@@ -1,6 +1,6 @@
 const voorzieningen = require('./wmo.voorzieningen.json');
 
 module.exports = {
-  path: '/wmo',
+  path: '/api/wmoned/voorzieningen',
   template: voorzieningen,
 };
