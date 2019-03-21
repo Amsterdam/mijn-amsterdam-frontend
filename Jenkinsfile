@@ -42,29 +42,29 @@ String BRANCH = "${env.BRANCH_NAME}"
 
 if (BRANCH == "master") {
 
-    node {
-        stage('Push acceptance image') {
-            tryStep "image tagging", {
-                docker.withRegistry('https://repo.secure.amsterdam.nl', 'docker-registry') {
-                    def image = docker.image("mijnams/mijnamsterdam:${env.BUILD_NUMBER}")
-                    image.pull()
-                    image.push("acceptance")
-                }
-            }
-        }
-    }
+    // node {
+    //     stage('Push acceptance image') {
+    //         tryStep "image tagging", {
+    //             docker.withRegistry('https://repo.secure.amsterdam.nl', 'docker-registry') {
+    //                 def image = docker.image("mijnams/mijnamsterdam:${env.BUILD_NUMBER}")
+    //                 image.pull()
+    //                 image.push("acceptance")
+    //             }
+    //         }
+    //     }
+    // }
 
-    node {
-        stage("Deploy to ACC") {
-            tryStep "deployment", {
-                build job: 'Subtask_Openstack_Playbook',
-                    parameters: [
-                        [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
-                        [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml'],
-                    ]
-            }
-        }
-    }
+    // node {
+    //     stage("Deploy to ACC") {
+    //         tryStep "deployment", {
+    //             build job: 'Subtask_Openstack_Playbook',
+    //                 parameters: [
+    //                     [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
+    //                     [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml'],
+    //                 ]
+    //         }
+    //     }
+    // }
 
     // Enable when project is ready for production
     // stage('Waiting for approval') {
