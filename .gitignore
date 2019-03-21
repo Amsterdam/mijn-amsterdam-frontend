@@ -11,8 +11,8 @@
 # production
 /build
 
-# mock data
-/mock-api/*
+# mock data, simple approach to exclude possibly sensitive data
+/mock-api/**/*.json
 
 # misc
 .DS_Store
