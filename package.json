@@ -1,0 +1,60 @@
+{
+  "name": "mijn-amsterdam-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "classnames": "^2.2.6",
+    "date-fns": "^1.30.1",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "^2.1.8",
+    "use-react-router": "^1.0.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "cypress": "cypress open",
+    "lint:staged": "lint-staged",
+    "mock-api": "dyson mock-api/",
+    "watch:mock-api": "nodemon --watch mock-api dyson mock-api"
+  },
+  "eslintConfig": {
+    "extends": "react-app",
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": "error"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "pre-commit": "lint:staged",
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "dyson": "^2.0.3",
+    "dyson-generators": "^0.2.0",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.8.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "faker": "^4.1.0",
+    "lint-staged": "^8.1.5",
+    "node-sass": "^4.11.0",
+    "pre-commit": "^1.2.2",
+    "prettier": "1.16.4",
+    "react-test-renderer": "^16.8.3"
+  }
+}
