@@ -1,7 +1,7 @@
 const focus = require('./focus.json');
 
 module.exports = {
-  path: '/focus',
+  path: '/api/focus/aanvragen',
   template: {
     ...focus,
   },

@@ -1,5 +1,5 @@
 module.exports = {
-  path: '/auth',
+  path: '/api/auth',
   template: {
     isAuthenticated: (params, query, body, x, headers) => {
       return (
