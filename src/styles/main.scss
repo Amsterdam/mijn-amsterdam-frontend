@@ -1,0 +1,29 @@
+// Use this file as an entry point for global styles and imports
+
+@import 'global';
+@import 'normalize';
+@import 'fonts';
+
+// Global styling and reset
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; // translates to 10px which makes 1rem = 10px in all other elemens contained within body
+}
+
+body {
+  min-height: 100vh;
+  font-family: "AvenirNext", Arial, Helvetica, sans-serif;
+  color: $color-black;
+  font-size: 1.6rem;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+#app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

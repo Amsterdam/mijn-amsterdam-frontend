@@ -1,0 +1,25 @@
+@mixin center-flex-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@mixin page-content-main {
+  min-height: 20rem;
+  padding: 0 4rem;
+}
+
+@mixin heading($size, $line-height, $unit: 'rem') {
+  font-size: #{$size}#{$unit};
+  line-height: #{$line-height};
+}
+
+@mixin heading-large {
+  @include heading(3, 1.3);
+  font-weight: 500;
+}
+
+
+@mixin paragraph-style-regular {
+  line-height: 1.375; // translate to 22px with 16px font-size
+}

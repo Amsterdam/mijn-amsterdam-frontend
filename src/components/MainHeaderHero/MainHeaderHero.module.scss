@@ -1,0 +1,18 @@
+@import 'styles/_global.scss';
+
+.MainHeaderHero {
+  width: 100%;
+  max-width: $main-header-hero-max-width;
+  height: $main-header-hero-height;
+  overflow: hidden;
+  position: relative;
+
+  img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    width: 100%;
+    height: auto;
+  }
+}

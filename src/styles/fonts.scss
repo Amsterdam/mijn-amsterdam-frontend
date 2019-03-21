@@ -1,0 +1,35 @@
+/*
+This CSS resource incorporates links to font software which is the valuable copyrighted
+property of Monotype Imaging and/or its suppliers. You may not attempt to copy, install,
+redistribute, convert, modify or reverse engineer this font software. Please contact Monotype
+Imaging with any questions regarding Web Fonts:  http://www.fonts.com
+*/
+@import url("https://fast.fonts.net/t/1.css?apiType=css&projectid=3680cf49-2b05-4b8a-af28-fa9e27d2bed0");
+
+@font-face {
+  font-family: "AvenirNext"; // AvenirNextLTW01-Regular
+  src: url("../assets/fonts/AvenirNext/2cd55546-ec00-4af9-aeca-4a3cd186da53.woff2") format("woff2"),
+  url("../assets/fonts/AvenirNext/1e9892c0-6927-4412-9874-1b82801ba47a.woff") format("woff");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "AvenirNext"; // AvenirNextLTW01-Medium
+  src: url("../assets/fonts/AvenirNextMedium/627fbb5a-3bae-4cd9-b617-2f923e29d55e.woff2") format("woff2"),
+  url("../assets/fonts/AvenirNextMedium/f26faddb-86cc-4477-a253-1e1287684336.woff") format("woff");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "AvenirNext"; // Avenir Next LT W01 Demi
+  src: url("../assets/fonts/AvenirNextDemi/aad99a1f-7917-4dd6-bbb5-b07cedbff64f.woff2") format("woff2"),
+  url("../assets/fonts/AvenirNextDemi/91b50bbb-9aa1-4d54-9159-ec6f19d14a7c.woff") format("woff");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "AvenirNext"; // Avenir LT W01 85 Heavy
+  src: url("../assets/fonts/AvenirHeavy/65cde95a-ac33-4c65-8198-e37857968d1a.woff2") format("woff2"),
+  url("../assets/fonts/AvenirHeavy/7147ec3a-8ff8-4ec9-8c5c-bd1571dc6ae6.woff") format("woff");
+  font-weight: 800;
+}
