@@ -1,0 +1,12 @@
+version: '3.5'
+services:
+  mijnamsterdam: # NGINX
+    build: .
+    ports:
+      - "8103:80"
+
+  test:
+    build:
+      context: .
+      target: build-deps
+    command: npm run test

@@ -1,0 +1,10 @@
+.env
+.git
+.sass-cache
+node_modules/
+.editorconfig
+.gitignore
+.prettierrc
+.idea
+.git
+readme.md
