@@ -1,0 +1,35 @@
+@import 'styles/_global.scss';
+
+.header {
+  @include center-flex-col;
+}
+
+.topBar {
+  width: $main-boxed-width;
+  height: $main-header-topbar-height;
+
+  h1 {
+    margin: .4em 0 0;
+    @include heading-large;
+  }
+}
+
+.logoLink {
+  display: flex;
+  color: inherit;
+  text-decoration: none;
+}
+
+.logo {
+  position: relative;
+  left: -3rem;
+  top: 2rem;
+  width: 9rem;
+  height: 6.8rem;
+}
+
+.betaLabel {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

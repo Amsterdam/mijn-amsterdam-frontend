@@ -1,0 +1,22 @@
+@import 'styles/_global.scss';
+
+.MainFooter {
+  background-color: $color-neutral-grey4;
+  min-height: $main-footer-min-height;
+  padding-bottom: 4.4rem;
+  position: relative;
+}
+
+.InnerContainer {
+  width: $main-boxed-width;
+  margin: 0 auto;
+}
+
+.BottomBar {
+  background-color: $color-white;
+  height: 4.4rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

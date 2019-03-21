@@ -1,0 +1,8 @@
+@import 'styles/_global.scss';
+
+.MainNavBar {
+  height: $main-header-navbar-height;
+  background-color: $color-neutral-grey1;
+  max-width: $main-max-width;
+  width: 100%;
+}

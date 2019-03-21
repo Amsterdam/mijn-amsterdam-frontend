@@ -1,0 +1,7 @@
+@import 'styles/_global.scss';
+
+.PageContentMainHeading {
+  @include heading-large;
+  padding-top: .6rem; // visually vertically centered
+  margin-bottom: 3.8rem;
+}

@@ -1,0 +1,16 @@
+@import 'styles/_global.scss';
+
+.PageContentMain {
+  @include page-content-main;
+  top: -10.2rem;
+  position: relative;
+  background-color: $color-white;
+
+  &--default {
+    width: 100%;
+  }
+
+  &--medium {
+    width: 46rem;
+  }
+}
