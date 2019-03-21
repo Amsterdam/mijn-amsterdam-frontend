@@ -16,7 +16,7 @@ is a portal for official communication with the municipality of Amsterdam.
 ### Development
 
 - Be extra considerate about naming things, discuss with the team if needed.
-- Write a test when a complex and/or critical component is encountered, don't over do it. We don't need 100% test coverage.
+- Write a test when a complex and/or critical component is encountered. We don't require 100% test coverage however...
 - Take time to review code. Thorough reviews are a good addition for preventing sloppy code and bugs.
 - Try to improve your skills, ask questions, be thoughtful and voice concerns if you have them.
 
