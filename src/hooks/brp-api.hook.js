@@ -5,7 +5,36 @@ export const useBrpApi = (initialState = {}) => {
   const options = { url: ApiUrls.BRP };
   const { data, refetch } = useDataApi(options, initialState);
 
-  return { persoon: data.persoon || {}, refetch };
+  if (data.persoon) {
+    const me = data.persoon || {};
+
+    const partnerItem = Array.isArray(me.heeftAlsEchtgenootPartner)
+      ? me.heeftAlsEchtgenootPartner.find(item => !('datumOntbinding' in item))
+      : null;
+
+    const partner = partnerItem && partnerItem.gerelateerde;
+
+    const address = {
+      current: {
+        locality: `${me.verblijfsadres.openbareRuimteNaam} ${
+          me.verblijfsadres.huisnummer
+        }
+        ${me.verblijfsadres.postcode} ${me.verblijfsadres.woonplaatsNaam}`,
+        dateStarted: me.verblijfsadres.begindatumVerblijf,
+      },
+    };
+
+    const legalCommitment = me.omschrijvingBurgerlijkeStaat && {
+      type: me.omschrijvingBurgerlijkeStaat,
+      dateStarted: me.tijdvakGeldigheid.beginGeldigheid,
+      place: '?????',
+      country: '?????Nederland',
+    };
+
+    return { me, partner, address, legalCommitment, refetch };
+  }
+
+  return {};
 };
 
 export function getProfileLabel(persoon) {
