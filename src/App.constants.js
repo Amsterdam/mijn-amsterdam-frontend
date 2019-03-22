@@ -26,16 +26,15 @@ export const AppRoutes = {
   MIJN_UPDATES: '/updates',
 };
 
-// TODO: Make configurable via ENV setting
-const API_BASE_URL = '//localhost:5001';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export const ApiUrls = {
-  MIJN_UPDATES: `${API_BASE_URL}/mijn-updates`,
-  BRP: `${API_BASE_URL}/brp`,
-  WMO: `${API_BASE_URL}/wmo`,
-  FOCUS: `${API_BASE_URL}/focus`,
+  MIJN_UPDATES: `${API_BASE_URL}/profiel/mijn-updates`,
+  BRP: `${API_BASE_URL}/brp/brp`,
+  WMO: `${API_BASE_URL}/wmoned/voorzieningen`,
+  FOCUS: `${API_BASE_URL}/focus/aanvragen`,
   AUTH: `${API_BASE_URL}/auth`,
-  ERFPACHT: `${API_BASE_URL}/erfpacht`,
+  ERFPACHT: `${API_BASE_URL}/erfpacht/check-erfpacht`,
 };
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options

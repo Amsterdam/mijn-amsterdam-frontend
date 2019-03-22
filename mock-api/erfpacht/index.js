@@ -1,8 +1,6 @@
-const erfpacht = require('./erfpacht.json');
-
 module.exports = {
-  path: "/erfpacht",
+  path: '/api/erfpacht/check-erfpacht',
   template: {
-    heeftErfpacht: true,
-  }
+    status: true,
+  },
 };
