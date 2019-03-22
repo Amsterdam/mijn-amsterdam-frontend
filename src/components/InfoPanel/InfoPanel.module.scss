@@ -1,0 +1,42 @@
+@import 'styles/_global.scss';
+
+.InfoPanel {
+
+}
+
+.InfoPanelTitle {
+  @include heading-medium;
+  padding-left: 16rem;
+  border-bottom: 1px solid $color-neutral-grey1;
+  padding-bottom: 1.3rem;
+}
+
+.InfoPanelContent {
+  display: flex;
+}
+
+.InfoPanelTable {
+  width: 59%;
+  border-collapse: collapse;
+  tbody > tr {
+    > td {
+      text-align: left;
+      white-space: pre-line;
+      padding-bottom: 1rem;
+    }
+    > th {
+      width: 16rem;
+      text-align: right;
+      padding-right: 2rem;
+      padding-bottom: 1rem;
+      color: $color-neutral-grey4;
+      font-weight: 200;
+    }
+  }
+}
+
+.InfoPanelActionLinks {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
