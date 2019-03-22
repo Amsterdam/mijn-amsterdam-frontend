@@ -29,7 +29,7 @@ export default function MainHeader() {
         </Link>
         <BetaLabel className={styles.betaLabel} />
       </div>
-      {getProfileLabel(BRP.persoon)}
+      {getProfileLabel(BRP && BRP.me)}
       <MainNavBar />
       <MainHeaderHero />
     </header>
