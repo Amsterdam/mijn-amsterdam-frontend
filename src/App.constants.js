@@ -26,7 +26,6 @@ export const AppRoutes = {
   MIJN_UPDATES: '/updates',
 };
 
-// TODO: Make configurable via ENV setting
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export const ApiUrls = {
