@@ -1,7 +1,7 @@
 const user = require('./brp.user.json');
 
 module.exports = {
-  path: '/brp',
+  path: '/api/brp/brp',
   template: {
     ...user,
   },

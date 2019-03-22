@@ -1,7 +1,7 @@
-const updates = require('updates.json');
+const updates = require('./updates.json');
 
 module.exports = {
-  path: '/mijn-updates',
+  path: '/api/profiel/mijn-updates',
   template: (_, queryParams) => {
     return updates.slice(queryParams.offset, queryParams.limit);
   },
