@@ -1,4 +1,4 @@
-$main-max-width: 120rem;
+$main-max-width: 100vw;
 $main-boxed-width: 94rem;
 
 $main-header-topbar-height: 10.6rem;
@@ -6,6 +6,7 @@ $main-header-navbar-height: 4.4rem;
 $main-header-hero-max-width: 120rem;
 $main-header-hero-height: 30rem;
 $main-header-hero-border-top-color: $color-neutral-grey1;
-$main-header-total-height: $main-header-topbar-height + $main-header-navbar-height + $main-header-hero-height;
+$main-header-total-height: $main-header-topbar-height +
+  $main-header-navbar-height + $main-header-hero-height;
 
 $main-footer-min-height: 20rem;

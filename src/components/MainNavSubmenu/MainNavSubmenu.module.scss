@@ -1,0 +1,74 @@
+@import 'styles/_global.scss';
+
+.MainNavSubmenu {
+  z-index: 2;
+}
+
+.SubmenuButton {
+  height: 24px;
+  padding-left: 0;
+  padding-right: 0;
+  margin-right: 30px;
+  background-color: $color-neutral-grey1;
+  border: 0px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover {
+    color: $color-primary-red;
+  }
+
+  &Open {
+    color: $color-primary-red;
+    margin-bottom: -2px;
+    border-bottom: solid 2px $color-primary-red;
+  }
+}
+
+.SubmenuPanel {
+  opacity: 0;
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 300ms ease-out 100ms,
+              opacity 200ms ease-in-out 100ms;
+  position: absolute;
+  top: $main-header-navbar-height;
+  background-color: $color-neutral-grey1;
+  left: 0;
+  right: 0;
+
+  &Open {
+    max-height: 500px;
+    opacity: 1;
+  }
+}
+
+.SubmenuItems {
+  display: flex;
+  width: 55rem;
+  padding: 2.5rem 0 2.5rem 0;
+  flex-wrap: wrap;
+  margin-left: calc(calc(100vw - #{$main-boxed-width}) / 2);
+}
+
+.MainNavSubmenuLink {
+  display: flex;
+  align-items: center;
+  width: 22rem;
+  color: $color-black;
+  text-decoration: none;
+  font-weight: 500;
+
+  svg {
+    margin: 5px 15px 5px 0;
+  }
+
+  &:hover {
+    color: $color-primary-red;
+
+    svg {
+      fill: $color-primary-red;
+    }
+  }
+}

@@ -1,9 +1,1 @@
 @import 'styles/global';
-
-
-.App {
-  max-width: $main-boxed-width;
-  margin: 0 auto;
-  display: flex;
-  min-height: calc(100vh - #{$main-header-total-height + $main-footer-min-height});
-}
