@@ -6,6 +6,7 @@ export const Chapters = {
   GEZONDHEID: 'GEZONDHEID',
   INKOMEN: 'INKOMEN',
   PROFILE: 'PROFILE',
+  PROFILE: 'PROFILE',
 
   // TODO: Clarify what this is about
   TIPS: 'tips',
@@ -70,4 +71,5 @@ export const ExternalUrls = {
     'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
   ERFPACHT_ACC:
     'https://mijnerfpacht.acc.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
+  BERICHTENBOX: 'https://mijn.overheid.nl/berichtenbox/inbox/',
 };
