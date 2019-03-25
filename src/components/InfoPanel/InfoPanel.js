@@ -34,8 +34,12 @@ function InfoPanelTable({ data = {} }) {
 
 export default function InfoPanel({ title = '', actionLinks = [], info = {} }) {
   return [
-    title && <h3 className={styles.InfoPanelTitle}>{title}</h3>,
-    <div className={styles.InfoPanelContent}>
+    title && (
+      <h3 key="heading" className={styles.InfoPanelTitle}>
+        {title}
+      </h3>
+    ),
+    <div key="content" className={styles.InfoPanelContent}>
       <InfoPanelTable data={info} />
       {!!actionLinks.length && (
         <InfoPanelActionLinks actionLinks={actionLinks} />
