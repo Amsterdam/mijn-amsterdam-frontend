@@ -1,9 +1,5 @@
 @import 'styles/_global.scss';
 
-.NotFound {
-  composes: PageContentMain from 'components/PageContentMain/PageContentMain.module.scss';
-}
-
 p {
   @include paragraph-style-regular;
 }
