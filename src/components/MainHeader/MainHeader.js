@@ -44,8 +44,6 @@ export default function MainHeader() {
     SESSION: { isAuthenticated },
   } = useContext(AppContext);
 
-  console.log('auth:', useContext(AppContext));
-
   return (
     <header className={styles.header}>
       <div
