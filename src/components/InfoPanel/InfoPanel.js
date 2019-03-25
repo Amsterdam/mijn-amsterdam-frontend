@@ -41,7 +41,7 @@ export default function InfoPanel({ title = '', actionLinks = [], info = {} }) {
     ),
     <div key="content" className={styles.InfoPanelContent}>
       <InfoPanelTable data={info} />
-      {!!actionLinks.length && (
+      {actionLinks.length && (
         <InfoPanelActionLinks actionLinks={actionLinks} />
       )}
     </div>,
