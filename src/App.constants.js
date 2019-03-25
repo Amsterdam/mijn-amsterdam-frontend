@@ -20,6 +20,7 @@ export const AppRoutes = {
   GEZONDHEID: '/gezondheid',
   INKOMEN: '/inkomen',
   PROFIEL: '/profiel',
+  MIJN_BUURT: '/buurt',
 
   // NOTE: Route components not implemented, subject to change
   TIPS: '/tips',
