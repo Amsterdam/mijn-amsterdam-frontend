@@ -19,14 +19,14 @@ export const AppRoutes = {
   BELASTINGEN: '/belastingen',
   GEZONDHEID: '/gezondheid',
   INKOMEN: '/inkomen',
-  PROFILE: '/profile',
+  PROFIEL: '/profiel',
+  MIJN_BUURT: '/buurt',
 
   // NOTE: Route components not implemented, subject to change
   TIPS: '/tips',
   MIJN_UPDATES: '/updates',
 };
 
-// TODO: Make configurable via ENV setting
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export const ApiUrls = {
