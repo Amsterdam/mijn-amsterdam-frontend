@@ -1,10 +1,12 @@
+import { ExternalUrls } from 'App.constants';
+
 export const panelConfig = {
   me: {
     title: 'Persoonlijke gegevens',
     actionLinks: [
       {
         label: 'Inzien of correctie doorgeven',
-        url: '',
+        url: ExternalUrls.CHANGE_PERSONAL_DATA,
       },
     ],
   },
@@ -13,7 +15,7 @@ export const panelConfig = {
     actionLinks: [
       {
         label: 'Inzien of correctie doorgeven',
-        url: '',
+        url: ExternalUrls.CHANGE_PERSONAL_DATA,
       },
     ],
   },
@@ -35,7 +37,7 @@ export const panelConfig = {
     actionLinks: [
       {
         label: 'Verhuizing doorgeven',
-        url: '',
+        url: ExternalUrls.REPORT_RELOCATION,
       },
     ],
   },
