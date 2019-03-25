@@ -13,12 +13,14 @@ html {
 
 body {
   min-height: 100vh;
-  font-family: "AvenirNext", Arial, Helvetica, sans-serif;
+  font-family: 'AvenirNext', Arial, Helvetica, sans-serif;
   color: $color-black;
   font-size: 1.6rem;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: inherit;
 }
 
