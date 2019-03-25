@@ -6,7 +6,9 @@ function InfoPanelActionLinks({ actionLinks }) {
     <ul className={styles.InfoPanelActionLinks}>
       {actionLinks.map((actionLink, index) => (
         <li key={`link-${index}`}>
-          <a href={actionLink.url}>{actionLink.label}</a>
+          <a className="button-link" href={actionLink.url}>
+            {actionLink.label}
+          </a>
         </li>
       ))}
     </ul>
@@ -31,15 +33,13 @@ function InfoPanelTable({ data = {} }) {
 }
 
 export default function InfoPanel({ title = '', actionLinks = [], info = {} }) {
-  return (
-    <div key={title} className={styles.InfoPanel}>
-      {title && <h3 className={styles.InfoPanelTitle}>{title}</h3>}
-      <div className={styles.InfoPanelContent}>
-        <InfoPanelTable data={info} />
-        {!!actionLinks.length && (
-          <InfoPanelActionLinks actionLinks={actionLinks} />
-        )}
-      </div>
-    </div>
-  );
+  return [
+    title && <h3 className={styles.InfoPanelTitle}>{title}</h3>,
+    <div className={styles.InfoPanelContent}>
+      <InfoPanelTable data={info} />
+      {!!actionLinks.length && (
+        <InfoPanelActionLinks actionLinks={actionLinks} />
+      )}
+    </div>,
+  ];
 }

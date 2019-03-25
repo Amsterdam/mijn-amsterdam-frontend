@@ -1,0 +1,10 @@
+@import 'styles/_global.scss';
+
+.ChapterHeadingIcon {
+  display: block;
+  position: absolute;
+  fill: $color-primary-red;
+  height: 5rem;
+  width: 5rem;
+  top: 3.6rem;
+}

@@ -2,4 +2,26 @@
 
 .Profile {
 
+  > *[class^="PageContentMainHeading"] {
+    margin-left: 12rem;
+  }
+
+  > *[class^="PageContentMainBody_PageContentMainBody"] {
+
+    margin-left: -4rem;
+    margin-right: -4rem;
+
+    > p {
+      margin-right: 16rem;
+      margin-left: 16rem;
+
+      &:last-of-type {
+        margin-bottom: 7rem;
+      }
+    }
+
+    > *[class^="InfoPanel_InfoPanelContent"] {
+      margin-bottom: 4.5rem;
+    }
+  }
 }

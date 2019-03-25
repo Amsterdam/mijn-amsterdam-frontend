@@ -7,7 +7,7 @@
 .InfoPanelTitle {
   @include heading-medium;
   padding-left: 16rem;
-  border-bottom: 1px solid $color-neutral-grey1;
+  border-bottom: 1px solid $color-neutral-grey2;
   padding-bottom: 1.3rem;
 }
 
@@ -18,17 +18,18 @@
 .InfoPanelTable {
   width: 59%;
   border-collapse: collapse;
+
   tbody > tr {
     > td {
       text-align: left;
       white-space: pre-line;
-      padding-bottom: 1rem;
+      padding-bottom: .5rem;
     }
     > th {
       width: 16rem;
       text-align: right;
       padding-right: 2rem;
-      padding-bottom: 1rem;
+      padding-bottom: .5rem;
       color: $color-neutral-grey4;
       font-weight: 200;
     }
@@ -39,4 +40,8 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
+
+  > li {
+    margin-bottom: .6rem;
+  }
 }
