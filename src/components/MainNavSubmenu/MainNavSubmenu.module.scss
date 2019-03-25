@@ -5,13 +5,13 @@
 }
 
 .SubmenuButton {
-  height: 24px;
+  height: 2.4rem;
   padding-left: 0;
   padding-right: 0;
-  margin-right: 30px;
+  margin-right: 3rem;
   background-color: $color-neutral-grey1;
-  border: 0px;
-  font-size: 18px;
+  border: 0;
+  font-size: 1.8rem;
   font-weight: 500;
   cursor: pointer;
 
@@ -21,14 +21,14 @@
 
   &Open {
     color: $color-primary-red;
-    margin-bottom: -2px;
-    border-bottom: solid 2px $color-primary-red;
+    margin-bottom: -.2rem;
+    border-bottom: solid .2rem $color-primary-red;
   }
 }
 
 .SubmenuPanel {
   opacity: 0;
-  max-height: 0px;
+  max-height: 0;
   overflow: hidden;
   transition: max-height 300ms ease-out 100ms,
               opacity 200ms ease-in-out 100ms;
@@ -39,7 +39,7 @@
   right: 0;
 
   &Open {
-    max-height: 500px;
+    max-height: 50rem;
     opacity: 1;
   }
 }
@@ -61,7 +61,7 @@
   font-weight: 500;
 
   svg {
-    margin: 5px 15px 5px 0;
+    margin: .5rem 1.5rem .5rem 0;
   }
 
   &:hover {
