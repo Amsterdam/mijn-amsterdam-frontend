@@ -11,11 +11,13 @@ import styles from './App.module.scss';
 
 import AppContext from './App.context';
 import { useBrpApi } from 'hooks/brp-api.hook.js';
+import useSessionApi from 'hooks/session.api.hook.js';
 
 export default function App() {
   // State that needs to be available everywhere
   const appState = {
     BRP: useBrpApi(),
+    SESSION: useSessionApi(),
   };
 
   return (
