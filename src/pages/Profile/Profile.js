@@ -5,71 +5,18 @@ import { defaultDateFormat } from 'helpers/App';
 import PageContentMain from 'components/PageContentMain/PageContentMain';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
+import styles from 'pages/Profile/Profile.module.scss';
+import { brpInfoLabels, panelConfig } from './Profile.constants';
+import { Chapters } from 'App.constants';
+import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
 
-const panelConfig = {
-  me: {
-    title: 'Persoonlijke gegevens',
-    actionLinks: [
-      {
-        label: 'Inzien of correctie doorgeven',
-        url: '',
-      },
-    ],
-  },
-  partner: {
-    title: 'Partner',
-    actionLinks: [
-      {
-        label: 'Inzien of correctie doorgeven',
-        url: '',
-      },
-    ],
-  },
-  legalCommitment: {
-    title: 'Verbintenis',
-    actionLinks: [
-      {
-        label: 'Trouwen en partnerschap',
-        url: '',
-      },
-      {
-        label: 'Echtscheiding',
-        url: '',
-      },
-    ],
-  },
-  address: {
-    title: 'Huidig woonadres',
-    actionLinks: [
-      {
-        label: 'Verhuizing doorgeven',
-        url: '',
-      },
-    ],
-  },
-};
-
-const brpInfoLabels = {
-  FirstName: 'Voornamen',
-  LastName: 'Achternaam',
-  Gender: 'Geslacht',
-  BSN: 'Bsn',
-  DateOfBirth: 'Geboortedatum',
-  PlaceOfBirth: 'Geboorteplaats',
-  CountryOfBirth: 'Geboorteland',
-  Nationality: 'Nationaliteit',
-  Date: 'Datum',
-  Place: 'Plaats',
-  Country: 'Land',
-  DateStarted: 'Sinds',
-};
-
-export default function Profile() {
-  const {
-    BRP: { me = {}, partner = {}, address = {}, legalCommitment = null },
-  } = useContext(AppContext);
-
-  const brpInfo = {
+function formatProfileData({
+  me = {},
+  partner = {},
+  address = {},
+  legalCommitment = null,
+}) {
+  return {
     me: me && {
       [brpInfoLabels.FirstName]: me.voornamen,
       [brpInfoLabels.LastName]: me.geslachtsnaam,
@@ -98,9 +45,15 @@ export default function Profile() {
       ),
     },
   };
+}
+
+export default function Profile() {
+  const { BRP } = useContext(AppContext);
+  const brpInfo = formatProfileData(BRP);
 
   return (
-    <PageContentMain>
+    <PageContentMain className={styles.Profile}>
+      <ChapterHeadingIcon chapter={Chapters.BURGERZAKEN} />
       <PageContentMainHeading>Mijn gegevens</PageContentMainHeading>
       <PageContentMainBody>
         <p>

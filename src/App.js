@@ -22,7 +22,7 @@ export default function App() {
     <BrowserRouter>
       <AppContext.Provider value={appState}>
         <MainHeader />
-        <main className={styles.App}>
+        <div className={styles.App}>
           <Switch>
             <Route exact path={AppRoutes.ROOT} component={Dashboard} />
             {/* <Route path={AppRoutes.BURGERZAKEN} />
@@ -33,7 +33,7 @@ export default function App() {
             <Route path={AppRoutes.PROFILE} component={Profile} />
             <Route component={NotFound} />
           </Switch>
-        </main>
+        </div>
         <MainFooter />
       </AppContext.Provider>
     </BrowserRouter>

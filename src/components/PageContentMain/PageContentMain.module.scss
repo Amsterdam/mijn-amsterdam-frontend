@@ -2,15 +2,15 @@
 
 .PageContentMain {
   @include page-content-main;
-  top: -10.2rem;
+  top: -8.5rem;
   position: relative;
   background-color: $color-white;
 
-  &--default {
+  &__default {
     width: 100%;
   }
 
-  &--medium {
+  &__medium {
     width: 46rem;
   }
 }
