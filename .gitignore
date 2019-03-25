@@ -13,6 +13,7 @@
 
 # mock data, simple approach to exclude possibly sensitive data
 /mock-api/**/*.json
+/mock-api/secure-data
 
 # misc
 .DS_Store

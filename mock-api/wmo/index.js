@@ -1,4 +1,4 @@
-const voorzieningen = require('./wmo.voorzieningen.json');
+const voorzieningen = require('../secure-data/wmo.json');
 
 module.exports = {
   path: '/api/wmoned/voorzieningen',
