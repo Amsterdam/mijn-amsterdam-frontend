@@ -5,7 +5,7 @@ function InfoPanelActionLinks({ actionLinks }) {
   return (
     <ul className={styles.InfoPanelActionLinks}>
       {actionLinks.map((actionLink, index) => (
-        <li key={`link-${index}`}>
+        <li key={actionLink.label}>
           <a className="button-link" href={actionLink.url}>
             {actionLink.label}
           </a>
@@ -21,7 +21,7 @@ function InfoPanelTable({ data = {} }) {
       <tbody>
         {Object.entries(data).map(([label, value], index) => {
           return (
-            <tr key={`row-${index}`}>
+            <tr key={label}>
               <th>{label}</th>
               <td>{value}</td>
             </tr>
