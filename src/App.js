@@ -30,7 +30,7 @@ export default function App() {
               <Route path={AppRoutes.BELASTINGEN} />
               <Route path={AppRoutes.GEZONDHEID} />
               <Route path={AppRoutes.INKOMEN} />*/}
-            <Route path={AppRoutes.PROFILE} component={Profile} />
+            <Route path={AppRoutes.PROFIEL} component={Profile} />
             <Route component={NotFound} />
           </Switch>
         </div>
