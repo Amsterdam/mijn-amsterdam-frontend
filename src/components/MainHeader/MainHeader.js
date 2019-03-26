@@ -1,5 +1,5 @@
 import { AppRoutes, ExternalUrls } from 'App.constants';
-import AppContext from 'App.context';
+import { AppContext } from 'AppState';
 import { ReactComponent as BetaLabel } from 'assets/images/beta-label.svg';
 import { ReactComponent as AmsterdamLogoLarge } from 'assets/images/logo-amsterdam-large.svg';
 import classnames from 'classnames';
@@ -12,7 +12,7 @@ import useReactRouter from 'use-react-router';
 import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
 
 import styles from './MainHeader.module.scss';
-import ButtonLink, {
+import {
   ButtonLinkExternal,
   IconButtonLink,
 } from 'components/ButtonLink/ButtonLink';
