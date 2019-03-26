@@ -15,7 +15,6 @@ import { getProfileLabel } from 'hooks/brp-api.hook';
 export default function MainHeader() {
   const { location } = useReactRouter();
   const isDashboard = location.pathname === AppRoutes.ROOT;
-
   const { BRP } = useContext(AppContext);
 
   return (
@@ -23,11 +22,23 @@ export default function MainHeader() {
       <div
         className={classnames(styles.topBar, { [styles.white]: isDashboard })}
       >
-        <Link className={styles.logoLink} to={AppRoutes.ROOT}>
-          <AmsterdamLogoLarge className={styles.logo} />
-          <h1>Mijn Amsterdam</h1>
-        </Link>
-        <BetaLabel className={styles.betaLabel} />
+        <span className={styles.logoLink}>
+          <AmsterdamLogoLarge
+            role="img"
+            aria-label="Amsterdam logo"
+            className={styles.logo}
+          />
+          <h1 id="logo">
+            <Link className={styles.logoLink} to={AppRoutes.ROOT}>
+              Mijn Amsterdam
+            </Link>
+          </h1>
+        </span>
+        <BetaLabel
+          role="img"
+          aria-label="Beta versie"
+          className={styles.betaLabel}
+        />
       </div>
       {getProfileLabel(BRP && BRP.me)}
       <MainNavBar />
