@@ -5,7 +5,7 @@ export const Chapters = {
   BELASTINGEN: 'BELASTINGEN',
   GEZONDHEID: 'GEZONDHEID',
   INKOMEN: 'INKOMEN',
-  PROFILE: 'PROFILE',
+  PROFIEL: 'PROFIEL',
 
   // TODO: Clarify what this is about
   TIPS: 'tips',
@@ -70,6 +70,7 @@ export const ExternalUrls = {
     'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
   ERFPACHT_ACC:
     'https://mijnerfpacht.acc.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
+  BERICHTENBOX: 'https://mijn.overheid.nl/berichtenbox/inbox/',
   TROUWEN_EN_PARTNERSCHAP:
     'https://www.amsterdam.nl/burgerzaken/trouwen-partnerschap/',
   ECHTSCHEIDING:
