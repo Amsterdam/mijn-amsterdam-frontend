@@ -28,7 +28,7 @@ function SecondaryLinks({ me, hasMessages = true }) {
       </ButtonLinkExternal>
       {me && <Link to={AppRoutes.PROFIEL}>{getProfileLabel(me)}</Link>}
       {
-        <IconButtonLink>
+        <IconButtonLink external={true} target="_self" to={AppRoutes.LOGOUT}>
           <LogoutIcon /> Uitloggen
         </IconButtonLink>
       }
@@ -51,12 +51,24 @@ export default function MainHeader() {
           [styles.isDashboard]: isDashboard,
         })}
       >
-        <Link className={styles.logoLink} to={AppRoutes.ROOT}>
-          <AmsterdamLogoLarge className={styles.logo} />
-          <h1>Mijn Amsterdam</h1>
-        </Link>
+        <span className={styles.logoLink}>
+          <AmsterdamLogoLarge
+            role="img"
+            aria-label="Amsterdam logo"
+            className={styles.logo}
+          />
+          <h1>
+            <Link className={styles.logoLink} to={AppRoutes.ROOT}>
+              Mijn Amsterdam
+            </Link>
+          </h1>
+        </span>
         {isAuthenticated && <SecondaryLinks me={BRP.me} />}
-        <BetaLabel className={styles.betaLabel} />
+        <BetaLabel
+          role="img"
+          aria-label="Beta versie"
+          className={styles.betaLabel}
+        />
       </div>
       <MainNavBar />
       <MainHeaderHero />

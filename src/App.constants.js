@@ -25,6 +25,9 @@ export const AppRoutes = {
   // NOTE: Route components not implemented, subject to change
   TIPS: '/tips',
   MIJN_UPDATES: '/updates',
+
+  // External
+  LOGOUT: '/logout',
 };
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -71,6 +74,10 @@ export const ExternalUrls = {
   ERFPACHT_ACC:
     'https://mijnerfpacht.acc.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
   BERICHTENBOX: 'https://mijn.overheid.nl/berichtenbox/inbox/',
+  TROUWEN_EN_PARTNERSCHAP:
+    'https://www.amsterdam.nl/burgerzaken/trouwen-partnerschap/',
+  ECHTSCHEIDING:
+    'https://www.amsterdam.nl/veelgevraagd/?productid=%7B531BC4F8-F16D-4196-BFA0-D83C40A4D21F%7D',
 };
 
 // NOTE: Keep up-to-date with _colors.scss

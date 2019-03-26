@@ -9,6 +9,7 @@ export default function ButtonLink({
   children,
   hasIcon = false,
   className,
+  target = '_blank',
 }) {
   const classes = classnames(
     styles.ButtonLink,
@@ -16,13 +17,20 @@ export default function ButtonLink({
     className
   );
   if (external) {
+    if (target === '_blank') {
+      return (
+        <a
+          href={to}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={classes}
+        >
+          {children}
+        </a>
+      );
+    }
     return (
-      <a
-        href={to}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={classes}
-      >
+      <a href={to} target={target} className={classes}>
         {children}
       </a>
     );
