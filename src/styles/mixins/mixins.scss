@@ -19,6 +19,7 @@
   font-weight: 800;
 }
 
-@mixin paragraph-style-regular {
-  line-height: 1.375; // translate to 22px with 16px font-size
+@mixin heading-medium {
+  @include heading(2, 1.3);
+  font-weight: 800;
 }
