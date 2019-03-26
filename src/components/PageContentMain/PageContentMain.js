@@ -9,9 +9,10 @@ export default function PageContentMain({
   heading,
 }) {
   const classNames = composeClassNames(
-    className || styles.PageContentMain,
-    styles[`PageContentMain--${variant}`] || styles[`PageContentMain--default`]
+    styles.PageContentMain,
+    className,
+    styles[`PageContentMain__${variant}`] || styles.PageContentMain__default
   );
 
-  return <article className={classNames}>{children}</article>;
+  return <main className={classNames}>{children}</main>;
 }

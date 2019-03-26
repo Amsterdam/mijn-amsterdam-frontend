@@ -2,15 +2,20 @@
 
 .PageContentMain {
   @include page-content-main;
-  top: -10.2rem;
+  top: -8.5rem;
   position: relative;
   background-color: $color-white;
+  margin: 0 auto;
 
-  &--default {
-    width: 100%;
+  &__default {
+    max-width: $main-boxed-width;
   }
 
-  &--medium {
-    width: 46rem;
+  &__medium {
+    max-width: 46rem;
+  }
+
+  &__full {
+    width: 100%;
   }
 }

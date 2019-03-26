@@ -62,6 +62,9 @@ To run the mock-api run the following command in the console `$ npm run watch:mo
 Whenever you need to update/add an api look for the correct api mock in `./mock-api` and make your changes.
 The server will restart automatically.
 
+Some of the mock-api data might be privacy sensitive and is treated as secure. The data can be found on the shared google drive of the team.
+Extract the archive as the `/mock-api/secure-data/` folder. Without these files the mock-api will not work correctly.
+
 ### Branch naming + PR
 
 - When creating a new branch, preferably, branch off `master`

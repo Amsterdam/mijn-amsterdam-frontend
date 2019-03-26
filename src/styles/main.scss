@@ -1,13 +1,14 @@
 // Use this file as an entry point for global styles and imports
-
 @import 'global';
 @import 'normalize';
 @import 'fonts';
+@import 'components/components';
 
 // Global styling and reset
 html {
   box-sizing: border-box;
   font-size: 62.5%; // translates to 10px which makes 1rem = 10px in all other elemens contained within body
+  line-height: 1.375;
 }
 
 body {
