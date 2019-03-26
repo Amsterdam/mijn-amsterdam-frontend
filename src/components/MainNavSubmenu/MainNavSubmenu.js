@@ -3,9 +3,9 @@ import styles from './MainNavSubmenu.module.scss';
 import classnames from 'classnames';
 import { NavLink } from 'react-router-dom';
 
-export function MainNavSubmenuLink({ to, children }) {
+export function MainNavSubmenuLink({ to, children, ...rest }) {
   return (
-    <NavLink to={to} className={styles.MainNavSubmenuLink}>
+    <NavLink to={to} className={styles.MainNavSubmenuLink} {...rest}>
       {children}
     </NavLink>
   );
@@ -13,25 +13,27 @@ export function MainNavSubmenuLink({ to, children }) {
 
 export default function MainNavSubmenu({
   title,
-  isActive,
+  open,
   toggleSubmenu,
   children,
+  ...rest
 }) {
   return (
     <span className={styles.MainNavSubmenu}>
       <button
         className={classnames(
           styles.SubmenuButton,
-          isActive && styles.SubmenuButtonOpen
+          open && styles.SubmenuButtonOpen
         )}
         onClick={toggleSubmenu}
+        {...rest}
       >
         {title}
       </button>
       <div
         className={classnames(
           styles.SubmenuPanel,
-          isActive && styles.SubmenuPanelOpen
+          open && styles.SubmenuPanelOpen
         )}
       >
         <div className={styles.SubmenuItems}>{children}</div>
