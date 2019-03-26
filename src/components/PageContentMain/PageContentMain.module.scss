@@ -5,12 +5,17 @@
   top: -8.5rem;
   position: relative;
   background-color: $color-white;
+  margin: 0 auto;
 
   &__default {
-    width: 100%;
+    max-width: $main-boxed-width;
   }
 
   &__medium {
-    width: 46rem;
+    max-width: 46rem;
+  }
+
+  &__full {
+    width: 100%;
   }
 }
