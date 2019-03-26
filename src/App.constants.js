@@ -70,6 +70,10 @@ export const ExternalUrls = {
     'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
   ERFPACHT_ACC:
     'https://mijnerfpacht.acc.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
+  TROUWEN_EN_PARTNERSCHAP:
+    'https://www.amsterdam.nl/burgerzaken/trouwen-partnerschap/',
+  ECHTSCHEIDING:
+    'https://www.amsterdam.nl/veelgevraagd/?productid=%7B531BC4F8-F16D-4196-BFA0-D83C40A4D21F%7D',
 };
 
 // NOTE: Keep up-to-date with _colors.scss

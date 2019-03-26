@@ -42,23 +42,23 @@ export default function MainNavBar() {
           isActive={SubMenuId.MIJN_THEMAS === activeSubmenuId}
         >
           <MainNavSubmenuLink to={AppRoutes.BURGERZAKEN}>
-            <BurgerzakenIcon />
+            <BurgerzakenIcon aria-hidden="true" />
             Burgerzaken
           </MainNavSubmenuLink>
           <MainNavSubmenuLink to={AppRoutes.GEZONDHEID}>
-            <GezondheidIcon />
+            <GezondheidIcon aria-hidden="true" />
             Gezondheid
           </MainNavSubmenuLink>
           <MainNavSubmenuLink to={AppRoutes.WONEN}>
-            <WonenIcon />
+            <WonenIcon aria-hidden="true" />
             Wonen
           </MainNavSubmenuLink>
           <MainNavSubmenuLink to={AppRoutes.INKOMEN}>
-            <InkomenIcon />
+            <InkomenIcon aria-hidden="true" />
             Inkomen
           </MainNavSubmenuLink>
           <MainNavSubmenuLink to={AppRoutes.BELASTINGEN}>
-            <BelastingenIcon />
+            <BelastingenIcon aria-hidden="true" />
             Belastingen
           </MainNavSubmenuLink>
         </MainNavSubmenu>
