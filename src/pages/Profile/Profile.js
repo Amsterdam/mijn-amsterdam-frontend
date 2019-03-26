@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import InfoPanel from 'components/InfoPanel/InfoPanel';
-import AppContext from 'App.context';
+import { AppContext } from 'AppState';
 import { defaultDateFormat } from 'helpers/App';
 import PageContentMain from 'components/PageContentMain/PageContentMain';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
