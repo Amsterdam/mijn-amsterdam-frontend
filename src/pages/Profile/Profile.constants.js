@@ -26,11 +26,11 @@ export const panelConfig = {
     actionLinks: [
       {
         label: 'Trouwen en partnerschap',
-        url: '',
+        url: ExternalUrls.TROUWEN_EN_PARTNERSCHAP,
       },
       {
         label: 'Echtscheiding',
-        url: '',
+        url: ExternalUrls.ECHTSCHEIDING,
       },
     ],
   },
