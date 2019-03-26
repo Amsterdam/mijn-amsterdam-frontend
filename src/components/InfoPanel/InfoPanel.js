@@ -38,7 +38,7 @@ function InfoPanelTable({ data = {} }) {
 
 export default function InfoPanel({ title = '', actionLinks = [], info = {} }) {
   return [
-    title && (
+    !!title && (
       <h3 key="heading" className={styles.InfoPanelTitle}>
         {title}
       </h3>
