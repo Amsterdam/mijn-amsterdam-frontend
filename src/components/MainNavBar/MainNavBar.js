@@ -12,58 +12,103 @@ import { ReactComponent as BelastingenIcon } from 'assets/images/belastingen.svg
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from 'components/MainNavSubmenu/MainNavSubmenu';
+import { ButtonText, SubMenuItems } from './MainNavBar.constants';
 
-const SubMenuId = {
-  MIJN_THEMAS: 'mijn-themas',
-};
-
-function MainNavLink({ children, to }) {
+function MainNavLink({ children, to, ...rest }) {
   return (
-    <NavLink to={to} className={styles.MainNavLink}>
+    <NavLink to={to} className={styles.MainNavLink} {...rest}>
       {children}
     </NavLink>
   );
 }
 
 export default function MainNavBar() {
-  const [activeSubmenuId, setActiveSubmenu] = useState('');
+  const [showSubMenu, setShowSubMenu] = useState(false);
 
-  function toggleSubmenu(submenuId) {
-    setActiveSubmenu(activeSubmenuId !== submenuId ? submenuId : '');
+  function setSubMenuVisibility() {
+    const inSubMenu = SubMenuItems.indexOf(document.activeElement.id) >= 0;
+    if (showSubMenu) {
+      if (!inSubMenu) {
+        setShowSubMenu(false);
+      }
+    } else {
+      if (inSubMenu) {
+        setShowSubMenu(true);
+      }
+    }
   }
 
   return (
     <nav className={styles.MainNavBar}>
       <div className={styles.LinkContainer}>
-        <MainNavLink to={AppRoutes.ROOT}>Home</MainNavLink>
-        <MainNavSubmenu
-          title="Mijn thema's"
-          toggleSubmenu={() => toggleSubmenu(SubMenuId.MIJN_THEMAS)}
-          isActive={SubMenuId.MIJN_THEMAS === activeSubmenuId}
+        <MainNavLink
+          id={ButtonText.HOME}
+          to={AppRoutes.ROOT}
+          onFocus={setSubMenuVisibility}
         >
-          <MainNavSubmenuLink to={AppRoutes.BURGERZAKEN}>
+          {ButtonText.HOME}
+        </MainNavLink>
+        <MainNavSubmenu
+          id={ButtonText.MIJN_THEMAS}
+          title={ButtonText.MIJN_THEMAS}
+          open={showSubMenu}
+          onFocus={setSubMenuVisibility}
+        >
+          <MainNavSubmenuLink
+            id={ButtonText.BURGERZAKEN}
+            to={AppRoutes.BURGERZAKEN}
+            onFocus={setSubMenuVisibility}
+          >
             <BurgerzakenIcon />
-            Burgerzaken
+            {ButtonText.BURGERZAKEN}
           </MainNavSubmenuLink>
-          <MainNavSubmenuLink to={AppRoutes.GEZONDHEID}>
+          <MainNavSubmenuLink
+            id={ButtonText.GEZONDHEID}
+            to={AppRoutes.GEZONDHEID}
+            onFocus={setSubMenuVisibility}
+          >
             <GezondheidIcon />
-            Gezondheid
+            {ButtonText.GEZONDHEID}
           </MainNavSubmenuLink>
-          <MainNavSubmenuLink to={AppRoutes.WONEN}>
+          <MainNavSubmenuLink
+            id={ButtonText.WONEN}
+            to={AppRoutes.WONEN}
+            onFocus={setSubMenuVisibility}
+          >
             <WonenIcon />
-            Wonen
+            {ButtonText.WONEN}
           </MainNavSubmenuLink>
-          <MainNavSubmenuLink to={AppRoutes.INKOMEN}>
+          <MainNavSubmenuLink
+            id={ButtonText.INKOMEN}
+            to={AppRoutes.INKOMEN}
+            onFocus={setSubMenuVisibility}
+          >
             <InkomenIcon />
-            Inkomen
+            {ButtonText.INKOMEN}
           </MainNavSubmenuLink>
-          <MainNavSubmenuLink to={AppRoutes.BELASTINGEN}>
+          <MainNavSubmenuLink
+            id={ButtonText.BELASTINGEN}
+            to={AppRoutes.BELASTINGEN}
+            onFocus={setSubMenuVisibility}
+          >
             <BelastingenIcon />
-            Belastingen
+            {ButtonText.BELASTINGEN}
           </MainNavSubmenuLink>
         </MainNavSubmenu>
-        <MainNavLink to={AppRoutes.MIJN_BUURT}>Mijn buurt</MainNavLink>
-        <MainNavLink to={AppRoutes.MIJN_UPDATES}>Mijn updates</MainNavLink>
+        <MainNavLink
+          id={ButtonText.MIJN_BUURT}
+          to={AppRoutes.MIJN_BUURT}
+          onFocus={setSubMenuVisibility}
+        >
+          {ButtonText.MIJN_BUURT}
+        </MainNavLink>
+        <MainNavLink
+          id={ButtonText.MIJN_UPDATES}
+          to={AppRoutes.MIJN_UPDATES}
+          onFocus={setSubMenuVisibility}
+        >
+          {ButtonText.MIJN_UPDATES}
+        </MainNavLink>
       </div>
     </nav>
   );
