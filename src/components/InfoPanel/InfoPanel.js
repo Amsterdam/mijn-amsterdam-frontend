@@ -1,14 +1,18 @@
 import React from 'react';
 import styles from './InfoPanel.module.scss';
+import ButtonLink from 'components/ButtonLink/ButtonLink';
 
 function InfoPanelActionLinks({ actionLinks }) {
   return (
     <ul className={styles.InfoPanelActionLinks}>
       {actionLinks.map((actionLink, index) => (
         <li key={actionLink.label}>
-          <a className="button-link" href={actionLink.url}>
+          <ButtonLink
+            external={actionLink.external || false}
+            to={actionLink.url}
+          >
             {actionLink.label}
-          </a>
+          </ButtonLink>
         </li>
       ))}
     </ul>
