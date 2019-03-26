@@ -17,13 +17,18 @@ export default function ButtonLink({
   );
   if (external) {
     return (
-      <a href={to} className={classes}>
+      <a
+        href={to}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={classes}
+      >
         {children}
       </a>
     );
   }
   return (
-    <Link href={to} className={classes}>
+    <Link to={to} className={classes}>
       {children}
     </Link>
   );
