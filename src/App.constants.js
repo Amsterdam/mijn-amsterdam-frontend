@@ -5,8 +5,7 @@ export const Chapters = {
   BELASTINGEN: 'BELASTINGEN',
   GEZONDHEID: 'GEZONDHEID',
   INKOMEN: 'INKOMEN',
-  PROFILE: 'PROFILE',
-  PROFILE: 'PROFILE',
+  PROFIEL: 'PROFIEL',
 
   // TODO: Clarify what this is about
   TIPS: 'tips',
