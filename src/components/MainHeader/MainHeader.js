@@ -28,7 +28,7 @@ function SecondaryLinks({ me, hasMessages = true }) {
       </ButtonLinkExternal>
       {me && <Link to={AppRoutes.PROFIEL}>{getProfileLabel(me)}</Link>}
       {
-        <IconButtonLink>
+        <IconButtonLink external={true} target="_self" to={AppRoutes.LOGOUT}>
           <LogoutIcon /> Uitloggen
         </IconButtonLink>
       }
