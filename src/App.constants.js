@@ -71,3 +71,27 @@ export const ExternalUrls = {
   ERFPACHT_ACC:
     'https://mijnerfpacht.acc.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
 };
+
+// NOTE: Keep up-to-date with _colors.scss
+export const Colors = {
+  white: 'white',
+  black: 'black',
+  primaryRed: '#EC0000',
+  primaryDarkblue: '#004699',
+  neutralGrey1: '#F5F5F5',
+  neutralGrey2: '#E6E6E6',
+  neutralGrey3: '#B4B4B4',
+  neutralGrey4: '#767676',
+  neutralGrey5: '#323232',
+  supportValid: '#00A03C',
+  supportInvalid: '#EC0000',
+  supportFocus: '#FEC813',
+  supportPurple: '#A00078',
+  supportPink: '#E50082',
+  supportOrange: '#FF9100',
+  supportYellow: '#FFE600',
+  supportLightgreen: '#BED200',
+  supportDarkgreen: '#00A03C',
+  supportLightblue: '#009DEC',
+  overlayBlack50: 'rgba(0, 0, 0, 0.5)',
+};

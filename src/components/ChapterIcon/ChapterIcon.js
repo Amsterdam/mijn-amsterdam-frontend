@@ -1,14 +1,17 @@
 import React from 'react';
-// import styles from './ChapterIcon.module.scss';
 
 import { ReactComponent as IconBurgerZaken } from 'assets/images/burgerzaken.svg';
 import { ReactComponent as IconGezondheid } from 'assets/images/gezondheid.svg';
 import { ReactComponent as IconInkomen } from 'assets/images/inkomen.svg';
 import { ReactComponent as IconWonen } from 'assets/images/wonen.svg';
 import { ReactComponent as IconBelastingen } from 'assets/images/belastingen.svg';
-import { Chapters } from 'App.constants';
+import { Chapters, Colors } from 'App.constants';
 
-export default function ChapterIcon({ chapter, fill = '#000000', className }) {
+export default function ChapterIcon({
+  chapter,
+  fill = Colors.black,
+  className,
+}) {
   let Icon;
   switch (chapter) {
     case Chapters.WONEN:
