@@ -3,13 +3,14 @@ import styles from './MainFooter.module.scss';
 import ButtonLink, {
   ButtonLinkExternal,
 } from 'components/ButtonLink/ButtonLink';
-import { ExternalUrls } from 'App.constants';
+import { ExternalUrls, AppRoutes } from 'App.constants';
 import { LinkList } from './MainFooter.constants';
+import classnames from 'classnames';
 
 export default function MainFooter() {
   return (
     <footer className={styles.MainFooter}>
-      <div className={styles.InnerContainer}>
+      <div className={classnames(styles.TopBar, styles.InnerContainer)}>
         <div className={styles.ContactPanel}>
           <h3>Contact</h3>
           <p>
@@ -26,14 +27,17 @@ export default function MainFooter() {
           </p>
           <ul>
             <li>
-              <ButtonLink white={true} to={ExternalUrls.CONTACT_FORM}>
+              <ButtonLinkExternal white={true} to={ExternalUrls.CONTACT_FORM}>
                 Of gebruik het contactformulier
-              </ButtonLink>
+              </ButtonLinkExternal>
             </li>
             <li>
-              <ButtonLink white={true} to={ExternalUrls.CONTACT_GENERAL}>
+              <ButtonLinkExternal
+                white={true}
+                to={ExternalUrls.CONTACT_GENERAL}
+              >
                 Meer contactgegevens en openingstijden
-              </ButtonLink>
+              </ButtonLinkExternal>
             </li>
           </ul>
         </div>
@@ -42,7 +46,7 @@ export default function MainFooter() {
           <ul>
             {LinkList.map(({ to, label }) => (
               <li>
-                <ButtonLinkExternal white={true} to={to}>
+                <ButtonLinkExternal key={label} white={true} to={to}>
                   {label}
                 </ButtonLinkExternal>
               </li>
@@ -59,7 +63,10 @@ export default function MainFooter() {
         </div>
       </div>
       <div className={styles.BottomBar}>
-        <div className={styles.InnerContainer}>bottom</div>
+        <div className={styles.InnerContainer}>
+          <ButtonLink to={AppRoutes.ABOUT}>Over mijn Amsterdam</ButtonLink>
+          <ButtonLink to={AppRoutes.PRIVACY}>Privacy</ButtonLink>
+        </div>
       </div>
     </footer>
   );

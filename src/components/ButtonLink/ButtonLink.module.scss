@@ -43,6 +43,10 @@
     svg {
       fill: $color-white;
     }
+    &:focus {
+      color: $color-black;
+      background-image: url("assets/icons/Chevron-Right.svg");
+    }
   }
 }
 

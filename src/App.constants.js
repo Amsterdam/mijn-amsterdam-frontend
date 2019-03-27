@@ -21,6 +21,8 @@ export const AppRoutes = {
   INKOMEN: '/inkomen',
   PROFIEL: '/profiel',
   MIJN_BUURT: '/buurt',
+  ABOUT: '/over-mijn-amstedam',
+  PRIVACY: '/privacy',
 
   // NOTE: Route components not implemented, subject to change
   TIPS: '/tips',
