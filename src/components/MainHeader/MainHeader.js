@@ -63,7 +63,6 @@ export default function MainHeader() {
             </Link>
           </h1>
         </span>
-        {isAuthenticated && <SecondaryLinks me={BRP.me} />}
         <BetaLabel
           role="img"
           aria-label="Beta versie"
@@ -71,6 +70,7 @@ export default function MainHeader() {
         />
       </div>
       <MainNavBar />
+      {isAuthenticated && <SecondaryLinks me={BRP.me} />}
       <MainHeaderHero />
     </header>
   );
