@@ -19,15 +19,18 @@ function getMenuItem(MenuItem, activeSubmenuId, setSubMenuVisibility) {
   if ('submenuItems' in MenuItem) {
     return (
       <MainNavSubmenu
+        key={MenuItem.id}
         id={MenuItem.id}
         title={MenuItem.label}
         isOpen={activeSubmenuId === MenuItem.id}
         onFocus={() => setSubMenuVisibility(MenuItem.id)}
-        onMouseenter={() => setSubMenuVisibility(MenuItem.id)}
+        onMouseEnter={() => setSubMenuVisibility(MenuItem.id)}
+        onMouseLeave={() => setSubMenuVisibility()}
       >
         {MenuItem.submenuItems.map(({ id, to, Icon, label }) => {
           return (
             <MainNavSubmenuLink
+              key={id}
               to={to}
               id={id}
               onFocus={() => setSubMenuVisibility(MenuItem.id, true)}
@@ -43,9 +46,11 @@ function getMenuItem(MenuItem, activeSubmenuId, setSubMenuVisibility) {
 
   return (
     <MainNavLink
+      key={MenuItem.id}
       id={MenuItem.id}
       to={MenuItem.to}
       onFocus={() => setSubMenuVisibility(MenuItem.id)}
+      onMouseEnter={() => setSubMenuVisibility(MenuItem.id)}
     >
       {MenuItem.label}
     </MainNavLink>
@@ -55,7 +60,7 @@ function getMenuItem(MenuItem, activeSubmenuId, setSubMenuVisibility) {
 export default function MainNavBar() {
   const [activeSubmenuId, activateSubmenu] = useState('');
 
-  function setSubMenuVisibility(id, isSubmenuTrigger) {
+  function setSubMenuVisibility(id, isSubmenuTrigger = false) {
     if (id && activeSubmenuId !== id) {
       activateSubmenu(id);
     } else if (!isSubmenuTrigger) {
