@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './MainNavSubmenu.module.scss';
 import classnames from 'classnames';
 import { NavLink } from 'react-router-dom';
-import debounce from 'lodash.debounce';
+import useDebouncedCallback from 'use-debounce/lib/callback';
 
 export function MainNavSubmenuLink({ to, children, ...rest }) {
   return (
@@ -19,7 +19,7 @@ export default function MainNavSubmenu({
   onMouseLeave,
   ...rest
 }) {
-  const debouncedLeave = debounce(() => {
+  const [debouncedLeave, cancelLeave] = useDebouncedCallback(() => {
     onMouseLeave();
   }, 200);
 
@@ -41,7 +41,7 @@ export default function MainNavSubmenu({
           styles.SubmenuPanel,
           isOpen && styles.SubmenuPanelOpen
         )}
-        onMouseEnter={() => debouncedLeave.cancel()}
+        onMouseEnter={() => cancelLeave()}
         onMouseLeave={() => onMouseLeave()}
       >
         <div className={styles.SubmenuItems}>{children}</div>
