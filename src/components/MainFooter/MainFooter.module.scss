@@ -10,6 +10,9 @@
 .InnerContainer {
   width: $main-boxed-width;
   margin: 0 auto;
+}
+
+.TopBar {
   display: flex;
   padding: 3rem 0 5rem;
 
@@ -39,6 +42,12 @@
   bottom: 0;
   left: 0;
   right: 0;
+  padding-top: 1rem;
+
+  a {
+    display: inline-block;
+    margin-right: 8rem;
+  }
 }
 
 .ContactPanel {
