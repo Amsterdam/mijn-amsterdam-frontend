@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ButtonLink ButtonLink default renders correctly 1`] = `
+<a
+  className="ButtonLink IconLink"
+  href="/"
+  onClick={[Function]}
+>
+  <svg>
+    Alert.svg
+  </svg>
+</a>
+`;
+
+exports[`ButtonLink ButtonLink external renders correctly 1`] = `"<a href=\\"/\\" target=\\"_blank\\" rel=\\"noopener noreferrer\\" class=\\"ButtonLink\\"></a>"`;
+
+exports[`ButtonLink Renders 1`] = `"<a class=\\"ButtonLink\\" href=\\"/\\"></a>"`;

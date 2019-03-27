@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
+import AppState from './AppState';
 import { AppRoutes } from './App.constants.js';
 import MainHeader from './components/MainHeader/MainHeader.js';
 import MainFooter from './components/MainFooter/MainFooter.js';
@@ -9,18 +10,10 @@ import Profile from './pages/Profile/Profile.js';
 import NotFound from './pages/NotFound/NotFound.js';
 import styles from './App.module.scss';
 
-import AppContext from './App.context';
-import { useBrpApi } from 'hooks/brp-api.hook.js';
-
 export default function App() {
-  // State that needs to be available everywhere
-  const appState = {
-    BRP: useBrpApi(),
-  };
-
   return (
     <BrowserRouter>
-      <AppContext.Provider value={appState}>
+      <AppState>
         <MainHeader />
         <div className={styles.App}>
           <Switch>
@@ -35,7 +28,7 @@ export default function App() {
           </Switch>
         </div>
         <MainFooter />
-      </AppContext.Provider>
+      </AppState>
     </BrowserRouter>
   );
 }

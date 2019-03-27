@@ -30,5 +30,5 @@ export default function ChapterIcon({
       Icon = IconBurgerZaken;
   }
 
-  return <Icon fill={fill} className={className} />;
+  return <Icon aria-hidden="true" fill={fill} className={className} />;
 }
