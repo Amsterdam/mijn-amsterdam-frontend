@@ -6,15 +6,12 @@
   font-weight: bolder;
   text-decoration: none;
 
-  &:not(.IconLink):before {
-    background: url("assets/icons/Chevron-Right.svg") center no-repeat;
-    background-size: auto 70%;
-    content: '';
-    display: inline-block;
-    height: 1.22em;
-    position: relative;
-    vertical-align: text-bottom;
-    width: 1.22em;
+  &:not(.IconLink) {
+    background-image: url("assets/icons/Chevron-Right.svg");
+    background-repeat: no-repeat;
+    background-size: 1.4rem auto;
+    background-position: -.3rem .4rem;
+    padding-left: 1.46rem;
   }
 
   &.is-active,
@@ -23,9 +20,8 @@
       color: $color-primary-red;
       text-decoration: underline;
     }
-    &:not(.IconLink):before {
-      background: url("assets/icons/Chevron-Right__primary-red.svg") center no-repeat;
-      background-size: auto 70%;
+    &:not(.IconLink) {
+      background-image: url("assets/icons/Chevron-Right__primary-red.svg");
     }
     svg {
       fill: $color-primary-red;
@@ -35,6 +31,18 @@
   svg {
     width: 1em;
     height: 1em;
+  }
+}
+
+.ButtonLink.ButtonLinkWhite {
+  &,
+  &:hover,
+  &.is-active {
+    background-image: url("assets/icons/Chevron-Right__primary-white.svg");
+    color: $color-white;
+    svg {
+      fill: $color-white;
+    }
   }
 }
 

@@ -10,6 +10,26 @@
 .InnerContainer {
   width: $main-boxed-width;
   margin: 0 auto;
+  display: flex;
+  padding: 3rem 0 5rem;
+
+  &, a {
+    color: $color-white;
+  }
+
+  h3 {
+    margin-top: 0;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin-bottom: 1rem;
+    }
+  }
 }
 
 .BottomBar {
@@ -19,4 +39,16 @@
   bottom: 0;
   left: 0;
   right: 0;
+}
+
+.ContactPanel {
+
+}
+
+.FollowPanel {
+  margin: 0 3rem;
+}
+
+.TodoPanel {
+
 }
