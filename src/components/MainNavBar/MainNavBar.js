@@ -1,69 +1,79 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-
-import { AppRoutes } from 'App.constants';
-
-import styles from './MainNavBar.module.scss';
-import { ReactComponent as BurgerzakenIcon } from 'assets/images/burgerzaken.svg';
-import { ReactComponent as GezondheidIcon } from 'assets/images/gezondheid.svg';
-import { ReactComponent as WonenIcon } from 'assets/images/wonen.svg';
-import { ReactComponent as InkomenIcon } from 'assets/images/inkomen.svg';
-import { ReactComponent as BelastingenIcon } from 'assets/images/belastingen.svg';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from 'components/MainNavSubmenu/MainNavSubmenu';
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
-const SubMenuId = {
-  MIJN_THEMAS: 'mijn-themas',
-};
+import { MenuConfig } from './MainNavBar.constants';
+import styles from './MainNavBar.module.scss';
 
-function MainNavLink({ children, to }) {
+function MainNavLink({ children, to, ...rest }) {
   return (
-    <NavLink to={to} className={styles.MainNavLink}>
+    <NavLink to={to} className={styles.MainNavLink} {...rest}>
       {children}
     </NavLink>
   );
 }
 
-export default function MainNavBar() {
-  const [activeSubmenuId, setActiveSubmenu] = useState('');
+function getMenuItem(MenuItem, activeSubmenuId, setSubMenuVisibility) {
+  if ('submenuItems' in MenuItem) {
+    return (
+      <MainNavSubmenu
+        key={MenuItem.id}
+        id={MenuItem.id}
+        title={MenuItem.label}
+        isOpen={activeSubmenuId === MenuItem.id}
+        onFocus={() => setSubMenuVisibility(MenuItem.id)}
+        onMouseEnter={() => setSubMenuVisibility(MenuItem.id)}
+        onMouseLeave={() => setSubMenuVisibility()}
+      >
+        {MenuItem.submenuItems.map(({ id, to, Icon, label }) => {
+          return (
+            <MainNavSubmenuLink
+              key={id}
+              to={to}
+              id={id}
+              onFocus={() => setSubMenuVisibility(MenuItem.id, true)}
+            >
+              {Icon && <Icon aria-hidden="true" />}
+              {label}
+            </MainNavSubmenuLink>
+          );
+        })}
+      </MainNavSubmenu>
+    );
+  }
 
-  function toggleSubmenu(submenuId) {
-    setActiveSubmenu(activeSubmenuId !== submenuId ? submenuId : '');
+  return (
+    <MainNavLink
+      key={MenuItem.id}
+      id={MenuItem.id}
+      to={MenuItem.to}
+      onFocus={() => setSubMenuVisibility(MenuItem.id)}
+      onMouseEnter={() => setSubMenuVisibility(MenuItem.id)}
+    >
+      {MenuItem.label}
+    </MainNavLink>
+  );
+}
+
+export default function MainNavBar() {
+  const [activeSubmenuId, activateSubmenu] = useState('');
+
+  function setSubMenuVisibility(id, isSubmenuTrigger = false) {
+    if (id && activeSubmenuId !== id) {
+      activateSubmenu(id);
+    } else if (!isSubmenuTrigger) {
+      activateSubmenu('');
+    }
   }
 
   return (
     <nav className={styles.MainNavBar}>
       <div className={styles.LinkContainer}>
-        <MainNavLink to={AppRoutes.ROOT}>Home</MainNavLink>
-        <MainNavSubmenu
-          title="Mijn thema's"
-          toggleSubmenu={() => toggleSubmenu(SubMenuId.MIJN_THEMAS)}
-          isActive={SubMenuId.MIJN_THEMAS === activeSubmenuId}
-        >
-          <MainNavSubmenuLink to={AppRoutes.BURGERZAKEN}>
-            <BurgerzakenIcon aria-hidden="true" />
-            Burgerzaken
-          </MainNavSubmenuLink>
-          <MainNavSubmenuLink to={AppRoutes.GEZONDHEID}>
-            <GezondheidIcon aria-hidden="true" />
-            Gezondheid
-          </MainNavSubmenuLink>
-          <MainNavSubmenuLink to={AppRoutes.WONEN}>
-            <WonenIcon aria-hidden="true" />
-            Wonen
-          </MainNavSubmenuLink>
-          <MainNavSubmenuLink to={AppRoutes.INKOMEN}>
-            <InkomenIcon aria-hidden="true" />
-            Inkomen
-          </MainNavSubmenuLink>
-          <MainNavSubmenuLink to={AppRoutes.BELASTINGEN}>
-            <BelastingenIcon aria-hidden="true" />
-            Belastingen
-          </MainNavSubmenuLink>
-        </MainNavSubmenu>
-        <MainNavLink to={AppRoutes.MIJN_BUURT}>Mijn buurt</MainNavLink>
-        <MainNavLink to={AppRoutes.MIJN_UPDATES}>Mijn updates</MainNavLink>
+        {MenuConfig.map(MenuItem =>
+          getMenuItem(MenuItem, activeSubmenuId, setSubMenuVisibility)
+        )}
       </div>
     </nav>
   );

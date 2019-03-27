@@ -33,9 +33,8 @@
   }
 
   svg {
+    width: 1em;
     height: 1em;
-    width: auto;
-    vertical-align: middle;
   }
 }
 
@@ -44,6 +43,7 @@
   position: relative;
 
   svg {
+    display: block;
     position: absolute;
     left: 0;
     top: 50%;
