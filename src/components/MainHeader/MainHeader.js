@@ -19,7 +19,7 @@ import {
 
 function SecondaryLinks({ me, hasMessages = true }) {
   return (
-    <div className={styles.secondaryLinks}>
+    <nav className={styles.secondaryLinks}>
       <ButtonLinkExternal
         to={ExternalUrls.BERICHTENBOX}
         className={classnames(hasMessages && 'has-messages')}
@@ -32,7 +32,7 @@ function SecondaryLinks({ me, hasMessages = true }) {
           <LogoutIcon /> Uitloggen
         </IconButtonLink>
       }
-    </div>
+    </nav>
   );
 }
 
