@@ -12,6 +12,29 @@
   margin: 0 auto;
 }
 
+.TopBar {
+  display: flex;
+  padding: 3rem 0 5rem;
+
+  &, a {
+    color: $color-white;
+  }
+
+  h3 {
+    margin-top: 0;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin-bottom: 1rem;
+    }
+  }
+}
+
 .BottomBar {
   background-color: $color-white;
   height: 4.4rem;
@@ -19,4 +42,22 @@
   bottom: 0;
   left: 0;
   right: 0;
+  padding-top: 1rem;
+
+  a {
+    display: inline-block;
+    margin-right: 8rem;
+  }
+}
+
+.ContactPanel {
+
+}
+
+.FollowPanel {
+  margin: 0 3rem;
+}
+
+.TodoPanel {
+
 }
