@@ -5,8 +5,8 @@ import PageContentMainBody from 'components/PageContentMainBody/PageContentMainB
 
 export default () => {
   return (
-    <PageContentMain variant="medium">
-      <PageContentMainHeading>Helaas</PageContentMainHeading>
+    <PageContentMain>
+      <PageContentMainHeading variant="medium">Helaas</PageContentMainHeading>
       <PageContentMainBody>
         <p>De pagina waar u naar op zoek was bestaat niet (meer).</p>
       </PageContentMainBody>

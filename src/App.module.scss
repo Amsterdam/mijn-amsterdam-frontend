@@ -1,6 +1,5 @@
 @import 'styles/global';
 
 .App {
-  display: flex;
   min-height: calc(100vh - #{$main-header-total-height + $main-footer-min-height});
 }

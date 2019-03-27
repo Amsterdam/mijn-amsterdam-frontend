@@ -2,6 +2,18 @@
 
 .PageContentMainHeading {
   @include heading-large;
-  padding-top: 1.8rem; // visually vertically centered
+  height: 8.5rem;
+  margin-top: 0;
+  padding: 3.8rem 4rem 0 4rem;
+  margin: -8.5rem -4rem 0;
   margin-bottom: 3.8rem;
+  background-color: $color-white;
+
+  &__medium {
+    width: 46rem;
+    position: relative;
+    left: calc(50% + 4rem);
+    transform: translateX(-#{$main-boxed-width/2});
+  }
+
 }

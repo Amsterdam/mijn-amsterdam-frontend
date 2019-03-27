@@ -1,5 +1,7 @@
-@import 'styles/global';
+@import 'styles/_global.scss';
 
 .Dashboard {
-  @include center-flex-col;
+  [class^="PageContentMainBody"] {
+    display: flex;
+  }
 }
