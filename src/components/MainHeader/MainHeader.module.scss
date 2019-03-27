@@ -33,3 +33,25 @@
   top: 0;
   right: 0;
 }
+
+.isDashboard {
+  background: inherit; // redundant style placeholder
+}
+
+.secondaryLinks {
+  position: absolute;
+  top: 2rem;
+  right: calc(calc(100vw - #{$main-boxed-width}) / 2);
+
+  > a {
+    display: inline-block;
+    margin-left: 3.3rem;
+    font-weight: normal;
+    text-decoration: none;
+
+    &:hover {
+      color: $color-primary-red;
+      text-decoration: underline;
+    }
+  }
+}

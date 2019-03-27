@@ -30,3 +30,14 @@ body {
   flex-direction: column;
   align-items: center;
 }
+
+a, button {
+  &:focus {
+    background-color: $color-support-focus;
+  }
+}
+input, textarea, select, button {
+  &:focus {
+    outline: .2rem solid $color-support-focus;
+  }
+}
