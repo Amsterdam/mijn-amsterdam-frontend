@@ -33,7 +33,7 @@ export default function MainNavSubmenu({
         onMouseLeave={debouncedLeave}
         {...rest}
       >
-        {title}
+        <span>{title}</span>
       </button>
       <div
         aria-hidden={!isOpen}

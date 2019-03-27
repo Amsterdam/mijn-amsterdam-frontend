@@ -7,23 +7,23 @@
   width: $main-max-width;
   background-color: $color-neutral-grey1;
   position: relative;
+  height: $main-header-navbar-height;
 }
 
 .LinkContainer {
   display: flex;
-  align-items: center;
   width: $main-boxed-width;
-  min-height: $main-header-navbar-height;
 }
 
 .MainNavLink {
   display: block;
-  align-self: center;
   margin-right: 3rem;
   color: $color-black;
   font-size: 1.8rem;
   font-weight: 500;
   text-decoration: none;
+  padding-top: .9rem;
+  padding-bottom: .9rem;
 
   &:hover {
     color: $color-primary-red;

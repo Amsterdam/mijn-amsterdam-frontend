@@ -5,17 +5,21 @@
   top: -8.5rem;
   position: relative;
   background-color: $color-white;
-  margin-left: calc(calc(100vw - #{$main-boxed-width}) / 2);
 
   &__default {
     max-width: $main-boxed-width;
+    margin: 0 auto;
   }
 
   &__medium {
-    max-width: 46rem;
+    width: 46rem;
+    position: relative;
+    left: 50%;
+    transform: translateX(-#{$main-boxed-width/2});
   }
 
   &__full {
     width: 100%;
+    margin: 0;
   }
 }
