@@ -11,29 +11,23 @@ export function MainNavSubmenuLink({ to, children, ...rest }) {
   );
 }
 
-export default function MainNavSubmenu({
-  title,
-  open,
-  toggleSubmenu,
-  children,
-  ...rest
-}) {
+export default function MainNavSubmenu({ title, isOpen, children, ...rest }) {
   return (
     <span className={styles.MainNavSubmenu}>
       <button
         className={classnames(
           styles.SubmenuButton,
-          open && styles.SubmenuButtonOpen
+          isOpen && styles.SubmenuButtonOpen
         )}
-        onClick={toggleSubmenu}
         {...rest}
       >
         {title}
       </button>
       <div
+        aria-hidden={!isOpen}
         className={classnames(
           styles.SubmenuPanel,
-          open && styles.SubmenuPanelOpen
+          isOpen && styles.SubmenuPanelOpen
         )}
       >
         <div className={styles.SubmenuItems}>{children}</div>
