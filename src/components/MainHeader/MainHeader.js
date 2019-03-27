@@ -19,7 +19,7 @@ import {
 
 function SecondaryLinks({ me, hasMessages = true }) {
   return (
-    <div className={styles.secondaryLinks}>
+    <nav className={styles.secondaryLinks}>
       <ButtonLinkExternal
         to={ExternalUrls.BERICHTENBOX}
         className={classnames(hasMessages && 'has-messages')}
@@ -32,7 +32,7 @@ function SecondaryLinks({ me, hasMessages = true }) {
           <LogoutIcon /> Uitloggen
         </IconButtonLink>
       }
-    </div>
+    </nav>
   );
 }
 
@@ -63,7 +63,6 @@ export default function MainHeader() {
             </Link>
           </h1>
         </span>
-        {isAuthenticated && <SecondaryLinks me={BRP.me} />}
         <BetaLabel
           role="img"
           aria-label="Beta versie"
@@ -71,6 +70,7 @@ export default function MainHeader() {
         />
       </div>
       <MainNavBar />
+      {isAuthenticated && <SecondaryLinks me={BRP.me} />}
       <MainHeaderHero />
     </header>
   );
