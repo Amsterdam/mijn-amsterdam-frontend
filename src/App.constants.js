@@ -57,7 +57,7 @@ export const ExternalUrls = {
     'https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D',
   STADSPAS: 'https://www.amsterdam.nl/stadspas',
   CHANGE_PERSONAL_DATA:
-    'https://www.amsterdam.nl/veelgevraagd/?caseid=%7B8A5BE9B1-243D-44D4-9139-49BBE30FE37C%7D',
+    'https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D',
   REPORT_RELOCATION:
     'https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/',
   CONTACT_FORM:
