@@ -23,3 +23,14 @@
   @include heading(2, 1.3);
   font-weight: 800;
 }
+
+@mixin heading-small {
+  @include heading(1.8, 1.3);
+  font-weight: 500;
+}
+
+@mixin reset-list-style {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
