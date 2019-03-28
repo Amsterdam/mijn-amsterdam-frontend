@@ -4,4 +4,10 @@
   [class^="PageContentMainBody"] {
     display: flex;
   }
+
+  [class^="MijnUpdates_MijnUpdates"] {
+    width: 38rem;
+    margin-top: -3.8rem;
+    border-top: 1px solid $color-neutral-grey2;
+  }
 }
