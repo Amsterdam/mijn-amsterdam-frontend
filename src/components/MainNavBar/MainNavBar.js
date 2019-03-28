@@ -1,9 +1,9 @@
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from 'components/MainNavSubmenu/MainNavSubmenu';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-
+import { AppContext } from 'AppState';
 import { MenuConfig } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
 
@@ -59,6 +59,9 @@ function getMenuItem(MenuItem, activeSubmenuId, setSubMenuVisibility) {
 
 export default function MainNavBar() {
   const [activeSubmenuId, activateSubmenu] = useState('');
+  const {
+    SESSION: { isAuthenticated },
+  } = useContext(AppContext);
 
   function setSubMenuVisibility(id, isSubmenuTrigger = false) {
     if (id && activeSubmenuId !== id) {
@@ -70,11 +73,13 @@ export default function MainNavBar() {
 
   return (
     <nav className={styles.MainNavBar}>
-      <div className={styles.LinkContainer}>
-        {MenuConfig.map(MenuItem =>
-          getMenuItem(MenuItem, activeSubmenuId, setSubMenuVisibility)
-        )}
-      </div>
+      {isAuthenticated && (
+        <div className={styles.LinkContainer}>
+          {MenuConfig.map(MenuItem =>
+            getMenuItem(MenuItem, activeSubmenuId, setSubMenuVisibility)
+          )}
+        </div>
+      )}
     </nav>
   );
 }
