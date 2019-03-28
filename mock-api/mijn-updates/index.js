@@ -1,4 +1,4 @@
-const updates = require('./updates.json');
+const updates = require('../secure-data/mijn-updates.json');
 
 module.exports = {
   path: '/api/profiel/mijn-updates',
