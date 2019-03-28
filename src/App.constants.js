@@ -21,6 +21,8 @@ export const AppRoutes = {
   INKOMEN: '/inkomen',
   PROFIEL: '/profiel',
   MIJN_BUURT: '/buurt',
+  ABOUT: '/over-mijn-amstedam',
+  PRIVACY: '/privacy',
 
   // NOTE: Route components not implemented, subject to change
   TIPS: '/tips',
@@ -78,6 +80,15 @@ export const ExternalUrls = {
     'https://www.amsterdam.nl/burgerzaken/trouwen-partnerschap/',
   ECHTSCHEIDING:
     'https://www.amsterdam.nl/veelgevraagd/?productid=%7B531BC4F8-F16D-4196-BFA0-D83C40A4D21F%7D',
+  CONTACT_GENERAL: 'https://www.amsterdam.nl/contact/',
+  AMSTERDAM_NEWSLETTER:
+    'https://www.amsterdam.nl/nieuwsbrieven/actueel/nieuwsbrief/nieuwsbrief/',
+  AMSTERDAM_TWITTER: 'https://twitter.com/AmsterdamNL',
+  AMSTERDAM_FACEBOOK: 'https://www.facebook.com/gemeenteamsterdam',
+  AMSTERDAM_INSTAGRAM: 'https://www.instagram.com/gemeenteamsterdam/',
+  AMSTERDAM_LINKEDIN: 'https://www.linkedin.com/company/gemeente-amsterdam',
+  AMSTERDAM_VACATURES:
+    'https://www.amsterdam.nl/bestuur-organisatie/werkenbij/',
 };
 
 // NOTE: Keep up-to-date with _colors.scss

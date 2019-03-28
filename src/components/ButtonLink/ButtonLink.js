@@ -9,12 +9,14 @@ export default function ButtonLink({
   children,
   hasIcon = false,
   className,
+  white = false,
   target = '_blank',
 }) {
   const classes = classnames(
     styles.ButtonLink,
     hasIcon && styles.IconLink,
-    className
+    className,
+    white && styles.ButtonLinkWhite
   );
   if (external) {
     if (target === '_blank') {
