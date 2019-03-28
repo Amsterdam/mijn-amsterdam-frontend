@@ -27,10 +27,10 @@ export const AppRoutes = {
   // NOTE: Route components not implemented, subject to change
   TIPS: '/tips',
   MIJN_UPDATES: '/updates',
-
-  // External
-  LOGOUT: '/logout',
 };
+
+export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL;
+export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL;
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 

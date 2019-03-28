@@ -45,7 +45,7 @@ export default function MainFooter() {
           <h3>Volg de gemeente</h3>
           <ul>
             {LinkList.map(({ to, label }) => (
-              <li>
+              <li key={label}>
                 <ButtonLinkExternal key={label} white={true} to={to}>
                   {label}
                 </ButtonLinkExternal>
