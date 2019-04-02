@@ -26,6 +26,9 @@ COPY .env /app
 COPY src /app/src
 COPY public /app/public
 
+ENV CI=true
+ENV INLINE_RUNTIME_CHUNK=false
+
 RUN npm run build
 RUN echo "build= `date`" > /app/build/version.txt
 
