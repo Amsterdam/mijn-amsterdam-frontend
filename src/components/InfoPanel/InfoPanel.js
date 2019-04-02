@@ -23,14 +23,16 @@ function InfoPanelTable({ data = {} }) {
   return (
     <table className={styles.InfoPanelTable}>
       <tbody>
-        {Object.entries(data).map(([label, value], index) => {
-          return (
-            <tr key={label}>
-              <th>{label}</th>
-              <td>{value}</td>
-            </tr>
-          );
-        })}
+        {Object.entries(data)
+          .filter(([, value]) => !!value)
+          .map(([label, value], index) => {
+            return (
+              <tr key={label}>
+                <th>{label}</th>
+                <td>{value}</td>
+              </tr>
+            );
+          })}
       </tbody>
     </table>
   );
