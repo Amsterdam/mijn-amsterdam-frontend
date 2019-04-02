@@ -23,6 +23,7 @@ export const AppRoutes = {
   MIJN_BUURT: '/buurt',
   ABOUT: '/over-mijn-amstedam',
   PRIVACY: '/privacy',
+  API_LOGIN: '/api/login',
 
   // NOTE: Route components not implemented, subject to change
   TIPS: '/tips',
