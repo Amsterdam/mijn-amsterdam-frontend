@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 
 import AppState from './AppState';
 import { AppRoutes } from './App.constants.js';
@@ -18,6 +18,7 @@ export default function App() {
         <div className={styles.App}>
           <Switch>
             <Route exact path={AppRoutes.ROOT} component={Landing} />
+            <Redirect from={AppRoutes.API_LOGIN} to={AppRoutes.ROOT} />
             {/* <Route path={AppRoutes.BURGERZAKEN} />
               <Route path={AppRoutes.WONEN} />
               <Route path={AppRoutes.BELASTINGEN} />
