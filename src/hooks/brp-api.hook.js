@@ -10,16 +10,17 @@ export const useBrpApi = (initialState = {}) => {
 
     const partnerItem = Array.isArray(me.heeftAlsEchtgenootPartner)
       ? me.heeftAlsEchtgenootPartner.find(item => !('datumOntbinding' in item))
-      : null;
+      : me.heeftAlsEchtgenootPartner || null;
 
     const partner = partnerItem && partnerItem.gerelateerde;
 
     const address = {
       current: {
-        locality: `${me.verblijfsadres.openbareRuimteNaam} ${
+        locality: `${me.verblijfsadres.straatnaam} ${
           me.verblijfsadres.huisnummer
         }
-        ${me.verblijfsadres.postcode} ${me.verblijfsadres.woonplaatsNaam}`,
+        ${me.verblijfsadres.postcode} ${me.verblijfsadres.woonplaatsNaam ||
+          ''}`,
         dateStarted: me.verblijfsadres.begindatumVerblijf,
       },
     };
@@ -27,8 +28,11 @@ export const useBrpApi = (initialState = {}) => {
     const legalCommitment = me.omschrijvingBurgerlijkeStaat && {
       type: me.omschrijvingBurgerlijkeStaat,
       dateStarted: me.tijdvakGeldigheid.beginGeldigheid,
-      place: me.plaatsnaamSluiting,
-      country: me.landnaamSluiting,
+      place:
+        me.plaatsnaamSluiting ||
+        (partnerItem && partnerItem.plaatsnaamSluitingOmschrijving),
+      country:
+        me.landnaamSluiting || (partnerItem && partnerItem.landnaamSluiting),
     };
 
     return { me, partner, address, legalCommitment, refetch };
