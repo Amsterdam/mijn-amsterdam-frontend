@@ -6,11 +6,13 @@ export default function PageContentMainHeading({
   size = 2,
   variant,
   children,
+  className,
 }) {
   const H = `h${size}`;
   const classNames = composeClassNames(
     styles.PageContentMainHeading,
-    variant && styles[`PageContentMainHeading__${variant}`]
+    variant && styles[`PageContentMainHeading__${variant}`],
+    className
   );
   return <H className={classNames}>{children}</H>;
 }
