@@ -11,9 +11,15 @@ RUN apt-get update && \
   git && \
   rm -rf /var/lib/apt/lists/*
 
-# Enable when we add the app to the repo
 COPY package.json /app/
 COPY package-lock.json /app/
+COPY .env.production /app/
+COPY .env /app/
+COPY src /app/src/
+COPY public /app/public/
+
+ENV CI=true
+ENV INLINE_RUNTIME_CHUNK=false
 
 RUN npm install \
   --unsafe-perm \
@@ -21,11 +27,6 @@ RUN npm install \
   ci \
   && npm cache clean --force
 
-COPY src /app/src
-COPY public /app/public
-
-ENV CI=true
-ENV NODE_PATH=src/
 RUN npm run build
 RUN echo "build= `date`" > /app/build/version.txt
 

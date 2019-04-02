@@ -1,5 +1,19 @@
-@import 'styles/global';
+@import 'styles/_global.scss';
 
 .Dashboard {
-  @include center-flex-col;
+  // [class^="PageContentMainBody"] {
+  //   // display: flex;
+  // }
+
+  [class^="MijnUpdates_MijnUpdates"] {
+    width: 38rem;
+    margin-top: -3.8rem;
+    margin-left: 4rem;
+    border-top: 1px solid $color-neutral-grey2;
+    margin-bottom: 5rem;
+
+    [class^="MijnUpdates_ChapterIndication"] {
+      display: none;
+    }
+  }
 }
