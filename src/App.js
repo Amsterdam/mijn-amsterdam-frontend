@@ -9,6 +9,7 @@ import Profile from './pages/Profile/Profile.js';
 import NotFound from './pages/NotFound/NotFound.js';
 import styles from './App.module.scss';
 import Landing from 'pages/Landing/Landing';
+import MijnUpdates from 'pages/MijnUpdates/MijnUpdates';
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
               <Route path={AppRoutes.BELASTINGEN} />
               <Route path={AppRoutes.GEZONDHEID} />
               <Route path={AppRoutes.INKOMEN} />*/}
+            <Route path={AppRoutes.MIJN_UPDATES} component={MijnUpdates} />
             <Route path={AppRoutes.PROFIEL} component={Profile} />
             <Route component={NotFound} />
           </Switch>
