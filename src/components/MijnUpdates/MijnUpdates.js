@@ -5,7 +5,7 @@ import { defaultDateFormat } from 'helpers/App';
 import { AppRoutes, Colors } from 'App.constants';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 
-export default function MijnUpdates({ items, total }) {
+export default function MijnUpdates({ items = [], total = 0 }) {
   return (
     <div className={styles.MijnUpdates}>
       <ul>
