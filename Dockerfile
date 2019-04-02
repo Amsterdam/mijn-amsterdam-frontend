@@ -22,6 +22,7 @@ RUN npm install \
   && npm cache clean --force
 
 COPY .env.production /app
+COPY .env /app
 COPY src /app/src
 COPY public /app/public
 
