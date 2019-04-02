@@ -11,7 +11,10 @@ export default function MijnUpdates({ items, total }) {
       <ul>
         {items.map(item => {
           return (
-            <li key={item.title} className={styles.MijnUpdateItem}>
+            <li
+              key={item.title + item.datePublished}
+              className={styles.MijnUpdateItem}
+            >
               <ChapterIcon
                 fill={Colors.primaryRed}
                 className={styles.Icon}
