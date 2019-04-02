@@ -27,6 +27,11 @@ node {
                     "docker-compose -p mijn_amsterdam_frontend -f docker-compose.yml run --rm test"
         }
     }
+}
+
+String BRANCH = "${env.BRANCH_NAME}"
+
+if (BRANCH == "master" || BRANCH == "test-acc") {
 
     stage("Build acceptance image") {
         tryStep "build", {
@@ -36,11 +41,6 @@ node {
             }
         }
     }
-}
-
-String BRANCH = "${env.BRANCH_NAME}"
-
-if (BRANCH == "master") {
 
     node {
         stage('Push acceptance image') {
