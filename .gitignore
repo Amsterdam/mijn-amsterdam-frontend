@@ -15,6 +15,7 @@
 /mock-api/**/*.json
 /mock-api/secure-data
 secure-data.zip
+.node-persist
 
 # misc
 .DS_Store
