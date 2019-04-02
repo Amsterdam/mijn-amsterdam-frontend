@@ -29,8 +29,6 @@ ENV NODE_PATH=src/
 RUN npm run build
 RUN echo "build= `date`" > /app/build/version.txt
 
-COPY public /app/public
-
 # Web server image
 FROM nginx:stable-alpine
 
@@ -42,7 +40,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
   && ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Copy the built application files to the current image
-COPY --from=build-deps /app/public /usr/share/nginx/html
+COPY --from=build-deps /app/build /usr/share/nginx/html
 
 # Use LOGOUT_URL for nginx rewrite directive
 RUN envsubst '${LOGOUT_URL}' < /tmp/nginx-server-default.template.conf > /etc/nginx/conf.d/default.conf
