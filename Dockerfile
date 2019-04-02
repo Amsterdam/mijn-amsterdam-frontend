@@ -21,12 +21,10 @@ RUN npm install \
   ci \
   && npm cache clean --force
 
+COPY .env.production /app
 COPY src /app/src
 COPY public /app/public
 
-ENV CI=true
-ENV INLINE_RUNTIME_CHUNK=false
-ENV NODE_PATH=src/
 RUN npm run build
 RUN echo "build= `date`" > /app/build/version.txt
 
