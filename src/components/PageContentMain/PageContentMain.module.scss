@@ -2,24 +2,17 @@
 
 .PageContentMain {
   @include page-content-main;
-  top: -8.5rem;
   position: relative;
-  background-color: $color-white;
 
   &__default {
+    width: 100%;
     max-width: $main-boxed-width;
     margin: 0 auto;
-  }
-
-  &__medium {
-    width: 46rem;
-    position: relative;
-    left: 50%;
-    transform: translateX(-#{$main-boxed-width/2});
   }
 
   &__full {
     width: 100%;
     margin: 0;
+    padding: 0;
   }
 }
