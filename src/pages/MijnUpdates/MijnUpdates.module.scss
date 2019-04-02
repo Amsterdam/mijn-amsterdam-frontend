@@ -1,1 +1,41 @@
 @import 'styles/_global.scss';
+
+.PanelHeading {
+  @include heading-medium-large;
+  border-bottom: 1px solid $color-neutral-grey2;
+  padding-top: 4rem;
+  padding-bottom: 1.6rem;
+  text-indent: 16rem;
+  margin: 0;
+}
+
+.LatestUpdatesPanel,
+.PreviousUpdatesPanel > [class^="PageContentMainBody_PageContentMainBody"] {
+  width: 100%;
+  max-width: $main-boxed-width;
+  margin: 0 auto;
+  position: relative;
+  margin-bottom: 6rem;
+
+  *[class^="MijnUpdates_MijnUpdateItem"] {
+    padding-left: 16rem;
+
+    *[class^="MijnUpdates_Icon"] {
+      left: 6.4rem;
+    }
+
+    aside {
+      width: 17.5rem;
+      position: absolute;
+      right: 0;
+    }
+  }
+}
+
+.PreviousUpdatesPanel {
+  background-color: $color-neutral-grey1;
+
+  *[class^="MijnUpdates_Icon"] {
+    fill: $color-neutral-grey4;
+  }
+}

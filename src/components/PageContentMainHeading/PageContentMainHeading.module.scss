@@ -2,18 +2,28 @@
 
 .PageContentMainHeading {
   @include heading-large;
-  height: 8.5rem;
+  height: $main-header-hero-heading-overlap;
   margin-top: 0;
-  padding: 3.8rem 4rem 0 4rem;
-  margin: -8.5rem -4rem 0;
+  padding: 3.8rem 0 0;
+  margin: -#{$main-header-hero-heading-overlap} 0 0;
   margin-bottom: 3.8rem;
   background-color: $color-white;
+  text-indent: 4rem;
 
   &__medium {
     width: 46rem;
     position: relative;
-    left: calc(50% + 4rem);
+    left: 50%;
     transform: translateX(-#{$main-boxed-width/2});
+  }
+
+  &__withIcon {
+    text-indent: 16rem;
+
+    *[class^="ChapterHeadingIcon_ChapterHeadingIcon"] {
+      left: 8rem;
+      transform: translateX(-50%);
+    }
   }
 
 }
