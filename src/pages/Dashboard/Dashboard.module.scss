@@ -1,9 +1,9 @@
 @import 'styles/_global.scss';
 
 .Dashboard {
-  // [class^="PageContentMainBody"] {
-  //   // display: flex;
-  // }
+  [class^="PageContentMainBody"] {
+    display: flex;
+  }
 
   [class^="MijnUpdates_MijnUpdates"] {
     width: 38rem;
