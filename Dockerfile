@@ -18,13 +18,16 @@ COPY .env /app/
 COPY src /app/src/
 COPY public /app/public/
 
+ENV CI=true
+ENV INLINE_RUNTIME_CHUNK=false
+
 RUN npm install \
   --unsafe-perm \
   --verbose \
   ci \
   && npm cache clean --force
 
-RUN npm run build --production
+RUN npm run build
 RUN echo "build= `date`" > /app/build/version.txt
 
 # Web server image
