@@ -27,8 +27,8 @@ export const useBrpApi = (initialState = {}) => {
     const legalCommitment = me.omschrijvingBurgerlijkeStaat && {
       type: me.omschrijvingBurgerlijkeStaat,
       dateStarted: me.tijdvakGeldigheid.beginGeldigheid,
-      place: '?????',
-      country: '?????Nederland',
+      place: me.plaatsnaamSluiting,
+      country: me.landnaamSluiting,
     };
 
     return { me, partner, address, legalCommitment, refetch };
