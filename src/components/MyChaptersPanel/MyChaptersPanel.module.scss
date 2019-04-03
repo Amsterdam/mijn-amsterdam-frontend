@@ -11,5 +11,10 @@
 }
 
 .Links {
-  columns: 2;
+  display: flex;
+  flex-wrap: wrap;
+
+  [class^="MainNavSubmenu_MainNavSubmenuLink"] {
+    width: 50%;
+  }
 }
