@@ -73,3 +73,7 @@ Extract the archive as the `/mock-api/secure-data/` folder. Without these files 
 - When creating a PR/MR put the ticket number between square brackets like: `[mijn-1234] Some title for your PR`
 - Keep commit messages compact en meaningful
 - Try to squash commits before merging into master.
+
+## Docker
+- `docker build ./ --tag="mijn-amsterdam"`
+- `docker run -p 8080:80 -e LOGOUT_URL=test mijn-amsterdam`
