@@ -5,6 +5,7 @@ import PageContentMainBody from 'components/PageContentMainBody/PageContentMainB
 import styles from './Dashboard.module.scss';
 import MijnUpdates from 'components/MijnUpdates/MijnUpdates';
 import { useMijnUpdatesApi } from 'hooks/mijn-updates-api.hook';
+import DirectLinks from 'components/DirectLinks/DirectLinks';
 
 export default () => {
   const {
@@ -18,6 +19,7 @@ export default () => {
       </PageContentMainHeading>
       <PageContentMainBody>
         <MijnUpdates total={total} items={items} />
+        <DirectLinks />
       </PageContentMainBody>
     </PageContentMain>
   );
