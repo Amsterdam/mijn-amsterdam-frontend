@@ -40,10 +40,6 @@ button {
   &:focus {
     background-color: $color-support-focus;
   }
-
-  &:visited {
-    color: inherit;
-  }
 }
 input,
 textarea,
