@@ -11,9 +11,15 @@ RUN apt-get update && \
   git && \
   rm -rf /var/lib/apt/lists/*
 
-# Enable when we add the app to the repo
 COPY package.json /app/
 COPY package-lock.json /app/
+COPY .env.production /app/
+COPY .env /app/
+COPY src /app/src/
+COPY public /app/public/
+
+ENV CI=true
+ENV INLINE_RUNTIME_CHUNK=false
 
 RUN npm install \
   --unsafe-perm \
@@ -21,15 +27,8 @@ RUN npm install \
   ci \
   && npm cache clean --force
 
-COPY src /app/src
-COPY public /app/public
-
-ENV CI=true
-ENV NODE_PATH=src/
 RUN npm run build
 RUN echo "build= `date`" > /app/build/version.txt
-
-COPY public /app/public
 
 # Web server image
 FROM nginx:stable-alpine
@@ -42,7 +41,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
   && ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Copy the built application files to the current image
-COPY --from=build-deps /app/public /usr/share/nginx/html
+COPY --from=build-deps /app/build /usr/share/nginx/html
 
 # Use LOGOUT_URL for nginx rewrite directive
 RUN envsubst '${LOGOUT_URL}' < /tmp/nginx-server-default.template.conf > /etc/nginx/conf.d/default.conf

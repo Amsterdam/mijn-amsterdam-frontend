@@ -23,6 +23,7 @@ export const AppRoutes = {
   MIJN_BUURT: '/buurt',
   ABOUT: '/over-mijn-amstedam',
   PRIVACY: '/privacy',
+  API_LOGIN: '/api/login',
 
   // NOTE: Route components not implemented, subject to change
   TIPS: '/tips',
@@ -39,12 +40,12 @@ export const ApiUrls = {
   BRP: `${API_BASE_URL}/brp/brp`,
   WMO: `${API_BASE_URL}/wmoned/voorzieningen`,
   FOCUS: `${API_BASE_URL}/focus/aanvragen`,
-  AUTH: `${API_BASE_URL}/auth`,
+  AUTH: `${API_BASE_URL}/auth/check`,
   ERFPACHT: `${API_BASE_URL}/erfpacht/check-erfpacht`,
 };
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
-export const DEFAULT_DATE_FORMAT = 'DD MMM YYYY';
+export const DEFAULT_DATE_FORMAT = 'DD MMMM YYYY';
 
 export const ExternalUrls = {
   BIJSTAND_WHAT_TO_EXPECT:

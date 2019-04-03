@@ -53,8 +53,10 @@ export default function Profile() {
 
   return (
     <PageContentMain className={styles.Profile}>
-      <ChapterHeadingIcon chapter={Chapters.BURGERZAKEN} />
-      <PageContentMainHeading>Mijn gegevens</PageContentMainHeading>
+      <PageContentMainHeading variant="withIcon">
+        <ChapterHeadingIcon chapter={Chapters.BURGERZAKEN} />
+        Mijn gegevens
+      </PageContentMainHeading>
       <PageContentMainBody>
         <p>
           In de Basisregistratie Personen legt de gemeente persoonsgegevens over
