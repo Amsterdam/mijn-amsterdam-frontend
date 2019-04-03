@@ -19,15 +19,11 @@
     border-bottom: 0.1rem $color-neutral-grey2 solid;
     line-height: 5.5rem;
     float: left;
+    width: calc(50% - 2rem);
   }
 
   li:nth-child(odd) {
-    width: calc(calc(#{$main-boxed-width} / 2) - 2rem);
     margin-right: 4rem;
-  }
-
-  li:nth-child(even) {
-    width: calc(calc(#{$main-boxed-width} / 2) - 2rem);
   }
 
   li:nth-child(-n + 2) {
