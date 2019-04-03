@@ -8,10 +8,10 @@ export default function DirectLinks() {
     <div className={styles.DirectLinks}>
       <h2>Direct naar</h2>
       <ul className={styles.LinkList}>
-        {Object.keys(LINKS).map(link => {
-          const { url, title } = LINKS[link];
+        {Object.entries(LINKS).map(link => {
+          const [linkName, { url, title }] = link;
           return (
-            <li key={link}>
+            <li key={linkName}>
               <a href={url}>
                 <ExternalLinkIcon />
                 {title}

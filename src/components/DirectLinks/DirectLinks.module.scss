@@ -2,7 +2,6 @@
 
 .DirectLinks {
   width: $main-boxed-width;
-  margin: auto;
 
   h2 {
     @include heading-large;
@@ -14,6 +13,7 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
+  overflow: hidden; // Clearfix
 
   li {
     border-bottom: 0.1rem $color-neutral-grey2 solid;
