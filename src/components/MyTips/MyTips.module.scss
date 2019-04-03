@@ -1,0 +1,57 @@
+@import 'styles/_global.scss';
+
+.MyTips {
+  width: $main-boxed-width;
+
+  h2 {
+    @include heading-large;
+    margin: 0;
+  }
+
+  h4 {
+    font-size: 2rem;
+    line-height: 2.8rem;
+    margin-top: 2rem;
+    margin-bottom: 0rem;
+  }
+
+  p {
+    margin-top: 1.2rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+
+    li {
+      width: 30%;
+    }
+  }
+}
+
+.Placeholder {
+  height: 19rem;
+  width: 100%;
+  background-color: $color-neutral-grey2;
+}
+
+.HeaderBar {
+  display: flex;
+  margin: 1.6rem 0;
+  align-items: center;
+
+  a {
+    margin-left: 2rem;
+    margin-top: 0.6rem;
+  }
+
+  .OptIn {
+    font-size: 1.4rem;
+    margin-left: auto;
+    color: $color-primary-red;
+    text-decoration: underline;
+  }
+}

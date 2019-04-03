@@ -6,10 +6,6 @@ export const Chapters = {
   GEZONDHEID: 'GEZONDHEID',
   INKOMEN: 'INKOMEN',
   PROFIEL: 'PROFIEL',
-
-  // TODO: Clarify what this is about
-  TIPS: 'tips',
-  MIJN_UPDATES: 'mijn-updates',
 };
 
 export const AppRoutes = {
@@ -26,7 +22,7 @@ export const AppRoutes = {
   API_LOGIN: '/api/login',
 
   // NOTE: Route components not implemented, subject to change
-  TIPS: '/tips',
+  MIJN_TIPS: '/tips',
   MIJN_UPDATES: '/updates',
 };
 
@@ -37,6 +33,7 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export const ApiUrls = {
   MIJN_UPDATES: `${API_BASE_URL}/profiel/mijn-updates`,
+  MY_TIPS: `${API_BASE_URL}/profiel/mijn-tips`,
   BRP: `${API_BASE_URL}/brp/brp`,
   WMO: `${API_BASE_URL}/wmoned/voorzieningen`,
   FOCUS: `${API_BASE_URL}/focus/aanvragen`,
