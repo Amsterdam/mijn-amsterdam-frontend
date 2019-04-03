@@ -1,0 +1,59 @@
+@import 'styles/_global.scss';
+
+.DirectLinks {
+  width: $main-boxed-width;
+
+  h2 {
+    @include heading-large;
+    margin-bottom: 1.6rem;
+  }
+}
+
+.LinkList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  overflow: hidden; // Clearfix
+
+  li {
+    border-bottom: 0.1rem $color-neutral-grey2 solid;
+    line-height: 5.5rem;
+    float: left;
+    width: calc(50% - 2rem);
+  }
+
+  li:nth-child(odd) {
+    margin-right: 4rem;
+  }
+
+  li:nth-child(-n + 2) {
+    border-top: 0.1rem $color-neutral-grey2 solid;
+  }
+
+  li:nth-child(2n + 1) {
+    clear: left;
+  }
+
+  a {
+    margin: auto;
+    text-decoration: none;
+
+    svg {
+      height: 1.5rem;
+      width: 1.5rem;
+    }
+
+    &:hover {
+      color: $color-primary-red;
+      text-decoration: underline;
+
+      svg path {
+        fill: $color-primary-red;
+      }
+    }
+  }
+
+  svg {
+    margin-right: 0.5rem;
+  }
+}
