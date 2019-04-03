@@ -1,5 +1,15 @@
 @import 'styles/_global.scss';
 
 .MyChaptersPanel {
+  background-color: $color-neutral-grey1;
+  padding: 3.2rem 4rem;
+}
 
+.Title {
+  @include heading-medium-large;
+  margin: 0 0 2rem;
+}
+
+.Links {
+  columns: 2;
 }

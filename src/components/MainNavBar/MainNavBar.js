@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 import { AppContext } from 'AppState';
 import { MenuConfig } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
+import { Colors } from 'App.constants';
 
 function MainNavLink({ children, to, ...rest }) {
   return (
@@ -35,7 +36,7 @@ function getMenuItem(MenuItem, activeSubmenuId, setSubMenuVisibility) {
               id={id}
               onFocus={() => setSubMenuVisibility(MenuItem.id, true)}
             >
-              {Icon && <Icon aria-hidden="true" />}
+              {Icon && <Icon fill={Colors.neutralGrey4} aria-hidden="true" />}
               {label}
             </MainNavSubmenuLink>
           );
