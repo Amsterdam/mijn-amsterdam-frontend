@@ -7,6 +7,7 @@ import MijnUpdates from 'components/MijnUpdates/MijnUpdates';
 import { useMijnUpdatesApi } from 'hooks/mijn-updates-api.hook';
 import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
 import { Chapters } from 'App.constants';
+import Heading from 'components/Heading/Heading';
 
 export default () => {
   const {
@@ -30,7 +31,7 @@ export default () => {
       </div>
       <div className={styles.PreviousUpdatesPanel}>
         <PageContentMainBody>
-          <h3 className={styles.PanelHeading}>Eerdere updates (#)</h3>
+          <Heading className={styles.PanelHeading}>Eerdere updates (#)</Heading>
           <MijnUpdates total={total} items={items} />
         </PageContentMainBody>
       </div>

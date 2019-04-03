@@ -4,6 +4,7 @@ import ButtonLink from 'components/ButtonLink/ButtonLink';
 import { defaultDateFormat } from 'helpers/App';
 import { AppRoutes, Colors } from 'App.constants';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
+import Heading from 'components/Heading/Heading';
 
 export default function MijnUpdates({ items = [], total = 0 }) {
   return (
@@ -28,7 +29,9 @@ export default function MijnUpdates({ items = [], total = 0 }) {
                   {defaultDateFormat(item.datePublished)}
                 </time>
               </aside>
-              <h4 className={styles.Title}>{item.title}</h4>
+              <Heading el="h4" size="small" className={styles.Title}>
+                {item.title}
+              </Heading>
               {!!item.description && (
                 <p className={styles.Description}>{item.description}</p>
               )}

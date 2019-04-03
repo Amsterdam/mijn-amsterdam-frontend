@@ -38,3 +38,9 @@
   margin: 0;
   list-style-type: none;
 }
+
+@mixin select($name) {
+  [class^="#{$name}"] {
+    @content;
+  }
+}
