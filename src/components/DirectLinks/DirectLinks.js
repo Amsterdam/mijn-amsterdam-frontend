@@ -3,10 +3,10 @@ import styles from './DirectLinks.module.scss';
 import { LINKS } from './DirectLinks.constants';
 import { ReactComponent as ExternalLinkIcon } from 'assets/icons/External-Link.svg';
 
-export default function DirectLinks() {
+export default function DirectLinks({ title }) {
   return (
     <div className={styles.DirectLinks}>
-      <h2>Direct naar</h2>
+      <h2>{title}</h2>
       <ul className={styles.LinkList}>
         {Object.entries(LINKS).map(link => {
           const [linkName, { url, title }] = link;

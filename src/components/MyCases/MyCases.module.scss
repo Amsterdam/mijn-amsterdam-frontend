@@ -1,0 +1,43 @@
+@import 'styles/_global.scss';
+
+.MyCases {
+  width: 100%;
+  max-width: $main-boxed-width;
+
+  h2 {
+    @include heading-large;
+    margin-bottom: 1.6rem;
+  }
+}
+
+.List {
+  @include reset-list-style;
+  display: flex;
+}
+
+.CaseItem {
+  border-top: .1rem solid $color-neutral-grey2;
+  line-height: 5.5rem;
+  padding-left: 5rem;
+  position: relative;
+  flex: 1;
+
+  &:nth-child(odd) {
+    margin-right: 4rem;
+  }
+
+  a {
+    text-decoration: none;
+     &:hover {
+      color: $color-primary-red;
+      text-decoration: underline;
+     }
+  }
+
+  svg {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

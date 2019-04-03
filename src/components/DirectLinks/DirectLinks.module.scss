@@ -10,9 +10,7 @@
 }
 
 .LinkList {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+  @include reset-list-style;
   overflow: hidden; // Clearfix
 
   li {
