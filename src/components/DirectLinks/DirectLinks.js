@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './DirectLinks.module.scss';
 import { LINKS } from './DirectLinks.constants';
-import { ReactComponent as OutsideLink } from 'assets/icons/Outside-Link.svg';
+import { ReactComponent as ExternalLinkIcon } from 'assets/icons/External-Link.svg';
 
 export default function DirectLinks() {
   return (
@@ -14,7 +14,7 @@ export default function DirectLinks() {
             return (
               <li key={link}>
                 <a href={url}>
-                  <OutsideLink />
+                  <ExternalLinkIcon />
                   {displayName}
                 </a>
               </li>

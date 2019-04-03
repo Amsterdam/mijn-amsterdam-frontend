@@ -46,6 +46,11 @@
     margin: auto;
     text-decoration: none;
 
+    svg {
+      height: 1.5rem;
+      width: 1.5rem;
+    }
+
     &:hover {
       color: $color-primary-red;
       text-decoration: underline;
