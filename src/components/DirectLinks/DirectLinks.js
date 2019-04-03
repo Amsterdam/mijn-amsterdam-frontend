@@ -9,14 +9,17 @@ export default function DirectLinks() {
       <div className={styles.InnerContainer}>
         <h2>Direct naar</h2>
         <ul className={styles.LinkList}>
-          {Object.values(LINKS).map(link => (
-            <li>
-              <a href={link.url}>
-                <OutsideLink />
-                {link.displayName}
-              </a>
-            </li>
-          ))}
+          {Object.keys(LINKS).map(link => {
+            const { url, displayName } = LINKS[link];
+            return (
+              <li key={link}>
+                <a href={url}>
+                  <OutsideLink />
+                  {displayName}
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>
