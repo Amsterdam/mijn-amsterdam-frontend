@@ -9,12 +9,12 @@ export default function DirectLinks() {
       <h2>Direct naar</h2>
       <ul className={styles.LinkList}>
         {Object.keys(LINKS).map(link => {
-          const { url, displayName } = LINKS[link];
+          const { url, title } = LINKS[link];
           return (
             <li key={link}>
               <a href={url}>
                 <ExternalLinkIcon />
-                {displayName}
+                {title}
               </a>
             </li>
           );
