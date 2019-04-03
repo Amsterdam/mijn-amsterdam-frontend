@@ -2,18 +2,26 @@
 
 .Dashboard {
   [class^="PageContentMainBody"] {
+    margin-top: -3.8rem;
     display: flex;
+    flex-direction: row;
   }
 
   [class^="MijnUpdates_MijnUpdates"] {
-    width: 38rem;
-    margin-top: -3.8rem;
+    flex-basis: calc(50% - 9rem); // margin-left + margin-right
+    flex-shrink: 0;
+    overflow: hidden;
     margin-left: 4rem;
+    margin-right: 4rem;
     border-top: 1px solid $color-neutral-grey2;
     margin-bottom: 5rem;
 
     [class^="MijnUpdates_ChapterIndication"] {
       display: none;
     }
+  }
+
+  [class^="MyChaptersPanel_MyChaptersPanel"] {
+    align-self: flex-start;
   }
 }

@@ -19,7 +19,7 @@ export default () => {
       </PageContentMainHeading>
       <PageContentMainBody>
         <MijnUpdates total={total} items={items} />
-        <MyChaptersPanel />
+        <MyChaptersPanel title="Mijn thema's" />
       </PageContentMainBody>
     </PageContentMain>
   );
