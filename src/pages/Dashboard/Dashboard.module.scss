@@ -5,10 +5,12 @@
     margin-top: -3.8rem;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    padding-bottom: 10rem;
   }
 
   [class^="MijnUpdates_MijnUpdates"] {
-    flex-basis: calc(50% - 9rem); // margin-left + margin-right
+    flex-basis: calc(50% - 9rem); // margin-left + margin-right + virtual-gutter
     flex-shrink: 0;
     overflow: hidden;
     margin-left: 4rem;
@@ -23,5 +25,10 @@
 
   [class^="MyChaptersPanel_MyChaptersPanel"] {
     align-self: flex-start;
+    width: calc(50% + 1rem); // + virtual-gutter
+  }
+
+  [class^="DirectLinks_DirectLinks"] {
+    width: 100%;
   }
 }
