@@ -161,16 +161,15 @@ export const Labels = {
   },
 };
 
+// TEST Data is too old
+const DATE_NOW = '2016-11-03';
+
 export default (offset, limit) => {
   const api = paginatedApiHook(ApiUrls.FOCUS, offset, limit);
   // NOTE: Temporary take data from focus api
   const isActual = item => {
-    console.log(
-      '>',
-      differenceInDays(new Date(), item.processtappen.aanvraag.datum)
-    );
     return (
-      differenceInDays(new Date(), item.processtappen.aanvraag.datum) <
+      differenceInDays(DATE_NOW, item.processtappen.aanvraag.datum) <
       item.dienstverleningstermijn
     );
   };
