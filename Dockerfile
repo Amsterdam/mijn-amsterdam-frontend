@@ -44,4 +44,4 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 COPY --from=build-deps /app/build /usr/share/nginx/html
 
 # Use LOGOUT_URL for nginx rewrite directive
-RUN envsubst '${LOGOUT_URL}' < /tmp/nginx-server-default.template.conf > /etc/nginx/conf.d/default.conf
+CMD envsubst '${LOGOUT_URL}' < /tmp/nginx-server-default.template.conf > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
