@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import MijnUpdates from './MijnUpdates';
+import MyUpdates from './MyUpdates';
 
 it('Renders without crashing', () => {
-  shallow(<MijnUpdates />);
+  shallow(<MyUpdates />);
 });

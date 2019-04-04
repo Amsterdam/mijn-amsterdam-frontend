@@ -1,20 +1,20 @@
 import React from 'react';
-import styles from './MijnUpdates.module.scss';
+import styles from './MyUpdates.module.scss';
 import ButtonLink from 'components/ButtonLink/ButtonLink';
 import { defaultDateFormat } from 'helpers/App';
 import { AppRoutes, Colors } from 'App.constants';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import Heading from 'components/Heading/Heading';
 
-export default function MijnUpdates({ items = [], total = 0 }) {
+export default function MyUpdates({ items = [], total = 0 }) {
   return (
-    <div className={styles.MijnUpdates}>
+    <div className={styles.MyUpdates}>
       <ul>
         {items.map(item => {
           return (
             <li
               key={item.title + item.datePublished}
-              className={styles.MijnUpdateItem}
+              className={styles.MyUpdateItem}
             >
               <ChapterIcon
                 fill={Colors.primaryRed}
@@ -44,7 +44,7 @@ export default function MijnUpdates({ items = [], total = 0 }) {
       </ul>
       {total > items.length && (
         <p className={styles.FooterLink}>
-          <ButtonLink to={AppRoutes.MIJN_UPDATES}>Alle updates</ButtonLink>
+          <ButtonLink to={AppRoutes.MY_UPDATES}>Alle updates</ButtonLink>
         </p>
       )}
     </div>
