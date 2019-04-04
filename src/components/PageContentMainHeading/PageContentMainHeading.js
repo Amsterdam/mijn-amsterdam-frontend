@@ -1,18 +1,22 @@
 import React from 'react';
 import styles from './PageContentMainHeading.module.scss';
 import composeClassNames from 'classnames';
+import Heading from 'components/Heading/Heading';
 
 export default function PageContentMainHeading({
-  size = 2,
+  el = 'h2',
   variant,
   children,
   className,
 }) {
-  const H = `h${size}`;
   const classNames = composeClassNames(
     styles.PageContentMainHeading,
     variant && styles[`PageContentMainHeading__${variant}`],
     className
   );
-  return <H className={classNames}>{children}</H>;
+  return (
+    <Heading el={el} size="large" className={classNames}>
+      {children}
+    </Heading>
+  );
 }

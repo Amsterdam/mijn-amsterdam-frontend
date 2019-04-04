@@ -16,6 +16,7 @@ import {
   ButtonLinkExternal,
   IconButtonLink,
 } from 'components/ButtonLink/ButtonLink';
+import Heading from 'components/Heading/Heading';
 
 function SecondaryLinks({ me, hasMessages = true }) {
   return (
@@ -57,11 +58,11 @@ export default function MainHeader() {
             aria-label="Amsterdam logo"
             className={styles.logo}
           />
-          <h1>
+          <Heading size="large" el="h1">
             <Link className={styles.logoLink} to={AppRoutes.ROOT}>
               Mijn Amsterdam
             </Link>
-          </h1>
+          </Heading>
         </span>
         <BetaLabel
           role="img"

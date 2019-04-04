@@ -1,7 +1,6 @@
 @import 'styles/_global.scss';
 
 .PanelHeading {
-  @include heading-medium-large;
   border-bottom: 1px solid $color-neutral-grey2;
   padding-top: 4rem;
   padding-bottom: 1.6rem;
@@ -17,10 +16,10 @@
   position: relative;
   margin-bottom: 6rem;
 
-  *[class^="MijnUpdates_MijnUpdateItem"] {
+  @include select(MijnUpdates_MijnUpdateItem) {
     padding-left: 16rem;
 
-    *[class^="MijnUpdates_Icon"] {
+    @include select(MijnUpdates_Icon) {
       left: 6.4rem;
     }
 
@@ -39,7 +38,7 @@
 .PreviousUpdatesPanel {
   background-color: $color-neutral-grey1;
 
-  *[class^="MijnUpdates_Icon"] {
+  @include select(MijnUpdates_Icon) {
     fill: $color-neutral-grey4;
   }
 }
