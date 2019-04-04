@@ -3,7 +3,7 @@ import PageContentMain from 'components/PageContentMain/PageContentMain';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
 import styles from './Dashboard.module.scss';
-import MijnUpdates from 'components/MijnUpdates/MijnUpdates';
+import MyUpdates from 'components/MyUpdates/MyUpdates';
 import MyChaptersPanel from 'components/MyChaptersPanel/MyChaptersPanel';
 import DirectLinks from 'components/DirectLinks/DirectLinks';
 import { AppContext } from 'AppState';
@@ -32,7 +32,7 @@ export default () => {
         Mijn updates ({myUpdatesTotal})
       </PageContentMainHeading>
       <PageContentMainBody className={styles.MainBody}>
-        <MijnUpdates
+        <MyUpdates
           total={myUpdatesTotal}
           items={myUpdates.slice(0, MAX_UPDATES_VISIBLE)}
         />

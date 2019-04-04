@@ -1,7 +1,7 @@
 import React, { createContext } from 'react';
 import { useBrpApi } from 'hooks/brp-api.hook.js';
 import useSessionApi from 'hooks/session.api.hook.js';
-import useMijnUpdatesApi from 'hooks/mijn-updates-api.hook';
+import useMyUpdatesApi from 'hooks/mijn-updates-api.hook';
 import useMyCasesApi from 'hooks/my-cases-api.hook';
 import useMyTipsApi from 'hooks/my-tips-api.hook';
 
@@ -14,7 +14,7 @@ export default function AppState({ children, value }) {
     SESSION: useSessionApi(),
 
     // NOTE: If needed we can postpone immediate fetching of below data and start fetching in the component.
-    MY_UPDATES: useMijnUpdatesApi(),
+    MY_UPDATES: useMyUpdatesApi(),
     MY_CASES: useMyCasesApi(),
     MY_TIPS: useMyTipsApi(),
   };
