@@ -6,7 +6,6 @@ import styles from './MijnUpdates.module.scss';
 import MijnUpdates from 'components/MijnUpdates/MijnUpdates';
 import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
 import { Chapters } from 'App.constants';
-import Heading from 'components/Heading/Heading';
 import { AppContext } from 'AppState';
 
 const MAX_UPDATES_VISIBLE = 200;
@@ -48,7 +47,7 @@ export default () => {
       </div>
       <div className={styles.PreviousUpdatesPanel}>
         <PageContentMainBody>
-          <Heading className={styles.PanelHeading}>Eerdere updates (#)</Heading>
+          <h3 className={styles.PanelHeading}>Eerdere updates (#)</h3>
           <MijnUpdates total={total} items={items} />
         </PageContentMainBody>
       </div>
