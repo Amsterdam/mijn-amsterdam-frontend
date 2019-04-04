@@ -5,7 +5,7 @@ import classnames from 'classnames';
 const Sizes = {
   SMALL: 'small',
   MEDIUM: 'medium',
-  MEDIUM_lARGE: 'mediumLarge',
+  MEDIUM_LARGE: 'mediumLarge',
   LARGE: 'large',
 };
 
