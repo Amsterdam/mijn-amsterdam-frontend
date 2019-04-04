@@ -1,20 +1,10 @@
-import React, { useContext } from 'react';
-import PageContentMain from 'components/PageContentMain/PageContentMain';
-import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
-import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
-import { AppContext } from 'AppState';
-import Dashboard from 'pages/Dashboard/Dashboard';
 import { LOGIN_URL } from 'App.constants';
+import PageContentMain from 'components/PageContentMain/PageContentMain';
+import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
+import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
+import React from 'react';
 
 export default () => {
-  const {
-    SESSION: { isAuthenticated },
-  } = useContext(AppContext);
-
-  if (isAuthenticated) {
-    return <Dashboard />;
-  }
-
   return (
     <PageContentMain>
       <PageContentMainHeading>Welkom bij Mijn Amsterdam</PageContentMainHeading>

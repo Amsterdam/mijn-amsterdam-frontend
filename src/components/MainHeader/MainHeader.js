@@ -1,14 +1,12 @@
 import { AppRoutes, ExternalUrls, LOGOUT_URL } from 'App.constants';
-import { AppContext } from 'AppState';
 import { ReactComponent as BetaLabel } from 'assets/images/beta-label.svg';
 import { ReactComponent as AmsterdamLogoLarge } from 'assets/images/logo-amsterdam-large.svg';
 import classnames from 'classnames';
 import MainHeaderHero from 'components/MainHeaderHero/MainHeaderHero';
 import MainNavBar from 'components/MainNavBar/MainNavBar';
 import { getProfileLabel } from 'hooks/brp-api.hook';
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import useReactRouter from 'use-react-router';
 import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
 
 import styles from './MainHeader.module.scss';
@@ -18,7 +16,7 @@ import {
 } from 'components/ButtonLink/ButtonLink';
 import Heading from 'components/Heading/Heading';
 
-function SecondaryLinks({ me, hasMessages = true }) {
+function SecondaryLinks({ me = {}, hasMessages = true }) {
   return (
     <nav className={styles.secondaryLinks}>
       <ButtonLinkExternal
@@ -37,21 +35,10 @@ function SecondaryLinks({ me, hasMessages = true }) {
   );
 }
 
-export default function MainHeader() {
-  const { location } = useReactRouter();
-  const isDashboard = location.pathname === AppRoutes.ROOT;
-  const {
-    BRP,
-    SESSION: { isAuthenticated },
-  } = useContext(AppContext);
-
+export default function MainHeader({ me, isAuthenticated }) {
   return (
     <header className={styles.header}>
-      <div
-        className={classnames(styles.topBar, {
-          [styles.isDashboard]: isDashboard,
-        })}
-      >
+      <div className={classnames(styles.topBar)}>
         <span className={styles.logoLink}>
           <AmsterdamLogoLarge
             role="img"
@@ -70,8 +57,12 @@ export default function MainHeader() {
           className={styles.betaLabel}
         />
       </div>
-      <MainNavBar />
-      {isAuthenticated && <SecondaryLinks me={BRP.me} />}
+      {isAuthenticated && (
+        <>
+          <MainNavBar />
+          <SecondaryLinks me={me} />
+        </>
+      )}
       <MainHeaderHero />
     </header>
   );
