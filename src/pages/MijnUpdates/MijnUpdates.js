@@ -1,17 +1,35 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import PageContentMain from 'components/PageContentMain/PageContentMain';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
 import styles from './MijnUpdates.module.scss';
 import MijnUpdates from 'components/MijnUpdates/MijnUpdates';
-import { useMijnUpdatesApi } from 'hooks/mijn-updates-api.hook';
 import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
 import { Chapters } from 'App.constants';
+import Heading from 'components/Heading/Heading';
+import { AppContext } from 'AppState';
+
+const MAX_UPDATES_VISIBLE = 200;
 
 export default () => {
   const {
-    data: { items, total },
-  } = useMijnUpdatesApi(0, 200);
+    MY_UPDATES: {
+      refetch,
+      data: { items, total },
+      isLoading,
+      isDirty,
+    },
+  } = useContext(AppContext);
+
+  useEffect(() => {
+    // If there are more items available then currently loaded, fetch more items
+    if (
+      !isDirty ||
+      (total > items.length && items.length < MAX_UPDATES_VISIBLE && !isLoading)
+    ) {
+      refetch({ offset: items.length, limit: MAX_UPDATES_VISIBLE });
+    }
+  }, []);
 
   return (
     <PageContentMain className={styles.MijnUpdates} variant="full">
@@ -30,7 +48,7 @@ export default () => {
       </div>
       <div className={styles.PreviousUpdatesPanel}>
         <PageContentMainBody>
-          <h3 className={styles.PanelHeading}>Eerdere updates (#)</h3>
+          <Heading className={styles.PanelHeading}>Eerdere updates (#)</Heading>
           <MijnUpdates total={total} items={items} />
         </PageContentMainBody>
       </div>

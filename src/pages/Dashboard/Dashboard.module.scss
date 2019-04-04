@@ -1,7 +1,7 @@
 @import 'styles/_global.scss';
 
 .Dashboard {
-  [class^="PageContentMainBody"] {
+  @include select(PageContentMainBody) {
     margin-top: -3.8rem;
     display: flex;
     flex-direction: row;
@@ -9,7 +9,7 @@
     padding-bottom: 10rem;
   }
 
-  [class^="MijnUpdates_MijnUpdates"] {
+  @include select(MijnUpdates_MijnUpdates) {
     flex-basis: calc(50% - 9rem); // margin-left + margin-right + virtual-gutter
     flex-shrink: 0;
     overflow: hidden;
@@ -18,17 +18,17 @@
     border-top: 1px solid $color-neutral-grey2;
     margin-bottom: 5rem;
 
-    [class^="MijnUpdates_ChapterIndication"] {
+    @include select(MijnUpdates_ChapterIndication) {
       display: none;
     }
   }
 
-  [class^="MyChaptersPanel_MyChaptersPanel"] {
+  @include select(MyChaptersPanel_MyChaptersPanel) {
     align-self: flex-start;
     width: calc(50% + 1rem); // + virtual-gutter
   }
 
-  [class^="DirectLinks_DirectLinks"] {
+  @include select(DirectLinks_DirectLinks) {
     width: 100%;
     margin-bottom: 5rem;
   }
