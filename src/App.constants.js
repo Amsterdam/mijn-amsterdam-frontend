@@ -5,7 +5,7 @@ export const Chapters = {
   BELASTINGEN: 'BELASTINGEN',
   GEZONDHEID: 'GEZONDHEID',
   INKOMEN: 'INKOMEN',
-  PROFIEL: 'PROFIEL',
+  PROFILE: 'PROFILE',
 };
 
 export const AppRoutes = {
@@ -15,7 +15,7 @@ export const AppRoutes = {
   BELASTINGEN: '/belastingen',
   GEZONDHEID: '/gezondheid',
   INKOMEN: '/inkomen',
-  PROFIEL: '/profiel',
+  PROFILE: '/profiel',
   MIJN_BUURT: '/buurt',
   ABOUT: '/over-mijn-amstedam',
   PRIVACY: '/privacy',
@@ -23,7 +23,7 @@ export const AppRoutes = {
 
   // NOTE: Route components not implemented, subject to change
   MY_TIPS: '/tips',
-  MIJN_UPDATES: '/updates',
+  MY_UPDATES: '/updates',
 };
 
 export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL;
@@ -32,7 +32,7 @@ export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL;
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export const ApiUrls = {
-  MIJN_UPDATES: `${API_BASE_URL}/profiel/mijn-updates`,
+  MY_UPDATES: `${API_BASE_URL}/profiel/mijn-updates`,
   MY_CASES: `${API_BASE_URL}/profiel/mijn-lopende-zaken`,
   MY_TIPS: `${API_BASE_URL}/profiel/mijn-tips`,
   BRP: `${API_BASE_URL}/brp/brp`,

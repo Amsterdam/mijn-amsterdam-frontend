@@ -27,7 +27,7 @@ function SecondaryLinks({ me, hasMessages = true }) {
       >
         Berichtenbox
       </ButtonLinkExternal>
-      {me && <Link to={AppRoutes.PROFIEL}>{getProfileLabel(me)}</Link>}
+      {me && <Link to={AppRoutes.PROFILE}>{getProfileLabel(me)}</Link>}
       {
         <IconButtonLink external={true} target="_self" to={LOGOUT_URL}>
           <LogoutIcon /> Uitloggen
