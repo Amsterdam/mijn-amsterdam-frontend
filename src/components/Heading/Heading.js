@@ -6,7 +6,7 @@ const Sizes = {
   SMALL: 'small',
   MEDIUM: 'medium',
   MEDIUM_lARGE: 'mediumLarge',
-  lARGE: 'large',
+  LARGE: 'large',
 };
 
 const Elements = {
