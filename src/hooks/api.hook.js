@@ -35,7 +35,20 @@ const createApiDataReducer = (initialData = null) => (state, action) => {
   }
 };
 
-export const useDataApi = (options, initialData) => {
+// The data api request options object
+const DEFAULT_REQUEST_OPTIONS = {
+  // Url to data api
+  url: '',
+  // Request query params
+  params: {},
+  // Postpone fetch when hook is called initially
+  postpone: false,
+};
+
+export const useDataApi = (
+  options = DEFAULT_REQUEST_OPTIONS,
+  initialData = {}
+) => {
   const [requestOptions, setRequestOptions] = useState(options);
   const apiDataReducer = createApiDataReducer(initialData);
 
@@ -44,6 +57,9 @@ export const useDataApi = (options, initialData) => {
     isError: false,
     data: initialData,
   });
+
+  const isDirty = state.data !== initialData;
+  const isPristine = !isDirty;
 
   useEffect(() => {
     let didCancel = false;
@@ -71,7 +87,9 @@ export const useDataApi = (options, initialData) => {
       }
     };
 
-    fetchData();
+    if (requestOptions.postpone !== true) {
+      fetchData();
+    }
     // When component is destroyed this callback is executed.
     return () => {
       didCancel = true;
@@ -81,8 +99,8 @@ export const useDataApi = (options, initialData) => {
   }, [requestOptions]);
 
   const refetch = options => {
-    setRequestOptions(options);
+    setRequestOptions({ ...options, postpone: false });
   };
 
-  return { ...state, refetch };
+  return { ...state, isDirty, isPristine, refetch };
 };

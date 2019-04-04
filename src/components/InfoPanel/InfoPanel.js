@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './InfoPanel.module.scss';
 import ButtonLink from 'components/ButtonLink/ButtonLink';
+import Heading from 'components/Heading/Heading';
 
 function InfoPanelActionLinks({ actionLinks }) {
   return (
@@ -39,17 +40,15 @@ function InfoPanelTable({ data = {} }) {
 }
 
 export default function InfoPanel({ title = '', actionLinks = [], info = {} }) {
-  return [
-    !!title && (
-      <h3 key="heading" className={styles.InfoPanelTitle}>
-        {title}
-      </h3>
-    ),
-    <div key="content" className={styles.InfoPanelContent}>
-      <InfoPanelTable data={info} />
-      {!!actionLinks.length && (
-        <InfoPanelActionLinks actionLinks={actionLinks} />
-      )}
-    </div>,
-  ];
+  return (
+    <div className={styles.InfoPanel}>
+      {!!title && <Heading>{title}</Heading>}
+      <div className={styles.InfoPanelContent}>
+        <InfoPanelTable data={info} />
+        {!!actionLinks.length && (
+          <InfoPanelActionLinks actionLinks={actionLinks} />
+        )}
+      </div>
+    </div>
+  );
 }
