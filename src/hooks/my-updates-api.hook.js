@@ -1,6 +1,6 @@
 import { ApiUrls } from 'App.constants';
 import paginatedApiHook from './paginated-api.hook';
-
+import { Labels } from './my-cases-api.hook';
 // export default (offset, limit) => {
 //   return paginatedApiHook(ApiUrls.MY_UPDATES, offset, limit);
 // };
@@ -21,8 +21,8 @@ export default (offset, limit) => {
           return {
             chapter: 'INKOMEN',
             datePublished,
-            title: item.naam,
-            description: 'Uw aanvraag is ontvangen',
+            title: Labels[item.soortProduct][latestType].label,
+            description: Labels[item.soortProduct][latestType].title,
             link: {
               to: '/inkomen',
               label: 'bekijk item',
@@ -30,5 +30,5 @@ export default (offset, limit) => {
           };
         })
     : [];
-  return { ...api, data: { items } };
+  return { ...api, data: { items, total: items.length } };
 };
