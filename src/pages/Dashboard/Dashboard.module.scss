@@ -38,3 +38,9 @@
     margin-bottom: 2rem;
   }
 }
+
+.MainBody {
+  max-width: $main-boxed-width;
+  width: 100%;
+  margin: 0 auto;
+}

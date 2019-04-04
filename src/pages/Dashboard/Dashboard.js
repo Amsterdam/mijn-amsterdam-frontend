@@ -8,8 +8,10 @@ import MyChaptersPanel from 'components/MyChaptersPanel/MyChaptersPanel';
 import DirectLinks from 'components/DirectLinks/DirectLinks';
 import { AppContext } from 'AppState';
 import MyCases from 'components/MyCases/MyCases';
+import MyTips from 'components/MyTips/MyTips';
 
 const MAX_UPDATES_VISIBLE = 3;
+const MAX_TIPS_VISIBLE = 3;
 
 export default () => {
   const {
@@ -19,14 +21,17 @@ export default () => {
     MY_CASES: {
       data: { items: myCases },
     },
+    MY_TIPS: {
+      data: { items: myTips },
+    },
   } = useContext(AppContext);
 
   return (
-    <PageContentMain className={styles.Dashboard}>
+    <PageContentMain className={styles.Dashboard} variant="full">
       <PageContentMainHeading variant="medium">
         Mijn updates ({myUpdatesTotal})
       </PageContentMainHeading>
-      <PageContentMainBody>
+      <PageContentMainBody className={styles.MainBody}>
         <MijnUpdates
           total={myUpdatesTotal}
           items={myUpdates.slice(0, MAX_UPDATES_VISIBLE)}
@@ -34,6 +39,7 @@ export default () => {
         <MyChaptersPanel title="Mijn thema's" />
         <MyCases title="Mijn lopende zaken" items={myCases} />
         <DirectLinks />
+        <MyTips items={myTips.slice(0, MAX_TIPS_VISIBLE)} />
       </PageContentMainBody>
     </PageContentMain>
   );
