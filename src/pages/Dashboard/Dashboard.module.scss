@@ -1,19 +1,40 @@
 @import 'styles/_global.scss';
 
 .Dashboard {
-  // [class^="PageContentMainBody"] {
-  //   // display: flex;
-  // }
-
-  [class^="MijnUpdates_MijnUpdates"] {
-    width: 38rem;
+  @include select(PageContentMainBody) {
     margin-top: -3.8rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-bottom: 10rem;
+  }
+
+  @include select(MijnUpdates_MijnUpdates) {
+    flex-basis: calc(50% - 9rem); // margin-left + margin-right + virtual-gutter
+    flex-shrink: 0;
+    overflow: hidden;
     margin-left: 4rem;
+    margin-right: 4rem;
     border-top: 1px solid $color-neutral-grey2;
     margin-bottom: 5rem;
 
-    [class^="MijnUpdates_ChapterIndication"] {
+    @include select(MijnUpdates_ChapterIndication) {
       display: none;
     }
+  }
+
+  @include select(MyChaptersPanel_MyChaptersPanel) {
+    align-self: flex-start;
+    width: calc(50% + 1rem); // + virtual-gutter
+  }
+
+  @include select(DirectLinks_DirectLinks) {
+    width: 100%;
+    margin-bottom: 5rem;
+  }
+
+  @include select(MyCases) {
+    width: 100%;
+    margin-bottom: 2rem;
   }
 }

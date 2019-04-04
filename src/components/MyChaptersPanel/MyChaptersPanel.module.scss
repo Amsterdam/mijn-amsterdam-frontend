@@ -1,0 +1,19 @@
+@import 'styles/_global.scss';
+
+.MyChaptersPanel {
+  background-color: $color-neutral-grey1;
+  padding: 3.2rem 4rem;
+}
+
+.Title {
+  margin: 0 0 2rem;
+}
+
+.Links {
+  display: flex;
+  flex-wrap: wrap;
+
+  @include select(MainNavSubmenu_MainNavSubmenuLink) {
+    width: 50%;
+  }
+}

@@ -1,14 +1,14 @@
 @import 'styles/_global.scss';
 
 .InfoPanel {
+  margin-bottom: 5rem;
 
-}
-
-.InfoPanelTitle {
-  @include heading-medium;
-  padding-left: 16rem;
-  border-bottom: 1px solid $color-neutral-grey2;
-  padding-bottom: 1.3rem;
+  @include select(Heading) {
+    padding-left: 16rem;
+    border-bottom: 1px solid $color-neutral-grey2;
+    padding-bottom: 1.3rem;
+    margin-bottom: 2rem;
+  }
 }
 
 .InfoPanelContent {

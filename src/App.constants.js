@@ -22,7 +22,7 @@ export const AppRoutes = {
   API_LOGIN: '/api/login',
 
   // NOTE: Route components not implemented, subject to change
-  MIJN_TIPS: '/tips',
+  MY_TIPS: '/tips',
   MIJN_UPDATES: '/updates',
 };
 
@@ -33,6 +33,7 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export const ApiUrls = {
   MIJN_UPDATES: `${API_BASE_URL}/profiel/mijn-updates`,
+  MY_CASES: `${API_BASE_URL}/profiel/mijn-lopende-zaken`,
   MY_TIPS: `${API_BASE_URL}/profiel/mijn-tips`,
   BRP: `${API_BASE_URL}/brp/brp`,
   WMO: `${API_BASE_URL}/wmoned/voorzieningen`,

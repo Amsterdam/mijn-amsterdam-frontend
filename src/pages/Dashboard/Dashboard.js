@@ -1,32 +1,41 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PageContentMain from 'components/PageContentMain/PageContentMain';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
 import styles from './Dashboard.module.scss';
 import MijnUpdates from 'components/MijnUpdates/MijnUpdates';
-import { useMijnUpdatesApi } from 'hooks/mijn-updates-api.hook';
-import { useMyTipsApi } from 'hooks/my-tips-api.hooks';
+import MyChaptersPanel from 'components/MyChaptersPanel/MyChaptersPanel';
 import DirectLinks from 'components/DirectLinks/DirectLinks';
+import { AppContext } from 'AppState';
+import MyCases from 'components/MyCases/MyCases';
 import MyTips from 'components/MyTips/MyTips';
+
+const MAX_UPDATES_VISIBLE = 3;
 
 export default () => {
   const {
-    data: { items: updateItems, total: updateItemsCount },
-  } = useMijnUpdatesApi();
-
-  const {
-    data: { items: tips },
-  } = useMyTipsApi();
+    MY_UPDATES: {
+      data: { items: myUpdates, total: myUpdatesTotal },
+    },
+    MY_CASES: {
+      data: { items: myCases },
+    },
+  } = useContext(AppContext);
 
   return (
     <PageContentMain className={styles.Dashboard}>
       <PageContentMainHeading variant="medium">
-        Mijn updates ({updateItemsCount})
+        Mijn updates ({myUpdatesTotal})
       </PageContentMainHeading>
       <PageContentMainBody>
-        <MijnUpdates total={updateItemsCount} items={updateItems} />
-        <MyTips items={tips} />
+        <MijnUpdates
+          total={myUpdatesTotal}
+          items={myUpdates.slice(0, MAX_UPDATES_VISIBLE)}
+        />
+        <MyChaptersPanel title="Mijn thema's" />
+        <MyCases title="Mijn lopende zaken" items={myCases} />
         <DirectLinks />
+        <MyTips items={tips} />
       </PageContentMainBody>
     </PageContentMain>
   );

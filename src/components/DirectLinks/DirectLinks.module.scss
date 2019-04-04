@@ -1,19 +1,13 @@
 @import 'styles/_global.scss';
 
 .DirectLinks {
-  width: $main-boxed-width;
-  margin-top: 2rem;
-
-  h2 {
-    @include heading-large;
+  @include select(Heading) {
     margin-bottom: 1.6rem;
   }
 }
 
 .LinkList {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+  @include reset-list-style;
   overflow: hidden; // Clearfix
 
   li {
