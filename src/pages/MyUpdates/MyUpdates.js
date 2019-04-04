@@ -2,8 +2,8 @@ import React, { useContext, useEffect } from 'react';
 import PageContentMain from 'components/PageContentMain/PageContentMain';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
-import styles from './MijnUpdates.module.scss';
-import MijnUpdates from 'components/MijnUpdates/MijnUpdates';
+import styles from './MyUpdates.module.scss';
+import MyUpdates from 'components/MyUpdates/MyUpdates';
 import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
 import { Chapters } from 'App.constants';
 import Heading from 'components/Heading/Heading';
@@ -32,7 +32,7 @@ export default () => {
   }, []);
 
   return (
-    <PageContentMain className={styles.MijnUpdates} variant="full">
+    <PageContentMain className={styles.MyUpdates} variant="full">
       <div className={styles.LatestUpdatesPanel}>
         <PageContentMainHeading
           variant="withIcon"
@@ -43,13 +43,13 @@ export default () => {
         </PageContentMainHeading>
         <PageContentMainBody>
           <h3 className={styles.PanelHeading}>Nieuw (#)</h3>
-          <MijnUpdates total={total} items={items} />
+          <MyUpdates total={total} items={items} />
         </PageContentMainBody>
       </div>
       <div className={styles.PreviousUpdatesPanel}>
         <PageContentMainBody>
           <Heading className={styles.PanelHeading}>Eerdere updates (#)</Heading>
-          <MijnUpdates total={total} items={items} />
+          <MyUpdates total={total} items={items} />
         </PageContentMainBody>
       </div>
     </PageContentMain>

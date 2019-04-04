@@ -9,7 +9,7 @@ import Profile from './pages/Profile/Profile.js';
 import NotFound from './pages/NotFound/NotFound.js';
 import styles from './App.module.scss';
 import Landing from 'pages/Landing/Landing';
-import MijnUpdates from 'pages/MijnUpdates/MijnUpdates';
+import MyUpdates from 'pages/MyUpdates/MyUpdates';
 import MyTips from 'pages/MyTips/MyTips';
 
 export default function App() {
@@ -21,8 +21,8 @@ export default function App() {
           <Switch>
             <Route exact path={AppRoutes.ROOT} component={Landing} />
             <Redirect from={AppRoutes.API_LOGIN} to={AppRoutes.ROOT} />
-            <Route path={AppRoutes.MIJN_UPDATES} component={MijnUpdates} />
-            <Route path={AppRoutes.PROFIEL} component={Profile} />
+            <Route path={AppRoutes.MY_UPDATES} component={MyUpdates} />
+            <Route path={AppRoutes.PROFILE} component={Profile} />
             <Route path={AppRoutes.MY_TIPS} component={MyTips} />
             <Route component={NotFound} />
           </Switch>

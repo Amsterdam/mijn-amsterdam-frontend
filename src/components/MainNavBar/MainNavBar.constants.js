@@ -51,5 +51,5 @@ export const MenuConfig = [
     submenuItems: MyChaptersMenuItems,
   },
   { label: 'Mijn buurt', id: 'mijn-buurt', to: AppRoutes.MIJN_BUURT },
-  { label: 'Mijn updates', id: 'mijn-updates', to: AppRoutes.MIJN_UPDATES },
+  { label: 'Mijn updates', id: 'mijn-updates', to: AppRoutes.MY_UPDATES },
 ];
