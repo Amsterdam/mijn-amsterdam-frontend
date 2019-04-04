@@ -5,8 +5,8 @@ import classnames from 'classnames';
 const Sizes = {
   SMALL: 'small',
   MEDIUM: 'medium',
-  MEDIUM_lARGE: 'mediumLarge',
-  lARGE: 'large',
+  MEDIUM_LARGE: 'mediumLarge',
+  LARGE: 'large',
 };
 
 const Elements = {
