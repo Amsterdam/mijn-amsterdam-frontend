@@ -15,7 +15,7 @@ const Tip = ({ tip }) => (
   </li>
 );
 
-export default function MyTips({ items }) {
+export default function MyTips({ items = [] }) {
   return (
     <div className={styles.MyTips}>
       <div className={styles.HeaderBar}>
