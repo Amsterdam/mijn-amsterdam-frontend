@@ -75,5 +75,6 @@ Extract the archive as the `/mock-api/secure-data/` folder. Without these files 
 - Try to squash commits before merging into master.
 
 ## Docker
+
 - `docker build ./ --tag="mijn-amsterdam"`
 - `docker run -p 8080:80 -e LOGOUT_URL=test mijn-amsterdam`
