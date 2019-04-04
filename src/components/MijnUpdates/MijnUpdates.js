@@ -29,7 +29,7 @@ export default function MijnUpdates({ items = [], total = 0 }) {
                   {defaultDateFormat(item.datePublished)}
                 </time>
               </aside>
-              <Heading el="h4" size="small" className={styles.Title}>
+              <Heading el="h4" size="small">
                 {item.title}
               </Heading>
               {!!item.description && (
