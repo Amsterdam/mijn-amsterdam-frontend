@@ -1,8 +1,6 @@
 @import 'styles/_global.scss';
 
 .DirectLinks {
-  width: $main-boxed-width;
-
   @include select(Heading) {
     margin-bottom: 1.6rem;
   }

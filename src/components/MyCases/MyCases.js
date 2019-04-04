@@ -3,6 +3,7 @@ import styles from './MyCases.module.scss';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import { NavLink } from 'react-router-dom';
 import { Colors } from 'App.constants';
+import Heading from 'components/Heading/Heading';
 
 function CaseItem({ item }) {
   const { title, chapter, to } = item;
@@ -19,10 +20,10 @@ function CaseItem({ item }) {
 export default function MyCases({ title, items = [] }) {
   return (
     <div className={styles.MyCases}>
-      <h2>{title}</h2>
+      <Heading size="large">{title}</Heading>
       <ul className={styles.List}>
         {items.map(item => (
-          <CaseItem item={item} />
+          <CaseItem key={item.title} item={item} />
         ))}
       </ul>
     </div>

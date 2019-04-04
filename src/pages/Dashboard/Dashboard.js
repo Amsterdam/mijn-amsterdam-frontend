@@ -7,27 +7,32 @@ import MijnUpdates from 'components/MijnUpdates/MijnUpdates';
 import MyChaptersPanel from 'components/MyChaptersPanel/MyChaptersPanel';
 import DirectLinks from 'components/DirectLinks/DirectLinks';
 import { AppContext } from 'AppState';
+import MyCases from 'components/MyCases/MyCases';
 
 const MAX_UPDATES_VISIBLE = 3;
 
 export default () => {
   const {
     MY_UPDATES: {
-      data: { items, total },
+      data: { items: myUpdates, total: myUpdatesTotal },
+    },
+    MY_CASES: {
+      data: { items: myCases },
     },
   } = useContext(AppContext);
 
   return (
     <PageContentMain className={styles.Dashboard}>
       <PageContentMainHeading variant="medium">
-        Mijn updates ({total})
+        Mijn updates ({myUpdatesTotal})
       </PageContentMainHeading>
       <PageContentMainBody>
         <MijnUpdates
-          total={total}
-          items={items.slice(0, MAX_UPDATES_VISIBLE)}
+          total={myUpdatesTotal}
+          items={myUpdates.slice(0, MAX_UPDATES_VISIBLE)}
         />
         <MyChaptersPanel title="Mijn thema's" />
+        <MyCases title="Mijn lopende zaken" items={myCases} />
         <DirectLinks />
       </PageContentMainBody>
     </PageContentMain>

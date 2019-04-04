@@ -32,4 +32,9 @@
     width: 100%;
     margin-bottom: 5rem;
   }
+
+  @include select(MyCases) {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
 }
