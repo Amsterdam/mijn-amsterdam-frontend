@@ -1,7 +1,7 @@
 import React, { createContext } from 'react';
 import { useBrpApi } from 'hooks/brp-api.hook.js';
 import useSessionApi from 'hooks/session.api.hook.js';
-import useMyUpdatesApi from 'hooks/mijn-updates-api.hook';
+import useMyUpdatesApi from 'hooks/my-updates-api.hook';
 import useMyCasesApi from 'hooks/my-cases-api.hook';
 import useMyTipsApi from 'hooks/my-tips-api.hook';
 
