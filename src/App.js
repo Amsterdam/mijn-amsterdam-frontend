@@ -10,6 +10,7 @@ import NotFound from './pages/NotFound/NotFound.js';
 import styles from './App.module.scss';
 import Landing from 'pages/Landing/Landing';
 import MijnUpdates from 'pages/MijnUpdates/MijnUpdates';
+import MyTips from 'pages/MyTips/MyTips';
 
 export default function App() {
   return (
@@ -20,13 +21,9 @@ export default function App() {
           <Switch>
             <Route exact path={AppRoutes.ROOT} component={Landing} />
             <Redirect from={AppRoutes.API_LOGIN} to={AppRoutes.ROOT} />
-            {/* <Route path={AppRoutes.BURGERZAKEN} />
-              <Route path={AppRoutes.WONEN} />
-              <Route path={AppRoutes.BELASTINGEN} />
-              <Route path={AppRoutes.GEZONDHEID} />
-              <Route path={AppRoutes.INKOMEN} />*/}
             <Route path={AppRoutes.MIJN_UPDATES} component={MijnUpdates} />
             <Route path={AppRoutes.PROFIEL} component={Profile} />
+            <Route path={AppRoutes.MY_TIPS} component={MyTips} />
             <Route component={NotFound} />
           </Switch>
         </div>

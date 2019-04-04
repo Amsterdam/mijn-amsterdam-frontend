@@ -1,0 +1,43 @@
+@import 'styles/_global.scss';
+
+.MyTips {
+  width: 100%;
+}
+
+.TipsList {
+  @include reset-list-style;
+  display: flex;
+  justify-content: space-between;
+}
+
+.TipItem {
+  width: calc((100% / 3) - 4rem);
+  p {
+    margin-top: 1.2rem;
+  }
+}
+
+.ImageContainer {
+  height: 19rem;
+  width: 100%;
+  background-color: $color-neutral-grey2;
+  margin-bottom: 2rem;
+}
+
+.HeaderBar {
+  display: flex;
+  margin: 1.6rem 0;
+  align-items: center;
+
+  @include select(ButtonLink) {
+    margin-left: 2rem;
+    margin-top: 0.6rem;
+  }
+
+  .OptIn {
+    font-size: 1.4rem;
+    margin-left: auto;
+    color: $color-primary-red;
+    text-decoration: underline;
+  }
+}
