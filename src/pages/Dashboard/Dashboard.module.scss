@@ -9,7 +9,7 @@
     padding-bottom: 10rem;
   }
 
-  @include select(MijnUpdates_MijnUpdates) {
+  @include select(MyUpdates_MyUpdates) {
     flex-basis: calc(50% - 9rem); // margin-left + margin-right + virtual-gutter
     flex-shrink: 0;
     overflow: hidden;
@@ -18,7 +18,7 @@
     border-top: 1px solid $color-neutral-grey2;
     margin-bottom: 5rem;
 
-    @include select(MijnUpdates_ChapterIndication) {
+    @include select(MyUpdates_ChapterIndication) {
       display: none;
     }
   }

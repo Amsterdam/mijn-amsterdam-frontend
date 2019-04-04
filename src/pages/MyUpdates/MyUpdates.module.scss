@@ -16,10 +16,10 @@
   position: relative;
   margin-bottom: 6rem;
 
-  @include select(MijnUpdates_MijnUpdateItem) {
+  @include select(MyUpdates_MyUpdateItem) {
     padding-left: 16rem;
 
-    @include select(MijnUpdates_Icon) {
+    @include select(MyUpdates_Icon) {
       left: 6.4rem;
     }
 
@@ -38,7 +38,7 @@
 .PreviousUpdatesPanel {
   background-color: $color-neutral-grey1;
 
-  @include select(MijnUpdates_Icon) {
+  @include select(MyUpdates_Icon) {
     fill: $color-neutral-grey4;
   }
 }
