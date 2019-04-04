@@ -6,9 +6,11 @@ export default (offset, limit) => {
   // NOTE: Temporary take data from focus api
   const items = !(api.data && api.data.items)
     ? Object.values(api.data)
-        .filter(item => !!item.processtappen.inBehandeling)
+        .filter(
+          item =>
+            !!(item && item.processtappen && item.processtappen.inBehandeling)
+        )
         .map(item => {
-          console.log(item);
           const latestType = item._meest_recent;
           const dateModified = item.processtappen[latestType].datum;
           return {
