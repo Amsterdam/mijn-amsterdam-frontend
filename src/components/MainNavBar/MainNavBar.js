@@ -25,6 +25,7 @@ function getMenuItem(MenuItem, activeSubmenuId, setSubMenuVisibility) {
         title={MenuItem.label}
         isOpen={activeSubmenuId === MenuItem.id}
         onFocus={() => setSubMenuVisibility(MenuItem.id)}
+        onClick={event => event.preventDefault()} // Prevent chrome from closing the submenu by triggering focus handler on click
         onMouseEnter={() => setSubMenuVisibility(MenuItem.id)}
         onMouseLeave={() => setSubMenuVisibility()}
       >
