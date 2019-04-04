@@ -1,10 +1,9 @@
 @import 'styles/_global.scss';
 
 .PageContentMainHeading {
-  @include heading-large;
   height: $main-header-hero-heading-overlap;
   margin-top: 0;
-  padding: 3.8rem 0 0;
+  padding: 4rem 0 0;
   margin: -#{$main-header-hero-heading-overlap} 0 0;
   margin-bottom: 3.8rem;
   background-color: $color-white;
@@ -20,7 +19,7 @@
   &__withIcon {
     text-indent: 16rem;
 
-    *[class^="ChapterHeadingIcon_ChapterHeadingIcon"] {
+    @include select(ChapterHeadingIcon_ChapterHeadingIcon) {
       left: 8rem;
       transform: translateX(-50%);
     }

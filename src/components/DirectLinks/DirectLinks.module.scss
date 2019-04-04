@@ -3,8 +3,7 @@
 .DirectLinks {
   width: $main-boxed-width;
 
-  h2 {
-    @include heading-large;
+  @include select(Heading) {
     margin-bottom: 1.6rem;
   }
 }
