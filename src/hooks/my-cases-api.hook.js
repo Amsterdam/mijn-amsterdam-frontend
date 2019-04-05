@@ -1,9 +1,10 @@
 import { ApiUrls } from 'App.constants';
 import paginatedApiHook from './paginated-api.hook';
-import { differenceInDays } from 'date-fns';
+import { differenceInCalendarDays } from 'date-fns';
 
 export const Labels = {
   Participatiewet: {
+    about: 'Bijstandsuitkering',
     aanvraag: {
       label: 'Aanvraag Bijstandsuitkering',
       title: 'Wij hebben uw aanvraag voor een bijstandsuitkering ontvangen.',
@@ -68,6 +69,7 @@ export const Labels = {
     },
   },
   'Bijzondere Bijstand': {
+    about: 'Bijzondere bijstand',
     aanvraag: {
       label: 'Aanvraag',
       title:
@@ -115,6 +117,7 @@ export const Labels = {
     },
   },
   Minimafonds: {
+    about: 'Stadspas',
     aanvraag: {
       label: 'Aanvraag',
       title:
@@ -161,7 +164,7 @@ export const Labels = {
   },
 };
 
-// TEST Data is too old
+// TEST Data is too old to render current cases
 const DATE_NOW = '2016-11-03';
 
 export default (offset, limit) => {
@@ -169,8 +172,8 @@ export default (offset, limit) => {
   // NOTE: Temporary take data from focus api
   const isActual = item => {
     return (
-      differenceInDays(DATE_NOW, item.processtappen.aanvraag.datum) <
-      item.dienstverleningstermijn
+      differenceInCalendarDays(DATE_NOW, item.processtappen.aanvraag.datum) <
+        item.dienstverleningstermijn && !item.beslissing
     );
   };
 
@@ -190,7 +193,7 @@ export default (offset, limit) => {
           return {
             chapter: 'INKOMEN',
             dateModified,
-            title: item.soortProduct,
+            title: Labels[item.soortProduct].about,
             to: '/inkomen',
           };
         })
