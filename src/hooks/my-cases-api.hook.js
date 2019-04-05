@@ -173,7 +173,7 @@ export default (offset, limit) => {
   const isActual = item => {
     return (
       differenceInCalendarDays(DATE_NOW, item.processtappen.aanvraag.datum) <
-        item.dienstverleningstermijn && !item.beslissing
+      item.dienstverleningstermijn
     );
   };
 
@@ -193,7 +193,7 @@ export default (offset, limit) => {
           return {
             chapter: 'INKOMEN',
             dateModified,
-            title: Labels[item.soortProduct].about,
+            title: `${Labels[item.soortProduct].about} - ${item.naam}`,
             to: '/inkomen',
           };
         })
