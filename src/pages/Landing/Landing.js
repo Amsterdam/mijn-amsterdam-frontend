@@ -8,7 +8,7 @@ export default () => {
   return (
     <PageContentMain>
       <PageContentMainHeading>Welkom bij Mijn Amsterdam</PageContentMainHeading>
-      <PageContentMainBody>
+      <PageContentMainBody variant="regular">
         <p>
           <a href={LOGIN_URL}>Login</a>
         </p>

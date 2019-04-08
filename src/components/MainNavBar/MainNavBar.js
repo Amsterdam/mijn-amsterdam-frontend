@@ -18,13 +18,15 @@ function MainNavLink({ children, to, ...rest }) {
 
 function getMenuItem(MenuItem, activeSubmenuId, setSubMenuVisibility) {
   if ('submenuItems' in MenuItem) {
+    const isOpen = activeSubmenuId === MenuItem.id;
     return (
       <MainNavSubmenu
         key={MenuItem.id}
         id={MenuItem.id}
         title={MenuItem.label}
-        isOpen={activeSubmenuId === MenuItem.id}
-        onFocus={() => setSubMenuVisibility(MenuItem.id)}
+        isOpen={isOpen}
+        onFocus={() => !isOpen && setSubMenuVisibility(MenuItem.id)}
+        onClick={event => event.preventDefault()} // Prevent chrome from closing the submenu by triggering focus handler on click
         onMouseEnter={() => setSubMenuVisibility(MenuItem.id)}
         onMouseLeave={() => setSubMenuVisibility()}
       >

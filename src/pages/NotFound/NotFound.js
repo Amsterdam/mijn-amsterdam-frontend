@@ -8,7 +8,7 @@ export default () => {
   return (
     <PageContentMain className={styles.NotFound}>
       <PageContentMainHeading variant="medium">Helaas</PageContentMainHeading>
-      <PageContentMainBody>
+      <PageContentMainBody variant="regular">
         <p>De pagina waar u naar op zoek was bestaat niet (meer).</p>
       </PageContentMainBody>
     </PageContentMain>
