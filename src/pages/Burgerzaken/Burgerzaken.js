@@ -6,9 +6,9 @@ import PageContentMainBody from 'components/PageContentMainBody/PageContentMainB
 export default () => {
   return (
     <PageContentMain>
-      <PageContentMainHeading>MyTips</PageContentMainHeading>
-      <PageContentMainBody>
-        <p>MyTips body</p>
+      <PageContentMainHeading>Burgerzaken</PageContentMainHeading>
+      <PageContentMainBody variant="regular">
+        <p>Burgerzaken body</p>
       </PageContentMainBody>
     </PageContentMain>
   );
