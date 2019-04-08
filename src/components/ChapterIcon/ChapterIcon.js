@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ReactComponent as IconBurgerZaken } from 'assets/images/burgerzaken.svg';
-import { ReactComponent as IconGezondheid } from 'assets/images/gezondheid.svg';
+import { ReactComponent as IconZorg } from 'assets/images/zorg.svg';
 import { ReactComponent as IconInkomen } from 'assets/images/inkomen.svg';
 import { ReactComponent as IconWonen } from 'assets/images/wonen.svg';
 import { ReactComponent as IconBelastingen } from 'assets/images/belastingen.svg';
@@ -23,8 +23,8 @@ export default function ChapterIcon({
     case Chapters.BELASTINGEN:
       Icon = IconBelastingen;
       break;
-    case Chapters.GEZONDHEID:
-      Icon = IconGezondheid;
+    case Chapters.ZORG:
+      Icon = IconZorg;
       break;
     default:
       Icon = IconBurgerZaken;
