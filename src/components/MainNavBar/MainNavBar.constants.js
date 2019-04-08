@@ -4,6 +4,7 @@ import { ReactComponent as ZorgIcon } from 'assets/images/zorg.svg';
 import { ReactComponent as WonenIcon } from 'assets/images/wonen.svg';
 import { ReactComponent as InkomenIcon } from 'assets/images/inkomen.svg';
 import { ReactComponent as BelastingenIcon } from 'assets/images/belastingen.svg';
+import { ReactComponent as JeugdhulpIcon } from 'assets/icons/Passport.svg';
 
 export const MyChaptersMenuItems = [
   {
@@ -13,16 +14,22 @@ export const MyChaptersMenuItems = [
     Icon: BurgerzakenIcon,
   },
   {
-    label: 'Zorg',
-    id: 'gezondhied',
-    to: AppRoutes.ZORG,
-    Icon: ZorgIcon,
-  },
-  {
     label: 'Wonen',
     id: 'wonen',
     to: AppRoutes.WONEN,
     Icon: WonenIcon,
+  },
+  {
+    label: 'Belastingen',
+    id: 'belastingen',
+    to: AppRoutes.BELASTINGEN,
+    Icon: BelastingenIcon,
+  },
+  {
+    label: 'Zorg',
+    id: 'gezondhied',
+    to: AppRoutes.ZORG,
+    Icon: ZorgIcon,
   },
   {
     label: 'Inkomen',
@@ -31,10 +38,10 @@ export const MyChaptersMenuItems = [
     Icon: InkomenIcon,
   },
   {
-    label: 'Belastingen',
-    id: 'belastingen',
-    to: AppRoutes.BELASTINGEN,
-    Icon: BelastingenIcon,
+    label: 'Jeugdhulp',
+    id: 'jeugdhulp',
+    to: AppRoutes.JEUGDHULP,
+    Icon: JeugdhulpIcon,
   },
 ];
 

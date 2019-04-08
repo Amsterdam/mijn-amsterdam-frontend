@@ -4,6 +4,7 @@ export const Chapters = {
   WONEN: 'WONEN',
   BELASTINGEN: 'BELASTINGEN',
   ZORG: 'ZORG',
+  JEUGDHULP: 'JEUGDHULP',
   INKOMEN: 'INKOMEN',
   PROFILE: 'PROFILE',
 };
@@ -14,6 +15,7 @@ export const AppRoutes = {
   WONEN: '/wonen',
   BELASTINGEN: '/belastingen',
   ZORG: '/zorg',
+  JEUGDHULP: '/jeugdhulp',
   INKOMEN: '/inkomen',
   PROFILE: '/profiel',
   MIJN_BUURT: '/buurt',
