@@ -2,6 +2,7 @@ import { ApiUrls } from 'App.constants';
 import paginatedApiHook from './paginated-api.hook';
 import { differenceInCalendarDays } from 'date-fns';
 
+// TODO: Find a sweet spot for the data stored here. Should the api just return wel structured data?
 export const Labels = {
   Participatiewet: {
     about: 'Bijstandsuitkering',
