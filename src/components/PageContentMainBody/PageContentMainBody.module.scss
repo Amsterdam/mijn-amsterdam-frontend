@@ -2,4 +2,8 @@
 
 .PageContentMainBody {
   display: block;
+
+  &__regular {
+    padding: 0 4rem;
+  }
 }

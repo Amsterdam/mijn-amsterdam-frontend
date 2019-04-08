@@ -6,9 +6,9 @@ import styles from './AlphaPage.module.scss';
 
 export default () => {
   return (
-    <PageContentMain>
-      <PageContentMainHeading>AlphaPage title</PageContentMainHeading>
-      <PageContentMainBody>
+    <PageContentMain className={styles.AlphaPage}>
+      <PageContentMainHeading>AlphaPage</PageContentMainHeading>
+      <PageContentMainBody variant="regular">
         <p>AlphaPage body</p>
       </PageContentMainBody>
     </PageContentMain>
