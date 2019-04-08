@@ -1,6 +1,6 @@
 import { AppRoutes } from 'App.constants';
 import { ReactComponent as BurgerzakenIcon } from 'assets/images/burgerzaken.svg';
-import { ReactComponent as GezondheidIcon } from 'assets/images/gezondheid.svg';
+import { ReactComponent as ZorgIcon } from 'assets/images/zorg.svg';
 import { ReactComponent as WonenIcon } from 'assets/images/wonen.svg';
 import { ReactComponent as InkomenIcon } from 'assets/images/inkomen.svg';
 import { ReactComponent as BelastingenIcon } from 'assets/images/belastingen.svg';
@@ -13,10 +13,10 @@ export const MyChaptersMenuItems = [
     Icon: BurgerzakenIcon,
   },
   {
-    label: 'Gezondheid',
+    label: 'Zorg',
     id: 'gezondhied',
-    to: AppRoutes.GEZONDHEID,
-    Icon: GezondheidIcon,
+    to: AppRoutes.ZORG,
+    Icon: ZorgIcon,
   },
   {
     label: 'Wonen',

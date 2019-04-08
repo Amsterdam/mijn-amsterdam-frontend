@@ -3,7 +3,7 @@ export const Chapters = {
   BURGERZAKEN: 'BURGERZAKEN',
   WONEN: 'WONEN',
   BELASTINGEN: 'BELASTINGEN',
-  GEZONDHEID: 'GEZONDHEID',
+  ZORG: 'ZORG',
   INKOMEN: 'INKOMEN',
   PROFILE: 'PROFILE',
 };
@@ -13,7 +13,7 @@ export const AppRoutes = {
   BURGERZAKEN: '/burgerzaken',
   WONEN: '/wonen',
   BELASTINGEN: '/belastingen',
-  GEZONDHEID: '/gezondheid',
+  ZORG: '/zorg',
   INKOMEN: '/inkomen',
   PROFILE: '/profiel',
   MIJN_BUURT: '/buurt',
