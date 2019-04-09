@@ -1,4 +1,14 @@
-export const Chapters = {
+export type Chapter =
+  | 'ROOT'
+  | 'BURGERZAKEN'
+  | 'WONEN'
+  | 'BELASTINGEN'
+  | 'ZORG'
+  | 'JEUGDHULP'
+  | 'INKOMEN'
+  | 'PROFILE';
+
+export const Chapters:  { [chapter in Chapter]: Chapter } = {
   ROOT: 'ROOT',
   BURGERZAKEN: 'BURGERZAKEN',
   WONEN: 'WONEN',

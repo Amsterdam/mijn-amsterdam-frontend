@@ -1,6 +1,6 @@
 import React, { createContext } from 'react';
 import { useBrpApi, BrpState } from 'hooks/api/brp-api.hook';
-import useSessionApi from 'hooks/api/session.api.hook';
+import useSessionApi, { SessionState } from 'hooks/api/session.api.hook';
 import useMyUpdatesApi from 'hooks/api/my-updates-api.hook';
 import useMyCasesApi from 'hooks/api/my-cases-api.hook';
 import useMyTipsApi from 'hooks/api/my-tips-api.hook';
@@ -12,7 +12,7 @@ export interface CustomAppState {
 
 export interface DefaultAppState {
   BRP: BrpState,
-  SESSION: object,
+  SESSION: SessionState,
   MY_UPDATES: object,
   MY_CASES: object,
   MY_TIPS: object,

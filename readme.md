@@ -39,6 +39,8 @@ When creating constants put them in a `Component.constants.js` file. Use `UPPER_
 const Things = { FOO: 'Bar', WHY_NOT_THIS_ONE: 'I don\'t like pink' }
 ```
 
+When dealing with more than a few types, create a `*.types.ts` file.
+
 #### Styles
 
 - when component name is `MyComponent`, name your css (modules) file `MyComponent.module.css`

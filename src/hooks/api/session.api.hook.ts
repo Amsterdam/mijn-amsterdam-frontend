@@ -1,7 +1,11 @@
 import { useDataApi } from './api.hook';
 import { ApiUrls } from 'App.constants';
 
-const INITIAL_SESSION_STATE = {
+export interface SessionState {
+  isAuthenticated: boolean;
+}
+
+const INITIAL_SESSION_STATE: SessionState = {
   isAuthenticated: false,
 };
 

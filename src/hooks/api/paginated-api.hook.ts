@@ -1,6 +1,19 @@
 import { useDataApi } from './api.hook';
+import { Unshaped } from 'App.types';
 
-const INITIAL_STATE = { items: [], total: 0, offset: 0, limit: 3 };
+export interface PaginatedItemsState {
+  items: Unshaped[];
+  total: number;
+  offset: number;
+  limit: number;
+}
+
+const INITIAL_STATE: PaginatedItemsState = {
+  items: [],
+  total: 0,
+  offset: 0,
+  limit: 3,
+};
 
 export default function paginatedApi(
   url: string,
@@ -22,4 +35,4 @@ export default function paginatedApi(
       api.refetch({ ...options, params: { offset, limit } });
     },
   };
-};
+}
