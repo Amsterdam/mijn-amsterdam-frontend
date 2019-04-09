@@ -3,8 +3,8 @@ import axios from 'axios';
 
 export interface ApiRequestOptions {
   url: string;
-  params: Record<string, any>;
-  postpone: boolean;
+  params?: Record<string, any>;
+  postpone?: boolean;
 }
 
 export interface Action {
