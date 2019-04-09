@@ -1,5 +1,7 @@
 import React from 'react';
 import styles from './MainHeaderHero.module.scss';
+import useReactRouter from 'use-react-router';
+import { AppRoutes } from 'App.constants';
 
 // TODO: Enable if we have appropriate responsive images
 // For now, 3 versions of the landscape image can be delivered: 1024, 1366 and 1600
@@ -19,10 +21,20 @@ const DEFAULT_ALT = 'Sfeerbeeld kenmerkend voor de Amsterdammer';
 // const LANDSCAPE_MEDIUM = imgUrl('//placehold.it/', 1366);
 // const LANDSCAPE_LARGE = imgUrl('//placehold.it/', 1600);
 
-const DEFAULT_IMG_SRC = '/header/Header-Desktop-4.jpg';
+function getHeroSrc() {
+  const { location } = useReactRouter();
+  switch (location.pathname) {
+    case AppRoutes.ROOT:
+      return 'header/Header-Desktop-1.jpg';
+    case AppRoutes.PROFILE:
+      return 'header/Header-Desktop-2.jpg';
+    default:
+      return 'header/Header-Desktop-3.jpg';
+  }
+}
 
 export default function MainHeaderHero(props) {
-  const src = props.src || DEFAULT_IMG_SRC;
+  const src = props.src || getHeroSrc();
   const alt = props.alt || DEFAULT_ALT;
   return (
     <div className={styles.MainHeaderHero}>
@@ -52,7 +64,7 @@ export default function MainHeaderHero(props) {
           srcset={LANDSCAPE_MEDIUM}
         />
         */}
-        <img src={DEFAULT_IMG_SRC} className={styles.TheImg} alt={alt} />
+        <img src={src} className={styles.TheImg} alt={alt} />
       </picture>
     </div>
   );
