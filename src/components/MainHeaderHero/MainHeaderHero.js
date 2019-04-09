@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './MainHeaderHero.module.scss';
 
 // TODO: Enable if we have appropriate responsive images
-
+// For now, 3 versions of the landscape image can be delivered: 1024, 1366 and 1600
 // function imgUrl(path, w, orientation = 'l', pd = 1) {
 //   const r = orientation === 'p' ? 0.4 : 0.25;
 //   return `${path}${Math.round(pd * w)}x${Math.round(pd * (w * r))}`;
