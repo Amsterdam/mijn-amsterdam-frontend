@@ -1,0 +1,21 @@
+@import 'styles/_global.scss';
+
+.MyArea {
+  width: $main-max-width;
+  height: 40rem;
+}
+
+.Map {
+  position: absolute;
+  height: 38rem;
+  width: 100%;
+  border: none;
+}
+
+.Overlay {
+  position: absolute;
+  background-color: transparent;
+  cursor: pointer;
+  width: 100%;
+  height: 38rem;
+}

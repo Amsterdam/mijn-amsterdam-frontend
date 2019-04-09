@@ -41,6 +41,7 @@ export default () => {
           <MyChaptersPanel title="Mijn thema's" />
         </div>
         <MyCases title="Mijn lopende zaken" items={myCases} />
+        <MyArea />
         <MyTips items={myTips.slice(0, MAX_TIPS_VISIBLE)} />
         <DirectLinks />
       </PageContentMainBody>
