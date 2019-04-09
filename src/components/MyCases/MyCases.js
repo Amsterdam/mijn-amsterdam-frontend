@@ -23,7 +23,7 @@ export default function MyCases({ title, items = [] }) {
       <Heading size="large">{title}</Heading>
       <ul className={styles.List}>
         {items.map(item => (
-          <CaseItem key={item.title} item={item} />
+          <CaseItem key={item.title + item.dateModified} item={item} />
         ))}
       </ul>
     </div>
