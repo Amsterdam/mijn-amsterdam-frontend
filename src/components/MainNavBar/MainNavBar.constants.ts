@@ -64,6 +64,6 @@ export const menuItems: MenuItem[] = [
     to: '',
     submenuItems: myChaptersMenuItems,
   },
-  { title: 'Mijn buurt', id: 'mijn-buurt', to: AppRoutes.MIJN_BUURT },
-  { title: 'Mijn updates', id: 'mijn-updates', to: AppRoutes.MY_UPDATES },
+  { label: 'Mijn buurt', id: 'mijn-buurt', to: AppRoutes.MY_AREA },
+  { label: 'Mijn updates', id: 'mijn-updates', to: AppRoutes.MY_UPDATES },
 ];

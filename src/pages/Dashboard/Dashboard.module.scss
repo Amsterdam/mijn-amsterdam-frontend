@@ -28,9 +28,13 @@
     width: calc(50% + 1rem); // + virtual-gutter
   }
 
-  @include select(DirectLinks_DirectLinks) {
-    width: 100%;
-    margin-bottom: 5rem;
+  @include select(MyCases_MyCases) {
+    width: $main-boxed-width;
+    margin-bottom: 8rem;
+  }
+
+  @include select(MyArea_MyArea) {
+    margin-bottom: 10rem;
   }
 
   @include select(MyCases) {
