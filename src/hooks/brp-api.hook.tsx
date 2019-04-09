@@ -1,6 +1,5 @@
 import { useDataApi } from './api.hook';
 import { ApiUrls } from 'App.constants';
-import { string } from 'prop-types';
 
 // Interfaces shaped to API data state
 interface GerelateerdePartner {
@@ -81,7 +80,7 @@ export interface BrpState {
 }
 
 export const useBrpApi = (initialState = {}): BrpState | object => {
-  const options = { url: ApiUrls.BRP, params: {}, postpone: false }; // TODO: Define type so we don't have to pass default props
+  const options = { url: ApiUrls.BRP };
   const { data, refetch } = useDataApi(options, initialState);
 
   if (data.persoon) {

@@ -1,6 +1,17 @@
 import { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 
+export interface ApiRequestOptions {
+  url: string;
+  params: Record<string, any>;
+  postpone: boolean;
+}
+
+export interface Action {
+  type: string;
+  payload?: any;
+}
+
 /**
  * Concepts in this hook are described in the following article:
  * https://www.robinwieruch.de/react-hooks-fetch-data/
@@ -12,7 +23,10 @@ const ActionTypes = {
   FETCH_FAILURE: 'FETCH_FAILURE',
 };
 
-const createApiDataReducer = (initialData = null) => (state, action) => {
+const createApiDataReducer = (initialData: object | null = null) => (
+  state: object,
+  action: Action
+) => {
   switch (action.type) {
     case ActionTypes.FETCH_INIT:
       return { ...state, isLoading: true, isError: false };
@@ -36,7 +50,7 @@ const createApiDataReducer = (initialData = null) => (state, action) => {
 };
 
 // The data api request options object
-const DEFAULT_REQUEST_OPTIONS = {
+const DEFAULT_REQUEST_OPTIONS: ApiRequestOptions = {
   // Url to data api
   url: '',
   // Request query params
@@ -46,8 +60,8 @@ const DEFAULT_REQUEST_OPTIONS = {
 };
 
 export const useDataApi = (
-  options = DEFAULT_REQUEST_OPTIONS,
-  initialData = {}
+  options: ApiRequestOptions = DEFAULT_REQUEST_OPTIONS,
+  initialData: object = {}
 ) => {
   const [requestOptions, setRequestOptions] = useState(options);
   const apiDataReducer = createApiDataReducer(initialData);
@@ -98,7 +112,7 @@ export const useDataApi = (
     // See: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
   }, [requestOptions]);
 
-  const refetch = options => {
+  const refetch = (options: ApiRequestOptions) => {
     setRequestOptions({ ...options, postpone: false });
   };
 
