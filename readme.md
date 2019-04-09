@@ -7,15 +7,16 @@ is a portal for official communication with the municipality of Amsterdam.
 
 ### Keypoints
 
-- Javascript SPA
+- Typescript SPA
 - Boilerplate with `create-react-app`
 - Built with `react`
+- Uses `scss` for css pre processing
 - Uses `css modules` for style composition
 - Communication via REST Api
 
 ### Development
 
-- Be extra considerate about naming things, discuss with the team if needed.
+- Be extra considerate about naming things, discuss with the team if needed. Dutch terms that cannot be easily translated are kept dutch. The test can be provided in English.
 - Write a test when a complex and/or critical component is encountered. We don't require 100% test coverage however...
 - Take time to review code. Thorough reviews are a good addition for preventing sloppy code and bugs.
 - Try to improve your skills, ask questions, be thoughtful and voice concerns if you have them.
@@ -23,7 +24,7 @@ is a portal for official communication with the municipality of Amsterdam.
 #### Components
 
 Stick to functional react components as much as possible, when you need state within a component
-use the hooks api or context provider.
+use the hooks api with context provider.
 
 Multiple components/exports per file is ok als long as they are logically grouped and the line count is managable.
 
