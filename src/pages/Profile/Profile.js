@@ -11,32 +11,32 @@ import { Chapters } from 'App.constants';
 import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
 
 function formatProfileData({
-  me = {},
+  person = {},
   partner = {},
   address = {},
-  legalCommitment = null,
+  maritalStatus = null,
 }) {
   return {
-    me: me && {
-      [brpInfoLabels.FirstName]: me.voornamen,
-      [brpInfoLabels.LastName]: me.geslachtsnaam,
-      [brpInfoLabels.Gender]: me.omschrijvingGeslachtsaanduiding,
-      [brpInfoLabels.BSN]: me.bsn,
-      [brpInfoLabels.DateOfBirth]: defaultDateFormat(me.geboortedatum),
-      [brpInfoLabels.PlaceOfBirth]: me.geboorteplaatsnaam,
-      [brpInfoLabels.CountryOfBirth]: me.geboortelandnaam,
+    person: person && {
+      [brpInfoLabels.FirstName]: person.firstName,
+      [brpInfoLabels.LastName]: person.lastName,
+      [brpInfoLabels.Gender]: person.gender,
+      [brpInfoLabels.BSN]: person.bsn,
+      [brpInfoLabels.DateOfBirth]: defaultDateFormat(person.dateOfBirth),
+      [brpInfoLabels.PlaceOfBirth]: person.placeOfBirth,
+      [brpInfoLabels.CountryOfBirth]: person.countryOfBirth,
     },
     partner: partner && {
-      [brpInfoLabels.FirstName]: partner.voornamen,
-      [brpInfoLabels.LastName]: partner.geslachtsnaam,
-      [brpInfoLabels.BSN]: me.bsn,
-      [brpInfoLabels.DateOfBirth]: defaultDateFormat(partner.geboortedatum),
+      [brpInfoLabels.FirstName]: partner.firstName,
+      [brpInfoLabels.LastName]: partner.lastName,
+      [brpInfoLabels.BSN]: partner.bsn,
+      [brpInfoLabels.DateOfBirth]: defaultDateFormat(partner.dateOfBirth),
     },
-    legalCommitment: legalCommitment && {
-      '': legalCommitment.type,
-      [brpInfoLabels.Date]: defaultDateFormat(legalCommitment.dateStarted),
-      [brpInfoLabels.Place]: legalCommitment.place,
-      [brpInfoLabels.Country]: legalCommitment.country,
+    maritalStatus: maritalStatus && {
+      '': maritalStatus.type,
+      [brpInfoLabels.Date]: defaultDateFormat(maritalStatus.dateStarted),
+      [brpInfoLabels.Place]: maritalStatus.place,
+      [brpInfoLabels.Country]: maritalStatus.country,
     },
     address: address.current && {
       '': address.current.locality,
@@ -66,7 +66,7 @@ export default function Profile() {
           dus dat deze gegevens kloppen.
         </p>
         {Object.entries(brpInfo)
-          .filter(([id]) => !!brpInfo[id])
+          .filter(([id]) => !!brpInfo[id]) // check if object key has a truthy value associated.
           .map(([id, info]) => {
             return <InfoPanel key={id} {...panelConfig[id]} info={info} />;
           })}

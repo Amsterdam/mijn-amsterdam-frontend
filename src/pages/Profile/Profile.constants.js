@@ -1,7 +1,7 @@
 import { ExternalUrls } from 'App.constants';
 
 export const panelConfig = {
-  me: {
+  person: {
     title: 'Persoonlijke gegevens',
     actionLinks: [
       {
@@ -21,7 +21,7 @@ export const panelConfig = {
       },
     ],
   },
-  legalCommitment: {
+  maritalStatus: {
     title: 'Verbintenis',
     actionLinks: [
       {

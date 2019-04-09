@@ -5,7 +5,7 @@ import { ReactComponent as AmsterdamLogoLarge } from 'assets/images/logo-amsterd
 import classnames from 'classnames';
 import MainHeaderHero from 'components/MainHeaderHero/MainHeaderHero';
 import MainNavBar from 'components/MainNavBar/MainNavBar';
-import { getProfileLabel } from 'hooks/brp-api.hook';
+import { getProfileLabel, BrpState, Person } from 'hooks/brp-api.hook';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import useReactRouter from 'use-react-router';
@@ -18,7 +18,12 @@ import {
 } from 'components/ButtonLink/ButtonLink';
 import Heading from 'components/Heading/Heading';
 
-function SecondaryLinks({ me, hasMessages = true }) {
+interface SecondaryLinksProps {
+  person: Person;
+  hasMessages?: boolean;
+}
+
+function SecondaryLinks({ person, hasMessages = false }: SecondaryLinksProps) {
   return (
     <nav className={styles.secondaryLinks}>
       <ButtonLinkExternal
@@ -27,8 +32,8 @@ function SecondaryLinks({ me, hasMessages = true }) {
       >
         Berichtenbox
       </ButtonLinkExternal>
-      {me && me.voornamen && (
-        <Link to={AppRoutes.PROFILE}>{getProfileLabel(me)}</Link>
+      {person && person.firstName && (
+        <Link to={AppRoutes.PROFILE}>{getProfileLabel(person)}</Link>
       )}
       {
         <IconButtonLink external={true} target="_self" to={LOGOUT_URL}>
@@ -60,7 +65,7 @@ export default function MainHeader() {
             aria-label="Amsterdam logo"
             className={styles.logo}
           />
-          <Heading size="large" el="h1">
+          <Heading size="large" el="h1" className>
             <Link className={styles.logoLink} to={AppRoutes.ROOT}>
               Mijn Amsterdam
             </Link>
@@ -73,7 +78,7 @@ export default function MainHeader() {
         />
       </div>
       <MainNavBar />
-      {isAuthenticated && <SecondaryLinks me={BRP.me} />}
+      {isAuthenticated && <SecondaryLinks person={BRP.person} />}
       <MainHeaderHero />
     </header>
   );
