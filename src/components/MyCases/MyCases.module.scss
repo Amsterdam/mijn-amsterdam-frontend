@@ -9,6 +9,7 @@
 .List {
   @include reset-list-style;
   display: flex;
+  flex-wrap: wrap;
 }
 
 .CaseItem {
@@ -16,7 +17,7 @@
   line-height: 5.5rem;
   padding-left: 5rem;
   position: relative;
-  flex: 1;
+  flex-basis: calc(50% - 4rem);
 
   &:nth-child(odd) {
     margin-right: 4rem;
