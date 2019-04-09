@@ -4,21 +4,10 @@
   width: 100%;
   overflow: hidden;
   position: relative;
-  padding-top: 25%;
-  min-height: 20em;
-
-  @media screen and (orientation: portrait) {
-    padding-top: 40%;
-  }
 }
 
 .TheImg {
   display: block;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  min-width: 100%;
+  width: 100%;
   height: auto;
-  min-height: 100%;
 }
