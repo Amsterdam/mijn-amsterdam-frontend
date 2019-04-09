@@ -5,7 +5,7 @@ import { ReactComponent as AmsterdamLogoLarge } from 'assets/images/logo-amsterd
 import classnames from 'classnames';
 import MainHeaderHero from 'components/MainHeaderHero/MainHeaderHero';
 import MainNavBar from 'components/MainNavBar/MainNavBar';
-import { getProfileLabel, BrpState, Person } from 'hooks/brp-api.hook';
+import { getProfileLabel, BrpState, Person } from 'hooks/api/brp-api.hook';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import useReactRouter from 'use-react-router';

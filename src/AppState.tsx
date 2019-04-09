@@ -1,9 +1,9 @@
 import React, { createContext } from 'react';
-import { useBrpApi, BrpState } from 'hooks/brp-api.hook';
-import useSessionApi from 'hooks/session.api.hook';
-import useMyUpdatesApi from 'hooks/my-updates-api.hook';
-import useMyCasesApi from 'hooks/my-cases-api.hook';
-import useMyTipsApi from 'hooks/my-tips-api.hook';
+import { useBrpApi, BrpState } from 'hooks/api/brp-api.hook';
+import useSessionApi from 'hooks/api/session.api.hook';
+import useMyUpdatesApi from 'hooks/api/my-updates-api.hook';
+import useMyCasesApi from 'hooks/api/my-cases-api.hook';
+import useMyTipsApi from 'hooks/api/my-tips-api.hook';
 
 // E.g Used for testing componnets that consume parts of the app state.
 export interface CustomAppState {
