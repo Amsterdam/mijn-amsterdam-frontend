@@ -8,7 +8,7 @@ import MainFooter from './components/MainFooter/MainFooter';
 import Profile from './pages/Profile/Profile';
 import NotFound from './pages/NotFound/NotFound';
 import styles from './App.module.scss';
-import Landing from 'pages/Landing/Landing.js';
+import Landing from 'pages/Landing/Landing';
 import MyUpdates from 'pages/MyUpdates/MyUpdates';
 import MyTips from 'pages/MyTips/MyTips';
 import Burgerzaken from 'pages/Burgerzaken/Burgerzaken';
