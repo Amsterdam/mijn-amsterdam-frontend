@@ -2,11 +2,11 @@ import { useDataApi } from './api.hook';
 
 const INITIAL_STATE = { items: [], total: 0, offset: 0, limit: 3 };
 
-export default (
+export default function paginatedApi(
   url: string,
   offset: number = INITIAL_STATE.offset,
   limit: number = INITIAL_STATE.limit
-) => {
+) {
   const options = {
     url,
     params: { offset, limit },

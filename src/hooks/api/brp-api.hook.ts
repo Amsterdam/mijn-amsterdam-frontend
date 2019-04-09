@@ -1,5 +1,6 @@
-import { useDataApi, ApiHook } from './api.hook';
+import { useDataApi } from './api.hook';
 import { ApiUrls } from 'App.constants';
+import { ApiHook } from './api.types';
 
 // Interfaces shaped to API data state
 interface GerelateerdePartner {
@@ -83,6 +84,7 @@ export const useBrpApi = (initialState = {}): BrpState | object => {
   const options = { url: ApiUrls.BRP };
   const { data, refetch } = useDataApi(options, initialState);
 
+  // TODO: Cleanup this mess and have the API return properly formatted data.
   if (data.persoon) {
     const persoon: Persoon = data.persoon || {};
 
