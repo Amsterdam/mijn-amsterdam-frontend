@@ -1,15 +1,28 @@
 import { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
+import { Unshaped } from 'App.types';
 
 export interface ApiRequestOptions {
   url: string;
-  params?: Record<string, any>;
+  params?: Unshaped;
   postpone?: boolean;
 }
 
 export interface Action {
   type: string;
   payload?: any;
+}
+
+export interface ApiData {
+  isLoading: boolean;
+  isError: boolean;
+  data: Unshaped;
+}
+
+export interface ApiHook extends ApiData {
+  isPristine: boolean;
+  isDirty: boolean;
+  refetch: (options: ApiRequestOptions) => void
 }
 
 /**
@@ -23,10 +36,10 @@ const ActionTypes = {
   FETCH_FAILURE: 'FETCH_FAILURE',
 };
 
-const createApiDataReducer = (initialData: object | null = null) => (
-  state: object,
+const createApiDataReducer = (initialData: Unshaped = {}) => (
+  state: ApiData,
   action: Action
-) => {
+): ApiData => {
   switch (action.type) {
     case ActionTypes.FETCH_INIT:
       return { ...state, isLoading: true, isError: false };
@@ -61,7 +74,7 @@ const DEFAULT_REQUEST_OPTIONS: ApiRequestOptions = {
 
 export const useDataApi = (
   options: ApiRequestOptions = DEFAULT_REQUEST_OPTIONS,
-  initialData: object = {}
+  initialData: Unshaped = {}
 ) => {
   const [requestOptions, setRequestOptions] = useState(options);
   const apiDataReducer = createApiDataReducer(initialData);

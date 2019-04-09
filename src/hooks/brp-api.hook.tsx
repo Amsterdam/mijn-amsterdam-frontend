@@ -1,4 +1,4 @@
-import { useDataApi } from './api.hook';
+import { useDataApi, ApiHook } from './api.hook';
 import { ApiUrls } from 'App.constants';
 
 // Interfaces shaped to API data state
@@ -76,7 +76,7 @@ export interface BrpState {
   partner?: Pick<Person, 'firstName' | 'lastName' | 'dateOfBirth' | 'bsn'>;
   address: Addresses;
   maritalStatus?: MaritalStatus;
-  refetch: () => void;
+  refetch: ApiHook['refetch'];
 }
 
 export const useBrpApi = (initialState = {}): BrpState | object => {
@@ -92,7 +92,14 @@ export const useBrpApi = (initialState = {}): BrpState | object => {
         )
       : persoon.heeftAlsEchtgenootPartner || null;
 
-    const partner = partnerItem && partnerItem.gerelateerde;
+    const partner = partnerItem &&
+      partnerItem.gerelateerde && {
+        firstName: partnerItem.gerelateerde.voornamen,
+        country: partnerItem.landnaamSluiting,
+        lastName: '',
+        bsn: 0,
+        dateOfBirth: '',
+      };
 
     const address = {
       current: {
@@ -110,13 +117,16 @@ export const useBrpApi = (initialState = {}): BrpState | object => {
       dateStarted: persoon.tijdvakGeldigheid.beginGeldigheid,
       place:
         persoon.plaatsnaamSluiting ||
-        (partnerItem && partnerItem.plaatsnaamSluitingOmschrijving),
+        (partnerItem && partnerItem.plaatsnaamSluitingOmschrijving) ||
+        '',
       country:
-        (partner && partner.landnaamSluiting) ||
-        (partnerItem && partnerItem.landnaamSluiting),
+        (partner && partner.country) ||
+        (partnerItem && partnerItem.landnaamSluiting) ||
+        '',
     };
 
     const person = {
+      bsn: persoon.bsn,
       firstName: persoon.voornamen,
       lastName: persoon.voorvoegselGeslachtsnaam
         ? `${persoon.voorvoegselGeslachtsnaam} ${persoon.geslachtsnaam}`
