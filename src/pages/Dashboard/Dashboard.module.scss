@@ -1,13 +1,20 @@
 @import 'styles/_global.scss';
 
 .Dashboard {
-  @include select(PageContentMainBody) {
-    margin-top: -3.8rem;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding-bottom: 10rem;
-  }
+}
+
+.UpdatesChaptersContainer {
+  width: $main-boxed-width;
+  display: flex;
+  margin-bottom: 12rem;
+}
+
+.MainBody {
+  @include center-flex-col;
+  width: $main-max-width;
+  margin: 0 auto;
+  margin-top: -3.8rem;
+  padding-bottom: 10rem;
 
   @include select(MyUpdates_MyUpdates) {
     flex-basis: calc(50% - 9rem); // margin-left + margin-right + virtual-gutter
@@ -28,19 +35,21 @@
     width: calc(50% + 1rem); // + virtual-gutter
   }
 
+  @include select(MyCases_MyCases) {
+    width: $main-boxed-width;
+    margin-bottom: 8rem;
+  }
+
+  @include select(MyArea_MyArea) {
+    margin-bottom: 12rem;
+  }
+
+  @include select(MyTips_MyTips) {
+    width: $main-boxed-width;
+    margin-bottom: 12rem;
+  }
+
   @include select(DirectLinks_DirectLinks) {
-    width: 100%;
-    margin-bottom: 5rem;
+    width: $main-boxed-width;
   }
-
-  @include select(MyCases) {
-    width: 100%;
-    margin-bottom: 2rem;
-  }
-}
-
-.MainBody {
-  max-width: $main-boxed-width;
-  width: 100%;
-  margin: 0 auto;
 }
