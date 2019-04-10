@@ -1,6 +1,6 @@
 import { useDataApi } from './api.hook';
 import { ApiUrls } from 'App.constants';
-import { ApiHook } from './api.types';
+import { ApiHookState } from './api.types';
 
 // Interfaces shaped to API data state
 interface GerelateerdePartner {
@@ -77,7 +77,7 @@ export interface BrpState {
   partner?: Pick<Person, 'firstName' | 'lastName' | 'dateOfBirth' | 'bsn'>;
   address: Addresses;
   maritalStatus?: MaritalStatus;
-  refetch: ApiHook['refetch'];
+  refetch: ApiHookState['refetch'];
 }
 
 export const useBrpApi = (initialState = {}): BrpState | object => {

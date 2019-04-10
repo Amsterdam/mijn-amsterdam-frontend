@@ -1,7 +1,7 @@
 import { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import { Unshaped } from 'App.types';
-import { ApiData, Action, ApiRequestOptions } from './api.types';
+import { Action, ApiRequestOptions, ApiState } from './api.types';
 
 /**
  * Concepts in this hook are described in the following article:
@@ -15,9 +15,9 @@ const ActionTypes = {
 };
 
 const createApiDataReducer = (initialData: Unshaped = {}) => (
-  state: ApiData,
+  state: ApiState,
   action: Action
-): ApiData => {
+): ApiState => {
   switch (action.type) {
     case ActionTypes.FETCH_INIT:
       return { ...state, isLoading: true, isError: false };

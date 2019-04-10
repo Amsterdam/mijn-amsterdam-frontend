@@ -11,13 +11,13 @@ export interface Action {
   payload?: any;
 }
 
-export interface ApiData {
+export interface ApiState {
   isLoading: boolean;
   isError: boolean;
   data: Unshaped;
 }
 
-export interface ApiHook extends ApiData {
+export interface ApiHookState extends ApiState {
   isPristine: boolean;
   isDirty: boolean;
   refetch: (options: ApiRequestOptions) => void;

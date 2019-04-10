@@ -1,14 +1,14 @@
 import { useDataApi } from './api.hook';
 import { Unshaped } from 'App.types';
 
-export interface PaginatedItemsState {
+export interface PaginatedItems {
   items: Unshaped[];
   total: number;
   offset: number;
   limit: number;
 }
 
-const INITIAL_STATE: PaginatedItemsState = {
+const INITIAL_STATE: PaginatedItems = {
   items: [],
   total: 0,
   offset: 0,
