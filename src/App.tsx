@@ -2,11 +2,13 @@ import React from 'react';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 
 import AppState, { SessionState } from './AppState';
-import { AppRoutes } from './App.constants.js';
-import MainHeader from './components/MainHeader/MainHeader.js';
-import MainFooter from './components/MainFooter/MainFooter.js';
-import Profile from './pages/Profile/Profile.js';
-import NotFound from './pages/NotFound/NotFound.js';
+import { AppRoutes } from './App.constants';
+import MainHeader, {
+  MainHeaderProps,
+} from './components/MainHeader/MainHeader';
+import MainFooter from './components/MainFooter/MainFooter';
+import Profile from './pages/Profile/Profile';
+import NotFound from './pages/NotFound/NotFound';
 import styles from './App.module.scss';
 import MyUpdates from 'pages/MyUpdates/MyUpdates';
 import MyTips from 'pages/MyTips/MyTips';
@@ -19,10 +21,10 @@ import Wonen from 'pages/Wonen/Wonen';
 import Inkomen from 'pages/Inkomen/Inkomen';
 import Zorg from 'pages/Zorg/Zorg';
 
-function MainApp({ me, isAuthenticated }) {
+function MainApp({ person, isAuthenticated }: MainHeaderProps) {
   return (
     <>
-      <MainHeader me={me} isAuthenticated={isAuthenticated} />
+      <MainHeader person={person} isAuthenticated={isAuthenticated} />
       <div className={styles.App}>
         <Switch>
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
@@ -58,7 +60,7 @@ export default function App() {
               session={session}
               render={({ SESSION, BRP }) => (
                 <MainApp
-                  me={BRP.me}
+                  person={BRP.person}
                   isAuthenticated={SESSION.isAuthenticated}
                 />
               )}

@@ -4,7 +4,6 @@ import { ReactComponent as AmsterdamLogoLarge } from 'assets/images/logo-amsterd
 import classnames from 'classnames';
 import MainHeaderHero from 'components/MainHeaderHero/MainHeaderHero';
 import MainNavBar from 'components/MainNavBar/MainNavBar';
-import { getProfileLabel } from 'hooks/brp-api.hook';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
@@ -15,6 +14,7 @@ import {
   IconButtonLink,
 } from 'components/ButtonLink/ButtonLink';
 import Heading from 'components/Heading/Heading';
+import { Person } from 'hooks/api/brp-api.hook';
 
 interface SecondaryLinksProps {
   person: Person;
@@ -31,7 +31,7 @@ function SecondaryLinks({ person, hasMessages = false }: SecondaryLinksProps) {
         Berichtenbox
       </ButtonLinkExternal>
       {person && person.firstName && (
-        <Link to={AppRoutes.PROFILE}>{getProfileLabel(person)}</Link>
+        <Link to={AppRoutes.PROFILE}>{person.fullName}</Link>
       )}
       {
         <IconButtonLink external={true} target="_self" to={LOGOUT_URL}>
@@ -42,7 +42,15 @@ function SecondaryLinks({ person, hasMessages = false }: SecondaryLinksProps) {
   );
 }
 
-export default function MainHeader({ person, isAuthenticated }) {
+export interface MainHeaderProps {
+  person?: Person | null;
+  isAuthenticated?: boolean;
+}
+
+export default function MainHeader({
+  person = null,
+  isAuthenticated = false,
+}: MainHeaderProps) {
   return (
     <header className={styles.header}>
       <div className={classnames(styles.topBar)}>
@@ -64,7 +72,7 @@ export default function MainHeader({ person, isAuthenticated }) {
           className={styles.betaLabel}
         />
       </div>
-      {isAuthenticated && (
+      {isAuthenticated && person && (
         <>
           <MainNavBar />
           <SecondaryLinks person={person} />

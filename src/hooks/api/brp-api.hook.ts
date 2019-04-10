@@ -56,6 +56,7 @@ export type MaritalStatusType = 'gehuwd' | 'ongehuwd';
 export interface Person {
   firstName: string;
   lastName: string;
+  fullName: string;
   gender: string;
   dateOfBirth: string;
   placeOfBirth: string;
@@ -72,17 +73,17 @@ export interface Addresses {
   current: Address;
 }
 
-export interface BrpState {
-  person: Person;
+export interface BrpApiState extends Omit<ApiHookState, 'data'> {
+  person?: Person;
   partner?: Pick<Person, 'firstName' | 'lastName' | 'dateOfBirth' | 'bsn'>;
-  address: Addresses;
+  address?: Addresses;
   maritalStatus?: MaritalStatus;
-  refetch: ApiHookState['refetch'];
 }
 
-export const useBrpApi = (initialState = {}): BrpState | object => {
+export const useBrpApi = (initialState = {}): BrpApiState => {
   const options = { url: ApiUrls.BRP };
-  const { data, refetch } = useDataApi(options, initialState);
+  const api = useDataApi(options, initialState);
+  const { data, ...rest } = api;
 
   // TODO: Cleanup this mess and have the API return properly formatted data.
   if (data.persoon) {
@@ -127,28 +128,23 @@ export const useBrpApi = (initialState = {}): BrpState | object => {
         '',
     };
 
-    const person = {
+    const lastName = persoon.voorvoegselGeslachtsnaam
+      ? `${persoon.voorvoegselGeslachtsnaam} ${persoon.geslachtsnaam}`
+      : persoon.geslachtsnaam;
+
+    const person: Person = {
       bsn: persoon.bsn,
       firstName: persoon.voornamen,
-      lastName: persoon.voorvoegselGeslachtsnaam
-        ? `${persoon.voorvoegselGeslachtsnaam} ${persoon.geslachtsnaam}`
-        : persoon.geslachtsnaam,
+      lastName,
+      fullName: `${persoon.voornamen} ${lastName}`,
       dateOfBirth: persoon.geboortedatum,
       placeOfBirth: persoon.geboorteplaatsnaam,
       countryOfBirth: persoon.geboortelandnaam,
       gender: persoon.omschrijvingGeslachtsAanduiding,
     };
 
-    return { person, partner, address, maritalStatus, refetch };
+    return { ...rest, person, partner, address, maritalStatus };
   }
 
-  return {};
+  return rest;
 };
-
-export function getProfileLabel(person: Person) {
-  if (person) {
-    return `${person.firstName} ${person.lastName}`;
-  }
-
-  return 'Persoonlijke gegevens';
-}
