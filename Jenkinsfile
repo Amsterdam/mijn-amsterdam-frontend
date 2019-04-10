@@ -54,17 +54,17 @@ if (BRANCH == "test") {
         }
     }
 
-    // node {
-    //     stage("Deploy to ACC") {
-    //         tryStep "deployment", {
-    //             build job: 'Subtask_Openstack_Playbook',
-    //                 parameters: [
-    //                     [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
-    //                     [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml'],
-    //                 ]
-    //         }
-    //     }
-    // }
+    node {
+        stage("Deploy to ACC") {
+            tryStep "deployment", {
+                build job: 'Subtask_Openstack_Playbook',
+                    parameters: [
+                        [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
+                        [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend-test.yml'],
+                    ]
+            }
+        }
+    }
 }
 
 if (BRANCH == "master" || BRANCH == "test-acc") {
