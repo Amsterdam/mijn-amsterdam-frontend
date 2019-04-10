@@ -11,19 +11,29 @@ export interface CustomAppState {
 }
 
 export interface DefaultAppState {
-  BRP: BrpState,
-  SESSION: SessionState,
-  MY_UPDATES: object,
-  MY_CASES: object,
-  MY_TIPS: object,
+  BRP: BrpState;
+  SESSION: SessionState;
+  MY_UPDATES: object;
+  MY_CASES: object;
+  MY_TIPS: object;
 }
 
 export type AppState = DefaultAppState | CustomAppState;
 
 export const AppContext = createContext<AppState>({});
 
-export default ({ children, value }: { children: JSX.Element[], value?: CustomAppState }) => {
-  const defaultAppState = value || {
+export default ({
+  render,
+  children,
+  value,
+  session,
+}: {
+  children: JSX.Element[];
+  value?: CustomAppState;
+  session: SessionState;
+  render: (state: any) => JSX.Element;
+}) => {
+  const appState = value || {
     BRP: useBrpApi(),
     SESSION: useSessionApi(),
 
@@ -33,5 +43,9 @@ export default ({ children, value }: { children: JSX.Element[], value?: CustomAp
     MY_TIPS: useMyTipsApi(),
   };
 
-  return <AppContext.Provider value={defaultAppState}>{children}</AppContext.Provider>;
-}
+  return (
+    <AppContext.Provider value={appState}>
+      {render ? render(appState) : children}
+    </AppContext.Provider>
+  );
+};
