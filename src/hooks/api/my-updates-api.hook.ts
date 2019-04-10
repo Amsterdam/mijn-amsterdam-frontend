@@ -1,5 +1,5 @@
 import { ApiUrls, Chapter } from 'App.constants';
-import paginatedApiHook, { PaginatedItems } from './paginated-api.hook';
+import paginatedApiHook, { PaginatedItemsResponse } from './paginated-api.hook';
 import { ApiHookState } from './api.types';
 
 export interface MyUpdate {
@@ -13,14 +13,14 @@ export interface MyUpdate {
   };
 }
 
-export interface MyUpdates extends PaginatedItems {
+export interface MyUpdatesResponse extends PaginatedItemsResponse {
   items: MyUpdate[];
 }
 
 export interface MyUpdatesState extends ApiHookState {
-  data: MyUpdates;
+  data: MyUpdatesResponse;
 }
 
-export default (offset?: number, limit?: number) => {
+export default (offset?: number, limit?: number): MyUpdatesState => {
   return paginatedApiHook(ApiUrls.MY_UPDATES, offset, limit);
 };

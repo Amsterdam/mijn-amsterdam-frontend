@@ -14,11 +14,11 @@ export interface Action {
 export interface ApiState {
   isLoading: boolean;
   isError: boolean;
-  data: Unshaped;
+  data: any;
 }
 
 export interface ApiHookState extends ApiState {
   isPristine: boolean;
   isDirty: boolean;
-  refetch: (options: ApiRequestOptions) => void;
+  refetch: (options?: ApiRequestOptions | any) => void;
 }
