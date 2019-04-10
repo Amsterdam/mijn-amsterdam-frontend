@@ -8,37 +8,37 @@ import { ReactComponent as JeugdhulpIcon } from 'assets/icons/Passport.svg';
 
 export const MyChaptersMenuItems = [
   {
-    label: 'Burgerzaken',
+    title: 'Burgerzaken',
     id: 'burgerzaken',
     to: AppRoutes.BURGERZAKEN,
     Icon: BurgerzakenIcon,
   },
   {
-    label: 'Wonen',
+    title: 'Wonen',
     id: 'wonen',
     to: AppRoutes.WONEN,
     Icon: WonenIcon,
   },
   {
-    label: 'Belastingen',
+    title: 'Belastingen',
     id: 'belastingen',
     to: AppRoutes.BELASTINGEN,
     Icon: BelastingenIcon,
   },
   {
-    label: 'Zorg',
+    title: 'Zorg',
     id: 'gezondhied',
     to: AppRoutes.ZORG,
     Icon: ZorgIcon,
   },
   {
-    label: 'Inkomen',
+    title: 'Inkomen',
     id: 'inkomen',
     to: AppRoutes.INKOMEN,
     Icon: InkomenIcon,
   },
   {
-    label: 'Jeugdhulp',
+    title: 'Jeugdhulp',
     id: 'jeugdhulp',
     to: AppRoutes.JEUGDHULP,
     Icon: JeugdhulpIcon,
@@ -47,16 +47,16 @@ export const MyChaptersMenuItems = [
 
 export const MenuConfig = [
   {
-    label: 'Home',
+    title: 'Home',
     id: 'home',
     to: AppRoutes.ROOT,
   },
   {
-    label: "Mijn thema's",
+    title: "Mijn thema's",
     id: 'mijn-themas',
     to: AppRoutes.MIJN_THEMAS,
     submenuItems: MyChaptersMenuItems,
   },
-  { label: 'Mijn buurt', id: 'mijn-buurt', to: AppRoutes.MIJN_BUURT },
-  { label: 'Mijn updates', id: 'mijn-updates', to: AppRoutes.MY_UPDATES },
+  { title: 'Mijn buurt', id: 'mijn-buurt', to: AppRoutes.MIJN_BUURT },
+  { title: 'Mijn updates', id: 'mijn-updates', to: AppRoutes.MY_UPDATES },
 ];

@@ -12,11 +12,11 @@ export default function MyChaptersPanel({ title }) {
         {title}
       </Heading>
       <div className={styles.Links}>
-        {MyChaptersMenuItems.map(({ id, to, Icon, label }) => {
+        {MyChaptersMenuItems.map(({ id, to, Icon, title }) => {
           return (
             <MainNavSubmenuLink key={id} to={to} id={id}>
               {Icon && <Icon fill={Colors.neutralGrey4} aria-hidden="true" />}
-              {label}
+              {title}
             </MainNavSubmenuLink>
           );
         })}

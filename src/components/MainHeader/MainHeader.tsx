@@ -14,7 +14,7 @@ import {
   IconButtonLink,
 } from 'components/ButtonLink/ButtonLink';
 import Heading from 'components/Heading/Heading';
-import { Person } from 'hooks/api/brp-api.hook';
+import { Person } from 'data-formatting/brp';
 
 interface SecondaryLinksProps {
   person: Person;

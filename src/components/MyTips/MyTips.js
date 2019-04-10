@@ -11,7 +11,7 @@ const Tip = ({ tip }) => (
     <div className={styles.ImageContainer} />
     <Heading el="h4">{tip.title}</Heading>
     <p>{tip.description}</p>
-    <ButtonLinkExternal to={tip.link.to}>{tip.link.label}</ButtonLinkExternal>
+    <ButtonLinkExternal to={tip.link.to}>{tip.link.title}</ButtonLinkExternal>
   </li>
 );
 

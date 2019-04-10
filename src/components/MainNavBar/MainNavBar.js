@@ -23,14 +23,14 @@ function getMenuItem(MenuItem, activeSubmenuId, setSubMenuVisibility) {
       <MainNavSubmenu
         key={MenuItem.id}
         id={MenuItem.id}
-        title={MenuItem.label}
+        title={MenuItem.title}
         isOpen={isOpen}
         onFocus={() => !isOpen && setSubMenuVisibility(MenuItem.id)}
         onClick={event => event.preventDefault()} // Prevent chrome from closing the submenu by triggering focus handler on click
         onMouseEnter={() => setSubMenuVisibility(MenuItem.id)}
         onMouseLeave={() => setSubMenuVisibility()}
       >
-        {MenuItem.submenuItems.map(({ id, to, Icon, label }) => {
+        {MenuItem.submenuItems.map(({ id, to, Icon, title }) => {
           return (
             <MainNavSubmenuLink
               key={id}
@@ -39,7 +39,7 @@ function getMenuItem(MenuItem, activeSubmenuId, setSubMenuVisibility) {
               onFocus={() => setSubMenuVisibility(MenuItem.id, true)}
             >
               {Icon && <Icon fill={Colors.neutralGrey4} aria-hidden="true" />}
-              {label}
+              {title}
             </MainNavSubmenuLink>
           );
         })}
@@ -55,7 +55,7 @@ function getMenuItem(MenuItem, activeSubmenuId, setSubMenuVisibility) {
       onFocus={() => setSubMenuVisibility(MenuItem.id)}
       onMouseEnter={() => setSubMenuVisibility(MenuItem.id)}
     >
-      {MenuItem.label}
+      {MenuItem.title}
     </MainNavLink>
   );
 }

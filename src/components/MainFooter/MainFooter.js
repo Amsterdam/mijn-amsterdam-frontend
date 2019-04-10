@@ -44,10 +44,10 @@ export default function MainFooter() {
         <div className={styles.FollowPanel}>
           <h3>Volg de gemeente</h3>
           <ul>
-            {LinkList.map(({ to, label }) => (
-              <li key={label}>
-                <ButtonLinkExternal key={label} white={true} to={to}>
-                  {label}
+            {LinkList.map(({ to, title }) => (
+              <li key={title}>
+                <ButtonLinkExternal key={title} white={true} to={to}>
+                  {title}
                 </ButtonLinkExternal>
               </li>
             ))}

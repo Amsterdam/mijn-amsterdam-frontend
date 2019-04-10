@@ -8,7 +8,7 @@ export type Chapter =
   | 'INKOMEN'
   | 'PROFILE';
 
-export const Chapters:  { [chapter in Chapter]: Chapter } = {
+export const Chapters: { [chapter in Chapter]: Chapter } = {
   ROOT: 'ROOT',
   BURGERZAKEN: 'BURGERZAKEN',
   WONEN: 'WONEN',
@@ -44,12 +44,12 @@ export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL;
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export const ApiUrls = {
-  MY_UPDATES: `${API_BASE_URL}/profiel/mijn-updates`,
-  MY_CASES: `${API_BASE_URL}/profiel/mijn-lopende-zaken`,
+  MY_UPDATES: `${API_BASE_URL}/focus`,
+  MY_CASES: `${API_BASE_URL}/focus`,
   MY_TIPS: `${API_BASE_URL}/profiel/mijn-tips`,
   BRP: `${API_BASE_URL}/brp/brp`,
   WMO: `${API_BASE_URL}/wmoned/voorzieningen`,
-  FOCUS: `${API_BASE_URL}/focus/aanvragen`,
+  FOCUS: `${API_BASE_URL}/focus`,
   AUTH: `${API_BASE_URL}/auth/check`,
   ERFPACHT: `${API_BASE_URL}/erfpacht/check-erfpacht`,
 };

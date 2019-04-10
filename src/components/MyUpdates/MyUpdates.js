@@ -36,7 +36,7 @@ export default function MyUpdates({ items = [], total = 0 }) {
                 <p className={styles.Description}>{item.description}</p>
               )}
               <p className={styles.Action}>
-                <ButtonLink to={item.link.to}>{item.link.label}</ButtonLink>
+                <ButtonLink to={item.link.to}>{item.link.title}</ButtonLink>
               </p>
             </li>
           );

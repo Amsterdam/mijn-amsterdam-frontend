@@ -8,7 +8,7 @@ export interface MyTip {
   subtitle: string;
   description: string;
   link: {
-    label: string;
+    title: string;
     to: string;
   };
 }

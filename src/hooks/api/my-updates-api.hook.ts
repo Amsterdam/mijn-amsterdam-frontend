@@ -1,6 +1,7 @@
-import { ApiUrls, Chapter } from 'App.constants';
+import { ApiUrls, Chapter, Chapters } from 'App.constants';
 import paginatedApiHook, { PaginatedItemsResponse } from './paginated-api.hook';
 import { ApiHookState } from './api.types';
+import formatFocusApiResponse from 'data-formatting/focus';
 
 export interface MyUpdate {
   chapter: Chapter;
@@ -8,7 +9,7 @@ export interface MyUpdate {
   title: string;
   description: string;
   link: {
-    label: string;
+    title: string;
     to: string;
   };
 }
@@ -22,5 +23,20 @@ export interface MyUpdatesState extends ApiHookState {
 }
 
 export default (offset?: number, limit?: number): MyUpdatesState => {
-  return paginatedApiHook(ApiUrls.MY_UPDATES, offset, limit);
+  const { data, ...rest } = paginatedApiHook(ApiUrls.MY_UPDATES, offset, limit);
+  const items = formatFocusApiResponse(data.items) as any[];
+  // TODO: Store last visited date in localhost and check against that
+  const myUpdateItems = items.map(item => ({
+    ...item,
+    chapter: Chapters.INKOMEN,
+  }));
+
+  return {
+    ...rest,
+    data: {
+      ...data,
+      items: myUpdateItems,
+      total: myUpdateItems.length,
+    },
+  };
 };
