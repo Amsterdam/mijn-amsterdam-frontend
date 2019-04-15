@@ -31,9 +31,9 @@ node {
 
 String BRANCH = "${env.BRANCH_NAME}"
 
-if (BRANCH == "test") {
+if (BRANCH == "master" || BRANCH == "test-acc" || BRANCH == "test") {
 
-    stage("Build test-acc image") {
+    stage("Build image") {
         tryStep "build", {
             docker.withRegistry('https://repo.secure.amsterdam.nl', 'docker-registry') {
                 def image = docker.build("mijnams/mijnamsterdam:${env.BUILD_NUMBER}", "--build-arg http_proxy=${JENKINS_HTTP_PROXY_STRING} --build-arg https_proxy=${JENKINS_HTTP_PROXY_STRING} .")
@@ -43,43 +43,7 @@ if (BRANCH == "test") {
     }
 
     node {
-        stage('Push test image') {
-            tryStep "image tagging", {
-                docker.withRegistry('https://repo.secure.amsterdam.nl', 'docker-registry') {
-                    def image = docker.image("mijnams/mijnamsterdam:${env.BUILD_NUMBER}")
-                    image.pull()
-                    image.push("test")
-                }
-            }
-        }
-    }
-
-    node {
-        stage("Deploy to ACC") {
-            tryStep "deployment", {
-                build job: 'Subtask_Openstack_Playbook',
-                    parameters: [
-                        [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
-                        [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend-test.yml'],
-                    ]
-            }
-        }
-    }
-}
-
-if (BRANCH == "master" || BRANCH == "test-acc") {
-
-    stage("Build acceptance image") {
-        tryStep "build", {
-            docker.withRegistry('https://repo.secure.amsterdam.nl', 'docker-registry') {
-                def image = docker.build("mijnams/mijnamsterdam:${env.BUILD_NUMBER}", "--build-arg http_proxy=${JENKINS_HTTP_PROXY_STRING} --build-arg https_proxy=${JENKINS_HTTP_PROXY_STRING} .")
-                image.push()
-            }
-        }
-    }
-
-    node {
-        stage('Push acceptance image') {
+        stage('Push image') {
             tryStep "image tagging", {
                 docker.withRegistry('https://repo.secure.amsterdam.nl', 'docker-registry') {
                     def image = docker.image("mijnams/mijnamsterdam:${env.BUILD_NUMBER}")
@@ -91,6 +55,7 @@ if (BRANCH == "master" || BRANCH == "test-acc") {
     }
 
     node {
+      if (BRANCH == "master" || BRANCH == "test-acc") {
         stage("Deploy to ACC") {
             tryStep "deployment", {
                 build job: 'Subtask_Openstack_Playbook',
@@ -100,6 +65,18 @@ if (BRANCH == "master" || BRANCH == "test-acc") {
                     ]
             }
         }
+      }
+      if (BRANCH == "test") {
+        stage("Deploy to TEST") {
+            tryStep "deployment", {
+                build job: 'Subtask_Openstack_Playbook',
+                    parameters: [
+                        [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
+                        [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend-test.yml'],
+                    ]
+            }
+        }
+      }
     }
 
     // Enable when project is ready for production
