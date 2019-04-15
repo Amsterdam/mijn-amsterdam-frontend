@@ -64,7 +64,7 @@ export default function MainHeaderHero(props) {
           srcset={LANDSCAPE_MEDIUM}
         />
         */}
-        <img src={src} className={styles.TheImg} alt={alt} />
+        <img src={src} className={styles.Image} alt={alt} />
       </picture>
     </div>
   );
