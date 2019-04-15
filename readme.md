@@ -28,10 +28,13 @@ use the hooks api with context provider.
 
 Multiple components/exports per file is ok als long as they are logically grouped and the line count is managable.
 
-A blueprint for components can be found in `components/AlphaComponent/`. To generate a component based on this bare minium you can
-either copy/paste rename stuff or use a tool like `npm install -g generact`
+A blueprint for basic components can be found in `components/AlphaComponent/`. A blueprint for page components is locataed in `pages/AlphaPage`.
+To generate a component based on these blueprints you can either copy/paste rename stuff or use a tool like `npm install -g generact` which can
+be used to duplicate any component and assign it a specific name.
 
 ### Naming
+
+#### Constants
 
 When creating constants put them in a `Component.constants.js` file. Use `UPPER_SNAKE_CASE` naming. e.g:
 
@@ -39,7 +42,11 @@ When creating constants put them in a `Component.constants.js` file. Use `UPPER_
 const Things = { FOO: 'Bar', WHY_NOT_THIS_ONE: 'I don\'t like pink' }
 ```
 
-When dealing with more than a few types, create a `*.types.ts` file.
+#### Typescript
+
+- When dealing with more than a few types, create a `*.types.ts` file. This keeps module files more readable.
+- Files that include markup are committed with the `.tsx` extension.
+- Generic / global types and interfaces can be put in `App.types.ts`.
 
 #### Styles
 
