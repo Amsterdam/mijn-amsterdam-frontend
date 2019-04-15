@@ -9,6 +9,7 @@ export interface MainNavSubmenuLinkProps {
   id?: string;
   to: string;
   children: ChildrenContent;
+  onFocus: () => void;
 }
 
 export function MainNavSubmenuLink({
@@ -24,10 +25,14 @@ export function MainNavSubmenuLink({
 }
 
 export interface MainNavSubmenuProps {
+  id: string;
   title: string;
   isOpen?: boolean;
   children: ChildrenContent;
+  onMouseEnter: () => void;
   onMouseLeave: () => void;
+  onFocus: () => void;
+  onClick: (event: any) => void;
 }
 
 export default function MainNavSubmenu({

@@ -78,7 +78,10 @@ export default function MainNavBar() {
     SESSION: { isAuthenticated },
   } = useContext(AppContext);
 
-  function setSubMenuVisibility(id, isSubmenuTrigger = false) {
+  function setSubMenuVisibility(
+    id?: string,
+    isSubmenuTrigger: boolean = false
+  ) {
     if (id && activeSubmenuId !== id) {
       activateSubmenu(id);
     } else if (!isSubmenuTrigger) {
@@ -90,7 +93,9 @@ export default function MainNavBar() {
     <nav className={styles.MainNavBar}>
       {isAuthenticated && (
         <div className={styles.LinkContainer}>
-          {menuItems.map(item =>getMenuItem(item, activeSubmenuId, setSubMenuVisibility)}
+          {menuItems.map(item =>
+            getMenuItem(item, activeSubmenuId, setSubMenuVisibility)
+          )}
         </div>
       )}
     </nav>
