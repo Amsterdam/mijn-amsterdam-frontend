@@ -6,11 +6,6 @@ export interface ApiRequestOptions {
   postpone?: boolean;
 }
 
-export interface Action {
-  type: string;
-  payload?: any;
-}
-
 export interface ApiState {
   isLoading: boolean;
   isError: boolean;

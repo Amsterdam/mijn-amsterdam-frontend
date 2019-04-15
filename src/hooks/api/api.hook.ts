@@ -1,7 +1,7 @@
 import { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
-import { Unshaped } from 'App.types';
-import { Action, ApiRequestOptions, ApiState } from './api.types';
+import { Unshaped, Action } from 'App.types';
+import { ApiRequestOptions, ApiState } from './api.types';
 
 /**
  * Concepts in this hook are described in the following article:
@@ -42,11 +42,11 @@ const createApiDataReducer = (initialData: Unshaped = {}) => (
 
 // The data api request options object
 const DEFAULT_REQUEST_OPTIONS: ApiRequestOptions = {
-  // Url to data api
+  // Url to data api endpoint
   url: '',
   // Request query params
   params: {},
-  // Postpone fetch when hook is called initially
+  // Postpone fetch when hook is called/set-up for the first time
   postpone: false,
 };
 
