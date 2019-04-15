@@ -6,6 +6,7 @@ import useDebouncedCallback from 'use-debounce/lib/callback';
 import { ChildrenContent } from 'App.types';
 
 export interface MainNavSubmenuLinkProps {
+  id?: string;
   to: string;
   children: ChildrenContent;
 }

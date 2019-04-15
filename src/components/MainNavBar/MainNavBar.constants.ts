@@ -5,12 +5,11 @@ import { ReactComponent as WonenIcon } from 'assets/images/wonen.svg';
 import { ReactComponent as InkomenIcon } from 'assets/images/inkomen.svg';
 import { ReactComponent as BelastingenIcon } from 'assets/images/belastingen.svg';
 import { ReactComponent as JeugdhulpIcon } from 'assets/icons/Passport.svg';
-import { LinkProps } from 'App.types';
-import { FunctionComponent, SVGProps } from 'react';
+import { LinkProps, SVGComponent } from 'App.types';
 
 export interface MenuItem extends LinkProps {
   id: string;
-  Icon?: FunctionComponent<SVGProps<SVGElement>>;
+  Icon?: SVGComponent;
   submenuItems?: MenuItem[];
 }
 

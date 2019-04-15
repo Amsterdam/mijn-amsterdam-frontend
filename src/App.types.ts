@@ -1,3 +1,5 @@
+import { FunctionComponent, SVGProps } from 'react';
+
 // Generic object interface
 export interface Unshaped {
   [key: string]: any;
@@ -14,4 +16,8 @@ export interface LinkProps {
   title: string;
 }
 
-export type ChildrenContent = React.ReactChild | React.ReactChild[];
+export type SVGComponent = FunctionComponent<SVGProps<SVGElement>>;
+
+export type ChildContent = React.ReactChild | SVGComponent | undefined;
+
+export type ChildrenContent = ChildContent | ChildContent[];
