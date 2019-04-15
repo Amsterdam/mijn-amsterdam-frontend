@@ -1,0 +1,10 @@
+@import 'styles/_global.scss';
+
+.MyAreaContainer {
+  height: calc(100% - 5.5rem);
+}
+
+.MyAreaHeader {
+  height: 50px;
+  background-color: green;
+}

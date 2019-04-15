@@ -41,6 +41,7 @@
   }
 
   @include select(MyArea_MyArea) {
+    height: 48rem;
     margin-bottom: 10rem;
   }
 

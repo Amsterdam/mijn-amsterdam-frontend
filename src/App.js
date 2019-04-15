@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
+import useReactRouter from 'use-react-router';
 
 import AppState, { SessionState } from './AppState';
 import { AppRoutes } from './App.constants.js';
@@ -18,9 +19,22 @@ import Jeugdhulp from 'pages/Jeugdhulp/Jeugdhulp';
 import Wonen from 'pages/Wonen/Wonen';
 import Inkomen from 'pages/Inkomen/Inkomen';
 import Zorg from 'pages/Zorg/Zorg';
+import MyArea from 'pages/MyArea/MyArea';
+
+function isMyAreaRoute(location) {
+  return location ? location.pathname === AppRoutes.MY_AREA : false;
+}
+
+function MyAreaRoute() {
+  return <MyArea />;
+}
 
 function MainApp({ me, isAuthenticated }) {
-  return (
+  const { location } = useReactRouter();
+
+  return isMyAreaRoute(location) ? (
+    <MyAreaRoute />
+  ) : (
     <>
       <MainHeader me={me} isAuthenticated={isAuthenticated} />
       <div className={styles.App}>
@@ -36,6 +50,7 @@ function MainApp({ me, isAuthenticated }) {
           <Route path={AppRoutes.WONEN} component={Wonen} />
           <Route path={AppRoutes.INKOMEN} component={Inkomen} />
           <Route path={AppRoutes.ZORG} component={Zorg} />
+          <Route path={AppRoutes.MY_AREA} component={MyArea} />
           <Route component={NotFound} />
         </Switch>
       </div>
