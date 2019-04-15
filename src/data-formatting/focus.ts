@@ -1,6 +1,8 @@
 import { AppRoutes } from 'App.constants';
 import { defaultDateFormat } from 'helpers/App';
 import { LinkProps } from '../App.types';
+import { Chapter, Chapters } from '../App.constants';
+import Inkomen from 'pages/Inkomen/Inkomen';
 
 type StepName = 'aanvraag' | 'inBehandeling' | 'herstelTermijn' | 'beslissing';
 type DecisionName = 'afwijzing' | 'intrekking' | 'buitenBehandeling';
@@ -203,12 +205,14 @@ export const Labels: LabelData = {
 };
 
 export interface MyCase {
+  id: string;
   datePublished: string;
   title: string;
   subtitle: string;
   description: string;
   status: string;
   inProgress: boolean;
+  chapter: Chapter;
   link: LinkProps;
 }
 
@@ -260,6 +264,8 @@ function formatFocusProduct(product: FocusProduct): MyCase {
   };
 
   return {
+    id,
+    chapter: Chapters.INKOMEN,
     datePublished: stepData.datum,
     title: replaceWith(stepLabels.title, sourceData),
     subtitle: replaceWith(stepLabels.subtitle, sourceData),
