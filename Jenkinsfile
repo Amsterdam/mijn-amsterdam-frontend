@@ -48,12 +48,7 @@ if (BRANCH == "master" || BRANCH == "test-acc" || BRANCH == "test") {
                 docker.withRegistry('https://repo.secure.amsterdam.nl', 'docker-registry') {
                     def image = docker.image("mijnams/mijnamsterdam:${env.BUILD_NUMBER}")
                     image.pull()
-                    if (BRANCH == "master" || BRANCH == "test-acc") {
-                      image.push("acceptance")
-                    }
-                    if (BRANCH == "test") {
-                      image.push("test")
-                    }
+                    image.push("acceptance")
                 }
             }
         }
@@ -76,8 +71,8 @@ if (BRANCH == "master" || BRANCH == "test-acc" || BRANCH == "test") {
             tryStep "deployment", {
                 build job: 'Subtask_Openstack_Playbook',
                     parameters: [
-                        [$class: 'StringParameterValue', name: 'INVENTORY', value: 'test'],
-                        [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml'],
+                        [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
+                        [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend-test.yml'],
                     ]
             }
         }
