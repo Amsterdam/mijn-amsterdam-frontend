@@ -2,16 +2,14 @@ import { ApiUrls, Chapter, Chapters } from 'App.constants';
 import paginatedApiHook, { PaginatedItemsResponse } from './paginated-api.hook';
 import { ApiHookState } from './api.types';
 import formatFocusApiResponse from 'data-formatting/focus';
+import { LinkProps } from 'App.types';
 
 export interface MyUpdate {
   chapter: Chapter;
   datePublished: string;
   title: string;
   description: string;
-  link: {
-    title: string;
-    to: string;
-  };
+  link: LinkProps;
 }
 
 export interface MyUpdatesResponse extends PaginatedItemsResponse {

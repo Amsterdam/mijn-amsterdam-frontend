@@ -1,6 +1,7 @@
 import { ExternalUrls } from 'App.constants';
+import { LinkProps } from 'App.types';
 
-export const LinkList = [
+export const LinkList: LinkProps[] = [
   {
     to: ExternalUrls.AMSTERDAM_NEWSLETTER,
     title: 'Nieuwsbrief Amsterdam.nl',

@@ -1,16 +1,14 @@
 import { ApiUrls } from 'App.constants';
 import paginatedApiHook, { PaginatedItemsResponse } from './paginated-api.hook';
 import { ApiHookState } from './api.types';
+import { LinkProps } from 'react-router-dom';
 
 export interface MyTip {
   datePublished: string;
   title: string;
   subtitle: string;
   description: string;
-  link: {
-    title: string;
-    to: string;
-  };
+  link: LinkProps;
 }
 
 export interface MyTipsResponse extends PaginatedItemsResponse {

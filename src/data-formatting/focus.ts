@@ -1,5 +1,6 @@
 import { AppRoutes } from 'App.constants';
 import { defaultDateFormat } from 'helpers/App';
+import { LinkProps } from '../App.types';
 
 type StepName = 'aanvraag' | 'inBehandeling' | 'herstelTermijn' | 'beslissing';
 type DecisionName = 'afwijzing' | 'intrekking' | 'buitenBehandeling';
@@ -208,10 +209,7 @@ export interface MyCase {
   description: string;
   status: string;
   inProgress: boolean;
-  link: {
-    title: string;
-    to: string;
-  };
+  link: LinkProps;
 }
 
 function isInProgess(

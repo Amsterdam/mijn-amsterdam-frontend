@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './InfoPanel.module.scss';
 import ButtonLink from 'components/ButtonLink/ButtonLink';
 import Heading from 'components/Heading/Heading';
-import { Unshaped } from '../../App.types';
+import { Unshaped } from 'App.types';
 
 export interface ActionLink {
   title: string;
