@@ -1,13 +1,11 @@
 import React from 'react';
 import styles from './ChapterHeadingIcon.module.scss';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
+import { ChapterIconProps } from 'components/ChapterIcon/ChapterIcon';
 
-export interface ChapterHeadingIconProps {
-  className: any;
-}
+export type ChapterHeadingIconProps = Omit<ChapterIconProps, 'className'>;
 
 export default function ChapterHeadingIcon({
-  className,
   ...rest
 }: ChapterHeadingIconProps) {
   return (
