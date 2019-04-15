@@ -13,3 +13,5 @@ export interface LinkProps {
   to: string;
   title: string;
 }
+
+export type ChildrenContent = React.ReactChild | React.ReactChild[];

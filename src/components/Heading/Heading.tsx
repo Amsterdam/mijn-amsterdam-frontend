@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Heading.module.scss';
 import classnames from 'classnames';
+import { ChildrenContent } from 'App.types';
 
 type HeadingStyleSize = 'small' | 'medium' | 'mediumLarge' | 'large';
 
@@ -25,7 +26,7 @@ const Elements: { [tagName in HeadingTagName]: HeadingTagName } = {
 interface HeadingProps {
   el?: HeadingTagName;
   size?: HeadingStyleSize;
-  children: React.ReactChild;
+  children: ChildrenContent;
   className?: any;
 }
 
