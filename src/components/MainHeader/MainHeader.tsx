@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
 
 import styles from './MainHeader.module.scss';
+
 import {
   ButtonLinkExternal,
   IconButtonLink,

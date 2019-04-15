@@ -1,12 +1,13 @@
 @import 'styles/_global.scss';
 
 .header {
-  @include center-flex-col;
+
 }
 
 .topBar {
   width: $main-boxed-width;
   height: $main-header-topbar-height;
+  margin: 0 auto;
 
   @include select(Heading) {
     margin: .4em 0 0;
