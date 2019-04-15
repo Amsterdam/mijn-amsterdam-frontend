@@ -32,7 +32,7 @@ export function SessionState({ render }: SessionStateProps) {
 
 interface AppStateProps {
   children?: ChildrenContent;
-  value?: AppState;
+  value?: Partial<AppState>;
   session?: SessionApiState;
   render?: (state: AppState) => ChildrenContent;
 }
