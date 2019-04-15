@@ -31,9 +31,9 @@ node {
 
 String BRANCH = "${env.BRANCH_NAME}"
 
-if (BRANCH == "master" || BRANCH == "test-acc") {
+if (BRANCH == "master" || BRANCH == "test-acc" || BRANCH == "test") {
 
-    stage("Build acceptance image") {
+    stage("Build image") {
         tryStep "build", {
             docker.withRegistry('https://repo.secure.amsterdam.nl', 'docker-registry') {
                 def image = docker.build("mijnams/mijnamsterdam:${env.BUILD_NUMBER}", "--build-arg http_proxy=${JENKINS_HTTP_PROXY_STRING} --build-arg https_proxy=${JENKINS_HTTP_PROXY_STRING} .")
@@ -43,18 +43,24 @@ if (BRANCH == "master" || BRANCH == "test-acc") {
     }
 
     node {
-        stage('Push acceptance image') {
+        stage('Push image') {
             tryStep "image tagging", {
                 docker.withRegistry('https://repo.secure.amsterdam.nl', 'docker-registry') {
                     def image = docker.image("mijnams/mijnamsterdam:${env.BUILD_NUMBER}")
                     image.pull()
-                    image.push("acceptance")
+                    if (BRANCH == "master" || BRANCH == "test-acc") {
+                      image.push("acceptance")
+                    }
+                    if (BRANCH == "test") {
+                      image.push("test")
+                    }
                 }
             }
         }
     }
 
     node {
+      if (BRANCH == "master" || BRANCH == "test-acc") {
         stage("Deploy to ACC") {
             tryStep "deployment", {
                 build job: 'Subtask_Openstack_Playbook',
@@ -64,6 +70,18 @@ if (BRANCH == "master" || BRANCH == "test-acc") {
                     ]
             }
         }
+      }
+      if (BRANCH == "test") {
+        stage("Deploy to TEST") {
+            tryStep "deployment", {
+                build job: 'Subtask_Openstack_Playbook',
+                    parameters: [
+                        [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
+                        [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend-test.yml'],
+                    ]
+            }
+        }
+      }
     }
 
     // Enable when project is ready for production
