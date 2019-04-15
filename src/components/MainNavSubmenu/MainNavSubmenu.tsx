@@ -3,13 +3,30 @@ import styles from './MainNavSubmenu.module.scss';
 import classnames from 'classnames';
 import { NavLink } from 'react-router-dom';
 import useDebouncedCallback from 'use-debounce/lib/callback';
+import { ChildrenContent } from 'App.types';
 
-export function MainNavSubmenuLink({ to, children, ...rest }) {
+export interface MainNavSubmenuLinkProps {
+  to: string;
+  children: ChildrenContent;
+}
+
+export function MainNavSubmenuLink({
+  to,
+  children,
+  ...rest
+}: MainNavSubmenuLinkProps) {
   return (
     <NavLink to={to} className={styles.MainNavSubmenuLink} {...rest}>
       {children}
     </NavLink>
   );
+}
+
+export interface MainNavSubmenuProps {
+  title: string;
+  isOpen?: boolean;
+  children: ChildrenContent;
+  onMouseLeave: () => void;
 }
 
 export default function MainNavSubmenu({
@@ -18,7 +35,7 @@ export default function MainNavSubmenu({
   children,
   onMouseLeave,
   ...rest
-}) {
+}: MainNavSubmenuProps) {
   const [debouncedLeave, cancelLeave] = useDebouncedCallback(() => {
     onMouseLeave();
   }, 200);
