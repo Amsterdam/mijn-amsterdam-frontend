@@ -84,7 +84,7 @@ export default function MainNavBar() {
   ) {
     if (id && activeSubmenuId !== id) {
       activateSubmenu(id);
-    } else if (!isSubmenuTrigger) {
+    } else if (!isSubmenuTrigger && activeSubmenuId !== id) {
       activateSubmenu('');
     }
   }
