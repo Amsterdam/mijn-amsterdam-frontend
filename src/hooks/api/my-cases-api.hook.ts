@@ -7,11 +7,11 @@ export interface MyCasesResponse extends PaginatedItemsResponse {
   items: MyCase[];
 }
 
-export interface MyCasesState extends ApiHookState {
+export interface MyCasesApiState extends ApiHookState {
   data: MyCasesResponse;
 }
 
-export default (offset?: number, limit?: number): MyCasesState => {
+export default (offset?: number, limit?: number): MyCasesApiState => {
   const { data, ...rest } = paginatedApiHook(ApiUrls.MY_CASES, offset, limit);
 
   return {

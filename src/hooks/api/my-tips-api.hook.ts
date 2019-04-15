@@ -17,10 +17,10 @@ export interface MyTipsResponse extends PaginatedItemsResponse {
   items: MyTip[];
 }
 
-export interface MyTipsState extends ApiHookState {
+export interface MyTipsApiState extends ApiHookState {
   data: MyTipsResponse;
 }
 
-export default (offset?: number, limit?: number): MyTipsState => {
+export default (offset?: number, limit?: number): MyTipsApiState => {
   return paginatedApiHook(ApiUrls.MY_TIPS, offset, limit);
 };
