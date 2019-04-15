@@ -1,13 +1,19 @@
 import React from 'react';
 import composeClassNames from 'classnames';
 import styles from './PageContentMain.module.scss';
+import { ChildrenContent } from 'App.types';
+
+export interface PageContentMainProps {
+  className?: any;
+  variant?: 'default' | 'full';
+  children: ChildrenContent;
+}
 
 export default function PageContentMain({
   className,
-  variant,
+  variant = 'default',
   children,
-  heading,
-}) {
+}: PageContentMainProps) {
   const classNames = composeClassNames(
     styles.PageContentMain,
     className,
