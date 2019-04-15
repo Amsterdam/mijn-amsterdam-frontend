@@ -5,6 +5,7 @@ import formatFocusApiResponse from 'data-formatting/focus';
 import { LinkProps } from 'App.types';
 
 export interface MyUpdate {
+  id: string;
   chapter: Chapter;
   datePublished: string;
   title: string;
@@ -24,9 +25,10 @@ export default (offset?: number, limit?: number): MyUpdatesState => {
   const { data, ...rest } = paginatedApiHook(ApiUrls.MY_UPDATES, offset, limit);
   const items = formatFocusApiResponse(data.items) as any[];
   // TODO: Store last visited date in localhost and check against that
-  const myUpdateItems = items.map(item => ({
+  const myUpdateItems = items.map((item, index) => ({
     ...item,
     chapter: Chapters.INKOMEN,
+    id: 'item-' + index,
   }));
 
   return {

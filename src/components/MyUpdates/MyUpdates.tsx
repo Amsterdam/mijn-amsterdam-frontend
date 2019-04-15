@@ -5,17 +5,20 @@ import { defaultDateFormat } from 'helpers/App';
 import { AppRoutes, Colors } from 'App.constants';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import Heading from 'components/Heading/Heading';
+import { MyUpdate } from '../../hooks/api/my-updates-api.hook';
 
-export default function MyUpdates({ items = [], total = 0 }) {
+export interface MyUpdatesProps {
+  items: MyUpdate[];
+  total: number;
+}
+
+export default function MyUpdates({ items = [], total = 0 }: MyUpdatesProps) {
   return (
     <div className={styles.MyUpdates}>
       <ul>
         {items.map(item => {
           return (
-            <li
-              key={item.title + item.datePublished}
-              className={styles.MyUpdateItem}
-            >
+            <li key={item.id} className={styles.MyUpdateItem}>
               <ChapterIcon
                 fill={Colors.primaryRed}
                 className={styles.Icon}
