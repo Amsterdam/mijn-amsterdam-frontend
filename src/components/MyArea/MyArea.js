@@ -3,6 +3,16 @@ import { withRouter } from 'react-router-dom';
 import styles from './MyArea.module.scss';
 import { MAP_URL } from './MyArea.constants';
 import { AppRoutes } from 'App.constants';
+import { ReactComponent as Logo } from 'assets/images/logo-amsterdam.svg';
+
+export const MyAreaHeader = () => {
+  return (
+    <div className={styles.Header}>
+      <Logo />
+      <h1>Mijn Buurt</h1>
+    </div>
+  );
+};
 
 const MyArea = ({ history }) => {
   return (
