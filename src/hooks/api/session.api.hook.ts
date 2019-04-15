@@ -3,7 +3,7 @@ import { ApiUrls } from 'App.constants';
 import { ApiHookState } from './api.types';
 
 export interface SessionState {
-  isAuthenticated: boolean;
+  isAuthenticated?: boolean;
 }
 
 const INITIAL_SESSION_STATE: SessionState = {

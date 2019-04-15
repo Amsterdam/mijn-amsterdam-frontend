@@ -5,8 +5,16 @@ import { ReactComponent as WonenIcon } from 'assets/images/wonen.svg';
 import { ReactComponent as InkomenIcon } from 'assets/images/inkomen.svg';
 import { ReactComponent as BelastingenIcon } from 'assets/images/belastingen.svg';
 import { ReactComponent as JeugdhulpIcon } from 'assets/icons/Passport.svg';
+import { LinkProps } from 'App.types';
+import { FunctionComponent, SVGProps } from 'react';
 
-export const MyChaptersMenuItems = [
+export interface MenuItem extends LinkProps {
+  id: string;
+  Icon?: FunctionComponent<SVGProps<SVGElement>>;
+  submenuItems?: MenuItem[];
+}
+
+export const myChaptersMenuItems: MenuItem[] = [
   {
     title: 'Burgerzaken',
     id: 'burgerzaken',
@@ -45,7 +53,7 @@ export const MyChaptersMenuItems = [
   },
 ];
 
-export const MenuConfig = [
+export const menuItems: MenuItem[] = [
   {
     title: 'Home',
     id: 'home',
@@ -54,8 +62,8 @@ export const MenuConfig = [
   {
     title: "Mijn thema's",
     id: 'mijn-themas',
-    to: AppRoutes.MIJN_THEMAS,
-    submenuItems: MyChaptersMenuItems,
+    to: '',
+    submenuItems: myChaptersMenuItems,
   },
   { title: 'Mijn buurt', id: 'mijn-buurt', to: AppRoutes.MIJN_BUURT },
   { title: 'Mijn updates', id: 'mijn-updates', to: AppRoutes.MY_UPDATES },
