@@ -33,7 +33,12 @@ function getHeroSrc() {
   }
 }
 
-export default function MainHeaderHero(props) {
+export interface MainHeaderHeroProps {
+  src: string;
+  alt: string;
+}
+
+export default function MainHeaderHero(props: Partial<MainHeaderHeroProps>) {
   const src = props.src || getHeroSrc();
   const alt = props.alt || DEFAULT_ALT;
   return (
