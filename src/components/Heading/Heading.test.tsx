@@ -3,5 +3,5 @@ import { shallow } from 'enzyme';
 import Heading from './Heading';
 
 it('Renders without crashing', () => {
-  shallow(<Heading />);
+  shallow(<Heading>Test</Heading>);
 });
