@@ -5,7 +5,7 @@ export const panelConfig = {
     title: 'Persoonlijke gegevens',
     actionLinks: [
       {
-        label: 'Inzien of correctie doorgeven',
+        title: 'Inzien of correctie doorgeven',
         url: ExternalUrls.CHANGE_PERSONAL_DATA,
         external: true,
       },
@@ -15,7 +15,7 @@ export const panelConfig = {
     title: 'Partner',
     actionLinks: [
       {
-        label: 'Inzien of correctie doorgeven',
+        title: 'Inzien of correctie doorgeven',
         url: ExternalUrls.CHANGE_PERSONAL_DATA,
         external: true,
       },
@@ -25,11 +25,11 @@ export const panelConfig = {
     title: 'Verbintenis',
     actionLinks: [
       {
-        label: 'Trouwen en partnerschap',
+        title: 'Trouwen en partnerschap',
         url: ExternalUrls.TROUWEN_EN_PARTNERSCHAP,
       },
       {
-        label: 'Echtscheiding',
+        title: 'Echtscheiding',
         url: ExternalUrls.ECHTSCHEIDING,
       },
     ],
@@ -38,7 +38,7 @@ export const panelConfig = {
     title: 'Huidig woonadres',
     actionLinks: [
       {
-        label: 'Verhuizing doorgeven',
+        title: 'Verhuizing doorgeven',
         url: ExternalUrls.REPORT_RELOCATION,
         external: true,
       },

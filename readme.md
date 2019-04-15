@@ -47,6 +47,7 @@ const Things = { FOO: 'Bar', WHY_NOT_THIS_ONE: 'I don\'t like pink' }
 - When dealing with more than a few types, create a `*.types.ts` file. This keeps module files more readable.
 - Files that include markup are committed with the `.tsx` extension.
 - Generic / global types and interfaces can be put in `App.types.ts`.
+- Component props are declared in an interface with a `Props` suffix. e.g `ButtonLinkProps`;
 
 #### Styles
 

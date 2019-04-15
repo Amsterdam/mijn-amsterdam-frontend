@@ -3,26 +3,26 @@ import { ExternalUrls } from 'App.constants';
 export const LinkList = [
   {
     to: ExternalUrls.AMSTERDAM_NEWSLETTER,
-    label: 'Nieuwsbrief Amsterdam.nl',
+    title: 'Nieuwsbrief Amsterdam.nl',
   },
   {
     to: ExternalUrls.AMSTERDAM_TWITTER,
-    label: 'Twitter',
+    title: 'Twitter',
   },
   {
     to: ExternalUrls.AMSTERDAM_FACEBOOK,
-    label: 'Facebook',
+    title: 'Facebook',
   },
   {
     to: ExternalUrls.AMSTERDAM_INSTAGRAM,
-    label: 'Instagram',
+    title: 'Instagram',
   },
   {
     to: ExternalUrls.AMSTERDAM_LINKEDIN,
-    label: 'LinkedIn',
+    title: 'LinkedIn',
   },
   {
     to: ExternalUrls.AMSTERDAM_VACATURES,
-    label: 'Vacatures',
+    title: 'Vacatures',
   },
 ];

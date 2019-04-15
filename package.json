@@ -13,6 +13,7 @@
     "@types/react-dom": "^16.8.3",
     "@types/react-router": "^4.4.5",
     "@types/react-router-dom": "^4.3.1",
+    "@types/react-test-renderer": "^16.8.1",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "date-fns": "^1.30.1",

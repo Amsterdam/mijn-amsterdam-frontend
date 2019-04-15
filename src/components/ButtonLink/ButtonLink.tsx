@@ -3,6 +3,16 @@ import { Link } from 'react-router-dom';
 import styles from './ButtonLink.module.scss';
 import classnames from 'classnames';
 
+export interface ButtonLinkProps {
+  external: boolean;
+  to: string;
+  children: JSX.Element | JSX.Element[];
+  hasIcon: boolean;
+  className: any;
+  white: boolean;
+  target: '_blank' | '_self' | '_parent' | '_top';
+}
+
 export default function ButtonLink({
   external = false,
   to,
@@ -11,7 +21,7 @@ export default function ButtonLink({
   className,
   white = false,
   target = '_blank',
-}) {
+}: ButtonLinkProps) {
   const classes = classnames(
     styles.ButtonLink,
     hasIcon && styles.IconLink,
@@ -44,10 +54,10 @@ export default function ButtonLink({
   );
 }
 
-export function ButtonLinkExternal(props) {
+export function ButtonLinkExternal(props: Omit<ButtonLinkProps, 'external'>) {
   return <ButtonLink {...props} external={true} />;
 }
 
-export function IconButtonLink(props) {
+export function IconButtonLink(props: Omit<ButtonLinkProps, 'hasIcon'>) {
   return <ButtonLink {...props} hasIcon={true} />;
 }
