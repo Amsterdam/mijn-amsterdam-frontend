@@ -1,7 +1,7 @@
 import { ApiUrls } from 'App.constants';
 import paginatedApiHook, { PaginatedItemsResponse } from './paginated-api.hook';
 import { ApiHookState } from './api.types';
-import { LinkProps } from 'react-router-dom';
+import { LinkProps } from 'App.types';
 
 export interface MyTip {
   datePublished: string;

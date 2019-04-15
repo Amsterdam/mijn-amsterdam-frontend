@@ -5,8 +5,13 @@ import ButtonLink, {
 } from 'components/ButtonLink/ButtonLink';
 import Heading from 'components/Heading/Heading';
 import { AppRoutes } from 'App.constants';
+import { MyTip } from 'hooks/api/my-tips-api.hook';
 
-const Tip = ({ tip }) => (
+export interface TipProps {
+  tip: MyTip;
+}
+
+const Tip = ({ tip }: TipProps) => (
   <li className={styles.TipItem}>
     <div className={styles.ImageContainer} />
     <Heading el="h4">{tip.title}</Heading>
@@ -15,7 +20,11 @@ const Tip = ({ tip }) => (
   </li>
 );
 
-export default function MyTips({ items = [] }) {
+export interface MyTipsProps {
+  items: MyTip[];
+}
+
+export default function MyTips({ items = [] }: MyTipsProps) {
   return (
     <div className={styles.MyTips}>
       <div className={styles.HeaderBar}>
