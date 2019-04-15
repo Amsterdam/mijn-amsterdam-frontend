@@ -15,7 +15,9 @@ export interface AppState {
 }
 
 export const AppContext = createContext<AppState>({} as AppState);
-export const SessionContext = createContext<SessionApiState>({});
+export const SessionContext = createContext<SessionApiState>(
+  {} as SessionApiState
+);
 
 interface SessionStateProps {
   render: (session: SessionApiState) => ChildrenContent;

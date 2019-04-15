@@ -38,8 +38,8 @@ export const AppRoutes = {
   MY_UPDATES: '/updates',
 };
 
-export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL;
-export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL;
+export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/login';
+export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL || '/logout';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 

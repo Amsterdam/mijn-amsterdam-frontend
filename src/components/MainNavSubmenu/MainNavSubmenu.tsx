@@ -9,7 +9,7 @@ export interface MainNavSubmenuLinkProps {
   id?: string;
   to: string;
   children: ChildrenContent;
-  onFocus: () => void;
+  onFocus?: () => void;
 }
 
 export function MainNavSubmenuLink({
