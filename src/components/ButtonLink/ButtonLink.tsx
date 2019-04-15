@@ -6,7 +6,7 @@ import classnames from 'classnames';
 export interface ButtonLinkProps {
   external: boolean;
   to: string;
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactChild;
   hasIcon: boolean;
   className: any;
   white: boolean;

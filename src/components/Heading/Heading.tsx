@@ -23,9 +23,9 @@ const Elements: { [tagName in HeadingTagName]: HeadingTagName } = {
 };
 
 interface HeadingProps {
-  el: HeadingTagName;
-  size: HeadingStyleSize;
-  children: JSX.Element | JSX.Element[];
+  el?: HeadingTagName;
+  size?: HeadingStyleSize;
+  children: React.ReactChild;
   className?: any;
 }
 
