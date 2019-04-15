@@ -32,9 +32,9 @@ export function SessionState({ render }: SessionStateProps) {
 
 interface AppStateProps {
   children?: ChildrenContent;
-  value?: Partial<AppState>;
+  value?: AppState;
   session?: SessionApiState;
-  render?: (state: Partial<AppState>) => ChildrenContent;
+  render?: (state: AppState) => ChildrenContent;
 }
 
 export default ({ render, children, value, session }: AppStateProps) => {
@@ -55,8 +55,8 @@ export default ({ render, children, value, session }: AppStateProps) => {
   }
 
   return (
-    <AppContext.Provider value={appState}>
-      {render ? render(appState) : children}
+    <AppContext.Provider value={appState as AppState}>
+      {render ? render(appState as AppState) : children}
     </AppContext.Provider>
   );
 };
