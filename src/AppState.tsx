@@ -55,6 +55,7 @@ export default ({ render, children, value, session }: AppStateProps) => {
   }
 
   return (
+    // TODO: Straight out partial appState assignments. Forcing type assignment here for !!!111!!1!!
     <AppContext.Provider value={appState as AppState}>
       {render ? render(appState as AppState) : children}
     </AppContext.Provider>
