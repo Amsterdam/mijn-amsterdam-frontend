@@ -71,7 +71,7 @@ export default function MainNavSubmenu({
           isOpen && styles.SubmenuPanelOpen
         )}
         onMouseEnter={() => cancelLeave()}
-        onMouseLeave={() => debouncedLeave()}
+        onMouseLeave={() => onMouseLeave()}
       >
         <div className={styles.SubmenuItems}>{children}</div>
       </div>
