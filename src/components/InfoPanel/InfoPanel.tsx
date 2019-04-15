@@ -2,17 +2,28 @@ import React from 'react';
 import styles from './InfoPanel.module.scss';
 import ButtonLink from 'components/ButtonLink/ButtonLink';
 import Heading from 'components/Heading/Heading';
+import { Unshaped } from '../../App.types';
 
-function InfoPanelActionLinks({ actionLinks }) {
+export interface ActionLink {
+  title: string;
+  url: string;
+  external?: boolean;
+}
+
+export interface InfoPanelActionLinksProps {
+  actionLinks: ActionLink[];
+}
+
+function InfoPanelActionLinks({ actionLinks }: InfoPanelActionLinksProps) {
   return (
     <ul className={styles.InfoPanelActionLinks}>
       {actionLinks.map((actionLink, index) => (
-        <li key={actionLink.label}>
+        <li key={actionLink.title}>
           <ButtonLink
             external={actionLink.external || false}
             to={actionLink.url}
           >
-            {actionLink.label}
+            {actionLink.title}
           </ButtonLink>
         </li>
       ))}
@@ -20,16 +31,20 @@ function InfoPanelActionLinks({ actionLinks }) {
   );
 }
 
-function InfoPanelTable({ data = {} }) {
+export interface InfoPanelTableProps {
+  panelData: Unshaped;
+}
+
+function InfoPanelTable({ panelData = {} }: InfoPanelTableProps) {
   return (
     <table className={styles.InfoPanelTable}>
       <tbody>
-        {Object.entries(data)
+        {Object.entries(panelData)
           .filter(([, value]) => !!value)
-          .map(([label, value], index) => {
+          .map(([title, value], index) => {
             return (
-              <tr key={label}>
-                <th>{label}</th>
+              <tr key={title}>
+                <th>{title}</th>
                 <td>{value}</td>
               </tr>
             );
@@ -39,12 +54,22 @@ function InfoPanelTable({ data = {} }) {
   );
 }
 
-export default function InfoPanel({ title = '', actionLinks = [], info = {} }) {
+export interface InfoPanelProps {
+  title?: string;
+  actionLinks?: ActionLink[];
+  infoData: Unshaped;
+}
+
+export default function InfoPanel({
+  title = '',
+  actionLinks = [],
+  infoData = {},
+}: InfoPanelProps) {
   return (
     <div className={styles.InfoPanel}>
       {!!title && <Heading>{title}</Heading>}
       <div className={styles.InfoPanelContent}>
-        <InfoPanelTable data={info} />
+        <InfoPanelTable panelData={infoData} />
         {!!actionLinks.length && (
           <InfoPanelActionLinks actionLinks={actionLinks} />
         )}

@@ -67,8 +67,10 @@ export default function Profile() {
         </p>
         {Object.entries(brpInfo)
           .filter(([id]) => !!brpInfo[id]) // check if object key has a truthy value associated.
-          .map(([id, info]) => {
-            return <InfoPanel key={id} {...panelConfig[id]} info={info} />;
+          .map(([id, infoData]) => {
+            return (
+              <InfoPanel key={id} {...panelConfig[id]} infoData={infoData} />
+            );
           })}
       </PageContentMainBody>
     </PageContentMain>

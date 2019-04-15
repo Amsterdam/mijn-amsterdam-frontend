@@ -4,13 +4,13 @@ import styles from './ButtonLink.module.scss';
 import classnames from 'classnames';
 
 export interface ButtonLinkProps {
-  external: boolean;
+  external?: boolean;
   to: string;
   children: React.ReactChild;
-  hasIcon: boolean;
-  className: any;
-  white: boolean;
-  target: '_blank' | '_self' | '_parent' | '_top';
+  hasIcon?: boolean;
+  className?: any;
+  white?: boolean;
+  target?: '_blank' | '_self' | '_parent' | '_top';
 }
 
 export default function ButtonLink({
