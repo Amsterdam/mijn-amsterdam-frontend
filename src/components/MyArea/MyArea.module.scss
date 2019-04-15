@@ -23,7 +23,8 @@
 .Header {
   display: flex;
   height: 5.5rem;
-  padding-left: 0.8rem;
+  padding-left: 1.8rem;
+  padding-right: 1.8rem;
 
   h1 {
     font-size: 2rem;
@@ -33,5 +34,25 @@
     height: 5rem;
     width: 8rem;
     margin-right: 0.8rem;
+  }
+}
+
+.CloseBtn {
+  display: flex;
+  align-items: center;
+  height: 2.2rem;
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+  margin: auto 0rem auto 0.5rem;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin-left: auto;
+
+  svg {
+    height: inherit;
+    width: 3rem;
+    margin: 0;
   }
 }
