@@ -48,7 +48,12 @@ if (BRANCH == "master" || BRANCH == "test-acc" || BRANCH == "test") {
                 docker.withRegistry('https://repo.secure.amsterdam.nl', 'docker-registry') {
                     def image = docker.image("mijnams/mijnamsterdam:${env.BUILD_NUMBER}")
                     image.pull()
-                    image.push("acceptance")
+                    if (BRANCH == "master" || BRANCH == "test-acc") {
+                      image.push("acceptance")
+                    }
+                    if (BRANCH == "test") {
+                      image.push("test")
+                    }
                 }
             }
         }
