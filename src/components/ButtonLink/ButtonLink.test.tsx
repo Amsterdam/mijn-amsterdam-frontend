@@ -9,7 +9,7 @@ describe('ButtonLink', () => {
   it('Renders without crashing', () => {
     shallow(
       <BrowserRouter>
-        <ButtonLink to="/" />
+        <ButtonLink to="/">Link!</ButtonLink>
       </BrowserRouter>
     );
   });
@@ -17,7 +17,7 @@ describe('ButtonLink', () => {
   it('Renders', () => {
     const component = shallow(
       <BrowserRouter>
-        <ButtonLink to="/" />
+        <ButtonLink to="/">Link!</ButtonLink>
       </BrowserRouter>
     );
     expect(component.html()).toMatchSnapshot();
@@ -35,7 +35,9 @@ describe('ButtonLink', () => {
   });
 
   it('ButtonLink external renders correctly', () => {
-    const component = mount(<ButtonLinkExternal to="/" />);
+    const component = mount(
+      <ButtonLinkExternal to="/">Link!</ButtonLinkExternal>
+    );
     expect(component.html()).toMatchSnapshot();
     expect(component.getDOMNode().getAttribute('rel')).toBe(
       'noopener noreferrer'
