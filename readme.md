@@ -7,15 +7,16 @@ is a portal for official communication with the municipality of Amsterdam.
 
 ### Keypoints
 
-- Javascript SPA
+- Typescript SPA
 - Boilerplate with `create-react-app`
 - Built with `react`
+- Uses `scss` for css pre processing
 - Uses `css modules` for style composition
 - Communication via REST Api
 
 ### Development
 
-- Be extra considerate about naming things, discuss with the team if needed.
+- Be extra considerate about naming things, discuss with the team if needed. Dutch terms that cannot be easily translated are kept dutch. The rest can be provided in English.
 - Write a test when a complex and/or critical component is encountered. We don't require 100% test coverage however...
 - Take time to review code. Thorough reviews are a good addition for preventing sloppy code and bugs.
 - Try to improve your skills, ask questions, be thoughtful and voice concerns if you have them.
@@ -23,20 +24,30 @@ is a portal for official communication with the municipality of Amsterdam.
 #### Components
 
 Stick to functional react components as much as possible, when you need state within a component
-use the hooks api or context provider.
+use the hooks api with context provider.
 
 Multiple components/exports per file is ok als long as they are logically grouped and the line count is managable.
 
-A blueprint for components can be found in `components/AlphaComponent/`. To generate a component based on this bare minium you can
-either copy/paste rename stuff or use a tool like `npm install -g generact`
+A blueprint for basic components can be found in `components/AlphaComponent/`. A blueprint for page components is locataed in `pages/AlphaPage`.
+To generate a component based on these blueprints you can either copy/paste rename stuff or use a tool like `npm install -g generact` which can
+be used to duplicate any component and assign it a specific name.
 
 ### Naming
+
+#### Constants
 
 When creating constants put them in a `Component.constants.js` file. Use `UPPER_SNAKE_CASE` naming. e.g:
 
 ```
 const Things = { FOO: 'Bar', WHY_NOT_THIS_ONE: 'I don\'t like pink' }
 ```
+
+#### Typescript
+
+- When dealing with more than a few types, create a `*.types.ts` file. This keeps module files more readable.
+- Files that include markup are committed with the `.tsx` extension.
+- Generic / global types and interfaces can be put in `App.types.ts`.
+- Component props are declared in an interface with a `Props` suffix. e.g `ButtonLinkProps`;
 
 #### Styles
 

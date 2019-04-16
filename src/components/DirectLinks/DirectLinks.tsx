@@ -1,0 +1,27 @@
+import React from 'react';
+import styles from './DirectLinks.module.scss';
+import { LINKS } from './DirectLinks.constants';
+import Heading from 'components/Heading/Heading';
+import { ReactComponent as ExternalLinkIcon } from 'assets/icons/External-Link.svg';
+import { entries } from 'helpers/App';
+
+export default function DirectLinks() {
+  return (
+    <div className={styles.DirectLinks}>
+      <Heading size="large">Direct naar</Heading>
+      <ul className={styles.LinkList}>
+        {entries(LINKS).map(link => {
+          const [linkName, { url, title }] = link;
+          return (
+            <li key={linkName}>
+              <a href={url}>
+                <ExternalLinkIcon />
+                {title}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
