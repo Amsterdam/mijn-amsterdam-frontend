@@ -24,4 +24,7 @@ export type ChildContent =
   | undefined
   | JSX.Element;
 
-export type ChildrenContent = any;
+export type ComponentChildren =
+  | ChildContent
+  | ChildContent[]
+  | ChildContent[][];

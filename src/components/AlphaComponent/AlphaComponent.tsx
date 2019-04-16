@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './AlphaComponent.module.scss';
-import { ChildrenContent } from 'App.types';
+import { ComponentChildren } from 'App.types';
 
 export interface AlphaComponentProps {
-  children?: ChildrenContent;
+  children?: ComponentChildren;
 }
 
 export default function AlphaComponent({ children }: AlphaComponentProps) {

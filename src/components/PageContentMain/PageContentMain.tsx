@@ -1,12 +1,12 @@
 import React from 'react';
 import composeClassNames from 'classnames';
 import styles from './PageContentMain.module.scss';
-import { ChildrenContent } from 'App.types';
+import { ComponentChildren } from 'App.types';
 
 export interface PageContentMainProps {
   className?: any;
   variant?: 'default' | 'full';
-  children: ChildrenContent;
+  children: ComponentChildren;
 }
 
 export default function PageContentMain({

@@ -1,10 +1,10 @@
 import React from 'react';
 import styles from './PageContentMainBody.module.scss';
 import classnames from 'classnames';
-import { ChildrenContent } from 'App.types';
+import { ComponentChildren } from 'App.types';
 
 export interface PageContentMainBodyProps {
-  children: ChildrenContent;
+  children: ComponentChildren;
   variant?: 'regular';
   className?: any;
 }

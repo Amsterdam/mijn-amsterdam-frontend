@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './ButtonLink.module.scss';
 import classnames from 'classnames';
-import { ChildrenContent } from 'App.types';
+import { ComponentChildren } from 'App.types';
 
 export interface ButtonLinkProps {
   external?: boolean;
   to: string;
-  children: ChildrenContent;
+  children: ComponentChildren;
   hasIcon?: boolean;
   className?: any;
   white?: boolean;

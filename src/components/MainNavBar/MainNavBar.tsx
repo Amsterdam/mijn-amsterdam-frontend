@@ -7,11 +7,11 @@ import { AppContext } from 'AppState';
 import { menuItems, MenuItem } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
 import { Colors } from 'App.constants';
-import { ChildrenContent, LinkProps } from 'App.types';
+import { ComponentChildren, LinkProps } from 'App.types';
 
 export interface MainNavLinkProps {
   to: string;
-  children: ChildrenContent;
+  children: ComponentChildren;
   onFocus?: () => void;
   onMouseEnter?: () => void;
 }
