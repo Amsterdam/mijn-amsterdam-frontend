@@ -16,7 +16,7 @@ is a portal for official communication with the municipality of Amsterdam.
 
 ### Development
 
-- Be extra considerate about naming things, discuss with the team if needed. Dutch terms that cannot be easily translated are kept dutch. The test can be provided in English.
+- Be extra considerate about naming things, discuss with the team if needed. Dutch terms that cannot be easily translated are kept dutch. The rest can be provided in English.
 - Write a test when a complex and/or critical component is encountered. We don't require 100% test coverage however...
 - Take time to review code. Thorough reviews are a good addition for preventing sloppy code and bugs.
 - Try to improve your skills, ask questions, be thoughtful and voice concerns if you have them.
