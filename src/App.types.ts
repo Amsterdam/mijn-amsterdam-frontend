@@ -18,13 +18,16 @@ export interface LinkProps {
 
 export type SVGComponent = FunctionComponent<SVGProps<SVGElement>>;
 
-export type ChildContent =
-  | React.ReactChild
-  | SVGComponent
-  | undefined
-  | JSX.Element;
+// export type ChildContent =
+//   | React.ReactChild
+//   | SVGComponent
+//   | undefined
+//   | JSX.Element
+//   | null;
 
-export type ComponentChildren =
-  | ChildContent
-  | ChildContent[]
-  | ChildContent[][];
+// export type ComponentChildren =
+//   | ChildContent
+//   | ChildContent[]
+//   | ChildContent[][];
+
+export type ComponentChildren = any;

@@ -33,11 +33,12 @@ export default function paginatedApi(
 
   return {
     ...api,
+    data: api.data || null,
     refetch: ({
       offset = INITIAL_STATE.offset,
       limit = INITIAL_STATE.limit,
     } = {}) => {
-      api.refetch({ ...options, params: { offset, limit } });
+      api.refetch && api.refetch({ ...options, params: { offset, limit } });
     },
   };
 }
