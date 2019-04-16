@@ -12,6 +12,6 @@ exports[`ButtonLink ButtonLink default renders correctly 1`] = `
 </a>
 `;
 
-exports[`ButtonLink ButtonLink external renders correctly 1`] = `"<a href=\\"/\\" target=\\"_blank\\" rel=\\"noopener noreferrer\\" class=\\"ButtonLink\\"></a>"`;
+exports[`ButtonLink ButtonLink external renders correctly 1`] = `"<a href=\\"/\\" target=\\"_blank\\" rel=\\"noopener noreferrer\\" class=\\"ButtonLink\\">Link!</a>"`;
 
-exports[`ButtonLink Renders 1`] = `"<a class=\\"ButtonLink\\" href=\\"/\\"></a>"`;
+exports[`ButtonLink Renders 1`] = `"<a class=\\"ButtonLink\\" href=\\"/\\">Link!</a>"`;
