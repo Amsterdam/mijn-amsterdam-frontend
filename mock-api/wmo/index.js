@@ -1,6 +1,10 @@
-const voorzieningen = require('../secure-data/wmo.json');
+const focus = require('../secure-data/wmo.json');
 
 module.exports = {
   path: '/api/wmoned/voorzieningen',
-  template: voorzieningen,
+  template: (_, queryParams) => {
+    return {
+      items: focus,
+    };
+  },
 };
