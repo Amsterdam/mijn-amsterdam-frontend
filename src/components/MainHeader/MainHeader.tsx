@@ -45,7 +45,7 @@ function SecondaryLinks({ person, hasMessages = false }: SecondaryLinksProps) {
 
 export interface MainHeaderProps {
   person?: Person | null;
-  isAuthenticated: boolean;
+  isAuthenticated?: boolean;
 }
 
 export default function MainHeader({
