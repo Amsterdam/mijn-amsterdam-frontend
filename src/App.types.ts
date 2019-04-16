@@ -18,6 +18,7 @@ export interface LinkProps {
 
 export type SVGComponent = FunctionComponent<SVGProps<SVGElement>>;
 
+// NOTE: Could not figure out how to type this correctly atm.
 // export type ChildContent =
 //   | React.ReactChild
 //   | SVGComponent
