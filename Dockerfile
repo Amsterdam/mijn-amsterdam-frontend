@@ -13,6 +13,8 @@ RUN apt-get update && \
 
 COPY package.json /app/
 COPY package-lock.json /app/
+COPY tsconfig.json /app/
+COPY paths.json /app/
 COPY .env.production /app/
 COPY .env /app/
 COPY src /app/src/
