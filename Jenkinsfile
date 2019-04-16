@@ -31,6 +31,12 @@ node {
 
 String BRANCH = "${env.BRANCH_NAME}"
 
+if (BRANCH == "master") {
+  stage('Waiting for approval') {
+      input "Deploy master to ACC?"
+  }
+}
+
 if (BRANCH == "master" || BRANCH == "test-acc" || BRANCH == "test") {
 
     stage("Build image") {
