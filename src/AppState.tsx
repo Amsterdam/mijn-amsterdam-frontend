@@ -5,13 +5,16 @@ import useMyUpdatesApi from 'hooks/api/my-updates-api.hook';
 import useMyCasesApi from 'hooks/api/my-cases-api.hook';
 import useMyTipsApi from 'hooks/api/my-tips-api.hook';
 import { ChildrenContent } from './App.types';
+import { MyUpdatesApiState } from './hooks/api/my-updates-api.hook';
+import { MyCasesApiState } from './hooks/api/my-cases-api.hook';
+import { MyTipsApiState } from './hooks/api/my-tips-api.hook';
 
 export interface AppState {
   BRP: BrpApiState;
   SESSION: SessionApiState;
-  MY_UPDATES: object;
-  MY_CASES: object;
-  MY_TIPS: object;
+  MY_UPDATES: MyUpdatesApiState;
+  MY_CASES: MyCasesApiState;
+  MY_TIPS: MyTipsApiState;
 }
 
 export const AppContext = createContext<AppState>({} as AppState);

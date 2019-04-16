@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import MyUpdates from './MyUpdates';
-import AppState from 'AppState';
+import AppState, { AppState as AppStateInterface } from 'AppState';
 
-const appState = { MY_UPDATES: {} };
+const appState = { MY_UPDATES: {} } as AppStateInterface;
 
 it('Renders without crashing', () => {
   shallow(

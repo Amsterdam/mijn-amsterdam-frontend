@@ -3,6 +3,7 @@ import styles from './InfoPanel.module.scss';
 import ButtonLink from 'components/ButtonLink/ButtonLink';
 import Heading from 'components/Heading/Heading';
 import { Unshaped } from 'App.types';
+import { entries } from 'helpers/App';
 
 export interface ActionLink {
   title: string;
@@ -39,7 +40,7 @@ function InfoPanelTable({ panelData = {} }: InfoPanelTableProps) {
   return (
     <table className={styles.InfoPanelTable}>
       <tbody>
-        {Object.entries(panelData)
+        {entries(panelData)
           .filter(([, value]) => !!value)
           .map(([title, value], index) => {
             return (
@@ -57,19 +58,19 @@ function InfoPanelTable({ panelData = {} }: InfoPanelTableProps) {
 export interface InfoPanelProps {
   title?: string;
   actionLinks?: ActionLink[];
-  infoData: Unshaped;
+  panelData: Unshaped;
 }
 
 export default function InfoPanel({
   title = '',
   actionLinks = [],
-  infoData = {},
+  panelData = {},
 }: InfoPanelProps) {
   return (
     <div className={styles.InfoPanel}>
       {!!title && <Heading>{title}</Heading>}
       <div className={styles.InfoPanelContent}>
-        <InfoPanelTable panelData={infoData} />
+        <InfoPanelTable panelData={panelData} />
         {!!actionLinks.length && (
           <InfoPanelActionLinks actionLinks={actionLinks} />
         )}

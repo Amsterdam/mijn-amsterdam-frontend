@@ -17,11 +17,11 @@ export interface MyUpdatesResponse extends PaginatedItemsResponse {
   items: MyUpdate[];
 }
 
-export interface MyUpdatesState extends ApiHookState {
+export interface MyUpdatesApiState extends ApiHookState {
   data: MyUpdatesResponse;
 }
 
-export default (offset?: number, limit?: number): MyUpdatesState => {
+export default (offset?: number, limit?: number): MyUpdatesApiState => {
   const { data, ...rest } = paginatedApiHook(ApiUrls.MY_UPDATES, offset, limit);
   const items = formatFocusApiResponse(data.items) as any[];
   // TODO: Store last visited date in localhost and check against that

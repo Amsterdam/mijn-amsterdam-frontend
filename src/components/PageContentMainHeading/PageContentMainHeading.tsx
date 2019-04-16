@@ -2,12 +2,12 @@ import React from 'react';
 import styles from './PageContentMainHeading.module.scss';
 import composeClassNames from 'classnames';
 import Heading from 'components/Heading/Heading';
-import { ChildContent } from '../../App.types';
+import { ChildrenContent } from '../../App.types';
 
 export interface PageContentMainHeadingProps {
   el?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   variant?: 'medium' | 'withIcon';
-  children: ChildContent;
+  children: ChildrenContent;
   className?: any;
 }
 
