@@ -2,7 +2,11 @@
 
 .DataLinkTable {
   padding-top: 4rem;
+  margin-bottom: 8rem;
+  transition: margin 200ms ease-out;
+
   &.isCollapsed {
+    margin-bottom: 0;
     .CaretIcon {
       transform: translateY(-50%) rotate(0);
     }

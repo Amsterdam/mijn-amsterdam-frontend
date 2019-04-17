@@ -33,21 +33,19 @@ export default () => {
 
   return (
     <PageContentMain className={styles.MyUpdates} variant="full">
-      <div className={styles.LatestUpdatesPanel}>
-        <PageContentMainHeading
-          variant="withIcon"
-          className={styles.MainHeader}
-        >
-          <ChapterHeadingIcon chapter={Chapters.BURGERZAKEN} />
-          Alle updates
-        </PageContentMainHeading>
-        <PageContentMainBody>
-          <h3 className={styles.PanelHeading}>Nieuw (#)</h3>
-          <MyUpdates total={total} items={items} />
-        </PageContentMainBody>
-      </div>
+      <PageContentMainHeading
+        variant="boxedWithIcon"
+        className={styles.MainHeader}
+      >
+        <ChapterHeadingIcon chapter={Chapters.BURGERZAKEN} />
+        Alle updates
+      </PageContentMainHeading>
+      <PageContentMainBody variant="boxed">
+        <h3 className={styles.PanelHeading}>Nieuw (#)</h3>
+        <MyUpdates total={total} items={items} />
+      </PageContentMainBody>
       <div className={styles.PreviousUpdatesPanel}>
-        <PageContentMainBody>
+        <PageContentMainBody variant="boxed">
           <Heading className={styles.PanelHeading}>Eerdere updates (#)</Heading>
           <MyUpdates total={total} items={items} />
         </PageContentMainBody>

@@ -27,12 +27,12 @@ export default () => {
   const itemsPrevious = items.filter(item => !item.isActual);
 
   return (
-    <PageContentMain className={styles.Page}>
-      <PageContentMainHeading variant="withIcon">
+    <PageContentMain variant="full" className={styles.Page}>
+      <PageContentMainHeading variant="boxedWithIcon">
         <ChapterHeadingIcon chapter={Chapters.ZORG} />
         Zorg
       </PageContentMainHeading>
-      <PageContentMainBody>
+      <PageContentMainBody variant="boxed">
         <p>Zorg body</p>
         <DataLinkTable
           rowHeight="6rem"
@@ -46,14 +46,17 @@ export default () => {
           items={itemsActual}
           title="Mijn huidige voorziengen"
         />
-        <DataLinkTable
-          rowHeight="6rem"
-          displayProps={DISPLAY_PROPS}
-          items={itemsPrevious}
-          title="Mijn eerdere voorziengen"
-          className={styles.DataLinkTable__history}
-        />
       </PageContentMainBody>
+      <div className={styles.HistoricDataLinkTable}>
+        <PageContentMainBody variant="boxed">
+          <DataLinkTable
+            rowHeight="6rem"
+            displayProps={DISPLAY_PROPS}
+            items={itemsPrevious}
+            title="Mijn eerdere voorziengen"
+          />
+        </PageContentMainBody>
+      </div>
     </PageContentMain>
   );
 };

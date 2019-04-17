@@ -6,4 +6,9 @@
   &__regular {
     padding: 0 4rem;
   }
+
+  &__boxed {
+    max-width: $main-boxed-width;
+    margin: 0 auto;
+  }
 }
