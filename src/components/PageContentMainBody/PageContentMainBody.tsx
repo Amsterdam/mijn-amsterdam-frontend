@@ -5,13 +5,13 @@ import { ComponentChildren } from 'App.types';
 
 export interface PageContentMainBodyProps {
   children: ComponentChildren;
-  variant?: 'regular';
+  variant?: 'regular' | 'boxed';
   className?: any;
 }
 
 export default function PageContentMainBody({
   children,
-  variant = 'regular',
+  variant,
   className,
 }: PageContentMainBodyProps) {
   const classes = classnames(

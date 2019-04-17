@@ -1,3 +1,8 @@
+import slug from 'slug';
+import { defaultDateFormat, dateFormat } from '../helpers/App';
+import { AppRoutes } from 'App.constants';
+import { LinkProps } from '../App.types';
+
 // Example data
 //  {
 //     "Omschrijving": "handbewogen rolstoel",
@@ -15,11 +20,14 @@
 //     "PGBbudget": []
 //   },
 export interface WmoItem {
+  id: string;
   title: string; // Omschrijving
   dateStart: string; // Startdatum
-  dateFinish: string; // Einddatum
+  dateFinish?: string; // Einddatum
   supplier: string; // Leverancier
   qtyDescription: string; // Omvang: e.g 1 stuks per beschikking
+  isActual: boolean; // Actueel
+  link: LinkProps;
 }
 
 interface WmoApiItem {
@@ -28,6 +36,7 @@ interface WmoApiItem {
   Einddatum: string;
   Leverancier: string;
   Omvang: string;
+  Actueel: boolean;
 }
 
 export type WmoApiResponse = WmoApiItem[];
@@ -42,13 +51,23 @@ export function formatWmoApiResponse(
       Einddatum: dateFinish,
       Leverancier: supplier,
       Omvang: qtyDescription,
+      Actueel: isActual,
     } = item;
+    const [start] = dateStart.split('T');
+    const [finish] = dateFinish ? dateFinish.split('T') : ['aanvraag'];
+    const id = slug(`${title}-${start}-${finish}`).toLowerCase();
     return {
+      id,
       title,
-      dateStart,
-      dateFinish,
+      dateStart: dateFormat(dateStart, 'DD MMM YYYY'),
+      dateFinish: dateFinish && dateFormat(dateFinish, 'DD MMM YYYY'),
       supplier,
       qtyDescription,
+      isActual,
+      link: {
+        title: 'Meer info',
+        to: `${AppRoutes.ZORG}/${id}`,
+      },
     };
   });
 }

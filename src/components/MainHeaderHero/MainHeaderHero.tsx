@@ -23,13 +23,15 @@ const DEFAULT_ALT = 'Sfeerbeeld kenmerkend voor de Amsterdammer';
 
 function getHeroSrc() {
   const { location } = useReactRouter();
-  switch (location.pathname) {
-    case AppRoutes.ROOT:
-      return 'header/Header-Desktop-1.jpg';
-    case AppRoutes.PROFILE:
-      return 'header/Header-Desktop-2.jpg';
+  const isChapterPath = (path: string) => location.pathname.startsWith(path);
+
+  switch (true) {
+    case isChapterPath(AppRoutes.ROOT):
+      return '/header/Header-Desktop-1.jpg';
+    case isChapterPath(AppRoutes.PROFILE):
+      return '/header/Header-Desktop-2.jpg';
     default:
-      return 'header/Header-Desktop-3.jpg';
+      return '/header/Header-Desktop-3.jpg';
   }
 }
 
@@ -41,6 +43,7 @@ export interface MainHeaderHeroProps {
 export default function MainHeaderHero(props: Partial<MainHeaderHeroProps>) {
   const src = props.src || getHeroSrc();
   const alt = props.alt || DEFAULT_ALT;
+
   return (
     <div className={styles.MainHeaderHero}>
       <picture>
