@@ -24,6 +24,7 @@
     "react-dom": "^16.8.3",
     "react-router-dom": "^5.0.0",
     "react-scripts": "^2.1.8",
+    "slug": "^1.1.0",
     "typescript": "^3.4.2",
     "use-debounce": "^1.1.1",
     "use-react-router": "^1.0.5"
@@ -61,6 +62,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@types/slug": "^0.9.1",
     "dyson": "^2.0.3",
     "dyson-generators": "^0.2.0",
     "enzyme": "^3.8.0",

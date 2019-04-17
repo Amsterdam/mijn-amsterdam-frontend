@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { HTMLProps } from 'react';
 import styles from './Heading.module.scss';
 import classnames from 'classnames';
 import { ComponentChildren } from 'App.types';
@@ -23,7 +23,7 @@ const Elements: { [tagName in HeadingTagName]: HeadingTagName } = {
   h6: 'h6',
 };
 
-interface HeadingProps {
+interface HeadingProps extends Omit<HTMLProps<HTMLHeadingElement>, 'size'> {
   el?: HeadingTagName;
   size?: HeadingStyleSize;
   children: ComponentChildren;

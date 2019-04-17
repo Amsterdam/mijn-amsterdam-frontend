@@ -1,0 +1,68 @@
+@import 'styles/_global.scss';
+
+.DataLinkTable {
+  padding-top: 4rem;
+  &.isCollapsed {
+    .CaretIcon {
+      transform: translateY(-50%) rotate(0);
+    }
+    .Panel {
+      transition-timing-function: ease-out;
+    }
+  }
+}
+
+.CaretIcon {
+  height: .8em;
+  width: .8em;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  left: 0;
+  transition: transform 200ms ease-out;
+}
+
+.Title {
+  cursor: pointer;
+  position: relative;
+  padding-left: 1em;
+  margin-bottom: 4rem;
+
+  span {
+    padding-left: .2em;
+  }
+}
+
+.Panel {
+  overflow: hidden;
+  transition: height 400ms ease-in;
+  border-bottom: .1rem solid $color-neutral-grey2;
+}
+
+.Table {
+  border-collapse: collapse;
+}
+
+.TableRow {
+  td {
+    border-top: .1rem solid $color-neutral-grey2;
+    padding: 1em 1em 1em 0;
+  }
+  th {
+    text-align: left;
+    color: $color-neutral-grey4;
+    font-weight: 500;
+  }
+}
+
+.DisplayPropTitle {
+  @include select(ButtonLink_ButtonLink) {
+    white-space: normal;
+  }
+}
+
+.DisplayProp {
+  color: $color-neutral-grey4;
+  font-weight: normal;
+  white-space: nowrap;
+}

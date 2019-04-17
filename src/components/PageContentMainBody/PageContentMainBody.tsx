@@ -11,7 +11,7 @@ export interface PageContentMainBodyProps {
 
 export default function PageContentMainBody({
   children,
-  variant = 'regular',
+  variant,
   className,
 }: PageContentMainBodyProps) {
   const classes = classnames(
