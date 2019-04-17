@@ -20,7 +20,7 @@ function CaseItem({ item }: CaseItemProps) {
     <li className={styles.CaseItem}>
       <NavLink to={to}>
         <ChapterIcon fill={Colors.primaryRed} chapter={chapter} />
-        {title} {item.inProgress ? 'pr' : 'af'}
+        {title}
       </NavLink>
     </li>
   );
