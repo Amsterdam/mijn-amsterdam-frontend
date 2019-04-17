@@ -23,12 +23,12 @@ const DEFAULT_ALT = 'Sfeerbeeld kenmerkend voor de Amsterdammer';
 
 function getHeroSrc() {
   const { location } = useReactRouter();
-  const chapterPath = (path: string) => location.pathname.startsWith(path);
+  const isChapterPath = (path: string) => location.pathname.startsWith(path);
 
   switch (true) {
-    case chapterPath(AppRoutes.ROOT):
+    case isChapterPath(AppRoutes.ROOT):
       return '/header/Header-Desktop-1.jpg';
-    case chapterPath(AppRoutes.PROFILE):
+    case isChapterPath(AppRoutes.PROFILE):
       return '/header/Header-Desktop-2.jpg';
     default:
       return '/header/Header-Desktop-3.jpg';
