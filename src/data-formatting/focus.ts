@@ -3,10 +3,11 @@ import { defaultDateFormat } from 'helpers/App';
 import { LinkProps } from '../App.types';
 import { Chapter, Chapters } from '../App.constants';
 import Inkomen from 'pages/Inkomen/Inkomen';
+import { differenceInCalendarDays, parse, addMonths } from 'date-fns';
 
 type StepName = 'aanvraag' | 'inBehandeling' | 'herstelTermijn' | 'beslissing';
 type DecisionName = 'afwijzing' | 'intrekking' | 'buitenBehandeling';
-type DecisionType = 'Afgerond' | 'Afwijzing';
+type DecisionType = 'Toekenning' | 'Afwijzing';
 type ProductName = 'Participatiewet' | 'Bijzondere Bijstand' | 'Minimafonds';
 
 interface Article {
@@ -23,7 +24,7 @@ interface ProductType {
   beslissing: Article & {
     afwijzing?: Article;
     intrekking?: Article;
-    buitenBehandeling?: Article;
+    buitenBehandeling?: Article; // NOTE: not implemented yet
   };
 }
 
@@ -216,14 +217,23 @@ export interface MyCase {
   link: LinkProps;
 }
 
+const HISTORIC_DAYS_THRESHOLD = 28;
+
 function isInProgess(
   decisionType: DecisionType,
   steps: FocusProduct['processtappen'],
   latestStep: StepName
 ) {
-  // const stepData = steps[latestStep];
-  // TODO: Figure out if something is in progresss.
-  return !decisionType || decisionType !== 'Afgerond';
+  const noDecision = !decisionType;
+
+  let aMonthHasPasedSinceDecision = false;
+
+  if (steps.beslissing) {
+    aMonthHasPasedSinceDecision =
+      addMonths(steps.beslissing.datum, 1) < new Date();
+  }
+
+  return noDecision || aMonthHasPasedSinceDecision;
 }
 
 function translateTitle(title: string) {
