@@ -41,7 +41,7 @@ export default function DataLinkTable({
   // Setting an explicit height will result in a nice transition
   const cssCalcExpr = isCollapsed
     ? 0
-    : `calc((${items.length} * ${rowHeight}) + 1.5rem)`;
+    : `calc((${items.length} * ${rowHeight}) + 1.5rem)`; // 1.5rem being the base height of the thead
 
   // Vary the transition duration between 300 and 600ms
   const cssTransitionDurationMS = `${Math.min(
@@ -85,9 +85,7 @@ export default function DataLinkTable({
             {items.map(item => (
               <tr className={styles.TableRow}>
                 <td className={styles.DisplayPropTitle}>
-                  <ButtonLink to={`${AppRoutes.ZORG}/${item.id}`}>
-                    {item.title}
-                  </ButtonLink>
+                  <ButtonLink to={item.link.to}>{item.title}</ButtonLink>
                 </td>
                 {displayProps &&
                   entries(displayProps).map(([key]) => (

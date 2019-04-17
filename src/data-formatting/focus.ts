@@ -230,7 +230,7 @@ function isInProgess(
 
   if (steps.beslissing) {
     aMonthHasPasedSinceDecision =
-      addMonths(steps.beslissing.datum, 1) < new Date();
+      addMonths(steps.beslissing.datum, 1) > new Date();
   }
 
   return noDecision || aMonthHasPasedSinceDecision;

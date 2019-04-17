@@ -1,5 +1,7 @@
 import slug from 'slug';
 import { defaultDateFormat, dateFormat } from '../helpers/App';
+import { AppRoutes } from 'App.constants';
+import { LinkProps } from '../App.types';
 
 // Example data
 //  {
@@ -25,6 +27,7 @@ export interface WmoItem {
   supplier: string; // Leverancier
   qtyDescription: string; // Omvang: e.g 1 stuks per beschikking
   isActual: boolean; // Actueel
+  link: LinkProps;
 }
 
 interface WmoApiItem {
@@ -52,14 +55,19 @@ export function formatWmoApiResponse(
     } = item;
     const [start] = dateStart.split('T');
     const [finish] = dateFinish ? dateFinish.split('T') : ['aanvraag'];
+    const id = slug(`${title}-${start}-${finish}`).toLowerCase();
     return {
-      id: slug(`${title}-${start}-${finish}`).toLowerCase(),
+      id,
       title,
       dateStart: dateFormat(dateStart, 'DD MMM YYYY'),
       dateFinish: dateFinish && dateFormat(dateFinish, 'DD MMM YYYY'),
       supplier,
       qtyDescription,
       isActual,
+      link: {
+        title: 'Meer info',
+        to: `${AppRoutes.ZORG}/${id}`,
+      },
     };
   });
 }
