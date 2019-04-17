@@ -1,5 +1,14 @@
 @import 'styles/_global.scss';
 
+@mixin withIcon {
+  text-indent: 16rem;
+
+  @include select(ChapterHeadingIcon_ChapterHeadingIcon) {
+    left: 8rem;
+    transform: translateX(-50%);
+  }
+}
+
 .PageContentMainHeading {
   height: $main-header-hero-heading-overlap;
   margin-top: 0;
@@ -8,6 +17,7 @@
   margin-bottom: 3.8rem;
   background-color: $color-white;
   text-indent: 4rem;
+  position: relative;
 
   &__medium {
     width: 46rem;
@@ -16,13 +26,21 @@
     transform: translateX(-#{$main-boxed-width/2});
   }
 
-  &__withIcon {
-    text-indent: 16rem;
+  &__boxed {
+    max-width: $main-boxed-width;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-    @include select(ChapterHeadingIcon_ChapterHeadingIcon) {
-      left: 8rem;
-      transform: translateX(-50%);
-    }
+  &__withIcon {
+    @include withIcon;
+  }
+
+  &__boxedWithIcon {
+    max-width: $main-boxed-width;
+    @include withIcon;
+    margin-left: auto;
+    margin-right: auto;
   }
 
 }

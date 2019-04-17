@@ -8,37 +8,38 @@
   margin: 0;
 }
 
-.LatestUpdatesPanel,
-.PreviousUpdatesPanel > [class^="PageContentMainBody_PageContentMainBody"] {
-  width: 100%;
-  max-width: $main-boxed-width;
-  margin: 0 auto;
-  position: relative;
-  margin-bottom: 6rem;
+.MyUpdates {
+  @include select(PageContentMainBody_PageContentMainBody) {
+    width: 100%;
+    max-width: $main-boxed-width;
+    margin: 0 auto;
+    position: relative;
+    margin-bottom: 6rem;
 
-  @include select(MyUpdates_MyUpdateItem) {
-    padding-left: 16rem;
+    @include select(MyUpdates_MyUpdateItem) {
+      padding-left: 16rem;
 
-    @include select(MyUpdates_Icon) {
-      left: 6.4rem;
-    }
+      @include select(MyUpdates_Icon) {
+        left: 6.4rem;
+      }
 
-    aside {
-      width: 17.5rem;
-      position: absolute;
-      right: 0;
+      aside {
+        width: 17.5rem;
+        position: absolute;
+        right: 0;
 
-      time {
-        color: $color-neutral-grey4;
+        time {
+          color: $color-neutral-grey4;
+        }
       }
     }
   }
-}
 
-.PreviousUpdatesPanel {
-  background-color: $color-neutral-grey1;
+  .PreviousUpdatesPanel {
+    background-color: $color-neutral-grey1;
 
-  @include select(MyUpdates_Icon) {
-    fill: $color-neutral-grey4;
+    @include select(MyUpdates_Icon) {
+      fill: $color-neutral-grey4;
+    }
   }
 }

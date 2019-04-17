@@ -1,1 +1,41 @@
 @import 'styles/_global.scss';
+
+.Page {
+  @include select(PageContentMainBody_PageContentMainBody) {
+    > p {
+      margin-right: 16rem;
+      margin-left: 16rem;
+
+      &:last-of-type {
+        margin-bottom: 7rem;
+      }
+    }
+  }
+
+  @include select(DataLinkTable) {
+    @include select(Heading) {
+      margin-left: 16rem;
+      margin-right: 16rem;
+    }
+    @include select(DataLinkTable_Table) {
+      width: 100%;
+    }
+    @include select(DataLinkTable_DisplayPropTitle) {
+      width: 75%;
+      padding-right: 3em;
+    }
+  }
+}
+
+.DataLinkTableCurrent {
+  @include select(DataLinkTable_Panel) {
+    border-bottom: 0;
+  }
+}
+
+.HistoricDataLinkTable {
+  background-color: $color-neutral-grey1;
+  @include select(DataLinkTable_Panel) {
+    border-bottom: 0;
+  }
+}
