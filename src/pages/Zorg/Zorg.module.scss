@@ -27,8 +27,17 @@
   }
 }
 
+.DataLinkTableCurrent {
+  @include select(DataLinkTable_Panel) {
+    border-bottom: 0;
+  }
+}
+
 .HistoricDataLinkTable {
   background-color: $color-neutral-grey1;
+  @include select(DataLinkTable_Panel) {
+    border-bottom: 0;
+  }
 }
 
 // .LatestUpdatesPanel,

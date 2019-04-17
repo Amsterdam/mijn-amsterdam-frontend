@@ -45,6 +45,7 @@ export default () => {
           displayProps={DISPLAY_PROPS}
           items={itemsActual}
           title="Mijn huidige voorziengen"
+          className={styles.DataLinkTableCurrent}
         />
       </PageContentMainBody>
       <div className={styles.HistoricDataLinkTable}>
