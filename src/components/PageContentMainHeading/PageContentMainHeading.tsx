@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './PageContentMainHeading.module.scss';
 import composeClassNames from 'classnames';
 import Heading, { HeadingTagName } from 'components/Heading/Heading';
-import { ComponentChildren } from '../../App.types';
+import { ComponentChildren } from 'App.types';
 
 type HeadingVariant = 'medium' | 'withIcon' | 'boxed' | 'boxedWithIcon';
 

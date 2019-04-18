@@ -10,9 +10,9 @@ import { AppRoutes } from 'App.constants';
 import { ReactComponent as CaretLeft } from 'assets/icons/Chevron-Left.svg';
 import { AppContext } from 'AppState';
 import useReactRouter from 'use-react-router';
-import { WmoItem } from '../../data-formatting/wmo';
+import { WmoItem } from 'data-formatting/wmo';
 import DocumentList from 'components/DocumentList/DocumentList';
-import Heading from '../../components/Heading/Heading';
+import Heading from 'components/Heading/Heading';
 
 export default () => {
   const {
