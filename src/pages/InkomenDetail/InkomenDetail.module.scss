@@ -5,15 +5,9 @@
     position: relative;
   }
 
-  .DocumentListHeading {
-    text-indent: 16rem;
-  }
-
-  @include select(DocumentList_DocumentListItem) {
-    padding-left: 16rem;
-    @include select(DocumentList_MetaInfo) {
-      right: 13rem;
-    }
+  @include select(StatusLine_List) {
+    max-width: $main-boxed-width;
+    margin: 0 auto;
   }
 }
 

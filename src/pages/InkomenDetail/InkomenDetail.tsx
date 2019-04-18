@@ -11,6 +11,7 @@ import useReactRouter from 'use-react-router';
 import DocumentList from 'components/DocumentList/DocumentList';
 import Heading from 'components/Heading/Heading';
 import PageContentMainHeadingBackLink from 'components/PageContentMainHeadingBackLink/PageContentMainHeadingBackLink';
+import StatusLine from 'components/StatusLine/StatusLine';
 
 export default () => {
   const {
@@ -24,36 +25,6 @@ export default () => {
     },
   } = useReactRouter();
   const FocusItem = items.find(item => item.id === id);
-  const documents = [
-    {
-      id: 'doc-1',
-      title: 'Documentje',
-      type: 'beschikking',
-      datePublished: '2019-10-12',
-      url: 'http://www.download',
-    },
-    {
-      id: 'doc-1',
-      title: 'Documentje',
-      type: 'beschikking',
-      datePublished: '2019-10-12',
-      url: 'http://www.download',
-    },
-    {
-      id: 'doc-1',
-      title: 'Documentje',
-      type: 'beschikking',
-      datePublished: '2019-10-12',
-      url: 'http://www.download',
-    },
-    {
-      id: 'doc-1',
-      title: 'Documentje',
-      type: 'beschikking',
-      datePublished: '2019-10-12',
-      url: 'http://www.download',
-    },
-  ];
   return (
     <PageContentMain variant="full" className={styles.InkomenDetail}>
       <PageContentMainHeading el="header" variant="boxedWithIcon">
@@ -65,12 +36,11 @@ export default () => {
           {FocusItem && FocusItem.title}
         </Heading>
       </PageContentMainHeading>
-      <PageContentMainBody variant="boxed">
-        <Heading size="mediumLarge" className={styles.DocumentListHeading}>
-          Mijn brieven
-        </Heading>
-        <DocumentList items={documents} />
-      </PageContentMainBody>
+      {FocusItem && (
+        <PageContentMainBody>
+          <StatusLine items={FocusItem.process} />
+        </PageContentMainBody>
+      )}
     </PageContentMain>
   );
 };

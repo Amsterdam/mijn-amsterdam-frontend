@@ -1,8 +1,6 @@
 import React from 'react';
 import styles from './DocumentList.module.scss';
-import ButtonLink from 'components/ButtonLink/ButtonLink';
 import { defaultDateFormat } from 'helpers/App';
-import { AppRoutes, Colors } from 'App.constants';
 import { ReactComponent as DocumentIcon } from 'assets/icons/Document.svg';
 import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
 import Heading from 'components/Heading/Heading';
