@@ -4,7 +4,8 @@ import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import { NavLink } from 'react-router-dom';
 import { Colors } from 'App.constants';
 import Heading from 'components/Heading/Heading';
-import { MyCase } from '../../data-formatting/focus';
+import { MyCase } from 'hooks/api/my-cases-api.hook';
+import classnames from 'classnames';
 
 interface CaseItemProps {
   item: MyCase;
@@ -35,7 +36,12 @@ export default function MyCases({ title, items = [] }: MyCasesProps) {
   return (
     <div className={styles.MyCases}>
       <Heading size="large">{title}</Heading>
-      <ul className={styles.List}>
+      <ul
+        className={classnames(
+          styles.List,
+          items.length % 2 === 1 && styles.List__odd
+        )}
+      >
         {items.map(item => (
           <CaseItem key={item.id} item={item} />
         ))}

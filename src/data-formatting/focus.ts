@@ -205,7 +205,7 @@ export const Labels: LabelData = {
   },
 };
 
-export interface MyCase {
+export interface FocusItem {
   id: string;
   datePublished: string;
   title: string;
@@ -254,7 +254,7 @@ function replaceWith(text: string, data: any) {
   return text;
 }
 
-function formatFocusProduct(product: FocusProduct): MyCase {
+function formatFocusProduct(product: FocusProduct): FocusItem {
   const {
     _meest_recent: latestStep,
     soortProduct: productType,
@@ -291,6 +291,6 @@ function formatFocusProduct(product: FocusProduct): MyCase {
 
 export default function formatFocusApiResponse(
   products: FocusApiResponse
-): MyCase[] {
+): FocusItem[] {
   return products.map(product => formatFocusProduct(product));
 }
