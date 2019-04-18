@@ -9,7 +9,7 @@ import styles from 'pages/Profile/Profile.module.scss';
 import { brpInfoLabels, panelConfig } from './Profile.constants';
 import { Chapters } from 'App.constants';
 import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
-import { BrpApiState } from '../../hooks/api/brp-api.hook';
+import { BrpApiState } from 'hooks/api/brp-api.hook';
 
 // NOTE: Preferred simple interface here.
 interface ProfileData {

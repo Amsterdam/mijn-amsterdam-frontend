@@ -8,7 +8,7 @@ import Heading from '../Heading/Heading';
 import styles from './DataLinkTable.module.scss';
 import ButtonLink from 'components/ButtonLink/ButtonLink';
 import { AppRoutes } from 'App.constants';
-import { entries } from '../../helpers/App';
+import { entries } from 'helpers/App';
 
 export interface DataLinkTableProps {
   items?: Unshaped[];
