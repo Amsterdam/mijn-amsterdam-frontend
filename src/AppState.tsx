@@ -9,6 +9,7 @@ import { MyUpdatesApiState } from './hooks/api/my-updates-api.hook';
 import { MyCasesApiState } from './hooks/api/my-cases-api.hook';
 import { MyTipsApiState } from './hooks/api/my-tips-api.hook';
 import useWmoApi, { WmoApiState } from './hooks/api/api.wmo';
+import useFocusApi, { FocusApiState } from './hooks/api/api.focus';
 
 export interface AppState {
   BRP: BrpApiState;
@@ -17,6 +18,7 @@ export interface AppState {
   MY_CASES: MyCasesApiState;
   MY_TIPS: MyTipsApiState;
   WMO: WmoApiState;
+  FOCUS: FocusApiState;
 }
 
 // Use typecasting here to allow for proper state completion and use in deconstruction assignments.

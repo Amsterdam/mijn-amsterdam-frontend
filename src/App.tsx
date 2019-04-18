@@ -21,6 +21,7 @@ import Wonen from 'pages/Wonen/Wonen';
 import Inkomen from 'pages/Inkomen/Inkomen';
 import Zorg from 'pages/Zorg/Zorg';
 import ZorgDetail from 'pages/ZorgDetail/ZorgDetail';
+import InkomenDetail from 'pages/InkomenDetail/InkomenDetail';
 
 function MainApp({ person, isAuthenticated }: MainHeaderProps) {
   return (
@@ -37,6 +38,7 @@ function MainApp({ person, isAuthenticated }: MainHeaderProps) {
           <Route path={AppRoutes.BELASTINGEN} component={Belastingen} />
           <Route path={AppRoutes.JEUGDHULP} component={Jeugdhulp} />
           <Route path={AppRoutes.WONEN} component={Wonen} />
+          <Route path={`${AppRoutes.INKOMEN}/:id`} component={InkomenDetail} />
           <Route path={AppRoutes.INKOMEN} component={Inkomen} />
           <Route path={`${AppRoutes.ZORG}/:id`} component={ZorgDetail} />
           <Route path={AppRoutes.ZORG} component={Zorg} />
