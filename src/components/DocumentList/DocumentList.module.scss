@@ -4,7 +4,7 @@
   @include reset-list-style;
 }
 
-.MyUpdateItem {
+.DocumentListItem {
   border-top: 1px solid $color-neutral-grey2;
   padding-top: 2rem;
   padding-bottom: 2rem;
@@ -18,9 +18,31 @@
 
 .Icon {
   position: absolute;
-  left: 0;
-  top: 2.3rem;
-  fill: $color-primary-red;
+  left: -.5rem;
+  top: .4em;
+  fill: $color-neutral-grey4;
+}
+
+.FileType {
+  color: $color-neutral-grey4;
+}
+
+.DownloadLink {
+  text-decoration: none;
+  display: block;
+  position: relative;
+  padding-left: 5rem;
+  &:hover {
+    color: $color-primary-red;
+    svg {
+      fill: $color-primary-red;
+    }
+  }
+}
+
+.DownloadIcon {
+  height: .8em;
+  width: .8em;
 }
 
 .Description {
@@ -31,20 +53,18 @@
   font-size: 1.4rem;
 }
 
-.Action {
-  margin: 0;
-  margin-top: .4rem;
-}
-
-.FooterLink {
-  margin: 0;
-  padding: 2rem 0;
-  border-top: 1px solid $color-neutral-grey2;
-  border-bottom: 1px solid $color-neutral-grey2;
-}
-
-.ChapterIndication {
+.TypeIndication {
   font-style: normal;
   text-transform: capitalize;
   display: block;
+}
+
+ .MetaInfo {
+  width: 17.5rem;
+  position: absolute;
+  right: 0;
+
+  time {
+    color: $color-neutral-grey4;
+  }
 }
