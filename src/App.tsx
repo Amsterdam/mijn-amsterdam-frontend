@@ -20,6 +20,7 @@ import Jeugdhulp from 'pages/Jeugdhulp/Jeugdhulp';
 import Wonen from 'pages/Wonen/Wonen';
 import Inkomen from 'pages/Inkomen/Inkomen';
 import Zorg from 'pages/Zorg/Zorg';
+import ZorgDetail from 'pages/ZorgDetail/ZorgDetail';
 
 function MainApp({ person, isAuthenticated }: MainHeaderProps) {
   return (
@@ -37,6 +38,7 @@ function MainApp({ person, isAuthenticated }: MainHeaderProps) {
           <Route path={AppRoutes.JEUGDHULP} component={Jeugdhulp} />
           <Route path={AppRoutes.WONEN} component={Wonen} />
           <Route path={AppRoutes.INKOMEN} component={Inkomen} />
+          <Route path={`${AppRoutes.ZORG}/:id`} component={ZorgDetail} />
           <Route path={AppRoutes.ZORG} component={Zorg} />
           <Route component={NotFound} />
         </Switch>
