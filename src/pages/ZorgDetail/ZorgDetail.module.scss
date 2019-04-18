@@ -1,20 +1,29 @@
 @import 'styles/_global.scss';
 
 .ZorgDetail {
-  @include select(Heading_Heading) {
+  @include select(PageContentMainHeading) {
     position: relative;
     @include select(ButtonLink) {
       @include heading-small;
-      // position: absolute;
-      text-indent: 0;
-      margin-left: 14rem;
       display: block;
       font-weight: bold;
       padding-left: 1.2em;
+
       svg {
         height: .9em;
         width: .9em;
       }
+    }
+  }
+
+  .DocumentListHeading {
+    text-indent: 16rem;
+  }
+
+  @include select(DocumentList_DocumentListItem) {
+    padding-left: 16rem;
+    @include select(DocumentList_MetaInfo) {
+      right: 13rem;
     }
   }
 }
