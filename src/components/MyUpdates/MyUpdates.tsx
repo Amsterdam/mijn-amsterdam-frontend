@@ -50,6 +50,7 @@ export default function MyUpdates({ items = [], total = 0 }: MyUpdatesProps) {
           <ButtonLink to={AppRoutes.MY_UPDATES}>Alle updates</ButtonLink>
         </p>
       )}
+      {items.length === 0 && <p>Er zijn geen updates</p>}
     </div>
   );
 }
