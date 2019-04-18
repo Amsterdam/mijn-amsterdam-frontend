@@ -44,8 +44,10 @@ export default function MainNavSubmenu({
   ...rest
 }: MainNavSubmenuProps) {
   const [debouncedLeave, cancelLeave] = useDebouncedCallback(() => {
-    console.log('onMouseLeave!');
     onMouseLeave();
+  }, 200);
+  const [debouncedEnter, cancelEnter] = useDebouncedCallback(() => {
+    onMouseEnter();
   }, 200);
 
   return (
@@ -55,10 +57,13 @@ export default function MainNavSubmenu({
           styles.SubmenuButton,
           isOpen && styles.SubmenuButtonOpen
         )}
-        onMouseLeave={debouncedLeave}
+        onMouseLeave={() => {
+          cancelEnter();
+          debouncedLeave();
+        }}
         onMouseEnter={() => {
           cancelLeave();
-          onMouseEnter();
+          debouncedEnter();
         }}
         {...rest}
       >
@@ -71,7 +76,7 @@ export default function MainNavSubmenu({
           isOpen && styles.SubmenuPanelOpen
         )}
         onMouseEnter={() => cancelLeave()}
-        onMouseLeave={() => onMouseLeave()}
+        onMouseLeave={() => debouncedLeave()}
       >
         <div className={styles.SubmenuItems}>{children}</div>
       </div>
