@@ -39,6 +39,7 @@ export default () => {
           displayProps={DISPLAY_PROPS}
           items={itemsRequested}
           title="Mijn lopende aanvragen"
+          startCollapsed={false}
         />
         <DataLinkTable
           rowHeight="6rem"
