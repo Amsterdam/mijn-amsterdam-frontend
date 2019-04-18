@@ -11,7 +11,7 @@ export interface FocusApiState extends ApiHookState {
   data: FocusResponse;
 }
 
-export default function useFocusApiResponse(
+export default function useFocusApi(
   offset?: number,
   limit?: number
 ): FocusApiState {
