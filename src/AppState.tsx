@@ -62,6 +62,7 @@ export default ({ render, children, value, session }: AppStateProps) => {
       MY_CASES: useMyCasesApi(),
       MY_TIPS: useMyTipsApi(),
       WMO: useWmoApi(),
+      FOCUS: useFocusApi(),
     };
   }
 
