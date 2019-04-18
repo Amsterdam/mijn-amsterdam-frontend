@@ -3,17 +3,6 @@
 .ZorgDetail {
   @include select(PageContentMainHeading) {
     position: relative;
-    @include select(ButtonLink) {
-      @include heading-small;
-      display: block;
-      font-weight: bold;
-      padding-left: 1.2em;
-
-      svg {
-        height: .9em;
-        width: .9em;
-      }
-    }
   }
 
   .DocumentListHeading {

@@ -4,12 +4,11 @@ import PageContentMainHeading from 'components/PageContentMainHeading/PageConten
 import styles from './ZorgDetail.module.scss';
 import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
 import { Chapters } from 'App.constants';
-import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
-import { AppRoutes } from 'App.constants';
-import { ReactComponent as CaretLeft } from 'assets/icons/Chevron-Left.svg';
 import { AppContext } from 'AppState';
 import useReactRouter from 'use-react-router';
 import Heading from 'components/Heading/Heading';
+import PageContentMainHeadingBackLink from 'components/PageContentMainHeadingBackLink/PageContentMainHeadingBackLink';
+import { AppRoutes } from '../../App.constants';
 
 export default () => {
   const {
@@ -28,9 +27,9 @@ export default () => {
     <PageContentMain variant="full" className={styles.ZorgDetail}>
       <PageContentMainHeading el="header" variant="boxedWithIcon">
         <ChapterHeadingIcon chapter={Chapters.ZORG} />
-        <IconButtonLink to={AppRoutes.ZORG}>
-          <CaretLeft /> Zorg
-        </IconButtonLink>
+        <PageContentMainHeadingBackLink to={AppRoutes.ZORG}>
+          Zorg
+        </PageContentMainHeadingBackLink>
         <Heading el="h2" className={styles.PageHeading}>
           {WmoItem && WmoItem.title}
         </Heading>
