@@ -14,8 +14,8 @@
 
   @include select(DataLinkTable) {
     @include select(Heading) {
-      margin-left: 16rem;
-      margin-right: 16rem;
+      margin-left: 13.5rem;
+      margin-right: 13.5rem;
     }
     @include select(DataLinkTable_Table) {
       width: 100%;
