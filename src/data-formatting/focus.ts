@@ -56,12 +56,18 @@ interface FocusProduct {
 
 type FocusApiResponse = FocusProduct[];
 
+const processSteps: StepTitle[] = [
+  'aanvraag',
+  'inBehandeling',
+  'herstelTermijn',
+  'beslissing',
+];
+
 export const Labels: LabelData = {
   Participatiewet: {
     aanvraag: {
       title: 'Aanvraag {title}',
-      description:
-        'U hebt op {datePublished} een bijstandsuitkering aangevraagd.',
+      description: 'U hebt op {stepDate} een bijstandsuitkering aangevraagd.',
     },
     inBehandeling: {
       title: '{title} in behandeling',
@@ -117,22 +123,22 @@ export const Labels: LabelData = {
   },
   Minimafonds: {
     aanvraag: {
-      title: 'Aanvraag {title}',
+      title: 'Aanvraag',
       description: 'U hebt op {datePublished} een Stadspas aangevraagd.',
     },
     inBehandeling: {
-      title: '{title} in behandeling',
+      title: 'In behandeling',
       description:
         'Het kan zijn dat u nog extra informatie moet opsturen.\nU ontvangt vóór {decisionDeadline} ons besluit.\nLet op: Deze status informatie betreft alleen uw aanvraag voor een Stadspas; uw eventuele andere Hulp bij Laag Inkomen producten worden via post en/of telefoon afgehandeld.',
     },
     herstelTermijn: {
-      title: 'Meer informatie nodig {title}',
+      title: 'Meer informatie',
       description:
         'Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken. Bekijk de brief voor meer details.\nU moet de extra informatie vóór {userActionDeadline} opsturen. Dan ontvangt u vóór {recoveryDeadline} ons besluit.\n\nTip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk in. Hoe eerder u ons de noodzakelijke informatie geeft, hoe eerder wij verder kunnen met de behandeling van uw aanvraag.',
     },
     beslissing: {
       Afwijzing: {
-        title: 'Besluit {title}',
+        title: 'Besluit',
         description:
           'U heeft geen recht op een Stadspas. De reden voor afwijzing is {reasonForDecision}. Bekijk de brief voor meer details.',
       },
@@ -148,11 +154,12 @@ export const Labels: LabelData = {
 interface StepSourceData {
   title: string;
   decision: Decision;
-  datePublished: string;
-  decisionDeadline: string;
-  userActionDeadline: string;
-  recoveryDeadline: string;
-  reasonForDecision: string;
+  datePublished?: string;
+  decisionDeadline?: string;
+  userActionDeadline?: string;
+  recoveryDeadline?: string;
+  reasonForDecision?: string;
+  latestStep: StepTitle;
 }
 
 export interface ProcessStep {
@@ -160,6 +167,7 @@ export interface ProcessStep {
   title: string;
   datePublished: string;
   description: string;
+  isActual: boolean;
 }
 
 export interface FocusItem {
@@ -198,26 +206,53 @@ function translateProductTitle(title: ProductTitle) {
   return title;
 }
 
+type GetStepSourceDataArgs = Pick<
+  StepSourceData,
+  'title' | 'latestStep' | 'decision'
+> & { stepData: Step | null };
+
+// Data for replacement tags in label data.
+function getStepSourceData({
+  title,
+  stepData,
+  latestStep,
+  decision,
+}: GetStepSourceDataArgs): StepSourceData {
+  const stepDate = stepData ? stepData.datum : '';
+  return {
+    title: translateProductTitle(title),
+    latestStep,
+    decision,
+    datePublished: defaultDateFormat(stepDate),
+    decisionDeadline: calculateDecisionDeadline(stepDate), // Decision will be made before this deadline.
+    userActionDeadline: calculateUserActionDeadline(stepDate), // Deadline for person to take action.
+    recoveryDeadline: calculateRecoveryDeadline(stepDate), // Deadline with decision after userAction.
+    reasonForDecision: '--onbekend--', // Why a decision was made. // TODO: Do we have a reden?
+  };
+}
+
 function replaceSourceDataTags(text: string, data: StepSourceData): string {
-  const matches = text.match(/[^{\}]+(?=})/g) as Array<keyof StepSourceData>;
+  let rText = text || '';
+  const matches =
+    rText && (rText.match(/[^{\}]+(?=})/g) as Array<keyof StepSourceData>);
   if (Array.isArray(matches)) {
-    return matches.reduce((text, key) => {
-      return text.replace(`{${key}}`, data[key] || '');
-    }, text);
+    return matches.reduce((rText, key) => {
+      return data[key] ? rText.replace(`{${key}}`, data[key] || '') : rText;
+    }, rText);
   }
-  return text;
+  return rText;
 }
 
 function calculateUserActionDeadline(date: string) {
-  return date;
+  return defaultDateFormat(date);
 }
 
 function calculateDecisionDeadline(date: string) {
-  return date;
+  return defaultDateFormat(date);
 }
 
 function calculateRecoveryDeadline(date: string) {
-  return date;
+  return defaultDateFormat(date);
 }
 
 function formatFocusDocument(
@@ -239,7 +274,7 @@ function formatStepData(
   sourceData: StepSourceData,
   productOrigin: ProductOrigin,
   stepTitle: StepTitle,
-  stepData: Step
+  stepData: Step | null
 ): ProcessStep {
   const stepLabels =
     !!sourceData.decision && stepTitle === 'beslissing'
@@ -247,12 +282,19 @@ function formatStepData(
       : (Labels[productOrigin][stepTitle] as Info);
 
   return {
-    title: replaceSourceDataTags(stepLabels.title, sourceData),
-    datePublished: defaultDateFormat(stepData.datum),
-    description: replaceSourceDataTags(stepLabels.description, sourceData),
-    documents: stepData.document.map(document =>
-      formatFocusDocument(stepTitle, stepData.datum, document)
-    ),
+    title: stepLabels
+      ? replaceSourceDataTags(stepLabels.title, sourceData)
+      : stepTitle,
+    datePublished: stepData ? defaultDateFormat(stepData.datum) : '--NNB--',
+    description: stepLabels
+      ? replaceSourceDataTags(stepLabels.description, sourceData)
+      : '--NNB--',
+    documents: stepData
+      ? stepData.document.map(document =>
+          formatFocusDocument(stepTitle, stepData.datum, document)
+        )
+      : [],
+    isActual: stepTitle === sourceData.latestStep,
   };
 }
 
@@ -264,7 +306,6 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
     processtappen: steps,
     naam: title,
     _id: id,
-    processtappen,
   } = product;
 
   const inProgress = isInProgess(decision, steps);
@@ -273,21 +314,17 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
     ? (Labels[productType][latestStep] as Info)
     : (Labels[productType][latestStep] as InfoExtended)[decision];
 
-  // Data for replacement tags in label data.
-  const sourceData: StepSourceData = {
-    title: translateProductTitle(title),
+  const sourceData = getStepSourceData({
+    title,
     decision,
-    datePublished: defaultDateFormat(stepData.datum),
-    decisionDeadline: calculateDecisionDeadline(stepData.datum), // Decision will be made before this deadline.
-    userActionDeadline: calculateUserActionDeadline(stepData.datum), // Deadline for person to take action.
-    recoveryDeadline: calculateRecoveryDeadline(stepData.datum), // Deadline with decision after userAction.
-    reasonForDecision: '--onbekend--', // Why a decision was made. // TODO: Do we have a reden?
-  };
+    latestStep,
+    stepData,
+  });
 
   return {
     id,
     chapter: Chapters.INKOMEN,
-    datePublished: sourceData.datePublished,
+    datePublished: sourceData.datePublished || '',
     title: replaceSourceDataTags(stepLabels.title, sourceData),
     description: replaceSourceDataTags(stepLabels.description, sourceData),
     latestStep,
@@ -299,9 +336,16 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
       title: 'Meer informatie', // TODO: How to get custom link title?
       to: `${AppRoutes.INKOMEN}/${id}`,
     },
-    process: entries(processtappen)
-      .filter(([, stepData]) => stepData !== null)
-      .map(([stepTitle, stepData]) => {
+    process: processSteps
+      .filter(stepTitle => !!steps[stepTitle])
+      .map(stepTitle => {
+        const stepData = steps[stepTitle] || null;
+        const sourceData = getStepSourceData({
+          title,
+          decision,
+          latestStep,
+          stepData,
+        });
         return formatStepData(sourceData, productType, stepTitle, stepData);
       }),
   };
