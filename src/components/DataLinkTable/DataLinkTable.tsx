@@ -65,6 +65,7 @@ export default function DataLinkTable({
         </Heading>
       )}
       <div
+        aria-hidden={isCollapsed}
         className={styles.Panel}
         style={{
           height: rowHeight === 'auto' ? rowHeight : cssCalcExpr,
