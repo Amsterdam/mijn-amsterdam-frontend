@@ -8,7 +8,7 @@
 }
 
 .InnerContainer {
-  width: $main-boxed-width;
+  width: calc(#{$main-boxed-width} - 8rem); // align with boxed-regular content
   margin: 0 auto;
 }
 
