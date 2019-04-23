@@ -28,11 +28,13 @@
 
   h1 {
     font-size: 2rem;
+    margin-top: 0.5rem;
+    margin-left: 1.5rem;
   }
 
   svg {
     height: 5rem;
-    width: 8rem;
+    width: 10rem;
     margin-right: 0.8rem;
   }
 }
@@ -52,7 +54,8 @@
 
   svg {
     height: inherit;
-    width: 3rem;
+    width: 1.8rem;
     margin: 0;
+    margin-left: 1rem;
   }
 }
