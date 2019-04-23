@@ -77,6 +77,9 @@
   &:last-child .Panel:first-child:before {
     background: linear-gradient(to bottom, $color-neutral-grey3 0%, $color-neutral-grey3 65%, $color-neutral-grey1 100%);
   }
+  &:first-child:last-child .Panel:first-child:before {
+    background: linear-gradient(to bottom, $color-neutral-grey1 0%, $color-neutral-grey3 15%, $color-neutral-grey3 85%, $color-neutral-grey1 100%);
+  }
 }
 
 .ListItem__actual .Panel:first-child:after {
