@@ -1,6 +1,6 @@
 import { AppRoutes } from 'App.constants';
 import { defaultDateFormat, entries } from 'helpers/App';
-import { LinkProps } from '../App.types';
+import { LinkProps } from 'App.types';
 import { Chapter, Chapters } from '../App.constants';
 import { addMonths } from 'date-fns';
 import { Document as GenericDocument } from '../components/DocumentList/DocumentList';
@@ -13,6 +13,7 @@ type ProductTitle = 'Levensonderhoud' | 'Stadspas' | string;
 interface Info {
   title: string;
   description: string;
+  infoLink?: LinkProps | LinkProps[];
 }
 
 type InfoExtended = { [type in Decision]: Info };
@@ -69,11 +70,31 @@ export const Labels: LabelData = {
       title: 'Aanvraag {title}',
       description:
         'U hebt op {datePublished} een bijstandsuitkering aangevraagd.',
+      infoLink: {
+        to:
+          'https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D',
+        title: 'Meer informatie',
+        target: '_self',
+      },
     },
     inBehandeling: {
       title: '{title} in behandeling',
       description:
         'Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u nog extra informatie moet opsturen.\nU ontvangt vóór {decisionDeadline} ons besluit.',
+      infoLink: [
+        {
+          to:
+            'https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d',
+          title: 'Meer informatie over uw rechten.',
+          target: '_self',
+        },
+        {
+          to:
+            'https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d',
+          title: 'Meer informatie over uw plichten.',
+          target: '_self',
+        },
+      ],
     },
     herstelTermijn: {
       title: 'Meer informatie nodig over {title}',
@@ -90,6 +111,12 @@ export const Labels: LabelData = {
         title: 'Besluit {title}',
         description:
           'U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer details.',
+        infoLink: {
+          to:
+            'https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D',
+          title: 'Meer informatie over de betaling van uw uitkering',
+          target: '_self',
+        },
       },
     },
   },
@@ -147,6 +174,11 @@ export const Labels: LabelData = {
         title: 'Besluit',
         description:
           'U heeft recht op een Stadspas. Bekijk de brief voor meer details.',
+        infoLink: {
+          to: 'https://www.amsterdam.nl/stadspas',
+          title: 'Meer informatie over de stadspas',
+          target: '_self',
+        },
       },
     },
   },
@@ -170,6 +202,7 @@ export interface ProcessStep {
   title: string;
   datePublished: string;
   description: string;
+  infoLink?: LinkProps | LinkProps[];
   isActual: boolean;
 }
 
@@ -301,6 +334,7 @@ function formatStepData(
         )
       : [],
     isActual: stepTitle === sourceData.latestStep,
+    infoLink: stepLabels.infoLink,
   };
 }
 
