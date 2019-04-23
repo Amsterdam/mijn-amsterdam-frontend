@@ -42,8 +42,14 @@
     margin-right: auto;
   }
 
+  // Align style for the backlink and elements
   @include select(PageContentMainHeadingBackLink) {
     display: block;
+    float: left;
+
+    + * {
+      clear: left;
+    }
   }
 
 }
