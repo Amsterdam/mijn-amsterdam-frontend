@@ -23,19 +23,11 @@ import Inkomen from 'pages/Inkomen/Inkomen';
 import Zorg from 'pages/Zorg/Zorg';
 import MyArea from 'pages/MyArea/MyArea';
 
-function isMyAreaRoute(location) {
-  return location ? location.pathname === AppRoutes.MY_AREA : false;
-}
-
-function MyAreaRoute() {
-  return <MyArea />;
-}
-
-function MainApp({ me, isAuthenticated }: MainHeaderProps) {
+function MainApp({ person, isAuthenticated }: MainHeaderProps) {
   const { location } = useReactRouter();
 
-  return isMyAreaRoute(location) ? (
-    <MyAreaRoute />
+  return location.pathname === AppRoutes.MY_AREA ? (
+    <MyArea />
   ) : (
     <>
       <MainHeader person={person} isAuthenticated={isAuthenticated} />

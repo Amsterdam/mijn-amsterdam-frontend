@@ -11,6 +11,7 @@ export interface MenuItem extends LinkProps {
   id: string;
   Icon?: SVGComponent;
   submenuItems?: MenuItem[];
+  title: string;
 }
 
 export const myChaptersMenuItems: MenuItem[] = [
@@ -64,6 +65,6 @@ export const menuItems: MenuItem[] = [
     to: '',
     submenuItems: myChaptersMenuItems,
   },
-  { label: 'Mijn buurt', id: 'mijn-buurt', to: AppRoutes.MY_AREA },
-  { label: 'Mijn updates', id: 'mijn-updates', to: AppRoutes.MY_UPDATES },
+  { title: 'Mijn buurt', id: 'mijn-buurt', to: AppRoutes.MY_AREA },
+  { title: 'Mijn updates', id: 'mijn-updates', to: AppRoutes.MY_UPDATES },
 ];
