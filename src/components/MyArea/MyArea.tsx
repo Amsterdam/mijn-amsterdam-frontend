@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter, NavLink } from 'react-router-dom';
+import { withRouter, NavLink, RouteComponentProps } from 'react-router-dom';
 import styles from './MyArea.module.scss';
 import { MAP_URL } from './MyArea.constants';
 import { AppRoutes } from 'App.constants';
@@ -20,7 +20,7 @@ export const MyAreaHeader = () => {
   );
 };
 
-const MyArea = ({ history }) => {
+const MyArea: React.SFC<RouteComponentProps> = ({ history }) => {
   return (
     <div className={styles.MyArea}>
       <iframe
