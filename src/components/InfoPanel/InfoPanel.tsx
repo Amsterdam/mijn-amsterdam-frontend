@@ -20,10 +20,7 @@ function InfoPanelActionLinks({ actionLinks }: InfoPanelActionLinksProps) {
     <ul className={styles.InfoPanelActionLinks}>
       {actionLinks.map((actionLink, index) => (
         <li key={actionLink.title}>
-          <ButtonLink
-            external={actionLink.external || false}
-            to={actionLink.url}
-          >
+          <ButtonLink target="_self" to={actionLink.url}>
             {actionLink.title}
           </ButtonLink>
         </li>

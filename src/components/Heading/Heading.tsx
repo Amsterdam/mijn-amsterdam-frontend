@@ -12,7 +12,7 @@ const Sizes: { [key: string]: HeadingStyleSize } = {
   LARGE: 'large',
 };
 
-type HeadingTagName = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+export type HeadingTagName = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div';
 
 const Elements: { [tagName in HeadingTagName]: HeadingTagName } = {
   h1: 'h1',
@@ -21,6 +21,7 @@ const Elements: { [tagName in HeadingTagName]: HeadingTagName } = {
   h4: 'h4',
   h5: 'h5',
   h6: 'h6',
+  div: 'div',
 };
 
 interface HeadingProps extends Omit<HTMLProps<HTMLHeadingElement>, 'size'> {

@@ -38,3 +38,10 @@
     transform: translateY(-50%);
   }
 }
+
+.List__odd {
+  li:last-child {
+    flex-basis: 100%;
+    margin-right: 0;
+  }
+}

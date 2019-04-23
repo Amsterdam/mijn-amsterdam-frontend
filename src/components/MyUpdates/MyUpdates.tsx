@@ -5,7 +5,7 @@ import { defaultDateFormat } from 'helpers/App';
 import { AppRoutes, Colors } from 'App.constants';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import Heading from 'components/Heading/Heading';
-import { MyUpdate } from '../../hooks/api/my-updates-api.hook';
+import { MyUpdate } from 'hooks/api/my-updates-api.hook';
 
 export interface MyUpdatesProps {
   items: MyUpdate[];
@@ -50,6 +50,7 @@ export default function MyUpdates({ items = [], total = 0 }: MyUpdatesProps) {
           <ButtonLink to={AppRoutes.MY_UPDATES}>Alle updates</ButtonLink>
         </p>
       )}
+      {items.length === 0 && <p>Er zijn geen updates</p>}
     </div>
   );
 }
