@@ -25,7 +25,7 @@ export default () => {
 
   return (
     <PageContentMain variant="full" className={styles.ZorgDetail}>
-      <PageContentMainHeading el="header" variant="boxedWithIcon">
+      <PageContentMainHeading el="div" variant="boxedWithIcon">
         <ChapterHeadingIcon chapter={Chapters.ZORG} />
         <PageContentMainHeadingBackLink to={AppRoutes.ZORG}>
           Zorg
