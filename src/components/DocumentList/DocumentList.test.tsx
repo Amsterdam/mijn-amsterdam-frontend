@@ -1,11 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import DocumentList from './DocumentList';
-import { MyUpdate } from 'hooks/api/my-updates-api.hook';
+import DocumentList, { Document } from './DocumentList';
 
-const MY_UPDATES: MyUpdate[] = [];
-const MY_UPDATES_TOTAL = 10;
+const ITEMS: Document[] = [];
 
 it('Renders without crashing', () => {
-  shallow(<DocumentList items={MY_UPDATES} total={MY_UPDATES_TOTAL} />);
+  shallow(<DocumentList items={ITEMS} />);
 });
