@@ -1,6 +1,7 @@
 @import 'styles/_global.scss';
 
 .InkomenDetail {
+
   @include select(PageContentMainHeading) {
     position: relative;
   }
