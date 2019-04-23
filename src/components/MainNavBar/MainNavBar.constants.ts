@@ -1,4 +1,4 @@
-import { AppRoutes } from 'App.constants';
+import { AppRoutes, Chapters, Chapter } from 'App.constants';
 import { ReactComponent as BurgerzakenIcon } from 'assets/images/burgerzaken.svg';
 import { ReactComponent as ZorgIcon } from 'assets/images/zorg.svg';
 import { ReactComponent as WonenIcon } from 'assets/images/wonen.svg';
@@ -7,46 +7,60 @@ import { ReactComponent as BelastingenIcon } from 'assets/images/belastingen.svg
 import { ReactComponent as JeugdhulpIcon } from 'assets/icons/Passport.svg';
 import { LinkProps, SVGComponent } from 'App.types';
 
+export type MainMenuId =
+  | Chapter
+  | 'home'
+  | 'my-chapters'
+  | 'my-area'
+  | 'my-updates';
+
 export interface MenuItem extends LinkProps {
-  id: string;
+  id: MainMenuId;
   Icon?: SVGComponent;
   submenuItems?: MenuItem[];
 }
 
+export const mainMenuItemId: { [key: string]: MainMenuId } = {
+  HOME: 'home',
+  MY_CHAPTERS: 'my-chapters',
+  MY_AREA: 'my-area',
+  MY_UPDATES: 'my-updates',
+};
+
 export const myChaptersMenuItems: MenuItem[] = [
   {
     title: 'Burgerzaken',
-    id: 'burgerzaken',
+    id: Chapters.BURGERZAKEN,
     to: AppRoutes.BURGERZAKEN,
     Icon: BurgerzakenIcon,
   },
   {
     title: 'Wonen',
-    id: 'wonen',
+    id: Chapters.WONEN,
     to: AppRoutes.WONEN,
     Icon: WonenIcon,
   },
   {
     title: 'Belastingen',
-    id: 'belastingen',
+    id: Chapters.BELASTINGEN,
     to: AppRoutes.BELASTINGEN,
     Icon: BelastingenIcon,
   },
   {
     title: 'Zorg',
-    id: 'gezondhied',
+    id: Chapters.ZORG,
     to: AppRoutes.ZORG,
     Icon: ZorgIcon,
   },
   {
     title: 'Inkomen',
-    id: 'inkomen',
+    id: Chapters.INKOMEN,
     to: AppRoutes.INKOMEN,
     Icon: InkomenIcon,
   },
   {
     title: 'Jeugdhulp',
-    id: 'jeugdhulp',
+    id: Chapters.JEUGDHULP,
     to: AppRoutes.JEUGDHULP,
     Icon: JeugdhulpIcon,
   },
@@ -55,15 +69,22 @@ export const myChaptersMenuItems: MenuItem[] = [
 export const menuItems: MenuItem[] = [
   {
     title: 'Home',
-    id: 'home',
+    id: mainMenuItemId.HOME,
     to: AppRoutes.ROOT,
   },
   {
     title: "Mijn thema's",
-    id: 'mijn-themas',
+    id: mainMenuItemId.MY_CHAPTERS,
     to: '',
-    submenuItems: myChaptersMenuItems,
   },
-  { title: 'Mijn buurt', id: 'mijn-buurt', to: AppRoutes.MIJN_BUURT },
-  { title: 'Mijn updates', id: 'mijn-updates', to: AppRoutes.MY_UPDATES },
+  { title: 'Mijn buurt', id: mainMenuItemId.MY_AREA, to: AppRoutes.MIJN_BUURT },
+  {
+    title: 'Mijn updates',
+    id: mainMenuItemId.MY_UPDATES,
+    to: AppRoutes.MY_UPDATES,
+  },
 ];
+
+export const submenuItems: { [id: string]: MenuItem[] } = {
+  [mainMenuItemId.MY_CHAPTERS]: myChaptersMenuItems,
+};

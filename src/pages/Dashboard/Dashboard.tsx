@@ -24,6 +24,7 @@ export default () => {
     MY_TIPS: {
       data: { items: myTips },
     },
+    MY_CHAPTERS,
   } = useContext(AppContext);
 
   return (
@@ -36,7 +37,7 @@ export default () => {
           total={myUpdatesTotal}
           items={myUpdates.slice(0, MAX_UPDATES_VISIBLE)}
         />
-        <MyChaptersPanel title="Mijn thema's" />
+        <MyChaptersPanel items={MY_CHAPTERS} title="Mijn thema's" />
       </PageContentMainBody>
       <PageContentMainBody variant="regularBoxed">
         <MyCases title="Mijn lopende zaken" items={myCases} />

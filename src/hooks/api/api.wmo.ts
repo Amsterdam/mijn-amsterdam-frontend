@@ -1,13 +1,13 @@
 import { ApiUrls } from 'App.constants';
 import paginatedApiHook, { PaginatedItemsResponse } from './paginated-api.hook';
-import { ApiHookState } from './api.types';
+import { ApiState } from './api.types';
 import {
   formatWmoApiResponse,
   WmoItem,
   WmoApiResponse,
 } from 'data-formatting/wmo';
 
-export interface WmoApiState extends ApiHookState {
+export interface WmoApiState extends ApiState {
   data: {
     items: WmoItem[];
   };

@@ -10,6 +10,8 @@ import { MyCasesApiState } from './hooks/api/my-cases-api.hook';
 import { MyTipsApiState } from './hooks/api/my-tips-api.hook';
 import useWmoApi, { WmoApiState } from './hooks/api/api.wmo';
 import useFocusApi, { FocusApiState } from './hooks/api/api.focus';
+import useMyChapters from 'hooks/myChapters.hook';
+import { MenuItem } from './components/MainNavBar/MainNavBar.constants';
 
 export interface AppState {
   BRP: BrpApiState;
@@ -19,6 +21,7 @@ export interface AppState {
   MY_TIPS: MyTipsApiState;
   WMO: WmoApiState;
   FOCUS: FocusApiState;
+  MY_CHAPTERS: MenuItem[];
 }
 
 // Use typecasting here to allow for proper state completion and use in deconstruction assignments.
@@ -53,16 +56,25 @@ export default ({ render, children, value, session }: AppStateProps) => {
   if (typeof value !== 'undefined') {
     appState = value;
   } else {
+    const WMO = useWmoApi();
+    const FOCUS = useFocusApi();
+    const BRP = useBrpApi();
+    const MY_UPDATES = useMyUpdatesApi();
+    const MY_CASES = useMyCasesApi();
+    const MY_TIPS = useMyTipsApi();
+    const MY_CHAPTERS = useMyChapters({ WMO, FOCUS });
+
     appState = {
-      BRP: useBrpApi(),
+      BRP,
       SESSION: session,
 
       // NOTE: If needed we can postpone immediate fetching of below data and start fetching in the component.
-      MY_UPDATES: useMyUpdatesApi(),
-      MY_CASES: useMyCasesApi(),
-      MY_TIPS: useMyTipsApi(),
-      WMO: useWmoApi(),
-      FOCUS: useFocusApi(),
+      MY_UPDATES,
+      MY_CASES,
+      MY_TIPS,
+      WMO,
+      FOCUS,
+      MY_CHAPTERS,
     };
   }
 
