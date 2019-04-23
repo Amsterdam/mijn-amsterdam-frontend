@@ -1,7 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import StatusLine from './StatusLine';
+import StatusLine, { StatusLineItem } from './StatusLine';
+
+const ITEMS: StatusLineItem[] = [];
 
 it('Renders without crashing', () => {
-  shallow(<StatusLine />);
+  shallow(<StatusLine items={ITEMS} />);
 });

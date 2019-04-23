@@ -5,7 +5,6 @@ import classnames from 'classnames';
 import { ComponentChildren, LinkProps } from 'App.types';
 
 export interface ButtonLinkProps {
-  external?: boolean;
   to: string;
   children: ComponentChildren;
   hasIcon?: boolean;
@@ -15,7 +14,6 @@ export interface ButtonLinkProps {
 }
 
 export default function ButtonLink({
-  external = false,
   to,
   children,
   hasIcon = false,
@@ -29,7 +27,7 @@ export default function ButtonLink({
     className,
     white && styles.ButtonLinkWhite
   );
-  if (external || !!target) {
+  if (!!target) {
     if (target === '_blank') {
       return (
         <a
@@ -55,8 +53,8 @@ export default function ButtonLink({
   );
 }
 
-export function ButtonLinkExternal(props: Omit<ButtonLinkProps, 'external'>) {
-  return <ButtonLink {...props} external={true} />;
+export function ButtonLinkExternal(props: ButtonLinkProps) {
+  return <ButtonLink {...props} target={props.target || '_self'} />;
 }
 
 export function IconButtonLink(props: Omit<ButtonLinkProps, 'hasIcon'>) {

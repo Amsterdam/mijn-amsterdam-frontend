@@ -8,7 +8,7 @@ import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
 import ButtonLink from '../ButtonLink/ButtonLink';
 import { LinkProps } from 'App.types';
 
-type StatusLineItem = ProcessStep;
+export type StatusLineItem = ProcessStep;
 
 interface StatusLineProps {
   items: StatusLineItem[];

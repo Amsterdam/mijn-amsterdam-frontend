@@ -36,7 +36,9 @@ describe('ButtonLink', () => {
 
   it('ButtonLink external renders correctly', () => {
     const component = mount(
-      <ButtonLinkExternal to="/">Link!</ButtonLinkExternal>
+      <ButtonLinkExternal target="_blank" to="/">
+        Link!
+      </ButtonLinkExternal>
     );
     expect(component.html()).toMatchSnapshot();
     expect(component.getDOMNode().getAttribute('rel')).toBe(
