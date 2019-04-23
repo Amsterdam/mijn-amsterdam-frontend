@@ -11,7 +11,6 @@ export interface MenuItem extends LinkProps {
   id: string;
   Icon?: SVGComponent;
   submenuItems?: MenuItem[];
-  title: string;
 }
 
 export const myChaptersMenuItems: MenuItem[] = [
