@@ -32,6 +32,7 @@ function DownloadLink({ item }: DownloadLinkProps) {
 function StatusLineItem({ item }: StatusLineItemProps) {
   return (
     <li
+      key={item.id}
       className={classnames(
         styles.ListItem,
         item.isActual && styles.ListItem__actual
@@ -43,12 +44,14 @@ function StatusLineItem({ item }: StatusLineItemProps) {
       </div>
       <div className={styles.Panel}>
         {item.description &&
-          item.description.split(/\\n/).map(text => <p>{text}</p>)}
+          item.description
+            .split(/\\n/)
+            .map((text, index) => <p key={index}>{text}</p>)}
       </div>
       <div className={styles.Panel}>
         <p>
           {item.documents.map(document => (
-            <DownloadLink item={document} />
+            <DownloadLink key={document.id} item={document} />
           ))}
         </p>
       </div>
@@ -61,7 +64,7 @@ export default function StatusLine({ items }: StatusLineProps) {
     <div className={styles.StatusLine}>
       <ul className={styles.List}>
         {items.map(item => (
-          <StatusLineItem item={item} />
+          <StatusLineItem key={item.id} item={item} />
         ))}
       </ul>
       {!items.length && <p>Er is geen status beschikbaar.</p>}
