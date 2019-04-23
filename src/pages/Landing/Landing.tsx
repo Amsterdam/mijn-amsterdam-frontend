@@ -29,10 +29,10 @@ export default () => {
         <Heading size="medium">Log in op uw persoonlijke pagina</Heading>
         <a role="button" href={LOGIN_URL} className={styles.LoginBtn}>
           <img src={DigiDLogo} alt="DigiD logo" className={styles.LoginLogo} />
-          <div className={styles.LoginContent}>Inloggen met DigiD</div>
+          Inloggen met DigiD
         </a>
         <p>
-          <b>Wilt u hulp bij het inloggen met DigiD?</b>
+          <strong>Wilt u hulp bij het inloggen met DigiD?</strong>
           <br />
           Ga naar <a href="#">DigiD</a>
           <br />
@@ -41,18 +41,20 @@ export default () => {
           Dan hoeft u geen wachtwoord meer te onthouden
         </p>
         <p>
-          <b>Op dit moment kunt u deze informatie vinden op Mij Amsterdam</b>
-          <ul>
-            <li>Hoe u ingeschreven staat bij de gemeente</li>
-            <li>Hoe het staat met uw aanvraag voor een bijstandsbijkering</li>
-            <li>Hoe het staat met uw aanvraag voor een Stadspas</li>
-            <li>Een link naar Mijn Belastingen</li>
-            <li>Een link naar Mijn Erfpacht</li>
-            <li>Informatie over uw eigen buurt</li>
-          </ul>
+          <strong>
+            Op dit moment kunt u deze informatie vinden op Mijn Amsterdam
+          </strong>
         </p>
+        <ul>
+          <li>Hoe u ingeschreven staat bij de gemeente</li>
+          <li>Hoe het staat met uw aanvraag voor een bijstandsbijkering</li>
+          <li>Hoe het staat met uw aanvraag voor een Stadspas</li>
+          <li>Een link naar Mijn Belastingen</li>
+          <li>Een link naar Mijn Erfpacht</li>
+          <li>Informatie over uw eigen buurt</li>
+        </ul>
         <p>
-          <b>Mijn Amsterdam is nog niet af</b>
+          <strong>Mijn Amsterdam is nog niet af</strong>
           <br />
           De komende jaren komen er steeds meer bij. Laat ons weten wat u ervan
           vindt. Mail uw ideeen naar:

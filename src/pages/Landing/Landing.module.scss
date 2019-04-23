@@ -6,33 +6,34 @@
   ul {
     margin: 0;
     padding-left: 2rem;
-
-    li {
-      list-style-type: square;
-    }
+    list-style-type: square;
   }
 }
 
 .LoginBtn {
   display: flex;
   height: 4.6rem;
+  width: 18.5rem; // ie11 fallback
   width: fit-content;
   cursor: pointer;
   margin-top: 4rem;
   margin-bottom: 3rem;
   text-decoration: none;
+  background-color: $color-primary-red;
+  color: $color-white;
+  font-weight: 700;
+  padding-right: 1.3rem;
+  line-height: 4.6rem;
+  &:focus {
+    color: $color-black;
+  }
 }
 
 .LoginLogo {
   height: 4.6rem;
-  margin-right: 1rem;
-}
-
-.LoginContent {
-  background-color: $color-primary-red;
-  color: $color-white;
-  font-weight: 700;
-  padding: 1.3rem;
+  margin-right: 1.3rem;
+  border-right: 1rem solid $color-white;
+  background-color: #000;
 }
 
 .BetaLogo {

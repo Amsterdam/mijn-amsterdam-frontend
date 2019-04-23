@@ -54,7 +54,7 @@ export default function MainHeader({
 }: MainHeaderProps) {
   return (
     <header className={styles.header}>
-      <div className={classnames(styles.topBar)}>
+      <div className={styles.topBar}>
         <span className={styles.logoLink}>
           <AmsterdamLogoLarge
             role="img"

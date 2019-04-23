@@ -77,11 +77,11 @@ export default function App() {
               )}
             />
           ) : (
-            <>
+            <div className={styles.NotYetAuthenticated}>
               <MainHeader />
               <Landing />
               <MainFooter />
-            </>
+            </div>
           );
         }}
       />
