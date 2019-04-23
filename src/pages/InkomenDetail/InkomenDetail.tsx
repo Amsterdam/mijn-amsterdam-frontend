@@ -27,7 +27,7 @@ export default () => {
   const FocusItem = items.find(item => item.id === id);
   return (
     <PageContentMain variant="full" className={styles.InkomenDetail}>
-      <PageContentMainHeading el="header" variant="boxedWithIcon">
+      <PageContentMainHeading el="div" variant="boxedWithIcon">
         <ChapterHeadingIcon chapter={Chapters.INKOMEN} />
         <PageContentMainHeadingBackLink to={AppRoutes.INKOMEN}>
           Inkomen
