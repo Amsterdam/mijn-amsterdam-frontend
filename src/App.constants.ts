@@ -28,8 +28,8 @@ export const AppRoutes = {
   JEUGDHULP: '/jeugdhulp',
   INKOMEN: '/inkomen',
   PROFILE: '/profiel',
-  MIJN_BUURT: '/buurt',
-  ABOUT: '/over-mijn-amstedam',
+  MY_AREA: '/buurt',
+  ABOUT: '/over-mijn-amsterdam',
   PRIVACY: '/privacy',
   API_LOGIN: '/api/login',
 

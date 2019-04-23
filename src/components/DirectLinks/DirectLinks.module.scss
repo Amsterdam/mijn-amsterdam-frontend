@@ -1,6 +1,7 @@
 @import 'styles/_global.scss';
 
 .DirectLinks {
+  width: 100%;
   @include select(Heading) {
     margin-bottom: 1.6rem;
   }
