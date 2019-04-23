@@ -28,6 +28,7 @@
   @include select(MyCases_MyCases) {
     width: $main-boxed-width;
     margin-bottom: 8rem;
+    margin-top: 10rem;
   }
 
   @include select(MyArea_MyArea) {
@@ -37,7 +38,7 @@
 
   @include select(MyTips_MyTips) {
     width: $main-boxed-width;
-    margin-bottom: 12rem;
+    margin-bottom: 10rem;
   }
 
   @include select(DirectLinks_DirectLinks) {
@@ -56,5 +57,4 @@
   width: 100%;
   margin: 0 auto;
   margin-top: -3.8rem;
-  margin-bottom: 10rem;
 }
