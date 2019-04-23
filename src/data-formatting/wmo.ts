@@ -44,7 +44,7 @@ export type WmoApiResponse = WmoApiItem[];
 export function formatWmoApiResponse(
   wmoApiResponseData: WmoApiResponse
 ): WmoItem[] {
-  return wmoApiResponseData.map(item => {
+  return wmoApiResponseData.map((item, index) => {
     const {
       Omschrijving: title,
       Startdatum: dateStart,
@@ -55,7 +55,7 @@ export function formatWmoApiResponse(
     } = item;
     const [start] = dateStart.split('T');
     const [finish] = dateFinish ? dateFinish.split('T') : ['aanvraag'];
-    const id = slug(`${title}-${start}-${finish}`).toLowerCase();
+    const id = slug(`${title}-${start}-${finish}-${index}`).toLowerCase();
     return {
       id,
       title,

@@ -1,7 +1,7 @@
 const focus = require('../secure-data/focus.json');
 
 module.exports = {
-  path: '/api/focus',
+  path: '/api/focus/aanvragen',
   template: (_, queryParams) => {
     return {
       items: focus,
