@@ -1,6 +1,6 @@
 import { ApiUrls, Chapter } from 'App.constants';
 import paginatedApiHook, { PaginatedItemsResponse } from './paginated-api.hook';
-import { ApiHookState } from './api.types';
+import { ApiState } from './api.types';
 import { LinkProps } from 'App.types';
 
 export interface MyUpdate {
@@ -16,7 +16,7 @@ export interface MyUpdatesResponse extends PaginatedItemsResponse {
   items: MyUpdate[];
 }
 
-export interface MyUpdatesApiState extends ApiHookState {
+export interface MyUpdatesApiState extends ApiState {
   data: MyUpdatesResponse;
 }
 

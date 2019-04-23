@@ -9,11 +9,8 @@ export interface ApiRequestOptions {
 export interface ApiState {
   isLoading?: boolean;
   isError?: boolean;
-  data?: any;
-}
-
-export interface ApiHookState extends ApiState {
   isPristine?: boolean;
   isDirty?: boolean;
+  data?: any;
   refetch?: (options?: ApiRequestOptions | any) => void;
 }
