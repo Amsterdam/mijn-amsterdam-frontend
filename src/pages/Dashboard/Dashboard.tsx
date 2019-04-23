@@ -32,7 +32,7 @@ export default () => {
       <PageContentMainHeading variant="medium">
         Mijn updates {myUpdatesTotal > 0 && <span>({myUpdatesTotal})</span>}
       </PageContentMainHeading>
-      <PageContentMainBody className={styles.MainBody}>
+      <PageContentMainBody variant="regularBoxed" className={styles.FirstBody}>
         <MyUpdates
           total={myUpdatesTotal}
           items={myUpdates.slice(0, MAX_UPDATES_VISIBLE)}
@@ -41,7 +41,11 @@ export default () => {
       </PageContentMainBody>
       <PageContentMainBody variant="regularBoxed">
         <MyCases title="Mijn lopende zaken" items={myCases} />
+      </PageContentMainBody>
+      <PageContentMainBody>
         <MyArea />
+      </PageContentMainBody>
+      <PageContentMainBody variant="regularBoxed">
         <MyTips items={myTips.slice(0, MAX_TIPS_VISIBLE)} />
         <DirectLinks />
       </PageContentMainBody>
