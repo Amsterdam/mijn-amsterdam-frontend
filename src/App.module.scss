@@ -2,4 +2,5 @@
 
 .App {
   min-height: calc(100vh - #{$main-header-total-height});
+  padding-bottom: 6rem;
 }

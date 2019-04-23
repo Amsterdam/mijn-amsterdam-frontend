@@ -2,11 +2,9 @@
 
 .Dashboard {
   @include select(PageContentMainBody) {
-    margin-top: -3.8rem;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    padding-bottom: 10rem;
   }
 
   @include select(MyUpdates_MyUpdates) {
@@ -43,4 +41,5 @@
   max-width: $main-boxed-width;
   width: 100%;
   margin: 0 auto;
+  margin-top: -3.8rem;
 }

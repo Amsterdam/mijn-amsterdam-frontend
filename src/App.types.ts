@@ -14,6 +14,7 @@ export interface Action {
 export interface LinkProps {
   to: string;
   title: string;
+  target?: '_blank' | '_self' | '_parent' | '_top';
 }
 
 export type SVGComponent = FunctionComponent<SVGProps<SVGElement>>;

@@ -1,0 +1,70 @@
+@import 'styles/_global.scss';
+
+.DocumentList > ul {
+  @include reset-list-style;
+}
+
+.DocumentListItem {
+  border-top: 1px solid $color-neutral-grey2;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-left: 5rem;
+  position: relative;
+
+  &:first-child {
+    border-top: 0;
+  }
+}
+
+.Icon {
+  position: absolute;
+  left: -.5rem;
+  top: .4em;
+  fill: $color-neutral-grey4;
+}
+
+.FileType {
+  color: $color-neutral-grey4;
+}
+
+.DownloadLink {
+  text-decoration: none;
+  display: block;
+  position: relative;
+  padding-left: 5rem;
+  &:hover {
+    color: $color-primary-red;
+    svg {
+      fill: $color-primary-red;
+    }
+  }
+}
+
+.DownloadIcon {
+  height: .8em;
+  width: .8em;
+}
+
+.Description {
+  margin: .2rem 0;
+}
+
+.Datum {
+  font-size: 1.4rem;
+}
+
+.TypeIndication {
+  font-style: normal;
+  text-transform: capitalize;
+  display: block;
+}
+
+ .MetaInfo {
+  width: 17.5rem;
+  position: absolute;
+  right: 0;
+
+  time {
+    color: $color-neutral-grey4;
+  }
+}
