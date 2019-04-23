@@ -5,6 +5,8 @@ import { ProcessStep } from 'data-formatting/focus';
 import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
 import { Document } from '../DocumentList/DocumentList';
 import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
+import ButtonLink from '../ButtonLink/ButtonLink';
+import { LinkProps } from 'App.types';
 
 type StatusLineItem = ProcessStep;
 
@@ -47,6 +49,14 @@ function StatusLineItem({ item }: StatusLineItemProps) {
           item.description
             .split(/\\n/)
             .map((text, index) => <p key={index}>{text}</p>)}
+        {!!item.infoLink &&
+          ([] as LinkProps[]).concat(item.infoLink).map(infoLink => (
+            <p>
+              <ButtonLink to={infoLink.to} target={infoLink.target}>
+                {infoLink.title}
+              </ButtonLink>
+            </p>
+          ))}
       </div>
       <div className={styles.Panel}>
         <p>

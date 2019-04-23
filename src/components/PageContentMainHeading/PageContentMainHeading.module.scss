@@ -42,4 +42,8 @@
     margin-right: auto;
   }
 
+  @include select(PageContentMainHeadingBackLink) {
+    display: block;
+  }
+
 }
