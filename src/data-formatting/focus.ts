@@ -67,7 +67,8 @@ export const Labels: LabelData = {
   Participatiewet: {
     aanvraag: {
       title: 'Aanvraag {title}',
-      description: 'U hebt op {stepDate} een bijstandsuitkering aangevraagd.',
+      description:
+        'U hebt op {datePublished} een bijstandsuitkering aangevraagd.',
     },
     inBehandeling: {
       title: '{title} in behandeling',
@@ -152,6 +153,7 @@ export const Labels: LabelData = {
 };
 
 interface StepSourceData {
+  id: string;
   title: string;
   decision: Decision;
   datePublished?: string;
@@ -163,6 +165,7 @@ interface StepSourceData {
 }
 
 export interface ProcessStep {
+  id: string;
   documents: GenericDocument[];
   title: string;
   datePublished: string;
@@ -208,11 +211,12 @@ function translateProductTitle(title: ProductTitle) {
 
 type GetStepSourceDataArgs = Pick<
   StepSourceData,
-  'title' | 'latestStep' | 'decision'
+  'title' | 'latestStep' | 'decision' | 'id'
 > & { stepData: Step | null };
 
 // Data for replacement tags in label data.
 function getStepSourceData({
+  id,
   title,
   stepData,
   latestStep,
@@ -220,6 +224,7 @@ function getStepSourceData({
 }: GetStepSourceDataArgs): StepSourceData {
   const stepDate = stepData ? stepData.datum : '';
   return {
+    id,
     title: translateProductTitle(title),
     latestStep,
     decision,
@@ -282,6 +287,7 @@ function formatStepData(
       : (Labels[productOrigin][stepTitle] as Info);
 
   return {
+    id: sourceData.id,
     title: stepLabels
       ? replaceSourceDataTags(stepLabels.title, sourceData)
       : stepTitle,
@@ -315,6 +321,7 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
     : (Labels[productType][latestStep] as InfoExtended)[decision];
 
   const sourceData = getStepSourceData({
+    id: `${id}-${latestStep}`,
     title,
     decision,
     latestStep,
@@ -341,6 +348,7 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
       .map(stepTitle => {
         const stepData = steps[stepTitle] || null;
         const sourceData = getStepSourceData({
+          id: `${id}-${stepTitle}`,
           title,
           decision,
           latestStep,

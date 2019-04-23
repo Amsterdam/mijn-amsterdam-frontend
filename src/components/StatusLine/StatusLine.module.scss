@@ -17,29 +17,6 @@
   display: block;
 }
 
-.ListItem {
-  display: flex;
-  border-top: 1px solid $color-neutral-grey2;
-  padding: 0 7.5rem;
-
-  &:first-child {
-    border-top: 0;
-    .Panel:first-child:before {
-      background: linear-gradient(to top, $color-neutral-grey3 0%, $color-neutral-grey3 65%, $color-neutral-grey1 100%);
-    }
-  }
-  &:last-child .Panel:first-child:before {
-    background: linear-gradient(to bottom, $color-neutral-grey3 0%, $color-neutral-grey3 65%, $color-neutral-grey1 100%);
-  }
-}
-
-.ListItem__actual .Panel:first-child:after {
-  width: 3rem;
-  height: 3rem;
-  background-color: $color-support-darkgreen;
-  margin-left: -.55rem;
-}
-
 .DownloadLink {
   display: block;
   font-weight: normal;
@@ -79,6 +56,33 @@
       top: 2rem;
       left: -1.1rem;
       background-color: $color-neutral-grey3;
+      color: $color-white;
+      text-align: center;
+      line-height: 2em;
     }
   }
+}
+
+.ListItem {
+  display: flex;
+  border-top: 1px solid $color-neutral-grey2;
+  padding: 0 7.5rem;
+
+  &:first-child {
+    border-top: 0;
+    .Panel:first-child:before {
+      background: linear-gradient(to top, $color-neutral-grey3 0%, $color-neutral-grey3 65%, $color-neutral-grey1 100%);
+    }
+  }
+  &:last-child .Panel:first-child:before {
+    background: linear-gradient(to bottom, $color-neutral-grey3 0%, $color-neutral-grey3 65%, $color-neutral-grey1 100%);
+  }
+}
+
+.ListItem__actual .Panel:first-child:after {
+  width: 3rem;
+  height: 3rem;
+  margin-left: -.55rem;
+  background: $color-support-darkgreen url("assets/icons/Checkmark__white.svg") no-repeat center;
+  background-size: 1em 1em;
 }
