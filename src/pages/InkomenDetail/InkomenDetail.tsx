@@ -4,11 +4,9 @@ import PageContentMainHeading from 'components/PageContentMainHeading/PageConten
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
 import styles from './InkomenDetail.module.scss';
 import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
-import { Chapters } from 'App.constants';
-import { AppRoutes } from 'App.constants';
+import { Chapters, AppRoutes } from 'App.constants';
 import { AppContext } from 'AppState';
 import useReactRouter from 'use-react-router';
-import DocumentList from 'components/DocumentList/DocumentList';
 import Heading from 'components/Heading/Heading';
 import PageContentMainHeadingBackLink from 'components/PageContentMainHeadingBackLink/PageContentMainHeadingBackLink';
 import StatusLine from 'components/StatusLine/StatusLine';
