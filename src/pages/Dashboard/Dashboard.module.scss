@@ -1,6 +1,11 @@
 @import 'styles/_global.scss';
 
 .Dashboard {
+  @include select(PageContentMainBody) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 }
 
 .UpdatesChaptersContainer {
@@ -54,3 +59,9 @@
     width: $main-boxed-width;
   }
 }
+
+.MainBody {
+  max-width: $main-boxed-width;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: -3.8rem;

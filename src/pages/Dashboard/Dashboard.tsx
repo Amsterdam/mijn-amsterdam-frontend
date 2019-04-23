@@ -30,16 +30,16 @@ export default () => {
   return (
     <PageContentMain className={styles.Dashboard} variant="full">
       <PageContentMainHeading variant="medium">
-        Mijn updates ({myUpdatesTotal})
+        Mijn updates {myUpdatesTotal > 0 && <span>({myUpdatesTotal})</span>}
       </PageContentMainHeading>
       <PageContentMainBody className={styles.MainBody}>
-        <div className={styles.UpdatesChaptersContainer}>
-          <MyUpdates
-            total={myUpdatesTotal}
-            items={myUpdates.slice(0, MAX_UPDATES_VISIBLE)}
-          />
-          <MyChaptersPanel title="Mijn thema's" />
-        </div>
+        <MyUpdates
+          total={myUpdatesTotal}
+          items={myUpdates.slice(0, MAX_UPDATES_VISIBLE)}
+        />
+        <MyChaptersPanel title="Mijn thema's" />
+      </PageContentMainBody>
+      <PageContentMainBody variant="regularBoxed">
         <MyCases title="Mijn lopende zaken" items={myCases} />
         <MyArea />
         <MyTips items={myTips.slice(0, MAX_TIPS_VISIBLE)} />

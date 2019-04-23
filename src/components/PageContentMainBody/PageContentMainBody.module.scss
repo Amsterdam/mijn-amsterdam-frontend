@@ -11,4 +11,10 @@
     max-width: $main-boxed-width;
     margin: 0 auto;
   }
+
+  &__regularBoxed {
+    padding: 0 4rem;
+    max-width: $main-boxed-width;
+    margin: 0 auto;
+  }
 }

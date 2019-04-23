@@ -1,7 +1,7 @@
 @import 'styles/_global.scss';
 
 @mixin withIcon {
-  text-indent: 16rem;
+  padding-left: 16rem;
 
   @include select(ChapterHeadingIcon_ChapterHeadingIcon) {
     left: 8rem;
@@ -10,13 +10,12 @@
 }
 
 .PageContentMainHeading {
-  height: $main-header-hero-heading-overlap;
+  min-height: $main-header-hero-heading-overlap;
   margin-top: 0;
-  padding: 4rem 0 0;
+  padding: 4rem 0 0 4rem;
   margin: -#{$main-header-hero-heading-overlap} 0 0;
   margin-bottom: 3.8rem;
   background-color: $color-white;
-  text-indent: 4rem;
   position: relative;
 
   &__medium {
@@ -41,6 +40,16 @@
     @include withIcon;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  // Align style for the backlink and elements
+  @include select(PageContentMainHeadingBackLink) {
+    display: block;
+    float: left;
+
+    + * {
+      clear: left;
+    }
   }
 
 }
