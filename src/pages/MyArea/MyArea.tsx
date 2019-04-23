@@ -1,5 +1,5 @@
 import React from 'react';
-import MyArea, { MyAreaHeader } from 'components/MyArea/MyArea';
+import { MyAreaHeader, MyAreaMap } from 'components/MyArea/MyArea';
 import styles from './MyArea.module.scss';
 
 export default () => {
@@ -7,7 +7,7 @@ export default () => {
     <>
       <MyAreaHeader />
       <div className={styles.MyAreaContainer}>
-        <MyArea />
+        <MyAreaMap />
       </div>
     </>
   );

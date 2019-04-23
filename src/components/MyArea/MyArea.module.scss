@@ -5,6 +5,13 @@
   height: inherit;
 }
 
+.Content {
+  background-color: $color-white;
+  padding: 2rem 4rem;
+  width: 42rem;
+  margin-left: 50%;
+}
+
 .Map {
   position: absolute;
   height: inherit;
@@ -18,6 +25,8 @@
   cursor: pointer;
   width: 100%;
   height: 48rem;
+  display: flex;
+  align-items: flex-end;
 }
 
 .Header {
