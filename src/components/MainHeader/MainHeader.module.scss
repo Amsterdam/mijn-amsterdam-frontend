@@ -41,7 +41,7 @@
 .secondaryLinks {
   position: absolute;
   top: 2rem;
-  right: calc(calc(100vw - #{$main-boxed-width}) / 2);
+  right: calc((100vw - #{$main-boxed-width}) / 2);
 
   > a {
     display: inline-block;

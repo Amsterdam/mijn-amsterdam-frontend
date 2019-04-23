@@ -39,8 +39,6 @@ export default () => {
           items={myUpdates.slice(0, MAX_UPDATES_VISIBLE)}
         />
         <MyChaptersPanel items={MY_CHAPTERS} title="Mijn thema's" />
-      </PageContentMainBody>
-      <PageContentMainBody variant="regularBoxed">
         <MyCases title="Mijn lopende zaken" items={myCases} />
       </PageContentMainBody>
       <PageContentMainBody>
