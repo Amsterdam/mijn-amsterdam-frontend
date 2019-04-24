@@ -8,10 +8,9 @@
   }
 
   @include select(MyUpdates_MyUpdates) {
-    flex-basis: calc(50% - 9rem); // margin-left + margin-right + virtual-gutter
+    flex-basis: calc(50% - 5rem); // margin-left + margin-right + virtual-gutter
     flex-shrink: 0;
     overflow: hidden;
-    margin-left: 4rem;
     margin-right: 4rem;
     border-top: 1px solid $color-neutral-grey2;
     margin-bottom: 5rem;
@@ -29,6 +28,7 @@
   @include select(MyCases_MyCases) {
     width: $main-boxed-width;
     margin-bottom: 8rem;
+    margin-top: 10rem;
   }
 
   @include select(MyArea_MyArea) {
@@ -38,7 +38,7 @@
 
   @include select(MyTips_MyTips) {
     width: $main-boxed-width;
-    margin-bottom: 12rem;
+    margin-bottom: 10rem;
   }
 
   @include select(DirectLinks_DirectLinks) {
@@ -57,5 +57,4 @@
   width: 100%;
   margin: 0 auto;
   margin-top: -3.8rem;
-  margin-bottom: 10rem;
 }

@@ -2,12 +2,17 @@ import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from 'components/MainNavSubmenu/MainNavSubmenu';
 import React, { useState, useContext } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { AppContext } from 'AppState';
-import { menuItems, MenuItem } from './MainNavBar.constants';
+import {
+  menuItems,
+  MenuItem,
+  mainMenuItemId,
+  submenuItems,
+} from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
 import { Colors } from 'App.constants';
-import { ComponentChildren, LinkProps } from 'App.types';
+import { ComponentChildren } from 'App.types';
 
 export interface MainNavLinkProps {
   to: string;
@@ -76,6 +81,7 @@ export default function MainNavBar() {
   const [activeSubmenuId, activateSubmenu] = useState('');
   const {
     SESSION: { isAuthenticated },
+    MY_CHAPTERS,
   } = useContext(AppContext);
 
   function setSubMenuVisibility(
@@ -93,9 +99,17 @@ export default function MainNavBar() {
     <nav className={styles.MainNavBar}>
       {isAuthenticated && (
         <div className={styles.LinkContainer}>
-          {menuItems.map(item =>
-            getMenuItem(item, activeSubmenuId, setSubMenuVisibility)
-          )}
+          {menuItems.map(item => {
+            let menuItem = item;
+            if (item.id in submenuItems) {
+              if (item.id === mainMenuItemId.MY_CHAPTERS) {
+                menuItem = { ...item, submenuItems: MY_CHAPTERS };
+              } else {
+                menuItem = { ...item, submenuItems: submenuItems[item.id] };
+              }
+            }
+            return getMenuItem(menuItem, activeSubmenuId, setSubMenuVisibility);
+          })}
         </div>
       )}
     </nav>

@@ -1,9 +1,5 @@
 @import 'styles/_global.scss';
 
-.header {
-
-}
-
 .topBar {
   width: $main-boxed-width;
   height: $main-header-topbar-height;
@@ -41,7 +37,7 @@
 .secondaryLinks {
   position: absolute;
   top: 2rem;
-  right: calc(calc(100vw - #{$main-boxed-width}) / 2);
+  right: calc((100vw - #{$main-boxed-width}) / 2);
 
   > a {
     display: inline-block;

@@ -1,5 +1,5 @@
 import { useDataApi } from './api.hook';
-import { ApiHookState } from './api.types';
+import { ApiState } from './api.types';
 
 export interface PaginatedItemsResponse {
   items: any[];
@@ -8,7 +8,7 @@ export interface PaginatedItemsResponse {
   limit: number;
 }
 
-export interface PaginatedApiState extends ApiHookState {
+export interface PaginatedApiState extends ApiState {
   data: PaginatedItemsResponse;
   refetch: (options: { offset?: number; limit?: number }) => void;
 }

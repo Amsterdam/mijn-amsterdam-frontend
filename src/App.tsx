@@ -65,7 +65,7 @@ export default function App() {
           if (session.isLoading) {
             return <p>...</p>;
           }
-          // Render the main app pnly if we are authenticated
+          // Render the main app only if we are authenticated
           return session.isAuthenticated ? (
             <AppState
               session={session}
