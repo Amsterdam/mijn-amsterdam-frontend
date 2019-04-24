@@ -4,10 +4,10 @@ import classnames from 'classnames';
 import { NavLink } from 'react-router-dom';
 import useDebouncedCallback from 'use-debounce/lib/callback';
 import { ComponentChildren } from 'App.types';
+import { LinkProps } from '../../App.types';
 
-export interface MainNavSubmenuLinkProps {
+export interface MainNavSubmenuLinkProps extends Omit<LinkProps, 'title'> {
   id?: string;
-  to: string;
   children: ComponentChildren;
   onFocus?: () => void;
 }
@@ -15,9 +15,20 @@ export interface MainNavSubmenuLinkProps {
 export function MainNavSubmenuLink({
   to,
   children,
+  id,
+  target,
   ...rest
 }: MainNavSubmenuLinkProps) {
-  return (
+  return !!target ? (
+    <a
+      href={to}
+      target={target}
+      className={styles.MainNavSubmenuLink}
+      {...rest}
+    >
+      {children}
+    </a>
+  ) : (
     <NavLink to={to} className={styles.MainNavSubmenuLink} {...rest}>
       {children}
     </NavLink>

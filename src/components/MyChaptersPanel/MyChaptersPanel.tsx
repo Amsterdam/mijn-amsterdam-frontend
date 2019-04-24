@@ -20,9 +20,9 @@ export default function MyChaptersPanel({
         {title}
       </Heading>
       <div className={styles.Links}>
-        {items.map(({ id, to, Icon, title }) => {
+        {items.map(({ id, to, Icon, title, target }) => {
           return (
-            <MainNavSubmenuLink key={id} to={to} id={id}>
+            <MainNavSubmenuLink key={id} to={to} id={id} target={target}>
               {Icon && <Icon fill={Colors.neutralGrey4} aria-hidden="true" />}
               {title}
             </MainNavSubmenuLink>
