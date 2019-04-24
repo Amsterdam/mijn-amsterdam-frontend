@@ -1,23 +1,47 @@
 @import 'styles/_global.scss';
 
 .ZorgDetail {
-  @include select(PageContentMainHeading) {
-    position: relative;
-  }
 
-  .DocumentListHeading {
-    text-indent: 16rem;
-  }
+}
 
-  @include select(DocumentList_DocumentListItem) {
-    padding-left: 16rem;
-    @include select(DocumentList_MetaInfo) {
-      right: 13rem;
+.List {
+  @include reset-list-style;
+}
+
+.ListHeading {
+  border-bottom: .1rem solid $color-neutral-grey2;
+  text-indent: 12rem;
+  padding-bottom: 1rem;
+}
+
+.ListItem {
+  display: flex;
+  padding-left: 12rem;
+
+  > p {
+    flex: 1 0 50%;
+
+    > strong {
+      color: $color-neutral-grey4;
+      font-weight: 500;
+      display: block;
+      border-bottom: .1rem solid $color-neutral-grey2;
+      padding-bottom: .5rem;
+      margin-bottom: .5rem;
     }
   }
 }
 
-.PageHeading {
-  @include heading-large;
-  margin: 0;
+.DatesInfo {
+  background: url("assets/icons/Calendar.svg") no-repeat 2.8rem center;
+  background-size: 2.4rem auto;
+}
+
+.SupplierInfo {
+  background: url("assets/icons/Card.svg") no-repeat 2.8rem center;
+  background-size: 2.4rem auto;
+}
+
+.AdditionalInfo {
+
 }
