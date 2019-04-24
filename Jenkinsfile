@@ -48,7 +48,7 @@ if (BRANCH == "master" || BRANCH == "test-acc" || BRANCH == "test") {
   stage("Build image (test/acc)") {
     tryStep "build", {
       docker.withRegistry('https://repo.secure.amsterdam.nl', 'docker-registry') {
-      def image = docker.build("mijnams/mijnamsterdam:${env.BUILD_NUMBER}", "--build-arg target=${DEV_TARGET} --build-arg http_proxy=${JENKINS_HTTP_PROXY_STRING} --build-arg https_proxy=${JENKINS_HTTP_PROXY_STRING} .")
+      def image = docker.build("mijnams/mijnamsterdam:${env.BUILD_NUMBER}", "--build-arg TARGET=${DEV_TARGET} --build-arg http_proxy=${JENKINS_HTTP_PROXY_STRING} --build-arg https_proxy=${JENKINS_HTTP_PROXY_STRING} .")
       image.push()
     }
   }
@@ -110,7 +110,7 @@ node {
 //   stage("Build and Push Production image") {
 //     tryStep "build", {
 //       docker.withRegistry('https://repo.secure.amsterdam.nl','docker-registry') {
-//         def image = docker.build("mijnams/mijnamsterdam:${env.BUILD_NUMBER}", "--build-arg target=${PROD_TARGET} .")
+//         def image = docker.build("mijnams/mijnamsterdam:${env.BUILD_NUMBER}", "--build-arg TARGET=${PROD_TARGET}  --build-arg http_proxy=${JENKINS_HTTP_PROXY_STRING} --build-arg https_proxy=${JENKINS_HTTP_PROXY_STRING} .")
 //         image.pull()
 //         image.push("production")
 //         image.push("latest")
