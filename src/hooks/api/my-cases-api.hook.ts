@@ -1,4 +1,4 @@
-import { ApiHookState } from './api.types';
+import { ApiState } from './api.types';
 import { FocusItem } from 'data-formatting/focus';
 import useFocusApi from './api.focus';
 import { PaginatedItemsResponse } from './paginated-api.hook';
@@ -9,7 +9,7 @@ export interface MyCasesResponse extends PaginatedItemsResponse {
   items: MyCase[];
 }
 
-export interface MyCasesApiState extends ApiHookState {
+export interface MyCasesApiState extends ApiState {
   data: MyCasesResponse;
 }
 

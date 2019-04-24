@@ -1,5 +1,4 @@
-// const focus = require('../secure-data/focus.json');
-
+// const items = require('../secure-data/mijn-updates.json');
 const items = [];
 
 module.exports = {
