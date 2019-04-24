@@ -8,7 +8,7 @@ import Heading from '../Heading/Heading';
 import styles from './DataLinkTable.module.scss';
 import ButtonLink from 'components/ButtonLink/ButtonLink';
 import { AppRoutes } from 'App.constants';
-import { entries } from '../../helpers/App';
+import { entries } from 'helpers/App';
 
 export interface DataLinkTableProps {
   items?: Unshaped[];
@@ -65,6 +65,7 @@ export default function DataLinkTable({
         </Heading>
       )}
       <div
+        aria-hidden={isCollapsed}
         className={styles.Panel}
         style={{
           height: rowHeight === 'auto' ? rowHeight : cssCalcExpr,
@@ -77,19 +78,21 @@ export default function DataLinkTable({
               <th>&nbsp;</th>
               {displayProps &&
                 entries(displayProps).map(([, label]) => (
-                  <th className={styles.DisplayProp}>{label}</th>
+                  <th key={label} className={styles.DisplayProp}>
+                    {label}
+                  </th>
                 ))}
             </tr>
           </thead>
           <tbody>
             {items.map(item => (
-              <tr className={styles.TableRow}>
+              <tr key={item.id} className={styles.TableRow}>
                 <td className={styles.DisplayPropTitle}>
                   <ButtonLink to={item.link.to}>{item.title}</ButtonLink>
                 </td>
                 {displayProps &&
                   entries(displayProps).map(([key]) => (
-                    <td className={styles.DisplayProp}>
+                    <td key={key} className={styles.DisplayProp}>
                       {item[key] || <span>&mdash;</span>}
                     </td>
                   ))}

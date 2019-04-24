@@ -2,18 +2,15 @@
 
 .Dashboard {
   @include select(PageContentMainBody) {
-    margin-top: -3.8rem;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    padding-bottom: 10rem;
   }
 
   @include select(MyUpdates_MyUpdates) {
-    flex-basis: calc(50% - 9rem); // margin-left + margin-right + virtual-gutter
+    flex-basis: calc(50% - 5rem); // margin-left + margin-right + virtual-gutter
     flex-shrink: 0;
     overflow: hidden;
-    margin-left: 4rem;
     margin-right: 4rem;
     border-top: 1px solid $color-neutral-grey2;
     margin-bottom: 5rem;
@@ -28,19 +25,36 @@
     width: calc(50% + 1rem); // + virtual-gutter
   }
 
-  @include select(DirectLinks_DirectLinks) {
-    width: 100%;
-    margin-bottom: 5rem;
+  @include select(MyCases_MyCases) {
+    width: $main-boxed-width;
+    margin-bottom: 8rem;
+    margin-top: 10rem;
   }
 
-  @include select(MyCases) {
-    width: 100%;
-    margin-bottom: 2rem;
+  @include select(MyArea_MyArea) {
+    height: 48rem;
+    margin-bottom: 10rem;
+  }
+
+  @include select(MyTips_MyTips) {
+    width: $main-boxed-width;
+    margin-bottom: 10rem;
+  }
+
+  @include select(DirectLinks_DirectLinks) {
+    width: $main-boxed-width;
   }
 }
 
-.MainBody {
+.UpdatesChaptersContainer {
+  width: $main-boxed-width;
+  display: flex;
+  margin-bottom: 12rem;
+}
+
+.FirstBody {
   max-width: $main-boxed-width;
   width: 100%;
   margin: 0 auto;
+  margin-top: -3.8rem;
 }

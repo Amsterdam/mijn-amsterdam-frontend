@@ -1,0 +1,13 @@
+@import 'styles/_global.scss';
+
+.PageContentMainHeadingBackLink {
+  @include heading-small;
+  font-weight: bold;
+  padding-left: 1.2em;
+  margin-left: -1.1em;
+
+  svg {
+    height: .9em;
+    width: .9em;
+  }
+}

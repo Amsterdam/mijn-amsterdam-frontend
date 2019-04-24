@@ -1,7 +1,9 @@
 @import 'styles/_global.scss';
 
 .InfoPanel {
-  margin-bottom: 5rem;
+  &:not(:first-child) {
+    margin-top: 5rem;
+  }
 
   @include select(Heading) {
     padding-left: 16rem;

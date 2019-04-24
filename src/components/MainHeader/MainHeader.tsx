@@ -35,7 +35,7 @@ function SecondaryLinks({ person, hasMessages = false }: SecondaryLinksProps) {
         <Link to={AppRoutes.PROFILE}>{person.fullName}</Link>
       )}
       {
-        <IconButtonLink external={true} target="_self" to={LOGOUT_URL}>
+        <IconButtonLink target="_self" to={LOGOUT_URL}>
           <LogoutIcon /> Uitloggen
         </IconButtonLink>
       }

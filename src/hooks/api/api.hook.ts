@@ -26,6 +26,8 @@ const createApiDataReducer = (initialData: Unshaped = {}) => (
         ...state,
         isLoading: false,
         isError: false,
+        isPristine: false,
+        isDirty: true,
         data: action.payload,
       };
     case ActionTypes.FETCH_FAILURE:
@@ -33,6 +35,8 @@ const createApiDataReducer = (initialData: Unshaped = {}) => (
         ...state,
         isLoading: false,
         isError: true,
+        isPristine: false,
+        isDirty: true,
         data: initialData,
       };
     default:
@@ -58,13 +62,15 @@ export const useDataApi = (
   const apiDataReducer = createApiDataReducer(initialData);
 
   const [state, dispatch] = useReducer(apiDataReducer, {
-    isLoading: false,
+    isLoading: options.postpone === true ? false : true,
     isError: false,
+    isPristine: true,
+    isDirty: false,
     data: initialData,
+    refetch: (options: ApiRequestOptions) => {
+      setRequestOptions({ ...options, postpone: false });
+    },
   });
-
-  const isDirty = state.data !== initialData;
-  const isPristine = !isDirty;
 
   useEffect(() => {
     let didCancel = false;
@@ -103,9 +109,5 @@ export const useDataApi = (
     // See: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
   }, [requestOptions]);
 
-  const refetch = (options: ApiRequestOptions) => {
-    setRequestOptions({ ...options, postpone: false });
-  };
-
-  return { ...state, isDirty, isPristine, refetch };
+  return state;
 };

@@ -28,8 +28,8 @@ export const AppRoutes = {
   JEUGDHULP: '/jeugdhulp',
   INKOMEN: '/inkomen',
   PROFILE: '/profiel',
-  MIJN_BUURT: '/buurt',
-  ABOUT: '/over-mijn-amstedam',
+  MY_AREA: '/buurt',
+  ABOUT: '/over-mijn-amsterdam',
   PRIVACY: '/privacy',
   API_LOGIN: '/api/login',
 
@@ -44,12 +44,12 @@ export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL || '/logout';
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export const ApiUrls = {
-  MY_UPDATES: `${API_BASE_URL}/focus`,
-  MY_CASES: `${API_BASE_URL}/focus`,
+  MY_UPDATES: `${API_BASE_URL}/mijn-updates`,
+  MY_CASES: `${API_BASE_URL}/focus/aanvragen`,
   MY_TIPS: `${API_BASE_URL}/profiel/mijn-tips`,
   BRP: `${API_BASE_URL}/brp/brp`,
   WMO: `${API_BASE_URL}/wmoned/voorzieningen`,
-  FOCUS: `${API_BASE_URL}/focus`,
+  FOCUS: `${API_BASE_URL}/focus/aanvragen`,
   AUTH: `${API_BASE_URL}/auth/check`,
   ERFPACHT: `${API_BASE_URL}/erfpacht/check-erfpacht`,
 };

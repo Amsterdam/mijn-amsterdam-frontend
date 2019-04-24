@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
+import useReactRouter from 'use-react-router';
 
 import AppState, { SessionState } from './AppState';
 import { AppRoutes } from './App.constants';
@@ -20,9 +21,16 @@ import Jeugdhulp from 'pages/Jeugdhulp/Jeugdhulp';
 import Wonen from 'pages/Wonen/Wonen';
 import Inkomen from 'pages/Inkomen/Inkomen';
 import Zorg from 'pages/Zorg/Zorg';
+import ZorgDetail from 'pages/ZorgDetail/ZorgDetail';
+import InkomenDetail from 'pages/InkomenDetail/InkomenDetail';
+import MyArea from 'pages/MyArea/MyArea';
 
 function MainApp({ person, isAuthenticated }: MainHeaderProps) {
-  return (
+  const { location } = useReactRouter();
+
+  return location.pathname === AppRoutes.MY_AREA ? (
+    <MyArea />
+  ) : (
     <>
       <MainHeader person={person} isAuthenticated={isAuthenticated} />
       <div className={styles.App}>
@@ -36,8 +44,11 @@ function MainApp({ person, isAuthenticated }: MainHeaderProps) {
           <Route path={AppRoutes.BELASTINGEN} component={Belastingen} />
           <Route path={AppRoutes.JEUGDHULP} component={Jeugdhulp} />
           <Route path={AppRoutes.WONEN} component={Wonen} />
+          <Route path={`${AppRoutes.INKOMEN}/:id`} component={InkomenDetail} />
           <Route path={AppRoutes.INKOMEN} component={Inkomen} />
+          <Route path={`${AppRoutes.ZORG}/:id`} component={ZorgDetail} />
           <Route path={AppRoutes.ZORG} component={Zorg} />
+          <Route path={AppRoutes.MY_AREA} component={MyArea} />
           <Route component={NotFound} />
         </Switch>
       </div>
@@ -54,7 +65,7 @@ export default function App() {
           if (session.isLoading) {
             return <p>...</p>;
           }
-          // Render the main app pnly if we are authenticated
+          // Render the main app only if we are authenticated
           return session.isAuthenticated ? (
             <AppState
               session={session}

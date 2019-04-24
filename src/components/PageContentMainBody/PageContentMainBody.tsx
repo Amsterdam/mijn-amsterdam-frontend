@@ -5,7 +5,7 @@ import { ComponentChildren } from 'App.types';
 
 export interface PageContentMainBodyProps {
   children: ComponentChildren;
-  variant?: 'regular' | 'boxed';
+  variant?: 'regular' | 'boxed' | 'regularBoxed';
   className?: any;
 }
 

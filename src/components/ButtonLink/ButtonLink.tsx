@@ -2,26 +2,24 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './ButtonLink.module.scss';
 import classnames from 'classnames';
-import { ComponentChildren } from 'App.types';
+import { ComponentChildren, LinkProps } from 'App.types';
 
 export interface ButtonLinkProps {
-  external?: boolean;
   to: string;
   children: ComponentChildren;
   hasIcon?: boolean;
   className?: any;
   white?: boolean;
-  target?: '_blank' | '_self' | '_parent' | '_top';
+  target?: LinkProps['target'];
 }
 
 export default function ButtonLink({
-  external = false,
   to,
   children,
   hasIcon = false,
   className,
   white = false,
-  target = '_blank',
+  target,
 }: ButtonLinkProps) {
   const classes = classnames(
     styles.ButtonLink,
@@ -29,7 +27,7 @@ export default function ButtonLink({
     className,
     white && styles.ButtonLinkWhite
   );
-  if (external) {
+  if (!!target) {
     if (target === '_blank') {
       return (
         <a
@@ -55,8 +53,8 @@ export default function ButtonLink({
   );
 }
 
-export function ButtonLinkExternal(props: Omit<ButtonLinkProps, 'external'>) {
-  return <ButtonLink {...props} external={true} />;
+export function ButtonLinkExternal(props: ButtonLinkProps) {
+  return <ButtonLink {...props} target={props.target || '_self'} />;
 }
 
 export function IconButtonLink(props: Omit<ButtonLinkProps, 'hasIcon'>) {
