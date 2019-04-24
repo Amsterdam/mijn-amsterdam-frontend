@@ -12,6 +12,7 @@ import useWmoApi, { WmoApiState } from './hooks/api/api.wmo';
 import useFocusApi, { FocusApiState } from './hooks/api/api.focus';
 import useMyChapters from 'hooks/myChapters.hook';
 import { MenuItem } from './components/MainNavBar/MainNavBar.constants';
+import useErfpachtApi, { ErfpachtApiState } from './hooks/api/api.erfpacht';
 
 export interface AppState {
   BRP: BrpApiState;
@@ -22,6 +23,7 @@ export interface AppState {
   WMO: WmoApiState;
   FOCUS: FocusApiState;
   MY_CHAPTERS: MenuItem[];
+  ERFPACHT: ErfpachtApiState;
 }
 
 // Use typecasting here to allow for proper state completion and use in deconstruction assignments.
@@ -62,19 +64,22 @@ export default ({ render, children, value, session }: AppStateProps) => {
     const MY_UPDATES = useMyUpdatesApi();
     const MY_CASES = useMyCasesApi();
     const MY_TIPS = useMyTipsApi();
-    const MY_CHAPTERS = useMyChapters({ WMO, FOCUS });
+    const ERFPACHT = useErfpachtApi();
+    const MY_CHAPTERS = useMyChapters({ WMO, FOCUS, ERFPACHT });
 
     appState = {
       BRP,
       SESSION: session,
 
-      // NOTE: If needed we can postpone immediate fetching of below data and start fetching in the component.
+      // NOTE: If needed we can postpone immediate fetching of below data and start fetching in the component
+      // by calling the refetch method implemented in the api hooks.
       MY_UPDATES,
       MY_CASES,
       MY_TIPS,
       WMO,
       FOCUS,
       MY_CHAPTERS,
+      ERFPACHT,
     };
   }
 
