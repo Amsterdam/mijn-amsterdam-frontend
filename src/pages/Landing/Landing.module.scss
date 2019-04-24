@@ -1,1 +1,44 @@
 @import 'styles/_global.scss';
+
+.Landing {
+  margin-bottom: 10rem;
+
+  ul {
+    margin: 0;
+    padding-left: 2rem;
+    list-style-type: square;
+  }
+}
+
+.LoginBtn {
+  display: flex;
+  height: 4.6rem;
+  width: 18.5rem; // ie11 fallback
+  width: fit-content;
+  cursor: pointer;
+  margin-top: 4rem;
+  margin-bottom: 3rem;
+  text-decoration: none;
+  background-color: $color-primary-red;
+  color: $color-white;
+  font-weight: 700;
+  padding-right: 1.3rem;
+  line-height: 4.6rem;
+  &:focus {
+    color: $color-black;
+  }
+}
+
+.LoginLogo {
+  height: 4.6rem;
+  margin-right: 1.3rem;
+  border-right: 1rem solid $color-white;
+  background-color: #000;
+}
+
+.BetaLogo {
+  float: right;
+  height: 12rem;
+  width: 12rem;
+  margin-top: -4rem;
+}
