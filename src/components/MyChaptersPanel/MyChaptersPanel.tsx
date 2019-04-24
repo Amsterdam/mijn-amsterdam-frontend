@@ -12,7 +12,7 @@ export interface MyChaptersPanelProps {
 
 export default function MyChaptersPanel({
   title,
-  items,
+  items = [],
 }: MyChaptersPanelProps) {
   return (
     <div className={styles.MyChaptersPanel}>
