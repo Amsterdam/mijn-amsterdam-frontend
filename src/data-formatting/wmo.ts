@@ -25,6 +25,7 @@ export interface WmoItem {
   dateStart: string; // Startdatum
   dateFinish?: string; // Einddatum
   supplier: string; // Leverancier
+  supplierUrl: string; // Leverancier url
   qtyDescription: string; // Omvang: e.g 1 stuks per beschikking
   isActual: boolean; // Actueel
   link: LinkProps;
@@ -62,6 +63,8 @@ export function formatWmoApiResponse(
       dateStart: dateFormat(dateStart, 'DD MMM YYYY'),
       dateFinish: dateFinish && dateFormat(dateFinish, 'DD MMM YYYY'),
       supplier,
+      // TODO: See if we can get a url to the suppliers websites
+      supplierUrl: supplier ? `https://${supplier}.nl` : '',
       qtyDescription,
       isActual,
       link: {
