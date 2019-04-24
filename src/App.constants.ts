@@ -82,10 +82,7 @@ export const ExternalUrls = {
     'https://www.eherkenning.nl/inloggen-met-eherkenning/middel-aanvragen/',
   KVK_REPORT_CHANGE:
     'https://www.kvk.nl/inschrijven-en-wijzigen/wijziging-doorgeven/',
-  ERFPACHT:
-    'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
-  ERFPACHT_ACC:
-    'https://mijnerfpacht.acc.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
+  ERFPACHT: process.env.REACT_APP_ERFPACHT_URL,
   BERICHTENBOX: 'https://mijn.overheid.nl/berichtenbox/inbox/',
   TROUWEN_EN_PARTNERSCHAP:
     'https://www.amsterdam.nl/burgerzaken/trouwen-partnerschap/',

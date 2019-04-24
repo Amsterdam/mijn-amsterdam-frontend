@@ -1,4 +1,4 @@
-import { AppRoutes, Chapters, Chapter } from 'App.constants';
+import { AppRoutes, Chapters, Chapter, ExternalUrls } from 'App.constants';
 import { ReactComponent as BurgerzakenIcon } from 'assets/images/burgerzaken.svg';
 import { ReactComponent as ZorgIcon } from 'assets/images/zorg.svg';
 import { ReactComponent as WonenIcon } from 'assets/images/wonen.svg';
@@ -37,8 +37,9 @@ export const myChaptersMenuItems: MenuItem[] = [
   {
     title: 'Wonen',
     id: Chapters.WONEN,
-    to: AppRoutes.WONEN,
+    to: ExternalUrls.ERFPACHT || AppRoutes.WONEN,
     Icon: WonenIcon,
+    target: '_self',
   },
   {
     title: 'Belastingen',

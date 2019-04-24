@@ -48,12 +48,13 @@ function getMenuItem(
         onMouseEnter={() => setSubMenuVisibility(item.id)}
         onMouseLeave={() => setSubMenuVisibility()}
       >
-        {item.submenuItems.map(({ id, to, Icon, title }) => {
+        {item.submenuItems.map(({ id, to, Icon, title, target }) => {
           return (
             <MainNavSubmenuLink
               key={id}
               to={to}
               id={id}
+              target={target}
               onFocus={() => setSubMenuVisibility(item.id, true)}
             >
               {Icon && <Icon fill={Colors.neutralGrey4} aria-hidden="true" />}
