@@ -63,6 +63,7 @@ export function formatWmoApiResponse(
       dateStart: dateFormat(dateStart, 'DD MMM YYYY'),
       dateFinish: dateFinish && dateFormat(dateFinish, 'DD MMM YYYY'),
       supplier,
+      // TODO: See if we can get a url to the suppliers websites
       supplierUrl: supplier ? `https://${supplier}.nl` : '',
       qtyDescription,
       isActual,
