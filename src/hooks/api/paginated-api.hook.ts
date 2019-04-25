@@ -13,21 +13,23 @@ export interface PaginatedApiState extends ApiState {
   refetch: (options: { offset?: number; limit?: number }) => void;
 }
 
-const INITIAL_STATE: PaginatedItemsResponse = {
+export const INITIAL_STATE: PaginatedItemsResponse = {
   items: [],
   total: 0,
   offset: 0,
   limit: 3,
 };
 
-export default function paginatedApi(
+export default function usePaginatedApi(
   url: string,
   offset: number = INITIAL_STATE.offset,
-  limit: number = INITIAL_STATE.limit
+  limit: number = INITIAL_STATE.limit,
+  postpone: boolean = false
 ): PaginatedApiState {
   const options = {
     url,
     params: { offset, limit },
+    postpone,
   };
   const [api, refetch] = useDataApi(options, INITIAL_STATE);
 

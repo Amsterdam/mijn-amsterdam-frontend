@@ -1,5 +1,5 @@
 import { ApiUrls, Chapter } from 'App.constants';
-import paginatedApiHook, { PaginatedItemsResponse } from './paginated-api.hook';
+import usePaginatedApi, { PaginatedItemsResponse } from './paginated-api.hook';
 import { ApiState } from './api.types';
 import { LinkProps } from 'App.types';
 
@@ -21,5 +21,5 @@ export interface MyUpdatesApiState extends ApiState {
 }
 
 export default (offset?: number, limit?: number): MyUpdatesApiState => {
-  return paginatedApiHook(ApiUrls.MY_UPDATES, offset, limit);
+  return usePaginatedApi(ApiUrls.MY_UPDATES, offset, limit);
 };

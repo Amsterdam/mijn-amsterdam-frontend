@@ -1,5 +1,5 @@
 import { ApiUrls } from 'App.constants';
-import paginatedApiHook, { PaginatedItemsResponse } from './paginated-api.hook';
+import usePaginatedApi, { PaginatedItemsResponse } from './paginated-api.hook';
 import { ApiState } from './api.types';
 import {
   formatWmoApiResponse,
@@ -14,7 +14,7 @@ export interface WmoApiState extends ApiState {
 }
 
 export default (offset?: number, limit?: number): WmoApiState => {
-  const { data, ...rest } = paginatedApiHook(ApiUrls.WMO, offset, limit);
+  const { data, ...rest } = usePaginatedApi(ApiUrls.WMO, offset, limit);
 
   return {
     ...rest,
