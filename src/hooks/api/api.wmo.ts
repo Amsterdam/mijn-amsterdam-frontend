@@ -1,14 +1,10 @@
 import { ApiUrls } from 'App.constants';
 import usePaginatedApi, { PaginatedItemsResponse } from './paginated-api.hook';
 import { ApiState } from './api.types';
-import {
-  formatWmoApiResponse,
-  WmoItem,
-  WmoApiResponse,
-} from 'data-formatting/wmo';
+import { formatWmoApiResponse, WmoItem } from 'data-formatting/wmo';
 
 export interface WmoApiState extends ApiState {
-  data: {
+  data: PaginatedItemsResponse & {
     items: WmoItem[];
   };
 }
