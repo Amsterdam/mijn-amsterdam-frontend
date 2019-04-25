@@ -27,7 +27,7 @@ export default () => {
       !isDirty ||
       (total > items.length && items.length < MAX_UPDATES_VISIBLE && !isLoading)
     ) {
-      refetch && refetch({ offset: 0, limit: MAX_UPDATES_VISIBLE });
+      refetch && refetch({ offset: items.length, limit: MAX_UPDATES_VISIBLE });
     }
   }, []);
 
