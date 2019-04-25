@@ -19,6 +19,7 @@ export interface MyUpdatesResponse extends PaginatedItemsResponse {
 
 export interface MyUpdatesApiState extends ApiState {
   data: MyUpdatesResponse;
+  refetch: (options: { offset?: number; limit?: number }) => void;
 }
 
 export default (offset?: number, limit?: number): MyUpdatesApiState => {
