@@ -1,7 +1,8 @@
 import { ApiUrls, Chapter } from 'App.constants';
-import paginatedApiHook, { PaginatedItemsResponse } from './paginated-api.hook';
+import usePaginatedApi, { PaginatedItemsResponse } from './paginated-api.hook';
 import { ApiState } from './api.types';
 import { LinkProps } from 'App.types';
+import { isProduction } from 'helpers/App';
 
 export interface MyUpdate {
   id: string;
@@ -18,8 +19,10 @@ export interface MyUpdatesResponse extends PaginatedItemsResponse {
 
 export interface MyUpdatesApiState extends ApiState {
   data: MyUpdatesResponse;
+  refetch: (options: { offset?: number; limit?: number }) => void;
 }
 
 export default (offset?: number, limit?: number): MyUpdatesApiState => {
-  return paginatedApiHook(ApiUrls.MY_UPDATES, offset, limit);
+  // NOTE: The updates api is not available in production yet
+  return usePaginatedApi(ApiUrls.MY_UPDATES, offset, limit, isProduction());
 };

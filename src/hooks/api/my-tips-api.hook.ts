@@ -1,7 +1,8 @@
 import { ApiUrls } from 'App.constants';
-import paginatedApiHook, { PaginatedItemsResponse } from './paginated-api.hook';
+import usePaginatedApi, { PaginatedItemsResponse } from './paginated-api.hook';
 import { ApiState } from './api.types';
 import { LinkProps } from 'App.types';
+import { isProduction } from 'helpers/App';
 
 export interface MyTip {
   datePublished: string;
@@ -20,5 +21,6 @@ export interface MyTipsApiState extends ApiState {
 }
 
 export default (offset?: number, limit?: number): MyTipsApiState => {
-  return paginatedApiHook(ApiUrls.MY_TIPS, offset, limit);
+  // NOTE: The tips api is not available in production yet
+  return usePaginatedApi(ApiUrls.MY_TIPS, offset, limit, isProduction());
 };

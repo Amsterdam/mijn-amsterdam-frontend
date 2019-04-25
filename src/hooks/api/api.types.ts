@@ -12,5 +12,4 @@ export interface ApiState {
   isPristine?: boolean;
   isDirty?: boolean;
   data?: any;
-  refetch?: (options?: ApiRequestOptions | any) => void;
 }

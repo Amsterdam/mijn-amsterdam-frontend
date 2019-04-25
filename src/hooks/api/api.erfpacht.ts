@@ -11,7 +11,7 @@ export interface ErfpachtApiState extends ApiState {
 }
 
 export default function useErfpachtApi(): ErfpachtApiState {
-  const api = useDataApi({
+  const [api] = useDataApi({
     url: ApiUrls.ERFPACHT,
   });
   return {

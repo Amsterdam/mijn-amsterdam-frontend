@@ -15,6 +15,6 @@ export type SessionApiState = ApiState & SessionState;
 export default function useSessionApi(
   initialData = INITIAL_SESSION_STATE
 ): SessionApiState {
-  const { data, ...rest } = useDataApi({ url: ApiUrls.AUTH }, initialData);
+  const [{ data, ...rest }] = useDataApi({ url: ApiUrls.AUTH }, initialData);
   return { ...data, ...rest };
 }
