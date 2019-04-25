@@ -29,7 +29,7 @@ export default function paginatedApi(
     url,
     params: { offset, limit },
   };
-  const api = useDataApi(options, INITIAL_STATE);
+  const [api, refetch] = useDataApi(options, INITIAL_STATE);
 
   return {
     ...api,
@@ -38,7 +38,7 @@ export default function paginatedApi(
       offset = INITIAL_STATE.offset,
       limit = INITIAL_STATE.limit,
     } = {}) => {
-      api.refetch && api.refetch({ ...options, params: { offset, limit } });
+      refetch({ ...options, params: { offset, limit } });
     },
   };
 }

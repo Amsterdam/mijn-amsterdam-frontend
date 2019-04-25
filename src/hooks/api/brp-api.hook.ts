@@ -7,7 +7,7 @@ export type BrpApiState = Omit<ApiState, 'data'> & BrpDataFormatted;
 
 export const useBrpApi = (initialState = {}): BrpApiState => {
   const options = { url: ApiUrls.BRP };
-  const api = useDataApi(options, initialState);
+  const [api] = useDataApi(options, initialState);
   const { data, ...rest } = api;
 
   const brpData = formatBrpApiResponse(data);
