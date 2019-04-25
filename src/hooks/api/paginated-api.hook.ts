@@ -32,10 +32,13 @@ export default function usePaginatedApi(
     postpone,
   };
   const [api, refetch] = useDataApi(options, INITIAL_STATE);
+  const responseData = Array.isArray(api.data)
+    ? { items: api.data, total: api.data.length, offset: 0, limit: -1 }
+    : api.data;
 
   return {
     ...api,
-    data: api.data || null,
+    data: responseData,
     refetch: ({
       offset = INITIAL_STATE.offset,
       limit = INITIAL_STATE.limit,
