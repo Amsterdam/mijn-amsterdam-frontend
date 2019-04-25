@@ -37,6 +37,7 @@
 
   .PreviousUpdatesPanel {
     background-color: $color-neutral-grey1;
+    padding-bottom: 1rem;
 
     @include select(MyUpdates_Icon) {
       fill: $color-neutral-grey4;
