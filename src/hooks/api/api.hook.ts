@@ -45,7 +45,7 @@ const createApiDataReducer = (initialData: Unshaped = {}) => (
 };
 
 // The data api request options object
-const DEFAULT_REQUEST_OPTIONS: ApiRequestOptions = {
+export const DEFAULT_REQUEST_OPTIONS: ApiRequestOptions = {
   // Url to data api endpoint
   url: '',
   // Request query params
@@ -54,23 +54,28 @@ const DEFAULT_REQUEST_OPTIONS: ApiRequestOptions = {
   postpone: false,
 };
 
+export const getDefaultState = (initialData = {}, postpone = false) => ({
+  isLoading: postpone === true ? false : true,
+  isError: false,
+  isPristine: true,
+  isDirty: false,
+  data: initialData,
+});
+
 export const useDataApi = (
   options: ApiRequestOptions = DEFAULT_REQUEST_OPTIONS,
   initialData: Unshaped = {}
-) => {
+): [ApiState, (options: ApiRequestOptions) => void] => {
   const [requestOptions, setRequestOptions] = useState(options);
   const apiDataReducer = createApiDataReducer(initialData);
+  const refetch = (options: ApiRequestOptions) => {
+    setRequestOptions({ ...options, postpone: false });
+  };
 
-  const [state, dispatch] = useReducer(apiDataReducer, {
-    isLoading: options.postpone === true ? false : true,
-    isError: false,
-    isPristine: true,
-    isDirty: false,
-    data: initialData,
-    refetch: (options: ApiRequestOptions) => {
-      setRequestOptions({ ...options, postpone: false });
-    },
-  });
+  const [state, dispatch] = useReducer(
+    apiDataReducer,
+    getDefaultState(initialData, requestOptions.postpone)
+  );
 
   useEffect(() => {
     let didCancel = false;
@@ -98,7 +103,7 @@ export const useDataApi = (
       }
     };
 
-    if (requestOptions.postpone !== true) {
+    if (requestOptions.postpone !== true && requestOptions.url !== '') {
       fetchData();
     }
     // When component is destroyed this callback is executed.
@@ -109,5 +114,5 @@ export const useDataApi = (
     // See: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
   }, [requestOptions]);
 
-  return state;
+  return [state, refetch];
 };

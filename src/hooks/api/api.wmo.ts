@@ -1,20 +1,16 @@
 import { ApiUrls } from 'App.constants';
-import paginatedApiHook, { PaginatedItemsResponse } from './paginated-api.hook';
+import usePaginatedApi, { PaginatedItemsResponse } from './paginated-api.hook';
 import { ApiState } from './api.types';
-import {
-  formatWmoApiResponse,
-  WmoItem,
-  WmoApiResponse,
-} from 'data-formatting/wmo';
+import { formatWmoApiResponse, WmoItem } from 'data-formatting/wmo';
 
 export interface WmoApiState extends ApiState {
-  data: {
+  data: PaginatedItemsResponse & {
     items: WmoItem[];
   };
 }
 
 export default (offset?: number, limit?: number): WmoApiState => {
-  const { data, ...rest } = paginatedApiHook(ApiUrls.WMO, offset, limit);
+  const { data, ...rest } = usePaginatedApi(ApiUrls.WMO, offset, limit);
 
   return {
     ...rest,

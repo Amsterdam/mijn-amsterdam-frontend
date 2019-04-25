@@ -1,5 +1,5 @@
 import { ApiUrls } from 'App.constants';
-import paginatedApiHook, { PaginatedItemsResponse } from './paginated-api.hook';
+import usePaginatedApi, { PaginatedItemsResponse } from './paginated-api.hook';
 import { ApiState } from './api.types';
 import formatFocusApiResponse, { FocusItem } from 'data-formatting/focus';
 
@@ -15,7 +15,7 @@ export default function useFocusApi(
   offset?: number,
   limit?: number
 ): FocusApiState {
-  const { data, ...rest } = paginatedApiHook(ApiUrls.FOCUS, offset, limit);
+  const { data, ...rest } = usePaginatedApi(ApiUrls.FOCUS, offset, limit);
 
   return {
     ...rest,
