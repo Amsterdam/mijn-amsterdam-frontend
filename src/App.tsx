@@ -2,7 +2,10 @@ import React from 'react';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import useReactRouter from 'use-react-router';
 
-import AppState, { SessionState } from './AppState';
+import AppState, {
+  SessionState,
+  AppState as AppStateInterface,
+} from './AppState';
 import { AppRoutes } from './App.constants';
 import MainHeader, {
   MainHeaderProps,
@@ -25,14 +28,21 @@ import ZorgDetail from 'pages/ZorgDetail/ZorgDetail';
 import InkomenDetail from 'pages/InkomenDetail/InkomenDetail';
 import MyArea from 'pages/MyArea/MyArea';
 
-function MainApp({ person, isAuthenticated }: MainHeaderProps) {
+interface MainAppProps {
+  appState: AppStateInterface;
+}
+
+function MainApp({ appState: { SESSION, BRP } }: MainAppProps) {
   const { location } = useReactRouter();
 
   return location.pathname === AppRoutes.MY_AREA ? (
     <MyArea />
   ) : (
     <>
-      <MainHeader person={person} isAuthenticated={isAuthenticated} />
+      <MainHeader
+        person={BRP.person}
+        isAuthenticated={SESSION.isAuthenticated}
+      />
       <div className={styles.App}>
         <Switch>
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
@@ -69,12 +79,7 @@ export default function App() {
           return session.isAuthenticated ? (
             <AppState
               session={session}
-              render={({ SESSION, BRP }) => (
-                <MainApp
-                  person={BRP.person}
-                  isAuthenticated={SESSION.isAuthenticated}
-                />
-              )}
+              render={appState => <MainApp appState={appState} />}
             />
           ) : (
             <div className={styles.NotYetAuthenticated}>
