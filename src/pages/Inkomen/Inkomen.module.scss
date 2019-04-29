@@ -20,8 +20,11 @@
     @include select(DataLinkTable_Table) {
       width: 100%;
     }
+    @include select(DataLinkTable_DisplayProp) {
+      width: 20%;
+    }
     @include select(DataLinkTable_DisplayPropTitle) {
-      width: 75%;
+      width: 60%;
       padding-right: 3em;
     }
   }
