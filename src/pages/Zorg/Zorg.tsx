@@ -33,7 +33,7 @@ export default () => {
         Zorg
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
-        <p>Zorg body</p>
+        {/* <p>Zorg body</p> */}
         <DataLinkTable
           rowHeight="6rem"
           displayProps={DISPLAY_PROPS}

@@ -24,7 +24,11 @@ interface DownloadLinkProps {
 
 function DownloadLink({ item }: DownloadLinkProps) {
   return (
-    <IconButtonLink className={styles.DownloadLink} to={item.url}>
+    <IconButtonLink
+      target="_blank"
+      className={styles.DownloadLink}
+      to={item.url}
+    >
       <DownloadIcon />
       {item.title}
     </IconButtonLink>

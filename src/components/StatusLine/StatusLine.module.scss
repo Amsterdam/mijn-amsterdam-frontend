@@ -20,19 +20,25 @@
 .DownloadLink {
   display: block;
   font-weight: normal;
+  position: relative;
+
+  svg {
+    top: .2rem;
+    transform: none;
+  }
 }
 
 .Panel {
   position: relative;
   padding: 1.8rem;
-  flex: 1;
+  width: 30rem;
 
   > p {
     margin: 0;
   }
 
   &:nth-child(2) {
-    flex: 2;
+    width: 60rem;
   }
 
   &:first-child {

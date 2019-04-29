@@ -58,10 +58,10 @@ interface FocusProduct {
 type FocusApiResponse = FocusProduct[];
 
 const processSteps: StepTitle[] = [
-  'aanvraag',
-  'inBehandeling',
-  'herstelTermijn',
   'beslissing',
+  'herstelTermijn',
+  'inBehandeling',
+  'aanvraag',
 ];
 
 export const Labels: LabelData = {
@@ -103,12 +103,12 @@ export const Labels: LabelData = {
     },
     beslissing: {
       Afwijzing: {
-        title: 'Besluit {title}',
+        title: '{title}',
         description:
           'U heeft geen recht op een bijstandsuitkering. De reden voor afwijzing is {reasonForDecision}. Bekijk de brief voor meer details.',
       },
       Toekenning: {
-        title: 'Besluit {title}',
+        title: '{title}',
         description:
           'U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer details.',
         infoLink: {
@@ -122,7 +122,7 @@ export const Labels: LabelData = {
   },
   'Bijzondere Bijstand': {
     aanvraag: {
-      title: 'Aanvraag {title}',
+      title: '{title}',
       description:
         'U hebt op {datePublished} een bijzondere bijstandsuitkering aangevraagd.',
     },
@@ -302,7 +302,7 @@ function formatFocusDocument(
   return {
     id: String(id),
     title,
-    url,
+    url: `/api/${url}`,
     datePublished,
     type: stepTitle,
   };

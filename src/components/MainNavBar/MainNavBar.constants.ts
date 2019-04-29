@@ -80,7 +80,7 @@ export const menuItems: MenuItem[] = [
   },
   { title: 'Mijn buurt', id: mainMenuItemId.MY_AREA, to: AppRoutes.MY_AREA },
   {
-    title: 'Mijn updates',
+    title: 'Mijn meldingen',
     id: mainMenuItemId.MY_UPDATES,
     to: AppRoutes.MY_UPDATES,
   },
