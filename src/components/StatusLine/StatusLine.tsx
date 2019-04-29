@@ -30,7 +30,7 @@ function DownloadLink({ item }: DownloadLinkProps) {
       to={item.url}
     >
       <DownloadIcon />
-      {item.title}
+      Bekijk brief
     </IconButtonLink>
   );
 }
@@ -45,7 +45,7 @@ function StatusLineItem({ item }: StatusLineItemProps) {
       )}
     >
       <div className={styles.Panel}>
-        <strong className={styles.StatusTitle}>{item.title}</strong>
+        <strong className={styles.StatusTitle}>{item.status}</strong>
         <time className={styles.StatusDate}>{item.datePublished}</time>
       </div>
       <div className={styles.Panel}>
@@ -55,7 +55,7 @@ function StatusLineItem({ item }: StatusLineItemProps) {
             .map((text, index) => <p key={index}>{text}</p>)}
         {!!item.infoLink &&
           ([] as LinkProps[]).concat(item.infoLink).map(infoLink => (
-            <p>
+            <p key={infoLink.to}>
               <ButtonLink to={infoLink.to} target={infoLink.target}>
                 {infoLink.title}
               </ButtonLink>
