@@ -48,13 +48,15 @@ export default () => {
             Lees meer over inkomensondersteuning
           </ButtonLinkExternal>
         </p>
-        <DataLinkTable
-          rowHeight="6rem"
-          displayProps={DISPLAY_PROPS_ACTUAL}
-          items={itemsRequested}
-          title="Mijn lopende aanvragen"
-          startCollapsed={false}
-        />
+        {!!itemsRequested.length && (
+          <DataLinkTable
+            rowHeight="6rem"
+            displayProps={DISPLAY_PROPS_ACTUAL}
+            items={itemsRequested}
+            title="Mijn lopende aanvragen"
+            startCollapsed={false}
+          />
+        )}
         <DataLinkTable
           rowHeight="6rem"
           displayProps={DISPLAY_PROPS}
