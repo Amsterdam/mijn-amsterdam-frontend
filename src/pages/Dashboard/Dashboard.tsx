@@ -31,7 +31,7 @@ export default () => {
   return (
     <PageContentMain className={styles.Dashboard} variant="full">
       <PageContentMainHeading variant="medium">
-        Mijn updates {myUpdatesTotal > 0 && <span>({myUpdatesTotal})</span>}
+        Mijn meldingen {myUpdatesTotal > 0 && <span>({myUpdatesTotal})</span>}
       </PageContentMainHeading>
       <PageContentMainBody variant="regularBoxed" className={styles.FirstBody}>
         <MyUpdates
@@ -39,7 +39,7 @@ export default () => {
           items={myUpdates.slice(0, MAX_UPDATES_VISIBLE)}
         />
         <MyChaptersPanel items={MY_CHAPTERS} title="Mijn thema's" />
-        <MyCases title="Mijn lopende zaken" items={myCases} />
+        <MyCases title="Mijn lopende aanvragen" items={myCases} />
       </PageContentMainBody>
       <PageContentMainBody>
         <MyArea />

@@ -36,7 +36,7 @@ export default () => {
           <br />
           Ga naar <a href="#">DigiD</a>
           <br />
-          Of gebruike de <a href="#">DigiD app</a>
+          Of gebruik de <a href="#">DigiD app</a>
           <br />
           Dan hoeft u geen wachtwoord meer te onthouden
         </p>
@@ -47,7 +47,7 @@ export default () => {
         </p>
         <ul>
           <li>Hoe u ingeschreven staat bij de gemeente</li>
-          <li>Hoe het staat met uw aanvraag voor een bijstandsbijkering</li>
+          <li>Hoe het staat met uw aanvraag voor een bijstandsuitkering</li>
           <li>Hoe het staat met uw aanvraag voor een Stadspas</li>
           <li>Een link naar Mijn Belastingen</li>
           <li>Een link naar Mijn Erfpacht</li>
@@ -56,8 +56,10 @@ export default () => {
         <p>
           <strong>Mijn Amsterdam is nog niet af</strong>
           <br />
-          De komende jaren komen er steeds meer bij. Laat ons weten wat u ervan
-          vindt. Mail uw ideeen naar:
+          De komende jaren komt er steeds meer bij. Laat ons weten wat u ervan
+          vindt.
+          <br />
+          Mail uw ideeën naar:&nbsp;
           <a href="mailto:mijnamsterdam@amsterdam.nl">
             MijnAmsterdam@amsterdam.nl
           </a>

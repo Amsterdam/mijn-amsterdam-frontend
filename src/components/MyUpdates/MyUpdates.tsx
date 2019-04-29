@@ -47,10 +47,10 @@ export default function MyUpdates({ items = [], total = 0 }: MyUpdatesProps) {
       </ul>
       {total > items.length && (
         <p className={styles.FooterLink}>
-          <ButtonLink to={AppRoutes.MY_UPDATES}>Alle updates</ButtonLink>
+          <ButtonLink to={AppRoutes.MY_UPDATES}>Alle meldingen</ButtonLink>
         </p>
       )}
-      {items.length === 0 && <p>Er zijn geen updates</p>}
+      {items.length === 0 && <p>Er zijn op het moment geen meldingen</p>}
     </div>
   );
 }
