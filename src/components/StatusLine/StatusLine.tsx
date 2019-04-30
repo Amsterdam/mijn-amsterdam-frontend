@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styles from './StatusLine.module.scss';
 import classnames from 'classnames';
 import { ProcessStep } from 'data-formatting/focus';
-import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
+import {
+  IconButtonLink,
+  ButtonLinkExternal,
+} from 'components/ButtonLink/ButtonLink';
 import { Document } from '../DocumentList/DocumentList';
 import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
 import ButtonLink from '../ButtonLink/ButtonLink';
 import { LinkProps } from 'App.types';
+
+const markdownLinkRegex = /\[((?:[^\[\]\\]|\\.)+)\]\((https?:\/\/(?:[-A-Z0-9+&@#\/%=~_|\[\]](?= *\))|[-A-Z0-9+&@#\/%?=~_|\[\]!:,.;](?! *\))|\([-A-Z0-9+&@#\/%?=~_|\[\]!:,.;(]*\))+) *\)/i;
+const markdownTagMatchRegex = /(\[.*?\]\(.*?\))/gi;
 
 export type StatusLineItem = ProcessStep;
 
@@ -35,7 +41,34 @@ function DownloadLink({ item }: DownloadLinkProps) {
   );
 }
 
+function parseDescription(text: string, item: any) {
+  const linkTags = text.split(markdownTagMatchRegex);
+  if (linkTags) {
+    return linkTags.map(link => {
+      const tagParts = link.match(markdownLinkRegex);
+      if (tagParts) {
+        const [, text, url] = tagParts;
+        return (
+          <ButtonLinkExternal key={url} to={url}>
+            {text}
+          </ButtonLinkExternal>
+        );
+      }
+      return link;
+    });
+  }
+  return text.split(/\n/g).map(text => [text, <br />]);
+}
+
 function StatusLineItem({ item }: StatusLineItemProps) {
+  const memoizedDescription = useMemo(() => {
+    return (
+      item.description &&
+      item.description
+        .split(/\n\n/g)
+        .map((text, index) => <p key={index}>{parseDescription(text, item)}</p>)
+    );
+  }, [item]);
   return (
     <li
       key={item.id}
@@ -48,20 +81,7 @@ function StatusLineItem({ item }: StatusLineItemProps) {
         <strong className={styles.StatusTitle}>{item.status}</strong>
         <time className={styles.StatusDate}>{item.datePublished}</time>
       </div>
-      <div className={styles.Panel}>
-        {item.description &&
-          item.description
-            .split(/\\n/)
-            .map((text, index) => <p key={index}>{text}</p>)}
-        {!!item.infoLink &&
-          ([] as LinkProps[]).concat(item.infoLink).map(infoLink => (
-            <p key={infoLink.to}>
-              <ButtonLink to={infoLink.to} target={infoLink.target}>
-                {infoLink.title}
-              </ButtonLink>
-            </p>
-          ))}
-      </div>
+      <div className={styles.Panel}>{memoizedDescription}</div>
       <div className={styles.Panel}>
         <p>
           {item.documents.map(document => (
