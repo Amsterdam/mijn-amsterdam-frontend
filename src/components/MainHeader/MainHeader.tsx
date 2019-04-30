@@ -18,7 +18,7 @@ import Heading from 'components/Heading/Heading';
 import { Person } from 'data-formatting/brp';
 
 interface SecondaryLinksProps {
-  person: Person;
+  person: Person | null;
   hasMessages?: boolean;
 }
 
@@ -73,7 +73,7 @@ export default function MainHeader({
           className={styles.betaLabel}
         />
       </div>
-      {isAuthenticated && person && (
+      {isAuthenticated && (
         <>
           <MainNavBar />
           <SecondaryLinks person={person} />
