@@ -45,6 +45,7 @@ interface Step {
   datum: string;
   status: RequestStatus;
   aantalDagenHerstelTermijn?: string;
+  reden?: string;
 }
 
 interface FocusProduct {
@@ -205,6 +206,7 @@ interface StepSourceData {
   daysSupplierActionRequired: number;
   daysRecoveryAction: number;
   dateOfRequestStart: string;
+  reden?: string;
 }
 
 export interface ProcessStep {
@@ -263,6 +265,7 @@ type GetStepSourceDataArgs = Pick<
   | 'daysSupplierActionRequired'
   | 'daysRecoveryAction'
   | 'dateOfRequestStart'
+  | 'reden'
 > & { stepData: Step | null };
 
 // Data for replacement tags in label data.
@@ -280,7 +283,7 @@ function getStepSourceData({
   const stepDate = stepData ? stepData.datum : '';
   const userActionDeadline = calculateUserActionDeadline(
     stepData,
-    daysUserActionRequired
+    daysRecoveryAction
   );
   return {
     id,
@@ -296,11 +299,8 @@ function getStepSourceData({
       daysUserActionRequired,
       daysRecoveryAction
     ), // Decision will be made before this deadline.
-    userActionDeadline: calculateUserActionDeadline(
-      stepData,
-      daysUserActionRequired
-    ), // Deadline for person to take action.
-    reasonForDecision: '--onbekend--', // Why a decision was made. // TODO: Do we have a reden?
+    userActionDeadline, // Deadline for person to take action.
+    reasonForDecision: stepData ? stepData.reden : '', // Why a decision was made.
     daysRecoveryAction,
     dateOfRequestStart,
   };
