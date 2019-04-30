@@ -15,12 +15,14 @@
 
 .StatusDate {
   display: block;
+  white-space: nowrap;
 }
 
 .DownloadLink {
   display: block;
   font-weight: normal;
   position: relative;
+  white-space: nowrap;
 
   svg {
     top: .2rem;
@@ -31,18 +33,24 @@
 .Panel {
   position: relative;
   padding: 1.8rem;
-  width: 30rem;
+  flex: 1;
 
   > p {
     margin: 0;
   }
 
+  &:last-child {
+    width: auto;
+    overflow: hidden;
+  }
+
   &:nth-child(2) {
-    width: 60rem;
+    flex: 2;
   }
 
   &:first-child {
-    padding: 1.8rem 6rem 1.8rem 8.5rem;
+    padding: 1.8rem 3rem 1.8rem 8.5rem;
+
     &:before {
       content: '';
       width: .2rem;

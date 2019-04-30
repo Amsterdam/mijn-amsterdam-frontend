@@ -2,10 +2,15 @@ import { AppRoutes } from 'App.constants';
 import { defaultDateFormat, entries } from 'helpers/App';
 import { LinkProps } from 'App.types';
 import { Chapter, Chapters } from '../App.constants';
-import { addMonths } from 'date-fns';
+import { addMonths, addDays } from 'date-fns';
 import { Document as GenericDocument } from '../components/DocumentList/DocumentList';
 
 type StepTitle = 'aanvraag' | 'inBehandeling' | 'herstelTermijn' | 'beslissing';
+type RequestStatus =
+  | 'Aanvraag'
+  | 'Meer informatie nodig'
+  | 'In behandeling'
+  | 'Beslissing';
 type Decision = 'Toekenning' | 'Afwijzing';
 type ProductOrigin = 'Participatiewet' | 'Bijzondere Bijstand' | 'Minimafonds';
 type ProductTitle = 'Levensonderhoud' | 'Stadspas' | string;
@@ -14,6 +19,7 @@ interface Info {
   title: string;
   description: string;
   infoLink?: LinkProps | LinkProps[];
+  status: RequestStatus;
 }
 
 type InfoExtended = { [type in Decision]: Info };
@@ -38,6 +44,7 @@ interface Document {
 interface Step {
   document: Document[];
   datum: string;
+  status: RequestStatus;
 }
 
 interface FocusProduct {
@@ -53,6 +60,8 @@ interface FocusProduct {
     beslissing: Step;
   };
   document: Document[];
+  dienstverleningstermijn: number;
+  inspanningsperiode: number;
 }
 
 type FocusApiResponse = FocusProduct[];
@@ -67,7 +76,8 @@ const processSteps: StepTitle[] = [
 export const Labels: LabelData = {
   Participatiewet: {
     aanvraag: {
-      title: 'Aanvraag {title}',
+      title: '{title}',
+      status: 'Aanvraag',
       description:
         'U hebt op {datePublished} een bijstandsuitkering aangevraagd.',
       infoLink: {
@@ -78,7 +88,8 @@ export const Labels: LabelData = {
       },
     },
     inBehandeling: {
-      title: '{title} in behandeling',
+      title: '{title}',
+      status: 'In behandeling',
       description:
         'Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u nog extra informatie moet opsturen.\nU ontvangt vóór {decisionDeadline} ons besluit.',
       infoLink: [
@@ -97,24 +108,27 @@ export const Labels: LabelData = {
       ],
     },
     herstelTermijn: {
-      title: 'Meer informatie nodig over {title}',
+      title: '{title}',
+      status: 'Meer informatie nodig',
       description:
         'Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken. Bekijk de brief voor meer details.\nU moet de extra informatie vóór {userActionDeadline} opsturen. Dan ontvangt u vóór {recoveryDeadline} ons besluit.\n\nTip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk in. Hoe eerder u ons de noodzakelijke informatie geeft, hoe eerder wij verder kunnen met de behandeling van uw aanvraag.',
     },
     beslissing: {
       Afwijzing: {
         title: '{title}',
+        status: 'Beslissing',
         description:
           'U heeft geen recht op een bijstandsuitkering. De reden voor afwijzing is {reasonForDecision}. Bekijk de brief voor meer details.',
       },
       Toekenning: {
         title: '{title}',
+        status: 'Beslissing',
         description:
           'U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer details.',
         infoLink: {
           to:
             'https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D',
-          title: 'Meer informatie over de betaling van uw uitkering',
+          title: 'Bekijk hier de betaaldata van de uitkering',
           target: '_self',
         },
       },
@@ -123,27 +137,32 @@ export const Labels: LabelData = {
   'Bijzondere Bijstand': {
     aanvraag: {
       title: '{title}',
+      status: 'Aanvraag',
       description:
         'U hebt op {datePublished} een bijzondere bijstandsuitkering aangevraagd.',
     },
     inBehandeling: {
       title: '{title} in behandeling',
+      status: 'In behandeling',
       description:
         'Wij gaan nu bekijken of u recht hebt op bijzondere bijstand. Het kan zijn dat u nog extra informatie moet opsturen.\nU ontvangt vóór {decisionDeadline} ons besluit.',
     },
     herstelTermijn: {
-      title: 'Meer informatie nodig - {title}',
+      title: '{title}',
+      status: 'Meer informatie nodig',
       description:
         'Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken. Bekijk de brief voor meer details.\nU moet de extra informatie vóór {userActionDeadline} opsturen. Dan ontvangt u vóór {recoveryDeadline} ons besluit.\n\nTip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk in. Hoe eerder u ons de noodzakelijke informatie geeft, hoe eerder wij verder kunnen met de behandeling van uw aanvraag.',
     },
     beslissing: {
       Afwijzing: {
-        title: 'Besluit {title}',
+        title: '{title}',
+        status: 'Beslissing',
         description:
           'U heeft geen recht op bijzondere bijstand. De reden voor afwijzing is {reasonForDecision}. Bekijk de brief voor meer details.',
       },
       Toekenning: {
-        title: 'Besluit {title}',
+        title: '{title}',
+        status: 'Beslissing',
         description:
           'U heeft recht op bijzondere bijstand. Bekijk de brief voor meer details.',
       },
@@ -151,27 +170,32 @@ export const Labels: LabelData = {
   },
   Minimafonds: {
     aanvraag: {
-      title: 'Aanvraag',
+      title: '{title}',
+      status: 'Aanvraag',
       description: 'U hebt op {datePublished} een Stadspas aangevraagd.',
     },
     inBehandeling: {
       title: 'In behandeling',
+      status: 'In behandeling',
       description:
         'Het kan zijn dat u nog extra informatie moet opsturen.\nU ontvangt vóór {decisionDeadline} ons besluit.\nLet op: Deze status informatie betreft alleen uw aanvraag voor een Stadspas; uw eventuele andere Hulp bij Laag Inkomen producten worden via post en/of telefoon afgehandeld.',
     },
     herstelTermijn: {
-      title: 'Meer informatie',
+      title: '{title}',
+      status: 'Meer informatie nodig',
       description:
         'Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken. Bekijk de brief voor meer details.\nU moet de extra informatie vóór {userActionDeadline} opsturen. Dan ontvangt u vóór {recoveryDeadline} ons besluit.\n\nTip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk in. Hoe eerder u ons de noodzakelijke informatie geeft, hoe eerder wij verder kunnen met de behandeling van uw aanvraag.',
     },
     beslissing: {
       Afwijzing: {
-        title: 'Besluit',
+        title: '{title}',
+        status: 'Beslissing',
         description:
           'U heeft geen recht op een Stadspas. De reden voor afwijzing is {reasonForDecision}. Bekijk de brief voor meer details.',
       },
       Toekenning: {
-        title: 'Besluit',
+        title: '{title}',
+        status: 'Beslissing',
         description:
           'U heeft recht op een Stadspas. Bekijk de brief voor meer details.',
         infoLink: {
@@ -184,6 +208,7 @@ export const Labels: LabelData = {
   },
 };
 
+// Object with properties that are used to replace strings in generated messages.
 interface StepSourceData {
   id: string;
   title: string;
@@ -194,6 +219,8 @@ interface StepSourceData {
   recoveryDeadline?: string;
   reasonForDecision?: string;
   latestStep: StepTitle;
+  daysUserActionRequired: number;
+  daysSupplierActionRequired: number;
 }
 
 export interface ProcessStep {
@@ -204,6 +231,7 @@ export interface ProcessStep {
   description: string;
   infoLink?: LinkProps | LinkProps[];
   isActual: boolean;
+  status: RequestStatus | '';
 }
 
 export interface FocusItem {
@@ -244,7 +272,12 @@ function translateProductTitle(title: ProductTitle) {
 
 type GetStepSourceDataArgs = Pick<
   StepSourceData,
-  'title' | 'latestStep' | 'decision' | 'id'
+  | 'title'
+  | 'latestStep'
+  | 'decision'
+  | 'id'
+  | 'daysUserActionRequired'
+  | 'daysSupplierActionRequired'
 > & { stepData: Step | null };
 
 // Data for replacement tags in label data.
@@ -254,17 +287,35 @@ function getStepSourceData({
   stepData,
   latestStep,
   decision,
+  daysUserActionRequired,
+  daysSupplierActionRequired,
 }: GetStepSourceDataArgs): StepSourceData {
   const stepDate = stepData ? stepData.datum : '';
+  const userActionDeadline = calculateUserActionDeadline(
+    stepData,
+    daysUserActionRequired
+  );
   return {
     id,
     title: translateProductTitle(title),
     latestStep,
     decision,
+    daysUserActionRequired,
+    daysSupplierActionRequired,
     datePublished: defaultDateFormat(stepDate),
-    decisionDeadline: calculateDecisionDeadline(stepDate), // Decision will be made before this deadline.
-    userActionDeadline: calculateUserActionDeadline(stepDate), // Deadline for person to take action.
-    recoveryDeadline: calculateRecoveryDeadline(stepDate), // Deadline with decision after userAction.
+    decisionDeadline: calculateDecisionDeadline(
+      stepData,
+      daysSupplierActionRequired
+    ), // Decision will be made before this deadline.
+    userActionDeadline: calculateUserActionDeadline(
+      stepData,
+      daysUserActionRequired
+    ), // Deadline for person to take action.
+    recoveryDeadline: calculateRecoveryDeadline(
+      stepData,
+      daysUserActionRequired,
+      daysSupplierActionRequired
+    ), // Deadline with decision after userAction.
     reasonForDecision: '--onbekend--', // Why a decision was made. // TODO: Do we have a reden?
   };
 }
@@ -275,22 +326,47 @@ function replaceSourceDataTags(text: string, data: StepSourceData): string {
     rText && (rText.match(/[^{\}]+(?=})/g) as Array<keyof StepSourceData>);
   if (Array.isArray(matches)) {
     return matches.reduce((rText, key) => {
-      return data[key] ? rText.replace(`{${key}}`, data[key] || '') : rText;
+      let value = '';
+      if (data[key]) {
+        value = `${data[key]}`;
+      }
+      return data[key] ? rText.replace(`{${key}}`, value) : rText;
     }, rText);
   }
   return rText;
 }
 
-function calculateUserActionDeadline(date: string) {
-  return defaultDateFormat(date);
+function calculateUserActionDeadline(
+  stepData: Step | null,
+  daysUserActionRequired: number
+) {
+  return stepData
+    ? defaultDateFormat(addDays(stepData.datum, daysUserActionRequired))
+    : '';
 }
 
-function calculateDecisionDeadline(date: string) {
-  return defaultDateFormat(date);
+function calculateDecisionDeadline(
+  stepData: Step | null,
+  daysSupplierActionRequired: number
+) {
+  return stepData
+    ? defaultDateFormat(addDays(stepData.datum, daysSupplierActionRequired))
+    : '';
 }
 
-function calculateRecoveryDeadline(date: string) {
-  return defaultDateFormat(date);
+function calculateRecoveryDeadline(
+  stepData: Step | null,
+  daysUserActionRequired: number,
+  daysSupplierActionRequired: number
+) {
+  return stepData
+    ? defaultDateFormat(
+        addDays(
+          stepData.datum,
+          daysUserActionRequired + daysSupplierActionRequired
+        )
+      )
+    : '';
 }
 
 function formatFocusDocument(
@@ -324,7 +400,7 @@ function formatStepData(
     title: stepLabels
       ? replaceSourceDataTags(stepLabels.title, sourceData)
       : stepTitle,
-    datePublished: stepData ? defaultDateFormat(stepData.datum) : '--NNB--',
+    datePublished: stepData ? defaultDateFormat(stepData.datum) : '-',
     description: stepLabels
       ? replaceSourceDataTags(stepLabels.description, sourceData)
       : '--NNB--',
@@ -335,6 +411,7 @@ function formatStepData(
       : [],
     isActual: stepTitle === sourceData.latestStep,
     infoLink: stepLabels.infoLink,
+    status: stepLabels.status,
   };
 }
 
@@ -346,6 +423,8 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
     processtappen: steps,
     naam: title,
     _id: id,
+    dienstverleningstermijn: daysSupplierActionRequired,
+    inspanningsperiode: daysUserActionRequired,
   } = product;
 
   const inProgress = isInProgess(decision, steps);
@@ -360,6 +439,8 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
     decision,
     latestStep,
     stepData,
+    daysSupplierActionRequired,
+    daysUserActionRequired,
   });
 
   return {
@@ -387,6 +468,8 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
           decision,
           latestStep,
           stepData,
+          daysSupplierActionRequired,
+          daysUserActionRequired,
         });
         return formatStepData(sourceData, productType, stepTitle, stepData);
       }),

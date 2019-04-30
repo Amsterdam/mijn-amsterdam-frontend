@@ -3,12 +3,12 @@ import NL_LOCALE from 'date-fns/locale/nl';
 import { DEFAULT_DATE_FORMAT } from 'App.constants';
 import { KeyboardEvent, MouseEvent } from 'react';
 
-export function dateFormat(datestr: string, fmt: string) {
-  return format(datestr, fmt, { locale: NL_LOCALE });
+export function dateFormat(date: string | Date, fmt: string): string {
+  return format(date, fmt, { locale: NL_LOCALE });
 }
 
-export function defaultDateFormat(datestr: string) {
-  return dateFormat(datestr, DEFAULT_DATE_FORMAT);
+export function defaultDateFormat(date: string | Date): string {
+  return dateFormat(date, DEFAULT_DATE_FORMAT);
 }
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
