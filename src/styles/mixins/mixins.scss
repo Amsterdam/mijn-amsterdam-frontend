@@ -40,7 +40,19 @@
 }
 
 @mixin select($name) {
-  [class*="#{$name}"] {
+  [class*='#{$name}'] {
     @content;
+  }
+}
+
+@mixin respond-to($media) {
+  @if $media == small-screen {
+    @media only screen and (max-width: $breakpoint-small) {
+      @content;
+    }
+  } @else if $media == medium-screen {
+    @media only screen and (max-width: $breakpoint-medium) {
+      @content;
+    }
   }
 }
