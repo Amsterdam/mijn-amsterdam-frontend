@@ -1,2 +1,4 @@
-$breakpoint-small: 400px;
-$breakpoint-medium: 1024px;
+$breakpoints: (
+  small-screen: 400px,
+  medium-screen: 1024px,
+)
