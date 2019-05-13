@@ -74,10 +74,13 @@ export default function MainHeader({
         />
       </div>
       {isAuthenticated && (
-        <>
-          <MainNavBar />
-          <SecondaryLinks person={person} />
-        </>
+        <div className={styles.MenuContainer}>
+          <button className={styles.MenuToggleBtn}>Open</button>
+          <div className={styles.MenuWrapper}>
+            <MainNavBar />
+            <SecondaryLinks person={person} />
+          </div>
+        </div>
       )}
       <MainHeaderHero />
     </header>

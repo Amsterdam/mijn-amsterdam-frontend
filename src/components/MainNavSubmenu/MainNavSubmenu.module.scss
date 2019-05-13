@@ -2,6 +2,10 @@
 
 .MainNavSubmenu {
   z-index: 2;
+
+  @include respond-to(medium-screen) {
+    display: none;
+  }
 }
 
 .SubmenuButton {
@@ -14,13 +18,13 @@
   font-weight: 500;
   cursor: pointer;
   display: inline-block;
-  padding-top: .9rem;
-  padding-bottom: .8rem;
-  margin-top: .2rem;
+  padding-top: 0.9rem;
+  padding-bottom: 0.8rem;
+  margin-top: 0.2rem;
 
   span {
     display: inline-block;
-    border-bottom: solid .2rem transparent;
+    border-bottom: solid 0.2rem transparent;
   }
 
   &:hover span {
@@ -37,8 +41,7 @@
   opacity: 0;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 300ms ease-out 100ms,
-              opacity 200ms ease-in-out 100ms;
+  transition: max-height 300ms ease-out 100ms, opacity 200ms ease-in-out 100ms;
   position: absolute;
   top: $main-header-navbar-height;
   background-color: $color-neutral-grey1;
@@ -71,7 +74,7 @@
   font-weight: 500;
 
   svg {
-    margin: .5rem 1.5rem .5rem 0;
+    margin: 0.5rem 1.5rem 0.5rem 0;
   }
 
   &:hover {
