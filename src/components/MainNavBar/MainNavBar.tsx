@@ -9,6 +9,7 @@ import {
   MenuItem,
   mainMenuItemId,
   submenuItems,
+  MenuItemTitles,
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
 import { Colors } from 'App.constants';
@@ -17,11 +18,12 @@ import { ComponentChildren } from 'App.types';
 export interface MainNavLinkProps {
   to: string;
   children: ComponentChildren;
+  title: string;
   onFocus?: () => void;
   onMouseEnter?: () => void;
 }
 
-function MainNavLink({ children, to, ...rest }: MainNavLinkProps) {
+function MainNavLink({ children, to, title, ...rest }: MainNavLinkProps) {
   return (
     <NavLink to={to} className={styles.MainNavLink} {...rest}>
       {children}
@@ -72,6 +74,7 @@ function getMenuItem(
       to={item.to}
       onFocus={() => setSubMenuVisibility(item.id)}
       onMouseEnter={() => setSubMenuVisibility(item.id)}
+      title={item.title}
     >
       {item.title}
     </MainNavLink>
