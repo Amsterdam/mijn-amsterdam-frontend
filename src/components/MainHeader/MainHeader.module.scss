@@ -6,7 +6,7 @@
   margin: 0 auto;
 
   @include select(Heading) {
-    margin: .4em 0 0;
+    margin: 0.4em 0 0;
   }
 }
 
@@ -36,7 +36,7 @@
 
 .secondaryLinks {
   position: absolute;
-  top: 2rem;
+  margin-top: -13rem;
   right: calc((100vw - #{$main-boxed-width}) / 2);
 
   > a {
@@ -49,5 +49,40 @@
       color: $color-primary-red;
       text-decoration: underline;
     }
+  }
+
+  @include respond-to(medium-screen) {
+    position: relative;
+  }
+}
+
+.MenuToggleBtn {
+  display: none;
+  height: $main-header-navbar-height;
+  @include respond-to(medium-screen) {
+    display: initial;
+  }
+}
+
+.MenuContainer {
+  position: relative;
+  // border: 1px solid blue;
+  height: $main-header-navbar-height;
+  background-color: $color-neutral-grey1;
+  @include respond-to(medium-screen) {
+    margin-bottom: $main-header-navbar-height;
+  }
+}
+
+.MenuWrapper {
+  // border: 1px solid red;
+  @include respond-to(medium-screen) {
+    position: absolute;
+    top: $main-header-navbar-height;
+    // display: none;
+    background-color: $color-neutral-grey1;
+    width: 30rem;
+    height: 30rem;
+    z-index: 999;
   }
 }
