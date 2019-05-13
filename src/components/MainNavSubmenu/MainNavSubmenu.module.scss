@@ -2,6 +2,10 @@
 
 .MainNavSubmenu {
   z-index: 2;
+
+  @include respond-to(medium-screen) {
+    display: none;
+  }
 }
 
 .SubmenuButton {

@@ -12,6 +12,11 @@
 .LinkContainer {
   display: flex;
   width: $main-boxed-width;
+
+  @include respond-to(medium-screen) {
+    width: 100%;
+    flex-direction: column;
+  }
 }
 
 .MainNavLink {
