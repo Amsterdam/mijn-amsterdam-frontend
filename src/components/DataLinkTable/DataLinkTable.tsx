@@ -1,18 +1,18 @@
 import { Unshaped } from 'App.types';
 import { ReactComponent as CaretIcon } from 'assets/icons/Chevron-Right.svg';
 import classnames from 'classnames';
+import ButtonLink from 'components/ButtonLink/ButtonLink';
+import { entries, withKeyPress } from 'helpers/App';
 import React, { useState } from 'react';
 
-import { withKeyPress } from 'helpers/App';
 import Heading from '../Heading/Heading';
 import styles from './DataLinkTable.module.scss';
-import ButtonLink from 'components/ButtonLink/ButtonLink';
-import { AppRoutes } from 'App.constants';
-import { entries } from 'helpers/App';
+import createPersistedState from 'use-persisted-state';
 
 export interface DataLinkTableProps {
+  id: string;
   items?: Unshaped[];
-  title: string;
+  title?: string;
   startCollapsed?: boolean;
   className?: any;
   displayProps?: { [key: string]: string }; // key => Label. Will be displayed right of the title in the table
@@ -20,6 +20,7 @@ export interface DataLinkTableProps {
 }
 
 export default function DataLinkTable({
+  id,
   items = [],
   title = '',
   startCollapsed = true,
@@ -27,7 +28,7 @@ export default function DataLinkTable({
   displayProps,
   rowHeight = 'auto',
 }: DataLinkTableProps) {
-  const [isCollapsed, setCollapsed] = useState(startCollapsed);
+  const [isCollapsed, setCollapsed] = createPersistedState(id)(startCollapsed);
   const classes = classnames(
     styles.DataLinkTable,
     isCollapsed && styles.isCollapsed,
