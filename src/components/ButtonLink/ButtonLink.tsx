@@ -11,7 +11,6 @@ export interface ButtonLinkProps {
   className?: any;
   white?: boolean;
   target?: LinkProps['target'];
-  onClick?: () => void;
 }
 
 export default function ButtonLink({
@@ -21,7 +20,6 @@ export default function ButtonLink({
   className,
   white = false,
   target,
-  onClick = () => void 0,
 }: ButtonLinkProps) {
   const classes = classnames(
     styles.ButtonLink,
@@ -49,7 +47,7 @@ export default function ButtonLink({
     );
   }
   return (
-    <Link to={to} className={classes} onClick={onClick}>
+    <Link to={to} className={classes}>
       {children}
     </Link>
   );
