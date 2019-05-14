@@ -8,8 +8,6 @@ import {
 } from 'components/ButtonLink/ButtonLink';
 import { Document } from '../DocumentList/DocumentList';
 import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
-import ButtonLink from '../ButtonLink/ButtonLink';
-import { LinkProps } from 'App.types';
 import { defaultDateFormat } from 'helpers/App';
 import useRouter from 'use-react-router';
 
