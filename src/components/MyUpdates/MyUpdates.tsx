@@ -24,6 +24,7 @@ export default function MyUpdates({ items = [], total = 0 }: MyUpdatesProps) {
       ...myUpdatesState,
       [id]: true,
     });
+    // NOTE: Add a timeout so state will be persisted before routing.
     setTimeout(() => {
       history.push(to);
     }, 0);
