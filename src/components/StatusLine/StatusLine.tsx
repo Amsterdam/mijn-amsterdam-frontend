@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect, useRef } from 'react';
 import styles from './StatusLine.module.scss';
 import classnames from 'classnames';
 import { ProcessStep } from 'data-formatting/focus';
@@ -8,7 +8,10 @@ import {
 } from 'components/ButtonLink/ButtonLink';
 import { Document } from '../DocumentList/DocumentList';
 import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
+import ButtonLink from '../ButtonLink/ButtonLink';
+import { LinkProps } from 'App.types';
 import { defaultDateFormat } from 'helpers/App';
+import { RouteComponentProps, withRouter } from 'react-router';
 import useRouter from 'use-react-router';
 
 const markdownLinkRegex = /\[((?:[^\[\]\\]|\\.)+)\]\((https?:\/\/(?:[-A-Z0-9+&@#\/%=~_|\[\]](?= *\))|[-A-Z0-9+&@#\/%?=~_|\[\]!:,.;](?! *\))|\([-A-Z0-9+&@#\/%?=~_|\[\]!:,.;(]*\))+) *\)/i;
@@ -22,7 +25,6 @@ interface StatusLineProps {
 
 interface StatusLineItemProps {
   item: StatusLineItem;
-  stepNumber: number;
 }
 
 interface DownloadLinkProps {
@@ -61,7 +63,7 @@ function parseDescription(text: string, item: any) {
   return text.split(/\n/g).map(text => [text, <br />]);
 }
 
-function StatusLineItem({ item, stepNumber }: StatusLineItemProps) {
+function StatusLineItem({ item }: StatusLineItemProps) {
   const { location } = useRouter();
   const memoizedDescription = useMemo(() => {
     return (
@@ -82,7 +84,7 @@ function StatusLineItem({ item, stepNumber }: StatusLineItemProps) {
         location.hash.substring(1) === item.id && styles.Highlight
       )}
     >
-      <div className={styles.Panel} data-stepnumber={stepNumber}>
+      <div className={styles.Panel}>
         <strong className={styles.StatusTitle}>{item.status}</strong>
         <time className={styles.StatusDate}>
           {defaultDateFormat(item.datePublished)}
@@ -102,11 +104,9 @@ function StatusLineItem({ item, stepNumber }: StatusLineItemProps) {
 
 export default function StatusLine({ items }: StatusLineProps) {
   const { location } = useRouter();
-
   useEffect(() => {
     const id = location.hash.substring(1);
     const step = document.getElementById(id);
-
     if (step) {
       window.scroll({
         top: step.getBoundingClientRect().top,
@@ -114,16 +114,11 @@ export default function StatusLine({ items }: StatusLineProps) {
       });
     }
   }, [location.hash]);
-
   return (
     <div className={styles.StatusLine}>
       <ul className={styles.List}>
-        {items.map((item, index) => (
-          <StatusLineItem
-            key={item.id}
-            item={item}
-            stepNumber={items.length - index}
-          />
+        {items.map(item => (
+          <StatusLineItem key={item.id} item={item} />
         ))}
       </ul>
       {!items.length && <p>Er is geen status beschikbaar.</p>}

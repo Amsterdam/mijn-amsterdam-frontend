@@ -51,7 +51,6 @@
   &:first-child {
     padding: 1.8rem 3rem 1.8rem 8.5rem;
 
-    // Vertical line
     &:before {
       content: '';
       width: .2rem;
@@ -61,9 +60,8 @@
       left: -.2rem; // place outside of element
       background: $color-neutral-grey3;
     }
-    // Circle icon
+    // flex: 2 0 auto;
     &:after {
-      // content: attr(data-stepnumber);
       content: '';
       position: absolute;
       width: 2rem;
@@ -74,9 +72,7 @@
       background-color: $color-neutral-grey3;
       color: $color-white;
       text-align: center;
-      font-size: .8em;
-      font-weight: 800;
-      line-height: 1.5;
+      line-height: 2em;
     }
   }
 }
@@ -108,6 +104,22 @@
   background-size: 1em 1em;
 }
 
+@keyframes Highlight {
+    0% {
+      transform: scale(.5);
+    }
+    50% {
+      background-color: $color-support-lightblue;
+      transform: scale(2);
+    }
+    100.0%  {
+      transform: scale(1);
+    }
+}
+
 .Highlight .Panel:first-child:after {
-  background-color: $color-support-lightblue;
+  animation-name: Highlight;
+  animation-delay: 800ms;
+  animation-duration: 800ms;
+  animation-timing-function: ease-in-out;
 }
