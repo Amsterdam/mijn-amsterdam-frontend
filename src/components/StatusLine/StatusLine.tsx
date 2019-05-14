@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useRef } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import styles from './StatusLine.module.scss';
 import classnames from 'classnames';
 import { ProcessStep } from 'data-formatting/focus';
@@ -8,10 +8,7 @@ import {
 } from 'components/ButtonLink/ButtonLink';
 import { Document } from '../DocumentList/DocumentList';
 import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
-import ButtonLink from '../ButtonLink/ButtonLink';
-import { LinkProps } from 'App.types';
 import { defaultDateFormat } from 'helpers/App';
-import { RouteComponentProps, withRouter } from 'react-router';
 import useRouter from 'use-react-router';
 
 const markdownLinkRegex = /\[((?:[^\[\]\\]|\\.)+)\]\((https?:\/\/(?:[-A-Z0-9+&@#\/%=~_|\[\]](?= *\))|[-A-Z0-9+&@#\/%?=~_|\[\]!:,.;](?! *\))|\([-A-Z0-9+&@#\/%?=~_|\[\]!:,.;(]*\))+) *\)/i;
