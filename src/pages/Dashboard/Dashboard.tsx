@@ -26,7 +26,7 @@ export default () => {
     },
     MY_CHAPTERS,
   } = useContext(AppContext);
-  console.log(' render dashj', MY_UPDATES.items);
+
   return (
     <PageContentMain className={styles.Dashboard} variant="full">
       <PageContentMainHeading variant="medium">
