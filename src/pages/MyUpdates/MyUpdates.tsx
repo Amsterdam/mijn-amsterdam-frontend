@@ -25,7 +25,7 @@ export default () => {
         Alle updates
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
-        <h3 className={styles.PanelHeading}>Nieuw (#)</h3>
+        {/* <h3 className={styles.PanelHeading}>Nieuw (#)</h3> */}
         <MyUpdates total={total} items={items} />
       </PageContentMainBody>
       {/* NOTE: It's currently unclear what previous updates are so for now it's disabled. */}
