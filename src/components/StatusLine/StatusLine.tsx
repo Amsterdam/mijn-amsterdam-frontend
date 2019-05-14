@@ -22,6 +22,7 @@ interface StatusLineProps {
 
 interface StatusLineItemProps {
   item: StatusLineItem;
+  stepNumber: number;
 }
 
 interface DownloadLinkProps {
@@ -60,7 +61,7 @@ function parseDescription(text: string, item: any) {
   return text.split(/\n/g).map(text => [text, <br />]);
 }
 
-function StatusLineItem({ item }: StatusLineItemProps) {
+function StatusLineItem({ item, stepNumber }: StatusLineItemProps) {
   const { location } = useRouter();
   const memoizedDescription = useMemo(() => {
     return (
@@ -81,7 +82,7 @@ function StatusLineItem({ item }: StatusLineItemProps) {
         location.hash.substring(1) === item.id && styles.Highlight
       )}
     >
-      <div className={styles.Panel}>
+      <div className={styles.Panel} data-stepNumber={stepNumber}>
         <strong className={styles.StatusTitle}>{item.status}</strong>
         <time className={styles.StatusDate}>
           {defaultDateFormat(item.datePublished)}
@@ -101,9 +102,11 @@ function StatusLineItem({ item }: StatusLineItemProps) {
 
 export default function StatusLine({ items }: StatusLineProps) {
   const { location } = useRouter();
+
   useEffect(() => {
     const id = location.hash.substring(1);
     const step = document.getElementById(id);
+
     if (step) {
       window.scroll({
         top: step.getBoundingClientRect().top,
@@ -111,11 +114,16 @@ export default function StatusLine({ items }: StatusLineProps) {
       });
     }
   }, [location.hash]);
+
   return (
     <div className={styles.StatusLine}>
       <ul className={styles.List}>
-        {items.map(item => (
-          <StatusLineItem key={item.id} item={item} />
+        {items.map((item, index) => (
+          <StatusLineItem
+            key={item.id}
+            item={item}
+            stepNumber={items.length - index}
+          />
         ))}
       </ul>
       {!items.length && <p>Er is geen status beschikbaar.</p>}
