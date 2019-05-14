@@ -82,7 +82,7 @@ function StatusLineItem({ item, stepNumber }: StatusLineItemProps) {
         location.hash.substring(1) === item.id && styles.Highlight
       )}
     >
-      <div className={styles.Panel} data-stepNumber={stepNumber}>
+      <div className={styles.Panel} data-stepnumber={stepNumber}>
         <strong className={styles.StatusTitle}>{item.status}</strong>
         <time className={styles.StatusDate}>
           {defaultDateFormat(item.datePublished)}
