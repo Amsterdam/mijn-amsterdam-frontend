@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import styles from './StatusLine.module.scss';
 import classnames from 'classnames';
 import { ProcessStep } from 'data-formatting/focus';
@@ -8,8 +8,8 @@ import {
 } from 'components/ButtonLink/ButtonLink';
 import { Document } from '../DocumentList/DocumentList';
 import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
-import ButtonLink from '../ButtonLink/ButtonLink';
-import { LinkProps } from 'App.types';
+import { defaultDateFormat } from 'helpers/App';
+import useRouter from 'use-react-router';
 
 const markdownLinkRegex = /\[((?:[^\[\]\\]|\\.)+)\]\((https?:\/\/(?:[-A-Z0-9+&@#\/%=~_|\[\]](?= *\))|[-A-Z0-9+&@#\/%?=~_|\[\]!:,.;](?! *\))|\([-A-Z0-9+&@#\/%?=~_|\[\]!:,.;(]*\))+) *\)/i;
 const markdownTagMatchRegex = /(\[.*?\]\(.*?\))/gi;
@@ -22,6 +22,7 @@ interface StatusLineProps {
 
 interface StatusLineItemProps {
   item: StatusLineItem;
+  stepNumber: number;
 }
 
 interface DownloadLinkProps {
@@ -36,7 +37,7 @@ function DownloadLink({ item }: DownloadLinkProps) {
       to={item.url}
     >
       <DownloadIcon />
-      Bekijk brief
+      {item.title}
     </IconButtonLink>
   );
 }
@@ -60,7 +61,8 @@ function parseDescription(text: string, item: any) {
   return text.split(/\n/g).map(text => [text, <br />]);
 }
 
-function StatusLineItem({ item }: StatusLineItemProps) {
+function StatusLineItem({ item, stepNumber }: StatusLineItemProps) {
+  const { location } = useRouter();
   const memoizedDescription = useMemo(() => {
     return (
       item.description &&
@@ -69,17 +71,22 @@ function StatusLineItem({ item }: StatusLineItemProps) {
         .map((text, index) => <p key={index}>{parseDescription(text, item)}</p>)
     );
   }, [item]);
+
   return (
     <li
       key={item.id}
+      id={item.id}
       className={classnames(
         styles.ListItem,
-        item.isActual && styles.ListItem__actual
+        item.isActual && styles.Actual,
+        location.hash.substring(1) === item.id && styles.Highlight
       )}
     >
-      <div className={styles.Panel}>
+      <div className={styles.Panel} data-stepnumber={stepNumber}>
         <strong className={styles.StatusTitle}>{item.status}</strong>
-        <time className={styles.StatusDate}>{item.datePublished}</time>
+        <time className={styles.StatusDate}>
+          {defaultDateFormat(item.datePublished)}
+        </time>
       </div>
       <div className={styles.Panel}>{memoizedDescription}</div>
       <div className={styles.Panel}>
@@ -94,11 +101,29 @@ function StatusLineItem({ item }: StatusLineItemProps) {
 }
 
 export default function StatusLine({ items }: StatusLineProps) {
+  const { location } = useRouter();
+
+  useEffect(() => {
+    const id = location.hash.substring(1);
+    const step = document.getElementById(id);
+
+    if (step) {
+      window.scroll({
+        top: step.getBoundingClientRect().top,
+        behavior: 'smooth',
+      });
+    }
+  }, [location.hash]);
+
   return (
     <div className={styles.StatusLine}>
       <ul className={styles.List}>
-        {items.map(item => (
-          <StatusLineItem key={item.id} item={item} />
+        {items.map((item, index) => (
+          <StatusLineItem
+            key={item.id}
+            item={item}
+            stepNumber={items.length - index}
+          />
         ))}
       </ul>
       {!items.length && <p>Er is geen status beschikbaar.</p>}

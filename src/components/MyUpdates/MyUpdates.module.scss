@@ -48,3 +48,20 @@
   text-transform: capitalize;
   display: block;
 }
+
+.isUnread {
+  .Datum {
+    position: relative;
+    padding-left: 1em;
+
+    &:after {
+      content: '• ';
+      color: $color-support-lightblue;
+      font-size: 1.6em;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
