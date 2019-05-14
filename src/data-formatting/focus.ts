@@ -88,7 +88,7 @@ export const Labels: LabelData = {
       title: '{title}',
       status: 'In behandeling',
       description: `Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u nog extra informatie moet opsturen.
-        U ontvangt vóór {decisionDeadline} ons besluit.
+        U ontvangt vóór {decisionDeadline1} ons besluit.
         Lees meer over uw [rechten](https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d) en [plichten](https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d)
         `,
     },
@@ -96,7 +96,7 @@ export const Labels: LabelData = {
       title: '{title}',
       status: 'Meer informatie nodig',
       description: `Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken. Bekijk de brief voor meer details.
-        U moet de extra informatie vóór {userActionDeadline} opsturen. Dan ontvangt u vóór {decisionDeadline} ons besluit.
+        U moet de extra informatie vóór {userActionDeadline} opsturen. Dan ontvangt u vóór {decisionDeadline2} ons besluit.
 
 
         Tip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk in. Hoe eerder u ons de noodzakelijke informatie geeft, hoe eerder wij verder kunnen met de behandeling van uw aanvraag.`,
@@ -127,13 +127,13 @@ export const Labels: LabelData = {
       title: '{title} in behandeling',
       status: 'In behandeling',
       description: `Wij gaan nu bekijken of u recht hebt op bijzondere bijstand. Het kan zijn dat u nog extra informatie moet opsturen.
-        U ontvangt vóór {decisionDeadline} ons besluit.`,
+        U ontvangt vóór {decisionDeadline1} ons besluit.`,
     },
     herstelTermijn: {
       title: '{title}',
       status: 'Meer informatie nodig',
       description: `Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken. Bekijk de brief voor meer details.
-        U moet de extra informatie vóór {userActionDeadline} opsturen. Dan ontvangt u vóór {decisionDeadline} ons besluit.
+        U moet de extra informatie vóór {userActionDeadline} opsturen. Dan ontvangt u vóór {decisionDeadline2} ons besluit.
 
         Tip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk in. Hoe eerder u ons de noodzakelijke informatie geeft, hoe eerder wij verder kunnen met de behandeling van uw aanvraag.`,
     },
@@ -162,14 +162,14 @@ export const Labels: LabelData = {
       title: 'In behandeling',
       status: 'In behandeling',
       description: `Het kan zijn dat u nog extra informatie moet opsturen.
-        U ontvangt vóór {decisionDeadline} ons besluit.
+        U ontvangt vóór {decisionDeadline1} ons besluit.
         Let op: Deze status informatie betreft alleen uw aanvraag voor een Stadspas; uw eventuele andere Hulp bij Laag Inkomen producten worden via post en/of telefoon afgehandeld.`,
     },
     herstelTermijn: {
       title: '{title}',
       status: 'Meer informatie nodig',
       description: `Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken. Bekijk de brief voor meer details.
-        U moet de extra informatie vóór {userActionDeadline} opsturen. Dan ontvangt u vóór {decisionDeadline} ons besluit.
+        U moet de extra informatie vóór {userActionDeadline} opsturen. Dan ontvangt u vóór {decisionDeadline2} ons besluit.
 
         Tip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk in. Hoe eerder u ons de noodzakelijke informatie geeft, hoe eerder wij verder kunnen met de behandeling van uw aanvraag.`,
     },
@@ -198,7 +198,8 @@ interface StepSourceData {
   title: string;
   decision: Decision;
   datePublished?: string;
-  decisionDeadline?: string;
+  decisionDeadline1?: string;
+  decisionDeadline2?: string; // with hersteltermijn dagen
   userActionDeadline?: string;
   reasonForDecision?: string;
   latestStep: StepTitle;
@@ -293,12 +294,18 @@ function getStepSourceData({
     daysUserActionRequired,
     daysSupplierActionRequired,
     datePublished: defaultDateFormat(stepDate),
-    decisionDeadline: calculateDecisionDeadline(
+    decisionDeadline1: calculateDecisionDeadline(
+      dateOfRequestStart,
+      daysSupplierActionRequired,
+      daysUserActionRequired,
+      0
+    ),
+    decisionDeadline2: calculateDecisionDeadline(
       dateOfRequestStart,
       daysSupplierActionRequired,
       daysUserActionRequired,
       daysRecoveryAction
-    ), // Decision will be made before this deadline.
+    ),
     userActionDeadline, // Deadline for person to take action.
     reasonForDecision: stepData ? stepData.reden : '', // Why a decision was made.
     daysRecoveryAction,
