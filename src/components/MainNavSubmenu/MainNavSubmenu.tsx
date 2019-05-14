@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { NavLink } from 'react-router-dom';
 import useDebouncedCallback from 'use-debounce/lib/callback';
 import { ComponentChildren } from 'App.types';
-import { LinkProps } from '../../App.types';
+import { LinkProps } from 'App.types';
 
 export interface MainNavSubmenuLinkProps extends Omit<LinkProps, 'title'> {
   id?: string;

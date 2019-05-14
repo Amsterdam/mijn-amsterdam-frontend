@@ -6,7 +6,7 @@ import { addMonths, addDays } from 'date-fns';
 import { Document as GenericDocument } from '../components/DocumentList/DocumentList';
 
 type StepTitle = 'aanvraag' | 'inBehandeling' | 'herstelTermijn' | 'beslissing';
-type RequestStatus =
+export type RequestStatus =
   | 'Aanvraag'
   | 'Meer informatie nodig'
   | 'In behandeling'
@@ -82,7 +82,7 @@ export const Labels: LabelData = {
       status: 'Aanvraag',
       description: `U hebt op {datePublished} een bijstandsuitkering aangevraagd.
 
-        [meer informatie](https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D)`,
+        [Wat kunt u van ons verwachten?](https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D)`,
     },
     inBehandeling: {
       title: '{title}',
@@ -376,7 +376,7 @@ function formatStepData(
     title: stepLabels
       ? replaceSourceDataTags(stepLabels.title, sourceData)
       : stepTitle,
-    datePublished: stepData ? defaultDateFormat(stepData.datum) : '-',
+    datePublished: stepData ? stepData.datum : '-',
     description: stepLabels
       ? replaceSourceDataTags(stepLabels.description, sourceData)
       : '--NNB--',
@@ -435,7 +435,7 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
     inProgress,
     isGranted: decision === 'Toekenning',
     isDenied: decision === 'Afwijzing',
-    supplier: 'Werk en inkomen', // TODO: How to get supplier?
+    supplier: '',
     link: {
       title: 'Meer informatie', // TODO: How to get custom link title?
       to: `${AppRoutes.INKOMEN}/${id}`,

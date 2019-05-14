@@ -1,24 +1,23 @@
-import React, { useContext } from 'react';
-import PageContentMain from 'components/PageContentMain/PageContentMain';
-import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
-import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
-import styles from './Dashboard.module.scss';
-import MyUpdates from 'components/MyUpdates/MyUpdates';
-import MyChaptersPanel from 'components/MyChaptersPanel/MyChaptersPanel';
-import DirectLinks from 'components/DirectLinks/DirectLinks';
 import { AppContext } from 'AppState';
-import MyCases from 'components/MyCases/MyCases';
-import MyTips from 'components/MyTips/MyTips';
+import DirectLinks from 'components/DirectLinks/DirectLinks';
 import MyArea from 'components/MyArea/MyArea';
+import MyCases from 'components/MyCases/MyCases';
+import MyChaptersPanel from 'components/MyChaptersPanel/MyChaptersPanel';
+import MyTips from 'components/MyTips/MyTips';
+import MyUpdates from 'components/MyUpdates/MyUpdates';
+import PageContentMain from 'components/PageContentMain/PageContentMain';
+import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
+import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
+import React, { useContext } from 'react';
+
+import styles from './Dashboard.module.scss';
 
 const MAX_UPDATES_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
 
 export default () => {
   const {
-    MY_UPDATES: {
-      data: { items: myUpdates, total: myUpdatesTotal },
-    },
+    MY_UPDATES,
     MY_CASES: {
       data: { items: myCases },
     },
@@ -27,16 +26,17 @@ export default () => {
     },
     MY_CHAPTERS,
   } = useContext(AppContext);
-
+  console.log(' render dashj', MY_UPDATES.items);
   return (
     <PageContentMain className={styles.Dashboard} variant="full">
       <PageContentMainHeading variant="medium">
-        Mijn meldingen {myUpdatesTotal > 0 && <span>({myUpdatesTotal})</span>}
+        Mijn meldingen{' '}
+        {MY_UPDATES.total > 0 && <span>({MY_UPDATES.total})</span>}
       </PageContentMainHeading>
       <PageContentMainBody variant="regularBoxed" className={styles.FirstBody}>
         <MyUpdates
-          total={myUpdatesTotal}
-          items={myUpdates.slice(0, MAX_UPDATES_VISIBLE)}
+          total={MY_UPDATES.total}
+          items={MY_UPDATES.items.slice(0, MAX_UPDATES_VISIBLE)}
         />
         <MyChaptersPanel items={MY_CHAPTERS} title="Mijn thema's" />
         <MyCases title="Mijn lopende aanvragen" items={myCases} />

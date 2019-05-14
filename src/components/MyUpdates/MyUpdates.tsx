@@ -1,11 +1,15 @@
-import React from 'react';
-import styles from './MyUpdates.module.scss';
-import ButtonLink from 'components/ButtonLink/ButtonLink';
-import { defaultDateFormat } from 'helpers/App';
 import { AppRoutes, Colors } from 'App.constants';
+import classnames from 'classnames';
+import ButtonLink from 'components/ButtonLink/ButtonLink';
+import ButtonLinkStyles from 'components/ButtonLink/ButtonLink.module.scss';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import Heading from 'components/Heading/Heading';
-import { MyUpdate } from 'hooks/api/my-updates-api.hook';
+import { defaultDateFormat } from 'helpers/App';
+import { MyUpdate, useUpdatesState } from 'hooks/api/my-updates-api.hook';
+import React from 'react';
+import useRouter from 'use-react-router';
+
+import styles from './MyUpdates.module.scss';
 
 export interface MyUpdatesProps {
   items: MyUpdate[];
@@ -13,12 +17,29 @@ export interface MyUpdatesProps {
 }
 
 export default function MyUpdates({ items = [], total = 0 }: MyUpdatesProps) {
+  const [myUpdatesState, setMyUpdatesState] = useUpdatesState();
+  const { history } = useRouter();
+  function showUpdate(id: string, to: string) {
+    setMyUpdatesState({
+      ...myUpdatesState,
+      [id]: true,
+    });
+    setTimeout(() => {
+      history.push(to);
+    }, 0);
+  }
   return (
     <div className={styles.MyUpdates}>
       <ul>
         {items.map(item => {
           return (
-            <li key={item.id} className={styles.MyUpdateItem}>
+            <li
+              key={item.id}
+              className={classnames(
+                styles.MyUpdateItem,
+                item.isUnread && styles.isUnread
+              )}
+            >
               <ChapterIcon
                 fill={Colors.primaryRed}
                 className={styles.Icon}
@@ -39,7 +60,15 @@ export default function MyUpdates({ items = [], total = 0 }: MyUpdatesProps) {
                 <p className={styles.Description}>{item.description}</p>
               )}
               <p className={styles.Action}>
-                <ButtonLink to={item.link.to}>{item.link.title}</ButtonLink>
+                <a
+                  role="button"
+                  className={ButtonLinkStyles.ButtonLink}
+                  onClick={() => {
+                    showUpdate(item.id, item.link.to);
+                  }}
+                >
+                  {item.link.title}
+                </a>
               </p>
             </li>
           );

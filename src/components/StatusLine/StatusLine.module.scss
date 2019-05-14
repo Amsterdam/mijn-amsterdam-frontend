@@ -96,10 +96,30 @@
   }
 }
 
-.ListItem__actual .Panel:first-child:after {
+.Actual .Panel:first-child:after {
   width: 3rem;
   height: 3rem;
   margin-left: -.55rem;
   background: $color-support-darkgreen url("assets/icons/Checkmark__white.svg") no-repeat center;
   background-size: 1em 1em;
+}
+
+@keyframes Highlight {
+    0% {
+      transform: scale(.5);
+    }
+    50% {
+      background-color: $color-support-lightblue;
+      transform: scale(2);
+    }
+    100.0%  {
+      transform: scale(1);
+    }
+}
+
+.Highlight .Panel:first-child:after {
+  animation-name: Highlight;
+  animation-delay: 800ms;
+  animation-duration: 800ms;
+  animation-timing-function: ease-in-out;
 }

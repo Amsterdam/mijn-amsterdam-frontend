@@ -12,12 +12,10 @@ import { ExternalUrls } from 'App.constants';
 
 const DISPLAY_PROPS = {
   datePublished: 'besluit',
-  dateFinish: 'einde',
 };
 
 const DISPLAY_PROPS_ACTUAL = {
   datePublished: 'aanvraag',
-  supplier: 'leverancier',
 };
 
 export default () => {
