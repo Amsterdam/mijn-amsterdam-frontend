@@ -12,9 +12,9 @@
     "@types/node": "^11.13.2",
     "@types/react": "^16.8.13",
     "@types/react-dom": "^16.8.3",
-    "@types/react-router": "^4.4.5",
     "@types/react-router-dom": "^4.3.1",
     "@types/react-test-renderer": "^16.8.1",
+    "@types/use-persisted-state": "^0.3.0",
     "axios": "^0.18.0",
     "axios-mock-adapter": "^1.16.0",
     "classnames": "^2.2.6",
@@ -29,6 +29,7 @@
     "slug": "^1.1.0",
     "typescript": "^3.4.2",
     "use-debounce": "^1.1.1",
+    "use-persisted-state": "^0.3.0",
     "use-react-router": "^1.0.5"
   },
   "scripts": {
@@ -70,6 +71,7 @@
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.8.0",
     "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react-hooks": "^1.6.0",
     "faker": "^4.1.0",
     "lint-staged": "^8.1.5",
     "node-sass": "^4.11.0",
