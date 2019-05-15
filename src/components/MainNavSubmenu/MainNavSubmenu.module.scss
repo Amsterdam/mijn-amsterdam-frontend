@@ -2,10 +2,6 @@
 
 .MainNavSubmenu {
   z-index: 2;
-
-  @include respond-to(medium-screen) {
-    display: none;
-  }
 }
 
 .SubmenuButton {
@@ -82,6 +78,43 @@
 
     svg {
       fill: $color-primary-red;
+    }
+  }
+}
+
+@include respond-to(medium-screen) {
+  .MainNavSubmenu {
+    grid-row: 1;
+  }
+  .SubmenuButton {
+    display: none;
+  }
+
+  .SubmenuPanel {
+    opacity: 1;
+    max-height: initial;
+    overflow: hidden;
+    position: relative;
+    width: $responsive-header-navbar-width;
+    top: 0;
+    padding-left: $responsive-header-navbar-padding-left;
+    padding-top: 0.4rem;
+    border-top: 0.2rem solid $color-neutral-grey2;
+  }
+
+  .SubmenuItems {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: initial;
+    left: 0;
+    position: relative;
+    transform: initial;
+    padding: 0;
+    width: $responsive-header-navbar-width -
+      $responsive-header-navbar-padding-left;
+
+    a {
+      height: 4.8rem;
     }
   }
 }

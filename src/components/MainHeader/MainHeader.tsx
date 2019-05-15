@@ -4,10 +4,10 @@ import { ReactComponent as AmsterdamLogoLarge } from 'assets/images/logo-amsterd
 import classnames from 'classnames';
 import MainHeaderHero from 'components/MainHeaderHero/MainHeaderHero';
 import MainNavBar from 'components/MainNavBar/MainNavBar';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
-
+import classNames from 'classnames';
 import styles from './MainHeader.module.scss';
 
 import {
@@ -52,6 +52,19 @@ export default function MainHeader({
   person = null,
   isAuthenticated = false,
 }: MainHeaderProps) {
+  const [responsiveMenuIsVisible, toggleResponsiveMenu] = useState(true);
+  const MenuWrapperId = 'MenuWrapper';
+
+  function onOutsideHandler(e) {
+    // const clickedInsdie = document
+    //   .getElementById(MenuWrapperId)
+    //   .contains(e.target);
+  }
+
+  useEffect(() => {
+    document.addEventListener('click', (e: any): void => {});
+  });
+
   return (
     <header className={styles.header}>
       <div className={styles.topBar}>
@@ -75,8 +88,19 @@ export default function MainHeader({
       </div>
       {isAuthenticated && (
         <div className={styles.MenuContainer}>
-          <button className={styles.MenuToggleBtn}>Open</button>
-          <div className={styles.MenuWrapper}>
+          <button
+            className={classNames(styles.MenuToggleBtn, {
+              [styles.MenuToggleBtnOpen]: responsiveMenuIsVisible,
+            })}
+            onClick={() => toggleResponsiveMenu(!responsiveMenuIsVisible)}
+          />
+          <div
+            id={MenuWrapperId}
+            className={classNames(styles.MenuWrapper, {
+              [styles.MenuWrapperOpen]: responsiveMenuIsVisible,
+            })}
+            onBlur={() => toggleResponsiveMenu(false)}
+          >
             <MainNavBar />
             <SecondaryLinks person={person} />
           </div>
