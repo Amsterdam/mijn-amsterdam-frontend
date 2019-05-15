@@ -42,7 +42,7 @@ export default () => {
           over de inkomensregelingen van de gemeente Amsterdam?
         </p>
         <p>
-          <ButtonLinkExternal to={ExternalUrls.BIJSTAND_WHAT_TO_EXPECT}>
+          <ButtonLinkExternal to={ExternalUrls.ABOUT_INCOME_SUPPORT}>
             Lees meer over inkomensondersteuning
           </ButtonLinkExternal>
         </p>
