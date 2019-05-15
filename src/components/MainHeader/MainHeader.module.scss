@@ -50,40 +50,79 @@
       text-decoration: underline;
     }
   }
-
-  @include respond-to(medium-screen) {
-    position: relative;
-  }
 }
 
 .MenuToggleBtn {
   display: none;
   height: $main-header-navbar-height;
-  @include respond-to(medium-screen) {
-    display: initial;
-  }
+  background-image: url('assets/icons/Menu.svg');
+  background-size: 24px;
+  width: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 0;
+  background-color: transparent;
 }
 
 .MenuContainer {
   position: relative;
-  // border: 1px solid blue;
   height: $main-header-navbar-height;
   background-color: $color-neutral-grey1;
-  @include respond-to(medium-screen) {
-    margin-bottom: $main-header-navbar-height;
-  }
 }
 
 .MenuWrapper {
-  // border: 1px solid red;
-  @include respond-to(medium-screen) {
+}
+
+@include respond-to(medium-screen) {
+  .secondaryLinks {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 0;
+    right: 0;
+
+    a {
+      font-weight: bold;
+      font-size: 1.5rem;
+      margin: 0;
+      padding-left: $responsive-header-navbar-padding-left;
+      padding-top: 1rem;
+      border-top: 0.1rem solid $color-neutral-grey2;
+      height: 4rem;
+      svg {
+        display: none;
+      }
+
+      &:first-child {
+        border-top: 0.2rem solid $color-neutral-grey2;
+      }
+    }
+  }
+
+  .MenuToggleBtn {
+    display: initial;
+    cursor: pointer;
+
+    &Open {
+      background-image: url('assets/icons/Close.svg');
+    }
+  }
+
+  .MenuContainer {
+    margin-bottom: $main-header-navbar-height;
+  }
+
+  .MenuWrapper {
+    display: none;
     position: absolute;
     top: $main-header-navbar-height;
-    // display: none;
     background-color: $color-neutral-grey1;
-    width: 30rem;
-    height: 30rem;
+    width: $responsive-header-navbar-width;
     z-index: 999;
+
+    &Open {
+      display: block;
+    }
   }
 }
 
