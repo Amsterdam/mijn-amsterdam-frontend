@@ -14,11 +14,17 @@ import styles from './MyUpdates.module.scss';
 export interface MyUpdatesProps {
   items: MyUpdate[];
   total: number;
+  showMoreLink?: boolean;
 }
 
-export default function MyUpdates({ items = [], total = 0 }: MyUpdatesProps) {
+export default function MyUpdates({
+  items = [],
+  total = 0,
+  showMoreLink = false,
+}: MyUpdatesProps) {
   const [myUpdatesState, setMyUpdatesState] = useUpdatesState();
   const { history } = useRouter();
+
   function showUpdate(id: string, to: string) {
     setMyUpdatesState({
       ...myUpdatesState,
@@ -75,7 +81,7 @@ export default function MyUpdates({ items = [], total = 0 }: MyUpdatesProps) {
           );
         })}
       </ul>
-      {total > items.length && (
+      {showMoreLink && (
         <p className={styles.FooterLink}>
           <ButtonLink to={AppRoutes.MY_UPDATES}>Alle meldingen</ButtonLink>
         </p>

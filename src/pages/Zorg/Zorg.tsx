@@ -35,7 +35,7 @@ export default () => {
       <PageContentMainBody variant="boxed">
         {/* <p>Zorg body</p> */}
         <DataLinkTable
-          id="healthcare-requested"
+          id="datalinktable-healthcare-requested"
           rowHeight="6rem"
           displayProps={DISPLAY_PROPS}
           items={itemsRequested}
@@ -43,7 +43,7 @@ export default () => {
           startCollapsed={false}
         />
         <DataLinkTable
-          id="healthcare-granted"
+          id="datalinktable-healthcare-granted"
           rowHeight="6rem"
           displayProps={DISPLAY_PROPS}
           items={itemsActual}
@@ -54,7 +54,7 @@ export default () => {
       <div className={styles.HistoricDataLinkTable}>
         <PageContentMainBody variant="boxed">
           <DataLinkTable
-            id="healthcare-previous"
+            id="datalinktable-healthcare-previous"
             rowHeight="6rem"
             displayProps={DISPLAY_PROPS}
             items={itemsPrevious}

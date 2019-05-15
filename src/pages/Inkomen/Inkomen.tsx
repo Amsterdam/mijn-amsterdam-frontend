@@ -48,7 +48,7 @@ export default () => {
         </p>
         {!!itemsRequested.length && (
           <DataLinkTable
-            id="income-actual"
+            id="datalinktable-income-actual"
             rowHeight="6rem"
             displayProps={DISPLAY_PROPS_ACTUAL}
             items={itemsRequested}
@@ -56,26 +56,30 @@ export default () => {
             startCollapsed={false}
           />
         )}
-        <DataLinkTable
-          id="income-granted"
-          rowHeight="6rem"
-          displayProps={DISPLAY_PROPS}
-          items={itemsGranted}
-          title="Mijn toegekende aanvragen"
-        />
-      </PageContentMainBody>
-      <div className={styles.HistoricDataLinkTable}>
-        <PageContentMainBody variant="boxed">
+        {!!itemsGranted.length && (
           <DataLinkTable
-            id="income-denied"
+            id="datalinktable-income-granted"
             rowHeight="6rem"
             displayProps={DISPLAY_PROPS}
-            items={itemsDenied}
-            title="Mijn afgewezen aanvragen"
-            className={styles.DataLinkTableCurrent}
+            items={itemsGranted}
+            title="Mijn toegekende aanvragen"
           />
-        </PageContentMainBody>
-      </div>
+        )}
+      </PageContentMainBody>
+      {!!itemsDenied.length && (
+        <div className={styles.HistoricDataLinkTable}>
+          <PageContentMainBody variant="boxed">
+            <DataLinkTable
+              id="datalinktable-income-denied"
+              rowHeight="6rem"
+              displayProps={DISPLAY_PROPS}
+              items={itemsDenied}
+              title="Mijn afgewezen aanvragen"
+              className={styles.DataLinkTableCurrent}
+            />
+          </PageContentMainBody>
+        </div>
+      )}
     </PageContentMain>
   );
 };

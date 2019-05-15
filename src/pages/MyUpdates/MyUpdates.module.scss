@@ -16,6 +16,10 @@
     position: relative;
     margin-bottom: 6rem;
 
+    @include select(MyUpdates_Description) {
+      padding-right: 30rem;
+    }
+
     @include select(MyUpdates_MyUpdateItem) {
       padding-left: 16rem;
 

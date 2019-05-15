@@ -48,7 +48,12 @@ export default function MyCases({ title, items = [] }: MyCasesProps) {
           ))}
         </ul>
       )}
-      {!items.length && <p>Er zijn op dit moment geen lopende aanvragen.</p>}
+      {!items.length && (
+        <p>
+          U hebt geen meldingen of aanvragen lopen die u via Mijn Amsterdam kunt
+          volgen.
+        </p>
+      )}
     </div>
   );
 }
