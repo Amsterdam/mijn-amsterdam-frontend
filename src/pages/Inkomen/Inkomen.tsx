@@ -48,6 +48,7 @@ export default () => {
         </p>
         {!!itemsRequested.length && (
           <DataLinkTable
+            id="income-actual"
             rowHeight="6rem"
             displayProps={DISPLAY_PROPS_ACTUAL}
             items={itemsRequested}
@@ -56,6 +57,7 @@ export default () => {
           />
         )}
         <DataLinkTable
+          id="income-granted"
           rowHeight="6rem"
           displayProps={DISPLAY_PROPS}
           items={itemsGranted}
@@ -65,6 +67,7 @@ export default () => {
       <div className={styles.HistoricDataLinkTable}>
         <PageContentMainBody variant="boxed">
           <DataLinkTable
+            id="income-denied"
             rowHeight="6rem"
             displayProps={DISPLAY_PROPS}
             items={itemsDenied}
