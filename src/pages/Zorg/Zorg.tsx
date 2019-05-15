@@ -34,34 +34,40 @@ export default () => {
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
         {/* <p>Zorg body</p> */}
-        <DataLinkTable
-          id="healthcare-requested"
-          rowHeight="6rem"
-          displayProps={DISPLAY_PROPS}
-          items={itemsRequested}
-          title="Mijn lopende aanvragen"
-          startCollapsed={false}
-        />
-        <DataLinkTable
-          id="healthcare-granted"
-          rowHeight="6rem"
-          displayProps={DISPLAY_PROPS}
-          items={itemsActual}
-          title="Mijn huidige voorziengen"
-          className={styles.DataLinkTableCurrent}
-        />
-      </PageContentMainBody>
-      <div className={styles.HistoricDataLinkTable}>
-        <PageContentMainBody variant="boxed">
+        {!!itemsRequested.length && (
           <DataLinkTable
-            id="healthcare-previous"
+            id="datalinktable-healthcare-requested"
             rowHeight="6rem"
             displayProps={DISPLAY_PROPS}
-            items={itemsPrevious}
-            title="Mijn eerdere voorziengen"
+            items={itemsRequested}
+            title="Mijn lopende aanvragen"
+            startCollapsed={false}
           />
-        </PageContentMainBody>
-      </div>
+        )}
+        {!!itemsActual.length && (
+          <DataLinkTable
+            id="datalinktable-healthcare-granted"
+            rowHeight="6rem"
+            displayProps={DISPLAY_PROPS}
+            items={itemsActual}
+            title="Mijn huidige voorziengen"
+            className={styles.DataLinkTableCurrent}
+          />
+        )}
+      </PageContentMainBody>
+      {!!itemsPrevious.length && (
+        <div className={styles.HistoricDataLinkTable}>
+          <PageContentMainBody variant="boxed">
+            <DataLinkTable
+              id="datalinktable-healthcare-previous"
+              rowHeight="6rem"
+              displayProps={DISPLAY_PROPS}
+              items={itemsPrevious}
+              title="Mijn eerdere voorziengen"
+            />
+          </PageContentMainBody>
+        </div>
+      )}
     </PageContentMain>
   );
 };

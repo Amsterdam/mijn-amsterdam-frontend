@@ -59,12 +59,14 @@ export default () => {
                 <strong>Leverancier</strong>
                 <span>{WmoItem.supplier}</span>
               </p>
-              <p>
-                <strong>&nbsp;</strong>
-                <ButtonLinkExternal to={WmoItem.supplierUrl}>
-                  {WmoItem.supplierUrl}
-                </ButtonLinkExternal>
-              </p>
+              {!!WmoItem.supplierUrl && (
+                <p>
+                  <strong>&nbsp;</strong>
+                  <ButtonLinkExternal to={WmoItem.supplierUrl}>
+                    {WmoItem.supplierUrl}
+                  </ButtonLinkExternal>
+                </p>
+              )}
             </li>
           )}
         </ul>

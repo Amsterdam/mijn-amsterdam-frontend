@@ -9,12 +9,12 @@ import React, { useContext } from 'react';
 
 import { useUpdatesState } from 'hooks/api/my-updates-api.hook';
 import styles from './MyUpdates.module.scss';
+import Heading from 'components/Heading/Heading';
 
 export default () => {
   const {
     MY_UPDATES: { items, total },
   } = useContext(AppContext);
-  const [myUpdatesState] = useUpdatesState();
   return (
     <PageContentMain className={styles.MyUpdates} variant="full">
       <PageContentMainHeading
@@ -22,19 +22,21 @@ export default () => {
         className={styles.MainHeader}
       >
         <ChapterHeadingIcon chapter={Chapters.BURGERZAKEN} />
-        Alle updates
+        Alle meldingen
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
-        {/* <h3 className={styles.PanelHeading}>Nieuw (#)</h3> */}
-        <MyUpdates total={total} items={items} />
+        <h3 className={styles.PanelHeading}>Actueel</h3>
+        <MyUpdates total={total} items={items.filter(item => item.isActual)} />
       </PageContentMainBody>
-      {/* NOTE: It's currently unclear what previous updates are so for now it's disabled. */}
-      {/* <div className={styles.PreviousUpdatesPanel}>
+      <div className={styles.PreviousUpdatesPanel}>
         <PageContentMainBody variant="boxed">
-          <Heading className={styles.PanelHeading}>Eerdere updates (#)</Heading>
-          <MyUpdates total={total} items={items} />
+          <Heading className={styles.PanelHeading}>Eerdere meldingen</Heading>
+          <MyUpdates
+            total={total}
+            items={items.filter(item => !item.isActual)}
+          />
         </PageContentMainBody>
-      </div> */}
+      </div>
     </PageContentMain>
   );
 };
