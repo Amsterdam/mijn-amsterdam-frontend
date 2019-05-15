@@ -12,11 +12,6 @@
 .LinkContainer {
   display: flex;
   width: $main-boxed-width;
-
-  @include respond-to(medium-screen) {
-    width: 100%;
-    flex-direction: column;
-  }
 }
 
 .MainNavLink {
@@ -35,5 +30,29 @@
 
   &:last-child {
     margin-right: 0;
+  }
+}
+
+@include respond-to(medium-screen) {
+  .MainNavBar {
+    height: auto;
+    width: $responsive-header-navbar-width;
+  }
+
+  .LinkContainer {
+    display: grid;
+    width: $responsive-header-navbar-width;
+  }
+
+  .MainNavLink {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin: 0;
+    padding-left: $responsive-header-navbar-padding-left;
+    border-top: 0.1rem solid $color-neutral-grey2;
+
+    &:first-child {
+      border-top: 0.2rem solid $color-neutral-grey2;
+    }
   }
 }
