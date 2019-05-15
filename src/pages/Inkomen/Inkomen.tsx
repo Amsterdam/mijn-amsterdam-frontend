@@ -61,7 +61,7 @@ export default () => {
           rowHeight="6rem"
           displayProps={DISPLAY_PROPS}
           items={itemsGranted}
-          title="Mijn toegekende voozieningen"
+          title="Mijn toegekende aanvragen"
         />
       </PageContentMainBody>
       <div className={styles.HistoricDataLinkTable}>
