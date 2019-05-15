@@ -22,7 +22,7 @@ export default () => {
         className={styles.MainHeader}
       >
         <ChapterHeadingIcon chapter={Chapters.BURGERZAKEN} />
-        Alle updates
+        Alle meldingen
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
         {/* <h3 className={styles.PanelHeading}>Nieuw (#)</h3> */}
