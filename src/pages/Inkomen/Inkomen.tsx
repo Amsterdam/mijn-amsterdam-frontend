@@ -21,9 +21,11 @@ const DISPLAY_PROPS_ACTUAL = {
 export default () => {
   const {
     FOCUS: {
-      data: { items },
+      data: { products },
     },
   } = useContext(AppContext);
+
+  const items = products.Levensonderhoud ? products.Levensonderhoud.items : [];
 
   const itemsRequested = items.filter(item => item.inProgress);
   const itemsGranted = items.filter(item => item.isGranted);
