@@ -27,6 +27,8 @@ export default () => {
     MY_CHAPTERS,
   } = useContext(AppContext);
 
+  const tipItems = myTips.slice(0, MAX_TIPS_VISIBLE);
+
   return (
     <PageContentMain className={styles.Dashboard} variant="full">
       <PageContentMainHeading variant="medium">
@@ -45,7 +47,7 @@ export default () => {
         <MyArea />
       </PageContentMainBody>
       <PageContentMainBody variant="regularBoxed">
-        <MyTips items={myTips.slice(0, MAX_TIPS_VISIBLE)} />
+        {!!tipItems.length && <MyTips items={tipItems} />}
         <DirectLinks />
       </PageContentMainBody>
     </PageContentMain>
