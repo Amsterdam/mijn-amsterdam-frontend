@@ -5,14 +5,25 @@ import { Chapter, Chapters } from '../App.constants';
 import { addMonths, addDays } from 'date-fns';
 import { Document as GenericDocument } from '../components/DocumentList/DocumentList';
 
+/**
+ * Focus api data has to be transformed extensively to make it readable and presentable to a client.
+ */
+
+// The process steps are in order of:
 type StepTitle = 'aanvraag' | 'inBehandeling' | 'herstelTermijn' | 'beslissing';
 export type RequestStatus =
   | 'Aanvraag'
   | 'Meer informatie nodig'
   | 'In behandeling'
   | 'Beslissing';
+
+// A decision can be made and currently have 2 values.
 type Decision = 'Toekenning' | 'Afwijzing';
+
+// The official terms of the Focus api "product categories" data how they are used within the Municipality of Amsterdam.
 type ProductOrigin = 'Participatiewet' | 'Bijzondere Bijstand' | 'Minimafonds';
+
+// The official terms of the Focus api "product" names how they are used within the Municipality of Amsterdam.
 type ProductTitle = 'Levensonderhoud' | 'Stadspas' | string;
 
 interface Info {
@@ -75,6 +86,7 @@ const processSteps: StepTitle[] = [
 ];
 
 // Links can be added in the format of [text](link)
+// Tags like {title} will be replaced with corresponding data from the StepSourceData object.
 export const Labels: LabelData = {
   Participatiewet: {
     aanvraag: {
@@ -192,22 +204,22 @@ export const Labels: LabelData = {
   },
 };
 
-// Object with properties that are used to replace strings in generated messages.
+// Object with properties that are used to replace strings in the generated messages above.
 interface StepSourceData {
   id: string;
   title: string;
   decision: Decision;
-  datePublished?: string;
+  datePublished?: string; // Generic date term for use as designated date about an item.
   decisionDeadline1?: string;
-  decisionDeadline2?: string; // with hersteltermijn dagen
+  decisionDeadline2?: string;
   userActionDeadline?: string;
   reasonForDecision?: string;
   latestStep: StepTitle;
   daysUserActionRequired: number;
   daysSupplierActionRequired: number;
-  daysRecoveryAction: number;
-  dateOfRequestStart: string;
-  reden?: string;
+  daysRecoveryAction: number; // The number of days a client has to provide more information about a request
+  dateOfRequestStart: string; // The official start date of the clients request process.
+  reden?: string; // The reason why a decision was made about a clients request for product.
 }
 
 export interface ProcessStep {
@@ -294,20 +306,24 @@ function getStepSourceData({
     daysUserActionRequired,
     daysSupplierActionRequired,
     datePublished: defaultDateFormat(stepDate),
+    // deadline for when a decision about a request is made before recovery action is required.
     decisionDeadline1: calculateDecisionDeadline(
       dateOfRequestStart,
       daysSupplierActionRequired,
       daysUserActionRequired,
       0
     ),
+    // deadline for when a decision about a request is made after recovery action is initiated.
     decisionDeadline2: calculateDecisionDeadline(
       dateOfRequestStart,
       daysSupplierActionRequired,
       daysUserActionRequired,
       daysRecoveryAction
     ),
-    userActionDeadline, // Deadline for person to take action.
-    reasonForDecision: stepData ? stepData.reden : '', // Why a decision was made.
+    // Deadline for person to take action.
+    userActionDeadline,
+    // Why a decision was made.
+    reasonForDecision: stepData ? stepData.reden : '',
     daysRecoveryAction,
     dateOfRequestStart,
   };
@@ -329,6 +345,7 @@ function replaceSourceDataTags(text: string, data: StepSourceData): string {
   return rText;
 }
 
+// Returns the date before which a client has to respond with information regarding a request for a product.
 function calculateUserActionDeadline(
   stepData: Step | null,
   daysUserActionRequired: number
@@ -338,6 +355,7 @@ function calculateUserActionDeadline(
     : '';
 }
 
+// Returns the date before which municipality has to inform the client about a decision that has been made regarding his/her request for a product.
 function calculateDecisionDeadline(
   dateOfRequestStart: string,
   daysSupplierActionRequired: number,
@@ -397,6 +415,7 @@ function formatStepData(
   };
 }
 
+// This function transforms the source data from the api into readable/presentable messages for the client.
 function formatFocusProduct(product: FocusProduct): FocusItem {
   const {
     _meest_recent: latestStep,
