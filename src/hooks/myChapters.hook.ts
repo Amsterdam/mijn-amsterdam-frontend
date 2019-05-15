@@ -5,14 +5,27 @@ import { FocusApiState } from './api/api.focus';
 import { Chapters } from 'App.constants';
 import { MenuItem } from '../components/MainNavBar/MainNavBar.constants';
 import { ErfpachtApiState } from './api/api.erfpacht';
+import { ProductTitles } from '../data-formatting/focus';
 
 function isChapterActive(
   item: MenuItem,
   { WMO, FOCUS, ERFPACHT }: useMyChaptersProps
 ) {
+  console.log('>>>', FOCUS.data.products);
   switch (item.id) {
     case Chapters.INKOMEN:
-      return !FOCUS.isLoading && !!FOCUS.data.items.length;
+      return (
+        !FOCUS.isLoading &&
+        (!!FOCUS.data.products[ProductTitles.Bijstandsuitkering] &&
+          !!FOCUS.data.products[ProductTitles.Bijstandsuitkering].items.length)
+      );
+
+    case Chapters.BURGERZAKEN:
+      return (
+        !FOCUS.isLoading &&
+        !!FOCUS.data.products[ProductTitles.Stadspas] &&
+        !!FOCUS.data.products[ProductTitles.Stadspas].items.length
+      );
 
     case Chapters.ZORG:
       return !WMO.isLoading && !!WMO.data.items.length;

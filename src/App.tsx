@@ -1,32 +1,31 @@
-import React from 'react';
-import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
-import useReactRouter from 'use-react-router';
-
-import AppState, {
-  SessionState,
-  AppState as AppStateInterface,
-} from './AppState';
-import { AppRoutes } from './App.constants';
-import MainHeader, {
-  MainHeaderProps,
-} from './components/MainHeader/MainHeader';
-import MainFooter from './components/MainFooter/MainFooter';
-import Profile from './pages/Profile/Profile';
-import NotFound from './pages/NotFound/NotFound';
-import styles from './App.module.scss';
-import MyUpdates from 'pages/MyUpdates/MyUpdates';
-import MyTips from 'pages/MyTips/MyTips';
-import Dashboard from 'pages/Dashboard/Dashboard';
-import Landing from 'pages/Landing/Landing';
-import Burgerzaken from 'pages/Burgerzaken/Burgerzaken';
 import Belastingen from 'pages/Belastingen/Belastingen';
-import Jeugdhulp from 'pages/Jeugdhulp/Jeugdhulp';
-import Wonen from 'pages/Wonen/Wonen';
+import Burgerzaken from 'pages/Burgerzaken/Burgerzaken';
+import BurgerzakenDetail from 'pages/BurgerzakenDetail/BurgerzakenDetail';
+import Dashboard from 'pages/Dashboard/Dashboard';
 import Inkomen from 'pages/Inkomen/Inkomen';
+import InkomenDetail from 'pages/InkomenDetail/InkomenDetail';
+import Jeugdhulp from 'pages/Jeugdhulp/Jeugdhulp';
+import Landing from 'pages/Landing/Landing';
+import MyArea from 'pages/MyArea/MyArea';
+import MyTips from 'pages/MyTips/MyTips';
+import MyUpdates from 'pages/MyUpdates/MyUpdates';
+import Wonen from 'pages/Wonen/Wonen';
 import Zorg from 'pages/Zorg/Zorg';
 import ZorgDetail from 'pages/ZorgDetail/ZorgDetail';
-import InkomenDetail from 'pages/InkomenDetail/InkomenDetail';
-import MyArea from 'pages/MyArea/MyArea';
+import React from 'react';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import useReactRouter from 'use-react-router';
+
+import { AppRoutes } from './App.constants';
+import styles from './App.module.scss';
+import AppState, {
+  AppState as AppStateInterface,
+  SessionState,
+} from './AppState';
+import MainFooter from './components/MainFooter/MainFooter';
+import MainHeader from './components/MainHeader/MainHeader';
+import NotFound from './pages/NotFound/NotFound';
+import Profile from './pages/Profile/Profile';
 
 interface MainAppProps {
   appState: AppStateInterface;
@@ -50,11 +49,22 @@ function MainApp({ appState: { SESSION, BRP } }: MainAppProps) {
           <Route path={AppRoutes.MY_UPDATES} component={MyUpdates} />
           <Route path={AppRoutes.PROFILE} component={Profile} />
           <Route path={AppRoutes.MY_TIPS} component={MyTips} />
+          <Route
+            path={`${AppRoutes.STADSPAS}/:id`}
+            component={BurgerzakenDetail}
+          />
           <Route path={AppRoutes.BURGERZAKEN} component={Burgerzaken} />
           <Route path={AppRoutes.BELASTINGEN} component={Belastingen} />
           <Route path={AppRoutes.JEUGDHULP} component={Jeugdhulp} />
           <Route path={AppRoutes.WONEN} component={Wonen} />
-          <Route path={`${AppRoutes.INKOMEN}/:id`} component={InkomenDetail} />
+          <Route
+            path={`${AppRoutes.BIJSTANDSUITKERING}/:id`}
+            component={InkomenDetail}
+          />
+          <Route
+            path={`${AppRoutes.BIJZONDERE_BIJSTAND}/:id`}
+            component={InkomenDetail}
+          />
           <Route path={AppRoutes.INKOMEN} component={Inkomen} />
           <Route path={`${AppRoutes.ZORG}/:id`} component={ZorgDetail} />
           <Route path={AppRoutes.ZORG} component={Zorg} />

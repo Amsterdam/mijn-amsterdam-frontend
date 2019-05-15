@@ -2,8 +2,9 @@ import { AppRoutes } from 'App.constants';
 import { defaultDateFormat, entries } from 'helpers/App';
 import { LinkProps } from 'App.types';
 import { Chapter, Chapters } from '../App.constants';
-import { addMonths, addDays } from 'date-fns';
+import { addMonths, addDays, differenceInCalendarDays } from 'date-fns';
 import { Document as GenericDocument } from '../components/DocumentList/DocumentList';
+import { MyUpdate } from 'hooks/api/my-updates-api.hook';
 
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
@@ -30,17 +31,19 @@ interface Info {
   title: string;
   description: string;
   status: RequestStatus;
+  update: {
+    title: string;
+    description: string;
+  };
 }
 
 type InfoExtended = { [type in Decision]: Info };
-
 interface ProductType {
   aanvraag: Info;
   inBehandeling: Info;
   herstelTermijn: Info;
   beslissing: InfoExtended;
 }
-
 type LabelData = { [origin in ProductOrigin]: ProductType };
 
 interface Document {
@@ -79,24 +82,36 @@ interface FocusProduct {
 type FocusApiResponse = FocusProduct[];
 
 const processSteps: StepTitle[] = [
-  'beslissing',
-  'herstelTermijn',
-  'inBehandeling',
   'aanvraag',
+  'inBehandeling',
+  'herstelTermijn',
+  'beslissing',
 ];
+
+const MAX_DAYS_UPDATE_VISIBLE = 28;
 
 // Links can be added in the format of [text](link)
 // Tags like {title} will be replaced with corresponding data from the StepSourceData object.
 export const Labels: LabelData = {
   Participatiewet: {
     aanvraag: {
+      update: {
+        title: 'Wij verwerken uw aanvraag',
+        description:
+          'Wij hebben uw aanvraag voor een bijstandsuitkering ontvangen op {dateStart}.',
+      },
       title: '{title}',
       status: 'Aanvraag',
-      description: `U hebt op {datePublished} een bijstandsuitkering aangevraagd.
+      description: `U hebt op {dateStart} een bijstandsuitkering aangevraagd.
 
         [Wat kunt u van ons verwachten?](https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D)`,
     },
     inBehandeling: {
+      update: {
+        title: 'Wij behandelen uw aanvraag',
+        description:
+          'Wij hebben uw aanvraag voor een bijstandsuitkering in behandeling genomen op {datePublished}.',
+      },
       title: '{title}',
       status: 'In behandeling',
       description: `Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u nog extra informatie moet opsturen.
@@ -105,6 +120,11 @@ export const Labels: LabelData = {
         `,
     },
     herstelTermijn: {
+      update: {
+        title: 'Neem actie',
+        description:
+          'Er is meer informatie en tijd nodig om uw aanvraag voor een bijstandsuitkering te behandelen.',
+      },
       title: '{title}',
       status: 'Meer informatie nodig',
       description: `Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken. Bekijk de brief voor meer details.
@@ -115,12 +135,22 @@ export const Labels: LabelData = {
     },
     beslissing: {
       Afwijzing: {
+        update: {
+          title: 'Uw aanvraag is afgewezen',
+          description:
+            'U heeft geen recht op een bijstandsuitkering (besluit: {datePublished}).',
+        },
         title: '{title}',
         status: 'Beslissing',
         description:
           'U heeft geen recht op een bijstandsuitkering. De reden voor afwijzing is {reasonForDecision}. Bekijk de brief voor meer details.',
       },
       Toekenning: {
+        update: {
+          title: 'Uw aanvraag is toegekend',
+          description:
+            'U heeft recht op een bijstandsuitkering (besluit: {datePublished}).',
+        },
         title: '{title}',
         status: 'Beslissing',
         description: `U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer details.
@@ -130,18 +160,33 @@ export const Labels: LabelData = {
   },
   'Bijzondere Bijstand': {
     aanvraag: {
+      update: {
+        title: 'Wij verwerken uw aanvraag',
+        description:
+          'Wij hebben uw aanvraag voor bijzondere bijstand ontvangen op {dateStart}.',
+      },
       title: '{title}',
       status: 'Aanvraag',
       description:
         'U hebt op {datePublished} een bijzondere bijstandsuitkering aangevraagd.',
     },
     inBehandeling: {
+      update: {
+        title: 'Wij behandelen uw aanvraag',
+        description:
+          'Wij hebben uw aanvraag voor bijzondere bijstand in behandeling genomen op {datePublished}.',
+      },
       title: '{title} in behandeling',
       status: 'In behandeling',
       description: `Wij gaan nu bekijken of u recht hebt op bijzondere bijstand. Het kan zijn dat u nog extra informatie moet opsturen.
         U ontvangt vóór {decisionDeadline1} ons besluit.`,
     },
     herstelTermijn: {
+      update: {
+        title: 'Neem actie',
+        description:
+          'Er is meer informatie en tijd nodig om uw aanvraag voor bijzondere bijstand te behandelen.',
+      },
       title: '{title}',
       status: 'Meer informatie nodig',
       description: `Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken. Bekijk de brief voor meer details.
@@ -151,12 +196,22 @@ export const Labels: LabelData = {
     },
     beslissing: {
       Afwijzing: {
+        update: {
+          title: 'Uw aanvraag is afgewezen',
+          description:
+            'U heeft geen recht op bijzondere bijstand (besluit: {datePublished}).',
+        },
         title: '{title}',
         status: 'Beslissing',
         description:
           'U heeft geen recht op bijzondere bijstand. De reden voor afwijzing is {reasonForDecision}. Bekijk de brief voor meer details.',
       },
       Toekenning: {
+        update: {
+          title: 'Uw aanvraag is toegekend',
+          description:
+            'U heeft recht op bijzondere bijstand (besluit: {datePublished}).',
+        },
         title: '{title}',
         status: 'Beslissing',
         description:
@@ -166,11 +221,21 @@ export const Labels: LabelData = {
   },
   Minimafonds: {
     aanvraag: {
+      update: {
+        title: 'Wij verwerken uw aanvraag',
+        description:
+          'Wij hebben uw aanvraag voor een Stadspas ontvangen op {dateStart}.',
+      },
       title: '{title}',
       status: 'Aanvraag',
       description: 'U hebt op {datePublished} een Stadspas aangevraagd.',
     },
     inBehandeling: {
+      update: {
+        title: 'Wij behandelen uw aanvraag',
+        description:
+          'Wij hebben uw aanvraag voor een Stadspas in behandeling genomen op {datePublished}.',
+      },
       title: 'In behandeling',
       status: 'In behandeling',
       description: `Het kan zijn dat u nog extra informatie moet opsturen.
@@ -178,6 +243,11 @@ export const Labels: LabelData = {
         Let op: Deze status informatie betreft alleen uw aanvraag voor een Stadspas; uw eventuele andere Hulp bij Laag Inkomen producten worden via post en/of telefoon afgehandeld.`,
     },
     herstelTermijn: {
+      update: {
+        title: 'Neem actie',
+        description:
+          'Er is meer informatie en tijd nodig om uw aanvraag voor een Stadspas te behandelen.',
+      },
       title: '{title}',
       status: 'Meer informatie nodig',
       description: `Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken. Bekijk de brief voor meer details.
@@ -187,12 +257,22 @@ export const Labels: LabelData = {
     },
     beslissing: {
       Afwijzing: {
+        update: {
+          title: 'Uw aanvraag is afgewezen',
+          description:
+            'U heeft geen recht op een Stadspas (besluit: {datePublished}).',
+        },
         title: '{title}',
         status: 'Beslissing',
         description:
           'U heeft geen recht op een Stadspas. De reden voor afwijzing is {reasonForDecision}. Bekijk de brief voor meer details.',
       },
       Toekenning: {
+        update: {
+          title: 'Uw aanvraag is toegekend',
+          description:
+            'U heeft recht op een Stadspas. Bekijk de brief voor meer details.',
+        },
         title: '{title}',
         status: 'Beslissing',
         description: `
@@ -208,7 +288,7 @@ export const Labels: LabelData = {
 interface StepSourceData {
   id: string;
   title: string;
-  decision: Decision;
+  decision?: Decision;
   datePublished?: string; // Generic date term for use as designated date about an item.
   decisionDeadline1?: string;
   decisionDeadline2?: string;
@@ -218,7 +298,7 @@ interface StepSourceData {
   daysUserActionRequired: number;
   daysSupplierActionRequired: number;
   daysRecoveryAction: number; // The number of days a client has to provide more information about a request
-  dateOfRequestStart: string; // The official start date of the clients request process.
+  dateStart: string; // The official start date of the clients request process.
   reden?: string; // The reason why a decision was made about a clients request for product.
 }
 
@@ -230,6 +310,7 @@ export interface ProcessStep {
   description: string;
   isActual: boolean;
   status: RequestStatus | '';
+  aboutStep: StepTitle;
 }
 
 export interface FocusItem {
@@ -238,14 +319,27 @@ export interface FocusItem {
   title: string;
   description: string;
   latestStep: StepTitle;
-  supplier: string;
   inProgress: boolean;
   isGranted: boolean;
   isDenied: boolean;
   chapter: Chapter;
   link: LinkProps;
   process: ProcessStep[];
+  productTitle: ProductTitle;
+  update?: MyUpdate;
 }
+
+export const ProductTitles = {
+  Bijstandsuitkering: 'Levensonderhoud',
+  Stadspas: 'Stadspas',
+  BijzondereBijstand: 'Bijzondere bijstand',
+};
+
+const AppRoutesByProductTitle = {
+  [ProductTitles.Bijstandsuitkering]: AppRoutes.BIJSTANDSUITKERING,
+  [ProductTitles.Stadspas]: AppRoutes.STADSPAS,
+  [ProductTitles.BijzondereBijstand]: AppRoutes.BIJZONDERE_BIJSTAND,
+};
 
 function isInProgess(decision: Decision, steps: FocusProduct['processtappen']) {
   const noDecision = !decision;
@@ -277,7 +371,7 @@ type GetStepSourceDataArgs = Pick<
   | 'daysUserActionRequired'
   | 'daysSupplierActionRequired'
   | 'daysRecoveryAction'
-  | 'dateOfRequestStart'
+  | 'dateStart'
   | 'reden'
 > & { stepData: Step | null };
 
@@ -288,7 +382,7 @@ function getStepSourceData({
   stepData,
   latestStep,
   decision,
-  dateOfRequestStart,
+  dateStart,
   daysUserActionRequired,
   daysSupplierActionRequired,
   daysRecoveryAction,
@@ -308,14 +402,14 @@ function getStepSourceData({
     datePublished: defaultDateFormat(stepDate),
     // deadline for when a decision about a request is made before recovery action is required.
     decisionDeadline1: calculateDecisionDeadline(
-      dateOfRequestStart,
+      dateStart,
       daysSupplierActionRequired,
       daysUserActionRequired,
       0
     ),
     // deadline for when a decision about a request is made after recovery action is initiated.
     decisionDeadline2: calculateDecisionDeadline(
-      dateOfRequestStart,
+      dateStart,
       daysSupplierActionRequired,
       daysUserActionRequired,
       daysRecoveryAction
@@ -325,7 +419,7 @@ function getStepSourceData({
     // Why a decision was made.
     reasonForDecision: stepData ? stepData.reden : '',
     daysRecoveryAction,
-    dateOfRequestStart,
+    dateStart: defaultDateFormat(dateStart),
   };
 }
 
@@ -357,14 +451,14 @@ function calculateUserActionDeadline(
 
 // Returns the date before which municipality has to inform the client about a decision that has been made regarding his/her request for a product.
 function calculateDecisionDeadline(
-  dateOfRequestStart: string,
+  dateStart: string,
   daysSupplierActionRequired: number,
   daysUserActionRequired: number,
   daysRecoveryAction: number = 0
 ) {
   return defaultDateFormat(
     addDays(
-      dateOfRequestStart,
+      dateStart,
       daysSupplierActionRequired + daysUserActionRequired + daysRecoveryAction
     )
   );
@@ -382,6 +476,36 @@ function formatFocusDocument(
     url: `/api/${url}`,
     datePublished,
     type: stepTitle,
+  };
+}
+
+export function formatFocusUpdateItem(
+  item: FocusItem,
+  step: ProcessStep,
+  isActual: boolean,
+  productOrigin: ProductOrigin,
+  sourceData: StepSourceData
+): MyUpdate {
+  const stepLabels = Labels[productOrigin][step.aboutStep] as any; // Can't work the right TS construct here atm.
+  const stepLabelSource = !!sourceData.decision
+    ? stepLabels[sourceData.decision]
+    : stepLabels;
+
+  return {
+    id: step.id,
+    datePublished: step.datePublished,
+    chapter: Chapters.INKOMEN,
+    title:
+      stepLabelSource.update &&
+      replaceSourceDataTags(stepLabelSource.update.title, sourceData),
+    description:
+      stepLabelSource.update &&
+      replaceSourceDataTags(stepLabelSource.update.description, sourceData),
+    isActual,
+    link: {
+      to: `${AppRoutesByProductTitle[item.productTitle]}/${item.id}#${step.id}`,
+      title: 'Meer informatie',
+    },
   };
 }
 
@@ -412,18 +536,19 @@ function formatStepData(
       : [],
     isActual: stepTitle === sourceData.latestStep,
     status: stepLabels.status,
+    aboutStep: stepTitle,
   };
 }
 
 // This function transforms the source data from the api into readable/presentable messages for the client.
 function formatFocusProduct(product: FocusProduct): FocusItem {
   const {
+    _id: id,
     _meest_recent: latestStep,
-    soortProduct: productType,
+    soortProduct: productOrigin,
     typeBesluit: decision,
     processtappen: steps,
     naam: title,
-    _id: id,
     dienstverleningstermijn: daysSupplierActionRequired,
     inspanningsperiode: daysUserActionRequired,
   } = product;
@@ -431,13 +556,13 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
   const inProgress = isInProgess(decision, steps);
   const stepData = steps[latestStep];
   const stepLabels = inProgress
-    ? (Labels[productType][latestStep] as Info)
-    : (Labels[productType][latestStep] as InfoExtended)[decision];
+    ? (Labels[productOrigin][latestStep] as Info)
+    : (Labels[productOrigin][latestStep] as InfoExtended)[decision];
   const daysRecoveryAction =
     steps.herstelTermijn && steps.herstelTermijn.aantalDagenHerstelTermijn
       ? parseInt(steps.herstelTermijn.aantalDagenHerstelTermijn, 10)
       : 0;
-  const dateOfRequestStart = steps.aanvraag.datum;
+  const dateStart = steps.aanvraag.datum;
 
   const sourceData = getStepSourceData({
     id: `${id}-${latestStep}`,
@@ -445,27 +570,29 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
     decision,
     latestStep,
     stepData,
-    dateOfRequestStart,
+    dateStart,
     daysSupplierActionRequired,
     daysUserActionRequired,
     daysRecoveryAction,
   });
 
-  return {
+  const item = {
     id,
     chapter: Chapters.INKOMEN,
     datePublished: sourceData.datePublished || '',
+    // Regular title, can be turned into more elaborate descriptive information. E.g Bijstandsuitkering could become Uw Aanvraag voor een bijstandsuitkering.
     title: replaceSourceDataTags(stepLabels.title, sourceData),
     description: replaceSourceDataTags(stepLabels.description, sourceData),
     latestStep,
     inProgress,
     isGranted: decision === 'Toekenning',
     isDenied: decision === 'Afwijzing',
-    supplier: '',
     link: {
       title: 'Meer informatie', // TODO: How to get custom link title?
-      to: `${AppRoutes.INKOMEN}/${id}`,
+      to: `${AppRoutesByProductTitle[title]}/${id}`,
     },
+    // Different from regular title, because that can be more descriptive
+    productTitle: title,
     process: processSteps
       .filter(stepTitle => !!steps[stepTitle])
       .map(stepTitle => {
@@ -479,10 +606,28 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
           daysSupplierActionRequired,
           daysUserActionRequired,
           daysRecoveryAction,
-          dateOfRequestStart,
+          dateStart,
         });
-        return formatStepData(sourceData, productType, stepTitle, stepData);
+        return formatStepData(sourceData, productOrigin, stepTitle, stepData);
       }),
+  };
+
+  const latestStepItem = item.process[item.process.length - 1];
+
+  const isActual =
+    latestStepItem.status !== 'Beslissing' ||
+    differenceInCalendarDays(new Date(), latestStepItem.datePublished) <
+      MAX_DAYS_UPDATE_VISIBLE;
+
+  return {
+    ...item,
+    update: formatFocusUpdateItem(
+      item,
+      latestStepItem,
+      isActual,
+      productOrigin,
+      sourceData
+    ),
   };
 }
 
