@@ -126,3 +126,9 @@ export const Colors = {
   supportLightblue: '#009DEC',
   overlayBlack50: 'rgba(0, 0, 0, 0.5)',
 };
+
+// NOTE: Keep up-to-date with _layout.scss
+export const Layout = {
+  mainHeaderTopbarHeight: 106, // px
+  mainHeaderNavbarHeight: 44, // px
+};
