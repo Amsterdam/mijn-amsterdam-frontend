@@ -1,4 +1,4 @@
-import { AppRoutes, ExternalUrls, LOGOUT_URL } from 'App.constants';
+import { AppRoutes, ExternalUrls, LOGOUT_URL, Layout } from 'App.constants';
 import { ReactComponent as BetaLabel } from 'assets/images/beta-label.svg';
 import { ReactComponent as AmsterdamLogoLarge } from 'assets/images/logo-amsterdam-large.svg';
 import classnames from 'classnames';
@@ -16,6 +16,7 @@ import {
 } from 'components/ButtonLink/ButtonLink';
 import Heading from 'components/Heading/Heading';
 import { Person } from 'data-formatting/brp';
+import useRouter from 'use-react-router';
 
 interface SecondaryLinksProps {
   person: Person | null;
@@ -52,19 +53,46 @@ export default function MainHeader({
   person = null,
   isAuthenticated = false,
 }: MainHeaderProps) {
-  const [responsiveMenuIsVisible, toggleResponsiveMenu] = useState(true);
+  const [responsiveMenuIsVisible, toggleResponsiveMenu] = useState(false);
   const MenuWrapperId = 'MenuWrapper';
+  const MenuToggleBtnId = 'MenuToggleBtn';
+  const { history } = useRouter();
 
-  function onOutsideHandler(e) {
-    // const clickedInsdie = document
-    //   .getElementById(MenuWrapperId)
-    //   .contains(e.target);
+  /**
+   * Close the responsive menu on outside menu click, if the menu is open
+   */
+  function closeRespMenuOnOutsideMenuClick(e: any) {
+    // If the menu is open, check if the user clicked outside of the menu
+    if (responsiveMenuIsVisible) {
+      const clickedOutside = !(
+        document.getElementById(MenuWrapperId)!.contains(e.target) ||
+        document.getElementById(MenuToggleBtnId)!.contains(e.target)
+      );
+
+      // If so, close the menu
+      if (clickedOutside) {
+        toggleResponsiveMenu(false);
+      }
+    }
   }
 
+  /**
+   * Add a listener to close the responsive menu if the user clicks outside
+   * of the menu
+   */
   useEffect(() => {
-    document.addEventListener('click', (e: any): void => {});
+    document.addEventListener('click', closeRespMenuOnOutsideMenuClick);
+    // Return the clean up function
+    return () =>
+      document.removeEventListener('click', closeRespMenuOnOutsideMenuClick);
   });
 
+  /**
+   * Listen to history changes and close the responsive menu on change
+   */
+  useEffect(() => {
+    history.listen(() => toggleResponsiveMenu(false));
+  });
   return (
     <header className={styles.header}>
       <div className={styles.topBar}>
@@ -89,6 +117,7 @@ export default function MainHeader({
       {isAuthenticated && (
         <div className={styles.MenuContainer}>
           <button
+            id={MenuToggleBtnId}
             className={classNames(styles.MenuToggleBtn, {
               [styles.MenuToggleBtnOpen]: responsiveMenuIsVisible,
             })}
@@ -99,11 +128,21 @@ export default function MainHeader({
             className={classNames(styles.MenuWrapper, {
               [styles.MenuWrapperOpen]: responsiveMenuIsVisible,
             })}
-            onBlur={() => toggleResponsiveMenu(false)}
           >
             <MainNavBar />
             <SecondaryLinks person={person} />
           </div>
+          <div
+            style={{
+              height:
+                document.body.scrollHeight -
+                Layout.mainHeaderTopbarHeight -
+                Layout.mainHeaderNavbarHeight,
+            }}
+            className={classNames(styles.Modal, {
+              [styles.ModalOpen]: responsiveMenuIsVisible,
+            })}
+          />
         </div>
       )}
       <MainHeaderHero />
