@@ -16,6 +16,10 @@
   display: flex;
   padding: 3rem 0 5rem;
 
+  @include respond-to(medium-screen) {
+    display: initial;
+  }
+
   &, a {
     color: $color-white;
   }
@@ -50,12 +54,28 @@
   }
 }
 
+.Panel {
+  @include respond-to(medium-screen) {
+    > :not(:first-child) {
+      display: none;
+    }
+    &Open {
+      > * {
+        display: initial!important;
+      }
+    }
+  }
+}
+
 .ContactPanel {
 
 }
 
 .FollowPanel {
   margin: 0 3rem;
+  @include respond-to(medium-screen) {
+    margin: 0;
+  }
 }
 
 .TodoPanel {
