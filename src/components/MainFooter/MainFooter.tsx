@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './MainFooter.module.scss';
 import ButtonLink, {
   ButtonLinkExternal,
@@ -8,11 +8,26 @@ import { LinkList } from './MainFooter.constants';
 import classnames from 'classnames';
 
 export default function MainFooter() {
+  const [panelStates, setPanelState] = useState({} as any);
+  function togglePanel(panelId: string) {
+    const isOpen = !panelStates[panelId];
+    setPanelState({
+      ...panelStates,
+      [panelId]: isOpen,
+    });
+  }
+
   return (
     <footer className={styles.MainFooter}>
       <div className={classnames(styles.TopBar, styles.InnerContainer)}>
-        <div className={styles.ContactPanel}>
-          <h3>Contact</h3>
+        <div
+          className={classnames(
+            styles.Panel,
+            styles.ContactPanel,
+            panelStates.Contact && styles.PanelOpen
+          )}
+        >
+          <h3 onClick={() => togglePanel('Contact')}>Contact</h3>
           <p>
             Hebt u een vraag en kunt u het antwoord niet vinden op deze website?
             Neem dan contact met ons op.
@@ -41,8 +56,14 @@ export default function MainFooter() {
             </li>
           </ul>
         </div>
-        <div className={styles.FollowPanel}>
-          <h3>Volg de gemeente</h3>
+        <div
+          className={classnames(
+            styles.Panel,
+            styles.FollowPanel,
+            panelStates.Follow && styles.PanelOpen
+          )}
+        >
+          <h3 onClick={() => togglePanel('Follow')}>Volg de gemeente</h3>
           <ul>
             {LinkList.map(({ to, title }) => (
               <li key={title}>
@@ -53,8 +74,14 @@ export default function MainFooter() {
             ))}
           </ul>
         </div>
-        <div className={styles.TodoPanel}>
-          <h3>Uit in Amsterdam</h3>
+        <div
+          className={classnames(
+            styles.Panel,
+            styles.TodoPanel,
+            panelStates.Todo && styles.PanelOpen
+          )}
+        >
+          <h3 onClick={() => togglePanel('Todo')}>Uit in Amsterdam</h3>
           <p>
             Wat is er te doen in Amsterdam? Informatie over toerisme, cultuur,
             uitgaan, evenementen en meer vindt u op{' '}
