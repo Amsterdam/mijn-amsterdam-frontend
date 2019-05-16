@@ -31,6 +31,10 @@ export default () => {
   const itemsGranted = items.filter(item => item.isGranted);
   const itemsDenied = items.filter(item => item.isDenied);
 
+  const hasActiveRequests = !!itemsRequested.length;
+  const hasGrantedRequests = !!itemsGranted.length;
+  const hasDeniedRequests = !!itemsDenied.length;
+
   return (
     <PageContentMain variant="full" className={styles.Page}>
       <PageContentMainHeading variant="boxedWithIcon">
@@ -48,7 +52,7 @@ export default () => {
             Lees meer over inkomensondersteuning
           </ButtonLinkExternal>
         </p>
-        {!!itemsRequested.length && (
+        {hasActiveRequests && (
           <DataLinkTable
             id="datalinktable-income-actual"
             rowHeight="6rem"
@@ -58,17 +62,18 @@ export default () => {
             startCollapsed={false}
           />
         )}
-        {!!itemsGranted.length && (
+        {hasGrantedRequests && (
           <DataLinkTable
             id="datalinktable-income-granted"
             rowHeight="6rem"
             displayProps={DISPLAY_PROPS}
             items={itemsGranted}
+            startCollapsed={hasActiveRequests}
             title="Mijn toegekende aanvragen"
           />
         )}
       </PageContentMainBody>
-      {!!itemsDenied.length && (
+      {hasDeniedRequests && (
         <div className={styles.HistoricDataLinkTable}>
           <PageContentMainBody variant="boxed">
             <DataLinkTable
@@ -76,6 +81,7 @@ export default () => {
               rowHeight="6rem"
               displayProps={DISPLAY_PROPS}
               items={itemsDenied}
+              startCollapsed={hasActiveRequests || hasGrantedRequests}
               title="Mijn afgewezen aanvragen"
               className={styles.DataLinkTableCurrent}
             />

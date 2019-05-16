@@ -26,6 +26,10 @@ export default () => {
   const itemsActual = items.filter(item => item.isActual && !!item.dateFinish);
   const itemsPrevious = items.filter(item => !item.isActual);
 
+  const hasActiveRequests = !!itemsRequested.length;
+  const hasActualItems = !!itemsActual.length;
+  const hasPreviousItems = !!itemsPrevious.length;
+
   return (
     <PageContentMain variant="full" className={styles.Page}>
       <PageContentMainHeading variant="boxedWithIcon">
@@ -34,7 +38,7 @@ export default () => {
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
         {/* <p>Zorg body</p> */}
-        {!!itemsRequested.length && (
+        {hasActiveRequests && (
           <DataLinkTable
             id="datalinktable-healthcare-requested"
             rowHeight="6rem"
@@ -44,18 +48,19 @@ export default () => {
             startCollapsed={false}
           />
         )}
-        {!!itemsActual.length && (
+        {hasActualItems && (
           <DataLinkTable
             id="datalinktable-healthcare-granted"
             rowHeight="6rem"
             displayProps={DISPLAY_PROPS}
             items={itemsActual}
             title="Mijn huidige voorziengen"
+            startCollapsed={hasActiveRequests}
             className={styles.DataLinkTableCurrent}
           />
         )}
       </PageContentMainBody>
-      {!!itemsPrevious.length && (
+      {hasPreviousItems && (
         <div className={styles.HistoricDataLinkTable}>
           <PageContentMainBody variant="boxed">
             <DataLinkTable
@@ -64,6 +69,7 @@ export default () => {
               displayProps={DISPLAY_PROPS}
               items={itemsPrevious}
               title="Mijn eerdere voorziengen"
+              startCollapsed={hasActiveRequests || hasActualItems}
             />
           </PageContentMainBody>
         </div>

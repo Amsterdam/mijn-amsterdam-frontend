@@ -35,7 +35,7 @@ export const myChaptersMenuItems: MenuItem[] = [
     Icon: BurgerzakenIcon,
   },
   {
-    title: 'Wonen',
+    title: 'Erfpacht',
     id: Chapters.WONEN,
     to: ExternalUrls.ERFPACHT || AppRoutes.WONEN,
     Icon: WonenIcon,

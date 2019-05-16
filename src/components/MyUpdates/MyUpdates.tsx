@@ -81,12 +81,14 @@ export default function MyUpdates({
           );
         })}
       </ul>
+      {items.length === 0 && (
+        <p>Er zijn op het moment geen actuele meldingen</p>
+      )}
       {showMoreLink && (
         <p className={styles.FooterLink}>
           <ButtonLink to={AppRoutes.MY_UPDATES}>Alle meldingen</ButtonLink>
         </p>
       )}
-      {items.length === 0 && <p>Er zijn op het moment geen meldingen</p>}
     </div>
   );
 }
