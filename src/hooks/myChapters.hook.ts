@@ -11,7 +11,6 @@ function isChapterActive(
   item: MenuItem,
   { WMO, FOCUS, ERFPACHT }: useMyChaptersProps
 ) {
-  console.log('>>>', FOCUS.data.products);
   switch (item.id) {
     case Chapters.INKOMEN:
       return (
