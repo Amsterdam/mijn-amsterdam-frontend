@@ -2,9 +2,9 @@
 
 .MainNavSubmenu {
   z-index: 2;
-
+  display: none;
   @include respond-to(medium-screen) {
-    display: none;
+    display: block;
   }
 }
 
