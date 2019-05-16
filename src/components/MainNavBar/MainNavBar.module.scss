@@ -44,6 +44,11 @@
     width: $responsive-header-navbar-width;
   }
 
+  // NOTE: Currently we have only 1 MainNavSubmenu, if others are added we need more finegrained selection here.
+  @include select(MainNavSubmenu) {
+    grid-row: 1;
+  }
+
   .MainNavLink {
     font-weight: bold;
     font-size: 1.5rem;
