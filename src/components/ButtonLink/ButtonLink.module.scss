@@ -4,6 +4,7 @@
   color: $color-black;
   font-weight: bolder;
   text-decoration: none;
+  cursor: pointer;
 
   &:not(.IconLink) {
     background-image: url('assets/icons/Chevron-Right.svg');

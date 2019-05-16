@@ -22,11 +22,14 @@ export const Chapters: { [chapter in Chapter]: Chapter } = {
 export const AppRoutes = {
   ROOT: '/',
   BURGERZAKEN: '/burgerzaken',
+  STADSPAS: '/burgerzaken/stadspas',
   WONEN: '/wonen',
   BELASTINGEN: '/belastingen',
   ZORG: '/zorg',
   JEUGDHULP: '/jeugdhulp',
   INKOMEN: '/inkomen',
+  BIJSTANDSUITKERING: '/inkomen/bijstandsuitkering',
+  BIJZONDERE_BIJSTAND: '/inkomen/bijzondere-bijstand',
   PROFILE: '/profiel',
   MY_AREA: '/buurt',
   ABOUT: '/over-mijn-amsterdam',
@@ -58,6 +61,7 @@ export const ApiUrls = {
 export const DEFAULT_DATE_FORMAT = 'DD MMMM YYYY';
 
 export const ExternalUrls = {
+  ABOUT_INCOME_SUPPORT: 'https://www.amsterdam.nl/werk-inkomen/',
   BIJSTAND_WHAT_TO_EXPECT:
     'https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D',
   BIJSTAND_RIGHTS:

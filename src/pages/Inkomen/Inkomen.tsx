@@ -12,20 +12,20 @@ import { ExternalUrls } from 'App.constants';
 
 const DISPLAY_PROPS = {
   datePublished: 'besluit',
-  dateFinish: 'einde',
 };
 
 const DISPLAY_PROPS_ACTUAL = {
   datePublished: 'aanvraag',
-  supplier: 'leverancier',
 };
 
 export default () => {
   const {
     FOCUS: {
-      data: { items },
+      data: { products },
     },
   } = useContext(AppContext);
+
+  const items = products.Levensonderhoud ? products.Levensonderhoud.items : [];
 
   const itemsRequested = items.filter(item => item.inProgress);
   const itemsGranted = items.filter(item => item.isGranted);
@@ -44,12 +44,13 @@ export default () => {
           over de inkomensregelingen van de gemeente Amsterdam?
         </p>
         <p>
-          <ButtonLinkExternal to={ExternalUrls.BIJSTAND_WHAT_TO_EXPECT}>
+          <ButtonLinkExternal to={ExternalUrls.ABOUT_INCOME_SUPPORT}>
             Lees meer over inkomensondersteuning
           </ButtonLinkExternal>
         </p>
         {!!itemsRequested.length && (
           <DataLinkTable
+            id="datalinktable-income-actual"
             rowHeight="6rem"
             displayProps={DISPLAY_PROPS_ACTUAL}
             items={itemsRequested}
@@ -57,24 +58,30 @@ export default () => {
             startCollapsed={false}
           />
         )}
-        <DataLinkTable
-          rowHeight="6rem"
-          displayProps={DISPLAY_PROPS}
-          items={itemsGranted}
-          title="Mijn toegekende voozieningen"
-        />
-      </PageContentMainBody>
-      <div className={styles.HistoricDataLinkTable}>
-        <PageContentMainBody variant="boxed">
+        {!!itemsGranted.length && (
           <DataLinkTable
+            id="datalinktable-income-granted"
             rowHeight="6rem"
             displayProps={DISPLAY_PROPS}
-            items={itemsDenied}
-            title="Mijn afgewezen aanvragen"
-            className={styles.DataLinkTableCurrent}
+            items={itemsGranted}
+            title="Mijn toegekende aanvragen"
           />
-        </PageContentMainBody>
-      </div>
+        )}
+      </PageContentMainBody>
+      {!!itemsDenied.length && (
+        <div className={styles.HistoricDataLinkTable}>
+          <PageContentMainBody variant="boxed">
+            <DataLinkTable
+              id="datalinktable-income-denied"
+              rowHeight="6rem"
+              displayProps={DISPLAY_PROPS}
+              items={itemsDenied}
+              title="Mijn afgewezen aanvragen"
+              className={styles.DataLinkTableCurrent}
+            />
+          </PageContentMainBody>
+        </div>
+      )}
     </PageContentMain>
   );
 };

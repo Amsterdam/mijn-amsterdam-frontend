@@ -1,36 +1,20 @@
-import React, { useContext, useEffect } from 'react';
-import PageContentMain from 'components/PageContentMain/PageContentMain';
-import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
-import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
-import styles from './MyUpdates.module.scss';
-import MyUpdates from 'components/MyUpdates/MyUpdates';
-import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
 import { Chapters } from 'App.constants';
-import Heading from 'components/Heading/Heading';
 import { AppContext } from 'AppState';
+import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
+import MyUpdates from 'components/MyUpdates/MyUpdates';
+import PageContentMain from 'components/PageContentMain/PageContentMain';
+import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
+import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
+import React, { useContext } from 'react';
 
-const MAX_UPDATES_VISIBLE = 200;
+import { useUpdatesState } from 'hooks/api/my-updates-api.hook';
+import styles from './MyUpdates.module.scss';
+import Heading from 'components/Heading/Heading';
 
 export default () => {
   const {
-    MY_UPDATES: {
-      refetch,
-      data: { items, total },
-      isLoading,
-      isDirty,
-    },
+    MY_UPDATES: { items, total },
   } = useContext(AppContext);
-
-  useEffect(() => {
-    // If there are more items available then currently loaded, fetch more items
-    if (
-      !isDirty ||
-      (total > items.length && items.length < MAX_UPDATES_VISIBLE && !isLoading)
-    ) {
-      refetch && refetch({ offset: items.length, limit: MAX_UPDATES_VISIBLE });
-    }
-  }, []);
-
   return (
     <PageContentMain className={styles.MyUpdates} variant="full">
       <PageContentMainHeading
@@ -38,16 +22,19 @@ export default () => {
         className={styles.MainHeader}
       >
         <ChapterHeadingIcon chapter={Chapters.BURGERZAKEN} />
-        Alle updates
+        Alle meldingen
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
-        <h3 className={styles.PanelHeading}>Nieuw (#)</h3>
-        <MyUpdates total={total} items={items} />
+        <h3 className={styles.PanelHeading}>Actueel</h3>
+        <MyUpdates total={total} items={items.filter(item => item.isActual)} />
       </PageContentMainBody>
       <div className={styles.PreviousUpdatesPanel}>
         <PageContentMainBody variant="boxed">
-          <Heading className={styles.PanelHeading}>Eerdere updates (#)</Heading>
-          <MyUpdates total={total} items={items} />
+          <Heading className={styles.PanelHeading}>Eerdere meldingen</Heading>
+          <MyUpdates
+            total={total}
+            items={items.filter(item => !item.isActual)}
+          />
         </PageContentMainBody>
       </div>
     </PageContentMain>

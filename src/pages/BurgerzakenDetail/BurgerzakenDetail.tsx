@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import PageContentMain from 'components/PageContentMain/PageContentMain';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
-import styles from './InkomenDetail.module.scss';
+import styles from './BurgerzakenDetail.module.scss';
 import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
 import { Chapters, AppRoutes } from 'App.constants';
 import { AppContext } from 'AppState';
@@ -24,11 +24,11 @@ export default () => {
   } = useReactRouter();
   const FocusItem = items.find(item => item.id === id);
   return (
-    <PageContentMain variant="full" className={styles.InkomenDetail}>
+    <PageContentMain variant="full" className={styles.BurgerzakenDetail}>
       <PageContentMainHeading el="div" variant="boxedWithIcon">
-        <ChapterHeadingIcon chapter={Chapters.INKOMEN} />
-        <PageContentMainHeadingBackLink to={AppRoutes.INKOMEN}>
-          Inkomen
+        <ChapterHeadingIcon chapter={Chapters.BURGERZAKEN} />
+        <PageContentMainHeadingBackLink to={AppRoutes.BURGERZAKEN}>
+          Burgerzaken
         </PageContentMainHeadingBackLink>
         <Heading el="h2" className={styles.PageHeading}>
           {FocusItem && FocusItem.title}

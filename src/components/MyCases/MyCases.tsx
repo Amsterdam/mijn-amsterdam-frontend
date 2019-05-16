@@ -36,16 +36,24 @@ export default function MyCases({ title, items = [] }: MyCasesProps) {
   return (
     <div className={styles.MyCases}>
       <Heading size="large">{title}</Heading>
-      <ul
-        className={classnames(
-          styles.List,
-          items.length % 2 === 1 && styles.List__odd
-        )}
-      >
-        {items.map(item => (
-          <CaseItem key={item.id} item={item} />
-        ))}
-      </ul>
+      {!!items.length && (
+        <ul
+          className={classnames(
+            styles.List,
+            items.length % 2 === 1 && styles.List__odd
+          )}
+        >
+          {items.map(item => (
+            <CaseItem key={item.id} item={item} />
+          ))}
+        </ul>
+      )}
+      {!items.length && (
+        <p>
+          U hebt geen meldingen of aanvragen lopen die u via Mijn Amsterdam kunt
+          volgen.
+        </p>
+      )}
     </div>
   );
 }
