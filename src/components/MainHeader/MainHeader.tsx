@@ -90,9 +90,8 @@ export default function MainHeader({
   /**
    * Listen to history changes and close the responsive menu on change
    */
-  useEffect(() => {
-    history.listen(() => toggleResponsiveMenu(false));
-  });
+  useEffect(() => history.listen(() => toggleResponsiveMenu(false)));
+
   return (
     <header className={styles.header}>
       <div className={styles.topBar}>
