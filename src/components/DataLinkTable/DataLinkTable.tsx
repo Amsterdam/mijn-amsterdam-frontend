@@ -28,7 +28,10 @@ export default function DataLinkTable({
   displayProps,
   rowHeight = 'auto',
 }: DataLinkTableProps) {
-  const [isCollapsed, setCollapsed] = createPersistedState(id)(startCollapsed);
+  const [isCollapsed, setCollapsed] = createPersistedState(
+    id,
+    window.sessionStorage
+  )(startCollapsed);
   const classes = classnames(
     styles.DataLinkTable,
     isCollapsed && styles.isCollapsed,

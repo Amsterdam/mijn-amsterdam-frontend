@@ -28,20 +28,20 @@ export default () => {
   } = useContext(AppContext);
 
   const tipItems = myTips.slice(0, MAX_TIPS_VISIBLE);
-
+  const actualUpdateItems = MY_UPDATES.items.filter(item => item.isActual);
   return (
     <PageContentMain className={styles.Dashboard} variant="full">
       <PageContentMainHeading variant="medium">
         Mijn meldingen&nbsp;
-        {MY_UPDATES.total > 0 && <span>({MY_UPDATES.total})</span>}
+        {actualUpdateItems.length > MAX_UPDATES_VISIBLE && (
+          <span>({actualUpdateItems.length})</span>
+        )}
       </PageContentMainHeading>
       <PageContentMainBody variant="regularBoxed" className={styles.FirstBody}>
         <MyUpdates
-          total={MY_UPDATES.total}
-          items={MY_UPDATES.items
-            .filter(item => item.isActual)
-            .slice(0, MAX_UPDATES_VISIBLE)}
-          showMoreLink={true}
+          total={actualUpdateItems.length}
+          items={actualUpdateItems.slice(0, MAX_UPDATES_VISIBLE)}
+          showMoreLink={MY_UPDATES.total > 0}
         />
         <MyChaptersPanel items={MY_CHAPTERS} title="Mijn thema's" />
         <MyCases title="Mijn lopende aanvragen" items={myCases} />
