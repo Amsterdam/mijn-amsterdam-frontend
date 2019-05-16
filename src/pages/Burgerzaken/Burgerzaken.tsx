@@ -1,14 +1,13 @@
-import React, { useContext } from 'react';
-import PageContentMain from 'components/PageContentMain/PageContentMain';
-import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
-import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
-import { AppContext } from 'AppState';
-import DataLinkTable from 'components/DataLinkTable/DataLinkTable';
-import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
 import { Chapters } from 'App.constants';
+import { AppContext } from 'AppState';
+import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
+import DataLinkTable from 'components/DataLinkTable/DataLinkTable';
+import PageContentMain from 'components/PageContentMain/PageContentMain';
+import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
+import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
+import React, { useContext } from 'react';
+
 import styles from './Burgerzaken.module.scss';
-import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
-import { ExternalUrls } from 'App.constants';
 
 const DISPLAY_PROPS = {
   datePublished: 'besluit',
@@ -31,6 +30,10 @@ export default () => {
   const itemsGranted = items.filter(item => item.isGranted);
   const itemsDenied = items.filter(item => item.isDenied);
 
+  const hasActiveRequests = !!itemsRequested.length;
+  const hasGrantedRequests = !!itemsGranted.length;
+  const hasDeniedRequests = !!itemsDenied.length;
+
   return (
     <PageContentMain variant="full" className={styles.Page}>
       <PageContentMainHeading variant="boxedWithIcon">
@@ -38,7 +41,7 @@ export default () => {
         Burgerzaken
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
-        {!!itemsRequested.length && (
+        {hasActiveRequests && (
           <DataLinkTable
             id="datalinktable-burgerzaken-actual"
             rowHeight="6rem"
@@ -48,17 +51,18 @@ export default () => {
             startCollapsed={false}
           />
         )}
-        {!!itemsGranted.length && (
+        {hasGrantedRequests && (
           <DataLinkTable
             id="datalinktable-burgerzaken-granted"
             rowHeight="6rem"
             displayProps={DISPLAY_PROPS}
             items={itemsGranted}
+            startCollapsed={hasActiveRequests}
             title="Mijn toegekende aanvragen"
           />
         )}
       </PageContentMainBody>
-      {!!itemsDenied.length && (
+      {hasDeniedRequests && (
         <div className={styles.HistoricDataLinkTable}>
           <PageContentMainBody variant="boxed">
             <DataLinkTable
@@ -66,6 +70,7 @@ export default () => {
               rowHeight="6rem"
               displayProps={DISPLAY_PROPS}
               items={itemsDenied}
+              startCollapsed={hasActiveRequests || hasDeniedRequests}
               title="Mijn afgewezen aanvragen"
               className={styles.DataLinkTableCurrent}
             />
