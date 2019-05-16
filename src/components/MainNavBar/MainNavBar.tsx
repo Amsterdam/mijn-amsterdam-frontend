@@ -1,7 +1,7 @@
+import React, { FunctionComponent, useState, useContext } from 'react';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from 'components/MainNavSubmenu/MainNavSubmenu';
-import React, { useState, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AppContext } from 'AppState';
 import {
@@ -9,7 +9,6 @@ import {
   MenuItem,
   mainMenuItemId,
   submenuItems,
-  MenuItemTitles,
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
 import { Colors } from 'App.constants';
