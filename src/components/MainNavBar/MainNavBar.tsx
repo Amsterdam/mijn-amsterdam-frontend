@@ -9,7 +9,6 @@ import {
   MenuItem,
   mainMenuItemId,
   submenuItems,
-  MenuItemTitles,
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
 import { Colors } from 'App.constants';

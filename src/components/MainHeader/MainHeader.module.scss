@@ -70,7 +70,18 @@
   background-color: $color-neutral-grey1;
 }
 
-.MenuWrapper {
+.Modal {
+  display: none;
+  background: $color-neutral-grey4;
+  opacity: 0.5;
+  position: absolute;
+  top: $main-header-navbar-height;
+  width: 100%;
+  z-index: 1;
+
+  &Open {
+    display: block;
+  }
 }
 
 @include respond-to(medium-screen) {
@@ -102,6 +113,7 @@
   .MenuToggleBtn {
     display: initial;
     cursor: pointer;
+    height: $main-header-navbar-height;
 
     &Open {
       background-image: url('assets/icons/Close.svg');
@@ -118,7 +130,7 @@
     top: $main-header-navbar-height;
     background-color: $color-neutral-grey1;
     width: $responsive-header-navbar-width;
-    z-index: 999;
+    z-index: 2;
 
     &Open {
       display: block;
