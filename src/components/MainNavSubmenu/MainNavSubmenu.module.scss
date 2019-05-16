@@ -87,9 +87,6 @@
 }
 
 @include respond-to(medium-screen) {
-  .MainNavSubmenu {
-    grid-row: 1;
-  }
   .SubmenuButton {
     display: none;
   }
