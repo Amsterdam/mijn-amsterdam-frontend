@@ -5,7 +5,6 @@
   flex-direction: column;
   align-items: center;
   width: $main-max-width;
-  background-color: $color-neutral-grey1;
   position: relative;
   height: $main-header-navbar-height;
 }
@@ -22,8 +21,8 @@
   font-size: 1.8rem;
   font-weight: 500;
   text-decoration: none;
-  padding-top: .9rem;
-  padding-bottom: .9rem;
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
 
   &:hover {
     color: $color-primary-red;
@@ -31,5 +30,29 @@
 
   &:last-child {
     margin-right: 0;
+  }
+}
+
+@include respond-to(medium-screen) {
+  .MainNavBar {
+    height: auto;
+    width: $responsive-header-navbar-width;
+  }
+
+  .LinkContainer {
+    display: grid;
+    width: $responsive-header-navbar-width;
+  }
+
+  .MainNavLink {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin: 0;
+    padding-left: $responsive-header-navbar-padding-left;
+    border-top: 0.1rem solid $color-neutral-grey2;
+
+    &:first-child {
+      border-top: 0.2rem solid $color-neutral-grey2;
+    }
   }
 }

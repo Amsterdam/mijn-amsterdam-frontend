@@ -67,20 +67,31 @@ export const myChaptersMenuItems: MenuItem[] = [
   },
 ];
 
+export const MenuItemTitles = {
+  HOME: 'Home',
+  MY_CHAPTERS: "Mijn thema's",
+  MY_AREA: 'Mijn buurt',
+  MY_UPDATES: 'Mijn meldingen',
+};
+
 export const menuItems: MenuItem[] = [
   {
-    title: 'Home',
+    title: MenuItemTitles.HOME,
     id: mainMenuItemId.HOME,
     to: AppRoutes.ROOT,
   },
   {
-    title: "Mijn thema's",
+    title: MenuItemTitles.MY_CHAPTERS,
     id: mainMenuItemId.MY_CHAPTERS,
     to: '',
   },
-  { title: 'Mijn buurt', id: mainMenuItemId.MY_AREA, to: AppRoutes.MY_AREA },
   {
-    title: 'Mijn meldingen',
+    title: MenuItemTitles.MY_AREA,
+    id: mainMenuItemId.MY_AREA,
+    to: AppRoutes.MY_AREA,
+  },
+  {
+    title: MenuItemTitles.MY_UPDATES,
     id: mainMenuItemId.MY_UPDATES,
     to: AppRoutes.MY_UPDATES,
   },
