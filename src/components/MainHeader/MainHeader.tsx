@@ -18,6 +18,9 @@ import Heading from 'components/Heading/Heading';
 import { Person } from 'data-formatting/brp';
 import useRouter from 'use-react-router';
 
+const MenuWrapperId = 'MenuWrapper';
+const MenuToggleBtnId = 'MenuToggleBtn';
+
 interface SecondaryLinksProps {
   person: Person | null;
   hasMessages?: boolean;
@@ -54,43 +57,30 @@ export default function MainHeader({
   isAuthenticated = false,
 }: MainHeaderProps) {
   const [responsiveMenuIsVisible, toggleResponsiveMenu] = useState(false);
-  const MenuWrapperId = 'MenuWrapper';
-  const MenuToggleBtnId = 'MenuToggleBtn';
   const { history } = useRouter();
 
-  /**
-   * Close the responsive menu on outside menu click, if the menu is open
-   */
-  function closeRespMenuOnOutsideMenuClick(e: any) {
-    // If the menu is open, check if the user clicked outside of the menu
+  function closeResponsiveMenu(e: any) {
     if (responsiveMenuIsVisible) {
+      // Testing for elements that are not part of the responsive menu
       const clickedOutside = !(
         document.getElementById(MenuWrapperId)!.contains(e.target) ||
         document.getElementById(MenuToggleBtnId)!.contains(e.target)
       );
 
-      // If so, close the menu
       if (clickedOutside) {
         toggleResponsiveMenu(false);
       }
     }
   }
 
-  /**
-   * Add a listener to close the responsive menu if the user clicks outside
-   * of the menu
-   */
   useEffect(() => {
-    document.addEventListener('click', closeRespMenuOnOutsideMenuClick);
-    // Return the clean up function
-    return () =>
-      document.removeEventListener('click', closeRespMenuOnOutsideMenuClick);
+    document.addEventListener('click', closeResponsiveMenu);
+    return () => document.removeEventListener('click', closeResponsiveMenu);
   });
 
-  /**
-   * Listen to history changes and close the responsive menu on change
-   */
-  useEffect(() => history.listen(() => toggleResponsiveMenu(false)));
+  useEffect(() => {
+    toggleResponsiveMenu(false);
+  }, [history.location]);
 
   return (
     <header className={styles.header}>
