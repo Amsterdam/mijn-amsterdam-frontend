@@ -8,6 +8,9 @@ $main-header-hero-height: 30rem;
 $main-header-hero-heading-overlap: 8.5rem;
 $main-header-hero-border-top-color: $color-neutral-grey1;
 $main-header-total-height: $main-header-topbar-height +
-  $main-header-navbar-height + $main-header-hero-height - $main-header-hero-heading-overlap;
+  $main-header-navbar-height + $main-header-hero-height -
+  $main-header-hero-heading-overlap;
+$responsive-header-navbar-width: 35rem;
+$responsive-header-navbar-padding-left: 1rem;
 
 $main-footer-min-height: 20rem;
