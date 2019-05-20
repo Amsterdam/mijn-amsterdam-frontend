@@ -78,13 +78,15 @@
   top: $main-header-navbar-height;
   width: 100%;
   z-index: 1;
-
-  &Open {
-    display: block;
-  }
 }
 
 @include respond-to(medium-screen) {
+  .Modal {
+    &Open {
+      display: block;
+    }
+  }
+
   .secondaryLinks {
     display: flex;
     flex-direction: column;
