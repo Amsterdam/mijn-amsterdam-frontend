@@ -2,10 +2,6 @@
 
 .MainNavSubmenu {
   z-index: 2;
-
-  @include respond-to(medium-screen) {
-    display: none;
-  }
 }
 
 .SubmenuButton {
@@ -18,13 +14,13 @@
   font-weight: 500;
   cursor: pointer;
   display: inline-block;
-  padding-top: 0.9rem;
-  padding-bottom: 0.8rem;
-  margin-top: 0.2rem;
+  padding-top: .9rem;
+  padding-bottom: .8rem;
+  margin-top: .2rem;
 
   span {
     display: inline-block;
-    border-bottom: solid 0.2rem transparent;
+    border-bottom: solid .2rem transparent;
   }
 
   &:hover span {
@@ -41,7 +37,8 @@
   opacity: 0;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 300ms ease-out 100ms, opacity 200ms ease-in-out 100ms;
+  transition: max-height 300ms ease-out 100ms,
+              opacity 200ms ease-in-out 100ms;
   position: absolute;
   top: $main-header-navbar-height;
   background-color: $color-neutral-grey1;
@@ -74,7 +71,7 @@
   font-weight: 500;
 
   svg {
-    margin: 0.5rem 1.5rem 0.5rem 0;
+    margin: .5rem 1.5rem .5rem 0;
   }
 
   &:hover {
@@ -82,39 +79,6 @@
 
     svg {
       fill: $color-primary-red;
-    }
-  }
-}
-
-@include respond-to(medium-screen) {
-  .SubmenuButton {
-    display: none;
-  }
-
-  .SubmenuPanel {
-    opacity: 1;
-    max-height: initial;
-    overflow: hidden;
-    position: relative;
-    width: $responsive-header-navbar-width;
-    top: 0;
-    padding-top: 0.4rem;
-    border-top: 0.2rem solid $color-neutral-grey2;
-  }
-
-  .SubmenuItems {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: initial;
-    left: 0;
-    position: relative;
-    transform: initial;
-    padding: 0;
-
-    a {
-      height: 4.8rem;
-      padding-left: $responsive-header-navbar-padding-left;
-      width: 100%;
     }
   }
 }
