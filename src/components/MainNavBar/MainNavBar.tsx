@@ -1,7 +1,7 @@
-import React, { FunctionComponent, useState, useContext } from 'react';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from 'components/MainNavSubmenu/MainNavSubmenu';
+import React, { useState, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AppContext } from 'AppState';
 import {
@@ -17,12 +17,11 @@ import { ComponentChildren } from 'App.types';
 export interface MainNavLinkProps {
   to: string;
   children: ComponentChildren;
-  title: string;
   onFocus?: () => void;
   onMouseEnter?: () => void;
 }
 
-function MainNavLink({ children, to, title, ...rest }: MainNavLinkProps) {
+function MainNavLink({ children, to, ...rest }: MainNavLinkProps) {
   return (
     <NavLink to={to} className={styles.MainNavLink} {...rest}>
       {children}
@@ -73,7 +72,6 @@ function getMenuItem(
       to={item.to}
       onFocus={() => setSubMenuVisibility(item.id)}
       onMouseEnter={() => setSubMenuVisibility(item.id)}
-      title={item.title}
     >
       {item.title}
     </MainNavLink>
