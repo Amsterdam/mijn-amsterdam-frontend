@@ -81,6 +81,26 @@
 }
 
 @include respond-to(medium-screen) {
+  .topBar {
+    height: $responsive-header-topbar-height;
+
+    @include select(Heading) {
+      margin: 0.5rem 0 0 2rem;
+      font-size: 1.8rem;
+    }
+  }
+
+  .logo {
+    left: 1rem;
+    top: -1rem;
+    width: 8rem;
+  }
+
+  .betaLabel {
+    height: 3rem;
+    width: 3rem;
+  }
+
   .Modal {
     &Open {
       display: block;
