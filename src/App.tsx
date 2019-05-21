@@ -83,7 +83,11 @@ export default function App() {
       <SessionState
         render={session => {
           if (session.isLoading) {
-            return <p>...</p>;
+            return (
+              <p className={styles.PreLoader}>
+                Mijn amsterdam wordt geladen...
+              </p>
+            );
           }
           // Render the main app only if we are authenticated
           return session.isAuthenticated ? (

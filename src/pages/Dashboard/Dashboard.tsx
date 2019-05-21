@@ -11,6 +11,7 @@ import PageContentMainHeading from 'components/PageContentMainHeading/PageConten
 import React, { useContext } from 'react';
 
 import styles from './Dashboard.module.scss';
+import LoadingContent from '../../components/LoadingContent/LoadingContent';
 
 const MAX_UPDATES_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
@@ -20,11 +21,12 @@ export default () => {
     MY_UPDATES,
     MY_CASES: {
       data: { items: myCases },
+      isLoading: isMyCasesLoading,
     },
     MY_TIPS: {
       data: { items: myTips },
     },
-    MY_CHAPTERS,
+    MY_CHAPTERS: { items: myChapterItems, isLoading: isMyChaptersLoading },
   } = useContext(AppContext);
 
   const tipItems = myTips.slice(0, MAX_TIPS_VISIBLE);
@@ -32,19 +34,33 @@ export default () => {
   return (
     <PageContentMain className={styles.Dashboard} variant="full">
       <PageContentMainHeading variant="medium">
-        Mijn meldingen&nbsp;
-        {actualUpdateItems.length > MAX_UPDATES_VISIBLE && (
-          <span>({actualUpdateItems.length})</span>
+        {MY_UPDATES.isLoading ? (
+          <LoadingContent barConfig={[['50%', '3rem', '2rem']]} />
+        ) : (
+          'Mijn meldingen'
         )}
+        {!MY_UPDATES.isLoading &&
+          actualUpdateItems.length > MAX_UPDATES_VISIBLE && (
+            <span>&nbsp;({actualUpdateItems.length})</span>
+          )}
       </PageContentMainHeading>
       <PageContentMainBody variant="regularBoxed" className={styles.FirstBody}>
         <MyUpdates
           total={actualUpdateItems.length}
           items={actualUpdateItems.slice(0, MAX_UPDATES_VISIBLE)}
           showMoreLink={MY_UPDATES.total > 0}
+          isLoading={MY_UPDATES.isLoading}
         />
-        <MyChaptersPanel items={MY_CHAPTERS} title="Mijn thema's" />
-        <MyCases title="Mijn lopende aanvragen" items={myCases} />
+        <MyChaptersPanel
+          isLoading={isMyChaptersLoading}
+          items={myChapterItems}
+          title="Mijn thema's"
+        />
+        <MyCases
+          isLoading={!!isMyCasesLoading}
+          title="Mijn lopende aanvragen"
+          items={myCases}
+        />
       </PageContentMainBody>
       <PageContentMainBody>
         <MyArea />

@@ -18,6 +18,7 @@ export interface MyUpdate {
 export type MyUpdatesApiState = {
   items: MyUpdate[];
   total: number;
+  isLoading: boolean;
 };
 
 interface MyUpdatesState {
@@ -48,5 +49,6 @@ export default ({ FOCUS }: Pick<AppState, 'FOCUS'>): MyUpdatesApiState => {
   return {
     items,
     total: items.length,
+    isLoading: !!FOCUS.isLoading,
   };
 };

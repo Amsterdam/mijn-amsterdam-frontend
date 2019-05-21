@@ -42,14 +42,24 @@ interface useMyChaptersProps {
   ERFPACHT: ErfpachtApiState;
 }
 
-export default function useMyChapters(apiStates: useMyChaptersProps) {
+export interface MyChaptersApiState {
+  items: MenuItem[];
+  isLoading: boolean;
+}
+
+export default function useMyChapters(
+  apiStates: useMyChaptersProps
+): MyChaptersApiState {
   const { WMO, FOCUS, ERFPACHT } = apiStates;
   const availableChapters = useCallback(() => {
     const items = myChaptersMenuItems.filter(item => {
       return isChapterActive(item, apiStates);
     });
 
-    return items;
+    return {
+      items,
+      isLoading: !!(WMO.isLoading && FOCUS.isLoading && ERFPACHT.isLoading),
+    };
   }, [WMO.isLoading, FOCUS.isLoading, ERFPACHT.isLoading]);
 
   return availableChapters();

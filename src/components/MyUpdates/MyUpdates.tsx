@@ -10,20 +10,24 @@ import React from 'react';
 import useRouter from 'use-react-router';
 
 import styles from './MyUpdates.module.scss';
+import LoadingContent from 'components/LoadingContent/LoadingContent';
 
 export interface MyUpdatesProps {
   items: MyUpdate[];
   total: number;
   showMoreLink?: boolean;
+  isLoading?: boolean;
 }
 
 export default function MyUpdates({
   items = [],
   total = 0,
   showMoreLink = false,
+  isLoading = true,
 }: MyUpdatesProps) {
   const [myUpdatesState, setMyUpdatesState] = useUpdatesState();
   const { history } = useRouter();
+  const hasItems = !!items.length;
 
   function showUpdate(id: string, to: string) {
     setMyUpdatesState({
@@ -35,9 +39,15 @@ export default function MyUpdates({
       history.push(to);
     }, 0);
   }
+
   return (
-    <div className={styles.MyUpdates}>
+    <div className={classnames(styles.MyUpdates, styles.isLoading)}>
       <ul>
+        {isLoading && (
+          <li className={classnames(styles.MyUpdateItem, styles.FakeContent)}>
+            <LoadingContent />
+          </li>
+        )}
         {items.map(item => {
           return (
             <li
@@ -81,10 +91,10 @@ export default function MyUpdates({
           );
         })}
       </ul>
-      {items.length === 0 && (
+      {!isLoading && items.length === 0 && (
         <p>Er zijn op het moment geen actuele meldingen</p>
       )}
-      {showMoreLink && (
+      {!isLoading && showMoreLink && (
         <p className={styles.FooterLink}>
           <ButtonLink to={AppRoutes.MY_UPDATES}>Alle meldingen</ButtonLink>
         </p>

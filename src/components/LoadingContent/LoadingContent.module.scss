@@ -1,0 +1,31 @@
+@import 'styles/_global.scss';
+
+@keyframes placeHolderShimmer{
+  0%{
+    background-position: -1168px 0
+  }
+  100%{
+    background-position: 1168px 0
+  }
+}
+
+.LoadingContent {
+  > div {
+    height: 1rem;
+    margin-bottom: 1rem;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: $color-neutral-grey2;
+    background: linear-gradient(to right, $color-neutral-grey1 8%, $color-neutral-grey2 18%, $color-neutral-grey1 33%);
+    background-size: 1200px 104px;
+  }
+
+  &.DarkMode > div {
+    background: $color-neutral-grey4;
+    background: linear-gradient(to right, $color-neutral-grey3 8%, $color-neutral-grey4 18%, $color-neutral-grey3 33%);
+    background-size: 1200px 104px;
+  }
+}

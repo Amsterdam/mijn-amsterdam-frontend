@@ -18,6 +18,7 @@ export interface MenuItem extends LinkProps {
   id: MainMenuId;
   Icon?: SVGComponent;
   submenuItems?: MenuItem[];
+  isLoading?: boolean;
 }
 
 export const mainMenuItemId: { [key: string]: MainMenuId } = {

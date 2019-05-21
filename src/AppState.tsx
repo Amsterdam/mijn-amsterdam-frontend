@@ -13,6 +13,7 @@ import useFocusApi, { FocusApiState } from './hooks/api/api.focus';
 import useMyChapters from 'hooks/myChapters.hook';
 import { MenuItem } from './components/MainNavBar/MainNavBar.constants';
 import useErfpachtApi, { ErfpachtApiState } from './hooks/api/api.erfpacht';
+import { MyChaptersApiState } from './hooks/myChapters.hook';
 
 export interface AppState {
   BRP: BrpApiState;
@@ -22,7 +23,7 @@ export interface AppState {
   MY_TIPS: MyTipsApiState;
   WMO: WmoApiState;
   FOCUS: FocusApiState;
-  MY_CHAPTERS: MenuItem[];
+  MY_CHAPTERS: MyChaptersApiState;
   ERFPACHT: ErfpachtApiState;
 }
 
