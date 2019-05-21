@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './MainFooter.module.scss';
 import ButtonLink, {
   ButtonLinkExternal,
@@ -6,13 +6,37 @@ import ButtonLink, {
 import { ExternalUrls, AppRoutes } from 'App.constants';
 import { LinkList } from './MainFooter.constants';
 import classnames from 'classnames';
+import { useLargeScreen } from 'hooks/media.hook';
+
+interface PanelState {
+  [panelId: string]: boolean;
+}
 
 export default function MainFooter() {
+  const [panelStates, setPanelState] = useState<PanelState>({});
+  function togglePanel(panelId: string) {
+    const isOpen = !panelStates[panelId];
+    setPanelState({
+      ...panelStates,
+      [panelId]: isOpen,
+    });
+  }
+
+  const titleRole = useLargeScreen() ? 'columnheader' : 'button';
+
   return (
     <footer className={styles.MainFooter}>
       <div className={classnames(styles.TopBar, styles.InnerContainer)}>
-        <div className={styles.ContactPanel}>
-          <h3>Contact</h3>
+        <div
+          className={classnames(
+            styles.Panel,
+            styles.ContactPanel,
+            panelStates.Contact && styles.PanelOpen
+          )}
+        >
+          <h3 role={titleRole} onClick={() => togglePanel('Contact')}>
+            Contact
+          </h3>
           <p>
             Hebt u een vraag en kunt u het antwoord niet vinden op deze website?
             Neem dan contact met ons op.
@@ -41,8 +65,16 @@ export default function MainFooter() {
             </li>
           </ul>
         </div>
-        <div className={styles.FollowPanel}>
-          <h3>Volg de gemeente</h3>
+        <div
+          className={classnames(
+            styles.Panel,
+            styles.FollowPanel,
+            panelStates.Follow && styles.PanelOpen
+          )}
+        >
+          <h3 role={titleRole} onClick={() => togglePanel('Follow')}>
+            Volg de gemeente
+          </h3>
           <ul>
             {LinkList.map(({ to, title }) => (
               <li key={title}>
@@ -53,8 +85,16 @@ export default function MainFooter() {
             ))}
           </ul>
         </div>
-        <div className={styles.TodoPanel}>
-          <h3>Uit in Amsterdam</h3>
+        <div
+          className={classnames(
+            styles.Panel,
+            styles.TodoPanel,
+            panelStates.Todo && styles.PanelOpen
+          )}
+        >
+          <h3 role={titleRole} onClick={() => togglePanel('Todo')}>
+            Uit in Amsterdam
+          </h3>
           <p>
             Wat is er te doen in Amsterdam? Informatie over toerisme, cultuur,
             uitgaan, evenementen en meer vindt u op{' '}
@@ -64,7 +104,7 @@ export default function MainFooter() {
       </div>
       <div className={styles.BottomBar}>
         <div className={styles.InnerContainer}>
-          <ButtonLink to={AppRoutes.ABOUT}>Over mijn Amsterdam</ButtonLink>
+          <ButtonLink to={AppRoutes.ABOUT}>Over deze site</ButtonLink>
           <ButtonLink to={AppRoutes.PRIVACY}>Privacy</ButtonLink>
         </div>
       </div>

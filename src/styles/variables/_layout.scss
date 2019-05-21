@@ -1,5 +1,6 @@
 $main-max-width: 100%;
 $main-boxed-width: 94rem;
+$main-min-width: 32rem;
 
 $main-header-topbar-height: 10.6rem;
 $main-header-navbar-height: 4.4rem;
@@ -10,7 +11,10 @@ $main-header-hero-border-top-color: $color-neutral-grey1;
 $main-header-total-height: $main-header-topbar-height +
   $main-header-navbar-height + $main-header-hero-height -
   $main-header-hero-heading-overlap;
-$responsive-header-navbar-width: 35rem;
+$responsive-header-navbar-width: $main-min-width;
 $responsive-header-navbar-padding-left: 1rem;
+$responsive-header-topbar-height: 6rem;
+$medium-screen-content-margin: 2.8rem;
+$small-screen-content-margin: 1.5rem;
 
 $main-footer-min-height: 20rem;

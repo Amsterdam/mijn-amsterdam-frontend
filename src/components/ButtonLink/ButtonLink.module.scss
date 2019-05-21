@@ -62,14 +62,3 @@
     transform: translateY(-50%);
   }
 }
-
-@include respond-to(medium-screen) {
-  .ButtonLink {
-    &:not(.IconLink) {
-      background-image: none;
-      &:hover {
-        background-image: none;
-      }
-    }
-  }
-}

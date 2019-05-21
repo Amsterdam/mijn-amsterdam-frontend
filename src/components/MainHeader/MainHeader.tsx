@@ -1,6 +1,7 @@
 import { AppRoutes, ExternalUrls, LOGOUT_URL, Layout } from 'App.constants';
 import { ReactComponent as BetaLabel } from 'assets/images/beta-label.svg';
 import { ReactComponent as AmsterdamLogoLarge } from 'assets/images/logo-amsterdam-large.svg';
+import { ReactComponent as AmsterdamLogo } from 'assets/images/logo-amsterdam.svg';
 import classnames from 'classnames';
 import MainHeaderHero from 'components/MainHeaderHero/MainHeaderHero';
 import MainNavBar from 'components/MainNavBar/MainNavBar';
@@ -17,6 +18,7 @@ import {
 import Heading from 'components/Heading/Heading';
 import { Person } from 'data-formatting/brp';
 import useRouter from 'use-react-router';
+import { useLargeScreen } from 'hooks/media.hook';
 
 const MenuWrapperId = 'MenuWrapper';
 const MenuToggleBtnId = 'MenuToggleBtn';
@@ -82,11 +84,13 @@ export default function MainHeader({
     toggleResponsiveMenu(false);
   }, [history.location]);
 
+  const Logo = useLargeScreen() ? AmsterdamLogoLarge : AmsterdamLogo;
+
   return (
     <header className={styles.header}>
       <div className={styles.topBar}>
         <span className={styles.logoLink}>
-          <AmsterdamLogoLarge
+          <Logo
             role="img"
             aria-label="Amsterdam logo"
             className={styles.logo}
