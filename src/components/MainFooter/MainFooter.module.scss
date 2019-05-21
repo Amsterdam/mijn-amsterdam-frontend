@@ -48,11 +48,12 @@
   }
 }
 
+.ContactPanel {
+  width: 80rem;
+}
+
 .FollowPanel {
   margin: 0 3rem;
-  li {
-    white-space: nowrap;
-  }
 }
 
 @include respond-to(medium-screen) {
