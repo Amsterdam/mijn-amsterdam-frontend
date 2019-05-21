@@ -81,6 +81,12 @@
       > :not(:first-child) {
         display: block;
       }
+
+      h3 {
+        &:before {
+          transform: rotate(-90deg);
+        }
+      }
     }
 
     h3 {

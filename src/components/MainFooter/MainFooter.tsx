@@ -6,6 +6,7 @@ import ButtonLink, {
 import { ExternalUrls, AppRoutes } from 'App.constants';
 import { LinkList } from './MainFooter.constants';
 import classnames from 'classnames';
+import { isLargeScreen } from 'helpers/Media';
 
 export default function MainFooter() {
   const [panelStates, setPanelState] = useState({} as any);
@@ -17,6 +18,8 @@ export default function MainFooter() {
     });
   }
 
+  const titleRole = isLargeScreen() ? 'columnheader' : 'button';
+
   return (
     <footer className={styles.MainFooter}>
       <div className={classnames(styles.TopBar, styles.InnerContainer)}>
@@ -27,7 +30,9 @@ export default function MainFooter() {
             panelStates.Contact && styles.PanelOpen
           )}
         >
-          <h3 onClick={() => togglePanel('Contact')}>Contact</h3>
+          <h3 role={titleRole} onClick={() => togglePanel('Contact')}>
+            Contact
+          </h3>
           <p>
             Hebt u een vraag en kunt u het antwoord niet vinden op deze website?
             Neem dan contact met ons op.
@@ -63,7 +68,9 @@ export default function MainFooter() {
             panelStates.Follow && styles.PanelOpen
           )}
         >
-          <h3 onClick={() => togglePanel('Follow')}>Volg de gemeente</h3>
+          <h3 role={titleRole} onClick={() => togglePanel('Follow')}>
+            Volg de gemeente
+          </h3>
           <ul>
             {LinkList.map(({ to, title }) => (
               <li key={title}>
@@ -81,7 +88,9 @@ export default function MainFooter() {
             panelStates.Todo && styles.PanelOpen
           )}
         >
-          <h3 onClick={() => togglePanel('Todo')}>Uit in Amsterdam</h3>
+          <h3 role={titleRole} onClick={() => togglePanel('Todo')}>
+            Uit in Amsterdam
+          </h3>
           <p>
             Wat is er te doen in Amsterdam? Informatie over toerisme, cultuur,
             uitgaan, evenementen en meer vindt u op{' '}
