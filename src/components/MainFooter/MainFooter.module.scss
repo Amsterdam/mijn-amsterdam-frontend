@@ -45,8 +45,16 @@
   }
 }
 
+.ContactPanel {
+  width: 80rem;
+}
+
 .FollowPanel {
   margin: 0 3rem;
+  width: 60rem;
+}
+
+.TodoPanel {
 }
 
 @include respond-to(medium-screen) {
