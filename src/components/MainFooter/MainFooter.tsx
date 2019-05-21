@@ -6,7 +6,7 @@ import ButtonLink, {
 import { ExternalUrls, AppRoutes } from 'App.constants';
 import { LinkList } from './MainFooter.constants';
 import classnames from 'classnames';
-import { isLargeScreen } from 'helpers/Media';
+import { useLargeScreen } from 'hooks/media.hook';
 
 export default function MainFooter() {
   const [panelStates, setPanelState] = useState({} as any);
@@ -18,7 +18,7 @@ export default function MainFooter() {
     });
   }
 
-  const titleRole = isLargeScreen() ? 'columnheader' : 'button';
+  const titleRole = useLargeScreen() ? 'columnheader' : 'button';
 
   return (
     <footer className={styles.MainFooter}>

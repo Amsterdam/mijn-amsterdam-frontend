@@ -37,7 +37,7 @@ function MainApp({ appState: { SESSION, BRP } }: MainAppProps) {
   return location.pathname === AppRoutes.MY_AREA ? (
     <MyArea />
   ) : (
-    <div className={styles.App}>
+    <>
       <MainHeader
         person={BRP.person}
         isAuthenticated={SESSION.isAuthenticated}
@@ -73,7 +73,7 @@ function MainApp({ appState: { SESSION, BRP } }: MainAppProps) {
         </Switch>
       </div>
       <MainFooter />
-    </div>
+    </>
   );
 }
 

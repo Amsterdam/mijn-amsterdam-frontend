@@ -73,24 +73,8 @@
   }
 
   .Panel {
-    > *:not(h3) {
-      margin-left: $medium-screen-content-margin;
-    }
-
     > :not(:first-child) {
       display: none;
-    }
-
-    &Open {
-      > :not(:first-child) {
-        display: block;
-      }
-
-      h3 {
-        &:before {
-          transform: rotate(-90deg);
-        }
-      }
     }
 
     h3 {
@@ -110,6 +94,22 @@
         margin-left: -2.8rem;
         margin-bottom: -2rem;
       }
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &Open {
+      > :not(:first-child) {
+        display: block;
+      }
+
+      h3 {
+        &:before {
+          transform: rotate(-90deg);
+        }
+      }
     }
   }
 }
@@ -117,9 +117,5 @@
 @include respond-to(small-screen) {
   .InnerContainer {
     padding-left: $small-screen-content-margin;
-  }
-
-  > *:not(h3) {
-    margin-left: $medium-screen-content-margin;
   }
 }

@@ -3,7 +3,7 @@
 .App {
   min-height: calc(100vh - #{$main-header-total-height});
   min-width: $main-min-width;
-  position: relative;
+  padding-bottom: 6rem;
 }
 
 .NotYetAuthenticated {

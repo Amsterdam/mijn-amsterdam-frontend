@@ -1,5 +1,11 @@
 @import 'styles/_global.scss';
 
+.header {
+  width: 100%;
+  min-width: $main-min-width;
+  position: relative;
+}
+
 .topBar {
   width: 100%;
   max-width: $main-boxed-width;
@@ -124,7 +130,8 @@
       border-top: 0.1rem solid $color-neutral-grey2;
       height: 4rem;
 
-      // Target a specific anchor with high CSS specificity
+      // ButtonLinks do not need chevron backgrounds in de footer. In order to
+      // target the ButtonLinks we need high CSS specificity
       &:not(.IconLink) {
         background-image: none;
         &:hover {

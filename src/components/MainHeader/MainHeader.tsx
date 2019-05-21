@@ -18,7 +18,7 @@ import {
 import Heading from 'components/Heading/Heading';
 import { Person } from 'data-formatting/brp';
 import useRouter from 'use-react-router';
-import { isLargeScreen } from 'helpers/Media';
+import { useLargeScreen } from 'hooks/media.hook';
 
 const MenuWrapperId = 'MenuWrapper';
 const MenuToggleBtnId = 'MenuToggleBtn';
@@ -84,7 +84,7 @@ export default function MainHeader({
     toggleResponsiveMenu(false);
   }, [history.location]);
 
-  const Logo = isLargeScreen() ? AmsterdamLogoLarge : AmsterdamLogo;
+  const Logo = useLargeScreen() ? AmsterdamLogoLarge : AmsterdamLogo;
 
   return (
     <header className={styles.header}>
