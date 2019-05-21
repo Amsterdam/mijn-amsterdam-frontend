@@ -8,8 +8,12 @@ import { LinkList } from './MainFooter.constants';
 import classnames from 'classnames';
 import { useLargeScreen } from 'hooks/media.hook';
 
+interface PanelState {
+  [panelId: string]: boolean;
+}
+
 export default function MainFooter() {
-  const [panelStates, setPanelState] = useState({} as any);
+  const [panelStates, setPanelState] = useState<PanelState>({});
   function togglePanel(panelId: string) {
     const isOpen = !panelStates[panelId];
     setPanelState({
