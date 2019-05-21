@@ -52,7 +52,7 @@
 @include respond-to(medium-screen) {
   .InnerContainer {
     width: 100%;
-    padding-left: 2.8rem;
+    padding-left: $medium-screen-content-margin;
   }
 
   .TopBar {
@@ -73,6 +73,10 @@
   }
 
   .Panel {
+    > *:not(h3) {
+      margin-left: $medium-screen-content-margin;
+    }
+
     > :not(:first-child) {
       display: none;
     }
@@ -107,5 +111,15 @@
         margin-bottom: -2rem;
       }
     }
+  }
+}
+
+@include respond-to(small-screen) {
+  .InnerContainer {
+    padding-left: $small-screen-content-margin;
+  }
+
+  > *:not(h3) {
+    margin-left: $medium-screen-content-margin;
   }
 }
