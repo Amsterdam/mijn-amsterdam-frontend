@@ -1,7 +1,14 @@
 @import 'styles/_global.scss';
 
+.header {
+  width: 100%;
+  min-width: $main-min-width;
+  position: relative;
+}
+
 .topBar {
-  width: $main-boxed-width;
+  width: 100%;
+  max-width: $main-boxed-width;
   height: $main-header-topbar-height;
   margin: 0 auto;
 
@@ -81,6 +88,26 @@
 }
 
 @include respond-to(medium-screen) {
+  .topBar {
+    height: $responsive-header-topbar-height;
+
+    @include select(Heading) {
+      margin: 0.5rem 0 0 2rem;
+      font-size: 1.8rem;
+    }
+  }
+
+  .logo {
+    left: 1rem;
+    top: -1rem;
+    width: 8rem;
+  }
+
+  .betaLabel {
+    height: 3rem;
+    width: 3rem;
+  }
+
   .Modal {
     &Open {
       display: block;
@@ -102,6 +129,16 @@
       padding-top: 1rem;
       border-top: 0.1rem solid $color-neutral-grey2;
       height: 4rem;
+
+      // ButtonLinks do not need chevron backgrounds in de footer. In order to
+      // target the ButtonLinks we need high CSS specificity
+      &:not(.IconLink) {
+        background-image: none;
+        &:hover {
+          background-image: none;
+        }
+      }
+
       svg {
         display: none;
       }

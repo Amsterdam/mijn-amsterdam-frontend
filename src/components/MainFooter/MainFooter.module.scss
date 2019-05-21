@@ -3,8 +3,6 @@
 .MainFooter {
   background-color: $color-neutral-grey4;
   min-height: $main-footer-min-height;
-  padding-bottom: 4.4rem;
-  position: relative;
 }
 
 .InnerContainer {
@@ -16,7 +14,8 @@
   display: flex;
   padding: 3rem 0 5rem;
 
-  &, a {
+  &,
+  a {
     color: $color-white;
   }
 
@@ -38,10 +37,6 @@
 .BottomBar {
   background-color: $color-white;
   height: 4.4rem;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
   padding-top: 1rem;
 
   a {
@@ -50,14 +45,77 @@
   }
 }
 
-.ContactPanel {
-
-}
-
 .FollowPanel {
   margin: 0 3rem;
 }
 
-.TodoPanel {
+@include respond-to(medium-screen) {
+  .InnerContainer {
+    width: 100%;
+    padding-left: $medium-screen-content-margin;
+  }
 
+  .TopBar {
+    display: block;
+    padding-top: 2rem;
+    padding-bottom: 1.5rem;
+    padding-right: 2rem;
+  }
+
+  .BottomBar {
+    a {
+      margin-right: 3rem;
+    }
+  }
+
+  .FollowPanel {
+    margin: 0;
+  }
+
+  .Panel {
+    > :not(:first-child) {
+      display: none;
+    }
+
+    h3 {
+      padding-left: 2.8rem;
+      margin-top: 2rem;
+      cursor: pointer;
+      width: fit-content;
+
+      &:before {
+        content: '';
+        background-image: url('assets/icons/Chevron-Right__primary-white.svg');
+        display: block;
+        width: 1.5rem;
+        height: 1.5rem;
+        background-size: 1.5rem;
+        transform: rotate(90deg);
+        margin-left: -2.8rem;
+        margin-bottom: -2rem;
+      }
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &Open {
+      > :not(:first-child) {
+        display: block;
+      }
+
+      h3 {
+        &:before {
+          transform: rotate(-90deg);
+        }
+      }
+    }
+  }
+}
+
+@include respond-to(small-screen) {
+  .InnerContainer {
+    padding-left: $small-screen-content-margin;
+  }
 }
