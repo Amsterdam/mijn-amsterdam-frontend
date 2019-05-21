@@ -21,6 +21,7 @@
     background: $color-neutral-grey2;
     background: linear-gradient(to right, $color-neutral-grey1 8%, $color-neutral-grey2 18%, $color-neutral-grey1 33%);
     background-size: 1200px 104px;
+    border-radius: 2px;
   }
 
   &.DarkMode > div {
