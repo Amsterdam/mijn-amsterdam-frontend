@@ -102,6 +102,15 @@
       padding-top: 1rem;
       border-top: 0.1rem solid $color-neutral-grey2;
       height: 4rem;
+
+      // Target a specific anchor with high CSS specificity
+      &:not(.IconLink) {
+        background-image: none;
+        &:hover {
+          background-image: none;
+        }
+      }
+
       svg {
         display: none;
       }
