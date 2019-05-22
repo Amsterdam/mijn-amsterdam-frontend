@@ -27,7 +27,6 @@ export default function MyUpdates({
 }: MyUpdatesProps) {
   const [myUpdatesState, setMyUpdatesState] = useUpdatesState();
   const { history } = useRouter();
-  const hasItems = !!items.length;
 
   function showUpdate(id: string, to: string) {
     setMyUpdatesState({
@@ -48,48 +47,49 @@ export default function MyUpdates({
             <LoadingContent />
           </li>
         )}
-        {items.map(item => {
-          return (
-            <li
-              key={item.id}
-              className={classnames(
-                styles.MyUpdateItem,
-                item.isUnread && styles.isUnread
-              )}
-            >
-              <ChapterIcon
-                fill={Colors.primaryRed}
-                className={styles.Icon}
-                chapter={item.chapter}
-              />
-              <aside>
-                <em className={styles.ChapterIndication}>
-                  {item.chapter.toLowerCase()}
-                </em>
-                <time className={styles.Datum} dateTime={item.datePublished}>
-                  {defaultDateFormat(item.datePublished)}
-                </time>
-              </aside>
-              <Heading el="h4" size="small">
-                {item.title}
-              </Heading>
-              {!!item.description && (
-                <p className={styles.Description}>{item.description}</p>
-              )}
-              <p className={styles.Action}>
-                <a
-                  role="button"
-                  className={ButtonLinkStyles.ButtonLink}
-                  onClick={() => {
-                    showUpdate(item.id, item.link.to);
-                  }}
-                >
-                  {item.link.title}
-                </a>
-              </p>
-            </li>
-          );
-        })}
+        {!isLoading &&
+          items.map(item => {
+            return (
+              <li
+                key={item.id}
+                className={classnames(
+                  styles.MyUpdateItem,
+                  item.isUnread && styles.isUnread
+                )}
+              >
+                <ChapterIcon
+                  fill={Colors.primaryRed}
+                  className={styles.Icon}
+                  chapter={item.chapter}
+                />
+                <aside>
+                  <em className={styles.ChapterIndication}>
+                    {item.chapter.toLowerCase()}
+                  </em>
+                  <time className={styles.Datum} dateTime={item.datePublished}>
+                    {defaultDateFormat(item.datePublished)}
+                  </time>
+                </aside>
+                <Heading el="h4" size="small">
+                  {item.title}
+                </Heading>
+                {!!item.description && (
+                  <p className={styles.Description}>{item.description}</p>
+                )}
+                <p className={styles.Action}>
+                  <a
+                    role="button"
+                    className={ButtonLinkStyles.ButtonLink}
+                    onClick={() => {
+                      showUpdate(item.id, item.link.to);
+                    }}
+                  >
+                    {item.link.title}
+                  </a>
+                </p>
+              </li>
+            );
+          })}
       </ul>
       {!isLoading && items.length === 0 && (
         <p>Er zijn op het moment geen actuele meldingen</p>

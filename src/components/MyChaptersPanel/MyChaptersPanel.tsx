@@ -35,7 +35,6 @@ export default function MyChaptersPanel({
       {isLoading && (
         <LoadingContent
           className={styles.LoadingContent}
-          darkMode={true}
           barConfig={[
             ['4rem', '4rem', '1rem'],
             ['auto', '2rem', '0'],

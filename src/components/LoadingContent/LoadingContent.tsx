@@ -9,7 +9,6 @@ export interface ComponentProps {
   children?: ComponentChildren;
   barConfig?: BarConfig;
   className?: any;
-  darkMode?: boolean;
 }
 
 const defaultBarConfig = [
@@ -23,16 +22,9 @@ export default function LoadingContent({
   children,
   barConfig = defaultBarConfig,
   className,
-  darkMode = false,
 }: ComponentProps) {
   return (
-    <div
-      className={classnames(
-        styles.LoadingContent,
-        darkMode && styles.DarkMode,
-        className
-      )}
-    >
+    <div className={classnames(styles.LoadingContent, className)}>
       {barConfig.map(([width, height, marginBottom], index) => {
         return (
           <div

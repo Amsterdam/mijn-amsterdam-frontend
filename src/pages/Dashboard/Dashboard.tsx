@@ -25,6 +25,7 @@ export default () => {
     },
     MY_TIPS: {
       data: { items: myTips },
+      isLoading: isMyTipsLoading,
     },
     MY_CHAPTERS: { items: myChapterItems, isLoading: isMyChaptersLoading },
   } = useContext(AppContext);
@@ -66,7 +67,7 @@ export default () => {
         <MyArea />
       </PageContentMainBody>
       <PageContentMainBody variant="regularBoxed">
-        {!!tipItems.length && <MyTips items={tipItems} />}
+        <MyTips isLoading={!!isMyTipsLoading} items={tipItems} />
         <DirectLinks />
       </PageContentMainBody>
     </PageContentMain>

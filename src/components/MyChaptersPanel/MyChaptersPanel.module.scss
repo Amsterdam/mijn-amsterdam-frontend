@@ -23,7 +23,6 @@
   display: grid;
   grid-template-columns: 4rem 1rem 12rem;
   grid-template-rows: 4rem 1rem 4rem;
-  opacity: 0.2;
 
   > :nth-child(2) {
     grid-column: 3;
