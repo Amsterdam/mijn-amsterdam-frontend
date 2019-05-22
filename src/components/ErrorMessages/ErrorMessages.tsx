@@ -8,69 +8,21 @@ import React, { DOMElement, useContext, useRef, useState } from 'react';
 
 import styles from './ErrorMessages.module.scss';
 
-interface Error {
+export interface Error {
   name: string;
   error: string;
 }
 
+export type ErrorMessageMap = Partial<Record<StateKey, Error>>;
+
 interface ComponentProps {
   className?: any;
+  errors: Error[];
 }
 
-type ErrorMessageMap = Partial<Record<StateKey, Error>>;
-
-const errorMessageMap: ErrorMessageMap = {
-  BRP: {
-    name: 'Persoonsgegevens',
-    error: 'Communicatie met api mislukt.',
-  },
-  MY_UPDATES: {
-    name: 'Mijn meldingen',
-    error: 'Communicatie met api mislukt.',
-  },
-  MY_CASES: {
-    name: 'Mijn lopende aanvragen',
-    error: 'Communicatie met api mislukt.',
-  },
-  MY_TIPS: {
-    name: 'Mijn tips',
-    error: 'Communicatie met api mislukt.',
-  },
-  WMO: {
-    name: 'Zorg',
-    error: 'Communicatie met api mislukt.',
-  },
-  FOCUS: {
-    name: 'Stadspas of Bijstandsuitkering',
-    error: 'Communicatie met api mislukt.',
-  },
-  ERFPACHT: {
-    name: 'Erfpacht',
-    error: 'Communicatie met api mislukt.',
-  },
-};
-
-const excludedApiKeys: StateKey[] = ['MY_CHAPTERS', 'SESSION'];
-
-export default function ErrorMessages({ className }: ComponentProps) {
-  const appState = useContext(AppContext);
+export default function ErrorMessages({ className, errors }: ComponentProps) {
   const el = useRef(null);
   const [isModalOpen, setModalOpen] = useState(false);
-
-  const errors = entries(appState)
-    .filter(
-      ([stateKey, state]) =>
-        !excludedApiKeys.includes(stateKey) &&
-        'isError' in state &&
-        state.isError
-    )
-    .map(
-      ([stateKey]) =>
-        errorMessageMap[stateKey] || {
-          name: stateKey,
-          error: 'Communicatie met api mislukt.',
-        }
-    );
 
   return (
     <div ref={el} className={classnames(styles.ErrorMessages, className)}>

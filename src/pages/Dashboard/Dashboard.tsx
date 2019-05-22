@@ -35,6 +35,7 @@ export default () => {
 
   const tipItems = myTips.slice(0, MAX_TIPS_VISIBLE);
   const actualUpdateItems = myUpdateItems.filter(item => item.isActual);
+
   return (
     <PageContentMain className={styles.Dashboard} variant="full">
       <PageContentMainHeading variant="medium">

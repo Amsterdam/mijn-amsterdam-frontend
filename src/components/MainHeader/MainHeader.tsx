@@ -22,7 +22,11 @@ import { useLargeScreen } from 'hooks/media.hook';
 
 const MenuWrapperId = 'MenuWrapper';
 const MenuToggleBtnId = 'MenuToggleBtn';
-import ErrorMessages from 'components/ErrorMessages/ErrorMessages';
+import ErrorMessages, {
+  ErrorMessageMap,
+} from 'components/ErrorMessages/ErrorMessages';
+import { entries } from 'helpers/App';
+import { AppContext, StateKey } from 'AppState';
 
 interface SecondaryLinksProps {
   person: Person | null;
@@ -55,12 +59,60 @@ export interface MainHeaderProps {
   isAuthenticated?: boolean;
 }
 
+const errorMessageMap: ErrorMessageMap = {
+  BRP: {
+    name: 'Persoonsgegevens',
+    error: 'Communicatie met api mislukt.',
+  },
+  MY_UPDATES: {
+    name: 'Mijn meldingen',
+    error: 'Communicatie met api mislukt.',
+  },
+  MY_CASES: {
+    name: 'Mijn lopende aanvragen',
+    error: 'Communicatie met api mislukt.',
+  },
+  MY_TIPS: {
+    name: 'Mijn tips',
+    error: 'Communicatie met api mislukt.',
+  },
+  WMO: {
+    name: 'Zorg',
+    error: 'Communicatie met api mislukt.',
+  },
+  FOCUS: {
+    name: 'Stadspas of Bijstandsuitkering',
+    error: 'Communicatie met api mislukt.',
+  },
+  ERFPACHT: {
+    name: 'Erfpacht',
+    error: 'Communicatie met api mislukt.',
+  },
+};
+
+const excludedApiKeys: StateKey[] = ['MY_CHAPTERS', 'SESSION'];
+
 export default function MainHeader({
   person = null,
   isAuthenticated = false,
 }: MainHeaderProps) {
   const [responsiveMenuIsVisible, toggleResponsiveMenu] = useState(false);
   const { history } = useRouter();
+  const appState = useContext(AppContext);
+  const errors = entries(appState)
+    .filter(
+      ([stateKey, state]) =>
+        !excludedApiKeys.includes(stateKey) &&
+        'isError' in state &&
+        state.isError
+    )
+    .map(
+      ([stateKey]) =>
+        errorMessageMap[stateKey] || {
+          name: stateKey,
+          error: 'Communicatie met api mislukt.',
+        }
+    );
 
   function closeResponsiveMenu(e: any) {
     if (responsiveMenuIsVisible) {
@@ -140,7 +192,9 @@ export default function MainHeader({
         </div>
       )}
       <MainHeaderHero />
-      <ErrorMessages className={styles.ErrorMessages} />
+      {!!errors.length && (
+        <ErrorMessages errors={errors} className={styles.ErrorMessages} />
+      )}
     </header>
   );
 }
