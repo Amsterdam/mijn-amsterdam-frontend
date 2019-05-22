@@ -3,5 +3,5 @@ import { shallow } from 'enzyme';
 import MyCases from './MyCases';
 
 it('Renders without crashing', () => {
-  shallow(<MyCases />);
+  shallow(<MyCases title="testje" items={[]} isLoading={false} />);
 });
