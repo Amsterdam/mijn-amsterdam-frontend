@@ -28,10 +28,20 @@
     }
   }
 
+  &:focus {
+    background-color: $color-support-focus;
+  }
+
   svg {
     width: 1em;
     height: 1em;
   }
+}
+
+.ButtonLinkButtonReset {
+  @extend .ButtonLink;
+  background: none;
+  border: 0;
 }
 
 .ButtonLink.ButtonLinkWhite {

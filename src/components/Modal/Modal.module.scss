@@ -1,0 +1,69 @@
+@import 'styles/_global.scss';
+
+.Modal {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, .2);
+}
+
+.Wrapper {
+  background-color: $color-white;
+  position: relative;
+
+  &.Boxed {
+    max-width: $main-boxed-width;
+  }
+
+  &.HorizontallyCentered {
+    left: 50%;
+    transform: translateX(-50%)
+  }
+  &.VerticallyCentered {
+    max-height: 100vh;
+    overflow: auto;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &.HorizontallyCentered {
+      transform: translateX(-50%) translateY(-50%);
+    }
+  }
+}
+
+.Header {
+  display: flex;
+  border-bottom: 1px solid $color-neutral-grey2;
+  padding: 1rem;
+  padding-bottom: .5rem;
+}
+
+.Content {
+  padding: 1rem;
+}
+
+.ButtonClose {
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  font-size: 4rem;
+  position: relative;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+
+  &:hover {
+    color: $color-primary-red;
+  }
+
+  > span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+}

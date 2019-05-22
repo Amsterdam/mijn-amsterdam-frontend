@@ -27,6 +27,8 @@ export interface AppState {
   ERFPACHT: ErfpachtApiState;
 }
 
+export type StateKey = keyof AppState;
+
 // Use typecasting here to allow for proper state completion and use in deconstruction assignments.
 export const AppContext = createContext<AppState>({} as AppState);
 export const SessionContext = createContext<SessionApiState>(

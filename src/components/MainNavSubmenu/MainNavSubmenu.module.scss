@@ -1,9 +1,5 @@
 @import 'styles/_global.scss';
 
-.MainNavSubmenu {
-  z-index: 2;
-}
-
 .SubmenuButton {
   padding-left: 0;
   padding-right: 0;
@@ -17,6 +13,10 @@
   padding-top: 0.9rem;
   padding-bottom: 0.8rem;
   margin-top: 0.2rem;
+
+  &:focus {
+    background-color: $color-support-focus;
+  }
 
   span {
     display: inline-block;

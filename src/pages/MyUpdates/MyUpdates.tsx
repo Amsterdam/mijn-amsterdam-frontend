@@ -12,7 +12,10 @@ import Heading from 'components/Heading/Heading';
 
 export default () => {
   const {
-    MY_UPDATES: { items, total, isLoading },
+    MY_UPDATES: {
+      data: { items, total },
+      isLoading,
+    },
   } = useContext(AppContext);
   return (
     <PageContentMain className={styles.MyUpdates} variant="full">

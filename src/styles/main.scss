@@ -35,18 +35,16 @@ a {
   color: inherit;
 }
 
-[role=button],
-a,
-button {
-  &:focus {
-    background-color: $color-support-focus;
-  }
+a:focus {
+  background-color: $color-support-focus;
 }
+
+[role=button],
 input,
 textarea,
 select,
 button {
   &:focus {
-    outline: 0.2rem solid $color-support-focus;
+    outline: 0.3rem solid $color-support-focus;
   }
 }

@@ -1,11 +1,11 @@
-import { AppRoutes, ExternalUrls, LOGOUT_URL, Layout } from 'App.constants';
+import { AppRoutes, ExternalUrls, LOGOUT_URL, Layout, ApiUrls } from 'App.constants';
 import { ReactComponent as BetaLabel } from 'assets/images/beta-label.svg';
 import { ReactComponent as AmsterdamLogoLarge } from 'assets/images/logo-amsterdam-large.svg';
 import { ReactComponent as AmsterdamLogo } from 'assets/images/logo-amsterdam.svg';
 import classnames from 'classnames';
 import MainHeaderHero from 'components/MainHeaderHero/MainHeaderHero';
 import MainNavBar from 'components/MainNavBar/MainNavBar';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
 import classNames from 'classnames';
@@ -22,6 +22,7 @@ import { useLargeScreen } from 'hooks/media.hook';
 
 const MenuWrapperId = 'MenuWrapper';
 const MenuToggleBtnId = 'MenuToggleBtn';
+import ErrorMessages from 'components/ErrorMessages/ErrorMessages';
 
 interface SecondaryLinksProps {
   person: Person | null;
@@ -139,6 +140,7 @@ export default function MainHeader({
         </div>
       )}
       <MainHeaderHero />
+      <ErrorMessages className={styles.ErrorMessages} />
     </header>
   );
 }

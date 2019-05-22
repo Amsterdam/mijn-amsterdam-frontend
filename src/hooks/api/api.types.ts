@@ -7,9 +7,9 @@ export interface ApiRequestOptions {
 }
 
 export interface ApiState {
-  isLoading?: boolean;
-  isError?: boolean;
-  isPristine?: boolean;
-  isDirty?: boolean;
-  data?: any;
+  isLoading: boolean;
+  isError: boolean;
+  isPristine: boolean;
+  isDirty: boolean;
+  data: any;
 }

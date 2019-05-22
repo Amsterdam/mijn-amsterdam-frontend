@@ -18,7 +18,10 @@ const MAX_TIPS_VISIBLE = 3;
 
 export default () => {
   const {
-    MY_UPDATES,
+    MY_UPDATES: {
+      data: { items: myUpdateItems, total: myUpdatesTotal },
+      isLoading: isMyUpdatesLoading,
+    },
     MY_CASES: {
       data: { items: myCases },
       isLoading: isMyCasesLoading,
@@ -31,16 +34,16 @@ export default () => {
   } = useContext(AppContext);
 
   const tipItems = myTips.slice(0, MAX_TIPS_VISIBLE);
-  const actualUpdateItems = MY_UPDATES.items.filter(item => item.isActual);
+  const actualUpdateItems = myUpdateItems.filter(item => item.isActual);
   return (
     <PageContentMain className={styles.Dashboard} variant="full">
       <PageContentMainHeading variant="medium">
-        {MY_UPDATES.isLoading ? (
+        {isMyUpdatesLoading ? (
           <LoadingContent barConfig={[['50%', '3rem', '2rem']]} />
         ) : (
           'Mijn meldingen'
         )}
-        {!MY_UPDATES.isLoading &&
+        {!isMyUpdatesLoading &&
           actualUpdateItems.length > MAX_UPDATES_VISIBLE && (
             <span>&nbsp;({actualUpdateItems.length})</span>
           )}
@@ -49,8 +52,8 @@ export default () => {
         <MyUpdates
           total={actualUpdateItems.length}
           items={actualUpdateItems.slice(0, MAX_UPDATES_VISIBLE)}
-          showMoreLink={MY_UPDATES.total > 0}
-          isLoading={MY_UPDATES.isLoading}
+          showMoreLink={myUpdatesTotal > 0}
+          isLoading={isMyUpdatesLoading}
         />
         <MyChaptersPanel
           isLoading={isMyChaptersLoading}

@@ -3,6 +3,7 @@ import { LinkProps } from 'App.types';
 import { AppState } from 'AppState';
 import createPersistedState from 'use-persisted-state';
 import { FocusItem } from 'data-formatting/focus';
+import { ApiState } from './api.types';
 
 export interface MyUpdate {
   id: string;
@@ -15,11 +16,12 @@ export interface MyUpdate {
   isActual?: boolean; // Is this update newsworthy
 }
 
-export type MyUpdatesApiState = {
-  items: MyUpdate[];
-  total: number;
-  isLoading: boolean;
-};
+export interface MyUpdatesApiState extends ApiState {
+  data: {
+    items: MyUpdate[];
+    total: number;
+  };
+}
 
 interface MyUpdatesState {
   [id: string]: boolean;
@@ -47,8 +49,10 @@ export default ({ FOCUS }: Pick<AppState, 'FOCUS'>): MyUpdatesApiState => {
   });
 
   return {
-    items,
-    total: items.length,
-    isLoading: !!FOCUS.isLoading,
+    ...FOCUS,
+    data: {
+      items,
+      total: items.length,
+    },
   };
 };
