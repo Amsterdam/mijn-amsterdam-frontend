@@ -46,6 +46,7 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
             ? (el.current! as HTMLElement).getBoundingClientRect().top
             : 'center'
         }
+        appendTo={document.getElementById('modal-root')!}
       >
         <div className={styles.ErrorInfo}>
           <p>De volgende gegevens kunnen niet opgehaald worden:</p>

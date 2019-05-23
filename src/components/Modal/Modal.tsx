@@ -17,6 +17,7 @@ interface ModalProps {
   contentWidth?: number | 'boxed';
   contentVerticalPosition?: number | 'center';
   contentHorizontalPosition?: number | 'center';
+  appendTo: HTMLElement;
 }
 
 export default function Modal({
@@ -28,6 +29,7 @@ export default function Modal({
   contentWidth = 'boxed',
   contentVerticalPosition = 'center',
   contentHorizontalPosition = 'center',
+  appendTo,
 }: ModalProps) {
   const modalWrapperEl = useRef(null);
 
@@ -62,7 +64,6 @@ export default function Modal({
     ? ReactDOM.createPortal(
         <FocusTrap>
           <div
-            id="test"
             className={classnames(styles.Modal, className)}
             onClick={event => closeFromOverlay(event.target)}
             role="dialog"
@@ -96,7 +97,7 @@ export default function Modal({
             </div>
           </div>
         </FocusTrap>,
-        document.getElementById('modal-root')!
+        appendTo
       )
     : null;
 }
