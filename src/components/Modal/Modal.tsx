@@ -71,7 +71,7 @@ export default function Modal({
             >
               {!!title && <Heading size="small">{title}</Heading>}
               <button className={styles.ButtonClose} onClick={onClose}>
-                <span>&times;</span>
+                &times;
               </button>
             </header>
             <div className={styles.Content}>{children}</div>

@@ -38,6 +38,7 @@
   border-bottom: 1px solid $color-neutral-grey2;
   padding: 1rem;
   padding-bottom: .5rem;
+  align-items: center;
 }
 
 .Content {
@@ -51,19 +52,14 @@
   margin: 0;
   position: relative;
   font-size: 4rem;
-  position: relative;
   border: 0;
   background: transparent;
   cursor: pointer;
+  display: flex;
+  text-align: center;
+  align-items: center;
 
   &:hover {
     color: $color-primary-red;
-  }
-
-  > span {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translateX(-50%) translateY(-50%);
   }
 }
