@@ -55,6 +55,7 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
             })}
           </ul>
           <p>
+            {/* TODO: Arrange correct text here */}
             Probeer het later nog eens. Bel anders naar 0000000 voor hulp en
             ondersteuning.
           </p>

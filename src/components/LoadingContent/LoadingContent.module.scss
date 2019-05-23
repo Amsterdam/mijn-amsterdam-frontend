@@ -1,5 +1,7 @@
 @import 'styles/_global.scss';
 
+// Concept copied from https://github.com/yarism/react-loading-placeholder/blob/master/src/LoadingPlaceholder.css
+
 @keyframes placeHolderShimmer{
   0%{
     background-position: -1168px 0

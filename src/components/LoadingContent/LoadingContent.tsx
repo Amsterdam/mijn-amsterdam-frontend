@@ -3,7 +3,12 @@ import styles from './LoadingContent.module.scss';
 import { ComponentChildren } from 'App.types';
 import classnames from 'classnames';
 
-export type BarConfig = Array<string[]>;
+type width = string;
+type height = string;
+type marginBottom = string;
+type BarProp = width | height | marginBottom;
+
+export type BarConfig = Array<BarProp[]>;
 
 export interface ComponentProps {
   children?: ComponentChildren;
@@ -11,7 +16,7 @@ export interface ComponentProps {
   className?: any;
 }
 
-const defaultBarConfig = [
+const defaultBarConfig: BarConfig = [
   ['70%', '2rem', '.7rem'],
   ['90%', '2rem', '.7rem'],
   ['90%', '2rem', '.7rem'],

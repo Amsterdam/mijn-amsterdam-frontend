@@ -1,32 +1,36 @@
-import { AppRoutes, ExternalUrls, LOGOUT_URL, Layout, ApiUrls } from 'App.constants';
+import {
+  AppRoutes,
+  excludedApiKeys,
+  ExternalUrls,
+  Layout,
+  LOGOUT_URL,
+  errorMessageMap,
+} from 'App.constants';
+import { AppContext } from 'AppState';
+import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
 import { ReactComponent as BetaLabel } from 'assets/images/beta-label.svg';
 import { ReactComponent as AmsterdamLogoLarge } from 'assets/images/logo-amsterdam-large.svg';
 import { ReactComponent as AmsterdamLogo } from 'assets/images/logo-amsterdam.svg';
-import classnames from 'classnames';
-import MainHeaderHero from 'components/MainHeaderHero/MainHeaderHero';
-import MainNavBar from 'components/MainNavBar/MainNavBar';
-import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
-import classNames from 'classnames';
-import styles from './MainHeader.module.scss';
-
 import {
   ButtonLinkExternal,
   IconButtonLink,
 } from 'components/ButtonLink/ButtonLink';
+import ErrorMessages from 'components/ErrorMessages/ErrorMessages';
 import Heading from 'components/Heading/Heading';
+import MainHeaderHero from 'components/MainHeaderHero/MainHeaderHero';
+import MainNavBar from 'components/MainNavBar/MainNavBar';
 import { Person } from 'data-formatting/brp';
-import useRouter from 'use-react-router';
+import { entries } from 'helpers/App';
 import { useLargeScreen } from 'hooks/media.hook';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import useRouter from 'use-react-router';
+
+import styles from './MainHeader.module.scss';
+import classnames from 'classnames';
 
 const MenuWrapperId = 'MenuWrapper';
 const MenuToggleBtnId = 'MenuToggleBtn';
-import ErrorMessages, {
-  ErrorMessageMap,
-} from 'components/ErrorMessages/ErrorMessages';
-import { entries } from 'helpers/App';
-import { AppContext, StateKey } from 'AppState';
 
 interface SecondaryLinksProps {
   person: Person | null;
@@ -59,39 +63,6 @@ export interface MainHeaderProps {
   isAuthenticated?: boolean;
 }
 
-const errorMessageMap: ErrorMessageMap = {
-  BRP: {
-    name: 'Persoonsgegevens',
-    error: 'Communicatie met api mislukt.',
-  },
-  MY_UPDATES: {
-    name: 'Mijn meldingen',
-    error: 'Communicatie met api mislukt.',
-  },
-  MY_CASES: {
-    name: 'Mijn lopende aanvragen',
-    error: 'Communicatie met api mislukt.',
-  },
-  MY_TIPS: {
-    name: 'Mijn tips',
-    error: 'Communicatie met api mislukt.',
-  },
-  WMO: {
-    name: 'Zorg',
-    error: 'Communicatie met api mislukt.',
-  },
-  FOCUS: {
-    name: 'Stadspas of Bijstandsuitkering',
-    error: 'Communicatie met api mislukt.',
-  },
-  ERFPACHT: {
-    name: 'Erfpacht',
-    error: 'Communicatie met api mislukt.',
-  },
-};
-
-const excludedApiKeys: StateKey[] = ['MY_CHAPTERS', 'SESSION'];
-
 export default function MainHeader({
   person = null,
   isAuthenticated = false,
@@ -113,6 +84,8 @@ export default function MainHeader({
           error: 'Communicatie met api mislukt.',
         }
     );
+
+  const hasErrors = !!errors.length;
 
   function closeResponsiveMenu(e: any) {
     if (responsiveMenuIsVisible) {
@@ -164,14 +137,14 @@ export default function MainHeader({
         <div className={styles.MenuContainer}>
           <button
             id={MenuToggleBtnId}
-            className={classNames(styles.MenuToggleBtn, {
+            className={classnames(styles.MenuToggleBtn, {
               [styles.MenuToggleBtnOpen]: responsiveMenuIsVisible,
             })}
             onClick={() => toggleResponsiveMenu(!responsiveMenuIsVisible)}
           />
           <div
             id={MenuWrapperId}
-            className={classNames(styles.MenuWrapper, {
+            className={classnames(styles.MenuWrapper, {
               [styles.MenuWrapperOpen]: responsiveMenuIsVisible,
             })}
           >
@@ -185,14 +158,14 @@ export default function MainHeader({
                 Layout.mainHeaderTopbarHeight -
                 Layout.mainHeaderNavbarHeight,
             }}
-            className={classNames(styles.Modal, {
+            className={classnames(styles.Modal, {
               [styles.ModalOpen]: responsiveMenuIsVisible,
             })}
           />
         </div>
       )}
       <MainHeaderHero />
-      {!!errors.length && (
+      {hasErrors && (
         <ErrorMessages errors={errors} className={styles.ErrorMessages} />
       )}
     </header>
