@@ -36,7 +36,6 @@ export default () => {
 
   const hasActiveRequests = !!itemsRequested.length;
   const hasGrantedRequests = !!itemsGranted.length;
-  const hasDeniedRequests = !!itemsDenied.length;
 
   return (
     <PageContentMain variant="full" className={styles.Page}>
@@ -60,45 +59,39 @@ export default () => {
             Uw gegevens kunnen op dit moment niet worden getoond.
           </Alert>
         )}
-        {hasActiveRequests && (
+        <DataLinkTable
+          id="datalinktable-income-actual"
+          rowHeight="6rem"
+          displayProps={DISPLAY_PROPS_ACTUAL}
+          items={itemsRequested}
+          title="Mijn lopende aanvragen"
+          startCollapsed={false}
+          isLoading={isLoading}
+        />
+        <DataLinkTable
+          id="datalinktable-income-granted"
+          rowHeight="6rem"
+          displayProps={DISPLAY_PROPS}
+          items={itemsGranted}
+          startCollapsed={hasActiveRequests}
+          isLoading={isLoading}
+          title="Mijn toegekende aanvragen"
+        />
+      </PageContentMainBody>
+      <div className={styles.HistoricDataLinkTable}>
+        <PageContentMainBody variant="boxed">
           <DataLinkTable
-            id="datalinktable-income-actual"
-            rowHeight="6rem"
-            displayProps={DISPLAY_PROPS_ACTUAL}
-            items={itemsRequested}
-            title="Mijn lopende aanvragen"
-            startCollapsed={false}
-            isLoading={isLoading}
-          />
-        )}
-        {hasGrantedRequests && (
-          <DataLinkTable
-            id="datalinktable-income-granted"
+            id="datalinktable-income-denied"
             rowHeight="6rem"
             displayProps={DISPLAY_PROPS}
-            items={itemsGranted}
-            startCollapsed={hasActiveRequests}
+            items={itemsDenied}
+            startCollapsed={hasActiveRequests || hasGrantedRequests}
+            title="Mijn afgewezen aanvragen"
+            className={styles.DataLinkTableCurrent}
             isLoading={isLoading}
-            title="Mijn toegekende aanvragen"
           />
-        )}
-      </PageContentMainBody>
-      {hasDeniedRequests && (
-        <div className={styles.HistoricDataLinkTable}>
-          <PageContentMainBody variant="boxed">
-            <DataLinkTable
-              id="datalinktable-income-denied"
-              rowHeight="6rem"
-              displayProps={DISPLAY_PROPS}
-              items={itemsDenied}
-              startCollapsed={hasActiveRequests || hasGrantedRequests}
-              title="Mijn afgewezen aanvragen"
-              className={styles.DataLinkTableCurrent}
-              isLoading={isLoading}
-            />
-          </PageContentMainBody>
-        </div>
-      )}
+        </PageContentMainBody>
+      </div>
     </PageContentMain>
   );
 };

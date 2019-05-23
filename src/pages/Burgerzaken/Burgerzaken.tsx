@@ -34,7 +34,6 @@ export default () => {
   const itemsDenied = items.filter(item => item.isDenied);
 
   const hasActiveRequests = !!itemsRequested.length;
-  const hasGrantedRequests = !!itemsGranted.length;
   const hasDeniedRequests = !!itemsDenied.length;
 
   return (

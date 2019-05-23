@@ -50,14 +50,23 @@
   height: 3rem;
   padding: 0;
   margin: 0;
-  position: relative;
-  font-size: 4rem;
   border: 0;
   background: transparent;
   cursor: pointer;
   display: flex;
-  text-align: center;
+  justify-content: center;
   align-items: center;
+
+  svg {
+    display: block;
+    width: 2rem;
+    height: 2rem;
+  }
+
+  &:focus {
+    background-color: $color-support-focus;
+    outline: 0;
+  }
 
   &:hover {
     color: $color-primary-red;

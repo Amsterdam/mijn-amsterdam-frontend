@@ -32,7 +32,6 @@ export default () => {
 
   const hasActiveRequests = !!itemsRequested.length;
   const hasActualItems = !!itemsActual.length;
-  const hasPreviousItems = !!itemsPrevious.length;
 
   return (
     <PageContentMain variant="full" className={styles.Page}>

@@ -69,8 +69,8 @@ export default function DataLinkTable({
         <Heading
           size="mediumLarge"
           role="button"
+          tabIndex={!hasItems ? -1 : 0}
           className={styles.Title}
-          tabIndex={0}
           onKeyPress={event => hasItems && toggleCollapsed(event)}
           onClick={event => hasItems && toggleCollapsed(event)}
         >

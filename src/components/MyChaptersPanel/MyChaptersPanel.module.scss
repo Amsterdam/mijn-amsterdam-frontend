@@ -14,7 +14,13 @@
   flex-wrap: wrap;
 
   @include select(MainNavSubmenu_MainNavSubmenuLink) {
-    width: 50%;
+    width: calc(50% - .5rem);
+    &:nth-child(odd) {
+      margin-right: .5rem;
+    }
+    &:nth-child(even) {
+      margin-left: .5rem;
+    }
   }
 }
 

@@ -17,6 +17,9 @@
   &,
   a {
     color: $color-white;
+    &:focus {
+      color: $color-black;
+    }
   }
 
   h3 {

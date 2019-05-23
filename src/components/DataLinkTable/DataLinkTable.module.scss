@@ -33,6 +33,10 @@
   padding-left: 1em;
   margin-bottom: 4rem;
 
+  &:focus {
+    background-color: $color-support-focus;
+  }
+
   span {
     padding-left: .2em;
   }
