@@ -16,6 +16,13 @@ body {
   font-family: 'AvenirNext', Arial, Helvetica, sans-serif;
   color: $color-black;
   font-size: 1.6rem;
+
+  &.has-modal {
+    overflow: hidden;
+    > *:not(#modal-root) {
+      pointer-events: none;
+    }
+  }
 }
 
 *,

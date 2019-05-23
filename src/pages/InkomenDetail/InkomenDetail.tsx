@@ -10,11 +10,16 @@ import useReactRouter from 'use-react-router';
 import Heading from 'components/Heading/Heading';
 import PageContentMainHeadingBackLink from 'components/PageContentMainHeadingBackLink/PageContentMainHeadingBackLink';
 import StatusLine from 'components/StatusLine/StatusLine';
+import Alert from 'components/Alert/Alert';
+import LoadingContent from 'components/LoadingContent/LoadingContent';
+import { FocusItem } from '../../data-formatting/focus';
 
 export default () => {
   const {
     FOCUS: {
       data: { items },
+      isError,
+      isLoading,
     },
   } = useContext(AppContext);
   const {
@@ -31,9 +36,24 @@ export default () => {
           Inkomen
         </PageContentMainHeadingBackLink>
         <Heading el="h2" className={styles.PageHeading}>
-          {FocusItem && FocusItem.title}
+          {!isLoading && FocusItem ? (
+            FocusItem.title
+          ) : (
+            <LoadingContent
+              className={styles.LoadingContentHeading}
+              barConfig={[['50%', '3rem', '0']]}
+            />
+          )}
         </Heading>
       </PageContentMainHeading>
+      {isLoading && (
+        <LoadingContent className={styles.LoadingContentStatusLine} />
+      )}
+      {isError && (
+        <Alert type="warning">
+          Uw gegevens kunnen op dit moment niet worden getoond.
+        </Alert>
+      )}
       {FocusItem && (
         <PageContentMainBody>
           <StatusLine items={FocusItem.process} />

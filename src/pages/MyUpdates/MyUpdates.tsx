@@ -9,12 +9,14 @@ import React, { useContext } from 'react';
 
 import styles from './MyUpdates.module.scss';
 import Heading from 'components/Heading/Heading';
+import Alert from 'components/Alert/Alert';
 
 export default () => {
   const {
     MY_UPDATES: {
       data: { items, total },
       isLoading,
+      isError,
     },
   } = useContext(AppContext);
   return (
@@ -27,6 +29,11 @@ export default () => {
         Alle meldingen
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
+        {isError && (
+          <Alert type="warning">
+            Uw meldingen kunnen op dit moment niet geladen worden.
+          </Alert>
+        )}
         <h3 className={styles.PanelHeading}>Actueel</h3>
         <MyUpdates
           isLoading={isLoading}

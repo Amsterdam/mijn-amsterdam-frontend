@@ -78,10 +78,13 @@ export default function MyUpdates({
                 )}
                 <p className={styles.Action}>
                   <a
+                    href={item.link.to}
                     role="button"
                     className={ButtonLinkStyles.ButtonLink}
-                    onClick={() => {
+                    onClick={event => {
+                      event.preventDefault();
                       showUpdate(item.id, item.link.to);
+                      return false;
                     }}
                   >
                     {item.link.title}
@@ -92,7 +95,9 @@ export default function MyUpdates({
           })}
       </ul>
       {!isLoading && items.length === 0 && (
-        <p>Er zijn op het moment geen actuele meldingen</p>
+        <p className={styles.NoItemsInfo}>
+          Er zijn op het moment geen actuele meldingen
+        </p>
       )}
       {!isLoading && showMoreLink && (
         <p className={styles.FooterLink}>

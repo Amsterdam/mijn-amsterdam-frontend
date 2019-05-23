@@ -1,7 +1,7 @@
 import { ComponentChildren } from 'App.types';
 import classnames from 'classnames';
-import React, { useRef, DOMElement } from 'react';
-import { useState } from 'react';
+import React, { useRef, useEffect } from 'react';
+import FocusTrap from 'focus-trap-react';
 import ReactDOM from 'react-dom';
 
 import styles from './Modal.module.scss';
@@ -30,6 +30,15 @@ export default function Modal({
 }: ModalProps) {
   const modalWrapperEl = useRef(null);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add('has-modal');
+    }
+    return () => {
+      document.body.classList.remove('has-modal');
+    };
+  });
+
   function closeFromOverlay(target: EventTarget) {
     if (!(modalWrapperEl.current! as HTMLElement).contains(target as Node)) {
       onClose();
@@ -50,33 +59,42 @@ export default function Modal({
 
   return isOpen
     ? ReactDOM.createPortal(
-        <div
-          className={classnames(styles.Modal, className)}
-          onClick={event => closeFromOverlay(event.target)}
-        >
+        <FocusTrap>
           <div
-            className={classnames(
-              styles.Wrapper,
-              contentWidth === 'boxed' && styles.Boxed,
-              contentVerticalPosition === 'center' && styles.VerticallyCentered,
-              contentHorizontalPosition === 'center' &&
-                styles.HorizontallyCentered
-            )}
-            ref={modalWrapperEl}
-            style={inlineStyles}
+            id="test"
+            className={classnames(styles.Modal, className)}
+            onClick={event => closeFromOverlay(event.target)}
+            role="dialog"
+            aria-labelledby={title}
+            aria-modal="true"
           >
-            <header
-              className={styles.Header}
-              style={{ justifyContent: !!title ? 'space-between' : 'flex-end' }}
+            <div
+              className={classnames(
+                styles.Wrapper,
+                contentWidth === 'boxed' && styles.Boxed,
+                contentVerticalPosition === 'center' &&
+                  styles.VerticallyCentered,
+                contentHorizontalPosition === 'center' &&
+                  styles.HorizontallyCentered
+              )}
+              ref={modalWrapperEl}
+              style={inlineStyles}
             >
-              {!!title && <Heading size="small">{title}</Heading>}
-              <button className={styles.ButtonClose} onClick={onClose}>
-                &times;
-              </button>
-            </header>
-            <div className={styles.Content}>{children}</div>
+              <header
+                className={styles.Header}
+                style={{
+                  justifyContent: !!title ? 'space-between' : 'flex-end',
+                }}
+              >
+                {!!title && <Heading size="small">{title}</Heading>}
+                <button className={styles.ButtonClose} onClick={onClose}>
+                  &times;
+                </button>
+              </header>
+              <div className={styles.Content}>{children}</div>
+            </div>
           </div>
-        </div>,
+        </FocusTrap>,
         document.getElementById('modal-root')!
       )
     : null;

@@ -8,33 +8,43 @@ import React, { useState } from 'react';
 import Heading from '../Heading/Heading';
 import styles from './DataLinkTable.module.scss';
 import createPersistedState from 'use-persisted-state';
+import LoadingContent from 'components/LoadingContent/LoadingContent';
 
 export interface DataLinkTableProps {
   id: string;
   items?: Unshaped[];
   title?: string;
+  noItemsMessage?: string;
   startCollapsed?: boolean;
   className?: any;
   displayProps?: { [key: string]: string }; // key => Label. Will be displayed right of the title in the table
   rowHeight?: 'auto' | string;
+  isLoading: boolean;
 }
 
 export default function DataLinkTable({
   id,
   items = [],
   title = '',
+  noItemsMessage = '',
   startCollapsed = true,
   className,
   displayProps,
   rowHeight = 'auto',
+  isLoading = true,
 }: DataLinkTableProps) {
   const [isCollapsed, setCollapsed] = createPersistedState(
     id,
     window.sessionStorage
   )(startCollapsed);
+
+  const hasItems = !!items.length;
+  const hasTitle = !!title;
+  const hasNoItemsMessage = !!noItemsMessage;
+
   const classes = classnames(
     styles.DataLinkTable,
-    isCollapsed && styles.isCollapsed,
+    (!hasItems || isCollapsed) && styles.isCollapsed,
     className
   );
 
@@ -55,56 +65,66 @@ export default function DataLinkTable({
 
   return (
     <div className={classes}>
-      {!!title && (
+      {hasTitle && (
         <Heading
           size="mediumLarge"
           role="button"
           className={styles.Title}
           tabIndex={0}
-          onKeyPress={event => toggleCollapsed(event)}
-          onClick={event => toggleCollapsed(event)}
+          onKeyPress={event => hasItems && toggleCollapsed(event)}
+          onClick={event => hasItems && toggleCollapsed(event)}
         >
           <CaretIcon className={styles.CaretIcon} /> {title}
-          <span>({items.length})</span>
+          {hasItems && <span>({items.length})</span>}
         </Heading>
       )}
-      <div
-        aria-hidden={isCollapsed}
-        className={styles.Panel}
-        style={{
-          height: rowHeight === 'auto' ? rowHeight : cssCalcExpr,
-          transitionDuration: cssTransitionDurationMS,
-        }}
-      >
-        <table className={styles.Table}>
-          <thead>
-            <tr className={styles.TableRow}>
-              <th>&nbsp;</th>
-              {displayProps &&
-                entries(displayProps).map(([, label]) => (
-                  <th key={label} className={styles.DisplayProp}>
-                    {label}
-                  </th>
-                ))}
-            </tr>
-          </thead>
-          <tbody>
-            {items.map(item => (
-              <tr key={item.id} className={styles.TableRow}>
-                <td className={styles.DisplayPropTitle}>
-                  <ButtonLink to={item.link.to}>{item.title}</ButtonLink>
-                </td>
+      {isLoading && (
+        <LoadingContent
+          barConfig={[['auto', '2rem', '1rem'], ['auto', '2rem', '0']]}
+        />
+      )}
+      {hasNoItemsMessage && !isLoading && !hasItems && (
+        <p className={styles.NoItemsMessage}>{noItemsMessage}</p>
+      )}
+      {!isLoading && hasItems && (
+        <div
+          aria-hidden={isCollapsed}
+          className={styles.Panel}
+          style={{
+            height: rowHeight === 'auto' ? rowHeight : cssCalcExpr,
+            transitionDuration: cssTransitionDurationMS,
+          }}
+        >
+          <table className={styles.Table}>
+            <thead>
+              <tr className={styles.TableRow}>
+                <th>&nbsp;</th>
                 {displayProps &&
-                  entries(displayProps).map(([key]) => (
-                    <td key={key} className={styles.DisplayProp}>
-                      {item[key] || <span>&mdash;</span>}
-                    </td>
+                  entries(displayProps).map(([, label]) => (
+                    <th key={label} className={styles.DisplayProp}>
+                      {label}
+                    </th>
                   ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {items.map(item => (
+                <tr key={item.id} className={styles.TableRow}>
+                  <td className={styles.DisplayPropTitle}>
+                    <ButtonLink to={item.link.to}>{item.title}</ButtonLink>
+                  </td>
+                  {displayProps &&
+                    entries(displayProps).map(([key]) => (
+                      <td key={key} className={styles.DisplayProp}>
+                        {item[key] || <span>&mdash;</span>}
+                      </td>
+                    ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }

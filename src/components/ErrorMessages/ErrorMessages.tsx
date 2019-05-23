@@ -1,10 +1,9 @@
-import { AppContext, StateKey } from 'AppState';
+import { StateKey } from 'AppState';
 import { ReactComponent as AlertIcon } from 'assets/icons/Alert.svg';
 import classnames from 'classnames';
 import ButtonLinkStyle from 'components/ButtonLink/ButtonLink.module.scss';
 import Modal from 'components/Modal/Modal';
-import { entries } from 'helpers/App';
-import React, { DOMElement, useContext, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import styles from './ErrorMessages.module.scss';
 
@@ -52,11 +51,7 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
           <p>De volgende gegevens kunnen niet opgehaald worden:</p>
           <ul className={styles.ErrorList}>
             {errors.map(({ name, error }, index) => {
-              return (
-                <li key={`${name}-${index}`}>
-                  {name}: {error}
-                </li>
-              );
+              return <li key={`${name}-${index}`}>{name}</li>;
             })}
           </ul>
           <p>

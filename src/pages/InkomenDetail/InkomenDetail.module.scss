@@ -16,3 +16,13 @@
   @include heading-large;
   margin: 0;
 }
+
+.LoadingContentHeading {
+  padding-top: 1rem;
+}
+
+.LoadingContentStatusLine {
+  margin: 0 auto;
+  width: $main-boxed-width;
+  padding-left: 16rem;
+}

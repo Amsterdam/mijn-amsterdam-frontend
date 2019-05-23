@@ -7,6 +7,8 @@ import DataLinkTable from 'components/DataLinkTable/DataLinkTable';
 import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
 import { Chapters } from 'App.constants';
 import styles from './Zorg.module.scss';
+import Alert from 'components/Alert/Alert';
+import LoadingContent from 'components/LoadingContent/LoadingContent';
 
 const DISPLAY_PROPS = {
   dateStart: 'start',
@@ -17,6 +19,8 @@ export default () => {
   const {
     WMO: {
       data: { items },
+      isError,
+      isLoading,
     },
   } = useContext(AppContext);
 
@@ -37,43 +41,47 @@ export default () => {
         Zorg
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
-        {/* <p>Zorg body</p> */}
-        {hasActiveRequests && (
-          <DataLinkTable
-            id="datalinktable-healthcare-requested"
-            rowHeight="6rem"
-            displayProps={DISPLAY_PROPS}
-            items={itemsRequested}
-            title="Mijn lopende aanvragen"
-            startCollapsed={false}
-          />
+        {isError && (
+          <Alert type="warning">
+            Uw gegevens kunnen op dit moment niet worden getoond.
+          </Alert>
         )}
-        {hasActualItems && (
-          <DataLinkTable
-            id="datalinktable-healthcare-granted"
-            rowHeight="6rem"
-            displayProps={DISPLAY_PROPS}
-            items={itemsActual}
-            title="Mijn huidige voorziengen"
-            startCollapsed={hasActiveRequests}
-            className={styles.DataLinkTableCurrent}
-          />
-        )}
+        <DataLinkTable
+          id="datalinktable-healthcare-requested"
+          rowHeight="6rem"
+          displayProps={DISPLAY_PROPS}
+          items={itemsRequested}
+          title="Mijn lopende aanvragen"
+          noItemsMessage="U hebt op dit moment geen lopende aanvragen"
+          startCollapsed={false}
+          isLoading={isLoading}
+        />
+        <DataLinkTable
+          id="datalinktable-healthcare-granted"
+          rowHeight="6rem"
+          displayProps={DISPLAY_PROPS}
+          items={itemsActual}
+          title="Mijn huidige voorziengen"
+          noItemsMessage="U hebt nog geen huidige voorzieningen"
+          startCollapsed={hasActiveRequests}
+          className={styles.DataLinkTableCurrent}
+          isLoading={isLoading}
+        />
       </PageContentMainBody>
-      {hasPreviousItems && (
-        <div className={styles.HistoricDataLinkTable}>
-          <PageContentMainBody variant="boxed">
-            <DataLinkTable
-              id="datalinktable-healthcare-previous"
-              rowHeight="6rem"
-              displayProps={DISPLAY_PROPS}
-              items={itemsPrevious}
-              title="Mijn eerdere voorziengen"
-              startCollapsed={hasActiveRequests || hasActualItems}
-            />
-          </PageContentMainBody>
-        </div>
-      )}
+      <div className={styles.HistoricDataLinkTable}>
+        <PageContentMainBody variant="boxed">
+          <DataLinkTable
+            id="datalinktable-healthcare-previous"
+            rowHeight="6rem"
+            displayProps={DISPLAY_PROPS}
+            items={itemsPrevious}
+            title="Mijn eerdere voorziengen"
+            noItemsMessage="U hebt geen eerdere voorzieningen"
+            startCollapsed={hasActiveRequests || hasActualItems}
+            isLoading={isLoading}
+          />
+        </PageContentMainBody>
+      </div>
     </PageContentMain>
   );
 };

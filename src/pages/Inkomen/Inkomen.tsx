@@ -9,6 +9,7 @@ import { Chapters } from 'App.constants';
 import styles from './Inkomen.module.scss';
 import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
 import { ExternalUrls } from 'App.constants';
+import Alert from 'components/Alert/Alert';
 
 const DISPLAY_PROPS = {
   datePublished: 'besluit',
@@ -22,6 +23,8 @@ export default () => {
   const {
     FOCUS: {
       data: { products },
+      isError,
+      isLoading,
     },
   } = useContext(AppContext);
 
@@ -52,6 +55,11 @@ export default () => {
             Lees meer over inkomensondersteuning
           </ButtonLinkExternal>
         </p>
+        {isError && (
+          <Alert type="warning">
+            Uw gegevens kunnen op dit moment niet worden getoond.
+          </Alert>
+        )}
         {hasActiveRequests && (
           <DataLinkTable
             id="datalinktable-income-actual"
@@ -60,6 +68,7 @@ export default () => {
             items={itemsRequested}
             title="Mijn lopende aanvragen"
             startCollapsed={false}
+            isLoading={isLoading}
           />
         )}
         {hasGrantedRequests && (
@@ -69,6 +78,7 @@ export default () => {
             displayProps={DISPLAY_PROPS}
             items={itemsGranted}
             startCollapsed={hasActiveRequests}
+            isLoading={isLoading}
             title="Mijn toegekende aanvragen"
           />
         )}
@@ -84,6 +94,7 @@ export default () => {
               startCollapsed={hasActiveRequests || hasGrantedRequests}
               title="Mijn afgewezen aanvragen"
               className={styles.DataLinkTableCurrent}
+              isLoading={isLoading}
             />
           </PageContentMainBody>
         </div>

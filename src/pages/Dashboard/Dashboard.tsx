@@ -39,11 +39,7 @@ export default () => {
   return (
     <PageContentMain className={styles.Dashboard} variant="full">
       <PageContentMainHeading variant="medium">
-        {isMyUpdatesLoading ? (
-          <LoadingContent barConfig={[['50%', '3rem', '2rem']]} />
-        ) : (
-          'Mijn meldingen'
-        )}
+        Mijn meldingen
         {!isMyUpdatesLoading &&
           actualUpdateItems.length > MAX_UPDATES_VISIBLE && (
             <span>&nbsp;({actualUpdateItems.length})</span>

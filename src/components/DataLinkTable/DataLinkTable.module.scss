@@ -4,6 +4,7 @@
   padding-top: 4rem;
   margin-bottom: 8rem;
   transition: margin 200ms ease-out;
+  overflow: auto;
 
   &.isCollapsed {
     margin-bottom: 0;
@@ -69,4 +70,10 @@
   color: $color-neutral-grey4;
   font-weight: normal;
   white-space: nowrap;
+}
+
+.NoItemsMessage {
+  text-indent: 16rem;
+  margin-top: -3rem; // closer to the heading
+  margin-bottom: 3rem;
 }
