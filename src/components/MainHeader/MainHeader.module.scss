@@ -24,7 +24,7 @@
 
 .logo {
   position: relative;
-  left: -3rem;
+  left: -2rem;
   top: 2rem;
   width: 9rem;
   height: 6.8rem;
@@ -68,6 +68,7 @@
   background-position: center;
   border: 0;
   background-color: transparent;
+  margin-left: 1rem;
 }
 
 .MenuContainer {
@@ -98,9 +99,10 @@
   }
 
   .logo {
-    left: 1rem;
+    left: 2rem;
     top: -1rem;
     width: 8rem;
+    margin-right: 1rem;
   }
 
   .betaLabel {
