@@ -44,6 +44,8 @@ export default () => {
           showMoreLink={MY_UPDATES.total > 0}
         />
         <MyChaptersPanel items={MY_CHAPTERS} title="Mijn thema's" />
+      </PageContentMainBody>
+      <PageContentMainBody>
         <MyCases title="Mijn lopende aanvragen" items={myCases} />
       </PageContentMainBody>
       <PageContentMainBody>

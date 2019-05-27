@@ -3,17 +3,19 @@
 .Dashboard {
   @include select(PageContentMainBody) {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    width: 100%;
+    padding: 0;
+  }
+
+  @include select(PageContentMainHeading) {
+    padding-top: 2.5rem;
   }
 
   @include select(MyUpdates_MyUpdates) {
-    flex-basis: calc(50% - 5rem); // margin-left + margin-right + virtual-gutter
-    flex-shrink: 0;
+    max-width: $main-boxed-width / 2;
     overflow: hidden;
-    margin-right: 4rem;
+    padding: 0 4rem;
     border-top: 1px solid $color-neutral-grey2;
-    margin-bottom: 5rem;
 
     @include select(MyUpdates_ChapterIndication) {
       display: none;
@@ -21,8 +23,8 @@
   }
 
   @include select(MyChaptersPanel_MyChaptersPanel) {
+    width: $main-boxed-width / 2;
     align-self: flex-start;
-    width: calc(50% + 1rem); // + virtual-gutter
   }
 
   @include select(MyCases_MyCases) {
