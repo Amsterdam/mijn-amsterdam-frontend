@@ -45,3 +45,17 @@
     margin-right: 0;
   }
 }
+
+.LoadingContent {
+  display: grid;
+  grid-template-columns: calc(50% - 5rem) 4rem calc(50% - 5rem);
+  grid-template-rows: 3rem 3rem;
+
+  > :nth-child(2) {
+    grid-column: 3;
+  }
+  > :nth-child(3) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+}

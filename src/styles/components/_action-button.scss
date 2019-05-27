@@ -1,0 +1,34 @@
+
+.action-button {
+  padding: 1.4rem 1.5rem;
+  min-width: 6rem;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1em;
+  line-height: 1em;
+  text-decoration: none;
+  background-color: $color-primary-red;
+  color: $color-white;
+  border: 0;
+  font-weight: 500;
+
+  &:hover {
+    background-color: $color-support-red;
+  }
+
+  &[disabled],
+  &[readonly],
+  &.disabled {
+    background-color: $color-neutral-grey2 !important;
+    cursor: not-allowed;
+    pointer-events: none;
+    color: $color-neutral-grey3 !important;
+  }
+
+  &.secondary {
+    background-color: $color-support-blue;
+    &:hover {
+      background-color: $color-support-darkblue;
+    }
+  }
+}

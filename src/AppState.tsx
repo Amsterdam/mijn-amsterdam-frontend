@@ -1,18 +1,19 @@
-import React, { createContext } from 'react';
-import { useBrpApi, BrpApiState } from 'hooks/api/brp-api.hook';
-import useSessionApi, { SessionApiState } from 'hooks/api/session.api.hook';
-import useMyUpdatesApi from 'hooks/api/my-updates-api.hook';
+import { BrpApiState, useBrpApi } from 'hooks/api/brp-api.hook';
 import useMyCasesApi from 'hooks/api/my-cases-api.hook';
 import useMyTipsApi from 'hooks/api/my-tips-api.hook';
+import useMyUpdatesApi from 'hooks/api/my-updates-api.hook';
+import useSessionApi, { SessionApiState } from 'hooks/api/session.api.hook';
+import useMyChapters from 'hooks/myChapters.hook';
+import React, { createContext } from 'react';
+
 import { ComponentChildren } from './App.types';
-import { MyUpdatesApiState } from './hooks/api/my-updates-api.hook';
+import useErfpachtApi, { ErfpachtApiState } from './hooks/api/api.erfpacht';
+import useFocusApi, { FocusApiState } from './hooks/api/api.focus';
+import useWmoApi, { WmoApiState } from './hooks/api/api.wmo';
 import { MyCasesApiState } from './hooks/api/my-cases-api.hook';
 import { MyTipsApiState } from './hooks/api/my-tips-api.hook';
-import useWmoApi, { WmoApiState } from './hooks/api/api.wmo';
-import useFocusApi, { FocusApiState } from './hooks/api/api.focus';
-import useMyChapters from 'hooks/myChapters.hook';
-import { MenuItem } from './components/MainNavBar/MainNavBar.constants';
-import useErfpachtApi, { ErfpachtApiState } from './hooks/api/api.erfpacht';
+import { MyUpdatesApiState } from './hooks/api/my-updates-api.hook';
+import { MyChaptersApiState } from './hooks/myChapters.hook';
 
 export interface AppState {
   BRP: BrpApiState;
@@ -22,9 +23,11 @@ export interface AppState {
   MY_TIPS: MyTipsApiState;
   WMO: WmoApiState;
   FOCUS: FocusApiState;
-  MY_CHAPTERS: MenuItem[];
+  MY_CHAPTERS: MyChaptersApiState;
   ERFPACHT: ErfpachtApiState;
 }
+
+export type StateKey = keyof AppState;
 
 // Use typecasting here to allow for proper state completion and use in deconstruction assignments.
 export const AppContext = createContext<AppState>({} as AppState);

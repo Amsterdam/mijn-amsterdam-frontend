@@ -5,7 +5,8 @@ import { differenceInCalendarDays } from 'date-fns';
 import { ApiState } from './api.types';
 import { MyUpdate } from './my-updates-api.hook';
 import usePaginatedApi, { PaginatedItemsResponse } from './paginated-api.hook';
-import { ProductTitles } from '../../data-formatting/focus';
+import { ProductTitles } from 'data-formatting/focus';
+import { useMemo } from 'react';
 
 interface ProductCollection {
   [productTitle: string]: {
@@ -24,13 +25,8 @@ export interface FocusApiState extends ApiState {
   data: FocusResponse;
 }
 
-export default function useFocusApi(
-  offset?: number,
-  limit?: number
-): FocusApiState {
-  const { data, ...rest } = usePaginatedApi(ApiUrls.FOCUS, offset, limit);
-
-  const allItems = formatFocusApiResponse(data.items);
+function formatProductCollections(items: any[]) {
+  const allItems = formatFocusApiResponse(items);
   const products: ProductCollection = {};
   const allUpdates: MyUpdate[] = [];
 
@@ -56,6 +52,21 @@ export default function useFocusApi(
     }
   }
 
+  return {
+    allItems,
+    allUpdates,
+    products,
+  };
+}
+
+export default function useFocusApi(
+  offset?: number,
+  limit?: number
+): FocusApiState {
+  const { data, ...rest } = usePaginatedApi(ApiUrls.FOCUS, offset, limit);
+  const { allItems, allUpdates, products } = useMemo(() => {
+    return formatProductCollections(data.items);
+  }, [data.items.length]);
   return {
     ...rest,
     data: {

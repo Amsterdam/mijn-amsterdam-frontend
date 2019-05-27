@@ -10,6 +10,8 @@ import { brpInfoLabels, panelConfig } from './Profile.constants';
 import { Chapters } from 'App.constants';
 import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
 import { BrpApiState } from 'hooks/api/brp-api.hook';
+import Alert from 'components/Alert/Alert';
+import LoadingContent from 'components/LoadingContent/LoadingContent';
 
 // NOTE: Preferred simple interface here.
 interface ProfileData {
@@ -85,6 +87,18 @@ export default function Profile() {
           gegevens zijn de basis voor de processen van de gemeente. Belangrijk
           dus dat deze gegevens kloppen.
         </p>
+        {BRP.isLoading && (
+          <div className={styles.LoadingContent}>
+            <LoadingContent />
+            <LoadingContent />
+            <LoadingContent />
+          </div>
+        )}
+        {BRP.isError && (
+          <Alert type="warning">
+            Uw gegevens kunnen op dit moment niet worden getoond.
+          </Alert>
+        )}
         {brpInfo &&
           entries(brpInfo).map(
             ([id, panelData]) =>

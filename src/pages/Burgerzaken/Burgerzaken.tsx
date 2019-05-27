@@ -8,6 +8,7 @@ import PageContentMainHeading from 'components/PageContentMainHeading/PageConten
 import React, { useContext } from 'react';
 
 import styles from './Burgerzaken.module.scss';
+import Alert from 'components/Alert/Alert';
 
 const DISPLAY_PROPS = {
   datePublished: 'besluit',
@@ -21,6 +22,8 @@ export default () => {
   const {
     FOCUS: {
       data: { products },
+      isLoading,
+      isError,
     },
   } = useContext(AppContext);
 
@@ -31,7 +34,6 @@ export default () => {
   const itemsDenied = items.filter(item => item.isDenied);
 
   const hasActiveRequests = !!itemsRequested.length;
-  const hasGrantedRequests = !!itemsGranted.length;
   const hasDeniedRequests = !!itemsDenied.length;
 
   return (
@@ -41,42 +43,47 @@ export default () => {
         Burgerzaken
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
-        {hasActiveRequests && (
-          <DataLinkTable
-            id="datalinktable-burgerzaken-actual"
-            rowHeight="6rem"
-            displayProps={DISPLAY_PROPS_ACTUAL}
-            items={itemsRequested}
-            title="Mijn lopende aanvragen"
-            startCollapsed={false}
-          />
+        {isError && (
+          <Alert type="warning">
+            Uw gegevens kunnen op dit moment niet worden getoond.
+          </Alert>
         )}
-        {hasGrantedRequests && (
+        <DataLinkTable
+          id="datalinktable-burgerzaken-actual"
+          rowHeight="6rem"
+          displayProps={DISPLAY_PROPS_ACTUAL}
+          items={itemsRequested}
+          title="Mijn lopende aanvragen"
+          noItemsMessage="U hebt op dit moment geen lopende aanvragen"
+          startCollapsed={false}
+          isLoading={isLoading}
+        />
+        <DataLinkTable
+          id="datalinktable-burgerzaken-granted"
+          rowHeight="6rem"
+          displayProps={DISPLAY_PROPS}
+          items={itemsGranted}
+          startCollapsed={hasActiveRequests}
+          title="Mijn toegekende aanvragen"
+          noItemsMessage="U hebt op dit moment geen toegekende aanvragen"
+          isLoading={isLoading}
+        />
+      </PageContentMainBody>
+      <div className={styles.HistoricDataLinkTable}>
+        <PageContentMainBody variant="boxed">
           <DataLinkTable
-            id="datalinktable-burgerzaken-granted"
+            id="datalinktable-burgerzaken-denied"
             rowHeight="6rem"
             displayProps={DISPLAY_PROPS}
-            items={itemsGranted}
-            startCollapsed={hasActiveRequests}
-            title="Mijn toegekende aanvragen"
+            items={itemsDenied}
+            startCollapsed={hasActiveRequests || hasDeniedRequests}
+            title="Mijn afgewezen aanvragen"
+            noItemsMessage="U hebt op dit moment geen afgewezen aanvragen"
+            className={styles.DataLinkTableCurrent}
+            isLoading={isLoading}
           />
-        )}
-      </PageContentMainBody>
-      {hasDeniedRequests && (
-        <div className={styles.HistoricDataLinkTable}>
-          <PageContentMainBody variant="boxed">
-            <DataLinkTable
-              id="datalinktable-burgerzaken-denied"
-              rowHeight="6rem"
-              displayProps={DISPLAY_PROPS}
-              items={itemsDenied}
-              startCollapsed={hasActiveRequests || hasDeniedRequests}
-              title="Mijn afgewezen aanvragen"
-              className={styles.DataLinkTableCurrent}
-            />
-          </PageContentMainBody>
-        </div>
-      )}
+        </PageContentMainBody>
+      </div>
     </PageContentMain>
   );
 };

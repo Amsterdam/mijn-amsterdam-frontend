@@ -14,6 +14,39 @@
   flex-wrap: wrap;
 
   @include select(MainNavSubmenu_MainNavSubmenuLink) {
-    width: 50%;
+    width: calc(50% - .5rem);
+    &:nth-child(odd) {
+      margin-right: .5rem;
+    }
+    &:nth-child(even) {
+      margin-left: .5rem;
+    }
+  }
+}
+
+.LoadingContent {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 4rem 1rem 12rem;
+  grid-template-rows: 4rem 1rem 4rem;
+
+  > :nth-child(2) {
+    grid-column: 3;
+  }
+  > :nth-child(3) {
+    grid-column: 1;
+    grid-row: 3;
+  }
+  > :nth-child(4) {
+    grid-column: 3;
+    grid-row: 3;
+  }
+  > :nth-child(1),
+  > :nth-child(3) {
+    border-radius: 50%;
+  }
+  > :nth-child(2),
+  > :nth-child(4) {
+    margin-top: 1rem;
   }
 }

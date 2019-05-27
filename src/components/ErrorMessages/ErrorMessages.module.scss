@@ -1,0 +1,32 @@
+@import 'styles/_global.scss';
+
+.ErrorMessages {
+
+
+}
+
+.MessageBar {
+  background-color: $color-neutral-grey2;
+  margin: 0;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ErrorInfo {
+  > p {
+    margin-top: 0;
+  }
+}
+
+.ErrorList {
+
+}
+
+.AlertIcon {
+  display: inline-block;
+  vertical-align: text-bottom;
+  width: 2rem;
+  height: 2rem;
+  fill: $color-support-warning;
+}
