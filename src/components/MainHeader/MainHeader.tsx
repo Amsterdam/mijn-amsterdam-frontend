@@ -70,6 +70,23 @@ export default function MainHeader({
 }: MainHeaderProps) {
   const [responsiveMenuIsVisible, toggleResponsiveMenu] = useState(false);
   const { history } = useRouter();
+  const appState = useContext(AppContext);
+  const errors = entries(appState)
+    .filter(
+      ([stateKey, state]) =>
+        !excludedApiKeys.includes(stateKey) &&
+        'isError' in state &&
+        state.isError
+    )
+    .map(
+      ([stateKey]) =>
+        errorMessageMap[stateKey] || {
+          name: stateKey,
+          error: 'Communicatie met api mislukt.',
+        }
+    );
+
+  const hasErrors = !!errors.length;
   const isHeroVisible = !useSmallScreen();
   const appState = useContext(AppContext);
   const errors = entries(appState)
