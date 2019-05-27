@@ -33,10 +33,7 @@ export default function MyUpdates({
       ...myUpdatesState,
       [id]: true,
     });
-    // NOTE: Add a timeout so state will be persisted before routing.
-    setTimeout(() => {
-      history.push(to);
-    }, 0);
+    history.push(to);
   }
 
   return (

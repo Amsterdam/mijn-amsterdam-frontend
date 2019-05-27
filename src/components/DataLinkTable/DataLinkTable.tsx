@@ -2,13 +2,13 @@ import { Unshaped } from 'App.types';
 import { ReactComponent as CaretIcon } from 'assets/icons/Chevron-Right.svg';
 import classnames from 'classnames';
 import ButtonLink from 'components/ButtonLink/ButtonLink';
+import LoadingContent from 'components/LoadingContent/LoadingContent';
 import { entries, withKeyPress } from 'helpers/App';
+import { useSessionStorage } from 'hooks/storage.hook';
 import React, { useState } from 'react';
 
 import Heading from '../Heading/Heading';
 import styles from './DataLinkTable.module.scss';
-import { useSessionStorageState } from 'react-storage-hooks';
-import LoadingContent from 'components/LoadingContent/LoadingContent';
 
 export interface DataLinkTableProps {
   id: string;
@@ -33,10 +33,7 @@ export default function DataLinkTable({
   rowHeight = 'auto',
   isLoading = true,
 }: DataLinkTableProps) {
-  const [isCollapsed, setCollapsed] = useSessionStorageState(
-    id,
-    startCollapsed
-  );
+  const [isCollapsed, setCollapsed] = useSessionStorage(id, startCollapsed);
 
   const hasItems = !!items.length;
   const hasTitle = !!title;

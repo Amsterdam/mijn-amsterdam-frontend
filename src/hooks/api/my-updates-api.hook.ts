@@ -1,9 +1,9 @@
-import { useLocalStorageState } from 'react-storage-hooks';
 import { Chapter } from 'App.constants';
 import { LinkProps } from 'App.types';
 import { AppState } from 'AppState';
 
 import { ApiState } from './api.types';
+import { useLocalStorage } from 'hooks/storage.hook';
 
 export interface MyUpdate {
   id: string;
@@ -27,10 +27,8 @@ interface MyUpdatesState {
   [id: string]: boolean;
 }
 
-export function useUpdatesState(): [any, any] {
-  const [a, b] = useLocalStorageState('MY_UPDATES', {});
-  console.log(a, b);
-  return [a, b];
+export function useUpdatesState() {
+  return useLocalStorage('MY_UPDATES', {});
 }
 
 // NOTE: Currently we only extract/construct updates from the main focus api data which is not specifically tailored for this use.
