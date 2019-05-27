@@ -18,7 +18,7 @@ import {
 import Heading from 'components/Heading/Heading';
 import { Person } from 'data-formatting/brp';
 import useRouter from 'use-react-router';
-import { useLargeScreen } from 'hooks/media.hook';
+import { useLargeScreen, useSmallScreen } from 'hooks/media.hook';
 
 const MenuWrapperId = 'MenuWrapper';
 const MenuToggleBtnId = 'MenuToggleBtn';
@@ -60,6 +60,7 @@ export default function MainHeader({
 }: MainHeaderProps) {
   const [responsiveMenuIsVisible, toggleResponsiveMenu] = useState(false);
   const { history } = useRouter();
+  const isHeroVisible = !useSmallScreen();
 
   function closeResponsiveMenu(e: any) {
     if (responsiveMenuIsVisible) {
@@ -138,7 +139,7 @@ export default function MainHeader({
           />
         </div>
       )}
-      <MainHeaderHero />
+      {isHeroVisible && <MainHeaderHero />}
     </header>
   );
 }
