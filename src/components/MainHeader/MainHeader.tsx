@@ -23,6 +23,9 @@ import { Person } from 'data-formatting/brp';
 import useRouter from 'use-react-router';
 import { useLargeScreen, useSmallScreen } from 'hooks/media.hook';
 
+import styles from './MainHeader.module.scss';
+import classnames from 'classnames';
+
 const MenuWrapperId = 'MenuWrapper';
 const MenuToggleBtnId = 'MenuToggleBtn';
 
