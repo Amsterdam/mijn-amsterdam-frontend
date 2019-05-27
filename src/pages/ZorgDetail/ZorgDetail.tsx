@@ -11,11 +11,15 @@ import PageContentMainHeadingBackLink from 'components/PageContentMainHeadingBac
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
 import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
 import classnames from 'classnames';
+import Alert from 'components/Alert/Alert';
+import LoadingContent from 'components/LoadingContent/LoadingContent';
 
 export default () => {
   const {
     WMO: {
       data: { items },
+      isError,
+      isLoading,
     },
   } = useContext(AppContext);
   const {
@@ -33,11 +37,24 @@ export default () => {
           Zorg
         </PageContentMainHeadingBackLink>
         <Heading el="h2" className={styles.PageHeading}>
-          {WmoItem && WmoItem.title}
+          {!isLoading && WmoItem ? (
+            WmoItem.title
+          ) : (
+            <LoadingContent
+              className={styles.LoadingContentHeading}
+              barConfig={[['50%', '3rem', '0']]}
+            />
+          )}
         </Heading>
       </PageContentMainHeading>
       <PageContentMainBody variant="regularBoxed">
+        {isError && (
+          <Alert type="warning">
+            Uw gegevens kunnen op dit moment niet worden getoond.
+          </Alert>
+        )}
         <Heading className={styles.ListHeading}>Mijn gegevens</Heading>
+        {isLoading && <LoadingContent className={styles.LoadingContentInfo} />}
         <ul className={styles.List}>
           {WmoItem && WmoItem.dateStart && (
             <li className={classnames(styles.ListItem, styles.DatesInfo)}>

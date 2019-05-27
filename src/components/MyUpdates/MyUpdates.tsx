@@ -10,17 +10,20 @@ import React from 'react';
 import useRouter from 'use-react-router';
 
 import styles from './MyUpdates.module.scss';
+import LoadingContent from 'components/LoadingContent/LoadingContent';
 
 export interface MyUpdatesProps {
   items: MyUpdate[];
   total: number;
   showMoreLink?: boolean;
+  isLoading?: boolean;
 }
 
 export default function MyUpdates({
   items = [],
   total = 0,
   showMoreLink = false,
+  isLoading = true,
 }: MyUpdatesProps) {
   const [myUpdatesState, setMyUpdatesState] = useUpdatesState();
   const { history } = useRouter();
@@ -30,61 +33,70 @@ export default function MyUpdates({
       ...myUpdatesState,
       [id]: true,
     });
-    // NOTE: Add a timeout so state will be persisted before routing.
-    setTimeout(() => {
-      history.push(to);
-    }, 0);
+    history.push(to);
   }
+
   return (
-    <div className={styles.MyUpdates}>
+    <div className={classnames(styles.MyUpdates, styles.isLoading)}>
       <ul>
-        {items.map(item => {
-          return (
-            <li
-              key={item.id}
-              className={classnames(
-                styles.MyUpdateItem,
-                item.isUnread && styles.isUnread
-              )}
-            >
-              <ChapterIcon
-                fill={Colors.primaryRed}
-                className={styles.Icon}
-                chapter={item.chapter}
-              />
-              <aside>
-                <em className={styles.ChapterIndication}>
-                  {item.chapter.toLowerCase()}
-                </em>
-                <time className={styles.Datum} dateTime={item.datePublished}>
-                  {defaultDateFormat(item.datePublished)}
-                </time>
-              </aside>
-              <Heading el="h4" size="small">
-                {item.title}
-              </Heading>
-              {!!item.description && (
-                <p className={styles.Description}>{item.description}</p>
-              )}
-              <p className={styles.Action}>
-                <a
-                  role="button"
-                  className={ButtonLinkStyles.ButtonLink}
-                  onClick={() => {
-                    showUpdate(item.id, item.link.to);
-                  }}
-                >
-                  {item.link.title}
-                </a>
-              </p>
-            </li>
-          );
-        })}
+        {isLoading && (
+          <li className={classnames(styles.MyUpdateItem, styles.FakeContent)}>
+            <LoadingContent />
+          </li>
+        )}
+        {!isLoading &&
+          items.map(item => {
+            return (
+              <li
+                key={item.id}
+                className={classnames(
+                  styles.MyUpdateItem,
+                  item.isUnread && styles.isUnread
+                )}
+              >
+                <ChapterIcon
+                  fill={Colors.primaryRed}
+                  className={styles.Icon}
+                  chapter={item.chapter}
+                />
+                <aside>
+                  <em className={styles.ChapterIndication}>
+                    {item.chapter.toLowerCase()}
+                  </em>
+                  <time className={styles.Datum} dateTime={item.datePublished}>
+                    {defaultDateFormat(item.datePublished)}
+                  </time>
+                </aside>
+                <Heading el="h4" size="small">
+                  {item.title}
+                </Heading>
+                {!!item.description && (
+                  <p className={styles.Description}>{item.description}</p>
+                )}
+                <p className={styles.Action}>
+                  <a
+                    href={item.link.to}
+                    role="button"
+                    className={ButtonLinkStyles.ButtonLink}
+                    onClick={event => {
+                      event.preventDefault();
+                      showUpdate(item.id, item.link.to);
+                      return false;
+                    }}
+                  >
+                    {item.link.title}
+                  </a>
+                </p>
+              </li>
+            );
+          })}
       </ul>
-      {items.length === 0 && (
-        <p>Er zijn op het moment geen actuele meldingen</p>
+      {!isLoading && items.length === 0 && (
+        <p className={styles.NoItemsInfo}>
+          Er zijn op het moment geen actuele meldingen
+        </p>
       )}
-      {showMoreLink && (
+      {!isLoading && showMoreLink && (
         <p className={styles.FooterLink}>
           <ButtonLink to={AppRoutes.MY_UPDATES}>Alle meldingen</ButtonLink>
         </p>

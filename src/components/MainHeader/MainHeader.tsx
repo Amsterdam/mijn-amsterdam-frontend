@@ -1,21 +1,24 @@
-import { AppRoutes, ExternalUrls, LOGOUT_URL, Layout } from 'App.constants';
+import {
+  AppRoutes,
+  excludedApiKeys,
+  ExternalUrls,
+  Layout,
+  LOGOUT_URL,
+  errorMessageMap,
+} from 'App.constants';
+import { AppContext } from 'AppState';
+import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
 import { ReactComponent as BetaLabel } from 'assets/images/beta-label.svg';
 import { ReactComponent as AmsterdamLogoLarge } from 'assets/images/logo-amsterdam-large.svg';
 import { ReactComponent as AmsterdamLogo } from 'assets/images/logo-amsterdam.svg';
-import classnames from 'classnames';
-import MainHeaderHero from 'components/MainHeaderHero/MainHeaderHero';
-import MainNavBar from 'components/MainNavBar/MainNavBar';
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
-import classNames from 'classnames';
-import styles from './MainHeader.module.scss';
-
 import {
   ButtonLinkExternal,
   IconButtonLink,
 } from 'components/ButtonLink/ButtonLink';
+import ErrorMessages from 'components/ErrorMessages/ErrorMessages';
 import Heading from 'components/Heading/Heading';
+import MainHeaderHero from 'components/MainHeaderHero/MainHeaderHero';
+import MainNavBar from 'components/MainNavBar/MainNavBar';
 import { Person } from 'data-formatting/brp';
 import useRouter from 'use-react-router';
 import { useLargeScreen, useSmallScreen } from 'hooks/media.hook';
@@ -60,6 +63,23 @@ export default function MainHeader({
 }: MainHeaderProps) {
   const [responsiveMenuIsVisible, toggleResponsiveMenu] = useState(false);
   const { history } = useRouter();
+  const appState = useContext(AppContext);
+  const errors = entries(appState)
+    .filter(
+      ([stateKey, state]) =>
+        !excludedApiKeys.includes(stateKey) &&
+        'isError' in state &&
+        state.isError
+    )
+    .map(
+      ([stateKey]) =>
+        errorMessageMap[stateKey] || {
+          name: stateKey,
+          error: 'Communicatie met api mislukt.',
+        }
+    );
+
+  const hasErrors = !!errors.length;
   const isHeroVisible = !useSmallScreen();
 
   function closeResponsiveMenu(e: any) {
@@ -112,14 +132,14 @@ export default function MainHeader({
         <div className={styles.MenuContainer}>
           <button
             id={MenuToggleBtnId}
-            className={classNames(styles.MenuToggleBtn, {
+            className={classnames(styles.MenuToggleBtn, {
               [styles.MenuToggleBtnOpen]: responsiveMenuIsVisible,
             })}
             onClick={() => toggleResponsiveMenu(!responsiveMenuIsVisible)}
           />
           <div
             id={MenuWrapperId}
-            className={classNames(styles.MenuWrapper, {
+            className={classnames(styles.MenuWrapper, {
               [styles.MenuWrapperOpen]: responsiveMenuIsVisible,
             })}
           >
@@ -133,13 +153,16 @@ export default function MainHeader({
                 Layout.mainHeaderTopbarHeight -
                 Layout.mainHeaderNavbarHeight,
             }}
-            className={classNames(styles.Modal, {
+            className={classnames(styles.Modal, {
               [styles.ModalOpen]: responsiveMenuIsVisible,
             })}
           />
         </div>
       )}
       {isHeroVisible && <MainHeaderHero />}
+      {hasErrors && (
+        <ErrorMessages errors={errors} className={styles.ErrorMessages} />
+      )}
     </header>
   );
 }

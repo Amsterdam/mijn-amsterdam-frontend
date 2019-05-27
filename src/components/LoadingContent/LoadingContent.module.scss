@@ -1,0 +1,29 @@
+@import 'styles/_global.scss';
+
+// Concept copied from https://github.com/yarism/react-loading-placeholder/blob/master/src/LoadingPlaceholder.css
+
+@keyframes placeHolderShimmer{
+  0%{
+    background-position: -1168px 0
+  }
+  100%{
+    background-position: 1168px 0
+  }
+}
+
+.LoadingContent {
+  > div {
+    height: 1rem;
+    margin-bottom: 1rem;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: $color-neutral-grey4;
+    background: linear-gradient(to right, $color-neutral-grey3 8%, $color-neutral-grey4 18%, $color-neutral-grey3 33%);
+    background-size: 1200px 104px;
+    border-radius: 2px;
+    opacity: .2;
+  }
+}

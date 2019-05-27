@@ -1,3 +1,6 @@
+import { ErrorMessageMap } from 'components/ErrorMessages/ErrorMessages';
+import { StateKey } from 'AppState';
+
 export type Chapter =
   | 'ROOT'
   | 'BURGERZAKEN'
@@ -56,6 +59,39 @@ export const ApiUrls = {
   AUTH: `${API_BASE_URL}/auth/check`,
   ERFPACHT: `${API_BASE_URL}/erfpacht/check-erfpacht`,
 };
+
+export const errorMessageMap: ErrorMessageMap = {
+  BRP: {
+    name: 'Persoonsgegevens',
+    error: 'Communicatie met api mislukt.',
+  },
+  MY_UPDATES: {
+    name: 'Mijn meldingen',
+    error: 'Communicatie met api mislukt.',
+  },
+  MY_CASES: {
+    name: 'Mijn lopende aanvragen',
+    error: 'Communicatie met api mislukt.',
+  },
+  MY_TIPS: {
+    name: 'Mijn tips',
+    error: 'Communicatie met api mislukt.',
+  },
+  WMO: {
+    name: 'Zorg',
+    error: 'Communicatie met api mislukt.',
+  },
+  FOCUS: {
+    name: 'Stadspas of Bijstandsuitkering',
+    error: 'Communicatie met api mislukt.',
+  },
+  ERFPACHT: {
+    name: 'Erfpacht',
+    error: 'Communicatie met api mislukt.',
+  },
+};
+
+export const excludedApiKeys: StateKey[] = ['MY_CHAPTERS', 'SESSION'];
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
 export const DEFAULT_DATE_FORMAT = 'DD MMMM YYYY';

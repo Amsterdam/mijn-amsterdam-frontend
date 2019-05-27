@@ -42,3 +42,12 @@
     border-bottom: 0;
   }
 }
+
+.LoadingContent {
+  > :nth-child(1) {
+    margin-left: 16rem;
+  }
+  + .LoadingContent {
+    margin-top: 6rem;
+  }
+}

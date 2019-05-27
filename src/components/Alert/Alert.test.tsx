@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import MyCases from './MyCases';
+import Alert from './Alert';
 
 it('Renders without crashing', () => {
-  shallow(<MyCases title="testje" items={[]} isLoading={false} />);
+  shallow(<Alert />);
 });
