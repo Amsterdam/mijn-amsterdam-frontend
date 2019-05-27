@@ -137,6 +137,9 @@ export const ExternalUrls = {
   AMSTERDAM_LINKEDIN: 'https://www.linkedin.com/company/gemeente-amsterdam',
   AMSTERDAM_VACATURES:
     'https://www.amsterdam.nl/bestuur-organisatie/werkenbij/',
+  VOORGENOMEN_HUWELIJK:
+    'https://www.amsterdam.nl/burgerzaken/trouwen-partnerschap/trouwen-amsterdam/aankondigen/',
+  INCOME_CONTACT: 'https://www.amsterdam.nl/werk-inkomen/contact/',
 };
 
 // NOTE: Keep up-to-date with _colors.scss

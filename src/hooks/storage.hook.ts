@@ -1,27 +1,107 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 
-// TODO: Implement tab syncing via storage events
+interface LocalStorageHandler {
+  value: string | null;
+  set: (newValue: string) => void;
+  remove: () => void;
+}
+
+/**
+ * useLocalStorage hook
+ *
+ * @param {string} key - Key of the localStorage object
+ * @param {string} defaultValue - Default initial value
+ */
+function useWindowStorage(
+  key: string,
+  defaultValue: any = null,
+  adapter: Storage
+) {
+  const [value, setValue] = useState(getValueFromLocalStorage());
+
+  function init() {
+    const valueLoadedFromLocalStorage = getValueFromLocalStorage();
+    if (
+      valueLoadedFromLocalStorage === null ||
+      valueLoadedFromLocalStorage === 'null'
+    ) {
+      set(defaultValue);
+    }
+  }
+
+  function getValueFromLocalStorage() {
+    if (typeof adapter === 'undefined') {
+      return null;
+    }
+    return adapter.getItem(key);
+  }
+
+  function saveValueToLocalStorage(key: string, value: string | null) {
+    if (typeof adapter === 'undefined') {
+      return null;
+    }
+    return adapter.setItem(key, String(value));
+  }
+
+  function set(newValue: any) {
+    setValue(newValue);
+    saveValueToLocalStorage(key, newValue);
+  }
+
+  function listen(e: StorageEvent) {
+    if (e.storageArea === adapter && e.key === key) {
+      setValue(e.newValue);
+    }
+  }
+
+  function remove() {
+    set(null);
+    if (typeof adapter === 'undefined') {
+      return false;
+    }
+    adapter.removeItem(key);
+  }
+
+  //initialize
+  useEffect(() => {
+    init();
+  }, []);
+
+  if (adapter === localStorage) {
+    // check for changes across windows
+    useEffect(() => {
+      window.addEventListener('storage', listen);
+      return () => {
+        window.removeEventListener('storage', listen);
+      };
+    });
+  }
+
+  const handler: LocalStorageHandler = {
+    value,
+    set,
+    remove,
+  };
+
+  return handler;
+}
 
 export function useStorage(
   key: string,
   initialValue: any,
   adapter: Storage = localStorage
 ) {
-  const [item, setValue] = React.useState(() => {
-    const storedValue = adapter.getItem(key);
-    return typeof storedValue === 'string'
-      ? JSON.parse(storedValue)
-      : initialValue;
-  });
+  const { value: item, set: setValue } = useWindowStorage(
+    key,
+    JSON.stringify(initialValue),
+    adapter
+  );
 
   const setItem = (newValue: string) => {
-    const stringifiedValue =
-      typeof newValue !== 'undefined' ? JSON.stringify(newValue) : '';
-    adapter.setItem(key, stringifiedValue);
-    setValue(stringifiedValue);
+    setValue(JSON.stringify(newValue));
   };
 
-  return [item, setItem];
+  return [item !== null ? JSON.parse(item) : item, setItem];
 }
 
 export function useLocalStorage(key: string, value: any) {
@@ -29,5 +109,5 @@ export function useLocalStorage(key: string, value: any) {
 }
 
 export function useSessionStorage(key: string, value: any) {
-  return useStorage(key, value, localStorage);
+  return useStorage(key, value, sessionStorage);
 }
