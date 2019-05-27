@@ -29,6 +29,10 @@ export const panelConfig = {
         url: ExternalUrls.TROUWEN_EN_PARTNERSCHAP,
       },
       {
+        title: 'Voorgenomen huwelijk doorgeven',
+        url: ExternalUrls.VOORGENOMEN_HUWELIJK,
+      },
+      {
         title: 'Echtscheiding',
         url: ExternalUrls.ECHTSCHEIDING,
       },

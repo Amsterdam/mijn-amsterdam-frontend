@@ -97,9 +97,9 @@ export default function formatBrpApiResponse(
       partnerItem.gerelateerde && {
         firstName: partnerItem.gerelateerde.voornamen,
         country: partnerItem.landnaamSluiting,
-        lastName: '',
+        lastName: partnerItem.gerelateerde.geslachtsnaam,
         bsn: 0,
-        dateOfBirth: '',
+        dateOfBirth: partnerItem.gerelateerde.geboortedatum,
       };
 
     const address = {

@@ -26,7 +26,7 @@ export default function MyChaptersPanel({
         {items.map(({ id, to, Icon, title, target }) => {
           return (
             <MainNavSubmenuLink key={id} to={to} id={id} target={target}>
-              {Icon && <Icon fill={Colors.neutralGrey4} aria-hidden="true" />}
+              {Icon && <Icon aria-hidden="true" />}
               {title}
             </MainNavSubmenuLink>
           );

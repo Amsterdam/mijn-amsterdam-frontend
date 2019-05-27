@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import styles from './StatusLine.module.scss';
 import classnames from 'classnames';
 import { ProcessStep } from 'data-formatting/focus';
@@ -10,6 +10,7 @@ import { Document } from '../DocumentList/DocumentList';
 import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
 import { defaultDateFormat } from 'helpers/App';
 import useRouter from 'use-react-router';
+import { useSessionStorage } from 'hooks/storage.hook';
 
 const markdownLinkRegex = /\[((?:[^\[\]\\]|\\.)+)\]\((https?:\/\/(?:[-A-Z0-9+&@#\/%=~_|\[\]](?= *\))|[-A-Z0-9+&@#\/%?=~_|\[\]!:,.;](?! *\))|\([-A-Z0-9+&@#\/%?=~_|\[\]!:,.;(]*\))+) *\)/i;
 const markdownTagMatchRegex = /(\[.*?\]\(.*?\))/gi;
@@ -102,6 +103,14 @@ function StatusLineItem({ item, stepNumber }: StatusLineItemProps) {
 
 export default function StatusLine({ items }: StatusLineProps) {
   const { location } = useRouter();
+  const [isCollapsed, setCollapsed] = useSessionStorage(
+    'STATUS_LINE_' + location.pathname,
+    true
+  );
+
+  function toggleCollapsed() {
+    setCollapsed(!isCollapsed);
+  }
 
   useEffect(() => {
     const id = location.hash.substring(1);
@@ -118,15 +127,31 @@ export default function StatusLine({ items }: StatusLineProps) {
   return (
     <div className={styles.StatusLine}>
       <ul className={styles.List}>
-        {items.map((item, index) => (
-          <StatusLineItem
-            key={item.id}
-            item={item}
-            stepNumber={items.length - index}
-          />
-        ))}
+        {items
+          .filter(
+            (item, index) =>
+              !isCollapsed || (isCollapsed && index === items.length - 1)
+          )
+          .map((item, index) => (
+            <StatusLineItem
+              key={item.id}
+              item={item}
+              stepNumber={items.length - index}
+            />
+          ))}
       </ul>
       {!items.length && <p>Er is geen status beschikbaar.</p>}
+      {items.length > 1 && (
+        <button
+          className={classnames(
+            styles.MoreStatus,
+            isCollapsed && styles.isCollapsed
+          )}
+          onClick={toggleCollapsed}
+        >
+          {isCollapsed ? 'Lees meer' : 'Lees minder'} <span>▶</span>
+        </button>
+      )}
     </div>
   );
 }
