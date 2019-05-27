@@ -25,6 +25,7 @@ import { useLargeScreen } from 'hooks/media.hook';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useRouter from 'use-react-router';
+import { useLargeScreen, useSmallScreen } from 'hooks/media.hook';
 
 import styles from './MainHeader.module.scss';
 import classnames from 'classnames';
@@ -69,6 +70,7 @@ export default function MainHeader({
 }: MainHeaderProps) {
   const [responsiveMenuIsVisible, toggleResponsiveMenu] = useState(false);
   const { history } = useRouter();
+  const isHeroVisible = !useSmallScreen();
   const appState = useContext(AppContext);
   const errors = entries(appState)
     .filter(
@@ -164,7 +166,7 @@ export default function MainHeader({
           />
         </div>
       )}
-      <MainHeaderHero />
+      {isHeroVisible && <MainHeaderHero />}
       {hasErrors && (
         <ErrorMessages errors={errors} className={styles.ErrorMessages} />
       )}
