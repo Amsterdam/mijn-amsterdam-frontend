@@ -57,11 +57,10 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
           </ul>
           <p>
             {/* TODO: Arrange correct text here */}
-            Probeer het later nog eens. Bel anders naar 0000000 voor hulp en
-            ondersteuning.
+            Probeer het later nog eens.
           </p>
           <button className="action-button" onClick={() => setModalOpen(false)}>
-            Ok dan maar
+            Ok
           </button>
         </div>
       </Modal>
