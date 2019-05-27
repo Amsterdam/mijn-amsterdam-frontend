@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoadingContent component Show the correct custom barConfig 1`] = `"<div class=\\"LoadingContent\\"><div style=\\"width:300px;height:20px;margin-bottom:10px\\"></div><div style=\\"width:200px;height:10px;margin-bottom:5px\\"></div></div>"`;
+
+exports[`LoadingContent component Show the correct default barConfig 1`] = `"<div class=\\"LoadingContent\\"><div style=\\"width:70%;height:2rem;margin-bottom:.7rem\\"></div><div style=\\"width:90%;height:2rem;margin-bottom:.7rem\\"></div><div style=\\"width:90%;height:2rem;margin-bottom:.7rem\\"></div><div style=\\"width:40%;height:2rem;margin-bottom:0\\"></div></div>"`;

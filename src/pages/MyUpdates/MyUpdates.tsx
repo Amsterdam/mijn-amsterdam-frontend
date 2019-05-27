@@ -7,13 +7,17 @@ import PageContentMainBody from 'components/PageContentMainBody/PageContentMainB
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
 import React, { useContext } from 'react';
 
-import { useUpdatesState } from 'hooks/api/my-updates-api.hook';
 import styles from './MyUpdates.module.scss';
 import Heading from 'components/Heading/Heading';
+import Alert from 'components/Alert/Alert';
 
 export default () => {
   const {
-    MY_UPDATES: { items, total },
+    MY_UPDATES: {
+      data: { items, total },
+      isLoading,
+      isError,
+    },
   } = useContext(AppContext);
   return (
     <PageContentMain className={styles.MyUpdates} variant="full">
@@ -25,13 +29,23 @@ export default () => {
         Alle meldingen
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
+        {isError && (
+          <Alert type="warning">
+            Uw meldingen kunnen op dit moment niet geladen worden.
+          </Alert>
+        )}
         <h3 className={styles.PanelHeading}>Actueel</h3>
-        <MyUpdates total={total} items={items.filter(item => item.isActual)} />
+        <MyUpdates
+          isLoading={isLoading}
+          total={total}
+          items={items.filter(item => item.isActual)}
+        />
       </PageContentMainBody>
       <div className={styles.PreviousUpdatesPanel}>
         <PageContentMainBody variant="boxed">
           <Heading className={styles.PanelHeading}>Eerdere meldingen</Heading>
           <MyUpdates
+            isLoading={isLoading}
             total={total}
             items={items.filter(item => !item.isActual)}
           />

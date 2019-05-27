@@ -14,3 +14,11 @@
     }
   }
 }
+
+
+.LoadingContent {
+  padding-left: 16rem;
+  @include select(LoadingContent_LoadingContent) {
+    margin-bottom: 6rem;
+  }
+}

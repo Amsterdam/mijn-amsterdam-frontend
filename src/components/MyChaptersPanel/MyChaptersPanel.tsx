@@ -4,15 +4,18 @@ import { MainNavSubmenuLink } from 'components/MainNavSubmenu/MainNavSubmenu';
 import { Colors } from 'App.constants';
 import Heading from 'components/Heading/Heading';
 import { MenuItem } from '../MainNavBar/MainNavBar.constants';
+import LoadingContent from 'components/LoadingContent/LoadingContent';
 
 export interface MyChaptersPanelProps {
   title: string;
   items: MenuItem[];
+  isLoading: boolean;
 }
 
 export default function MyChaptersPanel({
   title,
   items = [],
+  isLoading = true,
 }: MyChaptersPanelProps) {
   return (
     <div className={styles.MyChaptersPanel}>
@@ -29,6 +32,17 @@ export default function MyChaptersPanel({
           );
         })}
       </div>
+      {isLoading && (
+        <LoadingContent
+          className={styles.LoadingContent}
+          barConfig={[
+            ['4rem', '4rem', '1rem'],
+            ['auto', '2rem', '0'],
+            ['4rem', '4rem', '1rem'],
+            ['auto', '2rem', '0'],
+          ]}
+        />
+      )}
     </div>
   );
 }

@@ -37,6 +37,10 @@
         }
       }
     }
+
+    @include select(MyUpdates_NoItemsInfo) {
+      text-indent: 16rem;
+    }
   }
 
   .PreviousUpdatesPanel {

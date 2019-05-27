@@ -1,0 +1,24 @@
+@import 'styles/_global.scss';
+
+.Alert {
+  display: flex;
+  padding: 2rem;
+  border: .2rem solid $color-black;
+
+  &.warning {
+    border-color: $color-support-warning;
+  }
+
+  &.success {
+    border-color: $color-support-valid;
+  }
+}
+
+.Icon {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  margin-right: 2rem;
+  fill: $color-black;
+}
+

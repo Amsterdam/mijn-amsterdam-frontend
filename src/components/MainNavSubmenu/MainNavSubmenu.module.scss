@@ -1,9 +1,5 @@
 @import 'styles/_global.scss';
 
-.MainNavSubmenu {
-  z-index: 2;
-}
-
 .SubmenuButton {
   padding-left: 0;
   padding-right: 0;
@@ -17,6 +13,10 @@
   padding-top: 0.9rem;
   padding-bottom: 0.8rem;
   margin-top: 0.2rem;
+
+  &:focus {
+    background-color: $color-support-focus;
+  }
 
   span {
     display: inline-block;
@@ -64,10 +64,17 @@
 .MainNavSubmenuLink {
   display: flex;
   align-items: center;
-  width: 22rem;
+  width: 21.5rem;
   color: $color-black;
   text-decoration: none;
   font-weight: 500;
+
+  &:nth-child(odd) {
+    margin-right: .5rem;
+  }
+  &:nth-child(even) {
+    margin-left: .5rem;
+  }
 
   svg {
     margin: 0.5rem 1.5rem 0.5rem 0;

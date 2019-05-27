@@ -17,6 +17,9 @@
   &,
   a {
     color: $color-white;
+    &:focus {
+      color: $color-black;
+    }
   }
 
   h3 {
@@ -47,6 +50,9 @@
 
 .FollowPanel {
   margin: 0 3rem;
+  li {
+    white-space: nowrap;
+  }
 }
 
 @include respond-to(medium-screen) {
@@ -73,6 +79,7 @@
   }
 
   .Panel {
+
     > :not(:first-child) {
       display: none;
     }

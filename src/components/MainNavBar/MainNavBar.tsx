@@ -84,7 +84,7 @@ export default function MainNavBar() {
   const [activeSubmenuId, activateSubmenu] = useState('');
   const {
     SESSION: { isAuthenticated },
-    MY_CHAPTERS,
+    MY_CHAPTERS: { items: myChapterItems },
   } = useContext(AppContext);
 
   function setSubMenuVisibility(
@@ -106,7 +106,7 @@ export default function MainNavBar() {
             let menuItem = item;
             if (item.id in submenuItems) {
               if (item.id === mainMenuItemId.MY_CHAPTERS) {
-                menuItem = { ...item, submenuItems: MY_CHAPTERS };
+                menuItem = { ...item, submenuItems: myChapterItems };
               } else {
                 menuItem = { ...item, submenuItems: submenuItems[item.id] };
               }
