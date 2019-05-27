@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 
 import Heading from '../Heading/Heading';
 import styles from './DataLinkTable.module.scss';
-import createPersistedState from 'use-persisted-state';
+import { useSessionStorageState } from 'react-storage-hooks';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 
 export interface DataLinkTableProps {
@@ -33,10 +33,10 @@ export default function DataLinkTable({
   rowHeight = 'auto',
   isLoading = true,
 }: DataLinkTableProps) {
-  const [isCollapsed, setCollapsed] = createPersistedState(
+  const [isCollapsed, setCollapsed] = useSessionStorageState(
     id,
-    window.sessionStorage
-  )(startCollapsed);
+    startCollapsed
+  );
 
   const hasItems = !!items.length;
   const hasTitle = !!title;

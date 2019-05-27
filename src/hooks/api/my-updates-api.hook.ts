@@ -1,8 +1,8 @@
-import { AppRoutes, Chapter, Chapters } from 'App.constants';
+import { useLocalStorageState } from 'react-storage-hooks';
+import { Chapter } from 'App.constants';
 import { LinkProps } from 'App.types';
 import { AppState } from 'AppState';
-import createPersistedState from 'use-persisted-state';
-import { FocusItem } from 'data-formatting/focus';
+
 import { ApiState } from './api.types';
 
 export interface MyUpdate {
@@ -27,8 +27,11 @@ interface MyUpdatesState {
   [id: string]: boolean;
 }
 
-const myUpdatesState = createPersistedState('MY_UPDATES');
-export const useUpdatesState = () => myUpdatesState({});
+export function useUpdatesState(): [any, any] {
+  const [a, b] = useLocalStorageState('MY_UPDATES', {});
+  console.log(a, b);
+  return [a, b];
+}
 
 // NOTE: Currently we only extract/construct updates from the main focus api data which is not specifically tailored for this use.
 // In the future we will get specifically tailored generic update content from various api's which will be integrated in
