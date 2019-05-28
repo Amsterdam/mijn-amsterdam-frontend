@@ -1,16 +1,17 @@
 import {
   AppRoutes,
+  errorMessageMap,
   excludedApiKeys,
   ExternalUrls,
   Layout,
   LOGOUT_URL,
-  errorMessageMap,
 } from 'App.constants';
 import { AppContext } from 'AppState';
 import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
 import { ReactComponent as BetaLabel } from 'assets/images/beta-label.svg';
 import { ReactComponent as AmsterdamLogoLarge } from 'assets/images/logo-amsterdam-large.svg';
 import { ReactComponent as AmsterdamLogo } from 'assets/images/logo-amsterdam.svg';
+import classnames from 'classnames';
 import {
   ButtonLinkExternal,
   IconButtonLink,
@@ -21,13 +22,12 @@ import MainHeaderHero from 'components/MainHeaderHero/MainHeaderHero';
 import MainNavBar from 'components/MainNavBar/MainNavBar';
 import { Person } from 'data-formatting/brp';
 import { entries } from 'helpers/App';
-import { useLargeScreen } from 'hooks/media.hook';
+import { useLargeScreen, useSmallScreen } from 'hooks/media.hook';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useRouter from 'use-react-router';
 
 import styles from './MainHeader.module.scss';
-import classnames from 'classnames';
 
 const MenuWrapperId = 'MenuWrapper';
 const MenuToggleBtnId = 'MenuToggleBtn';
@@ -69,6 +69,7 @@ export default function MainHeader({
 }: MainHeaderProps) {
   const [responsiveMenuIsVisible, toggleResponsiveMenu] = useState(false);
   const { history } = useRouter();
+  const isHeroVisible = !useSmallScreen();
   const appState = useContext(AppContext);
   const errors = entries(appState)
     .filter(
@@ -164,7 +165,7 @@ export default function MainHeader({
           />
         </div>
       )}
-      <MainHeaderHero />
+      {isHeroVisible && <MainHeaderHero />}
       {hasErrors && (
         <ErrorMessages errors={errors} className={styles.ErrorMessages} />
       )}

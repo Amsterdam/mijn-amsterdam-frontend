@@ -57,6 +57,8 @@ export default () => {
           items={myChapterItems}
           title="Mijn thema's"
         />
+      </PageContentMainBody>
+      <PageContentMainBody>
         <MyCases
           isLoading={!!isMyCasesLoading}
           title="Mijn lopende aanvragen"
