@@ -123,12 +123,15 @@
     @include select(PageContentMainHeading) {
       left: auto;
       width: $main-max-width;
-      margin-bottom: -1.5rem;
+      max-width: $main-max-width;
       font-size: 2.4rem;
+      margin-bottom: -1.5rem;
+      margin-top: -4.5rem;
     }
 
     @include select(MyUpdates_MyUpdates) {
       width: $main-max-width;
+      max-width: $main-max-width;
 
       @include select(MyUpdates_FooterLink) {
         border-bottom: 0;
@@ -136,6 +139,7 @@
     }
     @include select(MyChaptersPanel_MyChaptersPanel) {
       width: $main-max-width;
+      max-width: $main-max-width;
     }
   }
 }
