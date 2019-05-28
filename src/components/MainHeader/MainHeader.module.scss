@@ -90,7 +90,6 @@
 @include respond-to(medium-screen) {
   .topBar {
     height: $responsive-header-topbar-height;
-    max-width: 100%;
 
     @include select(Heading) {
       margin: 0.5rem 0 0 2rem;
@@ -186,4 +185,3 @@
   transform: translateX(-50%);
   width: $main-boxed-width;
 }
-
