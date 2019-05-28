@@ -22,6 +22,9 @@ import MainNavBar from 'components/MainNavBar/MainNavBar';
 import { Person } from 'data-formatting/brp';
 import useRouter from 'use-react-router';
 import { useLargeScreen, useSmallScreen } from 'hooks/media.hook';
+import { Link } from 'react-router-dom';
+import { entries } from 'helpers/App';
+import React, { useContext, useEffect, useState } from 'react';
 
 import styles from './MainHeader.module.scss';
 import classnames from 'classnames';
