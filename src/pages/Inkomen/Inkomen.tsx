@@ -28,7 +28,7 @@ export default () => {
     },
   } = useContext(AppContext);
 
-  const items = products.Levensonderhoud ? products.Levensonderhoud.items : [];
+  const items = Object.values(products).flatMap(product => product.items);
 
   const itemsRequested = items.filter(item => item.inProgress);
   const itemsGranted = items.filter(item => item.isGranted);
@@ -41,7 +41,7 @@ export default () => {
     <PageContentMain variant="full" className={styles.Page}>
       <PageContentMainHeading variant="boxedWithIcon">
         <ChapterHeadingIcon chapter={Chapters.INKOMEN} />
-        Inkomen
+        Werk &amp; inkomen
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
         <p>
@@ -52,6 +52,10 @@ export default () => {
         <p>
           <ButtonLinkExternal to={ExternalUrls.ABOUT_INCOME_SUPPORT}>
             Lees meer over inkomensondersteuning
+          </ButtonLinkExternal>
+          <br />
+          <ButtonLinkExternal to={ExternalUrls.INCOME_CONTACT}>
+            Contact Werk & inkomen
           </ButtonLinkExternal>
         </p>
         {isError && (

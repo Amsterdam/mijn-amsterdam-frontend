@@ -5,7 +5,6 @@ import { FocusApiState } from './api/api.focus';
 import { Chapters } from 'App.constants';
 import { MenuItem } from '../components/MainNavBar/MainNavBar.constants';
 import { ErfpachtApiState } from './api/api.erfpacht';
-import { ProductTitles } from '../data-formatting/focus';
 
 function isChapterActive(
   item: MenuItem,
@@ -15,15 +14,9 @@ function isChapterActive(
     case Chapters.INKOMEN:
       return (
         !FOCUS.isLoading &&
-        (!!FOCUS.data.products[ProductTitles.Bijstandsuitkering] &&
-          !!FOCUS.data.products[ProductTitles.Bijstandsuitkering].items.length)
-      );
-
-    case Chapters.BURGERZAKEN:
-      return (
-        !FOCUS.isLoading &&
-        !!FOCUS.data.products[ProductTitles.Stadspas] &&
-        !!FOCUS.data.products[ProductTitles.Stadspas].items.length
+        !!Object.values(FOCUS.data.products).some(
+          product => !!product.items.length
+        )
       );
 
     case Chapters.ZORG:
@@ -55,7 +48,6 @@ export default function useMyChapters(
     const items = myChaptersMenuItems.filter(item => {
       return isChapterActive(item, apiStates);
     });
-
     return {
       items,
       isLoading: !!(WMO.isLoading && FOCUS.isLoading && ERFPACHT.isLoading),
