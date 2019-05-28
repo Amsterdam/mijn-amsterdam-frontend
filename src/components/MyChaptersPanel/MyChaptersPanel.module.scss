@@ -15,5 +15,11 @@
 
   @include select(MainNavSubmenu_MainNavSubmenuLink) {
     width: 50%;
+    padding-left: 1rem;
+
+    &:nth-child(odd) {
+      width: calc(50% - 1rem);
+      margin-right: 1rem;
+    }
   }
 }
