@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './MyChaptersPanel.module.scss';
 import { MainNavSubmenuLink } from 'components/MainNavSubmenu/MainNavSubmenu';
-import { Colors } from 'App.constants';
 import Heading from 'components/Heading/Heading';
 import { MenuItem } from '../MainNavBar/MainNavBar.constants';
 import LoadingContent from 'components/LoadingContent/LoadingContent';

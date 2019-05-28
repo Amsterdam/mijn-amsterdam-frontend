@@ -1,6 +1,4 @@
 import Belastingen from 'pages/Belastingen/Belastingen';
-import Burgerzaken from 'pages/Burgerzaken/Burgerzaken';
-import BurgerzakenDetail from 'pages/BurgerzakenDetail/BurgerzakenDetail';
 import Dashboard from 'pages/Dashboard/Dashboard';
 import Inkomen from 'pages/Inkomen/Inkomen';
 import InkomenDetail from 'pages/InkomenDetail/InkomenDetail';
@@ -49,11 +47,7 @@ function MainApp({ appState: { SESSION, BRP } }: MainAppProps) {
           <Route path={AppRoutes.MY_UPDATES} component={MyUpdates} />
           <Route path={AppRoutes.PROFILE} component={Profile} />
           <Route path={AppRoutes.MY_TIPS} component={MyTips} />
-          <Route
-            path={`${AppRoutes.STADSPAS}/:id`}
-            component={BurgerzakenDetail}
-          />
-          <Route path={AppRoutes.BURGERZAKEN} component={Burgerzaken} />
+          <Route path={`${AppRoutes.STADSPAS}/:id`} component={InkomenDetail} />
           <Route path={AppRoutes.BELASTINGEN} component={Belastingen} />
           <Route path={AppRoutes.JEUGDHULP} component={Jeugdhulp} />
           <Route path={AppRoutes.WONEN} component={Wonen} />
