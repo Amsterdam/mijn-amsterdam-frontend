@@ -124,7 +124,7 @@
   left: 50%;
   transform: translateX(-50%);
   cursor: pointer;
-  padding: 0 1.4rem;
+  padding: 0 .4rem 0 1.4rem;
 
   &:hover {
     background-color: $color-primary-darkblue;
@@ -136,7 +136,7 @@
     font-size: .6em;
     position: relative;
     display: inline-block;
-    margin-left: .4rem;
+    margin: 0 1rem;
   }
 
   &.isCollapsed > span {

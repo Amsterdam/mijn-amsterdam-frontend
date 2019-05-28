@@ -25,12 +25,12 @@ export const Chapters: { [chapter in Chapter]: Chapter } = {
 export const AppRoutes = {
   ROOT: '/',
   BURGERZAKEN: '/burgerzaken',
-  STADSPAS: '/burgerzaken/stadspas',
   WONEN: '/wonen',
   BELASTINGEN: '/belastingen',
   ZORG: '/zorg',
   JEUGDHULP: '/jeugdhulp',
   INKOMEN: '/inkomen',
+  STADSPAS: '/inkomen/stadspas',
   BIJSTANDSUITKERING: '/inkomen/bijstandsuitkering',
   BIJZONDERE_BIJSTAND: '/inkomen/bijzondere-bijstand',
   PROFILE: '/profiel',

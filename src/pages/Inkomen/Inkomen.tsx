@@ -28,7 +28,7 @@ export default () => {
     },
   } = useContext(AppContext);
 
-  const items = products.Levensonderhoud ? products.Levensonderhoud.items : [];
+  const items = Object.values(products).flatMap(product => product.items);
 
   const itemsRequested = items.filter(item => item.inProgress);
   const itemsGranted = items.filter(item => item.isGranted);
@@ -41,7 +41,7 @@ export default () => {
     <PageContentMain variant="full" className={styles.Page}>
       <PageContentMainHeading variant="boxedWithIcon">
         <ChapterHeadingIcon chapter={Chapters.INKOMEN} />
-        Werk & inkomen
+        Werk &amp; inkomen
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
         <p>
