@@ -11,7 +11,6 @@ import PageContentMainHeading from 'components/PageContentMainHeading/PageConten
 import React, { useContext } from 'react';
 
 import styles from './Dashboard.module.scss';
-import LoadingContent from '../../components/LoadingContent/LoadingContent';
 
 const MAX_UPDATES_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
