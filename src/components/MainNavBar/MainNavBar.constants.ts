@@ -55,7 +55,7 @@ export const myChaptersMenuItems: MenuItem[] = [
     Icon: ZorgIcon,
   },
   {
-    title: 'Inkomen',
+    title: 'Werk & inkomen',
     id: Chapters.INKOMEN,
     to: AppRoutes.INKOMEN,
     Icon: InkomenIcon,

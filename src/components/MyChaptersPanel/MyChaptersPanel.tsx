@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './MyChaptersPanel.module.scss';
 import { MainNavSubmenuLink } from 'components/MainNavSubmenu/MainNavSubmenu';
-import { Colors } from 'App.constants';
 import Heading from 'components/Heading/Heading';
 import { MenuItem } from '../MainNavBar/MainNavBar.constants';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
@@ -26,7 +25,7 @@ export default function MyChaptersPanel({
         {items.map(({ id, to, Icon, title, target }) => {
           return (
             <MainNavSubmenuLink key={id} to={to} id={id} target={target}>
-              {Icon && <Icon fill={Colors.neutralGrey4} aria-hidden="true" />}
+              {Icon && <Icon aria-hidden="true" />}
               {title}
             </MainNavSubmenuLink>
           );

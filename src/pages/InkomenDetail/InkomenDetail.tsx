@@ -33,7 +33,7 @@ export default () => {
       <PageContentMainHeading el="div" variant="boxedWithIcon">
         <ChapterHeadingIcon chapter={Chapters.INKOMEN} />
         <PageContentMainHeadingBackLink to={AppRoutes.INKOMEN}>
-          Inkomen
+          Werk & inkomen
         </PageContentMainHeadingBackLink>
         <Heading el="h2" className={styles.PageHeading}>
           {!isLoading && FocusItem ? (
