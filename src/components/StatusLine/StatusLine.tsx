@@ -80,7 +80,8 @@ function StatusLineItem({ item, stepNumber }: StatusLineItemProps) {
       className={classnames(
         styles.ListItem,
         item.isActual && styles.Actual,
-        location.hash.substring(1) === item.id && styles.Highlight
+        location.hash.substring(1) === item.id && styles.Highlight,
+        styles[item.status.replace(/[^a-z]/gi, '').toLocaleLowerCase()]
       )}
     >
       <div className={styles.Panel} data-stepnumber={stepNumber}>
