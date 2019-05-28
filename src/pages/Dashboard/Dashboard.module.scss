@@ -30,6 +30,7 @@
 
   @include select(MyCases_MyCases) {
     width: $main-boxed-width;
+    margin: 0 auto;
     margin-bottom: 8rem;
     margin-top: 10rem;
   }
