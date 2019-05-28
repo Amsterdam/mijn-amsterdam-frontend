@@ -1,6 +1,4 @@
 import Belastingen from 'pages/Belastingen/Belastingen';
-import Burgerzaken from 'pages/Burgerzaken/Burgerzaken';
-import BurgerzakenDetail from 'pages/BurgerzakenDetail/BurgerzakenDetail';
 import Dashboard from 'pages/Dashboard/Dashboard';
 import Inkomen from 'pages/Inkomen/Inkomen';
 import InkomenDetail from 'pages/InkomenDetail/InkomenDetail';
@@ -26,6 +24,7 @@ import MainFooter from './components/MainFooter/MainFooter';
 import MainHeader from './components/MainHeader/MainHeader';
 import NotFound from './pages/NotFound/NotFound';
 import Profile from './pages/Profile/Profile';
+import Privacy from 'pages/Privacy/Privacy';
 
 interface MainAppProps {
   appState: AppStateInterface;
@@ -49,11 +48,7 @@ function MainApp({ appState: { SESSION, BRP } }: MainAppProps) {
           <Route path={AppRoutes.MY_UPDATES} component={MyUpdates} />
           <Route path={AppRoutes.PROFILE} component={Profile} />
           <Route path={AppRoutes.MY_TIPS} component={MyTips} />
-          <Route
-            path={`${AppRoutes.STADSPAS}/:id`}
-            component={BurgerzakenDetail}
-          />
-          <Route path={AppRoutes.BURGERZAKEN} component={Burgerzaken} />
+          <Route path={`${AppRoutes.STADSPAS}/:id`} component={InkomenDetail} />
           <Route path={AppRoutes.BELASTINGEN} component={Belastingen} />
           <Route path={AppRoutes.JEUGDHULP} component={Jeugdhulp} />
           <Route path={AppRoutes.WONEN} component={Wonen} />
@@ -69,6 +64,7 @@ function MainApp({ appState: { SESSION, BRP } }: MainAppProps) {
           <Route path={`${AppRoutes.ZORG}/:id`} component={ZorgDetail} />
           <Route path={AppRoutes.ZORG} component={Zorg} />
           <Route path={AppRoutes.MY_AREA} component={MyArea} />
+          <Route path={AppRoutes.PRIVACY} component={Privacy} />
           <Route component={NotFound} />
         </Switch>
       </div>
