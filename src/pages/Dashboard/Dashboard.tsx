@@ -11,6 +11,7 @@ import PageContentMainHeading from 'components/PageContentMainHeading/PageConten
 import React, { useContext } from 'react';
 
 import styles from './Dashboard.module.scss';
+import { useSmallScreen } from 'hooks/media.hook';
 
 const MAX_UPDATES_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
@@ -31,6 +32,7 @@ export default () => {
     },
     MY_CHAPTERS: { items: myChapterItems, isLoading: isMyChaptersLoading },
   } = useContext(AppContext);
+  const isMyAreaVisible = !useSmallScreen();
 
   const tipItems = myTips.slice(0, MAX_TIPS_VISIBLE);
   const actualUpdateItems = myUpdateItems.filter(item => item.isActual);
@@ -64,9 +66,11 @@ export default () => {
           items={myCases}
         />
       </PageContentMainBody>
-      <PageContentMainBody>
-        <MyArea />
-      </PageContentMainBody>
+      {isMyAreaVisible && (
+        <PageContentMainBody>
+          <MyArea />
+        </PageContentMainBody>
+      )}
       <PageContentMainBody variant="regularBoxed">
         <MyTips isLoading={!!isMyTipsLoading} items={tipItems} />
         <DirectLinks />
