@@ -54,9 +54,6 @@
   width: 60rem;
 }
 
-.TodoPanel {
-}
-
 @include respond-to(medium-screen) {
   .InnerContainer {
     width: 100%;
@@ -76,8 +73,17 @@
     }
   }
 
+  .ContactPanel {
+    width: 100%;
+  }
+
   .FollowPanel {
     margin: 0;
+    width: 100%;
+  }
+
+  .TodoPanel {
+    width: 100%;
   }
 
   .Panel {
