@@ -2,18 +2,20 @@
 
 .Dashboard {
   @include select(PageContentMainBody) {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    padding: 0;
+  }
+
+  @include select(PageContentMainHeading) {
+    padding-top: 2.5rem;
+    width: calc(#{$main-max-width} / 2);
+    max-width: calc(#{$main-boxed-width} / 2);
   }
 
   @include select(MyUpdates_MyUpdates) {
-    flex-basis: calc(50% - 5rem); // margin-left + margin-right + virtual-gutter
-    flex-shrink: 0;
-    overflow: hidden;
-    margin-right: 4rem;
+    width: calc(#{$main-max-width} / 2);
+    max-width: calc(#{$main-boxed-width} / 2);
+    padding: 0 4rem;
     border-top: 1px solid $color-neutral-grey2;
-    margin-bottom: 5rem;
 
     @include select(MyUpdates_ChapterIndication) {
       display: none;
@@ -21,12 +23,14 @@
   }
 
   @include select(MyChaptersPanel_MyChaptersPanel) {
+    width: calc(#{$main-max-width} / 2);
+    max-width: calc(#{$main-boxed-width} / 2);
     align-self: flex-start;
-    width: calc(50% + 1rem); // + virtual-gutter
   }
 
   @include select(MyCases_MyCases) {
     width: $main-boxed-width;
+    margin: 0 auto;
     margin-bottom: 8rem;
     margin-top: 10rem;
   }
@@ -53,8 +57,89 @@
 }
 
 .FirstBody {
+  display: flex;
   max-width: $main-boxed-width;
   width: 100%;
   margin: 0 auto;
   margin-top: -3.8rem;
+}
+
+@include respond-to(medium-screen) {
+  .FirstBody {
+    max-width: calc(#{$main-max-width} - 4rem);
+    margin: 0 2rem;
+    margin-top: -3.8rem;
+  }
+  .Dashboard {
+    @include select(PageContentMainHeading) {
+      left: 2rem;
+      padding-left: 2rem;
+      transform: translateX(0);
+      width: calc(#{$main-max-width} / 2 - 2rem);
+    }
+
+    @include select(MyUpdates_MyUpdates) {
+      padding: 0 2rem;
+      border-top: none;
+
+      @include select(MyUpdates_MyUpdateItem) {
+        border-top: 1px solid $color-neutral-grey2;
+        padding: 1.5rem 0rem 5.5rem 0rem;
+      }
+
+      @include select(MyUpdates_Icon) {
+        position: absolute;
+        top: 0.7rem;
+        width: 2rem;
+      }
+
+      @include select(MyUpdates_ChapterIndication) {
+        display: block;
+        margin-left: 3rem;
+        margin-bottom: 1.5rem;
+      }
+
+      @include select(MyUpdates_Datum) {
+        display: block;
+        position: absolute;
+        bottom: 2rem;
+        color: $color-neutral-grey4;
+      }
+    }
+    @include select(MyChaptersPanel_MyChaptersPanel) {
+      padding: 2rem;
+    }
+  }
+}
+
+@include respond-to(small-screen) {
+  .FirstBody {
+    flex-direction: column;
+    margin: 0;
+    max-width: $main-max-width;
+  }
+
+  .Dashboard {
+    @include select(PageContentMainHeading) {
+      left: auto;
+      width: $main-max-width;
+      max-width: $main-max-width;
+      font-size: 2.4rem;
+      margin-bottom: -1.5rem;
+      margin-top: -4.5rem;
+    }
+
+    @include select(MyUpdates_MyUpdates) {
+      width: $main-max-width;
+      max-width: $main-max-width;
+
+      @include select(MyUpdates_FooterLink) {
+        border-bottom: 0;
+      }
+    }
+    @include select(MyChaptersPanel_MyChaptersPanel) {
+      width: $main-max-width;
+      max-width: $main-max-width;
+    }
+  }
 }
