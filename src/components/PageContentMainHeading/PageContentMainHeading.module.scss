@@ -6,6 +6,10 @@
   @include select(ChapterHeadingIcon_ChapterHeadingIcon) {
     left: 8rem;
     transform: translateX(-50%);
+
+    @include respond-to(small-screen) {
+      left: 5.5rem;
+    }
   }
 }
 
@@ -50,6 +54,26 @@
 
       + * {
         clear: left;
+      }
+    }
+
+    @include respond-to(small-screen) {
+      min-height: $main-header-hero-heading-overlap--medium-screen;
+      margin: -#{$main-header-hero-heading-overlap--medium-screen} 0 0;
+      padding: 2rem 0 0 1rem;
+
+      &__medium,
+      &__boxed,
+      &__boxedWithIcon {
+        width: auto;
+        margin-left: 1rem;
+        margin-right: 1rem;
+        position: static;
+        transform: none;
+      }
+
+      &__boxedWithIcon {
+        padding-left: 7.5rem;
       }
     }
 

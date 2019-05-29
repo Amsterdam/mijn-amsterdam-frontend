@@ -9,6 +9,11 @@
       &:last-of-type {
         margin-bottom: 7rem;
       }
+
+      @include respond-to(small-screen) {
+        margin-left: 3.4rem;
+        margin-right: 3.4rem;
+      }
     }
   }
 
@@ -16,6 +21,11 @@
     @include select(Heading) {
       margin-left: 13.5rem;
       margin-right: 13.5rem;
+
+      @include respond-to(small-screen) {
+        margin-left: 1.2rem;
+        margin-right: 1.2rem;
+      }
     }
     @include select(DataLinkTable_Table) {
       width: 100%;

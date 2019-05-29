@@ -3,6 +3,11 @@
 .MyChaptersPanel {
   background-color: $color-neutral-grey1;
   padding: 3.2rem 4rem;
+
+  @include respond-to(small-screen) {
+    padding-left: 2.4rem;
+    padding-right: 2.4rem;
+  }
 }
 
 .Title {
@@ -21,9 +26,18 @@
     &:nth-child(even) {
       margin-left: .5rem;
     }
+  }
 
-    &:nth-child(even) {
-      margin-left: .5rem;
+  @include respond-to(small-screen) {
+    display: block;
+    @include select(MainNavSubmenu_MainNavSubmenuLink) {
+      width: auto;
+      &:nth-child(odd) {
+        margin-right: 0;
+      }
+      &:nth-child(even) {
+        margin-left: 0;
+      }
     }
   }
 }

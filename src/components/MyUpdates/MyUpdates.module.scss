@@ -14,6 +14,10 @@
   &:first-child {
     border-top: 0;
   }
+
+  @include respond-to(small-screen) {
+    padding-left: 0;
+  }
 }
 
 .Icon {
@@ -21,6 +25,28 @@
   left: 0;
   top: 2.3rem;
   fill: $color-primary-red;
+
+  @include respond-to(small-screen) {
+    position: static;
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 2rem;
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.Icon,
+.MetaInfo {
+  @include respond-to(small-screen) {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 2rem;
+
+    &.MetaInfo {
+      margin-left: 1rem;
+    }
+  }
 }
 
 .Description {
@@ -29,6 +55,10 @@
 
 .Datum {
   font-size: 1.4rem;
+
+  @include respond-to(small-screen) {
+    color: $color-neutral-grey4;
+  }
 }
 
 .Action {
@@ -47,6 +77,14 @@
   font-style: normal;
   text-transform: capitalize;
   display: block;
+
+  @include respond-to(small-screen) {
+    display: inline;
+
+    &:after {
+      content: ' - ';
+    }
+  }
 }
 
 .isUnread {

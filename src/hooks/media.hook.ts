@@ -12,3 +12,7 @@ export function useMediumScreen(): boolean {
 export function useSmallScreen(): boolean {
   return useMedia({ maxWidth: 768 });
 }
+
+export function useMediumSmallScreen(): boolean {
+  return useMedia({ minWidth: 640, maxWidth: 1024 });
+}

@@ -59,7 +59,7 @@ export default function MyUpdates({
                   className={styles.Icon}
                   chapter={item.chapter}
                 />
-                <aside>
+                <aside className={styles.MetaInfo}>
                   <em className={styles.ChapterIndication}>
                     {item.chapter.toLowerCase()}
                   </em>
@@ -67,7 +67,7 @@ export default function MyUpdates({
                     {defaultDateFormat(item.datePublished)}
                   </time>
                 </aside>
-                <Heading el="h4" size="small">
+                <Heading className={styles.Title} el="h4" size="small">
                   {item.title}
                 </Heading>
                 {!!item.description && (
