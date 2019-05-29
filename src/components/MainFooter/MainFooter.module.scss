@@ -61,7 +61,7 @@
   }
 }
 
-@include respond-to(phone) {
+@include respond-to(tablet) {
   .InnerContainer {
     width: auto;
     margin: 0 2.4rem;
