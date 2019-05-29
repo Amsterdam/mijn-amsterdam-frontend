@@ -44,7 +44,7 @@
   width: $main-boxed-width;
 }
 
-@include respond-to(medium-screen) {
+@include respond-to(tablet) {
   .logo {
     left: 1rem;
     top: -1rem;
@@ -65,9 +65,9 @@
   }
 }
 
-@include respond-to(small-screen) {
+@include respond-to(phone) {
   .topBar {
-    height: $main-header-topbar-height--small-screen;
+    height: $main-header-topbar-height--phone;
     @include select(Heading) {
       font-size: 1.8rem; // Overrides the default responsive size
     }

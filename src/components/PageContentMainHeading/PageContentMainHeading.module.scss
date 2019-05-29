@@ -7,7 +7,7 @@
     left: 8rem;
     transform: translateX(-50%);
 
-    @include respond-to(small-screen) {
+    @include respond-to(phone) {
       left: 5.5rem;
     }
   }
@@ -57,9 +57,9 @@
       }
     }
 
-    @include respond-to(small-screen) {
-      min-height: $main-header-hero-heading-overlap--medium-screen;
-      margin: -#{$main-header-hero-heading-overlap--medium-screen} 0 0;
+    @include respond-to(phone) {
+      min-height: $main-header-hero-heading-overlap--tablet;
+      margin: -#{$main-header-hero-heading-overlap--tablet} 0 0;
       padding: 2rem 0 0 1rem;
 
       &__medium,

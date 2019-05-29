@@ -10,7 +10,7 @@
         margin-bottom: 7rem;
       }
 
-      @include respond-to(small-screen) {
+      @include respond-to(phone) {
         margin-left: 3.4rem;
         margin-right: 3.4rem;
       }
@@ -22,7 +22,7 @@
       margin-left: 13.5rem;
       margin-right: 13.5rem;
 
-      @include respond-to(small-screen) {
+      @include respond-to(phone) {
         margin-left: 1.2rem;
         margin-right: 1.2rem;
       }
