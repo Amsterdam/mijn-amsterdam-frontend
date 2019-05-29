@@ -1,10 +1,6 @@
 @import 'styles/_global.scss';
 
 .Dashboard {
-  @include select(PageContentMainBody) {
-    padding: 0;
-  }
-
   @include select(PageContentMainHeading) {
     padding-top: 2.5rem;
     width: calc(#{$main-max-width} / 2);
@@ -62,6 +58,16 @@
   width: 100%;
   margin: 0 auto;
   margin-top: -3.8rem;
+  padding: 0;
+}
+
+.SecondBody {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: $main-boxed-width;
+  width: 100%;
+  padding: 0 4rem;
 }
 
 @include respond-to(medium-screen) {
@@ -119,7 +125,15 @@
     max-width: $main-max-width;
   }
 
+  .SecondBody {
+    padding: 0 2rem;
+  }
+
   .Dashboard {
+    @include select(Heading_Heading) {
+      font-size: 2.4rem;
+    }
+
     @include select(PageContentMainHeading) {
       left: auto;
       width: $main-max-width;
@@ -140,6 +154,10 @@
     @include select(MyChaptersPanel_MyChaptersPanel) {
       width: $main-max-width;
       max-width: $main-max-width;
+    }
+
+    @include select(MyCases_MyCases) {
+      margin-top: 3rem;
     }
   }
 }
