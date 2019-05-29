@@ -10,7 +10,7 @@ export type DirectLinkType =
 export interface DirectLink {
   title: string;
   url: string;
-  isSmallScreenLink?: true;
+  isPhoneScreenLink?: true;
   isExternalLink?: true;
 }
 
@@ -18,12 +18,12 @@ export const LINKS: { [key in DirectLinkType]: DirectLink } = {
   MY_TIPS: {
     title: 'Mijn tips',
     url: AppRoutes.MY_TIPS,
-    isSmallScreenLink: true,
+    isPhoneScreenLink: true,
   },
   MY_AREA: {
     title: 'Mijn buurt',
     url: AppRoutes.MY_AREA,
-    isSmallScreenLink: true,
+    isPhoneScreenLink: true,
   },
   MIJN_BELASTINGEN: {
     title: 'Mijn belastingen',

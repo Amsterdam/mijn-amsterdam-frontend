@@ -4,18 +4,18 @@ import { LINKS } from './DirectLinks.constants';
 import Heading from 'components/Heading/Heading';
 import { ReactComponent as ExternalLinkIcon } from 'assets/icons/External-Link.svg';
 import { entries } from 'helpers/App';
-import { useMediumScreen } from 'hooks/media.hook';
+import { usePhoneScreen } from 'hooks/media.hook';
 import ButtonLink from 'components/ButtonLink/ButtonLink';
 
 export default function DirectLinks() {
-  const isMediumScreen = useMediumScreen();
+  const isPhoneScreen = usePhoneScreen();
   return (
     <div className={styles.DirectLinks}>
       <Heading size="large">Direct naar</Heading>
       <ul className={styles.LinkList}>
         {entries(LINKS)
-          .filter(([, { isSmallScreenLink }]) =>
-            !isMediumScreen ? isSmallScreenLink !== true : true
+          .filter(([, { isPhoneScreenLink }]) =>
+            !isPhoneScreen ? isPhoneScreenLink !== true : true
           )
           .map(link => {
             const [linkName, { url, title, isExternalLink }] = link;

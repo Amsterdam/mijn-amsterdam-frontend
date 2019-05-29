@@ -25,7 +25,7 @@ export default function MainHeader({
   isAuthenticated = false,
 }: MainHeaderProps) {
   // TODO: TBD if hero should not show up on mobile.
-  // const isHeroVisible = !useSmallScreen();
+  // const isHeroVisible = !usePhoneScreen();
   const isHeroVisible = true;
   const appState = useContext(AppContext);
   const errors = entries(appState)
