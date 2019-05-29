@@ -1,34 +1,58 @@
 @import 'styles/_global.scss';
 
 .Dashboard {
-  @include select(PageContentMainHeading) {
-    padding-top: 2.5rem;
-    width: calc(#{$main-max-width} / 2);
-    max-width: calc(#{$main-boxed-width} / 2);
+  @include select(PageContentMainBody) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    @include respond-to(small-screen) {
+      display: block;
+    }
   }
 
   @include select(MyUpdates_MyUpdates) {
-    width: calc(#{$main-max-width} / 2);
-    max-width: calc(#{$main-boxed-width} / 2);
-    padding: 0 4rem;
+    flex-basis: calc(50% - 5rem); // margin-left + margin-right + virtual-gutter
+    flex-shrink: 0;
+    overflow: hidden;
+    margin-right: 4rem;
     border-top: 1px solid $color-neutral-grey2;
+    margin-bottom: 5rem;
 
     @include select(MyUpdates_ChapterIndication) {
       display: none;
+      @include respond-to(small-screen) {
+        display: inline;
+      }
+    }
+
+    @include respond-to(small-screen) {
+      margin-right: 0;
+      margin-bottom: -.1rem; // make block below overlap the bottom border
     }
   }
 
   @include select(MyChaptersPanel_MyChaptersPanel) {
-    width: calc(#{$main-max-width} / 2);
-    max-width: calc(#{$main-boxed-width} / 2);
     align-self: flex-start;
+    width: calc(50% + 1rem); // + virtual-gutter
+
+    @include respond-to(small-screen) {
+      width: auto;
+      // Break out of the Container
+      margin: 0 -2.4rem;
+    }
   }
 
   @include select(MyCases_MyCases) {
     width: $main-boxed-width;
-    margin: 0 auto;
     margin-bottom: 8rem;
     margin-top: 10rem;
+
+    @include respond-to(small-screen) {
+      width: auto;
+      margin-bottom: 3rem;
+      margin-top: 3rem;
+    }
   }
 
   @include select(MyArea_MyArea) {
@@ -37,12 +61,16 @@
   }
 
   @include select(MyTips_MyTips) {
-    width: $main-boxed-width;
     margin-bottom: 10rem;
+
   }
 
   @include select(DirectLinks_DirectLinks) {
     width: $main-boxed-width;
+
+    @include respond-to(small-screen) {
+      width: auto;
+    }
   }
 }
 
@@ -53,111 +81,12 @@
 }
 
 .FirstBody {
-  display: flex;
   max-width: $main-boxed-width;
   width: 100%;
   margin: 0 auto;
   margin-top: -3.8rem;
-  padding: 0;
-}
 
-.SecondBody {
-  display: flex;
-  justify-content: center;
-  margin: 0 auto;
-  max-width: $main-boxed-width;
-  width: 100%;
-  padding: 0 4rem;
-}
-
-@include respond-to(medium-screen) {
-  .FirstBody {
-    max-width: calc(#{$main-max-width} - 4rem);
-    margin: 0 2rem;
-    margin-top: -3.8rem;
-  }
-  .Dashboard {
-    @include select(PageContentMainHeading) {
-      left: 2rem;
-      padding-left: 2rem;
-      transform: translateX(0);
-      width: calc(#{$main-max-width} / 2 - 2rem);
-    }
-
-    @include select(MyUpdates_MyUpdates) {
-      padding: 0 2rem;
-      border-top: none;
-
-      @include select(MyUpdates_MyUpdateItem) {
-        border-top: 1px solid $color-neutral-grey2;
-        padding: 1.5rem 0rem 5.5rem 0rem;
-      }
-
-      @include select(MyUpdates_Icon) {
-        position: absolute;
-        top: 0.7rem;
-        width: 2rem;
-      }
-
-      @include select(MyUpdates_ChapterIndication) {
-        display: block;
-        margin-left: 3rem;
-        margin-bottom: 1.5rem;
-      }
-
-      @include select(MyUpdates_Datum) {
-        display: block;
-        position: absolute;
-        bottom: 2rem;
-        color: $color-neutral-grey4;
-      }
-    }
-    @include select(MyChaptersPanel_MyChaptersPanel) {
-      padding: 2rem;
-    }
-  }
-}
-
-@include respond-to(small-screen) {
-  .FirstBody {
-    flex-direction: column;
-    margin: 0;
-    max-width: $main-max-width;
-  }
-
-  .SecondBody {
-    padding: 0 2rem;
-  }
-
-  .Dashboard {
-    @include select(Heading_Heading) {
-      font-size: 2.4rem;
-    }
-
-    @include select(PageContentMainHeading) {
-      left: auto;
-      width: $main-max-width;
-      max-width: $main-max-width;
-      font-size: 2.4rem;
-      margin-bottom: -1.5rem;
-      margin-top: -4.5rem;
-    }
-
-    @include select(MyUpdates_MyUpdates) {
-      width: $main-max-width;
-      max-width: $main-max-width;
-
-      @include select(MyUpdates_FooterLink) {
-        border-bottom: 0;
-      }
-    }
-    @include select(MyChaptersPanel_MyChaptersPanel) {
-      width: $main-max-width;
-      max-width: $main-max-width;
-    }
-
-    @include select(MyCases_MyCases) {
-      margin-top: 3rem;
-    }
+  @include respond-to(small-screen) {
+    margin-top: 2rem;
   }
 }

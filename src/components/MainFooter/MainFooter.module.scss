@@ -55,16 +55,16 @@
 .FollowPanel {
   margin: 0 3rem;
   width: 60rem;
-  
+
   li {
     white-space: nowrap;
   }
 }
 
-@include respond-to(medium-screen) {
+@include respond-to(small-screen) {
   .InnerContainer {
-    width: 100%;
-    padding-left: $medium-screen-content-margin;
+    width: auto;
+    margin: 0 2.4rem;
   }
 
   .TopBar {
@@ -136,8 +136,3 @@
   }
 }
 
-@include respond-to(small-screen) {
-  .InnerContainer {
-    padding-left: $small-screen-content-margin;
-  }
-}

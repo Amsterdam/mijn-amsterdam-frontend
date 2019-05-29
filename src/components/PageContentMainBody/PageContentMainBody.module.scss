@@ -14,6 +14,11 @@
 
   &__regularBoxed {
     padding: 0 4rem;
+
+    @include respond-to(small-screen) {
+      padding: 0 2.4rem;
+    }
+
     max-width: $main-boxed-width;
     margin: 0 auto;
   }
