@@ -24,7 +24,7 @@ import {
   IconButtonLink,
 } from 'components/ButtonLink/ButtonLink';
 import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
-import { useLargeScreen, usePhoneScreen } from 'hooks/media.hook';
+import { useTabletScreen, usePhoneScreen } from 'hooks/media.hook';
 import useRouter from 'use-react-router';
 import classnames from 'classnames';
 import { Person } from 'data-formatting/brp';
@@ -133,12 +133,12 @@ export default function MainNavBar({ person }: MainNavBarProps) {
     MY_CHAPTERS: { items: myChapterItems },
   } = useContext(AppContext);
 
-  const isPhoneScreen = usePhoneScreen();
-  const [isPhoneScreenMenuVisible, toggleSmallScreenMenu] = useState(false);
+  const isResponsiveMenu = usePhoneScreen();
+  const [isResponsiveMenuMenuVisible, toggleSmallScreenMenu] = useState(false);
   const { history } = useRouter();
 
   function closeSmallScreenMenu(e: any) {
-    if (isPhoneScreenMenuVisible) {
+    if (isResponsiveMenuMenuVisible) {
       // Testing for clicks on elements that are not part of the responsive menu
       const MenuToggleButton = document.getElementById(MenuToggleBtnId);
       const LinkContainer = document.getElementById(LinkContainerId);
@@ -177,19 +177,19 @@ export default function MainNavBar({ person }: MainNavBarProps) {
 
   return (
     <nav className={styles.MainNavBar}>
-      {isPhoneScreen && (
+      {isResponsiveMenu && (
         <button
           id={MenuToggleBtnId}
           className={classnames(styles.MenuToggleBtn, {
-            [styles.MenuToggleBtnOpen]: isPhoneScreenMenuVisible,
+            [styles.MenuToggleBtnOpen]: isResponsiveMenuMenuVisible,
           })}
-          onClick={() => toggleSmallScreenMenu(!isPhoneScreenMenuVisible)}
+          onClick={() => toggleSmallScreenMenu(!isResponsiveMenuMenuVisible)}
         >
           Toggle menu
         </button>
       )}
 
-      {isAuthenticated && (!isPhoneScreen || isPhoneScreenMenuVisible) && (
+      {isAuthenticated && (!isResponsiveMenu || isResponsiveMenuMenuVisible) && (
         <div id={LinkContainerId} className={styles.LinkContainer}>
           {menuItems.map(item => {
             let menuItem = item;
@@ -206,7 +206,7 @@ export default function MainNavBar({ person }: MainNavBarProps) {
         </div>
       )}
 
-      {isPhoneScreenMenuVisible && (
+      {isResponsiveMenuMenuVisible && (
         <div
           style={{
             height:
