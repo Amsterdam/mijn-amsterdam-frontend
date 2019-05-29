@@ -5,6 +5,10 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+
+    @include respond-to(phone) {
+      display: block; // NOTE: This discards all the flexbox properties defined below
+    }
   }
 
   @include select(MyUpdates_MyUpdates) {
@@ -22,12 +26,22 @@
 
   @include select(MyChaptersPanel_MyChaptersPanel) {
     flex-basis: calc(50% + 1rem); // + virtual-gutter
+
+    @include respond-to(phone) {
+      margin-left: -2.4rem;
+      margin-right: -2.4rem;
+    }
   }
 
   @include select(MyCases_MyCases) {
     flex-basis: $main-boxed-width;
     margin-bottom: 8rem;
     margin-top: 10rem;
+
+    @include respond-to(phone) {
+      margin-bottom: 4rem;
+      margin-top: 4rem;
+    }
   }
 
   @include select(MyArea_MyArea) {
@@ -51,4 +65,8 @@
   margin: 0 auto;
   // Makes the updates and chapters touch the bottom of Hero
   margin-top: -3.8rem;
+
+  @include respond-to(phone) {
+    margin-top: 2rem;
+  }
 }
