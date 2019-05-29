@@ -59,7 +59,7 @@ export default () => {
           title="Mijn thema's"
         />
       </PageContentMainBody>
-      <PageContentMainBody>
+      <PageContentMainBody className={styles.SecondBody}>
         <MyCases
           isLoading={!!isMyCasesLoading}
           title="Mijn lopende aanvragen"
