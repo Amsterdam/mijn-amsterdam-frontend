@@ -61,7 +61,7 @@
   }
 }
 
-@include respond-to(small-screen) {
+@include respond-to(phone) {
   .InnerContainer {
     width: auto;
     margin: 0 2.4rem;

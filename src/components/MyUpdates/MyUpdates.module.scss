@@ -15,7 +15,7 @@
     border-top: 0;
   }
 
-  @include respond-to(small-screen) {
+  @include respond-to(phone) {
     padding-left: 0;
   }
 }
@@ -26,7 +26,7 @@
   top: 2.3rem;
   fill: $color-primary-red;
 
-  @include respond-to(small-screen) {
+  @include respond-to(phone) {
     position: static;
     display: inline-block;
     vertical-align: middle;
@@ -38,7 +38,7 @@
 
 .Icon,
 .MetaInfo {
-  @include respond-to(small-screen) {
+  @include respond-to(phone) {
     display: inline-block;
     vertical-align: middle;
     margin-bottom: 2rem;
@@ -56,7 +56,7 @@
 .Datum {
   font-size: 1.4rem;
 
-  @include respond-to(small-screen) {
+  @include respond-to(phone) {
     color: $color-neutral-grey4;
   }
 }
@@ -78,7 +78,7 @@
   text-transform: capitalize;
   display: block;
 
-  @include respond-to(small-screen) {
+  @include respond-to(phone) {
     display: inline;
 
     &:after {

@@ -1,7 +1,7 @@
 @import 'styles/_global.scss';
 
 .ChapterIcon {
-  @include respond-to(small-screen) {
+  @include respond-to(phone) {
     width: 3.6rem;
     height: 3.6rem;
   }

@@ -5,10 +5,6 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-
-    @include respond-to(small-screen) {
-      display: block;
-    }
   }
 
   @include select(MyUpdates_MyUpdates) {
@@ -21,38 +17,17 @@
 
     @include select(MyUpdates_ChapterIndication) {
       display: none;
-      @include respond-to(small-screen) {
-        display: inline;
-      }
-    }
-
-    @include respond-to(small-screen) {
-      margin-right: 0;
-      margin-bottom: -.1rem; // make block below overlap the bottom border
     }
   }
 
   @include select(MyChaptersPanel_MyChaptersPanel) {
-    align-self: flex-start;
-    width: calc(50% + 1rem); // + virtual-gutter
-
-    @include respond-to(small-screen) {
-      width: auto;
-      // Break out of the Container
-      margin: 0 -2.4rem;
-    }
+    flex-basis: calc(50% + 1rem); // + virtual-gutter
   }
 
   @include select(MyCases_MyCases) {
-    width: $main-boxed-width;
+    flex-basis: $main-boxed-width;
     margin-bottom: 8rem;
     margin-top: 10rem;
-
-    @include respond-to(small-screen) {
-      width: auto;
-      margin-bottom: 3rem;
-      margin-top: 3rem;
-    }
   }
 
   @include select(MyArea_MyArea) {
@@ -61,32 +36,19 @@
   }
 
   @include select(MyTips_MyTips) {
+    flex-basis: $main-boxed-width;
     margin-bottom: 10rem;
-
   }
 
   @include select(DirectLinks_DirectLinks) {
-    width: $main-boxed-width;
-
-    @include respond-to(small-screen) {
-      width: auto;
-    }
+    flex-basis: $main-boxed-width;
   }
-}
-
-.UpdatesChaptersContainer {
-  width: $main-boxed-width;
-  display: flex;
-  margin-bottom: 12rem;
 }
 
 .FirstBody {
   max-width: $main-boxed-width;
   width: 100%;
   margin: 0 auto;
+  // Makes the updates and chapters touch the bottom of Hero
   margin-top: -3.8rem;
-
-  @include respond-to(small-screen) {
-    margin-top: 2rem;
-  }
 }

@@ -90,7 +90,7 @@
   }
 }
 
-@include respond-to(small-screen) {
+@include respond-to(phone) {
   .MainNavSubmenu {
     .SubmenuButton {
       display: none;
@@ -100,7 +100,7 @@
       opacity: 1;
       max-height: initial;
       position: relative;
-      width: $main-header-navbar-width--small-screen;
+      width: $main-header-navbar-width--phone;
       top: 0;
       padding-top: 0.4rem;
       padding-bottom: 0.8rem;

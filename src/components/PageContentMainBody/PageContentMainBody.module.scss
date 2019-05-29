@@ -15,7 +15,7 @@
   &__regularBoxed {
     padding: 0 4rem;
 
-    @include respond-to(small-screen) {
+    @include respond-to(phone) {
       padding: 0 2.4rem;
     }
 
