@@ -30,7 +30,6 @@
       td:not(:first-child) {
         display: inline-block;
         + td {
-          padding-top: 1rem;
           padding-left: 1rem;
         }
       }
