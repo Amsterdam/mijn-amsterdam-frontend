@@ -15,7 +15,7 @@
   &__regularBoxed {
     padding: 0 4rem;
 
-    @include respond-to(phone) {
+    @include media("<=phone") {
       padding: 0 2.4rem;
     }
 

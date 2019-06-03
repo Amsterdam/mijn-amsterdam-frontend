@@ -44,7 +44,7 @@
   width: $main-boxed-width;
 }
 
-@include respond-to(tablet) {
+@include media("<=tablet") {
   .logo {
     left: 1rem;
     top: -1rem;
@@ -65,7 +65,7 @@
   }
 }
 
-@include respond-to(phone) {
+@include media("<=phone") {
   .topBar {
     height: $main-header-topbar-height--phone;
     @include select(Heading) {

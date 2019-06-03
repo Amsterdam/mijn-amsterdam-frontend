@@ -12,7 +12,7 @@
   background-color: $color-neutral-grey1;
   margin: 0 auto;
 
-  @include respond-to(phone) {
+  @include media("<=phone") {
     display: grid;
     width: $main-header-navbar-width--phone;
     margin: 0;
@@ -39,7 +39,7 @@
     margin-right: 0;
   }
 
-  @include respond-to(phone) {
+  @include media("<=phone") {
     font-weight: bold;
     font-size: 1.5rem;
     margin: 0;
@@ -70,7 +70,7 @@
     }
   }
 
-  @include respond-to(phone) {
+  @include media("<=phone") {
     position: static;
     margin-top: 0;
 

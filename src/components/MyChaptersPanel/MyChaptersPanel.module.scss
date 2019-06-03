@@ -4,7 +4,7 @@
   background-color: $color-neutral-grey1;
   padding: 3.2rem 4rem;
 
-  @include respond-to(phone) {
+  @include media("<=phone") {
     padding-left: 2.4rem;
     padding-right: 2.4rem;
   }
@@ -31,7 +31,7 @@
     }
   }
 
-  @include respond-to(phone) {
+  @include media("<=phone") {
     display: block;
 
     @include select(MainNavSubmenu_MainNavSubmenuLink) {
