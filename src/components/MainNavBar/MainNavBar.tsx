@@ -137,7 +137,7 @@ export default function MainNavBar({ person }: MainNavBarProps) {
   const [isResponsiveMenuMenuVisible, toggleSmallScreenMenu] = useState(false);
   const { history } = useRouter();
 
-  function closeSmallScreenMenu(e: any) {
+  function closeResponsiveMenu(e: any) {
     if (isResponsiveMenuMenuVisible) {
       // Testing for clicks on elements that are not part of the responsive menu
       const MenuToggleButton = document.getElementById(MenuToggleBtnId);
@@ -166,8 +166,8 @@ export default function MainNavBar({ person }: MainNavBarProps) {
 
   // Bind click outside small screen menu to hide it
   useEffect(() => {
-    document.addEventListener('click', closeSmallScreenMenu);
-    return () => document.removeEventListener('click', closeSmallScreenMenu);
+    document.addEventListener('click', closeResponsiveMenu);
+    return () => document.removeEventListener('click', closeResponsiveMenu);
   });
 
   // Hides small screen menu on route change
