@@ -70,6 +70,7 @@
         left: 50%;
         transform: translateX(calc(-50vw + 2rem));
       }
+      &__withIcon,
       &__boxed,
       &__boxedWithIcon {
         width: auto;
@@ -79,6 +80,7 @@
         transform: none;
       }
 
+      &__withIcon,
       &__boxedWithIcon {
         padding-left: 14rem;
       }
@@ -90,6 +92,7 @@
       padding: 2rem 0 0 1rem;
 
       // All version are treated the same on phones
+      &__withIcon,
       &__medium,
       &__boxed,
       &__boxedWithIcon {
@@ -100,6 +103,7 @@
         transform: none;
       }
 
+      &__withIcon,
       &__boxedWithIcon {
         padding-left: 7.5rem;
       }

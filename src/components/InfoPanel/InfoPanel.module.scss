@@ -10,11 +10,16 @@
     border-bottom: 1px solid $color-neutral-grey2;
     padding-bottom: 1.3rem;
     margin-bottom: 2rem;
+
+    @include media("<=phone") {
+      padding-left: 0;
+    }
   }
 }
 
 .InfoPanelContent {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .InfoPanelTable {
@@ -35,7 +40,35 @@
       color: $color-neutral-grey4;
       font-weight: 200;
     }
+
+    th, td {
+      vertical-align: top;
+    }
   }
+
+  @include media("<=phone") {
+    display: block;
+
+    tbody, thead, tr, td, th {
+      display: block;
+    }
+    tbody > tr {
+      > th,
+      > td {
+        width: auto;
+        text-align: left;
+        width: auto;
+        padding-bottom: 0;
+      }
+
+      + tr {
+        > th {
+          padding-top: 2rem;
+        }
+      }
+    }
+  }
+
 }
 
 .InfoPanelActionLinks {
@@ -43,5 +76,9 @@
 
   > li {
     margin-bottom: .6rem;
+  }
+
+  @include media("<=phone") {
+    margin: 2rem 0 0 0;
   }
 }
