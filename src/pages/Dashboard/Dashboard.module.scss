@@ -31,7 +31,6 @@
 
     @include media(">phone", "<=tablet") {
       // Weirdly sized chapters panel for tablet screens needs the following to break-out of the flex restrains
-      padding-right: 0;
       flex-basis: calc(50% + 5rem);
       margin-left: -5rem;
       transform: translateX(5rem);

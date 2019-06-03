@@ -47,7 +47,7 @@
   background-color: $color-neutral-grey1;
   left: 0;
   right: 0;
-  z-index: 2;
+  z-index: z-index(submenu-panel);
 
   &Open {
     max-height: 50rem;

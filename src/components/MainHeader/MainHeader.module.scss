@@ -66,5 +66,19 @@
   top: 16rem;
   left: 50%;
   transform: translateX(-50%);
-  width: $main-boxed-width;
+  max-width: $main-boxed-width;
+  width: 100%;
+  z-index: z-index(header-error-messages);
+
+  @include media("<=tablet") {
+    width: calc(100% - 4rem);
+    top: 11rem;
+  }
+
+  @include media("<=phone") {
+    position: static;
+    transform: none;
+    left: auto;
+    width: 100%;
+  }
 }

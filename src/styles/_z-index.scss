@@ -1,6 +1,10 @@
 // Global z-index control
 $z-index: (
-
+  header-error-messages: 9,
+  submenu-panel: 10,
+  main-nav-bar-modal: 10,
+  main-nav-bar-inner--tablet: 11,
+  modal: 20,
 );
 
 @function z-index($key) {

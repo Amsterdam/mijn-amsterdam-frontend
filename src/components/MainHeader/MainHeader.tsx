@@ -68,10 +68,10 @@ export default function MainHeader({
         />
       </div>
       {isAuthenticated && <MainNavBar person={person} />}
-      {isHeroVisible && <MainHeaderHero />}
       {hasErrors && (
         <ErrorMessages errors={errors} className={styles.ErrorMessages} />
       )}
+      {isHeroVisible && <MainHeaderHero />}
     </header>
   );
 }

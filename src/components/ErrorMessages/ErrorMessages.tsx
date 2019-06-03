@@ -31,7 +31,10 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
           gegevens
         </span>
         <button
-          className={ButtonLinkStyle.ButtonLinkButtonReset}
+          className={classnames(
+            ButtonLinkStyle.ButtonLinkButtonReset,
+            styles.ActionButton
+          )}
           onClick={() => setModalOpen(true)}
         >
           Meer informatie
