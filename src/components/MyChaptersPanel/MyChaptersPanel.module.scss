@@ -4,7 +4,7 @@
   background-color: $color-neutral-grey1;
   padding: 3.2rem 4rem;
 
-  @include media("<=phone") {
+  @include media("<=tablet") {
     padding-left: 2.4rem;
     padding-right: 2.4rem;
   }
@@ -29,12 +29,12 @@
     &:nth-child(even) {
       margin-left: .5rem;
     }
-  }
 
-  @include media("<=phone") {
-    display: block;
+    @include media(">phone", "<=tablet") {
+      padding-left: 0;
+    }
 
-    @include select(MainNavSubmenu_MainNavSubmenuLink) {
+    @include media("<=phone") {
       width: auto;
 
       &:nth-child(odd) {
@@ -45,6 +45,10 @@
         margin-left: 0;
       }
     }
+  }
+
+  @include media("<=phone") {
+    display: block;
   }
 }
 
