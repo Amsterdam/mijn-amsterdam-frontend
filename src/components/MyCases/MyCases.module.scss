@@ -18,8 +18,8 @@
 
 .CaseItem {
   border-top: .1rem solid $color-neutral-grey2;
-  line-height: 5.5rem;
-  padding-left: 5rem;
+  min-height: 5.5rem;
+  padding: 1rem 0 1rem 5rem;
   position: relative;
   flex-basis: calc(50% - 4rem);
 

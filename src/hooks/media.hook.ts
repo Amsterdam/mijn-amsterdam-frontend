@@ -6,7 +6,7 @@ export function useDesktopScreen(): boolean {
 }
 
 export function useTabletScreen(): boolean {
-  return useMedia({ maxWidth: 768 });
+  return useMedia({ maxWidth: 900 }); // including Nexus 10
 }
 
 export function usePhoneScreen(): boolean {
