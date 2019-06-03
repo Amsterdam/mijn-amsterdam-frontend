@@ -7,6 +7,10 @@
     left: 8rem;
     transform: translateX(-50%);
 
+    @include media("<=tablet") {
+      left: 9rem;
+    }
+
     @include media("<=phone") {
       left: 5.5rem;
     }
@@ -17,7 +21,7 @@
   &.PageContentMainHeading {
     min-height: $main-header-hero-heading-overlap;
     margin-top: 0;
-    padding: 4rem 0 0 4rem;
+    padding: 5rem 0 0 4rem;
     margin: -#{$main-header-hero-heading-overlap} 0 0;
     margin-bottom: 3.8rem;
     background-color: $color-white;
@@ -60,7 +64,7 @@
     @include media("<=tablet") {
       // min-height: $main-header-hero-heading-overlap--tablet;
       // margin: -#{$main-header-hero-heading-overlap--tablet} 0 0;
-      padding: 3rem 0 0 1.8rem;
+      padding: 4.5rem 0 0 1.8rem;
 
       &__medium {
         width: calc(50vw - 3rem);
@@ -68,17 +72,17 @@
         left: 50%;
         transform: translateX(calc(-50vw + 2rem));
       }
-      // &__boxed,
-      // &__boxedWithIcon {
-      //   // width: auto;
-      //   // margin-left: 1rem;
-      //   // margin-right: 1rem;
-      //   // position: static;
-      //   // transform: none;
-      // }
+      &__boxed,
+      &__boxedWithIcon {
+        width: auto;
+        margin-left: 2rem;
+        margin-right: 2rem;
+        position: static;
+        transform: none;
+      }
 
       &__boxedWithIcon {
-        padding-left: 7.5rem;
+        padding-left: 14rem;
       }
     }
 
