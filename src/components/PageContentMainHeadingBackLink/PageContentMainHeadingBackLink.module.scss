@@ -6,6 +6,10 @@
   padding-left: 1.2em;
   margin-left: -1.1em;
 
+  @include media("<=phone") {
+    margin-left: 0;
+  }
+
   svg {
     height: .9em;
     width: .9em;

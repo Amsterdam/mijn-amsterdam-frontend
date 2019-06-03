@@ -1,14 +1,15 @@
 @import 'styles/_global.scss';
 
 .InkomenDetail {
-
-  @include select(PageContentMainHeading) {
-    position: relative;
-  }
-
   @include select(StatusLine_List) {
     max-width: $main-boxed-width;
     margin: 0 auto;
+  }
+
+  @include media("<=phone") {
+    @include select(PageContentMainHeading_PageContentMainHeading) {
+      // padding-left: 6rem;
+    }
   }
 }
 

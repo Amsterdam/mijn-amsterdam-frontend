@@ -12,7 +12,7 @@
     }
 
     @include media("<=phone") {
-      left: 5.5rem;
+      left: 4.7rem;
     }
   }
 }
@@ -91,6 +91,7 @@
     @include media("<=phone") {
       min-height: $main-header-hero-heading-overlap--phone;
       margin: -#{$main-header-hero-heading-overlap--phone} 0 0;
+      margin-bottom: 3.8rem;
       padding: 2rem 0 0 1rem;
 
       // All version are treated the same on phones
@@ -108,7 +109,7 @@
 
       &__withIcon,
       &__boxedWithIcon {
-        padding-left: 7.5rem;
+        padding-left: 6.5rem;
       }
     }
   }
