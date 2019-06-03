@@ -8,9 +8,15 @@
   width: 5rem;
   top: 3.6rem;
 
-  @include media("<=phone") {
+  @include media("<=tablet") {
     height: 4rem;
     width: 4rem;
+    top: 3rem;
+  }
+
+  @include media("<=phone") {
+    height: 3rem;
+    width: 3rem;
     top: 2rem;
   }
 }
