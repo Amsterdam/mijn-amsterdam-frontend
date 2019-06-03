@@ -14,6 +14,20 @@
   @include select(Heading) {
     margin: 0.4em 0 0;
   }
+
+  @include media("<=tablet") {
+    @include select(Heading) {
+      margin: 0.5rem 0 0 2rem;
+      font-size: 2.6rem; // Overrides the default responsive size
+    }
+  }
+
+  @include media("<=phone") {
+    height: $main-header-topbar-height--phone;
+    @include select(Heading) {
+      font-size: 1.8rem; // Overrides the default responsive size
+    }
+  }
 }
 
 .logoLink {
@@ -28,12 +42,24 @@
   top: 2rem;
   width: 9rem;
   height: 6.8rem;
+
+  @include media("<=tablet") {
+    left: 2rem;
+    top: -1rem;
+    width: 8rem;
+    margin-right: 1rem;
+  }
 }
 
 .betaLabel {
   position: absolute;
   top: 0;
   right: 0;
+
+  @include media("<=tablet") {
+    height: 3rem;
+    width: 3rem;
+  }
 }
 
 .ErrorMessages {
@@ -42,34 +68,4 @@
   left: 50%;
   transform: translateX(-50%);
   width: $main-boxed-width;
-}
-
-@include media("<=tablet") {
-  .logo {
-    left: 1rem;
-    top: -1rem;
-    width: 8rem;
-    margin-right: 1rem;
-  }
-
-  .betaLabel {
-    height: 3rem;
-    width: 3rem;
-  }
-
-  .topBar {
-    @include select(Heading) {
-      margin: 0.5rem 0 0 2rem;
-      font-size: 2.6rem; // Overrides the default responsive size
-    }
-  }
-}
-
-@include media("<=phone") {
-  .topBar {
-    height: $main-header-topbar-height--phone;
-    @include select(Heading) {
-      font-size: 1.8rem; // Overrides the default responsive size
-    }
-  }
 }
