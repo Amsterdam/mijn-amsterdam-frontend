@@ -10,6 +10,10 @@
   &__boxed {
     max-width: $main-boxed-width;
     margin: 0 auto;
+
+    @include media(">phone", "<=tablet") {
+      padding: 0 4rem;
+    }
   }
 
   &__regularBoxed {
@@ -22,4 +26,5 @@
     max-width: $main-boxed-width;
     margin: 0 auto;
   }
+
 }
