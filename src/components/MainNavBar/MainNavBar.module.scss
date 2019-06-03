@@ -114,6 +114,10 @@
   &Open {
     background-image: url('assets/icons/Close.svg');
   }
+
+  @include media(">phone", "<=tablet") {
+    margin-left: 1.2rem;
+  }
 }
 
 .Modal {

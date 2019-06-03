@@ -16,6 +16,7 @@
   }
 
   @include media("<=tablet") {
+    height: $main-header-topbar-height--tablet;
     @include select(Heading) {
       margin: 0.5rem 0 0 2rem;
       font-size: 2.6rem; // Overrides the default responsive size
@@ -48,6 +49,10 @@
     top: -1rem;
     width: 8rem;
     margin-right: 1rem;
+  }
+
+  @include media("<=phone") {
+    left: 1rem;
   }
 }
 
