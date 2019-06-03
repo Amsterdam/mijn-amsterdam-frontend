@@ -64,13 +64,7 @@
     @include media("<=tablet") {
       padding: 3.7rem 0 0 1.8rem;
 
-      &__medium {
-        width: calc(50vw - 3rem);
-        position: relative;
-        left: 50%;
-        transform: translateX(calc(-50vw + 2rem));
-      }
-      &__withIcon,
+      &,
       &__boxed,
       &__boxedWithIcon {
         width: auto;
@@ -78,6 +72,14 @@
         margin-right: 2rem;
         position: static;
         transform: none;
+      }
+
+      &__medium {
+        width: calc(50vw - 3rem);
+        position: relative;
+        left: 50%;
+        transform: translateX(calc(-50vw + 2rem));
+        margin-left: 0;
       }
 
       &__withIcon,
@@ -92,6 +94,7 @@
       padding: 2rem 0 0 1rem;
 
       // All version are treated the same on phones
+      &,
       &__withIcon,
       &__medium,
       &__boxed,
