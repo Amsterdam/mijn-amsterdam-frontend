@@ -18,6 +18,12 @@
     margin-right: 4rem;
     border-top: 1px solid $color-neutral-grey2;
     margin-bottom: 5rem;
+
+    // In combination with Chapters panel and sizing of PageContentMainHeading__medium
+    @include media(">phone", "<=tablet") {
+      flex-basis: calc(50% - 3rem);
+      margin-right: 2rem;
+    }
   }
 
   @include select(MyChaptersPanel_MyChaptersPanel) {
