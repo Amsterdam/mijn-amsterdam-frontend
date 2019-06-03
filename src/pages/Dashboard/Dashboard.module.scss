@@ -24,6 +24,11 @@
       flex-basis: calc(50% - 3rem);
       margin-right: 2rem;
     }
+
+    @include media("<=phone") {
+      flex-basis: 100%;
+      margin: 0;
+    }
   }
 
   @include select(MyChaptersPanel_MyChaptersPanel) {
@@ -40,6 +45,7 @@
     @include media("<=phone") {
       margin-left: -2.4rem;
       margin-right: -2.4rem;
+      margin-top: -0.1rem; // overlap border line from sibling component rendered on top of this one
     }
   }
 

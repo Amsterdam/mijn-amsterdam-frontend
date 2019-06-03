@@ -21,7 +21,7 @@
   &.PageContentMainHeading {
     min-height: $main-header-hero-heading-overlap;
     margin-top: 0;
-    padding: 5rem 0 0 4rem;
+    padding: 3.7rem 0 0 4rem;
     margin: -#{$main-header-hero-heading-overlap} 0 0;
     margin-bottom: 3.8rem;
     background-color: $color-white;
@@ -62,9 +62,7 @@
     }
 
     @include media("<=tablet") {
-      // min-height: $main-header-hero-heading-overlap--tablet;
-      // margin: -#{$main-header-hero-heading-overlap--tablet} 0 0;
-      padding: 4.5rem 0 0 1.8rem;
+      padding: 3.7rem 0 0 1.8rem;
 
       &__medium {
         width: calc(50vw - 3rem);
