@@ -42,7 +42,8 @@ export default function DataLinkTable({
   const classes = classnames(
     styles.DataLinkTable,
     (!hasItems || isCollapsed) && styles.isCollapsed,
-    className
+    className,
+    rowHeight === 'auto' && styles.noTransition
   );
 
   const toggleCollapsed = withKeyPress<HTMLHeadingElement>(() =>
@@ -50,15 +51,20 @@ export default function DataLinkTable({
   );
 
   // Setting an explicit height will result in a nice transition
-  const cssCalcExpr = isCollapsed
+  let cssCalcExpr = isCollapsed
     ? 0
     : `calc((${items.length} * ${rowHeight}) + 1.5rem)`; // 1.5rem being the base height of the thead
 
   // Vary the transition duration between 300 and 600ms
-  const cssTransitionDurationMS = `${Math.min(
+  let cssTransitionDurationMS = `${Math.min(
     Math.max(items.length * 60, 300),
     600
   )}ms`;
+
+  if (rowHeight === 'auto') {
+    cssCalcExpr = isCollapsed ? 0 : 'auto';
+    cssTransitionDurationMS = '0ms';
+  }
 
   return (
     <div className={classes}>
@@ -88,7 +94,7 @@ export default function DataLinkTable({
           aria-hidden={isCollapsed}
           className={styles.Panel}
           style={{
-            height: rowHeight === 'auto' ? rowHeight : cssCalcExpr,
+            height: cssCalcExpr,
             transitionDuration: cssTransitionDurationMS,
           }}
         >
@@ -111,8 +117,11 @@ export default function DataLinkTable({
                     <ButtonLink to={item.link.to}>{item.title}</ButtonLink>
                   </td>
                   {displayProps &&
-                    entries(displayProps).map(([key]) => (
+                    entries(displayProps).map(([key, label]) => (
                       <td key={key} className={styles.DisplayProp}>
+                        <span className={styles.DisplayPropLabel}>
+                          {label}:
+                        </span>
                         {item[key] || <span>&mdash;</span>}
                       </td>
                     ))}

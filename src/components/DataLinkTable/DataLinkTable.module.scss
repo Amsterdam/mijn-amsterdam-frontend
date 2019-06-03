@@ -15,6 +15,30 @@
       transition-timing-function: ease-out;
     }
   }
+
+  &.noTransition {
+    transition: none;
+  }
+
+  @include media("<=phone") {
+    margin: 0 2.4rem;
+    table {
+      display: grid;
+      tr, td, tbody {
+        display: block;
+      }
+      td:not(:first-child) {
+        display: inline-block;
+        + td {
+          padding-top: 1rem;
+          padding-left: 1rem;
+        }
+      }
+      thead {
+        display: none;
+      }
+    }
+  }
 }
 
 .CaretIcon {
@@ -46,6 +70,10 @@
   overflow: hidden;
   transition: height 400ms ease-in;
   border-bottom: .1rem solid $color-neutral-grey2;
+
+  @include media("<=phone") {
+    border-bottom: 0;
+  }
 }
 
 .Table {
@@ -54,13 +82,27 @@
 
 .TableRow {
   td {
-    border-top: .1rem solid $color-neutral-grey2;
     padding: 1em 1em 1em 0;
+    vertical-align: top;
+    // Use nth-child here because css specificity allows us to change border-top for tablet easily
+    &, &:nth-child(1) {
+      border-top: .1rem solid $color-neutral-grey2;
+      padding-top: 1em;
+    }
   }
   th {
     text-align: left;
     color: $color-neutral-grey4;
     font-weight: 500;
+  }
+  @include media("<=phone") {
+    td {
+      border-top: 0;
+      padding: 0;
+      &:last-child {
+        padding-bottom: 1rem;
+      }
+    }
   }
 }
 
@@ -69,7 +111,14 @@
     white-space: normal;
   }
 }
+.DisplayPropLabel {
+  display: none;
+  padding-right: .3rem;
 
+  @include media("<=phone") {
+    display: initial;
+  }
+}
 .DisplayProp {
   color: $color-neutral-grey4;
   font-weight: normal;
