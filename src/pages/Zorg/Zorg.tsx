@@ -8,7 +8,7 @@ import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon
 import { Chapters } from 'App.constants';
 import styles from './Zorg.module.scss';
 import Alert from 'components/Alert/Alert';
-import LoadingContent from 'components/LoadingContent/LoadingContent';
+import { useTabletScreen } from 'hooks/media.hook';
 
 const DISPLAY_PROPS = {
   dateStart: 'start',
@@ -33,6 +33,8 @@ export default () => {
   const hasActiveRequests = !!itemsRequested.length;
   const hasActualItems = !!itemsActual.length;
 
+  const isTabletScreen = useTabletScreen();
+
   return (
     <PageContentMain variant="full" className={styles.Page}>
       <PageContentMainHeading variant="boxedWithIcon">
@@ -47,7 +49,7 @@ export default () => {
         )}
         <DataLinkTable
           id="datalinktable-healthcare-requested"
-          rowHeight="6rem"
+          rowHeight={isTabletScreen ? 'auto' : '6rem'}
           displayProps={DISPLAY_PROPS}
           items={itemsRequested}
           title="Mijn lopende aanvragen"
@@ -57,7 +59,7 @@ export default () => {
         />
         <DataLinkTable
           id="datalinktable-healthcare-granted"
-          rowHeight="6rem"
+          rowHeight={isTabletScreen ? 'auto' : '6rem'}
           displayProps={DISPLAY_PROPS}
           items={itemsActual}
           title="Mijn huidige voorziengen"
@@ -71,7 +73,7 @@ export default () => {
         <PageContentMainBody variant="boxed">
           <DataLinkTable
             id="datalinktable-healthcare-previous"
-            rowHeight="6rem"
+            rowHeight={isTabletScreen ? 'auto' : '6rem'}
             displayProps={DISPLAY_PROPS}
             items={itemsPrevious}
             title="Mijn eerdere voorziengen"
