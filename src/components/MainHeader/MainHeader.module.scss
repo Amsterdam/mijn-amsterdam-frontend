@@ -17,15 +17,9 @@
 
   @include media("<=tablet") {
     height: $main-header-topbar-height--tablet;
-    @include select(Heading) {
-      margin: 0.5rem 0 0 2rem;
-      font-size: 2.6rem; // Overrides the default responsive size
-    }
-  }
 
-  @include media("<=phone") {
-    height: $main-header-topbar-height--phone;
     @include select(Heading) {
+      margin: 1rem 0 0 2rem;
       font-size: 1.8rem; // Overrides the default responsive size
     }
   }
@@ -46,8 +40,8 @@
 
   @include media("<=tablet") {
     left: 2rem;
-    top: -1rem;
-    width: 8rem;
+    top: -.5rem;
+    width: 9.3rem; // translates approx. height of 4rem
     margin-right: 1rem;
   }
 
