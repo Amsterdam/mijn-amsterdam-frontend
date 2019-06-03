@@ -134,7 +134,7 @@ export default function MainNavBar({ person }: MainNavBarProps) {
   } = useContext(AppContext);
 
   const isResponsiveMenu = usePhoneScreen();
-  const [isResponsiveMenuMenuVisible, toggleSmallScreenMenu] = useState(false);
+  const [isResponsiveMenuMenuVisible, toggleResponsiveMenu] = useState(false);
   const { history } = useRouter();
 
   function closeResponsiveMenu(e: any) {
@@ -148,7 +148,7 @@ export default function MainNavBar({ person }: MainNavBarProps) {
       );
 
       if (clickedOutside) {
-        toggleSmallScreenMenu(false);
+        toggleResponsiveMenu(false);
       }
     }
   }
@@ -172,7 +172,7 @@ export default function MainNavBar({ person }: MainNavBarProps) {
 
   // Hides small screen menu on route change
   useEffect(() => {
-    toggleSmallScreenMenu(false);
+    toggleResponsiveMenu(false);
   }, [history.location]);
 
   return (
@@ -183,7 +183,7 @@ export default function MainNavBar({ person }: MainNavBarProps) {
           className={classnames(styles.MenuToggleBtn, {
             [styles.MenuToggleBtnOpen]: isResponsiveMenuMenuVisible,
           })}
-          onClick={() => toggleSmallScreenMenu(!isResponsiveMenuMenuVisible)}
+          onClick={() => toggleResponsiveMenu(!isResponsiveMenuMenuVisible)}
         >
           Toggle menu
         </button>
