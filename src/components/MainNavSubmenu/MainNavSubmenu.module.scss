@@ -90,7 +90,7 @@
   }
 }
 
-@include respond-to(phone) {
+@include media("<=phone") {
   .MainNavSubmenu {
     .SubmenuButton {
       display: none;

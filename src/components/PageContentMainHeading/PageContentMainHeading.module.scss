@@ -7,7 +7,7 @@
     left: 8rem;
     transform: translateX(-50%);
 
-    @include respond-to(phone) {
+    @include media("<=phone") {
       left: 5.5rem;
     }
   }
@@ -57,7 +57,7 @@
       }
     }
 
-    @include respond-to(phone) {
+    @include media("<=phone") {
       min-height: $main-header-hero-heading-overlap--tablet;
       margin: -#{$main-header-hero-heading-overlap--tablet} 0 0;
       padding: 2rem 0 0 1rem;

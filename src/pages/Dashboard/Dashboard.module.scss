@@ -6,7 +6,7 @@
     flex-direction: row;
     flex-wrap: wrap;
 
-    @include respond-to(phone) {
+    @include media("<=phone") {
       display: block; // NOTE: This discards all the flexbox properties defined below
     }
   }
@@ -27,7 +27,7 @@
   @include select(MyChaptersPanel_MyChaptersPanel) {
     flex-basis: calc(50% + 1rem); // + virtual-gutter
 
-    @include respond-to(phone) {
+    @include media("<=phone") {
       margin-left: -2.4rem;
       margin-right: -2.4rem;
     }
@@ -38,7 +38,7 @@
     margin-bottom: 8rem;
     margin-top: 10rem;
 
-    @include respond-to(phone) {
+    @include media("<=phone") {
       margin-bottom: 4rem;
       margin-top: 4rem;
     }
@@ -66,7 +66,7 @@
   // Makes the updates and chapters touch the bottom of Hero
   margin-top: -3.8rem;
 
-  @include respond-to(phone) {
+  @include media("<=phone") {
     margin-top: 2rem;
   }
 }

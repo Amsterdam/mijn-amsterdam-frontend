@@ -17,7 +17,7 @@
   @include heading(3, 1.3);
   font-weight: 800;
 
-  @include respond-to(phone) {
+  @include media("<=phone") {
     @include heading(2.4, 1.3);
   }
 }
@@ -26,7 +26,7 @@
   @include heading(2.4, 1.3);
   font-weight: 800;
 
-  @include respond-to(phone) {
+  @include media("<=phone") {
     @include heading(2.1, 1.3);
   }
 }
@@ -53,8 +53,3 @@
   }
 }
 
-@mixin respond-to($breakpoint) {
-  @media only screen and (max-width: map-get($breakpoints, $breakpoint)) {
-    @content;
-  }
-}
