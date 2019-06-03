@@ -18,10 +18,6 @@
     margin-right: 4rem;
     border-top: 1px solid $color-neutral-grey2;
     margin-bottom: 5rem;
-
-    @include select(MyUpdates_ChapterIndication) {
-      display: none;
-    }
   }
 
   @include select(MyChaptersPanel_MyChaptersPanel) {

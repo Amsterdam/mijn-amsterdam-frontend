@@ -24,7 +24,7 @@ import {
   IconButtonLink,
 } from 'components/ButtonLink/ButtonLink';
 import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
-import { useTabletScreen, usePhoneScreen } from 'hooks/media.hook';
+import { useTabletScreen } from 'hooks/media.hook';
 import useRouter from 'use-react-router';
 import classnames from 'classnames';
 import { Person } from 'data-formatting/brp';
@@ -133,7 +133,7 @@ export default function MainNavBar({ person }: MainNavBarProps) {
     MY_CHAPTERS: { items: myChapterItems },
   } = useContext(AppContext);
 
-  const isResponsiveMenu = usePhoneScreen();
+  const isResponsiveMenu = useTabletScreen();
   const [isResponsiveMenuMenuVisible, toggleResponsiveMenu] = useState(false);
   const { history } = useRouter();
 

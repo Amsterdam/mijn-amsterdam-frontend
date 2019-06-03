@@ -15,7 +15,7 @@
     border-top: 0;
   }
 
-  @include media("<=phone") {
+  @include media("<=tablet") {
     padding-left: 0;
   }
 }
@@ -26,7 +26,7 @@
   top: 2.3rem;
   fill: $color-primary-red;
 
-  @include media("<=phone") {
+  @include media("<=tablet") {
     position: static;
     display: inline-block;
     vertical-align: middle;
@@ -38,7 +38,7 @@
 
 .Icon,
 .MetaInfo {
-  @include media("<=phone") {
+  @include media("<=tablet") {
     display: inline-block;
     vertical-align: middle;
     margin-bottom: 2rem;
@@ -56,7 +56,7 @@
 .Datum {
   font-size: 1.4rem;
 
-  @include media("<=phone") {
+  @include media("<=tablet") {
     color: $color-neutral-grey4;
   }
 }
@@ -76,9 +76,9 @@
 .ChapterIndication {
   font-style: normal;
   text-transform: capitalize;
-  display: block;
+  display: none;
 
-  @include media("<=phone") {
+  @include media("<=tablet") {
     display: inline;
 
     &:after {
