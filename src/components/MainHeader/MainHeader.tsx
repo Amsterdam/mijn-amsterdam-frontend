@@ -9,7 +9,7 @@ import MainHeaderHero from 'components/MainHeaderHero/MainHeaderHero';
 import MainNavBar from 'components/MainNavBar/MainNavBar';
 import { Person } from 'data-formatting/brp';
 import { entries } from 'helpers/App';
-import { useLargeScreen } from 'hooks/media.hook';
+import { useDesktopScreen } from 'hooks/media.hook';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -44,7 +44,7 @@ export default function MainHeader({
     );
 
   const hasErrors = !!errors.length;
-  const Logo = useLargeScreen() ? AmsterdamLogoLarge : AmsterdamLogo;
+  const Logo = useDesktopScreen() ? AmsterdamLogoLarge : AmsterdamLogo;
 
   return (
     <header className={styles.header}>
