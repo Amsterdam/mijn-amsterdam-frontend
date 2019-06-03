@@ -8,9 +8,17 @@
 
 .LinkContainer {
   display: flex;
-  width: $main-boxed-width;
+  max-width: $main-boxed-width;
   background-color: $color-neutral-grey1;
   margin: 0 auto;
+
+  @include respond-to(phone) {
+    display: grid;
+    width: $main-header-navbar-width--phone;
+    margin: 0;
+    z-index: 2;
+    position: relative;
+  }
 }
 
 .MainNavLink {
@@ -30,6 +38,19 @@
   &:last-child {
     margin-right: 0;
   }
+
+  @include respond-to(phone) {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin: 0;
+    padding-left: 1.6rem;
+    border-top: 0.1rem solid $color-neutral-grey2;
+
+    // Move home button after the Chapters menu
+    &:first-child {
+      grid-row: 2;
+    }
+  }
 }
 
 .secondaryLinks {
@@ -48,47 +69,31 @@
       text-decoration: underline;
     }
   }
-}
 
-@include respond-to(phone) {
-  .LinkContainer {
-    display: grid;
-    width: $main-header-navbar-width--phone;
-    margin: 0;
-    z-index: 2;
-    position: relative;
-  }
-
-  .secondaryLinks > a,
-  .MainNavLink {
-    font-weight: bold;
-    font-size: 1.5rem;
-    margin: 0;
-    padding-left: 1.6rem;
-    border-top: 0.1rem solid $color-neutral-grey2;
-  }
-
-  // Move home button after the Chapters menu
-  .MainNavLink:first-child {
-    grid-row: 2;
-  }
-
-  .secondaryLinks {
+  @include respond-to(phone) {
     position: static;
     margin-top: 0;
-    @include select(ButtonLink_ButtonLink) {
-      padding-left: 1.6rem;
-      // Remove the icons from the links
-      background-image: none;
-      svg {
-        display: none;
-      }
-    }
-    // Mimic style of MainNavLinks
+
     > a {
+      font-weight: bold;
+      font-size: 1.5rem;
+      margin: 0;
+      padding-left: 1.6rem;
+      border-top: 0.1rem solid $color-neutral-grey2;
       display: block;
       padding-top: .8rem;
       padding-bottom: .8rem;
+    }
+
+    @include select(ButtonLink_ButtonLink) {
+      padding-left: 1.6rem;
+      // Remove the icons from the links
+      &, &:hover {
+        background-image: none;
+      }
+      svg {
+        display: none;
+      }
     }
   }
 }
