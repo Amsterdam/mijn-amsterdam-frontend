@@ -16,7 +16,7 @@
     display: grid; // On a phone the menu is ordered differently so we use grid to have control over that
     width: $main-header-navbar-width--phone;
     margin: 0;
-    z-index: 2;
+    z-index: z-index(main-nav-bar-inner--tablet);
     position: relative;
   }
 }
@@ -126,5 +126,5 @@
   position: absolute;
   top: $main-header-navbar-height;
   width: 100%;
-  z-index: 1;
+  z-index: z-index(main-nav-bar-modal);
 }
