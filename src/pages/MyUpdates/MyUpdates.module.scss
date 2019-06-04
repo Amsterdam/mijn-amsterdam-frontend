@@ -25,6 +25,10 @@
 
     @include select(MyUpdates_Description) {
       padding-right: 30rem;
+
+      @include media("<=phone") {
+        padding-right: 2rem;
+      }
     }
 
     @include select(MyUpdates_MyUpdateItem) {

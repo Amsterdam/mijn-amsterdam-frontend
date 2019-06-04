@@ -30,25 +30,25 @@
       margin-left: .5rem;
     }
 
-    @include media(">phone", "<=tablet") {
+    @include media("<=tablet") {
       padding-left: 0;
     }
 
     @include media("<=phone") {
-      width: auto;
+      // width: auto;
 
       &:nth-child(odd) {
-        margin-right: 0;
+        // margin-right: 0;
       }
 
       &:nth-child(even) {
-        margin-left: 0;
+        // margin-left: 0;
       }
     }
   }
 
   @include media("<=phone") {
-    display: block;
+    // display: block;
   }
 }
 
