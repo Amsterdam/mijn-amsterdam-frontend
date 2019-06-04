@@ -6,6 +6,13 @@
   padding-bottom: 1.6rem;
   text-indent: 16rem;
   margin: 0;
+
+  @include media("<=tablet") {
+    text-indent: 0;
+  }
+  @include media("<=phone") {
+    text-indent: 2.4rem;
+  }
 }
 
 .MyUpdates {
@@ -36,10 +43,30 @@
           color: $color-neutral-grey4;
         }
       }
+
+      @include media("<=tablet") {
+        padding-left: 0;
+
+        @include select(MyUpdates_MyUpdateItem) {
+          padding-left: 0;
+        }
+
+        aside {
+          width: auto;
+          position: static;
+        }
+      }
+      @include media("<=phone") {
+        padding-left: 2.4rem;
+      }
     }
 
     @include select(MyUpdates_NoItemsInfo) {
       text-indent: 16rem;
+
+      @include media("<=phone") {
+        text-indent: 0;
+      }
     }
   }
 
