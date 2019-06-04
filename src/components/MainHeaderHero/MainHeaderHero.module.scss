@@ -4,10 +4,20 @@
   width: 100%;
   overflow: hidden;
   position: relative;
+  padding-top: 25%;
+  background: red;
+
+  @include media("<=tablet") {
+    padding-top: 40%;
+  }
 }
 
 .Image {
   display: block;
-  width: 100%;
-  height: auto;
+  width: auto;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
