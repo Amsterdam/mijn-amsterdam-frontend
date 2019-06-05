@@ -18,7 +18,7 @@ body {
   font-size: 1.6rem;
 
   &.has-modal {
-    overflow: hidden;
+    position: fixed;
     > *:not(#modal-root) {
       pointer-events: none;
     }

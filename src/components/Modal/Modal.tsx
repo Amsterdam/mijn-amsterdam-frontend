@@ -11,19 +11,26 @@ import Heading from 'components/Heading/Heading';
 interface ModalProps {
   children: ComponentChildren;
   className?: any;
-  isOpen: boolean;
+  isOpen: boolean | undefined;
   onClose: () => void;
   title?: string;
   contentWidth?: number | 'boxed';
-  contentVerticalPosition?: number | 'center';
-  contentHorizontalPosition?: number | 'center';
+  contentVerticalPosition?: number | 'center' | 'top' | 'bottom';
+  contentHorizontalPosition?: number | 'center' | 'left' | 'right';
   appendTo: HTMLElement;
+}
+
+function setScrollYProp() {
+  document.documentElement.style.setProperty(
+    '--scroll-y',
+    `${window.scrollY}px`
+  );
 }
 
 export default function Modal({
   children,
   className,
-  isOpen = false,
+  isOpen = undefined,
   title,
   onClose,
   contentWidth = 'boxed',
@@ -31,19 +38,34 @@ export default function Modal({
   contentHorizontalPosition = 'center',
   appendTo,
 }: ModalProps) {
-  const modalWrapperEl = useRef(null);
+  const dialogEl = useRef(null);
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.classList.add('has-modal');
+    if (isOpen === undefined) {
+      return;
     }
+    if (isOpen) {
+      const scrollY = document.documentElement.style.getPropertyValue(
+        '--scroll-y'
+      );
+      const body = document.body;
+      body.style.top = `-${scrollY}`;
+      body.classList.add('has-modal');
+    } else {
+      const body = document.body;
+      const scrollY = body.style.top;
+      body.style.top = '';
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    }
+    window.addEventListener('scroll', setScrollYProp);
     return () => {
       document.body.classList.remove('has-modal');
+      window.removeEventListener('scroll', setScrollYProp);
     };
-  });
+  }, [isOpen]);
 
   function closeFromOverlay(target: EventTarget) {
-    if (!(modalWrapperEl.current! as HTMLElement).contains(target as Node)) {
+    if (!(dialogEl.current! as HTMLElement).contains(target as Node)) {
       onClose();
     }
   }
@@ -62,24 +84,30 @@ export default function Modal({
 
   return isOpen
     ? ReactDOM.createPortal(
-        <FocusTrap>
+        <>
           <div
             className={classnames(styles.Modal, className)}
             onClick={event => closeFromOverlay(event.target)}
-            role="dialog"
-            aria-labelledby={title}
-            aria-modal="true"
-          >
+          />
+          <FocusTrap>
             <div
+              role="dialog"
+              aria-labelledby={title}
+              aria-modal="true"
               className={classnames(
-                styles.Wrapper,
+                styles.Dialog,
                 contentWidth === 'boxed' && styles.Boxed,
                 contentVerticalPosition === 'center' &&
                   styles.VerticallyCentered,
                 contentHorizontalPosition === 'center' &&
-                  styles.HorizontallyCentered
+                  styles.HorizontallyCentered,
+                contentVerticalPosition === 'top' && styles.VerticallyTop,
+                contentHorizontalPosition === 'left' && styles.HorizontallyLeft,
+                contentVerticalPosition === 'bottom' && styles.VerticallyBottom,
+                contentHorizontalPosition === 'right' &&
+                  styles.HorizontallyRight
               )}
-              ref={modalWrapperEl}
+              ref={dialogEl}
               style={inlineStyles}
             >
               <header
@@ -89,14 +117,17 @@ export default function Modal({
                 }}
               >
                 {!!title && <Heading size="small">{title}</Heading>}
-                <button className={styles.ButtonClose} onClick={onClose}>
+                <button
+                  className={styles.ButtonClose}
+                  onClick={() => onClose()}
+                >
                   <CloseIcon />
                 </button>
               </header>
               <div className={styles.Content}>{children}</div>
             </div>
-          </div>
-        </FocusTrap>,
+          </FocusTrap>
+        </>,
         appendTo
       )
     : null;
