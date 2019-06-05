@@ -51,9 +51,9 @@ function getHeroSrc() {
   // LANDSCAPE_LARGE: '/header/Header-Desktop-1-1080x432.jpg';
 
   return {
-    PORTRAIT_SMALL: imgUrl(imageName, 360, 'p'),
-    PORTRAIT_SMALL_2X: imgUrl(imageName, 360, 'p', 2),
-    PORTRAIT_SMALL_3X: imgUrl(imageName, 360, 'p', 3),
+    PORTRAIT_SMALL: imgUrl(imageName, 360, 'portrait'),
+    PORTRAIT_SMALL_2X: imgUrl(imageName, 360, 'portrait', 2),
+    PORTRAIT_SMALL_3X: imgUrl(imageName, 360, 'portrait', 3),
     LANDSCAPE_SMALL: imgUrl(imageName, 1024),
     LANDSCAPE_MEDIUM: imgUrl(imageName, 1366),
     LANDSCAPE_LARGE: imgUrl(imageName, 1600),
