@@ -19,7 +19,6 @@
 
 @include select(Heading_Heading) {
   &.PageContentMainHeading {
-    display: flex;
     min-height: $main-header-hero-heading-overlap;
     margin-top: 0;
     padding: 3.7rem 0 0 4rem;
