@@ -20,7 +20,7 @@
     padding: 0 4rem;
 
     @include media("<=phone") {
-      padding: 0 2.4rem;
+      padding: 0 2rem;
     }
 
     max-width: $main-boxed-width;

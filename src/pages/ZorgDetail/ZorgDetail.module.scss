@@ -10,13 +10,21 @@
 
 .ListHeading {
   border-bottom: .1rem solid $color-neutral-grey2;
-  text-indent: 12rem;
+  padding-left: 12rem;
   padding-bottom: 1rem;
+
+  @include media("<=phone") {
+    padding-left: 7rem;
+  }
 }
 
 .ListItem {
   display: flex;
   padding-left: 12rem;
+
+  @include media("<=phone") {
+    padding-left: 7rem;
+  }
 
   > p {
     flex: 1 0 50%;
@@ -42,8 +50,11 @@
   background-size: 2.4rem auto;
 }
 
-.AdditionalInfo {
-
+.DatesInfo,
+.SupplierInfo {
+  @include media("<=phone") {
+    background-position: 2rem center;
+  }
 }
 
 .LoadingContentInfo {

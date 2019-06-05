@@ -9,10 +9,8 @@ export default function ChapterHeadingIcon({
   ...rest
 }: ChapterHeadingIconProps) {
   return (
-    <ChapterIcon
-      aria-hidden="true"
-      className={styles.ChapterHeadingIcon}
-      {...rest}
-    />
+    <span className={styles.ChapterHeadingIcon}>
+      <ChapterIcon aria-hidden="true" {...rest} />
+    </span>
   );
 }
