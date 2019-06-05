@@ -19,6 +19,7 @@ body {
 
   &.has-modal {
     position: fixed;
+    width: 100vw;
     > *:not(#modal-root) {
       pointer-events: none;
     }
