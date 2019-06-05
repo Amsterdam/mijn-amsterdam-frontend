@@ -3,30 +3,24 @@ import styles from './MainHeaderHero.module.scss';
 import useReactRouter from 'use-react-router';
 import { AppRoutes } from 'App.constants';
 
+const DEFAULT_ALT = 'Sfeerbeeld kenmerkend voor de Amsterdammer';
+const LANDSCAPE_SCREEN_RATIO = 0.25;
+const PORTRAIT_SCREEN_RATIO = 0.4;
+
 // TODO: Enable if we have appropriate responsive images
 // For now, 3 versions of the landscape image can be delivered: 1024, 1366 and 1600
 function imgUrl(
   imageName: string,
-  w: number,
-  orientation: 'l' | 'p' = 'l',
-  pd: number = 1
+  width: number,
+  orientation: 'landscape' | 'portrait' = 'landscape',
+  pixelDensity: number = 1
 ) {
-  const r = orientation === 'p' ? 0.4 : 0.25;
-  return `/header/${imageName}-${Math.round(pd * w)}x${Math.round(
-    pd * (w * r)
+  const ratio =
+    orientation === 'portrait' ? PORTRAIT_SCREEN_RATIO : LANDSCAPE_SCREEN_RATIO;
+  return `/header/${imageName}-${Math.round(pixelDensity * width)}x${Math.round(
+    pixelDensity * (width * ratio)
   )}.jpg`;
 }
-
-const DEFAULT_ALT = 'Sfeerbeeld kenmerkend voor de Amsterdammer';
-
-// TBD: Which size for mobile + tablet
-// const PORTRAIT_SMALL = imgUrl('//placehold.it/', 360, 'p');
-// const PORTRAIT_SMALL_2X = imgUrl('//placehold.it/', 360, 'p', 2);
-// const PORTRAIT_SMALL_3X = imgUrl('//placehold.it/', 360, 'p', 3);
-
-// const LANDSCAPE_SMALL = imgUrl('//placehold.it/', 1024);
-// const LANDSCAPE_MEDIUM = imgUrl('//placehold.it/', 1366);
-// const LANDSCAPE_LARGE = imgUrl('//placehold.it/', 1600);
 
 function getHeroSrc() {
   const { location } = useReactRouter();
