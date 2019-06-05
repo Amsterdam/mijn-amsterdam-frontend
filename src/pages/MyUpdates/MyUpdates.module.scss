@@ -82,5 +82,9 @@
     @include select(MyUpdates_Icon) {
       fill: $color-neutral-grey4;
     }
+
+    @include media("<=phone") {
+      padding-top: 2rem;
+    }
   }
 }

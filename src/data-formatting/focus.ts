@@ -357,7 +357,7 @@ function isInProgess(decision: Decision, steps: FocusProduct['processtappen']) {
 function translateProductTitle(title: ProductTitle) {
   switch (title) {
     case 'Levensonderhoud':
-      return 'Bijstandsuitkering met een hele lange titel effe kijken of dit op mobiel goed uitkomt';
+      return 'Bijstandsuitkering';
   }
   return title;
 }
