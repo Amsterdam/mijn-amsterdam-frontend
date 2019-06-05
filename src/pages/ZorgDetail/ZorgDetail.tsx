@@ -33,10 +33,10 @@ export default () => {
     <PageContentMain variant="full" className={styles.ZorgDetail}>
       <PageContentMainHeading el="div" variant="boxedWithIcon">
         <ChapterHeadingIcon chapter={Chapters.ZORG} />
-        <PageContentMainHeadingBackLink to={AppRoutes.ZORG}>
-          Zorg
-        </PageContentMainHeadingBackLink>
         <Heading el="h2" className={styles.PageHeading}>
+          <PageContentMainHeadingBackLink to={AppRoutes.ZORG}>
+            Zorg
+          </PageContentMainHeadingBackLink>
           {!isLoading && WmoItem ? (
             WmoItem.title
           ) : (

@@ -1,22 +1,18 @@
 @import 'styles/_global.scss';
 
 .ChapterHeadingIcon {
-  display: block;
-  position: absolute;
-  fill: $color-primary-red;
-  height: 5rem;
-  width: 5rem;
-  top: 3.6rem;
 
-  @include media("<=tablet") {
-    height: 4rem;
-    width: 4rem;
-    top: 3rem;
-  }
+  svg {
+    fill: $color-primary-red;
+    height: auto;
+    width: 5rem;
 
-  @include media("<=phone") {
-    height: 3rem;
-    width: 3rem;
-    top: 2rem;
+    @include media("<=tablet") {
+      width: 4rem;
+    }
+
+    @include media("<=phone") {
+      width: 3.2rem;
+    }
   }
 }
