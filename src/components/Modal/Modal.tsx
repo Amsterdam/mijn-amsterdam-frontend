@@ -40,6 +40,7 @@ export default function Modal({
 }: ModalProps) {
   const dialogEl = useRef(null);
 
+  // Concepts taken from: https://css-tricks.com/prevent-page-scrolling-when-a-modal-is-open/
   useEffect(() => {
     if (isOpen === undefined) {
       return;
