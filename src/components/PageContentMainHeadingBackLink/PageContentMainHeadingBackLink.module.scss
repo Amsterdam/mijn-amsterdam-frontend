@@ -10,10 +10,6 @@
   width: 100%;
   display: block;
 
-  @include media("<=phone") {
-    transform: translateX(0);
-  }
-
   svg {
     height: .9em;
     width: .9em;
