@@ -104,9 +104,7 @@ export default function MainFooter() {
       </div>
       <div className={styles.BottomBar}>
         <div className={styles.InnerContainer}>
-          {/* <ButtonLink to={AppRoutes.ABOUT}>Over deze site</ButtonLink> */
-          /* TODO: Implement later? */}
-          <ButtonLink to={AppRoutes.PRIVACY}>Privacy</ButtonLink>
+          <ButtonLink to={AppRoutes.PROCLAIMER}>Proclaimer</ButtonLink>
         </div>
       </div>
     </footer>

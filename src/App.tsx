@@ -24,7 +24,7 @@ import MainFooter from './components/MainFooter/MainFooter';
 import MainHeader from './components/MainHeader/MainHeader';
 import NotFound from './pages/NotFound/NotFound';
 import Profile from './pages/Profile/Profile';
-import Privacy from 'pages/Privacy/Privacy';
+import Proclaimer from 'pages/Proclaimer/Proclaimer';
 
 interface MainAppProps {
   appState: AppStateInterface;
@@ -69,7 +69,7 @@ function MainApp({ appState: { SESSION, BRP } }: MainAppProps) {
           <Route path={`${AppRoutes.ZORG}/:id`} component={ZorgDetail} />
           <Route path={AppRoutes.ZORG} component={Zorg} />
           <Route path={AppRoutes.MY_AREA} component={MyArea} />
-          <Route path={AppRoutes.PRIVACY} component={Privacy} />
+          <Route path={AppRoutes.PROCLAIMER} component={Proclaimer} />
           <Route component={NotFound} />
         </Switch>
       </div>

@@ -36,7 +36,7 @@ export const AppRoutes = {
   PROFILE: '/profiel',
   MY_AREA: '/buurt',
   ABOUT: '/over-mijn-amsterdam',
-  PRIVACY: '/privacy',
+  PROCLAIMER: '/proclaimer',
   API_LOGIN: '/api/login',
 
   // NOTE: Route components not implemented, subject to change
