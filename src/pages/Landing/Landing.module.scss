@@ -24,6 +24,7 @@
   font-weight: 700;
   padding-right: 1.3rem;
   line-height: 4.6rem;
+
   &:focus {
     color: $color-black;
   }
@@ -36,9 +37,14 @@
   background-color: #000;
 }
 
+@include select(PageContentMainHeading) {
+  position: relative;
+}
+
 .BetaLogo {
-  float: right;
-  height: 12rem;
-  width: 12rem;
-  margin-top: -4rem;
+  position: absolute;
+  height: 100%;
+  width: auto;
+  margin-top: -1rem;
+  right: 0;
 }
