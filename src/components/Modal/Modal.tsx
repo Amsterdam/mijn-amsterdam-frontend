@@ -65,7 +65,10 @@ export default function Modal({
   }, [isOpen]);
 
   function closeFromOverlay(target: EventTarget) {
-    if (!(dialogEl.current! as HTMLElement).contains(target as Node)) {
+    const el = dialogEl.current ? (dialogEl.current! as HTMLElement) : null;
+    if (el && !el.contains(target as Node)) {
+      onClose();
+    } else if (!el) {
       onClose();
     }
   }

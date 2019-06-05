@@ -33,8 +33,8 @@ describe('Modal test', () => {
         Testje
       </Modal>
     );
-    expect(component.find('[className*="Wrapper"]')).toHaveLength(1);
-    expect(component.find('[className*="Wrapper"]').prop('style')).toEqual({
+    expect(component.find('[className*="Dialog"]')).toHaveLength(1);
+    expect(component.find('[className*="Dialog"]').prop('style')).toEqual({
       width: 100,
       left: 10,
       top: 10,
@@ -59,17 +59,17 @@ describe('Modal test', () => {
         Testje
       </Modal>
     );
-    expect(component.find('[className*="Wrapper"]')).toHaveLength(0);
+    expect(component.find('[className*="Dialog"]')).toHaveLength(0);
     open();
-    expect(component.find('[className*="Wrapper"]')).toHaveLength(1);
+    expect(component.find('[className*="Dialog"]')).toHaveLength(1);
     component.childAt(0).simulate('click');
     expect(close).toHaveBeenCalled();
-    expect(component.find('[className*="Wrapper"]')).toHaveLength(0);
+    expect(component.find('[className*="Dialog"]')).toHaveLength(0);
     open();
-    expect(component.find('[className*="Wrapper"]')).toHaveLength(1);
+    expect(component.find('[className*="Dialog"]')).toHaveLength(1);
     component.find('[className*="ButtonClose"]').simulate('click');
     expect(close).toHaveBeenCalled();
-    expect(component.find('[className*="Wrapper"]')).toHaveLength(0);
+    expect(component.find('[className*="Dialog"]')).toHaveLength(0);
 
     component.unmount();
   });
@@ -80,7 +80,7 @@ describe('Modal test', () => {
         Testje
       </Modal>
     );
-    expect(component.find('[className*="Wrapper"]')).toHaveLength(0);
+    expect(component.find('[className*="Dialog"]')).toHaveLength(0);
     component.unmount();
 
     expect(modalRoot.childNodes.length).toBe(0);
