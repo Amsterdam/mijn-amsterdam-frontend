@@ -5,6 +5,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    align-items: flex-start;
 
     @include media("<=phone") {
       display: block; // NOTE: This discards all the flexbox properties defined below
