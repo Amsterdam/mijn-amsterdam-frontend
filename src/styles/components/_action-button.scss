@@ -14,6 +14,7 @@
 
   &:hover {
     background-color: $color-support-red;
+    color: $color-white;
   }
 
   &[disabled],
@@ -29,6 +30,26 @@
     background-color: $color-support-blue;
     &:hover {
       background-color: $color-support-darkblue;
+    }
+    &.line-only {
+      border-color: $color-support-darkblue;
+      color: $color-support-darkblue;
+
+      &:hover {
+        color: $color-white;
+      }
+    }
+  }
+
+  &.line-only {
+    background-color: $color-white;
+    border: 1px solid;
+    border-color: $color-primary-red;
+    color: $color-primary-red;
+
+    &:not(.secondary):hover {
+      background-color: $color-primary-red;
+      color: $color-white;
     }
   }
 }

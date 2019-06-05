@@ -150,16 +150,4 @@
     background-color: $color-primary-darkblue;
     color: $color-white;
   }
-
-  > span {
-    transform: rotate(-90deg);
-    font-size: .6em;
-    position: relative;
-    display: inline-block;
-    margin: 0 1rem;
-  }
-
-  &.isCollapsed > span {
-    transform: rotate(90deg);
-  }
 }
