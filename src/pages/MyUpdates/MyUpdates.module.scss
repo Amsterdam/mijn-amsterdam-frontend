@@ -12,6 +12,7 @@
   }
   @include media("<=phone") {
     text-indent: 2.4rem;
+    padding-top: 0;
   }
 }
 

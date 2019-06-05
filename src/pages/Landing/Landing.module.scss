@@ -28,12 +28,6 @@
     padding-left: 1.3rem;
     line-height: 4.6rem;
   }
-
-  // &:focus {
-  //   color: $color-black;
-  //   background-color: $color-support-focus;
-  //   outline: 0;
-  // }
 }
 
 .LoginLogo {
@@ -51,6 +45,6 @@
   position: absolute;
   height: 100%;
   width: auto;
-  margin-top: -1rem;
+  top: 0;
   right: 0;
 }
