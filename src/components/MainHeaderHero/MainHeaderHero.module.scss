@@ -5,7 +5,7 @@
   overflow: hidden;
   position: relative;
   padding-top: 25%;
-  background: red;
+  background: $color-neutral-grey3;
 
   @include media("<=tablet") {
     padding-top: 40%;
