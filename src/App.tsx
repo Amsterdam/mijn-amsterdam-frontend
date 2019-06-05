@@ -10,7 +10,7 @@ import MyUpdates from 'pages/MyUpdates/MyUpdates';
 import Wonen from 'pages/Wonen/Wonen';
 import Zorg from 'pages/Zorg/Zorg';
 import ZorgDetail from 'pages/ZorgDetail/ZorgDetail';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import useReactRouter from 'use-react-router';
 
@@ -32,6 +32,11 @@ interface MainAppProps {
 
 function MainApp({ appState: { SESSION, BRP } }: MainAppProps) {
   const { location } = useReactRouter();
+
+  useEffect(() => {
+    // Scroll to top on route change
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return location.pathname === AppRoutes.MY_AREA ? (
     <MyArea />

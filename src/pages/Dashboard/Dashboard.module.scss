@@ -32,7 +32,7 @@
   }
 
   @include select(MyChaptersPanel_MyChaptersPanel) {
-    flex-basis: calc(50% + 1rem); // + custom gutter (an visually pleasing space between 2 blocks)
+    width: calc(50% + 1rem); // + custom gutter (an visually pleasing space between 2 blocks)
 
     @include media(">phone", "<=tablet") {
       // Weirdly sized chapters panel for tablet screens needs the following to break-out of the flex restrains
@@ -40,7 +40,6 @@
       margin-left: -5rem;
       transform: translateX(5rem);
     }
-
 
     @include media("<=phone") {
       margin-left: -2rem;

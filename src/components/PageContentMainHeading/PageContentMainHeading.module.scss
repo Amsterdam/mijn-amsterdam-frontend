@@ -25,7 +25,6 @@
 @include select(Heading_Heading) {
   &.PageContentMainHeading {
     min-height: $main-header-hero-heading-overlap;
-    margin-top: 0;
     margin: -#{$main-header-hero-heading-overlap} 0 0;
     margin-bottom: 3.8rem;
     background-color: $color-white;
@@ -33,6 +32,13 @@
     display: flex;
     align-items: center;
     padding: 1rem 3.8rem 0 3.8rem;
+
+    // IE11 Hack for vertical flexbox centering
+    &:after{
+      content: '';
+      min-height: calc(#{$main-header-hero-heading-overlap} - 1rem); // compensates the 1rem top padding
+      font-size: 0;
+    }
 
     &__medium {
       width: 46rem;

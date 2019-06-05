@@ -1,18 +1,20 @@
 @import 'styles/_global.scss';
 
 .ChapterHeadingIcon {
-
   svg {
     fill: $color-primary-red;
     height: auto;
+    max-height: 5rem;
     width: 5rem;
 
     @include media("<=tablet") {
       width: 4rem;
+      max-height: 4rem;
     }
 
     @include media("<=phone") {
       width: 3.2rem;
+      max-height: 3.2rem;
     }
   }
 }
