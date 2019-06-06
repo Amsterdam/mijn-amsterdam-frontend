@@ -35,12 +35,12 @@ export function useUpdatesState() {
 // In the future we will get specifically tailored generic update content from various api's which will be integrated in
 // a domain wide updates stream.
 export default ({ FOCUS }: Pick<AppState, 'FOCUS'>): MyUpdatesApiState => {
-  const [myUpdatesState] = useUpdatesState() || {};
+  const [myUpdatesState] = useUpdatesState();
   const items = [
     ...FOCUS.data.updates.map(update => {
       return {
         ...update,
-        isUnread: !(update.id in myUpdatesState),
+        isUnread: myUpdatesState ? !(update.id in myUpdatesState) : true,
       };
     }),
   ].sort((a, b) => {
