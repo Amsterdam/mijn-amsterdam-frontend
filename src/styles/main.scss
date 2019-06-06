@@ -51,6 +51,7 @@ input,
 textarea,
 select,
 button {
+  line-height: inherit;
   &:focus {
     outline: 0.3rem solid $color-support-focus;
   }

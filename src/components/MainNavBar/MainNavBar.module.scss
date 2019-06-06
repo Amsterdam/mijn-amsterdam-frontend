@@ -29,10 +29,20 @@
   font-weight: 500;
   text-decoration: none;
   padding-top: 0.9rem;
-  padding-bottom: 0.9rem;
+  padding-bottom: 0.7rem;
 
   &:hover {
     color: $color-primary-red;
+  }
+
+  span {
+    display: inline-block;
+    border-bottom: solid 0.2rem transparent;
+  }
+
+  &:hover span {
+    color: $color-primary-red;
+    border-bottom-color: $color-primary-red;
   }
 
   &:last-child {

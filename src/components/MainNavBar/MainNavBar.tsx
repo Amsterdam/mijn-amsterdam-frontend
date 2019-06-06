@@ -71,7 +71,7 @@ function SecondaryLinks({ person, hasMessages = false }: SecondaryLinksProps) {
 function MainNavLink({ children, to, title, ...rest }: MainNavLinkProps) {
   return (
     <NavLink to={to} className={styles.MainNavLink} {...rest}>
-      {children}
+      <span>{children}</span>
     </NavLink>
   );
 }

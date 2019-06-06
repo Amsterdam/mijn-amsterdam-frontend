@@ -9,6 +9,8 @@ import { Chapters } from 'App.constants';
 import styles from './Zorg.module.scss';
 import Alert from 'components/Alert/Alert';
 import { useTabletScreen } from 'hooks/media.hook';
+import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
+import { ExternalUrls } from '../../App.constants';
 
 const DISPLAY_PROPS = {
   dateStart: 'start',
@@ -42,6 +44,16 @@ export default () => {
         Zorg
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
+        <p>
+          Heeft u zorg en ondersteuning nodig? Dan kunt u bij de gemeente
+          Amsterdam terecht. Hieronder ziet u van welke voorzieningen u nu al
+          gebruik maakt.
+        </p>
+        <p>
+          <ButtonLinkExternal to={ExternalUrls.ZORG_LEES_MEER}>
+            Lees meer over zorg bij gemeente Amsterdam
+          </ButtonLinkExternal>
+        </p>
         {isError && (
           <Alert type="warning">
             Uw gegevens kunnen op dit moment niet worden getoond.
