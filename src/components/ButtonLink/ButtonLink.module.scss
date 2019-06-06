@@ -14,7 +14,7 @@
     padding-left: 0.8em;
   }
 
-  @include media(">tablet") {
+  @include hoverCapable {
     &:hover {
       & {
         color: $color-primary-red;

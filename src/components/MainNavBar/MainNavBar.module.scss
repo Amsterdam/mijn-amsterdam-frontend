@@ -31,7 +31,7 @@
   padding-top: 0.9rem;
   padding-bottom: 0.7rem;
 
-  @include media(">tablet") {
+  @include hoverCapable {
     &:hover {
       color: $color-primary-red;
     }
@@ -42,7 +42,7 @@
     border-bottom: solid 0.2rem transparent;
   }
 
-  @include media(">tablet") {
+  @include hoverCapable {
     &:hover span {
       color: $color-primary-red;
       border-bottom-color: $color-primary-red;

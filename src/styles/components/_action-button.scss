@@ -12,7 +12,7 @@
   border: 0;
   font-weight: 500;
 
-  @include media(">tablet") {
+  @include hoverCapable {
     &:hover {
       background-color: $color-support-red;
       color: $color-white;
@@ -30,7 +30,7 @@
 
   &.secondary {
     background-color: $color-support-blue;
-    @include media(">tablet") {
+    @include hoverCapable {
       &:hover {
         background-color: $color-support-darkblue;
       }
@@ -39,7 +39,7 @@
       border-color: $color-support-darkblue;
       color: $color-support-darkblue;
 
-      @include media(">tablet") {
+      @include hoverCapable {
         &:hover {
           color: $color-white;
         }

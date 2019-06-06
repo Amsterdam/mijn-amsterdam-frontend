@@ -146,7 +146,7 @@
   cursor: pointer;
   padding: 0 .4rem 0 1.4rem;
 
-  @include media(">tablet") {
+  @include hoverCapable {
     &:hover {
       background-color: $color-primary-darkblue;
       color: $color-white;
