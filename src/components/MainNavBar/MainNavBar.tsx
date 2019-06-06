@@ -41,7 +41,7 @@ export interface MainNavLinkProps {
 }
 
 interface SecondaryLinksProps {
-  person: Person | null;
+  person?: Person | null;
   hasMessages?: boolean;
 }
 
@@ -79,7 +79,8 @@ function MainNavLink({ children, to, title, ...rest }: MainNavLinkProps) {
 function getMenuItem(
   item: MenuItem,
   activeSubmenuId: string,
-  setSubMenuVisibility: (id?: string, isSubmenuTrigger?: boolean) => void
+  setSubMenuVisibility: (id?: string, isSubmenuTrigger?: boolean) => void,
+  useInteractionHandlers: boolean = true
 ) {
   if (Array.isArray(item.submenuItems)) {
     const isOpen = activeSubmenuId === item.id;
@@ -113,12 +114,12 @@ function getMenuItem(
     );
   }
 
-  const interactionHandlers = useTabletScreen()
-    ? {}
-    : {
+  const interactionHandlers = useInteractionHandlers
+    ? {
         onFocus: () => setSubMenuVisibility(item.id),
         onMouseEnter: () => setSubMenuVisibility(item.id),
-      };
+      }
+    : {};
 
   return (
     <MainNavLink
@@ -206,7 +207,12 @@ export default function MainNavBar({ person }: MainNavBarProps) {
                 menuItem = { ...item, submenuItems: submenuItems[item.id] };
               }
             }
-            return getMenuItem(menuItem, activeSubmenuId, setSubMenuVisibility);
+            return getMenuItem(
+              menuItem,
+              activeSubmenuId,
+              setSubMenuVisibility,
+              !isResponsiveMenu
+            );
           })}
           <SecondaryLinks person={person} />
         </div>
