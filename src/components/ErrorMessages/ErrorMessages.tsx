@@ -22,7 +22,9 @@ interface ComponentProps {
 export default function ErrorMessages({ className, errors }: ComponentProps) {
   const el = useRef(null);
   const [isModalOpen, setModalOpen] = useState(false);
-
+  const top = el.current
+    ? (el.current! as HTMLElement).getBoundingClientRect().top
+    : 0;
   return (
     <div ref={el} className={classnames(styles.ErrorMessages, className)}>
       <p className={styles.MessageBar}>
@@ -44,11 +46,7 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
         title="U ziet misschien niet al uw gegevens"
-        contentVerticalPosition={
-          el.current
-            ? (el.current! as HTMLElement).getBoundingClientRect().top
-            : 'center'
-        }
+        contentVerticalPosition={el.current ? Math.max(top, 0) : 'center'}
         appendTo={document.getElementById('modal-root')!}
       >
         <div className={styles.ErrorInfo}>

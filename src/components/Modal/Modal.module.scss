@@ -10,18 +10,29 @@
   z-index: z-index(modal);
 }
 
-.Wrapper {
+.Dialog {
   background-color: $color-white;
-  position: relative;
+  position: fixed;
+  z-index: z-index(dialog);
 
   &.Boxed {
     max-width: $main-boxed-width;
+    width: calc(100% - 2rem);
   }
 
   &.HorizontallyCentered {
     left: 50%;
     transform: translateX(-50%)
   }
+
+  &.HorizontallyLeft {
+    left: 0;
+  }
+
+  &.HorizontallyRight {
+    right: 0;
+  }
+
   &.VerticallyCentered {
     max-height: 100vh;
     overflow: auto;
@@ -31,6 +42,14 @@
     &.HorizontallyCentered {
       transform: translateX(-50%) translateY(-50%);
     }
+  }
+
+  &.VerticallyTop {
+    top: 0;
+  }
+
+  &.VerticallyBottom {
+    bottom: 0;
   }
 }
 
