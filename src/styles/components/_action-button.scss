@@ -12,9 +12,11 @@
   border: 0;
   font-weight: 500;
 
-  &:hover {
-    background-color: $color-support-red;
-    color: $color-white;
+  @include media(">tablet") {
+    &:hover {
+      background-color: $color-support-red;
+      color: $color-white;
+    }
   }
 
   &[disabled],
@@ -28,15 +30,19 @@
 
   &.secondary {
     background-color: $color-support-blue;
-    &:hover {
-      background-color: $color-support-darkblue;
+    @include media(">tablet") {
+      &:hover {
+        background-color: $color-support-darkblue;
+      }
     }
     &.line-only {
       border-color: $color-support-darkblue;
       color: $color-support-darkblue;
 
-      &:hover {
-        color: $color-white;
+      @include media(">tablet") {
+        &:hover {
+          color: $color-white;
+        }
       }
     }
   }
