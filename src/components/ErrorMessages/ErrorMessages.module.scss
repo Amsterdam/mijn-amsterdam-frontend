@@ -2,7 +2,6 @@
 
 .ErrorMessages {
 
-
 }
 
 .MessageBar {
@@ -11,6 +10,10 @@
   padding: 1rem;
   display: flex;
   justify-content: space-between;
+
+  @include media("<=phone") {
+    display: block;
+  }
 }
 
 .ErrorInfo {
@@ -21,6 +24,13 @@
 
 .ErrorList {
 
+}
+
+.ActionButton {
+  width: auto;
+  @include media("<=phone") {
+    margin-left: 2.5rem;
+  }
 }
 
 .AlertIcon {

@@ -6,7 +6,7 @@ import ButtonLink, {
 import { ExternalUrls, AppRoutes } from 'App.constants';
 import { LinkList } from './MainFooter.constants';
 import classnames from 'classnames';
-import { useLargeScreen } from 'hooks/media.hook';
+import { useDesktopScreen } from 'hooks/media.hook';
 
 interface PanelState {
   [panelId: string]: boolean;
@@ -22,7 +22,7 @@ export default function MainFooter() {
     });
   }
 
-  const titleRole = useLargeScreen() ? 'columnheader' : 'button';
+  const titleRole = useDesktopScreen() ? 'columnheader' : 'button';
 
   return (
     <footer className={styles.MainFooter}>
@@ -104,9 +104,7 @@ export default function MainFooter() {
       </div>
       <div className={styles.BottomBar}>
         <div className={styles.InnerContainer}>
-          {/* <ButtonLink to={AppRoutes.ABOUT}>Over deze site</ButtonLink> */
-          /* TODO: Implement later? */}
-          <ButtonLink to={AppRoutes.PRIVACY}>Privacy</ButtonLink>
+          <ButtonLink to={AppRoutes.PROCLAIMER}>Proclaimer</ButtonLink>
         </div>
       </div>
     </footer>

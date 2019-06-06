@@ -9,6 +9,20 @@
       &:last-of-type {
         margin-bottom: 7rem;
       }
+
+      @include media("<=tablet") {
+        margin-right: 2rem;
+        margin-left: 12rem;
+      }
+
+      @include media("<=phone") {
+        margin-left: 3.4rem;
+        margin-right: 3.4rem;
+
+        &:last-of-type {
+          margin-bottom: 2rem;
+        }
+      }
     }
   }
 
@@ -27,6 +41,29 @@
       width: 60%;
       padding-right: 3em;
     }
+
+    @include media("<=tablet") {
+      @include select(Heading) {
+        margin-left: 9.5rem;
+        margin-right: 9.5rem;
+      }
+    }
+    @include media("<=phone") {
+      @include select(Heading) {
+        margin-left: 0;
+        margin-right: 0;
+      }
+      @include select(DataLinkTable_Table) {
+        width: auto;
+      }
+      @include select(DataLinkTable_DisplayProp) {
+        width: auto;
+      }
+      @include select(DataLinkTable_DisplayPropTitle) {
+        width: auto;
+        padding-right: 0;
+      }
+    }
   }
 }
 
@@ -38,6 +75,7 @@
 
 .HistoricDataLinkTable {
   background-color: $color-neutral-grey1;
+  margin-top: -0.1rem; // Overlap border bottom of Datatable above
   @include select(DataLinkTable_Panel) {
     border-bottom: 0;
   }

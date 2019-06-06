@@ -145,12 +145,13 @@ export default function StatusLine({ items }: StatusLineProps) {
       {items.length > 1 && (
         <button
           className={classnames(
+            'action-button secondary line-only',
             styles.MoreStatus,
             isCollapsed && styles.isCollapsed
           )}
           onClick={toggleCollapsed}
         >
-          {isCollapsed ? 'Lees meer' : 'Lees minder'} <span>▶</span>
+          {isCollapsed ? 'Toon alles' : 'Toon minder'}
         </button>
       )}
     </div>

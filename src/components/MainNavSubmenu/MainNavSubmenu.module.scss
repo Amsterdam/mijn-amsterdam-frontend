@@ -1,18 +1,15 @@
 @import 'styles/_global.scss';
 
 .SubmenuButton {
-  padding-left: 0;
-  padding-right: 0;
-  margin-right: 3rem;
-  background-color: $color-neutral-grey1;
-  border: 0;
   font-size: 1.8rem;
   font-weight: 500;
+  text-decoration: none;
+  padding: 0.9rem 0 0.7rem 0;
+  background-color: $color-neutral-grey1;
+  border: 0;
   cursor: pointer;
-  display: inline-block;
-  padding-top: 0.9rem;
-  padding-bottom: 0.8rem;
-  margin-top: 0.2rem;
+  display: block;
+  margin-right: 3rem;
 
   &:focus {
     background-color: $color-support-focus;
@@ -23,13 +20,15 @@
     border-bottom: solid 0.2rem transparent;
   }
 
-  &:hover span {
-    color: $color-primary-red;
+  @include hoverCapable {
+    &:hover span {
+      color: $color-primary-red;
+      border-bottom-color: $color-primary-red;
+    }
   }
 
-  &Open span {
-    color: $color-primary-red;
-    border-bottom-color: $color-primary-red;
+  @include media("<=tablet") {
+    display: none;
   }
 }
 
@@ -43,11 +42,22 @@
   background-color: $color-neutral-grey1;
   left: 0;
   right: 0;
-  z-index: 2;
+  z-index: z-index(submenu-panel);
 
   &Open {
     max-height: 50rem;
     opacity: 1;
+  }
+
+  @include media("<=tablet") {
+    opacity: 1;
+    max-height: initial;
+    position: relative;
+    width: $main-header-navbar-width--phone;
+    top: 0;
+    padding-top: 0.4rem;
+    padding-bottom: 0.8rem;
+    border-top: 0.1rem solid $color-neutral-grey2;
   }
 }
 
@@ -59,6 +69,13 @@
   left: 50%;
   position: relative;
   transform: translateX(-#{$main-boxed-width/2});
+
+  @include media("<=tablet") {
+    flex-direction: column;
+    left: 0;
+    transform: initial;
+    padding: 0;
+  }
 }
 
 .MainNavSubmenuLink {
@@ -81,47 +98,26 @@
     fill: $color-black;
   }
 
-  &:hover {
-    color: $color-primary-red;
+  @include hoverCapable {
+    &:hover {
+      color: $color-primary-red;
+      text-decoration: underline;
 
-    svg {
-      fill: $color-primary-red;
+      svg {
+        fill: $color-primary-red;
+      }
     }
   }
-}
 
-@include respond-to(medium-screen) {
-  .MainNavSubmenu {
-    grid-row: 1;
-  }
-  .SubmenuButton {
-    display: none;
-  }
+  @include media("<=tablet") {
+    height: 4.8rem;
+    padding-left: 1.6rem;
 
-  .SubmenuPanel {
-    opacity: 1;
-    max-height: initial;
-    overflow: hidden;
-    position: relative;
-    width: $responsive-header-navbar-width;
-    top: 0;
-    padding-top: 0.4rem;
-    border-top: 0.2rem solid $color-neutral-grey2;
-  }
-
-  .SubmenuItems {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: initial;
-    left: 0;
-    position: relative;
-    transform: initial;
-    padding: 0;
-
-    a {
-      height: 4.8rem;
-      padding-left: $responsive-header-navbar-padding-left;
-      width: 100%;
+    &:nth-child(odd) {
+      margin-right: 0;
+    }
+    &:nth-child(even) {
+      margin-left: 0;
     }
   }
 }

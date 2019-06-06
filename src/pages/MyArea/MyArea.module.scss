@@ -1,5 +1,6 @@
 @import 'styles/_global.scss';
 
 .MyAreaContainer {
-  height: calc(100% - 5.5rem);
+  width: 100vw;
+  height: calc(100vh - 5.5rem);
 }

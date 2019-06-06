@@ -4,7 +4,11 @@
   @include heading-small;
   font-weight: bold;
   padding-left: 1.2em;
-  margin-left: -1.1em;
+  transform: translateX(-2rem);
+  position: relative;
+  // Make sure the link displays above the text instead of before.
+  width: 100%;
+  display: block;
 
   svg {
     height: .9em;

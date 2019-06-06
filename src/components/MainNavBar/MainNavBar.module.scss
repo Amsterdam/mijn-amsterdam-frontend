@@ -1,17 +1,24 @@
 @import 'styles/_global.scss';
 
 .MainNavBar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: $main-max-width;
   position: relative;
   height: $main-header-navbar-height;
+  background-color: $color-neutral-grey1;
 }
 
 .LinkContainer {
   display: flex;
-  width: $main-boxed-width;
+  max-width: $main-boxed-width;
+  background-color: $color-neutral-grey1;
+  margin: 0 auto;
+
+  @include media("<=tablet") {
+    display: grid; // On a phone the menu is ordered differently so we use grid to have control over that
+    width: $main-header-navbar-width--phone;
+    margin: 0;
+    z-index: z-index(main-nav-bar-inner--tablet);
+    position: relative;
+  }
 }
 
 .MainNavLink {
@@ -22,37 +29,116 @@
   font-weight: 500;
   text-decoration: none;
   padding-top: 0.9rem;
-  padding-bottom: 0.9rem;
+  padding-bottom: 0.7rem;
 
-  &:hover {
-    color: $color-primary-red;
+  @include hoverCapable {
+    &:hover {
+      color: $color-primary-red;
+    }
+  }
+
+  span {
+    display: inline-block;
+    border-bottom: solid 0.2rem transparent;
+  }
+
+  @include hoverCapable {
+    &:hover span {
+      color: $color-primary-red;
+      border-bottom-color: $color-primary-red;
+    }
   }
 
   &:last-child {
     margin-right: 0;
   }
-}
 
-@include respond-to(medium-screen) {
-  .MainNavBar {
-    height: auto;
-    width: $responsive-header-navbar-width;
-  }
-
-  .LinkContainer {
-    display: grid;
-    width: $responsive-header-navbar-width;
-  }
-
-  .MainNavLink {
+  @include media("<=tablet") {
     font-weight: bold;
     font-size: 1.5rem;
     margin: 0;
-    padding-left: $responsive-header-navbar-padding-left;
+    padding-left: 1.6rem;
     border-top: 0.1rem solid $color-neutral-grey2;
 
+    // Move home button after the Chapters menu
     &:first-child {
-      border-top: 0.2rem solid $color-neutral-grey2;
+      grid-row: 2;
     }
   }
+}
+
+.secondaryLinks {
+  position: absolute;
+  margin-top: -8.1rem;
+  right: calc((100vw - #{$main-boxed-width}) / 2);
+
+  > a {
+    display: inline-block;
+    margin-left: 3.3rem;
+    font-weight: normal;
+    text-decoration: none;
+
+    &:hover {
+      color: $color-primary-red;
+      text-decoration: underline;
+    }
+  }
+
+  @include media("<=tablet") {
+    position: static;
+    margin-top: 0;
+
+    > a {
+      font-weight: bold;
+      font-size: 1.5rem;
+      margin: 0;
+      padding-left: 1.6rem;
+      border-top: 0.1rem solid $color-neutral-grey2;
+      display: block;
+      padding-top: .8rem;
+      padding-bottom: .8rem;
+    }
+
+    @include select(ButtonLink_ButtonLink) {
+      padding-left: 1.6rem;
+      // Remove the icons from the links
+      &, &:hover {
+        background-image: none;
+      }
+      svg {
+        display: none;
+      }
+    }
+  }
+}
+
+.MenuToggleBtn {
+  height: $main-header-navbar-height;
+  background-image: url('assets/icons/Menu.svg');
+  background-size: 24px;
+  width: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 0;
+  background-color: transparent;
+  margin-left: .2rem;
+  text-indent: -100vw; // move text outside of view
+  cursor: pointer;
+
+  &Open {
+    background-image: url('assets/icons/Close.svg');
+  }
+
+  @include media(">phone", "<=tablet") {
+    margin-left: 1.2rem;
+  }
+}
+
+.Modal {
+  background: $color-neutral-grey4;
+  opacity: 0.5;
+  position: absolute;
+  top: $main-header-navbar-height;
+  width: 100%;
+  z-index: z-index(main-nav-bar-modal);
 }

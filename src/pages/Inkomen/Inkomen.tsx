@@ -10,6 +10,7 @@ import styles from './Inkomen.module.scss';
 import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
 import { ExternalUrls } from 'App.constants';
 import Alert from 'components/Alert/Alert';
+import { useTabletScreen } from '../../hooks/media.hook';
 
 const DISPLAY_PROPS = {
   datePublished: 'besluit',
@@ -36,6 +37,8 @@ export default () => {
 
   const hasActiveRequests = !!itemsRequested.length;
   const hasGrantedRequests = !!itemsGranted.length;
+
+  const isTabletScreen = useTabletScreen();
 
   return (
     <PageContentMain variant="full" className={styles.Page}>
@@ -65,7 +68,7 @@ export default () => {
         )}
         <DataLinkTable
           id="datalinktable-income-actual"
-          rowHeight="6rem"
+          rowHeight={isTabletScreen ? 'auto' : '6rem'}
           displayProps={DISPLAY_PROPS_ACTUAL}
           items={itemsRequested}
           title="Mijn lopende aanvragen"
@@ -74,7 +77,7 @@ export default () => {
         />
         <DataLinkTable
           id="datalinktable-income-granted"
-          rowHeight="6rem"
+          rowHeight={isTabletScreen ? 'auto' : '6rem'}
           displayProps={DISPLAY_PROPS}
           items={itemsGranted}
           startCollapsed={hasActiveRequests}
@@ -86,7 +89,7 @@ export default () => {
         <PageContentMainBody variant="boxed">
           <DataLinkTable
             id="datalinktable-income-denied"
-            rowHeight="6rem"
+            rowHeight={isTabletScreen ? 'auto' : '6rem'}
             displayProps={DISPLAY_PROPS}
             items={itemsDenied}
             startCollapsed={hasActiveRequests || hasGrantedRequests}

@@ -26,6 +26,21 @@
     border-top: 0.1rem $color-neutral-grey2 solid;
   }
 
+  @include media("<=phone") {
+    // Reset the list style for smaller screens, just 1 column here
+    li {
+      &, &:nth-child(-n + 2), &:nth-child(odd) {
+        width: auto;
+        float: none;
+        border-top: 0;
+        margin-right: 0;
+      }
+      &:nth-child(1) {
+        border-top: 0.1rem $color-neutral-grey2 solid;
+      }
+    }
+  }
+
   li:nth-child(2n + 1) {
     clear: left;
   }
@@ -33,6 +48,7 @@
   a {
     margin: auto;
     text-decoration: none;
+    font-weight: normal;
 
     svg {
       height: 1.5rem;

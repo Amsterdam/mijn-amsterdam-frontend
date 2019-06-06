@@ -36,7 +36,7 @@ export const AppRoutes = {
   PROFILE: '/profiel',
   MY_AREA: '/buurt',
   ABOUT: '/over-mijn-amsterdam',
-  PRIVACY: '/privacy',
+  PROCLAIMER: '/proclaimer',
   API_LOGIN: '/api/login',
 
   // NOTE: Route components not implemented, subject to change
@@ -140,6 +140,7 @@ export const ExternalUrls = {
   VOORGENOMEN_HUWELIJK:
     'https://www.amsterdam.nl/burgerzaken/trouwen-partnerschap/trouwen-amsterdam/aankondigen/',
   INCOME_CONTACT: 'https://www.amsterdam.nl/werk-inkomen/contact/',
+  ZORG_LEES_MEER: 'https://www.amsterdam.nl/zorg-ondersteuning/',
 };
 
 // NOTE: Keep up-to-date with _colors.scss

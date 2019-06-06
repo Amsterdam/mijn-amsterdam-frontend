@@ -10,11 +10,21 @@
   &__boxed {
     max-width: $main-boxed-width;
     margin: 0 auto;
+
+    @include media(">phone", "<=tablet") {
+      padding: 0 4rem;
+    }
   }
 
   &__regularBoxed {
     padding: 0 4rem;
+
+    @include media("<=phone") {
+      padding: 0 2rem;
+    }
+
     max-width: $main-boxed-width;
     margin: 0 auto;
   }
+
 }

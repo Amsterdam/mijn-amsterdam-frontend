@@ -3,6 +3,11 @@
 .MyChaptersPanel {
   background-color: $color-neutral-grey1;
   padding: 3.2rem 4rem;
+
+  @include media("<=tablet") {
+    padding-left: 2.4rem;
+    padding-right: 2.4rem;
+  }
 }
 
 .Title {
@@ -15,16 +20,35 @@
 
   @include select(MainNavSubmenu_MainNavSubmenuLink) {
     width: calc(50% - .5rem);
+    margin-bottom: 1rem;
+
     &:nth-child(odd) {
       margin-right: .5rem;
-    }
-    &:nth-child(even) {
-      margin-left: .5rem;
     }
 
     &:nth-child(even) {
       margin-left: .5rem;
     }
+
+    @include media("<=tablet") {
+      padding-left: 0;
+    }
+
+    @include media("<=phone") {
+      // width: auto;
+
+      &:nth-child(odd) {
+        // margin-right: 0;
+      }
+
+      &:nth-child(even) {
+        // margin-left: 0;
+      }
+    }
+  }
+
+  @include media("<=phone") {
+    // display: block;
   }
 }
 

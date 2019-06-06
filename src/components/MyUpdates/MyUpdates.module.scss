@@ -14,6 +14,10 @@
   &:first-child {
     border-top: 0;
   }
+
+  @include media("<=tablet") {
+    padding-left: 0;
+  }
 }
 
 .Icon {
@@ -21,6 +25,28 @@
   left: 0;
   top: 2.3rem;
   fill: $color-primary-red;
+
+  @include media("<=tablet") {
+    position: static;
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 2rem;
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.Icon,
+.MetaInfo {
+  @include media("<=tablet") {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 2rem;
+
+    &.MetaInfo {
+      margin-left: 1rem;
+    }
+  }
 }
 
 .Description {
@@ -29,6 +55,10 @@
 
 .Datum {
   font-size: 1.4rem;
+
+  @include media("<=tablet") {
+    color: $color-neutral-grey4;
+  }
 }
 
 .Action {
@@ -46,25 +76,34 @@
 .ChapterIndication {
   font-style: normal;
   text-transform: capitalize;
-  display: block;
-}
+  display: none;
 
-.isUnread {
-  .Datum {
-    position: relative;
-    padding-left: 1em;
+  @include media("<=tablet") {
+    display: inline;
 
     &:after {
-      content: '• ';
-      color: $color-support-lightblue;
-      font-size: 1.6em;
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
+      content: ' - ';
     }
   }
 }
+
+// TODO: Enable when we have a design and/or decision wether we want to actually implement such a thing.
+// .isUnread {
+//   .Datum {
+//     position: relative;
+//     padding-left: 1em;
+
+//     &:after {
+//       content: '• ';
+//       color: $color-support-lightblue;
+//       font-size: 1.6em;
+//       position: absolute;
+//       left: 0;
+//       top: 50%;
+//       transform: translateY(-50%);
+//     }
+//   }
+// }
 
 .FakeContent {
   padding-left: 0;

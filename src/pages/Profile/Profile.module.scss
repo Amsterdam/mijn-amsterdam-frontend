@@ -11,6 +11,16 @@
       &:last-of-type {
         margin-bottom: 7rem;
       }
+
+      @include media("<=phone") {
+        margin-right: 1rem;
+        margin-left: 1rem;
+      }
+    }
+
+    @include media("<=phone") {
+      padding-left: 2rem;
+      padding-right: 2rem;
     }
   }
 }

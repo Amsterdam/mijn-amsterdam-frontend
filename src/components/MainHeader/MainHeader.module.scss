@@ -14,6 +14,15 @@
   @include select(Heading) {
     margin: 0.4em 0 0;
   }
+
+  @include media("<=tablet") {
+    height: $main-header-topbar-height--tablet;
+
+    @include select(Heading) {
+      margin: 1rem 0 0 2rem;
+      font-size: 1.8rem; // Overrides the default responsive size
+    }
+  }
 }
 
 .logoLink {
@@ -28,153 +37,27 @@
   top: 2rem;
   width: 9rem;
   height: 6.8rem;
+
+  @include media("<=tablet") {
+    left: 2rem;
+    top: -.5rem;
+    width: 9.3rem; // translates approx. height of 4rem
+    margin-right: 1rem;
+  }
+
+  @include media("<=phone") {
+    left: 1rem;
+  }
 }
 
 .betaLabel {
   position: absolute;
   top: 0;
   right: 0;
-}
 
-.isDashboard {
-  background: inherit; // redundant style placeholder
-}
-
-.secondaryLinks {
-  position: absolute;
-  margin-top: -13rem;
-  right: calc((100vw - #{$main-boxed-width}) / 2);
-
-  > a {
-    display: inline-block;
-    margin-left: 3.3rem;
-    font-weight: normal;
-    text-decoration: none;
-
-    &:hover {
-      color: $color-primary-red;
-      text-decoration: underline;
-    }
-  }
-}
-
-.MenuToggleBtn {
-  display: none;
-  height: $main-header-navbar-height;
-  background-image: url('assets/icons/Menu.svg');
-  background-size: 24px;
-  width: 40px;
-  background-repeat: no-repeat;
-  background-position: center;
-  border: 0;
-  background-color: transparent;
-  margin-left: 1rem;
-}
-
-.MenuContainer {
-  position: relative;
-  height: $main-header-navbar-height;
-  background-color: $color-neutral-grey1;
-}
-
-.Modal {
-  display: none;
-  background: $color-neutral-grey4;
-  opacity: 0.5;
-  position: absolute;
-  top: $main-header-navbar-height;
-  width: 100%;
-  z-index: 1;
-}
-
-@include respond-to(medium-screen) {
-  .topBar {
-    height: $responsive-header-topbar-height;
-
-    @include select(Heading) {
-      margin: 0.5rem 0 0 2rem;
-      font-size: 1.8rem;
-    }
-  }
-
-  .logo {
-    left: 2rem;
-    top: -1rem;
-    width: 8rem;
-    margin-right: 1rem;
-  }
-
-  .betaLabel {
+  @include media("<=tablet") {
     height: 3rem;
     width: 3rem;
-  }
-
-  .Modal {
-    &Open {
-      display: block;
-    }
-  }
-
-  .secondaryLinks {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    margin-top: 0;
-    right: 0;
-
-    a {
-      font-weight: bold;
-      font-size: 1.5rem;
-      margin: 0;
-      padding-left: $responsive-header-navbar-padding-left;
-      padding-top: 1rem;
-      border-top: 0.1rem solid $color-neutral-grey2;
-      height: 4rem;
-
-      // ButtonLinks do not need chevron backgrounds in de footer. In order to
-      // target the ButtonLinks we need high CSS specificity
-      &:not(.IconLink) {
-        background-image: none;
-        &:hover {
-          background-image: none;
-        }
-      }
-
-      svg {
-        display: none;
-      }
-
-      &:first-child {
-        border-top: 0.2rem solid $color-neutral-grey2;
-      }
-    }
-  }
-
-  .MenuToggleBtn {
-    display: initial;
-    cursor: pointer;
-    height: $main-header-navbar-height;
-
-    &Open {
-      background-image: url('assets/icons/Close.svg');
-    }
-  }
-
-  .MenuContainer {
-    margin-bottom: $main-header-navbar-height;
-  }
-
-  .MenuWrapper {
-    display: none;
-    position: absolute;
-    top: $main-header-navbar-height;
-    background-color: $color-neutral-grey1;
-    width: $responsive-header-navbar-width;
-    z-index: 2;
-
-    &Open {
-      display: block;
-    }
   }
 }
 
@@ -183,5 +66,19 @@
   top: 16rem;
   left: 50%;
   transform: translateX(-50%);
-  width: $main-boxed-width;
+  max-width: $main-boxed-width;
+  width: 100%;
+  z-index: z-index(header-error-messages);
+
+  @include media("<=tablet") {
+    width: calc(100% - 4rem);
+    top: 14rem;
+  }
+
+  @include media("<=phone") {
+    position: static;
+    transform: none;
+    left: auto;
+    width: 100%;
+  }
 }

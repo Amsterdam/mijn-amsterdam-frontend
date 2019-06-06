@@ -29,7 +29,7 @@ export default () => {
         <Heading size="medium">Log in op uw persoonlijke pagina</Heading>
         <a role="button" href={LOGIN_URL} className={styles.LoginBtn}>
           <img src={DigiDLogo} alt="DigiD logo" className={styles.LoginLogo} />
-          Inloggen met DigiD
+          <span>Inloggen met DigiD</span>
         </a>
         <p>
           <strong>Wilt u hulp bij het inloggen met DigiD?</strong>
