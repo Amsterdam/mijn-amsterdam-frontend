@@ -113,12 +113,18 @@ function getMenuItem(
     );
   }
 
+  const interactionHandlers = useTabletScreen()
+    ? {}
+    : {
+        onFocus: () => setSubMenuVisibility(item.id),
+        onMouseEnter: () => setSubMenuVisibility(item.id),
+      };
+
   return (
     <MainNavLink
       key={item.id}
       to={item.to}
-      onFocus={() => setSubMenuVisibility(item.id)}
-      onMouseEnter={() => setSubMenuVisibility(item.id)}
+      {...interactionHandlers}
       title={item.title}
     >
       {item.title}
