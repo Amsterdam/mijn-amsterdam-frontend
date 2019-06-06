@@ -14,17 +14,18 @@
     padding-left: 0.8em;
   }
 
-  &.is-active,
-  &:hover {
-    & {
-      color: $color-primary-red;
-      text-decoration: underline;
-    }
-    &:not(.IconLink) {
-      background-image: url('assets/icons/Chevron-Right__primary-red.svg');
-    }
-    svg {
-      fill: $color-primary-red;
+  @include media(">tablet") {
+    &:hover {
+      & {
+        color: $color-primary-red;
+        text-decoration: underline;
+      }
+      &:not(.IconLink) {
+        background-image: url('assets/icons/Chevron-Right__primary-red.svg');
+      }
+      svg {
+        fill: $color-primary-red;
+      }
     }
   }
 
@@ -47,8 +48,7 @@
 
 .ButtonLink.ButtonLinkWhite {
   &,
-  &:hover,
-  &.is-active {
+  &:hover {
     background-image: url('assets/icons/Chevron-Right__primary-white.svg');
     color: $color-white;
     svg {
