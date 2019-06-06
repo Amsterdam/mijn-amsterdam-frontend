@@ -8,7 +8,9 @@ import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon
 import { Chapters } from 'App.constants';
 import styles from './Zorg.module.scss';
 import Alert from 'components/Alert/Alert';
-import LoadingContent from 'components/LoadingContent/LoadingContent';
+import { useTabletScreen } from 'hooks/media.hook';
+import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
+import { ExternalUrls } from '../../App.constants';
 
 const DISPLAY_PROPS = {
   dateStart: 'start',
@@ -33,6 +35,8 @@ export default () => {
   const hasActiveRequests = !!itemsRequested.length;
   const hasActualItems = !!itemsActual.length;
 
+  const isTabletScreen = useTabletScreen();
+
   return (
     <PageContentMain variant="full" className={styles.Page}>
       <PageContentMainHeading variant="boxedWithIcon">
@@ -40,6 +44,16 @@ export default () => {
         Zorg
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
+        <p>
+          Heeft u zorg en ondersteuning nodig? Dan kunt u bij de gemeente
+          Amsterdam terecht. Hieronder ziet u van welke voorzieningen u nu al
+          gebruik maakt.
+        </p>
+        <p>
+          <ButtonLinkExternal to={ExternalUrls.ZORG_LEES_MEER}>
+            Lees meer over zorg bij gemeente Amsterdam
+          </ButtonLinkExternal>
+        </p>
         {isError && (
           <Alert type="warning">
             Uw gegevens kunnen op dit moment niet worden getoond.
@@ -47,7 +61,7 @@ export default () => {
         )}
         <DataLinkTable
           id="datalinktable-healthcare-requested"
-          rowHeight="6rem"
+          rowHeight={isTabletScreen ? 'auto' : '6rem'}
           displayProps={DISPLAY_PROPS}
           items={itemsRequested}
           title="Mijn lopende aanvragen"
@@ -57,7 +71,7 @@ export default () => {
         />
         <DataLinkTable
           id="datalinktable-healthcare-granted"
-          rowHeight="6rem"
+          rowHeight={isTabletScreen ? 'auto' : '6rem'}
           displayProps={DISPLAY_PROPS}
           items={itemsActual}
           title="Mijn huidige voorziengen"
@@ -71,7 +85,7 @@ export default () => {
         <PageContentMainBody variant="boxed">
           <DataLinkTable
             id="datalinktable-healthcare-previous"
-            rowHeight="6rem"
+            rowHeight={isTabletScreen ? 'auto' : '6rem'}
             displayProps={DISPLAY_PROPS}
             items={itemsPrevious}
             title="Mijn eerdere voorziengen"

@@ -8,6 +8,11 @@
 .InnerContainer {
   width: $main-boxed-width;
   margin: 0 auto;
+
+  @include media("<=tablet") {
+    width: auto;
+    margin: 0 2.4rem;
+  }
 }
 
 .TopBar {
@@ -35,6 +40,13 @@
       margin-bottom: 1rem;
     }
   }
+
+  @include media("<=tablet") {
+    display: block;
+    padding-top: 2rem;
+    padding-bottom: 1.5rem;
+    padding-right: 2rem;
+  }
 }
 
 .BottomBar {
@@ -46,55 +58,16 @@
     display: inline-block;
     margin-right: 8rem;
   }
-}
 
-.ContactPanel {
-  width: 80rem;
-}
-
-.FollowPanel {
-  margin: 0 3rem;
-  width: 60rem;
-  
-  li {
-    white-space: nowrap;
-  }
-}
-
-@include respond-to(medium-screen) {
-  .InnerContainer {
-    width: 100%;
-    padding-left: $medium-screen-content-margin;
-  }
-
-  .TopBar {
-    display: block;
-    padding-top: 2rem;
-    padding-bottom: 1.5rem;
-    padding-right: 2rem;
-  }
-
-  .BottomBar {
+  @include media("<=tablet") {
     a {
       margin-right: 3rem;
     }
   }
+}
 
-  .ContactPanel {
-    width: 100%;
-  }
-
-  .FollowPanel {
-    margin: 0;
-    width: 100%;
-  }
-
-  .TodoPanel {
-    width: 100%;
-  }
-
-  .Panel {
-
+.Panel {
+  @include media("<=tablet") {
     > :not(:first-child) {
       display: none;
     }
@@ -136,8 +109,32 @@
   }
 }
 
-@include respond-to(small-screen) {
-  .InnerContainer {
-    padding-left: $small-screen-content-margin;
+.ContactPanel {
+  width: 80rem;
+
+  @include media("<=tablet") {
+    width: 100%;
   }
 }
+
+.FollowPanel {
+  margin: 0 3rem;
+  width: 60rem;
+
+  li {
+    white-space: nowrap;
+  }
+
+  @include media("<=tablet") {
+    margin: 0;
+    width: 100%;
+  }
+}
+
+.TodoPanel {
+  @include media("<=tablet") {
+    width: 100%;
+  }
+}
+
+

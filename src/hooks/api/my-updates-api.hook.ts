@@ -40,7 +40,7 @@ export default ({ FOCUS }: Pick<AppState, 'FOCUS'>): MyUpdatesApiState => {
     ...FOCUS.data.updates.map(update => {
       return {
         ...update,
-        isUnread: !(update.id in myUpdatesState),
+        isUnread: myUpdatesState ? !(update.id in myUpdatesState) : true,
       };
     }),
   ].sort((a, b) => {

@@ -32,10 +32,11 @@ export default () => {
     <PageContentMain variant="full" className={styles.InkomenDetail}>
       <PageContentMainHeading el="div" variant="boxedWithIcon">
         <ChapterHeadingIcon chapter={Chapters.INKOMEN} />
-        <PageContentMainHeadingBackLink to={AppRoutes.INKOMEN}>
-          Werk & inkomen
-        </PageContentMainHeadingBackLink>
+
         <Heading el="h2" className={styles.PageHeading}>
+          <PageContentMainHeadingBackLink to={AppRoutes.INKOMEN}>
+            Werk & inkomen
+          </PageContentMainHeadingBackLink>
           {!isLoading && FocusItem ? (
             FocusItem.title
           ) : (

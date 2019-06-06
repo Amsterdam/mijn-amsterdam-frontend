@@ -1,163 +1,91 @@
 @import 'styles/_global.scss';
 
 .Dashboard {
-  @include select(PageContentMainHeading) {
-    padding-top: 2.5rem;
-    width: calc(#{$main-max-width} / 2);
-    max-width: calc(#{$main-boxed-width} / 2);
+  @include select(PageContentMainBody) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    @include media("<=phone") {
+      display: block; // NOTE: This discards all the flexbox properties defined below
+    }
   }
 
   @include select(MyUpdates_MyUpdates) {
-    width: calc(#{$main-max-width} / 2);
-    max-width: calc(#{$main-boxed-width} / 2);
-    padding: 0 4rem;
+    flex-basis: calc(50% - 5rem); // margin-left + margin-right + custom gutter (an visually pleasing space between 2 blocks)
+    flex-shrink: 0;
+    overflow: hidden;
+    margin-right: 4rem;
     border-top: 1px solid $color-neutral-grey2;
+    margin-bottom: 5rem;
 
-    @include select(MyUpdates_ChapterIndication) {
-      display: none;
+    // In combination with Chapters panel and sizing of PageContentMainHeading__medium
+    @include media(">phone", "<=tablet") {
+      flex-basis: calc(50% - 3rem);
+      margin-right: 2rem;
+    }
+
+    @include media("<=phone") {
+      flex-basis: 100%;
+      margin: 0;
     }
   }
 
   @include select(MyChaptersPanel_MyChaptersPanel) {
-    width: calc(#{$main-max-width} / 2);
-    max-width: calc(#{$main-boxed-width} / 2);
-    align-self: flex-start;
+    width: calc(50% + 1rem); // + custom gutter (an visually pleasing space between 2 blocks)
+
+    @include media(">phone", "<=tablet") {
+      // Weirdly sized chapters panel for tablet screens needs the following to break-out of the flex restrains
+      flex-basis: calc(50% + 5rem);
+      margin-left: -5rem;
+      transform: translateX(5rem);
+    }
+
+    @include media("<=phone") {
+      width: auto;
+      flex-basis: auto;
+      margin-left: -2rem;
+      margin-right: -2rem;
+      margin-top: -0.1rem; // overlap border line from sibling component rendered on top of this one
+    }
   }
 
   @include select(MyCases_MyCases) {
-    width: $main-boxed-width;
-    margin: 0 auto;
+    flex-basis: $main-boxed-width;
     margin-bottom: 8rem;
     margin-top: 10rem;
+
+    @include media("<=phone") {
+      margin-bottom: 4rem;
+      margin-top: 4rem;
+    }
   }
 
   @include select(MyArea_MyArea) {
     height: 48rem;
     margin-bottom: 10rem;
+    width: 100%;
   }
 
   @include select(MyTips_MyTips) {
-    width: $main-boxed-width;
+    flex-basis: $main-boxed-width;
     margin-bottom: 10rem;
   }
 
   @include select(DirectLinks_DirectLinks) {
-    width: $main-boxed-width;
+    flex-basis: $main-boxed-width;
   }
-}
-
-.UpdatesChaptersContainer {
-  width: $main-boxed-width;
-  display: flex;
-  margin-bottom: 12rem;
 }
 
 .FirstBody {
-  display: flex;
   max-width: $main-boxed-width;
   width: 100%;
   margin: 0 auto;
+  // Makes the updates and chapters touch the bottom of Hero
   margin-top: -3.8rem;
-  padding: 0;
-}
 
-.SecondBody {
-  display: flex;
-  justify-content: center;
-  margin: 0 auto;
-  max-width: $main-boxed-width;
-  width: 100%;
-  padding: 0 4rem;
-}
-
-@include respond-to(medium-screen) {
-  .FirstBody {
-    max-width: calc(#{$main-max-width} - 4rem);
-    margin: 0 2rem;
-    margin-top: -3.8rem;
-  }
-  .Dashboard {
-    @include select(PageContentMainHeading) {
-      left: 2rem;
-      padding-left: 2rem;
-      transform: translateX(0);
-      width: calc(#{$main-max-width} / 2 - 2rem);
-    }
-
-    @include select(MyUpdates_MyUpdates) {
-      padding: 0 2rem;
-      border-top: none;
-
-      @include select(MyUpdates_MyUpdateItem) {
-        border-top: 1px solid $color-neutral-grey2;
-        padding: 1.5rem 0rem 5.5rem 0rem;
-      }
-
-      @include select(MyUpdates_Icon) {
-        position: absolute;
-        top: 0.7rem;
-        width: 2rem;
-      }
-
-      @include select(MyUpdates_ChapterIndication) {
-        display: block;
-        margin-left: 3rem;
-        margin-bottom: 1.5rem;
-      }
-
-      @include select(MyUpdates_Datum) {
-        display: block;
-        position: absolute;
-        bottom: 2rem;
-        color: $color-neutral-grey4;
-      }
-    }
-    @include select(MyChaptersPanel_MyChaptersPanel) {
-      padding: 2rem;
-    }
-  }
-}
-
-@include respond-to(small-screen) {
-  .FirstBody {
-    flex-direction: column;
-    margin: 0;
-    max-width: $main-max-width;
-  }
-
-  .SecondBody {
-    padding: 0 2rem;
-  }
-
-  .Dashboard {
-    @include select(Heading_Heading) {
-      font-size: 2.4rem;
-    }
-
-    @include select(PageContentMainHeading) {
-      left: auto;
-      width: $main-max-width;
-      max-width: $main-max-width;
-      font-size: 2.4rem;
-      margin-bottom: -1.5rem;
-      margin-top: -4.5rem;
-    }
-
-    @include select(MyUpdates_MyUpdates) {
-      width: $main-max-width;
-      max-width: $main-max-width;
-
-      @include select(MyUpdates_FooterLink) {
-        border-bottom: 0;
-      }
-    }
-    @include select(MyChaptersPanel_MyChaptersPanel) {
-      width: $main-max-width;
-      max-width: $main-max-width;
-    }
-
-    @include select(MyCases_MyCases) {
-      margin-top: 3rem;
-    }
+  @include media("<=phone") {
+    margin-top: -1rem;
   }
 }

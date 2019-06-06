@@ -1,23 +1,44 @@
 @import 'styles/_global.scss';
 
 @mixin withIcon {
-  padding-left: 16rem;
 
   @include select(ChapterHeadingIcon_ChapterHeadingIcon) {
-    left: 8rem;
-    transform: translateX(-50%);
+    flex-basis: 16rem;
+    flex-grow: 0;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-left: -3.8rem; // compensates the padding-left
+
+    @include media("<=tablet") {
+      flex-basis: 14rem;
+      margin-left: -2rem;
+    }
+
+    @include media("<=phone") {
+      flex-basis: 8rem;
+    }
   }
 }
 
 @include select(Heading_Heading) {
   &.PageContentMainHeading {
     min-height: $main-header-hero-heading-overlap;
-    margin-top: 0;
-    padding: 4rem 0 0 4rem;
     margin: -#{$main-header-hero-heading-overlap} 0 0;
     margin-bottom: 3.8rem;
     background-color: $color-white;
     position: relative;
+    display: flex;
+    align-items: center;
+    padding: 1rem 3.8rem 0 3.8rem;
+
+    // IE11 Hack for vertical flexbox centering
+    &:after{
+      content: '';
+      min-height: calc(#{$main-header-hero-heading-overlap} - 1rem); // compensates the 1rem top padding
+      font-size: 0;
+    }
 
     &__medium {
       width: 46rem;
@@ -53,5 +74,45 @@
       }
     }
 
+    @include media("<=tablet") {
+      padding: 1rem 2rem 0 2rem;
+
+      &,
+      &__boxed,
+      &__boxedWithIcon {
+        width: auto;
+        margin-left: 2rem;
+        margin-right: 2rem;
+        transform: none;
+        left: auto;
+      }
+
+      &__medium {
+        width: calc(50vw - 3rem);
+        position: relative;
+        left: 50%;
+        transform: translateX(calc(-50vw + 2rem));
+        margin-left: 0;
+      }
+    }
+
+    @include media("<=phone") {
+      min-height: $main-header-hero-heading-overlap--phone;
+      margin: -#{$main-header-hero-heading-overlap--phone} 0 0;
+      margin-bottom: 1rem;
+
+      // All version are treated the same on phones
+      &,
+      &__withIcon,
+      &__medium,
+      &__boxed,
+      &__boxedWithIcon {
+        width: auto;
+        margin-left: 1rem;
+        margin-right: 1rem;
+        transform: none;
+        left: auto;
+      }
+    }
   }
 }

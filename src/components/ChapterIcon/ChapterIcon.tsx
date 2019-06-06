@@ -7,6 +7,9 @@ import { ReactComponent as IconWonen } from 'assets/images/wonen.svg';
 import { ReactComponent as IconBelastingen } from 'assets/images/belastingen.svg';
 import { Chapters, Chapter as ChapterType, Colors } from 'App.constants';
 
+import styles from './ChapterIcon.module.scss';
+import classnames from 'classnames';
+
 export interface ChapterIconProps {
   chapter: ChapterType;
   fill?: string;
@@ -36,5 +39,11 @@ export default function ChapterIcon({
       Icon = IconBurgerZaken;
   }
 
-  return <Icon aria-hidden="true" fill={fill} className={className} />;
+  return (
+    <Icon
+      aria-hidden="true"
+      fill={fill}
+      className={classnames(styles.ChapterIcon, className)}
+    />
+  );
 }

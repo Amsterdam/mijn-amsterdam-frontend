@@ -1,8 +1,8 @@
-import React, { FunctionComponent, useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from 'components/MainNavSubmenu/MainNavSubmenu';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { AppContext } from 'AppState';
 import {
   menuItems,
@@ -11,8 +11,26 @@ import {
   submenuItems,
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
-import { Colors } from 'App.constants';
+import {
+  Colors,
+  AppRoutes,
+  LOGOUT_URL,
+  ExternalUrls,
+  Layout,
+} from 'App.constants';
 import { ComponentChildren } from 'App.types';
+import {
+  ButtonLinkExternal,
+  IconButtonLink,
+} from 'components/ButtonLink/ButtonLink';
+import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
+import { useTabletScreen } from 'hooks/media.hook';
+import useRouter from 'use-react-router';
+import classnames from 'classnames';
+import { Person } from 'data-formatting/brp';
+
+const MenuToggleBtnId = 'MenuToggleBtn';
+const LinkContainerId = 'MainMenu';
 
 export interface MainNavLinkProps {
   to: string;
@@ -22,10 +40,38 @@ export interface MainNavLinkProps {
   onMouseEnter?: () => void;
 }
 
+interface SecondaryLinksProps {
+  person?: Person | null;
+  hasMessages?: boolean;
+}
+
+type MainNavBarProps = SecondaryLinksProps;
+
+function SecondaryLinks({ person, hasMessages = false }: SecondaryLinksProps) {
+  return (
+    <div className={styles.secondaryLinks}>
+      <ButtonLinkExternal
+        to={ExternalUrls.BERICHTENBOX}
+        className={classnames(hasMessages && 'has-messages')}
+      >
+        Berichtenbox
+      </ButtonLinkExternal>
+      {person && person.firstName && (
+        <Link to={AppRoutes.PROFILE}>{person.fullName}</Link>
+      )}
+      {
+        <IconButtonLink target="_self" to={LOGOUT_URL}>
+          <LogoutIcon /> Uitloggen
+        </IconButtonLink>
+      }
+    </div>
+  );
+}
+
 function MainNavLink({ children, to, title, ...rest }: MainNavLinkProps) {
   return (
     <NavLink to={to} className={styles.MainNavLink} {...rest}>
-      {children}
+      <span>{children}</span>
     </NavLink>
   );
 }
@@ -33,7 +79,8 @@ function MainNavLink({ children, to, title, ...rest }: MainNavLinkProps) {
 function getMenuItem(
   item: MenuItem,
   activeSubmenuId: string,
-  setSubMenuVisibility: (id?: string, isSubmenuTrigger?: boolean) => void
+  setSubMenuVisibility: (id?: string, isSubmenuTrigger?: boolean) => void,
+  useInteractionHandlers: boolean = true
 ) {
   if (Array.isArray(item.submenuItems)) {
     const isOpen = activeSubmenuId === item.id;
@@ -67,12 +114,18 @@ function getMenuItem(
     );
   }
 
+  const interactionHandlers = useInteractionHandlers
+    ? {
+        onFocus: () => setSubMenuVisibility(item.id),
+        onMouseEnter: () => setSubMenuVisibility(item.id),
+      }
+    : {};
+
   return (
     <MainNavLink
       key={item.id}
       to={item.to}
-      onFocus={() => setSubMenuVisibility(item.id)}
-      onMouseEnter={() => setSubMenuVisibility(item.id)}
+      {...interactionHandlers}
       title={item.title}
     >
       {item.title}
@@ -80,12 +133,32 @@ function getMenuItem(
   );
 }
 
-export default function MainNavBar() {
+export default function MainNavBar({ person }: MainNavBarProps) {
   const [activeSubmenuId, activateSubmenu] = useState('');
   const {
     SESSION: { isAuthenticated },
     MY_CHAPTERS: { items: myChapterItems },
   } = useContext(AppContext);
+
+  const isResponsiveMenu = useTabletScreen();
+  const [isResponsiveMenuMenuVisible, toggleResponsiveMenu] = useState(false);
+  const { history } = useRouter();
+
+  function closeResponsiveMenu(e: any) {
+    if (isResponsiveMenuMenuVisible) {
+      // Testing for clicks on elements that are not part of the responsive menu
+      const MenuToggleButton = document.getElementById(MenuToggleBtnId);
+      const LinkContainer = document.getElementById(LinkContainerId);
+      const clickedOutside = !(
+        (LinkContainer && LinkContainer.contains(e.target)) ||
+        (MenuToggleButton && MenuToggleButton.contains(e.target))
+      );
+
+      if (clickedOutside) {
+        toggleResponsiveMenu(false);
+      }
+    }
+  }
 
   function setSubMenuVisibility(
     id?: string,
@@ -98,10 +171,33 @@ export default function MainNavBar() {
     }
   }
 
+  // Bind click outside small screen menu to hide it
+  useEffect(() => {
+    document.addEventListener('click', closeResponsiveMenu);
+    return () => document.removeEventListener('click', closeResponsiveMenu);
+  });
+
+  // Hides small screen menu on route change
+  useEffect(() => {
+    toggleResponsiveMenu(false);
+  }, [history.location]);
+
   return (
     <nav className={styles.MainNavBar}>
-      {isAuthenticated && (
-        <div className={styles.LinkContainer}>
+      {isResponsiveMenu && (
+        <button
+          id={MenuToggleBtnId}
+          className={classnames(styles.MenuToggleBtn, {
+            [styles.MenuToggleBtnOpen]: isResponsiveMenuMenuVisible,
+          })}
+          onClick={() => toggleResponsiveMenu(!isResponsiveMenuMenuVisible)}
+        >
+          Toggle menu
+        </button>
+      )}
+
+      {isAuthenticated && (!isResponsiveMenu || isResponsiveMenuMenuVisible) && (
+        <div id={LinkContainerId} className={styles.LinkContainer}>
           {menuItems.map(item => {
             let menuItem = item;
             if (item.id in submenuItems) {
@@ -111,9 +207,27 @@ export default function MainNavBar() {
                 menuItem = { ...item, submenuItems: submenuItems[item.id] };
               }
             }
-            return getMenuItem(menuItem, activeSubmenuId, setSubMenuVisibility);
+            return getMenuItem(
+              menuItem,
+              activeSubmenuId,
+              setSubMenuVisibility,
+              !isResponsiveMenu
+            );
           })}
+          <SecondaryLinks person={person} />
         </div>
+      )}
+
+      {isResponsiveMenuMenuVisible && (
+        <div
+          style={{
+            height:
+              document.body.scrollHeight -
+              Layout.mainHeaderTopbarHeight -
+              Layout.mainHeaderNavbarHeight,
+          }}
+          className={styles.Modal}
+        />
       )}
     </nav>
   );

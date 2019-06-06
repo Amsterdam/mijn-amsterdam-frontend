@@ -19,26 +19,32 @@
   margin-top: 4rem;
   margin-bottom: 3rem;
   text-decoration: none;
-  background-color: $color-primary-red;
-  color: $color-white;
-  font-weight: 700;
-  padding-right: 1.3rem;
-  line-height: 4.6rem;
-  &:focus {
-    color: $color-black;
+
+  > span {
+    background-color: $color-primary-red;
+    color: $color-white;
+    font-weight: 700;
+    padding-right: 1.3rem;
+    padding-left: 1.3rem;
+    line-height: 4.6rem;
   }
 }
 
 .LoginLogo {
   height: 4.6rem;
   margin-right: 1.3rem;
-  border-right: 1rem solid $color-white;
+  // border-right: 1rem solid $color-white;
   background-color: #000;
 }
 
+@include select(PageContentMainHeading) {
+  position: relative;
+}
+
 .BetaLogo {
-  float: right;
-  height: 12rem;
-  width: 12rem;
-  margin-top: -4rem;
+  position: absolute;
+  height: 100%;
+  width: auto;
+  top: 0;
+  right: 0;
 }

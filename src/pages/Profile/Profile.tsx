@@ -15,18 +15,18 @@ import LoadingContent from 'components/LoadingContent/LoadingContent';
 
 // NOTE: Preferred simple interface here.
 interface ProfileData {
-  person?: {
+  person: {
     [label: string]: string | number;
   };
-  partner?: {
+  partner: {
     [label: string]: string | number;
-  };
-  maritalStatus?: {
+  } | null;
+  maritalStatus: {
     [label: string]: string;
-  };
-  address?: {
+  } | null;
+  address: {
     [label: string]: string;
-  };
+  } | null;
 }
 
 function formatProfileData({
@@ -35,7 +35,7 @@ function formatProfileData({
   address,
   maritalStatus,
 }: BrpApiState): ProfileData | null {
-  if (!(person && partner && address && address.current && maritalStatus)) {
+  if (!person) {
     return null;
   }
   return {
@@ -48,24 +48,30 @@ function formatProfileData({
       [brpInfoLabels.PlaceOfBirth]: person.placeOfBirth,
       [brpInfoLabels.CountryOfBirth]: person.countryOfBirth,
     },
-    partner: {
-      [brpInfoLabels.FirstName]: partner.firstName,
-      [brpInfoLabels.LastName]: partner.lastName,
-      [brpInfoLabels.BSN]: partner.bsn,
-      [brpInfoLabels.DateOfBirth]: defaultDateFormat(partner.dateOfBirth),
-    },
-    maritalStatus: {
-      '': maritalStatus.type,
-      [brpInfoLabels.Date]: defaultDateFormat(maritalStatus.dateStarted),
-      [brpInfoLabels.Place]: maritalStatus.place,
-      [brpInfoLabels.Country]: maritalStatus.country,
-    },
-    address: {
-      '': address.current.locality,
-      [brpInfoLabels.DateStarted]: defaultDateFormat(
-        address.current.dateStarted
-      ),
-    },
+    partner: partner
+      ? {
+          [brpInfoLabels.FirstName]: partner.firstName,
+          [brpInfoLabels.LastName]: partner.lastName,
+          [brpInfoLabels.BSN]: partner.bsn,
+          [brpInfoLabels.DateOfBirth]: defaultDateFormat(partner.dateOfBirth),
+        }
+      : null,
+    maritalStatus: maritalStatus
+      ? {
+          '': maritalStatus.type,
+          [brpInfoLabels.Date]: defaultDateFormat(maritalStatus.dateStarted),
+          [brpInfoLabels.Place]: maritalStatus.place,
+          [brpInfoLabels.Country]: maritalStatus.country,
+        }
+      : null,
+    address: address
+      ? {
+          '': address.current.locality,
+          [brpInfoLabels.DateStarted]: defaultDateFormat(
+            address.current.dateStarted
+          ),
+        }
+      : null,
   };
 }
 

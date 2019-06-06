@@ -8,10 +8,10 @@ import MyUpdates from 'components/MyUpdates/MyUpdates';
 import PageContentMain from 'components/PageContentMain/PageContentMain';
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
+import { usePhoneScreen } from 'hooks/media.hook';
 import React, { useContext } from 'react';
 
 import styles from './Dashboard.module.scss';
-import { useSmallScreen } from 'hooks/media.hook';
 
 const MAX_UPDATES_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
@@ -32,10 +32,10 @@ export default () => {
     },
     MY_CHAPTERS: { items: myChapterItems, isLoading: isMyChaptersLoading },
   } = useContext(AppContext);
-  const isMyAreaVisible = !useSmallScreen();
 
   const tipItems = myTips.slice(0, MAX_TIPS_VISIBLE);
   const actualUpdateItems = myUpdateItems.filter(item => item.isActual);
+  const isPhoneScreen = usePhoneScreen();
 
   return (
     <PageContentMain className={styles.Dashboard} variant="full">
@@ -58,21 +58,21 @@ export default () => {
           items={myChapterItems}
           title="Mijn thema's"
         />
-      </PageContentMainBody>
-      <PageContentMainBody className={styles.SecondBody}>
         <MyCases
           isLoading={!!isMyCasesLoading}
           title="Mijn lopende aanvragen"
           items={myCases}
         />
       </PageContentMainBody>
-      {isMyAreaVisible && (
+      {!isPhoneScreen && (
         <PageContentMainBody>
           <MyArea />
         </PageContentMainBody>
       )}
       <PageContentMainBody variant="regularBoxed">
-        <MyTips isLoading={!!isMyTipsLoading} items={tipItems} />
+        {!isPhoneScreen && (
+          <MyTips isLoading={!!isMyTipsLoading} items={tipItems} />
+        )}
         <DirectLinks />
       </PageContentMainBody>
     </PageContentMain>

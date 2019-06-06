@@ -102,7 +102,7 @@ export default function formatBrpApiResponse(
         dateOfBirth: partnerItem.gerelateerde.geboortedatum,
       };
 
-    const address = {
+    const address = persoon.verblijfsadres && {
       current: {
         locality: `${persoon.verblijfsadres.straatnaam} ${
           persoon.verblijfsadres.huisnummer
