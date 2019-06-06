@@ -31,8 +31,10 @@
   padding-top: 0.9rem;
   padding-bottom: 0.7rem;
 
-  &:hover {
-    color: $color-primary-red;
+  @include media(">tablet") {
+    &:hover {
+      color: $color-primary-red;
+    }
   }
 
   span {

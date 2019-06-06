@@ -146,8 +146,10 @@
   cursor: pointer;
   padding: 0 .4rem 0 1.4rem;
 
-  &:hover {
-    background-color: $color-primary-darkblue;
-    color: $color-white;
+  @include media(">tablet") {
+    &:hover {
+      background-color: $color-primary-darkblue;
+      color: $color-white;
+    }
   }
 }
