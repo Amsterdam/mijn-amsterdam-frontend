@@ -40,13 +40,14 @@
 
   svg {
     display: block;
-    height: 3.5rem;
-    width: auto;
+    height: 4.5rem;
+    width: 9.6rem;
     margin-right: 0.8rem;
 
     @include media("<=phone") {
       height: 3rem;
-      width: 6rem;
+      width: 6.6rem;
+      margin-right: 0;
     }
   }
 }
