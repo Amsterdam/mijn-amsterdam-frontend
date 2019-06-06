@@ -96,12 +96,14 @@
     fill: $color-black;
   }
 
-  &:hover {
-    color: $color-primary-red;
-    text-decoration: underline;
+  @include media(">tablet") {
+    &:hover {
+      color: $color-primary-red;
+      text-decoration: underline;
 
-    svg {
-      fill: $color-primary-red;
+      svg {
+        fill: $color-primary-red;
+      }
     }
   }
 

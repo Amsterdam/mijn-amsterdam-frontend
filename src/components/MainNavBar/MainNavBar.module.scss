@@ -40,9 +40,11 @@
     border-bottom: solid 0.2rem transparent;
   }
 
-  &:hover span {
-    color: $color-primary-red;
-    border-bottom-color: $color-primary-red;
+  @include media(">tablet") {
+    &:hover span {
+      color: $color-primary-red;
+      border-bottom-color: $color-primary-red;
+    }
   }
 
   &:last-child {
