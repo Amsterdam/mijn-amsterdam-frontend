@@ -11,8 +11,7 @@ export function MyAreaHeader() {
   return (
     <div className={styles.Header}>
       <Logo />
-      <h1>Mijn Buurt</h1>
-
+      <h1 className={styles.Title}>Mijn Buurt</h1>
       <NavLink to={AppRoutes.ROOT} className={styles.CloseBtn}>
         Sluit kaart
         <CloseIcon />

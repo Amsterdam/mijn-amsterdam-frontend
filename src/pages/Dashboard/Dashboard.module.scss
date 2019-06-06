@@ -65,6 +65,7 @@
   @include select(MyArea_MyArea) {
     height: 48rem;
     margin-bottom: 10rem;
+    width: 100%;
   }
 
   @include select(MyTips_MyTips) {
