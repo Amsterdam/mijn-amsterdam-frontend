@@ -96,7 +96,7 @@ export default function Modal({
           <FocusTrap>
             <div
               role="dialog"
-              aria-labelledby={title}
+              aria-labelledby="dialog-title"
               aria-modal="true"
               className={classnames(
                 styles.Dialog,
@@ -115,6 +115,7 @@ export default function Modal({
               style={inlineStyles}
             >
               <header
+                id="dialog-title"
                 className={styles.Header}
                 style={{
                   justifyContent: !!title ? 'space-between' : 'flex-end',
