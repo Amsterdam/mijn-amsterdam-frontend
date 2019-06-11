@@ -201,6 +201,7 @@ export default function MainNavBar({ person }: MainNavBarProps) {
           {menuItems.map(item => {
             let menuItem = item;
             if (item.id in submenuItems) {
+              // Add dynamic chapter submenu items to the menu
               if (item.id === mainMenuItemId.MY_CHAPTERS) {
                 menuItem = { ...item, submenuItems: myChapterItems };
               } else {

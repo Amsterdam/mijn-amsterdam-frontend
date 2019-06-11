@@ -335,6 +335,13 @@ export const ProductTitles = {
   BijzondereBijstand: 'Bijzondere bijstand',
 };
 
+const DocumentTitles: { [originalTitle: string]: string } = {
+  'LO: Aanvraag': 'Aanvraag bijstandsuitkering',
+  'LO: Besluit': 'Besluit aanvraag bijstandsuitkering',
+  'LO: In behandeling': 'Uw aanvraag is in behandeling genomen',
+  'LO: Herstel': 'Verzoek om aanvullende informatie van u',
+};
+
 const AppRoutesByProductTitle = {
   [ProductTitles.Bijstandsuitkering]: AppRoutes.BIJSTANDSUITKERING,
   [ProductTitles.Stadspas]: AppRoutes.STADSPAS,
@@ -472,7 +479,7 @@ function formatFocusDocument(
   const { id, omschrijving: title, $ref: url } = document;
   return {
     id: String(id),
-    title,
+    title: DocumentTitles[title] || title,
     url: `/api/${url}`,
     datePublished,
     type: stepTitle,
