@@ -38,12 +38,14 @@ interface Info {
 }
 
 type InfoExtended = { [type in Decision]: Info };
+
 interface ProductType {
   aanvraag: Info;
   inBehandeling: Info;
   herstelTermijn: Info;
   beslissing: InfoExtended;
 }
+
 type LabelData = { [origin in ProductOrigin]: ProductType };
 
 interface Document {
