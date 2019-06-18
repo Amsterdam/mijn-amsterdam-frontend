@@ -9,6 +9,7 @@ export default () => {
     <PageContentMain className={styles.Proclaimer}>
       <PageContentMainHeading>Proclaimer</PageContentMainHeading>
       <PageContentMainBody variant="regular">
+        {/* Text delivered via e-mail by Kim Westerweel */}
         <p>
           Mijn Amsterdam is een website van de gemeente Amsterdam. Op Mijn
           Amsterdam tonen wij uw persoonlijke informatie uit de verschillende

@@ -1,6 +1,5 @@
 import { ApiUrls } from 'App.constants';
 import formatFocusApiResponse, { FocusItem } from 'data-formatting/focus';
-import { differenceInCalendarDays } from 'date-fns';
 
 import { ApiState } from './api.types';
 import { MyUpdate } from './my-updates-api.hook';

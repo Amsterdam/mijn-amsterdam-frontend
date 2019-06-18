@@ -21,14 +21,19 @@
   min-height: 5.5rem;
   padding: 1rem 0 1rem 5rem;
   position: relative;
-  flex-basis: calc(50% - 4rem);
+  flex-basis: calc(50% - 5rem);
 
   &:nth-child(odd) {
-    margin-right: 4rem;
+    margin-right: 5rem;
 
     @include media("<=phone") {
       margin: 0;
     }
+  }
+
+  &:nth-child(even) {
+    margin-left: 5rem;
+    flex-basis: calc(50% - 5rem);
   }
 
   a {
@@ -44,13 +49,6 @@
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-  }
-}
-
-.List__odd {
-  li:last-child {
-    flex-basis: 100%;
-    margin-right: 0;
   }
 }
 

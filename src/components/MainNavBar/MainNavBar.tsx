@@ -54,7 +54,7 @@ function SecondaryLinks({ person, hasMessages = false }: SecondaryLinksProps) {
         to={ExternalUrls.BERICHTENBOX}
         className={classnames(hasMessages && 'has-messages')}
       >
-        Berichtenbox
+        Berichten Mijn Overheid
       </ButtonLinkExternal>
       {person && person.firstName && (
         <Link to={AppRoutes.PROFILE}>{person.fullName}</Link>
@@ -201,6 +201,7 @@ export default function MainNavBar({ person }: MainNavBarProps) {
           {menuItems.map(item => {
             let menuItem = item;
             if (item.id in submenuItems) {
+              // Add dynamic chapter submenu items to the menu
               if (item.id === mainMenuItemId.MY_CHAPTERS) {
                 menuItem = { ...item, submenuItems: myChapterItems };
               } else {

@@ -36,9 +36,8 @@
   padding-left: 1.8rem;
   padding-right: 1.8rem;
   align-items: center;
-  justify-content: space-between;
 
-  svg {
+  .Logo {
     display: block;
     height: 4.5rem;
     width: 9.6rem;
@@ -61,15 +60,13 @@
   font-size: 2rem;
   margin: 0;
   margin-left: 1.5rem;
-
-  @include media("<=phone") {
-    text-align: center;
-  }
+  flex-grow: 1;
+  transform: translateY(-.4rem);
 }
 
 .CloseBtn {
-  display: flex;
-  align-items: flex-end;
+  transform: translateY(-.3rem);
+  display: block;
   height: 2.2rem;
   padding: 0;
   background-color: transparent;
@@ -77,6 +74,11 @@
   text-decoration: none;
   font-size: 1.8rem;
   font-weight: 500;
+
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+  }
 
   svg {
     height: inherit;

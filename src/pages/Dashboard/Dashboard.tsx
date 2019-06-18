@@ -12,6 +12,8 @@ import { usePhoneScreen } from 'hooks/media.hook';
 import React, { useContext } from 'react';
 
 import styles from './Dashboard.module.scss';
+import { Link } from 'react-router-dom';
+import { AppRoutes } from '../../App.constants';
 
 const MAX_UPDATES_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
@@ -40,7 +42,9 @@ export default () => {
   return (
     <PageContentMain className={styles.Dashboard} variant="full">
       <PageContentMainHeading variant="medium">
-        Mijn meldingen
+        <Link className={styles.MyUpdatesHeadingLink} to={AppRoutes.MY_UPDATES}>
+          Mijn meldingen
+        </Link>
         {!isMyUpdatesLoading &&
           actualUpdateItems.length > MAX_UPDATES_VISIBLE && (
             <span>&nbsp;({actualUpdateItems.length})</span>
