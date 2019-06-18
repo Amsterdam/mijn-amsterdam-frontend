@@ -4,6 +4,7 @@ export interface ApiRequestOptions {
   url: string;
   params?: Unshaped;
   postpone?: boolean;
+  resetToInitialDataOnError?: boolean;
 }
 
 export interface ApiState {
@@ -12,4 +13,5 @@ export interface ApiState {
   isPristine: boolean;
   isDirty: boolean;
   data: any;
+  errorMessage: string | null;
 }

@@ -12,8 +12,9 @@ interface ModalProps {
   children: ComponentChildren;
   className?: any;
   isOpen: boolean | undefined;
-  onClose: () => void;
+  onClose?: () => void;
   title?: string;
+  showCloseButton?: boolean;
   contentWidth?: number | 'boxed';
   contentVerticalPosition?: number | 'center' | 'top' | 'bottom';
   contentHorizontalPosition?: number | 'center' | 'left' | 'right';
@@ -29,9 +30,21 @@ function setScrollYProp() {
 
 export default function Modal({
   children,
+  ...props
+}: Omit<ModalProps, 'appendTo'>) {
+  return (
+    <Dialog {...props} appendTo={document.getElementById('modal-root')!}>
+      {children}
+    </Dialog>
+  );
+}
+
+export function Dialog({
+  children,
   className,
   isOpen = undefined,
   title,
+  showCloseButton = true,
   onClose,
   contentWidth = 'boxed',
   contentVerticalPosition = 'center',
@@ -65,15 +78,6 @@ export default function Modal({
     };
   }, [isOpen]);
 
-  function closeFromOverlay(target: EventTarget) {
-    const el = dialogEl.current ? (dialogEl.current! as HTMLElement) : null;
-    if (el && !el.contains(target as Node)) {
-      onClose();
-    } else if (!el) {
-      onClose();
-    }
-  }
-
   const inlineStyles: React.CSSProperties = {};
 
   if (typeof contentWidth === 'number') {
@@ -88,12 +92,13 @@ export default function Modal({
 
   return isOpen
     ? ReactDOM.createPortal(
-        <>
-          <div
-            className={classnames(styles.Modal, className)}
-            onClick={event => closeFromOverlay(event.target)}
-          />
-          <FocusTrap>
+        <FocusTrap focusTrapOptions={{ escapeDeactivates: false }}>
+          <div className={styles.ModalContainer}>
+            <div
+              className={classnames(styles.Modal, className)}
+              onClick={() => typeof onClose === 'function' && onClose()}
+            />
+
             <div
               role="dialog"
               aria-labelledby="dialog-title"
@@ -122,17 +127,19 @@ export default function Modal({
                 }}
               >
                 {!!title && <Heading size="small">{title}</Heading>}
-                <button
-                  className={styles.ButtonClose}
-                  onClick={() => onClose()}
-                >
-                  <CloseIcon />
-                </button>
+                {showCloseButton && (
+                  <button
+                    className={styles.ButtonClose}
+                    onClick={() => typeof onClose === 'function' && onClose()}
+                  >
+                    <CloseIcon />
+                  </button>
+                )}
               </header>
               <div className={styles.Content}>{children}</div>
             </div>
-          </FocusTrap>
-        </>,
+          </div>
+        </FocusTrap>,
         appendTo
       )
     : null;

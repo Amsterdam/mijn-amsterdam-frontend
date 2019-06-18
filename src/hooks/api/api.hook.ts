@@ -14,10 +14,10 @@ const ActionTypes = {
   FETCH_FAILURE: 'FETCH_FAILURE',
 };
 
-const createApiDataReducer = (initialData: Unshaped = {}) => (
-  state: ApiState,
-  action: Action
-): ApiState => {
+const createApiDataReducer = (
+  initialData: Unshaped = {},
+  resetToInitialDataOnError: boolean = false
+) => (state: ApiState, action: Action): ApiState => {
   switch (action.type) {
     case ActionTypes.FETCH_INIT:
       return { ...state, isLoading: true, isError: false };
@@ -29,6 +29,7 @@ const createApiDataReducer = (initialData: Unshaped = {}) => (
         isPristine: false,
         isDirty: true,
         data: action.payload,
+        errorMessage: null,
       };
     case ActionTypes.FETCH_FAILURE:
       return {
@@ -37,7 +38,8 @@ const createApiDataReducer = (initialData: Unshaped = {}) => (
         isError: true,
         isPristine: false,
         isDirty: true,
-        data: initialData,
+        data: resetToInitialDataOnError ? initialData : state.data,
+        errorMessage: action.payload,
       };
     default:
       throw new Error();
@@ -60,6 +62,7 @@ export const getDefaultState = (initialData = {}, postpone = false) => ({
   isPristine: true,
   isDirty: false,
   data: initialData,
+  errorMessage: null,
 });
 
 export const useDataApi = (
@@ -67,7 +70,7 @@ export const useDataApi = (
   initialData: Unshaped = {}
 ): [ApiState, (options: ApiRequestOptions) => void] => {
   const [requestOptions, setRequestOptions] = useState(options);
-  const apiDataReducer = createApiDataReducer(initialData);
+  const apiDataReducer = createApiDataReducer(initialData, true);
   const refetch = (options: ApiRequestOptions) => {
     setRequestOptions({ ...options, postpone: false });
   };
@@ -94,10 +97,11 @@ export const useDataApi = (
             payload: result.data,
           });
         }
-      } catch (error) {
+      } catch (result) {
         if (!didCancel) {
           dispatch({
             type: ActionTypes.FETCH_FAILURE,
+            payload: result.message,
           });
         }
       }
