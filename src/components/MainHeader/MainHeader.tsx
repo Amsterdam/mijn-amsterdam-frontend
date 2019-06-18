@@ -49,18 +49,18 @@ export default function MainHeader({
   return (
     <header className={styles.header}>
       <div className={styles.topBar}>
-        <span className={styles.logoLink}>
+        <Link className={styles.logoLink} to={AppRoutes.ROOT}>
           <Logo
             role="img"
             aria-label="Amsterdam logo"
             className={styles.logo}
           />
-          <Heading size="large" el="h1">
-            <Link className={styles.logoLink} to={AppRoutes.ROOT}>
-              Mijn Amsterdam
-            </Link>
-          </Heading>
-        </span>
+        </Link>
+        <Heading size="large" el="h1">
+          <Link className={styles.logoLink} to={AppRoutes.ROOT}>
+            Mijn Amsterdam
+          </Link>
+        </Heading>
         <BetaLabel
           role="img"
           aria-label="Beta versie"

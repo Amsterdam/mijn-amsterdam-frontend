@@ -7,9 +7,12 @@
 
 .topBar {
   width: 100%;
-  max-width: $main-boxed-width;
+  // Offset header to the left so that the focus area of the logo svg covers the complete logo.
+  max-width: calc(#{$main-boxed-width} + 2rem);
+  transform: translateX(-1rem);
   height: $main-header-topbar-height;
   margin: 0 auto;
+  display: flex;
 
   @include select(Heading) {
     margin: 0.4em 0 0;
@@ -17,6 +20,7 @@
 
   @include media("<=tablet") {
     height: $main-header-topbar-height--tablet;
+    transform: translateX(0);
 
     @include select(Heading) {
       margin: 1rem 0 0 2rem;
@@ -33,7 +37,8 @@
 
 .logo {
   position: relative;
-  left: -2rem;
+  left: 0;
+  margin-right: 2rem;
   top: 2rem;
   width: 9rem;
   height: 6.8rem;

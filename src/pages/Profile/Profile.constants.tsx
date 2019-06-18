@@ -54,7 +54,7 @@ export const brpInfoLabels = {
   FirstName: 'Voornamen',
   LastName: 'Achternaam',
   Gender: 'Geslacht',
-  BSN: 'Bsn',
+  BSN: 'BSN',
   DateOfBirth: 'Geboortedatum',
   PlaceOfBirth: 'Geboorteplaats',
   CountryOfBirth: 'Geboorteland',

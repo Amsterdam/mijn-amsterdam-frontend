@@ -54,7 +54,7 @@ function SecondaryLinks({ person, hasMessages = false }: SecondaryLinksProps) {
         to={ExternalUrls.BERICHTENBOX}
         className={classnames(hasMessages && 'has-messages')}
       >
-        Berichtenbox
+        Berichten Mijn Overheid
       </ButtonLinkExternal>
       {person && person.firstName && (
         <Link to={AppRoutes.PROFILE}>{person.fullName}</Link>

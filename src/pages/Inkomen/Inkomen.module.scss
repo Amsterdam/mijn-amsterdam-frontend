@@ -16,8 +16,8 @@
       }
 
       @include media("<=phone") {
-        margin-left: 3.4rem;
-        margin-right: 3.4rem;
+        margin-left: 1.4rem;
+        margin-right: 1.4rem;
 
         &:last-of-type {
           margin-bottom: 2rem;

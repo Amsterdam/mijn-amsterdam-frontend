@@ -18,7 +18,7 @@ export default function MyChaptersPanel({
 }: MyChaptersPanelProps) {
   return (
     <div className={styles.MyChaptersPanel}>
-      <Heading size="mediumLarge" className={styles.Title}>
+      <Heading size="large" className={styles.Title}>
         {title}
       </Heading>
       <div className={styles.Links}>
