@@ -12,6 +12,14 @@
     }
   }
 
+  .MyUpdatesHeadingLink {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+      color: $color-primary-red;
+    }
+  }
+
   @include select(MyUpdates_MyUpdates) {
     flex-basis: calc(50% - 5rem); // margin-left + margin-right + custom gutter (an visually pleasing space between 2 blocks)
     flex-shrink: 0;
@@ -33,7 +41,11 @@
   }
 
   @include select(MyChaptersPanel_MyChaptersPanel) {
-    width: calc(50% + 1rem); // + custom gutter (an visually pleasing space between 2 blocks)
+
+    @include media(">tablet") {
+      width: calc(50% + 5rem); // + custom gutter (an visually pleasing space between 2 blocks)
+      margin-right: -4rem;
+    }
 
     @include media(">phone", "<=tablet") {
       // Weirdly sized chapters panel for tablet screens needs the following to break-out of the flex restrains

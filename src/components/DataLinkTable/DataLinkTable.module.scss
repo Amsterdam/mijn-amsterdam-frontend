@@ -21,8 +21,7 @@
   }
 
   @include media("<=phone") {
-    margin: 0 2rem;
-    table {
+    .Table {
       display: grid;
       tr, td, tbody {
         display: block;

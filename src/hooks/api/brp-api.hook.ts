@@ -10,7 +10,7 @@ export const useBrpApi = (initialState = {}): BrpApiState => {
   const [api] = useDataApi(options, initialState);
   const { data, ...rest } = api;
 
-  const brpData = formatBrpApiResponse(data);
+  const brpData = typeof data === 'object' ? formatBrpApiResponse(data) : {};
 
   return { ...rest, ...brpData };
 };

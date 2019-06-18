@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import styles from './MyArea.module.scss';
 import { MAP_URL } from './MyArea.constants';
 import { AppRoutes } from 'App.constants';
@@ -10,11 +10,13 @@ import Heading from 'components/Heading/Heading';
 export function MyAreaHeader() {
   return (
     <div className={styles.Header}>
-      <Logo />
+      <Link to={AppRoutes.ROOT}>
+        <Logo className={styles.Logo} />
+      </Link>
       <h1 className={styles.Title}>Mijn Buurt</h1>
       <NavLink to={AppRoutes.ROOT} className={styles.CloseBtn}>
-        Sluit kaart
-        <CloseIcon />
+        <span>Sluit kaart</span>
+        <CloseIcon className={styles.CloseIcon} />
       </NavLink>
     </div>
   );
