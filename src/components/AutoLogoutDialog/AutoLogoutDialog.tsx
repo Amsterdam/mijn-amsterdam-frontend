@@ -12,6 +12,8 @@ import Modal from '../Modal/Modal';
 import styles from './AutoLogoutDialog.module.scss';
 
 const ONE_MINUTE_SECONDS = 60;
+const AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS = 10 * ONE_MINUTE_SECONDS;
+const AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS = 2 * ONE_MINUTE_SECONDS;
 
 export interface ComponentProps {
   children?: ComponentChildren;
@@ -24,7 +26,7 @@ export interface CirculoComponentProps {
 }
 
 function Circulo({
-  timeoutSeconds = ONE_MINUTE_SECONDS * 2,
+  timeoutSeconds = AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS,
   onMaxCount,
 }: CirculoComponentProps) {
   const [originalTitle] = useState(document.title);
@@ -71,7 +73,7 @@ export default function AutoLogoutDialog({
   const { resume, reset } = useCounter({
     startPaused: false,
     startCountAt: 0,
-    maxCount: 5, // 10 minutes
+    maxCount: AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS, // 10 minutes
     onMaxCount: () => {
       setOpen(true);
     },
