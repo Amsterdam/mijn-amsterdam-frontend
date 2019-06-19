@@ -83,36 +83,34 @@ function MainApp({ appState: { SESSION, BRP } }: MainAppProps) {
 
 export default function App() {
   return (
-    <div>
-      <BrowserRouter>
-        <SessionState
-          render={session => {
-            if (session.isLoading) {
-              return (
-                <p className={styles.PreLoader}>
-                  Mijn amsterdam wordt geladen...
-                </p>
-              );
-            }
-            // Render the main app only if we are authenticated
-            return session.isAuthenticated ? (
-              <>
-                <AutoLogoutDialog session={session} />
-                <AppState
-                  session={session}
-                  render={appState => <MainApp appState={appState} />}
-                />
-              </>
-            ) : (
-              <div className={styles.NotYetAuthenticated}>
-                <MainHeader />
-                <Landing />
-                <MainFooter />
-              </div>
+    <BrowserRouter>
+      <SessionState
+        render={session => {
+          if (session.isLoading) {
+            return (
+              <p className={styles.PreLoader}>
+                Mijn amsterdam wordt geladen...
+              </p>
             );
-          }}
-        />
-      </BrowserRouter>
-    </div>
+          }
+          // Render the main app only if we are authenticated
+          return session.isAuthenticated ? (
+            <>
+              <AutoLogoutDialog session={session} />
+              <AppState
+                session={session}
+                render={appState => <MainApp appState={appState} />}
+              />
+            </>
+          ) : (
+            <div className={styles.NotYetAuthenticated}>
+              <MainHeader />
+              <Landing />
+              <MainFooter />
+            </div>
+          );
+        }}
+      />
+    </BrowserRouter>
   );
 }
