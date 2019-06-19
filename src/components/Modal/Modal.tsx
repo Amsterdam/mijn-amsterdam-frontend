@@ -81,7 +81,8 @@ export function Dialog({
   const inlineStyles: React.CSSProperties = {};
 
   if (typeof contentWidth === 'number') {
-    inlineStyles.width = contentWidth;
+    inlineStyles.width = '100%';
+    inlineStyles.maxWidth = contentWidth;
   }
   if (typeof contentVerticalPosition === 'number') {
     inlineStyles.top = contentVerticalPosition;
