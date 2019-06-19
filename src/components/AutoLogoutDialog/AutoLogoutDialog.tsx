@@ -42,6 +42,7 @@ function Circulo({
     timeoutSeconds - progressCountSeconds
   );
 
+  // This effect just restores the original page title when the component is unmounted.
   useEffect(
     () => () => {
       document.title = originalTitle;
