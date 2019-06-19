@@ -145,6 +145,7 @@
   transform: translateX(-50%);
   cursor: pointer;
   padding: 0 .4rem 0 1.4rem;
+  margin-bottom: 2rem;
 
   @include hoverCapable {
     &:hover {
