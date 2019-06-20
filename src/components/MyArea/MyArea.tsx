@@ -1,11 +1,17 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import styles from './MyArea.module.scss';
-import { MAP_URL } from './MyArea.constants';
+import {
+  MAP_URL,
+  DEFAULT_LON,
+  DEFAULT_LAT,
+  DEFAULT_ZOOM,
+} from './MyArea.constants';
 import { AppRoutes } from 'App.constants';
 import { ReactComponent as Logo } from 'assets/images/logo-amsterdam.svg';
 import { ReactComponent as CloseIcon } from 'assets/icons/Close.svg';
 import Heading from 'components/Heading/Heading';
+import { useDataApi } from '../../hooks/api/api.hook';
 
 export function MyAreaHeader() {
   return (
@@ -23,11 +29,29 @@ export function MyAreaHeader() {
 }
 
 export function MyAreaMap() {
+  const address = 'Weesperstraat 113';
+  const [{ data }] = useDataApi({
+    url: `https://api.data.amsterdam.nl/atlas/search/adres/?q=${address}`,
+  });
+
+  let url = `${MAP_URL}&center=${DEFAULT_LON}%2C${DEFAULT_LAT}&zoom=${DEFAULT_ZOOM}`;
+
+  if (data.results && data.results.length) {
+    const {
+      results: [
+        {
+          centroid: [lat, lon],
+        },
+      ],
+    } = data;
+    url = `${MAP_URL}&center=${lon}%2C${lat}&zoom=${13}`;
+  }
+
   return (
     <iframe
       id="mapIframe"
       title="Kaart van mijn buurt"
-      src={MAP_URL}
+      src={url}
       className={styles.Map}
     />
   );
