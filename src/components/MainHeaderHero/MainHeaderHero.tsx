@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './MainHeaderHero.module.scss';
-import useReactRouter from 'use-react-router';
+import useRouter from 'use-react-router';
 import { AppRoutes } from 'App.constants';
 
 const DEFAULT_ALT = 'Sfeerbeeld kenmerkend voor de Amsterdammer';
@@ -23,7 +23,7 @@ function imgUrl(
 }
 
 function getHeroSrc() {
-  const { location } = useReactRouter();
+  const { location } = useRouter();
   const isChapterPath = (path: string) => location.pathname.startsWith(path);
 
   let imageName = 'Header-Desktop-1';

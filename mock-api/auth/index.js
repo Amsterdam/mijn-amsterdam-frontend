@@ -5,6 +5,7 @@ const APP_URL = `http://${server.ip}:${APP_PORT}`;
 
 module.exports = {
   path: '/api/login|logout',
+  cache: false,
   status: async (req, res, next) => {
     if (req.url.endsWith('login')) {
       await state.setAuth(true);
@@ -19,12 +20,5 @@ module.exports = {
     }
     next();
   },
-  template: {
-    isAuthenticated: async (params, query, body, x, headers) => {
-      return state.isAuthenticated();
-    },
-    userType: async (params, query, body, x, headers) => {
-      return state.getUserType();
-    },
-  },
+  template: require('./check').template,
 };

@@ -5,7 +5,7 @@ import styles from './ZorgDetail.module.scss';
 import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
 import { Chapters, AppRoutes } from 'App.constants';
 import { AppContext } from 'AppState';
-import useReactRouter from 'use-react-router';
+import useRouter from 'use-react-router';
 import Heading from 'components/Heading/Heading';
 import PageContentMainHeadingBackLink from 'components/PageContentMainHeadingBackLink/PageContentMainHeadingBackLink';
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
@@ -26,7 +26,7 @@ export default () => {
     match: {
       params: { id },
     },
-  } = useReactRouter();
+  } = useRouter();
   const WmoItem = items.find(item => item.id === id);
 
   return (

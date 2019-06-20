@@ -44,6 +44,10 @@
     background: linear-gradient(to bottom, $color-neutral-grey1 0%, $color-neutral-grey1 3rem, $color-neutral-grey3 3rem, $color-neutral-grey3 100%);
   }
 
+  &.aanvraag .Panel:first-child:last-child:before {
+    background: linear-gradient(to bottom, $color-neutral-grey1 0%, $color-neutral-grey1 3rem, $color-neutral-grey3 3rem, $color-neutral-grey1 100%);
+  }
+
   &:not(.aanvraag):not(.beslissing) {
     &:last-child .Panel:before {
       background: linear-gradient(to bottom, $color-neutral-grey3 0%, $color-neutral-grey3 75%, $color-neutral-grey1 100%);
@@ -145,6 +149,7 @@
   transform: translateX(-50%);
   cursor: pointer;
   padding: 0 .4rem 0 1.4rem;
+  margin-bottom: 2rem;
 
   @include hoverCapable {
     &:hover {
