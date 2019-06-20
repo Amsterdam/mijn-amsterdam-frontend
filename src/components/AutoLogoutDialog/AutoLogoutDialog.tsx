@@ -10,50 +10,47 @@ import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import { Colors, LOGOUT_URL } from '../../App.constants';
 import Modal from '../Modal/Modal';
 import styles from './AutoLogoutDialog.module.scss';
+import classnames from 'classnames';
 
 const ONE_MINUTE_SECONDS = 60;
 const AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS = 10 * ONE_MINUTE_SECONDS;
 const AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS = 2 * ONE_MINUTE_SECONDS;
+const TITLE = 'Wilt u doorgaan?';
+
+export interface AutoLogoutDialogSettings {
+  secondsBeforeDialogShow?: number;
+  secondsBeforeAutoLogout?: number;
+}
 
 export interface ComponentProps {
   children?: ComponentChildren;
   session: SessionApiState;
+  settings?: AutoLogoutDialogSettings;
 }
 
 export interface CirculoComponentProps {
+  maxCount?: number;
   onMaxCount?: CounterProps['onMaxCount'];
-  timeoutSeconds?: number;
+  onTick?: CounterProps['onTick'];
 }
 
 function Circulo({
-  timeoutSeconds = AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS,
+  maxCount = AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS,
   onMaxCount,
+  onTick,
 }: CirculoComponentProps) {
-  const [originalTitle] = useState(document.title);
   const { count: progressCountSeconds } = useCounter({
-    maxCount: timeoutSeconds,
+    maxCount,
     onMaxCount,
-    onTick: count => {
-      document.title = count % 2 === 0 ? 'Wilt u doorgaan?' : originalTitle;
-    },
+    onTick,
   });
 
-  const timeDisplay = formattedTimeFromSeconds(
-    timeoutSeconds - progressCountSeconds
-  );
-
-  // This effect just restores the original page title when the component is unmounted.
-  useEffect(
-    () => () => {
-      document.title = originalTitle;
-    },
-    []
-  );
+  const timeDisplay = formattedTimeFromSeconds(maxCount - progressCountSeconds);
 
   return (
     <span className={styles.Circulo}>
       <CircularProgressbar
-        maxValue={timeoutSeconds}
+        maxValue={maxCount}
         value={progressCountSeconds}
         text={`${timeDisplay}`}
         styles={buildStyles({
@@ -70,31 +67,49 @@ function Circulo({
 export default function AutoLogoutDialog({
   children,
   session,
+  settings = {
+    secondsBeforeDialogShow: AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS,
+    secondsBeforeAutoLogout: AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS,
+  },
 }: ComponentProps) {
   const { resume, reset } = useCounter({
-    startPaused: false,
-    startCountAt: 0,
-    maxCount: AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS, // 10 minutes
+    maxCount: settings.secondsBeforeDialogShow,
     onMaxCount: () => {
       setOpen(true);
     },
   });
 
   const [isOpen, setOpen] = useState(false);
+  const [originalTitle] = useState(document.title);
+  const [continueButtonIsVisible, setContinueButtonVisibility] = useState(true);
 
   function showLoginScreen() {
+    setContinueButtonVisibility(false);
     session.refetch();
   }
 
   function continueUsingApp() {
+    session.refetch();
     setOpen(false);
     reset();
     resume();
   }
 
+  const onTick = (count: number) => {
+    document.title = count % 2 === 0 ? TITLE : originalTitle;
+  };
+
+  // This effect just restores the original page title when the component is unmounted.
+  useEffect(
+    () => () => {
+      document.title = originalTitle;
+    },
+    []
+  );
+
   return (
     <Modal
-      title={'Wilt u doorgaan?'}
+      title={TITLE}
       isOpen={isOpen}
       contentWidth={450}
       showCloseButton={false}
@@ -104,19 +119,33 @@ export default function AutoLogoutDialog({
           U bent langer dan 10 minuten niet actief geweest op Mijn Amsterdam.
         </p>
         <p className={styles.TimerText}>
-          <Circulo onMaxCount={showLoginScreen} />
+          <Circulo
+            maxCount={settings.secondsBeforeAutoLogout}
+            onMaxCount={showLoginScreen}
+            onTick={onTick}
+          />
           Voor uw veiligheid wordt u automatisch uitgelogd.
         </p>
         <p>Wilt u doorgaan of uitloggen?</p>
         <p>
-          <button
-            className="action-button secondary"
-            onClick={continueUsingApp}
+          {continueButtonIsVisible && (
+            <button
+              className="action-button secondary continue-button"
+              onClick={continueUsingApp}
+            >
+              Doorgaan
+            </button>
+          )}
+          <a
+            className={classnames(
+              'action-button line-only secondary logout-button',
+              !continueButtonIsVisible && 'disabled'
+            )}
+            href={LOGOUT_URL}
           >
-            Doorgaan
-          </button>
-          <a className="action-button line-only secondary" href={LOGOUT_URL}>
-            Nu uitloggen
+            {continueButtonIsVisible
+              ? 'Nu uitloggen'
+              : 'U wordt nu automatisch uitgelogd...'}
           </a>
         </p>
       </div>

@@ -86,7 +86,8 @@ export default function App() {
     <BrowserRouter>
       <SessionState
         render={session => {
-          if (session.isLoading) {
+          // If session was previously authenticated we don't want to show the loader again
+          if (session.isLoading && session.isPristine) {
             return (
               <p className={styles.PreLoader}>
                 Mijn amsterdam wordt geladen...

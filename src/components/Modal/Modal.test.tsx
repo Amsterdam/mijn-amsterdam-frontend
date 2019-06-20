@@ -5,16 +5,11 @@ import renderer from 'react-test-renderer';
 import styles from 'pages/Profile/Profile.module.scss';
 
 describe('Modal test', () => {
-  const modalRoot = document.createElement('div');
-  modalRoot.setAttribute('id', 'modal-root');
-  const body = document.querySelector('body')!;
-  body.appendChild(modalRoot);
-
   window.scrollTo = jest.fn();
 
   it('Renders without crashing', () => {
     const component = shallow(
-      <Dialog appendTo={modalRoot} isOpen={false} onClose={() => void 0}>
+      <Dialog isOpen={false} onClose={() => void 0}>
         Testje
       </Dialog>
     );
@@ -30,7 +25,6 @@ describe('Modal test', () => {
         contentWidth={100}
         isOpen={true}
         onClose={() => void 0}
-        appendTo={modalRoot}
       >
         Testje
       </Dialog>
@@ -58,7 +52,7 @@ describe('Modal test', () => {
       component.setProps({ isOpen });
     });
     component = mount(
-      <Dialog isOpen={isOpen} onClose={close} appendTo={modalRoot}>
+      <Dialog isOpen={isOpen} onClose={close}>
         Testje
       </Dialog>
     );
@@ -79,17 +73,13 @@ describe('Modal test', () => {
 
   it('Does not open the modal content', () => {
     const component = mount(
-      <Dialog isOpen={false} onClose={() => void 0} appendTo={modalRoot}>
+      <Dialog isOpen={false} onClose={() => void 0}>
         Testje
       </Dialog>
     );
     expect(component.find('[className*="Dialog"]')).toHaveLength(0);
     component.unmount();
 
-    expect(modalRoot.childNodes.length).toBe(0);
-  });
-
-  afterAll(() => {
-    modalRoot.remove();
+    expect(document.getElementById('modal-root')!.childNodes.length).toBe(0);
   });
 });

@@ -18,7 +18,7 @@ interface ModalProps {
   contentWidth?: number | 'boxed';
   contentVerticalPosition?: number | 'center' | 'top' | 'bottom';
   contentHorizontalPosition?: number | 'center' | 'left' | 'right';
-  appendTo: HTMLElement;
+  appendTo?: HTMLElement;
 }
 
 function setScrollYProp() {
@@ -52,6 +52,18 @@ export function Dialog({
   appendTo,
 }: ModalProps) {
   const dialogEl = useRef(null);
+
+  if (!appendTo) {
+    const modalRootElement = document.getElementById('modal-root');
+    if (!modalRootElement) {
+      const modalRoot = document.createElement('div');
+      modalRoot.setAttribute('id', 'modal-root');
+      document.querySelector('body')!.appendChild(modalRoot);
+      appendTo = modalRoot;
+    } else {
+      appendTo = modalRootElement;
+    }
+  }
 
   // Concepts taken from: https://css-tricks.com/prevent-page-scrolling-when-a-modal-is-open/
   useEffect(() => {
