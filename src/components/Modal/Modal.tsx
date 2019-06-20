@@ -12,12 +12,13 @@ interface ModalProps {
   children: ComponentChildren;
   className?: any;
   isOpen: boolean | undefined;
-  onClose: () => void;
+  onClose?: () => void;
   title?: string;
+  showCloseButton?: boolean;
   contentWidth?: number | 'boxed';
   contentVerticalPosition?: number | 'center' | 'top' | 'bottom';
   contentHorizontalPosition?: number | 'center' | 'left' | 'right';
-  appendTo: HTMLElement;
+  appendTo?: HTMLElement;
 }
 
 function setScrollYProp() {
@@ -29,9 +30,21 @@ function setScrollYProp() {
 
 export default function Modal({
   children,
+  ...props
+}: Omit<ModalProps, 'appendTo'>) {
+  return (
+    <Dialog {...props} appendTo={document.getElementById('modal-root')!}>
+      {children}
+    </Dialog>
+  );
+}
+
+export function Dialog({
+  children,
   className,
   isOpen = undefined,
   title,
+  showCloseButton = true,
   onClose,
   contentWidth = 'boxed',
   contentVerticalPosition = 'center',
@@ -39,6 +52,18 @@ export default function Modal({
   appendTo,
 }: ModalProps) {
   const dialogEl = useRef(null);
+
+  if (!appendTo) {
+    const modalRootElement = document.getElementById('modal-root');
+    if (!modalRootElement) {
+      const modalRoot = document.createElement('div');
+      modalRoot.setAttribute('id', 'modal-root');
+      document.querySelector('body')!.appendChild(modalRoot);
+      appendTo = modalRoot;
+    } else {
+      appendTo = modalRootElement;
+    }
+  }
 
   // Concepts taken from: https://css-tricks.com/prevent-page-scrolling-when-a-modal-is-open/
   useEffect(() => {
@@ -65,19 +90,11 @@ export default function Modal({
     };
   }, [isOpen]);
 
-  function closeFromOverlay(target: EventTarget) {
-    const el = dialogEl.current ? (dialogEl.current! as HTMLElement) : null;
-    if (el && !el.contains(target as Node)) {
-      onClose();
-    } else if (!el) {
-      onClose();
-    }
-  }
-
   const inlineStyles: React.CSSProperties = {};
 
   if (typeof contentWidth === 'number') {
-    inlineStyles.width = contentWidth;
+    inlineStyles.width = '100%';
+    inlineStyles.maxWidth = contentWidth;
   }
   if (typeof contentVerticalPosition === 'number') {
     inlineStyles.top = contentVerticalPosition;
@@ -88,15 +105,16 @@ export default function Modal({
 
   return isOpen
     ? ReactDOM.createPortal(
-        <>
-          <div
-            className={classnames(styles.Modal, className)}
-            onClick={event => closeFromOverlay(event.target)}
-          />
-          <FocusTrap>
+        <FocusTrap focusTrapOptions={{ escapeDeactivates: false }}>
+          <div className={styles.ModalContainer}>
+            <div
+              className={classnames(styles.Modal, className)}
+              onClick={() => typeof onClose === 'function' && onClose()}
+            />
+
             <div
               role="dialog"
-              aria-labelledby={title}
+              aria-labelledby="dialog-title"
               aria-modal="true"
               className={classnames(
                 styles.Dialog,
@@ -115,23 +133,26 @@ export default function Modal({
               style={inlineStyles}
             >
               <header
+                id="dialog-title"
                 className={styles.Header}
                 style={{
                   justifyContent: !!title ? 'space-between' : 'flex-end',
                 }}
               >
                 {!!title && <Heading size="small">{title}</Heading>}
-                <button
-                  className={styles.ButtonClose}
-                  onClick={() => onClose()}
-                >
-                  <CloseIcon />
-                </button>
+                {showCloseButton && (
+                  <button
+                    className={styles.ButtonClose}
+                    onClick={() => typeof onClose === 'function' && onClose()}
+                  >
+                    <CloseIcon />
+                  </button>
+                )}
               </header>
               <div className={styles.Content}>{children}</div>
             </div>
-          </FocusTrap>
-        </>,
+          </div>
+        </FocusTrap>,
         appendTo
       )
     : null;

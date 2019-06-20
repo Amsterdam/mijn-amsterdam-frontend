@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, addSeconds } from 'date-fns';
 import NL_LOCALE from 'date-fns/locale/nl';
 import { DEFAULT_DATE_FORMAT } from 'App.constants';
 import { KeyboardEvent, MouseEvent } from 'react';
@@ -9,6 +9,10 @@ export function dateFormat(date: string | Date, fmt: string): string {
 
 export function defaultDateFormat(date: string | Date): string {
   return dateFormat(date, DEFAULT_DATE_FORMAT);
+}
+
+export function formattedTimeFromSeconds(seconds: number) {
+  return dateFormat(addSeconds(new Date(0), seconds), 'mm:ss');
 }
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685

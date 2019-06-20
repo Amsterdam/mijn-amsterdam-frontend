@@ -3,7 +3,7 @@ import useMyCasesApi from 'hooks/api/my-cases-api.hook';
 import useMyTipsApi from 'hooks/api/my-tips-api.hook';
 import useMyUpdatesApi from 'hooks/api/my-updates-api.hook';
 import useSessionApi, { SessionApiState } from 'hooks/api/session.api.hook';
-import useMyChapters from 'hooks/myChapters.hook';
+import useMyChapters from 'hooks/api/myChapters.hook';
 import React, { createContext } from 'react';
 
 import { ComponentChildren } from './App.types';
@@ -13,7 +13,7 @@ import useWmoApi, { WmoApiState } from './hooks/api/api.wmo';
 import { MyCasesApiState } from './hooks/api/my-cases-api.hook';
 import { MyTipsApiState } from './hooks/api/my-tips-api.hook';
 import { MyUpdatesApiState } from './hooks/api/my-updates-api.hook';
-import { MyChaptersApiState } from './hooks/myChapters.hook';
+import { MyChaptersApiState } from './hooks/api/myChapters.hook';
 
 export interface AppState {
   BRP: BrpApiState;
