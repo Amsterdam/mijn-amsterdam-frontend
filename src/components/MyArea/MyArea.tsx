@@ -40,6 +40,25 @@ export function MyAreaMap({ trackCategory }: MyAreaMapComponentProps) {
   useEffect(() => {
     trackItemPresentation(trackCategory, 'Embed_kaart');
   }, []);
+
+  const address = 'Weesperstraat 113';
+  const [{ data }] = useDataApi({
+    url: `https://api.data.amsterdam.nl/atlas/search/adres/?q=${address}`,
+  });
+
+  let url = `${MAP_URL}&center=${DEFAULT_LON}%2C${DEFAULT_LAT}&zoom=${DEFAULT_ZOOM}`;
+
+  if (data.results && data.results.length) {
+    const {
+      results: [
+        {
+          centroid: [lat, lon],
+        },
+      ],
+    } = data;
+    url = `${MAP_URL}&center=${lon}%2C${lat}&zoom=${13}`;
+  }
+
   return (
     <iframe
       id="mapIframe"

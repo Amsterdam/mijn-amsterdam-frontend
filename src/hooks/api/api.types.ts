@@ -15,3 +15,5 @@ export interface ApiState {
   data: any;
   errorMessage: string | null;
 }
+
+export type RefetchFunction = (options: ApiRequestOptions) => void;
