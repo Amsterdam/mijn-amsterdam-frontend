@@ -37,7 +37,8 @@ describe('Modal test', () => {
     );
     expect(component.find('[className*="Dialog"]')).toHaveLength(1);
     expect(component.find('[className*="Dialog"]').prop('style')).toEqual({
-      width: 100,
+      width: '100%',
+      maxWidth: 100,
       left: 10,
       top: 10,
     });
