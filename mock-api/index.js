@@ -1,11 +1,7 @@
-const dyson = require('dyson');
 const os = require('os');
 const ifaces = os.networkInterfaces();
 
-const options = {
-  configDir: `${__dirname}/`,
-  port: 5000,
-};
+const [dir, port] = process.argv.slice(2);
 
 // Get network ip for localhost
 Object.keys(ifaces).forEach(function(ifname) {
@@ -21,14 +17,7 @@ Object.keys(ifaces).forEach(function(ifname) {
   });
 });
 
-const configs = dyson.getConfigurations(options);
-const appBefore = dyson.createServer(options);
-
-appBefore.use((req, res, next) => {
-  // Put your middleware here!
-  next();
-});
-
-dyson.registerServices(appBefore, options, configs);
-
-console.log(`Dyson listening on ${exports.ip}:${options.port}`);
+const configDir = process.cwd() + '/' + dir;
+console.log(
+  `Dyson listening on ${exports.ip}:${port} and serving from: ${configDir}`
+);
