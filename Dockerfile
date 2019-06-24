@@ -18,6 +18,7 @@ COPY tsconfig.json /app/
 COPY paths.json /app/
 COPY .env* /app/
 COPY env-copy.sh /app/
+COPY mock-api /app/mock-api
 
 # Builds are always production builds but can have differences in server environment (test/acceptance/production)
 # Try to overwrite the default production file if a PROD_ENV is set as build-arg

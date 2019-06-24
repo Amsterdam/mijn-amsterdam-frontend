@@ -1,6 +1,6 @@
 describe('Landing page and login', function() {
   const LOGIN_BTN_TEXT = 'Inloggen met DigiD';
-  const USERNAME = 'Anna Maria Petra Jansma';
+  const USERNAME = 'Ann Michelle Johanna Janssen';
   const URL = 'http://localhost:3000/';
   const LOGIN_URL = 'localhost:5000/api/login';
   const LOGOUT_URL = 'localhost:5000/api/logout';

@@ -1,0 +1,17 @@
+version: '3.5'
+services:
+  mock-api:
+    image: mock-api
+    ports:
+      - '5000:5000'
+      - '3000:3000'
+  app:
+    image: app
+    depends_on:
+      - mock-api
+    network_mode: 'service:mock-api'
+  cypress:
+    image: cypress
+    depends_on:
+      - app
+    network_mode: 'service:mock-api'
