@@ -14,7 +14,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import useRouter from 'use-react-router';
 
-import { AppRoutes, PageTitles, PageTitleMain } from './App.constants';
+import { AppRoutes } from './App.constants';
 import styles from './App.module.scss';
 import AppState, {
   AppState as AppStateInterface,
@@ -26,6 +26,7 @@ import NotFound from './pages/NotFound/NotFound';
 import Profile from './pages/Profile/Profile';
 import Proclaimer from 'pages/Proclaimer/Proclaimer';
 import AutoLogoutDialog from 'components/AutoLogoutDialog/AutoLogoutDialog';
+import { usePageChange } from 'hooks/pageChange';
 
 interface MainAppProps {
   appState: AppStateInterface;
@@ -34,12 +35,7 @@ interface MainAppProps {
 function MainApp({ appState: { SESSION, BRP } }: MainAppProps) {
   const { location } = useRouter();
 
-  useEffect(() => {
-    // Scroll to top on route change
-    window.scrollTo(0, 0);
-    // Change Page title on route change
-    document.title = PageTitles[location.pathname] || PageTitleMain;
-  }, [location.pathname]);
+  usePageChange();
 
   return location.pathname === AppRoutes.MY_AREA ? (
     <MyArea />

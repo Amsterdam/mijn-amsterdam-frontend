@@ -1,4 +1,4 @@
-import { LOGIN_URL, PageTitleLanding } from 'App.constants';
+import { LOGIN_URL } from 'App.constants';
 import { ReactComponent as BetaLabel } from 'assets/images/beta-label.svg';
 import DigiDLogo from 'assets/images/digid-logo.png';
 import Heading from 'components/Heading/Heading';
@@ -9,6 +9,7 @@ import useDocumentTitle from 'hooks/documentTitle.hook';
 import React from 'react';
 
 import styles from './Landing.module.scss';
+import { PageTitleLanding } from 'hooks/pageChange';
 
 export default () => {
   // NOTE: Custom title because this page is rendered outside of the <Router />
