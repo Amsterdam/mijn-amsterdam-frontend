@@ -1,0 +1,113 @@
+{
+  "persoon": {
+    "a-nummer": "1234567890",
+    "aanduidingNaamgebruik": "P",
+    "aanduidingNaamgebruikOmschrijving": "Geslachtsnaam echtgenoot/geregistreerd partner",
+    "bsn": "123456789",
+    "burgerlijkeStaat": "2",
+    "codeGeboorteplaats": "0974",
+    "datumInschrijving": "1966-09-13T00:00:00",
+    "geboorteLand": "6030",
+    "geboorteLandNaam": "Nederland",
+    "geboortedatum": "1946-05-19T00:00:00",
+    "geboortelandnaam": "Nederland",
+    "geboorteplaats": "0974",
+    "geboorteplaatsnaam": "Susteren",
+    "gemeenteVanInschrijving": "599",
+    "gemeentenaamInschrijving": "Rotterdam",
+    "geslachtsaanduiding": "V",
+    "geslachtsnaam": "Janssen",
+    "heeftAlsEchtgenootPartner": [
+      {
+        "datumSluiting": "1975-09-09T00:00:00",
+        "gerelateerde": {
+          "bsn": "123456789",
+          "geboortedatum": "1941-07-17T00:00:00",
+          "geslachtsnaam": "Vermeuren",
+          "voorletters": "H.",
+          "voornamen": "Henk"
+        }
+      },
+      {
+        "datumOntbinding": "1974-09-13T00:00:00",
+        "gerelateerde": {
+          "bsn": "234567890",
+          "geboortedatum": "1922-11-10T00:00:00",
+          "geslachtsnaam": "Hoever",
+          "voorletters": "E.",
+          "voornamen": "Eric",
+          "voorvoegselGeslachtsnaam": "van der"
+        }
+      }
+    ],
+    "heeftAlsKinderen": {
+      "gerelateerde": {
+        "geboortedatum": "1969-12-14T00:00:00",
+        "geslachtsnaam": "Vermeuren",
+        "voorletters": "R.",
+        "voornamen": "Rick"
+      }
+    },
+    "heeftAlsNationaliteit": {
+      "gerelateerde": {
+        "code": "1",
+        "omschrijving": "Nederlandse"
+      }
+    },
+    "heeftAlsOuders": [
+      {
+        "gerelateerde": {
+          "geboortedatum": "1924-11-10T00:00:00",
+          "geslachtsnaam": "Putte",
+          "voorletters": "E.",
+          "voornamen": "Eline"
+        }
+      },
+      {
+        "gerelateerde": {
+          "geboortedatum": "1924-06-22T00:00:00",
+          "geslachtsnaam": "Janssen",
+          "voorletters": "F.",
+          "voornamen": "Frits"
+        }
+      }
+    ],
+    "indicatieGeheim": "0",
+    "omschrijvingBurgerlijkeStaat": "Gehuwd",
+    "omschrijvingGeslachtsaanduiding": "Vrouw",
+    "omschrijvingIndicatieGeheim": "Geen beperking",
+    "opgemaakteNaam": "A.M.J. Vermeuren",
+    "tijdvakGeldigheid": {
+      "beginGeldigheid": "1946-05-19T00:00:00"
+    },
+    "verblijfsadres": {
+      "begindatumVerblijf": "1987-10-02T00:00:00",
+      "huisnummer": "24",
+      "identificatie": "0599200049002401",
+      "openbareRuimteNaam": "Malm\u00f6pad",
+      "postcode": "3067PW",
+      "straatnaam": "Malm\u00f6pad",
+      "woonplaatsNaam": "Rotterdam"
+    },
+    "verblijftIn": {
+      "gerelateerde": {
+        "adresAanduidingGrp": {
+          "huisnummer": "24",
+          "identificatie": "0599200049002401",
+          "openbareRuimteNaam": "Malm\u00f6pad",
+          "postcode": "3067PW",
+          "straatnaam": "Malm\u00f6pad",
+          "woonplaatsNaam": "Rotterdam"
+        },
+        "authentiek": "J",
+        "identificatie": "0599010049002401",
+        "typering": "Verblijfsobject"
+      },
+      "tijdvakRelatie": {
+        "beginRelatie": "1987-10-02T00:00:00"
+      }
+    },
+    "voorletters": "A.M.J.",
+    "voornamen": "Ann Michelle Johanna"
+  }
+}

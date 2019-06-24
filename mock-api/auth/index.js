@@ -7,7 +7,6 @@ module.exports = {
   path: '/api/login|logout',
   cache: false,
   status: async (req, res, next) => {
-    // console.log(req.headers);
     if (req.url.endsWith('login')) {
       await state.setAuth(true);
       await state.setUserType(req.params.userType || 'BURGER');
