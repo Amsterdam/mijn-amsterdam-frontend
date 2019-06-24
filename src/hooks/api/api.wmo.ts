@@ -16,7 +16,7 @@ export default (offset?: number, limit?: number): WmoApiState => {
     ...rest,
     data: {
       ...data,
-      items: formatWmoApiResponse(data.items),
+      items: Array.isArray(data.items) ? formatWmoApiResponse(data.items) : [],
     },
   };
 };

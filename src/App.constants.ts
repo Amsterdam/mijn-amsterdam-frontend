@@ -44,6 +44,27 @@ export const AppRoutes = {
   MY_UPDATES: '/updates',
 };
 
+export const PageTitleMain = 'Mijn Amsterdam';
+export const PageTitleLanding = `Login met DigID | ${PageTitleMain}`;
+
+export const PageTitles = {
+  [AppRoutes.ROOT]: `Home | ${PageTitleMain}`,
+  [AppRoutes.BURGERZAKEN]: `Burgerzaken | ${PageTitleMain}`,
+  [AppRoutes.WONEN]: `Wonen | ${PageTitleMain}`,
+  [AppRoutes.BELASTINGEN]: `Belastingen | ${PageTitleMain}`,
+  [AppRoutes.ZORG]: `Zorg | ${PageTitleMain}`,
+  [AppRoutes.JEUGDHULP]: `Jeugdhulp | ${PageTitleMain}`,
+  [AppRoutes.INKOMEN]: `Werk & Inkomen | ${PageTitleMain}`,
+  [AppRoutes.STADSPAS]: `Stadspas | ${PageTitleMain}`,
+  [AppRoutes.BIJSTANDSUITKERING]: `Bijstandsuitkering | ${PageTitleMain}`,
+  [AppRoutes.BIJZONDERE_BIJSTAND]: `Bijzondere bijstand | ${PageTitleMain}`,
+  [AppRoutes.PROFILE]: `Profiel | ${PageTitleMain}`,
+  [AppRoutes.MY_AREA]: `Mijn buurt | ${PageTitleMain}`,
+  [AppRoutes.PROCLAIMER]: `Proclaimer | ${PageTitleMain}`,
+  [AppRoutes.MY_TIPS]: `Tips | ${PageTitleMain}`,
+  [AppRoutes.MY_UPDATES]: `Meldingen | ${PageTitleMain}`,
+};
+
 export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/login';
 export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL || '/logout';
 

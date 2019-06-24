@@ -23,6 +23,7 @@
     "node-persist": "^3.0.4",
     "react": "^16.8.3",
     "react-app-polyfill": "^0.2.2",
+    "react-circular-progressbar": "^2.0.1",
     "react-dom": "^16.8.3",
     "react-hooks-testing-library": "^0.5.0",
     "react-router-dom": "^5.0.0",

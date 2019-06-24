@@ -12,9 +12,9 @@ import Zorg from 'pages/Zorg/Zorg';
 import ZorgDetail from 'pages/ZorgDetail/ZorgDetail';
 import React, { useEffect } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import useReactRouter from 'use-react-router';
+import useRouter from 'use-react-router';
 
-import { AppRoutes } from './App.constants';
+import { AppRoutes, PageTitles, PageTitleMain } from './App.constants';
 import styles from './App.module.scss';
 import AppState, {
   AppState as AppStateInterface,
@@ -25,17 +25,20 @@ import MainHeader from './components/MainHeader/MainHeader';
 import NotFound from './pages/NotFound/NotFound';
 import Profile from './pages/Profile/Profile';
 import Proclaimer from 'pages/Proclaimer/Proclaimer';
+import AutoLogoutDialog from 'components/AutoLogoutDialog/AutoLogoutDialog';
 
 interface MainAppProps {
   appState: AppStateInterface;
 }
 
 function MainApp({ appState: { SESSION, BRP } }: MainAppProps) {
-  const { location } = useReactRouter();
+  const { location } = useRouter();
 
   useEffect(() => {
     // Scroll to top on route change
     window.scrollTo(0, 0);
+    // Change Page title on route change
+    document.title = PageTitles[location.pathname] || PageTitleMain;
   }, [location.pathname]);
 
   return location.pathname === AppRoutes.MY_AREA ? (
@@ -83,7 +86,8 @@ export default function App() {
     <BrowserRouter>
       <SessionState
         render={session => {
-          if (session.isLoading) {
+          // If session was previously authenticated we don't want to show the loader again
+          if (session.isLoading && session.isPristine) {
             return (
               <p className={styles.PreLoader}>
                 Mijn amsterdam wordt geladen...
@@ -92,10 +96,13 @@ export default function App() {
           }
           // Render the main app only if we are authenticated
           return session.isAuthenticated ? (
-            <AppState
-              session={session}
-              render={appState => <MainApp appState={appState} />}
-            />
+            <>
+              <AutoLogoutDialog session={session} />
+              <AppState
+                session={session}
+                render={appState => <MainApp appState={appState} />}
+              />
+            </>
           ) : (
             <div className={styles.NotYetAuthenticated}>
               <MainHeader />

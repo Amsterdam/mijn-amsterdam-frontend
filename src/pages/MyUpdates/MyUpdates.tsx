@@ -34,7 +34,9 @@ export default () => {
             Uw meldingen kunnen op dit moment niet geladen worden.
           </Alert>
         )}
-        <h3 className={styles.PanelHeading}>Actueel</h3>
+        <Heading el="h3" size="mediumLarge" className={styles.PanelHeading}>
+          Actueel
+        </Heading>
         <MyUpdates
           isLoading={isLoading}
           total={total}
@@ -43,7 +45,9 @@ export default () => {
       </PageContentMainBody>
       <div className={styles.PreviousUpdatesPanel}>
         <PageContentMainBody variant="boxed">
-          <Heading className={styles.PanelHeading}>Eerdere meldingen</Heading>
+          <Heading el="h3" size="mediumLarge" className={styles.PanelHeading}>
+            Eerdere meldingen
+          </Heading>
           <MyUpdates
             isLoading={isLoading}
             total={total}

@@ -47,7 +47,6 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
         onClose={() => setModalOpen(false)}
         title="U ziet misschien niet al uw gegevens"
         contentVerticalPosition={el.current ? Math.max(top, 0) : 'center'}
-        appendTo={document.getElementById('modal-root')!}
       >
         <div className={styles.ErrorInfo}>
           <p>De volgende gegevens kunnen niet opgehaald worden:</p>

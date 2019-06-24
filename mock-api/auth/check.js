@@ -2,18 +2,21 @@ const state = require('./state');
 
 module.exports = {
   path: '/api/auth/check',
+  cache: false,
   status: async (req, res, next) => {
-    if (!(await state.isAuthenticated())) {
+    const isAuthenticated = await state.isAuthenticated();
+    if (!isAuthenticated) {
       res.status(403);
     }
     next();
   },
-  template: {
-    isAuthenticated: async (params, query, body, x, headers) => {
-      return state.isAuthenticated();
-    },
-    userType: async (params, query, body, x, headers) => {
-      return state.getUserType();
-    },
+  template: async (params, query, body, x, headers) => {
+    const isAuthenticated = await state.isAuthenticated();
+    const userType = await state.getUserType();
+    const response = {
+      isAuthenticated,
+      userType,
+    };
+    return response;
   },
 };

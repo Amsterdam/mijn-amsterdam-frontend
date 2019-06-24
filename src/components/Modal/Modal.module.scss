@@ -10,6 +10,13 @@
   z-index: z-index(modal);
 }
 
+.ModalContainer {
+  display: none;
+  &:last-child {
+    display: block;
+  }
+}
+
 .Dialog {
   background-color: $color-white;
   position: fixed;

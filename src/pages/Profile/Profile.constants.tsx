@@ -9,6 +9,10 @@ export const panelConfig = {
         url: ExternalUrls.CHANGE_PERSONAL_DATA,
         external: true,
       },
+      {
+        title: 'Voorgenomen huwelijk doorgeven',
+        url: ExternalUrls.VOORGENOMEN_HUWELIJK,
+      },
     ],
   },
   partner: {
@@ -27,10 +31,6 @@ export const panelConfig = {
       {
         title: 'Trouwen en partnerschap',
         url: ExternalUrls.TROUWEN_EN_PARTNERSCHAP,
-      },
-      {
-        title: 'Voorgenomen huwelijk doorgeven',
-        url: ExternalUrls.VOORGENOMEN_HUWELIJK,
       },
       {
         title: 'Echtscheiding',
@@ -54,7 +54,7 @@ export const brpInfoLabels = {
   FirstName: 'Voornamen',
   LastName: 'Achternaam',
   Gender: 'Geslacht',
-  BSN: 'Bsn',
+  BSN: 'BSN',
   DateOfBirth: 'Geboortedatum',
   PlaceOfBirth: 'Geboorteplaats',
   CountryOfBirth: 'Geboorteland',
