@@ -26,10 +26,7 @@ node {
       sh "docker-compose -p mijn_amsterdam_frontend -f docker-compose.yml build && " +
       "docker-compose -p mijn_amsterdam_frontend -f docker-compose.yml run --rm test"
     }
-  }
-
-  stage("Test E2E") {
-    tryStep "test", {
+    tryStep "test e2e", {
       sh "docker-compose -f docker-compose-cypress.yml build && " +
       "docker-compose -f docker-compose-cypress.yml run --rm"
     }
