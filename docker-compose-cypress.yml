@@ -1,17 +1,23 @@
 version: '3.5'
 services:
   mock-api:
-    image: mock-api
+    build:
+      context: .
+      dockerfile: Dockerfile.mock-api
     ports:
       - '5000:5000'
       - '3000:3000'
   app:
-    image: app
+    build:
+      context: .
+      dockerfile: Dockerfile.app
     depends_on:
       - mock-api
     network_mode: 'service:mock-api'
   cypress:
-    image: cypress
+    build:
+      context: .
+      dockerfile: Dockerfile.cypress
     depends_on:
       - app
     network_mode: 'service:mock-api'
