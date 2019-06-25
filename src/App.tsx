@@ -1,3 +1,6 @@
+import AutoLogoutDialog from 'components/AutoLogoutDialog/AutoLogoutDialog';
+import { trackEvent, usePiwik } from 'hooks/piwik.hook';
+import usePageChange from 'hooks/pageChange';
 import Belastingen from 'pages/Belastingen/Belastingen';
 import Dashboard from 'pages/Dashboard/Dashboard';
 import Inkomen from 'pages/Inkomen/Inkomen';
@@ -7,6 +10,7 @@ import Landing from 'pages/Landing/Landing';
 import MyArea from 'pages/MyArea/MyArea';
 import MyTips from 'pages/MyTips/MyTips';
 import MyUpdates from 'pages/MyUpdates/MyUpdates';
+import Proclaimer from 'pages/Proclaimer/Proclaimer';
 import Wonen from 'pages/Wonen/Wonen';
 import Zorg from 'pages/Zorg/Zorg';
 import ZorgDetail from 'pages/ZorgDetail/ZorgDetail';
@@ -24,12 +28,20 @@ import MainFooter from './components/MainFooter/MainFooter';
 import MainHeader from './components/MainHeader/MainHeader';
 import NotFound from './pages/NotFound/NotFound';
 import Profile from './pages/Profile/Profile';
-import Proclaimer from 'pages/Proclaimer/Proclaimer';
-import AutoLogoutDialog from 'components/AutoLogoutDialog/AutoLogoutDialog';
-import { usePageChange } from 'hooks/pageChange';
 
 interface MainAppProps {
   appState: AppStateInterface;
+}
+
+function track(event: any) {
+  // NOTE: Potentially dangerous because dom traversal could go down to some parent element with a data-track attribute.
+  const trackNode = event.target.closest('[data-track]');
+  if (trackNode && trackNode.dataset.track) {
+    const payload = trackNode.dataset.track;
+    if (payload) {
+      trackEvent(payload.split(','));
+    }
+  }
 }
 
 function MainApp({ appState: { SESSION, BRP } }: MainAppProps) {
@@ -65,7 +77,10 @@ function MainApp({ appState: { SESSION, BRP } }: MainAppProps) {
             component={InkomenDetail}
           />
           <Route path={AppRoutes.INKOMEN} component={Inkomen} />
-          <Route path={`${AppRoutes.ZORG}/:id`} component={ZorgDetail} />
+          <Route
+            path={`${AppRoutes.ZORG_VOORZIENINGEN}/:id`}
+            component={ZorgDetail}
+          />
           <Route path={AppRoutes.ZORG} component={Zorg} />
           <Route path={AppRoutes.MY_AREA} component={MyArea} />
           <Route path={AppRoutes.PROCLAIMER} component={Proclaimer} />
@@ -78,6 +93,11 @@ function MainApp({ appState: { SESSION, BRP } }: MainAppProps) {
 }
 
 export default function App() {
+  usePiwik();
+  useEffect(() => {
+    window.addEventListener('click', track);
+    return () => window.removeEventListener('click', track);
+  }, []);
   return (
     <BrowserRouter>
       <SessionState
@@ -93,11 +113,11 @@ export default function App() {
           // Render the main app only if we are authenticated
           return session.isAuthenticated ? (
             <>
-              <AutoLogoutDialog session={session} />
               <AppState
                 session={session}
                 render={appState => <MainApp appState={appState} />}
               />
+              <AutoLogoutDialog session={session} />
             </>
           ) : (
             <div className={styles.NotYetAuthenticated}>

@@ -6,14 +6,26 @@ import PageContentMain from 'components/PageContentMain/PageContentMain';
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
 import useDocumentTitle from 'hooks/documentTitle.hook';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import styles from './Landing.module.scss';
 import { PageTitleLanding } from 'hooks/pageChange';
+import { trackItemPresentation, itemClickPayload } from 'hooks/piwik.hook';
+
+const CATEGORY = 'MA_Landingspagina';
+const DIGID_LOGIN_BUTTON = 'DigiD_login_button';
 
 export default () => {
   // NOTE: Custom title because this page is rendered outside of the <Router />
   useDocumentTitle(PageTitleLanding);
+
+  const loginButton = useRef(null);
+
+  useEffect(() => {
+    if (loginButton.current) {
+      trackItemPresentation(CATEGORY, DIGID_LOGIN_BUTTON);
+    }
+  }, []);
 
   return (
     <PageContentMain>
@@ -33,7 +45,13 @@ export default () => {
           aanvragen volgen en krijgt u tips.
         </p>
         <Heading size="medium">Log in op uw persoonlijke pagina</Heading>
-        <a role="button" href={LOGIN_URL} className={styles.LoginBtn}>
+        <a
+          data-track={itemClickPayload(CATEGORY, DIGID_LOGIN_BUTTON)}
+          ref={loginButton}
+          role="button"
+          href={LOGIN_URL}
+          className={styles.LoginBtn}
+        >
           <img src={DigiDLogo} alt="DigiD logo" className={styles.LoginLogo} />
           <span>Inloggen met DigiD</span>
         </a>

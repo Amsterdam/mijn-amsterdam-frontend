@@ -1,6 +1,8 @@
 import { AppRoutes } from 'App.constants';
 import { useEffect } from 'react';
 import useRouter from 'use-react-router';
+import { trackPageView } from './piwik.hook';
+import { useDebouncedCallback } from 'use-debounce';
 
 export const PageTitleMain = 'Mijn Amsterdam';
 export const PageTitleLanding = `Login met DigID | ${PageTitleMain}`;
@@ -28,17 +30,27 @@ const sortedPageTitleRoutes = Object.keys(PageTitles).sort((a, b) => {
   return a.length < b.length ? 1 : 0;
 });
 
-export function usePageChange() {
+export default function usePageChange() {
   const { location } = useRouter();
-  useEffect(() => {
-    // Scroll to top on route change
-    window.scrollTo(0, 0);
-    // Change Page title on route change
-    const index = sortedPageTitleRoutes.findIndex(route =>
-      location.pathname.startsWith(route)
-    );
 
-    document.title =
-      index !== -1 ? PageTitles[sortedPageTitleRoutes[index]] : PageTitleMain;
-  }, [location.pathname]);
+  const [pageChangeCallback] = useDebouncedCallback(
+    () => {
+      // Scroll to top on route change
+      window.scrollTo(0, 0);
+
+      // Change Page title on route change
+      const index = sortedPageTitleRoutes.findIndex(route =>
+        location.pathname.startsWith(route)
+      );
+
+      document.title =
+        index !== -1 ? PageTitles[sortedPageTitleRoutes[index]] : PageTitleMain;
+
+      trackPageView();
+    },
+    20,
+    [location.pathname]
+  );
+
+  pageChangeCallback();
 }

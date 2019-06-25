@@ -48,9 +48,16 @@ export default function useMyChapters(
     const items = myChaptersMenuItems.filter(item => {
       return isChapterActive(item, apiStates);
     });
+
+    const isLoading = !!(
+      WMO.isLoading &&
+      FOCUS.isLoading &&
+      ERFPACHT.isLoading
+    );
+
     return {
       items,
-      isLoading: !!(WMO.isLoading && FOCUS.isLoading && ERFPACHT.isLoading),
+      isLoading,
     };
   }, [WMO.isLoading, FOCUS.isLoading, ERFPACHT.isLoading]);
 

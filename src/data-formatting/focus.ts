@@ -499,6 +499,8 @@ export function formatFocusUpdateItem(
   const stepLabelSource = !!sourceData.decision
     ? stepLabels[sourceData.decision]
     : stepLabels;
+  const route =
+    AppRoutesByProductTitle[item.productTitle] || AppRoutes.BIJZONDERE_BIJSTAND;
 
   return {
     id: step.id,
@@ -512,7 +514,7 @@ export function formatFocusUpdateItem(
       replaceSourceDataTags(stepLabelSource.update.description, sourceData),
     isActual,
     link: {
-      to: `${AppRoutesByProductTitle[item.productTitle]}/${item.id}#${step.id}`,
+      to: `${route}/${item.id}#${step.id}`,
       title: 'Meer informatie',
     },
   };

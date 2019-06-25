@@ -28,6 +28,7 @@ export const AppRoutes = {
   WONEN: '/wonen',
   BELASTINGEN: '/belastingen',
   ZORG: '/zorg',
+  ZORG_VOORZIENINGEN: '/zorg/voorzieningen',
   JEUGDHULP: '/jeugdhulp',
   INKOMEN: '/inkomen',
   STADSPAS: '/inkomen/stadspas',

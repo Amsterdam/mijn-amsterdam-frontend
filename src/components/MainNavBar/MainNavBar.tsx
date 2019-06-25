@@ -28,6 +28,10 @@ import { useTabletScreen } from 'hooks/media.hook';
 import useRouter from 'use-react-router';
 import classnames from 'classnames';
 import { Person } from 'data-formatting/brp';
+import {
+  trackItemPresentation,
+  itemClickPayload,
+} from '../../hooks/piwik.hook';
 
 const MenuToggleBtnId = 'MenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -48,6 +52,13 @@ interface SecondaryLinksProps {
 type MainNavBarProps = SecondaryLinksProps;
 
 function SecondaryLinks({ person, hasMessages = false }: SecondaryLinksProps) {
+  const hasFirstName = !!(person && person.firstName);
+  useEffect(() => {
+    if (hasFirstName) {
+      trackItemPresentation('MA_Header/Secundaire_Links', 'Link_naar_Profiel');
+    }
+  }, [hasFirstName]);
+
   return (
     <div className={styles.secondaryLinks}>
       <ButtonLinkExternal
@@ -103,6 +114,10 @@ function getMenuItem(
               to={to}
               id={id}
               target={target}
+              data-track={itemClickPayload(
+                'MA_Header/Primaire_Links/Mijn_Themas_submenu',
+                `Link_naar_${id}`
+              )}
               onFocus={() => setSubMenuVisibility(item.id, true)}
             >
               {Icon && <Icon fill={Colors.neutralGrey4} aria-hidden="true" />}
@@ -127,6 +142,10 @@ function getMenuItem(
       to={item.to}
       {...interactionHandlers}
       title={item.title}
+      data-track={itemClickPayload(
+        'MA_Header/Primaire_Links',
+        `Link_naar_${item.id}`
+      )}
     >
       {item.title}
     </MainNavLink>

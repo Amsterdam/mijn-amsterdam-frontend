@@ -1,11 +1,12 @@
-import { AppRoutes, Chapters, Chapter, ExternalUrls } from 'App.constants';
-import { ReactComponent as BurgerzakenIcon } from 'assets/images/burgerzaken.svg';
-import { ReactComponent as ZorgIcon } from 'assets/images/zorg.svg';
-import { ReactComponent as WonenIcon } from 'assets/images/wonen.svg';
-import { ReactComponent as InkomenIcon } from 'assets/images/inkomen.svg';
-import { ReactComponent as BelastingenIcon } from 'assets/images/belastingen.svg';
+import { AppRoutes, Chapter, Chapters, ExternalUrls } from 'App.constants';
+import { LinkProps } from 'App.types';
 import { ReactComponent as JeugdhulpIcon } from 'assets/icons/Passport.svg';
-import { LinkProps, SVGComponent } from 'App.types';
+import { ReactComponent as BelastingenIcon } from 'assets/images/belastingen.svg';
+import { ReactComponent as BurgerzakenIcon } from 'assets/images/burgerzaken.svg';
+import { ReactComponent as InkomenIcon } from 'assets/images/inkomen.svg';
+import { ReactComponent as WonenIcon } from 'assets/images/wonen.svg';
+import { ReactComponent as ZorgIcon } from 'assets/images/zorg.svg';
+import { FunctionComponent, SVGProps } from 'react';
 
 export type MainMenuId =
   | Chapter
@@ -16,7 +17,7 @@ export type MainMenuId =
 
 export interface MenuItem extends LinkProps {
   id: MainMenuId;
-  Icon?: SVGComponent;
+  Icon?: FunctionComponent<SVGProps<SVGSVGElement>>;
   submenuItems?: MenuItem[];
   isLoading?: boolean;
 }
