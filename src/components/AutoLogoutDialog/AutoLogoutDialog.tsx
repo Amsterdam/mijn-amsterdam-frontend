@@ -13,8 +13,9 @@ import styles from './AutoLogoutDialog.module.scss';
 import classnames from 'classnames';
 
 const ONE_MINUTE_SECONDS = 60;
-const AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS = 10 * ONE_MINUTE_SECONDS;
-const AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS = 2 * ONE_MINUTE_SECONDS;
+const AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS = 13 * ONE_MINUTE_SECONDS;
+const AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS =
+  2 * ONE_MINUTE_SECONDS + 10; // Add 10 seconds time mismatch range
 const TITLE = 'Wilt u doorgaan?';
 
 export interface AutoLogoutDialogSettings {
@@ -83,6 +84,19 @@ export default function AutoLogoutDialog({
   const [originalTitle] = useState(document.title);
   const [continueButtonIsVisible, setContinueButtonVisibility] = useState(true);
 
+  useEffect(() => {
+    if (session.isDirty && !session.isLoading && session.isAuthenticated) {
+      resetAutoLogout();
+    }
+  }, [session.isLoading]);
+
+  function resetAutoLogout() {
+    setContinueButtonVisibility(true);
+    setOpen(false);
+    reset();
+    resume();
+  }
+
   function showLoginScreen() {
     setContinueButtonVisibility(false);
     session.refetch();
@@ -90,9 +104,7 @@ export default function AutoLogoutDialog({
 
   function continueUsingApp() {
     session.refetch();
-    setOpen(false);
-    reset();
-    resume();
+    resetAutoLogout();
   }
 
   const onTick = (count: number) => {
@@ -145,7 +157,7 @@ export default function AutoLogoutDialog({
           >
             {continueButtonIsVisible
               ? 'Nu uitloggen'
-              : 'U wordt nu automatisch uitgelogd...'}
+              : 'Bezig met controleren van uw sessie'}
           </a>
         </p>
       </div>
