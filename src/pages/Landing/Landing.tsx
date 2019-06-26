@@ -46,7 +46,6 @@ export default () => {
         </p>
         <Heading size="medium">Log in op uw persoonlijke pagina</Heading>
         <a
-          data-track={itemClickPayload(CATEGORY, DIGID_LOGIN_BUTTON)}
           ref={loginButton}
           role="button"
           href={LOGIN_URL}
