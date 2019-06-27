@@ -29,18 +29,21 @@ type LinkPayload = ['trackLink', string, LinkType];
 const theWindow = window as any;
 let referrerUrl: string;
 
+function pushToPiwik(payload: any) {
+  theWindow._paq = theWindow._paq || [];
+  theWindow._paq.push(payload);
+}
+
 // Initialize connection with Piwik
 export function usePiwik() {
-  theWindow._paq = theWindow._paq || [];
-
-  if (theWindow._paq.length === 0) {
-    theWindow._paq.push(['enableLinkTracking']);
-    theWindow._paq.push(['setUserId', 'Tim']);
-    theWindow._paq.push([
+  if (!theWindow._paq || theWindow._paq.length === 0) {
+    pushToPiwik(['enableLinkTracking']);
+    pushToPiwik(['setUserId', 'Tim']);
+    pushToPiwik([
       'setTrackerUrl',
       `${TrackerConfig.url}/${TrackerConfig.phpFilename}`,
     ]);
-    theWindow._paq.push(['setSiteId', TrackerConfig.siteId]);
+    pushToPiwik(['setSiteId', TrackerConfig.siteId]);
   }
 
   // Is only loaded once, has internal caching.
@@ -50,16 +53,16 @@ export function usePiwik() {
 export function trackEvent(
   payload: EventPayload | [EventPayload, LinkPayload]
 ) {
-  return theWindow._paq.push(payload);
+  return pushToPiwik(payload);
 }
 
 export function trackPageView(title?: string, url?: string) {
-  theWindow._paq.push(['setDocumentTitle', title || document.title]);
+  pushToPiwik(['setDocumentTitle', title || document.title]);
   if (referrerUrl) {
-    theWindow._paq.push(['setReferrerUrl', referrerUrl]);
+    pushToPiwik(['setReferrerUrl', referrerUrl]);
   }
-  theWindow._paq.push(['setCustomUrl', url || document.location.href]);
-  theWindow._paq.push(['trackPageView']);
+  pushToPiwik(['setCustomUrl', url || document.location.href]);
+  pushToPiwik(['trackPageView']);
   referrerUrl = url || document.location.href;
 }
 
