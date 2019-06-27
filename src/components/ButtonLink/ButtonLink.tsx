@@ -11,6 +11,8 @@ export interface ButtonLinkProps {
   className?: any;
   white?: boolean;
   target?: LinkProps['target'];
+  download?: string;
+  'data-track'?: any[];
 }
 
 export default function ButtonLink({

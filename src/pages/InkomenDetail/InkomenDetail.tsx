@@ -12,7 +12,7 @@ import PageContentMainHeadingBackLink from 'components/PageContentMainHeadingBac
 import StatusLine from 'components/StatusLine/StatusLine';
 import Alert from 'components/Alert/Alert';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
-import { FocusItem } from '../../data-formatting/focus';
+import { FocusItem } from 'data-formatting/focus';
 
 export default () => {
   const {
@@ -34,7 +34,10 @@ export default () => {
         <ChapterHeadingIcon chapter={Chapters.INKOMEN} />
 
         <Heading el="h2" className={styles.PageHeading}>
-          <PageContentMainHeadingBackLink to={AppRoutes.INKOMEN}>
+          <PageContentMainHeadingBackLink
+            trackCategory="MA_Inkomen/Detail_Pagina"
+            to={AppRoutes.INKOMEN}
+          >
             Werk & inkomen
           </PageContentMainHeadingBackLink>
           {!isLoading && FocusItem ? (
@@ -57,7 +60,10 @@ export default () => {
       )}
       {FocusItem && (
         <PageContentMainBody>
-          <StatusLine items={FocusItem.process} />
+          <StatusLine
+            items={FocusItem.process}
+            trackCategory="MA_Inkomen/Detail_pagina/Metro_lijn"
+          />
         </PageContentMainBody>
       )}
     </PageContentMain>

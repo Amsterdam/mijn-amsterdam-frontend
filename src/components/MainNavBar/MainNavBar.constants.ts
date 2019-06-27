@@ -10,10 +10,10 @@ import { FunctionComponent, SVGProps } from 'react';
 
 export type MainMenuId =
   | Chapter
-  | 'home'
-  | 'my-chapters'
-  | 'my-area'
-  | 'my-updates';
+  | 'DASHBOARD'
+  | 'MIJN_THEMAS'
+  | 'MIJN_BUURT'
+  | 'MIJN_MELDINGEN';
 
 export interface MenuItem extends LinkProps {
   id: MainMenuId;
@@ -23,10 +23,10 @@ export interface MenuItem extends LinkProps {
 }
 
 export const mainMenuItemId: { [key: string]: MainMenuId } = {
-  HOME: 'home',
-  MY_CHAPTERS: 'my-chapters',
-  MY_AREA: 'my-area',
-  MY_UPDATES: 'my-updates',
+  HOME: 'DASHBOARD',
+  MY_CHAPTERS: 'MIJN_THEMAS',
+  MY_AREA: 'MIJN_BUURT',
+  MY_UPDATES: 'MIJN_MELDINGEN',
 };
 
 export const myChaptersMenuItems: MenuItem[] = [

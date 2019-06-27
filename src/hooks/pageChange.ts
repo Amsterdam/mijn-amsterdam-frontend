@@ -33,24 +33,18 @@ const sortedPageTitleRoutes = Object.keys(PageTitles).sort((a, b) => {
 export default function usePageChange() {
   const { location } = useRouter();
 
-  const [pageChangeCallback] = useDebouncedCallback(
-    () => {
-      // Scroll to top on route change
-      window.scrollTo(0, 0);
+  useEffect(() => {
+    // Scroll to top on route change
+    window.scrollTo(0, 0);
 
-      // Change Page title on route change
-      const index = sortedPageTitleRoutes.findIndex(route =>
-        location.pathname.startsWith(route)
-      );
+    // Change Page title on route change
+    const index = sortedPageTitleRoutes.findIndex(route =>
+      location.pathname.startsWith(route)
+    );
 
-      document.title =
-        index !== -1 ? PageTitles[sortedPageTitleRoutes[index]] : PageTitleMain;
+    document.title =
+      index !== -1 ? PageTitles[sortedPageTitleRoutes[index]] : PageTitleMain;
 
-      trackPageView();
-    },
-    20,
-    [location.pathname]
-  );
-
-  pageChangeCallback();
+    trackPageView(document.title, location.pathname);
+  }, [location.pathname]);
 }

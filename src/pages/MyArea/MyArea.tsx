@@ -5,9 +5,9 @@ import styles from './MyArea.module.scss';
 export default () => {
   return (
     <>
-      <MyAreaHeader />
+      <MyAreaHeader trackCategory="MA_Mijn_buurt/Detail_Pagina" />
       <div className={styles.MyAreaContainer}>
-        <MyAreaMap />
+        <MyAreaMap trackCategory="MA_Mijn_buurt/Detail_Pagina" />
       </div>
     </>
   );

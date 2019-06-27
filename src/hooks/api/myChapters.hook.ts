@@ -3,7 +3,7 @@ import { myChaptersMenuItems } from 'components/MainNavBar/MainNavBar.constants'
 import { WmoApiState } from './api.wmo';
 import { FocusApiState } from './api.focus';
 import { Chapters } from 'App.constants';
-import { MenuItem } from '../../components/MainNavBar/MainNavBar.constants';
+import { MenuItem } from 'components/MainNavBar/MainNavBar.constants';
 import { ErfpachtApiState } from './api.erfpacht';
 
 function isChapterActive(

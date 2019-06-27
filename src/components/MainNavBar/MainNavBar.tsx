@@ -28,10 +28,12 @@ import { useTabletScreen } from 'hooks/media.hook';
 import useRouter from 'use-react-router';
 import classnames from 'classnames';
 import { Person } from 'data-formatting/brp';
+import { itemInteractionPayload }  from 'hooks/piwik.hook';
+import { trackEvent } from 'hooks/piwik.hook';
 import {
   trackItemPresentation,
   itemClickPayload,
-} from '../../hooks/piwik.hook';
+}  from 'hooks/piwik.hook';
 
 const MenuToggleBtnId = 'MenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -64,14 +66,33 @@ function SecondaryLinks({ person, hasMessages = false }: SecondaryLinksProps) {
       <ButtonLinkExternal
         to={ExternalUrls.BERICHTENBOX}
         className={classnames(hasMessages && 'has-messages')}
+        data-track={itemClickPayload(
+          'MA_Header/Secundaire_Links',
+          'Link_naar_Berichtenbox'
+        )}
       >
         Berichten Mijn Overheid
       </ButtonLinkExternal>
       {person && person.firstName && (
-        <Link to={AppRoutes.PROFILE}>{person.fullName}</Link>
+        <Link
+          to={AppRoutes.PROFILE}
+          data-track={itemClickPayload(
+            'MA_Header/Secundaire_Links',
+            'Link_naar_Profiel'
+          )}
+        >
+          {person.fullName}
+        </Link>
       )}
       {
-        <IconButtonLink target="_self" to={LOGOUT_URL}>
+        <IconButtonLink
+          target="_self"
+          to={LOGOUT_URL}
+          data-track={itemClickPayload(
+            'MA_Header/Secundaire_Links',
+            'Link_naar_Uitloggen'
+          )}
+        >
           <LogoutIcon /> Uitloggen
         </IconButtonLink>
       }
@@ -185,8 +206,22 @@ export default function MainNavBar({ person }: MainNavBarProps) {
   ) {
     if (id && activeSubmenuId !== id) {
       activateSubmenu(id);
+      trackEvent(
+        itemInteractionPayload(
+          'MouseEnter',
+          `MA_Header/Primaire_Links/Submenu`,
+          id
+        )
+      );
     } else if (!isSubmenuTrigger && activeSubmenuId !== id) {
       activateSubmenu('');
+      trackEvent(
+        itemInteractionPayload(
+          'MouseLeave',
+          `MA_Header/Primaire_Links/Submenu`,
+          id ? id : ''
+        )
+      );
     }
   }
 

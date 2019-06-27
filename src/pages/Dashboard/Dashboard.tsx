@@ -13,7 +13,7 @@ import React, { useContext } from 'react';
 
 import styles from './Dashboard.module.scss';
 import { Link } from 'react-router-dom';
-import { AppRoutes } from '../../App.constants';
+import { AppRoutes } from 'App.constants';
 import { itemClickPayload } from 'hooks/piwik.hook';
 
 const MAX_UPDATES_VISIBLE = 3;
@@ -75,11 +75,12 @@ export default () => {
           isLoading={!!isMyCasesLoading}
           title="Mijn lopende aanvragen"
           items={myCases}
+          trackCategory={'MA_Dashboard/Mijn_lopende_aanvragen'}
         />
       </PageContentMainBody>
       {!isPhoneScreen && (
         <PageContentMainBody>
-          <MyArea />
+          <MyArea trackCategory={'MA_Dashboard/Mijn_Buurt'} />
         </PageContentMainBody>
       )}
       <PageContentMainBody variant="regularBoxed">

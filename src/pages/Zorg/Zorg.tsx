@@ -10,7 +10,7 @@ import styles from './Zorg.module.scss';
 import Alert from 'components/Alert/Alert';
 import { useTabletScreen } from 'hooks/media.hook';
 import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
-import { ExternalUrls } from '../../App.constants';
+import { ExternalUrls } from 'App.constants';
 
 const DISPLAY_PROPS = {
   dateStart: 'start',
@@ -68,6 +68,7 @@ export default () => {
           noItemsMessage="U hebt op dit moment geen lopende aanvragen"
           startCollapsed={false}
           isLoading={isLoading}
+          trackCategory="MA_Zorg/Detail_Pagina/Lopende_aanvragen"
         />
         <DataLinkTable
           id="datalinktable-healthcare-granted"
@@ -79,6 +80,7 @@ export default () => {
           startCollapsed={hasActiveRequests}
           className={styles.DataLinkTableCurrent}
           isLoading={isLoading}
+          trackCategory="MA_Zorg/Detail_Pagina/Huidige_voorzieningen"
         />
       </PageContentMainBody>
       <div className={styles.HistoricDataLinkTable}>
@@ -92,6 +94,7 @@ export default () => {
             noItemsMessage="U hebt geen eerdere voorzieningen"
             startCollapsed={hasActiveRequests || hasActualItems}
             isLoading={isLoading}
+            trackCategory="MA_Zorg/Detail_Pagina/Eerdere_voorzieningen"
           />
         </PageContentMainBody>
       </div>

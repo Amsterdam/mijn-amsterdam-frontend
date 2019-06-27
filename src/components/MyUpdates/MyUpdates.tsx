@@ -44,7 +44,7 @@ export default function MyUpdates({
 
   const [trackEventPayload] = useDebouncedCallback(
     () => {
-      trackItemPresentation(trackCategory, 'Aantal', 'Show', '' + items.length);
+      trackItemPresentation(trackCategory, 'Aantal', '' + items.length);
     },
     1000,
     [items.length]
@@ -93,6 +93,10 @@ export default function MyUpdates({
                   <a
                     href={item.link.to}
                     role="button"
+                    data-track={itemClickPayload(
+                      `${trackCategory}/Melding`,
+                      'Link_naar_meer_info'
+                    )}
                     className={ButtonLinkStyles.ButtonLink}
                     onClick={event => {
                       event.preventDefault();

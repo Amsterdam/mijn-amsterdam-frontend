@@ -5,10 +5,17 @@ import ButtonLink from 'components/ButtonLink/ButtonLink';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 import { entries, withKeyPress } from 'helpers/App';
 import { useSessionStorage } from 'hooks/storage.hook';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Heading from '../Heading/Heading';
 import styles from './DataLinkTable.module.scss';
+import {
+  itemClickTogglePayload,
+  itemClickPayload,
+  trackItemPresentation,
+}  from 'hooks/piwik.hook';
+
+const DEFAULT_TRACK_CATEGORY = 'Thema_Pagina';
 
 export interface DataLinkTableProps {
   id: string;
@@ -20,6 +27,7 @@ export interface DataLinkTableProps {
   displayProps?: { [key: string]: string }; // key => Label. Will be displayed right of the title in the table
   rowHeight?: 'auto' | string;
   isLoading: boolean;
+  trackCategory: string;
 }
 
 export default function DataLinkTable({
@@ -32,6 +40,7 @@ export default function DataLinkTable({
   displayProps,
   rowHeight = 'auto',
   isLoading = true,
+  trackCategory = DEFAULT_TRACK_CATEGORY,
 }: DataLinkTableProps) {
   const [isCollapsed, setCollapsed] = useSessionStorage(id, startCollapsed);
 
@@ -66,6 +75,14 @@ export default function DataLinkTable({
     cssTransitionDurationMS = '0ms';
   }
 
+  useEffect(() => {
+    trackItemPresentation(
+      `${trackCategory}/DataLink_tabel`,
+      'Inhoud',
+      isCollapsed ? 'dicht' : 'open'
+    );
+  }, []);
+
   return (
     <div className={classes}>
       {hasTitle && (
@@ -76,6 +93,11 @@ export default function DataLinkTable({
           className={styles.Title}
           onKeyPress={event => hasItems && toggleCollapsed(event)}
           onClick={event => hasItems && toggleCollapsed(event)}
+          data-track={itemClickTogglePayload(
+            `${trackCategory}`,
+            'DataLink_tabel_titel',
+            isCollapsed ? 'dicht' : 'open'
+          )}
         >
           <CaretIcon className={styles.CaretIcon} /> {title}
           {hasItems && <span>({items.length})</span>}
@@ -114,7 +136,15 @@ export default function DataLinkTable({
               {items.map(item => (
                 <tr key={item.id} className={styles.TableRow}>
                   <td className={styles.DisplayPropTitle}>
-                    <ButtonLink to={item.link.to}>{item.title}</ButtonLink>
+                    <ButtonLink
+                      to={item.link.to}
+                      data-track={itemClickPayload(
+                        `${trackCategory}/DataLink_tabel`,
+                        'DataLink'
+                      )}
+                    >
+                      {item.title}
+                    </ButtonLink>
                   </td>
                   {displayProps &&
                     entries(displayProps).map(([key, label]) => (

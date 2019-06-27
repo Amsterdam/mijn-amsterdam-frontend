@@ -488,7 +488,7 @@ function formatFocusDocument(
   return {
     id: String(id),
     title: DocumentTitles[title] || title,
-    url: `/api/${url}`,
+    url: `/api${url}`,
     datePublished,
     type: stepTitle,
   };

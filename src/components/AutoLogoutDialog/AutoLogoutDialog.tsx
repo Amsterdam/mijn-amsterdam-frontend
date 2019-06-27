@@ -7,10 +7,16 @@ import { CounterProps, useCounter } from 'hooks/timer.hook';
 import React, { useState, useEffect } from 'react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 
-import { Colors, LOGOUT_URL } from '../../App.constants';
+import { Colors, LOGOUT_URL } from 'App.constants';
 import Modal from '../Modal/Modal';
 import styles from './AutoLogoutDialog.module.scss';
 import classnames from 'classnames';
+import { trackEvent } from 'hooks/piwik.hook';
+import { itemClickPayload } from 'hooks/piwik.hook';
+import {
+  trackItemPresentation,
+  itemInteractionPayload,
+} from 'hooks/piwik.hook';
 
 const ONE_MINUTE_SECONDS = 60;
 const AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS = 10 * ONE_MINUTE_SECONDS;
@@ -84,6 +90,13 @@ export default function AutoLogoutDialog({
   const [continueButtonIsVisible, setContinueButtonVisibility] = useState(true);
 
   function showLoginScreen() {
+    trackEvent(
+      itemInteractionPayload(
+        'Redirect',
+        'MA_Sessie/Auto_Logout_Dialog',
+        'Timeout'
+      )
+    );
     setContinueButtonVisibility(false);
     session.refetch();
   }
@@ -99,13 +112,18 @@ export default function AutoLogoutDialog({
     document.title = count % 2 === 0 ? TITLE : originalTitle;
   };
 
-  // This effect just restores the original page title when the component is unmounted.
-  useEffect(
-    () => () => {
+  // This effect restores the original page title when the component is unmounted.
+  useEffect(() => {
+    return () => {
       document.title = originalTitle;
-    },
-    []
-  );
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      trackItemPresentation('MA_Sessie/Auto_Logout_Dialog', 'Timeout');
+    }
+  }, [isOpen]);
 
   return (
     <Modal
@@ -132,6 +150,10 @@ export default function AutoLogoutDialog({
             <button
               className="action-button secondary continue-button"
               onClick={continueUsingApp}
+              data-track={itemClickPayload(
+                'MA_Sessie/Auto_Logout_Dialog',
+                'Button_doorgaan'
+              )}
             >
               Doorgaan
             </button>
@@ -142,6 +164,10 @@ export default function AutoLogoutDialog({
               !continueButtonIsVisible && 'disabled'
             )}
             href={LOGOUT_URL}
+            data-track={itemClickPayload(
+              'MA_Sessie/Auto_Logout_Dialog',
+              'Button_uitloggen'
+            )}
           >
             {continueButtonIsVisible
               ? 'Nu uitloggen'
