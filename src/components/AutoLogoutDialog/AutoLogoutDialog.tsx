@@ -154,52 +154,49 @@ export default function AutoLogoutDialog({
   );
 
   return (
-    <>
-      {count}
-      <Modal
-        title={TITLE}
-        isOpen={isOpen}
-        contentWidth={450}
-        showCloseButton={false}
-      >
-        <div className={styles.AutoLogoutDialog}>
-          <p>
-            U bent langer dan{' '}
-            {AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS / ONE_MINUTE_SECONDS} minuten
-            niet actief geweest op Mijn Amsterdam.
-          </p>
-          <p className={styles.TimerText}>
-            <CountDownTimer
-              maxCount={nSettings.secondsBeforeAutoLogout}
-              onMaxCount={showLoginScreen}
-              onTick={onTick}
-            />
-            Voor uw veiligheid wordt u mogelijk automatisch uitgelogd.
-          </p>
-          <p>Wilt u doorgaan of uitloggen?</p>
-          <p>
-            {continueButtonIsVisible && (
-              <button
-                className="action-button secondary continue-button"
-                onClick={continueUsingApp}
-              >
-                Doorgaan
-              </button>
-            )}
-            <a
-              className={classnames(
-                'action-button line-only secondary logout-button',
-                !continueButtonIsVisible && 'disabled'
-              )}
-              href={LOGOUT_URL}
+    <Modal
+      title={TITLE}
+      isOpen={isOpen}
+      contentWidth={450}
+      showCloseButton={false}
+    >
+      <div className={styles.AutoLogoutDialog}>
+        <p>
+          U bent langer dan{' '}
+          {AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS / ONE_MINUTE_SECONDS} minuten niet
+          actief geweest op Mijn Amsterdam.
+        </p>
+        <p className={styles.TimerText}>
+          <CountDownTimer
+            maxCount={nSettings.secondsBeforeAutoLogout}
+            onMaxCount={showLoginScreen}
+            onTick={onTick}
+          />
+          Voor uw veiligheid wordt u mogelijk automatisch uitgelogd.
+        </p>
+        <p>Wilt u doorgaan of uitloggen?</p>
+        <p>
+          {continueButtonIsVisible && (
+            <button
+              className="action-button secondary continue-button"
+              onClick={continueUsingApp}
             >
-              {continueButtonIsVisible
-                ? 'Nu uitloggen'
-                : 'Bezig met controleren van uw sessie..'}
-            </a>
-          </p>
-        </div>
-      </Modal>
-    </>
+              Doorgaan
+            </button>
+          )}
+          <a
+            className={classnames(
+              'action-button line-only secondary logout-button',
+              !continueButtonIsVisible && 'disabled'
+            )}
+            href={LOGOUT_URL}
+          >
+            {continueButtonIsVisible
+              ? 'Nu uitloggen'
+              : 'Bezig met controleren van uw sessie..'}
+          </a>
+        </p>
+      </div>
+    </Modal>
   );
 }
