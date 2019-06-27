@@ -41,8 +41,8 @@
     "eject": "react-scripts eject",
     "cypress": "cypress open",
     "lint:staged": "lint-staged",
-    "mock-api": "dyson mock-api/ 5000",
-    "watch:mock-api": "nodemon --watch mock-api dyson mock-api/ 5000"
+    "mock-api": "dyson mock-api/",
+    "watch:mock-api": "nodemon --watch mock-api dyson mock-api"
   },
   "eslintConfig": {
     "extends": "react-app",
