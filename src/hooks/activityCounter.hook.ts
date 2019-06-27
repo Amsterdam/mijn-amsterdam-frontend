@@ -13,7 +13,9 @@ export default function useActivityCounter(throttleTimeoutMs: number = 3000) {
   const state = useState(0);
   const [, setCount] = state;
 
-  const stillActive = () => setCount(count => count + 1);
+  const stillActive = throttle(throttleTimeoutMs, () =>
+    setCount(count => count + 1)
+  );
 
   useEffect(() => {
     defaultEvents.forEach(eventName => {
