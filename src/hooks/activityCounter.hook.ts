@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { throttle } from 'throttle-debounce';
 
-export default function useActivityCounter(throttleTimeoutMs: number = 3000) {
+export default function useActivityCounter(throttleTimeoutMs: number = 30000) {
   const defaultEvents = [
     'mousemove',
     'mousedown',
