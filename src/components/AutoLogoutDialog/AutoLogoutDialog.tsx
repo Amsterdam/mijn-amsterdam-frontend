@@ -18,7 +18,7 @@ import styles from './AutoLogoutDialog.module.scss';
  * after a certain time {`AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS`}.
  * If the dialog is shown the countdown timer starts to count down from {`AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS`}.
  * If the countdown is complete a request to the auth status endpoint is made and the response is put into the state.
- * Wether the Dialog and timer are reset or the User is automatically logged out is dependent on the response and how the app
+ * Whether the Dialog and timer are reset or the User is automatically logged out is dependent on the response and how the app
  * interacts with that. In our case, if the `isAuthenticated` flag is `false`, the app will show the login screen. This logic can
  * be found in App.tsx.
  */
