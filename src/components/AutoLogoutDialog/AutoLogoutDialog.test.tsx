@@ -2,8 +2,9 @@ import { render, mount } from 'enzyme';
 import React from 'react';
 
 import AutoLogoutDialog, { AutoLogoutDialogSettings } from './AutoLogoutDialog';
+import { act } from 'react-test-renderer';
 
-const ONE_SCOND_IN_MS = 1000;
+const ONE_SECOND_IN_MS = 1000;
 const DOC_TITLE = 'AutoLogoutDialog';
 
 describe('AutoLogoutDialog', () => {
@@ -18,9 +19,23 @@ describe('AutoLogoutDialog', () => {
   const settings: AutoLogoutDialogSettings = {
     secondsBeforeDialogShow: 10,
     secondsBeforeAutoLogout: 8,
+    secondsSessionRenewRequestInterval: 2,
   };
 
   let component: any;
+  const map: any = {};
+
+  beforeAll(() => {
+    window.addEventListener = jest.fn((event, callback: any) => {
+      map[event] = () => {
+        callback && callback();
+      };
+    });
+  });
+
+  afterAll(() => {
+    (window.addEventListener as any).mockRestore();
+  });
 
   beforeEach(() => {
     document.title = DOC_TITLE;
@@ -36,14 +51,27 @@ describe('AutoLogoutDialog', () => {
     refetch.mockReset();
   });
 
+  it('resets the autologout counter every x seconds whenever user activity is detected', () => {
+    map.mousemove();
+    jest.advanceTimersByTime(
+      ONE_SECOND_IN_MS * settings.secondsSessionRenewRequestInterval!
+    );
+    expect(refetch).toHaveBeenCalled();
+    map.mousemove();
+    jest.advanceTimersByTime(
+      ONE_SECOND_IN_MS * settings.secondsSessionRenewRequestInterval!
+    );
+    expect(refetch).toHaveBeenCalledTimes(2);
+  });
+
   it('shows the auto logout dialog after x seconds and fires callback after another x seconds', () => {
     jest.advanceTimersByTime(
-      ONE_SCOND_IN_MS * settings.secondsBeforeDialogShow!
+      ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow!
     );
     component.update();
     expect(component.childAt(0).prop('isOpen')).toBe(true);
     jest.advanceTimersByTime(
-      ONE_SCOND_IN_MS * settings.secondsBeforeAutoLogout!
+      ONE_SECOND_IN_MS * settings.secondsBeforeAutoLogout!
     );
     component.update();
     expect(refetch).toHaveBeenCalled();
@@ -51,7 +79,7 @@ describe('AutoLogoutDialog', () => {
 
   it('fires callback when clicking continue button', () => {
     jest.advanceTimersByTime(
-      ONE_SCOND_IN_MS * settings.secondsBeforeDialogShow!
+      ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow!
     );
     component.update();
     let continueButton = component.find('[className*="continue-button"]');
@@ -70,13 +98,13 @@ describe('AutoLogoutDialog', () => {
     const documentTitle = document.title;
 
     jest.advanceTimersByTime(
-      ONE_SCOND_IN_MS * settings.secondsBeforeDialogShow!
+      ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow!
     );
     component.update();
 
     expect(document.title).toBe(documentTitle);
 
-    jest.advanceTimersByTime(ONE_SCOND_IN_MS * 2);
+    jest.advanceTimersByTime(ONE_SECOND_IN_MS * 2);
     component.update();
 
     expect(document.title).not.toBe(DOC_TITLE);
