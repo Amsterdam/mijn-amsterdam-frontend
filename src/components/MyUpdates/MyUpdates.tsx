@@ -6,24 +6,30 @@ import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import Heading from 'components/Heading/Heading';
 import { defaultDateFormat } from 'helpers/App';
 import { MyUpdate, useUpdatesState } from 'hooks/api/my-updates-api.hook';
-import React from 'react';
+import React, { useEffect } from 'react';
 import useRouter from 'use-react-router';
 
 import styles from './MyUpdates.module.scss';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
+import { useDebouncedCallback } from 'use-debounce';
+import { trackItemPresentation, itemClickPayload } from 'hooks/piwik.hook';
 
 export interface MyUpdatesProps {
   items: MyUpdate[];
   total: number;
   showMoreLink?: boolean;
   isLoading?: boolean;
+  trackCategory?: string;
 }
+
+const CATEGORY = 'Mijn_Meldingen';
 
 export default function MyUpdates({
   items = [],
   total = 0,
   showMoreLink = false,
   isLoading = true,
+  trackCategory = CATEGORY,
 }: MyUpdatesProps) {
   const [myUpdatesState, setMyUpdatesState] = useUpdatesState();
   const { history } = useRouter();
@@ -35,6 +41,16 @@ export default function MyUpdates({
     });
     history.push(to);
   }
+
+  const [trackEventPayload] = useDebouncedCallback(
+    () => {
+      trackItemPresentation(trackCategory, 'Aantal', '' + items.length);
+    },
+    1000,
+    [items.length]
+  );
+
+  trackEventPayload();
 
   return (
     <div className={classnames(styles.MyUpdates, styles.isLoading)}>
@@ -77,6 +93,10 @@ export default function MyUpdates({
                   <a
                     href={item.link.to}
                     role="button"
+                    data-track={itemClickPayload(
+                      `${trackCategory}/Melding`,
+                      'Link_naar_meer_info'
+                    )}
                     className={ButtonLinkStyles.ButtonLink}
                     onClick={event => {
                       event.preventDefault();
@@ -98,7 +118,15 @@ export default function MyUpdates({
       )}
       {!isLoading && showMoreLink && (
         <p className={styles.FooterLink}>
-          <ButtonLink to={AppRoutes.MY_UPDATES}>Alle meldingen</ButtonLink>
+          <ButtonLink
+            to={AppRoutes.MY_UPDATES}
+            data-track={itemClickPayload(
+              trackCategory,
+              'Link_naar_alle_meldingen'
+            )}
+          >
+            Alle meldingen
+          </ButtonLink>
         </p>
       )}
     </div>

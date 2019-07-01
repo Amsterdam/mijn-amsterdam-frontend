@@ -1,4 +1,4 @@
-import { AppRoutes } from '../../App.constants';
+import { AppRoutes } from 'App.constants';
 export type DirectLinkType =
   | 'MIJN_BELASTINGEN'
   | 'MIJN_SUBSIDIE'

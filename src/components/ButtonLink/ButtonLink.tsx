@@ -11,6 +11,8 @@ export interface ButtonLinkProps {
   className?: any;
   white?: boolean;
   target?: LinkProps['target'];
+  download?: string;
+  'data-track'?: any[];
 }
 
 export default function ButtonLink({
@@ -20,6 +22,7 @@ export default function ButtonLink({
   className,
   white = false,
   target,
+  ...otherProps
 }: ButtonLinkProps) {
   const classes = classnames(
     styles.ButtonLink,
@@ -31,6 +34,7 @@ export default function ButtonLink({
     if (target === '_blank') {
       return (
         <a
+          {...otherProps}
           href={to}
           target="_blank"
           rel="noopener noreferrer"
@@ -41,13 +45,13 @@ export default function ButtonLink({
       );
     }
     return (
-      <a href={to} target={target} className={classes}>
+      <a {...otherProps} href={to} target={target} className={classes}>
         {children}
       </a>
     );
   }
   return (
-    <Link to={to} className={classes}>
+    <Link {...otherProps} to={to} className={classes}>
       {children}
     </Link>
   );

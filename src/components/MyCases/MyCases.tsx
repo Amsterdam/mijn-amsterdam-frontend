@@ -5,14 +5,17 @@ import { NavLink } from 'react-router-dom';
 import { Colors } from 'App.constants';
 import Heading from 'components/Heading/Heading';
 import { MyCase } from 'hooks/api/my-cases-api.hook';
-import classnames from 'classnames';
 import LoadingContent from '../LoadingContent/LoadingContent';
+import { itemClickPayload } from 'hooks/piwik.hook';
+
+const DEFAULT_TRACK_CATEGORY = 'Lopende_aanvragen';
 
 interface CaseItemProps {
   item: MyCase;
+  trackCategory: string;
 }
 
-function CaseItem({ item }: CaseItemProps) {
+function CaseItem({ item, trackCategory }: CaseItemProps) {
   const {
     title,
     chapter,
@@ -20,7 +23,13 @@ function CaseItem({ item }: CaseItemProps) {
   } = item;
   return (
     <li className={styles.CaseItem}>
-      <NavLink to={to}>
+      <NavLink
+        to={to}
+        data-track={itemClickPayload(
+          `${trackCategory}/${chapter}`,
+          'Link_naar_Detail_pagina'
+        )}
+      >
         <ChapterIcon fill={Colors.primaryRed} chapter={chapter} />
         {title}
       </NavLink>
@@ -32,12 +41,14 @@ export interface MyCasesProps {
   title: string;
   items: MyCase[];
   isLoading: boolean;
+  trackCategory: string;
 }
 
 export default function MyCases({
   title,
   items = [],
   isLoading = true,
+  trackCategory = DEFAULT_TRACK_CATEGORY,
 }: MyCasesProps) {
   return (
     <div className={styles.MyCases}>
@@ -55,7 +66,7 @@ export default function MyCases({
       {!!items.length && (
         <ul className={styles.List}>
           {items.map(item => (
-            <CaseItem key={item.id} item={item} />
+            <CaseItem trackCategory={trackCategory} key={item.id} item={item} />
           ))}
         </ul>
       )}

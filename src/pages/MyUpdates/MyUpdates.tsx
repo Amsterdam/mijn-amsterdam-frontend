@@ -41,6 +41,7 @@ export default () => {
           isLoading={isLoading}
           total={total}
           items={items.filter(item => item.isActual)}
+          trackCategory={'MA_Mijn_meldingen/Actuele_meldingen'}
         />
       </PageContentMainBody>
       <div className={styles.PreviousUpdatesPanel}>
@@ -52,6 +53,7 @@ export default () => {
             isLoading={isLoading}
             total={total}
             items={items.filter(item => !item.isActual)}
+            trackCategory={'MA_Mijn_meldingen/Eerdere_meldingen'}
           />
         </PageContentMainBody>
       </div>
