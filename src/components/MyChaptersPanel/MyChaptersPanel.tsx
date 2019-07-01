@@ -4,18 +4,37 @@ import { MainNavSubmenuLink } from 'components/MainNavSubmenu/MainNavSubmenu';
 import Heading from 'components/Heading/Heading';
 import { MenuItem } from '../MainNavBar/MainNavBar.constants';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
+import { itemClickPayload } from 'hooks/piwik.hook';
+import { useDebouncedCallback } from 'use-debounce';
+import { trackItemPresentation } from 'hooks/piwik.hook';
 
 export interface MyChaptersPanelProps {
   title: string;
   items: MenuItem[];
   isLoading: boolean;
+  trackCategory?: string;
 }
+
+const CATEGORY = 'MA_Dashboard/Mijn_Themas';
 
 export default function MyChaptersPanel({
   title,
   items = [],
   isLoading = true,
+  trackCategory = CATEGORY,
 }: MyChaptersPanelProps) {
+  const [trackEventPayload] = useDebouncedCallback(
+    () => {
+      items.forEach(({ id }) => {
+        trackItemPresentation(trackCategory, `Link_naar_Thema_${id}`);
+      });
+    },
+    1000,
+    [items.length]
+  );
+
+  trackEventPayload();
+
   return (
     <div className={styles.MyChaptersPanel}>
       <Heading size="large" className={styles.Title}>
@@ -24,7 +43,13 @@ export default function MyChaptersPanel({
       <div className={styles.Links}>
         {items.map(({ id, to, Icon, title, target }) => {
           return (
-            <MainNavSubmenuLink key={id} to={to} id={id} target={target}>
+            <MainNavSubmenuLink
+              data-track={itemClickPayload(CATEGORY, `Link_naar_Thema_${id}`)}
+              key={id}
+              to={to}
+              id={id}
+              target={target}
+            >
               {Icon && <Icon aria-hidden="true" />}
               {title}
             </MainNavSubmenuLink>

@@ -11,14 +11,17 @@ import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
 import { defaultDateFormat } from 'helpers/App';
 import useRouter from 'use-react-router';
 import { useSessionStorage } from 'hooks/storage.hook';
+import { itemClickTogglePayload } from 'hooks/piwik.hook';
 
 const markdownLinkRegex = /\[((?:[^\[\]\\]|\\.)+)\]\((https?:\/\/(?:[-A-Z0-9+&@#\/%=~_|\[\]](?= *\))|[-A-Z0-9+&@#\/%?=~_|\[\]!:,.;](?! *\))|\([-A-Z0-9+&@#\/%?=~_|\[\]!:,.;(]*\))+) *\)/i;
 const markdownTagMatchRegex = /(\[.*?\]\(.*?\))/gi;
+const DEFAULT_TRACK_CATEGORY = 'Metro_lijn';
 
 export type StatusLineItem = ProcessStep;
 
 interface StatusLineProps {
   items: StatusLineItem[];
+  trackCategory?: string;
 }
 
 interface StatusLineItemProps {
@@ -36,6 +39,7 @@ function DownloadLink({ item }: DownloadLinkProps) {
       target="_blank"
       className={styles.DownloadLink}
       to={item.url}
+      download={item.title}
     >
       <DownloadIcon />
       {item.title}
@@ -102,7 +106,10 @@ function StatusLineItem({ item, stepNumber }: StatusLineItemProps) {
   );
 }
 
-export default function StatusLine({ items }: StatusLineProps) {
+export default function StatusLine({
+  items,
+  trackCategory = DEFAULT_TRACK_CATEGORY,
+}: StatusLineProps) {
   const { location } = useRouter();
   const [isCollapsed, setCollapsed] = useSessionStorage(
     'STATUS_LINE_' + location.pathname,
@@ -149,9 +156,14 @@ export default function StatusLine({ items }: StatusLineProps) {
             styles.MoreStatus,
             isCollapsed && styles.isCollapsed
           )}
+          data-track={itemClickTogglePayload(
+            `${trackCategory}/MetroLijn`,
+            'Toon alles/minder',
+            isCollapsed ? 'alles' : 'minder'
+          )}
           onClick={toggleCollapsed}
         >
-          {isCollapsed ? 'Toon alles' : 'Toon minder'}
+          {!isCollapsed ? 'Toon alles' : 'Toon minder'}
         </button>
       )}
     </div>

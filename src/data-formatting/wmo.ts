@@ -69,7 +69,7 @@ export function formatWmoApiResponse(
       isActual,
       link: {
         title: 'Meer info',
-        to: `${AppRoutes.ZORG}/${id}`,
+        to: `${AppRoutes.ZORG_VOORZIENINGEN}/${id}`,
       },
     };
   });

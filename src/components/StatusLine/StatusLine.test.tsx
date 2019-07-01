@@ -8,7 +8,7 @@ const ITEMS: StatusLineItem[] = [];
 it('Renders without crashing', () => {
   shallow(
     <BrowserRouter>
-      <StatusLine items={ITEMS} />
+      <StatusLine items={ITEMS} trackCategory="Test/Status_line" />
     </BrowserRouter>
   );
 });

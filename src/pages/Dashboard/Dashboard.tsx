@@ -13,7 +13,8 @@ import React, { useContext } from 'react';
 
 import styles from './Dashboard.module.scss';
 import { Link } from 'react-router-dom';
-import { AppRoutes } from '../../App.constants';
+import { AppRoutes } from 'App.constants';
+import { itemClickPayload } from 'hooks/piwik.hook';
 
 const MAX_UPDATES_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
@@ -42,7 +43,14 @@ export default () => {
   return (
     <PageContentMain className={styles.Dashboard} variant="full">
       <PageContentMainHeading variant="medium">
-        <Link className={styles.MyUpdatesHeadingLink} to={AppRoutes.MY_UPDATES}>
+        <Link
+          className={styles.MyUpdatesHeadingLink}
+          to={AppRoutes.MY_UPDATES}
+          data-track={itemClickPayload(
+            'MA_Dashboard/Mijn_meldingen',
+            'Hoofd_titel'
+          )}
+        >
           Mijn meldingen
         </Link>
         {!isMyUpdatesLoading &&
@@ -56,6 +64,7 @@ export default () => {
           items={actualUpdateItems.slice(0, MAX_UPDATES_VISIBLE)}
           showMoreLink={myUpdatesTotal > 0}
           isLoading={isMyUpdatesLoading}
+          trackCategory={'MA_Dashboard/Mijn_meldingen'}
         />
         <MyChaptersPanel
           isLoading={isMyChaptersLoading}
@@ -66,11 +75,12 @@ export default () => {
           isLoading={!!isMyCasesLoading}
           title="Mijn lopende aanvragen"
           items={myCases}
+          trackCategory={'MA_Dashboard/Mijn_lopende_aanvragen'}
         />
       </PageContentMainBody>
       {!isPhoneScreen && (
         <PageContentMainBody>
-          <MyArea />
+          <MyArea trackCategory={'MA_Dashboard/Mijn_Buurt'} />
         </PageContentMainBody>
       )}
       <PageContentMainBody variant="regularBoxed">

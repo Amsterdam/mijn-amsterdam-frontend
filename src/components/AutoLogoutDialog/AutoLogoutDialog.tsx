@@ -1,15 +1,21 @@
 import 'react-circular-progressbar/dist/styles.css';
 
+import { Colors, LOGOUT_URL } from 'App.constants';
 import { ComponentChildren } from 'App.types';
 import classnames from 'classnames';
 import { formattedTimeFromSeconds } from 'helpers/App';
 import useActivityCounter from 'hooks/activityCounter.hook';
 import { SessionApiState } from 'hooks/api/session.api.hook';
+import {
+  itemClickPayload,
+  itemInteractionPayload,
+  trackEvent,
+  trackItemPresentation,
+} from 'hooks/piwik.hook';
 import { CounterProps, useCounter } from 'hooks/timer.hook';
 import React, { useEffect, useState } from 'react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 
-import { Colors, LOGOUT_URL } from '../../App.constants';
 import Modal from '../Modal/Modal';
 import styles from './AutoLogoutDialog.module.scss';
 
@@ -87,7 +93,10 @@ const DefaultSettings = {
 export default function AutoLogoutDialog({
   children,
   session,
-  settings = {},
+  settings = {
+    secondsBeforeDialogShow: AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS,
+    secondsBeforeAutoLogout: AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS,
+  },
 }: ComponentProps) {
   // Will open the dialog if maxCount is reached.
   const nSettings = { ...DefaultSettings, ...settings };
@@ -128,6 +137,13 @@ export default function AutoLogoutDialog({
   }
 
   function showLoginScreen() {
+    trackEvent(
+      itemInteractionPayload(
+        'Redirect',
+        'MA_Sessie/Auto_Logout_Dialog',
+        'Timeout'
+      )
+    );
     setContinueButtonVisibility(false);
     // Refetching the session here will make the App show the login screen automatically if the `isAuthenticated` flag
     // in the response of the fetch call is `false`.
@@ -145,13 +161,18 @@ export default function AutoLogoutDialog({
     document.title = count % 2 === 0 ? TITLE : originalTitle;
   };
 
-  // This effect just restores the original page title when the component is unmounted.
-  useEffect(
-    () => () => {
+  // This effect restores the original page title when the component is unmounted.
+  useEffect(() => {
+    return () => {
       document.title = originalTitle;
-    },
-    []
-  );
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      trackItemPresentation('MA_Sessie/Auto_Logout_Dialog', 'Timeout');
+    }
+  }, [isOpen]);
 
   return (
     <Modal
@@ -180,6 +201,10 @@ export default function AutoLogoutDialog({
             <button
               className="action-button secondary continue-button"
               onClick={continueUsingApp}
+              data-track={itemClickPayload(
+                'MA_Sessie/Auto_Logout_Dialog',
+                'Button_doorgaan'
+              )}
             >
               Doorgaan
             </button>
@@ -190,6 +215,10 @@ export default function AutoLogoutDialog({
               !continueButtonIsVisible && 'disabled'
             )}
             href={LOGOUT_URL}
+            data-track={itemClickPayload(
+              'MA_Sessie/Auto_Logout_Dialog',
+              'Button_uitloggen'
+            )}
           >
             {continueButtonIsVisible
               ? 'Nu uitloggen'

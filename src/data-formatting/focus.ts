@@ -337,6 +337,12 @@ export const ProductTitles = {
   BijzondereBijstand: 'Bijzondere bijstand',
 };
 
+export const ProductOrigins = {
+  Participatiewet: 'Participatiewet',
+  'Bijzondere Bijstand': 'Bijzondere Bijstand',
+  Minimafonds: 'Minimafonds',
+};
+
 const DocumentTitles: { [originalTitle: string]: string } = {
   'LO: Aanvraag': 'Aanvraag bijstandsuitkering',
   'LO: Besluit': 'Besluit aanvraag bijstandsuitkering',
@@ -344,10 +350,10 @@ const DocumentTitles: { [originalTitle: string]: string } = {
   'LO: Herstel': 'Verzoek om aanvullende informatie van u',
 };
 
-const AppRoutesByProductTitle = {
-  [ProductTitles.Bijstandsuitkering]: AppRoutes.BIJSTANDSUITKERING,
-  [ProductTitles.Stadspas]: AppRoutes.STADSPAS,
-  [ProductTitles.BijzondereBijstand]: AppRoutes.BIJZONDERE_BIJSTAND,
+const AppRoutesByProductOrigin = {
+  [ProductOrigins.Participatiewet]: AppRoutes.BIJSTANDSUITKERING,
+  [ProductOrigins.Minimafonds]: AppRoutes.STADSPAS,
+  [ProductOrigins['Bijzondere Bijstand']]: AppRoutes.BIJZONDERE_BIJSTAND,
 };
 
 function isInProgess(decision: Decision, steps: FocusProduct['processtappen']) {
@@ -482,7 +488,7 @@ function formatFocusDocument(
   return {
     id: String(id),
     title: DocumentTitles[title] || title,
-    url: `/api/${url}`,
+    url: `/api${url}`,
     datePublished,
     type: stepTitle,
   };
@@ -499,6 +505,7 @@ export function formatFocusUpdateItem(
   const stepLabelSource = !!sourceData.decision
     ? stepLabels[sourceData.decision]
     : stepLabels;
+  const route = AppRoutesByProductOrigin[productOrigin];
 
   return {
     id: step.id,
@@ -512,7 +519,7 @@ export function formatFocusUpdateItem(
       replaceSourceDataTags(stepLabelSource.update.description, sourceData),
     isActual,
     link: {
-      to: `${AppRoutesByProductTitle[item.productTitle]}/${item.id}#${step.id}`,
+      to: `${route}/${item.id}#${step.id}`,
       title: 'Meer informatie',
     },
   };
@@ -598,7 +605,7 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
     isDenied: decision === 'Afwijzing',
     link: {
       title: 'Meer informatie', // TODO: How to get custom link title?
-      to: `${AppRoutesByProductTitle[title]}/${id}`,
+      to: `${AppRoutesByProductOrigin[productOrigin]}/${id}`,
     },
     // Different from regular title, because that can be more descriptive
     productTitle: title,
