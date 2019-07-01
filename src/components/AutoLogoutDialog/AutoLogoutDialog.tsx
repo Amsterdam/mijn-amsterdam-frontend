@@ -184,8 +184,10 @@ export default function AutoLogoutDialog({
       <div className={styles.AutoLogoutDialog}>
         <p>
           U bent langer dan{' '}
-          {AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS / ONE_MINUTE_SECONDS} minuten niet
-          actief geweest op Mijn Amsterdam.
+          {formattedTimeFromSeconds(
+            AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS / ONE_MINUTE_SECONDS
+          )}{' '}
+          minuten niet actief geweest op Mijn Amsterdam.
         </p>
         <p className={styles.TimerText}>
           <CountDownTimer
