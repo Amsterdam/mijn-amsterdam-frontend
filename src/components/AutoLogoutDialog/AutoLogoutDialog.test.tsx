@@ -1,8 +1,7 @@
-import { render, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import React from 'react';
 
 import AutoLogoutDialog, { AutoLogoutDialogSettings } from './AutoLogoutDialog';
-import { act } from 'react-test-renderer';
 
 const ONE_SECOND_IN_MS = 1000;
 const DOC_TITLE = 'AutoLogoutDialog';
