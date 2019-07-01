@@ -1,7 +1,5 @@
 import useScript from 'hooks/useScript';
-import useRouter from 'use-react-router';
 import { useEffect } from 'react';
-import { link } from 'fs';
 
 const TrackerConfig = {
   url: 'https://piwik.data.amsterdam.nl',

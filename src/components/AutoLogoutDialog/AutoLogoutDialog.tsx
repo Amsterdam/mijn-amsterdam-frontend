@@ -1,24 +1,23 @@
 import 'react-circular-progressbar/dist/styles.css';
 
+import { Colors, LOGOUT_URL } from 'App.constants';
 import { ComponentChildren } from 'App.types';
 import classnames from 'classnames';
 import { formattedTimeFromSeconds } from 'helpers/App';
 import useActivityCounter from 'hooks/activityCounter.hook';
 import { SessionApiState } from 'hooks/api/session.api.hook';
+import {
+  itemClickPayload,
+  itemInteractionPayload,
+  trackEvent,
+  trackItemPresentation,
+} from 'hooks/piwik.hook';
 import { CounterProps, useCounter } from 'hooks/timer.hook';
 import React, { useEffect, useState } from 'react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 
-import { Colors, LOGOUT_URL } from 'App.constants';
 import Modal from '../Modal/Modal';
 import styles from './AutoLogoutDialog.module.scss';
-import classnames from 'classnames';
-import { trackEvent } from 'hooks/piwik.hook';
-import { itemClickPayload } from 'hooks/piwik.hook';
-import {
-  trackItemPresentation,
-  itemInteractionPayload,
-} from 'hooks/piwik.hook';
 
 /**
  * This component is essentially a dialog with a countdown timer presented to the user
