@@ -110,16 +110,16 @@ export default function AutoLogoutDialog({
   const [isOpen, setOpen] = useState(false);
   const [originalTitle] = useState(document.title);
   const [continueButtonIsVisible, setContinueButtonVisibility] = useState(true);
-  const [count] = useActivityCounter(
+  const [activityCount] = useActivityCounter(
     nSettings.secondsSessionRenewRequestInterval * ONE_SECOND_MS
   );
 
   // Renew the remote tma session whenever we detect user activity
   useEffect(() => {
-    if (count !== 0) {
+    if (activityCount !== 0 && isOpen !== true) {
       session.refetch();
     }
-  }, [count]);
+  }, [activityCount]);
 
   // This effect responds to the session loader and will reset the autologout
   // whenever the session is still active.
