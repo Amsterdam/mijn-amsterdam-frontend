@@ -1,5 +1,4 @@
 import useScript from 'hooks/useScript';
-import { useEffect } from 'react';
 
 const TrackerConfig = {
   url: 'https://piwik.data.amsterdam.nl',
@@ -36,7 +35,6 @@ function pushToPiwik(payload: any) {
 export function usePiwik() {
   if (!theWindow._paq || theWindow._paq.length === 0) {
     pushToPiwik(['enableLinkTracking']);
-    pushToPiwik(['setUserId', 'Tim']);
     pushToPiwik([
       'setTrackerUrl',
       `${TrackerConfig.url}/${TrackerConfig.phpFilename}`,
