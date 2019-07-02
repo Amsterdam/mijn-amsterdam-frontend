@@ -57,35 +57,33 @@ export default () => {
         <p>
           <strong>Wilt u hulp bij het inloggen met DigiD?</strong>
           <br />
-          Ga naar <a href="#">DigiD</a>
+          Ga naar <a href="https://www.digid.nl">DigiD</a>
           <br />
-          Of gebruik de <a href="#">DigiD app</a>
+          Of gebruik de{' '}
+          <a href="https://www.digid.nl/over-digid/app">DigiD app</a>
           <br />
-          Dan hoeft u geen wachtwoord meer te onthouden
+          Dan hoeft u geen wachtwoord meer te onthouden.
         </p>
         <p>
           <strong>
-            Op dit moment kunt u deze informatie vinden op Mijn Amsterdam
+            Op dit moment kunt u deze informatie vinden op Mijn Amsterdam:
           </strong>
         </p>
         <ul>
           <li>Hoe u ingeschreven staat bij de gemeente</li>
           <li>Hoe het staat met uw aanvraag voor een bijstandsuitkering</li>
           <li>Hoe het staat met uw aanvraag voor een Stadspas</li>
-          <li>Een link naar Mijn Belastingen</li>
-          <li>Een link naar Mijn Erfpacht</li>
+          <li>Informatie over uw gemeentebelastingen</li>
+          <li>Informatie over uw erfpacht</li>
           <li>Informatie over uw eigen buurt</li>
         </ul>
         <p>
           <strong>Mijn Amsterdam is nog niet af</strong>
           <br />
           De komende jaren komt er steeds meer bij. Laat ons weten wat u ervan
-          vindt.
+          vindt. U kunt hiervoor de "uw mening" knop gebruiken aan de
+          rechterkant van het scherm.
           <br />
-          Mail uw ideeën naar:&nbsp;
-          <a href="mailto:mijnamsterdam@amsterdam.nl">
-            MijnAmsterdam@amsterdam.nl
-          </a>
         </p>
       </PageContentMainBody>
     </PageContentMain>
