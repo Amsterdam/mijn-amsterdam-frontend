@@ -21,10 +21,12 @@ node {
     checkout scm
   }
 
-  stage("Test") {
-    tryStep "test", {
-      sh "docker-compose -p mijn_amsterdam_frontend -f docker-compose.yml build && " +
-      "docker-compose -p mijn_amsterdam_frontend -f docker-compose.yml run --rm test"
+  if (BRANCH != "test-acc") {
+    stage("Test") {
+      tryStep "test", {
+        sh "docker-compose -p mijn_amsterdam_frontend -f docker-compose.yml build && " +
+        "docker-compose -p mijn_amsterdam_frontend -f docker-compose.yml run --rm test"
+      }
     }
   }
 }
