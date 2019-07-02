@@ -1,10 +1,10 @@
 import useScript from 'hooks/useScript';
 
 const TrackerConfig = {
-  url: 'https://piwik.data.amsterdam.nl',
+  url: 'https://piwik.datapunt.amsterdam.nl',
   siteId: process.env.REACT_APP_SITE_ID,
-  jsFilename: 'piwik.js',
-  phpFilename: 'piwik.php',
+  jsFilename: 'matamo.js',
+  phpFilename: 'matamo.php',
 };
 
 export type ActionCategory = string;
@@ -34,6 +34,7 @@ function pushToPiwik(payload: any) {
 // Initialize connection with Piwik
 export function usePiwik() {
   if (!theWindow._paq || theWindow._paq.length === 0) {
+    pushToPiwik(['trackPageView']);
     pushToPiwik(['enableLinkTracking']);
     pushToPiwik([
       'setTrackerUrl',
