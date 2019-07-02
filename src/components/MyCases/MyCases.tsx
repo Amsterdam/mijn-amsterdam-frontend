@@ -71,10 +71,7 @@ export default function MyCases({
         </ul>
       )}
       {!isLoading && !items.length && (
-        <p>
-          U hebt geen meldingen of aanvragen lopen die u via Mijn Amsterdam kunt
-          volgen.
-        </p>
+        <p>U hebt geen aanvragen lopen die u via Mijn Amsterdam kunt volgen.</p>
       )}
     </div>
   );
