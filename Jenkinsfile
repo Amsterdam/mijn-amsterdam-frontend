@@ -16,6 +16,11 @@ def tryStep(String message, Closure block, Closure tearDown = null) {
   }
 }
 
+
+String BRANCH = "${env.BRANCH_NAME}"
+String DEV_TARGET = "acceptance"
+String PROD_TARGET = "production"
+
 node {
   stage("Checkout") {
     checkout scm
@@ -30,10 +35,6 @@ node {
     }
   }
 }
-
-String BRANCH = "${env.BRANCH_NAME}"
-String DEV_TARGET = "acceptance"
-String PROD_TARGET = "production"
 
 if (BRANCH == "test") {
   DEV_TARGET = "test"
