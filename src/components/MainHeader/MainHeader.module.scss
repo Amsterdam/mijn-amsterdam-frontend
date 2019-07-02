@@ -18,6 +18,7 @@
   }
 
   @include media("<=tablet") {
+    max-width: none;
     height: $main-header-topbar-height--tablet;
 
     @include select(Heading) {

@@ -6,11 +6,12 @@ import PageContentMain from 'components/PageContentMain/PageContentMain';
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
 import useDocumentTitle from 'hooks/documentTitle.hook';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import styles from './Landing.module.scss';
 import { PageTitleLanding } from 'hooks/pageChange';
 import { trackItemPresentation, itemClickPayload } from 'hooks/piwik.hook';
+import classnames from 'classnames';
 
 const CATEGORY = 'MA_Landingspagina';
 const DIGID_LOGIN_BUTTON = 'DigiD_login_button';
@@ -26,6 +27,8 @@ export default () => {
       trackItemPresentation(CATEGORY, DIGID_LOGIN_BUTTON);
     }
   }, []);
+
+  const [isRedirecting, setRedirecting] = useState(false);
 
   return (
     <PageContentMain>
@@ -49,7 +52,11 @@ export default () => {
           ref={loginButton}
           role="button"
           href={LOGIN_URL}
-          className={styles.LoginBtn}
+          onClick={() => setRedirecting(true)}
+          className={classnames(
+            styles.LoginBtn,
+            isRedirecting && styles.LoginBtnDisabled
+          )}
         >
           <img src={DigiDLogo} alt="DigiD logo" className={styles.LoginLogo} />
           <span>Inloggen met DigiD</span>

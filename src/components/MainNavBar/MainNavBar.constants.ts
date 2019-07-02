@@ -7,6 +7,7 @@ import { ReactComponent as InkomenIcon } from 'assets/images/inkomen.svg';
 import { ReactComponent as WonenIcon } from 'assets/images/wonen.svg';
 import { ReactComponent as ZorgIcon } from 'assets/images/zorg.svg';
 import { FunctionComponent, SVGProps } from 'react';
+import { string } from 'prop-types';
 
 export type MainMenuId =
   | Chapter
@@ -39,7 +40,7 @@ export const myChaptersMenuItems: MenuItem[] = [
   {
     title: 'Erfpacht',
     id: Chapters.WONEN,
-    to: ExternalUrls.SSO_ERFPACHT || AppRoutes.WONEN,
+    to: ExternalUrls.SSO_ERFPACHT || '',
     Icon: WonenIcon,
     target: '_self',
   },

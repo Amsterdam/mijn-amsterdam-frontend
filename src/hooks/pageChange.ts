@@ -11,7 +11,6 @@ export const PageTitles = {
   [AppRoutes.ROOT]: `Home | ${PageTitleMain}`,
   [AppRoutes.BURGERZAKEN]: `Burgerzaken | ${PageTitleMain}`,
   [AppRoutes.BIJSTANDSUITKERING]: `Bijstandsuitkering | ${PageTitleMain}`,
-  [AppRoutes.WONEN]: `Wonen | ${PageTitleMain}`,
   [AppRoutes.BELASTINGEN]: `Belastingen | ${PageTitleMain}`,
   [AppRoutes.ZORG]: `Zorg | ${PageTitleMain}`,
   [AppRoutes.JEUGDHULP]: `Jeugdhulp | ${PageTitleMain}`,

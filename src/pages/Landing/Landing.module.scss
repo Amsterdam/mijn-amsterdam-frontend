@@ -30,6 +30,17 @@
   }
 }
 
+.LoginBtnDisabled {
+  cursor: progress;
+  span {
+    background-color: $color-neutral-grey2 !important;
+    border-color: $color-neutral-grey2 !important;
+    cursor: not-allowed;
+    pointer-events: none;
+    color: $color-neutral-grey3 !important;
+  }
+}
+
 .LoginLogo {
   height: 4.6rem;
   margin-right: 1.3rem;
