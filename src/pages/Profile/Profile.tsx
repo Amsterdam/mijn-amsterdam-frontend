@@ -45,7 +45,7 @@ function formatProfileData({
     },
     address: address
       ? {
-          '': address.current.locality,
+          [brpInfoLabels.Address]: address.current.locality,
           [brpInfoLabels.DateStarted]: defaultDateFormat(
             address.current.dateStarted
           ),
@@ -55,7 +55,6 @@ function formatProfileData({
       ? {
           [brpInfoLabels.FirstName]: partner.firstName,
           [brpInfoLabels.LastName]: partner.lastName,
-          [brpInfoLabels.BSN]: partner.bsn,
           [brpInfoLabels.DateOfBirth]: defaultDateFormat(partner.dateOfBirth),
           [brpInfoLabels.MaritalStatusType]: partner.type,
           [brpInfoLabels.Date]: defaultDateFormat(partner.dateStarted),

@@ -10,10 +10,6 @@ export const panelConfig = {
         external: true,
       },
       {
-        title: 'Trouwen en partnerschap',
-        url: ExternalUrls.TROUWEN_EN_PARTNERSCHAP,
-      },
-      {
         title: 'Voorgenomen huwelijk doorgeven',
         url: ExternalUrls.VOORGENOMEN_HUWELIJK,
       },
@@ -59,4 +55,5 @@ export const brpInfoLabels = {
   Country: 'Land',
   DateStarted: 'Sinds',
   MaritalStatusType: 'Soort verbintenis',
+  Address: 'Adres',
 };
