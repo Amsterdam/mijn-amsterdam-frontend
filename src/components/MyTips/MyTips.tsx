@@ -62,7 +62,7 @@ export default function MyTips({ items = [], isLoading = true }: MyTipsProps) {
         ))}
       </ul>
       {!isLoading && !items.length && (
-        <p>We hebben op het moment geen tips voor u</p>
+        <p>We hebben op dit moment geen persoonlijke tips voor u.</p>
       )}
     </div>
   );
