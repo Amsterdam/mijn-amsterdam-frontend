@@ -39,15 +39,16 @@ export const myChaptersMenuItems: MenuItem[] = [
   {
     title: 'Erfpacht',
     id: Chapters.WONEN,
-    to: ExternalUrls.ERFPACHT || AppRoutes.WONEN,
+    to: ExternalUrls.SSO_ERFPACHT || AppRoutes.WONEN,
     Icon: WonenIcon,
     target: '_self',
   },
   {
     title: 'Belastingen',
     id: Chapters.BELASTINGEN,
-    to: AppRoutes.BELASTINGEN,
+    to: ExternalUrls.SSO_BELASTINGEN,
     Icon: BelastingenIcon,
+    target: '_self',
   },
   {
     title: 'Zorg',
