@@ -113,7 +113,7 @@ export default function MyUpdates({
       </ul>
       {!isLoading && items.length === 0 && (
         <p className={styles.NoItemsInfo}>
-          Er zijn op het moment geen actuele meldingen
+          Er zijn op dit moment geen actuele meldingen voor u.
         </p>
       )}
       {!isLoading && showMoreLink && (
