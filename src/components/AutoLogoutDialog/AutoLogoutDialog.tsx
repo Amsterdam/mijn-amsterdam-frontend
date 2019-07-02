@@ -78,6 +78,7 @@ function CountDownTimer({
           pathTransition: 'none',
           pathColor: Colors.primaryDarkblue,
           textColor: Colors.primaryDarkblue,
+          trailColor: Colors.neutralGrey2,
         })}
       />
     </span>
@@ -134,6 +135,7 @@ export default function AutoLogoutDialog({
     setOpen(false);
     reset();
     resume();
+    document.title = originalTitle;
   }
 
   function showLoginScreen() {
@@ -184,10 +186,8 @@ export default function AutoLogoutDialog({
       <div className={styles.AutoLogoutDialog}>
         <p>
           U bent langer dan{' '}
-          {formattedTimeFromSeconds(
-            AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS / ONE_MINUTE_SECONDS
-          )}{' '}
-          minuten niet actief geweest op Mijn Amsterdam.
+          {formattedTimeFromSeconds(AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS)} minuten
+          niet actief geweest op Mijn Amsterdam.
         </p>
         <p className={styles.TimerText}>
           <CountDownTimer
