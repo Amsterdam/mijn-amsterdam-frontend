@@ -4,11 +4,13 @@ import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import { NavLink } from 'react-router-dom';
 import { Colors } from 'App.constants';
 import Heading from 'components/Heading/Heading';
-import { MyCase } from 'hooks/api/my-cases-api.hook';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { itemClickPayload } from 'hooks/piwik.hook';
+import { FocusItem } from 'data-formatting/focus';
 
 const DEFAULT_TRACK_CATEGORY = 'Lopende_aanvragen';
+
+type MyCase = FocusItem; // NOTE: atm it's the only Case possible
 
 interface CaseItemProps {
   item: MyCase;
