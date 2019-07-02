@@ -21,9 +21,6 @@ interface ProfileData {
   partner: {
     [label: string]: string | number;
   } | null;
-  maritalStatus: {
-    [label: string]: string;
-  } | null;
   address: {
     [label: string]: string;
   } | null;
@@ -33,7 +30,6 @@ function formatProfileData({
   person,
   partner,
   address,
-  maritalStatus,
 }: BrpApiState): ProfileData | null {
   if (!person) {
     return null;
@@ -46,30 +42,25 @@ function formatProfileData({
       [brpInfoLabels.BSN]: person.bsn,
       [brpInfoLabels.DateOfBirth]: defaultDateFormat(person.dateOfBirth),
       [brpInfoLabels.PlaceOfBirth]: person.placeOfBirth,
-      [brpInfoLabels.CountryOfBirth]: person.countryOfBirth,
     },
-    partner: partner
-      ? {
-          [brpInfoLabels.FirstName]: partner.firstName,
-          [brpInfoLabels.LastName]: partner.lastName,
-          [brpInfoLabels.BSN]: partner.bsn,
-          [brpInfoLabels.DateOfBirth]: defaultDateFormat(partner.dateOfBirth),
-        }
-      : null,
-    maritalStatus: maritalStatus
-      ? {
-          '': maritalStatus.type,
-          [brpInfoLabels.Date]: defaultDateFormat(maritalStatus.dateStarted),
-          [brpInfoLabels.Place]: maritalStatus.place,
-          [brpInfoLabels.Country]: maritalStatus.country,
-        }
-      : null,
     address: address
       ? {
           '': address.current.locality,
           [brpInfoLabels.DateStarted]: defaultDateFormat(
             address.current.dateStarted
           ),
+        }
+      : null,
+    partner: partner
+      ? {
+          [brpInfoLabels.FirstName]: partner.firstName,
+          [brpInfoLabels.LastName]: partner.lastName,
+          [brpInfoLabels.BSN]: partner.bsn,
+          [brpInfoLabels.DateOfBirth]: defaultDateFormat(partner.dateOfBirth),
+          [brpInfoLabels.MaritalStatusType]: partner.type,
+          [brpInfoLabels.Date]: defaultDateFormat(partner.dateStarted),
+          [brpInfoLabels.Place]: partner.place,
+          [brpInfoLabels.Country]: partner.country,
         }
       : null,
   };
