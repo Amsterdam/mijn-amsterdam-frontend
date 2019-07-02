@@ -1,7 +1,7 @@
 import useScript from 'hooks/useScript';
 
 const TrackerConfig = {
-  url: 'https://piwik.datapunt.amsterdam.nl',
+  url: 'https://piwik.data.amsterdam.nl',
   siteId: process.env.REACT_APP_SITE_ID,
   jsFilename: 'piwik.js',
   phpFilename: 'piwik.php',
