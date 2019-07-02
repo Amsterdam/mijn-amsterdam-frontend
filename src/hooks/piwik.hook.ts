@@ -34,17 +34,17 @@ function pushToPiwik(payload: any) {
 // Initialize connection with Piwik
 export function usePiwik() {
   if (!theWindow._paq || theWindow._paq.length === 0) {
-    pushToPiwik(['trackPageView']);
-    pushToPiwik(['enableLinkTracking']);
     pushToPiwik([
       'setTrackerUrl',
       `${TrackerConfig.url}/${TrackerConfig.phpFilename}`,
     ]);
     pushToPiwik(['setSiteId', TrackerConfig.siteId]);
+    pushToPiwik(['trackPageView']);
+    pushToPiwik(['enableLinkTracking']);
   }
 
   // Is only loaded once, has internal caching.
-  useScript(`${TrackerConfig.url}/${TrackerConfig.jsFilename}`);
+  useScript(`${TrackerConfig.url}/${TrackerConfig.jsFilename}`, true, true);
 }
 
 export function trackEvent(
