@@ -3,8 +3,8 @@ import useScript from 'hooks/useScript';
 const TrackerConfig = {
   url: 'https://piwik.datapunt.amsterdam.nl',
   siteId: process.env.REACT_APP_SITE_ID,
-  jsFilename: 'matamo.js',
-  phpFilename: 'matamo.php',
+  jsFilename: 'piwik.js',
+  phpFilename: 'piwik.php',
 };
 
 export type ActionCategory = string;
