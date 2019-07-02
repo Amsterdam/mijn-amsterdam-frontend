@@ -115,7 +115,8 @@ export default function formatBrpApiResponse(
 
     const maritalStatus = persoon.omschrijvingBurgerlijkeStaat && {
       type: persoon.omschrijvingBurgerlijkeStaat,
-      dateStarted: persoon.tijdvakGeldigheid.beginGeldigheid,
+      dateStarted:
+        persoon.tijdvakGeldigheid && persoon.tijdvakGeldigheid.beginGeldigheid,
       place:
         persoon.plaatsnaamSluiting ||
         (partnerItem && partnerItem.plaatsnaamSluitingOmschrijving) ||
