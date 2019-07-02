@@ -14,6 +14,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import styles from './MainHeader.module.scss';
+import FontEnlarger from 'components/FontEnlarger/FontEnlarger';
 
 export interface MainHeaderProps {
   person?: Person | null;
@@ -61,6 +62,7 @@ export default function MainHeader({
             Mijn Amsterdam
           </Link>
         </Heading>
+        <FontEnlarger />
         <BetaLabel
           role="img"
           aria-label="Beta versie"
