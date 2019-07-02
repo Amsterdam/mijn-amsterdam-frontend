@@ -24,7 +24,7 @@ export const LINKS: { [key in DirectLinkType]: DirectLink } = {
     isPhoneScreenLink: true,
   },
   MIJN_WERK_EN_INKOMEN: {
-    title: 'Mijn werk & inkomen',
+    title: 'Mijn Werk en Inkomen',
     url: 'https://edison.amsterdam.nl/SignIn?ReturnUrl=%2F',
     isExternalLink: true,
   },

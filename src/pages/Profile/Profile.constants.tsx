@@ -10,6 +10,10 @@ export const panelConfig = {
         external: true,
       },
       {
+        title: 'Trouwen en partnerschap',
+        url: ExternalUrls.TROUWEN_EN_PARTNERSCHAP,
+      },
+      {
         title: 'Voorgenomen huwelijk doorgeven',
         url: ExternalUrls.VOORGENOMEN_HUWELIJK,
       },
@@ -28,10 +32,6 @@ export const panelConfig = {
   partner: {
     title: 'Partner',
     actionLinks: [
-      {
-        title: 'Trouwen en partnerschap',
-        url: ExternalUrls.TROUWEN_EN_PARTNERSCHAP,
-      },
       {
         title: 'Inzien of correctie doorgeven',
         url: ExternalUrls.CHANGE_PERSONAL_DATA,
