@@ -141,6 +141,8 @@ export const ExternalUrls = {
   INCOME_CONTACT: 'https://www.amsterdam.nl/werk-inkomen/contact/',
   ZORG_LEES_MEER: 'https://www.amsterdam.nl/zorg-ondersteuning/',
   SSO_BELASTINGEN: 'https://belastingbalie.amsterdam.nl/digid.info.php',
+  MIJN_WERK_EN_INKOMEN: 'https://edison.amsterdam.nl/SignIn?ReturnUrl=%2F',
+  MIJN_SUBSIDIES: 'https://mijnsubsidies.amsterdam.nl/loket/',
 };
 
 // NOTE: Keep up-to-date with _colors.scss

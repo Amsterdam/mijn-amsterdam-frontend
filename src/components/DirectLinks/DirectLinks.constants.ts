@@ -1,7 +1,8 @@
-import { AppRoutes } from 'App.constants';
+import { AppRoutes, ExternalUrls } from 'App.constants';
 export type DirectLinkType =
   | 'MIJN_SUBSIDIE'
   | 'MIJN_WERK_EN_INKOMEN'
+  | 'MIJN_OVERHEID_BERICHTEBOX'
   | 'MY_AREA'
   | 'MY_TIPS';
 
@@ -23,14 +24,19 @@ export const LINKS: { [key in DirectLinkType]: DirectLink } = {
     url: AppRoutes.MY_AREA,
     isPhoneScreenLink: true,
   },
+  MIJN_OVERHEID_BERICHTEBOX: {
+    title: 'Mijn Overheid Berichtenbox',
+    url: ExternalUrls.BERICHTENBOX,
+    isExternalLink: true,
+  },
   MIJN_WERK_EN_INKOMEN: {
     title: 'Mijn Werk en Inkomen',
-    url: 'https://edison.amsterdam.nl/SignIn?ReturnUrl=%2F',
+    url: ExternalUrls.MIJN_WERK_EN_INKOMEN,
     isExternalLink: true,
   },
   MIJN_SUBSIDIE: {
     title: 'Mijn subsidies',
-    url: 'https://mijnsubsidies.amsterdam.nl/loket/',
+    url: ExternalUrls.MIJN_SUBSIDIES,
     isExternalLink: true,
   },
 };

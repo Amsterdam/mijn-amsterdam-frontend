@@ -31,6 +31,7 @@ import { Person } from 'data-formatting/brp';
 import { itemInteractionPayload } from 'hooks/piwik.hook';
 import { trackEvent } from 'hooks/piwik.hook';
 import { trackItemPresentation, itemClickPayload } from 'hooks/piwik.hook';
+import LoadingContent from '../LoadingContent/LoadingContent';
 
 const MenuToggleBtnId = 'MenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -60,27 +61,19 @@ function SecondaryLinks({ person, hasMessages = false }: SecondaryLinksProps) {
 
   return (
     <div className={styles.secondaryLinks}>
-      <ButtonLinkExternal
-        to={ExternalUrls.BERICHTENBOX}
-        className={classnames(hasMessages && 'has-messages')}
+      <Link
+        to={AppRoutes.PROFILE}
         data-track={itemClickPayload(
           'MA_Header/Secundaire_Links',
-          'Link_naar_Berichtenbox'
+          'Link_naar_Profiel'
         )}
       >
-        Berichten Mijn Overheid
-      </ButtonLinkExternal>
-      {person && person.firstName && (
-        <Link
-          to={AppRoutes.PROFILE}
-          data-track={itemClickPayload(
-            'MA_Header/Secundaire_Links',
-            'Link_naar_Profiel'
-          )}
-        >
-          {person.fullName}
-        </Link>
-      )}
+        {person && person.firstName ? (
+          person.fullName
+        ) : (
+          <LoadingContent barConfig={[['15rem', '1rem', '0']]} />
+        )}
+      </Link>
       {
         <IconButtonLink
           target="_self"
