@@ -33,10 +33,6 @@ export const panelConfig = {
         url: ExternalUrls.CHANGE_PERSONAL_DATA,
         external: true,
       },
-      {
-        title: 'Echtscheiding',
-        url: ExternalUrls.ECHTSCHEIDING,
-      },
     ],
   },
 };
