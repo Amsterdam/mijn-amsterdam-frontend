@@ -58,7 +58,10 @@ function formatProfileData({
           [brpInfoLabels.DateOfBirth]: defaultDateFormat(partner.dateOfBirth),
           [brpInfoLabels.MaritalStatusType]: partner.type,
           [brpInfoLabels.Date]: defaultDateFormat(partner.dateStarted),
-          [brpInfoLabels.Place]: `${partner.place} ${partner.country}`,
+          [brpInfoLabels.Place]:
+            partner.place || partner.country
+              ? `${partner.place} ${partner.country}`
+              : 'Onbekend',
         }
       : null,
   };
