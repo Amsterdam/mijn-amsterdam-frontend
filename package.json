@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/polyfill": "^7.4.0",
+    "@sentry/browser": "^5.4.3",
     "@types/axios": "^0.14.0",
     "@types/classnames": "^2.2.7",
     "@types/enzyme": "^3.9.1",
