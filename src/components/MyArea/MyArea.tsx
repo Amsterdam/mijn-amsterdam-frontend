@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react';
-import { NavLink, Link } from 'react-router-dom';
-import styles from './MyArea.module.scss';
-import { MAP_URL } from './MyArea.constants';
 import { AppRoutes } from 'App.constants';
-import { ReactComponent as Logo } from 'assets/images/logo-amsterdam.svg';
 import { ReactComponent as CloseIcon } from 'assets/icons/Close.svg';
+import { ReactComponent as Logo } from 'assets/images/logo-amsterdam.svg';
 import Heading from 'components/Heading/Heading';
-import { itemClickPayload } from 'hooks/piwik.hook';
-import { trackItemPresentation } from 'hooks/piwik.hook';
+import { itemClickPayload, trackItemPresentation } from 'hooks/piwik.hook';
+import React, { useEffect } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import styles from './MyArea.module.scss';
+import useMyMap from 'hooks/api/api.mymap';
 
 interface MyAreaHeaderComponentProps {
   trackCategory: string;
@@ -34,49 +33,57 @@ export function MyAreaHeader({ trackCategory }: MyAreaHeaderComponentProps) {
 
 interface MyAreaMapComponentProps {
   trackCategory: string;
+  address?: string;
+  simpleMap?: boolean;
 }
 
-export function MyAreaMap({ trackCategory }: MyAreaMapComponentProps) {
+export function MyAreaMap({
+  trackCategory,
+  address,
+  simpleMap = false,
+}: MyAreaMapComponentProps) {
   useEffect(() => {
-    trackItemPresentation(trackCategory, 'Embed_kaart');
+    trackItemPresentation(
+      trackCategory,
+      'Embed_kaart' + simpleMap ? '_simpel' : '_volledig'
+    );
   }, []);
 
-  const address = 'Weesperstraat 113';
-  const [{ data }] = useDataApi({
-    url: `https://api.data.amsterdam.nl/atlas/search/adres/?q=${address}`,
-  });
+  const { url, isDirty, isLoading } = useMyMap(address, simpleMap);
 
-  let url = `${MAP_URL}&center=${DEFAULT_LON}%2C${DEFAULT_LAT}&zoom=${DEFAULT_ZOOM}`;
-
-  if (data.results && data.results.length) {
-    const {
-      results: [
-        {
-          centroid: [lat, lon],
-        },
-      ],
-    } = data;
-    url = `${MAP_URL}&center=${lon}%2C${lat}&zoom=${13}`;
-  }
-
-  return (
+  return isDirty && !isLoading ? (
     <iframe
       id="mapIframe"
       title="Kaart van mijn buurt"
-      src={MAP_URL}
+      src={url}
       className={styles.Map}
     />
+  ) : (
+    <span>Kaart wordt geladen..</span>
   );
 }
 
 interface MyAreaComponentProps {
   trackCategory: string;
+  simpleMap?: boolean;
+  address?: string;
 }
 
-export default function MyArea({ trackCategory }: MyAreaComponentProps) {
+export default function MyArea({
+  trackCategory,
+  simpleMap = false,
+  address,
+}: MyAreaComponentProps) {
+  if (!address) {
+    return null;
+  }
   return (
     <div className={styles.MyArea}>
-      <MyAreaMap trackCategory={trackCategory} />
+      <MyAreaMap
+        trackCategory={trackCategory}
+        simpleMap={simpleMap}
+        address={address}
+      />
       <NavLink
         to={AppRoutes.MY_AREA}
         className={styles.Overlay}

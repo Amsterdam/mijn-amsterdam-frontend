@@ -67,6 +67,7 @@ export interface Person {
 export interface Address {
   locality: string;
   dateStarted: string;
+  street: string;
 }
 
 export interface Addresses {
@@ -110,6 +111,9 @@ export default function formatBrpApiResponse(
         ${persoon.verblijfsadres.postcode} ${persoon.verblijfsadres
           .woonplaatsNaam || ''}`,
         dateStarted: persoon.verblijfsadres.begindatumVerblijf,
+        street: `${persoon.verblijfsadres.straatnaam} ${
+          persoon.verblijfsadres.huisnummer
+        }`,
       },
     };
 

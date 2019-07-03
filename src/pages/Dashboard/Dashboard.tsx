@@ -34,6 +34,7 @@ export default () => {
       isLoading: isMyTipsLoading,
     },
     MY_CHAPTERS: { items: myChapterItems, isLoading: isMyChaptersLoading },
+    BRP: { address },
   } = useContext(AppContext);
 
   const tipItems = myTips.slice(0, MAX_TIPS_VISIBLE);
@@ -80,7 +81,11 @@ export default () => {
       </PageContentMainBody>
       {!isPhoneScreen && (
         <PageContentMainBody>
-          <MyArea trackCategory={'MA_Dashboard/Mijn_Buurt'} />
+          <MyArea
+            trackCategory={'MA_Dashboard/Mijn_Buurt'}
+            simpleMap={true}
+            address={address && address.current && address.current.street}
+          />
         </PageContentMainBody>
       )}
       <PageContentMainBody variant="regularBoxed">
