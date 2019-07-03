@@ -147,9 +147,7 @@ export default function AutoLogoutDialog({
       )
     );
     setContinueButtonVisibility(false);
-    // Refetching the session here will make the App show the login screen automatically if the `isAuthenticated` flag
-    // in the response of the fetch call is `false`.
-    session.refetch();
+    window.location.reload();
   }
 
   function continueUsingApp() {
