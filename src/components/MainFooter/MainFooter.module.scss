@@ -6,7 +6,7 @@
 }
 
 .InnerContainer {
-  width: $main-boxed-width;
+  max-width: $main-boxed-width;
   margin: 0 auto;
 
   @include media("<=tablet") {

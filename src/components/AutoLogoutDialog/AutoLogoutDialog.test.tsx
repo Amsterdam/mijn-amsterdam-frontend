@@ -30,6 +30,7 @@ describe('AutoLogoutDialog', () => {
         callback && callback();
       };
     });
+    window.location.reload = jest.fn();
   });
 
   afterAll(() => {
@@ -73,7 +74,7 @@ describe('AutoLogoutDialog', () => {
       ONE_SECOND_IN_MS * settings.secondsBeforeAutoLogout!
     );
     component.update();
-    expect(refetch).toHaveBeenCalled();
+    expect(window.location.reload).toHaveBeenCalled();
   });
 
   it('fires callback when clicking continue button', () => {

@@ -22,6 +22,9 @@ function isChapterActive(
     case Chapters.ZORG:
       return !WMO.isLoading && !!WMO.data.items.length;
 
+    case Chapters.BELASTINGEN:
+      return true; // SSO to belastingen
+
     case Chapters.WONEN:
       return !ERFPACHT.isLoading && ERFPACHT.data.status === true;
   }

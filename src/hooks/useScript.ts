@@ -43,7 +43,7 @@ export default function useScript(
         // Remove from cachedScripts we can try loading again
         const index = cachedScripts.indexOf(src);
         if (index >= 0) cachedScripts.splice(index, 1);
-        script.remove();
+        script.parentNode!.removeChild(script);
 
         setState({
           loaded: true,

@@ -1,5 +1,6 @@
 import { Chapters } from 'App.constants';
 import { AppContext } from 'AppState';
+import Alert from 'components/Alert/Alert';
 import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
 import MyUpdates from 'components/MyUpdates/MyUpdates';
 import PageContentMain from 'components/PageContentMain/PageContentMain';
@@ -8,8 +9,6 @@ import PageContentMainHeading from 'components/PageContentMainHeading/PageConten
 import React, { useContext } from 'react';
 
 import styles from './MyUpdates.module.scss';
-import Heading from 'components/Heading/Heading';
-import Alert from 'components/Alert/Alert';
 
 export default () => {
   const {
@@ -26,7 +25,7 @@ export default () => {
         className={styles.MainHeader}
       >
         <ChapterHeadingIcon chapter={Chapters.BURGERZAKEN} />
-        Alle meldingen
+        Mijn meldingen
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
         {isError && (
@@ -34,29 +33,14 @@ export default () => {
             Uw meldingen kunnen op dit moment niet geladen worden.
           </Alert>
         )}
-        <Heading el="h3" size="mediumLarge" className={styles.PanelHeading}>
-          Actueel
-        </Heading>
         <MyUpdates
           isLoading={isLoading}
           total={total}
           items={items.filter(item => item.isActual)}
           trackCategory={'MA_Mijn_meldingen/Actuele_meldingen'}
+          noContentNotification="Er zijn op dit moment geen actuele meldingen voor u."
         />
       </PageContentMainBody>
-      <div className={styles.PreviousUpdatesPanel}>
-        <PageContentMainBody variant="boxed">
-          <Heading el="h3" size="mediumLarge" className={styles.PanelHeading}>
-            Eerdere meldingen
-          </Heading>
-          <MyUpdates
-            isLoading={isLoading}
-            total={total}
-            items={items.filter(item => !item.isActual)}
-            trackCategory={'MA_Mijn_meldingen/Eerdere_meldingen'}
-          />
-        </PageContentMainBody>
-      </div>
     </PageContentMain>
   );
 };

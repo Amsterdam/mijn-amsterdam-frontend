@@ -24,6 +24,7 @@ const Tip = ({ tip }: TipProps) => (
 export interface MyTipsProps {
   items: MyTip[];
   isLoading: boolean;
+  showHeader?: boolean;
 }
 
 function LoadingContentListItems() {
@@ -44,16 +45,24 @@ function LoadingContentListItems() {
   return <>{elements}</>;
 }
 
-export default function MyTips({ items = [], isLoading = true }: MyTipsProps) {
+export default function MyTips({
+  items = [],
+  isLoading = true,
+  showHeader = true,
+}: MyTipsProps) {
   return (
     <div className={styles.MyTips}>
-      <div className={styles.HeaderBar}>
-        <Heading size="large">Mijn tips</Heading>
-        <ButtonLink to={AppRoutes.MY_TIPS}>Mijn tips</ButtonLink>
-        {/* <a href="" className={styles.OptIn}>
+      {showHeader && (
+        <div className={styles.HeaderBar}>
+          <Heading size="large">Mijn tips</Heading>
+          {!!items.length && (
+            <ButtonLink to={AppRoutes.MY_TIPS}>Mijn tips</ButtonLink>
+          )}
+          {/* <a href="" className={styles.OptIn}>
           Maak relevanter
         </a> */}
-      </div>
+        </div>
+      )}
 
       <ul className={styles.TipsList}>
         {isLoading && <LoadingContentListItems />}
@@ -62,7 +71,7 @@ export default function MyTips({ items = [], isLoading = true }: MyTipsProps) {
         ))}
       </ul>
       {!isLoading && !items.length && (
-        <p>We hebben op het moment geen tips voor u</p>
+        <p>We hebben op dit moment geen persoonlijke tips voor u.</p>
       )}
     </div>
   );
