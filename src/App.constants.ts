@@ -30,10 +30,10 @@ export const AppRoutes = {
   ZORG: '/zorg',
   ZORG_VOORZIENINGEN: '/zorg/voorzieningen',
   JEUGDHULP: '/jeugdhulp',
-  INKOMEN: '/inkomen',
-  STADSPAS: '/inkomen/stadspas',
-  BIJSTANDSUITKERING: '/inkomen/bijstandsuitkering',
-  BIJZONDERE_BIJSTAND: '/inkomen/bijzondere-bijstand',
+  INKOMEN: '/werk-en-inkomen',
+  STADSPAS: '/werk-en-inkomen/stadspas',
+  BIJSTANDSUITKERING: '/werk-en-inkomen/bijstandsuitkering',
+  BIJZONDERE_BIJSTAND: '/werk-en-inkomen/bijzondere-bijstand',
   PROFILE: '/profiel',
   MY_AREA: '/buurt',
   ABOUT: '/over-mijn-amsterdam',
@@ -121,7 +121,7 @@ export const ExternalUrls = {
     'https://www.eherkenning.nl/inloggen-met-eherkenning/middel-aanvragen/',
   KVK_REPORT_CHANGE:
     'https://www.kvk.nl/inschrijven-en-wijzigen/wijziging-doorgeven/',
-  ERFPACHT: process.env.REACT_APP_ERFPACHT_URL,
+  SSO_ERFPACHT: process.env.REACT_APP_ERFPACHT_URL,
   BERICHTENBOX: 'https://mijn.overheid.nl/berichtenbox/inbox/',
   TROUWEN_EN_PARTNERSCHAP:
     'https://www.amsterdam.nl/burgerzaken/trouwen-partnerschap/',
@@ -140,6 +140,9 @@ export const ExternalUrls = {
     'https://www.amsterdam.nl/burgerzaken/trouwen-partnerschap/trouwen-amsterdam/aankondigen/',
   INCOME_CONTACT: 'https://www.amsterdam.nl/werk-inkomen/contact/',
   ZORG_LEES_MEER: 'https://www.amsterdam.nl/zorg-ondersteuning/',
+  SSO_BELASTINGEN: 'https://belastingbalie.amsterdam.nl/digid.info.php',
+  MIJN_WERK_EN_INKOMEN: 'https://edison.amsterdam.nl/SignIn?ReturnUrl=%2F',
+  MIJN_SUBSIDIES: 'https://mijnsubsidies.amsterdam.nl/loket/',
 };
 
 // NOTE: Keep up-to-date with _colors.scss

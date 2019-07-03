@@ -163,7 +163,7 @@ export default function StatusLine({
           )}
           onClick={toggleCollapsed}
         >
-          {!isCollapsed ? 'Toon alles' : 'Toon minder'}
+          {isCollapsed ? 'Toon alles' : 'Toon minder'}
         </button>
       )}
     </div>

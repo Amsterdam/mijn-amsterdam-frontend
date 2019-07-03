@@ -20,5 +20,5 @@ export default function PageContentMain({
     styles[`PageContentMain__${variant}`] || styles.PageContentMain__default
   );
 
-  return <main className={classNames}>{children}</main>;
+  return <div className={classNames}>{children}</div>;
 }
