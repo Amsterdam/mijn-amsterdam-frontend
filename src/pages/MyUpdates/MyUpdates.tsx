@@ -25,7 +25,7 @@ export default () => {
         className={styles.MainHeader}
       >
         <ChapterHeadingIcon chapter={Chapters.BURGERZAKEN} />
-        Alle meldingen
+        Mijn meldingen
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
         {isError && (
