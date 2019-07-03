@@ -39,6 +39,9 @@
     pointer-events: none;
     color: $color-neutral-grey3 !important;
   }
+  & {
+    filter: grayscale(100%);
+  }
 }
 
 .LoginLogo {

@@ -59,7 +59,11 @@ export default () => {
           )}
         >
           <img src={DigiDLogo} alt="DigiD logo" className={styles.LoginLogo} />
-          <span>Inloggen met DigiD</span>
+          <span>
+            {isRedirecting
+              ? 'U wordt naar de DigID inlogpagina gestuurd..'
+              : 'Inloggen met DigiD'}
+          </span>
         </a>
         <p>
           <strong>Wilt u hulp bij het inloggen met DigiD?</strong>
