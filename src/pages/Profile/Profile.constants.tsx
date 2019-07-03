@@ -47,7 +47,7 @@ export const brpInfoLabels = {
   CountryOfBirth: 'Geboorteland',
   Nationality: 'Nationaliteit',
   Date: 'Datum',
-  Place: 'Plaats',
+  Place: 'Plaats en land',
   Country: 'Land',
   DateStarted: 'Sinds',
   MaritalStatusType: 'Soort verbintenis',

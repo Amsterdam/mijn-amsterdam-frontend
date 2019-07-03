@@ -58,8 +58,7 @@ function formatProfileData({
           [brpInfoLabels.DateOfBirth]: defaultDateFormat(partner.dateOfBirth),
           [brpInfoLabels.MaritalStatusType]: partner.type,
           [brpInfoLabels.Date]: defaultDateFormat(partner.dateStarted),
-          [brpInfoLabels.Place]: partner.place,
-          [brpInfoLabels.Country]: partner.country,
+          [brpInfoLabels.Place]: `${partner.place} ${partner.country}`,
         }
       : null,
   };
@@ -95,17 +94,19 @@ export default function Profile() {
             Uw gegevens kunnen op dit moment niet worden getoond.
           </Alert>
         )}
-        {brpInfo &&
-          entries(brpInfo).map(
-            ([id, panelData]) =>
-              panelData && ( // TS compiler complains when using regular filtering.
-                <InfoPanel
-                  key={id}
-                  {...panelConfig[id]}
-                  panelData={panelData}
-                />
-              )
-          )}
+        <div className={styles.InfoPanels}>
+          {brpInfo &&
+            entries(brpInfo).map(
+              ([id, panelData]) =>
+                panelData && ( // TS compiler complains when using regular filtering.
+                  <InfoPanel
+                    key={id}
+                    {...panelConfig[id]}
+                    panelData={panelData}
+                  />
+                )
+            )}
+        </div>
       </PageContentMainBody>
     </PageContentMain>
   );
