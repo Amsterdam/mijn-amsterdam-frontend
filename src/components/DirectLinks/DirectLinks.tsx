@@ -11,7 +11,7 @@ export default function DirectLinks() {
   const isPhoneScreen = usePhoneScreen();
   return (
     <div className={styles.DirectLinks}>
-      <Heading size="large">Links naar</Heading>
+      <Heading size="large">Bezoek ook</Heading>
       <ul className={styles.LinkList}>
         {entries(LINKS)
           .filter(([, { isPhoneScreenLink }]) =>
