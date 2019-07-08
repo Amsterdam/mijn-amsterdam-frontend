@@ -3,6 +3,7 @@ FROM node
 COPY /mock-api /mock-api
 COPY /package.json /package.json
 
+RUN npm cache clean --force
 RUN npm i dyson node-persist date-fns
 
 CMD ["npm", "run", "mock-api"]
