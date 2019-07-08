@@ -14,8 +14,5 @@ export default function useErfpachtApi(): ErfpachtApiState {
   const [api] = useDataApi({
     url: ApiUrls.ERFPACHT,
   });
-  return {
-    ...api,
-    data: api.data,
-  };
+  return api;
 }

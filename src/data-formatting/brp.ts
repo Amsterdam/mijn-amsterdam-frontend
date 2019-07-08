@@ -60,7 +60,6 @@ export interface Person {
   gender: string;
   dateOfBirth: string;
   placeOfBirth: string;
-  countryOfBirth: string;
   bsn: number;
 }
 
@@ -75,9 +74,9 @@ export interface Addresses {
 
 export interface BrpDataFormatted {
   person?: Person;
-  partner?: Pick<Person, 'firstName' | 'lastName' | 'dateOfBirth' | 'bsn'>;
+  partner?: Pick<Person, 'firstName' | 'lastName' | 'dateOfBirth' | 'bsn'> &
+    MaritalStatus;
   address?: Addresses;
-  maritalStatus?: MaritalStatus;
 }
 
 export default function formatBrpApiResponse(
@@ -93,6 +92,17 @@ export default function formatBrpApiResponse(
         )
       : persoon.heeftAlsEchtgenootPartner || null;
 
+    const maritalStatus = persoon.omschrijvingBurgerlijkeStaat && {
+      type: persoon.omschrijvingBurgerlijkeStaat,
+      dateStarted:
+        persoon.tijdvakGeldigheid && persoon.tijdvakGeldigheid.beginGeldigheid,
+      place:
+        persoon.plaatsnaamSluiting ||
+        (partnerItem && partnerItem.plaatsnaamSluitingOmschrijving) ||
+        '',
+      country: (partnerItem && partnerItem.landnaamSluiting) || '',
+    };
+
     const partner = partnerItem &&
       partnerItem.gerelateerde && {
         firstName: partnerItem.gerelateerde.voornamen,
@@ -100,6 +110,7 @@ export default function formatBrpApiResponse(
         lastName: partnerItem.gerelateerde.geslachtsnaam,
         bsn: 0,
         dateOfBirth: partnerItem.gerelateerde.geboortedatum,
+        ...(maritalStatus || {}),
       };
 
     const address = persoon.verblijfsadres && {
@@ -107,23 +118,11 @@ export default function formatBrpApiResponse(
         locality: `${persoon.verblijfsadres.straatnaam} ${
           persoon.verblijfsadres.huisnummer
         }
-        ${persoon.verblijfsadres.postcode} ${persoon.verblijfsadres
-          .woonplaatsNaam || ''}`,
+        ${persoon.verblijfsadres.postcode
+          .split(/([0-9]{4})/g)
+          .join(' ')} ${persoon.verblijfsadres.woonplaatsNaam || ''}`,
         dateStarted: persoon.verblijfsadres.begindatumVerblijf,
       },
-    };
-
-    const maritalStatus = persoon.omschrijvingBurgerlijkeStaat && {
-      type: persoon.omschrijvingBurgerlijkeStaat,
-      dateStarted: persoon.tijdvakGeldigheid.beginGeldigheid,
-      place:
-        persoon.plaatsnaamSluiting ||
-        (partnerItem && partnerItem.plaatsnaamSluitingOmschrijving) ||
-        '',
-      country:
-        (partner && partner.country) ||
-        (partnerItem && partnerItem.landnaamSluiting) ||
-        '',
     };
 
     const lastName = persoon.voorvoegselGeslachtsnaam
@@ -136,12 +135,13 @@ export default function formatBrpApiResponse(
       lastName,
       fullName: `${persoon.voornamen} ${lastName}`,
       dateOfBirth: persoon.geboortedatum,
-      placeOfBirth: persoon.geboorteplaatsnaam,
-      countryOfBirth: persoon.geboortelandnaam,
+      placeOfBirth: `${persoon.geboorteplaatsnaam}, ${
+        persoon.geboortelandnaam
+      }`,
       gender: persoon.omschrijvingGeslachtsAanduiding,
     };
 
-    return { person, partner, address, maritalStatus };
+    return { person, partner, address };
   }
 
   return {};

@@ -15,35 +15,22 @@ export const panelConfig = {
       },
     ],
   },
+  address: {
+    title: 'Woonadres',
+    actionLinks: [
+      {
+        title: 'Verhuizing doorgeven',
+        url: ExternalUrls.REPORT_RELOCATION,
+        external: true,
+      },
+    ],
+  },
   partner: {
     title: 'Partner',
     actionLinks: [
       {
         title: 'Inzien of correctie doorgeven',
         url: ExternalUrls.CHANGE_PERSONAL_DATA,
-        external: true,
-      },
-    ],
-  },
-  maritalStatus: {
-    title: 'Verbintenis',
-    actionLinks: [
-      {
-        title: 'Trouwen en partnerschap',
-        url: ExternalUrls.TROUWEN_EN_PARTNERSCHAP,
-      },
-      {
-        title: 'Echtscheiding',
-        url: ExternalUrls.ECHTSCHEIDING,
-      },
-    ],
-  },
-  address: {
-    title: 'Huidig woonadres',
-    actionLinks: [
-      {
-        title: 'Verhuizing doorgeven',
-        url: ExternalUrls.REPORT_RELOCATION,
         external: true,
       },
     ],
@@ -60,7 +47,9 @@ export const brpInfoLabels = {
   CountryOfBirth: 'Geboorteland',
   Nationality: 'Nationaliteit',
   Date: 'Datum',
-  Place: 'Plaats',
+  Place: 'Plaats en land',
   Country: 'Land',
   DateStarted: 'Sinds',
+  MaritalStatusType: 'Soort verbintenis',
+  Address: 'Adres',
 };

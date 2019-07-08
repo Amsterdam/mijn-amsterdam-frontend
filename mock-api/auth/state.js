@@ -2,7 +2,7 @@ const storage = require('node-persist');
 const differenceInSeconds = require('date-fns/difference_in_seconds');
 
 const ONE_MINUTE_IN_SECONDS = 60;
-const DIGID_SESSION_TIMEOUT_SECONDS = 10 * ONE_MINUTE_IN_SECONDS;
+const DIGID_SESSION_TIMEOUT_SECONDS = 15 * ONE_MINUTE_IN_SECONDS;
 
 storage.init();
 
