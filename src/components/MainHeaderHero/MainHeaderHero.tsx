@@ -26,7 +26,7 @@ function getHeroSrc() {
   const { location } = useRouter();
   const isChapterPath = (path: string) => location.pathname.startsWith(path);
 
-  let imageName = 'Header-Desktop-1';
+  let imageName;
 
   switch (true) {
     // case isChapterPath(AppRoutes.PROFILE):
@@ -36,7 +36,7 @@ function getHeroSrc() {
     //   imageName = 'Header-Desktop-4';
     //   break;
     default:
-      imageName = 'Header-Desktop-1';
+      imageName = 'Zuid-Oost_RT-02';
       break;
   }
 
