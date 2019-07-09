@@ -159,6 +159,7 @@ export function formatProfileData({
       [brpInfoLabels.CountryOfBirth]: persoon.geboortelandnaam || 'Onbekend',
       [brpInfoLabels.Nationality]:
         persoon.nationaliteiten &&
+        persoon.nationaliteiten.length &&
         persoon.nationaliteiten.reduce(
           (str, { omschrijving }) => str + omschrijving + ' ',
           ''
