@@ -33,6 +33,7 @@ import { trackEvent } from 'hooks/piwik.hook';
 import { trackItemPresentation, itemClickPayload } from 'hooks/piwik.hook';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import FontEnlarger from 'components/FontEnlarger/FontEnlarger';
+import { useDesktopScreen } from 'hooks/media.hook';
 
 const MenuToggleBtnId = 'MenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -59,10 +60,11 @@ function SecondaryLinks({ person, hasMessages = false }: SecondaryLinksProps) {
       trackItemPresentation('MA_Header/Secundaire_Links', 'Link_naar_Profiel');
     }
   }, [hasFirstName]);
+  const isDesktopScreen = useDesktopScreen();
 
   return (
     <div className={styles.secondaryLinks}>
-      <FontEnlarger />
+      {isDesktopScreen && <FontEnlarger />}
       <Link
         to={AppRoutes.PROFILE}
         data-track={itemClickPayload(
