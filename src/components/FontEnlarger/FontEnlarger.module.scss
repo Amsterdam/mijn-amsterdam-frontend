@@ -2,6 +2,10 @@
 .FontEnlarger {
   position: relative;
   margin: auto;
+
+  >strong {
+    color: $color-neutral-grey4;
+  }
 }
 
 .FontEnlargerPopup {
