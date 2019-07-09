@@ -4,15 +4,15 @@ import ButtonLink from 'components/ButtonLink/ButtonLink';
 import ButtonLinkStyles from 'components/ButtonLink/ButtonLink.module.scss';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import Heading from 'components/Heading/Heading';
+import LoadingContent from 'components/LoadingContent/LoadingContent';
 import { defaultDateFormat } from 'helpers/App';
 import { MyUpdate, useUpdatesState } from 'hooks/api/my-updates-api.hook';
+import { itemClickPayload, trackItemPresentation } from 'hooks/piwik.hook';
 import React, { useEffect } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
 import useRouter from 'use-react-router';
 
 import styles from './MyUpdates.module.scss';
-import LoadingContent from 'components/LoadingContent/LoadingContent';
-import { useDebouncedCallback } from 'use-debounce';
-import { trackItemPresentation, itemClickPayload } from 'hooks/piwik.hook';
 
 export interface MyUpdatesProps {
   items: MyUpdate[];
@@ -20,6 +20,7 @@ export interface MyUpdatesProps {
   showMoreLink?: boolean;
   isLoading?: boolean;
   trackCategory?: string;
+  noContentNotification?: string;
 }
 
 const CATEGORY = 'Mijn_Meldingen';
@@ -30,6 +31,7 @@ export default function MyUpdates({
   showMoreLink = false,
   isLoading = true,
   trackCategory = CATEGORY,
+  noContentNotification = 'Er zijn op dit moment geen meldingen voor u.',
 }: MyUpdatesProps) {
   const [myUpdatesState, setMyUpdatesState] = useUpdatesState();
   const { history } = useRouter();
@@ -112,9 +114,7 @@ export default function MyUpdates({
           })}
       </ul>
       {!isLoading && items.length === 0 && (
-        <p className={styles.NoItemsInfo}>
-          Er zijn op het moment geen actuele meldingen
-        </p>
+        <p className={styles.NoItemsInfo}>{noContentNotification}</p>
       )}
       {!isLoading && showMoreLink && (
         <p className={styles.FooterLink}>

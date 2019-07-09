@@ -8,6 +8,8 @@ module.exports = {
     if (!isAuthenticated) {
       res.status(403);
     }
+    // Renew session for every check
+    await state.setAuth(true);
     next();
   },
   template: async (params, query, body, x, headers) => {

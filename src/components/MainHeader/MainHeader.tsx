@@ -10,7 +10,7 @@ import MainNavBar from 'components/MainNavBar/MainNavBar';
 import { Person } from 'data-formatting/brp';
 import { entries } from 'helpers/App';
 import { useDesktopScreen } from 'hooks/media.hook';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import styles from './MainHeader.module.scss';

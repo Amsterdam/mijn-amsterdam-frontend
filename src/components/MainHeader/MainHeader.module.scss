@@ -3,10 +3,12 @@
 .header {
   min-width: $main-min-width;
   position: relative;
+  @include IE11 {
+    overflow-x: hidden; // Hack for a weird horizontal scrollbar showing up in IE11 because of the positioning of the betalabel
+  }
 }
 
 .topBar {
-  width: 100%;
   // Offset header to the left so that the focus area of the logo svg covers the complete logo.
   max-width: $main-boxed-width;
   height: $main-header-topbar-height;
@@ -18,6 +20,7 @@
   }
 
   @include media("<=tablet") {
+    max-width: none;
     height: $main-header-topbar-height--tablet;
 
     @include select(Heading) {

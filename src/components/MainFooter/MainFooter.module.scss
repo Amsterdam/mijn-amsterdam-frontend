@@ -6,7 +6,7 @@
 }
 
 .InnerContainer {
-  width: $main-boxed-width;
+  max-width: $main-boxed-width;
   margin: 0 auto;
 
   @include media("<=tablet") {
@@ -68,6 +68,7 @@
 
 .Panel {
   @include media("<=tablet") {
+
     > :not(:first-child) {
       display: none;
     }
@@ -104,6 +105,10 @@
         &:before {
           transform: rotate(-90deg);
         }
+      }
+
+      + .Panel {
+        margin-top: 4rem;
       }
     }
   }

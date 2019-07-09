@@ -51,7 +51,7 @@ export default () => {
         </p>
         <p>
           <ButtonLinkExternal to={ExternalUrls.ZORG_LEES_MEER}>
-            Lees meer over zorg bij gemeente Amsterdam
+            Overzicht en aanvragen van alle zorgproducten
           </ButtonLinkExternal>
         </p>
         {isError && (
@@ -65,7 +65,7 @@ export default () => {
           displayProps={DISPLAY_PROPS}
           items={itemsRequested}
           title="Mijn lopende aanvragen"
-          noItemsMessage="U hebt op dit moment geen lopende aanvragen"
+          noItemsMessage="U hebt op dit moment geen lopende aanvragen."
           startCollapsed={false}
           isLoading={isLoading}
           trackCategory="MA_Zorg/Detail_Pagina/Lopende_aanvragen"
@@ -76,7 +76,7 @@ export default () => {
           displayProps={DISPLAY_PROPS}
           items={itemsActual}
           title="Mijn huidige voorzieningen"
-          noItemsMessage="U hebt nog geen huidige voorzieningen"
+          noItemsMessage="U hebt nog geen huidige voorzieningen."
           startCollapsed={hasActiveRequests}
           className={styles.DataLinkTableCurrent}
           isLoading={isLoading}
@@ -91,7 +91,7 @@ export default () => {
             displayProps={DISPLAY_PROPS}
             items={itemsPrevious}
             title="Mijn eerdere voorzieningen"
-            noItemsMessage="U hebt geen eerdere voorzieningen"
+            noItemsMessage="U hebt geen eerdere voorzieningen."
             startCollapsed={hasActiveRequests || hasActualItems}
             isLoading={isLoading}
             trackCategory="MA_Zorg/Detail_Pagina/Eerdere_voorzieningen"

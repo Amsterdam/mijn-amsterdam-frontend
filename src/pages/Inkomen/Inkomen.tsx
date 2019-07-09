@@ -10,7 +10,7 @@ import styles from './Inkomen.module.scss';
 import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
 import { ExternalUrls } from 'App.constants';
 import Alert from 'components/Alert/Alert';
-import { useTabletScreen }  from 'hooks/media.hook';
+import { useTabletScreen } from 'hooks/media.hook';
 
 const DISPLAY_PROPS = {
   datePublished: 'besluit',
@@ -75,6 +75,7 @@ export default () => {
           startCollapsed={false}
           isLoading={isLoading}
           trackCategory="MA_Inkomen/Thema_Pagina/Lopende_aanvragen"
+          noItemsMessage="U hebt op dit moment geen lopende aanvragen."
         />
         <DataLinkTable
           id="datalinktable-income-granted"
@@ -85,6 +86,7 @@ export default () => {
           isLoading={isLoading}
           title="Mijn toegekende aanvragen"
           trackCategory="MA_Inkomen/Thema_Pagina/Toegekende_aanvragen"
+          noItemsMessage="U hebt op dit moment geen toegekende aanvragen."
         />
       </PageContentMainBody>
       <div className={styles.HistoricDataLinkTable}>
@@ -99,6 +101,7 @@ export default () => {
             className={styles.DataLinkTableCurrent}
             isLoading={isLoading}
             trackCategory="MA_Inkomen/Thema_Pagina/Afgewezen_aanvragen"
+            noItemsMessage="U hebt op dit moment geen afgewezen aanvragen."
           />
         </PageContentMainBody>
       </div>

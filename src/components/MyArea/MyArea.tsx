@@ -18,7 +18,7 @@ export function MyAreaHeader({ trackCategory }: MyAreaHeaderComponentProps) {
       <Link to={AppRoutes.ROOT}>
         <Logo className={styles.Logo} />
       </Link>
-      <h1 className={styles.Title}>Mijn Buurt</h1>
+      <h1 className={styles.Title}>Mijn buurt</h1>
       <NavLink
         to={AppRoutes.ROOT}
         className={styles.CloseBtn}
@@ -93,10 +93,10 @@ export default function MyArea({
         )}
       >
         <div>
-          <Heading size="large">Mijn Buurt</Heading>
+          <Heading size="large">Mijn buurt</Heading>
           <p>
             Klik voor een overzicht van gemeentelijke informatie rond uw eigen
-            woning
+            woning.
           </p>
         </div>
       </NavLink>

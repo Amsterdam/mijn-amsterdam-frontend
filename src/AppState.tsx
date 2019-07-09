@@ -1,5 +1,4 @@
 import { BrpApiState, useBrpApi } from 'hooks/api/brp-api.hook';
-import useMyCasesApi from 'hooks/api/my-cases-api.hook';
 import useMyTipsApi from 'hooks/api/my-tips-api.hook';
 import useMyUpdatesApi from 'hooks/api/my-updates-api.hook';
 import useSessionApi, { SessionApiState } from 'hooks/api/session.api.hook';
@@ -10,10 +9,11 @@ import { ComponentChildren } from './App.types';
 import useErfpachtApi, { ErfpachtApiState } from './hooks/api/api.erfpacht';
 import useFocusApi, { FocusApiState } from './hooks/api/api.focus';
 import useWmoApi, { WmoApiState } from './hooks/api/api.wmo';
-import { MyCasesApiState } from './hooks/api/my-cases-api.hook';
 import { MyTipsApiState } from './hooks/api/my-tips-api.hook';
 import { MyUpdatesApiState } from './hooks/api/my-updates-api.hook';
 import { MyChaptersApiState } from './hooks/api/myChapters.hook';
+
+type MyCasesApiState = FocusApiState;
 
 export interface AppState {
   BRP: BrpApiState;
@@ -63,9 +63,20 @@ export default ({ render, children, value, session }: AppStateProps) => {
   } else {
     const WMO = useWmoApi();
     const FOCUS = useFocusApi();
+
+    const { data, ...rest } = FOCUS;
+    const items = data.items.filter(item => item.inProgress);
+    const MY_CASES = {
+      data: {
+        ...data,
+        items,
+        total: items.length,
+      },
+      ...rest,
+    };
+
     const BRP = useBrpApi();
     const MY_UPDATES = useMyUpdatesApi({ FOCUS });
-    const MY_CASES = useMyCasesApi();
     const MY_TIPS = useMyTipsApi();
     const ERFPACHT = useErfpachtApi();
     const MY_CHAPTERS = useMyChapters({ WMO, FOCUS, ERFPACHT });

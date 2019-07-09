@@ -1,7 +1,6 @@
 import AutoLogoutDialog from 'components/AutoLogoutDialog/AutoLogoutDialog';
 import { trackEvent, usePiwik } from 'hooks/piwik.hook';
 import usePageChange from 'hooks/pageChange';
-import Belastingen from 'pages/Belastingen/Belastingen';
 import Dashboard from 'pages/Dashboard/Dashboard';
 import Inkomen from 'pages/Inkomen/Inkomen';
 import InkomenDetail from 'pages/InkomenDetail/InkomenDetail';
@@ -11,7 +10,6 @@ import MyArea from 'pages/MyArea/MyArea';
 import MyTips from 'pages/MyTips/MyTips';
 import MyUpdates from 'pages/MyUpdates/MyUpdates';
 import Proclaimer from 'pages/Proclaimer/Proclaimer';
-import Wonen from 'pages/Wonen/Wonen';
 import Zorg from 'pages/Zorg/Zorg';
 import ZorgDetail from 'pages/ZorgDetail/ZorgDetail';
 import React, { useEffect } from 'react';
@@ -54,7 +52,7 @@ function MainApp({ appState: { SESSION, BRP } }: MainAppProps) {
   ) : (
     <>
       <MainHeader
-        person={BRP.person}
+        person={BRP.persoon}
         isAuthenticated={SESSION.isAuthenticated}
       />
       <div className={styles.App}>
@@ -65,9 +63,7 @@ function MainApp({ appState: { SESSION, BRP } }: MainAppProps) {
           <Route path={AppRoutes.PROFILE} component={Profile} />
           <Route path={AppRoutes.MY_TIPS} component={MyTips} />
           <Route path={`${AppRoutes.STADSPAS}/:id`} component={InkomenDetail} />
-          <Route path={AppRoutes.BELASTINGEN} component={Belastingen} />
           <Route path={AppRoutes.JEUGDHULP} component={Jeugdhulp} />
-          <Route path={AppRoutes.WONEN} component={Wonen} />
           <Route
             path={`${AppRoutes.BIJSTANDSUITKERING}/:id`}
             component={InkomenDetail}

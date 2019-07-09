@@ -27,13 +27,11 @@ import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
 import { useTabletScreen } from 'hooks/media.hook';
 import useRouter from 'use-react-router';
 import classnames from 'classnames';
-import { Person } from 'data-formatting/brp';
-import { itemInteractionPayload }  from 'hooks/piwik.hook';
+import { Person, getFullName } from 'data-formatting/brp';
+import { itemInteractionPayload } from 'hooks/piwik.hook';
 import { trackEvent } from 'hooks/piwik.hook';
-import {
-  trackItemPresentation,
-  itemClickPayload,
-}  from 'hooks/piwik.hook';
+import { trackItemPresentation, itemClickPayload } from 'hooks/piwik.hook';
+import LoadingContent from '../LoadingContent/LoadingContent';
 
 const MenuToggleBtnId = 'MenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -54,7 +52,7 @@ interface SecondaryLinksProps {
 type MainNavBarProps = SecondaryLinksProps;
 
 function SecondaryLinks({ person, hasMessages = false }: SecondaryLinksProps) {
-  const hasFirstName = !!(person && person.firstName);
+  const hasFirstName = !!(person && person.voornamen);
   useEffect(() => {
     if (hasFirstName) {
       trackItemPresentation('MA_Header/Secundaire_Links', 'Link_naar_Profiel');
@@ -63,27 +61,19 @@ function SecondaryLinks({ person, hasMessages = false }: SecondaryLinksProps) {
 
   return (
     <div className={styles.secondaryLinks}>
-      <ButtonLinkExternal
-        to={ExternalUrls.BERICHTENBOX}
-        className={classnames(hasMessages && 'has-messages')}
+      <Link
+        to={AppRoutes.PROFILE}
         data-track={itemClickPayload(
           'MA_Header/Secundaire_Links',
-          'Link_naar_Berichtenbox'
+          'Link_naar_Profiel'
         )}
       >
-        Berichten Mijn Overheid
-      </ButtonLinkExternal>
-      {person && person.firstName && (
-        <Link
-          to={AppRoutes.PROFILE}
-          data-track={itemClickPayload(
-            'MA_Header/Secundaire_Links',
-            'Link_naar_Profiel'
-          )}
-        >
-          {person.fullName}
-        </Link>
-      )}
+        {person && person.voornamen ? (
+          getFullName(person)
+        ) : (
+          <LoadingContent barConfig={[['15rem', '1rem', '0']]} />
+        )}
+      </Link>
       {
         <IconButtonLink
           target="_self"
@@ -182,9 +172,9 @@ export default function MainNavBar({ person }: MainNavBarProps) {
 
   const isResponsiveMenu = useTabletScreen();
   const [isResponsiveMenuMenuVisible, toggleResponsiveMenu] = useState(false);
-  const { history } = useRouter();
+  const { history, location } = useRouter();
 
-  function closeResponsiveMenu(e: any) {
+  function closeResponsiveMenu(e?: any) {
     if (isResponsiveMenuMenuVisible) {
       // Testing for clicks on elements that are not part of the responsive menu
       const MenuToggleButton = document.getElementById(MenuToggleBtnId);
@@ -234,6 +224,7 @@ export default function MainNavBar({ person }: MainNavBarProps) {
   // Hides small screen menu on route change
   useEffect(() => {
     toggleResponsiveMenu(false);
+    setSubMenuVisibility();
   }, [history.location]);
 
   return (

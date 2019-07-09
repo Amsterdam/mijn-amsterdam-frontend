@@ -54,10 +54,6 @@ export default () => {
         >
           Mijn meldingen
         </Link>
-        {!isMyUpdatesLoading &&
-          actualUpdateItems.length > MAX_UPDATES_VISIBLE && (
-            <span>&nbsp;({actualUpdateItems.length})</span>
-          )}
       </PageContentMainHeading>
       <PageContentMainBody variant="regularBoxed" className={styles.FirstBody}>
         <MyUpdates
