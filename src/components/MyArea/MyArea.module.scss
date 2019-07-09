@@ -7,6 +7,7 @@
 .Map {
   height: 100%;
   width: 100%;
+  margin: 0;
   border: none;
 }
 
@@ -43,14 +44,14 @@
     width: 9.6rem;
     margin-right: 0.8rem;
 
-    @include media("<=phone") {
+    @include media('<=phone') {
       height: 3rem;
       width: 6.6rem;
       margin-right: 0;
     }
   }
 
-  @include media("<=phone") {
+  @include media('<=phone') {
     padding-left: 1rem;
     padding-right: 1rem;
   }
@@ -61,11 +62,11 @@
   margin: 0;
   margin-left: 1.5rem;
   flex-grow: 1;
-  transform: translateY(-.4rem);
+  transform: translateY(-0.4rem);
 }
 
 .CloseBtn {
-  transform: translateY(-.3rem);
+  transform: translateY(-0.3rem);
   display: block;
   height: 2.2rem;
   padding: 0;
@@ -87,7 +88,11 @@
     margin-left: 1rem;
   }
 
-  @include media("<=phone") {
+  @include media('<=phone') {
     font-size: 1.4rem;
   }
+}
+
+.loadingText {
+  text-align: center;
 }

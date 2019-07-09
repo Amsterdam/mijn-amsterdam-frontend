@@ -59,7 +59,7 @@ export function MyAreaMap({
       className={styles.Map}
     />
   ) : (
-    <span>Kaart wordt geladen..</span>
+    <div className={styles.loadingText}>Kaart wordt geladen..</div>
   );
 }
 
