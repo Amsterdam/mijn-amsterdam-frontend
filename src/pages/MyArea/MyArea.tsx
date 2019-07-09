@@ -2,13 +2,14 @@ import React, { useContext } from 'react';
 import { MyAreaHeader, MyAreaMap } from 'components/MyArea/MyArea';
 import styles from './MyArea.module.scss';
 import { AppContext } from '../../AppState';
+import { getFullAddress } from 'data-formatting/brp';
 
 export default () => {
   const {
-    BRP: { address },
+    BRP: { adres },
   } = useContext(AppContext);
 
-  const currentAddress = address && address.current && address.current.street;
+  const currentAddress = adres && adres.straatnaam && getFullAddress(adres);
 
   if (!currentAddress) {
     return null;
