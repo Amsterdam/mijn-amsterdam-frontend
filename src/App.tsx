@@ -52,7 +52,7 @@ function MainApp({ appState: { SESSION, BRP } }: MainAppProps) {
   ) : (
     <>
       <MainHeader
-        person={BRP.person}
+        person={BRP.persoon}
         isAuthenticated={SESSION.isAuthenticated}
       />
       <div className={styles.App}>

@@ -53,8 +53,8 @@ export default function useMyChapters(
     });
 
     const isLoading = !!(
-      WMO.isLoading &&
-      FOCUS.isLoading &&
+      WMO.isLoading ||
+      FOCUS.isLoading ||
       ERFPACHT.isLoading
     );
 

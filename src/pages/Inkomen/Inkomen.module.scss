@@ -6,10 +6,6 @@
       margin-right: 16rem;
       margin-left: 16rem;
 
-      &:last-of-type {
-        margin-bottom: 7rem;
-      }
-
       @include media("<=tablet") {
         margin-right: 2rem;
         margin-left: 12rem;

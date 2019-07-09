@@ -1,5 +1,5 @@
 import slug from 'slug';
-import { defaultDateFormat, dateFormat } from '../helpers/App';
+import { defaultDateFormat } from '../helpers/App';
 import { AppRoutes } from 'App.constants';
 import { LinkProps } from '../App.types';
 
@@ -60,8 +60,8 @@ export function formatWmoApiResponse(
     return {
       id,
       title,
-      dateStart: dateFormat(dateStart, 'DD MMM YYYY'),
-      dateFinish: dateFinish && dateFormat(dateFinish, 'DD MMM YYYY'),
+      dateStart: defaultDateFormat(dateStart),
+      dateFinish: dateFinish && defaultDateFormat(dateFinish),
       supplier,
       // TODO: See if we can get a url to the suppliers websites
       supplierUrl: '',
