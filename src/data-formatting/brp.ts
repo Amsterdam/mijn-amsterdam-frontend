@@ -153,20 +153,24 @@ export function formatProfileData({
       [brpInfoLabels.LastName]: persoon.geslachtsnaam,
       [brpInfoLabels.Gender]: persoon.omschrijvingGeslachtsaanduiding,
       [brpInfoLabels.BSN]: persoon.bsn,
-      [brpInfoLabels.DateOfBirth]: defaultDateFormat(persoon.geboortedatum),
-      [brpInfoLabels.PlaceOfBirth]: persoon.geboorteplaatsnaam,
-      [brpInfoLabels.CountryOfBirth]: persoon.geboortelandnaam,
-      [brpInfoLabels.Nationality]: persoon.nationaliteiten.reduce(
-        (str, { omschrijving }) => str + omschrijving + ' ',
-        ''
-      ),
+      [brpInfoLabels.DateOfBirth]:
+        persoon.geboortedatum && defaultDateFormat(persoon.geboortedatum),
+      [brpInfoLabels.PlaceOfBirth]: persoon.geboorteplaatsnaam || 'Onbekend',
+      [brpInfoLabels.CountryOfBirth]: persoon.geboortelandnaam || 'Onbekend',
+      [brpInfoLabels.Nationality]:
+        persoon.nationaliteiten &&
+        persoon.nationaliteiten.reduce(
+          (str, { omschrijving }) => str + omschrijving + ' ',
+          ''
+        ),
     },
     address: {
       [brpInfoLabels.Street]: `${adres.straatnaam} ${
         adres.huisnummer
       } ${adres.huisnummertoevoeging || ''}${adres.huisletter || ''}`,
       [brpInfoLabels.Place]: `${adres.postcode} ${adres.woonplaatsNaam || ''}`,
-      [brpInfoLabels.DateStarted]: defaultDateFormat(adres.begindatumVerblijf),
+      [brpInfoLabels.DateStarted]:
+        adres.begindatumVerblijf && defaultDateFormat(adres.begindatumVerblijf),
     },
     maritalStatus:
       verbintenis && verbintenis.persoon && !verbintenis.datumOntbinding
@@ -183,9 +187,9 @@ export function formatProfileData({
             [brpInfoLabels.PreLastName]:
               verbintenis.persoon.voorvoegselGeslachtsnaam,
             [brpInfoLabels.LastName]: verbintenis.persoon.geslachtsnaam,
-            [brpInfoLabels.DateOfBirth]: defaultDateFormat(
-              verbintenis.persoon.geboortedatum
-            ),
+            [brpInfoLabels.DateOfBirth]:
+              verbintenis.persoon.geboortedatum &&
+              defaultDateFormat(verbintenis.persoon.geboortedatum),
           }
         : null,
   };
