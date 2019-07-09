@@ -45,9 +45,9 @@ export default () => {
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
         <p>
-          Heeft u zorg en ondersteuning nodig? Dan kunt u bij de gemeente
-          Amsterdam terecht. Hieronder ziet u van welke voorzieningen u nu al
-          gebruik maakt.
+          Hebt u zorg en ondersteuning nodig? Soms kunt u daarvoor terecht bij
+          de gemeente. Hieronder ziet u van welke regelingen en hulpmiddelen u
+          nu al gebruik maakt.
         </p>
         <p>
           <ButtonLinkExternal to={ExternalUrls.ZORG_LEES_MEER}>
