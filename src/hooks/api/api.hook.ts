@@ -1,7 +1,7 @@
 import { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import { Unshaped, Action } from 'App.types';
-import { ApiRequestOptions, ApiState } from './api.types';
+import { ApiRequestOptions, ApiState, RefetchFunction } from './api.types';
 
 /**
  * Concepts in this hook are described in the following article:
@@ -68,7 +68,7 @@ export const getDefaultState = (initialData = {}, postpone = false) => ({
 export const useDataApi = (
   options: ApiRequestOptions = DEFAULT_REQUEST_OPTIONS,
   initialData: Unshaped = {}
-): [ApiState, (options: ApiRequestOptions) => void] => {
+): [ApiState, RefetchFunction] => {
   const [requestOptions, setRequestOptions] = useState(options);
   const apiDataReducer = createApiDataReducer(initialData, true);
   const refetch = (options: ApiRequestOptions) => {
