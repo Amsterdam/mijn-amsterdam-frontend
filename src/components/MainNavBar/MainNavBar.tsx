@@ -27,7 +27,7 @@ import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
 import { useTabletScreen } from 'hooks/media.hook';
 import useRouter from 'use-react-router';
 import classnames from 'classnames';
-import { Person } from 'data-formatting/brp';
+import { Person, getFullName } from 'data-formatting/brp';
 import { itemInteractionPayload } from 'hooks/piwik.hook';
 import { trackEvent } from 'hooks/piwik.hook';
 import { trackItemPresentation, itemClickPayload } from 'hooks/piwik.hook';
@@ -54,7 +54,7 @@ interface SecondaryLinksProps {
 type MainNavBarProps = SecondaryLinksProps;
 
 function SecondaryLinks({ person, hasMessages = false }: SecondaryLinksProps) {
-  const hasFirstName = !!(person && person.firstName);
+  const hasFirstName = !!(person && person.voornamen);
   useEffect(() => {
     if (hasFirstName) {
       trackItemPresentation('MA_Header/Secundaire_Links', 'Link_naar_Profiel');
@@ -72,8 +72,8 @@ function SecondaryLinks({ person, hasMessages = false }: SecondaryLinksProps) {
           'Link_naar_Profiel'
         )}
       >
-        {person && person.firstName ? (
-          person.fullName
+        {person && person.voornamen ? (
+          getFullName(person)
         ) : (
           <LoadingContent barConfig={[['15rem', '1rem', '0']]} />
         )}

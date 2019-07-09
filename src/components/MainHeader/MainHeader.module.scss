@@ -3,12 +3,9 @@
 .header {
   min-width: $main-min-width;
   position: relative;
-  overflow-x: hidden; // Hack for a weird horizontal scrollbar showing up in IE11 because of the positioning of the betalabel
-
-  // @include select(FontEnlarger_FontEnlarger) {
-  //   position: relative;
-  //   transform: translateY(-1.7rem) translateX(-4rem);
-  // }
+  @include IE11 {
+    overflow-x: hidden; // Hack for a weird horizontal scrollbar showing up in IE11 because of the positioning of the betalabel
+  }
 }
 
 .topBar {
