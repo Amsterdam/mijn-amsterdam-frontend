@@ -19,19 +19,18 @@ import {
   Layout,
 } from 'App.constants';
 import { ComponentChildren } from 'App.types';
-import {
-  ButtonLinkExternal,
-  IconButtonLink,
-} from 'components/ButtonLink/ButtonLink';
+import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
 import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
 import { useTabletScreen } from 'hooks/media.hook';
 import useRouter from 'use-react-router';
 import classnames from 'classnames';
-import { Person, getFullName } from 'data-formatting/brp';
+import { Persoon, getFullName } from 'data-formatting/brp';
 import { itemInteractionPayload } from 'hooks/piwik.hook';
 import { trackEvent } from 'hooks/piwik.hook';
 import { trackItemPresentation, itemClickPayload } from 'hooks/piwik.hook';
 import LoadingContent from '../LoadingContent/LoadingContent';
+import FontEnlarger from 'components/FontEnlarger/FontEnlarger';
+import { useDesktopScreen } from 'hooks/media.hook';
 
 const MenuToggleBtnId = 'MenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -45,7 +44,7 @@ export interface MainNavLinkProps {
 }
 
 interface SecondaryLinksProps {
-  person?: Person | null;
+  person?: Persoon | null;
   hasMessages?: boolean;
 }
 
@@ -58,9 +57,11 @@ function SecondaryLinks({ person, hasMessages = false }: SecondaryLinksProps) {
       trackItemPresentation('MA_Header/Secundaire_Links', 'Link_naar_Profiel');
     }
   }, [hasFirstName]);
+  const isDesktopScreen = useDesktopScreen();
 
   return (
     <div className={styles.secondaryLinks}>
+      {isDesktopScreen && <FontEnlarger />}
       <Link
         to={AppRoutes.PROFILE}
         data-track={itemClickPayload(
