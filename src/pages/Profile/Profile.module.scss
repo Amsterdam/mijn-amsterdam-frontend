@@ -23,8 +23,16 @@
       padding-right: 2rem;
     }
   }
-}
 
+  @include media(">phone") {
+    // Custom style
+    [class*="burgerlijke-staat"] [class*="InfoPanelTableRow__voornamen"] {
+      th, td {
+        padding-top: 3rem;
+      }
+    }
+  }
+}
 
 .LoadingContent {
   padding-left: 16rem;

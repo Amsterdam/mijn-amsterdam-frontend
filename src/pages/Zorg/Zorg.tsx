@@ -51,7 +51,7 @@ export default () => {
         </p>
         <p>
           <ButtonLinkExternal to={ExternalUrls.ZORG_LEES_MEER}>
-            Lees meer over zorg bij gemeente Amsterdam
+            Overzicht en aanvragen van alle zorgproducten
           </ButtonLinkExternal>
         </p>
         {isError && (
