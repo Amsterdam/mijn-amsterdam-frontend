@@ -53,7 +53,7 @@ export const brpInfoLabels = {
   Address: 'Adres',
 };
 
-interface Adres {
+export interface Adres {
   straatnaam: string;
   postcode: string;
   woonplaatsNaam: string;
@@ -73,7 +73,7 @@ interface Partner {
   voorvoegselGeslachtsnaam: string;
 }
 
-interface Persoon {
+export interface Persoon {
   aanduidingNaamgebruikOmschrijving: string;
   bsn: string;
   geboortedatum: string;
