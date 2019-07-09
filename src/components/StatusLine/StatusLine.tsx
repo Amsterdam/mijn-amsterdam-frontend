@@ -122,7 +122,7 @@ export default function StatusLine({
 
   useEffect(() => {
     const id = location.hash.substring(1);
-    const step = document.getElementById(id);
+    const step = id && document.getElementById(id);
 
     if (step) {
       window.scroll({
