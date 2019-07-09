@@ -14,7 +14,6 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import styles from './MainHeader.module.scss';
-import FontEnlarger from 'components/FontEnlarger/FontEnlarger';
 
 export interface MainHeaderProps {
   person?: Person | null;
@@ -25,8 +24,6 @@ export default function MainHeader({
   person = null,
   isAuthenticated = false,
 }: MainHeaderProps) {
-  // TODO: TBD if hero should not show up on mobile.
-  // const isHeroVisible = !usePhoneScreen();
   const isHeroVisible = true;
   const appState = useContext(AppContext);
   const errors = entries(appState)
@@ -62,7 +59,6 @@ export default function MainHeader({
             Mijn Amsterdam
           </Link>
         </Heading>
-        <FontEnlarger />
         <BetaLabel
           role="img"
           aria-label="Beta versie"

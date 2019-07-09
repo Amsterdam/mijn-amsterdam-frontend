@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './FontEnlarger.module.scss';
 import { ComponentChildren } from 'App.types';
 import classnames from 'classnames';
+import { useDebouncedCallback } from 'use-debounce';
 
 export interface ComponentProps {
   children?: ComponentChildren;
@@ -12,9 +13,13 @@ export default function FontEnlarger({ children }: ComponentProps) {
   function show() {
     setVisibility(true);
   }
-  function hide() {
-    setVisibility(false);
-  }
+  const [hide] = useDebouncedCallback(
+    () => {
+      setVisibility(false);
+    },
+    200,
+    []
+  );
   return (
     <div className={styles.FontEnlarger}>
       <strong onMouseEnter={() => show()} onMouseLeave={() => hide()}>

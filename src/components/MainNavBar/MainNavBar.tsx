@@ -32,6 +32,7 @@ import { itemInteractionPayload } from 'hooks/piwik.hook';
 import { trackEvent } from 'hooks/piwik.hook';
 import { trackItemPresentation, itemClickPayload } from 'hooks/piwik.hook';
 import LoadingContent from '../LoadingContent/LoadingContent';
+import FontEnlarger from 'components/FontEnlarger/FontEnlarger';
 
 const MenuToggleBtnId = 'MenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -61,6 +62,7 @@ function SecondaryLinks({ person, hasMessages = false }: SecondaryLinksProps) {
 
   return (
     <div className={styles.secondaryLinks}>
+      <FontEnlarger />
       <Link
         to={AppRoutes.PROFILE}
         data-track={itemClickPayload(
