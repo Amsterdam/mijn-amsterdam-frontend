@@ -169,7 +169,7 @@ export function formatProfileData({
       [brpInfoLabels.DateStarted]: defaultDateFormat(adres.begindatumVerblijf),
     },
     maritalStatus:
-      verbintenis && !verbintenis.datumOntbinding
+      verbintenis && verbintenis.persoon && !verbintenis.datumOntbinding
         ? {
             [brpInfoLabels.MaritalStatusType]:
               verbintenis.soortVerbintenisOmschrijving,
