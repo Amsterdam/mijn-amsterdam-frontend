@@ -98,8 +98,9 @@
 
     @include media("<=phone") {
       min-height: $main-header-hero-heading-overlap--phone;
-      margin: -#{$main-header-hero-heading-overlap--phone} 0 0;
+      margin: 0;
       margin-bottom: 1rem;
+      padding-left: 1rem;
 
       // All version are treated the same on phones
       &,
