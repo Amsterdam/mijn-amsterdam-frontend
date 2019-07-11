@@ -28,7 +28,7 @@ node {
     }
 
     tryStep "test e2e", {
-      sh "docker-compose -f docker-compose-cypress.yml run --rm integration-tests"
+      sh "docker-compose -f docker-compose-cypress.yml run --rm test-integration"
     }
   }
 }
