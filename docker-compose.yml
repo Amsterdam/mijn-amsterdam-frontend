@@ -3,10 +3,16 @@ services:
   mijnamsterdam: # NGINX
     build: .
     ports:
-      - "8103:80"
+      - '8103:80'
 
   test:
     build:
       context: .
       target: build-deps
     command: npm run test
+
+  test-integration:
+    build:
+      context: .
+      target: integration-tests
+    command: npm run integration-tests

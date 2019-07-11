@@ -38,6 +38,17 @@ RUN npm install \
 RUN npm run build
 RUN echo "build= `date`" > /app/build/version.txt
 
+FROM cypress/base:10 as integration-tests
+
+COPY /cypress /cypress
+COPY /cypress.json /cypress.json
+COPY /package.json /package.json
+
+RUN npm i cypress dyson http-server node-persist date-fns concurrently
+
+COPY --from=build-deps /app/build /build
+COPY  mock-api /mock-api
+
 # Web server image
 FROM nginx:stable-alpine
 
