@@ -4,6 +4,11 @@
   position: relative;
   height: $main-header-navbar-height;
   background-color: $color-neutral-grey1;
+
+  @include select(FontEnlarger_FontEnlarger__) {
+    position: absolute;
+    margin-left: -3rem;
+  }
 }
 
 .LinkContainer {

@@ -42,10 +42,10 @@ export default () => {
       </PageContentMainHeading>
       <PageContentMainBody variant="regular" className={styles.Landing}>
         <p>
-          Op Mijn Amsterdam vindt u een overzicht van uw persoonlijke informatie
-          en van zaken die u moet regelen met de gemeente. U kunt ook direct een
-          aanvraag indienen om uw informatie te wijzigen. Verder kunt u uw
-          aanvragen volgen en krijgt u tips.
+          Op Mijn Amsterdam kunt u uw persoonlijke gegevens inzien en een
+          correctie doorgeven. Ook kunt u er dingen regelen en krijgt u tips.
+          Als u iets hebt aangevraagd, kunt u zien hoe het met uw aanvraag
+          staat.
         </p>
         <Heading size="medium">Log in op uw persoonlijke pagina</Heading>
         <a
