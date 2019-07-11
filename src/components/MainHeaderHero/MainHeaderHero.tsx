@@ -29,14 +29,17 @@ function getHeroSrc() {
   let imageName;
 
   switch (true) {
-    // case isChapterPath(AppRoutes.PROFILE):
-    //   imageName = 'Header-Desktop-2';
-    //   break;
-    // case isChapterPath(AppRoutes.INKOMEN):
-    //   imageName = 'Header-Desktop-4';
-    //   break;
+    case isChapterPath(AppRoutes.PROFILE):
+      imageName = 'Zuid-Oost-RT-08';
+      break;
+    case isChapterPath(AppRoutes.INKOMEN):
+      imageName = 'Zuid-Oost-RT-11';
+      break;
+    case isChapterPath(AppRoutes.MY_UPDATES):
+      imageName = 'Zuid-Oost-RT-06';
+      break;
     default:
-      imageName = 'Zuid-Oost_RT-02';
+      imageName = 'Zuid-Oost-RT-02';
       break;
   }
 
