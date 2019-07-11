@@ -1,38 +1,31 @@
 import AutoLogoutDialog from 'components/AutoLogoutDialog/AutoLogoutDialog';
-import { trackEvent, usePiwik } from 'hooks/piwik.hook';
 import usePageChange from 'hooks/pageChange';
+import { trackEvent, usePiwik } from 'hooks/piwik.hook';
 import Dashboard from 'pages/Dashboard/Dashboard';
 import Inkomen from 'pages/Inkomen/Inkomen';
 import InkomenDetail from 'pages/InkomenDetail/InkomenDetail';
 import Jeugdhulp from 'pages/Jeugdhulp/Jeugdhulp';
-import Landing from 'pages/Landing/Landing';
+import LandingPage from 'pages/Landing/Landing';
 import MyArea from 'pages/MyArea/MyArea';
 import MyTips from 'pages/MyTips/MyTips';
 import MyUpdates from 'pages/MyUpdates/MyUpdates';
 import Proclaimer from 'pages/Proclaimer/Proclaimer';
 import Zorg from 'pages/Zorg/Zorg';
 import ZorgDetail from 'pages/ZorgDetail/ZorgDetail';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import useRouter from 'use-react-router';
 
 import { AppRoutes } from './App.constants';
 import styles from './App.module.scss';
-import AppState, {
-  AppState as AppStateInterface,
-  SessionState,
-} from './AppState';
+import AppState, { AppContext, SessionContext, SessionState } from './AppState';
 import MainFooter from './components/MainFooter/MainFooter';
 import MainHeader from './components/MainHeader/MainHeader';
 import NotFound from './pages/NotFound/NotFound';
 import Profile from './pages/Profile/Profile';
 
-interface MainAppProps {
-  appState: AppStateInterface;
-}
-
 function track(event: any) {
-  // NOTE: Potentially dangerous because dom traversal could go down to some parent element with a data-track attribute.
+  // NOTE: Beware of potentially nested [data-track] attributes as traversing up the dom here could result in using the wrong data-track attribute on a parent.
   const trackNode = event.target.closest('[data-track]');
   if (trackNode && trackNode.dataset.track) {
     const payload = trackNode.dataset.track;
@@ -42,8 +35,10 @@ function track(event: any) {
   }
 }
 
-function MainApp({ appState: { SESSION, BRP } }: MainAppProps) {
+function AppAuthenticated() {
   const { location } = useRouter();
+  const { BRP } = useContext(AppContext);
+  const session = useContext(SessionContext);
 
   usePageChange();
 
@@ -53,7 +48,7 @@ function MainApp({ appState: { SESSION, BRP } }: MainAppProps) {
     <>
       <MainHeader
         person={BRP.persoon}
-        isAuthenticated={SESSION.isAuthenticated}
+        isAuthenticated={session.isAuthenticated}
       />
       <div className={styles.App}>
         <Switch>
@@ -88,42 +83,43 @@ function MainApp({ appState: { SESSION, BRP } }: MainAppProps) {
   );
 }
 
+function AppLanding() {
+  const session = useContext(SessionContext);
+  const { isPristine, isAuthenticated } = session;
+  // If session was previously authenticated we don't want to show the loader again
+  if (isPristine) {
+    return <p className={styles.PreLoader}>Mijn Amsterdam wordt geladen...</p>;
+  }
+  // Render the main app only if we are authenticated
+  return isAuthenticated ? (
+    <>
+      <AppState>
+        <AppAuthenticated />
+      </AppState>
+      <AutoLogoutDialog />
+    </>
+  ) : (
+    <div className={styles.NotYetAuthenticated}>
+      <MainHeader />
+      <LandingPage />
+      <MainFooter />
+    </div>
+  );
+}
+
 export default function App() {
+  // Piwik tracking
   usePiwik();
   useEffect(() => {
     window.addEventListener('click', track);
     return () => window.removeEventListener('click', track);
   }, []);
+
   return (
     <BrowserRouter>
-      <SessionState
-        render={session => {
-          // If session was previously authenticated we don't want to show the loader again
-          if (session.isLoading && session.isPristine) {
-            return (
-              <p className={styles.PreLoader}>
-                Mijn amsterdam wordt geladen...
-              </p>
-            );
-          }
-          // Render the main app only if we are authenticated
-          return session.isAuthenticated ? (
-            <>
-              <AppState
-                session={session}
-                render={appState => <MainApp appState={appState} />}
-              />
-              <AutoLogoutDialog session={session} />
-            </>
-          ) : (
-            <div className={styles.NotYetAuthenticated}>
-              <MainHeader />
-              <Landing />
-              <MainFooter />
-            </div>
-          );
-        }}
-      />
+      <SessionState>
+        <AppLanding />
+      </SessionState>
     </BrowserRouter>
   );
 }

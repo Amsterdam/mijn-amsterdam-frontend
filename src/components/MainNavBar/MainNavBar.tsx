@@ -1,36 +1,33 @@
-import React, { useState, useContext, useEffect } from 'react';
+import { AppRoutes, Colors, Layout, LOGOUT_URL } from 'App.constants';
+import { ComponentChildren } from 'App.types';
+import { AppContext, SessionContext } from 'AppState';
+import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
+import classnames from 'classnames';
+import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
+import FontEnlarger from 'components/FontEnlarger/FontEnlarger';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from 'components/MainNavSubmenu/MainNavSubmenu';
-import { NavLink, Link } from 'react-router-dom';
-import { AppContext } from 'AppState';
+import { getFullName, Persoon } from 'data-formatting/brp';
+import { useDesktopScreen, useTabletScreen } from 'hooks/media.hook';
 import {
-  menuItems,
-  MenuItem,
+  itemClickPayload,
+  itemInteractionPayload,
+  trackEvent,
+  trackItemPresentation,
+} from 'hooks/piwik.hook';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import useRouter from 'use-react-router';
+
+import LoadingContent from '../LoadingContent/LoadingContent';
+import {
   mainMenuItemId,
+  MenuItem,
+  menuItems,
   submenuItems,
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
-import {
-  Colors,
-  AppRoutes,
-  LOGOUT_URL,
-  ExternalUrls,
-  Layout,
-} from 'App.constants';
-import { ComponentChildren } from 'App.types';
-import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
-import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
-import { useTabletScreen } from 'hooks/media.hook';
-import useRouter from 'use-react-router';
-import classnames from 'classnames';
-import { Persoon, getFullName } from 'data-formatting/brp';
-import { itemInteractionPayload } from 'hooks/piwik.hook';
-import { trackEvent } from 'hooks/piwik.hook';
-import { trackItemPresentation, itemClickPayload } from 'hooks/piwik.hook';
-import LoadingContent from '../LoadingContent/LoadingContent';
-import FontEnlarger from 'components/FontEnlarger/FontEnlarger';
-import { useDesktopScreen } from 'hooks/media.hook';
 
 const MenuToggleBtnId = 'MenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -50,7 +47,7 @@ interface SecondaryLinksProps {
 
 type MainNavBarProps = SecondaryLinksProps;
 
-function SecondaryLinks({ person, hasMessages = false }: SecondaryLinksProps) {
+function SecondaryLinks({ person }: SecondaryLinksProps) {
   const hasFirstName = !!(person && person.voornamen);
   useEffect(() => {
     if (hasFirstName) {
@@ -167,13 +164,12 @@ function getMenuItem(
 export default function MainNavBar({ person }: MainNavBarProps) {
   const [activeSubmenuId, activateSubmenu] = useState('');
   const {
-    SESSION: { isAuthenticated },
     MY_CHAPTERS: { items: myChapterItems },
   } = useContext(AppContext);
-
+  const { isAuthenticated } = useContext(SessionContext);
   const isResponsiveMenu = useTabletScreen();
   const [isResponsiveMenuMenuVisible, toggleResponsiveMenu] = useState(false);
-  const { history, location } = useRouter();
+  const { history } = useRouter();
 
   function closeResponsiveMenu(e?: any) {
     if (isResponsiveMenuMenuVisible) {
