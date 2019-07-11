@@ -2,8 +2,8 @@ describe('Landing page and login', function() {
   const LOGIN_BTN_TEXT = 'Inloggen met DigiD';
   const USERNAME = 'Ann Michelle Johanna Janssen';
   const URL = 'http://localhost:3000/';
-  const LOGIN_URL = 'localhost:5000/api/login';
-  const LOGOUT_URL = 'localhost:5000/api/logout';
+  const LOGIN_URL = 'localhost:3000/api/login';
+  const LOGOUT_URL = 'localhost:3000/api/logout';
 
   it('shows login button', function() {
     // Make sure the user is in an logged out state
