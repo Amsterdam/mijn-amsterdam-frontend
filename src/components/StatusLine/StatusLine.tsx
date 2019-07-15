@@ -11,7 +11,7 @@ import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
 import { defaultDateFormat } from 'helpers/App';
 import useRouter from 'use-react-router';
 import { useSessionStorage } from 'hooks/storage.hook';
-import { itemClickTogglePayload } from 'hooks/piwik.hook';
+import { itemClickTogglePayload } from 'hooks/analytics.hook';
 
 const markdownLinkRegex = /\[((?:[^\[\]\\]|\\.)+)\]\((https?:\/\/(?:[-A-Z0-9+&@#\/%=~_|\[\]](?= *\))|[-A-Z0-9+&@#\/%?=~_|\[\]!:,.;](?! *\))|\([-A-Z0-9+&@#\/%?=~_|\[\]!:,.;(]*\))+) *\)/i;
 const markdownTagMatchRegex = /(\[.*?\]\(.*?\))/gi;

@@ -7,7 +7,7 @@ import Heading from 'components/Heading/Heading';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 import { defaultDateFormat } from 'helpers/App';
 import { MyUpdate, useUpdatesState } from 'hooks/api/my-updates-api.hook';
-import { itemClickPayload, trackItemPresentation } from 'hooks/piwik.hook';
+import { itemClickPayload, trackItemPresentation } from 'hooks/analytics.hook';
 import React, { useEffect } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import useRouter from 'use-react-router';

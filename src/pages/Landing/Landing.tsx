@@ -10,7 +10,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import styles from './Landing.module.scss';
 import { PageTitleLanding } from 'hooks/pageChange';
-import { trackItemPresentation, itemClickPayload } from 'hooks/piwik.hook';
+import { trackItemPresentation, itemClickPayload } from 'hooks/analytics.hook';
 import classnames from 'classnames';
 
 const CATEGORY = 'MA_Landingspagina';

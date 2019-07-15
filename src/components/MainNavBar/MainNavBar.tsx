@@ -15,7 +15,7 @@ import {
   itemInteractionPayload,
   trackEvent,
   trackItemPresentation,
-} from 'hooks/piwik.hook';
+} from 'hooks/analytics.hook';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import useRouter from 'use-react-router';

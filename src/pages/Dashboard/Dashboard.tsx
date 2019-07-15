@@ -14,7 +14,7 @@ import React, { useContext, useMemo } from 'react';
 import styles from './Dashboard.module.scss';
 import { Link } from 'react-router-dom';
 import { AppRoutes } from 'App.constants';
-import { itemClickPayload } from 'hooks/piwik.hook';
+import { itemClickPayload } from 'hooks/analytics.hook';
 import { getFullAddress } from 'data-formatting/brp';
 
 const MAX_UPDATES_VISIBLE = 3;

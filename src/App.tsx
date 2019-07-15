@@ -1,6 +1,6 @@
 import AutoLogoutDialog from 'components/AutoLogoutDialog/AutoLogoutDialog';
 import usePageChange from 'hooks/pageChange';
-import { trackEvent, usePiwik } from 'hooks/piwik.hook';
+import { trackEvent, useAnalytics } from 'hooks/analytics.hook';
 import Dashboard from 'pages/Dashboard/Dashboard';
 import Inkomen from 'pages/Inkomen/Inkomen';
 import InkomenDetail from 'pages/InkomenDetail/InkomenDetail';
@@ -108,8 +108,8 @@ function AppLanding() {
 }
 
 export default function App() {
-  // Piwik tracking
-  usePiwik();
+  // analytics tracking
+  useAnalytics();
   useEffect(() => {
     window.addEventListener('click', track);
     return () => window.removeEventListener('click', track);
