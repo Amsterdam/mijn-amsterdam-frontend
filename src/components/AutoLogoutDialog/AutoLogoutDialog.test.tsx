@@ -2,6 +2,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 
 import AutoLogoutDialog, { AutoLogoutDialogSettings } from './AutoLogoutDialog';
+import { SessionContext } from '../../AppState';
 
 const ONE_SECOND_IN_MS = 1000;
 const DOC_TITLE = 'AutoLogoutDialog';
@@ -41,7 +42,9 @@ describe('AutoLogoutDialog', () => {
     document.title = DOC_TITLE;
     jest.useFakeTimers();
     component = mount(
-      <AutoLogoutDialog session={session} settings={settings} />
+      <SessionContext.Provider value={session}>
+        <AutoLogoutDialog settings={settings} />
+      </SessionContext.Provider>
     );
   });
 
