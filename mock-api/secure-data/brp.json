@@ -1,0 +1,66 @@
+{
+  "adres": {
+    "huisletter": null,
+    "huisnummer": "1",
+    "huisnummertoevoeging": null,
+    "postcode": "1064 BH",
+    "straatnaam": "Burgemeester R\u00f6ellstr",
+    "woonplaatsNaam": null
+  },
+  "persoon": {
+    "aanduidingNaamgebruikOmschrijving": "Eigen geslachtsnaam",
+    "bsn": "129095205",
+    "geboortedatum": "1950-01-01T00:00:00Z",
+    "geboortelandnaam": "Nederland",
+    "geboorteplaatsnaam": "Lochem",
+    "gemeentenaamInschrijving": "Amsterdam",
+    "geslachtsnaam": "Beemsterboer",
+    "nationaliteiten": [
+      {
+        "omschrijving": "Nederlandse"
+      }
+    ],
+    "omschrijvingBurgerlijkeStaat": "Gehuwd",
+    "omschrijvingGeslachtsaanduiding": "Man",
+    "opgemaakteNaam": "W. Beemsterboer",
+    "voornamen": "Wesley",
+    "voorvoegselGeslachtsnaam": null
+  },
+  "verbintenis": {
+    "datumOntbinding": null,
+    "datumSluiting": "",
+    "landnaamSluiting": "Marokko",
+    "persoon": {
+      "bsn": "123456780",
+      "geboortedatum": "2019-07-08T09:14:58.963Z",
+      "geslachtsaanduiding": null,
+      "geslachtsnaam": "Bakker",
+      "overlijdensdatum": null,
+      "voornamen": "Souad",
+      "voorvoegselGeslachtsnaam": null
+    },
+    "plaatsnaamSluitingOmschrijving": "Asilah",
+    "soortVerbintenis": "H",
+    "soortVerbintenisOmschrijving": "Huwelijk"
+  },
+  "kinderen": [
+    {
+      "bsn": null,
+      "geboortedatum": "2019-07-08T09:14:58.963Z",
+      "geslachtsaanduiding": "M",
+      "geslachtsnaam": "Kosterijk",
+      "overlijdensdatum": null,
+      "voornamen": "Yassine",
+      "voorvoegselGeslachtsnaam": null
+    },
+    {
+      "bsn": null,
+      "geboortedatum": "2019-07-08T09:14:58.963Z",
+      "geslachtsaanduiding": "M",
+      "geslachtsnaam": "Kosterijk",
+      "overlijdensdatum": null,
+      "voornamen": "Marwan",
+      "voorvoegselGeslachtsnaam": null
+    }
+  ]
+}
