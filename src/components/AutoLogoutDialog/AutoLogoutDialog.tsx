@@ -11,7 +11,7 @@ import {
   itemInteractionPayload,
   trackEvent,
   trackItemPresentation,
-} from 'hooks/piwik.hook';
+} from 'hooks/matomo.hook';
 import { CounterProps, useCounter } from 'hooks/timer.hook';
 import React, { useEffect, useState } from 'react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';

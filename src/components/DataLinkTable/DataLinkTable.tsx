@@ -13,7 +13,7 @@ import {
   itemClickTogglePayload,
   itemClickPayload,
   trackItemPresentation,
-} from 'hooks/piwik.hook';
+} from 'hooks/matomo.hook';
 
 const DEFAULT_TRACK_CATEGORY = 'Thema_Pagina';
 

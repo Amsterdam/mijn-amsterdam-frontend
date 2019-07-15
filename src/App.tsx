@@ -1,5 +1,5 @@
 import AutoLogoutDialog from 'components/AutoLogoutDialog/AutoLogoutDialog';
-import { trackEvent, usePiwik } from 'hooks/piwik.hook';
+import { trackEvent, useMatomo } from 'hooks/matomo.hook';
 import usePageChange from 'hooks/pageChange';
 import Dashboard from 'pages/Dashboard/Dashboard';
 import Inkomen from 'pages/Inkomen/Inkomen';
@@ -89,7 +89,7 @@ function MainApp({ appState: { SESSION, BRP } }: MainAppProps) {
 }
 
 export default function App() {
-  usePiwik();
+  useMatomo();
   useEffect(() => {
     window.addEventListener('click', track);
     return () => window.removeEventListener('click', track);

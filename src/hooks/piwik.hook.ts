@@ -1,10 +1,10 @@
 import useScript from 'hooks/useScript';
 
 const TrackerConfig = {
-  url: 'https://piwik.data.amsterdam.nl',
+  url: 'https://analytics.data.amsterdam.nl',
   siteId: process.env.REACT_APP_SITE_ID,
-  jsFilename: 'piwik.js',
-  phpFilename: 'piwik.php',
+  jsFilename: 'matomo.js',
+  phpFilename: 'matomo.php',
 };
 
 export type ActionCategory = string;
@@ -26,21 +26,21 @@ type LinkPayload = ['trackLink', string, LinkType];
 const theWindow = window as any;
 let referrerUrl: string;
 
-function pushToPiwik(payload: any) {
+function pushToMatomo(payload: any) {
   theWindow._paq = theWindow._paq || [];
   theWindow._paq.push(payload);
 }
 
-// Initialize connection with Piwik
-export function usePiwik() {
+// Initialize connection with Matomo
+export function useMatomo() {
   if (!theWindow._paq || theWindow._paq.length === 0) {
-    pushToPiwik([
+    pushToMatomo([
       'setTrackerUrl',
       `${TrackerConfig.url}/${TrackerConfig.phpFilename}`,
     ]);
-    pushToPiwik(['setSiteId', TrackerConfig.siteId]);
-    pushToPiwik(['trackPageView']);
-    pushToPiwik(['enableLinkTracking']);
+    pushToMatomo(['setSiteId', TrackerConfig.siteId]);
+    pushToMatomo(['trackPageView']);
+    pushToMatomo(['enableLinkTracking']);
   }
 
   // Is only loaded once, has internal caching.
@@ -50,16 +50,16 @@ export function usePiwik() {
 export function trackEvent(
   payload: EventPayload | [EventPayload, LinkPayload]
 ) {
-  return pushToPiwik(payload);
+  return pushToMatomo(payload);
 }
 
 export function trackPageView(title?: string, url?: string) {
-  pushToPiwik(['setDocumentTitle', title || document.title]);
+  pushToMatomo(['setDocumentTitle', title || document.title]);
   if (referrerUrl) {
-    pushToPiwik(['setReferrerUrl', referrerUrl]);
+    pushToMatomo(['setReferrerUrl', referrerUrl]);
   }
-  pushToPiwik(['setCustomUrl', url || document.location.href]);
-  pushToPiwik(['trackPageView']);
+  pushToMatomo(['setCustomUrl', url || document.location.href]);
+  pushToMatomo(['trackPageView']);
   referrerUrl = url || document.location.href;
 }
 

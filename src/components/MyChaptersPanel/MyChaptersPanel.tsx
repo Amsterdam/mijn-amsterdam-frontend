@@ -4,9 +4,9 @@ import { MainNavSubmenuLink } from 'components/MainNavSubmenu/MainNavSubmenu';
 import Heading from 'components/Heading/Heading';
 import { MenuItem } from '../MainNavBar/MainNavBar.constants';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
-import { itemClickPayload } from 'hooks/piwik.hook';
+import { itemClickPayload } from 'hooks/matomo.hook';
 import { useDebouncedCallback } from 'use-debounce';
-import { trackItemPresentation } from 'hooks/piwik.hook';
+import { trackItemPresentation } from 'hooks/matomo.hook';
 
 export interface MyChaptersPanelProps {
   title: string;
