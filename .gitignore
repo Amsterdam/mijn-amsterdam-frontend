@@ -11,10 +11,6 @@
 # production
 /build
 
-# mock data, simple approach to exclude possibly sensitive data
-/mock-api/**/*.json
-/mock-api/secure-data
-secure-data.zip
 .node-persist
 
 # misc
