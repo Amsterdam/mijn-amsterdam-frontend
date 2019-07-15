@@ -47,6 +47,7 @@ export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/login';
 export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL || '/logout';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const ATLAS_API_BASE_URL = process.env.REACT_APP_ATLAS_API_BASE_URL;
 
 export const ApiUrls = {
   MY_UPDATES: `${API_BASE_URL}/mijn-updates`,
@@ -57,6 +58,7 @@ export const ApiUrls = {
   FOCUS: `${API_BASE_URL}/focus/aanvragen`,
   AUTH: `${API_BASE_URL}/auth/check`,
   ERFPACHT: `${API_BASE_URL}/erfpacht/check-erfpacht`,
+  BAG: `${ATLAS_API_BASE_URL}/atlas/search/adres/`,
 };
 
 export const errorMessageMap: ErrorMessageMap = {

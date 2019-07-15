@@ -9,13 +9,12 @@ import PageContentMain from 'components/PageContentMain/PageContentMain';
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
 import { usePhoneScreen } from 'hooks/media.hook';
-import React, { useContext, useMemo } from 'react';
+import React, { useContext } from 'react';
 
 import styles from './Dashboard.module.scss';
 import { Link } from 'react-router-dom';
 import { AppRoutes } from 'App.constants';
 import { itemClickPayload } from 'hooks/analytics.hook';
-import { getFullAddress } from 'data-formatting/brp';
 
 const MAX_UPDATES_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
@@ -35,15 +34,14 @@ export default () => {
       isLoading: isMyTipsLoading,
     },
     MY_CHAPTERS: { items: myChapterItems, isLoading: isMyChaptersLoading },
-    BRP: { adres },
+    MY_AREA: {
+      url: { simple: mapUrl },
+    },
   } = useContext(AppContext);
 
   const tipItems = myTips.slice(0, MAX_TIPS_VISIBLE);
   const actualUpdateItems = myUpdateItems.filter(item => item.isActual);
   const isPhoneScreen = usePhoneScreen();
-  const fullAddress = useMemo(() => {
-    return adres && getFullAddress(adres);
-  }, [adres]);
 
   return (
     <PageContentMain className={styles.Dashboard} variant="full">
@@ -81,11 +79,7 @@ export default () => {
       </PageContentMainBody>
       {!isPhoneScreen && (
         <PageContentMainBody>
-          <MyArea
-            trackCategory={'MA_Dashboard/Mijn_Buurt'}
-            simpleMap={true}
-            address={fullAddress}
-          />
+          <MyArea trackCategory={'MA_Dashboard/Mijn_Buurt'} url={mapUrl} />
         </PageContentMainBody>
       )}
       <PageContentMainBody variant="regularBoxed">

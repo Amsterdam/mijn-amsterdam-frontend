@@ -3,7 +3,7 @@ import useMyTipsApi from 'hooks/api/my-tips-api.hook';
 import useMyUpdatesApi from 'hooks/api/my-updates-api.hook';
 import useSessionApi, { SessionApiState } from 'hooks/api/session.api.hook';
 import useMyChapters from 'hooks/api/myChapters.hook';
-import React, { createContext, useMemo } from 'react';
+import React, { createContext, useMemo, useEffect } from 'react';
 
 import { ComponentChildren } from './App.types';
 import useErfpachtApi, { ErfpachtApiState } from './hooks/api/api.erfpacht';
@@ -12,6 +12,8 @@ import useWmoApi, { WmoApiState } from './hooks/api/api.wmo';
 import { MyTipsApiState } from './hooks/api/my-tips-api.hook';
 import { MyUpdatesApiState } from './hooks/api/my-updates-api.hook';
 import { MyChaptersApiState } from './hooks/api/myChapters.hook';
+import useMyMap from './hooks/api/api.mymap';
+import { getFullAddress } from 'data-formatting/brp';
 
 type MyCasesApiState = FocusApiState;
 
@@ -25,6 +27,7 @@ export interface AppState {
   FOCUS: FocusApiState;
   MY_CHAPTERS: MyChaptersApiState;
   ERFPACHT: ErfpachtApiState;
+  MY_AREA: any;
 }
 
 export type StateKey = keyof AppState;
@@ -56,6 +59,8 @@ interface AppStateProps {
 export function useAppState(value?: any) {
   let appState;
 
+  // use state map url
+
   if (typeof value !== 'undefined') {
     appState = value;
   } else {
@@ -79,6 +84,17 @@ export function useAppState(value?: any) {
     const ERFPACHT = useErfpachtApi();
     const MY_CHAPTERS = useMyChapters({ WMO, FOCUS, ERFPACHT });
 
+    const MY_AREA = useMyMap();
+
+    // fetch when address is available
+    // const { url: mapUrl } = useMyMap(getFullAddress(adres));
+
+    useEffect(() => {
+      if (BRP.adres && BRP.adres.straatnaam) {
+        MY_AREA.refetch(getFullAddress(BRP.adres));
+      }
+    }, [BRP.adres && BRP.adres.straatnaam]);
+
     appState = useMemo(() => {
       return {
         BRP,
@@ -91,6 +107,7 @@ export function useAppState(value?: any) {
         FOCUS,
         MY_CHAPTERS,
         ERFPACHT,
+        MY_AREA,
       };
     }, [
       WMO.isLoading,
@@ -101,6 +118,7 @@ export function useAppState(value?: any) {
       MY_TIPS.isLoading,
       ERFPACHT.isLoading,
       MY_CHAPTERS.isLoading,
+      MY_AREA.url,
     ]);
   }
 
