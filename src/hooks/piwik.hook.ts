@@ -27,7 +27,6 @@ const theWindow = window as any;
 let referrerUrl: string;
 
 function pushToPiwik(payload: any) {
-  console.log('::', payload);
   theWindow._paq = theWindow._paq || [];
   theWindow._paq.push(payload);
 }
