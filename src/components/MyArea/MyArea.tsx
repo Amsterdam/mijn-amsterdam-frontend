@@ -2,7 +2,7 @@ import { AppRoutes } from 'App.constants';
 import { ReactComponent as CloseIcon } from 'assets/icons/Close.svg';
 import { ReactComponent as Logo } from 'assets/images/logo-amsterdam.svg';
 import Heading from 'components/Heading/Heading';
-import { itemClickPayload, trackItemPresentation } from 'hooks/piwik.hook';
+import { itemClickPayload, trackItemPresentation } from 'hooks/matomo.hook';
 import React, { useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import styles from './MyArea.module.scss';
