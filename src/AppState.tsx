@@ -59,8 +59,6 @@ interface AppStateProps {
 export function useAppState(value?: any) {
   let appState;
 
-  // use state map url
-
   if (typeof value !== 'undefined') {
     appState = value;
   } else {
@@ -83,11 +81,7 @@ export function useAppState(value?: any) {
     const MY_TIPS = useMyTipsApi();
     const ERFPACHT = useErfpachtApi();
     const MY_CHAPTERS = useMyChapters({ WMO, FOCUS, ERFPACHT });
-
     const MY_AREA = useMyMap();
-
-    // fetch when address is available
-    // const { url: mapUrl } = useMyMap(getFullAddress(adres));
 
     useEffect(() => {
       if (BRP.adres && BRP.adres.straatnaam) {
