@@ -1,7 +1,6 @@
-import { useDataApi } from './api.hook';
 import { ApiUrls } from 'App.constants';
-import { useDebouncedCallback } from 'use-debounce';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useDataApi } from './api.hook';
 
 export const BAG_SEARCH_ENDPOINT_URL = `${ApiUrls.BAG}?q=`;
 

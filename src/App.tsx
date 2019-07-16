@@ -88,7 +88,7 @@ function AppLanding() {
   const { isPristine, isAuthenticated } = session;
   // If session was previously authenticated we don't want to show the loader again
   if (isPristine) {
-    return <p className={styles.PreLoader}>Mijn Amsterdam wordt geladen...</p>;
+    return <p className={styles.PreLoader}>Welkom bij Mijn Amsterdam</p>;
   }
   // Render the main app only if we are authenticated
   return isAuthenticated ? (

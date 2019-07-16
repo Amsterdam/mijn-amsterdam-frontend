@@ -15,10 +15,7 @@ export default () => {
     <div className={styles.Container}>
       <MyAreaHeader trackCategory="MA_Mijn_buurt/Detail_Pagina" />
       <div className={styles.MyAreaContainer}>
-        {!!mapUrl && (
-          <MyAreaMap trackCategory="MA_Mijn_buurt/Detail_Pagina" url={mapUrl} />
-        )}
-        {!mapUrl && <p>De kaart wordt geladen..</p>}
+        <MyAreaMap trackCategory="MA_Mijn_buurt/Detail_Pagina" url={mapUrl} />
       </div>
     </div>
   );
