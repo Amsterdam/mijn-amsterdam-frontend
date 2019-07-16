@@ -41,7 +41,6 @@ export function MyAreaMap({ trackCategory, url }: MyAreaMapComponentProps) {
   useEffect(() => {
     trackItemPresentation(trackCategory, 'Embed_kaart');
   }, []);
-  console.log('MYAREA MAP');
   return !!url ? (
     <iframe
       id="mapIframe"

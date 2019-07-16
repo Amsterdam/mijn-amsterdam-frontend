@@ -60,7 +60,7 @@ export default () => {
         <MyUpdates
           total={myUpdateItems.length}
           items={myUpdateItems.slice(0, MAX_UPDATES_VISIBLE)}
-          showMoreLink={myUpdatesTotal > 0}
+          showMoreLink={myUpdatesTotal > MAX_UPDATES_VISIBLE}
           isLoading={isMyUpdatesLoading}
           trackCategory={'MA_Dashboard/Mijn_meldingen'}
         />
