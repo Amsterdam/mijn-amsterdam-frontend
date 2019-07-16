@@ -79,7 +79,7 @@ export const ApiConfig: ApiConfig = {
     postponeFetch: isProduction(),
   },
   [ApiUrls.MY_TIPS]: {
-    postponeFetch: isProduction(),
+    postponeFetch: true,
   },
 };
 
