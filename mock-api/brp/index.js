@@ -1,4 +1,4 @@
-const user = require('../secure-data/brp.json');
+const user = require('../json/brp.json');
 
 module.exports = {
   path: '/api/brp/brp',

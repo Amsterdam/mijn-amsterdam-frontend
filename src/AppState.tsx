@@ -3,7 +3,7 @@ import useMyTipsApi from 'hooks/api/my-tips-api.hook';
 import useMyUpdatesApi from 'hooks/api/my-updates-api.hook';
 import useSessionApi, { SessionApiState } from 'hooks/api/session.api.hook';
 import useMyChapters from 'hooks/api/myChapters.hook';
-import React, { createContext } from 'react';
+import React, { createContext, useMemo, useEffect } from 'react';
 
 import { ComponentChildren } from './App.types';
 import useErfpachtApi, { ErfpachtApiState } from './hooks/api/api.erfpacht';
@@ -12,6 +12,8 @@ import useWmoApi, { WmoApiState } from './hooks/api/api.wmo';
 import { MyTipsApiState } from './hooks/api/my-tips-api.hook';
 import { MyUpdatesApiState } from './hooks/api/my-updates-api.hook';
 import { MyChaptersApiState } from './hooks/api/myChapters.hook';
+import useMyMap from './hooks/api/api.mymap';
+import { getFullAddress } from 'data-formatting/brp';
 
 type MyCasesApiState = FocusApiState;
 
@@ -25,6 +27,7 @@ export interface AppState {
   FOCUS: FocusApiState;
   MY_CHAPTERS: MyChaptersApiState;
   ERFPACHT: ErfpachtApiState;
+  MY_AREA: any;
 }
 
 export type StateKey = keyof AppState;
@@ -36,14 +39,14 @@ export const SessionContext = createContext<SessionApiState>(
 );
 
 interface SessionStateProps {
-  render: (session: SessionApiState) => ComponentChildren;
+  children: ComponentChildren;
 }
 
-export function SessionState({ render }: SessionStateProps) {
+export function SessionState({ children }: SessionStateProps) {
   const session = useSessionApi();
   return (
     <SessionContext.Provider value={session}>
-      {render(session)}
+      {children}
     </SessionContext.Provider>
   );
 }
@@ -51,11 +54,9 @@ export function SessionState({ render }: SessionStateProps) {
 interface AppStateProps {
   children?: ComponentChildren;
   value?: Partial<AppState>;
-  session?: SessionApiState;
-  render?: (state: AppState) => ComponentChildren;
 }
 
-export default ({ render, children, value, session }: AppStateProps) => {
+export function useAppState(value?: any) {
   let appState;
 
   if (typeof value !== 'undefined') {
@@ -80,27 +81,51 @@ export default ({ render, children, value, session }: AppStateProps) => {
     const MY_TIPS = useMyTipsApi();
     const ERFPACHT = useErfpachtApi();
     const MY_CHAPTERS = useMyChapters({ WMO, FOCUS, ERFPACHT });
+    const MY_AREA = useMyMap();
 
-    appState = {
-      BRP,
-      SESSION: session,
+    useEffect(() => {
+      if (BRP.adres && BRP.adres.straatnaam) {
+        MY_AREA.refetch(getFullAddress(BRP.adres));
+      }
+    }, [BRP.adres && BRP.adres.straatnaam]);
 
-      // NOTE: If needed we can postpone immediate fetching of below data and start fetching in the component
-      // by calling the refetch method implemented in the api hooks.
-      MY_UPDATES,
-      MY_CASES,
-      MY_TIPS,
-      WMO,
-      FOCUS,
-      MY_CHAPTERS,
-      ERFPACHT,
-    };
+    // NOTE: For now we can use this solution but we probably need some more finegrained memoization of the state as the app grows larger.
+    appState = useMemo(() => {
+      return {
+        BRP,
+        // NOTE: If needed we can postpone immediate fetching of below data and start fetching in the component
+        // by calling the refetch method implemented in the api hooks.
+        MY_UPDATES,
+        MY_CASES,
+        MY_TIPS,
+        WMO,
+        FOCUS,
+        MY_CHAPTERS,
+        ERFPACHT,
+        MY_AREA,
+      };
+    }, [
+      WMO.isLoading,
+      FOCUS.isLoading,
+      BRP.isLoading,
+      MY_UPDATES.isLoading,
+      MY_CASES.isLoading,
+      MY_TIPS.isLoading,
+      ERFPACHT.isLoading,
+      MY_CHAPTERS.isLoading,
+      MY_AREA.url,
+    ]);
   }
 
+  return appState;
+}
+
+export default ({ children }: AppStateProps) => {
+  const appState = useAppState();
   return (
     // TODO: Straight out partial appState assignments. Forcing type assignment here for !!!111!!1!!
     <AppContext.Provider value={appState as AppState}>
-      {render ? render(appState as AppState) : children}
+      {children}
     </AppContext.Provider>
   );
 };

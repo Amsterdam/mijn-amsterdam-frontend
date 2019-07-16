@@ -1,12 +1,13 @@
 import { AppRoutes } from 'App.constants';
 import { ReactComponent as CloseIcon } from 'assets/icons/Close.svg';
 import { ReactComponent as Logo } from 'assets/images/logo-amsterdam.svg';
+import { ReactComponent as HomeIcon } from 'assets/icons/home.svg';
 import Heading from 'components/Heading/Heading';
-import { itemClickPayload, trackItemPresentation } from 'hooks/piwik.hook';
-import React, { useEffect } from 'react';
+import { itemClickPayload, trackItemPresentation } from 'hooks/analytics.hook';
+import React, { useContext, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+
 import styles from './MyArea.module.scss';
-import useMyMap from 'hooks/api/api.mymap';
 
 interface MyAreaHeaderComponentProps {
   trackCategory: string;
@@ -33,25 +34,14 @@ export function MyAreaHeader({ trackCategory }: MyAreaHeaderComponentProps) {
 
 interface MyAreaMapComponentProps {
   trackCategory: string;
-  address?: string;
-  simpleMap?: boolean;
+  url: string;
 }
 
-export function MyAreaMap({
-  trackCategory,
-  address,
-  simpleMap = false,
-}: MyAreaMapComponentProps) {
+export function MyAreaMap({ trackCategory, url }: MyAreaMapComponentProps) {
   useEffect(() => {
-    trackItemPresentation(
-      trackCategory,
-      'Embed_kaart' + simpleMap ? '_simpel' : '_volledig'
-    );
+    trackItemPresentation(trackCategory, 'Embed_kaart');
   }, []);
-
-  const { url, isDirty, isLoading } = useMyMap(address, simpleMap);
-
-  return isDirty && !isLoading ? (
+  return !!url ? (
     <iframe
       id="mapIframe"
       title="Kaart van mijn buurt"
@@ -59,31 +49,24 @@ export function MyAreaMap({
       className={styles.Map}
     />
   ) : (
-    <div className={styles.loadingText}>Kaart wordt geladen..</div>
+    <div className={styles.loadingText}>
+      <span className={styles.HomeLoader}>
+        <HomeIcon />
+        Uw adres wordt opgezocht..
+      </span>
+    </div>
   );
 }
 
 interface MyAreaComponentProps {
   trackCategory: string;
-  simpleMap?: boolean;
-  address?: string;
+  url: string;
 }
 
-export default function MyArea({
-  trackCategory,
-  simpleMap = false,
-  address,
-}: MyAreaComponentProps) {
-  if (!address) {
-    return null;
-  }
+export default function MyArea({ trackCategory, url }: MyAreaComponentProps) {
   return (
     <div className={styles.MyArea}>
-      <MyAreaMap
-        trackCategory={trackCategory}
-        simpleMap={simpleMap}
-        address={address}
-      />
+      <MyAreaMap trackCategory={trackCategory} url={url} />
       <NavLink
         to={AppRoutes.MY_AREA}
         className={styles.Overlay}

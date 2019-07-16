@@ -1,5 +1,7 @@
-import { ErrorMessageMap } from 'components/ErrorMessages/ErrorMessages';
 import { StateKey } from 'AppState';
+import { ErrorMessageMap } from 'components/ErrorMessages/ErrorMessages';
+import { isProduction } from 'helpers/App';
+import { MyUpdate } from 'hooks/api/my-updates-api.hook';
 
 export type Chapter =
   | 'ROOT'
@@ -9,6 +11,7 @@ export type Chapter =
   | 'ZORG'
   | 'JEUGDHULP'
   | 'INKOMEN'
+  | 'MELDINGEN'
   | 'PROFILE';
 
 export const Chapters: { [chapter in Chapter]: Chapter } = {
@@ -20,6 +23,7 @@ export const Chapters: { [chapter in Chapter]: Chapter } = {
   JEUGDHULP: 'JEUGDHULP',
   INKOMEN: 'INKOMEN',
   PROFILE: 'PROFILE',
+  MELDINGEN: 'MELDINGEN',
 };
 
 export const AppRoutes = {
@@ -47,6 +51,7 @@ export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/login';
 export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL || '/logout';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const ATLAS_API_BASE_URL = process.env.REACT_APP_ATLAS_API_BASE_URL;
 
 export const ApiUrls = {
   MY_UPDATES: `${API_BASE_URL}/mijn-updates`,
@@ -57,6 +62,25 @@ export const ApiUrls = {
   FOCUS: `${API_BASE_URL}/focus/aanvragen`,
   AUTH: `${API_BASE_URL}/auth/check`,
   ERFPACHT: `${API_BASE_URL}/erfpacht/check-erfpacht`,
+  BAG: `${ATLAS_API_BASE_URL}/atlas/search/adres/`,
+};
+
+export interface ApiConfig {
+  [apiUrl: string]: {
+    postponeFetch: boolean;
+  };
+}
+
+export const ApiConfig: ApiConfig = {
+  [ApiUrls.FOCUS]: {
+    postponeFetch: isProduction(),
+  },
+  [ApiUrls.WMO]: {
+    postponeFetch: isProduction(),
+  },
+  [ApiUrls.MY_TIPS]: {
+    postponeFetch: true,
+  },
 };
 
 export const errorMessageMap: ErrorMessageMap = {
@@ -111,7 +135,7 @@ export const ExternalUrls = {
   REPORT_RELOCATION:
     'https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/',
   CONTACT_FORM:
-    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/scKlachtenformulier.aspx',
+    'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx/fKlachtenformulier',
   COLOFON: 'https://www.amsterdam.nl/algemene_onderdelen/overige/colofon/',
   PROCLAIMER:
     'https://www.amsterdam.nl/algemene_onderdelen/overige/proclaimer/',
@@ -173,4 +197,24 @@ export const Colors = {
 export const Layout = {
   mainHeaderTopbarHeight: 106, // px
   mainHeaderNavbarHeight: 44, // px
+};
+
+export const WelcomeUpdate: MyUpdate = {
+  id: 'welcome01',
+  chapter: Chapters.MELDINGEN,
+  datePublished: new Date(2019, 7, 16).toISOString(),
+  title: 'Welkom op Mijn Amsterdam!',
+  description:
+    'Deze website is nog volop in ontwikkeling. Gaandeweg komt meer informatie voor u beschikbaar.',
+  customLink: {
+    callback: () => {
+      const usabilla = (window as any).usabilla_live;
+      if (usabilla) {
+        usabilla('click');
+      } else {
+        window.location.href = ExternalUrls.CONTACT_FORM;
+      }
+    },
+    title: 'Laat ons weten wat u ervan vindt',
+  },
 };

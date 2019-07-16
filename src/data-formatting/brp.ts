@@ -138,9 +138,8 @@ export function getFullName(person: Persoon) {
 }
 
 export function getFullAddress(address: Adres) {
-  return `${address.straatnaam} ${address.huisnummer} ${address.huisletter ||
-    address.huisnummertoevoeging ||
-    ''}`;
+  return `${address.straatnaam} ${address.huisnummer ||
+    ''} ${address.huisletter || ''} ${address.huisnummertoevoeging || ''}`;
 }
 
 export function formatProfileData({

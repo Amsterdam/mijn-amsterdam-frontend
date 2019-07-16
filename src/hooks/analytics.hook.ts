@@ -1,7 +1,7 @@
 import useScript from 'hooks/useScript';
 
 const TrackerConfig = {
-  url: 'https://piwik.data.amsterdam.nl',
+  url: 'https://analytics.data.amsterdam.nl',
   siteId: process.env.REACT_APP_SITE_ID,
   jsFilename: 'piwik.js',
   phpFilename: 'piwik.php',
@@ -26,21 +26,21 @@ type LinkPayload = ['trackLink', string, LinkType];
 const theWindow = window as any;
 let referrerUrl: string;
 
-function pushToPiwik(payload: any) {
+function pushToAnalytics(payload: any) {
   theWindow._paq = theWindow._paq || [];
   theWindow._paq.push(payload);
 }
 
-// Initialize connection with Piwik
-export function usePiwik() {
+// Initialize connection with analytics
+export function useAnalytics() {
   if (!theWindow._paq || theWindow._paq.length === 0) {
-    pushToPiwik([
+    pushToAnalytics([
       'setTrackerUrl',
       `${TrackerConfig.url}/${TrackerConfig.phpFilename}`,
     ]);
-    pushToPiwik(['setSiteId', TrackerConfig.siteId]);
-    pushToPiwik(['trackPageView']);
-    pushToPiwik(['enableLinkTracking']);
+    pushToAnalytics(['setSiteId', TrackerConfig.siteId]);
+    pushToAnalytics(['trackPageView']);
+    pushToAnalytics(['enableLinkTracking']);
   }
 
   // Is only loaded once, has internal caching.
@@ -50,16 +50,16 @@ export function usePiwik() {
 export function trackEvent(
   payload: EventPayload | [EventPayload, LinkPayload]
 ) {
-  return pushToPiwik(payload);
+  return pushToAnalytics(payload);
 }
 
 export function trackPageView(title?: string, url?: string) {
-  pushToPiwik(['setDocumentTitle', title || document.title]);
+  pushToAnalytics(['setDocumentTitle', title || document.title]);
   if (referrerUrl) {
-    pushToPiwik(['setReferrerUrl', referrerUrl]);
+    pushToAnalytics(['setReferrerUrl', referrerUrl]);
   }
-  pushToPiwik(['setCustomUrl', url || document.location.href]);
-  pushToPiwik(['trackPageView']);
+  pushToAnalytics(['setCustomUrl', url || document.location.href]);
+  pushToAnalytics(['trackPageView']);
   referrerUrl = url || document.location.href;
 }
 

@@ -2,6 +2,7 @@
 
 .Container {
   overflow: hidden; // Fix for an issue where the myArea page has whitespace beneath the iframe
+  background-color: $color-neutral-grey1;
 }
 
 .MyAreaContainer {

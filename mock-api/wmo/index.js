@@ -1,4 +1,4 @@
-const focus = require('../secure-data/wmo.json');
+const focus = require('../json/wmo.json');
 
 module.exports = {
   path: '/api/wmoned/voorzieningen',

@@ -1,9 +1,8 @@
-import { Chapter } from 'App.constants';
+import { Chapter, WelcomeUpdate } from 'App.constants';
 import { LinkProps } from 'App.types';
 import { AppState } from 'AppState';
-
-import { ApiState } from './api.types';
 import { useLocalStorage } from 'hooks/storage.hook';
+import { ApiState } from './api.types';
 
 export interface MyUpdate {
   id: string;
@@ -11,9 +10,13 @@ export interface MyUpdate {
   datePublished: string;
   title: string;
   description: string;
-  link: LinkProps;
+  link?: LinkProps;
   isUnread?: boolean; // Was this update presented to the user / has it been read
   isActual?: boolean; // Is this update newsworthy
+  customLink?: {
+    callback: () => void;
+    title: string;
+  };
 }
 
 export interface MyUpdatesApiState extends ApiState {
@@ -21,10 +24,6 @@ export interface MyUpdatesApiState extends ApiState {
     items: MyUpdate[];
     total: number;
   };
-}
-
-interface MyUpdatesState {
-  [id: string]: boolean;
 }
 
 export function useUpdatesState() {
@@ -37,6 +36,10 @@ export function useUpdatesState() {
 export default ({ FOCUS }: Pick<AppState, 'FOCUS'>): MyUpdatesApiState => {
   const [myUpdatesState] = useUpdatesState();
   const items = [
+    // Static content welcome message
+    WelcomeUpdate,
+
+    // Focus update items
     ...FOCUS.data.updates.map(update => {
       return {
         ...update,

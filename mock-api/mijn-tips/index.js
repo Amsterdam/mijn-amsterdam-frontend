@@ -1,4 +1,4 @@
-const tips = require('../secure-data/mijn-tips.json');
+const tips = require('../json/mijn-tips.json');
 
 module.exports = {
   path: '/api/profiel/mijn-tips',
