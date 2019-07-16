@@ -11,9 +11,9 @@
 }
 
 .LoginBtn {
-  display: flex;
+  display: inline-flex;
   height: 4.6rem;
-  width: 18.5rem; // ie11 fallback
+  width: 28rem; // ie11 fallback
   width: fit-content;
   cursor: pointer;
   margin-top: 4rem;

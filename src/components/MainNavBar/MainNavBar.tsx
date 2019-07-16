@@ -75,6 +75,7 @@ function SecondaryLinks({ person }: SecondaryLinksProps) {
       {
         <IconButtonLink
           to={LOGOUT_URL}
+          rel="external"
           data-track={itemClickPayload(
             'MA_Header/Secundaire_Links',
             'Link_naar_Uitloggen'
