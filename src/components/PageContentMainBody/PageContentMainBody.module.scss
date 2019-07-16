@@ -9,6 +9,10 @@
 
   &__regular {
     padding: 0 4rem;
+
+    @include media("<=phone") {
+      padding: 0 2rem;
+    }
   }
 
   &__boxed {

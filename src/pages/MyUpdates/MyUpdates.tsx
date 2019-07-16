@@ -24,7 +24,7 @@ export default () => {
         variant="boxedWithIcon"
         className={styles.MainHeader}
       >
-        <ChapterHeadingIcon chapter={Chapters.MY_UPDATES} />
+        <ChapterHeadingIcon chapter={Chapters.MELDINGEN} />
         Mijn meldingen
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">

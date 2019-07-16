@@ -36,7 +36,7 @@ export default function ChapterIcon({
     case Chapters.ZORG:
       Icon = IconZorg;
       break;
-    case Chapters.MY_UPDATES:
+    case Chapters.MELDINGEN:
       Icon = IconMyUpdates;
       break;
     default:
