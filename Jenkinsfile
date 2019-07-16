@@ -103,34 +103,35 @@ node {
   }
 }
 
-// Enable when project is ready for production
-stage('Waiting for approval') {
-    slackSend channel: '#ci-channel', color: 'warning', message: 'Mijn Amsterdam Frontend is waiting for Production Release - please confirm'
-    input "Deploy to Production?"
-}
+if (BRANCH == "master") {
+  // Enable when project is ready for production
+  stage('Waiting for approval') {
+      slackSend channel: '#ci-channel', color: 'warning', message: 'Mijn Amsterdam Frontend is waiting for Production Release - please confirm'
+      input "Deploy to Production?"
+  }
 
-node {
-  stage("Build and Push Production image") {
-    tryStep "build", {
-      docker.withRegistry("${DOCKER_REGISTRY}",'docker-registry') {
-        def image = docker.build("mijnams/mijnamsterdam:${env.BUILD_NUMBER}", "--build-arg PROD_ENV=${PROD_TARGET}  --build-arg http_proxy=${JENKINS_HTTP_PROXY_STRING} --build-arg https_proxy=${JENKINS_HTTP_PROXY_STRING} .")
-        image.pull()
-        image.push("production")
-        image.push("latest")
+  node {
+    stage("Build and Push Production image") {
+      tryStep "build", {
+        docker.withRegistry("${DOCKER_REGISTRY}",'docker-registry') {
+          def image = docker.build("mijnams/mijnamsterdam:${env.BUILD_NUMBER}", "--build-arg PROD_ENV=${PROD_TARGET}  --build-arg http_proxy=${JENKINS_HTTP_PROXY_STRING} --build-arg https_proxy=${JENKINS_HTTP_PROXY_STRING} .")
+          image.pull()
+          image.push("production")
+          image.push("latest")
+        }
       }
     }
   }
-}
 
-node {
+  node {
     stage("Deploy to PROD") {
-        tryStep "deployment", {
-            build job: 'Subtask_Openstack_Playbook',
-            parameters: [
-                [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
-                [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml'],
-            ]
-        }
+      tryStep "deployment", {
+        build job: 'Subtask_Openstack_Playbook',
+        parameters: [
+          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
+          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml'],
+        ]
+      }
     }
-}
+  }
 }
