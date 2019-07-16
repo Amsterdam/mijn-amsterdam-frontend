@@ -1,4 +1,4 @@
-// const items = require('../secure-data/mijn-updates.json');
+// const items = require('../json/mijn-updates.json');
 const items = [];
 
 module.exports = {
