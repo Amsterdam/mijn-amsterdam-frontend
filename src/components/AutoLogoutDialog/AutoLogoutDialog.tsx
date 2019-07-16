@@ -5,19 +5,19 @@ import { ComponentChildren } from 'App.types';
 import classnames from 'classnames';
 import { formattedTimeFromSeconds } from 'helpers/App';
 import useActivityCounter from 'hooks/activityCounter.hook';
-import { SessionApiState } from 'hooks/api/session.api.hook';
 import {
   itemClickPayload,
   itemInteractionPayload,
   trackEvent,
   trackItemPresentation,
-} from 'hooks/piwik.hook';
+} from 'hooks/analytics.hook';
 import { CounterProps, useCounter } from 'hooks/timer.hook';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 
 import Modal from '../Modal/Modal';
 import styles from './AutoLogoutDialog.module.scss';
+import { SessionContext } from 'AppState';
 
 /**
  * This component is essentially a dialog with a countdown timer presented to the user
@@ -44,7 +44,6 @@ export interface AutoLogoutDialogSettings {
 
 export interface ComponentProps {
   children?: ComponentChildren;
-  session: SessionApiState;
   settings?: AutoLogoutDialogSettings;
 }
 
@@ -91,14 +90,8 @@ const DefaultSettings = {
   secondsSessionRenewRequestInterval: SESSION_RENEW_INTERVAL_SECONDS,
 };
 
-export default function AutoLogoutDialog({
-  children,
-  session,
-  settings = {
-    secondsBeforeDialogShow: AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS,
-    secondsBeforeAutoLogout: AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS,
-  },
-}: ComponentProps) {
+export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
+  const session = useContext(SessionContext);
   // Will open the dialog if maxCount is reached.
   const nSettings = { ...DefaultSettings, ...settings };
   const { resume, reset } = useCounter({
@@ -117,18 +110,13 @@ export default function AutoLogoutDialog({
 
   // Renew the remote tma session whenever we detect user activity
   useEffect(() => {
+    if (session.isDirty && session.isAuthenticated) {
+      resetAutoLogout();
+    }
     if (activityCount !== 0 && isOpen !== true) {
       session.refetch();
     }
   }, [activityCount]);
-
-  // This effect responds to the session loader and will reset the autologout
-  // whenever the session is still active.
-  useEffect(() => {
-    if (session.isDirty && !session.isLoading && session.isAuthenticated) {
-      resetAutoLogout();
-    }
-  }, [session.isLoading]);
 
   function resetAutoLogout() {
     setContinueButtonVisibility(true);

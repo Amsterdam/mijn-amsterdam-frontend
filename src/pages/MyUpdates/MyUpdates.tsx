@@ -24,7 +24,7 @@ export default () => {
         variant="boxedWithIcon"
         className={styles.MainHeader}
       >
-        <ChapterHeadingIcon chapter={Chapters.BURGERZAKEN} />
+        <ChapterHeadingIcon chapter={Chapters.MELDINGEN} />
         Mijn meldingen
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
@@ -36,7 +36,7 @@ export default () => {
         <MyUpdates
           isLoading={isLoading}
           total={total}
-          items={items.filter(item => item.isActual)}
+          items={items}
           trackCategory={'MA_Mijn_meldingen/Actuele_meldingen'}
           noContentNotification="Er zijn op dit moment geen actuele meldingen voor u."
         />

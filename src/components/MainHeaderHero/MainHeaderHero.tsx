@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from './MainHeaderHero.module.scss';
 import useRouter from 'use-react-router';
 import { AppRoutes } from 'App.constants';
+import { SessionContext } from '../../AppState';
 
 const DEFAULT_ALT = 'Sfeerbeeld kenmerkend voor de Amsterdammer';
 const LANDSCAPE_SCREEN_RATIO = 0.25;
@@ -22,7 +23,7 @@ function imgUrl(
   )}.jpg`;
 }
 
-function getHeroSrc() {
+function getHeroSrc(isAuthenticated: boolean = false) {
   const { location } = useRouter();
   const isChapterPath = (path: string) => location.pathname.startsWith(path);
 
@@ -33,13 +34,19 @@ function getHeroSrc() {
       imageName = 'Zuid-Oost-RT-08';
       break;
     case isChapterPath(AppRoutes.INKOMEN):
-      imageName = 'Zuid-Oost-RT-11';
+      imageName = 'Zuid-Oost-RT-02';
+      break;
+    case isChapterPath(AppRoutes.ZORG):
+      imageName = 'west-RT-01';
       break;
     case isChapterPath(AppRoutes.MY_UPDATES):
       imageName = 'Zuid-Oost-RT-06';
       break;
+    case isChapterPath(AppRoutes.ROOT):
+      imageName = isAuthenticated ? 'west-RT-05' : 'Zuid-Oost-RT-11';
+      break;
     default:
-      imageName = 'Zuid-Oost-RT-02';
+      imageName = 'west-RT-05';
       break;
   }
 
@@ -69,7 +76,8 @@ export interface MainHeaderHeroProps {
 }
 
 export default function MainHeaderHero(props: Partial<MainHeaderHeroProps>) {
-  const srcSet = getHeroSrc();
+  const session = useContext(SessionContext);
+  const srcSet = getHeroSrc(session.isAuthenticated);
   const alt = props.alt || DEFAULT_ALT;
 
   return (

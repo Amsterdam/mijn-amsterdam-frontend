@@ -1,9 +1,10 @@
-import { useDataApi } from './api.hook';
 import { ApiUrls } from 'App.constants';
-import { ApiState, ApiRequestOptions } from './api.types';
+import { useMemo } from 'react';
+import { useDataApi } from './api.hook';
+import { ApiRequestOptions, ApiState } from './api.types';
 
 export interface SessionState {
-  isAuthenticated?: boolean;
+  isAuthenticated: boolean;
   refetch: () => void;
 }
 
@@ -21,6 +22,16 @@ export type SessionApiState = ApiState & SessionState;
 export default function useSessionApi(
   initialData = INITIAL_SESSION_STATE
 ): SessionApiState {
-  const [{ data, ...rest }, refetch] = useDataApi(requestOptions, initialData);
-  return { ...data, ...rest, refetch: () => refetch(requestOptions) };
+  const [{ data, isLoading, isDirty, ...rest }, refetch] = useDataApi(
+    requestOptions,
+    initialData
+  );
+  return useMemo(() => {
+    return {
+      ...data,
+      ...rest,
+      isDirty,
+      refetch: () => refetch(requestOptions),
+    };
+  }, [data.isAuthenticated, isDirty]);
 }

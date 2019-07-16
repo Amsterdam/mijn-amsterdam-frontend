@@ -1,8 +1,8 @@
 import { AppRoutes } from 'App.constants';
 import { useEffect } from 'react';
 import useRouter from 'use-react-router';
-import { trackPageView } from './piwik.hook';
-import { useDebouncedCallback } from 'use-debounce';
+
+import { trackPageView } from './analytics.hook';
 
 export const PageTitleMain = 'Mijn Amsterdam';
 export const PageTitleLanding = `Login met DigID | ${PageTitleMain}`;

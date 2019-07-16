@@ -25,6 +25,8 @@
   left: 0;
   top: 2.3rem;
   fill: $color-primary-red;
+  width: 3.2rem;
+  height: auto;
 
   @include media("<=tablet") {
     position: static;
@@ -89,6 +91,7 @@
 
 .NoItemsInfo {
   margin: 0;
+  margin-top: 2rem;
 }
 
 // TODO: Enable when we have a design and/or decision wether we want to actually implement such a thing.

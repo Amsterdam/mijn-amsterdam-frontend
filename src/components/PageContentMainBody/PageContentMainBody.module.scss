@@ -3,8 +3,16 @@
 .PageContentMainBody {
   display: block;
 
+  > p:first-of-type {
+    margin-top: 0;
+  }
+
   &__regular {
     padding: 0 4rem;
+
+    @include media("<=phone") {
+      padding: 0 2rem;
+    }
   }
 
   &__boxed {

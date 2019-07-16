@@ -1,11 +1,12 @@
-import { ApiUrls } from 'App.constants';
-import formatFocusApiResponse, { FocusItem } from 'data-formatting/focus';
-
+import { ApiConfig, ApiUrls } from 'App.constants';
+import formatFocusApiResponse, {
+  FocusItem,
+  ProductTitles,
+} from 'data-formatting/focus';
+import { useMemo } from 'react';
 import { ApiState } from './api.types';
 import { MyUpdate } from './my-updates-api.hook';
 import usePaginatedApi, { PaginatedItemsResponse } from './paginated-api.hook';
-import { ProductTitles } from 'data-formatting/focus';
-import { useMemo } from 'react';
 
 interface ProductCollection {
   [productTitle: string]: {
@@ -62,7 +63,12 @@ export default function useFocusApi(
   offset?: number,
   limit?: number
 ): FocusApiState {
-  const { data, ...rest } = usePaginatedApi(ApiUrls.FOCUS, offset, limit);
+  const { data, ...rest } = usePaginatedApi(
+    ApiUrls.FOCUS,
+    offset,
+    limit,
+    ApiConfig[ApiUrls.FOCUS].postponeFetch
+  );
   const { allItems, allUpdates, products } = useMemo(() => {
     return formatProductCollections(data.items);
   }, [data.items.length]);

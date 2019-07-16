@@ -5,6 +5,7 @@ import { ReactComponent as IconZorg } from 'assets/images/zorg.svg';
 import { ReactComponent as IconInkomen } from 'assets/images/inkomen.svg';
 import { ReactComponent as IconWonen } from 'assets/images/wonen.svg';
 import { ReactComponent as IconBelastingen } from 'assets/images/belastingen.svg';
+import { ReactComponent as IconMyUpdates } from 'assets/icons/Bell.svg';
 import { Chapters, Chapter as ChapterType, Colors } from 'App.constants';
 
 import styles from './ChapterIcon.module.scss';
@@ -34,6 +35,9 @@ export default function ChapterIcon({
       break;
     case Chapters.ZORG:
       Icon = IconZorg;
+      break;
+    case Chapters.MELDINGEN:
+      Icon = IconMyUpdates;
       break;
     default:
       Icon = IconBurgerZaken;
