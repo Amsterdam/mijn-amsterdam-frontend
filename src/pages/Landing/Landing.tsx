@@ -42,10 +42,11 @@ export default () => {
       </PageContentMainHeading>
       <PageContentMainBody variant="regular" className={styles.Landing}>
         <p>
-          Op Mijn Amsterdam kunt u uw persoonlijke gegevens inzien en een
-          correctie doorgeven. Ook kunt u er dingen regelen en krijgt u tips.
-          Als u iets hebt aangevraagd, kunt u zien hoe het met uw aanvraag
-          staat.
+          Op Mijn Amsterdam ziet u hoe het staat met uw aanvraag of melding. Ook
+          ziet u welke gegevens de gemeente van u heeft vastgelegd. Klopt er
+          iets niet, dan ziet u waar u terecht kunt om het aan te passen. Nog
+          niet alle producten van de gemeente zijn via Mijn Amsterdam
+          beschikbaar. De komende jaren komt er steeds meer bij.
         </p>
         <Heading size="medium">Log in op uw persoonlijke pagina</Heading>
         <a
@@ -66,14 +67,9 @@ export default () => {
           </span>
         </a>
         <p>
-          <strong>Wilt u hulp bij het inloggen met DigiD?</strong>
+          <strong>Heeft u nog geen DigiD? Regel dit dan eerst.</strong>
           <br />
-          Ga naar <a href="https://www.digid.nl">DigiD</a>
-          <br />
-          Of gebruik de{' '}
-          <a href="https://www.digid.nl/over-digid/app">DigiD app</a>
-          <br />
-          Dan hoeft u geen wachtwoord meer te onthouden.
+          Ga naar <a href="https://www.digid.nl/aanvragen">DigiD aanvragen</a>
         </p>
         <p>
           <strong>

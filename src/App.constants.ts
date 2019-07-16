@@ -203,9 +203,9 @@ export const WelcomeUpdate: MyUpdate = {
   id: 'welcome01',
   chapter: Chapters.MY_UPDATES,
   datePublished: new Date(2019, 7, 16).toISOString(),
-  title: 'Welkom op Mijn Amsterdam',
+  title: 'Welkom op Mijn Amsterdam!',
   description:
-    'We zijn nog volop in ontwikkeling. In de komende maanden kunt u hier steeds meer persoonlijke informatie vinden.',
+    'Deze website is nog volop in ontwikkeling. Gaandeweg komt meer informatie voor u beschikbaar.',
   customLink: {
     callback: () => {
       const usabilla = (window as any).usabilla_live;
@@ -215,6 +215,6 @@ export const WelcomeUpdate: MyUpdate = {
         window.location.href = ExternalUrls.CONTACT_FORM;
       }
     },
-    title: 'Laat ons weten wat u er van vindt',
+    title: 'Laat ons weten wat u ervan vindt',
   },
 };

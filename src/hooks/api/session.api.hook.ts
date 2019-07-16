@@ -1,10 +1,10 @@
-import { useDataApi } from './api.hook';
 import { ApiUrls } from 'App.constants';
-import { ApiState, ApiRequestOptions } from './api.types';
 import { useMemo } from 'react';
+import { useDataApi } from './api.hook';
+import { ApiRequestOptions, ApiState } from './api.types';
 
 export interface SessionState {
-  isAuthenticated?: boolean;
+  isAuthenticated: boolean;
   refetch: () => void;
 }
 

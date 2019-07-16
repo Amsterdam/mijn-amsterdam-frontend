@@ -1,6 +1,7 @@
 import { AppRoutes } from 'App.constants';
 import { ReactComponent as CloseIcon } from 'assets/icons/Close.svg';
 import { ReactComponent as Logo } from 'assets/images/logo-amsterdam.svg';
+import { ReactComponent as HomeIcon } from 'assets/icons/home.svg';
 import Heading from 'components/Heading/Heading';
 import { itemClickPayload, trackItemPresentation } from 'hooks/analytics.hook';
 import React, { useContext, useEffect } from 'react';
@@ -40,8 +41,8 @@ export function MyAreaMap({ trackCategory, url }: MyAreaMapComponentProps) {
   useEffect(() => {
     trackItemPresentation(trackCategory, 'Embed_kaart');
   }, []);
-
-  return url ? (
+  console.log('MYAREA MAP');
+  return !!url ? (
     <iframe
       id="mapIframe"
       title="Kaart van mijn buurt"
@@ -51,7 +52,7 @@ export function MyAreaMap({ trackCategory, url }: MyAreaMapComponentProps) {
   ) : (
     <div className={styles.loadingText}>
       <span className={styles.HomeLoader}>
-        <img src="https://data.amsterdam.nl/assets/images/map/home.svg" />
+        <HomeIcon />
         Uw adres wordt opgezocht..
       </span>
     </div>
@@ -60,13 +61,13 @@ export function MyAreaMap({ trackCategory, url }: MyAreaMapComponentProps) {
 
 interface MyAreaComponentProps {
   trackCategory: string;
-  url?: string;
+  url: string;
 }
 
 export default function MyArea({ trackCategory, url }: MyAreaComponentProps) {
   return (
     <div className={styles.MyArea}>
-      {!!url && <MyAreaMap trackCategory={trackCategory} url={url} />}
+      <MyAreaMap trackCategory={trackCategory} url={url} />
       <NavLink
         to={AppRoutes.MY_AREA}
         className={styles.Overlay}

@@ -3,6 +3,10 @@
 .PageContentMainBody {
   display: block;
 
+  > p:first-of-type {
+    margin-top: 0;
+  }
+
   &__regular {
     padding: 0 4rem;
   }
