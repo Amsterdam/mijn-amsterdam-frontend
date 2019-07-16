@@ -14,7 +14,7 @@
   padding-bottom: 1rem;
 
   @include media("<=phone") {
-    padding-left: 7rem;
+    padding-left: 6rem;
   }
 }
 
@@ -23,7 +23,7 @@
   padding-left: 12rem;
 
   @include media("<=phone") {
-    padding-left: 7rem;
+    padding-left: 6rem;
   }
 
   > p {

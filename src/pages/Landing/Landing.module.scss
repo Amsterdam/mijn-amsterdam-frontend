@@ -16,8 +16,6 @@
   width: 28rem; // ie11 fallback
   width: fit-content;
   cursor: pointer;
-  margin-top: 4rem;
-  margin-bottom: 3rem;
   text-decoration: none;
 
   > span {
@@ -27,6 +25,10 @@
     padding-right: 1.3rem;
     padding-left: 1.3rem;
     line-height: 4.6rem;
+  }
+
+  + p {
+    margin-top: 1rem;
   }
 }
 

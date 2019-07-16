@@ -202,7 +202,7 @@ export const Layout = {
 export const WelcomeUpdate: MyUpdate = {
   id: 'welcome01',
   chapter: Chapters.MELDINGEN,
-  datePublished: new Date(2019, 7, 16).toISOString(),
+  datePublished: new Date(2019, 6, 16).toISOString(),
   title: 'Welkom op Mijn Amsterdam!',
   description:
     'Deze website is nog volop in ontwikkeling. Gaandeweg komt meer informatie voor u beschikbaar.',

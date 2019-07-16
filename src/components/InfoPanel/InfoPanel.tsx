@@ -22,7 +22,12 @@ function InfoPanelActionLinks({ actionLinks }: InfoPanelActionLinksProps) {
     <ul className={styles.InfoPanelActionLinks}>
       {actionLinks.map((actionLink, index) => (
         <li key={actionLink.title}>
-          <ButtonLink to={actionLink.url}>{actionLink.title}</ButtonLink>
+          <ButtonLink
+            to={actionLink.url}
+            rel={actionLink.external ? 'external' : ''}
+          >
+            {actionLink.title}
+          </ButtonLink>
         </li>
       ))}
     </ul>

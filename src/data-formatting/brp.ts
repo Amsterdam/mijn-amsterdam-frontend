@@ -163,12 +163,12 @@ export function formatProfileData({
       [brpInfoLabels.PlaceOfBirth]: persoon.geboorteplaatsnaam || 'Onbekend',
       [brpInfoLabels.CountryOfBirth]: persoon.geboortelandnaam || 'Onbekend',
       [brpInfoLabels.Nationality]:
-        persoon.nationaliteiten &&
-        persoon.nationaliteiten.length &&
-        persoon.nationaliteiten.reduce(
-          (str, { omschrijving }) => str + omschrijving + ' ',
-          ''
-        ),
+        persoon.nationaliteiten && persoon.nationaliteiten.length
+          ? persoon.nationaliteiten.reduce(
+              (str, { omschrijving }) => str + omschrijving + ' ',
+              ''
+            )
+          : 'Onbekend',
     },
     address: {
       [brpInfoLabels.Street]: `${adres.straatnaam} ${

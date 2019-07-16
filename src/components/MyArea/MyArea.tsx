@@ -52,7 +52,7 @@ export function MyAreaMap({ trackCategory, url }: MyAreaMapComponentProps) {
     <div className={styles.loadingText}>
       <span className={styles.HomeLoader}>
         <HomeIcon />
-        Uw adres wordt opgezocht..
+        Uw adres wordt opgezocht...
       </span>
     </div>
   );
