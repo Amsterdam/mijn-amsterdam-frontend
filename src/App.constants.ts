@@ -1,5 +1,6 @@
-import { ErrorMessageMap } from 'components/ErrorMessages/ErrorMessages';
 import { StateKey } from 'AppState';
+import { ErrorMessageMap } from 'components/ErrorMessages/ErrorMessages';
+import { isProduction } from 'helpers/App';
 
 export type Chapter =
   | 'ROOT'
@@ -59,6 +60,24 @@ export const ApiUrls = {
   AUTH: `${API_BASE_URL}/auth/check`,
   ERFPACHT: `${API_BASE_URL}/erfpacht/check-erfpacht`,
   BAG: `${ATLAS_API_BASE_URL}/atlas/search/adres/`,
+};
+
+export interface ApiConfig {
+  [apiUrl: string]: {
+    postponeFetch: boolean;
+  };
+}
+
+export const ApiConfig: ApiConfig = {
+  [ApiUrls.FOCUS]: {
+    postponeFetch: isProduction(),
+  },
+  [ApiUrls.WMO]: {
+    postponeFetch: isProduction(),
+  },
+  [ApiUrls.MY_TIPS]: {
+    postponeFetch: isProduction(),
+  },
 };
 
 export const errorMessageMap: ErrorMessageMap = {
