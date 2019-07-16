@@ -42,7 +42,7 @@ describe('ButtonLink', () => {
     );
     expect(component.html()).toMatchSnapshot();
     expect(component.getDOMNode().getAttribute('rel')).toBe(
-      'noopener noreferrer'
+      'external noopener noreferrer'
     );
   });
 });

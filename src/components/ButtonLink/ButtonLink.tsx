@@ -11,6 +11,7 @@ export interface ButtonLinkProps {
   className?: any;
   white?: boolean;
   target?: LinkProps['target'];
+  rel?: string;
   download?: string;
   'data-track'?: any[];
 }
@@ -22,6 +23,7 @@ export default function ButtonLink({
   className,
   white = false,
   target,
+  rel,
   ...otherProps
 }: ButtonLinkProps) {
   const classes = classnames(
@@ -30,14 +32,14 @@ export default function ButtonLink({
     className,
     white && styles.ButtonLinkWhite
   );
-  if (!!target) {
+  if (!!target || (rel && rel.indexOf('external') !== -1)) {
     if (target === '_blank') {
       return (
         <a
           {...otherProps}
           href={to}
           target="_blank"
-          rel="noopener noreferrer"
+          rel="external noopener noreferrer"
           className={classes}
         >
           {children}
@@ -45,7 +47,13 @@ export default function ButtonLink({
       );
     }
     return (
-      <a {...otherProps} href={to} target={target} className={classes}>
+      <a
+        {...otherProps}
+        href={to}
+        rel={rel}
+        target={target}
+        className={classes}
+      >
         {children}
       </a>
     );
@@ -58,7 +66,7 @@ export default function ButtonLink({
 }
 
 export function ButtonLinkExternal(props: ButtonLinkProps) {
-  return <ButtonLink {...props} target={props.target || '_self'} />;
+  return <ButtonLink {...props} rel="external" />;
 }
 
 export function IconButtonLink(props: Omit<ButtonLinkProps, 'hasIcon'>) {
