@@ -38,7 +38,7 @@ export default () => {
             Zorg
           </PageContentMainHeadingBackLink>
           {!isLoading && WmoItem ? (
-            WmoItem.title
+            <span>{WmoItem.title}</span>
           ) : (
             <LoadingContent
               className={styles.LoadingContentHeading}
