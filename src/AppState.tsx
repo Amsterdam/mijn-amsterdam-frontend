@@ -89,6 +89,7 @@ export function useAppState(value?: any) {
       }
     }, [BRP.adres && BRP.adres.straatnaam]);
 
+    // NOTE: For now we can use this solution but we probably need some more finegrained memoization of the state as the app grows larger.
     appState = useMemo(() => {
       return {
         BRP,
