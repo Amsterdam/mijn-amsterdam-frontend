@@ -74,7 +74,6 @@ function SecondaryLinks({ person }: SecondaryLinksProps) {
       </Link>
       {
         <IconButtonLink
-          target="_self"
           to={LOGOUT_URL}
           data-track={itemClickPayload(
             'MA_Header/Secundaire_Links',
@@ -116,13 +115,13 @@ function getMenuItem(
         onMouseEnter={() => setSubMenuVisibility(item.id)}
         onMouseLeave={() => setSubMenuVisibility()}
       >
-        {item.submenuItems.map(({ id, to, Icon, title, target }) => {
+        {item.submenuItems.map(({ id, to, Icon, title, rel }) => {
           return (
             <MainNavSubmenuLink
               key={id}
               to={to}
               id={id}
-              target={target}
+              rel={rel}
               data-track={itemClickPayload(
                 'MA_Header/Primaire_Links/Mijn_Themas_submenu',
                 `Link_naar_${id}`

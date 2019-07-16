@@ -16,20 +16,15 @@ export function MainNavSubmenuLink({
   to,
   children,
   id,
-  target,
+  rel,
   ...rest
 }: MainNavSubmenuLinkProps) {
-  return !!target ? (
-    <a
-      href={to}
-      target={target}
-      className={styles.MainNavSubmenuLink}
-      {...rest}
-    >
+  return rel && rel.indexOf('external') !== -1 ? (
+    <a href={to} rel={rel} className={styles.MainNavSubmenuLink} {...rest}>
       {children}
     </a>
   ) : (
-    <NavLink to={to} className={styles.MainNavSubmenuLink} {...rest}>
+    <NavLink to={to} className={styles.MainNavSubmenuLink} rel={rel} {...rest}>
       {children}
     </NavLink>
   );
