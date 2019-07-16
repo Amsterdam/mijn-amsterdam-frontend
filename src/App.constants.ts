@@ -11,7 +11,7 @@ export type Chapter =
   | 'ZORG'
   | 'JEUGDHULP'
   | 'INKOMEN'
-  | 'MY_UPDATES'
+  | 'MELDINGEN'
   | 'PROFILE';
 
 export const Chapters: { [chapter in Chapter]: Chapter } = {
@@ -23,7 +23,7 @@ export const Chapters: { [chapter in Chapter]: Chapter } = {
   JEUGDHULP: 'JEUGDHULP',
   INKOMEN: 'INKOMEN',
   PROFILE: 'PROFILE',
-  MY_UPDATES: 'MY_UPDATES',
+  MELDINGEN: 'MELDINGEN',
 };
 
 export const AppRoutes = {
@@ -201,7 +201,7 @@ export const Layout = {
 
 export const WelcomeUpdate: MyUpdate = {
   id: 'welcome01',
-  chapter: Chapters.MY_UPDATES,
+  chapter: Chapters.MELDINGEN,
   datePublished: new Date(2019, 7, 16).toISOString(),
   title: 'Welkom op Mijn Amsterdam!',
   description:
