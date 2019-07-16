@@ -35,7 +35,7 @@ export const LINKS: { [key in DirectLinkType]: DirectLink } = {
     isExternalLink: true,
   },
   MIJN_SUBSIDIE: {
-    title: 'Mijn subsidies',
+    title: 'Mijn Subsidies',
     url: ExternalUrls.MIJN_SUBSIDIES,
     isExternalLink: true,
   },

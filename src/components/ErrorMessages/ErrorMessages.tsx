@@ -60,7 +60,7 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
             Probeer het later nog eens.
           </p>
           <button className="action-button" onClick={() => setModalOpen(false)}>
-            Ok
+            Oké
           </button>
         </div>
       </Modal>

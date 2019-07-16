@@ -40,12 +40,6 @@ if (BRANCH == "test") {
   DEV_TARGET = "test"
 }
 
-if (BRANCH == "master") {
-  stage('Waiting for approval') {
-    input "Deploy master to ACC?"
-  }
-}
-
 if (BRANCH == "master" || BRANCH == "test-acc" || BRANCH == "test") {
 
   stage("Build image (test/acc)") {
