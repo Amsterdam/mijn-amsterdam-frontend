@@ -91,24 +91,31 @@ export default function MyUpdates({
                 {!!item.description && (
                   <p className={styles.Description}>{item.description}</p>
                 )}
-                <p className={styles.Action}>
-                  <a
-                    href={item.link.to}
-                    role="button"
-                    data-track={itemClickPayload(
-                      `${trackCategory}/Melding`,
-                      'Link_naar_meer_info'
-                    )}
-                    className={ButtonLinkStyles.ButtonLink}
-                    onClick={event => {
-                      event.preventDefault();
-                      showUpdate(item.id, item.link.to);
-                      return false;
-                    }}
-                  >
-                    {item.link.title}
-                  </a>
-                </p>
+                {(!!item.link || !!item.customLink) && (
+                  <p className={styles.Action}>
+                    <a
+                      href={item.customLink ? '#' : item.link!.to}
+                      role="button"
+                      data-track={itemClickPayload(
+                        `${trackCategory}/Melding`,
+                        'Link_naar_meer_info'
+                      )}
+                      className={ButtonLinkStyles.ButtonLink}
+                      onClick={event => {
+                        event.preventDefault();
+                        if (item.customLink) {
+                          item.customLink.callback();
+                        }
+                        if (item.link) {
+                          showUpdate(item.id, item.link.to);
+                        }
+                        return false;
+                      }}
+                    >
+                      {(item.link || item.customLink)!.title}
+                    </a>
+                  </p>
+                )}
               </li>
             );
           })}

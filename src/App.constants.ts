@@ -1,6 +1,7 @@
 import { StateKey } from 'AppState';
 import { ErrorMessageMap } from 'components/ErrorMessages/ErrorMessages';
 import { isProduction } from 'helpers/App';
+import { MyUpdate } from 'hooks/api/my-updates-api.hook';
 
 export type Chapter =
   | 'ROOT'
@@ -10,6 +11,7 @@ export type Chapter =
   | 'ZORG'
   | 'JEUGDHULP'
   | 'INKOMEN'
+  | 'MY_UPDATES'
   | 'PROFILE';
 
 export const Chapters: { [chapter in Chapter]: Chapter } = {
@@ -21,6 +23,7 @@ export const Chapters: { [chapter in Chapter]: Chapter } = {
   JEUGDHULP: 'JEUGDHULP',
   INKOMEN: 'INKOMEN',
   PROFILE: 'PROFILE',
+  MY_UPDATES: 'MY_UPDATES',
 };
 
 export const AppRoutes = {
@@ -132,7 +135,7 @@ export const ExternalUrls = {
   REPORT_RELOCATION:
     'https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/',
   CONTACT_FORM:
-    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/scKlachtenformulier.aspx',
+    'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx/fKlachtenformulier',
   COLOFON: 'https://www.amsterdam.nl/algemene_onderdelen/overige/colofon/',
   PROCLAIMER:
     'https://www.amsterdam.nl/algemene_onderdelen/overige/proclaimer/',
@@ -194,4 +197,24 @@ export const Colors = {
 export const Layout = {
   mainHeaderTopbarHeight: 106, // px
   mainHeaderNavbarHeight: 44, // px
+};
+
+export const WelcomeUpdate: MyUpdate = {
+  id: 'welcome01',
+  chapter: Chapters.MY_UPDATES,
+  datePublished: new Date(2019, 7, 16).toISOString(),
+  title: 'Welkom op Mijn Amsterdam',
+  description:
+    'We zijn nog volop in ontwikkeling. In de komende maanden kunt u hier steeds meer persoonlijke informatie vinden.',
+  customLink: {
+    callback: () => {
+      const usabilla = (window as any).usabilla_live;
+      if (usabilla) {
+        usabilla('click');
+      } else {
+        window.location.href = ExternalUrls.CONTACT_FORM;
+      }
+    },
+    title: 'Laat ons weten wat u er van vindt',
+  },
 };

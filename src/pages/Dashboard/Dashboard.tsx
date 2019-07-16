@@ -40,7 +40,6 @@ export default () => {
   } = useContext(AppContext);
 
   const tipItems = myTips.slice(0, MAX_TIPS_VISIBLE);
-  const actualUpdateItems = myUpdateItems.filter(item => item.isActual);
   const isPhoneScreen = usePhoneScreen();
 
   return (
@@ -59,8 +58,8 @@ export default () => {
       </PageContentMainHeading>
       <PageContentMainBody variant="regularBoxed" className={styles.FirstBody}>
         <MyUpdates
-          total={actualUpdateItems.length}
-          items={actualUpdateItems.slice(0, MAX_UPDATES_VISIBLE)}
+          total={myUpdateItems.length}
+          items={myUpdateItems.slice(0, MAX_UPDATES_VISIBLE)}
           showMoreLink={myUpdatesTotal > 0}
           isLoading={isMyUpdatesLoading}
           trackCategory={'MA_Dashboard/Mijn_meldingen'}
