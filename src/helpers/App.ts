@@ -4,19 +4,19 @@ function formatDate(
   date: Date,
   fmt: 'mm:ss' | 'DD MMMM YYYY' = 'DD MMMM YYYY'
 ) {
-  var monthNames = [
-    'Januari',
-    'Februari',
-    'Maart',
-    'April',
-    'Mei',
-    'Juni',
-    'Juli',
-    'Augustus',
-    'September',
-    'Oktober',
-    'November',
-    'December',
+  const monthNames = [
+    'januari',
+    'februari',
+    'maart',
+    'april',
+    'mei',
+    'juni',
+    'juli',
+    'augustus',
+    'september',
+    'oktober',
+    'november',
+    'december',
   ];
 
   if (fmt === 'mm:ss') {
