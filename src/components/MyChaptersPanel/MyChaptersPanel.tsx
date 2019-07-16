@@ -41,14 +41,14 @@ export default function MyChaptersPanel({
         {title}
       </Heading>
       <div className={styles.Links}>
-        {items.map(({ id, to, Icon, title, target }) => {
+        {items.map(({ id, to, Icon, title, rel }) => {
           return (
             <MainNavSubmenuLink
               data-track={itemClickPayload(CATEGORY, `Link_naar_Thema_${id}`)}
               key={id}
               to={to}
               id={id}
-              target={target}
+              rel={rel}
             >
               {Icon && <Icon aria-hidden="true" />}
               {title}
