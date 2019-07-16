@@ -48,20 +48,27 @@ export default () => {
           niet alle producten van de gemeente zijn via Mijn Amsterdam
           beschikbaar. De komende jaren komt er steeds meer bij.
         </p>
-        <Heading size="medium">Log in op uw persoonlijke pagina</Heading>
-        <a
-          ref={loginButton}
-          role="button"
-          href={LOGIN_URL}
-          onClick={() => setRedirecting(true)}
-          className={classnames(
-            styles.LoginBtn,
-            isRedirecting && styles.LoginBtnDisabled
-          )}
-        >
-          <img src={DigiDLogo} alt="DigiD logo" className={styles.LoginLogo} />
-          <span>{isRedirecting ? 'Bezig...' : 'Inloggen met DigiD'}</span>
-        </a>
+        <p>
+          <a
+            ref={loginButton}
+            role="button"
+            href={LOGIN_URL}
+            onClick={() => setRedirecting(true)}
+            className={classnames(
+              styles.LoginBtn,
+              isRedirecting && styles.LoginBtnDisabled
+            )}
+          >
+            <img
+              src={DigiDLogo}
+              alt="DigiD logo"
+              className={styles.LoginLogo}
+            />
+            <span>
+              {isRedirecting ? 'Bezig met inloggen...' : 'Inloggen met DigiD'}
+            </span>
+          </a>
+        </p>
         <p>
           <strong>Heeft u nog geen DigiD? Regel dit dan eerst.</strong>
           <br />

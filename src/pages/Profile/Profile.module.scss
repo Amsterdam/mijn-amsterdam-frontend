@@ -13,8 +13,8 @@
       }
 
       @include media("<=phone") {
-        margin-right: 1rem;
-        margin-left: 1rem;
+        margin-right: 0;
+        margin-left: 0;
       }
     }
 
@@ -36,6 +36,9 @@
 
 .LoadingContent {
   padding-left: 16rem;
+  @include media("<=phone") {
+    padding-left: 0;
+  }
   @include select(LoadingContent_LoadingContent) {
     margin-bottom: 6rem;
   }

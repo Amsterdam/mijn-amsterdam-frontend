@@ -12,7 +12,6 @@ import PageContentMainHeadingBackLink from 'components/PageContentMainHeadingBac
 import StatusLine from 'components/StatusLine/StatusLine';
 import Alert from 'components/Alert/Alert';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
-import { FocusItem } from 'data-formatting/focus';
 
 export default () => {
   const {
@@ -41,7 +40,7 @@ export default () => {
             Werk & inkomen
           </PageContentMainHeadingBackLink>
           {!isLoading && FocusItem ? (
-            FocusItem.title
+            <span>{FocusItem.title}</span>
           ) : (
             <LoadingContent
               className={styles.LoadingContentHeading}
