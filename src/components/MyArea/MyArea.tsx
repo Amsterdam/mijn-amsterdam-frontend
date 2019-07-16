@@ -49,7 +49,12 @@ export function MyAreaMap({ trackCategory, url }: MyAreaMapComponentProps) {
       className={styles.Map}
     />
   ) : (
-    <div className={styles.loadingText}>Kaart wordt geladen..</div>
+    <div className={styles.loadingText}>
+      <span className={styles.HomeLoader}>
+        <img src="https://data.amsterdam.nl/assets/images/map/home.svg" />
+        Uw adres wordt opgezocht..
+      </span>
+    </div>
   );
 }
 
