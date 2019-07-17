@@ -3,13 +3,19 @@ import { MyAreaHeader, MyAreaMap } from 'components/MyArea/MyArea';
 import React, { useContext } from 'react';
 
 import styles from './MyArea.module.scss';
+import { usePhoneScreen } from 'hooks/media.hook';
 
 export default () => {
-  const {
+  let {
     MY_AREA: {
       url: { advanced: mapUrl },
     },
   } = useContext(AppContext);
+
+  // We have to figure out if we are on a phone screen on this level and not in
+  // the hook who builds the map url since hooks need to be called in a React
+  // component
+  mapUrl = mapUrl + `&legenda=${!usePhoneScreen()}`;
 
   return (
     <div className={styles.Container}>
