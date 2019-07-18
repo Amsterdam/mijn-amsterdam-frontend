@@ -72,7 +72,7 @@ describe('AutoLogoutDialog', () => {
       ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow!
     );
     component.update();
-    expect(component.childAt(0).prop('isOpen')).toBe(true);
+    expect(component.childAt(1).prop('isOpen')).toBe(true);
     map.mousemove();
     jest.advanceTimersByTime(
       ONE_SECOND_IN_MS * settings.secondsSessionRenewRequestInterval!
@@ -97,7 +97,7 @@ describe('AutoLogoutDialog', () => {
     component.update();
 
     continueButton = component.find('[className*="continue-button"]');
-    expect(component.childAt(0).prop('isOpen')).toBe(false);
+    expect(component.childAt(1).prop('isOpen')).toBe(false);
     expect(refetch).toHaveBeenCalledTimes(1);
     expect(continueButton).toHaveLength(0);
   });

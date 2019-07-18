@@ -94,7 +94,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   const session = useContext(SessionContext);
   // Will open the dialog if maxCount is reached.
   const nSettings = { ...DefaultSettings, ...settings };
-  const { resume, reset } = useCounter({
+  const { resume, reset, count } = useCounter({
     maxCount: nSettings.secondsBeforeDialogShow,
     onMaxCount: () => {
       setOpen(true);
@@ -164,57 +164,63 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   }, [isOpen]);
 
   return (
-    <Modal
-      title={TITLE}
-      isOpen={isOpen}
-      contentWidth={450}
-      showCloseButton={false}
-    >
-      <div className={styles.AutoLogoutDialog}>
-        <p>
-          U bent langer dan{' '}
-          {formattedTimeFromSeconds(AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS)} minuten
-          niet actief geweest op Mijn Amsterdam.
-        </p>
-        <p className={styles.TimerText}>
-          <CountDownTimer
-            maxCount={nSettings.secondsBeforeAutoLogout}
-            onMaxCount={showLoginScreen}
-            onTick={onTick}
-          />
-          Voor uw veiligheid wordt u mogelijk automatisch uitgelogd.
-        </p>
-        <p>Wilt u doorgaan of uitloggen?</p>
-        <p>
-          {continueButtonIsVisible && (
-            <button
-              className="action-button secondary continue-button"
-              onClick={continueUsingApp}
+    <>
+      <span className={styles.SessionCountDown}>
+        sessie{' '}
+        {formattedTimeFromSeconds(nSettings.secondsBeforeDialogShow - count)}
+      </span>
+      <Modal
+        title={TITLE}
+        isOpen={isOpen}
+        contentWidth={450}
+        showCloseButton={false}
+      >
+        <div className={styles.AutoLogoutDialog}>
+          <p>
+            U bent langer dan{' '}
+            {formattedTimeFromSeconds(AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS)}{' '}
+            minuten niet actief geweest op Mijn Amsterdam.
+          </p>
+          <p className={styles.TimerText}>
+            <CountDownTimer
+              maxCount={nSettings.secondsBeforeAutoLogout}
+              onMaxCount={showLoginScreen}
+              onTick={onTick}
+            />
+            Voor uw veiligheid wordt u mogelijk automatisch uitgelogd.
+          </p>
+          <p>Wilt u doorgaan of uitloggen?</p>
+          <p>
+            {continueButtonIsVisible && (
+              <button
+                className="action-button secondary continue-button"
+                onClick={continueUsingApp}
+                data-track={itemClickPayload(
+                  'MA_Sessie/Auto_Logout_Dialog',
+                  'Button_doorgaan'
+                )}
+              >
+                Doorgaan
+              </button>
+            )}
+            <a
+              className={classnames(
+                'action-button line-only secondary logout-button',
+                !continueButtonIsVisible && 'disabled'
+              )}
+              href={LOGOUT_URL}
               data-track={itemClickPayload(
                 'MA_Sessie/Auto_Logout_Dialog',
-                'Button_doorgaan'
+                'Button_uitloggen'
               )}
             >
-              Doorgaan
-            </button>
-          )}
-          <a
-            className={classnames(
-              'action-button line-only secondary logout-button',
-              !continueButtonIsVisible && 'disabled'
-            )}
-            href={LOGOUT_URL}
-            data-track={itemClickPayload(
-              'MA_Sessie/Auto_Logout_Dialog',
-              'Button_uitloggen'
-            )}
-          >
-            {continueButtonIsVisible
-              ? 'Nu uitloggen'
-              : 'Bezig met controleren van uw sessie..'}
-          </a>
-        </p>
-      </div>
-    </Modal>
+              {continueButtonIsVisible
+                ? 'Nu uitloggen'
+                : 'Bezig met controleren van uw sessie..'}
+            </a>
+          </p>
+        </div>
+      </Modal>
+    </>
   );
 }
