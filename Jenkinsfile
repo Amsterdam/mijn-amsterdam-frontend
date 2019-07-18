@@ -18,21 +18,15 @@ def tryStep(String message, Closure block, Closure tearDown = null) {
 
 
 String BRANCH = "${env.BRANCH_NAME}"
-String DEV_TARGET = "acceptance" // Passed as env variable to the docker containers
+String DEV_TARGET = "acceptance"
 String PROD_TARGET = "production"
-
-if (BRANCH == "test") {
-  DEV_TARGET = "test"
-}
 
 node {
   stage("Checkout") {
     checkout scm
   }
-}
 
-if (BRANCH != "test-acc") {
-  node {
+  if (BRANCH != "test-acc") {
     stage("Test") {
       tryStep "test", {
         sh "docker-compose -p mijn_amsterdam_frontend -f docker-compose.yml build && " +
@@ -42,17 +36,28 @@ if (BRANCH != "test-acc") {
   }
 }
 
-node {
-  if (BRANCH == "master" || BRANCH == "test-acc" || BRANCH == "test") {
-    stage("Build image (test/acc)") {
-      tryStep "build", {
-        docker.withRegistry("${DOCKER_REGISTRY}", 'docker-registry') {
-        def image = docker.build("mijnams/mijnamsterdam:${env.BUILD_NUMBER}", "--build-arg PROD_ENV=${DEV_TARGET} --build-arg http_proxy=${JENKINS_HTTP_PROXY_STRING} --build-arg https_proxy=${JENKINS_HTTP_PROXY_STRING} .")
-        image.push()
-      }
+if (BRANCH == "test") {
+  DEV_TARGET = "test"
+}
+
+if (BRANCH == "master") {
+  stage('Waiting for approval') {
+    input "Deploy master to ACC?"
+  }
+}
+
+if (BRANCH == "master" || BRANCH == "test-acc" || BRANCH == "test") {
+
+  stage("Build image (test/acc)") {
+    tryStep "build", {
+      docker.withRegistry("${DOCKER_REGISTRY}", 'docker-registry') {
+      def image = docker.build("mijnams/mijnamsterdam:${env.BUILD_NUMBER}", "--build-arg PROD_ENV=${DEV_TARGET} --build-arg http_proxy=${JENKINS_HTTP_PROXY_STRING} --build-arg https_proxy=${JENKINS_HTTP_PROXY_STRING} .")
+      image.push()
     }
   }
+}
 
+node {
   stage('Push image (test/acc)') {
     tryStep "image tagging", {
       docker.withRegistry("${DOCKER_REGISTRY}", 'docker-registry') {
@@ -98,14 +103,16 @@ node {
   }
 }
 
+if (BRANCH == "master") {
+  // Enable when project is ready for production
+  stage('Waiting for approval') {
+      slackSend channel: '#ci-channel', color: 'warning', message: 'Mijn Amsterdam Frontend is waiting for Production Release - please confirm'
+      input "Deploy to Production?"
+  }
+}
 
 node {
   if (BRANCH == "master") {
-    stage('Waiting for PRODUCTION deployment approval') {
-        slackSend channel: '#mijn_amsterdam', color: 'warning', message: 'Mijn Amsterdam Frontend is waiting for Production Release - please confirm'
-        input "Deploy to Production?"
-    }
-  
     stage("Build and Push Production image") {
       tryStep "build", {
         docker.withRegistry("${DOCKER_REGISTRY}",'docker-registry') {
