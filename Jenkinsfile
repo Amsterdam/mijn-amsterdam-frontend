@@ -40,6 +40,12 @@ if (BRANCH == "test") {
   DEV_TARGET = "test"
 }
 
+if (BRANCH == "master") {
+  stage('Waiting for approval') {
+    input "Deploy master to ACC?"
+  }
+}
+
 if (BRANCH == "master" || BRANCH == "test-acc" || BRANCH == "test") {
 
   stage("Build image (test/acc)") {
@@ -106,26 +112,30 @@ if (BRANCH == "master") {
 }
 
 node {
-  stage("Build and Push Production image") {
-    tryStep "build", {
-      docker.withRegistry("${DOCKER_REGISTRY}",'docker-registry') {
-        def image = docker.build("mijnams/mijnamsterdam:${env.BUILD_NUMBER}", "--build-arg PROD_ENV=${PROD_TARGET}  --build-arg http_proxy=${JENKINS_HTTP_PROXY_STRING} --build-arg https_proxy=${JENKINS_HTTP_PROXY_STRING} .")
-        image.pull()
-        image.push("production")
-        image.push("latest")
+  if (BRANCH == "master") {
+    stage("Build and Push Production image") {
+      tryStep "build", {
+        docker.withRegistry("${DOCKER_REGISTRY}",'docker-registry') {
+          def image = docker.build("mijnams/mijnamsterdam:${env.BUILD_NUMBER}", "--build-arg PROD_ENV=${PROD_TARGET}  --build-arg http_proxy=${JENKINS_HTTP_PROXY_STRING} --build-arg https_proxy=${JENKINS_HTTP_PROXY_STRING} .")
+          image.pull()
+          image.push("production")
+          image.push("latest")
+        }
       }
     }
   }
 }
 
 node {
-  stage("Deploy to PROD") {
-    tryStep "deployment", {
-      build job: 'Subtask_Openstack_Playbook',
-      parameters: [
-        [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
-        [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml'],
-      ]
+  if (BRANCH == "master") {
+    stage("Deploy to PROD") {
+      tryStep "deployment", {
+        build job: 'Subtask_Openstack_Playbook',
+        parameters: [
+          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
+          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml'],
+        ]
+      }
     }
   }
 }

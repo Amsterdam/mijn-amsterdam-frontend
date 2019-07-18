@@ -1,3 +1,4 @@
+import { Breakpoints } from './../App.constants';
 // Helper functions to determine screen size in JS
 import { useMedia } from 'use-media';
 import { detect } from 'detect-browser';

@@ -164,7 +164,7 @@ export const ExternalUrls = {
     'https://www.amsterdam.nl/burgerzaken/trouwen-partnerschap/trouwen-amsterdam/aankondigen/',
   INCOME_CONTACT: 'https://www.amsterdam.nl/werk-inkomen/contact/',
   ZORG_LEES_MEER: 'https://www.amsterdam.nl/zorg-ondersteuning/',
-  SSO_BELASTINGEN: 'https://belastingbalie.amsterdam.nl/subject.gegevens.php',
+  SSO_BELASTINGEN: 'https://belastingbalie.amsterdam.nl/digid.saml.php?start',
   MIJN_WERK_EN_INKOMEN: 'https://edison.amsterdam.nl/SignIn?ReturnUrl=%2F',
   MIJN_SUBSIDIES: 'https://mijnsubsidies.amsterdam.nl/loket/',
 };
@@ -197,6 +197,12 @@ export const Colors = {
 export const Layout = {
   mainHeaderTopbarHeight: 106, // px
   mainHeaderNavbarHeight: 44, // px
+};
+
+// NOTE: Keep up-to-date with _breakpoints.scss
+export const Breakpoints = {
+  tablet: 1024, // px
+  phone: 640, // px
 };
 
 export const WelcomeUpdate: MyUpdate = {
