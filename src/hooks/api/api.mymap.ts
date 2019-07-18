@@ -1,6 +1,7 @@
 import { ApiUrls } from 'App.constants';
 import { useEffect, useState } from 'react';
 import { useDataApi } from './api.hook';
+import { usePhoneScreen } from 'hooks/media.hook';
 
 export const BAG_SEARCH_ENDPOINT_URL = `${ApiUrls.BAG}?q=`;
 
@@ -20,6 +21,7 @@ export default function useMyMap(address?: string) {
   });
 
   let [urls, setUrls] = useState({ simple: '', advanced: '' });
+  const showLegenda = !usePhoneScreen();
 
   useEffect(() => {
     if (!isLoading && isDirty) {
@@ -34,7 +36,7 @@ export default function useMyMap(address?: string) {
         } = data;
 
         setUrls({
-          advanced: `${MAP_URL}&center=${lon}%2C${lat}&zoom=${LOCATION_ZOOM}&marker=${lon}%2C${lat}&marker-icon=home&${LAYERS_CONFIG}`,
+          advanced: `${MAP_URL}&center=${lon}%2C${lat}&zoom=${LOCATION_ZOOM}&marker=${lon}%2C${lat}&marker-icon=home&${LAYERS_CONFIG}&legenda=${showLegenda}`,
           simple: `${MAP_URL}&center=${lon}%2C${lat}&zoom=${LOCATION_ZOOM}&marker=${lon}%2C${lat}&marker-icon=home`,
         });
       } else {
