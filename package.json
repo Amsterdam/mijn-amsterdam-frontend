@@ -18,6 +18,7 @@
     "axios": "^0.19.0",
     "axios-mock-adapter": "^1.16.0",
     "classnames": "^2.2.6",
+    "detect-browser": "^4.6.0",
     "focus-trap-react": "^6.0.0",
     "include-media": "^1.4.9",
     "node-persist": "^3.0.4",

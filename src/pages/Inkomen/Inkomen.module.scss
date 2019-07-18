@@ -6,12 +6,12 @@
       margin-right: 16rem;
       margin-left: 16rem;
 
-      @include media("<=tablet") {
+      @include media-query('<=tablet') {
         margin-right: 2rem;
         margin-left: 12rem;
       }
 
-      @include media("<=phone") {
+      @include media-query('<=phone') {
         margin-left: 0;
         margin-right: 0;
 
@@ -38,13 +38,13 @@
       padding-right: 3em;
     }
 
-    @include media("<=tablet") {
+    @include media-query('<=tablet') {
       @include select(Heading) {
         margin-left: 9.5rem;
         margin-right: 9.5rem;
       }
     }
-    @include media("<=phone") {
+    @include media-query('<=phone') {
       @include select(Heading) {
         margin-left: 0;
         margin-right: 0;

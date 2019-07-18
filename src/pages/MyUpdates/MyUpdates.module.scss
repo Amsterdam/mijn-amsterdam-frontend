@@ -7,10 +7,10 @@
   text-indent: 16rem;
   margin: 0;
 
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     text-indent: 0;
   }
-  @include media("<=phone") {
+  @include media-query('<=phone') {
     text-indent: 2.4rem;
     padding-top: 0;
   }
@@ -27,7 +27,7 @@
     @include select(MyUpdates_Description) {
       padding-right: 30rem;
 
-      @include media("<=phone") {
+      @include media-query('<=phone') {
         padding-right: 2rem;
       }
     }
@@ -49,7 +49,7 @@
         }
       }
 
-      @include media("<=tablet") {
+      @include media-query('<=tablet') {
         padding-left: 0;
 
         @include select(MyUpdates_MyUpdateItem) {
@@ -61,7 +61,7 @@
           position: static;
         }
       }
-      @include media("<=phone") {
+      @include media-query('<=phone') {
         padding-left: 0;
       }
     }
@@ -69,7 +69,7 @@
     @include select(MyUpdates_NoItemsInfo) {
       text-indent: 16rem;
 
-      @include media("<=phone") {
+      @include media-query('<=phone') {
         text-indent: 0;
       }
     }
@@ -83,7 +83,7 @@
       fill: $color-neutral-grey4;
     }
 
-    @include media("<=phone") {
+    @include media-query('<=phone') {
       padding-top: 2rem;
     }
   }
