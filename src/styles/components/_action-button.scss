@@ -43,6 +43,7 @@
     &, &:focus {
       background-color: $color-support-blue;
       border-color: $color-support-blue;
+      color: $color-white;
     }
 
     @include hoverCapable {
@@ -53,12 +54,9 @@
     }
 
     &.line-only {
-      border-color: $color-support-darkblue;
-      color: $color-support-darkblue;
-
-      &:focus {
-        background-color: $color-white;
-        border-color: $color-support-blue;
+      &, &:focus {
+        border-color: $color-support-darkblue;
+        color: $color-support-darkblue;
       }
 
       @include hoverCapable {

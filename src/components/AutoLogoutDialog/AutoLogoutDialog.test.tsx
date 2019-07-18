@@ -73,6 +73,11 @@ describe('AutoLogoutDialog', () => {
     );
     component.update();
     expect(component.childAt(0).prop('isOpen')).toBe(true);
+    map.mousemove();
+    jest.advanceTimersByTime(
+      ONE_SECOND_IN_MS * settings.secondsSessionRenewRequestInterval!
+    );
+    expect(refetch).not.toHaveBeenCalled();
     jest.advanceTimersByTime(
       ONE_SECOND_IN_MS * settings.secondsBeforeAutoLogout!
     );
