@@ -98,8 +98,9 @@ node {
   }
 }
 
-if (BRANCH == "master") {
-  node {
+
+node {
+  if (BRANCH == "master") {
     stage('Waiting for PRODUCTION deployment approval') {
         slackSend channel: '#mijn_amsterdam', color: 'warning', message: 'Mijn Amsterdam Frontend is waiting for Production Release - please confirm'
         input "Deploy to Production?"
@@ -116,8 +117,10 @@ if (BRANCH == "master") {
       }
     }
   }
+}
 
-  node {
+node {
+  if (BRANCH == "master") {
     stage("Deploy to PROD") {
       tryStep "deployment", {
         build job: 'Subtask_Openstack_Playbook',
