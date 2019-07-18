@@ -30,9 +30,5 @@
   position: fixed;
   bottom: 1rem;
   right: 1rem;
-  opacity: 0;
-
-  &:hover {
-    opacity: 1;
-  }
+  opacity: .1;
 }
