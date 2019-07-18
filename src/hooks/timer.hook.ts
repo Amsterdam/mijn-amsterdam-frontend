@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const ONE_SECOND_IN_MS = 1000;
 
@@ -73,6 +73,7 @@ export function useCounter(nConfig: Partial<CounterProps> = DefaultConfig) {
   }
 
   useInterval(() => {
+    // this state is not yet available in the rest of this function body
     setCount(count => count + incrementWith);
     if (typeof onTick === 'function') {
       onTick(count + incrementWith);
