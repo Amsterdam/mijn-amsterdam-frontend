@@ -25,3 +25,14 @@
   display: block;
   margin-right: 2rem;
 }
+
+.SessionCountDown {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  opacity: 0;
+
+  &:hover {
+    opacity: 1;
+  }
+}
