@@ -199,6 +199,12 @@ export const Layout = {
   mainHeaderNavbarHeight: 44, // px
 };
 
+// NOTE: Keep up-to-date with _breakpoints.scss
+export const Breakpoints = {
+  tablet: 1024, // px
+  phone: 640, // px
+};
+
 export const WelcomeUpdate: MyUpdate = {
   id: 'welcome01',
   chapter: Chapters.MELDINGEN,
