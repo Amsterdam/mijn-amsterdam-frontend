@@ -110,10 +110,11 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
 
   // Renew the remote tma session whenever we detect user activity
   useEffect(() => {
-    if (session.isDirty && session.isAuthenticated) {
-      resetAutoLogout();
-    }
     if (activityCount !== 0 && isOpen !== true) {
+      if (session.isDirty && session.isAuthenticated) {
+        resetAutoLogout();
+      }
+
       session.refetch();
     }
   }, [activityCount]);
