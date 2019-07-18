@@ -5,7 +5,7 @@ import React, { useContext } from 'react';
 import styles from './MyArea.module.scss';
 
 export default () => {
-  let {
+  const {
     MY_AREA: {
       url: { advanced: mapUrl },
     },
