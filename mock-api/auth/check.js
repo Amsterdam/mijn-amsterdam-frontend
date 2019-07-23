@@ -7,9 +7,10 @@ module.exports = {
     const isAuthenticated = await state.isAuthenticated();
     if (!isAuthenticated) {
       res.status(403);
+    } else {
+      // Renew session for every check
+      await state.setAuth(true);
     }
-    // Renew session for every check
-    await state.setAuth(true);
     next();
   },
   template: async (params, query, body, x, headers) => {

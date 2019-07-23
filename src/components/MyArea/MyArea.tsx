@@ -4,7 +4,7 @@ import { ReactComponent as Logo } from 'assets/images/logo-amsterdam.svg';
 import { ReactComponent as HomeIcon } from 'assets/icons/home.svg';
 import Heading from 'components/Heading/Heading';
 import { itemClickPayload, trackItemPresentation } from 'hooks/analytics.hook';
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 import styles from './MyArea.module.scss';
