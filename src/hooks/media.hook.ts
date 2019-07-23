@@ -2,14 +2,10 @@
 import { useMedia } from 'use-media';
 import { detect } from 'detect-browser';
 
-const isIE11 = detect()!.name === 'ie';
-
-export function useIE11() {
-  return isIE11;
-}
+var isIE11 = !!window.navigator.userAgent.indexOf('MSIE ');
 
 export function useDesktopScreen(): boolean {
-  return useMedia({ minWidth: 1025 }) || useIE11();
+  return useMedia({ minWidth: 1025 }) || isIE11;
 }
 
 export function useTabletScreen(): boolean {
