@@ -21,7 +21,7 @@
   max-width: $main-boxed-width;
   padding-left: 16rem;
 
-  @include media("<=phone") {
+  @include media-query('<=phone') {
     padding-left: 0;
   }
 }

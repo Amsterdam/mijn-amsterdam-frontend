@@ -15,7 +15,7 @@
     border-top: 0;
   }
 
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     padding-left: 0;
   }
 }
@@ -28,7 +28,7 @@
   width: 3.2rem;
   height: auto;
 
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     position: static;
     display: inline-block;
     vertical-align: middle;
@@ -40,7 +40,7 @@
 
 .Icon,
 .MetaInfo {
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     display: inline-block;
     vertical-align: middle;
     margin-bottom: 2rem;
@@ -58,7 +58,7 @@
 .Datum {
   font-size: 1.4rem;
 
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     color: $color-neutral-grey4;
   }
 }
@@ -80,7 +80,7 @@
   text-transform: capitalize;
   display: none;
 
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     display: inline;
 
     &:after {

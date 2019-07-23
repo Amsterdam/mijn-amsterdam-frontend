@@ -7,7 +7,7 @@
     flex-wrap: wrap;
     align-items: flex-start;
 
-    @include media("<=phone") {
+    @include media-query('<=phone') {
       display: block; // NOTE: This discards all the flexbox properties defined below
     }
   }
@@ -21,7 +21,9 @@
   }
 
   @include select(MyUpdates_MyUpdates) {
-    flex-basis: calc(50% - 5rem); // margin-left + margin-right + custom gutter (an visually pleasing space between 2 blocks)
+    flex-basis: calc(
+      50% - 5rem
+    ); // margin-left + margin-right + custom gutter (an visually pleasing space between 2 blocks)
     flex-shrink: 0;
     overflow: hidden;
     margin-right: 4rem;
@@ -29,32 +31,37 @@
     margin-bottom: 10rem;
 
     // In combination with Chapters panel and sizing of PageContentMainHeading__medium
-    @include media(">phone", "<=tablet") {
+    @include media-query('>phone', '<=tablet') {
       flex-basis: calc(50% - 3rem);
       margin-right: 2rem;
     }
 
-    @include media("<=phone") {
+    @include media-query('<=phone') {
       flex-basis: 100%;
       margin: 0;
     }
   }
 
   @include select(MyChaptersPanel_MyChaptersPanel) {
+    @include IE11 {
+      width: calc(50% + 1rem);
+    }
 
-    @include media(">tablet") {
-      width: calc(50% + 5rem); // + custom gutter (an visually pleasing space between 2 blocks)
+    @include media-query('>tablet') {
+      width: calc(
+        50% + 5rem
+      ); // + custom gutter (an visually pleasing space between 2 blocks)
       margin-right: -4rem;
     }
 
-    @include media(">phone", "<=tablet") {
+    @include media-query('>phone', '<=tablet') {
       // Weirdly sized chapters panel for tablet screens needs the following to break-out of the flex restrains
       flex-basis: calc(50% + 5rem);
       margin-left: -5rem;
       transform: translateX(5rem);
     }
 
-    @include media("<=phone") {
+    @include media-query('<=phone') {
       width: auto;
       flex-basis: auto;
       margin-left: -2rem;
@@ -67,7 +74,7 @@
     flex-basis: $main-boxed-width;
     margin-bottom: 8rem;
 
-    @include media("<=phone") {
+    @include media-query('<=phone') {
       margin-bottom: 4rem;
       margin-top: 4rem;
     }
@@ -96,7 +103,7 @@
   // Makes the updates and chapters touch the bottom of Hero
   margin-top: -3.8rem;
 
-  @include media("<=phone") {
+  @include media-query('<=phone') {
     margin-top: -1rem;
   }
 }

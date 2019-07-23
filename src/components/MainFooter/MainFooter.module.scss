@@ -9,7 +9,7 @@
   max-width: $main-boxed-width;
   margin: 0 auto;
 
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     width: auto;
     margin: 0 2.4rem;
   }
@@ -41,7 +41,7 @@
     }
   }
 
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     display: block;
     padding-top: 2rem;
     padding-bottom: 1.5rem;
@@ -59,7 +59,7 @@
     margin-right: 8rem;
   }
 
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     a {
       margin-right: 3rem;
     }
@@ -67,8 +67,7 @@
 }
 
 .Panel {
-  @include media("<=tablet") {
-
+  @include media-query('<=tablet') {
     > :not(:first-child) {
       display: none;
     }
@@ -117,7 +116,7 @@
 .ContactPanel {
   width: 80rem;
 
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     width: 100%;
   }
 }
@@ -130,16 +129,14 @@
     white-space: nowrap;
   }
 
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     margin: 0;
     width: 100%;
   }
 }
 
 .TodoPanel {
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     width: 100%;
   }
 }
-
-
