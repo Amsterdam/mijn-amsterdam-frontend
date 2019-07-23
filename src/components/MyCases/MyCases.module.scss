@@ -11,13 +11,13 @@
   display: flex;
   flex-wrap: wrap;
 
-  @include media("<=phone") {
+  @include media-query('<=phone') {
     display: block;
   }
 }
 
 .CaseItem {
-  border-top: .1rem solid $color-neutral-grey2;
+  border-top: 0.1rem solid $color-neutral-grey2;
   min-height: 5.5rem;
   padding: 1rem 0 1rem 5rem;
   position: relative;
@@ -26,7 +26,7 @@
   &:nth-child(odd) {
     margin-right: 5rem;
 
-    @include media("<=phone") {
+    @include media-query('<=phone') {
       margin: 0;
     }
   }
@@ -38,10 +38,10 @@
 
   a {
     text-decoration: none;
-     &:hover {
+    &:hover {
       color: $color-primary-red;
       text-decoration: underline;
-     }
+    }
   }
 
   svg {

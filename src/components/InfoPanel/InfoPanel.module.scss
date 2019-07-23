@@ -11,7 +11,7 @@
     padding-bottom: 1.3rem;
     margin-bottom: 2rem;
 
-    @include media("<=phone") {
+    @include media-query('<=phone') {
       padding-left: 0;
     }
   }
@@ -30,26 +30,31 @@
     > td {
       text-align: left;
       white-space: pre-line;
-      padding-bottom: .5rem;
+      padding-bottom: 0.5rem;
     }
     > th {
       width: 16rem;
       text-align: right;
       padding-right: 2rem;
-      padding-bottom: .5rem;
+      padding-bottom: 0.5rem;
       color: $color-neutral-grey4;
       font-weight: 200;
     }
 
-    th, td {
+    th,
+    td {
       vertical-align: top;
     }
   }
 
-  @include media("<=phone") {
+  @include media-query('<=phone') {
     display: block;
 
-    tbody, thead, tr, td, th {
+    tbody,
+    thead,
+    tr,
+    td,
+    th {
       display: block;
     }
     tbody > tr {
@@ -68,17 +73,16 @@
       }
     }
   }
-
 }
 
 .InfoPanelActionLinks {
   @include reset-list-style;
 
   > li {
-    margin-bottom: .6rem;
+    margin-bottom: 0.6rem;
   }
 
-  @include media("<=phone") {
+  @include media-query('<=phone') {
     margin: 2rem 0 0 0;
   }
 }

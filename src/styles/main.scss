@@ -17,6 +17,10 @@ body {
   color: $color-black;
   font-size: 1.6rem;
 
+  @include IE11 {
+    min-width: map-get($breakpoints, 'tablet');
+  }
+
   &.has-modal {
     position: fixed;
     width: 100vw;
@@ -51,7 +55,7 @@ a:focus {
   background-color: $color-support-focus;
 }
 
-[role=button],
+[role='button'],
 input,
 textarea,
 select,

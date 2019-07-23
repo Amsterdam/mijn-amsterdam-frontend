@@ -1,7 +1,6 @@
 @import 'styles/_global.scss';
 
 .ZorgDetail {
-
 }
 
 .List {
@@ -9,11 +8,11 @@
 }
 
 .ListHeading {
-  border-bottom: .1rem solid $color-neutral-grey2;
+  border-bottom: 0.1rem solid $color-neutral-grey2;
   padding-left: 12rem;
   padding-bottom: 1rem;
 
-  @include media("<=phone") {
+  @include media-query('<=phone') {
     padding-left: 6rem;
   }
 }
@@ -22,7 +21,7 @@
   display: flex;
   padding-left: 12rem;
 
-  @include media("<=phone") {
+  @include media-query('<=phone') {
     padding-left: 6rem;
   }
 
@@ -33,26 +32,26 @@
       color: $color-neutral-grey4;
       font-weight: 500;
       display: block;
-      border-bottom: .1rem solid $color-neutral-grey2;
-      padding-bottom: .5rem;
-      margin-bottom: .5rem;
+      border-bottom: 0.1rem solid $color-neutral-grey2;
+      padding-bottom: 0.5rem;
+      margin-bottom: 0.5rem;
     }
   }
 }
 
 .DatesInfo {
-  background: url("assets/icons/Calendar.svg") no-repeat 2.8rem center;
+  background: url('assets/icons/Calendar.svg') no-repeat 2.8rem center;
   background-size: 2.4rem auto;
 }
 
 .SupplierInfo {
-  background: url("assets/icons/Card.svg") no-repeat 2.8rem center;
+  background: url('assets/icons/Card.svg') no-repeat 2.8rem center;
   background-size: 2.4rem auto;
 }
 
 .DatesInfo,
 .SupplierInfo {
-  @include media("<=phone") {
+  @include media-query('<=phone') {
     background-position: 2rem center;
   }
 }
@@ -63,5 +62,5 @@
 }
 
 .LoadingContentHeading {
-  padding-top: .5rem;
+  padding-top: 0.5rem;
 }

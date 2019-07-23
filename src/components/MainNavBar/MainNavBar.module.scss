@@ -17,7 +17,7 @@
   background-color: $color-neutral-grey1;
   margin: 0 auto;
 
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     display: grid; // On a phone the menu is ordered differently so we use grid to have control over that
     width: $main-header-navbar-width--phone;
     margin: 0;
@@ -58,7 +58,7 @@
     margin-right: 0;
   }
 
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     font-weight: bold;
     font-size: 1.5rem;
     margin: 0;
@@ -77,6 +77,11 @@
   margin-top: -8.1rem;
   right: calc((100vw - #{$main-boxed-width}) / 2);
 
+  @include IE11 {
+    position: relative;
+    right: -10rem;
+  }
+
   > a {
     display: inline-block;
     margin-left: 3.3rem;
@@ -89,7 +94,7 @@
     }
   }
 
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     position: static;
     margin-top: 0;
 
@@ -100,14 +105,15 @@
       padding-left: 1.6rem;
       border-top: 0.1rem solid $color-neutral-grey2;
       display: block;
-      padding-top: .8rem;
-      padding-bottom: .8rem;
+      padding-top: 0.8rem;
+      padding-bottom: 0.8rem;
     }
 
     @include select(ButtonLink_ButtonLink) {
       padding-left: 1.6rem;
       // Remove the icons from the links
-      &, &:hover {
+      &,
+      &:hover {
         background-image: none;
       }
       svg {
@@ -126,7 +132,7 @@
   background-position: center;
   border: 0;
   background-color: transparent;
-  margin-left: .2rem;
+  margin-left: 0.2rem;
   text-indent: -100vw; // move text outside of view
   cursor: pointer;
 
@@ -134,7 +140,7 @@
     background-image: url('assets/icons/Close.svg');
   }
 
-  @include media(">phone", "<=tablet") {
+  @include media-query('>phone', '<=tablet') {
     margin-left: 1.2rem;
   }
 }
