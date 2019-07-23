@@ -1,18 +1,17 @@
-import { Breakpoints } from './../App.constants';
 // Helper functions to determine screen size in JS
+import { Breakpoints } from './../App.constants';
 import { useMedia } from 'use-media';
-import { detect } from 'detect-browser';
 
 var isIE11 = !!window.navigator.userAgent.indexOf('MSIE ');
 
 export function useDesktopScreen(): boolean {
-  return useMedia({ minWidth: 1025 }) || isIE11;
+  return useMedia({ minWidth: Breakpoints.tablet + 1 }) || isIE11;
 }
 
 export function useTabletScreen(): boolean {
-  return useMedia({ maxWidth: 1024 }) && !isIE11; // including Nexus 10
+  return useMedia({ maxWidth: Breakpoints.tablet }) && !isIE11;
 }
 
 export function usePhoneScreen(): boolean {
-  return useMedia({ maxWidth: 640 }) && !isIE11;
+  return useMedia({ maxWidth: Breakpoints.phone }) && !isIE11;
 }
