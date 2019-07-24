@@ -43,10 +43,10 @@ export default () => {
       <PageContentMainBody variant="regular" className={styles.Landing}>
         <p>
           Op Mijn Amsterdam ziet u hoe het staat met uw aanvraag of melding. Ook
-          ziet u welke gegevens de gemeente van u heeft vastgelegd. Klopt er
-          iets niet, dan ziet u waar u terecht kunt om het aan te passen. Nog
-          niet alle producten van de gemeente zijn via Mijn Amsterdam
-          beschikbaar. De komende jaren komt er steeds meer bij.
+          ziet u welke gegevens de gemeente van u heeft vastgelegd. En hoe u
+          het kunt doorgeven als er iets niet klopt. Nog niet al uw informatie is
+          via Mijn Amsterdam beschikbaar. De komende jaren komt er steeds meer
+          bij.
         </p>
         <p>
           <a
@@ -70,14 +70,12 @@ export default () => {
           </a>
         </p>
         <p>
-          <strong>Heeft u nog geen DigiD? Regel dit dan eerst.</strong>
+          <strong>Nog geen DigiD?</strong>
           <br />
-          Ga naar <a href="https://www.digid.nl/aanvragen">DigiD aanvragen</a>
+          <a href="https://www.digid.nl/aanvragen">Vraag DigiD aan</a>
         </p>
         <p>
-          <strong>
-            Op dit moment kunt u deze informatie vinden op Mijn Amsterdam:
-          </strong>
+          <strong>Dit staat nu op Mijn Amsterdam:</strong>
         </p>
         <ul>
           <li>Hoe u ingeschreven staat bij de gemeente</li>
