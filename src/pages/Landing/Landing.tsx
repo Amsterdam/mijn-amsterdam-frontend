@@ -70,7 +70,7 @@ export default () => {
           </a>
         </p>
         <p>
-          <strong>No geen DigiD?</strong>
+          <strong>Nog geen DigiD?</strong>
           <br />
           <a href="https://www.digid.nl/aanvragen">Vraag DigiD aan</a>
         </p>
