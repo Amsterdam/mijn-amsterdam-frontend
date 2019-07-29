@@ -558,7 +558,7 @@ function formatStepData(
 
 // This function transforms the source data from the api into readable/presentable messages for the client.
 function formatFocusProduct(product: FocusProduct): FocusItem {
-  const {
+  let {
     _id: id,
     _meest_recent: latestStep,
     soortProduct: productOrigin,
@@ -568,9 +568,37 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
     dienstverleningstermijn: daysSupplierActionRequired,
     inspanningsperiode: daysUserActionRequired,
   } = product;
-
   const inProgress = isInProgess(decision, steps);
   const stepData = steps[latestStep];
+
+  // FIX ME!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+  // ################################
+  // HACK ###########################
+  // ################################
+
+  // Due to an error in the test data we get back from the WPI we need to
+  // overwrite the data in order for it to work. This was a super dirty quick
+  // fix and needed since a team was testing the app at the moment it broke and
+  // they needed it to work, badly.
+
+  // TODO: DO NOT PUSH TO PRODUCTION
+  // TODO: DO NOT PUSH TO PRODUCTION
+  // TODO: DO NOT PUSH TO PRODUCTION
+
+  if (
+    !inProgress &&
+    (decision === 'Afwijzing' || decision === 'Toekenning') &&
+    latestStep === 'aanvraag'
+  ) {
+    // @ts-ignore
+    latestStep = 'beslissing';
+  }
+
+  // ################################
+  // HACK ###########################
+  // ################################
+
   const stepLabels = inProgress
     ? (Labels[productOrigin][latestStep] as Info)
     : (Labels[productOrigin][latestStep] as InfoExtended)[decision];
