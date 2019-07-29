@@ -620,7 +620,7 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
     daysUserActionRequired,
     daysRecoveryAction,
   });
-  // debugger;
+
   const item = {
     id,
     chapter: Chapters.INKOMEN,
