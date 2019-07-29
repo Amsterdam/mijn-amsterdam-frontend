@@ -591,7 +591,6 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
     (decision === 'Afwijzing' || decision === 'Toekenning') &&
     latestStep === 'aanvraag'
   ) {
-    console.log('in if');
     // @ts-ignore
     latestStep = 'beslissing';
   }
