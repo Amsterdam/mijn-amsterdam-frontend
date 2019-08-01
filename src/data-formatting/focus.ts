@@ -18,7 +18,7 @@ export type RequestStatus =
   | 'In behandeling'
   | 'Beslissing';
 
-// A decision can be made and currently have 2 values.
+// A decision can be made and currently have 3 values.
 type Decision = 'Toekenning' | 'Afwijzing' | 'Buiten Behandeling';
 
 // The official terms of the Focus api "product categories" data how they are used within the Municipality of Amsterdam.
