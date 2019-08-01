@@ -18,8 +18,8 @@ export type RequestStatus =
   | 'In behandeling'
   | 'Beslissing';
 
-// A decision can be made and currently have 2 values.
-type Decision = 'Toekenning' | 'Afwijzing';
+// A decision can be made and currently have 3 values.
+type Decision = 'Toekenning' | 'Afwijzing' | 'Buiten Behandeling';
 
 // The official terms of the Focus api "product categories" data how they are used within the Municipality of Amsterdam.
 type ProductOrigin = 'Participatiewet' | 'Bijzondere Bijstand' | 'Minimafonds';
@@ -158,6 +158,17 @@ export const Labels: LabelData = {
         description: `U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer details.
           [Bekijk hier de betaaldata van de uitkering](https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D)`,
       },
+      'Buiten Behandeling': {
+        update: {
+          title: 'Uw aanvraag is buiten behandeling gesteld',
+          description:
+            'Uw aanvraag is buiten behandeling gesteld (besluit: {datePublished}).',
+        },
+        title: '{title}',
+        status: 'Beslissing',
+        description:
+          'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
+      },
     },
   },
   'Bijzondere Bijstand': {
@@ -218,6 +229,17 @@ export const Labels: LabelData = {
         status: 'Beslissing',
         description:
           'U heeft recht op bijzondere bijstand. Bekijk de brief voor meer details.',
+      },
+      'Buiten Behandeling': {
+        update: {
+          title: 'Uw aanvraag is buiten behandeling gesteld',
+          description:
+            'Uw aanvraag is buiten behandeling gesteld (besluit: {datePublished}).',
+        },
+        title: '{title}',
+        status: 'Beslissing',
+        description:
+          'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
       },
     },
   },
@@ -281,6 +303,17 @@ export const Labels: LabelData = {
           U heeft recht op een Stadspas. Bekijk de brief voor meer details.
           [Meer informatie over de stadspas](https://www.amsterdam.nl/stadspas)
           `,
+      },
+      'Buiten Behandeling': {
+        update: {
+          title: 'Uw aanvraag is buiten behandeling gesteld',
+          description:
+            'Uw aanvraag is buiten behandeling gesteld (besluit: {datePublished}).',
+        },
+        title: '{title}',
+        status: 'Beslissing',
+        description:
+          'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
       },
     },
   },
@@ -589,7 +622,7 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
   if (
     !inProgress &&
     (decision === 'Afwijzing' || decision === 'Toekenning') &&
-    latestStep === 'aanvraag'
+    latestStep !== 'beslissing'
   ) {
     // @ts-ignore
     latestStep = 'beslissing';
