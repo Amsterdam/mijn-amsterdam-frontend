@@ -2,6 +2,7 @@
 
 .StatusLine {
   background-color: $color-neutral-grey1;
+  margin-bottom: 2rem;
 }
 
 .List {
@@ -164,7 +165,7 @@
 
 .MoreStatus {
   position: relative;
-  background-color: $color-neutral-grey3;
+  background-color: transparent;
   display: flex;
   align-content: center;
   justify-content: center;
@@ -172,13 +173,19 @@
   left: 50%;
   transform: translateX(-50%);
   cursor: pointer;
-  padding: 0 0.4rem 0 1.4rem;
+  padding: 0 0.4rem 0 0;
   margin-bottom: 2rem;
+  font-weight: 700;
 
-  @include hoverCapable {
-    &:hover {
-      background-color: $color-primary-darkblue;
-      color: $color-white;
+  svg {
+    height: 15px;
+    margin-top: 0.3rem;
+    transform: rotate(90deg);
+  }
+
+  &Closed {
+    svg {
+      transform: rotate(-90deg);
     }
   }
 }

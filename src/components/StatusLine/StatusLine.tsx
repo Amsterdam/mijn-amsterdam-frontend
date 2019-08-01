@@ -12,6 +12,7 @@ import { defaultDateFormat } from 'helpers/App';
 import useRouter from 'use-react-router';
 import { useSessionStorage } from 'hooks/storage.hook';
 import { itemClickTogglePayload } from 'hooks/analytics.hook';
+import { ReactComponent as CaretLeft } from 'assets/icons/Chevron-Left.svg';
 
 const markdownLinkRegex = /\[((?:[^\[\]\\]|\\.)+)\]\((https?:\/\/(?:[-A-Z0-9+&@#\/%=~_|\[\]](?= *\))|[-A-Z0-9+&@#\/%?=~_|\[\]!:,.;](?! *\))|\([-A-Z0-9+&@#\/%?=~_|\[\]!:,.;(]*\))+) *\)/i;
 const markdownTagMatchRegex = /(\[.*?\]\(.*?\))/gi;
@@ -132,29 +133,29 @@ export default function StatusLine({
   }, [location.hash]);
 
   return (
-    <div className={styles.StatusLine}>
-      <ul className={styles.List}>
-        {items
-          .filter(
-            (item, index) =>
-              !isCollapsed || (isCollapsed && index === items.length - 1)
-          )
-          .map((item, index) => (
-            <StatusLineItem
-              key={item.id}
-              item={item}
-              stepNumber={items.length - index}
-            />
-          ))}
-      </ul>
+    <>
+      <div className={styles.StatusLine}>
+        <ul className={styles.List}>
+          {items
+            .filter(
+              (item, index) =>
+                !isCollapsed || (isCollapsed && index === items.length - 1)
+            )
+            .map((item, index) => (
+              <StatusLineItem
+                key={item.id}
+                item={item}
+                stepNumber={items.length - index}
+              />
+            ))}
+        </ul>
+      </div>
       {!items.length && <p>Er is geen status beschikbaar.</p>}
       {items.length > 1 && (
         <button
-          className={classnames(
-            'action-button secondary line-only',
-            styles.MoreStatus,
-            isCollapsed && styles.isCollapsed
-          )}
+          className={classnames(styles.MoreStatus, {
+            [styles.MoreStatusClosed]: isCollapsed,
+          })}
           data-track={itemClickTogglePayload(
             `${trackCategory}/MetroLijn`,
             'Toon alles/minder',
@@ -162,9 +163,10 @@ export default function StatusLine({
           )}
           onClick={toggleCollapsed}
         >
+          <CaretLeft />
           {isCollapsed ? 'Toon alles' : 'Toon minder'}
         </button>
       )}
-    </div>
+    </>
   );
 }
