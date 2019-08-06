@@ -8,12 +8,17 @@
   @include reset-list-style;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .TipItem {
-  width: calc((100% / 3) - 4rem);
+  width: calc((100% / 3) - 3%);
   p {
     margin-top: 1.2rem;
+  }
+  margin-bottom: 2rem;
+  @include media-query('<=phone') {
+    width: 100%;
   }
 }
 
