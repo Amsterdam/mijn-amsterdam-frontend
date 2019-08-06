@@ -24,12 +24,14 @@ export default function usePaginatedApi(
   url: string,
   offset: number = INITIAL_STATE.offset,
   limit: number = INITIAL_STATE.limit,
-  postpone: boolean = false
+  postpone: boolean = false,
+  method: string = 'GET'
 ): PaginatedApiState {
   const options = {
     url,
     params: { offset, limit },
     postpone,
+    method,
   };
   const [api, refetch] = useDataApi(options, INITIAL_STATE);
   const responseData = Array.isArray(api.data)

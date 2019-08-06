@@ -56,7 +56,7 @@ const ATLAS_API_BASE_URL = process.env.REACT_APP_ATLAS_API_BASE_URL;
 export const ApiUrls = {
   MY_UPDATES: `${API_BASE_URL}/mijn-updates`,
   MY_CASES: `${API_BASE_URL}/focus/aanvragen`,
-  MY_TIPS: `${API_BASE_URL}/profiel/mijn-tips`,
+  MY_TIPS: `${API_BASE_URL}/tips/gettips`,
   BRP: `${API_BASE_URL}/brp/brp`,
   WMO: `${API_BASE_URL}/wmoned/voorzieningen`,
   FOCUS: `${API_BASE_URL}/focus/aanvragen`,
@@ -79,7 +79,7 @@ export const ApiConfig: ApiConfig = {
     postponeFetch: isProduction(),
   },
   [ApiUrls.MY_TIPS]: {
-    postponeFetch: true,
+    postponeFetch: isProduction(),
   },
 };
 

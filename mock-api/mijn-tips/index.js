@@ -1,13 +1,12 @@
-const tips = require('../json/mijn-tips.json');
+const data = require('../json/mijn-tips.json');
 
 module.exports = {
-  path: '/api/profiel/mijn-tips',
+  path: '/api/tips/gettips',
+  method: 'POST',
   template: (_, queryParams) => {
     return {
-      total: tips.length,
-      offset: queryParams.offset,
-      limit: queryParams.limit,
-      items: tips.slice(queryParams.offset, queryParams.limit),
+      total: data.tips.length,
+      items: data.tips.slice(queryParams.offset, queryParams.limit),
     };
   },
 };
