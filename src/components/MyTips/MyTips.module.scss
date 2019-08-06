@@ -22,6 +22,14 @@
   width: 100%;
   background-color: $color-neutral-grey1;
   margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ImgPlaceholder {
+  width: 10rem;
+  height: 10rem;
 }
 
 .HeaderBar {

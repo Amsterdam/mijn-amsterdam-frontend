@@ -10,6 +10,7 @@ export interface MyTip {
   subtitle: string;
   description: string;
   link: LinkProps;
+  imgUrl?: string;
 }
 
 export interface MyTipsResponse extends PaginatedItemsResponse {
@@ -29,6 +30,7 @@ export default function useMyTipsApi(
     ApiUrls.MY_TIPS,
     offset,
     limit,
-    ApiConfig[ApiUrls.MY_TIPS].postponeFetch
+    ApiConfig[ApiUrls.MY_TIPS].postponeFetch,
+    'POST'
   );
 }

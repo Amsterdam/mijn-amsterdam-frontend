@@ -7,6 +7,7 @@ import Heading from 'components/Heading/Heading';
 import { AppRoutes } from 'App.constants';
 import { MyTip } from 'hooks/api/my-tips-api.hook';
 import LoadingContent from '../LoadingContent/LoadingContent';
+import { ReactComponent as ImgPlaceholder } from 'assets/images/img-placeholder.svg';
 
 export interface TipProps {
   tip: MyTip;
@@ -14,7 +15,13 @@ export interface TipProps {
 
 const Tip = ({ tip }: TipProps) => (
   <li className={styles.TipItem}>
-    <div className={styles.ImageContainer} />
+    <div className={styles.ImageContainer}>
+      {tip.imgUrl ? (
+        <img src={tip.imgUrl} />
+      ) : (
+        <ImgPlaceholder className={styles.ImgPlaceholder} />
+      )}
+    </div>
     <Heading el="h4">{tip.title}</Heading>
     <p>{tip.description}</p>
     <ButtonLinkExternal to={tip.link.to}>{tip.link.title}</ButtonLinkExternal>
