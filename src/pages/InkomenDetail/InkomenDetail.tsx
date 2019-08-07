@@ -40,7 +40,7 @@ export default () => {
             Werk & inkomen
           </PageContentMainHeadingBackLink>
           {!isLoading && FocusItem ? (
-            <span>{FocusItem.title}</span>
+            <span>{FocusItem.productTitle}</span>
           ) : (
             <LoadingContent
               className={styles.LoadingContentHeading}
