@@ -440,6 +440,7 @@ function getStepSourceData({
     stepData,
     daysRecoveryAction
   );
+
   return {
     id,
     title: translateProductTitle(title),
@@ -615,10 +616,6 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
   // fix and needed since a team was testing the app at the moment it broke and
   // they needed it to work, badly.
 
-  // TODO: DO NOT PUSH TO PRODUCTION
-  // TODO: DO NOT PUSH TO PRODUCTION
-  // TODO: DO NOT PUSH TO PRODUCTION
-
   if (
     !inProgress &&
     (decision === 'Afwijzing' || decision === 'Toekenning') &&
@@ -656,7 +653,7 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
   const item = {
     id,
     chapter: Chapters.INKOMEN,
-    datePublished: sourceData.datePublished || '',
+    datePublished: defaultDateFormat(steps.aanvraag.datum),
     // Regular title, can be turned into more elaborate descriptive information. E.g Bijstandsuitkering could become Uw Aanvraag voor een bijstandsuitkering.
     title: replaceSourceDataTags(stepLabels.title, sourceData),
     description: replaceSourceDataTags(stepLabels.description, sourceData),
