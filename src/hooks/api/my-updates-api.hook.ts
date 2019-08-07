@@ -8,6 +8,7 @@ export interface MyUpdate {
   id: string;
   chapter: Chapter;
   datePublished: string;
+  productTitle?: string;
   title: string;
   description: string;
   link?: LinkProps;
