@@ -4,7 +4,7 @@ import PageContentMainHeading from 'components/PageContentMainHeading/PageConten
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
 import styles from './InkomenDetail.module.scss';
 import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
-import { Chapters, AppRoutes } from 'App.constants';
+import { Chapters, AppRoutes, DisplayNames } from 'App.constants';
 import { AppContext } from 'AppState';
 import useRouter from 'use-react-router';
 import Heading from 'components/Heading/Heading';
@@ -37,7 +37,7 @@ export default () => {
             trackCategory="MA_Inkomen/Detail_Pagina"
             to={AppRoutes.INKOMEN}
           >
-            Werk & inkomen
+            {DisplayNames.WERK_EN_INKOMEN}
           </PageContentMainHeadingBackLink>
           {!isLoading && FocusItem ? (
             <span>{FocusItem.productTitle}</span>
