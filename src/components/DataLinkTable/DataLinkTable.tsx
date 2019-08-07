@@ -143,7 +143,7 @@ export default function DataLinkTable({
                         'DataLink'
                       )}
                     >
-                      {item.productTitle}
+                      {item.productTitle || item.title}
                     </ButtonLink>
                   </td>
                   {displayProps &&
