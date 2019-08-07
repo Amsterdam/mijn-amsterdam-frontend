@@ -98,7 +98,7 @@ export const Labels: LabelData = {
   Participatiewet: {
     aanvraag: {
       update: {
-        title: 'Wij verwerken uw aanvraag',
+        title: 'Wij hebben uw aanvraag ontvangen',
         description:
           'Wij hebben uw aanvraag voor een bijstandsuitkering ontvangen op {dateStart}.',
       },
@@ -174,7 +174,7 @@ export const Labels: LabelData = {
   'Bijzondere Bijstand': {
     aanvraag: {
       update: {
-        title: 'Wij verwerken uw aanvraag',
+        title: 'Wij hebben uw aanvraag ontvangen',
         description:
           'Wij hebben uw aanvraag voor bijzondere bijstand ontvangen op {dateStart}.',
       },
@@ -246,7 +246,7 @@ export const Labels: LabelData = {
   Minimafonds: {
     aanvraag: {
       update: {
-        title: 'Wij verwerken uw aanvraag',
+        title: 'Wij hebben uw aanvraag ontvangen',
         description:
           'Wij hebben uw aanvraag voor een Stadspas ontvangen op {dateStart}.',
       },
