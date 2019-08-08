@@ -145,7 +145,7 @@ export const Labels: LabelData = {
         title: '{title}',
         status: 'Beslissing',
         description:
-          'U heeft geen recht op een bijstandsuitkering. De reden voor afwijzing is {reasonForDecision}. Bekijk de brief voor meer details.',
+          'U heeft geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.',
       },
       Toekenning: {
         update: {
@@ -217,7 +217,7 @@ export const Labels: LabelData = {
         title: '{title}',
         status: 'Beslissing',
         description:
-          'U heeft geen recht op bijzondere bijstand. De reden voor afwijzing is {reasonForDecision}. Bekijk de brief voor meer details.',
+          'U heeft geen recht op bijzondere bijstand. Bekijk de brief voor meer details.',
       },
       Toekenning: {
         update: {
@@ -289,7 +289,7 @@ export const Labels: LabelData = {
         title: '{title}',
         status: 'Beslissing',
         description:
-          'U heeft geen recht op een Stadspas. De reden voor afwijzing is {reasonForDecision}. Bekijk de brief voor meer details.',
+          'U heeft geen recht op een Stadspas. Bekijk de brief voor meer details.',
       },
       Toekenning: {
         update: {
