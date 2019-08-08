@@ -328,5 +328,98 @@
     },
     "soortProduct": "Bijzondere Bijstand",
     "typeBesluit": "Afwijzing"
-  }
+  },
+  {
+    "_id":"0-2",
+    "_meest_recent":"herstelTermijn",
+    "dienstverleningstermijn":42,
+    "naam":"Stadspas",
+    "processtappen":{
+       "aanvraag":{
+          "_id":0,
+          "datum":"2019-07-24T00:00:00+02:00",
+          "document":[
+
+          ]
+       },
+       "beslissing":null,
+       "bezwaar":null,
+       "herstelTermijn":{
+          "_id":2,
+          "aantalDagenHerstelTermijn":"10",
+          "datum":"2019-07-27T00:00:00+02:00",
+          "document":[
+
+          ]
+       },
+       "inBehandeling":{
+          "_id":1,
+          "datum":"2019-07-25T00:00:00+02:00",
+          "document":[
+
+          ]
+       }
+    },
+    "soortProduct":"Minimafonds"
+ },
+ {
+  "_id":"0-10",
+  "_meest_recent":"inBehandeling",
+  "dienstverleningstermijn":42,
+  "naam":"Stadspas",
+  "processtappen":{
+     "aanvraag":{
+        "_id":0,
+        "datum":"2019-07-30T00:00:00+02:00",
+        "document":[
+
+        ]
+     },
+     "beslissing":null,
+     "bezwaar":null,
+     "herstelTermijn":null,
+     "inBehandeling":{
+        "_id":1,
+        "datum":"2019-07-31T00:00:00+02:00",
+        "document":[
+
+        ]
+     }
+  },
+  "soortProduct":"Minimafonds"
+},
+{
+  "_id":"0-20",
+  "_meest_recent":"beslissing",
+  "dienstverleningstermijn":21,
+  "inspanningsperiode":28,
+  "naam":"Levensonderhoud",
+  "processtappen":{
+     "aanvraag":{
+        "_id":0,
+        "datum":"2015-12-29T00:00:00+01:00",
+        "document":[
+
+        ]
+     },
+     "beslissing":{
+        "_id":3,
+        "datum":"2016-02-02T00:00:00+01:00",
+        "document":[
+
+        ]
+     },
+     "bezwaar":null,
+     "herstelTermijn":null,
+     "inBehandeling":{
+        "_id":1,
+        "datum":"2015-12-29T00:00:00+01:00",
+        "document":[
+
+        ]
+     }
+  },
+  "soortProduct":"Participatiewet",
+  "typeBesluit":"Toekenning"
+}
 ]

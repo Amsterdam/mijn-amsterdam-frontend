@@ -55,9 +55,11 @@ function parseDescription(text: string, item: any) {
       if (tagParts) {
         const [, text, url] = tagParts;
         return (
-          <ButtonLinkExternal key={url} to={url}>
-            {text}
-          </ButtonLinkExternal>
+          <p>
+            <ButtonLinkExternal key={url} to={url}>
+              {text}
+            </ButtonLinkExternal>
+          </p>
         );
       }
       return link;

@@ -98,7 +98,7 @@ export const Labels: LabelData = {
   Participatiewet: {
     aanvraag: {
       update: {
-        title: 'Wij verwerken uw aanvraag',
+        title: 'Wij hebben uw aanvraag ontvangen',
         description:
           'Wij hebben uw aanvraag voor een bijstandsuitkering ontvangen op {dateStart}.',
       },
@@ -145,7 +145,7 @@ export const Labels: LabelData = {
         title: '{title}',
         status: 'Beslissing',
         description:
-          'U heeft geen recht op een bijstandsuitkering. De reden voor afwijzing is {reasonForDecision}. Bekijk de brief voor meer details.',
+          'U heeft geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.',
       },
       Toekenning: {
         update: {
@@ -174,7 +174,7 @@ export const Labels: LabelData = {
   'Bijzondere Bijstand': {
     aanvraag: {
       update: {
-        title: 'Wij verwerken uw aanvraag',
+        title: 'Wij hebben uw aanvraag ontvangen',
         description:
           'Wij hebben uw aanvraag voor bijzondere bijstand ontvangen op {dateStart}.',
       },
@@ -217,7 +217,7 @@ export const Labels: LabelData = {
         title: '{title}',
         status: 'Beslissing',
         description:
-          'U heeft geen recht op bijzondere bijstand. De reden voor afwijzing is {reasonForDecision}. Bekijk de brief voor meer details.',
+          'U heeft geen recht op bijzondere bijstand. Bekijk de brief voor meer details.',
       },
       Toekenning: {
         update: {
@@ -246,7 +246,7 @@ export const Labels: LabelData = {
   Minimafonds: {
     aanvraag: {
       update: {
-        title: 'Wij verwerken uw aanvraag',
+        title: 'Wij hebben uw aanvraag ontvangen',
         description:
           'Wij hebben uw aanvraag voor een Stadspas ontvangen op {dateStart}.',
       },
@@ -289,7 +289,7 @@ export const Labels: LabelData = {
         title: '{title}',
         status: 'Beslissing',
         description:
-          'U heeft geen recht op een Stadspas. De reden voor afwijzing is {reasonForDecision}. Bekijk de brief voor meer details.',
+          'U heeft geen recht op een Stadspas. Bekijk de brief voor meer details.',
       },
       Toekenning: {
         update: {
@@ -440,6 +440,7 @@ function getStepSourceData({
     stepData,
     daysRecoveryAction
   );
+
   return {
     id,
     title: translateProductTitle(title),
@@ -615,10 +616,6 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
   // fix and needed since a team was testing the app at the moment it broke and
   // they needed it to work, badly.
 
-  // TODO: DO NOT PUSH TO PRODUCTION
-  // TODO: DO NOT PUSH TO PRODUCTION
-  // TODO: DO NOT PUSH TO PRODUCTION
-
   if (
     !inProgress &&
     (decision === 'Afwijzing' || decision === 'Toekenning') &&
@@ -656,7 +653,7 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
   const item = {
     id,
     chapter: Chapters.INKOMEN,
-    datePublished: sourceData.datePublished || '',
+    datePublished: defaultDateFormat(steps.aanvraag.datum),
     // Regular title, can be turned into more elaborate descriptive information. E.g Bijstandsuitkering could become Uw Aanvraag voor een bijstandsuitkering.
     title: replaceSourceDataTags(stepLabels.title, sourceData),
     description: replaceSourceDataTags(stepLabels.description, sourceData),

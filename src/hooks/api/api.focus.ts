@@ -45,7 +45,7 @@ function formatProductCollections(items: any[]) {
 
       if (item.update) {
         productCollecton.updates.push(item.update);
-        allUpdates.push(item.update);
+        allUpdates.push({ ...item.update, productTitle: item.productTitle });
       }
 
       productCollecton.items.push(item);
