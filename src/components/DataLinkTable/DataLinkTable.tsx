@@ -82,7 +82,7 @@ export default function DataLinkTable({
       isCollapsed ? 'dicht' : 'open'
     );
   }, []);
-  console.log(items);
+  
   return (
     <div className={classes}>
       {hasTitle && (
