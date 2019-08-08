@@ -600,7 +600,7 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
     processtappen: steps,
     naam: title,
     dienstverleningstermijn: daysSupplierActionRequired,
-    inspanningsperiode: daysUserActionRequired,
+    inspanningsperiode: daysUserActionRequired = 28,
   } = product;
   const inProgress = isInProgess(decision, steps);
   const stepData = steps[latestStep];
