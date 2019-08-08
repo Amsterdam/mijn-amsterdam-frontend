@@ -26,6 +26,10 @@ export const Chapters: { [chapter in Chapter]: Chapter } = {
   MELDINGEN: 'MELDINGEN',
 };
 
+export const DisplayNames = {
+  WERK_EN_INKOMEN: 'Werk en inkomen',
+};
+
 export const AppRoutes = {
   ROOT: '/',
   BURGERZAKEN: '/burgerzaken',

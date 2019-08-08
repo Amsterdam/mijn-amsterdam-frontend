@@ -32,6 +32,11 @@
 
     @include media-query('<=tablet') {
       padding-left: 0;
+
+      min-width: 18.5rem;
+      &:nth-child(even) {
+        margin-left: 0;
+      }
     }
   }
 

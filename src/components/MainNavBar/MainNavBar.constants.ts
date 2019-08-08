@@ -1,3 +1,4 @@
+import { DisplayNames } from './../../App.constants';
 import { AppRoutes, Chapter, Chapters, ExternalUrls } from 'App.constants';
 import { LinkProps } from 'App.types';
 import { ReactComponent as JeugdhulpIcon } from 'assets/icons/Passport.svg';
@@ -57,7 +58,7 @@ export const myChaptersMenuItems: MenuItem[] = [
     Icon: ZorgIcon,
   },
   {
-    title: 'Werk & inkomen',
+    title: DisplayNames.WERK_EN_INKOMEN,
     id: Chapters.INKOMEN,
     to: AppRoutes.INKOMEN,
     Icon: InkomenIcon,
