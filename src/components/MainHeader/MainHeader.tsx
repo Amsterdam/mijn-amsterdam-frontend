@@ -16,12 +16,10 @@ import { Link } from 'react-router-dom';
 import styles from './MainHeader.module.scss';
 
 export interface MainHeaderProps {
-  person?: Person | null;
   isAuthenticated?: boolean;
 }
 
 export default function MainHeader({
-  person = null,
   isAuthenticated = false,
 }: MainHeaderProps) {
   const isHeroVisible = true;
@@ -65,7 +63,7 @@ export default function MainHeader({
           className={styles.betaLabel}
         />
       </div>
-      {isAuthenticated && <MainNavBar person={person} />}
+      {isAuthenticated && <MainNavBar />}
       {hasErrors && (
         <ErrorMessages errors={errors} className={styles.ErrorMessages} />
       )}

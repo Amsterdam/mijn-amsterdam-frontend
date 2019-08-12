@@ -1,7 +1,8 @@
 import { ApiUrls } from 'App.constants';
-import { useEffect, useState } from 'react';
-import { useDataApi } from './api.hook';
 import { usePhoneScreen } from 'hooks/media.hook';
+import { useEffect, useState } from 'react';
+import { useCounter } from '../timer.hook';
+import { useDataApi } from './api.hook';
 
 export const BAG_SEARCH_ENDPOINT_URL = `${ApiUrls.BAG}?q=`;
 
@@ -22,11 +23,12 @@ export default function useMyMap(address?: string) {
   });
 
   let [urls, setUrls] = useState({ simple: '', advanced: '' });
+  let [isDefaultMapLocation, setIsDefaultMapLocation] = useState(false);
   const showLegenda = !usePhoneScreen();
+  const hasData = !!(data && data.results && data.results.length);
 
   useEffect(() => {
-    if (!isLoading && isDirty) {
-      const hasData = !!(data && data.results && data.results.length);
+    if ((!isLoading && isDirty) || isDefaultMapLocation) {
       if (hasData) {
         const {
           results: [
@@ -47,13 +49,24 @@ export default function useMyMap(address?: string) {
         });
       }
     }
-  }, [isLoading]);
+  }, [isLoading, isDefaultMapLocation]);
+
+  // Show default address after 5 seconds
+  useCounter({
+    maxCount: 5,
+    onMaxCount: () => {
+      if (!hasData) {
+        setIsDefaultMapLocation(true);
+      }
+    },
+  });
 
   return {
     url: urls,
     isDirty,
     isLoading,
-    refetch: (address: string) =>
-      refetch({ url: BAG_SEARCH_ENDPOINT_URL + address }),
+    refetch: (address: string) => {
+      refetch({ url: BAG_SEARCH_ENDPOINT_URL + address });
+    },
   };
 }
