@@ -1,10 +1,10 @@
 import { AppRoutes } from 'App.constants';
-import { defaultDateFormat, entries } from 'helpers/App';
 import { LinkProps } from 'App.types';
-import { Chapter, Chapters } from '../App.constants';
-import { addMonths, addDays, differenceInCalendarDays } from 'date-fns';
-import { Document as GenericDocument } from '../components/DocumentList/DocumentList';
+import { addDays, addMonths, differenceInCalendarDays } from 'date-fns';
+import { defaultDateFormat } from 'helpers/App';
 import { MyUpdate } from 'hooks/api/my-updates-api.hook';
+import { Chapter, Chapters } from '../App.constants';
+import { Document as GenericDocument } from '../components/DocumentList/DocumentList';
 
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
@@ -66,7 +66,6 @@ interface Step {
 
 interface FocusProduct {
   _id: string;
-  _meest_recent: StepTitle;
   soortProduct: ProductOrigin;
   typeBesluit: Decision;
   naam: string;
@@ -83,6 +82,7 @@ interface FocusProduct {
 
 type FocusApiResponse = FocusProduct[];
 
+// NOTE: MUST Keep in this order
 const processSteps: StepTitle[] = [
   'aanvraag',
   'inBehandeling',
@@ -592,9 +592,8 @@ function formatStepData(
 
 // This function transforms the source data from the api into readable/presentable messages for the client.
 function formatFocusProduct(product: FocusProduct): FocusItem {
-  let {
+  const {
     _id: id,
-    _meest_recent: latestStep,
     soortProduct: productOrigin,
     typeBesluit: decision,
     processtappen: steps,
@@ -602,32 +601,14 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
     dienstverleningstermijn: daysSupplierActionRequired,
     inspanningsperiode: daysUserActionRequired = 28,
   } = product;
+
+  // Find the latest active step of the request process.
+  const latestStep =
+    [...processSteps].reverse().find(step => {
+      return step in steps && steps[step] !== null;
+    }) || processSteps[0];
   const inProgress = isInProgess(decision, steps);
   const stepData = steps[latestStep];
-
-  // FIX ME!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-  // ################################
-  // HACK ###########################
-  // ################################
-
-  // Due to an error in the test data we get back from the WPI we need to
-  // overwrite the data in order for it to work. This was a super dirty quick
-  // fix and needed since a team was testing the app at the moment it broke and
-  // they needed it to work, badly.
-
-  if (
-    !inProgress &&
-    (decision === 'Afwijzing' || decision === 'Toekenning') &&
-    latestStep !== 'beslissing'
-  ) {
-    // @ts-ignore
-    latestStep = 'beslissing';
-  }
-
-  // ################################
-  // HACK ###########################
-  // ################################
 
   const stepLabels = inProgress
     ? (Labels[productOrigin][latestStep] as Info)
