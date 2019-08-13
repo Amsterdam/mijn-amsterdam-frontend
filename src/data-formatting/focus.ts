@@ -658,6 +658,7 @@ export function formatFocusProduct(product: FocusProduct): FocusItem {
     datePublished: sourceData.datePublished || '', // Date on which this information was published,
     // Regular title, can be turned into more elaborate descriptive information. E.g Bijstandsuitkering could become Uw Aanvraag voor een bijstandsuitkering.
     title: replaceSourceDataTags(stepLabels.title, sourceData),
+    productTitle,
     description: replaceSourceDataTags(stepLabels.description, sourceData),
     latestStep,
     inProgress,
@@ -667,7 +668,6 @@ export function formatFocusProduct(product: FocusProduct): FocusItem {
       title: 'Meer informatie', // TODO: How to get custom link title?
       to: `${AppRoutesByProductOrigin[productOrigin]}/${id}`,
     },
-    productTitle,
     process: processSteps
       .filter(stepTitle => !!steps[stepTitle])
       .map(stepTitle => {
