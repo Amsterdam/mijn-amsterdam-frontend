@@ -86,7 +86,6 @@ export default function MyUpdates({
                   </time>
                 </aside>
                 <Heading className={styles.Title} el="h4" size="small">
-                  {item.productTitle ? `${item.productTitle}: ` : ''}
                   {item.title}
                 </Heading>
                 {!!item.description && (

@@ -20,15 +20,15 @@ function formatDate(
   ];
 
   if (fmt === 'mm:ss') {
-    const mins = date.getMinutes();
-    const secs = date.getSeconds();
+    const mins = date.getUTCMinutes();
+    const secs = date.getUTCSeconds();
 
     return `${(mins + '').padStart(2, '0')}:${(secs + '').padStart(2, '0')}`;
   }
 
-  const day = date.getDate();
-  const monthIndex = date.getMonth();
-  const year = date.getFullYear();
+  const day = date.getUTCDate();
+  const monthIndex = date.getUTCMonth();
+  const year = date.getUTCFullYear();
 
   return (
     (day + '').padStart(2, '0') + ' ' + monthNames[monthIndex] + ' ' + year

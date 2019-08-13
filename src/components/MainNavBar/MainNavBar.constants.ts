@@ -1,5 +1,10 @@
-import { DisplayNames } from './../../App.constants';
-import { AppRoutes, Chapter, Chapters, ExternalUrls } from 'App.constants';
+import {
+  AppRoutes,
+  Chapter,
+  Chapters,
+  ChapterTitles,
+  ExternalUrls,
+} from 'App.constants';
 import { LinkProps } from 'App.types';
 import { ReactComponent as JeugdhulpIcon } from 'assets/icons/Passport.svg';
 import { ReactComponent as BelastingenIcon } from 'assets/images/belastingen.svg';
@@ -32,39 +37,39 @@ export const mainMenuItemId: { [key: string]: MainMenuId } = {
 
 export const myChaptersMenuItems: MenuItem[] = [
   {
-    title: 'Burgerzaken',
+    title: ChapterTitles.BURGERZAKEN,
     id: Chapters.BURGERZAKEN,
     to: AppRoutes.BURGERZAKEN,
     Icon: BurgerzakenIcon,
   },
   {
-    title: 'Erfpacht',
+    title: ChapterTitles.WONEN,
     id: Chapters.WONEN,
     to: ExternalUrls.SSO_ERFPACHT || '',
     Icon: WonenIcon,
     rel: 'external',
   },
   {
-    title: 'Belastingen',
+    title: ChapterTitles.BELASTINGEN,
     id: Chapters.BELASTINGEN,
     to: ExternalUrls.SSO_BELASTINGEN,
     Icon: BelastingenIcon,
     rel: 'external',
   },
   {
-    title: 'Zorg',
+    title: ChapterTitles.ZORG,
     id: Chapters.ZORG,
     to: AppRoutes.ZORG,
     Icon: ZorgIcon,
   },
   {
-    title: DisplayNames.WERK_EN_INKOMEN,
+    title: ChapterTitles.INKOMEN,
     id: Chapters.INKOMEN,
     to: AppRoutes.INKOMEN,
     Icon: InkomenIcon,
   },
   {
-    title: 'Jeugdhulp',
+    title: ChapterTitles.JEUGDHULP,
     id: Chapters.JEUGDHULP,
     to: AppRoutes.JEUGDHULP,
     Icon: JeugdhulpIcon,
@@ -72,10 +77,10 @@ export const myChaptersMenuItems: MenuItem[] = [
 ];
 
 export const MenuItemTitles = {
-  HOME: 'Home',
+  HOME: ChapterTitles.ROOT,
   MY_CHAPTERS: "Mijn thema's",
-  MY_AREA: 'Mijn buurt',
-  MY_UPDATES: 'Mijn meldingen',
+  MY_AREA: ChapterTitles.MIJN_BUURT,
+  MY_UPDATES: ChapterTitles.MELDINGEN,
 };
 
 export const menuItems: MenuItem[] = [
