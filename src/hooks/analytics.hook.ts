@@ -2,7 +2,7 @@ import useScript from 'hooks/useScript';
 
 const TrackerConfig = {
   url: 'https://analytics.data.amsterdam.nl',
-  siteId: process.env.REACT_APP_SITE_ID,
+  siteId: process.env.REACT_APP_ANALYTICS_SITE_ID,
   jsFilename: 'piwik.js',
   phpFilename: 'piwik.php',
 };
