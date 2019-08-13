@@ -40,15 +40,13 @@ export interface MainNavLinkProps {
   onMouseEnter?: () => void;
 }
 
-interface SecondaryLinksProps {
-  person?: Persoon | null;
-  hasMessages?: boolean;
-}
+function SecondaryLinks() {
+  const {
+    BRP: { persoon, isError },
+  } = useContext(AppContext);
 
-type MainNavBarProps = SecondaryLinksProps;
+  const hasFirstName = !!(persoon && persoon.voornamen);
 
-function SecondaryLinks({ person }: SecondaryLinksProps) {
-  const hasFirstName = !!(person && person.voornamen);
   useEffect(() => {
     if (hasFirstName) {
       trackItemPresentation('MA_Header/Secundaire_Links', 'Link_naar_Profiel');
@@ -59,19 +57,21 @@ function SecondaryLinks({ person }: SecondaryLinksProps) {
   return (
     <div className={styles.secondaryLinks}>
       {isDesktopScreen && <FontEnlarger />}
-      <Link
-        to={AppRoutes.PROFILE}
-        data-track={itemClickPayload(
-          'MA_Header/Secundaire_Links',
-          'Link_naar_Profiel'
-        )}
-      >
-        {person && person.voornamen ? (
-          getFullName(person)
-        ) : (
-          <LoadingContent barConfig={[['15rem', '1rem', '0']]} />
-        )}
-      </Link>
+      {!isError && (
+        <Link
+          to={AppRoutes.PROFILE}
+          data-track={itemClickPayload(
+            'MA_Header/Secundaire_Links',
+            'Link_naar_Profiel'
+          )}
+        >
+          {persoon && persoon.voornamen ? (
+            getFullName(persoon)
+          ) : (
+            <LoadingContent barConfig={[['15rem', '1rem', '0']]} />
+          )}
+        </Link>
+      )}
       {
         <IconButtonLink
           to={LOGOUT_URL}
@@ -161,7 +161,7 @@ function getMenuItem(
   );
 }
 
-export default function MainNavBar({ person }: MainNavBarProps) {
+export default function MainNavBar() {
   const [activeSubmenuId, activateSubmenu] = useState('');
   const {
     MY_CHAPTERS: { items: myChapterItems },
@@ -257,7 +257,7 @@ export default function MainNavBar({ person }: MainNavBarProps) {
               !isResponsiveMenu
             );
           })}
-          <SecondaryLinks person={person} />
+          <SecondaryLinks />
         </div>
       )}
 

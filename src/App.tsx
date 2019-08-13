@@ -37,7 +37,6 @@ function track(event: any) {
 
 function AppAuthenticated() {
   const { location } = useRouter();
-  const { BRP } = useContext(AppContext);
   const session = useContext(SessionContext);
 
   usePageChange();
@@ -46,10 +45,7 @@ function AppAuthenticated() {
     <MyArea />
   ) : (
     <>
-      <MainHeader
-        person={BRP.persoon}
-        isAuthenticated={session.isAuthenticated}
-      />
+      <MainHeader isAuthenticated={session.isAuthenticated} />
       <div className={styles.App}>
         <Switch>
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
