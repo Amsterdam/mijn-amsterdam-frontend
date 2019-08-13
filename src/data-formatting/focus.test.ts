@@ -72,8 +72,9 @@ const inputData: FocusProduct = {
 const formattedFocusProduct = {
   id: '0-20',
   chapter: 'INKOMEN',
-  datePublished: '02 februari 2016',
+  datePublished: '01 februari 2016',
   title: 'Bijstandsuitkering',
+  productTitle: 'Levensonderhoud',
   description:
     'U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer details.\n          [Bekijk hier de betaaldata van de uitkering](https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D)',
   latestStep: 'beslissing',
@@ -84,14 +85,13 @@ const formattedFocusProduct = {
     title: 'Meer informatie',
     to: '/werk-en-inkomen/bijstandsuitkering/0-20',
   },
-  productTitle: 'Levensonderhoud',
   process: [
     {
       id: '0-20-aanvraag',
       title: 'Bijstandsuitkering',
       datePublished: '2015-12-29T00:00:00+01:00',
       description:
-        'U hebt op 29 december 2015 een bijstandsuitkering aangevraagd.\n\n        [Wat kunt u van ons verwachten?](https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D)',
+        'U hebt op 28 december 2015 een bijstandsuitkering aangevraagd.\n\n        [Wat kunt u van ons verwachten?](https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D)',
       documents: [
         {
           id: '3428561',
@@ -117,7 +117,7 @@ const formattedFocusProduct = {
       title: 'Bijstandsuitkering',
       datePublished: '2015-12-29T00:00:00+01:00',
       description:
-        'Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u nog extra informatie moet opsturen.\n        U ontvangt vóór 16 februari 2016 ons besluit.\n\n        \n        Lees meer over uw \n        [rechten](https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d) en [plichten](https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d)\n        ',
+        'Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u nog extra informatie moet opsturen.\n        U ontvangt vóór 15 februari 2016 ons besluit.\n\n        \n        Lees meer over uw \n        [rechten](https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d) en [plichten](https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d)\n        ',
       documents: [
         {
           id: '3428561',
@@ -171,7 +171,7 @@ const formattedFocusProduct = {
     chapter: 'INKOMEN',
     title: 'Bijstandsuitkering: Uw aanvraag is toegekend',
     description:
-      'U heeft recht op een bijstandsuitkering (besluit: 02 februari 2016).',
+      'U heeft recht op een bijstandsuitkering (besluit: 01 februari 2016).',
     isActual: false,
     link: {
       to: '/werk-en-inkomen/bijstandsuitkering/0-20#0-20-beslissing',
