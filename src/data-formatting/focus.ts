@@ -325,7 +325,7 @@ export const Labels: LabelData = {
         description:
           'Wij hebben uw aanvraag voor een Stadspas in behandeling genomen op {datePublished}.',
       },
-      title: 'In behandeling',
+      title: '{productTitle}',
       status: 'In behandeling',
       description: `Het kan zijn dat u nog extra informatie moet opsturen.
         U ontvangt vóór {decisionDeadline1} ons besluit.
