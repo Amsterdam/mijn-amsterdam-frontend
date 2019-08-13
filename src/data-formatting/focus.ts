@@ -11,7 +11,12 @@ import { Document as GenericDocument } from '../components/DocumentList/Document
  */
 
 // The process steps are in order of:
-type StepTitle = 'aanvraag' | 'inBehandeling' | 'herstelTermijn' | 'beslissing';
+type StepTitle =
+  | 'aanvraag'
+  | 'inBehandeling'
+  | 'herstelTermijn'
+  | 'beslissing'
+  | 'bezwaar';
 export type RequestStatus =
   | 'Aanvraag'
   | 'Meer informatie nodig'
@@ -43,6 +48,7 @@ interface ProductType {
   aanvraag: Info;
   inBehandeling: Info;
   herstelTermijn: Info;
+  bezwaar: Info | null;
   beslissing: InfoExtended;
 }
 
@@ -59,23 +65,23 @@ interface Document {
 interface Step {
   document: Document[];
   datum: string;
-  status: RequestStatus;
+  // status: RequestStatus;
   aantalDagenHerstelTermijn?: string;
   reden?: string;
 }
 
-interface FocusProduct {
+export interface FocusProduct {
   _id: string;
   soortProduct: ProductOrigin;
   typeBesluit: Decision;
   naam: string;
   processtappen: {
     aanvraag: Step;
-    inBehandeling: Step;
-    herstelTermijn: Step;
-    beslissing: Step;
+    inBehandeling: Step | null;
+    herstelTermijn: Step | null;
+    beslissing: Step | null;
+    bezwaar: Step | null;
   };
-  document: Document[];
   dienstverleningstermijn: number;
   inspanningsperiode: number;
 }
@@ -146,6 +152,8 @@ export interface ProductCollection {
 
 // Links can be added in the format of [text](link)
 // Tags like {productTitle} will be replaced with corresponding data from the StepSourceData object.
+// double newlines are transformed to paragraphs <p />
+// single newline is transformed to <br/>
 export const Labels: LabelData = {
   Participatiewet: {
     aanvraag: {
@@ -172,7 +180,8 @@ export const Labels: LabelData = {
         U ontvangt vóór {decisionDeadline1} ons besluit.
 
         
-        Lees meer over uw [rechten](https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d) en [plichten](https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d)
+        Lees meer over uw 
+        [rechten](https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d) en [plichten](https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d)
         `,
     },
     herstelTermijn: {
@@ -224,6 +233,7 @@ export const Labels: LabelData = {
           'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
       },
     },
+    bezwaar: null,
   },
   'Bijzondere Bijstand': {
     aanvraag: {
@@ -296,6 +306,7 @@ export const Labels: LabelData = {
           'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
       },
     },
+    bezwaar: null,
   },
   Minimafonds: {
     aanvraag: {
@@ -370,6 +381,7 @@ export const Labels: LabelData = {
           'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
       },
     },
+    bezwaar: null,
   },
 };
 
@@ -600,7 +612,7 @@ function formatStepData(
 }
 
 // This function transforms the source data from the api into readable/presentable messages for the client.
-function formatFocusProduct(product: FocusProduct): FocusItem {
+export function formatFocusProduct(product: FocusProduct): FocusItem {
   const {
     _id: id,
     soortProduct: productOrigin,
@@ -682,7 +694,7 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
     differenceInCalendarDays(new Date(), latestStepItem.datePublished) <
       MAX_DAYS_UPDATE_VISIBLE;
 
-  return {
+  const focusItem = {
     ...item,
     update: formatFocusUpdateItem(
       item,
@@ -692,6 +704,8 @@ function formatFocusProduct(product: FocusProduct): FocusItem {
       sourceData
     ),
   };
+
+  return focusItem;
 }
 
 function formatFocusApiResponse(products: FocusApiResponse): FocusItem[] {
