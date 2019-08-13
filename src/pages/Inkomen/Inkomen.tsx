@@ -5,7 +5,7 @@ import PageContentMainBody from 'components/PageContentMainBody/PageContentMainB
 import { AppContext } from 'AppState';
 import DataLinkTable from 'components/DataLinkTable/DataLinkTable';
 import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
-import { Chapters, DisplayNames } from 'App.constants';
+import { Chapters, ChapterTitles } from 'App.constants';
 import styles from './Inkomen.module.scss';
 import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
 import { ExternalUrls } from 'App.constants';
@@ -44,7 +44,7 @@ export default () => {
     <PageContentMain variant="full" className={styles.Page}>
       <PageContentMainHeading variant="boxedWithIcon">
         <ChapterHeadingIcon chapter={Chapters.INKOMEN} />
-        {DisplayNames.WERK_EN_INKOMEN}
+        {ChapterTitles.INKOMEN}
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
         <p>
@@ -58,7 +58,7 @@ export default () => {
           </ButtonLinkExternal>
           <br />
           <ButtonLinkExternal to={ExternalUrls.INCOME_CONTACT}>
-            Contact {DisplayNames.WERK_EN_INKOMEN}
+            Contact {ChapterTitles.INKOMEN}
           </ButtonLinkExternal>
         </p>
         {isError && (

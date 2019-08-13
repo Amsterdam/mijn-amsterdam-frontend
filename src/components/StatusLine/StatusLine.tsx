@@ -49,17 +49,16 @@ function DownloadLink({ item }: DownloadLinkProps) {
 
 function parseDescription(text: string, item: any) {
   const linkTags = text.split(markdownTagMatchRegex);
+
   if (linkTags) {
     return linkTags.map(link => {
       const tagParts = link.match(markdownLinkRegex);
       if (tagParts) {
         const [, text, url] = tagParts;
         return (
-          <p>
-            <ButtonLinkExternal key={url} to={url}>
-              {text}
-            </ButtonLinkExternal>
-          </p>
+          <ButtonLinkExternal key={url} to={url}>
+            {text}
+          </ButtonLinkExternal>
         );
       }
       return link;
