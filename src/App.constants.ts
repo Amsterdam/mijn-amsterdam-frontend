@@ -12,10 +12,12 @@ export type Chapter =
   | 'JEUGDHULP'
   | 'INKOMEN'
   | 'MELDINGEN'
+  | 'MIJN_BUURT'
   | 'PROFILE';
 
 export const Chapters: { [chapter in Chapter]: Chapter } = {
   ROOT: 'ROOT',
+  MIJN_BUURT: 'MIJN_BUURT',
   BURGERZAKEN: 'BURGERZAKEN',
   WONEN: 'WONEN',
   BELASTINGEN: 'BELASTINGEN',
@@ -26,8 +28,17 @@ export const Chapters: { [chapter in Chapter]: Chapter } = {
   MELDINGEN: 'MELDINGEN',
 };
 
-export const DisplayNames = {
-  WERK_EN_INKOMEN: 'Werk en inkomen',
+export const ChapterTitles: { [chapter in Chapter]: string } = {
+  INKOMEN: 'Werk en inkomen',
+  BURGERZAKEN: 'Burgerzaken',
+  BELASTINGEN: 'Belastingen',
+  JEUGDHULP: 'Jeugdhulp',
+  WONEN: 'Erfpacht',
+  ZORG: 'Zorg',
+  ROOT: 'Home',
+  MELDINGEN: 'Mijn meldingen',
+  PROFILE: 'Mijn gegevens',
+  MIJN_BUURT: 'Mijn buurt',
 };
 
 export const AppRoutes = {

@@ -82,7 +82,7 @@ export default function DataLinkTable({
       isCollapsed ? 'dicht' : 'open'
     );
   }, []);
-  
+
   return (
     <div className={classes}>
       {hasTitle && (
@@ -143,7 +143,7 @@ export default function DataLinkTable({
                         'DataLink'
                       )}
                     >
-                      {item.productTitle || item.title}
+                      {item.title}
                     </ButtonLink>
                   </td>
                   {displayProps &&

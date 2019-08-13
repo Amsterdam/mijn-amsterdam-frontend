@@ -1,20 +1,19 @@
-import { AppRoutes } from 'App.constants';
+import { AppRoutes, ChapterTitles } from 'App.constants';
 import { useEffect } from 'react';
 import useRouter from 'use-react-router';
-
 import { trackPageView } from './analytics.hook';
 
 export const PageTitleMain = 'Mijn Amsterdam';
 export const PageTitleLanding = `Login met DigID | ${PageTitleMain}`;
 
 export const PageTitles = {
-  [AppRoutes.ROOT]: `Home | ${PageTitleMain}`,
-  [AppRoutes.BURGERZAKEN]: `Burgerzaken | ${PageTitleMain}`,
+  [AppRoutes.ROOT]: `${ChapterTitles.ROOT} | ${PageTitleMain}`,
+  [AppRoutes.BURGERZAKEN]: `${ChapterTitles.BURGERZAKEN} | ${PageTitleMain}`,
   [AppRoutes.BIJSTANDSUITKERING]: `Bijstandsuitkering | ${PageTitleMain}`,
-  [AppRoutes.BELASTINGEN]: `Belastingen | ${PageTitleMain}`,
-  [AppRoutes.ZORG]: `Zorg | ${PageTitleMain}`,
-  [AppRoutes.JEUGDHULP]: `Jeugdhulp | ${PageTitleMain}`,
-  [AppRoutes.INKOMEN]: `Werk & Inkomen | ${PageTitleMain}`,
+  [AppRoutes.BELASTINGEN]: `${ChapterTitles.BELASTINGEN} | ${PageTitleMain}`,
+  [AppRoutes.ZORG]: `${ChapterTitles.ZORG} | ${PageTitleMain}`,
+  [AppRoutes.JEUGDHULP]: `${ChapterTitles.JEUGDHULP} | ${PageTitleMain}`,
+  [AppRoutes.INKOMEN]: `${ChapterTitles.INKOMEN} | ${PageTitleMain}`,
   [AppRoutes.STADSPAS]: `Stadspas | ${PageTitleMain}`,
 
   [AppRoutes.BIJZONDERE_BIJSTAND]: `Bijzondere bijstand | ${PageTitleMain}`,
@@ -22,7 +21,7 @@ export const PageTitles = {
   [AppRoutes.MY_AREA]: `Mijn buurt | ${PageTitleMain}`,
   [AppRoutes.PROCLAIMER]: `Proclaimer | ${PageTitleMain}`,
   [AppRoutes.MY_TIPS]: `Tips | ${PageTitleMain}`,
-  [AppRoutes.MY_UPDATES]: `Meldingen | ${PageTitleMain}`,
+  [AppRoutes.MY_UPDATES]: `${ChapterTitles.MELDINGEN} | ${PageTitleMain}`,
 };
 
 const sortedPageTitleRoutes = Object.keys(PageTitles).sort((a, b) => {
