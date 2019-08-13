@@ -8,7 +8,6 @@ export interface MyUpdate {
   id: string;
   chapter: Chapter;
   datePublished: string;
-  productTitle?: string;
   title: string;
   description: string;
   link?: LinkProps;
@@ -39,7 +38,6 @@ export default ({ FOCUS }: Pick<AppState, 'FOCUS'>): MyUpdatesApiState => {
   const items = [
     // Static content welcome message
     WelcomeUpdate,
-
     // Focus update items
     ...FOCUS.data.updates.map(update => {
       return {

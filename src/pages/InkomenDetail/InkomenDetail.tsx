@@ -40,7 +40,7 @@ export default () => {
             {ChapterTitles.INKOMEN}
           </PageContentMainHeadingBackLink>
           {!isLoading && FocusItem ? (
-            <span>{FocusItem.productTitle}</span>
+            <span>{FocusItem.title}</span>
           ) : (
             <LoadingContent
               className={styles.LoadingContentHeading}

@@ -1,62 +1,22 @@
 import { ApiConfig, ApiUrls } from 'App.constants';
-import formatFocusApiResponse, {
+import {
   FocusItem,
-  ProductTitles,
+  formatProductCollections,
+  ProductCollection,
 } from 'data-formatting/focus';
 import { useMemo } from 'react';
 import { ApiState } from './api.types';
 import { MyUpdate } from './my-updates-api.hook';
 import usePaginatedApi, { PaginatedItemsResponse } from './paginated-api.hook';
 
-interface ProductCollection {
-  [productTitle: string]: {
-    updates: any[];
-    items: FocusItem[];
-  };
-}
-
-export interface FocusResponse extends PaginatedItemsResponse {
+export interface FocusData extends PaginatedItemsResponse {
   items: FocusItem[];
   updates: MyUpdate[];
   products: ProductCollection;
 }
 
 export interface FocusApiState extends ApiState {
-  data: FocusResponse;
-}
-
-function formatProductCollections(items: any[]) {
-  const allItems = formatFocusApiResponse(items);
-  const products: ProductCollection = {};
-  const allUpdates: MyUpdate[] = [];
-
-  for (const item of allItems) {
-    const { productTitle } = item;
-
-    if (productTitle !== ProductTitles.BijzondereBijstand) {
-      let productCollecton = products[productTitle];
-
-      if (!productCollecton) {
-        productCollecton = products[productTitle] = {
-          updates: [],
-          items: [],
-        };
-      }
-
-      if (item.update) {
-        productCollecton.updates.push(item.update);
-        allUpdates.push({ ...item.update, productTitle: item.productTitle });
-      }
-
-      productCollecton.items.push(item);
-    }
-  }
-
-  return {
-    allItems,
-    allUpdates,
-    products,
-  };
+  data: FocusData;
 }
 
 export default function useFocusApi(
