@@ -68,8 +68,8 @@
 }
 
 @mixin media-query($sizes...) {
-  @include media($sizes...) {
-    @supports (display: grid) {
+  @supports (display: grid) {
+    @include media($sizes...) {
       @content;
     }
   }
