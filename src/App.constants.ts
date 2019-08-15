@@ -13,7 +13,8 @@ export type Chapter =
   | 'INKOMEN'
   | 'MELDINGEN'
   | 'MIJN_BUURT'
-  | 'PROFILE';
+  | 'PROFILE'
+  | 'MIJN_TIPS';
 
 export const Chapters: { [chapter in Chapter]: Chapter } = {
   ROOT: 'ROOT',
@@ -26,6 +27,7 @@ export const Chapters: { [chapter in Chapter]: Chapter } = {
   INKOMEN: 'INKOMEN',
   PROFILE: 'PROFILE',
   MELDINGEN: 'MELDINGEN',
+  MIJN_TIPS: 'MIJN_TIPS',
 };
 
 export const ChapterTitles: { [chapter in Chapter]: string } = {
@@ -39,6 +41,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   MELDINGEN: 'Mijn meldingen',
   PROFILE: 'Mijn gegevens',
   MIJN_BUURT: 'Mijn buurt',
+  MIJN_TIPS: 'Mijn tips',
 };
 
 export const AppRoutes = {
