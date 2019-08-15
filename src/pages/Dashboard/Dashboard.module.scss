@@ -12,7 +12,7 @@
     }
   }
 
-  .MyUpdatesHeadingLink {
+  .MyNotificationsHeadingLink {
     text-decoration: none;
     &:hover {
       text-decoration: underline;
@@ -20,7 +20,7 @@
     }
   }
 
-  @include select(MyUpdates_MyUpdates) {
+  @include select(MyNotifications_MyNotifications) {
     flex-basis: calc(
       50% - 5rem
     ); // margin-left + margin-right + custom gutter (an visually pleasing space between 2 blocks)
@@ -100,7 +100,7 @@
   max-width: $main-boxed-width;
   width: 100%;
   margin: 0 auto;
-  // Makes the updates and chapters touch the bottom of Hero
+  // Makes the notifications and chapters touch the bottom of Hero
   margin-top: -3.8rem;
 
   @include media-query('<=phone') {

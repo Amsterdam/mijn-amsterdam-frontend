@@ -2,24 +2,24 @@ import { Chapters } from 'App.constants';
 import { AppContext } from 'AppState';
 import Alert from 'components/Alert/Alert';
 import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
-import MyUpdates from 'components/MyUpdates/MyUpdates';
+import MyNotifications from 'components/MyNotifications/MyNotifications';
 import PageContentMain from 'components/PageContentMain/PageContentMain';
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
 import React, { useContext } from 'react';
 
-import styles from './MyUpdates.module.scss';
+import styles from './MyNotifications.module.scss';
 
 export default () => {
   const {
-    MY_UPDATES: {
+    MY_NOTIFICATIONS: {
       data: { items, total },
       isLoading,
       isError,
     },
   } = useContext(AppContext);
   return (
-    <PageContentMain className={styles.MyUpdates} variant="full">
+    <PageContentMain className={styles.MyNotifications} variant="full">
       <PageContentMainHeading
         variant="boxedWithIcon"
         className={styles.MainHeader}
@@ -33,7 +33,7 @@ export default () => {
             Uw meldingen kunnen op dit moment niet geladen worden.
           </Alert>
         )}
-        <MyUpdates
+        <MyNotifications
           isLoading={isLoading}
           total={total}
           items={items}

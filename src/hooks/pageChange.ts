@@ -21,7 +21,7 @@ export const PageTitles = {
   [AppRoutes.MY_AREA]: `Mijn buurt | ${PageTitleMain}`,
   [AppRoutes.PROCLAIMER]: `Proclaimer | ${PageTitleMain}`,
   [AppRoutes.MY_TIPS]: `Tips | ${PageTitleMain}`,
-  [AppRoutes.MY_UPDATES]: `${ChapterTitles.MELDINGEN} | ${PageTitleMain}`,
+  [AppRoutes.MY_NOTIFICATIONS]: `${ChapterTitles.MELDINGEN} | ${PageTitleMain}`,
 };
 
 const sortedPageTitleRoutes = Object.keys(PageTitles).sort((a, b) => {

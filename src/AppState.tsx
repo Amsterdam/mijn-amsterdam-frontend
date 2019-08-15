@@ -1,6 +1,6 @@
 import { BrpApiState, useBrpApi } from 'hooks/api/brp-api.hook';
 import useMyTipsApi from 'hooks/api/my-tips-api.hook';
-import useMyUpdatesApi from 'hooks/api/my-updates-api.hook';
+import useMyNotificationsApi from 'hooks/api/my-notifications-api.hook';
 import useSessionApi, { SessionApiState } from 'hooks/api/session.api.hook';
 import useMyChapters from 'hooks/api/myChapters.hook';
 import React, { createContext, useMemo, useEffect } from 'react';
@@ -10,7 +10,7 @@ import useErfpachtApi, { ErfpachtApiState } from './hooks/api/api.erfpacht';
 import useFocusApi, { FocusApiState } from './hooks/api/api.focus';
 import useWmoApi, { WmoApiState } from './hooks/api/api.wmo';
 import { MyTipsApiState } from './hooks/api/my-tips-api.hook';
-import { MyUpdatesApiState } from './hooks/api/my-updates-api.hook';
+import { MyNotificationsApiState } from './hooks/api/my-notifications-api.hook';
 import { MyChaptersApiState } from './hooks/api/myChapters.hook';
 import useMyMap from './hooks/api/api.mymap';
 import { getFullAddress } from 'data-formatting/brp';
@@ -20,7 +20,7 @@ type MyCasesApiState = FocusApiState;
 export interface AppState {
   BRP: BrpApiState;
   SESSION: SessionApiState;
-  MY_UPDATES: MyUpdatesApiState;
+  MY_NOTIFICATIONS: MyNotificationsApiState;
   MY_CASES: MyCasesApiState;
   MY_TIPS: MyTipsApiState;
   WMO: WmoApiState;
@@ -66,18 +66,18 @@ export function useAppState(value?: any) {
     const FOCUS = useFocusApi();
 
     const { data, ...rest } = FOCUS;
-    const items = data.items.filter(item => item.inProgress);
+    // At the time of writing we only show recentCases from the Focus API.
     const MY_CASES = {
       data: {
         ...data,
-        items,
-        total: items.length,
+        items: data.recentCases,
+        total: data.recentCases.length,
       },
       ...rest,
     };
 
     const BRP = useBrpApi();
-    const MY_UPDATES = useMyUpdatesApi({ FOCUS });
+    const MY_NOTIFICATIONS = useMyNotificationsApi({ FOCUS });
     const MY_TIPS = useMyTipsApi();
     const ERFPACHT = useErfpachtApi();
     const MY_CHAPTERS = useMyChapters({ WMO, FOCUS, ERFPACHT });
@@ -95,7 +95,7 @@ export function useAppState(value?: any) {
         BRP,
         // NOTE: If needed we can postpone immediate fetching of below data and start fetching in the component
         // by calling the refetch method implemented in the api hooks.
-        MY_UPDATES,
+        MY_NOTIFICATIONS,
         MY_CASES,
         MY_TIPS,
         WMO,
@@ -108,7 +108,7 @@ export function useAppState(value?: any) {
       WMO.isLoading,
       FOCUS.isLoading,
       BRP.isLoading,
-      MY_UPDATES.isLoading,
+      MY_NOTIFICATIONS.isLoading,
       MY_CASES.isLoading,
       MY_TIPS.isLoading,
       ERFPACHT.isLoading,

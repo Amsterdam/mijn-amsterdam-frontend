@@ -1,14 +1,14 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import MyUpdates from './MyUpdates';
+import MyNotifications from './MyNotifications';
 import AppState, { AppState as AppStateInterface } from 'AppState';
 
-const appState = { MY_UPDATES: {} } as AppStateInterface;
+const appState = { MY_NOTIFICATIONS: {} } as AppStateInterface;
 
 it('Renders without crashing', () => {
   shallow(
     <AppState value={appState}>
-      <MyUpdates />
+      <MyNotifications />
     </AppState>
   );
 });
