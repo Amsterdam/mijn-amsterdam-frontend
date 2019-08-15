@@ -125,7 +125,7 @@ interface StepSourceData {
 export interface ProcessStep {
   id: string;
   documents: GenericDocument[];
-  title: string;
+  title: JSX.Element | string;
   description: JSX.Element | string;
   datePublished: string;
   status: RequestStatus | '';
