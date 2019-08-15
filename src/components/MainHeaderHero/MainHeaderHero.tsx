@@ -39,7 +39,7 @@ function getHeroSrc(isAuthenticated: boolean = false) {
     case isChapterPath(AppRoutes.ZORG):
       imageName = 'west-RT-01';
       break;
-    case isChapterPath(AppRoutes.MY_UPDATES):
+    case isChapterPath(AppRoutes.MY_NOTIFICATIONS):
       imageName = 'Zuid-Oost-RT-06';
       break;
     case isChapterPath(AppRoutes.ROOT):

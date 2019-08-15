@@ -32,7 +32,7 @@ export const mainMenuItemId: { [key: string]: MainMenuId } = {
   HOME: 'DASHBOARD',
   MY_CHAPTERS: 'MIJN_THEMAS',
   MY_AREA: 'MIJN_BUURT',
-  MY_UPDATES: 'MIJN_MELDINGEN',
+  MY_NOTIFICATIONS: 'MIJN_MELDINGEN',
 };
 
 export const myChaptersMenuItems: MenuItem[] = [
@@ -80,7 +80,7 @@ export const MenuItemTitles = {
   HOME: ChapterTitles.ROOT,
   MY_CHAPTERS: "Mijn thema's",
   MY_AREA: ChapterTitles.MIJN_BUURT,
-  MY_UPDATES: ChapterTitles.MELDINGEN,
+  MY_NOTIFICATIONS: ChapterTitles.MELDINGEN,
 };
 
 export const menuItems: MenuItem[] = [
@@ -100,9 +100,9 @@ export const menuItems: MenuItem[] = [
     to: AppRoutes.MY_AREA,
   },
   {
-    title: MenuItemTitles.MY_UPDATES,
-    id: mainMenuItemId.MY_UPDATES,
-    to: AppRoutes.MY_UPDATES,
+    title: MenuItemTitles.MY_NOTIFICATIONS,
+    id: mainMenuItemId.MY_NOTIFICATIONS,
+    to: AppRoutes.MY_NOTIFICATIONS,
   },
 ];
 

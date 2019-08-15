@@ -1,10 +1,10 @@
 @import 'styles/_global.scss';
 
-.MyUpdates > ul {
+.MyNotifications > ul {
   @include reset-list-style;
 }
 
-.MyUpdateItem {
+.MyNotificationItem {
   border-top: 1px solid $color-neutral-grey2;
   padding-top: 2rem;
   padding-bottom: 2rem;

@@ -16,7 +16,7 @@
   }
 }
 
-.MyUpdates {
+.MyNotifications {
   @include select(PageContentMainBody_PageContentMainBody) {
     width: 100%;
     max-width: $main-boxed-width;
@@ -24,7 +24,7 @@
     position: relative;
     margin-bottom: 6rem;
 
-    @include select(MyUpdates_Description) {
+    @include select(MyNotifications_Description) {
       padding-right: 30rem;
 
       @include media-query('<=phone') {
@@ -32,10 +32,10 @@
       }
     }
 
-    @include select(MyUpdates_MyUpdateItem) {
+    @include select(MyNotifications_MyNotificationItem) {
       padding-left: 16rem;
 
-      @include select(MyUpdates_Icon) {
+      @include select(MyNotifications_Icon) {
         left: 6.4rem;
       }
 
@@ -52,7 +52,7 @@
       @include media-query('<=tablet') {
         padding-left: 0;
 
-        @include select(MyUpdates_MyUpdateItem) {
+        @include select(MyNotifications_MyNotificationItem) {
           padding-left: 0;
         }
 
@@ -66,25 +66,12 @@
       }
     }
 
-    @include select(MyUpdates_NoItemsInfo) {
+    @include select(MyNotifications_NoItemsInfo) {
       text-indent: 16rem;
 
       @include media-query('<=phone') {
         text-indent: 0;
       }
-    }
-  }
-
-  .PreviousUpdatesPanel {
-    background-color: $color-neutral-grey1;
-    padding-bottom: 1rem;
-
-    @include select(MyUpdates_Icon) {
-      fill: $color-neutral-grey4;
-    }
-
-    @include media-query('<=phone') {
-      padding-top: 2rem;
     }
   }
 }
