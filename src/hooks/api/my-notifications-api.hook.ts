@@ -8,8 +8,8 @@ export interface MyNotification {
   id: string;
   chapter: Chapter;
   datePublished: string;
-  title: string;
-  description: string;
+  title: string | JSX.Element;
+  description: string | JSX.Element;
   link?: LinkProps;
   isUnread?: boolean; // Was this notification presented to the user / has it been read
   customLink?: {

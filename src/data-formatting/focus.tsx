@@ -135,14 +135,17 @@ export interface ProcessStep {
 export interface FocusItem {
   id: string;
   datePublished: string;
-  title: string;
+  title: JSX.Element | string;
   description: JSX.Element | string;
   latestStep: StepTitle;
   hasDecision: boolean;
   isRecent: boolean;
+
+  // The null values are used to indicate there is no decision made yet
   isGranted: boolean | null;
   isDenied: boolean | null;
   isDiscarded: boolean | null;
+
   chapter: Chapter;
   link: LinkProps;
   process: ProcessStep[];
@@ -152,7 +155,7 @@ export interface FocusItem {
 
 export interface ProductCollection {
   [productTitle: string]: {
-    notifications: any[];
+    notifications: MyNotification[];
     items: FocusItem[];
   };
 }
@@ -628,7 +631,10 @@ function getStepSourceData({
   };
 }
 
-function parseLabelContent(text: any, data: StepSourceData): string {
+function parseLabelContent(
+  text: TextPartContents,
+  data: StepSourceData
+): string | JSX.Element {
   let rText = text || '';
 
   if (typeof rText === 'function') {
@@ -853,7 +859,7 @@ function formatFocusApiResponse(products: FocusApiResponse): FocusItem[] {
  * Organise the data in a easy to access object so we can refer to
  * specific types of products when using the data throughout the app
  */
-export function formatProductCollections(items: any[]) {
+export function formatProductCollections(items: FocusProduct[]) {
   const allItems = formatFocusApiResponse(items);
   const products: ProductCollection = {};
   const allNotifications: MyNotification[] = [];
