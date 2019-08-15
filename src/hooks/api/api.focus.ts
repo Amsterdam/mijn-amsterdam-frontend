@@ -6,12 +6,13 @@ import {
 } from 'data-formatting/focus';
 import { useMemo } from 'react';
 import { ApiState } from './api.types';
-import { MyUpdate } from './my-updates-api.hook';
+import { MyNotification } from './my-notifications-api.hook';
 import usePaginatedApi, { PaginatedItemsResponse } from './paginated-api.hook';
 
 export interface FocusData extends PaginatedItemsResponse {
   items: FocusItem[];
-  updates: MyUpdate[];
+  recentCases: FocusItem[];
+  notifications: MyNotification[];
   products: ProductCollection;
 }
 
@@ -29,15 +30,20 @@ export default function useFocusApi(
     limit,
     ApiConfig[ApiUrls.FOCUS].postponeFetch
   );
-  const { allItems, allUpdates, products } = useMemo(() => {
+
+  const { allItems, allNotifications, products } = useMemo(() => {
     return formatProductCollections(data.items);
   }, [data.items.length]);
+
+  const recentCases = allItems.filter(item => item.isRecent);
+
   return {
     ...rest,
     data: {
       ...data,
       items: allItems,
-      updates: allUpdates,
+      notifications: allNotifications,
+      recentCases,
       products,
     },
   };

@@ -2,7 +2,7 @@
 const items = [];
 
 module.exports = {
-  path: '/api/mijn-updates',
+  path: '/api/mijn-meldingen',
   template: (_, queryParams) => {
     return {
       total: items.length,

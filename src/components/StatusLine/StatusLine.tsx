@@ -1,11 +1,8 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styles from './StatusLine.module.scss';
 import classnames from 'classnames';
 import { ProcessStep } from 'data-formatting/focus';
-import {
-  IconButtonLink,
-  ButtonLinkExternal,
-} from 'components/ButtonLink/ButtonLink';
+import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
 import { Document } from '../DocumentList/DocumentList';
 import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
 import { defaultDateFormat } from 'helpers/App';
@@ -14,8 +11,6 @@ import { useSessionStorage } from 'hooks/storage.hook';
 import { itemClickTogglePayload } from 'hooks/analytics.hook';
 import { ReactComponent as CaretLeft } from 'assets/icons/Chevron-Left.svg';
 
-const markdownLinkRegex = /\[((?:[^\[\]\\]|\\.)+)\]\((https?:\/\/(?:[-A-Z0-9+&@#\/%=~_|\[\]](?= *\))|[-A-Z0-9+&@#\/%?=~_|\[\]!:,.;](?! *\))|\([-A-Z0-9+&@#\/%?=~_|\[\]!:,.;(]*\))+) *\)/i;
-const markdownTagMatchRegex = /(\[.*?\]\(.*?\))/gi;
 const DEFAULT_TRACK_CATEGORY = 'Metro_lijn';
 
 export type StatusLineItem = ProcessStep;
@@ -47,36 +42,8 @@ function DownloadLink({ item }: DownloadLinkProps) {
   );
 }
 
-function parseDescription(text: string, item: any) {
-  const linkTags = text.split(markdownTagMatchRegex);
-
-  if (linkTags) {
-    return linkTags.map(link => {
-      const tagParts = link.match(markdownLinkRegex);
-      if (tagParts) {
-        const [, text, url] = tagParts;
-        return (
-          <ButtonLinkExternal key={url} to={url}>
-            {text}
-          </ButtonLinkExternal>
-        );
-      }
-      return link;
-    });
-  }
-  return text.split(/\n/g).map(text => [text, <br />]);
-}
-
 function StatusLineItem({ item, stepNumber }: StatusLineItemProps) {
   const { location } = useRouter();
-  const memoizedDescription = useMemo(() => {
-    return (
-      item.description &&
-      item.description
-        .split(/\n\n/g)
-        .map((text, index) => <p key={index}>{parseDescription(text, item)}</p>)
-    );
-  }, [item]);
 
   return (
     <li
@@ -84,7 +51,6 @@ function StatusLineItem({ item, stepNumber }: StatusLineItemProps) {
       id={item.id}
       className={classnames(
         styles.ListItem,
-        item.isActual && styles.Actual,
         location.hash.substring(1) === item.id && styles.Highlight,
         styles[item.status.replace(/[^a-z]/gi, '').toLocaleLowerCase()]
       )}
@@ -95,7 +61,7 @@ function StatusLineItem({ item, stepNumber }: StatusLineItemProps) {
           {defaultDateFormat(item.datePublished)}
         </time>
       </div>
-      <div className={styles.Panel}>{memoizedDescription}</div>
+      <div className={styles.Panel}>{item.description}</div>
       <div className={styles.Panel}>
         <p>
           {item.documents.map(document => (

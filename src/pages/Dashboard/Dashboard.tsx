@@ -4,7 +4,7 @@ import MyArea from 'components/MyArea/MyArea';
 import MyCases from 'components/MyCases/MyCases';
 import MyChaptersPanel from 'components/MyChaptersPanel/MyChaptersPanel';
 import MyTips from 'components/MyTips/MyTips';
-import MyUpdates from 'components/MyUpdates/MyUpdates';
+import MyNotifications from 'components/MyNotifications/MyNotifications';
 import PageContentMain from 'components/PageContentMain/PageContentMain';
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
@@ -16,14 +16,14 @@ import { Link } from 'react-router-dom';
 import { AppRoutes } from 'App.constants';
 import { itemClickPayload } from 'hooks/analytics.hook';
 
-const MAX_UPDATES_VISIBLE = 3;
+const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
 
 export default () => {
   const {
-    MY_UPDATES: {
-      data: { items: myUpdateItems, total: myUpdatesTotal },
-      isLoading: isMyUpdatesLoading,
+    MY_NOTIFICATIONS: {
+      data: { items: myNotificationItems, total: myNotificationsTotal },
+      isLoading: isMyNotificationsLoading,
     },
     MY_CASES: {
       data: { items: myCases },
@@ -46,8 +46,8 @@ export default () => {
     <PageContentMain className={styles.Dashboard} variant="full">
       <PageContentMainHeading variant="medium">
         <Link
-          className={styles.MyUpdatesHeadingLink}
-          to={AppRoutes.MY_UPDATES}
+          className={styles.MyNotificationsHeadingLink}
+          to={AppRoutes.MY_NOTIFICATIONS}
           data-track={itemClickPayload(
             'MA_Dashboard/Mijn_meldingen',
             'Hoofd_titel'
@@ -57,11 +57,11 @@ export default () => {
         </Link>
       </PageContentMainHeading>
       <PageContentMainBody variant="regularBoxed" className={styles.FirstBody}>
-        <MyUpdates
-          total={myUpdateItems.length}
-          items={myUpdateItems.slice(0, MAX_UPDATES_VISIBLE)}
-          showMoreLink={myUpdatesTotal > MAX_UPDATES_VISIBLE}
-          isLoading={isMyUpdatesLoading}
+        <MyNotifications
+          total={myNotificationItems.length}
+          items={myNotificationItems.slice(0, MAX_NOTIFICATIONS_VISIBLE)}
+          showMoreLink={myNotificationsTotal > MAX_NOTIFICATIONS_VISIBLE}
+          isLoading={isMyNotificationsLoading}
           trackCategory={'MA_Dashboard/Mijn_meldingen'}
         />
         <MyChaptersPanel

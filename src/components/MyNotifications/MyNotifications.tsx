@@ -6,16 +6,19 @@ import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import Heading from 'components/Heading/Heading';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 import { defaultDateFormat } from 'helpers/App';
-import { MyUpdate, useUpdatesState } from 'hooks/api/my-updates-api.hook';
+import {
+  MyNotification,
+  useMyNotificationsState,
+} from 'hooks/api/my-notifications-api.hook';
 import { itemClickPayload, trackItemPresentation } from 'hooks/analytics.hook';
 import React, { useEffect } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import useRouter from 'use-react-router';
 
-import styles from './MyUpdates.module.scss';
+import styles from './MyNotifications.module.scss';
 
-export interface MyUpdatesProps {
-  items: MyUpdate[];
+export interface MyNotificationsProps {
+  items: MyNotification[];
   total: number;
   showMoreLink?: boolean;
   isLoading?: boolean;
@@ -25,20 +28,23 @@ export interface MyUpdatesProps {
 
 const CATEGORY = 'Mijn_Meldingen';
 
-export default function MyUpdates({
+export default function MyNotifications({
   items = [],
   total = 0,
   showMoreLink = false,
   isLoading = true,
   trackCategory = CATEGORY,
   noContentNotification = 'Er zijn op dit moment geen meldingen voor u.',
-}: MyUpdatesProps) {
-  const [myUpdatesState, setMyUpdatesState] = useUpdatesState();
+}: MyNotificationsProps) {
+  const [
+    myNotificationsState,
+    setMyNotificationsState,
+  ] = useMyNotificationsState();
   const { history } = useRouter();
 
-  function showUpdate(id: string, to: string) {
-    setMyUpdatesState({
-      ...myUpdatesState,
+  function showNotification(id: string, to: string) {
+    setMyNotificationsState({
+      ...myNotificationsState,
       [id]: true,
     });
     history.push(to);
@@ -55,10 +61,15 @@ export default function MyUpdates({
   trackEventPayload();
 
   return (
-    <div className={classnames(styles.MyUpdates, styles.isLoading)}>
+    <div className={classnames(styles.MyNotifications, styles.isLoading)}>
       <ul>
         {isLoading && (
-          <li className={classnames(styles.MyUpdateItem, styles.FakeContent)}>
+          <li
+            className={classnames(
+              styles.MyNotificationItem,
+              styles.FakeContent
+            )}
+          >
             <LoadingContent />
           </li>
         )}
@@ -68,7 +79,7 @@ export default function MyUpdates({
               <li
                 key={item.id}
                 className={classnames(
-                  styles.MyUpdateItem,
+                  styles.MyNotificationItem,
                   item.isUnread && styles.isUnread
                 )}
               >
@@ -107,7 +118,7 @@ export default function MyUpdates({
                           item.customLink.callback();
                         }
                         if (item.link) {
-                          showUpdate(item.id, item.link.to);
+                          showNotification(item.id, item.link.to);
                         }
                         return false;
                       }}
@@ -126,7 +137,7 @@ export default function MyUpdates({
       {!isLoading && showMoreLink && (
         <p className={styles.FooterLink}>
           <ButtonLink
-            to={AppRoutes.MY_UPDATES}
+            to={AppRoutes.MY_NOTIFICATIONS}
             data-track={itemClickPayload(
               trackCategory,
               'Link_naar_alle_meldingen'
