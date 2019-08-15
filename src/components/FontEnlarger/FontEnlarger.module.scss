@@ -1,10 +1,16 @@
 @import 'styles/_global.scss';
+
 .FontEnlarger {
   position: relative;
   margin: auto;
 
-  >strong {
-    color: $color-neutral-grey4;
+  > button {
+    font-weight: bold;
+    @include button-unstyled();
+    &:focus {
+      background-color: $color-support-focus;
+      outline: 1px dotted #000;
+    }
   }
 }
 
