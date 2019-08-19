@@ -1,7 +1,7 @@
 import { StateKey } from 'AppState';
 import { ErrorMessageMap } from 'components/ErrorMessages/ErrorMessages';
 import { isProduction } from 'helpers/App';
-import { MyUpdate } from 'hooks/api/my-updates-api.hook';
+import { MyNotification } from 'hooks/api/my-notifications-api.hook';
 
 export type Chapter =
   | 'ROOT'
@@ -13,7 +13,8 @@ export type Chapter =
   | 'INKOMEN'
   | 'MELDINGEN'
   | 'MIJN_BUURT'
-  | 'PROFILE';
+  | 'PROFILE'
+  | 'MIJN_TIPS';
 
 export const Chapters: { [chapter in Chapter]: Chapter } = {
   ROOT: 'ROOT',
@@ -26,6 +27,7 @@ export const Chapters: { [chapter in Chapter]: Chapter } = {
   INKOMEN: 'INKOMEN',
   PROFILE: 'PROFILE',
   MELDINGEN: 'MELDINGEN',
+  MIJN_TIPS: 'MIJN_TIPS',
 };
 
 export const ChapterTitles: { [chapter in Chapter]: string } = {
@@ -39,6 +41,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   MELDINGEN: 'Mijn meldingen',
   PROFILE: 'Mijn gegevens',
   MIJN_BUURT: 'Mijn buurt',
+  MIJN_TIPS: 'Mijn tips',
 };
 
 export const AppRoutes = {
@@ -59,7 +62,7 @@ export const AppRoutes = {
   PROCLAIMER: '/proclaimer',
   API_LOGIN: '/api/login',
   MY_TIPS: '/tips',
-  MY_UPDATES: '/meldingen',
+  MY_NOTIFICATIONS: '/meldingen',
 };
 
 export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/login';
@@ -69,7 +72,7 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const ATLAS_API_BASE_URL = process.env.REACT_APP_ATLAS_API_BASE_URL;
 
 export const ApiUrls = {
-  MY_UPDATES: `${API_BASE_URL}/mijn-updates`,
+  MY_NOTIFICATIONS: `${API_BASE_URL}/mijn-meldingen`,
   MY_CASES: `${API_BASE_URL}/focus/aanvragen`,
   MY_TIPS: `${API_BASE_URL}/tips/gettips`,
   BRP: `${API_BASE_URL}/brp/brp`,
@@ -103,7 +106,7 @@ export const errorMessageMap: ErrorMessageMap = {
     name: 'Persoonsgegevens',
     error: 'Communicatie met api mislukt.',
   },
-  MY_UPDATES: {
+  MY_NOTIFICATIONS: {
     name: 'Mijn meldingen',
     error: 'Communicatie met api mislukt.',
   },
@@ -220,7 +223,7 @@ export const Breakpoints = {
   phone: 640, // px
 };
 
-export const WelcomeUpdate: MyUpdate = {
+export const WelcomeNotification: MyNotification = {
   id: 'welcome01',
   chapter: Chapters.MELDINGEN,
   datePublished: new Date(2019, 6, 16).toISOString(),

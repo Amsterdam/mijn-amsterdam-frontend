@@ -4,6 +4,8 @@ import PageContentMainHeading from 'components/PageContentMainHeading/PageConten
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
 import MyTips from 'components/MyTips/MyTips';
 import { AppContext } from 'AppState';
+import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
+import { Chapters, ChapterTitles } from 'App.constants';
 
 export default () => {
   const {
@@ -14,7 +16,10 @@ export default () => {
   } = useContext(AppContext);
   return (
     <PageContentMain>
-      <PageContentMainHeading>Mijn tips</PageContentMainHeading>
+      <PageContentMainHeading variant="boxedWithIcon">
+        <ChapterHeadingIcon chapter={Chapters.MIJN_TIPS} />
+        {ChapterTitles.MIJN_TIPS}
+      </PageContentMainHeading>
       <PageContentMainBody variant="regularBoxed">
         <MyTips showHeader={false} isLoading={isMyTipsLoading} items={myTips} />
       </PageContentMainBody>

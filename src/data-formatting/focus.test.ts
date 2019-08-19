@@ -1,187 +1,339 @@
 import { FocusProduct, formatFocusProduct } from './focus';
-const inputData: FocusProduct = {
-  _id: '0-20',
-  dienstverleningstermijn: 21,
-  inspanningsperiode: 28,
-  naam: 'Levensonderhoud',
-  processtappen: {
-    aanvraag: {
-      datum: '2015-12-29T00:00:00+01:00',
-      document: [
-        {
-          $ref: '/focus/document?id=3428561&isBulk=false&isDms=false',
-          id: 3428561,
-          isBulk: false,
-          isDms: false,
-          omschrijving: 'Documentje!',
-        },
-        {
-          $ref: '/focus/document?id=6043736&isBulk=true&isDms=false',
-          id: 6043736,
-          isBulk: true,
-          isDms: false,
-          omschrijving: 'Documentje!',
-        },
-      ],
-    },
-    beslissing: {
-      datum: '2016-02-02T00:00:00+01:00',
-      document: [
-        {
-          $ref: '/focus/document?id=3428561&isBulk=false&isDms=false',
-          id: 3428561,
-          isBulk: false,
-          isDms: false,
-          omschrijving: 'Documentje!',
-        },
-        {
-          $ref: '/focus/document?id=6043736&isBulk=true&isDms=false',
-          id: 6043736,
-          isBulk: true,
-          isDms: false,
-          omschrijving: 'Documentje!',
-        },
-      ],
-    },
-    bezwaar: null,
-    herstelTermijn: null,
-    inBehandeling: {
-      datum: '2015-12-29T00:00:00+01:00',
-      document: [
-        {
-          $ref: '/focus/document?id=3428561&isBulk=false&isDms=false',
-          id: 3428561,
-          isBulk: false,
-          isDms: false,
-          omschrijving: 'Documentje!',
-        },
-        {
-          $ref: '/focus/document?id=6043736&isBulk=true&isDms=false',
-          id: 6043736,
-          isBulk: true,
-          isDms: false,
-          omschrijving: 'Documentje!',
-        },
-      ],
-    },
-  },
-  soortProduct: 'Participatiewet',
-  typeBesluit: 'Toekenning',
-};
 
-const formattedFocusProduct = {
-  id: '0-20',
-  chapter: 'INKOMEN',
-  datePublished: '01 februari 2016',
-  title: 'Bijstandsuitkering',
-  productTitle: 'Levensonderhoud',
-  description:
-    'U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer details.\n          [Bekijk hier de betaaldata van de uitkering](https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D)',
-  latestStep: 'beslissing',
-  inProgress: false,
-  isGranted: true,
-  isDenied: false,
-  link: {
-    title: 'Meer informatie',
-    to: '/werk-en-inkomen/bijstandsuitkering/0-20',
+const testData = [
+  {
+    _id: '0-0',
+    _meest_recent: 'aanvraag',
+    dienstverleningstermijn: 42,
+    naam: 'Stadspas',
+    processtappen: {
+      aanvraag: {
+        _id: 0,
+        datum: '2019-07-08T15:05:52+02:00',
+        document: [
+          {
+            $ref: 'focus/document?id=4400000004&isBulk=true&isDms=false',
+            id: 4400000004,
+            isBulk: true,
+            isDms: false,
+            omschrijving: 'Aanvraag Stadspas (papier)',
+          },
+          {
+            $ref: 'focus/document?id=4400000005&isBulk=true&isDms=false',
+            id: 4400000005,
+            isBulk: true,
+            isDms: false,
+            omschrijving: 'Aanvraag Stadspas (balie)',
+          },
+          {
+            $ref: 'focus/document?id=4400000006&isBulk=true&isDms=false',
+            id: 4400000006,
+            isBulk: true,
+            isDms: false,
+            omschrijving: 'Aanvraag Stadspas (digitaal)',
+          },
+        ],
+      },
+      beslissing: null,
+      bezwaar: null,
+      herstelTermijn: null,
+      inBehandeling: null,
+    },
+    soortProduct: 'Minimafonds',
   },
-  process: [
-    {
-      id: '0-20-aanvraag',
-      title: 'Bijstandsuitkering',
-      datePublished: '2015-12-29T00:00:00+01:00',
-      description:
-        'U hebt op 28 december 2015 een bijstandsuitkering aangevraagd.\n\n        [Wat kunt u van ons verwachten?](https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D)',
-      documents: [
-        {
-          id: '3428561',
-          title: 'Documentje!',
-          url: '/api/focus/document?id=3428561&isBulk=false&isDms=false',
-          datePublished: '2015-12-29T00:00:00+01:00',
-          type: 'aanvraag',
-        },
-        {
-          id: '6043736',
-          title: 'Documentje!',
-          url: '/api/focus/document?id=6043736&isBulk=true&isDms=false',
-          datePublished: '2015-12-29T00:00:00+01:00',
-          type: 'aanvraag',
-        },
-      ],
-      isActual: false,
-      status: 'Aanvraag',
-      aboutStep: 'aanvraag',
+  {
+    _id: '0-1',
+    _meest_recent: 'inBehandeling',
+    dienstverleningstermijn: 42,
+    naam: 'Stadspas',
+    processtappen: {
+      aanvraag: {
+        _id: 0,
+        datum: '2019-07-07T15:05:52+02:00',
+        document: [
+          {
+            $ref: 'focus/document?id=4400000004&isBulk=true&isDms=false',
+            id: 4400000004,
+            isBulk: true,
+            isDms: false,
+            omschrijving: 'Aanvraag Stadspas (papier)',
+          },
+          {
+            $ref: 'focus/document?id=4400000005&isBulk=true&isDms=false',
+            id: 4400000005,
+            isBulk: true,
+            isDms: false,
+            omschrijving: 'Aanvraag Stadspas (balie)',
+          },
+          {
+            $ref: 'focus/document?id=4400000006&isBulk=true&isDms=false',
+            id: 4400000006,
+            isBulk: true,
+            isDms: false,
+            omschrijving: 'Aanvraag Stadspas (digitaal)',
+          },
+        ],
+      },
+      beslissing: null,
+      bezwaar: null,
+      herstelTermijn: null,
+      inBehandeling: {
+        _id: 1,
+        datum: '2019-07-08T15:05:52+02:00',
+        document: [],
+      },
     },
-    {
-      id: '0-20-inBehandeling',
-      title: 'Bijstandsuitkering',
-      datePublished: '2015-12-29T00:00:00+01:00',
-      description:
-        'Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u nog extra informatie moet opsturen.\n        U ontvangt vóór 15 februari 2016 ons besluit.\n\n        \n        Lees meer over uw \n        [rechten](https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d) en [plichten](https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d)\n        ',
-      documents: [
-        {
-          id: '3428561',
-          title: 'Documentje!',
-          url: '/api/focus/document?id=3428561&isBulk=false&isDms=false',
-          datePublished: '2015-12-29T00:00:00+01:00',
-          type: 'inBehandeling',
-        },
-        {
-          id: '6043736',
-          title: 'Documentje!',
-          url: '/api/focus/document?id=6043736&isBulk=true&isDms=false',
-          datePublished: '2015-12-29T00:00:00+01:00',
-          type: 'inBehandeling',
-        },
-      ],
-      isActual: false,
-      status: 'In behandeling',
-      aboutStep: 'inBehandeling',
-    },
-    {
-      id: '0-20-beslissing',
-      title: 'Bijstandsuitkering',
-      datePublished: '2016-02-02T00:00:00+01:00',
-      description:
-        'U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer details.\n          [Bekijk hier de betaaldata van de uitkering](https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D)',
-      documents: [
-        {
-          id: '3428561',
-          title: 'Documentje!',
-          url: '/api/focus/document?id=3428561&isBulk=false&isDms=false',
-          datePublished: '2016-02-02T00:00:00+01:00',
-          type: 'beslissing',
-        },
-        {
-          id: '6043736',
-          title: 'Documentje!',
-          url: '/api/focus/document?id=6043736&isBulk=true&isDms=false',
-          datePublished: '2016-02-02T00:00:00+01:00',
-          type: 'beslissing',
-        },
-      ],
-      isActual: true,
-      status: 'Beslissing',
-      aboutStep: 'beslissing',
-    },
-  ],
-  update: {
-    id: '0-20-beslissing',
-    datePublished: '2016-02-02T00:00:00+01:00',
-    chapter: 'INKOMEN',
-    title: 'Bijstandsuitkering: Uw aanvraag is toegekend',
-    description:
-      'U heeft recht op een bijstandsuitkering (besluit: 01 februari 2016).',
-    isActual: false,
-    link: {
-      to: '/werk-en-inkomen/bijstandsuitkering/0-20#0-20-beslissing',
-      title: 'Meer informatie',
-    },
+    soortProduct: 'Minimafonds',
   },
-};
+  {
+    _id: '0-2',
+    _meest_recent: 'herstelTermijn',
+    dienstverleningstermijn: 42,
+    naam: 'Stadspas',
+    processtappen: {
+      aanvraag: {
+        _id: 0,
+        datum: '2019-07-03T15:05:52+02:00',
+        document: [
+          {
+            $ref: 'focus/document?id=4400000004&isBulk=true&isDms=false',
+            id: 4400000004,
+            isBulk: true,
+            isDms: false,
+            omschrijving: 'Aanvraag Stadspas (papier)',
+          },
+          {
+            $ref: 'focus/document?id=4400000005&isBulk=true&isDms=false',
+            id: 4400000005,
+            isBulk: true,
+            isDms: false,
+            omschrijving: 'Aanvraag Stadspas (balie)',
+          },
+          {
+            $ref: 'focus/document?id=4400000006&isBulk=true&isDms=false',
+            id: 4400000006,
+            isBulk: true,
+            isDms: false,
+            omschrijving: 'Aanvraag Stadspas (digitaal)',
+          },
+        ],
+      },
+      beslissing: null,
+      bezwaar: null,
+      herstelTermijn: {
+        _id: 2,
+        aantalDagenHerstelTermijn: '10',
+        datum: '2019-07-06T15:05:52+02:00',
+        document: [],
+      },
+      inBehandeling: {
+        _id: 1,
+        datum: '2019-07-04T15:05:52+02:00',
+        document: [],
+      },
+    },
+    soortProduct: 'Minimafonds',
+  },
+  {
+    _id: '1-0',
+    _meest_recent: 'beslissing',
+    dienstverleningstermijn: 21,
+    inspanningsperiode: 28,
+    naam: 'Levensonderhoud',
+    processtappen: {
+      aanvraag: {
+        _id: 0,
+        datum: '2019-07-24T15:05:51+02:00',
+        document: [
+          {
+            $ref: 'focus/document?id=660000000000004&isBulk=false&isDms=false',
+            id: 660000000000004,
+            isBulk: false,
+            isDms: false,
+            omschrijving: 'Aanvraag WWB (GALO)',
+          },
+        ],
+      },
+      beslissing: {
+        _id: 3,
+        datum: '2019-07-28T15:05:51+02:00',
+        document: [
+          {
+            $ref: 'focus/document?id=660000000000005&isBulk=false&isDms=false',
+            id: 660000000000005,
+            isBulk: false,
+            isDms: false,
+            omschrijving: 'Afwijzen Levensonderhoud (BIJ)',
+          },
+        ],
+      },
+      bezwaar: null,
+      herstelTermijn: null,
+      inBehandeling: {
+        _id: 1,
+        datum: '2019-07-25T15:05:51+02:00',
+        document: [],
+      },
+    },
+    soortProduct: 'Participatiewet',
+    typeBesluit: 'Toekenning',
+  },
+  {
+    _id: '1-1',
+    _meest_recent: 'beslissing',
+    dienstverleningstermijn: 21,
+    inspanningsperiode: 28,
+    naam: 'Levensonderhoud',
+    processtappen: {
+      aanvraag: {
+        _id: 0,
+        datum: '2019-04-09T15:05:51+02:00',
+        document: [
+          {
+            $ref: 'focus/document?id=660000000000006&isBulk=false&isDms=false',
+            id: 660000000000006,
+            isBulk: false,
+            isDms: false,
+            omschrijving: 'Aanvraag WWB (GALO)',
+          },
+        ],
+      },
+      beslissing: {
+        _id: 3,
+        datum: '2019-05-07T15:05:51+02:00',
+        document: [
+          {
+            $ref: 'focus/document?id=660000000000007&isBulk=false&isDms=false',
+            id: 660000000000007,
+            isBulk: false,
+            isDms: false,
+            omschrijving: 'Afwijzen Levensonderhoud',
+          },
+        ],
+        reden: 'Test LO',
+      },
+      bezwaar: null,
+      herstelTermijn: null,
+      inBehandeling: {
+        _id: 1,
+        datum: '2019-04-11T15:05:51+02:00',
+        document: [],
+      },
+    },
+    soortProduct: 'Participatiewet',
+    typeBesluit: 'Afwijzing',
+  },
+  {
+    _id: '1-2',
+    _meest_recent: 'beslissing',
+    dienstverleningstermijn: 21,
+    inspanningsperiode: 28,
+    naam: 'Levensonderhoud',
+    processtappen: {
+      aanvraag: {
+        _id: 0,
+        datum: '2019-05-09T15:05:51+02:00',
+        document: [
+          {
+            $ref: 'focus/document?id=660000000000008&isBulk=false&isDms=false',
+            id: 660000000000008,
+            isBulk: false,
+            isDms: false,
+            omschrijving: 'Aanvraag WWB (GALO)',
+          },
+        ],
+      },
+      beslissing: {
+        _id: 3,
+        datum: '2019-06-08T15:05:51+02:00',
+        document: [
+          {
+            $ref: 'focus/document?id=660000000000009&isBulk=false&isDms=false',
+            id: 660000000000009,
+            isBulk: false,
+            isDms: false,
+            omschrijving: 'Toekennen Levensonderhoud (BIJ)',
+          },
+        ],
+      },
+      bezwaar: null,
+      herstelTermijn: {
+        _id: 2,
+        aantalDagenHerstelTermijn: '20',
+        datum: '2019-05-19T15:05:51+02:00',
+        document: [],
+      },
+      inBehandeling: {
+        _id: 1,
+        datum: '2019-05-11T15:05:51+02:00',
+        document: [],
+      },
+    },
+    soortProduct: 'Participatiewet',
+    typeBesluit: 'Toekenning',
+  },
+  {
+    _id: '1-3',
+    _meest_recent: 'beslissing',
+    dienstverleningstermijn: 21,
+    inspanningsperiode: 28,
+    naam: 'Levensonderhoud',
+    processtappen: {
+      aanvraag: {
+        _id: 0,
+        datum: '2019-06-08T15:05:52+02:00',
+        document: [
+          {
+            $ref: 'focus/document?id=660000000000010&isBulk=false&isDms=false',
+            id: 660000000000010,
+            isBulk: false,
+            isDms: false,
+            omschrijving: 'Aanvraag WWB (GALO)',
+          },
+          {
+            $ref: 'focus/document?id=660000000000019&isBulk=false&isDms=false',
+            id: 660000000000019,
+            isBulk: false,
+            isDms: false,
+            omschrijving: 'Aanvraag WWB (GALO)',
+          },
+        ],
+      },
+      beslissing: {
+        _id: 3,
+        datum: '2019-07-03T15:05:52+02:00',
+        document: [
+          {
+            $ref: 'focus/document?id=660000000000011&isBulk=false&isDms=false',
+            id: 660000000000011,
+            isBulk: false,
+            isDms: false,
+            omschrijving: 'Niet in behandeling nemen',
+          },
+        ],
+      },
+      bezwaar: null,
+      herstelTermijn: {
+        _id: 2,
+        aantalDagenHerstelTermijn: '15',
+        datum: '2019-06-13T15:05:52+02:00',
+        document: [],
+      },
+      inBehandeling: {
+        _id: 1,
+        datum: '2019-06-11T15:05:52+02:00',
+        document: [],
+      },
+    },
+    soortProduct: 'Participatiewet',
+    typeBesluit: 'Buiten Behandeling',
+  },
+];
 
 describe('Focus data formatting', () => {
-  it('format correctly', () => {
-    expect(formatFocusProduct(inputData)).toEqual(formattedFocusProduct);
+  testData.forEach(item => {
+    it('format correctly ' + item.naam + '--' + item._id, () => {
+      expect(formatFocusProduct(item as FocusProduct)).toMatchSnapshot();
+    });
   });
 });
