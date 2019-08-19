@@ -119,7 +119,7 @@ export const errorMessageMap: ErrorMessageMap = {
     error: 'Communicatie met api mislukt.',
   },
   WMO: {
-    name: 'Zorg',
+    name: 'Zorg en ondersteuning',
     error: 'Communicatie met api mislukt.',
   },
   FOCUS: {
