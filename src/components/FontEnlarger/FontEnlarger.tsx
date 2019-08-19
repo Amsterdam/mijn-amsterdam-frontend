@@ -22,9 +22,15 @@ export default function FontEnlarger({ children }: ComponentProps) {
   );
   return (
     <div className={styles.FontEnlarger}>
-      <strong onMouseEnter={() => show()} onMouseLeave={() => hide()}>
-        A + -
-      </strong>
+      <button
+        onFocus={() => show()}
+        onBlur={() => hide()}
+        onMouseEnter={() => show()}
+        onMouseLeave={() => hide()}
+        title="Uitleg tekst vergroter"
+      >
+        A &#43; &minus;
+      </button>
       <div
         className={classnames(
           styles.FontEnlargerPopup,
