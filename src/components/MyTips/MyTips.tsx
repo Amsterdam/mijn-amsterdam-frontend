@@ -19,7 +19,7 @@ const Tip = ({ tip }: TipProps) => (
       {tip.imgUrl ? (
         <img src={tip.imgUrl} />
       ) : (
-        <ImgPlaceholder className={styles.ImgPlaceholder} />
+        <ImgPlaceholder aria-hidden="true" className={styles.ImgPlaceholder} />
       )}
     </div>
     <Heading el="h4">{tip.title}</Heading>

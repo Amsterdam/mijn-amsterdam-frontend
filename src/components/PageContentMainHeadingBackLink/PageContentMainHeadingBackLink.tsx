@@ -27,7 +27,7 @@ export default function PageContentMainHeadingBackLink({
       className={styles.PageContentMainHeadingBackLink}
       to={to}
     >
-      <CaretLeft /> {children}
+      <CaretLeft aria-hidden="true" /> {children}
     </IconButtonLink>
   );
 }

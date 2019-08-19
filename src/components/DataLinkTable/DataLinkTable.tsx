@@ -5,7 +5,7 @@ import ButtonLink from 'components/ButtonLink/ButtonLink';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 import { entries, withKeyPress } from 'helpers/App';
 import { useSessionStorage } from 'hooks/storage.hook';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import Heading from '../Heading/Heading';
 import styles from './DataLinkTable.module.scss';
@@ -99,7 +99,7 @@ export default function DataLinkTable({
             isCollapsed ? 'dicht' : 'open'
           )}
         >
-          <CaretIcon className={styles.CaretIcon} /> {title}
+          <CaretIcon aria-hidden="true" className={styles.CaretIcon} /> {title}
           {hasItems && <span>({items.length})</span>}
         </Heading>
       )}
