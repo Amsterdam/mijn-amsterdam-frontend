@@ -23,6 +23,7 @@ import MainFooter from './components/MainFooter/MainFooter';
 import MainHeader from './components/MainHeader/MainHeader';
 import NotFound from './pages/NotFound/NotFound';
 import Profile from './pages/Profile/Profile';
+import classnames from 'classnames';
 
 function track(event: any) {
   // NOTE: Beware of potentially nested [data-track] attributes as traversing up the dom here could result in using the wrong data-track attribute on a parent.
@@ -33,6 +34,25 @@ function track(event: any) {
       trackEvent(payload.split(','));
     }
   }
+}
+
+function AppNotAuthenticated() {
+  return (
+    <>
+      <div
+        className={classnames(styles.App, styles.NotYetAuthenticated)}
+        id="AppContent"
+      >
+        <MainHeader />
+        <Switch>
+          <Route exact path={AppRoutes.ROOT} component={LandingPage} />
+          <Route path={AppRoutes.PROCLAIMER} component={Proclaimer} />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
+      <MainFooter />
+    </>
+  );
 }
 
 function AppAuthenticated() {
@@ -98,11 +118,7 @@ function AppLanding() {
       <AutoLogoutDialog />
     </>
   ) : (
-    <div className={styles.NotYetAuthenticated}>
-      <MainHeader />
-      <LandingPage />
-      <MainFooter />
-    </div>
+    <AppNotAuthenticated />
   );
 }
 
