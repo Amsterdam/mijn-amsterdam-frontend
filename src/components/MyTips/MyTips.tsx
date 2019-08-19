@@ -24,7 +24,12 @@ const Tip = ({ tip }: TipProps) => (
     </div>
     <Heading el="h4">{tip.title}</Heading>
     <p>{tip.description}</p>
-    <ButtonLinkExternal to={tip.link.to}>{tip.link.title}</ButtonLinkExternal>
+    <ButtonLinkExternal
+      aria-label="Meer informatie over deze tip"
+      to={tip.link.to}
+    >
+      {tip.link.title}
+    </ButtonLinkExternal>
   </li>
 );
 

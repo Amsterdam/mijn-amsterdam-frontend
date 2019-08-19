@@ -105,6 +105,7 @@ export default function MyNotifications({
                 {(!!item.link || !!item.customLink) && (
                   <p className={styles.Action}>
                     <a
+                      aria-label="Meer informatie over deze melding"
                       href={item.customLink ? '#' : item.link!.to}
                       role="button"
                       data-track={itemClickPayload(
