@@ -124,7 +124,6 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
     setOpen(false);
     reset();
     resume();
-    document.title = originalTitle;
   }
 
   function showLoginScreen() {
@@ -143,6 +142,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
     // Refetching the session will renew the session for another {AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS + AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS} seconds.
     session.refetch();
     resetAutoLogout();
+    document.title = originalTitle;
   }
 
   // On every tick the document title is changed trying to catch the users attention.
