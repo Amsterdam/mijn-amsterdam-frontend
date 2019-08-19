@@ -240,6 +240,7 @@ export default function MainNavBar() {
 
       {isAuthenticated && (!isResponsiveMenu || isResponsiveMenuMenuVisible) && (
         <div id={LinkContainerId} className={styles.LinkContainer}>
+          <SecondaryLinks />
           {menuItems.map(item => {
             let menuItem = item;
             if (item.id in submenuItems) {
@@ -257,7 +258,6 @@ export default function MainNavBar() {
               !isResponsiveMenu
             );
           })}
-          <SecondaryLinks />
         </div>
       )}
 
