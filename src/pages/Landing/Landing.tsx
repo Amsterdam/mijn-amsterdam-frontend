@@ -73,14 +73,15 @@ export default () => {
             </span>
           </a>
         </p>
+        <Heading size="small" el="h3">
+          Nog geen DigiD?
+        </Heading>
         <p>
-          <strong>Nog geen DigiD?</strong>
-          <br />
           <a href="https://www.digid.nl/aanvragen">Vraag DigiD aan</a>
         </p>
-        <p>
-          <strong>Dit staat nu op Mijn Amsterdam:</strong>
-        </p>
+        <Heading size="small" el="h3">
+          Dit staat nu op Mijn Amsterdam:
+        </Heading>
         <ul>
           <li>Hoe u ingeschreven staat bij de gemeente</li>
           <li>Hoe het staat met uw aanvraag voor een bijstandsuitkering</li>
@@ -89,9 +90,10 @@ export default () => {
           <li>Informatie over uw erfpacht</li>
           <li>Informatie over uw eigen buurt</li>
         </ul>
+        <Heading size="small" el="h3">
+          Mijn Amsterdam is nog niet af
+        </Heading>
         <p>
-          <strong>Mijn Amsterdam is nog niet af</strong>
-          <br />
           De komende jaren komt er steeds meer bij. Laat ons weten wat u ervan
           vindt. U kunt hiervoor de "uw mening" knop gebruiken aan de
           rechterkant van het scherm.
