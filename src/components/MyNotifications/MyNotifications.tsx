@@ -88,6 +88,9 @@ export default function MyNotifications({
                   className={styles.Icon}
                   chapter={item.chapter}
                 />
+                <Heading className={styles.Title} el="h4" size="small">
+                  {item.title}
+                </Heading>
                 <aside className={styles.MetaInfo}>
                   <em className={styles.ChapterIndication}>
                     {item.chapter.toLowerCase()}
@@ -96,9 +99,6 @@ export default function MyNotifications({
                     {defaultDateFormat(item.datePublished)}
                   </time>
                 </aside>
-                <Heading className={styles.Title} el="h4" size="small">
-                  {item.title}
-                </Heading>
                 {!!item.description && (
                   <p className={styles.Description}>{item.description}</p>
                 )}
