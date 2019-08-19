@@ -40,11 +40,15 @@ export default () => {
           className={styles.BetaLogo}
         />
       </PageContentMainHeading>
-      <PageContentMainBody variant="regular" className={styles.Landing}>
+      <PageContentMainBody
+        id="AppContent"
+        variant="regular"
+        className={styles.Landing}
+      >
         <p>
           Op Mijn Amsterdam ziet u hoe het staat met uw aanvraag of melding. Ook
-          ziet u welke gegevens de gemeente van u heeft vastgelegd. En hoe u
-          het kunt doorgeven als er iets niet klopt. Nog niet al uw informatie is
+          ziet u welke gegevens de gemeente van u heeft vastgelegd. En hoe u het
+          kunt doorgeven als er iets niet klopt. Nog niet al uw informatie is
           via Mijn Amsterdam beschikbaar. De komende jaren komt er steeds meer
           bij.
         </p>

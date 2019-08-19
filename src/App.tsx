@@ -46,7 +46,7 @@ function AppAuthenticated() {
   ) : (
     <>
       <MainHeader isAuthenticated={session.isAuthenticated} />
-      <div className={styles.App}>
+      <div className={styles.App} id="AppContent">
         <Switch>
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Redirect from={AppRoutes.API_LOGIN} to={AppRoutes.ROOT} />

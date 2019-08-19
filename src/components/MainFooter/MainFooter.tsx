@@ -25,7 +25,7 @@ export default function MainFooter() {
   const titleRole = useDesktopScreen() ? 'columnheader' : 'button';
 
   return (
-    <footer className={styles.MainFooter}>
+    <footer className={styles.MainFooter} id="MainFooter">
       <div className={classnames(styles.TopBar, styles.InnerContainer)}>
         <div
           className={classnames(
