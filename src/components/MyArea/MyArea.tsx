@@ -17,7 +17,12 @@ export function MyAreaHeader({ trackCategory }: MyAreaHeaderComponentProps) {
   return (
     <div className={styles.Header}>
       <Link to={AppRoutes.ROOT}>
-        <Logo aria-hidden="true" className={styles.Logo} />
+        <Logo
+          aria-hidden="true"
+          role="img"
+          aria-label="Amsterdam logo"
+          className={styles.Logo}
+        />
       </Link>
       <h1 className={styles.Title}>Mijn buurt</h1>
       <NavLink
