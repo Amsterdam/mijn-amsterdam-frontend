@@ -41,9 +41,10 @@ function DownloadLink({ item }: DownloadLinkProps) {
     <IconButtonLink
       className={styles.DownloadLink}
       to={item.url}
+      rel="external nofollow"
       download={item.title}
     >
-      <DownloadIcon />
+      <DownloadIcon aria-hidden="true" />
       {item.title}
     </IconButtonLink>
   );
@@ -144,7 +145,7 @@ export default function StatusLine({
           )}
           onClick={toggleCollapsed}
         >
-          <CaretLeft />
+          <CaretLeft aria-hidden="true" />
           {isCollapsed ? 'Toon alles' : 'Toon minder'}
         </button>
       )}

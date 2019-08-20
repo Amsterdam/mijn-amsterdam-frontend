@@ -23,6 +23,7 @@ export default function FontEnlarger({ children }: ComponentProps) {
   return (
     <div className={styles.FontEnlarger}>
       <button
+        aria-label="Uitleg tekst vergroten"
         onFocus={() => show()}
         onBlur={() => hide()}
         onMouseEnter={() => show()}

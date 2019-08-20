@@ -50,13 +50,16 @@
 }
 
 .Title {
-  cursor: pointer;
   position: relative;
   padding-left: 1em;
   margin-bottom: 4rem;
 
-  &:focus {
-    background-color: $color-support-focus;
+
+  &.has-items {
+    cursor: pointer;
+    &:focus {
+      background-color: $color-support-focus;
+    }
   }
 
   span {

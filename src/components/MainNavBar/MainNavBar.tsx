@@ -8,7 +8,7 @@ import FontEnlarger from 'components/FontEnlarger/FontEnlarger';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from 'components/MainNavSubmenu/MainNavSubmenu';
-import { getFullName, Persoon } from 'data-formatting/brp';
+import { getFullName } from 'data-formatting/brp';
 import { useDesktopScreen, useTabletScreen } from 'hooks/media.hook';
 import {
   itemClickPayload,
@@ -81,7 +81,7 @@ function SecondaryLinks() {
             'Link_naar_Uitloggen'
           )}
         >
-          <LogoutIcon /> Uitloggen
+          <LogoutIcon aria-hidden="true" /> Uitloggen
         </IconButtonLink>
       }
     </div>
@@ -108,7 +108,6 @@ function getMenuItem(
     return (
       <MainNavSubmenu
         key={item.id}
-        id={item.id}
         title={item.title}
         isOpen={isOpen}
         onFocus={() => !isOpen && setSubMenuVisibility(item.id)}
@@ -121,7 +120,6 @@ function getMenuItem(
             <MainNavSubmenuLink
               key={id}
               to={to}
-              id={id}
               rel={rel}
               data-track={itemClickPayload(
                 'MA_Header/Primaire_Links/Mijn_Themas_submenu',
@@ -193,22 +191,8 @@ export default function MainNavBar() {
   ) {
     if (id && activeSubmenuId !== id) {
       activateSubmenu(id);
-      trackEvent(
-        itemInteractionPayload(
-          'MouseEnter',
-          `MA_Header/Primaire_Links/Submenu`,
-          id
-        )
-      );
     } else if (!isSubmenuTrigger && activeSubmenuId !== id) {
       activateSubmenu('');
-      trackEvent(
-        itemInteractionPayload(
-          'MouseLeave',
-          `MA_Header/Primaire_Links/Submenu`,
-          id ? id : ''
-        )
-      );
     }
   }
 
@@ -234,7 +218,7 @@ export default function MainNavBar() {
           })}
           onClick={() => toggleResponsiveMenu(!isResponsiveMenuMenuVisible)}
         >
-          Toggle menu
+          Navigatie
         </button>
       )}
 

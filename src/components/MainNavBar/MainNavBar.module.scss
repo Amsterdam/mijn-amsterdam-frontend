@@ -77,11 +77,6 @@
   margin-top: -8.1rem;
   right: calc((100vw - #{$main-boxed-width}) / 2);
 
-  @include IE11 {
-    position: relative;
-    right: -10rem;
-  }
-
   > a {
     display: inline-block;
     margin-left: 3.3rem;
