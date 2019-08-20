@@ -8,7 +8,7 @@ import FontEnlarger from 'components/FontEnlarger/FontEnlarger';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from 'components/MainNavSubmenu/MainNavSubmenu';
-import { getFullName, Persoon } from 'data-formatting/brp';
+import { getFullName } from 'data-formatting/brp';
 import { useDesktopScreen, useTabletScreen } from 'hooks/media.hook';
 import {
   itemClickPayload,
@@ -81,7 +81,7 @@ function SecondaryLinks() {
             'Link_naar_Uitloggen'
           )}
         >
-          <LogoutIcon /> Uitloggen
+          <LogoutIcon aria-hidden="true" /> Uitloggen
         </IconButtonLink>
       }
     </div>

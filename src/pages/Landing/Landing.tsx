@@ -35,6 +35,7 @@ export default () => {
       <PageContentMainHeading>
         Welkom op Mijn Amsterdam
         <BetaLabel
+          aria-hidden="true"
           role="img"
           aria-label="Beta versie"
           className={styles.BetaLogo}

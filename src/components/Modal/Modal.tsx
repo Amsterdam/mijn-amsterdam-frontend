@@ -145,7 +145,7 @@ export function Dialog({
                     className={styles.ButtonClose}
                     onClick={() => typeof onClose === 'function' && onClose()}
                   >
-                    <CloseIcon />
+                    <CloseIcon aria-hidden="true" />
                   </button>
                 )}
               </header>

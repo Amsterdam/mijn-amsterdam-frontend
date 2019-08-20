@@ -4,7 +4,6 @@ import useRouter from 'use-react-router';
 import { AppRoutes } from 'App.constants';
 import { SessionContext } from '../../AppState';
 
-const DEFAULT_ALT = 'Sfeerbeeld kenmerkend voor de Amsterdammer';
 const LANDSCAPE_SCREEN_RATIO = 0.25;
 const PORTRAIT_SCREEN_RATIO = 0.4;
 
@@ -72,13 +71,11 @@ function getHeroSrc(isAuthenticated: boolean = false) {
 
 export interface MainHeaderHeroProps {
   src: string;
-  alt: string;
 }
 
 export default function MainHeaderHero(props: Partial<MainHeaderHeroProps>) {
   const session = useContext(SessionContext);
   const srcSet = getHeroSrc(session.isAuthenticated);
-  const alt = props.alt || DEFAULT_ALT;
 
   return (
     <div className={styles.MainHeaderHero}>
@@ -107,7 +104,7 @@ export default function MainHeaderHero(props: Partial<MainHeaderHeroProps>) {
           media="(orientation: landscape) and (min-width: 1200px)"
           srcSet={srcSet.LANDSCAPE_MEDIUM}
         />
-        <img src={srcSet.LANDSCAPE_MEDIUM} className={styles.Image} alt={alt} />
+        <img src={srcSet.LANDSCAPE_MEDIUM} className={styles.Image} alt="" />
       </picture>
     </div>
   );
