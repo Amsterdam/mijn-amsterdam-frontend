@@ -31,9 +31,13 @@ export default function DocumentList({ items = [] }: DocumentListProps) {
                 </time>
               </aside>
               <a className={styles.DownloadLink} href={item.url}>
-                <DocumentIcon className={styles.Icon} />
+                <DocumentIcon aria-hidden="true" className={styles.Icon} />
                 <Heading el="h4" size="small">
-                  {item.title} <DownloadIcon className={styles.DownloadIcon} />
+                  {item.title}{' '}
+                  <DownloadIcon
+                    aria-hidden="true"
+                    className={styles.DownloadIcon}
+                  />
                 </Heading>
                 <div className={styles.FileType}>PDF</div>
               </a>

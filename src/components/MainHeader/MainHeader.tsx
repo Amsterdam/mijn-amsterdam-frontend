@@ -63,6 +63,7 @@ export default function MainHeader({
       <div className={styles.topBar}>
         <Link className={styles.logoLink} to={AppRoutes.ROOT}>
           <Logo
+            aria-hidden="true"
             role="img"
             aria-label="Amsterdam logo"
             className={styles.logo}
@@ -73,6 +74,7 @@ export default function MainHeader({
           </Heading>
         </Link>
         <BetaLabel
+          aria-hidden="true"
           role="img"
           aria-label="Beta versie"
           className={styles.betaLabel}
