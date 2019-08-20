@@ -193,22 +193,8 @@ export default function MainNavBar() {
   ) {
     if (id && activeSubmenuId !== id) {
       activateSubmenu(id);
-      trackEvent(
-        itemInteractionPayload(
-          'MouseEnter',
-          `MA_Header/Primaire_Links/Submenu`,
-          id
-        )
-      );
     } else if (!isSubmenuTrigger && activeSubmenuId !== id) {
       activateSubmenu('');
-      trackEvent(
-        itemInteractionPayload(
-          'MouseLeave',
-          `MA_Header/Primaire_Links/Submenu`,
-          id ? id : ''
-        )
-      );
     }
   }
 
