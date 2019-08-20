@@ -220,7 +220,7 @@ export default function MainNavBar() {
           })}
           onClick={() => toggleResponsiveMenu(!isResponsiveMenuMenuVisible)}
         >
-          Toggle menu
+          Navigatie
         </button>
       )}
 

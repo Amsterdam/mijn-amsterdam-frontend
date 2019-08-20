@@ -21,7 +21,7 @@
   min-height: 5.5rem;
   padding: 1rem 0 1rem 5rem;
   position: relative;
-  flex-basis: calc(50% - 5rem);
+  width: calc(50% - 5rem);
 
   &:nth-child(odd) {
     margin-right: 5rem;
@@ -33,7 +33,6 @@
 
   &:nth-child(even) {
     margin-left: 5rem;
-    flex-basis: calc(50% - 5rem);
 
     @include media-query('<=phone') {
       margin: 0;
@@ -42,6 +41,7 @@
 
   a {
     text-decoration: none;
+
     &:hover {
       color: $color-primary-red;
       text-decoration: underline;
