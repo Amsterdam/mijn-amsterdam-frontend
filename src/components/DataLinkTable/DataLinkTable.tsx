@@ -88,9 +88,7 @@ export default function DataLinkTable({
       {hasTitle && (
         <Heading
           size="mediumLarge"
-          role="button"
-          tabIndex={!hasItems ? -1 : 0}
-          className={styles.Title}
+          className={classnames(styles.Title, hasItems && 'has-items')}
           onKeyPress={event => hasItems && toggleCollapsed(event)}
           onClick={event => hasItems && toggleCollapsed(event)}
           data-track={itemClickTogglePayload(
@@ -98,6 +96,7 @@ export default function DataLinkTable({
             'DataLink_tabel_titel',
             isCollapsed ? 'dicht' : 'open'
           )}
+          {...(hasItems ? { role: 'button', tabIndex: 0 } : {})}
         >
           <CaretIcon aria-hidden="true" className={styles.CaretIcon} /> {title}
           {hasItems && <span>({items.length})</span>}

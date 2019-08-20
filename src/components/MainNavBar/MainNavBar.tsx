@@ -193,22 +193,8 @@ export default function MainNavBar() {
   ) {
     if (id && activeSubmenuId !== id) {
       activateSubmenu(id);
-      trackEvent(
-        itemInteractionPayload(
-          'MouseEnter',
-          `MA_Header/Primaire_Links/Submenu`,
-          id
-        )
-      );
     } else if (!isSubmenuTrigger && activeSubmenuId !== id) {
       activateSubmenu('');
-      trackEvent(
-        itemInteractionPayload(
-          'MouseLeave',
-          `MA_Header/Primaire_Links/Submenu`,
-          id ? id : ''
-        )
-      );
     }
   }
 
@@ -234,12 +220,13 @@ export default function MainNavBar() {
           })}
           onClick={() => toggleResponsiveMenu(!isResponsiveMenuMenuVisible)}
         >
-          Toggle menu
+          Navigatie
         </button>
       )}
 
       {isAuthenticated && (!isResponsiveMenu || isResponsiveMenuMenuVisible) && (
         <div id={LinkContainerId} className={styles.LinkContainer}>
+          <SecondaryLinks />
           {menuItems.map(item => {
             let menuItem = item;
             if (item.id in submenuItems) {
@@ -257,7 +244,6 @@ export default function MainNavBar() {
               !isResponsiveMenu
             );
           })}
-          <SecondaryLinks />
         </div>
       )}
 
