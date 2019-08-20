@@ -108,7 +108,6 @@ function getMenuItem(
     return (
       <MainNavSubmenu
         key={item.id}
-        id={item.id}
         title={item.title}
         isOpen={isOpen}
         onFocus={() => !isOpen && setSubMenuVisibility(item.id)}
@@ -121,7 +120,6 @@ function getMenuItem(
             <MainNavSubmenuLink
               key={id}
               to={to}
-              id={id}
               rel={rel}
               data-track={itemClickPayload(
                 'MA_Header/Primaire_Links/Mijn_Themas_submenu',
