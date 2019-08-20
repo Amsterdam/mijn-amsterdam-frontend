@@ -7,17 +7,23 @@ export interface PageContentMainBodyProps {
   children: ComponentChildren;
   variant?: 'regular' | 'boxed' | 'regularBoxed';
   className?: any;
+  id?: string;
 }
 
 export default function PageContentMainBody({
   children,
   variant,
   className,
+  id,
 }: PageContentMainBodyProps) {
   const classes = classnames(
     styles.PageContentMainBody,
     variant && styles[`PageContentMainBody__${variant}`],
     className
   );
-  return <div className={classes}>{children}</div>;
+  return (
+    <div id={id} className={classes}>
+      {children}
+    </div>
+  );
 }

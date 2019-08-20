@@ -34,6 +34,7 @@ function DownloadLink({ item }: DownloadLinkProps) {
     <IconButtonLink
       className={styles.DownloadLink}
       to={item.url}
+      rel="external nofollow"
       download={item.title}
     >
       <DownloadIcon />
