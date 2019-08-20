@@ -93,3 +93,32 @@
     width: 100%;
   }
 }
+
+.DirectSkipLinks {
+  position: absolute;
+  top: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+
+  @include media-query('<=tablet') {
+    top: 1rem;
+  }
+
+  > a {
+    position: absolute;
+    display: block;
+    margin: 0 auto;
+    z-index: 1;
+    opacity: 0;
+    white-space: nowrap;
+    margin-left: -500rem;
+
+    &:focus {
+      margin-left: 0;
+      z-index: 2;
+      opacity: 1;
+      position: static;
+    }
+  }
+}

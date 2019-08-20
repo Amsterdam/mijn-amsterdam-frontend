@@ -44,6 +44,22 @@ export default function MainHeader({
 
   return (
     <header className={styles.header}>
+      <nav className={styles.DirectSkipLinks}>
+        <a
+          tabIndex={0}
+          href="#AppContent"
+          className="action-button secondary line-only"
+        >
+          Direct naar: <b>Pagina inhoud</b>
+        </a>
+        <a
+          tabIndex={0}
+          href="#MainFooter"
+          className="action-button secondary line-only"
+        >
+          Direct naar: <b>Footer</b>
+        </a>
+      </nav>
       <div className={styles.topBar}>
         <Link className={styles.logoLink} to={AppRoutes.ROOT}>
           <Logo
@@ -51,12 +67,11 @@ export default function MainHeader({
             aria-label="Amsterdam logo"
             className={styles.logo}
           />
-        </Link>
-        <Heading size="large" el="h1">
-          <Link className={styles.logoLink} to={AppRoutes.ROOT}>
+
+          <Heading size="large" el="h1">
             Mijn Amsterdam
-          </Link>
-        </Heading>
+          </Heading>
+        </Link>
         <BetaLabel
           role="img"
           aria-label="Beta versie"

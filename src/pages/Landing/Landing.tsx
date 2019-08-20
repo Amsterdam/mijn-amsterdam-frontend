@@ -40,11 +40,15 @@ export default () => {
           className={styles.BetaLogo}
         />
       </PageContentMainHeading>
-      <PageContentMainBody variant="regular" className={styles.Landing}>
+      <PageContentMainBody
+        id="AppContent"
+        variant="regular"
+        className={styles.Landing}
+      >
         <p>
           Op Mijn Amsterdam ziet u hoe het staat met uw aanvraag of melding. Ook
-          ziet u welke gegevens de gemeente van u heeft vastgelegd. En hoe u
-          het kunt doorgeven als er iets niet klopt. Nog niet al uw informatie is
+          ziet u welke gegevens de gemeente van u heeft vastgelegd. En hoe u het
+          kunt doorgeven als er iets niet klopt. Nog niet al uw informatie is
           via Mijn Amsterdam beschikbaar. De komende jaren komt er steeds meer
           bij.
         </p>
@@ -69,14 +73,15 @@ export default () => {
             </span>
           </a>
         </p>
+        <Heading size="small" el="h3">
+          Nog geen DigiD?
+        </Heading>
         <p>
-          <strong>Nog geen DigiD?</strong>
-          <br />
           <a href="https://www.digid.nl/aanvragen">Vraag DigiD aan</a>
         </p>
-        <p>
-          <strong>Dit staat nu op Mijn Amsterdam:</strong>
-        </p>
+        <Heading size="small" el="h3">
+          Dit staat nu op Mijn Amsterdam:
+        </Heading>
         <ul>
           <li>Hoe u ingeschreven staat bij de gemeente</li>
           <li>Hoe het staat met uw aanvraag voor een bijstandsuitkering</li>
@@ -85,9 +90,10 @@ export default () => {
           <li>Informatie over uw erfpacht</li>
           <li>Informatie over uw eigen buurt</li>
         </ul>
+        <Heading size="small" el="h3">
+          Mijn Amsterdam is nog niet af
+        </Heading>
         <p>
-          <strong>Mijn Amsterdam is nog niet af</strong>
-          <br />
           De komende jaren komt er steeds meer bij. Laat ons weten wat u ervan
           vindt. U kunt hiervoor de "uw mening" knop gebruiken aan de
           rechterkant van het scherm.
