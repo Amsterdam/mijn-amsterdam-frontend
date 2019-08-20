@@ -47,7 +47,6 @@ export default function MyChaptersPanel({
               data-track={itemClickPayload(CATEGORY, `Link_naar_Thema_${id}`)}
               key={id}
               to={to}
-              id={id}
               rel={rel}
             >
               {Icon && <Icon aria-hidden="true" />}

@@ -7,7 +7,6 @@ import { ComponentChildren } from 'App.types';
 import { LinkProps } from 'App.types';
 
 export interface MainNavSubmenuLinkProps extends Omit<LinkProps, 'title'> {
-  id?: string;
   children: ComponentChildren;
   onFocus?: () => void;
 }
@@ -15,7 +14,6 @@ export interface MainNavSubmenuLinkProps extends Omit<LinkProps, 'title'> {
 export function MainNavSubmenuLink({
   to,
   children,
-  id,
   rel,
   ...rest
 }: MainNavSubmenuLinkProps) {
@@ -31,7 +29,6 @@ export function MainNavSubmenuLink({
 }
 
 export interface MainNavSubmenuProps {
-  id: string;
   title: string;
   isOpen?: boolean;
   children: ComponentChildren;
