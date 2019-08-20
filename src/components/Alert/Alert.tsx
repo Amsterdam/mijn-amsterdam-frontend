@@ -22,7 +22,7 @@ function getIcon(alertType: AlertType) {
       Icon = CheckmarkIcon;
       break;
   }
-  return <Icon className={styles.Icon} />;
+  return <Icon aria-hidden="true" className={styles.Icon} />;
 }
 
 export default function Alert({ children, type = 'success' }: ComponentProps) {

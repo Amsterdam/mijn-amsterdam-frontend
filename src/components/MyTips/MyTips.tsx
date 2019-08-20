@@ -19,12 +19,14 @@ const Tip = ({ tip }: TipProps) => (
       {tip.imgUrl ? (
         <img src={tip.imgUrl} />
       ) : (
-        <ImgPlaceholder className={styles.ImgPlaceholder} />
+        <ImgPlaceholder aria-hidden="true" className={styles.ImgPlaceholder} />
       )}
     </div>
     <Heading el="h4">{tip.title}</Heading>
     <p>{tip.description}</p>
-    <ButtonLinkExternal to={tip.link.to}>{tip.link.title}</ButtonLinkExternal>
+    <ButtonLinkExternal title="Meer informatie over deze tip" to={tip.link.to}>
+      {tip.link.title}
+    </ButtonLinkExternal>
   </li>
 );
 

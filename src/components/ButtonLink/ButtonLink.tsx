@@ -13,6 +13,7 @@ export interface ButtonLinkProps {
   target?: LinkProps['target'];
   rel?: string;
   download?: string;
+  title?: string;
   'data-track'?: any[];
 }
 

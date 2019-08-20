@@ -23,7 +23,7 @@ export default function DirectLinks() {
               <li key={linkName}>
                 {isExternalLink === true ? (
                   <a href={url}>
-                    <ExternalLinkIcon />
+                    <ExternalLinkIcon aria-hidden="true" />
                     {title}
                   </a>
                 ) : (
