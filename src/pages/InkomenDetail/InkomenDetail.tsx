@@ -21,18 +21,22 @@ export default () => {
       isLoading,
     },
   } = useContext(AppContext);
+
   const {
     match: {
       params: { id },
     },
   } = useRouter();
+
   const FocusItem = items.find(item => item.id === id);
+  const noContent = !isLoading && !FocusItem;
+
   return (
     <PageContentMain variant="full" className={styles.InkomenDetail}>
       <PageContentMainHeading el="div" variant="boxedWithIcon">
         <ChapterHeadingIcon chapter={Chapters.INKOMEN} />
 
-        <Heading el="h2" className={styles.PageHeading}>
+        <Heading el="h2" size="large" className={styles.PageHeading}>
           <PageContentMainHeadingBackLink
             trackCategory="MA_Inkomen/Detail_Pagina"
             to={AppRoutes.INKOMEN}
@@ -49,22 +53,22 @@ export default () => {
           )}
         </Heading>
       </PageContentMainHeading>
-      {isLoading && (
-        <LoadingContent className={styles.LoadingContentStatusLine} />
-      )}
-      {isError && (
-        <Alert type="warning">
-          Uw gegevens kunnen op dit moment niet worden getoond.
-        </Alert>
-      )}
-      {FocusItem && (
-        <PageContentMainBody>
+      <PageContentMainBody>
+        {isLoading && (
+          <LoadingContent className={styles.LoadingContentStatusLine} />
+        )}
+        {(isError || noContent) && (
+          <Alert type="warning">
+            Uw gegevens kunnen op dit moment niet worden getoond.
+          </Alert>
+        )}
+        {!!FocusItem && (
           <StatusLine
             items={FocusItem.process}
             trackCategory="MA_Inkomen/Detail_pagina/Metro_lijn"
           />
-        </PageContentMainBody>
-      )}
+        )}
+      </PageContentMainBody>
     </PageContentMain>
   );
 };

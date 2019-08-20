@@ -36,7 +36,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   BELASTINGEN: 'Belastingen',
   JEUGDHULP: 'Jeugdhulp',
   WONEN: 'Erfpacht',
-  ZORG: 'Zorg',
+  ZORG: 'Zorg en ondersteuning',
   ROOT: 'Home',
   MELDINGEN: 'Mijn meldingen',
   PROFILE: 'Mijn gegevens',

@@ -13,6 +13,8 @@ import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
 import classnames from 'classnames';
 import Alert from 'components/Alert/Alert';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
+import { ChapterTitles } from '../../App.constants';
+import StatusLine from 'components/StatusLine/StatusLine';
 
 export default () => {
   const {
@@ -27,15 +29,17 @@ export default () => {
       params: { id },
     },
   } = useRouter();
+
   const WmoItem = items.find(item => item.id === id);
+  const noContent = !isLoading && !WmoItem;
 
   return (
     <PageContentMain variant="full" className={styles.ZorgDetail}>
       <PageContentMainHeading el="div" variant="boxedWithIcon">
         <ChapterHeadingIcon chapter={Chapters.ZORG} />
-        <Heading el="h2" className={styles.PageHeading}>
+        <Heading el="h2" size="large" className={styles.PageHeading}>
           <PageContentMainHeadingBackLink to={AppRoutes.ZORG}>
-            Zorg
+            {ChapterTitles.ZORG}
           </PageContentMainHeadingBackLink>
           {!isLoading && WmoItem ? (
             <span>{WmoItem.title}</span>
@@ -48,46 +52,27 @@ export default () => {
         </Heading>
       </PageContentMainHeading>
       <PageContentMainBody variant="regularBoxed">
-        {isError && (
+        {(isError || noContent) && (
           <Alert type="warning">
             Uw gegevens kunnen op dit moment niet worden getoond.
           </Alert>
         )}
-        <Heading className={styles.ListHeading}>Mijn gegevens</Heading>
         {isLoading && <LoadingContent className={styles.LoadingContentInfo} />}
-        <ul className={styles.List}>
-          {WmoItem && WmoItem.dateStart && (
-            <li className={classnames(styles.ListItem, styles.DatesInfo)}>
-              <p>
-                <strong>Startdatum indicatie</strong>
-                <time>{WmoItem.dateStart}</time>
-              </p>
-              {WmoItem && WmoItem.dateFinish && (
-                <p>
-                  <strong>Einddatum indicatie</strong>
-                  <time>{WmoItem.dateFinish}</time>
-                </p>
-              )}
-            </li>
-          )}
-          {WmoItem && WmoItem.supplier && (
-            <li className={classnames(styles.ListItem, styles.SupplierInfo)}>
-              <p>
-                <strong>Leverancier</strong>
-                <span>{WmoItem.supplier}</span>
-              </p>
-              {!!WmoItem.supplierUrl && (
-                <p>
-                  <strong>&nbsp;</strong>
-                  <ButtonLinkExternal to={WmoItem.supplierUrl}>
-                    {WmoItem.supplierUrl}
-                  </ButtonLinkExternal>
-                </p>
-              )}
-            </li>
-          )}
-        </ul>
+        {!!WmoItem && (
+          <p className={styles.InfoDetail}>
+            Leverancier
+            <strong>{WmoItem.supplier}</strong>
+          </p>
+        )}
       </PageContentMainBody>
+      {!!WmoItem && (
+        <PageContentMainBody>
+          <StatusLine
+            items={WmoItem.process}
+            trackCategory="MA_Inkomen/Detail_pagina/Metro_lijn"
+          />
+        </PageContentMainBody>
+      )}
     </PageContentMain>
   );
 };

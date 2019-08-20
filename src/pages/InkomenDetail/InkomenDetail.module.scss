@@ -1,7 +1,7 @@
 @import 'styles/_global.scss';
 
 .InkomenDetail {
-  @include select(StatusLine_List__) {
+  @include select(StatusLine_ListItemInner__) {
     max-width: $main-boxed-width;
     margin: 0 auto;
   }

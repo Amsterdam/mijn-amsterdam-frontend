@@ -11,10 +11,10 @@ import Alert from 'components/Alert/Alert';
 import { useTabletScreen } from 'hooks/media.hook';
 import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
 import { ExternalUrls } from 'App.constants';
+import { ChapterTitles } from '../../App.constants';
 
 const DISPLAY_PROPS = {
-  dateStart: 'start',
-  dateFinish: 'einde',
+  title: 'Regeling',
 };
 
 export default () => {
@@ -41,17 +41,18 @@ export default () => {
     <PageContentMain variant="full" className={styles.Page}>
       <PageContentMainHeading variant="boxedWithIcon">
         <ChapterHeadingIcon chapter={Chapters.ZORG} />
-        Zorg
+        {ChapterTitles.ZORG}
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
         <p>
-          Hebt u zorg en ondersteuning nodig? Soms kunt u daarvoor terecht bij
-          de gemeente. Hieronder ziet u van welke regelingen en hulpmiddelen u
-          nu al gebruik maakt.
+          Hieronder ziet u uw regelingen en hulpmiddelen vanuit de Wmo. Hebt u
+          vragen of wilt u een wijziging doorgeven? Bel dan gratis de Wmo
+          Helpdesk: <a href="tel:08000643">0800 0643</a>. Of ga langs bij het
+          Sociaal Loket.
         </p>
         <p>
           <ButtonLinkExternal to={ExternalUrls.ZORG_LEES_MEER}>
-            Overzicht en aanvragen van alle zorgproducten
+            Lees hier meer over Zorg en ondersteuning
           </ButtonLinkExternal>
         </p>
         {isError && (
@@ -59,17 +60,6 @@ export default () => {
             Uw gegevens kunnen op dit moment niet worden getoond.
           </Alert>
         )}
-        <DataLinkTable
-          id="datalinktable-healthcare-requested"
-          rowHeight={isTabletScreen ? 'auto' : '6rem'}
-          displayProps={DISPLAY_PROPS}
-          items={itemsRequested}
-          title="Mijn lopende aanvragen"
-          noItemsMessage="U hebt op dit moment geen lopende aanvragen."
-          startCollapsed={false}
-          isLoading={isLoading}
-          trackCategory="MA_Zorg/Detail_Pagina/Lopende_aanvragen"
-        />
         <DataLinkTable
           id="datalinktable-healthcare-granted"
           rowHeight={isTabletScreen ? 'auto' : '6rem'}

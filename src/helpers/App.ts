@@ -35,8 +35,11 @@ function formatDate(
   );
 }
 
-export function defaultDateFormat(date: string | Date): string {
-  return formatDate(new Date(date));
+export function defaultDateFormat(
+  date: any,
+  defaultContent: string = 'Onbekende datum'
+): string {
+  return date ? formatDate(new Date(date)) : defaultContent;
 }
 
 export function formattedTimeFromSeconds(seconds: number) {

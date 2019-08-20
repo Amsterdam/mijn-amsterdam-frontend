@@ -9,6 +9,7 @@ import React, { useState, useEffect } from 'react';
 
 import Heading from '../Heading/Heading';
 import styles from './DataLinkTable.module.scss';
+import { LinkProps } from '../../App.types';
 import {
   itemClickTogglePayload,
   itemClickPayload,
@@ -19,7 +20,11 @@ const DEFAULT_TRACK_CATEGORY = 'Thema_Pagina';
 
 export interface DataLinkTableProps {
   id: string;
-  items?: Unshaped[];
+  items: Array<{
+    title: string | JSX.Element;
+    link: LinkProps;
+    [key: string]: any;
+  }>;
   title?: string;
   noItemsMessage?: string;
   startCollapsed?: boolean;
@@ -58,6 +63,10 @@ export default function DataLinkTable({
   const toggleCollapsed = withKeyPress<HTMLHeadingElement>(() =>
     setCollapsed(!isCollapsed)
   );
+
+  const displayPropEntries = displayProps
+    ? entries(displayProps).slice('title' in displayProps ? 1 : 0) // Don't use the title here, title is always fixed as first prop in the table;
+    : [];
 
   // Setting an explicit height will result in a nice transition
   let cssCalcExpr = isCollapsed
@@ -123,13 +132,14 @@ export default function DataLinkTable({
           <table className={styles.Table}>
             <thead>
               <tr className={styles.TableRow}>
-                <th>&nbsp;</th>
-                {displayProps &&
-                  entries(displayProps).map(([, label]) => (
-                    <th key={label} className={styles.DisplayProp}>
-                      {label}
-                    </th>
-                  ))}
+                <th className={styles.DisplayProp}>
+                  {(displayProps && displayProps.title) || ' '}
+                </th>
+                {displayPropEntries.map(([, label]) => (
+                  <th key={label} className={styles.DisplayProp}>
+                    {label}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
@@ -146,15 +156,12 @@ export default function DataLinkTable({
                       {item.title}
                     </ButtonLink>
                   </td>
-                  {displayProps &&
-                    entries(displayProps).map(([key, label]) => (
-                      <td key={key} className={styles.DisplayProp}>
-                        <span className={styles.DisplayPropLabel}>
-                          {label}:
-                        </span>
-                        {item[key] || <span>&mdash;</span>}
-                      </td>
-                    ))}
+                  {displayPropEntries.map(([key, label]) => (
+                    <td key={key} className={styles.DisplayProp}>
+                      <span className={styles.DisplayPropLabel}>{label}:</span>
+                      {item[key] || <span>&mdash;</span>}
+                    </td>
+                  ))}
                 </tr>
               ))}
             </tbody>

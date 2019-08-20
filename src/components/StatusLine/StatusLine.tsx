@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import styles from './StatusLine.module.scss';
 import classnames from 'classnames';
-import { ProcessStep } from 'data-formatting/focus';
 import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
 import { Document } from '../DocumentList/DocumentList';
 import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
@@ -12,8 +11,16 @@ import { itemClickTogglePayload } from 'hooks/analytics.hook';
 import { ReactComponent as CaretLeft } from 'assets/icons/Chevron-Left.svg';
 
 const DEFAULT_TRACK_CATEGORY = 'Metro_lijn';
-
-export type StatusLineItem = ProcessStep;
+export type StepType = 'first-step' | 'last-step' | 'middle-step';
+export interface StatusLineItem {
+  id: string;
+  status: string;
+  stepType: StepType;
+  datePublished: string;
+  description: string | JSX.Element;
+  documents: Document[];
+  isActual: boolean;
+}
 
 interface StatusLineProps {
   items: StatusLineItem[];
@@ -51,23 +58,26 @@ function StatusLineItem({ item, stepNumber }: StatusLineItemProps) {
       id={item.id}
       className={classnames(
         styles.ListItem,
+        item.isActual && styles.Actual,
         location.hash.substring(1) === item.id && styles.Highlight,
-        styles[item.status.replace(/[^a-z]/gi, '').toLocaleLowerCase()]
+        item.stepType && styles[item.stepType]
       )}
     >
-      <div className={styles.Panel} data-stepnumber={stepNumber}>
-        <strong className={styles.StatusTitle}>{item.status}</strong>
-        <time className={styles.StatusDate}>
-          {defaultDateFormat(item.datePublished)}
-        </time>
-      </div>
-      <div className={styles.Panel}>{item.description}</div>
-      <div className={styles.Panel}>
-        <p>
-          {item.documents.map(document => (
-            <DownloadLink key={document.id} item={document} />
-          ))}
-        </p>
+      <div className={styles.ListItemInner}>
+        <div className={styles.Panel} data-stepnumber={stepNumber}>
+          <strong className={styles.StatusTitle}>{item.status}</strong>
+          <time className={styles.StatusDate}>
+            {defaultDateFormat(item.datePublished)}
+          </time>
+        </div>
+        <div className={styles.Panel}>{item.description}</div>
+        <div className={styles.Panel}>
+          <p>
+            {item.documents.map(document => (
+              <DownloadLink key={document.id} item={document} />
+            ))}
+          </p>
+        </div>
       </div>
     </li>
   );
@@ -102,22 +112,26 @@ export default function StatusLine({
   return (
     <>
       <div className={styles.StatusLine}>
-        <ul className={styles.List}>
-          {items
-            .filter(
-              (item, index) =>
-                !isCollapsed || (isCollapsed && index === items.length - 1)
-            )
-            .map((item, index) => (
-              <StatusLineItem
-                key={item.id}
-                item={item}
-                stepNumber={items.length - index}
-              />
-            ))}
-        </ul>
+        {!!items.length && (
+          <ul className={styles.List}>
+            {items
+              .filter(
+                (item, index) =>
+                  !isCollapsed || (isCollapsed && index === items.length - 1)
+              )
+              .map((item, index) => (
+                <StatusLineItem
+                  key={item.id}
+                  item={item}
+                  stepNumber={items.length - index}
+                />
+              ))}
+          </ul>
+        )}
+        {!items.length && (
+          <p className={styles.NoStatusItems}>Er is geen status beschikbaar.</p>
+        )}
       </div>
-      {!items.length && <p>Er is geen status beschikbaar.</p>}
       {items.length > 1 && (
         <button
           className={classnames(styles.MoreStatus, {
