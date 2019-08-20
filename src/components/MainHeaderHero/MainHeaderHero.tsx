@@ -71,7 +71,6 @@ function getHeroSrc(isAuthenticated: boolean = false) {
 
 export interface MainHeaderHeroProps {
   src: string;
-  alt: string;
 }
 
 export default function MainHeaderHero(props: Partial<MainHeaderHeroProps>) {
