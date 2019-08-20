@@ -17,7 +17,12 @@ export function MyAreaHeader({ trackCategory }: MyAreaHeaderComponentProps) {
   return (
     <div className={styles.Header}>
       <Link to={AppRoutes.ROOT}>
-        <Logo className={styles.Logo} />
+        <Logo
+          aria-hidden="true"
+          role="img"
+          aria-label="Amsterdam logo"
+          className={styles.Logo}
+        />
       </Link>
       <h1 className={styles.Title}>Mijn buurt</h1>
       <NavLink
@@ -26,7 +31,7 @@ export function MyAreaHeader({ trackCategory }: MyAreaHeaderComponentProps) {
         data-track={itemClickPayload(trackCategory, 'Link_Sluit_kaart')}
       >
         <span>Sluit kaart</span>
-        <CloseIcon className={styles.CloseIcon} />
+        <CloseIcon aria-hidden="true" className={styles.CloseIcon} />
       </NavLink>
     </div>
   );
@@ -51,7 +56,7 @@ export function MyAreaMap({ trackCategory, url }: MyAreaMapComponentProps) {
   ) : (
     <div className={styles.loadingText}>
       <span className={styles.HomeLoader}>
-        <HomeIcon />
+        <HomeIcon aria-hidden="true" />
         Uw adres wordt opgezocht...
       </span>
     </div>

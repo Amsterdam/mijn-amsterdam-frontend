@@ -29,8 +29,8 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
     <div ref={el} className={classnames(styles.ErrorMessages, className)}>
       <p className={styles.MessageBar}>
         <span>
-          <AlertIcon className={styles.AlertIcon} /> U ziet misschien niet al uw
-          gegevens
+          <AlertIcon aria-hidden="true" className={styles.AlertIcon} /> U ziet
+          misschien niet al uw gegevens
         </span>
         <button
           className={classnames(
