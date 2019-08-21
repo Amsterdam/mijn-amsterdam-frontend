@@ -140,6 +140,26 @@
   }
 }
 
+.TutorialBtn {
+  height: $main-header-navbar-height;
+  background-image: url('assets/icons/Bell.svg');
+  background-size: 24px;
+  width: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: calc(50% - #{$main-boxed-width} / 2);
+
+  &Open {
+    z-index: $tutorial-items-z-index;
+    background-image: url('assets/icons/Close.svg');
+  }
+}
+
 .Modal {
   background: $color-neutral-grey4;
   opacity: 0.5;

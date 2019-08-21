@@ -28,6 +28,7 @@ import {
   submenuItems,
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
+import Tutorial from 'components/Tutorial/Tutorial';
 
 const MenuToggleBtnId = 'MenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -168,6 +169,7 @@ export default function MainNavBar() {
   const isResponsiveMenu = useTabletScreen();
   const [isResponsiveMenuMenuVisible, toggleResponsiveMenu] = useState(false);
   const { history } = useRouter();
+  const [isTutorialVisible, toggleTutorial] = useState(false);
 
   function closeResponsiveMenu(e?: any) {
     if (isResponsiveMenuMenuVisible) {
@@ -244,6 +246,16 @@ export default function MainNavBar() {
           })}
         </div>
       )}
+
+      <button
+        className={classnames(styles.TutorialBtn, {
+          [styles.TutorialBtnOpen]: isTutorialVisible,
+        })}
+        onClick={() => {
+          toggleTutorial(!isTutorialVisible);
+        }}
+      />
+      {isTutorialVisible && <Tutorial />}
 
       {isResponsiveMenuMenuVisible && (
         <div
