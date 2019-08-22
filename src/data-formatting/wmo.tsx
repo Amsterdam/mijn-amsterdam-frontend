@@ -2,8 +2,10 @@ import { AppRoutes } from 'App.constants';
 import { StatusLineItem } from 'components/StatusLine/StatusLine';
 import slug from 'slug';
 import { LinkProps } from '../App.types';
-import { defaultDateFormat } from '../helpers/App';
+import { defaultDateFormat, isDateInPast } from '../helpers/App';
 import React from 'react';
+import { StepType } from '../components/StatusLine/StatusLine';
+import { entries } from 'helpers/App';
 // Example data
 // [
 //   {
@@ -81,8 +83,9 @@ const Labels: {
         datePublished: data => data.dateDecision,
         description: data => (
           <p>
-            U hebt recht op {data.title} per {defaultDateFormat(data.dateStart)}
-            . De vervoerspas ontvangt u per post.
+            U hebt recht op een {data.title} per{' '}
+            {defaultDateFormat(data.dateStart)}. De vervoerspas ontvangt u per
+            post.
           </p>
         ),
       },
@@ -121,8 +124,8 @@ const Labels: {
         datePublished: data => data.dateDecision,
         description: data => (
           <p>
-            U hebt recht op {data.title} per {defaultDateFormat(data.dateStart)}
-            .
+            U hebt recht op een {data.title} per{' '}
+            {defaultDateFormat(data.dateStart)}.
           </p>
         ),
       },
@@ -236,8 +239,8 @@ const Labels: {
         datePublished: data => data.dateDecision,
         description: data => (
           <p>
-            U hebt recht op {data.title} per {defaultDateFormat(data.dateStart)}
-            .
+            U hebt recht op een {data.title} per{' '}
+            {defaultDateFormat(data.dateStart)}.
           </p>
         ),
       },
@@ -247,17 +250,17 @@ const Labels: {
         description: data => (
           <p>
             De gemeente heeft opdracht gegeven aan{' '}
-            {data.serviceDeliverySupplier} om uw {data.title} aan u te leveren.
+            {data.serviceDeliverySupplier} om een {data.title} aan u te leveren.
           </p>
         ),
       },
       {
-        status: 'Levering gestopt',
+        status: 'Product geleverd',
         datePublished: data => data.dateStartServiceDelivery,
         description: data => (
           <p>
             {data.serviceDeliverySupplier} heeft aan ons doorgegeven dat op{' '}
-            {defaultDateFormat(data.dateStartServiceDelivery)} uw {data.title}{' '}
+            {defaultDateFormat(data.dateStartServiceDelivery)} een {data.title}{' '}
             bij u is afgeleverd.
           </p>
         ),
@@ -279,8 +282,8 @@ const Labels: {
         datePublished: data => data.dateDecision,
         description: data => (
           <p>
-            U hebt recht op {data.title} per {defaultDateFormat(data.dateStart)}
-            .
+            U hebt recht op een {data.title} per{' '}
+            {defaultDateFormat(data.dateStart)}.
           </p>
         ),
       },
@@ -295,7 +298,7 @@ const Labels: {
         ),
       },
       {
-        status: 'Opdracht uitgevoerd',
+        status: 'Aanpassing uitgevoerd',
         datePublished: data => data.dateStartServiceDelivery,
         description: data => (
           <p>
@@ -336,23 +339,60 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
   });
 
   if (labelData) {
-    const items = labelData.statusItems;
-    return items.map((statusItem, index) => {
-      const isActual = index + 1 === items.length;
-      return {
-        id: `status-step-${index}`,
-        status: statusItem.status,
-        description: parseLabelContent(statusItem.description, data),
-        datePublished: parseLabelContent(
+    const items: WmoProcessItem[] = labelData.statusItems
+      // Filter out items that have no date associated.
+      .filter(statusItem => {
+        return (
+          typeof statusItem.datePublished === 'function' &&
+          statusItem.datePublished(data)
+        );
+      })
+      .map((statusItem, index) => {
+        const datePublished = parseLabelContent(
           statusItem.datePublished,
           data
-        ) as string,
-        isActual,
-        stepType:
-          index === 0 ? 'first-step' : isActual ? 'last-step' : 'middle-step',
-        documents: [], // NOTE: To be implemented in 2020
-      };
-    });
+        ) as string;
+
+        return {
+          id: `status-step-${index}`,
+          status: statusItem.status,
+          description: parseLabelContent(statusItem.description, data),
+          datePublished,
+          isActual: false,
+          stepType: 'middle-step',
+          documents: [], // NOTE: To be implemented in 2020
+        };
+      });
+
+    if (items.length) {
+      const nItems = [];
+      let hasActualStep = false;
+      let l = items.length;
+
+      while (l--) {
+        const item = items[l];
+        const inPast = isDateInPast(item.datePublished);
+        const isActual: boolean = inPast && !hasActualStep;
+        let stepType: StepType = 'middle-step';
+
+        if (l === 0) {
+          stepType = 'first-step';
+        } else if (l === items.length - 1) {
+          stepType = 'last-step';
+        }
+
+        nItems.unshift({
+          ...item,
+          isActual,
+          stepType,
+        });
+
+        if (isActual && !hasActualStep) {
+          hasActualStep = isActual;
+        }
+      }
+      return nItems;
+    }
   }
 
   return [];

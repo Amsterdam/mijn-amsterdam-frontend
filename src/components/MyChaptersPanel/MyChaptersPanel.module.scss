@@ -2,11 +2,10 @@
 
 .MyChaptersPanel {
   background-color: $color-neutral-grey1;
-  padding: 3.2rem 4rem;
+  padding: 3.2rem 0 4rem 3.2rem;
 
   @include media-query('<=tablet') {
     padding-left: 2.4rem;
-    padding-right: 2.4rem;
   }
 }
 

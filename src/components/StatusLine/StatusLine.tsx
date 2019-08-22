@@ -117,8 +117,7 @@ export default function StatusLine({
           <ul className={styles.List}>
             {items
               .filter(
-                (item, index) =>
-                  !isCollapsed || (isCollapsed && index === items.length - 1)
+                (item, index) => !isCollapsed || (isCollapsed && item.isActual)
               )
               .map((item, index) => (
                 <StatusLineItem

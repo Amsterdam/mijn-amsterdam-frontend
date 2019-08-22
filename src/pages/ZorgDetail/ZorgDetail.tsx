@@ -51,7 +51,7 @@ export default () => {
           )}
         </Heading>
       </PageContentMainHeading>
-      <PageContentMainBody variant="regularBoxed">
+      <PageContentMainBody variant="boxed">
         {(isError || noContent) && (
           <Alert type="warning">
             Uw gegevens kunnen op dit moment niet worden getoond.

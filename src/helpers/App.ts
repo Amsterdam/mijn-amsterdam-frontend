@@ -37,7 +37,7 @@ function formatDate(
 
 export function defaultDateFormat(
   date: any,
-  defaultContent: string = 'Onbekende datum'
+  defaultContent: string = ''
 ): string {
   return date ? formatDate(new Date(date)) : defaultContent;
 }
@@ -48,6 +48,10 @@ export function formattedTimeFromSeconds(seconds: number) {
   const t = new Date(0, 0, 0, 0, mins, secs);
 
   return formatDate(t, 'mm:ss');
+}
+
+export function isDateInPast(date: string | Date) {
+  return new Date(date).getTime() < new Date().getTime();
 }
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
