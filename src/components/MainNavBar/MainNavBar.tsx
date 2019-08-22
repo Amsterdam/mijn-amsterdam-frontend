@@ -264,7 +264,7 @@ export default function MainNavBar() {
           toggleTutorial(!isTutorialVisible);
         }}
       />
-      {isTutorialVisible && <Tutorial />}
+      {isTutorialVisible && <Tutorial toggleTutorial={toggleTutorial} />}
 
       {isResponsiveMenuMenuVisible && (
         <div

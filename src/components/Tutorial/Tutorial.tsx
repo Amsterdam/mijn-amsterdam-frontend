@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './Tutorial.module.scss';
 import classnames from 'classnames';
 import { ComponentChildren } from 'App.types';
@@ -6,9 +6,10 @@ import { ReactComponent as ArrowIcon } from 'assets/icons/Arrow__primary-white.s
 
 export interface ComponentProps {
   children?: ComponentChildren;
+  toggleTutorial: Function;
 }
 
-export default function Tutorial({ children }: ComponentProps) {
+export default function Tutorial({ toggleTutorial }: ComponentProps) {
   const myUpdatesHeaderPos = document
     .getElementById('MyUpdatesHeader')!
     .getBoundingClientRect();
@@ -24,6 +25,19 @@ export default function Tutorial({ children }: ComponentProps) {
   const myTipsHeaderPos = document
     .getElementById('MyTipsHeader')!
     .getBoundingClientRect();
+
+  function handleEscapeKey(e: KeyboardEvent) {
+    if (e.keyCode === 27) {
+      toggleTutorial();
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleEscapeKey);
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKey);
+    };
+  });
 
   return (
     <div
