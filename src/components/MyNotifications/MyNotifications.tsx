@@ -105,7 +105,7 @@ export default function MyNotifications({
                 {(!!item.link || !!item.customLink) && (
                   <p className={styles.Action}>
                     <a
-                      title="Meer informatie over deze melding"
+                      title={`Meer informatie over de melding: ${item.title}`}
                       href={item.customLink ? '#' : item.link!.to}
                       role="button"
                       data-track={itemClickPayload(

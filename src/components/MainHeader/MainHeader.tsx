@@ -7,7 +7,6 @@ import ErrorMessages from 'components/ErrorMessages/ErrorMessages';
 import Heading from 'components/Heading/Heading';
 import MainHeaderHero from 'components/MainHeaderHero/MainHeaderHero';
 import MainNavBar from 'components/MainNavBar/MainNavBar';
-import { Person } from 'data-formatting/brp';
 import { entries } from 'helpers/App';
 import { useDesktopScreen } from 'hooks/media.hook';
 import React, { useContext } from 'react';
@@ -61,7 +60,11 @@ export default function MainHeader({
         </a>
       </nav>
       <div className={styles.topBar}>
-        <Link className={styles.logoLink} to={AppRoutes.ROOT}>
+        <Link
+          className={styles.logoLink}
+          to={AppRoutes.ROOT}
+          aria-label="Terug naar home"
+        >
           <Logo
             aria-hidden="true"
             role="img"
