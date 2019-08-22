@@ -15,6 +15,7 @@ export interface ButtonLinkProps {
   download?: string;
   title?: string;
   'data-track'?: any[];
+  tabIndex?: number;
 }
 
 export default function ButtonLink({
