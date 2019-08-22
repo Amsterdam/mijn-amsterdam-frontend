@@ -26,13 +26,9 @@ export default () => {
     },
   } = useContext(AppContext);
 
-  const itemsRequested = items.filter(
-    item => item.isActual && !item.dateFinish
-  );
-  const itemsActual = items.filter(item => item.isActual && !!item.dateFinish);
+  const itemsActual = items.filter(item => item.isActual);
   const itemsPrevious = items.filter(item => !item.isActual);
 
-  const hasActiveRequests = !!itemsRequested.length;
   const hasActualItems = !!itemsActual.length;
 
   const isTabletScreen = useTabletScreen();
@@ -67,7 +63,7 @@ export default () => {
           items={itemsActual}
           title="Mijn huidige voorzieningen"
           noItemsMessage="U hebt nog geen huidige voorzieningen."
-          startCollapsed={hasActiveRequests}
+          startCollapsed={false}
           className={styles.DataLinkTableCurrent}
           isLoading={isLoading}
           trackCategory="MA_Zorg/Detail_Pagina/Huidige_voorzieningen"
@@ -82,7 +78,7 @@ export default () => {
             items={itemsPrevious}
             title="Mijn eerdere voorzieningen"
             noItemsMessage="U hebt geen eerdere voorzieningen."
-            startCollapsed={hasActiveRequests || hasActualItems}
+            startCollapsed={hasActualItems}
             isLoading={isLoading}
             trackCategory="MA_Zorg/Detail_Pagina/Eerdere_voorzieningen"
           />

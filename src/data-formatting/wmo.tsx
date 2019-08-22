@@ -391,6 +391,7 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
           hasActualStep = isActual;
         }
       }
+
       return nItems;
     }
   }
