@@ -1,36 +1,155 @@
 @import 'styles/_global.scss';
 
 .Tutorial {
-  position: fixed;
+  position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: grey;
-  opacity: 0.8;
-  z-index: 1000;
+  background-color: rgba($color-neutral-grey5, 0.8);
+  z-index: $tutorial-overlay-z-index;
+  margin-top: -$main-header-topbar-height;
 }
 
-@include select(Dashboard_Dashboard) {
-  @include select(Heading_Heading) {
-    background-color: transparent;
-    z-index: 1001;
-    @include select(Dashboard_MyNotificationsHeadingLink) {
-      position: relative;
-      background-color: white;
-      padding: 5px;
-      border-radius: 10px;
-    }
+.TutorialItem {
+  color: $color-white;
+  font-size: 1.7rem;
+  line-height: 2.2rem;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+}
+
+.MyUpdatesItem {
+  width: 25rem;
+  margin-top: -16rem;
+  margin-left: 23rem;
+
+  svg {
+    transform: rotate(180deg);
+    margin-left: -10rem;
+    margin-top: 1rem;
   }
 }
 
-@include select(MyCases_MyCases) {
+.MyChaptersItem {
+  width: 28rem;
+  margin-top: -3rem;
+  margin-left: 16rem;
+
+  svg {
+    transform: rotate(180deg);
+    margin-left: -6rem;
+    transform: scaleX(-1);
+    margin-top: 1rem;
+  }
+}
+
+.MyCasesItem {
+  width: 30rem;
+  margin-top: -17.5rem;
+  margin-left: 32rem;
+
+  svg {
+    transform: rotate(180deg);
+    margin-left: -8rem;
+    transform: scaleX(-1);
+    margin-top: 1rem;
+  }
+}
+
+.MyAreaItem {
+  width: 46rem;
+  margin-top: 4.5rem;
+  margin-left: 29rem;
+
+  svg {
+    margin-left: 8rem;
+    transform: scaleY(-1);
+    margin-top: 1rem;
+  }
+}
+
+.MyTipsItem {
+  width: 40rem;
+  margin-top: -38rem;
+  margin-left: 6rem;
+
+  svg {
+    margin-left: -9rem;
+    transform: scaleX(-1);
+    margin-top: 1rem;
+  }
+}
+
+.TutorialItems {
   @include select(Heading_Heading) {
-    position: relative;
-    z-index: 1001;
-    background-color: white;
-    width: fit-content;
-    padding: 5px;
-    border-radius: 10px;
+    @include select(Dashboard_MyNotificationsHeadingLink) {
+      position: relative;
+      z-index: $tutorial-items-z-index;
+      background-color: $color-white;
+      padding: $tutorial-items-padding;
+      border-radius: $tutorial-items-radius;
+      margin-left: -$tutorial-items-padding;
+    }
+  }
+
+  @include select(MyCases_MyCases) {
+    @include select(Heading_Heading) {
+      position: relative;
+      z-index: $tutorial-items-z-index;
+      background-color: $color-white;
+      width: fit-content;
+      padding: $tutorial-items-padding;
+      border-radius: $tutorial-items-radius;
+      margin-top: -$tutorial-items-padding;
+      margin-left: -$tutorial-items-padding;
+      margin-bottom: calc(#{$tutorial-items-padding} * 1);
+    }
+  }
+
+  @include select(MyChaptersPanel_MyChaptersPanel) {
+    @include select(Heading_Heading) {
+      position: relative;
+      z-index: $tutorial-items-z-index;
+      background-color: $color-white;
+      width: fit-content;
+      padding: $tutorial-items-padding;
+      border-radius: $tutorial-items-radius;
+      margin-top: -$tutorial-items-padding;
+      margin-left: -$tutorial-items-padding;
+      margin-bottom: $tutorial-items-padding;
+    }
+  }
+
+  @include select(MyArea_MyArea) {
+    @include select(Heading_Heading) {
+      position: relative;
+      z-index: $tutorial-items-z-index;
+      background-color: $color-white;
+      width: fit-content;
+      padding: $tutorial-items-padding;
+      border-radius: $tutorial-items-radius;
+      margin-top: -$tutorial-items-padding;
+      margin-left: -$tutorial-items-padding;
+      margin-bottom: -$tutorial-items-padding;
+    }
+  }
+
+  @include select(MyTips_MyTips) {
+    @include select(MyTips_HeaderBar) {
+      @include select(Heading_Heading) {
+        position: relative;
+        z-index: $tutorial-items-z-index;
+        background-color: $color-white;
+        width: fit-content;
+        padding: $tutorial-items-padding;
+        border-radius: $tutorial-items-radius;
+        margin-top: -$tutorial-items-padding;
+        margin-left: -$tutorial-items-padding;
+        margin-right: -$tutorial-items-padding;
+        margin-bottom: -$tutorial-items-padding;
+      }
+    }
   }
 }

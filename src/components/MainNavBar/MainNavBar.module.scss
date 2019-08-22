@@ -156,7 +156,10 @@
 
   &Open {
     z-index: $tutorial-items-z-index;
-    background-image: url('assets/icons/Close.svg');
+    background-image: url('assets/icons/Close__primary-white.svg');
+    position: fixed;
+    top: $main-header-topbar-height;
+    z-index: $tutorial-items-z-index;
   }
 }
 

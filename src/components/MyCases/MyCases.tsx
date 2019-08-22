@@ -54,7 +54,12 @@ export default function MyCases({
 }: MyCasesProps) {
   return (
     <div className={styles.MyCases}>
-      <Heading size="large">{title}</Heading>
+      <Heading
+        id="MyCasesHeader" // Used for tutorial placement
+        size="large"
+      >
+        {title}
+      </Heading>
       {isLoading && (
         <LoadingContent
           className={styles.LoadingContent}

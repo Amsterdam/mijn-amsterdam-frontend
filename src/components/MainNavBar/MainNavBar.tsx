@@ -29,6 +29,7 @@ import {
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
 import Tutorial from 'components/Tutorial/Tutorial';
+import teststyles from 'components/Tutorial/Tutorial.module.scss';
 
 const MenuToggleBtnId = 'MenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -170,6 +171,14 @@ export default function MainNavBar() {
   const [isResponsiveMenuMenuVisible, toggleResponsiveMenu] = useState(false);
   const { history } = useRouter();
   const [isTutorialVisible, toggleTutorial] = useState(false);
+  const TUTORIAL_CLASS = teststyles.TutorialItems;
+
+  useEffect(() => {
+    const classList = document.body.classList;
+    isTutorialVisible
+      ? classList.add(TUTORIAL_CLASS)
+      : classList.remove(TUTORIAL_CLASS);
+  }, [isTutorialVisible]);
 
   function closeResponsiveMenu(e?: any) {
     if (isResponsiveMenuMenuVisible) {

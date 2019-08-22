@@ -46,6 +46,7 @@ export default () => {
     <PageContentMain className={styles.Dashboard} variant="full">
       <PageContentMainHeading variant="medium">
         <Link
+          id="MyUpdatesHeader" // Used for tutorial placement
           className={styles.MyNotificationsHeadingLink}
           to={AppRoutes.MY_NOTIFICATIONS}
           data-track={itemClickPayload(

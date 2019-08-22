@@ -73,6 +73,7 @@ export default function MyArea({ trackCategory, url }: MyAreaComponentProps) {
     <div className={styles.MyArea}>
       <MyAreaMap trackCategory={trackCategory} url={url} />
       <NavLink
+        id="MyAreaHeader" // Used for tutorial placement
         to={AppRoutes.MY_AREA}
         className={styles.Overlay}
         data-track={itemClickPayload(
