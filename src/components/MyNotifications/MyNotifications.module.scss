@@ -32,22 +32,18 @@
     position: static;
     display: inline-block;
     vertical-align: middle;
-    margin-bottom: 2rem;
     width: 2rem;
     height: 2rem;
+    margin-right: .4rem;
   }
 }
 
-.Icon,
 .MetaInfo {
   @include media-query('<=tablet') {
     display: inline-block;
     vertical-align: middle;
-    margin-bottom: 2rem;
-
-    &.MetaInfo {
-      margin-left: 1rem;
-    }
+    // margin-top: 1rem;
+    // margin-bottom: .4rem;
   }
 }
 

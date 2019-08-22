@@ -4,6 +4,10 @@
   @include select(StatusLine_ListItemInner__) {
     max-width: $main-boxed-width;
     margin: 0 auto;
+
+    @include media-query('<=phone') {
+      margin: 0 4rem;
+    }
   }
 }
 

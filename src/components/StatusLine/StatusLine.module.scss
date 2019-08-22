@@ -38,6 +38,12 @@
     display: flex;
     padding: 0 7.5rem;
     border-top: 1px solid $color-neutral-grey2;
+
+    @include media-query('<=phone') {
+      display: block;
+      position: relative;
+      padding: 0 1rem;
+    }
   }
 
   &.first-step .Panel:first-child:before {
@@ -78,13 +84,6 @@
       $color-neutral-grey3 3rem,
       transparent 0%
     );
-  }
-
-  @include media-query('<=phone') {
-    display: block;
-    position: relative;
-    padding: 0 1rem;
-    margin: 0 1rem 0 3.8rem;
   }
 }
 
