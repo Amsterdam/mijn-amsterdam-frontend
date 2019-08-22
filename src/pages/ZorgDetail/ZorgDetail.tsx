@@ -58,7 +58,7 @@ export default () => {
           </Alert>
         )}
         {isLoading && <LoadingContent className={styles.LoadingContentInfo} />}
-        {!!WmoItem && (
+        {!!WmoItem && !!WmoItem.supplier && (
           <p className={styles.InfoDetail}>
             Leverancier
             <strong>{WmoItem.supplier}</strong>

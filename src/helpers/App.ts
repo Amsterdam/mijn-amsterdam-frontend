@@ -54,6 +54,10 @@ export function isDateInPast(date: string | Date) {
   return new Date(date).getTime() < new Date().getTime();
 }
 
+export function capitalizeFirstLetter(text: string) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
 export const entries = Object.entries as <T>(
   o: T

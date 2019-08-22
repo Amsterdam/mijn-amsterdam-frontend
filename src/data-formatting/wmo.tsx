@@ -2,7 +2,11 @@ import { AppRoutes } from 'App.constants';
 import { StatusLineItem } from 'components/StatusLine/StatusLine';
 import slug from 'slug';
 import { LinkProps } from '../App.types';
-import { defaultDateFormat, isDateInPast } from '../helpers/App';
+import {
+  defaultDateFormat,
+  isDateInPast,
+  capitalizeFirstLetter,
+} from '../helpers/App';
 import React from 'react';
 import { StepType } from '../components/StatusLine/StatusLine';
 import { entries } from 'helpers/App';
@@ -488,7 +492,7 @@ export function formatWmoApiResponse(
 
     return {
       id,
-      title,
+      title: capitalizeFirstLetter(title),
       dateStart: defaultDateFormat(dateStart),
       dateFinish: defaultDateFormat(dateFinish),
       supplier,
