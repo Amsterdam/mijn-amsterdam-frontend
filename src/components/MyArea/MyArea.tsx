@@ -16,7 +16,7 @@ interface MyAreaHeaderComponentProps {
 export function MyAreaHeader({ trackCategory }: MyAreaHeaderComponentProps) {
   return (
     <div className={styles.Header}>
-      <Link to={AppRoutes.ROOT}>
+      <Link to={AppRoutes.ROOT} aria-label="Terug naar home">
         <Logo
           aria-hidden="true"
           role="img"
