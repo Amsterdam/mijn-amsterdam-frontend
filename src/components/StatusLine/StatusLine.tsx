@@ -20,6 +20,7 @@ export interface StatusLineItem {
   description: string | JSX.Element;
   documents: Document[];
   isActual: boolean;
+  isHistorical: boolean;
 }
 
 interface StatusLineProps {
@@ -60,6 +61,7 @@ function StatusLineItem({ item, stepNumber }: StatusLineItemProps) {
       className={classnames(
         styles.ListItem,
         item.isActual && styles.Actual,
+        item.isHistorical && styles.Historical,
         location.hash.substring(1) === item.id && styles.Highlight,
         item.stepType && styles[item.stepType]
       )}

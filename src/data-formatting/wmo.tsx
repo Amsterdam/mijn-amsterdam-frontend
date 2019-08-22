@@ -9,7 +9,7 @@ import {
 } from '../helpers/App';
 import React from 'react';
 import { StepType } from '../components/StatusLine/StatusLine';
-import { entries } from 'helpers/App';
+
 // Example data
 // [
 //   {
@@ -365,6 +365,7 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
           isActual: false,
           stepType: 'middle-step',
           documents: [], // NOTE: To be implemented in 2020
+          isHistorical: false,
         };
       });
 
@@ -389,6 +390,7 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
           ...item,
           isActual,
           stepType,
+          isHistorical: inPast && !isActual,
         });
 
         if (isActual && !hasActualStep) {
