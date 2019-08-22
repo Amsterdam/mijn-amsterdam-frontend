@@ -17,7 +17,7 @@ const DISPLAY_PROPS = {
 };
 
 const DISPLAY_PROPS_ACTUAL = {
-  datePublished: 'aanvraag',
+  dateStart: 'aanvraag',
 };
 
 export default () => {
@@ -32,12 +32,8 @@ export default () => {
   const items = Object.values(products).flatMap(product => product.items);
 
   const itemsRequested = items.filter(item => !item.hasDecision);
-  const itemsGranted = items.filter(item => item.isGranted);
-  const itemsDenied = items.filter(item => item.isDenied);
-  const itemsDiscarded = items.filter(item => item.isDiscarded);
-
+  const itemsDecided = items.filter(item => item.hasDecision);
   const hasActiveRequests = !!itemsRequested.length;
-  const hasGrantedRequests = !!itemsGranted.length;
 
   const isTabletScreen = useTabletScreen();
 
@@ -82,42 +78,14 @@ export default () => {
           id="datalinktable-income-granted"
           rowHeight={isTabletScreen ? 'auto' : '6rem'}
           displayProps={DISPLAY_PROPS}
-          items={itemsGranted}
+          items={itemsDecided}
           startCollapsed={hasActiveRequests}
           isLoading={isLoading}
-          title="Mijn toegekende aanvragen"
-          trackCategory="MA_Inkomen/Thema_Pagina/Toegekende_aanvragen"
-          noItemsMessage="U hebt op dit moment geen toegekende aanvragen."
+          title="Mijn besluiten"
+          trackCategory="MA_Inkomen/Thema_Pagina/Mijn_Besluiten"
+          noItemsMessage="U hebt op dit moment geen besluiten."
         />
       </PageContentMainBody>
-      <div className={styles.HistoricDataLinkTable}>
-        <PageContentMainBody variant="boxed">
-          <DataLinkTable
-            id="datalinktable-income-discarded"
-            rowHeight={isTabletScreen ? 'auto' : '6rem'}
-            displayProps={DISPLAY_PROPS}
-            items={itemsDenied}
-            startCollapsed={hasActiveRequests || hasGrantedRequests}
-            title="Mijn afgewezen aanvragen"
-            className={styles.DataLinkTableCurrent}
-            isLoading={isLoading}
-            trackCategory="MA_Inkomen/Thema_Pagina/Afgewezen_aanvragen"
-            noItemsMessage="U hebt op dit moment geen afgewezen aanvragen."
-          />
-          <DataLinkTable
-            id="datalinktable-income-denied"
-            rowHeight={isTabletScreen ? 'auto' : '6rem'}
-            displayProps={DISPLAY_PROPS}
-            items={itemsDiscarded}
-            startCollapsed={hasActiveRequests || hasGrantedRequests}
-            title="Mijn buiten behandeling gestelde aanvragen"
-            className={styles.DataLinkTableCurrent}
-            isLoading={isLoading}
-            trackCategory="MA_Inkomen/Thema_Pagina/BuitenBehandeling_aanvragen"
-            noItemsMessage="U hebt op dit moment geen buiten behandeling gestelde aanvragen."
-          />
-        </PageContentMainBody>
-      </div>
     </PageContentMain>
   );
 };

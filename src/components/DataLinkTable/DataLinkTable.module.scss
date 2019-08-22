@@ -55,7 +55,7 @@
   margin-bottom: 4rem;
 
 
-  &.has-items {
+  &WithItems {
     cursor: pointer;
     &:focus {
       background-color: $color-support-focus;

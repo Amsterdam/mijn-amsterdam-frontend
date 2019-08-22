@@ -820,6 +820,9 @@ export function formatFocusProduct(product: FocusProduct): FocusItem {
     // Date on which the last updated information (Step) was published,
     datePublished: sourceData.datePublished || '',
 
+    // Date on which the request process was first published
+    dateStart: defaultDateFormat(dateStart),
+
     // Regular title, can be turned into more elaborate descriptive information. E.g Bijstandsuitkering could become Uw Aanvraag voor een bijstandsuitkering.
     title: parseLabelContent(stepLabels.title, sourceData),
 
