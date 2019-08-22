@@ -88,7 +88,10 @@ export default function DataLinkTable({
       {hasTitle && (
         <Heading
           size="mediumLarge"
-          className={classnames(styles.Title, hasItems && 'has-items')}
+          className={classnames(
+            styles.Title,
+            hasItems && styles.TitleWithItems
+          )}
           onKeyPress={event => hasItems && toggleCollapsed(event)}
           onClick={event => hasItems && toggleCollapsed(event)}
           data-track={itemClickTogglePayload(
@@ -136,6 +139,7 @@ export default function DataLinkTable({
                 <tr key={item.id} className={styles.TableRow}>
                   <td className={styles.DisplayPropTitle}>
                     <ButtonLink
+                      tabIndex={isCollapsed ? -1 : 0}
                       to={item.link.to}
                       data-track={itemClickPayload(
                         `${trackCategory}/DataLink_tabel`,

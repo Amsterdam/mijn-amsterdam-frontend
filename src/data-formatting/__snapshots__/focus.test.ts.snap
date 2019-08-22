@@ -4,6 +4,7 @@ exports[`Focus data formatting format correctly Levensonderhoud--1-0 1`] = `
 Object {
   "chapter": "INKOMEN",
   "datePublished": "28 juli 2019",
+  "dateStart": "24 juli 2019",
   "description": <React.Fragment>
     <p>
       U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer details.
@@ -140,6 +141,7 @@ exports[`Focus data formatting format correctly Levensonderhoud--1-1 1`] = `
 Object {
   "chapter": "INKOMEN",
   "datePublished": "07 mei 2019",
+  "dateStart": "09 april 2019",
   "description": "U heeft geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.",
   "hasDecision": true,
   "id": "1-1",
@@ -254,6 +256,7 @@ exports[`Focus data formatting format correctly Levensonderhoud--1-2 1`] = `
 Object {
   "chapter": "INKOMEN",
   "datePublished": "08 juni 2019",
+  "dateStart": "09 mei 2019",
   "description": <React.Fragment>
     <p>
       U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer details.
@@ -410,6 +413,7 @@ exports[`Focus data formatting format correctly Levensonderhoud--1-3 1`] = `
 Object {
   "chapter": "INKOMEN",
   "datePublished": "03 juli 2019",
+  "dateStart": "08 juni 2019",
   "description": "Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.",
   "hasDecision": true,
   "id": "1-3",
@@ -551,6 +555,7 @@ exports[`Focus data formatting format correctly Stadspas--0-0 1`] = `
 Object {
   "chapter": "INKOMEN",
   "datePublished": "08 juli 2019",
+  "dateStart": "08 juli 2019",
   "description": "U hebt op 08 juli 2019 een Stadspas aangevraagd.",
   "hasDecision": false,
   "id": "0-0",
@@ -616,6 +621,7 @@ exports[`Focus data formatting format correctly Stadspas--0-1 1`] = `
 Object {
   "chapter": "INKOMEN",
   "datePublished": "08 juli 2019",
+  "dateStart": "07 juli 2019",
   "description": <React.Fragment>
     <p>
       Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt vóór 
@@ -714,6 +720,7 @@ exports[`Focus data formatting format correctly Stadspas--0-2 1`] = `
 Object {
   "chapter": "INKOMEN",
   "datePublished": "06 juli 2019",
+  "dateStart": "03 juli 2019",
   "description": <React.Fragment>
     <p>
       Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken. Bekijk de brief voor meer details. U moet de extra informatie vóór 
