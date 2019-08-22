@@ -1,0 +1,36 @@
+@import 'styles/_global.scss';
+
+.Tutorial {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: grey;
+  opacity: 0.8;
+  z-index: 1000;
+}
+
+@include select(Dashboard_Dashboard) {
+  @include select(Heading_Heading) {
+    background-color: transparent;
+    z-index: 1001;
+    @include select(Dashboard_MyNotificationsHeadingLink) {
+      position: relative;
+      background-color: white;
+      padding: 5px;
+      border-radius: 10px;
+    }
+  }
+}
+
+@include select(MyCases_MyCases) {
+  @include select(Heading_Heading) {
+    position: relative;
+    z-index: 1001;
+    background-color: white;
+    width: fit-content;
+    padding: 5px;
+    border-radius: 10px;
+  }
+}
