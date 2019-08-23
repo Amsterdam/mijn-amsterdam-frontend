@@ -28,7 +28,6 @@ export default function FontEnlarger({ children }: ComponentProps) {
         onBlur={() => hide()}
         onMouseEnter={() => show()}
         onMouseLeave={() => hide()}
-        title="Uitleg tekst vergroter"
       >
         A &#43; &minus;
       </button>

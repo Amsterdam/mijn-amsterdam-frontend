@@ -30,7 +30,7 @@ node {
     stage("Test") {
       tryStep "test", {
         sh "docker-compose -p mijn_amsterdam_frontend -f docker-compose.yml build && " +
-        "docker-compose -p mijn_amsterdam_frontend -f docker-compose.yml run --rm test"
+        "docker-compose -p mijn_amsterdam_frontend_test -f docker-compose.yml run --rm test"
       }
     }
   }
