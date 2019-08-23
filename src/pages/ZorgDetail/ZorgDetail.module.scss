@@ -20,6 +20,10 @@
   @include select(StatusLine_ListHeading) {
     max-width: calc(#{$main-boxed-width} - 32rem);
     margin: 0 auto;
+
+    @include media-query('<=phone') {
+      margin: 0 8rem;
+    }
   }
   @include select(StatusLine_NoStatusItems) {
     max-width: calc(#{$main-boxed-width} - 32rem);
