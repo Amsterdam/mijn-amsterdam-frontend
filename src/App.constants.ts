@@ -36,7 +36,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   BELASTINGEN: 'Belastingen',
   JEUGDHULP: 'Jeugdhulp',
   WONEN: 'Erfpacht',
-  ZORG: 'Zorg',
+  ZORG: 'Zorg en ondersteuning',
   ROOT: 'Home',
   MELDINGEN: 'Mijn meldingen',
   PROFILE: 'Mijn gegevens',
@@ -119,7 +119,7 @@ export const errorMessageMap: ErrorMessageMap = {
     error: 'Communicatie met api mislukt.',
   },
   WMO: {
-    name: 'Zorg',
+    name: 'Zorg en ondersteuning',
     error: 'Communicatie met api mislukt.',
   },
   FOCUS: {
@@ -152,8 +152,8 @@ export const ExternalUrls = {
     'https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D',
   REPORT_RELOCATION:
     'https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/',
-  CONTACT_FORM:
-    'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx/fKlachtenformulier',
+  CONTACT_FORM: 'https://www.amsterdam.nl/contact/',
+  // 'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx/fKlachtenformulier',
   COLOFON: 'https://www.amsterdam.nl/algemene_onderdelen/overige/colofon/',
   PROCLAIMER:
     'https://www.amsterdam.nl/algemene_onderdelen/overige/proclaimer/',

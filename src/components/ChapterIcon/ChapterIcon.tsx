@@ -49,7 +49,7 @@ export default function ChapterIcon({
 
   return (
     <Icon
-      aria-hidden="true"
+      aria-label={chapter}
       fill={fill}
       className={classnames(styles.ChapterIcon, className)}
     />

@@ -37,6 +37,13 @@ export const mainMenuItemId: { [key: string]: MainMenuId } = {
 
 export const myChaptersMenuItems: MenuItem[] = [
   {
+    title: ChapterTitles.BELASTINGEN,
+    id: Chapters.BELASTINGEN,
+    to: ExternalUrls.SSO_BELASTINGEN,
+    Icon: BelastingenIcon,
+    rel: 'external',
+  },
+  {
     title: ChapterTitles.BURGERZAKEN,
     id: Chapters.BURGERZAKEN,
     to: AppRoutes.BURGERZAKEN,
@@ -47,13 +54,6 @@ export const myChaptersMenuItems: MenuItem[] = [
     id: Chapters.WONEN,
     to: ExternalUrls.SSO_ERFPACHT || '',
     Icon: WonenIcon,
-    rel: 'external',
-  },
-  {
-    title: ChapterTitles.BELASTINGEN,
-    id: Chapters.BELASTINGEN,
-    to: ExternalUrls.SSO_BELASTINGEN,
-    Icon: BelastingenIcon,
     rel: 'external',
   },
   {
