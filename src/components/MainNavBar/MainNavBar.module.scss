@@ -26,6 +26,16 @@
   }
 }
 
+.SubmenuItemTitle,
+.SubmenuItemIcon {
+  display: inline-block;
+  border-bottom: solid 0.2rem transparent;
+}
+
+.SubmenuItemTitle {
+  white-space: nowrap;
+}
+
 .MainNavLink {
   display: block;
   margin-right: 3rem;
@@ -40,11 +50,6 @@
     &:hover {
       color: $color-primary-red;
     }
-  }
-
-  span {
-    display: inline-block;
-    border-bottom: solid 0.2rem transparent;
   }
 
   @include hoverCapable {

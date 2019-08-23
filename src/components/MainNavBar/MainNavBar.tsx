@@ -127,8 +127,12 @@ function getMenuItem(
               )}
               onFocus={() => setSubMenuVisibility(item.id, true)}
             >
-              {Icon && <Icon fill={Colors.neutralGrey4} aria-hidden="true" />}
-              {title}
+              {Icon && (
+                <span className={styles.SubmenuItemIcon}>
+                  <Icon aria-label={id} fill={Colors.neutralGrey4} />
+                </span>
+              )}
+              <span className={styles.SubmenuItemTitle}>{title}</span>
             </MainNavSubmenuLink>
           );
         })}
