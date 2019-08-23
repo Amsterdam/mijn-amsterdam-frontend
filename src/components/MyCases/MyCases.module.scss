@@ -23,6 +23,10 @@
   position: relative;
   width: calc(50% - 5rem);
 
+  @include media-query('<=phone') {
+    width: auto;
+  }
+
   &:nth-child(odd) {
     margin-right: 5rem;
 
