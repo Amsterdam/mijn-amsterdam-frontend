@@ -71,7 +71,7 @@
     border-top: 0.1rem solid $color-neutral-grey2;
 
     // Move home button after the Chapters menu
-    &:first-child {
+    &:nth-child(2) {
       grid-row: 2;
     }
   }
@@ -97,6 +97,7 @@
   @include media-query('<=tablet') {
     position: static;
     margin-top: 0;
+    grid-row: 20;
 
     > a {
       font-weight: bold;
