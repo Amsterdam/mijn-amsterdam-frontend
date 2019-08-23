@@ -12,6 +12,16 @@
       margin: 0 4rem;
     }
   }
+
+  @include select(StatusLine_altDocumentContent) {
+    display: none;
+  }
+
+  @include select(StatusLine_Actual) {
+    @include select(StatusLine_altDocumentContent) {
+      display: block;
+    }
+  }
 }
 
 .InfoDetail {

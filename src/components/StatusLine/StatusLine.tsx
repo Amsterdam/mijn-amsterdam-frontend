@@ -26,11 +26,13 @@ export interface StatusLineItem {
 interface StatusLineProps {
   items: StatusLineItem[];
   trackCategory?: string;
+  altDocumentContent?: string | JSX.Element;
 }
 
 interface StatusLineItemProps {
   item: StatusLineItem;
   stepNumber: number;
+  altDocumentContent?: string | JSX.Element;
 }
 
 interface DownloadLinkProps {
@@ -51,7 +53,11 @@ function DownloadLink({ item }: DownloadLinkProps) {
   );
 }
 
-function StatusLineItem({ item, stepNumber }: StatusLineItemProps) {
+function StatusLineItem({
+  item,
+  stepNumber,
+  altDocumentContent,
+}: StatusLineItemProps) {
   const { location } = useRouter();
 
   return (
@@ -75,11 +81,16 @@ function StatusLineItem({ item, stepNumber }: StatusLineItemProps) {
         </div>
         <div className={styles.Panel}>{item.description}</div>
         <div className={styles.Panel}>
-          <p>
-            {item.documents.map(document => (
-              <DownloadLink key={document.id} item={document} />
-            ))}
-          </p>
+          {!!altDocumentContent && (
+            <p className={styles.altDocumentContent}>{altDocumentContent}</p>
+          )}
+          {!!item.documents && (
+            <p>
+              {item.documents.map(document => (
+                <DownloadLink key={document.id} item={document} />
+              ))}
+            </p>
+          )}
         </div>
       </div>
     </li>
@@ -89,6 +100,7 @@ function StatusLineItem({ item, stepNumber }: StatusLineItemProps) {
 export default function StatusLine({
   items,
   trackCategory = DEFAULT_TRACK_CATEGORY,
+  altDocumentContent,
 }: StatusLineProps) {
   const { location } = useRouter();
   const [isCollapsed, setCollapsed] = useSessionStorage(
@@ -126,6 +138,7 @@ export default function StatusLine({
                   key={item.id}
                   item={item}
                   stepNumber={items.length - index}
+                  altDocumentContent={altDocumentContent}
                 />
               ))}
           </ul>

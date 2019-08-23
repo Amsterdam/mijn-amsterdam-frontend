@@ -70,6 +70,9 @@ export default () => {
           <StatusLine
             items={WmoItem.process}
             trackCategory="MA_Inkomen/Detail_pagina/Metro_lijn"
+            altDocumentContent={
+              <strong>Deze informatie krijg je ook per post.</strong>
+            }
           />
         </PageContentMainBody>
       )}
