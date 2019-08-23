@@ -1,6 +1,7 @@
 import { Chapter, WelcomeNotification } from 'App.constants';
 import { LinkProps } from 'App.types';
 import { AppState } from 'AppState';
+import { dateSort } from 'helpers/App';
 import { useLocalStorage } from 'hooks/storage.hook';
 import { ApiState } from './api.types';
 
@@ -48,11 +49,7 @@ export default ({
           : true,
       };
     }),
-  ].sort((a, b) => {
-    const c = new Date(a.datePublished).getTime();
-    const d = new Date(b.datePublished).getTime();
-    return c > d ? -1 : 1;
-  });
+  ].sort(dateSort('datePublished', 'desc'));
 
   return {
     ...FOCUS,

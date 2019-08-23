@@ -127,6 +127,7 @@ export default function StatusLine({
   return (
     <>
       <div className={styles.StatusLine}>
+        <h4 className={styles.ListHeading}>Status</h4>
         {!!items.length && (
           <ul className={styles.List}>
             {items

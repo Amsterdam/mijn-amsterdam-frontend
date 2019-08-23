@@ -58,6 +58,15 @@ export function capitalizeFirstLetter(text: string) {
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
+export function dateSort(sortKey: string, direction: 'asc' | 'desc' = 'asc') {
+  return (a: any, b: any) => {
+    const c = new Date(a[sortKey]).getTime();
+    const d = new Date(b[sortKey]).getTime();
+    //c > d ? -1 : 1;
+    return direction === 'asc' ? (c < d ? -1 : 1) : c > d ? -1 : 1;
+  };
+}
+
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
 export const entries = Object.entries as <T>(
   o: T

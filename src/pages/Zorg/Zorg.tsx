@@ -10,8 +10,7 @@ import styles from './Zorg.module.scss';
 import Alert from 'components/Alert/Alert';
 import { useTabletScreen } from 'hooks/media.hook';
 import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
-import { ExternalUrls } from 'App.constants';
-import { ChapterTitles } from '../../App.constants';
+import { ExternalUrls, ChapterTitles } from 'App.constants';
 
 const DISPLAY_PROPS = {
   title: 'Regeling',

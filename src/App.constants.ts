@@ -152,8 +152,8 @@ export const ExternalUrls = {
     'https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D',
   REPORT_RELOCATION:
     'https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/',
-  CONTACT_FORM:
-    'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx/fKlachtenformulier',
+  CONTACT_FORM: 'https://www.amsterdam.nl/contact/',
+  // 'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx/fKlachtenformulier',
   COLOFON: 'https://www.amsterdam.nl/algemene_onderdelen/overige/colofon/',
   PROCLAIMER:
     'https://www.amsterdam.nl/algemene_onderdelen/overige/proclaimer/',

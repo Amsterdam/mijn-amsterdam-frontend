@@ -6,6 +6,7 @@ import {
   defaultDateFormat,
   isDateInPast,
   capitalizeFirstLetter,
+  dateSort,
 } from '../helpers/App';
 import React from 'react';
 import { StepType } from '../components/StatusLine/StatusLine';
@@ -96,7 +97,13 @@ const Labels: {
       {
         status: 'Einde recht',
         datePublished: data => data.dateFinish,
-        description: <p>Op deze datum vervalt uw recht op deze voorziening.</p>,
+        description: data => (
+          <p>
+            {data.dateFinish
+              ? 'Op deze datum vervalt uw recht op deze voorziening.'
+              : 'Er is een lopend recht zonder einddatum.'}
+          </p>
+        ),
       },
     ],
   },
@@ -136,7 +143,13 @@ const Labels: {
       {
         status: 'Einde recht',
         datePublished: data => data.dateFinish,
-        description: <p>Op deze datum vervalt uw recht op deze voorziening.</p>,
+        description: data => (
+          <p>
+            {data.dateFinish
+              ? 'Op deze datum vervalt uw recht op deze voorziening.'
+              : 'Er is een lopend recht zonder einddatum.'}
+          </p>
+        ),
       },
     ],
   },
@@ -169,7 +182,13 @@ const Labels: {
       {
         status: 'Einde recht',
         datePublished: data => data.dateFinish,
-        description: <p>Op deze datum vervalt uw recht op deze voorziening.</p>,
+        description: data => (
+          <p>
+            {data.dateFinish
+              ? 'Op deze datum vervalt uw recht op deze voorziening.'
+              : 'Er is een lopend recht zonder einddatum.'}
+          </p>
+        ),
       },
     ],
   },
@@ -228,7 +247,13 @@ const Labels: {
       {
         status: 'Einde recht',
         datePublished: data => data.dateFinish,
-        description: <p>Op deze datum vervalt uw recht op deze voorziening.</p>,
+        description: data => (
+          <p>
+            {data.dateFinish
+              ? 'Op deze datum vervalt uw recht op deze voorziening.'
+              : 'Er is een lopend recht zonder einddatum.'}
+          </p>
+        ),
       },
     ],
   },
@@ -272,7 +297,13 @@ const Labels: {
       {
         status: 'Einde recht',
         datePublished: data => data.dateFinish,
-        description: <p>Op deze datum vervalt uw recht op deze voorziening.</p>,
+        description: data => (
+          <p>
+            {data.dateFinish
+              ? 'Op deze datum vervalt uw recht op deze voorziening.'
+              : 'Er is een lopend recht zonder einddatum.'}
+          </p>
+        ),
       },
     ],
   },
@@ -314,7 +345,13 @@ const Labels: {
       {
         status: 'Einde recht',
         datePublished: data => data.dateFinish,
-        description: <p>Op deze datum vervalt uw recht op deze voorziening.</p>,
+        description: data => (
+          <p>
+            {data.dateFinish
+              ? 'Op deze datum vervalt uw recht op deze voorziening.'
+              : 'Er is een lopend recht zonder einddatum.'}
+          </p>
+        ),
       },
     ],
   },
@@ -343,15 +380,8 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
   });
 
   if (labelData) {
-    const items: WmoProcessItem[] = labelData.statusItems
-      // Filter out items that have no date associated.
-      .filter(statusItem => {
-        return (
-          typeof statusItem.datePublished === 'function' &&
-          statusItem.datePublished(data)
-        );
-      })
-      .map((statusItem, index) => {
+    const items: WmoProcessItem[] = labelData.statusItems.map(
+      (statusItem, index) => {
         const datePublished = parseLabelContent(
           statusItem.datePublished,
           data
@@ -367,7 +397,8 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
           documents: [], // NOTE: To be implemented in 2020
           isHistorical: false,
         };
-      });
+      }
+    );
 
     if (items.length) {
       const nItems = [];
@@ -454,58 +485,60 @@ export type WmoApiResponse = WmoApiItem[];
 export function formatWmoApiResponse(
   wmoApiResponseData: WmoApiResponse
 ): WmoItem[] {
-  return wmoApiResponseData.map((item, index) => {
-    const {
-      Omschrijving: title,
-      VoorzieningIngangsdatum: dateStart,
-      VoorzieningEinddatum: dateFinish,
-      Leverancier: supplier,
-      Actueel: isActual,
-      Beschikkingsdatum: dateDecision,
-      Voorzieningsoortcode: itemTypeCode,
-      Leveringsvorm: deliveryType,
-    } = item;
+  return wmoApiResponseData
+    .sort(dateSort('VoorzieningIngangsdatum', 'desc'))
+    .map((item, index) => {
+      const {
+        Omschrijving: title,
+        VoorzieningIngangsdatum: dateStart,
+        VoorzieningEinddatum: dateFinish,
+        Leverancier: supplier,
+        Actueel: isActual,
+        Beschikkingsdatum: dateDecision,
+        Voorzieningsoortcode: itemTypeCode,
+        Leveringsvorm: deliveryType,
+      } = item;
 
-    const {
-      StartdatumLeverancier: dateStartServiceDelivery,
-      EinddatumLeverancier: dateFinishServiceDelivery,
-      Opdrachtdatum: dateRequestOrderStart,
-      Leverancier: serviceDeliverySupplier, // TODO: seems to be only filled with a code in the api response data
-    } = (item.Levering || {}) as WmoApiLevering;
+      const {
+        StartdatumLeverancier: dateStartServiceDelivery,
+        EinddatumLeverancier: dateFinishServiceDelivery,
+        Opdrachtdatum: dateRequestOrderStart,
+        Leverancier: serviceDeliverySupplier, // TODO: seems to be only filled with a code in the api response data
+      } = (item.Levering || {}) as WmoApiLevering;
 
-    const [start] = dateStart.split('T');
-    const [finish] = dateFinish ? dateFinish.split('T') : ['aanvraag'];
-    const id = slug(`${title}-${start}-${finish}-${index}`).toLowerCase();
+      const [start] = dateStart.split('T');
+      const [finish] = dateFinish ? dateFinish.split('T') : ['aanvraag'];
+      const id = slug(`${title}-${start}-${finish}-${index}`).toLowerCase();
 
-    const process: WmoItem['process'] = formatWmoProcessItems({
-      title,
-      dateStart,
-      dateFinish: dateFinish || '',
-      supplier,
-      isActual,
-      dateDecision,
-      dateStartServiceDelivery,
-      dateFinishServiceDelivery: dateFinishServiceDelivery || '',
-      dateRequestOrderStart,
-      serviceDeliverySupplier: supplier || 'Onbekend',
-      itemTypeCode,
-      deliveryType,
+      const process: WmoItem['process'] = formatWmoProcessItems({
+        title,
+        dateStart,
+        dateFinish: dateFinish || '',
+        supplier,
+        isActual,
+        dateDecision,
+        dateStartServiceDelivery,
+        dateFinishServiceDelivery: dateFinishServiceDelivery || '',
+        dateRequestOrderStart,
+        serviceDeliverySupplier: supplier || 'Onbekend',
+        itemTypeCode,
+        deliveryType,
+      });
+
+      return {
+        id,
+        title: capitalizeFirstLetter(title),
+        dateStart: defaultDateFormat(dateStart),
+        dateFinish: defaultDateFormat(dateFinish),
+        supplier,
+        // TODO: See if we can get a url to the suppliers websites
+        supplierUrl: '',
+        isActual,
+        link: {
+          title: 'Meer informatie',
+          to: `${AppRoutes.ZORG_VOORZIENINGEN}/${id}`,
+        },
+        process,
+      };
     });
-
-    return {
-      id,
-      title: capitalizeFirstLetter(title),
-      dateStart: defaultDateFormat(dateStart),
-      dateFinish: defaultDateFormat(dateFinish),
-      supplier,
-      // TODO: See if we can get a url to the suppliers websites
-      supplierUrl: '',
-      isActual,
-      link: {
-        title: 'Meer informatie',
-        to: `${AppRoutes.ZORG_VOORZIENINGEN}/${id}`,
-      },
-      process,
-    };
-  });
 }

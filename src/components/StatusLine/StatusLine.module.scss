@@ -6,7 +6,12 @@
 
 .List {
   @include reset-list-style;
-  padding: 2rem 0;
+  padding: 1rem 0;
+}
+
+.ListHeading {
+  color: $color-neutral-grey4;
+  margin-bottom: 0;
 }
 
 .StatusTitle {
@@ -179,8 +184,7 @@
 }
 
 .NoStatusItems {
-  text-align: center;
-  padding: 2rem;
+  padding: 2rem 0;
 }
 
 .MoreStatus {
