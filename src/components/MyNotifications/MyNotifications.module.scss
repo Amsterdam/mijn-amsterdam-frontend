@@ -38,12 +38,10 @@
   }
 }
 
-.MetaInfo {
+.MetaInfoSecondary {
   @include media-query('<=tablet') {
     display: inline-block;
     vertical-align: middle;
-    // margin-top: 1rem;
-    // margin-bottom: .4rem;
   }
 }
 

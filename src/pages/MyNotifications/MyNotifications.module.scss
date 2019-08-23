@@ -32,6 +32,27 @@
       }
     }
 
+    @include select(MyNotifications_MetaInfoSecondary) {
+      position: absolute;
+      right: 0;
+      top: 2rem;
+      width: 17.5rem;
+
+      @include media-query('<=tablet') {
+        padding-right: 2rem;
+        position: static;
+        width: auto;
+      }
+
+      @include select(MyNotifications_ChapterIndication) {
+        display: block;
+
+        @include media-query('<=tablet') {
+          display: initial;
+        }
+      }
+    }
+
     @include select(MyNotifications_MyNotificationItem) {
       padding-left: 16rem;
 
@@ -40,10 +61,6 @@
       }
 
       aside {
-        width: 17.5rem;
-        position: absolute;
-        right: 0;
-
         time {
           color: $color-neutral-grey4;
         }

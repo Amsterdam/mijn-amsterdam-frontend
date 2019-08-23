@@ -92,12 +92,17 @@ export default function MyNotifications({
                     className={styles.Icon}
                     chapter={item.chapter}
                   />
-                  <em className={styles.ChapterIndication}>
-                    {item.chapter.toLowerCase()}
-                  </em>
-                  <time className={styles.Datum} dateTime={item.datePublished}>
-                    {defaultDateFormat(item.datePublished)}
-                  </time>
+                  <div className={styles.MetaInfoSecondary}>
+                    <em className={styles.ChapterIndication}>
+                      {item.chapter.toLowerCase()}
+                    </em>
+                    <time
+                      className={styles.Datum}
+                      dateTime={item.datePublished}
+                    >
+                      {defaultDateFormat(item.datePublished)}
+                    </time>
+                  </div>
                 </aside>
                 {!!item.description && (
                   <p className={styles.Description}>{item.description}</p>
