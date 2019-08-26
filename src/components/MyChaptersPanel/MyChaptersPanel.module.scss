@@ -31,12 +31,16 @@
 
     @include media-query('<=tablet') {
       padding-left: 0;
-
+      width: auto;
       min-width: 18.5rem;
       &:nth-child(even) {
         margin-left: 0;
       }
     }
+  }
+
+  @include media-query('<=tablet') {
+    display: block;
   }
 }
 
