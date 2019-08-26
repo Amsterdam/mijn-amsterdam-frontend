@@ -161,6 +161,14 @@
     top: $main-header-topbar-height;
     z-index: $tutorial-items-z-index;
   }
+
+  @include media-query('<=tablet') {
+    right: 0.5rem;
+
+    &Open {
+      top: 7rem;
+    }
+  }
 }
 
 .Modal {

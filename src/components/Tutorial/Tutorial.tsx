@@ -3,6 +3,7 @@ import styles from './Tutorial.module.scss';
 import classnames from 'classnames';
 import { ComponentChildren } from 'App.types';
 import { ReactComponent as ArrowIcon } from 'assets/icons/Arrow__primary-white.svg';
+import { usePhoneScreen } from 'hooks/media.hook';
 
 export interface ComponentProps {
   children?: ComponentChildren;
@@ -62,9 +63,19 @@ export default function Tutorial({ toggleTutorial }: ComponentProps) {
           left: myChaptersHeaderPos.left,
         }}
       >
-        <ArrowIcon />
-        <br />
+        {!usePhoneScreen() && (
+          <>
+            <ArrowIcon />
+            <br />
+          </>
+        )}
         Dit zijn de onderwerpen waarover u iets heeft bij de gemeente
+        {usePhoneScreen() && (
+          <>
+            <br />
+            <ArrowIcon />
+          </>
+        )}
       </div>
       <div
         className={classnames(styles.TutorialItem, styles.MyCasesItem)}
@@ -73,9 +84,19 @@ export default function Tutorial({ toggleTutorial }: ComponentProps) {
           left: myCasesHeaderPos.left,
         }}
       >
-        <ArrowIcon />
-        <br />
+        {!usePhoneScreen() && (
+          <>
+            <ArrowIcon />
+            <br />
+          </>
+        )}
         Dit is een overzicht van uw lopende aanvragen of wijzigingen
+        {usePhoneScreen() && (
+          <>
+            <br />
+            <ArrowIcon />
+          </>
+        )}
       </div>
       <div
         className={classnames(styles.TutorialItem, styles.MyAreaItem)}
@@ -86,8 +107,12 @@ export default function Tutorial({ toggleTutorial }: ComponentProps) {
       >
         Hier ziet u informatie van de gemeente, bijvoorbeeld over afval,
         parkeren en bekendmakingen
-        <br />
-        <ArrowIcon />
+        {usePhoneScreen && (
+          <>
+            <br />
+            <ArrowIcon />
+          </>
+        )}
       </div>
       <div
         className={classnames(styles.TutorialItem, styles.MyTipsItem)}

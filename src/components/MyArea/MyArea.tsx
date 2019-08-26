@@ -73,7 +73,6 @@ export default function MyArea({ trackCategory, url }: MyAreaComponentProps) {
     <div className={styles.MyArea}>
       <MyAreaMap trackCategory={trackCategory} url={url} />
       <NavLink
-        id="MyAreaHeader" // Used for tutorial placement
         to={AppRoutes.MY_AREA}
         className={styles.Overlay}
         data-track={itemClickPayload(
@@ -82,7 +81,12 @@ export default function MyArea({ trackCategory, url }: MyAreaComponentProps) {
         )}
       >
         <div>
-          <Heading size="large">Mijn buurt</Heading>
+          <Heading
+            id="MyAreaHeader" // Used for tutorial placement
+            size="large"
+          >
+            Mijn buurt
+          </Heading>
           <p>
             Klik voor een overzicht van gemeentelijke informatie rond uw eigen
             woning.

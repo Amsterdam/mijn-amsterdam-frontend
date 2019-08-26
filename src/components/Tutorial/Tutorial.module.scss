@@ -30,6 +30,20 @@
     margin-left: -10rem;
     margin-top: 1rem;
   }
+
+  @include media-query('<=tablet') {
+    margin-top: -12rem;
+  }
+
+  @include media-query('<=phone') {
+    margin-top: -12rem;
+    margin-left: 14rem;
+
+    svg {
+      margin-top: 0.5rem;
+      margin-left: 0rem;
+    }
+  }
 }
 
 .MyChaptersItem {
@@ -43,36 +57,81 @@
     transform: scaleX(-1);
     margin-top: 1rem;
   }
+
+  @include media-query('<=tablet') {
+    width: 28rem;
+    margin-top: -3rem;
+    margin-left: -26rem;
+
+    svg {
+      transform: rotate(0deg);
+      margin-left: 6rem;
+      margin-top: 1rem;
+    }
+  }
+
+  @include media-query('<=phone') {
+    margin-top: -18rem;
+    margin-left: 10rem;
+
+    svg {
+      transform: rotate(180deg);
+      margin-left: -1rem;
+      margin-top: 1rem;
+    }
+  }
 }
 
 .MyCasesItem {
   width: 30rem;
   margin-top: -17.5rem;
-  margin-left: 32rem;
+  margin-left: 22rem;
 
   svg {
     transform: rotate(180deg);
-    margin-left: -8rem;
+    margin-left: 10rem;
     transform: scaleX(-1);
     margin-top: 1rem;
+  }
+
+  @include media-query('<=phone') {
+    margin-top: -17rem;
+    margin-left: 19rem;
+
+    svg {
+      margin-left: 6rem;
+      margin-top: 2rem;
+      transform: rotate(180deg);
+    }
   }
 }
 
 .MyAreaItem {
   width: 46rem;
-  margin-top: 4.5rem;
-  margin-left: 29rem;
+  margin-top: -30rem;
+  margin-left: -36rem;
 
   svg {
     margin-left: 8rem;
     transform: scaleY(-1);
     margin-top: 1rem;
   }
+
+  @include media-query('<=phone') {
+    margin-top: -18rem;
+    margin-left: -1rem;
+
+    svg {
+      margin-left: -10rem;
+      transform: scaleY(1);
+      transform: rotate(180deg);
+    }
+  }
 }
 
 .MyTipsItem {
   width: 40rem;
-  margin-top: -38rem;
+  margin-top: -4rem;
   margin-left: 6rem;
 
   svg {
@@ -80,76 +139,85 @@
     transform: scaleX(-1);
     margin-top: 1rem;
   }
+
+  @include media-query('<=phone') {
+    margin-top: -3rem;
+    margin-left: 2rem;
+
+    svg {
+      margin-left: -12rem;
+    }
+  }
 }
 
 .TutorialItems {
-  @include select(Heading_Heading) {
-    @include select(Dashboard_MyNotificationsHeadingLink) {
-      position: relative;
-      z-index: $tutorial-items-z-index;
-      background-color: $color-white;
-      padding: $tutorial-items-padding;
-      border-radius: $tutorial-items-radius;
-      margin-left: -$tutorial-items-padding;
+  @include select-id(MyUpdatesHeader) {
+    position: relative;
+    z-index: $tutorial-items-z-index;
+    background-color: $color-white;
+    padding: $tutorial-items-padding;
+    border-radius: $tutorial-items-radius;
+    margin-left: -$tutorial-items-padding;
+  }
+
+  @include select-id(MyCasesHeader) {
+    position: relative;
+    z-index: $tutorial-items-z-index;
+    background-color: $color-white;
+    width: fit-content;
+    padding: $tutorial-items-padding;
+    border-radius: $tutorial-items-radius;
+    margin-top: -$tutorial-items-padding;
+    margin-left: -$tutorial-items-padding;
+    margin-bottom: calc(#{$tutorial-items-padding} * 1);
+  }
+
+  @include select-id(MyChaptersHeader) {
+    position: relative;
+    z-index: $tutorial-items-z-index;
+    background-color: $color-white;
+    display: inline-block;
+    padding: $tutorial-items-padding;
+    border-radius: $tutorial-items-radius;
+    margin-top: -$tutorial-items-padding;
+    margin-left: -$tutorial-items-padding;
+    margin-bottom: $tutorial-items-padding;
+  }
+
+  @include select-id(MyAreaHeader) {
+    position: relative;
+    z-index: $tutorial-items-z-index;
+    background-color: $color-white;
+    width: fit-content;
+    padding: $tutorial-items-padding;
+    border-radius: $tutorial-items-radius;
+    margin-top: -$tutorial-items-padding;
+    margin-left: -$tutorial-items-padding;
+    margin-bottom: -$tutorial-items-padding;
+
+    @include media-query('<=phone') {
+      margin-left: 0rem;
+      background-position: 0rem 1.2rem;
+      padding-left: 2rem;
     }
   }
 
-  @include select(MyCases_MyCases) {
-    @include select(Heading_Heading) {
-      position: relative;
-      z-index: $tutorial-items-z-index;
-      background-color: $color-white;
-      width: fit-content;
-      padding: $tutorial-items-padding;
-      border-radius: $tutorial-items-radius;
-      margin-top: -$tutorial-items-padding;
-      margin-left: -$tutorial-items-padding;
-      margin-bottom: calc(#{$tutorial-items-padding} * 1);
-    }
-  }
+  @include select-id(MyTipsHeader) {
+    position: relative;
+    z-index: $tutorial-items-z-index;
+    background-color: $color-white;
+    width: fit-content;
+    padding: $tutorial-items-padding;
+    border-radius: $tutorial-items-radius;
+    margin-top: -$tutorial-items-padding;
+    margin-left: -$tutorial-items-padding;
+    margin-right: -$tutorial-items-padding;
+    margin-bottom: -$tutorial-items-padding;
 
-  @include select(MyChaptersPanel_MyChaptersPanel) {
-    @include select(Heading_Heading) {
-      position: relative;
-      z-index: $tutorial-items-z-index;
-      background-color: $color-white;
-      width: fit-content;
-      padding: $tutorial-items-padding;
-      border-radius: $tutorial-items-radius;
-      margin-top: -$tutorial-items-padding;
-      margin-left: -$tutorial-items-padding;
-      margin-bottom: $tutorial-items-padding;
-    }
-  }
-
-  @include select(MyArea_MyArea) {
-    @include select(Heading_Heading) {
-      position: relative;
-      z-index: $tutorial-items-z-index;
-      background-color: $color-white;
-      width: fit-content;
-      padding: $tutorial-items-padding;
-      border-radius: $tutorial-items-radius;
-      margin-top: -$tutorial-items-padding;
-      margin-left: -$tutorial-items-padding;
-      margin-bottom: -$tutorial-items-padding;
-    }
-  }
-
-  @include select(MyTips_MyTips) {
-    @include select(MyTips_HeaderBar) {
-      @include select(Heading_Heading) {
-        position: relative;
-        z-index: $tutorial-items-z-index;
-        background-color: $color-white;
-        width: fit-content;
-        padding: $tutorial-items-padding;
-        border-radius: $tutorial-items-radius;
-        margin-top: -$tutorial-items-padding;
-        margin-left: -$tutorial-items-padding;
-        margin-right: -$tutorial-items-padding;
-        margin-bottom: -$tutorial-items-padding;
-      }
+    @include media-query('<=phone') {
+      margin-left: 0rem;
+      background-position: 0rem 1.2rem;
+      padding-left: 2rem;
     }
   }
 }
