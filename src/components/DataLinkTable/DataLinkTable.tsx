@@ -1,5 +1,5 @@
 import { Unshaped } from 'App.types';
-import { ReactComponent as CaretIcon } from 'assets/icons/Chevron-Right.svg';
+import { ReactComponent as CaretIcon } from 'assets/images/Chevron-Right.svg';
 import classnames from 'classnames';
 import ButtonLink from 'components/ButtonLink/ButtonLink';
 import LoadingContent from 'components/LoadingContent/LoadingContent';

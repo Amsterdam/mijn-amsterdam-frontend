@@ -49,6 +49,10 @@
     display: block;
   }
 
+  @include media-query('<=tablet') {
+    margin-left: 12rem;
+  }
+
   @include media-query('<=phone') {
     padding-left: 6rem;
     margin-left: 0;

@@ -3,12 +3,12 @@ import styles from './StatusLine.module.scss';
 import classnames from 'classnames';
 import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
 import { Document } from '../DocumentList/DocumentList';
-import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
+import { ReactComponent as DownloadIcon } from 'assets/images/Download.svg';
 import { defaultDateFormat } from 'helpers/App';
 import useRouter from 'use-react-router';
 import { useSessionStorage } from 'hooks/storage.hook';
 import { itemClickTogglePayload } from 'hooks/analytics.hook';
-import { ReactComponent as CaretLeft } from 'assets/icons/Chevron-Left.svg';
+import { ReactComponent as CaretLeft } from 'assets/images/Chevron-Left.svg';
 
 const DEFAULT_TRACK_CATEGORY = 'Metro_lijn';
 export type StepType = 'first-step' | 'last-step' | 'middle-step';

@@ -1,7 +1,7 @@
 import { AppRoutes, Colors, Layout, LOGOUT_URL } from 'App.constants';
 import { ComponentChildren } from 'App.types';
 import { AppContext, SessionContext } from 'AppState';
-import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
+import { ReactComponent as LogoutIcon } from 'assets/images/Logout.svg';
 import classnames from 'classnames';
 import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
 import FontEnlarger from 'components/FontEnlarger/FontEnlarger';

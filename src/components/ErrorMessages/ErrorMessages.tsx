@@ -1,5 +1,5 @@
 import { StateKey } from 'AppState';
-import { ReactComponent as AlertIcon } from 'assets/icons/Alert.svg';
+import { ReactComponent as AlertIcon } from 'assets/images/Alert.svg';
 import classnames from 'classnames';
 import ButtonLinkStyle from 'components/ButtonLink/ButtonLink.module.scss';
 import Modal from 'components/Modal/Modal';
