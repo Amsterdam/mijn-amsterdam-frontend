@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './PageContentMainHeadingBackLink.module.scss';
 import { ComponentChildren } from 'App.types';
 import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
-import { ReactComponent as CaretLeft } from 'assets/icons/Chevron-Left.svg';
+import { ReactComponent as CaretLeft } from 'assets/images/Chevron-Left.svg';
 import { itemClickPayload } from 'hooks/analytics.hook';
 
 const DEFAULT_TRACK_CATEGORY = 'Detail_Pagina';
