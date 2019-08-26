@@ -6,10 +6,10 @@ import {
   ExternalUrls,
 } from 'App.constants';
 import { LinkProps } from 'App.types';
-import { ReactComponent as JeugdhulpIcon } from 'assets/icons/Passport.svg';
 import { ReactComponent as BelastingenIcon } from 'assets/images/belastingen.svg';
 import { ReactComponent as BurgerzakenIcon } from 'assets/images/burgerzaken.svg';
 import { ReactComponent as InkomenIcon } from 'assets/images/inkomen.svg';
+import { ReactComponent as JeugdhulpIcon } from 'assets/images/Passport.svg';
 import { ReactComponent as WonenIcon } from 'assets/images/wonen.svg';
 import { ReactComponent as ZorgIcon } from 'assets/images/zorg.svg';
 import { FunctionComponent, SVGProps } from 'react';
