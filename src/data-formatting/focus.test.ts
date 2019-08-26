@@ -333,7 +333,8 @@ const testData = [
 describe('Focus data formatting', () => {
   testData.forEach(item => {
     it('format correctly ' + item.naam + '--' + item._id, () => {
-      expect(formatFocusProduct(item as FocusProduct)).toMatchSnapshot();
+      const d = new Date(0, 0, 0);
+      expect(formatFocusProduct(item as FocusProduct, d)).toMatchSnapshot();
     });
   });
 });

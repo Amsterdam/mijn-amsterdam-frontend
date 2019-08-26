@@ -549,7 +549,8 @@ const AppRoutesByProductOrigin = {
 /** Checks if an item returned from the api is considered recent */
 function isRecentItem(
   decision: Decision,
-  steps: FocusProduct['processtappen']
+  steps: FocusProduct['processtappen'],
+  compareDate: Date
 ) {
   const noDecision = !decision;
 
@@ -557,7 +558,7 @@ function isRecentItem(
 
   if (steps.beslissing !== null) {
     hasRecentDecision =
-      differenceInCalendarDays(new Date(), steps.beslissing.datum) <
+      differenceInCalendarDays(compareDate, steps.beslissing.datum) <
       DAYS_KEEP_RECENT;
   }
 
@@ -757,7 +758,10 @@ function formatStepData(
 }
 
 // This function transforms the source data from the api into readable/presentable messages for the client.
-export function formatFocusProduct(product: FocusProduct): FocusItem {
+export function formatFocusProduct(
+  product: FocusProduct,
+  compareData: Date
+): FocusItem {
   const {
     _id: id,
     soortProduct: productOrigin,
@@ -775,7 +779,7 @@ export function formatFocusProduct(product: FocusProduct): FocusItem {
     }) || processSteps[0];
 
   // Determine if this items falls within a recent period (of xx days)
-  const isRecent = isRecentItem(decision, steps);
+  const isRecent = isRecentItem(decision, steps, compareData);
 
   // The data about the latest step
   const latestStepData = steps[latestStep];
@@ -889,7 +893,8 @@ export function formatFocusProduct(product: FocusProduct): FocusItem {
 }
 
 function formatFocusApiResponse(products: FocusApiResponse): FocusItem[] {
-  return products.map(product => formatFocusProduct(product));
+  const d = new Date();
+  return products.map(product => formatFocusProduct(product, d));
 }
 
 /**
