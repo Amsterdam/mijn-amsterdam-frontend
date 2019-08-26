@@ -22,7 +22,7 @@ Object {
   "isDenied": false,
   "isDiscarded": false,
   "isGranted": true,
-  "isRecent": true,
+  "isRecent": false,
   "latestStep": "beslissing",
   "link": Object {
     "title": "Meer informatie",

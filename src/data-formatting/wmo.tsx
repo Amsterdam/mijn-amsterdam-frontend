@@ -41,7 +41,7 @@ import { StepType } from '../components/StatusLine/StatusLine';
 //   },
 // ];
 
-interface WmoProcessItem extends StatusLineItem {
+export interface WmoProcessItem extends StatusLineItem {
   id: string;
   status: string;
   description: JSX.Element | string;
@@ -485,7 +485,7 @@ export type WmoApiResponse = WmoApiItem[];
 export function formatWmoApiResponse(
   wmoApiResponseData: WmoApiResponse
 ): WmoItem[] {
-  return wmoApiResponseData
+  const items = wmoApiResponseData
     .sort(dateSort('VoorzieningIngangsdatum', 'desc'))
     .map((item, index) => {
       const {
@@ -541,4 +541,6 @@ export function formatWmoApiResponse(
         process,
       };
     });
+
+  return items;
 }
