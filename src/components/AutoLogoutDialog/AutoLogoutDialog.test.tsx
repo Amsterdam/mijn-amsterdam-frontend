@@ -31,6 +31,7 @@ describe('AutoLogoutDialog', () => {
         callback && callback();
       };
     });
+    // inspired by https://github.com/facebook/jest/issues/890#issuecomment-450708771
     delete window.location;
     window = Object.create(window);
     window.location = {
