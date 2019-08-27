@@ -67,9 +67,9 @@ function startDyson() {
 function startCypress() {
   cypress
     .run({
-      reporter: 'junit',
+      // reporter: 'junit',
       record: false,
-      browser: 'chrome',
+      // browser: 'chrome',
       config: {
         baseUrl: 'http://localhost:3000',
         chromeWebSecurity: false,
