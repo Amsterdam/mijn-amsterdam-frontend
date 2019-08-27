@@ -7,7 +7,7 @@ import { CounterProps, useCounter } from 'hooks/timer.hook';
 import React, { useState, useEffect } from 'react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 
-import { Colors, LOGOUT_URL } from '../../App.constants';
+import { Colors, LOGOUT_URL } from 'App.constants';
 import Modal from '../Modal/Modal';
 import styles from './AutoLogoutDialog.module.scss';
 import classnames from 'classnames';

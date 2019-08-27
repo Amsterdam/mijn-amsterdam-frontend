@@ -38,16 +38,18 @@ RUN npm install \
 RUN npm run build
 RUN echo "build= `date`" > /app/build/version.txt
 
-FROM cypress/base:10 as integration-tests
+# Set-up the integration test part of the build
+FROM cypress/browsers:chrome69 as integration-tests
+RUN npm i cypress
+WORKDIR /app
 
-COPY /cypress /cypress
-COPY /cypress.json /cypress.json
-COPY /package.json /package.json
+COPY --from=build-deps /app/ /app/
+COPY cypress /app/cypress
+COPY /e2e.js /app/e2e.js
+COPY /cypress.json /app/cypress.json
+COPY mock-api /app/mock-api
 
-RUN npm i cypress dyson http-server node-persist date-fns concurrently
-
-COPY --from=build-deps /app/build /build
-COPY  mock-api /mock-api
+# RUN npm install --save-dev cypress
 
 # Web server image
 FROM nginx:stable-alpine

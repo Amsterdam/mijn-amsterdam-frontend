@@ -1,5 +1,5 @@
-import { ErrorMessageMap } from 'components/ErrorMessages/ErrorMessages';
 import { StateKey } from 'AppState';
+import { ErrorMessageMap } from 'components/ErrorMessages/ErrorMessages';
 
 export type Chapter =
   | 'ROOT'
@@ -65,10 +65,28 @@ export const PageTitles = {
   [AppRoutes.MY_UPDATES]: `Meldingen | ${PageTitleMain}`,
 };
 
-export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/login';
-export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL || '/logout';
+let apiBaseUrl: string = process.env.REACT_APP_API_BASE_URL || '/api';
+let loginUrl: string = process.env.REACT_APP_LOGIN_URL || '/login';
+let logoutUrl: string = process.env.REACT_APP_LOGOUT_URL || '/logout';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const [protocol, , host] = window.location.href.split('/');
+const baseUrl = `${protocol}//${host}`;
+
+if (!apiBaseUrl.startsWith('http') && apiBaseUrl.startsWith('/')) {
+  apiBaseUrl = baseUrl + apiBaseUrl;
+}
+if (!loginUrl.startsWith('http') && loginUrl.startsWith('/')) {
+  loginUrl = baseUrl + loginUrl;
+}
+if (!logoutUrl.startsWith('http') && logoutUrl.startsWith('/')) {
+  logoutUrl = baseUrl + logoutUrl;
+}
+
+console.log(apiBaseUrl, loginUrl, logoutUrl);
+
+export const API_BASE_URL = apiBaseUrl;
+export const LOGIN_URL = loginUrl;
+export const LOGOUT_URL = logoutUrl;
 
 export const ApiUrls = {
   MY_UPDATES: `${API_BASE_URL}/mijn-updates`,

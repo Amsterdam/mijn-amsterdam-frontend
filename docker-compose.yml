@@ -15,4 +15,4 @@ services:
     build:
       context: .
       target: integration-tests
-    command: npm run integration-tests
+    command: node e2e.js
