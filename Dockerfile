@@ -39,8 +39,8 @@ RUN npm run build
 RUN echo "build= `date`" > /app/build/version.txt
 
 # Set-up the integration test part of the build
-FROM cypress/browsers:chrome69 as integration-tests
-RUN npm i cypress
+FROM cypress/base:10 as integration-tests
+
 WORKDIR /app
 
 COPY --from=build-deps /app/ /app/
@@ -48,6 +48,8 @@ COPY cypress /app/cypress
 COPY /e2e.js /app/e2e.js
 COPY /cypress.json /app/cypress.json
 COPY mock-api /app/mock-api
+
+RUN npm i cypress
 
 # RUN npm install --save-dev cypress
 
