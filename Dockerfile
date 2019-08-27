@@ -49,9 +49,7 @@ COPY /e2e.js /app/e2e.js
 COPY /cypress.json /app/cypress.json
 COPY mock-api /app/mock-api
 
-RUN npm i cypress
-
-# RUN npm install --save-dev cypress
+RUN npm install --save-dev cypress
 
 # Web server image
 FROM nginx:stable-alpine
