@@ -2,13 +2,12 @@
 
 .Tutorial {
   position: absolute;
-  top: -$main-header-topbar-height;
+  top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   background-color: rgba($color-neutral-grey5, 0.8);
   z-index: $tutorial-overlay-z-index;
-  // padding-bottom: -10rem;
 }
 
 .TutorialItem {
@@ -164,7 +163,7 @@
     position: relative;
     z-index: $tutorial-items-z-index;
     background-color: $color-white;
-    width: fit-content;
+    display: inline-block;
     padding: $tutorial-items-padding;
     border-radius: $tutorial-items-radius;
     margin-top: -$tutorial-items-padding;
@@ -188,7 +187,7 @@
     position: relative;
     z-index: $tutorial-items-z-index;
     background-color: $color-white;
-    width: fit-content;
+    display: inline-block;
     padding: $tutorial-items-padding;
     border-radius: $tutorial-items-radius;
     margin-top: -$tutorial-items-padding;

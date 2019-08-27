@@ -43,7 +43,7 @@ export default function Tutorial({ toggleTutorial }: ComponentProps) {
   return (
     <div
       className={styles.Tutorial}
-      style={{ height: document.body.clientHeight + 40 }}
+      style={{ height: document.body.clientHeight }}
     >
       <div
         className={classnames(styles.TutorialItem, styles.MyUpdatesItem)}

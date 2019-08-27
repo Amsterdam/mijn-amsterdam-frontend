@@ -12,18 +12,25 @@ import MyNotifications from 'pages/MyNotifications/MyNotifications';
 import Proclaimer from 'pages/Proclaimer/Proclaimer';
 import Zorg from 'pages/Zorg/Zorg';
 import ZorgDetail from 'pages/ZorgDetail/ZorgDetail';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import useRouter from 'use-react-router';
 
 import { AppRoutes } from './App.constants';
 import styles from './App.module.scss';
-import AppState, { AppContext, SessionContext, SessionState } from './AppState';
+import AppState, {
+  AppContext,
+  SessionContext,
+  SessionState,
+  TutorialState,
+  TutorialContext,
+} from './AppState';
 import MainFooter from './components/MainFooter/MainFooter';
 import MainHeader from './components/MainHeader/MainHeader';
 import NotFound from './pages/NotFound/NotFound';
 import Profile from './pages/Profile/Profile';
 import classnames from 'classnames';
+import Tutorial from 'components/Tutorial/Tutorial';
 
 function track(event: any) {
   // NOTE: Beware of potentially nested [data-track] attributes as traversing up the dom here could result in using the wrong data-track attribute on a parent.
@@ -58,6 +65,9 @@ function AppNotAuthenticated() {
 function AppAuthenticated() {
   const { location } = useRouter();
   const session = useContext(SessionContext);
+  const { isTutorialVisible, setIsTutorialVisible } = useContext(
+    TutorialContext
+  );
 
   usePageChange();
 
@@ -65,6 +75,7 @@ function AppAuthenticated() {
     <MyArea />
   ) : (
     <>
+      {isTutorialVisible && <Tutorial toggleTutorial={setIsTutorialVisible} />}
       <MainHeader isAuthenticated={session.isAuthenticated} />
       <div className={styles.App} id="AppContent">
         <Switch>
@@ -133,7 +144,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <SessionState>
-        <AppLanding />
+        <TutorialState>
+          <AppLanding />
+        </TutorialState>
       </SessionState>
     </BrowserRouter>
   );

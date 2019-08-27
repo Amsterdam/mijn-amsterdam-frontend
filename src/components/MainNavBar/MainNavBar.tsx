@@ -1,6 +1,6 @@
 import { AppRoutes, Colors, Layout, LOGOUT_URL } from 'App.constants';
 import { ComponentChildren } from 'App.types';
-import { AppContext, SessionContext } from 'AppState';
+import { AppContext, SessionContext, TutorialContext } from 'AppState';
 import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
 import classnames from 'classnames';
 import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
@@ -170,7 +170,9 @@ export default function MainNavBar() {
   const isResponsiveMenu = useTabletScreen();
   const [isResponsiveMenuMenuVisible, toggleResponsiveMenu] = useState(false);
   const { history } = useRouter();
-  const [isTutorialVisible, toggleTutorial] = useState(false);
+  const { isTutorialVisible, setIsTutorialVisible } = useContext(
+    TutorialContext
+  );
   const TUTORIAL_CLASS = teststyles.TutorialItems;
 
   useEffect(() => {
@@ -261,10 +263,9 @@ export default function MainNavBar() {
           [styles.TutorialBtnOpen]: isTutorialVisible,
         })}
         onClick={() => {
-          toggleTutorial(!isTutorialVisible);
+          setIsTutorialVisible(!isTutorialVisible);
         }}
       />
-      {isTutorialVisible && <Tutorial toggleTutorial={toggleTutorial} />}
 
       {isResponsiveMenuMenuVisible && (
         <div
