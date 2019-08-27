@@ -327,8 +327,9 @@ const Labels: {
         datePublished: data => data.dateRequestOrderStart,
         description: data => (
           <p>
-            De gemeente heeft opdracht gegeven aan om de aanpassingen aan uw
-            woning uit te voeren.
+            De gemeente heeft opdracht gegeven aan{' '}
+            {data.serviceDeliverySupplier} om de aanpassingen aan uw woning uit
+            te voeren.
           </p>
         ),
       },
