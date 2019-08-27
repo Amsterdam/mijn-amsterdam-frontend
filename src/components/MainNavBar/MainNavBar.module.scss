@@ -126,7 +126,7 @@
 
 .MenuToggleBtn {
   height: $main-header-navbar-height;
-  background-image: url('assets/icons/Menu.svg');
+  background-image: url('assets/images/Menu.svg');
   background-size: 24px;
   width: 40px;
   background-repeat: no-repeat;
@@ -138,7 +138,7 @@
   cursor: pointer;
 
   &Open {
-    background-image: url('assets/icons/Close.svg');
+    background-image: url('assets/images/Close.svg');
   }
 
   @include media-query('>phone', '<=tablet') {

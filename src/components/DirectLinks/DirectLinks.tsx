@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './DirectLinks.module.scss';
 import { LINKS } from './DirectLinks.constants';
 import Heading from 'components/Heading/Heading';
-import { ReactComponent as ExternalLinkIcon } from 'assets/icons/External-Link.svg';
+import { ReactComponent as ExternalLinkIcon } from 'assets/images/External-Link.svg';
 import { entries } from 'helpers/App';
 import { usePhoneScreen } from 'hooks/media.hook';
 import ButtonLink from 'components/ButtonLink/ButtonLink';
