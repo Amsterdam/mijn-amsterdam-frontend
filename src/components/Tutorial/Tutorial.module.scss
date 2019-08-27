@@ -2,13 +2,13 @@
 
 .Tutorial {
   position: absolute;
-  top: 0;
+  top: -$main-header-topbar-height;
   bottom: 0;
   left: 0;
   right: 0;
   background-color: rgba($color-neutral-grey5, 0.8);
   z-index: $tutorial-overlay-z-index;
-  margin-top: -$main-header-topbar-height;
+  // padding-bottom: -10rem;
 }
 
 .TutorialItem {
