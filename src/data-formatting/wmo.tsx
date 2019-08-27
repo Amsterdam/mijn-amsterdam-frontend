@@ -41,7 +41,7 @@ import { StepType } from '../components/StatusLine/StatusLine';
 //   },
 // ];
 
-interface WmoProcessItem extends StatusLineItem {
+export interface WmoProcessItem extends StatusLineItem {
   id: string;
   status: string;
   description: JSX.Element | string;
@@ -327,8 +327,9 @@ const Labels: {
         datePublished: data => data.dateRequestOrderStart,
         description: data => (
           <p>
-            De gemeente heeft opdracht gegeven aan om de aanpassingen aan uw
-            woning uit te voeren.
+            De gemeente heeft opdracht gegeven aan{' '}
+            {data.serviceDeliverySupplier} om de aanpassingen aan uw woning uit
+            te voeren.
           </p>
         ),
       },
@@ -485,7 +486,7 @@ export type WmoApiResponse = WmoApiItem[];
 export function formatWmoApiResponse(
   wmoApiResponseData: WmoApiResponse
 ): WmoItem[] {
-  return wmoApiResponseData
+  const items = wmoApiResponseData
     .sort(dateSort('VoorzieningIngangsdatum', 'desc'))
     .map((item, index) => {
       const {
@@ -541,4 +542,6 @@ export function formatWmoApiResponse(
         process,
       };
     });
+
+  return items;
 }
