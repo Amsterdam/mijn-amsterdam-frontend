@@ -142,9 +142,7 @@
 
 .TutorialBtn {
   height: $main-header-navbar-height;
-  background-image: url('assets/icons/Info.svg');
-  background-size: 24px;
-  width: 40px;
+  background-size: 2.4rem;
   background-repeat: no-repeat;
   background-position: center;
   border: 0;
@@ -153,13 +151,16 @@
   position: absolute;
   top: 0;
   right: calc(50% - #{$main-boxed-width} / 2);
-
+  font-weight: 700;
+  color: $color-neutral-grey4;
   &Open {
+    color: transparent;
     z-index: $tutorial-items-z-index;
     background-image: url('assets/icons/Close__primary-white.svg');
     position: fixed;
     top: $main-header-topbar-height;
     z-index: $tutorial-items-z-index;
+    width: 4rem;
   }
 
   @include media-query('<=tablet') {

@@ -265,7 +265,9 @@ export default function MainNavBar() {
         onClick={() => {
           setIsTutorialVisible(!isTutorialVisible);
         }}
-      />
+      >
+        Meer info
+      </button>
 
       {isResponsiveMenuMenuVisible && (
         <div
