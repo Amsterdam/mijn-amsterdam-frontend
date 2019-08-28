@@ -12,6 +12,11 @@
     }
   }
 
+  // Corrects the padding for the dasboard specifically
+  @include select(PageContentMainHeading_PageContentMainHeading) {
+    padding-top: 1rem;
+  }
+
   .MyNotificationsHeadingLink {
     text-decoration: none;
     &:hover {

@@ -7,6 +7,8 @@ import { Chapter, Chapters } from '../App.constants';
 import { Document as GenericDocument } from '../components/DocumentList/DocumentList';
 import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
 import React from 'react';
+import { StatusLineItem } from 'components/StatusLine/StatusLine';
+import { StepType } from '../components/StatusLine/StatusLine';
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
  */
@@ -120,9 +122,11 @@ interface StepSourceData {
   daysRecoveryAction: number; // The number of days a client has to provide more information about a request
   dateStart: string; // The official start date of the clients request process.
   reden?: string; // The reason why a decision was made about a clients request for product.
+  isActual: boolean;
+  stepType: StatusLineItem['stepType'];
 }
 
-export interface ProcessStep {
+export interface ProcessStep extends StatusLineItem {
   id: string;
   documents: GenericDocument[];
   title: JSX.Element | string;
@@ -545,7 +549,8 @@ const AppRoutesByProductOrigin = {
 /** Checks if an item returned from the api is considered recent */
 function isRecentItem(
   decision: Decision,
-  steps: FocusProduct['processtappen']
+  steps: FocusProduct['processtappen'],
+  compareDate: Date
 ) {
   const noDecision = !decision;
 
@@ -553,7 +558,7 @@ function isRecentItem(
 
   if (steps.beslissing !== null) {
     hasRecentDecision =
-      differenceInCalendarDays(new Date(), steps.beslissing.datum) <
+      differenceInCalendarDays(compareDate, steps.beslissing.datum) <
       DAYS_KEEP_RECENT;
   }
 
@@ -572,6 +577,8 @@ type GetStepSourceDataArgs = Pick<
   StepSourceData,
   | 'productTitle'
   | 'latestStep'
+  | 'stepType'
+  | 'isActual'
   | 'decision'
   | 'id'
   | 'daysUserActionRequired'
@@ -587,6 +594,8 @@ function getStepSourceData({
   productTitle,
   stepData,
   latestStep,
+  stepType,
+  isActual,
   decision,
   dateStart,
   daysUserActionRequired,
@@ -628,10 +637,12 @@ function getStepSourceData({
     daysRecoveryAction,
     // The first date of the request process.
     dateStart: defaultDateFormat(dateStart),
+    stepType,
+    isActual,
   };
 }
 
-function parseLabelContent(
+export function parseLabelContent(
   text: TextPartContents,
   data: StepSourceData
 ): string | JSX.Element {
@@ -740,11 +751,17 @@ function formatStepData(
       : [],
     status: stepLabels.status,
     aboutStep: stepTitle,
+    isActual: sourceData.isActual,
+    isHistorical: !sourceData.isActual,
+    stepType: sourceData.stepType,
   };
 }
 
 // This function transforms the source data from the api into readable/presentable messages for the client.
-export function formatFocusProduct(product: FocusProduct): FocusItem {
+export function formatFocusProduct(
+  product: FocusProduct,
+  compareData: Date
+): FocusItem {
   const {
     _id: id,
     soortProduct: productOrigin,
@@ -762,7 +779,7 @@ export function formatFocusProduct(product: FocusProduct): FocusItem {
     }) || processSteps[0];
 
   // Determine if this items falls within a recent period (of xx days)
-  const isRecent = isRecentItem(decision, steps);
+  const isRecent = isRecentItem(decision, steps, compareData);
 
   // The data about the latest step
   const latestStepData = steps[latestStep];
@@ -792,7 +809,13 @@ export function formatFocusProduct(product: FocusProduct): FocusItem {
     daysSupplierActionRequired,
     daysUserActionRequired,
     daysRecoveryAction,
+    isActual: false,
+    stepType: 'middle-step',
   });
+
+  const processStepsFiltered = processSteps.filter(
+    stepTitle => !!steps[stepTitle]
+  );
 
   const item = {
     id,
@@ -800,6 +823,9 @@ export function formatFocusProduct(product: FocusProduct): FocusItem {
 
     // Date on which the last updated information (Step) was published,
     datePublished: sourceData.datePublished || '',
+
+    // Date on which the request process was first published
+    dateStart: defaultDateFormat(dateStart),
 
     // Regular title, can be turned into more elaborate descriptive information. E.g Bijstandsuitkering could become Uw Aanvraag voor een bijstandsuitkering.
     title: parseLabelContent(stepLabels.title, sourceData),
@@ -817,23 +843,38 @@ export function formatFocusProduct(product: FocusProduct): FocusItem {
       title: 'Meer informatie', // TODO: How to get custom link title?
       to: `${AppRoutesByProductOrigin[productOrigin]}/${id}`,
     },
-    process: processSteps
-      .filter(stepTitle => !!steps[stepTitle])
-      .map(stepTitle => {
-        const stepData = steps[stepTitle] || null;
-        const sourceData = getStepSourceData({
-          id: `${id}-${stepTitle}`,
-          productTitle,
-          decision,
-          latestStep,
-          stepData,
-          daysSupplierActionRequired,
-          daysUserActionRequired,
-          daysRecoveryAction,
-          dateStart,
-        });
-        return formatStepData(sourceData, productOrigin, stepTitle, stepData);
-      }),
+    process: processStepsFiltered.map((stepTitle, index) => {
+      const stepData = steps[stepTitle] || null;
+      const isActual = stepTitle === latestStep;
+      let stepType: StepType = 'middle-step';
+
+      switch (stepTitle) {
+        case 'aanvraag':
+          stepType = 'first-step';
+          break;
+        case 'beslissing':
+          stepType = 'last-step';
+          break;
+        default:
+          break;
+      }
+
+      const sourceData = getStepSourceData({
+        id: `${id}-${stepTitle}`,
+        productTitle,
+        decision,
+        latestStep,
+        stepData,
+        daysSupplierActionRequired,
+        daysUserActionRequired,
+        daysRecoveryAction,
+        dateStart,
+        isActual,
+        stepType,
+      });
+
+      return formatStepData(sourceData, productOrigin, stepTitle, stepData);
+    }),
   };
 
   const latestStepItem = item.process[item.process.length - 1];
@@ -852,7 +893,8 @@ export function formatFocusProduct(product: FocusProduct): FocusItem {
 }
 
 function formatFocusApiResponse(products: FocusApiResponse): FocusItem[] {
-  return products.map(product => formatFocusProduct(product));
+  const d = new Date();
+  return products.map(product => formatFocusProduct(product, d));
 }
 
 /**

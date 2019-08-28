@@ -1,58 +1,61 @@
 @import 'styles/_global.scss';
 
 .ZorgDetail {
-}
-
-.List {
-  @include reset-list-style;
-}
-
-.ListHeading {
-  border-bottom: 0.1rem solid $color-neutral-grey2;
-  padding-left: 12rem;
-  padding-bottom: 1rem;
-
-  @include media-query('<=phone') {
-    padding-left: 6rem;
+  @include select(PageContentMainHeading_PageContentMainHeading) {
+    margin-bottom: 1rem;
   }
-}
+  @include select(StatusLine_ListItemInner__) {
+    max-width: $main-boxed-width;
+    margin: 0 auto;
 
-.ListItem {
-  display: flex;
-  padding-left: 12rem;
-
-  @include media-query('<=phone') {
-    padding-left: 6rem;
+    @include media-query('<=phone') {
+      margin: 0 4rem;
+    }
   }
 
-  > p {
-    flex: 1 0 50%;
+  @include select(StatusLine_altDocumentContent) {
+    display: none;
+  }
 
-    > strong {
-      color: $color-neutral-grey4;
-      font-weight: 500;
+  @include select(StatusLine_ListHeading) {
+    max-width: calc(#{$main-boxed-width} - 32rem);
+    margin: 0 auto;
+
+    @include media-query('<=phone') {
+      margin: 0 8rem;
+    }
+  }
+  @include select(StatusLine_NoStatusItems) {
+    max-width: calc(#{$main-boxed-width} - 32rem);
+    margin: 0 auto;
+  }
+
+  @include select(StatusLine_Actual) {
+    @include select(StatusLine_altDocumentContent) {
       display: block;
-      border-bottom: 0.1rem solid $color-neutral-grey2;
-      padding-bottom: 0.5rem;
-      margin-bottom: 0.5rem;
     }
   }
 }
 
-.DatesInfo {
-  background: url('assets/icons/Calendar.svg') no-repeat 2.8rem center;
-  background-size: 2.4rem auto;
-}
+.InfoDetail {
+  border-top: 0.1rem solid $color-neutral-grey2;
+  margin-left: 16rem;
+  padding-bottom: 1rem;
+  padding-top: 1.4rem;
+  color: $color-neutral-grey4;
 
-.SupplierInfo {
-  background: url('assets/icons/Card.svg') no-repeat 2.8rem center;
-  background-size: 2.4rem auto;
-}
+  strong {
+    color: $color-black;
+    display: block;
+  }
 
-.DatesInfo,
-.SupplierInfo {
+  @include media-query('<=tablet') {
+    margin-left: 12rem;
+  }
+
   @include media-query('<=phone') {
-    background-position: 2rem center;
+    padding-left: 6rem;
+    margin-left: 0;
   }
 }
 

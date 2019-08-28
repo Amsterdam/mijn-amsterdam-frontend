@@ -20,23 +20,26 @@ function formatDate(
   ];
 
   if (fmt === 'mm:ss') {
-    const mins = date.getUTCMinutes();
-    const secs = date.getUTCSeconds();
+    const mins = date.getMinutes();
+    const secs = date.getSeconds();
 
     return `${(mins + '').padStart(2, '0')}:${(secs + '').padStart(2, '0')}`;
   }
 
-  const day = date.getUTCDate();
-  const monthIndex = date.getUTCMonth();
-  const year = date.getUTCFullYear();
+  const day = date.getDate();
+  const monthIndex = date.getMonth();
+  const year = date.getFullYear();
 
   return (
     (day + '').padStart(2, '0') + ' ' + monthNames[monthIndex] + ' ' + year
   );
 }
 
-export function defaultDateFormat(date: string | Date): string {
-  return formatDate(new Date(date));
+export function defaultDateFormat(
+  date: any,
+  defaultContent: string = ''
+): string {
+  return date ? formatDate(new Date(date)) : defaultContent;
 }
 
 export function formattedTimeFromSeconds(seconds: number) {
@@ -45,6 +48,23 @@ export function formattedTimeFromSeconds(seconds: number) {
   const t = new Date(0, 0, 0, 0, mins, secs);
 
   return formatDate(t, 'mm:ss');
+}
+
+export function isDateInPast(date: string | Date) {
+  return new Date(date).getTime() < new Date().getTime();
+}
+
+export function capitalizeFirstLetter(text: string) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+export function dateSort(sortKey: string, direction: 'asc' | 'desc' = 'asc') {
+  return (a: any, b: any) => {
+    const c = new Date(a[sortKey]).getTime();
+    const d = new Date(b[sortKey]).getTime();
+    //c > d ? -1 : 1;
+    return direction === 'asc' ? (c < d ? -1 : 1) : c > d ? -1 : 1;
+  };
 }
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685

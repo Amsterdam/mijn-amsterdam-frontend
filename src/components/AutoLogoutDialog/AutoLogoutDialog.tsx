@@ -30,7 +30,7 @@ import { SessionContext } from 'AppState';
  */
 const ONE_SECOND_MS = 1000;
 const ONE_MINUTE_SECONDS = 60;
-const AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS = 13 * ONE_MINUTE_SECONDS;
+const AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS = 30;
 const AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS =
   2 * ONE_MINUTE_SECONDS + 10; // Add 10 seconds time mismatch range
 const SESSION_RENEW_INTERVAL_SECONDS = 30;
@@ -135,7 +135,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
       )
     );
     setContinueButtonVisibility(false);
-    window.location.reload();
+    window.location.href = '/';
   }
 
   function continueUsingApp() {

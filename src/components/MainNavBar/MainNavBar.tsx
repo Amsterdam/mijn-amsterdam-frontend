@@ -1,7 +1,7 @@
 import { AppRoutes, Colors, Layout, LOGOUT_URL } from 'App.constants';
 import { ComponentChildren } from 'App.types';
 import { AppContext, SessionContext, TutorialContext } from 'AppState';
-import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
+import { ReactComponent as LogoutIcon } from 'assets/images/Logout.svg';
 import classnames from 'classnames';
 import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
 import FontEnlarger from 'components/FontEnlarger/FontEnlarger';
@@ -28,8 +28,6 @@ import {
   submenuItems,
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
-import Tutorial from 'components/Tutorial/Tutorial';
-import teststyles from 'components/Tutorial/Tutorial.module.scss';
 
 const MenuToggleBtnId = 'MenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -129,8 +127,12 @@ function getMenuItem(
               )}
               onFocus={() => setSubMenuVisibility(item.id, true)}
             >
-              {Icon && <Icon fill={Colors.neutralGrey4} aria-hidden="true" />}
-              {title}
+              {Icon && (
+                <span className={styles.SubmenuItemIcon}>
+                  <Icon aria-label={id} fill={Colors.neutralGrey4} />
+                </span>
+              )}
+              <span className={styles.SubmenuItemTitle}>{title}</span>
             </MainNavSubmenuLink>
           );
         })}

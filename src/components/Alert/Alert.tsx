@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './Alert.module.scss';
 import { ComponentChildren } from 'App.types';
-import { ReactComponent as AlertIcon } from 'assets/icons/Alert.svg';
-import { ReactComponent as CheckmarkIcon } from 'assets/icons/Checkmark.svg';
+import { ReactComponent as AlertIcon } from 'assets/images/Alert.svg';
+import { ReactComponent as CheckmarkIcon } from 'assets/images/Checkmark.svg';
 import classnames from 'classnames';
 
 export type AlertType = 'warning' | 'info' | 'success';

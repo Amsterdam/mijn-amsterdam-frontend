@@ -83,21 +83,26 @@ export default function MyNotifications({
                   item.isUnread && styles.isUnread
                 )}
               >
-                <ChapterIcon
-                  fill={Colors.primaryRed}
-                  className={styles.Icon}
-                  chapter={item.chapter}
-                />
                 <Heading className={styles.Title} el="h4" size="small">
                   {item.title}
                 </Heading>
                 <aside className={styles.MetaInfo}>
-                  <em className={styles.ChapterIndication}>
-                    {item.chapter.toLowerCase()}
-                  </em>
-                  <time className={styles.Datum} dateTime={item.datePublished}>
-                    {defaultDateFormat(item.datePublished)}
-                  </time>
+                  <ChapterIcon
+                    fill={Colors.primaryRed}
+                    className={styles.Icon}
+                    chapter={item.chapter}
+                  />
+                  <div className={styles.MetaInfoSecondary}>
+                    <em className={styles.ChapterIndication}>
+                      {item.chapter.toLowerCase()}
+                    </em>
+                    <time
+                      className={styles.Datum}
+                      dateTime={item.datePublished}
+                    >
+                      {defaultDateFormat(item.datePublished)}
+                    </time>
+                  </div>
                 </aside>
                 {!!item.description && (
                   <p className={styles.Description}>{item.description}</p>
@@ -105,7 +110,7 @@ export default function MyNotifications({
                 {(!!item.link || !!item.customLink) && (
                   <p className={styles.Action}>
                     <a
-                      title="Meer informatie over deze melding"
+                      title={`Meer informatie over de melding: ${item.title}`}
                       href={item.customLink ? '#' : item.link!.to}
                       role="button"
                       data-track={itemClickPayload(
