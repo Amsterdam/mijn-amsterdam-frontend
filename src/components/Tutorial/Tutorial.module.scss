@@ -31,11 +31,11 @@
   }
 
   @include media-query('<=tablet') {
-    margin-top: -12rem;
+    margin-top: -16rem;
   }
 
   @include media-query('<=phone') {
-    margin-top: -12rem;
+    margin-top: -15rem;
     margin-left: 14rem;
 
     svg {
@@ -117,7 +117,7 @@
   }
 
   @include media-query('<=phone') {
-    margin-top: -18rem;
+    margin-top: -17rem;
     margin-left: -1rem;
 
     svg {
@@ -196,6 +196,7 @@
 
     @include media-query('<=phone') {
       margin-left: 0rem;
+      display: initial;
       background-position: 0rem 1.2rem;
       padding-left: 2rem;
     }
