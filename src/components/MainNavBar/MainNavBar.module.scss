@@ -146,6 +146,38 @@
   }
 }
 
+.TutorialBtn {
+  height: $main-header-navbar-height;
+  background-size: 2.4rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: calc(50% - #{$main-boxed-width} / 2);
+  font-weight: 700;
+  color: $color-neutral-grey4;
+
+  &Open {
+    color: transparent;
+    z-index: z-index(tutorial-items);
+    background-image: url('assets/icons/Close__primary-white.svg');
+    position: fixed;
+    top: $main-header-topbar-height;
+    width: 4rem;
+  }
+
+  @include media-query('<=tablet') {
+    right: 0.5rem;
+
+    &Open {
+      top: 7rem;
+    }
+  }
+}
+
 .Modal {
   background: $color-neutral-grey4;
   opacity: 0.5;

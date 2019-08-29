@@ -3,7 +3,7 @@ import useMyTipsApi from 'hooks/api/my-tips-api.hook';
 import useMyNotificationsApi from 'hooks/api/my-notifications-api.hook';
 import useSessionApi, { SessionApiState } from 'hooks/api/session.api.hook';
 import useMyChapters from 'hooks/api/myChapters.hook';
-import React, { createContext, useMemo, useEffect } from 'react';
+import React, { createContext, useMemo, useEffect, useState } from 'react';
 
 import { ComponentChildren } from './App.types';
 import useErfpachtApi, { ErfpachtApiState } from './hooks/api/api.erfpacht';
@@ -48,6 +48,29 @@ export function SessionState({ children }: SessionStateProps) {
     <SessionContext.Provider value={session}>
       {children}
     </SessionContext.Provider>
+  );
+}
+
+export interface TutorialState {
+  isTutorialVisible: boolean;
+  setIsTutorialVisible: Function;
+}
+interface TutorialStateProps {
+  children: ComponentChildren;
+}
+
+export const TutorialContext = createContext<TutorialState>(
+  {} as TutorialState
+);
+
+export function TutorialState({ children }: TutorialStateProps) {
+  const [isTutorialVisible, setIsTutorialVisible] = useState(false);
+  return (
+    <TutorialContext.Provider
+      value={{ isTutorialVisible, setIsTutorialVisible }}
+    >
+      {children}
+    </TutorialContext.Provider>
   );
 }
 

@@ -60,10 +60,8 @@
     }
 
     @include media-query('>phone', '<=tablet') {
-      // Weirdly sized chapters panel for tablet screens needs the following to break-out of the flex restrains
-      flex-basis: calc(50% + 5rem);
-      margin-left: -5rem;
-      transform: translateX(5rem);
+      margin-right: -4rem;
+      width: calc(50% + 4rem);
     }
 
     @include media-query('<=phone') {

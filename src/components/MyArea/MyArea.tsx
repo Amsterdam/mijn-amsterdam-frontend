@@ -81,7 +81,12 @@ export default function MyArea({ trackCategory, url }: MyAreaComponentProps) {
         )}
       >
         <div>
-          <Heading size="large">Mijn buurt</Heading>
+          <Heading
+            id="MyAreaHeader" // Used for tutorial placement
+            size="large"
+          >
+            Mijn buurt
+          </Heading>
           <p>
             Klik voor een overzicht van gemeentelijke informatie rond uw eigen
             woning.
