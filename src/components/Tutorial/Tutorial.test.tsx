@@ -26,8 +26,9 @@ describe('tutorial', () => {
   });
 
   it('Renders without crashing', () => {
-    mount(<Tutorial toggleTutorial={toggle} />);
-    expect(document.addEventListener).toHaveBeenCalled();
-    expect(window.addEventListener).toHaveBeenCalled();
+    const comp = shallow(<Tutorial toggleTutorial={toggle} />);
+    expect(document.addEventListener).toHaveBeenCalledTimes(1);
+    expect(window.addEventListener).toHaveBeenCalledTimes(1);
+    expect(comp.html()).toMatchSnapshot();
   });
 });
