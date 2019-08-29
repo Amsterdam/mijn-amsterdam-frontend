@@ -12,6 +12,7 @@ $tutorial-items-radius: 1rem;
   background-color: rgba($color-neutral-grey5, 0.8);
   z-index: z-index(tutorial-overlay);
   overflow: hidden;
+  min-width: $main-min-width;
 }
 
 .TutorialItem {
@@ -40,11 +41,13 @@ $tutorial-items-radius: 1rem;
 
   @include media-query('<=phone') {
     margin-top: -15rem;
-    margin-left: 14rem;
+    margin-left: 2rem;
 
     svg {
-      margin-top: 0.5rem;
-      margin-left: 0rem;
+      margin-top: 2rem;
+      margin-left: 16rem;
+      height: 8rem;
+      transform: rotate(150deg);
     }
   }
 }
@@ -74,13 +77,14 @@ $tutorial-items-radius: 1rem;
   }
 
   @include media-query('<=phone') {
-    margin-top: -18rem;
-    margin-left: 10rem;
+    margin-top: -15rem;
+    margin-left: 0rem;
 
     svg {
-      transform: rotate(180deg);
-      margin-left: -1rem;
-      margin-top: 1rem;
+      transform: rotate(170deg);
+      margin-left: 14rem;
+      margin-top: 2rem;
+      height: 8rem;
     }
   }
 }
@@ -91,20 +95,21 @@ $tutorial-items-radius: 1rem;
   margin-left: 22rem;
 
   svg {
-    transform: rotate(180deg);
-    margin-left: 10rem;
-    transform: scaleX(-1);
+    transform: rotate(-10deg) scaleX(-1);
+    margin-left: 14rem;
     margin-top: 1rem;
   }
 
   @include media-query('<=phone') {
     margin-top: -17rem;
-    margin-left: 19rem;
+    margin-left: 2rem;
+    width: 26rem;
 
     svg {
-      margin-left: 6rem;
-      margin-top: 2rem;
-      transform: rotate(180deg);
+      margin-left: -24rem;
+      margin-top: -2rem;
+      transform: rotate(50deg) scaleY(-1);
+      height: 8rem;
     }
   }
 }
@@ -121,13 +126,14 @@ $tutorial-items-radius: 1rem;
   }
 
   @include media-query('<=phone') {
-    margin-top: -17rem;
-    margin-left: -1rem;
+    width: 22rem;
+    margin-top: -14rem;
+    margin-left: 2rem;
 
     svg {
-      margin-left: -10rem;
-      transform: scaleY(1);
+      margin-left: 6rem;
       transform: rotate(180deg);
+      height: 8rem;
     }
   }
 }
@@ -144,11 +150,13 @@ $tutorial-items-radius: 1rem;
   }
 
   @include media-query('<=phone') {
-    margin-top: -3rem;
+    width: 22rem;
+    margin-top: -2rem;
     margin-left: 2rem;
 
     svg {
-      margin-left: -12rem;
+      height: 8rem;
+      margin-left: 4rem;
     }
   }
 }
