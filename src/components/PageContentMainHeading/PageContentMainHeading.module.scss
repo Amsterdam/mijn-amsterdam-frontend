@@ -45,7 +45,7 @@
       width: 46rem;
       position: relative;
       left: 50%;
-      transform: translateX(-#{$main-boxed-width/2});
+      margin-left: calc(-#{$main-boxed-width} / 2);
     }
 
     &__boxed {
@@ -92,8 +92,7 @@
       &__medium {
         width: calc(50vw - 3rem);
         position: relative;
-        left: 50%;
-        transform: translateX(calc(-50vw + 2rem));
+        left: 1.3rem;
         margin-left: 0;
       }
     }

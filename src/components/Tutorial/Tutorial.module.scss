@@ -1,0 +1,219 @@
+@import 'styles/_global.scss';
+
+$tutorial-items-padding: 1rem;
+$tutorial-items-radius: 1rem;
+
+.Tutorial {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba($color-neutral-grey5, 0.8);
+  z-index: z-index(tutorial-overlay);
+  overflow: hidden;
+  min-width: $main-min-width;
+}
+
+.TutorialItem {
+  color: $color-white;
+  font-size: 1.7rem;
+  line-height: 2.2rem;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+}
+
+.MyUpdatesItem {
+  width: 25rem;
+  margin-top: -16rem;
+  margin-left: 23rem;
+
+  svg {
+    transform: rotate(180deg);
+    margin-left: -10rem;
+    margin-top: 1rem;
+  }
+
+  @include media-query('<=tablet') {
+    margin-top: -16rem;
+  }
+
+  @include media-query('<=phone') {
+    margin-top: -15rem;
+    margin-left: 2rem;
+
+    svg {
+      margin-top: 2rem;
+      margin-left: 16rem;
+      height: 8rem;
+      transform: rotate(150deg);
+    }
+  }
+}
+
+.MyChaptersItem {
+  width: 28rem;
+  margin-top: -3rem;
+  margin-left: 16rem;
+
+  svg {
+    transform: rotate(180deg);
+    margin-left: -6rem;
+    transform: scaleX(-1);
+    margin-top: 1rem;
+  }
+
+  @include media-query('<=tablet') {
+    width: 28rem;
+    margin-top: -3rem;
+    margin-left: -26rem;
+
+    svg {
+      transform: rotate(0deg);
+      margin-left: 6rem;
+      margin-top: 1rem;
+    }
+  }
+
+  @include media-query('<=phone') {
+    margin-top: -15rem;
+    margin-left: 0rem;
+
+    svg {
+      transform: rotate(170deg);
+      margin-left: 14rem;
+      margin-top: 2rem;
+      height: 8rem;
+    }
+  }
+}
+
+.MyCasesItem {
+  width: 30rem;
+  margin-top: -17.5rem;
+  margin-left: 22rem;
+
+  svg {
+    transform: rotate(-10deg) scaleX(-1);
+    margin-left: 14rem;
+    margin-top: 1rem;
+  }
+
+  @include media-query('<=phone') {
+    margin-top: -17rem;
+    margin-left: 2rem;
+    width: 26rem;
+
+    svg {
+      margin-left: -24rem;
+      margin-top: -2rem;
+      transform: rotate(50deg) scaleY(-1);
+      height: 8rem;
+    }
+  }
+}
+
+.MyAreaItem {
+  width: 46rem;
+  margin-top: -30rem;
+  margin-left: -36rem;
+
+  svg {
+    margin-left: 8rem;
+    transform: scaleY(-1);
+    margin-top: 1rem;
+  }
+
+  @include media-query('<=phone') {
+    width: 22rem;
+    margin-top: -14rem;
+    margin-left: 2rem;
+
+    svg {
+      margin-left: 6rem;
+      transform: rotate(180deg);
+      height: 8rem;
+    }
+  }
+}
+
+.MyTipsItem {
+  width: 40rem;
+  margin-top: -4rem;
+  margin-left: 6rem;
+
+  svg {
+    margin-left: -9rem;
+    transform: scaleX(-1);
+    margin-top: 1rem;
+  }
+
+  @include media-query('<=phone') {
+    width: 22rem;
+    margin-top: -2rem;
+    margin-left: 2rem;
+
+    svg {
+      height: 8rem;
+      margin-left: 4rem;
+    }
+  }
+}
+
+%tutorialHeading {
+  position: relative;
+  z-index: z-index(tutorial-items);
+  background-color: $color-white;
+  padding: $tutorial-items-padding;
+  border-radius: $tutorial-items-radius;
+  margin-left: -$tutorial-items-padding;
+}
+
+.TutorialItems {
+  [id='MyChaptersHeader'],
+  [id='MyAreaHeader'],
+  [id='MyTipsHeader'],
+  [id='MyCasesHeader'],
+  [id='MyUpdatesHeader'] {
+    @extend %tutorialHeading;
+  }
+
+  [id='MyCasesHeader'] {
+    display: inline-block;
+    margin-top: -$tutorial-items-padding;
+    margin-bottom: calc(#{$tutorial-items-padding} * 1);
+  }
+
+  [id='MyChaptersHeader'] {
+    display: inline-block;
+    margin-top: -$tutorial-items-padding;
+    margin-bottom: $tutorial-items-padding;
+  }
+
+  [id='MyAreaHeader'] {
+    display: inline-block;
+    margin-top: -$tutorial-items-padding;
+    margin-bottom: -$tutorial-items-padding;
+
+    @include media-query('<=phone') {
+      margin-left: 0rem;
+      display: initial;
+      background-position: 0rem 1.2rem;
+      padding-left: 2rem;
+    }
+  }
+
+  [id='MyTipsHeader'] {
+    padding: $tutorial-items-padding;
+    margin-top: -$tutorial-items-padding;
+    margin-right: -$tutorial-items-padding;
+    margin-bottom: -$tutorial-items-padding;
+
+    @include media-query('<=phone') {
+      margin-left: 0rem;
+      background-position: 0rem 1.2rem;
+      padding-left: 2rem;
+    }
+  }
+}
