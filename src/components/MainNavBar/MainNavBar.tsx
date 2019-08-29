@@ -29,6 +29,7 @@ import {
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
 import teststyles from '../Tutorial/Tutorial.module.scss';
+import Dashboard from 'pages/Dashboard/Dashboard';
 
 const MenuToggleBtnId = 'MenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -172,7 +173,7 @@ export default function MainNavBar() {
   const { isAuthenticated } = useContext(SessionContext);
   const isResponsiveMenu = useTabletScreen();
   const [isResponsiveMenuMenuVisible, toggleResponsiveMenu] = useState(false);
-  const { history } = useRouter();
+  const { history, location } = useRouter();
   const { isTutorialVisible, setIsTutorialVisible } = useContext(
     TutorialContext
   );
@@ -261,16 +262,18 @@ export default function MainNavBar() {
         </div>
       )}
 
-      <button
-        className={classnames(styles.TutorialBtn, {
-          [styles.TutorialBtnOpen]: isTutorialVisible,
-        })}
-        onClick={() => {
-          setIsTutorialVisible(!isTutorialVisible);
-        }}
-      >
-        Meer info
-      </button>
+      {location.pathname === AppRoutes.ROOT && (
+        <button
+          className={classnames(styles.TutorialBtn, {
+            [styles.TutorialBtnOpen]: isTutorialVisible,
+          })}
+          onClick={() => {
+            setIsTutorialVisible(!isTutorialVisible);
+          }}
+        >
+          Meer info
+        </button>
+      )}
 
       {isResponsiveMenuMenuVisible && (
         <div

@@ -1,5 +1,8 @@
 @import 'styles/_global.scss';
 
+$tutorial-items-padding: 1rem;
+$tutorial-items-radius: 1rem;
+
 .Tutorial {
   position: absolute;
   top: 0;
@@ -7,7 +10,8 @@
   left: 0;
   right: 0;
   background-color: rgba($color-neutral-grey5, 0.8);
-  z-index: $tutorial-overlay-z-index;
+  z-index: z-index(tutorial-overlay);
+  overflow: hidden;
 }
 
 .TutorialItem {
@@ -149,49 +153,39 @@
   }
 }
 
+%tutorialHeading {
+  position: relative;
+  z-index: z-index(tutorial-items);
+  background-color: $color-white;
+  padding: $tutorial-items-padding;
+  border-radius: $tutorial-items-radius;
+  margin-left: -$tutorial-items-padding;
+}
+
 .TutorialItems {
-  @include select-id(MyUpdatesHeader) {
-    position: relative;
-    z-index: $tutorial-items-z-index;
-    background-color: $color-white;
-    padding: $tutorial-items-padding;
-    border-radius: $tutorial-items-radius;
-    margin-left: -$tutorial-items-padding;
+  [id='MyChaptersHeader'],
+  [id='MyAreaHeader'],
+  [id='MyTipsHeader'],
+  [id='MyCasesHeader'],
+  [id='MyUpdatesHeader'] {
+    @extend %tutorialHeading;
   }
 
-  @include select-id(MyCasesHeader) {
-    position: relative;
-    z-index: $tutorial-items-z-index;
-    background-color: $color-white;
+  [id='MyCasesHeader'] {
     display: inline-block;
-    padding: $tutorial-items-padding;
-    border-radius: $tutorial-items-radius;
     margin-top: -$tutorial-items-padding;
-    margin-left: -$tutorial-items-padding;
     margin-bottom: calc(#{$tutorial-items-padding} * 1);
   }
 
-  @include select-id(MyChaptersHeader) {
-    position: relative;
-    z-index: $tutorial-items-z-index;
-    background-color: $color-white;
+  [id='MyChaptersHeader'] {
     display: inline-block;
-    padding: $tutorial-items-padding;
-    border-radius: $tutorial-items-radius;
     margin-top: -$tutorial-items-padding;
-    margin-left: -$tutorial-items-padding;
     margin-bottom: $tutorial-items-padding;
   }
 
-  @include select-id(MyAreaHeader) {
-    position: relative;
-    z-index: $tutorial-items-z-index;
-    background-color: $color-white;
+  [id='MyAreaHeader'] {
     display: inline-block;
-    padding: $tutorial-items-padding;
-    border-radius: $tutorial-items-radius;
     margin-top: -$tutorial-items-padding;
-    margin-left: -$tutorial-items-padding;
     margin-bottom: -$tutorial-items-padding;
 
     @include media-query('<=phone') {
@@ -202,15 +196,9 @@
     }
   }
 
-  @include select-id(MyTipsHeader) {
-    position: relative;
-    z-index: $tutorial-items-z-index;
-    background-color: $color-white;
-    width: fit-content;
+  [id='MyTipsHeader'] {
     padding: $tutorial-items-padding;
-    border-radius: $tutorial-items-radius;
     margin-top: -$tutorial-items-padding;
-    margin-left: -$tutorial-items-padding;
     margin-right: -$tutorial-items-padding;
     margin-bottom: -$tutorial-items-padding;
 

@@ -159,13 +159,13 @@
   right: calc(50% - #{$main-boxed-width} / 2);
   font-weight: 700;
   color: $color-neutral-grey4;
+
   &Open {
     color: transparent;
-    z-index: $tutorial-items-z-index;
+    z-index: z-index(tutorial-items);
     background-image: url('assets/icons/Close__primary-white.svg');
     position: fixed;
     top: $main-header-topbar-height;
-    z-index: $tutorial-items-z-index;
     width: 4rem;
   }
 

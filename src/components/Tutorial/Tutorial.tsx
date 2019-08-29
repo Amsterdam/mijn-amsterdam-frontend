@@ -1,31 +1,39 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import styles from './Tutorial.module.scss';
 import classnames from 'classnames';
 import { ComponentChildren } from 'App.types';
 import { ReactComponent as ArrowIcon } from 'assets/icons/Arrow__primary-white.svg';
 import { usePhoneScreen } from 'hooks/media.hook';
+import { throttle } from 'throttle-debounce';
 
 export interface ComponentProps {
   children?: ComponentChildren;
   toggleTutorial: Function;
 }
 
+function calcPos() {
+  const scrollTop = document.documentElement.scrollTop;
+
+  return [
+    'MyUpdatesHeader',
+    'MyChaptersHeader',
+    'MyCasesHeader',
+    'MyAreaHeader',
+    'MyTipsHeader',
+  ].reduce((acc, id) => {
+    const rect = document.getElementById(id)!.getBoundingClientRect();
+    return {
+      ...acc,
+      [id]: {
+        top: scrollTop + rect.top,
+        left: rect.left,
+      },
+    };
+  }, {});
+}
+
 export default function Tutorial({ toggleTutorial }: ComponentProps) {
-  const myUpdatesHeaderPos = document
-    .getElementById('MyUpdatesHeader')!
-    .getBoundingClientRect();
-  const myChaptersHeaderPos = document
-    .getElementById('MyChaptersHeader')!
-    .getBoundingClientRect();
-  const myCasesHeaderPos = document
-    .getElementById('MyCasesHeader')!
-    .getBoundingClientRect();
-  const myAreaHeaderPos = document
-    .getElementById('MyAreaHeader')!
-    .getBoundingClientRect();
-  const myTipsHeaderPos = document
-    .getElementById('MyTipsHeader')!
-    .getBoundingClientRect();
+  const [pos, setPos]: [any, any] = useState({});
 
   function handleEscapeKey(e: KeyboardEvent) {
     if (e.keyCode === 27) {
@@ -33,14 +41,25 @@ export default function Tutorial({ toggleTutorial }: ComponentProps) {
     }
   }
 
-  useEffect(() => {
-    document.addEventListener('keydown', handleEscapeKey);
-    return () => {
-      document.removeEventListener('keydown', handleEscapeKey);
-    };
+  const resizeThrottled = throttle(20, () => {
+    setPos(calcPos());
   });
 
-  return (
+  useEffect(() => {
+    window.addEventListener('resize', resizeThrottled);
+    document.addEventListener('keydown', handleEscapeKey);
+
+    setPos(calcPos());
+
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKey);
+      window.removeEventListener('resize', resizeThrottled);
+    };
+  }, []);
+
+  const isPhone = usePhoneScreen();
+
+  return pos.myUpdatesHeaderPos ? (
     <div
       className={styles.Tutorial}
       style={{ height: document.body.clientHeight }}
@@ -48,8 +67,8 @@ export default function Tutorial({ toggleTutorial }: ComponentProps) {
       <div
         className={classnames(styles.TutorialItem, styles.MyUpdatesItem)}
         style={{
-          top: myUpdatesHeaderPos.top,
-          left: myUpdatesHeaderPos.left,
+          top: pos.myUpdatesHeaderPos.top,
+          left: pos.myUpdatesHeaderPos.left,
         }}
       >
         Hier ziet u nieuwe berichten van onze afdelingen die uw aandacht vragen
@@ -59,18 +78,18 @@ export default function Tutorial({ toggleTutorial }: ComponentProps) {
       <div
         className={classnames(styles.TutorialItem, styles.MyChaptersItem)}
         style={{
-          top: myChaptersHeaderPos.top,
-          left: myChaptersHeaderPos.left,
+          top: pos.myChaptersHeaderPos.top,
+          left: pos.myChaptersHeaderPos.left,
         }}
       >
-        {!usePhoneScreen() && (
+        {!isPhone && (
           <>
             <ArrowIcon />
             <br />
           </>
         )}
         Dit zijn de onderwerpen waarover u iets heeft bij de gemeente
-        {usePhoneScreen() && (
+        {isPhone && (
           <>
             <br />
             <ArrowIcon />
@@ -80,18 +99,18 @@ export default function Tutorial({ toggleTutorial }: ComponentProps) {
       <div
         className={classnames(styles.TutorialItem, styles.MyCasesItem)}
         style={{
-          top: myCasesHeaderPos.top,
-          left: myCasesHeaderPos.left,
+          top: pos.myCasesHeaderPos.top,
+          left: pos.myCasesHeaderPos.left,
         }}
       >
-        {!usePhoneScreen() && (
+        {!isPhone && (
           <>
             <ArrowIcon />
             <br />
           </>
         )}
         Dit is een overzicht van uw lopende aanvragen of wijzigingen
-        {usePhoneScreen() && (
+        {isPhone && (
           <>
             <br />
             <ArrowIcon />
@@ -101,8 +120,8 @@ export default function Tutorial({ toggleTutorial }: ComponentProps) {
       <div
         className={classnames(styles.TutorialItem, styles.MyAreaItem)}
         style={{
-          top: myAreaHeaderPos.top,
-          left: myAreaHeaderPos.left,
+          top: pos.myAreaHeaderPos.top,
+          left: pos.myAreaHeaderPos.left,
         }}
       >
         Hier ziet u informatie van de gemeente, bijvoorbeeld over afval,
@@ -117,8 +136,8 @@ export default function Tutorial({ toggleTutorial }: ComponentProps) {
       <div
         className={classnames(styles.TutorialItem, styles.MyTipsItem)}
         style={{
-          top: myTipsHeaderPos.top,
-          left: myTipsHeaderPos.left,
+          top: pos.myTipsHeaderPos.top,
+          left: pos.myTipsHeaderPos.left,
         }}
       >
         <ArrowIcon />
@@ -127,5 +146,7 @@ export default function Tutorial({ toggleTutorial }: ComponentProps) {
         voorzieningen van de gemeente
       </div>
     </div>
+  ) : (
+    <></>
   );
 }
