@@ -59,7 +59,7 @@ export default function Tutorial({ toggleTutorial }: ComponentProps) {
 
   const isPhone = usePhoneScreen();
 
-  return pos.myUpdatesHeaderPos ? (
+  return pos.MyUpdatesHeader ? (
     <div
       className={styles.Tutorial}
       style={{ height: document.body.clientHeight }}
@@ -67,8 +67,8 @@ export default function Tutorial({ toggleTutorial }: ComponentProps) {
       <div
         className={classnames(styles.TutorialItem, styles.MyUpdatesItem)}
         style={{
-          top: pos.myUpdatesHeaderPos.top,
-          left: pos.myUpdatesHeaderPos.left,
+          top: pos.MyUpdatesHeader.top,
+          left: pos.MyUpdatesHeader.left,
         }}
       >
         Hier ziet u nieuwe berichten van onze afdelingen die uw aandacht vragen
@@ -78,8 +78,8 @@ export default function Tutorial({ toggleTutorial }: ComponentProps) {
       <div
         className={classnames(styles.TutorialItem, styles.MyChaptersItem)}
         style={{
-          top: pos.myChaptersHeaderPos.top,
-          left: pos.myChaptersHeaderPos.left,
+          top: pos.MyChaptersHeader.top,
+          left: pos.MyChaptersHeader.left,
         }}
       >
         {!isPhone && (
@@ -99,8 +99,8 @@ export default function Tutorial({ toggleTutorial }: ComponentProps) {
       <div
         className={classnames(styles.TutorialItem, styles.MyCasesItem)}
         style={{
-          top: pos.myCasesHeaderPos.top,
-          left: pos.myCasesHeaderPos.left,
+          top: pos.MyCasesHeader.top,
+          left: pos.MyCasesHeader.left,
         }}
       >
         {!isPhone && (
@@ -120,8 +120,8 @@ export default function Tutorial({ toggleTutorial }: ComponentProps) {
       <div
         className={classnames(styles.TutorialItem, styles.MyAreaItem)}
         style={{
-          top: pos.myAreaHeaderPos.top,
-          left: pos.myAreaHeaderPos.left,
+          top: pos.MyAreaHeader.top,
+          left: pos.MyAreaHeader.left,
         }}
       >
         Hier ziet u informatie van de gemeente, bijvoorbeeld over afval,
@@ -136,8 +136,8 @@ export default function Tutorial({ toggleTutorial }: ComponentProps) {
       <div
         className={classnames(styles.TutorialItem, styles.MyTipsItem)}
         style={{
-          top: pos.myTipsHeaderPos.top,
-          left: pos.myTipsHeaderPos.left,
+          top: pos.MyTipsHeader.top,
+          left: pos.MyTipsHeader.left,
         }}
       >
         <ArrowIcon />
