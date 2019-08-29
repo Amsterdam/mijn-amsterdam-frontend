@@ -8,7 +8,7 @@ import Heading from 'components/Heading/Heading';
 import MainHeaderHero from 'components/MainHeaderHero/MainHeaderHero';
 import MainNavBar from 'components/MainNavBar/MainNavBar';
 import { entries } from 'helpers/App';
-import { useDesktopScreen } from 'hooks/media.hook';
+import { useDesktopScreen, usePhoneScreen } from 'hooks/media.hook';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -43,22 +43,24 @@ export default function MainHeader({
 
   return (
     <header className={styles.header}>
-      <nav className={styles.DirectSkipLinks}>
-        <a
-          tabIndex={0}
-          href="#AppContent"
-          className="action-button secondary line-only"
-        >
-          Direct naar: <b>Pagina inhoud</b>
-        </a>
-        <a
-          tabIndex={0}
-          href="#MainFooter"
-          className="action-button secondary line-only"
-        >
-          Direct naar: <b>Footer</b>
-        </a>
-      </nav>
+      {!usePhoneScreen() && (
+        <nav className={styles.DirectSkipLinks}>
+          <a
+            tabIndex={0}
+            href="#AppContent"
+            className="action-button secondary line-only"
+          >
+            Direct naar: <b>Pagina inhoud</b>
+          </a>
+          <a
+            tabIndex={0}
+            href="#MainFooter"
+            className="action-button secondary line-only"
+          >
+            Direct naar: <b>Footer</b>
+          </a>
+        </nav>
+      )}
       <div className={styles.topBar}>
         <Link
           className={styles.logoLink}
