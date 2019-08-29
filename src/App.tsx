@@ -18,7 +18,13 @@ import useRouter from 'use-react-router';
 
 import { AppRoutes } from './App.constants';
 import styles from './App.module.scss';
-import AppState, { AppContext, SessionContext, SessionState } from './AppState';
+import AppState, {
+  AppContext,
+  SessionContext,
+  SessionState,
+  TutorialState,
+  TutorialContext,
+} from './AppState';
 import MainFooter from './components/MainFooter/MainFooter';
 import MainHeader from './components/MainHeader/MainHeader';
 import NotFound from './pages/NotFound/NotFound';
@@ -133,7 +139,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <SessionState>
-        <AppLanding />
+        <TutorialState>
+          <AppLanding />
+        </TutorialState>
       </SessionState>
     </BrowserRouter>
   );
