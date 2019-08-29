@@ -66,7 +66,12 @@ export default function MyTips({
     <div className={styles.MyTips}>
       {showHeader && (
         <div className={styles.HeaderBar}>
-          <Heading size="large">Mijn tips</Heading>
+          <Heading
+            id="MyTipsHeader" // Used for tutorial placement
+            size="large"
+          >
+            Mijn tips
+          </Heading>
           {!!items.length && (
             <ButtonLink to={AppRoutes.MY_TIPS}>Mijn tips</ButtonLink>
           )}

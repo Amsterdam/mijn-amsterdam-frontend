@@ -37,7 +37,11 @@ export default function MyChaptersPanel({
 
   return (
     <div className={styles.MyChaptersPanel}>
-      <Heading size="large" className={styles.Title}>
+      <Heading
+        id="MyChaptersHeader" // Used for tutorial placement
+        size="large"
+        className={styles.Title}
+      >
         {title}
       </Heading>
       <div className={styles.Links}>

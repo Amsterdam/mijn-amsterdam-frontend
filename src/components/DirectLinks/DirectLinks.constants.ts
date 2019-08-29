@@ -10,18 +10,21 @@ export interface DirectLink {
   url: string;
   isPhoneScreenLink?: true;
   isExternalLink?: true;
+  id?: string;
 }
 
 export const LINKS: { [key in DirectLinkType]: DirectLink } = {
-  MY_TIPS: {
-    title: 'Mijn tips',
-    url: AppRoutes.MY_TIPS,
-    isPhoneScreenLink: true,
-  },
   MY_AREA: {
     title: 'Mijn buurt',
     url: AppRoutes.MY_AREA,
     isPhoneScreenLink: true,
+    id: 'MyAreaHeader',
+  },
+  MY_TIPS: {
+    title: 'Mijn tips',
+    url: AppRoutes.MY_TIPS,
+    isPhoneScreenLink: true,
+    id: 'MyTipsHeader',
   },
   MIJN_OVERHEID_BERICHTEBOX: {
     title: 'Mijn Overheid Berichtenbox',

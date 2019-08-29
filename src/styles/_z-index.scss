@@ -6,6 +6,8 @@ $z-index: (
   main-nav-bar-inner--tablet: 11,
   modal: 20,
   dialog: 21,
+  tutorial-overlay: 1000,
+  tutorial-items: 1001
 );
 
 @function z-index($key) {

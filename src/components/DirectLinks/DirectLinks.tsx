@@ -18,7 +18,7 @@ export default function DirectLinks() {
             !isPhoneScreen ? isPhoneScreenLink !== true : true
           )
           .map(link => {
-            const [linkName, { url, title, isExternalLink }] = link;
+            const [linkName, { url, title, isExternalLink, id }] = link;
             return (
               <li key={linkName}>
                 {isExternalLink === true ? (
@@ -27,7 +27,9 @@ export default function DirectLinks() {
                     {title}
                   </a>
                 ) : (
-                  <ButtonLink to={url}>{title}</ButtonLink>
+                  <ButtonLink id={id} to={url}>
+                    {title}
+                  </ButtonLink>
                 )}
               </li>
             );
