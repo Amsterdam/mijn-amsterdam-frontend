@@ -17,11 +17,15 @@ export default (offset?: number, limit?: number): WmoApiState => {
     ApiConfig[ApiUrls.WMO].postponeFetch
   );
 
+  const items = Array.isArray(data.items)
+    ? formatWmoApiResponse(data.items)
+    : [];
+
   return {
     ...rest,
     data: {
       ...data,
-      items: Array.isArray(data.items) ? formatWmoApiResponse(data.items) : [],
+      items,
     },
   };
 };
