@@ -34,13 +34,19 @@ export default function usePaginatedApi(
     method,
   };
   const [api, refetch] = useDataApi(options, INITIAL_STATE);
-  const responseData = Array.isArray(api.data)
-    ? { items: api.data, total: api.data.length, offset: 0, limit: -1 }
-    : api.data;
+  // Basic data formatting
+  const data = Array.isArray(api.data)
+    ? // API returns array items
+      { items: api.data, total: api.data.length, offset: 0, limit: -1 }
+    : // API returns paginated api response
+    typeof api.data === 'object' && api.data !== null && 'items' in api.data
+    ? api.data
+    : // API returns unknown data format and defaults to an empty dataset
+      { items: [], total: 0, limit: -1 };
 
   return {
     ...api,
-    data: responseData,
+    data,
     refetch: ({
       offset = INITIAL_STATE.offset,
       limit = INITIAL_STATE.limit,

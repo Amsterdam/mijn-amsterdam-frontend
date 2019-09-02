@@ -59,6 +59,7 @@ export default () => {
             role="button"
             href={LOGIN_URL}
             onClick={() => setRedirecting(true)}
+            rel="noopener noreferrer"
             className={classnames(
               styles.LoginBtn,
               isRedirecting && styles.LoginBtnDisabled
