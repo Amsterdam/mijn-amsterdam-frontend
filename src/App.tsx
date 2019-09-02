@@ -139,9 +139,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <SessionState>
-        <TutorialState>
-          <AppLanding />
-        </TutorialState>
+        <AppLanding />
       </SessionState>
     </BrowserRouter>
   );

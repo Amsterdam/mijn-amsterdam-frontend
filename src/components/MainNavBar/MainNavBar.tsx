@@ -30,6 +30,7 @@ import {
 import styles from './MainNavBar.module.scss';
 import teststyles from '../Tutorial/Tutorial.module.scss';
 import Dashboard from 'pages/Dashboard/Dashboard';
+import Tutorial from 'components/Tutorial/Tutorial';
 
 const MenuToggleBtnId = 'MenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -263,16 +264,28 @@ export default function MainNavBar() {
       )}
 
       {location.pathname === AppRoutes.ROOT && (
-        <button
-          className={classnames(styles.TutorialBtn, {
-            [styles.TutorialBtnOpen]: isTutorialVisible,
-          })}
-          onClick={() => {
-            setIsTutorialVisible(!isTutorialVisible);
-          }}
-        >
-          Meer info
-        </button>
+        <>
+          <button
+            className={classnames(styles.TutorialBtn, {
+              [styles.TutorialBtnOpen]: isTutorialVisible,
+            })}
+            onClick={() => {
+              const isVisible = !isTutorialVisible;
+              trackEvent(
+                itemClickPayload(
+                  'MA_Dashboard',
+                  isVisible ? 'Show Tutorial' : 'Hide Tutorial'
+                )
+              );
+              setIsTutorialVisible(isVisible);
+            }}
+          >
+            Meer info
+          </button>
+          {isTutorialVisible && (
+            <Tutorial toggleTutorial={setIsTutorialVisible} />
+          )}
+        </>
       )}
 
       {isResponsiveMenuMenuVisible && (
