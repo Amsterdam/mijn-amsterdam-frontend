@@ -25,6 +25,7 @@
     "react-app-polyfill": "^0.2.2",
     "react-circular-progressbar": "^2.0.1",
     "react-dom": "^16.8.3",
+    "react-error-boundary": "^1.2.5",
     "react-hooks-testing-library": "^0.5.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "^2.1.8",

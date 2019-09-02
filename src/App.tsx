@@ -15,21 +15,17 @@ import ZorgDetail from 'pages/ZorgDetail/ZorgDetail';
 import React, { useContext, useEffect } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import useRouter from 'use-react-router';
-
+import ErrorBoundary from 'react-error-boundary';
 import { AppRoutes } from './App.constants';
 import styles from './App.module.scss';
-import AppState, {
-  AppContext,
-  SessionContext,
-  SessionState,
-  TutorialState,
-  TutorialContext,
-} from './AppState';
+import AppState, { SessionContext, SessionState } from './AppState';
 import MainFooter from './components/MainFooter/MainFooter';
 import MainHeader from './components/MainHeader/MainHeader';
 import NotFound from './pages/NotFound/NotFound';
 import Profile from './pages/Profile/Profile';
 import classnames from 'classnames';
+import * as Sentry from '@sentry/browser';
+import ApplicationError from 'components/ApplicationError/ApplicationError';
 
 function track(event: any) {
   // NOTE: Beware of potentially nested [data-track] attributes as traversing up the dom here could result in using the wrong data-track attribute on a parent.
@@ -115,6 +111,7 @@ function AppLanding() {
   if (isPristine) {
     return <p className={styles.PreLoader}>Welkom bij Mijn Amsterdam</p>;
   }
+
   // Render the main app only if we are authenticated
   return isAuthenticated ? (
     <>
@@ -136,13 +133,20 @@ export default function App() {
     return () => window.removeEventListener('click', track);
   }, []);
 
+  const sendToSentry = (error: Error, componentStack: string) => {
+    Sentry.captureException(error);
+  };
+
   return (
     <BrowserRouter>
-      <SessionState>
-        <TutorialState>
+      <ErrorBoundary
+        onError={sendToSentry}
+        FallbackComponent={ApplicationError}
+      >
+        <SessionState>
           <AppLanding />
-        </TutorialState>
-      </SessionState>
+        </SessionState>
+      </ErrorBoundary>
     </BrowserRouter>
   );
 }
