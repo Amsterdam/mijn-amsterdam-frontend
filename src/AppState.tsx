@@ -88,13 +88,13 @@ export function useAppState(value?: any) {
     const WMO = useWmoApi();
     const FOCUS = useFocusApi();
 
-    const { data, ...rest } = FOCUS;
+    const { data: focusData, ...rest } = FOCUS;
     // At the time of writing we only show recentCases from the Focus API.
     const MY_CASES = {
       data: {
-        ...data,
-        items: data.recentCases,
-        total: data.recentCases.length,
+        ...focusData,
+        items: focusData.recentCases,
+        total: focusData.recentCases.length,
       },
       ...rest,
     };
