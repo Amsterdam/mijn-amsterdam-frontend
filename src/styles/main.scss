@@ -17,6 +17,7 @@ body {
   color: $color-black;
   font-size: 1.6rem;
 
+  min-width: $main-min-width;
   @include IE11 {
     min-width: map-get($breakpoints, 'tablet');
   }
