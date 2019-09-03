@@ -70,7 +70,7 @@ pipeline {
     // ACCEPTANCE
 
     stage('Build ACC') {
-      when { branch 'master' }
+      when { not { branch 'test' } } // Also Build PR's
       options {
         timeout(time: 30, unit: 'MINUTES')
       }
