@@ -10,5 +10,5 @@ services:
       context: .
       target: build-deps
       args:
-        - BUILD_ENV=test-unit
+        - BUILD_ENV=test-unit # prevents Dockerfile from building the app when running unit tests
     command: npm run test

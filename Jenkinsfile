@@ -18,7 +18,7 @@ pipeline {
   stages {
 
     stage('Unit tests') {
-      // when { not { branch 'test' } } // Skip unit tests when pushing directly to test (for speed)
+      when { not { branch 'test' } } // Skip unit tests when pushing directly to test (for speed)
       options {
         timeout(time: 30, unit: 'MINUTES')
       }
@@ -34,31 +34,6 @@ pipeline {
         }
       }
     }
-
-    // stage('Run tests') {
-      //parallel {
-        // stage('E2E tests') {
-        //   options {
-        //     timeout(time: 60, unit: 'MINUTES')
-        //   }
-        //   environment {
-        //     PROJECT                = "${PROJECT_PREFIX}e2e"
-        //     USERNAME_EMPLOYEE      = 'atlas.employee@amsterdam.nl'
-        //     USERNAME_EMPLOYEE_PLUS = 'atlas.employee.plus@amsterdam.nl'
-        //     PASSWORD_EMPLOYEE      = credentials('PASSWORD_EMPLOYEE')
-        //     PASSWORD_EMPLOYEE_PLUS = credentials('PASSWORD_EMPLOYEE_PLUS')
-        //   }
-        //   steps {
-        //     sh "docker-compose -p ${PROJECT} up --build --exit-code-from start start"
-        //   }
-        //   post {
-        //     always {
-        //        sh "docker-compose -p ${PROJECT} down -v || true"
-        //     }
-        //   }
-        // }
-      //}
-    // }
 
     // TEST
 
@@ -126,53 +101,56 @@ pipeline {
 
     // PRODUCTION
 
-    // stage('Build PROD') {
-    //   when {
-    //     branch 'master',
-    //     tag 'release-*'
-    //   }
-    //   options {
-    //     timeout(time: 30, unit: 'MINUTES')
-    //   }
-    //   steps {
-    //     // NOTE BUILD_ENV intentionaly not set (using Dockerfile default)
-    //     sh "docker build -t ${IMAGE_PRODUCTION} " +
-    //         "--shm-size 1G " +
-    //         "."
-    //     sh "docker tag ${IMAGE_PRODUCTION} ${IMAGE_LATEST}"
-    //     sh "docker push ${IMAGE_PRODUCTION}"
-    //     sh "docker push ${IMAGE_LATEST}"
-    //   }
-    // }
+    stage('Build PROD') {
+      when {
+        allOf {
+          branch 'master'; tag 'release-*'
+        }
+      }
+      options {
+        timeout(time: 30, unit: 'MINUTES')
+      }
+      steps {
+        // NOTE BUILD_ENV intentionaly not set (using Dockerfile default)
+        sh "docker build -t ${IMAGE_PRODUCTION} " +
+            "--shm-size 1G " +
+            "."
+        sh "docker tag ${IMAGE_PRODUCTION} ${IMAGE_LATEST}"
+        sh "docker push ${IMAGE_PRODUCTION}"
+        sh "docker push ${IMAGE_LATEST}"
+      }
+    }
 
-    // stage('Waiting for approval PROD Deploy') {
-    //   when {
-    //     branch 'master',
-    //     tag 'release-*'
-    //   }
-    //   steps {
-    //     script {
-    //       input "Deploy to Production?"
-    //       echo "Okay, moving on"
-    //     }
-    //   }
-    // }
+    stage('Deploy PROD - Waiting for approval') {
+      when {
+        allOf {
+          branch 'master'; tag 'release-*'
+        }
+      }
+      steps {
+        script {
+          input "Deploy to Production?"
+          echo "Okay, moving on"
+        }
+      }
+    }
 
-    // stage('Deploy PROD') {
-    //   when {
-    //     branch 'master',
-    //     tag 'release-*'
-    //   }
-    //   options {
-    //     timeout(time: 5, unit: 'MINUTES')
-    //   }
-    //   steps {
-    //     build job: 'Subtask_Openstack_Playbook', parameters: [
-    //       [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
-    //       [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-client.yml']
-    //     ]
-    //   }
-    // }
+    stage('Deploy PROD') {
+      when {
+        allOf {
+          branch 'master'; tag 'release-*'
+        }
+      }
+      options {
+        timeout(time: 5, unit: 'MINUTES')
+      }
+      steps {
+        build job: 'Subtask_Openstack_Playbook', parameters: [
+          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
+          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml']
+        ]
+      }
+    }
   }
 
   post {
@@ -182,11 +160,11 @@ pipeline {
 
     failure {
       echo 'Something went wrong while running pipeline'
-      // slackSend(
-      //   channel: 'ci-channel',
-      //   color: 'danger',
-      //   message: "${JOB_NAME}: failure ${BUILD_URL}"
-      // )
+      slackSend(
+        channel: 'ci-channel',
+        color: 'danger',
+        message: "${JOB_NAME}: failure ${BUILD_URL}"
+      )
     }
   }
 }
