@@ -1,5 +1,5 @@
 import { AppRoutes, errorMessageMap, excludedApiKeys } from 'App.constants';
-import { AppContext } from 'AppState';
+import { AppContext, TutorialState } from 'AppState';
 import { ReactComponent as BetaLabel } from 'assets/images/beta-label.svg';
 import { ReactComponent as AmsterdamLogoLarge } from 'assets/images/logo-amsterdam-large.svg';
 import { ReactComponent as AmsterdamLogo } from 'assets/images/logo-amsterdam.svg';
@@ -85,7 +85,11 @@ export default function MainHeader({
           className={styles.betaLabel}
         />
       </div>
-      {isAuthenticated && <MainNavBar />}
+      {isAuthenticated && (
+        <TutorialState>
+          <MainNavBar />
+        </TutorialState>
+      )}
       {hasErrors && (
         <ErrorMessages errors={errors} className={styles.ErrorMessages} />
       )}
