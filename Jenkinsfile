@@ -26,7 +26,7 @@ pipeline {
         PROJECT = "${PROJECT_PREFIX}unit"
       }
       steps {
-        sh "docker-compose -p ${PROJECT} up --build --build-arg BUILD_ENV=test-unit --exit-code-from test-unit test-unit"
+        sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit test-unit"
       }
       post {
         always {

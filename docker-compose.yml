@@ -9,4 +9,6 @@ services:
     build:
       context: .
       target: build-deps
+      args:
+        - BUILD_ENV=test-unit
     command: npm run test
