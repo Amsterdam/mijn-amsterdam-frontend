@@ -2,7 +2,7 @@ FROM node:10.15 as build-deps
 LABEL maintainer="datapunt@amsterdam.nl"
 
 ENV LOGOUT_URL=${LOGOUT_URL:-notset}
-ARG PROD_ENV=production
+ARG BUILD_ENV=production
 
 WORKDIR /app
 
@@ -20,8 +20,8 @@ COPY .env* /app/
 COPY env-copy.sh /app/
 
 # Builds are always production builds but can have differences in server environment (test/acceptance/production)
-# Try to overwrite the default production file if a PROD_ENV is set as build-arg
-RUN sh env-copy.sh ${PROD_ENV}
+# Try to overwrite the default production .env file if a BUILD_ENV is set as build-arg
+RUN sh env-copy.sh ${BUILD_ENV}
 
 COPY src /app/src/
 COPY public /app/public/

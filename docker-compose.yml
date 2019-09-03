@@ -5,7 +5,7 @@ services:
     ports:
       - "8103:80"
 
-  test:
+  test-unit:
     build:
       context: .
       target: build-deps
