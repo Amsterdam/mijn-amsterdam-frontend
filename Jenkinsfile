@@ -7,7 +7,7 @@ pipeline {
   environment {
     COMMIT_HASH = GIT_COMMIT.substring(0, 8)
     PROJECT_PREFIX = "${BRANCH_NAME}_${COMMIT_HASH}_${BUILD_NUMBER}_"
-    IMAGE_BASE = "${DOCKER_REGISTRY}/mijnams/mijnamsterdam"
+    IMAGE_BASE = "repo.secure.amsterdam.nl/mijnams/mijnamsterdam"
     IMAGE_BUILD = "${IMAGE_BASE}:${BUILD_NUMBER}"
     IMAGE_ACCEPTANCE = "${IMAGE_BASE}:acceptance"
     IMAGE_PRODUCTION = "${IMAGE_BASE}:production"
@@ -182,11 +182,11 @@ pipeline {
 
     failure {
       echo 'Something went wrong while running pipeline'
-      slackSend(
-        channel: 'ci-channel',
-        color: 'danger',
-        message: "${JOB_NAME}: failure ${BUILD_URL}"
-      )
+      // slackSend(
+      //   channel: 'ci-channel',
+      //   color: 'danger',
+      //   message: "${JOB_NAME}: failure ${BUILD_URL}"
+      // )
     }
   }
 }
