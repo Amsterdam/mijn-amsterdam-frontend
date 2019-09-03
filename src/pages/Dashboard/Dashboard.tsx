@@ -98,7 +98,6 @@ export default () => {
           <DirectLinks />
         </PageContentMainBody>
       </PageContentMain>
-      {isTutorialVisible && <Tutorial toggleTutorial={setIsTutorialVisible} />}
     </>
   );
 };
