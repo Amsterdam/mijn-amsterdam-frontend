@@ -1,7 +1,6 @@
 pipeline {
   agent {
     docker {
-        image 'mijnams/mijnamsterdam'
         registryUrl DOCKER_REGISTRY
         registryCredentialsId 'docker-registry'
         // args '-v /var/jenkins_home/.m2:/root/.m2'
