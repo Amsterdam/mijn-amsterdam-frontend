@@ -1,11 +1,5 @@
 pipeline {
-  agent {
-    docker {
-        registryUrl DOCKER_REGISTRY
-        registryCredentialsId 'docker-registry'
-        // args '-v /var/jenkins_home/.m2:/root/.m2'
-    }
-  }
+  agent any
   options {
     timeout(time: 5, unit: 'DAYS')
   }
