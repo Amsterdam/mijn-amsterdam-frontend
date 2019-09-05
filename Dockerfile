@@ -17,7 +17,7 @@ COPY package-lock.json /app/
 COPY tsconfig.json /app/
 COPY paths.json /app/
 COPY .env* /app/
-COPY env-copy.sh /app/
+COPY scripts/env-copy.sh /app/
 
 # Builds are always production builds but can have differences in server environment (test/acceptance/production)
 # Try to overwrite the default production .env file if a BUILD_ENV is set as build-arg

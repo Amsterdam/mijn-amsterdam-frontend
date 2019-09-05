@@ -1,8 +1,5 @@
 pipeline {
   agent any
-  options {
-    timeout(time: 5, unit: 'DAYS')
-  }
 
   environment {
     COMMIT_HASH = GIT_COMMIT.substring(0, 8)
@@ -20,7 +17,7 @@ pipeline {
     stage('Unit tests') {
       when { not { branch 'test' } } // Skip unit tests when pushing directly to test (for speed)
       options {
-        timeout(time: 30, unit: 'MINUTES')
+        timeout(time: 5, unit: 'MINUTES')
       }
       environment {
         PROJECT = "${PROJECT_PREFIX}unit"
@@ -40,7 +37,7 @@ pipeline {
     stage('Build TEST') {
       when { branch 'test' }
       options {
-        timeout(time: 30, unit: 'MINUTES')
+        timeout(time: 10, unit: 'MINUTES')
       }
       steps {
         sh "docker build -t ${IMAGE_BUILD} " +
@@ -72,7 +69,7 @@ pipeline {
     stage('Build ACC') {
       when { not { branch 'test' } } // Also Build PR's
       options {
-        timeout(time: 30, unit: 'MINUTES')
+        timeout(time: 10, unit: 'MINUTES')
       }
       steps {
         sh "docker build -t ${IMAGE_BUILD} " +
@@ -108,7 +105,7 @@ pipeline {
         }
       }
       options {
-        timeout(time: 30, unit: 'MINUTES')
+        timeout(time: 10, unit: 'MINUTES')
       }
       steps {
         // NOTE BUILD_ENV intentionaly not set (using Dockerfile default)
@@ -126,6 +123,9 @@ pipeline {
         allOf {
           branch 'master'; tag 'release-*'
         }
+      }
+      options {
+        timeout(time: 120, unit: 'MINUTES')
       }
       steps {
         script {
