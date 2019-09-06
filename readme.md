@@ -85,6 +85,13 @@ Extract the archive as the `/mock-api/secure-data/` folder. Without these files 
 - Keep commit messages compact en meaningful
 - Try to squash commits before merging into master.
 
+### Continuous integration / Continuous deployment
+
+We currently work with a trunk based development approach. [see also](https://trunkbaseddevelopment.com) This means we have relatively short lived branches and only 1 main branch (master)
+The master branch should always be production worthy in terms of functionality, stability and code quality.
+Every release to production is accompanied with a release tag in the from of: `release-v1.2.3`. Whenever you are about create a release, use the `npm run release:(major|minor|bug)` command. This command
+creates a semver version of the release tag and pushes it to origin. The CI/CD pipeline will automatically detect the tag and starts building a production image.
+
 ## Docker
 
 - `docker build ./ --tag="mijn-amsterdam"`
