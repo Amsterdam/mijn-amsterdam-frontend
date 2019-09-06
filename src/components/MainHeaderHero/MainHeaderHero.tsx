@@ -17,9 +17,9 @@ function imgUrl(
 ) {
   const ratio =
     orientation === 'portrait' ? PORTRAIT_SCREEN_RATIO : LANDSCAPE_SCREEN_RATIO;
-  return `/header/${imageName}-${Math.round(pixelDensity * width)}x${Math.round(
+  return `/header/${Math.round(pixelDensity * width)}x${Math.round(
     pixelDensity * (width * ratio)
-  )}.jpg`;
+  )}-${imageName}.jpg`;
 }
 
 function getHeroSrc(isAuthenticated: boolean = false) {
@@ -30,22 +30,16 @@ function getHeroSrc(isAuthenticated: boolean = false) {
 
   switch (true) {
     case isChapterPath(AppRoutes.PROFILE):
-      imageName = 'Zuid-Oost-RT-08';
+      imageName = 'burgerzaken';
       break;
     case isChapterPath(AppRoutes.INKOMEN):
-      imageName = 'Zuid-Oost-RT-02';
+      imageName = 'werk';
       break;
     case isChapterPath(AppRoutes.ZORG):
-      imageName = 'west-RT-01';
-      break;
-    case isChapterPath(AppRoutes.MY_NOTIFICATIONS):
-      imageName = 'Zuid-Oost-RT-06';
-      break;
-    case isChapterPath(AppRoutes.ROOT):
-      imageName = isAuthenticated ? 'west-RT-05' : 'Zuid-Oost-RT-11';
+      imageName = 'zorg';
       break;
     default:
-      imageName = 'west-RT-05';
+      imageName = 'algemeen';
       break;
   }
 
@@ -76,6 +70,8 @@ export interface MainHeaderHeroProps {
 export default function MainHeaderHero(props: Partial<MainHeaderHeroProps>) {
   const session = useContext(SessionContext);
   const srcSet = getHeroSrc(session.isAuthenticated);
+
+  console.log(srcSet);
 
   return (
     <div className={styles.MainHeaderHero}>
