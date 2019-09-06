@@ -1,122 +1,66 @@
-import useScript from 'hooks/useScript';
+import MatomoTracker from '@datapunt/matomo-tracker-js';
+import { TrackEventParams } from '@datapunt/matomo-tracker-js/lib/types';
+import { useDebouncedCallback } from 'use-debounce';
+import { useSessionStorage } from './storage.hook';
 
-const TrackerConfig = {
-  url: 'https://analytics.data.amsterdam.nl',
-  siteId: process.env.REACT_APP_ANALYTICS_SITE_ID,
-  jsFilename: 'piwik.js',
-  phpFilename: 'piwik.php',
+let MatomoInstance: MatomoTracker;
+const hasSiteId = !!process.env.REACT_APP_ANALYTICS_SITE_ID;
+const siteId = hasSiteId ? Number(process.env.REACT_APP_ANALYTICS_SITE_ID) : -1;
+const MatomoTrackerConfig = {
+  urlBase: 'https://analytics.data.amsterdam.nl',
+  siteId,
+  trackerUrl: 'https://analytics.data.amsterdam.nl/piwik.php',
+  srcUrl: 'https://analytics.data.amsterdam.nl/piwik.js',
 };
-
-export type ActionCategory = string;
-export type ActionName =
-  | 'ToggleExpandCollapse'
-  | 'Show'
-  | 'Hide'
-  | 'Show_on_load'
-  | 'Click'
-  | 'MouseEnter'
-  | 'MouseLeave'
-  | 'Callback'
-  | 'Redirect'
-  | 'ClickToggle';
-type LinkType = 'link' | 'download';
-type EventPayload = ['trackEvent', ActionCategory, ActionName, string, string?];
-type LinkPayload = ['trackLink', string, LinkType];
-
-const theWindow = window as any;
-let referrerUrl: string;
-
-function pushToAnalytics(payload: any) {
-  theWindow._paq = theWindow._paq || [];
-  theWindow._paq.push(payload);
-}
 
 // Initialize connection with analytics
 export function useAnalytics() {
-  if (!theWindow._paq || theWindow._paq.length === 0) {
-    pushToAnalytics([
-      'setTrackerUrl',
-      `${TrackerConfig.url}/${TrackerConfig.phpFilename}`,
-    ]);
-    pushToAnalytics(['setSiteId', TrackerConfig.siteId]);
-    pushToAnalytics(['trackPageView']);
-    pushToAnalytics(['enableLinkTracking']);
+  if (hasSiteId && !MatomoInstance) {
+    MatomoInstance = new MatomoTracker(MatomoTrackerConfig);
   }
-
-  // Is only loaded once, has internal caching.
-  useScript(`${TrackerConfig.url}/${TrackerConfig.jsFilename}`, true, true);
 }
 
-export function trackEvent(
-  payload: EventPayload | [EventPayload, LinkPayload]
-) {
-  console.log(payload);
-  return pushToAnalytics(payload);
+export function trackEvent(payload: TrackEventParams) {
+  return MatomoInstance && MatomoInstance.trackEvent(payload);
 }
 
 export function trackPageView(title?: string, url?: string) {
-  pushToAnalytics(['setDocumentTitle', title || document.title]);
-  if (referrerUrl) {
-    pushToAnalytics(['setReferrerUrl', referrerUrl]);
-  }
-  pushToAnalytics(['setCustomUrl', url || document.location.href]);
-  pushToAnalytics(['trackPageView']);
-  referrerUrl = url || document.location.href;
-}
-
-export function itemPresentationPayload(
-  category: string,
-  name: string,
-  value?: string
-): EventPayload {
-  return ['trackEvent', category, 'Show_on_load', name, value];
+  const payload = {
+    documentTitle: title || document.title,
+    href: url || document.location.href,
+  };
+  return MatomoInstance && MatomoInstance.trackPageView(payload);
 }
 
 export function trackItemPresentation(
   category: string,
   name: string,
-  value?: string
+  value?: number
 ) {
-  trackEvent(itemPresentationPayload(category, name, value));
+  return trackEvent({
+    category,
+    name,
+    action: 'Tonen',
+    value,
+  });
 }
 
-export function itemInteractionPayload(
-  action: ActionName = 'Click',
-  category: string,
+export function useSessionCallbackOnceDebounced(
   name: string,
-  value?: string,
-  linkType?: LinkType
-): EventPayload | [EventPayload, LinkPayload] {
-  if (typeof linkType !== 'undefined') {
-    return [
-      ['trackEvent', category, action, name],
-      ['trackLink', value || '', linkType],
-    ];
-  }
-  return ['trackEvent', category, action, name, value];
-}
-export function itemClickPayload(
-  category: string,
-  name: string,
-  value?: string,
-  linkType?: LinkType
-): EventPayload | [EventPayload, LinkPayload] {
-  return itemInteractionPayload('Click', category, name, value, linkType);
-}
-
-export function trackItemClick(
-  category: string,
-  name: string,
-  value?: string,
-  linkType?: LinkType
+  callback: () => void,
+  debounceTrigger: any = true,
+  timeoutMS: number = 1000
 ) {
-  trackEvent(itemClickPayload(category, name, value, linkType));
-}
-
-export function itemClickTogglePayload(
-  category: string,
-  name: string,
-  value?: string
-): EventPayload {
-  return ['trackEvent', category, 'ClickToggle', name, value];
+  const [isSessionTracked, setSessionTracked] = useSessionStorage(name, false);
+  const [trackEvent] = useDebouncedCallback(
+    () => {
+      if (!isSessionTracked) {
+        callback();
+        setSessionTracked(true);
+      }
+    },
+    timeoutMS,
+    [debounceTrigger]
+  );
+  trackEvent();
 }

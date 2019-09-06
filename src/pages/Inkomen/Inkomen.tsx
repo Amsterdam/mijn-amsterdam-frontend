@@ -71,7 +71,7 @@ export default () => {
           title="Mijn lopende aanvragen"
           startCollapsed={false}
           isLoading={isLoading}
-          trackCategory="MA_Inkomen/Thema_Pagina/Lopende_aanvragen"
+          trackCategory="Werk en inkomen overzicht / Lopende aanvragen"
           noItemsMessage="U hebt op dit moment geen lopende aanvragen."
         />
         <DataLinkTable
@@ -82,7 +82,7 @@ export default () => {
           startCollapsed={hasActiveRequests}
           isLoading={isLoading}
           title="Mijn besluiten"
-          trackCategory="MA_Inkomen/Thema_Pagina/Mijn_Besluiten"
+          trackCategory="Werk en inkomen overzicht / Besluiten"
           noItemsMessage="U hebt op dit moment geen besluiten."
         />
       </PageContentMainBody>

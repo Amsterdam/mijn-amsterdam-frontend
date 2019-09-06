@@ -3,17 +3,12 @@ import { ReactComponent as CloseIcon } from 'assets/images/Close.svg';
 import { ReactComponent as Logo } from 'assets/images/logo-amsterdam.svg';
 import { ReactComponent as HomeIcon } from 'assets/images/home.svg';
 import Heading from 'components/Heading/Heading';
-import { itemClickPayload, trackItemPresentation } from 'hooks/analytics.hook';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 import styles from './MyArea.module.scss';
 
-interface MyAreaHeaderComponentProps {
-  trackCategory: string;
-}
-
-export function MyAreaHeader({ trackCategory }: MyAreaHeaderComponentProps) {
+export function MyAreaHeader() {
   return (
     <div className={styles.Header}>
       <Link to={AppRoutes.ROOT} aria-label="Terug naar home">
@@ -25,11 +20,7 @@ export function MyAreaHeader({ trackCategory }: MyAreaHeaderComponentProps) {
         />
       </Link>
       <h1 className={styles.Title}>Mijn buurt</h1>
-      <NavLink
-        to={AppRoutes.ROOT}
-        className={styles.CloseBtn}
-        data-track={itemClickPayload(trackCategory, 'Link_Sluit_kaart')}
-      >
+      <NavLink to={AppRoutes.ROOT} className={styles.CloseBtn}>
         <span>Sluit kaart</span>
         <CloseIcon aria-hidden="true" className={styles.CloseIcon} />
       </NavLink>
@@ -38,14 +29,10 @@ export function MyAreaHeader({ trackCategory }: MyAreaHeaderComponentProps) {
 }
 
 interface MyAreaMapComponentProps {
-  trackCategory: string;
   url: string;
 }
 
-export function MyAreaMap({ trackCategory, url }: MyAreaMapComponentProps) {
-  useEffect(() => {
-    trackItemPresentation(trackCategory, 'Embed_kaart');
-  }, []);
+export function MyAreaMap({ url }: MyAreaMapComponentProps) {
   return !!url ? (
     <iframe
       id="mapIframe"
@@ -64,22 +51,14 @@ export function MyAreaMap({ trackCategory, url }: MyAreaMapComponentProps) {
 }
 
 interface MyAreaComponentProps {
-  trackCategory: string;
   url: string;
 }
 
-export default function MyArea({ trackCategory, url }: MyAreaComponentProps) {
+export default function MyArea({ url }: MyAreaComponentProps) {
   return (
     <div className={styles.MyArea}>
-      <MyAreaMap trackCategory={trackCategory} url={url} />
-      <NavLink
-        to={AppRoutes.MY_AREA}
-        className={styles.Overlay}
-        data-track={itemClickPayload(
-          trackCategory,
-          'KaartLink_naar_Detail_Pagina'
-        )}
-      >
+      <MyAreaMap url={url} />
+      <NavLink to={AppRoutes.MY_AREA} className={styles.Overlay}>
         <div>
           <Heading
             id="MyAreaHeader" // Used for tutorial placement

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "dependencies": {
     "@babel/polyfill": "^7.4.0",
+    "@datapunt/matomo-tracker-js": "0.0.12",
     "@sentry/browser": "^5.4.3",
     "@types/axios": "^0.14.0",
     "@types/classnames": "^2.2.7",

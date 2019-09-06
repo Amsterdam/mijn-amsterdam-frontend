@@ -1,4 +1,4 @@
-import { AppContext, TutorialContext } from 'AppState';
+import { AppContext } from 'AppState';
 import DirectLinks from 'components/DirectLinks/DirectLinks';
 import MyArea from 'components/MyArea/MyArea';
 import MyCases from 'components/MyCases/MyCases';
@@ -14,8 +14,6 @@ import React, { useContext } from 'react';
 import styles from './Dashboard.module.scss';
 import { Link } from 'react-router-dom';
 import { AppRoutes } from 'App.constants';
-import { itemClickPayload } from 'hooks/analytics.hook';
-import Tutorial from 'components/Tutorial/Tutorial';
 
 const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
@@ -43,10 +41,6 @@ export default () => {
   const tipItems = myTips.slice(0, MAX_TIPS_VISIBLE);
   const isPhoneScreen = usePhoneScreen();
 
-  const { isTutorialVisible, setIsTutorialVisible } = useContext(
-    TutorialContext
-  );
-
   return (
     <>
       <PageContentMain className={styles.Dashboard} variant="full">
@@ -55,10 +49,6 @@ export default () => {
             id="MyUpdatesHeader" // Used for tutorial placement
             className={styles.MyNotificationsHeadingLink}
             to={AppRoutes.MY_NOTIFICATIONS}
-            data-track={itemClickPayload(
-              'MA_Dashboard/Mijn_meldingen',
-              'Hoofd_titel'
-            )}
           >
             Mijn meldingen
           </Link>
@@ -72,23 +62,23 @@ export default () => {
             items={myNotificationItems.slice(0, MAX_NOTIFICATIONS_VISIBLE)}
             showMoreLink={myNotificationsTotal > MAX_NOTIFICATIONS_VISIBLE}
             isLoading={isMyNotificationsLoading}
-            trackCategory={'MA_Dashboard/Mijn_meldingen'}
+            trackCategory="Dashboard / Mijn meldingen"
           />
           <MyChaptersPanel
             isLoading={isMyChaptersLoading}
             items={myChapterItems}
             title="Mijn thema's"
+            trackCategory="Dashboard / Mijn Thema's"
           />
           <MyCases
             isLoading={!!isMyCasesLoading}
             title="Mijn lopende aanvragen"
             items={myCases}
-            trackCategory={'MA_Dashboard/Mijn_lopende_aanvragen'}
           />
         </PageContentMainBody>
         {!isPhoneScreen && (
           <PageContentMainBody>
-            <MyArea trackCategory={'MA_Dashboard/Mijn_Buurt'} url={mapUrl} />
+            <MyArea url={mapUrl} />
           </PageContentMainBody>
         )}
         <PageContentMainBody variant="regularBoxed">

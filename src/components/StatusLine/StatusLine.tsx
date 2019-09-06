@@ -7,10 +7,9 @@ import { ReactComponent as DownloadIcon } from 'assets/images/Download.svg';
 import { defaultDateFormat } from 'helpers/App';
 import useRouter from 'use-react-router';
 import { useSessionStorage } from 'hooks/storage.hook';
-import { itemClickTogglePayload } from 'hooks/analytics.hook';
+import { trackEvent } from 'hooks/analytics.hook';
 import { ReactComponent as CaretLeft } from 'assets/images/Chevron-Left.svg';
 
-const DEFAULT_TRACK_CATEGORY = 'Metro_lijn';
 export type StepType = 'first-step' | 'last-step' | 'middle-step';
 export interface StatusLineItem {
   id: string;
@@ -25,7 +24,7 @@ export interface StatusLineItem {
 
 interface StatusLineProps {
   items: StatusLineItem[];
-  trackCategory?: string;
+  trackCategory: string;
   altDocumentContent?: string | JSX.Element;
 }
 
@@ -99,7 +98,7 @@ function StatusLineItem({
 
 export default function StatusLine({
   items,
-  trackCategory = DEFAULT_TRACK_CATEGORY,
+  trackCategory,
   altDocumentContent,
 }: StatusLineProps) {
   const { location } = useRouter();
@@ -109,6 +108,13 @@ export default function StatusLine({
   );
 
   function toggleCollapsed() {
+    if (isCollapsed) {
+      trackEvent({
+        category: trackCategory,
+        name: 'Metrolijn',
+        action: 'Alles tonen',
+      });
+    }
     setCollapsed(!isCollapsed);
   }
 
@@ -153,11 +159,6 @@ export default function StatusLine({
           className={classnames(styles.MoreStatus, {
             [styles.MoreStatusClosed]: isCollapsed,
           })}
-          data-track={itemClickTogglePayload(
-            `${trackCategory}/MetroLijn`,
-            'Toon alles/minder',
-            isCollapsed ? 'alles' : 'minder'
-          )}
           onClick={toggleCollapsed}
         >
           <CaretLeft aria-hidden="true" />

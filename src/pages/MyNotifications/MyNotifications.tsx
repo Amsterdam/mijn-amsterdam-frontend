@@ -37,8 +37,8 @@ export default () => {
           isLoading={isLoading}
           total={total}
           items={items}
-          trackCategory={'MA_Mijn_meldingen/Actuele_meldingen'}
           noContentNotification="Er zijn op dit moment geen actuele meldingen voor u."
+          trackCategory="Mijn meldingen overzicht"
         />
       </PageContentMainBody>
     </PageContentMain>

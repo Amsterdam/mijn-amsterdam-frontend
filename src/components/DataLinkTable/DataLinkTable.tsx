@@ -1,22 +1,17 @@
-import { Unshaped } from 'App.types';
+import { LinkProps } from 'App.types';
 import { ReactComponent as CaretIcon } from 'assets/images/Chevron-Right.svg';
 import classnames from 'classnames';
 import ButtonLink from 'components/ButtonLink/ButtonLink';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 import { entries, withKeyPress } from 'helpers/App';
 import { useSessionStorage } from 'hooks/storage.hook';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import Heading from '../Heading/Heading';
 import styles from './DataLinkTable.module.scss';
-import { LinkProps } from '../../App.types';
-import {
-  itemClickTogglePayload,
-  itemClickPayload,
-  trackItemPresentation,
-} from 'hooks/analytics.hook';
+import { trackEvent } from 'hooks/analytics.hook';
 
-const DEFAULT_TRACK_CATEGORY = 'Thema_Pagina';
+const DEFAULT_TRACK_CATEGORY = 'Thema Pagina';
 
 export interface DataLinkTableProps {
   id: string;
@@ -60,9 +55,16 @@ export default function DataLinkTable({
     rowHeight === 'auto' && styles.noTransition
   );
 
-  const toggleCollapsed = withKeyPress<HTMLHeadingElement>(() =>
-    setCollapsed(!isCollapsed)
-  );
+  const toggleCollapsed = withKeyPress<HTMLHeadingElement>(() => {
+    if (isCollapsed) {
+      trackEvent({
+        category: trackCategory,
+        name: 'Datatabel',
+        action: 'Open klikken',
+      });
+    }
+    setCollapsed(!isCollapsed);
+  });
 
   const displayPropEntries = displayProps
     ? entries(displayProps).slice('title' in displayProps ? 1 : 0) // Don't use the title here, title is always fixed as first prop in the table;
@@ -84,14 +86,6 @@ export default function DataLinkTable({
     cssTransitionDurationMS = '0ms';
   }
 
-  useEffect(() => {
-    trackItemPresentation(
-      `${trackCategory}/DataLink_tabel`,
-      'Inhoud',
-      isCollapsed ? 'dicht' : 'open'
-    );
-  }, []);
-
   return (
     <div className={classes}>
       {hasTitle && (
@@ -103,11 +97,6 @@ export default function DataLinkTable({
           )}
           onKeyPress={event => hasItems && toggleCollapsed(event)}
           onClick={event => hasItems && toggleCollapsed(event)}
-          data-track={itemClickTogglePayload(
-            `${trackCategory}`,
-            'DataLink_tabel_titel',
-            isCollapsed ? 'dicht' : 'open'
-          )}
           {...(hasItems ? { role: 'button', tabIndex: 0 } : {})}
         >
           <CaretIcon aria-hidden="true" className={styles.CaretIcon} /> {title}
@@ -151,10 +140,6 @@ export default function DataLinkTable({
                     <ButtonLink
                       tabIndex={isCollapsed ? -1 : 0}
                       to={item.link.to}
-                      data-track={itemClickPayload(
-                        `${trackCategory}/DataLink_tabel`,
-                        'DataLink'
-                      )}
                     >
                       {item.title}
                     </ButtonLink>

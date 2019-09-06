@@ -14,7 +14,6 @@ export interface ButtonLinkProps {
   rel?: string;
   download?: string;
   title?: string;
-  'data-track'?: any[];
   id?: string;
   tabIndex?: number;
 }
