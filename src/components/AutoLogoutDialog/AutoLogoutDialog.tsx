@@ -147,7 +147,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
 
   useEffect(() => {
     if (isOpen) {
-      trackItemPresentation('Logout Dialog', 'Openen');
+      trackItemPresentation('Session', 'Logout Dialog');
     }
   }, [isOpen]);
 
