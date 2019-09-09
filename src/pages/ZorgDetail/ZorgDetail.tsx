@@ -70,7 +70,7 @@ export default () => {
             altDocumentContent={(statusLineItem, stepNumber) => {
               return stepNumber === 1 ? (
                 <p>
-                  <strong>Deze informatie krijg je ook per post.</strong>
+                  <strong>U krijgt dit besluit per post.</strong>
                 </p>
               ) : (
                 ''
