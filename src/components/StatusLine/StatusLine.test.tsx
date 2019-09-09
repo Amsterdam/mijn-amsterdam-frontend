@@ -40,7 +40,7 @@ it('Renders the correct html', () => {
   expect(
     shallow(
       <BrowserRouter>
-        <StatusLine items={item.process} trackCategory="Test/Status_line" />
+        <StatusLine items={item.process} />
       </BrowserRouter>
     )
   ).toMatchSnapshot();

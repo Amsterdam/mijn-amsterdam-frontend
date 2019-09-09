@@ -4,25 +4,32 @@ import useRouter from 'use-react-router';
 import { trackPageView } from './analytics.hook';
 
 export const PageTitleMain = 'Mijn Amsterdam';
-export const PageTitleLanding = `Login met DigID | ${PageTitleMain}`;
 
-export const PageTitles = {
-  [AppRoutes.ROOT]: `${ChapterTitles.ROOT} | ${PageTitleMain}`,
-  [AppRoutes.BURGERZAKEN]: `${ChapterTitles.BURGERZAKEN} | ${PageTitleMain}`,
-  [AppRoutes.BIJSTANDSUITKERING]: `Bijstandsuitkering | ${PageTitleMain}`,
-  [AppRoutes.BELASTINGEN]: `${ChapterTitles.BELASTINGEN} | ${PageTitleMain}`,
-  [AppRoutes.ZORG]: `${ChapterTitles.ZORG} | ${PageTitleMain}`,
-  [AppRoutes.JEUGDHULP]: `${ChapterTitles.JEUGDHULP} | ${PageTitleMain}`,
-  [AppRoutes.INKOMEN]: `${ChapterTitles.INKOMEN} | ${PageTitleMain}`,
-  [AppRoutes.STADSPAS]: `Stadspas | ${PageTitleMain}`,
-
-  [AppRoutes.BIJZONDERE_BIJSTAND]: `Bijzondere bijstand | ${PageTitleMain}`,
-  [AppRoutes.PROFILE]: `Profiel | ${PageTitleMain}`,
-  [AppRoutes.MY_AREA]: `Mijn buurt | ${PageTitleMain}`,
-  [AppRoutes.PROCLAIMER]: `Proclaimer | ${PageTitleMain}`,
-  [AppRoutes.MY_TIPS]: `Tips | ${PageTitleMain}`,
-  [AppRoutes.MY_NOTIFICATIONS]: `${ChapterTitles.MELDINGEN} | ${PageTitleMain}`,
+const PageTitles = {
+  [AppRoutes.ROOT]: 'Home | Dashboard',
+  [AppRoutes.BURGERZAKEN]: ChapterTitles.BURGERZAKEN,
+  [AppRoutes.BIJSTANDSUITKERING]: `Bijstandsuitkering`,
+  [AppRoutes.BELASTINGEN]: ChapterTitles.BELASTINGEN,
+  [AppRoutes.ZORG]: `${ChapterTitles.ZORG} overzicht`,
+  [AppRoutes.ZORG_VOORZIENINGEN]: `Voorziening | ${ChapterTitles.ZORG}`,
+  [AppRoutes.JEUGDHULP]: `${ChapterTitles.JEUGDHULP} | overzicht`,
+  [AppRoutes.INKOMEN]: `${ChapterTitles.INKOMEN} | overzicht`,
+  [AppRoutes.STADSPAS]: `Stadspas | ${ChapterTitles.INKOMEN}`,
+  [AppRoutes.BIJZONDERE_BIJSTAND]: `Bijzondere bijstand | ${
+    ChapterTitles.INKOMEN
+  }`,
+  [AppRoutes.PROFILE]: `Profiel`,
+  [AppRoutes.MY_AREA]: `Mijn buurt`,
+  [AppRoutes.PROCLAIMER]: `Proclaimer`,
+  [AppRoutes.MY_TIPS]: `Mijn Tips | overzicht`,
+  [AppRoutes.MY_NOTIFICATIONS]: `${ChapterTitles.MELDINGEN} | overzicht`,
 };
+
+const CustomTrackingUrls = {
+  [AppRoutes.ROOT]: 'https://mijn.amsterdam.nl/home',
+};
+
+const ExcludePageViewTrackingUrls = [AppRoutes.API_LOGIN];
 
 const sortedPageTitleRoutes = Object.keys(PageTitles).sort((a, b) => {
   return a.length < b.length ? 1 : 0;
@@ -40,9 +47,16 @@ export default function usePageChange() {
       location.pathname.startsWith(route)
     );
 
-    document.title =
+    const title =
       index !== -1 ? PageTitles[sortedPageTitleRoutes[index]] : PageTitleMain;
 
-    trackPageView(document.title, location.pathname);
+    document.title = title;
+
+    if (!ExcludePageViewTrackingUrls.includes(location.pathname)) {
+      trackPageView(
+        title,
+        CustomTrackingUrls[location.pathname] || location.pathname
+      );
+    }
   }, [location.pathname]);
 }

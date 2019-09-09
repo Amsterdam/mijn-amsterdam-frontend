@@ -144,6 +144,7 @@ export function Dialog({
                   <button
                     className={styles.ButtonClose}
                     onClick={() => typeof onClose === 'function' && onClose()}
+                    arial-label="Overlay sluiten"
                   >
                     <CloseIcon aria-hidden="true" />
                   </button>

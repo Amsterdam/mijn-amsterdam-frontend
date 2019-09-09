@@ -55,9 +55,8 @@ describe('AutoLogoutDialog', () => {
   });
 
   afterEach(() => {
-    component.unmount();
-    jest.clearAllTimers();
     refetch.mockReset();
+    component.unmount();
   });
 
   it('resets the autologout counter every x seconds whenever user activity is detected', () => {
@@ -108,13 +107,15 @@ describe('AutoLogoutDialog', () => {
     expect(continueButton).toHaveLength(0);
   });
 
-  it('switches the document title continueously when timer is visible', () => {
+  it('switches the document title continuously when timer is visible', () => {
     const documentTitle = document.title;
 
     jest.advanceTimersByTime(
       ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow!
     );
     component.update();
+    let continueButton = component.find('[className*="continue-button"]');
+    expect(continueButton).toHaveLength(1);
 
     expect(document.title).toBe(documentTitle);
 

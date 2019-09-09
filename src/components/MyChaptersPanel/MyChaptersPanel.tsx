@@ -4,36 +4,35 @@ import { MainNavSubmenuLink } from 'components/MainNavSubmenu/MainNavSubmenu';
 import Heading from 'components/Heading/Heading';
 import { MenuItem } from '../MainNavBar/MainNavBar.constants';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
-import { itemClickPayload } from 'hooks/analytics.hook';
 import { useDebouncedCallback } from 'use-debounce';
-import { trackItemPresentation } from 'hooks/analytics.hook';
+import {
+  trackItemPresentation,
+  useSessionCallbackOnceDebounced,
+} from 'hooks/analytics.hook';
+import { useSessionStorage } from 'hooks/storage.hook';
 
 export interface MyChaptersPanelProps {
   title: string;
   items: MenuItem[];
   isLoading: boolean;
-  trackCategory?: string;
+  trackCategory: string;
 }
-
-const CATEGORY = 'MA_Dashboard/Mijn_Themas';
 
 export default function MyChaptersPanel({
   title,
   items = [],
   isLoading = true,
-  trackCategory = CATEGORY,
+  trackCategory,
 }: MyChaptersPanelProps) {
-  const [trackEventPayload] = useDebouncedCallback(
+  useSessionCallbackOnceDebounced(
+    trackCategory,
     () => {
       items.forEach(({ id }) => {
-        trackItemPresentation(trackCategory, `Link_naar_Thema_${id}`);
+        trackItemPresentation(trackCategory, `Thema ${id}`);
       });
     },
-    1000,
-    [items.length]
+    items.length
   );
-
-  trackEventPayload();
 
   return (
     <div className={styles.MyChaptersPanel}>
@@ -47,12 +46,7 @@ export default function MyChaptersPanel({
       <div className={styles.Links}>
         {items.map(({ id, to, Icon, title, rel }) => {
           return (
-            <MainNavSubmenuLink
-              data-track={itemClickPayload(CATEGORY, `Link_naar_Thema_${id}`)}
-              key={id}
-              to={to}
-              rel={rel}
-            >
+            <MainNavSubmenuLink key={id} to={to} rel={rel}>
               {Icon && <Icon aria-hidden="true" />}
               {title}
             </MainNavSubmenuLink>

@@ -13,9 +13,9 @@ export default () => {
 
   return (
     <div className={styles.Container}>
-      <MyAreaHeader trackCategory="MA_Mijn_buurt/Detail_Pagina" />
+      <MyAreaHeader />
       <div className={styles.MyAreaContainer}>
-        <MyAreaMap trackCategory="MA_Mijn_buurt/Detail_Pagina" url={mapUrl} />
+        <MyAreaMap url={mapUrl} />
       </div>
     </div>
   );

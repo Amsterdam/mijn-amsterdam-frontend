@@ -37,10 +37,7 @@ export default () => {
         <ChapterHeadingIcon chapter={Chapters.INKOMEN} />
 
         <Heading el="h2" size="large" className={styles.PageHeading}>
-          <PageContentMainHeadingBackLink
-            trackCategory="MA_Inkomen/Detail_Pagina"
-            to={AppRoutes.INKOMEN}
-          >
+          <PageContentMainHeadingBackLink to={AppRoutes.INKOMEN}>
             {ChapterTitles.INKOMEN}
           </PageContentMainHeadingBackLink>
           {!isLoading && FocusItem ? (
@@ -64,8 +61,8 @@ export default () => {
         )}
         {!!FocusItem && (
           <StatusLine
+            trackCategory={`Werk en inkomen / ${FocusItem.productTitle}`}
             items={FocusItem.process}
-            trackCategory="MA_Inkomen/Detail_pagina/Metro_lijn"
           />
         )}
       </PageContentMainBody>

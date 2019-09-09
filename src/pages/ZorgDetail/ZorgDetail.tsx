@@ -3,17 +3,14 @@ import PageContentMain from 'components/PageContentMain/PageContentMain';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
 import styles from './ZorgDetail.module.scss';
 import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
-import { Chapters, AppRoutes } from 'App.constants';
+import { Chapters, ChapterTitles, AppRoutes } from 'App.constants';
 import { AppContext } from 'AppState';
 import useRouter from 'use-react-router';
 import Heading from 'components/Heading/Heading';
 import PageContentMainHeadingBackLink from 'components/PageContentMainHeadingBackLink/PageContentMainHeadingBackLink';
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
-import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
-import classnames from 'classnames';
 import Alert from 'components/Alert/Alert';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
-import { ChapterTitles } from '../../App.constants';
 import StatusLine from 'components/StatusLine/StatusLine';
 
 export default () => {
@@ -69,7 +66,7 @@ export default () => {
         <PageContentMainBody>
           <StatusLine
             items={WmoItem.process}
-            trackCategory="MA_Inkomen/Detail_pagina/Metro_lijn"
+            trackCategory="Zorg en ondersteuning / Voorziening"
             altDocumentContent={
               <strong>Deze informatie krijg je ook per post.</strong>
             }

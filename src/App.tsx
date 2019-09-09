@@ -1,6 +1,6 @@
 import AutoLogoutDialog from 'components/AutoLogoutDialog/AutoLogoutDialog';
 import usePageChange from 'hooks/pageChange';
-import { trackEvent, useAnalytics } from 'hooks/analytics.hook';
+import { useAnalytics } from 'hooks/analytics.hook';
 import Dashboard from 'pages/Dashboard/Dashboard';
 import Inkomen from 'pages/Inkomen/Inkomen';
 import InkomenDetail from 'pages/InkomenDetail/InkomenDetail';
@@ -12,7 +12,7 @@ import MyNotifications from 'pages/MyNotifications/MyNotifications';
 import Proclaimer from 'pages/Proclaimer/Proclaimer';
 import Zorg from 'pages/Zorg/Zorg';
 import ZorgDetail from 'pages/ZorgDetail/ZorgDetail';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import useRouter from 'use-react-router';
 import ErrorBoundary from 'react-error-boundary';
@@ -26,17 +26,6 @@ import Profile from './pages/Profile/Profile';
 import classnames from 'classnames';
 import * as Sentry from '@sentry/browser';
 import ApplicationError from 'components/ApplicationError/ApplicationError';
-
-function track(event: any) {
-  // NOTE: Beware of potentially nested [data-track] attributes as traversing up the dom here could result in using the wrong data-track attribute on a parent.
-  const trackNode = event.target.closest('[data-track]');
-  if (trackNode && trackNode.dataset.track) {
-    const payload = trackNode.dataset.track;
-    if (payload) {
-      trackEvent(payload.split(','));
-    }
-  }
-}
 
 function AppNotAuthenticated() {
   return (
@@ -126,12 +115,7 @@ function AppLanding() {
 }
 
 export default function App() {
-  // analytics tracking
   useAnalytics();
-  useEffect(() => {
-    window.addEventListener('click', track);
-    return () => window.removeEventListener('click', track);
-  }, []);
 
   const sendToSentry = (error: Error, componentStack: string) => {
     Sentry.captureException(error);

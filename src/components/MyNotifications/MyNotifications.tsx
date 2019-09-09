@@ -10,9 +10,11 @@ import {
   MyNotification,
   useMyNotificationsState,
 } from 'hooks/api/my-notifications-api.hook';
-import { itemClickPayload, trackItemPresentation } from 'hooks/analytics.hook';
-import React, { useEffect } from 'react';
-import { useDebouncedCallback } from 'use-debounce';
+import {
+  trackItemPresentation,
+  useSessionCallbackOnceDebounced,
+} from 'hooks/analytics.hook';
+import React from 'react';
 import useRouter from 'use-react-router';
 
 import styles from './MyNotifications.module.scss';
@@ -22,18 +24,16 @@ export interface MyNotificationsProps {
   total: number;
   showMoreLink?: boolean;
   isLoading?: boolean;
-  trackCategory?: string;
+  trackCategory: string;
   noContentNotification?: string;
 }
-
-const CATEGORY = 'Mijn_Meldingen';
 
 export default function MyNotifications({
   items = [],
   total = 0,
   showMoreLink = false,
   isLoading = true,
-  trackCategory = CATEGORY,
+  trackCategory,
   noContentNotification = 'Er zijn op dit moment geen meldingen voor u.',
 }: MyNotificationsProps) {
   const [
@@ -50,15 +50,12 @@ export default function MyNotifications({
     history.push(to);
   }
 
-  const [trackEventPayload] = useDebouncedCallback(
-    () => {
-      trackItemPresentation(trackCategory, 'Aantal', '' + items.length);
-    },
-    1000,
-    [items.length]
+  useSessionCallbackOnceDebounced(
+    trackCategory,
+    () =>
+      trackItemPresentation(trackCategory, 'Aantal meldingen', items.length),
+    items.length
   );
-
-  trackEventPayload();
 
   return (
     <div className={classnames(styles.MyNotifications, styles.isLoading)}>
@@ -113,10 +110,6 @@ export default function MyNotifications({
                       title={`Meer informatie over de melding: ${item.title}`}
                       href={item.customLink ? '#' : item.link!.to}
                       role="button"
-                      data-track={itemClickPayload(
-                        `${trackCategory}/Melding`,
-                        'Link_naar_meer_info'
-                      )}
                       className={ButtonLinkStyles.ButtonLink}
                       onClick={event => {
                         event.preventDefault();
@@ -142,13 +135,7 @@ export default function MyNotifications({
       )}
       {!isLoading && showMoreLink && (
         <p className={styles.FooterLink}>
-          <ButtonLink
-            to={AppRoutes.MY_NOTIFICATIONS}
-            data-track={itemClickPayload(
-              trackCategory,
-              'Link_naar_alle_meldingen'
-            )}
-          >
+          <ButtonLink to={AppRoutes.MY_NOTIFICATIONS}>
             Alle meldingen
           </ButtonLink>
         </p>

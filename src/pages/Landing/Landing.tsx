@@ -5,27 +5,19 @@ import Heading from 'components/Heading/Heading';
 import PageContentMain from 'components/PageContentMain/PageContentMain';
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
-import useDocumentTitle from 'hooks/documentTitle.hook';
 import React, { useEffect, useRef, useState } from 'react';
 
 import styles from './Landing.module.scss';
-import { PageTitleLanding } from 'hooks/pageChange';
-import { trackItemPresentation, itemClickPayload } from 'hooks/analytics.hook';
+import { trackPageView } from 'hooks/analytics.hook';
 import classnames from 'classnames';
 
-const CATEGORY = 'MA_Landingspagina';
-const DIGID_LOGIN_BUTTON = 'DigiD_login_button';
-
 export default () => {
-  // NOTE: Custom title because this page is rendered outside of the <Router />
-  useDocumentTitle(PageTitleLanding);
-
   const loginButton = useRef(null);
 
   useEffect(() => {
-    if (loginButton.current) {
-      trackItemPresentation(CATEGORY, DIGID_LOGIN_BUTTON);
-    }
+    trackPageView('Landingspagina', document.location.href + 'landingspagina');
+    // Whenever we load the landing/login page, start a new session.
+    sessionStorage.clear();
   }, []);
 
   const [isRedirecting, setRedirecting] = useState(false);
