@@ -50,7 +50,6 @@ export function useAnalytics() {
 export function trackEvent(
   payload: EventPayload | [EventPayload, LinkPayload]
 ) {
-  console.log(payload);
   return pushToAnalytics(payload);
 }
 
