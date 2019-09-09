@@ -13,10 +13,6 @@
     }
   }
 
-  @include select(StatusLine_altDocumentContent) {
-    display: none;
-  }
-
   @include select(StatusLine_ListHeading) {
     max-width: calc(#{$main-boxed-width} - 32rem);
     margin: 0 auto;
@@ -28,12 +24,6 @@
   @include select(StatusLine_NoStatusItems) {
     max-width: calc(#{$main-boxed-width} - 32rem);
     margin: 0 auto;
-  }
-
-  @include select(StatusLine_Actual) {
-    @include select(StatusLine_altDocumentContent) {
-      display: block;
-    }
   }
 }
 
