@@ -1,6 +1,6 @@
 {
   "name": "mijn-amsterdam-frontend",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "dependencies": {
     "@babel/polyfill": "^7.4.0",
     "@datapunt/matomo-tracker-js": "0.0.12",
@@ -45,7 +45,10 @@
     "cypress": "cypress open",
     "lint:staged": "lint-staged",
     "mock-api": "dyson mock-api/",
-    "watch:mock-api": "nodemon --watch mock-api dyson mock-api"
+    "watch:mock-api": "nodemon --watch mock-api dyson mock-api",
+    "release:major": "sh scripts/release.sh --major",
+    "release:minor": "sh scripts/release.sh --minor",
+    "release:bug": "sh scripts/release.sh --bug"
   },
   "eslintConfig": {
     "extends": "react-app",
