@@ -13,7 +13,7 @@ import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
 import { ExternalUrls, ChapterTitles } from 'App.constants';
 
 const DISPLAY_PROPS = {
-  title: 'Regeling',
+  title: 'Voorziening',
 };
 
 export default () => {

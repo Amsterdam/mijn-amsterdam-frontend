@@ -67,9 +67,15 @@ export default () => {
           <StatusLine
             items={WmoItem.process}
             trackCategory="Zorg en ondersteuning / Voorziening"
-            altDocumentContent={
-              <strong>Deze informatie krijg je ook per post.</strong>
-            }
+            altDocumentContent={(statusLineItem, stepNumber) => {
+              return stepNumber === 1 ? (
+                <p>
+                  <strong>Deze informatie krijg je ook per post.</strong>
+                </p>
+              ) : (
+                ''
+              );
+            }}
           />
         </PageContentMainBody>
       )}

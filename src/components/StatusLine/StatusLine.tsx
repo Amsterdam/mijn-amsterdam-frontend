@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FunctionComponent, useMemo } from 'react';
 import styles from './StatusLine.module.scss';
 import classnames from 'classnames';
 import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
@@ -22,16 +22,22 @@ export interface StatusLineItem {
   isHistorical: boolean;
 }
 
+type AltDocumentContent = string | JSX.Element;
+type ConditionalAltDocumentContent = (
+  statusLineItem: StatusLineItem,
+  stepNumber: number
+) => AltDocumentContent;
+
 interface StatusLineProps {
   items: StatusLineItem[];
   trackCategory: string;
-  altDocumentContent?: string | JSX.Element;
+  altDocumentContent?: AltDocumentContent | ConditionalAltDocumentContent;
 }
 
 interface StatusLineItemProps {
   item: StatusLineItem;
   stepNumber: number;
-  altDocumentContent?: string | JSX.Element;
+  altDocumentContent?: AltDocumentContent | ConditionalAltDocumentContent;
 }
 
 interface DownloadLinkProps {
@@ -58,7 +64,11 @@ function StatusLineItem({
   altDocumentContent,
 }: StatusLineItemProps) {
   const { location } = useRouter();
-
+  const altDocumentContentActual = useMemo(() => {
+    return typeof altDocumentContent === 'function'
+      ? altDocumentContent(item, stepNumber)
+      : altDocumentContent;
+  }, []);
   return (
     <li
       key={item.id}
@@ -80,8 +90,10 @@ function StatusLineItem({
         </div>
         <div className={styles.Panel}>{item.description}</div>
         <div className={styles.Panel}>
-          {!!altDocumentContent && (
-            <p className={styles.altDocumentContent}>{altDocumentContent}</p>
+          {!!altDocumentContentActual && (
+            <span className={styles.altDocumentContent}>
+              {altDocumentContentActual}
+            </span>
           )}
           {!!item.documents && (
             <p>
@@ -144,7 +156,7 @@ export default function StatusLine({
                 <StatusLineItem
                   key={item.id}
                   item={item}
-                  stepNumber={items.length - index}
+                  stepNumber={index + 1}
                   altDocumentContent={altDocumentContent}
                 />
               ))}
