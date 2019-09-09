@@ -68,7 +68,6 @@ ShallowWrapper {
           },
         ]
       }
-      trackCategory="Test/Status_line"
     />
   </BrowserRouter>,
   Symbol(enzyme.__renderer__): Object {
@@ -149,7 +148,6 @@ ShallowWrapper {
             },
           ]
         }
-        trackCategory="Test/Status_line"
       />,
       "history": Object {
         "action": "POP",
@@ -237,7 +235,6 @@ ShallowWrapper {
             "stepType": "last-step",
           },
         ],
-        "trackCategory": "Test/Status_line",
       },
       "ref": null,
       "rendered": null,
@@ -315,7 +312,6 @@ ShallowWrapper {
               },
             ]
           }
-          trackCategory="Test/Status_line"
         />,
         "history": Object {
           "action": "POP",
@@ -403,7 +399,6 @@ ShallowWrapper {
               "stepType": "last-step",
             },
           ],
-          "trackCategory": "Test/Status_line",
         },
         "ref": null,
         "rendered": null,

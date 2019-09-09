@@ -65,7 +65,7 @@ export default () => {
           startCollapsed={false}
           className={styles.DataLinkTableCurrent}
           isLoading={isLoading}
-          trackCategory="MA_Zorg/Detail_Pagina/Huidige_voorzieningen"
+          trackCategory="Zorg en ondersteuning overzicht / Huidige voorzieningen"
         />
       </PageContentMainBody>
       <div className={styles.HistoricDataLinkTable}>
@@ -79,7 +79,7 @@ export default () => {
             noItemsMessage="U hebt geen eerdere voorzieningen."
             startCollapsed={hasActualItems}
             isLoading={isLoading}
-            trackCategory="MA_Zorg/Detail_Pagina/Eerdere_voorzieningen"
+            trackCategory="Zorg en ondersteuning overzicht / Eerdere voorzieningen"
           />
         </PageContentMainBody>
       </div>

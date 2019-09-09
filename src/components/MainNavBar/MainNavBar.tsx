@@ -10,12 +10,7 @@ import MainNavSubmenu, {
 } from 'components/MainNavSubmenu/MainNavSubmenu';
 import { getFullName } from 'data-formatting/brp';
 import { useDesktopScreen, useTabletScreen } from 'hooks/media.hook';
-import {
-  itemClickPayload,
-  itemInteractionPayload,
-  trackEvent,
-  trackItemPresentation,
-} from 'hooks/analytics.hook';
+import { trackItemPresentation } from 'hooks/analytics.hook';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import useRouter from 'use-react-router';
@@ -29,7 +24,6 @@ import {
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
 import teststyles from '../Tutorial/Tutorial.module.scss';
-import Dashboard from 'pages/Dashboard/Dashboard';
 import Tutorial from 'components/Tutorial/Tutorial';
 
 const MenuToggleBtnId = 'MenuToggleBtn';
@@ -52,7 +46,7 @@ function SecondaryLinks() {
 
   useEffect(() => {
     if (hasFirstName) {
-      trackItemPresentation('MA_Header/Secundaire_Links', 'Link_naar_Profiel');
+      trackItemPresentation('Header', 'Link naar Profiel');
     }
   }, [hasFirstName]);
   const isDesktopScreen = useDesktopScreen();
@@ -61,13 +55,7 @@ function SecondaryLinks() {
     <div className={styles.secondaryLinks}>
       {isDesktopScreen && <FontEnlarger />}
       {!isError && (
-        <Link
-          to={AppRoutes.PROFILE}
-          data-track={itemClickPayload(
-            'MA_Header/Secundaire_Links',
-            'Link_naar_Profiel'
-          )}
-        >
+        <Link to={AppRoutes.PROFILE}>
           {persoon && persoon.voornamen ? (
             getFullName(persoon)
           ) : (
@@ -76,14 +64,7 @@ function SecondaryLinks() {
         </Link>
       )}
       {
-        <IconButtonLink
-          to={LOGOUT_URL}
-          rel="external"
-          data-track={itemClickPayload(
-            'MA_Header/Secundaire_Links',
-            'Link_naar_Uitloggen'
-          )}
-        >
+        <IconButtonLink to={LOGOUT_URL} rel="external">
           <LogoutIcon aria-hidden="true" /> Uitloggen
         </IconButtonLink>
       }
@@ -124,10 +105,6 @@ function getMenuItem(
               key={id}
               to={to}
               rel={rel}
-              data-track={itemClickPayload(
-                'MA_Header/Primaire_Links/Mijn_Themas_submenu',
-                `Link_naar_${id}`
-              )}
               onFocus={() => setSubMenuVisibility(item.id, true)}
             >
               {Icon && (
@@ -156,10 +133,6 @@ function getMenuItem(
       to={item.to}
       {...interactionHandlers}
       title={item.title}
-      data-track={itemClickPayload(
-        'MA_Header/Primaire_Links',
-        `Link_naar_${item.id}`
-      )}
     >
       {item.title}
     </MainNavLink>
@@ -271,12 +244,6 @@ export default function MainNavBar() {
             })}
             onClick={() => {
               const isVisible = !isTutorialVisible;
-              trackEvent(
-                itemClickPayload(
-                  'MA_Dashboard',
-                  isVisible ? 'Show Tutorial' : 'Hide Tutorial'
-                )
-              );
               setIsTutorialVisible(isVisible);
             }}
           >

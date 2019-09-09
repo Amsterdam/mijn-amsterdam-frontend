@@ -9,7 +9,7 @@ Array [
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/hulp-bij-het-huishouden-2019-04-14-2020-03-08-0",
+      "to": "/zorg-en-ondersteuning/voorzieningen/hulp-bij-het-huishouden-2019-04-14-2020-03-08-0",
     },
     "process": Array [
       Object {
@@ -83,7 +83,7 @@ Array [
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/dagbesteding-2019-03-13-2020-03-12-1",
+      "to": "/zorg-en-ondersteuning/voorzieningen/dagbesteding-2019-03-13-2020-03-12-1",
     },
     "process": Array [
       Object {
@@ -157,7 +157,7 @@ Array [
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/ambulante-ondersteuning-2019-03-09-2020-03-08-2",
+      "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-2019-03-09-2020-03-08-2",
     },
     "process": Array [
       Object {
@@ -231,7 +231,7 @@ Array [
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/dagbesteding-2019-03-09-2020-03-08-3",
+      "to": "/zorg-en-ondersteuning/voorzieningen/dagbesteding-2019-03-09-2020-03-08-3",
     },
     "process": Array [
       Object {
@@ -305,7 +305,7 @@ Array [
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/ambulante-ondersteuning-2019-01-01-2019-12-31-4",
+      "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-2019-01-01-2019-12-31-4",
     },
     "process": Array [
       Object {
@@ -379,7 +379,7 @@ Array [
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/ambulante-ondersteuning-2018-12-31-2018-12-31-5",
+      "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-2018-12-31-2018-12-31-5",
     },
     "process": Array [
       Object {
@@ -453,7 +453,7 @@ Array [
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/ambulante-ondersteuning-2018-11-28-2019-03-08-6",
+      "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-2018-11-28-2019-03-08-6",
     },
     "process": Array [
       Object {
@@ -527,7 +527,7 @@ Array [
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/ambulante-ondersteuning-2018-11-20-2019-11-20-7",
+      "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-2018-11-20-2019-11-20-7",
     },
     "process": Array [
       Object {
@@ -601,7 +601,7 @@ Array [
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/woonruimteaanpassing-2018-10-24-aanvraag-8",
+      "to": "/zorg-en-ondersteuning/voorzieningen/woonruimteaanpassing-2018-10-24-aanvraag-8",
     },
     "process": Array [
       Object {
@@ -673,7 +673,7 @@ Array [
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/handbewogen-rolstoel-voor-semi-permanent-gebruik-2018-09-07-aanvraag-9",
+      "to": "/zorg-en-ondersteuning/voorzieningen/handbewogen-rolstoel-voor-semi-permanent-gebruik-2018-09-07-aanvraag-9",
     },
     "process": Array [
       Object {
@@ -753,7 +753,7 @@ Array [
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/woonruimteaanpassing-2018-07-17-aanvraag-10",
+      "to": "/zorg-en-ondersteuning/voorzieningen/woonruimteaanpassing-2018-07-17-aanvraag-10",
     },
     "process": Array [
       Object {
@@ -825,7 +825,7 @@ Array [
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/dagbesteding-2018-07-06-2019-01-01-11",
+      "to": "/zorg-en-ondersteuning/voorzieningen/dagbesteding-2018-07-06-2019-01-01-11",
     },
     "process": Array [
       Object {
@@ -899,7 +899,7 @@ Array [
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/woonruimteaanpassing-2018-04-20-aanvraag-12",
+      "to": "/zorg-en-ondersteuning/voorzieningen/woonruimteaanpassing-2018-04-20-aanvraag-12",
     },
     "process": Array [
       Object {
@@ -971,7 +971,7 @@ Array [
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/hulp-bij-het-huishouden-2018-04-14-2019-04-13-13",
+      "to": "/zorg-en-ondersteuning/voorzieningen/hulp-bij-het-huishouden-2018-04-14-2019-04-13-13",
     },
     "process": Array [
       Object {
@@ -1045,7 +1045,7 @@ Array [
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/dagbesteding-2018-03-09-2019-03-08-14",
+      "to": "/zorg-en-ondersteuning/voorzieningen/dagbesteding-2018-03-09-2019-03-08-14",
     },
     "process": Array [
       Object {
@@ -1119,7 +1119,7 @@ Array [
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/deur-tot-deur-plus-vervoer-2018-02-27-aanvraag-15",
+      "to": "/zorg-en-ondersteuning/voorzieningen/deur-tot-deur-plus-vervoer-2018-02-27-aanvraag-15",
     },
     "process": Array [
       Object {
@@ -1163,7 +1163,7 @@ Array [
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/ambulante-ondersteuning-2018-02-21-2019-02-21-16",
+      "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-2018-02-21-2019-02-21-16",
     },
     "process": Array [
       Object {
@@ -1237,7 +1237,7 @@ Array [
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/ambulante-ondersteuning-2018-01-01-2018-12-30-17",
+      "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-2018-01-01-2018-12-30-17",
     },
     "process": Array [
       Object {
@@ -1311,7 +1311,7 @@ Array [
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/ambulante-ondersteuning-2017-11-24-2018-11-23-18",
+      "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-2017-11-24-2018-11-23-18",
     },
     "process": Array [
       Object {
@@ -1385,7 +1385,7 @@ Array [
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/deur-tot-deur-plus-vervoer-2017-11-24-2018-02-26-19",
+      "to": "/zorg-en-ondersteuning/voorzieningen/deur-tot-deur-plus-vervoer-2017-11-24-2018-02-26-19",
     },
     "process": Array [
       Object {
@@ -1429,7 +1429,7 @@ Array [
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/dagbesteding-2017-06-01-2018-05-01-20",
+      "to": "/zorg-en-ondersteuning/voorzieningen/dagbesteding-2017-06-01-2018-05-01-20",
     },
     "process": Array [
       Object {
@@ -1503,7 +1503,7 @@ Array [
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/hulp-bij-het-huishouden-2017-06-01-2018-04-13-21",
+      "to": "/zorg-en-ondersteuning/voorzieningen/hulp-bij-het-huishouden-2017-06-01-2018-04-13-21",
     },
     "process": Array [
       Object {
@@ -1577,7 +1577,7 @@ Array [
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/dagbesteding-2017-06-01-2018-03-08-22",
+      "to": "/zorg-en-ondersteuning/voorzieningen/dagbesteding-2017-06-01-2018-03-08-22",
     },
     "process": Array [
       Object {
@@ -1651,7 +1651,7 @@ Array [
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/deur-tot-deur-plus-vervoer-2016-04-14-aanvraag-23",
+      "to": "/zorg-en-ondersteuning/voorzieningen/deur-tot-deur-plus-vervoer-2016-04-14-aanvraag-23",
     },
     "process": Array [
       Object {
@@ -1695,7 +1695,7 @@ Array [
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/woonruimteaanpassing-2015-02-19-aanvraag-24",
+      "to": "/zorg-en-ondersteuning/voorzieningen/woonruimteaanpassing-2015-02-19-aanvraag-24",
     },
     "process": Array [
       Object {
@@ -1767,7 +1767,7 @@ Array [
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/scootmobiel-voor-buitengebruik-2014-12-29-aanvraag-25",
+      "to": "/zorg-en-ondersteuning/voorzieningen/scootmobiel-voor-buitengebruik-2014-12-29-aanvraag-25",
     },
     "process": Array [
       Object {
@@ -1847,7 +1847,7 @@ Array [
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/elektrische-hulpaandrijving-voor-rolstoel-2014-09-08-aanvraag-26",
+      "to": "/zorg-en-ondersteuning/voorzieningen/elektrische-hulpaandrijving-voor-rolstoel-2014-09-08-aanvraag-26",
     },
     "process": Array [
       Object {
@@ -1927,7 +1927,7 @@ Array [
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/woonruimteaanpassing-2014-09-08-aanvraag-27",
+      "to": "/zorg-en-ondersteuning/voorzieningen/woonruimteaanpassing-2014-09-08-aanvraag-27",
     },
     "process": Array [
       Object {
@@ -1999,7 +1999,7 @@ Array [
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/woonruimteaanpassing-2013-12-05-aanvraag-28",
+      "to": "/zorg-en-ondersteuning/voorzieningen/woonruimteaanpassing-2013-12-05-aanvraag-28",
     },
     "process": Array [
       Object {
@@ -2071,7 +2071,7 @@ Array [
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/woonruimteaanpassing-2013-05-06-aanvraag-29",
+      "to": "/zorg-en-ondersteuning/voorzieningen/woonruimteaanpassing-2013-05-06-aanvraag-29",
     },
     "process": Array [
       Object {
@@ -2143,7 +2143,7 @@ Array [
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/kinderspeelvoertuig-2013-03-14-aanvraag-30",
+      "to": "/zorg-en-ondersteuning/voorzieningen/kinderspeelvoertuig-2013-03-14-aanvraag-30",
     },
     "process": Array [
       Object {
@@ -2223,7 +2223,7 @@ Array [
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/handbewogen-rolstoel-2012-10-05-aanvraag-31",
+      "to": "/zorg-en-ondersteuning/voorzieningen/handbewogen-rolstoel-2012-10-05-aanvraag-31",
     },
     "process": Array [
       Object {
@@ -2303,7 +2303,7 @@ Array [
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/douche-toiletstoel-verrijdbaarkantelbaarindividueel-aangepast-2012-10-05-aanvraag-32",
+      "to": "/zorg-en-ondersteuning/voorzieningen/douche-toiletstoel-verrijdbaarkantelbaarindividueel-aangepast-2012-10-05-aanvraag-32",
     },
     "process": Array [
       Object {
@@ -2383,7 +2383,7 @@ Array [
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg/voorzieningen/kamer-tot-kamer-vervoer-2012-08-07-aanvraag-33",
+      "to": "/zorg-en-ondersteuning/voorzieningen/kamer-tot-kamer-vervoer-2012-08-07-aanvraag-33",
     },
     "process": Array [
       Object {

@@ -5,12 +5,7 @@ import { ComponentChildren } from 'App.types';
 import classnames from 'classnames';
 import { formattedTimeFromSeconds } from 'helpers/App';
 import useActivityCounter from 'hooks/activityCounter.hook';
-import {
-  itemClickPayload,
-  itemInteractionPayload,
-  trackEvent,
-  trackItemPresentation,
-} from 'hooks/analytics.hook';
+import { trackEvent, trackItemPresentation } from 'hooks/analytics.hook';
 import { CounterProps, useCounter } from 'hooks/timer.hook';
 import React, { useEffect, useState, useContext } from 'react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
@@ -127,13 +122,6 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   }
 
   function showLoginScreen() {
-    trackEvent(
-      itemInteractionPayload(
-        'Redirect',
-        'MA_Sessie/Auto_Logout_Dialog',
-        'Timeout'
-      )
-    );
     setContinueButtonVisibility(false);
     window.location.href = '/';
   }
@@ -159,7 +147,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
 
   useEffect(() => {
     if (isOpen) {
-      trackItemPresentation('MA_Sessie/Auto_Logout_Dialog', 'Timeout');
+      trackItemPresentation('Session', 'Logout Dialog');
     }
   }, [isOpen]);
 
@@ -190,10 +178,6 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
             <button
               className="action-button secondary continue-button"
               onClick={continueUsingApp}
-              data-track={itemClickPayload(
-                'MA_Sessie/Auto_Logout_Dialog',
-                'Button_doorgaan'
-              )}
             >
               Doorgaan
             </button>
@@ -204,10 +188,6 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
               !continueButtonIsVisible && 'disabled'
             )}
             href={LOGOUT_URL}
-            data-track={itemClickPayload(
-              'MA_Sessie/Auto_Logout_Dialog',
-              'Button_uitloggen'
-            )}
           >
             {continueButtonIsVisible
               ? 'Nu uitloggen'
