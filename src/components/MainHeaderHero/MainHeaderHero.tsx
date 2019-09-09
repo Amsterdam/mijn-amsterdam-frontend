@@ -71,8 +71,6 @@ export default function MainHeaderHero(props: Partial<MainHeaderHeroProps>) {
   const session = useContext(SessionContext);
   const srcSet = getHeroSrc(session.isAuthenticated);
 
-  console.log(srcSet);
-
   return (
     <div className={styles.MainHeaderHero}>
       <picture>

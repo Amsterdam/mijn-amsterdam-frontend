@@ -7,10 +7,8 @@ let MatomoInstance: MatomoTracker;
 const hasSiteId = !!process.env.REACT_APP_ANALYTICS_SITE_ID;
 const siteId = hasSiteId ? Number(process.env.REACT_APP_ANALYTICS_SITE_ID) : -1;
 const MatomoTrackerConfig = {
-  urlBase: 'https://analytics.data.amsterdam.nl',
+  urlBase: 'https://analytics.data.amsterdam.nl/',
   siteId,
-  trackerUrl: 'https://analytics.data.amsterdam.nl/piwik.php',
-  srcUrl: 'https://analytics.data.amsterdam.nl/piwik.js',
 };
 
 // Initialize connection with analytics

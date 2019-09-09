@@ -29,6 +29,8 @@ const CustomTrackingUrls = {
   [AppRoutes.ROOT]: 'https://mijn.amsterdam.nl/home',
 };
 
+const ExcludePageViewTrackingUrls = [AppRoutes.API_LOGIN];
+
 const sortedPageTitleRoutes = Object.keys(PageTitles).sort((a, b) => {
   return a.length < b.length ? 1 : 0;
 });
@@ -50,9 +52,11 @@ export default function usePageChange() {
 
     document.title = title;
 
-    trackPageView(
-      title,
-      CustomTrackingUrls[location.pathname] || location.pathname
-    );
+    if (!ExcludePageViewTrackingUrls.includes(location.pathname)) {
+      trackPageView(
+        title,
+        CustomTrackingUrls[location.pathname] || location.pathname
+      );
+    }
   }, [location.pathname]);
 }
