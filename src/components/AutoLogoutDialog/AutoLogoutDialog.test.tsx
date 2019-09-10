@@ -3,6 +3,7 @@ import React from 'react';
 
 import AutoLogoutDialog, { AutoLogoutDialogSettings } from './AutoLogoutDialog';
 import { SessionContext } from '../../AppState';
+import { LOGOUT_URL } from 'App.constants';
 
 const ONE_SECOND_IN_MS = 1000;
 const DOC_TITLE = 'AutoLogoutDialog';
@@ -87,7 +88,7 @@ describe('AutoLogoutDialog', () => {
       ONE_SECOND_IN_MS * settings.secondsBeforeAutoLogout!
     );
     component.update();
-    expect(window.location.href).toBe('/');
+    expect(window.location.href).toBe(LOGOUT_URL);
   });
 
   it('fires callback when clicking continue button', () => {

@@ -13,7 +13,7 @@ import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
 import { ExternalUrls, ChapterTitles } from 'App.constants';
 
 const DISPLAY_PROPS = {
-  title: 'Voorziening',
+  title: '',
 };
 
 export default () => {
@@ -47,7 +47,7 @@ export default () => {
         </p>
         <p>
           <ButtonLinkExternal to={ExternalUrls.ZORG_LEES_MEER}>
-            Lees hier meer over Zorg en ondersteuning
+            Lees hier meer over zorg en ondersteuning
           </ButtonLinkExternal>
         </p>
         {isError && (

@@ -10,7 +10,7 @@ import { useSessionStorage } from 'hooks/storage.hook';
 import { trackEvent } from 'hooks/analytics.hook';
 import { ReactComponent as CaretLeft } from 'assets/images/Chevron-Left.svg';
 
-export type StepType = 'first-step' | 'last-step' | 'middle-step';
+export type StepType = 'first-step' | 'last-step' | 'intermediate-step';
 export interface StatusLineItem {
   id: string;
   status: string;
