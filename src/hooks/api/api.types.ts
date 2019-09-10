@@ -2,9 +2,11 @@ import { Unshaped } from 'App.types';
 
 export interface ApiRequestOptions {
   url: string;
+  data?: any;
   params?: Unshaped;
   postpone?: boolean;
   resetToInitialDataOnError?: boolean;
+  method?: 'GET' | 'POST';
 }
 
 export interface ApiState {
