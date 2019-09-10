@@ -51,13 +51,13 @@ export default () => {
       <PageContentMainBody variant="boxed">
         {(isError || noContent) && (
           <Alert type="warning">
-            Uw gegevens kunnen op dit moment niet worden getoond.
+            We kunnen op dit moment geen gegevens tonen.
           </Alert>
         )}
         {isLoading && <LoadingContent className={styles.LoadingContentInfo} />}
         {!!WmoItem && !!WmoItem.supplier && (
           <p className={styles.InfoDetail}>
-            Leverancier
+            Aanbieder
             <strong>{WmoItem.supplier}</strong>
           </p>
         )}
@@ -70,7 +70,9 @@ export default () => {
             altDocumentContent={(statusLineItem, stepNumber) => {
               return stepNumber === 1 ? (
                 <p>
-                  <strong>U krijgt dit besluit per post.</strong>
+                  <strong>U krijgt dit besluit per post.</strong> In de brief
+                  leest u ook hoe u bezwaar kunt maken, een klacht kan indienen
+                  of hoe u van aanbieder kunt wisselen.
                 </p>
               ) : (
                 ''

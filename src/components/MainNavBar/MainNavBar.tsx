@@ -250,7 +250,7 @@ export default function MainNavBar() {
               setIsTutorialVisible(isVisible);
             }}
           >
-            Meer info
+            Uitleg
           </button>
           {isTutorialVisible && (
             <Tutorial toggleTutorial={setIsTutorialVisible} />
