@@ -1,5 +1,14 @@
 import { useDataApi } from './api.hook';
-import { ApiState } from './api.types';
+import { ApiRequestOptions, ApiState } from './api.types';
+
+export interface PaginatedApiProps {
+  url: string;
+  offset?: number;
+  limit?: number;
+  postpone?: boolean;
+  method?: 'GET' | 'POST';
+  requestData?: any;
+}
 
 export interface PaginatedItemsResponse {
   items: any[];
@@ -10,7 +19,12 @@ export interface PaginatedItemsResponse {
 
 export interface PaginatedApiState extends ApiState {
   data: PaginatedItemsResponse;
-  refetch: (options: { offset?: number; limit?: number }) => void;
+  rawData: any;
+  refetch: (options: {
+    offset?: number;
+    limit?: number;
+    requestData?: any;
+  }) => void;
 }
 
 export const INITIAL_STATE: PaginatedItemsResponse = {
@@ -20,22 +34,28 @@ export const INITIAL_STATE: PaginatedItemsResponse = {
   limit: 3,
 };
 
-export default function usePaginatedApi(
-  url: string,
-  offset: number = INITIAL_STATE.offset,
-  limit: number = INITIAL_STATE.limit,
-  postpone: boolean = false,
-  method: string = 'GET'
-): PaginatedApiState {
-  const options = {
+export default function usePaginatedApi({
+  url,
+  requestData,
+  offset = INITIAL_STATE.offset,
+  limit = INITIAL_STATE.limit,
+  postpone = false,
+  method = 'GET',
+}: PaginatedApiProps): PaginatedApiState {
+  const options: ApiRequestOptions = {
     url,
     params: { offset, limit },
     postpone,
     method,
   };
+
+  if (method === 'POST') {
+    options.data = requestData;
+  }
+
   const [api, refetch] = useDataApi(options, INITIAL_STATE);
   // Basic data formatting
-  const data = Array.isArray(api.data)
+  const dataFormatted = Array.isArray(api.data)
     ? // API returns array items
       { items: api.data, total: api.data.length, offset: 0, limit: -1 }
     : // API returns paginated api response
@@ -46,12 +66,14 @@ export default function usePaginatedApi(
 
   return {
     ...api,
-    data,
+    rawData: api.data,
+    data: dataFormatted,
     refetch: ({
+      requestData,
       offset = INITIAL_STATE.offset,
       limit = INITIAL_STATE.limit,
     } = {}) => {
-      refetch({ ...options, params: { offset, limit } });
+      refetch({ ...options, data: requestData, params: { offset, limit } });
     },
   };
 }

@@ -1,10 +1,9 @@
 import { ApiUrls } from 'App.constants';
 import { BrpResponseData } from 'data-formatting/brp';
-
 import { useDataApi } from './api.hook';
 import { ApiState } from './api.types';
 
-export type BrpApiState = Omit<ApiState, 'data'> & BrpResponseData;
+export type BrpApiState = ApiState & { data: BrpResponseData };
 
 export function useBrpApi(initialState = {}): BrpApiState {
   const options = { url: ApiUrls.BRP };
@@ -13,5 +12,5 @@ export function useBrpApi(initialState = {}): BrpApiState {
 
   const brpData = typeof data === 'object' ? data : {};
 
-  return { ...rest, ...brpData };
+  return { ...rest, data: brpData };
 }
