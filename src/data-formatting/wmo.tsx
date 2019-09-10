@@ -227,7 +227,7 @@ const Labels: {
       },
       {
         status: 'Levering gestart',
-        datePublished: '',
+        datePublished: data => data.dateStartServiceDelivery,
         description: data => (
           <p>
             {data.supplier} is gestart met het leveren van {data.title}.
@@ -236,7 +236,7 @@ const Labels: {
       },
       {
         status: 'Levering gestopt',
-        datePublished: '',
+        datePublished: data => data.dateFinishServiceDelivery,
         description: data => (
           <p>
             {data.supplier} heeft aan ons doorgegeven dat u geen {data.title}{' '}
@@ -275,7 +275,7 @@ const Labels: {
       },
       {
         status: 'Opdracht gegeven',
-        datePublished: '',
+        datePublished: data => data.dateStartServiceDelivery,
         description: data => (
           <p>
             De gemeente heeft opdracht gegeven aan{' '}
@@ -285,12 +285,11 @@ const Labels: {
       },
       {
         status: 'Product geleverd',
-        datePublished: '',
+        datePublished: data => data.dateFinishServiceDelivery,
         description: data => (
           <p>
-            {data.serviceDeliverySupplier} heeft aan ons doorgegeven dat op{' '}
-            {defaultDateFormat(data.dateStartServiceDelivery)} een {data.title}{' '}
-            bij u is afgeleverd.
+            {data.serviceDeliverySupplier} heeft aan ons doorgegeven dat een{' '}
+            {data.title} bij u is afgeleverd.
           </p>
         ),
       },
@@ -324,7 +323,7 @@ const Labels: {
       },
       {
         status: 'Opdracht gegeven',
-        datePublished: '',
+        datePublished: data => data.dateStartServiceDelivery,
         description: data => (
           <p>
             De gemeente heeft opdracht gegeven aan{' '}
@@ -335,7 +334,7 @@ const Labels: {
       },
       {
         status: 'Aanpassing uitgevoerd',
-        datePublished: '',
+        datePublished: data => data.dateFinishServiceDelivery,
         description: data => (
           <p>
             {data.serviceDeliverySupplier} heeft aan ons doorgegeven dat de
@@ -388,13 +387,34 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
           data
         ) as string;
 
+        const supplierChangePossible =
+          labelData.statusItems.length === 4 &&
+          labelData.statusItems[2].status === 'Levering gestopt';
+
+        const docDescription =
+          index === 0 ? (
+            <p>
+              {supplierChangePossible
+                ? `In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
+              indienen of hoe u van aanbieder kunt wisselen.`
+                : `In de brief leest u ook hoe u bezwaar kunt maken of hoe u een klacht kan
+              indienen.`}
+            </p>
+          ) : (
+            ''
+          );
         return {
           id: `status-step-${index}`,
           status: statusItem.status,
-          description: parseLabelContent(statusItem.description, data),
+          description: (
+            <>
+              {parseLabelContent(statusItem.description, data)}
+              {docDescription}
+            </>
+          ),
           datePublished,
           isActual: false,
-          stepType: 'middle-step',
+          stepType: 'intermediate-step',
           documents: [], // NOTE: To be implemented in 2020
           isHistorical: false,
         };
@@ -405,12 +425,13 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
       const nItems = [];
       let hasActualStep = false;
       let l = items.length;
+      const len = l;
 
       while (l--) {
         const item = items[l];
         const inPast = isDateInPast(item.datePublished);
         const isActual: boolean = inPast && !hasActualStep;
-        let stepType: StepType = 'middle-step';
+        let stepType: StepType = 'intermediate-step';
 
         if (l === 0) {
           stepType = 'first-step';
@@ -420,6 +441,8 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
 
         nItems.unshift({
           ...item,
+          // Don't show the date for the intermediate steps
+          datePublished: l !== 1 && l !== len ? item.datePublished : '',
           isActual,
           stepType,
           isHistorical: inPast && !isActual,
@@ -507,9 +530,7 @@ export function formatWmoApiResponse(
         Leverancier: serviceDeliverySupplier, // TODO: seems to be only filled with a code in the api response data
       } = (item.Levering || {}) as WmoApiLevering;
 
-      const [start] = dateStart.split('T');
-      const [finish] = dateFinish ? dateFinish.split('T') : ['aanvraag'];
-      const id = slug(`${title}-${start}-${finish}-${index}`).toLowerCase();
+      const id = slug(`${title}-${index}`).toLowerCase();
 
       const process: WmoItem['process'] = formatWmoProcessItems({
         title,

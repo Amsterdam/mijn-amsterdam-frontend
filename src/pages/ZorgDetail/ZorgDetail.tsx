@@ -21,6 +21,7 @@ export default () => {
       isLoading,
     },
   } = useContext(AppContext);
+
   const {
     match: {
       params: { id },
@@ -70,15 +71,17 @@ export default () => {
             altDocumentContent={(statusLineItem, stepNumber) => {
               return stepNumber === 1 ? (
                 <p>
-                  <strong>U krijgt dit besluit per post.</strong> In de brief
-                  leest u ook hoe u bezwaar kunt maken, een klacht kan indienen
-                  of hoe u van aanbieder kunt wisselen.
+                  <strong>U krijgt dit besluit per post.</strong>
                 </p>
               ) : (
                 ''
               );
             }}
           />
+          <p className={styles.HistoricItemsMention}>
+            Informatie van voor 1 januari 2018 kunt u hier niet inzien. Deze
+            kunt u wel opvragen bij de Wmo Helpdesk.
+          </p>
         </PageContentMainBody>
       )}
     </PageContentMain>

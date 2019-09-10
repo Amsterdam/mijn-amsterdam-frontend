@@ -107,11 +107,13 @@
   }
 
   &:nth-child(2) {
-    flex: 2;
+    @include media-query(">=tablet") {
+      flex: 0 0 38rem;
+    }
   }
 
   &:first-child {
-    padding: 1.8rem 3rem 1.8rem 8.5rem;
+    padding: 1.8rem 0 1.8rem 8.5rem;
 
     // Vertical line
     &:before {
