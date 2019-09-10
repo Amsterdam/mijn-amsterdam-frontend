@@ -387,11 +387,18 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
           data
         ) as string;
 
+        const supplierChangePossible =
+          labelData.statusItems.length === 4 &&
+          labelData.statusItems[2].status === 'Levering gestopt';
+
         const docDescription =
           index === 0 ? (
             <p>
-              In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
+              {supplierChangePossible
+                ? `In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
+              indienen of hoe u van aanbieder kunt wisselen.`
+                : `In de brief leest u ook hoe u bezwaar kunt maken of hoe u een klacht kan
+              indienen.`}
             </p>
           ) : (
             ''
