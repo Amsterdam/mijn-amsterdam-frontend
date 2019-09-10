@@ -288,9 +288,8 @@ const Labels: {
         datePublished: data => data.dateFinishServiceDelivery,
         description: data => (
           <p>
-            {data.serviceDeliverySupplier} heeft aan ons doorgegeven dat op{' '}
-            {defaultDateFormat(data.dateStartServiceDelivery)} een {data.title}{' '}
-            bij u is afgeleverd.
+            {data.serviceDeliverySupplier} heeft aan ons doorgegeven dat een{' '}
+            {data.title} bij u is afgeleverd.
           </p>
         ),
       },
