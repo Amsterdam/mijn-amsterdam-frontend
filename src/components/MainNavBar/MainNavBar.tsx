@@ -39,7 +39,10 @@ export interface MainNavLinkProps {
 
 function SecondaryLinks() {
   const {
-    BRP: { persoon, isError },
+    BRP: {
+      data: { persoon },
+      isError,
+    },
   } = useContext(AppContext);
 
   const hasFirstName = !!(persoon && persoon.voornamen);

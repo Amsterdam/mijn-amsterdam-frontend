@@ -5,9 +5,11 @@ import {
   ProductCollection,
 } from 'data-formatting/focus';
 import { useMemo } from 'react';
-import { ApiState } from './api.types';
 import { MyNotification } from './my-notifications-api.hook';
-import usePaginatedApi, { PaginatedItemsResponse } from './paginated-api.hook';
+import usePaginatedApi, {
+  PaginatedApiState,
+  PaginatedItemsResponse,
+} from './paginated-api.hook';
 
 export interface FocusData extends PaginatedItemsResponse {
   items: FocusItem[];
@@ -16,20 +18,20 @@ export interface FocusData extends PaginatedItemsResponse {
   products: ProductCollection;
 }
 
-export interface FocusApiState extends ApiState {
+export interface FocusApiState extends PaginatedApiState {
   data: FocusData;
 }
 
 export default function useFocusApi(
-  offset?: number,
-  limit?: number
+  offset: number = 0,
+  limit: number = -1
 ): FocusApiState {
-  const { data, ...rest } = usePaginatedApi(
-    ApiUrls.FOCUS,
+  const { data, ...rest } = usePaginatedApi({
+    url: ApiUrls.FOCUS,
     offset,
     limit,
-    ApiConfig[ApiUrls.FOCUS].postponeFetch
-  );
+    postpone: ApiConfig[ApiUrls.FOCUS].postponeFetch,
+  });
 
   const { allItems, allNotifications, products } = useMemo(() => {
     return formatProductCollections(data.items);

@@ -107,10 +107,21 @@ export function useAppState(value?: any) {
     const MY_AREA = useMyMap();
 
     useEffect(() => {
-      if (BRP.adres && BRP.adres.straatnaam) {
-        MY_AREA.refetch(getFullAddress(BRP.adres));
+      if (BRP.data.adres && BRP.data.adres.straatnaam) {
+        MY_AREA.refetch(getFullAddress(BRP.data.adres));
       }
-    }, [BRP.adres && BRP.adres.straatnaam]);
+    }, [BRP.data.adres && BRP.data.adres.straatnaam]);
+
+    useEffect(() => {
+      if (WMO.isDirty && FOCUS.isDirty && ERFPACHT.isDirty && BRP.isDirty) {
+        MY_TIPS.refetch({
+          WMO: WMO.rawData,
+          FOCUS: FOCUS.rawData,
+          ERFPACHT: false,
+          BRP: BRP.data,
+        });
+      }
+    }, [WMO.isDirty, FOCUS.isDirty, ERFPACHT.isDirty, BRP.isDirty]);
 
     // NOTE: For now we can use this solution but we probably need some more finegrained memoization of the state as the app grows larger.
     appState = useMemo(() => {
