@@ -14,7 +14,7 @@ import React, { useContext } from 'react';
 
 export default function Profile() {
   const { BRP } = useContext(AppContext);
-  const brpInfo = formatProfileData(BRP);
+  const brpInfo = formatProfileData(BRP.data);
 
   return (
     <PageContentMain className={styles.Profile}>
