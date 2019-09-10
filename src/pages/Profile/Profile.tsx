@@ -38,7 +38,7 @@ export default function Profile() {
         )}
         {BRP.isError && (
           <Alert type="warning">
-            Uw gegevens kunnen op dit moment niet worden getoond.
+            We kunnen op dit moment geen gegevens tonen.
           </Alert>
         )}
         <div className={styles.InfoPanels}>
