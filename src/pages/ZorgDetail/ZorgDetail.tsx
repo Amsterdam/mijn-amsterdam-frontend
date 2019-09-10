@@ -68,6 +68,15 @@ export default () => {
           <StatusLine
             items={WmoItem.process}
             trackCategory="Zorg en ondersteuning / Voorziening"
+            altDocumentContent={(statusLineItem, stepNumber) => {
+              return stepNumber === 1 ? (
+                <p>
+                  <strong>U krijgt dit besluit per post.</strong>
+                </p>
+              ) : (
+                ''
+              );
+            }}
           />
           <p className={styles.HistoricItemsMention}>
             Informatie van voor 1 januari 2018 kunt u hier niet inzien. Deze

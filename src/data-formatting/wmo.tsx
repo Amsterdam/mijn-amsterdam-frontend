@@ -227,7 +227,7 @@ const Labels: {
       },
       {
         status: 'Levering gestart',
-        datePublished: '',
+        datePublished: data => data.dateStartServiceDelivery,
         description: data => (
           <p>
             {data.supplier} is gestart met het leveren van {data.title}.
@@ -236,7 +236,7 @@ const Labels: {
       },
       {
         status: 'Levering gestopt',
-        datePublished: '',
+        datePublished: data => data.dateFinishServiceDelivery,
         description: data => (
           <p>
             {data.supplier} heeft aan ons doorgegeven dat u geen {data.title}{' '}
@@ -275,7 +275,7 @@ const Labels: {
       },
       {
         status: 'Opdracht gegeven',
-        datePublished: '',
+        datePublished: data => data.dateStartServiceDelivery,
         description: data => (
           <p>
             De gemeente heeft opdracht gegeven aan{' '}
@@ -285,7 +285,7 @@ const Labels: {
       },
       {
         status: 'Product geleverd',
-        datePublished: '',
+        datePublished: data => data.dateFinishServiceDelivery,
         description: data => (
           <p>
             {data.serviceDeliverySupplier} heeft aan ons doorgegeven dat op{' '}
@@ -324,7 +324,7 @@ const Labels: {
       },
       {
         status: 'Opdracht gegeven',
-        datePublished: '',
+        datePublished: data => data.dateStartServiceDelivery,
         description: data => (
           <p>
             De gemeente heeft opdracht gegeven aan{' '}
@@ -335,7 +335,7 @@ const Labels: {
       },
       {
         status: 'Aanpassing uitgevoerd',
-        datePublished: '',
+        datePublished: data => data.dateFinishServiceDelivery,
         description: data => (
           <p>
             {data.serviceDeliverySupplier} heeft aan ons doorgegeven dat de
@@ -391,9 +391,8 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
         const docDescription =
           index === 0 ? (
             <p>
-              <strong>U krijgt dit besluit per post.</strong> In de brief leest
-              u ook hoe u bezwaar kunt maken, een klacht kan indienen of hoe u
-              van aanbieder kunt wisselen.
+              In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
+              indienen of hoe u van aanbieder kunt wisselen.
             </p>
           ) : (
             ''
@@ -409,7 +408,7 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
           ),
           datePublished,
           isActual: false,
-          stepType: 'middle-step',
+          stepType: 'intermediate-step',
           documents: [], // NOTE: To be implemented in 2020
           isHistorical: false,
         };
@@ -420,12 +419,13 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
       const nItems = [];
       let hasActualStep = false;
       let l = items.length;
+      const len = l;
 
       while (l--) {
         const item = items[l];
         const inPast = isDateInPast(item.datePublished);
         const isActual: boolean = inPast && !hasActualStep;
-        let stepType: StepType = 'middle-step';
+        let stepType: StepType = 'intermediate-step';
 
         if (l === 0) {
           stepType = 'first-step';
@@ -435,6 +435,8 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
 
         nItems.unshift({
           ...item,
+          // Don't show the date for the intermediate steps
+          datePublished: l !== 1 && l !== len ? item.datePublished : '',
           isActual,
           stepType,
           isHistorical: inPast && !isActual,

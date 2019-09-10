@@ -810,7 +810,7 @@ export function formatFocusProduct(
     daysUserActionRequired,
     daysRecoveryAction,
     isActual: false,
-    stepType: 'middle-step',
+    stepType: 'intermediate-step',
   });
 
   const processStepsFiltered = processSteps.filter(
@@ -846,7 +846,7 @@ export function formatFocusProduct(
     process: processStepsFiltered.map((stepTitle, index) => {
       const stepData = steps[stepTitle] || null;
       const isActual = stepTitle === latestStep;
-      let stepType: StepType = 'middle-step';
+      let stepType: StepType = 'intermediate-step';
 
       switch (stepTitle) {
         case 'aanvraag':

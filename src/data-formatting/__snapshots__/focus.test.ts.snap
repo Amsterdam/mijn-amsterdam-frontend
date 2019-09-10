@@ -106,7 +106,7 @@ Object {
       "isActual": false,
       "isHistorical": true,
       "status": "In behandeling",
-      "stepType": "middle-step",
+      "stepType": "intermediate-step",
       "title": "Bijstandsuitkering",
     },
     Object {
@@ -241,7 +241,7 @@ Object {
       "isActual": false,
       "isHistorical": true,
       "status": "In behandeling",
-      "stepType": "middle-step",
+      "stepType": "intermediate-step",
       "title": "Bijstandsuitkering",
     },
     Object {
@@ -376,7 +376,7 @@ Object {
       "isActual": false,
       "isHistorical": true,
       "status": "In behandeling",
-      "stepType": "middle-step",
+      "stepType": "intermediate-step",
       "title": "Bijstandsuitkering",
     },
     Object {
@@ -399,7 +399,7 @@ Object {
       "isActual": false,
       "isHistorical": true,
       "status": "Meer informatie nodig",
-      "stepType": "middle-step",
+      "stepType": "intermediate-step",
       "title": "Bijstandsuitkering",
     },
     Object {
@@ -541,7 +541,7 @@ Object {
       "isActual": false,
       "isHistorical": true,
       "status": "In behandeling",
-      "stepType": "middle-step",
+      "stepType": "intermediate-step",
       "title": "Bijstandsuitkering",
     },
     Object {
@@ -564,7 +564,7 @@ Object {
       "isActual": false,
       "isHistorical": true,
       "status": "Meer informatie nodig",
-      "stepType": "middle-step",
+      "stepType": "intermediate-step",
       "title": "Bijstandsuitkering",
     },
     Object {
@@ -758,7 +758,7 @@ Object {
       "isActual": true,
       "isHistorical": false,
       "status": "In behandeling",
-      "stepType": "middle-step",
+      "stepType": "intermediate-step",
       "title": "Stadspas",
     },
   ],
@@ -862,7 +862,7 @@ Object {
       "isActual": false,
       "isHistorical": true,
       "status": "In behandeling",
-      "stepType": "middle-step",
+      "stepType": "intermediate-step",
       "title": "Stadspas",
     },
     Object {
@@ -885,7 +885,7 @@ Object {
       "isActual": true,
       "isHistorical": false,
       "status": "Meer informatie nodig",
-      "stepType": "middle-step",
+      "stepType": "intermediate-step",
       "title": "Stadspas",
     },
   ],
