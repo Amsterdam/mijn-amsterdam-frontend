@@ -227,7 +227,7 @@ const Labels: {
       },
       {
         status: 'Levering gestart',
-        datePublished: data => data.dateStartServiceDelivery,
+        datePublished: '',
         description: data => (
           <p>
             {data.supplier} is gestart met het leveren van {data.title}.
@@ -236,7 +236,7 @@ const Labels: {
       },
       {
         status: 'Levering gestopt',
-        datePublished: data => data.dateFinishServiceDelivery,
+        datePublished: '',
         description: data => (
           <p>
             {data.supplier} heeft aan ons doorgegeven dat u geen {data.title}{' '}
@@ -275,7 +275,7 @@ const Labels: {
       },
       {
         status: 'Opdracht gegeven',
-        datePublished: data => data.dateRequestOrderStart,
+        datePublished: '',
         description: data => (
           <p>
             De gemeente heeft opdracht gegeven aan{' '}
@@ -285,7 +285,7 @@ const Labels: {
       },
       {
         status: 'Product geleverd',
-        datePublished: data => data.dateStartServiceDelivery,
+        datePublished: '',
         description: data => (
           <p>
             {data.serviceDeliverySupplier} heeft aan ons doorgegeven dat op{' '}
@@ -324,7 +324,7 @@ const Labels: {
       },
       {
         status: 'Opdracht gegeven',
-        datePublished: data => data.dateRequestOrderStart,
+        datePublished: '',
         description: data => (
           <p>
             De gemeente heeft opdracht gegeven aan{' '}
@@ -335,7 +335,7 @@ const Labels: {
       },
       {
         status: 'Aanpassing uitgevoerd',
-        datePublished: data => data.dateStartServiceDelivery,
+        datePublished: '',
         description: data => (
           <p>
             {data.serviceDeliverySupplier} heeft aan ons doorgegeven dat de
