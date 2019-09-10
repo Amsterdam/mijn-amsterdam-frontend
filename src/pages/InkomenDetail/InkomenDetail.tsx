@@ -56,7 +56,7 @@ export default () => {
         )}
         {(isError || noContent) && (
           <Alert type="warning">
-            Uw gegevens kunnen op dit moment niet worden getoond.
+            We kunnen op dit moment geen gegevens tonen.
           </Alert>
         )}
         {!!FocusItem && (

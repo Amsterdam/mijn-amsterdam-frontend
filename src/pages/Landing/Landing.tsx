@@ -78,6 +78,7 @@ export default () => {
         </Heading>
         <ul>
           <li>Hoe u ingeschreven staat bij de gemeente</li>
+          <li>Hoe het staat met uw aanvraag voor een WMO voorziening</li>
           <li>Hoe het staat met uw aanvraag voor een bijstandsuitkering</li>
           <li>Hoe het staat met uw aanvraag voor een Stadspas</li>
           <li>Informatie over uw gemeentebelastingen</li>
