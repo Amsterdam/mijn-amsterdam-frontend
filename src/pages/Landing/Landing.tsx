@@ -80,7 +80,7 @@ export default () => {
           <li>Hoe u ingeschreven staat bij de gemeente</li>
           <li>Hoe het staat met uw aanvraag voor een bijstandsuitkering</li>
           <li>Hoe het staat met uw aanvraag voor een Stadspas</li>
-          <li>Uw overzicht voorzieningen Zorg en Ondersteuning (Wmo)</li>
+          <li>Uw overzicht voorzieningen zorg en ondersteuning (Wmo)</li>
           <li>Informatie over uw gemeentebelastingen</li>
           <li>Informatie over uw erfpacht</li>
           <li>Informatie over uw eigen buurt</li>
