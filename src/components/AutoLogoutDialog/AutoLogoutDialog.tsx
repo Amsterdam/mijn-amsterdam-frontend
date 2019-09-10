@@ -123,7 +123,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
 
   function showLoginScreen() {
     setContinueButtonVisibility(false);
-    window.location.href = '/';
+    window.location.href = LOGOUT_URL;
   }
 
   function continueUsingApp() {
