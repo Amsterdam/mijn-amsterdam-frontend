@@ -21,6 +21,7 @@ export default () => {
       isLoading,
     },
   } = useContext(AppContext);
+
   const {
     match: {
       params: { id },
@@ -67,18 +68,11 @@ export default () => {
           <StatusLine
             items={WmoItem.process}
             trackCategory="Zorg en ondersteuning / Voorziening"
-            altDocumentContent={(statusLineItem, stepNumber) => {
-              return stepNumber === 1 ? (
-                <p>
-                  <strong>U krijgt dit besluit per post.</strong> In de brief
-                  leest u ook hoe u bezwaar kunt maken, een klacht kan indienen
-                  of hoe u van aanbieder kunt wisselen.
-                </p>
-              ) : (
-                ''
-              );
-            }}
           />
+          <p className={styles.HistoricItemsMention}>
+            Informatie van voor 1 januari 2018 kunt u hier niet inzien. Deze
+            kunt u wel opvragen bij de Wmo Helpdesk.
+          </p>
         </PageContentMainBody>
       )}
     </PageContentMain>

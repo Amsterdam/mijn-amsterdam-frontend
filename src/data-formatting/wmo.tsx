@@ -388,10 +388,25 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
           data
         ) as string;
 
+        const docDescription =
+          index === 0 ? (
+            <p>
+              <strong>U krijgt dit besluit per post.</strong> In de brief leest
+              u ook hoe u bezwaar kunt maken, een klacht kan indienen of hoe u
+              van aanbieder kunt wisselen.
+            </p>
+          ) : (
+            ''
+          );
         return {
           id: `status-step-${index}`,
           status: statusItem.status,
-          description: parseLabelContent(statusItem.description, data),
+          description: (
+            <>
+              {parseLabelContent(statusItem.description, data)}
+              {docDescription}
+            </>
+          ),
           datePublished,
           isActual: false,
           stepType: 'middle-step',
@@ -507,9 +522,7 @@ export function formatWmoApiResponse(
         Leverancier: serviceDeliverySupplier, // TODO: seems to be only filled with a code in the api response data
       } = (item.Levering || {}) as WmoApiLevering;
 
-      const [start] = dateStart.split('T');
-      const [finish] = dateFinish ? dateFinish.split('T') : ['aanvraag'];
-      const id = slug(`${title}-${start}-${finish}-${index}`).toLowerCase();
+      const id = slug(`${title}-${index}`).toLowerCase();
 
       const process: WmoItem['process'] = formatWmoProcessItems({
         title,
