@@ -4,12 +4,10 @@ import { MainNavSubmenuLink } from 'components/MainNavSubmenu/MainNavSubmenu';
 import Heading from 'components/Heading/Heading';
 import { MenuItem } from '../MainNavBar/MainNavBar.constants';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
-import { useDebouncedCallback } from 'use-debounce';
 import {
   trackItemPresentation,
   useSessionCallbackOnceDebounced,
 } from 'hooks/analytics.hook';
-import { useSessionStorage } from 'hooks/storage.hook';
 
 export interface MyChaptersPanelProps {
   title: string;
