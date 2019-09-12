@@ -41,9 +41,23 @@ export default function useMyTipsApi(
   return {
     ...rest,
     data,
-    refetch: (requestData: any) => {
+    refetch: ({
+      BRP: brp,
+      FOCUS: focus,
+      ERFPACHT: erfpacht,
+      WMO: wmo,
+    }: any) => {
+      const requestDataFormatted = {
+        optin: false,
+        data: {
+          brp,
+          focus,
+          erfpacht,
+          wmo,
+        },
+      };
       refetch({
-        requestData,
+        requestData: requestDataFormatted,
       });
     },
   };
