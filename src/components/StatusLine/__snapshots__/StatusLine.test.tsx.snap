@@ -48,7 +48,7 @@ ShallowWrapper {
             "stepType": "intermediate-step",
           },
           Object {
-            "datePublished": "2019-02-21T00:00:00",
+            "datePublished": "",
             "description": <React.Fragment>
               <p>
                 2Learn B.V.
@@ -143,7 +143,7 @@ ShallowWrapper {
               "stepType": "intermediate-step",
             },
             Object {
-              "datePublished": "2019-02-21T00:00:00",
+              "datePublished": "",
               "description": <React.Fragment>
                 <p>
                   2Learn B.V.
@@ -246,7 +246,7 @@ ShallowWrapper {
             "stepType": "intermediate-step",
           },
           Object {
-            "datePublished": "2019-02-21T00:00:00",
+            "datePublished": "",
             "description": <React.Fragment>
               <p>
                 2Learn B.V.
@@ -337,7 +337,7 @@ ShallowWrapper {
                 "stepType": "intermediate-step",
               },
               Object {
-                "datePublished": "2019-02-21T00:00:00",
+                "datePublished": "",
                 "description": <React.Fragment>
                   <p>
                     2Learn B.V.
@@ -440,7 +440,7 @@ ShallowWrapper {
               "stepType": "intermediate-step",
             },
             Object {
-              "datePublished": "2019-02-21T00:00:00",
+              "datePublished": "",
               "description": <React.Fragment>
                 <p>
                   2Learn B.V.

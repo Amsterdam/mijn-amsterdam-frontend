@@ -185,6 +185,8 @@ export const ExternalUrls = {
   SSO_BELASTINGEN: 'https://belastingbalie.amsterdam.nl/digid.saml.php?start',
   MIJN_WERK_EN_INKOMEN: 'https://edison.amsterdam.nl/SignIn?ReturnUrl=%2F',
   MIJN_SUBSIDIES: 'https://mijnsubsidies.amsterdam.nl/loket/',
+  MIJN_AMSTERDAM_VEELGEVRAAGD:
+    'https://www.amsterdam.nl/veelgevraagd/?productid={68422ECA-8C56-43EC-A9AA-B3DF190B5077}',
 };
 
 // NOTE: Keep up-to-date with _colors.scss
