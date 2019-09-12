@@ -1,4 +1,4 @@
-import React, { useEffect, FunctionComponent, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import styles from './StatusLine.module.scss';
 import classnames from 'classnames';
 import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
@@ -63,7 +63,6 @@ function StatusLineItem({
   stepNumber,
   altDocumentContent,
 }: StatusLineItemProps) {
-  const { location } = useRouter();
   const altDocumentContentActual = useMemo(() => {
     return typeof altDocumentContent === 'function'
       ? altDocumentContent(item, stepNumber)
@@ -77,7 +76,6 @@ function StatusLineItem({
         styles.ListItem,
         item.isActual && styles.Actual,
         item.isHistorical && styles.Historical,
-        location.hash.substring(1) === item.id && styles.Highlight,
         item.stepType && styles[item.stepType]
       )}
     >

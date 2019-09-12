@@ -50,46 +50,6 @@
       padding: 0 1rem;
     }
   }
-
-  &.first-step .Panel:first-child:before {
-    background: linear-gradient(
-      to bottom,
-      transparent 0%,
-      transparent 3rem,
-      $color-neutral-grey3 3rem,
-      $color-neutral-grey3 100%
-    );
-  }
-
-  &.first-step .Panel:first-child:last-child:before {
-    background: linear-gradient(
-      to bottom,
-      $color-neutral-grey1 0%,
-      $color-neutral-grey1 3rem,
-      $color-neutral-grey3 3rem,
-      $color-neutral-grey1 100%
-    );
-  }
-
-  &:not(.first-step):not(.last-step) {
-    &:last-child .Panel:before {
-      background: linear-gradient(
-        to bottom,
-        $color-neutral-grey3 0%,
-        $color-neutral-grey3 75%,
-        $color-neutral-grey1 100%
-      );
-    }
-  }
-
-  &.last-step .Panel:first-child:before {
-    background: linear-gradient(
-      to bottom,
-      $color-neutral-grey3 0%,
-      $color-neutral-grey3 3rem,
-      transparent 0%
-    );
-  }
 }
 
 .Panel {
@@ -154,6 +114,48 @@
   }
 }
 
+.ListItem {
+  &.first-step .Panel:first-child:before {
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 3rem,
+      $color-primary-darkblue 3rem,
+      $color-primary-darkblue 100%
+    );
+  }
+
+  &.first-step .Panel:first-child:last-child:before {
+    background: linear-gradient(
+      to bottom,
+      $color-neutral-grey1 0%,
+      $color-neutral-grey1 3rem,
+      $color-neutral-grey3 3rem,
+      $color-neutral-grey1 100%
+    );
+  }
+
+  &:not(.first-step):not(.last-step) {
+    &:last-child .Panel:before {
+      background: linear-gradient(
+        to bottom,
+        $color-primary-darkblue 0%,
+        $color-neutral-grey3 75%,
+        $color-neutral-grey1 100%
+      );
+    }
+  }
+
+  &.last-step .Panel:first-child:before {
+    background: linear-gradient(
+      to bottom,
+      $color-neutral-grey3 0%,
+      $color-neutral-grey3 3rem,
+      transparent 0%
+    );
+  }
+}
+
 .Actual {
   background-color: $color-neutral-grey1;
   .ListItemInner {
@@ -172,17 +174,27 @@
         no-repeat center;
       background-size: 0.9em 0.9em;
     }
+
+    &:first-child:before {
+      background: linear-gradient(
+      to bottom,
+      $color-primary-darkblue 0%,
+      $color-primary-darkblue 3rem,
+      $color-neutral-grey3 3rem,
+      $color-neutral-grey3 100%
+    );
+    }
   }
 }
 
 .Historical .Panel:first-child:after {
-  background: $color-neutral-grey3 url('assets/images/Checkmark__white.svg')
+  background: $color-primary-darkblue url('assets/images/Checkmark__white.svg')
         no-repeat center;
   background-size: 0.9em 0.9em;
 }
 
-.Highlight .Panel:first-child:after {
-  background-color: $color-primary-darkblue;
+.Historical .Panel:first-child:before {
+  background: $color-primary-darkblue;
 }
 
 .NoStatusItems {

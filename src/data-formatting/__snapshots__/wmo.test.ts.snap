@@ -498,7 +498,7 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2018-12-31T00:00:00",
+        "datePublished": "",
         "description": <React.Fragment>
           <p>
             Familysupporters/Forsa
@@ -587,7 +587,7 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2019-03-08T00:00:00",
+        "datePublished": "",
         "description": <React.Fragment>
           <p>
             Amstelring
@@ -1031,7 +1031,7 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2019-01-01T00:00:00",
+        "datePublished": "",
         "description": <React.Fragment>
           <p>
             Vivium Zorggroep
@@ -1207,7 +1207,7 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2019-04-13T00:00:00",
+        "datePublished": "",
         "description": <React.Fragment>
           <p>
             Emile Thuiszorg
@@ -1296,7 +1296,7 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2019-03-08T00:00:00",
+        "datePublished": "",
         "description": <React.Fragment>
           <p>
             Amstelring
@@ -1438,7 +1438,7 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2019-02-21T00:00:00",
+        "datePublished": "",
         "description": <React.Fragment>
           <p>
             2Learn B.V.
@@ -1527,7 +1527,7 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2018-12-30T00:00:00",
+        "datePublished": "",
         "description": <React.Fragment>
           <p>
             Stichting Forsa Amsterdam
@@ -1616,7 +1616,7 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2018-11-23T00:00:00",
+        "datePublished": "",
         "description": <React.Fragment>
           <p>
             Amstelring
@@ -1688,11 +1688,18 @@ Array [
         "stepType": "first-step",
       },
       Object {
-        "datePublished": "",
+        "datePublished": "2018-02-26T00:00:00",
         "description": <React.Fragment>
-          <p>
-            Op deze datum vervalt uw recht op deze voorziening.
-          </p>
+          <React.Fragment>
+            <p>
+              Op deze datum vervalt uw recht op deze voorziening.
+            </p>
+            <p>
+              <strong>
+                Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+              </strong>
+            </p>
+          </React.Fragment>
           
         </React.Fragment>,
         "documents": Array [],
@@ -1758,7 +1765,7 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2018-05-01T00:00:00",
+        "datePublished": "",
         "description": <React.Fragment>
           <p>
             Cordaan
@@ -1847,7 +1854,7 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2018-04-13T00:00:00",
+        "datePublished": "",
         "description": <React.Fragment>
           <p>
             Emile Thuiszorg
@@ -1936,7 +1943,7 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2018-03-08T00:00:00",
+        "datePublished": "",
         "description": <React.Fragment>
           <p>
             Amstelring
