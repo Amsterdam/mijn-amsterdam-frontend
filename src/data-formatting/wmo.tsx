@@ -98,13 +98,19 @@ const Labels: {
       {
         status: 'Einde recht',
         datePublished: data => data.dateFinish,
-        description: data => (
-          <p>
-            {data.dateFinish
-              ? 'Op deze datum vervalt uw recht op deze voorziening.'
-              : 'Er is een lopend recht zonder einddatum.'}
-          </p>
-        ),
+        description: data =>
+          data.dateFinish ? (
+            <>
+              <p>Op deze datum vervalt uw recht op deze voorziening.</p>
+              <p>
+                <strong>
+                  Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+                </strong>
+              </p>
+            </>
+          ) : (
+            <p>Er is een lopend recht zonder einddatum.</p>
+          ),
       },
     ],
   },

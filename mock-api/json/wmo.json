@@ -416,7 +416,7 @@
         }
     },
     {
-        "Omschrijving": "Kamer tot kamer vervoer",
+        "Omschrijving": "Kamer tot kamer vervoer !!1!!",
         "Wet": 1,
         "Actueel": true,
         "Volume": 1,
@@ -431,7 +431,7 @@
         "Aanvraagdatum": "2012-08-07T00:00:00",
         "Beschikkingsdatum": "2012-08-07T00:00:00",
         "VoorzieningIngangsdatum": "2012-08-07T00:00:00",
-        "VoorzieningEinddatum": null,
+        "VoorzieningEinddatum": "2012-09-07T00:00:00",
         "Levering": null
     },
     {
