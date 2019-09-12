@@ -1690,9 +1690,16 @@ Array [
       Object {
         "datePublished": "2018-02-26T00:00:00",
         "description": <React.Fragment>
-          <p>
-            Op deze datum vervalt uw recht op deze voorziening.
-          </p>
+          <React.Fragment>
+            <p>
+              Op deze datum vervalt uw recht op deze voorziening.
+            </p>
+            <p>
+              <strong>
+                Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+              </strong>
+            </p>
+          </React.Fragment>
           
         </React.Fragment>,
         "documents": Array [],
