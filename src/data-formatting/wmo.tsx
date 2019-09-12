@@ -62,8 +62,9 @@ type TextPartContent = string | JSX.Element;
 type TextPartContentFormatter = (data: WmoSourceData) => TextPartContent;
 type TextPartContents = TextPartContent | TextPartContentFormatter;
 
+// NOTE: See Functional Design document with information
 const Labels: {
-  [group: string]: {
+  [productGroupName: string]: {
     deliveryType: {
       PGB?: string[];
       ZIN?: string[];
@@ -144,11 +145,21 @@ const Labels: {
         status: 'Einde recht',
         datePublished: data => data.dateFinish,
         description: data => (
-          <p>
-            {data.dateFinish
-              ? 'Op deze datum vervalt uw recht op deze voorziening.'
-              : 'Er is een lopend recht zonder einddatum.'}
-          </p>
+          <>
+            <p>
+              {data.dateFinish
+                ? 'Op deze datum vervalt uw recht op deze voorziening.'
+                : 'Er is een lopend recht zonder einddatum.'}
+            </p>
+            {data.deliveryType === 'PGB' && (
+              <p>
+                <strong>
+                  Uiterlijk 8 weken voor de einddatum van uw PGB moet u een
+                  verlenging aanvragen. Hoe u dit doet, leest u in uw besluit'
+                </strong>
+              </p>
+            )}
+          </>
         ),
       },
     ],
@@ -183,11 +194,21 @@ const Labels: {
         status: 'Einde recht',
         datePublished: data => data.dateFinish,
         description: data => (
-          <p>
-            {data.dateFinish
-              ? 'Op deze datum vervalt uw recht op deze voorziening.'
-              : 'Er is een lopend recht zonder einddatum.'}
-          </p>
+          <>
+            <p>
+              {data.dateFinish
+                ? 'Op deze datum vervalt uw recht op deze voorziening.'
+                : 'Er is een lopend recht zonder einddatum.'}
+            </p>
+            {data.deliveryType === 'PGB' && (
+              <p>
+                <strong>
+                  Uiterlijk 8 weken voor de einddatum van uw PGB moet u een
+                  verlenging aanvragen. Hoe u dit doet, leest u in uw besluit'
+                </strong>
+              </p>
+            )}
+          </>
         ),
       },
     ],
@@ -387,6 +408,7 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
           data
         ) as string;
 
+        // Check to see if a client can change supplier during the right to a service.
         const supplierChangePossible =
           labelData.statusItems.length === 4 &&
           labelData.statusItems[2].status === 'Levering gestopt';
@@ -435,14 +457,15 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
 
         if (l === 0) {
           stepType = 'first-step';
-        } else if (l === items.length - 1) {
+        } else if (l === len - 1) {
           stepType = 'last-step';
         }
 
         nItems.unshift({
           ...item,
           // Don't show the date for the intermediate steps
-          datePublished: l !== 1 && l !== len ? item.datePublished : '',
+          datePublished:
+            stepType !== 'intermediate-step' ? item.datePublished : '',
           isActual,
           stepType,
           isHistorical: inPast && !isActual,

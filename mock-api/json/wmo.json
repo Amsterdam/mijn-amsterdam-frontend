@@ -879,5 +879,24 @@
             "StartdatumLeverancier": "2018-02-21T00:00:00",
             "EinddatumLeverancier": "2019-02-21T00:00:00"
         }
+    },
+    {
+        "Omschrijving": "hulp bij het huishouden (Pgb)",
+        "Wet": 1,
+        "Actueel": false,
+        "Volume": 12,
+        "Eenheid": "82",
+        "Frequentie": 2,
+        "Leveringsvorm": "PGB",
+        "Omvang": "12 stuks per week",
+        "Leverancier": null,
+        "Checkdatum": null,
+        "Voorzieningsoortcode": "WMH",
+        "Voorzieningcode": "013",
+        "Aanvraagdatum": "2017-09-15T00:00:00",
+        "Beschikkingsdatum": "2018-01-12T00:00:00",
+        "VoorzieningIngangsdatum": "2017-11-28T00:00:00",
+        "VoorzieningEinddatum": "2018-11-27T00:00:00",
+        "Levering": null
     }
 ]
