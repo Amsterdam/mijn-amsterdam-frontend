@@ -161,7 +161,7 @@ const Labels: {
               <p>
                 <strong>
                   Uiterlijk 8 weken voor de einddatum van uw PGB moet u een
-                  verlenging aanvragen. Hoe u dit doet, leest u in uw besluit'
+                  verlenging aanvragen. Hoe u dit doet, leest u in uw besluit
                 </strong>
               </p>
             )}
@@ -210,7 +210,7 @@ const Labels: {
               <p>
                 <strong>
                   Uiterlijk 8 weken voor de einddatum van uw PGB moet u een
-                  verlenging aanvragen. Hoe u dit doet, leest u in uw besluit'
+                  verlenging aanvragen. Hoe u dit doet, leest u in uw besluit
                 </strong>
               </p>
             )}
