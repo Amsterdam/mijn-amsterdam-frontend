@@ -2,6 +2,12 @@
 
 .Landing {
   margin-bottom: 10rem;
+  max-width: 54rem;
+  margin: 0 auto;
+
+  @include media-query(">phone") {
+    padding: 0;
+  }
 
   ul {
     padding-left: 2rem;
@@ -53,6 +59,18 @@
 
 @include select(PageContentMainHeading) {
   position: relative;
+}
+
+
+.MainHeadingInner {
+  width: 54rem;
+  margin: 0 auto;
+}
+
+@include select(Heading_Heading__tiny) {
+  + p, + ul {
+    margin-top: 0;
+  }
 }
 
 .BetaLogo {

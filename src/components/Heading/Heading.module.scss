@@ -3,6 +3,9 @@
 .Heading {
   margin: 0;
 
+  &__tiny {
+    @include heading-tiny;
+  }
   &__small {
     @include heading-small;
   }

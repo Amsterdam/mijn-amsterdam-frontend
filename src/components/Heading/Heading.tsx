@@ -3,13 +3,14 @@ import styles from './Heading.module.scss';
 import classnames from 'classnames';
 import { ComponentChildren } from 'App.types';
 
-type HeadingStyleSize = 'small' | 'medium' | 'mediumLarge' | 'large';
+type HeadingStyleSize = 'tiny' | 'small' | 'medium' | 'mediumLarge' | 'large';
 
 const Sizes: { [key: string]: HeadingStyleSize } = {
   SMALL: 'small',
   MEDIUM: 'medium',
   MEDIUM_LARGE: 'mediumLarge',
   LARGE: 'large',
+  TINY: 'tiny',
 };
 
 export type HeadingTagName = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div';
