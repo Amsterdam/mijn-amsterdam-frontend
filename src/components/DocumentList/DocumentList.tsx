@@ -4,6 +4,7 @@ import { defaultDateFormat } from 'helpers/App';
 import { ReactComponent as DocumentIcon } from 'assets/images/Document.svg';
 import { ReactComponent as DownloadIcon } from 'assets/images/Download.svg';
 import Heading from 'components/Heading/Heading';
+import { trackDownload } from '../../hooks/analytics.hook';
 
 export interface Document {
   id: string;
@@ -30,7 +31,11 @@ export default function DocumentList({ items = [] }: DocumentListProps) {
                   {defaultDateFormat(item.datePublished)}
                 </time>
               </aside>
-              <a className={styles.DownloadLink} href={item.url}>
+              <a
+                className={styles.DownloadLink}
+                href={item.url}
+                onClick={() => trackDownload(item.url)}
+              >
                 <DocumentIcon aria-hidden="true" className={styles.Icon} />
                 <Heading el="h4" size="small">
                   {item.title}{' '}

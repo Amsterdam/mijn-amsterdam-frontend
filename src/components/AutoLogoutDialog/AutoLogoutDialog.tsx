@@ -5,7 +5,11 @@ import { ComponentChildren } from 'App.types';
 import classnames from 'classnames';
 import { formattedTimeFromSeconds } from 'helpers/App';
 import useActivityCounter from 'hooks/activityCounter.hook';
-import { trackEvent, trackItemPresentation } from 'hooks/analytics.hook';
+import {
+  trackEvent,
+  trackItemPresentation,
+  trackLink,
+} from 'hooks/analytics.hook';
 import { CounterProps, useCounter } from 'hooks/timer.hook';
 import React, { useEffect, useState, useContext } from 'react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
@@ -187,6 +191,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
               'action-button line-only secondary logout-button',
               !continueButtonIsVisible && 'disabled'
             )}
+            onClick={() => trackLink(LOGOUT_URL)}
             href={LOGOUT_URL}
           >
             {continueButtonIsVisible
