@@ -40,6 +40,7 @@ export function trackDownload(url: string) {
 export function trackLink(url: string) {
   return MatomoInstance.trackLink({
     href: url,
+    linkType: 'link',
   });
 }
 
