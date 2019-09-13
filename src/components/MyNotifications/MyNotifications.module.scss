@@ -26,7 +26,7 @@
   top: 2.3rem;
   fill: $color-primary-red;
   width: 3.2rem;
-  height: auto;
+  height: 3.2rem;
 
   @include media-query('<=tablet') {
     position: static;

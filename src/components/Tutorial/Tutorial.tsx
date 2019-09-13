@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
 import styles from './Tutorial.module.scss';
 import classnames from 'classnames';
 import { ComponentChildren } from 'App.types';
@@ -59,93 +60,98 @@ export default function Tutorial({ toggleTutorial }: ComponentProps) {
 
   const isPhone = usePhoneScreen();
 
+  // Check if positions are calculated
   return pos.MyUpdatesHeader ? (
-    <div
-      className={styles.Tutorial}
-      style={{ height: document.body.clientHeight }}
-    >
+    ReactDOM.createPortal(
       <div
-        className={classnames(styles.TutorialItem, styles.MyUpdatesItem)}
-        style={{
-          top: pos.MyUpdatesHeader.top,
-          left: pos.MyUpdatesHeader.left,
-        }}
+        className={styles.Tutorial}
+        style={{ height: document.body.clientHeight }}
       >
-        Hier ziet u nieuwe berichten van onze afdelingen die uw aandacht vragen
-        <br />
-        <ArrowIcon />
-      </div>
-      <div
-        className={classnames(styles.TutorialItem, styles.MyChaptersItem)}
-        style={{
-          top: pos.MyChaptersHeader.top,
-          left: pos.MyChaptersHeader.left,
-        }}
-      >
-        {!isPhone && (
-          <>
-            <ArrowIcon />
-            <br />
-          </>
-        )}
-        Dit zijn de onderwerpen waarover u iets heeft bij de gemeente
-        {isPhone && (
-          <>
-            <br />
-            <ArrowIcon />
-          </>
-        )}
-      </div>
-      <div
-        className={classnames(styles.TutorialItem, styles.MyCasesItem)}
-        style={{
-          top: pos.MyCasesHeader.top,
-          left: pos.MyCasesHeader.left,
-        }}
-      >
-        {!isPhone && (
-          <>
-            <ArrowIcon />
-            <br />
-          </>
-        )}
-        Dit is een overzicht van uw lopende aanvragen of wijzigingen
-        {isPhone && (
-          <>
-            <br />
-            <ArrowIcon />
-          </>
-        )}
-      </div>
-      <div
-        className={classnames(styles.TutorialItem, styles.MyAreaItem)}
-        style={{
-          top: pos.MyAreaHeader.top,
-          left: pos.MyAreaHeader.left,
-        }}
-      >
-        Hier ziet u informatie van de gemeente, bijvoorbeeld over afval,
-        parkeren en bekendmakingen
-        {usePhoneScreen && (
-          <>
-            <br />
-            <ArrowIcon />
-          </>
-        )}
-      </div>
-      <div
-        className={classnames(styles.TutorialItem, styles.MyTipsItem)}
-        style={{
-          top: pos.MyTipsHeader.top,
-          left: pos.MyTipsHeader.left,
-        }}
-      >
-        <ArrowIcon />
-        <br />
-        Hier geven wij u handige tips, bijvoorbeeld over de regelingen en
-        voorzieningen van de gemeente
-      </div>
-    </div>
+        <div
+          className={classnames(styles.TutorialItem, styles.MyUpdatesItem)}
+          style={{
+            top: pos.MyUpdatesHeader.top,
+            left: pos.MyUpdatesHeader.left,
+          }}
+        >
+          Hier ziet u nieuwe berichten van onze afdelingen die uw aandacht
+          vragen
+          <br />
+          <ArrowIcon />
+        </div>
+        <div
+          className={classnames(styles.TutorialItem, styles.MyChaptersItem)}
+          style={{
+            top: pos.MyChaptersHeader.top,
+            left: pos.MyChaptersHeader.left,
+          }}
+        >
+          {!isPhone && (
+            <>
+              <ArrowIcon />
+              <br />
+            </>
+          )}
+          Dit zijn de onderwerpen waarover u iets heeft bij de gemeente
+          {isPhone && (
+            <>
+              <br />
+              <ArrowIcon />
+            </>
+          )}
+        </div>
+        <div
+          className={classnames(styles.TutorialItem, styles.MyCasesItem)}
+          style={{
+            top: pos.MyCasesHeader.top,
+            left: pos.MyCasesHeader.left,
+          }}
+        >
+          {!isPhone && (
+            <>
+              <ArrowIcon />
+              <br />
+            </>
+          )}
+          Dit is een overzicht van uw lopende aanvragen of wijzigingen
+          {isPhone && (
+            <>
+              <br />
+              <ArrowIcon />
+            </>
+          )}
+        </div>
+        <div
+          className={classnames(styles.TutorialItem, styles.MyAreaItem)}
+          style={{
+            top: pos.MyAreaHeader.top,
+            left: pos.MyAreaHeader.left,
+          }}
+        >
+          Hier ziet u informatie van de gemeente, bijvoorbeeld over afval,
+          parkeren en bekendmakingen
+          {usePhoneScreen && (
+            <>
+              <br />
+              <ArrowIcon />
+            </>
+          )}
+        </div>
+        <div
+          className={classnames(styles.TutorialItem, styles.MyTipsItem)}
+          style={{
+            top: pos.MyTipsHeader.top,
+            left: pos.MyTipsHeader.left,
+          }}
+        >
+          <ArrowIcon />
+          <br />
+          Hier geven wij u handige tips, bijvoorbeeld over de regelingen en
+          voorzieningen van de gemeente
+        </div>
+      </div>,
+      document.getElementById('modal-root')!
+    )
   ) : (
     <></>
   );
