@@ -6,6 +6,7 @@ import { ReactComponent as ExternalLinkIcon } from 'assets/images/External-Link.
 import { entries } from 'helpers/App';
 import { usePhoneScreen } from 'hooks/media.hook';
 import ButtonLink from 'components/ButtonLink/ButtonLink';
+import { trackLink } from 'hooks/analytics.hook';
 
 export default function DirectLinks() {
   const isPhoneScreen = usePhoneScreen();
@@ -22,7 +23,7 @@ export default function DirectLinks() {
             return (
               <li key={linkName}>
                 {isExternalLink === true ? (
-                  <a href={url}>
+                  <a href={url} onClick={() => trackLink(url)}>
                     <ExternalLinkIcon aria-hidden="true" />
                     {title}
                   </a>

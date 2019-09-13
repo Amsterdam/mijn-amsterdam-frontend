@@ -30,6 +30,20 @@ export function trackPageView(title?: string, url?: string) {
   return MatomoInstance && MatomoInstance.trackPageView(payload);
 }
 
+export function trackDownload(url: string) {
+  return MatomoInstance.trackLink({
+    href: url,
+    linkType: 'download',
+  });
+}
+
+export function trackLink(url: string) {
+  return MatomoInstance.trackLink({
+    href: url,
+    linkType: 'link',
+  });
+}
+
 export function trackItemPresentation(
   category: string,
   name: string,
