@@ -1,8 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { Dialog } from './Modal';
-import renderer from 'react-test-renderer';
-import styles from 'pages/Profile/Profile.module.scss';
 
 describe('Modal test', () => {
   window.scrollTo = jest.fn();

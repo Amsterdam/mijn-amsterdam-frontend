@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import * as Sentry from '@sentry/browser';
+import { useEffect, useState } from 'react';
 
 interface LocalStorageHandler {
   value: string | null;
@@ -45,7 +46,13 @@ function useWindowStorage(
 
   function set(newValue: any) {
     setValue(newValue);
-    saveValueToLocalStorage(key, newValue);
+    // Apparently in some cases IE11 throws a SCRIPT5: access denied error which crashes the app.
+    // The catch here prevents the crash and reports the error to Sentry.
+    try {
+      saveValueToLocalStorage(key, newValue);
+    } catch (error) {
+      Sentry.captureException(error);
+    }
   }
 
   function listen(e: StorageEvent) {

@@ -5,14 +5,13 @@ $tutorial-items-radius: 1rem;
 
 .Tutorial {
   position: absolute;
-  top: -$main-header-topbar-height;
+  top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   background-color: rgba($color-neutral-grey5, 0.8);
   z-index: z-index(tutorial-overlay);
   overflow: hidden;
-  min-width: $main-min-width;
 }
 
 .TutorialItem {
