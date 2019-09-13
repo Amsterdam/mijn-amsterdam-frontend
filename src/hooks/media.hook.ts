@@ -1,9 +1,9 @@
 // Helper functions to determine screen size in JS
-import { Breakpoints } from './../App.constants';
 import { useMedia } from 'use-media';
+import { Breakpoints } from './../App.constants';
 
-var ua = window.navigator.userAgent;
-var isIE = /MSIE|Trident/.test(ua);
+const ua = window.navigator.userAgent;
+export const isIE = /MSIE|Trident/.test(ua);
 
 export function useDesktopScreen(): boolean {
   return useMedia({ minWidth: Breakpoints.tablet + 1 }) || isIE;
