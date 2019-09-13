@@ -71,7 +71,10 @@ export default function Tutorial({ toggleTutorial }: ComponentProps) {
   // Check if positions are calculated
   return pos.MyUpdatesHeader ? (
     ReactDOM.createPortal(
-      <div className={styles.Tutorial}>
+      <div
+        className={styles.Tutorial}
+        style={{ height: document.body.clientHeight }}
+      >
         <div
           className={classnames(styles.TutorialItem, styles.MyUpdatesItem)}
           style={{
