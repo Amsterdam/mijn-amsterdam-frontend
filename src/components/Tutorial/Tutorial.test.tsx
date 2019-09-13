@@ -6,14 +6,6 @@ describe('tutorial', () => {
   const toggle = jest.fn();
 
   beforeAll(() => {
-    jest.spyOn(document, 'getElementById').mockReturnValue({
-      getBoundingClientRect: () => ({
-        top: 560,
-        left: 320,
-      }),
-      // addEventListener: jest.fn() as any,
-    } as HTMLElement);
-
     (window.matchMedia as any) = jest.fn(() => {
       return {
         addListener: jest.fn(),

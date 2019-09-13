@@ -50,7 +50,7 @@ export default () => {
             className={styles.MyNotificationsHeadingLink}
             to={AppRoutes.MY_NOTIFICATIONS}
           >
-            Mijn meldingen
+            Actueel
           </Link>
         </PageContentMainHeading>
         <PageContentMainBody
