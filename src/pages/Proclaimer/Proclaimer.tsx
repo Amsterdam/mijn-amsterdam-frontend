@@ -3,8 +3,13 @@ import PageContentMain from 'components/PageContentMain/PageContentMain';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
 import styles from './Proclaimer.module.scss';
+import { trackLink } from 'hooks/analytics.hook';
 
 export default () => {
+  const complaintsFormUrl =
+    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/scKlachtenformulier.aspx/fKlachtenformulier';
+  const privacyPageUrl = 'https://www.amsterdam.nl/privacy';
+
   return (
     <PageContentMain className={styles.Proclaimer}>
       <PageContentMainHeading>Proclaimer</PageContentMainHeading>
@@ -15,7 +20,10 @@ export default () => {
           Amsterdam tonen wij uw persoonlijke informatie uit de verschillende
           systemen die wij beheren. Wij doen ons uiterste best om ervoor te
           zorgen dat uw gegevens kloppen. Is dat niet zo?&nbsp;
-          <a href="https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/scKlachtenformulier.aspx/fKlachtenformulier">
+          <a
+            href={complaintsFormUrl}
+            onClick={() => trackLink(complaintsFormUrl)}
+          >
             Neem dan contact met ons op.
           </a>
         </p>
@@ -26,7 +34,10 @@ export default () => {
         </p>
         <p>
           Kijk voor de privacyverklaring van de gemeente Amsterdam op&nbsp;
-          <a href="https://www.amsterdam.nl/privacy">amsterdam.nl/privacy</a>.
+          <a href={privacyPageUrl} onClick={() => trackLink(privacyPageUrl)}>
+            amsterdam.nl/privacy
+          </a>
+          .
         </p>
       </PageContentMainBody>
     </PageContentMain>

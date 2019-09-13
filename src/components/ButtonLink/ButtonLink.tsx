@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './ButtonLink.module.scss';
 import classnames from 'classnames';
 import { ComponentChildren, LinkProps } from 'App.types';
 
-export interface ButtonLinkProps {
+export interface ButtonLinkProps extends HTMLAttributes<HTMLAnchorElement> {
   to: string;
   children: ComponentChildren;
   hasIcon?: boolean;

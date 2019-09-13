@@ -8,7 +8,7 @@ import PageContentMainHeading from 'components/PageContentMainHeading/PageConten
 import React, { useEffect, useRef, useState } from 'react';
 
 import styles from './Landing.module.scss';
-import { trackPageView } from 'hooks/analytics.hook';
+import { trackPageView, trackLink } from 'hooks/analytics.hook';
 import classnames from 'classnames';
 
 export default () => {
@@ -102,7 +102,10 @@ export default () => {
         </Heading>
         <p>
           Kijk bij{' '}
-          <a href={ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD}>
+          <a
+            onClick={() => trackLink(ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD)}
+            href={ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD}
+          >
             Mijn Amsterdam - gegevens inzien en storing melden.
           </a>
         </p>
