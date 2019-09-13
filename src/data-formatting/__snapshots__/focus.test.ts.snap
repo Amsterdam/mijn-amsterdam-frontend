@@ -11,6 +11,7 @@ Object {
     </p>
     <p>
       <ButtonLinkExternal
+        onClick={[Function]}
         to="https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D"
       >
         Bekijk hier de betaaldata van de uitkering
@@ -51,6 +52,7 @@ Object {
         </p>
         <p>
           <ButtonLinkExternal
+            onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D"
           >
             Wat kunt u van ons verwachten?
@@ -87,6 +89,7 @@ Object {
           Lees meer over uw
           <br />
           <ButtonLinkExternal
+            onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d"
           >
             rechten
@@ -95,6 +98,7 @@ Object {
           en
            
           <ButtonLinkExternal
+            onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d"
           >
             plichten
@@ -118,6 +122,7 @@ Object {
         </p>
         <p>
           <ButtonLinkExternal
+            onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D"
           >
             Bekijk hier de betaaldata van de uitkering
@@ -186,6 +191,7 @@ Object {
         </p>
         <p>
           <ButtonLinkExternal
+            onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D"
           >
             Wat kunt u van ons verwachten?
@@ -222,6 +228,7 @@ Object {
           Lees meer over uw
           <br />
           <ButtonLinkExternal
+            onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d"
           >
             rechten
@@ -230,6 +237,7 @@ Object {
           en
            
           <ButtonLinkExternal
+            onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d"
           >
             plichten
@@ -281,6 +289,7 @@ Object {
     </p>
     <p>
       <ButtonLinkExternal
+        onClick={[Function]}
         to="https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D"
       >
         Bekijk hier de betaaldata van de uitkering
@@ -321,6 +330,7 @@ Object {
         </p>
         <p>
           <ButtonLinkExternal
+            onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D"
           >
             Wat kunt u van ons verwachten?
@@ -357,6 +367,7 @@ Object {
           Lees meer over uw
           <br />
           <ButtonLinkExternal
+            onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d"
           >
             rechten
@@ -365,6 +376,7 @@ Object {
           en
            
           <ButtonLinkExternal
+            onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d"
           >
             plichten
@@ -411,6 +423,7 @@ Object {
         </p>
         <p>
           <ButtonLinkExternal
+            onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D"
           >
             Bekijk hier de betaaldata van de uitkering
@@ -479,6 +492,7 @@ Object {
         </p>
         <p>
           <ButtonLinkExternal
+            onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D"
           >
             Wat kunt u van ons verwachten?
@@ -522,6 +536,7 @@ Object {
           Lees meer over uw
           <br />
           <ButtonLinkExternal
+            onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d"
           >
             rechten
@@ -530,6 +545,7 @@ Object {
           en
            
           <ButtonLinkExternal
+            onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d"
           >
             plichten

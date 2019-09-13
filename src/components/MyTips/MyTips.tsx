@@ -8,6 +8,7 @@ import { AppRoutes } from 'App.constants';
 import { MyTip } from 'hooks/api/my-tips-api.hook';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { ReactComponent as ImgPlaceholder } from 'assets/images/img-placeholder.svg';
+import { trackLink } from 'hooks/analytics.hook';
 
 export interface TipProps {
   tip: MyTip;
@@ -27,6 +28,7 @@ const Tip = ({ tip }: TipProps) => (
     <ButtonLinkExternal
       title={`Meer informatie over de tip: ${tip.title}`}
       to={tip.link.to}
+      onClick={() => trackLink(tip.link.to)}
     >
       {tip.link.title}
     </ButtonLinkExternal>
