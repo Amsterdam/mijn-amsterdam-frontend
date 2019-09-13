@@ -417,7 +417,7 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
         // Check to see if a client can change supplier during the right to a service.
         const supplierChangePossible =
           labelData.statusItems.length === 4 &&
-          labelData.statusItems[2].status === 'Levering gestopt';
+          labelData.statusItems[2].status === 'Levering gestopt'; // Levering gestopt status is the common denominator for this case.
 
         const docDescription =
           index === 0 ? (
@@ -425,7 +425,7 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
               {supplierChangePossible
                 ? `In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
               indienen of hoe u van aanbieder kunt wisselen.`
-                : `In de brief leest u ook hoe u bezwaar kunt maken of hoe u een klacht kan
+                : `In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
               indienen.`}
             </p>
           ) : (
