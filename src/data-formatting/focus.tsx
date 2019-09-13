@@ -9,6 +9,7 @@ import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
 import React from 'react';
 import { StatusLineItem } from 'components/StatusLine/StatusLine';
 import { StepType } from '../components/StatusLine/StatusLine';
+import { trackLink } from 'hooks/analytics.hook';
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
  */
@@ -164,6 +165,18 @@ export interface ProductCollection {
   };
 }
 
+const FocusExternalUrls = {
+  BijstandsUitkeringAanvragenRechten:
+    'https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d',
+  BijstandsUitkeringAanvragenPlichten:
+    'https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d',
+  BijstandsUitkeringAanvragen:
+    'https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D',
+  BetaalDataUitkering:
+    'https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D',
+  StadsPas: 'https://www.amsterdam.nl/stadspas',
+};
+
 /**
  * A library of messages and titles with which we construct the information shown to the client */
 export const Labels: LabelData = {
@@ -182,7 +195,12 @@ export const Labels: LabelData = {
         <>
           <p>U hebt op {data.dateStart} een bijstandsuitkering aangevraagd.</p>
           <p>
-            <ButtonLinkExternal to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D">
+            <ButtonLinkExternal
+              to={FocusExternalUrls.BijstandsUitkeringAanvragen}
+              onClick={() =>
+                trackLink(FocusExternalUrls.BijstandsUitkeringAanvragen)
+              }
+            >
               Wat kunt u van ons verwachten?
             </ButtonLinkExternal>
           </p>
@@ -209,11 +227,21 @@ export const Labels: LabelData = {
           <p>
             Lees meer over uw
             <br />
-            <ButtonLinkExternal to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d">
+            <ButtonLinkExternal
+              to={FocusExternalUrls.BijstandsUitkeringAanvragenRechten}
+              onClick={() =>
+                trackLink(FocusExternalUrls.BijstandsUitkeringAanvragenRechten)
+              }
+            >
               rechten
             </ButtonLinkExternal>{' '}
             en{' '}
-            <ButtonLinkExternal to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d">
+            <ButtonLinkExternal
+              to={FocusExternalUrls.BijstandsUitkeringAanvragenPlichten}
+              onClick={() =>
+                trackLink(FocusExternalUrls.BijstandsUitkeringAanvragenPlichten)
+              }
+            >
               plichten
             </ButtonLinkExternal>
           </p>
@@ -275,7 +303,10 @@ export const Labels: LabelData = {
               details.
             </p>
             <p>
-              <ButtonLinkExternal to="https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D">
+              <ButtonLinkExternal
+                to={FocusExternalUrls.BetaalDataUitkering}
+                onClick={() => trackLink(FocusExternalUrls.BetaalDataUitkering)}
+              >
                 Bekijk hier de betaaldata van de uitkering
               </ButtonLinkExternal>
             </p>
@@ -494,7 +525,10 @@ export const Labels: LabelData = {
               U heeft recht op een Stadspas. Bekijk de brief voor meer details.
             </p>
             <p>
-              <ButtonLinkExternal to="https://www.amsterdam.nl/stadspas">
+              <ButtonLinkExternal
+                to={FocusExternalUrls.StadsPas}
+                onClick={() => trackLink(FocusExternalUrls.StadsPas)}
+              >
                 Meer informatie over de stadspas
               </ButtonLinkExternal>
             </p>

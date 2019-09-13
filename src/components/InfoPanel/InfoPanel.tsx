@@ -6,6 +6,7 @@ import { Unshaped } from 'App.types';
 import { entries } from 'helpers/App';
 import classnames from 'classnames';
 import slug from 'slug';
+import { trackLink } from 'hooks/analytics.hook';
 
 export interface ActionLink {
   title: string;
@@ -25,6 +26,9 @@ function InfoPanelActionLinks({ actionLinks }: InfoPanelActionLinksProps) {
           <ButtonLink
             to={actionLink.url}
             rel={actionLink.external ? 'external' : ''}
+            onClick={() => {
+              actionLink.external && trackLink(actionLink.url);
+            }}
           >
             {actionLink.title}
           </ButtonLink>
