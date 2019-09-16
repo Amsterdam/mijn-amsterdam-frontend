@@ -14,8 +14,6 @@ pipeline {
 
   stages {
 
-    script { currentBuild.displayName = ${PROJECT_PREFIX} }
-
     stage('Unit tests') {
       when { not { branch 'test' } } // Skip unit tests when pushing directly to test (for speed)
       options {
@@ -42,6 +40,9 @@ pipeline {
         timeout(time: 10, unit: 'MINUTES')
       }
       steps {
+
+        script { currentBuild.displayName = ${IMAGE_TEST} }
+
         sh "docker build -t ${IMAGE_BUILD} " +
           "--shm-size 1G " +
           "--build-arg BUILD_ENV=test " +
