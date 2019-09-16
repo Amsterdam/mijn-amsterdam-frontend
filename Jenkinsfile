@@ -23,6 +23,7 @@ pipeline {
         PROJECT = "${PROJECT_PREFIX}unit"
       }
       steps {
+        script { currentBuild.displayName = ${IMAGE_TEST} }
         sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit test-unit"
       }
       post {
@@ -40,9 +41,6 @@ pipeline {
         timeout(time: 10, unit: 'MINUTES')
       }
       steps {
-
-        script { currentBuild.displayName = ${IMAGE_TEST} }
-
         sh "docker build -t ${IMAGE_BUILD} " +
           "--shm-size 1G " +
           "--build-arg BUILD_ENV=test " +
