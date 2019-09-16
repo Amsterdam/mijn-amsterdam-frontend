@@ -38,9 +38,11 @@ RUN npm install \
   ci \
   && npm cache clean --force
 
+RUN rm /etc/localtime
+RUN ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
+
 # RUN npm run build
 RUN if [ "$BUILD_ENV" != "test-unit" ]; then npm run build ; fi
-RUN if [ "$BUILD_ENV" != "test-unit" ]; then echo "Europe/Amsterdam" > /etc/localtime ; fi
 RUN if [ "$BUILD_ENV" != "test-unit" ]; then echo "date=`date`; build=${BUILD_NUMBER}; see also: https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${COMMIT_HASH}" > /app/build/version.txt ; fi
 
 # Web server image
