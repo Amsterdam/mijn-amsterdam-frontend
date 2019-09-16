@@ -2,7 +2,10 @@ FROM node:10.15 as build-deps
 LABEL maintainer="datapunt@amsterdam.nl"
 
 ENV LOGOUT_URL=${LOGOUT_URL:-notset}
+
 ARG BUILD_ENV=production
+ARG BUILD_NUMBER=-1
+ARG COMMIT_HASH=
 
 WORKDIR /app
 
@@ -37,7 +40,7 @@ RUN npm install \
 
 # RUN npm run build
 RUN if [ "$BUILD_ENV" != "test-unit" ]; then npm run build ; fi
-RUN if [ "$BUILD_ENV" != "test-unit" ]; then echo "build=`date`; see also: https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/`git rev-parse HEAD`" > /app/build/version.txt ; fi
+RUN if [ "$BUILD_ENV" != "test-unit" ]; then echo "date=`date`; build=${BUILD_NUMBER}; see also: https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${COMMIT_HASH}" > /app/build/version.txt ; fi
 
 # Web server image
 FROM nginx:stable-alpine
