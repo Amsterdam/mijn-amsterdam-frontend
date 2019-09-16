@@ -37,7 +37,7 @@ RUN npm install \
 
 # RUN npm run build
 RUN if [ "$BUILD_ENV" != "test-unit" ]; then npm run build ; fi
-RUN if [ "$BUILD_ENV" != "test-unit" ]; then echo "build= `date`" > /app/build/version.txt ; fi
+RUN if [ "$BUILD_ENV" != "test-unit" ]; then echo "build=`date`; commit=https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/`git rev-parse HEAD`" > /app/build/version.txt ; fi
 
 # Web server image
 FROM nginx:stable-alpine
