@@ -5,7 +5,7 @@ pipeline {
     COMMIT_HASH = GIT_COMMIT.substring(0, 8)
     PROJECT_PREFIX = "${BRANCH_NAME}_${COMMIT_HASH}_${BUILD_NUMBER}_"
     IMAGE_BASE = "repo.secure.amsterdam.nl/mijnams/mijnamsterdam"
-    IMAGE_BUILD = "${IMAGE_BASE}:${BUILD_NUMBER}"
+    IMAGE_BUILD = "${IMAGE_BASE}:${COMMIT_HASH}"
     IMAGE_ACCEPTANCE = "${IMAGE_BASE}:acceptance"
     IMAGE_PRODUCTION = "${IMAGE_BASE}:production"
     IMAGE_TEST = "${IMAGE_BASE}:test"
