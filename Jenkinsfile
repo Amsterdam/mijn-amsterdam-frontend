@@ -14,6 +14,8 @@ pipeline {
 
   stages {
 
+    script { currentBuild.displayName = ${PROJECT_PREFIX} }
+
     stage('Unit tests') {
       when { not { branch 'test' } } // Skip unit tests when pushing directly to test (for speed)
       options {
