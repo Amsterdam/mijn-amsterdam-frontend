@@ -5,11 +5,7 @@ import { ComponentChildren } from 'App.types';
 import classnames from 'classnames';
 import { formattedTimeFromSeconds } from 'helpers/App';
 import useActivityCounter from 'hooks/activityCounter.hook';
-import {
-  trackEvent,
-  trackItemPresentation,
-  trackLink,
-} from 'hooks/analytics.hook';
+import { trackLink } from 'hooks/analytics.hook';
 import { CounterProps, useCounter } from 'hooks/timer.hook';
 import React, { useEffect, useState, useContext } from 'react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
@@ -148,12 +144,6 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
       document.title = originalTitle;
     };
   }, []);
-
-  useEffect(() => {
-    if (isOpen) {
-      trackItemPresentation('Session', 'Logout Dialog');
-    }
-  }, [isOpen]);
 
   return (
     <Modal

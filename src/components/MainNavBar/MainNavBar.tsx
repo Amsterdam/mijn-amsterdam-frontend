@@ -49,9 +49,10 @@ function SecondaryLinks() {
 
   useEffect(() => {
     if (hasFirstName) {
-      trackItemPresentation('Header', 'Link naar Profiel');
+      trackItemPresentation('Mijn gegevens', 'Link naar Profiel');
     }
   }, [hasFirstName]);
+
   const isDesktopScreen = useDesktopScreen();
 
   return (
