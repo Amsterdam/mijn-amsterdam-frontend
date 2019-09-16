@@ -3,10 +3,6 @@ LABEL maintainer="datapunt@amsterdam.nl"
 
 ENV LOGOUT_URL=${LOGOUT_URL:-notset}
 
-ARG BUILD_ENV=production
-ARG BUILD_NUMBER=-1
-ARG COMMIT_HASH=
-
 WORKDIR /app
 
 RUN apt-get update && \
@@ -21,6 +17,10 @@ COPY tsconfig.json /app/
 COPY paths.json /app/
 COPY .env* /app/
 COPY scripts/env-copy.sh /app/
+
+ARG BUILD_ENV=production
+ARG BUILD_NUMBER=-1
+ARG COMMIT_HASH=
 
 # Builds are always production builds but can have differences in server environment (test/acceptance/production)
 # Try to overwrite the default production .env file if a BUILD_ENV is set as build-arg
@@ -40,6 +40,7 @@ RUN npm install \
 
 # RUN npm run build
 RUN if [ "$BUILD_ENV" != "test-unit" ]; then npm run build ; fi
+RUN if [ "$BUILD_ENV" != "test-unit" ]; then echo "Europe/Amsterdam" > /etc/localtime ; fi
 RUN if [ "$BUILD_ENV" != "test-unit" ]; then echo "date=`date`; build=${BUILD_NUMBER}; see also: https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${COMMIT_HASH}" > /app/build/version.txt ; fi
 
 # Web server image
