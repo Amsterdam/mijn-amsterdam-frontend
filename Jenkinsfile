@@ -5,7 +5,7 @@ pipeline {
     COMMIT_HASH = GIT_COMMIT.substring(0, 8)
     PROJECT_PREFIX = "${BRANCH_NAME}_${COMMIT_HASH}_${BUILD_NUMBER}_"
     IMAGE_BASE = "repo.secure.amsterdam.nl/mijnams/mijnamsterdam"
-    IMAGE_BUILD = "${IMAGE_BASE}:${BUILD_NUMBER}"
+    IMAGE_BUILD = "${IMAGE_BASE}:${COMMIT_HASH}"
     IMAGE_ACCEPTANCE = "${IMAGE_BASE}:acceptance"
     IMAGE_PRODUCTION = "${IMAGE_BASE}:production"
     IMAGE_TEST = "${IMAGE_BASE}:test"
@@ -23,6 +23,7 @@ pipeline {
         PROJECT = "${PROJECT_PREFIX}unit"
       }
       steps {
+        script { currentBuild.displayName = "Unit testing ${BUILD_NUMBER} (${COMMIT_HASH})" }
         sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit test-unit"
       }
       post {
@@ -40,6 +41,7 @@ pipeline {
         timeout(time: 10, unit: 'MINUTES')
       }
       steps {
+        script { currentBuild.displayName = "TEST Build ${BUILD_NUMBER} (${COMMIT_HASH})" }
         sh "docker build -t ${IMAGE_BUILD} " +
           "--shm-size 1G " +
           "--build-arg BUILD_ENV=test " +
@@ -54,6 +56,7 @@ pipeline {
         timeout(time: 5, unit: 'MINUTES')
       }
       steps {
+        script { currentBuild.displayName = "TEST Deploy ${BUILD_NUMBER} (${COMMIT_HASH})" }
         sh "docker pull ${IMAGE_BUILD}"
         sh "docker tag ${IMAGE_BUILD} ${IMAGE_TEST}"
         sh "docker push ${IMAGE_TEST}"
@@ -72,6 +75,7 @@ pipeline {
         timeout(time: 10, unit: 'MINUTES')
       }
       steps {
+        script { currentBuild.displayName = "ACC Build ${BUILD_NUMBER} (${COMMIT_HASH})" }
         sh "docker build -t ${IMAGE_BUILD} " +
           "--shm-size 1G " +
           "--build-arg BUILD_ENV=acceptance " +
@@ -86,6 +90,7 @@ pipeline {
         timeout(time: 5, unit: 'MINUTES')
       }
       steps {
+        script { currentBuild.displayName = "ACC Deploy ${BUILD_NUMBER} (${COMMIT_HASH})" }
         sh "docker pull ${IMAGE_BUILD}"
         sh "docker tag ${IMAGE_BUILD} ${IMAGE_ACCEPTANCE}"
         sh "docker push ${IMAGE_ACCEPTANCE}"
@@ -108,6 +113,7 @@ pipeline {
         timeout(time: 10, unit: 'MINUTES')
       }
       steps {
+        script { currentBuild.displayName = "PROD:Build:${BUILD_NUMBER} (${COMMIT_HASH})" }
         // NOTE BUILD_ENV intentionaly not set (using Dockerfile default)
         sh "docker build -t ${IMAGE_PRODUCTION} " +
             "--shm-size 1G " +
@@ -128,6 +134,7 @@ pipeline {
         timeout(time: 120, unit: 'MINUTES')
       }
       steps {
+        script { currentBuild.displayName = "PROD:Deploy approval:${BUILD_NUMBER} (${COMMIT_HASH})" }
         script {
           input "Deploy to Production?"
           echo "Okay, moving on"
@@ -145,6 +152,7 @@ pipeline {
         timeout(time: 5, unit: 'MINUTES')
       }
       steps {
+        script { currentBuild.displayName = "PROD:Deploy:${BUILD_NUMBER} (${COMMIT_HASH})" }
         build job: 'Subtask_Openstack_Playbook', parameters: [
           [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
           [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml']
