@@ -23,7 +23,7 @@ pipeline {
         PROJECT = "${PROJECT_PREFIX}unit"
       }
       steps {
-        script { currentBuild.displayName = ${IMAGE_TEST} }
+        script { currentBuild.displayName = "${IMAGE_TEST}" }
         sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit test-unit"
       }
       post {
