@@ -131,7 +131,8 @@ pipeline {
     stage('Deploy PROD - Waiting for approval') {
       when {
         allOf {
-          branch 'master'; tag 'release-*'
+          branch 'master'
+          tag 'release-*'
         }
       }
       options {
@@ -149,7 +150,8 @@ pipeline {
     stage('Deploy PROD') {
       when {
         allOf {
-          branch 'master'; tag 'release-*'
+          branch 'master'
+          tag 'release-*'
         }
       }
       options {
