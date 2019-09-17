@@ -8,7 +8,7 @@
 #   exit 1;
 # fi
 
-git fetch origin && git checkout -b release-branch origin/master
+git fetch origin && git checkout -b release-branch origin/master &&
 
 echo "Fetched origin, created release-branch."
 
