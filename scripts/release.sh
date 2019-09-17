@@ -8,7 +8,7 @@ then
   exit 1;
 fi
 
-git pull origin master;
+git merge origin/master;
 
 CURTAG=`git describe --abbrev=0 --tags`;
 CURTAG=$(sed 's/[^0-9.]//g' <<< $CURTAG) # strip all but numbers and dots to extract specific version
