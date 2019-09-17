@@ -50,7 +50,7 @@ NEWTAG="release-v$MAJ.$MIN.$BUG"
 
 echo "Adding Tag: $NEWTAG";
 
-git branch -m $NEWTAG &&
+git branch -m "production-${NEWTAG}" &&
 npm --no-git-tag-version --allow-same-version version "$MAJ.$MIN.$BUG" &&
 git add package.json package-lock.json &&
 git tag $NEWTAG &&
