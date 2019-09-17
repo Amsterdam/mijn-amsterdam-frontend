@@ -62,7 +62,7 @@ export default () => {
             items={myNotificationItems.slice(0, MAX_NOTIFICATIONS_VISIBLE)}
             showMoreLink={myNotificationsTotal > MAX_NOTIFICATIONS_VISIBLE}
             isLoading={isMyNotificationsLoading}
-            trackCategory="Dashboard / Mijn meldingen"
+            trackCategory="Dashboard / Actueel"
           />
           <MyChaptersPanel
             isLoading={isMyChaptersLoading}
