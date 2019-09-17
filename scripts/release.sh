@@ -46,10 +46,10 @@ BRANCH="production-${NEWTAG}"
 echo "Adding Tag: $NEWTAG";
 
 git branch -m "$BRANCH" && \
-npm --no-git-tag-version --allow-same-version version "$MAJ.$MIN.$BUG" && \
-git add package.json package-lock.json && \
-git commit -m "Bump! $NEWTAG" && \
-git tag -a "$NEWTAG" -m  "Production ${NEWTAG}" && \
-git push -u --follow-tags origin head:master && \
+# npm --no-git-tag-version --allow-same-version version "$MAJ.$MIN.$BUG" && \
+# git add package.json package-lock.json && \
+# git commit -m "Bump! $NEWTAG" && \
+git tag -a "$NEWTAG" -m "Production ${NEWTAG}" && \
+git push origin "$NEWTAG" && \
 
-echo "Don't forget to Approve the deploy to production!"
+echo "Don't forget to Approve the deploy to the production environment!"

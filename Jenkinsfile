@@ -109,9 +109,7 @@ pipeline {
 
     stage('Build PROD') {
       when {
-        allOf {
-          branch 'master'; tag 'release-*'
-        }
+        tag 'release-v*'
       }
       options {
         timeout(time: 10, unit: 'MINUTES')
@@ -130,10 +128,7 @@ pipeline {
 
     stage('Deploy PROD - Waiting for approval') {
       when {
-        allOf {
-          branch 'master'
-          tag 'release-*'
-        }
+        tag 'release-v*'
       }
       options {
         timeout(time: 120, unit: 'MINUTES')
@@ -149,10 +144,7 @@ pipeline {
 
     stage('Deploy PROD') {
       when {
-        allOf {
-          branch 'master'
-          tag 'release-*'
-        }
+        tag 'release-v*'
       }
       options {
         timeout(time: 5, unit: 'MINUTES')
