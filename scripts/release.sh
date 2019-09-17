@@ -41,14 +41,15 @@ do
 done
 
 NEWTAG="release-v$MAJ.$MIN.$BUG"
+BRANCH="production-${NEWTAG}"
 
 echo "Adding Tag: $NEWTAG";
 
-git branch -m "production-${NEWTAG}" && \
+git branch -m "$BRANCH" && \
 npm --no-git-tag-version --allow-same-version version "$MAJ.$MIN.$BUG" && \
 git add package.json package-lock.json && \
 git commit -m "Bump! $NEWTAG" && \
 git tag -a "$NEWTAG" -m  "Production ${NEWTAG}" && \
-git push --follow-tags origin "$NEWTAG" && \
+git push -u --follow-tags origin "$BRANCH" && \
 
 echo "Don't forget to Pull Request the release!"
