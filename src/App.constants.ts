@@ -38,7 +38,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   WONEN: 'Erfpacht',
   ZORG: 'Zorg en ondersteuning',
   ROOT: 'Home',
-  MELDINGEN: 'Mijn meldingen',
+  MELDINGEN: 'Actueel',
   PROFILE: 'Mijn gegevens',
   MIJN_BUURT: 'Mijn buurt',
   MIJN_TIPS: 'Mijn tips',
@@ -107,7 +107,7 @@ export const errorMessageMap: ErrorMessageMap = {
     error: 'Communicatie met api mislukt.',
   },
   MY_NOTIFICATIONS: {
-    name: 'Mijn meldingen',
+    name: 'Actueel',
     error: 'Communicatie met api mislukt.',
   },
   MY_CASES: {
