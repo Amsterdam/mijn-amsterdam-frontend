@@ -25,7 +25,7 @@ export default () => {
         className={styles.MainHeader}
       >
         <ChapterHeadingIcon chapter={Chapters.MELDINGEN} />
-        Mijn meldingen
+        Actueel
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
         {isError && (
@@ -38,7 +38,7 @@ export default () => {
           total={total}
           items={items}
           noContentNotification="Er zijn op dit moment geen actuele meldingen voor u."
-          trackCategory="Mijn meldingen overzicht"
+          trackCategory="Actueel overzicht"
         />
       </PageContentMainBody>
     </PageContentMain>
