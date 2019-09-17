@@ -6,7 +6,7 @@ git checkout -b release-branch origin/master && \
 
 echo "Fetched origin, created release-branch."
 
-CURTAG=`git describe --abbrev=0 --tags`;
+CURTAG=`git for-each-ref refs/tags --sort=-taggerdate --format="%(refname:short)" --count=1`;
 CURTAG=$(sed 's/[^0-9.]//g' <<< $CURTAG) # strip all but numbers and dots to extract specific version
 
 IFS='.' read -a vers <<< "$CURTAG"
@@ -53,3 +53,4 @@ git tag -a "$NEWTAG" -m "Production ${NEWTAG}" && \
 git push origin "$NEWTAG" && \
 
 echo "Don't forget to Approve the deploy to the production environment!"
+
