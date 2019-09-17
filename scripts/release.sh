@@ -8,7 +8,8 @@
 #   exit 1;
 # fi
 
-git fetch origin && git checkout -b release-branch release-sdf &&
+git fetch origin && \
+git checkout -b release-branch release-sdf && \
 
 echo "Fetched origin, created release-branch."
 
@@ -50,11 +51,11 @@ NEWTAG="release-v$MAJ.$MIN.$BUG"
 
 echo "Adding Tag: $NEWTAG";
 
-git branch -m "production-${NEWTAG}" &&
-npm --no-git-tag-version --allow-same-version version "$MAJ.$MIN.$BUG" &&
-git add package.json package-lock.json &&
-git tag $NEWTAG &&
-git commit -m "Bump! $NEWTAG" &&
+git branch -m "production-${NEWTAG}" && \
+npm --no-git-tag-version --allow-same-version version "$MAJ.$MIN.$BUG" && \
+git add package.json package-lock.json && \
+git tag $NEWTAG && \
+git commit -m "Bump! $NEWTAG" && \
 # git push -u origin $NEWTAG
 
 echo "Don't forget to Pull Request the release!"
