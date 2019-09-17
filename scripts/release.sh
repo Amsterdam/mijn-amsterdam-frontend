@@ -1,14 +1,14 @@
 #!/bin/bash
 
-CURBRANCH=`git branch | grep \* | cut -d ' ' -f2`;
+# CURBRANCH=`git branch | grep \* | cut -d ' ' -f2`;
 
-if [ $CURBRANCH != "master" ]
-then
-  echo "You are not on master. The current branch is '$CURBRANCH' make sure you are on 'master'";
-  exit 1;
-fi
+# if [ $CURBRANCH != "master" ]
+# then
+#   echo "You are not on master. The current branch is '$CURBRANCH' make sure you are on 'master'";
+#   exit 1;
+# fi
 
-get fetch origin && git checkout -b release-branch origin/master
+git fetch origin && git checkout -b release-branch origin/master
 
 echo "Fetched origin, created release-branch."
 
