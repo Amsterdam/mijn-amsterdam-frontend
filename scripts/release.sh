@@ -11,7 +11,7 @@ fi
 git pull origin master;
 
 CURTAG=`git describe --abbrev=0 --tags`;
-CURTAG="${CURTAG/v/}"
+CURTAG=$(sed 's/[^0-9.]//g' <<< $CURTAG) # strip all but numbers and dots to extract specific version
 
 IFS='.' read -a vers <<< "$CURTAG"
 
@@ -48,5 +48,9 @@ NEWTAG="release-v$MAJ.$MIN.$BUG"
 
 echo "Adding Tag: $NEWTAG";
 
+npm --no-git-tag-version version "$MAJ.$MIN.$BUG"
+git add package.json package-lock.json
+git commit -m "Bump! $NEWTAG"
 git tag -a $NEWTAG -m $NEWTAG
-git push origin $NEWTAG
+
+echo "Don't forget to push the release!"
