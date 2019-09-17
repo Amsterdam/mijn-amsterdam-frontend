@@ -1,6 +1,7 @@
 #!/bin/bash
 
 git fetch origin && \
+git fetch origin -t && \
 git checkout -b release-branch origin/master && \
 
 echo "Fetched origin, created release-branch."
