@@ -50,10 +50,10 @@ NEWTAG="release-v$MAJ.$MIN.$BUG"
 
 echo "Adding Tag: $NEWTAG";
 
+git branch -m $NEWTAG &&
+git commit -m "Bump! $NEWTAG" &&
 npm --no-git-tag-version version "$MAJ.$MIN.$BUG" &&
 git add package.json package-lock.json &&
-git commit -m "Bump! $NEWTAG" &&
-git branch -m $NEWTAG &&
 git tag -a $NEWTAG -m $NEWTAG
 # git push -u origin $NEWTAG
 
