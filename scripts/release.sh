@@ -50,6 +50,6 @@ npm --no-git-tag-version --allow-same-version version "$MAJ.$MIN.$BUG" && \
 git add package.json package-lock.json && \
 git commit -m "Bump! $NEWTAG" && \
 git tag -a "$NEWTAG" -m  "Production ${NEWTAG}" && \
-git push -u --follow-tags origin master && \
+git push -u --follow-tags origin "$BRANCH" && \
 
 echo "Don't forget to Pull Request the release!"
