@@ -52,5 +52,6 @@ npm --no-git-tag-version version "$MAJ.$MIN.$BUG"
 git add package.json package-lock.json
 git commit -m "Bump! $NEWTAG"
 git tag -a $NEWTAG -m $NEWTAG
+git branch -m $NEWTAG
 
 echo "Don't forget to push the release!"
