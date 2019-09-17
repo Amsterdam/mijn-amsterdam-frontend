@@ -53,5 +53,6 @@ git add package.json package-lock.json
 git commit -m "Bump! $NEWTAG"
 git tag -a $NEWTAG -m $NEWTAG
 git branch -m $NEWTAG
+git push -u origin $NEWTAG
 
-echo "Don't forget to push the release!"
+echo "Don't forget to Pull Request the release!"
