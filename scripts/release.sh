@@ -10,6 +10,8 @@ fi
 
 get fetch origin && git checkout -b release-branch origin/master
 
+echo "Fetched origin, created release-branch."
+
 CURTAG=`git describe --abbrev=0 --tags`;
 CURTAG=$(sed 's/[^0-9.]//g' <<< $CURTAG) # strip all but numbers and dots to extract specific version
 
@@ -48,10 +50,10 @@ NEWTAG="release-v$MAJ.$MIN.$BUG"
 
 echo "Adding Tag: $NEWTAG";
 
-npm --no-git-tag-version version "$MAJ.$MIN.$BUG"
-git add package.json package-lock.json
-git commit -m "Bump! $NEWTAG"
-git tag -a $NEWTAG -m $NEWTAG
+npm --no-git-tag-version version "$MAJ.$MIN.$BUG" &&
+git add package.json package-lock.json &&
+git commit -m "Bump! $NEWTAG" &&
+git tag -a $NEWTAG -m $NEWTAG &&
 git branch -m $NEWTAG
 # git push -u origin $NEWTAG
 
