@@ -47,7 +47,7 @@ git branch -m "production-${NEWTAG}" && \
 npm --no-git-tag-version --allow-same-version version "$MAJ.$MIN.$BUG" && \
 git add package.json package-lock.json && \
 git commit -m "Bump! $NEWTAG" && \
-sleep 1 && \
+sleep 10 && \
 git tag "$NEWTAG" -a && \
 git push -u origin "$NEWTAG" --tags && \
 
