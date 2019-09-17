@@ -52,4 +52,4 @@ git commit -m "Bump! $NEWTAG" && \
 git tag -a "$NEWTAG" -m  "Production ${NEWTAG}" && \
 git push -u --follow-tags origin head:master && \
 
-echo "Don't forget to Pull Request the release!"
+echo "Don't forget to Approve the deploy to production!"
