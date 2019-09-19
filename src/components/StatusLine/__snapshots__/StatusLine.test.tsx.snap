@@ -13,13 +13,14 @@ ShallowWrapper {
               <p>
                 U hebt recht op 
                 ambulante ondersteuning
-                 per 
+                 per
+                 
                 21 februari 2018
                 .
               </p>
               <p>
-                In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
               </p>
             </React.Fragment>,
             "documents": Array [],
@@ -30,16 +31,13 @@ ShallowWrapper {
             "stepType": "first-step",
           },
           Object {
-            "datePublished": "",
-            "description": <React.Fragment>
-              <p>
-                2Learn B.V.
-                 is gestart met het leveren van 
-                ambulante ondersteuning
-                .
-              </p>
-              
-            </React.Fragment>,
+            "datePublished": "2018-02-21T00:00:00",
+            "description": <p>
+              2Learn B.V.
+               is gestart met het leveren van 
+              ambulante ondersteuning
+              .
+            </p>,
             "documents": Array [],
             "id": "status-step-1",
             "isActual": false,
@@ -49,16 +47,13 @@ ShallowWrapper {
           },
           Object {
             "datePublished": "",
-            "description": <React.Fragment>
-              <p>
-                2Learn B.V.
-                 heeft aan ons doorgegeven dat u geen 
-                ambulante ondersteuning
-                 
-                meer krijgt.
-              </p>
-              
-            </React.Fragment>,
+            "description": <p>
+              2Learn B.V.
+               heeft aan ons doorgegeven dat u geen 
+              ambulante ondersteuning
+               
+              meer krijgt.
+            </p>,
             "documents": Array [],
             "id": "status-step-2",
             "isActual": false,
@@ -67,13 +62,10 @@ ShallowWrapper {
             "stepType": "intermediate-step",
           },
           Object {
-            "datePublished": "2019-02-21T00:00:00",
-            "description": <React.Fragment>
-              <p>
-                Op deze datum vervalt uw recht op deze voorziening.
-              </p>
-              
-            </React.Fragment>,
+            "datePublished": "",
+            "description": <p>
+              Uw recht op ambulante ondersteuning is beëindigd per 21 februari 2019
+            </p>,
             "documents": Array [],
             "id": "status-step-3",
             "isActual": true,
@@ -108,13 +100,14 @@ ShallowWrapper {
                 <p>
                   U hebt recht op 
                   ambulante ondersteuning
-                   per 
+                   per
+                   
                   21 februari 2018
                   .
                 </p>
                 <p>
-                  In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
+                  In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
                 </p>
               </React.Fragment>,
               "documents": Array [],
@@ -125,16 +118,13 @@ ShallowWrapper {
               "stepType": "first-step",
             },
             Object {
-              "datePublished": "",
-              "description": <React.Fragment>
-                <p>
-                  2Learn B.V.
-                   is gestart met het leveren van 
-                  ambulante ondersteuning
-                  .
-                </p>
-                
-              </React.Fragment>,
+              "datePublished": "2018-02-21T00:00:00",
+              "description": <p>
+                2Learn B.V.
+                 is gestart met het leveren van 
+                ambulante ondersteuning
+                .
+              </p>,
               "documents": Array [],
               "id": "status-step-1",
               "isActual": false,
@@ -144,16 +134,13 @@ ShallowWrapper {
             },
             Object {
               "datePublished": "",
-              "description": <React.Fragment>
-                <p>
-                  2Learn B.V.
-                   heeft aan ons doorgegeven dat u geen 
-                  ambulante ondersteuning
-                   
-                  meer krijgt.
-                </p>
-                
-              </React.Fragment>,
+              "description": <p>
+                2Learn B.V.
+                 heeft aan ons doorgegeven dat u geen 
+                ambulante ondersteuning
+                 
+                meer krijgt.
+              </p>,
               "documents": Array [],
               "id": "status-step-2",
               "isActual": false,
@@ -162,13 +149,10 @@ ShallowWrapper {
               "stepType": "intermediate-step",
             },
             Object {
-              "datePublished": "2019-02-21T00:00:00",
-              "description": <React.Fragment>
-                <p>
-                  Op deze datum vervalt uw recht op deze voorziening.
-                </p>
-                
-              </React.Fragment>,
+              "datePublished": "",
+              "description": <p>
+                Uw recht op ambulante ondersteuning is beëindigd per 21 februari 2019
+              </p>,
               "documents": Array [],
               "id": "status-step-3",
               "isActual": true,
@@ -211,13 +195,14 @@ ShallowWrapper {
               <p>
                 U hebt recht op 
                 ambulante ondersteuning
-                 per 
+                 per
+                 
                 21 februari 2018
                 .
               </p>
               <p>
-                In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
+                In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
               </p>
             </React.Fragment>,
             "documents": Array [],
@@ -228,16 +213,13 @@ ShallowWrapper {
             "stepType": "first-step",
           },
           Object {
-            "datePublished": "",
-            "description": <React.Fragment>
-              <p>
-                2Learn B.V.
-                 is gestart met het leveren van 
-                ambulante ondersteuning
-                .
-              </p>
-              
-            </React.Fragment>,
+            "datePublished": "2018-02-21T00:00:00",
+            "description": <p>
+              2Learn B.V.
+               is gestart met het leveren van 
+              ambulante ondersteuning
+              .
+            </p>,
             "documents": Array [],
             "id": "status-step-1",
             "isActual": false,
@@ -247,16 +229,13 @@ ShallowWrapper {
           },
           Object {
             "datePublished": "",
-            "description": <React.Fragment>
-              <p>
-                2Learn B.V.
-                 heeft aan ons doorgegeven dat u geen 
-                ambulante ondersteuning
-                 
-                meer krijgt.
-              </p>
-              
-            </React.Fragment>,
+            "description": <p>
+              2Learn B.V.
+               heeft aan ons doorgegeven dat u geen 
+              ambulante ondersteuning
+               
+              meer krijgt.
+            </p>,
             "documents": Array [],
             "id": "status-step-2",
             "isActual": false,
@@ -265,13 +244,10 @@ ShallowWrapper {
             "stepType": "intermediate-step",
           },
           Object {
-            "datePublished": "2019-02-21T00:00:00",
-            "description": <React.Fragment>
-              <p>
-                Op deze datum vervalt uw recht op deze voorziening.
-              </p>
-              
-            </React.Fragment>,
+            "datePublished": "",
+            "description": <p>
+              Uw recht op ambulante ondersteuning is beëindigd per 21 februari 2019
+            </p>,
             "documents": Array [],
             "id": "status-step-3",
             "isActual": true,
@@ -302,13 +278,14 @@ ShallowWrapper {
                   <p>
                     U hebt recht op 
                     ambulante ondersteuning
-                     per 
+                     per
+                     
                     21 februari 2018
                     .
                   </p>
                   <p>
-                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
+                    In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
                   </p>
                 </React.Fragment>,
                 "documents": Array [],
@@ -319,16 +296,13 @@ ShallowWrapper {
                 "stepType": "first-step",
               },
               Object {
-                "datePublished": "",
-                "description": <React.Fragment>
-                  <p>
-                    2Learn B.V.
-                     is gestart met het leveren van 
-                    ambulante ondersteuning
-                    .
-                  </p>
-                  
-                </React.Fragment>,
+                "datePublished": "2018-02-21T00:00:00",
+                "description": <p>
+                  2Learn B.V.
+                   is gestart met het leveren van 
+                  ambulante ondersteuning
+                  .
+                </p>,
                 "documents": Array [],
                 "id": "status-step-1",
                 "isActual": false,
@@ -338,16 +312,13 @@ ShallowWrapper {
               },
               Object {
                 "datePublished": "",
-                "description": <React.Fragment>
-                  <p>
-                    2Learn B.V.
-                     heeft aan ons doorgegeven dat u geen 
-                    ambulante ondersteuning
-                     
-                    meer krijgt.
-                  </p>
-                  
-                </React.Fragment>,
+                "description": <p>
+                  2Learn B.V.
+                   heeft aan ons doorgegeven dat u geen 
+                  ambulante ondersteuning
+                   
+                  meer krijgt.
+                </p>,
                 "documents": Array [],
                 "id": "status-step-2",
                 "isActual": false,
@@ -356,13 +327,10 @@ ShallowWrapper {
                 "stepType": "intermediate-step",
               },
               Object {
-                "datePublished": "2019-02-21T00:00:00",
-                "description": <React.Fragment>
-                  <p>
-                    Op deze datum vervalt uw recht op deze voorziening.
-                  </p>
-                  
-                </React.Fragment>,
+                "datePublished": "",
+                "description": <p>
+                  Uw recht op ambulante ondersteuning is beëindigd per 21 februari 2019
+                </p>,
                 "documents": Array [],
                 "id": "status-step-3",
                 "isActual": true,
@@ -405,13 +373,14 @@ ShallowWrapper {
                 <p>
                   U hebt recht op 
                   ambulante ondersteuning
-                   per 
+                   per
+                   
                   21 februari 2018
                   .
                 </p>
                 <p>
-                  In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
+                  In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
                 </p>
               </React.Fragment>,
               "documents": Array [],
@@ -422,16 +391,13 @@ ShallowWrapper {
               "stepType": "first-step",
             },
             Object {
-              "datePublished": "",
-              "description": <React.Fragment>
-                <p>
-                  2Learn B.V.
-                   is gestart met het leveren van 
-                  ambulante ondersteuning
-                  .
-                </p>
-                
-              </React.Fragment>,
+              "datePublished": "2018-02-21T00:00:00",
+              "description": <p>
+                2Learn B.V.
+                 is gestart met het leveren van 
+                ambulante ondersteuning
+                .
+              </p>,
               "documents": Array [],
               "id": "status-step-1",
               "isActual": false,
@@ -441,16 +407,13 @@ ShallowWrapper {
             },
             Object {
               "datePublished": "",
-              "description": <React.Fragment>
-                <p>
-                  2Learn B.V.
-                   heeft aan ons doorgegeven dat u geen 
-                  ambulante ondersteuning
-                   
-                  meer krijgt.
-                </p>
-                
-              </React.Fragment>,
+              "description": <p>
+                2Learn B.V.
+                 heeft aan ons doorgegeven dat u geen 
+                ambulante ondersteuning
+                 
+                meer krijgt.
+              </p>,
               "documents": Array [],
               "id": "status-step-2",
               "isActual": false,
@@ -459,13 +422,10 @@ ShallowWrapper {
               "stepType": "intermediate-step",
             },
             Object {
-              "datePublished": "2019-02-21T00:00:00",
-              "description": <React.Fragment>
-                <p>
-                  Op deze datum vervalt uw recht op deze voorziening.
-                </p>
-                
-              </React.Fragment>,
+              "datePublished": "",
+              "description": <p>
+                Uw recht op ambulante ondersteuning is beëindigd per 21 februari 2019
+              </p>,
               "documents": Array [],
               "id": "status-step-3",
               "isActual": true,

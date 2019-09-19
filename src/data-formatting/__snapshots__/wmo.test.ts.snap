@@ -18,7 +18,8 @@ Array [
           <p>
             U hebt recht op 
             hulp bij het huishouden
-             per 
+             per
+             
             14 april 2019
             .
           </p>
@@ -29,41 +30,35 @@ Array [
         </React.Fragment>,
         "documents": Array [],
         "id": "status-step-0",
-        "isActual": false,
-        "isHistorical": true,
+        "isActual": true,
+        "isHistorical": false,
         "status": "Besluit",
         "stepType": "first-step",
       },
       Object {
-        "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Emile Thuiszorg
-             is gestart met het leveren van 
-            hulp bij het huishouden
-            .
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "2019-04-14T00:00:00",
+        "description": <p>
+          Emile Thuiszorg
+           is gestart met het leveren van 
+          hulp bij het huishouden
+          .
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
-        "isActual": true,
+        "isActual": false,
         "isHistorical": false,
         "status": "Levering gestart",
         "stepType": "intermediate-step",
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Emile Thuiszorg
-             heeft aan ons doorgegeven dat u geen 
-            hulp bij het huishouden
-             
-            meer krijgt.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Emile Thuiszorg
+           heeft aan ons doorgegeven dat u geen 
+          hulp bij het huishouden
+           
+          meer krijgt.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -72,13 +67,10 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2020-03-08T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            Op deze datum vervalt uw recht op deze voorziening.
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "",
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": false,
@@ -89,7 +81,7 @@ Array [
     ],
     "supplier": "Emile Thuiszorg",
     "supplierUrl": "",
-    "title": "Hulp bij het huishouden",
+    "title": "Hulp bij het huishouden(ZIN)",
   },
   Object {
     "dateFinish": "12 maart 2020",
@@ -107,7 +99,8 @@ Array [
           <p>
             U hebt recht op 
             dagbesteding
-             per 
+             per
+             
             13 maart 2019
             .
           </p>
@@ -118,41 +111,35 @@ Array [
         </React.Fragment>,
         "documents": Array [],
         "id": "status-step-0",
-        "isActual": false,
-        "isHistorical": true,
+        "isActual": true,
+        "isHistorical": false,
         "status": "Besluit",
         "stepType": "first-step",
       },
       Object {
-        "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Amstelring
-             is gestart met het leveren van 
-            dagbesteding
-            .
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "2019-03-13T00:00:00",
+        "description": <p>
+          Amstelring
+           is gestart met het leveren van 
+          dagbesteding
+          .
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
-        "isActual": true,
+        "isActual": false,
         "isHistorical": false,
         "status": "Levering gestart",
         "stepType": "intermediate-step",
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Amstelring
-             heeft aan ons doorgegeven dat u geen 
-            dagbesteding
-             
-            meer krijgt.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Amstelring
+           heeft aan ons doorgegeven dat u geen 
+          dagbesteding
+           
+          meer krijgt.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -161,13 +148,10 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2020-03-12T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            Op deze datum vervalt uw recht op deze voorziening.
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "",
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": false,
@@ -178,7 +162,7 @@ Array [
     ],
     "supplier": "Amstelring",
     "supplierUrl": "",
-    "title": "Dagbesteding",
+    "title": "Dagbesteding(ZIN)",
   },
   Object {
     "dateFinish": "08 maart 2020",
@@ -196,7 +180,8 @@ Array [
           <p>
             U hebt recht op 
             ambulante ondersteuning
-             per 
+             per
+             
             09 maart 2019
             .
           </p>
@@ -207,41 +192,35 @@ Array [
         </React.Fragment>,
         "documents": Array [],
         "id": "status-step-0",
-        "isActual": false,
-        "isHistorical": true,
+        "isActual": true,
+        "isHistorical": false,
         "status": "Besluit",
         "stepType": "first-step",
       },
       Object {
-        "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Amstelring
-             is gestart met het leveren van 
-            ambulante ondersteuning
-            .
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "2019-03-09T00:00:00",
+        "description": <p>
+          Amstelring
+           is gestart met het leveren van 
+          ambulante ondersteuning
+          .
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
-        "isActual": true,
+        "isActual": false,
         "isHistorical": false,
         "status": "Levering gestart",
         "stepType": "intermediate-step",
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Amstelring
-             heeft aan ons doorgegeven dat u geen 
-            ambulante ondersteuning
-             
-            meer krijgt.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Amstelring
+           heeft aan ons doorgegeven dat u geen 
+          ambulante ondersteuning
+           
+          meer krijgt.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -250,13 +229,10 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2020-03-08T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            Op deze datum vervalt uw recht op deze voorziening.
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "",
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": false,
@@ -267,7 +243,7 @@ Array [
     ],
     "supplier": "Amstelring",
     "supplierUrl": "",
-    "title": "Ambulante ondersteuning",
+    "title": "Ambulante ondersteuning(ZIN)",
   },
   Object {
     "dateFinish": "08 maart 2020",
@@ -285,7 +261,8 @@ Array [
           <p>
             U hebt recht op 
             dagbesteding
-             per 
+             per
+             
             09 maart 2019
             .
           </p>
@@ -296,41 +273,35 @@ Array [
         </React.Fragment>,
         "documents": Array [],
         "id": "status-step-0",
-        "isActual": false,
-        "isHistorical": true,
+        "isActual": true,
+        "isHistorical": false,
         "status": "Besluit",
         "stepType": "first-step",
       },
       Object {
-        "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Amstelring
-             is gestart met het leveren van 
-            dagbesteding
-            .
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "2019-03-09T00:00:00",
+        "description": <p>
+          Amstelring
+           is gestart met het leveren van 
+          dagbesteding
+          .
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
-        "isActual": true,
+        "isActual": false,
         "isHistorical": false,
         "status": "Levering gestart",
         "stepType": "intermediate-step",
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Amstelring
-             heeft aan ons doorgegeven dat u geen 
-            dagbesteding
-             
-            meer krijgt.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Amstelring
+           heeft aan ons doorgegeven dat u geen 
+          dagbesteding
+           
+          meer krijgt.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -339,13 +310,10 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2020-03-08T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            Op deze datum vervalt uw recht op deze voorziening.
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "",
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": false,
@@ -356,7 +324,7 @@ Array [
     ],
     "supplier": "Amstelring",
     "supplierUrl": "",
-    "title": "Dagbesteding",
+    "title": "Dagbesteding(ZIN)",
   },
   Object {
     "dateFinish": "31 december 2019",
@@ -374,7 +342,8 @@ Array [
           <p>
             U hebt recht op 
             ambulante ondersteuning
-             per 
+             per
+             
             01 januari 2019
             .
           </p>
@@ -385,41 +354,35 @@ Array [
         </React.Fragment>,
         "documents": Array [],
         "id": "status-step-0",
-        "isActual": false,
-        "isHistorical": true,
+        "isActual": true,
+        "isHistorical": false,
         "status": "Besluit",
         "stepType": "first-step",
       },
       Object {
-        "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Familysupporters/Forsa
-             is gestart met het leveren van 
-            ambulante ondersteuning
-            .
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "2019-01-01T00:00:00",
+        "description": <p>
+          Familysupporters/Forsa
+           is gestart met het leveren van 
+          ambulante ondersteuning
+          .
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
-        "isActual": true,
+        "isActual": false,
         "isHistorical": false,
         "status": "Levering gestart",
         "stepType": "intermediate-step",
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Familysupporters/Forsa
-             heeft aan ons doorgegeven dat u geen 
-            ambulante ondersteuning
-             
-            meer krijgt.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Familysupporters/Forsa
+           heeft aan ons doorgegeven dat u geen 
+          ambulante ondersteuning
+           
+          meer krijgt.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -428,13 +391,10 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2019-12-31T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            Op deze datum vervalt uw recht op deze voorziening.
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "",
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": false,
@@ -445,7 +405,7 @@ Array [
     ],
     "supplier": "Familysupporters/Forsa",
     "supplierUrl": "",
-    "title": "Ambulante ondersteuning",
+    "title": "Ambulante ondersteuning(ZIN)",
   },
   Object {
     "dateFinish": "31 december 2018",
@@ -463,13 +423,14 @@ Array [
           <p>
             U hebt recht op 
             ambulante ondersteuning
-             per 
+             per
+             
             31 december 2018
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -480,16 +441,13 @@ Array [
         "stepType": "first-step",
       },
       Object {
-        "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Familysupporters/Forsa
-             is gestart met het leveren van 
-            ambulante ondersteuning
-            .
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "2018-12-31T00:00:00",
+        "description": <p>
+          Familysupporters/Forsa
+           is gestart met het leveren van 
+          ambulante ondersteuning
+          .
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": false,
@@ -499,16 +457,13 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Familysupporters/Forsa
-             heeft aan ons doorgegeven dat u geen 
-            ambulante ondersteuning
-             
-            meer krijgt.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Familysupporters/Forsa
+           heeft aan ons doorgegeven dat u geen 
+          ambulante ondersteuning
+           
+          meer krijgt.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -517,13 +472,10 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2018-12-31T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            Op deze datum vervalt uw recht op deze voorziening.
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "",
+        "description": <p>
+          Uw recht op ambulante ondersteuning is beëindigd per 31 december 2018
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": true,
@@ -534,7 +486,7 @@ Array [
     ],
     "supplier": "Familysupporters/Forsa",
     "supplierUrl": "",
-    "title": "Ambulante ondersteuning",
+    "title": "Ambulante ondersteuning(ZIN)",
   },
   Object {
     "dateFinish": "08 maart 2019",
@@ -552,13 +504,14 @@ Array [
           <p>
             U hebt recht op 
             ambulante ondersteuning
-             per 
+             per
+             
             28 november 2018
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -569,16 +522,13 @@ Array [
         "stepType": "first-step",
       },
       Object {
-        "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Amstelring
-             is gestart met het leveren van 
-            ambulante ondersteuning
-            .
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "2018-11-28T00:00:00",
+        "description": <p>
+          Amstelring
+           is gestart met het leveren van 
+          ambulante ondersteuning
+          .
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": false,
@@ -588,16 +538,13 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Amstelring
-             heeft aan ons doorgegeven dat u geen 
-            ambulante ondersteuning
-             
-            meer krijgt.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Amstelring
+           heeft aan ons doorgegeven dat u geen 
+          ambulante ondersteuning
+           
+          meer krijgt.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -606,13 +553,10 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2019-03-08T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            Op deze datum vervalt uw recht op deze voorziening.
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "",
+        "description": <p>
+          Uw recht op ambulante ondersteuning is beëindigd per 08 maart 2019
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": true,
@@ -623,7 +567,7 @@ Array [
     ],
     "supplier": "Amstelring",
     "supplierUrl": "",
-    "title": "Ambulante ondersteuning",
+    "title": "Ambulante ondersteuning(ZIN)",
   },
   Object {
     "dateFinish": "20 november 2019",
@@ -641,7 +585,8 @@ Array [
           <p>
             U hebt recht op 
             ambulante ondersteuning
-             per 
+             per
+             
             20 november 2018
             .
           </p>
@@ -652,41 +597,35 @@ Array [
         </React.Fragment>,
         "documents": Array [],
         "id": "status-step-0",
-        "isActual": false,
-        "isHistorical": true,
+        "isActual": true,
+        "isHistorical": false,
         "status": "Besluit",
         "stepType": "first-step",
       },
       Object {
-        "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Leger des Heils
-             is gestart met het leveren van 
-            ambulante ondersteuning
-            .
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "2018-11-20T00:00:00",
+        "description": <p>
+          Leger des Heils
+           is gestart met het leveren van 
+          ambulante ondersteuning
+          .
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
-        "isActual": true,
+        "isActual": false,
         "isHistorical": false,
         "status": "Levering gestart",
         "stepType": "intermediate-step",
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Leger des Heils
-             heeft aan ons doorgegeven dat u geen 
-            ambulante ondersteuning
-             
-            meer krijgt.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Leger des Heils
+           heeft aan ons doorgegeven dat u geen 
+          ambulante ondersteuning
+           
+          meer krijgt.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -695,13 +634,10 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2019-11-20T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            Op deze datum vervalt uw recht op deze voorziening.
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "",
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": false,
@@ -712,7 +648,7 @@ Array [
     ],
     "supplier": "Leger des Heils",
     "supplierUrl": "",
-    "title": "Ambulante ondersteuning",
+    "title": "Ambulante ondersteuning(ZIN)",
   },
   Object {
     "dateFinish": "",
@@ -725,7 +661,7 @@ Array [
     },
     "process": Array [
       Object {
-        "datePublished": "2018-12-27T00:00:00",
+        "datePublished": "",
         "description": <React.Fragment>
           <p>
             U hebt recht op een 
@@ -736,8 +672,7 @@ Array [
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -749,15 +684,12 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            De gemeente heeft opdracht gegeven aan
-             
-            Welzorg
-             om de aanpassingen aan uw woning uit te voeren.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          De gemeente heeft opdracht gegeven aan
+           
+          Welzorg
+           om de aanpassingen aan uw woning uit te voeren.
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": true,
@@ -767,13 +699,10 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Welzorg
-             heeft aan ons doorgegeven dat de aanpassing aan uw woning is uitgevoerd.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Welzorg
+           heeft aan ons doorgegeven dat de aanpassing aan uw woning is uitgevoerd.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -783,12 +712,9 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Er is een lopend recht zonder einddatum.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": false,
@@ -799,7 +725,7 @@ Array [
     ],
     "supplier": "Welzorg",
     "supplierUrl": "",
-    "title": "Woonruimteaanpassing",
+    "title": "Woonruimteaanpassing(ZIN)",
   },
   Object {
     "dateFinish": "",
@@ -823,8 +749,7 @@ Array [
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -836,17 +761,14 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            De gemeente heeft opdracht gegeven aan
-             
-            Medipoint B.V.
-             om een 
-            handbewogen rolstoel voor semi-permanent gebruik
-             aan u te leveren.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          De gemeente heeft opdracht gegeven aan
+           
+          Medipoint B.V.
+           om een 
+          handbewogen rolstoel voor semi-permanent gebruik
+           aan u te leveren.
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": true,
@@ -856,16 +778,13 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Medipoint B.V.
-             heeft aan ons doorgegeven dat een
-             
-            handbewogen rolstoel voor semi-permanent gebruik
-             bij u is afgeleverd.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Medipoint B.V.
+           heeft aan ons doorgegeven dat een
+           
+          handbewogen rolstoel voor semi-permanent gebruik
+           bij u is afgeleverd.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -875,12 +794,9 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Er is een lopend recht zonder einddatum.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": false,
@@ -891,7 +807,7 @@ Array [
     ],
     "supplier": "Medipoint B.V.",
     "supplierUrl": "",
-    "title": "Handbewogen rolstoel voor semi-permanent gebruik",
+    "title": "Handbewogen rolstoel voor semi-permanent gebruik(ZIN)",
   },
   Object {
     "dateFinish": "",
@@ -904,7 +820,7 @@ Array [
     },
     "process": Array [
       Object {
-        "datePublished": "2018-07-20T00:00:00",
+        "datePublished": "",
         "description": <React.Fragment>
           <p>
             U hebt recht op een 
@@ -915,8 +831,7 @@ Array [
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -928,15 +843,12 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            De gemeente heeft opdracht gegeven aan
-             
-            Welzorg
-             om de aanpassingen aan uw woning uit te voeren.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          De gemeente heeft opdracht gegeven aan
+           
+          Welzorg
+           om de aanpassingen aan uw woning uit te voeren.
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": true,
@@ -946,13 +858,10 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Welzorg
-             heeft aan ons doorgegeven dat de aanpassing aan uw woning is uitgevoerd.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Welzorg
+           heeft aan ons doorgegeven dat de aanpassing aan uw woning is uitgevoerd.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -962,12 +871,9 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Er is een lopend recht zonder einddatum.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": false,
@@ -978,7 +884,7 @@ Array [
     ],
     "supplier": "Welzorg",
     "supplierUrl": "",
-    "title": "Woonruimteaanpassing",
+    "title": "Woonruimteaanpassing(ZIN)",
   },
   Object {
     "dateFinish": "01 januari 2019",
@@ -996,98 +902,9 @@ Array [
           <p>
             U hebt recht op 
             dagbesteding
-             per 
-            06 juli 2018
-            .
-          </p>
-          <p>
-            In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
-          </p>
-        </React.Fragment>,
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActual": false,
-        "isHistorical": true,
-        "status": "Besluit",
-        "stepType": "first-step",
-      },
-      Object {
-        "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Vivium Zorggroep
-             is gestart met het leveren van 
-            dagbesteding
-            .
-          </p>
-          
-        </React.Fragment>,
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActual": false,
-        "isHistorical": true,
-        "status": "Levering gestart",
-        "stepType": "intermediate-step",
-      },
-      Object {
-        "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Vivium Zorggroep
-             heeft aan ons doorgegeven dat u geen 
-            dagbesteding
-             
-            meer krijgt.
-          </p>
-          
-        </React.Fragment>,
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActual": false,
-        "isHistorical": true,
-        "status": "Levering gestopt",
-        "stepType": "intermediate-step",
-      },
-      Object {
-        "datePublished": "2019-01-01T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            Op deze datum vervalt uw recht op deze voorziening.
-          </p>
-          
-        </React.Fragment>,
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActual": true,
-        "isHistorical": false,
-        "status": "Einde recht",
-        "stepType": "last-step",
-      },
-    ],
-    "supplier": "Vivium Zorggroep",
-    "supplierUrl": "",
-    "title": "Dagbesteding",
-  },
-  Object {
-    "dateFinish": "",
-    "dateStart": "20 april 2018",
-    "id": "woonruimteaanpassing-12",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/woonruimteaanpassing-12",
-    },
-    "process": Array [
-      Object {
-        "datePublished": "2018-05-09T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            U hebt recht op een 
-            woonruimteaanpassing
              per
              
-            20 april 2018
+            06 juli 2018
             .
           </p>
           <p>
@@ -1103,16 +920,93 @@ Array [
         "stepType": "first-step",
       },
       Object {
+        "datePublished": "2018-07-06T00:00:00",
+        "description": <p>
+          Vivium Zorggroep
+           is gestart met het leveren van 
+          dagbesteding
+          .
+        </p>,
+        "documents": Array [],
+        "id": "status-step-1",
+        "isActual": false,
+        "isHistorical": true,
+        "status": "Levering gestart",
+        "stepType": "intermediate-step",
+      },
+      Object {
+        "datePublished": "",
+        "description": <p>
+          Vivium Zorggroep
+           heeft aan ons doorgegeven dat u geen 
+          dagbesteding
+           
+          meer krijgt.
+        </p>,
+        "documents": Array [],
+        "id": "status-step-2",
+        "isActual": false,
+        "isHistorical": true,
+        "status": "Levering gestopt",
+        "stepType": "intermediate-step",
+      },
+      Object {
+        "datePublished": "",
+        "description": <p>
+          Uw recht op dagbesteding is beëindigd per 01 januari 2019
+        </p>,
+        "documents": Array [],
+        "id": "status-step-3",
+        "isActual": true,
+        "isHistorical": false,
+        "status": "Einde recht",
+        "stepType": "last-step",
+      },
+    ],
+    "supplier": "Vivium Zorggroep",
+    "supplierUrl": "",
+    "title": "Dagbesteding(ZIN)",
+  },
+  Object {
+    "dateFinish": "",
+    "dateStart": "20 april 2018",
+    "id": "woonruimteaanpassing-12",
+    "isActual": true,
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/zorg-en-ondersteuning/voorzieningen/woonruimteaanpassing-12",
+    },
+    "process": Array [
+      Object {
         "datePublished": "",
         "description": <React.Fragment>
           <p>
-            De gemeente heeft opdracht gegeven aan
+            U hebt recht op een 
+            woonruimteaanpassing
+             per
              
-            Welzorg
-             om de aanpassingen aan uw woning uit te voeren.
+            20 april 2018
+            .
           </p>
-          
+          <p>
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
+          </p>
         </React.Fragment>,
+        "documents": Array [],
+        "id": "status-step-0",
+        "isActual": false,
+        "isHistorical": true,
+        "status": "Besluit",
+        "stepType": "first-step",
+      },
+      Object {
+        "datePublished": "",
+        "description": <p>
+          De gemeente heeft opdracht gegeven aan
+           
+          Welzorg
+           om de aanpassingen aan uw woning uit te voeren.
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": true,
@@ -1122,13 +1016,10 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Welzorg
-             heeft aan ons doorgegeven dat de aanpassing aan uw woning is uitgevoerd.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Welzorg
+           heeft aan ons doorgegeven dat de aanpassing aan uw woning is uitgevoerd.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -1138,12 +1029,9 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Er is een lopend recht zonder einddatum.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": false,
@@ -1154,7 +1042,7 @@ Array [
     ],
     "supplier": "Welzorg",
     "supplierUrl": "",
-    "title": "Woonruimteaanpassing",
+    "title": "Woonruimteaanpassing(ZIN)",
   },
   Object {
     "dateFinish": "13 april 2019",
@@ -1172,13 +1060,14 @@ Array [
           <p>
             U hebt recht op 
             hulp bij het huishouden
-             per 
+             per
+             
             14 april 2018
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -1189,16 +1078,13 @@ Array [
         "stepType": "first-step",
       },
       Object {
-        "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Emile Thuiszorg
-             is gestart met het leveren van 
-            hulp bij het huishouden
-            .
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "2018-04-14T00:00:00",
+        "description": <p>
+          Emile Thuiszorg
+           is gestart met het leveren van 
+          hulp bij het huishouden
+          .
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": false,
@@ -1208,16 +1094,13 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Emile Thuiszorg
-             heeft aan ons doorgegeven dat u geen 
-            hulp bij het huishouden
-             
-            meer krijgt.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Emile Thuiszorg
+           heeft aan ons doorgegeven dat u geen 
+          hulp bij het huishouden
+           
+          meer krijgt.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -1226,13 +1109,10 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2019-04-13T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            Op deze datum vervalt uw recht op deze voorziening.
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "",
+        "description": <p>
+          Uw recht op hulp bij het huishouden is beëindigd per 13 april 2019
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": true,
@@ -1243,7 +1123,7 @@ Array [
     ],
     "supplier": "Emile Thuiszorg",
     "supplierUrl": "",
-    "title": "Hulp bij het huishouden",
+    "title": "Hulp bij het huishouden(ZIN)",
   },
   Object {
     "dateFinish": "08 maart 2019",
@@ -1261,13 +1141,14 @@ Array [
           <p>
             U hebt recht op 
             dagbesteding
-             per 
+             per
+             
             09 maart 2018
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -1278,16 +1159,13 @@ Array [
         "stepType": "first-step",
       },
       Object {
-        "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Amstelring
-             is gestart met het leveren van 
-            dagbesteding
-            .
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "2018-03-09T00:00:00",
+        "description": <p>
+          Amstelring
+           is gestart met het leveren van 
+          dagbesteding
+          .
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": false,
@@ -1297,16 +1175,13 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Amstelring
-             heeft aan ons doorgegeven dat u geen 
-            dagbesteding
-             
-            meer krijgt.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Amstelring
+           heeft aan ons doorgegeven dat u geen 
+          dagbesteding
+           
+          meer krijgt.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -1315,13 +1190,10 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2019-03-08T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            Op deze datum vervalt uw recht op deze voorziening.
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "",
+        "description": <p>
+          Uw recht op dagbesteding is beëindigd per 08 maart 2019
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": true,
@@ -1332,7 +1204,7 @@ Array [
     ],
     "supplier": "Amstelring",
     "supplierUrl": "",
-    "title": "Dagbesteding",
+    "title": "Dagbesteding(ZIN)",
   },
   Object {
     "dateFinish": "",
@@ -1356,8 +1228,7 @@ Array [
             . De vervoerspas ontvangt u per post.
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -1369,12 +1240,9 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Er is een lopend recht zonder einddatum.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": false,
@@ -1385,7 +1253,7 @@ Array [
     ],
     "supplier": "Transvision",
     "supplierUrl": "",
-    "title": "Deur tot deur Plus vervoer",
+    "title": "Deur tot deur Plus vervoer(ZIN)",
   },
   Object {
     "dateFinish": "21 februari 2019",
@@ -1403,13 +1271,14 @@ Array [
           <p>
             U hebt recht op 
             ambulante ondersteuning
-             per 
+             per
+             
             21 februari 2018
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -1420,16 +1289,13 @@ Array [
         "stepType": "first-step",
       },
       Object {
-        "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            2Learn B.V.
-             is gestart met het leveren van 
-            ambulante ondersteuning
-            .
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "2018-02-21T00:00:00",
+        "description": <p>
+          2Learn B.V.
+           is gestart met het leveren van 
+          ambulante ondersteuning
+          .
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": false,
@@ -1439,16 +1305,13 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            2Learn B.V.
-             heeft aan ons doorgegeven dat u geen 
-            ambulante ondersteuning
-             
-            meer krijgt.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          2Learn B.V.
+           heeft aan ons doorgegeven dat u geen 
+          ambulante ondersteuning
+           
+          meer krijgt.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -1457,13 +1320,10 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2019-02-21T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            Op deze datum vervalt uw recht op deze voorziening.
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "",
+        "description": <p>
+          Uw recht op ambulante ondersteuning is beëindigd per 21 februari 2019
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": true,
@@ -1474,7 +1334,7 @@ Array [
     ],
     "supplier": "2Learn B.V.",
     "supplierUrl": "",
-    "title": "Ambulante ondersteuning",
+    "title": "Ambulante ondersteuning(ZIN)",
   },
   Object {
     "dateFinish": "30 december 2018",
@@ -1492,13 +1352,14 @@ Array [
           <p>
             U hebt recht op 
             ambulante ondersteuning
-             per 
+             per
+             
             01 januari 2018
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -1509,16 +1370,13 @@ Array [
         "stepType": "first-step",
       },
       Object {
-        "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Stichting Forsa Amsterdam
-             is gestart met het leveren van 
-            ambulante ondersteuning
-            .
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "2018-01-01T00:00:00",
+        "description": <p>
+          Stichting Forsa Amsterdam
+           is gestart met het leveren van 
+          ambulante ondersteuning
+          .
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": false,
@@ -1528,16 +1386,13 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Stichting Forsa Amsterdam
-             heeft aan ons doorgegeven dat u geen 
-            ambulante ondersteuning
-             
-            meer krijgt.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Stichting Forsa Amsterdam
+           heeft aan ons doorgegeven dat u geen 
+          ambulante ondersteuning
+           
+          meer krijgt.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -1546,13 +1401,10 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2018-12-30T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            Op deze datum vervalt uw recht op deze voorziening.
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "",
+        "description": <p>
+          Uw recht op ambulante ondersteuning is beëindigd per 30 december 2018
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": true,
@@ -1563,7 +1415,7 @@ Array [
     ],
     "supplier": "Stichting Forsa Amsterdam",
     "supplierUrl": "",
-    "title": "Ambulante ondersteuning",
+    "title": "Ambulante ondersteuning(ZIN)",
   },
   Object {
     "dateFinish": "23 november 2018",
@@ -1581,13 +1433,14 @@ Array [
           <p>
             U hebt recht op 
             ambulante ondersteuning
-             per 
+             per
+             
             24 november 2017
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -1598,16 +1451,13 @@ Array [
         "stepType": "first-step",
       },
       Object {
-        "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Amstelring
-             is gestart met het leveren van 
-            ambulante ondersteuning
-            .
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "2017-11-24T00:00:00",
+        "description": <p>
+          Amstelring
+           is gestart met het leveren van 
+          ambulante ondersteuning
+          .
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": false,
@@ -1617,16 +1467,13 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Amstelring
-             heeft aan ons doorgegeven dat u geen 
-            ambulante ondersteuning
-             
-            meer krijgt.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Amstelring
+           heeft aan ons doorgegeven dat u geen 
+          ambulante ondersteuning
+           
+          meer krijgt.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -1635,13 +1482,10 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2018-11-23T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            Op deze datum vervalt uw recht op deze voorziening.
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "",
+        "description": <p>
+          Uw recht op ambulante ondersteuning is beëindigd per 23 november 2018
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": true,
@@ -1652,7 +1496,7 @@ Array [
     ],
     "supplier": "Amstelring",
     "supplierUrl": "",
-    "title": "Ambulante ondersteuning",
+    "title": "Ambulante ondersteuning(ZIN)",
   },
   Object {
     "dateFinish": "26 februari 2018",
@@ -1676,8 +1520,7 @@ Array [
             . De vervoerspas ontvangt u per post.
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -1689,19 +1532,9 @@ Array [
       },
       Object {
         "datePublished": "2018-02-26T00:00:00",
-        "description": <React.Fragment>
-          <React.Fragment>
-            <p>
-              Op deze datum vervalt uw recht op deze voorziening.
-            </p>
-            <p>
-              <strong>
-                Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-              </strong>
-            </p>
-          </React.Fragment>
-          
-        </React.Fragment>,
+        "description": <p>
+          Uw recht op Deur tot deur Plus vervoer is beëindigd per 26 februari 2018
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": true,
@@ -1712,7 +1545,7 @@ Array [
     ],
     "supplier": "Transvision",
     "supplierUrl": "",
-    "title": "Deur tot deur Plus vervoer",
+    "title": "Deur tot deur Plus vervoer(ZIN)",
   },
   Object {
     "dateFinish": "01 mei 2018",
@@ -1730,13 +1563,14 @@ Array [
           <p>
             U hebt recht op 
             dagbesteding
-             per 
+             per
+             
             01 juni 2017
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -1747,16 +1581,13 @@ Array [
         "stepType": "first-step",
       },
       Object {
-        "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Cordaan
-             is gestart met het leveren van 
-            dagbesteding
-            .
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "2017-06-01T00:00:00",
+        "description": <p>
+          Cordaan
+           is gestart met het leveren van 
+          dagbesteding
+          .
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": false,
@@ -1766,16 +1597,13 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Cordaan
-             heeft aan ons doorgegeven dat u geen 
-            dagbesteding
-             
-            meer krijgt.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Cordaan
+           heeft aan ons doorgegeven dat u geen 
+          dagbesteding
+           
+          meer krijgt.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -1784,13 +1612,10 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2018-05-01T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            Op deze datum vervalt uw recht op deze voorziening.
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "",
+        "description": <p>
+          Uw recht op dagbesteding is beëindigd per 01 mei 2018
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": true,
@@ -1801,7 +1626,7 @@ Array [
     ],
     "supplier": "Cordaan",
     "supplierUrl": "",
-    "title": "Dagbesteding",
+    "title": "Dagbesteding(ZIN)",
   },
   Object {
     "dateFinish": "13 april 2018",
@@ -1819,13 +1644,14 @@ Array [
           <p>
             U hebt recht op 
             hulp bij het huishouden
-             per 
+             per
+             
             01 juni 2017
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -1836,16 +1662,13 @@ Array [
         "stepType": "first-step",
       },
       Object {
-        "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Emile Thuiszorg
-             is gestart met het leveren van 
-            hulp bij het huishouden
-            .
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "2017-06-01T00:00:00",
+        "description": <p>
+          Emile Thuiszorg
+           is gestart met het leveren van 
+          hulp bij het huishouden
+          .
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": false,
@@ -1855,16 +1678,13 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Emile Thuiszorg
-             heeft aan ons doorgegeven dat u geen 
-            hulp bij het huishouden
-             
-            meer krijgt.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Emile Thuiszorg
+           heeft aan ons doorgegeven dat u geen 
+          hulp bij het huishouden
+           
+          meer krijgt.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -1873,13 +1693,10 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2018-04-13T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            Op deze datum vervalt uw recht op deze voorziening.
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "",
+        "description": <p>
+          Uw recht op hulp bij het huishouden is beëindigd per 13 april 2018
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": true,
@@ -1890,7 +1707,7 @@ Array [
     ],
     "supplier": "Emile Thuiszorg",
     "supplierUrl": "",
-    "title": "Hulp bij het huishouden",
+    "title": "Hulp bij het huishouden(ZIN)",
   },
   Object {
     "dateFinish": "08 maart 2018",
@@ -1908,13 +1725,14 @@ Array [
           <p>
             U hebt recht op 
             dagbesteding
-             per 
+             per
+             
             01 juni 2017
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -1925,16 +1743,13 @@ Array [
         "stepType": "first-step",
       },
       Object {
-        "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Amstelring
-             is gestart met het leveren van 
-            dagbesteding
-            .
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "2017-06-01T00:00:00",
+        "description": <p>
+          Amstelring
+           is gestart met het leveren van 
+          dagbesteding
+          .
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": false,
@@ -1944,16 +1759,13 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Amstelring
-             heeft aan ons doorgegeven dat u geen 
-            dagbesteding
-             
-            meer krijgt.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Amstelring
+           heeft aan ons doorgegeven dat u geen 
+          dagbesteding
+           
+          meer krijgt.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -1962,13 +1774,10 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "2018-03-08T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            Op deze datum vervalt uw recht op deze voorziening.
-          </p>
-          
-        </React.Fragment>,
+        "datePublished": "",
+        "description": <p>
+          Uw recht op dagbesteding is beëindigd per 08 maart 2018
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": true,
@@ -1979,7 +1788,7 @@ Array [
     ],
     "supplier": "Amstelring",
     "supplierUrl": "",
-    "title": "Dagbesteding",
+    "title": "Dagbesteding(ZIN)",
   },
   Object {
     "dateFinish": "",
@@ -2003,8 +1812,7 @@ Array [
             . De vervoerspas ontvangt u per post.
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -2016,12 +1824,9 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Er is een lopend recht zonder einddatum.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": false,
@@ -2032,7 +1837,7 @@ Array [
     ],
     "supplier": "Transvision",
     "supplierUrl": "",
-    "title": "Deur tot deur Plus vervoer",
+    "title": "Deur tot deur Plus vervoer(ZIN)",
   },
   Object {
     "dateFinish": "",
@@ -2045,7 +1850,7 @@ Array [
     },
     "process": Array [
       Object {
-        "datePublished": "2015-06-23T00:00:00",
+        "datePublished": "",
         "description": <React.Fragment>
           <p>
             U hebt recht op een 
@@ -2056,8 +1861,7 @@ Array [
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -2069,15 +1873,12 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            De gemeente heeft opdracht gegeven aan
-             
-            Ergomedi Bouw B.V.
-             om de aanpassingen aan uw woning uit te voeren.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          De gemeente heeft opdracht gegeven aan
+           
+          Ergomedi Bouw B.V.
+           om de aanpassingen aan uw woning uit te voeren.
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": true,
@@ -2087,13 +1888,10 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Ergomedi Bouw B.V.
-             heeft aan ons doorgegeven dat de aanpassing aan uw woning is uitgevoerd.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Ergomedi Bouw B.V.
+           heeft aan ons doorgegeven dat de aanpassing aan uw woning is uitgevoerd.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -2103,12 +1901,9 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Er is een lopend recht zonder einddatum.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": false,
@@ -2119,7 +1914,7 @@ Array [
     ],
     "supplier": "Ergomedi Bouw B.V.",
     "supplierUrl": "",
-    "title": "Woonruimteaanpassing",
+    "title": "Woonruimteaanpassing(ZIN)",
   },
   Object {
     "dateFinish": "",
@@ -2143,8 +1938,7 @@ Array [
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -2156,17 +1950,14 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            De gemeente heeft opdracht gegeven aan
-             
-            Medipoint B.V.
-             om een 
-            scootmobiel voor buitengebruik
-             aan u te leveren.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          De gemeente heeft opdracht gegeven aan
+           
+          Medipoint B.V.
+           om een 
+          scootmobiel voor buitengebruik
+           aan u te leveren.
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": true,
@@ -2176,16 +1967,13 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Medipoint B.V.
-             heeft aan ons doorgegeven dat een
-             
-            scootmobiel voor buitengebruik
-             bij u is afgeleverd.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Medipoint B.V.
+           heeft aan ons doorgegeven dat een
+           
+          scootmobiel voor buitengebruik
+           bij u is afgeleverd.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -2195,12 +1983,9 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Er is een lopend recht zonder einddatum.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": false,
@@ -2211,7 +1996,7 @@ Array [
     ],
     "supplier": "Medipoint B.V.",
     "supplierUrl": "",
-    "title": "Scootmobiel voor buitengebruik",
+    "title": "Scootmobiel voor buitengebruik(ZIN)",
   },
   Object {
     "dateFinish": "",
@@ -2235,8 +2020,7 @@ Array [
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -2248,17 +2032,14 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            De gemeente heeft opdracht gegeven aan
-             
-            Medipoint B.V.
-             om een 
-            elektrische hulpaandrijving voor rolstoel
-             aan u te leveren.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          De gemeente heeft opdracht gegeven aan
+           
+          Medipoint B.V.
+           om een 
+          elektrische hulpaandrijving voor rolstoel
+           aan u te leveren.
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": true,
@@ -2268,16 +2049,13 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Medipoint B.V.
-             heeft aan ons doorgegeven dat een
-             
-            elektrische hulpaandrijving voor rolstoel
-             bij u is afgeleverd.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Medipoint B.V.
+           heeft aan ons doorgegeven dat een
+           
+          elektrische hulpaandrijving voor rolstoel
+           bij u is afgeleverd.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -2287,12 +2065,9 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Er is een lopend recht zonder einddatum.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": false,
@@ -2303,7 +2078,7 @@ Array [
     ],
     "supplier": "Medipoint B.V.",
     "supplierUrl": "",
-    "title": "Elektrische hulpaandrijving voor rolstoel",
+    "title": "Elektrische hulpaandrijving voor rolstoel(ZIN)",
   },
   Object {
     "dateFinish": "",
@@ -2316,7 +2091,7 @@ Array [
     },
     "process": Array [
       Object {
-        "datePublished": "2014-09-11T00:00:00",
+        "datePublished": "",
         "description": <React.Fragment>
           <p>
             U hebt recht op een 
@@ -2327,8 +2102,7 @@ Array [
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -2340,15 +2114,12 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            De gemeente heeft opdracht gegeven aan
-             
-            Gebr Koenen B.V.
-             om de aanpassingen aan uw woning uit te voeren.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          De gemeente heeft opdracht gegeven aan
+           
+          Gebr Koenen B.V.
+           om de aanpassingen aan uw woning uit te voeren.
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": true,
@@ -2358,13 +2129,10 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Gebr Koenen B.V.
-             heeft aan ons doorgegeven dat de aanpassing aan uw woning is uitgevoerd.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Gebr Koenen B.V.
+           heeft aan ons doorgegeven dat de aanpassing aan uw woning is uitgevoerd.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -2374,12 +2142,9 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Er is een lopend recht zonder einddatum.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": false,
@@ -2390,7 +2155,7 @@ Array [
     ],
     "supplier": "Gebr Koenen B.V.",
     "supplierUrl": "",
-    "title": "Woonruimteaanpassing",
+    "title": "Woonruimteaanpassing(ZIN)",
   },
   Object {
     "dateFinish": "",
@@ -2403,7 +2168,7 @@ Array [
     },
     "process": Array [
       Object {
-        "datePublished": "2013-12-09T00:00:00",
+        "datePublished": "",
         "description": <React.Fragment>
           <p>
             U hebt recht op een 
@@ -2414,8 +2179,7 @@ Array [
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -2427,15 +2191,12 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            De gemeente heeft opdracht gegeven aan
-             
-            Gebr Koenen B.V.
-             om de aanpassingen aan uw woning uit te voeren.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          De gemeente heeft opdracht gegeven aan
+           
+          Gebr Koenen B.V.
+           om de aanpassingen aan uw woning uit te voeren.
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": true,
@@ -2445,13 +2206,10 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Gebr Koenen B.V.
-             heeft aan ons doorgegeven dat de aanpassing aan uw woning is uitgevoerd.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Gebr Koenen B.V.
+           heeft aan ons doorgegeven dat de aanpassing aan uw woning is uitgevoerd.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -2461,12 +2219,9 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Er is een lopend recht zonder einddatum.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": false,
@@ -2477,7 +2232,7 @@ Array [
     ],
     "supplier": "Gebr Koenen B.V.",
     "supplierUrl": "",
-    "title": "Woonruimteaanpassing",
+    "title": "Woonruimteaanpassing(ZIN)",
   },
   Object {
     "dateFinish": "",
@@ -2490,7 +2245,7 @@ Array [
     },
     "process": Array [
       Object {
-        "datePublished": "2013-05-17T00:00:00",
+        "datePublished": "",
         "description": <React.Fragment>
           <p>
             U hebt recht op een 
@@ -2501,8 +2256,7 @@ Array [
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -2514,15 +2268,12 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            De gemeente heeft opdracht gegeven aan
-             
-            Gebr Koenen B.V.
-             om de aanpassingen aan uw woning uit te voeren.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          De gemeente heeft opdracht gegeven aan
+           
+          Gebr Koenen B.V.
+           om de aanpassingen aan uw woning uit te voeren.
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": true,
@@ -2532,13 +2283,10 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Gebr Koenen B.V.
-             heeft aan ons doorgegeven dat de aanpassing aan uw woning is uitgevoerd.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Gebr Koenen B.V.
+           heeft aan ons doorgegeven dat de aanpassing aan uw woning is uitgevoerd.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -2548,12 +2296,9 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Er is een lopend recht zonder einddatum.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": false,
@@ -2564,7 +2309,7 @@ Array [
     ],
     "supplier": "Gebr Koenen B.V.",
     "supplierUrl": "",
-    "title": "Woonruimteaanpassing",
+    "title": "Woonruimteaanpassing(ZIN)",
   },
   Object {
     "dateFinish": "",
@@ -2588,8 +2333,7 @@ Array [
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -2601,17 +2345,14 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            De gemeente heeft opdracht gegeven aan
-             
-            Welzorg
-             om een 
-            kinderspeelvoertuig
-             aan u te leveren.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          De gemeente heeft opdracht gegeven aan
+           
+          Welzorg
+           om een 
+          kinderspeelvoertuig
+           aan u te leveren.
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": true,
@@ -2621,16 +2362,13 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Welzorg
-             heeft aan ons doorgegeven dat een
-             
-            kinderspeelvoertuig
-             bij u is afgeleverd.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Welzorg
+           heeft aan ons doorgegeven dat een
+           
+          kinderspeelvoertuig
+           bij u is afgeleverd.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -2640,12 +2378,9 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Er is een lopend recht zonder einddatum.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": false,
@@ -2656,7 +2391,7 @@ Array [
     ],
     "supplier": "Welzorg",
     "supplierUrl": "",
-    "title": "Kinderspeelvoertuig",
+    "title": "Kinderspeelvoertuig(ZIN)",
   },
   Object {
     "dateFinish": "",
@@ -2680,8 +2415,7 @@ Array [
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -2693,17 +2427,14 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            De gemeente heeft opdracht gegeven aan
-             
-            Medipoint B.V.
-             om een 
-            handbewogen rolstoel
-             aan u te leveren.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          De gemeente heeft opdracht gegeven aan
+           
+          Medipoint B.V.
+           om een 
+          handbewogen rolstoel
+           aan u te leveren.
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": true,
@@ -2713,16 +2444,13 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Medipoint B.V.
-             heeft aan ons doorgegeven dat een
-             
-            handbewogen rolstoel
-             bij u is afgeleverd.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Medipoint B.V.
+           heeft aan ons doorgegeven dat een
+           
+          handbewogen rolstoel
+           bij u is afgeleverd.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -2732,12 +2460,9 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Er is een lopend recht zonder einddatum.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": false,
@@ -2748,7 +2473,7 @@ Array [
     ],
     "supplier": "Medipoint B.V.",
     "supplierUrl": "",
-    "title": "Handbewogen rolstoel",
+    "title": "Handbewogen rolstoel(ZIN)",
   },
   Object {
     "dateFinish": "",
@@ -2772,8 +2497,7 @@ Array [
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -2785,17 +2509,14 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            De gemeente heeft opdracht gegeven aan
-             
-            Medipoint B.V.
-             om een 
-            douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast)
-             aan u te leveren.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          De gemeente heeft opdracht gegeven aan
+           
+          Medipoint B.V.
+           om een 
+          douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast)
+           aan u te leveren.
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": true,
@@ -2805,16 +2526,13 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Medipoint B.V.
-             heeft aan ons doorgegeven dat een
-             
-            douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast)
-             bij u is afgeleverd.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Medipoint B.V.
+           heeft aan ons doorgegeven dat een
+           
+          douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast)
+           bij u is afgeleverd.
+        </p>,
         "documents": Array [],
         "id": "status-step-2",
         "isActual": false,
@@ -2824,12 +2542,9 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Er is een lopend recht zonder einddatum.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
         "documents": Array [],
         "id": "status-step-3",
         "isActual": false,
@@ -2840,7 +2555,7 @@ Array [
     ],
     "supplier": "Medipoint B.V.",
     "supplierUrl": "",
-    "title": "Douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast)",
+    "title": "Douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast)(ZIN)",
   },
   Object {
     "dateFinish": "",
@@ -2864,8 +2579,7 @@ Array [
             . De vervoerspas ontvangt u per post.
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -2877,12 +2591,9 @@ Array [
       },
       Object {
         "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            Er is een lopend recht zonder einddatum.
-          </p>
-          
-        </React.Fragment>,
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
         "documents": Array [],
         "id": "status-step-1",
         "isActual": false,
@@ -2893,7 +2604,7 @@ Array [
     ],
     "supplier": "Transvision",
     "supplierUrl": "",
-    "title": "Kamer tot kamer vervoer",
+    "title": "Kamer tot kamer vervoer(ZIN)",
   },
 ]
 `;

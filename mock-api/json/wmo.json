@@ -898,5 +898,79 @@
         "VoorzieningIngangsdatum": "2017-11-28T00:00:00",
         "VoorzieningEinddatum": "2018-11-27T00:00:00",
         "Levering": null
+    },
+    [
+    {
+        "Omschrijving": "hulp bij het huishouden",
+        "Wet": 1,
+        "Actueel": false,
+        "Volume": 1,
+        "Eenheid": "82",
+        "Frequentie": 3,
+        "Leveringsvorm": "ZIN",
+        "Omvang": "1 stuks per vier weken",
+        "Leverancier": "Cordaan",
+        "Checkdatum": "2018-10-05T00:00:00",
+        "Voorzieningsoortcode": "WMH",
+        "Voorzieningcode": "013",
+        "Aanvraagdatum": "2017-06-01T00:00:00",
+        "Beschikkingsdatum": "2017-06-01T00:00:00",
+        "VoorzieningIngangsdatum": "2017-06-01T00:00:00",
+        "VoorzieningEinddatum": "2018-02-16T00:00:00",
+        "Levering": {
+            "Opdrachtdatum": "2017-06-01T00:00:00",
+            "Leverancier": "Z00008",
+            "IngangsdatumGeldigheid": "2017-06-01T00:00:00",
+            "EinddatumGeldigheid": "2018-02-16T00:00:00",
+            "StartdatumLeverancier": "2017-06-01T00:00:00",
+            "EinddatumLeverancier": "2018-02-16T00:00:00"
+        }
+    },
+    {
+        "Omschrijving": "ambulante ondersteuning",
+        "Wet": 1,
+        "Actueel": false,
+        "Volume": 1,
+        "Eenheid": "82",
+        "Frequentie": 3,
+        "Leveringsvorm": "ZIN",
+        "Omvang": "1 stuks per vier weken",
+        "Leverancier": "Cordaan",
+        "Checkdatum": "2018-10-05T00:00:00",
+        "Voorzieningsoortcode": "AO5",
+        "Voorzieningcode": "021",
+        "Aanvraagdatum": "2018-01-01T00:00:00",
+        "Beschikkingsdatum": "2018-01-01T00:00:00",
+        "VoorzieningIngangsdatum": "2018-01-01T00:00:00",
+        "VoorzieningEinddatum": "2018-02-16T00:00:00",
+        "Levering": {
+            "Opdrachtdatum": "2018-01-01T00:00:00",
+            "Leverancier": "Z00110",
+            "IngangsdatumGeldigheid": "2018-01-01T00:00:00",
+            "EinddatumGeldigheid": "2018-02-16T00:00:00",
+            "StartdatumLeverancier": "2018-01-01T00:00:00",
+            "EinddatumLeverancier": "2018-02-16T00:00:00"
+        }
+    },
+    {
+        "Omschrijving": "deur tot deur, samenreizend vervoer",
+        "Wet": 1,
+        "Actueel": true,
+        "Volume": 1,
+        "Eenheid": "82",
+        "Frequentie": 6,
+        "Leveringsvorm": "ZIN",
+        "Omvang": "1 stuks per beschikking",
+        "Leverancier": "RMC Amsterdam",
+        "Checkdatum": null,
+        "Voorzieningsoortcode": "AOV",
+        "Voorzieningcode": "720",
+        "Aanvraagdatum": "2013-10-25T00:00:00",
+        "Beschikkingsdatum": "2013-11-05T00:00:00",
+        "VoorzieningIngangsdatum": "2013-11-04T00:00:00",
+        "VoorzieningEinddatum": null,
+        "Levering": null
     }
+]
+
 ]
