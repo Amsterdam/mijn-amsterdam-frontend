@@ -115,7 +115,7 @@
 }
 
 .ListItem {
-  &.first-step .Panel:first-child:before {
+  &.first-step:not(.Actual) .Panel:first-child:before {
     background: linear-gradient(
       to bottom,
       transparent 0%,
@@ -135,7 +135,7 @@
     );
   }
 
-  &:not(.first-step):not(.last-step) {
+  &:not(.first-step):not(.last-step):not(.Actual) {
     &:last-child .Panel:before {
       background: linear-gradient(
         to bottom,
@@ -151,6 +151,14 @@
       to bottom,
       $color-neutral-grey3 0%,
       $color-neutral-grey3 3rem,
+      transparent 0%
+    );
+  }
+  &.last-step.Actual .Panel:first-child:before {
+    background: linear-gradient(
+      to bottom,
+      $color-primary-darkblue 0%,
+      $color-primary-darkblue 3rem,
       transparent 0%
     );
   }
@@ -184,6 +192,15 @@
       $color-neutral-grey3 100%
     );
     }
+  }
+  &.first-step .Panel:first-child:before {
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 3rem,
+      $color-neutral-grey3 3rem,
+      $color-neutral-grey3 100%
+    );
   }
 }
 
