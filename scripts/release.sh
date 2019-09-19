@@ -6,51 +6,37 @@ git checkout -b release-branch origin/master && \
 
 echo "Fetched origin, created release-branch."
 
-CURTAG=`git for-each-ref refs/tags --sort=-taggerdate --format="%(refname:short)" --count=1`;
-CURTAG=$(sed 's/[^0-9.]//g' <<< $CURTAG) # strip all but numbers and dots to extract specific version
-
-IFS='.' read -a vers <<< "$CURTAG"
-
-MAJ=${vers[0]}
-MIN=${vers[1]}
-
-BUG=$([ "${vers[2]}" == "" ] && echo 0 || echo "$d")
-
-echo "Current Tag: v$MAJ.$MIN.$BUG"
-
 for cmd in "$@"
 do
 	case $cmd in
 		"--major")
-			# $((MAJ+1))
-			((MAJ+=1))
-			MIN=0
-			BUG=0
 			echo "Incrementing Major Version#"
+      npm --no-git-tag-version --allow-same-version version major
 			;;
 		"--minor")
-			((MIN+=1))
-			BUG=0
 			echo "Incrementing Minor Version#"
+      npm --no-git-tag-version --allow-same-version version minor
 			;;
 		"--bug")
-			((BUG+=1))
 			echo "Incrementing Bug Version#"
+      npm --no-git-tag-version --allow-same-version version patch
 			;;
 	esac
 done
 
-NEWTAG="release-v$MAJ.$MIN.$BUG"
+NEWVERSION=$(grep '"version"' package.json | cut -d '"' -f 4)
+
+NEWTAG="release-v$NEWVERSION"
 BRANCH="production-${NEWTAG}"
 
 echo "Adding Tag: $NEWTAG";
 
 git branch -m "$BRANCH" && \
-# npm --no-git-tag-version --allow-same-version version "$MAJ.$MIN.$BUG" && \
-# git add package.json package-lock.json && \
-# git commit -m "Bump! $NEWTAG" && \
-git tag -a "$NEWTAG" -m "Production ${NEWTAG}" && \
-git push origin "$NEWTAG" && \
 
-echo "Don't forget to Approve the deploy to the production environment!"
+git add package.json package-lock.json && \
+git commit -m "Bump! $NEWTAG" && \
+git tag -a "$NEWTAG" -m "Production ${NEWTAG}" && \
+git push origin --follow-tags "$BRANCH" && \
+
+echo "Don't forget to merge to master and Approve the deploy to the production environment!"
 
