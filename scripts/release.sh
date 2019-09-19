@@ -35,8 +35,8 @@ git branch -m "$BRANCH" && \
 
 git add package.json package-lock.json && \
 git commit -m "Bump! $NEWTAG" && \
-# git tag -a "$NEWTAG" -m "Production ${NEWTAG}" && \
+git tag -a "$NEWTAG" -m "Production ${NEWTAG}" && \
 git push origin --follow-tags "$BRANCH" && \
 
-echo "Don't forget to Approve the deploy to the production environment!"
+echo "Don't forget to merge to master and Approve the deploy to the production environment!"
 
