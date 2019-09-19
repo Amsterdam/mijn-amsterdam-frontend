@@ -78,12 +78,6 @@ export default () => {
               );
             }}
           />
-          {WmoItem && !WmoItem.isActual && (
-            <p className={styles.HistoricItemsMention}>
-              Informatie van voor 1 januari 2018 kunt u hier niet inzien. Deze
-              kunt u wel opvragen bij de Wmo Helpdesk.
-            </p>
-          )}
         </PageContentMainBody>
       )}
     </PageContentMain>
