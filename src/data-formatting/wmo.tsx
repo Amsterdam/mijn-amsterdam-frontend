@@ -666,7 +666,7 @@ export function formatWmoApiResponse(
 
       return {
         id,
-        title: capitalizeFirstLetter(title) + `(${deliveryType})`,
+        title: capitalizeFirstLetter(title),
         dateStart: defaultDateFormat(dateStart),
         dateFinish: defaultDateFormat(dateFinish),
         supplier,
