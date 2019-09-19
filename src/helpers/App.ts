@@ -50,8 +50,8 @@ export function formattedTimeFromSeconds(seconds: number) {
   return formatDate(t, 'mm:ss');
 }
 
-export function isDateInPast(date: string | Date) {
-  return new Date(date).getTime() < new Date().getTime();
+export function isDateInPast(date: string | Date, dateNow: string | Date) {
+  return new Date(date).getTime() < new Date(dateNow).getTime();
 }
 
 export function capitalizeFirstLetter(text: string) {

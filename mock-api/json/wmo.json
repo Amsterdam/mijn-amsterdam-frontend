@@ -234,7 +234,7 @@
         }
     },
     {
-        "Omschrijving": "dagbesteding",
+        "Omschrijving": "dagbesteding 2019!",
         "Wet": 1,
         "Actueel": false,
         "Volume": 1,
@@ -364,7 +364,7 @@
         }
     },
     {
-        "Omschrijving": "dagbesteding",
+        "Omschrijving": "dagbesteding 2019! 2",
         "Wet": 1,
         "Actueel": true,
         "Volume": 1,
@@ -385,7 +385,7 @@
             "Leverancier": "Z00103",
             "IngangsdatumGeldigheid": "2019-03-09T00:00:00",
             "EinddatumGeldigheid": "2020-03-08T00:00:00",
-            "StartdatumLeverancier": "2019-03-09T00:00:00",
+            "StartdatumLeverancier": "2019-03-11T00:00:00",
             "EinddatumLeverancier": null
         }
     },

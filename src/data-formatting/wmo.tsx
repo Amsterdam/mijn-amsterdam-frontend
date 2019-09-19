@@ -59,7 +59,10 @@ export interface WmoItem {
 }
 
 type TextPartContent = string | JSX.Element;
-type TextPartContentFormatter = (data: WmoSourceData) => TextPartContent;
+type TextPartContentFormatter = (
+  data: WmoSourceData,
+  stepIndex?: number
+) => TextPartContent;
 type TextPartContents = TextPartContent | TextPartContentFormatter;
 
 // NOTE: See Functional Design document with information
@@ -74,6 +77,8 @@ const Labels: {
       status: string;
       datePublished: TextPartContents;
       description: TextPartContents;
+      isHistorical: (stepIndex: number, data: WmoSourceData) => boolean;
+      isActual: (stepIndex: number, data: WmoSourceData) => boolean;
     }>;
   };
 } = {
@@ -87,33 +92,41 @@ const Labels: {
       {
         status: 'Besluit',
         datePublished: data => data.dateDecision,
+        isHistorical: (stepIndex, data) => data.isActual === false,
+        isActual: (stepIndex, data) => data.isActual === true,
         description: data => (
-          <p>
-            U hebt recht op een {data.title} per{' '}
-            {defaultDateFormat(data.dateStart)}. De vervoerspas ontvangt u per
-            post.
-          </p>
+          <>
+            <p>
+              U hebt recht op een {data.title} per{' '}
+              {defaultDateFormat(data.dateStart)}. De vervoerspas ontvangt u per
+              post.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          </>
         ),
       },
       {
         status: 'Einde recht',
-        datePublished: data => data.dateFinish,
-        description: data =>
-          data.dateFinish ? (
-            <>
-              <p>Op deze datum vervalt uw recht op deze voorziening.</p>
-              <p>
-                <strong>
-                  Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-                </strong>
-              </p>
-            </>
-          ) : (
-            <p>Er is een lopend recht zonder einddatum.</p>
-          ),
+        datePublished: data => (data.isActual ? '' : data.dateFinish),
+        isHistorical: () => false,
+        isActual: (stepIndex, data) => data.isActual === false,
+        description: data => (
+          <p>
+            {data.isActual
+              ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
+              : `Uw recht op ${data.title} is beëindigd per ${defaultDateFormat(
+                  data.dateFinish
+                )}`}
+          </p>
+        ),
       },
     ],
   },
+
+  // Vergoeding
   Compensation: {
     deliveryType: {
       ZIN: ['FIN', 'MVV', 'MVW', 'VHK', 'VVD', 'VVK'],
@@ -140,28 +153,42 @@ const Labels: {
       {
         status: 'Besluit',
         datePublished: data => data.dateDecision,
+        isHistorical: (stepIndex, data) => data.isActual === false,
+        isActual: (stepIndex, data) => data.isActual === true,
         description: data => (
-          <p>
-            U hebt recht op een {data.title} per{' '}
-            {defaultDateFormat(data.dateStart)}.
-          </p>
+          <>
+            <p>
+              U hebt recht op een {data.title} per{' '}
+              {defaultDateFormat(data.dateStart)}.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          </>
         ),
       },
       {
         status: 'Einde recht',
-        datePublished: data => data.dateFinish,
+        datePublished: data => (data.isActual ? '' : data.dateFinish),
+        isHistorical: () => false,
+        isActual: (stepIndex, data) => data.isActual === false,
         description: data => (
           <>
             <p>
-              {data.dateFinish
-                ? 'Op deze datum vervalt uw recht op deze voorziening.'
-                : 'Er is een lopend recht zonder einddatum.'}
+              {data.isActual
+                ? data.dateFinish
+                  ? 'Op deze datum vervalt uw recht op deze voorziening.'
+                  : 'Er is een lopend recht zonder einddatum.'
+                : `Uw recht op ${
+                    data.title
+                  } is beëindigd per ${defaultDateFormat(data.dateFinish)}`}
             </p>
-            {data.deliveryType === 'PGB' && (
+            {data.isActual && data.deliveryType === 'PGB' && (
               <p>
                 <strong>
                   Uiterlijk 8 weken voor de einddatum van uw PGB moet u een
-                  verlenging aanvragen. Hoe u dit doet, leest u in uw besluit
+                  verlenging aanvragen. Hoe u dit doet, leest u in uw besluit.
                 </strong>
               </p>
             )}
@@ -170,6 +197,7 @@ const Labels: {
       },
     ],
   },
+
   PGB: {
     deliveryType: {
       PGB: [
@@ -189,36 +217,52 @@ const Labels: {
       {
         status: 'Besluit',
         datePublished: data => data.dateDecision,
+        isHistorical: (stepIndex, data) => data.isActual === false,
+        isActual: (stepIndex, data) => data.isActual === true,
         description: data => (
-          <p>
-            U hebt recht op {data.title} per {defaultDateFormat(data.dateStart)}
-            .
-          </p>
+          <>
+            <p>
+              U hebt recht op {data.title} per{' '}
+              {defaultDateFormat(data.dateStart)}.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          </>
         ),
       },
       {
         status: 'Einde recht',
         datePublished: data => data.dateFinish,
+        isHistorical: () => false,
+        isActual: (stepIndex, data) => data.isActual === false,
         description: data => (
           <>
             <p>
-              {data.dateFinish
-                ? 'Op deze datum vervalt uw recht op deze voorziening.'
-                : 'Er is een lopend recht zonder einddatum.'}
+              {data.isActual
+                ? data.dateFinish
+                  ? `Op deze datum vervalt uw recht op ${data.title}.`
+                  : 'Er is een lopend recht zonder einddatum.'
+                : `Uw recht op ${
+                    data.title
+                  } is beëindigd per ${defaultDateFormat(data.dateFinish)}`}
             </p>
-            {data.deliveryType === 'PGB' && (
-              <p>
+            <p>
+              {data.isActual && (
                 <strong>
                   Uiterlijk 8 weken voor de einddatum van uw PGB moet u een
-                  verlenging aanvragen. Hoe u dit doet, leest u in uw besluit
+                  verlenging aanvragen. Hoe u dit doet, leest u in uw besluit.
                 </strong>
-              </p>
-            )}
+              )}
+            </p>
           </>
         ),
       },
     ],
   },
+
+  // Diensten
   Services: {
     deliveryType: {
       ZIN: [
@@ -245,16 +289,57 @@ const Labels: {
       {
         status: 'Besluit',
         datePublished: data => data.dateDecision,
-        description: data => (
-          <p>
-            U hebt recht op {data.title} per {defaultDateFormat(data.dateStart)}
-            .
-          </p>
-        ),
+        isHistorical: (stepIndex, sourceData: WmoSourceData) =>
+          sourceData.isActual
+            ? sourceData.dateDecision === sourceData.dateStartServiceDelivery
+            : true,
+        isActual: (stepIndex, sourceData: WmoSourceData) =>
+          sourceData.isActual
+            ? sourceData.dateDecision !== sourceData.dateStartServiceDelivery
+            : false,
+        description: (data: WmoSourceData) => {
+          return (
+            <>
+              <p>
+                U hebt recht op {data.title} per{' '}
+                {defaultDateFormat(data.dateStart)}.
+              </p>
+              <p>
+                {data.isActual &&
+                [
+                  'WMH',
+                  'AO1',
+                  'AO2',
+                  'AO3',
+                  'AO4',
+                  'AO5',
+                  'AO6',
+                  'AO7',
+                  'AO8',
+                  'DBA',
+                  'DBH',
+                  'DBL',
+                  'DBS',
+                  'KVB',
+                ].includes(data.itemTypeCode)
+                  ? `In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
+              indienen of hoe u van aanbieder kunt wisselen.`
+                  : `In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.`}
+              </p>
+            </>
+          );
+        },
       },
       {
         status: 'Levering gestart',
         datePublished: data => data.dateStartServiceDelivery,
+        isHistorical: (stepIndex, sourceData: WmoSourceData) =>
+          sourceData.isActual === false,
+        isActual: (stepIndex, sourceData: WmoSourceData) =>
+          sourceData.isActual === true
+            ? sourceData.dateDecision === sourceData.dateStartServiceDelivery
+            : false,
         description: data => (
           <p>
             {data.supplier} is gestart met het leveren van {data.title}.
@@ -263,7 +348,10 @@ const Labels: {
       },
       {
         status: 'Levering gestopt',
-        datePublished: data => data.dateFinishServiceDelivery,
+        datePublished: () => '',
+        isHistorical: (stepIndex, sourceData: WmoSourceData) =>
+          sourceData.isActual === false,
+        isActual: () => false,
         description: data => (
           <p>
             {data.supplier} heeft aan ons doorgegeven dat u geen {data.title}{' '}
@@ -273,17 +361,24 @@ const Labels: {
       },
       {
         status: 'Einde recht',
-        datePublished: data => data.dateFinish,
+        datePublished: () => '',
+        isHistorical: () => false,
+        isActual: (stepIndex, sourceData: WmoSourceData) =>
+          sourceData.isActual === false,
         description: data => (
           <p>
-            {data.dateFinish
-              ? 'Op deze datum vervalt uw recht op deze voorziening.'
-              : 'Er is een lopend recht zonder einddatum.'}
+            {data.isActual
+              ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
+              : `Uw recht op ${data.title} is beëindigd per ${defaultDateFormat(
+                  data.dateFinish
+                )}`}
           </p>
         ),
       },
     ],
   },
+
+  // Zorg in natura (Hulpmiddelen)
   SupportProducts: {
     deliveryType: {
       ZIN: ['AAN', 'AUT', 'FIE', 'GBW', 'OVE', 'ROL', 'RWD', 'RWT', 'SCO'],
@@ -293,16 +388,29 @@ const Labels: {
       {
         status: 'Besluit',
         datePublished: data => data.dateDecision,
+        isHistorical: () => true,
+        isActual: () => false,
         description: data => (
-          <p>
-            U hebt recht op een {data.title} per{' '}
-            {defaultDateFormat(data.dateStart)}.
-          </p>
+          <>
+            <p>
+              U hebt recht op een {data.title} per{' '}
+              {defaultDateFormat(data.dateStart)}.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          </>
         ),
       },
       {
         status: 'Opdracht gegeven',
-        datePublished: data => data.dateStartServiceDelivery,
+        datePublished: () => '',
+        isHistorical: (stepIndex, data) => data.isActual === false,
+        isActual: (stepIndex, data) =>
+          data.isActual
+            ? isDateInPast(data.dateRequestOrderStart, new Date())
+            : false,
         description: data => (
           <p>
             De gemeente heeft opdracht gegeven aan{' '}
@@ -312,7 +420,9 @@ const Labels: {
       },
       {
         status: 'Product geleverd',
-        datePublished: data => data.dateFinishServiceDelivery,
+        datePublished: () => '',
+        isHistorical: (stepIndex, data) => data.isActual === false,
+        isActual: () => false,
         description: data => (
           <p>
             {data.serviceDeliverySupplier} heeft aan ons doorgegeven dat een{' '}
@@ -322,17 +432,23 @@ const Labels: {
       },
       {
         status: 'Einde recht',
-        datePublished: data => data.dateFinish,
+        datePublished: () => '',
+        isHistorical: () => false,
+        isActual: (stepIndex, data) => data.isActual === false,
         description: data => (
           <p>
-            {data.dateFinish
-              ? 'Op deze datum vervalt uw recht op deze voorziening.'
-              : 'Er is een lopend recht zonder einddatum.'}
+            {data.isActual
+              ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
+              : `Uw recht op ${data.title} is beëindigd per ${defaultDateFormat(
+                  data.dateFinish
+                )}`}
           </p>
         ),
       },
     ],
   },
+
+  // Zorg in natura (WRA)
   WRA: {
     deliveryType: {
       ZIN: ['ZIN', 'WRA'],
@@ -340,17 +456,30 @@ const Labels: {
     statusItems: [
       {
         status: 'Besluit',
-        datePublished: data => data.dateDecision,
+        datePublished: () => '',
+        isHistorical: () => true,
+        isActual: () => false,
         description: data => (
-          <p>
-            U hebt recht op een {data.title} per{' '}
-            {defaultDateFormat(data.dateStart)}.
-          </p>
+          <>
+            <p>
+              U hebt recht op een {data.title} per{' '}
+              {defaultDateFormat(data.dateStart)}.
+            </p>
+            <p>
+              In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.
+            </p>
+          </>
         ),
       },
       {
         status: 'Opdracht gegeven',
-        datePublished: data => data.dateStartServiceDelivery,
+        datePublished: () => '',
+        isHistorical: (stepIndex, data) => data.isActual === false,
+        isActual: (stepIndex, data) =>
+          data.isActual
+            ? isDateInPast(data.dateRequestOrderStart, new Date())
+            : false,
         description: data => (
           <p>
             De gemeente heeft opdracht gegeven aan{' '}
@@ -361,7 +490,9 @@ const Labels: {
       },
       {
         status: 'Aanpassing uitgevoerd',
-        datePublished: data => data.dateFinishServiceDelivery,
+        datePublished: () => '',
+        isHistorical: (stepIndex, data) => data.isActual === false,
+        isActual: () => false,
         description: data => (
           <p>
             {data.serviceDeliverySupplier} heeft aan ons doorgegeven dat de
@@ -371,12 +502,16 @@ const Labels: {
       },
       {
         status: 'Einde recht',
-        datePublished: data => data.dateFinish,
+        datePublished: data => '',
+        isHistorical: () => false,
+        isActual: (stepIndex, data) => data.isActual === false,
         description: data => (
           <p>
-            {data.dateFinish
-              ? 'Op deze datum vervalt uw recht op deze voorziening.'
-              : 'Er is een lopend recht zonder einddatum.'}
+            {data.isActual
+              ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
+              : `Uw recht op ${data.title} is beëindigd per ${defaultDateFormat(
+                  data.dateFinish
+                )}`}
           </p>
         ),
       },
@@ -398,7 +533,7 @@ export function parseLabelContent(
 }
 
 function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
-  const labelData = Object.values(Labels).find(labelData => {
+  const labelData = Object.values(Labels).find((labelData, index) => {
     const type = data.deliveryType || '';
     return (
       labelData.deliveryType[type] &&
@@ -407,6 +542,7 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
   });
 
   if (labelData) {
+    const stepCount = labelData.statusItems.length;
     const items: WmoProcessItem[] = labelData.statusItems.map(
       (statusItem, index) => {
         const datePublished = parseLabelContent(
@@ -414,76 +550,28 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
           data
         ) as string;
 
-        // Check to see if a client can change supplier during the right to a service.
-        const supplierChangePossible =
-          labelData.statusItems.length === 4 &&
-          labelData.statusItems[2].status === 'Levering gestopt'; // Levering gestopt status is the common denominator for this case.
+        let stepType: StepType = 'intermediate-step';
 
-        const docDescription =
-          index === 0 ? (
-            <p>
-              {supplierChangePossible
-                ? `In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.`
-                : `In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.`}
-            </p>
-          ) : (
-            ''
-          );
+        if (index === 0) {
+          stepType = 'first-step';
+        } else if (index === stepCount - 1) {
+          stepType = 'last-step';
+        }
+
         return {
           id: `status-step-${index}`,
           status: statusItem.status,
-          description: (
-            <>
-              {parseLabelContent(statusItem.description, data)}
-              {docDescription}
-            </>
-          ),
+          description: parseLabelContent(statusItem.description, data),
           datePublished,
-          isActual: false,
-          stepType: 'intermediate-step',
-          documents: [], // NOTE: To be implemented in 2020
-          isHistorical: false,
+          isActual: statusItem.isActual(index, data),
+          stepType,
+          isHistorical: statusItem.isHistorical(index, data),
+          documents: [], // NOTE: To be implemented late 2020
         };
       }
     );
 
-    if (items.length) {
-      const nItems = [];
-      let hasActualStep = false;
-      let l = items.length;
-      const len = l;
-
-      while (l--) {
-        const item = items[l];
-        const inPast = isDateInPast(item.datePublished);
-        const isActual: boolean = inPast && !hasActualStep;
-        let stepType: StepType = 'intermediate-step';
-
-        if (l === 0) {
-          stepType = 'first-step';
-        } else if (l === len - 1) {
-          stepType = 'last-step';
-        }
-
-        nItems.unshift({
-          ...item,
-          // Don't show the date for the intermediate steps
-          datePublished:
-            stepType !== 'intermediate-step' ? item.datePublished : '',
-          isActual,
-          stepType,
-          isHistorical: inPast && !isActual,
-        });
-
-        if (isActual && !hasActualStep) {
-          hasActualStep = isActual;
-        }
-      }
-
-      return nItems;
-    }
+    return items;
   }
 
   return [];
@@ -578,7 +666,7 @@ export function formatWmoApiResponse(
 
       return {
         id,
-        title: capitalizeFirstLetter(title),
+        title: capitalizeFirstLetter(title) + `(${deliveryType})`,
         dateStart: defaultDateFormat(dateStart),
         dateFinish: defaultDateFormat(dateFinish),
         supplier,

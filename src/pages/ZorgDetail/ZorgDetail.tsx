@@ -71,7 +71,11 @@ export default () => {
             altDocumentContent={(statusLineItem, stepNumber) => {
               return stepNumber === 1 ? (
                 <p>
-                  <strong>U krijgt dit besluit per post.</strong>
+                  <strong>
+                    {WmoItem.isActual
+                      ? 'U krijgt dit besluit per post.'
+                      : 'U hebt dit besluit per post ontvangen.'}
+                  </strong>
                 </p>
               ) : (
                 ''
