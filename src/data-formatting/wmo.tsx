@@ -333,7 +333,7 @@ const Labels: {
       },
       {
         status: 'Levering gestart',
-        datePublished: data => data.dateStartServiceDelivery,
+        datePublished: () => '',
         isHistorical: (stepIndex, sourceData: WmoSourceData) =>
           sourceData.isActual === false,
         isActual: (stepIndex, sourceData: WmoSourceData) =>
