@@ -62,9 +62,3 @@
     }
   }
 }
-
-.DataLinkTableCurrent {
-  @include select(DataLinkTable_Panel) {
-    border-bottom: 0;
-  }
-}

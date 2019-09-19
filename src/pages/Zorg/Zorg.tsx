@@ -57,7 +57,7 @@ export default () => {
         )}
         <DataLinkTable
           id="datalinktable-healthcare-granted"
-          rowHeight={isTabletScreen ? 'auto' : '6rem'}
+          rowHeight={isTabletScreen ? 'auto' : '5.8rem'}
           displayProps={DISPLAY_PROPS}
           items={itemsActual}
           title="Mijn huidige voorzieningen"
@@ -68,21 +68,23 @@ export default () => {
           trackCategory="Zorg en ondersteuning overzicht / Huidige voorzieningen"
         />
       </PageContentMainBody>
-      <div className={styles.HistoricDataLinkTable}>
-        <PageContentMainBody variant="boxed">
-          <DataLinkTable
-            id="datalinktable-healthcare-previous"
-            rowHeight={isTabletScreen ? 'auto' : '6rem'}
-            displayProps={DISPLAY_PROPS}
-            items={itemsPrevious}
-            title="Mijn eerdere voorzieningen"
-            noItemsMessage="U hebt geen eerdere voorzieningen."
-            startCollapsed={hasActualItems}
-            isLoading={isLoading}
-            trackCategory="Zorg en ondersteuning overzicht / Eerdere voorzieningen"
-          />
-        </PageContentMainBody>
-      </div>
+      <PageContentMainBody variant="boxed">
+        <DataLinkTable
+          id="datalinktable-healthcare-previous"
+          rowHeight={isTabletScreen ? 'auto' : '5.8rem'}
+          displayProps={DISPLAY_PROPS}
+          items={itemsPrevious}
+          title="Mijn eerdere voorzieningen"
+          noItemsMessage="U hebt geen eerdere voorzieningen."
+          startCollapsed={hasActualItems}
+          isLoading={isLoading}
+          trackCategory="Zorg en ondersteuning overzicht / Eerdere voorzieningen"
+        />
+        <p className={styles.HistoricItemsMention}>
+          Informatie van voor 1 januari 2018 kunt u hier niet inzien. Deze kunt
+          u wel opvragen bij de Wmo Helpdesk.
+        </p>
+      </PageContentMainBody>
     </PageContentMain>
   );
 };
