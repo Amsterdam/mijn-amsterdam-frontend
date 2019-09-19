@@ -81,7 +81,7 @@ Array [
     ],
     "supplier": "Emile Thuiszorg",
     "supplierUrl": "",
-    "title": "Hulp bij het huishouden(ZIN)",
+    "title": "Hulp bij het huishouden",
   },
   Object {
     "dateFinish": "12 maart 2020",
@@ -162,7 +162,7 @@ Array [
     ],
     "supplier": "Amstelring",
     "supplierUrl": "",
-    "title": "Dagbesteding(ZIN)",
+    "title": "Dagbesteding",
   },
   Object {
     "dateFinish": "08 maart 2020",
@@ -243,7 +243,7 @@ Array [
     ],
     "supplier": "Amstelring",
     "supplierUrl": "",
-    "title": "Ambulante ondersteuning(ZIN)",
+    "title": "Ambulante ondersteuning",
   },
   Object {
     "dateFinish": "08 maart 2020",
@@ -324,7 +324,7 @@ Array [
     ],
     "supplier": "Amstelring",
     "supplierUrl": "",
-    "title": "Dagbesteding(ZIN)",
+    "title": "Dagbesteding",
   },
   Object {
     "dateFinish": "31 december 2019",
@@ -405,7 +405,7 @@ Array [
     ],
     "supplier": "Familysupporters/Forsa",
     "supplierUrl": "",
-    "title": "Ambulante ondersteuning(ZIN)",
+    "title": "Ambulante ondersteuning",
   },
   Object {
     "dateFinish": "31 december 2018",
@@ -486,7 +486,7 @@ Array [
     ],
     "supplier": "Familysupporters/Forsa",
     "supplierUrl": "",
-    "title": "Ambulante ondersteuning(ZIN)",
+    "title": "Ambulante ondersteuning",
   },
   Object {
     "dateFinish": "08 maart 2019",
@@ -567,7 +567,7 @@ Array [
     ],
     "supplier": "Amstelring",
     "supplierUrl": "",
-    "title": "Ambulante ondersteuning(ZIN)",
+    "title": "Ambulante ondersteuning",
   },
   Object {
     "dateFinish": "20 november 2019",
@@ -648,7 +648,7 @@ Array [
     ],
     "supplier": "Leger des Heils",
     "supplierUrl": "",
-    "title": "Ambulante ondersteuning(ZIN)",
+    "title": "Ambulante ondersteuning",
   },
   Object {
     "dateFinish": "",
@@ -725,7 +725,7 @@ Array [
     ],
     "supplier": "Welzorg",
     "supplierUrl": "",
-    "title": "Woonruimteaanpassing(ZIN)",
+    "title": "Woonruimteaanpassing",
   },
   Object {
     "dateFinish": "",
@@ -807,7 +807,7 @@ Array [
     ],
     "supplier": "Medipoint B.V.",
     "supplierUrl": "",
-    "title": "Handbewogen rolstoel voor semi-permanent gebruik(ZIN)",
+    "title": "Handbewogen rolstoel voor semi-permanent gebruik",
   },
   Object {
     "dateFinish": "",
@@ -884,7 +884,7 @@ Array [
     ],
     "supplier": "Welzorg",
     "supplierUrl": "",
-    "title": "Woonruimteaanpassing(ZIN)",
+    "title": "Woonruimteaanpassing",
   },
   Object {
     "dateFinish": "01 januari 2019",
@@ -965,7 +965,7 @@ Array [
     ],
     "supplier": "Vivium Zorggroep",
     "supplierUrl": "",
-    "title": "Dagbesteding(ZIN)",
+    "title": "Dagbesteding",
   },
   Object {
     "dateFinish": "",
@@ -1042,7 +1042,7 @@ Array [
     ],
     "supplier": "Welzorg",
     "supplierUrl": "",
-    "title": "Woonruimteaanpassing(ZIN)",
+    "title": "Woonruimteaanpassing",
   },
   Object {
     "dateFinish": "13 april 2019",
@@ -1123,7 +1123,7 @@ Array [
     ],
     "supplier": "Emile Thuiszorg",
     "supplierUrl": "",
-    "title": "Hulp bij het huishouden(ZIN)",
+    "title": "Hulp bij het huishouden",
   },
   Object {
     "dateFinish": "08 maart 2019",
@@ -1204,7 +1204,7 @@ Array [
     ],
     "supplier": "Amstelring",
     "supplierUrl": "",
-    "title": "Dagbesteding(ZIN)",
+    "title": "Dagbesteding",
   },
   Object {
     "dateFinish": "",
@@ -1253,7 +1253,7 @@ Array [
     ],
     "supplier": "Transvision",
     "supplierUrl": "",
-    "title": "Deur tot deur Plus vervoer(ZIN)",
+    "title": "Deur tot deur Plus vervoer",
   },
   Object {
     "dateFinish": "21 februari 2019",
@@ -1334,7 +1334,7 @@ Array [
     ],
     "supplier": "2Learn B.V.",
     "supplierUrl": "",
-    "title": "Ambulante ondersteuning(ZIN)",
+    "title": "Ambulante ondersteuning",
   },
   Object {
     "dateFinish": "30 december 2018",
@@ -1415,7 +1415,7 @@ Array [
     ],
     "supplier": "Stichting Forsa Amsterdam",
     "supplierUrl": "",
-    "title": "Ambulante ondersteuning(ZIN)",
+    "title": "Ambulante ondersteuning",
   },
   Object {
     "dateFinish": "23 november 2018",
@@ -1496,7 +1496,7 @@ Array [
     ],
     "supplier": "Amstelring",
     "supplierUrl": "",
-    "title": "Ambulante ondersteuning(ZIN)",
+    "title": "Ambulante ondersteuning",
   },
   Object {
     "dateFinish": "26 februari 2018",
@@ -1545,7 +1545,7 @@ Array [
     ],
     "supplier": "Transvision",
     "supplierUrl": "",
-    "title": "Deur tot deur Plus vervoer(ZIN)",
+    "title": "Deur tot deur Plus vervoer",
   },
   Object {
     "dateFinish": "01 mei 2018",
@@ -1626,7 +1626,7 @@ Array [
     ],
     "supplier": "Cordaan",
     "supplierUrl": "",
-    "title": "Dagbesteding(ZIN)",
+    "title": "Dagbesteding",
   },
   Object {
     "dateFinish": "13 april 2018",
@@ -1707,7 +1707,7 @@ Array [
     ],
     "supplier": "Emile Thuiszorg",
     "supplierUrl": "",
-    "title": "Hulp bij het huishouden(ZIN)",
+    "title": "Hulp bij het huishouden",
   },
   Object {
     "dateFinish": "08 maart 2018",
@@ -1788,7 +1788,7 @@ Array [
     ],
     "supplier": "Amstelring",
     "supplierUrl": "",
-    "title": "Dagbesteding(ZIN)",
+    "title": "Dagbesteding",
   },
   Object {
     "dateFinish": "",
@@ -1837,7 +1837,7 @@ Array [
     ],
     "supplier": "Transvision",
     "supplierUrl": "",
-    "title": "Deur tot deur Plus vervoer(ZIN)",
+    "title": "Deur tot deur Plus vervoer",
   },
   Object {
     "dateFinish": "",
@@ -1914,7 +1914,7 @@ Array [
     ],
     "supplier": "Ergomedi Bouw B.V.",
     "supplierUrl": "",
-    "title": "Woonruimteaanpassing(ZIN)",
+    "title": "Woonruimteaanpassing",
   },
   Object {
     "dateFinish": "",
@@ -1996,7 +1996,7 @@ Array [
     ],
     "supplier": "Medipoint B.V.",
     "supplierUrl": "",
-    "title": "Scootmobiel voor buitengebruik(ZIN)",
+    "title": "Scootmobiel voor buitengebruik",
   },
   Object {
     "dateFinish": "",
@@ -2078,7 +2078,7 @@ Array [
     ],
     "supplier": "Medipoint B.V.",
     "supplierUrl": "",
-    "title": "Elektrische hulpaandrijving voor rolstoel(ZIN)",
+    "title": "Elektrische hulpaandrijving voor rolstoel",
   },
   Object {
     "dateFinish": "",
@@ -2155,7 +2155,7 @@ Array [
     ],
     "supplier": "Gebr Koenen B.V.",
     "supplierUrl": "",
-    "title": "Woonruimteaanpassing(ZIN)",
+    "title": "Woonruimteaanpassing",
   },
   Object {
     "dateFinish": "",
@@ -2232,7 +2232,7 @@ Array [
     ],
     "supplier": "Gebr Koenen B.V.",
     "supplierUrl": "",
-    "title": "Woonruimteaanpassing(ZIN)",
+    "title": "Woonruimteaanpassing",
   },
   Object {
     "dateFinish": "",
@@ -2309,7 +2309,7 @@ Array [
     ],
     "supplier": "Gebr Koenen B.V.",
     "supplierUrl": "",
-    "title": "Woonruimteaanpassing(ZIN)",
+    "title": "Woonruimteaanpassing",
   },
   Object {
     "dateFinish": "",
@@ -2391,7 +2391,7 @@ Array [
     ],
     "supplier": "Welzorg",
     "supplierUrl": "",
-    "title": "Kinderspeelvoertuig(ZIN)",
+    "title": "Kinderspeelvoertuig",
   },
   Object {
     "dateFinish": "",
@@ -2473,7 +2473,7 @@ Array [
     ],
     "supplier": "Medipoint B.V.",
     "supplierUrl": "",
-    "title": "Handbewogen rolstoel(ZIN)",
+    "title": "Handbewogen rolstoel",
   },
   Object {
     "dateFinish": "",
@@ -2555,7 +2555,7 @@ Array [
     ],
     "supplier": "Medipoint B.V.",
     "supplierUrl": "",
-    "title": "Douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast)(ZIN)",
+    "title": "Douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast)",
   },
   Object {
     "dateFinish": "",
@@ -2604,7 +2604,7 @@ Array [
     ],
     "supplier": "Transvision",
     "supplierUrl": "",
-    "title": "Kamer tot kamer vervoer(ZIN)",
+    "title": "Kamer tot kamer vervoer",
   },
 ]
 `;
