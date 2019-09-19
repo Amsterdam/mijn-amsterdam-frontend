@@ -899,7 +899,6 @@
         "VoorzieningEinddatum": "2018-11-27T00:00:00",
         "Levering": null
     },
-    [
     {
         "Omschrijving": "hulp bij het huishouden",
         "Wet": 1,
@@ -971,6 +970,4 @@
         "VoorzieningEinddatum": null,
         "Levering": null
     }
-]
-
 ]
