@@ -14,102 +14,102 @@ pipeline {
 
   stages {
 
-    stage('Unit tests') {
-      when { not { branch 'test' } } // Skip unit tests when pushing directly to test (for speed)
-      options {
-        timeout(time: 5, unit: 'MINUTES')
-      }
-      environment {
-        PROJECT = "${PROJECT_PREFIX}unit"
-      }
-      steps {
-        script { currentBuild.displayName = "Unit testing #${BUILD_NUMBER} (${COMMIT_HASH})" }
-        sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit test-unit"
-      }
-      post {
-        always {
-          sh "docker-compose -p ${PROJECT} down -v || true"
-        }
-      }
-    }
+    // stage('Unit tests') {
+    //   when { not { branch 'test' } } // Skip unit tests when pushing directly to test (for speed)
+    //   options {
+    //     timeout(time: 5, unit: 'MINUTES')
+    //   }
+    //   environment {
+    //     PROJECT = "${PROJECT_PREFIX}unit"
+    //   }
+    //   steps {
+    //     script { currentBuild.displayName = "Unit testing #${BUILD_NUMBER} (${COMMIT_HASH})" }
+    //     sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit test-unit"
+    //   }
+    //   post {
+    //     always {
+    //       sh "docker-compose -p ${PROJECT} down -v || true"
+    //     }
+    //   }
+    // }
 
-    // TEST
+    // // TEST
 
-    stage('Build TEST') {
-      when { branch 'test' }
-      options {
-        timeout(time: 10, unit: 'MINUTES')
-      }
-      steps {
-        script { currentBuild.displayName = "TEST Build #${BUILD_NUMBER} (${COMMIT_HASH})" }
-        sh "docker build -t ${IMAGE_BUILD} " +
-          "--shm-size 1G " +
-          "--build-arg BUILD_ENV=test " +
-          "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
-          "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
-          "."
-        sh "docker push ${IMAGE_BUILD}"
-      }
-    }
+    // stage('Build TEST') {
+    //   when { branch 'test' }
+    //   options {
+    //     timeout(time: 10, unit: 'MINUTES')
+    //   }
+    //   steps {
+    //     script { currentBuild.displayName = "TEST Build #${BUILD_NUMBER} (${COMMIT_HASH})" }
+    //     sh "docker build -t ${IMAGE_BUILD} " +
+    //       "--shm-size 1G " +
+    //       "--build-arg BUILD_ENV=test " +
+    //       "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
+    //       "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
+    //       "."
+    //     sh "docker push ${IMAGE_BUILD}"
+    //   }
+    // }
 
-    stage('Deploy TEST') {
-      when { branch 'test' }
-      options {
-        timeout(time: 5, unit: 'MINUTES')
-      }
-      steps {
-        script { currentBuild.displayName = "TEST Deploy #${BUILD_NUMBER} (${COMMIT_HASH})" }
-        sh "docker pull ${IMAGE_BUILD}"
-        sh "docker tag ${IMAGE_BUILD} ${IMAGE_TEST}"
-        sh "docker push ${IMAGE_TEST}"
-        build job: 'Subtask_Openstack_Playbook', parameters: [
-          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
-          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend-test.yml']
-        ]
-      }
-    }
+    // stage('Deploy TEST') {
+    //   when { branch 'test' }
+    //   options {
+    //     timeout(time: 5, unit: 'MINUTES')
+    //   }
+    //   steps {
+    //     script { currentBuild.displayName = "TEST Deploy #${BUILD_NUMBER} (${COMMIT_HASH})" }
+    //     sh "docker pull ${IMAGE_BUILD}"
+    //     sh "docker tag ${IMAGE_BUILD} ${IMAGE_TEST}"
+    //     sh "docker push ${IMAGE_TEST}"
+    //     build job: 'Subtask_Openstack_Playbook', parameters: [
+    //       [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
+    //       [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend-test.yml']
+    //     ]
+    //   }
+    // }
 
-    // ACCEPTANCE
+    // // ACCEPTANCE
 
-    stage('Build ACC') {
-      when { not { branch 'test' } } // Also Build PR's
-      options {
-        timeout(time: 10, unit: 'MINUTES')
-      }
-      steps {
-        script { currentBuild.displayName = "ACC Build #${BUILD_NUMBER} (${COMMIT_HASH})" }
-        sh "docker build -t ${IMAGE_BUILD} " +
-          "--shm-size 1G " +
-          "--build-arg BUILD_ENV=acceptance " +
-          "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
-          "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
-          "."
-        sh "docker push ${IMAGE_BUILD}"
-      }
-    }
+    // stage('Build ACC') {
+    //   when { not { branch 'test' } } // Also Build PR's
+    //   options {
+    //     timeout(time: 10, unit: 'MINUTES')
+    //   }
+    //   steps {
+    //     script { currentBuild.displayName = "ACC Build #${BUILD_NUMBER} (${COMMIT_HASH})" }
+    //     sh "docker build -t ${IMAGE_BUILD} " +
+    //       "--shm-size 1G " +
+    //       "--build-arg BUILD_ENV=acceptance " +
+    //       "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
+    //       "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
+    //       "."
+    //     sh "docker push ${IMAGE_BUILD}"
+    //   }
+    // }
 
-    stage('Deploy ACC') {
-      when { branch 'master' }
-      options {
-        timeout(time: 5, unit: 'MINUTES')
-      }
-      steps {
-        script { currentBuild.displayName = "ACC Deploy #${BUILD_NUMBER} (${COMMIT_HASH})" }
-        sh "docker pull ${IMAGE_BUILD}"
-        sh "docker tag ${IMAGE_BUILD} ${IMAGE_ACCEPTANCE}"
-        sh "docker push ${IMAGE_ACCEPTANCE}"
-        build job: 'Subtask_Openstack_Playbook', parameters: [
-          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
-          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml']
-        ]
-      }
-    }
+    // stage('Deploy ACC') {
+    //   when { branch 'master' }
+    //   options {
+    //     timeout(time: 5, unit: 'MINUTES')
+    //   }
+    //   steps {
+    //     script { currentBuild.displayName = "ACC Deploy #${BUILD_NUMBER} (${COMMIT_HASH})" }
+    //     sh "docker pull ${IMAGE_BUILD}"
+    //     sh "docker tag ${IMAGE_BUILD} ${IMAGE_ACCEPTANCE}"
+    //     sh "docker push ${IMAGE_ACCEPTANCE}"
+    //     build job: 'Subtask_Openstack_Playbook', parameters: [
+    //       [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
+    //       [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml']
+    //     ]
+    //   }
+    // }
 
     // PRODUCTION
 
     stage('Build PROD') {
       when {
-        tag 'release-v*'
+        branch 'production-release-v*'
       }
       options {
         timeout(time: 10, unit: 'MINUTES')
@@ -128,7 +128,7 @@ pipeline {
 
     stage('Deploy PROD - Waiting for approval') {
       when {
-        tag 'release-v*'
+        branch 'production-release-v*'
       }
       options {
         timeout(time: 120, unit: 'MINUTES')
@@ -142,21 +142,21 @@ pipeline {
       }
     }
 
-    stage('Deploy PROD') {
-      when {
-        tag 'release-v*'
-      }
-      options {
-        timeout(time: 5, unit: 'MINUTES')
-      }
-      steps {
-        script { currentBuild.displayName = "PROD:Deploy:#${BUILD_NUMBER} (${COMMIT_HASH})" }
-        build job: 'Subtask_Openstack_Playbook', parameters: [
-          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
-          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml']
-        ]
-      }
-    }
+    // stage('Deploy PROD') {
+    //   when {
+    //     branch 'production-release-v*'
+    //   }
+    //   options {
+    //     timeout(time: 5, unit: 'MINUTES')
+    //   }
+    //   steps {
+    //     script { currentBuild.displayName = "PROD:Deploy:#${BUILD_NUMBER} (${COMMIT_HASH})" }
+    //     build job: 'Subtask_Openstack_Playbook', parameters: [
+    //       [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
+    //       [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml']
+    //     ]
+    //   }
+    // }
   }
 
   post {
