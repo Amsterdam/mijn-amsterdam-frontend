@@ -10,6 +10,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from './Landing.module.scss';
 import { trackPageView, trackLink } from 'hooks/analytics.hook';
 import classnames from 'classnames';
+import { clearSessionStorage } from 'hooks/storage.hook';
 
 export default () => {
   const loginButton = useRef(null);
@@ -17,7 +18,7 @@ export default () => {
   useEffect(() => {
     trackPageView('Landingspagina', document.location.href + 'landingspagina');
     // Whenever we load the landing/login page, start a new session.
-    sessionStorage.clear();
+    clearSessionStorage();
   }, []);
 
   const [isRedirecting, setRedirecting] = useState(false);
