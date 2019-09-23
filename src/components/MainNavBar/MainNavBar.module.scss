@@ -157,8 +157,9 @@
   position: absolute;
   top: 0;
   right: calc(50% - #{$main-boxed-width} / 2);
-  font-weight: 700;
+  font-weight: 500;
   color: $color-neutral-grey4;
+  font-size: 1.8rem;
 
   &Open {
     color: transparent;
