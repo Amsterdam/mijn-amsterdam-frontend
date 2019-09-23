@@ -3,6 +3,7 @@ export type DirectLinkType =
   | 'MIJN_SUBSIDIE'
   | 'MIJN_OVERHEID_BERICHTEBOX'
   | 'MY_AREA'
+  | 'FAQ'
   | 'MY_TIPS';
 
 export interface DirectLink {
@@ -34,6 +35,11 @@ export const LINKS: { [key in DirectLinkType]: DirectLink } = {
   MIJN_SUBSIDIE: {
     title: 'Mijn Subsidies',
     url: ExternalUrls.MIJN_SUBSIDIES,
+    isExternalLink: true,
+  },
+  FAQ: {
+    title: 'Veelgestelde vragen',
+    url: ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD,
     isExternalLink: true,
   },
 };
