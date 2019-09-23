@@ -31,6 +31,7 @@ export default () => {
     MY_TIPS: {
       data: { items: myTips },
       isLoading: isMyTipsLoading,
+      isPristine: isMyTipsPristine,
     },
     MY_CHAPTERS: { items: myChapterItems, isLoading: isMyChaptersLoading },
     MY_AREA: {
@@ -83,7 +84,10 @@ export default () => {
         )}
         <PageContentMainBody variant="regularBoxed">
           {!isPhoneScreen && (
-            <MyTips isLoading={!!isMyTipsLoading} items={tipItems} />
+            <MyTips
+              isLoading={isMyTipsPristine || isMyTipsLoading}
+              items={tipItems}
+            />
           )}
           <DirectLinks />
         </PageContentMainBody>
