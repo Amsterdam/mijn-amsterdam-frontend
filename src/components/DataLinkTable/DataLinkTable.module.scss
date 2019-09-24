@@ -18,24 +18,6 @@
   &.noTransition {
     transition: none;
   }
-
-  @include media-query('<=phone') {
-    .Table {
-      display: grid;
-      tr,
-      td,
-      tbody {
-        display: block;
-      }
-      td:not(:first-child) {
-        display: block;
-        padding-left: 1.3rem;
-      }
-      thead {
-        display: none;
-      }
-    }
-  }
 }
 
 .CaretIcon {
@@ -71,13 +53,30 @@
   transition: height 400ms ease-in;
   border-bottom: 0.1rem solid $color-neutral-grey2;
 
-  @include media-query('<=phone') {
+  @include media-q('<=phone') {
     border-bottom: 0;
   }
 }
 
 .Table {
   border-collapse: collapse;
+  width: 100%;
+
+  @include media-q('<=phone') {
+    display: grid;
+    tr,
+    td,
+    tbody {
+      display: block;
+    }
+    td:not(:first-child) {
+      display: block;
+      padding-left: 1.3rem;
+    }
+    thead {
+      display: none;
+    }
+  }
 }
 
 .TableRow {
@@ -96,7 +95,7 @@
     color: $color-neutral-grey4;
     font-weight: 500;
   }
-  @include media-query('<=phone') {
+  @include media-q('<=phone') {
     td {
       border-top: 0;
       padding: 0;
@@ -117,7 +116,7 @@
   display: none;
   padding-right: 0.3rem;
 
-  @include media-query('<=phone') {
+  @include media-q('<=phone') {
     display: initial;
   }
 }

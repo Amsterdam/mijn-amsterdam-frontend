@@ -6,7 +6,6 @@ import MyChaptersPanel from 'components/MyChaptersPanel/MyChaptersPanel';
 import MyTips from 'components/MyTips/MyTips';
 import MyNotifications from 'components/MyNotifications/MyNotifications';
 import PageContentMain from 'components/PageContentMain/PageContentMain';
-import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
 import { usePhoneScreen } from 'hooks/media.hook';
 import React, { useContext } from 'react';
@@ -44,8 +43,8 @@ export default () => {
 
   return (
     <>
-      <PageContentMain className={styles.Dashboard} variant="full">
-        <PageContentMainHeading variant="medium">
+      <PageContentMain className={styles.Dashboard}>
+        <PageContentMainHeading>
           <Link
             id="MyUpdatesHeader" // Used for tutorial placement
             className={styles.MyNotificationsHeadingLink}
@@ -54,10 +53,7 @@ export default () => {
             Actueel
           </Link>
         </PageContentMainHeading>
-        <PageContentMainBody
-          variant="regularBoxed"
-          className={styles.FirstBody}
-        >
+        <div className={styles.TopContentContainer}>
           <MyNotifications
             total={myNotificationItems.length}
             items={myNotificationItems.slice(0, MAX_NOTIFICATIONS_VISIBLE)}
@@ -71,26 +67,17 @@ export default () => {
             title="Mijn thema's"
             trackCategory="Dashboard / Mijn Thema's"
           />
-          <MyCases
-            isLoading={!!isMyCasesLoading}
-            title="Mijn lopende aanvragen"
-            items={myCases}
-          />
-        </PageContentMainBody>
+        </div>
+
+        {!isPhoneScreen && <MyArea url={mapUrl} />}
+
         {!isPhoneScreen && (
-          <PageContentMainBody>
-            <MyArea url={mapUrl} />
-          </PageContentMainBody>
+          <MyTips
+            isLoading={isMyTipsPristine || isMyTipsLoading}
+            items={tipItems}
+          />
         )}
-        <PageContentMainBody variant="regularBoxed">
-          {!isPhoneScreen && (
-            <MyTips
-              isLoading={isMyTipsPristine || isMyTipsLoading}
-              items={tipItems}
-            />
-          )}
-          <DirectLinks />
-        </PageContentMainBody>
+        <DirectLinks />
       </PageContentMain>
     </>
   );

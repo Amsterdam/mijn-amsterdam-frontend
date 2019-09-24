@@ -1,4 +1,14 @@
-@import '../Inkomen/Inkomen.module.scss'; // same typeof page
+@import 'styles/_global.scss';
+
+.Zorg {
+  @include select(DataLinkTable_DataLinkTable) {
+    @include centered-content;
+  }
+}
+
+.Intro {
+  @include centered-content(62rem);
+}
 
 .HistoricItemsMention {
   margin: 0 auto;

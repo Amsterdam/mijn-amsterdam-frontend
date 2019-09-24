@@ -6,13 +6,15 @@ const ua = window.navigator.userAgent;
 export const isIE = /MSIE|Trident/.test(ua);
 
 export function useDesktopScreen(): boolean {
-  return useMedia({ minWidth: Breakpoints.tablet + 1 }) || isIE;
+  return useMedia({ minWidth: Breakpoints.tablet + 1 });
 }
 
 export function useTabletScreen(): boolean {
-  return useMedia({ maxWidth: Breakpoints.tablet }) && !isIE;
+  return useMedia({
+    maxWidth: Breakpoints.tablet,
+  });
 }
 
 export function usePhoneScreen(): boolean {
-  return useMedia({ maxWidth: Breakpoints.phone }) && !isIE;
+  return useMedia({ maxWidth: Breakpoints.phone });
 }

@@ -4,6 +4,18 @@
   align-items: center;
 }
 
+@mixin centered-content($max-width: $main-boxed-width) {
+  margin: 0 auto;
+  max-width: calc(100vw - 2rem);
+
+  @include media-q('>phone') {
+    max-width: calc(100vw - 4rem);
+  }
+  @include media-q('>tablet') {
+    max-width: $max-width;
+  }
+}
+
 @mixin page-content-main {
   min-height: 20rem;
 }
@@ -17,7 +29,7 @@
   @include heading(3, 1.3);
   font-weight: 800;
 
-  @include media-query('<=phone') {
+  @include media-q('<=phone') {
     @include heading(2.4, 1.3);
   }
 }
@@ -26,7 +38,7 @@
   @include heading(2.4, 1.3);
   font-weight: 800;
 
-  @include media-query('<=phone') {
+  @include media-q('<=phone') {
     @include heading(2.1, 1.3);
   }
 }
@@ -78,17 +90,15 @@
   }
 }
 
-@mixin media-query($sizes...) {
-  @supports (display: grid) {
-    @include media($sizes...) {
-      @content;
-    }
-  }
-}
-
 @mixin button-unstyled() {
   border: 0;
   background: transparent;
   padding: 0;
   width: auto;
+}
+
+@mixin media-q($sizes...) {
+  @include media($sizes...) {
+    @content;
+  }
 }

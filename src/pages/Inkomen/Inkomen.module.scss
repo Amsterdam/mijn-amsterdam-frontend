@@ -1,64 +1,11 @@
 @import 'styles/_global.scss';
 
-.Page {
-  @include select(PageContentMainBody_PageContentMainBody) {
-    > p {
-      margin-right: 16rem;
-      margin-left: 16rem;
-
-      @include media-query('<=tablet') {
-        margin-right: 2rem;
-        margin-left: 12rem;
-      }
-
-      @include media-query('<=phone') {
-        margin-left: 0;
-        margin-right: 0;
-
-        &:last-of-type {
-          margin-bottom: 2rem;
-        }
-      }
-    }
+.Inkomen {
+  @include select(DataLinkTable_DataLinkTable) {
+    @include centered-content;
   }
+}
 
-  @include select(DataLinkTable) {
-    @include select(Heading) {
-      margin-left: 13.5rem;
-      margin-right: 13.5rem;
-    }
-    @include select(DataLinkTable_Table) {
-      width: 100%;
-    }
-    @include select(DataLinkTable_DisplayProp) {
-      width: 20%;
-    }
-    @include select(DataLinkTable_DisplayPropTitle) {
-      width: 60%;
-      padding-right: 3em;
-    }
-
-    @include media-query('<=tablet') {
-      @include select(Heading) {
-        margin-left: 9.5rem;
-        margin-right: 9.5rem;
-      }
-    }
-    @include media-query('<=phone') {
-      @include select(Heading) {
-        margin-left: 0;
-        margin-right: 0;
-      }
-      @include select(DataLinkTable_Table) {
-        width: auto;
-      }
-      @include select(DataLinkTable_DisplayProp) {
-        width: auto;
-      }
-      @include select(DataLinkTable_DisplayPropTitle) {
-        width: auto;
-        padding-right: 0;
-      }
-    }
-  }
+.Intro {
+  @include centered-content(62rem);
 }

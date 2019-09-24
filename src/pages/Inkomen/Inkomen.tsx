@@ -1,16 +1,15 @@
 import React, { useContext } from 'react';
 import PageContentMain from 'components/PageContentMain/PageContentMain';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
-import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
 import { AppContext } from 'AppState';
 import DataLinkTable from 'components/DataLinkTable/DataLinkTable';
-import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
 import { Chapters, ChapterTitles } from 'App.constants';
 import styles from './Inkomen.module.scss';
 import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
 import { ExternalUrls } from 'App.constants';
 import Alert from 'components/Alert/Alert';
 import { useTabletScreen } from 'hooks/media.hook';
+import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 
 const DISPLAY_PROPS = {
   datePublished: 'besluit',
@@ -34,58 +33,53 @@ export default () => {
   const itemsRequested = items.filter(item => !item.hasDecision);
   const itemsDecided = items.filter(item => item.hasDecision);
   const hasActiveRequests = !!itemsRequested.length;
-
   const isTabletScreen = useTabletScreen();
 
   return (
-    <PageContentMain variant="full" className={styles.Page}>
-      <PageContentMainHeading variant="boxedWithIcon">
-        <ChapterHeadingIcon chapter={Chapters.INKOMEN} />
+    <PageContentMain className={styles.Inkomen}>
+      <PageContentMainHeading icon={<ChapterIcon chapter={Chapters.INKOMEN} />}>
         {ChapterTitles.INKOMEN}
       </PageContentMainHeading>
-      <PageContentMainBody variant="boxed">
+      <div className={styles.Intro}>
         <p>
-          Hieronder vindt u een overzicht van alle voorzieningen die u hebt ter
-          aanvulling of ondersteuning bij een laag inkomen. Wilt u meer weten
-          over de inkomensregelingen van de gemeente Amsterdam?
+          Hieronder ziet u uw regelingen en hulpmiddelen vanuit de Wmo. Hebt u
+          vragen of wilt u een wijziging doorgeven? Bel dan gratis de Wmo
+          Helpdesk: <a href="tel:08000643">0800 0643</a>. Of ga langs bij het
+          Sociaal Loket.
         </p>
         <p>
-          <ButtonLinkExternal to={ExternalUrls.ABOUT_INCOME_SUPPORT}>
-            Lees meer over inkomensondersteuning
-          </ButtonLinkExternal>
-          <br />
-          <ButtonLinkExternal to={ExternalUrls.INCOME_CONTACT}>
-            Contact {ChapterTitles.INKOMEN}
+          <ButtonLinkExternal to={ExternalUrls.ZORG_LEES_MEER}>
+            Lees hier meer over zorg en ondersteuning
           </ButtonLinkExternal>
         </p>
-        {isError && (
-          <Alert type="warning">
-            We kunnen op dit moment geen gegevens tonen.
-          </Alert>
-        )}
-        <DataLinkTable
-          id="datalinktable-income-actual"
-          rowHeight={isTabletScreen ? 'auto' : '5.8rem'}
-          displayProps={DISPLAY_PROPS_ACTUAL}
-          items={itemsRequested}
-          title="Mijn lopende aanvragen"
-          startCollapsed={false}
-          isLoading={isLoading}
-          trackCategory="Werk en inkomen overzicht / Lopende aanvragen"
-          noItemsMessage="U hebt op dit moment geen lopende aanvragen."
-        />
-        <DataLinkTable
-          id="datalinktable-income-granted"
-          rowHeight={isTabletScreen ? 'auto' : '5.8rem'}
-          displayProps={DISPLAY_PROPS}
-          items={itemsDecided}
-          startCollapsed={hasActiveRequests}
-          isLoading={isLoading}
-          title="Mijn besluiten"
-          trackCategory="Werk en inkomen overzicht / Besluiten"
-          noItemsMessage="U hebt op dit moment geen besluiten."
-        />
-      </PageContentMainBody>
+      </div>
+      {isError && (
+        <Alert type="warning">
+          We kunnen op dit moment geen gegevens tonen.
+        </Alert>
+      )}
+      <DataLinkTable
+        id="datalinktable-income-actual"
+        rowHeight={isTabletScreen ? 'auto' : '5.8rem'}
+        displayProps={DISPLAY_PROPS_ACTUAL}
+        items={itemsRequested}
+        title="Mijn lopende aanvragen"
+        startCollapsed={false}
+        isLoading={isLoading}
+        trackCategory="Werk en inkomen overzicht / Lopende aanvragen"
+        noItemsMessage="U hebt op dit moment geen lopende aanvragen."
+      />
+      <DataLinkTable
+        id="datalinktable-income-granted"
+        rowHeight={isTabletScreen ? 'auto' : '5.8rem'}
+        displayProps={DISPLAY_PROPS}
+        items={itemsDecided}
+        startCollapsed={hasActiveRequests}
+        isLoading={isLoading}
+        title="Mijn besluiten"
+        trackCategory="Werk en inkomen overzicht / Besluiten"
+        noItemsMessage="U hebt op dit moment geen besluiten."
+      />
     </PageContentMain>
   );
 };

@@ -1,15 +1,13 @@
 @import 'styles/_global.scss';
 
 .Landing {
-  margin-bottom: 10rem;
-  max-width: 58rem;
-  margin: 0 auto;
-  padding: 0;
-
-  @include media-query("<=phone") {
-    padding: 0 2rem;
+  @include select(PageContentMainHeading_PageContentMainHeading) {
+    padding-left: 16rem;
   }
+}
 
+.BodyContent {
+  @include centered-content(62rem);
   ul {
     padding-left: 2rem;
     list-style-type: square;
@@ -58,17 +56,6 @@
   background-color: #000;
 }
 
-@include select(PageContentMainHeading) {
-  position: relative;
-  display: block;
-}
-
-.MainHeadingInner {
-  width: 58rem;
-  display: block;
-  margin: 0 auto;
-}
-
 @include select(Heading_Heading__tiny) {
   + p, + ul {
     margin-top: 0;
@@ -79,24 +66,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  bottom: 0;
+  width: 10rem;
+  height: 10rem;
   display: block;
-
-  > svg {
-    max-width: 10rem;
-    max-height: 10rem;
-    display: block;
-    height: 100%;
-    width: auto;
-    position: relative;
-    right: 0;
-  }
-
-  @include media-query("<=tablet") {
-    right:-1.5rem;
-  }
-
-  @include media-query("<=phone") {
-    right: -2.5rem;
-  }
 }

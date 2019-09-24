@@ -1,7 +1,7 @@
 @import 'styles/_global.scss';
 
 .ChapterIcon {
-  @include media-query('<=phone') {
+  @include media-q('<=phone') {
     width: 3.6rem;
     height: 3.6rem;
   }

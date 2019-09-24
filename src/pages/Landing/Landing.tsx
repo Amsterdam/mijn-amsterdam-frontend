@@ -3,7 +3,6 @@ import { ReactComponent as BetaLabel } from 'assets/images/beta-label.svg';
 import DigiDLogo from 'assets/images/digid-logo.png';
 import Heading from 'components/Heading/Heading';
 import PageContentMain from 'components/PageContentMain/PageContentMain';
-import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -24,20 +23,19 @@ export default () => {
   const [isRedirecting, setRedirecting] = useState(false);
 
   return (
-    <PageContentMain>
-      <PageContentMainHeading>
+    <PageContentMain className={styles.Landing}>
+      <PageContentMainHeading className={styles.Heading}>
         <span className={styles.MainHeadingInner}>
           Welkom op Mijn Amsterdam
         </span>
-        <span className={styles.BetaLogo}>
-          <BetaLabel aria-hidden="true" role="img" aria-label="Beta versie" />
-        </span>
+        <BetaLabel
+          aria-hidden="true"
+          role="img"
+          aria-label="Beta versie"
+          className={styles.BetaLogo}
+        />
       </PageContentMainHeading>
-      <PageContentMainBody
-        id="AppContent"
-        variant="regular"
-        className={styles.Landing}
-      >
+      <div id="AppContent" className={styles.BodyContent}>
         <p>
           Welkom op Mijn Amsterdam: uw persoonlijke digitale pagina bij de
           gemeente Amsterdam. Hier ziet u op één centrale plek welke gegevens de
@@ -105,7 +103,7 @@ export default () => {
             veelgestelde vragen over Mijn Amsterdam
           </a>
         </p>
-      </PageContentMainBody>
+      </div>
     </PageContentMain>
   );
 };

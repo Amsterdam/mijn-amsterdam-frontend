@@ -59,14 +59,14 @@
     width: 9.6rem;
     margin-right: 0.8rem;
 
-    @include media-query('<=phone') {
+    @include media-q('<=phone') {
       height: 3rem;
       width: 6.6rem;
       margin-right: 0;
     }
   }
 
-  @include media-query('<=phone') {
+  @include media-q('<=phone') {
     padding-left: 1rem;
     padding-right: 1rem;
   }
@@ -103,7 +103,7 @@
     margin-left: 1rem;
   }
 
-  @include media-query('<=phone') {
+  @include media-q('<=phone') {
     font-size: 1.4rem;
   }
 }

@@ -1,47 +1,5 @@
 @import 'styles/_global.scss';
 
-.InkomenDetail {
-  @include select(PageContentMainHeading_PageContentMainHeading) {
-    margin-bottom: 1rem;
-  }
-  @include select(StatusLine_ListItemInner__) {
-    max-width: $main-boxed-width;
-    margin: 0 auto;
-
-    @include media-query('<=phone') {
-      margin: 0 4rem;
-    }
-  }
-
-  @include select(StatusLine_altDocumentContent) {
-    display: none;
-  }
-
-  @include select(StatusLine_ListHeading) {
-    max-width: calc(#{$main-boxed-width} - 32rem);
-    margin: 0 auto;
-
-    @include media-query('<=phone') {
-      margin: 0 8rem;
-    }
-  }
-  @include select(StatusLine_NoStatusItems) {
-    max-width: calc(#{$main-boxed-width} - 32rem);
-    margin: 0 auto;
-  }
-
-  @include select(StatusLine_Actual) {
-    @include select(StatusLine_altDocumentContent) {
-      display: block;
-    }
-  }
-}
-
-.PageHeading {
-  @include heading-large;
-  margin: 0;
-}
-
 .LoadingContentHeading {
   padding-top: 1rem;
 }
@@ -51,7 +9,7 @@
   max-width: $main-boxed-width;
   padding-left: 16rem;
 
-  @include media-query('<=phone') {
+  @include media-q('<=phone') {
     padding-left: 0;
   }
 }

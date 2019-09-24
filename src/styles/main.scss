@@ -16,11 +16,7 @@ body {
   font-family: 'AvenirNext', Arial, Helvetica, sans-serif;
   color: $color-black;
   font-size: 1.6rem;
-
   min-width: $main-min-width;
-  @include IE11 {
-    min-width: map-get($breakpoints, 'tablet');
-  }
 
   &.has-modal {
     position: fixed;

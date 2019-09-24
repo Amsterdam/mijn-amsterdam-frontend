@@ -5,20 +5,14 @@ import { ComponentChildren } from 'App.types';
 
 export interface PageContentMainProps {
   className?: any;
-  variant?: 'default' | 'full';
   children: ComponentChildren;
 }
 
 export default function PageContentMain({
   className,
-  variant = 'default',
   children,
 }: PageContentMainProps) {
-  const classNames = composeClassNames(
-    styles.PageContentMain,
-    className,
-    styles[`PageContentMain__${variant}`] || styles.PageContentMain__default
-  );
+  const classNames = composeClassNames(styles.PageContentMain, className);
 
-  return <div className={classNames}>{children}</div>;
+  return <main className={classNames}>{children}</main>;
 }

@@ -11,7 +11,7 @@
     padding-bottom: 1.3rem;
     margin-bottom: 2rem;
 
-    @include media-query('<=phone') {
+    @include media-q('<=phone') {
       padding-left: 0;
     }
   }
@@ -47,7 +47,7 @@
     }
   }
 
-  @include media-query('<=phone') {
+  @include media-q('<=phone') {
     display: block;
 
     tbody,
@@ -82,7 +82,7 @@
     margin-bottom: 0.6rem;
   }
 
-  @include media-query('<=phone') {
+  @include media-q('<=phone') {
     margin: 2rem 0 0 0;
   }
 }

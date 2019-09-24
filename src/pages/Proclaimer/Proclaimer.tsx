@@ -1,7 +1,6 @@
 import React from 'react';
 import PageContentMain from 'components/PageContentMain/PageContentMain';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
-import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
 import styles from './Proclaimer.module.scss';
 import { trackLink } from 'hooks/analytics.hook';
 
@@ -13,8 +12,7 @@ export default () => {
   return (
     <PageContentMain className={styles.Proclaimer}>
       <PageContentMainHeading>Proclaimer</PageContentMainHeading>
-      <PageContentMainBody variant="regular">
-        {/* Text delivered via e-mail by Kim Westerweel */}
+      <div className={styles.BodyContent}>
         <p>
           Mijn Amsterdam is een website van de gemeente Amsterdam. Op Mijn
           Amsterdam tonen wij uw persoonlijke informatie uit de verschillende
@@ -39,7 +37,7 @@ export default () => {
           </a>
           .
         </p>
-      </PageContentMainBody>
+      </div>
     </PageContentMain>
   );
 };
