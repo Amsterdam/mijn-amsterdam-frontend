@@ -29,12 +29,9 @@ export default () => {
         <span className={styles.MainHeadingInner}>
           Welkom op Mijn Amsterdam
         </span>
-        <BetaLabel
-          aria-hidden="true"
-          role="img"
-          aria-label="Beta versie"
-          className={styles.BetaLogo}
-        />
+        <span className={styles.BetaLogo}>
+          <BetaLabel aria-hidden="true" role="img" aria-label="Beta versie" />
+        </span>
       </PageContentMainHeading>
       <PageContentMainBody
         id="AppContent"
