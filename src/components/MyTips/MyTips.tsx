@@ -16,13 +16,11 @@ export interface TipProps {
 
 const Tip = ({ tip }: TipProps) => (
   <li className={styles.TipItem}>
-    <div className={styles.ImageContainer}>
-      {tip.imgUrl ? (
-        <img src={tip.imgUrl} />
-      ) : (
-        <ImgPlaceholder aria-hidden="true" className={styles.ImgPlaceholder} />
-      )}
-    </div>
+    {tip.imgUrl ? (
+      <img alt="" src={tip.imgUrl} className={styles.Img} />
+    ) : (
+      <ImgPlaceholder aria-hidden="true" className={styles.Img} />
+    )}
     <Heading el="h4">{tip.title}</Heading>
     <p>{tip.description}</p>
     <ButtonLinkExternal
