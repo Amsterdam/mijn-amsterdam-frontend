@@ -90,10 +90,7 @@ export default () => {
         <ul>
           <li>Hoe u ingeschreven staat bij de gemeente</li>
           <li>Hoe het staat met uw aanvraag voor een bijstandsuitkering</li>
-          <li>
-            Uw overzicht voorzieningen in het kader van zorg en ondersteuning
-            (Wmo)
-          </li>
+          <li>Uw voorzieningen in het kader van zorg en ondersteuning (Wmo)</li>
           <li>Hoe het staat met uw aanvraag voor een Stadspas</li>
           <li>Informatie over uw gemeentebelastingen</li>
           <li>Informatie over uw erfpacht</li>
@@ -108,7 +105,7 @@ export default () => {
             onClick={() => trackLink(ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD)}
             href={ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD}
           >
-            Mijn Amsterdam - gegevens inzien en storing melden.
+            veelgestelde vragen over Mijn Amsterdam
           </a>
         </p>
       </PageContentMainBody>
