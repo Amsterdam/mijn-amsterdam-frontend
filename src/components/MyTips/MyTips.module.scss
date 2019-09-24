@@ -22,19 +22,11 @@
   }
 }
 
-.ImageContainer {
-  height: 19rem;
+.Img {
+  display: block;
   width: 100%;
-  background-color: $color-neutral-grey1;
-  margin-bottom: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.ImgPlaceholder {
-  width: 10rem;
-  height: 10rem;
+  height: auto;
+  margin-bottom: 1rem;
 }
 
 .HeaderBar {
