@@ -9,10 +9,19 @@
   display: flex;
   align-items: center;
   padding: 1rem 0 0 4rem;
+
+  @include media-q('<=phone') {
+    margin-top: 0;
+  }
 }
 
 .HasIcon {
   padding: 3.2rem 0 0 9rem;
+
+  @include media-q('<=phone') {
+    height: auto;
+    padding-left: 0;
+  }
 }
 
 .HeadingInner {
@@ -37,6 +46,7 @@
     @include media-q('<=phone') {
       width: 3.2rem;
       max-height: 3.2rem;
+      transform: none;
     }
   }
 }
