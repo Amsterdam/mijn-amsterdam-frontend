@@ -10,7 +10,7 @@
 }
 
 .ListHeading {
-  @include centered-content;
+  @include centered-block;
   color: $color-neutral-grey4;
   margin-bottom: 0;
 }
@@ -41,7 +41,6 @@
 .ListItem {
 
   &Inner {
-    @include centered-content;
     display: flex;
     padding: 0 7.5rem;
     border-top: 1px solid $color-neutral-grey2;
@@ -107,7 +106,15 @@
     }
   }
 
-  @include media-q('<=phone') {
+  @include media-q('<tablet') {
+    &,
+    &:first-child {
+      padding: 1rem 1rem 1rem 3rem;
+      position: static;
+    }
+  }
+
+  @include media-q('<phone') {
     &,
     &:first-child {
       padding: 1rem 1rem 1rem 3rem;
@@ -217,7 +224,7 @@
 }
 
 .NoStatusItems {
-  padding: 2rem 0;
+  padding: 0;
 }
 
 .MoreStatus {

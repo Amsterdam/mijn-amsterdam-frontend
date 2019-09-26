@@ -9,7 +9,7 @@
 }
 
 .topBar {
-  @include centered-content();
+  @include centered-max;
   height: $main-header-topbar-height;
   display: flex;
 

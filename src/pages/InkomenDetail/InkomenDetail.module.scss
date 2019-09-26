@@ -1,15 +1,2 @@
 @import 'styles/_global.scss';
 
-.LoadingContentHeading {
-  padding-top: 1rem;
-}
-
-.LoadingContentStatusLine {
-  margin: 0 auto;
-  max-width: $main-boxed-width;
-  padding-left: 16rem;
-
-  @include media-q('<=phone') {
-    padding-left: 0;
-  }
-}

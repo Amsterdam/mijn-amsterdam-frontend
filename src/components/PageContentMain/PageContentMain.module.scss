@@ -1,19 +1,94 @@
 @import 'styles/_global.scss';
 
 .PageContentMain {
-  // background: $col;
-  // @include page-content-main;
-  // position: relative;
 
-  // &__default {
-  //   width: 100%;
-  //   max-width: $main-boxed-width;
-  //   margin: 0 auto;
-  // }
+}
 
-  // &__full {
-  //   width: 100%;
-  //   margin: 0;
-  //   padding: 0;
-  // }
+.TextPage {
+  @include select(PageContentMainHeading_PageContentMainHeading) {
+    @include centered-max;
+
+    @include media-q('<tablet') {
+      margin-left: 2rem;
+      margin-right: 2rem;
+    }
+
+    @include media-q('<phone') {
+      margin: 0;
+    }
+  }
+
+  @include select(PageContentMainHeading_HeadingInner) {
+    @include centered-max(62rem);;
+    width: calc(100% - 4rem);
+    margin: 0 auto;
+
+    @include media-q('<tablet') {
+      margin-left: 3rem;
+      margin-right: 3rem;
+    }
+
+    @include media-q('<phone') {
+      margin-left: 1rem;
+      margin-right: 1rem;
+    }
+  }
+}
+
+.OverviewPage {
+  @extend .TextPage;
+
+  @include select(PageContentMainHeading_HeadingInner) {
+    margin-left: 0;
+  }
+
+  @include select(DataLinkTable_DataLinkTable) {
+    @include centered-block;
+  }
+}
+
+.DetailPage {
+  @extend .OverviewPage;
+
+  @include select(StatusLine_ListItemInner__) {
+    max-width: $main-boxed-width;
+    margin: 0 auto;
+
+    @include media-q('<tablet') {
+      margin: 0;
+      padding-left: 6rem;
+    }
+
+    @include media-q('<phone') {
+      margin: 0 4rem;
+    }
+  }
+
+  @include select(StatusLine_NoStatusItems, StatusLine_ListHeading) {
+    @include centered-block;
+    padding-left: 16rem;
+
+    @include media-q('<tablet') {
+      padding-left: 10rem;
+    }
+
+    @include media-q('<phone') {
+      padding-left: 7rem;
+    }
+  }
+}
+
+.PageContent {
+  @include centered-max(62rem);
+
+  @include media-q('<tablet') {
+    margin-left: 5rem;
+    margin-right: 5rem;
+    max-width: none;
+  }
+
+  @include media-q('<phone') {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
 }

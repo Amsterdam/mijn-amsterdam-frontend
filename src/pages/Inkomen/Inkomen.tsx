@@ -10,6 +10,8 @@ import { ExternalUrls } from 'App.constants';
 import Alert from 'components/Alert/Alert';
 import { useTabletScreen } from 'hooks/media.hook';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
+import classnames from 'classnames';
+import pageContentStyles from 'components/PageContentMain/PageContentMain.module.scss';
 
 const DISPLAY_PROPS = {
   datePublished: 'besluit',
@@ -36,11 +38,13 @@ export default () => {
   const isTabletScreen = useTabletScreen();
 
   return (
-    <PageContentMain className={styles.Inkomen}>
+    <PageContentMain
+      className={classnames(styles.Inkomen, pageContentStyles.OverviewPage)}
+    >
       <PageContentMainHeading icon={<ChapterIcon chapter={Chapters.INKOMEN} />}>
         {ChapterTitles.INKOMEN}
       </PageContentMainHeading>
-      <div className={styles.Intro}>
+      <div className={pageContentStyles.PageContent}>
         <p>
           Hieronder ziet u uw regelingen en hulpmiddelen vanuit de Wmo. Hebt u
           vragen of wilt u een wijziging doorgeven? Bel dan gratis de Wmo
@@ -52,12 +56,12 @@ export default () => {
             Lees hier meer over zorg en ondersteuning
           </ButtonLinkExternal>
         </p>
+        {isError && (
+          <Alert type="warning">
+            We kunnen op dit moment geen gegevens tonen.
+          </Alert>
+        )}
       </div>
-      {isError && (
-        <Alert type="warning">
-          We kunnen op dit moment geen gegevens tonen.
-        </Alert>
-      )}
       <DataLinkTable
         id="datalinktable-income-actual"
         rowHeight={isTabletScreen ? 'auto' : '5.8rem'}

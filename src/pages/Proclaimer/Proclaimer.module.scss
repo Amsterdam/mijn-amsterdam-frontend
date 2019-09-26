@@ -1,11 +1,3 @@
 @import 'styles/_global.scss';
 
-.Proclaimer {
-  @include select(PageContentMainHeading_PageContentMainHeading) {
-    padding-left: 16rem;
-  }
-}
 
-.BodyContent {
-  @include centered-content(62rem);
-}

@@ -9,6 +9,7 @@ import StatusLine from 'components/StatusLine/StatusLine';
 import Alert from 'components/Alert/Alert';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
+import pageContentStyles from 'components/PageContentMain/PageContentMain.module.scss';
 
 export default () => {
   const {
@@ -29,21 +30,21 @@ export default () => {
   const noContent = !isLoading && !FocusItem;
 
   return (
-    <PageContentMain className={styles.InkomenDetail}>
+    <PageContentMain className={pageContentStyles.DetailPage}>
       <PageContentMainHeading
         icon={<ChapterIcon chapter={Chapters.INKOMEN} />}
         backLink={{ to: AppRoutes.INKOMEN, title: ChapterTitles.INKOMEN }}
       >
         {FocusItem && FocusItem.title}
       </PageContentMainHeading>
-      {isLoading && (
-        <LoadingContent className={styles.LoadingContentStatusLine} />
-      )}
-      {(isError || noContent) && (
-        <Alert type="warning">
-          We kunnen op dit moment geen gegevens tonen.
-        </Alert>
-      )}
+      <div className={pageContentStyles.PageContent}>
+        {(isError || noContent) && (
+          <Alert type="warning">
+            We kunnen op dit moment geen gegevens tonen.
+          </Alert>
+        )}
+        {isLoading && <LoadingContent />}
+      </div>
       {!!FocusItem && (
         <StatusLine
           trackCategory={`Werk en inkomen / ${FocusItem.productTitle}`}

@@ -59,8 +59,8 @@
 }
 
 .Table {
-  border-collapse: collapse;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
 
   @include media-q('<=phone') {
     display: grid;
@@ -80,9 +80,18 @@
 }
 
 .TableRow {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+
   td {
     padding: 1em 1em 1em 0;
     vertical-align: top;
+    flex: 1 1 auto;
+
+    &:first-child {
+      flex-basis: 75%;
+    }
     // Use nth-child here because css specificity allows us to change border-top for tablet easily
     &,
     &:nth-child(1) {

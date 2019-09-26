@@ -10,6 +10,7 @@ import { useTabletScreen } from 'hooks/media.hook';
 import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
 import { ExternalUrls, ChapterTitles } from 'App.constants';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
+import pageContentStyles from 'components/PageContentMain/PageContentMain.module.scss';
 
 const DISPLAY_PROPS = {
   title: '',
@@ -30,11 +31,11 @@ export default () => {
   const isTabletScreen = useTabletScreen();
 
   return (
-    <PageContentMain className={styles.Zorg}>
+    <PageContentMain className={pageContentStyles.OverviewPage}>
       <PageContentMainHeading icon={<ChapterIcon chapter={Chapters.ZORG} />}>
         {ChapterTitles.ZORG}
       </PageContentMainHeading>
-      <div className={styles.Intro}>
+      <div className={pageContentStyles.PageContent}>
         <p>
           Hieronder ziet u uw regelingen en hulpmiddelen vanuit de Wmo. Hebt u
           vragen of wilt u een wijziging doorgeven? Bel dan gratis de Wmo
@@ -46,12 +47,12 @@ export default () => {
             Lees hier meer over zorg en ondersteuning
           </ButtonLinkExternal>
         </p>
+        {isError && (
+          <Alert type="warning">
+            We kunnen op dit moment geen gegevens tonen.
+          </Alert>
+        )}
       </div>
-      {isError && (
-        <Alert type="warning">
-          We kunnen op dit moment geen gegevens tonen.
-        </Alert>
-      )}
       <DataLinkTable
         id="datalinktable-healthcare-granted"
         rowHeight={isTabletScreen ? 'auto' : '5.8rem'}

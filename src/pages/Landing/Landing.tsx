@@ -10,6 +10,7 @@ import styles from './Landing.module.scss';
 import { trackPageView, trackLink } from 'hooks/analytics.hook';
 import classnames from 'classnames';
 import { clearSessionStorage } from 'hooks/storage.hook';
+import pageContentStyles from 'components/PageContentMain/PageContentMain.module.scss';
 
 export default () => {
   const loginButton = useRef(null);
@@ -23,11 +24,9 @@ export default () => {
   const [isRedirecting, setRedirecting] = useState(false);
 
   return (
-    <PageContentMain className={styles.Landing}>
+    <PageContentMain className={pageContentStyles.TextPage}>
       <PageContentMainHeading className={styles.Heading}>
-        <span className={styles.MainHeadingInner}>
-          Welkom op Mijn Amsterdam
-        </span>
+        Welkom op Mijn Amsterdam
         <BetaLabel
           aria-hidden="true"
           role="img"
@@ -35,7 +34,7 @@ export default () => {
           className={styles.BetaLogo}
         />
       </PageContentMainHeading>
-      <div id="AppContent" className={styles.BodyContent}>
+      <div id="AppContent" className={pageContentStyles.PageContent}>
         <p>
           Welkom op Mijn Amsterdam: uw persoonlijke digitale pagina bij de
           gemeente Amsterdam. Hier ziet u op één centrale plek welke gegevens de

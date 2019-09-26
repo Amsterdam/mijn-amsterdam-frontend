@@ -3,6 +3,7 @@ import PageContentMain from 'components/PageContentMain/PageContentMain';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
 import styles from './Proclaimer.module.scss';
 import { trackLink } from 'hooks/analytics.hook';
+import pageContentStyles from 'components/PageContentMain/PageContentMain.module.scss';
 
 export default () => {
   const complaintsFormUrl =
@@ -10,9 +11,9 @@ export default () => {
   const privacyPageUrl = 'https://www.amsterdam.nl/privacy';
 
   return (
-    <PageContentMain className={styles.Proclaimer}>
+    <PageContentMain className={pageContentStyles.TextPage}>
       <PageContentMainHeading>Proclaimer</PageContentMainHeading>
-      <div className={styles.BodyContent}>
+      <div className={pageContentStyles.PageContent}>
         <p>
           Mijn Amsterdam is een website van de gemeente Amsterdam. Op Mijn
           Amsterdam tonen wij uw persoonlijke informatie uit de verschillende

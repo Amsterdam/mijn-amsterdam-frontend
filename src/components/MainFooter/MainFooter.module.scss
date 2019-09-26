@@ -6,13 +6,7 @@
 }
 
 .InnerContainer {
-  max-width: $main-boxed-width;
-  margin: 0 auto;
-
-  @include media-q('<=tablet') {
-    width: auto;
-    margin: 0 2.4rem;
-  }
+  @include centered-block;
 }
 
 .TopBar {

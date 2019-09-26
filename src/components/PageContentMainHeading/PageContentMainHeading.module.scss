@@ -1,26 +1,15 @@
 @import 'styles/_global.scss';
 
 .PageContentMainHeading {
-  @include centered-content();
   background: $color-white;
   margin-top: -8.5rem;
   height: 8.5rem;
   position: relative;
   display: flex;
   align-items: center;
-  padding: 1rem 0 0 4rem;
 
   @include media-q('<=phone') {
-    margin-top: 0;
-  }
-}
-
-.HasIcon {
-  padding: 3.2rem 0 0 9rem;
-
-  @include media-q('<=phone') {
-    height: auto;
-    padding-left: 0;
+    margin: 0;
   }
 }
 
@@ -29,24 +18,34 @@
 }
 
 .Icon {
-  margin-right: 2rem;
+  flex-basis: 16rem;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   > svg {
     fill: $color-primary-red;
     height: auto;
     max-height: 5rem;
     width: 5rem;
-    transform: translateX(-3rem);
+  }
 
-    @include media-q('<=tablet') {
+  @include media-q('<tablet') {
+    flex-basis: 10rem;
+
+    > svg {
       width: 4rem;
       max-height: 4rem;
     }
+  }
 
-    @include media-q('<=phone') {
+  @include media-q('<phone') {
+    flex-basis: 8rem;
+
+    > svg {
       width: 3.2rem;
       max-height: 3.2rem;
-      transform: none;
     }
   }
 }

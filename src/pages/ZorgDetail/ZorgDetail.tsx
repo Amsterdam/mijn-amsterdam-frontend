@@ -9,6 +9,8 @@ import Alert from 'components/Alert/Alert';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 import StatusLine from 'components/StatusLine/StatusLine';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
+import pageContentStyles from 'components/PageContentMain/PageContentMain.module.scss';
+import composeClassNames from 'classnames';
 
 export default () => {
   const {
@@ -29,25 +31,30 @@ export default () => {
   const noContent = !isLoading && !WmoItem;
 
   return (
-    <PageContentMain className={styles.ZorgDetail}>
+    <PageContentMain className={pageContentStyles.DetailPage}>
       <PageContentMainHeading
-        icon={<ChapterIcon chapter={Chapters.INKOMEN} />}
-        backLink={{ to: AppRoutes.INKOMEN, title: ChapterTitles.INKOMEN }}
+        icon={<ChapterIcon chapter={Chapters.ZORG} />}
+        backLink={{ to: AppRoutes.ZORG, title: ChapterTitles.ZORG }}
+        isLoading={isLoading}
       >
         {WmoItem && WmoItem.title}
       </PageContentMainHeading>
-      {(isError || noContent) && (
-        <Alert type="warning">
-          We kunnen op dit moment geen gegevens tonen.
-        </Alert>
-      )}
-      {isLoading && <LoadingContent className={styles.LoadingContentInfo} />}
-      {!!WmoItem && !!WmoItem.supplier && (
-        <p className={styles.InfoDetail}>
-          Aanbieder
-          <strong>{WmoItem.supplier}</strong>
-        </p>
-      )}
+
+      <div className={pageContentStyles.PageContent}>
+        {(isError || noContent) && (
+          <Alert type="warning">
+            We kunnen op dit moment geen gegevens tonen.
+          </Alert>
+        )}
+        {isLoading && <LoadingContent className={styles.LoadingContentInfo} />}
+        {!!WmoItem && !!WmoItem.supplier && (
+          <p className={styles.InfoDetail}>
+            Aanbieder
+            <strong>{WmoItem.supplier}</strong>
+          </p>
+        )}
+      </div>
+
       {!!WmoItem && (
         <StatusLine
           items={WmoItem.process}

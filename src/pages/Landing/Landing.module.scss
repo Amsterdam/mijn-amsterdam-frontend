@@ -1,19 +1,5 @@
 @import 'styles/_global.scss';
 
-.Landing {
-  @include select(PageContentMainHeading_PageContentMainHeading) {
-    padding-left: 16rem;
-  }
-}
-
-.BodyContent {
-  @include centered-content(62rem);
-  ul {
-    padding-left: 2rem;
-    list-style-type: square;
-  }
-}
-
 .LoginBtn {
   display: inline-flex;
   height: 4.6rem;

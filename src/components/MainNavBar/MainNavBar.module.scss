@@ -12,7 +12,7 @@
 }
 
 .LinkContainer {
-  @include centered-content();
+  @include centered-max;
 
   display: flex;
   background-color: $color-neutral-grey1;
@@ -137,6 +137,7 @@
   margin-left: 0.2rem;
   text-indent: -100vw; // move text outside of view
   cursor: pointer;
+  padding: 0;
 
   &Open {
     background-image: url('assets/images/Close.svg');
@@ -161,6 +162,7 @@
   font-weight: 500;
   color: $color-neutral-grey4;
   font-size: 1.8rem;
+  padding: 0;
 
   &Open {
     color: transparent;

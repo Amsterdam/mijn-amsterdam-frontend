@@ -1,7 +1,6 @@
 @import 'styles/_global.scss';
 
 .Profile {
-  @include centered-content;
 
   @include media-q('>phone') {
     // Custom style
@@ -15,7 +14,6 @@
 }
 
 .Intro {
-  @include centered-content(62rem);
   margin-bottom: 10rem;
 }
 

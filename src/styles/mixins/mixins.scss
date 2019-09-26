@@ -4,20 +4,25 @@
   align-items: center;
 }
 
-@mixin centered-content($max-width: $main-boxed-width) {
-  margin: 0 auto;
-  max-width: calc(100vw - 2rem);
-
-  @include media-q('>phone') {
-    max-width: calc(100vw - 4rem);
-  }
-  @include media-q('>tablet') {
-    max-width: $max-width;
-  }
+@mixin centered-max($max-width: $main-boxed-width) {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: $max-width;
 }
 
-@mixin page-content-main {
-  min-height: 20rem;
+@mixin centered-block {
+  @include centered-max;
+
+  @include media-q('<tablet') {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    max-width: none;
+  }
+
+  @include media-q('<phone') {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
 }
 
 @mixin heading($size, $line-height, $unit: 'rem') {
@@ -64,8 +69,12 @@
   list-style-type: none;
 }
 
-@mixin select($name) {
-  [class*='#{$name}'] {
+@mixin select($names...) {
+  $selectors: ();
+  @each $name in $names {
+    $selectors: append($selectors, ('[class*="#{$name}"]'), comma)
+  }
+  #{$selectors} {
     @content;
   }
 }
@@ -101,4 +110,15 @@
   @include media($sizes...) {
     @content;
   }
+}
+
+@function str-split($string, $separator) {
+  $i: str-index($string, $separator);
+  @if $i != null {
+    @return append(
+      str-slice($string, 1, $i - 1),
+      str-split(str-slice($string, $i + str-length($separator)), $separator)
+    );
+  }
+  @return $string
 }
