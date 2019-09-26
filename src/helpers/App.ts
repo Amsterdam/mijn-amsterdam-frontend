@@ -51,7 +51,7 @@ export function formattedTimeFromSeconds(seconds: number) {
 }
 
 export function isDateInPast(date: string | Date, dateNow: string | Date) {
-  return new Date(date).getTime() < new Date(dateNow).getTime();
+  return new Date(date).getTime() <= new Date(dateNow).getTime();
 }
 
 export function capitalizeFirstLetter(text: string) {
@@ -62,8 +62,24 @@ export function dateSort(sortKey: string, direction: 'asc' | 'desc' = 'asc') {
   return (a: any, b: any) => {
     const c = new Date(a[sortKey]).getTime();
     const d = new Date(b[sortKey]).getTime();
-    //c > d ? -1 : 1;
-    return direction === 'asc' ? (c < d ? -1 : 1) : c > d ? -1 : 1;
+
+    if (direction === 'asc') {
+      if (c < d) {
+        return -1;
+      } else if (c == d) {
+        return 0;
+      } else {
+        return 1;
+      }
+    }
+
+    if (d < c) {
+      return -1;
+    } else if (c == d) {
+      return 0;
+    } else {
+      return 1;
+    }
   };
 }
 
