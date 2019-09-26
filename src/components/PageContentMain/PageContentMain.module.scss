@@ -51,16 +51,14 @@
   @extend .OverviewPage;
 
   @include select(StatusLine_ListItemInner__) {
-    max-width: $main-boxed-width;
-    margin: 0 auto;
+    @include centered-block;
 
     @include media-q('<tablet') {
-      margin: 0;
-      padding-left: 6rem;
+      margin-left: 7rem;
     }
 
     @include media-q('<phone') {
-      margin: 0 4rem;
+      margin-left: 4rem;
     }
   }
 

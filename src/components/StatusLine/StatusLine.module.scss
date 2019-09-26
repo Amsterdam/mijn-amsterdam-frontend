@@ -39,15 +39,17 @@
 }
 
 .ListItem {
-
   &Inner {
     display: flex;
     padding: 0 7.5rem;
     border-top: 1px solid $color-neutral-grey2;
 
-    @include media-q('<=phone') {
+    @include media-q('<tablet') {
       display: block;
       position: relative;
+      padding: 0 2rem;
+    }
+    @include media-q('<phone') {
       padding: 0 1rem;
     }
   }
@@ -68,7 +70,7 @@
   }
 
   &:nth-child(2) {
-    @include media-q(">=tablet") {
+    @include media-q(">tablet") {
       flex: 0 0 38rem;
     }
   }
@@ -107,14 +109,6 @@
   }
 
   @include media-q('<tablet') {
-    &,
-    &:first-child {
-      padding: 1rem 1rem 1rem 3rem;
-      position: static;
-    }
-  }
-
-  @include media-q('<phone') {
     &,
     &:first-child {
       padding: 1rem 1rem 1rem 3rem;
