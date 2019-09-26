@@ -63,17 +63,9 @@ export function dateSort(sortKey: string, direction: 'asc' | 'desc' = 'asc') {
     const c = new Date(a[sortKey]).getTime();
     const d = new Date(b[sortKey]).getTime();
 
-    if (direction === 'asc') {
-      if (c < d) {
-        return -1;
-      } else if (c == d) {
-        return 0;
-      } else {
-        return 1;
-      }
-    }
+    const s = direction === 'asc' ? c < d : d < c;
 
-    if (d < c) {
+    if (s) {
       return -1;
     } else if (c == d) {
       return 0;
