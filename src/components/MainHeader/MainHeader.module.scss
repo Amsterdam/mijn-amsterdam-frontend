@@ -17,7 +17,7 @@
     margin: 0.4em 0 0;
   }
 
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     max-width: none;
     height: $main-header-topbar-height--tablet;
 
@@ -34,7 +34,7 @@
   text-decoration: none;
   transform: translateX(-3rem);
 
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     transform: translateX(0);
   }
 }
@@ -47,14 +47,14 @@
   width: 9rem;
   height: 6.8rem;
 
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     left: 2rem;
     top: -0.5rem;
     width: 9.3rem; // translates approx. height of 4rem
     margin-right: 1rem;
   }
 
-  @include media-q('<=phone') {
+  @include mq-phone() {
     left: 1rem;
   }
 }
@@ -66,7 +66,7 @@
   height: 10rem;
   width: 10rem;
 
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     height: 3rem;
     width: 3rem;
   }
@@ -81,12 +81,12 @@
   width: 100%;
   z-index: z-index(header-error-messages);
 
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     width: calc(100% - 4rem);
     top: 14rem;
   }
 
-  @include media-q('<=phone') {
+  @include mq-phone() {
     position: static;
     transform: none;
     left: auto;
@@ -101,7 +101,7 @@
   transform: translateX(-50%);
   z-index: 2;
 
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     top: 1rem;
   }
 

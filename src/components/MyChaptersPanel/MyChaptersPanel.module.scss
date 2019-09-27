@@ -4,7 +4,7 @@
   background-color: $color-neutral-grey1;
   padding: 3.2rem 0 4rem 3.2rem;
 
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     padding-left: 2.4rem;
   }
 }
@@ -29,7 +29,7 @@
       margin-left: 0.5rem;
     }
 
-    @include media-q('<=tablet') {
+    @include mq-tablet() {
       padding-left: 0;
       width: auto;
       min-width: 18.5rem;
@@ -39,7 +39,7 @@
     }
   }
 
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     display: block;
   }
 }

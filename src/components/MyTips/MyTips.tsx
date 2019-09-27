@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './MyTips.module.scss';
 import ButtonLink, {
   ButtonLinkExternal,
@@ -7,31 +7,41 @@ import Heading from 'components/Heading/Heading';
 import { AppRoutes } from 'App.constants';
 import { MyTip } from 'hooks/api/my-tips-api.hook';
 import LoadingContent from '../LoadingContent/LoadingContent';
-import { ReactComponent as ImgPlaceholder } from 'assets/images/img-placeholder.svg';
 import { trackLink } from 'hooks/analytics.hook';
 
 export interface TipProps {
   tip: MyTip;
 }
 
-const Tip = ({ tip }: TipProps) => (
-  <li className={styles.TipItem}>
-    {tip.imgUrl ? (
-      <img alt="" src={tip.imgUrl} className={styles.Img} />
-    ) : (
-      <ImgPlaceholder aria-hidden="true" className={styles.Img} />
-    )}
-    <Heading el="h4">{tip.title}</Heading>
-    <p>{tip.description}</p>
-    <ButtonLinkExternal
-      title={`Meer informatie over de tip: ${tip.title}`}
-      to={tip.link.to}
-      onClick={() => trackLink(tip.link.to)}
-    >
-      {tip.link.title}
-    </ButtonLinkExternal>
-  </li>
-);
+const Tip = ({ tip }: TipProps) => {
+  const [imgUrl, setImgUrl] = useState('/img/img-placeholder.svg');
+
+  useEffect(() => {
+    const image = new Image();
+    image.addEventListener('load', () => {
+      setImgUrl('' + tip.imgUrl);
+    });
+  }, [tip.imgUrl]);
+
+  return (
+    <li className={styles.TipItem}>
+      <article>
+        <figure className={styles.ImageContainer}>
+          <img alt="" src={imgUrl} className={styles.Img} />
+        </figure>
+        <Heading el="h4">{tip.title}</Heading>
+        <p>{tip.description}</p>
+        <ButtonLinkExternal
+          title={`Meer informatie over de tip: ${tip.title}`}
+          to={tip.link.to}
+          onClick={() => trackLink(tip.link.to)}
+        >
+          {tip.link.title}
+        </ButtonLinkExternal>
+      </article>
+    </li>
+  );
+};
 
 export interface MyTipsProps {
   items: MyTip[];

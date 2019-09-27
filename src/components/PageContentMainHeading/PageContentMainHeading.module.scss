@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
 
-  @include media-q('<=phone') {
+  @include mq-phone() {
     margin: 0;
   }
 }
@@ -31,7 +31,7 @@
     width: 5rem;
   }
 
-  @include media-q('<tablet') {
+  @include mq-tablet() {
     flex-basis: 10rem;
 
     > svg {
@@ -40,7 +40,7 @@
     }
   }
 
-  @include media-q('<phone') {
+  @include mq-phone() {
     flex-basis: 8rem;
 
     > svg {

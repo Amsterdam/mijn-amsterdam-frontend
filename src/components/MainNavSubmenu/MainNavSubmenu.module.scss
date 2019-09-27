@@ -28,7 +28,7 @@
     }
   }
 
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     display: none;
   }
 }
@@ -50,7 +50,7 @@
     opacity: 1;
   }
 
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     opacity: 1;
     max-height: initial;
     position: relative;
@@ -71,7 +71,7 @@
   position: relative;
   transform: translateX(-#{$main-boxed-width/2});
 
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     flex-direction: column;
     left: 0;
     transform: initial;
@@ -110,7 +110,7 @@
     }
   }
 
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     height: 4.8rem;
     padding-left: 1.6rem;
 

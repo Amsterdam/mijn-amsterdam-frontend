@@ -53,7 +53,7 @@
   transition: height 400ms ease-in;
   border-bottom: 0.1rem solid $color-neutral-grey2;
 
-  @include media-q('<=phone') {
+  @include mq-phone() {
     border-bottom: 0;
   }
 }
@@ -62,7 +62,7 @@
   display: flex;
   flex-direction: column;
 
-  @include media-q('<=phone') {
+  @include mq-phone() {
     display: grid;
     tr,
     td,
@@ -104,7 +104,7 @@
     color: $color-neutral-grey4;
     font-weight: 500;
   }
-  @include media-q('<=phone') {
+  @include mq-phone() {
     td {
       border-top: 0;
       padding: 0;
@@ -125,7 +125,7 @@
   display: none;
   padding-right: 0.3rem;
 
-  @include media-q('<=phone') {
+  @include mq-phone() {
     display: initial;
   }
 }

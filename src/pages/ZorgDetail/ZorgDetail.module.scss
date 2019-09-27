@@ -11,7 +11,7 @@
     display: block;
   }
 
-  @include media-q('<tablet') {
+  @include mq-tablet() {
     margin-left: 7rem;
   }
 }

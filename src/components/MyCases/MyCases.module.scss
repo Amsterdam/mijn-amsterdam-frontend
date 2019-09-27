@@ -11,7 +11,7 @@
   display: flex;
   flex-wrap: wrap;
 
-  @include media-q('<=phone') {
+  @include mq-phone() {
     display: block;
   }
 }
@@ -23,14 +23,14 @@
   position: relative;
   width: calc(50% - 5rem);
 
-  @include media-q('<=phone') {
+  @include mq-phone() {
     width: auto;
   }
 
   &:nth-child(odd) {
     margin-right: 5rem;
 
-    @include media-q('<=phone') {
+    @include mq-phone() {
       margin: 0;
     }
   }
@@ -38,7 +38,7 @@
   &:nth-child(even) {
     margin-left: 5rem;
 
-    @include media-q('<=phone') {
+    @include mq-phone() {
       margin: 0;
     }
   }

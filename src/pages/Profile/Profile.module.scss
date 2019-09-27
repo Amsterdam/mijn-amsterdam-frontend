@@ -22,3 +22,7 @@
     margin-bottom: 6rem;
   }
 }
+
+.InfoPanels {
+  @include centered-block;
+}

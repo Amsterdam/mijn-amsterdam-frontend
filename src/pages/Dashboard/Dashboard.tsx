@@ -69,6 +69,12 @@ export default () => {
           />
         </div>
 
+        <MyCases
+          isLoading={!!isMyCasesLoading}
+          title="Mijn lopende aanvragen"
+          items={myCases}
+        />
+
         {!isPhoneScreen && <MyArea url={mapUrl} />}
 
         {!isPhoneScreen && (

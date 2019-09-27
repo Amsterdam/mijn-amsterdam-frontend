@@ -22,18 +22,18 @@
       bottom: 0;
     }
 
-    @include media-q('<=phone') {
+    @include mq-phone() {
       margin: 0 1rem;
     }
 
     @include select(PageContentMainHeading_HeadingInner) {
       margin: 0 4rem;
 
-      @include media-q('<=tablet') {
+      @include mq-tablet() {
         margin: 0 2rem;
       }
 
-      @include media-q('<=phone') {
+      @include mq-phone() {
         margin: 0;
       }
     }
@@ -74,11 +74,11 @@
 
   @include select(MyChaptersPanel_MyChaptersPanel) {
     // Adjust some margins to match the design on mobile
-    @include media-q('>=phone') {
+    @include media-q('>phone') {
       flex: 0 0 calc(50% + 2rem);
     }
 
-    @include media-q('<phone') {
+    @include mq-phone() {
       margin-left: -1rem;
       width: auto;
     }

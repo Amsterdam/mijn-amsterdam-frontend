@@ -18,7 +18,7 @@
   background-color: $color-neutral-grey1;
 
 
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     display: grid; // On a phone the menu is ordered differently so we use grid to have control over that
     width: $main-header-navbar-width--phone;
     margin: 0;
@@ -64,7 +64,7 @@
     margin-right: 0;
   }
 
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     font-weight: bold;
     font-size: 1.5rem;
     margin: 0;
@@ -95,7 +95,7 @@
     }
   }
 
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     position: static;
     margin-top: 0;
     grid-row: 20;
@@ -143,7 +143,7 @@
     background-image: url('assets/images/Close.svg');
   }
 
-  @include media-q('>phone', '<=tablet') {
+  @include media-q('>phone', '<tablet') {
     margin-left: 1.2rem;
   }
 }
@@ -173,7 +173,7 @@
     width: 4rem;
   }
 
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     right: 0.5rem;
 
     &Open {

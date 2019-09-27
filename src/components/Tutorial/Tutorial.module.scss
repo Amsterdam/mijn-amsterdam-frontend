@@ -34,11 +34,11 @@ $tutorial-items-radius: 1rem;
     margin-top: 1rem;
   }
 
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     margin-top: -16rem;
   }
 
-  @include media-q('<=phone') {
+  @include mq-phone() {
     margin-top: -15rem;
     margin-left: 2rem;
 
@@ -63,7 +63,7 @@ $tutorial-items-radius: 1rem;
     margin-top: 1rem;
   }
 
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     width: 28rem;
     margin-top: -3rem;
     margin-left: -26rem;
@@ -75,7 +75,7 @@ $tutorial-items-radius: 1rem;
     }
   }
 
-  @include media-q('<=phone') {
+  @include mq-phone() {
     margin-top: -15rem;
     margin-left: 0rem;
 
@@ -99,7 +99,7 @@ $tutorial-items-radius: 1rem;
     margin-top: 1rem;
   }
 
-  @include media-q('<=phone') {
+  @include mq-phone() {
     margin-top: -17rem;
     margin-left: 2rem;
     width: 26rem;
@@ -124,7 +124,7 @@ $tutorial-items-radius: 1rem;
     margin-top: 1rem;
   }
 
-  @include media-q('<=phone') {
+  @include mq-phone() {
     width: 22rem;
     margin-top: -14rem;
     margin-left: 2rem;
@@ -148,7 +148,7 @@ $tutorial-items-radius: 1rem;
     margin-top: 1rem;
   }
 
-  @include media-q('<=phone') {
+  @include mq-phone() {
     width: 22rem;
     margin-top: -2rem;
     margin-left: 2rem;
@@ -195,7 +195,7 @@ $tutorial-items-radius: 1rem;
     margin-top: -$tutorial-items-padding;
     margin-bottom: -$tutorial-items-padding;
 
-    @include media-q('<=phone') {
+    @include mq-phone() {
       margin-left: 0rem;
       display: initial;
       background-position: 0rem 1.2rem;
@@ -209,7 +209,7 @@ $tutorial-items-radius: 1rem;
     margin-right: -$tutorial-items-padding;
     margin-bottom: -$tutorial-items-padding;
 
-    @include media-q('<=phone') {
+    @include mq-phone() {
       margin-left: 0rem;
       background-position: 0rem 1.2rem;
       padding-left: 2rem;

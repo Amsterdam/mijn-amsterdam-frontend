@@ -17,9 +17,13 @@
     margin-top: 1.2rem;
   }
   margin-bottom: 2rem;
-  @include media-q('<=phone') {
+  @include mq-phone() {
     width: 100%;
   }
+}
+
+.ImageContainer {
+  margin: 0;
 }
 
 .Img {
@@ -27,6 +31,7 @@
   width: 100%;
   height: auto;
   margin-bottom: 1rem;
+  background: $color-white;
 }
 
 .HeaderBar {

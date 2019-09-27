@@ -8,6 +8,8 @@ import React, { useContext } from 'react';
 
 import styles from './MyNotifications.module.scss';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
+import pageContentStyles from 'components/PageContentMain/PageContentMain.module.scss';
+import classnames from 'classnames';
 
 export default () => {
   const {
@@ -18,18 +20,25 @@ export default () => {
     },
   } = useContext(AppContext);
   return (
-    <PageContentMain className={styles.MyNotifications}>
+    <PageContentMain
+      className={classnames(
+        pageContentStyles.DetailPage,
+        styles.MyNotifications
+      )}
+    >
       <PageContentMainHeading
         className={styles.MainHeader}
         icon={<ChapterIcon chapter={Chapters.MELDINGEN} />}
       >
         Actueel
       </PageContentMainHeading>
-      {isError && (
-        <Alert type="warning">
-          Uw meldingen kunnen op dit moment niet geladen worden.
-        </Alert>
-      )}
+      <div className={pageContentStyles.PageContent}>
+        {isError && (
+          <Alert type="warning">
+            Uw meldingen kunnen op dit moment niet geladen worden.
+          </Alert>
+        )}
+      </div>
       <MyNotifications
         isLoading={isLoading}
         total={total}

@@ -44,12 +44,12 @@
     padding: 0 7.5rem;
     border-top: 1px solid $color-neutral-grey2;
 
-    @include media-q('<tablet') {
+    @include mq-tablet() {
       display: block;
       position: relative;
       padding: 0 2rem;
     }
-    @include media-q('<phone') {
+    @include mq-phone() {
       padding: 0 1rem;
     }
   }
@@ -108,7 +108,7 @@
     }
   }
 
-  @include media-q('<tablet') {
+  @include mq-tablet() {
     &,
     &:first-child {
       padding: 1rem 1rem 1rem 3rem;

@@ -15,7 +15,7 @@
     border-top: 0;
   }
 
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     padding-left: 0;
   }
 }
@@ -28,7 +28,7 @@
   width: 3.2rem;
   height: 3.2rem;
 
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     position: static;
     display: inline-block;
     vertical-align: middle;
@@ -39,7 +39,7 @@
 }
 
 .MetaInfoSecondary {
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     display: inline-block;
     vertical-align: middle;
   }
@@ -52,7 +52,7 @@
 .Datum {
   font-size: 1.4rem;
 
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     color: $color-neutral-grey4;
   }
 }
@@ -74,7 +74,7 @@
   text-transform: capitalize;
   display: none;
 
-  @include media-q('<=tablet') {
+  @include mq-tablet() {
     display: inline;
 
     &:after {

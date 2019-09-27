@@ -1,13 +1,15 @@
 import React from 'react';
 import PageContentMain from 'components/PageContentMain/PageContentMain';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
-import styles from './NotFound.module.scss';
+import pageContentStyles from 'components/PageContentMain/PageContentMain.module.scss';
 
 export default () => {
   return (
-    <PageContentMain className={styles.NotFound}>
+    <PageContentMain className={pageContentStyles.TextPage}>
       <PageContentMainHeading>Helaas</PageContentMainHeading>
-      <p>De pagina waar u naar op zoek was bestaat niet (meer).</p>
+      <p className={pageContentStyles.PageContent}>
+        De pagina waar u naar op zoek was bestaat niet (meer).
+      </p>
     </PageContentMain>
   );
 };
