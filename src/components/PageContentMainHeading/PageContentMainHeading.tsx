@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { HTMLProps } from 'react';
 import styles from './PageContentMainHeading.module.scss';
 import composeClassNames from 'classnames';
 import Heading, { HeadingTagName } from 'components/Heading/Heading';
@@ -7,7 +7,8 @@ import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
 import { ReactComponent as CaretLeft } from 'assets/images/Chevron-Left.svg';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 
-export interface PageContentMainHeadingProps {
+export interface PageContentMainHeadingProps
+  extends Omit<HTMLProps<HTMLHeadingElement>, 'size'> {
   children: ComponentChildren;
   backLink?: LinkProps;
   el?: HeadingTagName;
@@ -23,6 +24,7 @@ export default function PageContentMainHeading({
   icon,
   backLink,
   isLoading,
+  ...rest
 }: PageContentMainHeadingProps) {
   const classNames = composeClassNames(
     styles.PageContentMainHeading,
@@ -30,7 +32,7 @@ export default function PageContentMainHeading({
     className
   );
   return (
-    <Heading el={el} size="large" className={classNames}>
+    <Heading el={el} size="large" className={classNames} {...rest}>
       {!!icon && (
         <span aria-hidden="true" className={styles.Icon}>
           {icon}

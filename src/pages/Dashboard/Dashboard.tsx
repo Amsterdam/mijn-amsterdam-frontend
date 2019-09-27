@@ -44,9 +44,9 @@ export default () => {
   return (
     <>
       <PageContentMain className={styles.Dashboard}>
-        <PageContentMainHeading>
+        <PageContentMainHeading id="MyUpdatesHeader">
           <Link
-            id="MyUpdatesHeader" // Used for tutorial placement
+            // Used for tutorial placement
             className={styles.MyNotificationsHeadingLink}
             to={AppRoutes.MY_NOTIFICATIONS}
           >

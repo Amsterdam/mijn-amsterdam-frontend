@@ -79,8 +79,12 @@
   }
 }
 
-@mixin select-id($name) {
-  [id='#{$name}'] {
+@mixin select-id($names...) {
+  $selectors: ();
+  @each $name in $names {
+    $selectors: append($selectors, ('[id="#{$name}"]'), comma)
+  }
+  #{$selectors} {
     @content;
   }
 }

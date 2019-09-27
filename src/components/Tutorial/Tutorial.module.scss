@@ -170,27 +170,28 @@ $tutorial-items-radius: 1rem;
 }
 
 .TutorialItems {
-  [id='MyChaptersHeader'],
-  [id='MyAreaHeader'],
-  [id='MyTipsHeader'],
-  [id='MyCasesHeader'],
-  [id='MyUpdatesHeader'] {
+  @include select-id(MyChaptersHeader, MyAreaHeader, MyTipsHeader, MyCasesHeader) {
     @extend %tutorialHeading;
   }
 
-  [id='MyCasesHeader'] {
+  [id=MyUpdatesHeader] > span {
+    @extend %tutorialHeading;
+    transform: translateX(-1rem);
+  }
+
+  @include select-id(MyCasesHeader) {
     display: inline-block;
     margin-top: -$tutorial-items-padding;
     margin-bottom: calc(#{$tutorial-items-padding} * 1);
   }
 
-  [id='MyChaptersHeader'] {
+  @include select-id(MyChaptersHeader) {
     display: inline-block;
     margin-top: -$tutorial-items-padding;
     margin-bottom: $tutorial-items-padding;
   }
 
-  [id='MyAreaHeader'] {
+  @include select-id(MyAreaHeader) {
     display: inline-block;
     margin-top: -$tutorial-items-padding;
     margin-bottom: -$tutorial-items-padding;
@@ -203,7 +204,7 @@ $tutorial-items-radius: 1rem;
     }
   }
 
-  [id='MyTipsHeader'] {
+  @include select-id(MyTipsHeader) {
     padding: $tutorial-items-padding;
     margin-top: -$tutorial-items-padding;
     margin-right: -$tutorial-items-padding;
