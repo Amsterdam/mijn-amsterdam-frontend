@@ -26,8 +26,8 @@ import { SessionContext } from 'AppState';
 const ONE_SECOND_MS = 1000;
 const ONE_MINUTE_SECONDS = 60;
 const AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS = 13 * ONE_MINUTE_SECONDS;
-const AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS =
-  2 * ONE_MINUTE_SECONDS + 10; // Add 10 seconds time mismatch range
+export const AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS =
+  2 * ONE_MINUTE_SECONDS;
 const SESSION_RENEW_INTERVAL_SECONDS = 30;
 const TITLE = 'Wilt u doorgaan?';
 
@@ -127,7 +127,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   }
 
   function continueUsingApp() {
-    // Refetching the session will renew the session for another {AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS + AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS} seconds.
+    // Refetching the session will renew the session for another {nSettings.secondsBeforeDialogShow + AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS} seconds.
     session.refetch();
     resetAutoLogout();
     document.title = originalTitle;
@@ -155,7 +155,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
       <div className={styles.AutoLogoutDialog}>
         <p>
           U bent langer dan{' '}
-          {formattedTimeFromSeconds(AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS)} minuten
+          {formattedTimeFromSeconds(nSettings.secondsBeforeDialogShow)} minuten
           niet actief geweest op Mijn Amsterdam.
         </p>
         <p className={styles.TimerText}>
