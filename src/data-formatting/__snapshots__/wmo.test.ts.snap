@@ -30,8 +30,8 @@ Array [
         </React.Fragment>,
         "documents": Array [],
         "id": "status-step-0",
-        "isActual": true,
-        "isHistorical": false,
+        "isActual": false,
+        "isHistorical": true,
         "status": "Besluit",
         "stepType": "first-step",
       },
@@ -46,7 +46,7 @@ Array [
         "documents": Array [],
         "id": "status-step-1",
         "isActual": false,
-        "isHistorical": false,
+        "isHistorical": true,
         "status": "Levering gestart",
         "stepType": "intermediate-step",
       },
@@ -61,7 +61,7 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-2",
-        "isActual": false,
+        "isActual": true,
         "isHistorical": false,
         "status": "Levering gestopt",
         "stepType": "intermediate-step",
@@ -111,8 +111,8 @@ Array [
         </React.Fragment>,
         "documents": Array [],
         "id": "status-step-0",
-        "isActual": true,
-        "isHistorical": false,
+        "isActual": false,
+        "isHistorical": true,
         "status": "Besluit",
         "stepType": "first-step",
       },
@@ -127,7 +127,7 @@ Array [
         "documents": Array [],
         "id": "status-step-1",
         "isActual": false,
-        "isHistorical": false,
+        "isHistorical": true,
         "status": "Levering gestart",
         "stepType": "intermediate-step",
       },
@@ -142,7 +142,7 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-2",
-        "isActual": false,
+        "isActual": true,
         "isHistorical": false,
         "status": "Levering gestopt",
         "stepType": "intermediate-step",
@@ -167,92 +167,11 @@ Array [
   Object {
     "dateFinish": "08 maart 2020",
     "dateStart": "09 maart 2019",
-    "id": "ambulante-ondersteuning-2",
+    "id": "dagbesteding-2",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-2",
-    },
-    "process": Array [
-      Object {
-        "datePublished": "2019-03-11T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            U hebt recht op 
-            ambulante ondersteuning
-             per
-             
-            09 maart 2019
-            .
-          </p>
-          <p>
-            In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
-          </p>
-        </React.Fragment>,
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActual": true,
-        "isHistorical": false,
-        "status": "Besluit",
-        "stepType": "first-step",
-      },
-      Object {
-        "datePublished": "",
-        "description": <p>
-          Amstelring
-           is gestart met het leveren van 
-          ambulante ondersteuning
-          .
-        </p>,
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActual": false,
-        "isHistorical": false,
-        "status": "Levering gestart",
-        "stepType": "intermediate-step",
-      },
-      Object {
-        "datePublished": "",
-        "description": <p>
-          Amstelring
-           heeft aan ons doorgegeven dat u geen 
-          ambulante ondersteuning
-           
-          meer krijgt.
-        </p>,
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActual": false,
-        "isHistorical": false,
-        "status": "Levering gestopt",
-        "stepType": "intermediate-step",
-      },
-      Object {
-        "datePublished": "",
-        "description": <p>
-          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-        </p>,
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActual": false,
-        "isHistorical": false,
-        "status": "Einde recht",
-        "stepType": "last-step",
-      },
-    ],
-    "supplier": "Amstelring",
-    "supplierUrl": "",
-    "title": "Ambulante ondersteuning",
-  },
-  Object {
-    "dateFinish": "08 maart 2020",
-    "dateStart": "09 maart 2019",
-    "id": "dagbesteding-3",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/dagbesteding-3",
+      "to": "/zorg-en-ondersteuning/voorzieningen/dagbesteding-2",
     },
     "process": Array [
       Object {
@@ -273,8 +192,8 @@ Array [
         </React.Fragment>,
         "documents": Array [],
         "id": "status-step-0",
-        "isActual": true,
-        "isHistorical": false,
+        "isActual": false,
+        "isHistorical": true,
         "status": "Besluit",
         "stepType": "first-step",
       },
@@ -289,7 +208,7 @@ Array [
         "documents": Array [],
         "id": "status-step-1",
         "isActual": false,
-        "isHistorical": false,
+        "isHistorical": true,
         "status": "Levering gestart",
         "stepType": "intermediate-step",
       },
@@ -304,7 +223,7 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-2",
-        "isActual": false,
+        "isActual": true,
         "isHistorical": false,
         "status": "Levering gestopt",
         "stepType": "intermediate-step",
@@ -325,6 +244,87 @@ Array [
     "supplier": "Amstelring",
     "supplierUrl": "",
     "title": "Dagbesteding",
+  },
+  Object {
+    "dateFinish": "08 maart 2020",
+    "dateStart": "09 maart 2019",
+    "id": "ambulante-ondersteuning-3",
+    "isActual": true,
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-3",
+    },
+    "process": Array [
+      Object {
+        "datePublished": "2019-03-11T00:00:00",
+        "description": <React.Fragment>
+          <p>
+            U hebt recht op 
+            ambulante ondersteuning
+             per
+             
+            09 maart 2019
+            .
+          </p>
+          <p>
+            In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
+              indienen of hoe u van aanbieder kunt wisselen.
+          </p>
+        </React.Fragment>,
+        "documents": Array [],
+        "id": "status-step-0",
+        "isActual": false,
+        "isHistorical": true,
+        "status": "Besluit",
+        "stepType": "first-step",
+      },
+      Object {
+        "datePublished": "",
+        "description": <p>
+          Amstelring
+           is gestart met het leveren van 
+          ambulante ondersteuning
+          .
+        </p>,
+        "documents": Array [],
+        "id": "status-step-1",
+        "isActual": false,
+        "isHistorical": true,
+        "status": "Levering gestart",
+        "stepType": "intermediate-step",
+      },
+      Object {
+        "datePublished": "",
+        "description": <p>
+          Amstelring
+           heeft aan ons doorgegeven dat u geen 
+          ambulante ondersteuning
+           
+          meer krijgt.
+        </p>,
+        "documents": Array [],
+        "id": "status-step-2",
+        "isActual": true,
+        "isHistorical": false,
+        "status": "Levering gestopt",
+        "stepType": "intermediate-step",
+      },
+      Object {
+        "datePublished": "",
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
+        "documents": Array [],
+        "id": "status-step-3",
+        "isActual": false,
+        "isHistorical": false,
+        "status": "Einde recht",
+        "stepType": "last-step",
+      },
+    ],
+    "supplier": "Amstelring",
+    "supplierUrl": "",
+    "title": "Ambulante ondersteuning",
   },
   Object {
     "dateFinish": "31 december 2019",
@@ -354,8 +354,8 @@ Array [
         </React.Fragment>,
         "documents": Array [],
         "id": "status-step-0",
-        "isActual": true,
-        "isHistorical": false,
+        "isActual": false,
+        "isHistorical": true,
         "status": "Besluit",
         "stepType": "first-step",
       },
@@ -370,7 +370,7 @@ Array [
         "documents": Array [],
         "id": "status-step-1",
         "isActual": false,
-        "isHistorical": false,
+        "isHistorical": true,
         "status": "Levering gestart",
         "stepType": "intermediate-step",
       },
@@ -385,7 +385,7 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-2",
-        "isActual": false,
+        "isActual": true,
         "isHistorical": false,
         "status": "Levering gestopt",
         "stepType": "intermediate-step",
@@ -472,7 +472,7 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "",
+        "datePublished": "2018-12-31T00:00:00",
         "description": <p>
           Uw recht op ambulante ondersteuning is beëindigd per 31 december 2018
         </p>,
@@ -553,7 +553,7 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "",
+        "datePublished": "2019-03-08T00:00:00",
         "description": <p>
           Uw recht op ambulante ondersteuning is beëindigd per 08 maart 2019
         </p>,
@@ -597,8 +597,8 @@ Array [
         </React.Fragment>,
         "documents": Array [],
         "id": "status-step-0",
-        "isActual": true,
-        "isHistorical": false,
+        "isActual": false,
+        "isHistorical": true,
         "status": "Besluit",
         "stepType": "first-step",
       },
@@ -613,7 +613,7 @@ Array [
         "documents": Array [],
         "id": "status-step-1",
         "isActual": false,
-        "isHistorical": false,
+        "isHistorical": true,
         "status": "Levering gestart",
         "stepType": "intermediate-step",
       },
@@ -628,7 +628,7 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-2",
-        "isActual": false,
+        "isActual": true,
         "isHistorical": false,
         "status": "Levering gestopt",
         "stepType": "intermediate-step",
@@ -661,7 +661,7 @@ Array [
     },
     "process": Array [
       Object {
-        "datePublished": "",
+        "datePublished": "2018-12-27T00:00:00",
         "description": <React.Fragment>
           <p>
             U hebt recht op een 
@@ -692,8 +692,8 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-1",
-        "isActual": true,
-        "isHistorical": false,
+        "isActual": false,
+        "isHistorical": true,
         "status": "Opdracht gegeven",
         "stepType": "intermediate-step",
       },
@@ -705,7 +705,7 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-2",
-        "isActual": false,
+        "isActual": true,
         "isHistorical": false,
         "status": "Aanpassing uitgevoerd",
         "stepType": "intermediate-step",
@@ -771,8 +771,8 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-1",
-        "isActual": true,
-        "isHistorical": false,
+        "isActual": false,
+        "isHistorical": true,
         "status": "Opdracht gegeven",
         "stepType": "intermediate-step",
       },
@@ -787,7 +787,7 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-2",
-        "isActual": false,
+        "isActual": true,
         "isHistorical": false,
         "status": "Product geleverd",
         "stepType": "intermediate-step",
@@ -820,7 +820,7 @@ Array [
     },
     "process": Array [
       Object {
-        "datePublished": "",
+        "datePublished": "2018-07-20T00:00:00",
         "description": <React.Fragment>
           <p>
             U hebt recht op een 
@@ -851,8 +851,8 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-1",
-        "isActual": true,
-        "isHistorical": false,
+        "isActual": false,
+        "isHistorical": true,
         "status": "Opdracht gegeven",
         "stepType": "intermediate-step",
       },
@@ -864,7 +864,7 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-2",
-        "isActual": false,
+        "isActual": true,
         "isHistorical": false,
         "status": "Aanpassing uitgevoerd",
         "stepType": "intermediate-step",
@@ -951,7 +951,7 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "",
+        "datePublished": "2019-01-01T00:00:00",
         "description": <p>
           Uw recht op dagbesteding is beëindigd per 01 januari 2019
         </p>,
@@ -978,7 +978,7 @@ Array [
     },
     "process": Array [
       Object {
-        "datePublished": "",
+        "datePublished": "2018-05-09T00:00:00",
         "description": <React.Fragment>
           <p>
             U hebt recht op een 
@@ -1009,8 +1009,8 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-1",
-        "isActual": true,
-        "isHistorical": false,
+        "isActual": false,
+        "isHistorical": true,
         "status": "Opdracht gegeven",
         "stepType": "intermediate-step",
       },
@@ -1022,7 +1022,7 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-2",
-        "isActual": false,
+        "isActual": true,
         "isHistorical": false,
         "status": "Aanpassing uitgevoerd",
         "stepType": "intermediate-step",
@@ -1109,7 +1109,7 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "",
+        "datePublished": "2019-04-13T00:00:00",
         "description": <p>
           Uw recht op hulp bij het huishouden is beëindigd per 13 april 2019
         </p>,
@@ -1190,7 +1190,7 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "",
+        "datePublished": "2019-03-08T00:00:00",
         "description": <p>
           Uw recht op dagbesteding is beëindigd per 08 maart 2019
         </p>,
@@ -1320,7 +1320,7 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "",
+        "datePublished": "2019-02-21T00:00:00",
         "description": <p>
           Uw recht op ambulante ondersteuning is beëindigd per 21 februari 2019
         </p>,
@@ -1401,7 +1401,7 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "",
+        "datePublished": "2018-12-30T00:00:00",
         "description": <p>
           Uw recht op ambulante ondersteuning is beëindigd per 30 december 2018
         </p>,
@@ -1418,13 +1418,62 @@ Array [
     "title": "Ambulante ondersteuning",
   },
   Object {
-    "dateFinish": "23 november 2018",
+    "dateFinish": "26 februari 2018",
     "dateStart": "24 november 2017",
-    "id": "ambulante-ondersteuning-18",
+    "id": "deur-tot-deur-plus-vervoer-18",
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-18",
+      "to": "/zorg-en-ondersteuning/voorzieningen/deur-tot-deur-plus-vervoer-18",
+    },
+    "process": Array [
+      Object {
+        "datePublished": "2017-11-25T00:00:00",
+        "description": <React.Fragment>
+          <p>
+            U hebt recht op een 
+            Deur tot deur Plus vervoer
+             per
+             
+            24 november 2017
+            . De vervoerspas ontvangt u per post.
+          </p>
+          <p>
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
+          </p>
+        </React.Fragment>,
+        "documents": Array [],
+        "id": "status-step-0",
+        "isActual": false,
+        "isHistorical": true,
+        "status": "Besluit",
+        "stepType": "first-step",
+      },
+      Object {
+        "datePublished": "2018-02-26T00:00:00",
+        "description": <p>
+          Uw recht op Deur tot deur Plus vervoer is beëindigd per 26 februari 2018
+        </p>,
+        "documents": Array [],
+        "id": "status-step-1",
+        "isActual": true,
+        "isHistorical": false,
+        "status": "Einde recht",
+        "stepType": "last-step",
+      },
+    ],
+    "supplier": "Transvision",
+    "supplierUrl": "",
+    "title": "Deur tot deur Plus vervoer",
+  },
+  Object {
+    "dateFinish": "23 november 2018",
+    "dateStart": "24 november 2017",
+    "id": "ambulante-ondersteuning-19",
+    "isActual": false,
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-19",
     },
     "process": Array [
       Object {
@@ -1482,7 +1531,7 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "",
+        "datePublished": "2018-11-23T00:00:00",
         "description": <p>
           Uw recht op ambulante ondersteuning is beëindigd per 23 november 2018
         </p>,
@@ -1499,56 +1548,7 @@ Array [
     "title": "Ambulante ondersteuning",
   },
   Object {
-    "dateFinish": "26 februari 2018",
-    "dateStart": "24 november 2017",
-    "id": "deur-tot-deur-plus-vervoer-19",
-    "isActual": false,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/deur-tot-deur-plus-vervoer-19",
-    },
-    "process": Array [
-      Object {
-        "datePublished": "2017-11-25T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            U hebt recht op een 
-            Deur tot deur Plus vervoer
-             per
-             
-            24 november 2017
-            . De vervoerspas ontvangt u per post.
-          </p>
-          <p>
-            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
-          </p>
-        </React.Fragment>,
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActual": false,
-        "isHistorical": true,
-        "status": "Besluit",
-        "stepType": "first-step",
-      },
-      Object {
-        "datePublished": "2018-02-26T00:00:00",
-        "description": <p>
-          Uw recht op Deur tot deur Plus vervoer is beëindigd per 26 februari 2018
-        </p>,
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActual": true,
-        "isHistorical": false,
-        "status": "Einde recht",
-        "stepType": "last-step",
-      },
-    ],
-    "supplier": "Transvision",
-    "supplierUrl": "",
-    "title": "Deur tot deur Plus vervoer",
-  },
-  Object {
-    "dateFinish": "01 mei 2018",
+    "dateFinish": "08 maart 2018",
     "dateStart": "01 juni 2017",
     "id": "dagbesteding-20",
     "isActual": false,
@@ -1583,7 +1583,7 @@ Array [
       Object {
         "datePublished": "",
         "description": <p>
-          Cordaan
+          Amstelring
            is gestart met het leveren van 
           dagbesteding
           .
@@ -1598,7 +1598,7 @@ Array [
       Object {
         "datePublished": "",
         "description": <p>
-          Cordaan
+          Amstelring
            heeft aan ons doorgegeven dat u geen 
           dagbesteding
            
@@ -1612,9 +1612,9 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "",
+        "datePublished": "2018-03-08T00:00:00",
         "description": <p>
-          Uw recht op dagbesteding is beëindigd per 01 mei 2018
+          Uw recht op dagbesteding is beëindigd per 08 maart 2018
         </p>,
         "documents": Array [],
         "id": "status-step-3",
@@ -1624,7 +1624,7 @@ Array [
         "stepType": "last-step",
       },
     ],
-    "supplier": "Cordaan",
+    "supplier": "Amstelring",
     "supplierUrl": "",
     "title": "Dagbesteding",
   },
@@ -1693,7 +1693,7 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "",
+        "datePublished": "2018-04-13T00:00:00",
         "description": <p>
           Uw recht op hulp bij het huishouden is beëindigd per 13 april 2018
         </p>,
@@ -1710,7 +1710,7 @@ Array [
     "title": "Hulp bij het huishouden",
   },
   Object {
-    "dateFinish": "08 maart 2018",
+    "dateFinish": "01 mei 2018",
     "dateStart": "01 juni 2017",
     "id": "dagbesteding-22",
     "isActual": false,
@@ -1745,7 +1745,7 @@ Array [
       Object {
         "datePublished": "",
         "description": <p>
-          Amstelring
+          Cordaan
            is gestart met het leveren van 
           dagbesteding
           .
@@ -1760,7 +1760,7 @@ Array [
       Object {
         "datePublished": "",
         "description": <p>
-          Amstelring
+          Cordaan
            heeft aan ons doorgegeven dat u geen 
           dagbesteding
            
@@ -1774,9 +1774,9 @@ Array [
         "stepType": "intermediate-step",
       },
       Object {
-        "datePublished": "",
+        "datePublished": "2018-05-01T00:00:00",
         "description": <p>
-          Uw recht op dagbesteding is beëindigd per 08 maart 2018
+          Uw recht op dagbesteding is beëindigd per 01 mei 2018
         </p>,
         "documents": Array [],
         "id": "status-step-3",
@@ -1786,7 +1786,7 @@ Array [
         "stepType": "last-step",
       },
     ],
-    "supplier": "Amstelring",
+    "supplier": "Cordaan",
     "supplierUrl": "",
     "title": "Dagbesteding",
   },
@@ -1850,7 +1850,7 @@ Array [
     },
     "process": Array [
       Object {
-        "datePublished": "",
+        "datePublished": "2015-06-23T00:00:00",
         "description": <React.Fragment>
           <p>
             U hebt recht op een 
@@ -1881,8 +1881,8 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-1",
-        "isActual": true,
-        "isHistorical": false,
+        "isActual": false,
+        "isHistorical": true,
         "status": "Opdracht gegeven",
         "stepType": "intermediate-step",
       },
@@ -1894,7 +1894,7 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-2",
-        "isActual": false,
+        "isActual": true,
         "isHistorical": false,
         "status": "Aanpassing uitgevoerd",
         "stepType": "intermediate-step",
@@ -1960,8 +1960,8 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-1",
-        "isActual": true,
-        "isHistorical": false,
+        "isActual": false,
+        "isHistorical": true,
         "status": "Opdracht gegeven",
         "stepType": "intermediate-step",
       },
@@ -1976,7 +1976,7 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-2",
-        "isActual": false,
+        "isActual": true,
         "isHistorical": false,
         "status": "Product geleverd",
         "stepType": "intermediate-step",
@@ -2001,11 +2001,88 @@ Array [
   Object {
     "dateFinish": "",
     "dateStart": "08 september 2014",
-    "id": "elektrische-hulpaandrijving-voor-rolstoel-26",
+    "id": "woonruimteaanpassing-26",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/elektrische-hulpaandrijving-voor-rolstoel-26",
+      "to": "/zorg-en-ondersteuning/voorzieningen/woonruimteaanpassing-26",
+    },
+    "process": Array [
+      Object {
+        "datePublished": "2014-09-11T00:00:00",
+        "description": <React.Fragment>
+          <p>
+            U hebt recht op een 
+            woonruimteaanpassing
+             per
+             
+            08 september 2014
+            .
+          </p>
+          <p>
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
+          </p>
+        </React.Fragment>,
+        "documents": Array [],
+        "id": "status-step-0",
+        "isActual": false,
+        "isHistorical": true,
+        "status": "Besluit",
+        "stepType": "first-step",
+      },
+      Object {
+        "datePublished": "",
+        "description": <p>
+          De gemeente heeft opdracht gegeven aan
+           
+          Gebr Koenen B.V.
+           om de aanpassingen aan uw woning uit te voeren.
+        </p>,
+        "documents": Array [],
+        "id": "status-step-1",
+        "isActual": false,
+        "isHistorical": true,
+        "status": "Opdracht gegeven",
+        "stepType": "intermediate-step",
+      },
+      Object {
+        "datePublished": "",
+        "description": <p>
+          Gebr Koenen B.V.
+           heeft aan ons doorgegeven dat de aanpassing aan uw woning is uitgevoerd.
+        </p>,
+        "documents": Array [],
+        "id": "status-step-2",
+        "isActual": true,
+        "isHistorical": false,
+        "status": "Aanpassing uitgevoerd",
+        "stepType": "intermediate-step",
+      },
+      Object {
+        "datePublished": "",
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
+        "documents": Array [],
+        "id": "status-step-3",
+        "isActual": false,
+        "isHistorical": false,
+        "status": "Einde recht",
+        "stepType": "last-step",
+      },
+    ],
+    "supplier": "Gebr Koenen B.V.",
+    "supplierUrl": "",
+    "title": "Woonruimteaanpassing",
+  },
+  Object {
+    "dateFinish": "",
+    "dateStart": "08 september 2014",
+    "id": "elektrische-hulpaandrijving-voor-rolstoel-27",
+    "isActual": true,
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/zorg-en-ondersteuning/voorzieningen/elektrische-hulpaandrijving-voor-rolstoel-27",
     },
     "process": Array [
       Object {
@@ -2042,8 +2119,8 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-1",
-        "isActual": true,
-        "isHistorical": false,
+        "isActual": false,
+        "isHistorical": true,
         "status": "Opdracht gegeven",
         "stepType": "intermediate-step",
       },
@@ -2058,7 +2135,7 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-2",
-        "isActual": false,
+        "isActual": true,
         "isHistorical": false,
         "status": "Product geleverd",
         "stepType": "intermediate-step",
@@ -2082,83 +2159,6 @@ Array [
   },
   Object {
     "dateFinish": "",
-    "dateStart": "08 september 2014",
-    "id": "woonruimteaanpassing-27",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/woonruimteaanpassing-27",
-    },
-    "process": Array [
-      Object {
-        "datePublished": "",
-        "description": <React.Fragment>
-          <p>
-            U hebt recht op een 
-            woonruimteaanpassing
-             per
-             
-            08 september 2014
-            .
-          </p>
-          <p>
-            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
-          </p>
-        </React.Fragment>,
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActual": false,
-        "isHistorical": true,
-        "status": "Besluit",
-        "stepType": "first-step",
-      },
-      Object {
-        "datePublished": "",
-        "description": <p>
-          De gemeente heeft opdracht gegeven aan
-           
-          Gebr Koenen B.V.
-           om de aanpassingen aan uw woning uit te voeren.
-        </p>,
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActual": true,
-        "isHistorical": false,
-        "status": "Opdracht gegeven",
-        "stepType": "intermediate-step",
-      },
-      Object {
-        "datePublished": "",
-        "description": <p>
-          Gebr Koenen B.V.
-           heeft aan ons doorgegeven dat de aanpassing aan uw woning is uitgevoerd.
-        </p>,
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActual": false,
-        "isHistorical": false,
-        "status": "Aanpassing uitgevoerd",
-        "stepType": "intermediate-step",
-      },
-      Object {
-        "datePublished": "",
-        "description": <p>
-          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-        </p>,
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActual": false,
-        "isHistorical": false,
-        "status": "Einde recht",
-        "stepType": "last-step",
-      },
-    ],
-    "supplier": "Gebr Koenen B.V.",
-    "supplierUrl": "",
-    "title": "Woonruimteaanpassing",
-  },
-  Object {
-    "dateFinish": "",
     "dateStart": "05 december 2013",
     "id": "woonruimteaanpassing-28",
     "isActual": true,
@@ -2168,7 +2168,7 @@ Array [
     },
     "process": Array [
       Object {
-        "datePublished": "",
+        "datePublished": "2013-12-09T00:00:00",
         "description": <React.Fragment>
           <p>
             U hebt recht op een 
@@ -2199,8 +2199,8 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-1",
-        "isActual": true,
-        "isHistorical": false,
+        "isActual": false,
+        "isHistorical": true,
         "status": "Opdracht gegeven",
         "stepType": "intermediate-step",
       },
@@ -2212,7 +2212,7 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-2",
-        "isActual": false,
+        "isActual": true,
         "isHistorical": false,
         "status": "Aanpassing uitgevoerd",
         "stepType": "intermediate-step",
@@ -2245,7 +2245,7 @@ Array [
     },
     "process": Array [
       Object {
-        "datePublished": "",
+        "datePublished": "2013-05-17T00:00:00",
         "description": <React.Fragment>
           <p>
             U hebt recht op een 
@@ -2276,8 +2276,8 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-1",
-        "isActual": true,
-        "isHistorical": false,
+        "isActual": false,
+        "isHistorical": true,
         "status": "Opdracht gegeven",
         "stepType": "intermediate-step",
       },
@@ -2289,7 +2289,7 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-2",
-        "isActual": false,
+        "isActual": true,
         "isHistorical": false,
         "status": "Aanpassing uitgevoerd",
         "stepType": "intermediate-step",
@@ -2355,8 +2355,8 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-1",
-        "isActual": true,
-        "isHistorical": false,
+        "isActual": false,
+        "isHistorical": true,
         "status": "Opdracht gegeven",
         "stepType": "intermediate-step",
       },
@@ -2371,7 +2371,7 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-2",
-        "isActual": false,
+        "isActual": true,
         "isHistorical": false,
         "status": "Product geleverd",
         "stepType": "intermediate-step",
@@ -2396,93 +2396,11 @@ Array [
   Object {
     "dateFinish": "",
     "dateStart": "05 oktober 2012",
-    "id": "handbewogen-rolstoel-31",
+    "id": "douche-toiletstoel-verrijdbaarkantelbaarindividueel-aangepast-31",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/handbewogen-rolstoel-31",
-    },
-    "process": Array [
-      Object {
-        "datePublished": "2012-10-05T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            U hebt recht op een 
-            handbewogen rolstoel
-             per
-             
-            05 oktober 2012
-            .
-          </p>
-          <p>
-            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
-          </p>
-        </React.Fragment>,
-        "documents": Array [],
-        "id": "status-step-0",
-        "isActual": false,
-        "isHistorical": true,
-        "status": "Besluit",
-        "stepType": "first-step",
-      },
-      Object {
-        "datePublished": "",
-        "description": <p>
-          De gemeente heeft opdracht gegeven aan
-           
-          Medipoint B.V.
-           om een 
-          handbewogen rolstoel
-           aan u te leveren.
-        </p>,
-        "documents": Array [],
-        "id": "status-step-1",
-        "isActual": true,
-        "isHistorical": false,
-        "status": "Opdracht gegeven",
-        "stepType": "intermediate-step",
-      },
-      Object {
-        "datePublished": "",
-        "description": <p>
-          Medipoint B.V.
-           heeft aan ons doorgegeven dat een
-           
-          handbewogen rolstoel
-           bij u is afgeleverd.
-        </p>,
-        "documents": Array [],
-        "id": "status-step-2",
-        "isActual": false,
-        "isHistorical": false,
-        "status": "Product geleverd",
-        "stepType": "intermediate-step",
-      },
-      Object {
-        "datePublished": "",
-        "description": <p>
-          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-        </p>,
-        "documents": Array [],
-        "id": "status-step-3",
-        "isActual": false,
-        "isHistorical": false,
-        "status": "Einde recht",
-        "stepType": "last-step",
-      },
-    ],
-    "supplier": "Medipoint B.V.",
-    "supplierUrl": "",
-    "title": "Handbewogen rolstoel",
-  },
-  Object {
-    "dateFinish": "",
-    "dateStart": "05 oktober 2012",
-    "id": "douche-toiletstoel-verrijdbaarkantelbaarindividueel-aangepast-32",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/douche-toiletstoel-verrijdbaarkantelbaarindividueel-aangepast-32",
+      "to": "/zorg-en-ondersteuning/voorzieningen/douche-toiletstoel-verrijdbaarkantelbaarindividueel-aangepast-31",
     },
     "process": Array [
       Object {
@@ -2519,8 +2437,8 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-1",
-        "isActual": true,
-        "isHistorical": false,
+        "isActual": false,
+        "isHistorical": true,
         "status": "Opdracht gegeven",
         "stepType": "intermediate-step",
       },
@@ -2535,7 +2453,7 @@ Array [
         </p>,
         "documents": Array [],
         "id": "status-step-2",
-        "isActual": false,
+        "isActual": true,
         "isHistorical": false,
         "status": "Product geleverd",
         "stepType": "intermediate-step",
@@ -2556,6 +2474,88 @@ Array [
     "supplier": "Medipoint B.V.",
     "supplierUrl": "",
     "title": "Douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast)",
+  },
+  Object {
+    "dateFinish": "",
+    "dateStart": "05 oktober 2012",
+    "id": "handbewogen-rolstoel-32",
+    "isActual": true,
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/zorg-en-ondersteuning/voorzieningen/handbewogen-rolstoel-32",
+    },
+    "process": Array [
+      Object {
+        "datePublished": "2012-10-05T00:00:00",
+        "description": <React.Fragment>
+          <p>
+            U hebt recht op een 
+            handbewogen rolstoel
+             per
+             
+            05 oktober 2012
+            .
+          </p>
+          <p>
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
+          </p>
+        </React.Fragment>,
+        "documents": Array [],
+        "id": "status-step-0",
+        "isActual": false,
+        "isHistorical": true,
+        "status": "Besluit",
+        "stepType": "first-step",
+      },
+      Object {
+        "datePublished": "",
+        "description": <p>
+          De gemeente heeft opdracht gegeven aan
+           
+          Medipoint B.V.
+           om een 
+          handbewogen rolstoel
+           aan u te leveren.
+        </p>,
+        "documents": Array [],
+        "id": "status-step-1",
+        "isActual": false,
+        "isHistorical": true,
+        "status": "Opdracht gegeven",
+        "stepType": "intermediate-step",
+      },
+      Object {
+        "datePublished": "",
+        "description": <p>
+          Medipoint B.V.
+           heeft aan ons doorgegeven dat een
+           
+          handbewogen rolstoel
+           bij u is afgeleverd.
+        </p>,
+        "documents": Array [],
+        "id": "status-step-2",
+        "isActual": true,
+        "isHistorical": false,
+        "status": "Product geleverd",
+        "stepType": "intermediate-step",
+      },
+      Object {
+        "datePublished": "",
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
+        "documents": Array [],
+        "id": "status-step-3",
+        "isActual": false,
+        "isHistorical": false,
+        "status": "Einde recht",
+        "stepType": "last-step",
+      },
+    ],
+    "supplier": "Medipoint B.V.",
+    "supplierUrl": "",
+    "title": "Handbewogen rolstoel",
   },
   Object {
     "dateFinish": "",

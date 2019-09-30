@@ -969,5 +969,24 @@
         "VoorzieningIngangsdatum": "2013-11-04T00:00:00",
         "VoorzieningEinddatum": null,
         "Levering": null
+    },
+    {
+        "Omschrijving": "vervoerskostenvergoeding rolstoeltaxi of vervoer derden",
+        "Wet": 1,
+        "Actueel": true,
+        "Volume": 1,
+        "Eenheid": "82",
+        "Frequentie": 6,
+        "Leveringsvorm": "ZIN",
+        "Omvang": "1 stuks per beschikking",
+        "Leverancier": null,
+        "Checkdatum": null,
+        "Voorzieningsoortcode": "VVK",
+        "Voorzieningcode": "604",
+        "Aanvraagdatum": "2019-09-25T00:00:00",
+        "Beschikkingsdatum": "2019-09-25T00:00:00",
+        "VoorzieningIngangsdatum": "2019-09-25T00:00:00",
+        "VoorzieningEinddatum": null,
+        "Levering": null
     }
 ]
