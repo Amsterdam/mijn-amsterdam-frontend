@@ -90,7 +90,8 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   // Will open the dialog if maxCount is reached.
   const nSettings = { ...DefaultSettings, ...settings };
   const { resume, reset } = useCounter({
-    maxCount: nSettings.secondsBeforeDialogShow,
+    maxCount:
+      nSettings.secondsBeforeDialogShow - nSettings.secondsBeforeAutoLogout, // Gives user T time to cancel the automatic logout
     onMaxCount: () => {
       setOpen(true);
     },
