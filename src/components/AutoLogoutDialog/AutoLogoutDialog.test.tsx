@@ -18,7 +18,7 @@ describe('AutoLogoutDialog', () => {
   };
 
   const settings: AutoLogoutDialogSettings = {
-    secondsBeforeDialogShow: 10,
+    secondsBeforeDialogShow: 18,
     secondsBeforeAutoLogout: 8,
     secondsSessionRenewRequestInterval: 2,
   };
@@ -93,7 +93,8 @@ describe('AutoLogoutDialog', () => {
 
   it('fires callback when clicking continue button', () => {
     jest.advanceTimersByTime(
-      ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow!
+      ONE_SECOND_IN_MS *
+        (settings.secondsBeforeDialogShow! - settings.secondsBeforeAutoLogout!)
     );
     component.update();
     let continueButton = component.find('[className*="continue-button"]');
@@ -112,7 +113,8 @@ describe('AutoLogoutDialog', () => {
     const documentTitle = document.title;
 
     jest.advanceTimersByTime(
-      ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow!
+      ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow! -
+        settings.secondsBeforeAutoLogout!
     );
     component.update();
     let continueButton = component.find('[className*="continue-button"]');
