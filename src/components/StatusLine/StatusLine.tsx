@@ -18,8 +18,8 @@ export interface StatusLineItem {
   datePublished: string;
   description: string | JSX.Element;
   documents: Document[];
-  isActual: boolean;
-  isHistorical: boolean;
+  isLastActive: boolean;
+  isChecked: boolean;
 }
 
 type AltDocumentContent = string | JSX.Element;
@@ -79,8 +79,8 @@ function StatusLineItem({
       id={item.id}
       className={classnames(
         styles.ListItem,
-        item.isActual && styles.Actual,
-        item.isHistorical && styles.Historical,
+        item.isLastActive && styles.LastActive,
+        item.isChecked && styles.Checked,
         item.stepType && styles[item.stepType]
       )}
     >
@@ -173,7 +173,8 @@ export default function StatusLine({
           <ul className={styles.List}>
             {items
               .filter(
-                (item, index) => !isCollapsed || (isCollapsed && item.isActual)
+                (item, index) =>
+                  !isCollapsed || (isCollapsed && item.isLastActive)
               )
               .map((item, index) => (
                 <StatusLineItem

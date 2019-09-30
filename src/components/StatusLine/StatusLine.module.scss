@@ -118,7 +118,7 @@
 }
 
 .ListItem {
-  &.first-step:not(.Actual) .Panel:first-child:before {
+  &.first-step:not(.LastActive) .Panel:first-child:before {
     background: linear-gradient(
       to bottom,
       transparent 0%,
@@ -138,7 +138,7 @@
     );
   }
 
-  &:not(.first-step):not(.last-step):not(.Actual) {
+  &:not(.first-step):not(.last-step):not(.LastActive) {
     &:last-child .Panel:before {
       background: linear-gradient(
         to bottom,
@@ -157,7 +157,7 @@
       transparent 0%
     );
   }
-  &.last-step.Actual .Panel:first-child:before {
+  &.last-step.LastActive .Panel:first-child:before {
     background: linear-gradient(
       to bottom,
       $color-primary-darkblue 0%,
@@ -167,7 +167,7 @@
   }
 }
 
-.Actual {
+.LastActive {
   background-color: $color-neutral-grey1;
   .ListItemInner {
     border-top: 0;
@@ -207,13 +207,13 @@
   }
 }
 
-.Historical .Panel:first-child:after {
+.Checked .Panel:first-child:after {
   background: $color-primary-darkblue url('assets/images/Checkmark__white.svg')
         no-repeat center;
   background-size: 0.9em 0.9em;
 }
 
-.Historical .Panel:first-child:before {
+.Checked .Panel:first-child:before {
   background: $color-primary-darkblue;
 }
 
