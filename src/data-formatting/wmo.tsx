@@ -179,7 +179,7 @@ const Labels: {
               {data.isActual
                 ? data.dateFinish
                   ? 'Op deze datum vervalt uw recht op deze voorziening.'
-                  : 'Er is een lopend recht zonder einddatum.'
+                  : 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
                 : `Uw recht op ${
                     data.title
                   } is beëindigd per ${defaultDateFormat(data.dateFinish)}`}
@@ -234,7 +234,7 @@ const Labels: {
       },
       {
         status: 'Einde recht',
-        datePublished: data => data.dateFinish,
+        datePublished: data => data.dateFinish || '',
         isHistorical: () => false,
         isActual: (stepIndex, data) => data.isActual === false,
         description: data => (
@@ -289,14 +289,8 @@ const Labels: {
       {
         status: 'Besluit',
         datePublished: data => data.dateDecision,
-        isHistorical: (stepIndex, sourceData: WmoSourceData) =>
-          sourceData.isActual
-            ? sourceData.dateDecision === sourceData.dateStartServiceDelivery
-            : true,
-        isActual: (stepIndex, sourceData: WmoSourceData) =>
-          sourceData.isActual
-            ? sourceData.dateDecision !== sourceData.dateStartServiceDelivery
-            : false,
+        isHistorical: (stepIndex, sourceData: WmoSourceData) => true,
+        isActual: (stepIndex, sourceData: WmoSourceData) => false,
         description: (data: WmoSourceData) => {
           return (
             <>
@@ -335,11 +329,9 @@ const Labels: {
         status: 'Levering gestart',
         datePublished: () => '',
         isHistorical: (stepIndex, sourceData: WmoSourceData) =>
-          sourceData.isActual === false,
+          sourceData.isActual === false || !!sourceData.dateFinish,
         isActual: (stepIndex, sourceData: WmoSourceData) =>
-          sourceData.isActual === true
-            ? sourceData.dateDecision === sourceData.dateStartServiceDelivery
-            : false,
+          sourceData.isActual === true && !sourceData.dateFinish,
         description: data => (
           <p>
             {data.supplier} is gestart met het leveren van {data.title}.
@@ -351,7 +343,8 @@ const Labels: {
         datePublished: () => '',
         isHistorical: (stepIndex, sourceData: WmoSourceData) =>
           sourceData.isActual === false,
-        isActual: () => false,
+        isActual: (stepIndex, sourceData: WmoSourceData) =>
+          sourceData.isActual === true && !!sourceData.dateFinish,
         description: data => (
           <p>
             {data.supplier} heeft aan ons doorgegeven dat u geen {data.title}{' '}
@@ -361,7 +354,7 @@ const Labels: {
       },
       {
         status: 'Einde recht',
-        datePublished: () => '',
+        datePublished: data => (data.isActual ? '' : data.dateFinish),
         isHistorical: () => false,
         isActual: (stepIndex, sourceData: WmoSourceData) =>
           sourceData.isActual === false,
@@ -406,10 +399,12 @@ const Labels: {
       {
         status: 'Opdracht gegeven',
         datePublished: () => '',
-        isHistorical: (stepIndex, data) => data.isActual === false,
+        isHistorical: (stepIndex, data) =>
+          data.isActual === false ||
+          isDateInPast(data.dateStartServiceDelivery, new Date()),
         isActual: (stepIndex, data) =>
           data.isActual
-            ? isDateInPast(data.dateRequestOrderStart, new Date())
+            ? !isDateInPast(data.dateStartServiceDelivery, new Date())
             : false,
         description: data => (
           <p>
@@ -422,7 +417,10 @@ const Labels: {
         status: 'Product geleverd',
         datePublished: () => '',
         isHistorical: (stepIndex, data) => data.isActual === false,
-        isActual: () => false,
+        isActual: (stepIndex, data) =>
+          data.isActual
+            ? isDateInPast(data.dateStartServiceDelivery, new Date())
+            : false,
         description: data => (
           <p>
             {data.serviceDeliverySupplier} heeft aan ons doorgegeven dat een{' '}
@@ -432,7 +430,7 @@ const Labels: {
       },
       {
         status: 'Einde recht',
-        datePublished: () => '',
+        datePublished: data => (data.isActual ? '' : data.dateFinish),
         isHistorical: () => false,
         isActual: (stepIndex, data) => data.isActual === false,
         description: data => (
@@ -456,7 +454,7 @@ const Labels: {
     statusItems: [
       {
         status: 'Besluit',
-        datePublished: () => '',
+        datePublished: data => data.dateDecision,
         isHistorical: () => true,
         isActual: () => false,
         description: data => (
@@ -475,10 +473,12 @@ const Labels: {
       {
         status: 'Opdracht gegeven',
         datePublished: () => '',
-        isHistorical: (stepIndex, data) => data.isActual === false,
+        isHistorical: (stepIndex, data) =>
+          data.isActual === false ||
+          isDateInPast(data.dateStartServiceDelivery, new Date()),
         isActual: (stepIndex, data) =>
           data.isActual
-            ? isDateInPast(data.dateRequestOrderStart, new Date())
+            ? !isDateInPast(data.dateStartServiceDelivery, new Date())
             : false,
         description: data => (
           <p>
@@ -492,7 +492,10 @@ const Labels: {
         status: 'Aanpassing uitgevoerd',
         datePublished: () => '',
         isHistorical: (stepIndex, data) => data.isActual === false,
-        isActual: () => false,
+        isActual: (stepIndex, data) =>
+          data.isActual
+            ? isDateInPast(data.dateStartServiceDelivery, new Date())
+            : false,
         description: data => (
           <p>
             {data.serviceDeliverySupplier} heeft aan ons doorgegeven dat de
@@ -502,7 +505,7 @@ const Labels: {
       },
       {
         status: 'Einde recht',
-        datePublished: data => '',
+        datePublished: data => (data.isActual ? '' : data.dateFinish),
         isHistorical: () => false,
         isActual: (stepIndex, data) => data.isActual === false,
         description: data => (

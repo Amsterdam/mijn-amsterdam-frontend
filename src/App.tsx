@@ -101,13 +101,17 @@ function AppLanding() {
     return <p className={styles.PreLoader}>Welkom bij Mijn Amsterdam</p>;
   }
 
+  const dialogTimeoutSettings = {
+    secondsBeforeDialogShow: session.validityInSeconds,
+  };
+
   // Render the main app only if we are authenticated
   return isAuthenticated ? (
     <>
       <AppState>
         <AppAuthenticated />
       </AppState>
-      <AutoLogoutDialog />
+      <AutoLogoutDialog settings={dialogTimeoutSettings} />
     </>
   ) : (
     <AppNotAuthenticated />

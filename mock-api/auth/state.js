@@ -1,8 +1,9 @@
 const storage = require('node-persist');
 const differenceInSeconds = require('date-fns/difference_in_seconds');
 
+const TIMEOUT_MINUTES = 15;
 const ONE_MINUTE_IN_SECONDS = 60;
-const DIGID_SESSION_TIMEOUT_SECONDS = 15 * ONE_MINUTE_IN_SECONDS;
+const DIGID_SESSION_TIMEOUT_SECONDS = TIMEOUT_MINUTES * ONE_MINUTE_IN_SECONDS;
 
 storage.init();
 
@@ -27,3 +28,5 @@ exports.setAuth = isAuthenticated => {
 exports.setUserType = type => {
   return storage.setItem('userType', type);
 };
+
+exports.DIGID_SESSION_TIMEOUT_SECONDS = DIGID_SESSION_TIMEOUT_SECONDS;
