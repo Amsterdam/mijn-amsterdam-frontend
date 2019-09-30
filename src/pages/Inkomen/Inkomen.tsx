@@ -1,5 +1,8 @@
 import React, { useContext } from 'react';
-import PageContentMain from 'components/PageContentMain/PageContentMain';
+import {
+  OverviewPage,
+  PageContent,
+} from 'components/PageContentMain/PageContentMain';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
 import { AppContext } from 'AppState';
 import DataLinkTable from 'components/DataLinkTable/DataLinkTable';
@@ -10,8 +13,6 @@ import { ExternalUrls } from 'App.constants';
 import Alert from 'components/Alert/Alert';
 import { useTabletScreen } from 'hooks/media.hook';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
-import classnames from 'classnames';
-import pageContentStyles from 'components/PageContentMain/PageContentMain.module.scss';
 
 const DISPLAY_PROPS = {
   datePublished: 'besluit',
@@ -38,13 +39,11 @@ export default () => {
   const isTabletScreen = useTabletScreen();
 
   return (
-    <PageContentMain
-      className={classnames(styles.Inkomen, pageContentStyles.OverviewPage)}
-    >
+    <OverviewPage className={styles.Inkomen}>
       <PageContentMainHeading icon={<ChapterIcon chapter={Chapters.INKOMEN} />}>
         {ChapterTitles.INKOMEN}
       </PageContentMainHeading>
-      <div className={pageContentStyles.PageContent}>
+      <PageContent>
         <p>
           Hieronder ziet u uw regelingen en hulpmiddelen vanuit de Wmo. Hebt u
           vragen of wilt u een wijziging doorgeven? Bel dan gratis de Wmo
@@ -61,7 +60,7 @@ export default () => {
             We kunnen op dit moment geen gegevens tonen.
           </Alert>
         )}
-      </div>
+      </PageContent>
       <DataLinkTable
         id="datalinktable-income-actual"
         rowHeight={isTabletScreen ? 'auto' : '5.8rem'}
@@ -84,6 +83,6 @@ export default () => {
         trackCategory="Werk en inkomen overzicht / Besluiten"
         noItemsMessage="U hebt op dit moment geen besluiten."
       />
-    </PageContentMain>
+    </OverviewPage>
   );
 };
