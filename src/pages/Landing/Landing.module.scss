@@ -48,6 +48,12 @@
   }
 }
 
+.Heading {
+  @include IE11 {
+    overflow: hidden;
+  }
+}
+
 .BetaLogo {
   position: absolute;
   top: 0;

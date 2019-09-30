@@ -2,7 +2,7 @@
 
 .MyChaptersPanel {
   background-color: $color-neutral-grey1;
-  padding: 3.2rem 0 4rem 3.2rem;
+  padding: 3.2rem 0 4rem 0;
 
   @include mq-tablet() {
     padding-left: 2.4rem;
@@ -10,12 +10,13 @@
 }
 
 .Title {
-  margin: 0 0 2rem;
+  margin: 0 0 2rem 3.2rem;
 }
 
 .Links {
   display: flex;
   flex-wrap: wrap;
+  padding-left: 3.2rem;
 
   @include select(MainNavSubmenu_MainNavSubmenuLink) {
     width: calc(50% - 0.5rem);

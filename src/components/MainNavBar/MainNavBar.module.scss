@@ -19,6 +19,7 @@
 
 
   @include mq-tablet() {
+    display: -ms-grid;
     display: grid; // On a phone the menu is ordered differently so we use grid to have control over that
     width: $main-header-navbar-width--phone;
     margin: 0;
@@ -73,6 +74,7 @@
 
     // Move home button after the Chapters menu
     &:nth-child(2) {
+      -ms-grid-row:2;
       grid-row: 2;
     }
   }
@@ -98,6 +100,7 @@
   @include mq-tablet() {
     position: static;
     margin-top: 0;
+    -ms-grid-row: 20;
     grid-row: 20;
 
     > a {
