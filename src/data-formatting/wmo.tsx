@@ -352,7 +352,16 @@ const Labels: {
           sourceData.isActual === false ||
           isDateInPast(sourceData.dateFinish, new Date()),
         isLastActive: (stepIndex, sourceData: WmoSourceData) => false,
-        description: data => <p>Niet van toepassing.</p>,
+        description: data => (
+          <p>
+            {data.isActual
+              ? 'Niet van toepassing.'
+              : `${data.supplier} heeft aan ons doorgegeven dat u geen ${
+                  data.title
+                }
+            meer krijgt.`}
+          </p>
+        ),
       },
       {
         status: 'Einde recht',
