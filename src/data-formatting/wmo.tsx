@@ -346,6 +346,15 @@ const Labels: {
         ),
       },
       {
+        status: 'Levering gestopt',
+        datePublished: () => '',
+        isChecked: (stepIndex, sourceData: WmoSourceData) =>
+          sourceData.isActual === false ||
+          isDateInPast(sourceData.dateFinish, new Date()),
+        isLastActive: (stepIndex, sourceData: WmoSourceData) => false,
+        description: data => <p>niet van toepassing.</p>,
+      },
+      {
         status: 'Einde recht',
         datePublished: data =>
           !isDateInPast(data.dateFinish, new Date()) ? '' : data.dateFinish,
