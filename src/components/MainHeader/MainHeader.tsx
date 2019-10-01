@@ -1,5 +1,5 @@
 import { AppRoutes, errorMessageMap, excludedApiKeys } from 'App.constants';
-import { AppContext } from 'AppState';
+import { AppContext, TutorialState } from 'AppState';
 import { ReactComponent as BetaLabel } from 'assets/images/beta-label.svg';
 import { ReactComponent as AmsterdamLogoLarge } from 'assets/images/logo-amsterdam-large.svg';
 import { ReactComponent as AmsterdamLogo } from 'assets/images/logo-amsterdam.svg';
@@ -7,25 +7,20 @@ import ErrorMessages from 'components/ErrorMessages/ErrorMessages';
 import Heading from 'components/Heading/Heading';
 import MainHeaderHero from 'components/MainHeaderHero/MainHeaderHero';
 import MainNavBar from 'components/MainNavBar/MainNavBar';
-import { Person } from 'data-formatting/brp';
 import { entries } from 'helpers/App';
-import { useDesktopScreen } from 'hooks/media.hook';
-import React, { useContext, useEffect, useState } from 'react';
+import { useDesktopScreen, usePhoneScreen } from 'hooks/media.hook';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import styles from './MainHeader.module.scss';
 
 export interface MainHeaderProps {
-  person?: Person | null;
   isAuthenticated?: boolean;
 }
 
 export default function MainHeader({
-  person = null,
   isAuthenticated = false,
 }: MainHeaderProps) {
-  // TODO: TBD if hero should not show up on mobile.
-  // const isHeroVisible = !usePhoneScreen();
   const isHeroVisible = true;
   const appState = useContext(AppContext);
   const errors = entries(appState)
@@ -48,26 +43,53 @@ export default function MainHeader({
 
   return (
     <header className={styles.header}>
+      {!usePhoneScreen() && (
+        <nav className={styles.DirectSkipLinks}>
+          <a
+            tabIndex={0}
+            href="#AppContent"
+            className="action-button secondary line-only"
+          >
+            Direct naar: <b>Pagina inhoud</b>
+          </a>
+          <a
+            tabIndex={0}
+            href="#MainFooter"
+            className="action-button secondary line-only"
+          >
+            Direct naar: <b>Footer</b>
+          </a>
+        </nav>
+      )}
       <div className={styles.topBar}>
-        <Link className={styles.logoLink} to={AppRoutes.ROOT}>
+        <Link
+          className={styles.logoLink}
+          to={AppRoutes.ROOT}
+          aria-label="Terug naar home"
+        >
           <Logo
+            aria-hidden="true"
             role="img"
             aria-label="Amsterdam logo"
             className={styles.logo}
           />
-        </Link>
-        <Heading size="large" el="h1">
-          <Link className={styles.logoLink} to={AppRoutes.ROOT}>
+
+          <Heading size="large" el="h1">
             Mijn Amsterdam
-          </Link>
-        </Heading>
+          </Heading>
+        </Link>
         <BetaLabel
+          aria-hidden="true"
           role="img"
           aria-label="Beta versie"
           className={styles.betaLabel}
         />
       </div>
-      {isAuthenticated && <MainNavBar person={person} />}
+      {isAuthenticated && (
+        <TutorialState>
+          <MainNavBar />
+        </TutorialState>
+      )}
       {hasErrors && (
         <ErrorMessages errors={errors} className={styles.ErrorMessages} />
       )}

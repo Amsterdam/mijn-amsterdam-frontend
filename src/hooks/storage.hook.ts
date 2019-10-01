@@ -1,10 +1,40 @@
-import { useState, useEffect } from 'react';
+import * as Sentry from '@sentry/browser';
+import { useEffect, useState } from 'react';
+import { Unshaped } from '../App.types';
 
 interface LocalStorageHandler {
   value: string | null;
   set: (newValue: string) => void;
   remove: () => void;
 }
+
+interface MemoryAdapter extends Storage {
+  data: Unshaped;
+}
+
+// Basic implementation of local/session storage like database interface.
+const memoryHandler: MemoryAdapter = {
+  data: {},
+  setItem(key: string, value: string) {
+    memoryHandler.data[key] = value;
+  },
+  getItem(key: string) {
+    return memoryHandler.data[key];
+  },
+  removeItem(key: string) {
+    delete memoryHandler.data[key];
+  },
+  clear() {
+    memoryHandler.data = {};
+  },
+  get length() {
+    return Object.keys(memoryHandler.data).length;
+  },
+  key(index: number) {
+    const keys = Object.keys(memoryHandler.data);
+    return memoryHandler.data[keys[index]] || null;
+  },
+};
 
 /**
  * useLocalStorage hook
@@ -45,7 +75,13 @@ function useWindowStorage(
 
   function set(newValue: any) {
     setValue(newValue);
-    saveValueToLocalStorage(key, newValue);
+    // Apparently in some cases IE11 throws a SCRIPT5: access denied error which crashes the app.
+    // The catch here prevents the crash and reports the error to Sentry.
+    try {
+      saveValueToLocalStorage(key, newValue);
+    } catch (error) {
+      Sentry.captureException(error);
+    }
   }
 
   function listen(e: StorageEvent) {
@@ -89,7 +125,7 @@ function useWindowStorage(
 export function useStorage(
   key: string,
   initialValue: any,
-  adapter: Storage = localStorage
+  adapter: Storage | MemoryAdapter = localStorage
 ) {
   const { value: item, set: setValue } = useWindowStorage(
     key,
@@ -109,5 +145,22 @@ export function useLocalStorage(key: string, value: any) {
 }
 
 export function useSessionStorage(key: string, value: any) {
-  return useStorage(key, value, sessionStorage);
+  let adapter: MemoryAdapter | Storage = memoryHandler;
+  try {
+    adapter = sessionStorage;
+  } catch (error) {}
+
+  return useStorage(key, value, adapter);
+}
+
+export function clearSessionStorage() {
+  try {
+    sessionStorage.clear();
+  } catch (error) {}
+}
+
+export function clearLocalStorage() {
+  try {
+    localStorage.clear();
+  } catch (error) {}
 }

@@ -8,25 +8,30 @@
   @include reset-list-style;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .TipItem {
-  width: calc((100% / 3) - 4rem);
+  width: calc((100% / 3) - 3%);
   p {
     margin-top: 1.2rem;
   }
+  margin-bottom: 2rem;
+  @include media-query('<=phone') {
+    width: 100%;
+  }
 }
 
-.ImageContainer {
-  height: 19rem;
+.Img {
+  display: block;
   width: 100%;
-  background-color: $color-neutral-grey2;
-  margin-bottom: 2rem;
+  height: auto;
+  margin-bottom: 1rem;
 }
 
 .HeaderBar {
   display: flex;
-  margin: 1.6rem 0;
+  margin: 0 0 1.6rem 0;
   align-items: center;
 
   @include select(ButtonLink) {

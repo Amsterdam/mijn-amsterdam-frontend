@@ -5,10 +5,12 @@ services:
     ports:
       - '8103:80'
 
-  test:
+  test-unit:
     build:
       context: .
       target: build-deps
+      args:
+        - BUILD_ENV=test-unit # prevents Dockerfile from building the app when running unit tests
     command: npm run test
 
   test-integration:

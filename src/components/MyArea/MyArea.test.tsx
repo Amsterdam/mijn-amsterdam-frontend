@@ -3,5 +3,5 @@ import { shallow } from 'enzyme';
 import MyArea from './MyArea';
 
 it('Renders without crashing', () => {
-  shallow(<MyArea />);
+  shallow(<MyArea url="" />);
 });

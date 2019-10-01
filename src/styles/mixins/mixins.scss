@@ -17,7 +17,7 @@
   @include heading(3, 1.3);
   font-weight: 800;
 
-  @include media("<=phone") {
+  @include media-query('<=phone') {
     @include heading(2.4, 1.3);
   }
 }
@@ -26,7 +26,7 @@
   @include heading(2.4, 1.3);
   font-weight: 800;
 
-  @include media("<=phone") {
+  @include media-query('<=phone') {
     @include heading(2.1, 1.3);
   }
 }
@@ -38,6 +38,11 @@
 
 @mixin heading-small {
   @include heading(1.8, 1.3);
+  font-weight: 800;
+}
+
+@mixin heading-tiny {
+  @include heading(1.6, 1.3);
   font-weight: 800;
 }
 
@@ -53,8 +58,37 @@
   }
 }
 
-@mixin hoverCapable {
-  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active), (hover: hover) {
+@mixin select-id($name) {
+  [id='#{$name}'] {
     @content;
   }
+}
+
+@mixin hoverCapable {
+  @media all and (-ms-high-contrast: none),
+    (-ms-high-contrast: active),
+    (hover: hover) {
+    @content;
+  }
+}
+
+@mixin IE11() {
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    @content;
+  }
+}
+
+@mixin media-query($sizes...) {
+  @supports (display: grid) {
+    @include media($sizes...) {
+      @content;
+    }
+  }
+}
+
+@mixin button-unstyled() {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  width: auto;
 }

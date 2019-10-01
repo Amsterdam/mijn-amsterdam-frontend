@@ -4,7 +4,7 @@ import PageContentMainHeading from 'components/PageContentMainHeading/PageConten
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
 import styles from './InkomenDetail.module.scss';
 import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
-import { Chapters, AppRoutes } from 'App.constants';
+import { Chapters, AppRoutes, ChapterTitles } from 'App.constants';
 import { AppContext } from 'AppState';
 import useRouter from 'use-react-router';
 import Heading from 'components/Heading/Heading';
@@ -12,7 +12,6 @@ import PageContentMainHeadingBackLink from 'components/PageContentMainHeadingBac
 import StatusLine from 'components/StatusLine/StatusLine';
 import Alert from 'components/Alert/Alert';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
-import { FocusItem } from '../../data-formatting/focus';
 
 export default () => {
   const {
@@ -22,23 +21,27 @@ export default () => {
       isLoading,
     },
   } = useContext(AppContext);
+
   const {
     match: {
       params: { id },
     },
   } = useRouter();
+
   const FocusItem = items.find(item => item.id === id);
+  const noContent = !isLoading && !FocusItem;
+
   return (
     <PageContentMain variant="full" className={styles.InkomenDetail}>
       <PageContentMainHeading el="div" variant="boxedWithIcon">
         <ChapterHeadingIcon chapter={Chapters.INKOMEN} />
 
-        <Heading el="h2" className={styles.PageHeading}>
+        <Heading el="h2" size="large" className={styles.PageHeading}>
           <PageContentMainHeadingBackLink to={AppRoutes.INKOMEN}>
-            Werk & inkomen
+            {ChapterTitles.INKOMEN}
           </PageContentMainHeadingBackLink>
           {!isLoading && FocusItem ? (
-            FocusItem.title
+            <span>{FocusItem.title}</span>
           ) : (
             <LoadingContent
               className={styles.LoadingContentHeading}
@@ -47,19 +50,22 @@ export default () => {
           )}
         </Heading>
       </PageContentMainHeading>
-      {isLoading && (
-        <LoadingContent className={styles.LoadingContentStatusLine} />
-      )}
-      {isError && (
-        <Alert type="warning">
-          Uw gegevens kunnen op dit moment niet worden getoond.
-        </Alert>
-      )}
-      {FocusItem && (
-        <PageContentMainBody>
-          <StatusLine items={FocusItem.process} />
-        </PageContentMainBody>
-      )}
+      <PageContentMainBody>
+        {isLoading && (
+          <LoadingContent className={styles.LoadingContentStatusLine} />
+        )}
+        {(isError || noContent) && (
+          <Alert type="warning">
+            We kunnen op dit moment geen gegevens tonen.
+          </Alert>
+        )}
+        {!!FocusItem && (
+          <StatusLine
+            trackCategory={`Werk en inkomen / ${FocusItem.productTitle}`}
+            items={FocusItem.process}
+          />
+        )}
+      </PageContentMainBody>
     </PageContentMain>
   );
 };

@@ -7,6 +7,7 @@ import { ExternalUrls, AppRoutes } from 'App.constants';
 import { LinkList } from './MainFooter.constants';
 import classnames from 'classnames';
 import { useDesktopScreen } from 'hooks/media.hook';
+import { trackLink } from 'hooks/analytics.hook';
 
 interface PanelState {
   [panelId: string]: boolean;
@@ -25,7 +26,7 @@ export default function MainFooter() {
   const titleRole = useDesktopScreen() ? 'columnheader' : 'button';
 
   return (
-    <footer className={styles.MainFooter}>
+    <footer className={styles.MainFooter} id="MainFooter">
       <div className={classnames(styles.TopBar, styles.InnerContainer)}>
         <div
           className={classnames(
@@ -51,7 +52,11 @@ export default function MainFooter() {
           </p>
           <ul>
             <li>
-              <ButtonLinkExternal white={true} to={ExternalUrls.CONTACT_FORM}>
+              <ButtonLinkExternal
+                white={true}
+                to={ExternalUrls.CONTACT_FORM}
+                onClick={() => trackLink(ExternalUrls.CONTACT_FORM)}
+              >
                 Of gebruik het contactformulier
               </ButtonLinkExternal>
             </li>
@@ -59,6 +64,7 @@ export default function MainFooter() {
               <ButtonLinkExternal
                 white={true}
                 to={ExternalUrls.CONTACT_GENERAL}
+                onClick={() => trackLink(ExternalUrls.CONTACT_GENERAL)}
               >
                 Meer contactgegevens en openingstijden
               </ButtonLinkExternal>
@@ -78,7 +84,12 @@ export default function MainFooter() {
           <ul>
             {LinkList.map(({ to, title }) => (
               <li key={title}>
-                <ButtonLinkExternal key={title} white={true} to={to}>
+                <ButtonLinkExternal
+                  key={title}
+                  white={true}
+                  to={to}
+                  onClick={() => trackLink(to)}
+                >
                   {title}
                 </ButtonLinkExternal>
               </li>
@@ -98,7 +109,12 @@ export default function MainFooter() {
           <p>
             Wat is er te doen in Amsterdam? Informatie over toerisme, cultuur,
             uitgaan, evenementen en meer vindt u op{' '}
-            <a href="https://www.iamsterdam.com">Iamsterdam.com</a>
+            <a
+              href="https://www.iamsterdam.com"
+              onClick={() => trackLink('https://www.iamsterdam.com')}
+            >
+              Iamsterdam.com
+            </a>
           </p>
         </div>
       </div>

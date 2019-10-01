@@ -1,67 +1,75 @@
-import { AppRoutes, Chapters, Chapter, ExternalUrls } from 'App.constants';
-import { ReactComponent as BurgerzakenIcon } from 'assets/images/burgerzaken.svg';
-import { ReactComponent as ZorgIcon } from 'assets/images/zorg.svg';
-import { ReactComponent as WonenIcon } from 'assets/images/wonen.svg';
-import { ReactComponent as InkomenIcon } from 'assets/images/inkomen.svg';
+import {
+  AppRoutes,
+  Chapter,
+  Chapters,
+  ChapterTitles,
+  ExternalUrls,
+} from 'App.constants';
+import { LinkProps } from 'App.types';
 import { ReactComponent as BelastingenIcon } from 'assets/images/belastingen.svg';
-import { ReactComponent as JeugdhulpIcon } from 'assets/icons/Passport.svg';
-import { LinkProps, SVGComponent } from 'App.types';
+import { ReactComponent as BurgerzakenIcon } from 'assets/images/burgerzaken.svg';
+import { ReactComponent as InkomenIcon } from 'assets/images/inkomen.svg';
+import { ReactComponent as JeugdhulpIcon } from 'assets/images/Passport.svg';
+import { ReactComponent as WonenIcon } from 'assets/images/wonen.svg';
+import { ReactComponent as ZorgIcon } from 'assets/images/zorg.svg';
+import { FunctionComponent, SVGProps } from 'react';
 
 export type MainMenuId =
   | Chapter
-  | 'home'
-  | 'my-chapters'
-  | 'my-area'
-  | 'my-updates';
+  | 'DASHBOARD'
+  | 'MIJN_THEMAS'
+  | 'MIJN_BUURT'
+  | 'MIJN_MELDINGEN';
 
 export interface MenuItem extends LinkProps {
   id: MainMenuId;
-  Icon?: SVGComponent;
+  Icon?: FunctionComponent<SVGProps<SVGSVGElement>>;
   submenuItems?: MenuItem[];
   isLoading?: boolean;
 }
 
 export const mainMenuItemId: { [key: string]: MainMenuId } = {
-  HOME: 'home',
-  MY_CHAPTERS: 'my-chapters',
-  MY_AREA: 'my-area',
-  MY_UPDATES: 'my-updates',
+  HOME: 'DASHBOARD',
+  MY_CHAPTERS: 'MIJN_THEMAS',
+  MY_AREA: 'MIJN_BUURT',
+  MY_NOTIFICATIONS: 'MIJN_MELDINGEN',
 };
 
 export const myChaptersMenuItems: MenuItem[] = [
   {
-    title: 'Burgerzaken',
+    title: ChapterTitles.BELASTINGEN,
+    id: Chapters.BELASTINGEN,
+    to: ExternalUrls.SSO_BELASTINGEN,
+    Icon: BelastingenIcon,
+    rel: 'external',
+  },
+  {
+    title: ChapterTitles.BURGERZAKEN,
     id: Chapters.BURGERZAKEN,
     to: AppRoutes.BURGERZAKEN,
     Icon: BurgerzakenIcon,
   },
   {
-    title: 'Erfpacht',
+    title: ChapterTitles.WONEN,
     id: Chapters.WONEN,
-    to: ExternalUrls.ERFPACHT || AppRoutes.WONEN,
+    to: ExternalUrls.SSO_ERFPACHT || '',
     Icon: WonenIcon,
-    target: '_self',
+    rel: 'external',
   },
   {
-    title: 'Belastingen',
-    id: Chapters.BELASTINGEN,
-    to: AppRoutes.BELASTINGEN,
-    Icon: BelastingenIcon,
-  },
-  {
-    title: 'Zorg',
+    title: ChapterTitles.ZORG,
     id: Chapters.ZORG,
     to: AppRoutes.ZORG,
     Icon: ZorgIcon,
   },
   {
-    title: 'Werk & inkomen',
+    title: ChapterTitles.INKOMEN,
     id: Chapters.INKOMEN,
     to: AppRoutes.INKOMEN,
     Icon: InkomenIcon,
   },
   {
-    title: 'Jeugdhulp',
+    title: ChapterTitles.JEUGDHULP,
     id: Chapters.JEUGDHULP,
     to: AppRoutes.JEUGDHULP,
     Icon: JeugdhulpIcon,
@@ -69,10 +77,10 @@ export const myChaptersMenuItems: MenuItem[] = [
 ];
 
 export const MenuItemTitles = {
-  HOME: 'Home',
+  HOME: ChapterTitles.ROOT,
   MY_CHAPTERS: "Mijn thema's",
-  MY_AREA: 'Mijn buurt',
-  MY_UPDATES: 'Mijn meldingen',
+  MY_AREA: ChapterTitles.MIJN_BUURT,
+  MY_NOTIFICATIONS: ChapterTitles.MELDINGEN,
 };
 
 export const menuItems: MenuItem[] = [
@@ -92,9 +100,9 @@ export const menuItems: MenuItem[] = [
     to: AppRoutes.MY_AREA,
   },
   {
-    title: MenuItemTitles.MY_UPDATES,
-    id: mainMenuItemId.MY_UPDATES,
-    to: AppRoutes.MY_UPDATES,
+    title: MenuItemTitles.MY_NOTIFICATIONS,
+    id: mainMenuItemId.MY_NOTIFICATIONS,
+    to: AppRoutes.MY_NOTIFICATIONS,
   },
 ];
 

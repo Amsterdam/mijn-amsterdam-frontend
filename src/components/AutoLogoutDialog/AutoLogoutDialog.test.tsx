@@ -1,9 +1,11 @@
-import { render, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import React from 'react';
 
 import AutoLogoutDialog, { AutoLogoutDialogSettings } from './AutoLogoutDialog';
+import { SessionContext } from '../../AppState';
+import { LOGOUT_URL } from 'App.constants';
 
-const ONE_SCOND_IN_MS = 1000;
+const ONE_SECOND_IN_MS = 1000;
 const DOC_TITLE = 'AutoLogoutDialog';
 
 describe('AutoLogoutDialog', () => {
@@ -16,42 +18,83 @@ describe('AutoLogoutDialog', () => {
   };
 
   const settings: AutoLogoutDialogSettings = {
-    secondsBeforeDialogShow: 10,
+    secondsBeforeDialogShow: 18,
     secondsBeforeAutoLogout: 8,
+    secondsSessionRenewRequestInterval: 2,
   };
 
   let component: any;
+  const map: any = {};
+
+  beforeAll(() => {
+    window.addEventListener = jest.fn((event, callback: any) => {
+      map[event] = () => {
+        callback && callback();
+      };
+    });
+    // inspired by https://github.com/facebook/jest/issues/890#issuecomment-450708771
+    delete window.location;
+    window = Object.create(window);
+    window.location = {
+      ...window.location,
+      href: '/test',
+    };
+  });
+
+  afterAll(() => {
+    (window.addEventListener as any).mockRestore();
+  });
 
   beforeEach(() => {
     document.title = DOC_TITLE;
     jest.useFakeTimers();
     component = mount(
-      <AutoLogoutDialog session={session} settings={settings} />
+      <SessionContext.Provider value={session}>
+        <AutoLogoutDialog settings={settings} />
+      </SessionContext.Provider>
     );
   });
 
   afterEach(() => {
-    component.unmount();
-    jest.clearAllTimers();
     refetch.mockReset();
+    component.unmount();
+  });
+
+  it('resets the autologout counter every x seconds whenever user activity is detected', () => {
+    map.mousemove();
+    jest.advanceTimersByTime(
+      ONE_SECOND_IN_MS * settings.secondsSessionRenewRequestInterval!
+    );
+    expect(refetch).toHaveBeenCalled();
+    map.mousemove();
+    jest.advanceTimersByTime(
+      ONE_SECOND_IN_MS * settings.secondsSessionRenewRequestInterval!
+    );
+    expect(refetch).toHaveBeenCalledTimes(2);
   });
 
   it('shows the auto logout dialog after x seconds and fires callback after another x seconds', () => {
     jest.advanceTimersByTime(
-      ONE_SCOND_IN_MS * settings.secondsBeforeDialogShow!
+      ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow!
     );
     component.update();
     expect(component.childAt(0).prop('isOpen')).toBe(true);
+    map.mousemove();
     jest.advanceTimersByTime(
-      ONE_SCOND_IN_MS * settings.secondsBeforeAutoLogout!
+      ONE_SECOND_IN_MS * settings.secondsSessionRenewRequestInterval!
+    );
+    expect(refetch).not.toHaveBeenCalled();
+    jest.advanceTimersByTime(
+      ONE_SECOND_IN_MS * settings.secondsBeforeAutoLogout!
     );
     component.update();
-    expect(refetch).toHaveBeenCalled();
+    expect(window.location.href).toBe(LOGOUT_URL);
   });
 
   it('fires callback when clicking continue button', () => {
     jest.advanceTimersByTime(
-      ONE_SCOND_IN_MS * settings.secondsBeforeDialogShow!
+      ONE_SECOND_IN_MS *
+        (settings.secondsBeforeDialogShow! - settings.secondsBeforeAutoLogout!)
     );
     component.update();
     let continueButton = component.find('[className*="continue-button"]');
@@ -66,17 +109,20 @@ describe('AutoLogoutDialog', () => {
     expect(continueButton).toHaveLength(0);
   });
 
-  it('switches the document title continueously when timer is visible', () => {
+  it('switches the document title continuously when timer is visible', () => {
     const documentTitle = document.title;
 
     jest.advanceTimersByTime(
-      ONE_SCOND_IN_MS * settings.secondsBeforeDialogShow!
+      ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow! -
+        settings.secondsBeforeAutoLogout!
     );
     component.update();
+    let continueButton = component.find('[className*="continue-button"]');
+    expect(continueButton).toHaveLength(1);
 
     expect(document.title).toBe(documentTitle);
 
-    jest.advanceTimersByTime(ONE_SCOND_IN_MS * 2);
+    jest.advanceTimersByTime(ONE_SECOND_IN_MS * 2);
     component.update();
 
     expect(document.title).not.toBe(DOC_TITLE);

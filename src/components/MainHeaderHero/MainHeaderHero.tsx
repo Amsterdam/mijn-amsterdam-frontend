@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from './MainHeaderHero.module.scss';
 import useRouter from 'use-react-router';
 import { AppRoutes } from 'App.constants';
+import { SessionContext } from '../../AppState';
 
-const DEFAULT_ALT = 'Sfeerbeeld kenmerkend voor de Amsterdammer';
 const LANDSCAPE_SCREEN_RATIO = 0.25;
 const PORTRAIT_SCREEN_RATIO = 0.4;
 
@@ -17,26 +17,29 @@ function imgUrl(
 ) {
   const ratio =
     orientation === 'portrait' ? PORTRAIT_SCREEN_RATIO : LANDSCAPE_SCREEN_RATIO;
-  return `/header/${imageName}-${Math.round(pixelDensity * width)}x${Math.round(
+  return `/header/${Math.round(pixelDensity * width)}x${Math.round(
     pixelDensity * (width * ratio)
-  )}.jpg`;
+  )}-${imageName}.jpg`;
 }
 
-function getHeroSrc() {
+function getHeroSrc(isAuthenticated: boolean = false) {
   const { location } = useRouter();
   const isChapterPath = (path: string) => location.pathname.startsWith(path);
 
-  let imageName = 'Header-Desktop-1';
+  let imageName;
 
   switch (true) {
-    // case isChapterPath(AppRoutes.PROFILE):
-    //   imageName = 'Header-Desktop-2';
-    //   break;
-    // case isChapterPath(AppRoutes.INKOMEN):
-    //   imageName = 'Header-Desktop-4';
-    //   break;
+    case isChapterPath(AppRoutes.PROFILE):
+      imageName = 'burgerzaken';
+      break;
+    case isChapterPath(AppRoutes.INKOMEN):
+      imageName = 'werk';
+      break;
+    case isChapterPath(AppRoutes.ZORG):
+      imageName = 'zorg';
+      break;
     default:
-      imageName = 'Header-Desktop-1';
+      imageName = 'algemeen';
       break;
   }
 
@@ -62,12 +65,11 @@ function getHeroSrc() {
 
 export interface MainHeaderHeroProps {
   src: string;
-  alt: string;
 }
 
 export default function MainHeaderHero(props: Partial<MainHeaderHeroProps>) {
-  const srcSet = getHeroSrc();
-  const alt = props.alt || DEFAULT_ALT;
+  const session = useContext(SessionContext);
+  const srcSet = getHeroSrc(session.isAuthenticated);
 
   return (
     <div className={styles.MainHeaderHero}>
@@ -96,7 +98,7 @@ export default function MainHeaderHero(props: Partial<MainHeaderHeroProps>) {
           media="(orientation: landscape) and (min-width: 1200px)"
           srcSet={srcSet.LANDSCAPE_MEDIUM}
         />
-        <img src={srcSet.LANDSCAPE_MEDIUM} className={styles.Image} alt={alt} />
+        <img src={srcSet.LANDSCAPE_MEDIUM} className={styles.Image} alt="" />
       </picture>
     </div>
   );

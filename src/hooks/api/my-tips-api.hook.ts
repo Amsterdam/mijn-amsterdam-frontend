@@ -1,8 +1,10 @@
-import { ApiUrls } from 'App.constants';
-import usePaginatedApi, { PaginatedItemsResponse } from './paginated-api.hook';
-import { ApiState } from './api.types';
+import { ApiConfig, ApiUrls } from 'App.constants';
 import { LinkProps } from 'App.types';
-import { isProduction } from 'helpers/App';
+import usePaginatedApi, {
+  PaginatedApiProps,
+  PaginatedApiState,
+  PaginatedItemsResponse,
+} from './paginated-api.hook';
 
 export interface MyTip {
   datePublished: string;
@@ -10,17 +12,53 @@ export interface MyTip {
   subtitle: string;
   description: string;
   link: LinkProps;
+  imgUrl?: string;
 }
 
 export interface MyTipsResponse extends PaginatedItemsResponse {
   items: MyTip[];
 }
 
-export interface MyTipsApiState extends ApiState {
+export interface MyTipsApiState extends PaginatedApiState {
   data: MyTipsResponse;
+  refetch: (requestData: any) => void;
 }
 
-export default (offset?: number, limit?: number): MyTipsApiState => {
-  // NOTE: The tips api is not available in production yet
-  return usePaginatedApi(ApiUrls.MY_TIPS, offset, limit, isProduction());
-};
+export default function useMyTipsApi(
+  offset: number = 0,
+  limit: number = -1
+): MyTipsApiState {
+  const options: PaginatedApiProps = {
+    url: ApiUrls.MY_TIPS,
+    offset,
+    limit,
+    postpone: ApiConfig[ApiUrls.MY_TIPS].postponeFetch,
+    method: 'POST',
+  };
+
+  const { data, refetch, ...rest } = usePaginatedApi(options);
+
+  return {
+    ...rest,
+    data,
+    refetch: ({
+      BRP: brp,
+      FOCUS: focus,
+      ERFPACHT: erfpacht,
+      WMO: wmo,
+    }: any) => {
+      const requestDataFormatted = {
+        optin: false,
+        data: {
+          brp,
+          focus,
+          erfpacht,
+          wmo,
+        },
+      };
+      refetch({
+        requestData: requestDataFormatted,
+      });
+    },
+  };
+}

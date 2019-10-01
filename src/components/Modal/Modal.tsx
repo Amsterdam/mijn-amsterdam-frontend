@@ -3,10 +3,11 @@ import classnames from 'classnames';
 import React, { useRef, useEffect } from 'react';
 import FocusTrap from 'focus-trap-react';
 import ReactDOM from 'react-dom';
-import { ReactComponent as CloseIcon } from 'assets/icons/Close.svg';
+import { ReactComponent as CloseIcon } from 'assets/images/Close.svg';
 
 import styles from './Modal.module.scss';
 import Heading from 'components/Heading/Heading';
+import useModalRoot from 'hooks/modalRoot.hook';
 
 interface ModalProps {
   children: ComponentChildren;
@@ -54,15 +55,7 @@ export function Dialog({
   const dialogEl = useRef(null);
 
   if (!appendTo) {
-    const modalRootElement = document.getElementById('modal-root');
-    if (!modalRootElement) {
-      const modalRoot = document.createElement('div');
-      modalRoot.setAttribute('id', 'modal-root');
-      document.querySelector('body')!.appendChild(modalRoot);
-      appendTo = modalRoot;
-    } else {
-      appendTo = modalRootElement;
-    }
+    appendTo = useModalRoot();
   }
 
   // Concepts taken from: https://css-tricks.com/prevent-page-scrolling-when-a-modal-is-open/
@@ -144,8 +137,9 @@ export function Dialog({
                   <button
                     className={styles.ButtonClose}
                     onClick={() => typeof onClose === 'function' && onClose()}
+                    arial-label="Overlay sluiten"
                   >
-                    <CloseIcon />
+                    <CloseIcon aria-hidden="true" />
                   </button>
                 )}
               </header>

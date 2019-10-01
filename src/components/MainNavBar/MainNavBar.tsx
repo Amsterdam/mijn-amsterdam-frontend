@@ -1,33 +1,30 @@
-import React, { useState, useContext, useEffect } from 'react';
+import { AppRoutes, Colors, Layout, LOGOUT_URL } from 'App.constants';
+import { ComponentChildren } from 'App.types';
+import { AppContext, SessionContext, TutorialContext } from 'AppState';
+import { ReactComponent as LogoutIcon } from 'assets/images/Logout.svg';
+import classnames from 'classnames';
+import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
+import FontEnlarger from 'components/FontEnlarger/FontEnlarger';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from 'components/MainNavSubmenu/MainNavSubmenu';
-import { NavLink, Link } from 'react-router-dom';
-import { AppContext } from 'AppState';
+import { getFullName } from 'data-formatting/brp';
+import { useDesktopScreen, useTabletScreen } from 'hooks/media.hook';
+import { trackItemPresentation } from 'hooks/analytics.hook';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import useRouter from 'use-react-router';
+
+import LoadingContent from '../LoadingContent/LoadingContent';
 import {
-  menuItems,
-  MenuItem,
   mainMenuItemId,
+  MenuItem,
+  menuItems,
   submenuItems,
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
-import {
-  Colors,
-  AppRoutes,
-  LOGOUT_URL,
-  ExternalUrls,
-  Layout,
-} from 'App.constants';
-import { ComponentChildren } from 'App.types';
-import {
-  ButtonLinkExternal,
-  IconButtonLink,
-} from 'components/ButtonLink/ButtonLink';
-import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
-import { useTabletScreen } from 'hooks/media.hook';
-import useRouter from 'use-react-router';
-import classnames from 'classnames';
-import { Person } from 'data-formatting/brp';
+import teststyles from '../Tutorial/Tutorial.module.scss';
+import Tutorial from 'components/Tutorial/Tutorial';
 
 const MenuToggleBtnId = 'MenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -40,28 +37,39 @@ export interface MainNavLinkProps {
   onMouseEnter?: () => void;
 }
 
-interface SecondaryLinksProps {
-  person?: Person | null;
-  hasMessages?: boolean;
-}
+function SecondaryLinks() {
+  const {
+    BRP: {
+      data: { persoon },
+      isError,
+    },
+  } = useContext(AppContext);
 
-type MainNavBarProps = SecondaryLinksProps;
+  const hasFirstName = !!(persoon && persoon.voornamen);
 
-function SecondaryLinks({ person, hasMessages = false }: SecondaryLinksProps) {
+  useEffect(() => {
+    if (hasFirstName) {
+      trackItemPresentation('Mijn gegevens', 'Link naar Profiel');
+    }
+  }, [hasFirstName]);
+
+  const isDesktopScreen = useDesktopScreen();
+
   return (
     <div className={styles.secondaryLinks}>
-      <ButtonLinkExternal
-        to={ExternalUrls.BERICHTENBOX}
-        className={classnames(hasMessages && 'has-messages')}
-      >
-        Berichten Mijn Overheid
-      </ButtonLinkExternal>
-      {person && person.firstName && (
-        <Link to={AppRoutes.PROFILE}>{person.fullName}</Link>
+      {isDesktopScreen && <FontEnlarger />}
+      {!isError && (
+        <Link to={AppRoutes.PROFILE}>
+          {persoon && persoon.voornamen ? (
+            getFullName(persoon)
+          ) : (
+            <LoadingContent barConfig={[['15rem', '1rem', '0']]} />
+          )}
+        </Link>
       )}
       {
-        <IconButtonLink target="_self" to={LOGOUT_URL}>
-          <LogoutIcon /> Uitloggen
+        <IconButtonLink to={LOGOUT_URL} rel="external">
+          <LogoutIcon aria-hidden="true" /> Uitloggen
         </IconButtonLink>
       }
     </div>
@@ -88,7 +96,6 @@ function getMenuItem(
     return (
       <MainNavSubmenu
         key={item.id}
-        id={item.id}
         title={item.title}
         isOpen={isOpen}
         onFocus={() => !isOpen && setSubMenuVisibility(item.id)}
@@ -96,17 +103,20 @@ function getMenuItem(
         onMouseEnter={() => setSubMenuVisibility(item.id)}
         onMouseLeave={() => setSubMenuVisibility()}
       >
-        {item.submenuItems.map(({ id, to, Icon, title, target }) => {
+        {item.submenuItems.map(({ id, to, Icon, title, rel }) => {
           return (
             <MainNavSubmenuLink
               key={id}
               to={to}
-              id={id}
-              target={target}
+              rel={rel}
               onFocus={() => setSubMenuVisibility(item.id, true)}
             >
-              {Icon && <Icon fill={Colors.neutralGrey4} aria-hidden="true" />}
-              {title}
+              {Icon && (
+                <span className={styles.SubmenuItemIcon}>
+                  <Icon aria-label={id} fill={Colors.neutralGrey4} />
+                </span>
+              )}
+              <span className={styles.SubmenuItemTitle}>{title}</span>
             </MainNavSubmenuLink>
           );
         })}
@@ -133,18 +143,28 @@ function getMenuItem(
   );
 }
 
-export default function MainNavBar({ person }: MainNavBarProps) {
+export default function MainNavBar() {
   const [activeSubmenuId, activateSubmenu] = useState('');
   const {
-    SESSION: { isAuthenticated },
     MY_CHAPTERS: { items: myChapterItems },
   } = useContext(AppContext);
-
+  const { isAuthenticated } = useContext(SessionContext);
   const isResponsiveMenu = useTabletScreen();
   const [isResponsiveMenuMenuVisible, toggleResponsiveMenu] = useState(false);
-  const { history } = useRouter();
+  const { history, location } = useRouter();
+  const { isTutorialVisible, setIsTutorialVisible } = useContext(
+    TutorialContext
+  );
+  const TUTORIAL_CLASS = teststyles.TutorialItems;
 
-  function closeResponsiveMenu(e: any) {
+  useEffect(() => {
+    const classList = document.body.classList;
+    isTutorialVisible
+      ? classList.add(TUTORIAL_CLASS)
+      : classList.remove(TUTORIAL_CLASS);
+  }, [isTutorialVisible]);
+
+  function closeResponsiveMenu(e?: any) {
     if (isResponsiveMenuMenuVisible) {
       // Testing for clicks on elements that are not part of the responsive menu
       const MenuToggleButton = document.getElementById(MenuToggleBtnId);
@@ -180,6 +200,7 @@ export default function MainNavBar({ person }: MainNavBarProps) {
   // Hides small screen menu on route change
   useEffect(() => {
     toggleResponsiveMenu(false);
+    setSubMenuVisibility();
   }, [history.location]);
 
   return (
@@ -192,12 +213,13 @@ export default function MainNavBar({ person }: MainNavBarProps) {
           })}
           onClick={() => toggleResponsiveMenu(!isResponsiveMenuMenuVisible)}
         >
-          Toggle menu
+          Navigatie
         </button>
       )}
 
       {isAuthenticated && (!isResponsiveMenu || isResponsiveMenuMenuVisible) && (
         <div id={LinkContainerId} className={styles.LinkContainer}>
+          <SecondaryLinks />
           {menuItems.map(item => {
             let menuItem = item;
             if (item.id in submenuItems) {
@@ -215,8 +237,26 @@ export default function MainNavBar({ person }: MainNavBarProps) {
               !isResponsiveMenu
             );
           })}
-          <SecondaryLinks person={person} />
         </div>
+      )}
+
+      {location.pathname === AppRoutes.ROOT && (
+        <>
+          <button
+            className={classnames(styles.TutorialBtn, {
+              [styles.TutorialBtnOpen]: isTutorialVisible,
+            })}
+            onClick={() => {
+              const isVisible = !isTutorialVisible;
+              setIsTutorialVisible(isVisible);
+            }}
+          >
+            Uitleg
+          </button>
+          {isTutorialVisible && (
+            <Tutorial toggleTutorial={setIsTutorialVisible} />
+          )}
+        </>
       )}
 
       {isResponsiveMenuMenuVisible && (

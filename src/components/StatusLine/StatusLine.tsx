@@ -1,29 +1,43 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import styles from './StatusLine.module.scss';
 import classnames from 'classnames';
-import { ProcessStep } from 'data-formatting/focus';
-import {
-  IconButtonLink,
-  ButtonLinkExternal,
-} from 'components/ButtonLink/ButtonLink';
+import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
 import { Document } from '../DocumentList/DocumentList';
-import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
+import { ReactComponent as DownloadIcon } from 'assets/images/Download.svg';
 import { defaultDateFormat } from 'helpers/App';
 import useRouter from 'use-react-router';
 import { useSessionStorage } from 'hooks/storage.hook';
+import { trackEvent } from 'hooks/analytics.hook';
+import { ReactComponent as CaretLeft } from 'assets/images/Chevron-Left.svg';
 
-const markdownLinkRegex = /\[((?:[^\[\]\\]|\\.)+)\]\((https?:\/\/(?:[-A-Z0-9+&@#\/%=~_|\[\]](?= *\))|[-A-Z0-9+&@#\/%?=~_|\[\]!:,.;](?! *\))|\([-A-Z0-9+&@#\/%?=~_|\[\]!:,.;(]*\))+) *\)/i;
-const markdownTagMatchRegex = /(\[.*?\]\(.*?\))/gi;
+export type StepType = 'first-step' | 'last-step' | 'intermediate-step';
+export interface StatusLineItem {
+  id: string;
+  status: string;
+  stepType: StepType;
+  datePublished: string;
+  description: string | JSX.Element;
+  documents: Document[];
+  isLastActive: boolean;
+  isChecked: boolean;
+}
 
-export type StatusLineItem = ProcessStep;
+type AltDocumentContent = string | JSX.Element;
+type ConditionalAltDocumentContent = (
+  statusLineItem: StatusLineItem,
+  stepNumber: number
+) => AltDocumentContent;
 
 interface StatusLineProps {
   items: StatusLineItem[];
+  trackCategory: string;
+  altDocumentContent?: AltDocumentContent | ConditionalAltDocumentContent;
 }
 
 interface StatusLineItemProps {
   item: StatusLineItem;
   stepNumber: number;
+  altDocumentContent?: AltDocumentContent | ConditionalAltDocumentContent;
 }
 
 interface DownloadLinkProps {
@@ -33,76 +47,70 @@ interface DownloadLinkProps {
 function DownloadLink({ item }: DownloadLinkProps) {
   return (
     <IconButtonLink
-      target="_blank"
       className={styles.DownloadLink}
       to={item.url}
+      rel="external nofollow"
+      download={item.title}
     >
-      <DownloadIcon />
+      <DownloadIcon aria-hidden="true" />
       {item.title}
     </IconButtonLink>
   );
 }
 
-function parseDescription(text: string, item: any) {
-  const linkTags = text.split(markdownTagMatchRegex);
-  if (linkTags) {
-    return linkTags.map(link => {
-      const tagParts = link.match(markdownLinkRegex);
-      if (tagParts) {
-        const [, text, url] = tagParts;
-        return (
-          <ButtonLinkExternal key={url} to={url}>
-            {text}
-          </ButtonLinkExternal>
-        );
-      }
-      return link;
-    });
-  }
-  return text.split(/\n/g).map(text => [text, <br />]);
-}
-
-function StatusLineItem({ item, stepNumber }: StatusLineItemProps) {
-  const { location } = useRouter();
-  const memoizedDescription = useMemo(() => {
-    return (
-      item.description &&
-      item.description
-        .split(/\n\n/g)
-        .map((text, index) => <p key={index}>{parseDescription(text, item)}</p>)
-    );
-  }, [item]);
-
+function StatusLineItem({
+  item,
+  stepNumber,
+  altDocumentContent,
+}: StatusLineItemProps) {
+  const altDocumentContentActual = useMemo(() => {
+    return typeof altDocumentContent === 'function'
+      ? altDocumentContent(item, stepNumber)
+      : altDocumentContent;
+  }, []);
   return (
     <li
       key={item.id}
       id={item.id}
       className={classnames(
         styles.ListItem,
-        item.isActual && styles.Actual,
-        location.hash.substring(1) === item.id && styles.Highlight,
-        styles[item.status.replace(/[^a-z]/gi, '').toLocaleLowerCase()]
+        item.isLastActive && styles.LastActive,
+        item.isChecked && styles.Checked,
+        item.stepType && styles[item.stepType]
       )}
     >
-      <div className={styles.Panel} data-stepnumber={stepNumber}>
-        <strong className={styles.StatusTitle}>{item.status}</strong>
-        <time className={styles.StatusDate}>
-          {defaultDateFormat(item.datePublished)}
-        </time>
-      </div>
-      <div className={styles.Panel}>{memoizedDescription}</div>
-      <div className={styles.Panel}>
-        <p>
-          {item.documents.map(document => (
-            <DownloadLink key={document.id} item={document} />
-          ))}
-        </p>
+      <div className={styles.ListItemInner}>
+        <div className={styles.Panel} data-stepnumber={stepNumber}>
+          <strong className={styles.StatusTitle}>{item.status}</strong>
+          <time className={styles.StatusDate}>
+            {defaultDateFormat(item.datePublished)}
+          </time>
+        </div>
+        <div className={styles.Panel}>{item.description}</div>
+        <div className={styles.Panel}>
+          {!!altDocumentContentActual && (
+            <span className={styles.altDocumentContent}>
+              {altDocumentContentActual}
+            </span>
+          )}
+          {!!item.documents && (
+            <p>
+              {item.documents.map(document => (
+                <DownloadLink key={document.id} item={document} />
+              ))}
+            </p>
+          )}
+        </div>
       </div>
     </li>
   );
 }
 
-export default function StatusLine({ items }: StatusLineProps) {
+export default function StatusLine({
+  items,
+  trackCategory,
+  altDocumentContent,
+}: StatusLineProps) {
   const { location } = useRouter();
   const [isCollapsed, setCollapsed] = useSessionStorage(
     'STATUS_LINE_' + location.pathname,
@@ -110,12 +118,19 @@ export default function StatusLine({ items }: StatusLineProps) {
   );
 
   function toggleCollapsed() {
+    if (isCollapsed) {
+      trackEvent({
+        category: trackCategory,
+        name: 'Metrolijn',
+        action: 'Alles tonen',
+      });
+    }
     setCollapsed(!isCollapsed);
   }
 
   useEffect(() => {
     const id = location.hash.substring(1);
-    const step = document.getElementById(id);
+    const step = id && document.getElementById(id);
 
     if (step) {
       window.scroll({
@@ -126,34 +141,41 @@ export default function StatusLine({ items }: StatusLineProps) {
   }, [location.hash]);
 
   return (
-    <div className={styles.StatusLine}>
-      <ul className={styles.List}>
-        {items
-          .filter(
-            (item, index) =>
-              !isCollapsed || (isCollapsed && index === items.length - 1)
-          )
-          .map((item, index) => (
-            <StatusLineItem
-              key={item.id}
-              item={item}
-              stepNumber={items.length - index}
-            />
-          ))}
-      </ul>
-      {!items.length && <p>Er is geen status beschikbaar.</p>}
+    <>
+      <div className={styles.StatusLine}>
+        <h4 className={styles.ListHeading}>Status</h4>
+        {!!items.length && (
+          <ul className={styles.List}>
+            {items
+              .filter(
+                (item, index) =>
+                  !isCollapsed || (isCollapsed && item.isLastActive)
+              )
+              .map((item, index) => (
+                <StatusLineItem
+                  key={item.id}
+                  item={item}
+                  stepNumber={index + 1}
+                  altDocumentContent={altDocumentContent}
+                />
+              ))}
+          </ul>
+        )}
+        {!items.length && (
+          <p className={styles.NoStatusItems}>Er is geen status beschikbaar.</p>
+        )}
+      </div>
       {items.length > 1 && (
         <button
-          className={classnames(
-            'action-button secondary line-only',
-            styles.MoreStatus,
-            isCollapsed && styles.isCollapsed
-          )}
+          className={classnames(styles.MoreStatus, {
+            [styles.MoreStatusClosed]: isCollapsed,
+          })}
           onClick={toggleCollapsed}
         >
+          <CaretLeft aria-hidden="true" />
           {isCollapsed ? 'Toon alles' : 'Toon minder'}
         </button>
       )}
-    </div>
+    </>
   );
 }

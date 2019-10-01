@@ -4,7 +4,7 @@ import MyArea from 'components/MyArea/MyArea';
 import MyCases from 'components/MyCases/MyCases';
 import MyChaptersPanel from 'components/MyChaptersPanel/MyChaptersPanel';
 import MyTips from 'components/MyTips/MyTips';
-import MyUpdates from 'components/MyUpdates/MyUpdates';
+import MyNotifications from 'components/MyNotifications/MyNotifications';
 import PageContentMain from 'components/PageContentMain/PageContentMain';
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
@@ -13,16 +13,16 @@ import React, { useContext } from 'react';
 
 import styles from './Dashboard.module.scss';
 import { Link } from 'react-router-dom';
-import { AppRoutes } from '../../App.constants';
+import { AppRoutes } from 'App.constants';
 
-const MAX_UPDATES_VISIBLE = 3;
+const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
 
 export default () => {
   const {
-    MY_UPDATES: {
-      data: { items: myUpdateItems, total: myUpdatesTotal },
-      isLoading: isMyUpdatesLoading,
+    MY_NOTIFICATIONS: {
+      data: { items: myNotificationItems, total: myNotificationsTotal },
+      isLoading: isMyNotificationsLoading,
     },
     MY_CASES: {
       data: { items: myCases },
@@ -31,54 +31,67 @@ export default () => {
     MY_TIPS: {
       data: { items: myTips },
       isLoading: isMyTipsLoading,
+      isPristine: isMyTipsPristine,
     },
     MY_CHAPTERS: { items: myChapterItems, isLoading: isMyChaptersLoading },
+    MY_AREA: {
+      url: { simple: mapUrl },
+    },
   } = useContext(AppContext);
 
   const tipItems = myTips.slice(0, MAX_TIPS_VISIBLE);
-  const actualUpdateItems = myUpdateItems.filter(item => item.isActual);
   const isPhoneScreen = usePhoneScreen();
 
   return (
-    <PageContentMain className={styles.Dashboard} variant="full">
-      <PageContentMainHeading variant="medium">
-        <Link className={styles.MyUpdatesHeadingLink} to={AppRoutes.MY_UPDATES}>
-          Mijn meldingen
-        </Link>
-        {!isMyUpdatesLoading &&
-          actualUpdateItems.length > MAX_UPDATES_VISIBLE && (
-            <span>&nbsp;({actualUpdateItems.length})</span>
-          )}
-      </PageContentMainHeading>
-      <PageContentMainBody variant="regularBoxed" className={styles.FirstBody}>
-        <MyUpdates
-          total={actualUpdateItems.length}
-          items={actualUpdateItems.slice(0, MAX_UPDATES_VISIBLE)}
-          showMoreLink={myUpdatesTotal > 0}
-          isLoading={isMyUpdatesLoading}
-        />
-        <MyChaptersPanel
-          isLoading={isMyChaptersLoading}
-          items={myChapterItems}
-          title="Mijn thema's"
-        />
-        <MyCases
-          isLoading={!!isMyCasesLoading}
-          title="Mijn lopende aanvragen"
-          items={myCases}
-        />
-      </PageContentMainBody>
-      {!isPhoneScreen && (
-        <PageContentMainBody>
-          <MyArea />
+    <>
+      <PageContentMain className={styles.Dashboard} variant="full">
+        <PageContentMainHeading variant="medium">
+          <Link
+            id="MyUpdatesHeader" // Used for tutorial placement
+            className={styles.MyNotificationsHeadingLink}
+            to={AppRoutes.MY_NOTIFICATIONS}
+          >
+            Actueel
+          </Link>
+        </PageContentMainHeading>
+        <PageContentMainBody
+          variant="regularBoxed"
+          className={styles.FirstBody}
+        >
+          <MyNotifications
+            total={myNotificationItems.length}
+            items={myNotificationItems.slice(0, MAX_NOTIFICATIONS_VISIBLE)}
+            showMoreLink={myNotificationsTotal > MAX_NOTIFICATIONS_VISIBLE}
+            isLoading={isMyNotificationsLoading}
+            trackCategory="Dashboard / Actueel"
+          />
+          <MyChaptersPanel
+            isLoading={isMyChaptersLoading}
+            items={myChapterItems}
+            title="Mijn thema's"
+            trackCategory="Dashboard / Mijn Thema's"
+          />
+          <MyCases
+            isLoading={!!isMyCasesLoading}
+            title="Mijn lopende aanvragen"
+            items={myCases}
+          />
         </PageContentMainBody>
-      )}
-      <PageContentMainBody variant="regularBoxed">
         {!isPhoneScreen && (
-          <MyTips isLoading={!!isMyTipsLoading} items={tipItems} />
+          <PageContentMainBody>
+            <MyArea url={mapUrl} />
+          </PageContentMainBody>
         )}
-        <DirectLinks />
-      </PageContentMainBody>
-    </PageContentMain>
+        <PageContentMainBody variant="regularBoxed">
+          {!isPhoneScreen && (
+            <MyTips
+              isLoading={isMyTipsPristine || isMyTipsLoading}
+              items={tipItems}
+            />
+          )}
+          <DirectLinks />
+        </PageContentMainBody>
+      </PageContentMain>
+    </>
   );
 };

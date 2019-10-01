@@ -11,10 +11,6 @@
 # production
 /build
 
-# mock data, simple approach to exclude possibly sensitive data
-# /mock-api/**/*.json
-# /mock-api/secure-data
-# secure-data.zip
 .node-persist
 
 # misc
@@ -28,3 +24,5 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+/cypress/videos
+/cypress/screenshots

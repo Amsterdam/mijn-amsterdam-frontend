@@ -1,148 +1,202 @@
-// Interfaces shaped to API data state
-interface GerelateerdePartner {
-  voornamen: string;
-  geslachtsnaam: string;
-  geboortedatum: string;
-  landnaamSluiting: string;
-  bsn: number;
-}
+import { ExternalUrls } from 'App.constants';
+import { defaultDateFormat } from 'helpers/App';
 
-interface Adres {
+export const panelConfig = {
+  person: {
+    title: 'Persoonlijke gegevens',
+    actionLinks: [
+      {
+        title: 'Inzien of correctie doorgeven',
+        url: ExternalUrls.CHANGE_PERSONAL_DATA,
+        external: true,
+      },
+    ],
+  },
+  address: {
+    title: 'Woonadres',
+    actionLinks: [
+      {
+        title: 'Verhuizing doorgeven',
+        url: ExternalUrls.REPORT_RELOCATION,
+        external: true,
+      },
+    ],
+  },
+  maritalStatus: {
+    title: 'Burgerlijke staat',
+    actionLinks: [
+      {
+        title: 'Inzien of correctie doorgeven',
+        url: ExternalUrls.CHANGE_PERSONAL_DATA,
+        external: true,
+      },
+    ],
+  },
+};
+
+export const brpInfoLabels = {
+  FirstName: 'Voornamen',
+  PreLastName: 'Voorvoegsel',
+  LastName: 'Achternaam',
+  Gender: 'Geslacht',
+  BSN: 'BSN',
+  DateOfBirth: 'Geboortedatum',
+  PlaceOfBirth: 'Geboorteplaats',
+  CountryOfBirth: 'Geboorteland',
+  Nationality: 'Nationaliteit',
+  Date: 'Datum',
+  Place: 'Plaats',
+  Street: 'Straat',
+  Country: 'Land',
+  DateStarted: 'Sinds',
+  MaritalStatusType: 'Soort verbintenis',
+  Address: 'Adres',
+};
+
+export interface Adres {
   straatnaam: string;
   postcode: string;
   woonplaatsNaam: string;
   huisnummer: string;
+  huisnummertoevoeging: string;
+  huisletter: string;
   begindatumVerblijf: string;
 }
 
-interface EchtgenootPartner {
-  datumOntbinding: string;
-  plaatsnaamSluitingOmschrijving: string;
-  landnaamSluiting: string;
-  gerelateerde: GerelateerdePartner;
-}
-
-interface Persoon {
+interface Partner {
+  bsn: string;
+  geboortedatum: string;
+  geslachtsaanduiding: string;
+  geslachtsnaam: string;
+  overlijdensdatum: string;
   voornamen: string;
   voorvoegselGeslachtsnaam: string;
-  geslachtsnaam: string;
-  heeftAlsEchtgenootPartner: EchtgenootPartner | EchtgenootPartner[];
-  verblijfsadres: Adres;
-  omschrijvingBurgerlijkeStaat: MaritalStatusType;
-  omschrijvingGeslachtsAanduiding: string;
-  tijdvakGeldigheid: { beginGeldigheid: string };
-  plaatsnaamSluiting: string;
-  landnaamSluiting: string;
+}
+
+export interface Persoon {
+  aanduidingNaamgebruikOmschrijving: string;
+  bsn: string;
   geboortedatum: string;
-  geboorteplaatsnaam: string;
   geboortelandnaam: string;
-  bsn: number;
+  geboorteplaatsnaam: string;
+  gemeentenaamInschrijving: string;
+  voorvoegselGeslachtsnaam: string;
+  geslachtsnaam: string;
+  omschrijvingBurgerlijkeStaat: string;
+  omschrijvingGeslachtsaanduiding: string;
+  opgemaakteNaam: string;
+  voornamen: string;
+  nationaliteiten: Array<{ omschrijving: string }>;
 }
 
-interface BrpResponseData {
+export type Person = Persoon;
+
+interface Verbintenis {
+  datumOntbinding: string;
+  datumSluiting: string;
+  landnaamSluiting: string;
+  persoon: Partner;
+  plaatsnaamSluitingOmschrijving: string;
+  soortVerbintenis: string;
+  soortVerbintenisOmschrijving: string;
+}
+
+interface Kind {
+  bsn: string;
+  geboortedatum: string;
+  geslachtsaanduiding: string;
+  geslachtsnaam: string;
+  overlijdensdatum: string;
+  voornamen: string;
+  voorvoegselGeslachtsnaam: string;
+}
+
+export interface BrpResponseData {
   persoon: Persoon;
+  verbintenis?: Verbintenis;
+  kinderen?: Kind[];
+  adres: Adres;
 }
 
-// Interfaces actually used in app
-export type MaritalStatus = {
-  dateStarted: string;
-  place: string;
-  country: string;
-  type: MaritalStatusType;
-};
-
-export type MaritalStatusType = 'gehuwd' | 'ongehuwd';
-
-export interface Person {
-  firstName: string;
-  lastName: string;
-  fullName: string;
-  gender: string;
-  dateOfBirth: string;
-  placeOfBirth: string;
-  countryOfBirth: string;
-  bsn: number;
+// NOTE: Preferred simple interface here.
+export interface ProfileData {
+  person: {
+    [label: string]: string | number;
+  };
+  maritalStatus: {
+    [label: string]: string | number;
+  } | null;
+  address: {
+    [label: string]: string;
+  } | null;
 }
 
-export interface Address {
-  locality: string;
-  dateStarted: string;
+export function getFullName(person: Persoon) {
+  return `${person.voornamen} ${person.voorvoegselGeslachtsnaam || ''} ${
+    person.geslachtsnaam
+  }`;
 }
 
-export interface Addresses {
-  current: Address;
+export function getFullAddress(address: Adres) {
+  return `${address.straatnaam} ${address.huisnummer ||
+    ''} ${address.huisletter || ''} ${address.huisnummertoevoeging || ''}`;
 }
 
-export interface BrpDataFormatted {
-  person?: Person;
-  partner?: Pick<Person, 'firstName' | 'lastName' | 'dateOfBirth' | 'bsn'>;
-  address?: Addresses;
-  maritalStatus?: MaritalStatus;
-}
-
-export default function formatBrpApiResponse(
-  responseData: BrpResponseData
-): BrpDataFormatted {
-  // TODO: Cleanup this mess and have the API return properly formatted data.
-  if (responseData.persoon) {
-    const persoon: Persoon = responseData.persoon || {};
-
-    const partnerItem = Array.isArray(persoon.heeftAlsEchtgenootPartner)
-      ? persoon.heeftAlsEchtgenootPartner.find(
-          item => !('datumOntbinding' in item)
-        )
-      : persoon.heeftAlsEchtgenootPartner || null;
-
-    const partner = partnerItem &&
-      partnerItem.gerelateerde && {
-        firstName: partnerItem.gerelateerde.voornamen,
-        country: partnerItem.landnaamSluiting,
-        lastName: partnerItem.gerelateerde.geslachtsnaam,
-        bsn: 0,
-        dateOfBirth: partnerItem.gerelateerde.geboortedatum,
-      };
-
-    const address = persoon.verblijfsadres && {
-      current: {
-        locality: `${persoon.verblijfsadres.straatnaam} ${
-          persoon.verblijfsadres.huisnummer
-        }
-        ${persoon.verblijfsadres.postcode} ${persoon.verblijfsadres
-          .woonplaatsNaam || ''}`,
-        dateStarted: persoon.verblijfsadres.begindatumVerblijf,
-      },
-    };
-
-    const maritalStatus = persoon.omschrijvingBurgerlijkeStaat && {
-      type: persoon.omschrijvingBurgerlijkeStaat,
-      dateStarted: persoon.tijdvakGeldigheid.beginGeldigheid,
-      place:
-        persoon.plaatsnaamSluiting ||
-        (partnerItem && partnerItem.plaatsnaamSluitingOmschrijving) ||
-        '',
-      country:
-        (partner && partner.country) ||
-        (partnerItem && partnerItem.landnaamSluiting) ||
-        '',
-    };
-
-    const lastName = persoon.voorvoegselGeslachtsnaam
-      ? `${persoon.voorvoegselGeslachtsnaam} ${persoon.geslachtsnaam}`
-      : persoon.geslachtsnaam;
-
-    const person: Person = {
-      bsn: persoon.bsn,
-      firstName: persoon.voornamen,
-      lastName,
-      fullName: `${persoon.voornamen} ${lastName}`,
-      dateOfBirth: persoon.geboortedatum,
-      placeOfBirth: persoon.geboorteplaatsnaam,
-      countryOfBirth: persoon.geboortelandnaam,
-      gender: persoon.omschrijvingGeslachtsAanduiding,
-    };
-
-    return { person, partner, address, maritalStatus };
+export function formatProfileData({
+  persoon,
+  adres,
+  verbintenis,
+  kinderen,
+}: BrpResponseData): ProfileData | null {
+  if (!persoon) {
+    return null;
   }
-
-  return {};
+  return {
+    person: {
+      [brpInfoLabels.FirstName]: persoon.voornamen,
+      [brpInfoLabels.PreLastName]: persoon.voorvoegselGeslachtsnaam,
+      [brpInfoLabels.LastName]: persoon.geslachtsnaam,
+      [brpInfoLabels.Gender]: persoon.omschrijvingGeslachtsaanduiding,
+      [brpInfoLabels.BSN]: persoon.bsn,
+      [brpInfoLabels.DateOfBirth]:
+        persoon.geboortedatum && defaultDateFormat(persoon.geboortedatum),
+      [brpInfoLabels.PlaceOfBirth]: persoon.geboorteplaatsnaam || 'Onbekend',
+      [brpInfoLabels.CountryOfBirth]: persoon.geboortelandnaam || 'Onbekend',
+      [brpInfoLabels.Nationality]:
+        persoon.nationaliteiten && persoon.nationaliteiten.length
+          ? persoon.nationaliteiten.reduce(
+              (str, { omschrijving }) => str + omschrijving + ' ',
+              ''
+            )
+          : 'Onbekend',
+    },
+    address: {
+      [brpInfoLabels.Street]: `${adres.straatnaam} ${
+        adres.huisnummer
+      } ${adres.huisnummertoevoeging || ''}${adres.huisletter || ''}`,
+      [brpInfoLabels.Place]: `${adres.postcode} ${adres.woonplaatsNaam || ''}`,
+      [brpInfoLabels.DateStarted]:
+        adres.begindatumVerblijf && defaultDateFormat(adres.begindatumVerblijf),
+    },
+    maritalStatus:
+      verbintenis && verbintenis.persoon && !verbintenis.datumOntbinding
+        ? {
+            [brpInfoLabels.MaritalStatusType]:
+              verbintenis.soortVerbintenisOmschrijving,
+            [brpInfoLabels.Date]: verbintenis.datumSluiting
+              ? defaultDateFormat(verbintenis.datumSluiting)
+              : 'Onbekend',
+            [brpInfoLabels.Place]:
+              verbintenis.plaatsnaamSluitingOmschrijving || 'Onbekend',
+            [brpInfoLabels.Country]: verbintenis.landnaamSluiting || 'Onbekend',
+            [brpInfoLabels.FirstName]: verbintenis.persoon.voornamen,
+            [brpInfoLabels.PreLastName]:
+              verbintenis.persoon.voorvoegselGeslachtsnaam,
+            [brpInfoLabels.LastName]: verbintenis.persoon.geslachtsnaam,
+            [brpInfoLabels.DateOfBirth]:
+              verbintenis.persoon.geboortedatum &&
+              defaultDateFormat(verbintenis.persoon.geboortedatum),
+          }
+        : null,
+  };
 }

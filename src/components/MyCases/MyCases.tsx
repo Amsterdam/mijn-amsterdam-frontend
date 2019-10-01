@@ -4,9 +4,10 @@ import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import { NavLink } from 'react-router-dom';
 import { Colors } from 'App.constants';
 import Heading from 'components/Heading/Heading';
-import { MyCase } from 'hooks/api/my-cases-api.hook';
-import classnames from 'classnames';
 import LoadingContent from '../LoadingContent/LoadingContent';
+import { FocusItem } from 'data-formatting/focus';
+
+type MyCase = FocusItem; // NOTE: atm it's the only Case possible
 
 interface CaseItemProps {
   item: MyCase;
@@ -41,7 +42,12 @@ export default function MyCases({
 }: MyCasesProps) {
   return (
     <div className={styles.MyCases}>
-      <Heading size="large">{title}</Heading>
+      <Heading
+        id="MyCasesHeader" // Used for tutorial placement
+        size="large"
+      >
+        {title}
+      </Heading>
       {isLoading && (
         <LoadingContent
           className={styles.LoadingContent}
@@ -60,10 +66,7 @@ export default function MyCases({
         </ul>
       )}
       {!isLoading && !items.length && (
-        <p>
-          U hebt geen meldingen of aanvragen lopen die u via Mijn Amsterdam kunt
-          volgen.
-        </p>
+        <p>U hebt geen aanvragen lopen die u via Mijn Amsterdam kunt volgen.</p>
       )}
     </div>
   );

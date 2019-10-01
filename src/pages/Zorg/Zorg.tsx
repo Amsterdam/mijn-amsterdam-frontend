@@ -10,11 +10,10 @@ import styles from './Zorg.module.scss';
 import Alert from 'components/Alert/Alert';
 import { useTabletScreen } from 'hooks/media.hook';
 import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
-import { ExternalUrls } from '../../App.constants';
+import { ExternalUrls, ChapterTitles } from 'App.constants';
 
 const DISPLAY_PROPS = {
-  dateStart: 'start',
-  dateFinish: 'einde',
+  title: '',
 };
 
 export default () => {
@@ -26,13 +25,9 @@ export default () => {
     },
   } = useContext(AppContext);
 
-  const itemsRequested = items.filter(
-    item => item.isActual && !item.dateFinish
-  );
-  const itemsActual = items.filter(item => item.isActual && !!item.dateFinish);
+  const itemsActual = items.filter(item => item.isActual);
   const itemsPrevious = items.filter(item => !item.isActual);
 
-  const hasActiveRequests = !!itemsRequested.length;
   const hasActualItems = !!itemsActual.length;
 
   const isTabletScreen = useTabletScreen();
@@ -41,60 +36,55 @@ export default () => {
     <PageContentMain variant="full" className={styles.Page}>
       <PageContentMainHeading variant="boxedWithIcon">
         <ChapterHeadingIcon chapter={Chapters.ZORG} />
-        Zorg
+        {ChapterTitles.ZORG}
       </PageContentMainHeading>
       <PageContentMainBody variant="boxed">
         <p>
-          Heeft u zorg en ondersteuning nodig? Dan kunt u bij de gemeente
-          Amsterdam terecht. Hieronder ziet u van welke voorzieningen u nu al
-          gebruik maakt.
+          Hieronder ziet u uw regelingen en hulpmiddelen vanuit de Wmo. Hebt u
+          vragen of wilt u een wijziging doorgeven? Bel dan gratis de Wmo
+          Helpdesk: <a href="tel:08000643">0800 0643</a>. Of ga langs bij het
+          Sociaal Loket.
         </p>
         <p>
           <ButtonLinkExternal to={ExternalUrls.ZORG_LEES_MEER}>
-            Lees meer over zorg bij gemeente Amsterdam
+            Lees hier meer over zorg en ondersteuning
           </ButtonLinkExternal>
         </p>
         {isError && (
           <Alert type="warning">
-            Uw gegevens kunnen op dit moment niet worden getoond.
+            We kunnen op dit moment geen gegevens tonen.
           </Alert>
         )}
         <DataLinkTable
-          id="datalinktable-healthcare-requested"
-          rowHeight={isTabletScreen ? 'auto' : '6rem'}
-          displayProps={DISPLAY_PROPS}
-          items={itemsRequested}
-          title="Mijn lopende aanvragen"
-          noItemsMessage="U hebt op dit moment geen lopende aanvragen"
-          startCollapsed={false}
-          isLoading={isLoading}
-        />
-        <DataLinkTable
           id="datalinktable-healthcare-granted"
-          rowHeight={isTabletScreen ? 'auto' : '6rem'}
+          rowHeight={isTabletScreen ? 'auto' : '5.8rem'}
           displayProps={DISPLAY_PROPS}
           items={itemsActual}
           title="Mijn huidige voorzieningen"
-          noItemsMessage="U hebt nog geen huidige voorzieningen"
-          startCollapsed={hasActiveRequests}
+          noItemsMessage="U hebt nog geen huidige voorzieningen."
+          startCollapsed={false}
           className={styles.DataLinkTableCurrent}
           isLoading={isLoading}
+          trackCategory="Zorg en ondersteuning overzicht / Huidige voorzieningen"
         />
       </PageContentMainBody>
-      <div className={styles.HistoricDataLinkTable}>
-        <PageContentMainBody variant="boxed">
-          <DataLinkTable
-            id="datalinktable-healthcare-previous"
-            rowHeight={isTabletScreen ? 'auto' : '6rem'}
-            displayProps={DISPLAY_PROPS}
-            items={itemsPrevious}
-            title="Mijn eerdere voorzieningen"
-            noItemsMessage="U hebt geen eerdere voorzieningen"
-            startCollapsed={hasActiveRequests || hasActualItems}
-            isLoading={isLoading}
-          />
-        </PageContentMainBody>
-      </div>
+      <PageContentMainBody variant="boxed">
+        <DataLinkTable
+          id="datalinktable-healthcare-previous"
+          rowHeight={isTabletScreen ? 'auto' : '5.8rem'}
+          displayProps={DISPLAY_PROPS}
+          items={itemsPrevious}
+          title="Mijn eerdere voorzieningen"
+          noItemsMessage="U hebt geen eerdere voorzieningen."
+          startCollapsed={hasActualItems}
+          isLoading={isLoading}
+          trackCategory="Zorg en ondersteuning overzicht / Eerdere voorzieningen"
+        />
+        <p className={styles.HistoricItemsMention}>
+          Informatie van voor 1 januari 2018 kunt u hier niet inzien. Deze kunt
+          u wel opvragen bij de Wmo Helpdesk.
+        </p>
+      </PageContentMainBody>
     </PageContentMain>
   );
 };

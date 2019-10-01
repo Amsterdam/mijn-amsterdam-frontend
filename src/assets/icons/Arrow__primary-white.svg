@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="102px" height="112px" viewBox="0 0 102 112" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>pijl-icoon</title>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(2.000000, 10.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <path d="M74.8433715,-9.33509732 L100,0 L77.437945,14.5242444 L76.3871073,4.86281214 C33.0872258,15.5645767 2,54.6215055 2,100 C2,101.104569 1.1045695,102 0,102 C-1.1045695,102 -2,101.104569 -2,100 C-2,52.586192 30.6053853,11.8051625 75.9503288,0.851860956 L74.8433715,-9.33509732 Z"></path>
+        </g>
+    </g>
+</svg>

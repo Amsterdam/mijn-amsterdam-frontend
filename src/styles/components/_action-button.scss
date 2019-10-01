@@ -43,28 +43,22 @@
     &, &:focus {
       background-color: $color-support-blue;
       border-color: $color-support-blue;
+      color: $color-white;
+    }
+
+    &.line-only {
+      &, &:focus {
+        background-color: $color-white;
+        border-color: $color-support-darkblue;
+        color: $color-support-darkblue;
+      }
     }
 
     @include hoverCapable {
       &:hover {
         background-color: $color-support-darkblue;
         border-color: $color-support-darkblue;
-      }
-    }
-
-    &.line-only {
-      border-color: $color-support-darkblue;
-      color: $color-support-darkblue;
-
-      &:focus {
-        background-color: $color-white;
-        border-color: $color-support-blue;
-      }
-
-      @include hoverCapable {
-        &:hover {
-          color: $color-white;
-        }
+        color: $color-white;
       }
     }
   }

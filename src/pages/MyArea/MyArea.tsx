@@ -1,14 +1,22 @@
-import React from 'react';
+import { AppContext } from 'AppState';
 import { MyAreaHeader, MyAreaMap } from 'components/MyArea/MyArea';
+import React, { useContext } from 'react';
+
 import styles from './MyArea.module.scss';
 
 export default () => {
+  const {
+    MY_AREA: {
+      url: { advanced: mapUrl },
+    },
+  } = useContext(AppContext);
+
   return (
-    <>
+    <div className={styles.Container}>
       <MyAreaHeader />
       <div className={styles.MyAreaContainer}>
-        <MyAreaMap />
+        <MyAreaMap url={mapUrl} />
       </div>
-    </>
+    </div>
   );
 };

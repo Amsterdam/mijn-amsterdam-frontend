@@ -1,138 +1,176 @@
-#!groovy
+pipeline {
+  agent any
 
-def tryStep(String message, Closure block, Closure tearDown = null) {
-  try {
-    block()
-  }
-  catch (Throwable t) {
-    slackSend message: "${env.JOB_NAME}: ${message} failure ${env.BUILD_URL}", channel: '#ci-channel', color: 'danger'
-
-    throw t
-  }
-  finally {
-    if (tearDown) {
-      tearDown()
-    }
-  }
-}
-
-node {
-  stage("Checkout") {
-    checkout scm
+  environment {
+    COMMIT_HASH = GIT_COMMIT.substring(0, 8)
+    PROJECT_PREFIX = "${BRANCH_NAME}_${COMMIT_HASH}_${BUILD_NUMBER}_"
+    IMAGE_BASE = "repo.secure.amsterdam.nl/mijnams/mijnamsterdam"
+    IMAGE_BUILD = "${IMAGE_BASE}:${COMMIT_HASH}"
+    IMAGE_ACCEPTANCE = "${IMAGE_BASE}:acceptance"
+    IMAGE_PRODUCTION = "${IMAGE_BASE}:production"
+    IMAGE_TEST = "${IMAGE_BASE}:test"
+    IMAGE_LATEST = "${IMAGE_BASE}:latest"
   }
 
-  stage("Test") {
-    // tryStep "test", {
-    //   sh "docker-compose -p mijn_amsterdam_frontend -f docker-compose.yml build && " +
-    //   "docker-compose -p mijn_amsterdam_frontend -f docker-compose.yml run --rm test"
-    // }
+  stages {
 
-    tryStep "test e2e", {
-      sh "docker-compose -p mijn_amsterdam_frontend -f docker-compose.yml build && " +
-      "docker-compose -p mijn_amsterdam_frontend -f docker-compose.yml run --rm test-integration"
-    }
-  }
-}
-
-String BRANCH = "${env.BRANCH_NAME}"
-String DEV_TARGET = "acceptance"
-String PROD_TARGET = "production"
-
-if (BRANCH == "test") {
-  DEV_TARGET = "test"
-}
-
-if (BRANCH == "master") {
-  stage('Waiting for approval') {
-    input "Deploy master to ACC?"
-  }
-}
-
-if (BRANCH == "master" || BRANCH == "test-acc" || BRANCH == "test") {
-
-  stage("Build image (test/acc)") {
-    tryStep "build", {
-      docker.withRegistry("${DOCKER_REGISTRY}", 'docker-registry') {
-      def image = docker.build("mijnams/mijnamsterdam:${env.BUILD_NUMBER}", "--build-arg PROD_ENV=${DEV_TARGET} --build-arg http_proxy=${JENKINS_HTTP_PROXY_STRING} --build-arg https_proxy=${JENKINS_HTTP_PROXY_STRING} .")
-      image.push()
-    }
-  }
-}
-
-node {
-  stage('Push image (test/acc)') {
-    tryStep "image tagging", {
-      docker.withRegistry("${DOCKER_REGISTRY}", 'docker-registry') {
-
-        def image = docker.image("mijnams/mijnamsterdam:${env.BUILD_NUMBER}")
-        image.pull()
-
-        if (BRANCH == "master" || BRANCH == "test-acc") {
-          image.push("acceptance")
-        }
-        if (BRANCH == "test") {
-          image.push("test")
+    stage('Unit tests') {
+      when { not { branch 'test' } } // Skip unit tests when pushing directly to test (for speed)
+      options {
+        timeout(time: 5, unit: 'MINUTES')
+      }
+      environment {
+        PROJECT = "${PROJECT_PREFIX}unit"
+      }
+      steps {
+        script { currentBuild.displayName = "Unit testing #${BUILD_NUMBER} (${COMMIT_HASH})" }
+        sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit test-unit"
+      }
+      post {
+        always {
+          sh "docker-compose -p ${PROJECT} down -v || true"
         }
       }
     }
-  }
-}
 
-node {
+    // TEST
 
-  if (BRANCH == "master" || BRANCH == "test-acc") {
-    stage("Deploy to ACC") {
-      tryStep "deployment", {
-        build job: 'Subtask_Openstack_Playbook',
-        parameters: [
+    stage('Build TEST') {
+      when { branch 'test' }
+      options {
+        timeout(time: 10, unit: 'MINUTES')
+      }
+      steps {
+        script { currentBuild.displayName = "TEST Build #${BUILD_NUMBER} (${COMMIT_HASH})" }
+        sh "docker build -t ${IMAGE_BUILD} " +
+          "--shm-size 1G " +
+          "--build-arg BUILD_ENV=test " +
+          "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
+          "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
+          "."
+        sh "docker push ${IMAGE_BUILD}"
+      }
+    }
+
+    stage('Deploy TEST') {
+      when { branch 'test' }
+      options {
+        timeout(time: 5, unit: 'MINUTES')
+      }
+      steps {
+        script { currentBuild.displayName = "TEST Deploy #${BUILD_NUMBER} (${COMMIT_HASH})" }
+        sh "docker pull ${IMAGE_BUILD}"
+        sh "docker tag ${IMAGE_BUILD} ${IMAGE_TEST}"
+        sh "docker push ${IMAGE_TEST}"
+        build job: 'Subtask_Openstack_Playbook', parameters: [
           [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
-          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml'],
+          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend-test.yml']
+        ]
+      }
+    }
+
+    // ACCEPTANCE
+
+    stage('Build ACC') {
+      when { not { branch 'test' } } // Also Build PR's
+      options {
+        timeout(time: 10, unit: 'MINUTES')
+      }
+      steps {
+        script { currentBuild.displayName = "ACC Build #${BUILD_NUMBER} (${COMMIT_HASH})" }
+        sh "docker build -t ${IMAGE_BUILD} " +
+          "--shm-size 1G " +
+          "--build-arg BUILD_ENV=acceptance " +
+          "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
+          "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
+          "."
+        sh "docker push ${IMAGE_BUILD}"
+      }
+    }
+
+    stage('Deploy ACC') {
+      when { branch 'master' }
+      options {
+        timeout(time: 5, unit: 'MINUTES')
+      }
+      steps {
+        script { currentBuild.displayName = "ACC Deploy #${BUILD_NUMBER} (${COMMIT_HASH})" }
+        sh "docker pull ${IMAGE_BUILD}"
+        sh "docker tag ${IMAGE_BUILD} ${IMAGE_ACCEPTANCE}"
+        sh "docker push ${IMAGE_ACCEPTANCE}"
+        build job: 'Subtask_Openstack_Playbook', parameters: [
+          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
+          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml']
+        ]
+      }
+    }
+
+    // PRODUCTION
+
+    stage('Build PROD') {
+      when {
+        branch 'production-release-v*'
+      }
+      options {
+        timeout(time: 10, unit: 'MINUTES')
+      }
+      steps {
+        script { currentBuild.displayName = "PROD:Build:#${BUILD_NUMBER} (${COMMIT_HASH})" }
+        // NOTE BUILD_ENV intentionaly not set (using Dockerfile default)
+        sh "docker build -t ${IMAGE_PRODUCTION} " +
+            "--shm-size 1G " +
+            "."
+        sh "docker tag ${IMAGE_PRODUCTION} ${IMAGE_LATEST}"
+        sh "docker push ${IMAGE_PRODUCTION}"
+        sh "docker push ${IMAGE_LATEST}"
+      }
+    }
+
+    stage('Deploy PROD - Waiting for approval') {
+      when {
+        branch 'production-release-v*'
+      }
+      options {
+        timeout(time: 120, unit: 'MINUTES')
+      }
+      steps {
+        script { currentBuild.displayName = "PROD:Deploy approval:#${BUILD_NUMBER} (${COMMIT_HASH})" }
+        script {
+          input "Deploy to Production?"
+          echo "Okay, moving on"
+        }
+      }
+    }
+
+    stage('Deploy PROD') {
+      when {
+        branch 'production-release-v*'
+      }
+      options {
+        timeout(time: 5, unit: 'MINUTES')
+      }
+      steps {
+        script { currentBuild.displayName = "PROD:Deploy:#${BUILD_NUMBER} (${COMMIT_HASH})" }
+        build job: 'Subtask_Openstack_Playbook', parameters: [
+          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
+          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml']
         ]
       }
     }
   }
 
-  if (BRANCH == "test") {
-    stage("Deploy to TEST") {
-      tryStep "deployment", {
-        build job: 'Subtask_Openstack_Playbook',
-        parameters: [
-          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
-          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend-test.yml'],
-        ]
-      }
+  post {
+    success {
+      echo 'Pipeline success'
+    }
+
+    failure {
+      echo 'Something went wrong while running pipeline'
+      slackSend(
+        channel: 'ci-channel',
+        color: 'danger',
+        message: "${JOB_NAME}: failure ${BUILD_URL}"
+      )
     }
   }
-}
-
-// Enable when project is ready for production
-// stage('Waiting for approval') {
-//     slackSend channel: '#ci-channel', color: 'warning', message: 'Mijn Amsterdam Frontend is waiting for Production Release - please confirm'
-//     input "Deploy to Production?"
-// }
-
-// node {
-//   stage("Build and Push Production image") {
-//     tryStep "build", {
-//       docker.withRegistry("${DOCKER_REGISTRY}",'docker-registry') {
-//         def image = docker.build("mijnams/mijnamsterdam:${env.BUILD_NUMBER}", "--build-arg PROD_ENV=${PROD_TARGET}  --build-arg http_proxy=${JENKINS_HTTP_PROXY_STRING} --build-arg https_proxy=${JENKINS_HTTP_PROXY_STRING} .")
-//         image.pull()
-//         image.push("production")
-//         image.push("latest")
-//       }
-//     }
-//   }
-// }
-
-// node {
-//     stage("Deploy to PROD") {
-//         tryStep "deployment", {
-//             build job: 'Subtask_Openstack_Playbook',
-//             parameters: [
-//                 [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
-//                 [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml'],
-//             ]
-//         }
-//     }
-// }
 }

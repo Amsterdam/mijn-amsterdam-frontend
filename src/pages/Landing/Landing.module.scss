@@ -2,22 +2,25 @@
 
 .Landing {
   margin-bottom: 10rem;
+  max-width: 58rem;
+  margin: 0 auto;
+
+  @include media-query(">phone") {
+    padding: 0;
+  }
 
   ul {
-    margin: 0;
     padding-left: 2rem;
     list-style-type: square;
   }
 }
 
 .LoginBtn {
-  display: flex;
+  display: inline-flex;
   height: 4.6rem;
-  width: 18.5rem; // ie11 fallback
+  width: 28rem; // ie11 fallback
   width: fit-content;
   cursor: pointer;
-  margin-top: 4rem;
-  margin-bottom: 3rem;
   text-decoration: none;
 
   > span {
@@ -28,17 +31,46 @@
     padding-left: 1.3rem;
     line-height: 4.6rem;
   }
+
+  + p {
+    margin-top: 1rem;
+  }
+}
+
+.LoginBtnDisabled {
+  cursor: progress;
+  span {
+    background-color: $color-neutral-grey2 !important;
+    border-color: $color-neutral-grey2 !important;
+    cursor: not-allowed;
+    pointer-events: none;
+    color: $color-neutral-grey3 !important;
+  }
+  & {
+    filter: grayscale(100%);
+  }
 }
 
 .LoginLogo {
   height: 4.6rem;
   margin-right: 1.3rem;
-  // border-right: 1rem solid $color-white;
   background-color: #000;
 }
 
 @include select(PageContentMainHeading) {
   position: relative;
+}
+
+
+.MainHeadingInner {
+  width: 58rem;
+  margin: 0 auto;
+}
+
+@include select(Heading_Heading__tiny) {
+  + p, + ul {
+    margin-top: 0;
+  }
 }
 
 .BetaLogo {

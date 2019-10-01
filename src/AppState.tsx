@@ -1,30 +1,33 @@
 import { BrpApiState, useBrpApi } from 'hooks/api/brp-api.hook';
-import useMyCasesApi from 'hooks/api/my-cases-api.hook';
 import useMyTipsApi from 'hooks/api/my-tips-api.hook';
-import useMyUpdatesApi from 'hooks/api/my-updates-api.hook';
+import useMyNotificationsApi from 'hooks/api/my-notifications-api.hook';
 import useSessionApi, { SessionApiState } from 'hooks/api/session.api.hook';
 import useMyChapters from 'hooks/api/myChapters.hook';
-import React, { createContext } from 'react';
+import React, { createContext, useMemo, useEffect, useState } from 'react';
 
 import { ComponentChildren } from './App.types';
 import useErfpachtApi, { ErfpachtApiState } from './hooks/api/api.erfpacht';
 import useFocusApi, { FocusApiState } from './hooks/api/api.focus';
 import useWmoApi, { WmoApiState } from './hooks/api/api.wmo';
-import { MyCasesApiState } from './hooks/api/my-cases-api.hook';
 import { MyTipsApiState } from './hooks/api/my-tips-api.hook';
-import { MyUpdatesApiState } from './hooks/api/my-updates-api.hook';
+import { MyNotificationsApiState } from './hooks/api/my-notifications-api.hook';
 import { MyChaptersApiState } from './hooks/api/myChapters.hook';
+import useMyMap from './hooks/api/api.mymap';
+import { getFullAddress } from 'data-formatting/brp';
+
+type MyCasesApiState = FocusApiState;
 
 export interface AppState {
   BRP: BrpApiState;
   SESSION: SessionApiState;
-  MY_UPDATES: MyUpdatesApiState;
+  MY_NOTIFICATIONS: MyNotificationsApiState;
   MY_CASES: MyCasesApiState;
   MY_TIPS: MyTipsApiState;
   WMO: WmoApiState;
   FOCUS: FocusApiState;
   MY_CHAPTERS: MyChaptersApiState;
   ERFPACHT: ErfpachtApiState;
+  MY_AREA: any;
 }
 
 export type StateKey = keyof AppState;
@@ -36,26 +39,47 @@ export const SessionContext = createContext<SessionApiState>(
 );
 
 interface SessionStateProps {
-  render: (session: SessionApiState) => ComponentChildren;
+  children: ComponentChildren;
 }
 
-export function SessionState({ render }: SessionStateProps) {
+export function SessionState({ children }: SessionStateProps) {
   const session = useSessionApi();
   return (
     <SessionContext.Provider value={session}>
-      {render(session)}
+      {children}
     </SessionContext.Provider>
+  );
+}
+
+export interface TutorialState {
+  isTutorialVisible: boolean;
+  setIsTutorialVisible: Function;
+}
+interface TutorialStateProps {
+  children: ComponentChildren;
+}
+
+export const TutorialContext = createContext<TutorialState>(
+  {} as TutorialState
+);
+
+export function TutorialState({ children }: TutorialStateProps) {
+  const [isTutorialVisible, setIsTutorialVisible] = useState(false);
+  return (
+    <TutorialContext.Provider
+      value={{ isTutorialVisible, setIsTutorialVisible }}
+    >
+      {children}
+    </TutorialContext.Provider>
   );
 }
 
 interface AppStateProps {
   children?: ComponentChildren;
   value?: Partial<AppState>;
-  session?: SessionApiState;
-  render?: (state: AppState) => ComponentChildren;
 }
 
-export default ({ render, children, value, session }: AppStateProps) => {
+export function useAppState(value?: any) {
   let appState;
 
   if (typeof value !== 'undefined') {
@@ -63,33 +87,79 @@ export default ({ render, children, value, session }: AppStateProps) => {
   } else {
     const WMO = useWmoApi();
     const FOCUS = useFocusApi();
+
+    const { data: focusData, ...rest } = FOCUS;
+    // At the time of writing we only show recentCases from the Focus API.
+    const MY_CASES = {
+      data: {
+        ...focusData,
+        items: focusData.recentCases,
+        total: focusData.recentCases.length,
+      },
+      ...rest,
+    };
+
     const BRP = useBrpApi();
-    const MY_UPDATES = useMyUpdatesApi({ FOCUS });
-    const MY_CASES = useMyCasesApi();
+    const MY_NOTIFICATIONS = useMyNotificationsApi({ FOCUS });
     const MY_TIPS = useMyTipsApi();
     const ERFPACHT = useErfpachtApi();
     const MY_CHAPTERS = useMyChapters({ WMO, FOCUS, ERFPACHT });
+    const MY_AREA = useMyMap();
 
-    appState = {
-      BRP,
-      SESSION: session,
+    useEffect(() => {
+      if (BRP.data.adres && BRP.data.adres.straatnaam) {
+        MY_AREA.refetch(getFullAddress(BRP.data.adres));
+      }
+    }, [BRP.data.adres && BRP.data.adres.straatnaam]);
 
-      // NOTE: If needed we can postpone immediate fetching of below data and start fetching in the component
-      // by calling the refetch method implemented in the api hooks.
-      MY_UPDATES,
-      MY_CASES,
-      MY_TIPS,
-      WMO,
-      FOCUS,
-      MY_CHAPTERS,
-      ERFPACHT,
-    };
+    useEffect(() => {
+      if (WMO.isDirty && FOCUS.isDirty && ERFPACHT.isDirty && BRP.isDirty) {
+        MY_TIPS.refetch({
+          WMO: WMO.rawData,
+          FOCUS: FOCUS.rawData,
+          ERFPACHT: false,
+          BRP: BRP.data,
+        });
+      }
+    }, [WMO.isDirty, FOCUS.isDirty, ERFPACHT.isDirty, BRP.isDirty]);
+
+    // NOTE: For now we can use this solution but we probably need some more finegrained memoization of the state as the app grows larger.
+    appState = useMemo(() => {
+      return {
+        BRP,
+        // NOTE: If needed we can postpone immediate fetching of below data and start fetching in the component
+        // by calling the refetch method implemented in the api hooks.
+        MY_NOTIFICATIONS,
+        MY_CASES,
+        MY_TIPS,
+        WMO,
+        FOCUS,
+        MY_CHAPTERS,
+        ERFPACHT,
+        MY_AREA,
+      };
+    }, [
+      WMO.isLoading,
+      FOCUS.isLoading,
+      BRP.isLoading,
+      MY_NOTIFICATIONS.isLoading,
+      MY_CASES.isLoading,
+      MY_TIPS.isLoading,
+      ERFPACHT.isLoading,
+      MY_CHAPTERS.isLoading,
+      MY_AREA.url,
+    ]);
   }
 
+  return appState;
+}
+
+export default ({ children }: AppStateProps) => {
+  const appState = useAppState();
   return (
     // TODO: Straight out partial appState assignments. Forcing type assignment here for !!!111!!1!!
     <AppContext.Provider value={appState as AppState}>
-      {render ? render(appState as AppState) : children}
+      {children}
     </AppContext.Provider>
   );
 };

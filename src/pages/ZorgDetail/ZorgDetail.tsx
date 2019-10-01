@@ -3,16 +3,15 @@ import PageContentMain from 'components/PageContentMain/PageContentMain';
 import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
 import styles from './ZorgDetail.module.scss';
 import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
-import { Chapters, AppRoutes } from 'App.constants';
+import { Chapters, ChapterTitles, AppRoutes } from 'App.constants';
 import { AppContext } from 'AppState';
 import useRouter from 'use-react-router';
 import Heading from 'components/Heading/Heading';
 import PageContentMainHeadingBackLink from 'components/PageContentMainHeadingBackLink/PageContentMainHeadingBackLink';
 import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
-import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
-import classnames from 'classnames';
 import Alert from 'components/Alert/Alert';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
+import StatusLine from 'components/StatusLine/StatusLine';
 
 export default () => {
   const {
@@ -22,23 +21,26 @@ export default () => {
       isLoading,
     },
   } = useContext(AppContext);
+
   const {
     match: {
       params: { id },
     },
   } = useRouter();
+
   const WmoItem = items.find(item => item.id === id);
+  const noContent = !isLoading && !WmoItem;
 
   return (
     <PageContentMain variant="full" className={styles.ZorgDetail}>
       <PageContentMainHeading el="div" variant="boxedWithIcon">
         <ChapterHeadingIcon chapter={Chapters.ZORG} />
-        <Heading el="h2" className={styles.PageHeading}>
+        <Heading el="h2" size="large" className={styles.PageHeading}>
           <PageContentMainHeadingBackLink to={AppRoutes.ZORG}>
-            Zorg
+            {ChapterTitles.ZORG}
           </PageContentMainHeadingBackLink>
           {!isLoading && WmoItem ? (
-            WmoItem.title
+            <span>{WmoItem.title}</span>
           ) : (
             <LoadingContent
               className={styles.LoadingContentHeading}
@@ -47,47 +49,41 @@ export default () => {
           )}
         </Heading>
       </PageContentMainHeading>
-      <PageContentMainBody variant="regularBoxed">
-        {isError && (
+      <PageContentMainBody variant="boxed">
+        {(isError || noContent) && (
           <Alert type="warning">
-            Uw gegevens kunnen op dit moment niet worden getoond.
+            We kunnen op dit moment geen gegevens tonen.
           </Alert>
         )}
-        <Heading className={styles.ListHeading}>Mijn gegevens</Heading>
         {isLoading && <LoadingContent className={styles.LoadingContentInfo} />}
-        <ul className={styles.List}>
-          {WmoItem && WmoItem.dateStart && (
-            <li className={classnames(styles.ListItem, styles.DatesInfo)}>
-              <p>
-                <strong>Startdatum indicatie</strong>
-                <time>{WmoItem.dateStart}</time>
-              </p>
-              {WmoItem && WmoItem.dateFinish && (
-                <p>
-                  <strong>Einddatum indicatie</strong>
-                  <time>{WmoItem.dateFinish}</time>
-                </p>
-              )}
-            </li>
-          )}
-          {WmoItem && WmoItem.supplier && (
-            <li className={classnames(styles.ListItem, styles.SupplierInfo)}>
-              <p>
-                <strong>Leverancier</strong>
-                <span>{WmoItem.supplier}</span>
-              </p>
-              {!!WmoItem.supplierUrl && (
-                <p>
-                  <strong>&nbsp;</strong>
-                  <ButtonLinkExternal to={WmoItem.supplierUrl}>
-                    {WmoItem.supplierUrl}
-                  </ButtonLinkExternal>
-                </p>
-              )}
-            </li>
-          )}
-        </ul>
+        {!!WmoItem && !!WmoItem.supplier && (
+          <p className={styles.InfoDetail}>
+            Aanbieder
+            <strong>{WmoItem.supplier}</strong>
+          </p>
+        )}
       </PageContentMainBody>
+      {!!WmoItem && (
+        <PageContentMainBody>
+          <StatusLine
+            items={WmoItem.process}
+            trackCategory="Zorg en ondersteuning / Voorziening"
+            altDocumentContent={(statusLineItem, stepNumber) => {
+              return stepNumber === 1 ? (
+                <p>
+                  <strong>
+                    {WmoItem.isActual
+                      ? 'U krijgt dit besluit per post.'
+                      : 'U hebt dit besluit per post ontvangen.'}
+                  </strong>
+                </p>
+              ) : (
+                ''
+              );
+            }}
+          />
+        </PageContentMainBody>
+      )}
     </PageContentMain>
   );
 };

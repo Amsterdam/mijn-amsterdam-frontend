@@ -13,6 +13,7 @@
 
   &:focus {
     background-color: $color-support-focus;
+    outline: 1px dotted #000;
   }
 
   span {
@@ -27,7 +28,7 @@
     }
   }
 
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     display: none;
   }
 }
@@ -49,7 +50,7 @@
     opacity: 1;
   }
 
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     opacity: 1;
     max-height: initial;
     position: relative;
@@ -70,7 +71,7 @@
   position: relative;
   transform: translateX(-#{$main-boxed-width/2});
 
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     flex-direction: column;
     left: 0;
     transform: initial;
@@ -87,14 +88,14 @@
   font-weight: 500;
 
   &:nth-child(odd) {
-    margin-right: .5rem;
+    margin-right: 0.5rem;
   }
   &:nth-child(even) {
-    margin-left: .5rem;
+    margin-left: 0.5rem;
   }
 
   svg {
-    margin: 0.5rem 1.5rem 0.5rem 0;
+    margin: 0.5rem 0.5rem 0.5rem 0;
     fill: $color-black;
   }
 
@@ -109,7 +110,7 @@
     }
   }
 
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     height: 4.8rem;
     padding-left: 1.6rem;
 

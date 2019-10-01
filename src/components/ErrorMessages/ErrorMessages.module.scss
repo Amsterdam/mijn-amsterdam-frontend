@@ -1,7 +1,6 @@
 @import 'styles/_global.scss';
 
 .ErrorMessages {
-
 }
 
 .MessageBar {
@@ -11,7 +10,7 @@
   display: flex;
   justify-content: space-between;
 
-  @include media("<=phone") {
+  @include media-query('<=phone') {
     display: block;
   }
 }
@@ -23,12 +22,11 @@
 }
 
 .ErrorList {
-
 }
 
 .ActionButton {
   width: auto;
-  @include media("<=phone") {
+  @include media-query('<=phone') {
     margin-left: 2.5rem;
   }
 }

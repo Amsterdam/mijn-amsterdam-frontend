@@ -2,17 +2,19 @@
 
 .MyArea {
   position: relative;
+  background-color: $color-neutral-grey1;
 }
 
 .Map {
   height: 100%;
   width: 100%;
+  margin: 0;
   border: none;
 }
 
 .Overlay {
   position: absolute;
-  background-color: transparent;
+
   cursor: pointer;
   top: 0;
   left: 0;
@@ -30,12 +32,26 @@
   }
 }
 
+.HomeLoader {
+  position: absolute;
+  top: calc(50% - 1.5rem);
+  left: calc(50% - 1.5rem);
+  display: flex;
+  align-items: center;
+  > svg {
+    width: 3rem;
+    height: 3rem;
+    margin-right: 1rem;
+  }
+}
+
 .Header {
   display: flex;
   height: 5.5rem;
   padding-left: 1.8rem;
   padding-right: 1.8rem;
   align-items: center;
+  background-color: $color-white;
 
   .Logo {
     display: block;
@@ -43,14 +59,14 @@
     width: 9.6rem;
     margin-right: 0.8rem;
 
-    @include media("<=phone") {
+    @include media-query('<=phone') {
       height: 3rem;
       width: 6.6rem;
       margin-right: 0;
     }
   }
 
-  @include media("<=phone") {
+  @include media-query('<=phone') {
     padding-left: 1rem;
     padding-right: 1rem;
   }
@@ -61,11 +77,11 @@
   margin: 0;
   margin-left: 1.5rem;
   flex-grow: 1;
-  transform: translateY(-.4rem);
+  transform: translateY(-0.4rem);
 }
 
 .CloseBtn {
-  transform: translateY(-.3rem);
+  transform: translateY(-0.3rem);
   display: block;
   height: 2.2rem;
   padding: 0;
@@ -87,7 +103,11 @@
     margin-left: 1rem;
   }
 
-  @include media("<=phone") {
+  @include media-query('<=phone') {
     font-size: 1.4rem;
   }
+}
+
+.loadingText {
+  text-align: center;
 }

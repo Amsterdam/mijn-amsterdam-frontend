@@ -5,9 +5,9 @@ import { NavLink } from 'react-router-dom';
 import useDebouncedCallback from 'use-debounce/lib/callback';
 import { ComponentChildren } from 'App.types';
 import { LinkProps } from 'App.types';
+import { trackLink } from '../../hooks/analytics.hook';
 
 export interface MainNavSubmenuLinkProps extends Omit<LinkProps, 'title'> {
-  id?: string;
   children: ComponentChildren;
   onFocus?: () => void;
 }
@@ -15,28 +15,27 @@ export interface MainNavSubmenuLinkProps extends Omit<LinkProps, 'title'> {
 export function MainNavSubmenuLink({
   to,
   children,
-  id,
-  target,
+  rel,
   ...rest
 }: MainNavSubmenuLinkProps) {
-  return !!target ? (
+  return rel && rel.indexOf('external') !== -1 ? (
     <a
       href={to}
-      target={target}
+      onClick={() => trackLink(to)}
+      rel={rel}
       className={styles.MainNavSubmenuLink}
       {...rest}
     >
       {children}
     </a>
   ) : (
-    <NavLink to={to} className={styles.MainNavSubmenuLink} {...rest}>
+    <NavLink to={to} className={styles.MainNavSubmenuLink} rel={rel} {...rest}>
       {children}
     </NavLink>
   );
 }
 
 export interface MainNavSubmenuProps {
-  id: string;
   title: string;
   isOpen?: boolean;
   children: ComponentChildren;

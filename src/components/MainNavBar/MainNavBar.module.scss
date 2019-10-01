@@ -4,6 +4,11 @@
   position: relative;
   height: $main-header-navbar-height;
   background-color: $color-neutral-grey1;
+
+  @include select(FontEnlarger_FontEnlarger__) {
+    position: absolute;
+    margin-left: -3rem;
+  }
 }
 
 .LinkContainer {
@@ -12,13 +17,23 @@
   background-color: $color-neutral-grey1;
   margin: 0 auto;
 
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     display: grid; // On a phone the menu is ordered differently so we use grid to have control over that
     width: $main-header-navbar-width--phone;
     margin: 0;
     z-index: z-index(main-nav-bar-inner--tablet);
     position: relative;
   }
+}
+
+.SubmenuItemTitle,
+.SubmenuItemIcon {
+  display: inline-block;
+  border-bottom: solid 0.2rem transparent;
+}
+
+.SubmenuItemTitle {
+  white-space: nowrap;
 }
 
 .MainNavLink {
@@ -37,11 +52,6 @@
     }
   }
 
-  span {
-    display: inline-block;
-    border-bottom: solid 0.2rem transparent;
-  }
-
   @include hoverCapable {
     &:hover span {
       color: $color-primary-red;
@@ -53,7 +63,7 @@
     margin-right: 0;
   }
 
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     font-weight: bold;
     font-size: 1.5rem;
     margin: 0;
@@ -61,7 +71,7 @@
     border-top: 0.1rem solid $color-neutral-grey2;
 
     // Move home button after the Chapters menu
-    &:first-child {
+    &:nth-child(2) {
       grid-row: 2;
     }
   }
@@ -84,9 +94,10 @@
     }
   }
 
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     position: static;
     margin-top: 0;
+    grid-row: 20;
 
     > a {
       font-weight: bold;
@@ -95,14 +106,15 @@
       padding-left: 1.6rem;
       border-top: 0.1rem solid $color-neutral-grey2;
       display: block;
-      padding-top: .8rem;
-      padding-bottom: .8rem;
+      padding-top: 0.8rem;
+      padding-bottom: 0.8rem;
     }
 
     @include select(ButtonLink_ButtonLink) {
       padding-left: 1.6rem;
       // Remove the icons from the links
-      &, &:hover {
+      &,
+      &:hover {
         background-image: none;
       }
       svg {
@@ -114,23 +126,56 @@
 
 .MenuToggleBtn {
   height: $main-header-navbar-height;
-  background-image: url('assets/icons/Menu.svg');
+  background-image: url('assets/images/Menu.svg');
   background-size: 24px;
   width: 40px;
   background-repeat: no-repeat;
   background-position: center;
   border: 0;
   background-color: transparent;
-  margin-left: .2rem;
+  margin-left: 0.2rem;
   text-indent: -100vw; // move text outside of view
   cursor: pointer;
 
   &Open {
-    background-image: url('assets/icons/Close.svg');
+    background-image: url('assets/images/Close.svg');
   }
 
-  @include media(">phone", "<=tablet") {
+  @include media-query('>phone', '<=tablet') {
     margin-left: 1.2rem;
+  }
+}
+
+.TutorialBtn {
+  height: $main-header-navbar-height;
+  background-size: 2.4rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: calc(50% - #{$main-boxed-width} / 2);
+  font-weight: 500;
+  color: $color-neutral-grey4;
+  font-size: 1.8rem;
+
+  &Open {
+    color: transparent;
+    z-index: z-index(tutorial-items);
+    background-image: url('assets/icons/Close__primary-white.svg');
+    position: fixed;
+    top: $main-header-topbar-height;
+    width: 4rem;
+  }
+
+  @include media-query('<=tablet') {
+    right: 0.5rem;
+
+    &Open {
+      top: 7rem;
+    }
   }
 }
 

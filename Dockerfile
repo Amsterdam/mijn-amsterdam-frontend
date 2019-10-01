@@ -2,7 +2,6 @@ FROM node:10.15 as build-deps
 LABEL maintainer="datapunt@amsterdam.nl"
 
 ENV LOGOUT_URL=${LOGOUT_URL:-notset}
-ARG PROD_ENV=production
 
 WORKDIR /app
 
@@ -17,11 +16,15 @@ COPY package-lock.json /app/
 COPY tsconfig.json /app/
 COPY paths.json /app/
 COPY .env* /app/
-COPY env-copy.sh /app/
+COPY scripts/env-copy.sh /app/
+
+ARG BUILD_ENV=production
+ARG BUILD_NUMBER=-1
+ARG COMMIT_HASH=
 
 # Builds are always production builds but can have differences in server environment (test/acceptance/production)
-# Try to overwrite the default production file if a PROD_ENV is set as build-arg
-RUN sh env-copy.sh ${PROD_ENV}
+# Try to overwrite the default production .env file if a BUILD_ENV is set as build-arg
+RUN sh env-copy.sh ${BUILD_ENV}
 
 COPY src /app/src/
 COPY public /app/public/
@@ -35,8 +38,12 @@ RUN npm install \
   ci \
   && npm cache clean --force
 
-RUN npm run build
-RUN echo "build= `date`" > /app/build/version.txt
+RUN rm /etc/localtime
+RUN ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
+
+# RUN npm run build
+RUN if [ "$BUILD_ENV" != "test-unit" ]; then npm run build ; fi
+RUN if [ "$BUILD_ENV" != "test-unit" ]; then echo "date=`date`; build=${BUILD_NUMBER}; see also: https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${COMMIT_HASH}" > /app/build/version.txt ; fi
 
 # Set-up the integration test part of the build
 FROM cypress/base:10 as integration-tests

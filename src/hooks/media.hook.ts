@@ -1,14 +1,18 @@
 // Helper functions to determine screen size in JS
 import { useMedia } from 'use-media';
+import { Breakpoints } from './../App.constants';
+
+const ua = window.navigator.userAgent;
+export const isIE = /MSIE|Trident/.test(ua);
 
 export function useDesktopScreen(): boolean {
-  return useMedia({ minWidth: 1025 });
+  return useMedia({ minWidth: Breakpoints.tablet + 1 }) || isIE;
 }
 
 export function useTabletScreen(): boolean {
-  return useMedia({ maxWidth: 900 }); // including Nexus 10
+  return useMedia({ maxWidth: Breakpoints.tablet }) && !isIE;
 }
 
 export function usePhoneScreen(): boolean {
-  return useMedia({ maxWidth: 640 });
+  return useMedia({ maxWidth: Breakpoints.phone }) && !isIE;
 }

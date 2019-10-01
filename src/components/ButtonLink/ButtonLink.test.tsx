@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import ButtonLink, { IconButtonLink, ButtonLinkExternal } from './ButtonLink';
 import renderer from 'react-test-renderer';
-import { ReactComponent as IconComponent } from 'assets/icons/Alert.svg';
+import { ReactComponent as IconComponent } from 'assets/images/Alert.svg';
 import { BrowserRouter } from 'react-router-dom';
 
 describe('ButtonLink', () => {
@@ -42,7 +42,7 @@ describe('ButtonLink', () => {
     );
     expect(component.html()).toMatchSnapshot();
     expect(component.getDOMNode().getAttribute('rel')).toBe(
-      'noopener noreferrer'
+      'external noopener noreferrer'
     );
   });
 });

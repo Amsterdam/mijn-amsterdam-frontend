@@ -1,5 +1,7 @@
 import { StateKey } from 'AppState';
 import { ErrorMessageMap } from 'components/ErrorMessages/ErrorMessages';
+import { isProduction } from 'helpers/App';
+import { MyNotification } from 'hooks/api/my-notifications-api.hook';
 
 export type Chapter =
   | 'ROOT'
@@ -9,10 +11,14 @@ export type Chapter =
   | 'ZORG'
   | 'JEUGDHULP'
   | 'INKOMEN'
-  | 'PROFILE';
+  | 'MELDINGEN'
+  | 'MIJN_BUURT'
+  | 'PROFILE'
+  | 'MIJN_TIPS';
 
 export const Chapters: { [chapter in Chapter]: Chapter } = {
   ROOT: 'ROOT',
+  MIJN_BUURT: 'MIJN_BUURT',
   BURGERZAKEN: 'BURGERZAKEN',
   WONEN: 'WONEN',
   BELASTINGEN: 'BELASTINGEN',
@@ -20,6 +26,22 @@ export const Chapters: { [chapter in Chapter]: Chapter } = {
   JEUGDHULP: 'JEUGDHULP',
   INKOMEN: 'INKOMEN',
   PROFILE: 'PROFILE',
+  MELDINGEN: 'MELDINGEN',
+  MIJN_TIPS: 'MIJN_TIPS',
+};
+
+export const ChapterTitles: { [chapter in Chapter]: string } = {
+  INKOMEN: 'Werk en inkomen',
+  BURGERZAKEN: 'Burgerzaken',
+  BELASTINGEN: 'Belastingen',
+  JEUGDHULP: 'Jeugdhulp',
+  WONEN: 'Erfpacht',
+  ZORG: 'Zorg en ondersteuning',
+  ROOT: 'Home',
+  MELDINGEN: 'Actueel',
+  PROFILE: 'Mijn gegevens',
+  MIJN_BUURT: 'Mijn buurt',
+  MIJN_TIPS: 'Mijn tips',
 };
 
 export const AppRoutes = {
@@ -27,76 +49,56 @@ export const AppRoutes = {
   BURGERZAKEN: '/burgerzaken',
   WONEN: '/wonen',
   BELASTINGEN: '/belastingen',
-  ZORG: '/zorg',
+  ZORG: '/zorg-en-ondersteuning',
+  ZORG_VOORZIENINGEN: '/zorg-en-ondersteuning/voorzieningen',
   JEUGDHULP: '/jeugdhulp',
-  INKOMEN: '/inkomen',
-  STADSPAS: '/inkomen/stadspas',
-  BIJSTANDSUITKERING: '/inkomen/bijstandsuitkering',
-  BIJZONDERE_BIJSTAND: '/inkomen/bijzondere-bijstand',
-  PROFILE: '/profiel',
+  INKOMEN: '/werk-en-inkomen',
+  STADSPAS: '/werk-en-inkomen/stadspas',
+  BIJSTANDSUITKERING: '/werk-en-inkomen/bijstandsuitkering',
+  BIJZONDERE_BIJSTAND: '/werk-en-inkomen/bijzondere-bijstand',
+  PROFILE: '/persoonlijke-gegevens',
   MY_AREA: '/buurt',
   ABOUT: '/over-mijn-amsterdam',
   PROCLAIMER: '/proclaimer',
   API_LOGIN: '/api/login',
-
-  // NOTE: Route components not implemented, subject to change
-  MY_TIPS: '/tips',
-  MY_UPDATES: '/updates',
+  MY_TIPS: '/overzicht-tips',
+  MY_NOTIFICATIONS: '/overzicht-meldingen',
 };
 
-export const PageTitleMain = 'Mijn Amsterdam';
-export const PageTitleLanding = `Login met DigID | ${PageTitleMain}`;
+export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/login';
+export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL || '/logout';
 
-export const PageTitles = {
-  [AppRoutes.ROOT]: `Home | ${PageTitleMain}`,
-  [AppRoutes.BURGERZAKEN]: `Burgerzaken | ${PageTitleMain}`,
-  [AppRoutes.WONEN]: `Wonen | ${PageTitleMain}`,
-  [AppRoutes.BELASTINGEN]: `Belastingen | ${PageTitleMain}`,
-  [AppRoutes.ZORG]: `Zorg | ${PageTitleMain}`,
-  [AppRoutes.JEUGDHULP]: `Jeugdhulp | ${PageTitleMain}`,
-  [AppRoutes.INKOMEN]: `Werk & Inkomen | ${PageTitleMain}`,
-  [AppRoutes.STADSPAS]: `Stadspas | ${PageTitleMain}`,
-  [AppRoutes.BIJSTANDSUITKERING]: `Bijstandsuitkering | ${PageTitleMain}`,
-  [AppRoutes.BIJZONDERE_BIJSTAND]: `Bijzondere bijstand | ${PageTitleMain}`,
-  [AppRoutes.PROFILE]: `Profiel | ${PageTitleMain}`,
-  [AppRoutes.MY_AREA]: `Mijn buurt | ${PageTitleMain}`,
-  [AppRoutes.PROCLAIMER]: `Proclaimer | ${PageTitleMain}`,
-  [AppRoutes.MY_TIPS]: `Tips | ${PageTitleMain}`,
-  [AppRoutes.MY_UPDATES]: `Meldingen | ${PageTitleMain}`,
-};
-
-let apiBaseUrl: string = process.env.REACT_APP_API_BASE_URL || '/api';
-let loginUrl: string = process.env.REACT_APP_LOGIN_URL || '/login';
-let logoutUrl: string = process.env.REACT_APP_LOGOUT_URL || '/logout';
-
-const [protocol, , host] = window.location.href.split('/');
-const baseUrl = `${protocol}//${host}`;
-
-if (!apiBaseUrl.startsWith('http') && apiBaseUrl.startsWith('/')) {
-  apiBaseUrl = baseUrl + apiBaseUrl;
-}
-if (!loginUrl.startsWith('http') && loginUrl.startsWith('/')) {
-  loginUrl = baseUrl + loginUrl;
-}
-if (!logoutUrl.startsWith('http') && logoutUrl.startsWith('/')) {
-  logoutUrl = baseUrl + logoutUrl;
-}
-
-console.log(apiBaseUrl, loginUrl, logoutUrl);
-
-export const API_BASE_URL = apiBaseUrl;
-export const LOGIN_URL = loginUrl;
-export const LOGOUT_URL = logoutUrl;
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const ATLAS_API_BASE_URL = process.env.REACT_APP_ATLAS_API_BASE_URL;
 
 export const ApiUrls = {
-  MY_UPDATES: `${API_BASE_URL}/mijn-updates`,
+  MY_NOTIFICATIONS: `${API_BASE_URL}/mijn-meldingen`,
   MY_CASES: `${API_BASE_URL}/focus/aanvragen`,
-  MY_TIPS: `${API_BASE_URL}/profiel/mijn-tips`,
+  MY_TIPS: `${API_BASE_URL}/tips/gettips`,
   BRP: `${API_BASE_URL}/brp/brp`,
   WMO: `${API_BASE_URL}/wmoned/voorzieningen`,
   FOCUS: `${API_BASE_URL}/focus/aanvragen`,
   AUTH: `${API_BASE_URL}/auth/check`,
   ERFPACHT: `${API_BASE_URL}/erfpacht/check-erfpacht`,
+  BAG: `${ATLAS_API_BASE_URL}/atlas/search/adres/`,
+};
+
+export interface ApiConfig {
+  [apiUrl: string]: {
+    postponeFetch: boolean;
+  };
+}
+
+export const ApiConfig: ApiConfig = {
+  [ApiUrls.FOCUS]: {
+    postponeFetch: isProduction(),
+  },
+  [ApiUrls.WMO]: {
+    postponeFetch: isProduction(),
+  },
+  [ApiUrls.MY_TIPS]: {
+    postponeFetch: true,
+  },
 };
 
 export const errorMessageMap: ErrorMessageMap = {
@@ -104,8 +106,8 @@ export const errorMessageMap: ErrorMessageMap = {
     name: 'Persoonsgegevens',
     error: 'Communicatie met api mislukt.',
   },
-  MY_UPDATES: {
-    name: 'Mijn meldingen',
+  MY_NOTIFICATIONS: {
+    name: 'Actueel',
     error: 'Communicatie met api mislukt.',
   },
   MY_CASES: {
@@ -117,7 +119,7 @@ export const errorMessageMap: ErrorMessageMap = {
     error: 'Communicatie met api mislukt.',
   },
   WMO: {
-    name: 'Zorg',
+    name: 'Zorg en ondersteuning',
     error: 'Communicatie met api mislukt.',
   },
   FOCUS: {
@@ -151,7 +153,7 @@ export const ExternalUrls = {
   REPORT_RELOCATION:
     'https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/',
   CONTACT_FORM:
-    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/scKlachtenformulier.aspx',
+    'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx/fKlachtenformulier',
   COLOFON: 'https://www.amsterdam.nl/algemene_onderdelen/overige/colofon/',
   PROCLAIMER:
     'https://www.amsterdam.nl/algemene_onderdelen/overige/proclaimer/',
@@ -161,7 +163,7 @@ export const ExternalUrls = {
     'https://www.eherkenning.nl/inloggen-met-eherkenning/middel-aanvragen/',
   KVK_REPORT_CHANGE:
     'https://www.kvk.nl/inschrijven-en-wijzigen/wijziging-doorgeven/',
-  ERFPACHT: process.env.REACT_APP_ERFPACHT_URL,
+  SSO_ERFPACHT: process.env.REACT_APP_ERFPACHT_URL,
   BERICHTENBOX: 'https://mijn.overheid.nl/berichtenbox/inbox/',
   TROUWEN_EN_PARTNERSCHAP:
     'https://www.amsterdam.nl/burgerzaken/trouwen-partnerschap/',
@@ -180,6 +182,11 @@ export const ExternalUrls = {
     'https://www.amsterdam.nl/burgerzaken/trouwen-partnerschap/trouwen-amsterdam/aankondigen/',
   INCOME_CONTACT: 'https://www.amsterdam.nl/werk-inkomen/contact/',
   ZORG_LEES_MEER: 'https://www.amsterdam.nl/zorg-ondersteuning/',
+  SSO_BELASTINGEN: 'https://belastingbalie.amsterdam.nl/digid.saml.php?start',
+  MIJN_WERK_EN_INKOMEN: 'https://edison.amsterdam.nl/SignIn?ReturnUrl=%2F',
+  MIJN_SUBSIDIES: 'https://mijnsubsidies.amsterdam.nl/loket/',
+  MIJN_AMSTERDAM_VEELGEVRAAGD:
+    'https://www.amsterdam.nl/veelgevraagd/?productid={68422ECA-8C56-43EC-A9AA-B3DF190B5077}',
 };
 
 // NOTE: Keep up-to-date with _colors.scss
@@ -210,4 +217,30 @@ export const Colors = {
 export const Layout = {
   mainHeaderTopbarHeight: 106, // px
   mainHeaderNavbarHeight: 44, // px
+};
+
+// NOTE: Keep up-to-date with _breakpoints.scss
+export const Breakpoints = {
+  tablet: 1024, // px
+  phone: 640, // px
+};
+
+export const WelcomeNotification: MyNotification = {
+  id: 'welcome01',
+  chapter: Chapters.MELDINGEN,
+  datePublished: new Date(2019, 9, 1).toISOString(),
+  title: 'Welkom op Mijn Amsterdam!',
+  description:
+    'Deze website is nog volop in ontwikkeling. Gaandeweg komt meer informatie voor u beschikbaar.',
+  customLink: {
+    callback: () => {
+      const usabilla = (window as any).usabilla_live;
+      if (usabilla) {
+        usabilla('click');
+      } else {
+        window.location.href = ExternalUrls.CONTACT_FORM;
+      }
+    },
+    title: 'Laat ons weten wat u ervan vindt',
+  },
 };

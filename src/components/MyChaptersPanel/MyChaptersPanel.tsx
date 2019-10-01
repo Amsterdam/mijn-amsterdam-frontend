@@ -4,27 +4,47 @@ import { MainNavSubmenuLink } from 'components/MainNavSubmenu/MainNavSubmenu';
 import Heading from 'components/Heading/Heading';
 import { MenuItem } from '../MainNavBar/MainNavBar.constants';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
+import {
+  trackItemPresentation,
+  useSessionCallbackOnceDebounced,
+} from 'hooks/analytics.hook';
 
 export interface MyChaptersPanelProps {
   title: string;
   items: MenuItem[];
   isLoading: boolean;
+  trackCategory: string;
 }
 
 export default function MyChaptersPanel({
   title,
   items = [],
   isLoading = true,
+  trackCategory,
 }: MyChaptersPanelProps) {
+  useSessionCallbackOnceDebounced(
+    trackCategory,
+    () => {
+      items.forEach(({ id }) => {
+        trackItemPresentation(trackCategory, `Thema ${id}`);
+      });
+    },
+    items.length
+  );
+
   return (
     <div className={styles.MyChaptersPanel}>
-      <Heading size="large" className={styles.Title}>
+      <Heading
+        id="MyChaptersHeader" // Used for tutorial placement
+        size="large"
+        className={styles.Title}
+      >
         {title}
       </Heading>
       <div className={styles.Links}>
-        {items.map(({ id, to, Icon, title, target }) => {
+        {items.map(({ id, to, Icon, title, rel }) => {
           return (
-            <MainNavSubmenuLink key={id} to={to} id={id} target={target}>
+            <MainNavSubmenuLink key={id} to={to} rel={rel}>
               {Icon && <Icon aria-hidden="true" />}
               {title}
             </MainNavSubmenuLink>

@@ -2,11 +2,10 @@
 
 .MyChaptersPanel {
   background-color: $color-neutral-grey1;
-  padding: 3.2rem 4rem;
+  padding: 3.2rem 0 4rem 3.2rem;
 
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     padding-left: 2.4rem;
-    padding-right: 2.4rem;
   }
 }
 
@@ -19,63 +18,29 @@
   flex-wrap: wrap;
 
   @include select(MainNavSubmenu_MainNavSubmenuLink) {
-    width: calc(50% - .5rem);
+    width: calc(50% - 0.5rem);
     margin-bottom: 1rem;
 
     &:nth-child(odd) {
-      margin-right: .5rem;
+      margin-right: 0.5rem;
     }
 
     &:nth-child(even) {
-      margin-left: .5rem;
+      margin-left: 0.5rem;
     }
 
-    @include media("<=tablet") {
+    @include media-query('<=tablet') {
       padding-left: 0;
-    }
-
-    @include media("<=phone") {
-      // width: auto;
-
-      &:nth-child(odd) {
-        // margin-right: 0;
-      }
-
+      width: auto;
+      min-width: 18.5rem;
       &:nth-child(even) {
-        // margin-left: 0;
+        margin-left: 0;
       }
     }
   }
 
-  @include media("<=phone") {
-    // display: block;
-  }
-}
-
-.LoadingContent {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 4rem 1rem 12rem;
-  grid-template-rows: 4rem 1rem 4rem;
-
-  > :nth-child(2) {
-    grid-column: 3;
-  }
-  > :nth-child(3) {
-    grid-column: 1;
-    grid-row: 3;
-  }
-  > :nth-child(4) {
-    grid-column: 3;
-    grid-row: 3;
-  }
-  > :nth-child(1),
-  > :nth-child(3) {
-    border-radius: 50%;
-  }
-  > :nth-child(2),
-  > :nth-child(4) {
-    margin-top: 1rem;
+  @include media-query('<=tablet') {
+    display: block;
   }
 }
 

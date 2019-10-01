@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './ButtonLink.module.scss';
 import classnames from 'classnames';
 import { ComponentChildren, LinkProps } from 'App.types';
 
-export interface ButtonLinkProps {
+export interface ButtonLinkProps extends HTMLAttributes<HTMLAnchorElement> {
   to: string;
   children: ComponentChildren;
   hasIcon?: boolean;
   className?: any;
   white?: boolean;
   target?: LinkProps['target'];
+  rel?: string;
+  download?: string;
+  title?: string;
+  id?: string;
+  tabIndex?: number;
 }
 
 export default function ButtonLink({
@@ -20,6 +25,8 @@ export default function ButtonLink({
   className,
   white = false,
   target,
+  rel,
+  ...otherProps
 }: ButtonLinkProps) {
   const classes = classnames(
     styles.ButtonLink,
@@ -27,13 +34,14 @@ export default function ButtonLink({
     className,
     white && styles.ButtonLinkWhite
   );
-  if (!!target) {
+  if (!!target || (rel && rel.indexOf('external') !== -1)) {
     if (target === '_blank') {
       return (
         <a
+          {...otherProps}
           href={to}
           target="_blank"
-          rel="noopener noreferrer"
+          rel="external noopener noreferrer"
           className={classes}
         >
           {children}
@@ -41,20 +49,26 @@ export default function ButtonLink({
       );
     }
     return (
-      <a href={to} target={target} className={classes}>
+      <a
+        {...otherProps}
+        href={to}
+        rel={rel}
+        target={target}
+        className={classes}
+      >
         {children}
       </a>
     );
   }
   return (
-    <Link to={to} className={classes}>
+    <Link {...otherProps} to={to} className={classes}>
       {children}
     </Link>
   );
 }
 
 export function ButtonLinkExternal(props: ButtonLinkProps) {
-  return <ButtonLink {...props} target={props.target || '_self'} />;
+  return <ButtonLink {...props} rel="external" />;
 }
 
 export function IconButtonLink(props: Omit<ButtonLinkProps, 'hasIcon'>) {

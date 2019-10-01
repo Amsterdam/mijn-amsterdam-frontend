@@ -4,6 +4,9 @@ import ButtonLink from 'components/ButtonLink/ButtonLink';
 import Heading from 'components/Heading/Heading';
 import { Unshaped } from 'App.types';
 import { entries } from 'helpers/App';
+import classnames from 'classnames';
+import slug from 'slug';
+import { trackLink } from 'hooks/analytics.hook';
 
 export interface ActionLink {
   title: string;
@@ -20,7 +23,13 @@ function InfoPanelActionLinks({ actionLinks }: InfoPanelActionLinksProps) {
     <ul className={styles.InfoPanelActionLinks}>
       {actionLinks.map((actionLink, index) => (
         <li key={actionLink.title}>
-          <ButtonLink target="_self" to={actionLink.url}>
+          <ButtonLink
+            to={actionLink.url}
+            rel={actionLink.external ? 'external' : ''}
+            onClick={() => {
+              actionLink.external && trackLink(actionLink.url);
+            }}
+          >
             {actionLink.title}
           </ButtonLink>
         </li>
@@ -41,7 +50,10 @@ function InfoPanelTable({ panelData = {} }: InfoPanelTableProps) {
           .filter(([, value]) => !!value)
           .map(([title, value], index) => {
             return (
-              <tr key={title}>
+              <tr
+                key={title}
+                className={`InfoPanelTableRow__${slug(title, { lower: true })}`}
+              >
                 <th>{title}</th>
                 <td>{value}</td>
               </tr>
@@ -66,7 +78,12 @@ export default function InfoPanel({
   return (
     <div className={styles.InfoPanel}>
       {!!title && <Heading>{title}</Heading>}
-      <div className={styles.InfoPanelContent}>
+      <div
+        className={classnames(
+          styles.InfoPanelContent,
+          slug(title, { lower: true })
+        )}
+      >
         <InfoPanelTable panelData={panelData} />
         {!!actionLinks.length && (
           <InfoPanelActionLinks actionLinks={actionLinks} />

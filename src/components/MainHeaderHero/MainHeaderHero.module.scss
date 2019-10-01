@@ -5,9 +5,9 @@
   overflow: hidden;
   position: relative;
   padding-top: 25%;
-  background: $color-neutral-grey1;
+  background: $color-neutral-grey2;
 
-  @include media("<=tablet") {
+  @include media-query('<=tablet') {
     padding-top: 40%;
   }
 }
@@ -20,4 +20,7 @@
   top: 0;
   left: 50%;
   transform: translateX(-50%);
+  line-height: 20rem;
+  color: $color-neutral-grey3;
+  text-align: left;
 }

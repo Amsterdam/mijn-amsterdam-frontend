@@ -1,5 +1,5 @@
 import { StateKey } from 'AppState';
-import { ReactComponent as AlertIcon } from 'assets/icons/Alert.svg';
+import { ReactComponent as AlertIcon } from 'assets/images/Alert.svg';
 import classnames from 'classnames';
 import ButtonLinkStyle from 'components/ButtonLink/ButtonLink.module.scss';
 import Modal from 'components/Modal/Modal';
@@ -29,8 +29,8 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
     <div ref={el} className={classnames(styles.ErrorMessages, className)}>
       <p className={styles.MessageBar}>
         <span>
-          <AlertIcon className={styles.AlertIcon} /> U ziet misschien niet al uw
-          gegevens
+          <AlertIcon aria-hidden="true" className={styles.AlertIcon} /> U ziet
+          misschien niet al uw gegevens
         </span>
         <button
           className={classnames(
@@ -60,7 +60,7 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
             Probeer het later nog eens.
           </p>
           <button className="action-button" onClick={() => setModalOpen(false)}>
-            Ok
+            Oké
           </button>
         </div>
       </Modal>

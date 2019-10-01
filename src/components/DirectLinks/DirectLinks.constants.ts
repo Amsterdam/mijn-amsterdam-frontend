@@ -1,48 +1,45 @@
-import { AppRoutes } from '../../App.constants';
+import { AppRoutes, ExternalUrls } from 'App.constants';
 export type DirectLinkType =
-  | 'MIJN_BELASTINGEN'
   | 'MIJN_SUBSIDIE'
-  | 'MIJN_WERK_EN_INKOMEN'
+  | 'MIJN_OVERHEID_BERICHTEBOX'
   | 'MY_AREA'
-  | 'MY_TIPS'
-  | 'MIJN_ERFPACHT';
+  | 'FAQ'
+  | 'MY_TIPS';
 
 export interface DirectLink {
   title: string;
   url: string;
   isPhoneScreenLink?: true;
   isExternalLink?: true;
+  id?: string;
 }
 
 export const LINKS: { [key in DirectLinkType]: DirectLink } = {
-  MY_TIPS: {
-    title: 'Mijn tips',
-    url: AppRoutes.MY_TIPS,
-    isPhoneScreenLink: true,
-  },
   MY_AREA: {
     title: 'Mijn buurt',
     url: AppRoutes.MY_AREA,
     isPhoneScreenLink: true,
+    id: 'MyAreaHeader',
   },
-  MIJN_BELASTINGEN: {
-    title: 'Mijn belastingen',
-    url: 'https://belastingbalie.amsterdam.nl',
+  MY_TIPS: {
+    title: 'Mijn tips',
+    url: AppRoutes.MY_TIPS,
+    isPhoneScreenLink: true,
+    id: 'MyTipsHeader',
+  },
+  MIJN_OVERHEID_BERICHTEBOX: {
+    title: 'Mijn Overheid Berichtenbox',
+    url: ExternalUrls.BERICHTENBOX,
     isExternalLink: true,
   },
   MIJN_SUBSIDIE: {
-    title: 'Mijn subsidie',
-    url: 'https://mijnsubsidies.amsterdam.nl/loket/',
+    title: 'Mijn Subsidies',
+    url: ExternalUrls.MIJN_SUBSIDIES,
     isExternalLink: true,
   },
-  MIJN_WERK_EN_INKOMEN: {
-    title: 'Mijn werk & inkomen',
-    url: 'https://edison.amsterdam.nl/SignIn?ReturnUrl=%2F',
-    isExternalLink: true,
-  },
-  MIJN_ERFPACHT: {
-    title: 'Mijn erfpacht',
-    url: 'https://mijnerfpacht.amsterdam.nl',
+  FAQ: {
+    title: 'Veelgestelde vragen',
+    url: ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD,
     isExternalLink: true,
   },
 };

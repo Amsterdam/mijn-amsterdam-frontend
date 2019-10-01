@@ -6,5 +6,5 @@ import { MyTip } from 'hooks/api/my-tips-api.hook';
 const MY_TIPS: MyTip[] = [];
 
 it('Renders without crashing', () => {
-  shallow(<MyTips items={MY_TIPS} />);
+  shallow(<MyTips isLoading={false} items={MY_TIPS} />);
 });

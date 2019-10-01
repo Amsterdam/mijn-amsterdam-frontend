@@ -1,5 +1,10 @@
 @import 'styles/_global.scss';
 
+.Container {
+  overflow: hidden; // Fix for an issue where the myArea page has whitespace beneath the iframe
+  background-color: $color-neutral-grey1;
+}
+
 .MyAreaContainer {
   width: 100vw;
   height: calc(100vh - 5.5rem);
