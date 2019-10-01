@@ -60,7 +60,7 @@ export default function MyCases({
       )}
       {!!items.length && (
         <ul className={styles.List}>
-          {[...items, ...items, ...items].map(item => (
+          {items.map(item => (
             <CaseItem key={item.id} item={item} />
           ))}
         </ul>

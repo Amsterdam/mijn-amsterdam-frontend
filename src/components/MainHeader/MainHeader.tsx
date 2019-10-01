@@ -8,11 +8,7 @@ import Heading from 'components/Heading/Heading';
 import MainHeaderHero from 'components/MainHeaderHero/MainHeaderHero';
 import MainNavBar from 'components/MainNavBar/MainNavBar';
 import { entries } from 'helpers/App';
-import {
-  useDesktopScreen,
-  usePhoneScreen,
-  useTabletScreen,
-} from 'hooks/media.hook';
+import { useDesktopScreen, usePhoneScreen } from 'hooks/media.hook';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -44,11 +40,6 @@ export default function MainHeader({
 
   const hasErrors = !!errors.length;
   const Logo = useDesktopScreen() ? AmsterdamLogoLarge : AmsterdamLogo;
-
-  const isTab = useTabletScreen();
-  const isPhone = usePhoneScreen();
-
-  const env = isTab && !isPhone ? 'Tablet' : isPhone ? 'Phone' : 'Desktop';
 
   return (
     <header className={styles.header}>
@@ -84,15 +75,12 @@ export default function MainHeader({
           />
 
           <Heading size="large" el="h1">
-            Mijn Amsterdam {env}
+            Mijn Amsterdam
           </Heading>
         </Link>
-        <BetaLabel
-          aria-hidden="true"
-          role="img"
-          aria-label="Beta versie"
-          className={styles.betaLabel}
-        />
+        <div className={styles.betaLabel}>
+          <BetaLabel aria-hidden="true" role="img" aria-label="Beta versie" />
+        </div>
       </div>
       {isAuthenticated && (
         <TutorialState>
