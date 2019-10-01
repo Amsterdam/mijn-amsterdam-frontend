@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import PageContentMain from 'components/PageContentMain/PageContentMain';
-import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
+import { DetailPage, PageContent } from 'components/Page/Page';
+import PageHeading from 'components/PageHeading/PageHeading';
 import styles from './ZorgDetail.module.scss';
 import { Chapters, ChapterTitles, AppRoutes } from 'App.constants';
 import { AppContext } from 'AppState';
@@ -9,8 +9,6 @@ import Alert from 'components/Alert/Alert';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 import StatusLine from 'components/StatusLine/StatusLine';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
-import pageContentStyles from 'components/PageContentMain/PageContentMain.module.scss';
-import composeClassNames from 'classnames';
 
 export default () => {
   const {
@@ -31,16 +29,16 @@ export default () => {
   const noContent = !isLoading && !WmoItem;
 
   return (
-    <PageContentMain className={pageContentStyles.DetailPage}>
-      <PageContentMainHeading
+    <DetailPage>
+      <PageHeading
         icon={<ChapterIcon chapter={Chapters.ZORG} />}
         backLink={{ to: AppRoutes.ZORG, title: ChapterTitles.ZORG }}
         isLoading={isLoading}
       >
         {WmoItem && WmoItem.title}
-      </PageContentMainHeading>
+      </PageHeading>
 
-      <div className={pageContentStyles.PageContent}>
+      <PageContent>
         {(isError || noContent) && (
           <Alert type="warning">
             We kunnen op dit moment geen gegevens tonen.
@@ -53,7 +51,7 @@ export default () => {
             <strong>{WmoItem.supplier}</strong>
           </p>
         )}
-      </div>
+      </PageContent>
 
       {!!WmoItem && (
         <StatusLine
@@ -74,6 +72,6 @@ export default () => {
           }}
         />
       )}
-    </PageContentMain>
+    </DetailPage>
   );
 };

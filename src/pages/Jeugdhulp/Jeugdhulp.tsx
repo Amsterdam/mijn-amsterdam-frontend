@@ -1,12 +1,12 @@
 import React from 'react';
-import PageContentMain from 'components/PageContentMain/PageContentMain';
-import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
+import Page from 'components/Page/Page';
+import PageHeading from 'components/PageHeading/PageHeading';
 
 export default () => {
   return (
-    <PageContentMain>
-      <PageContentMainHeading>Jeugdhulp</PageContentMainHeading>
+    <Page>
+      <PageHeading>Jeugdhulp</PageHeading>
       <p>Jeugdhulp body</p>
-    </PageContentMain>
+    </Page>
   );
 };

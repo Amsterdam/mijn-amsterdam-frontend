@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import PageContentMain from 'components/PageContentMain/PageContentMain';
-import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
+import { OverviewPage, PageContent } from 'components/Page/Page';
+import PageHeading from 'components/PageHeading/PageHeading';
 import { AppContext } from 'AppState';
 import DataLinkTable from 'components/DataLinkTable/DataLinkTable';
 import { Chapters } from 'App.constants';
@@ -10,7 +10,6 @@ import { useTabletScreen } from 'hooks/media.hook';
 import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
 import { ExternalUrls, ChapterTitles } from 'App.constants';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
-import pageContentStyles from 'components/PageContentMain/PageContentMain.module.scss';
 
 const DISPLAY_PROPS = {
   title: '',
@@ -31,11 +30,11 @@ export default () => {
   const isTabletScreen = useTabletScreen();
 
   return (
-    <PageContentMain className={pageContentStyles.OverviewPage}>
-      <PageContentMainHeading icon={<ChapterIcon chapter={Chapters.ZORG} />}>
+    <OverviewPage>
+      <PageHeading icon={<ChapterIcon chapter={Chapters.ZORG} />}>
         {ChapterTitles.ZORG}
-      </PageContentMainHeading>
-      <div className={pageContentStyles.PageContent}>
+      </PageHeading>
+      <PageContent>
         <p>
           Hieronder ziet u uw regelingen en hulpmiddelen vanuit de Wmo. Hebt u
           vragen of wilt u een wijziging doorgeven? Bel dan gratis de Wmo
@@ -52,7 +51,7 @@ export default () => {
             We kunnen op dit moment geen gegevens tonen.
           </Alert>
         )}
-      </div>
+      </PageContent>
       <DataLinkTable
         id="datalinktable-healthcare-granted"
         rowHeight={isTabletScreen ? 'auto' : '5.8rem'}
@@ -81,6 +80,6 @@ export default () => {
         Informatie van voor 1 januari 2018 kunt u hier niet inzien. Deze kunt u
         wel opvragen bij de Wmo Helpdesk.
       </p>
-    </PageContentMain>
+    </OverviewPage>
   );
 };

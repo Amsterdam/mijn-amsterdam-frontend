@@ -1,5 +1,5 @@
 import React, { HTMLProps } from 'react';
-import styles from './PageContentMainHeading.module.scss';
+import styles from './PageHeading.module.scss';
 import composeClassNames from 'classnames';
 import Heading, { HeadingTagName } from 'components/Heading/Heading';
 import { ComponentChildren, LinkProps } from 'App.types';
@@ -7,7 +7,7 @@ import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
 import { ReactComponent as CaretLeft } from 'assets/images/Chevron-Left.svg';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 
-export interface PageContentMainHeadingProps
+export interface PageHeadingProps
   extends Omit<HTMLProps<HTMLHeadingElement>, 'size'> {
   children: ComponentChildren;
   backLink?: LinkProps;
@@ -17,7 +17,7 @@ export interface PageContentMainHeadingProps
   isLoading?: boolean;
 }
 
-export default function PageContentMainHeading({
+export default function PageHeading({
   el = 'h2',
   children,
   className,
@@ -25,9 +25,9 @@ export default function PageContentMainHeading({
   backLink,
   isLoading,
   ...rest
-}: PageContentMainHeadingProps) {
+}: PageHeadingProps) {
   const classNames = composeClassNames(
-    styles.PageContentMainHeading,
+    styles.PageHeading,
     !!icon && styles.HasIcon,
     className
   );

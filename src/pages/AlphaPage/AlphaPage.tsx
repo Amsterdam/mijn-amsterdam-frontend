@@ -1,13 +1,16 @@
 import React from 'react';
-import PageContentMain from 'components/PageContentMain/PageContentMain';
-import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
+import Page from 'components/Page/Page';
+import PageHeading from 'components/PageHeading/PageHeading';
 import styles from './AlphaPage.module.scss';
+import { PageContent } from 'components/Page/Page';
 
 export default () => {
   return (
-    <PageContentMain className={styles.AlphaPage}>
-      <PageContentMainHeading>AlphaPage</PageContentMainHeading>
-      <p>AlphaPage body</p>
-    </PageContentMain>
+    <Page className={styles.AlphaPage}>
+      <PageHeading>AlphaPage</PageHeading>
+      <PageContent>
+        <p>AlphaPage body</p>
+      </PageContent>
+    </Page>
   );
 };

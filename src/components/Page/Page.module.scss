@@ -1,9 +1,9 @@
 @import 'styles/_global.scss';
 
-.PageContentMain {
+.Page {
   display: block;
 
-  @include select(PageContentMainHeading_PageContentMainHeading) {
+  @include select(PageHeading_PageHeading) {
     @include centered-max;
 
     @include mq-tablet() {
@@ -19,7 +19,7 @@
 
 .TextPage {
 
-  @include select(PageContentMainHeading_HeadingInner) {
+  @include select(PageHeading_HeadingInner) {
     @include centered-max(62rem);;
     width: calc(100% - 4rem);
     margin: 0 auto;
@@ -38,7 +38,7 @@
 
 .OverviewPage {
 
-  @include select(PageContentMainHeading_HeadingInner) {
+  @include select(PageHeading_HeadingInner) {
     margin-left: 0;
   }
 

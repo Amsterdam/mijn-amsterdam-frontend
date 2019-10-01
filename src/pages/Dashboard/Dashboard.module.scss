@@ -4,7 +4,7 @@
 
   // Dashboard has a different design for the heading, to match the design easily and responsively
   // a pragmatic solution is written below.
-  @include select(PageContentMainHeading_PageContentMainHeading) {
+  @include select(PageHeading_PageHeading) {
     @include centered-max;
     background: transparent;
 
@@ -26,7 +26,7 @@
       margin: 0 1rem;
     }
 
-    @include select(PageContentMainHeading_HeadingInner) {
+    @include select(PageHeading_HeadingInner) {
       margin: 0 4rem;
 
       @include mq-tablet() {

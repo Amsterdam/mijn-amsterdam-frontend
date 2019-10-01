@@ -3,30 +3,24 @@ import { AppContext } from 'AppState';
 import Alert from 'components/Alert/Alert';
 import InfoPanel from 'components/InfoPanel/InfoPanel';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
-import PageContentMain from 'components/PageContentMain/PageContentMain';
-import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
+import { DetailPage, PageContent } from 'components/Page/Page';
+import PageHeading from 'components/PageHeading/PageHeading';
 import { formatProfileData, panelConfig } from 'data-formatting/brp';
 import { entries } from 'helpers/App';
 import styles from 'pages/Profile/Profile.module.scss';
 import React, { useContext } from 'react';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
-import pageContentStyles from 'components/PageContentMain/PageContentMain.module.scss';
-import classnames from 'classnames';
 
 export default function Profile() {
   const { BRP } = useContext(AppContext);
   const brpInfo = formatProfileData(BRP.data);
 
   return (
-    <PageContentMain
-      className={classnames(pageContentStyles.DetailPage, styles.Profile)}
-    >
-      <PageContentMainHeading
-        icon={<ChapterIcon chapter={Chapters.BURGERZAKEN} />}
-      >
+    <DetailPage className={styles.Profile}>
+      <PageHeading icon={<ChapterIcon chapter={Chapters.BURGERZAKEN} />}>
         Mijn gegevens
-      </PageContentMainHeading>
-      <div className={classnames(pageContentStyles.PageContent, styles.Intro)}>
+      </PageHeading>
+      <PageContent className={styles.Intro}>
         <p>
           In de Basisregistratie Personen legt de gemeente persoonsgegevens over
           u vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of
@@ -46,7 +40,7 @@ export default function Profile() {
             We kunnen op dit moment geen gegevens tonen.
           </Alert>
         )}
-      </div>
+      </PageContent>
       <div className={styles.InfoPanels}>
         {brpInfo &&
           entries(brpInfo).map(
@@ -60,6 +54,6 @@ export default function Profile() {
               )
           )}
       </div>
-    </PageContentMain>
+    </DetailPage>
   );
 }

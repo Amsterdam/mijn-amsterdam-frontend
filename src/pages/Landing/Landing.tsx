@@ -2,15 +2,15 @@ import { LOGIN_URL, ExternalUrls } from 'App.constants';
 import { ReactComponent as BetaLabel } from 'assets/images/beta-label.svg';
 import DigiDLogo from 'assets/images/digid-logo.png';
 import Heading from 'components/Heading/Heading';
-import PageContentMain from 'components/PageContentMain/PageContentMain';
-import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
+import Page, { TextPage, PageContent } from 'components/Page/Page';
+import PageHeading from 'components/PageHeading/PageHeading';
 import React, { useEffect, useRef, useState } from 'react';
 
 import styles from './Landing.module.scss';
 import { trackPageView, trackLink } from 'hooks/analytics.hook';
 import classnames from 'classnames';
 import { clearSessionStorage } from 'hooks/storage.hook';
-import pageContentStyles from 'components/PageContentMain/PageContentMain.module.scss';
+import pageContentStyles from 'components/Page/Page.module.scss';
 
 export default () => {
   const loginButton = useRef(null);
@@ -24,8 +24,8 @@ export default () => {
   const [isRedirecting, setRedirecting] = useState(false);
 
   return (
-    <PageContentMain className={pageContentStyles.TextPage}>
-      <PageContentMainHeading className={styles.Heading}>
+    <TextPage>
+      <PageHeading className={styles.Heading}>
         Welkom op Mijn Amsterdam
         <BetaLabel
           aria-hidden="true"
@@ -33,8 +33,8 @@ export default () => {
           aria-label="Beta versie"
           className={styles.BetaLogo}
         />
-      </PageContentMainHeading>
-      <div id="AppContent" className={pageContentStyles.PageContent}>
+      </PageHeading>
+      <PageContent id="AppContent">
         <p>
           Welkom op Mijn Amsterdam: uw persoonlijke digitale pagina bij de
           gemeente Amsterdam. Hier ziet u op één centrale plek welke gegevens de
@@ -102,7 +102,7 @@ export default () => {
             veelgestelde vragen over Mijn Amsterdam
           </a>
         </p>
-      </div>
-    </PageContentMain>
+      </PageContent>
+    </TextPage>
   );
 };

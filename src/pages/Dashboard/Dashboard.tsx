@@ -5,8 +5,8 @@ import MyCases from 'components/MyCases/MyCases';
 import MyChaptersPanel from 'components/MyChaptersPanel/MyChaptersPanel';
 import MyTips from 'components/MyTips/MyTips';
 import MyNotifications from 'components/MyNotifications/MyNotifications';
-import PageContentMain from 'components/PageContentMain/PageContentMain';
-import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
+import Page from 'components/Page/Page';
+import PageHeading from 'components/PageHeading/PageHeading';
 import { usePhoneScreen } from 'hooks/media.hook';
 import React, { useContext } from 'react';
 
@@ -43,8 +43,8 @@ export default () => {
 
   return (
     <>
-      <PageContentMain className={styles.Dashboard}>
-        <PageContentMainHeading id="MyUpdatesHeader">
+      <Page className={styles.Dashboard}>
+        <PageHeading id="MyUpdatesHeader">
           <Link
             // Used for tutorial placement
             className={styles.MyNotificationsHeadingLink}
@@ -52,7 +52,7 @@ export default () => {
           >
             Actueel
           </Link>
-        </PageContentMainHeading>
+        </PageHeading>
         <div className={styles.TopContentContainer}>
           <MyNotifications
             total={myNotificationItems.length}
@@ -84,7 +84,7 @@ export default () => {
           />
         )}
         <DirectLinks />
-      </PageContentMain>
+      </Page>
     </>
   );
 };

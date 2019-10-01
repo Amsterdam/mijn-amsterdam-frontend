@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
-import PageContentMain from 'components/PageContentMain/PageContentMain';
-import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
+import Page, { PageContent } from 'components/Page/Page';
+import PageHeading from 'components/PageHeading/PageHeading';
 import styles from './InkomenDetail.module.scss';
 import { Chapters, AppRoutes, ChapterTitles } from 'App.constants';
 import { AppContext } from 'AppState';
@@ -9,7 +9,7 @@ import StatusLine from 'components/StatusLine/StatusLine';
 import Alert from 'components/Alert/Alert';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
-import pageContentStyles from 'components/PageContentMain/PageContentMain.module.scss';
+import { DetailPage } from 'components/Page/Page';
 
 export default () => {
   const {
@@ -30,27 +30,27 @@ export default () => {
   const noContent = !isLoading && !FocusItem;
 
   return (
-    <PageContentMain className={pageContentStyles.DetailPage}>
-      <PageContentMainHeading
+    <DetailPage>
+      <PageHeading
         icon={<ChapterIcon chapter={Chapters.INKOMEN} />}
         backLink={{ to: AppRoutes.INKOMEN, title: ChapterTitles.INKOMEN }}
       >
         {FocusItem && FocusItem.title}
-      </PageContentMainHeading>
-      <div className={pageContentStyles.PageContent}>
+      </PageHeading>
+      <PageContent>
         {(isError || noContent) && (
           <Alert type="warning">
             We kunnen op dit moment geen gegevens tonen.
           </Alert>
         )}
         {isLoading && <LoadingContent />}
-      </div>
+      </PageContent>
       {!!FocusItem && (
         <StatusLine
           trackCategory={`Werk en inkomen / ${FocusItem.productTitle}`}
           items={FocusItem.process}
         />
       )}
-    </PageContentMain>
+    </DetailPage>
   );
 };

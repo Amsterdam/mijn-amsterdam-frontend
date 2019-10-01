@@ -1,9 +1,6 @@
 import React, { useContext } from 'react';
-import {
-  OverviewPage,
-  PageContent,
-} from 'components/PageContentMain/PageContentMain';
-import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
+import { OverviewPage, PageContent } from 'components/Page/Page';
+import PageHeading from 'components/PageHeading/PageHeading';
 import { AppContext } from 'AppState';
 import DataLinkTable from 'components/DataLinkTable/DataLinkTable';
 import { Chapters, ChapterTitles } from 'App.constants';
@@ -40,9 +37,9 @@ export default () => {
 
   return (
     <OverviewPage className={styles.Inkomen}>
-      <PageContentMainHeading icon={<ChapterIcon chapter={Chapters.INKOMEN} />}>
+      <PageHeading icon={<ChapterIcon chapter={Chapters.INKOMEN} />}>
         {ChapterTitles.INKOMEN}
-      </PageContentMainHeading>
+      </PageHeading>
       <PageContent>
         <p>
           Hieronder ziet u uw regelingen en hulpmiddelen vanuit de Wmo. Hebt u
