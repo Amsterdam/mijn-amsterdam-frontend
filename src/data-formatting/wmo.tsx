@@ -341,20 +341,6 @@ const Labels: {
         ),
       },
       {
-        status: 'Levering gestopt',
-        datePublished: () => '',
-        isChecked: (stepIndex, sourceData: WmoSourceData) =>
-          sourceData.isActual === false ||
-          isDateInPast(sourceData.dateFinish, new Date()),
-        isLastActive: (stepIndex, sourceData: WmoSourceData) => false,
-        description: data => (
-          <p>
-            {data.supplier} heeft aan ons doorgegeven dat u geen {data.title}{' '}
-            meer krijgt.
-          </p>
-        ),
-      },
-      {
         status: 'Einde recht',
         datePublished: data =>
           !isDateInPast(data.dateFinish, new Date()) ? '' : data.dateFinish,
@@ -453,7 +439,7 @@ const Labels: {
   // Zorg in natura (WRA)
   WRA: {
     deliveryType: {
-      ZIN: ['ZIN', 'WRA'],
+      ZIN: ['ZIN', 'WRA', 'WRA1', 'WRA2', 'WRA3', 'WRA4', 'WRA5'],
     },
     statusItems: [
       {
