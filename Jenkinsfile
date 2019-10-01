@@ -52,27 +52,35 @@ pipeline {
       }
     }
 
-    stage('Deploy TEST') {
-      when { branch 'test' }
-      options {
-        timeout(time: 5, unit: 'MINUTES')
-      }
+    stage('E2E testing') {
+      // when { not { branch 'test' } }
       steps {
-        script { currentBuild.displayName = "TEST Deploy #${BUILD_NUMBER} (${COMMIT_HASH})" }
-        sh "docker pull ${IMAGE_BUILD}"
-        sh "docker tag ${IMAGE_BUILD} ${IMAGE_TEST}"
-        sh "docker push ${IMAGE_TEST}"
-        build job: 'Subtask_Openstack_Playbook', parameters: [
-          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
-          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend-test.yml']
-        ]
+        script { currentBuild.displayName = "ACC e2e testing #${BUILD_NUMBER} (${COMMIT_HASH})" }
+        sh "node e2e"
       }
     }
+
+    // stage('Deploy TEST') {
+    //   when { branch 'test' }
+    //   options {
+    //     timeout(time: 5, unit: 'MINUTES')
+    //   }
+    //   steps {
+    //     script { currentBuild.displayName = "TEST Deploy #${BUILD_NUMBER} (${COMMIT_HASH})" }
+    //     sh "docker pull ${IMAGE_BUILD}"
+    //     sh "docker tag ${IMAGE_BUILD} ${IMAGE_TEST}"
+    //     sh "docker push ${IMAGE_TEST}"
+    //     build job: 'Subtask_Openstack_Playbook', parameters: [
+    //       [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
+    //       [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend-test.yml']
+    //     ]
+    //   }
+    // }
 
     // ACCEPTANCE
 
     stage('Build ACC') {
-      when { not { branch 'test' } } // Also Build PR's
+      when { not { branch 'test' } }
       options {
         timeout(time: 10, unit: 'MINUTES')
       }
