@@ -17,11 +17,17 @@
 }
 
 .CaseItem {
-  border-top: 0.1rem solid $color-neutral-grey2;
+  border-bottom: 0.1rem solid $color-neutral-grey2;
   min-height: 5.5rem;
   padding: 1rem 0 1rem 5rem;
   position: relative;
   width: calc(50% - 5rem);
+  display: flex;
+  align-items: center;
+
+  &:nth-child(-n + 2) {
+    border-top: 0.1rem $color-neutral-grey2 solid;
+  }
 
   @include mq-phone() {
     width: auto;

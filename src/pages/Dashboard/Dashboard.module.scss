@@ -61,6 +61,7 @@
     overflow: hidden;
     border-top: 1px solid $color-neutral-grey2;
     margin: 0 1rem;
+    margin-bottom: 8rem;
 
     @include media-q('>phone') {
       flex-grow: 1;
@@ -76,11 +77,6 @@
     // Adjust some margins to match the design on mobile
     @include media-q('>phone') {
       flex: 0 0 calc(50% + 2rem);
-    }
-
-    @include mq-phone() {
-      margin-left: -1rem;
-      width: auto;
     }
   }
 

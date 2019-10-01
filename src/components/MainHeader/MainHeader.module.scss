@@ -1,11 +1,7 @@
 @import 'styles/_global.scss';
 
 .header {
-  position: relative;
 
-  @include IE11 {
-    overflow-x: hidden; // Hack for a weird horizontal scrollbar showing up in IE11 because of the positioning of the betalabel
-  }
 }
 
 .topBar {

@@ -4,6 +4,10 @@
 @import 'fonts';
 @import 'components/components';
 
+html, body {
+  min-height: 100%;
+}
+
 // Global styling and reset
 html {
   box-sizing: border-box;
@@ -21,14 +25,11 @@ body {
   &.has-modal {
     position: fixed;
     width: 100vw;
+
     > *:not(#modal-root) {
       pointer-events: none;
     }
   }
-}
-
-main {
-  display: block;
 }
 
 *,
@@ -37,11 +38,9 @@ main {
   box-sizing: inherit;
 }
 
-#app {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+#root {
+  min-height: 100%;
+  position: relative;
 }
 
 a {

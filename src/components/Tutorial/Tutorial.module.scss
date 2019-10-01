@@ -25,7 +25,7 @@ $tutorial-items-radius: 1rem;
 
 .MyUpdatesItem {
   width: 25rem;
-  margin-top: -16rem;
+  margin-top: -14rem;
   margin-left: 16rem;
 
   svg {
@@ -34,26 +34,22 @@ $tutorial-items-radius: 1rem;
     margin-top: 1rem;
   }
 
-  @include mq-tablet() {
-    margin-top: -16rem;
-  }
-
   @include mq-phone() {
-    margin-top: -15rem;
-    margin-left: 2rem;
+    margin-top: -12rem;
+    margin-left: 4rem;
 
     svg {
       margin-top: 2rem;
-      margin-left: 16rem;
+      margin-left: -3rem;
       height: 8rem;
-      transform: rotate(150deg);
+      transform: rotate(170deg);
     }
   }
 }
 
 .MyChaptersItem {
   width: 28rem;
-  margin-top: -3rem;
+  margin-top: -5rem;
   margin-left: 16rem;
 
   svg {
@@ -65,7 +61,7 @@ $tutorial-items-radius: 1rem;
 
   @include mq-tablet() {
     width: 28rem;
-    margin-top: -3rem;
+    margin-top: -4rem;
     margin-left: -26rem;
 
     svg {
@@ -76,12 +72,12 @@ $tutorial-items-radius: 1rem;
   }
 
   @include mq-phone() {
-    margin-top: -15rem;
-    margin-left: 0rem;
+    margin-top: -16rem;
+    margin-left: 10rem;
 
     svg {
       transform: rotate(170deg);
-      margin-left: 14rem;
+      margin-left: -4rem;
       margin-top: 2rem;
       height: 8rem;
     }
@@ -100,7 +96,7 @@ $tutorial-items-radius: 1rem;
   }
 
   @include mq-phone() {
-    margin-top: -17rem;
+    margin-top: -19rem;
     margin-left: 2rem;
     width: 26rem;
 
@@ -126,7 +122,7 @@ $tutorial-items-radius: 1rem;
 
   @include mq-phone() {
     width: 22rem;
-    margin-top: -14rem;
+    margin-top: -13rem;
     margin-left: 2rem;
 
     svg {
@@ -150,7 +146,7 @@ $tutorial-items-radius: 1rem;
 
   @include mq-phone() {
     width: 22rem;
-    margin-top: -2rem;
+    margin-top: -3rem;
     margin-left: 2rem;
 
     svg {
@@ -174,7 +170,7 @@ $tutorial-items-radius: 1rem;
     @extend %tutorialHeading;
   }
 
-  [id=MyUpdatesHeader] > span {
+  [id="MyUpdatesHeader"] > span {
     @extend %tutorialHeading;
     transform: translateX(-1rem);
   }

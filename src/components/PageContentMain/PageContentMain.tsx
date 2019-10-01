@@ -12,13 +12,17 @@ export default function PageContentMain({
   className,
   children,
 }: PageContentMainProps) {
-  const classNames = composeClassNames(
-    styles.PageContentMain,
-    styles.TextPage,
-    className
-  );
+  const classNames = composeClassNames(styles.PageContentMain, className);
 
   return <main className={classNames}>{children}</main>;
+}
+
+export function TextPage({ children, className }: PageContentMainProps) {
+  return (
+    <PageContentMain className={composeClassNames(styles.TextPage, className)}>
+      {children}
+    </PageContentMain>
+  );
 }
 
 export function OverviewPage({ children, className }: PageContentMainProps) {

@@ -1,9 +1,12 @@
 @import 'styles/_global.scss';
 
 .MainNavBar {
-  position: relative;
   height: $main-header-navbar-height;
   background-color: $color-neutral-grey1;
+
+  &:not(.BurgerMenu) {
+    // position: relative;
+  }
 
   @include select(FontEnlarger_FontEnlarger__) {
     position: absolute;
@@ -13,10 +16,9 @@
 
 .LinkContainer {
   @include centered-max;
-
   display: flex;
   background-color: $color-neutral-grey1;
-
+  // margin-top: $main-header-topbar-height;
 
   @include mq-tablet() {
     display: -ms-grid;
@@ -160,7 +162,7 @@
   background-color: transparent;
   cursor: pointer;
   position: absolute;
-  top: 0;
+  top: $main-header-topbar-height;
   right: calc(50% - #{$main-boxed-width} / 2);
   font-weight: 500;
   color: $color-neutral-grey4;
@@ -177,6 +179,7 @@
   }
 
   @include mq-tablet() {
+    top: $main-header-topbar-height--tablet;
     right: 0.5rem;
 
     &Open {
@@ -185,11 +188,13 @@
   }
 }
 
-.Modal {
-  background: $color-neutral-grey4;
-  opacity: 0.5;
+.BurgerMenu:before {
+  content: '';
   position: absolute;
-  top: $main-header-navbar-height;
-  width: 100%;
-  z-index: z-index(main-nav-bar-modal);
+  top: $main-header-topbar-height;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, .4);
+  z-index: z-index(burger-menu-backdrop);
 }

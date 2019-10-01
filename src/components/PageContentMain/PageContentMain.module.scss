@@ -1,10 +1,8 @@
 @import 'styles/_global.scss';
 
 .PageContentMain {
+  display: block;
 
-}
-
-.TextPage {
   @include select(PageContentMainHeading_PageContentMainHeading) {
     @include centered-max;
 
@@ -17,6 +15,9 @@
       margin: 0;
     }
   }
+}
+
+.TextPage {
 
   @include select(PageContentMainHeading_HeadingInner) {
     @include centered-max(62rem);;
@@ -36,7 +37,6 @@
 }
 
 .OverviewPage {
-  @extend .TextPage;
 
   @include select(PageContentMainHeading_HeadingInner) {
     margin-left: 0;
