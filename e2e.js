@@ -7,24 +7,6 @@ const path = require('path');
 
 const appPath = path.join(__dirname, '/build/');
 
-const os = require('os');
-const ifaces = os.networkInterfaces();
-
-let ip;
-// Get network ip for localhost
-Object.keys(ifaces).forEach(function(ifname) {
-  ifaces[ifname].forEach(function(iface) {
-    if ('IPv4' !== iface.family || iface.internal !== false) {
-      // skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
-      return;
-    }
-
-    if (!ip) {
-      ip = iface.address;
-    }
-  });
-});
-
 function startCypress() {
   cypress
     .run({
@@ -32,9 +14,10 @@ function startCypress() {
       record: false,
       // browser: 'chrome',
       config: {
-        baseUrl: `http://${ip}:3000`,
+        baseUrl: `http://localhost:3000`,
         chromeWebSecurity: false,
         video: false,
+        screenshotOnRunFailure: false,
         viewportWidth: 1500,
         viewportHeight: 1000,
       },
