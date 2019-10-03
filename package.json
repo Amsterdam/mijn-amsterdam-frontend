@@ -15,11 +15,11 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-router-dom": "^4.3.5",
     "@types/react-test-renderer": "^16.9.0",
+    "@types/slug": "^0.9.1",
     "@types/throttle-debounce": "^1.1.1",
     "axios": "^0.19.0",
     "axios-mock-adapter": "^1.17.0",
     "classnames": "^2.2.6",
-    "cypress": "^3.4.1",
     "focus-trap-react": "^6.0.0",
     "http-server": "^0.11.1",
     "include-media": "^1.4.9",
@@ -77,7 +77,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@types/slug": "^0.9.1",
     "dyson": "^2.0.5",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
