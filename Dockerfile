@@ -55,7 +55,6 @@ WORKDIR /app
 COPY --from=build-deps /app/ /app/
 COPY cypress /app/cypress
 COPY /e2e.js /app/e2e.js
-COPY /cypress.json /app/cypress.json
 COPY mock-api /app/mock-api
 
 # Web server image
