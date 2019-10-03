@@ -82,7 +82,6 @@ function startHttpServer() {
           proxy_response.pipe(response);
           var responseCache = '';
           proxy_response.on('data', function(chunk) {});
-          console.log(proxy_response.headers);
           response.writeHead(proxy_response.statusCode, proxy_response.headers);
         });
         request.pipe(proxy_request);
