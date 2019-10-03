@@ -1,13 +1,53 @@
-const util = require('util');
-const exec = require('child_process').exec;
-const dyson = require('dyson');
+module.paths.push('/usr/local/lib/node_modules');
 const cypress = require('cypress');
-
-var http = require('http');
-var fs = require('fs');
-var path = require('path');
+const dyson = require('dyson');
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
 
 const appPath = path.join(__dirname, '/build/');
+
+const os = require('os');
+const ifaces = os.networkInterfaces();
+
+let ip;
+// Get network ip for localhost
+Object.keys(ifaces).forEach(function(ifname) {
+  ifaces[ifname].forEach(function(iface) {
+    if ('IPv4' !== iface.family || iface.internal !== false) {
+      // skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
+      return;
+    }
+
+    if (!ip) {
+      ip = iface.address;
+    }
+  });
+});
+
+function startCypress() {
+  cypress
+    .run({
+      // reporter: 'junit',
+      record: false,
+      // browser: 'chrome',
+      config: {
+        baseUrl: `http://${ip}:3000`,
+        chromeWebSecurity: false,
+        video: false,
+        viewportWidth: 1500,
+        viewportHeight: 1000,
+      },
+    })
+    .then(rs => {
+      const exitCode = rs.totalFailed >= 1 ? 1 : 0;
+      process.exit(exitCode);
+    })
+    .catch(error => {
+      console.error(error);
+      process.exit(1);
+    });
+}
 
 function startHttpServer() {
   http
@@ -28,6 +68,7 @@ function startHttpServer() {
         stream.pipe(response);
       } else {
         const [host] = request.headers['host'].split(':');
+
         var request_options = {
           host,
           port: 5000,
@@ -41,12 +82,14 @@ function startHttpServer() {
           proxy_response.pipe(response);
           var responseCache = '';
           proxy_response.on('data', function(chunk) {});
+          console.log(proxy_response.headers);
           response.writeHead(proxy_response.statusCode, proxy_response.headers);
         });
         request.pipe(proxy_request);
       }
     })
     .listen(3000, () => {
+      console.log('Application server on port 3000');
       startCypress();
     });
 }
@@ -62,32 +105,11 @@ function startDyson() {
   const appAfter = dyson.registerServices(appBefore, options, configs);
 
   console.log(`Dyson listening at port ${options.port}`);
-}
 
-function startCypress() {
-  cypress
-    .run({
-      // reporter: 'junit',
-      record: false,
-      // browser: 'chrome',
-      config: {
-        baseUrl: 'http://localhost:3000',
-        chromeWebSecurity: false,
-        video: false,
-      },
-    })
-    .then(rs => {
-      const exitCode = rs.totalFailed >= 1 ? 1 : 0;
-      process.exit(exitCode);
-    })
-    .catch(error => {
-      console.error(error);
-      process.exit(1);
-    });
+  startHttpServer();
 }
 
 startDyson();
-startHttpServer();
 
 // startCypress();
 

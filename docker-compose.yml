@@ -17,4 +17,7 @@ services:
     build:
       context: .
       target: integration-tests
-    command: node e2e.js
+      args:
+        - BUILD_ENV=test-integration
+    entrypoint: node
+    command: e2e.js

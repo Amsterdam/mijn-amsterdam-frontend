@@ -8,6 +8,7 @@ WORKDIR /app
 RUN apt-get update && \
   apt-get install -y \
   netcat \
+  netcat \
   git && \
   rm -rf /var/lib/apt/lists/*
 
@@ -20,7 +21,7 @@ COPY scripts/env-copy.sh /app/
 
 ARG BUILD_ENV=production
 ARG BUILD_NUMBER=-1
-ARG COMMIT_HASH=
+ARG COMMIT_HASH=unknown
 
 # Builds are always production builds but can have differences in server environment (test/acceptance/production)
 # Try to overwrite the default production .env file if a BUILD_ENV is set as build-arg
@@ -42,21 +43,21 @@ RUN rm /etc/localtime
 RUN ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
 
 # RUN npm run build
+RUN export BUILD_ENV=$BUILD_ENV
 RUN if [ "$BUILD_ENV" != "test-unit" ]; then npm run build ; fi
 RUN if [ "$BUILD_ENV" != "test-unit" ]; then echo "date=`date`; build=${BUILD_NUMBER}; see also: https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${COMMIT_HASH}" > /app/build/version.txt ; fi
 
 # Set-up the integration test part of the build
-FROM cypress/included:3.2.0 as integration-tests
+FROM cypress/included:3.4.1 as integration-tests
 
 WORKDIR /app
 
 COPY --from=build-deps /app/ /app/
 COPY cypress /app/cypress
 COPY /e2e.js /app/e2e.js
+COPY /cp.js /app/cp.js
 COPY /cypress.json /app/cypress.json
 COPY mock-api /app/mock-api
-
-# RUN npm install --save-dev cypress
 
 # Web server image
 FROM nginx:stable-alpine
