@@ -53,10 +53,20 @@ pipeline {
     }
 
     stage('E2E testing') {
-      // when { not { branch 'test' } }
+      // options {
+      //   timeout(time: 5, unit: 'MINUTES')
+      // }
+      environment {
+        PROJECT = "${PROJECT_PREFIX}integration"
+      }
       steps {
         script { currentBuild.displayName = "ACC e2e testing #${BUILD_NUMBER} (${COMMIT_HASH})" }
-        sh "node e2e"
+        sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-integration test-integration"
+      }
+      post {
+        always {
+          sh "docker-compose -p ${PROJECT} down -v || true"
+        }
       }
     }
 
