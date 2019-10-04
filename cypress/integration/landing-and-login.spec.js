@@ -6,8 +6,7 @@ describe('Landing page and login', function() {
   }
 
   it('Visit logout url always returns to landing page', function() {
-    cy.request('http://localhost:5000/api/logout');
-    cy.visit('/');
+    cy.visit('/api/logout');
     atHome();
   });
 

@@ -44,12 +44,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cypress": "cypress open",
+    "cypress:ci": "concurrently \"cypress run\" --kill-others \"node proxy-serve\" \"npm:mock-api\" --success first",
     "lint:staged": "lint-staged",
-    "mock-api": "dyson mock-api 5000 &",
+    "mock-api": "dyson mock-api 5000",
     "watch:mock-api": "nodemon --watch mock-api dyson mock-api/ 5000",
-    "serve-build": "http-server -p 3000 ./build &",
-    "integration-tests": "npm run mock-api && npm run serve-build && npx cypress run && killall node",
+    "serve-build": "http-server -p 3000 ./build",
     "release:major": "sh scripts/release.sh --major",
     "release:minor": "sh scripts/release.sh --minor",
     "release:bug": "sh scripts/release.sh --bug"
@@ -77,6 +76,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "concurrently": "^4.1.2",
     "dyson": "^2.0.5",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",

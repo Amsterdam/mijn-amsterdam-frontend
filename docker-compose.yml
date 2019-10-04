@@ -19,5 +19,5 @@ services:
       target: integration-tests
       args:
         - BUILD_ENV=test-integration
-    entrypoint: node
-    command: e2e.js
+    entrypoint: npm
+    command: run cypress:ci

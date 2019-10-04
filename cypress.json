@@ -1,1 +1,12 @@
-{}
+{
+  "reporter": "junit",
+  "reporterOptions": {
+    "mochaFile": "cypress/results/cypress-report.xml",
+    "toConsole": true
+  },
+  "baseUrl": "http://localhost:3000",
+  "chromeWebSecurity": false,
+  "video": false,
+  "viewportWidth": 1500,
+  "viewportHeight": 1000
+}
