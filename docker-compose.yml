@@ -19,4 +19,4 @@ services:
       target: e2e-tests
       args:
         - BUILD_ENV=e2e-tests
-    entrypoint: ["npm", "run", "cypress:ci"]
+    # entrypoint: ["npm", "run", "cypress:ci"]
