@@ -77,31 +77,31 @@ http
   });
 // }
 
-function startDyson() {
-  const options = {
-    configDir: path.join(__dirname, 'mock-api'),
-    port: 5000,
-  };
+// function startDyson() {
+//   const options = {
+//     configDir: path.join(__dirname, 'mock-api'),
+//     port: 5000,
+//   };
 
-  const configs = dyson.getConfigurations(options);
-  const appBefore = dyson.createServer(options);
-  const appAfter = dyson.registerServices(appBefore, options, configs);
+//   const configs = dyson.getConfigurations(options);
+//   const appBefore = dyson.createServer(options);
+//   const appAfter = dyson.registerServices(appBefore, options, configs);
 
-  console.log(`Dyson listening at port ${options.port}`);
+//   console.log(`Dyson listening at port ${options.port}`);
 
-  http.get('http://localhost:3000/api/login', response => {
-    console.log(response.headers);
-    var body = '';
-    response.on('data', function(d) {
-      body += d;
-    });
-    response.on('end', () => {
-      console.log(body);
-      process.exit(1);
-    });
-  });
-  // startHttpServer();
-}
+//   http.get('http://localhost:3000/api/login', response => {
+//     console.log(response.headers);
+//     var body = '';
+//     response.on('data', function(d) {
+//       body += d;
+//     });
+//     response.on('end', () => {
+//       console.log(body);
+//       process.exit(1);
+//     });
+//   });
+//   // startHttpServer();
+// }
 
 // startDyson();
 
