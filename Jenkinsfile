@@ -52,19 +52,20 @@ pipeline {
       }
     }
 
-    stage('Integration testing') {
+    stage('E2E testing') {
       // options {
       //   timeout(time: 5, unit: 'MINUTES')
       // }
       environment {
-        PROJECT = "${PROJECT_PREFIX}integration"
+        PROJECT = "${PROJECT_PREFIX}e2e"
       }
       steps {
-        script { currentBuild.displayName = "Integration testing #${BUILD_NUMBER} (${COMMIT_HASH})" }
-        sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-integration test-integration"
+        script { currentBuild.displayName = "E2E testing #${BUILD_NUMBER} (${COMMIT_HASH})" }
+        sh "docker-compose -p ${PROJECT} up --build --exit-code-from e2e-tests e2e-tests"
       }
       post {
         always {
+          junit 'cypress/results/cypress-report.xml'
           sh "docker-compose -p ${PROJECT} down -v || true"
         }
       }
@@ -178,9 +179,6 @@ pipeline {
   }
 
   post {
-    always {
-      junit 'cypress/results/cypress-report.xml'
-    }
     success {
       echo 'Pipeline success'
     }

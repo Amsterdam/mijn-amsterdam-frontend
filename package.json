@@ -44,7 +44,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cypress:ci": "concurrently \"cypress run\" --kill-others \"node proxy-serve\" \"npm:mock-api\" --success first",
+    "cypress:ci": "concurrently \"npx cypress run\" --kill-others \"node proxy-serve\" \"npm:mock-api\" --success first",
     "lint:staged": "lint-staged",
     "mock-api": "dyson mock-api 5000",
     "watch:mock-api": "nodemon --watch mock-api dyson mock-api/ 5000",

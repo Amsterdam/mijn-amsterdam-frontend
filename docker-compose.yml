@@ -13,11 +13,10 @@ services:
         - BUILD_ENV=test-unit # prevents Dockerfile from building the app when running unit tests
     command: npm run test
 
-  test-integration:
+  e2e-tests:
     build:
       context: .
-      target: integration-tests
+      target: e2e-tests
       args:
-        - BUILD_ENV=test-integration
-    entrypoint: npm
-    command: run cypress:ci
+        - BUILD_ENV=e2e-tests
+    command: npm run cypress:ci

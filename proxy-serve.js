@@ -35,7 +35,11 @@ const appPath = path.join(__dirname, '/build/');
 // function startHttpServer() {
 http
   .createServer(function(request, response) {
-    if (!request.url.startsWith('/api') && !request.url.startsWith('/logout')) {
+    if (
+      !request.url.startsWith('/api') &&
+      !request.url.startsWith('/logout') &&
+      !request.url.startsWith('/atlas')
+    ) {
       let fileName = request.url;
       if (fileName.indexOf('.') === -1) {
         fileName = 'index.html';

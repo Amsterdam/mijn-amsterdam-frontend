@@ -79,7 +79,7 @@ export default () => {
         </PageContentMainBody>
         {!isPhoneScreen && (
           <PageContentMainBody>
-            <MyArea url={mapUrl} />
+            {/* <MyArea url={mapUrl} /> */}
           </PageContentMainBody>
         )}
         <PageContentMainBody variant="regularBoxed">

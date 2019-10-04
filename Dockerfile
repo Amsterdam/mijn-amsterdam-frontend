@@ -48,7 +48,7 @@ RUN if [ "$BUILD_ENV" != "test-unit" ]; then npm run build ; fi
 RUN if [ "$BUILD_ENV" != "test-unit" ]; then echo "date=`date`; build=${BUILD_NUMBER}; see also: https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${COMMIT_HASH}" > /app/build/version.txt ; fi
 
 # Set-up the integration test part of the build
-FROM cypress/included:3.4.1 as integration-tests
+FROM cypress/base:10 as e2e-tests
 
 WORKDIR /app
 
@@ -57,6 +57,8 @@ COPY cypress /app/cypress
 COPY /proxy-serve.js /app/proxy-serve.js
 COPY /cypress.json /app/cypress.json
 COPY mock-api /app/mock-api
+
+RUN npm install cypress
 
 # Web server image
 FROM nginx:stable-alpine
