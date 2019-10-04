@@ -1,7 +1,7 @@
 module.paths.push('/usr/local/lib/node_modules');
 const cypress = require('cypress');
 const dyson = require('dyson');
-const http = require('http');
+const { http } = require('follow-redirects');
 const fs = require('fs');
 const path = require('path');
 
@@ -52,7 +52,7 @@ http
       stream.pipe(response);
     } else {
       const [host] = request.headers['host'].split(':');
-
+      console.log('route:', request.url);
       var request_options = {
         host,
         port: 5000,
@@ -73,24 +73,35 @@ http
   })
   .listen(3000, () => {
     console.log('Application server on port 3000');
-    // startCypress();
+    startDyson();
   });
 // }
 
-// function startDyson() {
-//   const options = {
-//     configDir: path.join(__dirname, 'mock-api'),
-//     port: 5000,
-//   };
+function startDyson() {
+  const options = {
+    configDir: path.join(__dirname, 'mock-api'),
+    port: 5000,
+  };
 
-//   const configs = dyson.getConfigurations(options);
-//   const appBefore = dyson.createServer(options);
-//   const appAfter = dyson.registerServices(appBefore, options, configs);
+  const configs = dyson.getConfigurations(options);
+  const appBefore = dyson.createServer(options);
+  const appAfter = dyson.registerServices(appBefore, options, configs);
 
-//   console.log(`Dyson listening at port ${options.port}`);
+  console.log(`Dyson listening at port ${options.port}`);
 
-//   startHttpServer();
-// }
+  http.get('http://localhost:3000/api/login', response => {
+    console.log(response.headers);
+    var body = '';
+    response.on('data', function(d) {
+      body += d;
+    });
+    response.on('end', () => {
+      console.log(body);
+      process.exit(1);
+    });
+  });
+  // startHttpServer();
+}
 
 // startDyson();
 
