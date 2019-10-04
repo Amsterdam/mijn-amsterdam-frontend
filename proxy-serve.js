@@ -73,7 +73,7 @@ http
   })
   .listen(3000, () => {
     console.log('Application server on port 3000');
-    startDyson();
+    // startDyson();
   });
 // }
 
