@@ -1,16 +1,16 @@
-FROM node:10.15 as build-deps
+FROM node:10.15.3 as build-deps
 LABEL maintainer="datapunt@amsterdam.nl"
 
 ENV LOGOUT_URL=${LOGOUT_URL:-notset}
 
 WORKDIR /app
 
-RUN apt-get update && \
-  apt-get install -y \
-  netcat \
-  netcat \
-  git && \
-  rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && \
+#   apt-get install -y \
+#   netcat \
+#   netcat \
+#   git && \
+#   rm -rf /var/lib/apt/lists/*
 
 COPY package.json /app/
 COPY package-lock.json /app/
@@ -30,7 +30,10 @@ RUN sh env-copy.sh ${BUILD_ENV}
 COPY src /app/src/
 COPY public /app/public/
 
+# Indicating we are on a CI environment
 ENV CI=true
+
+# CRA will generate a file for the React runtime chunk, inlining it will cause issues with the CSP config
 ENV INLINE_RUNTIME_CHUNK=false
 
 RUN npm install \
@@ -39,16 +42,16 @@ RUN npm install \
   ci \
   && npm cache clean --force
 
+# Setting the correct timezone for the build
 RUN rm /etc/localtime
 RUN ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
 
 # RUN npm run build
-RUN export BUILD_ENV=$BUILD_ENV
 RUN if [ "$BUILD_ENV" != "test-unit" ]; then npm run build ; fi
 RUN if [ "$BUILD_ENV" != "test-unit" ]; then echo "date=`date`; build=${BUILD_NUMBER}; see also: https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${COMMIT_HASH}" > /app/build/version.txt ; fi
 
 # Set-up the integration test part of the build
-FROM cypress/base:10 as e2e-tests
+FROM cypress/included:3.4.1 as e2e-tests
 
 WORKDIR /app
 
@@ -57,8 +60,6 @@ COPY cypress /app/cypress
 COPY /proxy-serve.js /app/proxy-serve.js
 COPY /cypress.json /app/cypress.json
 COPY mock-api /app/mock-api
-
-RUN npm install cypress
 
 # Web server image
 FROM nginx:stable-alpine
