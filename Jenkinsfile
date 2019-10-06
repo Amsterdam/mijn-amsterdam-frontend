@@ -42,12 +42,12 @@ pipeline {
       }
       steps {
         script { currentBuild.displayName = "E2E testing #${BUILD_NUMBER} (${COMMIT_HASH})" }
-        sh "docker-compose -p ${PROJECT}  -f docker-compose-e2e.yml up --build --exit-code-from e2e e2e"
+        sh "docker-compose -p ${PROJECT} -f docker-compose-e2e.yml up --build --exit-code-from e2e e2e"
       }
       post {
         always {
-          junit 'cypress/results/cypress-report.xml'
-          sh "docker-compose -p ${PROJECT} down -v || true"
+          sh "docker-compose -p ${PROJECT} -f docker-compose-e2e.yml down -v || true"
+          // junit 'cypress/results/cypress-report.xml'
         }
       }
     }
