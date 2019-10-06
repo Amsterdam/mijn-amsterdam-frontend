@@ -1,23 +1,11 @@
-const os = require('os');
-const ifaces = os.networkInterfaces();
+const ip = require('../get-ip').ip;
 
 const [dir, port] = process.argv.slice(2);
-
-// Get network ip for localhost
-Object.keys(ifaces).forEach(function(ifname) {
-  ifaces[ifname].forEach(function(iface) {
-    if ('IPv4' !== iface.family || iface.internal !== false) {
-      // skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
-      return;
-    }
-
-    if (!exports.ip) {
-      exports.ip = iface.address;
-    }
-  });
-});
-
+const apiPort = process.env.MOCK_API_PORT || port || 5000;
 const configDir = process.cwd() + '/' + dir;
+
 console.log(
-  `Dyson listening on ${exports.ip}:${port} and serving from: ${configDir}`
+  `Dyson listening on ${ip}:${apiPort} and serving from: ${configDir}`
 );
+
+exports.ip = ip;

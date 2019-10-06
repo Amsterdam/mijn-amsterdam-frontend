@@ -1,5 +1,6 @@
 const storage = require('node-persist');
-const differenceInSeconds = require('date-fns/difference_in_seconds');
+const differenceInSeconds = require('date-fns').differenceInSeconds;
+const parseISO = require('date-fns').parseISO;
 
 const TIMEOUT_MINUTES = 15;
 const ONE_MINUTE_IN_SECONDS = 60;
@@ -11,7 +12,8 @@ exports.isAuthenticated = async () => {
   const isAuthenticated = await storage.getItem('authState');
   const lastLogin = await storage.getItem('authStateLastLogin');
   const isValidSessionTime =
-    differenceInSeconds(new Date(), lastLogin) < DIGID_SESSION_TIMEOUT_SECONDS;
+    differenceInSeconds(new Date(), parseISO(lastLogin)) <
+    DIGID_SESSION_TIMEOUT_SECONDS;
   return isAuthenticated && isValidSessionTime;
 };
 exports.getUserType = () => storage.getItem('userType');

@@ -1,0 +1,38 @@
+version: "3.5"
+services:
+  mock-api:
+    ports:
+      - "5000:5000"
+    build:
+      context: .
+      dockerfile: ./mock-api/Dockerfile
+    environment:
+      - APP_HOST=http://app
+      - APP_PORT=3000
+
+  app:
+    ports:
+      - "3000:3000"
+    build:
+      context: .
+    links:
+      - "mock-api:api"
+    depends_on:
+      - mock-api
+    environment:
+      - MOCK_API_HOST=api
+      - MOCK_API_PORT=5000
+
+  e2e:
+    links:
+      - mock-api
+      - app
+    build:
+      context: .
+      dockerfile: ./cypress/Dockerfile
+    environment:
+      - CYPRESS_baseUrl=http://app:3000
+    depends_on:
+      - app
+      - mock-api
+

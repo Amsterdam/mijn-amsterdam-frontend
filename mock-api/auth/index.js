@@ -1,7 +1,8 @@
 const state = require('./state');
-const server = require('../index');
-const APP_PORT = process.env.FRONT_END_PORT || 3000;
-const APP_URL = `http://${server.ip}:${APP_PORT}`;
+const ip = require('../index').ip || 'localhost';
+const APP_HOST = process.env.APP_HOST || ip;
+const APP_PORT = process.env.APP_PORT || 3000;
+const APP_URL = `${APP_HOST}:${APP_PORT}`;
 
 module.exports = {
   path: '/api/login|logout',

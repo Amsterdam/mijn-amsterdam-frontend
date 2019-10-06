@@ -42,7 +42,7 @@ pipeline {
       }
       steps {
         script { currentBuild.displayName = "E2E testing #${BUILD_NUMBER} (${COMMIT_HASH})" }
-        sh "docker-compose -p ${PROJECT} up --build --exit-code-from e2e-tests e2e-tests"
+        sh "docker-compose -p ${PROJECT}  -f docker-compose-e2e.yml up --build --exit-code-from e2e-tests e2e-tests"
       }
       post {
         always {
