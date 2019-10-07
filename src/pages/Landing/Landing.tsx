@@ -2,14 +2,15 @@ import { LOGIN_URL, ExternalUrls } from 'App.constants';
 import { ReactComponent as BetaLabel } from 'assets/images/beta-label.svg';
 import DigiDLogo from 'assets/images/digid-logo.png';
 import Heading from 'components/Heading/Heading';
-import PageContentMain from 'components/PageContentMain/PageContentMain';
-import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
-import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
+import Page, { TextPage, PageContent } from 'components/Page/Page';
+import PageHeading from 'components/PageHeading/PageHeading';
 import React, { useEffect, useRef, useState } from 'react';
 
 import styles from './Landing.module.scss';
 import { trackPageView, trackLink } from 'hooks/analytics.hook';
 import classnames from 'classnames';
+import { clearSessionStorage } from 'hooks/storage.hook';
+import pageContentStyles from 'components/Page/Page.module.scss';
 
 export default () => {
   const loginButton = useRef(null);
@@ -17,29 +18,23 @@ export default () => {
   useEffect(() => {
     trackPageView('Landingspagina', document.location.href + 'landingspagina');
     // Whenever we load the landing/login page, start a new session.
-    sessionStorage.clear();
+    clearSessionStorage();
   }, []);
 
   const [isRedirecting, setRedirecting] = useState(false);
 
   return (
-    <PageContentMain>
-      <PageContentMainHeading>
-        <span className={styles.MainHeadingInner}>
-          Welkom op Mijn Amsterdam
-        </span>
+    <TextPage>
+      <PageHeading className={styles.Heading}>
+        Welkom op Mijn Amsterdam
         <BetaLabel
           aria-hidden="true"
           role="img"
           aria-label="Beta versie"
           className={styles.BetaLogo}
         />
-      </PageContentMainHeading>
-      <PageContentMainBody
-        id="AppContent"
-        variant="regular"
-        className={styles.Landing}
-      >
+      </PageHeading>
+      <PageContent id="AppContent">
         <p>
           Welkom op Mijn Amsterdam: uw persoonlijke digitale pagina bij de
           gemeente Amsterdam. Hier ziet u op één centrale plek welke gegevens de
@@ -89,9 +84,7 @@ export default () => {
         <ul>
           <li>Hoe u ingeschreven staat bij de gemeente</li>
           <li>Hoe het staat met uw aanvraag voor een bijstandsuitkering</li>
-          <li>
-            Overzicht voorzieningen in het kader van zorg en ondersteuning
-          </li>
+          <li>Uw voorzieningen in het kader van zorg en ondersteuning (Wmo)</li>
           <li>Hoe het staat met uw aanvraag voor een Stadspas</li>
           <li>Informatie over uw gemeentebelastingen</li>
           <li>Informatie over uw erfpacht</li>
@@ -106,10 +99,10 @@ export default () => {
             onClick={() => trackLink(ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD)}
             href={ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD}
           >
-            Mijn Amsterdam - gegevens inzien en storing melden.
+            veelgestelde vragen over Mijn Amsterdam
           </a>
         </p>
-      </PageContentMainBody>
-    </PageContentMain>
+      </PageContent>
+    </TextPage>
   );
 };

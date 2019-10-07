@@ -1,20 +1,5 @@
 @import 'styles/_global.scss';
 
-.Landing {
-  margin-bottom: 10rem;
-  max-width: 54rem;
-  margin: 0 auto;
-
-  @include media-query(">phone") {
-    padding: 0;
-  }
-
-  ul {
-    padding-left: 2rem;
-    list-style-type: square;
-  }
-}
-
 .LoginBtn {
   display: inline-flex;
   height: 4.6rem;
@@ -57,26 +42,23 @@
   background-color: #000;
 }
 
-@include select(PageContentMainHeading) {
-  position: relative;
-}
-
-
-.MainHeadingInner {
-  width: 54rem;
-  margin: 0 auto;
-}
-
 @include select(Heading_Heading__tiny) {
   + p, + ul {
     margin-top: 0;
   }
 }
 
+.Heading {
+  @include IE11 {
+    overflow: hidden;
+  }
+}
+
 .BetaLogo {
   position: absolute;
-  height: 100%;
-  width: auto;
   top: 0;
   right: 0;
+  width: 10rem;
+  height: 10rem;
+  display: block;
 }

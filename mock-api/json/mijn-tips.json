@@ -1,90 +1,89 @@
 {
-  "items":[
-     {
-        "active":true,
-        "datePublished":"2019-07-24",
-        "description":"Het is sinds 1 juli niet meer toegestaan om met een telefoon in de hand te fietsen.",
-        "id":1,
-        "link":{
-           "title":"Vraag direct aan",
-           "to":"https://www.rijksoverheid.nl/onderwerpen/fiets/vraag-en-antwoord/mag-ik-bellen-en-naar-muziek-luisteren-op-de-fiets"
+    "items": [
+        {
+            "datePublished": "2019-07-24",
+            "description": "U mag geen telegoon meer vasthouden op de fiets",
+            "id": 1,
+            "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/bellenopfiets.jpg",
+            "link": {
+                "title": "Meer informatie",
+                "to": "https://www.rijksoverheid.nl/onderwerpen/fiets/vraag-en-antwoord/mag-ik-bellen-en-naar-muziek-luisteren-op-de-fiets"
+            },
+            "priority": 50,
+            "title": "Geen telefoon op de fiets"
         },
-        "priority":50,
-        "title":"Geen telefoon op de fiets"
-     },
-     {
-        "active":true,
-        "conditional":"datetime.now() < datetime(2019, 9, 1) ",
-        "datePublished":"2019-07-24",
-        "description":"De aansluiting belastingen is toegevoegd aan mijn amsterdam",
-        "id":6,
-        "link":{
-           "title":"Meer informatie",
-           "to":"https://mijn.amsterdam.nl"
+        {
+            "datePublished": "2019-08-18",
+            "description": "Kijk waar het dichtstbijzijnde Afvalpunt is. En welke vergunningen de gemeente heeft uitgegeven in uw buurt",
+            "id": 9,
+            "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/afvalpunt.jpg",
+            "link": {
+                "title": "Kijk op de kaart",
+                "to": "/buurt"
+            },
+            "priority": 40,
+            "title": "Mijn buurt"
         },
-        "priority":40,
-        "title":"Nieuwe aansluiting"
-     },
-     {
-        "active":true,
-        "datePublished":"2019-07-24",
-        "description":"Op een Afvalpunt kunt u gratis\u00a0uw grofvuil, klein chemisch afval en kringloopgoederen\u00a0kwijt",
-        "id":3,
-        "link":{
-           "title":"Bekijk",
-           "to":"https://www.amsterdam.nl/afval/grofvuil/grofvuil-wegbrengen/"
+        {
+            "datePublished": "2019-07-24",
+            "description": "Op een Afvalpunt kunt u uw grofvuil, klein chemisch afval en tweedehands spullen inleveren",
+            "id": 3,
+            "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/grofvuil.jpg",
+            "link": {
+                "title": "Adressen Afvalpunten",
+                "to": "https://www.amsterdam.nl/afval/grofvuil/grofvuil-wegbrengen/"
+            },
+            "priority": 25,
+            "title": "Grofvuil"
         },
-        "priority":25,
-        "title":"Grofvuil"
-     },
-     {
-        "active":true,
-        "datePublished":"2019-07-24",
-        "description":"Word een vrijwilligger in Amsterdam",
-        "id":2,
-        "link":{
-           "title":"Vrijwilliger worden",
-           "to":"https://www.vrijwilligerapp.nl/"
+        {
+            "datePublished": "2019-07-24",
+            "description": "Er is altijd vrijwilligerswerk dat bij u past\nBekijk de vacature",
+            "id": 2,
+            "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/vrijwilliger.jpg",
+            "link": {
+                "title": "Vrijwilligerscentrale Amsterdam",
+                "to": "https://www.vca.nu/vacaturebank/"
+            },
+            "priority": 20,
+            "title": "Vrijwilliger worden?"
         },
-        "priority":20,
-        "title":"Vrijwilliger worden?"
-     },
-     {
-        "active":true,
-        "datePublished":"2019-07-24",
-        "description":"Bekijk hoe u gratis een geveltuin kunt aanvragen bij uw stadsdeel.",
-        "id":4,
-        "link":{
-           "title":"Bekijk",
-           "to":"https://www.amsterdam.nl/veelgevraagd/?productid=%7B2214F853-B9F5-41F6-934B-B1616D8E0949%7D#%7B7E4E60A9-F809-4FC9-B7EB-9C06B3DB4513%7D"
+        {
+            "datePublished": "2019-07-24",
+            "description": "Bekijk hoe u gratis een geveltuin kunt aanvragen bij uw stadsdeel. Of hoe u de geveltuin kunt laten verwijderen.",
+            "id": 4,
+            "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/geveltuin.jpg",
+            "link": {
+                "title": "Meer informatie",
+                "to": "https://www.amsterdam.nl/veelgevraagd/?productid=%7B2214F853-B9F5-41F6-934B-B1616D8E0949%7D#%7B7E4E60A9-F809-4FC9-B7EB-9C06B3DB4513%7D"
+            },
+            "priority": 20,
+            "title": "Geveltuin"
         },
-        "priority":20,
-        "title":"Geveltuin aanleggen"
-     },
-     {
-        "active":true,
-        "datePublished":"2019-07-24",
-        "description":"Gaat u op reis naar verre oorden? Kijk welke vaccinaties u nodig heeft",
-        "id":5,
-        "link":{
-           "title":"Meer informatie",
-           "to":"https://www.ggd.amsterdam.nl/ggd/contact/reizigersvaccinatie/"
+        {
+            "datePublished": "2019-07-24",
+            "description": "De GGD geeft advies en alle vaccinaties die u nodig hebt voor uw vakantie naar het buitenland",
+            "id": 5,
+            "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/vaccinaties.jpg",
+            "link": {
+                "title": "Meer informatie",
+                "to": "https://www.ggd.amsterdam.nl/ggd/contact/reizigersvaccinatie/vaccinaties.jpg"
+            },
+            "priority": 20,
+            "title": "Vaccinaties"
         },
-        "priority":20,
-        "title":"Vaccinaties"
-     },
-     {
-        "active":true,
-        "datePublished":"2019-07-24",
-        "description":"Wij zijn constant bezig met nieuw gemeentelijke diensten aan te sluiten!",
-        "id":7,
-        "link":{
-           "title":"Meer informatie",
-           "to":"https://mijn.amsterdam.nl"
-        },
-        "priority":20,
-        "title":"Kom regelmatig terug"
-     }
-  ],
-  "total":7
+        {
+            "datePublished": "2019-07-24",
+            "description": "U vindt hier steeds weer nieuwe onderwerpen! Bekijk de nieuwe onderwerpen",
+            "id": 7,
+            "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/nieuweaansluiting.jpg",
+            "link": {
+                "title": "Bekijk de nieuwe onderwerpen",
+                "to": "/"
+            },
+            "priority": 20,
+            "title": "Kom snel terug"
+        }
+    ],
+    "total": 7
 }

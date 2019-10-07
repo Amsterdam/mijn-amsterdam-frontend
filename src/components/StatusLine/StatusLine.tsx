@@ -18,8 +18,8 @@ export interface StatusLineItem {
   datePublished: string;
   description: string | JSX.Element;
   documents: Document[];
-  isActual: boolean;
-  isHistorical: boolean;
+  isLastActive: boolean;
+  isChecked: boolean;
 }
 
 type AltDocumentContent = string | JSX.Element;
@@ -42,6 +42,11 @@ interface StatusLineItemProps {
 
 interface DownloadLinkProps {
   item: Document;
+}
+
+interface ToggleMoreProps {
+  isCollapsed: boolean;
+  toggleCollapsed: () => void;
 }
 
 function DownloadLink({ item }: DownloadLinkProps) {
@@ -74,8 +79,8 @@ function StatusLineItem({
       id={item.id}
       className={classnames(
         styles.ListItem,
-        item.isActual && styles.Actual,
-        item.isHistorical && styles.Historical,
+        item.isLastActive && styles.LastActive,
+        item.isChecked && styles.Checked,
         item.stepType && styles[item.stepType]
       )}
     >
@@ -103,6 +108,20 @@ function StatusLineItem({
         </div>
       </div>
     </li>
+  );
+}
+
+function ToggleMore({ isCollapsed, toggleCollapsed }: ToggleMoreProps) {
+  return (
+    <button
+      className={classnames(styles.MoreStatus, {
+        [styles.MoreStatusClosed]: isCollapsed,
+      })}
+      onClick={toggleCollapsed}
+    >
+      <CaretLeft aria-hidden="true" />
+      {isCollapsed ? 'Toon alles' : 'Toon minder'}
+    </button>
   );
 }
 
@@ -142,13 +161,20 @@ export default function StatusLine({
 
   return (
     <>
+      {items.length > 1 && (
+        <ToggleMore
+          isCollapsed={isCollapsed}
+          toggleCollapsed={toggleCollapsed}
+        />
+      )}
       <div className={styles.StatusLine}>
         <h4 className={styles.ListHeading}>Status</h4>
         {!!items.length && (
           <ul className={styles.List}>
             {items
               .filter(
-                (item, index) => !isCollapsed || (isCollapsed && item.isActual)
+                (item, index) =>
+                  !isCollapsed || (isCollapsed && item.isLastActive)
               )
               .map((item, index) => (
                 <StatusLineItem
@@ -165,15 +191,10 @@ export default function StatusLine({
         )}
       </div>
       {items.length > 1 && (
-        <button
-          className={classnames(styles.MoreStatus, {
-            [styles.MoreStatusClosed]: isCollapsed,
-          })}
-          onClick={toggleCollapsed}
-        >
-          <CaretLeft aria-hidden="true" />
-          {isCollapsed ? 'Toon alles' : 'Toon minder'}
-        </button>
+        <ToggleMore
+          isCollapsed={isCollapsed}
+          toggleCollapsed={toggleCollapsed}
+        />
       )}
     </>
   );

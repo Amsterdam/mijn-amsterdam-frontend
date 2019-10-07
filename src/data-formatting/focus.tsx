@@ -785,8 +785,8 @@ function formatStepData(
       : [],
     status: stepLabels.status,
     aboutStep: stepTitle,
-    isActual: sourceData.isActual,
-    isHistorical: !sourceData.isActual,
+    isLastActive: sourceData.isActual,
+    isChecked: !sourceData.isActual,
     stepType: sourceData.stepType,
   };
 }

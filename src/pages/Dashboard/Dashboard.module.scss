@@ -1,20 +1,42 @@
 @import 'styles/_global.scss';
 
 .Dashboard {
-  @include select(PageContentMainBody) {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
 
-    @include media-query('<=phone') {
-      display: block; // NOTE: This discards all the flexbox properties defined below
+  // Dashboard has a different design for the heading, to match the design easily and responsively
+  // a pragmatic solution is written below.
+  @include select(PageHeading_PageHeading) {
+    @include centered-max;
+    background: transparent;
+
+    span {
+      z-index: 0;
     }
-  }
 
-  // Corrects the padding for the dasboard specifically
-  @include select(PageContentMainHeading_PageContentMainHeading) {
-    padding-top: 1rem;
+    &:before {
+      content: '';
+      position: absolute;
+      background: #fff;
+      width: calc(50% - 2rem);
+      left: 0;
+      top: 0;
+      bottom: 0;
+    }
+
+    @include mq-phone() {
+      margin: 0 1rem;
+    }
+
+    @include select(PageHeading_HeadingInner) {
+      margin: 0 4rem;
+
+      @include mq-tablet() {
+        margin: 0 2rem;
+      }
+
+      @include mq-phone() {
+        margin: 0;
+      }
+    }
   }
 
   .MyNotificationsHeadingLink {
@@ -25,62 +47,42 @@
     }
   }
 
-  @include select(MyNotifications_MyNotifications) {
-    flex-basis: calc(
-      50% - 5rem
-    ); // margin-left + margin-right + custom gutter (an visually pleasing space between 2 blocks)
-    flex-shrink: 0;
-    overflow: hidden;
-    margin-right: 4rem;
-    border-top: 1px solid $color-neutral-grey2;
+  .TopContentContainer {
+    @include centered-max;
     margin-bottom: 10rem;
 
-    // In combination with Chapters panel and sizing of PageContentMainHeading__medium
-    @include media-query('>phone', '<=tablet') {
-      flex-basis: calc(50% - 3rem);
-      margin-right: 2rem;
+    @include media-q('>phone') {
+      display: flex;
+      align-items: flex-start;
+    }
+  }
+
+  @include select(MyNotifications_MyNotifications) {
+    overflow: hidden;
+    border-top: 1px solid $color-neutral-grey2;
+    margin: 0 1rem;
+    margin-bottom: 8rem;
+
+    @include media-q('>phone') {
+      flex-grow: 1;
+      margin: 0 2rem;
     }
 
-    @include media-query('<=phone') {
-      flex-basis: 100%;
-      margin: 0;
+    @include media-q('>tablet') {
+      margin: 0 4rem;
     }
   }
 
   @include select(MyChaptersPanel_MyChaptersPanel) {
-    @include IE11 {
-      width: calc(50% + 1rem);
-    }
-
-    @include media-query('>tablet') {
-      width: calc(
-        50% + 5rem
-      ); // + custom gutter (an visually pleasing space between 2 blocks)
-      margin-right: -4rem;
-    }
-
-    @include media-query('>phone', '<=tablet') {
-      margin-right: -4rem;
-      width: calc(50% + 4rem);
-    }
-
-    @include media-query('<=phone') {
-      width: auto;
-      flex-basis: auto;
-      margin-left: -2rem;
-      margin-right: -2rem;
-      margin-top: -0.1rem; // overlap border line from sibling component rendered on top of this one
+    // Adjust some margins to match the design on mobile
+    @include media-q('>phone') {
+      flex: 0 0 calc(50% + 2rem);
     }
   }
 
   @include select(MyCases_MyCases) {
-    flex-basis: $main-boxed-width;
     margin-bottom: 8rem;
-
-    @include media-query('<=phone') {
-      margin-bottom: 4rem;
-      margin-top: 4rem;
-    }
+    @include centered-block;
   }
 
   @include select(MyArea_MyArea) {
@@ -89,24 +91,12 @@
     width: 100%;
   }
 
-  @include select(MyTips_MyTips) {
-    flex-basis: $main-boxed-width;
-    margin-bottom: 10rem;
-  }
-
   @include select(DirectLinks_DirectLinks) {
-    flex-basis: $main-boxed-width;
+    @include centered-block;
   }
-}
 
-.FirstBody {
-  max-width: $main-boxed-width;
-  width: 100%;
-  margin: 0 auto;
-  // Makes the notifications and chapters touch the bottom of Hero
-  margin-top: -3.8rem;
-
-  @include media-query('<=phone') {
-    margin-top: -1rem;
+  @include select(MyTips_MyTips) {
+    @include centered-block;
+    margin-bottom: 10rem;
   }
 }

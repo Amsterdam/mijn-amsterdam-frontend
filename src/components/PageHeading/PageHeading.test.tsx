@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import PageContentMain from './PageContentMain';
+import PageHeading from './PageHeading';
 
 it('Renders without crashing', () => {
-  shallow(<PageContentMain>Hela!</PageContentMain>);
+  shallow(<PageHeading>Hola!</PageHeading>);
 });

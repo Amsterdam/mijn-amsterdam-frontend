@@ -1,17 +1,14 @@
 import React, { useContext } from 'react';
-import PageContentMain from 'components/PageContentMain/PageContentMain';
-import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
+import { DetailPage, PageContent } from 'components/Page/Page';
+import PageHeading from 'components/PageHeading/PageHeading';
 import styles from './ZorgDetail.module.scss';
-import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
 import { Chapters, ChapterTitles, AppRoutes } from 'App.constants';
 import { AppContext } from 'AppState';
 import useRouter from 'use-react-router';
-import Heading from 'components/Heading/Heading';
-import PageContentMainHeadingBackLink from 'components/PageContentMainHeadingBackLink/PageContentMainHeadingBackLink';
-import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
 import Alert from 'components/Alert/Alert';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 import StatusLine from 'components/StatusLine/StatusLine';
+import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 
 export default () => {
   const {
@@ -32,24 +29,16 @@ export default () => {
   const noContent = !isLoading && !WmoItem;
 
   return (
-    <PageContentMain variant="full" className={styles.ZorgDetail}>
-      <PageContentMainHeading el="div" variant="boxedWithIcon">
-        <ChapterHeadingIcon chapter={Chapters.ZORG} />
-        <Heading el="h2" size="large" className={styles.PageHeading}>
-          <PageContentMainHeadingBackLink to={AppRoutes.ZORG}>
-            {ChapterTitles.ZORG}
-          </PageContentMainHeadingBackLink>
-          {!isLoading && WmoItem ? (
-            <span>{WmoItem.title}</span>
-          ) : (
-            <LoadingContent
-              className={styles.LoadingContentHeading}
-              barConfig={[['50%', '3rem', '0']]}
-            />
-          )}
-        </Heading>
-      </PageContentMainHeading>
-      <PageContentMainBody variant="boxed">
+    <DetailPage>
+      <PageHeading
+        icon={<ChapterIcon chapter={Chapters.ZORG} />}
+        backLink={{ to: AppRoutes.ZORG, title: ChapterTitles.ZORG }}
+        isLoading={isLoading}
+      >
+        {WmoItem && WmoItem.title}
+      </PageHeading>
+
+      <PageContent>
         {(isError || noContent) && (
           <Alert type="warning">
             We kunnen op dit moment geen gegevens tonen.
@@ -62,30 +51,27 @@ export default () => {
             <strong>{WmoItem.supplier}</strong>
           </p>
         )}
-      </PageContentMainBody>
+      </PageContent>
+
       {!!WmoItem && (
-        <PageContentMainBody>
-          <StatusLine
-            items={WmoItem.process}
-            trackCategory="Zorg en ondersteuning / Voorziening"
-            altDocumentContent={(statusLineItem, stepNumber) => {
-              return stepNumber === 1 ? (
-                <p>
-                  <strong>U krijgt dit besluit per post.</strong>
-                </p>
-              ) : (
-                ''
-              );
-            }}
-          />
-          {WmoItem && !WmoItem.isActual && (
-            <p className={styles.HistoricItemsMention}>
-              Informatie van voor 1 januari 2018 kunt u hier niet inzien. Deze
-              kunt u wel opvragen bij de Wmo Helpdesk.
-            </p>
-          )}
-        </PageContentMainBody>
+        <StatusLine
+          items={WmoItem.process}
+          trackCategory="Zorg en ondersteuning / Voorziening"
+          altDocumentContent={(statusLineItem, stepNumber) => {
+            return stepNumber === 1 ? (
+              <p>
+                <strong>
+                  {WmoItem.isActual
+                    ? 'U krijgt dit besluit per post.'
+                    : 'U hebt dit besluit per post ontvangen.'}
+                </strong>
+              </p>
+            ) : (
+              ''
+            );
+          }}
+        />
       )}
-    </PageContentMain>
+    </DetailPage>
   );
 };
