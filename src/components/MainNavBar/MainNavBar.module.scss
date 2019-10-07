@@ -1,9 +1,12 @@
 @import 'styles/_global.scss';
 
 .MainNavBar {
-  position: relative;
   height: $main-header-navbar-height;
   background-color: $color-neutral-grey1;
+
+  &:not(.BurgerMenu) {
+    // position: relative;
+  }
 
   @include select(FontEnlarger_FontEnlarger__) {
     position: absolute;
@@ -12,12 +15,13 @@
 }
 
 .LinkContainer {
+  @include centered-max;
   display: flex;
-  max-width: $main-boxed-width;
   background-color: $color-neutral-grey1;
-  margin: 0 auto;
+  // margin-top: $main-header-topbar-height;
 
-  @include media-query('<=tablet') {
+  @include mq-tablet() {
+    display: -ms-grid;
     display: grid; // On a phone the menu is ordered differently so we use grid to have control over that
     width: $main-header-navbar-width--phone;
     margin: 0;
@@ -63,7 +67,7 @@
     margin-right: 0;
   }
 
-  @include media-query('<=tablet') {
+  @include mq-tablet() {
     font-weight: bold;
     font-size: 1.5rem;
     margin: 0;
@@ -72,6 +76,7 @@
 
     // Move home button after the Chapters menu
     &:nth-child(2) {
+      -ms-grid-row:2;
       grid-row: 2;
     }
   }
@@ -94,9 +99,10 @@
     }
   }
 
-  @include media-query('<=tablet') {
+  @include mq-tablet() {
     position: static;
     margin-top: 0;
+    -ms-grid-row: 20;
     grid-row: 20;
 
     > a {
@@ -136,12 +142,13 @@
   margin-left: 0.2rem;
   text-indent: -100vw; // move text outside of view
   cursor: pointer;
+  padding: 0;
 
   &Open {
     background-image: url('assets/images/Close.svg');
   }
 
-  @include media-query('>phone', '<=tablet') {
+  @include media-q('>phone', '<tablet') {
     margin-left: 1.2rem;
   }
 }
@@ -155,11 +162,12 @@
   background-color: transparent;
   cursor: pointer;
   position: absolute;
-  top: 0;
+  top: $main-header-topbar-height;
   right: calc(50% - #{$main-boxed-width} / 2);
   font-weight: 500;
   color: $color-neutral-grey4;
   font-size: 1.8rem;
+  padding: 0;
 
   &Open {
     color: transparent;
@@ -170,7 +178,8 @@
     width: 4rem;
   }
 
-  @include media-query('<=tablet') {
+  @include mq-tablet() {
+    top: $main-header-topbar-height--tablet;
     right: 0.5rem;
 
     &Open {
@@ -179,11 +188,13 @@
   }
 }
 
-.Modal {
-  background: $color-neutral-grey4;
-  opacity: 0.5;
+.BurgerMenu:before {
+  content: '';
   position: absolute;
-  top: $main-header-navbar-height;
-  width: 100%;
-  z-index: z-index(main-nav-bar-modal);
+  top: $main-header-topbar-height;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, .4);
+  z-index: z-index(burger-menu-backdrop);
 }

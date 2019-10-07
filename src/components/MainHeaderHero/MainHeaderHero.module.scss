@@ -7,7 +7,7 @@
   padding-top: 25%;
   background: $color-neutral-grey2;
 
-  @include media-query('<=tablet') {
+  @include mq-tablet() {
     padding-top: 40%;
   }
 }

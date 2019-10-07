@@ -149,8 +149,8 @@ export default function MainNavBar() {
     MY_CHAPTERS: { items: myChapterItems },
   } = useContext(AppContext);
   const { isAuthenticated } = useContext(SessionContext);
-  const isResponsiveMenu = useTabletScreen();
-  const [isResponsiveMenuMenuVisible, toggleResponsiveMenu] = useState(false);
+  const isBurgerMenu = useTabletScreen();
+  const [isBurgerMenuVisible, toggleBurgerMenu] = useState(false);
   const { history, location } = useRouter();
   const { isTutorialVisible, setIsTutorialVisible } = useContext(
     TutorialContext
@@ -164,18 +164,18 @@ export default function MainNavBar() {
       : classList.remove(TUTORIAL_CLASS);
   }, [isTutorialVisible]);
 
-  function closeResponsiveMenu(e?: any) {
-    if (isResponsiveMenuMenuVisible) {
+  function closeBurgerMenu(e?: any) {
+    if (isBurgerMenuVisible) {
       // Testing for clicks on elements that are not part of the responsive menu
-      const MenuToggleButton = document.getElementById(MenuToggleBtnId);
+      const BurgerMenuToggleButton = document.getElementById(MenuToggleBtnId);
       const LinkContainer = document.getElementById(LinkContainerId);
       const clickedOutside = !(
         (LinkContainer && LinkContainer.contains(e.target)) ||
-        (MenuToggleButton && MenuToggleButton.contains(e.target))
+        (BurgerMenuToggleButton && BurgerMenuToggleButton.contains(e.target))
       );
 
       if (clickedOutside) {
-        toggleResponsiveMenu(false);
+        toggleBurgerMenu(false);
       }
     }
   }
@@ -193,31 +193,37 @@ export default function MainNavBar() {
 
   // Bind click outside small screen menu to hide it
   useEffect(() => {
-    document.addEventListener('click', closeResponsiveMenu);
-    return () => document.removeEventListener('click', closeResponsiveMenu);
+    document.addEventListener('click', closeBurgerMenu);
+    return () => document.removeEventListener('click', closeBurgerMenu);
   });
 
   // Hides small screen menu on route change
   useEffect(() => {
-    toggleResponsiveMenu(false);
+    toggleBurgerMenu(false);
     setSubMenuVisibility();
   }, [history.location]);
 
   return (
-    <nav className={styles.MainNavBar}>
-      {isResponsiveMenu && (
+    <nav
+      className={classnames(
+        styles.MainNavBar,
+        isBurgerMenuVisible && styles.BurgerMenu
+      )}
+    >
+      {isBurgerMenu && (
         <button
           id={MenuToggleBtnId}
-          className={classnames(styles.MenuToggleBtn, {
-            [styles.MenuToggleBtnOpen]: isResponsiveMenuMenuVisible,
-          })}
-          onClick={() => toggleResponsiveMenu(!isResponsiveMenuMenuVisible)}
+          className={classnames(
+            styles.MenuToggleBtn,
+            isBurgerMenuVisible && styles.MenuToggleBtnOpen
+          )}
+          onClick={() => toggleBurgerMenu(!isBurgerMenuVisible)}
         >
           Navigatie
         </button>
       )}
 
-      {isAuthenticated && (!isResponsiveMenu || isResponsiveMenuMenuVisible) && (
+      {isAuthenticated && (!isBurgerMenu || isBurgerMenuVisible) && (
         <div id={LinkContainerId} className={styles.LinkContainer}>
           <SecondaryLinks />
           {menuItems.map(item => {
@@ -234,7 +240,7 @@ export default function MainNavBar() {
               menuItem,
               activeSubmenuId,
               setSubMenuVisibility,
-              !isResponsiveMenu
+              !isBurgerMenu
             );
           })}
         </div>
@@ -243,9 +249,10 @@ export default function MainNavBar() {
       {location.pathname === AppRoutes.ROOT && (
         <>
           <button
-            className={classnames(styles.TutorialBtn, {
-              [styles.TutorialBtnOpen]: isTutorialVisible,
-            })}
+            className={classnames(
+              styles.TutorialBtn,
+              isTutorialVisible && styles.TutorialBtnOpen
+            )}
             onClick={() => {
               const isVisible = !isTutorialVisible;
               setIsTutorialVisible(isVisible);
@@ -259,17 +266,7 @@ export default function MainNavBar() {
         </>
       )}
 
-      {isResponsiveMenuMenuVisible && (
-        <div
-          style={{
-            height:
-              document.body.scrollHeight -
-              Layout.mainHeaderTopbarHeight -
-              Layout.mainHeaderNavbarHeight,
-          }}
-          className={styles.Modal}
-        />
-      )}
+      {isBurgerMenuVisible && <div className={styles.Modal} />}
     </nav>
   );
 }

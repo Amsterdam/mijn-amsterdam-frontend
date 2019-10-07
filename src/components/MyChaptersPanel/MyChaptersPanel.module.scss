@@ -2,20 +2,29 @@
 
 .MyChaptersPanel {
   background-color: $color-neutral-grey1;
-  padding: 3.2rem 0 4rem 3.2rem;
-
-  @include media-query('<=tablet') {
-    padding-left: 2.4rem;
-  }
+  padding: 3.2rem 0 4rem 0;
 }
 
 .Title {
-  margin: 0 0 2rem;
+  margin: 0 0 2rem 3.2rem;
+
+  @include mq-phone() {
+    margin-left: 1rem;
+  }
 }
 
 .Links {
   display: flex;
   flex-wrap: wrap;
+  padding-left: 3.2rem;
+
+  @include mq-tablet() {
+    display: block;
+  }
+
+  @include mq-phone() {
+    padding-left: 1rem;
+  }
 
   @include select(MainNavSubmenu_MainNavSubmenuLink) {
     width: calc(50% - 0.5rem);
@@ -29,18 +38,15 @@
       margin-left: 0.5rem;
     }
 
-    @include media-query('<=tablet') {
+    @include mq-tablet() {
       padding-left: 0;
       width: auto;
       min-width: 18.5rem;
+
       &:nth-child(even) {
         margin-left: 0;
       }
     }
-  }
-
-  @include media-query('<=tablet') {
-    display: block;
   }
 }
 

@@ -78,12 +78,9 @@ export default function MainHeader({
             Mijn Amsterdam
           </Heading>
         </Link>
-        <BetaLabel
-          aria-hidden="true"
-          role="img"
-          aria-label="Beta versie"
-          className={styles.betaLabel}
-        />
+        <div className={styles.betaLabel}>
+          <BetaLabel aria-hidden="true" role="img" aria-label="Beta versie" />
+        </div>
       </div>
       {isAuthenticated && (
         <TutorialState>
