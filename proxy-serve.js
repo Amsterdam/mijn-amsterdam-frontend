@@ -26,7 +26,7 @@ http
       const [host] = request.headers['host'].split(':');
       console.log('route:', request.url);
       var request_options = {
-        host: process.env.MOCK_API_HOST || 'http://localhost',
+        host: process.env.MOCK_API_HOST || ip,
         port: process.env.MOCK_API_PORT || 5000,
         path: request.url,
         method: request.method,

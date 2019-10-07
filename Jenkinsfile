@@ -47,7 +47,7 @@ pipeline {
       post {
         always {
           sh "docker-compose -p ${PROJECT} -f docker-compose-e2e.yml down -v || true"
-          junit 'cypress/results/cypress-report.xml'
+          junit '**/results/*.xml'
         }
       }
     }
