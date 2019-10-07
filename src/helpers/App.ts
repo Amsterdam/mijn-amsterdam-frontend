@@ -82,9 +82,9 @@ export function withKeyPress<T>(fn: Function, keyName: string = 'enter') {
 }
 
 export function isProduction() {
-  return process.env.REACT_APP_SENTRY_ENV === 'production';
+  return process.env.REACT_APP_BUILD_ENV === 'production';
 }
 
 export function isAcceptance() {
-  return process.env.REACT_APP_SENTRY_ENV === 'acceptance';
+  return process.env.REACT_APP_BUILD_ENV === 'acceptance';
 }
