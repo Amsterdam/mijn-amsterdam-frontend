@@ -18,9 +18,13 @@ const Tip = ({ tip }: TipProps) => {
 
   useEffect(() => {
     const image = new Image();
-    image.addEventListener('load', () => {
-      setImgUrl('' + tip.imgUrl);
-    });
+    const url = '' + tip.imgUrl;
+    if (url) {
+      image.addEventListener('load', () => {
+        setImgUrl(url);
+      });
+      image.src = url;
+    }
   }, [tip.imgUrl]);
 
   return (
