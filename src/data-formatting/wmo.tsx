@@ -146,6 +146,11 @@ const Labels: {
         'VVD',
         'VVK',
         'WRA',
+        'WRA1',
+        'WRA2',
+        'WRA3',
+        'WRA4',
+        'WRA5',
       ],
       '': ['FIE', 'FIN', 'MVV', 'MVW', 'VHK', 'VVK'],
     },
@@ -349,8 +354,12 @@ const Labels: {
         isLastActive: (stepIndex, sourceData: WmoSourceData) => false,
         description: data => (
           <p>
-            {data.supplier} heeft aan ons doorgegeven dat u geen {data.title}{' '}
-            meer krijgt.
+            {data.isActual
+              ? 'Niet van toepassing.'
+              : `${data.supplier} heeft aan ons doorgegeven dat u geen ${
+                  data.title
+                }
+            meer krijgt.`}
           </p>
         ),
       },
@@ -453,7 +462,7 @@ const Labels: {
   // Zorg in natura (WRA)
   WRA: {
     deliveryType: {
-      ZIN: ['ZIN', 'WRA'],
+      ZIN: ['ZIN', 'WRA', 'WRA1', 'WRA2', 'WRA3', 'WRA4', 'WRA5'],
     },
     statusItems: [
       {
