@@ -44,6 +44,11 @@ interface DownloadLinkProps {
   item: Document;
 }
 
+interface ToggleMoreProps {
+  isCollapsed: boolean;
+  toggleCollapsed: () => void;
+}
+
 function DownloadLink({ item }: DownloadLinkProps) {
   return (
     <IconButtonLink
@@ -106,6 +111,20 @@ function StatusLineItem({
   );
 }
 
+function ToggleMore({ isCollapsed, toggleCollapsed }: ToggleMoreProps) {
+  return (
+    <button
+      className={classnames(styles.MoreStatus, {
+        [styles.MoreStatusClosed]: isCollapsed,
+      })}
+      onClick={toggleCollapsed}
+    >
+      <CaretLeft aria-hidden="true" />
+      {isCollapsed ? 'Toon alles' : 'Toon minder'}
+    </button>
+  );
+}
+
 export default function StatusLine({
   items,
   trackCategory,
@@ -142,6 +161,12 @@ export default function StatusLine({
 
   return (
     <>
+      {items.length > 1 && (
+        <ToggleMore
+          isCollapsed={isCollapsed}
+          toggleCollapsed={toggleCollapsed}
+        />
+      )}
       <div className={styles.StatusLine}>
         <h4 className={styles.ListHeading}>Status</h4>
         {!!items.length && (
@@ -166,15 +191,10 @@ export default function StatusLine({
         )}
       </div>
       {items.length > 1 && (
-        <button
-          className={classnames(styles.MoreStatus, {
-            [styles.MoreStatusClosed]: isCollapsed,
-          })}
-          onClick={toggleCollapsed}
-        >
-          <CaretLeft aria-hidden="true" />
-          {isCollapsed ? 'Toon alles' : 'Toon minder'}
-        </button>
+        <ToggleMore
+          isCollapsed={isCollapsed}
+          toggleCollapsed={toggleCollapsed}
+        />
       )}
     </>
   );

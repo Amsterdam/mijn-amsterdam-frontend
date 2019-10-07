@@ -1,35 +1,7 @@
 @import 'styles/_global.scss';
 
-.ZorgDetail {
-  @include select(PageContentMainHeading_PageContentMainHeading) {
-    margin-bottom: 1rem;
-  }
-  @include select(StatusLine_ListItemInner__) {
-    max-width: $main-boxed-width;
-    margin: 0 auto;
-
-    @include media-query('<=phone') {
-      margin: 0 4rem;
-    }
-  }
-
-  @include select(StatusLine_ListHeading) {
-    max-width: calc(#{$main-boxed-width} - 32rem);
-    margin: 0 auto;
-
-    @include media-query('<=phone') {
-      margin: 0 8rem;
-    }
-  }
-  @include select(StatusLine_NoStatusItems) {
-    max-width: calc(#{$main-boxed-width} - 32rem);
-    margin: 0 auto;
-  }
-}
-
 .InfoDetail {
   border-top: 0.1rem solid $color-neutral-grey2;
-  margin-left: 16rem;
   padding-bottom: 1rem;
   padding-top: 1.4rem;
   color: $color-neutral-grey4;
@@ -39,21 +11,7 @@
     display: block;
   }
 
-  @include media-query('<=tablet') {
-    margin-left: 12rem;
+  @include mq-tablet() {
+    margin-left: 7rem;
   }
-
-  @include media-query('<=phone') {
-    padding-left: 6rem;
-    margin-left: 0;
-  }
-}
-
-.LoadingContentInfo {
-  padding-top: 1rem;
-  margin-left: 12rem;
-}
-
-.LoadingContentHeading {
-  padding-top: 0.5rem;
 }

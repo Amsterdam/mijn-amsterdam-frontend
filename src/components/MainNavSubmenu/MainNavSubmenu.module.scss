@@ -28,7 +28,7 @@
     }
   }
 
-  @include media-query('<=tablet') {
+  @include mq-tablet() {
     display: none;
   }
 }
@@ -39,7 +39,7 @@
   overflow: hidden;
   transition: max-height 300ms ease-out 100ms, opacity 200ms ease-in-out 100ms;
   position: absolute;
-  top: $main-header-navbar-height;
+  top: $main-header-topbar-height + $main-header-navbar-height;
   background-color: $color-neutral-grey1;
   left: 0;
   right: 0;
@@ -50,7 +50,7 @@
     opacity: 1;
   }
 
-  @include media-query('<=tablet') {
+  @include mq-tablet() {
     opacity: 1;
     max-height: initial;
     position: relative;
@@ -71,7 +71,7 @@
   position: relative;
   transform: translateX(-#{$main-boxed-width/2});
 
-  @include media-query('<=tablet') {
+  @include mq-tablet() {
     flex-direction: column;
     left: 0;
     transform: initial;
@@ -110,7 +110,7 @@
     }
   }
 
-  @include media-query('<=tablet') {
+  @include mq-tablet() {
     height: 4.8rem;
     padding-left: 1.6rem;
 

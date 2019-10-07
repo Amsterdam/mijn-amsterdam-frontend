@@ -1,28 +1,8 @@
 @import 'styles/_global.scss';
 
 .Profile {
-  @include select(PageContentMainBody_PageContentMainBody) {
-    > p {
-      margin-right: 16rem;
-      margin-left: 16rem;
 
-      &:last-of-type {
-        margin-bottom: 7rem;
-      }
-
-      @include media-query('<=phone') {
-        margin-right: 0;
-        margin-left: 0;
-      }
-    }
-
-    @include media-query('<=phone') {
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
-  }
-
-  @include media-query('>phone') {
+  @include media-q('>phone') {
     // Custom style
     [class*='burgerlijke-staat'] [class*='InfoPanelTableRow__voornamen'] {
       th,
@@ -33,12 +13,16 @@
   }
 }
 
+.Intro {
+  margin-bottom: 10rem;
+}
+
 .LoadingContent {
-  padding-left: 16rem;
-  @include media-query('<=phone') {
-    padding-left: 0;
-  }
-  @include select(LoadingContent_LoadingContent) {
+  > * {
     margin-bottom: 6rem;
   }
+}
+
+.InfoPanels {
+  @include centered-block;
 }
