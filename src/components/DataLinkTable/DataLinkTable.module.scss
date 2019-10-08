@@ -18,31 +18,13 @@
   &.noTransition {
     transition: none;
   }
-
-  @include media-query('<=phone') {
-    .Table {
-      display: grid;
-      tr,
-      td,
-      tbody {
-        display: block;
-      }
-      td:not(:first-child) {
-        display: block;
-        padding-left: 1.3rem;
-      }
-      thead {
-        display: none;
-      }
-    }
-  }
 }
 
 .CaretIcon {
   height: 0.8em;
   width: 0.8em;
   position: absolute;
-  top: 1.6rem;
+  top: 1.4rem;
   transform: translateY(-50%) rotate(90deg);
   left: 0;
   transition: transform 200ms ease-out;
@@ -53,6 +35,13 @@
   padding-left: 1em;
   margin-bottom: 4rem;
 
+  @include mq-tablet() {
+    margin-left: 9.5rem;
+  }
+  @include mq-phone() {
+    margin-left: 0;
+  }
+  margin-left: 15.5rem;
 
   &WithItems {
     cursor: pointer;
@@ -71,19 +60,45 @@
   transition: height 400ms ease-in;
   border-bottom: 0.1rem solid $color-neutral-grey2;
 
-  @include media-query('<=phone') {
+  @include mq-phone() {
     border-bottom: 0;
   }
 }
 
 .Table {
-  border-collapse: collapse;
+  display: flex;
+  flex-direction: column;
+
+  @include mq-phone() {
+    display: grid;
+    tr,
+    td,
+    tbody {
+      display: block;
+    }
+    td:not(:first-child) {
+      display: block;
+      padding-left: 1.3rem;
+    }
+    thead {
+      display: none;
+    }
+  }
 }
 
 .TableRow {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+
   td {
     padding: 1em 1em 1em 0;
     vertical-align: top;
+    flex: 1 1 auto;
+
+    &:first-child {
+      flex-basis: 75%;
+    }
     // Use nth-child here because css specificity allows us to change border-top for tablet easily
     &,
     &:nth-child(1) {
@@ -96,7 +111,7 @@
     color: $color-neutral-grey4;
     font-weight: 500;
   }
-  @include media-query('<=phone') {
+  @include mq-phone() {
     td {
       border-top: 0;
       padding: 0;
@@ -117,7 +132,7 @@
   display: none;
   padding-right: 0.3rem;
 
-  @include media-query('<=phone') {
+  @include mq-phone() {
     display: initial;
   }
 }
@@ -128,7 +143,13 @@
 }
 
 .NoItemsMessage {
-  text-indent: 16rem;
+  @include mq-tablet() {
+    text-indent: 12rem;
+  }
+  @include mq-phone() {
+    text-indent: 0;
+  }
+  text-indent: 18rem;
   margin-top: -3rem; // closer to the heading
   margin-bottom: 3rem;
 }

@@ -1,25 +1,19 @@
 @import 'styles/_global.scss';
 
 .header {
-  width: 100%;
-  position: relative;
-  @include IE11 {
-    overflow-x: hidden; // Hack for a weird horizontal scrollbar showing up in IE11 because of the positioning of the betalabel
-  }
+
 }
 
 .topBar {
-  // Offset header to the left so that the focus area of the logo svg covers the complete logo.
-  max-width: $main-boxed-width;
+  @include centered-max;
   height: $main-header-topbar-height;
-  margin: 0 auto;
   display: flex;
 
   @include select(Heading) {
     margin: 0.4em 0 0;
   }
 
-  @include media-query('<=tablet') {
+  @include mq-tablet() {
     max-width: none;
     height: $main-header-topbar-height--tablet;
 
@@ -36,7 +30,7 @@
   text-decoration: none;
   transform: translateX(-3rem);
 
-  @include media-query('<=tablet') {
+  @include mq-tablet() {
     transform: translateX(0);
   }
 }
@@ -49,14 +43,14 @@
   width: 9rem;
   height: 6.8rem;
 
-  @include media-query('<=tablet') {
+  @include mq-tablet() {
     left: 2rem;
     top: -0.5rem;
     width: 9.3rem; // translates approx. height of 4rem
     margin-right: 1rem;
   }
 
-  @include media-query('<=phone') {
+  @include mq-phone() {
     left: 1rem;
   }
 }
@@ -65,8 +59,12 @@
   position: absolute;
   top: 0;
   right: 0;
+  height: 5rem;
+  width: 5rem;
+  overflow: hidden;
+  display: block;
 
-  @include media-query('<=tablet') {
+  @include mq-tablet() {
     height: 3rem;
     width: 3rem;
   }
@@ -81,12 +79,12 @@
   width: 100%;
   z-index: z-index(header-error-messages);
 
-  @include media-query('<=tablet') {
+  @include mq-tablet() {
     width: calc(100% - 4rem);
     top: 14rem;
   }
 
-  @include media-query('<=phone') {
+  @include mq-phone() {
     position: static;
     transform: none;
     left: auto;
@@ -101,7 +99,7 @@
   transform: translateX(-50%);
   z-index: 2;
 
-  @include media-query('<=tablet') {
+  @include mq-tablet() {
     top: 1rem;
   }
 

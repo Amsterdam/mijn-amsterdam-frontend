@@ -10,6 +10,7 @@
 }
 
 .ListHeading {
+  @include centered-block;
   color: $color-neutral-grey4;
   margin-bottom: 0;
 }
@@ -38,15 +39,17 @@
 }
 
 .ListItem {
-
   &Inner {
     display: flex;
     padding: 0 7.5rem;
     border-top: 1px solid $color-neutral-grey2;
 
-    @include media-query('<=phone') {
+    @include mq-tablet() {
       display: block;
       position: relative;
+      padding: 0 2rem;
+    }
+    @include mq-phone() {
       padding: 0 1rem;
     }
   }
@@ -67,7 +70,7 @@
   }
 
   &:nth-child(2) {
-    @include media-query(">=tablet") {
+    @include media-q(">tablet") {
       flex: 0 0 38rem;
     }
   }
@@ -105,7 +108,7 @@
     }
   }
 
-  @include media-query('<=phone') {
+  @include mq-tablet() {
     &,
     &:first-child {
       padding: 1rem 1rem 1rem 3rem;
@@ -215,7 +218,7 @@
 }
 
 .NoStatusItems {
-  padding: 2rem 0;
+  padding: 0;
 }
 
 .MoreStatus {
@@ -229,7 +232,6 @@
   transform: translateX(-50%);
   cursor: pointer;
   padding: 0 0.4rem 0 0;
-  margin-bottom: 2rem;
   font-weight: 700;
 
   svg {

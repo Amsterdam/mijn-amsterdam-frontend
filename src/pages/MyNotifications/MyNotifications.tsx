@@ -1,14 +1,14 @@
 import { Chapters } from 'App.constants';
 import { AppContext } from 'AppState';
 import Alert from 'components/Alert/Alert';
-import ChapterHeadingIcon from 'components/ChapterHeadingIcon/ChapterHeadingIcon';
 import MyNotifications from 'components/MyNotifications/MyNotifications';
-import PageContentMain from 'components/PageContentMain/PageContentMain';
-import PageContentMainBody from 'components/PageContentMainBody/PageContentMainBody';
-import PageContentMainHeading from 'components/PageContentMainHeading/PageContentMainHeading';
+import { DetailPage, PageContent } from 'components/Page/Page';
+import PageHeading from 'components/PageHeading/PageHeading';
 import React, { useContext } from 'react';
 
 import styles from './MyNotifications.module.scss';
+import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
+import classnames from 'classnames';
 
 export default () => {
   const {
@@ -19,28 +19,27 @@ export default () => {
     },
   } = useContext(AppContext);
   return (
-    <PageContentMain className={styles.MyNotifications} variant="full">
-      <PageContentMainHeading
-        variant="boxedWithIcon"
+    <DetailPage className={styles.MyNotifications}>
+      <PageHeading
         className={styles.MainHeader}
+        icon={<ChapterIcon chapter={Chapters.MELDINGEN} />}
       >
-        <ChapterHeadingIcon chapter={Chapters.MELDINGEN} />
         Actueel
-      </PageContentMainHeading>
-      <PageContentMainBody variant="boxed">
+      </PageHeading>
+      <PageContent>
         {isError && (
           <Alert type="warning">
-            Uw meldingen kunnen op dit moment niet geladen worden.
+            Niet alle meldingen kunnen op dit moment worden getoond.
           </Alert>
         )}
-        <MyNotifications
-          isLoading={isLoading}
-          total={total}
-          items={items}
-          noContentNotification="Er zijn op dit moment geen actuele meldingen voor u."
-          trackCategory="Actueel overzicht"
-        />
-      </PageContentMainBody>
-    </PageContentMain>
+      </PageContent>
+      <MyNotifications
+        isLoading={isLoading}
+        total={total}
+        items={items}
+        noContentNotification="Er zijn op dit moment geen actuele meldingen voor u."
+        trackCategory="Actueel overzicht"
+      />
+    </DetailPage>
   );
 };

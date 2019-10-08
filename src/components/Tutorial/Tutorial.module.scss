@@ -25,8 +25,8 @@ $tutorial-items-radius: 1rem;
 
 .MyUpdatesItem {
   width: 25rem;
-  margin-top: -16rem;
-  margin-left: 23rem;
+  margin-top: -14rem;
+  margin-left: 16rem;
 
   svg {
     transform: rotate(180deg);
@@ -34,26 +34,22 @@ $tutorial-items-radius: 1rem;
     margin-top: 1rem;
   }
 
-  @include media-query('<=tablet') {
-    margin-top: -16rem;
-  }
-
-  @include media-query('<=phone') {
-    margin-top: -15rem;
-    margin-left: 2rem;
+  @include mq-phone() {
+    margin-top: -12rem;
+    margin-left: 4rem;
 
     svg {
       margin-top: 2rem;
-      margin-left: 16rem;
+      margin-left: -3rem;
       height: 8rem;
-      transform: rotate(150deg);
+      transform: rotate(170deg);
     }
   }
 }
 
 .MyChaptersItem {
   width: 28rem;
-  margin-top: -3rem;
+  margin-top: -5rem;
   margin-left: 16rem;
 
   svg {
@@ -63,9 +59,9 @@ $tutorial-items-radius: 1rem;
     margin-top: 1rem;
   }
 
-  @include media-query('<=tablet') {
+  @include mq-tablet() {
     width: 28rem;
-    margin-top: -3rem;
+    margin-top: -4rem;
     margin-left: -26rem;
 
     svg {
@@ -75,13 +71,13 @@ $tutorial-items-radius: 1rem;
     }
   }
 
-  @include media-query('<=phone') {
-    margin-top: -15rem;
-    margin-left: 0rem;
+  @include mq-phone() {
+    margin-top: -16rem;
+    margin-left: 10rem;
 
     svg {
       transform: rotate(170deg);
-      margin-left: 14rem;
+      margin-left: -4rem;
       margin-top: 2rem;
       height: 8rem;
     }
@@ -99,8 +95,8 @@ $tutorial-items-radius: 1rem;
     margin-top: 1rem;
   }
 
-  @include media-query('<=phone') {
-    margin-top: -17rem;
+  @include mq-phone() {
+    margin-top: -19rem;
     margin-left: 2rem;
     width: 26rem;
 
@@ -124,9 +120,9 @@ $tutorial-items-radius: 1rem;
     margin-top: 1rem;
   }
 
-  @include media-query('<=phone') {
+  @include mq-phone() {
     width: 22rem;
-    margin-top: -14rem;
+    margin-top: -13rem;
     margin-left: 2rem;
 
     svg {
@@ -148,9 +144,9 @@ $tutorial-items-radius: 1rem;
     margin-top: 1rem;
   }
 
-  @include media-query('<=phone') {
+  @include mq-phone() {
     width: 22rem;
-    margin-top: -2rem;
+    margin-top: -3rem;
     margin-left: 2rem;
 
     svg {
@@ -170,32 +166,33 @@ $tutorial-items-radius: 1rem;
 }
 
 .TutorialItems {
-  [id='MyChaptersHeader'],
-  [id='MyAreaHeader'],
-  [id='MyTipsHeader'],
-  [id='MyCasesHeader'],
-  [id='MyUpdatesHeader'] {
+  @include select-id(MyChaptersHeader, MyAreaHeader, MyTipsHeader, MyCasesHeader) {
     @extend %tutorialHeading;
   }
 
-  [id='MyCasesHeader'] {
+  [id="MyUpdatesHeader"] > span {
+    @extend %tutorialHeading;
+    transform: translateX(-1rem);
+  }
+
+  @include select-id(MyCasesHeader) {
     display: inline-block;
     margin-top: -$tutorial-items-padding;
     margin-bottom: calc(#{$tutorial-items-padding} * 1);
   }
 
-  [id='MyChaptersHeader'] {
+  @include select-id(MyChaptersHeader) {
     display: inline-block;
     margin-top: -$tutorial-items-padding;
     margin-bottom: $tutorial-items-padding;
   }
 
-  [id='MyAreaHeader'] {
+  @include select-id(MyAreaHeader) {
     display: inline-block;
     margin-top: -$tutorial-items-padding;
     margin-bottom: -$tutorial-items-padding;
 
-    @include media-query('<=phone') {
+    @include mq-phone() {
       margin-left: 0rem;
       display: initial;
       background-position: 0rem 1.2rem;
@@ -203,13 +200,13 @@ $tutorial-items-radius: 1rem;
     }
   }
 
-  [id='MyTipsHeader'] {
+  @include select-id(MyTipsHeader) {
     padding: $tutorial-items-padding;
     margin-top: -$tutorial-items-padding;
     margin-right: -$tutorial-items-padding;
     margin-bottom: -$tutorial-items-padding;
 
-    @include media-query('<=phone') {
+    @include mq-phone() {
       margin-left: 0rem;
       background-position: 0rem 1.2rem;
       padding-left: 2rem;

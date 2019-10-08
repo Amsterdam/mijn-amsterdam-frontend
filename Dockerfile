@@ -44,7 +44,8 @@ RUN npm ci --verbose
 RUN rm /etc/localtime
 RUN ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
 
-# RUN npm run build
+# Some conditional setup
+RUN if [ "$BUILD_ENV" != "production" ]; then rm /app/public/robots.txt ; fi
 RUN if [ "$BUILD_ENV" != "test-unit" ]; then npm run build ; fi
 RUN if [ "$BUILD_ENV" != "test-unit" ]; then echo "date=`date`; build=${BUILD_NUMBER}; see also: https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${COMMIT_HASH}" > /app/build/version.txt ; fi
 
