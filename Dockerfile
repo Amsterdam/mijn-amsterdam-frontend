@@ -38,11 +38,7 @@ ENV CI=true
 # CRA will generate a file for the React runtime chunk, inlining it will cause issues with the CSP config
 ENV INLINE_RUNTIME_CHUNK=false
 
-RUN npm install \
-  --unsafe-perm \
-  --verbose \
-  ci \
-  && npm cache clean --force
+RUN npm ci --verbose
 
 # Setting the correct timezone for the build
 RUN rm /etc/localtime
