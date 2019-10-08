@@ -1,7 +1,7 @@
 {
   "reporter": "junit",
   "reporterOptions": {
-    "mochaFile": "results/test-report.[hash].xml",
+    "mochaFile": "results/test-report-[hash].xml",
     "toConsole": true
   },
   "baseUrl": "http://localhost:3000",
