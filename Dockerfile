@@ -12,7 +12,7 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 COPY package.json /app/
-COPY package-lock.json /app/
+# COPY package-lock.json /app/
 COPY tsconfig.json /app/
 COPY paths.json /app/
 COPY .env* /app/
