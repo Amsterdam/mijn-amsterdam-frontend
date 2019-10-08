@@ -187,6 +187,7 @@ export const ExternalUrls = {
   MIJN_SUBSIDIES: 'https://mijnsubsidies.amsterdam.nl/loket/',
   MIJN_AMSTERDAM_VEELGEVRAAGD:
     'https://www.amsterdam.nl/veelgevraagd/?productid={68422ECA-8C56-43EC-A9AA-B3DF190B5077}',
+  AMSTERDAM: 'https://www.amsterdam.nl',
 };
 
 // NOTE: Keep up-to-date with _colors.scss
