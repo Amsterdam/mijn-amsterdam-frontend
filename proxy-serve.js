@@ -51,8 +51,8 @@ http
 
     http.get(
       {
-        host: apiHost,
-        port: apiPort,
+        host: ip,
+        port: 3000,
         path: '/api/brp/brp',
       },
       response => {
