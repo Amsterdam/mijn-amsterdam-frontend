@@ -7,6 +7,7 @@
   "baseUrl": "http://localhost:3000",
   "chromeWebSecurity": false,
   "video": false,
+  "browser": "chrome",
   "screenshotOnRunFailure": false,
   "viewportWidth": 1500,
   "viewportHeight": 1000
