@@ -1,5 +1,5 @@
 export function getPageHeading() {
-  return selectComponent('PageContentMainHeading_PageContentMainHeading').eq(0);
+  return selectComponent('PageHeading_PageHeading').eq(0);
 }
 export function assertAtHome(headingString) {
   cy.location('pathname').should('eq', '/');

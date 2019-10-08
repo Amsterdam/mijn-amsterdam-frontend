@@ -1,12 +1,13 @@
 {
-  "reporter": "junit",
+  "reporter": "list",
   "reporterOptions": {
-    "mochaFile": "results/test-report.xml",
+    "mochaFile": "results/test-report.[hash].xml",
     "toConsole": true
   },
   "baseUrl": "http://localhost:3000",
   "chromeWebSecurity": false,
   "video": false,
+  "screenshotOnRunFailure": false,
   "viewportWidth": 1500,
   "viewportHeight": 1000
 }

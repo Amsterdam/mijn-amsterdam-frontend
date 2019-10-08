@@ -4,3 +4,5 @@ WORKDIR /app
 
 COPY cypress /app/cypress
 COPY cypress.json /app
+
+CMD [ "cypress", "run", "--project", "./" ]
