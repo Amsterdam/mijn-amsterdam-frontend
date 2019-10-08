@@ -4,6 +4,7 @@ export type DirectLinkType =
   | 'MIJN_OVERHEID_BERICHTEBOX'
   | 'MY_AREA'
   | 'FAQ'
+  | 'AMSTERDAM'
   | 'MY_TIPS';
 
 export interface DirectLink {
@@ -27,11 +28,6 @@ export const LINKS: { [key in DirectLinkType]: DirectLink } = {
     isPhoneScreenLink: true,
     id: 'MyTipsHeader',
   },
-  MIJN_OVERHEID_BERICHTEBOX: {
-    title: 'Mijn Overheid Berichtenbox',
-    url: ExternalUrls.BERICHTENBOX,
-    isExternalLink: true,
-  },
   MIJN_SUBSIDIE: {
     title: 'Mijn Subsidies',
     url: ExternalUrls.MIJN_SUBSIDIES,
@@ -40,6 +36,16 @@ export const LINKS: { [key in DirectLinkType]: DirectLink } = {
   FAQ: {
     title: 'Veelgestelde vragen',
     url: ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD,
+    isExternalLink: true,
+  },
+  MIJN_OVERHEID_BERICHTEBOX: {
+    title: 'Mijn Overheid Berichtenbox',
+    url: ExternalUrls.BERICHTENBOX,
+    isExternalLink: true,
+  },
+  AMSTERDAM: {
+    title: 'Amsterdam.nl',
+    url: ExternalUrls.AMSTERDAM,
     isExternalLink: true,
   },
 };
