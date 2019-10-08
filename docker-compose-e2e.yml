@@ -25,7 +25,6 @@ services:
 
   e2e:
     links:
-      - mock-api
       - app
     build:
       context: .
@@ -34,7 +33,6 @@ services:
       - CYPRESS_baseUrl=http://app:3000
     depends_on:
       - app
-      - mock-api
     volumes:
       - ./cypress:/app/cypress
       - ./cypress.json:/app/cypress.json
