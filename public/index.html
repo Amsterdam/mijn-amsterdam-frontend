@@ -17,6 +17,9 @@
         <title>Welkom op Mijn Amsterdam | Login met uw DigiD</title>
 
         <meta name="referrer" content="no-referrer" /><!-- Disable referer request header on supported browsers -->
+        <% if (process.env.REACT_APP_BUILD_ENV !== 'production') { %>
+        <meta name="robots" content="noindex">
+        <% } %>
 
         <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
