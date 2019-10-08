@@ -24,7 +24,7 @@
   height: 0.8em;
   width: 0.8em;
   position: absolute;
-  top: 1.6rem;
+  top: 1.4rem;
   transform: translateY(-50%) rotate(90deg);
   left: 0;
   transition: transform 200ms ease-out;
@@ -35,6 +35,13 @@
   padding-left: 1em;
   margin-bottom: 4rem;
 
+  @include mq-tablet() {
+    margin-left: 9.5rem;
+  }
+  @include mq-phone() {
+    margin-left: 0;
+  }
+  margin-left: 15.5rem;
 
   &WithItems {
     cursor: pointer;
@@ -136,7 +143,13 @@
 }
 
 .NoItemsMessage {
-  text-indent: 16rem;
+  @include mq-tablet() {
+    text-indent: 12rem;
+  }
+  @include mq-phone() {
+    text-indent: 0;
+  }
+  text-indent: 18rem;
   margin-top: -3rem; // closer to the heading
   margin-bottom: 3rem;
 }

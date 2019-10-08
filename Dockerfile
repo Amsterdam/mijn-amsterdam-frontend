@@ -32,11 +32,7 @@ COPY public /app/public/
 ENV CI=true
 ENV INLINE_RUNTIME_CHUNK=false
 
-RUN npm install \
-  --unsafe-perm \
-  --verbose \
-  ci \
-  && npm cache clean --force
+RUN npm ci --verbose
 
 RUN rm /etc/localtime
 RUN ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime

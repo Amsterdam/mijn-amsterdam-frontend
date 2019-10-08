@@ -29,7 +29,7 @@ export default () => {
       <PageContent>
         {isError && (
           <Alert type="warning">
-            Uw meldingen kunnen op dit moment niet geladen worden.
+            Niet alle meldingen kunnen op dit moment worden getoond.
           </Alert>
         )}
       </PageContent>
