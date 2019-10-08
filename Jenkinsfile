@@ -46,7 +46,7 @@ pipeline {
       }
       post {
         always {
-          junit '**/results/*.xml'
+          junit '**/results/test-report-*.xml'
           sh "docker-compose -p ${PROJECT} -f docker-compose-e2e.yml down -v || true"
         }
       }
