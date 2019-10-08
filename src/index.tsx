@@ -8,12 +8,12 @@ import * as Sentry from '@sentry/browser';
 const sentryDSN = process.env.REACT_APP_SENTRY_DSN;
 if (
   sentryDSN &&
-  process.env.REACT_APP_SENTRY_ENV &&
-  process.env.REACT_APP_SENTRY_ENV !== 'development'
+  process.env.REACT_APP_BUILD_ENV &&
+  process.env.REACT_APP_BUILD_ENV !== 'development'
 ) {
   Sentry.init({
     dsn: sentryDSN,
-    environment: process.env.REACT_APP_SENTRY_ENV,
+    environment: process.env.REACT_APP_BUILD_ENV,
   });
 }
 
