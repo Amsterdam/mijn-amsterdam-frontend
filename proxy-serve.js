@@ -48,23 +48,4 @@ http
   })
   .listen(port, () => {
     console.log(`Application server running on ${ip}:${port}`);
-    setTimeout(() => {
-      http.get(
-        {
-          host: 'api',
-          port: 5000,
-          path: '/api/brp/brp',
-        },
-        response => {
-          let body = '';
-          response.on('data', function(chunk) {
-            body += chunk;
-          });
-          response.on('end', function() {
-            console.log(response.headers, body);
-          });
-        }
-      );
-    }, 3000);
-    // startDyson();
   });

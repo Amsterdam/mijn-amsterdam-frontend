@@ -2,7 +2,8 @@ import { assertAtHome, selectComponent } from '../support/helpers';
 
 describe('Dashboard', function() {
   it('Visit login url always redirects user to Dashboard page', function() {
-    cy.visit('/api/login');
+    cy.request('/api/login');
+    cy.visit('/');
     assertAtHome('Actueel');
   });
 
