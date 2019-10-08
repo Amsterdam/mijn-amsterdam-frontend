@@ -35,4 +35,7 @@ services:
     depends_on:
       - app
       - mock-api
+    volumes:
+      - ./cypress:/app/cypress
+      - ./cypress.json:/app/cypress.json
 
