@@ -23,6 +23,8 @@ services:
       - MOCK_API_PORT=5000
 
   e2e:
+    image: cypress/included:3.4.1
+    working_dir: /app
     build:
       context: .
       dockerfile: ./cypress/Dockerfile
