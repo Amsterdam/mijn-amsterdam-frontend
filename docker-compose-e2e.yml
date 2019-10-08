@@ -9,8 +9,6 @@ services:
     environment:
       - APP_HOST=http://app
       - APP_PORT=3000
-    links:
-      - app
 
   app:
     ports:
@@ -28,6 +26,7 @@ services:
   e2e:
     links:
       - app
+      - "mock-api:api"
     build:
       context: .
       dockerfile: ./cypress/Dockerfile
