@@ -48,22 +48,4 @@ http
   })
   .listen(port, () => {
     console.log(`Application server running on ${ip}:${port}`);
-
-    http.get(
-      {
-        host: ip,
-        port: 3000,
-        path: '/api/brp/brp',
-      },
-      response => {
-        let body = '';
-        response.on('data', function(chunk) {
-          body += chunk;
-        });
-        response.on('end', function() {
-          console.log(response.headers, body);
-        });
-      }
-    );
-    // startDyson();
   });
