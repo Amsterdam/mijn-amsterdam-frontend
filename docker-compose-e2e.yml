@@ -10,7 +10,6 @@ services:
     environment:
       - APP_HOST=http://app
       - APP_PORT=3000
-
   app:
     ports:
       - "3001:3000"
@@ -25,9 +24,6 @@ services:
   e2e:
     image: cypress/included:3.4.1
     working_dir: /app
-    build:
-      context: .
-      dockerfile: ./cypress/Dockerfile
     environment:
       - CYPRESS_baseUrl=http://app:3000
     depends_on:
