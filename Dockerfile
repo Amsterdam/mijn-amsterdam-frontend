@@ -32,7 +32,7 @@ COPY public /app/public/
 ENV CI=true
 ENV INLINE_RUNTIME_CHUNK=false
 
-RUN npm ci
+RUN npm ci --verbose
 
 RUN rm /etc/localtime
 RUN ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
