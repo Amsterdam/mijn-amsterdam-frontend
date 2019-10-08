@@ -1,5 +1,9 @@
-FROM cypress/included:3.4.1
+FROM cypress/base:10
 
 WORKDIR /app
 
-CMD [ "cypress", "run", "--project", "./" ]
+ENV CI=1
+RUN npm init --yes
+RUN npm install cypress
+
+RUN npx cypress verify
