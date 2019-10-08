@@ -5,6 +5,9 @@ const ip = require('./get-ip').ip;
 const appPath = path.join(__dirname, '/build/');
 const port = process.env.APP_PORT || 3000;
 
+const apiHost = process.env.MOCK_API_HOST || ip;
+const apiPort = process.env.MOCK_API_PORT || 5000;
+
 http
   .createServer(function(request, response) {
     if (
@@ -26,8 +29,8 @@ http
       const [host] = request.headers['host'].split(':');
       console.log('route:', request.url);
       var request_options = {
-        host: process.env.MOCK_API_HOST || ip,
-        port: process.env.MOCK_API_PORT || 5000,
+        host: apiHost,
+        port: apiPort,
         path: request.url,
         method: request.method,
       };
@@ -44,6 +47,17 @@ http
     }
   })
   .listen(port, () => {
-    console.log(`Application server on ${ip}:${port}`);
+    console.log(`Application server running on ${ip}:${port}`);
+
+    http.get(
+      {
+        host: apiHost,
+        port: apiPort,
+        path: '/api/login',
+      },
+      response => {
+        console.log(response.headers);
+      }
+    );
     // startDyson();
   });
