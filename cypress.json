@@ -1,5 +1,5 @@
 {
-  "reporter": "junit",
+  "reporter": "list",
   "reporterOptions": {
     "mochaFile": "results/test-report-[hash].xml",
     "toConsole": true
