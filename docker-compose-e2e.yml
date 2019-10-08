@@ -1,8 +1,9 @@
 version: "3.5"
+
 services:
-  mock-api:
+  api:
     ports:
-      - "5000"
+      - "5001:5000"
     build:
       context: .
       dockerfile: ./mock-api/Dockerfile
@@ -12,21 +13,16 @@ services:
 
   app:
     ports:
-      - "3000"
+      - "3001:3000"
     build:
       context: .
-    links:
-      - "mock-api:api"
     depends_on:
-      - mock-api
+      - api
     environment:
       - MOCK_API_HOST=api
       - MOCK_API_PORT=5000
 
   e2e:
-    links:
-      - app
-      - "mock-api:api"
     build:
       context: .
       dockerfile: ./cypress/Dockerfile
@@ -34,8 +30,8 @@ services:
       - CYPRESS_baseUrl=http://app:3000
     depends_on:
       - app
+      - api
     volumes:
       - ./cypress:/app/cypress
       - ./cypress.json:/app/cypress.json
-    command: npx cypress run
 
