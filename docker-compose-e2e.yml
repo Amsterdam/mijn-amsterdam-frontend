@@ -9,6 +9,8 @@ services:
     environment:
       - APP_HOST=http://app
       - APP_PORT=3000
+    links:
+      - app
 
   app:
     ports:
