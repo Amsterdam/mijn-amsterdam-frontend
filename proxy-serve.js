@@ -53,10 +53,16 @@ http
       {
         host: apiHost,
         port: apiPort,
-        path: '/api/login',
+        path: '/api/brp/brp',
       },
       response => {
-        console.log(response.headers);
+        let body = '';
+        response.on('data', function(chunk) {
+          body += chunk;
+        });
+        response.on('end', function() {
+          console.log(response.headers, body);
+        });
       }
     );
     // startDyson();
