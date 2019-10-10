@@ -1,41 +1,38 @@
-FROM node:10.15 as build-deps
-LABEL maintainer="datapunt@amsterdam.nl"
+FROM node:10.15.3 as build-deps
 
 ENV LOGOUT_URL=${LOGOUT_URL:-notset}
+# Indicating we are on a CI environment
+ENV CI=true
+# CRA will generate a file for the React runtime chunk, inlining it will cause issues with the CSP config
+ENV INLINE_RUNTIME_CHUNK=false
+
+# Default --build-args
+ARG BUILD_ENV=production
+ARG BUILD_NUMBER=-1
+ARG COMMIT_HASH=unknown
 
 WORKDIR /app
 
-RUN apt-get update && \
-  apt-get install -y \
-  netcat \
-  git && \
-  rm -rf /var/lib/apt/lists/*
-
+# Copy required files for building
 COPY package.json /app/
 COPY package-lock.json /app/
+
+RUN npm ci
+
 COPY tsconfig.json /app/
 COPY paths.json /app/
 COPY .env* /app/
-COPY scripts/env-copy.sh /app/
-
-ARG BUILD_ENV=production
-ARG BUILD_NUMBER=-1
-ARG COMMIT_HASH=
-
-# Builds are always production builds but can have differences in server environment (test/acceptance/production)
-# Try to overwrite the default production .env file if a BUILD_ENV is set as build-arg
-RUN sh env-copy.sh ${BUILD_ENV}
-
+COPY scripts/ /app/scripts
 COPY src /app/src/
 COPY public /app/public/
 
-ENV CI=true
-ENV INLINE_RUNTIME_CHUNK=false
-
-RUN npm ci --verbose
-
+# Setting the correct timezone for the build
 RUN rm /etc/localtime
 RUN ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
+
+# Builds are always production builds but can have differences in server environment (test/acceptance/production)
+# Try to overwrite the default production .env file if a BUILD_ENV is set as build-arg
+RUN sh scripts/env-copy.sh ${BUILD_ENV}
 
 # Some conditional setup
 RUN if [ "$BUILD_ENV" != "production" ]; then rm /app/public/robots.txt ; fi

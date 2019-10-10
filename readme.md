@@ -73,9 +73,6 @@ To run the mock-api run the following command in the console `$ npm run watch:mo
 Whenever you need to update/add an api look for the correct api mock in `./mock-api` and make your changes.
 The server will restart automatically.
 
-Some of the mock-api data might be privacy sensitive and is treated as secure. The data can be found on the shared google drive of the team.
-Extract the archive as the `/mock-api/secure-data/` folder. Without these files the mock-api will not work correctly.
-
 ### Branch naming + PR
 
 - When creating a new branch, preferably, branch off `master`
@@ -91,6 +88,10 @@ We currently work with a trunk based development approach. [see also](https://tr
 The master branch should always be production worthy in terms of functionality, stability and code quality.
 Every release to production is accompanied with a release tag in the from of: `release-v1.2.3`. Whenever you are about create a release, use the `npm run release:(major|minor|bug)` command. This command
 creates a [semver](https://semver.org/) version of the release tag and pushes it to origin. The CI/CD pipeline will automatically detect the tag and starts building a production image.
+
+run e2e tests locally outside of docker by running the `npm run e2:ci` command
+run the e2e tests in the docker set-up by running the `docker-compose up --build --exit-code-from e2e e2e` command
+run the cypress ui for e2e testing by firing up the api `npm run mock-api` and the build `npm run serve-build` and then `cypress open`
 
 ## Docker
 
