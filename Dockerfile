@@ -6,11 +6,6 @@ ENV CI=true
 # CRA will generate a file for the React runtime chunk, inlining it will cause issues with the CSP config
 ENV INLINE_RUNTIME_CHUNK=false
 
-# Default --build-args
-ARG BUILD_ENV=production
-ARG BUILD_NUMBER=-1
-ARG COMMIT_HASH=unknown
-
 WORKDIR /app
 
 # Copy required files for building
@@ -30,6 +25,11 @@ COPY public /app/public/
 RUN rm /etc/localtime
 RUN ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
 
+# Default --build-args
+ARG BUILD_ENV=production
+ARG BUILD_NUMBER=-1
+ARG COMMIT_HASH=unknown
+
 # Builds are always production builds but can have differences in server environment (test/acceptance/production)
 # Try to overwrite the default production .env file if a BUILD_ENV is set as build-arg
 RUN sh scripts/env-copy.sh ${BUILD_ENV}
@@ -37,7 +37,7 @@ RUN sh scripts/env-copy.sh ${BUILD_ENV}
 # Some conditional setup
 RUN if [ "$BUILD_ENV" != "production" ]; then rm /app/public/robots.txt ; fi
 RUN if [ "$BUILD_ENV" != "test-unit" ]; then npm run build ; fi
-RUN if [ "$BUILD_ENV" != "test-unit" ]; then echo "date=`date`; build=${BUILD_NUMBER}; see also: https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${COMMIT_HASH}" > /app/build/version.txt ; fi
+RUN if [ "$BUILD_ENV" != "test-unit" ]; then echo "date=`date`; build=${BUILD_NUMBER}; build_env=${BUILD_ENV}; see also: https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${COMMIT_HASH}" > /app/build/version.txt ; fi
 
 # Web server image
 FROM nginx:stable-alpine
