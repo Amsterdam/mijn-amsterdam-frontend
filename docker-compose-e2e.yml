@@ -27,6 +27,7 @@ services:
     environment:
       - CYPRESS_baseUrl=http://app:3000
       - DEBUG=cypress:*
+      - NO_PROXY=localhost,app,api
     depends_on:
       - app
       - api
