@@ -4,6 +4,9 @@ import NL_LOCALE from 'date-fns/locale/nl';
 import { KeyboardEvent, MouseEvent } from 'react';
 
 export function dateFormat(datestr: string | Date | number, fmt: string) {
+  if (!datestr) {
+    return '';
+  }
   const d = typeof datestr === 'string' ? parseISO(datestr) : datestr;
   return format(d, fmt, { locale: NL_LOCALE });
 }
