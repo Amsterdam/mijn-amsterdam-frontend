@@ -13,7 +13,7 @@
     "serve-build": "node scripts/proxy-serve",
     "start": "react-scripts start",
     "test": "react-scripts test",
-    "watch:mock-api": "nodemon --watch mock-api dyson mock-api/ 5000"
+    "watch:mock-api": "nodemon --watch mock-api dyson mock-api 5000"
   },
   "pre-commit": "lint:staged",
   "lint-staged": {

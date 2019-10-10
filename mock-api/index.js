@@ -7,5 +7,3 @@ const configDir = process.cwd() + '/' + dir;
 console.log(
   `Dyson listening on ${ip}:${apiPort} and serving from: ${configDir}`
 );
-
-exports.ip = ip;
