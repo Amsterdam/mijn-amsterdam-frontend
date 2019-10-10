@@ -54,39 +54,39 @@ pipeline {
 
     // TEST
 
-    // stage('Build TEST') {
-    //   when { branch 'test' }
-    //   options {
-    //     timeout(time: 30, unit: 'MINUTES')
-    //   }
-    //   steps {
-    //     script { currentBuild.displayName = "TEST Build #${BUILD_NUMBER} (${COMMIT_HASH})" }
-    //     sh "docker build -t ${IMAGE_BUILD} " +
-    //       "--shm-size 1G " +
-    //       "--build-arg BUILD_ENV=test " +
-    //       "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
-    //       "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
-    //       "."
-    //     sh "docker push ${IMAGE_BUILD}"
-    //   }
-    // }
+    stage('Build TEST') {
+      when { branch 'test' }
+      options {
+        timeout(time: 30, unit: 'MINUTES')
+      }
+      steps {
+        script { currentBuild.displayName = "TEST Build #${BUILD_NUMBER} (${COMMIT_HASH})" }
+        sh "docker build -t ${IMAGE_BUILD} " +
+          "--shm-size 1G " +
+          "--build-arg BUILD_ENV=test " +
+          "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
+          "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
+          "."
+        sh "docker push ${IMAGE_BUILD}"
+      }
+    }
 
-    // stage('Deploy TEST') {
-    //   when { branch 'test' }
-    //   options {
-    //     timeout(time: 5, unit: 'MINUTES')
-    //   }
-    //   steps {
-    //     script { currentBuild.displayName = "TEST Deploy #${BUILD_NUMBER} (${COMMIT_HASH})" }
-    //     sh "docker pull ${IMAGE_BUILD}"
-    //     sh "docker tag ${IMAGE_BUILD} ${IMAGE_TEST}"
-    //     sh "docker push ${IMAGE_TEST}"
-    //     build job: 'Subtask_Openstack_Playbook', parameters: [
-    //       [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
-    //       [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend-test.yml']
-    //     ]
-    //   }
-    // }
+    stage('Deploy TEST') {
+      when { branch 'test' }
+      options {
+        timeout(time: 5, unit: 'MINUTES')
+      }
+      steps {
+        script { currentBuild.displayName = "TEST Deploy #${BUILD_NUMBER} (${COMMIT_HASH})" }
+        sh "docker pull ${IMAGE_BUILD}"
+        sh "docker tag ${IMAGE_BUILD} ${IMAGE_TEST}"
+        sh "docker push ${IMAGE_TEST}"
+        build job: 'Subtask_Openstack_Playbook', parameters: [
+          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
+          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend-test.yml']
+        ]
+      }
+    }
 
     // ACCEPTANCE
 
