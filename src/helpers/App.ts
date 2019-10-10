@@ -1,53 +1,23 @@
+import { DEFAULT_DATE_FORMAT } from 'App.constants';
+import { format, parseISO } from 'date-fns';
+import NL_LOCALE from 'date-fns/locale/nl';
 import { KeyboardEvent, MouseEvent } from 'react';
 
-function formatDate(
-  date: Date,
-  fmt: 'mm:ss' | 'DD MMMM YYYY' = 'DD MMMM YYYY'
-) {
-  const monthNames = [
-    'januari',
-    'februari',
-    'maart',
-    'april',
-    'mei',
-    'juni',
-    'juli',
-    'augustus',
-    'september',
-    'oktober',
-    'november',
-    'december',
-  ];
-
-  if (fmt === 'mm:ss') {
-    const mins = date.getMinutes();
-    const secs = date.getSeconds();
-
-    return `${(mins + '').padStart(2, '0')}:${(secs + '').padStart(2, '0')}`;
-  }
-
-  const day = date.getDate();
-  const monthIndex = date.getMonth();
-  const year = date.getFullYear();
-
-  return (
-    (day + '').padStart(2, '0') + ' ' + monthNames[monthIndex] + ' ' + year
-  );
+export function dateFormat(datestr: string | Date | number, fmt: string) {
+  const d = typeof datestr === 'string' ? parseISO(datestr) : datestr;
+  return format(d, fmt, { locale: NL_LOCALE });
 }
 
-export function defaultDateFormat(
-  date: any,
-  defaultContent: string = ''
-): string {
-  return date ? formatDate(new Date(date)) : defaultContent;
+export function defaultDateFormat(datestr: string | Date | number) {
+  return dateFormat(datestr, DEFAULT_DATE_FORMAT);
 }
 
 export function formattedTimeFromSeconds(seconds: number) {
   const secs = seconds % 60;
   const mins = (seconds - secs) / 60;
-  const t = new Date(0, 0, 0, 0, mins, secs);
+  const time = new Date(0, 0, 0, 0, mins, secs);
 
-  return formatDate(t, 'mm:ss');
+  return dateFormat(time, 'mm:ss');
 }
 
 export function isDateInPast(date: string | Date, dateNow: string | Date) {

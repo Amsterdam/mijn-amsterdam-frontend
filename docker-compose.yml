@@ -1,10 +1,6 @@
 version: '3.5'
 services:
-  mijnamsterdam: # NGINX
-    build: .
-    ports:
-      - '8103:80'
-
+  # Unit testing
   test-unit:
     build:
       context: .
@@ -13,10 +9,40 @@ services:
         - BUILD_ENV=test-unit # prevents Dockerfile from building the app when running unit tests
     command: npm run test
 
-  e2e-tests:
+  # E2E testing
+  api:
     build:
       context: .
-      target: e2e-tests
-      args:
-        - BUILD_ENV=e2e-tests
-    entrypoint: ["npm", "run", "cypress:ci"]
+      target: build-deps
+    environment:
+      - APP_HOST=frontend
+      - APP_PORT=3000
+    volumes:
+      - ./mock-api:/app/mock-api
+    command: npm run mock-api
+
+  frontend:
+    build:
+      context: .
+      target: build-deps
+    depends_on:
+      - api
+    environment:
+      - MOCK_API_HOST=api
+      - MOCK_API_PORT=5000
+    command: npm run serve-build
+
+  e2e:
+    image: cypress/included:3.4.1
+    working_dir: /e2e
+    environment:
+      - CYPRESS_baseUrl=http://frontend:3000
+      # - DEBUG=cypress:*
+      - no_proxy=localhost,frontend,api #needs to be lowercase as this takes precedence over the uppercase verion on the build server
+    depends_on:
+      - frontend
+      - api
+    volumes:
+      - ./cypress:/e2e/cypress
+      - ./cypress.json:/e2e/cypress.json
+

@@ -42,12 +42,12 @@ pipeline {
       }
       steps {
         script { currentBuild.displayName = "E2E testing #${BUILD_NUMBER} (${COMMIT_HASH})" }
-        sh "stdbuf -i0 -e0 -o0 docker-compose -p ${PROJECT} -f docker-compose-e2e.yml up --build --exit-code-from e2e"
+        sh "stdbuf -i0 -e0 -o0 docker-compose -p ${PROJECT} up --build --exit-code-from e2e e2e"
       }
       post {
         always {
           junit 'cypress/results/test-report-*.xml'
-          sh "docker-compose -p ${PROJECT} -f docker-compose-e2e.yml down -v || true"
+          sh "docker-compose -p ${PROJECT} down -v || true"
         }
       }
     }
@@ -138,6 +138,9 @@ pipeline {
         // NOTE BUILD_ENV intentionaly not set (using Dockerfile default)
         sh "docker build -t ${IMAGE_PRODUCTION} " +
             "--shm-size 1G " +
+            "--build-arg BUILD_ENV=production " +
+            "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
+            "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
             "."
         sh "docker tag ${IMAGE_PRODUCTION} ${IMAGE_LATEST}"
         sh "docker push ${IMAGE_PRODUCTION}"

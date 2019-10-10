@@ -684,7 +684,7 @@ export function formatWmoApiResponse(
         id,
         title: capitalizeFirstLetter(title),
         dateStart: defaultDateFormat(dateStart),
-        dateFinish: defaultDateFormat(dateFinish),
+        dateFinish: dateFinish ? defaultDateFormat(dateFinish) : '',
         supplier,
         // TODO: See if we can get a url to the suppliers websites
         supplierUrl: '',

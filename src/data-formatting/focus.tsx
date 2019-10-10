@@ -1,6 +1,11 @@
 import { AppRoutes } from 'App.constants';
 import { LinkProps } from 'App.types';
-import { addDays, addMonths, differenceInCalendarDays } from 'date-fns';
+import {
+  addDays,
+  addMonths,
+  differenceInCalendarDays,
+  parseISO,
+} from 'date-fns';
 import { defaultDateFormat } from 'helpers/App';
 import { MyNotification } from 'hooks/api/my-notifications-api.hook';
 import { Chapter, Chapters } from '../App.constants';
@@ -86,10 +91,10 @@ export interface FocusProduct {
   naam: string;
   processtappen: {
     aanvraag: Step;
-    inBehandeling: Step | null;
-    herstelTermijn: Step | null;
-    beslissing: Step | null;
-    bezwaar: Step | null;
+    inBehandeling: Step;
+    herstelTermijn: Step;
+    beslissing: Step;
+    bezwaar: Step;
   };
   dienstverleningstermijn: number;
   inspanningsperiode: number;
@@ -592,7 +597,7 @@ function isRecentItem(
 
   if (steps.beslissing !== null) {
     hasRecentDecision =
-      differenceInCalendarDays(compareDate, steps.beslissing.datum) <
+      differenceInCalendarDays(compareDate, new Date(steps.beslissing.datum)) <
       DAYS_KEEP_RECENT;
   }
 
@@ -620,7 +625,7 @@ type GetStepSourceDataArgs = Pick<
   | 'daysRecoveryAction'
   | 'dateStart'
   | 'reden'
-> & { stepData: Step | null };
+> & { stepData: Step };
 
 // Data for conveniently constructing the information shown to the clien.
 function getStepSourceData({
@@ -691,11 +696,13 @@ export function parseLabelContent(
 
 // Returns the date before which a client has to respond with information regarding a request for a product.
 function calculateUserActionDeadline(
-  stepData: Step | null,
+  stepData: Step,
   daysUserActionRequired: number
 ) {
   return stepData
-    ? defaultDateFormat(addDays(stepData.datum, daysUserActionRequired))
+    ? defaultDateFormat(
+        addDays(parseISO(stepData.datum), daysUserActionRequired)
+      )
     : '';
 }
 
@@ -708,7 +715,7 @@ function calculateDecisionDeadline(
 ) {
   return defaultDateFormat(
     addDays(
-      dateStart,
+      parseISO(dateStart),
       daysSupplierActionRequired + daysUserActionRequired + daysRecoveryAction
     )
   );
@@ -762,7 +769,7 @@ function formatStepData(
   sourceData: StepSourceData,
   productOrigin: ProductOrigin,
   stepTitle: StepTitle,
-  stepData: Step | null
+  stepData: Step
 ): ProcessStep {
   const stepLabels =
     !!sourceData.decision && stepTitle === 'beslissing'
@@ -816,7 +823,7 @@ export function formatFocusProduct(
   const isRecent = isRecentItem(decision, steps, compareData);
 
   // The data about the latest step
-  const latestStepData = steps[latestStep];
+  const latestStepData = steps[latestStep] as Step;
 
   const hasDecision = steps.beslissing !== null;
 
@@ -877,38 +884,42 @@ export function formatFocusProduct(
       title: 'Meer informatie', // TODO: How to get custom link title?
       to: `${AppRoutesByProductOrigin[productOrigin]}/${id}`,
     },
-    process: processStepsFiltered.map((stepTitle, index) => {
-      const stepData = steps[stepTitle] || null;
-      const isActual = stepTitle === latestStep;
-      let stepType: StepType = 'intermediate-step';
+    process: processStepsFiltered
+      .filter(stepTitle => {
+        return !!steps[stepTitle];
+      })
+      .map((stepTitle, index) => {
+        const stepData = steps[stepTitle] as Step;
+        const isActual = stepTitle === latestStep;
+        let stepType: StepType = 'intermediate-step';
 
-      switch (stepTitle) {
-        case 'aanvraag':
-          stepType = 'first-step';
-          break;
-        case 'beslissing':
-          stepType = 'last-step';
-          break;
-        default:
-          break;
-      }
+        switch (stepTitle) {
+          case 'aanvraag':
+            stepType = 'first-step';
+            break;
+          case 'beslissing':
+            stepType = 'last-step';
+            break;
+          default:
+            break;
+        }
 
-      const sourceData = getStepSourceData({
-        id: `${id}-${stepTitle}`,
-        productTitle,
-        decision,
-        latestStep,
-        stepData,
-        daysSupplierActionRequired,
-        daysUserActionRequired,
-        daysRecoveryAction,
-        dateStart,
-        isActual,
-        stepType,
-      });
+        const sourceData = getStepSourceData({
+          id: `${id}-${stepTitle}`,
+          productTitle,
+          decision,
+          latestStep,
+          stepData,
+          daysSupplierActionRequired,
+          daysUserActionRequired,
+          daysRecoveryAction,
+          dateStart,
+          isActual,
+          stepType,
+        });
 
-      return formatStepData(sourceData, productOrigin, stepTitle, stepData);
-    }),
+        return formatStepData(sourceData, productOrigin, stepTitle, stepData);
+      }),
   };
 
   const latestStepItem = item.process[item.process.length - 1];

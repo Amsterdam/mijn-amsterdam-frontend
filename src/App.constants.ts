@@ -135,7 +135,7 @@ export const errorMessageMap: ErrorMessageMap = {
 export const excludedApiKeys: StateKey[] = ['MY_CHAPTERS', 'SESSION'];
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
-export const DEFAULT_DATE_FORMAT = 'DD MMMM YYYY';
+export const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
 
 export const ExternalUrls = {
   ABOUT_INCOME_SUPPORT: 'https://www.amsterdam.nl/werk-inkomen/',

@@ -10,7 +10,7 @@ Object.keys(ifaces).forEach(function(ifname) {
     }
 
     if (!exports.ip) {
-      exports.ip = iface.address;
+      module.exports = iface.address;
     }
   });
 });
