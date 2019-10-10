@@ -34,9 +34,7 @@ pipeline {
     }
 
      stage('E2E testing') {
-      // options {
-      //   timeout(time: 5, unit: 'MINUTES')
-      // }
+      when { not { branch 'test' } }
       environment {
         PROJECT = "${PROJECT_PREFIX}e2e"
       }
