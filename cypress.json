@@ -2,7 +2,7 @@
   "reporter": "junit",
   "reporterOptions": {
     "mochaFile": "cypress/results/test-report-[hash].xml",
-    "toConsole": true
+    "toConsole": false
   },
   "baseUrl": "http://localhost:3000",
   "chromeWebSecurity": false,
