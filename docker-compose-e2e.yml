@@ -26,6 +26,7 @@ services:
     working_dir: /app
     environment:
       - CYPRESS_baseUrl=http://app:3000
+      - DEBUG=cypress:*
     depends_on:
       - app
       - api
