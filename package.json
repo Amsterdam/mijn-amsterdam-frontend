@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "scripts": {
     "build": "react-scripts build",
-    "cypress:ci": "concurrently \"npm:serve-build\" \"npm:mock-api\" \"npx cypress run\" --kill-others --success first",
+    "e2e:ci": "concurrently \"npm:serve-build\" \"npm:mock-api\" \"npx cypress run\" --kill-others --success first",
     "eject": "react-scripts eject",
     "lint:staged": "lint-staged",
     "mock-api": "dyson mock-api 5000",
