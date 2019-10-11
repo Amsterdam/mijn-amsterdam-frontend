@@ -5,7 +5,8 @@
     "huisnummertoevoeging": null,
     "postcode": "1064 BH",
     "straatnaam": "Burgemeester R\u00f6ellstr",
-    "woonplaatsNaam": "Amsterdam"
+    "woonplaatsNaam": "Amsterdam",
+    "begindatumVerblijf": null
   },
   "persoon": {
     "aanduidingNaamgebruikOmschrijving": "Eigen geslachtsnaam",
@@ -24,7 +25,8 @@
     "omschrijvingGeslachtsaanduiding": "Man",
     "opgemaakteNaam": "W. Beemsterboer",
     "voornamen": "Wesley",
-    "voorvoegselGeslachtsnaam": null
+    "voorvoegselGeslachtsnaam": null,
+    "mokum": true
   },
   "verbintenis": {
     "datumOntbinding": null,

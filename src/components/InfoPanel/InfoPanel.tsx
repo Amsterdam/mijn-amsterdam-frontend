@@ -81,6 +81,7 @@ export default function InfoPanel({
       <div
         className={classnames(
           styles.InfoPanelContent,
+          `${styles.InfoPanelContent}__${slug(title, { lower: true })}`,
           slug(title, { lower: true })
         )}
       >

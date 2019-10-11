@@ -5,7 +5,7 @@ import InfoPanel from 'components/InfoPanel/InfoPanel';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 import { DetailPage, PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
-import { formatProfileData, panelConfig } from 'data-formatting/brp';
+import { panelConfig, formatProfileData } from 'data-formatting/brp';
 import { entries } from 'helpers/App';
 import styles from 'pages/Profile/Profile.module.scss';
 import React, { useContext } from 'react';
@@ -13,7 +13,7 @@ import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 
 export default function Profile() {
   const { BRP } = useContext(AppContext);
-  const brpInfo = formatProfileData(BRP.data);
+  const brpData = formatProfileData(BRP.data);
 
   return (
     <DetailPage className={styles.Profile}>
@@ -42,17 +42,13 @@ export default function Profile() {
         )}
       </PageContent>
       <div className={styles.InfoPanels}>
-        {brpInfo &&
-          entries(brpInfo).map(
-            ([id, panelData]) =>
-              panelData && ( // TS compiler complains when using regular filtering.
-                <InfoPanel
-                  key={id}
-                  {...panelConfig[id]}
-                  panelData={panelData}
-                />
-              )
-          )}
+        {brpData &&
+          brpData.person &&
+          entries(brpData)
+            .filter(([id, panelData]) => !!panelData)
+            .map(([id, panelData]) => (
+              <InfoPanel key={id} {...panelConfig[id]} panelData={panelData} />
+            ))}
       </div>
     </DetailPage>
   );

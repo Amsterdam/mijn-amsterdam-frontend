@@ -2,8 +2,12 @@ export function getPageHeading() {
   return selectComponent('PageHeading_PageHeading').eq(0);
 }
 
-export function assertAtPage(headingString, pathname) {
+export function assertPath(pathname) {
   cy.location('pathname').should('eq', pathname);
+}
+
+export function assertAtPage(headingString, pathname) {
+  assertPath(pathname);
   getPageHeading().contains(headingString);
 }
 

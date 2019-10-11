@@ -1,3 +1,4 @@
+import { assertAtHome } from '../support/helpers';
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -10,7 +11,10 @@
 //
 //
 // -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
+Cypress.Commands.add('login', () => {
+  cy.visit('/api/login');
+  assertAtHome('Actueel');
+});
 //
 //
 // -- This is a child command --
