@@ -14,6 +14,7 @@ import { MyNotificationsApiState } from './hooks/api/my-notifications-api.hook';
 import { MyChaptersApiState } from './hooks/api/myChapters.hook';
 import useMyMap from './hooks/api/api.mymap';
 import { getFullAddress } from 'data-formatting/brp';
+import { ApiConfig, ApiUrls } from './App.constants';
 
 type MyCasesApiState = FocusApiState;
 
@@ -100,6 +101,12 @@ export function useAppState(value?: any) {
   const ERFPACHT = useErfpachtApi();
   const MY_CHAPTERS = useMyChapters({ WMO, FOCUS, ERFPACHT });
   const MY_AREA = useMyMap();
+  const tipsDependencies = [
+    ApiConfig[ApiUrls.WMO].postponeFetch || WMO.isDirty,
+    ApiConfig[ApiUrls.FOCUS].postponeFetch || FOCUS.isDirty,
+    ERFPACHT.isDirty,
+    BRP.isDirty,
+  ];
 
   useEffect(() => {
     if (BRP.data.adres && BRP.data.adres.straatnaam) {
@@ -108,7 +115,7 @@ export function useAppState(value?: any) {
   }, [BRP.data.adres && BRP.data.adres.straatnaam]);
 
   useEffect(() => {
-    if (WMO.isDirty && FOCUS.isDirty && ERFPACHT.isDirty && BRP.isDirty) {
+    if (tipsDependencies.every(isReady => isReady)) {
       MY_TIPS.refetch({
         WMO: WMO.rawData,
         FOCUS: FOCUS.rawData,
@@ -116,7 +123,7 @@ export function useAppState(value?: any) {
         BRP: BRP.data,
       });
     }
-  }, [WMO.isDirty, FOCUS.isDirty, ERFPACHT.isDirty, BRP.isDirty]);
+  }, tipsDependencies);
 
   // NOTE: For now we can use this solution but we probably need some more finegrained memoization of the state as the app grows larger.
   return useMemo(() => {
