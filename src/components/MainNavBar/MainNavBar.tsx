@@ -59,7 +59,7 @@ function SecondaryLinks() {
     <div className={styles.secondaryLinks}>
       {isDesktopScreen && <FontEnlarger />}
       {!isError && (
-        <Link to={AppRoutes.PROFILE}>
+        <Link to={AppRoutes.PROFILE} className={styles.ProfileLink}>
           {persoon && persoon.voornamen ? (
             getFullName(persoon)
           ) : (

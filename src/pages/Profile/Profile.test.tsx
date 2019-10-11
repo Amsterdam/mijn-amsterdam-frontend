@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import Profile from './Profile';
 import AppState from 'AppState';
-import { formatProfileData, BrpResponseData } from 'data-formatting/brp';
+import { BrpResponseData } from 'data-formatting/brp';
 import slug from 'slug';
 
 function getAppState(data: BrpResponseData) {
@@ -13,7 +13,7 @@ function getAppState(data: BrpResponseData) {
       isPristine: false,
       isError: false,
       errorMessage: '',
-      data: formatProfileData(data),
+      data,
     },
   };
 }

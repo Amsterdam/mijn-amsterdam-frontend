@@ -5,7 +5,7 @@ import InfoPanel from 'components/InfoPanel/InfoPanel';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 import { DetailPage, PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
-import { panelConfig } from 'data-formatting/brp';
+import { panelConfig, formatProfileData } from 'data-formatting/brp';
 import { entries } from 'helpers/App';
 import styles from 'pages/Profile/Profile.module.scss';
 import React, { useContext } from 'react';
@@ -13,6 +13,7 @@ import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 
 export default function Profile() {
   const { BRP } = useContext(AppContext);
+  const brpData = formatProfileData(BRP.data);
 
   return (
     <DetailPage className={styles.Profile}>
@@ -41,9 +42,9 @@ export default function Profile() {
         )}
       </PageContent>
       <div className={styles.InfoPanels}>
-        {BRP.data &&
-          BRP.data.person &&
-          entries(BRP.data)
+        {brpData &&
+          brpData.person &&
+          entries(brpData)
             .filter(([id, panelData]) => !!panelData)
             .map(([id, panelData]) => (
               <InfoPanel key={id} {...panelConfig[id]} panelData={panelData} />

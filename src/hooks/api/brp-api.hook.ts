@@ -1,6 +1,5 @@
 import { ApiUrls } from 'App.constants';
-import { formatProfileData, ProfileData } from 'data-formatting/brp';
-import { useMemo } from 'react';
+import { ProfileData } from 'data-formatting/brp';
 import { useDataApi } from './api.hook';
 import { ApiState } from './api.types';
 
@@ -10,10 +9,7 @@ export function useBrpApi(initialState = {}): BrpApiState {
   const options = { url: ApiUrls.BRP };
   const [api] = useDataApi(options, initialState);
   const { data, ...rest } = api;
-
-  const brpData = useMemo(() => {
-    return data && data.persoon ? formatProfileData(data) : {};
-  }, [data]);
+  const brpData = data && data.persoon ? data : {};
 
   return { ...rest, data: brpData };
 }

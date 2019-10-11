@@ -132,9 +132,9 @@ export interface ProfileData {
 }
 
 export function getFullName(person: Persoon) {
-  return `${person.voornamen} ${person.voorvoegselGeslachtsnaam || ''} ${
-    person.geslachtsnaam
-  }`;
+  return `${person.voornamen} ${
+    person.voorvoegselGeslachtsnaam ? person.voorvoegselGeslachtsnaam + ' ' : ''
+  }${person.geslachtsnaam}`;
 }
 
 export function getFullAddress(address: Adres) {
