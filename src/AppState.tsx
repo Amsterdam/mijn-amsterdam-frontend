@@ -80,82 +80,74 @@ interface AppStateProps {
 }
 
 export function useAppState(value?: any) {
-  let appState;
+  const WMO = useWmoApi();
+  const FOCUS = useFocusApi();
 
-  if (typeof value !== 'undefined') {
-    appState = value;
-  } else {
-    const WMO = useWmoApi();
-    const FOCUS = useFocusApi();
+  const { data: focusData, ...rest } = FOCUS;
+  // At the time of writing we only show recentCases from the Focus API.
+  const MY_CASES = {
+    data: {
+      ...focusData,
+      items: focusData.recentCases,
+      total: focusData.recentCases.length,
+    },
+    ...rest,
+  };
 
-    const { data: focusData, ...rest } = FOCUS;
-    // At the time of writing we only show recentCases from the Focus API.
-    const MY_CASES = {
-      data: {
-        ...focusData,
-        items: focusData.recentCases,
-        total: focusData.recentCases.length,
-      },
-      ...rest,
+  const BRP = useBrpApi();
+  const MY_NOTIFICATIONS = useMyNotificationsApi({ FOCUS });
+  const MY_TIPS = useMyTipsApi();
+  const ERFPACHT = useErfpachtApi();
+  const MY_CHAPTERS = useMyChapters({ WMO, FOCUS, ERFPACHT });
+  const MY_AREA = useMyMap();
+
+  useEffect(() => {
+    if (BRP.data.adres && BRP.data.adres.straatnaam) {
+      MY_AREA.refetch(getFullAddress(BRP.data.adres));
+    }
+  }, [BRP.data.adres && BRP.data.adres.straatnaam]);
+
+  useEffect(() => {
+    if (WMO.isDirty && FOCUS.isDirty && ERFPACHT.isDirty && BRP.isDirty) {
+      MY_TIPS.refetch({
+        WMO: WMO.rawData,
+        FOCUS: FOCUS.rawData,
+        ERFPACHT: false,
+        BRP: BRP.data,
+      });
+    }
+  }, [WMO.isDirty, FOCUS.isDirty, ERFPACHT.isDirty, BRP.isDirty]);
+
+  // NOTE: For now we can use this solution but we probably need some more finegrained memoization of the state as the app grows larger.
+  return useMemo(() => {
+    return {
+      BRP,
+      // NOTE: If needed we can postpone immediate fetching of below data and start fetching in the component
+      // by calling the refetch method implemented in the api hooks.
+      MY_NOTIFICATIONS,
+      MY_CASES,
+      MY_TIPS,
+      WMO,
+      FOCUS,
+      MY_CHAPTERS,
+      ERFPACHT,
+      MY_AREA,
     };
-
-    const BRP = useBrpApi();
-    const MY_NOTIFICATIONS = useMyNotificationsApi({ FOCUS });
-    const MY_TIPS = useMyTipsApi();
-    const ERFPACHT = useErfpachtApi();
-    const MY_CHAPTERS = useMyChapters({ WMO, FOCUS, ERFPACHT });
-    const MY_AREA = useMyMap();
-
-    useEffect(() => {
-      if (BRP.data.adres && BRP.data.adres.straatnaam) {
-        MY_AREA.refetch(getFullAddress(BRP.data.adres));
-      }
-    }, [BRP.data.adres && BRP.data.adres.straatnaam]);
-
-    useEffect(() => {
-      if (WMO.isDirty && FOCUS.isDirty && ERFPACHT.isDirty && BRP.isDirty) {
-        MY_TIPS.refetch({
-          WMO: WMO.rawData,
-          FOCUS: FOCUS.rawData,
-          ERFPACHT: false,
-          BRP: BRP.data,
-        });
-      }
-    }, [WMO.isDirty, FOCUS.isDirty, ERFPACHT.isDirty, BRP.isDirty]);
-
-    // NOTE: For now we can use this solution but we probably need some more finegrained memoization of the state as the app grows larger.
-    appState = useMemo(() => {
-      return {
-        BRP,
-        // NOTE: If needed we can postpone immediate fetching of below data and start fetching in the component
-        // by calling the refetch method implemented in the api hooks.
-        MY_NOTIFICATIONS,
-        MY_CASES,
-        MY_TIPS,
-        WMO,
-        FOCUS,
-        MY_CHAPTERS,
-        ERFPACHT,
-        MY_AREA,
-      };
-    }, [
-      WMO.isLoading,
-      FOCUS.isLoading,
-      BRP.isLoading,
-      MY_NOTIFICATIONS.isLoading,
-      MY_CASES.isLoading,
-      MY_TIPS.isLoading,
-      ERFPACHT.isLoading,
-      MY_CHAPTERS.isLoading,
-      MY_AREA.url,
-    ]);
-  }
-
-  return appState;
+  }, [
+    WMO.isLoading,
+    FOCUS.isLoading,
+    BRP.isLoading,
+    MY_NOTIFICATIONS.isLoading,
+    MY_CASES.isLoading,
+    MY_TIPS.isLoading,
+    ERFPACHT.isLoading,
+    MY_CHAPTERS.isLoading,
+    MY_AREA.url,
+  ]);
 }
 
-export default ({ children }: AppStateProps) => {
-  const appState = useAppState();
+export default ({ children, value }: AppStateProps) => {
+  const appState = value || useAppState();
   return (
     // TODO: Straight out partial appState assignments. Forcing type assignment here for !!!111!!1!!
     <AppContext.Provider value={appState as AppState}>
