@@ -119,7 +119,7 @@ function AppLanding() {
 }
 
 export default function App() {
-  // useAnalytics();
+  useAnalytics();
 
   const sendToSentry = (error: Error, componentStack: string) => {
     Sentry.captureException(error);
