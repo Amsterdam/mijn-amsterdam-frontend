@@ -13,7 +13,8 @@ import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 
 export default function Profile() {
   const { BRP } = useContext(AppContext);
-  const brpData = formatProfileData(BRP.data);
+
+  const brpData = BRP.isDirty ? formatProfileData(BRP.data) : null;
 
   return (
     <DetailPage className={styles.Profile}>
