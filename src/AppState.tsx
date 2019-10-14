@@ -109,7 +109,13 @@ export function useAppState(value?: any) {
   ];
 
   useEffect(() => {
-    if (BRP.data.adres && BRP.data.adres.straatnaam) {
+    if (
+      BRP.data &&
+      BRP.data.persoon &&
+      BRP.data.persoon.mokum &&
+      BRP.data.adres &&
+      BRP.data.adres.straatnaam
+    ) {
       MY_AREA.refetch(getFullAddress(BRP.data.adres));
     }
   }, [BRP.data.adres && BRP.data.adres.straatnaam]);
