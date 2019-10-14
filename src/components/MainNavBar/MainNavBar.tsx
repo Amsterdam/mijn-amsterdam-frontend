@@ -26,7 +26,7 @@ import styles from './MainNavBar.module.scss';
 import teststyles from '../Tutorial/Tutorial.module.scss';
 import Tutorial from 'components/Tutorial/Tutorial';
 
-const MenuToggleBtnId = 'MenuToggleBtn';
+const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
 
 export interface MainNavLinkProps {
@@ -68,7 +68,11 @@ function SecondaryLinks() {
         </Link>
       )}
       {
-        <IconButtonLink to={LOGOUT_URL} rel="external">
+        <IconButtonLink
+          to={LOGOUT_URL}
+          rel="external"
+          className={styles.LogoutLink}
+        >
           <LogoutIcon aria-hidden="true" /> Uitloggen
         </IconButtonLink>
       }
@@ -167,7 +171,9 @@ export default function MainNavBar() {
   function closeBurgerMenu(e?: any) {
     if (isBurgerMenuVisible) {
       // Testing for clicks on elements that are not part of the responsive menu
-      const BurgerMenuToggleButton = document.getElementById(MenuToggleBtnId);
+      const BurgerMenuToggleButton = document.getElementById(
+        BurgerMenuToggleBtnId
+      );
       const LinkContainer = document.getElementById(LinkContainerId);
       const clickedOutside = !(
         (LinkContainer && LinkContainer.contains(e.target)) ||
@@ -207,15 +213,16 @@ export default function MainNavBar() {
     <nav
       className={classnames(
         styles.MainNavBar,
-        isBurgerMenuVisible && styles.BurgerMenu
+        isBurgerMenu && styles.BurgerMenu,
+        isBurgerMenuVisible && styles.BurgerMenuVisible
       )}
     >
       {isBurgerMenu && (
         <button
-          id={MenuToggleBtnId}
+          id={BurgerMenuToggleBtnId}
           className={classnames(
-            styles.MenuToggleBtn,
-            isBurgerMenuVisible && styles.MenuToggleBtnOpen
+            styles.BurgerMenuToggleBtn,
+            isBurgerMenuVisible && styles.BurgerMenuToggleBtnOpen
           )}
           onClick={() => toggleBurgerMenu(!isBurgerMenuVisible)}
         >

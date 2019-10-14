@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import useDebouncedCallback from 'use-debounce/lib/callback';
 import { ComponentChildren } from 'App.types';
 import { LinkProps } from 'App.types';
-import { trackLink } from '../../hooks/analytics.hook';
+import { trackLink } from 'hooks/analytics.hook';
 
 export interface MainNavSubmenuLinkProps extends Omit<LinkProps, 'title'> {
   children: ComponentChildren;
