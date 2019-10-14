@@ -58,6 +58,10 @@ export interface WmoItem {
   process: WmoProcessItem[];
 }
 
+function isDateInFuture(dateStr: string | Date, compareDate: Date) {
+  return !isDateInPast(dateStr, compareDate);
+}
+
 type TextPartContent = string | JSX.Element;
 type TextPartContentFormatter = (
   data: WmoSourceData,
@@ -67,7 +71,7 @@ type TextPartContents = TextPartContent | TextPartContentFormatter;
 
 // NOTE: See Functional Design document with information
 const Labels: {
-  [productGroupName: string]: {
+  [productGroupName: /* leveringsvorm */ string]: {
     deliveryType: {
       PGB?: string[];
       ZIN?: string[];
@@ -338,7 +342,7 @@ const Labels: {
           isDateInPast(sourceData.dateFinish, new Date()),
         isLastActive: (stepIndex, sourceData: WmoSourceData) =>
           sourceData.isActual === true &&
-          !isDateInPast(sourceData.dateFinish, new Date()),
+          isDateInFuture(sourceData.dateFinish, new Date()),
         description: data => (
           <p>
             {data.supplier} is gestart met het leveren van {data.title}.
@@ -366,14 +370,14 @@ const Labels: {
       {
         status: 'Einde recht',
         datePublished: data =>
-          !isDateInPast(data.dateFinish, new Date()) ? '' : data.dateFinish,
+          isDateInFuture(data.dateFinish, new Date()) ? '' : data.dateFinish,
         isChecked: () => false,
         isLastActive: (stepIndex, sourceData: WmoSourceData) =>
           sourceData.isActual === false ||
           isDateInPast(sourceData.dateFinish, new Date()),
         description: data => (
           <p>
-            {data.isActual && !isDateInPast(data.dateFinish, new Date())
+            {data.isActual && isDateInFuture(data.dateFinish, new Date())
               ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
               : `Uw recht op ${data.title} is beëindigd per ${defaultDateFormat(
                   data.dateFinish
@@ -417,7 +421,7 @@ const Labels: {
           isDateInPast(data.dateStartServiceDelivery, new Date()),
         isLastActive: (stepIndex, data) =>
           data.isActual
-            ? !isDateInPast(data.dateStartServiceDelivery, new Date())
+            ? isDateInFuture(data.dateStartServiceDelivery, new Date())
             : false,
         description: data => (
           <p>
@@ -491,7 +495,7 @@ const Labels: {
           isDateInPast(data.dateStartServiceDelivery, new Date()),
         isLastActive: (stepIndex, data) =>
           data.isActual
-            ? !isDateInPast(data.dateStartServiceDelivery, new Date())
+            ? isDateInFuture(data.dateStartServiceDelivery, new Date())
             : false,
         description: data => (
           <p>
