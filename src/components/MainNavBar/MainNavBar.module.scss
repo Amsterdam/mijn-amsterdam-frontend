@@ -130,7 +130,7 @@
   }
 }
 
-.MenuToggleBtn {
+.BurgerMenuToggleBtn {
   height: $main-header-navbar-height;
   background-image: url('assets/images/Menu.svg');
   background-size: 24px;
@@ -188,18 +188,22 @@
   }
 }
 
-.BurgerMenu:before {
-  content: '';
-  position: absolute;
-  top: $main-header-topbar-height;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, .4);
-  z-index: z-index(burger-menu-backdrop);
+.BurgerMenu {
+  &Visible {
+    &:before {
+      content: '';
+      position: absolute;
+      top: $main-header-topbar-height;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, .4);
+      z-index: z-index(burger-menu-backdrop);
+    }
+  }
 }
 
-
+.LogoutLink,
 .ProfileLink {
   color: inherit;
 }

@@ -26,6 +26,7 @@ import Profile from './pages/Profile/Profile';
 import classnames from 'classnames';
 import * as Sentry from '@sentry/browser';
 import ApplicationError from 'components/ApplicationError/ApplicationError';
+import useScript from 'hooks/useScript';
 
 function AppNotAuthenticated() {
   return (
@@ -119,7 +120,12 @@ function AppLanding() {
 }
 
 export default function App() {
-  useAnalytics();
+  if (
+    ['production', 'acceptance'].includes(`${process.env.REACT_APP_BUILD_ENV}`)
+  ) {
+    useAnalytics();
+    useScript('/js/usabilla.js');
+  }
 
   const sendToSentry = (error: Error, componentStack: string) => {
     Sentry.captureException(error);
