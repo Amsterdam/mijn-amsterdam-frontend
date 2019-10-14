@@ -93,6 +93,9 @@ export const ApiConfig: ApiConfig = {
   [ApiUrls.FOCUS]: {
     postponeFetch: isProduction(),
   },
+  [ApiUrls.WMO]: {
+    postponeFetch: false,
+  },
   [ApiUrls.MY_TIPS]: {
     postponeFetch: true,
   },
