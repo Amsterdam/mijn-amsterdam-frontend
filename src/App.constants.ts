@@ -94,7 +94,7 @@ export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
     postponeFetch: isProduction(),
   },
   WMO: {
-    postponeFetch: false,
+    postponeFetch: isProduction(),
   },
   MY_TIPS: {
     postponeFetch: true,
