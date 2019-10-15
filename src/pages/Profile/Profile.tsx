@@ -58,14 +58,14 @@ export default function Profile() {
               </p>
               <p>
                 U kunt uw huidige adres doorgeven bij het Stadsloket. U moet
-                hiervoor{' '}
+                hiervoor een{' '}
                 <a
                   rel="external noopener noreferrer"
                   href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
                 >
-                  een afspraak maken
-                </a>
-                .
+                  afspraak
+                </a>{' '}
+                maken .
               </p>
             </Alert>
           )}
@@ -73,15 +73,15 @@ export default function Profile() {
           <Alert type="warning" className="inOnderzoek">
             <p>
               Op dit moment onderzoeken wij of u nog steeds woont op het adres
-              waar u ingeschreven staat. Kijk{' '}
+              waar u ingeschreven staat. Kijk voor{' '}
               <a
                 href="https://www.amsterdam.nl/veelgevraagd/?productid={49AB6693-E7FA-4642-82F4-D14D87E02C72}"
                 rel="external noopener noreferrer"
               >
-                hier
+                meer
               </a>{' '}
-              voor meer informatie over het onderzoek naar uw inschrijving in de
-              Basisregistratie Personen (BRP)
+              informatie over onderzoek naar uw inschrijving in de
+              Basisregistratie Personen (BRP).
             </p>
             <p>
               Kloppen uw gegevens niet? Voorkom een boete en stuur een bericht
