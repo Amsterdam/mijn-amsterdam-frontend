@@ -71,7 +71,9 @@ export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL || '/logout';
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const ATLAS_API_BASE_URL = process.env.REACT_APP_ATLAS_API_BASE_URL;
 
-export const ApiUrls = {
+export type ApiName = StateKey | 'BAG' | 'AUTH';
+
+export const ApiUrls: TypeIndex<ApiName, string> = {
   MY_NOTIFICATIONS: `${API_BASE_URL}/mijn-meldingen`,
   MY_CASES: `${API_BASE_URL}/focus/aanvragen`,
   MY_TIPS: `${API_BASE_URL}/tips/gettips`,
@@ -84,19 +86,17 @@ export const ApiUrls = {
 };
 
 export interface ApiConfig {
-  [apiUrl: string]: {
-    postponeFetch: boolean;
-  };
+  postponeFetch: boolean;
 }
 
-export const ApiConfig: ApiConfig = {
-  [ApiUrls.FOCUS]: {
+export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
+  FOCUS: {
     postponeFetch: isProduction(),
   },
-  [ApiUrls.WMO]: {
+  WMO: {
     postponeFetch: false,
   },
-  [ApiUrls.MY_TIPS]: {
+  MY_TIPS: {
     postponeFetch: true,
   },
 };
@@ -131,8 +131,6 @@ export const errorMessageMap: ErrorMessageMap = {
     error: 'Communicatie met api mislukt.',
   },
 };
-
-export const excludedApiKeys: StateKey[] = ['MY_CHAPTERS', 'SESSION'];
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
 export const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';

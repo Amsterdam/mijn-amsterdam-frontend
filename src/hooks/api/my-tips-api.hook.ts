@@ -1,5 +1,5 @@
-import { ApiConfig, ApiUrls } from 'App.constants';
 import { LinkProps } from 'App.types';
+import { getApiConfigValue, getApiUrl } from 'helpers/App';
 import usePaginatedApi, {
   PaginatedApiProps,
   PaginatedApiState,
@@ -29,10 +29,10 @@ export default function useMyTipsApi(
   limit: number = -1
 ): MyTipsApiState {
   const options: PaginatedApiProps = {
-    url: ApiUrls.MY_TIPS,
+    url: getApiUrl('MY_TIPS'),
     offset,
     limit,
-    postpone: ApiConfig[ApiUrls.MY_TIPS].postponeFetch,
+    postpone: getApiConfigValue('MY_TIPS', 'postponeFetch', false),
     method: 'POST',
   };
 

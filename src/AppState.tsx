@@ -14,7 +14,7 @@ import { MyNotificationsApiState } from './hooks/api/my-notifications-api.hook';
 import { MyChaptersApiState } from './hooks/api/myChapters.hook';
 import useMyMap from './hooks/api/api.mymap';
 import { getFullAddress } from 'data-formatting/brp';
-import { ApiConfig, ApiUrls } from './App.constants';
+import { getApiConfigValue } from 'helpers/App';
 
 type MyCasesApiState = FocusApiState;
 
@@ -102,8 +102,8 @@ export function useAppState(value?: any) {
   const MY_CHAPTERS = useMyChapters({ WMO, FOCUS, ERFPACHT });
   const MY_AREA = useMyMap();
   const tipsDependencies = [
-    ApiConfig[ApiUrls.WMO].postponeFetch || WMO.isDirty,
-    ApiConfig[ApiUrls.FOCUS].postponeFetch || FOCUS.isDirty,
+    getApiConfigValue('WMO', 'postponeFetch', false) || WMO.isDirty,
+    getApiConfigValue('FOCUS', 'postponeFetch', false) || FOCUS.isDirty,
     ERFPACHT.isDirty,
     BRP.isDirty,
   ];

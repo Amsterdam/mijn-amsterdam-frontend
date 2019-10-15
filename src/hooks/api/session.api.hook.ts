@@ -1,6 +1,6 @@
-import { ApiUrls } from 'App.constants';
 import { AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS } from 'components/AutoLogoutDialog/AutoLogoutDialog';
 import { useMemo } from 'react';
+import { getApiUrl } from '../../helpers/App';
 import { useDataApi } from './api.hook';
 import { ApiRequestOptions, ApiState } from './api.types';
 
@@ -18,7 +18,7 @@ const INITIAL_SESSION_STATE: Omit<SessionState, 'refetch'> = {
 };
 
 const requestOptions: ApiRequestOptions = {
-  url: ApiUrls.AUTH,
+  url: getApiUrl('AUTH'),
   resetToInitialDataOnError: true,
 };
 

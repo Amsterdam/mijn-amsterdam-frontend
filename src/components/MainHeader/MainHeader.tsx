@@ -1,5 +1,5 @@
-import { AppRoutes, errorMessageMap, excludedApiKeys } from 'App.constants';
-import { AppContext, TutorialState } from 'AppState';
+import { AppRoutes, errorMessageMap } from 'App.constants';
+import { AppContext, TutorialState, StateKey } from 'AppState';
 import { ReactComponent as BetaLabel } from 'assets/images/beta-label.svg';
 import { ReactComponent as AmsterdamLogoLarge } from 'assets/images/logo-amsterdam-large.svg';
 import { ReactComponent as AmsterdamLogo } from 'assets/images/logo-amsterdam.svg';
@@ -13,6 +13,8 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import styles from './MainHeader.module.scss';
+
+const excludedApiKeys: StateKey[] = ['MY_CHAPTERS', 'SESSION'];
 
 export interface MainHeaderProps {
   isAuthenticated?: boolean;
