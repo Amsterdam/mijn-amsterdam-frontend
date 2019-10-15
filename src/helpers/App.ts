@@ -1,7 +1,8 @@
-import { DEFAULT_DATE_FORMAT } from 'App.constants';
+import { ApiUrls, DEFAULT_DATE_FORMAT } from 'App.constants';
 import { format, parseISO } from 'date-fns';
 import NL_LOCALE from 'date-fns/locale/nl';
 import { KeyboardEvent, MouseEvent } from 'react';
+import { ApiConfig, ApiName } from '../App.constants';
 
 export function dateFormat(datestr: string | Date | number, fmt: string) {
   if (!datestr) {
@@ -68,4 +69,17 @@ export function isProduction() {
 
 export function isAcceptance() {
   return process.env.REACT_APP_BUILD_ENV === 'acceptance';
+}
+
+export function getApiConfigValue(
+  name: ApiName,
+  param: keyof ApiConfig,
+  defaultValue: any
+) {
+  const cfg = ApiConfig[name] && ApiConfig[name]![param];
+  return typeof cfg !== 'undefined' ? cfg : defaultValue;
+}
+
+export function getApiUrl(name: ApiName) {
+  return ApiUrls[name] || '';
 }

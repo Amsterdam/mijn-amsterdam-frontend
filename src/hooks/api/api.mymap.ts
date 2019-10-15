@@ -1,10 +1,10 @@
-import { ApiUrls } from 'App.constants';
+import { getApiUrl } from 'helpers/App';
 import { usePhoneScreen } from 'hooks/media.hook';
 import { useEffect, useState } from 'react';
 import { useCounter } from '../timer.hook';
 import { useDataApi } from './api.hook';
 
-export const BAG_SEARCH_ENDPOINT_URL = `${ApiUrls.BAG}?q=`;
+export const BAG_SEARCH_ENDPOINT_URL = `${getApiUrl('BAG')}?q=`;
 
 export const MAP_URL = process.env.REACT_APP_EMBED_MAP_URL;
 export const DEFAULT_LAT = 52.3717228;

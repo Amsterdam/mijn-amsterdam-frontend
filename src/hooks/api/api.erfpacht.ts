@@ -1,5 +1,5 @@
+import { getApiUrl } from 'helpers/App';
 import { useDataApi } from './api.hook';
-import { ApiUrls } from 'App.constants';
 import { ApiState } from './api.types';
 
 interface ErfpachtApiResponse {
@@ -12,7 +12,7 @@ export interface ErfpachtApiState extends ApiState {
 
 export default function useErfpachtApi(): ErfpachtApiState {
   const [api] = useDataApi({
-    url: ApiUrls.ERFPACHT,
+    url: getApiUrl('ERFPACHT'),
   });
   return api;
 }
