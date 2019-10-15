@@ -1,9 +1,9 @@
-import { ApiConfig, ApiUrls } from 'App.constants';
 import {
   FocusItem,
   formatProductCollections,
   ProductCollection,
 } from 'data-formatting/focus';
+import { getApiConfigValue, getApiUrl } from 'helpers/App';
 import { useMemo } from 'react';
 import { MyNotification } from './my-notifications-api.hook';
 import usePaginatedApi, {
@@ -27,10 +27,10 @@ export default function useFocusApi(
   limit: number = -1
 ): FocusApiState {
   const { data, ...rest } = usePaginatedApi({
-    url: ApiUrls.FOCUS,
+    url: getApiUrl('FOCUS'),
     offset,
     limit,
-    postpone: ApiConfig[ApiUrls.FOCUS].postponeFetch,
+    postpone: getApiConfigValue('FOCUS', 'postponeFetch', false),
   });
 
   const { allItems, allNotifications, products } = useMemo(() => {
