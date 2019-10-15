@@ -46,13 +46,26 @@ export default function Profile() {
           BRP.data.persoon.vertrokkenOnbekendWaarheen && (
             <Alert type="warning" className="vertrokkenOnbekendWaarheen">
               <p>
-                U staat sinds 10 januari 2018 in de BRP geregistreerd als
-                ‘vertrokken – onbekend waarheen’. Kijk voor meer informatie op
-                link
+                U staat sinds {new Date().toISOString()} in de BRP geregistreerd
+                als "vertrokken – onbekend waarheen". Kijk{' '}
+                <a
+                  rel="external noopener noreferrer"
+                  href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
+                >
+                  hier
+                </a>{' '}
+                voor meer informatie.
               </p>
               <p>
                 U kunt uw huidige adres doorgeven bij het Stadsloket. U moet
-                hiervoor een link afspraak maken.
+                hiervoor{' '}
+                <a
+                  rel="external noopener noreferrer"
+                  href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
+                >
+                  een afspraak maken
+                </a>
+                .
               </p>
             </Alert>
           )}
@@ -60,12 +73,15 @@ export default function Profile() {
           <Alert type="warning" className="inOnderzoek">
             <p>
               Op dit moment onderzoeken wij of u nog steeds woont op het adres
-              waar u ingeschreven staat. Kijk voor meer informatie op{' '}
-              <a href="" rel="external noopener noreferrer">
-                link
+              waar u ingeschreven staat. Kijk{' '}
+              <a
+                href="https://www.amsterdam.nl/veelgevraagd/?productid={49AB6693-E7FA-4642-82F4-D14D87E02C72}"
+                rel="external noopener noreferrer"
+              >
+                hier
               </a>{' '}
-              onderzoek naar uw inschrijving in de Basisregistratie Personen
-              (BRP)
+              voor meer informatie over het onderzoek naar uw inschrijving in de
+              Basisregistratie Personen (BRP)
             </p>
             <p>
               Kloppen uw gegevens niet? Voorkom een boete en stuur een bericht
