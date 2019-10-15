@@ -1,5 +1,6 @@
 {
   "adres": {
+    "inOnderzoek": true,
     "huisletter": null,
     "huisnummer": "1",
     "huisnummertoevoeging": null,
@@ -9,6 +10,7 @@
     "begindatumVerblijf": null
   },
   "persoon": {
+    "vertrokkenOnbekendWaarheen": true,
     "aanduidingNaamgebruikOmschrijving": "Eigen geslachtsnaam",
     "bsn": "129095205",
     "geboortedatum": "1950-01-01T00:00:00Z",

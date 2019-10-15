@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './Alert.module.scss';
 import { ComponentChildren } from 'App.types';
-import { ReactComponent as AlertIcon } from 'assets/images/Alert.svg';
-import { ReactComponent as CheckmarkIcon } from 'assets/images/Checkmark.svg';
+import { ReactComponent as AlertIcon } from 'assets/icons/Alert.svg';
+import { ReactComponent as CheckmarkIcon } from 'assets/icons/Checkmark.svg';
 import classnames from 'classnames';
 
 export type AlertType = 'warning' | 'info' | 'success';
@@ -10,6 +10,7 @@ export type AlertType = 'warning' | 'info' | 'success';
 export interface ComponentProps {
   children?: ComponentChildren;
   type?: AlertType;
+  className?: any;
 }
 
 function getIcon(alertType: AlertType) {
@@ -25,10 +26,14 @@ function getIcon(alertType: AlertType) {
   return <Icon aria-hidden="true" className={styles.Icon} />;
 }
 
-export default function Alert({ children, type = 'success' }: ComponentProps) {
+export default function Alert({
+  children,
+  type = 'success',
+  className,
+}: ComponentProps) {
   return (
-    <p className={classnames(styles.Alert, styles[type])}>
+    <div className={classnames(styles.Alert, styles[type], className)}>
       {getIcon(type)} {children}
-    </p>
+    </div>
   );
 }

@@ -4,7 +4,7 @@ import composeClassNames from 'classnames';
 import Heading, { HeadingTagName } from 'components/Heading/Heading';
 import { ComponentChildren, LinkProps } from 'App.types';
 import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
-import { ReactComponent as CaretLeft } from 'assets/images/Chevron-Left.svg';
+import { ReactComponent as CaretLeft } from 'assets/icons/Chevron-Left.svg';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 
 export interface PageHeadingProps

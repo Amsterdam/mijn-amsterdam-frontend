@@ -38,7 +38,53 @@ export default function Profile() {
         )}
         {BRP.isError && (
           <Alert type="warning">
-            We kunnen op dit moment geen gegevens tonen.
+            <p>We kunnen op dit moment geen gegevens tonen.</p>
+          </Alert>
+        )}
+        {BRP.data &&
+          BRP.data.persoon &&
+          BRP.data.persoon.vertrokkenOnbekendWaarheen && (
+            <Alert type="warning" className="vertrokkenOnbekendWaarheen">
+              <p>
+                U staat sinds 10 januari 2018 in de BRP geregistreerd als
+                ‘vertrokken – onbekend waarheen’. Kijk voor meer informatie op
+                link
+              </p>
+              <p>
+                U kunt uw huidige adres doorgeven bij het Stadsloket. U moet
+                hiervoor een link afspraak maken.
+              </p>
+            </Alert>
+          )}
+        {BRP.data && BRP.data.adres && BRP.data.adres.inOnderzoek && (
+          <Alert type="warning" className="inOnderzoek">
+            <p>
+              Op dit moment onderzoeken wij of u nog steeds woont op het adres
+              waar u ingeschreven staat. Kijk voor meer informatie op{' '}
+              <a href="" rel="external noopener noreferrer">
+                link
+              </a>{' '}
+              onderzoek naar uw inschrijving in de Basisregistratie Personen
+              (BRP)
+            </p>
+            <p>
+              Kloppen uw gegevens niet? Voorkom een boete en stuur een bericht
+              naar{' '}
+              <a
+                href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
+                rel="external noopener noreferrer"
+              >
+                adresonderzoek.basisinformatie@amsterdam.nl
+              </a>
+              . Of bel naar{' '}
+              <a
+                href="tel:020
+              253 9068"
+              >
+                020 253 9068
+              </a>
+              .
+            </p>
           </Alert>
         )}
       </PageContent>

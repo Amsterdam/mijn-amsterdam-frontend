@@ -48,7 +48,7 @@ export default () => {
         </p>
         {isError && (
           <Alert type="warning">
-            We kunnen op dit moment geen gegevens tonen.
+            <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>
         )}
       </PageContent>

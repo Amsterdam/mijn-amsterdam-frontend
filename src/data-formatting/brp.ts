@@ -61,6 +61,7 @@ export interface Adres {
   huisnummertoevoeging: string | null;
   huisletter: string | null;
   begindatumVerblijf: string | null;
+  inOnderzoek: boolean;
 }
 
 interface Partner {
@@ -88,6 +89,7 @@ export interface Persoon {
   voornamen: string;
   nationaliteiten: Array<{ omschrijving: string }>;
   mokum: boolean;
+  vertrokkenOnbekendWaarheen: boolean;
 }
 
 export type Person = Persoon;

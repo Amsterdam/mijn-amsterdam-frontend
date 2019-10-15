@@ -1,7 +1,7 @@
 import { AppRoutes } from 'App.constants';
-import { ReactComponent as CloseIcon } from 'assets/images/Close.svg';
+import { ReactComponent as CloseIcon } from 'assets/icons/Close.svg';
 import { ReactComponent as Logo } from 'assets/images/logo-amsterdam.svg';
-import { ReactComponent as HomeIcon } from 'assets/images/home.svg';
+import { ReactComponent as HomeIcon } from 'assets/icons/home.svg';
 import Heading from 'components/Heading/Heading';
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
