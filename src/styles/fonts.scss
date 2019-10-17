@@ -24,12 +24,5 @@ Imaging with any questions regarding Web Fonts:  http://www.fonts.com
   font-family: "AvenirNext"; // Avenir Next LT W01 Demi
   src: url("../assets/fonts/AvenirNextDemi/aad99a1f-7917-4dd6-bbb5-b07cedbff64f.woff2") format("woff2"),
   url("../assets/fonts/AvenirNextDemi/91b50bbb-9aa1-4d54-9159-ec6f19d14a7c.woff") format("woff");
-  font-weight: 600;
-}
-
-@font-face {
-  font-family: "AvenirNext"; // Avenir LT W01 85 Heavy
-  src: url("../assets/fonts/AvenirHeavy/65cde95a-ac33-4c65-8198-e37857968d1a.woff2") format("woff2"),
-  url("../assets/fonts/AvenirHeavy/7147ec3a-8ff8-4ec9-8c5c-bd1571dc6ae6.woff") format("woff");
-  font-weight: 800;
+  font-weight: bold;
 }

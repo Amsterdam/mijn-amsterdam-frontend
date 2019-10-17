@@ -3,12 +3,12 @@ import styles from './StatusLine.module.scss';
 import classnames from 'classnames';
 import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
 import { Document } from '../DocumentList/DocumentList';
-import { ReactComponent as DownloadIcon } from 'assets/images/Download.svg';
+import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
 import { defaultDateFormat } from 'helpers/App';
 import useRouter from 'use-react-router';
 import { useSessionStorage } from 'hooks/storage.hook';
 import { trackEvent } from 'hooks/analytics.hook';
-import { ReactComponent as CaretLeft } from 'assets/images/Chevron-Left.svg';
+import { ReactComponent as CaretLeft } from 'assets/icons/Chevron-Left.svg';
 
 export type StepType = 'first-step' | 'last-step' | 'intermediate-step';
 export interface StatusLineItem {

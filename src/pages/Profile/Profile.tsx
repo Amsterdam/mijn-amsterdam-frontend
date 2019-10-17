@@ -38,7 +38,55 @@ export default function Profile() {
         )}
         {BRP.isError && (
           <Alert type="warning">
-            We kunnen op dit moment geen gegevens tonen.
+            <p>We kunnen op dit moment geen gegevens tonen.</p>
+          </Alert>
+        )}
+        {BRP.data &&
+          BRP.data.persoon &&
+          BRP.data.persoon.vertrokkenOnbekendWaarheen && (
+            <Alert type="warning" className="vertrokkenOnbekendWaarheen">
+              <p>
+                U staat sinds {new Date().toISOString()} in de BRP geregistreerd
+                als "vertrokken – onbekend waarheen".
+              </p>
+              <p>
+                U kunt uw huidige adres doorgeven bij het Stadsloket. U moet
+                hiervoor een{' '}
+                <a
+                  rel="external noopener noreferrer"
+                  href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
+                >
+                  afspraak
+                </a>{' '}
+                maken .
+              </p>
+            </Alert>
+          )}
+        {BRP.data && BRP.data.adres && BRP.data.adres.inOnderzoek && (
+          <Alert type="warning" className="inOnderzoek">
+            <p>
+              Op dit moment onderzoeken wij of u nog steeds woont op het adres
+              waar u ingeschreven staat. Kijk voor{' '}
+              <a
+                href="https://www.amsterdam.nl/veelgevraagd/?productid={49AB6693-E7FA-4642-82F4-D14D87E02C72}"
+                rel="external noopener noreferrer"
+              >
+                meer
+              </a>{' '}
+              informatie over onderzoek naar uw inschrijving in de
+              Basisregistratie Personen (BRP).
+            </p>
+            <p>
+              Kloppen uw gegevens niet? Voorkom een boete en stuur een bericht
+              naar{' '}
+              <a
+                href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
+                rel="external noopener noreferrer"
+              >
+                adresonderzoek.basisinformatie@amsterdam.nl
+              </a>
+              .
+            </p>
           </Alert>
         )}
       </PageContent>

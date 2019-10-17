@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './DocumentList.module.scss';
 import { defaultDateFormat } from 'helpers/App';
-import { ReactComponent as DocumentIcon } from 'assets/images/Document.svg';
-import { ReactComponent as DownloadIcon } from 'assets/images/Download.svg';
+import { ReactComponent as DocumentIcon } from 'assets/icons/Document.svg';
+import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
 import Heading from 'components/Heading/Heading';
 import { trackDownload } from '../../hooks/analytics.hook';
 

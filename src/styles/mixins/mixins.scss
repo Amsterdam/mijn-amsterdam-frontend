@@ -32,7 +32,7 @@
 
 @mixin heading-large {
   @include heading(3, 1);
-  font-weight: 800;
+  font-weight: 600;
 
   @include mq-phone() {
     @include heading(2.4, 1);
@@ -41,7 +41,7 @@
 
 @mixin heading-medium-large {
   @include heading(2.4, 1.3);
-  font-weight: 800;
+  font-weight: 600;
 
   @include mq-phone() {
     @include heading(2.1, 1.3);
@@ -50,17 +50,17 @@
 
 @mixin heading-medium {
   @include heading(2, 1.3);
-  font-weight: 800;
+  font-weight: 600;
 }
 
 @mixin heading-small {
   @include heading(1.8, 1.3);
-  font-weight: 800;
+  font-weight: 600;
 }
 
 @mixin heading-tiny {
   @include heading(1.6, 1.3);
-  font-weight: 800;
+  font-weight: 600;
 }
 
 @mixin reset-list-style {

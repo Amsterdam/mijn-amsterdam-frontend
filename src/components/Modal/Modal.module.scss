@@ -90,11 +90,6 @@
     height: 2rem;
   }
 
-  &:focus {
-    background-color: $color-support-focus;
-    outline: 0;
-  }
-
   &:hover {
     color: $color-primary-red;
   }

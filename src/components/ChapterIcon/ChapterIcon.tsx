@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { ReactComponent as IconBurgerZaken } from 'assets/images/burgerzaken.svg';
-import { ReactComponent as IconZorg } from 'assets/images/zorg.svg';
-import { ReactComponent as IconInkomen } from 'assets/images/inkomen.svg';
-import { ReactComponent as IconWonen } from 'assets/images/wonen.svg';
-import { ReactComponent as IconBelastingen } from 'assets/images/belastingen.svg';
-import { ReactComponent as IconMyNotifications } from 'assets/images/Bell.svg';
-import { ReactComponent as IconTips } from 'assets/images/Tip.svg';
+import { ReactComponent as IconBurgerZaken } from 'assets/icons/burgerzaken.svg';
+import { ReactComponent as IconZorg } from 'assets/icons/zorg.svg';
+import { ReactComponent as IconInkomen } from 'assets/icons/inkomen.svg';
+import { ReactComponent as IconWonen } from 'assets/icons/wonen.svg';
+import { ReactComponent as IconBelastingen } from 'assets/icons/belastingen.svg';
+import { ReactComponent as IconMyNotifications } from 'assets/icons/Bell.svg';
+import { ReactComponent as IconTips } from 'assets/icons/Tip.svg';
 import { Chapters, Chapter as ChapterType, Colors } from 'App.constants';
 
 import styles from './ChapterIcon.module.scss';
