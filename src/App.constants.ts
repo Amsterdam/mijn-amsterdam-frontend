@@ -136,37 +136,14 @@ export const errorMessageMap: ErrorMessageMap = {
 export const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
 
 export const ExternalUrls = {
-  ABOUT_INCOME_SUPPORT: 'https://www.amsterdam.nl/werk-inkomen/',
-  BIJSTAND_WHAT_TO_EXPECT:
-    'https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D',
-  BIJSTAND_RIGHTS:
-    'https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d',
-  BIJSTAND_OBLIGATIONS:
-    'https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d',
-  BIJSTAND_PAYMENT_DATE:
-    'https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D',
-  STADSPAS: 'https://www.amsterdam.nl/stadspas',
   CHANGE_PERSONAL_DATA:
     'https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D',
   REPORT_RELOCATION:
     'https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/',
   CONTACT_FORM:
     'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx/fKlachtenformulier',
-  COLOFON: 'https://www.amsterdam.nl/algemene_onderdelen/overige/colofon/',
-  PROCLAIMER:
-    'https://www.amsterdam.nl/algemene_onderdelen/overige/proclaimer/',
-  AMSTERDAM_WASTE: 'https://www.amsterdam.nl/afval',
-  DIGID: 'https://digid.nl',
-  EHERKENNING:
-    'https://www.eherkenning.nl/inloggen-met-eherkenning/middel-aanvragen/',
-  KVK_REPORT_CHANGE:
-    'https://www.kvk.nl/inschrijven-en-wijzigen/wijziging-doorgeven/',
   SSO_ERFPACHT: process.env.REACT_APP_ERFPACHT_URL,
   BERICHTENBOX: 'https://mijn.overheid.nl/berichtenbox/inbox/',
-  TROUWEN_EN_PARTNERSCHAP:
-    'https://www.amsterdam.nl/burgerzaken/trouwen-partnerschap/',
-  ECHTSCHEIDING:
-    'https://www.amsterdam.nl/veelgevraagd/?productid=%7B531BC4F8-F16D-4196-BFA0-D83C40A4D21F%7D',
   CONTACT_GENERAL: 'https://www.amsterdam.nl/contact/',
   AMSTERDAM_NEWSLETTER:
     'https://www.amsterdam.nl/nieuwsbrieven/actueel/nieuwsbrief/nieuwsbrief/',
@@ -176,16 +153,14 @@ export const ExternalUrls = {
   AMSTERDAM_LINKEDIN: 'https://www.linkedin.com/company/gemeente-amsterdam',
   AMSTERDAM_VACATURES:
     'https://www.amsterdam.nl/bestuur-organisatie/werkenbij/',
-  VOORGENOMEN_HUWELIJK:
-    'https://www.amsterdam.nl/burgerzaken/trouwen-partnerschap/trouwen-amsterdam/aankondigen/',
-  INCOME_CONTACT: 'https://www.amsterdam.nl/werk-inkomen/contact/',
   ZORG_LEES_MEER: 'https://www.amsterdam.nl/zorg-ondersteuning/',
   SSO_BELASTINGEN: 'https://belastingbalie.amsterdam.nl/digid.saml.php?start',
-  MIJN_WERK_EN_INKOMEN: 'https://edison.amsterdam.nl/SignIn?ReturnUrl=%2F',
   MIJN_SUBSIDIES: 'https://mijnsubsidies.amsterdam.nl/loket/',
   MIJN_AMSTERDAM_VEELGEVRAAGD:
     'https://www.amsterdam.nl/veelgevraagd/?productid={68422ECA-8C56-43EC-A9AA-B3DF190B5077}',
   AMSTERDAM: 'https://www.amsterdam.nl',
+  WPI_CONTACT: 'https://www.amsterdam.nl/werk-inkomen/contact/',
+  WPI_REGELINGEN: 'https://www.amsterdam.nl/werk-inkomen/uitkeringen/',
 };
 
 // NOTE: Keep up-to-date with _colors.scss

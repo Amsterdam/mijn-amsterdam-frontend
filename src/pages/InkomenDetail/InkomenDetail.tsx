@@ -49,6 +49,13 @@ export default () => {
         <StatusLine
           trackCategory={`Werk en inkomen / ${FocusItem.productTitle}`}
           items={FocusItem.process}
+          altDocumentContent={(statusLineItem, stepNumber) => {
+            return statusLineItem.isLastActive ? (
+              <b>U ontvangt deze brief per post.</b>
+            ) : (
+              ''
+            );
+          }}
         />
       )}
     </DetailPage>
