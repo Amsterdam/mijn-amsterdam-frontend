@@ -50,8 +50,19 @@
       }
     }
 
-    @include hoverCapable {
+    &.link {
+      background-color: $color-white;
+      border-color: $color-support-darkblue;
+      color: $color-support-darkblue;
+      border: 0;
+
       &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    @include hoverCapable {
+      &:hover:not(.link) {
         background-color: $color-support-darkblue;
         border-color: $color-support-darkblue;
         color: $color-white;
