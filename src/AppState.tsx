@@ -130,7 +130,7 @@ export function useAppState(value?: any) {
         BRP: BRP.data,
       });
     }
-  }, tipsDependencies);
+  }, [...tipsDependencies, MY_TIPS.isOptIn]);
 
   // NOTE: For now we can use this solution but we probably need some more finegrained memoization of the state as the app grows larger.
   return useMemo(() => {
@@ -157,6 +157,7 @@ export function useAppState(value?: any) {
     ERFPACHT.isLoading,
     MY_CHAPTERS.isLoading,
     MY_AREA.url,
+    MY_TIPS.isOptIn,
   ]);
 }
 

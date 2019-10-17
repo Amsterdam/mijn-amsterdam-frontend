@@ -62,14 +62,14 @@
 
 .Header {
   display: flex;
-  border-bottom: 1px solid $color-neutral-grey2;
-  padding: 1rem 1rem 1rem 2rem;
-  padding-bottom: .5rem;
+  border-bottom: 1px solid $color-neutral-grey4;
+  padding: 1rem 1.5rem;
+  padding-bottom: .8rem;
   align-items: center;
 }
 
 .Content {
-  padding: 2rem;
+  padding: 1.5rem;
 }
 
 .ButtonClose {
