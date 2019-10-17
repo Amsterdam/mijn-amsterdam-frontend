@@ -1,11 +1,6 @@
 import { AppRoutes } from 'App.constants';
 import { LinkProps } from 'App.types';
-import {
-  addDays,
-  addMonths,
-  differenceInCalendarDays,
-  parseISO,
-} from 'date-fns';
+import { addDays, differenceInCalendarDays, parseISO } from 'date-fns';
 import { defaultDateFormat } from 'helpers/App';
 import { MyNotification } from 'hooks/api/my-notifications-api.hook';
 import { Chapter, Chapters } from '../App.constants';
@@ -981,4 +976,18 @@ export function formatProductCollections(items: FocusProduct[]) {
     allNotifications,
     products,
   };
+}
+
+export function altDocumentContent(
+  statusLineItem: StatusLineItem,
+  stepNumber: number
+) {
+  return statusLineItem.isLastActive &&
+    ['Meer informatie nodig', 'In behandeling', 'Besluit'].includes(
+      statusLineItem.status
+    ) ? (
+    <b>U ontvangt deze brief per post.</b>
+  ) : (
+    ''
+  );
 }
