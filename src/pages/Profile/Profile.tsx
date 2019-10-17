@@ -47,14 +47,7 @@ export default function Profile() {
             <Alert type="warning" className="vertrokkenOnbekendWaarheen">
               <p>
                 U staat sinds {new Date().toISOString()} in de BRP geregistreerd
-                als "vertrokken – onbekend waarheen". Kijk{' '}
-                <a
-                  rel="external noopener noreferrer"
-                  href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
-                >
-                  hier
-                </a>{' '}
-                voor meer informatie.
+                als "vertrokken – onbekend waarheen".
               </p>
               <p>
                 U kunt uw huidige adres doorgeven bij het Stadsloket. U moet
@@ -91,13 +84,6 @@ export default function Profile() {
                 rel="external noopener noreferrer"
               >
                 adresonderzoek.basisinformatie@amsterdam.nl
-              </a>
-              . Of bel naar{' '}
-              <a
-                href="tel:020
-              253 9068"
-              >
-                020 253 9068
               </a>
               .
             </p>

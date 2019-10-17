@@ -6,6 +6,10 @@
   text-decoration: none;
   cursor: pointer;
 
+  &:visited {
+    color: inherit;
+  }
+
   &:not(.IconLink) {
     background-image: url('assets/icons/Chevron-Right.svg');
     background-repeat: no-repeat;
@@ -27,10 +31,6 @@
         fill: $color-primary-red;
       }
     }
-  }
-
-  &:focus {
-    background-color: $color-support-focus;
   }
 
   svg {
@@ -55,7 +55,6 @@
       fill: $color-white;
     }
     &:focus {
-      color: $color-black;
       background-image: url('assets/icons/Chevron-Right.svg');
     }
   }
