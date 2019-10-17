@@ -6,4 +6,19 @@
   }
 }
 
+button.OptInOutButton {
+  display: block;
+  margin: 4rem auto 7rem auto;
+}
 
+.OptInOutInfo {
+  margin-top: 0;
+  margin-bottom: 4rem;
+}
+
+.OptInOutButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 2rem;
+}

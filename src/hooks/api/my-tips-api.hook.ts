@@ -1,5 +1,6 @@
 import { LinkProps } from 'App.types';
 import { getApiConfigValue, getApiUrl } from 'helpers/App';
+import { useCookie } from 'hooks/storage.hook';
 import usePaginatedApi, {
   PaginatedApiProps,
   PaginatedApiState,
@@ -22,6 +23,23 @@ export interface MyTipsResponse extends PaginatedItemsResponse {
 export interface MyTipsApiState extends PaginatedApiState {
   data: MyTipsResponse;
   refetch: (requestData: any) => void;
+  isOptIn: boolean;
+  optIn: () => void;
+  optOut: () => void;
+}
+
+export function useOptIn(): [boolean, () => void, () => void] {
+  const [isOptIn, setOptIn] = useCookie('optInPersonalizedTips', 'no');
+
+  function optIn() {
+    setOptIn('yes', { path: '/' });
+  }
+
+  function optOut() {
+    setOptIn('no', { path: '/' });
+  }
+
+  return [isOptIn === 'yes', optIn, optOut];
 }
 
 export default function useMyTipsApi(
@@ -36,29 +54,39 @@ export default function useMyTipsApi(
     method: 'POST',
   };
 
-  const { data, refetch, ...rest } = usePaginatedApi(options);
+  const { data, refetch: originalRefetch, isDirty, ...rest } = usePaginatedApi(
+    options
+  );
+
+  const [isOptIn, optIn, optOut] = useOptIn();
+
+  function refetch({
+    BRP: brp,
+    FOCUS: focus,
+    ERFPACHT: erfpacht,
+    WMO: wmo,
+  }: any) {
+    const requestDataFormatted = {
+      optin: isOptIn,
+      data: {
+        brp,
+        focus,
+        erfpacht,
+        wmo,
+      },
+    };
+    originalRefetch({
+      requestData: requestDataFormatted,
+    });
+  }
 
   return {
     ...rest,
+    isDirty,
     data,
-    refetch: ({
-      BRP: brp,
-      FOCUS: focus,
-      ERFPACHT: erfpacht,
-      WMO: wmo,
-    }: any) => {
-      const requestDataFormatted = {
-        optin: false,
-        data: {
-          brp,
-          focus,
-          erfpacht,
-          wmo,
-        },
-      };
-      refetch({
-        requestData: requestDataFormatted,
-      });
-    },
+    refetch,
+    isOptIn,
+    optIn,
+    optOut,
   };
 }
