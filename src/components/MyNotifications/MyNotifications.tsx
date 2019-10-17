@@ -84,11 +84,15 @@ export default function MyNotifications({
                   {item.title}
                 </Heading>
                 <aside className={styles.MetaInfo}>
-                  <ChapterIcon
-                    fill={Colors.primaryRed}
-                    className={styles.Icon}
-                    chapter={item.chapter}
-                  />
+                  {!item.Icon ? (
+                    <ChapterIcon
+                      fill={Colors.primaryRed}
+                      className={styles.Icon}
+                      chapter={item.chapter}
+                    />
+                  ) : (
+                    <item.Icon className={styles.Icon} />
+                  )}
                   <div className={styles.MetaInfoSecondary}>
                     <em className={styles.ChapterIndication}>
                       {item.chapter.toLowerCase()}

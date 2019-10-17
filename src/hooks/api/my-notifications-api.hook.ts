@@ -13,6 +13,7 @@ export interface MyNotification {
   description: string | JSX.Element;
   link?: LinkProps;
   isUnread?: boolean; // Was this notification presented to the user / has it been read
+  Icon?: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   customLink?: {
     callback: () => void;
     title: string;
@@ -30,29 +31,49 @@ export function useMyNotificationsState() {
   return useLocalStorage('MY_NOTIFICATIONS', {});
 }
 
+function isUnread(
+  notification: MyNotification,
+  myNotificationsState: MyNotificationsApiState
+) {
+  return {
+    ...notification,
+    isUnread: myNotificationsState
+      ? !(notification.id in myNotificationsState)
+      : true,
+  };
+}
+
 // NOTE: Currently we only extract/construct notifications from the main focus api data which is not specifically tailored for this use.
 // In the future we will get specifically tailored generic notification content from various api's which will be integrated in
 // a domain wide notifications stream.
 export default ({
   FOCUS,
-}: Pick<AppState, 'FOCUS'>): MyNotificationsApiState => {
+  BRP,
+}: Pick<AppState, 'FOCUS' | 'BRP'>): MyNotificationsApiState => {
   const [myNotificationsState] = useMyNotificationsState();
+
   const items = [
     // Static content welcome message
     WelcomeNotification,
     // Focus notification items
-    ...FOCUS.data.notifications.map(notification => {
-      return {
-        ...notification,
-        isUnread: myNotificationsState
-          ? !(notification.id in myNotificationsState)
-          : true,
-      };
-    }),
-  ].sort(dateSort('datePublished', 'desc'));
+    ...FOCUS.data.notifications,
+    // BRP Notifications
+    ...BRP.data.notifications,
+  ]
+    .map(notification => isUnread(notification, myNotificationsState))
+    .sort(dateSort('datePublished', 'desc'));
+
+  const isLoading = BRP.isLoading || FOCUS.isLoading;
+  const isError = BRP.isError || FOCUS.isError;
+  const isDirty = BRP.isDirty && FOCUS.isDirty;
+  const isPristine = BRP.isPristine && FOCUS.isPristine;
 
   return {
-    ...FOCUS,
+    isLoading,
+    isError,
+    isDirty,
+    isPristine,
+    errorMessage: '',
     data: {
       items,
       total: items.length,

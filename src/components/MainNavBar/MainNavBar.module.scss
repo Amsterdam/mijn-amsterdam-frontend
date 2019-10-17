@@ -132,7 +132,7 @@
 
 .BurgerMenuToggleBtn {
   height: $main-header-navbar-height;
-  background-image: url('assets/images/Menu.svg');
+  background-image: url('assets/icons/Menu.svg');
   background-size: 24px;
   width: 40px;
   background-repeat: no-repeat;
@@ -145,7 +145,7 @@
   padding: 0;
 
   &Open {
-    background-image: url('assets/images/Close.svg');
+    background-image: url('assets/icons/Close.svg');
   }
 
   @include media-q('>phone', '<tablet') {

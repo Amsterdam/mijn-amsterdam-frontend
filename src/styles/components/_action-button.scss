@@ -12,12 +12,6 @@
   border: 1px solid $color-primary-red;
   font-weight: 500;
 
-  &:focus {
-    outline: 0.3rem solid $color-support-focus;
-    background-color: $color-support-red;
-    border-color: $color-support-red;
-  }
-
   @include hoverCapable {
     &:hover {
       background-color: $color-support-red;
@@ -36,21 +30,23 @@
     color: $color-neutral-grey3 !important;
   }
 
+  &:visited {
+    color: inherit;
+  }
+
   &.secondary {
     background-color: $color-support-blue;
     border-color: $color-support-blue;
 
     &, &:focus {
-      background-color: $color-support-blue;
-      border-color: $color-support-blue;
       color: $color-white;
     }
 
     &.line-only {
       &, &:focus {
         background-color: $color-white;
-        border-color: $color-support-darkblue;
         color: $color-support-darkblue;
+        border-color: $color-support-blue;
       }
     }
 

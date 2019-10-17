@@ -41,7 +41,7 @@ export default () => {
       <PageContent>
         {(isError || noContent) && (
           <Alert type="warning">
-            We kunnen op dit moment geen gegevens tonen.
+            <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>
         )}
         {isLoading && <LoadingContent className={styles.LoadingContentInfo} />}

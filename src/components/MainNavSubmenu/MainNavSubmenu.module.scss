@@ -11,11 +11,6 @@
   display: block;
   margin-right: 3rem;
 
-  &:focus {
-    background-color: $color-support-focus;
-    outline: 1px dotted #000;
-  }
-
   span {
     display: inline-block;
     border-bottom: solid 0.2rem transparent;

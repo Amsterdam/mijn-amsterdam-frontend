@@ -6,8 +6,12 @@
   text-decoration: none;
   cursor: pointer;
 
+  &:visited {
+    color: inherit;
+  }
+
   &:not(.IconLink) {
-    background-image: url('assets/images/Chevron-Right.svg');
+    background-image: url('assets/icons/Chevron-Right.svg');
     background-repeat: no-repeat;
     background-size: 0.8em auto;
     background-position: -0.3rem 0.5rem;
@@ -21,16 +25,12 @@
         text-decoration: underline;
       }
       &:not(.IconLink) {
-        background-image: url('assets/images/Chevron-Right__primary-red.svg');
+        background-image: url('assets/icons/Chevron-Right__primary-red.svg');
       }
       svg {
         fill: $color-primary-red;
       }
     }
-  }
-
-  &:focus {
-    background-color: $color-support-focus;
   }
 
   svg {
@@ -49,14 +49,13 @@
 .ButtonLink.ButtonLinkWhite {
   &,
   &:hover {
-    background-image: url('assets/images/Chevron-Right__primary-white.svg');
+    background-image: url('assets/icons/Chevron-Right__primary-white.svg');
     color: $color-white;
     svg {
       fill: $color-white;
     }
     &:focus {
-      color: $color-black;
-      background-image: url('assets/images/Chevron-Right.svg');
+      background-image: url('assets/icons/Chevron-Right.svg');
     }
   }
 }

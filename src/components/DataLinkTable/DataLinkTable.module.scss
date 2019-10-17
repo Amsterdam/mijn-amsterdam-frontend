@@ -45,9 +45,6 @@
 
   &WithItems {
     cursor: pointer;
-    &:focus {
-      background-color: $color-support-focus;
-    }
   }
 
   span {
