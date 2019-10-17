@@ -141,7 +141,12 @@ export function useStorage(
 }
 
 export function useLocalStorage(key: string, value: any) {
-  return useStorage(key, value, localStorage);
+  let adapter: MemoryAdapter | Storage = memoryHandler;
+  try {
+    adapter = localStorage;
+  } catch (error) {}
+
+  return useStorage(key, value, adapter);
 }
 
 export function useSessionStorage(key: string, value: any) {
