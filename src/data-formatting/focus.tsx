@@ -983,10 +983,12 @@ export function altDocumentContent(
   stepNumber: number
 ) {
   return statusLineItem.isLastActive &&
-    ['Meer informatie nodig', 'In behandeling', 'Besluit'].includes(
-      statusLineItem.status
-    ) ? (
-    <b>U ontvangt deze brief per post.</b>
+    ['Meer informatie nodig', 'Besluit'].includes(statusLineItem.status) ? (
+    <b>
+      U ontvangt{' '}
+      {statusLineItem.status === 'Besluit' ? 'dit besluit' : 'deze brief'} per
+      post.
+    </b>
   ) : (
     ''
   );
