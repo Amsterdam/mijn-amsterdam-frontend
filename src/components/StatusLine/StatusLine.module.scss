@@ -103,7 +103,7 @@
       color: $color-white;
       text-align: center;
       font-size: 0.8em;
-      font-weight: 800;
+      font-weight: 600;
       line-height: 1.5;
     }
   }
@@ -181,7 +181,7 @@
       height: 3.2rem;
       margin-left: -0.55rem;
       top: 1.4rem;
-      background: $color-primary-darkblue url('assets/images/Checkmark__white.svg')
+      background: $color-primary-darkblue url('assets/icons/Checkmark__white.svg')
         no-repeat center;
       background-size: 0.9em 0.9em;
     }
@@ -208,7 +208,7 @@
 }
 
 .Checked .Panel:first-child:after {
-  background: $color-primary-darkblue url('assets/images/Checkmark__white.svg')
+  background: $color-primary-darkblue url('assets/icons/Checkmark__white.svg')
         no-repeat center;
   background-size: 0.9em 0.9em;
 }

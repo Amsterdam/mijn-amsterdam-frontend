@@ -47,8 +47,14 @@ a {
   color: inherit;
 }
 
-a:focus {
-  background-color: $color-support-focus;
+p a {
+  color: $color-primary-darkblue;
+  &:hover {
+    color: $color-primary-red;
+  }
+  &:visited {
+    color: $color-support-purple;
+  }
 }
 
 [role='button'],
@@ -57,7 +63,4 @@ textarea,
 select,
 button {
   line-height: inherit;
-  &:focus {
-    outline: 0.3rem solid $color-support-focus;
-  }
 }

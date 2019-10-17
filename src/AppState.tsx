@@ -1,4 +1,4 @@
-import { BrpApiState, useBrpApi } from 'hooks/api/brp-api.hook';
+import { BrpApiState, useBrpApi } from 'hooks/api/api.brp';
 import useMyTipsApi from 'hooks/api/my-tips-api.hook';
 import useMyNotificationsApi from 'hooks/api/my-notifications-api.hook';
 import useSessionApi, { SessionApiState } from 'hooks/api/session.api.hook';
@@ -96,11 +96,12 @@ export function useAppState(value?: any) {
   };
 
   const BRP = useBrpApi();
-  const MY_NOTIFICATIONS = useMyNotificationsApi({ FOCUS });
   const MY_TIPS = useMyTipsApi();
   const ERFPACHT = useErfpachtApi();
   const MY_CHAPTERS = useMyChapters({ WMO, FOCUS, ERFPACHT });
   const MY_AREA = useMyMap();
+  const MY_NOTIFICATIONS = useMyNotificationsApi({ FOCUS, BRP });
+
   const tipsDependencies = [
     getApiConfigValue('WMO', 'postponeFetch', false) || WMO.isDirty,
     getApiConfigValue('FOCUS', 'postponeFetch', false) || FOCUS.isDirty,

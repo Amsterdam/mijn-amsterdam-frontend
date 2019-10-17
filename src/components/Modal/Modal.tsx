@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import React, { useRef, useEffect } from 'react';
 import FocusTrap from 'focus-trap-react';
 import ReactDOM from 'react-dom';
-import { ReactComponent as CloseIcon } from 'assets/images/Close.svg';
+import { ReactComponent as CloseIcon } from 'assets/icons/Close.svg';
 
 import styles from './Modal.module.scss';
 import Heading from 'components/Heading/Heading';

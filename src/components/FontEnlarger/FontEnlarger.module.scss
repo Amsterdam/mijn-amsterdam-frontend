@@ -7,10 +7,6 @@
   > button {
     font-weight: bold;
     @include button-unstyled();
-    &:focus {
-      background-color: $color-support-focus;
-      outline: 1px dotted #000;
-    }
   }
 }
 

@@ -19,6 +19,7 @@ function getAppState(data: BrpResponseData) {
 }
 
 const responseData = {
+  notifications: [],
   adres: {
     huisletter: null,
     huisnummer: '1',
@@ -156,5 +157,22 @@ describe('BRP Profile page', () => {
     expect(page.find(`.InfoPanelTableRow__geboorteland td`).text()).toBe(
       'Onbekend'
     );
+  });
+
+  it('Displays an alert when adres.inOnderzoek and/or persoon.vertrokkenOnbekendWaarheen is true', () => {
+    const responseDataCopy = JSON.parse(JSON.stringify(responseData));
+    responseDataCopy.persoon.vertrokkenOnbekendWaarheen = true;
+    responseDataCopy.adres.inOnderzoek = true;
+
+    const appState = getAppState(responseDataCopy);
+
+    const page = mount(
+      <AppState value={appState}>
+        <Profile />
+      </AppState>
+    );
+
+    expect(page.find('.vertrokkenOnbekendWaarheen')).not.toBeNull();
+    expect(page.find('.inOnderzoek')).not.toBeNull();
   });
 });
