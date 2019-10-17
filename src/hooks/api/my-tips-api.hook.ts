@@ -32,12 +32,10 @@ export function useOptIn(): [boolean, () => void, () => void] {
   const [isOptIn, setOptIn] = useCookie('optInPersonalizedTips', 'no');
 
   function optIn() {
-    console.log('optIn');
     setOptIn('yes', { path: '/' });
   }
 
   function optOut() {
-    console.log('optOut');
     setOptIn('no', { path: '/' });
   }
 
