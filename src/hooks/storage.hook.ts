@@ -61,17 +61,17 @@ function useWindowStorage(
   }
 
   function getValueFromLocalStorage() {
-    if (typeof adapter === 'undefined') {
-      return null;
-    }
-    return adapter.getItem(key);
+    try {
+      return adapter.getItem(key);
+    } catch (e) {}
+    return null;
   }
 
   function saveValueToLocalStorage(key: string, value: string | null) {
-    if (typeof adapter === 'undefined') {
-      return null;
-    }
-    return adapter.setItem(key, String(value));
+    try {
+      return adapter.setItem(key, String(value));
+    } catch (e) {}
+    return null;
   }
 
   function set(newValue: any) {
