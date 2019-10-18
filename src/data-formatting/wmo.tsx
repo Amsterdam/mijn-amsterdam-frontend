@@ -321,11 +321,15 @@ const Labels: {
                   'DBL',
                   'DBS',
                   'KVB',
-                ].includes(data.itemTypeCode)
-                  ? `In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.`
-                  : `In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.`}
+                ].includes(data.itemTypeCode) ? (
+                  <>
+                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht
+                    kan indienen of <u>hoe u van aanbieder kunt wisselen.</u>
+                  </>
+                ) : (
+                  `In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.`
+                )}
               </p>
             </>
           );
