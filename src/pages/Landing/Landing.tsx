@@ -83,9 +83,9 @@ export default () => {
         </Heading>
         <ul>
           <li>Hoe u ingeschreven staat bij de gemeente</li>
-          <li>Hoe het staat met uw aanvraag voor een bijstandsuitkering</li>
+          {/* <li>Hoe het staat met uw aanvraag voor een bijstandsuitkering</li>
           <li>Uw voorzieningen in het kader van zorg en ondersteuning (Wmo)</li>
-          <li>Hoe het staat met uw aanvraag voor een Stadspas</li>
+          <li>Hoe het staat met uw aanvraag voor een Stadspas</li> */}
           <li>Informatie over uw gemeentebelastingen</li>
           <li>Informatie over uw erfpacht</li>
           <li>Informatie over uw eigen buurt en rondom uw woning</li>

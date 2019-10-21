@@ -195,10 +195,8 @@ const Labels: {
             </p>
             {data.isActual && data.deliveryType === 'PGB' && (
               <p>
-                <strong>
-                  Uiterlijk 8 weken voor de einddatum van uw PGB moet u een
-                  verlenging aanvragen. Hoe u dit doet, leest u in uw besluit.
-                </strong>
+                Uiterlijk 8 weken voor de einddatum van uw PGB moet u een
+                verlenging aanvragen. Hoe u dit doet, leest u in uw besluit.
               </p>
             )}
           </>
@@ -257,14 +255,13 @@ const Labels: {
                     data.title
                   } is beëindigd per ${defaultDateFormat(data.dateFinish)}`}
             </p>
-            <p>
-              {data.isActual && (
-                <strong>
-                  Uiterlijk 8 weken voor de einddatum van uw PGB moet u een
-                  verlenging aanvragen. Hoe u dit doet, leest u in uw besluit.
-                </strong>
-              )}
-            </p>
+
+            {data.isActual && (
+              <p>
+                Uiterlijk 8 weken voor de einddatum van uw PGB moet u een
+                verlenging aanvragen. Hoe u dit doet, leest u in uw besluit.
+              </p>
+            )}
           </>
         ),
       },
@@ -324,11 +321,15 @@ const Labels: {
                   'DBL',
                   'DBS',
                   'KVB',
-                ].includes(data.itemTypeCode)
-                  ? `In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.`
-                  : `In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
-              indienen.`}
+                ].includes(data.itemTypeCode) ? (
+                  <>
+                    In de brief leest u ook hoe u bezwaar kunt maken, een klacht
+                    kan indienen of <u>hoe u van aanbieder kunt wisselen.</u>
+                  </>
+                ) : (
+                  `In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan
+              indienen.`
+                )}
               </p>
             </>
           );
