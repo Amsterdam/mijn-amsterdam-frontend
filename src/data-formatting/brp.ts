@@ -90,6 +90,7 @@ export interface Persoon {
   nationaliteiten: Array<{ omschrijving: string }>;
   mokum: boolean;
   vertrokkenOnbekendWaarheen: boolean;
+  datumVertrekUitNederland: string;
 }
 
 export type Person = Persoon;
