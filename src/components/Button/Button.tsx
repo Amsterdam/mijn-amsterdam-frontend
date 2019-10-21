@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Children } from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 import styles from './Button.module.scss';
 import classnames from 'classnames';
@@ -13,10 +13,10 @@ type CustomButtonProps = {
   children: ReactNode;
   className?: string;
   icon?: any;
-  isLean?: true;
+  isLean?: boolean;
 };
 
-export type ButtonLinkProps = LinkProps & CustomButtonProps;
+export type ButtonLinkProps = LinkProps & CustomButtonProps & { LinkEl?: any };
 export type ButtonProps = CustomButtonProps & {
   onClick?: (event: any) => void;
 };
@@ -52,12 +52,14 @@ export default function ButtonLink({
   variant = 'plain',
   icon = ChevronIcon,
   iconPosition = 'left',
+  LinkEl = Link,
   ...otherProps
 }: ButtonLinkProps) {
   const TheIcon = icon;
+  const locProp = { ...(LinkEl === Link ? { to } : { href: to }) };
   return (
-    <Link
-      to={to}
+    <LinkEl
+      {...locProp}
       className={classnames(
         styles.Button,
         styles[`Button__${variant}`],
@@ -80,10 +82,16 @@ export default function ButtonLink({
           className={classnames(styles.Icon, styles[`Icon__${iconPosition}`])}
         />
       )}
-    </Link>
+    </LinkEl>
   );
 }
 
-export function ButtonLinkExternal(props: ButtonLinkProps) {
-  return <ButtonLink {...props} rel="external" />;
+export function ButtonLinkExternal(
+  props: Omit<ButtonLinkProps, 'LinkEl' | 'rel'>
+) {
+  return (
+    <ButtonLink LinkEl={'a'} {...props} rel="external noopener noreferrer">
+      {props.children}
+    </ButtonLink>
+  );
 }

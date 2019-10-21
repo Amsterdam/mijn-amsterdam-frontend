@@ -13,13 +13,14 @@
   display: flex;
   padding: 3rem 0 5rem;
 
-  &,
-  a {
+  &, a, a:hover {
     color: $color-white;
-    &:focus {
-      color: $color-black;
+    @include select(Button_Icon) {
+      fill: $color-white;
     }
   }
+
+  --button-plain-text-color: var(--color-white);
 
   h3 {
     margin-top: 0;

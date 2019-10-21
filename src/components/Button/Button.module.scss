@@ -53,7 +53,6 @@
   --button-plain-border-color-hover: transparent;
   --button-plain-outline-hover: 0;
   --button-plain-text-color-hover: var(--color-primary-red);
-
 }
 
 @mixin buttonStyle($variant: primary) {
@@ -107,7 +106,6 @@
   align-items: center;
   text-decoration: none;
   font-weight: 500;
-  border: 1px solid red;
   padding: 0 1rem;
 
   @include buttonStyle(primary);
