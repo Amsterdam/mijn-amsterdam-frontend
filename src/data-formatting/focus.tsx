@@ -10,7 +10,7 @@ import { defaultDateFormat } from 'helpers/App';
 import { MyNotification } from 'hooks/api/my-notifications-api.hook';
 import { Chapter, Chapters } from '../App.constants';
 import { Document as GenericDocument } from '../components/DocumentList/DocumentList';
-import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
+import { ButtonLinkExternal } from 'components/Button/Button';
 import React from 'react';
 import { StatusLineItem } from 'components/StatusLine/StatusLine';
 import { StepType } from '../components/StatusLine/StatusLine';

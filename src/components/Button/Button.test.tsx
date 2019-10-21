@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import ButtonLink, { IconButtonLink, ButtonLinkExternal } from './ButtonLink';
+import ButtonLink, { ButtonLinkExternal } from './Button';
 import renderer from 'react-test-renderer';
 import { ReactComponent as IconComponent } from 'assets/icons/Alert.svg';
 import { BrowserRouter } from 'react-router-dom';
@@ -26,9 +26,9 @@ describe('ButtonLink', () => {
   it('ButtonLink default renders correctly', () => {
     const component = renderer.create(
       <BrowserRouter>
-        <IconButtonLink to="/">
+        <ButtonLink to="/">
           <IconComponent />
-        </IconButtonLink>
+        </ButtonLink>
       </BrowserRouter>
     );
     expect(component.toJSON()).toMatchSnapshot();

@@ -9,6 +9,7 @@ import PageHeading from 'components/PageHeading/PageHeading';
 import React, { useContext, useState } from 'react';
 import styles from './MyTips.module.scss';
 import Modal from 'components/Modal/Modal';
+import { Button } from 'components/Button/Button';
 
 export default () => {
   const {
@@ -46,19 +47,15 @@ export default () => {
               gebruik gemaakt word van persoonlijke informatie.
             </>
           )}
-          <button
-            className={classnames(
-              'action-button',
-              'secondary',
-              isOptIn && 'line-only',
-              styles.OptInOutButton
-            )}
+          <Button
+            variant={isOptIn ? 'secondary-inverted' : 'secondary'}
+            className={styles.OptInOutToggleButton}
             onClick={() => setModalIsOpen(true)}
           >
             {isOptIn
               ? 'Nee, toon geen persoonlijke tips'
               : 'Toon persoonlijke tips'}
-          </button>
+          </Button>
         </p>
         <Modal
           isOpen={modalIsOpen}
@@ -84,18 +81,25 @@ export default () => {
               )}
             </p>
             <p className={styles.OptInOutButtons}>
-              <button
-                className={classnames('action-button', 'secondary', 'link')}
+              <Button variant="plain" onClick={() => setModalIsOpen(false)}>
+                Nee bedankt
+              </Button>
+              <Button
+                variant="plain"
+                isDisabled={true}
                 onClick={() => setModalIsOpen(false)}
               >
                 Nee bedankt
-              </button>
-              <button
-                className={classnames(
-                  'action-button',
-                  'secondary',
-                  isOptIn && 'line-only'
-                )}
+              </Button>
+              <Button
+                variant="plain"
+                isDisabled={true}
+                onClick={() => setModalIsOpen(false)}
+              >
+                Nee bedankt
+              </Button>
+              <Button
+                variant={isOptIn ? 'secondary-inverted' : 'secondary'}
                 onClick={() => {
                   if (isOptIn) {
                     optOut();
@@ -108,7 +112,7 @@ export default () => {
                 {isOptIn
                   ? 'Nee, toon geen persoonlijke tips'
                   : 'Toon persoonlijke tips'}
-              </button>
+              </Button>
             </p>
           </>
         </Modal>

@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import styles from './MainFooter.module.scss';
-import ButtonLink, {
-  ButtonLinkExternal,
-} from 'components/ButtonLink/ButtonLink';
+import ButtonLink, { ButtonLinkExternal } from 'components/Button/Button';
 import { ExternalUrls, AppRoutes } from 'App.constants';
 import { LinkList } from './MainFooter.constants';
 import classnames from 'classnames';
@@ -53,7 +51,6 @@ export default function MainFooter() {
           <ul>
             <li>
               <ButtonLinkExternal
-                white={true}
                 to={ExternalUrls.CONTACT_FORM}
                 onClick={() => trackLink(ExternalUrls.CONTACT_FORM)}
               >
@@ -62,7 +59,6 @@ export default function MainFooter() {
             </li>
             <li>
               <ButtonLinkExternal
-                white={true}
                 to={ExternalUrls.CONTACT_GENERAL}
                 onClick={() => trackLink(ExternalUrls.CONTACT_GENERAL)}
               >
@@ -86,7 +82,6 @@ export default function MainFooter() {
               <li key={title}>
                 <ButtonLinkExternal
                   key={title}
-                  white={true}
                   to={to}
                   onClick={() => trackLink(to)}
                 >

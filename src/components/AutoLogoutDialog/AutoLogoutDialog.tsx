@@ -2,7 +2,6 @@ import 'react-circular-progressbar/dist/styles.css';
 
 import { Colors, LOGOUT_URL } from 'App.constants';
 import { ComponentChildren } from 'App.types';
-import classnames from 'classnames';
 import { formattedTimeFromSeconds } from 'helpers/App';
 import useActivityCounter from 'hooks/activityCounter.hook';
 import { trackLink } from 'hooks/analytics.hook';
@@ -13,6 +12,7 @@ import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import Modal from '../Modal/Modal';
 import styles from './AutoLogoutDialog.module.scss';
 import { SessionContext } from 'AppState';
+import ButtonLink, { Button } from 'components/Button/Button';
 
 /**
  * This component is essentially a dialog with a countdown timer presented to the user
@@ -170,25 +170,25 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
         <p>Wilt u doorgaan of uitloggen?</p>
         <p>
           {continueButtonIsVisible && (
-            <button
-              className="action-button secondary continue-button"
+            <Button
+              variant="secondary"
+              className="continue-button"
               onClick={continueUsingApp}
             >
               Doorgaan
-            </button>
+            </Button>
           )}
-          <a
-            className={classnames(
-              'action-button line-only secondary logout-button',
-              !continueButtonIsVisible && 'disabled'
-            )}
+          <ButtonLink
+            variant="secondary-inverted"
+            isDisabled={!continueButtonIsVisible}
+            className="logout-button"
             onClick={() => trackLink(LOGOUT_URL)}
-            href={LOGOUT_URL}
+            to={LOGOUT_URL}
           >
             {continueButtonIsVisible
               ? 'Nu uitloggen'
               : 'Bezig met controleren van uw sessie..'}
-          </a>
+          </ButtonLink>
         </p>
       </div>
     </Modal>

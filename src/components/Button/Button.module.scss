@@ -1,0 +1,139 @@
+@import 'styles/_global.scss';
+
+
+:global(:root) {
+  --color-primary-red: #{$color-primary-red};
+  --color-primary-darkblue: #{$color-primary-darkblue};
+  --color-support-red: #{$color-support-red};
+  --color-support-blue: #{$color-support-blue};
+  --color-support-darkblue: #{$color-support-darkblue};
+  --color-support-purple: #{$color-support-purple};
+  --color-white: #{$color-white};
+  --color-neutral-grey1: #{$color-neutral-grey1};
+  --color-neutral-grey2: #{$color-neutral-grey2};
+  --color-neutral-grey3: #{$color-neutral-grey3};
+  --color-neutral-grey4: #{$color-neutral-grey4};
+
+  // Primary button
+  --button-primary-background-color: var(--color-primary-red);
+  --button-primary-border: 1px solid var(--color-primary-red);
+  --button-primary-text-color: var(--color-white);
+
+  --button-primary-background-color-hover: var(--color-support-red);
+  --button-primary-border-color-hover: var(--color-support-red);
+  --button-primary-outline-hover: 0;
+  --button-primary-text-color-hover: var(--color-white);
+
+  // Secondary
+  --button-secondary-background-color: var(--color-primary-darkblue);
+  --button-secondary-border: 1px solid var(--color-primary-darkblue);
+  --button-secondary-text-color: var(--color-white);
+
+  --button-secondary-background-color-hover: var(--color-support-darkblue);
+  --button-secondary-border-color-hover: var(--color-support-darkblue);
+  --button-secondary-outline-hover: 0;
+  --button-secondary-text-color-hover: var(--button-secondary-text-color);
+
+  // Secondary inverted
+  --button-secondary-inverted-background-color: var(--color-white);
+  --button-secondary-inverted-border: 1px solid var(--color-primary-darkblue);
+  --button-secondary-inverted-text-color: var(--color-primary-darkblue);
+
+  --button-secondary-inverted-background-color-hover: var(--color-white);
+  --button-secondary-inverted-border-color-hover: var(--color-support-darkblue);
+  --button-secondary-inverted-outline-hover: 1px solid var(--color-support-darkblue);
+  --button-secondary-inverted-text-color-hover: var(--color-support-darkblue);
+
+  // Plain
+  --button-plain-background-color: transparent;
+  --button-plain-border: 1px solid transparent;
+  --button-plain-text-color: var(--color-black);
+
+  --button-plain-background-color-hover: transparent;
+  --button-plain-border-color-hover: transparent;
+  --button-plain-outline-hover: 0;
+  --button-plain-text-color-hover: var(--color-primary-red);
+
+}
+
+@mixin buttonStyle($variant: primary) {
+  &__#{$variant} {
+
+    &[disabled],
+    &.disabled {
+      --button-#{$variant}-background-color: var(--color-neutral-grey2);
+      --button-#{$variant}-border: 1px solid var(--color-neutral-grey2);
+      --button-#{$variant}-text-color: var(--color-neutral-grey4);
+
+      --button-#{$variant}-background-color-hover: var(--color-neutral-grey2);
+      --button-#{$variant}-border-color-hover: var(--color-neutral-grey2);
+      --button-#{$variant}-outline-hover: 0;
+      --button-#{$variant}-text-color-hover: var(--color-neutral-grey4);
+
+      pointer-events: none;
+    }
+
+    background-color: var(--button-#{$variant}-background-color);
+    border: var(--button-#{$variant}-border);
+    color: var(--button-#{$variant}-text-color);
+
+    @include hoverCapable {
+      &:hover {
+        background-color: var(--button-#{$variant}-background-color-hover);
+        border-color: var(--button-#{$variant}-border-color-hover);
+        color: var(--button-#{$variant}-text-color-hover);
+        outline: var(--button-#{$variant}-outline-hover);
+
+        .Icon {
+          fill: var(--button-#{$variant}-text-color-hover);
+        }
+        .Chevron:before {
+          border-color: var(--button-#{$variant}-text-color-hover);
+        }
+      }
+    }
+
+    @content;
+  }
+}
+
+.Button {
+  height: 4.4rem;
+  min-width: 6rem;
+  cursor: pointer;
+  font-size: 1em;
+  line-height: 1.2em;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  font-weight: 500;
+  border: 1px solid red;
+  padding: 0 1rem;
+
+  @include buttonStyle(primary);
+  @include buttonStyle(secondary);
+  @include buttonStyle(secondary-inverted);
+  @include buttonStyle(plain) {
+    &:hover {
+      text-decoration: underline;
+    }
+  };
+
+  &:visited:not(:hover) {
+    color: inherit;
+  }
+
+  &__lean {
+    height: auto;
+    padding: 0;
+  }
+
+  + [class*="Button_Button"] {
+    margin-left: 1rem;
+  }
+}
+
+.Icon {
+  height: 1em;
+  width: auto;
+}

@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import styles from './StatusLine.module.scss';
 import classnames from 'classnames';
-import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
+import ButtonLink from 'components/Button/Button';
 import { Document } from '../DocumentList/DocumentList';
 import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
 import { defaultDateFormat } from 'helpers/App';
@@ -51,7 +51,7 @@ interface ToggleMoreProps {
 
 function DownloadLink({ item }: DownloadLinkProps) {
   return (
-    <IconButtonLink
+    <ButtonLink
       className={styles.DownloadLink}
       to={item.url}
       rel="external nofollow"
@@ -59,7 +59,7 @@ function DownloadLink({ item }: DownloadLinkProps) {
     >
       <DownloadIcon aria-hidden="true" />
       {item.title}
-    </IconButtonLink>
+    </ButtonLink>
   );
 }
 

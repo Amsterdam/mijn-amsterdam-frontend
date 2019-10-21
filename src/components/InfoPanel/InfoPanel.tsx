@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './InfoPanel.module.scss';
-import ButtonLink from 'components/ButtonLink/ButtonLink';
+import ButtonLink from 'components/Button/Button';
 import Heading from 'components/Heading/Heading';
 import { Unshaped } from 'App.types';
 import { entries } from 'helpers/App';

@@ -1,7 +1,6 @@
 import { AppRoutes, Colors } from 'App.constants';
 import classnames from 'classnames';
-import ButtonLink from 'components/ButtonLink/ButtonLink';
-import ButtonLinkStyles from 'components/ButtonLink/ButtonLink.module.scss';
+import ButtonLink from 'components/Button/Button';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import Heading from 'components/Heading/Heading';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
@@ -110,11 +109,9 @@ export default function MyNotifications({
                 )}
                 {(!!item.link || !!item.customLink) && (
                   <p className={styles.Action}>
-                    <a
+                    <ButtonLink
                       title={`Meer informatie over de melding: ${item.title}`}
-                      href={item.customLink ? '#' : item.link!.to}
-                      role="button"
-                      className={ButtonLinkStyles.ButtonLink}
+                      to={item.customLink ? '#' : item.link!.to}
                       onClick={event => {
                         event.preventDefault();
                         if (item.customLink) {
@@ -127,7 +124,7 @@ export default function MyNotifications({
                       }}
                     >
                       {(item.link || item.customLink)!.title}
-                    </a>
+                    </ButtonLink>
                   </p>
                 )}
               </li>

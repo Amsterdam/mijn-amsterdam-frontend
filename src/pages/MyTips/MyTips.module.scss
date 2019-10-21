@@ -6,7 +6,11 @@
   }
 }
 
-button.OptInOutButton {
+button.OptInOutToggleButton {
+  // --button-secondary-background-color-hover: yellow;
+  // --button-secondary-border-color-hover: orange;
+  // --button-secondary-text-color-hover: black;
+
   display: block;
   margin: 4rem auto 7rem auto;
 }

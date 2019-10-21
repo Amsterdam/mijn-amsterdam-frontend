@@ -5,9 +5,9 @@ import PageHeading from 'components/PageHeading/PageHeading';
 export default () => {
   return (
     <TextPage>
-      <PageHeading>Helaas</PageHeading>
+      <PageHeading>404 - Pagina niet gevonden</PageHeading>
       <PageContent>
-        <p>De pagina waar u naar op zoek was bestaat niet (meer).</p>
+        <p>Helaas, de pagina waar u naar op zoek was bestaat niet (meer).</p>
       </PageContent>
     </TextPage>
   );

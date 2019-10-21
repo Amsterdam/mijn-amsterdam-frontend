@@ -1,7 +1,7 @@
 import { LinkProps } from 'App.types';
 import { ReactComponent as CaretIcon } from 'assets/icons/Chevron-Right.svg';
 import classnames from 'classnames';
-import ButtonLink from 'components/ButtonLink/ButtonLink';
+import ButtonLink from 'components/Button/Button';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 import { entries, withKeyPress } from 'helpers/App';
 import { useSessionStorage } from 'hooks/storage.hook';

@@ -7,7 +7,7 @@ import { Chapters } from 'App.constants';
 import styles from './Zorg.module.scss';
 import Alert from 'components/Alert/Alert';
 import { useTabletScreen } from 'hooks/media.hook';
-import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
+import { ButtonLinkExternal } from 'components/Button/Button';
 import { ExternalUrls, ChapterTitles } from 'App.constants';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 

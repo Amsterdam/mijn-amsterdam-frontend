@@ -5,7 +5,7 @@ import Heading from 'components/Heading/Heading';
 import { ReactComponent as ExternalLinkIcon } from 'assets/icons/External-Link.svg';
 import { entries } from 'helpers/App';
 import { usePhoneScreen } from 'hooks/media.hook';
-import ButtonLink from 'components/ButtonLink/ButtonLink';
+import ButtonLink from 'components/Button/Button';
 import { trackLink } from 'hooks/analytics.hook';
 
 export default function DirectLinks() {

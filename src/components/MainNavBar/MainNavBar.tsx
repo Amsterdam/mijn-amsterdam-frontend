@@ -3,7 +3,7 @@ import { ComponentChildren } from 'App.types';
 import { AppContext, SessionContext, TutorialContext } from 'AppState';
 import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
 import classnames from 'classnames';
-import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
+import ButtonLink from 'components/Button/Button';
 import FontEnlarger from 'components/FontEnlarger/FontEnlarger';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
@@ -68,13 +68,15 @@ function SecondaryLinks() {
         </Link>
       )}
       {
-        <IconButtonLink
+        <ButtonLink
           to={LOGOUT_URL}
           rel="external"
           className={styles.LogoutLink}
+          icon={LogoutIcon}
+          isLean={true}
         >
-          <LogoutIcon aria-hidden="true" /> Uitloggen
-        </IconButtonLink>
+          Uitloggen
+        </ButtonLink>
       }
     </div>
   );

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './MyTips.module.scss';
-import ButtonLink, {
-  ButtonLinkExternal,
-} from 'components/ButtonLink/ButtonLink';
+import ButtonLink, { ButtonLinkExternal } from 'components/Button/Button';
 import Heading from 'components/Heading/Heading';
 import { AppRoutes } from 'App.constants';
 import { MyTip } from 'hooks/api/my-tips-api.hook';
