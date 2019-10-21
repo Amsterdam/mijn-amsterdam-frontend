@@ -9,7 +9,6 @@ type CustomButtonProps = {
   variant?: 'primary' | 'secondary' | 'secondary-inverted' | 'plain';
   isDisabled?: boolean;
   iconPosition?: 'left' | 'right';
-  hasIcon?: boolean;
   children: ReactNode;
   className?: string;
   icon?: any;

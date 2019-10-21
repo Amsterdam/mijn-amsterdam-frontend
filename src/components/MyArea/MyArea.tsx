@@ -22,7 +22,6 @@ export function MyAreaHeader() {
       </Link>
       <h1 className={styles.Title}>Mijn buurt</h1>
       <ButtonLink
-        hasIcon={true}
         iconPosition="right"
         icon={CloseIcon}
         to={AppRoutes.ROOT}
