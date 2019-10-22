@@ -29,7 +29,6 @@ export default () => {
   } = useContext(AppContext);
 
   const items = Object.values(products).flatMap(product => product.items);
-
   const itemsRequested = items.filter(item => !item.hasDecision);
   const itemsDecided = items.filter(item => item.hasDecision);
   const hasActiveRequests = !!itemsRequested.length;
@@ -42,14 +41,16 @@ export default () => {
       </PageHeading>
       <PageContent>
         <p>
-          Hieronder ziet u uw regelingen en hulpmiddelen vanuit de Wmo. Hebt u
-          vragen of wilt u een wijziging doorgeven? Bel dan gratis de Wmo
-          Helpdesk: <a href="tel:08000643">0800 0643</a>. Of ga langs bij het
-          Sociaal Loket.
+          Hieronder vindt u een overzicht van alle voorzieningen die u hebt ter
+          aanvulling of ondersteuning bij een laag inkomen.
         </p>
         <p>
-          <ButtonLinkExternal to={ExternalUrls.ZORG_LEES_MEER}>
-            Lees hier meer over zorg en ondersteuning
+          <ButtonLinkExternal to={ExternalUrls.WPI_REGELINGEN}>
+            Naar alle regeleingen voor Werk en inkomen
+          </ButtonLinkExternal>
+          <br />
+          <ButtonLinkExternal to={ExternalUrls.WPI_CONTACT}>
+            Contact Werk en inkomen
           </ButtonLinkExternal>
         </p>
         {isError && (
