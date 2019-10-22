@@ -47,10 +47,17 @@ export default () => {
             </>
           )}
           <button
-            className={classnames('action-button', styles.OptInOutButton)}
+            className={classnames(
+              'action-button',
+              'secondary',
+              isOptIn && 'line-only',
+              styles.OptInOutButton
+            )}
             onClick={() => setModalIsOpen(true)}
           >
-            Toon {isOptIn && 'geen '}persoonlijke tips
+            {isOptIn
+              ? 'Nee, toon geen persoonlijke tips'
+              : 'Toon persoonlijke tips'}
           </button>
         </p>
         <Modal
@@ -84,7 +91,11 @@ export default () => {
                 Nee bedankt
               </button>
               <button
-                className={classnames('action-button', 'secondary')}
+                className={classnames(
+                  'action-button',
+                  'secondary',
+                  isOptIn && 'line-only'
+                )}
                 onClick={() => {
                   if (isOptIn) {
                     optOut();
@@ -94,7 +105,9 @@ export default () => {
                   setModalIsOpen(false);
                 }}
               >
-                Toon {isOptIn && 'geen '}persoonlijke tips
+                {isOptIn
+                  ? 'Nee, toon geen persoonlijke tips'
+                  : 'Toon persoonlijke tips'}
               </button>
             </p>
           </>

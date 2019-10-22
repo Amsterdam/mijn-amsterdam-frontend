@@ -24,8 +24,12 @@ Array [
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
+            <React.Fragment>
+              In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan indienen of 
+              <u>
+                hoe u van aanbieder kunt wisselen.
+              </u>
+            </React.Fragment>
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -101,8 +105,12 @@ Array [
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
+            <React.Fragment>
+              In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan indienen of 
+              <u>
+                hoe u van aanbieder kunt wisselen.
+              </u>
+            </React.Fragment>
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -178,8 +186,12 @@ Array [
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
+            <React.Fragment>
+              In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan indienen of 
+              <u>
+                hoe u van aanbieder kunt wisselen.
+              </u>
+            </React.Fragment>
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -255,8 +267,12 @@ Array [
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
+            <React.Fragment>
+              In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan indienen of 
+              <u>
+                hoe u van aanbieder kunt wisselen.
+              </u>
+            </React.Fragment>
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -332,8 +348,12 @@ Array [
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
+            <React.Fragment>
+              In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan indienen of 
+              <u>
+                hoe u van aanbieder kunt wisselen.
+              </u>
+            </React.Fragment>
           </p>
         </React.Fragment>,
         "documents": Array [],
@@ -565,8 +585,12 @@ Array [
             .
           </p>
           <p>
-            In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan
-              indienen of hoe u van aanbieder kunt wisselen.
+            <React.Fragment>
+              In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan indienen of 
+              <u>
+                hoe u van aanbieder kunt wisselen.
+              </u>
+            </React.Fragment>
           </p>
         </React.Fragment>,
         "documents": Array [],

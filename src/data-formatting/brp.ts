@@ -90,6 +90,7 @@ export interface Persoon {
   nationaliteiten: Array<{ omschrijving: string }>;
   mokum: boolean;
   vertrokkenOnbekendWaarheen: boolean;
+  datumVertrekUitNederland: string;
 }
 
 export type Person = Persoon;
@@ -171,9 +172,11 @@ export function formatProfileData({
           : unknown,
     },
     address: {
-      [brpInfoLabels.Street]: `${adres.straatnaam} ${
-        adres.huisnummer
-      } ${adres.huisnummertoevoeging || ''}${adres.huisletter || ''}`,
+      [brpInfoLabels.Street]: adres.straatnaam
+        ? `${adres.straatnaam} ${
+            adres.huisnummer
+          } ${adres.huisnummertoevoeging || ''}${adres.huisletter || ''}`
+        : unknown,
       [brpInfoLabels.Place]: `${adres.postcode} ${adres.woonplaatsNaam || ''}`,
       [brpInfoLabels.DateStarted]:
         adres.begindatumVerblijf && defaultDateFormat(adres.begindatumVerblijf),
