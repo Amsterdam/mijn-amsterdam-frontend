@@ -15,7 +15,8 @@ import { defaultDateFormat } from '../../helpers/App';
 export default function Profile() {
   const { BRP } = useContext(AppContext);
 
-  const brpData = BRP.isDirty ? formatProfileData(BRP.data) : null;
+  const brpData =
+    BRP.isDirty && !BRP.isError ? formatProfileData(BRP.data) : null;
 
   return (
     <DetailPage className={styles.Profile}>
