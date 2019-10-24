@@ -10,6 +10,7 @@ import React, { useContext, useState } from 'react';
 import styles from './MyTips.module.scss';
 import Modal from 'components/Modal/Modal';
 import { Button } from 'components/Button/Button';
+import { LinkButton } from '../../components/Button/Button';
 
 export default () => {
   const {
@@ -81,9 +82,9 @@ export default () => {
               )}
             </p>
             <p className={styles.OptInOutButtons}>
-              <Button variant="plain" onClick={() => setModalIsOpen(false)}>
+              <LinkButton icon="" onClick={() => setModalIsOpen(false)}>
                 Nee bedankt
-              </Button>
+              </LinkButton>
               <Button
                 variant="plain"
                 isDisabled={true}

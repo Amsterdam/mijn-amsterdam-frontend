@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import styles from './MainFooter.module.scss';
-import ButtonLink, { ButtonLinkExternal } from 'components/Button/Button';
+import ButtonLink, {
+  IconLinkExternal,
+  IconLink,
+} from 'components/Button/Button';
 import { ExternalUrls, AppRoutes } from 'App.constants';
 import { LinkList } from './MainFooter.constants';
 import classnames from 'classnames';
@@ -50,20 +53,20 @@ export default function MainFooter() {
           </p>
           <ul>
             <li>
-              <ButtonLinkExternal
+              <IconLinkExternal
                 to={ExternalUrls.CONTACT_FORM}
                 onClick={() => trackLink(ExternalUrls.CONTACT_FORM)}
               >
                 Of gebruik het contactformulier
-              </ButtonLinkExternal>
+              </IconLinkExternal>
             </li>
             <li>
-              <ButtonLinkExternal
+              <IconLinkExternal
                 to={ExternalUrls.CONTACT_GENERAL}
                 onClick={() => trackLink(ExternalUrls.CONTACT_GENERAL)}
               >
                 Meer contactgegevens en openingstijden
-              </ButtonLinkExternal>
+              </IconLinkExternal>
             </li>
           </ul>
         </div>
@@ -80,13 +83,13 @@ export default function MainFooter() {
           <ul>
             {LinkList.map(({ to, title }) => (
               <li key={title}>
-                <ButtonLinkExternal
+                <IconLinkExternal
                   key={title}
                   to={to}
                   onClick={() => trackLink(to)}
                 >
                   {title}
-                </ButtonLinkExternal>
+                </IconLinkExternal>
               </li>
             ))}
           </ul>
@@ -115,7 +118,7 @@ export default function MainFooter() {
       </div>
       <div className={styles.BottomBar}>
         <div className={styles.InnerContainer}>
-          <ButtonLink to={AppRoutes.PROCLAIMER}>Proclaimer</ButtonLink>
+          <IconLink to={AppRoutes.PROCLAIMER}>Proclaimer</IconLink>
         </div>
       </div>
     </footer>

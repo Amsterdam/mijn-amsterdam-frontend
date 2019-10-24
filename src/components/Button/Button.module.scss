@@ -107,6 +107,7 @@
   text-decoration: none;
   font-weight: 500;
   padding: 0 1rem;
+  white-space: nowrap;
 
   @include buttonStyle(primary);
   @include buttonStyle(secondary);
@@ -132,6 +133,6 @@
 }
 
 .Icon {
-  height: 1em;
+  height: .9em;
   width: auto;
 }

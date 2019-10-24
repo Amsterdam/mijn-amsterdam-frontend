@@ -21,16 +21,6 @@
   }
 }
 
-.ErrorList {
-}
-
-.ActionButton {
-  width: auto;
-  @include mq-phone() {
-    margin-left: 2.5rem;
-  }
-}
-
 .AlertIcon {
   display: inline-block;
   vertical-align: text-bottom;

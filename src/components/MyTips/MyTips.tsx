@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styles from './MyTips.module.scss';
-import ButtonLink, { ButtonLinkExternal } from 'components/Button/Button';
+import { ButtonLinkExternal, IconLink } from 'components/Button/Button';
 import Heading from 'components/Heading/Heading';
 import { AppRoutes } from 'App.constants';
 import { MyTip } from 'hooks/api/my-tips-api.hook';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { trackLink } from 'hooks/analytics.hook';
+import { IconLinkExternal } from '../Button/Button';
 
 export interface TipProps {
   tip: MyTip;
@@ -33,13 +34,13 @@ const Tip = ({ tip }: TipProps) => {
         </figure>
         <Heading el="h4">{tip.title}</Heading>
         <p>{tip.description}</p>
-        <ButtonLinkExternal
+        <IconLinkExternal
           title={`Meer informatie over de tip: ${tip.title}`}
           to={tip.link.to}
           onClick={() => trackLink(tip.link.to)}
         >
           {tip.link.title}
-        </ButtonLinkExternal>
+        </IconLinkExternal>
       </article>
     </li>
   );
@@ -85,7 +86,7 @@ export default function MyTips({
             Mijn tips
           </Heading>
           {!!items.length && (
-            <ButtonLink to={AppRoutes.MY_TIPS}>Mijn tips</ButtonLink>
+            <IconLink to={AppRoutes.MY_TIPS}>Mijn tips</IconLink>
           )}
           {/* <a href="" className={styles.OptIn}>
           Maak relevanter
