@@ -7,7 +7,7 @@ import { Chapters } from 'App.constants';
 import styles from './Zorg.module.scss';
 import Alert from 'components/Alert/Alert';
 import { useTabletScreen } from 'hooks/media.hook';
-import Linkd from 'components/Button/Button';
+import Linkd, { LinkdInline } from 'components/Button/Button';
 import { ExternalUrls, ChapterTitles } from 'App.constants';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 
@@ -38,8 +38,8 @@ export default () => {
         <p>
           Hieronder ziet u uw regelingen en hulpmiddelen vanuit de Wmo. Hebt u
           vragen of wilt u een wijziging doorgeven? Bel dan gratis de Wmo
-          Helpdesk: <a href="tel:08000643">0800 0643</a>. Of ga langs bij het
-          Sociaal Loket.
+          Helpdesk: <LinkdInline href="tel:08000643">0800 0643</LinkdInline>. Of
+          ga langs bij het Sociaal Loket.
         </p>
         <p>
           <Linkd external={true} href={ExternalUrls.ZORG_LEES_MEER}>

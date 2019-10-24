@@ -6,6 +6,7 @@ import { LinkList } from './MainFooter.constants';
 import classnames from 'classnames';
 import { useDesktopScreen } from 'hooks/media.hook';
 import { trackLink } from 'hooks/analytics.hook';
+import { LinkdInline } from '../Button/Button';
 
 interface PanelState {
   [panelId: string]: boolean;
@@ -42,7 +43,7 @@ export default function MainFooter() {
           </p>
           <p>
             <strong>
-              Bel: <a href="tel:14020">14 020</a>
+              Bel: <LinkdInline href="tel:14020">14 020</LinkdInline>
             </strong>
             &nbsp;(verkort nummer)
             <br />
@@ -94,20 +95,15 @@ export default function MainFooter() {
           <p>
             Wat is er te doen in Amsterdam? Informatie over toerisme, cultuur,
             uitgaan, evenementen en meer vindt u op{' '}
-            <a
-              href="https://www.iamsterdam.com"
-              onClick={() => trackLink('https://www.iamsterdam.com')}
-            >
+            <Linkd external={true} icon="" href="https://www.iamsterdam.com">
               Iamsterdam.com
-            </a>
+            </Linkd>
           </p>
         </div>
       </div>
       <div className={styles.BottomBar}>
         <div className={styles.InnerContainer}>
-          <Linkd external={true} href={AppRoutes.PROCLAIMER}>
-            Proclaimer
-          </Linkd>
+          <Linkd href={AppRoutes.PROCLAIMER}>Proclaimer</Linkd>
         </div>
       </div>
     </footer>

@@ -2,6 +2,7 @@ import React from 'react';
 import { TextPage, PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
 import { trackLink } from 'hooks/analytics.hook';
+import Linkd, { LinkdInline } from 'components/Button/Button';
 
 export default () => {
   const complaintsFormUrl =
@@ -17,12 +18,9 @@ export default () => {
           Amsterdam tonen wij uw persoonlijke informatie uit de verschillende
           systemen die wij beheren. Wij doen ons uiterste best om ervoor te
           zorgen dat uw gegevens kloppen. Is dat niet zo?&nbsp;
-          <a
-            href={complaintsFormUrl}
-            onClick={() => trackLink(complaintsFormUrl)}
-          >
+          <LinkdInline href={complaintsFormUrl}>
             Neem dan contact met ons op.
-          </a>
+          </LinkdInline>
         </p>
         <p>
           Wij gaan ervan uit dat u verantwoordelijk met uw eigen gegevens
@@ -31,10 +29,7 @@ export default () => {
         </p>
         <p>
           Kijk voor de privacyverklaring van de gemeente Amsterdam op&nbsp;
-          <a href={privacyPageUrl} onClick={() => trackLink(privacyPageUrl)}>
-            amsterdam.nl/privacy
-          </a>
-          .
+          <LinkdInline href={privacyPageUrl}>amsterdam.nl/privacy</LinkdInline>.
         </p>
       </PageContent>
     </TextPage>

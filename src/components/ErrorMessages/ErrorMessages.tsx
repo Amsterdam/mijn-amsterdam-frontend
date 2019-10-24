@@ -34,7 +34,7 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
           misschien niet al uw gegevens
         </span>
         <Button
-          inline={true}
+          lean={true}
           variant="plain"
           icon={ChevronIcon}
           onClick={() => setModalOpen(true)}

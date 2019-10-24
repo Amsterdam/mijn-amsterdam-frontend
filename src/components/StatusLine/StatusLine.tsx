@@ -120,7 +120,7 @@ function ToggleMore({ isCollapsed, toggleCollapsed }: ToggleMoreProps) {
       onClick={toggleCollapsed}
       icon={CaretLeft}
       variant="plain"
-      inline={true}
+      lean={true}
     >
       {isCollapsed ? 'Toon alles' : 'Toon minder'}
     </Button>

@@ -71,7 +71,7 @@ function SecondaryLinks() {
         <Linkd
           href={LOGOUT_URL}
           external={true}
-          inline={true}
+          lean={true}
           className={styles.LogoutLink}
           icon={LogoutIcon}
         >
@@ -267,7 +267,7 @@ export default function MainNavBar() {
               setIsTutorialVisible(isVisible);
             }}
             variant="plain"
-            inline={true}
+            lean={true}
           >
             Uitleg
           </Button>

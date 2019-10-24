@@ -4,14 +4,15 @@ import styles from './Button.module.scss';
 import classnames from 'classnames';
 import { ReactNode } from 'react';
 import { ReactComponent as ChevronIcon } from 'assets/icons/Chevron-Right.svg';
+import { trackLink } from '../../hooks/analytics.hook';
 
 interface CustomButtonProps {
-  variant?: 'primary' | 'secondary' | 'secondary-inverted' | 'plain';
+  variant?: 'primary' | 'secondary' | 'secondary-inverted' | 'plain' | 'inline';
   isDisabled?: boolean;
   iconPosition?: 'left' | 'right';
   className?: string;
   icon?: any;
-  inline?: boolean;
+  lean?: boolean;
 }
 
 export interface LinkdProps
@@ -26,11 +27,11 @@ export interface ButtonProps
 
 type buttonStyleProps = Pick<
   CustomButtonProps,
-  'inline' | 'isDisabled' | 'variant' | 'className'
+  'lean' | 'isDisabled' | 'variant' | 'className'
 >;
 
 function buttonStyle({
-  inline,
+  lean,
   isDisabled,
   variant,
   className,
@@ -38,7 +39,7 @@ function buttonStyle({
   return classnames(
     styles.Button,
     styles[`Button__${variant}`],
-    inline && styles.Button__inline,
+    lean && styles.Button__lean,
     isDisabled && styles.ButtonDisabled,
     className
   );
@@ -74,7 +75,7 @@ export function Button({
   children,
   variant = 'secondary',
   className,
-  inline = false,
+  lean = false,
   isDisabled = false,
   icon,
   iconPosition = 'left',
@@ -83,7 +84,7 @@ export function Button({
   return (
     <button
       {...otherProps}
-      className={buttonStyle({ inline, isDisabled, variant, className })}
+      className={buttonStyle({ lean, isDisabled, variant, className })}
       disabled={isDisabled}
     >
       <ButtonBody icon={icon} iconPosition={iconPosition}>
@@ -98,28 +99,57 @@ export default function Linkd({
   className,
   isDisabled,
   href,
-  inline = true,
+  lean = true,
   variant = 'plain',
   icon = ChevronIcon,
   iconPosition = 'left',
   external = false,
+  onClick,
   ...otherProps
 }: LinkdProps) {
   const LinkElement = external ? 'a' : Link;
   const relProp = {
     ...(LinkElement === Link ? {} : { rel: 'external noopener noreferrer' }),
   };
+
+  let clickHandler = onClick;
+  if (external && !clickHandler) {
+    clickHandler = () => trackLink(href);
+  }
+
   return (
     <LinkElement
       {...otherProps}
       {...relProp}
       href={href}
       to={href}
-      className={buttonStyle({ inline, isDisabled, variant, className })}
+      onClick={clickHandler}
+      className={buttonStyle({ lean, isDisabled, variant, className })}
     >
       <ButtonBody icon={icon} iconPosition={iconPosition}>
         {children}
       </ButtonBody>
     </LinkElement>
+  );
+}
+
+export function LinkdInline({
+  external,
+  children,
+  variant = 'inline',
+  lean = true,
+  icon = '',
+  ...otherProps
+}: LinkdProps) {
+  return (
+    <Linkd
+      {...otherProps}
+      icon={icon}
+      external={external}
+      variant={variant}
+      lean={lean}
+    >
+      {children}
+    </Linkd>
   );
 }
