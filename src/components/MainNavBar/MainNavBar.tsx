@@ -24,7 +24,7 @@ import {
 import styles from './MainNavBar.module.scss';
 import teststyles from '../Tutorial/Tutorial.module.scss';
 import Tutorial from 'components/Tutorial/Tutorial';
-import Linkd from 'components/Button/Button';
+import Linkd, { Button } from 'components/Button/Button';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -257,7 +257,7 @@ export default function MainNavBar() {
 
       {location.pathname === AppRoutes.ROOT && (
         <>
-          <button
+          <Button
             className={classnames(
               styles.TutorialBtn,
               isTutorialVisible && styles.TutorialBtnOpen
@@ -266,9 +266,11 @@ export default function MainNavBar() {
               const isVisible = !isTutorialVisible;
               setIsTutorialVisible(isVisible);
             }}
+            variant="plain"
+            inline={true}
           >
             Uitleg
-          </button>
+          </Button>
           {isTutorialVisible && (
             <Tutorial toggleTutorial={setIsTutorialVisible} />
           )}

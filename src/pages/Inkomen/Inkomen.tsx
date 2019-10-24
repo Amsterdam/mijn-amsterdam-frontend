@@ -5,11 +5,11 @@ import { AppContext } from 'AppState';
 import DataLinkTable from 'components/DataLinkTable/DataLinkTable';
 import { Chapters, ChapterTitles } from 'App.constants';
 import styles from './Inkomen.module.scss';
-import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
 import { ExternalUrls } from 'App.constants';
 import Alert from 'components/Alert/Alert';
 import { useTabletScreen } from 'hooks/media.hook';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
+import Linkd from 'components/Button/Button';
 
 const DISPLAY_PROPS = {
   datePublished: 'besluit',
