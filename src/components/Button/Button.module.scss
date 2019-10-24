@@ -116,6 +116,10 @@ $buttons: (
   font-weight: 500;
   padding: 0 1rem;
 
+  &:visited:not(:hover) {
+    color: inherit;
+  }
+
   @include buttonStyle("primary");
   @include buttonStyle("secondary");
   @include buttonStyle("secondary-inverted");

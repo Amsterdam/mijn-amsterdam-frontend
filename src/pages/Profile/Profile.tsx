@@ -10,8 +10,8 @@ import { entries } from 'helpers/App';
 import styles from 'pages/Profile/Profile.module.scss';
 import React, { useContext } from 'react';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
-import { defaultDateFormat } from '../../helpers/App';
-import { LinkdInline } from '../../components/Button/Button';
+import { defaultDateFormat } from 'helpers/App';
+import { LinkdInline } from 'components/Button/Button';
 
 export default function Profile() {
   const { BRP } = useContext(AppContext);

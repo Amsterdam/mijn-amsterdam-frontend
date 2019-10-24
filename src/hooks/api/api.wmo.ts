@@ -1,10 +1,6 @@
 import { formatWmoApiResponse, WmoItem } from 'data-formatting/wmo';
-import { getApiConfigValue } from 'helpers/App';
-import { getApiUrl } from '../../helpers/App';
-import usePaginatedApi, {
-  PaginatedApiState,
-  PaginatedItemsResponse,
-} from './paginated-api.hook';
+import { getApiConfigValue, getApiUrl } from 'helpers/App';
+import usePaginatedApi, { PaginatedApiState, PaginatedItemsResponse } from './paginated-api.hook';
 
 export interface WmoApiState extends PaginatedApiState {
   data: PaginatedItemsResponse & {

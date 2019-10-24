@@ -4,7 +4,7 @@ import styles from './Button.module.scss';
 import classnames from 'classnames';
 import { ReactNode } from 'react';
 import { ReactComponent as ChevronIcon } from 'assets/icons/Chevron-Right.svg';
-import { trackLink } from '../../hooks/analytics.hook';
+import { trackLink } from 'hooks/analytics.hook';
 
 interface CustomButtonProps {
   variant?: 'primary' | 'secondary' | 'secondary-inverted' | 'plain' | 'inline';
