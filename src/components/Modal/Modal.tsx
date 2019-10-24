@@ -143,7 +143,7 @@ export function Dialog({
                     arial-label="Overlay sluiten"
                     lean={true}
                   >
-                    <CloseIcon aria-hidden="true" />
+                    <CloseIcon arial-label="Overlay sluiten" />
                   </Button>
                 )}
               </header>
