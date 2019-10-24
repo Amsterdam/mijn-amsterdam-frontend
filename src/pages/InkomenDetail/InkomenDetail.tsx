@@ -1,7 +1,6 @@
-import React, { useContext, useEffect } from 'react';
-import Page, { PageContent } from 'components/Page/Page';
+import React, { useContext } from 'react';
+import { PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
-import styles from './InkomenDetail.module.scss';
 import { Chapters, AppRoutes, ChapterTitles } from 'App.constants';
 import { AppContext } from 'AppState';
 import useRouter from 'use-react-router';
@@ -10,6 +9,7 @@ import Alert from 'components/Alert/Alert';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import { DetailPage } from 'components/Page/Page';
+import { altDocumentContent } from 'data-formatting/focus';
 
 export default () => {
   const {
@@ -49,6 +49,7 @@ export default () => {
         <StatusLine
           trackCategory={`Werk en inkomen / ${FocusItem.productTitle}`}
           items={FocusItem.process}
+          altDocumentContent={altDocumentContent}
         />
       )}
     </DetailPage>

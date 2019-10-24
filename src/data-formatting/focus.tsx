@@ -20,11 +20,12 @@ type StepTitle =
   | 'herstelTermijn'
   | 'beslissing'
   | 'bezwaar';
+
 export type RequestStatus =
   | 'Aanvraag'
   | 'Meer informatie nodig'
   | 'In behandeling'
-  | 'Beslissing';
+  | 'Besluit';
 
 // A decision can be made and currently have 3 values.
 type Decision = 'Toekenning' | 'Afwijzing' | 'Buiten Behandeling';
@@ -275,7 +276,7 @@ export const Labels: LabelData = {
             }).`,
         },
         title: data => data.productTitle,
-        status: 'Beslissing',
+        status: 'Besluit',
         description:
           'U heeft geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.',
       },
@@ -288,7 +289,7 @@ export const Labels: LabelData = {
             }).`,
         },
         title: data => data.productTitle,
-        status: 'Beslissing',
+        status: 'Besluit',
         description: data => (
           <>
             <p>
@@ -316,7 +317,7 @@ export const Labels: LabelData = {
             }).`,
         },
         title: data => data.productTitle,
-        status: 'Beslissing',
+        status: 'Besluit',
         description:
           'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
       },
@@ -391,7 +392,7 @@ export const Labels: LabelData = {
             }).`,
         },
         title: data => data.productTitle,
-        status: 'Beslissing',
+        status: 'Besluit',
         description:
           'U heeft geen recht op bijzondere bijstand. Bekijk de brief voor meer details.',
       },
@@ -404,7 +405,7 @@ export const Labels: LabelData = {
             }).`,
         },
         title: data => data.productTitle,
-        status: 'Beslissing',
+        status: 'Besluit',
         description:
           'U heeft recht op bijzondere bijstand. Bekijk de brief voor meer details.',
       },
@@ -418,7 +419,7 @@ export const Labels: LabelData = {
             }).`,
         },
         title: data => data.productTitle,
-        status: 'Beslissing',
+        status: 'Besluit',
         description:
           'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
       },
@@ -500,7 +501,7 @@ export const Labels: LabelData = {
             }).`,
         },
         title: data => data.productTitle,
-        status: 'Beslissing',
+        status: 'Besluit',
         description:
           'U heeft geen recht op een Stadspas. Bekijk de brief voor meer details.',
       },
@@ -511,7 +512,7 @@ export const Labels: LabelData = {
             'U heeft recht op een Stadspas. Bekijk de brief voor meer details.',
         },
         title: data => data.productTitle,
-        status: 'Beslissing',
+        status: 'Besluit',
         description: data => (
           <>
             <p>
@@ -535,7 +536,7 @@ export const Labels: LabelData = {
             }).`,
         },
         title: data => data.productTitle,
-        status: 'Beslissing',
+        status: 'Besluit',
         description:
           'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
       },
@@ -770,11 +771,13 @@ function formatStepData(
     description: stepLabels
       ? parseLabelContent(stepLabels.description, sourceData)
       : '--NNB--',
-    documents: stepData
-      ? stepData.document.map(document =>
-          formatFocusDocument(stepTitle, stepData.datum, document)
-        )
-      : [],
+    documents: [],
+    // NOTE: Enable if Focus system can provide the actual documents via their Api.
+    // documents: stepData
+    //   ? stepData.document.map(document =>
+    //       formatFocusDocument(stepTitle, stepData.datum, document)
+    //     )
+    //   : [],
     status: stepLabels.status,
     aboutStep: stepTitle,
     isLastActive: sourceData.isActual,
@@ -963,4 +966,20 @@ export function formatProductCollections(items: FocusProduct[]) {
     allNotifications,
     products,
   };
+}
+
+export function altDocumentContent(
+  statusLineItem: StatusLineItem,
+  stepNumber: number
+) {
+  return statusLineItem.isLastActive &&
+    ['Meer informatie nodig', 'Besluit'].includes(statusLineItem.status) ? (
+    <b>
+      U ontvangt{' '}
+      {statusLineItem.status === 'Besluit' ? 'dit besluit' : 'deze brief'} per
+      post.
+    </b>
+  ) : (
+    ''
+  );
 }

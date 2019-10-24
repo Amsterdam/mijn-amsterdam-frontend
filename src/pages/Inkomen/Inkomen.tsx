@@ -5,7 +5,7 @@ import { AppContext } from 'AppState';
 import DataLinkTable from 'components/DataLinkTable/DataLinkTable';
 import { Chapters, ChapterTitles } from 'App.constants';
 import styles from './Inkomen.module.scss';
-import Linkd from 'components/Button/Button';
+import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
 import { ExternalUrls } from 'App.constants';
 import Alert from 'components/Alert/Alert';
 import { useTabletScreen } from 'hooks/media.hook';
@@ -29,7 +29,6 @@ export default () => {
   } = useContext(AppContext);
 
   const items = Object.values(products).flatMap(product => product.items);
-
   const itemsRequested = items.filter(item => !item.hasDecision);
   const itemsDecided = items.filter(item => item.hasDecision);
   const hasActiveRequests = !!itemsRequested.length;
@@ -42,22 +41,16 @@ export default () => {
       </PageHeading>
       <PageContent>
         <p>
-          Hieronder ziet u uw regelingen en hulpmiddelen vanuit de Wmo. Hebt u
-          vragen of wilt u een wijziging doorgeven? Bel dan gratis de Wmo
-          Helpdesk:{' '}
-          <Linkd
-            external={true}
-            inline={true}
-            variant="plain"
-            href="tel:08000643"
-          >
-            0800 0643
-          </Linkd>
-          . Of ga langs bij het Sociaal Loket.
+          Hieronder vindt u een overzicht van alle voorzieningen die u hebt ter
+          aanvulling of ondersteuning bij een laag inkomen.
         </p>
         <p>
-          <Linkd external={true} href={ExternalUrls.ZORG_LEES_MEER}>
-            Lees hier meer over zorg en ondersteuning
+          <Linkd external={true} href={ExternalUrls.WPI_REGELINGEN}>
+            Naar alle regeleingen voor Werk en inkomen
+          </Linkd>
+          <br />
+          <Linkd external={true} href={ExternalUrls.WPI_CONTACT}>
+            Contact Werk en inkomen
           </Linkd>
         </p>
         {isError && (

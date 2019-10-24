@@ -10,6 +10,7 @@ import { entries } from 'helpers/App';
 import styles from 'pages/Profile/Profile.module.scss';
 import React, { useContext } from 'react';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
+import { defaultDateFormat } from '../../helpers/App';
 
 export default function Profile() {
   const { BRP } = useContext(AppContext);
@@ -47,8 +48,11 @@ export default function Profile() {
           BRP.data.persoon.vertrokkenOnbekendWaarheen && (
             <Alert type="warning" className="vertrokkenOnbekendWaarheen">
               <p>
-                U staat sinds {new Date().toISOString()} in de BRP geregistreerd
-                als "vertrokken – onbekend waarheen".
+                U staat sinds{' '}
+                {BRP.data.persoon.datumVertrekUitNederland
+                  ? defaultDateFormat(BRP.data.persoon.datumVertrekUitNederland)
+                  : 'enige tijd'}{' '}
+                in de BRP geregistreerd als "vertrokken – onbekend waarheen".
               </p>
               <p>
                 U kunt uw huidige adres doorgeven bij het Stadsloket. U moet
