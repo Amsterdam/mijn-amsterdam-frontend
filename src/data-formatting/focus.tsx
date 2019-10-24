@@ -1,20 +1,14 @@
 import { AppRoutes } from 'App.constants';
 import { LinkProps } from 'App.types';
-import {
-  addDays,
-  addMonths,
-  differenceInCalendarDays,
-  parseISO,
-} from 'date-fns';
+import { addDays, differenceInCalendarDays, parseISO } from 'date-fns';
 import { defaultDateFormat } from 'helpers/App';
 import { MyNotification } from 'hooks/api/my-notifications-api.hook';
 import { Chapter, Chapters } from '../App.constants';
 import { Document as GenericDocument } from '../components/DocumentList/DocumentList';
-import { ButtonLinkExternal } from 'components/Button/Button';
+import Linkd from 'components/Button/Button';
 import React from 'react';
 import { StatusLineItem } from 'components/StatusLine/StatusLine';
 import { StepType } from '../components/StatusLine/StatusLine';
-import { trackLink } from 'hooks/analytics.hook';
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
  */
@@ -200,14 +194,12 @@ export const Labels: LabelData = {
         <>
           <p>U hebt op {data.dateStart} een bijstandsuitkering aangevraagd.</p>
           <p>
-            <ButtonLinkExternal
-              to={FocusExternalUrls.BijstandsUitkeringAanvragen}
-              onClick={() =>
-                trackLink(FocusExternalUrls.BijstandsUitkeringAanvragen)
-              }
+            <Linkd
+              href={FocusExternalUrls.BijstandsUitkeringAanvragen}
+              external={true}
             >
               Wat kunt u van ons verwachten?
-            </ButtonLinkExternal>
+            </Linkd>
           </p>
         </>
       ),
@@ -232,23 +224,19 @@ export const Labels: LabelData = {
           <p>
             Lees meer over uw
             <br />
-            <ButtonLinkExternal
-              to={FocusExternalUrls.BijstandsUitkeringAanvragenRechten}
-              onClick={() =>
-                trackLink(FocusExternalUrls.BijstandsUitkeringAanvragenRechten)
-              }
+            <Linkd
+              href={FocusExternalUrls.BijstandsUitkeringAanvragenRechten}
+              external={true}
             >
               rechten
-            </ButtonLinkExternal>{' '}
+            </Linkd>{' '}
             en{' '}
-            <ButtonLinkExternal
-              to={FocusExternalUrls.BijstandsUitkeringAanvragenPlichten}
-              onClick={() =>
-                trackLink(FocusExternalUrls.BijstandsUitkeringAanvragenPlichten)
-              }
+            <Linkd
+              href={FocusExternalUrls.BijstandsUitkeringAanvragenPlichten}
+              external={true}
             >
               plichten
-            </ButtonLinkExternal>
+            </Linkd>
           </p>
         </>
       ),
@@ -308,12 +296,12 @@ export const Labels: LabelData = {
               details.
             </p>
             <p>
-              <ButtonLinkExternal
-                to={FocusExternalUrls.BetaalDataUitkering}
-                onClick={() => trackLink(FocusExternalUrls.BetaalDataUitkering)}
+              <Linkd
+                href={FocusExternalUrls.BetaalDataUitkering}
+                external={true}
               >
                 Bekijk hier de betaaldata van de uitkering
-              </ButtonLinkExternal>
+              </Linkd>
             </p>
           </>
         ),
@@ -530,12 +518,9 @@ export const Labels: LabelData = {
               U heeft recht op een Stadspas. Bekijk de brief voor meer details.
             </p>
             <p>
-              <ButtonLinkExternal
-                to={FocusExternalUrls.StadsPas}
-                onClick={() => trackLink(FocusExternalUrls.StadsPas)}
-              >
+              <Linkd href={FocusExternalUrls.StadsPas} external={true}>
                 Meer informatie over de stadspas
-              </ButtonLinkExternal>
+              </Linkd>
             </p>
           </>
         ),

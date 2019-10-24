@@ -5,7 +5,8 @@ import Modal from 'components/Modal/Modal';
 import React, { useRef, useState } from 'react';
 
 import styles from './ErrorMessages.module.scss';
-import { Button, LinkButton } from 'components/Button/Button';
+import { Button } from 'components/Button/Button';
+import { ReactComponent as ChevronIcon } from 'assets/icons/Chevron-Right.svg';
 
 export interface Error {
   name: string;
@@ -32,9 +33,14 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
           <AlertIcon aria-hidden="true" className={styles.AlertIcon} /> U ziet
           misschien niet al uw gegevens
         </span>
-        <LinkButton onClick={() => setModalOpen(true)}>
+        <Button
+          inline={true}
+          variant="plain"
+          icon={ChevronIcon}
+          onClick={() => setModalOpen(true)}
+        >
           Meer informatie
-        </LinkButton>
+        </Button>
       </p>
       <Modal
         isOpen={isModalOpen}

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './InfoPanel.module.scss';
-import ButtonLink from 'components/Button/Button';
+import Linkd from 'components/Button/Button';
 import Heading from 'components/Heading/Heading';
 import { Unshaped } from 'App.types';
 import { entries } from 'helpers/App';
@@ -23,15 +23,9 @@ function InfoPanelActionLinks({ actionLinks }: InfoPanelActionLinksProps) {
     <ul className={styles.InfoPanelActionLinks}>
       {actionLinks.map((actionLink, index) => (
         <li key={actionLink.title}>
-          <ButtonLink
-            to={actionLink.url}
-            rel={actionLink.external ? 'external' : ''}
-            onClick={() => {
-              actionLink.external && trackLink(actionLink.url);
-            }}
-          >
+          <Linkd href={actionLink.url} external={actionLink.external}>
             {actionLink.title}
-          </ButtonLink>
+          </Linkd>
         </li>
       ))}
     </ul>

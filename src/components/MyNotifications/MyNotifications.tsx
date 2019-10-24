@@ -1,6 +1,6 @@
 import { AppRoutes, Colors } from 'App.constants';
 import classnames from 'classnames';
-import ButtonLink from 'components/Button/Button';
+import Linkd from 'components/Button/Button';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import Heading from 'components/Heading/Heading';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
@@ -109,9 +109,9 @@ export default function MyNotifications({
                 )}
                 {(!!item.link || !!item.customLink) && (
                   <p className={styles.Action}>
-                    <ButtonLink
+                    <Linkd
                       title={`Meer informatie over de melding: ${item.title}`}
-                      to={item.customLink ? '#' : item.link!.to}
+                      href={item.customLink ? '#' : item.link!.to}
                       onClick={event => {
                         event.preventDefault();
                         if (item.customLink) {
@@ -124,7 +124,7 @@ export default function MyNotifications({
                       }}
                     >
                       {(item.link || item.customLink)!.title}
-                    </ButtonLink>
+                    </Linkd>
                   </p>
                 )}
               </li>
@@ -136,9 +136,7 @@ export default function MyNotifications({
       )}
       {!isLoading && showMoreLink && (
         <p className={styles.FooterLink}>
-          <ButtonLink to={AppRoutes.MY_NOTIFICATIONS}>
-            Alle meldingen
-          </ButtonLink>
+          <Linkd href={AppRoutes.MY_NOTIFICATIONS}>Alle meldingen</Linkd>
         </p>
       )}
     </div>

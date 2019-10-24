@@ -1,58 +1,57 @@
 @import 'styles/_global.scss';
 
-
-:global(:root) {
-  --color-primary-red: #{$color-primary-red};
-  --color-primary-darkblue: #{$color-primary-darkblue};
-  --color-support-red: #{$color-support-red};
-  --color-support-blue: #{$color-support-blue};
-  --color-support-darkblue: #{$color-support-darkblue};
-  --color-support-purple: #{$color-support-purple};
-  --color-white: #{$color-white};
-  --color-neutral-grey1: #{$color-neutral-grey1};
-  --color-neutral-grey2: #{$color-neutral-grey2};
-  --color-neutral-grey3: #{$color-neutral-grey3};
-  --color-neutral-grey4: #{$color-neutral-grey4};
-
+$buttons: (
   // Primary button
-  --button-primary-background-color: var(--color-primary-red);
-  --button-primary-border: 1px solid var(--color-primary-red);
-  --button-primary-text-color: var(--color-white);
+  primary: (
+    background-color: $color-primary-red,
+    border: 1px solid $color-primary-red,
+    text-color: $color-white,
 
-  --button-primary-background-color-hover: var(--color-support-red);
-  --button-primary-border-color-hover: var(--color-support-red);
-  --button-primary-outline-hover: 0;
-  --button-primary-text-color-hover: var(--color-white);
+    background-color-hover: $color-support-red,
+    border-color-hover: $color-support-red,
+    outline-hover: default,
+    text-color-hover: $color-white,
+  ),
 
-  // Secondary
-  --button-secondary-background-color: var(--color-primary-darkblue);
-  --button-secondary-border: 1px solid var(--color-primary-darkblue);
-  --button-secondary-text-color: var(--color-white);
+  secondary: (
+    // Secondary
+    background-color: $color-primary-darkblue,
+    border: 1px solid $color-primary-darkblue,
+    text-color: $color-white,
 
-  --button-secondary-background-color-hover: var(--color-support-darkblue);
-  --button-secondary-border-color-hover: var(--color-support-darkblue);
-  --button-secondary-outline-hover: 0;
-  --button-secondary-text-color-hover: var(--button-secondary-text-color);
+    background-color-hover: $color-support-darkblue,
+    border-color-hover: $color-support-darkblue,
+    outline-hover: default,
+    text-color-hover: $color-white
+  ),
 
-  // Secondary inverted
-  --button-secondary-inverted-background-color: var(--color-white);
-  --button-secondary-inverted-border: 1px solid var(--color-primary-darkblue);
-  --button-secondary-inverted-text-color: var(--color-primary-darkblue);
+  secondary-inverted: (
+    // Secondary inverted
+    background-color: $color-white,
+    border: 1px solid $color-primary-darkblue,
+    text-color: $color-primary-darkblue,
 
-  --button-secondary-inverted-background-color-hover: var(--color-white);
-  --button-secondary-inverted-border-color-hover: var(--color-support-darkblue);
-  --button-secondary-inverted-outline-hover: 1px solid var(--color-support-darkblue);
-  --button-secondary-inverted-text-color-hover: var(--color-support-darkblue);
+    background-color-hover: $color-white,
+    border-color-hover: $color-support-darkblue,
+    outline-hover: 1px solid $color-support-darkblue,
+    text-color-hover: $color-support-darkblue
+  ),
 
-  // Plain
-  --button-plain-background-color: transparent;
-  --button-plain-border: 1px solid transparent;
-  --button-plain-text-color: var(--color-black);
+  plain: (
+    // Plain
+    background-color: transparent,
+    border: 1px solid transparent,
+    text-color: $color-black,
 
-  --button-plain-background-color-hover: transparent;
-  --button-plain-border-color-hover: transparent;
-  --button-plain-outline-hover: 0;
-  --button-plain-text-color-hover: var(--color-primary-red);
+    background-color-hover: transparent,
+    border-color-hover: transparent,
+    outline-hover: default,
+    text-color-hover: $color-primary-red
+  )
+);
+
+@function button-prop($variant, $prop) {
+  @return map-get(map-get($buttons, $variant), $prop);
 }
 
 @mixin buttonStyle($variant: primary) {
@@ -60,34 +59,32 @@
 
     &[disabled],
     &.disabled {
-      --button-#{$variant}-background-color: var(--color-neutral-grey2);
-      --button-#{$variant}-border: 1px solid var(--color-neutral-grey2);
-      --button-#{$variant}-text-color: var(--color-neutral-grey4);
-
-      --button-#{$variant}-background-color-hover: var(--color-neutral-grey2);
-      --button-#{$variant}-border-color-hover: var(--color-neutral-grey2);
-      --button-#{$variant}-outline-hover: 0;
-      --button-#{$variant}-text-color-hover: var(--color-neutral-grey4);
-
-      pointer-events: none;
+      &, &:hover {
+        background-color: $color-neutral-grey2;
+        border: 1px solid $color-neutral-grey2;
+        color: $color-neutral-grey4;
+        outline: default;
+        pointer-events: none;
+      }
     }
 
-    background-color: var(--button-#{$variant}-background-color);
-    border: var(--button-#{$variant}-border);
-    color: var(--button-#{$variant}-text-color);
+    background-color: button-prop($variant, background-color);
+    border: button-prop($variant, border);
+    color: button-prop($variant, text-color);
 
     @include hoverCapable {
       &:hover {
-        background-color: var(--button-#{$variant}-background-color-hover);
-        border-color: var(--button-#{$variant}-border-color-hover);
-        color: var(--button-#{$variant}-text-color-hover);
-        outline: var(--button-#{$variant}-outline-hover);
+        background-color: button-prop($variant, background-color-hover);
+        border-color: button-prop($variant, border-color-hover);
+        color: button-prop($variant, text-color-hover);
+        outline: button-prop($variant, outline-hover);
 
+        > svg,
         .Icon {
-          fill: var(--button-#{$variant}-text-color-hover);
+          fill: button-prop($variant, text-color-hover);
         }
         .Chevron:before {
-          border-color: var(--button-#{$variant}-text-color-hover);
+          border-color: button-prop($variant, text-color-hover);
         }
       }
     }
@@ -98,7 +95,6 @@
 
 .Button {
   height: 4.4rem;
-  min-width: 6rem;
   cursor: pointer;
   font-size: 1em;
   line-height: 1.2em;
@@ -107,7 +103,7 @@
   text-decoration: none;
   font-weight: 500;
   padding: 0 1rem;
-  white-space: nowrap;
+  // white-space: nowrap;
 
   @include buttonStyle(primary);
   @include buttonStyle(secondary);
@@ -122,17 +118,21 @@
     color: inherit;
   }
 
-  &__lean {
+  &__inline {
     height: auto;
     padding: 0;
-  }
-
-  + [class*="Button_Button"] {
-    margin-left: 1rem;
   }
 }
 
 .Icon {
   height: .9em;
   width: auto;
+}
+
+.Icon__left {
+  margin-right: .2rem;
+}
+
+.Icon__right {
+  margin-left: .2rem;
 }

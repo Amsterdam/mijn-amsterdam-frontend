@@ -1,15 +1,15 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import ButtonLink, { ButtonLinkExternal } from './Button';
+import Linkd from './Button';
 import renderer from 'react-test-renderer';
 import { ReactComponent as IconComponent } from 'assets/icons/Alert.svg';
 import { BrowserRouter } from 'react-router-dom';
 
-describe('ButtonLink', () => {
+describe('Linkd', () => {
   it('Renders without crashing', () => {
     shallow(
       <BrowserRouter>
-        <ButtonLink to="/">Link!</ButtonLink>
+        <Linkd href="/">Link!</Linkd>
       </BrowserRouter>
     );
   });
@@ -17,32 +17,33 @@ describe('ButtonLink', () => {
   it('Renders', () => {
     const component = shallow(
       <BrowserRouter>
-        <ButtonLink to="/">Link!</ButtonLink>
+        <Linkd href="/">Link!</Linkd>
       </BrowserRouter>
     );
     expect(component.html()).toMatchSnapshot();
   });
 
-  it('ButtonLink default renders correctly', () => {
+  it('Linkd default renders correctly', () => {
     const component = renderer.create(
       <BrowserRouter>
-        <ButtonLink to="/">
+        <Linkd href="/">
           <IconComponent />
-        </ButtonLink>
+        </Linkd>
       </BrowserRouter>
     );
     expect(component.toJSON()).toMatchSnapshot();
   });
 
-  it('ButtonLink external renders correctly', () => {
+  it('Linkd external renders correctly', () => {
     const component = mount(
-      <ButtonLinkExternal target="_blank" to="/">
+      <Linkd external={true} target="_blank" href="/">
         Link!
-      </ButtonLinkExternal>
+      </Linkd>
     );
     expect(component.html()).toMatchSnapshot();
     expect(component.getDOMNode().getAttribute('rel')).toBe(
       'external noopener noreferrer'
     );
+    expect(component.getDOMNode().getAttribute('target')).toBe('_blank');
   });
 });

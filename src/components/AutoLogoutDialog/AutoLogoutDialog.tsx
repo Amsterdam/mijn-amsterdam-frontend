@@ -12,7 +12,7 @@ import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import Modal from '../Modal/Modal';
 import styles from './AutoLogoutDialog.module.scss';
 import { SessionContext } from 'AppState';
-import ButtonLink, { Button } from 'components/Button/Button';
+import Linkd, { Button } from 'components/Button/Button';
 
 /**
  * This component is essentially a dialog with a countdown timer presented to the user
@@ -178,17 +178,17 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
               Doorgaan
             </Button>
           )}
-          <ButtonLink
+          <Linkd
             variant="secondary-inverted"
             isDisabled={!continueButtonIsVisible}
             className="logout-button"
-            onClick={() => trackLink(LOGOUT_URL)}
-            to={LOGOUT_URL}
+            external={true}
+            href={LOGOUT_URL}
           >
             {continueButtonIsVisible
               ? 'Nu uitloggen'
               : 'Bezig met controleren van uw sessie..'}
-          </ButtonLink>
+          </Linkd>
         </p>
       </div>
     </Modal>

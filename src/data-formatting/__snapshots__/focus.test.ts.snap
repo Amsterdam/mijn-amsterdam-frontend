@@ -10,12 +10,12 @@ Object {
       U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer details.
     </p>
     <p>
-      <ButtonLinkExternal
+      <LinkdExternal
         onClick={[Function]}
         to="https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D"
       >
         Bekijk hier de betaaldata van de uitkering
-      </ButtonLinkExternal>
+      </LinkdExternal>
     </p>
   </React.Fragment>,
   "hasDecision": true,
@@ -46,17 +46,17 @@ Object {
       "datePublished": "2019-07-24T15:05:51+02:00",
       "description": <React.Fragment>
         <p>
-          U hebt op 
+          U hebt op
           24 juli 2019
            een bijstandsuitkering aangevraagd.
         </p>
         <p>
-          <ButtonLinkExternal
+          <LinkdExternal
             onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D"
           >
             Wat kunt u van ons verwachten?
-          </ButtonLinkExternal>
+          </LinkdExternal>
         </p>
       </React.Fragment>,
       "documents": Array [
@@ -81,28 +81,28 @@ Object {
       "description": <React.Fragment>
         <p>
           Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt vóór
-           
+
           11 september 2019
            ons besluit.
         </p>
         <p>
           Lees meer over uw
           <br />
-          <ButtonLinkExternal
+          <LinkdExternal
             onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d"
           >
             rechten
-          </ButtonLinkExternal>
-           
+          </LinkdExternal>
+
           en
-           
-          <ButtonLinkExternal
+
+          <LinkdExternal
             onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d"
           >
             plichten
-          </ButtonLinkExternal>
+          </LinkdExternal>
         </p>
       </React.Fragment>,
       "documents": Array [],
@@ -121,12 +121,12 @@ Object {
           U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer details.
         </p>
         <p>
-          <ButtonLinkExternal
+          <LinkdExternal
             onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D"
           >
             Bekijk hier de betaaldata van de uitkering
-          </ButtonLinkExternal>
+          </LinkdExternal>
         </p>
       </React.Fragment>,
       "documents": Array [
@@ -185,17 +185,17 @@ Object {
       "datePublished": "2019-04-09T15:05:51+02:00",
       "description": <React.Fragment>
         <p>
-          U hebt op 
+          U hebt op
           09 april 2019
            een bijstandsuitkering aangevraagd.
         </p>
         <p>
-          <ButtonLinkExternal
+          <LinkdExternal
             onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D"
           >
             Wat kunt u van ons verwachten?
-          </ButtonLinkExternal>
+          </LinkdExternal>
         </p>
       </React.Fragment>,
       "documents": Array [
@@ -220,28 +220,28 @@ Object {
       "description": <React.Fragment>
         <p>
           Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt vóór
-           
+
           28 mei 2019
            ons besluit.
         </p>
         <p>
           Lees meer over uw
           <br />
-          <ButtonLinkExternal
+          <LinkdExternal
             onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d"
           >
             rechten
-          </ButtonLinkExternal>
-           
+          </LinkdExternal>
+
           en
-           
-          <ButtonLinkExternal
+
+          <LinkdExternal
             onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d"
           >
             plichten
-          </ButtonLinkExternal>
+          </LinkdExternal>
         </p>
       </React.Fragment>,
       "documents": Array [],
@@ -288,12 +288,12 @@ Object {
       U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer details.
     </p>
     <p>
-      <ButtonLinkExternal
+      <LinkdExternal
         onClick={[Function]}
         to="https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D"
       >
         Bekijk hier de betaaldata van de uitkering
-      </ButtonLinkExternal>
+      </LinkdExternal>
     </p>
   </React.Fragment>,
   "hasDecision": true,
@@ -324,17 +324,17 @@ Object {
       "datePublished": "2019-05-09T15:05:51+02:00",
       "description": <React.Fragment>
         <p>
-          U hebt op 
+          U hebt op
           09 mei 2019
            een bijstandsuitkering aangevraagd.
         </p>
         <p>
-          <ButtonLinkExternal
+          <LinkdExternal
             onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D"
           >
             Wat kunt u van ons verwachten?
-          </ButtonLinkExternal>
+          </LinkdExternal>
         </p>
       </React.Fragment>,
       "documents": Array [
@@ -359,28 +359,28 @@ Object {
       "description": <React.Fragment>
         <p>
           Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt vóór
-           
+
           27 juni 2019
            ons besluit.
         </p>
         <p>
           Lees meer over uw
           <br />
-          <ButtonLinkExternal
+          <LinkdExternal
             onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d"
           >
             rechten
-          </ButtonLinkExternal>
-           
+          </LinkdExternal>
+
           en
-           
-          <ButtonLinkExternal
+
+          <LinkdExternal
             onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d"
           >
             plichten
-          </ButtonLinkExternal>
+          </LinkdExternal>
         </p>
       </React.Fragment>,
       "documents": Array [],
@@ -396,9 +396,9 @@ Object {
       "datePublished": "2019-05-19T15:05:51+02:00",
       "description": <React.Fragment>
         <p>
-          Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken. Bekijk de brief voor meer details. U moet de extra informatie vóór 
+          Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken. Bekijk de brief voor meer details. U moet de extra informatie vóór
           08 juni 2019
-           opsturen. Dan ontvangt u vóór 
+           opsturen. Dan ontvangt u vóór
           17 juli 2019
            ons besluit.
         </p>
@@ -422,12 +422,12 @@ Object {
           U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer details.
         </p>
         <p>
-          <ButtonLinkExternal
+          <LinkdExternal
             onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D"
           >
             Bekijk hier de betaaldata van de uitkering
-          </ButtonLinkExternal>
+          </LinkdExternal>
         </p>
       </React.Fragment>,
       "documents": Array [
@@ -486,17 +486,17 @@ Object {
       "datePublished": "2019-06-08T15:05:52+02:00",
       "description": <React.Fragment>
         <p>
-          U hebt op 
+          U hebt op
           08 juni 2019
            een bijstandsuitkering aangevraagd.
         </p>
         <p>
-          <ButtonLinkExternal
+          <LinkdExternal
             onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D"
           >
             Wat kunt u van ons verwachten?
-          </ButtonLinkExternal>
+          </LinkdExternal>
         </p>
       </React.Fragment>,
       "documents": Array [
@@ -528,28 +528,28 @@ Object {
       "description": <React.Fragment>
         <p>
           Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt vóór
-           
+
           27 juli 2019
            ons besluit.
         </p>
         <p>
           Lees meer over uw
           <br />
-          <ButtonLinkExternal
+          <LinkdExternal
             onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d"
           >
             rechten
-          </ButtonLinkExternal>
-           
+          </LinkdExternal>
+
           en
-           
-          <ButtonLinkExternal
+
+          <LinkdExternal
             onClick={[Function]}
             to="https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d"
           >
             plichten
-          </ButtonLinkExternal>
+          </LinkdExternal>
         </p>
       </React.Fragment>,
       "documents": Array [],
@@ -565,9 +565,9 @@ Object {
       "datePublished": "2019-06-13T15:05:52+02:00",
       "description": <React.Fragment>
         <p>
-          Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken. Bekijk de brief voor meer details. U moet de extra informatie vóór 
+          Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken. Bekijk de brief voor meer details. U moet de extra informatie vóór
           28 juni 2019
-           opsturen. Dan ontvangt u vóór 
+           opsturen. Dan ontvangt u vóór
           11 augustus 2019
            ons besluit.
         </p>
@@ -685,7 +685,7 @@ Object {
   "dateStart": "07 juli 2019",
   "description": <React.Fragment>
     <p>
-      Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt vóór 
+      Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt vóór
       15 september 2019
        ons besluit.
       <br />
@@ -758,7 +758,7 @@ Object {
       "datePublished": "2019-07-08T15:05:52+02:00",
       "description": <React.Fragment>
         <p>
-          Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt vóór 
+          Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt vóór
           15 september 2019
            ons besluit.
           <br />
@@ -790,9 +790,9 @@ Object {
   "dateStart": "03 juli 2019",
   "description": <React.Fragment>
     <p>
-      Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken. Bekijk de brief voor meer details. U moet de extra informatie vóór 
+      Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken. Bekijk de brief voor meer details. U moet de extra informatie vóór
       16 juli 2019
-       opsturen. Dan ontvangt u vóór 
+       opsturen. Dan ontvangt u vóór
       21 september 2019
        ons besluit.
     </p>
@@ -862,7 +862,7 @@ Object {
       "datePublished": "2019-07-04T15:05:52+02:00",
       "description": <React.Fragment>
         <p>
-          Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt vóór 
+          Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt vóór
           11 september 2019
            ons besluit.
           <br />
@@ -886,9 +886,9 @@ Object {
       "datePublished": "2019-07-06T15:05:52+02:00",
       "description": <React.Fragment>
         <p>
-          Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken. Bekijk de brief voor meer details. U moet de extra informatie vóór 
+          Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken. Bekijk de brief voor meer details. U moet de extra informatie vóór
           16 juli 2019
-           opsturen. Dan ontvangt u vóór 
+           opsturen. Dan ontvangt u vóór
           21 september 2019
            ons besluit.
         </p>

@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import styles from './MainFooter.module.scss';
-import ButtonLink, {
-  IconLinkExternal,
-  IconLink,
-} from 'components/Button/Button';
+import Linkd from 'components/Button/Button';
 import { ExternalUrls, AppRoutes } from 'App.constants';
 import { LinkList } from './MainFooter.constants';
 import classnames from 'classnames';
@@ -53,20 +50,14 @@ export default function MainFooter() {
           </p>
           <ul>
             <li>
-              <IconLinkExternal
-                to={ExternalUrls.CONTACT_FORM}
-                onClick={() => trackLink(ExternalUrls.CONTACT_FORM)}
-              >
+              <Linkd external={true} href={ExternalUrls.CONTACT_FORM}>
                 Of gebruik het contactformulier
-              </IconLinkExternal>
+              </Linkd>
             </li>
             <li>
-              <IconLinkExternal
-                to={ExternalUrls.CONTACT_GENERAL}
-                onClick={() => trackLink(ExternalUrls.CONTACT_GENERAL)}
-              >
+              <Linkd external={true} href={ExternalUrls.CONTACT_GENERAL}>
                 Meer contactgegevens en openingstijden
-              </IconLinkExternal>
+              </Linkd>
             </li>
           </ul>
         </div>
@@ -83,13 +74,9 @@ export default function MainFooter() {
           <ul>
             {LinkList.map(({ to, title }) => (
               <li key={title}>
-                <IconLinkExternal
-                  key={title}
-                  to={to}
-                  onClick={() => trackLink(to)}
-                >
+                <Linkd external={true} key={title} href={to}>
                   {title}
-                </IconLinkExternal>
+                </Linkd>
               </li>
             ))}
           </ul>
@@ -118,7 +105,9 @@ export default function MainFooter() {
       </div>
       <div className={styles.BottomBar}>
         <div className={styles.InnerContainer}>
-          <IconLink to={AppRoutes.PROCLAIMER}>Proclaimer</IconLink>
+          <Linkd external={true} href={AppRoutes.PROCLAIMER}>
+            Proclaimer
+          </Linkd>
         </div>
       </div>
     </footer>

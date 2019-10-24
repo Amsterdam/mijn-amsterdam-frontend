@@ -1,6 +1,5 @@
 import { Chapters, ChapterTitles } from 'App.constants';
 import { AppContext } from 'AppState';
-import classnames from 'classnames';
 import Alert from 'components/Alert/Alert';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import MyTips from 'components/MyTips/MyTips';
@@ -10,7 +9,6 @@ import React, { useContext, useState } from 'react';
 import styles from './MyTips.module.scss';
 import Modal from 'components/Modal/Modal';
 import { Button } from 'components/Button/Button';
-import { LinkButton } from '../../components/Button/Button';
 
 export default () => {
   const {
@@ -82,21 +80,7 @@ export default () => {
               )}
             </p>
             <p className={styles.OptInOutButtons}>
-              <LinkButton icon="" onClick={() => setModalIsOpen(false)}>
-                Nee bedankt
-              </LinkButton>
-              <Button
-                variant="plain"
-                isDisabled={true}
-                onClick={() => setModalIsOpen(false)}
-              >
-                Nee bedankt
-              </Button>
-              <Button
-                variant="plain"
-                isDisabled={true}
-                onClick={() => setModalIsOpen(false)}
-              >
+              <Button variant="plain" onClick={() => setModalIsOpen(false)}>
                 Nee bedankt
               </Button>
               <Button

@@ -13,8 +13,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import styles from './MainHeader.module.scss';
-import ButtonLink from 'components/Button/Button';
-import { ButtonLinkExternal } from '../Button/Button';
+import Linkd from 'components/Button/Button';
 
 const excludedApiKeys: StateKey[] = ['MY_CHAPTERS', 'SESSION'];
 
@@ -49,12 +48,12 @@ export default function MainHeader({
     <header className={styles.header}>
       {!usePhoneScreen() && (
         <nav className={styles.DirectSkipLinks}>
-          <ButtonLinkExternal tabIndex={0} to="#AppContent">
+          <Linkd external={true} tabIndex={0} href="#AppContent">
             Direct naar: <b>Pagina inhoud</b>
-          </ButtonLinkExternal>
-          <ButtonLinkExternal tabIndex={0} to="#MainFooter">
+          </Linkd>
+          <Linkd external={true} tabIndex={0} href="#MainFooter">
             Direct naar: <b>Footer</b>
-          </ButtonLinkExternal>
+          </Linkd>
         </nav>
       )}
       <div className={styles.topBar}>

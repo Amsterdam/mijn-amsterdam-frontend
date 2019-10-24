@@ -1,50 +1,52 @@
-import React, { Children } from 'react';
-import { Link, LinkProps } from 'react-router-dom';
+import React, { AnchorHTMLAttributes, ButtonHTMLAttributes } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Button.module.scss';
 import classnames from 'classnames';
 import { ReactNode } from 'react';
 import { ReactComponent as ChevronIcon } from 'assets/icons/Chevron-Right.svg';
-import { ComponentChildren } from '../../App.types';
 
 interface CustomButtonProps {
   variant?: 'primary' | 'secondary' | 'secondary-inverted' | 'plain';
   isDisabled?: boolean;
   iconPosition?: 'left' | 'right';
-  children: ReactNode;
   className?: string;
   icon?: any;
   inline?: boolean;
 }
 
-export type ButtonLinkProps = LinkProps & CustomButtonProps & { LinkEl?: any };
-export type ButtonProps = CustomButtonProps & {
-  onClick?: (event: any) => void;
-};
+export interface LinkdProps
+  extends CustomButtonProps,
+    AnchorHTMLAttributes<HTMLAnchorElement> {
+  external?: boolean;
+  href: string;
+}
+export interface ButtonProps
+  extends CustomButtonProps,
+    ButtonHTMLAttributes<HTMLButtonElement> {}
 
-type ButtonStylesProps = Pick<
+type buttonStyleProps = Pick<
   CustomButtonProps,
   'inline' | 'isDisabled' | 'variant' | 'className'
 >;
 
-function ButtonStyles({
+function buttonStyle({
   inline,
   isDisabled,
   variant,
   className,
-}: ButtonStylesProps) {
+}: buttonStyleProps) {
   return classnames(
     styles.Button,
     styles[`Button__${variant}`],
-    inline && styles.Button__lean,
+    inline && styles.Button__inline,
     isDisabled && styles.ButtonDisabled,
     className
   );
 }
 
-type ButtonBodyProps = Pick<
-  CustomButtonProps,
-  'icon' | 'iconPosition' | 'children'
->;
+type ButtonBodyProps = Pick<CustomButtonProps, 'icon' | 'iconPosition'> & {
+  children: ReactNode;
+};
 
 function ButtonBody({ icon, iconPosition, children }: ButtonBodyProps) {
   const Icon = icon;
@@ -81,7 +83,7 @@ export function Button({
   return (
     <button
       {...otherProps}
-      className={ButtonStyles({ inline, isDisabled, variant, className })}
+      className={buttonStyle({ inline, isDisabled, variant, className })}
       disabled={isDisabled}
     >
       <ButtonBody icon={icon} iconPosition={iconPosition}>
@@ -91,103 +93,33 @@ export function Button({
   );
 }
 
-export default function ButtonLink({
+export default function Linkd({
   children,
   className,
   isDisabled,
-  to,
+  href,
   inline = true,
   variant = 'plain',
-  icon,
+  icon = ChevronIcon,
   iconPosition = 'left',
-  LinkEl = Link,
+  external = false,
   ...otherProps
-}: ButtonLinkProps) {
-  const locProp = { ...(LinkEl === Link ? { to } : { href: to }) };
+}: LinkdProps) {
+  const LinkElement = external ? 'a' : Link;
+  const relProp = {
+    ...(LinkElement === Link ? {} : { rel: 'external noopener noreferrer' }),
+  };
   return (
-    <LinkEl
-      {...locProp}
+    <LinkElement
       {...otherProps}
-      className={ButtonStyles({ inline, isDisabled, variant, className })}
+      {...relProp}
+      href={href}
+      to={href}
+      className={buttonStyle({ inline, isDisabled, variant, className })}
     >
       <ButtonBody icon={icon} iconPosition={iconPosition}>
         {children}
       </ButtonBody>
-    </LinkEl>
+    </LinkElement>
   );
 }
-
-//
-export function ButtonLinkExternal(
-  props: Omit<ButtonLinkProps, 'LinkEl' | 'rel'>
-) {
-  return (
-    <ButtonLink LinkEl={'a'} {...props} rel="external noopener noreferrer">
-      {props.children}
-    </ButtonLink>
-  );
-}
-
-// A button that looks like a link
-export function LinkButton({
-  children,
-  icon = ChevronIcon,
-  ...otherProps
-}: ButtonProps) {
-  return (
-    <Button {...otherProps} icon={icon} variant="plain" inline={true}>
-      {children}
-    </Button>
-  );
-}
-
-// A link with an icon
-export function IconLink({
-  children,
-  to,
-  icon = ChevronIcon,
-  iconPosition = 'left',
-  ...otherProps
-}: ButtonLinkProps) {
-  return (
-    <ButtonLink {...otherProps} icon={icon} iconPosition={iconPosition} to={to}>
-      {children}
-    </ButtonLink>
-  );
-}
-
-// An external link with an icon
-export function IconLinkExternal({
-  children,
-  to,
-  icon = ChevronIcon,
-  iconPosition = 'left',
-  ...otherProps
-}: ButtonLinkProps) {
-  return (
-    <ButtonLinkExternal
-      {...otherProps}
-      icon={icon}
-      iconPosition={iconPosition}
-      to={to}
-    >
-      {children}
-    </ButtonLinkExternal>
-  );
-}
-
-/**
- * Varianten:
- *
- * Button (primary, secondary, secondary-inverted, link, plain)
- * ButtonWithIcon
-
- * InlineLinkWithIcon defaults to Chevron
-
- * InlineButtonWithIcon defaults to Chevron
-
- * ExternalInlineLinkWithIcon defaults to Chevron
-
- * ExternalInlineLinkWithoutIcon
-
- */

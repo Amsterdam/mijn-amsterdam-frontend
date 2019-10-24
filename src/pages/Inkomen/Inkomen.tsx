@@ -5,7 +5,7 @@ import { AppContext } from 'AppState';
 import DataLinkTable from 'components/DataLinkTable/DataLinkTable';
 import { Chapters, ChapterTitles } from 'App.constants';
 import styles from './Inkomen.module.scss';
-import { ButtonLinkExternal } from 'components/Button/Button';
+import Linkd from 'components/Button/Button';
 import { ExternalUrls } from 'App.constants';
 import Alert from 'components/Alert/Alert';
 import { useTabletScreen } from 'hooks/media.hook';
@@ -44,13 +44,21 @@ export default () => {
         <p>
           Hieronder ziet u uw regelingen en hulpmiddelen vanuit de Wmo. Hebt u
           vragen of wilt u een wijziging doorgeven? Bel dan gratis de Wmo
-          Helpdesk: <a href="tel:08000643">0800 0643</a>. Of ga langs bij het
-          Sociaal Loket.
+          Helpdesk:{' '}
+          <Linkd
+            external={true}
+            inline={true}
+            variant="plain"
+            href="tel:08000643"
+          >
+            0800 0643
+          </Linkd>
+          . Of ga langs bij het Sociaal Loket.
         </p>
         <p>
-          <ButtonLinkExternal to={ExternalUrls.ZORG_LEES_MEER}>
+          <Linkd external={true} href={ExternalUrls.ZORG_LEES_MEER}>
             Lees hier meer over zorg en ondersteuning
-          </ButtonLinkExternal>
+          </Linkd>
         </p>
         {isError && (
           <Alert type="warning">

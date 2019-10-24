@@ -8,6 +8,7 @@ import { ReactComponent as CloseIcon } from 'assets/icons/Close.svg';
 import styles from './Modal.module.scss';
 import Heading from 'components/Heading/Heading';
 import useModalRoot from 'hooks/modalRoot.hook';
+import { Button } from 'components/Button/Button';
 
 interface ModalProps {
   children: ComponentChildren;
@@ -77,6 +78,7 @@ export function Dialog({
       window.scrollTo(0, parseInt(scrollY || '0') * -1);
     }
     window.addEventListener('scroll', setScrollYProp);
+
     return () => {
       document.body.classList.remove('has-modal');
       window.removeEventListener('scroll', setScrollYProp);
@@ -134,13 +136,15 @@ export function Dialog({
               >
                 {!!title && <Heading size="small">{title}</Heading>}
                 {showCloseButton && (
-                  <button
+                  <Button
+                    variant="plain"
                     className={styles.ButtonClose}
                     onClick={() => typeof onClose === 'function' && onClose()}
                     arial-label="Overlay sluiten"
+                    inline={true}
                   >
                     <CloseIcon aria-hidden="true" />
-                  </button>
+                  </Button>
                 )}
               </header>
               <div className={styles.Content}>{children}</div>

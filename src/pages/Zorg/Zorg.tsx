@@ -7,7 +7,7 @@ import { Chapters } from 'App.constants';
 import styles from './Zorg.module.scss';
 import Alert from 'components/Alert/Alert';
 import { useTabletScreen } from 'hooks/media.hook';
-import { ButtonLinkExternal } from 'components/Button/Button';
+import Linkd from 'components/Button/Button';
 import { ExternalUrls, ChapterTitles } from 'App.constants';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 
@@ -42,9 +42,9 @@ export default () => {
           Sociaal Loket.
         </p>
         <p>
-          <ButtonLinkExternal to={ExternalUrls.ZORG_LEES_MEER}>
+          <Linkd external={true} href={ExternalUrls.ZORG_LEES_MEER}>
             Lees hier meer over zorg en ondersteuning
-          </ButtonLinkExternal>
+          </Linkd>
         </p>
         {isError && (
           <Alert type="warning">

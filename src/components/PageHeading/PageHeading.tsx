@@ -3,7 +3,7 @@ import styles from './PageHeading.module.scss';
 import composeClassNames from 'classnames';
 import Heading, { HeadingTagName } from 'components/Heading/Heading';
 import { ComponentChildren, LinkProps } from 'App.types';
-import ButtonLink from 'components/Button/Button';
+import Linkd from 'components/Button/Button';
 import { ReactComponent as CaretLeft } from 'assets/icons/Chevron-Left.svg';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 
@@ -40,13 +40,13 @@ export default function PageHeading({
       )}
       <div className={styles.HeadingInner}>
         {!!backLink && (
-          <ButtonLink
+          <Linkd
             icon={CaretLeft}
             className={styles.BackLink}
-            to={backLink.to}
+            href={backLink.to}
           >
             {backLink.title}
-          </ButtonLink>
+          </Linkd>
         )}
         {isLoading && (
           <LoadingContent

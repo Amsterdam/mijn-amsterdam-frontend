@@ -7,10 +7,6 @@
 }
 
 button.OptInOutToggleButton {
-  // --button-secondary-background-color-hover: yellow;
-  // --button-secondary-border-color-hover: orange;
-  // --button-secondary-text-color-hover: black;
-
   display: block;
   margin: 4rem auto 7rem auto;
 }
@@ -25,4 +21,8 @@ button.OptInOutToggleButton {
   flex-direction: row;
   justify-content: center;
   margin-bottom: 2rem;
+
+  button + button {
+    margin-left: 1rem;
+  }
 }

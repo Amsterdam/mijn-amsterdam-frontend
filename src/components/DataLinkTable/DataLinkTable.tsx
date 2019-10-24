@@ -1,7 +1,7 @@
 import { LinkProps } from 'App.types';
 import { ReactComponent as CaretIcon } from 'assets/icons/Chevron-Right.svg';
 import classnames from 'classnames';
-import ButtonLink from 'components/Button/Button';
+import Linkd from 'components/Button/Button';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 import { entries, withKeyPress } from 'helpers/App';
 import { useSessionStorage } from 'hooks/storage.hook';
@@ -137,12 +137,9 @@ export default function DataLinkTable({
               {items.map(item => (
                 <tr key={item.id} className={styles.TableRow}>
                   <td className={styles.DisplayPropTitle}>
-                    <ButtonLink
-                      tabIndex={isCollapsed ? -1 : 0}
-                      to={item.link.to}
-                    >
+                    <Linkd tabIndex={isCollapsed ? -1 : 0} href={item.link.to}>
                       {item.title}
-                    </ButtonLink>
+                    </Linkd>
                   </td>
                   {displayPropEntries.map(([key, label]) => (
                     <td key={key} className={styles.DisplayProp}>

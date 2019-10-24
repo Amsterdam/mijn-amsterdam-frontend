@@ -3,7 +3,6 @@ import { ComponentChildren } from 'App.types';
 import { AppContext, SessionContext, TutorialContext } from 'AppState';
 import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
 import classnames from 'classnames';
-import ButtonLink, { IconLinkExternal } from 'components/Button/Button';
 import FontEnlarger from 'components/FontEnlarger/FontEnlarger';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
@@ -25,6 +24,7 @@ import {
 import styles from './MainNavBar.module.scss';
 import teststyles from '../Tutorial/Tutorial.module.scss';
 import Tutorial from 'components/Tutorial/Tutorial';
+import Linkd from 'components/Button/Button';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -68,13 +68,15 @@ function SecondaryLinks() {
         </Link>
       )}
       {
-        <IconLinkExternal
-          to={LOGOUT_URL}
+        <Linkd
+          href={LOGOUT_URL}
+          external={true}
+          inline={true}
           className={styles.LogoutLink}
           icon={LogoutIcon}
         >
           Uitloggen
-        </IconLinkExternal>
+        </Linkd>
       }
     </div>
   );

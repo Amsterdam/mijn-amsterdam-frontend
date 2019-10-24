@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import styles from './StatusLine.module.scss';
 import classnames from 'classnames';
-import ButtonLink from 'components/Button/Button';
+import Linkd, { Button } from 'components/Button/Button';
 import { Document } from '../DocumentList/DocumentList';
 import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
 import { defaultDateFormat } from 'helpers/App';
@@ -51,15 +51,15 @@ interface ToggleMoreProps {
 
 function DownloadLink({ item }: DownloadLinkProps) {
   return (
-    <ButtonLink
+    <Linkd
       className={styles.DownloadLink}
-      to={item.url}
+      href={item.url}
       rel="external nofollow"
       download={item.title}
+      icon={DownloadIcon}
     >
-      <DownloadIcon aria-hidden="true" />
       {item.title}
-    </ButtonLink>
+    </Linkd>
   );
 }
 
@@ -113,15 +113,17 @@ function StatusLineItem({
 
 function ToggleMore({ isCollapsed, toggleCollapsed }: ToggleMoreProps) {
   return (
-    <button
+    <Button
       className={classnames(styles.MoreStatus, {
         [styles.MoreStatusClosed]: isCollapsed,
       })}
       onClick={toggleCollapsed}
+      icon={CaretLeft}
+      variant="plain"
+      inline={true}
     >
-      <CaretLeft aria-hidden="true" />
       {isCollapsed ? 'Toon alles' : 'Toon minder'}
-    </button>
+    </Button>
   );
 }
 
