@@ -170,9 +170,14 @@ $tutorial-items-radius: 1rem;
     @extend %tutorialHeading;
   }
 
-  [id="MyUpdatesHeader"] > div {
-    @extend %tutorialHeading;
-    transform: translateX(-1rem);
+  [id="MyUpdatesHeader"] {
+    @include select(PageHeading_HeadingInner) {
+      z-index: z-index(tutorial-items);
+    }
+    > div {
+      @extend %tutorialHeading;
+      transform: translateX(-1rem);
+    }
   }
 
   @include select-id(MyCasesHeader) {
