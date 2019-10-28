@@ -10,6 +10,7 @@ import LoadingContent from 'components/LoadingContent/LoadingContent';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import { DetailPage } from 'components/Page/Page';
 import { altDocumentContent } from 'data-formatting/focus';
+import styles from './InkomenDetail.module.scss';
 
 export default () => {
   const {
@@ -37,7 +38,7 @@ export default () => {
       >
         {FocusItem && FocusItem.title}
       </PageHeading>
-      <PageContent>
+      <PageContent className={styles.DetailPageContent}>
         {(isError || noContent) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>
