@@ -31,17 +31,23 @@ export function trackPageView(title?: string, url?: string) {
 }
 
 export function trackDownload(url: string) {
-  return MatomoInstance.trackLink({
-    href: url,
-    linkType: 'download',
-  });
+  return (
+    MatomoInstance &&
+    MatomoInstance.trackLink({
+      href: url,
+      linkType: 'download',
+    })
+  );
 }
 
 export function trackLink(url: string) {
-  return MatomoInstance.trackLink({
-    href: url,
-    linkType: 'link',
-  });
+  return (
+    MatomoInstance &&
+    MatomoInstance.trackLink({
+      href: url,
+      linkType: 'link',
+    })
+  );
 }
 
 export function trackItemPresentation(

@@ -13,11 +13,10 @@
   display: flex;
   padding: 3rem 0 5rem;
 
-  &,
-  a {
+  &, a, a:hover {
     color: $color-white;
-    &:focus {
-      color: $color-black;
+    @include select(Button_Icon) {
+      fill: $color-white;
     }
   }
 
@@ -32,6 +31,11 @@
 
     li {
       margin-bottom: 1rem;
+      @include select(Button__plain) {
+        &, &:visited {
+          color: $color-white;
+        }
+      }
     }
   }
 
@@ -49,7 +53,6 @@
   padding-top: 1rem;
 
   a {
-    display: inline-block;
     margin-right: 8rem;
   }
 

@@ -5,8 +5,7 @@ import Heading from 'components/Heading/Heading';
 import { ReactComponent as ExternalLinkIcon } from 'assets/icons/External-Link.svg';
 import { entries } from 'helpers/App';
 import { usePhoneScreen } from 'hooks/media.hook';
-import ButtonLink from 'components/ButtonLink/ButtonLink';
-import { trackLink } from 'hooks/analytics.hook';
+import Linkd from 'components/Button/Button';
 
 export default function DirectLinks() {
   const isPhoneScreen = usePhoneScreen();
@@ -22,16 +21,14 @@ export default function DirectLinks() {
             const [linkName, { url, title, isExternalLink, id }] = link;
             return (
               <li key={linkName}>
-                {isExternalLink === true ? (
-                  <a href={url} onClick={() => trackLink(url)}>
-                    <ExternalLinkIcon aria-hidden="true" />
-                    {title}
-                  </a>
-                ) : (
-                  <ButtonLink id={id} to={url}>
-                    {title}
-                  </ButtonLink>
-                )}
+                <Linkd
+                  icon={isExternalLink ? ExternalLinkIcon : ''}
+                  id={id}
+                  href={url}
+                  external={isExternalLink}
+                >
+                  {title}
+                </Linkd>
               </li>
             );
           })}

@@ -2,10 +2,8 @@ import 'react-circular-progressbar/dist/styles.css';
 
 import { Colors, LOGOUT_URL } from 'App.constants';
 import { ComponentChildren } from 'App.types';
-import classnames from 'classnames';
 import { formattedTimeFromSeconds } from 'helpers/App';
 import useActivityCounter from 'hooks/activityCounter.hook';
-import { trackLink } from 'hooks/analytics.hook';
 import { CounterProps, useCounter } from 'hooks/timer.hook';
 import React, { useEffect, useState, useContext } from 'react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
@@ -13,6 +11,7 @@ import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import Modal from '../Modal/Modal';
 import styles from './AutoLogoutDialog.module.scss';
 import { SessionContext } from 'AppState';
+import Linkd, { Button, ButtonStyles } from 'components/Button/Button';
 
 /**
  * This component is essentially a dialog with a countdown timer presented to the user
@@ -168,27 +167,30 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
           Voor uw veiligheid wordt u mogelijk automatisch uitgelogd.
         </p>
         <p>Wilt u doorgaan of uitloggen?</p>
-        <p>
+        <p className={ButtonStyles.ButtonGroup}>
           {continueButtonIsVisible && (
-            <button
-              className="action-button secondary continue-button"
+            <Button
+              variant="secondary"
+              className="continue-button"
               onClick={continueUsingApp}
             >
               Doorgaan
-            </button>
+            </Button>
           )}
-          <a
-            className={classnames(
-              'action-button line-only secondary logout-button',
-              !continueButtonIsVisible && 'disabled'
-            )}
-            onClick={() => trackLink(LOGOUT_URL)}
+          <Linkd
+            variant="secondary-inverted"
+            lean={false}
+            isDisabled={!continueButtonIsVisible}
+            className="logout-button"
+            external={true}
+            icon=""
             href={LOGOUT_URL}
+            role="button"
           >
             {continueButtonIsVisible
               ? 'Nu uitloggen'
               : 'Bezig met controleren van uw sessie..'}
-          </a>
+          </Linkd>
         </p>
       </div>
     </Modal>

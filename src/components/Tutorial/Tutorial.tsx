@@ -6,7 +6,7 @@ import { ComponentChildren, Unshaped } from 'App.types';
 import { ReactComponent as ArrowIcon } from 'assets/icons/Arrow__primary-white.svg';
 import { usePhoneScreen } from 'hooks/media.hook';
 import { throttle } from 'throttle-debounce';
-import useModalRoot from '../../hooks/modalRoot.hook';
+import useModalRoot from 'hooks/modalRoot.hook';
 
 export interface ComponentProps {
   children?: ComponentChildren;

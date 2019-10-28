@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import styles from './MainFooter.module.scss';
-import ButtonLink, {
-  ButtonLinkExternal,
-} from 'components/ButtonLink/ButtonLink';
+import Linkd from 'components/Button/Button';
 import { ExternalUrls, AppRoutes } from 'App.constants';
 import { LinkList } from './MainFooter.constants';
 import classnames from 'classnames';
 import { useDesktopScreen } from 'hooks/media.hook';
 import { trackLink } from 'hooks/analytics.hook';
+import { LinkdInline } from '../Button/Button';
 
 interface PanelState {
   [panelId: string]: boolean;
@@ -44,7 +43,10 @@ export default function MainFooter() {
           </p>
           <p>
             <strong>
-              Bel: <a href="tel:14020">14 020</a>
+              Bel:{' '}
+              <LinkdInline external={true} href="tel:14020">
+                14 020
+              </LinkdInline>
             </strong>
             &nbsp;(verkort nummer)
             <br />
@@ -52,22 +54,14 @@ export default function MainFooter() {
           </p>
           <ul>
             <li>
-              <ButtonLinkExternal
-                white={true}
-                to={ExternalUrls.CONTACT_FORM}
-                onClick={() => trackLink(ExternalUrls.CONTACT_FORM)}
-              >
+              <Linkd external={true} href={ExternalUrls.CONTACT_FORM}>
                 Of gebruik het contactformulier
-              </ButtonLinkExternal>
+              </Linkd>
             </li>
             <li>
-              <ButtonLinkExternal
-                white={true}
-                to={ExternalUrls.CONTACT_GENERAL}
-                onClick={() => trackLink(ExternalUrls.CONTACT_GENERAL)}
-              >
+              <Linkd external={true} href={ExternalUrls.CONTACT_GENERAL}>
                 Meer contactgegevens en openingstijden
-              </ButtonLinkExternal>
+              </Linkd>
             </li>
           </ul>
         </div>
@@ -84,14 +78,9 @@ export default function MainFooter() {
           <ul>
             {LinkList.map(({ to, title }) => (
               <li key={title}>
-                <ButtonLinkExternal
-                  key={title}
-                  white={true}
-                  to={to}
-                  onClick={() => trackLink(to)}
-                >
+                <Linkd external={true} key={title} href={to}>
                   {title}
-                </ButtonLinkExternal>
+                </Linkd>
               </li>
             ))}
           </ul>
@@ -109,18 +98,15 @@ export default function MainFooter() {
           <p>
             Wat is er te doen in Amsterdam? Informatie over toerisme, cultuur,
             uitgaan, evenementen en meer vindt u op{' '}
-            <a
-              href="https://www.iamsterdam.com"
-              onClick={() => trackLink('https://www.iamsterdam.com')}
-            >
+            <Linkd external={true} icon="" href="https://www.iamsterdam.com">
               Iamsterdam.com
-            </a>
+            </Linkd>
           </p>
         </div>
       </div>
       <div className={styles.BottomBar}>
         <div className={styles.InnerContainer}>
-          <ButtonLink to={AppRoutes.PROCLAIMER}>Proclaimer</ButtonLink>
+          <Linkd href={AppRoutes.PROCLAIMER}>Proclaimer</Linkd>
         </div>
       </div>
     </footer>

@@ -7,10 +7,10 @@ import PageHeading from 'components/PageHeading/PageHeading';
 import React, { useEffect, useRef, useState } from 'react';
 
 import styles from './Landing.module.scss';
-import { trackPageView, trackLink } from 'hooks/analytics.hook';
+import { trackPageView } from 'hooks/analytics.hook';
 import classnames from 'classnames';
 import { clearSessionStorage } from 'hooks/storage.hook';
-import pageContentStyles from 'components/Page/Page.module.scss';
+import { LinkdInline } from 'components/Button/Button';
 
 export default () => {
   const loginButton = useRef(null);
@@ -95,12 +95,12 @@ export default () => {
         </Heading>
         <p>
           Kijk bij{' '}
-          <a
-            onClick={() => trackLink(ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD)}
+          <LinkdInline
+            external={true}
             href={ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD}
           >
             veelgestelde vragen over Mijn Amsterdam
-          </a>
+          </LinkdInline>
         </p>
       </PageContent>
     </TextPage>

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styles from './MainHeaderHero.module.scss';
 import useRouter from 'use-react-router';
 import { AppRoutes } from 'App.constants';
-import { SessionContext } from '../../AppState';
+import { SessionContext } from 'AppState';
 
 const LANDSCAPE_SCREEN_RATIO = 0.25;
 const PORTRAIT_SCREEN_RATIO = 0.4;

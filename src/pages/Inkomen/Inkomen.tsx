@@ -5,11 +5,11 @@ import { AppContext } from 'AppState';
 import DataLinkTable from 'components/DataLinkTable/DataLinkTable';
 import { Chapters, ChapterTitles } from 'App.constants';
 import styles from './Inkomen.module.scss';
-import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
 import { ExternalUrls } from 'App.constants';
 import Alert from 'components/Alert/Alert';
 import { useTabletScreen } from 'hooks/media.hook';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
+import Linkd from 'components/Button/Button';
 
 const DISPLAY_PROPS = {
   datePublished: 'besluit',
@@ -45,13 +45,13 @@ export default () => {
           aanvulling of ondersteuning bij een laag inkomen.
         </p>
         <p>
-          <ButtonLinkExternal to={ExternalUrls.WPI_REGELINGEN}>
+          <Linkd external={true} href={ExternalUrls.WPI_REGELINGEN}>
             Naar alle regeleingen voor Werk en inkomen
-          </ButtonLinkExternal>
+          </Linkd>
           <br />
-          <ButtonLinkExternal to={ExternalUrls.WPI_CONTACT}>
+          <Linkd external={true} href={ExternalUrls.WPI_CONTACT}>
             Contact Werk en inkomen
-          </ButtonLinkExternal>
+          </Linkd>
         </p>
         {isError && (
           <Alert type="warning">
@@ -61,7 +61,6 @@ export default () => {
       </PageContent>
       <DataLinkTable
         id="datalinktable-income-actual"
-        rowHeight={isTabletScreen ? 'auto' : '5.8rem'}
         displayProps={DISPLAY_PROPS_ACTUAL}
         items={itemsRequested}
         title="Mijn lopende aanvragen"
@@ -72,7 +71,6 @@ export default () => {
       />
       <DataLinkTable
         id="datalinktable-income-granted"
-        rowHeight={isTabletScreen ? 'auto' : '5.8rem'}
         displayProps={DISPLAY_PROPS}
         items={itemsDecided}
         startCollapsed={hasActiveRequests}

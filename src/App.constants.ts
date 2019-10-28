@@ -141,7 +141,7 @@ export const ExternalUrls = {
   REPORT_RELOCATION:
     'https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/',
   CONTACT_FORM:
-    'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx/fKlachtenformulier',
+    'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx',
   SSO_ERFPACHT: process.env.REACT_APP_ERFPACHT_URL,
   BERICHTENBOX: 'https://mijn.overheid.nl/berichtenbox/inbox/',
   CONTACT_GENERAL: 'https://www.amsterdam.nl/contact/',

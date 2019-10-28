@@ -3,7 +3,7 @@ import styles from './PageHeading.module.scss';
 import composeClassNames from 'classnames';
 import Heading, { HeadingTagName } from 'components/Heading/Heading';
 import { ComponentChildren, LinkProps } from 'App.types';
-import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
+import Linkd from 'components/Button/Button';
 import { ReactComponent as CaretLeft } from 'assets/icons/Chevron-Left.svg';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 
@@ -32,17 +32,21 @@ export default function PageHeading({
     className
   );
   return (
-    <Heading el={el} size="large" className={classNames} {...rest}>
+    <header className={classNames} {...rest}>
       {!!icon && (
         <span aria-hidden="true" className={styles.Icon}>
           {icon}
         </span>
       )}
-      <span className={styles.HeadingInner}>
+      <div className={styles.HeadingInner}>
         {!!backLink && (
-          <IconButtonLink className={styles.BackLink} to={backLink.to}>
-            <CaretLeft aria-hidden="true" /> {backLink.title}
-          </IconButtonLink>
+          <Linkd
+            icon={CaretLeft}
+            className={styles.BackLink}
+            href={backLink.to}
+          >
+            {backLink.title}
+          </Linkd>
         )}
         {isLoading && (
           <LoadingContent
@@ -50,8 +54,10 @@ export default function PageHeading({
             barConfig={[['50%', '3rem', '0']]}
           />
         )}
-        {!isLoading && children}
-      </span>
-    </Heading>
+        <Heading el={el} size="large">
+          {!isLoading && children}
+        </Heading>
+      </div>
+    </header>
   );
 }

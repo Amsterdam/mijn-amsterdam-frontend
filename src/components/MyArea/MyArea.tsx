@@ -7,6 +7,7 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 import styles from './MyArea.module.scss';
+import Linkd from 'components/Button/Button';
 
 export function MyAreaHeader() {
   return (
@@ -20,10 +21,9 @@ export function MyAreaHeader() {
         />
       </Link>
       <h1 className={styles.Title}>Mijn buurt</h1>
-      <NavLink to={AppRoutes.ROOT} className={styles.CloseBtn}>
-        <span>Sluit kaart</span>
-        <CloseIcon aria-hidden="true" className={styles.CloseIcon} />
-      </NavLink>
+      <Linkd iconPosition="right" icon={CloseIcon} href={AppRoutes.ROOT}>
+        Sluit kaart
+      </Linkd>
     </div>
   );
 }
