@@ -43,7 +43,10 @@ export default function MainFooter() {
           </p>
           <p>
             <strong>
-              Bel: <LinkdInline href="tel:14020">14 020</LinkdInline>
+              Bel:{' '}
+              <LinkdInline external={true} href="tel:14020">
+                14 020
+              </LinkdInline>
             </strong>
             &nbsp;(verkort nummer)
             <br />

@@ -38,8 +38,11 @@ export default () => {
         <p>
           Hieronder ziet u uw regelingen en hulpmiddelen vanuit de Wmo. Hebt u
           vragen of wilt u een wijziging doorgeven? Bel dan gratis de Wmo
-          Helpdesk: <LinkdInline href="tel:08000643">0800 0643</LinkdInline>. Of
-          ga langs bij het Sociaal Loket.
+          Helpdesk:{' '}
+          <LinkdInline external={true} href="tel:08000643">
+            0800 0643
+          </LinkdInline>
+          . Of ga langs bij het Sociaal Loket.
         </p>
         <p>
           <Linkd external={true} href={ExternalUrls.ZORG_LEES_MEER}>

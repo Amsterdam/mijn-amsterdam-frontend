@@ -18,7 +18,7 @@ export default () => {
           Amsterdam tonen wij uw persoonlijke informatie uit de verschillende
           systemen die wij beheren. Wij doen ons uiterste best om ervoor te
           zorgen dat uw gegevens kloppen. Is dat niet zo?&nbsp;
-          <LinkdInline href={complaintsFormUrl}>
+          <LinkdInline external={true} href={complaintsFormUrl}>
             Neem dan contact met ons op.
           </LinkdInline>
         </p>
@@ -29,7 +29,10 @@ export default () => {
         </p>
         <p>
           Kijk voor de privacyverklaring van de gemeente Amsterdam op&nbsp;
-          <LinkdInline href={privacyPageUrl}>amsterdam.nl/privacy</LinkdInline>.
+          <LinkdInline external={true} href={privacyPageUrl}>
+            amsterdam.nl/privacy
+          </LinkdInline>
+          .
         </p>
       </PageContent>
     </TextPage>

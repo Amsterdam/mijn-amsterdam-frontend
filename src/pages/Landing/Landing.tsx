@@ -95,7 +95,10 @@ export default () => {
         </Heading>
         <p>
           Kijk bij{' '}
-          <LinkdInline href={ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD}>
+          <LinkdInline
+            external={true}
+            href={ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD}
+          >
             veelgestelde vragen over Mijn Amsterdam
           </LinkdInline>
         </p>

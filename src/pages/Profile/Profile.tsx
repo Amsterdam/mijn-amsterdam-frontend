@@ -58,7 +58,10 @@ export default function Profile() {
               <p>
                 U kunt uw huidige adres doorgeven bij het Stadsloket. U moet
                 hiervoor een{' '}
-                <LinkdInline href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D">
+                <LinkdInline
+                  external={true}
+                  href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
+                >
                   afspraak
                 </LinkdInline>{' '}
                 maken .
@@ -70,7 +73,10 @@ export default function Profile() {
             <p>
               Op dit moment onderzoeken wij of u nog steeds woont op het adres
               waar u ingeschreven staat. Kijk voor{' '}
-              <LinkdInline href="https://www.amsterdam.nl/veelgevraagd/?productid={49AB6693-E7FA-4642-82F4-D14D87E02C72}">
+              <LinkdInline
+                external={true}
+                href="https://www.amsterdam.nl/veelgevraagd/?productid={49AB6693-E7FA-4642-82F4-D14D87E02C72}"
+              >
                 meer
               </LinkdInline>{' '}
               informatie over onderzoek naar uw inschrijving in de

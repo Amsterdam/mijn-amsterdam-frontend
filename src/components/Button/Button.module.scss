@@ -77,10 +77,7 @@ $buttons: (
 
     background-color: button-prop($variant, background-color);
     border: button-prop($variant, border);
-
-    &, &:visited:not(:hover) {
-      color: button-prop($variant, text-color);
-    }
+    color: button-prop($variant, text-color);
 
     @include hoverCapable {
       &:hover {
@@ -121,10 +118,14 @@ $buttons: (
     font-weight: normal;
     text-decoration: underline;
 
-    &:visited {
-      color: $color-support-purple;
-    }
+    // &:visited {
+    //   color: $color-support-purple;
+    // }
   };
+
+  &:visited:not(:hover):not([class*="Button__inline"]) {
+    color: inherit;
+  }
 
   @include buttonStyle("plain") {
     &:hover {
