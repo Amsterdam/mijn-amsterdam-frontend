@@ -46,8 +46,6 @@ export default function DataLinkTable({
   const [isCollapsed, setCollapsed] = useSessionStorage(id, startCollapsed);
   const { height: tableHeight } = useComponentSize(tableRef);
 
-  console.log('tableHeight:', tableHeight);
-
   const hasItems = !!items.length;
   const hasTitle = !!title;
   const hasNoItemsMessage = !!noItemsMessage;
