@@ -101,6 +101,10 @@ export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
   },
 };
 
+export const FeatureToggle = {
+  myTipsoptInOutPersonalization: false,
+};
+
 export const errorMessageMap: ErrorMessageMap = {
   BRP: {
     name: 'Persoonsgegevens',
