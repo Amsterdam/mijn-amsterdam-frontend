@@ -66,6 +66,11 @@
   display: flex;
   flex-direction: column;
 
+  @include IE11 {
+    display: table;
+    width: 100%;
+  }
+
   @include mq-phone() {
     display: grid;
     tr,
@@ -88,6 +93,10 @@
   flex-direction: row;
   flex-basis: 100%;
 
+  @include IE11 {
+    display: table-row;
+  }
+
   td {
     padding: 1em 1em 1em 0;
     vertical-align: top;
@@ -95,6 +104,10 @@
 
     &:first-child {
       flex-basis: 75%;
+
+      @include IE11 {
+        width: 75%;
+      }
     }
     // Use nth-child here because css specificity allows us to change border-top for tablet easily
     &,

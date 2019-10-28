@@ -10,6 +10,8 @@ import React from 'react';
 import Heading from '../Heading/Heading';
 import styles from './DataLinkTable.module.scss';
 import { trackEvent } from 'hooks/analytics.hook';
+import { useRef } from 'react';
+import useComponentSize from '@rehooks/component-size';
 
 const DEFAULT_TRACK_CATEGORY = 'Thema Pagina';
 
@@ -25,7 +27,6 @@ export interface DataLinkTableProps {
   startCollapsed?: boolean;
   className?: any;
   displayProps?: { [key: string]: string }; // key => Label. Will be displayed right of the title in the table
-  rowHeight?: 'auto' | string;
   isLoading: boolean;
   trackCategory: string;
 }
@@ -38,11 +39,14 @@ export default function DataLinkTable({
   startCollapsed = true,
   className,
   displayProps,
-  rowHeight = 'auto',
   isLoading = true,
   trackCategory = DEFAULT_TRACK_CATEGORY,
 }: DataLinkTableProps) {
+  const tableRef = useRef(null);
   const [isCollapsed, setCollapsed] = useSessionStorage(id, startCollapsed);
+  const { height: tableHeight } = useComponentSize(tableRef);
+
+  console.log('tableHeight:', tableHeight);
 
   const hasItems = !!items.length;
   const hasTitle = !!title;
@@ -51,8 +55,7 @@ export default function DataLinkTable({
   const classes = classnames(
     styles.DataLinkTable,
     (!hasItems || isCollapsed) && styles.isCollapsed,
-    className,
-    rowHeight === 'auto' && styles.noTransition
+    className
   );
 
   const toggleCollapsed = withKeyPress<HTMLHeadingElement>(() => {
@@ -71,20 +74,13 @@ export default function DataLinkTable({
     : [];
 
   // Setting an explicit height will result in a nice transition
-  let cssCalcExpr = isCollapsed
-    ? 0
-    : `calc((${items.length} * ${rowHeight}) + 1.5rem)`; // 1.5rem being the base height of the thead
+  let cssCalcExpr = isCollapsed ? 0 : tableHeight; // 1.5rem being the base height of the thead
 
   // Vary the transition duration between 300 and 600ms
   let cssTransitionDurationMS = `${Math.min(
     Math.max(items.length * 60, 300),
     600
   )}ms`;
-
-  if (rowHeight === 'auto') {
-    cssCalcExpr = isCollapsed ? 0 : 'auto';
-    cssTransitionDurationMS = '0ms';
-  }
 
   return (
     <div className={classes}>
@@ -120,7 +116,7 @@ export default function DataLinkTable({
             transitionDuration: cssTransitionDurationMS,
           }}
         >
-          <table className={styles.Table}>
+          <table className={styles.Table} ref={tableRef}>
             <thead>
               <tr className={styles.TableRow}>
                 <th className={styles.DisplayProp}>

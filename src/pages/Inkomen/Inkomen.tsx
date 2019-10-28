@@ -61,7 +61,6 @@ export default () => {
       </PageContent>
       <DataLinkTable
         id="datalinktable-income-actual"
-        rowHeight={isTabletScreen ? 'auto' : '5.8rem'}
         displayProps={DISPLAY_PROPS_ACTUAL}
         items={itemsRequested}
         title="Mijn lopende aanvragen"
@@ -72,7 +71,6 @@ export default () => {
       />
       <DataLinkTable
         id="datalinktable-income-granted"
-        rowHeight={isTabletScreen ? 'auto' : '5.8rem'}
         displayProps={DISPLAY_PROPS}
         items={itemsDecided}
         startCollapsed={hasActiveRequests}

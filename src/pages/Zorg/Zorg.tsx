@@ -57,7 +57,6 @@ export default () => {
       </PageContent>
       <DataLinkTable
         id="datalinktable-healthcare-granted"
-        rowHeight={isTabletScreen ? 'auto' : '5.8rem'}
         displayProps={DISPLAY_PROPS}
         items={itemsActual}
         title="Mijn huidige voorzieningen"
@@ -70,7 +69,6 @@ export default () => {
 
       <DataLinkTable
         id="datalinktable-healthcare-previous"
-        rowHeight={isTabletScreen ? 'auto' : '5.8rem'}
         displayProps={DISPLAY_PROPS}
         items={itemsPrevious}
         title="Mijn eerdere voorzieningen"
