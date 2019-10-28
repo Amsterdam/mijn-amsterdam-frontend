@@ -101,7 +101,7 @@ export function Dialog({
   return isOpen
     ? ReactDOM.createPortal(
         <FocusTrap focusTrapOptions={{ escapeDeactivates: false }}>
-          <dialog className={styles.ModalContainer}>
+          <div className={styles.ModalContainer}>
             <div
               className={classnames(styles.Modal, className)}
               onClick={() => typeof onClose === 'function' && onClose()}
@@ -149,7 +149,7 @@ export function Dialog({
               </header>
               <div className={styles.Content}>{children}</div>
             </div>
-          </dialog>
+          </div>
         </FocusTrap>,
         appendTo
       )

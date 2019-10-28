@@ -82,7 +82,10 @@ $buttons: (
 
     background-color: button-prop($variant, background-color);
     border: button-prop($variant, border);
-    color: button-prop($variant, text-color);
+
+    &, &:visited:not(:hover) {
+      color: button-prop($variant, text-color);
+    }
 
     @include hoverCapable {
       &:hover {
@@ -115,10 +118,6 @@ $buttons: (
   text-decoration: none;
   font-weight: 500;
   padding: 0 1rem;
-
-  &:visited:not(:hover) {
-    color: inherit;
-  }
 
   @include buttonStyle("primary");
   @include buttonStyle("secondary");
@@ -155,4 +154,10 @@ $buttons: (
 
 .Icon__right {
   margin-left: .2rem;
+}
+
+.ButtonGroup {
+  .Button + .Button {
+    margin-left: 1rem;
+  }
 }

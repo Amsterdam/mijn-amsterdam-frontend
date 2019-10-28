@@ -153,3 +153,5 @@ export function LinkdInline({
     </Linkd>
   );
 }
+
+export const ButtonStyles = styles;

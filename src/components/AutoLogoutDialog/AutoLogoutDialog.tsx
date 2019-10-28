@@ -4,7 +4,6 @@ import { Colors, LOGOUT_URL } from 'App.constants';
 import { ComponentChildren } from 'App.types';
 import { formattedTimeFromSeconds } from 'helpers/App';
 import useActivityCounter from 'hooks/activityCounter.hook';
-import { trackLink } from 'hooks/analytics.hook';
 import { CounterProps, useCounter } from 'hooks/timer.hook';
 import React, { useEffect, useState, useContext } from 'react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
@@ -12,7 +11,7 @@ import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import Modal from '../Modal/Modal';
 import styles from './AutoLogoutDialog.module.scss';
 import { SessionContext } from 'AppState';
-import Linkd, { Button } from 'components/Button/Button';
+import Linkd, { Button, ButtonStyles } from 'components/Button/Button';
 
 /**
  * This component is essentially a dialog with a countdown timer presented to the user
@@ -168,7 +167,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
           Voor uw veiligheid wordt u mogelijk automatisch uitgelogd.
         </p>
         <p>Wilt u doorgaan of uitloggen?</p>
-        <p>
+        <p className={ButtonStyles.ButtonGroup}>
           {continueButtonIsVisible && (
             <Button
               variant="secondary"
@@ -180,10 +179,13 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
           )}
           <Linkd
             variant="secondary-inverted"
+            lean={false}
             isDisabled={!continueButtonIsVisible}
             className="logout-button"
             external={true}
+            icon=""
             href={LOGOUT_URL}
+            role="button"
           >
             {continueButtonIsVisible
               ? 'Nu uitloggen'

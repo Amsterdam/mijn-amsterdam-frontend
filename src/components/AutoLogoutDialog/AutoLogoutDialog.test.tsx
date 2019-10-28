@@ -58,6 +58,7 @@ describe('AutoLogoutDialog', () => {
   afterEach(() => {
     refetch.mockReset();
     component.unmount();
+    component = null;
   });
 
   it('resets the autologout counter every x seconds whenever user activity is detected', () => {
@@ -97,13 +98,13 @@ describe('AutoLogoutDialog', () => {
         (settings.secondsBeforeDialogShow! - settings.secondsBeforeAutoLogout!)
     );
     component.update();
-    let continueButton = component.find('[className*="continue-button"]');
+    let continueButton = component.find('Button.continue-button');
     expect(continueButton).toHaveLength(1);
 
     continueButton.simulate('click');
     component.update();
 
-    continueButton = component.find('[className*="continue-button"]');
+    continueButton = component.find('Button.continue-button');
     expect(component.childAt(0).prop('isOpen')).toBe(false);
     expect(refetch).toHaveBeenCalledTimes(1);
     expect(continueButton).toHaveLength(0);
@@ -117,7 +118,7 @@ describe('AutoLogoutDialog', () => {
         settings.secondsBeforeAutoLogout!
     );
     component.update();
-    let continueButton = component.find('[className*="continue-button"]');
+    let continueButton = component.find('Button.continue-button');
     expect(continueButton).toHaveLength(1);
 
     expect(document.title).toBe(documentTitle);
