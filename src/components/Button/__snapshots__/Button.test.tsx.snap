@@ -18,6 +18,6 @@ exports[`Linkd Linkd default renders correctly 1`] = `
 </a>
 `;
 
-exports[`Linkd Linkd external renders correctly 1`] = `"<a target=\\"_blank\\" rel=\\"external noopener noreferrer\\" href=\\"/\\" to=\\"/\\" class=\\"Button Button__plain Button__lean\\"><svg aria-hidden=\\"true\\" class=\\"Icon Icon__left\\">Chevron-Right.svg</svg>Link!</a>"`;
+exports[`Linkd Linkd external renders correctly 1`] = `"<a target=\\"_blank\\" rel=\\"external noopener noreferrer\\" href=\\"/\\" class=\\"Button Button__plain Button__lean\\"><svg aria-hidden=\\"true\\" class=\\"Icon Icon__left\\">Chevron-Right.svg</svg>Link!</a>"`;
 
-exports[`Linkd Renders 1`] = `"<a href=\\"/\\" class=\\"Button Button__plain Button__lean\\"><svg aria-hidden=\\"true\\" class=\\"Icon Icon__left\\">Chevron-Right.svg</svg>Link!</a>"`;
+exports[`Linkd Renders 1`] = `"<a class=\\"Button Button__plain Button__lean\\" href=\\"/\\"><svg aria-hidden=\\"true\\" class=\\"Icon Icon__left\\">Chevron-Right.svg</svg>Link!</a>"`;

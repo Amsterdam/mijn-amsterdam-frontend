@@ -54,17 +54,18 @@ describe('Modal test', () => {
         Testje
       </Dialog>
     );
-    expect(component.find('[className*="Dialog"]')).toHaveLength(0);
+
+    expect(component.find('.Dialog')).toHaveLength(0);
     open();
-    expect(component.find('[className*="Dialog"]')).toHaveLength(1);
-    component.find('[className="Modal"]').simulate('click');
+    expect(component.find('.Dialog')).toHaveLength(1);
+    component.find('.Modal').simulate('click');
     expect(close).toHaveBeenCalled();
-    expect(component.find('[className*="Dialog"]')).toHaveLength(0);
+    expect(component.find('.Dialog')).toHaveLength(0);
     open();
-    expect(component.find('[className*="Dialog"]')).toHaveLength(1);
-    component.find('[className*="ButtonClose"]').simulate('click');
+    expect(component.find('.Dialog')).toHaveLength(1);
+    component.find('button.ButtonClose').simulate('click');
     expect(close).toHaveBeenCalled();
-    expect(component.find('[className*="Dialog"]')).toHaveLength(0);
+    expect(component.find('.Dialog')).toHaveLength(0);
 
     component.unmount();
   });
@@ -75,7 +76,7 @@ describe('Modal test', () => {
         Testje
       </Dialog>
     );
-    expect(component.find('[className*="Dialog"]')).toHaveLength(0);
+    expect(component.find('.Dialog')).toHaveLength(0);
     component.unmount();
 
     expect(document.getElementById('modal-root')!.childNodes.length).toBe(0);
