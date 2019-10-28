@@ -3,7 +3,7 @@
 .Dashboard {
 
   // Dashboard has a different design for the heading, to match the design easily and responsively
-  // a pragmatic solution is written below.
+  // a pragmatic solution with help of :before is written below.
   @include select(PageHeading_PageHeading) {
     @include centered-max;
     background: transparent;
@@ -25,7 +25,7 @@
 
     @include select(PageHeading_HeadingInner) {
       margin: 0 4rem;
-      z-index: 0;
+      z-index: z-index(tutorial-items);
 
       @include mq-tablet() {
         margin: 0 2rem;
@@ -47,9 +47,10 @@
 
   .TopContentContainer {
     @include centered-max;
-    margin-bottom: 10rem;
+    margin-bottom: 2rem;
 
     @include media-q('>phone') {
+      margin-bottom: 10rem;
       display: flex;
       align-items: flex-start;
     }
@@ -59,15 +60,16 @@
     overflow: hidden;
     border-top: 1px solid $color-neutral-grey2;
     margin: 0 1rem;
-    margin-bottom: 8rem;
 
     @include media-q('>phone') {
       flex-grow: 1;
       margin: 0 2rem;
+      margin-bottom: 8rem;
     }
 
     @include media-q('>tablet') {
       margin: 0 4rem;
+      margin-bottom: 8rem;
     }
   }
 
@@ -79,8 +81,11 @@
   }
 
   @include select(MyCases_MyCases) {
-    margin-bottom: 8rem;
     @include centered-block;
+    margin-bottom: 2rem;
+    @include media-q('>phone') {
+      margin-bottom: 8rem;
+    }
   }
 
   @include select(MyArea_MyArea) {

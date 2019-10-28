@@ -170,7 +170,7 @@ $tutorial-items-radius: 1rem;
     @extend %tutorialHeading;
   }
 
-  [id="MyUpdatesHeader"] > span {
+  [id="MyUpdatesHeader"] > div {
     @extend %tutorialHeading;
     transform: translateX(-1rem);
   }
