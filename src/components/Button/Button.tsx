@@ -94,6 +94,8 @@ export function Button({
   );
 }
 
+type PolymorphicType = keyof JSX.IntrinsicElements | React.ComponentType<any>;
+
 export default function Linkd({
   children,
   className,
@@ -107,12 +109,19 @@ export default function Linkd({
   onClick,
   ...otherProps
 }: LinkdProps) {
-  const LinkElement = external ? 'a' : Link;
+  const AnchorElement = 'a';
+  const LinkElement: PolymorphicType = external ? AnchorElement : Link;
+
   const relProp = {
     ...(LinkElement === Link ? {} : { rel: 'external noopener noreferrer' }),
   };
 
+  const urlProp = {
+    ...(LinkElement === Link ? { to: href } : { href }),
+  };
+
   let clickHandler = onClick;
+
   if (external && !clickHandler) {
     clickHandler = () => trackLink(href);
   }
@@ -121,8 +130,7 @@ export default function Linkd({
     <LinkElement
       {...otherProps}
       {...relProp}
-      href={href}
-      to={href}
+      {...urlProp}
       onClick={clickHandler}
       className={buttonStyle({ lean, isDisabled, variant, className })}
     >
