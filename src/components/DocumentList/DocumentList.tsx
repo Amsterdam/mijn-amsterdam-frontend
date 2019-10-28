@@ -4,7 +4,7 @@ import { defaultDateFormat } from 'helpers/App';
 import { ReactComponent as DocumentIcon } from 'assets/icons/Document.svg';
 import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
 import Heading from 'components/Heading/Heading';
-import { trackDownload } from '../../hooks/analytics.hook';
+import { trackDownload } from 'hooks/analytics.hook';
 
 export interface Document {
   id: string;

@@ -80,34 +80,6 @@
   transform: translateY(-0.4rem);
 }
 
-.CloseBtn {
-  transform: translateY(-0.3rem);
-  display: block;
-  height: 2.2rem;
-  padding: 0;
-  background-color: transparent;
-  border: 0;
-  text-decoration: none;
-  font-size: 1.8rem;
-  font-weight: 500;
-
-  > * {
-    display: inline-block;
-    vertical-align: middle;
-  }
-
-  svg {
-    height: inherit;
-    width: 1.8rem;
-    margin: 0;
-    margin-left: 1rem;
-  }
-
-  @include mq-phone() {
-    font-size: 1.4rem;
-  }
-}
-
 .loadingText {
   text-align: center;
 }

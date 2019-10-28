@@ -7,7 +7,7 @@ import { Chapters } from 'App.constants';
 import styles from './Zorg.module.scss';
 import Alert from 'components/Alert/Alert';
 import { useTabletScreen } from 'hooks/media.hook';
-import { ButtonLinkExternal } from 'components/ButtonLink/ButtonLink';
+import Linkd, { LinkdInline } from 'components/Button/Button';
 import { ExternalUrls, ChapterTitles } from 'App.constants';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 
@@ -38,13 +38,16 @@ export default () => {
         <p>
           Hieronder ziet u uw regelingen en hulpmiddelen vanuit de Wmo. Hebt u
           vragen of wilt u een wijziging doorgeven? Bel dan gratis de Wmo
-          Helpdesk: <a href="tel:08000643">0800 0643</a>. Of ga langs bij het
-          Sociaal Loket.
+          Helpdesk:{' '}
+          <LinkdInline external={true} href="tel:08000643">
+            0800 0643
+          </LinkdInline>
+          . Of ga langs bij het Sociaal Loket.
         </p>
         <p>
-          <ButtonLinkExternal to={ExternalUrls.ZORG_LEES_MEER}>
+          <Linkd external={true} href={ExternalUrls.ZORG_LEES_MEER}>
             Lees hier meer over zorg en ondersteuning
-          </ButtonLinkExternal>
+          </Linkd>
         </p>
         {isError && (
           <Alert type="warning">
@@ -54,7 +57,6 @@ export default () => {
       </PageContent>
       <DataLinkTable
         id="datalinktable-healthcare-granted"
-        rowHeight={isTabletScreen ? 'auto' : '5.8rem'}
         displayProps={DISPLAY_PROPS}
         items={itemsActual}
         title="Mijn huidige voorzieningen"
@@ -67,7 +69,6 @@ export default () => {
 
       <DataLinkTable
         id="datalinktable-healthcare-previous"
-        rowHeight={isTabletScreen ? 'auto' : '5.8rem'}
         displayProps={DISPLAY_PROPS}
         items={itemsPrevious}
         title="Mijn eerdere voorzieningen"

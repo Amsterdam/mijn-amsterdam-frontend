@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styles from './MyTips.module.scss';
-import ButtonLink, {
-  ButtonLinkExternal,
-} from 'components/ButtonLink/ButtonLink';
 import Heading from 'components/Heading/Heading';
 import { AppRoutes } from 'App.constants';
 import { MyTip } from 'hooks/api/my-tips-api.hook';
 import LoadingContent from '../LoadingContent/LoadingContent';
-import { trackLink } from 'hooks/analytics.hook';
+import Linkd from '../Button/Button';
 
 export interface TipProps {
   tip: MyTip;
@@ -35,13 +32,12 @@ const Tip = ({ tip }: TipProps) => {
         </figure>
         <Heading el="h4">{tip.title}</Heading>
         <p>{tip.description}</p>
-        <ButtonLinkExternal
+        <Linkd
           title={`Meer informatie over de tip: ${tip.title}`}
-          to={tip.link.to}
-          onClick={() => trackLink(tip.link.to)}
+          href={tip.link.to}
         >
           {tip.link.title}
-        </ButtonLinkExternal>
+        </Linkd>
       </article>
     </li>
   );
@@ -86,9 +82,7 @@ export default function MyTips({
           >
             Mijn tips
           </Heading>
-          {!!items.length && (
-            <ButtonLink to={AppRoutes.MY_TIPS}>Mijn tips</ButtonLink>
-          )}
+          {!!items.length && <Linkd href={AppRoutes.MY_TIPS}>Mijn tips</Linkd>}
           {/* <a href="" className={styles.OptIn}>
           Maak relevanter
         </a> */}

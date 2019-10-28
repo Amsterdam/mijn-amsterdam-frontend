@@ -15,10 +15,6 @@
   }
 }
 
-.HeadingInner {
-  display: block;
-}
-
 .Icon {
   flex-basis: 16rem;
   flex-shrink: 0;
@@ -55,13 +51,9 @@
 .BackLink {
   @include heading-small;
   font-weight: bold;
-  padding-left: 1.2em;
   transform: translateX(-2rem);
-  position: relative;
-  display: block;
+}
 
-  svg {
-    height: .9em;
-    width: .9em;
-  }
+.HeadingInner {
+  display: block;
 }

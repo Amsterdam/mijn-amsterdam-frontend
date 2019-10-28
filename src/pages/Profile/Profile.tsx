@@ -10,7 +10,8 @@ import { entries } from 'helpers/App';
 import styles from 'pages/Profile/Profile.module.scss';
 import React, { useContext } from 'react';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
-import { defaultDateFormat } from '../../helpers/App';
+import { defaultDateFormat } from 'helpers/App';
+import { LinkdInline } from 'components/Button/Button';
 
 export default function Profile() {
   const { BRP } = useContext(AppContext);
@@ -57,12 +58,12 @@ export default function Profile() {
               <p>
                 U kunt uw huidige adres doorgeven bij het Stadsloket. U moet
                 hiervoor een{' '}
-                <a
-                  rel="external noopener noreferrer"
+                <LinkdInline
+                  external={true}
                   href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
                 >
                   afspraak
-                </a>{' '}
+                </LinkdInline>{' '}
                 maken .
               </p>
             </Alert>
@@ -72,12 +73,12 @@ export default function Profile() {
             <p>
               Op dit moment onderzoeken wij of u nog steeds woont op het adres
               waar u ingeschreven staat. Kijk voor{' '}
-              <a
+              <LinkdInline
+                external={true}
                 href="https://www.amsterdam.nl/veelgevraagd/?productid={49AB6693-E7FA-4642-82F4-D14D87E02C72}"
-                rel="external noopener noreferrer"
               >
                 meer
-              </a>{' '}
+              </LinkdInline>{' '}
               informatie over onderzoek naar uw inschrijving in de
               Basisregistratie Personen (BRP).
             </p>

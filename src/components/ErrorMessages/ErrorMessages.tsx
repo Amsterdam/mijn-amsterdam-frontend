@@ -1,11 +1,12 @@
 import { StateKey } from 'AppState';
 import { ReactComponent as AlertIcon } from 'assets/icons/Alert.svg';
 import classnames from 'classnames';
-import ButtonLinkStyle from 'components/ButtonLink/ButtonLink.module.scss';
 import Modal from 'components/Modal/Modal';
 import React, { useRef, useState } from 'react';
 
 import styles from './ErrorMessages.module.scss';
+import { Button } from 'components/Button/Button';
+import { ReactComponent as ChevronIcon } from 'assets/icons/Chevron-Right.svg';
 
 export interface Error {
   name: string;
@@ -32,15 +33,14 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
           <AlertIcon aria-hidden="true" className={styles.AlertIcon} /> U ziet
           misschien niet al uw gegevens
         </span>
-        <button
-          className={classnames(
-            ButtonLinkStyle.ButtonLinkButtonReset,
-            styles.ActionButton
-          )}
+        <Button
+          lean={true}
+          variant="plain"
+          icon={ChevronIcon}
           onClick={() => setModalOpen(true)}
         >
           Meer informatie
-        </button>
+        </Button>
       </p>
       <Modal
         isOpen={isModalOpen}
@@ -59,9 +59,7 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
             {/* TODO: Arrange correct text here */}
             Probeer het later nog eens.
           </p>
-          <button className="action-button" onClick={() => setModalOpen(false)}>
-            Oké
-          </button>
+          <Button onClick={() => setModalOpen(false)}>Oké</Button>
         </div>
       </Modal>
     </div>

@@ -31,6 +31,12 @@
 
   @include mq-phone() {
     width: auto;
+    &:nth-child(-n + 2) {
+      border-top: 0;
+    }
+    &:nth-child(1) {
+      border-top: 0.1rem $color-neutral-grey2 solid;
+    }
   }
 
   &:nth-child(odd) {

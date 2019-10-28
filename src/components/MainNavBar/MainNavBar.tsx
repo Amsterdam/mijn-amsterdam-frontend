@@ -3,7 +3,6 @@ import { ComponentChildren } from 'App.types';
 import { AppContext, SessionContext, TutorialContext } from 'AppState';
 import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
 import classnames from 'classnames';
-import { IconButtonLink } from 'components/ButtonLink/ButtonLink';
 import FontEnlarger from 'components/FontEnlarger/FontEnlarger';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
@@ -25,6 +24,7 @@ import {
 import styles from './MainNavBar.module.scss';
 import teststyles from '../Tutorial/Tutorial.module.scss';
 import Tutorial from 'components/Tutorial/Tutorial';
+import Linkd, { Button } from 'components/Button/Button';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -68,13 +68,15 @@ function SecondaryLinks() {
         </Link>
       )}
       {
-        <IconButtonLink
-          to={LOGOUT_URL}
-          rel="external"
+        <Linkd
+          href={LOGOUT_URL}
+          external={true}
+          lean={true}
           className={styles.LogoutLink}
+          icon={LogoutIcon}
         >
-          <LogoutIcon aria-hidden="true" /> Uitloggen
-        </IconButtonLink>
+          Uitloggen
+        </Linkd>
       }
     </div>
   );
@@ -255,7 +257,7 @@ export default function MainNavBar() {
 
       {location.pathname === AppRoutes.ROOT && (
         <>
-          <button
+          <Button
             className={classnames(
               styles.TutorialBtn,
               isTutorialVisible && styles.TutorialBtnOpen
@@ -264,9 +266,11 @@ export default function MainNavBar() {
               const isVisible = !isTutorialVisible;
               setIsTutorialVisible(isVisible);
             }}
+            variant="plain"
+            lean={true}
           >
             Uitleg
-          </button>
+          </Button>
           {isTutorialVisible && (
             <Tutorial toggleTutorial={setIsTutorialVisible} />
           )}

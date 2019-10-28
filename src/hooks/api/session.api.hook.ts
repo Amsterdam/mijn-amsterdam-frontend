@@ -1,6 +1,6 @@
 import { AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS } from 'components/AutoLogoutDialog/AutoLogoutDialog';
+import { getApiUrl } from 'helpers/App';
 import { useMemo } from 'react';
-import { getApiUrl } from '../../helpers/App';
 import { useDataApi } from './api.hook';
 import { ApiRequestOptions, ApiState } from './api.types';
 
