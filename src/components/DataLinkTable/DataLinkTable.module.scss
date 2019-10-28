@@ -56,6 +56,7 @@
   overflow: hidden;
   transition: height 400ms ease-in;
   border-bottom: 0.1rem solid $color-neutral-grey2;
+  height: 0px;
 
   @include mq-phone() {
     border-bottom: 0;

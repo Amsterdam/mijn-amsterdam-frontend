@@ -72,7 +72,7 @@ export default function DataLinkTable({
     : [];
 
   // Setting an explicit height will result in a nice transition
-  let cssCalcExpr = isCollapsed ? 0 : tableHeight; // 1.5rem being the base height of the thead
+  let cssCalcExpr = `${isCollapsed ? 0 : tableHeight}px`; // 1.5rem being the base height of the thead
 
   // Vary the transition duration between 300 and 600ms
   let cssTransitionDurationMS = `${Math.min(
