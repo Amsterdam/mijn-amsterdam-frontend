@@ -38,7 +38,7 @@ export default () => {
         {WmoItem && WmoItem.title}
       </PageHeading>
 
-      <PageContent>
+      <PageContent className={styles.DetailPageContent}>
         {(isError || noContent) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>
