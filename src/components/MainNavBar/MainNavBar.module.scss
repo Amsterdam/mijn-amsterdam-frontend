@@ -173,6 +173,7 @@
     position: fixed;
     top: $main-header-topbar-height;
     width: 4rem;
+    text-indent: -10000px;
   }
 
   @include mq-tablet() {
