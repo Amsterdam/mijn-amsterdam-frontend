@@ -1,16 +1,30 @@
 @import 'styles/_global.scss';
 
-.ErrorMessages {
-}
-
 .MessageBar {
   background-color: $color-neutral-grey2;
   margin: 0;
-  padding: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
+  padding: 1rem 1.5rem;
+  padding-bottom: .8rem;
+  transition: all 200ms ease-in-out;
+  width: 100%;
+  position: absolute;
+  right: 0;
+  left: auto;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.MessageBarInner {
+  opacity: 1;
+  transition: opacity 100ms ease-in-out;
+}
+
+.ErrorMessages.Dismissed .MessageBar {
+  background: transparent;
+
+  .MessageBarInner {
+    opacity: 0;
+  }
 }
 
 .ErrorInfo {
@@ -24,5 +38,25 @@
   vertical-align: text-bottom;
   width: 2rem;
   height: 2rem;
+  fill: $color-support-warning;
+}
+
+.ModalFooter {
+  @include select(Checkbox_Checkbox) {
+    margin-left: 1rem;
+  }
+}
+
+.ToggleButton {
+  position: absolute;
+  right: .5rem;
+  &, &:hover {
+    background: none;
+  }
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.ErrorMessages.Dismissed .ToggleButton svg {
   fill: $color-support-warning;
 }

@@ -67,17 +67,15 @@ function SecondaryLinks() {
           )}
         </Link>
       )}
-      {
-        <Linkd
-          href={LOGOUT_URL}
-          external={true}
-          lean={true}
-          className={styles.LogoutLink}
-          icon={LogoutIcon}
-        >
-          Uitloggen
-        </Linkd>
-      }
+      <Linkd
+        href={LOGOUT_URL}
+        external={true}
+        lean={true}
+        className={styles.LogoutLink}
+        icon={LogoutIcon}
+      >
+        Uitloggen
+      </Linkd>
     </div>
   );
 }

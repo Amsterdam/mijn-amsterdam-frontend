@@ -1,17 +1,47 @@
 @import 'styles/_global.scss';
 
+@keyframes fadeIn {
+  from {
+    background-color: rgba(0, 0, 0, .2);
+  }
+
+  to {
+    background-color: rgba(0, 0, 0, .5);
+  }
+}
+
+:global {
+  .my-node-enter {
+    opacity: 0;
+  }
+  .my-node-enter-active {
+    opacity: 1;
+    transition: opacity 200ms;
+  }
+  .my-node-exit {
+    opacity: 1;
+  }
+  .my-node-exit-active {
+    opacity: 0;
+    transition: opacity 200ms;
+  }
+}
+
 .Modal {
   position: fixed;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, .2);
+  animation-duration: 200ms;
+  animation-name: fadeIn;
+  animation-fill-mode: forwards;
   z-index: z-index(modal);
 }
 
 .ModalContainer {
   display: none;
+
   &:last-child {
     display: block;
   }

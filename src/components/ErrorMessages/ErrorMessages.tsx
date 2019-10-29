@@ -1,12 +1,13 @@
 import { StateKey } from 'AppState';
 import { ReactComponent as AlertIcon } from 'assets/icons/Alert.svg';
+import { ReactComponent as CloseIcon } from 'assets/icons/Close.svg';
 import classnames from 'classnames';
 import Modal from 'components/Modal/Modal';
 import React, { useRef, useState } from 'react';
 
 import styles from './ErrorMessages.module.scss';
-import { Button } from 'components/Button/Button';
-import { ReactComponent as ChevronIcon } from 'assets/icons/Chevron-Right.svg';
+import { Button, IconButton } from 'components/Button/Button';
+import { useLocalStorage } from 'hooks/storage.hook';
 
 export interface Error {
   name: string;
@@ -20,27 +21,51 @@ interface ComponentProps {
   errors: Error[];
 }
 
+export function useErrorMessagesDismissed() {
+  return useLocalStorage('ErrorMessagesDismissed', false);
+}
+
 export default function ErrorMessages({ className, errors }: ComponentProps) {
   const el = useRef(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const top = el.current
     ? (el.current! as HTMLElement).getBoundingClientRect().top
     : 0;
+  const [isDismissed, setDismissed] = useErrorMessagesDismissed();
+
+  function dismissAll() {
+    setModalOpen(false);
+    setDismissed(true);
+  }
+
   return (
-    <div ref={el} className={classnames(styles.ErrorMessages, className)}>
+    <div
+      ref={el}
+      className={classnames(
+        styles.ErrorMessages,
+        isDismissed && styles.Dismissed,
+        className
+      )}
+    >
       <p className={styles.MessageBar}>
-        <span>
+        <span className={styles.MessageBarInner}>
           <AlertIcon aria-hidden="true" className={styles.AlertIcon} /> U ziet
-          misschien niet al uw gegevens
+          misschien niet al uw gegevens{' '}
+          <Button
+            lean={true}
+            variant="inline"
+            onClick={() => setModalOpen(true)}
+          >
+            meer informatie
+          </Button>
+          .
         </span>
-        <Button
-          lean={true}
-          variant="plain"
-          icon={ChevronIcon}
-          onClick={() => setModalOpen(true)}
-        >
-          Meer informatie
-        </Button>
+
+        <IconButton
+          icon={!isDismissed ? CloseIcon : AlertIcon}
+          className={styles.ToggleButton}
+          onClick={() => setDismissed(!isDismissed)}
+        />
       </p>
       <Modal
         isOpen={isModalOpen}
