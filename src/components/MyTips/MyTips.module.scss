@@ -37,11 +37,10 @@
 .HeaderBar {
   display: flex;
   margin: 0 0 1.6rem 0;
-  align-items: center;
+  align-items: flex-end;
 
-  @include select(Linkd) {
+  @include select(Button_Button) {
     margin-left: 2rem;
-    margin-top: 0.6rem;
   }
 
   .OptIn {
