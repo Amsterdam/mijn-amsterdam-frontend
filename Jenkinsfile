@@ -59,11 +59,7 @@ pipeline {
       }
       steps {
         script { currentBuild.displayName = "TEST Build #${BUILD_NUMBER} (${COMMIT_HASH})" }
-        sh "docker build " +
-          "-t ${IMAGE_TEST}" +
-          "-f ./Dockerfile.test" +
-          "--shm-size 1G " +
-          "."
+        sh "docker build -t ${IMAGE_TEST} -f ./Dockerfile.test --shm-size 1G ."
         sh "docker push ${IMAGE_TEST}"
       }
     }
