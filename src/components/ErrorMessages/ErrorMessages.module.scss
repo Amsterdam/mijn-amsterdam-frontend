@@ -3,15 +3,14 @@
 .MessageBar {
   background-color: $color-neutral-grey2;
   margin: 0;
-  padding: 1rem 1.5rem;
-  padding-bottom: .8rem;
+  padding: 1rem 3.5rem .8rem 1rem;
   transition: all 200ms ease-in-out;
   width: 100%;
   position: absolute;
   right: 0;
   left: auto;
-  white-space: nowrap;
   overflow: hidden;
+  z-index: 1;
 }
 
 .MessageBarInner {
@@ -50,10 +49,12 @@
 .ToggleButton {
   position: absolute;
   right: .5rem;
+
   &, &:hover {
     background: none;
   }
-  top: 50%;
+
+  top: 2rem;
   transform: translateY(-50%);
 }
 

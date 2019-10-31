@@ -7,7 +7,7 @@ import React, { useRef, useState } from 'react';
 
 import styles from './ErrorMessages.module.scss';
 import { Button, IconButton } from 'components/Button/Button';
-import { useLocalStorage } from 'hooks/storage.hook';
+import { useSessionStorage } from 'hooks/storage.hook';
 
 export interface Error {
   name: string;
@@ -22,7 +22,7 @@ interface ComponentProps {
 }
 
 export function useErrorMessagesDismissed() {
-  return useLocalStorage('ErrorMessagesDismissed', false);
+  return useSessionStorage('ErrorMessagesDismissed', false);
 }
 
 export default function ErrorMessages({ className, errors }: ComponentProps) {
