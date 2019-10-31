@@ -192,7 +192,7 @@
 
 .BurgerMenu {
   .LinkContainer {
-    transform: translate3d(-400px, 0, 0);
+    transform: translate3d(-100%, 0, 0);
     transition: transform 200ms ease-in;
   }
   &:before {
@@ -221,15 +221,4 @@
 .LogoutLink,
 .ProfileLink {
   color: inherit;
-}
-
-:global(body.burger-menu #AppContent),
-:global(body.burger-menu [class*="MainHeaderHero_MainHeaderHero"]) {
-  transform: translate3d(200px, 0, 0);
-  transition-timing-function: ease-out;
-}
-
-:global(body #AppContent),
-:global(body [class*="MainHeaderHero_MainHeaderHero"]) {
-  transition: transform ease-in 200ms;
 }

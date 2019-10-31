@@ -209,13 +209,6 @@ export default function MainNavBar() {
     setSubMenuVisibility();
   }, [history.location]);
 
-  useEffect(() => {
-    const classList = document.body.classList;
-    isBurgerMenuVisible
-      ? classList.add('burger-menu')
-      : classList.remove('burger-menu');
-  }, [isBurgerMenuVisible]);
-
   return (
     <nav
       className={classnames(
