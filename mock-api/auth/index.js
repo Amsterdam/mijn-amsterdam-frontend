@@ -2,7 +2,7 @@ const state = require('./state');
 const ip = require('../get-ip') || 'localhost';
 const APP_HOST = process.env.APP_HOST || ip;
 const APP_PORT = process.env.APP_PORT || 3000;
-const port = APP_PORT !== 80 ? `:${APP_PORT}` : '';
+const port = APP_PORT === 80 ? '' : `:${APP_PORT}`;
 const REDIRECT_URL = `//${APP_HOST}${port}`;
 
 module.exports = {
