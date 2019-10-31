@@ -61,6 +61,7 @@
     "focus-trap-react": "^6.0.0",
     "include-media": "^1.4.9",
     "js-cookie": "^2.2.1",
+    "mime-types": "^2.1.24",
     "node-persist": "^3.0.5",
     "react": "^16.10.2",
     "react-app-polyfill": "^0.2.2",
