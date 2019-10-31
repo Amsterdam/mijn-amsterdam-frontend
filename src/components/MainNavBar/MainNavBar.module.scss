@@ -85,10 +85,6 @@
   display: flex;
   align-items: center;
 
-  @include mq-phone() {
-    display: block;
-  }
-
   > a {
     margin-left: 3.3rem;
     font-weight: normal;
@@ -102,6 +98,7 @@
 
   @include mq-tablet() {
     position: static;
+    display: block;
     margin-top: 0;
     -ms-grid-row: 20;
     grid-row: 20;
@@ -194,16 +191,29 @@
 }
 
 .BurgerMenu {
-  &Visible {
-    &:before {
-      content: '';
+  .LinkContainer {
+    transform: translate3d(-400px, 0, 0);
+    transition: transform 200ms ease-in;
+  }
+  &:before {
+    content: '';
       position: absolute;
       top: $main-header-topbar-height;
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: rgba(0, 0, 0, .4);
+      background-color: rgba(0, 0, 0, .5);
+      opacity: 0;
+      transition: opacity 200ms ease-in-out;
       z-index: z-index(burger-menu-backdrop);
+  }
+  &Visible {
+    .LinkContainer {
+      transform: translateX(0);
+      transition-timing-function: ease-out;
+    }
+    &:before {
+      opacity: 1;
     }
   }
 }
@@ -211,4 +221,15 @@
 .LogoutLink,
 .ProfileLink {
   color: inherit;
+}
+
+:global(body.burger-menu #AppContent),
+:global(body.burger-menu [class*="MainHeaderHero_MainHeaderHero"]) {
+  transform: translate3d(200px, 0, 0);
+  transition-timing-function: ease-out;
+}
+
+:global(body #AppContent),
+:global(body [class*="MainHeaderHero_MainHeaderHero"]) {
+  transition: transform ease-in 200ms;
 }

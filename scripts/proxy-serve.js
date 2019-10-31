@@ -10,7 +10,7 @@ const apiHost = process.env.MOCK_API_HOST || 'localhost';
 const apiPort = process.env.MOCK_API_PORT || 5000;
 
 // All urls that start with following paths are proxied
-const proxiedPaths = ['/api', '/logout', '/atlas'];
+const proxiedPaths = ['/api', '/logout', '/atlas', '/mock-api'];
 
 http
   .createServer(function(request, response) {
@@ -28,10 +28,14 @@ http
       });
       stream.pipe(response);
     } else {
+      const path = request.url.startsWith('/mock-api')
+        ? request.url.replace(/(\/mock-api)/g, '/api')
+        : request.url;
+
       const request_options = {
         host: apiHost,
         port: apiPort,
-        path: request.url,
+        path,
         method: request.method,
       };
 

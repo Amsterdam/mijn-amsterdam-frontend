@@ -209,6 +209,13 @@ export default function MainNavBar() {
     setSubMenuVisibility();
   }, [history.location]);
 
+  useEffect(() => {
+    const classList = document.body.classList;
+    isBurgerMenuVisible
+      ? classList.add('burger-menu')
+      : classList.remove('burger-menu');
+  }, [isBurgerMenuVisible]);
+
   return (
     <nav
       className={classnames(
@@ -230,7 +237,7 @@ export default function MainNavBar() {
         </button>
       )}
 
-      {isAuthenticated && (!isBurgerMenu || isBurgerMenuVisible) && (
+      {isAuthenticated && (
         <div id={LinkContainerId} className={styles.LinkContainer}>
           <SecondaryLinks />
           {menuItems.map(item => {
