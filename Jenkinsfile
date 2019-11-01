@@ -59,13 +59,8 @@ pipeline {
       }
       steps {
         script { currentBuild.displayName = "TEST Build #${BUILD_NUMBER} (${COMMIT_HASH})" }
-        sh "docker build -t ${IMAGE_BUILD} " +
-          "--shm-size 1G " +
-          "--build-arg BUILD_ENV=test " +
-          "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
-          "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
-          "."
-        sh "docker push ${IMAGE_BUILD}"
+        sh "docker build -t ${IMAGE_TEST} -f ./Dockerfile.test --shm-size 1G ."
+        sh "docker push ${IMAGE_TEST}"
       }
     }
 
@@ -76,9 +71,6 @@ pipeline {
       }
       steps {
         script { currentBuild.displayName = "TEST Deploy #${BUILD_NUMBER} (${COMMIT_HASH})" }
-        sh "docker pull ${IMAGE_BUILD}"
-        sh "docker tag ${IMAGE_BUILD} ${IMAGE_TEST}"
-        sh "docker push ${IMAGE_TEST}"
         build job: 'Subtask_Openstack_Playbook', parameters: [
           [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
           [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend-test.yml']

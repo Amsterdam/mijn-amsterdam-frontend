@@ -1,7 +1,7 @@
 import { StateKey } from 'AppState';
 import { ErrorMessageMap } from 'components/ErrorMessages/ErrorMessages';
-import { isProduction } from 'helpers/App';
 import { MyNotification } from 'hooks/api/my-notifications-api.hook';
+import { isProduction } from './helpers/App';
 
 export type Chapter =
   | 'ROOT'
@@ -91,14 +91,18 @@ export interface ApiConfig {
 
 export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
   FOCUS: {
-    postponeFetch: isProduction(),
+    postponeFetch: false,
   },
   WMO: {
-    postponeFetch: isProduction(),
+    postponeFetch: false,
   },
   MY_TIPS: {
-    postponeFetch: true,
+    postponeFetch: true, // Stays true because we're not fetching immediately
   },
+};
+
+export const FeatureToggle = {
+  myTipsoptInOutPersonalization: !isProduction(),
 };
 
 export const errorMessageMap: ErrorMessageMap = {

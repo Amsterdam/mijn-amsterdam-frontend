@@ -9,6 +9,7 @@ import styles from './Modal.module.scss';
 import Heading from 'components/Heading/Heading';
 import useModalRoot from 'hooks/modalRoot.hook';
 import { Button } from 'components/Button/Button';
+import { CloseButton } from '../Button/Button';
 
 interface ModalProps {
   children: ComponentChildren;
@@ -136,15 +137,11 @@ export function Dialog({
               >
                 {!!title && <Heading size="small">{title}</Heading>}
                 {showCloseButton && (
-                  <Button
-                    variant="plain"
-                    className={styles.ButtonClose}
+                  <CloseButton
+                    title="Overlay sluiten"
+                    className="ButtonClose"
                     onClick={() => typeof onClose === 'function' && onClose()}
-                    arial-label="Overlay sluiten"
-                    lean={true}
-                  >
-                    <CloseIcon arial-label="Overlay sluiten" />
-                  </Button>
+                  />
                 )}
               </header>
               <div className={styles.Content}>{children}</div>

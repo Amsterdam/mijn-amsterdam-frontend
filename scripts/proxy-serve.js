@@ -2,6 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const appPath = path.join(__dirname, '/../build/');
+const mime = require('mime-types');
 
 const host = process.env.APP_HOST || 'localhost';
 const port = process.env.APP_PORT || 3000;
@@ -10,7 +11,7 @@ const apiHost = process.env.MOCK_API_HOST || 'localhost';
 const apiPort = process.env.MOCK_API_PORT || 5000;
 
 // All urls that start with following paths are proxied
-const proxiedPaths = ['/api', '/logout', '/atlas'];
+const proxiedPaths = ['/api', '/logout', '/atlas', '/mock-api'];
 
 http
   .createServer(function(request, response) {
@@ -21,17 +22,29 @@ http
       if (fileName.indexOf('.') === -1) {
         fileName = 'index.html';
       }
-      const stream = fs.createReadStream(path.join(appPath, fileName));
+      const file = path.join(appPath, fileName);
+      const stream = fs.createReadStream(file);
+
       stream.on('error', function() {
         response.writeHead(404);
         response.end();
       });
+
+      response.setHeader(
+        'Content-Type',
+        mime.contentType(path.extname(fileName))
+      );
+
       stream.pipe(response);
     } else {
+      const path = request.url.startsWith('/mock-api')
+        ? request.url.replace(/(\/mock-api)/g, '/api')
+        : request.url;
+
       const request_options = {
         host: apiHost,
         port: apiPort,
-        path: request.url,
+        path,
         method: request.method,
       };
 
