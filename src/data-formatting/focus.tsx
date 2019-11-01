@@ -123,7 +123,8 @@ interface StepSourceData {
   daysRecoveryAction: number; // The number of days a client has to provide more information about a request
   dateStart: string; // The official start date of the clients request process.
   reden?: string; // The reason why a decision was made about a clients request for product.
-  isActual: boolean;
+  isLastActive: boolean;
+  isRecent: boolean;
   stepType: StatusLineItem['stepType'];
 }
 
@@ -135,6 +136,7 @@ export interface ProcessStep extends StatusLineItem {
   datePublished: string;
   status: RequestStatus | '';
   aboutStep: StepTitle;
+  isRecent: boolean;
 }
 
 export interface FocusItem {
@@ -603,7 +605,8 @@ type GetStepSourceDataArgs = Pick<
   | 'productTitle'
   | 'latestStep'
   | 'stepType'
-  | 'isActual'
+  | 'isLastActive'
+  | 'isRecent'
   | 'decision'
   | 'id'
   | 'daysUserActionRequired'
@@ -620,7 +623,8 @@ function getStepSourceData({
   stepData,
   latestStep,
   stepType,
-  isActual,
+  isLastActive,
+  isRecent,
   decision,
   dateStart,
   daysUserActionRequired,
@@ -663,7 +667,8 @@ function getStepSourceData({
     // The first date of the request process.
     dateStart: defaultDateFormat(dateStart),
     stepType,
-    isActual,
+    isLastActive,
+    isRecent,
   };
 }
 
@@ -780,9 +785,10 @@ function formatStepData(
     //   : [],
     status: stepLabels.status,
     aboutStep: stepTitle,
-    isLastActive: sourceData.isActual,
-    isChecked: !sourceData.isActual,
+    isLastActive: sourceData.isLastActive,
+    isChecked: !sourceData.isLastActive,
     stepType: sourceData.stepType,
+    isRecent: sourceData.isRecent,
   };
 }
 
@@ -838,7 +844,8 @@ export function formatFocusProduct(
     daysSupplierActionRequired,
     daysUserActionRequired,
     daysRecoveryAction,
-    isActual: false,
+    isLastActive: false,
+    isRecent,
     stepType: 'intermediate-step',
   });
 
@@ -878,7 +885,7 @@ export function formatFocusProduct(
       })
       .map((stepTitle, index) => {
         const stepData = steps[stepTitle] as Step;
-        const isActual = stepTitle === latestStep;
+        const isLastActive = stepTitle === latestStep;
         let stepType: StepType = 'intermediate-step';
 
         switch (stepTitle) {
@@ -902,7 +909,8 @@ export function formatFocusProduct(
           daysUserActionRequired,
           daysRecoveryAction,
           dateStart,
-          isActual,
+          isLastActive,
+          isRecent,
           stepType,
         });
 
@@ -974,11 +982,19 @@ export function altDocumentContent(
 ) {
   return statusLineItem.isLastActive &&
     ['Meer informatie nodig', 'Besluit'].includes(statusLineItem.status) ? (
-    <b>
-      U ontvangt{' '}
-      {statusLineItem.status === 'Besluit' ? 'dit besluit' : 'deze brief'} per
-      post.
-    </b>
+    statusLineItem.isRecent ? (
+      <b>
+        U ontvangt{' '}
+        {statusLineItem.status === 'Besluit' ? 'dit besluit' : 'deze brief'} per
+        post.
+      </b>
+    ) : (
+      <b>
+        U heeft{' '}
+        {statusLineItem.status === 'Besluit' ? 'dit besluit' : 'deze brief'} per
+        post ontvangen.
+      </b>
+    )
   ) : (
     ''
   );
