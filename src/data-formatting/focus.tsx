@@ -980,8 +980,14 @@ export function altDocumentContent(
   statusLineItem: StatusLineItem,
   stepNumber: number
 ) {
-  return statusLineItem.isLastActive &&
-    ['Meer informatie nodig', 'Besluit'].includes(statusLineItem.status) ? (
+  if (statusLineItem.status === 'Meer informatie nodig') {
+    if (statusLineItem.isRecent && !statusLineItem.isLastActive) {
+      return <b>U heeft deze brief per post ontvangen.</b>;
+    }
+  }
+  return ['Meer informatie nodig', 'Besluit'].includes(
+    statusLineItem.status
+  ) ? (
     statusLineItem.isRecent ? (
       <b>
         U ontvangt{' '}
