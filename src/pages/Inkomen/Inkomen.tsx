@@ -46,7 +46,7 @@ export default () => {
         </p>
         <p>
           <Linkd external={true} href={ExternalUrls.WPI_REGELINGEN}>
-            Naar alle regeleingen voor Werk en inkomen
+            Naar alle regelingen voor Werk en inkomen
           </Linkd>
           <br />
           <Linkd external={true} href={ExternalUrls.WPI_CONTACT}>
