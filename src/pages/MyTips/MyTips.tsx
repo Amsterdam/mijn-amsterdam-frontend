@@ -1,4 +1,4 @@
-import { Chapters, ChapterTitles } from 'App.constants';
+import { Chapters, ChapterTitles, FeatureToggle } from 'App.constants';
 import { AppContext } from 'AppState';
 import Alert from 'components/Alert/Alert';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
@@ -6,9 +6,9 @@ import MyTips from 'components/MyTips/MyTips';
 import { OverviewPage, PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
 import React, { useContext, useState } from 'react';
+import { Button } from 'components/Button/Button';
 import styles from './MyTips.module.scss';
 import Modal from 'components/Modal/Modal';
-import { Button } from 'components/Button/Button';
 
 export default () => {
   const {
@@ -30,83 +30,86 @@ export default () => {
       <PageHeading icon={<ChapterIcon chapter={Chapters.MIJN_TIPS} />}>
         {ChapterTitles.MIJN_TIPS}
       </PageHeading>
-      <PageContent>
-        <p>
-          {!isOptIn ? (
-            <>
-              U ziet nu algemene tips over voorzieningnen en activiteiten in
-              Amsterdam. Op basis van uw informatie die bij de gemeente bekend
-              is kunnen we u ook informatie tonen die beter bij uw persoonlijk
-              situatie past.
-            </>
-          ) : (
-            <>
-              U ziet nu persoonlijke tips over voorzieningen en activiteiten in
-              Amsterdam. We kunnen u ook algemene informatie tonen waarbij geen
-              gebruik gemaakt word van persoonlijke informatie.
-            </>
-          )}
-          <Button
-            variant={isOptIn ? 'secondary-inverted' : 'secondary'}
-            className={styles.OptInOutToggleButton}
-            onClick={() => setModalIsOpen(true)}
+      {FeatureToggle.myTipsoptInOutPersonalization && (
+        <PageContent>
+          <p>
+            {!isOptIn ? (
+              <>
+                U ziet nu algemene tips over voorzieningnen en activiteiten in
+                Amsterdam. Op basis van uw informatie die bij de gemeente bekend
+                is kunnen we u ook informatie tonen die beter bij uw persoonlijk
+                situatie past.
+              </>
+            ) : (
+              <>
+                U ziet nu persoonlijke tips over voorzieningen en activiteiten
+                in Amsterdam. We kunnen u ook algemene informatie tonen waarbij
+                geen gebruik gemaakt word van persoonlijke informatie.
+              </>
+            )}
+            <Button
+              variant={isOptIn ? 'secondary-inverted' : 'secondary'}
+              className={styles.OptInOutToggleButton}
+              onClick={() => setModalIsOpen(true)}
+            >
+              {isOptIn
+                ? 'Nee, toon geen persoonlijke tips'
+                : 'Toon persoonlijke tips'}
+            </Button>
+          </p>
+          <Modal
+            isOpen={modalIsOpen}
+            onClose={() => setModalIsOpen(false)}
+            title="Persoonlijke tips"
+            contentWidth={620}
           >
-            {isOptIn
-              ? 'Nee, toon geen persoonlijke tips'
-              : 'Toon persoonlijke tips'}
-          </Button>
-        </p>
-        <Modal
-          isOpen={modalIsOpen}
-          onClose={() => setModalIsOpen(false)}
-          title="Persoonlijke tips"
-          contentWidth={620}
-        >
-          <>
-            <p className={styles.OptInOutInfo}>
-              {!isOptIn ? (
-                <>
-                  U ziet nu algemene tips over voorzieningnen en activiteiten in
-                  Amsterdam. Op basis van uw informatie die bij de gemeente
-                  bekend is kunnen we u ook informatie tonen die beter bij uw
-                  persoonlijk situatie past.
-                </>
-              ) : (
-                <>
-                  U ziet nu persoonlijke tips over voorzieningen en activiteiten
-                  in Amsterdam. We kunnen u ook algemene informatie tonen
-                  waarbij geen gebruik gemaakt word van persoonlijke informatie.
-                </>
-              )}
-            </p>
-            <p className={styles.OptInOutButtons}>
-              <Button variant="plain" onClick={() => setModalIsOpen(false)}>
-                Nee bedankt
-              </Button>
-              <Button
-                variant={isOptIn ? 'secondary-inverted' : 'secondary'}
-                onClick={() => {
-                  if (isOptIn) {
-                    optOut();
-                  } else {
-                    optIn();
-                  }
-                  setModalIsOpen(false);
-                }}
-              >
-                {isOptIn
-                  ? 'Nee, toon geen persoonlijke tips'
-                  : 'Toon persoonlijke tips'}
-              </Button>
-            </p>
-          </>
-        </Modal>
-        {isError && (
-          <Alert type="warning">
-            <p>We kunnen op dit moment geen gegevens tonen.</p>
-          </Alert>
-        )}
-      </PageContent>
+            <>
+              <p className={styles.OptInOutInfo}>
+                {!isOptIn ? (
+                  <>
+                    U ziet nu algemene tips over voorzieningnen en activiteiten
+                    in Amsterdam. Op basis van uw informatie die bij de gemeente
+                    bekend is kunnen we u ook informatie tonen die beter bij uw
+                    persoonlijk situatie past.
+                  </>
+                ) : (
+                  <>
+                    U ziet nu persoonlijke tips over voorzieningen en
+                    activiteiten in Amsterdam. We kunnen u ook algemene
+                    informatie tonen waarbij geen gebruik gemaakt word van
+                    persoonlijke informatie.
+                  </>
+                )}
+              </p>
+              <p className={styles.OptInOutButtons}>
+                <Button variant="plain" onClick={() => setModalIsOpen(false)}>
+                  Nee bedankt
+                </Button>
+                <Button
+                  variant={isOptIn ? 'secondary-inverted' : 'secondary'}
+                  onClick={() => {
+                    if (isOptIn) {
+                      optOut();
+                    } else {
+                      optIn();
+                    }
+                    setModalIsOpen(false);
+                  }}
+                >
+                  {isOptIn
+                    ? 'Nee, toon geen persoonlijke tips'
+                    : 'Toon persoonlijke tips'}
+                </Button>
+              </p>
+            </>
+          </Modal>
+          {isError && (
+            <Alert type="warning">
+              <p>We kunnen op dit moment geen gegevens tonen.</p>
+            </Alert>
+          )}
+        </PageContent>
+      )}
       <MyTips
         showHeader={false}
         isLoading={isPristine || isMyTipsLoading}

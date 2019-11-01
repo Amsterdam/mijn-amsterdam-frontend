@@ -11,6 +11,7 @@
     "release:major": "sh scripts/release.sh --major",
     "release:minor": "sh scripts/release.sh --minor",
     "serve-build": "node scripts/proxy-serve",
+    "serve-dev": "concurrently \"npm:serve-build\" \"npm:mock-api\"",
     "start": "react-scripts start",
     "test": "react-scripts test",
     "watch:mock-api": "nodemon --watch mock-api/ --exec npm run mock-api"
@@ -60,6 +61,7 @@
     "focus-trap-react": "^6.0.0",
     "include-media": "^1.4.9",
     "js-cookie": "^2.2.1",
+    "mime-types": "^2.1.24",
     "node-persist": "^3.0.5",
     "react": "^16.10.2",
     "react-app-polyfill": "^0.2.2",

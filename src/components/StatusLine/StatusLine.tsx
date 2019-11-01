@@ -20,6 +20,7 @@ export interface StatusLineItem {
   documents: Document[];
   isLastActive: boolean;
   isChecked: boolean;
+  [key: string]: any;
 }
 
 type AltDocumentContent = string | JSX.Element;

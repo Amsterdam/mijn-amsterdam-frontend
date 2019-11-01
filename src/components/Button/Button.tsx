@@ -4,6 +4,7 @@ import styles from './Button.module.scss';
 import classnames from 'classnames';
 import { ReactNode } from 'react';
 import { ReactComponent as ChevronIcon } from 'assets/icons/Chevron-Right.svg';
+import { ReactComponent as CloseIcon } from 'assets/icons/Close.svg';
 import { trackLink } from 'hooks/analytics.hook';
 
 interface CustomButtonProps {
@@ -132,7 +133,12 @@ export default function Linkd({
       {...relProp}
       {...urlProp}
       onClick={clickHandler}
-      className={buttonStyle({ lean, isDisabled, variant, className })}
+      className={buttonStyle({
+        lean,
+        isDisabled,
+        variant,
+        className: classnames(styles.Linkd, className),
+      })}
     >
       <ButtonBody icon={icon} iconPosition={iconPosition}>
         {children}
@@ -147,11 +153,13 @@ export function LinkdInline({
   variant = 'inline',
   lean = true,
   icon = '',
+  className,
   ...otherProps
 }: LinkdProps) {
   return (
     <Linkd
       {...otherProps}
+      className={classnames(styles.LinkedInline, className)}
       icon={icon}
       external={external}
       variant={variant}
@@ -163,3 +171,32 @@ export function LinkdInline({
 }
 
 export const ButtonStyles = styles;
+
+export interface IconButtonProps
+  extends Omit<ButtonProps, 'variant' | 'lean'>,
+    ButtonHTMLAttributes<HTMLButtonElement> {}
+
+export function IconButton({
+  className,
+  icon,
+  ...otherProps
+}: IconButtonProps) {
+  const Icon = icon;
+  return (
+    <Button
+      {...otherProps}
+      variant="plain"
+      className={classnames(styles.IconButton, className)}
+      lean={true}
+    >
+      <Icon aria-hidden={true} />
+    </Button>
+  );
+}
+
+export function CloseButton({
+  title = 'Sluiten',
+  ...props
+}: Omit<IconButtonProps, 'icon'>) {
+  return <IconButton {...props} title={title} icon={CloseIcon} />;
+}

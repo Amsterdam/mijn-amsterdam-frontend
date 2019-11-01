@@ -139,8 +139,8 @@ $buttons: (
 }
 
 .Icon {
-  height: .9em;
-  width: .9em;
+  height: .8em;
+  width: .8em;
 }
 
 .Icon__left {
@@ -154,5 +154,19 @@ $buttons: (
 .ButtonGroup {
   .Button + .Button {
     margin-left: 1rem;
+  }
+}
+
+.IconButton {
+  height: 2.2rem;
+  width: 2.2rem;
+  line-height: 1;
+}
+
+.Linkd {
+  align-items: baseline;
+  .Icon {
+    position: relative;
+    transform: translateY(1px);
   }
 }

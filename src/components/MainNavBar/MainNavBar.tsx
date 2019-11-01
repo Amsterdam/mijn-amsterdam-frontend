@@ -67,17 +67,15 @@ function SecondaryLinks() {
           )}
         </Link>
       )}
-      {
-        <Linkd
-          href={LOGOUT_URL}
-          external={true}
-          lean={true}
-          className={styles.LogoutLink}
-          icon={LogoutIcon}
-        >
-          Uitloggen
-        </Linkd>
-      }
+      <Linkd
+        href={LOGOUT_URL}
+        external={true}
+        lean={true}
+        className={styles.LogoutLink}
+        icon={LogoutIcon}
+      >
+        Uitloggen
+      </Linkd>
     </div>
   );
 }
@@ -232,7 +230,7 @@ export default function MainNavBar() {
         </button>
       )}
 
-      {isAuthenticated && (!isBurgerMenu || isBurgerMenuVisible) && (
+      {isAuthenticated && (
         <div id={LinkContainerId} className={styles.LinkContainer}>
           <SecondaryLinks />
           {menuItems.map(item => {

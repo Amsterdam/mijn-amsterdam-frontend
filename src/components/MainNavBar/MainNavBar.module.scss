@@ -98,11 +98,15 @@
 
   @include mq-tablet() {
     position: static;
+    display: block;
     margin-top: 0;
     -ms-grid-row: 20;
     grid-row: 20;
 
     > a {
+      &, &:hover {
+        border-top: 0.1rem solid $color-neutral-grey2;
+      }
       font-weight: bold;
       font-size: 1.5rem;
       margin: 0;
@@ -187,16 +191,33 @@
 }
 
 .BurgerMenu {
+  .LinkContainer {
+    transform: translate3d(-100%, 0, 0);
+    transition: transform 200ms ease-in;
+  }
+  &:before {
+    content: '';
+    position: absolute;
+    top: $main-header-topbar-height;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .5);
+    opacity: 0;
+    transition: opacity 200ms ease-out, transform 0ms 200ms;
+
+    z-index: z-index(burger-menu-backdrop);
+    transform: translate3d(-100%, 0, 0);
+  }
   &Visible {
+    .LinkContainer {
+      transform: translateX(0);
+      transition-timing-function: ease-out;
+    }
     &:before {
-      content: '';
-      position: absolute;
-      top: $main-header-topbar-height;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(0, 0, 0, .4);
-      z-index: z-index(burger-menu-backdrop);
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      transition: opacity 200ms 10ms ease-in, transform 0ms;
     }
   }
 }
