@@ -133,7 +133,12 @@ export default function Linkd({
       {...relProp}
       {...urlProp}
       onClick={clickHandler}
-      className={buttonStyle({ lean, isDisabled, variant, className })}
+      className={buttonStyle({
+        lean,
+        isDisabled,
+        variant,
+        className: classnames(styles.Linkd, className),
+      })}
     >
       <ButtonBody icon={icon} iconPosition={iconPosition}>
         {children}
@@ -148,11 +153,13 @@ export function LinkdInline({
   variant = 'inline',
   lean = true,
   icon = '',
+  className,
   ...otherProps
 }: LinkdProps) {
   return (
     <Linkd
       {...otherProps}
+      className={classnames(styles.LinkedInline, className)}
       icon={icon}
       external={external}
       variant={variant}
