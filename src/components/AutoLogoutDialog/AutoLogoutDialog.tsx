@@ -12,6 +12,7 @@ import Modal from '../Modal/Modal';
 import styles from './AutoLogoutDialog.module.scss';
 import { SessionContext } from 'AppState';
 import Linkd, { Button, ButtonStyles } from 'components/Button/Button';
+import classnames from 'classnames';
 
 /**
  * This component is essentially a dialog with a countdown timer presented to the user
@@ -181,7 +182,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
             variant="secondary-inverted"
             lean={false}
             isDisabled={!continueButtonIsVisible}
-            className="logout-button"
+            className={classnames('logout-button', styles.LogoutButton)}
             external={true}
             icon=""
             href={LOGOUT_URL}
