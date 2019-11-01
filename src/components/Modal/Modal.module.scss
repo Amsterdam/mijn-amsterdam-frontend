@@ -84,26 +84,3 @@
 .Content {
   padding: 1.5rem;
 }
-
-.ButtonClose {
-  width: 3rem;
-  height: 3rem;
-  padding: 0;
-  margin: 0;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  svg {
-    display: block;
-    width: 2rem;
-    height: 2rem;
-  }
-
-  &:hover {
-    color: $color-primary-red;
-  }
-}

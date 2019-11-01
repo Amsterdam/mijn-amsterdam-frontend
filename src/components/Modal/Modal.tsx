@@ -139,6 +139,7 @@ export function Dialog({
                 {showCloseButton && (
                   <CloseButton
                     title="Overlay sluiten"
+                    className="ButtonClose"
                     onClick={() => typeof onClose === 'function' && onClose()}
                   />
                 )}

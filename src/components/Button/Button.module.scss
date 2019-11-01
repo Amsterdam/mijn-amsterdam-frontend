@@ -109,7 +109,7 @@ $buttons: (
   font-size: 1em;
   line-height: 1.2em;
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   text-decoration: none;
   font-weight: 500;
   padding: 0 1rem;
@@ -163,7 +163,10 @@ $buttons: (
   line-height: 1;
 }
 
-.Linkd .Icon {
-  position: relative;
-  transform: translateY(1px);
+.Linkd {
+  align-items: baseline;
+  .Icon {
+    position: relative;
+    transform: translateY(1px);
+  }
 }
