@@ -102,7 +102,7 @@ export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
 };
 
 export const FeatureToggle = {
-  myTipsoptInOutPersonalization: !isProduction(),
+  myTipsoptInOutPersonalization: true,
 };
 
 export const errorMessageMap: ErrorMessageMap = {

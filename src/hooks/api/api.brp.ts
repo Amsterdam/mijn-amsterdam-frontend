@@ -35,7 +35,9 @@ export function useBrpApi(initialState = {}): BrpApiState {
   }
 
   if (brpData.persoon && brpData.persoon.vertrokkenOnbekendWaarheen) {
-    const dateLeft = defaultDateFormat(new Date());
+    const dateLeft = defaultDateFormat(
+      brpData.persoon.datumVertrekUitNederland
+    );
     notifications.push({
       Icon: AlertIcon,
       chapter: 'BURGERZAKEN',
