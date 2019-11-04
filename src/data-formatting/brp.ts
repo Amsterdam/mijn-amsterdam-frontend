@@ -177,9 +177,8 @@ export function formatProfileData({
             adres.huisnummer
           } ${adres.huisnummertoevoeging || ''}${adres.huisletter || ''}`
         : unknown,
-      [brpInfoLabels.Place]: adres.woonplaatsNaam
-        ? `${adres.postcode || ''} ${adres.woonplaatsNaam || ''}`
-        : unknown,
+      [brpInfoLabels.Place]: `${adres.postcode || ''} ${adres.woonplaatsNaam ||
+        'Onbekend'}`,
       [brpInfoLabels.DateStarted]:
         adres.begindatumVerblijf && defaultDateFormat(adres.begindatumVerblijf),
     },
