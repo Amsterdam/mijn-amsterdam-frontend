@@ -35,6 +35,7 @@ const Tip = ({ tip }: TipProps) => {
         <Linkd
           title={`Meer informatie over de tip: ${tip.title}`}
           href={tip.link.to}
+          external={true}
         >
           {tip.link.title}
         </Linkd>
@@ -82,11 +83,7 @@ export default function MyTips({
           >
             Mijn tips
           </Heading>
-          {!!items.length && (
-            <Linkd external={true} href={AppRoutes.MY_TIPS}>
-              Mijn tips
-            </Linkd>
-          )}
+          {!!items.length && <Linkd href={AppRoutes.MY_TIPS}>Mijn tips</Linkd>}
           {/* <a href="" className={styles.OptIn}>
           Maak relevanter
         </a> */}
