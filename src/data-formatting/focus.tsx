@@ -783,7 +783,7 @@ function formatStepData(
     //       formatFocusDocument(stepTitle, stepData.datum, document)
     //     )
     //   : [],
-    status: stepLabels.status,
+    status: stepLabels ? stepLabels.status : '',
     aboutStep: stepTitle,
     isLastActive: sourceData.isLastActive,
     isChecked: !sourceData.isLastActive,
@@ -864,11 +864,15 @@ export function formatFocusProduct(
     dateStart: defaultDateFormat(dateStart),
 
     // Regular title, can be turned into more elaborate descriptive information. E.g Bijstandsuitkering could become Uw Aanvraag voor een bijstandsuitkering.
-    title: parseLabelContent(stepLabels.title, sourceData),
+    title: stepLabels
+      ? parseLabelContent(stepLabels.title, sourceData)
+      : productTitle,
 
     // The name of the product (Stadspas, Levensonderhoud ...)
     productTitle,
-    description: parseLabelContent(stepLabels.description, sourceData),
+    description: stepLabels
+      ? parseLabelContent(stepLabels.description, sourceData)
+      : '',
     latestStep,
     isRecent,
     hasDecision,
