@@ -8,7 +8,6 @@ import { ReactComponent as CloseIcon } from 'assets/icons/Close.svg';
 import styles from './Modal.module.scss';
 import Heading from 'components/Heading/Heading';
 import useModalRoot from 'hooks/modalRoot.hook';
-import { Button } from 'components/Button/Button';
 import { CloseButton } from '../Button/Button';
 
 interface ModalProps {
