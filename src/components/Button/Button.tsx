@@ -189,7 +189,7 @@ export function IconButton({
       className={classnames(styles.IconButton, className)}
       lean={true}
     >
-      <Icon aria-hidden={true} />
+      <Icon className={styles.Icon} aria-hidden={true} />
     </Button>
   );
 }
