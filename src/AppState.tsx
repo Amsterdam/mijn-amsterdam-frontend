@@ -126,7 +126,7 @@ export function useAppState(value?: any) {
       MY_TIPS.refetch({
         WMO: WMO.rawData,
         FOCUS: FOCUS.rawData,
-        ERFPACHT: false,
+        ERFPACHT: ERFPACHT.data.status,
         BRP: BRP.data,
       });
     }
