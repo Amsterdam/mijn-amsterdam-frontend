@@ -28,7 +28,7 @@ export type RequestStatus =
   | 'Besluit';
 
 // A decision can be made and currently have 3 values.
-type Decision = 'Toekenning' | 'Afwijzing' | 'Buiten Behandeling';
+type Decision = 'Toekenning' | 'Afwijzing' | 'Buiten behandeling';
 
 // The official terms of the Focus api "product categories" data how they are used within the Municipality of Amsterdam.
 type ProductOrigin = 'Participatiewet' | 'Bijzondere Bijstand' | 'Minimafonds';
@@ -309,7 +309,7 @@ export const Labels: LabelData = {
           </>
         ),
       },
-      'Buiten Behandeling': {
+      'Buiten behandeling': {
         notification: {
           title: data =>
             `${data.productTitle}: Uw aanvraag is buiten behandeling gesteld`,
@@ -411,7 +411,7 @@ export const Labels: LabelData = {
         description:
           'U heeft recht op bijzondere bijstand. Bekijk de brief voor meer details.',
       },
-      'Buiten Behandeling': {
+      'Buiten behandeling': {
         notification: {
           title: data =>
             `${data.productTitle}: Uw aanvraag is buiten behandeling gesteld`,
@@ -529,7 +529,7 @@ export const Labels: LabelData = {
           </>
         ),
       },
-      'Buiten Behandeling': {
+      'Buiten behandeling': {
         notification: {
           title: data =>
             `${data.productTitle}: Uw aanvraag is buiten behandeling gesteld`,
@@ -879,7 +879,7 @@ export function formatFocusProduct(
     hasDecision,
     isGranted: hasDecision ? decision === 'Toekenning' : null,
     isDenied: hasDecision ? decision === 'Afwijzing' : null,
-    isDiscarded: hasDecision ? decision === 'Buiten Behandeling' : null,
+    isDiscarded: hasDecision ? decision === 'Buiten behandeling' : null,
     link: {
       title: 'Meer informatie', // TODO: How to get custom link title?
       to: `${AppRoutesByProductOrigin[productOrigin]}/${id}`,
