@@ -326,7 +326,7 @@ const testData = [
       },
     },
     soortProduct: 'Participatiewet',
-    typeBesluit: 'Buiten Behandeling',
+    typeBesluit: 'Buiten behandeling',
   },
 ];
 
