@@ -457,13 +457,14 @@ export const Labels: LabelData = {
           <p>
             Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt
             vóór {data.decisionDeadline1} ons besluit.
-            <br />
+          </p>
+          <p>
             <strong>
-              Let op: Deze status informatie betreft alleen uw aanvraag voor een
-              Stadspas;
+              Let op: Deze statusinformatie betreft alleen uw aanvraag voor een
+              Stadspas.
             </strong>
             <br />
-            uw eventuele andere Hulp bij Laag Inkomen producten worden via post
+            Uw eventuele andere Hulp bij Laag Inkomen producten worden via post
             en/of telefoon afgehandeld.
           </p>
         </>
