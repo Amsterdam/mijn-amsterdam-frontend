@@ -6,6 +6,7 @@ import { Colors } from 'App.constants';
 import Heading from 'components/Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { FocusItem } from 'data-formatting/focus';
+import classnames from 'classnames';
 
 type MyCase = FocusItem; // NOTE: atm it's the only Case possible
 
@@ -33,21 +34,19 @@ export interface MyCasesProps {
   title: string;
   items: MyCase[];
   isLoading: boolean;
+  className?: string;
 }
 
 export default function MyCases({
   title,
   items = [],
+  className,
   isLoading = true,
+  ...otherProps
 }: MyCasesProps) {
   return (
-    <div className={styles.MyCases}>
-      <Heading
-        id="MyCasesHeader" // Used for tutorial placement
-        size="large"
-      >
-        {title}
-      </Heading>
+    <div {...otherProps} className={classnames(styles.MyCases, className)}>
+      <Heading size="large">{title}</Heading>
       {isLoading && (
         <LoadingContent
           className={styles.LoadingContent}

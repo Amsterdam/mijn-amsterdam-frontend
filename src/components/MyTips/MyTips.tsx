@@ -5,6 +5,7 @@ import { AppRoutes } from 'App.constants';
 import { MyTip } from 'hooks/api/my-tips-api.hook';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import Linkd from '../Button/Button';
+import classnames from 'classnames';
 
 export interface TipProps {
   tip: MyTip;
@@ -46,6 +47,7 @@ const Tip = ({ tip }: TipProps) => {
 
 export interface MyTipsProps {
   items: MyTip[];
+  className?: string;
   isLoading: boolean;
   showHeader?: boolean;
 }
@@ -70,19 +72,16 @@ function LoadingContentListItems() {
 
 export default function MyTips({
   items = [],
+  className,
   isLoading = true,
   showHeader = true,
+  ...otherProps
 }: MyTipsProps) {
   return (
-    <div className={styles.MyTips}>
+    <div {...otherProps} className={classnames(styles.MyTips, className)}>
       {showHeader && (
         <div className={styles.HeaderBar}>
-          <Heading
-            id="MyTipsHeader" // Used for tutorial placement
-            size="large"
-          >
-            Mijn tips
-          </Heading>
+          <Heading size="large">Mijn tips</Heading>
           {!!items.length && <Linkd href={AppRoutes.MY_TIPS}>Mijn tips</Linkd>}
           {/* <a href="" className={styles.OptIn}>
           Maak relevanter

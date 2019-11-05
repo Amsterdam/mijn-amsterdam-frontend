@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import styles from './DirectLinks.module.scss';
 import { LINKS } from './DirectLinks.constants';
 import Heading from 'components/Heading/Heading';
@@ -6,12 +6,23 @@ import { ReactComponent as ExternalLinkIcon } from 'assets/icons/External-Link.s
 import { entries } from 'helpers/App';
 import { usePhoneScreen } from 'hooks/media.hook';
 import Linkd from 'components/Button/Button';
+import classnames from 'classnames';
 
-export default function DirectLinks() {
+export default function DirectLinks({
+  id = 'DirectLinks',
+  className,
+  ...otherProps
+}: HTMLAttributes<HTMLDivElement>) {
   const isPhoneScreen = usePhoneScreen();
   return (
-    <div className={styles.DirectLinks}>
-      <Heading size="large">Bezoek ook</Heading>
+    <div
+      {...otherProps}
+      className={classnames(styles.DirectLinks, className)}
+      id={id}
+    >
+      <Heading id={`${id}Header`} size="large">
+        Bezoek ook
+      </Heading>
       <ul className={styles.LinkList}>
         {entries(LINKS)
           .filter(([, { isPhoneScreenLink }]) =>

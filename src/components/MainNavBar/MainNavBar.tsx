@@ -1,6 +1,6 @@
-import { AppRoutes, Colors, Layout, LOGOUT_URL } from 'App.constants';
+import { AppRoutes, Colors, LOGOUT_URL } from 'App.constants';
 import { ComponentChildren } from 'App.types';
-import { AppContext, SessionContext, TutorialContext } from 'AppState';
+import { AppContext, SessionContext } from 'AppState';
 import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
 import classnames from 'classnames';
 import FontEnlarger from 'components/FontEnlarger/FontEnlarger';
@@ -22,7 +22,6 @@ import {
   submenuItems,
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
-import teststyles from '../Tutorial/Tutorial.module.scss';
 import Tutorial from 'components/Tutorial/Tutorial';
 import Linkd, { Button } from 'components/Button/Button';
 
@@ -59,7 +58,12 @@ function SecondaryLinks() {
     <div className={styles.secondaryLinks}>
       {isDesktopScreen && <FontEnlarger />}
       {!isError && (
-        <Link to={AppRoutes.PROFILE} className={styles.ProfileLink}>
+        <Link
+          to={AppRoutes.PROFILE}
+          className={styles.ProfileLink}
+          data-tutorial-item="Hier kunt u uw algemene persoonsgegevens uit de gemeentelijke basisregistratie raadplegen, zoals uw woonadres;left-bottom"
+          id="ProfileLink"
+        >
           {persoon && persoon.voornamen ? (
             getFullName(persoon)
           ) : (
@@ -156,17 +160,7 @@ export default function MainNavBar() {
   const isBurgerMenu = useTabletScreen();
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState(false);
   const { history, location } = useRouter();
-  const { isTutorialVisible, setIsTutorialVisible } = useContext(
-    TutorialContext
-  );
-  const TUTORIAL_CLASS = teststyles.TutorialItems;
-
-  useEffect(() => {
-    const classList = document.body.classList;
-    isTutorialVisible
-      ? classList.add(TUTORIAL_CLASS)
-      : classList.remove(TUTORIAL_CLASS);
-  }, [isTutorialVisible]);
+  const [isTutorialVisible, setIsTutorialVisible] = useState(false);
 
   function closeBurgerMenu(e?: any) {
     if (isBurgerMenuVisible) {
@@ -261,17 +255,14 @@ export default function MainNavBar() {
               isTutorialVisible && styles.TutorialBtnOpen
             )}
             onClick={() => {
-              const isVisible = !isTutorialVisible;
-              setIsTutorialVisible(isVisible);
+              setIsTutorialVisible(!isTutorialVisible);
             }}
             variant="plain"
             lean={true}
           >
             Uitleg
           </Button>
-          {isTutorialVisible && (
-            <Tutorial toggleTutorial={setIsTutorialVisible} />
-          )}
+          {isTutorialVisible && <Tutorial />}
         </>
       )}
 
