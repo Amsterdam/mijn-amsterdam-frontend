@@ -610,12 +610,13 @@ Object {
       Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt vóór 
       15 september 2019
        ons besluit.
-      <br />
+    </p>
+    <p>
       <strong>
-        Let op: Deze status informatie betreft alleen uw aanvraag voor een Stadspas;
+        Let op: Deze statusinformatie betreft alleen uw aanvraag voor een Stadspas.
       </strong>
       <br />
-      uw eventuele andere Hulp bij Laag Inkomen producten worden via post en/of telefoon afgehandeld.
+      Uw eventuele andere Hulp bij Laag Inkomen producten worden via post en/of telefoon afgehandeld.
     </p>
   </React.Fragment>,
   "hasDecision": false,
@@ -662,12 +663,13 @@ Object {
           Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt vóór 
           15 september 2019
            ons besluit.
-          <br />
+        </p>
+        <p>
           <strong>
-            Let op: Deze status informatie betreft alleen uw aanvraag voor een Stadspas;
+            Let op: Deze statusinformatie betreft alleen uw aanvraag voor een Stadspas.
           </strong>
           <br />
-          uw eventuele andere Hulp bij Laag Inkomen producten worden via post en/of telefoon afgehandeld.
+          Uw eventuele andere Hulp bij Laag Inkomen producten worden via post en/of telefoon afgehandeld.
         </p>
       </React.Fragment>,
       "documents": Array [],
@@ -746,12 +748,13 @@ Object {
           Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt vóór 
           11 september 2019
            ons besluit.
-          <br />
+        </p>
+        <p>
           <strong>
-            Let op: Deze status informatie betreft alleen uw aanvraag voor een Stadspas;
+            Let op: Deze statusinformatie betreft alleen uw aanvraag voor een Stadspas.
           </strong>
           <br />
-          uw eventuele andere Hulp bij Laag Inkomen producten worden via post en/of telefoon afgehandeld.
+          Uw eventuele andere Hulp bij Laag Inkomen producten worden via post en/of telefoon afgehandeld.
         </p>
       </React.Fragment>,
       "documents": Array [],
