@@ -186,9 +186,7 @@ const Labels: {
           <>
             <p>
               {data.isActual
-                ? data.dateFinish
-                  ? 'Op deze datum vervalt uw recht op deze voorziening.'
-                  : 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
+                ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
                 : `Uw recht op ${
                     data.title
                   } is beëindigd per ${defaultDateFormat(data.dateFinish)}`}
@@ -248,9 +246,7 @@ const Labels: {
           <>
             <p>
               {data.isActual
-                ? data.dateFinish
-                  ? `Op deze datum vervalt uw recht op ${data.title}.`
-                  : 'Er is een lopend recht zonder einddatum.'
+                ? `Op deze datum vervalt uw recht op ${data.title}.`
                 : `Uw recht op ${
                     data.title
                   } is beëindigd per ${defaultDateFormat(data.dateFinish)}`}

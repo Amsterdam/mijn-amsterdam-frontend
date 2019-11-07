@@ -326,7 +326,7 @@ const testData = [
       },
     },
     soortProduct: 'Participatiewet',
-    typeBesluit: 'Buiten behandeling',
+    typeBesluit: '  Buiten   BEHANDELING', // writing of the decision name is being normalized
   },
 ];
 
