@@ -1,7 +1,6 @@
 import { StateKey } from 'AppState';
 import { ErrorMessageMap } from 'components/ErrorMessages/ErrorMessages';
 import { MyNotification } from 'hooks/api/my-notifications-api.hook';
-import { isProduction } from './helpers/App';
 
 export type Chapter =
   | 'ROOT'
@@ -94,7 +93,7 @@ export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
     postponeFetch: false,
   },
   WMO: {
-    postponeFetch: isProduction(),
+    postponeFetch: false,
   },
   MY_TIPS: {
     postponeFetch: true, // Stays true because we're not fetching immediately
