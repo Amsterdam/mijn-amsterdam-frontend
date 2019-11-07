@@ -35,7 +35,7 @@ export default () => {
           <p>
             {!isOptIn ? (
               <>
-                U ziet nu algemene tips over voorzieningnen en activiteiten in
+                U ziet nu algemene tips over voorzieningen en activiteiten in
                 Amsterdam. Op basis van uw informatie die bij de gemeente bekend
                 is kunnen we u ook informatie tonen die beter bij uw
                 persoonlijke situatie past.
@@ -67,7 +67,7 @@ export default () => {
               <p className={styles.OptInOutInfo}>
                 {!isOptIn ? (
                   <>
-                    U ziet nu algemene tips over voorzieningnen en activiteiten
+                    U ziet nu algemene tips over voorzieningen en activiteiten
                     in Amsterdam. Op basis van uw informatie die bij de gemeente
                     bekend is kunnen we u ook informatie tonen die beter bij uw
                     persoonlijk situatie past.
