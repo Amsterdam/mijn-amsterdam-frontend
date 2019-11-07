@@ -313,7 +313,7 @@
       },
       "beslissing":{
         "_id":3,
-        "datum":"2019-07-03T15:05:52+02:00",
+        "datum":"2345-07-03T15:05:52+02:00",
         "document":[
           {
             "$ref":"focus/document?id=660000000000011&isBulk=false&isDms=false",
@@ -342,6 +342,6 @@
       }
     },
     "soortProduct":"Participatiewet",
-    "typeBesluit":"Buiten behandeling"
+    "typeBesluit":"Buiten BEHANDELING"
   }
 ]

@@ -29,7 +29,18 @@ export type RequestStatus =
   | 'Besluit';
 
 // A decision can be made and currently have 3 values.
-type Decision = 'Toekenning' | 'Afwijzing' | 'Buiten behandeling';
+type Decision = 'Toekenning' | 'Afwijzing' | 'Buiten Behandeling';
+type DecisionFormatted = 'toekenning' | 'afwijzing' | 'buitenbehandeling';
+
+const decisions: Record<DecisionFormatted, DecisionFormatted> = {
+  toekenning: 'toekenning',
+  afwijzing: 'afwijzing',
+  buitenbehandeling: 'buitenbehandeling',
+};
+
+function getDecision(decision: Decision): DecisionFormatted {
+  return decision.toLocaleLowerCase().replace(/\s/gi, '') as DecisionFormatted;
+}
 
 // The official terms of the Focus api "product categories" data how they are used within the Municipality of Amsterdam.
 type ProductOrigin = 'Participatiewet' | 'Bijzondere Bijstand' | 'Minimafonds';
@@ -51,7 +62,7 @@ interface Info {
   };
 }
 
-type InfoExtended = { [type in Decision]: Info };
+type InfoExtended = { [decision: string]: Info };
 
 interface ProductType {
   aanvraag: Info;
@@ -112,7 +123,7 @@ const DAYS_KEEP_RECENT = 28;
 interface StepSourceData {
   id: string;
   productTitle: string;
-  decision?: Decision;
+  decision?: DecisionFormatted;
   datePublished?: string; // Generic date term for use as designated date about an item.
   decisionDeadline1?: string;
   decisionDeadline2?: string;
@@ -270,7 +281,7 @@ export const Labels: LabelData = {
       ),
     },
     beslissing: {
-      Afwijzing: {
+      [getDecision('Afwijzing')]: {
         notification: {
           title: data => `${data.productTitle}: Uw aanvraag is afgewezen`,
           description: data =>
@@ -283,7 +294,7 @@ export const Labels: LabelData = {
         description:
           'U heeft geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.',
       },
-      Toekenning: {
+      [getDecision('Toekenning')]: {
         notification: {
           title: data => `${data.productTitle}: Uw aanvraag is toegekend`,
           description: data =>
@@ -310,7 +321,7 @@ export const Labels: LabelData = {
           </>
         ),
       },
-      'Buiten behandeling': {
+      [getDecision('Buiten Behandeling')]: {
         notification: {
           title: data =>
             `${data.productTitle}: Uw aanvraag is buiten behandeling gesteld`,
@@ -386,7 +397,7 @@ export const Labels: LabelData = {
       ),
     },
     beslissing: {
-      Afwijzing: {
+      [getDecision('Afwijzing')]: {
         notification: {
           title: data => `${data.productTitle}: Uw aanvraag is afgewezen`,
           description: data =>
@@ -399,7 +410,7 @@ export const Labels: LabelData = {
         description:
           'U heeft geen recht op bijzondere bijstand. Bekijk de brief voor meer details.',
       },
-      Toekenning: {
+      [getDecision('Toekenning')]: {
         notification: {
           title: data => `${data.productTitle}: Uw aanvraag is toegekend`,
           description: data =>
@@ -412,7 +423,7 @@ export const Labels: LabelData = {
         description:
           'U heeft recht op bijzondere bijstand. Bekijk de brief voor meer details.',
       },
-      'Buiten behandeling': {
+      [getDecision('Buiten Behandeling')]: {
         notification: {
           title: data =>
             `${data.productTitle}: Uw aanvraag is buiten behandeling gesteld`,
@@ -496,7 +507,7 @@ export const Labels: LabelData = {
       ),
     },
     beslissing: {
-      Afwijzing: {
+      [getDecision('Afwijzing')]: {
         notification: {
           title: data => `${data.productTitle}: Uw aanvraag is afgewezen`,
           description: data =>
@@ -509,7 +520,7 @@ export const Labels: LabelData = {
         description:
           'U heeft geen recht op een Stadspas. Bekijk de brief voor meer details.',
       },
-      Toekenning: {
+      [getDecision('Toekenning')]: {
         notification: {
           title: data => `${data.productTitle}: Uw aanvraag is toegekend`,
           description:
@@ -530,7 +541,7 @@ export const Labels: LabelData = {
           </>
         ),
       },
-      'Buiten behandeling': {
+      [getDecision('Buiten Behandeling')]: {
         notification: {
           title: data =>
             `${data.productTitle}: Uw aanvraag is buiten behandeling gesteld`,
@@ -577,7 +588,7 @@ const AppRoutesByProductOrigin = {
 
 /** Checks if an item returned from the api is considered recent */
 function isRecentItem(
-  decision: Decision,
+  decision: DecisionFormatted,
   steps: FocusProduct['processtappen'],
   compareDate: Date
 ) {
@@ -602,21 +613,20 @@ function translateProductTitle(title: ProductTitle) {
   return title;
 }
 
-type GetStepSourceDataArgs = Pick<
-  StepSourceData,
-  | 'productTitle'
-  | 'latestStep'
-  | 'stepType'
-  | 'isLastActive'
-  | 'isRecent'
-  | 'decision'
-  | 'id'
-  | 'daysUserActionRequired'
-  | 'daysSupplierActionRequired'
-  | 'daysRecoveryAction'
-  | 'dateStart'
-  | 'reden'
-> & { stepData: Step };
+interface StepSourceDataArgs {
+  stepData: Step;
+  id: string;
+  productTitle: string;
+  latestStep: StepTitle;
+  isLastActive: boolean;
+  isRecent: boolean;
+  stepType: StatusLineItem['stepType'];
+  decision: DecisionFormatted;
+  dateStart: string; // The official start date of the clients request process.
+  daysUserActionRequired: number;
+  daysSupplierActionRequired: number;
+  daysRecoveryAction: number; // The number of days a client has to provide more information about a request
+}
 
 // Data for conveniently constructing the information shown to the clien.
 function getStepSourceData({
@@ -632,7 +642,7 @@ function getStepSourceData({
   daysUserActionRequired,
   daysSupplierActionRequired,
   daysRecoveryAction,
-}: GetStepSourceDataArgs): StepSourceData {
+}: StepSourceDataArgs): StepSourceData {
   const stepDate = stepData ? stepData.datum : '';
   const userActionDeadline = calculateUserActionDeadline(
     stepData,
@@ -755,9 +765,11 @@ export function formatFocusNotificationItem(
     datePublished: step.datePublished,
     chapter: Chapters.INKOMEN,
     title:
+      stepLabelSource &&
       stepLabelSource.notification &&
       parseLabelContent(stepLabelSource.notification.title, sourceData),
     description:
+      stepLabelSource &&
       stepLabelSource.notification &&
       parseLabelContent(stepLabelSource.notification.description, sourceData),
     link: {
@@ -811,7 +823,7 @@ export function formatFocusProduct(
   const {
     _id: id,
     soortProduct: productOrigin,
-    typeBesluit: decision,
+    typeBesluit: rawDecision,
     processtappen: steps,
     naam: productTitle,
     dienstverleningstermijn: daysSupplierActionRequired,
@@ -823,6 +835,8 @@ export function formatFocusProduct(
     [...processSteps].reverse().find(step => {
       return step in steps && steps[step] !== null;
     }) || processSteps[0];
+
+  const decision = getDecision(rawDecision || '');
 
   // Determine if this items falls within a recent period (of xx days)
   const isRecent = isRecentItem(decision, steps, compareData);
@@ -893,9 +907,11 @@ export function formatFocusProduct(
     latestStep,
     isRecent,
     hasDecision,
-    isGranted: hasDecision ? decision === 'Toekenning' : null,
-    isDenied: hasDecision ? decision === 'Afwijzing' : null,
-    isDiscarded: hasDecision ? decision === 'Buiten behandeling' : null,
+    isGranted: hasDecision ? decision === getDecision('Toekenning') : null,
+    isDenied: hasDecision ? decision === getDecision('Afwijzing') : null,
+    isDiscarded: hasDecision
+      ? decision === getDecision('Buiten Behandeling')
+      : null,
     link: {
       title: 'Meer informatie', // TODO: How to get custom link title?
       to: `${AppRoutesByProductOrigin[productOrigin]}/${id}`,
