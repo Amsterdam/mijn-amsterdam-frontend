@@ -736,6 +736,15 @@ export function formatFocusNotificationItem(
   sourceData: StepSourceData
 ): MyNotification {
   const stepLabels = Labels[productOrigin][step.aboutStep] as any; // Can't work the right TS construct here atm.
+
+  if (process.env.REACT_APP_BUILD_ENV === 'production') {
+    Sentry.captureMessage(
+      `Debugging FOCUS production with Sentry: (Notification) ProductOrigin: ${productOrigin} / AboutStep: ${
+        step.aboutStep
+      } / Decision: ${sourceData.decision}`
+    );
+  }
+
   const stepLabelSource = !!sourceData.decision
     ? stepLabels[sourceData.decision]
     : stepLabels;
