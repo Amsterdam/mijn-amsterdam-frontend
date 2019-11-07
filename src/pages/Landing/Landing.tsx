@@ -44,7 +44,7 @@ export default () => {
         </p>
         <p>
           Nog niet al uw informatie is via Mijn Amsterdam zichtbaar. We
-          ontwikkelen stap voor stap. Er komen er steeds meer producten en
+          ontwikkelen stap voor stap. Er komen steeds meer producten en
           diensten bij.
         </p>
         <Heading size="mediumLarge" el="h2">
