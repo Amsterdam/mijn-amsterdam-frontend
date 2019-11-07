@@ -9,7 +9,6 @@ import Linkd from 'components/Button/Button';
 import React from 'react';
 import { StatusLineItem } from 'components/StatusLine/StatusLine';
 import { StepType } from '../components/StatusLine/StatusLine';
-import * as Sentry from '@sentry/browser';
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
  */
@@ -747,14 +746,6 @@ export function formatFocusNotificationItem(
 ): MyNotification {
   const stepLabels = Labels[productOrigin][step.aboutStep] as any; // Can't work the right TS construct here atm.
 
-  if (process.env.REACT_APP_BUILD_ENV === 'production') {
-    Sentry.captureMessage(
-      `Debugging FOCUS production with Sentry: (Notification) ProductOrigin: ${productOrigin} / AboutStep: ${
-        step.aboutStep
-      } / Decision: ${sourceData.decision}`
-    );
-  }
-
   const stepLabelSource = !!sourceData.decision
     ? stepLabels[sourceData.decision]
     : stepLabels;
@@ -845,12 +836,6 @@ export function formatFocusProduct(
   const latestStepData = steps[latestStep] as Step;
 
   const hasDecision = steps.beslissing !== null;
-
-  if (process.env.REACT_APP_BUILD_ENV === 'production') {
-    Sentry.captureMessage(
-      `Debugging FOCUS production with Sentry: ProductOrigin: ${productOrigin} / LatestStep: ${latestStep} / Decision: ${decision}`
-    );
-  }
 
   const stepLabels = !hasDecision
     ? (Labels[productOrigin][latestStep] as Info)
