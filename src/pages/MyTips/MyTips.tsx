@@ -76,7 +76,7 @@ export default () => {
                   <>
                     U ziet nu persoonlijke tips over voorzieningen en
                     activiteiten in Amsterdam. We kunnen u ook algemene
-                    informatie tonen waarbij geen gebruik gemaakt word van
+                    informatie tonen waarbij geen gebruik gemaakt wordt van
                     persoonlijke informatie.
                   </>
                 )}
