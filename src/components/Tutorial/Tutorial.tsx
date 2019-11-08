@@ -55,7 +55,6 @@ export default function Tutorial() {
       )}
       style={{ height: document.body.clientHeight }}
     >
-      <div>{isResizing ? 'resizing' : 'mwaaa'}</div>
       {tutorialItems.map((el, i) => (
         <TutorialItem key={i} el={el} />
       ))}
