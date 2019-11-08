@@ -211,8 +211,7 @@ export default function MainNavBar() {
       <nav
         className={classnames(
           styles.MainNavBar,
-          isBurgerMenu && styles.BurgerMenu,
-          isBurgerMenuVisible && styles.BurgerMenuVisible
+          isBurgerMenu && styles.BurgerMenu
         )}
       >
         {isBurgerMenu && (

@@ -20,11 +20,11 @@ describe('Header', () => {
 
   it('(PHONE) Should toggle the menu overlay', () => {
     cy.viewport('iphone-6');
-    selectComponent('MainNavBar_BurgerMenuVisible').should('not.exist');
+    selectComponent('MainNavBarAnim-enter').should('not.exist');
     selectComponent('MainNavBar_BurgerMenuToggleBtn').click();
-    selectComponent('MainNavBar_BurgerMenuVisible').should('exist');
+    selectComponent('MainNavBarAnim-enter').should('exist');
     selectComponent('MainNavBar_BurgerMenuToggleBtn').click();
-    selectComponent('MainNavBar_BurgerMenuVisible').should('not.exist');
+    selectComponent('MainNavBarAnim-enter').should('not.exist');
   });
 
   it('Should toggle the tutorial', () => {
