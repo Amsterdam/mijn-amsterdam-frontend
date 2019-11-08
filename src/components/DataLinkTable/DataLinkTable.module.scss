@@ -158,6 +158,10 @@
 
 
 :global {
+  .dataLinkTable-enter-active,
+  .dataLinkTable-exit-active,
+  .dataLinkTable-enter-done,
+  .dataLinkTable-exit-done,
   .dataLinkTable-exit,
   .dataLinkTable-enter {
     transition: all 300ms;

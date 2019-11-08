@@ -98,6 +98,10 @@
   }
 }
 
+.TutorialResizing .TutorialItem {
+  visibility: hidden;
+}
+
 .TutorialItemHeading {
   margin: 0;
   display: inline-block;

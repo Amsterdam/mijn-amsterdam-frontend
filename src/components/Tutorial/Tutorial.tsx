@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from './Tutorial.module.scss';
 
 import { ReactComponent as ArrowIcon } from 'assets/icons/Arrow__primary-white.svg';
 import useModalRoot from 'hooks/modalRoot.hook';
 import classnames from 'classnames';
+import useDetectResizing from 'hooks/detectResize.hook';
 
 function TutorialItem({ el }: { el: any }) {
   const heading = el.querySelector('[class^="Heading_Heading"]') || el;
@@ -20,7 +21,7 @@ function TutorialItem({ el }: { el: any }) {
   return (
     <div
       className={classnames(styles.TutorialItem, styles[fromDirection])}
-      style={{ left: pos.left, top: pos.top }}
+      style={{ left: pos.left, top: pos.top + window.pageYOffset }}
     >
       <h3
         className={styles.TutorialItemHeading}
@@ -43,12 +44,18 @@ export default function Tutorial() {
     document.querySelectorAll('[data-tutorial-item]')
   );
 
+  const isResizing = useDetectResizing();
+
   // Check if positions are calculated
   return ReactDOM.createPortal(
     <div
-      className={styles.Tutorial}
+      className={classnames(
+        styles.Tutorial,
+        isResizing && styles.TutorialResizing
+      )}
       style={{ height: document.body.clientHeight }}
     >
+      <div>{isResizing ? 'resizing' : 'mwaaa'}</div>
       {tutorialItems.map((el, i) => (
         <TutorialItem key={i} el={el} />
       ))}
