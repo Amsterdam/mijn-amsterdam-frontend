@@ -24,6 +24,7 @@ import {
 import styles from './MainNavBar.module.scss';
 import Tutorial from 'components/Tutorial/Tutorial';
 import Linkd, { Button } from 'components/Button/Button';
+import { CSSTransition } from 'react-transition-group';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -203,70 +204,74 @@ export default function MainNavBar() {
     setSubMenuVisibility();
   }, [history.location]);
 
+  const inProp = isBurgerMenu ? isBurgerMenuVisible : false;
+
   return (
-    <nav
-      className={classnames(
-        styles.MainNavBar,
-        isBurgerMenu && styles.BurgerMenu,
-        isBurgerMenuVisible && styles.BurgerMenuVisible
-      )}
-    >
-      {isBurgerMenu && (
-        <button
-          id={BurgerMenuToggleBtnId}
-          className={classnames(
-            styles.BurgerMenuToggleBtn,
-            isBurgerMenuVisible && styles.BurgerMenuToggleBtnOpen
-          )}
-          onClick={() => toggleBurgerMenu(!isBurgerMenuVisible)}
-        >
-          Navigatie
-        </button>
-      )}
-
-      {isAuthenticated && (
-        <div id={LinkContainerId} className={styles.LinkContainer}>
-          <SecondaryLinks />
-          {menuItems.map(item => {
-            let menuItem = item;
-            if (item.id in submenuItems) {
-              // Add dynamic chapter submenu items to the menu
-              if (item.id === mainMenuItemId.MY_CHAPTERS) {
-                menuItem = { ...item, submenuItems: myChapterItems };
-              } else {
-                menuItem = { ...item, submenuItems: submenuItems[item.id] };
-              }
-            }
-            return getMenuItem(
-              menuItem,
-              activeSubmenuId,
-              setSubMenuVisibility,
-              !isBurgerMenu
-            );
-          })}
-        </div>
-      )}
-
-      {location.pathname === AppRoutes.ROOT && (
-        <>
-          <Button
+    <CSSTransition in={inProp} timeout={0} classNames="MainNavBarAnim">
+      <nav
+        className={classnames(
+          styles.MainNavBar,
+          isBurgerMenu && styles.BurgerMenu,
+          isBurgerMenuVisible && styles.BurgerMenuVisible
+        )}
+      >
+        {isBurgerMenu && (
+          <button
+            id={BurgerMenuToggleBtnId}
             className={classnames(
-              styles.TutorialBtn,
-              isTutorialVisible && styles.TutorialBtnOpen
+              styles.BurgerMenuToggleBtn,
+              isBurgerMenuVisible && styles.BurgerMenuToggleBtnOpen
             )}
-            onClick={() => {
-              setIsTutorialVisible(!isTutorialVisible);
-            }}
-            variant="plain"
-            lean={true}
+            onClick={() => toggleBurgerMenu(!isBurgerMenuVisible)}
           >
-            Uitleg
-          </Button>
-          {isTutorialVisible && <Tutorial />}
-        </>
-      )}
+            Navigatie
+          </button>
+        )}
 
-      {isBurgerMenuVisible && <div className={styles.Modal} />}
-    </nav>
+        {isAuthenticated && (
+          <div id={LinkContainerId} className={styles.LinkContainer}>
+            <SecondaryLinks />
+            {menuItems.map(item => {
+              let menuItem = item;
+              if (item.id in submenuItems) {
+                // Add dynamic chapter submenu items to the menu
+                if (item.id === mainMenuItemId.MY_CHAPTERS) {
+                  menuItem = { ...item, submenuItems: myChapterItems };
+                } else {
+                  menuItem = { ...item, submenuItems: submenuItems[item.id] };
+                }
+              }
+              return getMenuItem(
+                menuItem,
+                activeSubmenuId,
+                setSubMenuVisibility,
+                !isBurgerMenu
+              );
+            })}
+          </div>
+        )}
+
+        {location.pathname === AppRoutes.ROOT && (
+          <>
+            <Button
+              className={classnames(
+                styles.TutorialBtn,
+                isTutorialVisible && styles.TutorialBtnOpen
+              )}
+              onClick={() => {
+                setIsTutorialVisible(!isTutorialVisible);
+              }}
+              variant="plain"
+              lean={true}
+            >
+              Uitleg
+            </Button>
+            {isTutorialVisible && <Tutorial />}
+          </>
+        )}
+
+        {isBurgerMenuVisible && <div className={styles.Modal} />}
+      </nav>
+    </CSSTransition>
   );
 }

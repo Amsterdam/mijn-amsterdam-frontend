@@ -190,12 +190,15 @@
   }
 }
 
+.LogoutLink,
+.ProfileLink {
+  color: inherit;
+}
+
+// Animation of the mainnavbar
+
 .BurgerMenu {
-  .LinkContainer {
-    transform: translate3d(-100%, 0, 0);
-    transition: transform 200ms ease-in;
-  }
-  &:before {
+   &:before {
     content: '';
     position: absolute;
     top: $main-header-topbar-height;
@@ -203,26 +206,54 @@
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, .5);
-    opacity: 0;
-    transition: opacity 200ms ease-out, transform 0ms 200ms;
-
     z-index: z-index(burger-menu-backdrop);
+  }
+  .LinkContainer {
+    opacity: 0;
+    transform: translate3d(-40rem, 0, 0);
+  }
+  &:before {
+    opacity: 0;
     transform: translate3d(-100%, 0, 0);
   }
-  &Visible {
-    .LinkContainer {
-      transform: translateX(0);
-      transition-timing-function: ease-out;
+}
+
+// CSS modules generates unique classNames so we have to use the className attribute selector for matching the right component
+:global {
+  .MainNavBarAnim-enter-done {
+    [class^="MainNavBar_LinkContainer"] {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      transition: all 200ms ease-in-out;
     }
     &:before {
       opacity: 1;
       transform: translate3d(0, 0, 0);
-      transition: opacity 200ms 10ms ease-in, transform 0ms;
+      transition: opacity 200ms 20ms ease-in, transform 0ms 0ms ease-in;
     }
   }
-}
 
-.LogoutLink,
-.ProfileLink {
-  color: inherit;
+  .MainNavBarAnim-exit {
+    [class^="MainNavBar_LinkContainer"] {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+    &:before {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .MainNavBarAnim-exit-done {
+    [class^="MainNavBar_LinkContainer"] {
+      opacity: 0;
+      transform: translate3d(-40rem, 0, 0);
+      transition: all 200ms ease-in-out;
+    }
+    &:before {
+      opacity: 0;
+      transform: translate3d(-100%, 0, 0);
+      transition: opacity 200ms 0ms ease-in, transform 0ms 200ms ease-in;
+    }
+  }
 }
