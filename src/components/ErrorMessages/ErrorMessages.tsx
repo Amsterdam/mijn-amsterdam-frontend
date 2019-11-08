@@ -33,11 +33,6 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
     : 0;
   const [isDismissed, setDismissed] = useErrorMessagesDismissed();
 
-  function dismissAll() {
-    setModalOpen(false);
-    setDismissed(true);
-  }
-
   return (
     <div
       ref={el}

@@ -54,18 +54,13 @@ interface MyAreaComponentProps {
   url: string;
 }
 
-export default function MyArea({ url }: MyAreaComponentProps) {
+export default function MyArea({ url, ...otherProps }: MyAreaComponentProps) {
   return (
-    <div className={styles.MyArea}>
+    <div {...otherProps} className={styles.MyArea}>
       <MyAreaMap url={url} />
       <NavLink to={AppRoutes.MY_AREA} className={styles.Overlay}>
         <div>
-          <Heading
-            id="MyAreaHeader" // Used for tutorial placement
-            size="large"
-          >
-            Mijn buurt
-          </Heading>
+          <Heading size="large">Mijn buurt</Heading>
           <p>
             Klik voor een overzicht van gemeentelijke informatie rond uw eigen
             woning.

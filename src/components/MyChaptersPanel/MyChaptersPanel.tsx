@@ -4,6 +4,7 @@ import { MainNavSubmenuLink } from 'components/MainNavSubmenu/MainNavSubmenu';
 import Heading from 'components/Heading/Heading';
 import { MenuItem } from '../MainNavBar/MainNavBar.constants';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
+import classnames from 'classnames';
 import {
   trackItemPresentation,
   useSessionCallbackOnceDebounced,
@@ -14,13 +15,16 @@ export interface MyChaptersPanelProps {
   items: MenuItem[];
   isLoading: boolean;
   trackCategory: string;
+  className?: string;
 }
 
 export default function MyChaptersPanel({
   title,
   items = [],
+  className,
   isLoading = true,
   trackCategory,
+  ...otherProps
 }: MyChaptersPanelProps) {
   useSessionCallbackOnceDebounced(
     trackCategory,
@@ -33,12 +37,11 @@ export default function MyChaptersPanel({
   );
 
   return (
-    <div className={styles.MyChaptersPanel}>
-      <Heading
-        id="MyChaptersHeader" // Used for tutorial placement
-        size="large"
-        className={styles.Title}
-      >
+    <div
+      {...otherProps}
+      className={classnames(styles.MyChaptersPanel, className)}
+    >
+      <Heading size="large" className={styles.Title}>
         {title}
       </Heading>
       <div className={styles.Links}>

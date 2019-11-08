@@ -12,6 +12,7 @@ import styles from './DataLinkTable.module.scss';
 import { trackEvent } from 'hooks/analytics.hook';
 import { useRef } from 'react';
 import useComponentSize from '@rehooks/component-size';
+import { CSSTransition } from 'react-transition-group';
 
 const DEFAULT_TRACK_CATEGORY = 'Thema Pagina';
 
@@ -74,12 +75,6 @@ export default function DataLinkTable({
   // Setting an explicit height will result in a nice transition
   let cssCalcExpr = `${isCollapsed ? 0 : tableHeight}px`; // 1.5rem being the base height of the thead
 
-  // Vary the transition duration between 300 and 600ms
-  let cssTransitionDurationMS = `${Math.min(
-    Math.max(items.length * 60, 300),
-    600
-  )}ms`;
-
   return (
     <div className={classes}>
       {hasTitle && (
@@ -105,47 +100,54 @@ export default function DataLinkTable({
       {hasNoItemsMessage && !isLoading && !hasItems && (
         <p className={styles.NoItemsMessage}>{noItemsMessage}</p>
       )}
+
       {!isLoading && hasItems && (
-        <div
-          aria-hidden={isCollapsed}
-          className={styles.Panel}
-          style={{
-            height: cssCalcExpr,
-            transitionDuration: cssTransitionDurationMS,
-          }}
-        >
-          <table className={styles.Table} ref={tableRef}>
-            <thead>
-              <tr className={styles.TableRow}>
-                <th className={styles.DisplayProp}>
-                  {(displayProps && displayProps.title) || ' '}
-                </th>
-                {displayPropEntries.map(([, label]) => (
-                  <th key={label} className={styles.DisplayProp}>
-                    {label}
+        <CSSTransition timeout={0} in={isCollapsed} classNames="dataLinkTable">
+          <div
+            aria-hidden={isCollapsed}
+            className={styles.Panel}
+            style={{
+              height: cssCalcExpr,
+            }}
+          >
+            <table className={styles.Table} ref={tableRef}>
+              <thead>
+                <tr className={styles.TableRow}>
+                  <th className={styles.DisplayProp}>
+                    {(displayProps && displayProps.title) || ' '}
                   </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {items.map(item => (
-                <tr key={item.id} className={styles.TableRow}>
-                  <td className={styles.DisplayPropTitle}>
-                    <Linkd tabIndex={isCollapsed ? -1 : 0} href={item.link.to}>
-                      {item.title}
-                    </Linkd>
-                  </td>
-                  {displayPropEntries.map(([key, label]) => (
-                    <td key={key} className={styles.DisplayProp}>
-                      <span className={styles.DisplayPropLabel}>{label}:</span>
-                      {item[key] || <span>&mdash;</span>}
-                    </td>
+                  {displayPropEntries.map(([, label]) => (
+                    <th key={label} className={styles.DisplayProp}>
+                      {label}
+                    </th>
                   ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {items.map(item => (
+                  <tr key={item.id} className={styles.TableRow}>
+                    <td className={styles.DisplayPropTitle}>
+                      <Linkd
+                        tabIndex={isCollapsed ? -1 : 0}
+                        href={item.link.to}
+                      >
+                        {item.title}
+                      </Linkd>
+                    </td>
+                    {displayPropEntries.map(([key, label]) => (
+                      <td key={key} className={styles.DisplayProp}>
+                        <span className={styles.DisplayPropLabel}>
+                          {label}:
+                        </span>
+                        {item[key] || <span>&mdash;</span>}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </CSSTransition>
       )}
     </div>
   );

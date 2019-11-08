@@ -2,7 +2,6 @@
 
 .DataLinkTable {
   padding-top: 4rem;
-  transition: margin 200ms ease-out;
   overflow: auto; // fixes margin of wrapped DataLinkTable.Title being respected
 
   &.isCollapsed {
@@ -10,13 +9,6 @@
     .CaretIcon {
       transform: translateY(-50%) rotate(0);
     }
-    .Panel {
-      transition-timing-function: ease-out;
-    }
-  }
-
-  &.noTransition {
-    transition: none;
   }
 }
 
@@ -54,7 +46,6 @@
 
 .Panel {
   overflow: hidden;
-  transition: height 400ms ease-in;
   border-bottom: 0.1rem solid $color-neutral-grey2;
   height: 0px;
 
@@ -163,4 +154,16 @@
   text-indent: 18rem;
   margin-top: -3rem; // closer to the heading
   margin-bottom: 3rem;
+}
+
+
+:global {
+  .dataLinkTable-enter-active,
+  .dataLinkTable-exit-active,
+  .dataLinkTable-enter-done,
+  .dataLinkTable-exit-done,
+  .dataLinkTable-exit,
+  .dataLinkTable-enter {
+    transition: all 300ms;
+  }
 }
