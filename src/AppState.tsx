@@ -52,29 +52,6 @@ export function SessionState({ children }: SessionStateProps) {
   );
 }
 
-export interface TutorialState {
-  isTutorialVisible: boolean;
-  setIsTutorialVisible: Function;
-}
-interface TutorialStateProps {
-  children: ComponentChildren;
-}
-
-export const TutorialContext = createContext<TutorialState>(
-  {} as TutorialState
-);
-
-export function TutorialState({ children }: TutorialStateProps) {
-  const [isTutorialVisible, setIsTutorialVisible] = useState(false);
-  return (
-    <TutorialContext.Provider
-      value={{ isTutorialVisible, setIsTutorialVisible }}
-    >
-      {children}
-    </TutorialContext.Provider>
-  );
-}
-
 interface AppStateProps {
   children?: ComponentChildren;
   value?: Partial<AppState>;

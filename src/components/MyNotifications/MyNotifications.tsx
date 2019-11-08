@@ -34,6 +34,7 @@ export default function MyNotifications({
   isLoading = true,
   trackCategory,
   noContentNotification = 'Er zijn op dit moment geen meldingen voor u.',
+  ...otherProps
 }: MyNotificationsProps) {
   const [
     myNotificationsState,
@@ -57,7 +58,10 @@ export default function MyNotifications({
   );
 
   return (
-    <div className={classnames(styles.MyNotifications, styles.isLoading)}>
+    <div
+      {...otherProps}
+      className={classnames(styles.MyNotifications, styles.isLoading)}
+    >
       <ul>
         {isLoading && (
           <li

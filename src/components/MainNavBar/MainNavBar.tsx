@@ -1,6 +1,6 @@
-import { AppRoutes, Colors, Layout, LOGOUT_URL } from 'App.constants';
+import { AppRoutes, Colors, LOGOUT_URL } from 'App.constants';
 import { ComponentChildren } from 'App.types';
-import { AppContext, SessionContext, TutorialContext } from 'AppState';
+import { AppContext, SessionContext } from 'AppState';
 import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
 import classnames from 'classnames';
 import FontEnlarger from 'components/FontEnlarger/FontEnlarger';
@@ -22,9 +22,9 @@ import {
   submenuItems,
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
-import teststyles from '../Tutorial/Tutorial.module.scss';
 import Tutorial from 'components/Tutorial/Tutorial';
 import Linkd, { Button } from 'components/Button/Button';
+import { CSSTransition } from 'react-transition-group';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -59,7 +59,12 @@ function SecondaryLinks() {
     <div className={styles.secondaryLinks}>
       {isDesktopScreen && <FontEnlarger />}
       {!isError && (
-        <Link to={AppRoutes.PROFILE} className={styles.ProfileLink}>
+        <Link
+          to={AppRoutes.PROFILE}
+          className={styles.ProfileLink}
+          data-tutorial-item="Hier kunt u uw algemene persoonsgegevens uit de gemeentelijke basisregistratie raadplegen, zoals uw woonadres;left-bottom"
+          id="ProfileLink"
+        >
           {persoon && persoon.voornamen ? (
             getFullName(persoon)
           ) : (
@@ -156,17 +161,7 @@ export default function MainNavBar() {
   const isBurgerMenu = useTabletScreen();
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState(false);
   const { history, location } = useRouter();
-  const { isTutorialVisible, setIsTutorialVisible } = useContext(
-    TutorialContext
-  );
-  const TUTORIAL_CLASS = teststyles.TutorialItems;
-
-  useEffect(() => {
-    const classList = document.body.classList;
-    isTutorialVisible
-      ? classList.add(TUTORIAL_CLASS)
-      : classList.remove(TUTORIAL_CLASS);
-  }, [isTutorialVisible]);
+  const [isTutorialVisible, setIsTutorialVisible] = useState(false);
 
   function closeBurgerMenu(e?: any) {
     if (isBurgerMenuVisible) {
@@ -209,73 +204,73 @@ export default function MainNavBar() {
     setSubMenuVisibility();
   }, [history.location]);
 
+  const inProp = isBurgerMenu ? isBurgerMenuVisible : false;
+
   return (
-    <nav
-      className={classnames(
-        styles.MainNavBar,
-        isBurgerMenu && styles.BurgerMenu,
-        isBurgerMenuVisible && styles.BurgerMenuVisible
-      )}
-    >
-      {isBurgerMenu && (
-        <button
-          id={BurgerMenuToggleBtnId}
-          className={classnames(
-            styles.BurgerMenuToggleBtn,
-            isBurgerMenuVisible && styles.BurgerMenuToggleBtnOpen
-          )}
-          onClick={() => toggleBurgerMenu(!isBurgerMenuVisible)}
-        >
-          Navigatie
-        </button>
-      )}
-
-      {isAuthenticated && (
-        <div id={LinkContainerId} className={styles.LinkContainer}>
-          <SecondaryLinks />
-          {menuItems.map(item => {
-            let menuItem = item;
-            if (item.id in submenuItems) {
-              // Add dynamic chapter submenu items to the menu
-              if (item.id === mainMenuItemId.MY_CHAPTERS) {
-                menuItem = { ...item, submenuItems: myChapterItems };
-              } else {
-                menuItem = { ...item, submenuItems: submenuItems[item.id] };
-              }
-            }
-            return getMenuItem(
-              menuItem,
-              activeSubmenuId,
-              setSubMenuVisibility,
-              !isBurgerMenu
-            );
-          })}
-        </div>
-      )}
-
-      {location.pathname === AppRoutes.ROOT && (
-        <>
-          <Button
+    <CSSTransition in={inProp} timeout={0} classNames="MainNavBarAnim">
+      <nav
+        className={classnames(
+          styles.MainNavBar,
+          isBurgerMenu && styles.BurgerMenu
+        )}
+      >
+        {isBurgerMenu && (
+          <button
+            id={BurgerMenuToggleBtnId}
             className={classnames(
-              styles.TutorialBtn,
-              isTutorialVisible && styles.TutorialBtnOpen
+              styles.BurgerMenuToggleBtn,
+              isBurgerMenuVisible && styles.BurgerMenuToggleBtnOpen
             )}
-            onClick={() => {
-              const isVisible = !isTutorialVisible;
-              setIsTutorialVisible(isVisible);
-            }}
-            variant="plain"
-            lean={true}
+            onClick={() => toggleBurgerMenu(!isBurgerMenuVisible)}
           >
-            Uitleg
-          </Button>
-          {isTutorialVisible && (
-            <Tutorial toggleTutorial={setIsTutorialVisible} />
-          )}
-        </>
-      )}
+            Navigatie
+          </button>
+        )}
 
-      {isBurgerMenuVisible && <div className={styles.Modal} />}
-    </nav>
+        {isAuthenticated && (
+          <div id={LinkContainerId} className={styles.LinkContainer}>
+            <SecondaryLinks />
+            {menuItems.map(item => {
+              let menuItem = item;
+              if (item.id in submenuItems) {
+                // Add dynamic chapter submenu items to the menu
+                if (item.id === mainMenuItemId.MY_CHAPTERS) {
+                  menuItem = { ...item, submenuItems: myChapterItems };
+                } else {
+                  menuItem = { ...item, submenuItems: submenuItems[item.id] };
+                }
+              }
+              return getMenuItem(
+                menuItem,
+                activeSubmenuId,
+                setSubMenuVisibility,
+                !isBurgerMenu
+              );
+            })}
+          </div>
+        )}
+
+        {location.pathname === AppRoutes.ROOT && (
+          <>
+            <Button
+              className={classnames(
+                styles.TutorialBtn,
+                isTutorialVisible && styles.TutorialBtnOpen
+              )}
+              onClick={() => {
+                setIsTutorialVisible(!isTutorialVisible);
+              }}
+              variant="plain"
+              lean={true}
+            >
+              Uitleg
+            </Button>
+            {isTutorialVisible && <Tutorial />}
+          </>
+        )}
+
+        {isBurgerMenuVisible && <div className={styles.Modal} />}
+      </nav>
+    </CSSTransition>
   );
 }
