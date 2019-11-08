@@ -51,13 +51,10 @@ export default ({
   BRP,
 }: Pick<AppState, 'FOCUS' | 'BRP'>): MyNotificationsApiState => {
   const [myNotificationsState] = useMyNotificationsState();
-  const [welcomeDate] = useLocalStorage(
-    'welcomeDate',
-    new Date().toISOString()
-  );
+
   const items = [
     // Static content welcome message
-    Object.assign(WelcomeNotification, { datePublished: welcomeDate }),
+    WelcomeNotification,
     // Focus notification items
     ...FOCUS.data.notifications,
     // BRP Notifications
