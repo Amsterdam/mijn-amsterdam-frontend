@@ -6,6 +6,7 @@ import { ReactComponent as ArrowIcon } from 'assets/icons/Arrow__primary-white.s
 import useModalRoot from 'hooks/modalRoot.hook';
 import classnames from 'classnames';
 import useDetectResizing from 'hooks/detectResize.hook';
+import { usePhoneScreen } from '../../hooks/media.hook';
 
 function TutorialItem({ el }: { el: any }) {
   const heading = el.querySelector('[class^="Heading_Heading"]') || el;
@@ -45,13 +46,14 @@ export default function Tutorial() {
   );
 
   const isResizing = useDetectResizing();
+  const isPhoneScreen = usePhoneScreen();
 
   // Check if positions are calculated
   return ReactDOM.createPortal(
     <div
       className={classnames(
         styles.Tutorial,
-        isResizing && styles.TutorialResizing
+        isResizing && !isPhoneScreen && styles.TutorialResizing
       )}
       style={{ height: document.body.clientHeight }}
     >

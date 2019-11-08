@@ -3,6 +3,14 @@ import { mount } from 'enzyme';
 import Tutorial from './Tutorial';
 
 describe('tutorial', () => {
+  beforeAll(() => {
+    (window.matchMedia as any) = jest.fn(() => {
+      return {
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+      };
+    });
+  });
   it('Renders without crashing', () => {
     const comp = mount(
       <div>
