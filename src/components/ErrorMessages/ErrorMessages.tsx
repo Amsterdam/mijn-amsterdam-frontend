@@ -50,6 +50,7 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
             lean={true}
             variant="inline"
             onClick={() => setModalOpen(true)}
+            aria-label="Meer informatie over waarom u mischien niet alle gegevens ziet."
           >
             meer informatie
           </Button>
@@ -60,6 +61,7 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
           icon={!isDismissed ? CloseIcon : AlertIcon}
           className={styles.ToggleButton}
           onClick={() => setDismissed(!isDismissed)}
+          aria-label={isDismissed ? 'Toon bericht' : 'Verberg bericht'}
         />
       </p>
       <Modal
