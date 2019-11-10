@@ -110,6 +110,7 @@ export function Dialog({
             <div
               role="dialog"
               aria-labelledby="dialog-title"
+              aria-describedby="dialog-desc"
               aria-modal="true"
               className={classnames(
                 styles.Dialog,
@@ -128,13 +129,16 @@ export function Dialog({
               style={inlineStyles}
             >
               <header
-                id="dialog-title"
                 className={styles.Header}
                 style={{
                   justifyContent: !!title ? 'space-between' : 'flex-end',
                 }}
               >
-                {!!title && <Heading size="small">{title}</Heading>}
+                {!!title && (
+                  <Heading size="small" id="dialog-title">
+                    {title}
+                  </Heading>
+                )}
                 {showCloseButton && (
                   <CloseButton
                     title="Overlay sluiten"
@@ -143,7 +147,9 @@ export function Dialog({
                   />
                 )}
               </header>
-              <div className={styles.Content}>{children}</div>
+              <div className={styles.Content} id="dialog-desc">
+                {children}
+              </div>
             </div>
           </div>
         </FocusTrap>,
