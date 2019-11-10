@@ -27,6 +27,7 @@ import classnames from 'classnames';
 import * as Sentry from '@sentry/browser';
 import ApplicationError from 'components/ApplicationError/ApplicationError';
 import useScript from 'hooks/useScript';
+import { isProduction } from './helpers/App';
 
 function AppNotAuthenticated() {
   return (
@@ -124,7 +125,10 @@ export default function App() {
     ['production', 'acceptance'].includes(`${process.env.REACT_APP_BUILD_ENV}`)
   ) {
     useAnalytics();
-    useScript('/js/usabilla.js');
+
+    if (isProduction()) {
+      useScript('/js/usabilla.js');
+    }
   }
 
   const sendToSentry = (error: Error, componentStack: string) => {
