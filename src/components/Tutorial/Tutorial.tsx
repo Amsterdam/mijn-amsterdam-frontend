@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { DOMElement, CSSProperties } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './Tutorial.module.scss';
 
@@ -6,7 +6,8 @@ import { ReactComponent as ArrowIcon } from 'assets/icons/Arrow__primary-white.s
 import useModalRoot from 'hooks/modalRoot.hook';
 import classnames from 'classnames';
 import useDetectResizing from 'hooks/detectResize.hook';
-import { usePhoneScreen } from '../../hooks/media.hook';
+import { usePhoneScreen } from 'hooks/media.hook';
+import { useRef, useEffect, useState } from 'react';
 
 function TutorialItem({ el }: { el: any }) {
   const heading = el.querySelector('[class^="Heading_Heading"]') || el;
@@ -19,19 +20,50 @@ function TutorialItem({ el }: { el: any }) {
     ';'
   );
 
+  const ref = useRef<HTMLDivElement | null>(null);
+  const headingRef = useRef<HTMLHeadingElement | null>(null);
+  const [itemPos, setItemPos] = useState({ width: 0, left: 0 });
+  const [headingPos, setHeadingPos] = useState({ width: 0, left: 0 });
+
+  useEffect(() => {
+    if (headingRef.current !== null) {
+      setHeadingPos((headingRef.current as any).getBoundingClientRect());
+    }
+    if (ref.current !== null) {
+      setItemPos((ref.current as any).getBoundingClientRect());
+    }
+  }, [ref.current, headingRef.current]);
+
+  const itemWidth = (itemPos as any).width;
+  const headingWidth = (headingPos as any).width + pos.left;
+  const left =
+    fromDirection.startsWith('right') &&
+    headingWidth + itemWidth > window.innerWidth
+      ? headingWidth + itemWidth - window.innerWidth
+      : 0;
+  const textStyle: CSSProperties = {
+    transform: `translateX(-${left}px)`,
+  };
+
   return (
     <div
       className={classnames(styles.TutorialItem, styles[fromDirection])}
-      style={{ left: pos.left, top: pos.top + window.pageYOffset }}
+      style={{
+        left: pos.left,
+        top: pos.top + window.pageYOffset,
+      }}
     >
       <h3
+        ref={headingRef}
         className={styles.TutorialItemHeading}
         style={{ fontSize, lineHeight, padding }}
       >
         {heading.textContent}
       </h3>
       <div className={styles.TutorialItemInner}>
-        <p className={styles.TutorialText}>{text}</p>
+        <p className={styles.TutorialText} style={textStyle}>
+          <span ref={ref}>{text}</span>
+        </p>
         <span className={styles.ArrowIconContainer}>
           <ArrowIcon className={styles.ArrowIcon} />
         </span>
