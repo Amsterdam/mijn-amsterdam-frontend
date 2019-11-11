@@ -23,8 +23,9 @@ import {
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
 import Tutorial from 'components/Tutorial/Tutorial';
-import Linkd, { Button } from 'components/Button/Button';
+import { Button } from 'components/Button/Button';
 import { CSSTransition } from 'react-transition-group';
+import { useTMALogout } from '../../hooks/api/session.api.hook';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -54,6 +55,7 @@ function SecondaryLinks() {
   }, [hasFirstName]);
 
   const isDesktopScreen = useDesktopScreen();
+  const logout = useTMALogout();
 
   return (
     <div className={styles.secondaryLinks}>
@@ -72,15 +74,15 @@ function SecondaryLinks() {
           )}
         </Link>
       )}
-      <Linkd
-        href={LOGOUT_URL}
-        external={true}
+      <Button
+        onClick={logout}
+        variant="inline"
         lean={true}
         className={styles.LogoutLink}
         icon={LogoutIcon}
       >
         Uitloggen
-      </Linkd>
+      </Button>
     </div>
   );
 }
