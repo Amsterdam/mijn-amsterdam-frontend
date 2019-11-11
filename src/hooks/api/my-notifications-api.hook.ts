@@ -1,4 +1,4 @@
-import { Chapter, WelcomeNotification } from 'App.constants';
+import { Chapter, TmaMalfunction, WelcomeNotification } from 'App.constants';
 import { LinkProps } from 'App.types';
 import { AppState } from 'AppState';
 import { dateSort } from 'helpers/App';
@@ -53,6 +53,7 @@ export default ({
   const [myNotificationsState] = useMyNotificationsState();
 
   const items = [
+    TmaMalfunction,
     // Static content welcome message
     WelcomeNotification,
     // Focus notification items
