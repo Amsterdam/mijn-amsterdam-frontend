@@ -23,6 +23,7 @@ export function MainNavSubmenuLink({
       href={to}
       onClick={() => trackLink(to)}
       rel={rel}
+      target="_blank"
       className={styles.MainNavSubmenuLink}
       {...rest}
     >
