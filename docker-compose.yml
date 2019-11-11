@@ -15,7 +15,7 @@ services:
       context: .
       target: build-deps
       args:
-        - BUILD_ENV=acceptance
+        - BUILD_ENV=e2e
     environment:
       - APP_HOST=frontend
       - APP_PORT=3000
@@ -28,7 +28,7 @@ services:
       context: .
       target: build-deps
       args:
-        - BUILD_ENV=acceptance
+        - BUILD_ENV=e2e
     depends_on:
       - api
     environment:
