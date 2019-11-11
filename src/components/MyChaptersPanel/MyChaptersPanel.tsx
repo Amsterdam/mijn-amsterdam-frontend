@@ -9,6 +9,7 @@ import {
   trackItemPresentation,
   useSessionCallbackOnceDebounced,
 } from 'hooks/analytics.hook';
+import { ChapterTitles, Chapter } from 'App.constants';
 
 export interface MyChaptersPanelProps {
   title: string;
@@ -30,7 +31,10 @@ export default function MyChaptersPanel({
     trackCategory,
     () => {
       items.forEach(({ id }) => {
-        trackItemPresentation(trackCategory, `Thema ${id}`);
+        trackItemPresentation(
+          trackCategory,
+          `Thema ${ChapterTitles[id as Chapter] || id}`
+        );
       });
     },
     items.length
