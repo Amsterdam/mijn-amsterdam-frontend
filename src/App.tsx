@@ -12,7 +12,7 @@ import MyNotifications from 'pages/MyNotifications/MyNotifications';
 import Proclaimer from 'pages/Proclaimer/Proclaimer';
 import Zorg from 'pages/Zorg/Zorg';
 import ZorgDetail from 'pages/ZorgDetail/ZorgDetail';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import useRouter from 'use-react-router';
 import ErrorBoundary from 'react-error-boundary';
@@ -97,8 +97,15 @@ function AppAuthenticated() {
 
 function AppLanding() {
   const session = useContext(SessionContext);
-  const { isPristine, isAuthenticated } = session;
+  const { isPristine, isAuthenticated, refetch } = session;
   // If session was previously authenticated we don't want to show the loader again
+
+  useEffect(() => {
+    setTimeout(() => {
+      refetch();
+    }, 1000);
+  }, []);
+
   if (isPristine) {
     return <p className={styles.PreLoader}>Welkom bij Mijn Amsterdam</p>;
   }
