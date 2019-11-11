@@ -98,14 +98,8 @@ function AppAuthenticated() {
 function AppLanding() {
   const session = useContext(SessionContext);
   const { isPristine, isAuthenticated, refetch } = session;
+
   // If session was previously authenticated we don't want to show the loader again
-
-  useEffect(() => {
-    setTimeout(() => {
-      refetch();
-    }, 1000);
-  }, []);
-
   if (isPristine) {
     return <p className={styles.PreLoader}>Welkom bij Mijn Amsterdam</p>;
   }
