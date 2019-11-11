@@ -87,10 +87,12 @@ function useWindowStorage(
 
   function listen(e: StorageEvent) {
     try {
-      if (e.storageArea === adapter && e.key === key) {
+      if ('storageArea' in e && e.storageArea === adapter && e.key === key) {
         setValue(e.newValue);
       }
-    } catch (error) {}
+    } catch (error) {
+      Sentry.captureException(error);
+    }
   }
 
   function remove() {
