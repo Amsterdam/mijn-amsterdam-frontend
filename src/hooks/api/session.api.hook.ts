@@ -20,6 +20,7 @@ const INITIAL_SESSION_STATE: Omit<SessionState, 'refetch'> = {
 const requestOptions: ApiRequestOptions = {
   url: getApiUrl('AUTH'),
   resetToInitialDataOnError: true,
+  postpone: true,
 };
 
 export type SessionApiState = Omit<ApiState, 'data'> & SessionState;
