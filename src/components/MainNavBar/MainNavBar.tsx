@@ -26,6 +26,7 @@ import Tutorial from 'components/Tutorial/Tutorial';
 import { Button } from 'components/Button/Button';
 import { CSSTransition } from 'react-transition-group';
 import { useTMALogout } from '../../hooks/api/session.api.hook';
+import Linkd from '../Button/Button';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -55,7 +56,6 @@ function SecondaryLinks() {
   }, [hasFirstName]);
 
   const isDesktopScreen = useDesktopScreen();
-  const logout = useTMALogout();
 
   return (
     <div className={styles.secondaryLinks}>
@@ -74,15 +74,15 @@ function SecondaryLinks() {
           )}
         </Link>
       )}
-      <Button
-        onClick={logout}
-        variant="inline"
+      <Linkd
+        href={LOGOUT_URL}
+        external={true}
         lean={true}
         className={styles.LogoutLink}
         icon={LogoutIcon}
       >
         Uitloggen
-      </Button>
+      </Linkd>
     </div>
   );
 }
