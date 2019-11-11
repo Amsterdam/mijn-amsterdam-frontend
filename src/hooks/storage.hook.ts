@@ -87,7 +87,12 @@ function useWindowStorage(
 
   function listen(e: StorageEvent) {
     try {
-      if ('storageArea' in e && e.storageArea === adapter && e.key === key) {
+      if (
+        e &&
+        'storageArea' in e &&
+        e.storageArea === adapter &&
+        e.key === key
+      ) {
         setValue(e.newValue);
       }
     } catch (error) {
