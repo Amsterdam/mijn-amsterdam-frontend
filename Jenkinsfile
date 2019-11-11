@@ -33,22 +33,22 @@ pipeline {
       }
     }
 
-     stage('E2E testing') {
-      when { not { branch 'test' } }
-      environment {
-        PROJECT = "${PROJECT_PREFIX}e2e"
-      }
-      steps {
-        script { currentBuild.displayName = "E2E testing #${BUILD_NUMBER} (${COMMIT_HASH})" }
-        sh "stdbuf -i0 -e0 -o0 docker-compose -p ${PROJECT} up --build --exit-code-from e2e e2e"
-      }
-      post {
-        always {
-          junit 'cypress/results/test-report-*.xml'
-          sh "docker-compose -p ${PROJECT} down -v || true"
-        }
-      }
-    }
+    //  stage('E2E testing') {
+    //   when { not { branch 'test' } }
+    //   environment {
+    //     PROJECT = "${PROJECT_PREFIX}e2e"
+    //   }
+    //   steps {
+    //     script { currentBuild.displayName = "E2E testing #${BUILD_NUMBER} (${COMMIT_HASH})" }
+    //     sh "stdbuf -i0 -e0 -o0 docker-compose -p ${PROJECT} up --build --exit-code-from e2e e2e"
+    //   }
+    //   post {
+    //     always {
+    //       junit 'cypress/results/test-report-*.xml'
+    //       sh "docker-compose -p ${PROJECT} down -v || true"
+    //     }
+    //   }
+    // }
 
     // TEST
 
