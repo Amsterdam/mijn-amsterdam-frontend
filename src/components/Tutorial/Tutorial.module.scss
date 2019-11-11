@@ -19,6 +19,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
 .TutorialText {
@@ -29,12 +30,20 @@
   text-align: center;
   width: 30rem;
   margin: 0;
+  position: relative;
+
+  @include mq-phone() {
+    width: 20rem;
+  }
 }
 
 .ArrowIcon {
   position: relative;
   transform-origin: center center;
   width: 11rem;
+  @include mq-phone() {
+    width: 5rem;
+  }
   height: auto;
 }
 

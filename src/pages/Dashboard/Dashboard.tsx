@@ -68,7 +68,7 @@ export default () => {
             isLoading={isMyChaptersLoading}
             items={myChapterItems}
             title="Mijn thema's"
-            data-tutorial-item="Dit zijn de onderwerpen waarover u iets heeft bij de gemeente;right-bottom"
+            data-tutorial-item="Dit zijn de onderwerpen waarover u iets heeft bij de gemeente;right-top"
             trackCategory="Dashboard / Mijn Thema's"
           />
         </div>
