@@ -195,6 +195,20 @@
   color: inherit;
 }
 
+.LogoutLink {
+  margin-left: 2rem;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  svg {
+    height: .8em;
+    width: auto;
+  }
+}
+
 // Animation of the mainnavbar
 
 .BurgerMenu {
