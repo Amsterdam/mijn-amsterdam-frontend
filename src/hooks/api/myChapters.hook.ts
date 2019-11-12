@@ -4,8 +4,6 @@ import {
   myChaptersMenuItems,
 } from 'components/MainNavBar/MainNavBar.constants';
 import { useCallback } from 'react';
-import { Chapter } from '../../App.constants';
-import { useLocalStorage } from '../storage.hook';
 import { ErfpachtApiState } from './api.erfpacht';
 import { FocusApiState } from './api.focus';
 import { WmoApiState } from './api.wmo';
@@ -45,10 +43,6 @@ interface useMyChaptersProps {
 export interface MyChaptersApiState {
   items: MenuItem[];
   isLoading: boolean;
-}
-
-export function useLastVisitedChapter() {
-  return useLocalStorage<Chapter>('lastChapterVisited');
 }
 
 export default function useMyChapters(
