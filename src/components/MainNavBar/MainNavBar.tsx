@@ -56,7 +56,6 @@ function SecondaryLinks() {
   }, [hasFirstName]);
 
   const isDesktopScreen = useDesktopScreen();
-
   const logoutForm = useTMALogout();
 
   return (

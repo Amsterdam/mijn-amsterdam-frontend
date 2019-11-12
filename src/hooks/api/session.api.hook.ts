@@ -1,6 +1,7 @@
 import { AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS } from 'components/AutoLogoutDialog/AutoLogoutDialog';
 import { getApiUrl } from 'helpers/App';
 import { useEffect, useMemo, useState } from 'react';
+import { isAcceptance } from '../../helpers/App';
 import { useDataApi } from './api.hook';
 import { ApiRequestOptions, ApiState } from './api.types';
 
@@ -60,7 +61,9 @@ export function useTMALogout() {
     const params = {
       request: 'logout',
       tgt_blob: tgtBlob,
-      'a-select-server': 'tma.amsterdam.nl',
+      'a-select-server': isAcceptance()
+        ? 'tma.acc.amsterdam.nl'
+        : 'tma.amsterdam.nl',
       logoutbutton: ' Log Out ',
     };
     post('https://tma.amsterdam.nl/aselectserver/server', params);
