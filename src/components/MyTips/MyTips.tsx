@@ -6,6 +6,9 @@ import { MyTip } from 'hooks/api/my-tips-api.hook';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import Linkd from '../Button/Button';
 import classnames from 'classnames';
+import { Button } from '../Button/Button';
+import MyTipsOptInOutModal from './MyTipsOptInOutModal';
+import { ReactComponent as ChevronIcon } from 'assets/icons/Chevron-Right.svg';
 
 export interface TipProps {
   tip: MyTip;
@@ -47,9 +50,11 @@ const Tip = ({ tip }: TipProps) => {
 
 export interface MyTipsProps {
   items: MyTip[];
+  isOptIn: boolean;
   className?: string;
   isLoading: boolean;
   showHeader?: boolean;
+  showOptIn?: boolean;
 }
 
 function LoadingContentListItems() {
@@ -75,17 +80,30 @@ export default function MyTips({
   className,
   isLoading = true,
   showHeader = true,
+  isOptIn,
+  showOptIn = false,
   ...otherProps
 }: MyTipsProps) {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   return (
     <div {...otherProps} className={classnames(styles.MyTips, className)}>
       {showHeader && (
         <div className={styles.HeaderBar}>
           <Heading size="large">Mijn tips</Heading>
           {!!items.length && <Linkd href={AppRoutes.MY_TIPS}>Mijn tips</Linkd>}
-          {/* <a href="" className={styles.OptIn}>
-          Maak relevanter
-        </a> */}
+          {showOptIn && (
+            <Button
+              lean={true}
+              variant="plain"
+              onClick={() => setModalIsOpen(true)}
+              className={styles.OptIn}
+              icon={ChevronIcon}
+            >
+              {isOptIn
+                ? 'Toon geen persoonlijke tips'
+                : 'Toon persoonlijke tips'}
+            </Button>
+          )}
         </div>
       )}
 
@@ -97,6 +115,12 @@ export default function MyTips({
       </ul>
       {!isLoading && !items.length && (
         <p>We hebben op dit moment geen persoonlijke tips voor u.</p>
+      )}
+      {showOptIn && (
+        <MyTipsOptInOutModal
+          isOpen={modalIsOpen}
+          onClose={() => setModalIsOpen(false)}
+        />
       )}
     </div>
   );
