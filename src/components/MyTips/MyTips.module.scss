@@ -44,9 +44,22 @@
   }
 
   .OptIn {
-    font-size: 1.4rem;
     margin-left: auto;
-    color: $color-primary-red;
-    text-decoration: underline;
+  }
+}
+
+.OptInOutInfo {
+  margin-top: 0;
+  margin-bottom: 4rem;
+}
+
+.OptInOutButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 2rem;
+
+  button + button {
+    margin-left: 1rem;
   }
 }

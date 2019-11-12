@@ -30,6 +30,7 @@ export default () => {
     },
     MY_TIPS: {
       data: { items: myTips },
+      isOptIn,
       isLoading: isMyTipsLoading,
       isPristine: isMyTipsPristine,
     },
@@ -92,6 +93,8 @@ export default () => {
             data-tutorial-item="Hier geven wij u handige tips, bijvoorbeeld over de regelingen en voorzieningen van de gemeente;right-bottom"
             isLoading={isMyTipsPristine || isMyTipsLoading}
             items={tipItems}
+            isOptIn={isOptIn}
+            showOptIn={true}
           />
         )}
         <DirectLinks data-tutorial-item="Hier kunt u meer algemene informatie vinden over Mijn Amsterdam, bijvoorbeeld waar u terecht kunt met uw vragen;right-bottom" />
