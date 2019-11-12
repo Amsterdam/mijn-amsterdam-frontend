@@ -1,10 +1,7 @@
 import { BrpApiState, useBrpApi } from 'hooks/api/api.brp';
 import useMyTipsApi from 'hooks/api/my-tips-api.hook';
 import useMyNotificationsApi from 'hooks/api/my-notifications-api.hook';
-import useSessionApi, {
-  SessionApiState,
-  useTMALogout,
-} from 'hooks/api/session.api.hook';
+import useSessionApi, { SessionApiState } from 'hooks/api/session.api.hook';
 import useMyChapters from 'hooks/api/myChapters.hook';
 import React, { createContext, useMemo, useEffect, useState } from 'react';
 

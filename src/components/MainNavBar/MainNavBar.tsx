@@ -25,7 +25,6 @@ import styles from './MainNavBar.module.scss';
 import Tutorial from 'components/Tutorial/Tutorial';
 import { Button } from 'components/Button/Button';
 import { CSSTransition } from 'react-transition-group';
-import { useTMALogout } from '../../hooks/api/session.api.hook';
 import Linkd from '../Button/Button';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
