@@ -149,7 +149,10 @@ export function useStorage(
   return [item !== null ? JSON.parse(item) : item, setItem];
 }
 
-export function useLocalStorage(key: string, value: any) {
+export function useLocalStorage<Value>(
+  key: string,
+  value: Value | null = null
+) {
   let adapter: MemoryAdapter | Storage = memoryHandler;
   try {
     adapter = localStorage;
