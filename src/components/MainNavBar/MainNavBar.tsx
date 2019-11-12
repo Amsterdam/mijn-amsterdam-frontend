@@ -60,7 +60,7 @@ function SecondaryLinks() {
 
   const logoutForm = useTMALogout();
 
-  const [lastChapterVisited] = useLastVisitedChapter();
+  const [lastChapterVisited, setLastChapterVisited] = useLastVisitedChapter();
 
   function logoutSpecific() {
     let url = LOGOUT_URL;
@@ -76,6 +76,7 @@ function SecondaryLinks() {
     }
 
     fetch(url).then(() => {
+      setLastChapterVisited(null);
       window.location.reload();
     });
   }
