@@ -8,7 +8,7 @@ import PageHeading from 'components/PageHeading/PageHeading';
 import React, { useContext, useState } from 'react';
 import { Button } from 'components/Button/Button';
 import styles from './MyTips.module.scss';
-import Modal from 'components/Modal/Modal';
+import MyTipsOptInOutModal from 'components/MyTips/MyTipsOptInOutModal';
 
 export default () => {
   const {
@@ -18,8 +18,6 @@ export default () => {
       isError,
       isPristine,
       isOptIn,
-      optIn,
-      optOut,
     },
   } = useContext(AppContext);
 
@@ -57,52 +55,10 @@ export default () => {
                 : 'Toon persoonlijke tips'}
             </Button>
           </p>
-          <Modal
-            isOpen={modalIsOpen}
+          <MyTipsOptInOutModal
             onClose={() => setModalIsOpen(false)}
-            title="Persoonlijke tips"
-            contentWidth={620}
-          >
-            <>
-              <p className={styles.OptInOutInfo}>
-                {!isOptIn ? (
-                  <>
-                    U ziet nu algemene tips over voorzieningen en activiteiten
-                    in Amsterdam. Op basis van uw informatie die bij de gemeente
-                    bekend is kunnen we u ook informatie tonen die beter bij uw
-                    persoonlijk situatie past.
-                  </>
-                ) : (
-                  <>
-                    U ziet nu persoonlijke tips over voorzieningen en
-                    activiteiten in Amsterdam. We kunnen u ook algemene
-                    informatie tonen waarbij geen gebruik gemaakt wordt van
-                    persoonlijke informatie.
-                  </>
-                )}
-              </p>
-              <p className={styles.OptInOutButtons}>
-                <Button variant="plain" onClick={() => setModalIsOpen(false)}>
-                  Nee bedankt
-                </Button>
-                <Button
-                  variant={isOptIn ? 'secondary-inverted' : 'secondary'}
-                  onClick={() => {
-                    if (isOptIn) {
-                      optOut();
-                    } else {
-                      optIn();
-                    }
-                    setModalIsOpen(false);
-                  }}
-                >
-                  {isOptIn
-                    ? 'Nee, toon geen persoonlijke tips'
-                    : 'Toon persoonlijke tips'}
-                </Button>
-              </p>
-            </>
-          </Modal>
+            isOpen={modalIsOpen}
+          />
           {isError && (
             <Alert type="warning">
               <p>We kunnen op dit moment geen gegevens tonen.</p>
@@ -114,6 +70,7 @@ export default () => {
         showHeader={false}
         isLoading={isPristine || isMyTipsLoading}
         items={myTips}
+        isOptIn={isOptIn}
       />
     </OverviewPage>
   );
