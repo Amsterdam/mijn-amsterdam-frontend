@@ -1,10 +1,14 @@
-import { useCallback } from 'react';
-import { myChaptersMenuItems } from 'components/MainNavBar/MainNavBar.constants';
-import { WmoApiState } from './api.wmo';
-import { FocusApiState } from './api.focus';
 import { Chapters } from 'App.constants';
-import { MenuItem } from 'components/MainNavBar/MainNavBar.constants';
+import {
+  MenuItem,
+  myChaptersMenuItems,
+} from 'components/MainNavBar/MainNavBar.constants';
+import { useCallback } from 'react';
+import { Chapter } from '../../App.constants';
+import { useLocalStorage } from '../storage.hook';
 import { ErfpachtApiState } from './api.erfpacht';
+import { FocusApiState } from './api.focus';
+import { WmoApiState } from './api.wmo';
 
 function isChapterActive(
   item: MenuItem,
@@ -43,10 +47,15 @@ export interface MyChaptersApiState {
   isLoading: boolean;
 }
 
+export function useLastVisitedChapter() {
+  return useLocalStorage<Chapter>('lastChapterVisited');
+}
+
 export default function useMyChapters(
   apiStates: useMyChaptersProps
 ): MyChaptersApiState {
   const { WMO, FOCUS, ERFPACHT } = apiStates;
+
   const availableChapters = useCallback(() => {
     const items = myChaptersMenuItems.filter(item => {
       return isChapterActive(item, apiStates);
