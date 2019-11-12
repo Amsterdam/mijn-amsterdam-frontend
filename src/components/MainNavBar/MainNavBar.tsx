@@ -56,7 +56,6 @@ function SecondaryLinks() {
   }, [hasFirstName]);
 
   const isDesktopScreen = useDesktopScreen();
-  const logoutForm = useTMALogout();
 
   return (
     <div className={styles.secondaryLinks}>
@@ -84,9 +83,6 @@ function SecondaryLinks() {
       >
         Uitloggen
       </Linkd>
-      <div style={{ display: 'none' }}>
-        <Button onClick={logoutForm}>A</Button>
-      </div>
     </div>
   );
 }

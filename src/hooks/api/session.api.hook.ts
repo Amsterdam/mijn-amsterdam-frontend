@@ -1,7 +1,6 @@
 import { AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS } from 'components/AutoLogoutDialog/AutoLogoutDialog';
 import { getApiUrl } from 'helpers/App';
-import { useEffect, useMemo, useState } from 'react';
-import { isAcceptance } from '../../helpers/App';
+import { useMemo } from 'react';
 import { useDataApi } from './api.hook';
 import { ApiRequestOptions, ApiState } from './api.types';
 
@@ -24,56 +23,6 @@ const requestOptions: ApiRequestOptions = {
 };
 
 export type SessionApiState = Omit<ApiState, 'data'> & SessionState;
-
-function post(path: string, params: any, method = 'post') {
-  // The rest of this code assumes you are not using a library.
-  // It can be made less wordy if you use one.
-  const form = document.createElement('form');
-  form.method = method;
-  form.action = path;
-
-  for (const key in params) {
-    if (params.hasOwnProperty(key)) {
-      const hiddenField = document.createElement('input');
-      hiddenField.type = 'hidden';
-      hiddenField.name = key;
-      hiddenField.value = params[key];
-
-      form.appendChild(hiddenField);
-    }
-  }
-
-  document.body.appendChild(form);
-  form.submit();
-}
-
-export function useTMALogout() {
-  const [tgtBlob, setTgtBlob] = useState('');
-  useEffect(() => {
-    if (!tgtBlob && !!document.referrer) {
-      const url = new URL(document.referrer);
-      const queryParams: any = new URLSearchParams(url.search);
-      setTgtBlob(queryParams.get('aselect_credentials'));
-    }
-  }, [document.referrer]);
-
-  return () => {
-    const params = {
-      request: 'logout',
-      tgt_blob: tgtBlob,
-      'a-select-server': isAcceptance()
-        ? 'tma.acc.amsterdam.nl'
-        : 'tma.amsterdam.nl',
-      logoutbutton: ' Log Out ',
-    };
-    post(
-      isAcceptance()
-        ? 'https://tma.acc.amsterdam.nl/aselectserver/server'
-        : 'https://tma.amsterdam.nl/aselectserver/server',
-      params
-    );
-  };
-}
 
 export default function useSessionApi(
   initialData = INITIAL_SESSION_STATE
