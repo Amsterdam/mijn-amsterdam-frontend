@@ -49,14 +49,12 @@ function post(path: string, params: any, method = 'post') {
 export function useTMALogout() {
   const [tgtBlob, setTgtBlob] = useState('');
   useEffect(() => {
-    if (!tgtBlob) {
-      const url = new URL(
-        'https://mijn.amsterdam.nl/api/login?aselect_credentials=5pLdp0PtVW8aS4Psyc7papbZ81stmuQi5a*GmTWWvM9Zj1lXlD*RSWFiJPx4FhzROO7yUCWzMR-qtQdTuVYA3JdKr01vxpZxsH1WLsqW24Y5WLENF159iEZx2EQEr-26nvpqBPk6kODGl-M-I0XDXxjqjM9G6VyIvxz5UMXlRU4_&rid=R2F3E2DDDAFF7E61DC0117E7A9B31926E6C19B977&a-select-server=tma.amsterdam.nl&language=nl'
-      );
+    if (!tgtBlob && !!document.referrer) {
+      const url = new URL(document.referrer);
       const queryParams: any = new URLSearchParams(url.search);
       setTgtBlob(queryParams.get('aselect_credentials'));
     }
-  }, []);
+  }, [document.referrer]);
 
   return () => {
     const params = {

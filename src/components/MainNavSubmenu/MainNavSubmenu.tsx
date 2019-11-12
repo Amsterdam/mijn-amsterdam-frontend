@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import styles from './MainNavSubmenu.module.scss';
 import classnames from 'classnames';
 import { NavLink } from 'react-router-dom';
@@ -10,26 +10,39 @@ import { trackLink } from 'hooks/analytics.hook';
 export interface MainNavSubmenuLinkProps extends Omit<LinkProps, 'title'> {
   children: ComponentChildren;
   onFocus?: () => void;
+  onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
+  className?: string;
 }
 
 export function MainNavSubmenuLink({
   to,
   children,
+  onClick,
+  className,
   rel,
   ...rest
 }: MainNavSubmenuLinkProps) {
   return rel && rel.indexOf('external') !== -1 ? (
     <a
       href={to}
-      onClick={() => trackLink(to)}
+      onClick={(event: MouseEvent<HTMLAnchorElement>) => {
+        onClick && onClick(event);
+        trackLink(to);
+      }}
       rel={rel}
-      className={styles.MainNavSubmenuLink}
+      className={classnames(styles.MainNavSubmenuLink, className)}
       {...rest}
     >
       {children}
     </a>
   ) : (
-    <NavLink to={to} className={styles.MainNavSubmenuLink} rel={rel} {...rest}>
+    <NavLink
+      to={to}
+      onClick={onClick}
+      className={classnames(styles.MainNavSubmenuLink, className)}
+      rel={rel}
+      {...rest}
+    >
       {children}
     </NavLink>
   );
