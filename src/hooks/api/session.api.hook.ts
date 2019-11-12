@@ -66,7 +66,12 @@ export function useTMALogout() {
         : 'tma.amsterdam.nl',
       logoutbutton: ' Log Out ',
     };
-    post('https://tma.amsterdam.nl/aselectserver/server', params);
+    post(
+      isAcceptance()
+        ? 'https://tma.acc.amsterdam.nl/aselectserver/server'
+        : 'https://tma.amsterdam.nl/aselectserver/server',
+      params
+    );
   };
 }
 
