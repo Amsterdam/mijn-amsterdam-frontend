@@ -139,8 +139,8 @@ $buttons: (
 }
 
 .Icon {
-  height: 1.2em;
-  width: 1.2em;
+  width: .9em;
+  height: .9em;
 }
 
 .Icon__left {
@@ -168,7 +168,5 @@ $buttons: (
   .Icon {
     position: relative;
     transform: translateY(1px);
-    width: .9em;
-    height: .9em;
   }
 }
