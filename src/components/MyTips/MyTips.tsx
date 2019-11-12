@@ -50,7 +50,7 @@ const Tip = ({ tip }: TipProps) => {
 
 export interface MyTipsProps {
   items: MyTip[];
-  isOptIn: boolean;
+  isOptIn?: boolean;
   className?: string;
   isLoading: boolean;
   showHeader?: boolean;
@@ -80,7 +80,7 @@ export default function MyTips({
   className,
   isLoading = true,
   showHeader = true,
-  isOptIn,
+  isOptIn = false,
   showOptIn = false,
   ...otherProps
 }: MyTipsProps) {
