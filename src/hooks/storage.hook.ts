@@ -86,17 +86,16 @@ function useWindowStorage(
   }
 
   function listen(e: StorageEvent) {
+    let storageAllowed = true;
     try {
-      if (
-        e &&
-        'storageArea' in e &&
-        e.storageArea === adapter &&
-        e.key === key
-      ) {
-        setValue(e.newValue);
-      }
+      localStorage.key(0);
+      sessionStorage.key(0);
     } catch (error) {
-      Sentry.captureException(error);
+      storageAllowed = false;
+    }
+
+    if (storageAllowed && e.storageArea === adapter && e.key === key) {
+      setValue(e.newValue);
     }
   }
 
