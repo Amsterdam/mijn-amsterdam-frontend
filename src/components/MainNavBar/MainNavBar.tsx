@@ -27,7 +27,6 @@ import { Button } from 'components/Button/Button';
 import { CSSTransition } from 'react-transition-group';
 import { useTMALogout } from '../../hooks/api/session.api.hook';
 import Linkd from '../Button/Button';
-import { useLastVisitedChapter } from '../../hooks/api/myChapters.hook';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -60,27 +59,6 @@ function SecondaryLinks() {
 
   const logoutForm = useTMALogout();
 
-  const [lastChapterVisited, setLastChapterVisited] = useLastVisitedChapter();
-
-  function logoutSpecific() {
-    let url = LOGOUT_URL;
-    switch (lastChapterVisited) {
-      case Chapters.BELASTINGEN:
-        url = 'https://belastingbalie.amsterdam.nl/digid.saml.php?logout=true';
-        console.log('Logout with belastingen');
-        break;
-      case Chapters.WONEN:
-        url = 'https://mijnerfpacht.amsterdam.nl/page/logout';
-        console.log('Logout with wonen');
-        break;
-    }
-
-    fetch(url).then(() => {
-      setLastChapterVisited(null);
-      window.location.reload();
-    });
-  }
-
   return (
     <div className={styles.secondaryLinks}>
       {isDesktopScreen && <FontEnlarger />}
@@ -109,7 +87,6 @@ function SecondaryLinks() {
       </Linkd>
       <div style={{ display: 'none' }}>
         <Button onClick={logoutForm}>A</Button>
-        <Button onClick={logoutSpecific}>B</Button>
       </div>
     </div>
   );

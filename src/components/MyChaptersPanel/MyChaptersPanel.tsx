@@ -10,7 +10,6 @@ import {
   useSessionCallbackOnceDebounced,
 } from 'hooks/analytics.hook';
 import { ChapterTitles, Chapter } from 'App.constants';
-import { useLastVisitedChapter } from 'hooks/api/myChapters.hook';
 
 export interface MyChaptersPanelProps {
   title: string;
@@ -28,7 +27,6 @@ export default function MyChaptersPanel({
   trackCategory,
   ...otherProps
 }: MyChaptersPanelProps) {
-  const [lastVisitedChapter, setLastVisitedChapter] = useLastVisitedChapter();
   useSessionCallbackOnceDebounced(
     trackCategory,
     () => {
@@ -53,15 +51,7 @@ export default function MyChaptersPanel({
       <div className={styles.Links}>
         {items.map(({ id, to, Icon, title, rel }) => {
           return (
-            <MainNavSubmenuLink
-              onClick={() => setLastVisitedChapter(id)}
-              key={id}
-              to={to}
-              rel={rel}
-              className={
-                lastVisitedChapter === id ? styles.LastVisitedChapter : ''
-              }
-            >
+            <MainNavSubmenuLink key={id} to={to} rel={rel}>
               {Icon && <Icon aria-hidden="true" />}
               {title}
             </MainNavSubmenuLink>
