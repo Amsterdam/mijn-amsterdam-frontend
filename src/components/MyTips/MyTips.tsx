@@ -3,7 +3,7 @@ import styles from './MyTips.module.scss';
 import Heading from 'components/Heading/Heading';
 import { AppRoutes } from 'App.constants';
 import { MyTip } from 'hooks/api/my-tips-api.hook';
-import LoadingContent from '../LoadingContent/LoadingContent';
+import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
 import Linkd from '../Button/Button';
 import classnames from 'classnames';
 import { Button } from '../Button/Button';
@@ -59,7 +59,7 @@ export interface MyTipsProps {
 
 function LoadingContentListItems() {
   const elements = [];
-  const barConfig = [
+  const barConfig: BarConfig = [
     ['100%', '19rem', '2rem'],
     ['50%', '2rem', '1rem'],
     ['90%', '2rem', '1rem'],
