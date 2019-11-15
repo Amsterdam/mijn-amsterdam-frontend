@@ -19,10 +19,10 @@ export interface SectionCollapsibleProps {
   noItemsMessage?: string;
   startCollapsed?: boolean;
   className?: any;
-  isLoading: boolean;
+  isLoading?: boolean;
   track?: { category: string; name: string };
   onToggleCollapsed?: (isCollapsed: boolean) => void;
-  hasItems: boolean;
+  hasItems?: boolean;
   children: ComponentChildren;
 }
 
@@ -34,13 +34,13 @@ export default function SectionCollapsible({
   className,
   onToggleCollapsed,
   isLoading = false,
-  hasItems = false,
+  hasItems = true,
   track,
   children,
 }: SectionCollapsibleProps) {
   const contentRef = useRef(null);
   const [isCollapsed, setCollapsed] = useSessionStorage(id, startCollapsed);
-  const { height: tableHeight } = useComponentSize(contentRef);
+  const { height: contentHeight } = useComponentSize(contentRef);
   const hasTitle = !!title;
   const hasNoItemsMessage = !!noItemsMessage;
 
@@ -66,7 +66,9 @@ export default function SectionCollapsible({
     onToggleCollapsed && onToggleCollapsed(isCollapsed);
   }, []);
 
-  let cssCalcExpr = `${isCollapsed ? 0 : tableHeight}px`;
+  let cssCalcExpr = `${isCollapsed ? 0 : contentHeight}px`;
+
+  console.log(title, isLoading, contentHeight);
 
   return (
     <section className={classes}>

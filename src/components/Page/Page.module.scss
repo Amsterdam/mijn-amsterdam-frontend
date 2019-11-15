@@ -42,7 +42,7 @@
     margin-left: 0;
   }
 
-  @include select(DataLinkTable_DataLinkTable) {
+  @include select(SectionCollapsible_SectionCollapsible) {
     @include centered-block;
   }
 }
@@ -80,8 +80,8 @@
   @include centered-max(62rem);
 
   @include mq-tablet() {
-    margin-left: 5rem;
-    margin-right: 5rem;
+    margin-left: 11.5rem;
+    margin-right: 11.5rem;
     max-width: none;
   }
 

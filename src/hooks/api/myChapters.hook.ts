@@ -29,7 +29,7 @@ function isChapterActive(
       return true; // SSO to belastingen
 
     case Chapters.AFVAL:
-      return !GARBAGE.isLoading && !!GARBAGE.data.length;
+      return !GARBAGE.isLoading;
 
     case Chapters.WONEN:
       return !ERFPACHT.isLoading && ERFPACHT.data.status === true;

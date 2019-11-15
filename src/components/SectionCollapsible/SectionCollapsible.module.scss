@@ -15,7 +15,7 @@
   height: 0.8em;
   width: 0.8em;
   position: absolute;
-  top: 1.4rem;
+  top: 1.5rem;
   transform: translateY(-50%) rotate(90deg);
   left: 0;
   transition: transform 200ms ease-out;
@@ -24,6 +24,7 @@
 .Title {
   position: relative;
   padding-left: 1em;
+  margin: 0 auto;
   margin-bottom: 4rem;
 
   @include mq-tablet() {
@@ -32,9 +33,9 @@
   @include mq-phone() {
     margin-left: 0;
   }
-  margin-left: 15.5rem;
+  max-width: 62rem;
 
-  &WithItems {
+  &WithItems span {
     cursor: pointer;
   }
 

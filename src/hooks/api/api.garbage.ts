@@ -37,7 +37,10 @@ interface GarbageInfoApiResponse {
   };
 }
 
-type GarbageInfoApiResponseFormatted = any[];
+interface GarbageInfoApiResponseFormatted {
+  ophalen: any[];
+  wegbrengen: any[];
+}
 
 export interface RawGarbageApiState extends ApiState {
   data: GarbageInfoApiResponse;
@@ -55,13 +58,18 @@ interface GarbageApiHookProps {
   centroid: [Lat, Lon];
 }
 
+const titles: { [type: string]: string } = {
+  huisvuil: 'Restafval',
+  grofvuil: 'Grofvuil',
+};
+
 export default function useGarbageApi(): GarbageApiState {
   const [api, refetch]: [RawGarbageApiState, RefetchFunction] = useDataApi({
     postpone: true,
     url: '',
   });
 
-  const data =
+  const ophalen =
     api.data.result && api.data.result.features && api.data.result.features
       ? api.data.result.features.map(feature => {
           const {
@@ -93,8 +101,8 @@ export default function useGarbageApi(): GarbageApiState {
           // ];
 
           return {
-            title: type,
-            // stadsdeel: stadsdeel_naam,
+            title: titles[type] || type,
+            stadsdeel: stadsdeel_naam,
             // tijdVan: tijd_vanaf,
             // tijdTot: tijd_tot,
             aanbiedwijze: aanbiedwijze || `Zet uw ${type} op straat`,
@@ -108,9 +116,58 @@ export default function useGarbageApi(): GarbageApiState {
         })
       : [];
 
+  const wegbrengen = [
+    {
+      naam: 'Afvalpunt Rozenburglaan',
+      stadsdeel: 'Oost',
+      adres: 'Rozenburglaan 1\n1097 HK Amsterdam',
+      telefoon: '020 587 6114',
+    },
+    {
+      naam: 'Afvalpunt De Faas (Oost, alleen voor bewoners)',
+      stadsdeel: 'Oost',
+      adres: 'Faas Wilkesstraat 120\n1095 MD Amsterdam',
+      telefoon: '020 5876145',
+    },
+    {
+      naam: 'Afvalpunt Struisgrasstraat',
+      stadsdeel: 'Noord',
+      adres: 'Struisgrasstraat 33a\n1032 KE Amsterdam',
+      telefoon: '020 587 6122',
+    },
+    {
+      naam: 'Afvalpunt Seineweg',
+      stadsdeel: 'Nieuw-West',
+      adres: 'Seineweg 1\n1043 BE Amsterdam',
+      telefoon: '020 587 6144',
+    },
+    {
+      naam: 'Afvalpunt Henk Sneevlietweg',
+      stadsdeel: 'Nieuw-West',
+      adres: 'Henk Sneevlietweg 22\n1066 VH Amsterdam',
+      telefoon: '020 587 6126',
+    },
+    {
+      naam: 'Afvalpunt Meerkerkdreef',
+      stadsdeel: 'Zuidoost',
+      adres: 'Meerkerkdreef 31\n1106 GZ Amsterdam',
+      telefoon: '020 587 6116',
+    },
+  ];
+
   return {
     ...api,
-    data,
+    data: {
+      ophalen,
+      wegbrengen: ophalen.length
+        ? wegbrengen.sort((item: any) => {
+            return item.stadsdeel.toLowerCase() ===
+              ophalen[0].stadsdeel.toLowerCase()
+              ? 1
+              : 0;
+          })
+        : [],
+    },
     refetch({ centroid: [lat, lon] }: GarbageApiHookProps) {
       refetch({
         url: `${getApiUrl('AFVAL_OPHAAL_GEBIEDEN')}?lat=${lat}&lon=${lon}`,
