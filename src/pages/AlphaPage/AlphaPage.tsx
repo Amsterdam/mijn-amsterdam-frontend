@@ -1,8 +1,7 @@
 import React from 'react';
-import Page from 'components/Page/Page';
+import Page, { PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
 import styles from './AlphaPage.module.scss';
-import { PageContent } from 'components/Page/Page';
 
 export default () => {
   return (
