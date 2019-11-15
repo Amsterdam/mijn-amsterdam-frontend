@@ -16,7 +16,7 @@ import React, { useContext, useEffect } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import useRouter from 'use-react-router';
 import ErrorBoundary from 'react-error-boundary';
-import { AppRoutes } from './App.constants';
+import { AppRoutes, FeatureToggle } from './App.constants';
 import styles from './App.module.scss';
 import AppState, { SessionContext, SessionState } from './AppState';
 import MainFooter from './components/MainFooter/MainFooter';
@@ -28,6 +28,7 @@ import * as Sentry from '@sentry/browser';
 import ApplicationError from 'components/ApplicationError/ApplicationError';
 import useScript from 'hooks/useScript';
 import { isProduction } from './helpers/App';
+import GarbageInformation from 'pages/GarbageInformation/GarbageInformation';
 
 function AppNotAuthenticated() {
   return (
@@ -87,6 +88,9 @@ function AppAuthenticated() {
           <Route path={AppRoutes.ZORG} component={Zorg} />
           <Route path={AppRoutes.MY_AREA} component={MyArea} />
           <Route path={AppRoutes.PROCLAIMER} component={Proclaimer} />
+          {FeatureToggle.garbageInformationPage && (
+            <Route path={AppRoutes.AFVAL} component={GarbageInformation} />
+          )}
           <Route component={NotFound} />
         </Switch>
       </div>
