@@ -2,15 +2,15 @@ import { getApiUrl } from 'helpers/App';
 import { useDataApi } from './api.hook';
 import { ApiState, RefetchFunction } from './api.types';
 
-type StadsdeelNaam =
-  | 'West'
-  | 'Zuid'
-  | 'Zuid-Oost'
-  | 'Centrum'
-  | 'Noord'
-  | 'Oost'
-  | 'Nieuw-West'
-  | 'Oud-zuid';
+enum Stadsdeel {
+  centrum = 'Centrum',
+  nieuwWest = 'Nieuw-West',
+  noord = 'Noord',
+  oost = 'Oost',
+  west = 'West',
+  zuid = 'Zuid',
+  zuidoost = 'Zuidoost',
+}
 
 interface AfvalOphaalGebiedProperty {
   aanbiedwijze: string;
@@ -20,7 +20,7 @@ interface AfvalOphaalGebiedProperty {
   opmerking: string | null;
   stadsdeel_code: string;
   stadsdeel_id: number;
-  stadsdeel_naam: StadsdeelNaam;
+  stadsdeel_naam: Stadsdeel;
   tijd_tot: string | null;
   tijd_vanaf: string | null;
   type: string;
@@ -86,25 +86,9 @@ export default function useGarbageApi(): GarbageApiState {
             },
           } = feature;
 
-          // return [
-          //   {
-          //     title: 'Aanbiedwijze',
-          //     description: aanbiedwijze || `Zet uw ${type} op straat`,
-          //   },
-          //   {
-          //     title: 'Ophaaldag',
-          //     description:
-          // ophaaldag === 'Op afspraak'
-          //   ? opmerking
-          //   : `${ophaaldag} tussen ${tijd_vanaf} ${tijd_tot}`,
-          //   },
-          // ];
-
           return {
             title: titles[type] || type,
             stadsdeel: stadsdeel_naam,
-            // tijdVan: tijd_vanaf,
-            // tijdTot: tijd_tot,
             aanbiedwijze: aanbiedwijze || `Zet uw ${type} op straat`,
             ophaaldag:
               ophaaldag === 'Op afspraak'
