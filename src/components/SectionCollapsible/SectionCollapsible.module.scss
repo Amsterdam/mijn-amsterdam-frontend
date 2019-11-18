@@ -48,6 +48,7 @@
   overflow: hidden;
   border-bottom: 0.1rem solid $color-neutral-grey2;
   height: 0px;
+  position: relative;
 
   @include mq-phone() {
     border-bottom: 0;
@@ -66,6 +67,13 @@
   margin-bottom: 3rem;
 }
 
+.ToggleMorePanel {
+  background: $color-white;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
 
 :global {
   .sectionCollapsible-enter-active,

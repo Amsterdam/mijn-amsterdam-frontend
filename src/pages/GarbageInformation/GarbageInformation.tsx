@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import Page, { PageContent, DetailPage } from 'components/Page/Page';
+import { PageContent, DetailPage } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
 import styles from './GarbageInformation.module.scss';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
@@ -10,15 +10,50 @@ import Heading from 'components/Heading/Heading';
 import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
 import { getFullAddress } from 'data-formatting/brp';
 import classnames from 'classnames';
+import { GarbagePoint } from 'hooks/api/api.garbage';
+import MyArea from 'components/MyArea/MyArea';
+import { MAP_URL, LOCATION_ZOOM } from 'hooks/api/api.mymap';
+import { MyAreaMap } from '../../components/MyArea/MyArea';
+import { usePhoneScreen } from '../../hooks/media.hook';
+
+function GarbagePointItem({ item }: { item: GarbagePoint }) {
+  return (
+    <div
+      key={item.naam}
+      className={classnames(styles.Panel, styles.AfvalPunten)}
+    >
+      <Heading size="small">
+        {item.naam} &mdash; {item.stadsdeel}{' '}
+        <span className={styles.DistanceToHome}>+/-{item.distance}KM</span>
+      </Heading>
+      <Heading size="tiny">Adres</Heading>
+      <p>{item.adres}</p>
+      <Heading size="tiny">Telefoon</Heading>
+      <p>
+        <a href={`tel:${item.telefoon}`}>{item.telefoon}</a>
+      </p>
+      <Heading size="tiny">Openingstijden</Heading>
+      <p>{item.openingstijden}</p>
+    </div>
+  );
+}
 
 export default () => {
   const {
     BRP,
     GARBAGE: {
       isLoading,
-      data: { wegbrengen, ophalen },
+      data: { wegbrengen, ophalen, centroid },
     },
   } = useContext(AppContext);
+
+  const garbageContainersMapUrl = centroid
+    ? `${MAP_URL}&center=${centroid[1]}%2C${centroid[0]}&zoom=12&marker=${
+        centroid[1]
+      }%2C${
+        centroid[0]
+      }&marker-icon=home&lagen=wlokca%3A1%7Cwlotxtl%3A1%7Cwlopls%3A1%7Cwlogls%3A1%7Cwloppr%3A1%7Cwlorst%3A1&legenda=false`
+    : '';
 
   return (
     <DetailPage className={styles.GarbageInformation}>
@@ -39,30 +74,25 @@ export default () => {
             Regels voor grofvuil en hergebruik
           </Linkd>
         </p>
+        {!!BRP.data.adres && (
+          <div className={classnames(styles.Panel, styles.AddressPanel)}>
+            <Heading size="tiny">Uw adres</Heading>
+            <p>{getFullAddress(BRP.data.adres)}</p>
+          </div>
+        )}
       </PageContent>
 
       {ophalen.map((item, index) => (
         <SectionCollapsible
           key={item.title}
           className={styles.InfoSection}
-          id="garbage-information"
+          id={`garbage-information-${item.title}`}
           isLoading={isLoading}
           title={item.title}
           hasItems={!!ophalen.length}
           noItemsMessage="Informatie over afval in uw buurt kan niet worden getoond"
+          startCollapsed={true}
         >
-          {index === 0 && (
-            <>
-              <div className={styles.Panel}>
-                <Heading size="tiny">Uw adres</Heading>
-                <p>{getFullAddress(BRP.data.adres)}</p>
-              </div>
-              <div className={styles.Panel}>
-                <Heading size="tiny">Stadsdeel</Heading>
-                <p>{item.stadsdeel}</p>
-              </div>
-            </>
-          )}
           {!!item.aanbiedwijze && (
             <div className={styles.Panel}>
               <Heading size="tiny">Aanbiedwijze</Heading>
@@ -75,37 +105,37 @@ export default () => {
               <p>{item.ophaaldag}</p>
             </div>
           )}
+          {!!item.buitenZetten && (
+            <div className={styles.Panel}>
+              <Heading size="tiny">Buiten zetten</Heading>
+              <p>{item.buitenZetten}</p>
+            </div>
+          )}
+          {index === 0 && (
+            <div className={styles.GarbageContainerMap}>
+              <MyAreaMap url={garbageContainersMapUrl} />
+            </div>
+          )}
         </SectionCollapsible>
       ))}
 
       <SectionCollapsible
         className={styles.InfoSection}
         id="diy-garbage-information"
-        title="Afvalpunten voor bewoners en bedrijven"
+        title="Grofvuil wegbrengen"
+        startCollapsed={true}
       >
-        <div className={classnames(styles.Panel, styles.AfvalPunten)}>
-          <Heading size="tiny">Openingstijden</Heading>
-          <p>
-            De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00
-            tot 17.00 uur.
-          </p>
-          <p>
-            <strong>Afvalpunt Henk Sneevlietweg ook op zondag open</strong>
-            Het Afvalpunt op de Henk Sneevlietweg 22 is elke zondag van 10.00
-            uur tot 16.00 uur open.
-          </p>
-        </div>
-        {wegbrengen.map(item => (
-          <div className={classnames(styles.Panel, styles.AfvalPunten)}>
-            <Heading size="small">
-              {item.naam} &mdash; {item.stadsdeel}
-            </Heading>
-            <p>{item.adres}</p>
-            <p>
-              Telefoon: <a href={`tel:${item.telefoon}`}>{item.telefoon}</a>
-            </p>
-          </div>
-        ))}
+        <GarbagePointItem item={wegbrengen[0]} />
+        <SectionCollapsible
+          className={styles.InfoSection}
+          id="diy-garbage-information-2"
+          title="Overige afvalpunten"
+          startCollapsed={true}
+        >
+          {wegbrengen.slice(1).map(item => (
+            <GarbagePointItem key={item.naam} item={item} />
+          ))}
+        </SectionCollapsible>
       </SectionCollapsible>
     </DetailPage>
   );

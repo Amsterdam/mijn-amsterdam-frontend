@@ -43,9 +43,9 @@
   p {
     @include GarbagePanel;
     font-weight: bold;
-
-    + p {
-      margin-top: 2rem;
+    margin-bottom: 2rem;
+    &:last-child {
+      margin-bottom: 0;
     }
   }
 }
@@ -53,14 +53,28 @@
 .AfvalPunten {
   @include select(Heading_Heading__small) {
     @include GarbagePanel;
+    margin-bottom: 2rem;
   }
   p {
     font-weight: normal;
     white-space: pre-wrap;
-    margin-top: 1rem;
 
     > strong {
       display: block;
     }
   }
+}
+
+.AddressPanel {
+  border-top: 0;
+}
+
+.DistanceToHome {
+  font-size: 1.3rem;
+  color: $color-neutral-grey4;
+  font-weight: normal;
+}
+
+.GarbageContainerMap {
+  height: 50rem;
 }
