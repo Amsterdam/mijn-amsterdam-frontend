@@ -55,21 +55,37 @@ export function trackItemPresentation(
   name: string,
   value?: number
 ) {
-  return trackEvent({
+  const payload = {
     category,
     name,
     action: 'Tonen',
     value,
+  };
+  return trackEvent(payload);
+}
+
+export function trackItemClick(category: string, name: string, value?: number) {
+  return trackEvent({
+    category,
+    name,
+    action: 'Klikken',
+    value,
   });
 }
 
+/**
+ * @param key A key to use for keeping track of the session variable
+ * @param callback The function that gets executed after debounce is done
+ * @param debounceTrigger The effect trigger for executing the debounced callback
+ * @param timeoutMS How many MS should the callback be debounced
+ */
 export function useSessionCallbackOnceDebounced(
-  name: string,
+  key: string,
   callback: () => void,
   debounceTrigger: any = true,
   timeoutMS: number = 1000
 ) {
-  const [isSessionTracked, setSessionTracked] = useSessionStorage(name, false);
+  const [isSessionTracked, setSessionTracked] = useSessionStorage(key, false);
   const [trackEvent] = useDebouncedCallback(
     () => {
       if (!isSessionTracked) {

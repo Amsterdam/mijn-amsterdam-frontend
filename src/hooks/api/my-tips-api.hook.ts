@@ -14,6 +14,7 @@ export interface MyTip {
   description: string;
   link: LinkProps;
   imgUrl?: string;
+  isPersonalized: boolean;
 }
 
 export interface MyTipsResponse extends PaginatedItemsResponse {
