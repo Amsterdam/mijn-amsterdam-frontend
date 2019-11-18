@@ -1,0 +1,79 @@
+@import 'styles/_global.scss';
+
+.SectionCollapsible {
+  overflow: auto; // fixes margin of wrapped SectionCollapsible.Title being respected
+
+  &.isCollapsed {
+    margin-bottom: 0;
+    .CaretIcon {
+      transform: translateY(-50%) rotate(0);
+    }
+  }
+}
+
+.CaretIcon {
+  height: 0.8em;
+  width: 0.8em;
+  position: absolute;
+  top: 1.5rem;
+  transform: translateY(-50%) rotate(90deg);
+  left: 0;
+  transition: transform 200ms ease-out;
+}
+
+.Title {
+  position: relative;
+  padding-left: 1em;
+  margin: 0 auto;
+  margin-bottom: 3rem;
+
+  @include mq-tablet() {
+    margin-left: 9.5rem;
+  }
+  @include mq-phone() {
+    margin-left: 0;
+  }
+  max-width: 62rem;
+
+  &WithItems span {
+    cursor: pointer;
+  }
+
+  span {
+    padding-left: 0.2em;
+  }
+}
+
+.Panel {
+  overflow: hidden;
+  border-bottom: 0.1rem solid $color-neutral-grey2;
+  height: 0px;
+
+  @include mq-phone() {
+    border-bottom: 0;
+  }
+}
+
+.NoItemsMessage {
+  @include mq-tablet() {
+    text-indent: 12rem;
+  }
+  @include mq-phone() {
+    text-indent: 0;
+  }
+  text-indent: 18rem;
+  margin-top: -3rem; // closer to the heading
+  margin-bottom: 3rem;
+}
+
+
+:global {
+  .sectionCollapsible-enter-active,
+  .sectionCollapsible-exit-active,
+  .sectionCollapsible-enter-done,
+  .sectionCollapsible-exit-done,
+  .sectionCollapsible-exit,
+  .sectionCollapsible-enter {
+    transition: all 300ms;
+  }
+}

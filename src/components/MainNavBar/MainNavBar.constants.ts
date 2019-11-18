@@ -1,7 +1,14 @@
-import { AppRoutes, Chapter, Chapters, ChapterTitles, ExternalUrls } from 'App.constants';
+import {
+  AppRoutes,
+  Chapter,
+  Chapters,
+  ChapterTitles,
+  ExternalUrls,
+} from 'App.constants';
 import { LinkProps } from 'App.types';
 import { ReactComponent as BelastingenIcon } from 'assets/icons/belastingen.svg';
 import { ReactComponent as BurgerzakenIcon } from 'assets/icons/burgerzaken.svg';
+import { ReactComponent as IconGarbage } from 'assets/icons/Huisvuilkalender.svg';
 import { ReactComponent as InkomenIcon } from 'assets/icons/inkomen.svg';
 import { ReactComponent as JeugdhulpIcon } from 'assets/icons/Passport.svg';
 import { ReactComponent as WonenIcon } from 'assets/icons/wonen.svg';
@@ -67,6 +74,12 @@ export const myChaptersMenuItems: MenuItem[] = [
     id: Chapters.JEUGDHULP,
     to: AppRoutes.JEUGDHULP,
     Icon: JeugdhulpIcon,
+  },
+  {
+    title: ChapterTitles.AFVAL,
+    id: Chapters.AFVAL,
+    to: AppRoutes.AFVAL,
+    Icon: IconGarbage,
   },
 ];
 

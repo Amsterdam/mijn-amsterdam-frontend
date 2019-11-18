@@ -15,6 +15,8 @@ import { MyChaptersApiState } from './hooks/api/myChapters.hook';
 import useMyMap from './hooks/api/api.mymap';
 import { getFullAddress } from 'data-formatting/brp';
 import { getApiConfigValue } from 'helpers/App';
+import { GarbageApiState } from './hooks/api/api.garbage';
+import useGarbageApi from './hooks/api/api.garbage';
 
 type MyCasesApiState = FocusApiState;
 
@@ -28,6 +30,7 @@ export interface AppState {
   FOCUS: FocusApiState;
   MY_CHAPTERS: MyChaptersApiState;
   ERFPACHT: ErfpachtApiState;
+  GARBAGE: GarbageApiState;
   MY_AREA: any;
 }
 
@@ -75,7 +78,8 @@ export function useAppState(value?: any) {
   const BRP = useBrpApi();
   const MY_TIPS = useMyTipsApi();
   const ERFPACHT = useErfpachtApi();
-  const MY_CHAPTERS = useMyChapters({ WMO, FOCUS, ERFPACHT });
+  const GARBAGE = useGarbageApi();
+  const MY_CHAPTERS = useMyChapters({ WMO, FOCUS, ERFPACHT, GARBAGE });
   const MY_AREA = useMyMap();
   const MY_NOTIFICATIONS = useMyNotificationsApi({ FOCUS, BRP });
 
@@ -86,6 +90,7 @@ export function useAppState(value?: any) {
     BRP.isDirty,
   ];
 
+  // Fetch lat/lon for address
   useEffect(() => {
     if (
       BRP.data &&
@@ -98,6 +103,8 @@ export function useAppState(value?: any) {
     }
   }, [BRP.data.adres && BRP.data.adres.straatnaam]);
 
+  // Fetch tips when dependent sources are loaded
+  // TODO: Exclude api responses that returned error
   useEffect(() => {
     if (tipsDependencies.every(isReady => isReady)) {
       MY_TIPS.refetch({
@@ -108,6 +115,12 @@ export function useAppState(value?: any) {
       });
     }
   }, [...tipsDependencies, MY_TIPS.isOptIn]);
+
+  useEffect(() => {
+    if (MY_AREA.centroid.length === 2) {
+      GARBAGE.refetch({ centroid: MY_AREA.centroid });
+    }
+  }, [MY_AREA.centroid]);
 
   // NOTE: For now we can use this solution but we probably need some more finegrained memoization of the state as the app grows larger.
   return useMemo(() => {
@@ -123,6 +136,7 @@ export function useAppState(value?: any) {
       MY_CHAPTERS,
       ERFPACHT,
       MY_AREA,
+      GARBAGE,
     };
   }, [
     WMO.isLoading,
@@ -133,6 +147,7 @@ export function useAppState(value?: any) {
     MY_TIPS.isLoading,
     ERFPACHT.isLoading,
     MY_CHAPTERS.isLoading,
+    GARBAGE.isLoading,
     MY_AREA.url,
     MY_TIPS.isOptIn,
   ]);

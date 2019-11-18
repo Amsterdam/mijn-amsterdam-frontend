@@ -7,7 +7,7 @@ it('Renders without crashing', () => {
     <DataLinkTable
       isLoading={false}
       items={[]}
-      trackCategory="test"
+      track={{ category: 'test', name: 'Data tabel' }}
       id="testje"
     />
   );

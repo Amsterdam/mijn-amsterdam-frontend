@@ -173,9 +173,7 @@ export function formatProfileData({
     },
     address: {
       [brpInfoLabels.Street]: adres.straatnaam
-        ? `${adres.straatnaam} ${
-            adres.huisnummer
-          } ${adres.huisnummertoevoeging || ''}${adres.huisletter || ''}`
+        ? getFullAddress(adres)
         : unknown,
       [brpInfoLabels.Place]: `${adres.postcode || ''} ${adres.woonplaatsNaam ||
         'Onbekend'}`,

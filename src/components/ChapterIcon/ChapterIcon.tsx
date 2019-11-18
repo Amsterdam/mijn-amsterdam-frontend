@@ -7,6 +7,7 @@ import { ReactComponent as IconWonen } from 'assets/icons/wonen.svg';
 import { ReactComponent as IconBelastingen } from 'assets/icons/belastingen.svg';
 import { ReactComponent as IconMyNotifications } from 'assets/icons/Bell.svg';
 import { ReactComponent as IconTips } from 'assets/icons/Tip.svg';
+import { ReactComponent as IconGarbage } from 'assets/icons/Huisvuilkalender.svg';
 import { Chapters, Chapter as ChapterType, Colors } from 'App.constants';
 
 import styles from './ChapterIcon.module.scss';
@@ -25,6 +26,9 @@ export default function ChapterIcon({
 }: ChapterIconProps) {
   let Icon;
   switch (chapter) {
+    case Chapters.AFVAL:
+      Icon = IconGarbage;
+      break;
     case Chapters.MIJN_TIPS:
       Icon = IconTips;
       break;
@@ -45,6 +49,7 @@ export default function ChapterIcon({
       break;
     default:
       Icon = IconBurgerZaken;
+      break;
   }
 
   return (
