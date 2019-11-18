@@ -83,3 +83,19 @@ export function getApiConfigValue(
 export function getApiUrl(name: ApiName) {
   return ApiUrls[name] || '';
 }
+
+/**
+ * Sloppy determination if given url points to a page of the application
+ * @param url string
+ */
+export function isInteralUrl(url: string) {
+  return (
+    url.match(/mijn\.(acc\.)?amsterdam.nl/) !== null ||
+    url.startsWith('/') ||
+    !url.startsWith('http')
+  );
+}
+
+export function isExternalUrl(url: string) {
+  return !isInteralUrl(url);
+}
