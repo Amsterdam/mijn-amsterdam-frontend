@@ -6,9 +6,8 @@ import classnames from 'classnames';
 type width = string;
 type height = string;
 type marginBottom = string;
-type BarProp = width | height | marginBottom;
 
-export type BarConfig = Array<BarProp[]>;
+export type BarConfig = Array<[width, height, marginBottom]>;
 
 export interface ComponentProps {
   children?: ComponentChildren;
@@ -24,7 +23,6 @@ const defaultBarConfig: BarConfig = [
 ];
 
 export default function LoadingContent({
-  children,
   barConfig = defaultBarConfig,
   className,
 }: ComponentProps) {
