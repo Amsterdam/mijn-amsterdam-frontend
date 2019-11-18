@@ -2,6 +2,7 @@ import { StateKey } from 'AppState';
 import { ReactComponent as AlertIcon } from 'assets/icons/Alert.svg';
 import { ErrorMessageMap } from 'components/ErrorMessages/ErrorMessages';
 import { MyNotification } from 'hooks/api/my-notifications-api.hook';
+import { isProduction } from './helpers/App';
 
 export type Chapter =
   | 'ROOT'
@@ -14,7 +15,8 @@ export type Chapter =
   | 'MELDINGEN'
   | 'MIJN_BUURT'
   | 'PROFILE'
-  | 'MIJN_TIPS';
+  | 'MIJN_TIPS'
+  | 'AFVAL';
 
 export const Chapters: { [chapter in Chapter]: Chapter } = {
   ROOT: 'ROOT',
@@ -28,6 +30,7 @@ export const Chapters: { [chapter in Chapter]: Chapter } = {
   PROFILE: 'PROFILE',
   MELDINGEN: 'MELDINGEN',
   MIJN_TIPS: 'MIJN_TIPS',
+  AFVAL: 'AFVAL',
 };
 
 export const ChapterTitles: { [chapter in Chapter]: string } = {
@@ -42,6 +45,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   PROFILE: 'Mijn gegevens',
   MIJN_BUURT: 'Mijn buurt',
   MIJN_TIPS: 'Mijn tips',
+  AFVAL: 'Afval',
 };
 
 export const AppRoutes = {
@@ -63,15 +67,16 @@ export const AppRoutes = {
   API_LOGIN: '/api/login',
   MY_TIPS: '/overzicht-tips',
   MY_NOTIFICATIONS: '/overzicht-meldingen',
+  AFVAL: '/afval',
 };
 
 export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/login';
 export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL || '/logout';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-const ATLAS_API_BASE_URL = process.env.REACT_APP_ATLAS_API_BASE_URL;
+const DATAPUNT_API_BASE_URL = process.env.REACT_APP_DATAPUNT_API_BASE_URL;
 
-export type ApiName = StateKey | 'BAG' | 'AUTH';
+export type ApiName = StateKey | 'BAG' | 'AUTH' | 'AFVAL_OPHAAL_GEBIEDEN';
 
 export const ApiUrls: TypeIndex<ApiName, string> = {
   MY_NOTIFICATIONS: `${API_BASE_URL}/mijn-meldingen`,
@@ -82,7 +87,8 @@ export const ApiUrls: TypeIndex<ApiName, string> = {
   FOCUS: `${API_BASE_URL}/focus/aanvragen`,
   AUTH: `${API_BASE_URL}/auth/check`,
   ERFPACHT: `${API_BASE_URL}/erfpacht/check-erfpacht`,
-  BAG: `${ATLAS_API_BASE_URL}/atlas/search/adres/`,
+  BAG: `${DATAPUNT_API_BASE_URL}/atlas/search/adres/`,
+  AFVAL_OPHAAL_GEBIEDEN: `${DATAPUNT_API_BASE_URL}/afvalophaalgebieden/search/`,
 };
 
 export interface ApiConfig {
@@ -103,6 +109,7 @@ export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
 
 export const FeatureToggle = {
   myTipsoptInOutPersonalization: true,
+  garbageInformationPage: !isProduction(),
 };
 
 export const errorMessageMap: ErrorMessageMap = {
@@ -165,6 +172,9 @@ export const ExternalUrls = {
   AMSTERDAM: 'https://www.amsterdam.nl',
   WPI_CONTACT: 'https://www.amsterdam.nl/werk-inkomen/contact/',
   WPI_REGELINGEN: 'https://www.amsterdam.nl/werk-inkomen/uitkeringen/',
+  HUISVUIL_VEELGEVRAAGD:
+    'https://www.amsterdam.nl/veelgevraagd/?productid=%7BC5AC6694-CB65-4ED8-B5B3-6794BEA279FD%7D',
+  AFVAL: 'https://www.amsterdam.nl/afval/',
 };
 
 // NOTE: Keep up-to-date with _colors.scss
@@ -189,12 +199,6 @@ export const Colors = {
   supportDarkgreen: '#00A03C',
   supportLightblue: '#009DEC',
   overlayBlack50: 'rgba(0, 0, 0, 0.5)',
-};
-
-// NOTE: Keep up-to-date with _layout.scss
-export const Layout = {
-  mainHeaderTopbarHeight: 106, // px
-  mainHeaderNavbarHeight: 44, // px
 };
 
 // NOTE: Keep up-to-date with _breakpoints.scss

@@ -21,6 +21,7 @@ export default function useMyMap(address?: string) {
   });
 
   let [urls, setUrls] = useState({ simple: '', advanced: '' });
+  const [centroid, setCentroid] = useState<[number, number] | []>([]);
   let [isDefaultMapLocation, setIsDefaultMapLocation] = useState(false);
   const showLegenda = !usePhoneScreen();
   const hasData = !!(data && data.results && data.results.length);
@@ -29,17 +30,17 @@ export default function useMyMap(address?: string) {
     if ((!isLoading && isDirty) || isDefaultMapLocation) {
       if (hasData) {
         const {
-          results: [
-            {
-              centroid: [lat, lon],
-            },
-          ],
+          results: [{ centroid }],
         } = data;
+
+        const [lat, lon] = centroid;
 
         setUrls({
           advanced: `${MAP_URL}&center=${lon}%2C${lat}&zoom=${LOCATION_ZOOM}&marker=${lon}%2C${lat}&marker-icon=home&${LAYERS_CONFIG}&legenda=${showLegenda}`,
           simple: `${MAP_URL}&center=${lon}%2C${lat}&zoom=${LOCATION_ZOOM}&marker=${lon}%2C${lat}&marker-icon=home`,
         });
+
+        setCentroid(centroid);
       } else {
         setUrls({
           advanced: `${MAP_URL}&center=${DEFAULT_LON}%2C${DEFAULT_LAT}&zoom=${DEFAULT_ZOOM}`,
@@ -61,6 +62,7 @@ export default function useMyMap(address?: string) {
 
   return {
     url: urls,
+    centroid,
     isDirty,
     isLoading,
     refetch: (address: string) => {

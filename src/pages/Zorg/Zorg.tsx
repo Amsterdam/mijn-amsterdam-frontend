@@ -64,7 +64,10 @@ export default () => {
         startCollapsed={false}
         className={styles.DataLinkTableCurrent}
         isLoading={isLoading}
-        trackCategory="Zorg en ondersteuning overzicht / Huidige voorzieningen"
+        track={{
+          category: 'Zorg en ondersteuning overzicht / Huidige voorzieningen',
+          name: 'Datatabel',
+        }}
       />
 
       <DataLinkTable
@@ -75,7 +78,10 @@ export default () => {
         noItemsMessage="U hebt geen eerdere voorzieningen."
         startCollapsed={hasActualItems}
         isLoading={isLoading}
-        trackCategory="Zorg en ondersteuning overzicht / Eerdere voorzieningen"
+        track={{
+          category: 'Zorg en ondersteuning overzicht / Eerdere voorzieningen',
+          name: 'Datatabel',
+        }}
       />
       <p className={styles.HistoricItemsMention}>
         Informatie van voor 1 januari 2018 kunt u hier niet inzien. Deze kunt u
