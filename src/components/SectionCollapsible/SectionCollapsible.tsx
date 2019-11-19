@@ -18,7 +18,7 @@ export interface SectionCollapsibleProps {
   title?: string;
   noItemsMessage?: string;
   startCollapsed?: boolean;
-  className?: any;
+  className?: string;
   isLoading?: boolean;
   track?: { category: string; name: string };
   onToggleCollapsed?: (isCollapsed: boolean) => void;

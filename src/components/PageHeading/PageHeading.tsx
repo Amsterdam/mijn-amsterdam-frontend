@@ -13,7 +13,7 @@ export interface PageHeadingProps
   backLink?: LinkProps;
   el?: HeadingTagName;
   icon?: JSX.Element;
-  className?: any;
+  className?: string;
   isLoading?: boolean;
 }
 

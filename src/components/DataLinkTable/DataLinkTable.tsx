@@ -16,7 +16,7 @@ export interface DataLinkTableProps {
   title?: string;
   noItemsMessage?: string;
   startCollapsed?: boolean;
-  className?: any;
+  className?: string;
   displayProps?: { [key: string]: string }; // key => Label. Will be displayed right of the title in the table
   isLoading: boolean;
   track: {

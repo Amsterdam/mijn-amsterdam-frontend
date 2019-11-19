@@ -13,7 +13,7 @@ export type BarConfig = Array<BarProp[]>;
 export interface ComponentProps {
   children?: ComponentChildren;
   barConfig?: BarConfig;
-  className?: any;
+  className?: string;
 }
 
 const defaultBarConfig: BarConfig = [

@@ -13,19 +13,22 @@ import classnames from 'classnames';
 import { GarbagePoint } from 'hooks/api/api.garbage';
 import { MAP_URL } from 'hooks/api/api.mymap';
 import { MyAreaMap } from 'components/MyArea/MyArea';
+import Panel from 'components/Panel/Panel';
 
 interface PanelProps {
   children: ReactNode;
   className?: string;
 }
 
-function Panel({ children, className }: PanelProps) {
-  return <div className={classnames(styles.Panel, className)}>{children}</div>;
+function GarbagePanel({ children, className }: PanelProps) {
+  return (
+    <Panel className={classnames(styles.Panel, className)}>{children}</Panel>
+  );
 }
 
 function GarbagePointItem({ item }: { item: GarbagePoint }) {
   return (
-    <Panel className={styles.AfvalPunten}>
+    <GarbagePanel className={styles.AfvalPunten}>
       <Heading size="small">
         {item.naam} &mdash; {item.stadsdeel}{' '}
         <span className={styles.DistanceToHome}>+/-{item.distance}KM</span>
@@ -38,7 +41,7 @@ function GarbagePointItem({ item }: { item: GarbagePoint }) {
       </p>
       <Heading size="tiny">Openingstijden</Heading>
       <p>{item.openingstijden}</p>
-    </Panel>
+    </GarbagePanel>
   );
 }
 
@@ -79,10 +82,10 @@ export default () => {
           </Linkd>
         </p>
         {!!BRP.data.adres && (
-          <Panel className={styles.AddressPanel}>
+          <GarbagePanel className={styles.AddressPanel}>
             <Heading size="tiny">Uw adres</Heading>
             <p>{getFullAddress(BRP.data.adres)}</p>
-          </Panel>
+          </GarbagePanel>
         )}
       </PageContent>
 
@@ -98,22 +101,22 @@ export default () => {
           startCollapsed={true}
         >
           {!!item.aanbiedwijze && (
-            <Panel>
+            <GarbagePanel>
               <Heading size="tiny">Aanbiedwijze</Heading>
               <p>{item.aanbiedwijze}</p>
-            </Panel>
+            </GarbagePanel>
           )}
           {!!item.ophaaldag && (
-            <Panel>
+            <GarbagePanel>
               <Heading size="tiny">Ophaaldag</Heading>
               <p>{item.ophaaldag}</p>
-            </Panel>
+            </GarbagePanel>
           )}
           {!!item.buitenZetten && (
-            <Panel>
+            <GarbagePanel>
               <Heading size="tiny">Buiten zetten</Heading>
               <p>{item.buitenZetten}</p>
-            </Panel>
+            </GarbagePanel>
           )}
           {index === 0 && (
             <div className={styles.GarbageContainerMap}>
