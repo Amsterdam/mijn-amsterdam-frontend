@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
 import { PageContent, DetailPage } from 'components/Page/Page';
+import React, { useContext, ReactNode } from 'react';
 import PageHeading from 'components/PageHeading/PageHeading';
 import styles from './GarbageInformation.module.scss';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
@@ -11,17 +11,21 @@ import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible
 import { getFullAddress } from 'data-formatting/brp';
 import classnames from 'classnames';
 import { GarbagePoint } from 'hooks/api/api.garbage';
-import MyArea from 'components/MyArea/MyArea';
-import { MAP_URL, LOCATION_ZOOM } from 'hooks/api/api.mymap';
-import { MyAreaMap } from '../../components/MyArea/MyArea';
-import { usePhoneScreen } from '../../hooks/media.hook';
+import { MAP_URL } from 'hooks/api/api.mymap';
+import { MyAreaMap } from 'components/MyArea/MyArea';
+
+interface PanelProps {
+  children: ReactNode;
+  className?: string;
+}
+
+function Panel({ children, className }: PanelProps) {
+  return <div className={classnames(styles.Panel, className)}>{children}</div>;
+}
 
 function GarbagePointItem({ item }: { item: GarbagePoint }) {
   return (
-    <div
-      key={item.naam}
-      className={classnames(styles.Panel, styles.AfvalPunten)}
-    >
+    <Panel className={styles.AfvalPunten}>
       <Heading size="small">
         {item.naam} &mdash; {item.stadsdeel}{' '}
         <span className={styles.DistanceToHome}>+/-{item.distance}KM</span>
@@ -34,7 +38,7 @@ function GarbagePointItem({ item }: { item: GarbagePoint }) {
       </p>
       <Heading size="tiny">Openingstijden</Heading>
       <p>{item.openingstijden}</p>
-    </div>
+    </Panel>
   );
 }
 
@@ -75,10 +79,10 @@ export default () => {
           </Linkd>
         </p>
         {!!BRP.data.adres && (
-          <div className={classnames(styles.Panel, styles.AddressPanel)}>
+          <Panel className={styles.AddressPanel}>
             <Heading size="tiny">Uw adres</Heading>
             <p>{getFullAddress(BRP.data.adres)}</p>
-          </div>
+          </Panel>
         )}
       </PageContent>
 
@@ -94,22 +98,22 @@ export default () => {
           startCollapsed={true}
         >
           {!!item.aanbiedwijze && (
-            <div className={styles.Panel}>
+            <Panel>
               <Heading size="tiny">Aanbiedwijze</Heading>
               <p>{item.aanbiedwijze}</p>
-            </div>
+            </Panel>
           )}
           {!!item.ophaaldag && (
-            <div className={styles.Panel}>
+            <Panel>
               <Heading size="tiny">Ophaaldag</Heading>
               <p>{item.ophaaldag}</p>
-            </div>
+            </Panel>
           )}
           {!!item.buitenZetten && (
-            <div className={styles.Panel}>
+            <Panel>
               <Heading size="tiny">Buiten zetten</Heading>
               <p>{item.buitenZetten}</p>
-            </div>
+            </Panel>
           )}
           {index === 0 && (
             <div className={styles.GarbageContainerMap}>
