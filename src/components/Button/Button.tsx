@@ -22,6 +22,7 @@ export interface LinkdProps
   external?: boolean;
   href: string;
 }
+
 export interface ButtonProps
   extends CustomButtonProps,
     ButtonHTMLAttributes<HTMLButtonElement> {}
@@ -30,6 +31,15 @@ type buttonStyleProps = Pick<
   CustomButtonProps,
   'lean' | 'isDisabled' | 'variant' | 'className'
 >;
+
+type ButtonBodyProps = Pick<CustomButtonProps, 'icon' | 'iconPosition'> & {
+  children: ReactNode;
+};
+
+interface PositionedIconProps {
+  position?: 'left' | 'right';
+  icon?: any;
+}
 
 function buttonStyle({
   lean,
@@ -46,27 +56,25 @@ function buttonStyle({
   );
 }
 
-type ButtonBodyProps = Pick<CustomButtonProps, 'icon' | 'iconPosition'> & {
-  children: ReactNode;
-};
+function PositionedIcon({ icon, position }: PositionedIconProps) {
+  const Icon = icon;
+  return (
+    <Icon
+      aria-hidden="true"
+      className={classnames(styles.Icon, styles[`Icon__${position}`])}
+    />
+  );
+}
 
 function ButtonBody({ icon, iconPosition, children }: ButtonBodyProps) {
-  const Icon = icon;
-
   return (
     <>
       {!!icon && iconPosition === 'left' && (
-        <Icon
-          aria-hidden="true"
-          className={classnames(styles.Icon, styles[`Icon__${iconPosition}`])}
-        />
+        <PositionedIcon icon={icon} position={iconPosition} />
       )}
       {children}
       {!!icon && iconPosition === 'right' && (
-        <Icon
-          aria-hidden="true"
-          className={classnames(styles.Icon, styles[`Icon__${iconPosition}`])}
-        />
+        <PositionedIcon icon={icon} position={iconPosition} />
       )}
     </>
   );
