@@ -116,6 +116,7 @@ export function useAppState(value?: any) {
     }
   }, [...tipsDependencies, MY_TIPS.isOptIn]);
 
+  // Fetch garbage information for address at lat,lon
   useEffect(() => {
     if (MY_AREA.centroid !== null) {
       GARBAGE.refetch({ centroid: MY_AREA.centroid });

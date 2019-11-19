@@ -3,7 +3,7 @@ import {
   MenuItem,
   myChaptersMenuItems,
 } from 'components/MainNavBar/MainNavBar.constants';
-import { useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { ErfpachtApiState } from './api.erfpacht';
 import { FocusApiState } from './api.focus';
 import { GarbageApiState } from './api.garbage';
@@ -26,10 +26,10 @@ function isChapterActive(
       return !WMO.isLoading && !!WMO.data.items.length;
 
     case Chapters.BELASTINGEN:
-      return true; // SSO to belastingen
+      return true; // SSO to belastingen, always visible for now.
 
     case Chapters.AFVAL:
-      return !GARBAGE.isLoading;
+      return !GARBAGE.isLoading && GARBAGE.isDirty;
 
     case Chapters.WONEN:
       return !ERFPACHT.isLoading && ERFPACHT.data.status === true;
@@ -55,23 +55,26 @@ export default function useMyChapters(
 ): MyChaptersApiState {
   const { WMO, FOCUS, ERFPACHT, GARBAGE } = apiStates;
 
-  const availableChapters = useCallback(() => {
+  const [{ items, isLoading }, setItems] = useState<MyChaptersApiState>({
+    items: [],
+    isLoading: true,
+  });
+
+  useEffect(() => {
     const items = myChaptersMenuItems.filter(item => {
       // Check to see if Chapter has been loaded or if it is directly available
       return isChapterActive(item, apiStates);
     });
-
     const isLoading =
       WMO.isLoading ||
       FOCUS.isLoading ||
       ERFPACHT.isLoading ||
       GARBAGE.isPristine;
+    setItems({ items, isLoading });
+  }, [WMO.isLoading, FOCUS.isLoading, ERFPACHT.isLoading, GARBAGE.isLoading]);
 
-    return {
-      items,
-      isLoading,
-    };
-  }, [WMO.isLoading, FOCUS.isLoading, ERFPACHT.isLoading, GARBAGE.isPristine]);
-
-  return availableChapters();
+  return {
+    items,
+    isLoading,
+  };
 }
