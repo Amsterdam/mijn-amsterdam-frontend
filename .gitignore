@@ -28,3 +28,4 @@ yarn-error.log*
 /cypress/results
 /cypress/videos
 /cypress/screenshots
+/.vscode/settings.json

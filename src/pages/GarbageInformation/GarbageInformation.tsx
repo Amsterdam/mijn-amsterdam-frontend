@@ -1,5 +1,5 @@
 import { PageContent, DetailPage } from 'components/Page/Page';
-import React, { useContext, ReactNode } from 'react';
+import React, { useContext, ReactNode, useState } from 'react';
 import PageHeading from 'components/PageHeading/PageHeading';
 import styles from './GarbageInformation.module.scss';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
