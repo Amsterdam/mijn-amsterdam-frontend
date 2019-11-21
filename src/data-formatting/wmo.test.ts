@@ -861,5 +861,7 @@ const testData: WmoApiResponse = [
 ];
 
 it('Should format WMO data correctly', () => {
-  expect(formatWmoApiResponse(testData)).toMatchSnapshot();
+  expect(
+    formatWmoApiResponse(testData, new Date(2019, 8, 20))
+  ).toMatchSnapshot();
 });
