@@ -174,18 +174,22 @@ export default () => {
           </Button>
         </div>
       </SectionCollapsible>
+      {/* {!isCollapsed('wegbrengen') && ( */}
       <SectionCollapsible
         className={classnames(
           styles.InfoSection,
           styles.InfoSectionOtherGarbagePoints
         )}
-        isCollapsed={isCollapsed('otherGarbagePoints')}
+        isCollapsed={
+          isCollapsed('wegbrengen') || isCollapsed('otherGarbagePoints')
+        }
         onToggleCollapsed={toggleCollapsed.bind(null, 'otherGarbagePoints')}
       >
         {wegbrengen.slice(1).map(item => (
           <GarbagePointItem key={item.naam} item={item} />
         ))}
       </SectionCollapsible>
+      {/* )} */}
     </DetailPage>
   );
 };
