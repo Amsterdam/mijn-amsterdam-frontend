@@ -64,11 +64,7 @@ describe('SectionCollapsible', () => {
 
     expect(component.childAt(0).hasClass(styles.isCollapsed)).toEqual(true);
     component.find(`.${styles.Title} span[role="button"]`).simulate('click');
-    expect(toggleCollapsed).toHaveBeenCalledTimes(2);
-    expect(component.childAt(0).hasClass(styles.isCollapsed)).toEqual(false);
-    component.find(`.${styles.Title} span[role="button"]`).simulate('click');
-    expect(toggleCollapsed).toHaveBeenCalledTimes(3);
-    expect(component.childAt(0).hasClass(styles.isCollapsed)).toEqual(true);
+    expect(toggleCollapsed).toHaveBeenCalledTimes(1);
   });
 
   it('should call trackEvent if tracking info is provided and section is expanded', () => {
@@ -91,9 +87,5 @@ describe('SectionCollapsible', () => {
       name: 'the content thing',
       action: 'Open klikken',
     });
-    component.find(`.${styles.Title} span[role="button"]`).simulate('click');
-    expect(trackingSpy).toBeCalledTimes(1);
-    component.find(`.${styles.Title} span[role="button"]`).simulate('click');
-    expect(trackingSpy).toBeCalledTimes(2);
   });
 });
