@@ -195,79 +195,19 @@
   color: inherit;
 }
 
-// .LogoutLink {
-//   margin-left: 2rem;
-//   text-decoration: none;
-
-//   &:hover {
-//     text-decoration: underline;
-//   }
-
-//   svg {
-//     height: .8em;
-//     width: auto;
-//   }
-// }
-
 // Animation of the mainnavbar
-
-.BurgerMenu {
-   &:before {
-    content: '';
-    position: absolute;
-    top: $main-header-topbar-height;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, .5);
-    z-index: z-index(burger-menu-backdrop);
-  }
-  .LinkContainer {
-    opacity: 0;
-    transform: translate3d(-40rem, 0, 0);
-  }
-  &:before {
-    opacity: 0;
-    transform: translate3d(-100%, 0, 0);
-  }
+.Backdrop {
+  position: fixed;
+  top: $main-header-topbar-height;
+  // left: -100%;
+  width: 100vw;
+  height: calc(100vh - #{$main-header-topbar-height});
+  background-color: rgba(0, 0, 0, .5);
+  z-index: z-index(burger-menu-backdrop);
+  // transition: left 0ms 200ms linear;
 }
 
-// CSS modules generates unique classNames so we have to use the className attribute selector for matching the right component
-:global {
-  .MainNavBarAnim-enter-done {
-    [class^="MainNavBar_LinkContainer"] {
-      opacity: 1;
-      transform: translate3d(0, 0, 0);
-      transition: all 200ms ease-in-out;
-    }
-    &:before {
-      opacity: 1;
-      transform: translate3d(0, 0, 0);
-      transition: opacity 200ms 20ms ease-in, transform 0ms 0ms ease-in;
-    }
-  }
-
-  .MainNavBarAnim-exit {
-    [class^="MainNavBar_LinkContainer"] {
-      opacity: 1;
-      transform: translate3d(0, 0, 0);
-    }
-    &:before {
-      opacity: 1;
-      transform: translate3d(0, 0, 0);
-    }
-  }
-
-  .MainNavBarAnim-exit-done {
-    [class^="MainNavBar_LinkContainer"] {
-      opacity: 0;
-      transform: translate3d(-40rem, 0, 0);
-      transition: all 200ms ease-in-out;
-    }
-    &:before {
-      opacity: 0;
-      transform: translate3d(-100%, 0, 0);
-      transition: opacity 200ms 0ms ease-in, transform 0ms 200ms ease-in;
-    }
-  }
+.BurgerMenuVisible .Backdrop {
+  // left: 0;
+  // transition: left 0ms 0ms linear;
 }

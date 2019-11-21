@@ -14,6 +14,8 @@ import { GarbagePoint } from 'hooks/api/api.garbage';
 import { MAP_URL } from 'hooks/api/api.mymap';
 import { MyAreaMap } from 'components/MyArea/MyArea';
 import Panel from 'components/Panel/Panel';
+import { useSessionStorage } from '../../hooks/storage.hook';
+import { Button } from '../../components/Button/Button';
 
 interface PanelProps {
   children: ReactNode;
@@ -54,6 +56,29 @@ export default () => {
     },
   } = useContext(AppContext);
 
+  const collapsedIndex = {
+    otherGarbagePoints: true,
+    wegbrengen: true,
+    ophalen1: true,
+    ophalen2: true,
+  };
+
+  const [isCollapsedIndex, setIsCollapsed] = useSessionStorage(
+    'garbagePoints',
+    collapsedIndex
+  );
+
+  function isCollapsed(key: string) {
+    return isCollapsedIndex && isCollapsedIndex[key];
+  }
+
+  function toggleCollapsed(key: string) {
+    setIsCollapsed({
+      ...isCollapsedIndex,
+      [key]: !isCollapsed(key),
+    });
+  }
+
   const garbageContainersMapUrl = centroid
     ? `${MAP_URL}&center=${centroid[1]}%2C${centroid[0]}&zoom=12&marker=${
         centroid[1]
@@ -93,12 +118,12 @@ export default () => {
         <SectionCollapsible
           key={item.title}
           className={styles.InfoSection}
-          id={`garbage-information-${item.title}`}
           isLoading={isLoading}
+          isCollapsed={isCollapsed('ophalen' + index)}
+          onToggleCollapsed={toggleCollapsed.bind(null, 'ophalen' + index)}
           title={item.title}
           hasItems={!!ophalen.length}
           noItemsMessage="Informatie over afval in uw buurt kan niet worden getoond"
-          startCollapsed={true}
         >
           {!!item.aanbiedwijze && (
             <GarbagePanel>
@@ -127,22 +152,39 @@ export default () => {
       ))}
 
       <SectionCollapsible
-        className={styles.InfoSection}
-        id="diy-garbage-information"
+        className={classnames(
+          styles.InfoSection,
+          styles.InfoSectionGarbagePoints
+        )}
         title="Grofvuil wegbrengen"
-        startCollapsed={true}
+        isCollapsed={isCollapsed('wegbrengen')}
+        onToggleCollapsed={toggleCollapsed.bind(null, 'wegbrengen')}
       >
         <GarbagePointItem item={wegbrengen[0]} />
-        <SectionCollapsible
-          className={styles.InfoSection}
-          id="diy-garbage-information-2"
-          title="Overige afvalpunten"
-          startCollapsed={true}
-        >
-          {wegbrengen.slice(1).map(item => (
-            <GarbagePointItem key={item.naam} item={item} />
-          ))}
-        </SectionCollapsible>
+        <div className={styles.ToggleOtherGarbagePointsButton}>
+          <Button
+            onClick={() => {
+              toggleCollapsed('otherGarbagePoints');
+            }}
+            variant="secondary-inverted"
+          >
+            {isCollapsed('otherGarbagePoints')
+              ? 'Toon overige afvalpunten'
+              : 'Verberg overige afvalpunten'}
+          </Button>
+        </div>
+      </SectionCollapsible>
+      <SectionCollapsible
+        className={classnames(
+          styles.InfoSection,
+          styles.InfoSectionOtherGarbagePoints
+        )}
+        isCollapsed={isCollapsed('otherGarbagePoints')}
+        onToggleCollapsed={toggleCollapsed.bind(null, 'otherGarbagePoints')}
+      >
+        {wegbrengen.slice(1).map(item => (
+          <GarbagePointItem key={item.naam} item={item} />
+        ))}
       </SectionCollapsible>
     </DetailPage>
   );

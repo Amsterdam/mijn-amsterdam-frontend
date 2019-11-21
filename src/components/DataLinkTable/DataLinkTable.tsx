@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 
 import styles from './DataLinkTable.module.scss';
 import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
+import { useSessionStorage } from 'hooks/storage.hook';
 
 export interface DataLinkTableProps {
   id: string;
@@ -35,7 +36,7 @@ export default function DataLinkTable({
   isLoading,
   track,
 }: DataLinkTableProps) {
-  const [isCollapsed, setCollapsed] = useState(startCollapsed);
+  const [isCollapsed, setCollapsed] = useSessionStorage(id, startCollapsed);
 
   const displayPropEntries = displayProps
     ? entries(displayProps).slice('title' in displayProps ? 1 : 0) // Don't use the title here, title is always fixed as first prop in the table;
@@ -44,14 +45,13 @@ export default function DataLinkTable({
   return (
     <SectionCollapsible
       className={styles.DataLinkTable}
-      id={id}
       title={title}
-      startCollapsed={startCollapsed}
       noItemsMessage={noItemsMessage}
       isLoading={isLoading}
       hasItems={!!items.length}
       track={track}
-      onToggleCollapsed={isCollapsed => setCollapsed(isCollapsed)}
+      isCollapsed={isCollapsed}
+      onToggleCollapsed={() => setCollapsed(!isCollapsed)}
     >
       <table className={styles.Table}>
         <thead>

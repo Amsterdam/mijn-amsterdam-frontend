@@ -37,7 +37,6 @@ export default function MyChaptersPanel({
         );
       });
     },
-    items.length
   );
 
   return (

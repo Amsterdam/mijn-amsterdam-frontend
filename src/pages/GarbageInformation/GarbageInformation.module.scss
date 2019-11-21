@@ -12,6 +12,10 @@
   }
 }
 
+.InfoSectionGarbagePoints {
+
+}
+
 @mixin GarbagePanel {
   margin: 0 auto;
   padding: 0;
@@ -77,4 +81,16 @@
 
 .GarbageContainerMap {
   height: 50rem;
+}
+
+.ToggleOtherGarbagePointsButton {
+  max-width: 62rem;
+  margin: 0 auto;
+}
+
+.InfoSectionOtherGarbagePoints {
+  padding-top: 0;
+  @include select(SectionCollapsible_Panel) {
+    border-top: 0;
+  }
 }

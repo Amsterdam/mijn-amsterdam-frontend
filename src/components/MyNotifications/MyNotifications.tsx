@@ -54,7 +54,6 @@ export default function MyNotifications({
     trackCategory,
     () =>
       trackItemPresentation(trackCategory, 'Aantal meldingen', items.length),
-    items.length
   );
 
   return (

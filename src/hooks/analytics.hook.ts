@@ -66,19 +66,14 @@ export function trackItemPresentation(
 export function useSessionCallbackOnceDebounced(
   name: string,
   callback: () => void,
-  debounceTrigger: any = true,
   timeoutMS: number = 1000
 ) {
   const [isSessionTracked, setSessionTracked] = useSessionStorage(name, false);
-  const [trackEvent] = useDebouncedCallback(
-    () => {
-      if (!isSessionTracked) {
-        callback();
-        setSessionTracked(true);
-      }
-    },
-    timeoutMS,
-    [debounceTrigger]
-  );
+  const [trackEvent] = useDebouncedCallback(() => {
+    if (!isSessionTracked) {
+      callback();
+      setSessionTracked(true);
+    }
+  }, timeoutMS);
   trackEvent();
 }
