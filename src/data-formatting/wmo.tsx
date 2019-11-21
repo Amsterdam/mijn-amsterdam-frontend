@@ -65,7 +65,7 @@ function isDateInFuture(dateStr: string | Date, compareDate: Date) {
 type TextPartContent = string | JSX.Element;
 type TextPartContentFormatter = (
   data: WmoSourceData,
-  stepIndex?: number
+  today: Date
 ) => TextPartContent;
 type TextPartContents = TextPartContent | TextPartContentFormatter;
 
@@ -81,8 +81,16 @@ const Labels: {
       status: string;
       datePublished: TextPartContents;
       description: TextPartContents;
-      isChecked: (stepIndex: number, data: WmoSourceData) => boolean;
-      isLastActive: (stepIndex: number, data: WmoSourceData) => boolean;
+      isChecked: (
+        stepIndex: number,
+        data: WmoSourceData,
+        today: Date
+      ) => boolean;
+      isLastActive: (
+        stepIndex: number,
+        data: WmoSourceData,
+        today: Date
+      ) => boolean;
     }>;
   };
 } = {
@@ -334,12 +342,12 @@ const Labels: {
       {
         status: 'Levering gestart',
         datePublished: () => '',
-        isChecked: (stepIndex, sourceData: WmoSourceData) =>
+        isChecked: (stepIndex, sourceData: WmoSourceData, today: Date) =>
           sourceData.isActual === false ||
-          isDateInPast(sourceData.dateFinish, new Date()),
-        isLastActive: (stepIndex, sourceData: WmoSourceData) =>
+          isDateInPast(sourceData.dateFinish, today),
+        isLastActive: (stepIndex, sourceData: WmoSourceData, today: Date) =>
           sourceData.isActual === true &&
-          isDateInFuture(sourceData.dateFinish, new Date()),
+          isDateInFuture(sourceData.dateFinish, today),
         description: data => (
           <p>
             {data.supplier} is gestart met het leveren van {data.title}.
@@ -349,9 +357,9 @@ const Labels: {
       {
         status: 'Levering gestopt',
         datePublished: () => '',
-        isChecked: (stepIndex, sourceData: WmoSourceData) =>
+        isChecked: (stepIndex, sourceData: WmoSourceData, today: Date) =>
           sourceData.isActual === false ||
-          isDateInPast(sourceData.dateFinish, new Date()),
+          isDateInPast(sourceData.dateFinish, today),
         isLastActive: (stepIndex, sourceData: WmoSourceData) => false,
         description: data => (
           <p>
@@ -366,15 +374,15 @@ const Labels: {
       },
       {
         status: 'Einde recht',
-        datePublished: data =>
-          isDateInFuture(data.dateFinish, new Date()) ? '' : data.dateFinish,
+        datePublished: (data, today) =>
+          isDateInFuture(data.dateFinish, today) ? '' : data.dateFinish,
         isChecked: () => false,
-        isLastActive: (stepIndex, sourceData: WmoSourceData) =>
+        isLastActive: (stepIndex, sourceData: WmoSourceData, today: Date) =>
           sourceData.isActual === false ||
-          isDateInPast(sourceData.dateFinish, new Date()),
-        description: data => (
+          isDateInPast(sourceData.dateFinish, today),
+        description: (data, today) => (
           <p>
-            {data.isActual && isDateInFuture(data.dateFinish, new Date())
+            {data.isActual && isDateInFuture(data.dateFinish, today)
               ? 'Op het moment dat uw recht stopt, ontvangt u hiervan bericht.'
               : `Uw recht op ${data.title} is beëindigd per ${defaultDateFormat(
                   data.dateFinish
@@ -413,12 +421,12 @@ const Labels: {
       {
         status: 'Opdracht gegeven',
         datePublished: () => '',
-        isChecked: (stepIndex, data) =>
+        isChecked: (stepIndex, data, today: Date) =>
           data.isActual === false ||
-          isDateInPast(data.dateStartServiceDelivery, new Date()),
-        isLastActive: (stepIndex, data) =>
+          isDateInPast(data.dateStartServiceDelivery, today),
+        isLastActive: (stepIndex, data, today: Date) =>
           data.isActual
-            ? isDateInFuture(data.dateStartServiceDelivery, new Date())
+            ? isDateInFuture(data.dateStartServiceDelivery, today)
             : false,
         description: data => (
           <p>
@@ -431,9 +439,9 @@ const Labels: {
         status: 'Product geleverd',
         datePublished: () => '',
         isChecked: (stepIndex, data) => data.isActual === false,
-        isLastActive: (stepIndex, data) =>
+        isLastActive: (stepIndex, data, today: Date) =>
           data.isActual
-            ? isDateInPast(data.dateStartServiceDelivery, new Date())
+            ? isDateInPast(data.dateStartServiceDelivery, today)
             : false,
         description: data => (
           <p>
@@ -487,12 +495,12 @@ const Labels: {
       {
         status: 'Opdracht gegeven',
         datePublished: () => '',
-        isChecked: (stepIndex, data) =>
+        isChecked: (stepIndex, data, today: Date) =>
           data.isActual === false ||
-          isDateInPast(data.dateStartServiceDelivery, new Date()),
-        isLastActive: (stepIndex, data) =>
+          isDateInPast(data.dateStartServiceDelivery, today),
+        isLastActive: (stepIndex, data, today: Date) =>
           data.isActual
-            ? isDateInFuture(data.dateStartServiceDelivery, new Date())
+            ? isDateInFuture(data.dateStartServiceDelivery, today)
             : false,
         description: data => (
           <p>
@@ -506,9 +514,9 @@ const Labels: {
         status: 'Aanpassing uitgevoerd',
         datePublished: () => '',
         isChecked: (stepIndex, data) => data.isActual === false,
-        isLastActive: (stepIndex, data) =>
+        isLastActive: (stepIndex, data, today: Date) =>
           data.isActual
-            ? isDateInPast(data.dateStartServiceDelivery, new Date())
+            ? isDateInPast(data.dateStartServiceDelivery, today)
             : false,
         description: data => (
           <p>
@@ -538,18 +546,22 @@ const Labels: {
 
 export function parseLabelContent(
   text: TextPartContents,
-  data: WmoSourceData
+  data: WmoSourceData,
+  today: Date
 ): string | JSX.Element {
   let rText = text || '';
 
   if (typeof rText === 'function') {
-    return rText(data);
+    return rText(data, today);
   }
 
   return rText;
 }
 
-function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
+function formatWmoProcessItems(
+  data: WmoSourceData,
+  today: Date
+): WmoProcessItem[] {
   const labelData = Object.values(Labels).find((labelData, index) => {
     const type = data.deliveryType || '';
     return (
@@ -564,7 +576,8 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
       (statusItem, index) => {
         const datePublished = parseLabelContent(
           statusItem.datePublished,
-          data
+          data,
+          today
         ) as string;
 
         let stepType: StepType = 'intermediate-step';
@@ -578,10 +591,10 @@ function formatWmoProcessItems(data: WmoSourceData): WmoProcessItem[] {
         return {
           id: `status-step-${index}`,
           status: statusItem.status,
-          description: parseLabelContent(statusItem.description, data),
+          description: parseLabelContent(statusItem.description, data, today),
           datePublished,
-          isLastActive: statusItem.isLastActive(index, data),
-          isChecked: statusItem.isChecked(index, data),
+          isLastActive: statusItem.isLastActive(index, data, today),
+          isChecked: statusItem.isChecked(index, data, today),
           stepType,
           documents: [], // NOTE: To be implemented late 2020
         };
@@ -641,7 +654,8 @@ export interface WmoApiItem {
 export type WmoApiResponse = WmoApiItem[];
 
 export function formatWmoApiResponse(
-  wmoApiResponseData: WmoApiResponse
+  wmoApiResponseData: WmoApiResponse,
+  today: Date
 ): WmoItem[] {
   const items = wmoApiResponseData
     .sort(dateSort('VoorzieningIngangsdatum', 'desc'))
@@ -666,20 +680,23 @@ export function formatWmoApiResponse(
 
       const id = slug(`${title}-${index}`).toLowerCase();
 
-      const process: WmoItem['process'] = formatWmoProcessItems({
-        title,
-        dateStart,
-        dateFinish: dateFinish || '',
-        supplier,
-        isActual,
-        dateDecision,
-        dateStartServiceDelivery,
-        dateFinishServiceDelivery: dateFinishServiceDelivery || '',
-        dateRequestOrderStart,
-        serviceDeliverySupplier: supplier || 'Onbekend',
-        itemTypeCode,
-        deliveryType,
-      });
+      const process: WmoItem['process'] = formatWmoProcessItems(
+        {
+          title,
+          dateStart,
+          dateFinish: dateFinish || '',
+          supplier,
+          isActual,
+          dateDecision,
+          dateStartServiceDelivery,
+          dateFinishServiceDelivery: dateFinishServiceDelivery || '',
+          dateRequestOrderStart,
+          serviceDeliverySupplier: supplier || 'Onbekend',
+          itemTypeCode,
+          deliveryType,
+        },
+        today
+      );
 
       return {
         id,
