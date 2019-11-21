@@ -174,7 +174,6 @@ export default () => {
           </Button>
         </div>
       </SectionCollapsible>
-      {/* {!isCollapsed('wegbrengen') && ( */}
       <SectionCollapsible
         className={classnames(
           styles.InfoSection,
@@ -189,7 +188,6 @@ export default () => {
           <GarbagePointItem key={item.naam} item={item} />
         ))}
       </SectionCollapsible>
-      {/* )} */}
     </DetailPage>
   );
 };
