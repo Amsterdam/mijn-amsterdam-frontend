@@ -10,7 +10,7 @@ export type AlertType = 'warning' | 'info' | 'success';
 export interface ComponentProps {
   children?: ComponentChildren;
   type?: AlertType;
-  className?: any;
+  className?: string;
 }
 
 function getIcon(alertType: AlertType) {

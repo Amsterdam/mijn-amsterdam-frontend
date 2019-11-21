@@ -12,7 +12,7 @@ import { CloseButton } from '../Button/Button';
 
 interface ModalProps {
   children: ComponentChildren;
-  className?: any;
+  className?: string;
   isOpen: boolean | undefined;
   onClose?: () => void;
   title?: string;

@@ -78,9 +78,9 @@ export function useAppState(value?: any) {
   const BRP = useBrpApi();
   const MY_TIPS = useMyTipsApi();
   const ERFPACHT = useErfpachtApi();
-  const GARBAGE = useGarbageApi();
-  const MY_CHAPTERS = useMyChapters({ WMO, FOCUS, ERFPACHT, GARBAGE });
   const MY_AREA = useMyMap();
+  const GARBAGE = useGarbageApi({ centroid: MY_AREA.centroid });
+  const MY_CHAPTERS = useMyChapters({ WMO, FOCUS, ERFPACHT, GARBAGE });
   const MY_NOTIFICATIONS = useMyNotificationsApi({ FOCUS, BRP });
 
   const tipsDependencies = [
@@ -116,8 +116,9 @@ export function useAppState(value?: any) {
     }
   }, [...tipsDependencies, MY_TIPS.isOptIn]);
 
+  // Fetch garbage information for address at lat,lon
   useEffect(() => {
-    if (MY_AREA.centroid.length === 2) {
+    if (MY_AREA.centroid !== null) {
       GARBAGE.refetch({ centroid: MY_AREA.centroid });
     }
   }, [MY_AREA.centroid]);

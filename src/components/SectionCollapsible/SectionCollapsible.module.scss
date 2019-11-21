@@ -48,6 +48,7 @@
   overflow: hidden;
   border-bottom: 0.1rem solid $color-neutral-grey2;
   height: 0px;
+  position: relative;
 
   @include mq-phone() {
     border-bottom: 0;
@@ -62,18 +63,14 @@
     text-indent: 0;
   }
   text-indent: 18rem;
-  margin-top: -3rem; // closer to the heading
+  margin-top: -3rem;
   margin-bottom: 3rem;
 }
 
-
-:global {
-  .sectionCollapsible-enter-active,
-  .sectionCollapsible-exit-active,
-  .sectionCollapsible-enter-done,
-  .sectionCollapsible-exit-done,
-  .sectionCollapsible-exit,
-  .sectionCollapsible-enter {
-    transition: all 300ms;
-  }
+.ToggleMorePanel {
+  background: $color-white;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }

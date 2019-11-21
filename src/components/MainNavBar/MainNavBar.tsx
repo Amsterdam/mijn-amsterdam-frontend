@@ -24,8 +24,8 @@ import {
 import styles from './MainNavBar.module.scss';
 import Tutorial from 'components/Tutorial/Tutorial';
 import { Button } from 'components/Button/Button';
-import { CSSTransition } from 'react-transition-group';
 import Linkd from '../Button/Button';
+import { useSpring, animated } from 'react-spring';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -159,8 +159,10 @@ export default function MainNavBar() {
     MY_CHAPTERS: { items: myChapterItems },
   } = useContext(AppContext);
   const { isAuthenticated } = useContext(SessionContext);
-  const isBurgerMenu = useTabletScreen();
-  const [isBurgerMenuVisible, toggleBurgerMenu] = useState(false);
+  const hasBurgerMenu = useTabletScreen();
+  const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
+    undefined
+  );
   const { history, location } = useRouter();
   const [isTutorialVisible, setIsTutorialVisible] = useState(false);
 
@@ -201,35 +203,78 @@ export default function MainNavBar() {
 
   // Hides small screen menu on route change
   useEffect(() => {
-    toggleBurgerMenu(false);
+    // toggleBurgerMenu(false);
     setSubMenuVisibility();
   }, [history.location]);
 
-  const inProp = isBurgerMenu ? isBurgerMenuVisible : false;
+  const linkContainerAnim = {
+    immediate: isBurgerMenuVisible === undefined,
+    reverse: isBurgerMenuVisible,
+    left: -400,
+    from: {
+      left: 0,
+    },
+  };
+
+  const backdropAnim = {
+    immediate: isBurgerMenuVisible === undefined,
+    reverse: isBurgerMenuVisible,
+    opacity: 0,
+    from: {
+      opacity: 1,
+    },
+  };
+  const left: any = {
+    immediate: isBurgerMenuVisible !== false,
+    reverse: !isBurgerMenuVisible,
+    left: 0,
+    from: {
+      left: -1000,
+    },
+  };
+  if (!isBurgerMenuVisible) {
+    left.delay = 300;
+  }
+  const linkContainerAnimationProps = useSpring(linkContainerAnim);
+  const backdropAnimationProps = useSpring(backdropAnim);
+  const leftProps = useSpring(left);
 
   return (
-    <CSSTransition in={inProp} timeout={0} classNames="MainNavBarAnim">
-      <nav
-        className={classnames(
-          styles.MainNavBar,
-          isBurgerMenu && styles.BurgerMenu
-        )}
-      >
-        {isBurgerMenu && (
-          <button
-            id={BurgerMenuToggleBtnId}
-            className={classnames(
-              styles.BurgerMenuToggleBtn,
-              isBurgerMenuVisible && styles.BurgerMenuToggleBtnOpen
-            )}
-            onClick={() => toggleBurgerMenu(!isBurgerMenuVisible)}
-          >
-            Navigatie
-          </button>
-        )}
+    <nav
+      className={classnames(
+        styles.MainNavBar,
+        hasBurgerMenu && styles.BurgerMenu,
+        isBurgerMenuVisible && styles.BurgerMenuVisible
+      )}
+    >
+      {hasBurgerMenu && (
+        <button
+          id={BurgerMenuToggleBtnId}
+          className={classnames(
+            styles.BurgerMenuToggleBtn,
+            isBurgerMenuVisible && styles.BurgerMenuToggleBtnOpen
+          )}
+          onClick={() => toggleBurgerMenu(!isBurgerMenuVisible)}
+        >
+          Navigatie
+        </button>
+      )}
 
-        {isAuthenticated && (
-          <div id={LinkContainerId} className={styles.LinkContainer}>
+      {isAuthenticated && (
+        <>
+          {hasBurgerMenu && (
+            <animated.div
+              key="BurgerMenuBackDrop"
+              style={{ ...leftProps, ...backdropAnimationProps }}
+              className={styles.Backdrop}
+            />
+          )}
+          <animated.div
+            key="LinkContainer"
+            id={LinkContainerId}
+            className={styles.LinkContainer}
+            style={linkContainerAnimationProps}
+          >
             <SecondaryLinks />
             {menuItems.map(item => {
               let menuItem = item;
@@ -245,33 +290,31 @@ export default function MainNavBar() {
                 menuItem,
                 activeSubmenuId,
                 setSubMenuVisibility,
-                !isBurgerMenu
+                !hasBurgerMenu
               );
             })}
-          </div>
-        )}
+          </animated.div>
+        </>
+      )}
 
-        {location.pathname === AppRoutes.ROOT && (
-          <>
-            <Button
-              className={classnames(
-                styles.TutorialBtn,
-                isTutorialVisible && styles.TutorialBtnOpen
-              )}
-              onClick={() => {
-                setIsTutorialVisible(!isTutorialVisible);
-              }}
-              variant="plain"
-              lean={true}
-            >
-              Uitleg
-            </Button>
-            {isTutorialVisible && <Tutorial />}
-          </>
-        )}
-
-        {isBurgerMenuVisible && <div className={styles.Modal} />}
-      </nav>
-    </CSSTransition>
+      {location.pathname === AppRoutes.ROOT && (
+        <>
+          <Button
+            className={classnames(
+              styles.TutorialBtn,
+              isTutorialVisible && styles.TutorialBtnOpen
+            )}
+            onClick={() => {
+              setIsTutorialVisible(!isTutorialVisible);
+            }}
+            variant="plain"
+            lean={true}
+          >
+            Uitleg
+          </Button>
+          {isTutorialVisible && <Tutorial />}
+        </>
+      )}
+    </nav>
   );
 }

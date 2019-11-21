@@ -12,7 +12,7 @@ export type BarConfig = Array<[width, height, marginBottom]>;
 export interface ComponentProps {
   children?: ComponentChildren;
   barConfig?: BarConfig;
-  className?: any;
+  className?: string;
 }
 
 const defaultBarConfig: BarConfig = [
