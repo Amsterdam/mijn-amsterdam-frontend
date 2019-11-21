@@ -63,7 +63,7 @@ const Tip = ({ tip }: TipProps) => {
           external={isExternal}
           onClick={() => {
             trackItemClick(clickCategory, tip.title);
-            if (isExternalUrl) {
+            if (isExternal) {
               trackLink(tip.link.to);
             }
           }}

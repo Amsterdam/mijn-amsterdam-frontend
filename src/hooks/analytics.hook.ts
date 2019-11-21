@@ -82,19 +82,14 @@ export function trackItemClick(category: string, name: string, value?: number) {
 export function useSessionCallbackOnceDebounced(
   key: string,
   callback: () => void,
-  debounceTrigger: any = true,
   timeoutMS: number = 1000
 ) {
   const [isSessionTracked, setSessionTracked] = useSessionStorage(key, false);
-  const [trackEvent] = useDebouncedCallback(
-    () => {
-      if (!isSessionTracked) {
-        callback();
-        setSessionTracked(true);
-      }
-    },
-    timeoutMS,
-    [debounceTrigger]
-  );
+  const [trackEvent] = useDebouncedCallback(() => {
+    if (!isSessionTracked) {
+      callback();
+      setSessionTracked(true);
+    }
+  }, timeoutMS);
   trackEvent();
 }
