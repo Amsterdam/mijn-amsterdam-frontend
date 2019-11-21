@@ -3,12 +3,19 @@ import styles from './MyTips.module.scss';
 import Heading from 'components/Heading/Heading';
 import { AppRoutes } from 'App.constants';
 import { MyTip } from 'hooks/api/my-tips-api.hook';
-import LoadingContent from '../LoadingContent/LoadingContent';
+import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
 import Linkd from '../Button/Button';
 import classnames from 'classnames';
 import { Button } from '../Button/Button';
 import MyTipsOptInOutModal from './MyTipsOptInOutModal';
 import { ReactComponent as ChevronIcon } from 'assets/icons/Chevron-Right.svg';
+import {
+  trackLink,
+  trackItemClick,
+  useSessionCallbackOnceDebounced,
+  trackItemPresentation,
+} from 'hooks/analytics.hook';
+import { isExternalUrl } from 'helpers/App';
 
 export interface TipProps {
   tip: MyTip;
@@ -28,6 +35,20 @@ const Tip = ({ tip }: TipProps) => {
     }
   }, [tip.imgUrl]);
 
+  const isExternal = isExternalUrl(tip.link.to);
+  const tipTrackingCategory = tip.isPersonalized
+    ? (category: string) => `${category} enkelvoudige content tips`
+    : (category: string) => `${category} generieke tips`;
+
+  const presentationCategory = tipTrackingCategory('Tonen');
+  const clickCategory = tipTrackingCategory('Klikken');
+
+  useSessionCallbackOnceDebounced(
+    presentationCategory,
+    () => trackItemPresentation(presentationCategory, tip.title),
+    tip.title
+  );
+
   return (
     <li className={styles.TipItem}>
       <article>
@@ -39,7 +60,13 @@ const Tip = ({ tip }: TipProps) => {
         <Linkd
           title={`Meer informatie over de tip: ${tip.title}`}
           href={tip.link.to}
-          external={true}
+          external={isExternal}
+          onClick={() => {
+            trackItemClick(clickCategory, tip.title);
+            if (isExternalUrl) {
+              trackLink(tip.link.to);
+            }
+          }}
         >
           {tip.link.title}
         </Linkd>
@@ -59,7 +86,7 @@ export interface MyTipsProps {
 
 function LoadingContentListItems() {
   const elements = [];
-  const barConfig = [
+  const barConfig: BarConfig = [
     ['100%', '19rem', '2rem'],
     ['50%', '2rem', '1rem'],
     ['90%', '2rem', '1rem'],
