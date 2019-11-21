@@ -68,8 +68,6 @@ export default function SectionCollapsible({
 
   let cssCalcExpr = `${isCollapsed ? 0 : contentHeight}px`;
 
-  console.log(title, isLoading, contentHeight);
-
   return (
     <section className={classes}>
       {hasTitle && (
