@@ -43,10 +43,8 @@ const Tip = ({ tip }: TipProps) => {
   const presentationCategory = tipTrackingCategory('Tonen');
   const clickCategory = tipTrackingCategory('Klikken');
 
-  useSessionCallbackOnceDebounced(
-    presentationCategory,
-    () => trackItemPresentation(presentationCategory, tip.title),
-    tip.title
+  useSessionCallbackOnceDebounced(presentationCategory, () =>
+    trackItemPresentation(presentationCategory, tip.title)
   );
 
   return (
