@@ -7,7 +7,7 @@ import * as analytics from 'hooks/analytics.hook';
 
 describe('SectionCollapsible', () => {
   let component: ReactWrapper<typeof SectionCollapsible>;
-  let toggleCollapsed: (isCollapsed: boolean) => void;
+  let toggleCollapsed: () => void;
 
   const trackingSpy = jest.spyOn(analytics, 'trackEvent');
 
@@ -25,14 +25,12 @@ describe('SectionCollapsible', () => {
       <SectionCollapsible
         isLoading={false}
         hasItems={true}
-        startCollapsed={false}
+        isCollapsed={false}
         onToggleCollapsed={toggleCollapsed}
-        id="testje"
       >
         <div style={{ height: 500 }}>Boohoo!</div>
       </SectionCollapsible>
     );
-    expect(toggleCollapsed).toHaveBeenCalledTimes(1);
     expect(component.childAt(0).hasClass(styles.isCollapsed)).toEqual(false);
   });
 
@@ -41,15 +39,13 @@ describe('SectionCollapsible', () => {
       <SectionCollapsible
         isLoading={false}
         hasItems={true}
-        startCollapsed={true}
+        isCollapsed={true}
         onToggleCollapsed={toggleCollapsed}
-        id="testje"
       >
         <div style={{ height: 500 }}>Boohoo!</div>
       </SectionCollapsible>
     );
 
-    expect(toggleCollapsed).toHaveBeenCalledTimes(1);
     expect(component.childAt(0).hasClass(styles.isCollapsed)).toEqual(true);
   });
 
@@ -59,22 +55,16 @@ describe('SectionCollapsible', () => {
         isLoading={false}
         hasItems={true}
         title="Click me!"
-        startCollapsed={true}
+        isCollapsed={true}
         onToggleCollapsed={toggleCollapsed}
-        id="testje"
       >
         <div style={{ height: 500 }}>Boohoo!</div>
       </SectionCollapsible>
     );
 
+    expect(component.childAt(0).hasClass(styles.isCollapsed)).toEqual(true);
+    component.find(`.${styles.Title} span[role="button"]`).simulate('click');
     expect(toggleCollapsed).toHaveBeenCalledTimes(1);
-    expect(component.childAt(0).hasClass(styles.isCollapsed)).toEqual(true);
-    component.find(`.${styles.Title} span[role="button"]`).simulate('click');
-    expect(toggleCollapsed).toHaveBeenCalledTimes(2);
-    expect(component.childAt(0).hasClass(styles.isCollapsed)).toEqual(false);
-    component.find(`.${styles.Title} span[role="button"]`).simulate('click');
-    expect(toggleCollapsed).toHaveBeenCalledTimes(3);
-    expect(component.childAt(0).hasClass(styles.isCollapsed)).toEqual(true);
   });
 
   it('should call trackEvent if tracking info is provided and section is expanded', () => {
@@ -82,10 +72,10 @@ describe('SectionCollapsible', () => {
       <SectionCollapsible
         isLoading={false}
         hasItems={true}
-        startCollapsed={true}
+        isCollapsed={true}
+        onToggleCollapsed={toggleCollapsed}
         track={{ category: 'the category', name: 'the content thing' }}
         title="Click me!"
-        id="testje"
       >
         <div style={{ height: 500 }}>Boohoo!</div>
       </SectionCollapsible>
@@ -97,9 +87,5 @@ describe('SectionCollapsible', () => {
       name: 'the content thing',
       action: 'Open klikken',
     });
-    component.find(`.${styles.Title} span[role="button"]`).simulate('click');
-    expect(trackingSpy).toBeCalledTimes(1);
-    component.find(`.${styles.Title} span[role="button"]`).simulate('click');
-    expect(trackingSpy).toBeCalledTimes(2);
   });
 });

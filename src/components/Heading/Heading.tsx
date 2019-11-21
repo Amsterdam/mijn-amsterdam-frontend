@@ -29,7 +29,7 @@ interface HeadingProps extends Omit<HTMLProps<HTMLHeadingElement>, 'size'> {
   el?: HeadingTagName;
   size?: HeadingStyleSize;
   children: ComponentChildren;
-  className?: any;
+  className?: string;
 }
 
 export default function Heading({

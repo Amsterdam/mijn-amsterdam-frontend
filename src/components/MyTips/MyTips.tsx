@@ -43,10 +43,8 @@ const Tip = ({ tip }: TipProps) => {
   const presentationCategory = tipTrackingCategory('Tonen');
   const clickCategory = tipTrackingCategory('Klikken');
 
-  useSessionCallbackOnceDebounced(
-    presentationCategory,
-    () => trackItemPresentation(presentationCategory, tip.title),
-    tip.title
+  useSessionCallbackOnceDebounced(presentationCategory, () =>
+    trackItemPresentation(presentationCategory, tip.title)
   );
 
   return (
@@ -63,7 +61,7 @@ const Tip = ({ tip }: TipProps) => {
           external={isExternal}
           onClick={() => {
             trackItemClick(clickCategory, tip.title);
-            if (isExternalUrl) {
+            if (isExternal) {
               trackLink(tip.link.to);
             }
           }}

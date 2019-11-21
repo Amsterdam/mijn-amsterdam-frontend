@@ -2,7 +2,7 @@ import React, { MouseEvent } from 'react';
 import styles from './MainNavSubmenu.module.scss';
 import classnames from 'classnames';
 import { NavLink } from 'react-router-dom';
-import useDebouncedCallback from 'use-debounce/lib/callback';
+import { useDebouncedCallback } from 'use-debounce';
 import { ComponentChildren } from 'App.types';
 import { LinkProps } from 'App.types';
 import { trackLink } from 'hooks/analytics.hook';

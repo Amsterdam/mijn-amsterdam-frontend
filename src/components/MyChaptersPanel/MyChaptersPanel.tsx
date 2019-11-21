@@ -10,6 +10,7 @@ import {
   useSessionCallbackOnceDebounced,
 } from 'hooks/analytics.hook';
 import { ChapterTitles, Chapter } from 'App.constants';
+import Panel from '../Panel/Panel';
 
 export interface MyChaptersPanelProps {
   title: string;
@@ -22,7 +23,6 @@ export interface MyChaptersPanelProps {
 export default function MyChaptersPanel({
   title,
   items = [],
-  className,
   isLoading = true,
   trackCategory,
   ...otherProps
@@ -37,14 +37,10 @@ export default function MyChaptersPanel({
         );
       });
     },
-    items.length
   );
 
   return (
-    <div
-      {...otherProps}
-      className={classnames(styles.MyChaptersPanel, className)}
-    >
+    <Panel {...otherProps} className={styles.MyChaptersPanel}>
       <Heading size="large" className={styles.Title}>
         {title}
       </Heading>
@@ -69,6 +65,6 @@ export default function MyChaptersPanel({
           ]}
         />
       )}
-    </div>
+    </Panel>
   );
 }

@@ -16,7 +16,7 @@ import classnames from 'classnames';
 export interface ChapterIconProps {
   chapter: ChapterType;
   fill?: string;
-  className?: any;
+  className?: string;
 }
 
 export default function ChapterIcon({

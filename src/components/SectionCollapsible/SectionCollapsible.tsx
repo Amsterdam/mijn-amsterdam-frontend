@@ -4,45 +4,52 @@ import classnames from 'classnames';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 import { withKeyPress } from 'helpers/App';
 import { useSessionStorage } from 'hooks/storage.hook';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Heading from '../Heading/Heading';
 import styles from './SectionCollapsible.module.scss';
 import { trackEvent } from 'hooks/analytics.hook';
 import { useRef } from 'react';
-import useComponentSize from '@rehooks/component-size';
-import { CSSTransition } from 'react-transition-group';
+import { useDomElementDimensions } from 'hooks/useDomElementDimensions.hook';
+import { useSpring, animated } from 'react-spring';
+import { useDebouncedCallback } from 'use-debounce';
 
 export interface SectionCollapsibleProps {
-  id: string;
   title?: string;
   noItemsMessage?: string;
-  startCollapsed?: boolean;
-  className?: any;
+  isCollapsed: boolean;
+  onToggleCollapsed: () => void;
+  className?: string;
   isLoading?: boolean;
   track?: { category: string; name: string };
-  onToggleCollapsed?: (isCollapsed: boolean) => void;
   hasItems?: boolean;
   children: ComponentChildren;
 }
 
 export default function SectionCollapsible({
-  id,
   title = '',
   noItemsMessage = '',
-  startCollapsed = true,
-  className,
+  isCollapsed,
   onToggleCollapsed,
+  className,
   isLoading = false,
   hasItems = true,
   track,
   children,
 }: SectionCollapsibleProps) {
   const contentRef = useRef(null);
-  const [isCollapsed, setCollapsed] = useSessionStorage(id, startCollapsed);
-  const { height: contentHeight } = useComponentSize(contentRef);
+  const [isReadyForAnimation, setReadyForAnimaton] = useState(false);
+  const { height: contentHeight } = useDomElementDimensions(contentRef);
   const hasTitle = !!title;
   const hasNoItemsMessage = !!noItemsMessage;
+
+  const [setReadyForAnimatonDebounced] = useDebouncedCallback(() => {
+    if (!isLoading) {
+      setReadyForAnimaton(true);
+    }
+  }, 200);
+
+  setReadyForAnimatonDebounced();
 
   const classes = classnames(
     styles.SectionCollapsible,
@@ -57,16 +64,19 @@ export default function SectionCollapsible({
         action: 'Open klikken',
       });
     }
-    setCollapsed(!isCollapsed);
-    onToggleCollapsed && onToggleCollapsed(!isCollapsed);
+    onToggleCollapsed && onToggleCollapsed();
   });
 
-  // Let the outside world know the collapsed state of the component initially
-  useEffect(() => {
-    onToggleCollapsed && onToggleCollapsed(isCollapsed);
-  }, []);
+  const heightAnim = {
+    immediate: !isReadyForAnimation,
+    reverse: isCollapsed,
+    from: {
+      height: 0,
+    },
+    height: contentHeight + 2,
+  };
 
-  let cssCalcExpr = `${isCollapsed ? 0 : contentHeight}px`;
+  const heightAnimSpring = useSpring(heightAnim);
 
   return (
     <section className={classes}>
@@ -98,21 +108,13 @@ export default function SectionCollapsible({
       )}
 
       {!isLoading && hasItems && (
-        <CSSTransition
-          timeout={0}
-          in={isCollapsed}
-          classNames="sectionCollapsible"
+        <animated.div
+          aria-hidden={isCollapsed}
+          className={styles.Panel}
+          style={heightAnimSpring}
         >
-          <div
-            aria-hidden={isCollapsed}
-            className={styles.Panel}
-            style={{
-              height: cssCalcExpr,
-            }}
-          >
-            <div ref={contentRef}>{children}</div>
-          </div>
-        </CSSTransition>
+          <div ref={contentRef}>{children}</div>
+        </animated.div>
       )}
     </section>
   );

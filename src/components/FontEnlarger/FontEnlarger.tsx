@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './FontEnlarger.module.scss';
 import { ComponentChildren } from 'App.types';
 import classnames from 'classnames';
@@ -13,13 +13,9 @@ export default function FontEnlarger({ children }: ComponentProps) {
   function show() {
     setVisibility(true);
   }
-  const [hide] = useDebouncedCallback(
-    () => {
-      setVisibility(false);
-    },
-    200,
-    []
-  );
+  const [hide] = useDebouncedCallback(() => {
+    setVisibility(false);
+  }, 200);
   return (
     <div className={styles.FontEnlarger}>
       <button

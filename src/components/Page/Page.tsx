@@ -4,7 +4,7 @@ import styles from './Page.module.scss';
 import { ComponentChildren } from 'App.types';
 
 export interface PageProps extends HTMLProps<HTMLDivElement> {
-  className?: any;
+  className?: string;
   children: ComponentChildren;
 }
 
