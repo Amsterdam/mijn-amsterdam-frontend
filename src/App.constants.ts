@@ -1,5 +1,4 @@
 import { StateKey } from 'AppState';
-import { ReactComponent as AlertIcon } from 'assets/icons/Alert.svg';
 import { ErrorMessageMap } from 'components/ErrorMessages/ErrorMessages';
 import { MyNotification } from 'hooks/api/my-notifications-api.hook';
 import { isProduction } from './helpers/App';
@@ -225,14 +224,4 @@ export const WelcomeNotification: MyNotification = {
     },
     title: 'Laat ons weten wat u ervan vindt',
   },
-};
-
-export const TmaMalfunction: MyNotification = {
-  id: 'malfunction01',
-  Icon: AlertIcon,
-  chapter: Chapters.MELDINGEN,
-  datePublished: new Date(2019, 10, 11).toISOString(),
-  title: 'Storing met uitloggen',
-  description:
-    'Door een technische storing werkt uitloggen op dit moment niet in alle gevallen goed. Sluit uw browser om de sessie te beëindigen.',
 };
