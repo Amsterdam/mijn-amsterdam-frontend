@@ -1,8 +1,3 @@
-// From: https://gist.githubusercontent.com/mattpowell/3380070/raw/5258f21f807602b699af3463aa684784c59a4443/distance.js
-function toRad(n: number) {
-  return (n * Math.PI) / 180;
-}
-
 export type Lat = number;
 export type Lon = number;
 export type Centroid = [Lat, Lon];
