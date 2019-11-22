@@ -7,6 +7,7 @@ export interface ApiRequestOptions {
   postpone?: boolean;
   resetToInitialDataOnError?: boolean;
   method?: 'GET' | 'POST';
+  timeout?: number; // in ms
 }
 
 export interface ApiState {
