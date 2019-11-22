@@ -4,14 +4,23 @@ import {
   myChaptersMenuItems,
 } from 'components/MainNavBar/MainNavBar.constants';
 import { useEffect, useState } from 'react';
+import { BrpApiState } from './api.brp';
 import { ErfpachtApiState } from './api.erfpacht';
 import { FocusApiState } from './api.focus';
 import { GarbageApiState } from './api.garbage';
 import { WmoApiState } from './api.wmo';
 
+interface useMyChaptersProps {
+  WMO: WmoApiState;
+  FOCUS: FocusApiState;
+  ERFPACHT: ErfpachtApiState;
+  GARBAGE: GarbageApiState;
+  BRP: BrpApiState;
+}
+
 function isChapterActive(
   item: MenuItem,
-  { WMO, FOCUS, ERFPACHT, GARBAGE }: useMyChaptersProps
+  { WMO, FOCUS, ERFPACHT, GARBAGE, BRP }: useMyChaptersProps
 ) {
   switch (item.id) {
     case Chapters.INKOMEN:
@@ -29,20 +38,19 @@ function isChapterActive(
       return true; // SSO to belastingen, always visible for now.
 
     case Chapters.AFVAL:
-      return !GARBAGE.isLoading && GARBAGE.isDirty;
+      return (
+        !GARBAGE.isLoading &&
+        GARBAGE.isDirty &&
+        BRP.data &&
+        BRP.data.persoon &&
+        BRP.data.persoon.mokum
+      );
 
     case Chapters.WONEN:
       return !ERFPACHT.isLoading && ERFPACHT.data.status === true;
   }
 
   return false;
-}
-
-interface useMyChaptersProps {
-  WMO: WmoApiState;
-  FOCUS: FocusApiState;
-  ERFPACHT: ErfpachtApiState;
-  GARBAGE: GarbageApiState;
 }
 
 export interface MyChaptersApiState {

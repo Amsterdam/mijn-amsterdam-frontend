@@ -80,7 +80,7 @@ export function useAppState(value?: any) {
   const ERFPACHT = useErfpachtApi();
   const MY_AREA = useMyMap();
   const GARBAGE = useGarbageApi({ centroid: MY_AREA.centroid });
-  const MY_CHAPTERS = useMyChapters({ WMO, FOCUS, ERFPACHT, GARBAGE });
+  const MY_CHAPTERS = useMyChapters({ WMO, FOCUS, ERFPACHT, GARBAGE, BRP });
   const MY_NOTIFICATIONS = useMyNotificationsApi({ FOCUS, BRP });
 
   const tipsDependencies = [
@@ -103,6 +103,28 @@ export function useAppState(value?: any) {
     }
   }, [BRP.data.adres && BRP.data.adres.straatnaam]);
 
+  // Fetch garbage information for address at lat,lon
+  useEffect(() => {
+    if (
+      MY_AREA.centroid !== null &&
+      BRP.data &&
+      BRP.data.persoon &&
+      BRP.data.persoon.mokum
+    ) {
+      let timeout: any;
+      if (MY_AREA.centroid !== null) {
+        GARBAGE.refetch({ centroid: MY_AREA.centroid });
+      } else {
+        timeout = setTimeout(() => {
+          GARBAGE.abort();
+        }, 10000);
+      }
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+  }, [MY_AREA.centroid]);
+
   // Fetch tips when dependent sources are loaded
   // TODO: Exclude api responses that returned error
   useEffect(() => {
@@ -115,21 +137,6 @@ export function useAppState(value?: any) {
       });
     }
   }, [...tipsDependencies, MY_TIPS.isOptIn]);
-
-  // Fetch garbage information for address at lat,lon
-  useEffect(() => {
-    let timeout: any;
-    if (MY_AREA.centroid !== null) {
-      GARBAGE.refetch({ centroid: MY_AREA.centroid });
-    } else {
-      timeout = setTimeout(() => {
-        GARBAGE.abort();
-      }, 10000);
-    }
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [MY_AREA.centroid]);
 
   // NOTE: For now we can use this solution but we probably need some more finegrained memoization of the state as the app grows larger.
   return useMemo(() => {
