@@ -59,6 +59,8 @@ export const DEFAULT_REQUEST_OPTIONS: ApiRequestOptions = {
   params: {},
   // Postpone fetch when hook is called/set-up for the first time
   postpone: false,
+  // timeout in ms
+  timeout: 10 * 1000,
 };
 
 export const getDefaultState = (initialData = {}, postpone = false) => ({
@@ -101,7 +103,10 @@ export const useDataApi = (
       });
 
       try {
-        const result = await axios(requestOptions);
+        const result = await axios({
+          ...DEFAULT_REQUEST_OPTIONS,
+          ...requestOptions,
+        });
 
         if (!didCancel) {
           dispatch({
