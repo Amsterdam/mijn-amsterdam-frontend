@@ -118,9 +118,17 @@ export function useAppState(value?: any) {
 
   // Fetch garbage information for address at lat,lon
   useEffect(() => {
+    let timeout: any;
     if (MY_AREA.centroid !== null) {
       GARBAGE.refetch({ centroid: MY_AREA.centroid });
+    } else {
+      timeout = setTimeout(() => {
+        GARBAGE.abort();
+      }, 10000);
     }
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [MY_AREA.centroid]);
 
   // NOTE: For now we can use this solution but we probably need some more finegrained memoization of the state as the app grows larger.
