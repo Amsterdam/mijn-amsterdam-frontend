@@ -14,7 +14,6 @@
   @include centered-max;
   display: flex;
   background-color: $color-neutral-grey1;
-  // margin-top: $main-header-topbar-height;
 
   @include mq-tablet() {
     display: -ms-grid;
@@ -71,7 +70,7 @@
     border-top: 0.1rem solid $color-neutral-grey2;
 
     // Move home button after the Chapters menu
-    &:nth-child(2) {
+    &:nth-child(1) {
       -ms-grid-row:2;
       grid-row: 2;
     }

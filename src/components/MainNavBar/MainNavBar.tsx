@@ -240,10 +240,14 @@ export default function MainNavBar() {
   const backdropAnimationProps = useSpring(backdropAnim);
   const leftProps = useSpring(left);
 
-  const Trap = hasBurgerMenu && isBurgerMenuVisible ? FocusTrap : 'div';
-
+  const Trap =
+    hasBurgerMenu && isBurgerMenuVisible ? FocusTrap : React.Fragment;
+  const trapOptions =
+    hasBurgerMenu && isBurgerMenuVisible
+      ? { focusTrapOptions: { escapeDeactivates: false } }
+      : {};
   return (
-    <Trap focusTrapOptions={{ escapeDeactivates: false }}>
+    <Trap {...trapOptions}>
       <nav
         className={classnames(
           styles.MainNavBar,
