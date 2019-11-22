@@ -38,7 +38,7 @@ export default function useMyMap(address?: string) {
           results: [{ centroid }],
         } = data;
 
-        const [lat, lon] = centroid;
+        const [lon, lat] = centroid;
 
         setUrls({
           advanced: `${MAP_URL}&center=${lon}%2C${lat}&zoom=${LOCATION_ZOOM}&marker=${lon}%2C${lat}&marker-icon=home&${LAYERS_CONFIG}&legenda=${showLegenda}`,
