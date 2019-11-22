@@ -21,6 +21,10 @@ export interface TipProps {
   tip: MyTip;
 }
 
+function tipTitle(title: string) {
+  return `Tip: ${title}`;
+}
+
 const Tip = ({ tip }: TipProps) => {
   const [imgUrl, setImgUrl] = useState('/img/img-placeholder.svg');
 
@@ -44,7 +48,7 @@ const Tip = ({ tip }: TipProps) => {
   const clickCategory = tipTrackingCategory('Klikken');
 
   useSessionCallbackOnceDebounced(presentationCategory, () =>
-    trackItemPresentation(presentationCategory, tip.title)
+    trackItemPresentation(presentationCategory, tipTitle(tip.title))
   );
 
   return (
@@ -60,7 +64,7 @@ const Tip = ({ tip }: TipProps) => {
           href={tip.link.to}
           external={isExternal}
           onClick={() => {
-            trackItemClick(clickCategory, tip.title);
+            trackItemClick(clickCategory, tipTitle(tip.title));
             if (isExternal) {
               trackLink(tip.link.to);
             }
