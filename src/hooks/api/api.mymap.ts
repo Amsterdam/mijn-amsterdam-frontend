@@ -22,7 +22,18 @@ export function useBagSearch(address?: string) {
   });
 }
 
-export default function useMyMap(address?: string) {
+export interface MyMapApiState {
+  url: {
+    advanced: string;
+    simple: string;
+  };
+  centroid: Centroid | null;
+  isDirty: boolean;
+  isLoading: boolean;
+  refetch: (address: string) => void;
+}
+
+export default function useMyMap(address?: string): MyMapApiState {
   const [{ data, isLoading, isDirty }, refetch] = useBagSearch(address);
 
   let [urls, setUrls] = useState({ simple: '', advanced: '' });

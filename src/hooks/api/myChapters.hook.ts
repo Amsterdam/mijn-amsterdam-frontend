@@ -1,4 +1,4 @@
-import { Chapters } from 'App.constants';
+import { Chapters, FeatureToggle } from 'App.constants';
 import {
   MenuItem,
   myChaptersMenuItems,
@@ -8,6 +8,7 @@ import { BrpApiState, isMokum } from './api.brp';
 import { ErfpachtApiState } from './api.erfpacht';
 import { FocusApiState } from './api.focus';
 import { GarbageApiState } from './api.garbage';
+import { MyMapApiState } from './api.mymap';
 import { WmoApiState } from './api.wmo';
 
 interface useMyChaptersProps {
@@ -16,6 +17,7 @@ interface useMyChaptersProps {
   ERFPACHT: ErfpachtApiState;
   GARBAGE: GarbageApiState;
   BRP: BrpApiState;
+  MY_AREA: MyMapApiState;
 }
 
 function isChapterActive(
@@ -39,6 +41,7 @@ function isChapterActive(
 
     case Chapters.AFVAL:
       return (
+        FeatureToggle.garbageInformationPage &&
         !GARBAGE.isLoading &&
         GARBAGE.isDirty &&
         BRP.data &&
@@ -61,7 +64,7 @@ export interface MyChaptersApiState {
 export default function useMyChapters(
   apiStates: useMyChaptersProps
 ): MyChaptersApiState {
-  const { WMO, FOCUS, ERFPACHT, GARBAGE, BRP } = apiStates;
+  const { WMO, FOCUS, ERFPACHT, GARBAGE, BRP, MY_AREA } = apiStates;
 
   const [{ items, isLoading }, setItems] = useState<MyChaptersApiState>({
     items: [],
@@ -77,7 +80,7 @@ export default function useMyChapters(
       WMO.isLoading ||
       FOCUS.isLoading ||
       ERFPACHT.isLoading ||
-      (GARBAGE.isPristine && isMokum(BRP));
+      (GARBAGE.isPristine && isMokum(BRP) && !!MY_AREA.centroid);
     setItems({ items, isLoading });
   }, [
     WMO.isLoading,
