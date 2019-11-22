@@ -203,7 +203,7 @@ export default function MainNavBar() {
 
   // Hides small screen menu on route change
   useEffect(() => {
-    // toggleBurgerMenu(false);
+    toggleBurgerMenu(false);
     setSubMenuVisibility();
   }, [history.location]);
 
