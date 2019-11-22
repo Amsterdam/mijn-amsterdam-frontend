@@ -29,6 +29,7 @@ export default function FontEnlarger({ children }: ComponentProps) {
         onFocus={() => show()}
         onBlur={() => hide()}
         onClick={() => focus()}
+        aria-expanded={isVisible}
       >
         A &#43; &minus;
       </button>
