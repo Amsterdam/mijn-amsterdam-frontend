@@ -182,7 +182,7 @@ export default function useGarbageApi({
           })
         : [],
     },
-    refetch({ centroid: [lat, lon] }: GarbageApiHookProps) {
+    refetch({ centroid: [lon, lat] }: GarbageApiHookProps) {
       refetch({
         url: `${getApiUrl('AFVAL_OPHAAL_GEBIEDEN')}?lat=${lat}&lon=${lon}`,
       });
