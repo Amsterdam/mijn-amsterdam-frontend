@@ -54,3 +54,7 @@ export function useBrpApi(initialState = {}): BrpApiState {
 
   return { ...rest, data: { ...brpData, notifications } };
 }
+
+export function isMokum(BRP: BrpApiState) {
+  return BRP.data && BRP.data.persoon && BRP.data.persoon.mokum;
+}
