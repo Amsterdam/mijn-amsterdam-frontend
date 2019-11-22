@@ -14,7 +14,6 @@
   @include centered-max;
   display: flex;
   background-color: $color-neutral-grey1;
-  // margin-top: $main-header-topbar-height;
 
   @include mq-tablet() {
     display: -ms-grid;
@@ -71,7 +70,7 @@
     border-top: 0.1rem solid $color-neutral-grey2;
 
     // Move home button after the Chapters menu
-    &:nth-child(2) {
+    &:nth-child(1) {
       -ms-grid-row:2;
       grid-row: 2;
     }
@@ -171,13 +170,7 @@
   padding: 0;
 
   &Open {
-    color: transparent;
-    z-index: z-index(tutorial-items);
-    background-image: url('assets/icons/Close__primary-white.svg');
-    position: fixed;
-    top: $main-header-topbar-height;
-    width: 4rem;
-    text-indent: -10000px;
+    display: none;
   }
 
   @include mq-tablet() {
@@ -199,15 +192,8 @@
 .Backdrop {
   position: fixed;
   top: $main-header-topbar-height;
-  // left: -100%;
   width: 100vw;
   height: calc(100vh - #{$main-header-topbar-height});
   background-color: rgba(0, 0, 0, .5);
   z-index: z-index(burger-menu-backdrop);
-  // transition: left 0ms 200ms linear;
-}
-
-.BurgerMenuVisible .Backdrop {
-  // left: 0;
-  // transition: left 0ms 0ms linear;
 }

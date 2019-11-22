@@ -1,4 +1,4 @@
-import React, { DOMElement, CSSProperties } from 'react';
+import React, { CSSProperties } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './Tutorial.module.scss';
 
@@ -8,6 +8,12 @@ import classnames from 'classnames';
 import useDetectResizing from 'hooks/detectResize.hook';
 import { usePhoneScreen } from 'hooks/media.hook';
 import { useRef, useEffect, useState } from 'react';
+import FocusTrap from 'focus-trap-react';
+import { CloseButton } from '../Button/Button';
+
+interface TutorialProps {
+  onClose: () => void;
+}
 
 function TutorialItem({ el }: { el: any }) {
   const heading = el.querySelector('[class^="Heading_Heading"]') || el;
@@ -72,7 +78,7 @@ function TutorialItem({ el }: { el: any }) {
   );
 }
 
-export default function Tutorial() {
+export default function Tutorial({ onClose }: TutorialProps) {
   const tutorialItems = Array.from(
     document.querySelectorAll('[data-tutorial-item]')
   );
@@ -82,17 +88,22 @@ export default function Tutorial() {
 
   // Check if positions are calculated
   return ReactDOM.createPortal(
-    <div
-      className={classnames(
-        styles.Tutorial,
-        isResizing && !isPhoneScreen && styles.TutorialResizing
-      )}
-      style={{ height: document.body.clientHeight }}
-    >
-      {tutorialItems.map((el, i) => (
-        <TutorialItem key={i} el={el} />
-      ))}
-    </div>,
+    <FocusTrap focusTrapOptions={{ escapeDeactivates: false }}>
+      <div
+        className={classnames(
+          styles.Tutorial,
+          isResizing && !isPhoneScreen && styles.TutorialResizing
+        )}
+        style={{ height: document.body.clientHeight }}
+      >
+        {tutorialItems.map((el, i) => (
+          <TutorialItem key={i} el={el} />
+        ))}
+        <CloseButton onClick={onClose} className={styles.CloseTutorial}>
+          Sluiten
+        </CloseButton>
+      </div>
+    </FocusTrap>,
     useModalRoot()
   );
 }

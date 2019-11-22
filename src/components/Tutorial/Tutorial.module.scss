@@ -131,3 +131,26 @@
     z-index: -1;
   }
 }
+
+.CloseTutorial {
+  position: fixed;
+  left: 50%;
+  top: calc(#{$main-header-topbar-height} + 10px);
+  transform: translateX(calc(#{$main-boxed-width/2} - 40px));
+
+  @include mq-tablet() {
+    left: calc(100% - 40px);
+    top: calc(#{$main-header-topbar-height--tablet} + 10px);
+    transform: none;
+  }
+
+  &:hover {
+    @include select(Button_Icon) {
+      fill: $color-white;
+    }
+  }
+  @include select(Button_Icon) {
+    fill: $color-white;
+    transform: scale(1.2);
+  }
+}

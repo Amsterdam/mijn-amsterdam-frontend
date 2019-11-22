@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, CSSProperties } from 'react';
 import styles from './StatusLine.module.scss';
 import classnames from 'classnames';
 import Linkd, { Button } from 'components/Button/Button';
@@ -39,6 +39,7 @@ interface StatusLineItemProps {
   item: StatusLineItem;
   stepNumber: number;
   altDocumentContent?: AltDocumentContent | ConditionalAltDocumentContent;
+  style?: CSSProperties;
 }
 
 interface DownloadLinkProps {
@@ -68,6 +69,7 @@ function StatusLineItem({
   item,
   stepNumber,
   altDocumentContent,
+  style,
 }: StatusLineItemProps) {
   const altDocumentContentActual = useMemo(() => {
     return typeof altDocumentContent === 'function'
@@ -76,6 +78,7 @@ function StatusLineItem({
   }, []);
   return (
     <li
+      style={style ? style : {}}
       key={item.id}
       id={item.id}
       className={classnames(
@@ -121,6 +124,7 @@ function ToggleMore({ isCollapsed, toggleCollapsed }: ToggleMoreProps) {
       onClick={toggleCollapsed}
       icon={CaretLeft}
       variant="plain"
+      aria-expanded={!isCollapsed}
       lean={true}
     >
       {isCollapsed ? 'Toon alles' : 'Toon minder'}
@@ -174,19 +178,20 @@ export default function StatusLine({
         <h4 className={styles.ListHeading}>Status</h4>
         {!!items.length && (
           <ul className={styles.List}>
-            {items
-              .filter(
-                (item, index) =>
-                  !isCollapsed || (isCollapsed && item.isLastActive)
-              )
-              .map((item, index) => (
-                <StatusLineItem
-                  key={item.id}
-                  item={item}
-                  stepNumber={index + 1}
-                  altDocumentContent={altDocumentContent}
-                />
-              ))}
+            {items.map((item, index) => (
+              <StatusLineItem
+                style={{
+                  display:
+                    !isCollapsed || (isCollapsed && item.isLastActive)
+                      ? 'block'
+                      : 'none',
+                }}
+                key={item.id}
+                item={item}
+                stepNumber={index + 1}
+                altDocumentContent={altDocumentContent}
+              />
+            ))}
           </ul>
         )}
         {!items.length && (

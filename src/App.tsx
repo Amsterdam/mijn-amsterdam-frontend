@@ -33,10 +33,7 @@ import GarbageInformation from 'pages/GarbageInformation/GarbageInformation';
 function AppNotAuthenticated() {
   return (
     <>
-      <div
-        className={classnames(styles.App, styles.NotYetAuthenticated)}
-        id="AppContent"
-      >
+      <div className={classnames(styles.App, styles.NotYetAuthenticated)}>
         <MainHeader />
         <Switch>
           <Route exact path={AppRoutes.ROOT} component={LandingPage} />
@@ -101,7 +98,7 @@ function AppAuthenticated() {
 
 function AppLanding() {
   const session = useContext(SessionContext);
-  const { isPristine, isAuthenticated, refetch } = session;
+  const { isPristine, isAuthenticated, validityInSeconds } = session;
 
   // If session was previously authenticated we don't want to show the loader again
   if (isPristine) {
@@ -109,7 +106,7 @@ function AppLanding() {
   }
 
   const dialogTimeoutSettings = {
-    secondsBeforeDialogShow: session.validityInSeconds,
+    secondsBeforeDialogShow: validityInSeconds,
   };
 
   // Render the main app only if we are authenticated
