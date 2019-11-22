@@ -1,4 +1,4 @@
-import { Chapters } from 'App.constants';
+import { Chapters, FeatureToggle } from 'App.constants';
 import {
   MenuItem,
   myChaptersMenuItems,
@@ -41,6 +41,7 @@ function isChapterActive(
 
     case Chapters.AFVAL:
       return (
+        FeatureToggle.garbageInformationPage &&
         !GARBAGE.isLoading &&
         GARBAGE.isDirty &&
         BRP.data &&
