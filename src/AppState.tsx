@@ -1,4 +1,4 @@
-import { BrpApiState, useBrpApi } from 'hooks/api/api.brp';
+import { BrpApiState, useBrpApi, isMokum } from 'hooks/api/api.brp';
 import useMyTipsApi from 'hooks/api/my-tips-api.hook';
 import useMyNotificationsApi from 'hooks/api/my-notifications-api.hook';
 import useSessionApi, { SessionApiState } from 'hooks/api/session.api.hook';
@@ -92,25 +92,14 @@ export function useAppState(value?: any) {
 
   // Fetch lat/lon for address
   useEffect(() => {
-    if (
-      BRP.data &&
-      BRP.data.persoon &&
-      BRP.data.persoon.mokum &&
-      BRP.data.adres &&
-      BRP.data.adres.straatnaam
-    ) {
+    if (isMokum(BRP) && BRP.data.adres && BRP.data.adres.straatnaam) {
       MY_AREA.refetch(getFullAddress(BRP.data.adres));
     }
   }, [BRP.data.adres && BRP.data.adres.straatnaam]);
 
   // Fetch garbage information for address at lat,lon
   useEffect(() => {
-    if (
-      MY_AREA.centroid !== null &&
-      BRP.data &&
-      BRP.data.persoon &&
-      BRP.data.persoon.mokum
-    ) {
+    if (MY_AREA.centroid !== null && isMokum(BRP)) {
       let timeout: any;
       if (MY_AREA.centroid !== null) {
         GARBAGE.refetch({ centroid: MY_AREA.centroid });
