@@ -33,10 +33,7 @@ import GarbageInformation from 'pages/GarbageInformation/GarbageInformation';
 function AppNotAuthenticated() {
   return (
     <>
-      <div
-        className={classnames(styles.App, styles.NotYetAuthenticated)}
-        id="AppContent"
-      >
+      <div className={classnames(styles.App, styles.NotYetAuthenticated)}>
         <MainHeader />
         <Switch>
           <Route exact path={AppRoutes.ROOT} component={LandingPage} />

@@ -1,4 +1,4 @@
-import React, { DOMElement, CSSProperties } from 'react';
+import React, { CSSProperties } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './Tutorial.module.scss';
 

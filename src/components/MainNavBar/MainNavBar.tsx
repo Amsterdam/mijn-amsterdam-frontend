@@ -4,6 +4,7 @@ import { AppContext, SessionContext } from 'AppState';
 import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
 import classnames from 'classnames';
 import FontEnlarger from 'components/FontEnlarger/FontEnlarger';
+import FocusTrap from 'focus-trap-react';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from 'components/MainNavSubmenu/MainNavSubmenu';
@@ -239,86 +240,94 @@ export default function MainNavBar() {
   const backdropAnimationProps = useSpring(backdropAnim);
   const leftProps = useSpring(left);
 
+  const Trap = hasBurgerMenu && isBurgerMenuVisible ? FocusTrap : 'div';
+
   return (
-    <nav
-      className={classnames(
-        styles.MainNavBar,
-        hasBurgerMenu && styles.BurgerMenu,
-        isBurgerMenuVisible && styles.BurgerMenuVisible
-      )}
-    >
-      {hasBurgerMenu && (
-        <button
-          id={BurgerMenuToggleBtnId}
-          className={classnames(
-            styles.BurgerMenuToggleBtn,
-            isBurgerMenuVisible && styles.BurgerMenuToggleBtnOpen
-          )}
-          onClick={() => toggleBurgerMenu(!isBurgerMenuVisible)}
-        >
-          Navigatie
-        </button>
-      )}
-
-      {isAuthenticated && (
-        <>
-          {hasBurgerMenu && (
-            <animated.div
-              key="BurgerMenuBackDrop"
-              style={{ ...leftProps, ...backdropAnimationProps }}
-              className={styles.Backdrop}
-            />
-          )}
-          <animated.div
-            key="LinkContainer"
-            id={LinkContainerId}
-            className={styles.LinkContainer}
-            style={linkContainerAnimationProps}
-          >
-            <SecondaryLinks />
-            {menuItems.map(item => {
-              let menuItem = item;
-              if (item.id in submenuItems) {
-                // Add dynamic chapter submenu items to the menu
-                if (item.id === mainMenuItemId.MY_CHAPTERS) {
-                  menuItem = { ...item, submenuItems: myChapterItems };
-                } else {
-                  menuItem = { ...item, submenuItems: submenuItems[item.id] };
-                }
-              }
-              return getMenuItem(
-                menuItem,
-                activeSubmenuId,
-                setSubMenuVisibility,
-                !hasBurgerMenu
-              );
-            })}
-          </animated.div>
-        </>
-      )}
-
-      {location.pathname === AppRoutes.ROOT && (
-        <>
-          <Button
+    <Trap focusTrapOptions={{ escapeDeactivates: false }}>
+      <nav
+        className={classnames(
+          styles.MainNavBar,
+          hasBurgerMenu && styles.BurgerMenu,
+          isBurgerMenuVisible && styles.BurgerMenuVisible
+        )}
+      >
+        {hasBurgerMenu && (
+          <button
+            id={BurgerMenuToggleBtnId}
             className={classnames(
-              styles.TutorialBtn,
-              isTutorialVisible && styles.TutorialBtnOpen
+              styles.BurgerMenuToggleBtn,
+              isBurgerMenuVisible && styles.BurgerMenuToggleBtnOpen
             )}
-            onClick={() => {
-              setIsTutorialVisible(!isTutorialVisible);
-            }}
-            variant="plain"
-            lean={true}
+            onClick={() => toggleBurgerMenu(!isBurgerMenuVisible)}
           >
-            Uitleg
-          </Button>
-          {isTutorialVisible && (
-            <Tutorial
-              onClose={() => setIsTutorialVisible(!isTutorialVisible)}
-            />
-          )}
-        </>
-      )}
-    </nav>
+            Navigatie
+          </button>
+        )}
+
+        {isAuthenticated && (
+          <>
+            {hasBurgerMenu && (
+              <animated.div
+                key="BurgerMenuBackDrop"
+                style={{ ...leftProps, ...backdropAnimationProps }}
+                className={styles.Backdrop}
+              />
+            )}
+
+            <animated.div
+              key="LinkContainer"
+              id={LinkContainerId}
+              className={styles.LinkContainer}
+              style={linkContainerAnimationProps}
+            >
+              {menuItems.map(item => {
+                let menuItem = item;
+                if (item.id in submenuItems) {
+                  // Add dynamic chapter submenu items to the menu
+                  if (item.id === mainMenuItemId.MY_CHAPTERS) {
+                    menuItem = { ...item, submenuItems: myChapterItems };
+                  } else {
+                    menuItem = {
+                      ...item,
+                      submenuItems: submenuItems[item.id],
+                    };
+                  }
+                }
+                return getMenuItem(
+                  menuItem,
+                  activeSubmenuId,
+                  setSubMenuVisibility,
+                  !hasBurgerMenu
+                );
+              })}
+              <SecondaryLinks />
+            </animated.div>
+          </>
+        )}
+
+        {location.pathname === AppRoutes.ROOT && (
+          <>
+            <Button
+              className={classnames(
+                styles.TutorialBtn,
+                isTutorialVisible && styles.TutorialBtnOpen
+              )}
+              onClick={() => {
+                setIsTutorialVisible(!isTutorialVisible);
+              }}
+              variant="plain"
+              lean={true}
+            >
+              Uitleg
+            </Button>
+            {isTutorialVisible && (
+              <Tutorial
+                onClose={() => setIsTutorialVisible(!isTutorialVisible)}
+              />
+            )}
+          </>
+        )}
+      </nav>
+    </Trap>
   );
 }
