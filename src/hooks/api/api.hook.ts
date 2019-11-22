@@ -1,7 +1,12 @@
 import { Action, Unshaped } from 'App.types';
 import axios from 'axios';
 import { useEffect, useReducer, useState } from 'react';
-import { ApiRequestOptions, ApiState, RefetchFunction } from './api.types';
+import {
+  AbortFunction,
+  ApiRequestOptions,
+  ApiState,
+  RefetchFunction,
+} from './api.types';
 
 /**
  * Concepts in this hook are described in the following article:
@@ -68,7 +73,7 @@ export const getDefaultState = (initialData = {}, postpone = false) => ({
 export const useDataApi = (
   options: ApiRequestOptions = DEFAULT_REQUEST_OPTIONS,
   initialData: Unshaped = {}
-): [ApiState, RefetchFunction] => {
+): [ApiState, RefetchFunction, AbortFunction] => {
   const [requestOptions, setRequestOptions] = useState(options);
   const apiDataReducer = createApiDataReducer(initialData, true);
   const refetch = (options: ApiRequestOptions) => {
@@ -79,6 +84,13 @@ export const useDataApi = (
     apiDataReducer,
     getDefaultState(initialData, requestOptions.postpone)
   );
+
+  function abort() {
+    dispatch({
+      type: ActionTypes.FETCH_FAILURE,
+      payload: 'Request aborted',
+    });
+  }
 
   useEffect(() => {
     let didCancel = false;
@@ -118,5 +130,5 @@ export const useDataApi = (
     // See: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
   }, [requestOptions]);
 
-  return [state, refetch];
+  return [state, refetch, abort];
 };

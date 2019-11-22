@@ -1,7 +1,7 @@
 import { getApiUrl } from 'helpers/App';
 import { Centroid, getDistance } from 'helpers/geo';
 import { useDataApi } from './api.hook';
-import { ApiState, RefetchFunction } from './api.types';
+import { AbortFunction, ApiState, RefetchFunction } from './api.types';
 
 enum Stadsdeel {
   centrum = 'Centrum',
@@ -51,6 +51,7 @@ export interface RawGarbageApiState extends ApiState {
 export interface GarbageApiState extends ApiState {
   data: GarbageInfoApiResponseFormatted;
   refetch: (requestData: GarbageApiHookProps) => void;
+  abort: AbortFunction;
 }
 
 export interface GarbagePoint {
@@ -77,7 +78,11 @@ export default function useGarbageApi({
 }: {
   centroid: Centroid | null;
 }): GarbageApiState {
-  const [api, refetch]: [RawGarbageApiState, RefetchFunction] = useDataApi({
+  const [api, refetch, abort]: [
+    RawGarbageApiState,
+    RefetchFunction,
+    AbortFunction
+  ] = useDataApi({
     postpone: true,
     url: '',
   });
@@ -187,5 +192,6 @@ export default function useGarbageApi({
         url: `${getApiUrl('AFVAL_OPHAAL_GEBIEDEN')}?lat=${lat}&lon=${lon}`,
       });
     },
+    abort,
   };
 }

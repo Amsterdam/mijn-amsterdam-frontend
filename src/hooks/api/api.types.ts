@@ -19,3 +19,4 @@ export interface ApiState {
 }
 
 export type RefetchFunction = (options: ApiRequestOptions) => void;
+export type AbortFunction = () => void;

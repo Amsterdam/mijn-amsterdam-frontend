@@ -71,7 +71,13 @@ export default function useMyChapters(
       ERFPACHT.isLoading ||
       GARBAGE.isPristine;
     setItems({ items, isLoading });
-  }, [WMO.isLoading, FOCUS.isLoading, ERFPACHT.isLoading, GARBAGE.isLoading]);
+  }, [
+    WMO.isLoading,
+    FOCUS.isLoading,
+    ERFPACHT.isLoading,
+    GARBAGE.isLoading,
+    GARBAGE.isError,
+  ]);
 
   return {
     items,
