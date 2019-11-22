@@ -312,7 +312,11 @@ export default function MainNavBar() {
           >
             Uitleg
           </Button>
-          {isTutorialVisible && <Tutorial />}
+          {isTutorialVisible && (
+            <Tutorial
+              onClose={() => setIsTutorialVisible(!isTutorialVisible)}
+            />
+          )}
         </>
       )}
     </nav>
