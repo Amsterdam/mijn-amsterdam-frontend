@@ -55,7 +55,7 @@ export const DEFAULT_REQUEST_OPTIONS: ApiRequestOptions = {
   // Postpone fetch when hook is called/set-up for the first time
   postpone: false,
   // timeout in ms
-  timeout: 30 * 1000,
+  timeout: 10 * 1000,
 };
 
 export const getDefaultState = (initialData = {}, postpone = false) => ({
