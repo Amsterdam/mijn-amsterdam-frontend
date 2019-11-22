@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styles from './FontEnlarger.module.scss';
 import { ComponentChildren } from 'App.types';
 import classnames from 'classnames';
-import { useDebouncedCallback } from 'use-debounce';
 
 export interface ComponentProps {
   children?: ComponentChildren;
@@ -10,20 +9,27 @@ export interface ComponentProps {
 
 export default function FontEnlarger({ children }: ComponentProps) {
   const [isVisible, setVisibility] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
   function show() {
     setVisibility(true);
   }
-  const [hide] = useDebouncedCallback(() => {
+  function hide() {
     setVisibility(false);
-  }, 200);
+  }
+  function focus() {
+    return buttonRef.current!.focus();
+  }
+
   return (
     <div className={styles.FontEnlarger}>
       <button
+        ref={buttonRef}
         aria-label="Uitleg tekst vergroten"
         onFocus={() => show()}
         onBlur={() => hide()}
-        onMouseEnter={() => show()}
-        onMouseLeave={() => hide()}
+        onClick={() => focus()}
+        aria-expanded={isVisible}
       >
         A &#43; &minus;
       </button>

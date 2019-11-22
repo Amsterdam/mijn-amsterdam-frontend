@@ -22,33 +22,49 @@ export default function Page({
   );
 }
 
-export function TextPage({ children, className }: PageProps) {
+export function TextPage({ children, className, ...otherProps }: PageProps) {
   return (
-    <Page className={composeClassNames(styles.TextPage, className)}>
+    <Page
+      {...otherProps}
+      className={composeClassNames(styles.TextPage, className)}
+    >
       {children}
     </Page>
   );
 }
 
-export function OverviewPage({ children, className }: PageProps) {
+export function OverviewPage({
+  children,
+  className,
+  ...otherProps
+}: PageProps) {
   return (
-    <Page className={composeClassNames(styles.OverviewPage, className)}>
+    <Page
+      {...otherProps}
+      className={composeClassNames(styles.OverviewPage, className)}
+    >
       {children}
     </Page>
   );
 }
 
-export function DetailPage({ children, className }: PageProps) {
+export function DetailPage({ children, className, ...otherProps }: PageProps) {
   return (
-    <Page className={composeClassNames(styles.DetailPage, className)}>
+    <Page
+      {...otherProps}
+      className={composeClassNames(styles.DetailPage, className)}
+    >
       {children}
     </Page>
   );
 }
 
-export function PageContent({ children, className }: PageProps) {
+export function PageContent({ children, className, ...otherProps }: PageProps) {
   return (
-    <div className={composeClassNames(styles.PageContent, className)}>
+    <div
+      {...otherProps}
+      className={composeClassNames(styles.PageContent, className)}
+    >
       {children}
     </div>
   );

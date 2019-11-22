@@ -13,6 +13,7 @@ interface CustomButtonProps {
   iconPosition?: 'left' | 'right';
   className?: string;
   icon?: any;
+  iconSize?: string;
   lean?: boolean;
 }
 
@@ -32,13 +33,17 @@ type buttonStyleProps = Pick<
   'lean' | 'isDisabled' | 'variant' | 'className'
 >;
 
-type ButtonBodyProps = Pick<CustomButtonProps, 'icon' | 'iconPosition'> & {
+type ButtonBodyProps = Pick<
+  CustomButtonProps,
+  'icon' | 'iconPosition' | 'iconSize'
+> & {
   children: ReactNode;
 };
 
 interface PositionedIconProps {
   position?: 'left' | 'right';
   icon?: any;
+  iconSize?: string;
 }
 
 function buttonStyle({
@@ -56,25 +61,44 @@ function buttonStyle({
   );
 }
 
-function PositionedIcon({ icon, position }: PositionedIconProps) {
+function PositionedIcon({
+  icon,
+  iconSize = '14px',
+  position,
+}: PositionedIconProps) {
   const Icon = icon;
   return (
     <Icon
       aria-hidden="true"
+      width={iconSize}
+      height={iconSize}
       className={classnames(styles.Icon, styles[`Icon__${position}`])}
     />
   );
 }
 
-function ButtonBody({ icon, iconPosition, children }: ButtonBodyProps) {
+function ButtonBody({
+  icon,
+  iconSize,
+  iconPosition,
+  children,
+}: ButtonBodyProps) {
   return (
     <>
       {!!icon && iconPosition === 'left' && (
-        <PositionedIcon icon={icon} position={iconPosition} />
+        <PositionedIcon
+          iconSize={iconSize}
+          icon={icon}
+          position={iconPosition}
+        />
       )}
       {children}
       {!!icon && iconPosition === 'right' && (
-        <PositionedIcon icon={icon} position={iconPosition} />
+        <PositionedIcon
+          iconSize={iconSize}
+          icon={icon}
+          position={iconPosition}
+        />
       )}
     </>
   );
@@ -87,6 +111,7 @@ export function Button({
   lean = false,
   isDisabled = false,
   icon,
+  iconSize,
   iconPosition = 'left',
   ...otherProps
 }: ButtonProps) {
@@ -96,7 +121,7 @@ export function Button({
       className={buttonStyle({ lean, isDisabled, variant, className })}
       disabled={isDisabled}
     >
-      <ButtonBody icon={icon} iconPosition={iconPosition}>
+      <ButtonBody iconSize={iconSize} icon={icon} iconPosition={iconPosition}>
         {children}
       </ButtonBody>
     </button>
@@ -113,6 +138,7 @@ export default function Linkd({
   lean = true,
   variant = 'plain',
   icon = ChevronIcon,
+  iconSize,
   iconPosition = 'left',
   external = false,
   onClick,
@@ -148,7 +174,7 @@ export default function Linkd({
         className: classnames(styles.Linkd, className),
       })}
     >
-      <ButtonBody icon={icon} iconPosition={iconPosition}>
+      <ButtonBody icon={icon} iconSize={iconSize} iconPosition={iconPosition}>
         {children}
       </ButtonBody>
     </LinkElement>
@@ -161,6 +187,7 @@ export function LinkdInline({
   variant = 'inline',
   lean = true,
   icon = '',
+  iconSize,
   className,
   ...otherProps
 }: LinkdProps) {
@@ -169,6 +196,7 @@ export function LinkdInline({
       {...otherProps}
       className={classnames(styles.LinkedInline, className)}
       icon={icon}
+      iconSize={iconSize}
       external={external}
       variant={variant}
       lean={lean}
@@ -187,6 +215,7 @@ export interface IconButtonProps
 export function IconButton({
   className,
   icon,
+  iconSize = '32px',
   ...otherProps
 }: IconButtonProps) {
   const Icon = icon;
@@ -197,7 +226,12 @@ export function IconButton({
       className={classnames(styles.IconButton, className)}
       lean={true}
     >
-      <Icon className={styles.Icon} aria-hidden={true} />
+      <Icon
+        width={iconSize}
+        height={iconSize}
+        className={styles.Icon}
+        aria-hidden={true}
+      />
     </Button>
   );
 }

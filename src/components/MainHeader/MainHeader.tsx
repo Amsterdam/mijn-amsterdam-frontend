@@ -14,11 +14,28 @@ import { Link } from 'react-router-dom';
 
 import styles from './MainHeader.module.scss';
 import Linkd from 'components/Button/Button';
+import useRouter from 'use-react-router';
 
 const excludedApiKeys: StateKey[] = ['MY_CHAPTERS', 'SESSION'];
 
 export interface MainHeaderProps {
   isAuthenticated?: boolean;
+}
+
+function TheHeading() {
+  const Logo = useDesktopScreen() ? AmsterdamLogoLarge : AmsterdamLogo;
+  return (
+    <>
+      <Logo
+        role="img"
+        aria-label="Gemeente Amsterdam"
+        className={styles.logo}
+      />
+      <Heading size="large" el="h1">
+        Mijn Amsterdam
+      </Heading>
+    </>
+  );
 }
 
 export default function MainHeader({
@@ -42,7 +59,7 @@ export default function MainHeader({
     );
 
   const hasErrors = !!errors.length;
-  const Logo = useDesktopScreen() ? AmsterdamLogoLarge : AmsterdamLogo;
+  const { location } = useRouter();
 
   return (
     <header className={styles.header}>
@@ -57,24 +74,21 @@ export default function MainHeader({
         </nav>
       )}
       <div className={styles.topBar}>
-        <Link
-          className={styles.logoLink}
-          to={AppRoutes.ROOT}
-          aria-label="Terug naar home"
-        >
-          <Logo
-            aria-hidden="true"
-            role="img"
-            aria-label="Amsterdam logo"
-            className={styles.logo}
-          />
-
-          <Heading size="large" el="h1">
-            Mijn Amsterdam
-          </Heading>
-        </Link>
+        {location.pathname !== AppRoutes.ROOT ? (
+          <Link
+            className={styles.logoLink}
+            to={AppRoutes.ROOT}
+            aria-label="Terug naar home"
+          >
+            <TheHeading />
+          </Link>
+        ) : (
+          <span className={styles.logoLink}>
+            <TheHeading />
+          </span>
+        )}
         <div className={styles.betaLabel}>
-          <BetaLabel aria-hidden="true" role="img" aria-label="Beta versie" />
+          <BetaLabel role="img" aria-label="Beta" />
         </div>
       </div>
       {isAuthenticated && <MainNavBar />}
