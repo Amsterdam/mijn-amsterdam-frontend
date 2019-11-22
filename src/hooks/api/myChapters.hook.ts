@@ -4,7 +4,7 @@ import {
   myChaptersMenuItems,
 } from 'components/MainNavBar/MainNavBar.constants';
 import { useEffect, useState } from 'react';
-import { BrpApiState } from './api.brp';
+import { BrpApiState, isMokum } from './api.brp';
 import { ErfpachtApiState } from './api.erfpacht';
 import { FocusApiState } from './api.focus';
 import { GarbageApiState } from './api.garbage';
@@ -61,7 +61,7 @@ export interface MyChaptersApiState {
 export default function useMyChapters(
   apiStates: useMyChaptersProps
 ): MyChaptersApiState {
-  const { WMO, FOCUS, ERFPACHT, GARBAGE } = apiStates;
+  const { WMO, FOCUS, ERFPACHT, GARBAGE, BRP } = apiStates;
 
   const [{ items, isLoading }, setItems] = useState<MyChaptersApiState>({
     items: [],
@@ -77,7 +77,7 @@ export default function useMyChapters(
       WMO.isLoading ||
       FOCUS.isLoading ||
       ERFPACHT.isLoading ||
-      GARBAGE.isPristine;
+      (GARBAGE.isPristine && isMokum(BRP));
     setItems({ items, isLoading });
   }, [
     WMO.isLoading,
@@ -85,6 +85,7 @@ export default function useMyChapters(
     ERFPACHT.isLoading,
     GARBAGE.isLoading,
     GARBAGE.isError,
+    isMokum(BRP),
   ]);
 
   return {
