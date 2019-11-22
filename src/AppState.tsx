@@ -80,7 +80,14 @@ export function useAppState(value?: any) {
   const ERFPACHT = useErfpachtApi();
   const MY_AREA = useMyMap();
   const GARBAGE = useGarbageApi({ centroid: MY_AREA.centroid });
-  const MY_CHAPTERS = useMyChapters({ WMO, FOCUS, ERFPACHT, GARBAGE, BRP });
+  const MY_CHAPTERS = useMyChapters({
+    WMO,
+    FOCUS,
+    ERFPACHT,
+    GARBAGE,
+    BRP,
+    MY_AREA,
+  });
   const MY_NOTIFICATIONS = useMyNotificationsApi({ FOCUS, BRP });
 
   const tipsDependencies = [
@@ -100,17 +107,7 @@ export function useAppState(value?: any) {
   // Fetch garbage information for address at lat,lon
   useEffect(() => {
     if (MY_AREA.centroid !== null && isMokum(BRP)) {
-      let timeout: any;
-      if (MY_AREA.centroid !== null) {
-        GARBAGE.refetch({ centroid: MY_AREA.centroid });
-      } else {
-        timeout = setTimeout(() => {
-          GARBAGE.abort();
-        }, 10000);
-      }
-      return () => {
-        clearTimeout(timeout);
-      };
+      GARBAGE.refetch({ centroid: MY_AREA.centroid });
     }
   }, [MY_AREA.centroid]);
 
