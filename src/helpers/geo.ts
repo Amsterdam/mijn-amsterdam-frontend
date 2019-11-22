@@ -1,6 +1,6 @@
 export type Lat = number;
 export type Lon = number;
-export type Centroid = [Lat, Lon];
+export type Centroid = [Lon, Lat];
 
 /**
  * Calculates the haversine distance between point A, and B.
