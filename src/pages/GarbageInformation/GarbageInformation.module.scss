@@ -70,7 +70,9 @@
 }
 
 .AddressPanel {
-  border-top: 0;
+  max-width: $main-boxed-width;
+  margin: 0 auto;
+  margin-top: 4rem;
 }
 
 .DistanceToHome {
