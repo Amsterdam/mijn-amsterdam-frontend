@@ -74,6 +74,14 @@
   max-width: $main-boxed-width;
   margin: 0 auto;
   margin-top: 4rem;
+
+  @include mq-tablet() {
+    margin: 0 2rem;
+  }
+
+  @include mq-phone() {
+    margin: 0 1rem;
+  }
 }
 
 .DistanceToHome {
