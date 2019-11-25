@@ -4,13 +4,13 @@ import { MainNavSubmenuLink } from 'components/MainNavSubmenu/MainNavSubmenu';
 import Heading from 'components/Heading/Heading';
 import { MenuItem } from '../MainNavBar/MainNavBar.constants';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
-import classnames from 'classnames';
 import {
   trackItemPresentation,
   useSessionCallbackOnceDebounced,
 } from 'hooks/analytics.hook';
 import { ChapterTitles, Chapter } from 'App.constants';
 import Panel from '../Panel/Panel';
+import { useDebounce } from 'use-debounce';
 
 export interface MyChaptersPanelProps {
   title: string;
@@ -27,17 +27,16 @@ export default function MyChaptersPanel({
   trackCategory,
   ...otherProps
 }: MyChaptersPanelProps) {
-  useSessionCallbackOnceDebounced(
-    trackCategory,
-    () => {
-      items.forEach(({ id }) => {
-        trackItemPresentation(
-          trackCategory,
-          `Thema ${ChapterTitles[id as Chapter] || id}`
-        );
-      });
-    },
-  );
+  // Use debounced value here because we want to avoid dependent loading flickr in the scenario: Api A done and Api B stars loading.
+  const [isLoadingDebounced] = useDebounce(isLoading, 200);
+  useSessionCallbackOnceDebounced(trackCategory, () => {
+    items.forEach(({ id }) => {
+      trackItemPresentation(
+        trackCategory,
+        `Thema ${ChapterTitles[id as Chapter] || id}`
+      );
+    });
+  });
 
   return (
     <Panel {...otherProps} className={styles.MyChaptersPanel}>
@@ -54,7 +53,7 @@ export default function MyChaptersPanel({
           );
         })}
       </div>
-      {isLoading && (
+      {isLoadingDebounced && (
         <LoadingContent
           className={styles.LoadingContent}
           barConfig={[
