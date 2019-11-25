@@ -108,7 +108,7 @@ export default function useGarbageApi({
             aanbiedwijze: aanbiedwijze || `Zet uw ${type} op straat`,
             buitenZetten:
               ophaaldag !== 'Op afspraak' && ophaaldag !== null
-                ? `${tijd_vanaf}\n${tijd_tot}`
+                ? `${tijd_vanaf} tot\n${tijd_tot}`
                 : '',
             ophaaldag: ophaaldag === 'Op afspraak' ? opmerking : ophaaldag,
           };
