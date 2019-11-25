@@ -27,7 +27,7 @@ export default function MyChaptersPanel({
   trackCategory,
   ...otherProps
 }: MyChaptersPanelProps) {
-  // Use debounced value here because we want to avoid dependent loading flickr in the scenario: Api A done and Api B stars loading.
+  // Use debounced value here because we want to avoid dependent loading flickr in the scenario: Api A done and Api B started request with data returned from B.
   const [isLoadingDebounced] = useDebounce(isLoading, 200);
   useSessionCallbackOnceDebounced(trackCategory, () => {
     items.forEach(({ id }) => {
