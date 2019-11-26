@@ -88,6 +88,7 @@ export default function MainNavSubmenu({
           cancelLeave();
           debouncedEnter();
         }}
+        aria-expanded={isOpen}
         {...rest}
       >
         <span>{title}</span>
