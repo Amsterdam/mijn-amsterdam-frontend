@@ -127,6 +127,7 @@ export default function MyTips({
               onClick={() => setModalIsOpen(true)}
               className={styles.OptIn}
               icon={ChevronIcon}
+              aria-expanded={showOptIn}
             >
               {isOptIn
                 ? 'Toon geen persoonlijke tips'

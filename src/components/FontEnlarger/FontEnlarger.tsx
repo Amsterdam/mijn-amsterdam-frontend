@@ -29,6 +29,9 @@ export default function FontEnlarger({ children }: ComponentProps) {
         onFocus={() => show()}
         onBlur={() => hide()}
         onClick={() => focus()}
+        onKeyUp={event => {
+          event.key.toLowerCase() === 'escape' && hide();
+        }}
         aria-expanded={isVisible}
       >
         A &#43; &minus;

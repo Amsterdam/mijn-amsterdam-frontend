@@ -89,13 +89,18 @@ export default function SectionCollapsible({
           )}
         >
           <CaretIcon aria-hidden="true" className={styles.CaretIcon} />{' '}
-          <span
-            {...(hasItems ? { role: 'button', tabIndex: 0 } : {})}
-            onKeyPress={event => hasItems && toggleCollapsed(event)}
-            onClick={event => hasItems && toggleCollapsed(event)}
-          >
-            {title}
-          </span>
+          {hasItems ? (
+            <button
+              aria-expanded={!isCollapsed}
+              className={styles.TitleToggle}
+              onKeyPress={event => hasItems && toggleCollapsed(event)}
+              onClick={event => hasItems && toggleCollapsed(event)}
+            >
+              {title}
+            </button>
+          ) : (
+            title
+          )}
         </Heading>
       )}
       {isLoading && (
