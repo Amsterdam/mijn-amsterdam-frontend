@@ -206,10 +206,16 @@ export default function MainNavBar() {
     setSubMenuVisibility();
   }, [history.location]);
 
+  const config = {
+    mass: 0.3,
+    tension: 400,
+  };
+
   const linkContainerAnim = {
     immediate: isBurgerMenuVisible === undefined,
     reverse: isBurgerMenuVisible,
     left: -400,
+    config,
     from: {
       left: 0,
     },
@@ -228,6 +234,7 @@ export default function MainNavBar() {
     immediate: isBurgerMenuVisible !== false,
     reverse: !isBurgerMenuVisible,
     left: 0,
+    config,
     from: {
       left: -1000,
     },
