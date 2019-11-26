@@ -77,7 +77,7 @@ export default function SectionCollapsible({
   };
 
   const heightAnimSpring = useSpring(heightAnim);
-
+  const El = hasItems ? 'button' : 'span';
   return (
     <section className={classes}>
       {hasTitle && (
@@ -89,13 +89,14 @@ export default function SectionCollapsible({
           )}
         >
           <CaretIcon aria-hidden="true" className={styles.CaretIcon} />{' '}
-          <span
-            {...(hasItems ? { role: 'button', tabIndex: 0 } : {})}
+          <El
+            aria-expanded={!isCollapsed}
+            className={styles.TitleToggle}
             onKeyPress={event => hasItems && toggleCollapsed(event)}
             onClick={event => hasItems && toggleCollapsed(event)}
           >
             {title}
-          </span>
+          </El>
         </Heading>
       )}
       {isLoading && (

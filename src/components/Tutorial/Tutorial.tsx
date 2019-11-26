@@ -70,7 +70,7 @@ function TutorialItem({ el }: { el: any }) {
         <p className={styles.TutorialText} style={textStyle}>
           <span ref={ref}>{text}</span>
         </p>
-        <span className={styles.ArrowIconContainer}>
+        <span aria-hidden="true" className={styles.ArrowIconContainer}>
           <ArrowIcon className={styles.ArrowIcon} />
         </span>
       </div>
@@ -99,9 +99,11 @@ export default function Tutorial({ onClose }: TutorialProps) {
         {tutorialItems.map((el, i) => (
           <TutorialItem key={i} el={el} />
         ))}
-        <CloseButton onClick={onClose} className={styles.CloseTutorial}>
-          Sluiten
-        </CloseButton>
+        <CloseButton
+          title="Uitleg verbergen"
+          onClick={onClose}
+          className={styles.CloseTutorial}
+        />
       </div>
     </FocusTrap>,
     useModalRoot()
