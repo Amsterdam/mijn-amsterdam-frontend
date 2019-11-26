@@ -33,7 +33,7 @@ pipeline {
       }
     }
 
-     stage('E2E testing') {
+    stage('E2E testing') {
       when { not { branch 'test' } }
       environment {
         PROJECT = "${PROJECT_PREFIX}e2e"
