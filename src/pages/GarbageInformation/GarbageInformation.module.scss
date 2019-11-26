@@ -48,6 +48,7 @@
     @include GarbagePanel;
     font-weight: bold;
     margin-bottom: 2rem;
+    white-space: pre-wrap;
     &:last-child {
       margin-bottom: 0;
     }
@@ -70,7 +71,17 @@
 }
 
 .AddressPanel {
-  border-top: 0;
+  max-width: $main-boxed-width;
+  margin: 0 auto;
+  margin-top: 4rem;
+
+  @include mq-tablet() {
+    margin: 0 2rem;
+  }
+
+  @include mq-phone() {
+    margin: 0 1rem;
+  }
 }
 
 .DistanceToHome {
