@@ -23,7 +23,7 @@
 
 .Title {
   position: relative;
-  padding-left: 1em;
+  padding-left: .8em;
   margin: 0 auto;
   margin-bottom: 3rem;
 
@@ -42,6 +42,14 @@
   span {
     padding-left: 0.2em;
   }
+}
+
+.TitleToggle {
+  margin: 0;
+  border: 0;
+  background: 0;
+  font-weight: bold;
+  padding: 0;
 }
 
 .Panel {

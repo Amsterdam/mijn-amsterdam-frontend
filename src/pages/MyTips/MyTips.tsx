@@ -49,6 +49,7 @@ export default () => {
               variant={isOptIn ? 'secondary-inverted' : 'secondary'}
               className={styles.OptInOutToggleButton}
               onClick={() => setModalIsOpen(true)}
+              aria-expanded={modalIsOpen}
             >
               {isOptIn
                 ? 'Nee, toon geen persoonlijke tips'

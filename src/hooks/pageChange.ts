@@ -32,7 +32,10 @@ const CustomTrackingUrls = {
 const ExcludePageViewTrackingUrls = [AppRoutes.API_LOGIN];
 
 const sortedPageTitleRoutes = Object.keys(PageTitles).sort((a, b) => {
-  return a.length < b.length ? 1 : 0;
+  if (a.length === b.length) {
+    return 0;
+  }
+  return a.length < b.length ? 1 : -1;
 });
 
 export default function usePageChange() {
@@ -43,9 +46,9 @@ export default function usePageChange() {
     window.scrollTo(0, 0);
 
     // Change Page title on route change
-    const index = sortedPageTitleRoutes.findIndex(route =>
-      location.pathname.startsWith(route)
-    );
+    const index = sortedPageTitleRoutes.findIndex(route => {
+      return location.pathname === route || location.pathname.startsWith(route);
+    });
 
     const title =
       index !== -1 ? PageTitles[sortedPageTitleRoutes[index]] : PageTitleMain;
