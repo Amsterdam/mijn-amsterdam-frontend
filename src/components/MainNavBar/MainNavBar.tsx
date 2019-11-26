@@ -48,14 +48,13 @@ function SecondaryLinks() {
   } = useContext(AppContext);
 
   const hasFirstName = !!(persoon && persoon.voornamen);
+  const isDesktopScreen = useDesktopScreen();
 
   useEffect(() => {
     if (hasFirstName) {
       trackItemPresentation('Mijn gegevens', 'Link naar Profiel');
     }
   }, [hasFirstName]);
-
-  const isDesktopScreen = useDesktopScreen();
 
   return (
     <div className={styles.secondaryLinks}>
@@ -65,7 +64,6 @@ function SecondaryLinks() {
           to={AppRoutes.PROFILE}
           className={styles.ProfileLink}
           data-tutorial-item="Hier kunt u uw algemene persoonsgegevens uit de gemeentelijke basisregistratie raadplegen, zoals uw woonadres;left-bottom"
-          id="ProfileLink"
         >
           {persoon && persoon.voornamen ? (
             getFullName(persoon)
@@ -225,6 +223,7 @@ export default function MainNavBar() {
       opacity: 1,
     },
   };
+
   const left: any = {
     immediate: isBurgerMenuVisible !== false,
     reverse: !isBurgerMenuVisible,
@@ -233,9 +232,11 @@ export default function MainNavBar() {
       left: -1000,
     },
   };
+
   if (!isBurgerMenuVisible) {
     left.delay = 300;
   }
+
   const linkContainerAnimationProps = useSpring(linkContainerAnim);
   const backdropAnimationProps = useSpring(backdropAnim);
   const leftProps = useSpring(left);
@@ -313,6 +314,7 @@ export default function MainNavBar() {
               setIsTutorialVisible(!isTutorialVisible);
             }}
             variant="plain"
+            aria-expanded={isTutorialVisible}
             lean={true}
           >
             Uitleg

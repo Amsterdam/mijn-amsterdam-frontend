@@ -28,7 +28,7 @@ function TheHeading() {
     <>
       <Logo
         role="img"
-        aria-label="Gemeente Amsterdam"
+        aria-label="Gemeente Amsterdam logo"
         className={styles.logo}
       />
       <Heading size="large" el="h1">
@@ -78,7 +78,7 @@ export default function MainHeader({
           <Link
             className={styles.logoLink}
             to={AppRoutes.ROOT}
-            aria-label="Terug naar home"
+            title="Terug naar home"
           >
             <TheHeading />
           </Link>
