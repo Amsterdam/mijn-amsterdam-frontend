@@ -70,7 +70,7 @@ interface GarbageApiHookProps {
 }
 
 const titles: { [type: string]: string } = {
-  huisvuil: 'Huisvuil',
+  huisvuil: 'Restafval',
   grofvuil: 'Grofvuil',
 };
 
