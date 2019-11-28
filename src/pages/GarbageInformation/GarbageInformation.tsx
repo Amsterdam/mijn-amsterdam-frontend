@@ -131,16 +131,16 @@ export default () => {
               <p>{item.aanbiedwijze}</p>
             </GarbagePanel>
           )}
-          {!!item.buitenZetten && (
-            <GarbagePanel>
-              <Heading size="tiny">Buiten zetten</Heading>
-              <p>{item.buitenZetten}</p>
-            </GarbagePanel>
-          )}
           {!!item.ophaaldag && (
             <GarbagePanel>
               <Heading size="tiny">Ophaaldag</Heading>
               <p dangerouslySetInnerHTML={{ __html: item.ophaaldag }} />
+            </GarbagePanel>
+          )}
+          {!!item.buitenZetten && (
+            <GarbagePanel>
+              <Heading size="tiny">Buiten zetten</Heading>
+              <p>{item.buitenZetten}</p>
             </GarbagePanel>
           )}
           {index === 0 && !item.ophaaldag && (
