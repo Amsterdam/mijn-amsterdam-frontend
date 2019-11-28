@@ -113,7 +113,7 @@ interface AfvalOphaalGebiedProperty {
   stadsdeel_naam: Stadsdeel;
   tijd_tot: string | null;
   tijd_vanaf: string | null;
-  type: string;
+  type: 'grofvuil' | 'huisvuil';
   website: string | null;
   ophalen: 'ja' | 'nee';
   frequentie: string | null;
@@ -127,8 +127,17 @@ interface GarbageInfoApiResponse {
   };
 }
 
+interface GarbageMoment {
+  title: string;
+  aanbiedwijze: string;
+  stadsdeel: Stadsdeel;
+  type: 'grofvuil' | 'huisvuil';
+  buitenZetten: string;
+  ophaaldag: string;
+}
+
 interface GarbageInfoApiResponseFormatted {
-  ophalen: any[];
+  ophalen: GarbageMoment[];
   wegbrengen: GarbagePoint[];
   centroid: Centroid | null;
 }
@@ -176,7 +185,7 @@ export default function useGarbageApi({
     url: '',
   });
 
-  const ophalen =
+  const ophalen: GarbageMoment[] =
     api.data.result && api.data.result.features && api.data.result.features
       ? api.data.result.features.map(feature => {
           const {
@@ -194,6 +203,7 @@ export default function useGarbageApi({
           return {
             title: titles[type] || type,
             stadsdeel: stadsdeel_naam,
+            type,
             aanbiedwijze:
               aanbiedwijze || `Zet uw ${titles[type].toLowerCase()} op straat`,
             buitenZetten:
@@ -212,7 +222,7 @@ export default function useGarbageApi({
                       ExternalUrls.AFVAL_AFSPRAAK_MAKEN
                     }>online</a>`
                   )
-                : ophaaldag,
+                : ophaaldag || '',
           };
         })
       : [];

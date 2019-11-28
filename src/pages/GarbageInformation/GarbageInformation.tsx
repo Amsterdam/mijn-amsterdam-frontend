@@ -127,20 +127,22 @@ export default () => {
         >
           {!!item.aanbiedwijze && (
             <GarbagePanel>
-              <Heading size="tiny">Aanbiedwijze</Heading>
+              <Heading size="tiny">
+                {item.type === 'grofvuil' ? 'Opmerking' : 'Hoe'}
+              </Heading>
               <p>{item.aanbiedwijze}</p>
-            </GarbagePanel>
-          )}
-          {!!item.ophaaldag && (
-            <GarbagePanel>
-              <Heading size="tiny">Ophaaldag</Heading>
-              <p dangerouslySetInnerHTML={{ __html: item.ophaaldag }} />
             </GarbagePanel>
           )}
           {!!item.buitenZetten && (
             <GarbagePanel>
               <Heading size="tiny">Buiten zetten</Heading>
               <p>{item.buitenZetten}</p>
+            </GarbagePanel>
+          )}
+          {!!item.ophaaldag && (
+            <GarbagePanel>
+              <Heading size="tiny">Ophaaldag</Heading>
+              <p dangerouslySetInnerHTML={{ __html: item.ophaaldag }} />
             </GarbagePanel>
           )}
           {index === 0 && !item.ophaaldag && (

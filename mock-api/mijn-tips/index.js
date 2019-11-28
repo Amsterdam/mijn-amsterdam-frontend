@@ -5,7 +5,6 @@ module.exports = {
   method: 'POST',
   template: (_, queryParams, body) => {
     const items = JSON.parse(JSON.stringify(data.items));
-    console.log('!!!!', body.optin);
     if (body && body.optin) {
       items[0].title = 'PERSONAL: ' + items[0].title;
     }
