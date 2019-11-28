@@ -57,6 +57,11 @@ p a {
   }
 }
 
+[role="button"],
+button {
+  cursor: pointer;
+}
+
 [role='button'],
 input,
 textarea,

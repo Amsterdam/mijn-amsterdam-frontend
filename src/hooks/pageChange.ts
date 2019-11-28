@@ -23,6 +23,7 @@ const PageTitles = {
   [AppRoutes.PROCLAIMER]: `Proclaimer`,
   [AppRoutes.MY_TIPS]: `Mijn Tips | overzicht`,
   [AppRoutes.MY_NOTIFICATIONS]: `${ChapterTitles.MELDINGEN} | overzicht`,
+  [AppRoutes.AFVAL]: `${ChapterTitles.AFVAL} rond uw adres`,
 };
 
 const CustomTrackingUrls = {
@@ -50,8 +51,9 @@ export default function usePageChange() {
       return location.pathname === route || location.pathname.startsWith(route);
     });
 
-    const title =
-      index !== -1 ? PageTitles[sortedPageTitleRoutes[index]] : PageTitleMain;
+    const route = sortedPageTitleRoutes[index];
+
+    const title = index !== -1 ? PageTitles[route] : PageTitleMain;
 
     document.title = title;
 

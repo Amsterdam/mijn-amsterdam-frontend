@@ -46,9 +46,7 @@
 
   p {
     @include GarbagePanel;
-    font-weight: bold;
     margin-bottom: 2rem;
-    white-space: pre-wrap;
     &:last-child {
       margin-bottom: 0;
     }
@@ -60,13 +58,8 @@
     @include GarbagePanel;
     margin-bottom: 2rem;
   }
-  p {
-    font-weight: normal;
-    white-space: pre-wrap;
-
-    > strong {
-      display: block;
-    }
+  p > strong {
+    display: block;
   }
 }
 

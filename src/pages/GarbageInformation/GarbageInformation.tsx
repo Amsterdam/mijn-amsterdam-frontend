@@ -83,7 +83,7 @@ export default () => {
   }
 
   const garbageContainersMapUrl = centroid
-    ? `${MAP_URL}&center=${centroid[1]}%2C${centroid[0]}&zoom=12&marker=${
+    ? `${MAP_URL}&center=${centroid[1]}%2C${centroid[0]}&zoom=15&marker=${
         centroid[1]
       }%2C${
         centroid[0]
@@ -98,15 +98,11 @@ export default () => {
       <PageContent>
         <p>
           Hieronder vindt u een overzicht van alle huis- en grofvuil
-          voorzieningen.
+          voorzieningen rond uw adres.
         </p>
         <p>
-          <Linkd href={ExternalUrls.HUISVUIL_VEELGEVRAAGD} external={true}>
-            Veelgevraagd huisvuil
-          </Linkd>
-          <br />
           <Linkd href={ExternalUrls.AFVAL} external={true}>
-            Regels voor grofvuil en hergebruik
+            Meer informatie over regels voor afval en hergebruik
           </Linkd>
         </p>
       </PageContent>
@@ -131,20 +127,22 @@ export default () => {
         >
           {!!item.aanbiedwijze && (
             <GarbagePanel>
-              <Heading size="tiny">Aanbiedwijze</Heading>
+              <Heading size="tiny">
+                {item.type === 'grofvuil' ? 'Opmerking' : 'Hoe'}
+              </Heading>
               <p>{item.aanbiedwijze}</p>
-            </GarbagePanel>
-          )}
-          {!!item.ophaaldag && (
-            <GarbagePanel>
-              <Heading size="tiny">Ophaaldag</Heading>
-              <p>{item.ophaaldag}</p>
             </GarbagePanel>
           )}
           {!!item.buitenZetten && (
             <GarbagePanel>
               <Heading size="tiny">Buiten zetten</Heading>
               <p>{item.buitenZetten}</p>
+            </GarbagePanel>
+          )}
+          {!!item.ophaaldag && (
+            <GarbagePanel>
+              <Heading size="tiny">Ophaaldag</Heading>
+              <p dangerouslySetInnerHTML={{ __html: item.ophaaldag }} />
             </GarbagePanel>
           )}
           {index === 0 && !item.ophaaldag && (
