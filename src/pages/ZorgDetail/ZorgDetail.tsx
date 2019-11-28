@@ -9,6 +9,7 @@ import Alert from 'components/Alert/Alert';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 import StatusLine from 'components/StatusLine/StatusLine';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
+import { useLocalStorage } from 'hooks/storage.hook';
 
 export default () => {
   const {
@@ -27,6 +28,7 @@ export default () => {
 
   const WmoItem = items.find(item => item.id === id);
   const noContent = !isLoading && !WmoItem;
+  const [isSafe] = useLocalStorage('showFocusDocuments', false);
 
   return (
     <DetailPage>
@@ -58,7 +60,8 @@ export default () => {
           items={WmoItem.process}
           trackCategory="Zorg en ondersteuning / Voorziening"
           altDocumentContent={(statusLineItem, stepNumber) => {
-            return stepNumber === 1 ? (
+            return (!statusLineItem.documents.length || isSafe === false) &&
+              stepNumber === 1 ? (
               <p>
                 <strong>
                   {WmoItem.isActual
