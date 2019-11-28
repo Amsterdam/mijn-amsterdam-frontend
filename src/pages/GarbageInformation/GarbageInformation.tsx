@@ -83,7 +83,7 @@ export default () => {
   }
 
   const garbageContainersMapUrl = centroid
-    ? `${MAP_URL}&center=${centroid[1]}%2C${centroid[0]}&zoom=12&marker=${
+    ? `${MAP_URL}&center=${centroid[1]}%2C${centroid[0]}&zoom=15&marker=${
         centroid[1]
       }%2C${
         centroid[0]
