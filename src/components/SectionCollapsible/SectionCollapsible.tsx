@@ -88,7 +88,6 @@ export default function SectionCollapsible({
             hasItems && styles.TitleWithItems
           )}
         >
-          <CaretIcon aria-hidden="true" className={styles.CaretIcon} />{' '}
           {hasItems ? (
             <button
               aria-expanded={!isCollapsed}
@@ -96,10 +95,14 @@ export default function SectionCollapsible({
               onKeyPress={event => hasItems && toggleCollapsed(event)}
               onClick={event => hasItems && toggleCollapsed(event)}
             >
+              <CaretIcon aria-hidden="true" className={styles.CaretIcon} />{' '}
               {title}
             </button>
           ) : (
-            title
+            <>
+              <CaretIcon aria-hidden="true" className={styles.CaretIcon} />{' '}
+              title
+            </>
           )}
         </Heading>
       )}

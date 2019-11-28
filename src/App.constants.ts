@@ -175,8 +175,6 @@ export const ExternalUrls = {
   AMSTERDAM: 'https://www.amsterdam.nl',
   WPI_CONTACT: 'https://www.amsterdam.nl/werk-inkomen/contact/',
   WPI_REGELINGEN: 'https://www.amsterdam.nl/werk-inkomen/uitkeringen/',
-  HUISVUIL_VEELGEVRAAGD:
-    'https://www.amsterdam.nl/veelgevraagd/?productid=%7BC5AC6694-CB65-4ED8-B5B3-6794BEA279FD%7D',
   AFVAL: 'https://www.amsterdam.nl/afval/',
 };
 

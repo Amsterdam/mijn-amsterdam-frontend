@@ -141,7 +141,6 @@
   background-color: transparent;
   margin-left: 0.2rem;
   text-indent: -100vw; // move text outside of view
-  cursor: pointer;
   padding: 0;
 
   &Open {
@@ -160,7 +159,6 @@
   background-position: center;
   border: 0;
   background-color: transparent;
-  cursor: pointer;
   position: absolute;
   top: $main-header-topbar-height;
   right: calc(50% - #{$main-boxed-width} / 2);
