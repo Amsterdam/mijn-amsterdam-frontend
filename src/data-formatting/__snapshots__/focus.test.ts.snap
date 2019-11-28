@@ -59,7 +59,15 @@ Object {
           </Linkd>
         </p>
       </React.Fragment>,
-      "documents": Array [],
+      "documents": Array [
+        Object {
+          "datePublished": "2019-07-24T15:05:51+02:00",
+          "id": "660000000000004",
+          "title": "Aanvraag WWB (GALO)",
+          "type": "aanvraag",
+          "url": "/api/focus/document?id=660000000000004&isBulk=false&isDms=false",
+        },
+      ],
       "id": "1-0-aanvraag",
       "isChecked": true,
       "isLastActive": false,
@@ -123,7 +131,15 @@ Object {
           </Linkd>
         </p>
       </React.Fragment>,
-      "documents": Array [],
+      "documents": Array [
+        Object {
+          "datePublished": "2019-07-28T15:05:51+02:00",
+          "id": "660000000000005",
+          "title": "Afwijzen Levensonderhoud (BIJ)",
+          "type": "beslissing",
+          "url": "/api/focus/document?id=660000000000005&isBulk=false&isDms=false",
+        },
+      ],
       "id": "1-0-beslissing",
       "isChecked": false,
       "isLastActive": true,
@@ -185,7 +201,15 @@ Object {
           </Linkd>
         </p>
       </React.Fragment>,
-      "documents": Array [],
+      "documents": Array [
+        Object {
+          "datePublished": "2019-04-09T15:05:51+02:00",
+          "id": "660000000000006",
+          "title": "Aanvraag WWB (GALO)",
+          "type": "aanvraag",
+          "url": "/api/focus/document?id=660000000000006&isBulk=false&isDms=false",
+        },
+      ],
       "id": "1-1-aanvraag",
       "isChecked": true,
       "isLastActive": false,
@@ -237,7 +261,15 @@ Object {
       "aboutStep": "beslissing",
       "datePublished": "2019-05-07T15:05:51+02:00",
       "description": "U heeft geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.",
-      "documents": Array [],
+      "documents": Array [
+        Object {
+          "datePublished": "2019-05-07T15:05:51+02:00",
+          "id": "660000000000007",
+          "title": "Afwijzen Levensonderhoud",
+          "type": "beslissing",
+          "url": "/api/focus/document?id=660000000000007&isBulk=false&isDms=false",
+        },
+      ],
       "id": "1-1-beslissing",
       "isChecked": false,
       "isLastActive": true,
@@ -311,7 +343,15 @@ Object {
           </Linkd>
         </p>
       </React.Fragment>,
-      "documents": Array [],
+      "documents": Array [
+        Object {
+          "datePublished": "2019-05-09T15:05:51+02:00",
+          "id": "660000000000008",
+          "title": "Aanvraag WWB (GALO)",
+          "type": "aanvraag",
+          "url": "/api/focus/document?id=660000000000008&isBulk=false&isDms=false",
+        },
+      ],
       "id": "1-2-aanvraag",
       "isChecked": true,
       "isLastActive": false,
@@ -399,7 +439,15 @@ Object {
           </Linkd>
         </p>
       </React.Fragment>,
-      "documents": Array [],
+      "documents": Array [
+        Object {
+          "datePublished": "2019-06-08T15:05:51+02:00",
+          "id": "660000000000009",
+          "title": "Toekennen Levensonderhoud (BIJ)",
+          "type": "beslissing",
+          "url": "/api/focus/document?id=660000000000009&isBulk=false&isDms=false",
+        },
+      ],
       "id": "1-2-beslissing",
       "isChecked": false,
       "isLastActive": true,
@@ -461,7 +509,22 @@ Object {
           </Linkd>
         </p>
       </React.Fragment>,
-      "documents": Array [],
+      "documents": Array [
+        Object {
+          "datePublished": "2019-06-08T15:05:52+02:00",
+          "id": "660000000000010",
+          "title": "Aanvraag WWB (GALO)",
+          "type": "aanvraag",
+          "url": "/api/focus/document?id=660000000000010&isBulk=false&isDms=false",
+        },
+        Object {
+          "datePublished": "2019-06-08T15:05:52+02:00",
+          "id": "660000000000019",
+          "title": "Aanvraag WWB (GALO)",
+          "type": "aanvraag",
+          "url": "/api/focus/document?id=660000000000019&isBulk=false&isDms=false",
+        },
+      ],
       "id": "1-3-aanvraag",
       "isChecked": true,
       "isLastActive": false,
@@ -537,7 +600,15 @@ Object {
       "aboutStep": "beslissing",
       "datePublished": "2019-07-03T15:05:52+02:00",
       "description": "Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.",
-      "documents": Array [],
+      "documents": Array [
+        Object {
+          "datePublished": "2019-07-03T15:05:52+02:00",
+          "id": "660000000000011",
+          "title": "Niet in behandeling nemen",
+          "type": "beslissing",
+          "url": "/api/focus/document?id=660000000000011&isBulk=false&isDms=false",
+        },
+      ],
       "id": "1-3-beslissing",
       "isChecked": false,
       "isLastActive": true,
@@ -585,7 +656,29 @@ Object {
       "aboutStep": "aanvraag",
       "datePublished": "2019-07-08T15:05:52+02:00",
       "description": "U hebt op 08 juli 2019 een Stadspas aangevraagd.",
-      "documents": Array [],
+      "documents": Array [
+        Object {
+          "datePublished": "2019-07-08T15:05:52+02:00",
+          "id": "4400000004",
+          "title": "Aanvraag Stadspas (papier)",
+          "type": "aanvraag",
+          "url": "/api/focus/document?id=4400000004&isBulk=true&isDms=false",
+        },
+        Object {
+          "datePublished": "2019-07-08T15:05:52+02:00",
+          "id": "4400000005",
+          "title": "Aanvraag Stadspas (balie)",
+          "type": "aanvraag",
+          "url": "/api/focus/document?id=4400000005&isBulk=true&isDms=false",
+        },
+        Object {
+          "datePublished": "2019-07-08T15:05:52+02:00",
+          "id": "4400000006",
+          "title": "Aanvraag Stadspas (digitaal)",
+          "type": "aanvraag",
+          "url": "/api/focus/document?id=4400000006&isBulk=true&isDms=false",
+        },
+      ],
       "id": "0-0-aanvraag",
       "isChecked": false,
       "isLastActive": true,
@@ -646,7 +739,29 @@ Object {
       "aboutStep": "aanvraag",
       "datePublished": "2019-07-07T15:05:52+02:00",
       "description": "U hebt op 07 juli 2019 een Stadspas aangevraagd.",
-      "documents": Array [],
+      "documents": Array [
+        Object {
+          "datePublished": "2019-07-07T15:05:52+02:00",
+          "id": "4400000004",
+          "title": "Aanvraag Stadspas (papier)",
+          "type": "aanvraag",
+          "url": "/api/focus/document?id=4400000004&isBulk=true&isDms=false",
+        },
+        Object {
+          "datePublished": "2019-07-07T15:05:52+02:00",
+          "id": "4400000005",
+          "title": "Aanvraag Stadspas (balie)",
+          "type": "aanvraag",
+          "url": "/api/focus/document?id=4400000005&isBulk=true&isDms=false",
+        },
+        Object {
+          "datePublished": "2019-07-07T15:05:52+02:00",
+          "id": "4400000006",
+          "title": "Aanvraag Stadspas (digitaal)",
+          "type": "aanvraag",
+          "url": "/api/focus/document?id=4400000006&isBulk=true&isDms=false",
+        },
+      ],
       "id": "0-1-aanvraag",
       "isChecked": true,
       "isLastActive": false,
@@ -731,7 +846,29 @@ Object {
       "aboutStep": "aanvraag",
       "datePublished": "2019-07-03T15:05:52+02:00",
       "description": "U hebt op 03 juli 2019 een Stadspas aangevraagd.",
-      "documents": Array [],
+      "documents": Array [
+        Object {
+          "datePublished": "2019-07-03T15:05:52+02:00",
+          "id": "4400000004",
+          "title": "Aanvraag Stadspas (papier)",
+          "type": "aanvraag",
+          "url": "/api/focus/document?id=4400000004&isBulk=true&isDms=false",
+        },
+        Object {
+          "datePublished": "2019-07-03T15:05:52+02:00",
+          "id": "4400000005",
+          "title": "Aanvraag Stadspas (balie)",
+          "type": "aanvraag",
+          "url": "/api/focus/document?id=4400000005&isBulk=true&isDms=false",
+        },
+        Object {
+          "datePublished": "2019-07-03T15:05:52+02:00",
+          "id": "4400000006",
+          "title": "Aanvraag Stadspas (digitaal)",
+          "type": "aanvraag",
+          "url": "/api/focus/document?id=4400000006&isBulk=true&isDms=false",
+        },
+      ],
       "id": "0-2-aanvraag",
       "isChecked": true,
       "isLastActive": false,
