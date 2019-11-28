@@ -790,13 +790,11 @@ function formatStepData(
     description: stepLabels
       ? parseLabelContent(stepLabels.description, sourceData)
       : '--NNB--',
-    documents: [],
-    // NOTE: Enable if Focus system can provide the actual documents via their Api.
-    // documents: stepData
-    //   ? stepData.document.map(document =>
-    //       formatFocusDocument(stepTitle, stepData.datum, document)
-    //     )
-    //   : [],
+    documents: stepData
+      ? stepData.document.map(document =>
+          formatFocusDocument(stepTitle, stepData.datum, document)
+        )
+      : [],
     status: stepLabels ? stepLabels.status : '',
     aboutStep: stepTitle,
     isLastActive: sourceData.isLastActive,
