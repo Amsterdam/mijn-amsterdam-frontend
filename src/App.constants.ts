@@ -176,6 +176,8 @@ export const ExternalUrls = {
   WPI_CONTACT: 'https://www.amsterdam.nl/werk-inkomen/contact/',
   WPI_REGELINGEN: 'https://www.amsterdam.nl/werk-inkomen/uitkeringen/',
   AFVAL: 'https://www.amsterdam.nl/afval/',
+  AFVAL_AFSPRAAK_MAKEN:
+    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Grofvuil.aspx',
 };
 
 // NOTE: Keep up-to-date with _colors.scss

@@ -140,7 +140,7 @@ export default () => {
           {!!item.ophaaldag && (
             <GarbagePanel>
               <Heading size="tiny">Ophaaldag</Heading>
-              <p>{item.ophaaldag}</p>
+              <p dangerouslySetInnerHTML={{ __html: item.ophaaldag }} />
             </GarbagePanel>
           )}
           {index === 0 && !item.ophaaldag && (

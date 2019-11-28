@@ -1,3 +1,4 @@
+import { ExternalUrls } from 'App.constants';
 import { getApiUrl } from 'helpers/App';
 import { Centroid, getDistance } from 'helpers/geo';
 import { useDataApi } from './api.hook';
@@ -110,7 +111,15 @@ export default function useGarbageApi({
               ophaaldag !== 'Op afspraak' && ophaaldag !== null
                 ? `${tijd_vanaf} tot\n${tijd_tot}`
                 : '',
-            ophaaldag: ophaaldag === 'Op afspraak' ? opmerking : ophaaldag,
+            ophaaldag:
+              ophaaldag === 'Op afspraak' && opmerking !== null
+                ? opmerking.replace(
+                    /(Maak een afspraak online)/gi,
+                    `Maak een afspraak <a rel="external noreferrer noopener" href=${
+                      ExternalUrls.AFVAL_AFSPRAAK_MAKEN
+                    }>online</a>`
+                  )
+                : ophaaldag,
           };
         })
       : [];
