@@ -58,8 +58,8 @@
   flex-direction: row;
   justify-content: center;
   margin-bottom: 2rem;
+}
 
-  button + button {
-    margin-left: 1rem;
-  }
+.OptInOutConfirmButton {
+  margin-left: 1rem;
 }
