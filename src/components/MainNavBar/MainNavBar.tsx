@@ -104,6 +104,7 @@ function getMenuItem(
 
     return (
       <MainNavSubmenu
+        id={item.id}
         key={item.id}
         title={item.title}
         isOpen={isOpen}
@@ -118,6 +119,7 @@ function getMenuItem(
               key={id}
               to={to}
               rel={rel}
+              data-chapter-id={id}
               onFocus={() => setSubMenuVisibility(item.id, true)}
             >
               {Icon && (
