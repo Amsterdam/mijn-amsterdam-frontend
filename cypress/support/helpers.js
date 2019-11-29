@@ -18,3 +18,10 @@ export function assertAtHome(headingString) {
 export function selectComponent(componentName) {
   return cy.get('[class*="' + componentName + '"]');
 }
+
+export function goToDashboard() {
+  it('Visit login url always redirects user to Dashboard page', () => {
+    cy.visit('/api/login');
+    assertAtHome('Actueel');
+  });
+}
