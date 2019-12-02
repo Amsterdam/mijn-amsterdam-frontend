@@ -10,8 +10,14 @@ const port = process.env.APP_PORT || 3000;
 const apiHost = process.env.MOCK_API_HOST || 'localhost';
 const apiPort = process.env.MOCK_API_PORT || 5000;
 
-// All urls that start with following paths are proxied
+// // All urls that start with following paths are proxied
 const proxiedPaths = ['/api', '/logout', '/atlas', '/mock-api'];
+const httpProxy = require('http-proxy');
+
+//
+// Http Server with proxyRequest Handler and Latency
+//
+const proxy = new httpProxy.createProxyServer();
 
 http
   .createServer(function(request, response) {
@@ -19,9 +25,11 @@ http
 
     if (!proxiedPaths.some(path => request.url.startsWith(path))) {
       let fileName = request.url;
+
       if (fileName.indexOf('.') === -1) {
         fileName = 'index.html';
       }
+
       const file = path.join(appPath, fileName);
       const stream = fs.createReadStream(file);
 
@@ -37,28 +45,17 @@ http
 
       stream.pipe(response);
     } else {
-      const path = request.url.startsWith('/mock-api')
+      const url = request.url.startsWith('/mock-api')
         ? request.url.replace(/(\/mock-api)/g, '/api')
         : request.url;
 
-      const request_options = {
-        host: apiHost,
-        port: apiPort,
-        path,
-        method: request.method,
-      };
+      request.url = url;
 
-      const proxy_request = http.request(request_options, function(
-        proxy_response
-      ) {
-        proxy_response.pipe(response);
-        response.writeHead(proxy_response.statusCode, proxy_response.headers);
+      proxy.on('error', error => {});
+
+      proxy.web(request, response, {
+        target: `http://${apiHost}:${apiPort}`,
       });
-      request.pipe(proxy_request);
     }
   })
-  .listen(port, () => {
-    console.log(
-      `Application server running on ${host}:${port} with ${proxiedPaths} proxied to ${apiHost}:${apiPort}`
-    );
-  });
+  .listen(port);
