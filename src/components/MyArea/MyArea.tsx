@@ -12,15 +12,18 @@ import Linkd from 'components/Button/Button';
 export function MyAreaHeader() {
   return (
     <div className={styles.Header}>
-      <Link to={AppRoutes.ROOT} aria-label="Terug naar home">
+      <Link
+        className={styles.LogoLink}
+        to={AppRoutes.ROOT}
+        title="Terug naar home"
+      >
         <Logo
-          aria-hidden="true"
           role="img"
-          aria-label="Amsterdam logo"
+          aria-label="Gemeente Amsterdam logo"
           className={styles.Logo}
         />
+        <h1 className={styles.Title}>Mijn buurt</h1>
       </Link>
-      <h1 className={styles.Title}>Mijn buurt</h1>
       <Linkd iconPosition="right" icon={CloseIcon} href={AppRoutes.ROOT}>
         Sluit kaart
       </Linkd>
