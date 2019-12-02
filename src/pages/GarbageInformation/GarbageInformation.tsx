@@ -127,9 +127,7 @@ export default () => {
         >
           {!!item.aanbiedwijze && (
             <GarbagePanel>
-              <Heading size="tiny">
-                {item.type === 'grofvuil' ? 'Opmerking' : 'Hoe'}
-              </Heading>
+              <Heading size="tiny">Hoe</Heading>
               <p>{item.aanbiedwijze}</p>
             </GarbagePanel>
           )}
@@ -142,10 +140,17 @@ export default () => {
           {!!item.ophaaldag && (
             <GarbagePanel>
               <Heading size="tiny">Ophaaldag</Heading>
-              <p dangerouslySetInnerHTML={{ __html: item.ophaaldag }} />
+              <p>{item.ophaaldag}</p>
+            </GarbagePanel>
+          )}
+          {!!item.opmerking && (
+            <GarbagePanel>
+              <Heading size="tiny">Opmerking</Heading>
+              <p dangerouslySetInnerHTML={{ __html: item.opmerking }} />
             </GarbagePanel>
           )}
           {index === 0 && !item.ophaaldag && (
+            /** Put the containers map within the expandable panel. */
             <div className={styles.GarbageContainerMap}>
               <MyAreaMap url={garbageContainersMapUrl} />
             </div>
@@ -158,7 +163,7 @@ export default () => {
           styles.InfoSection,
           styles.InfoSectionGarbagePoints
         )}
-        title="Grofvuil wegbrengen"
+        title="Afvalpunten"
         isCollapsed={isCollapsed('wegbrengen')}
         onToggleCollapsed={toggleCollapsed.bind(null, 'wegbrengen')}
       >

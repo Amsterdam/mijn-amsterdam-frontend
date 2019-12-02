@@ -134,6 +134,7 @@ interface GarbageMoment {
   type: 'grofvuil' | 'huisvuil';
   buitenZetten: string;
   ophaaldag: string;
+  opmerking: string;
 }
 
 interface GarbageInfoApiResponseFormatted {
@@ -197,6 +198,7 @@ export default function useGarbageApi({
               ophaaldag,
               opmerking,
               aanbiedwijze,
+              frequentie,
             },
           } = feature;
 
@@ -204,25 +206,28 @@ export default function useGarbageApi({
             title: titles[type] || type,
             stadsdeel: stadsdeel_naam,
             type,
-            aanbiedwijze:
-              aanbiedwijze || `Zet uw ${titles[type].toLowerCase()} op straat`,
+            aanbiedwijze,
             buitenZetten:
-              ophaaldag !== 'Op afspraak' && ophaaldag !== null
+              ophaaldag !== null
                 ? ophaaldag && tijd_vanaf && tijd_tot
                   ? capitalizeFirstLetter(
                       formatPickupDays(ophaaldag, tijd_vanaf, tijd_tot)
                     )
-                  : ophaaldag
+                  : ''
                 : '',
             ophaaldag:
-              ophaaldag === 'Op afspraak' && opmerking !== null
+              ophaaldag !== null
+                ? ophaaldag + (frequentie ? `, ${frequentie}` : '')
+                : /* fallback to*/ frequentie || '',
+            opmerking:
+              opmerking !== null
                 ? opmerking.replace(
-                    /(Maak een afspraak online)/gi,
-                    `Maak een afspraak <a rel="external noreferrer noopener" href=${
+                    /(online)/gi,
+                    `<a rel="external noreferrer noopener" href="${
                       ExternalUrls.AFVAL_AFSPRAAK_MAKEN
-                    }>online</a>`
+                    }">online</a>`
                   )
-                : ophaaldag || '',
+                : '',
           };
         })
       : [];
