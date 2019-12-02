@@ -16,10 +16,9 @@ describe('Navigate to Chapters', () => {
       'contain',
       'Toon persoonlijke tips'
     );
-    cy.get('[class*="MyTips_TipItem"]:first [class*="Heading_Heading"]').should(
-      'not.contain',
-      'PERSONAL'
-    );
+    cy.get(
+      '[class*="MyTips_TipItem__"]:first [class*="Heading_Heading"]'
+    ).should('not.contain', 'PERSONAL');
     selectComponent('MyTips_OptInOutConfirmButton').click();
     selectComponent('Modal_Modal').should('not.exist');
 
@@ -27,10 +26,9 @@ describe('Navigate to Chapters', () => {
       'contain',
       'Toon geen persoonlijke tips'
     );
-    cy.get('[class*="MyTips_TipItem"]:first [class*="Heading_Heading"]').should(
-      'contain',
-      'PERSONAL'
-    );
+    cy.get(
+      '[class*="MyTips_TipItem__"]:first [class*="Heading_Heading"]'
+    ).should('contain', 'PERSONAL');
     selectComponent('MyTips_OptIn').click();
     selectComponent('Modal_Modal').should('exist');
     selectComponent('MyTips_OptInOutConfirmButton').should(
@@ -39,9 +37,8 @@ describe('Navigate to Chapters', () => {
     );
     selectComponent('MyTips_OptInOutConfirmButton').click();
     selectComponent('Modal_Modal').should('not.exist');
-    cy.get('[class*="MyTips_TipItem"]:first [class*="Heading_Heading"]').should(
-      'not.contain',
-      'PERSONAL'
-    );
+    cy.get(
+      '[class*="MyTips_TipItem__"]:first [class*="Heading_Heading"]'
+    ).should('not.contain', 'PERSONAL');
   });
 });
