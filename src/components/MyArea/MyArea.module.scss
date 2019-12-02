@@ -44,26 +44,33 @@
   }
 }
 
+.LogoLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.Logo {
+  display: block;
+  height: 4.5rem;
+  width: 9.6rem;
+  margin-right: 0.8rem;
+
+  @include mq-phone() {
+    height: 3rem;
+    width: 6.6rem;
+    margin-right: 0;
+  }
+}
+
 .Header {
   display: flex;
   height: 5.5rem;
   padding-left: 1.8rem;
   padding-right: 1.8rem;
   align-items: center;
+  justify-content: space-between;
   background-color: $color-white;
-
-  .Logo {
-    display: block;
-    height: 4.5rem;
-    width: 9.6rem;
-    margin-right: 0.8rem;
-
-    @include mq-phone() {
-      height: 3rem;
-      width: 6.6rem;
-      margin-right: 0;
-    }
-  }
 
   @include mq-phone() {
     padding-left: 1rem;
