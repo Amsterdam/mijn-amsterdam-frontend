@@ -87,11 +87,9 @@ export default () => {
   }
 
   const garbageContainersMapUrl = centroid
-    ? `${MAP_URL}&center=${centroid[1]}%2C${centroid[0]}&zoom=15&marker=${
-        centroid[1]
-      }%2C${
+    ? `https://kaart.amsterdam.nl/afvalcontainers#17/${centroid[1]}/${
         centroid[0]
-      }&marker-icon=home&lagen=wlokca%3A1%7Cwlotxtl%3A1%7Cwlopls%3A1%7Cwlogls%3A1%7Cwloppr%3A1%7Cwlorst%3A1&legenda=false`
+      }/topo/9749,9750,9751,9752,9753,9754/9748/`
     : '';
 
   return (
