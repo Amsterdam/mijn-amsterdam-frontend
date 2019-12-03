@@ -51,6 +51,9 @@ describe('Navigate to Chapters', () => {
       it(
         'MainMenu: Should navigate to ' + assertNavigationForChapters[id].title,
         () => {
+          cy.get(
+            '[class*="MainNavBar_LinkContainer"] [data-submenu-id="MIJN_THEMAS"] > button'
+          ).trigger('mouseover');
           const chapterLink = cy.get(
             '[class*="MainNavBar_LinkContainer"] a[data-chapter-id=' + id + ']'
           );
