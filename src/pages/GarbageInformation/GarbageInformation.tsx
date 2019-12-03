@@ -32,7 +32,7 @@ function GarbagePointItem({ item }: { item: GarbagePoint }) {
   return (
     <GarbagePanel className={styles.AfvalPunten}>
       <Heading size="small">
-        {item.naam} &mdash; {item.stadsdeel}{' '}
+        {item.naam}{' '}
         {item.distance !== 0 && (
           <span className={styles.DistanceToHome}>+/-{item.distance}KM</span>
         )}
@@ -43,8 +43,12 @@ function GarbagePointItem({ item }: { item: GarbagePoint }) {
       <p>
         <a href={`tel:${item.telefoon}`}>{item.telefoon}</a>
       </p>
+      <Heading size="tiny">E-mail</Heading>
+      <p>
+        <a href={`mailto:${item.email}`}>{item.email}</a>
+      </p>
       <Heading size="tiny">Openingstijden</Heading>
-      <p>{item.openingstijden}</p>
+      <p className={styles.OpeningHours}>{item.openingstijden}</p>
     </GarbagePanel>
   );
 }
