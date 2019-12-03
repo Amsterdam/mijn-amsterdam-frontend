@@ -47,6 +47,8 @@
   p {
     @include GarbagePanel;
     margin-bottom: 2rem;
+    font-weight: bold;
+
     &:last-child {
       margin-bottom: 0;
     }
@@ -97,4 +99,8 @@
   @include select(SectionCollapsible_Panel) {
     border-top: 0;
   }
+}
+
+.OpeningHours {
+  white-space: pre-wrap;
 }

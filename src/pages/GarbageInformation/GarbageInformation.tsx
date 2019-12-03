@@ -32,7 +32,7 @@ function GarbagePointItem({ item }: { item: GarbagePoint }) {
   return (
     <GarbagePanel className={styles.AfvalPunten}>
       <Heading size="small">
-        {item.naam} &mdash; {item.stadsdeel}{' '}
+        {item.naam}{' '}
         {item.distance !== 0 && (
           <span className={styles.DistanceToHome}>+/-{item.distance}KM</span>
         )}
@@ -43,8 +43,12 @@ function GarbagePointItem({ item }: { item: GarbagePoint }) {
       <p>
         <a href={`tel:${item.telefoon}`}>{item.telefoon}</a>
       </p>
+      <Heading size="tiny">E-mail</Heading>
+      <p>
+        <a href={`mailto:${item.email}`}>{item.email}</a>
+      </p>
       <Heading size="tiny">Openingstijden</Heading>
-      <p>{item.openingstijden}</p>
+      <p className={styles.OpeningHours}>{item.openingstijden}</p>
     </GarbagePanel>
   );
 }
@@ -83,11 +87,9 @@ export default () => {
   }
 
   const garbageContainersMapUrl = centroid
-    ? `${MAP_URL}&center=${centroid[1]}%2C${centroid[0]}&zoom=15&marker=${
-        centroid[1]
-      }%2C${
+    ? `https://kaart.amsterdam.nl/afvalcontainers#17/${centroid[1]}/${
         centroid[0]
-      }&marker-icon=home&lagen=wlokca%3A1%7Cwlotxtl%3A1%7Cwlopls%3A1%7Cwlogls%3A1%7Cwloppr%3A1%7Cwlorst%3A1&legenda=false`
+      }/topo/9749,9750,9751,9752,9753,9754/9748/`
     : '';
 
   return (
@@ -127,9 +129,7 @@ export default () => {
         >
           {!!item.aanbiedwijze && (
             <GarbagePanel>
-              <Heading size="tiny">
-                {item.type === 'grofvuil' ? 'Opmerking' : 'Hoe'}
-              </Heading>
+              <Heading size="tiny">Hoe</Heading>
               <p>{item.aanbiedwijze}</p>
             </GarbagePanel>
           )}
@@ -142,10 +142,17 @@ export default () => {
           {!!item.ophaaldag && (
             <GarbagePanel>
               <Heading size="tiny">Ophaaldag</Heading>
-              <p dangerouslySetInnerHTML={{ __html: item.ophaaldag }} />
+              <p>{item.ophaaldag}</p>
+            </GarbagePanel>
+          )}
+          {!!item.opmerking && (
+            <GarbagePanel>
+              <Heading size="tiny">Opmerking</Heading>
+              <p dangerouslySetInnerHTML={{ __html: item.opmerking }} />
             </GarbagePanel>
           )}
           {index === 0 && !item.ophaaldag && (
+            /** Put the containers map within the expandable panel. */
             <div className={styles.GarbageContainerMap}>
               <MyAreaMap url={garbageContainersMapUrl} />
             </div>
@@ -158,7 +165,7 @@ export default () => {
           styles.InfoSection,
           styles.InfoSectionGarbagePoints
         )}
-        title="Grofvuil wegbrengen"
+        title="Afvalpunten"
         isCollapsed={isCollapsed('wegbrengen')}
         onToggleCollapsed={toggleCollapsed.bind(null, 'wegbrengen')}
       >
