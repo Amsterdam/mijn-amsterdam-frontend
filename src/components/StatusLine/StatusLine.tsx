@@ -6,7 +6,7 @@ import { Document } from '../DocumentList/DocumentList';
 import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
 import { defaultDateFormat } from 'helpers/App';
 import useRouter from 'use-react-router';
-import { useSessionStorage, useLocalStorage } from 'hooks/storage.hook';
+import { useSessionStorage } from 'hooks/storage.hook';
 import { trackEvent } from 'hooks/analytics.hook';
 import { ReactComponent as CaretLeft } from 'assets/icons/Chevron-Left.svg';
 
@@ -76,7 +76,7 @@ function StatusLineItem({
       ? altDocumentContent(item, stepNumber)
       : altDocumentContent;
   }, []);
-  const [isSafe] = useLocalStorage('showFocusDocuments', false);
+
   return (
     <li
       style={style ? style : {}}
@@ -103,7 +103,7 @@ function StatusLineItem({
               {altDocumentContentActual}
             </span>
           )}
-          {isSafe && !!item.documents && (
+          {!!item.documents && (
             <p>
               {item.documents.map(document => (
                 <DownloadLink key={document.id} item={document} />
