@@ -134,6 +134,7 @@ interface GarbageMoment {
   type: 'grofvuil' | 'huisvuil';
   buitenZetten: string;
   ophaaldag: string;
+  opmerking: string;
 }
 
 interface GarbageInfoApiResponseFormatted {
@@ -154,9 +155,9 @@ export interface GarbageApiState extends ApiState {
 
 export interface GarbagePoint {
   naam: string;
-  stadsdeel: string;
   adres: string;
   telefoon: string;
+  email: string;
   centroid: Centroid;
   distance?: number;
   openingstijden?: string;
@@ -197,6 +198,7 @@ export default function useGarbageApi({
               ophaaldag,
               opmerking,
               aanbiedwijze,
+              frequentie,
             },
           } = feature;
 
@@ -204,82 +206,86 @@ export default function useGarbageApi({
             title: titles[type] || type,
             stadsdeel: stadsdeel_naam,
             type,
-            aanbiedwijze:
-              aanbiedwijze || `Zet uw ${titles[type].toLowerCase()} op straat`,
+            aanbiedwijze,
             buitenZetten:
-              ophaaldag !== 'Op afspraak' && ophaaldag !== null
+              ophaaldag !== null
                 ? ophaaldag && tijd_vanaf && tijd_tot
                   ? capitalizeFirstLetter(
                       formatPickupDays(ophaaldag, tijd_vanaf, tijd_tot)
                     )
-                  : ophaaldag
+                  : ''
                 : '',
             ophaaldag:
-              ophaaldag === 'Op afspraak' && opmerking !== null
+              ophaaldag !== null
+                ? ophaaldag + (frequentie ? `, ${frequentie}` : '')
+                : /* fallback to*/ frequentie || '',
+            opmerking:
+              opmerking !== null
                 ? opmerking.replace(
-                    /(Maak een afspraak online)/gi,
-                    `Maak een afspraak <a rel="external noreferrer noopener" href=${
+                    /(online)/gi,
+                    `<a rel="external noreferrer noopener" href="${
                       ExternalUrls.AFVAL_AFSPRAAK_MAKEN
-                    }>online</a>`
+                    }">online</a>`
                   )
-                : ophaaldag || '',
+                : '',
           };
         })
       : [];
 
   const wegbrengen: GarbagePoint[] = [
     {
-      naam: 'Afvalpunt Rozenburglaan',
-      stadsdeel: 'Oost',
-      adres: 'Rozenburglaan 1\n1097 HK Amsterdam',
-      telefoon: '020 587 6114',
-      centroid: [4.937826595666199, 52.33884753701634] as Centroid,
-      openingstijden:
-        'Open van maandag tot en met zaterdag van 08.00 tot 17.00 uur',
-    },
-    {
       naam: 'Afvalpunt De Faas (Oost, alleen voor bewoners)',
-      stadsdeel: 'Oost',
-      adres: 'Faas Wilkesstraat 120\n1095 MD Amsterdam',
+      centroid: [4.97158187910041, 52.3710300144489] as Centroid,
+      adres: 'Faas Wilkesstraat 1201095 MD Amsterdam',
       telefoon: '020 5876145',
-      centroid: [4.9715818109598615, 52.371030012512854] as Centroid,
+      email: 'afvalpunten@aebamsterdam.nl',
       openingstijden:
-        'Open van maandag tot en met zaterdag van 08.00 tot 17.00 uur',
+        'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\r\n\r\nHet Afvalpunt op de Henk Sneevlietweg 22 is elke zondag van 10.00 uur tot 16.00 uur open.',
     },
     {
-      naam: 'Afvalpunt Struisgrasstraat',
-      stadsdeel: 'Noord',
-      adres: 'Struisgrasstraat 33a\n1032 KE Amsterdam',
-      telefoon: '020 587 6122',
-      centroid: [4.9082273, 52.3952357] as Centroid,
-      openingstijden:
-        'Open van maandag tot en met zaterdag van 08.00 tot 17.00 uur',
-    },
-    {
-      naam: 'Afvalpunt Seineweg',
-      stadsdeel: 'Nieuw-West',
-      adres: 'Seineweg 1\n1043 BE Amsterdam',
-      telefoon: '020 587 6144',
-      centroid: [4.820452174612768, 52.38620351506657] as Centroid,
-      openingstijden:
-        'Open van maandag tot en met zaterdag van 08.00 tot 17.00 uur',
-    },
-    {
-      naam: 'Afvalpunt Henk Sneevlietweg',
-      stadsdeel: 'Nieuw-West',
-      adres: 'Henk Sneevlietweg 22\n1066 VH Amsterdam',
+      naam: 'Afvalpunt Henk Sneevlietweg (Nieuw-West)',
+      centroid: [4.83347291303415, 52.3433575455427] as Centroid,
+      adres: 'Henk Sneevlietweg 22 1066 VH  Amsterdam',
       telefoon: '020 587 6126',
-      centroid: [4.8334728456417295, 52.34335754418036] as Centroid,
-      openingstijden: `Open van maandag tot en met zaterdag van 08.00 tot 17.00 uur\n\nElke zondag van 10.00 uur tot 16.00 uur open`,
+      email: 'afvalpunten@aebamsterdam.nl',
+      openingstijden:
+        'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\r\n\r\nHet Afvalpunt op de Henk Sneevlietweg 22 is elke zondag van 10.00 uur tot 16.00 uur open.',
     },
     {
-      naam: 'Afvalpunt Meerkerkdreef',
-      stadsdeel: 'Zuidoost',
-      adres: 'Meerkerkdreef 31\n1106 GZ Amsterdam',
+      naam: 'Afvalpunt Meerkerkdreef (Zuidoost)',
+      centroid: [4.97786715111811, 52.302520488967] as Centroid,
+      adres: 'Meerkerkdreef 31 1106 GZ  Amsterdam',
       telefoon: '020 587 6116',
-      centroid: [4.977867082426079, 52.302520487487] as Centroid,
+      email: 'afvalpunten@aebamsterdam.nl',
       openingstijden:
-        'Open van maandag tot en met zaterdag van 08.00 tot 17.00 uur',
+        'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\r\n\r\nHet Afvalpunt op de Henk Sneevlietweg 22 is elke zondag van 10.00 uur tot 16.00 uur open.',
+    },
+    {
+      naam: 'Afvalpunt Rozenburglaan (Oost)',
+      centroid: [4.93782666381194, 52.3388475386366] as Centroid,
+      adres: 'Rozenburglaan 1 1097 HK  Amsterdam',
+      telefoon: '020 587 6114',
+      email: 'afvalpunten@aebamsterdam.nl',
+      openingstijden:
+        'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\r\n\r\nHet Afvalpunt op de Henk Sneevlietweg 22 is elke zondag van 10.00 uur tot 16.00 uur open.',
+    },
+    {
+      naam: 'Afvalpunt Seineweg (Nieuw-West)',
+      centroid: [4.82017500674289, 52.386058385908] as Centroid,
+      adres: 'Seineweg 1 1043 BE  Amsterdam',
+      telefoon: '020 587 6144',
+      email: 'afvalpunten@aebamsterdam.nl',
+      openingstijden:
+        'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\r\n\r\nHet Afvalpunt op de Henk Sneevlietweg 22 is elke zondag van 10.00 uur tot 16.00 uur open.',
+    },
+    {
+      naam: 'Afvalpunt Struisgrasstraat (Noord)',
+      centroid: [4.90786592615004, 52.3957390236765] as Centroid,
+      adres: 'Struisgrasstraat 33a 1032 KE  Amsterdam',
+      telefoon: '020 587 6122',
+      email: 'afvalpunten@aebamsterdam.nl',
+      openingstijden:
+        'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\r\n\r\nHet Afvalpunt op de Henk Sneevlietweg 22 is elke zondag van 10.00 uur tot 16.00 uur open.',
     },
   ].map(item => {
     return {
