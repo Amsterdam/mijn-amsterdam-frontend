@@ -1000,11 +1000,18 @@ export function altDocumentContent(
   statusLineItem: StatusLineItem,
   stepNumber: number
 ) {
-  if (statusLineItem.status === 'Meer informatie nodig') {
-    if (statusLineItem.isRecent && !statusLineItem.isLastActive) {
-      return <b>U heeft deze brief per post ontvangen.</b>;
-    }
+  if (!!statusLineItem.documents.length) {
+    return '';
   }
+
+  if (
+    statusLineItem.status === 'Meer informatie nodig' &&
+    statusLineItem.isRecent &&
+    !statusLineItem.isLastActive
+  ) {
+    return <b>U heeft deze brief per post ontvangen.</b>;
+  }
+
   return ['Meer informatie nodig', 'Besluit'].includes(
     statusLineItem.status
   ) ? (
