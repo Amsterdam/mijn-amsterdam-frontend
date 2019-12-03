@@ -38,7 +38,7 @@ function GarbagePointItem({ item }: { item: GarbagePoint }) {
         )}
       </Heading>
       <Heading size="tiny">Adres</Heading>
-      <p>{item.adres}</p>
+      <p dangerouslySetInnerHTML={{ __html: item.adres }} />
       <Heading size="tiny">Telefoon</Heading>
       <p>
         <a href={`tel:${item.telefoon}`}>{item.telefoon}</a>
