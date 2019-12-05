@@ -16,12 +16,12 @@ export function defaultDateFormat(datestr: string | Date | number) {
   return dateFormat(datestr, DEFAULT_DATE_FORMAT);
 }
 
-export function formattedTimeFromSeconds(seconds: number) {
+export function formattedTimeFromSeconds(seconds: number, format = 'mm:ss') {
   const secs = seconds % 60;
   const mins = (seconds - secs) / 60;
   const time = new Date(0, 0, 0, 0, mins, secs);
 
-  return dateFormat(time, 'mm:ss');
+  return dateFormat(time, format);
 }
 
 export function isDateInPast(date: string | Date, dateNow: string | Date) {
