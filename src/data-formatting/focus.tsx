@@ -3,7 +3,7 @@ import { LinkProps } from 'App.types';
 import { addDays, differenceInCalendarDays, parseISO } from 'date-fns';
 import { defaultDateFormat } from 'helpers/App';
 import { MyNotification } from 'hooks/api/my-notifications-api.hook';
-import { Chapter, Chapters } from '../App.constants';
+import { Chapter, Chapters, FeatureToggle } from '../App.constants';
 import { Document as GenericDocument } from '../components/DocumentList/DocumentList';
 import Linkd from 'components/Button/Button';
 import React from 'react';
@@ -790,11 +790,12 @@ function formatStepData(
     description: stepLabels
       ? parseLabelContent(stepLabels.description, sourceData)
       : '--NNB--',
-    documents: stepData
-      ? stepData.document.map(document =>
-          formatFocusDocument(stepTitle, stepData.datum, document)
-        )
-      : [],
+    documents:
+      stepData && FeatureToggle.focusDocumentDownload
+        ? stepData.document.map(document =>
+            formatFocusDocument(stepTitle, stepData.datum, document)
+          )
+        : [],
     status: stepLabels ? stepLabels.status : '',
     aboutStep: stepTitle,
     isLastActive: sourceData.isLastActive,

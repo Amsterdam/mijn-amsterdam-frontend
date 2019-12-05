@@ -109,6 +109,7 @@ export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
 export const FeatureToggle = {
   myTipsoptInOutPersonalization: true,
   garbageInformationPage: !isProduction(),
+  focusDocumentDownload: !isProduction(),
 };
 
 export const errorMessageMap: ErrorMessageMap = {
