@@ -3,16 +3,17 @@ import { ReactComponent as AlertIcon } from 'assets/icons/Alert.svg';
 import { BrpResponseData } from 'data-formatting/brp';
 import { defaultDateFormat, getApiUrl } from 'helpers/App';
 import { useDataApi } from './api.hook';
-import { ApiState } from './api.types';
+import { AbortFunction, ApiState } from './api.types';
 import { MyNotification } from './my-notifications-api.hook';
 
 export interface BrpApiState extends ApiState {
   data: BrpResponseData & { notifications: MyNotification[] };
+  abort: AbortFunction;
 }
 
 export function useBrpApi(initialState = {}): BrpApiState {
   const options = { url: getApiUrl('BRP') };
-  const [api] = useDataApi(options, initialState);
+  const [api, , abort] = useDataApi(options, initialState);
   const { data, ...rest } = api;
   const brpData = data && data.persoon ? data : {};
 
@@ -52,7 +53,7 @@ export function useBrpApi(initialState = {}): BrpApiState {
     });
   }
 
-  return { ...rest, data: { ...brpData, notifications } };
+  return { ...rest, abort, data: { ...brpData, notifications } };
 }
 
 export function isMokum(BRP: BrpApiState) {

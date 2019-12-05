@@ -35,7 +35,7 @@ export default function useFocusApi(
 
   const { allItems, allNotifications, products } = useMemo(() => {
     return formatProductCollections(data.items);
-  }, [data.items.length]);
+  }, [data.items]);
 
   const recentCases = allItems.filter(item => item.isRecent);
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { renderHook, act } from 'react-hooks-testing-library';
-import { useDataApi, getDefaultState } from './api.hook';
 import MockAdapter from 'axios-mock-adapter';
+import { act, renderHook } from 'react-hooks-testing-library';
+import { getDefaultState, useDataApi } from './api.hook';
 
 const DUMMY_RESPONSE = { foo: 'bar' };
 const DUMMY_URL = 'http://test';
@@ -70,4 +70,6 @@ describe('Api hook', () => {
 
     expect(result.current[0].isError).toBe(true);
   });
+
+  it('should abort', () => {});
 });

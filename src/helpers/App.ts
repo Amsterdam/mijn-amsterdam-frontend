@@ -41,7 +41,7 @@ export function dateSort(sortKey: string, direction: 'asc' | 'desc' = 'asc') {
 
     if (s) {
       return -1;
-    } else if (c == d) {
+    } else if (c === d) {
       return 0;
     } else {
       return 1;

@@ -55,5 +55,5 @@ export default function useSessionApi(
       isDirty,
       refetch: () => refetch(requestOptions),
     };
-  }, [isDirty, validUntil]);
+  }, [isDirty, validUntil, isAuthenticated, isLoading, refetch, rest]);
 }

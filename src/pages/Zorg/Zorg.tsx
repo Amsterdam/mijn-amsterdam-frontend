@@ -6,7 +6,6 @@ import DataLinkTable from 'components/DataLinkTable/DataLinkTable';
 import { Chapters } from 'App.constants';
 import styles from './Zorg.module.scss';
 import Alert from 'components/Alert/Alert';
-import { useTabletScreen } from 'hooks/media.hook';
 import Linkd, { LinkdInline } from 'components/Button/Button';
 import { ExternalUrls, ChapterTitles } from 'App.constants';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
@@ -27,7 +26,6 @@ export default () => {
   const itemsActual = items.filter(item => item.isActual);
   const itemsPrevious = items.filter(item => !item.isActual);
   const hasActualItems = !!itemsActual.length;
-  const isTabletScreen = useTabletScreen();
 
   return (
     <OverviewPage>

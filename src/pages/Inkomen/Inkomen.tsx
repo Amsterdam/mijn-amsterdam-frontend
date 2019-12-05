@@ -7,7 +7,6 @@ import { Chapters, ChapterTitles } from 'App.constants';
 import styles from './Inkomen.module.scss';
 import { ExternalUrls } from 'App.constants';
 import Alert from 'components/Alert/Alert';
-import { useTabletScreen } from 'hooks/media.hook';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import Linkd from 'components/Button/Button';
 
@@ -32,7 +31,6 @@ export default () => {
   const itemsRequested = items.filter(item => !item.hasDecision);
   const itemsDecided = items.filter(item => item.hasDecision);
   const hasActiveRequests = !!itemsRequested.length;
-  const isTabletScreen = useTabletScreen();
 
   return (
     <OverviewPage className={styles.Inkomen}>

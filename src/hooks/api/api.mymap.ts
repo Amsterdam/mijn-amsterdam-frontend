@@ -64,7 +64,7 @@ export default function useMyMap(address?: string): MyMapApiState {
         });
       }
     }
-  }, [isLoading, isDefaultMapLocation]);
+  }, [isLoading, isDefaultMapLocation, isDirty, hasData, showLegenda, data]);
 
   // Show default address after 5 seconds
   useCounter({

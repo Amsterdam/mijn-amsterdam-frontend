@@ -181,7 +181,7 @@
       height: 3.2rem;
       margin-left: -0.55rem;
       top: 1.4rem;
-      background: $color-primary-darkblue url('assets/icons/Checkmark__white.svg')
+      background: $color-primary-darkblue url('/src/assets/icons/Checkmark__white.svg')
         no-repeat center;
       background-size: 0.9em 0.9em;
     }
@@ -208,7 +208,7 @@
 }
 
 .Checked .Panel:first-child:after {
-  background: $color-primary-darkblue url('assets/icons/Checkmark__white.svg')
+  background: $color-primary-darkblue url('/src/assets/icons/Checkmark__white.svg')
         no-repeat center;
   background-size: 0.9em 0.9em;
 }

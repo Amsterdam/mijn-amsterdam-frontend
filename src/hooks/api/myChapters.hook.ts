@@ -83,12 +83,14 @@ export default function useMyChapters(
       (GARBAGE.isPristine && isMokum(BRP) && !!MY_AREA.centroid);
     setItems({ items, isLoading });
   }, [
-    WMO.isLoading,
-    FOCUS.isLoading,
-    ERFPACHT.isLoading,
-    GARBAGE.isLoading,
+    BRP,
+    WMO,
+    FOCUS,
+    ERFPACHT,
+    GARBAGE,
     GARBAGE.isError,
-    isMokum(BRP),
+    MY_AREA.centroid,
+    apiStates,
   ]);
 
   return {

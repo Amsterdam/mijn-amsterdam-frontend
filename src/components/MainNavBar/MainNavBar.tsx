@@ -1,17 +1,16 @@
-import { AppRoutes, Colors, LOGOUT_URL, Chapters } from 'App.constants';
+import { AppRoutes, Colors, LOGOUT_URL } from 'App.constants';
 import { ComponentChildren } from 'App.types';
 import { AppContext, SessionContext } from 'AppState';
 import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
 import classnames from 'classnames';
 import FontEnlarger from 'components/FontEnlarger/FontEnlarger';
-import FocusTrap from 'focus-trap-react';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from 'components/MainNavSubmenu/MainNavSubmenu';
 import { getFullName } from 'data-formatting/brp';
 import { useDesktopScreen, useTabletScreen } from 'hooks/media.hook';
 import { trackItemPresentation } from 'hooks/analytics.hook';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useCallback } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import useRouter from 'use-react-router';
 
@@ -43,6 +42,7 @@ function SecondaryLinks() {
   const {
     BRP: {
       data: { persoon },
+      abort,
       isError,
     },
   } = useContext(AppContext);
@@ -59,6 +59,7 @@ function SecondaryLinks() {
   return (
     <div className={styles.secondaryLinks}>
       {isDesktopScreen && <FontEnlarger />}
+      <button onClick={abort}>abort</button>
       {!isError && (
         <Link
           to={AppRoutes.PROFILE}
@@ -185,16 +186,16 @@ export default function MainNavBar() {
     }
   }
 
-  function setSubMenuVisibility(
-    id?: string,
-    isSubmenuTrigger: boolean = false
-  ) {
-    if (id && activeSubmenuId !== id) {
-      activateSubmenu(id);
-    } else if (!isSubmenuTrigger && activeSubmenuId !== id) {
-      activateSubmenu('');
-    }
-  }
+  const setSubMenuVisibility = useCallback(
+    (id?: string, isSubmenuTrigger: boolean = false) => {
+      if (id && activeSubmenuId !== id) {
+        activateSubmenu(id);
+      } else if (!isSubmenuTrigger && activeSubmenuId !== id) {
+        activateSubmenu('');
+      }
+    },
+    [activeSubmenuId]
+  );
 
   // Bind click outside small screen menu to hide it
   useEffect(() => {
@@ -206,7 +207,7 @@ export default function MainNavBar() {
   useEffect(() => {
     toggleBurgerMenu(false);
     setSubMenuVisibility();
-  }, [history.location]);
+  }, [history.location, setSubMenuVisibility]);
 
   const config = {
     mass: 0.3,

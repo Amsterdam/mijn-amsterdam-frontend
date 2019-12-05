@@ -2,7 +2,7 @@ import { LOGIN_URL, ExternalUrls } from 'App.constants';
 import { ReactComponent as BetaLabel } from 'assets/images/beta-label.svg';
 import DigiDLogo from 'assets/images/digid-logo.png';
 import Heading from 'components/Heading/Heading';
-import Page, { TextPage, PageContent } from 'components/Page/Page';
+import { TextPage, PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -44,8 +44,8 @@ export default () => {
         </p>
         <p>
           Nog niet al uw informatie is via Mijn Amsterdam zichtbaar. We
-          ontwikkelen stap voor stap. Er komen steeds meer producten en
-          diensten bij.
+          ontwikkelen stap voor stap. Er komen steeds meer producten en diensten
+          bij.
         </p>
         <Heading size="mediumLarge" el="h2">
           Log in op uw persoonlijke pagina

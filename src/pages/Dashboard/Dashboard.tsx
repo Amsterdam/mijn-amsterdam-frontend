@@ -13,7 +13,6 @@ import React, { useContext } from 'react';
 import styles from './Dashboard.module.scss';
 import { Link } from 'react-router-dom';
 import { AppRoutes } from 'App.constants';
-import classnames from 'classnames';
 
 const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;

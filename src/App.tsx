@@ -12,7 +12,7 @@ import MyNotifications from 'pages/MyNotifications/MyNotifications';
 import Proclaimer from 'pages/Proclaimer/Proclaimer';
 import Zorg from 'pages/Zorg/Zorg';
 import ZorgDetail from 'pages/ZorgDetail/ZorgDetail';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import useRouter from 'use-react-router';
 import ErrorBoundary from 'react-error-boundary';
@@ -123,15 +123,10 @@ function AppLanding() {
 }
 
 export default function App() {
-  if (
+  useAnalytics(
     ['production', 'acceptance'].includes(`${process.env.REACT_APP_BUILD_ENV}`)
-  ) {
-    useAnalytics();
-
-    if (isProduction()) {
-      useScript('/js/usabilla.js');
-    }
-  }
+  );
+  useScript('/js/usabilla.js', false, true, !isProduction());
 
   const sendToSentry = (error: Error, componentStack: string) => {
     Sentry.captureException(error);

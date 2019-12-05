@@ -5,7 +5,7 @@ import { ComponentChildren } from 'App.types';
 import { formattedTimeFromSeconds } from 'helpers/App';
 import useActivityCounter from 'hooks/activityCounter.hook';
 import { CounterProps, useCounter } from 'hooks/timer.hook';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 
 import Modal from '../Modal/Modal';
@@ -104,24 +104,6 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
     nSettings.secondsSessionRenewRequestInterval * ONE_SECOND_MS
   );
 
-  // Renew the remote tma session whenever we detect user activity
-  useEffect(() => {
-    if (activityCount !== 0 && isOpen !== true) {
-      if (session.isDirty && session.isAuthenticated) {
-        resetAutoLogout();
-      }
-
-      session.refetch();
-    }
-  }, [activityCount]);
-
-  function resetAutoLogout() {
-    setContinueButtonVisibility(true);
-    setOpen(false);
-    reset();
-    resume();
-  }
-
   function showLoginScreen() {
     setContinueButtonVisibility(false);
     window.location.href = LOGOUT_URL;
@@ -139,12 +121,30 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
     document.title = count % 2 === 0 ? TITLE : originalTitle;
   };
 
+  const resetAutoLogout = useCallback(() => {
+    setContinueButtonVisibility(true);
+    setOpen(false);
+    reset();
+    resume();
+  }, [reset, resume]);
+
+  // Renew the remote tma session whenever we detect user activity
+  useEffect(() => {
+    if (activityCount !== 0 && isOpen !== true) {
+      if (session.isDirty && session.isAuthenticated) {
+        resetAutoLogout();
+      }
+
+      session.refetch();
+    }
+  }, [activityCount, isOpen, session, resetAutoLogout]);
+
   // This effect restores the original page title when the component is unmounted.
   useEffect(() => {
     return () => {
       document.title = originalTitle;
     };
-  }, []);
+  }, [originalTitle]);
 
   return (
     <Modal

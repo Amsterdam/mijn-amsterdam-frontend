@@ -1,15 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { throttle } from 'throttle-debounce';
 
+const defaultEvents = [
+  'mousemove',
+  'mousedown',
+  'resize',
+  'keydown',
+  'touchstart',
+  'wheel',
+];
+
 export default function useActivityCounter(throttleTimeoutMs: number = 30000) {
-  const defaultEvents = [
-    'mousemove',
-    'mousedown',
-    'resize',
-    'keydown',
-    'touchstart',
-    'wheel',
-  ];
   const state = useState(0);
   const [, setCount] = state;
 
@@ -26,7 +27,7 @@ export default function useActivityCounter(throttleTimeoutMs: number = 30000) {
         window.removeEventListener(eventName, stillActive);
       });
     };
-  }, []);
+  }, [stillActive]);
 
   return state;
 }

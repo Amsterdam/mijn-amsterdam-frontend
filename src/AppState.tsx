@@ -3,7 +3,7 @@ import useMyTipsApi from 'hooks/api/my-tips-api.hook';
 import useMyNotificationsApi from 'hooks/api/my-notifications-api.hook';
 import useSessionApi, { SessionApiState } from 'hooks/api/session.api.hook';
 import useMyChapters from 'hooks/api/myChapters.hook';
-import React, { createContext, useMemo, useEffect, useState } from 'react';
+import React, { createContext, useMemo, useEffect } from 'react';
 
 import { ComponentChildren } from './App.types';
 import useErfpachtApi, { ErfpachtApiState } from './hooks/api/api.erfpacht';
@@ -102,14 +102,14 @@ export function useAppState(value?: any) {
     if (isMokum(BRP) && BRP.data.adres && BRP.data.adres.straatnaam) {
       MY_AREA.refetch(getFullAddress(BRP.data.adres));
     }
-  }, [BRP.data.adres && BRP.data.adres.straatnaam]);
+  }, [BRP, MY_AREA]);
 
   // Fetch garbage information for address at lat,lon
   useEffect(() => {
     if (MY_AREA.centroid !== null && isMokum(BRP)) {
       GARBAGE.refetch({ centroid: MY_AREA.centroid });
     }
-  }, [MY_AREA.centroid]);
+  }, [MY_AREA.centroid, BRP, GARBAGE]);
 
   // Fetch tips when dependent sources are loaded
   // TODO: Exclude api responses that returned error
@@ -122,7 +122,7 @@ export function useAppState(value?: any) {
         BRP: BRP.data,
       });
     }
-  }, [...tipsDependencies, MY_TIPS.isOptIn]);
+  }, [tipsDependencies, WMO, FOCUS, ERFPACHT, BRP, MY_TIPS]);
 
   // NOTE: For now we can use this solution but we probably need some more finegrained memoization of the state as the app grows larger.
   return useMemo(() => {
@@ -141,17 +141,16 @@ export function useAppState(value?: any) {
       GARBAGE,
     };
   }, [
-    WMO.isLoading,
-    FOCUS.isLoading,
-    BRP.isLoading,
-    MY_NOTIFICATIONS.isLoading,
-    MY_CASES.isLoading,
-    MY_TIPS.isLoading,
-    ERFPACHT.isLoading,
-    MY_CHAPTERS.isLoading,
-    GARBAGE.isLoading,
-    MY_AREA.url,
-    MY_TIPS.isOptIn,
+    WMO,
+    FOCUS,
+    BRP,
+    MY_NOTIFICATIONS,
+    MY_CASES,
+    ERFPACHT,
+    MY_CHAPTERS,
+    GARBAGE,
+    MY_AREA,
+    MY_TIPS,
   ]);
 }
 

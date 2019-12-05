@@ -75,7 +75,7 @@ function StatusLineItem({
     return typeof altDocumentContent === 'function'
       ? altDocumentContent(item, stepNumber)
       : altDocumentContent;
-  }, []);
+  }, [altDocumentContent, item, stepNumber]);
 
   return (
     <li
