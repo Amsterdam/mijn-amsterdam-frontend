@@ -46,6 +46,7 @@ export default function MyTipsOptInOutModal({
             Nee bedankt
           </Button>
           <Button
+            className={styles.OptInOutConfirmButton}
             variant={isOptIn ? 'secondary-inverted' : 'secondary'}
             onClick={() => {
               if (isOptIn) {

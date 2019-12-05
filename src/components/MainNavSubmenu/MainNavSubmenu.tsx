@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react';
+import React, { MouseEvent, HTMLAttributes } from 'react';
 import styles from './MainNavSubmenu.module.scss';
 import classnames from 'classnames';
 import { NavLink } from 'react-router-dom';
@@ -7,7 +7,9 @@ import { ComponentChildren } from 'App.types';
 import { LinkProps } from 'App.types';
 import { trackLink } from 'hooks/analytics.hook';
 
-export interface MainNavSubmenuLinkProps extends Omit<LinkProps, 'title'> {
+export interface MainNavSubmenuLinkProps
+  extends Omit<LinkProps, 'title'>,
+    HTMLAttributes<HTMLAnchorElement> {
   children: ComponentChildren;
   onFocus?: () => void;
   onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
@@ -49,6 +51,7 @@ export function MainNavSubmenuLink({
 }
 
 export interface MainNavSubmenuProps {
+  id: string;
   title: string;
   isOpen?: boolean;
   children: ComponentChildren;
@@ -64,6 +67,7 @@ export default function MainNavSubmenu({
   children,
   onMouseLeave,
   onMouseEnter,
+  id,
   ...rest
 }: MainNavSubmenuProps) {
   const [debouncedLeave, cancelLeave] = useDebouncedCallback(() => {
@@ -74,7 +78,7 @@ export default function MainNavSubmenu({
   }, 200);
 
   return (
-    <span className={styles.MainNavSubmenu}>
+    <span className={styles.MainNavSubmenu} data-submenu-id={id}>
       <button
         className={classnames(
           styles.SubmenuButton,

@@ -15,6 +15,13 @@ export function assertAtHome(headingString) {
   assertAtPage(headingString, '/');
 }
 
-export function selectComponent(componentName) {
-  return cy.get('[class*="' + componentName + '"]');
+export function selectComponent(componentName, selectorAddition = '') {
+  return cy.get('[class*="' + componentName + '"]' + selectorAddition + '');
+}
+
+export function goToDashboard() {
+  it('Visit login url always redirects user to Dashboard page', () => {
+    cy.visit('/api/login');
+    assertAtHome('Actueel');
+  });
 }

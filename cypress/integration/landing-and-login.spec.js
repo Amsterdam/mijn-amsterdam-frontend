@@ -17,9 +17,7 @@ describe('Landing page and login', () => {
   });
 
   it('Clicking logout button sends us back to the landing page', () => {
-    selectComponent('MainNavBar_LogoutLink')
-      .should('exist')
-      .click();
+    cy.contains('Uitloggen').click();
     atHome();
   });
 });
