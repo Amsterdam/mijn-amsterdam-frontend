@@ -156,8 +156,8 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
       <div className={styles.AutoLogoutDialog}>
         <p>
           U bent langer dan{' '}
-          {formattedTimeFromSeconds(nSettings.secondsBeforeDialogShow)} minuten
-          niet actief geweest op Mijn Amsterdam.
+          {formattedTimeFromSeconds(nSettings.secondsBeforeDialogShow, 'm')}{' '}
+          minuten niet actief geweest op Mijn Amsterdam.
         </p>
         <p className={styles.TimerText}>
           <CountDownTimer
@@ -165,7 +165,9 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
             onMaxCount={showLoginScreen}
             onTick={onTick}
           />
-          Voor uw veiligheid wordt u mogelijk automatisch uitgelogd.
+          U wordt binnen{' '}
+          {formattedTimeFromSeconds(nSettings.secondsBeforeAutoLogout, 'm')}{' '}
+          minuten automatisch uitgelogd.
         </p>
         <p>Wilt u doorgaan of uitloggen?</p>
         <p className={ButtonStyles.ButtonGroup}>
