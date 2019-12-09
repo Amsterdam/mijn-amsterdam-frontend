@@ -30,7 +30,9 @@
     "not op_mini all"
   ],
   "eslintConfig": {
-    "extends": ["react-app"],
+    "extends": [
+      "react-app"
+    ],
     "plugins": [
       "prettier"
     ],
