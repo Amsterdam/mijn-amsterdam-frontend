@@ -123,10 +123,11 @@ function AppLanding() {
 }
 
 export default function App() {
-  useAnalytics(
-    ['production', 'acceptance'].includes(`${process.env.REACT_APP_BUILD_ENV}`)
+  const isAnalyticsEnabled = ['production', 'acceptance'].includes(
+    `${process.env.REACT_APP_BUILD_ENV}`
   );
-  useScript('/js/usabilla.js', false, true, !isProduction());
+  useAnalytics(isAnalyticsEnabled);
+  useScript('/js/usabilla.js', false, true, isProduction());
 
   const sendToSentry = (error: Error, componentStack: string) => {
     Sentry.captureException(error);
