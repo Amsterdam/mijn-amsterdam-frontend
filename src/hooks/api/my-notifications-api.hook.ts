@@ -3,6 +3,7 @@ import { LinkProps } from 'App.types';
 import { AppState } from 'AppState';
 import { dateSort } from 'helpers/App';
 import { useLocalStorage } from 'hooks/storage.hook';
+import { useMemo } from 'react';
 import { ApiState } from './api.types';
 
 export interface MyNotification {
@@ -52,31 +53,38 @@ export default ({
 }: Pick<AppState, 'FOCUS' | 'BRP'>): MyNotificationsApiState => {
   const [myNotificationsState] = useMyNotificationsState();
 
-  const items = [
-    // Static content welcome message
-    WelcomeNotification,
-    // Focus notification items
-    ...FOCUS.data.notifications,
-    // BRP Notifications
-    ...BRP.data.notifications,
-  ]
-    .map(notification => isUnread(notification, myNotificationsState))
-    .sort(dateSort('datePublished', 'desc'));
+  const items = useMemo(
+    () =>
+      [
+        // Static content welcome message
+        WelcomeNotification,
+        // Focus notification items
+        ...FOCUS.data.notifications,
+        // BRP Notifications
+        ...BRP.data.notifications,
+      ]
+        .map(notification => isUnread(notification, myNotificationsState))
+        .sort(dateSort('datePublished', 'desc')),
+    [FOCUS.data.notifications, BRP.data.notifications, myNotificationsState]
+  );
 
   const isLoading = BRP.isLoading || FOCUS.isLoading;
   const isError = BRP.isError || FOCUS.isError;
   const isDirty = BRP.isDirty && FOCUS.isDirty;
   const isPristine = BRP.isPristine && FOCUS.isPristine;
 
-  return {
-    isLoading,
-    isError,
-    isDirty,
-    isPristine,
-    errorMessage: '',
-    data: {
-      items,
-      total: items.length,
-    },
-  };
+  return useMemo(
+    () => ({
+      isLoading,
+      isError,
+      isDirty,
+      isPristine,
+      errorMessage: '',
+      data: {
+        items,
+        total: items.length,
+      },
+    }),
+    [isLoading, isError, isDirty, isPristine, items]
+  );
 };

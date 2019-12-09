@@ -7,7 +7,7 @@ export default function useScript(
   src: string,
   defer: boolean = false,
   async: boolean = true,
-  isDisabled: boolean = false
+  isEnabled: boolean = false
 ) {
   // Keeping track of script loaded and error state
   const [state, setState] = useState({
@@ -16,7 +16,7 @@ export default function useScript(
   });
 
   useEffect(() => {
-    if (isDisabled) {
+    if (!isEnabled) {
       return;
     }
     // If cachedScripts array already includes src that means another instance ...
@@ -67,7 +67,7 @@ export default function useScript(
         script.removeEventListener('error', onScriptError);
       };
     }
-  }, [src, isDisabled, defer, async]); // Only re-run effect if script src changes
+  }, [src, isEnabled, defer, async]); // Only re-run effect if script src changes
 
   return [state.loaded, state.error];
 }

@@ -51,16 +51,15 @@ function useWindowStorage(
   const getValueFromLocalStorage = useCallback(() => {
     try {
       return adapter.getItem(key);
-    } catch (e) {}
+    } catch (error) {
+      Sentry.captureException(error);
+    }
     return null;
   }, [adapter, key]);
 
   const saveValueToLocalStorage = useCallback(
     (key: string, value: string | null) => {
-      try {
-        return adapter.setItem(key, String(value));
-      } catch (e) {}
-      return null;
+      return adapter.setItem(key, String(value));
     },
     [adapter]
   );
@@ -91,8 +90,9 @@ function useWindowStorage(
     }
   }, [defaultValue, getValueFromLocalStorage, set]);
 
-  function listen(e: StorageEvent) {
+  function onStorageEvent(e: StorageEvent) {
     let storageAllowed = true;
+    // Check if we can handle the storage event
     try {
       localStorage.key(0);
       sessionStorage.key(0);
@@ -100,8 +100,10 @@ function useWindowStorage(
       storageAllowed = false;
     }
 
-    if (storageAllowed && e.storageArea === adapter && e.key === key) {
-      setValue(e.newValue);
+    if (storageAllowed) {
+      if (e.storageArea === adapter && e.key === key) {
+        setValue(e.newValue);
+      }
     }
   }
 
@@ -113,16 +115,15 @@ function useWindowStorage(
     adapter.removeItem(key);
   }
 
-  //initialize
   useEffect(() => {
     init();
   }, [init]);
 
   useEffect(() => {
     if (adapter === localStorage) {
-      window.addEventListener('storage', listen);
+      window.addEventListener('storage', onStorageEvent);
       return () => {
-        window.removeEventListener('storage', listen);
+        window.removeEventListener('storage', onStorageEvent);
       };
     }
   });
@@ -166,7 +167,10 @@ export function useLocalStorage<Value>(
   return useStorage(key, value, adapter);
 }
 
-export function useSessionStorage(key: string, value: any) {
+export function useSessionStorage<Value>(
+  key: string,
+  value: Value | null = null
+) {
   let adapter: MemoryAdapter | Storage = memoryHandler;
   try {
     adapter = sessionStorage;

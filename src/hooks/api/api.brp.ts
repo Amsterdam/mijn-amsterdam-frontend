@@ -2,6 +2,7 @@ import { AppRoutes } from 'App.constants';
 import { ReactComponent as AlertIcon } from 'assets/icons/Alert.svg';
 import { BrpResponseData } from 'data-formatting/brp';
 import { defaultDateFormat, getApiUrl } from 'helpers/App';
+import { useMemo } from 'react';
 import { useDataApi } from './api.hook';
 import { AbortFunction, ApiState } from './api.types';
 import { MyNotification } from './my-notifications-api.hook';
@@ -15,47 +16,56 @@ export function useBrpApi(initialState = {}): BrpApiState {
   const options = { url: getApiUrl('BRP') };
   const [api, , abort] = useDataApi(options, initialState);
   const { data, ...rest } = api;
-  const brpData = data && data.persoon ? data : {};
+  const inOnderzoek = data?.adres?.inOnderzoek || false;
+  const isOnbekendWaarheen = data?.persoon?.vertrokkenOnbekendWaarheen || false;
+  const dateLeft = data?.persoon?.datumVertrekUitNederland
+    ? defaultDateFormat(data.persoon.datumVertrekUitNederland)
+    : 'Onbekend';
 
-  const notifications: MyNotification[] = [];
+  const notifications = useMemo(() => {
+    const notifications: MyNotification[] = [];
 
-  if (brpData.adres && brpData.adres.inOnderzoek) {
-    notifications.push({
-      Icon: AlertIcon,
-      chapter: 'BURGERZAKEN',
-      datePublished: new Date().toISOString(),
-      id: 'brpAdresInOnderzoek',
-      title: 'Adres in onderzoek',
-      description:
-        'Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat.',
-      link: {
-        to: AppRoutes.PROFILE,
-        title: 'Meer informatie',
-      },
-    });
-  }
+    if (inOnderzoek) {
+      notifications.push({
+        Icon: AlertIcon,
+        chapter: 'BURGERZAKEN',
+        datePublished: new Date().toISOString(),
+        id: 'brpAdresInOnderzoek',
+        title: 'Adres in onderzoek',
+        description:
+          'Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat.',
+        link: {
+          to: AppRoutes.PROFILE,
+          title: 'Meer informatie',
+        },
+      });
+    }
 
-  if (brpData.persoon && brpData.persoon.vertrokkenOnbekendWaarheen) {
-    const dateLeft = defaultDateFormat(
-      brpData.persoon.datumVertrekUitNederland
-    );
-    notifications.push({
-      Icon: AlertIcon,
-      chapter: 'BURGERZAKEN',
-      datePublished: new Date().toISOString(),
-      id: 'brpVertrokkenOnbekendWaarheen',
-      title: 'Vertrokken - onbekend waarheen',
-      description: `U staat sinds ${dateLeft} in Basisregistratie Personen (BRP) geregistreerd als 'vertrokken onbekend waarheen'.`,
-      link: {
-        to: AppRoutes.PROFILE,
-        title: 'Meer informatie',
-      },
-    });
-  }
+    if (isOnbekendWaarheen) {
+      notifications.push({
+        Icon: AlertIcon,
+        chapter: 'BURGERZAKEN',
+        datePublished: new Date().toISOString(),
+        id: 'brpVertrokkenOnbekendWaarheen',
+        title: 'Vertrokken - onbekend waarheen',
+        description: `U staat sinds ${dateLeft} in Basisregistratie Personen (BRP) geregistreerd als 'vertrokken onbekend waarheen'.`,
+        link: {
+          to: AppRoutes.PROFILE,
+          title: 'Meer informatie',
+        },
+      });
+    }
 
-  return { ...rest, abort, data: { ...brpData, notifications } };
+    return notifications;
+  }, [inOnderzoek, isOnbekendWaarheen, dateLeft]);
+
+  const dataWithNotifications = useMemo(() => {
+    return { ...data, notifications };
+  }, [data, notifications]);
+
+  return { ...rest, abort, data: dataWithNotifications };
 }
 
 export function isMokum(BRP: BrpApiState) {
-  return BRP.data && BRP.data.persoon && BRP.data.persoon.mokum;
+  return !!BRP?.data?.persoon?.mokum;
 }

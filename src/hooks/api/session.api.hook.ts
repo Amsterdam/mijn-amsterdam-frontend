@@ -27,15 +27,12 @@ export type SessionApiState = Omit<ApiState, 'data'> & SessionState;
 export default function useSessionApi(
   initialData = INITIAL_SESSION_STATE
 ): SessionApiState {
-  const [
-    {
-      data: { isAuthenticated, validUntil },
-      isLoading,
-      isDirty,
-      ...rest
-    },
-    refetch,
-  ] = useDataApi(requestOptions, initialData);
+  const [{ data, isLoading, isDirty, ...rest }, refetch] = useDataApi(
+    requestOptions,
+    initialData
+  );
+
+  const { isAuthenticated, validUntil } = data;
 
   return useMemo(() => {
     const validityInSeconds = Math.max(
@@ -55,5 +52,6 @@ export default function useSessionApi(
       isDirty,
       refetch: () => refetch(requestOptions),
     };
-  }, [isDirty, validUntil, isAuthenticated, isLoading, refetch, rest]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [validUntil, isLoading]);
 }
