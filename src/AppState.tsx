@@ -2,8 +2,7 @@ import { BrpApiState, useBrpApi, isMokum } from 'hooks/api/api.brp';
 import useMyTipsApi from 'hooks/api/my-tips-api.hook';
 import useMyNotificationsApi from 'hooks/api/my-notifications-api.hook';
 import useSessionApi, { SessionApiState } from 'hooks/api/session.api.hook';
-import useMyChapters from 'hooks/api/myChapters.hook';
-import React, { createContext, useMemo, useEffect } from 'react';
+import React, { createContext, useEffect } from 'react';
 
 import { ComponentChildren } from './App.types';
 import useErfpachtApi, { ErfpachtApiState } from './hooks/api/api.erfpacht';
@@ -11,12 +10,13 @@ import useFocusApi, { FocusApiState } from './hooks/api/api.focus';
 import useWmoApi, { WmoApiState } from './hooks/api/api.wmo';
 import { MyTipsApiState } from './hooks/api/my-tips-api.hook';
 import { MyNotificationsApiState } from './hooks/api/my-notifications-api.hook';
-import { MyChaptersApiState } from './hooks/api/myChapters.hook';
+import { MyChaptersApiState } from './helpers/myChapters';
 import useMyMap from './hooks/api/api.mymap';
 import { getFullAddress } from 'data-formatting/brp';
 import { getApiConfigValue } from 'helpers/App';
 import { GarbageApiState } from './hooks/api/api.garbage';
 import useGarbageApi from './hooks/api/api.garbage';
+import getMyChapters from './helpers/myChapters';
 
 type MyCasesApiState = FocusApiState;
 
@@ -80,7 +80,7 @@ export function useAppState(value?: any) {
   const ERFPACHT = useErfpachtApi();
   const MY_AREA = useMyMap();
   const GARBAGE = useGarbageApi({ centroid: MY_AREA.centroid });
-  const MY_CHAPTERS = useMyChapters({
+  const MY_CHAPTERS = getMyChapters({
     WMO,
     FOCUS,
     ERFPACHT,
@@ -97,19 +97,25 @@ export function useAppState(value?: any) {
     BRP.isDirty,
   ];
 
-  // Fetch lat/lon for address
+  const address = BRP?.data?.adres ? getFullAddress(BRP.data.adres) : '';
+  const mokum = isMokum(BRP);
+  const refetchMyArea = MY_AREA.refetch;
+  const refetchGarbage = GARBAGE.refetch;
+  const centroid = MY_AREA.centroid;
+
+  // Fetch lat/lon for addresss
   useEffect(() => {
-    if (isMokum(BRP) && BRP.data.adres && BRP.data.adres.straatnaam) {
-      MY_AREA.refetch(getFullAddress(BRP.data.adres));
+    if (mokum && address) {
+      refetchMyArea(address);
     }
-  }, [BRP, MY_AREA]);
+  }, [address, mokum, refetchMyArea]);
 
   // Fetch garbage information for address at lat,lon
   useEffect(() => {
-    if (MY_AREA.centroid !== null && isMokum(BRP)) {
-      GARBAGE.refetch({ centroid: MY_AREA.centroid });
+    if (centroid !== null && mokum) {
+      refetchGarbage({ centroid });
     }
-  }, [MY_AREA.centroid, BRP, GARBAGE]);
+  }, [mokum, centroid, refetchGarbage]);
 
   // Fetch tips when dependent sources are loaded
   // TODO: Exclude api responses that returned error
@@ -122,36 +128,24 @@ export function useAppState(value?: any) {
         BRP: BRP.data,
       });
     }
-  }, [tipsDependencies, WMO, FOCUS, ERFPACHT, BRP, MY_TIPS]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [...tipsDependencies, MY_TIPS.isOptIn]);
 
   // NOTE: For now we can use this solution but we probably need some more finegrained memoization of the state as the app grows larger.
-  return useMemo(() => {
-    return {
-      BRP,
-      // NOTE: If needed we can postpone immediate fetching of below data and start fetching in the component
-      // by calling the refetch method implemented in the api hooks.
-      MY_NOTIFICATIONS,
-      MY_CASES,
-      MY_TIPS,
-      WMO,
-      FOCUS,
-      MY_CHAPTERS,
-      ERFPACHT,
-      MY_AREA,
-      GARBAGE,
-    };
-  }, [
-    WMO,
-    FOCUS,
+  return {
     BRP,
+    // NOTE: If needed we can postpone immediate fetching of below data and start fetching in the component
+    // by calling the refetch method implemented in the api hooks.
     MY_NOTIFICATIONS,
     MY_CASES,
-    ERFPACHT,
-    MY_CHAPTERS,
-    GARBAGE,
-    MY_AREA,
     MY_TIPS,
-  ]);
+    WMO,
+    FOCUS,
+    MY_CHAPTERS,
+    ERFPACHT,
+    MY_AREA,
+    GARBAGE,
+  };
 }
 
 export default ({ children, value }: AppStateProps) => {

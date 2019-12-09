@@ -3,7 +3,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import { Colors, LOGOUT_URL } from 'App.constants';
 import { ComponentChildren } from 'App.types';
 import { formattedTimeFromSeconds } from 'helpers/App';
-import useActivityCounter from 'hooks/activityCounter.hook';
+import { useActivityThrottle } from 'hooks/useThrottledFn.hook';
 import { CounterProps, useCounter } from 'hooks/timer.hook';
 import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
@@ -100,9 +100,8 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   const [isOpen, setOpen] = useState(false);
   const [originalTitle] = useState(document.title);
   const [continueButtonIsVisible, setContinueButtonVisibility] = useState(true);
-  const [activityCount] = useActivityCounter(
-    nSettings.secondsSessionRenewRequestInterval * ONE_SECOND_MS
-  );
+
+  const { isDirty, refetch, isAuthenticated } = session;
 
   function showLoginScreen() {
     setContinueButtonVisibility(false);
@@ -111,7 +110,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
 
   function continueUsingApp() {
     // Refetching the session will renew the session for another {nSettings.secondsBeforeDialogShow + AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS} seconds.
-    session.refetch();
+    refetch();
     resetAutoLogout();
     document.title = originalTitle;
   }
@@ -128,23 +127,25 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
     resume();
   }, [reset, resume]);
 
-  // Renew the remote tma session whenever we detect user activity
-  useEffect(() => {
-    if (activityCount !== 0 && isOpen !== true) {
-      if (session.isDirty && session.isAuthenticated) {
+  const resetOrRefetch = useCallback(() => {
+    if (isOpen !== true) {
+      if (isDirty && isAuthenticated) {
         resetAutoLogout();
       }
 
-      session.refetch();
+      refetch();
     }
-  }, [activityCount, isOpen, session, resetAutoLogout]);
+  }, [refetch, isOpen, isDirty, isAuthenticated, resetAutoLogout]);
+
+  useActivityThrottle(resetOrRefetch, 5 * ONE_SECOND_MS);
 
   // This effect restores the original page title when the component is unmounted.
   useEffect(() => {
     return () => {
       document.title = originalTitle;
     };
-  }, [originalTitle]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Modal
