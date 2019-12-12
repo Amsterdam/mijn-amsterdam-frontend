@@ -29,6 +29,7 @@ import ApplicationError from 'components/ApplicationError/ApplicationError';
 import useScript from 'hooks/useScript';
 import { isProduction } from './helpers/App';
 import GarbageInformation from 'pages/GarbageInformation/GarbageInformation';
+import { isAnalyticsEnabled, isSentryEnabled } from './env';
 
 function AppNotAuthenticated() {
   return (
@@ -123,14 +124,11 @@ function AppLanding() {
 }
 
 export default function App() {
-  const isAnalyticsEnabled = ['production', 'acceptance'].includes(
-    `${process.env.REACT_APP_BUILD_ENV}`
-  );
   useAnalytics(isAnalyticsEnabled);
   useScript('/js/usabilla.js', false, true, isProduction());
 
   const sendToSentry = (error: Error, componentStack: string) => {
-    Sentry.captureException(error);
+    isSentryEnabled && Sentry.captureException(error);
   };
 
   return (
