@@ -4,17 +4,16 @@ import { BrpResponseData } from 'data-formatting/brp';
 import { defaultDateFormat, getApiUrl } from 'helpers/App';
 import { useMemo } from 'react';
 import { useDataApi } from './api.hook';
-import { AbortFunction, ApiState } from './api.types';
+import { ApiState } from './api.types';
 import { MyNotification } from './my-notifications-api.hook';
 
 export interface BrpApiState extends ApiState {
   data: BrpResponseData & { notifications: MyNotification[] };
-  abort: AbortFunction;
 }
 
 export function useBrpApi(initialState = {}): BrpApiState {
   const options = { url: getApiUrl('BRP') };
-  const [api, , abort] = useDataApi(options, initialState);
+  const [api] = useDataApi(options, initialState);
   const { data, ...rest } = api;
   const inOnderzoek = data?.adres?.inOnderzoek || false;
   const isOnbekendWaarheen = data?.persoon?.vertrokkenOnbekendWaarheen || false;
@@ -63,7 +62,7 @@ export function useBrpApi(initialState = {}): BrpApiState {
     return { ...data, notifications };
   }, [data, notifications]);
 
-  return { ...rest, abort, data: dataWithNotifications };
+  return { ...rest, data: dataWithNotifications };
 }
 
 export function isMokum(BRP: BrpApiState) {

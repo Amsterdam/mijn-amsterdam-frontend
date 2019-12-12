@@ -46,7 +46,6 @@ function SecondaryLinks() {
   const {
     BRP: {
       data: { persoon },
-      abort,
       isError,
     },
   } = useContext(AppContext);
@@ -63,7 +62,6 @@ function SecondaryLinks() {
   return (
     <div className={styles.secondaryLinks}>
       {isDesktopScreen && <FontEnlarger />}
-      <button onClick={abort}>abort</button>
       {!isError && (
         <Link
           to={AppRoutes.PROFILE}

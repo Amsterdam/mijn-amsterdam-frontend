@@ -3,7 +3,7 @@ import { capitalizeFirstLetter, getApiUrl } from 'helpers/App';
 import { Centroid, getDistance } from 'helpers/geo';
 import { useCallback, useMemo } from 'react';
 import { useDataApi } from './api.hook';
-import { AbortFunction, ApiState, RefetchFunction } from './api.types';
+import { ApiState, RefetchFunction } from './api.types';
 
 // Reverse engineered from sourcecode at https://www.amsterdam.nl/afval/afvalwijzer/?adres=Dam%201
 
@@ -148,7 +148,6 @@ export interface RawGarbageApiState extends ApiState {
 export interface GarbageApiState extends ApiState {
   data: GarbageInfoApiResponseFormatted;
   refetch: (requestData: GarbageApiHookProps) => void;
-  abort: AbortFunction;
 }
 
 export interface GarbagePoint {
@@ -175,11 +174,7 @@ export default function useGarbageApi({
 }: {
   centroid: Centroid | null;
 }): GarbageApiState {
-  const [api, refetch, abort]: [
-    RawGarbageApiState,
-    RefetchFunction,
-    AbortFunction
-  ] = useDataApi({
+  const [api, refetch]: [RawGarbageApiState, RefetchFunction] = useDataApi({
     postpone: true,
     url: '',
   });
@@ -315,6 +310,5 @@ export default function useGarbageApi({
         : [],
     },
     refetch: refetchCallback,
-    abort,
   };
 }
