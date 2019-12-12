@@ -137,7 +137,10 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
     }
   }, [refetch, isOpen, isDirty, isAuthenticated, resetAutoLogout]);
 
-  useActivityThrottle(resetOrRefetch, 5 * ONE_SECOND_MS);
+  useActivityThrottle(
+    resetOrRefetch,
+    SESSION_RENEW_INTERVAL_SECONDS * ONE_SECOND_MS
+  );
 
   // This effect restores the original page title when the component is unmounted.
   useEffect(() => {

@@ -32,19 +32,21 @@ export function useThrottledFn(fn: () => void, throttleTimeoutMs = 5000) {
   const callbackRef = useRef<any>(null);
   const throttledRef = useRef<any>(null);
 
+  useEffect(() => {
+    callbackRef.current = fn;
+  }, [fn]);
+
   const throttledCallback = (throttledRef.current = useMemo(() => {
-    return throttle(
-      throttleTimeoutMs,
-      () => callbackRef.current && callbackRef.current()
-    );
+    return throttle(throttleTimeoutMs, () => {
+      callbackRef.current && callbackRef.current();
+    });
   }, [throttleTimeoutMs]));
 
   useEffect(() => {
-    callbackRef.current = fn;
     return () => {
       throttledRef.current && throttledRef.current.cancel();
     };
-  }, [fn]);
+  }, []);
 
   return throttledCallback;
 }
