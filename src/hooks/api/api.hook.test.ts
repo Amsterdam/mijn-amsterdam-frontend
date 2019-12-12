@@ -70,6 +70,4 @@ describe('Api hook', () => {
 
     expect(result.current[0].isError).toBe(true);
   });
-
-  it('should abort', () => {});
 });
