@@ -113,16 +113,16 @@ export default () => {
           <p>{item.aanbiedwijze}</p>
         </GarbagePanel>
       )}
-      {!!item.ophaaldag && (
-        <GarbagePanel>
-          <Heading size="tiny">Ophaaldag</Heading>
-          <p>{item.ophaaldag}</p>
-        </GarbagePanel>
-      )}
       {!!item.buitenZetten && (
         <GarbagePanel>
           <Heading size="tiny">Buiten zetten</Heading>
           <p>{item.buitenZetten}</p>
+        </GarbagePanel>
+      )}
+      {!!item.ophaaldag && (
+        <GarbagePanel>
+          <Heading size="tiny">Ophaaldag</Heading>
+          <p>{item.ophaaldag}</p>
         </GarbagePanel>
       )}
       {!!item.opmerking && (
@@ -133,24 +133,6 @@ export default () => {
       )}
     </SectionCollapsible>
   );
-
-  const mapCollapsible = () => {
-    return (
-      <SectionCollapsible
-        className={classnames(
-          styles.InfoSection,
-          styles.InfoSection__fullWidth
-        )}
-        title="Afvalcontainers in de buurt"
-        isCollapsed={isCollapsed('garbageContainersOnMap')}
-        onToggleCollapsed={toggleCollapsed.bind(null, 'garbageContainersOnMap')}
-      >
-        <div className={styles.GarbageContainerMap}>
-          <MyAreaMap url={garbageContainersMapUrl} />
-        </div>
-      </SectionCollapsible>
-    );
-  };
 
   const [restafval, grofvuil] = ophalen;
 
@@ -187,7 +169,19 @@ export default () => {
           isCollapsed('restafval')
         )}
 
-      {mapCollapsible()}
+      <SectionCollapsible
+        className={classnames(
+          styles.InfoSection,
+          styles.InfoSection__fullWidth
+        )}
+        title="Afvalcontainers in de buurt"
+        isCollapsed={isCollapsed('garbageContainersOnMap')}
+        onToggleCollapsed={toggleCollapsed.bind(null, 'garbageContainersOnMap')}
+      >
+        <div className={styles.GarbageContainerMap}>
+          <MyAreaMap url={garbageContainersMapUrl} />
+        </div>
+      </SectionCollapsible>
 
       <SectionCollapsible
         className={classnames(
@@ -215,6 +209,20 @@ export default () => {
               : 'Verberg overige afvalpunten'}
           </Linkd>
         </div>
+      </SectionCollapsible>
+      <SectionCollapsible
+        className={classnames(
+          styles.InfoSection,
+          styles.InfoSectionOtherGarbagePoints
+        )}
+        isCollapsed={
+          isCollapsed('wegbrengen') || isCollapsed('otherGarbagePoints')
+        }
+        onToggleCollapsed={toggleCollapsed.bind(null, 'otherGarbagePoints')}
+      >
+        {wegbrengen.slice(1).map(item => (
+          <GarbagePointItem key={item.naam} item={item} />
+        ))}
       </SectionCollapsible>
     </DetailPage>
   );
