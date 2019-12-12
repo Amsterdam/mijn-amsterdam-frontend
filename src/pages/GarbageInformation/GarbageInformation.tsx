@@ -15,7 +15,9 @@ import { MAP_URL } from 'hooks/api/api.mymap';
 import { MyAreaMap } from 'components/MyArea/MyArea';
 import Panel from 'components/Panel/Panel';
 import { useSessionStorage } from '../../hooks/storage.hook';
-import { Button } from '../../components/Button/Button';
+import { Button, LinkdInline } from '../../components/Button/Button';
+import GarbageInformation from 'pages/GarbageInformation/GarbageInformation';
+import { GarbageMoment } from '../../hooks/api/api.garbage';
 
 interface PanelProps {
   children: ReactNode;
@@ -87,10 +89,52 @@ export default () => {
   }
 
   const garbageContainersMapUrl = centroid
-    ? `https://kaart.amsterdam.nl/afvalcontainers#17/${centroid[1]}/${
-        centroid[0]
-      }/topo/9749,9750,9751,9752,9753,9754/9748/`
+    ? `https://kaart.amsterdam.nl/afvalcontainers#17/${centroid[1]}/${centroid[0]}/topo/9749,9750,9751,9752,9753,9754/9748/`
     : '';
+
+  const garbagePointCollapisble = (
+    id: string,
+    item: GarbageMoment,
+    isCollapsed: boolean
+  ) => (
+    <SectionCollapsible
+      key={item.title}
+      className={styles.InfoSection}
+      isLoading={isLoading}
+      isCollapsed={isCollapsed}
+      onToggleCollapsed={toggleCollapsed.bind(null, id)}
+      title={item.title}
+      hasItems={!!ophalen.length}
+      noItemsMessage="Informatie over afval in uw buurt kan niet worden getoond"
+    >
+      {!!item.aanbiedwijze && (
+        <GarbagePanel>
+          <Heading size="tiny">Hoe</Heading>
+          <p>{item.aanbiedwijze}</p>
+        </GarbagePanel>
+      )}
+      {!!item.buitenZetten && (
+        <GarbagePanel>
+          <Heading size="tiny">Buiten zetten</Heading>
+          <p>{item.buitenZetten}</p>
+        </GarbagePanel>
+      )}
+      {!!item.ophaaldag && (
+        <GarbagePanel>
+          <Heading size="tiny">Ophaaldag</Heading>
+          <p>{item.ophaaldag}</p>
+        </GarbagePanel>
+      )}
+      {!!item.opmerking && (
+        <GarbagePanel>
+          <Heading size="tiny">Opmerking</Heading>
+          <p dangerouslySetInnerHTML={{ __html: item.opmerking }} />
+        </GarbagePanel>
+      )}
+    </SectionCollapsible>
+  );
+
+  const [restafval, grofvuil] = ophalen;
 
   return (
     <DetailPage className={styles.GarbageInformation}>
@@ -108,7 +152,6 @@ export default () => {
           </Linkd>
         </p>
       </PageContent>
-
       {!!BRP.data.adres && (
         <GarbagePanel className={styles.AddressPanel}>
           <Heading size="tiny">Uw adres</Heading>
@@ -116,49 +159,29 @@ export default () => {
         </GarbagePanel>
       )}
 
-      {ophalen.map((item, index) => (
-        <SectionCollapsible
-          key={item.title}
-          className={styles.InfoSection}
-          isLoading={isLoading}
-          isCollapsed={isCollapsed('ophalen' + index)}
-          onToggleCollapsed={toggleCollapsed.bind(null, 'ophalen' + index)}
-          title={item.title}
-          hasItems={!!ophalen.length}
-          noItemsMessage="Informatie over afval in uw buurt kan niet worden getoond"
-        >
-          {!!item.aanbiedwijze && (
-            <GarbagePanel>
-              <Heading size="tiny">Hoe</Heading>
-              <p>{item.aanbiedwijze}</p>
-            </GarbagePanel>
-          )}
-          {!!item.buitenZetten && (
-            <GarbagePanel>
-              <Heading size="tiny">Buiten zetten</Heading>
-              <p>{item.buitenZetten}</p>
-            </GarbagePanel>
-          )}
-          {!!item.ophaaldag && (
-            <GarbagePanel>
-              <Heading size="tiny">Ophaaldag</Heading>
-              <p>{item.ophaaldag}</p>
-            </GarbagePanel>
-          )}
-          {!!item.opmerking && (
-            <GarbagePanel>
-              <Heading size="tiny">Opmerking</Heading>
-              <p dangerouslySetInnerHTML={{ __html: item.opmerking }} />
-            </GarbagePanel>
-          )}
-          {index === 0 && !item.ophaaldag && (
-            /** Put the containers map within the expandable panel. */
-            <div className={styles.GarbageContainerMap}>
-              <MyAreaMap url={garbageContainersMapUrl} />
-            </div>
-          )}
-        </SectionCollapsible>
-      ))}
+      {!!grofvuil &&
+        garbagePointCollapisble('grofvuil', grofvuil, isCollapsed('grofvuil'))}
+
+      {!!restafval &&
+        garbagePointCollapisble(
+          'restafval',
+          restafval,
+          isCollapsed('restafval')
+        )}
+
+      <SectionCollapsible
+        className={classnames(
+          styles.InfoSection,
+          styles.InfoSection__fullWidth
+        )}
+        title="Afvalcontainers in de buurt"
+        isCollapsed={isCollapsed('garbageContainersOnMap')}
+        onToggleCollapsed={toggleCollapsed.bind(null, 'garbageContainersOnMap')}
+      >
+        <div className={styles.GarbageContainerMap}>
+          <MyAreaMap url={garbageContainersMapUrl} />
+        </div>
+      </SectionCollapsible>
 
       <SectionCollapsible
         className={classnames(
@@ -171,16 +194,20 @@ export default () => {
       >
         <GarbagePointItem item={wegbrengen[0]} />
         <div className={styles.ToggleOtherGarbagePointsButton}>
-          <Button
+          <Linkd
             onClick={() => {
               toggleCollapsed('otherGarbagePoints');
             }}
-            variant="secondary-inverted"
+            className={
+              !isCollapsed('otherGarbagePoints')
+                ? styles.otherGarbagePointsExpanded
+                : ''
+            }
           >
             {isCollapsed('otherGarbagePoints')
               ? 'Toon overige afvalpunten'
               : 'Verberg overige afvalpunten'}
-          </Button>
+          </Linkd>
         </div>
       </SectionCollapsible>
       <SectionCollapsible
@@ -197,21 +224,6 @@ export default () => {
           <GarbagePointItem key={item.naam} item={item} />
         ))}
       </SectionCollapsible>
-      {ophalen.length && !!ophalen[0].ophaaldag && (
-        <SectionCollapsible
-          className={styles.InfoSection}
-          title="Afvalcontainers in de buurt"
-          isCollapsed={isCollapsed('garbageContainersOnMap')}
-          onToggleCollapsed={toggleCollapsed.bind(
-            null,
-            'garbageContainersOnMap'
-          )}
-        >
-          <div className={styles.GarbageContainerMap}>
-            <MyAreaMap url={garbageContainersMapUrl} />
-          </div>
-        </SectionCollapsible>
-      )}
     </DetailPage>
   );
 };

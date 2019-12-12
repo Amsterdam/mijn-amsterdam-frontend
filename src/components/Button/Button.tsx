@@ -21,7 +21,7 @@ export interface LinkdProps
   extends CustomButtonProps,
     AnchorHTMLAttributes<HTMLAnchorElement> {
   external?: boolean;
-  href: string;
+  href?: string;
 }
 
 export interface ButtonProps
@@ -145,7 +145,7 @@ export default function Linkd({
   ...otherProps
 }: LinkdProps) {
   const AnchorElement = 'a';
-  const LinkElement: PolymorphicType = external ? AnchorElement : Link;
+  const LinkElement: PolymorphicType = external || !href ? AnchorElement : Link;
 
   const relProp = {
     ...(LinkElement === Link ? {} : { rel: 'external noopener noreferrer' }),
@@ -157,7 +157,7 @@ export default function Linkd({
 
   let clickHandler = onClick;
 
-  if (external && !clickHandler) {
+  if (!!href && external && !clickHandler) {
     clickHandler = () => trackLink(href);
   }
 
