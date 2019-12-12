@@ -10,7 +10,7 @@ const sentryDSN = process.env.REACT_APP_SENTRY_DSN;
 if (
   sentryDSN &&
   process.env.REACT_APP_BUILD_ENV &&
-  ['development', 'test'].includes(process.env.REACT_APP_BUILD_ENV)
+  !['development', 'test'].includes(process.env.REACT_APP_BUILD_ENV)
 ) {
   Sentry.init({
     dsn: sentryDSN,
