@@ -23,16 +23,13 @@ function parseText(text: string, data: Record<string, any> = {}) {
 }
 
 function parsePickupDays(subject: string) {
-  return weekdays.reduce(
-    function(t, a: string) {
-      return (
-        new RegExp(a).test(subject.toLowerCase()) &&
-          ((subject = subject.replace(a, '')), t.push(a)),
-        t
-      );
-    },
-    [] as string[]
-  );
+  return weekdays.reduce(function(t, a: string) {
+    return (
+      new RegExp(a).test(subject.toLowerCase()) &&
+        ((subject = subject.replace(a, '')), t.push(a)),
+      t
+    );
+  }, [] as string[]);
 }
 
 function getPreviousDay(day: string) {
@@ -127,7 +124,7 @@ interface GarbageInfoApiResponse {
   };
 }
 
-interface GarbageMoment {
+export interface GarbageMoment {
   title: string;
   aanbiedwijze: string;
   stadsdeel: Stadsdeel;
@@ -223,9 +220,7 @@ export default function useGarbageApi({
               opmerking !== null
                 ? opmerking.replace(
                     /(online)/gi,
-                    `<a rel="external noreferrer noopener" href="${
-                      ExternalUrls.AFVAL_AFSPRAAK_MAKEN
-                    }">online</a>`
+                    `<a rel="external noreferrer noopener" href="${ExternalUrls.AFVAL_AFSPRAAK_MAKEN}">online</a>`
                   )
                 : '',
           };
