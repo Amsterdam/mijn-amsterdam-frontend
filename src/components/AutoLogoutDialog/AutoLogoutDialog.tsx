@@ -89,6 +89,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   const session = useContext(SessionContext);
   // Will open the dialog if maxCount is reached.
   const nSettings = { ...DefaultSettings, ...settings };
+
   const { resume, reset } = useCounter({
     maxCount:
       nSettings.secondsBeforeDialogShow - nSettings.secondsBeforeAutoLogout, // Gives user T time to cancel the automatic logout
@@ -139,7 +140,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
 
   useActivityThrottle(
     resetOrRefetch,
-    SESSION_RENEW_INTERVAL_SECONDS * ONE_SECOND_MS
+    nSettings.secondsSessionRenewRequestInterval * ONE_SECOND_MS
   );
 
   // This effect restores the original page title when the component is unmounted.
