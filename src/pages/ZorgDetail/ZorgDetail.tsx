@@ -57,6 +57,7 @@ export default () => {
         <StatusLine
           items={WmoItem.process}
           trackCategory="Zorg en ondersteuning / Voorziening"
+          id={id}
           altDocumentContent={(statusLineItem, stepNumber) => {
             return !statusLineItem.documents.length && stepNumber === 1 ? (
               <p>

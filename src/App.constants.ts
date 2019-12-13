@@ -179,6 +179,9 @@ export const ExternalUrls = {
   AFVAL: 'https://www.amsterdam.nl/afval/',
   AFVAL_AFSPRAAK_MAKEN:
     'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Grofvuil.aspx',
+  AMSTERDAM_COMPLAINTS_FROM:
+    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/scKlachtenformulier.aspx/fKlachtenformulier',
+  AMSTERDAM_PRIVACY_PAGE: 'https://www.amsterdam.nl/privacy',
 };
 
 // NOTE: Keep up-to-date with _colors.scss

@@ -1,5 +1,5 @@
 import { AppRoutes, Colors } from 'App.constants';
-import classnames from 'classnames';
+import classNames from 'classnames';
 import Linkd from 'components/Button/Button';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import Heading from 'components/Heading/Heading';
@@ -50,21 +50,19 @@ export default function MyNotifications({
     history.push(to);
   }
 
-  useSessionCallbackOnceDebounced(
-    trackCategory,
-    () =>
-      trackItemPresentation(trackCategory, 'Aantal meldingen', items.length),
+  useSessionCallbackOnceDebounced(trackCategory, () =>
+    trackItemPresentation(trackCategory, 'Aantal meldingen', items.length)
   );
 
   return (
     <div
       {...otherProps}
-      className={classnames(styles.MyNotifications, styles.isLoading)}
+      className={classNames(styles.MyNotifications, styles.isLoading)}
     >
       <ul>
         {isLoading && (
           <li
-            className={classnames(
+            className={classNames(
               styles.MyNotificationItem,
               styles.FakeContent
             )}
@@ -77,7 +75,7 @@ export default function MyNotifications({
             return (
               <li
                 key={item.id}
-                className={classnames(
+                className={classNames(
                   styles.MyNotificationItem,
                   item.isUnread && styles.isUnread
                 )}

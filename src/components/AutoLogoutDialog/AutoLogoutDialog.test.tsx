@@ -62,15 +62,23 @@ describe('AutoLogoutDialog', () => {
   });
 
   it('resets the autologout counter every x seconds whenever user activity is detected', () => {
+    const rf = refetch;
+
     map.mousemove();
+
     jest.advanceTimersByTime(
       ONE_SECOND_IN_MS * settings.secondsSessionRenewRequestInterval!
     );
     expect(refetch).toHaveBeenCalled();
+    expect(refetch).toBe(rf);
+
     map.mousemove();
     jest.advanceTimersByTime(
       ONE_SECOND_IN_MS * settings.secondsSessionRenewRequestInterval!
     );
+
+    expect(refetch).toBe(rf);
+
     expect(refetch).toHaveBeenCalledTimes(2);
   });
 

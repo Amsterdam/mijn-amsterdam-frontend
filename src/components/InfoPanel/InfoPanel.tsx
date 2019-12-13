@@ -6,7 +6,6 @@ import { Unshaped } from 'App.types';
 import { entries } from 'helpers/App';
 import classnames from 'classnames';
 import slug from 'slug';
-import { trackLink } from 'hooks/analytics.hook';
 
 export interface ActionLink {
   title: string;

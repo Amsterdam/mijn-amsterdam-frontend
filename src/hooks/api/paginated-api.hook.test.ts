@@ -1,7 +1,7 @@
+import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import usePaginatedApi from 'hooks/api/paginated-api.hook';
-import { renderHook } from 'react-hooks-testing-library';
 
 const DUMMY_RESPONSE_1 = {
   items: ['a', 'b'],

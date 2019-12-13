@@ -38,7 +38,7 @@ function TutorialItem({ el }: { el: any }) {
     if (ref.current !== null) {
       setItemPos((ref.current as any).getBoundingClientRect());
     }
-  }, [ref.current, headingRef.current]);
+  }, [ref, headingRef]);
 
   const itemWidth = (itemPos as any).width;
   const headingWidth = (headingPos as any).width + pos.left;

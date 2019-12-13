@@ -1,4 +1,4 @@
-import React, { MouseEvent, HTMLAttributes } from 'react';
+import React, { MouseEvent, HTMLAttributes, useState, useEffect } from 'react';
 import styles from './MainNavSubmenu.module.scss';
 import classnames from 'classnames';
 import { NavLink } from 'react-router-dom';
@@ -6,13 +6,12 @@ import { useDebouncedCallback } from 'use-debounce';
 import { ComponentChildren } from 'App.types';
 import { LinkProps } from 'App.types';
 import { trackLink } from 'hooks/analytics.hook';
+import useRouter from 'use-react-router';
 
 export interface MainNavSubmenuLinkProps
   extends Omit<LinkProps, 'title'>,
     HTMLAttributes<HTMLAnchorElement> {
   children: ComponentChildren;
-  onFocus?: () => void;
-  onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
   className?: string;
 }
 
@@ -53,47 +52,56 @@ export function MainNavSubmenuLink({
 export interface MainNavSubmenuProps {
   id: string;
   title: string;
-  isOpen?: boolean;
   children: ComponentChildren;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
-  onFocus: () => void;
-  onClick: (event: any) => void;
 }
 
 export default function MainNavSubmenu({
   title,
-  isOpen,
   children,
-  onMouseLeave,
-  onMouseEnter,
   id,
-  ...rest
 }: MainNavSubmenuProps) {
+  const [isOpen, setMenuIsOpen] = useState(false);
+
   const [debouncedLeave, cancelLeave] = useDebouncedCallback(() => {
-    onMouseLeave();
-  }, 200);
+    setMenuIsOpen(false);
+  }, 100);
+
   const [debouncedEnter, cancelEnter] = useDebouncedCallback(() => {
-    onMouseEnter();
-  }, 200);
+    setMenuIsOpen(true);
+  }, 100);
+
+  const onEnter = () => {
+    cancelLeave();
+    debouncedEnter();
+  };
+
+  const onLeave = () => {
+    cancelEnter();
+    debouncedLeave();
+  };
+
+  const { history } = useRouter();
+  // Hides small screen menu on route change
+  useEffect(() => {
+    cancelEnter();
+    setMenuIsOpen(false);
+  }, [history.location, cancelEnter]);
 
   return (
-    <span className={styles.MainNavSubmenu} data-submenu-id={id}>
+    <span
+      className={styles.MainNavSubmenu}
+      data-submenu-id={id}
+      onMouseEnter={onEnter}
+      onFocus={onEnter}
+      onMouseLeave={onLeave}
+      onBlur={onLeave}
+    >
       <button
         className={classnames(
           styles.SubmenuButton,
           isOpen && styles.SubmenuButtonOpen
         )}
-        onMouseLeave={() => {
-          cancelEnter();
-          debouncedLeave();
-        }}
-        onMouseEnter={() => {
-          cancelLeave();
-          debouncedEnter();
-        }}
         aria-expanded={isOpen}
-        {...rest}
       >
         <span>{title}</span>
       </button>
@@ -103,8 +111,6 @@ export default function MainNavSubmenu({
           styles.SubmenuPanel,
           isOpen && styles.SubmenuPanelOpen
         )}
-        onMouseEnter={() => cancelLeave()}
-        onMouseLeave={() => debouncedLeave()}
       >
         <div className={styles.SubmenuItems}>{children}</div>
       </div>

@@ -31,12 +31,6 @@ export type RequestStatus =
 type Decision = 'Toekenning' | 'Afwijzing' | 'Buiten Behandeling';
 type DecisionFormatted = 'toekenning' | 'afwijzing' | 'buitenbehandeling';
 
-const decisions: Record<DecisionFormatted, DecisionFormatted> = {
-  toekenning: 'toekenning',
-  afwijzing: 'afwijzing',
-  buitenbehandeling: 'buitenbehandeling',
-};
-
 function getDecision(decision: Decision): DecisionFormatted {
   return decision.toLocaleLowerCase().replace(/\s/gi, '') as DecisionFormatted;
 }
@@ -198,9 +192,7 @@ export const Labels: LabelData = {
       notification: {
         title: data => `${data.productTitle}: Wij hebben uw aanvraag ontvangen`,
         description: data =>
-          `Wij hebben uw aanvraag voor een bijstandsuitkering ontvangen op ${
-            data.dateStart
-          }.`,
+          `Wij hebben uw aanvraag voor een bijstandsuitkering ontvangen op ${data.dateStart}.`,
       },
       title: data => data.productTitle,
       status: 'Aanvraag',
@@ -222,9 +214,7 @@ export const Labels: LabelData = {
       notification: {
         title: data => `${data.productTitle}: Wij behandelen uw aanvraag`,
         description: data =>
-          `Wij hebben uw aanvraag voor een bijstandsuitkering in behandeling genomen op ${
-            data.datePublished
-          }.`,
+          `Wij hebben uw aanvraag voor een bijstandsuitkering in behandeling genomen op ${data.datePublished}.`,
       },
       title: data => data.productTitle,
       status: 'In behandeling',
@@ -284,9 +274,7 @@ export const Labels: LabelData = {
         notification: {
           title: data => `${data.productTitle}: Uw aanvraag is afgewezen`,
           description: data =>
-            `U heeft geen recht op een bijstandsuitkering (besluit: ${
-              data.datePublished
-            }).`,
+            `U heeft geen recht op een bijstandsuitkering (besluit: ${data.datePublished}).`,
         },
         title: data => data.productTitle,
         status: 'Besluit',
@@ -297,9 +285,7 @@ export const Labels: LabelData = {
         notification: {
           title: data => `${data.productTitle}: Uw aanvraag is toegekend`,
           description: data =>
-            `U heeft recht op een bijstandsuitkering (besluit: ${
-              data.datePublished
-            }).`,
+            `U heeft recht op een bijstandsuitkering (besluit: ${data.datePublished}).`,
         },
         title: data => data.productTitle,
         status: 'Besluit',
@@ -325,9 +311,7 @@ export const Labels: LabelData = {
           title: data =>
             `${data.productTitle}: Uw aanvraag is buiten behandeling gesteld`,
           description: data =>
-            `Uw aanvraag is buiten behandeling gesteld (besluit: ${
-              data.datePublished
-            }).`,
+            `Uw aanvraag is buiten behandeling gesteld (besluit: ${data.datePublished}).`,
         },
         title: data => data.productTitle,
         status: 'Besluit',
@@ -342,24 +326,18 @@ export const Labels: LabelData = {
       notification: {
         title: data => `${data.productTitle}: Wij hebben uw aanvraag ontvangen`,
         description: data =>
-          `Wij hebben uw aanvraag voor bijzondere bijstand ontvangen op ${
-            data.dateStart
-          }.`,
+          `Wij hebben uw aanvraag voor bijzondere bijstand ontvangen op ${data.dateStart}.`,
       },
       title: data => data.productTitle,
       status: 'Aanvraag',
       description: data =>
-        `U hebt op ${
-          data.dateStart
-        } een bijzondere bijstandsuitkering aangevraagd.`,
+        `U hebt op ${data.dateStart} een bijzondere bijstandsuitkering aangevraagd.`,
     },
     inBehandeling: {
       notification: {
         title: data => `${data.productTitle}: Wij behandelen uw aanvraag`,
         description: data =>
-          `Wij hebben uw aanvraag voor bijzondere bijstand in behandeling genomen op ${
-            data.datePublished
-          }.`,
+          `Wij hebben uw aanvraag voor bijzondere bijstand in behandeling genomen op ${data.datePublished}.`,
       },
       title: data => `${data.productTitle} in behandeling`,
       status: 'In behandeling',
@@ -400,9 +378,7 @@ export const Labels: LabelData = {
         notification: {
           title: data => `${data.productTitle}: Uw aanvraag is afgewezen`,
           description: data =>
-            `U heeft geen recht op bijzondere bijstand (besluit: ${
-              data.datePublished
-            }).`,
+            `U heeft geen recht op bijzondere bijstand (besluit: ${data.datePublished}).`,
         },
         title: data => data.productTitle,
         status: 'Besluit',
@@ -413,9 +389,7 @@ export const Labels: LabelData = {
         notification: {
           title: data => `${data.productTitle}: Uw aanvraag is toegekend`,
           description: data =>
-            `U heeft recht op bijzondere bijstand (besluit: ${
-              data.datePublished
-            }).`,
+            `U heeft recht op bijzondere bijstand (besluit: ${data.datePublished}).`,
         },
         title: data => data.productTitle,
         status: 'Besluit',
@@ -427,9 +401,7 @@ export const Labels: LabelData = {
           title: data =>
             `${data.productTitle}: Uw aanvraag is buiten behandeling gesteld`,
           description: data =>
-            `Uw aanvraag is buiten behandeling gesteld (besluit: ${
-              data.datePublished
-            }).`,
+            `Uw aanvraag is buiten behandeling gesteld (besluit: ${data.datePublished}).`,
         },
         title: data => data.productTitle,
         status: 'Besluit',
@@ -444,9 +416,7 @@ export const Labels: LabelData = {
       notification: {
         title: data => `${data.productTitle}: Wij hebben uw aanvraag ontvangen`,
         description: data =>
-          `Wij hebben uw aanvraag voor een Stadspas ontvangen op ${
-            data.dateStart
-          }.`,
+          `Wij hebben uw aanvraag voor een Stadspas ontvangen op ${data.dateStart}.`,
       },
       title: data => data.productTitle,
       status: 'Aanvraag',
@@ -457,9 +427,7 @@ export const Labels: LabelData = {
       notification: {
         title: data => `${data.productTitle}: Wij behandelen uw aanvraag`,
         description: data =>
-          `Wij hebben uw aanvraag voor een Stadspas in behandeling genomen op ${
-            data.datePublished
-          }.`,
+          `Wij hebben uw aanvraag voor een Stadspas in behandeling genomen op ${data.datePublished}.`,
       },
       title: data => data.productTitle,
       status: 'In behandeling',
@@ -510,9 +478,7 @@ export const Labels: LabelData = {
         notification: {
           title: data => `${data.productTitle}: Uw aanvraag is afgewezen`,
           description: data =>
-            `U heeft geen recht op een Stadspas (besluit: ${
-              data.datePublished
-            }).`,
+            `U heeft geen recht op een Stadspas (besluit: ${data.datePublished}).`,
         },
         title: data => data.productTitle,
         status: 'Besluit',
@@ -545,9 +511,7 @@ export const Labels: LabelData = {
           title: data =>
             `${data.productTitle}: Uw aanvraag is buiten behandeling gesteld`,
           description: data =>
-            `Uw aanvraag is buiten behandeling gesteld (besluit: ${
-              data.datePublished
-            }).`,
+            `Uw aanvraag is buiten behandeling gesteld (besluit: ${data.datePublished}).`,
         },
         title: data => data.productTitle,
         status: 'Besluit',

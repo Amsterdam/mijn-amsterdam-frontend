@@ -15,7 +15,7 @@ export function useDomElementDimensions(ref: any) {
       const { width, height } = ref.current.getBoundingClientRect();
       setDimensions({ width, height });
     }
-  }, [ref.current]);
+  }, [ref]);
 
   return dimensions;
 }

@@ -5,7 +5,6 @@ import { ExternalUrls, AppRoutes } from 'App.constants';
 import { LinkList } from './MainFooter.constants';
 import classnames from 'classnames';
 import { useDesktopScreen } from 'hooks/media.hook';
-import { trackLink } from 'hooks/analytics.hook';
 import { LinkdInline } from '../Button/Button';
 
 interface PanelState {

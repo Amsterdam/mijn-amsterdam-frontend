@@ -3,9 +3,9 @@ import 'react-circular-progressbar/dist/styles.css';
 import { Colors, LOGOUT_URL } from 'App.constants';
 import { ComponentChildren } from 'App.types';
 import { formattedTimeFromSeconds } from 'helpers/App';
-import useActivityCounter from 'hooks/activityCounter.hook';
+import { useActivityThrottle } from 'hooks/useThrottledFn.hook';
 import { CounterProps, useCounter } from 'hooks/timer.hook';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 
 import Modal from '../Modal/Modal';
@@ -89,6 +89,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   const session = useContext(SessionContext);
   // Will open the dialog if maxCount is reached.
   const nSettings = { ...DefaultSettings, ...settings };
+
   const { resume, reset } = useCounter({
     maxCount:
       nSettings.secondsBeforeDialogShow - nSettings.secondsBeforeAutoLogout, // Gives user T time to cancel the automatic logout
@@ -100,27 +101,8 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   const [isOpen, setOpen] = useState(false);
   const [originalTitle] = useState(document.title);
   const [continueButtonIsVisible, setContinueButtonVisibility] = useState(true);
-  const [activityCount] = useActivityCounter(
-    nSettings.secondsSessionRenewRequestInterval * ONE_SECOND_MS
-  );
 
-  // Renew the remote tma session whenever we detect user activity
-  useEffect(() => {
-    if (activityCount !== 0 && isOpen !== true) {
-      if (session.isDirty && session.isAuthenticated) {
-        resetAutoLogout();
-      }
-
-      session.refetch();
-    }
-  }, [activityCount]);
-
-  function resetAutoLogout() {
-    setContinueButtonVisibility(true);
-    setOpen(false);
-    reset();
-    resume();
-  }
+  const { isDirty, refetch, isAuthenticated } = session;
 
   function showLoginScreen() {
     setContinueButtonVisibility(false);
@@ -129,7 +111,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
 
   function continueUsingApp() {
     // Refetching the session will renew the session for another {nSettings.secondsBeforeDialogShow + AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS} seconds.
-    session.refetch();
+    refetch();
     resetAutoLogout();
     document.title = originalTitle;
   }
@@ -139,11 +121,34 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
     document.title = count % 2 === 0 ? TITLE : originalTitle;
   };
 
+  const resetAutoLogout = useCallback(() => {
+    setContinueButtonVisibility(true);
+    setOpen(false);
+    reset();
+    resume();
+  }, [reset, resume]);
+
+  const resetOrRefetch = useCallback(() => {
+    if (isOpen !== true) {
+      if (isDirty && isAuthenticated) {
+        resetAutoLogout();
+      }
+
+      refetch();
+    }
+  }, [refetch, isOpen, isDirty, isAuthenticated, resetAutoLogout]);
+
+  useActivityThrottle(
+    resetOrRefetch,
+    nSettings.secondsSessionRenewRequestInterval * ONE_SECOND_MS
+  );
+
   // This effect restores the original page title when the component is unmounted.
   useEffect(() => {
     return () => {
       document.title = originalTitle;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

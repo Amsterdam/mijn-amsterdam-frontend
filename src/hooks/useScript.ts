@@ -1,12 +1,13 @@
 // Taken from https://gist.github.com/gragland/929e42759c0051ff596bc961fb13cd93
-import { useState, useEffect } from 'react';
-// Hook
+import { useEffect, useState } from 'react';
+
 const cachedScripts: string[] = [];
 
 export default function useScript(
   src: string,
   defer: boolean = false,
-  async: boolean = true
+  async: boolean = true,
+  isEnabled: boolean = false
 ) {
   // Keeping track of script loaded and error state
   const [state, setState] = useState({
@@ -15,6 +16,9 @@ export default function useScript(
   });
 
   useEffect(() => {
+    if (!isEnabled) {
+      return;
+    }
     // If cachedScripts array already includes src that means another instance ...
     // ... of this hook already loaded this script, so no need to load again.
     if (cachedScripts.includes(src)) {
@@ -63,7 +67,7 @@ export default function useScript(
         script.removeEventListener('error', onScriptError);
       };
     }
-  }, [src]); // Only re-run effect if script src changes
+  }, [src, isEnabled, defer, async]); // Only re-run effect if script src changes
 
   return [state.loaded, state.error];
 }
