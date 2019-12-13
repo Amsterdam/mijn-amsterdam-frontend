@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/browser';
 import * as Cookies from 'js-cookie';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Unshaped } from '../App.types';
 
 interface LocalStorageHandler {
@@ -48,9 +48,39 @@ function useWindowStorage(
   defaultValue: any = null,
   adapter: Storage
 ) {
+  const getValueFromLocalStorage = useCallback(() => {
+    try {
+      return adapter.getItem(key);
+    } catch (error) {
+      Sentry.captureException(error);
+    }
+    return null;
+  }, [adapter, key]);
+
+  const saveValueToLocalStorage = useCallback(
+    (key: string, value: string | null) => {
+      return adapter.setItem(key, String(value));
+    },
+    [adapter]
+  );
+
   const [value, setValue] = useState(getValueFromLocalStorage());
 
-  function init() {
+  const set = useCallback(
+    (newValue: any) => {
+      setValue(newValue);
+      // Apparently in some cases IE11 throws a SCRIPT5: access denied error which crashes the app.
+      // The catch here prevents the crash and reports the error to Sentry.
+      try {
+        saveValueToLocalStorage(key, newValue);
+      } catch (error) {
+        Sentry.captureException(error);
+      }
+    },
+    [key, saveValueToLocalStorage]
+  );
+
+  const init = useCallback(() => {
     const valueLoadedFromLocalStorage = getValueFromLocalStorage();
     if (
       valueLoadedFromLocalStorage === null ||
@@ -58,35 +88,11 @@ function useWindowStorage(
     ) {
       set(defaultValue);
     }
-  }
+  }, [defaultValue, getValueFromLocalStorage, set]);
 
-  function getValueFromLocalStorage() {
-    try {
-      return adapter.getItem(key);
-    } catch (e) {}
-    return null;
-  }
-
-  function saveValueToLocalStorage(key: string, value: string | null) {
-    try {
-      return adapter.setItem(key, String(value));
-    } catch (e) {}
-    return null;
-  }
-
-  function set(newValue: any) {
-    setValue(newValue);
-    // Apparently in some cases IE11 throws a SCRIPT5: access denied error which crashes the app.
-    // The catch here prevents the crash and reports the error to Sentry.
-    try {
-      saveValueToLocalStorage(key, newValue);
-    } catch (error) {
-      Sentry.captureException(error);
-    }
-  }
-
-  function listen(e: StorageEvent) {
+  function onStorageEvent(e: StorageEvent) {
     let storageAllowed = true;
+    // Check if we can handle the storage event
     try {
       localStorage.key(0);
       sessionStorage.key(0);
@@ -94,8 +100,10 @@ function useWindowStorage(
       storageAllowed = false;
     }
 
-    if (storageAllowed && e.storageArea === adapter && e.key === key) {
-      setValue(e.newValue);
+    if (storageAllowed) {
+      if (e.storageArea === adapter && e.key === key) {
+        setValue(e.newValue);
+      }
     }
   }
 
@@ -107,20 +115,18 @@ function useWindowStorage(
     adapter.removeItem(key);
   }
 
-  //initialize
   useEffect(() => {
     init();
-  }, []);
+  }, [init]);
 
-  if (adapter === localStorage) {
-    // check for changes across windows
-    useEffect(() => {
-      window.addEventListener('storage', listen);
+  useEffect(() => {
+    if (adapter === localStorage) {
+      window.addEventListener('storage', onStorageEvent);
       return () => {
-        window.removeEventListener('storage', listen);
+        window.removeEventListener('storage', onStorageEvent);
       };
-    });
-  }
+    }
+  });
 
   const handler: LocalStorageHandler = {
     value,
@@ -161,7 +167,10 @@ export function useLocalStorage<Value>(
   return useStorage(key, value, adapter);
 }
 
-export function useSessionStorage(key: string, value: any) {
+export function useSessionStorage<Value>(
+  key: string,
+  value: Value | null = null
+) {
   let adapter: MemoryAdapter | Storage = memoryHandler;
   try {
     adapter = sessionStorage;

@@ -1,7 +1,7 @@
 import { LinkProps } from 'App.types';
 import Linkd from 'components/Button/Button';
 import { entries } from 'helpers/App';
-import React, { useState } from 'react';
+import React from 'react';
 
 import styles from './DataLinkTable.module.scss';
 import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';

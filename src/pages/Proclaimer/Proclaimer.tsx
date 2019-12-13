@@ -1,13 +1,12 @@
 import React from 'react';
 import { TextPage, PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
-import { trackLink } from 'hooks/analytics.hook';
-import Linkd, { LinkdInline } from 'components/Button/Button';
+import { LinkdInline } from 'components/Button/Button';
+import { ExternalUrls } from '../../App.constants';
 
 export default () => {
-  const complaintsFormUrl =
-    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/scKlachtenformulier.aspx/fKlachtenformulier';
-  const privacyPageUrl = 'https://www.amsterdam.nl/privacy';
+  const complaintsFormUrl = ExternalUrls.AMSTERDAM_COMPLAINTS_FROM;
+  const privacyPageUrl = ExternalUrls.AMSTERDAM_PRIVACY_PAGE;
 
   return (
     <TextPage>

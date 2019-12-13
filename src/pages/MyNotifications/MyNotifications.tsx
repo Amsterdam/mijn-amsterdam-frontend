@@ -8,7 +8,6 @@ import React, { useContext } from 'react';
 
 import styles from './MyNotifications.module.scss';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
-import classnames from 'classnames';
 
 export default () => {
   const {

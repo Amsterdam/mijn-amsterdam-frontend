@@ -22,7 +22,7 @@ function imgUrl(
   )}-${imageName}.jpg`;
 }
 
-function getHeroSrc(isAuthenticated: boolean = false) {
+function useHeroSrc(isAuthenticated: boolean = false) {
   const { location } = useRouter();
   const isChapterPath = (path: string) => location.pathname.startsWith(path);
 
@@ -69,7 +69,7 @@ export interface MainHeaderHeroProps {
 
 export default function MainHeaderHero(props: Partial<MainHeaderHeroProps>) {
   const session = useContext(SessionContext);
-  const srcSet = getHeroSrc(session.isAuthenticated);
+  const srcSet = useHeroSrc(session.isAuthenticated);
 
   return (
     <div className={styles.MainHeaderHero}>

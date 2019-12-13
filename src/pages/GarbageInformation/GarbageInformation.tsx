@@ -1,5 +1,5 @@
 import { PageContent, DetailPage } from 'components/Page/Page';
-import React, { useContext, ReactNode, useState } from 'react';
+import React, { useContext, ReactNode } from 'react';
 import PageHeading from 'components/PageHeading/PageHeading';
 import styles from './GarbageInformation.module.scss';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
@@ -11,13 +11,10 @@ import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible
 import { getFullAddress } from 'data-formatting/brp';
 import classnames from 'classnames';
 import { GarbagePoint } from 'hooks/api/api.garbage';
-import { MAP_URL } from 'hooks/api/api.mymap';
 import { MyAreaMap } from 'components/MyArea/MyArea';
 import Panel from 'components/Panel/Panel';
-import { useSessionStorage } from '../../hooks/storage.hook';
-import { Button, LinkdInline } from '../../components/Button/Button';
-import GarbageInformation from 'pages/GarbageInformation/GarbageInformation';
-import { GarbageMoment } from '../../hooks/api/api.garbage';
+import { useSessionStorage } from 'hooks/storage.hook';
+import { GarbageMoment } from 'hooks/api/api.garbage';
 
 interface PanelProps {
   children: ReactNode;
@@ -89,7 +86,9 @@ export default () => {
   }
 
   const garbageContainersMapUrl = centroid
-    ? `https://kaart.amsterdam.nl/afvalcontainers#17/${centroid[1]}/${centroid[0]}/topo/9749,9750,9751,9752,9753,9754/9748/`
+    ? `https://kaart.amsterdam.nl/afvalcontainers#17/${centroid[1]}/${
+        centroid[0]
+      }/topo/9749,9750,9751,9752,9753,9754/9748/`
     : '';
 
   const garbagePointCollapisble = (

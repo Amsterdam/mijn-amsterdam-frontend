@@ -12,8 +12,8 @@ const MatomoTrackerConfig = {
 };
 
 // Initialize connection with analytics
-export function useAnalytics() {
-  if (hasSiteId && !MatomoInstance) {
+export function useAnalytics(isEnabled: boolean = true) {
+  if (isEnabled && hasSiteId && !MatomoInstance) {
     MatomoInstance = new MatomoTracker(MatomoTrackerConfig);
   }
 }

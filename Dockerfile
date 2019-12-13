@@ -15,7 +15,6 @@ COPY package-lock.json /app/
 RUN npm ci
 
 COPY tsconfig.json /app/
-COPY paths.json /app/
 COPY .env* /app/
 COPY scripts/ /app/scripts
 COPY src /app/src/

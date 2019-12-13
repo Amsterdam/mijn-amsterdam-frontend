@@ -365,9 +365,7 @@ const Labels: {
           <p>
             {data.isActual
               ? 'Niet van toepassing.'
-              : `${data.supplier} heeft aan ons doorgegeven dat u geen ${
-                  data.title
-                }
+              : `${data.supplier} heeft aan ons doorgegeven dat u geen ${data.title}
             meer krijgt.`}
           </p>
         ),
@@ -675,7 +673,6 @@ export function formatWmoApiResponse(
         StartdatumLeverancier: dateStartServiceDelivery,
         EinddatumLeverancier: dateFinishServiceDelivery,
         Opdrachtdatum: dateRequestOrderStart,
-        Leverancier: serviceDeliverySupplier, // TODO: seems to be only filled with a code in the api response data
       } = (item.Levering || {}) as WmoApiLevering;
 
       const id = slug(`${title}-${index}`).toLowerCase();

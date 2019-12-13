@@ -1,12 +1,7 @@
 import { Action, Unshaped } from 'App.types';
 import axios from 'axios';
-import { useEffect, useReducer, useState } from 'react';
-import {
-  AbortFunction,
-  ApiRequestOptions,
-  ApiState,
-  RefetchFunction,
-} from './api.types';
+import { useEffect, useMemo, useReducer, useState } from 'react';
+import { ApiRequestOptions, ApiState, RefetchFunction } from './api.types';
 
 /**
  * Concepts in this hook are described in the following article:
@@ -75,24 +70,21 @@ export const getDefaultState = (initialData = {}, postpone = false) => ({
 export const useDataApi = (
   options: ApiRequestOptions = DEFAULT_REQUEST_OPTIONS,
   initialData: Unshaped = {}
-): [ApiState, RefetchFunction, AbortFunction] => {
+): [ApiState, RefetchFunction] => {
   const [requestOptions, setRequestOptions] = useState(options);
   const apiDataReducer = createApiDataReducer(initialData, true);
-  const refetch = (options: ApiRequestOptions) => {
-    setRequestOptions({ ...options, postpone: false });
-  };
+
+  const refetch = useMemo(
+    () => (options: ApiRequestOptions) => {
+      setRequestOptions({ ...options, postpone: false });
+    },
+    [setRequestOptions]
+  );
 
   const [state, dispatch] = useReducer(
     apiDataReducer,
     getDefaultState(initialData, requestOptions.postpone)
   );
-
-  function abort() {
-    dispatch({
-      type: ActionTypes.FETCH_FAILURE,
-      payload: 'Request aborted',
-    });
-  }
 
   useEffect(() => {
     let didCancel = false;
@@ -135,5 +127,7 @@ export const useDataApi = (
     // See: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
   }, [requestOptions]);
 
-  return [state, refetch, abort];
+  return useMemo<[ApiState, RefetchFunction]>(() => {
+    return [state, refetch];
+  }, [state, refetch]);
 };

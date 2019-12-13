@@ -1,10 +1,9 @@
+import React, { useState } from 'react';
 import { ComponentChildren } from 'App.types';
 import { ReactComponent as CaretIcon } from 'assets/icons/Chevron-Right.svg';
 import classnames from 'classnames';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 import { withKeyPress } from 'helpers/App';
-import { useSessionStorage } from 'hooks/storage.hook';
-import React, { useEffect, useState } from 'react';
 
 import Heading from '../Heading/Heading';
 import styles from './SectionCollapsible.module.scss';
@@ -108,7 +107,10 @@ export default function SectionCollapsible({
       )}
       {isLoading && (
         <LoadingContent
-          barConfig={[['auto', '2rem', '1rem'], ['auto', '2rem', '0']]}
+          barConfig={[
+            ['auto', '2rem', '1rem'],
+            ['auto', '2rem', '0'],
+          ]}
         />
       )}
       {hasNoItemsMessage && !isLoading && !hasItems && (

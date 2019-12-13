@@ -1,7 +1,7 @@
+import { act, renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
-import { renderHook, act } from 'react-hooks-testing-library';
-import { useDataApi, getDefaultState } from './api.hook';
 import MockAdapter from 'axios-mock-adapter';
+import { getDefaultState, useDataApi } from './api.hook';
 
 const DUMMY_RESPONSE = { foo: 'bar' };
 const DUMMY_URL = 'http://test';

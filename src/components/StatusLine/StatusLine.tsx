@@ -1,11 +1,10 @@
-import React, { useEffect, useMemo, CSSProperties } from 'react';
+import React, { useMemo, CSSProperties } from 'react';
 import styles from './StatusLine.module.scss';
 import classnames from 'classnames';
 import Linkd, { Button } from 'components/Button/Button';
 import { Document } from '../DocumentList/DocumentList';
 import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
 import { defaultDateFormat } from 'helpers/App';
-import useRouter from 'use-react-router';
 import { useSessionStorage } from 'hooks/storage.hook';
 import { trackEvent } from 'hooks/analytics.hook';
 import { ReactComponent as CaretLeft } from 'assets/icons/Chevron-Left.svg';
@@ -33,6 +32,7 @@ interface StatusLineProps {
   items: StatusLineItem[];
   trackCategory: string;
   altDocumentContent?: AltDocumentContent | ConditionalAltDocumentContent;
+  id: string;
 }
 
 interface StatusLineItemProps {
@@ -75,7 +75,7 @@ function StatusLineItem({
     return typeof altDocumentContent === 'function'
       ? altDocumentContent(item, stepNumber)
       : altDocumentContent;
-  }, []);
+  }, [altDocumentContent, item, stepNumber]);
 
   return (
     <li
@@ -137,10 +137,10 @@ export default function StatusLine({
   items,
   trackCategory,
   altDocumentContent,
+  id,
 }: StatusLineProps) {
-  const { location } = useRouter();
   const [isCollapsed, setCollapsed] = useSessionStorage(
-    'STATUS_LINE_' + location.pathname,
+    'STATUS_LINE_' + id,
     true
   );
 
@@ -154,18 +154,6 @@ export default function StatusLine({
     }
     setCollapsed(!isCollapsed);
   }
-
-  useEffect(() => {
-    const id = location.hash.substring(1);
-    const step = id && document.getElementById(id);
-
-    if (step) {
-      window.scroll({
-        top: step.getBoundingClientRect().top,
-        behavior: 'smooth',
-      });
-    }
-  }, [location.hash]);
 
   return (
     <>

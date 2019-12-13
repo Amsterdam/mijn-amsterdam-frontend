@@ -1,17 +1,22 @@
-import { AppRoutes, Colors, LOGOUT_URL, Chapters } from 'App.constants';
+import { AppRoutes, Colors, LOGOUT_URL } from 'App.constants';
 import { ComponentChildren } from 'App.types';
 import { AppContext, SessionContext } from 'AppState';
 import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
 import classnames from 'classnames';
 import FontEnlarger from 'components/FontEnlarger/FontEnlarger';
-import FocusTrap from 'focus-trap-react';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from 'components/MainNavSubmenu/MainNavSubmenu';
 import { getFullName } from 'data-formatting/brp';
 import { useDesktopScreen, useTabletScreen } from 'hooks/media.hook';
 import { trackItemPresentation } from 'hooks/analytics.hook';
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+} from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import useRouter from 'use-react-router';
 
@@ -35,8 +40,6 @@ export interface MainNavLinkProps {
   to: string;
   children: ComponentChildren;
   title: string;
-  onFocus?: () => void;
-  onMouseEnter?: () => void;
 }
 
 function SecondaryLinks() {
@@ -93,35 +96,13 @@ function MainNavLink({ children, to, title, ...rest }: MainNavLinkProps) {
   );
 }
 
-function getMenuItem(
-  item: MenuItem,
-  activeSubmenuId: string,
-  setSubMenuVisibility: (id?: string, isSubmenuTrigger?: boolean) => void,
-  useInteractionHandlers: boolean = true
-) {
+function getMenuItem(item: MenuItem) {
   if (Array.isArray(item.submenuItems)) {
-    const isOpen = activeSubmenuId === item.id;
-
     return (
-      <MainNavSubmenu
-        id={item.id}
-        key={item.id}
-        title={item.title}
-        isOpen={isOpen}
-        onFocus={() => !isOpen && setSubMenuVisibility(item.id)}
-        onClick={(event: Event) => event.preventDefault()} // Prevent chrome from closing the submenu by triggering focus handler on click
-        onMouseEnter={() => setSubMenuVisibility(item.id)}
-        onMouseLeave={() => setSubMenuVisibility()}
-      >
+      <MainNavSubmenu key={item.id} title={item.title} id={item.id}>
         {item.submenuItems.map(({ id, to, Icon, title, rel }) => {
           return (
-            <MainNavSubmenuLink
-              key={id}
-              to={to}
-              rel={rel}
-              data-chapter-id={id}
-              onFocus={() => setSubMenuVisibility(item.id, true)}
-            >
+            <MainNavSubmenuLink key={id} to={to} rel={rel} data-chapter-id={id}>
               {Icon && (
                 <span className={styles.SubmenuItemIcon}>
                   <Icon aria-label={id} fill={Colors.neutralGrey4} />
@@ -135,79 +116,14 @@ function getMenuItem(
     );
   }
 
-  const interactionHandlers = useInteractionHandlers
-    ? {
-        onFocus: () => setSubMenuVisibility(item.id),
-        onMouseEnter: () => setSubMenuVisibility(item.id),
-      }
-    : {};
-
   return (
-    <MainNavLink
-      key={item.id}
-      to={item.to}
-      {...interactionHandlers}
-      title={item.title}
-    >
+    <MainNavLink key={item.id} to={item.to} title={item.title}>
       {item.title}
     </MainNavLink>
   );
 }
 
-export default function MainNavBar() {
-  const [activeSubmenuId, activateSubmenu] = useState('');
-  const {
-    MY_CHAPTERS: { items: myChapterItems },
-  } = useContext(AppContext);
-  const { isAuthenticated } = useContext(SessionContext);
-  const hasBurgerMenu = useTabletScreen();
-  const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
-    undefined
-  );
-  const { history, location } = useRouter();
-  const [isTutorialVisible, setIsTutorialVisible] = useState(false);
-
-  function closeBurgerMenu(e?: any) {
-    if (isBurgerMenuVisible) {
-      // Testing for clicks on elements that are not part of the responsive menu
-      const BurgerMenuToggleButton = document.getElementById(
-        BurgerMenuToggleBtnId
-      );
-      const LinkContainer = document.getElementById(LinkContainerId);
-      const clickedOutside = !(
-        (LinkContainer && LinkContainer.contains(e.target)) ||
-        (BurgerMenuToggleButton && BurgerMenuToggleButton.contains(e.target))
-      );
-
-      if (clickedOutside) {
-        toggleBurgerMenu(false);
-      }
-    }
-  }
-
-  function setSubMenuVisibility(
-    id?: string,
-    isSubmenuTrigger: boolean = false
-  ) {
-    if (id && activeSubmenuId !== id) {
-      activateSubmenu(id);
-    } else if (!isSubmenuTrigger && activeSubmenuId !== id) {
-      activateSubmenu('');
-    }
-  }
-
-  // Bind click outside small screen menu to hide it
-  useEffect(() => {
-    document.addEventListener('click', closeBurgerMenu);
-    return () => document.removeEventListener('click', closeBurgerMenu);
-  });
-
-  // Hides small screen menu on route change
-  useEffect(() => {
-    toggleBurgerMenu(false);
-    setSubMenuVisibility();
-  }, [history.location]);
-
+function useBurgerMenuAnimation(isBurgerMenuVisible: boolean | undefined) {
   const config = {
     mass: 0.3,
     tension: 400,
@@ -250,6 +166,103 @@ export default function MainNavBar() {
   const backdropAnimationProps = useSpring(backdropAnim);
   const leftProps = useSpring(left);
 
+  return {
+    linkContainerAnimationProps,
+    backdropAnimationProps,
+    leftProps,
+  };
+}
+
+interface BurgerButtonProps {
+  isActive: boolean;
+  toggleBurgerMenu: (isActive: boolean) => void;
+}
+
+function BurgerButton({ isActive, toggleBurgerMenu }: BurgerButtonProps) {
+  return (
+    <button
+      id={BurgerMenuToggleBtnId}
+      className={classnames(
+        styles.BurgerMenuToggleBtn,
+        isActive && styles.BurgerMenuToggleBtnOpen
+      )}
+      onClick={() => toggleBurgerMenu(!isActive)}
+    >
+      Navigatie
+    </button>
+  );
+}
+
+export default function MainNavBar() {
+  const {
+    MY_CHAPTERS: { items: myChapterItems },
+  } = useContext(AppContext);
+  const { isAuthenticated } = useContext(SessionContext);
+  const hasBurgerMenu = useTabletScreen();
+  const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
+    undefined
+  );
+  const { history, location } = useRouter();
+  const [isTutorialVisible, setIsTutorialVisible] = useState(false);
+
+  const onClickOutsideBurgermenu = useCallback(
+    (event?: any) => {
+      if (isBurgerMenuVisible) {
+        // Testing for clicks on elements that are not part of the responsive menu
+        const BurgerMenuToggleButton = document.getElementById(
+          BurgerMenuToggleBtnId
+        );
+        const LinkContainer = document.getElementById(LinkContainerId);
+        const clickedOutside = !(
+          (LinkContainer && LinkContainer.contains(event.target)) ||
+          (BurgerMenuToggleButton &&
+            BurgerMenuToggleButton.contains(event.target))
+        );
+
+        if (clickedOutside) {
+          toggleBurgerMenu(false);
+        }
+      }
+    },
+    [isBurgerMenuVisible]
+  );
+
+  // Bind click outside small screen menu to hide it
+  useEffect(() => {
+    document.addEventListener('click', onClickOutsideBurgermenu);
+    return () =>
+      document.removeEventListener('click', onClickOutsideBurgermenu);
+  }, [onClickOutsideBurgermenu]);
+
+  // Hides small screen menu on route change
+  useEffect(() => {
+    toggleBurgerMenu(false);
+  }, [history.location]);
+
+  const {
+    linkContainerAnimationProps,
+    backdropAnimationProps,
+    leftProps,
+  } = useBurgerMenuAnimation(isBurgerMenuVisible);
+
+  const menuItemsComposed = useMemo(() => {
+    return menuItems.map(item => {
+      let menuItem = item;
+      if (item.id in submenuItems) {
+        // Add dynamic chapter submenu items to the menu
+        if (item.id === mainMenuItemId.MY_CHAPTERS) {
+          menuItem = { ...item, submenuItems: myChapterItems };
+        } else {
+          menuItem = {
+            ...item,
+            submenuItems: submenuItems[item.id],
+          };
+        }
+      }
+      return getMenuItem(menuItem);
+    });
+  }, [myChapterItems]);
+
   return (
     <nav
       className={classnames(
@@ -259,16 +272,10 @@ export default function MainNavBar() {
       )}
     >
       {hasBurgerMenu && (
-        <button
-          id={BurgerMenuToggleBtnId}
-          className={classnames(
-            styles.BurgerMenuToggleBtn,
-            isBurgerMenuVisible && styles.BurgerMenuToggleBtnOpen
-          )}
-          onClick={() => toggleBurgerMenu(!isBurgerMenuVisible)}
-        >
-          Navigatie
-        </button>
+        <BurgerButton
+          isActive={!!isBurgerMenuVisible}
+          toggleBurgerMenu={toggleBurgerMenu}
+        />
       )}
 
       {isAuthenticated && (
@@ -280,33 +287,13 @@ export default function MainNavBar() {
               className={styles.Backdrop}
             />
           )}
-
           <animated.div
             key="LinkContainer"
             id={LinkContainerId}
             className={styles.LinkContainer}
             style={linkContainerAnimationProps}
           >
-            {menuItems.map(item => {
-              let menuItem = item;
-              if (item.id in submenuItems) {
-                // Add dynamic chapter submenu items to the menu
-                if (item.id === mainMenuItemId.MY_CHAPTERS) {
-                  menuItem = { ...item, submenuItems: myChapterItems };
-                } else {
-                  menuItem = {
-                    ...item,
-                    submenuItems: submenuItems[item.id],
-                  };
-                }
-              }
-              return getMenuItem(
-                menuItem,
-                activeSubmenuId,
-                setSubMenuVisibility,
-                !hasBurgerMenu
-              );
-            })}
+            {menuItemsComposed}
             <SecondaryLinks />
           </animated.div>
         </>
