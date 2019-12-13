@@ -88,4 +88,21 @@ describe('SectionCollapsible', () => {
       action: 'Open klikken',
     });
   });
+
+  it('should show title and "no items message"', () => {
+    component = mount(
+      <SectionCollapsible
+        title="My Items"
+        isLoading={false}
+        hasItems={false}
+        isCollapsed={true}
+        onToggleCollapsed={toggleCollapsed}
+        noItemsMessage="No items"
+      >
+        <div style={{ height: 500 }}>Boohoo!</div>
+      </SectionCollapsible>
+    );
+
+    expect(component.html()).toMatchSnapshot();
+  });
 });
