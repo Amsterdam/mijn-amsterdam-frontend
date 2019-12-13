@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import StatusLine from './StatusLine';
-import { BrowserRouter } from 'react-router-dom';
 import { formatWmoApiResponse, WmoItem } from 'data-formatting/wmo';
 
 describe('StatusLine', () => {
@@ -39,10 +38,12 @@ describe('StatusLine', () => {
     );
     expect(
       shallow(
-        <BrowserRouter>
-          <StatusLine trackCategory="unittest" items={item.process} />
-        </BrowserRouter>
-      )
+        <StatusLine
+          id="unittest"
+          trackCategory="unittest"
+          items={item.process}
+        />
+      ).html()
     ).toMatchSnapshot();
   });
 });

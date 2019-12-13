@@ -51,6 +51,7 @@ export default () => {
           trackCategory={`Werk en inkomen / ${FocusItem.productTitle}`}
           items={FocusItem.process}
           altDocumentContent={altDocumentContent}
+          id={id}
         />
       )}
     </DetailPage>
