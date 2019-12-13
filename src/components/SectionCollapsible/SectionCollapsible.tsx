@@ -100,7 +100,7 @@ export default function SectionCollapsible({
           ) : (
             <>
               <CaretIcon aria-hidden="true" className={styles.CaretIcon} />{' '}
-              title
+              {title}
             </>
           )}
         </Heading>
