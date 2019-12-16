@@ -52,7 +52,7 @@ export default () => {
               aria-expanded={modalIsOpen}
             >
               {isOptIn
-                ? 'Nee, toon geen persoonlijke tips'
+                ? 'Toon geen persoonlijke tips'
                 : 'Toon persoonlijke tips'}
             </Button>
           </p>
