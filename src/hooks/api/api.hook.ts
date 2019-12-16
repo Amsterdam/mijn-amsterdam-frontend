@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/browser';
 import { Action, Unshaped } from 'App.types';
 import axios from 'axios';
 import { useEffect, useMemo, useReducer, useState } from 'react';
@@ -112,6 +113,9 @@ export const useDataApi = (
             type: ActionTypes.FETCH_FAILURE,
             payload: result.message,
           });
+          Sentry.captureMessage(
+            `API ERROR: ${result.message}, url: ${options.url}`
+          );
         }
       }
     };
