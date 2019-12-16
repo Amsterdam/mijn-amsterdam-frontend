@@ -14,7 +14,7 @@ describe('Navigate to Chapters', () => {
     selectComponent('MyTips_OptInOutConfirmButton').should('exist');
     selectComponent('MyTips_OptInOutConfirmButton').should(
       'contain',
-      'Toon persoonlijke tips'
+      'Ja, toon persoonlijke tips'
     );
     cy.get(
       '[class*="MyTips_TipItem__"]:first [class*="Heading_Heading"]'
