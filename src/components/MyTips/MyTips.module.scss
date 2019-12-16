@@ -24,6 +24,10 @@
 
 .ImageContainer {
   margin: 0;
+  margin-bottom: 2rem;
+  padding-top: 67%;
+  position: relative;
+  overflow: hidden;
 }
 
 .Img {
@@ -32,6 +36,9 @@
   height: auto;
   margin-bottom: 1rem;
   background: $color-white;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .HeaderBar {
