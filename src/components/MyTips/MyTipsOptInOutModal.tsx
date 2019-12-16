@@ -42,9 +42,6 @@ export default function MyTipsOptInOutModal({
           )}
         </p>
         <p className={styles.OptInOutButtons}>
-          <Button variant="plain" onClick={onClose}>
-            Nee bedankt
-          </Button>
           <Button
             className={styles.OptInOutConfirmButton}
             variant={isOptIn ? 'secondary-inverted' : 'secondary'}
@@ -59,7 +56,7 @@ export default function MyTipsOptInOutModal({
           >
             {isOptIn
               ? 'Nee, toon geen persoonlijke tips'
-              : 'Toon persoonlijke tips'}
+              : 'Ja, toon persoonlijke tips'}
           </Button>
         </p>
       </>
