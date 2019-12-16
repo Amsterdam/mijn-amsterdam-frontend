@@ -38,6 +38,9 @@ function useHeroSrc(isAuthenticated: boolean = false) {
     case isChapterPath(AppRoutes.ZORG):
       imageName = 'zorg';
       break;
+    case isChapterPath(AppRoutes.AFVAL):
+      imageName = 'afval';
+      break;
     default:
       imageName = 'algemeen';
       break;
