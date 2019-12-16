@@ -26,7 +26,9 @@ function tipTitle(title: string) {
 }
 
 const Tip = ({ tip }: TipProps) => {
-  const [imgUrl, setImgUrl] = useState('/img/img-placeholder.svg');
+  const [imgUrl, setImgUrl] = useState(
+    'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='
+  );
 
   useEffect(() => {
     const image = new Image();
@@ -144,7 +146,10 @@ export default function MyTips({
         ))}
       </ul>
       {!isLoading && !items.length && (
-        <p>We hebben op dit moment geen persoonlijke tips voor u.</p>
+        <p>
+          We hebben op dit moment geen {isOptIn ? 'persoonlijke ' : ''}tips voor
+          u.
+        </p>
       )}
       {showOptIn && (
         <MyTipsOptInOutModal
