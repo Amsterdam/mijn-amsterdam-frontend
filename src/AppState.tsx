@@ -1,4 +1,4 @@
-import { BrpApiState, useBrpApi, isMokum } from 'hooks/api/api.brp';
+import { BrpApiState, useBrpApi } from 'hooks/api/api.brp';
 import useMyTipsApi from 'hooks/api/my-tips-api.hook';
 import useMyNotificationsApi from 'hooks/api/my-notifications-api.hook';
 import useSessionApi, { SessionApiState } from 'hooks/api/session.api.hook';
@@ -12,7 +12,7 @@ import { MyTipsApiState } from './hooks/api/my-tips-api.hook';
 import { MyNotificationsApiState } from './hooks/api/my-notifications-api.hook';
 import { MyChaptersApiState } from './helpers/myChapters';
 import useMyMap from './hooks/api/api.mymap';
-import { getFullAddress } from 'data-formatting/brp';
+import { getFullAddress, isMokum } from 'data-formatting/brp';
 import { getApiConfigValue } from 'helpers/App';
 import { GarbageApiState } from './hooks/api/api.garbage';
 import useGarbageApi from './hooks/api/api.garbage';
@@ -97,7 +97,7 @@ export function useAppState(value?: any) {
     BRP.isDirty,
   ];
 
-  const address = BRP?.data?.adres ? getFullAddress(BRP.data.adres) : '';
+  const address = BRP?.data?.adres ? getFullAddress(BRP.data.adres[0]) : '';
   const mokum = isMokum(BRP);
   const refetchMyArea = MY_AREA.refetch;
   const refetchGarbage = GARBAGE.refetch;

@@ -5,8 +5,7 @@ import InfoPanel from 'components/InfoPanel/InfoPanel';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 import { DetailPage, PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
-import { panelConfig, formatProfileData } from 'data-formatting/brp';
-import { entries } from 'helpers/App';
+import { panelConfig } from './Profile.constants';
 import styles from 'pages/Profile/Profile.module.scss';
 import React, { useContext } from 'react';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
@@ -16,8 +15,10 @@ import { LinkdInline } from 'components/Button/Button';
 export default function Profile() {
   const { BRP } = useContext(AppContext);
 
-  const brpData =
-    BRP.isDirty && !BRP.isError ? formatProfileData(BRP.data) : null;
+  const brpData = BRP.isDirty && !BRP.isError ? BRP.data : null;
+  const hasBrpData = !!brpData;
+  const [hoofdAdres] = brpData?.adres || [];
+  const [huidigeVerbintenis] = brpData?.verbintenis || [];
 
   return (
     <DetailPage className={styles.Profile}>
@@ -44,31 +45,29 @@ export default function Profile() {
             <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>
         )}
-        {BRP.data &&
-          BRP.data.persoon &&
-          BRP.data.persoon.vertrokkenOnbekendWaarheen && (
-            <Alert type="warning" className="vertrokkenOnbekendWaarheen">
-              <p>
-                U staat sinds{' '}
-                {BRP.data.persoon.datumVertrekUitNederland
-                  ? defaultDateFormat(BRP.data.persoon.datumVertrekUitNederland)
-                  : 'enige tijd'}{' '}
-                in de BRP geregistreerd als "vertrokken – onbekend waarheen".
-              </p>
-              <p>
-                U kunt uw huidige adres doorgeven bij het Stadsloket. U moet
-                hiervoor een{' '}
-                <LinkdInline
-                  external={true}
-                  href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
-                >
-                  afspraak
-                </LinkdInline>{' '}
-                maken .
-              </p>
-            </Alert>
-          )}
-        {BRP.data && BRP.data.adres && BRP.data.adres.inOnderzoek && (
+        {brpData?.persoon.vertrokkenOnbekendWaarheen && (
+          <Alert type="warning" className="vertrokkenOnbekendWaarheen">
+            <p>
+              U staat sinds{' '}
+              {brpData?.persoon.datumVertrekUitNederland
+                ? defaultDateFormat(brpData.persoon.datumVertrekUitNederland)
+                : 'enige tijd'}{' '}
+              in de BRP geregistreerd als "vertrokken – onbekend waarheen".
+            </p>
+            <p>
+              U kunt uw huidige adres doorgeven bij het Stadsloket. U moet
+              hiervoor een{' '}
+              <LinkdInline
+                external={true}
+                href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
+              >
+                afspraak
+              </LinkdInline>{' '}
+              maken .
+            </p>
+          </Alert>
+        )}
+        {hoofdAdres?.inOnderzoek && (
           <Alert type="warning" className="inOnderzoek">
             <p>
               Op dit moment onderzoeken wij of u nog steeds woont op het adres
@@ -97,13 +96,18 @@ export default function Profile() {
         )}
       </PageContent>
       <div className={styles.InfoPanels}>
-        {brpData &&
-          brpData.person &&
-          entries(brpData)
-            .filter(([id, panelData]) => !!panelData)
-            .map(([id, panelData]) => (
-              <InfoPanel key={id} {...panelConfig[id]} panelData={panelData} />
-            ))}
+        {!!brpData?.persoon && (
+          <InfoPanel {...panelConfig.persoon} panelData={brpData.persoon} />
+        )}
+        {!!hoofdAdres && (
+          <InfoPanel {...panelConfig.adres} panelData={hoofdAdres} />
+        )}
+        {!!huidigeVerbintenis && (
+          <InfoPanel
+            {...panelConfig.verbintenis}
+            panelData={huidigeVerbintenis}
+          />
+        )}
       </div>
     </DetailPage>
   );

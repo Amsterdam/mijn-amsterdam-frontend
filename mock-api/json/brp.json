@@ -1,5 +1,5 @@
 {
-  "adres": {
+  "adres": [{
     "inOnderzoek": true,
     "huisletter": null,
     "huisnummer": "1",
@@ -8,7 +8,7 @@
     "straatnaam": "Burgemeester R\u00f6ellstr",
     "woonplaatsNaam": "Amsterdam",
     "begindatumVerblijf": null
-  },
+  }],
   "persoon": {
     "vertrokkenOnbekendWaarheen": true,
     "datumVertrekUitNederland": "1967-01-01T00:00:00Z",
@@ -31,7 +31,36 @@
     "voorvoegselGeslachtsnaam": null,
     "mokum": true
   },
-  "verbintenis": {
+  "ouders": [{
+    "geboortedatum": "1920-01-01T00:00:00Z",
+    "geboortelandnaam": "Nederland",
+    "geboorteplaatsnaam": "Lochem",
+    "geslachtsnaam": "Beemsterboer",
+    "nationaliteiten": [
+      {
+        "omschrijving": "Nederlandse"
+      }
+    ],
+    "omschrijvingGeslachtsaanduiding": "Man",
+    "opgemaakteNaam": "S. Beemsterboer",
+    "voornamen": "Senior",
+    "voorvoegselGeslachtsnaam": null
+  },{
+    "geboortedatum": "1920-01-01T00:00:00Z",
+    "geboortelandnaam": "Nederland",
+    "geboorteplaatsnaam": "Lochem",
+    "geslachtsnaam": "Beemsterboerin",
+    "nationaliteiten": [
+      {
+        "omschrijving": "Nederlandse"
+      }
+    ],
+    "omschrijvingGeslachtsaanduiding": "Vrouw",
+    "opgemaakteNaam": "Sa. Beemsterboer",
+    "voornamen": "Seniora",
+    "voorvoegselGeslachtsnaam": null
+  }],
+  "verbintenis": [{
     "datumOntbinding": null,
     "datumSluiting": "",
     "landnaamSluiting": "Marokko",
@@ -47,7 +76,7 @@
     "plaatsnaamSluitingOmschrijving": "Asilah",
     "soortVerbintenis": "H",
     "soortVerbintenisOmschrijving": "Huwelijk"
-  },
+  }],
   "kinderen": [
     {
       "bsn": null,

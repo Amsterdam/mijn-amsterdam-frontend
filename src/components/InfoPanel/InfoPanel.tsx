@@ -48,7 +48,7 @@ function InfoPanelTable({ panelData = {} }: InfoPanelTableProps) {
                 className={`InfoPanelTableRow__${slug(title, { lower: true })}`}
               >
                 <th>{title}</th>
-                <td>{value}</td>
+                <td>{JSON.stringify(value)}</td>
               </tr>
             );
           })}

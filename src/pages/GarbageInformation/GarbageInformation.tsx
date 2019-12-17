@@ -86,9 +86,7 @@ export default () => {
   }
 
   const garbageContainersMapUrl = centroid
-    ? `https://kaart.amsterdam.nl/afvalcontainers#17/${centroid[1]}/${
-        centroid[0]
-      }/topo/9749,9750,9751,9752,9753,9754/9748/`
+    ? `https://kaart.amsterdam.nl/afvalcontainers#17/${centroid[1]}/${centroid[0]}/topo/9749,9750,9751,9752,9753,9754/9748/`
     : '';
 
   const garbagePointCollapisble = (
@@ -151,10 +149,10 @@ export default () => {
           </Linkd>
         </p>
       </PageContent>
-      {!!BRP.data.adres && (
+      {!!BRP.data?.adres && (
         <GarbagePanel className={styles.AddressPanel}>
           <Heading size="tiny">Uw adres</Heading>
-          <p>{getFullAddress(BRP.data.adres)}</p>
+          <p>{getFullAddress(BRP.data.adres[0])}</p>
         </GarbagePanel>
       )}
 

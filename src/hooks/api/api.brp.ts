@@ -8,7 +8,8 @@ import { ApiState } from './api.types';
 import { MyNotification } from './my-notifications-api.hook';
 
 export interface BrpApiState extends ApiState {
-  data: BrpResponseData & { notifications: MyNotification[] };
+  data: BrpResponseData;
+  notifications: MyNotification[];
 }
 
 export function useBrpApi(initialState = {}): BrpApiState {
@@ -58,13 +59,5 @@ export function useBrpApi(initialState = {}): BrpApiState {
     return notifications;
   }, [inOnderzoek, isOnbekendWaarheen, dateLeft]);
 
-  const dataWithNotifications = useMemo(() => {
-    return { ...data, notifications };
-  }, [data, notifications]);
-
-  return { ...rest, data: dataWithNotifications };
-}
-
-export function isMokum(BRP: BrpApiState) {
-  return !!BRP?.data?.persoon?.mokum;
+  return { ...rest, data, notifications };
 }
