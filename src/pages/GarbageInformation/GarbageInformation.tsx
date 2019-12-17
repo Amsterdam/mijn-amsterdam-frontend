@@ -86,9 +86,7 @@ export default () => {
   }
 
   const garbageContainersMapUrl = centroid
-    ? `https://kaart.amsterdam.nl/afvalcontainers#17/${centroid[1]}/${
-        centroid[0]
-      }/topo/9749,9750,9751,9752,9753,9754/9748/`
+    ? `https://kaart.amsterdam.nl/afvalcontainers#17/${centroid[1]}/${centroid[0]}/topo/9749,9750,9751,9752,9753,9754/9748/`
     : '';
 
   const garbagePointCollapisble = (
@@ -223,6 +221,19 @@ export default () => {
           <GarbagePointItem key={item.naam} item={item} />
         ))}
       </SectionCollapsible>
+      <PageContent>
+        <p>
+          <Linkd
+            lean={false}
+            variant="secondary-inverted"
+            external={true}
+            href={ExternalUrls.AFVAL_MELDING_FORMULIER}
+            icon=""
+          >
+            Hier klopt iets niet
+          </Linkd>
+        </p>
+      </PageContent>
     </DetailPage>
   );
 };

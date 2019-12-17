@@ -159,7 +159,9 @@ $buttons: (
 }
 
 .Linkd {
-  align-items: baseline;
+  &.Button__plain {
+    align-items: baseline;
+  }
   .Icon {
     position: relative;
     transform: translateY(1px);
