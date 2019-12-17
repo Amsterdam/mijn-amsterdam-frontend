@@ -12,6 +12,8 @@ export interface BrpApiState extends ApiState {
   notifications: MyNotification[];
 }
 
+export type BrpKey = keyof BrpResponseData;
+
 export function useBrpApi(initialState = {}): BrpApiState {
   const options = { url: getApiUrl('BRP') };
   const [api] = useDataApi(options, initialState);

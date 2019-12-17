@@ -149,6 +149,7 @@ export default () => {
           </Linkd>
         </p>
       </PageContent>
+
       {!!BRP.data?.adres && (
         <GarbagePanel className={styles.AddressPanel}>
           <Heading size="tiny">Uw adres</Heading>

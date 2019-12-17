@@ -1,8 +1,6 @@
 import { ExternalUrls } from 'App.constants';
 import { InfoPanelProps } from 'components/InfoPanel/InfoPanel';
-import { BrpApiState } from 'hooks/api/api.brp';
-
-type BrpKey = keyof BrpApiState['data'];
+import { BrpKey } from 'hooks/api/api.brp';
 
 export const panelConfig: {
   [key in BrpKey]: Pick<InfoPanelProps, 'title' | 'actionLinks'>;

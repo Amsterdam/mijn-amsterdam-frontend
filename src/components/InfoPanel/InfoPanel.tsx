@@ -35,6 +35,13 @@ export interface InfoPanelTableProps {
   panelData: Unshaped;
 }
 
+function getValue(value: any) {
+  if (Array.isArray(value) || typeof value === 'object') {
+    return JSON.stringify(value);
+  }
+  return value;
+}
+
 function InfoPanelTable({ panelData = {} }: InfoPanelTableProps) {
   return (
     <table className={styles.InfoPanelTable}>
@@ -48,7 +55,7 @@ function InfoPanelTable({ panelData = {} }: InfoPanelTableProps) {
                 className={`InfoPanelTableRow__${slug(title, { lower: true })}`}
               >
                 <th>{title}</th>
-                <td>{JSON.stringify(value)}</td>
+                <td>{getValue(value)}</td>
               </tr>
             );
           })}

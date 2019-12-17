@@ -11,14 +11,20 @@ import React, { useContext } from 'react';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import { defaultDateFormat } from 'helpers/App';
 import { LinkdInline } from 'components/Button/Button';
+import { useMemo } from 'react';
+import { formatBrpProfileData } from 'data-formatting/brp';
 
 export default function Profile() {
   const { BRP } = useContext(AppContext);
 
-  const brpData = BRP.isDirty && !BRP.isError ? BRP.data : null;
+  const { isDirty, isError, data } = BRP;
+
+  const brpData = useMemo(() => {
+    const rData = isDirty && !isError ? data : null;
+    return rData ? formatBrpProfileData(rData) : rData;
+  }, [data, isDirty, isError]);
+
   const hasBrpData = !!brpData;
-  const [hoofdAdres] = brpData?.adres || [];
-  const [huidigeVerbintenis] = brpData?.verbintenis || [];
 
   return (
     <DetailPage className={styles.Profile}>
@@ -40,11 +46,13 @@ export default function Profile() {
             <LoadingContent />
           </div>
         )}
+
         {BRP.isError && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>
         )}
+
         {brpData?.persoon.vertrokkenOnbekendWaarheen && (
           <Alert type="warning" className="vertrokkenOnbekendWaarheen">
             <p>
@@ -67,7 +75,8 @@ export default function Profile() {
             </p>
           </Alert>
         )}
-        {hoofdAdres?.inOnderzoek && (
+
+        {brpData?.adres.inOnderzoek && (
           <Alert type="warning" className="inOnderzoek">
             <p>
               Op dit moment onderzoeken wij of u nog steeds woont op het adres
@@ -95,17 +104,20 @@ export default function Profile() {
           </Alert>
         )}
       </PageContent>
+
       <div className={styles.InfoPanels}>
         {!!brpData?.persoon && (
           <InfoPanel {...panelConfig.persoon} panelData={brpData.persoon} />
         )}
-        {!!hoofdAdres && (
-          <InfoPanel {...panelConfig.adres} panelData={hoofdAdres} />
+
+        {!!brpData?.adres && (
+          <InfoPanel {...panelConfig.adres} panelData={brpData.adres} />
         )}
-        {!!huidigeVerbintenis && (
+
+        {!!brpData?.verbintenis && (
           <InfoPanel
             {...panelConfig.verbintenis}
-            panelData={huidigeVerbintenis}
+            panelData={brpData.verbintenis}
           />
         )}
       </div>
