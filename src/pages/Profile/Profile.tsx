@@ -13,6 +13,8 @@ import { defaultDateFormat } from 'helpers/App';
 import { LinkdInline } from 'components/Button/Button';
 import { useMemo } from 'react';
 import { formatBrpProfileData } from 'data-formatting/brp';
+import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
+import { useSessionStorage } from 'hooks/storage.hook';
 
 export default function Profile() {
   const { BRP } = useContext(AppContext);
@@ -24,7 +26,22 @@ export default function Profile() {
     return rData ? formatBrpProfileData(rData) : rData;
   }, [data, isDirty, isError]);
 
-  const hasBrpData = !!brpData;
+  const [isCollapsedVerbintenis, setCollapsedVerbintenis] = useSessionStorage(
+    'profile.verbintenis',
+    true
+  );
+  const [isCollapsedKinderen, setCollapsedKinderen] = useSessionStorage(
+    'profile.kinderen',
+    true
+  );
+  const [isCollapsedOuders, setCollapsedOuders] = useSessionStorage(
+    'profile.ouders',
+    true
+  );
+  const [isCollapsedAdressen, setCollapsedAdressen] = useSessionStorage(
+    'profile.adressen',
+    true
+  );
 
   return (
     <DetailPage className={styles.Profile}>
@@ -115,10 +132,20 @@ export default function Profile() {
         )}
 
         {!!brpData?.verbintenis && (
-          <InfoPanel
-            {...panelConfig.verbintenis}
-            panelData={brpData.verbintenis}
-          />
+          <SectionCollapsible
+            title="Burgerlijke staat"
+            isLoading={false}
+            hasItems={true}
+            isCollapsed={isCollapsedVerbintenis}
+            onToggleCollapsed={() =>
+              setCollapsedVerbintenis(!isCollapsedVerbintenis)
+            }
+          >
+            <InfoPanel
+              {...panelConfig.verbintenis}
+              panelData={brpData.verbintenis}
+            />
+          </SectionCollapsible>
         )}
       </div>
     </DetailPage>

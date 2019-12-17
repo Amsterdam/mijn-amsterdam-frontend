@@ -26,12 +26,14 @@
   padding-left: 1em;
   margin: 0 auto;
   margin-bottom: 3rem;
+  transform: translateX(-2.5rem);
 
   @include mq-tablet() {
     margin-left: 9.5rem;
   }
   @include mq-phone() {
     margin-left: 0;
+    transform: translateX(0);
   }
   max-width: 62rem;
 

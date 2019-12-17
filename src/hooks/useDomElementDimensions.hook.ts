@@ -10,12 +10,13 @@ export function useDomElementDimensions(ref: any) {
     width: 0,
     height: 0,
   });
+  const { current } = ref;
   useEffect(() => {
-    if (ref.current) {
-      const { width, height } = ref.current.getBoundingClientRect();
+    if (current) {
+      const { width, height } = current.getBoundingClientRect();
       setDimensions({ width, height });
     }
-  }, [ref]);
+  }, [current]);
 
   return dimensions;
 }

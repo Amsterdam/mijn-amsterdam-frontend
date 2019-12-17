@@ -3,11 +3,11 @@ import { BrpApiState } from 'hooks/api/api.brp';
 import { defaultDateFormat } from '../helpers/App';
 
 type Value = string | number | null;
-type FormattedProfileValue =
+type ProfileKeyValFormatter =
   | string
   | [string, (value: any, brpData?: BrpResponseData) => Value];
 
-type ProfileLabels<T> = { [key in keyof T]: FormattedProfileValue };
+type ProfileLabels<T> = { [key in keyof T]: ProfileKeyValFormatter };
 
 export interface Adres {
   straatnaam: string;

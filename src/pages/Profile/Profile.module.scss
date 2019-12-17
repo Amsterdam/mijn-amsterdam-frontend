@@ -26,3 +26,23 @@
 .InfoPanels {
   @include centered-block;
 }
+
+.Profile {
+  @include select(SectionCollapsible_Title_) {
+    @include heading-medium;
+    padding-bottom: 1.3rem;
+    margin-bottom: 0;
+  }
+  @include select(SectionCollapsible_Panel) {
+    border-top: 0.1rem solid $color-neutral-grey2;
+    border-bottom: 0;
+    padding-top: 2rem;
+  }
+  @include select(SectionCollapsible_SectionCollapsible) {
+    margin-top: 5rem;
+
+    @include select(InfoPanel_InfoPanel) {
+      margin-bottom: 2rem;
+    }
+  }
+}
