@@ -70,6 +70,7 @@ export interface InfoPanelProps {
   title?: string;
   actionLinks?: ActionLink[];
   panelData: Unshaped;
+  className?: string;
 }
 
 export interface InfoPanelCollapsibleProps extends InfoPanelProps {
@@ -103,9 +104,10 @@ export default function InfoPanel({
   title = '',
   actionLinks = [],
   panelData = {},
+  className,
 }: InfoPanelProps) {
   return (
-    <div className={styles.InfoPanel}>
+    <div className={classnames(styles.InfoPanel, className)}>
       {!!title && <Heading>{title}</Heading>}
       <div
         className={classnames(

@@ -105,24 +105,30 @@ export default function Profile() {
         )}
       </PageContent>
 
-      <div className={styles.InfoPanels}>
-        {!!brpData?.persoon && (
-          <InfoPanel {...panelConfig.persoon} panelData={brpData.persoon} />
-        )}
+      {!!brpData?.persoon && (
+        <InfoPanel
+          className={styles.DefaultPanel}
+          {...panelConfig.persoon}
+          panelData={brpData.persoon}
+        />
+      )}
 
-        {!!brpData?.adres && (
-          <InfoPanel {...panelConfig.adres} panelData={brpData.adres} />
-        )}
+      {!!brpData?.adres && (
+        <InfoPanel
+          className={styles.DefaultPanel}
+          {...panelConfig.adres}
+          panelData={brpData.adres}
+        />
+      )}
 
-        {!!brpData?.verbintenis && (
-          <InfoPanelCollapsible
-            id="profile.verbintenis"
-            title={panelConfig.verbintenis.title}
-            actionLinks={panelConfig.verbintenis.actionLinks}
-            panelData={brpData.verbintenis}
-          />
-        )}
-      </div>
+      {!!brpData?.verbintenis && (
+        <InfoPanelCollapsible
+          id="profile.verbintenis"
+          title={panelConfig.verbintenis.title}
+          actionLinks={panelConfig.verbintenis.actionLinks}
+          panelData={brpData.verbintenis}
+        />
+      )}
     </DetailPage>
   );
 }

@@ -33,6 +33,11 @@
     @include heading-medium;
     padding-bottom: 1.3rem;
     margin-bottom: 0;
+    margin-left: 16rem;
+
+    @include mq-phone {
+      margin-left: 0;
+    }
   }
 
   @include select(SectionCollapsible_Panel) {
