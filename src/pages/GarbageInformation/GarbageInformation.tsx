@@ -221,7 +221,7 @@ export default () => {
           <GarbagePointItem key={item.naam} item={item} />
         ))}
       </SectionCollapsible>
-      {/* <PageContent>
+      <PageContent>
         <p>
           <Linkd
             lean={false}
@@ -233,7 +233,7 @@ export default () => {
             Hier klopt iets niet
           </Linkd>
         </p>
-      </PageContent> */}
+      </PageContent>
     </DetailPage>
   );
 };
