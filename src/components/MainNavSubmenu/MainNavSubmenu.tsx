@@ -7,20 +7,23 @@ import { ComponentChildren } from 'App.types';
 import { LinkProps } from 'App.types';
 import { trackLink } from 'hooks/analytics.hook';
 import useRouter from 'use-react-router';
+import { Colors } from 'App.constants';
+import { MenuItem } from 'components/MainNavBar/MainNavBar.constants';
 
 export interface MainNavSubmenuLinkProps
-  extends Omit<LinkProps, 'title'>,
-    HTMLAttributes<HTMLAnchorElement> {
-  children: ComponentChildren;
+  extends LinkProps,
+    Omit<HTMLAttributes<HTMLAnchorElement>, 'title'> {
   className?: string;
+  Icon: MenuItem['Icon'];
 }
 
 export function MainNavSubmenuLink({
   to,
-  children,
   onClick,
   className,
   rel,
+  title,
+  Icon,
   ...rest
 }: MainNavSubmenuLinkProps) {
   return rel && rel.indexOf('external') !== -1 ? (
@@ -34,7 +37,12 @@ export function MainNavSubmenuLink({
       className={classnames(styles.MainNavSubmenuLink, className)}
       {...rest}
     >
-      {children}
+      {Icon && (
+        <span className={styles.SubmenuItemIcon}>
+          <Icon aria-hidden="true" fill={Colors.neutralGrey4} />
+        </span>
+      )}
+      <span className={styles.SubmenuItemTitle}>{title}</span>
     </a>
   ) : (
     <NavLink
@@ -44,7 +52,12 @@ export function MainNavSubmenuLink({
       rel={rel}
       {...rest}
     >
-      {children}
+      {Icon && (
+        <span className={styles.SubmenuItemIcon}>
+          <Icon aria-hidden="true" fill={Colors.neutralGrey4} />
+        </span>
+      )}
+      <span className={styles.SubmenuItemTitle}>{title}</span>
     </NavLink>
   );
 }

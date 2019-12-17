@@ -1,11 +1,7 @@
 @import 'styles/_global.scss';
 
 .InfoSection {
-  padding-top: 4rem;
-  @include select(SectionCollapsible_Panel) {
-    border: 0;
-    border-top: .1rem solid $color-neutral-grey2;
-  }
+  padding-top: 2rem;
 }
 
 .GarbageInformation .InfoSection__fullWidth {

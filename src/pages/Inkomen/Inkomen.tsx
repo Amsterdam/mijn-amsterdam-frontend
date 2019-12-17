@@ -59,7 +59,6 @@ export default () => {
       </PageContent>
       <DataLinkTable
         id="datalinktable-income-actual"
-        displayProps={DISPLAY_PROPS_ACTUAL}
         items={itemsRequested}
         title="Mijn lopende aanvragen"
         startCollapsed={false}
@@ -72,7 +71,6 @@ export default () => {
       />
       <DataLinkTable
         id="datalinktable-income-granted"
-        displayProps={DISPLAY_PROPS}
         items={itemsDecided}
         startCollapsed={hasActiveRequests}
         isLoading={isLoading}

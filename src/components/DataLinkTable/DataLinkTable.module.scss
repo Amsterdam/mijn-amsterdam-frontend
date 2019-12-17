@@ -1,12 +1,27 @@
 @import 'styles/_global.scss';
 
 .DataLinkTable {
-  padding-top: 4rem;
+
+  @include select(SectionCollapsible_Panel) {
+    margin-bottom: 2rem;
+    // transition: border-color 800ms ease-out;
+  }
+
+  // &:not([class*="_isCollapsed"]) {
+  //   @include select(SectionCollapsible_Panel) {
+  //     border-color: white;
+  //   }
+  // }
 }
 
 .Table {
   display: flex;
   flex-direction: column;
+  margin-bottom: 5rem;
+
+  tr:first-of-type td {
+    border-top: 0;;
+  }
 
   @include IE11 {
     display: table;

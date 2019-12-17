@@ -45,22 +45,27 @@ function getValue(value: any) {
 }
 
 function InfoPanelTable({ panelData = {} }: InfoPanelTableProps) {
+  const rows = Array.isArray(panelData)
+    ? panelData.flatMap(panelData =>
+        entries(panelData).filter(([, value]) => !!value)
+      )
+    : entries(panelData).filter(([, value]) => !!value);
   return (
     <table className={styles.InfoPanelTable}>
       <tbody>
-        {entries(panelData)
-          .filter(([, value]) => !!value)
-          .map(([title, value], index) => {
-            return (
-              <tr
-                key={title}
-                className={`InfoPanelTableRow__${slug(title, { lower: true })}`}
-              >
-                <th>{title}</th>
-                <td>{getValue(value)}</td>
-              </tr>
-            );
-          })}
+        {rows.map(([title, value], index) => {
+          return (
+            <tr
+              key={title + index}
+              className={`InfoPanelTableRow__${slug(title + index, {
+                lower: true,
+              })}`}
+            >
+              <th>{title}</th>
+              <td>{getValue(value)}</td>
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );
@@ -69,7 +74,7 @@ function InfoPanelTable({ panelData = {} }: InfoPanelTableProps) {
 export interface InfoPanelProps {
   title?: string;
   actionLinks?: ActionLink[];
-  panelData: Unshaped;
+  panelData: Unshaped | Unshaped[];
   className?: string;
 }
 
@@ -108,7 +113,7 @@ export default function InfoPanel({
 }: InfoPanelProps) {
   return (
     <div className={classnames(styles.InfoPanel, className)}>
-      {!!title && <Heading>{title}</Heading>}
+      {!!title && <Heading className={styles.Title}>{title}</Heading>}
       <div
         className={classnames(
           styles.InfoPanelContent,

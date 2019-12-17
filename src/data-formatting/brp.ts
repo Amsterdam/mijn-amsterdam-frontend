@@ -1,5 +1,5 @@
 import { entries } from 'helpers/App';
-import { BrpApiState } from 'hooks/api/api.brp';
+import { BrpApiState, BrpKey } from 'hooks/api/api.brp';
 import { defaultDateFormat } from '../helpers/App';
 
 type Value = string | number | null;
@@ -107,7 +107,7 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
     value =>
       Array.isArray(value)
         ? value.map(({ omschrijving }) => omschrijving).join(' ')
-        : 'Onbekend',
+        : null,
   ],
   bsn: 'BSN',
 };
@@ -207,9 +207,15 @@ function format(
   return formattedData;
 }
 
-interface BrpProfileData {
-  [key: string]: { [key: string]: Value };
+interface ProfileSection {
+  [key: string]: Value;
 }
+
+type BrpProfileData = Partial<
+  {
+    [key in BrpKey]: ProfileSection | ProfileSection[];
+  }
+>;
 
 export function formatBrpProfileData(brpData: BrpResponseData): BrpProfileData {
   const [adres] = brpData.adres;
@@ -225,6 +231,12 @@ export function formatBrpProfileData(brpData: BrpResponseData): BrpProfileData {
       brpInfoLabels.verbintenis,
       verbintenis,
       brpData
+    );
+  }
+
+  if (brpData.kinderen) {
+    profileData.kinderen = brpData.kinderen.map(kind =>
+      format(brpInfoLabels.persoon, kind, brpData)
     );
   }
 

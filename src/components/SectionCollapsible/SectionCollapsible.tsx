@@ -123,7 +123,10 @@ export default function SectionCollapsible({
           className={styles.Panel}
           style={heightAnimSpring}
         >
-          <div ref={contentRef}>{children}</div>
+          {/* paddingBottom to prevent margin collapsing */}
+          <div style={{ paddingBottom: '1px' }} ref={contentRef}>
+            {children}
+          </div>
         </animated.div>
       )}
     </section>

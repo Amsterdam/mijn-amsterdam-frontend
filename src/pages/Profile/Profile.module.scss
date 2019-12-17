@@ -25,5 +25,9 @@
 
 .DefaultPanel {
   @include centered-block;
+  margin-bottom: 5rem;
 }
 
+.CollapsiblePanel {
+  margin-bottom: 5rem;
+}

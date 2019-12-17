@@ -13,15 +13,14 @@ import { defaultDateFormat } from 'helpers/App';
 import { LinkdInline } from 'components/Button/Button';
 import { useMemo } from 'react';
 import { formatBrpProfileData } from 'data-formatting/brp';
-import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
 import { InfoPanelCollapsible } from '../../components/InfoPanel/InfoPanel';
 
 export default function Profile() {
   const { BRP } = useContext(AppContext);
 
   const { isDirty, isError, data } = BRP;
-
-  const brpData = useMemo(() => {
+  const [adres] = data?.adres || [];
+  const brpProfileData = useMemo(() => {
     const rData = isDirty && !isError ? data : null;
     return rData ? formatBrpProfileData(rData) : rData;
   }, [data, isDirty, isError]);
@@ -53,12 +52,12 @@ export default function Profile() {
           </Alert>
         )}
 
-        {brpData?.persoon.vertrokkenOnbekendWaarheen && (
+        {data.persoon?.vertrokkenOnbekendWaarheen && (
           <Alert type="warning" className="vertrokkenOnbekendWaarheen">
             <p>
               U staat sinds{' '}
-              {brpData?.persoon.datumVertrekUitNederland
-                ? defaultDateFormat(brpData.persoon.datumVertrekUitNederland)
+              {data.persoon.datumVertrekUitNederland
+                ? defaultDateFormat(data.persoon.datumVertrekUitNederland)
                 : 'enige tijd'}{' '}
               in de BRP geregistreerd als "vertrokken – onbekend waarheen".
             </p>
@@ -76,7 +75,7 @@ export default function Profile() {
           </Alert>
         )}
 
-        {brpData?.adres.inOnderzoek && (
+        {adres?.inOnderzoek && (
           <Alert type="warning" className="inOnderzoek">
             <p>
               Op dit moment onderzoeken wij of u nog steeds woont op het adres
@@ -105,28 +104,37 @@ export default function Profile() {
         )}
       </PageContent>
 
-      {!!brpData?.persoon && (
+      {!!brpProfileData?.persoon && (
         <InfoPanel
           className={styles.DefaultPanel}
           {...panelConfig.persoon}
-          panelData={brpData.persoon}
+          panelData={brpProfileData.persoon}
         />
       )}
 
-      {!!brpData?.adres && (
+      {!!brpProfileData?.adres && (
         <InfoPanel
           className={styles.DefaultPanel}
           {...panelConfig.adres}
-          panelData={brpData.adres}
+          panelData={brpProfileData.adres}
         />
       )}
 
-      {!!brpData?.verbintenis && (
+      {!!brpProfileData?.verbintenis && (
         <InfoPanelCollapsible
           id="profile.verbintenis"
           title={panelConfig.verbintenis.title}
           actionLinks={panelConfig.verbintenis.actionLinks}
-          panelData={brpData.verbintenis}
+          panelData={brpProfileData.verbintenis}
+        />
+      )}
+
+      {!!brpProfileData?.kinderen && (
+        <InfoPanelCollapsible
+          id="profile.kinderen"
+          title={panelConfig.kinderen.title}
+          actionLinks={panelConfig.kinderen.actionLinks}
+          panelData={brpProfileData.kinderen}
         />
       )}
     </DetailPage>
