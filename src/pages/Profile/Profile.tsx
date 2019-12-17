@@ -14,7 +14,7 @@ import { LinkdInline } from 'components/Button/Button';
 import { useMemo } from 'react';
 import { formatBrpProfileData } from 'data-formatting/brp';
 import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
-import { useSessionStorage } from 'hooks/storage.hook';
+import { InfoPanelCollapsible } from '../../components/InfoPanel/InfoPanel';
 
 export default function Profile() {
   const { BRP } = useContext(AppContext);
@@ -25,23 +25,6 @@ export default function Profile() {
     const rData = isDirty && !isError ? data : null;
     return rData ? formatBrpProfileData(rData) : rData;
   }, [data, isDirty, isError]);
-
-  const [isCollapsedVerbintenis, setCollapsedVerbintenis] = useSessionStorage(
-    'profile.verbintenis',
-    true
-  );
-  const [isCollapsedKinderen, setCollapsedKinderen] = useSessionStorage(
-    'profile.kinderen',
-    true
-  );
-  const [isCollapsedOuders, setCollapsedOuders] = useSessionStorage(
-    'profile.ouders',
-    true
-  );
-  const [isCollapsedAdressen, setCollapsedAdressen] = useSessionStorage(
-    'profile.adressen',
-    true
-  );
 
   return (
     <DetailPage className={styles.Profile}>
@@ -132,20 +115,12 @@ export default function Profile() {
         )}
 
         {!!brpData?.verbintenis && (
-          <SectionCollapsible
-            title="Burgerlijke staat"
-            isLoading={false}
-            hasItems={true}
-            isCollapsed={isCollapsedVerbintenis}
-            onToggleCollapsed={() =>
-              setCollapsedVerbintenis(!isCollapsedVerbintenis)
-            }
-          >
-            <InfoPanel
-              {...panelConfig.verbintenis}
-              panelData={brpData.verbintenis}
-            />
-          </SectionCollapsible>
+          <InfoPanelCollapsible
+            id="profile.verbintenis"
+            title={panelConfig.verbintenis.title}
+            actionLinks={panelConfig.verbintenis.actionLinks}
+            panelData={brpData.verbintenis}
+          />
         )}
       </div>
     </DetailPage>

@@ -26,6 +26,7 @@ export const panelConfig: {
     ],
   },
   verbintenis: {
+    title: 'Burgerlijke staat',
     actionLinks: [
       {
         title: 'Inzien of correctie doorgeven',
@@ -35,9 +36,11 @@ export const panelConfig: {
     ],
   },
   ouders: {
+    title: 'Ouders',
     actionLinks: [],
   },
   kinderen: {
+    title: 'Kinderen',
     actionLinks: [],
   },
 };

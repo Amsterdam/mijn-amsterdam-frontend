@@ -6,6 +6,8 @@ import { Unshaped } from 'App.types';
 import { entries } from 'helpers/App';
 import classnames from 'classnames';
 import slug from 'slug';
+import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
+import { useSessionStorage } from 'hooks/storage.hook';
 
 export interface ActionLink {
   title: string;
@@ -68,6 +70,33 @@ export interface InfoPanelProps {
   title?: string;
   actionLinks?: ActionLink[];
   panelData: Unshaped;
+}
+
+export interface InfoPanelCollapsibleProps extends InfoPanelProps {
+  id: string;
+  startCollapsed?: boolean;
+}
+
+export function InfoPanelCollapsible({
+  id,
+  title = '',
+  actionLinks = [],
+  panelData = {},
+  startCollapsed = true,
+}: InfoPanelCollapsibleProps) {
+  const [isCollapsed, setCollapsed] = useSessionStorage(id, startCollapsed);
+  return (
+    <SectionCollapsible
+      className={styles.InfoPanelCollapsible}
+      title={title}
+      isLoading={false}
+      hasItems={true}
+      isCollapsed={isCollapsed}
+      onToggleCollapsed={() => setCollapsed(!isCollapsed)}
+    >
+      <InfoPanel actionLinks={actionLinks} panelData={panelData} />
+    </SectionCollapsible>
+  );
 }
 
 export default function InfoPanel({
