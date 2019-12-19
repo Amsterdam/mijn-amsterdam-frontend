@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ComponentChildren } from 'App.types';
 import { ReactComponent as CaretIcon } from 'assets/icons/Chevron-Right.svg';
 import classnames from 'classnames';
@@ -36,9 +36,8 @@ export default function SectionCollapsible({
   track,
   children,
 }: SectionCollapsibleProps) {
-  const contentRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const [isReadyForAnimation, setReadyForAnimaton] = useState(false);
-  const { height: contentHeight } = useDomElementDimensions(contentRef);
   const hasTitle = !!title;
   const hasNoItemsMessage = !!noItemsMessage;
 
@@ -46,9 +45,20 @@ export default function SectionCollapsible({
     if (!isLoading) {
       setReadyForAnimaton(true);
     }
-  }, 200);
+  }, 50);
 
   setReadyForAnimatonDebounced();
+
+  const [{ height: contentHeight }, setDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
+
+  useEffect(() => {
+    if (!isLoading && contentRef && contentRef.current) {
+      setDimensions(contentRef.current.getBoundingClientRect());
+    }
+  }, [isLoading]);
 
   const classes = classnames(
     styles.SectionCollapsible,
@@ -72,7 +82,7 @@ export default function SectionCollapsible({
     from: {
       height: 0,
     },
-    height: contentHeight + 2,
+    height: contentHeight,
   };
 
   const heightAnimSpring = useSpring(heightAnim);
