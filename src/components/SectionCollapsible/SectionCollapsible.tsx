@@ -42,7 +42,7 @@ export default function SectionCollapsible({
   const hasNoItemsMessage = !!noItemsMessage;
 
   const [setReadyForAnimatonDebounced] = useDebouncedCallback(() => {
-    if (!isLoading) {
+    if (!isLoading && isReadyForAnimation === false) {
       setReadyForAnimaton(true);
     }
   }, 50);
