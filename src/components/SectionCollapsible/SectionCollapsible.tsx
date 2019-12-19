@@ -9,7 +9,6 @@ import Heading from '../Heading/Heading';
 import styles from './SectionCollapsible.module.scss';
 import { trackEvent } from 'hooks/analytics.hook';
 import { useRef } from 'react';
-import { useDomElementDimensions } from 'hooks/useDomElementDimensions.hook';
 import { useSpring, animated } from 'react-spring';
 import { useDebouncedCallback } from 'use-debounce';
 
