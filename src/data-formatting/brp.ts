@@ -200,6 +200,11 @@ function format(
     const value = Array.isArray(formatter)
       ? formatter[1](data[key], data, brpData)
       : data[key];
+
+    if (!value) {
+      return acc;
+    }
+
     return {
       ...acc,
       [label]: value,
