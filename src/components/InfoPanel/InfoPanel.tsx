@@ -68,7 +68,7 @@ function InfoPanelTable({ panelData = {} }: InfoPanelTableProps) {
       )
     : [entries(panelData).filter(([, value]) => !!value)];
   return (
-    <>
+    <div className={styles.TableWrap}>
       {tables.map((rows, index) => (
         <table key={index} className={styles.InfoPanelTable}>
           <tbody>
@@ -88,7 +88,7 @@ function InfoPanelTable({ panelData = {} }: InfoPanelTableProps) {
           </tbody>
         </table>
       ))}
-    </>
+    </div>
   );
 }
 

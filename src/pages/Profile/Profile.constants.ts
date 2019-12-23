@@ -53,18 +53,34 @@ export const panelConfig: PanelConfig = {
         ]
       : [],
   }),
-  verbintenisHistorisch: {
+  verbintenisHistorisch: BRP => ({
     title: 'Voormalige verbintenissen',
-    actionLinks: [],
-  },
+    actionLinks: isMokum(BRP)
+      ? [
+          {
+            title: 'Inzien of correctie doorgeven',
+            url: ExternalUrls.CHANGE_PERSONAL_DATA,
+            external: true,
+          },
+        ]
+      : [],
+  }),
   ouders: {
     title: 'Ouders',
     actionLinks: [],
   },
-  kinderen: {
+  kinderen: BRP => ({
     title: 'Kinderen',
-    actionLinks: [],
-  },
+    actionLinks: isMokum(BRP)
+      ? [
+          {
+            title: 'Inzien of correctie doorgeven',
+            url: ExternalUrls.CHANGE_PERSONAL_DATA,
+            external: true,
+          },
+        ]
+      : [],
+  }),
   adresHistorisch: {
     title: 'Vorige woonadressen',
     actionLinks: [],
