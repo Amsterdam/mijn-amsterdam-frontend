@@ -9,7 +9,7 @@ import { panelConfig, PanelConfigFormatter } from './Profile.constants';
 import styles from 'pages/Profile/Profile.module.scss';
 import React, { useContext } from 'react';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
-import { defaultDateFormat, entries } from 'helpers/App';
+import { defaultDateFormat } from 'helpers/App';
 import { LinkdInline } from 'components/Button/Button';
 import { useMemo } from 'react';
 import { formatBrpProfileData } from 'data-formatting/brp';
