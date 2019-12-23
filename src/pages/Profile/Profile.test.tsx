@@ -7,17 +7,17 @@ import { ReactNode } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 const responseData = {
-  adres: [
-    {
-      inOnderzoek: true,
-      huisletter: null,
-      huisnummer: '1',
-      huisnummertoevoeging: null,
-      postcode: '1064 BH',
-      straatnaam: 'Burgemeester R\u00f6ellstr',
-      woonplaatsNaam: 'Amsterdam',
-      begindatumVerblijf: '1967-01-01T00:00:00Z',
-    },
+  adres: {
+    inOnderzoek: true,
+    huisletter: null,
+    huisnummer: '1',
+    huisnummertoevoeging: null,
+    postcode: '1064 BH',
+    straatnaam: 'Burgemeester R\u00f6ellstr',
+    woonplaatsNaam: 'Amsterdam',
+    begindatumVerblijf: '1967-01-01T00:00:00Z',
+  },
+  adresHistorisch: [
     {
       inOnderzoek: true,
       huisletter: null,
@@ -98,24 +98,24 @@ const responseData = {
       voorvoegselGeslachtsnaam: null,
     },
   ],
-  verbintenis: [
-    {
-      datumOntbinding: null,
-      datumSluiting: '1999-01-01T01:01:01.000Z',
-      landnaamSluiting: 'Marokko',
-      persoon: {
-        bsn: '123456780',
-        geboortedatum: '2019-07-08T09:14:58.963Z',
-        geslachtsaanduiding: null,
-        geslachtsnaam: 'Bakker',
-        overlijdensdatum: null,
-        voornamen: 'Souad',
-        voorvoegselGeslachtsnaam: null,
-      },
-      plaatsnaamSluitingOmschrijving: 'Asilah',
-      soortVerbintenis: 'H',
-      soortVerbintenisOmschrijving: 'Huwelijk',
+  verbintenis: {
+    datumOntbinding: null,
+    datumSluiting: '1999-01-01T01:01:01.000Z',
+    landnaamSluiting: 'Marokko',
+    persoon: {
+      bsn: '123456780',
+      geboortedatum: '2019-07-08T09:14:58.963Z',
+      geslachtsaanduiding: null,
+      geslachtsnaam: 'Bakker',
+      overlijdensdatum: null,
+      voornamen: 'Souad',
+      voorvoegselGeslachtsnaam: null,
     },
+    plaatsnaamSluitingOmschrijving: 'Asilah',
+    soortVerbintenis: 'H',
+    soortVerbintenisOmschrijving: 'Huwelijk',
+  },
+  verbintenisHistorisch: [
     {
       datumOntbinding: '1998-07-08T09:14:58.963Z',
       datumSluiting: '1912-01-01T01:01:01.000Z',
@@ -222,6 +222,7 @@ describe('BRP Profile page', () => {
   it('Does not display verbintenis information if not present', () => {
     const appState = getAppState();
     delete appState.BRP.data.verbintenis;
+    delete appState.BRP.data.verbintenisHistorisch;
 
     const page = mountWithAppstate(appState, <Profile />);
 

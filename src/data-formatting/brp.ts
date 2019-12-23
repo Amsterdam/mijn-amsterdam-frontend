@@ -65,10 +65,12 @@ interface Kind {
 
 export interface BrpResponseData {
   persoon: Persoon;
-  verbintenis?: Verbintenis[];
+  verbintenis?: Verbintenis;
+  verbintenisHistorisch?: Verbintenis[];
   kinderen?: Kind[];
   ouders: Persoon[];
-  adres: Adres[];
+  adres: Adres;
+  adresHistorisch?: Adres[];
 }
 
 export function getFullName(persoon: Persoon) {
@@ -115,15 +117,13 @@ const adres: ProfileLabels<Partial<Adres>> = {
   straatnaam: [
     'Straat',
     (_value, _item, brpData) => {
-      const [adres] = brpData?.adres || [];
-      return !!adres ? getFullAddress(adres) : 'Onbekend';
+      return !!brpData?.adres ? getFullAddress(brpData.adres) : 'Onbekend';
     },
   ],
   woonplaatsNaam: [
     'Plaats',
     (_value, _item, brpData) => {
-      const [adres] = brpData?.adres || [];
-      return !!adres ? adres.woonplaatsNaam : 'Onbekend';
+      return !!brpData?.adres ? brpData.adres.woonplaatsNaam : 'Onbekend';
     },
   ],
   begindatumVerblijf: [
@@ -134,8 +134,7 @@ const adres: ProfileLabels<Partial<Adres>> = {
 
 function partner(key: keyof Persoon, defaultValue: Value = null) {
   return (_value: any, brpData?: BrpResponseData): Value => {
-    const [verbintenis] = brpData?.verbintenis || [];
-    return verbintenis?.persoon[key] || defaultValue;
+    return brpData?.verbintenis?.persoon[key] || defaultValue;
   };
 }
 
@@ -225,49 +224,52 @@ interface BrpProfileData {
 }
 
 export function formatBrpProfileData(brpData: BrpResponseData): BrpProfileData {
-  const adressen = brpData.adres.map(adres =>
-    format(brpInfoLabels.adres, adres, brpData)
-  );
-
   const profileData: BrpProfileData = {
     persoon: format(brpInfoLabels.persoon, brpData.persoon, brpData),
-    adres: adressen[0],
+    adres: format(brpInfoLabels.adres, brpData.adres, brpData),
   };
 
-  if (Array.isArray(brpData.verbintenis) && brpData.verbintenis.length >= 1) {
-    const verbintenisHistorisch = brpData.verbintenis
-      .filter(verbintenis => !!verbintenis.datumOntbinding)
-      .map(verbintenis => {
+  if (brpData.verbintenis && !!brpData.verbintenis.soortVerbintenis) {
+    profileData.verbintenis = {
+      ...format(brpInfoLabels.verbintenis, brpData.verbintenis, brpData),
+      ...format(brpInfoLabels.persoon, brpData.verbintenis.persoon, brpData),
+    };
+  }
+
+  if (
+    Array.isArray(brpData.verbintenisHistorisch) &&
+    brpData.verbintenisHistorisch.length
+  ) {
+    const verbintenisHistorisch = brpData.verbintenisHistorisch.map(
+      verbintenis => {
         return {
           ...format(brpInfoLabels.verbintenis, verbintenis, brpData),
           ...format(brpInfoLabels.persoon, verbintenis.persoon, brpData),
         };
-      });
+      }
+    );
     profileData.verbintenisHistorisch = verbintenisHistorisch;
-
-    if (verbintenisHistorisch.length !== brpData.verbintenis.length) {
-      const [verbintenis] = brpData.verbintenis; // Assumes first item is actual
-      profileData.verbintenis = {
-        ...format(brpInfoLabels.verbintenis, verbintenis, brpData),
-        ...format(brpInfoLabels.persoon, verbintenis.persoon, brpData),
-      };
-    }
   }
 
-  if (brpData.kinderen) {
+  if (Array.isArray(brpData.kinderen) && brpData.kinderen.length) {
     profileData.kinderen = brpData.kinderen.map(kind =>
       format(brpInfoLabels.persoon, kind, brpData)
     );
   }
 
-  if (brpData.ouders) {
+  if (Array.isArray(brpData.ouders) && brpData.ouders.length) {
     profileData.ouders = brpData.ouders.map(ouder =>
       format(brpInfoLabels.persoon, ouder, brpData)
     );
   }
 
-  if (adressen.length > 1) {
-    profileData.adresHistorisch = adressen.slice(1);
+  if (
+    Array.isArray(brpData.adresHistorisch) &&
+    brpData.adresHistorisch.length
+  ) {
+    profileData.adresHistorisch = brpData.adresHistorisch.map(adres =>
+      format(brpInfoLabels.adres, adres, brpData)
+    );
   }
 
   return profileData;
