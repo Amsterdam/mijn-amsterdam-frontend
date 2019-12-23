@@ -108,7 +108,7 @@ export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
 
 export const FeatureToggle = {
   myTipsoptInOutPersonalization: true,
-  garbageInformationPage: !isProduction(),
+  garbageInformationPage: true,
   focusDocumentDownload: !isProduction(),
 };
 
@@ -182,6 +182,8 @@ export const ExternalUrls = {
   AMSTERDAM_COMPLAINTS_FROM:
     'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/scKlachtenformulier.aspx/fKlachtenformulier',
   AMSTERDAM_PRIVACY_PAGE: 'https://www.amsterdam.nl/privacy',
+  AFVAL_MELDING_FORMULIER:
+    'https://formulier.amsterdam.nl/mail/afval/afvalwijzer/',
 };
 
 // NOTE: Keep up-to-date with _colors.scss
