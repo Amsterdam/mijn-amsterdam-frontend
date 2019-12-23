@@ -140,16 +140,17 @@ export default function Profile() {
         />
       )}
 
-      {!!brpProfileData?.verbintenisHistorisch && (
-        <InfoPanelCollapsible
-          id="profile-verbintenisHistorisch"
-          className={styles.Verbintenis}
-          {...formatInfoPanelConfig(panelConfig.verbintenisHistorisch, BRP)}
-          panelData={brpProfileData.verbintenisHistorisch}
-        />
-      )}
+      {!!brpProfileData?.verbintenisHistorisch &&
+        brpProfileData?.verbintenisHistorisch.length && (
+          <InfoPanelCollapsible
+            id="profile-verbintenisHistorisch"
+            className={styles.Verbintenis}
+            {...formatInfoPanelConfig(panelConfig.verbintenisHistorisch, BRP)}
+            panelData={brpProfileData.verbintenisHistorisch}
+          />
+        )}
 
-      {!!brpProfileData?.kinderen && (
+      {!!brpProfileData?.kinderen && brpProfileData.kinderen.length && (
         <InfoPanelCollapsible
           id="profile-kinderen"
           {...formatInfoPanelConfig(panelConfig.kinderen, BRP)}
@@ -157,7 +158,7 @@ export default function Profile() {
         />
       )}
 
-      {!!brpProfileData?.ouders && (
+      {!!brpProfileData?.ouders && brpProfileData.ouders.length && (
         <InfoPanelCollapsible
           id="profile-ouders"
           {...formatInfoPanelConfig(panelConfig.ouders, BRP)}
@@ -165,13 +166,14 @@ export default function Profile() {
         />
       )}
 
-      {!!brpProfileData?.adresHistorisch && (
-        <InfoPanelCollapsible
-          id="profile-adresHistorisch"
-          {...formatInfoPanelConfig(panelConfig.adresHistorisch, BRP)}
-          panelData={brpProfileData.adresHistorisch}
-        />
-      )}
+      {!!brpProfileData?.adresHistorisch &&
+        brpProfileData?.adresHistorisch.length && (
+          <InfoPanelCollapsible
+            id="profile-adresHistorisch"
+            {...formatInfoPanelConfig(panelConfig.adresHistorisch, BRP)}
+            panelData={brpProfileData.adresHistorisch}
+          />
+        )}
     </DetailPage>
   );
 }
