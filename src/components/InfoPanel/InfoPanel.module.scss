@@ -44,8 +44,11 @@
   }
 }
 
-.InfoPanelTable {
+.TableWrap {
   width: 59%;
+}
+
+.InfoPanelTable {
   border-collapse: collapse;
 
   + .InfoPanelTable {
