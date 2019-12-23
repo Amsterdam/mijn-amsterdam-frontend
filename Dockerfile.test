@@ -19,7 +19,6 @@ COPY package-lock.json /app/
 RUN npm ci
 
 COPY tsconfig.json /app/
-COPY paths.json /app/
 COPY .env.test /app/.env.production
 COPY mock-api /app/mock-api
 COPY src /app/src/
