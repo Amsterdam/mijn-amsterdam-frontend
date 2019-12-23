@@ -91,8 +91,16 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
   omschrijvingGeslachtsaanduiding: 'Geslacht',
   geboortedatum: ['Geboortedatum', value => defaultDateFormat(value)],
   overlijdensdatum: ['Datum overlijden', value => defaultDateFormat(value)],
-  geboorteplaatsnaam: 'Geboorteplaats',
-  geboortelandnaam: 'Geboorteland',
+  geboorteplaatsnaam: [
+    'Geboorteplaats',
+    (value, _item, brpResponseData) =>
+      brpResponseData?.persoon.mokum ? value || 'Onbekend' : '',
+  ],
+  geboortelandnaam: [
+    'Geboorteland',
+    (value, _item, brpResponseData) =>
+      brpResponseData?.persoon.mokum ? value || 'Onbekend' : '',
+  ],
   nationaliteiten: [
     'Nationaliteit',
     value =>
