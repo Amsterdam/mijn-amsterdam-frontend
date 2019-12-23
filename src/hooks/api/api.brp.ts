@@ -18,31 +18,10 @@ export function useBrpApi(initialState = {}): BrpApiState {
   const options = { url: getApiUrl('BRP') };
   const [api] = useDataApi(options, initialState);
   const { data, ...rest } = api;
-
-  /**
-   * Below code is to ensure backward compatibility. This can be removed if adjustments in the back-end MKS api are finalized.
-   */
-  const formattedData = {
-    ...data,
-  };
-
-  if (!!data?.verbintenis && !Array.isArray(data.verbintenis)) {
-    formattedData.verbintenis = [data.verbintenis];
-  }
-
-  if (!!data?.adres && !Array.isArray(data.adres)) {
-    formattedData.adres = [data.adres];
-  }
-  /**
-   * // End backward compatibility code
-   */
-
-  const [adres] = formattedData?.adres || [];
-  const inOnderzoek = adres?.inOnderzoek || false;
-  const isOnbekendWaarheen =
-    formattedData?.persoon?.vertrokkenOnbekendWaarheen || false;
-  const dateLeft = formattedData?.persoon?.datumVertrekUitNederland
-    ? defaultDateFormat(formattedData.persoon.datumVertrekUitNederland)
+  const inOnderzoek = data?.adres?.inOnderzoek || false;
+  const isOnbekendWaarheen = data?.persoon?.vertrokkenOnbekendWaarheen || false;
+  const dateLeft = data?.persoon?.datumVertrekUitNederland
+    ? defaultDateFormat(data.persoon.datumVertrekUitNederland)
     : 'Onbekend';
 
   const notifications = useMemo(() => {
@@ -82,5 +61,5 @@ export function useBrpApi(initialState = {}): BrpApiState {
     return notifications;
   }, [inOnderzoek, isOnbekendWaarheen, dateLeft]);
 
-  return { ...rest, data: formattedData, notifications };
+  return { ...rest, data, notifications };
 }

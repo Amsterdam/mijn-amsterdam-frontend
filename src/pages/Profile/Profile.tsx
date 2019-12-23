@@ -30,7 +30,6 @@ export default function Profile() {
   const { BRP } = useContext(AppContext);
 
   const { isDirty, isError, data } = BRP;
-  const [adres] = data?.adres || [];
   const brpProfileData = useMemo(() => {
     const rData = isDirty && !isError ? data : null;
     return rData ? formatBrpProfileData(rData) : rData;
@@ -86,7 +85,7 @@ export default function Profile() {
           </Alert>
         )}
 
-        {adres?.inOnderzoek && (
+        {data?.adres?.inOnderzoek && (
           <Alert type="warning" className="inOnderzoek">
             <p>
               Op dit moment onderzoeken wij of u nog steeds woont op het adres
