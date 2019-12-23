@@ -48,6 +48,10 @@
   width: 59%;
   border-collapse: collapse;
 
+  + .InfoPanelTable {
+      margin-top: 2rem;
+    }
+
   tbody > tr {
     > td {
       text-align: left;

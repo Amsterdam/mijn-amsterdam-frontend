@@ -5,15 +5,26 @@ import InfoPanel from 'components/InfoPanel/InfoPanel';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 import { DetailPage, PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
-import { panelConfig } from './Profile.constants';
+import { panelConfig, PanelConfigFormatter } from './Profile.constants';
 import styles from 'pages/Profile/Profile.module.scss';
 import React, { useContext } from 'react';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
-import { defaultDateFormat } from 'helpers/App';
+import { defaultDateFormat, entries } from 'helpers/App';
 import { LinkdInline } from 'components/Button/Button';
 import { useMemo } from 'react';
 import { formatBrpProfileData } from 'data-formatting/brp';
-import { InfoPanelCollapsible } from '../../components/InfoPanel/InfoPanel';
+import { InfoPanelCollapsible } from 'components/InfoPanel/InfoPanel';
+import { BrpApiState } from '../../hooks/api/api.brp';
+
+function formatInfoPanelConfig(
+  panelConfig: PanelConfigFormatter,
+  BRP: BrpApiState
+) {
+  if (typeof panelConfig === 'function') {
+    return panelConfig(BRP);
+  }
+  return panelConfig;
+}
 
 export default function Profile() {
   const { BRP } = useContext(AppContext);
@@ -107,7 +118,7 @@ export default function Profile() {
       {!!brpProfileData?.persoon && (
         <InfoPanel
           className={styles.DefaultPanel}
-          {...panelConfig.persoon}
+          {...formatInfoPanelConfig(panelConfig.persoon, BRP)}
           panelData={brpProfileData.persoon}
         />
       )}
@@ -115,26 +126,50 @@ export default function Profile() {
       {!!brpProfileData?.adres && (
         <InfoPanel
           className={styles.DefaultPanel}
-          {...panelConfig.adres}
+          {...formatInfoPanelConfig(panelConfig.adres, BRP)}
           panelData={brpProfileData.adres}
         />
       )}
 
       {!!brpProfileData?.verbintenis && (
         <InfoPanelCollapsible
-          id="profile.verbintenis"
-          title={panelConfig.verbintenis.title}
-          actionLinks={panelConfig.verbintenis.actionLinks}
+          id="profile-verbintenis"
+          className={styles.Verbintenis}
+          {...formatInfoPanelConfig(panelConfig.verbintenis, BRP)}
           panelData={brpProfileData.verbintenis}
+        />
+      )}
+
+      {!!brpProfileData?.verbintenisHistorisch && (
+        <InfoPanelCollapsible
+          id="profile-verbintenisHistorisch"
+          className={styles.Verbintenis}
+          {...formatInfoPanelConfig(panelConfig.verbintenisHistorisch, BRP)}
+          panelData={brpProfileData.verbintenisHistorisch}
         />
       )}
 
       {!!brpProfileData?.kinderen && (
         <InfoPanelCollapsible
-          id="profile.kinderen"
-          title={panelConfig.kinderen.title}
-          actionLinks={panelConfig.kinderen.actionLinks}
+          id="profile-kinderen"
+          {...formatInfoPanelConfig(panelConfig.kinderen, BRP)}
           panelData={brpProfileData.kinderen}
+        />
+      )}
+
+      {!!brpProfileData?.ouders && (
+        <InfoPanelCollapsible
+          id="profile-ouders"
+          {...formatInfoPanelConfig(panelConfig.ouders, BRP)}
+          panelData={brpProfileData.ouders}
+        />
+      )}
+
+      {!!brpProfileData?.adresHistorisch && (
+        <InfoPanelCollapsible
+          id="profile-adresHistorisch"
+          {...formatInfoPanelConfig(panelConfig.adresHistorisch, BRP)}
+          panelData={brpProfileData.adresHistorisch}
         />
       )}
     </DetailPage>

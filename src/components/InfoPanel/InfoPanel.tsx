@@ -15,8 +15,29 @@ export interface ActionLink {
   external?: boolean;
 }
 
+export type ActionLinksFormatter =
+  | ActionLink[]
+  | ((sourceData: any) => ActionLink[]);
+
 export interface InfoPanelActionLinksProps {
   actionLinks: ActionLink[];
+}
+
+export interface InfoPanelTableProps {
+  panelData: Unshaped;
+}
+
+export interface InfoPanelProps {
+  id?: string;
+  title?: string;
+  actionLinks?: ActionLink[];
+  panelData: Unshaped | Unshaped[];
+  className?: string;
+}
+
+export interface InfoPanelCollapsibleProps extends InfoPanelProps {
+  id: string;
+  startCollapsed?: boolean;
 }
 
 function InfoPanelActionLinks({ actionLinks }: InfoPanelActionLinksProps) {
@@ -33,10 +54,6 @@ function InfoPanelActionLinks({ actionLinks }: InfoPanelActionLinksProps) {
   );
 }
 
-export interface InfoPanelTableProps {
-  panelData: Unshaped;
-}
-
 function getValue(value: any) {
   if (Array.isArray(value) || typeof value === 'object') {
     return JSON.stringify(value);
@@ -45,74 +62,45 @@ function getValue(value: any) {
 }
 
 function InfoPanelTable({ panelData = {} }: InfoPanelTableProps) {
-  const rows = Array.isArray(panelData)
-    ? panelData.flatMap(panelData =>
+  const tables = Array.isArray(panelData)
+    ? panelData.map(panelData =>
         entries(panelData).filter(([, value]) => !!value)
       )
-    : entries(panelData).filter(([, value]) => !!value);
+    : [entries(panelData).filter(([, value]) => !!value)];
   return (
-    <table className={styles.InfoPanelTable}>
-      <tbody>
-        {rows.map(([title, value], index) => {
-          return (
-            <tr
-              key={title + index}
-              className={`InfoPanelTableRow__${slug(title + index, {
-                lower: true,
-              })}`}
-            >
-              <th>{title}</th>
-              <td>{getValue(value)}</td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
-  );
-}
-
-export interface InfoPanelProps {
-  title?: string;
-  actionLinks?: ActionLink[];
-  panelData: Unshaped | Unshaped[];
-  className?: string;
-}
-
-export interface InfoPanelCollapsibleProps extends InfoPanelProps {
-  id: string;
-  startCollapsed?: boolean;
-}
-
-export function InfoPanelCollapsible({
-  id,
-  title = '',
-  actionLinks = [],
-  panelData = {},
-  startCollapsed = true,
-}: InfoPanelCollapsibleProps) {
-  const [isCollapsed, setCollapsed] = useSessionStorage(id, startCollapsed);
-  return (
-    <SectionCollapsible
-      className={styles.InfoPanelCollapsible}
-      title={title}
-      isLoading={false}
-      hasItems={true}
-      isCollapsed={isCollapsed}
-      onToggleCollapsed={() => setCollapsed(!isCollapsed)}
-    >
-      <InfoPanel actionLinks={actionLinks} panelData={panelData} />
-    </SectionCollapsible>
+    <>
+      {tables.map((rows, index) => (
+        <table key={index} className={styles.InfoPanelTable}>
+          <tbody>
+            {rows.map(([title, value], index) => {
+              return (
+                <tr
+                  key={title + index}
+                  className={`InfoPanelTableRow__${slug(title, {
+                    lower: true,
+                  })}`}
+                >
+                  <th>{title}</th>
+                  <td>{getValue(value)}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      ))}
+    </>
   );
 }
 
 export default function InfoPanel({
+  id,
   title = '',
   actionLinks = [],
   panelData = {},
   className,
 }: InfoPanelProps) {
   return (
-    <div className={classnames(styles.InfoPanel, className)}>
+    <div id={id} className={classnames(styles.InfoPanel, className)}>
       {!!title && <Heading className={styles.Title}>{title}</Heading>}
       <div
         className={classnames(
@@ -127,5 +115,33 @@ export default function InfoPanel({
         )}
       </div>
     </div>
+  );
+}
+
+export function InfoPanelCollapsible({
+  id,
+  title = '',
+  className,
+  actionLinks = [],
+  panelData = {},
+  startCollapsed = true,
+}: InfoPanelCollapsibleProps) {
+  const [isCollapsed, setCollapsed] = useSessionStorage(id, startCollapsed);
+  return (
+    <SectionCollapsible
+      className={styles.InfoPanelCollapsible}
+      title={title}
+      isLoading={false}
+      hasItems={true}
+      isCollapsed={isCollapsed}
+      onToggleCollapsed={() => setCollapsed(!isCollapsed)}
+    >
+      <InfoPanel
+        id={id}
+        className={className}
+        actionLinks={actionLinks}
+        panelData={panelData}
+      />
+    </SectionCollapsible>
   );
 }

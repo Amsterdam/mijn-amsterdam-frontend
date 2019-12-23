@@ -10,14 +10,6 @@ import Alert from 'components/Alert/Alert';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import Linkd from 'components/Button/Button';
 
-const DISPLAY_PROPS = {
-  datePublished: 'besluit',
-};
-
-const DISPLAY_PROPS_ACTUAL = {
-  dateStart: 'aanvraag',
-};
-
 export default () => {
   const {
     FOCUS: {

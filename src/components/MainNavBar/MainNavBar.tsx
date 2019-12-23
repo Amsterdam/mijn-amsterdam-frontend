@@ -1,4 +1,4 @@
-import { AppRoutes, Colors, LOGOUT_URL } from 'App.constants';
+import { AppRoutes, LOGOUT_URL } from 'App.constants';
 import { ComponentChildren } from 'App.types';
 import { AppContext, SessionContext } from 'AppState';
 import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';

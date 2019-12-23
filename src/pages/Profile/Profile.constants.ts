@@ -1,39 +1,61 @@
 import { ExternalUrls } from 'App.constants';
-import { InfoPanelProps } from 'components/InfoPanel/InfoPanel';
-import { BrpKey } from 'hooks/api/api.brp';
+import { ActionLink, InfoPanelProps } from 'components/InfoPanel/InfoPanel';
+import { isMokum } from 'data-formatting/brp';
+import { BrpApiState, BrpKey } from 'hooks/api/api.brp';
 
-export const panelConfig: {
-  [key in BrpKey]: Pick<InfoPanelProps, 'title' | 'actionLinks'>;
-} = {
-  persoon: {
+type PanelKey = BrpKey | 'adresHistorisch' | 'verbintenisHistorisch';
+type PanelProps = Pick<InfoPanelProps, 'title' | 'actionLinks'>;
+export type PanelConfigFormatter =
+  | PanelProps
+  | ((brpData: BrpApiState) => PanelProps);
+type PanelConfig = {
+  [key in PanelKey]: PanelConfigFormatter;
+};
+
+export const panelConfig: PanelConfig = {
+  persoon: BRP => ({
     title: 'Persoonlijke gegevens',
-    actionLinks: [
+    actionLinks: isMokum(BRP)
+      ? [
+          {
+            title: 'Inzien of correctie doorgeven',
+            url: ExternalUrls.CHANGE_PERSONAL_DATA,
+            external: true,
+          },
+        ]
+      : [],
+  }),
+  adres: BRP => {
+    const title = isMokum(BRP)
+      ? 'Verhuizing doorgeven'
+      : 'Verhuizing naar Amsterdam doorgeven';
+    const actionLinks: ActionLink[] = [
       {
-        title: 'Inzien of correctie doorgeven',
-        url: ExternalUrls.CHANGE_PERSONAL_DATA,
-        external: true,
-      },
-    ],
-  },
-  adres: {
-    title: 'Woonadres',
-    actionLinks: [
-      {
-        title: 'Verhuizing doorgeven',
+        title,
         url: ExternalUrls.REPORT_RELOCATION,
         external: true,
       },
-    ],
+    ];
+    return {
+      title: 'Woonadres',
+      actionLinks,
+    };
   },
-  verbintenis: {
+  verbintenis: BRP => ({
     title: 'Burgerlijke staat',
-    actionLinks: [
-      {
-        title: 'Inzien of correctie doorgeven',
-        url: ExternalUrls.CHANGE_PERSONAL_DATA,
-        external: true,
-      },
-    ],
+    actionLinks: isMokum(BRP)
+      ? [
+          {
+            title: 'Inzien of correctie doorgeven',
+            url: ExternalUrls.CHANGE_PERSONAL_DATA,
+            external: true,
+          },
+        ]
+      : [],
+  }),
+  verbintenisHistorisch: {
+    title: 'Voormalige verbintenissen',
+    actionLinks: [],
   },
   ouders: {
     title: 'Ouders',
@@ -41,6 +63,10 @@ export const panelConfig: {
   },
   kinderen: {
     title: 'Kinderen',
+    actionLinks: [],
+  },
+  adresHistorisch: {
+    title: 'Vorige woonadressen',
     actionLinks: [],
   },
 };

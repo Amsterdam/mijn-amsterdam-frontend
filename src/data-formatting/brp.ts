@@ -1,13 +1,16 @@
 import { entries } from 'helpers/App';
-import { BrpApiState, BrpKey } from 'hooks/api/api.brp';
+import { BrpApiState } from 'hooks/api/api.brp';
 import { defaultDateFormat } from '../helpers/App';
 
-type Value = string | number | null;
-type ProfileKeyValFormatter =
+type Value = any;
+type ProfileLabelValueFormatter =
   | string
-  | [string, (value: any, brpData?: BrpResponseData) => Value];
+  | [
+      string | ((key: string, item: any, brpData?: BrpResponseData) => string),
+      (value: any, item: any, brpData?: BrpResponseData) => Value
+    ];
 
-type ProfileLabels<T> = { [key in keyof T]: ProfileKeyValFormatter };
+type ProfileLabels<T> = { [key in keyof T]: ProfileLabelValueFormatter };
 
 export interface Adres {
   straatnaam: string;
@@ -20,20 +23,11 @@ export interface Adres {
   inOnderzoek: boolean;
 }
 
-interface Partner {
-  bsn: string;
-  geboortedatum: string;
-  geslachtsaanduiding: string | null;
-  geslachtsnaam: string;
-  overlijdensdatum: string | null;
-  voornamen: string;
-  voorvoegselGeslachtsnaam: string | null;
-}
-
 export interface Persoon {
   aanduidingNaamgebruikOmschrijving: string;
   bsn: string;
   geboortedatum: string;
+  overlijdensdatum: string | null;
   geboortelandnaam: string;
   geboorteplaatsnaam: string;
   gemeentenaamInschrijving: string;
@@ -49,14 +43,14 @@ export interface Persoon {
   datumVertrekUitNederland: string;
 }
 
-interface Verbintenis extends Partner {
+interface Verbintenis {
   datumOntbinding: string | null;
   datumSluiting: string;
   landnaamSluiting: string;
-  persoon: Partner;
   plaatsnaamSluitingOmschrijving: string;
   soortVerbintenis: string;
   soortVerbintenisOmschrijving: string;
+  persoon: Persoon;
 }
 
 interface Kind {
@@ -78,11 +72,7 @@ export interface BrpResponseData {
 }
 
 export function getFullName(persoon: Persoon) {
-  return `${persoon.voornamen} ${
-    persoon.voorvoegselGeslachtsnaam
-      ? persoon.voorvoegselGeslachtsnaam + ' '
-      : ''
-  }${persoon.geslachtsnaam}`;
+  return persoon.opgemaakteNaam;
 }
 
 export function getFullAddress(adres: Adres) {
@@ -100,6 +90,7 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
   geslachtsnaam: 'Achternaam',
   omschrijvingGeslachtsaanduiding: 'Geslacht',
   geboortedatum: ['Geboortedatum', value => defaultDateFormat(value)],
+  overlijdensdatum: ['Datum overlijden', value => defaultDateFormat(value)],
   geboorteplaatsnaam: 'Geboorteplaats',
   geboortelandnaam: 'Geboorteland',
   nationaliteiten: [
@@ -115,14 +106,14 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
 const adres: ProfileLabels<Partial<Adres>> = {
   straatnaam: [
     'Straat',
-    (_value, brpData) => {
+    (_value, _item, brpData) => {
       const [adres] = brpData?.adres || [];
       return !!adres ? getFullAddress(adres) : 'Onbekend';
     },
   ],
   woonplaatsNaam: [
     'Plaats',
-    (_value, brpData) => {
+    (_value, _item, brpData) => {
       const [adres] = brpData?.adres || [];
       return !!adres ? adres.woonplaatsNaam : 'Onbekend';
     },
@@ -133,14 +124,14 @@ const adres: ProfileLabels<Partial<Adres>> = {
   ],
 };
 
-function partner(key: keyof Partner, defaultValue: Value = null) {
+function partner(key: keyof Persoon, defaultValue: Value = null) {
   return (_value: any, brpData?: BrpResponseData): Value => {
     const [verbintenis] = brpData?.verbintenis || [];
     return verbintenis?.persoon[key] || defaultValue;
   };
 }
 
-const verbintenis: ProfileLabels<Partial<Verbintenis>> = {
+const verbintenis: ProfileLabels<Partial<Verbintenis> & Partial<Persoon>> = {
   soortVerbintenisOmschrijving: [
     'Soort verbintenis',
     value => value || 'Onbekend',
@@ -149,16 +140,18 @@ const verbintenis: ProfileLabels<Partial<Verbintenis>> = {
     'Sinds',
     value => (value ? defaultDateFormat(value) : 'Onbekend'),
   ],
+  datumOntbinding: [
+    'Datum ontbinding',
+    value => value && defaultDateFormat(value),
+  ],
   plaatsnaamSluitingOmschrijving: ['Plaats', value => value || 'Onbekend'],
   landnaamSluiting: ['Land', value => value || 'Onbekend'],
-  datumOntbinding: 'Datum ontbinding',
   voornamen: ['Voornamen', partner('voornamen')],
   voorvoegselGeslachtsnaam: [
     'Voorvoegsel',
     partner('voorvoegselGeslachtsnaam'),
   ],
   geslachtsnaam: ['Achternaam', partner('geslachtsnaam')],
-  // bsn: ['BSN', partner('bsn')],
   geboortedatum: [
     'Geboortedatum',
     (_value, brpData) => {
@@ -177,15 +170,13 @@ const verbintenis: ProfileLabels<Partial<Verbintenis>> = {
         : null;
     },
   ],
+  bsn: ['BSN', partner('bsn')],
 };
 
 export const brpInfoLabels = {
   persoon,
   adres,
   verbintenis,
-  // kinderen: {},
-  // ouders: {},
-  // adressen: {},
 };
 
 function format(
@@ -194,9 +185,13 @@ function format(
   brpData: BrpResponseData
 ) {
   const formattedData = entries(labelConfig).reduce((acc, [key, formatter]) => {
-    const label = Array.isArray(formatter) ? formatter[0] : formatter;
+    const labelFormatter = Array.isArray(formatter) ? formatter[0] : formatter;
+    const label =
+      typeof labelFormatter === 'function'
+        ? labelFormatter(key, data, brpData)
+        : labelFormatter;
     const value = Array.isArray(formatter)
-      ? formatter[1](data[key], brpData)
+      ? formatter[1](data[key], data, brpData)
       : data[key];
     return {
       ...acc,
@@ -211,33 +206,60 @@ interface ProfileSection {
   [key: string]: Value;
 }
 
-type BrpProfileData = Partial<
-  {
-    [key in BrpKey]: ProfileSection | ProfileSection[];
-  }
->;
+interface BrpProfileData {
+  persoon: ProfileSection;
+  adres: ProfileSection;
+  adresHistorisch?: ProfileSection[];
+  verbintenis?: ProfileSection;
+  verbintenisHistorisch?: ProfileSection[];
+  ouders?: ProfileSection[];
+  kinderen?: ProfileSection[];
+}
 
 export function formatBrpProfileData(brpData: BrpResponseData): BrpProfileData {
-  const [adres] = brpData.adres;
-  const [verbintenis] = brpData.verbintenis || [];
+  const adressen = brpData.adres.map(adres =>
+    format(brpInfoLabels.adres, adres, brpData)
+  );
 
   const profileData: BrpProfileData = {
     persoon: format(brpInfoLabels.persoon, brpData.persoon, brpData),
-    adres: format(brpInfoLabels.adres, adres, brpData),
+    adres: adressen[0],
   };
 
-  if (verbintenis && !verbintenis.datumOntbinding) {
-    profileData.verbintenis = format(
-      brpInfoLabels.verbintenis,
-      verbintenis,
-      brpData
-    );
+  if (Array.isArray(brpData.verbintenis) && brpData.verbintenis.length >= 1) {
+    const verbintenisHistorisch = brpData.verbintenis
+      .filter(verbintenis => !!verbintenis.datumOntbinding)
+      .map(verbintenis => {
+        return {
+          ...format(brpInfoLabels.verbintenis, verbintenis, brpData),
+          ...format(brpInfoLabels.persoon, verbintenis.persoon, brpData),
+        };
+      });
+    profileData.verbintenisHistorisch = verbintenisHistorisch;
+
+    if (verbintenisHistorisch.length !== brpData.verbintenis.length) {
+      const [verbintenis] = brpData.verbintenis; // Assumes first item is actual
+      profileData.verbintenis = {
+        ...format(brpInfoLabels.verbintenis, verbintenis, brpData),
+        ...format(brpInfoLabels.persoon, verbintenis.persoon, brpData),
+      };
+    }
   }
 
   if (brpData.kinderen) {
     profileData.kinderen = brpData.kinderen.map(kind =>
       format(brpInfoLabels.persoon, kind, brpData)
     );
+  }
+
+  if (brpData.ouders) {
+    profileData.ouders = brpData.ouders.map(ouder =>
+      format(brpInfoLabels.persoon, ouder, brpData)
+    );
+  }
+
+  if (adressen.length > 1) {
+    profileData.adresHistorisch = adressen.slice(1);
   }
 
   return profileData;
