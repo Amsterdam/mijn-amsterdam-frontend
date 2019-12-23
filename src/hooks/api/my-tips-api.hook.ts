@@ -70,12 +70,7 @@ export default function useMyTipsApi(
     const requestDataFormatted = {
       optin: isOptIn,
       data: {
-        // TODO: Remove when TIPS api can handle newly formatted data
-        brp: {
-          ...brp,
-          adres: brp.adres[0],
-          verbintenis: brp.verbintenis[0],
-        },
+        brp,
         focus,
         erfpacht,
         wmo,

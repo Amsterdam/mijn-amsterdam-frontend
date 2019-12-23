@@ -30,7 +30,6 @@ export default function Profile() {
   const { BRP } = useContext(AppContext);
 
   const { isDirty, isError, data } = BRP;
-  const [adres] = data?.adres || [];
   const brpProfileData = useMemo(() => {
     const rData = isDirty && !isError ? data : null;
     return rData ? formatBrpProfileData(rData) : rData;
@@ -86,7 +85,7 @@ export default function Profile() {
           </Alert>
         )}
 
-        {adres?.inOnderzoek && (
+        {data?.adres?.inOnderzoek && (
           <Alert type="warning" className="inOnderzoek">
             <p>
               Op dit moment onderzoeken wij of u nog steeds woont op het adres
@@ -140,17 +139,16 @@ export default function Profile() {
         />
       )}
 
-      {!!brpProfileData?.verbintenisHistorisch &&
-        brpProfileData?.verbintenisHistorisch.length && (
-          <InfoPanelCollapsible
-            id="profile-verbintenisHistorisch"
-            className={styles.Verbintenis}
-            {...formatInfoPanelConfig(panelConfig.verbintenisHistorisch, BRP)}
-            panelData={brpProfileData.verbintenisHistorisch}
-          />
-        )}
+      {!!brpProfileData?.verbintenisHistorisch && (
+        <InfoPanelCollapsible
+          id="profile-verbintenisHistorisch"
+          className={styles.Verbintenis}
+          {...formatInfoPanelConfig(panelConfig.verbintenisHistorisch, BRP)}
+          panelData={brpProfileData.verbintenisHistorisch}
+        />
+      )}
 
-      {!!brpProfileData?.kinderen && brpProfileData.kinderen.length && (
+      {!!brpProfileData?.kinderen && (
         <InfoPanelCollapsible
           id="profile-kinderen"
           {...formatInfoPanelConfig(panelConfig.kinderen, BRP)}
@@ -158,7 +156,7 @@ export default function Profile() {
         />
       )}
 
-      {!!brpProfileData?.ouders && brpProfileData.ouders.length && (
+      {!!brpProfileData?.ouders && (
         <InfoPanelCollapsible
           id="profile-ouders"
           {...formatInfoPanelConfig(panelConfig.ouders, BRP)}
@@ -166,14 +164,13 @@ export default function Profile() {
         />
       )}
 
-      {!!brpProfileData?.adresHistorisch &&
-        brpProfileData?.adresHistorisch.length && (
-          <InfoPanelCollapsible
-            id="profile-adresHistorisch"
-            {...formatInfoPanelConfig(panelConfig.adresHistorisch, BRP)}
-            panelData={brpProfileData.adresHistorisch}
-          />
-        )}
+      {!!brpProfileData?.adresHistorisch && (
+        <InfoPanelCollapsible
+          id="profile-adresHistorisch"
+          {...formatInfoPanelConfig(panelConfig.adresHistorisch, BRP)}
+          panelData={brpProfileData.adresHistorisch}
+        />
+      )}
     </DetailPage>
   );
 }

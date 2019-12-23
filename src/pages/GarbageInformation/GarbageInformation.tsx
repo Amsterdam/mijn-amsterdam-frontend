@@ -153,7 +153,7 @@ export default () => {
       {!!BRP.data?.adres && (
         <GarbagePanel className={styles.AddressPanel}>
           <Heading size="tiny">Uw adres</Heading>
-          <p>{getFullAddress(BRP.data.adres[0])}</p>
+          <p>{getFullAddress(BRP.data.adres)}</p>
         </GarbagePanel>
       )}
 

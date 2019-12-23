@@ -97,7 +97,7 @@ export function useAppState(value?: any) {
     BRP.isDirty,
   ];
 
-  const address = BRP?.data?.adres ? getFullAddress(BRP.data.adres[0]) : '';
+  const address = BRP?.data?.adres ? getFullAddress(BRP.data.adres) : '';
   const mokum = isMokum(BRP);
   const refetchMyArea = MY_AREA.refetch;
   const refetchGarbage = GARBAGE.refetch;
