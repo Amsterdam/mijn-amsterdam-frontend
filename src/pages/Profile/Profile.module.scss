@@ -1,16 +1,15 @@
 @import 'styles/_global.scss';
 
-.Profile {
-
-  @include media-q('>phone') {
-    // Custom style
-    [class*='burgerlijke-staat'] [class*='InfoPanelTableRow__voornamen'] {
+.Verbintenis {
+  [class*='InfoPanel_InfoPanelTable'] + [class*='InfoPanel_InfoPanelTable'] {
+    margin-top: 10rem;
+  }
+  [class*='InfoPanelTableRow__voornamen'] {
       th,
       td {
         padding-top: 3rem;
       }
     }
-  }
 }
 
 .Intro {
@@ -23,6 +22,11 @@
   }
 }
 
-.InfoPanels {
+.DefaultPanel {
   @include centered-block;
+  margin-bottom: 5rem;
+}
+
+.CollapsiblePanel {
+  margin-bottom: 5rem;
 }

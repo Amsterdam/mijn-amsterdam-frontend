@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ComponentChildren } from 'App.types';
 import { ReactComponent as CaretIcon } from 'assets/icons/Chevron-Right.svg';
 import classnames from 'classnames';
@@ -9,7 +9,6 @@ import Heading from '../Heading/Heading';
 import styles from './SectionCollapsible.module.scss';
 import { trackEvent } from 'hooks/analytics.hook';
 import { useRef } from 'react';
-import { useDomElementDimensions } from 'hooks/useDomElementDimensions.hook';
 import { useSpring, animated } from 'react-spring';
 import { useDebouncedCallback } from 'use-debounce';
 
@@ -36,19 +35,29 @@ export default function SectionCollapsible({
   track,
   children,
 }: SectionCollapsibleProps) {
-  const contentRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const [isReadyForAnimation, setReadyForAnimaton] = useState(false);
-  const { height: contentHeight } = useDomElementDimensions(contentRef);
   const hasTitle = !!title;
   const hasNoItemsMessage = !!noItemsMessage;
 
   const [setReadyForAnimatonDebounced] = useDebouncedCallback(() => {
-    if (!isLoading) {
+    if (!isLoading && isReadyForAnimation === false) {
       setReadyForAnimaton(true);
     }
-  }, 200);
+  }, 50);
 
   setReadyForAnimatonDebounced();
+
+  const [{ height: contentHeight }, setDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
+
+  useEffect(() => {
+    if (!isLoading && contentRef && contentRef.current) {
+      setDimensions(contentRef.current.getBoundingClientRect());
+    }
+  }, [isLoading]);
 
   const classes = classnames(
     styles.SectionCollapsible,
@@ -72,7 +81,7 @@ export default function SectionCollapsible({
     from: {
       height: 0,
     },
-    height: contentHeight + 2,
+    height: contentHeight,
   };
 
   const heightAnimSpring = useSpring(heightAnim);
@@ -123,7 +132,10 @@ export default function SectionCollapsible({
           className={styles.Panel}
           style={heightAnimSpring}
         >
-          <div ref={contentRef}>{children}</div>
+          {/* paddingBottom to prevent margin collapsing */}
+          <div style={{ paddingBottom: '1px' }} ref={contentRef}>
+            {children}
+          </div>
         </animated.div>
       )}
     </section>

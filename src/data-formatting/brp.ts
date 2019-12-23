@@ -1,57 +1,16 @@
-import { ExternalUrls } from 'App.constants';
-import { defaultDateFormat } from 'helpers/App';
+import { entries } from 'helpers/App';
+import { BrpApiState } from 'hooks/api/api.brp';
+import { defaultDateFormat } from '../helpers/App';
 
-export const panelConfig: { [key: string]: any } = {
-  person: {
-    title: 'Persoonlijke gegevens',
-    actionLinks: [
-      {
-        title: 'Inzien of correctie doorgeven',
-        url: ExternalUrls.CHANGE_PERSONAL_DATA,
-        external: true,
-      },
-    ],
-  },
-  address: {
-    title: 'Woonadres',
-    actionLinks: [
-      {
-        title: 'Verhuizing doorgeven',
-        url: ExternalUrls.REPORT_RELOCATION,
-        external: true,
-      },
-    ],
-  },
-  maritalStatus: {
-    title: 'Burgerlijke staat',
-    actionLinks: [
-      {
-        title: 'Inzien of correctie doorgeven',
-        url: ExternalUrls.CHANGE_PERSONAL_DATA,
-        external: true,
-      },
-    ],
-  },
-};
+type Value = any;
+type ProfileLabelValueFormatter =
+  | string
+  | [
+      string | ((key: string, item: any, brpData?: BrpResponseData) => string),
+      (value: any, item: any, brpData?: BrpResponseData) => Value
+    ];
 
-export const brpInfoLabels = {
-  FirstName: 'Voornamen',
-  PreLastName: 'Voorvoegsel',
-  LastName: 'Achternaam',
-  Gender: 'Geslacht',
-  BSN: 'BSN',
-  DateOfBirth: 'Geboortedatum',
-  PlaceOfBirth: 'Geboorteplaats',
-  CountryOfBirth: 'Geboorteland',
-  Nationality: 'Nationaliteit',
-  Date: 'Datum',
-  Place: 'Plaats',
-  Street: 'Straat',
-  Country: 'Land',
-  DateStarted: 'Sinds',
-  MaritalStatusType: 'Soort verbintenis',
-  Address: 'Adres',
-};
+type ProfileLabels<T> = { [key in keyof T]: ProfileLabelValueFormatter };
 
 export interface Adres {
   straatnaam: string;
@@ -64,20 +23,11 @@ export interface Adres {
   inOnderzoek: boolean;
 }
 
-interface Partner {
-  bsn: string;
-  geboortedatum: string;
-  geslachtsaanduiding: string | null;
-  geslachtsnaam: string;
-  overlijdensdatum: string | null;
-  voornamen: string;
-  voorvoegselGeslachtsnaam: string | null;
-}
-
 export interface Persoon {
   aanduidingNaamgebruikOmschrijving: string;
   bsn: string;
   geboortedatum: string;
+  overlijdensdatum: string | null;
   geboortelandnaam: string;
   geboorteplaatsnaam: string;
   gemeentenaamInschrijving: string;
@@ -93,16 +43,14 @@ export interface Persoon {
   datumVertrekUitNederland: string;
 }
 
-export type Person = Persoon;
-
 interface Verbintenis {
   datumOntbinding: string | null;
   datumSluiting: string;
   landnaamSluiting: string;
-  persoon: Partner;
   plaatsnaamSluitingOmschrijving: string;
   soortVerbintenis: string;
   soortVerbintenisOmschrijving: string;
+  persoon: Persoon;
 }
 
 interface Kind {
@@ -117,91 +65,210 @@ interface Kind {
 
 export interface BrpResponseData {
   persoon: Persoon;
-  verbintenis?: Verbintenis;
+  verbintenis?: Verbintenis[];
   kinderen?: Kind[];
-  adres: Adres;
+  ouders: Persoon[];
+  adres: Adres[];
 }
 
-export interface ProfileData {
-  person: {
-    [label: string]: string | number | null;
+export function getFullName(persoon: Persoon) {
+  return persoon.opgemaakteNaam;
+}
+
+export function getFullAddress(adres: Adres) {
+  return `${adres.straatnaam} ${adres.huisnummer || ''} ${adres.huisletter ||
+    ''} ${adres.huisnummertoevoeging || ''}`;
+}
+
+export function isMokum(BRP: BrpApiState) {
+  return !!BRP?.data?.persoon?.mokum;
+}
+
+const persoon: ProfileLabels<Partial<Persoon>> = {
+  voornamen: 'Voornamen',
+  voorvoegselGeslachtsnaam: 'Voorvoegsel',
+  geslachtsnaam: 'Achternaam',
+  omschrijvingGeslachtsaanduiding: 'Geslacht',
+  geboortedatum: ['Geboortedatum', value => defaultDateFormat(value)],
+  overlijdensdatum: ['Datum overlijden', value => defaultDateFormat(value)],
+  geboorteplaatsnaam: [
+    'Geboorteplaats',
+    (value, _item, brpResponseData) =>
+      brpResponseData?.persoon.mokum ? value || 'Onbekend' : '',
+  ],
+  geboortelandnaam: [
+    'Geboorteland',
+    (value, _item, brpResponseData) =>
+      brpResponseData?.persoon.mokum ? value || 'Onbekend' : '',
+  ],
+  nationaliteiten: [
+    'Nationaliteit',
+    value =>
+      Array.isArray(value)
+        ? value.map(({ omschrijving }) => omschrijving).join(' ')
+        : null,
+  ],
+  bsn: 'BSN',
+};
+
+const adres: ProfileLabels<Partial<Adres>> = {
+  straatnaam: [
+    'Straat',
+    (_value, _item, brpData) => {
+      const [adres] = brpData?.adres || [];
+      return !!adres ? getFullAddress(adres) : 'Onbekend';
+    },
+  ],
+  woonplaatsNaam: [
+    'Plaats',
+    (_value, _item, brpData) => {
+      const [adres] = brpData?.adres || [];
+      return !!adres ? adres.woonplaatsNaam : 'Onbekend';
+    },
+  ],
+  begindatumVerblijf: [
+    'Sinds',
+    value => (value ? defaultDateFormat(value) : 'Onbekend'),
+  ],
+};
+
+function partner(key: keyof Persoon, defaultValue: Value = null) {
+  return (_value: any, brpData?: BrpResponseData): Value => {
+    const [verbintenis] = brpData?.verbintenis || [];
+    return verbintenis?.persoon[key] || defaultValue;
   };
-  maritalStatus: {
-    [label: string]: string | number | null;
-  } | null;
-  address: {
-    [label: string]: string | null;
-  };
 }
 
-export function getFullName(person: Persoon) {
-  return `${person.voornamen} ${
-    person.voorvoegselGeslachtsnaam ? person.voorvoegselGeslachtsnaam + ' ' : ''
-  }${person.geslachtsnaam}`;
-}
+const verbintenis: ProfileLabels<Partial<Verbintenis> & Partial<Persoon>> = {
+  soortVerbintenisOmschrijving: [
+    'Soort verbintenis',
+    value => value || 'Onbekend',
+  ],
+  datumSluiting: [
+    'Sinds',
+    value => (value ? defaultDateFormat(value) : 'Onbekend'),
+  ],
+  datumOntbinding: [
+    'Datum ontbinding',
+    value => value && defaultDateFormat(value),
+  ],
+  plaatsnaamSluitingOmschrijving: ['Plaats', value => value || 'Onbekend'],
+  landnaamSluiting: ['Land', value => value || 'Onbekend'],
+  voornamen: ['Voornamen', partner('voornamen')],
+  voorvoegselGeslachtsnaam: [
+    'Voorvoegsel',
+    partner('voorvoegselGeslachtsnaam'),
+  ],
+  geslachtsnaam: ['Achternaam', partner('geslachtsnaam')],
+  geboortedatum: [
+    'Geboortedatum',
+    (_value, brpData) => {
+      const [verbintenis] = brpData?.verbintenis || [];
+      return verbintenis?.persoon.geboortedatum
+        ? defaultDateFormat(verbintenis.persoon.geboortedatum)
+        : null;
+    },
+  ],
+  overlijdensdatum: [
+    'Overlijdensdatum',
+    (_value, brpData) => {
+      const [verbintenis] = brpData?.verbintenis || [];
+      return verbintenis?.persoon.overlijdensdatum
+        ? defaultDateFormat(verbintenis.persoon.overlijdensdatum)
+        : null;
+    },
+  ],
+  bsn: ['BSN', partner('bsn')],
+};
 
-export function getFullAddress(address: Adres) {
-  return `${address.straatnaam} ${address.huisnummer ||
-    ''} ${address.huisletter || ''} ${address.huisnummertoevoeging || ''}`;
-}
-
-export function formatProfileData({
+export const brpInfoLabels = {
   persoon,
   adres,
   verbintenis,
-  kinderen,
-}: BrpResponseData): ProfileData {
-  const unknown = persoon.mokum ? 'Onbekend' : '';
-  return {
-    person: {
-      [brpInfoLabels.FirstName]: persoon.voornamen,
-      [brpInfoLabels.PreLastName]: persoon.voorvoegselGeslachtsnaam,
-      [brpInfoLabels.LastName]: persoon.geslachtsnaam,
-      [brpInfoLabels.Gender]: persoon.omschrijvingGeslachtsaanduiding,
-      [brpInfoLabels.BSN]: persoon.bsn,
-      [brpInfoLabels.DateOfBirth]:
-        persoon.geboortedatum && defaultDateFormat(persoon.geboortedatum),
-      [brpInfoLabels.PlaceOfBirth]: persoon.geboorteplaatsnaam || unknown,
-      [brpInfoLabels.CountryOfBirth]: persoon.geboortelandnaam || unknown,
-      [brpInfoLabels.Nationality]:
-        persoon.nationaliteiten && persoon.nationaliteiten.length
-          ? persoon.nationaliteiten.reduce(
-              (str, { omschrijving }) => str + omschrijving + ' ',
-              ''
-            )
-          : unknown,
-    },
-    address: {
-      [brpInfoLabels.Street]: adres.straatnaam
-        ? getFullAddress(adres)
-        : unknown,
-      [brpInfoLabels.Place]: `${adres.postcode || ''} ${adres.woonplaatsNaam ||
-        'Onbekend'}`,
-      [brpInfoLabels.DateStarted]:
-        adres.begindatumVerblijf && defaultDateFormat(adres.begindatumVerblijf),
-    },
-    maritalStatus: !!(
-      verbintenis &&
-      verbintenis.persoon &&
-      !verbintenis.datumOntbinding
-    )
-      ? {
-          [brpInfoLabels.MaritalStatusType]:
-            verbintenis.soortVerbintenisOmschrijving || unknown,
-          [brpInfoLabels.Date]: verbintenis.datumSluiting
-            ? defaultDateFormat(verbintenis.datumSluiting)
-            : unknown,
-          [brpInfoLabels.Place]:
-            verbintenis.plaatsnaamSluitingOmschrijving || unknown,
-          [brpInfoLabels.Country]: verbintenis.landnaamSluiting || unknown,
-          [brpInfoLabels.FirstName]: verbintenis.persoon.voornamen,
-          [brpInfoLabels.PreLastName]:
-            verbintenis.persoon.voorvoegselGeslachtsnaam,
-          [brpInfoLabels.LastName]: verbintenis.persoon.geslachtsnaam,
-          [brpInfoLabels.DateOfBirth]:
-            verbintenis.persoon.geboortedatum &&
-            defaultDateFormat(verbintenis.persoon.geboortedatum),
-        }
-      : null,
+};
+
+function format(
+  labelConfig: ProfileLabels<any>,
+  data: any,
+  brpData: BrpResponseData
+) {
+  const formattedData = entries(labelConfig).reduce((acc, [key, formatter]) => {
+    const labelFormatter = Array.isArray(formatter) ? formatter[0] : formatter;
+    const label =
+      typeof labelFormatter === 'function'
+        ? labelFormatter(key, data, brpData)
+        : labelFormatter;
+    const value = Array.isArray(formatter)
+      ? formatter[1](data[key], data, brpData)
+      : data[key];
+    return {
+      ...acc,
+      [label]: value,
+    };
+  }, {});
+
+  return formattedData;
+}
+
+interface ProfileSection {
+  [key: string]: Value;
+}
+
+interface BrpProfileData {
+  persoon: ProfileSection;
+  adres: ProfileSection;
+  adresHistorisch?: ProfileSection[];
+  verbintenis?: ProfileSection;
+  verbintenisHistorisch?: ProfileSection[];
+  ouders?: ProfileSection[];
+  kinderen?: ProfileSection[];
+}
+
+export function formatBrpProfileData(brpData: BrpResponseData): BrpProfileData {
+  const adressen = brpData.adres.map(adres =>
+    format(brpInfoLabels.adres, adres, brpData)
+  );
+
+  const profileData: BrpProfileData = {
+    persoon: format(brpInfoLabels.persoon, brpData.persoon, brpData),
+    adres: adressen[0],
   };
+
+  if (Array.isArray(brpData.verbintenis) && brpData.verbintenis.length >= 1) {
+    const verbintenisHistorisch = brpData.verbintenis
+      .filter(verbintenis => !!verbintenis.datumOntbinding)
+      .map(verbintenis => {
+        return {
+          ...format(brpInfoLabels.verbintenis, verbintenis, brpData),
+          ...format(brpInfoLabels.persoon, verbintenis.persoon, brpData),
+        };
+      });
+    profileData.verbintenisHistorisch = verbintenisHistorisch;
+
+    if (verbintenisHistorisch.length !== brpData.verbintenis.length) {
+      const [verbintenis] = brpData.verbintenis; // Assumes first item is actual
+      profileData.verbintenis = {
+        ...format(brpInfoLabels.verbintenis, verbintenis, brpData),
+        ...format(brpInfoLabels.persoon, verbintenis.persoon, brpData),
+      };
+    }
+  }
+
+  if (brpData.kinderen) {
+    profileData.kinderen = brpData.kinderen.map(kind =>
+      format(brpInfoLabels.persoon, kind, brpData)
+    );
+  }
+
+  if (brpData.ouders) {
+    profileData.ouders = brpData.ouders.map(ouder =>
+      format(brpInfoLabels.persoon, ouder, brpData)
+    );
+  }
+
+  if (adressen.length > 1) {
+    profileData.adresHistorisch = adressen.slice(1);
+  }
+
+  return profileData;
 }

@@ -89,4 +89,8 @@
     margin-left: 1rem;
     margin-right: 1rem;
   }
+
+  + [class*="DataLinkTable_DataLinkTable"] {
+    margin-top: 8rem;
+  }
 }

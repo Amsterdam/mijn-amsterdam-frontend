@@ -2,24 +2,46 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import Profile from './Profile';
 import AppState, { AppState as AppStateInterface } from 'AppState';
-import { BrpResponseData } from 'data-formatting/brp';
 import slug from 'slug';
 import { ReactNode } from 'react';
-import { withRouter } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 
 const responseData = {
-  notifications: [],
-  adres: {
-    huisletter: null,
-    huisnummer: '1',
-    huisnummertoevoeging: null,
-    postcode: '1064 BH',
-    straatnaam: 'Burgemeester R\u00f6ellstr',
-    woonplaatsNaam: 'Amsterdam',
-    begindatumVerblijf: null,
-  },
+  adres: [
+    {
+      inOnderzoek: true,
+      huisletter: null,
+      huisnummer: '1',
+      huisnummertoevoeging: null,
+      postcode: '1064 BH',
+      straatnaam: 'Burgemeester R\u00f6ellstr',
+      woonplaatsNaam: 'Amsterdam',
+      begindatumVerblijf: '1967-01-01T00:00:00Z',
+    },
+    {
+      inOnderzoek: true,
+      huisletter: null,
+      huisnummer: '1',
+      huisnummertoevoeging: null,
+      postcode: '1064 BH',
+      straatnaam: 'Burgemeester R\u00f6ellstr',
+      woonplaatsNaam: 'Amsterdam',
+      begindatumVerblijf: '1967-01-01T00:00:00Z',
+    },
+    {
+      inOnderzoek: true,
+      huisletter: null,
+      huisnummer: '1',
+      huisnummertoevoeging: null,
+      postcode: '1064 BH',
+      straatnaam: 'Burgemeester R\u00f6ellstr',
+      woonplaatsNaam: 'Amsterdam',
+      begindatumVerblijf: '1967-01-01T00:00:00Z',
+    },
+  ],
   persoon: {
+    vertrokkenOnbekendWaarheen: true,
+    datumVertrekUitNederland: '1967-01-01T00:00:00Z',
     aanduidingNaamgebruikOmschrijving: 'Eigen geslachtsnaam',
     bsn: '129095205',
     geboortedatum: '1950-01-01T00:00:00Z',
@@ -31,6 +53,9 @@ const responseData = {
       {
         omschrijving: 'Nederlandse',
       },
+      {
+        omschrijving: 'Turkse',
+      },
     ],
     omschrijvingBurgerlijkeStaat: 'Gehuwd',
     omschrijvingGeslachtsaanduiding: 'Man',
@@ -39,23 +64,113 @@ const responseData = {
     voorvoegselGeslachtsnaam: null,
     mokum: true,
   },
-  verbintenis: {
-    datumOntbinding: null,
-    datumSluiting: '',
-    landnaamSluiting: 'Marokko',
-    persoon: {
+  ouders: [
+    {
+      geboortedatum: '1920-01-01T00:00:00Z',
+      geboortelandnaam: 'Nederland',
+      geboorteplaatsnaam: 'Lochem',
+      geslachtsnaam: 'Beemsterboer',
+      nationaliteiten: [
+        {
+          omschrijving: 'Nederlandse',
+        },
+      ],
+      omschrijvingGeslachtsaanduiding: 'Man',
+      opgemaakteNaam: 'S. Beemsterboer',
+      voornamen: 'Senior',
       bsn: '123456780',
-      geboortedatum: '2019-07-08T09:14:58.963Z',
-      geslachtsaanduiding: null,
-      geslachtsnaam: 'Bakker',
-      overlijdensdatum: null,
-      voornamen: 'Souad',
       voorvoegselGeslachtsnaam: null,
     },
-    plaatsnaamSluitingOmschrijving: 'Asilah',
-    soortVerbintenis: 'H',
-    soortVerbintenisOmschrijving: 'Huwelijk',
-  },
+    {
+      geboortedatum: '1920-01-01T00:00:00Z',
+      geboortelandnaam: 'Nederland',
+      geboorteplaatsnaam: 'Lochem',
+      geslachtsnaam: 'Beemsterboerin',
+      bsn: '123456780',
+      nationaliteiten: [
+        {
+          omschrijving: 'Nederlandse',
+        },
+      ],
+      omschrijvingGeslachtsaanduiding: 'Vrouw',
+      opgemaakteNaam: 'Sa. Beemsterboer',
+      voornamen: 'Seniora',
+      voorvoegselGeslachtsnaam: null,
+    },
+  ],
+  verbintenis: [
+    {
+      datumOntbinding: null,
+      datumSluiting: '1999-01-01T01:01:01.000Z',
+      landnaamSluiting: 'Marokko',
+      persoon: {
+        bsn: '123456780',
+        geboortedatum: '2019-07-08T09:14:58.963Z',
+        geslachtsaanduiding: null,
+        geslachtsnaam: 'Bakker',
+        overlijdensdatum: null,
+        voornamen: 'Souad',
+        voorvoegselGeslachtsnaam: null,
+      },
+      plaatsnaamSluitingOmschrijving: 'Asilah',
+      soortVerbintenis: 'H',
+      soortVerbintenisOmschrijving: 'Huwelijk',
+    },
+    {
+      datumOntbinding: '1998-07-08T09:14:58.963Z',
+      datumSluiting: '1912-01-01T01:01:01.000Z',
+      landnaamSluiting: 'Marokko',
+      persoon: {
+        bsn: '123456780',
+        geboortedatum: '2019-07-08T09:14:58.963Z',
+        geslachtsaanduiding: null,
+        geslachtsnaam: 'Bakker',
+        overlijdensdatum: null,
+        voornamen: 'Souad',
+        voorvoegselGeslachtsnaam: null,
+      },
+      plaatsnaamSluitingOmschrijving: 'Asilah',
+      soortVerbintenis: 'H',
+      soortVerbintenisOmschrijving: 'Huwelijk',
+    },
+    {
+      datumOntbinding: '2019-07-08T09:14:58.963Z',
+      datumSluiting: '',
+      landnaamSluiting: 'Marokko',
+      persoon: {
+        bsn: '123456780',
+        geboortedatum: '2019-07-08T09:14:58.963Z',
+        geslachtsaanduiding: null,
+        geslachtsnaam: 'Bakker',
+        overlijdensdatum: null,
+        voornamen: 'Souad',
+        voorvoegselGeslachtsnaam: null,
+      },
+      plaatsnaamSluitingOmschrijving: 'Asilah',
+      soortVerbintenis: 'H',
+      soortVerbintenisOmschrijving: 'Huwelijk',
+    },
+  ],
+  kinderen: [
+    {
+      bsn: '123456780',
+      geboortedatum: '2019-07-08T09:14:58.963Z',
+      geslachtsaanduiding: 'M',
+      geslachtsnaam: 'Kosterijk',
+      overlijdensdatum: null,
+      voornamen: 'Yassine',
+      voorvoegselGeslachtsnaam: null,
+    },
+    {
+      bsn: '123456780',
+      geboortedatum: '2019-07-08T09:14:58.963Z',
+      geslachtsaanduiding: 'M',
+      geslachtsnaam: 'Kosterijk',
+      overlijdensdatum: '2019-07-08T09:14:58.963Z',
+      voornamen: 'Marwan',
+      voorvoegselGeslachtsnaam: null,
+    },
+  ],
 };
 
 function getAppState() {
@@ -97,28 +212,20 @@ describe('BRP Profile page', () => {
     );
   });
 
-  it('Doesdisplay verbintenis/maritalstatus information if present', () => {
+  it('Does display verbintenis information if present', () => {
     const appState = getAppState();
     const page = mountWithAppstate(appState, <Profile />);
 
-    expect(
-      page.find(
-        `.InfoPanelContent__${slug('Burgerlijke staat', { lower: true })}`
-      )
-    ).toHaveLength(1);
+    expect(page.find(`.InfoPanel.Verbintenis`)).toHaveLength(2);
   });
 
-  it('Does not display verbintenis/maritalstatus information if not present', () => {
+  it('Does not display verbintenis information if not present', () => {
     const appState = getAppState();
     delete appState.BRP.data.verbintenis;
 
     const page = mountWithAppstate(appState, <Profile />);
 
-    expect(
-      page.find(
-        `.InfoPanelContent__${slug('Burgerlijke staat', { lower: true })}`
-      )
-    ).toHaveLength(0);
+    expect(page.find(`.InfoPanel.Verbintenis`)).toHaveLength(0);
   });
 
   it('Does not display country and place of birth when NOT a resident of Amsterdam', () => {
@@ -129,31 +236,45 @@ describe('BRP Profile page', () => {
 
     const page = mountWithAppstate(appState, <Profile />);
 
-    expect(page.find(`.InfoPanelTableRow__geboorteplaats td`)).toHaveLength(0);
-    expect(page.find(`.InfoPanelTableRow__geboorteland td`)).toHaveLength(0);
+    expect(
+      page
+        .find('.InfoPanel')
+        .at(0)
+        .find(`.InfoPanelTableRow__geboorteplaats td`)
+    ).toHaveLength(0);
+    expect(
+      page
+        .find('.InfoPanel')
+        .at(0)
+        .find(`.InfoPanelTableRow__geboorteland td`)
+    ).toHaveLength(0);
   });
 
   it('Displays onbekend as value for country and place of birth when IS resident of Amsterdam', () => {
     const appState = getAppState();
-    appState.BRP.data.persoon.mokum = true;
     appState.BRP.data.persoon.geboorteplaatsnaam = '';
     appState.BRP.data.persoon.geboortelandnaam = '';
 
     const page = mountWithAppstate(appState, <Profile />);
 
-    expect(page.find(`.InfoPanelTableRow__geboorteplaats td`).text()).toBe(
-      'Onbekend'
-    );
-    expect(page.find(`.InfoPanelTableRow__geboorteland td`).text()).toBe(
-      'Onbekend'
-    );
+    expect(
+      page
+        .find('.InfoPanel')
+        .at(0)
+        .find(`.InfoPanelTableRow__geboorteplaats td`)
+        .text()
+    ).toBe('Onbekend');
+    expect(
+      page
+        .find('.InfoPanel')
+        .at(0)
+        .find(`.InfoPanelTableRow__geboorteland td`)
+        .text()
+    ).toBe('Onbekend');
   });
 
   it('Displays an alert when adres.inOnderzoek and/or persoon.vertrokkenOnbekendWaarheen is true', () => {
     const appState = getAppState();
-    appState.BRP.data.persoon.vertrokkenOnbekendWaarheen = true;
-    appState.BRP.data.adres.inOnderzoek = true;
-
     const page = mountWithAppstate(appState, <Profile />);
 
     expect(page.find('.vertrokkenOnbekendWaarheen')).not.toBeNull();
@@ -167,11 +288,7 @@ describe('BRP Profile page', () => {
 
     const page = mountWithAppstate(appState, <Profile />);
 
-    expect(
-      page.find(
-        `.InfoPanelContent__${slug('Burgerlijke staat', { lower: true })}`
-      )
-    ).toHaveLength(0);
+    expect(page.find(`.InfoPanel.Verbintenis`)).toHaveLength(0);
     expect(page.find('[class*="Alert_Alert"]')).not.toBeNull();
   });
 });

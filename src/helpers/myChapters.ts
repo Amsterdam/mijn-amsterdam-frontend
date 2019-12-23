@@ -3,7 +3,8 @@ import {
   MenuItem,
   myChaptersMenuItems,
 } from 'components/MainNavBar/MainNavBar.constants';
-import { BrpApiState, isMokum } from '../hooks/api/api.brp';
+import { isMokum } from 'data-formatting/brp';
+import { BrpApiState } from '../hooks/api/api.brp';
 import { ErfpachtApiState } from '../hooks/api/api.erfpacht';
 import { FocusApiState } from '../hooks/api/api.focus';
 import { GarbageApiState } from '../hooks/api/api.garbage';

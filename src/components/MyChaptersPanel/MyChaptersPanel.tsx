@@ -46,10 +46,14 @@ export default function MyChaptersPanel({
       <div className={styles.Links}>
         {items.map(({ id, to, Icon, title, rel }) => {
           return (
-            <MainNavSubmenuLink data-chapter-id={id} key={id} to={to} rel={rel}>
-              {Icon && <Icon aria-hidden="true" />}
-              {title}
-            </MainNavSubmenuLink>
+            <MainNavSubmenuLink
+              data-chapter-id={id}
+              key={id}
+              to={to}
+              rel={rel}
+              title={title}
+              Icon={Icon}
+            />
           );
         })}
       </div>

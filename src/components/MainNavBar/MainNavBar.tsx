@@ -1,4 +1,4 @@
-import { AppRoutes, Colors, LOGOUT_URL } from 'App.constants';
+import { AppRoutes, LOGOUT_URL } from 'App.constants';
 import { ComponentChildren } from 'App.types';
 import { AppContext, SessionContext } from 'AppState';
 import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
@@ -102,14 +102,15 @@ function getMenuItem(item: MenuItem) {
       <MainNavSubmenu key={item.id} title={item.title} id={item.id}>
         {item.submenuItems.map(({ id, to, Icon, title, rel }) => {
           return (
-            <MainNavSubmenuLink key={id} to={to} rel={rel} data-chapter-id={id}>
-              {Icon && (
-                <span className={styles.SubmenuItemIcon}>
-                  <Icon aria-label={id} fill={Colors.neutralGrey4} />
-                </span>
-              )}
-              <span className={styles.SubmenuItemTitle}>{title}</span>
-            </MainNavSubmenuLink>
+            <MainNavSubmenuLink
+              key={id}
+              className={styles.MainNavSubmenuLink}
+              title={title}
+              to={to}
+              rel={rel}
+              Icon={Icon}
+              data-chapter-id={id}
+            />
           );
         })}
       </MainNavSubmenu>

@@ -61,11 +61,11 @@ export default ({
         // Focus notification items
         ...FOCUS.data.notifications,
         // BRP Notifications
-        ...BRP.data.notifications,
+        ...BRP.notifications,
       ]
         .map(notification => isUnread(notification, myNotificationsState))
         .sort(dateSort('datePublished', 'desc')),
-    [FOCUS.data.notifications, BRP.data.notifications, myNotificationsState]
+    [FOCUS.data.notifications, BRP.notifications, myNotificationsState]
   );
 
   const isLoading = BRP.isLoading || FOCUS.isLoading;

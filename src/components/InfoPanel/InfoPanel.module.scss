@@ -1,30 +1,56 @@
 @import 'styles/_global.scss';
 
-.InfoPanel {
-  &:not(:first-child) {
-    margin-top: 5rem;
-  }
+.InfoPanel .Title {
+  margin-left: 16rem;
+  margin-bottom: 2rem;
 
-  @include select(Heading) {
-    padding-left: 16rem;
-    border-bottom: 1px solid $color-neutral-grey2;
-    padding-bottom: 1.3rem;
-    margin-bottom: 2rem;
-
-    @include mq-phone() {
-      padding-left: 0;
-    }
+  @include mq-phone() {
+    margin-left: 0;
   }
 }
 
 .InfoPanelContent {
   display: flex;
   flex-wrap: wrap;
+  border-top: 0.1rem solid $color-neutral-grey2;
+  padding-top: 2rem;
+}
+
+.InfoPanelCollapsible {
+  margin-bottom: 2rem;
+
+  @include select(SectionCollapsible_Title_) {
+    @include heading-medium;
+    margin-left: 16rem;
+    margin-bottom: 2rem;
+    transform: translateX(-2.1rem);
+
+    @include mq-phone {
+      margin-left: 0;
+    }
+  }
+
+  @include select(SectionCollapsible_Panel) {
+    border-bottom: 0;
+    border-top: 0.1rem solid $color-neutral-grey2;
+
+    .InfoPanelContent {
+      border-top: 0;
+    }
+
+    .InfoPanel {
+      margin-bottom: 2rem;
+    }
+  }
 }
 
 .InfoPanelTable {
   width: 59%;
   border-collapse: collapse;
+
+  + .InfoPanelTable {
+      margin-top: 2rem;
+    }
 
   tbody > tr {
     > td {
