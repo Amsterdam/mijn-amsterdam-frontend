@@ -222,6 +222,19 @@ export default () => {
           <GarbagePointItem key={item.naam} item={item} />
         ))}
       </SectionCollapsible>
+      <PageContent>
+        <p>
+          <Linkd
+            lean={false}
+            variant="secondary-inverted"
+            external={true}
+            href={ExternalUrls.AFVAL_MELDING_FORMULIER}
+            icon=""
+          >
+            Hier klopt iets niet
+          </Linkd>
+        </p>
+      </PageContent>
     </DetailPage>
   );
 };
