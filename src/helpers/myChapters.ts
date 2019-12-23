@@ -70,6 +70,7 @@ export default function getMyChapters(
   const focusIsloading = FOCUS.isLoading;
   const erfpachtIsloading = ERFPACHT.isLoading;
   const isFromMokum = isMokum(BRP);
+  const brpIsLoading = BRP.isLoading;
   const garbageIsPristine = GARBAGE.isPristine;
   const hasCentroid = !!MY_AREA.centroid;
 
@@ -80,6 +81,7 @@ export default function getMyChapters(
 
   const isLoading =
     wmoIsloading ||
+    brpIsLoading ||
     focusIsloading ||
     erfpachtIsloading ||
     (garbageIsPristine && isFromMokum && hasCentroid);
