@@ -58,7 +58,7 @@
 
 .SubmenuItems {
   display: flex;
-  width: 55rem;
+  max-width: 75rem;
   padding: 2.5rem 0 2.5rem 0;
   flex-wrap: wrap;
   left: 50%;
@@ -81,15 +81,7 @@
   text-decoration: none;
   font-weight: 500;
 
-  &:nth-child(odd) {
-    margin-right: 0.5rem;
-  }
-  &:nth-child(even) {
-    margin-left: 0.5rem;
-  }
-
   svg {
-    margin: 0.5rem 0.5rem 0.5rem 0;
     fill: $color-black;
   }
 
@@ -115,4 +107,22 @@
       margin-left: 0;
     }
   }
+}
+
+.SubmenuItemTitle,
+.SubmenuItemIcon {
+  display: inline-block;
+  border-bottom: solid 0.2rem transparent;
+}
+
+.SubmenuItemIcon {
+  width: 3.2rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1rem;
+}
+
+.SubmenuItemTitle {
+  white-space: nowrap;
 }

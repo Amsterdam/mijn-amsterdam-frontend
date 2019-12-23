@@ -5,19 +5,36 @@ import InfoPanel from 'components/InfoPanel/InfoPanel';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 import { DetailPage, PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
-import { panelConfig, formatProfileData } from 'data-formatting/brp';
-import { entries } from 'helpers/App';
+import { panelConfig, PanelConfigFormatter } from './Profile.constants';
 import styles from 'pages/Profile/Profile.module.scss';
 import React, { useContext } from 'react';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import { defaultDateFormat } from 'helpers/App';
 import { LinkdInline } from 'components/Button/Button';
+import { useMemo } from 'react';
+import { formatBrpProfileData } from 'data-formatting/brp';
+import { InfoPanelCollapsible } from 'components/InfoPanel/InfoPanel';
+import { BrpApiState } from '../../hooks/api/api.brp';
+
+function formatInfoPanelConfig(
+  panelConfig: PanelConfigFormatter,
+  BRP: BrpApiState
+) {
+  if (typeof panelConfig === 'function') {
+    return panelConfig(BRP);
+  }
+  return panelConfig;
+}
 
 export default function Profile() {
   const { BRP } = useContext(AppContext);
 
-  const brpData =
-    BRP.isDirty && !BRP.isError ? formatProfileData(BRP.data) : null;
+  const { isDirty, isError, data } = BRP;
+  const [adres] = data?.adres || [];
+  const brpProfileData = useMemo(() => {
+    const rData = isDirty && !isError ? data : null;
+    return rData ? formatBrpProfileData(rData) : rData;
+  }, [data, isDirty, isError]);
 
   return (
     <DetailPage className={styles.Profile}>
@@ -39,36 +56,37 @@ export default function Profile() {
             <LoadingContent />
           </div>
         )}
+
         {BRP.isError && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>
         )}
-        {BRP.data &&
-          BRP.data.persoon &&
-          BRP.data.persoon.vertrokkenOnbekendWaarheen && (
-            <Alert type="warning" className="vertrokkenOnbekendWaarheen">
-              <p>
-                U staat sinds{' '}
-                {BRP.data.persoon.datumVertrekUitNederland
-                  ? defaultDateFormat(BRP.data.persoon.datumVertrekUitNederland)
-                  : 'enige tijd'}{' '}
-                in de BRP geregistreerd als "vertrokken – onbekend waarheen".
-              </p>
-              <p>
-                U kunt uw huidige adres doorgeven bij het Stadsloket. U moet
-                hiervoor een{' '}
-                <LinkdInline
-                  external={true}
-                  href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
-                >
-                  afspraak
-                </LinkdInline>{' '}
-                maken .
-              </p>
-            </Alert>
-          )}
-        {BRP.data && BRP.data.adres && BRP.data.adres.inOnderzoek && (
+
+        {data.persoon?.vertrokkenOnbekendWaarheen && (
+          <Alert type="warning" className="vertrokkenOnbekendWaarheen">
+            <p>
+              U staat sinds{' '}
+              {data.persoon.datumVertrekUitNederland
+                ? defaultDateFormat(data.persoon.datumVertrekUitNederland)
+                : 'enige tijd'}{' '}
+              in de BRP geregistreerd als "vertrokken – onbekend waarheen".
+            </p>
+            <p>
+              U kunt uw huidige adres doorgeven bij het Stadsloket. U moet
+              hiervoor een{' '}
+              <LinkdInline
+                external={true}
+                href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
+              >
+                afspraak
+              </LinkdInline>{' '}
+              maken .
+            </p>
+          </Alert>
+        )}
+
+        {adres?.inOnderzoek && (
           <Alert type="warning" className="inOnderzoek">
             <p>
               Op dit moment onderzoeken wij of u nog steeds woont op het adres
@@ -96,15 +114,64 @@ export default function Profile() {
           </Alert>
         )}
       </PageContent>
-      <div className={styles.InfoPanels}>
-        {brpData &&
-          brpData.person &&
-          entries(brpData)
-            .filter(([id, panelData]) => !!panelData)
-            .map(([id, panelData]) => (
-              <InfoPanel key={id} {...panelConfig[id]} panelData={panelData} />
-            ))}
-      </div>
+
+      {!!brpProfileData?.persoon && (
+        <InfoPanel
+          className={styles.DefaultPanel}
+          {...formatInfoPanelConfig(panelConfig.persoon, BRP)}
+          panelData={brpProfileData.persoon}
+        />
+      )}
+
+      {!!brpProfileData?.adres && (
+        <InfoPanel
+          className={styles.DefaultPanel}
+          {...formatInfoPanelConfig(panelConfig.adres, BRP)}
+          panelData={brpProfileData.adres}
+        />
+      )}
+
+      {!!brpProfileData?.verbintenis && (
+        <InfoPanelCollapsible
+          id="profile-verbintenis"
+          className={styles.Verbintenis}
+          {...formatInfoPanelConfig(panelConfig.verbintenis, BRP)}
+          panelData={brpProfileData.verbintenis}
+        />
+      )}
+
+      {!!brpProfileData?.verbintenisHistorisch && (
+        <InfoPanelCollapsible
+          id="profile-verbintenisHistorisch"
+          className={styles.Verbintenis}
+          {...formatInfoPanelConfig(panelConfig.verbintenisHistorisch, BRP)}
+          panelData={brpProfileData.verbintenisHistorisch}
+        />
+      )}
+
+      {!!brpProfileData?.kinderen && (
+        <InfoPanelCollapsible
+          id="profile-kinderen"
+          {...formatInfoPanelConfig(panelConfig.kinderen, BRP)}
+          panelData={brpProfileData.kinderen}
+        />
+      )}
+
+      {!!brpProfileData?.ouders && (
+        <InfoPanelCollapsible
+          id="profile-ouders"
+          {...formatInfoPanelConfig(panelConfig.ouders, BRP)}
+          panelData={brpProfileData.ouders}
+        />
+      )}
+
+      {!!brpProfileData?.adresHistorisch && (
+        <InfoPanelCollapsible
+          id="profile-adresHistorisch"
+          {...formatInfoPanelConfig(panelConfig.adresHistorisch, BRP)}
+          panelData={brpProfileData.adresHistorisch}
+        />
+      )}
     </DetailPage>
   );
 }

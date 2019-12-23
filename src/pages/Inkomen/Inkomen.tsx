@@ -10,14 +10,6 @@ import Alert from 'components/Alert/Alert';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import Linkd from 'components/Button/Button';
 
-const DISPLAY_PROPS = {
-  datePublished: 'besluit',
-};
-
-const DISPLAY_PROPS_ACTUAL = {
-  dateStart: 'aanvraag',
-};
-
 export default () => {
   const {
     FOCUS: {
@@ -59,7 +51,6 @@ export default () => {
       </PageContent>
       <DataLinkTable
         id="datalinktable-income-actual"
-        displayProps={DISPLAY_PROPS_ACTUAL}
         items={itemsRequested}
         title="Mijn lopende aanvragen"
         startCollapsed={false}
@@ -72,7 +63,6 @@ export default () => {
       />
       <DataLinkTable
         id="datalinktable-income-granted"
-        displayProps={DISPLAY_PROPS}
         items={itemsDecided}
         startCollapsed={hasActiveRequests}
         isLoading={isLoading}

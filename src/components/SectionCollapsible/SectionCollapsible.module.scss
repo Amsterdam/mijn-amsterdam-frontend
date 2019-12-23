@@ -4,7 +4,7 @@
   overflow: auto; // fixes margin of wrapped SectionCollapsible.Title being respected
 
   &.isCollapsed {
-    margin-bottom: 0;
+
     .CaretIcon {
       transform: translateY(-50%) rotate(0);
     }
@@ -25,15 +25,16 @@
   position: relative;
   padding-left: 1em;
   margin: 0 auto;
-  margin-bottom: 3rem;
+  transform: translateX(-2.5rem);
+  max-width: 62rem;
 
   @include mq-tablet() {
     margin-left: 9.5rem;
   }
   @include mq-phone() {
     margin-left: 0;
+    transform: translateX(0);
   }
-  max-width: 62rem;
 
   span {
     padding-left: 0.2em;
@@ -50,9 +51,10 @@
 
 .Panel {
   overflow: hidden;
-  border-bottom: 0.1rem solid $color-neutral-grey2;
   height: 0px;
   position: relative;
+  margin-top: 2rem;
+  border-top: .1rem solid $color-neutral-grey2;
 
   @include mq-phone() {
     border-bottom: 0;
