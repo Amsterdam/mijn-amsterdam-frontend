@@ -91,6 +91,7 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
   voorvoegselGeslachtsnaam: 'Voorvoegsel',
   geslachtsnaam: 'Achternaam',
   omschrijvingGeslachtsaanduiding: 'Geslacht',
+  bsn: 'BSN',
   geboortedatum: ['Geboortedatum', value => defaultDateFormat(value)],
   overlijdensdatum: ['Datum overlijden', value => defaultDateFormat(value)],
   geboorteplaatsnaam: [
@@ -110,7 +111,6 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
         ? value.map(({ omschrijving }) => omschrijving).join(' ')
         : null,
   ],
-  bsn: 'BSN',
 };
 
 const adres: ProfileLabels<Partial<Adres>> = {
@@ -159,6 +159,11 @@ const verbintenis: ProfileLabels<Partial<Verbintenis> & Partial<Persoon>> = {
     partner('voorvoegselGeslachtsnaam'),
   ],
   geslachtsnaam: ['Achternaam', partner('geslachtsnaam')],
+  omschrijvingGeslachtsaanduiding: [
+    'Geslacht',
+    partner('omschrijvingGeslachtsaanduiding'),
+  ],
+  bsn: ['BSN', partner('bsn')],
   geboortedatum: [
     'Geboortedatum',
     (_value, brpData) => {
@@ -177,7 +182,6 @@ const verbintenis: ProfileLabels<Partial<Verbintenis> & Partial<Persoon>> = {
         : null;
     },
   ],
-  bsn: ['BSN', partner('bsn')],
 };
 
 export const brpInfoLabels = {
