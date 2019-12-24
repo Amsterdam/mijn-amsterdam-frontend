@@ -3,7 +3,6 @@ import { shallow, mount } from 'enzyme';
 import MyChaptersPanel from './MyChaptersPanel';
 import { MenuItem } from '../MainNavBar/MainNavBar.constants';
 import { BrowserRouter } from 'react-router-dom';
-import LoadingContent from 'components/LoadingContent/LoadingContent';
 
 const PANEL_TITLE = 'whoa!';
 const items: MenuItem[] = [
