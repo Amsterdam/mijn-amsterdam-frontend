@@ -59,7 +59,7 @@ export default function MyChaptersPanel({
       </div>
       {isLoadingDebounced && (
         <LoadingContent
-          className={styles.LoadingContent}
+          className={styles.LoadingPlaceholder}
           barConfig={[
             ['3.4rem', '3.4rem', '1rem'],
             ['auto', '1.6rem', '0'],
