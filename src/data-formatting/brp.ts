@@ -130,7 +130,10 @@ const adres: ProfileLabels<Partial<Adres>> = {
   woonplaatsNaam: [
     'Plaats',
     (_value, _item, brpData) => {
-      return !!brpData?.adres ? brpData.adres.woonplaatsNaam : 'Onbekend';
+      return !!brpData?.adres
+        ? `${brpData.adres.woonplaatsNaam || ''} ${brpData.adres.postcode ||
+            ''}`
+        : 'Onbekend';
     },
   ],
   begindatumVerblijf: [
@@ -145,10 +148,17 @@ function partner(key: keyof Persoon, defaultValue: Value = null) {
   };
 }
 
+function transformVerbintenisStatus(value: string) {
+  const status: { [key: string]: string } = {
+    Huwelijk: 'Gehuwd',
+  };
+  return status[value] || value;
+}
+
 const verbintenis: ProfileLabels<Partial<Verbintenis> & Partial<Persoon>> = {
   soortVerbintenisOmschrijving: [
-    'Soort verbintenis',
-    value => value || 'Onbekend',
+    'Status',
+    value => transformVerbintenisStatus(value) || 'Onbekend',
   ],
   datumSluiting: [
     'Sinds',
