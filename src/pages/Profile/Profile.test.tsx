@@ -212,6 +212,13 @@ describe('BRP Profile page', () => {
     );
   });
 
+  it('Renders all the information provided', () => {
+    const appState = getAppState();
+    const page = mountWithAppstate(appState, <Profile />);
+
+    expect(page.html()).toMatchSnapshot();
+  });
+
   it('Does display verbintenis information if present', () => {
     const appState = getAppState();
     const page = mountWithAppstate(appState, <Profile />);
