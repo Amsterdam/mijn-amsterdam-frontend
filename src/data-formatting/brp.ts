@@ -113,6 +113,13 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
   ],
 };
 
+const persoonSecundair: ProfileLabels<Partial<Persoon>> = {
+  ...persoon,
+};
+
+persoonSecundair.geboorteplaatsnaam = 'Geboorteplaats';
+persoonSecundair.geboortelandnaam = 'Geboorteland';
+
 const adres: ProfileLabels<Partial<Adres>> = {
   straatnaam: [
     'Straat',
@@ -186,6 +193,7 @@ const verbintenis: ProfileLabels<Partial<Verbintenis> & Partial<Persoon>> = {
 
 export const brpInfoLabels = {
   persoon,
+  persoonSecundair,
   adres,
   verbintenis,
 };
@@ -241,7 +249,11 @@ export function formatBrpProfileData(brpData: BrpResponseData): BrpProfileData {
   if (brpData.verbintenis && !!brpData.verbintenis.soortVerbintenis) {
     profileData.verbintenis = {
       ...format(brpInfoLabels.verbintenis, brpData.verbintenis, brpData),
-      ...format(brpInfoLabels.persoon, brpData.verbintenis.persoon, brpData),
+      ...format(
+        brpInfoLabels.persoonSecundair,
+        brpData.verbintenis.persoon,
+        brpData
+      ),
     };
   }
 
@@ -253,7 +265,11 @@ export function formatBrpProfileData(brpData: BrpResponseData): BrpProfileData {
       verbintenis => {
         return {
           ...format(brpInfoLabels.verbintenis, verbintenis, brpData),
-          ...format(brpInfoLabels.persoon, verbintenis.persoon, brpData),
+          ...format(
+            brpInfoLabels.persoonSecundair,
+            verbintenis.persoon,
+            brpData
+          ),
         };
       }
     );
@@ -262,13 +278,13 @@ export function formatBrpProfileData(brpData: BrpResponseData): BrpProfileData {
 
   if (Array.isArray(brpData.kinderen) && brpData.kinderen.length) {
     profileData.kinderen = brpData.kinderen.map(kind =>
-      format(brpInfoLabels.persoon, kind, brpData)
+      format(brpInfoLabels.persoonSecundair, kind, brpData)
     );
   }
 
   if (Array.isArray(brpData.ouders) && brpData.ouders.length) {
     profileData.ouders = brpData.ouders.map(ouder =>
-      format(brpInfoLabels.persoon, ouder, brpData)
+      format(brpInfoLabels.persoonSecundair, ouder, brpData)
     );
   }
 
