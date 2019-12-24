@@ -13,7 +13,7 @@ export const LOCATION_ZOOM = 14;
 export const LAYERS_CONFIG =
   'lagen=overig%3A1%7Cverreg%3A1%7Cverbes%3A1%7Cterras%3A1%7Csplits%3A1%7Cspeela%3A1%7Crectif%3A1%7Coptijd%3A1%7Conttre%3A1%7Comgver%3A1%7Cmeldin%3A1%7Cmedede%3A1%7Cligpla%3A1%7Ckapver%3A1%7Cinspra%3A1%7Cexploi%3A1%7Cevever%3A1%7Cdrahor%3A1%7Cbespla%3A1%7Cwlokca%3A1%7Cwlotxtl%3A1%7Cwlopls%3A1%7Cwlogls%3A1%7Cwloppr%3A1%7Cwlorst%3A1%7Ctcevt%3A1%7Cpvg%3A0%7Cuitzpvg%3A0';
 
-const SET_DEFAULT_ADDRESS_TIMEOUT = 5000;
+const SET_DEFAULT_ADDRESS_TIMEOUT = 10000;
 
 export function useBagSearch(address?: string) {
   return useDataApi({
@@ -46,6 +46,7 @@ export default function useMyMap(address?: string): MyMapApiState {
     const locationCentroid = !!(data && data.results && data.results.length)
       ? data.results[0].centroid
       : [];
+
     if (!advancedUrl && (isDirty || isDefaultMapLocation)) {
       if (!!locationCentroid.length) {
         const [lon, lat] = locationCentroid;
