@@ -41,7 +41,7 @@ export function MyAreaMap({ url }: MyAreaMapComponentProps) {
       id="mapIframe"
       title="Kaart van mijn buurt"
       src={url}
-      className={styles.Map}
+      className={styles.MapContainer}
     />
   ) : (
     <div className={styles.loadingText}>
