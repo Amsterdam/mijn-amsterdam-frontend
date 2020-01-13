@@ -17,7 +17,7 @@ const SET_DEFAULT_ADDRESS_TIMEOUT = 10000;
 
 export function useBagSearch(address?: string) {
   return useDataApi({
-    url: BAG_SEARCH_ENDPOINT_URL + address || '',
+    url: BAG_SEARCH_ENDPOINT_URL + (address ? encodeURIComponent(address) : ''),
     postpone: !address,
   });
 }
