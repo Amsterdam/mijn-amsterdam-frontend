@@ -64,8 +64,8 @@ export default () => {
   const collapsedIndex = {
     otherGarbagePoints: true,
     wegbrengen: true,
-    ophalen1: true,
-    ophalen2: true,
+    grofvuil: true,
+    restafval: true,
     garbageContainersOnMap: true,
   };
 
@@ -75,6 +75,7 @@ export default () => {
   );
 
   function isCollapsed(key: string) {
+    console.log();
     return isCollapsedIndex && isCollapsedIndex[key];
   }
 
