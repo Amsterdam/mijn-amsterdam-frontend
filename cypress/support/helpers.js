@@ -25,3 +25,10 @@ export function goToDashboard() {
     assertAtHome('Actueel');
   });
 }
+
+export function login() {
+  it('The profile link is visible in the header', () => {
+    cy.login();
+    selectComponent('MainNavBar_ProfileLink').contains('W. Beemsterboer');
+  });
+}
