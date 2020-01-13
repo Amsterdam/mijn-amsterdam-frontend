@@ -82,7 +82,7 @@ export default function useMyMap(address?: string): MyMapApiState {
 
   const refetchCallback = useCallback(
     (address: string) => {
-      refetch({ url: BAG_SEARCH_ENDPOINT_URL + address });
+      refetch({ url: BAG_SEARCH_ENDPOINT_URL + encodeURIComponent(address) });
     },
     [refetch]
   );
