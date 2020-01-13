@@ -54,10 +54,10 @@ export default function SectionCollapsible({
   });
 
   useEffect(() => {
-    if (!isLoading && contentRef && contentRef.current) {
+    if (!isLoading && hasItems && contentRef && contentRef.current) {
       setDimensions(contentRef.current.getBoundingClientRect());
     }
-  }, [isLoading]);
+  }, [isLoading, hasItems]);
 
   const classes = classnames(
     styles.SectionCollapsible,

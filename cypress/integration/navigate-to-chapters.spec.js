@@ -21,7 +21,7 @@ describe('Navigate to Chapters', () => {
   Object.entries(assertNavigationForChapters).forEach(
     ([id, { path, title }]) => {
       it(
-        'DashbaordMyChapters: Should navigate to ' +
+        'Dashboard My Chapters: Should navigate to ' +
           assertNavigationForChapters[id].title,
         () => {
           const chapterLink = cy.get(

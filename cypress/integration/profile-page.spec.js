@@ -1,10 +1,7 @@
-import { selectComponent, assertAtPage } from '../support/helpers';
+import { selectComponent, assertAtPage, login } from '../support/helpers';
 
 describe('Profile page', () => {
-  it('The profile link is visible in the header', () => {
-    cy.login();
-    selectComponent('MainNavBar_ProfileLink').contains('W. Beemsterboer');
-  });
+  login();
 
   it('Clicking the profile link in the header shows the profile page', () => {
     selectComponent('MainNavBar_ProfileLink').click();
