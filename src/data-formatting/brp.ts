@@ -74,7 +74,14 @@ export interface BrpResponseData {
 }
 
 export function getFullName(persoon: Persoon) {
-  return persoon.opgemaakteNaam;
+  return (
+    persoon.opgemaakteNaam ||
+    `${persoon.voornamen} ${
+      persoon.voorvoegselGeslachtsnaam
+        ? persoon.voorvoegselGeslachtsnaam + ' '
+        : ''
+    }${persoon.geslachtsnaam}`
+  );
 }
 
 export function getFullAddress(adres: Adres) {
