@@ -162,19 +162,15 @@ const verbintenis: ProfileLabels<Partial<Verbintenis> & Partial<Persoon>> = {
   soortVerbintenisOmschrijving: [
     (_value, item) => (!item.datumOntbinding ? 'Status' : 'Verbintenis'),
     (value, item) =>
-      (!item.datumOntbinding ? transformVerbintenisStatus(value) : value) ||
-      'Onbekend',
+      !item.datumOntbinding ? transformVerbintenisStatus(value) : value,
   ],
-  datumSluiting: [
-    'Vanaf',
-    value => (value ? defaultDateFormat(value) : 'Onbekend'),
-  ],
+  datumSluiting: ['Vanaf', value => !!value && defaultDateFormat(value)],
   datumOntbinding: [
     'Datum ontbinding',
-    value => value && defaultDateFormat(value),
+    value => !!value && defaultDateFormat(value),
   ],
-  plaatsnaamSluitingOmschrijving: ['Plaats', value => value || 'Onbekend'],
-  landnaamSluiting: ['Land', value => value || 'Onbekend'],
+  plaatsnaamSluitingOmschrijving: 'Plaats',
+  landnaamSluiting: 'Land',
 };
 
 export const brpInfoLabels = {
