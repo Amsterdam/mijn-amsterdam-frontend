@@ -368,7 +368,7 @@ export const Labels: LabelData = {
           <p>
             Tip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk
             in. Hoe eerder u ons de noodzakelijke informatie geeft, hoe eerder
-            wij verder kunnen met de behandeling van uw aanvraag.`
+            wij verder kunnen met de behandeling van uw aanvraag.
           </p>
         </>
       ),
