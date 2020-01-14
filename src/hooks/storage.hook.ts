@@ -161,7 +161,7 @@ export function useLocalStorage<Value>(
 ) {
   let adapter: MemoryAdapter | Storage = memoryHandler;
   try {
-    adapter = localStorage;
+    adapter = localStorage || memoryHandler;
   } catch (error) {}
 
   return useStorage(key, value, adapter);
@@ -173,7 +173,7 @@ export function useSessionStorage<Value>(
 ) {
   let adapter: MemoryAdapter | Storage = memoryHandler;
   try {
-    adapter = sessionStorage;
+    adapter = sessionStorage || memoryHandler;
   } catch (error) {}
 
   return useStorage(key, value, adapter);
