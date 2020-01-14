@@ -131,7 +131,9 @@ const adres: ProfileLabels<Partial<Adres>> = {
   straatnaam: [
     'Straat',
     (_value, _item, brpData) => {
-      return !!brpData?.adres ? getFullAddress(brpData.adres) : 'Onbekend';
+      return !!brpData?.adres?.straatnaam
+        ? getFullAddress(brpData.adres)
+        : 'Onbekend';
     },
   ],
   woonplaatsNaam: [
@@ -139,7 +141,7 @@ const adres: ProfileLabels<Partial<Adres>> = {
     (_value, _item, brpData) => {
       return !!brpData?.adres
         ? `${brpData.adres.postcode || ''} ${brpData.adres.woonplaatsNaam ||
-            ''}`
+            'Onbekend'}`
         : 'Onbekend';
     },
   ],
