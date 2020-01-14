@@ -1,6 +1,6 @@
 {
   "name": "mijn-amsterdam-frontend",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "scripts": {
     "build": "react-scripts build",
     "e2e:ci": "concurrently \"npm:serve-build\" \"npm:mock-api\" \"npx cypress run\" --kill-others --success first",
