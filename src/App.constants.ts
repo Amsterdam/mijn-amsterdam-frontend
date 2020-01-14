@@ -1,6 +1,7 @@
 import { StateKey } from 'AppState';
 import { ErrorMessageMap } from 'components/ErrorMessages/ErrorMessages';
 import { MyNotification } from 'hooks/api/my-notifications-api.hook';
+import { isProduction } from './helpers/App';
 
 export type Chapter =
   | 'ROOT'
@@ -108,7 +109,7 @@ export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
 export const FeatureToggle = {
   myTipsoptInOutPersonalization: true,
   garbageInformationPage: true,
-  focusDocumentDownload: true,
+  focusDocumentDownload: !isProduction(),
 };
 
 export const errorMessageMap: ErrorMessageMap = {
