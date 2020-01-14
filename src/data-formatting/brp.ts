@@ -131,32 +131,28 @@ const adres: ProfileLabels<Partial<Adres>> = {
   straatnaam: [
     'Straat',
     (_value, _item, brpData) => {
-      return !!brpData?.adres ? getFullAddress(brpData.adres) : 'Onbekend';
+      return !!brpData?.adres?.straatnaam
+        ? getFullAddress(brpData.adres)
+        : 'Onbekend';
     },
   ],
   woonplaatsNaam: [
     'Plaats',
     (_value, _item, brpData) => {
       return !!brpData?.adres
-        ? `${brpData.adres.woonplaatsNaam || ''} ${brpData.adres.postcode ||
-            ''}`
+        ? `${brpData.adres.postcode || ''} ${brpData.adres.woonplaatsNaam ||
+            'Onbekend'}`
         : 'Onbekend';
     },
   ],
   begindatumVerblijf: [
-    'Sinds',
+    'Vanaf',
     value => (value ? defaultDateFormat(value) : 'Onbekend'),
   ],
 };
 
-function partner(key: keyof Persoon, defaultValue: Value = null) {
-  return (_value: any, brpData?: BrpResponseData): Value => {
-    return brpData?.verbintenis?.persoon[key] || defaultValue;
-  };
-}
-
 function transformVerbintenisStatus(value: string) {
-  const status: { [key: string]: string } = {
+  const status: { [value: string]: string } = {
     Huwelijk: 'Gehuwd',
   };
   return status[value] || value;
@@ -164,11 +160,13 @@ function transformVerbintenisStatus(value: string) {
 
 const verbintenis: ProfileLabels<Partial<Verbintenis> & Partial<Persoon>> = {
   soortVerbintenisOmschrijving: [
-    'Status',
-    value => transformVerbintenisStatus(value) || 'Onbekend',
+    (_value, item) => (!item.datumOntbinding ? 'Status' : 'Verbintenis'),
+    (value, item) =>
+      (!item.datumOntbinding ? transformVerbintenisStatus(value) : value) ||
+      'Onbekend',
   ],
   datumSluiting: [
-    'Sinds',
+    'Vanaf',
     value => (value ? defaultDateFormat(value) : 'Onbekend'),
   ],
   datumOntbinding: [
@@ -177,35 +175,6 @@ const verbintenis: ProfileLabels<Partial<Verbintenis> & Partial<Persoon>> = {
   ],
   plaatsnaamSluitingOmschrijving: ['Plaats', value => value || 'Onbekend'],
   landnaamSluiting: ['Land', value => value || 'Onbekend'],
-  voornamen: ['Voornamen', partner('voornamen')],
-  voorvoegselGeslachtsnaam: [
-    'Voorvoegsel',
-    partner('voorvoegselGeslachtsnaam'),
-  ],
-  geslachtsnaam: ['Achternaam', partner('geslachtsnaam')],
-  omschrijvingGeslachtsaanduiding: [
-    'Geslacht',
-    partner('omschrijvingGeslachtsaanduiding'),
-  ],
-  bsn: ['BSN', partner('bsn')],
-  geboortedatum: [
-    'Geboortedatum',
-    (_value, brpData) => {
-      const [verbintenis] = brpData?.verbintenis || [];
-      return verbintenis?.persoon.geboortedatum
-        ? defaultDateFormat(verbintenis.persoon.geboortedatum)
-        : null;
-    },
-  ],
-  overlijdensdatum: [
-    'Overlijdensdatum',
-    (_value, brpData) => {
-      const [verbintenis] = brpData?.verbintenis || [];
-      return verbintenis?.persoon.overlijdensdatum
-        ? defaultDateFormat(verbintenis.persoon.overlijdensdatum)
-        : null;
-    },
-  ],
 };
 
 export const brpInfoLabels = {
