@@ -38,6 +38,10 @@
   }
 }
 
+.DocumentDownloadItems {
+  @include reset-list-style;
+}
+
 .ListItem {
   &Inner {
     display: flex;

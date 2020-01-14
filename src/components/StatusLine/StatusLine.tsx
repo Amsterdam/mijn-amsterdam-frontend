@@ -103,12 +103,14 @@ function StatusLineItem({
               {altDocumentContentActual}
             </span>
           )}
-          {!!item.documents && (
-            <p>
+          {!!item.documents.length && (
+            <ul className={styles.DocumentDownloadItems}>
               {item.documents.map(document => (
-                <DownloadLink key={document.id} item={document} />
+                <li key={document.id}>
+                  <DownloadLink key={document.id} item={document} />
+                </li>
               ))}
-            </p>
+            </ul>
           )}
         </div>
       </div>

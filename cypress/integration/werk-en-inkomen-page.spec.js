@@ -108,4 +108,33 @@ describe('Chapter: Werk en inkomen', () => {
       ':eq(1) button:first'
     ).click();
   });
+
+  it('Should be able to navigate to a detail page', () => {
+    cy.get('a')
+      .contains('Stadspas xxxx herstelTermijn')
+      .click();
+  });
+
+  it('Should display the title and a link to go back', () => {
+    cy.get('h2')
+      .contains('Stadspas xxxx herstelTermijn')
+      .should('exist');
+    cy.get('header')
+      .get('a')
+      .contains('Werk en inkomen')
+      .should('exist');
+  });
+
+  it('Should show all the steps of the status line', () => {
+    cy.get('button')
+      .contains('Toon alles')
+      .click();
+  });
+
+  it('Should have a few document downloads attached', () => {
+    cy.get('ul li ul li')
+      .contains('a')
+      .invoke('attr', 'download')
+      .should('exist');
+  });
 });
