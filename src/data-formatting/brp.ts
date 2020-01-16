@@ -195,6 +195,7 @@ function format(
       ? formatter[1](data[key], data, brpData)
       : data[key];
 
+    // Don't display falsey values
     if (!value) {
       return acc;
     }
