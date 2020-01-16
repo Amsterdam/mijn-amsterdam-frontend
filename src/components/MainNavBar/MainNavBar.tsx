@@ -24,7 +24,7 @@ import LoadingContent from '../LoadingContent/LoadingContent';
 import {
   mainMenuItemId,
   MenuItem,
-  menuItems,
+  mainMenuItems,
   submenuItems,
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
@@ -68,7 +68,7 @@ function SecondaryLinks() {
           className={styles.ProfileLink}
           data-tutorial-item="Hier kunt u uw algemene persoonsgegevens uit de gemeentelijke basisregistratie raadplegen, zoals uw woonadres;left-bottom"
         >
-          {persoon && persoon.voornamen ? (
+          {persoon && persoon.opgemaakteNaam ? (
             getFullName(persoon)
           ) : (
             <LoadingContent barConfig={[['15rem', '1rem', '0']]} />
@@ -195,10 +195,12 @@ function BurgerButton({ isActive, toggleBurgerMenu }: BurgerButtonProps) {
 }
 
 export default function MainNavBar() {
+  const appState = useContext(AppContext);
   const {
     MY_CHAPTERS: { items: myChapterItems },
-  } = useContext(AppContext);
-  const { isAuthenticated } = useContext(SessionContext);
+  } = appState;
+  const session = useContext(SessionContext);
+  const { isAuthenticated } = session;
   const hasBurgerMenu = useTabletScreen();
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
     undefined
@@ -247,7 +249,7 @@ export default function MainNavBar() {
   } = useBurgerMenuAnimation(isBurgerMenuVisible);
 
   const menuItemsComposed = useMemo(() => {
-    return menuItems.map(item => {
+    return mainMenuItems.map(item => {
       let menuItem = item;
       if (item.id in submenuItems) {
         // Add dynamic chapter submenu items to the menu
