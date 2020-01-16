@@ -75,7 +75,6 @@ export default () => {
   );
 
   function isCollapsed(key: string) {
-    console.log();
     return isCollapsedIndex && isCollapsedIndex[key];
   }
 

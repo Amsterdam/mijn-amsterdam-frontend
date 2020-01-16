@@ -25,6 +25,7 @@ export interface InfoPanelActionLinksProps {
 
 export interface InfoPanelTableProps {
   panelData: Unshaped;
+  omitPairWithFalseyValues?: boolean;
 }
 
 export interface InfoPanelProps {
@@ -33,6 +34,7 @@ export interface InfoPanelProps {
   actionLinks?: ActionLink[];
   panelData: Unshaped | Unshaped[];
   className?: string;
+  omitPairWithFalseyValues?: boolean;
 }
 
 export interface InfoPanelCollapsibleProps extends InfoPanelProps {
@@ -43,7 +45,7 @@ export interface InfoPanelCollapsibleProps extends InfoPanelProps {
 function InfoPanelActionLinks({ actionLinks }: InfoPanelActionLinksProps) {
   return (
     <ul className={styles.InfoPanelActionLinks}>
-      {actionLinks.map((actionLink, index) => (
+      {actionLinks.map(actionLink => (
         <li key={actionLink.title}>
           <Linkd href={actionLink.url} external={actionLink.external}>
             {actionLink.title}
@@ -61,12 +63,28 @@ function getValue(value: any) {
   return value;
 }
 
-function InfoPanelTable({ panelData = {} }: InfoPanelTableProps) {
+function filterValue(
+  omitPairWithFalseyValues: boolean = true,
+  [, value]: [string, string | number]
+) {
+  return omitPairWithFalseyValues ? !!value : true;
+}
+
+function InfoPanelTable({
+  panelData = {},
+  omitPairWithFalseyValues = true,
+}: InfoPanelTableProps) {
   const tables = Array.isArray(panelData)
     ? panelData.map(panelData =>
-        entries(panelData).filter(([, value]) => !!value)
+        entries(panelData).filter(
+          filterValue.bind(null, omitPairWithFalseyValues)
+        )
       )
-    : [entries(panelData).filter(([, value]) => !!value)];
+    : [
+        entries(panelData).filter(
+          filterValue.bind(null, omitPairWithFalseyValues)
+        ),
+      ];
   return (
     <div className={styles.TableWrap}>
       {tables.map((rows, index) => (
@@ -98,6 +116,7 @@ export default function InfoPanel({
   actionLinks = [],
   panelData = {},
   className,
+  omitPairWithFalseyValues = true,
 }: InfoPanelProps) {
   return (
     <div id={id} className={classnames(styles.InfoPanel, className)}>
@@ -110,7 +129,10 @@ export default function InfoPanel({
           slug(title, { lower: true })
         )}
       >
-        <InfoPanelTable panelData={panelData} />
+        <InfoPanelTable
+          omitPairWithFalseyValues={omitPairWithFalseyValues}
+          panelData={panelData}
+        />
         {!!actionLinks.length && (
           <InfoPanelActionLinks actionLinks={actionLinks} />
         )}

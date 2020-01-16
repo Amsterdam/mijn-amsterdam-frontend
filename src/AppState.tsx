@@ -44,10 +44,14 @@ export const SessionContext = createContext<SessionApiState>(
 
 interface SessionStateProps {
   children: ComponentChildren;
+  value?: SessionApiState;
 }
 
-export function SessionState({ children }: SessionStateProps) {
-  const session = useSessionApi();
+export function SessionState({ children, value }: SessionStateProps) {
+  let session: SessionApiState = useSessionApi();
+  if (value) {
+    session = value;
+  }
   return (
     <SessionContext.Provider value={session}>
       {children}

@@ -10,5 +10,7 @@ const DUMMY_ERRORS = [
 ];
 
 it('Renders without crashing', () => {
-  shallow(<ErrorMessages errors={DUMMY_ERRORS} />);
+  expect(
+    shallow(<ErrorMessages errors={DUMMY_ERRORS} />).html()
+  ).toMatchSnapshot();
 });
