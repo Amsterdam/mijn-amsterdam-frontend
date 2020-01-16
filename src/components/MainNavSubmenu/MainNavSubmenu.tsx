@@ -16,7 +16,7 @@ export interface MainNavSubmenuLinkProps
   className?: string;
   Icon: MenuItem['Icon'];
 }
-let i = 0;
+
 export function MainNavSubmenuLink({
   to,
   onClick,

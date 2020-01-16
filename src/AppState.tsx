@@ -44,7 +44,7 @@ export const SessionContext = createContext<SessionApiState>(
 
 interface SessionStateProps {
   children: ComponentChildren;
-  value: SessionApiState;
+  value?: SessionApiState;
 }
 
 export function SessionState({ children, value }: SessionStateProps) {
