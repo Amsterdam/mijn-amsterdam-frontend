@@ -5,6 +5,14 @@ Hi and welcome to the **Mijn-Amsterdam** front-end repository!
 This repo is the main codebase for the web application found at [https://mijn.amsterdam.nl](mijn.amsterdam.nl) which
 is a portal for official communication with the municipality of Amsterdam.
 
+To see the application quickly running locally, clone the repo and cd into the project folder. Put the following commands in your terminal:
+
+```
+$ npm install
+$ npm run mock-api
+$ npm start
+```
+
 ### Keypoints
 
 - Typescript SPA
