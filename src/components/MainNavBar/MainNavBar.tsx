@@ -205,6 +205,7 @@ export default function MainNavBar() {
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
     undefined
   );
+
   const { history, location } = useRouter();
   const [isTutorialVisible, setIsTutorialVisible] = useState(false);
 
