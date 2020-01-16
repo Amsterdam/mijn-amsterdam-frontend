@@ -18,7 +18,7 @@ describe('tutorial', () => {
         <div data-tutorial-item="Goody two shoes!left-bottom">
           On a large scale
         </div>
-        <Tutorial />
+        <Tutorial onClose={() => void 0} />
       </div>
     );
 

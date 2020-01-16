@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MainNavSubmenu/> rendering Opens/closes the submenu panel on user interaction 1`] = `"<span class=\\"MainNavSubmenu\\" data-submenu-id=\\"een-submenu\\"><button class=\\"SubmenuButton SubmenuButtonOpen\\" aria-expanded=\\"true\\"><span>submenutje</span></button><div aria-hidden=\\"false\\" class=\\"SubmenuPanel SubmenuPanelOpen\\"><div class=\\"SubmenuItems\\"><a href=\\"#\\">Linkje</a></div></div></span>"`;
+
+exports[`<MainNavSubmenu/> rendering Renders a submenu item 1`] = `"<span class=\\"MainNavSubmenu\\" data-submenu-id=\\"een-submenu\\"><button class=\\"SubmenuButton\\" aria-expanded=\\"false\\"><span>submenutje</span></button><div aria-hidden=\\"true\\" class=\\"SubmenuPanel\\"><div class=\\"SubmenuItems\\"><a href=\\"#\\">Linkje</a></div></div></span>"`;

@@ -90,7 +90,7 @@ export const MenuItemTitles = {
   MY_NOTIFICATIONS: ChapterTitles.MELDINGEN,
 };
 
-export const menuItems: MenuItem[] = [
+export const mainMenuItems: MenuItem[] = [
   {
     title: MenuItemTitles.HOME,
     id: mainMenuItemId.HOME,

@@ -63,7 +63,7 @@ describe('SectionCollapsible', () => {
     );
 
     expect(component.childAt(0).hasClass(styles.isCollapsed)).toEqual(true);
-    component.find(`.${styles.Title} button`).simulate('click');
+    component.find(`.Title button`).simulate('click');
     expect(toggleCollapsed).toHaveBeenCalledTimes(1);
   });
 
@@ -81,7 +81,7 @@ describe('SectionCollapsible', () => {
       </SectionCollapsible>
     );
 
-    component.find(`.${styles.Title} button`).simulate('click');
+    component.find(`.Title button`).simulate('click');
     expect(trackingSpy).toHaveBeenCalledWith({
       category: 'the category',
       name: 'the content thing',
