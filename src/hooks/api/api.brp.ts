@@ -37,7 +37,7 @@ export function useBrpApi(initialState = {}): BrpApiState {
         description:
           'Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat.',
         link: {
-          to: AppRoutes.PROFILE,
+          to: AppRoutes.MIJN_GEGEVENS,
           title: 'Meer informatie',
         },
       });
@@ -52,7 +52,7 @@ export function useBrpApi(initialState = {}): BrpApiState {
         title: 'Vertrokken - onbekend waarheen',
         description: `U staat sinds ${dateLeft} in Basisregistratie Personen (BRP) geregistreerd als 'vertrokken onbekend waarheen'.`,
         link: {
-          to: AppRoutes.PROFILE,
+          to: AppRoutes.MIJN_GEGEVENS,
           title: 'Meer informatie',
         },
       });

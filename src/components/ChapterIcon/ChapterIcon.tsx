@@ -30,7 +30,7 @@ export default function ChapterIcon({
   const { location } = useRouter();
 
   let Icon;
-  let matchChapter: ChapterType = chapter || Chapters.BURGERZAKEN;
+  let matchChapter: ChapterType = chapter || Chapters.ROOT;
 
   if (!chapter) {
     const route = entries(AppRoutes).find(([chapterId, path]) => {
@@ -67,6 +67,9 @@ export default function ChapterIcon({
     case Chapters.MELDINGEN:
       Icon = IconMyNotifications;
       break;
+    case Chapters.MIJN_GEGEVENS:
+      Icon = IconBurgerZaken;
+      break;
     default:
       Icon = IconBurgerZaken;
       break;
@@ -74,7 +77,7 @@ export default function ChapterIcon({
 
   return (
     <Icon
-      aria-label={chapter}
+      aria-label={matchChapter}
       fill={fill}
       className={classnames(styles.ChapterIcon, className)}
     />

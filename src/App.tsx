@@ -66,7 +66,7 @@ function AppAuthenticated() {
             path={AppRoutes.MY_NOTIFICATIONS}
             component={MyNotifications}
           />
-          <Route path={AppRoutes.PROFILE} component={Profile} />
+          <Route path={AppRoutes.MIJN_GEGEVENS} component={Profile} />
           <Route path={AppRoutes.MY_TIPS} component={MyTips} />
           <Route
             path={AppRoutes['INKOMEN/STADSPAS']}

@@ -19,7 +19,7 @@ const PageTitles = {
   [AppRoutes[
     'INKOMEN/BIJZONDERE_BIJSTAND'
   ]]: `Bijzondere bijstand | ${ChapterTitles.INKOMEN}`,
-  [AppRoutes.PROFILE]: `Profiel`,
+  [AppRoutes.MIJN_GEGEVENS]: `Profiel`,
   [AppRoutes.MY_AREA]: `Mijn buurt`,
   [AppRoutes.PROCLAIMER]: `Proclaimer`,
   [AppRoutes.MY_TIPS]: `Mijn Tips | overzicht`,

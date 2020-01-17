@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import Profile from './Profile';
 import AppState, { AppState as AppStateInterface } from 'AppState';
-import slug from 'slug';
 import { ReactNode } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 

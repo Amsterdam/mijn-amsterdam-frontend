@@ -13,20 +13,20 @@ export type Chapter =
   | 'INKOMEN'
   | 'MELDINGEN'
   | 'MIJN_BUURT'
-  | 'PROFILE'
   | 'MIJN_TIPS'
+  | 'MIJN_GEGEVENS'
   | 'AFVAL';
 
 export const Chapters: { [chapter in Chapter]: Chapter } = {
   ROOT: 'ROOT',
   MIJN_BUURT: 'MIJN_BUURT',
   BURGERZAKEN: 'BURGERZAKEN',
+  MIJN_GEGEVENS: 'MIJN_GEGEVENS',
   WONEN: 'WONEN',
   BELASTINGEN: 'BELASTINGEN',
   ZORG: 'ZORG',
   JEUGDHULP: 'JEUGDHULP',
   INKOMEN: 'INKOMEN',
-  PROFILE: 'PROFILE',
   MELDINGEN: 'MELDINGEN',
   MIJN_TIPS: 'MIJN_TIPS',
   AFVAL: 'AFVAL',
@@ -41,7 +41,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   ZORG: 'Zorg en ondersteuning',
   ROOT: 'Home',
   MELDINGEN: 'Actueel',
-  PROFILE: 'Mijn gegevens',
+  MIJN_GEGEVENS: 'Mijn gegevens',
   MIJN_BUURT: 'Mijn buurt',
   MIJN_TIPS: 'Mijn tips',
   AFVAL: 'Afval',
@@ -59,7 +59,7 @@ export const AppRoutes = {
   'INKOMEN/STADSPAS': '/werk-en-inkomen/stadspas/:id',
   'INKOMEN/BIJSTANDSUITKERING': '/werk-en-inkomen/bijstandsuitkering/:id',
   'INKOMEN/BIJZONDERE_BIJSTAND': '/werk-en-inkomen/bijzondere-bijstand/:id',
-  PROFILE: '/persoonlijke-gegevens',
+  MIJN_GEGEVENS: '/persoonlijke-gegevens',
   MY_AREA: '/buurt',
   ABOUT: '/over-mijn-amsterdam',
   PROCLAIMER: '/proclaimer',
