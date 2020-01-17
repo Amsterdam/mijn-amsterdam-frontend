@@ -1,5 +1,5 @@
-import { ExternalUrls } from 'App.constants';
 import { ActionLink, InfoPanelProps } from 'components/InfoPanel/InfoPanel';
+import { ExternalUrls } from 'config/App.constants';
 import { isMokum } from 'data-formatting/brp';
 import { BrpApiState, BrpKey } from 'hooks/api/api.brp';
 

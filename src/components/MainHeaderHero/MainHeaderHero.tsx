@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import styles from './MainHeaderHero.module.scss';
 import useRouter from 'use-react-router';
-import { AppRoutes } from 'App.constants';
+import { AppRoutes } from 'config/App.constants';
 import { SessionContext } from 'AppState';
+import { matchPath } from 'react-router';
 
 const LANDSCAPE_SCREEN_RATIO = 0.25;
 const PORTRAIT_SCREEN_RATIO = 0.4;
@@ -24,7 +25,12 @@ function imgUrl(
 
 function useHeroSrc(isAuthenticated: boolean = false) {
   const { location } = useRouter();
-  const isChapterPath = (path: string) => location.pathname.startsWith(path);
+  const isChapterPath = (path: string) =>
+    !!matchPath(location.pathname, {
+      path,
+      exact: true,
+      strict: false,
+    });
 
   let imageName;
 

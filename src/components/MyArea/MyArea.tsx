@@ -1,4 +1,4 @@
-import { AppRoutes } from 'App.constants';
+import { AppRoutes } from 'config/App.constants';
 import { ReactComponent as CloseIcon } from 'assets/icons/Close.svg';
 import { ReactComponent as Logo } from 'assets/images/logo-amsterdam.svg';
 import { ReactComponent as HomeIcon } from 'assets/icons/home.svg';

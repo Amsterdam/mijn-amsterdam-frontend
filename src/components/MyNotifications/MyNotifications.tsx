@@ -1,4 +1,4 @@
-import { AppRoutes, Colors } from 'App.constants';
+import { AppRoutes, Colors } from 'config/App.constants';
 import classNames from 'classnames';
 import Linkd from 'components/Button/Button';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';

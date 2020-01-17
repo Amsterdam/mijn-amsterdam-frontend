@@ -1,4 +1,4 @@
-import { AppRoutes } from 'App.constants';
+import { AppRoutes } from 'config/App.constants';
 import { StatusLineItem } from 'components/StatusLine/StatusLine';
 import slug from 'slug';
 import { LinkProps } from '../App.types';
@@ -10,6 +10,7 @@ import {
 } from '../helpers/App';
 import React from 'react';
 import { StepType } from '../components/StatusLine/StatusLine';
+import { generatePath } from 'react-router';
 
 // Example data
 // [
@@ -695,6 +696,10 @@ export function formatWmoApiResponse(
         today
       );
 
+      const route = generatePath(AppRoutes['ZORG/VOORZIENINGEN'], {
+        id,
+      });
+
       return {
         id,
         title: capitalizeFirstLetter(title),
@@ -706,7 +711,7 @@ export function formatWmoApiResponse(
         isActual,
         link: {
           title: 'Meer informatie',
-          to: `${AppRoutes.ZORG_VOORZIENINGEN}/${id}`,
+          to: route,
         },
         process,
       };

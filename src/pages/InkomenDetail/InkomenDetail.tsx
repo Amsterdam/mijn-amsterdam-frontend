@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
-import { Chapters, AppRoutes, ChapterTitles } from 'App.constants';
+import { AppRoutes, ChapterTitles } from 'config/App.constants';
 import { AppContext } from 'AppState';
 import useRouter from 'use-react-router';
 import StatusLine from 'components/StatusLine/StatusLine';
@@ -33,7 +33,7 @@ export default () => {
   return (
     <DetailPage>
       <PageHeading
-        icon={<ChapterIcon chapter={Chapters.INKOMEN} />}
+        icon={<ChapterIcon />}
         backLink={{ to: AppRoutes.INKOMEN, title: ChapterTitles.INKOMEN }}
       >
         {FocusItem && FocusItem.title}

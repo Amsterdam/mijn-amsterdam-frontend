@@ -1,5 +1,6 @@
-import { AppRoutes, ChapterTitles } from 'App.constants';
+import { AppRoutes, ChapterTitles } from 'config/App.constants';
 import { useEffect } from 'react';
+import { matchPath } from 'react-router-dom';
 import useRouter from 'use-react-router';
 import { trackPageView } from './analytics.hook';
 
@@ -8,16 +9,16 @@ export const PageTitleMain = 'Mijn Amsterdam';
 const PageTitles = {
   [AppRoutes.ROOT]: 'Home | Dashboard',
   [AppRoutes.BURGERZAKEN]: ChapterTitles.BURGERZAKEN,
-  [AppRoutes.BIJSTANDSUITKERING]: `Bijstandsuitkering`,
   [AppRoutes.BELASTINGEN]: ChapterTitles.BELASTINGEN,
   [AppRoutes.ZORG]: `${ChapterTitles.ZORG} overzicht`,
-  [AppRoutes.ZORG_VOORZIENINGEN]: `Voorziening | ${ChapterTitles.ZORG}`,
+  [AppRoutes['ZORG/VOORZIENINGEN']]: `Voorziening | ${ChapterTitles.ZORG}`,
   [AppRoutes.JEUGDHULP]: `${ChapterTitles.JEUGDHULP} | overzicht`,
   [AppRoutes.INKOMEN]: `${ChapterTitles.INKOMEN} | overzicht`,
-  [AppRoutes.STADSPAS]: `Stadspas | ${ChapterTitles.INKOMEN}`,
-  [AppRoutes.BIJZONDERE_BIJSTAND]: `Bijzondere bijstand | ${
-    ChapterTitles.INKOMEN
-  }`,
+  [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]: `Bijstandsuitkering`,
+  [AppRoutes['INKOMEN/STADSPAS']]: `Stadspas | ${ChapterTitles.INKOMEN}`,
+  [AppRoutes[
+    'INKOMEN/BIJZONDERE_BIJSTAND'
+  ]]: `Bijzondere bijstand | ${ChapterTitles.INKOMEN}`,
   [AppRoutes.PROFILE]: `Profiel`,
   [AppRoutes.MY_AREA]: `Mijn buurt`,
   [AppRoutes.PROCLAIMER]: `Proclaimer`,
@@ -48,7 +49,14 @@ export default function usePageChange() {
 
     // Change Page title on route change
     const index = sortedPageTitleRoutes.findIndex(route => {
-      return location.pathname === route || location.pathname.startsWith(route);
+      return (
+        location.pathname === route ||
+        !!matchPath(location.pathname, {
+          path: route,
+          exact: true,
+          strict: false,
+        })
+      );
     });
 
     const route = sortedPageTitleRoutes[index];

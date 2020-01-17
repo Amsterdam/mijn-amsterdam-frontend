@@ -3,7 +3,7 @@ import React, { useContext, ReactNode } from 'react';
 import PageHeading from 'components/PageHeading/PageHeading';
 import styles from './GarbageInformation.module.scss';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
-import { Chapters, ChapterTitles, ExternalUrls } from 'App.constants';
+import { ChapterTitles, ExternalUrls } from 'config/App.constants';
 import Linkd from 'components/Button/Button';
 import { AppContext } from 'AppState';
 import Heading from 'components/Heading/Heading';
@@ -135,9 +135,7 @@ export default () => {
 
   return (
     <DetailPage className={styles.GarbageInformation}>
-      <PageHeading icon={<ChapterIcon chapter={Chapters.AFVAL} />}>
-        {ChapterTitles.AFVAL}
-      </PageHeading>
+      <PageHeading icon={<ChapterIcon />}>{ChapterTitles.AFVAL}</PageHeading>
       <PageContent>
         <p>
           Hieronder vindt u een overzicht van alle huis- en grofvuil

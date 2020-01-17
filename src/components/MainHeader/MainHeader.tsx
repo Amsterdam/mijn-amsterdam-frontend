@@ -1,4 +1,4 @@
-import { AppRoutes, errorMessageMap } from 'App.constants';
+import { AppRoutes, errorMessageMap } from 'config/App.constants';
 import { AppContext, StateKey } from 'AppState';
 import { ReactComponent as BetaLabel } from 'assets/images/beta-label.svg';
 import { ReactComponent as AmsterdamLogoLarge } from 'assets/images/logo-amsterdam-large.svg';

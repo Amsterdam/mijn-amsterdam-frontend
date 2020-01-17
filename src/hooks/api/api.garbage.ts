@@ -1,4 +1,4 @@
-import { ExternalUrls } from 'App.constants';
+import { ExternalUrls } from 'config/App.constants';
 import { capitalizeFirstLetter, getApiUrl } from 'helpers/App';
 import { Centroid, getDistance } from 'helpers/geo';
 import { useCallback, useMemo } from 'react';

@@ -1,6 +1,6 @@
 import 'react-circular-progressbar/dist/styles.css';
 
-import { Colors, LOGOUT_URL } from 'App.constants';
+import { Colors, LOGOUT_URL } from 'config/App.constants';
 import { ComponentChildren } from 'App.types';
 import { formattedTimeFromSeconds } from 'helpers/App';
 import { useActivityThrottle } from 'hooks/useThrottledFn.hook';

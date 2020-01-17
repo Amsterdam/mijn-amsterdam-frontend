@@ -1,10 +1,3 @@
-import {
-  AppRoutes,
-  Chapter,
-  Chapters,
-  ChapterTitles,
-  ExternalUrls,
-} from 'App.constants';
 import { LinkProps } from 'App.types';
 import { ReactComponent as BelastingenIcon } from 'assets/icons/belastingen.svg';
 import { ReactComponent as BurgerzakenIcon } from 'assets/icons/burgerzaken.svg';
@@ -13,6 +6,13 @@ import { ReactComponent as InkomenIcon } from 'assets/icons/inkomen.svg';
 import { ReactComponent as JeugdhulpIcon } from 'assets/icons/Passport.svg';
 import { ReactComponent as WonenIcon } from 'assets/icons/wonen.svg';
 import { ReactComponent as ZorgIcon } from 'assets/icons/zorg.svg';
+import {
+  AppRoutes,
+  Chapter,
+  Chapters,
+  ChapterTitles,
+  ExternalUrls,
+} from 'config/App.constants';
 import { FunctionComponent, SVGProps } from 'react';
 
 export type MainMenuId =

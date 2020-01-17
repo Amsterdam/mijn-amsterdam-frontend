@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { DetailPage, PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
 import styles from './ZorgDetail.module.scss';
-import { Chapters, ChapterTitles, AppRoutes } from 'App.constants';
+import { ChapterTitles, AppRoutes } from 'config/App.constants';
 import { AppContext } from 'AppState';
 import useRouter from 'use-react-router';
 import Alert from 'components/Alert/Alert';
@@ -31,7 +31,7 @@ export default () => {
   return (
     <DetailPage>
       <PageHeading
-        icon={<ChapterIcon chapter={Chapters.ZORG} />}
+        icon={<ChapterIcon />}
         backLink={{ to: AppRoutes.ZORG, title: ChapterTitles.ZORG }}
         isLoading={isLoading}
       >

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './MainFooter.module.scss';
 import Linkd from 'components/Button/Button';
-import { ExternalUrls, AppRoutes } from 'App.constants';
+import { ExternalUrls, AppRoutes } from 'config/App.constants';
 import { LinkList } from './MainFooter.constants';
 import classnames from 'classnames';
 import { useDesktopScreen } from 'hooks/media.hook';

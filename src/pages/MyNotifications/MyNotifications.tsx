@@ -1,4 +1,3 @@
-import { Chapters } from 'App.constants';
 import { AppContext } from 'AppState';
 import Alert from 'components/Alert/Alert';
 import MyNotifications from 'components/MyNotifications/MyNotifications';
@@ -19,10 +18,7 @@ export default () => {
   } = useContext(AppContext);
   return (
     <DetailPage className={styles.MyNotifications}>
-      <PageHeading
-        className={styles.MainHeader}
-        icon={<ChapterIcon chapter={Chapters.MELDINGEN} />}
-      >
+      <PageHeading className={styles.MainHeader} icon={<ChapterIcon />}>
         Actueel
       </PageHeading>
       <PageContent>

@@ -1,7 +1,7 @@
 import { StateKey } from 'AppState';
 import { ErrorMessageMap } from 'components/ErrorMessages/ErrorMessages';
 import { MyNotification } from 'hooks/api/my-notifications-api.hook';
-import { isProduction } from './helpers/App';
+import { isProduction } from '../helpers/App';
 
 export type Chapter =
   | 'ROOT'
@@ -53,12 +53,12 @@ export const AppRoutes = {
   WONEN: '/wonen',
   BELASTINGEN: '/belastingen',
   ZORG: '/zorg-en-ondersteuning',
-  ZORG_VOORZIENINGEN: '/zorg-en-ondersteuning/voorzieningen',
+  'ZORG/VOORZIENINGEN': '/zorg-en-ondersteuning/voorzieningen/:id',
   JEUGDHULP: '/jeugdhulp',
   INKOMEN: '/werk-en-inkomen',
-  STADSPAS: '/werk-en-inkomen/stadspas',
-  BIJSTANDSUITKERING: '/werk-en-inkomen/bijstandsuitkering',
-  BIJZONDERE_BIJSTAND: '/werk-en-inkomen/bijzondere-bijstand',
+  'INKOMEN/STADSPAS': '/werk-en-inkomen/stadspas/:id',
+  'INKOMEN/BIJSTANDSUITKERING': '/werk-en-inkomen/bijstandsuitkering/:id',
+  'INKOMEN/BIJZONDERE_BIJSTAND': '/werk-en-inkomen/bijzondere-bijstand/:id',
   PROFILE: '/persoonlijke-gegevens',
   MY_AREA: '/buurt',
   ABOUT: '/over-mijn-amsterdam',
