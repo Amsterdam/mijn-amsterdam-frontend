@@ -8,7 +8,7 @@ import {
   trackItemPresentation,
   useSessionCallbackOnceDebounced,
 } from 'hooks/analytics.hook';
-import { ChapterTitles, Chapter } from 'config/App.constants';
+import { ChapterTitles, Chapter } from 'config/Chapter.constants';
 import Panel from '../Panel/Panel';
 import { useDebounce } from 'use-debounce';
 

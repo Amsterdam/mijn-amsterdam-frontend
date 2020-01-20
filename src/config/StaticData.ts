@@ -1,5 +1,6 @@
 import { MyNotification } from 'hooks/api/my-notifications-api.hook';
-import { Chapters, ExternalUrls } from './App.constants';
+import { ExternalUrls } from './App.constants';
+import { Chapters } from './Chapter.constants';
 
 export const WelcomeNotification: MyNotification = {
   id: 'welcome01',

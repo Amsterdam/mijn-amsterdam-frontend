@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import { PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
-import { AppRoutes, ChapterTitles } from 'config/App.constants';
+import { AppRoutes } from 'config/Routing.constants';
+import { ChapterTitles } from 'config/Chapter.constants';
 import { AppContext } from 'AppState';
 import useRouter from 'use-react-router';
 import StatusLine from 'components/StatusLine/StatusLine';

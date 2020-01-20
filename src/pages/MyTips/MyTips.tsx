@@ -1,4 +1,5 @@
-import { ChapterTitles, FeatureToggle } from 'config/App.constants';
+import { FeatureToggle } from 'config/App.constants';
+import { ChapterTitles } from 'config/Chapter.constants';
 import { AppContext } from 'AppState';
 import Alert from 'components/Alert/Alert';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
