@@ -9,7 +9,6 @@ export type Chapter =
   | 'WONEN'
   | 'BELASTINGEN'
   | 'ZORG'
-  | 'JEUGDHULP'
   | 'INKOMEN'
   | 'MELDINGEN'
   | 'MIJN_BUURT'
@@ -24,7 +23,6 @@ export const Chapters: { [chapter in Chapter]: Chapter } = {
   WONEN: 'WONEN',
   BELASTINGEN: 'BELASTINGEN',
   ZORG: 'ZORG',
-  JEUGDHULP: 'JEUGDHULP',
   INKOMEN: 'INKOMEN',
   PROFILE: 'PROFILE',
   MELDINGEN: 'MELDINGEN',
@@ -36,7 +34,6 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   INKOMEN: 'Werk en inkomen',
   BURGERZAKEN: 'Burgerzaken',
   BELASTINGEN: 'Belastingen',
-  JEUGDHULP: 'Jeugdhulp',
   WONEN: 'Erfpacht',
   ZORG: 'Zorg en ondersteuning',
   ROOT: 'Home',
@@ -54,20 +51,24 @@ export const AppRoutes = {
   BELASTINGEN: '/belastingen',
   ZORG: '/zorg-en-ondersteuning',
   ZORG_VOORZIENINGEN: '/zorg-en-ondersteuning/voorzieningen',
-  JEUGDHULP: '/jeugdhulp',
   INKOMEN: '/werk-en-inkomen',
   STADSPAS: '/werk-en-inkomen/stadspas',
   BIJSTANDSUITKERING: '/werk-en-inkomen/bijstandsuitkering',
   BIJZONDERE_BIJSTAND: '/werk-en-inkomen/bijzondere-bijstand',
   PROFILE: '/persoonlijke-gegevens',
   MY_AREA: '/buurt',
-  ABOUT: '/over-mijn-amsterdam',
-  PROCLAIMER: '/proclaimer',
-  API_LOGIN: '/api/login',
   MY_TIPS: '/overzicht-tips',
   MY_NOTIFICATIONS: '/overzicht-meldingen',
   AFVAL: '/afval',
+  // Public pages
+  PROCLAIMER: '/proclaimer',
+  API_LOGIN: '/api/login',
 };
+
+export const PublicRoutes = [AppRoutes.PROCLAIMER, AppRoutes.API_LOGIN];
+export const PrivateRoutes = Object.values(AppRoutes).filter(
+  path => !PublicRoutes.includes(path)
+);
 
 export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/login';
 export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL || '/logout';

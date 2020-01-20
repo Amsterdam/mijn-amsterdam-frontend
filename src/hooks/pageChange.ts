@@ -12,12 +12,9 @@ const PageTitles = {
   [AppRoutes.BELASTINGEN]: ChapterTitles.BELASTINGEN,
   [AppRoutes.ZORG]: `${ChapterTitles.ZORG} overzicht`,
   [AppRoutes.ZORG_VOORZIENINGEN]: `Voorziening | ${ChapterTitles.ZORG}`,
-  [AppRoutes.JEUGDHULP]: `${ChapterTitles.JEUGDHULP} | overzicht`,
   [AppRoutes.INKOMEN]: `${ChapterTitles.INKOMEN} | overzicht`,
   [AppRoutes.STADSPAS]: `Stadspas | ${ChapterTitles.INKOMEN}`,
-  [AppRoutes.BIJZONDERE_BIJSTAND]: `Bijzondere bijstand | ${
-    ChapterTitles.INKOMEN
-  }`,
+  [AppRoutes.BIJZONDERE_BIJSTAND]: `Bijzondere bijstand | ${ChapterTitles.INKOMEN}`,
   [AppRoutes.PROFILE]: `Profiel`,
   [AppRoutes.MY_AREA]: `Mijn buurt`,
   [AppRoutes.PROCLAIMER]: `Proclaimer`,

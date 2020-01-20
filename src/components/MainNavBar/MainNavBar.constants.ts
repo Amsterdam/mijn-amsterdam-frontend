@@ -10,7 +10,6 @@ import { ReactComponent as BelastingenIcon } from 'assets/icons/belastingen.svg'
 import { ReactComponent as BurgerzakenIcon } from 'assets/icons/burgerzaken.svg';
 import { ReactComponent as IconGarbage } from 'assets/icons/Huisvuilkalender.svg';
 import { ReactComponent as InkomenIcon } from 'assets/icons/inkomen.svg';
-import { ReactComponent as JeugdhulpIcon } from 'assets/icons/Passport.svg';
 import { ReactComponent as WonenIcon } from 'assets/icons/wonen.svg';
 import { ReactComponent as ZorgIcon } from 'assets/icons/zorg.svg';
 import { FunctionComponent, SVGProps } from 'react';
@@ -68,12 +67,6 @@ export const myChaptersMenuItems: MenuItem[] = [
     id: Chapters.INKOMEN,
     to: AppRoutes.INKOMEN,
     Icon: InkomenIcon,
-  },
-  {
-    title: ChapterTitles.JEUGDHULP,
-    id: Chapters.JEUGDHULP,
-    to: AppRoutes.JEUGDHULP,
-    Icon: JeugdhulpIcon,
   },
   {
     title: ChapterTitles.AFVAL,
