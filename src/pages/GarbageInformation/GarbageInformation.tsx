@@ -222,16 +222,14 @@ export default () => {
       </SectionCollapsible>
       <PageContent>
         <p>
-          Klopt er iets niet?{' '}
           <Linkd
-            variant="inline"
+            // variant="inline"
             external={true}
             href={ExternalUrls.AFVAL_MELDING_FORMULIER}
-            icon=""
+            // icon=""
           >
-            Geef het aan ons door
+            Klopt er iets niet? Geef het aan ons door.
           </Linkd>
-          .
         </p>
       </PageContent>
     </DetailPage>
