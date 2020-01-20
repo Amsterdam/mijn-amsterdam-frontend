@@ -4,7 +4,6 @@ import { useAnalytics } from 'hooks/analytics.hook';
 import Dashboard from 'pages/Dashboard/Dashboard';
 import Inkomen from 'pages/Inkomen/Inkomen';
 import InkomenDetail from 'pages/InkomenDetail/InkomenDetail';
-import Jeugdhulp from 'pages/Jeugdhulp/Jeugdhulp';
 import LandingPage from 'pages/Landing/Landing';
 import MyArea from 'pages/MyArea/MyArea';
 import MyTips from 'pages/MyTips/MyTips';
@@ -13,10 +12,16 @@ import Proclaimer from 'pages/Proclaimer/Proclaimer';
 import Zorg from 'pages/Zorg/Zorg';
 import ZorgDetail from 'pages/ZorgDetail/ZorgDetail';
 import React, { useContext } from 'react';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Redirect,
+  Route,
+  Switch,
+  matchPath,
+} from 'react-router-dom';
 import useRouter from 'use-react-router';
 import ErrorBoundary from 'react-error-boundary';
-import { AppRoutes, FeatureToggle } from './config/App.constants';
+import { AppRoutes, FeatureToggle, PrivateRoutes } from './config/App.constants';
 import styles from './App.module.scss';
 import AppState, { SessionContext, SessionState } from './AppState';
 import MainFooter from './components/MainFooter/MainFooter';
@@ -39,7 +44,23 @@ function AppNotAuthenticated() {
         <Switch>
           <Route exact path={AppRoutes.ROOT} component={LandingPage} />
           <Route path={AppRoutes.PROCLAIMER} component={Proclaimer} />
-          <Route component={NotFound} />
+          <Route
+            render={({ location: { pathname } }) => {
+              if (
+                PrivateRoutes.some(
+                  path =>
+                    !!matchPath(pathname, {
+                      path,
+                      exact: true,
+                      strict: false,
+                    })
+                )
+              ) {
+                return <Redirect to={AppRoutes.ROOT} />;
+              }
+              return <Route component={NotFound} />;
+            }}
+          />
         </Switch>
       </div>
       <MainFooter />
@@ -58,7 +79,7 @@ function AppAuthenticated() {
   ) : (
     <>
       <MainHeader isAuthenticated={session.isAuthenticated} />
-      <div className={styles.App} id="AppContent">
+       <div className={styles.App} id="AppContent">
         <Switch>
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Redirect from={AppRoutes.API_LOGIN} to={AppRoutes.ROOT} />
@@ -69,7 +90,6 @@ function AppAuthenticated() {
             path={AppRoutes['INKOMEN/STADSPAS']}
             component={InkomenDetail}
           />
-          <Route path={AppRoutes.JEUGDHULP} component={Jeugdhulp} />
           <Route
             path={AppRoutes['INKOMEN/BIJSTANDSUITKERING']}
             component={InkomenDetail}
