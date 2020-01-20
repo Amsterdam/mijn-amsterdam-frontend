@@ -1,35 +1,13 @@
-import { AppRoutes, ChapterTitles } from 'config/App.constants';
+import {
+  AppRoutes,
+  CustomTrackingUrls,
+  PageTitleMain,
+  PageTitles,
+} from 'config/App.constants';
 import { useEffect } from 'react';
 import { matchPath } from 'react-router-dom';
 import useRouter from 'use-react-router';
 import { trackPageView } from './analytics.hook';
-
-export const PageTitleMain = 'Mijn Amsterdam';
-
-const PageTitles = {
-  [AppRoutes.ROOT]: 'Home | Dashboard',
-  [AppRoutes.BURGERZAKEN]: ChapterTitles.BURGERZAKEN,
-  [AppRoutes.BELASTINGEN]: ChapterTitles.BELASTINGEN,
-  [AppRoutes.ZORG]: `${ChapterTitles.ZORG} overzicht`,
-  [AppRoutes['ZORG/VOORZIENINGEN']]: `Voorziening | ${ChapterTitles.ZORG}`,
-  [AppRoutes.JEUGDHULP]: `${ChapterTitles.JEUGDHULP} | overzicht`,
-  [AppRoutes.INKOMEN]: `${ChapterTitles.INKOMEN} | overzicht`,
-  [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]: `Bijstandsuitkering`,
-  [AppRoutes['INKOMEN/STADSPAS']]: `Stadspas | ${ChapterTitles.INKOMEN}`,
-  [AppRoutes[
-    'INKOMEN/BIJZONDERE_BIJSTAND'
-  ]]: `Bijzondere bijstand | ${ChapterTitles.INKOMEN}`,
-  [AppRoutes.MIJN_GEGEVENS]: `Profiel`,
-  [AppRoutes.MY_AREA]: `Mijn buurt`,
-  [AppRoutes.PROCLAIMER]: `Proclaimer`,
-  [AppRoutes.MY_TIPS]: `Mijn Tips | overzicht`,
-  [AppRoutes.MY_NOTIFICATIONS]: `${ChapterTitles.MELDINGEN} | overzicht`,
-  [AppRoutes.AFVAL]: `${ChapterTitles.AFVAL} rond uw adres`,
-};
-
-const CustomTrackingUrls = {
-  [AppRoutes.ROOT]: 'https://mijn.amsterdam.nl/home',
-};
 
 const ExcludePageViewTrackingUrls = [AppRoutes.API_LOGIN];
 

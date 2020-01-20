@@ -6,7 +6,7 @@ import styles from './MyArea.module.scss';
 
 export default () => {
   const {
-    MY_AREA: {
+    MIJN_BUURT: {
       url: { advanced: mapUrl },
     },
   } = useContext(AppContext);

@@ -121,7 +121,9 @@ export default function MyTips({
       {showHeader && (
         <div className={styles.HeaderBar}>
           <Heading size="large">Mijn tips</Heading>
-          {!!items.length && <Linkd href={AppRoutes.MY_TIPS}>Mijn tips</Linkd>}
+          {!!items.length && (
+            <Linkd href={AppRoutes.MIJN_TIPS}>Mijn tips</Linkd>
+          )}
           {showOptIn && (
             <Button
               lean={true}

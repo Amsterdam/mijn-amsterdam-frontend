@@ -61,7 +61,7 @@ export default function MyArea({ url, ...otherProps }: MyAreaComponentProps) {
   return (
     <div {...otherProps} className={styles.MyArea}>
       <MyAreaMap url={url} />
-      <NavLink to={AppRoutes.MY_AREA} className={styles.Overlay}>
+      <NavLink to={AppRoutes.MIJN_BUURT} className={styles.Overlay}>
         <div>
           <Heading size="large">Mijn buurt</Heading>
           <p>

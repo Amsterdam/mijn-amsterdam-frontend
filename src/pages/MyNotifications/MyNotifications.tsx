@@ -10,7 +10,7 @@ import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 
 export default () => {
   const {
-    MY_NOTIFICATIONS: {
+    MELDINGEN: {
       data: { items, total },
       isLoading,
       isError,

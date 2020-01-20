@@ -53,7 +53,7 @@ function AppAuthenticated() {
 
   usePageChange();
 
-  return location.pathname === AppRoutes.MY_AREA ? (
+  return location.pathname === AppRoutes.MIJN_BUURT ? (
     <MyArea />
   ) : (
     <>
@@ -62,12 +62,9 @@ function AppAuthenticated() {
         <Switch>
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Redirect from={AppRoutes.API_LOGIN} to={AppRoutes.ROOT} />
-          <Route
-            path={AppRoutes.MY_NOTIFICATIONS}
-            component={MyNotifications}
-          />
+          <Route path={AppRoutes.MELDINGEN} component={MyNotifications} />
           <Route path={AppRoutes.MIJN_GEGEVENS} component={Profile} />
-          <Route path={AppRoutes.MY_TIPS} component={MyTips} />
+          <Route path={AppRoutes.MIJN_TIPS} component={MyTips} />
           <Route
             path={AppRoutes['INKOMEN/STADSPAS']}
             component={InkomenDetail}
@@ -87,7 +84,7 @@ function AppAuthenticated() {
             component={ZorgDetail}
           />
           <Route path={AppRoutes.ZORG} component={Zorg} />
-          <Route path={AppRoutes.MY_AREA} component={MyArea} />
+          <Route path={AppRoutes.MIJN_BUURT} component={MyArea} />
           <Route path={AppRoutes.PROCLAIMER} component={Proclaimer} />
           {FeatureToggle.garbageInformationPage && (
             <Route path={AppRoutes.AFVAL} component={GarbageInformation} />

@@ -2,10 +2,10 @@ import { AppRoutes, ExternalUrls } from 'config/App.constants';
 export type DirectLinkType =
   | 'MIJN_SUBSIDIE'
   | 'MIJN_OVERHEID_BERICHTEBOX'
-  | 'MY_AREA'
+  | 'MIJN_BUURT'
   | 'FAQ'
   | 'AMSTERDAM'
-  | 'MY_TIPS';
+  | 'MIJN_TIPS';
 
 export interface DirectLink {
   title: string;
@@ -16,15 +16,15 @@ export interface DirectLink {
 }
 
 export const LINKS: { [key in DirectLinkType]: DirectLink } = {
-  MY_AREA: {
+  MIJN_BUURT: {
     title: 'Mijn buurt',
-    url: AppRoutes.MY_AREA,
+    url: AppRoutes.MIJN_BUURT,
     isPhoneScreenLink: true,
     id: 'MyAreaHeader',
   },
-  MY_TIPS: {
+  MIJN_TIPS: {
     title: 'Mijn tips',
-    url: AppRoutes.MY_TIPS,
+    url: AppRoutes.MIJN_TIPS,
     isPhoneScreenLink: true,
     id: 'MyTipsHeader',
   },

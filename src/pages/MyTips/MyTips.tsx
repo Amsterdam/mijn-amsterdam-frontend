@@ -12,7 +12,7 @@ import MyTipsOptInOutModal from 'components/MyTips/MyTipsOptInOutModal';
 
 export default () => {
   const {
-    MY_TIPS: {
+    MIJN_TIPS: {
       data: { items: myTips },
       isLoading: isMyTipsLoading,
       isError,

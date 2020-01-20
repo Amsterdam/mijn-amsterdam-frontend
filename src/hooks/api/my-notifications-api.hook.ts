@@ -29,7 +29,7 @@ export interface MyNotificationsApiState extends ApiState {
 }
 
 export function useMyNotificationsState() {
-  return useLocalStorage('MY_NOTIFICATIONS', {});
+  return useLocalStorage('MELDINGEN', {});
 }
 
 function isUnread(

@@ -23,15 +23,15 @@ type MyCasesApiState = FocusApiState;
 export interface AppState {
   BRP: BrpApiState;
   SESSION: SessionApiState;
-  MY_NOTIFICATIONS: MyNotificationsApiState;
+  MELDINGEN: MyNotificationsApiState;
   MY_CASES: MyCasesApiState;
-  MY_TIPS: MyTipsApiState;
+  MIJN_TIPS: MyTipsApiState;
   WMO: WmoApiState;
   FOCUS: FocusApiState;
   MY_CHAPTERS: MyChaptersApiState;
   ERFPACHT: ErfpachtApiState;
   GARBAGE: GarbageApiState;
-  MY_AREA: any;
+  MIJN_BUURT: any;
 }
 
 export type StateKey = keyof AppState;
@@ -80,19 +80,19 @@ export function useAppState(value?: any) {
   };
 
   const BRP = useBrpApi();
-  const MY_TIPS = useMyTipsApi();
+  const MIJN_TIPS = useMyTipsApi();
   const ERFPACHT = useErfpachtApi();
-  const MY_AREA = useMyMap();
-  const GARBAGE = useGarbageApi({ centroid: MY_AREA.centroid });
+  const MIJN_BUURT = useMyMap();
+  const GARBAGE = useGarbageApi({ centroid: MIJN_BUURT.centroid });
   const MY_CHAPTERS = getMyChapters({
     WMO,
     FOCUS,
     ERFPACHT,
     GARBAGE,
     BRP,
-    MY_AREA,
+    MIJN_BUURT,
   });
-  const MY_NOTIFICATIONS = useMyNotificationsApi({ FOCUS, BRP });
+  const MELDINGEN = useMyNotificationsApi({ FOCUS, BRP });
 
   const tipsDependencies = [
     getApiConfigValue('WMO', 'postponeFetch', false) || WMO.isDirty,
@@ -103,9 +103,9 @@ export function useAppState(value?: any) {
 
   const address = BRP?.data?.adres ? getFullAddress(BRP.data.adres) : '';
   const mokum = isMokum(BRP);
-  const refetchMyArea = MY_AREA.refetch;
+  const refetchMyArea = MIJN_BUURT.refetch;
   const refetchGarbage = GARBAGE.refetch;
-  const centroid = MY_AREA.centroid;
+  const centroid = MIJN_BUURT.centroid;
 
   // Fetch lat/lon for addresss
   useEffect(() => {
@@ -125,7 +125,7 @@ export function useAppState(value?: any) {
   // TODO: Exclude api responses that returned error
   useEffect(() => {
     if (tipsDependencies.every(isReady => isReady)) {
-      MY_TIPS.refetch({
+      MIJN_TIPS.refetch({
         WMO: WMO.rawData,
         FOCUS: FOCUS.rawData,
         ERFPACHT: ERFPACHT.data.status,
@@ -133,21 +133,21 @@ export function useAppState(value?: any) {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...tipsDependencies, MY_TIPS.isOptIn]);
+  }, [...tipsDependencies, MIJN_TIPS.isOptIn]);
 
   // NOTE: For now we can use this solution but we probably need some more finegrained memoization of the state as the app grows larger.
   return {
     BRP,
     // NOTE: If needed we can postpone immediate fetching of below data and start fetching in the component
     // by calling the refetch method implemented in the api hooks.
-    MY_NOTIFICATIONS,
+    MELDINGEN,
     MY_CASES,
-    MY_TIPS,
+    MIJN_TIPS,
     WMO,
     FOCUS,
     MY_CHAPTERS,
     ERFPACHT,
-    MY_AREA,
+    MIJN_BUURT,
     GARBAGE,
   };
 }

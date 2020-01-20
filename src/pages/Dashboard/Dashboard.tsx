@@ -19,7 +19,7 @@ const MAX_TIPS_VISIBLE = 3;
 
 export default () => {
   const {
-    MY_NOTIFICATIONS: {
+    MELDINGEN: {
       data: { items: myNotificationItems, total: myNotificationsTotal },
       isLoading: isMyNotificationsLoading,
     },
@@ -27,14 +27,14 @@ export default () => {
       data: { items: myCases },
       isLoading: isMyCasesLoading,
     },
-    MY_TIPS: {
+    MIJN_TIPS: {
       data: { items: myTips },
       isOptIn,
       isLoading: isMyTipsLoading,
       isPristine: isMyTipsPristine,
     },
     MY_CHAPTERS: { items: myChapterItems, isLoading: isMyChaptersLoading },
-    MY_AREA: {
+    MIJN_BUURT: {
       url: { simple: mapUrl },
     },
   } = useContext(AppContext);
@@ -51,7 +51,7 @@ export default () => {
         <PageHeading>
           <Link
             className={styles.MyNotificationsHeadingLink}
-            to={AppRoutes.MY_NOTIFICATIONS}
+            to={AppRoutes.MELDINGEN}
           >
             Actueel
           </Link>

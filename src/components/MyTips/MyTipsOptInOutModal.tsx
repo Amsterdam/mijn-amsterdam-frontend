@@ -14,7 +14,7 @@ export default function MyTipsOptInOutModal({
   onClose,
 }: OptInOutModalProps) {
   const {
-    MY_TIPS: { isOptIn, optIn, optOut },
+    MIJN_TIPS: { isOptIn, optIn, optOut },
   } = useContext(AppContext);
 
   return (
