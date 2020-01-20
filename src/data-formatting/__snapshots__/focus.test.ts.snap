@@ -36,7 +36,7 @@ Object {
     "id": "1-0-beslissing",
     "link": Object {
       "title": "Meer informatie",
-      "to": "/werk-en-inkomen/bijstandsuitkering/1-0#1-0-beslissing",
+      "to": "/werk-en-inkomen/bijstandsuitkering/1-0",
     },
     "title": "Bijstandsuitkering: Uw aanvraag is toegekend",
   },
@@ -178,7 +178,7 @@ Object {
     "id": "1-1-beslissing",
     "link": Object {
       "title": "Meer informatie",
-      "to": "/werk-en-inkomen/bijstandsuitkering/1-1#1-1-beslissing",
+      "to": "/werk-en-inkomen/bijstandsuitkering/1-1",
     },
     "title": "Bijstandsuitkering: Uw aanvraag is afgewezen",
   },
@@ -320,7 +320,7 @@ Object {
     "id": "1-2-beslissing",
     "link": Object {
       "title": "Meer informatie",
-      "to": "/werk-en-inkomen/bijstandsuitkering/1-2#1-2-beslissing",
+      "to": "/werk-en-inkomen/bijstandsuitkering/1-2",
     },
     "title": "Bijstandsuitkering: Uw aanvraag is toegekend",
   },
@@ -486,7 +486,7 @@ Object {
     "id": "1-3-beslissing",
     "link": Object {
       "title": "Meer informatie",
-      "to": "/werk-en-inkomen/bijstandsuitkering/1-3#1-3-beslissing",
+      "to": "/werk-en-inkomen/bijstandsuitkering/1-3",
     },
     "title": "Bijstandsuitkering: Uw aanvraag is buiten behandeling gesteld",
   },
@@ -647,7 +647,7 @@ Object {
     "id": "0-0-aanvraag",
     "link": Object {
       "title": "Meer informatie",
-      "to": "/werk-en-inkomen/stadspas/0-0#0-0-aanvraag",
+      "to": "/werk-en-inkomen/stadspas/0-0",
     },
     "title": "Stadspas: Wij hebben uw aanvraag ontvangen",
   },
@@ -730,7 +730,7 @@ Object {
     "id": "0-1-inBehandeling",
     "link": Object {
       "title": "Meer informatie",
-      "to": "/werk-en-inkomen/stadspas/0-1#0-1-inBehandeling",
+      "to": "/werk-en-inkomen/stadspas/0-1",
     },
     "title": "Stadspas: Wij behandelen uw aanvraag",
   },
@@ -837,7 +837,7 @@ Object {
     "id": "0-2-herstelTermijn",
     "link": Object {
       "title": "Meer informatie",
-      "to": "/werk-en-inkomen/stadspas/0-2#0-2-herstelTermijn",
+      "to": "/werk-en-inkomen/stadspas/0-2",
     },
     "title": "Stadspas: Neem actie",
   },

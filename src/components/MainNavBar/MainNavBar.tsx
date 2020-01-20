@@ -1,4 +1,4 @@
-import { AppRoutes, LOGOUT_URL } from 'App.constants';
+import { AppRoutes, LOGOUT_URL } from 'config/App.constants';
 import { ComponentChildren } from 'App.types';
 import { AppContext, SessionContext } from 'AppState';
 import { ReactComponent as LogoutIcon } from 'assets/icons/Logout.svg';
@@ -64,7 +64,7 @@ function SecondaryLinks() {
       {isDesktopScreen && <FontEnlarger />}
       {!isError && (
         <Link
-          to={AppRoutes.PROFILE}
+          to={AppRoutes.MIJN_GEGEVENS}
           className={styles.ProfileLink}
           data-tutorial-item="Hier kunt u uw algemene persoonsgegevens uit de gemeentelijke basisregistratie raadplegen, zoals uw woonadres;left-bottom"
         >

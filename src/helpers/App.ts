@@ -1,8 +1,8 @@
-import { ApiUrls, DEFAULT_DATE_FORMAT } from 'App.constants';
+import { ApiUrls, DEFAULT_DATE_FORMAT } from 'config/App.constants';
 import { format, parseISO } from 'date-fns';
 import NL_LOCALE from 'date-fns/locale/nl';
 import { KeyboardEvent, MouseEvent } from 'react';
-import { ApiConfig, ApiName } from '../App.constants';
+import { ApiConfig, ApiName } from '../config/App.constants';
 
 export function dateFormat(datestr: string | Date | number, fmt: string) {
   if (!datestr) {

@@ -2,7 +2,7 @@ import React from 'react';
 import { TextPage, PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
 import { LinkdInline } from 'components/Button/Button';
-import { ExternalUrls } from '../../App.constants';
+import { ExternalUrls } from '../../config/App.constants';
 
 export default () => {
   const complaintsFormUrl = ExternalUrls.AMSTERDAM_COMPLAINTS_FROM;

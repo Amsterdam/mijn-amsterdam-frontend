@@ -16,7 +16,7 @@ import React, { useContext } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import useRouter from 'use-react-router';
 import ErrorBoundary from 'react-error-boundary';
-import { AppRoutes, FeatureToggle } from './App.constants';
+import { AppRoutes, FeatureToggle } from './config/App.constants';
 import styles from './App.module.scss';
 import AppState, { SessionContext, SessionState } from './AppState';
 import MainFooter from './components/MainFooter/MainFooter';
@@ -53,7 +53,7 @@ function AppAuthenticated() {
 
   usePageChange();
 
-  return location.pathname === AppRoutes.MY_AREA ? (
+  return location.pathname === AppRoutes.MIJN_BUURT ? (
     <MyArea />
   ) : (
     <>
@@ -62,29 +62,29 @@ function AppAuthenticated() {
         <Switch>
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Redirect from={AppRoutes.API_LOGIN} to={AppRoutes.ROOT} />
+          <Route path={AppRoutes.MELDINGEN} component={MyNotifications} />
+          <Route path={AppRoutes.MIJN_GEGEVENS} component={Profile} />
+          <Route path={AppRoutes.MIJN_TIPS} component={MyTips} />
           <Route
-            path={AppRoutes.MY_NOTIFICATIONS}
-            component={MyNotifications}
+            path={AppRoutes['INKOMEN/STADSPAS']}
+            component={InkomenDetail}
           />
-          <Route path={AppRoutes.PROFILE} component={Profile} />
-          <Route path={AppRoutes.MY_TIPS} component={MyTips} />
-          <Route path={`${AppRoutes.STADSPAS}/:id`} component={InkomenDetail} />
           <Route path={AppRoutes.JEUGDHULP} component={Jeugdhulp} />
           <Route
-            path={`${AppRoutes.BIJSTANDSUITKERING}/:id`}
+            path={AppRoutes['INKOMEN/BIJSTANDSUITKERING']}
             component={InkomenDetail}
           />
           <Route
-            path={`${AppRoutes.BIJZONDERE_BIJSTAND}/:id`}
+            path={AppRoutes['INKOMEN/BIJZONDERE_BIJSTAND']}
             component={InkomenDetail}
           />
           <Route path={AppRoutes.INKOMEN} component={Inkomen} />
           <Route
-            path={`${AppRoutes.ZORG_VOORZIENINGEN}/:id`}
+            path={AppRoutes['ZORG/VOORZIENINGEN']}
             component={ZorgDetail}
           />
           <Route path={AppRoutes.ZORG} component={Zorg} />
-          <Route path={AppRoutes.MY_AREA} component={MyArea} />
+          <Route path={AppRoutes.MIJN_BUURT} component={MyArea} />
           <Route path={AppRoutes.PROCLAIMER} component={Proclaimer} />
           {FeatureToggle.garbageInformationPage && (
             <Route path={AppRoutes.AFVAL} component={GarbageInformation} />

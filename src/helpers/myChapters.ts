@@ -1,8 +1,8 @@
-import { Chapters, FeatureToggle } from 'App.constants';
 import {
   MenuItem,
   myChaptersMenuItems,
 } from 'components/MainNavBar/MainNavBar.constants';
+import { Chapters, FeatureToggle } from 'config/App.constants';
 import { isMokum } from 'data-formatting/brp';
 import { BrpApiState } from '../hooks/api/api.brp';
 import { ErfpachtApiState } from '../hooks/api/api.erfpacht';
@@ -17,7 +17,7 @@ interface getMyChaptersProps {
   ERFPACHT: ErfpachtApiState;
   GARBAGE: GarbageApiState;
   BRP: BrpApiState;
-  MY_AREA: MyMapApiState;
+  MIJN_BUURT: MyMapApiState;
 }
 
 function isChapterActive(
@@ -64,7 +64,7 @@ export interface MyChaptersApiState {
 export default function getMyChapters(
   apiStates: getMyChaptersProps
 ): MyChaptersApiState {
-  const { WMO, FOCUS, ERFPACHT, GARBAGE, BRP, MY_AREA } = apiStates;
+  const { WMO, FOCUS, ERFPACHT, GARBAGE, BRP, MIJN_BUURT } = apiStates;
 
   const wmoIsloading = WMO.isLoading;
   const focusIsloading = FOCUS.isLoading;
@@ -72,8 +72,8 @@ export default function getMyChapters(
   const isFromMokum = isMokum(BRP);
   const brpIsLoading = BRP.isLoading;
   const garbageIsPristine = GARBAGE.isPristine;
-  const myAreaIsLoading = MY_AREA.isLoading;
-  const hasCentroid = !!MY_AREA.centroid;
+  const myAreaIsLoading = MIJN_BUURT.isLoading;
+  const hasCentroid = !!MIJN_BUURT.centroid;
 
   const items = myChaptersMenuItems.filter(item => {
     // Check to see if Chapter has been loaded or if it is directly available

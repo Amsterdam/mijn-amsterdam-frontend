@@ -1,6 +1,6 @@
-import { Chapter, WelcomeNotification } from 'App.constants';
 import { LinkProps } from 'App.types';
 import { AppState } from 'AppState';
+import { Chapter, WelcomeNotification } from 'config/App.constants';
 import { dateSort } from 'helpers/App';
 import { useLocalStorage } from 'hooks/storage.hook';
 import { useMemo } from 'react';
@@ -29,7 +29,7 @@ export interface MyNotificationsApiState extends ApiState {
 }
 
 export function useMyNotificationsState() {
-  return useLocalStorage('MY_NOTIFICATIONS', {});
+  return useLocalStorage('MELDINGEN', {});
 }
 
 function isUnread(

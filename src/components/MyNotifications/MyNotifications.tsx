@@ -1,4 +1,4 @@
-import { AppRoutes, Colors } from 'App.constants';
+import { AppRoutes, Colors } from 'config/App.constants';
 import classNames from 'classnames';
 import Linkd from 'components/Button/Button';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
@@ -137,7 +137,7 @@ export default function MyNotifications({
       )}
       {!isLoading && showMoreLink && (
         <p className={styles.FooterLink}>
-          <Linkd href={AppRoutes.MY_NOTIFICATIONS}>Alle meldingen</Linkd>
+          <Linkd href={AppRoutes.MELDINGEN}>Alle meldingen</Linkd>
         </p>
       )}
     </div>

@@ -8,13 +8,16 @@ import { ReactComponent as IconBelastingen } from 'assets/icons/belastingen.svg'
 import { ReactComponent as IconMyNotifications } from 'assets/icons/Bell.svg';
 import { ReactComponent as IconTips } from 'assets/icons/Tip.svg';
 import { ReactComponent as IconGarbage } from 'assets/icons/Huisvuilkalender.svg';
-import { Chapters, Chapter as ChapterType, Colors } from 'App.constants';
-
+import { Chapters, Chapter as ChapterType, Colors } from 'config/App.constants';
+import { matchPath } from 'react-router';
+import { entries } from 'helpers/App';
 import styles from './ChapterIcon.module.scss';
 import classnames from 'classnames';
+import useRouter from 'use-react-router';
+import { AppRoutes } from '../../config/App.constants';
 
 export interface ChapterIconProps {
-  chapter: ChapterType;
+  chapter?: ChapterType;
   fill?: string;
   className?: string;
 }
@@ -24,8 +27,25 @@ export default function ChapterIcon({
   fill = Colors.black,
   className,
 }: ChapterIconProps) {
+  const { location } = useRouter();
+
   let Icon;
-  switch (chapter) {
+  let matchChapter: ChapterType = chapter || Chapters.ROOT;
+
+  if (!chapter) {
+    const route = entries(AppRoutes).find(([chapterId, path]) => {
+      const match = matchPath(location.pathname, {
+        path,
+        exact: true,
+        strict: false,
+      });
+      return !!(match && chapterId);
+    });
+    if (route) {
+      matchChapter = route[0].split('/')[0] as ChapterType;
+    }
+  }
+  switch (matchChapter) {
     case Chapters.AFVAL:
       Icon = IconGarbage;
       break;
@@ -47,6 +67,9 @@ export default function ChapterIcon({
     case Chapters.MELDINGEN:
       Icon = IconMyNotifications;
       break;
+    case Chapters.MIJN_GEGEVENS:
+      Icon = IconBurgerZaken;
+      break;
     default:
       Icon = IconBurgerZaken;
       break;
@@ -54,7 +77,7 @@ export default function ChapterIcon({
 
   return (
     <Icon
-      aria-label={chapter}
+      aria-label={matchChapter}
       fill={fill}
       className={classnames(styles.ChapterIcon, className)}
     />
