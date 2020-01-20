@@ -223,13 +223,12 @@ export default () => {
       <PageContent>
         <p>
           <Linkd
-            lean={false}
-            variant="secondary-inverted"
+            // variant="inline"
             external={true}
             href={ExternalUrls.AFVAL_MELDING_FORMULIER}
-            icon=""
+            // icon=""
           >
-            Hier klopt iets niet
+            Klopt er iets niet? Geef het aan ons door.
           </Linkd>
         </p>
       </PageContent>
