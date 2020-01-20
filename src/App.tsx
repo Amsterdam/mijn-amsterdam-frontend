@@ -21,7 +21,11 @@ import {
 } from 'react-router-dom';
 import useRouter from 'use-react-router';
 import ErrorBoundary from 'react-error-boundary';
-import { AppRoutes, FeatureToggle, PrivateRoutes } from './config/App.constants';
+import {
+  AppRoutes,
+  FeatureToggle,
+  PrivateRoutes,
+} from './config/App.constants';
 import styles from './App.module.scss';
 import AppState, { SessionContext, SessionState } from './AppState';
 import MainFooter from './components/MainFooter/MainFooter';
@@ -79,7 +83,7 @@ function AppAuthenticated() {
   ) : (
     <>
       <MainHeader isAuthenticated={session.isAuthenticated} />
-       <div className={styles.App} id="AppContent">
+      <div className={styles.App} id="AppContent">
         <Switch>
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Redirect from={AppRoutes.API_LOGIN} to={AppRoutes.ROOT} />
