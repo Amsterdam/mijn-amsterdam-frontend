@@ -10,7 +10,6 @@ export type Chapter =
   | 'WONEN'
   | 'BELASTINGEN'
   | 'ZORG'
-  | 'JEUGDHULP'
   | 'INKOMEN'
   | 'MELDINGEN'
   | 'MIJN_BUURT'
@@ -26,7 +25,6 @@ export const Chapters: { [chapter in Chapter]: Chapter } = {
   WONEN: 'WONEN',
   BELASTINGEN: 'BELASTINGEN',
   ZORG: 'ZORG',
-  JEUGDHULP: 'JEUGDHULP',
   INKOMEN: 'INKOMEN',
   MELDINGEN: 'MELDINGEN',
   MIJN_TIPS: 'MIJN_TIPS',
@@ -40,7 +38,6 @@ export const AppRoutes = {
   BELASTINGEN: '/belastingen',
   ZORG: '/zorg-en-ondersteuning',
   'ZORG/VOORZIENINGEN': '/zorg-en-ondersteuning/voorzieningen/:id',
-  JEUGDHULP: '/jeugdhulp',
   INKOMEN: '/werk-en-inkomen',
   'INKOMEN/STADSPAS': '/werk-en-inkomen/stadspas/:id',
   'INKOMEN/BIJSTANDSUITKERING': '/werk-en-inkomen/bijstandsuitkering/:id',
@@ -55,6 +52,11 @@ export const AppRoutes = {
   AFVAL: '/afval',
 };
 
+export const PublicRoutes = [AppRoutes.PROCLAIMER, AppRoutes.API_LOGIN];
+export const PrivateRoutes = Object.values(AppRoutes).filter(
+  path => !PublicRoutes.includes(path)
+);
+
 export const PageTitleMain = 'Mijn Amsterdam';
 
 // These are used for PageHeadings and link title props for example.
@@ -62,7 +64,6 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   INKOMEN: 'Werk en inkomen',
   BURGERZAKEN: 'Burgerzaken',
   BELASTINGEN: 'Belastingen',
-  JEUGDHULP: 'Jeugdhulp',
   WONEN: 'Erfpacht',
   ZORG: 'Zorg en ondersteuning',
   ROOT: 'Home',
@@ -79,7 +80,6 @@ export const PageTitles = {
   [AppRoutes.BELASTINGEN]: ChapterTitles.BELASTINGEN,
   [AppRoutes.ZORG]: `${ChapterTitles.ZORG} overzicht`,
   [AppRoutes['ZORG/VOORZIENINGEN']]: `Voorziening | ${ChapterTitles.ZORG}`,
-  [AppRoutes.JEUGDHULP]: `${ChapterTitles.JEUGDHULP} | overzicht`,
   [AppRoutes.INKOMEN]: `${ChapterTitles.INKOMEN} | overzicht`,
   [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]: `Bijstandsuitkering`,
   [AppRoutes['INKOMEN/STADSPAS']]: `Stadspas | ${ChapterTitles.INKOMEN}`,

@@ -10,7 +10,11 @@ const MELDINGEN_TOTAL = 10;
 it('Renders without crashing', () => {
   shallow(
     <BrowserRouter>
-      <MyNotifications items={MELDINGEN} total={MELDINGEN_TOTAL} />
+      <MyNotifications
+        trackCategory="myNotifications"
+        items={MELDINGEN}
+        total={MELDINGEN_TOTAL}
+      />
     </BrowserRouter>
   );
 });
