@@ -3,11 +3,10 @@ import { OverviewPage, PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
 import { AppContext } from 'AppState';
 import DataLinkTable from 'components/DataLinkTable/DataLinkTable';
-import { Chapters } from 'App.constants';
 import styles from './Zorg.module.scss';
 import Alert from 'components/Alert/Alert';
 import Linkd, { LinkdInline } from 'components/Button/Button';
-import { ExternalUrls, ChapterTitles } from 'App.constants';
+import { ExternalUrls, ChapterTitles } from 'config/App.constants';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 
 const DISPLAY_PROPS = {
@@ -29,9 +28,7 @@ export default () => {
 
   return (
     <OverviewPage>
-      <PageHeading icon={<ChapterIcon chapter={Chapters.ZORG} />}>
-        {ChapterTitles.ZORG}
-      </PageHeading>
+      <PageHeading icon={<ChapterIcon />}>{ChapterTitles.ZORG}</PageHeading>
       <PageContent>
         <p>
           Hieronder ziet u uw regelingen en hulpmiddelen vanuit de Wmo. Hebt u

@@ -3,7 +3,7 @@ import React from 'react';
 
 import AutoLogoutDialog, { AutoLogoutDialogSettings } from './AutoLogoutDialog';
 import { SessionContext } from 'AppState';
-import { LOGOUT_URL } from 'App.constants';
+import { LOGOUT_URL } from 'config/App.constants';
 
 const ONE_SECOND_IN_MS = 1000;
 const DOC_TITLE = 'AutoLogoutDialog';

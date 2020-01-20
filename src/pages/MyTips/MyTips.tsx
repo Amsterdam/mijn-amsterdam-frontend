@@ -1,4 +1,4 @@
-import { Chapters, ChapterTitles, FeatureToggle } from 'App.constants';
+import { ChapterTitles, FeatureToggle } from 'config/App.constants';
 import { AppContext } from 'AppState';
 import Alert from 'components/Alert/Alert';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
@@ -12,7 +12,7 @@ import MyTipsOptInOutModal from 'components/MyTips/MyTipsOptInOutModal';
 
 export default () => {
   const {
-    MY_TIPS: {
+    MIJN_TIPS: {
       data: { items: myTips },
       isLoading: isMyTipsLoading,
       isError,
@@ -25,7 +25,7 @@ export default () => {
 
   return (
     <OverviewPage className={styles.MyTips}>
-      <PageHeading icon={<ChapterIcon chapter={Chapters.MIJN_TIPS} />}>
+      <PageHeading icon={<ChapterIcon />}>
         {ChapterTitles.MIJN_TIPS}
       </PageHeading>
       {FeatureToggle.myTipsoptInOutPersonalization && (

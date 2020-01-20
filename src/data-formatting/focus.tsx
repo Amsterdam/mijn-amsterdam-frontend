@@ -1,14 +1,15 @@
-import { AppRoutes } from 'App.constants';
+import { AppRoutes } from 'config/App.constants';
 import { LinkProps } from 'App.types';
 import { addDays, differenceInCalendarDays, parseISO } from 'date-fns';
 import { defaultDateFormat } from 'helpers/App';
 import { MyNotification } from 'hooks/api/my-notifications-api.hook';
-import { Chapter, Chapters, FeatureToggle } from '../App.constants';
+import { Chapter, Chapters, FeatureToggle } from '../config/App.constants';
 import { Document as GenericDocument } from '../components/DocumentList/DocumentList';
 import Linkd from 'components/Button/Button';
 import React from 'react';
 import { StatusLineItem } from 'components/StatusLine/StatusLine';
 import { StepType } from '../components/StatusLine/StatusLine';
+import { generatePath } from 'react-router';
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
  */
@@ -544,9 +545,10 @@ const DocumentTitles: { [originalTitle: string]: string } = {
 };
 
 const AppRoutesByProductOrigin = {
-  [ProductOrigins.Participatiewet]: AppRoutes.BIJSTANDSUITKERING,
-  [ProductOrigins.Minimafonds]: AppRoutes.STADSPAS,
-  [ProductOrigins['Bijzondere Bijstand']]: AppRoutes.BIJZONDERE_BIJSTAND,
+  [ProductOrigins.Participatiewet]: AppRoutes['INKOMEN/BIJSTANDSUITKERING'],
+  [ProductOrigins.Minimafonds]: AppRoutes['INKOMEN/STADSPAS'],
+  [ProductOrigins['Bijzondere Bijstand']]:
+    AppRoutes['INKOMEN/BIJZONDERE_BIJSTAND'],
 };
 
 /** Checks if an item returned from the api is considered recent */
@@ -713,7 +715,6 @@ export function formatFocusNotificationItem(
   const stepLabelSource = !!sourceData.decision
     ? stepLabels[sourceData.decision]
     : stepLabels;
-  const route = AppRoutesByProductOrigin[productOrigin];
 
   return {
     id: step.id,
@@ -728,7 +729,7 @@ export function formatFocusNotificationItem(
       stepLabelSource.notification &&
       parseLabelContent(stepLabelSource.notification.description, sourceData),
     link: {
-      to: `${route}/${item.id}#${step.id}`,
+      to: item.link.to,
       title: 'Meer informatie',
     },
   };
@@ -832,6 +833,10 @@ export function formatFocusProduct(
     stepTitle => !!steps[stepTitle]
   );
 
+  const route = generatePath(AppRoutesByProductOrigin[productOrigin], {
+    id,
+  });
+
   const item = {
     id,
     chapter: Chapters.INKOMEN,
@@ -862,7 +867,7 @@ export function formatFocusProduct(
       : null,
     link: {
       title: 'Meer informatie', // TODO: How to get custom link title?
-      to: `${AppRoutesByProductOrigin[productOrigin]}/${id}`,
+      to: route,
     },
     process: processStepsFiltered
       .filter(stepTitle => {

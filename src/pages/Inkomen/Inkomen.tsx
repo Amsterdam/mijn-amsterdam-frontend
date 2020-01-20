@@ -3,9 +3,9 @@ import { OverviewPage, PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
 import { AppContext } from 'AppState';
 import DataLinkTable from 'components/DataLinkTable/DataLinkTable';
-import { Chapters, ChapterTitles } from 'App.constants';
+import { ChapterTitles } from 'config/App.constants';
 import styles from './Inkomen.module.scss';
-import { ExternalUrls } from 'App.constants';
+import { ExternalUrls } from 'config/App.constants';
 import Alert from 'components/Alert/Alert';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import Linkd from 'components/Button/Button';
@@ -26,9 +26,7 @@ export default () => {
 
   return (
     <OverviewPage className={styles.Inkomen}>
-      <PageHeading icon={<ChapterIcon chapter={Chapters.INKOMEN} />}>
-        {ChapterTitles.INKOMEN}
-      </PageHeading>
+      <PageHeading icon={<ChapterIcon />}>{ChapterTitles.INKOMEN}</PageHeading>
       <PageContent>
         <p>
           Hieronder vindt u een overzicht van alle voorzieningen die u hebt ter

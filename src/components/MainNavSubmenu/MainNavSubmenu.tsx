@@ -7,7 +7,7 @@ import { ComponentChildren } from 'App.types';
 import { LinkProps } from 'App.types';
 import { trackLink } from 'hooks/analytics.hook';
 import useRouter from 'use-react-router';
-import { Colors } from 'App.constants';
+import { Colors } from 'config/App.constants';
 import { MenuItem } from 'components/MainNavBar/MainNavBar.constants';
 
 export interface MainNavSubmenuLinkProps

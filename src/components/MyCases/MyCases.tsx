@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './MyCases.module.scss';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import { NavLink } from 'react-router-dom';
-import { Colors } from 'App.constants';
+import { Colors } from 'config/App.constants';
 import Heading from 'components/Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { FocusItem } from 'data-formatting/focus';

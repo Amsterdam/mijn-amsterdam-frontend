@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './MyTips.module.scss';
 import Heading from 'components/Heading/Heading';
-import { AppRoutes } from 'App.constants';
+import { AppRoutes } from 'config/App.constants';
 import { MyTip } from 'hooks/api/my-tips-api.hook';
 import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
 import Linkd from '../Button/Button';
@@ -121,7 +121,9 @@ export default function MyTips({
       {showHeader && (
         <div className={styles.HeaderBar}>
           <Heading size="large">Mijn tips</Heading>
-          {!!items.length && <Linkd href={AppRoutes.MY_TIPS}>Mijn tips</Linkd>}
+          {!!items.length && (
+            <Linkd href={AppRoutes.MIJN_TIPS}>Mijn tips</Linkd>
+          )}
           {showOptIn && (
             <Button
               lean={true}

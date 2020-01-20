@@ -48,10 +48,10 @@ export default function useMyTipsApi(
   limit: number = -1
 ): MyTipsApiState {
   const options: PaginatedApiProps = {
-    url: getApiUrl('MY_TIPS'),
+    url: getApiUrl('MIJN_TIPS'),
     offset,
     limit,
-    postpone: getApiConfigValue('MY_TIPS', 'postponeFetch', false),
+    postpone: getApiConfigValue('MIJN_TIPS', 'postponeFetch', false),
     method: 'POST',
   };
 

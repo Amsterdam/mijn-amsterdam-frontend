@@ -1,4 +1,4 @@
-import { AppRoutes } from 'App.constants';
+import { AppRoutes } from 'config/App.constants';
 import { ReactComponent as CloseIcon } from 'assets/icons/Close.svg';
 import { ReactComponent as Logo } from 'assets/images/logo-amsterdam.svg';
 import { ReactComponent as HomeIcon } from 'assets/icons/home.svg';
@@ -61,7 +61,7 @@ export default function MyArea({ url, ...otherProps }: MyAreaComponentProps) {
   return (
     <div {...otherProps} className={styles.MyArea}>
       <MyAreaMap url={url} />
-      <NavLink to={AppRoutes.MY_AREA} className={styles.Overlay}>
+      <NavLink to={AppRoutes.MIJN_BUURT} className={styles.Overlay}>
         <div>
           <Heading size="large">Mijn buurt</Heading>
           <p>

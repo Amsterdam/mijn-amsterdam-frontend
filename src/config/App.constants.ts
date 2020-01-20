@@ -1,8 +1,9 @@
 import { StateKey } from 'AppState';
 import { ErrorMessageMap } from 'components/ErrorMessages/ErrorMessages';
 import { MyNotification } from 'hooks/api/my-notifications-api.hook';
-import { isProduction } from './helpers/App';
+import { isProduction } from '../helpers/App';
 
+// Within the team we call these Themes
 export type Chapter =
   | 'ROOT'
   | 'BURGERZAKEN'
@@ -13,25 +14,50 @@ export type Chapter =
   | 'INKOMEN'
   | 'MELDINGEN'
   | 'MIJN_BUURT'
-  | 'PROFILE'
   | 'MIJN_TIPS'
+  | 'MIJN_GEGEVENS'
   | 'AFVAL';
 
 export const Chapters: { [chapter in Chapter]: Chapter } = {
   ROOT: 'ROOT',
   MIJN_BUURT: 'MIJN_BUURT',
   BURGERZAKEN: 'BURGERZAKEN',
+  MIJN_GEGEVENS: 'MIJN_GEGEVENS',
   WONEN: 'WONEN',
   BELASTINGEN: 'BELASTINGEN',
   ZORG: 'ZORG',
   JEUGDHULP: 'JEUGDHULP',
   INKOMEN: 'INKOMEN',
-  PROFILE: 'PROFILE',
   MELDINGEN: 'MELDINGEN',
   MIJN_TIPS: 'MIJN_TIPS',
   AFVAL: 'AFVAL',
 };
 
+export const AppRoutes = {
+  ROOT: '/',
+  BURGERZAKEN: '/burgerzaken',
+  WONEN: '/wonen',
+  BELASTINGEN: '/belastingen',
+  ZORG: '/zorg-en-ondersteuning',
+  'ZORG/VOORZIENINGEN': '/zorg-en-ondersteuning/voorzieningen/:id',
+  JEUGDHULP: '/jeugdhulp',
+  INKOMEN: '/werk-en-inkomen',
+  'INKOMEN/STADSPAS': '/werk-en-inkomen/stadspas/:id',
+  'INKOMEN/BIJSTANDSUITKERING': '/werk-en-inkomen/bijstandsuitkering/:id',
+  'INKOMEN/BIJZONDERE_BIJSTAND': '/werk-en-inkomen/bijzondere-bijstand/:id',
+  MIJN_GEGEVENS: '/persoonlijke-gegevens',
+  MIJN_BUURT: '/buurt',
+  ABOUT: '/over-mijn-amsterdam',
+  PROCLAIMER: '/proclaimer',
+  API_LOGIN: '/api/login',
+  MIJN_TIPS: '/overzicht-tips',
+  MELDINGEN: '/overzicht-meldingen',
+  AFVAL: '/afval',
+};
+
+export const PageTitleMain = 'Mijn Amsterdam';
+
+// These are used for PageHeadings and link title props for example.
 export const ChapterTitles: { [chapter in Chapter]: string } = {
   INKOMEN: 'Werk en inkomen',
   BURGERZAKEN: 'Burgerzaken',
@@ -41,32 +67,35 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   ZORG: 'Zorg en ondersteuning',
   ROOT: 'Home',
   MELDINGEN: 'Actueel',
-  PROFILE: 'Mijn gegevens',
+  MIJN_GEGEVENS: 'Mijn gegevens',
   MIJN_BUURT: 'Mijn buurt',
   MIJN_TIPS: 'Mijn tips',
   AFVAL: 'Afval',
 };
 
-export const AppRoutes = {
-  ROOT: '/',
-  BURGERZAKEN: '/burgerzaken',
-  WONEN: '/wonen',
-  BELASTINGEN: '/belastingen',
-  ZORG: '/zorg-en-ondersteuning',
-  ZORG_VOORZIENINGEN: '/zorg-en-ondersteuning/voorzieningen',
-  JEUGDHULP: '/jeugdhulp',
-  INKOMEN: '/werk-en-inkomen',
-  STADSPAS: '/werk-en-inkomen/stadspas',
-  BIJSTANDSUITKERING: '/werk-en-inkomen/bijstandsuitkering',
-  BIJZONDERE_BIJSTAND: '/werk-en-inkomen/bijzondere-bijstand',
-  PROFILE: '/persoonlijke-gegevens',
-  MY_AREA: '/buurt',
-  ABOUT: '/over-mijn-amsterdam',
-  PROCLAIMER: '/proclaimer',
-  API_LOGIN: '/api/login',
-  MY_TIPS: '/overzicht-tips',
-  MY_NOTIFICATIONS: '/overzicht-meldingen',
-  AFVAL: '/afval',
+export const PageTitles = {
+  [AppRoutes.ROOT]: 'Home | Dashboard',
+  [AppRoutes.BURGERZAKEN]: ChapterTitles.BURGERZAKEN,
+  [AppRoutes.BELASTINGEN]: ChapterTitles.BELASTINGEN,
+  [AppRoutes.ZORG]: `${ChapterTitles.ZORG} overzicht`,
+  [AppRoutes['ZORG/VOORZIENINGEN']]: `Voorziening | ${ChapterTitles.ZORG}`,
+  [AppRoutes.JEUGDHULP]: `${ChapterTitles.JEUGDHULP} | overzicht`,
+  [AppRoutes.INKOMEN]: `${ChapterTitles.INKOMEN} | overzicht`,
+  [AppRoutes['INKOMEN/BIJSTANDSUITKERING']]: `Bijstandsuitkering`,
+  [AppRoutes['INKOMEN/STADSPAS']]: `Stadspas | ${ChapterTitles.INKOMEN}`,
+  [AppRoutes[
+    'INKOMEN/BIJZONDERE_BIJSTAND'
+  ]]: `Bijzondere bijstand | ${ChapterTitles.INKOMEN}`,
+  [AppRoutes.MIJN_GEGEVENS]: `Profiel`,
+  [AppRoutes.MIJN_BUURT]: `Mijn buurt`,
+  [AppRoutes.PROCLAIMER]: `Proclaimer`,
+  [AppRoutes.MIJN_TIPS]: `Mijn Tips | overzicht`,
+  [AppRoutes.MELDINGEN]: `${ChapterTitles.MELDINGEN} | overzicht`,
+  [AppRoutes.AFVAL]: `${ChapterTitles.AFVAL} rond uw adres`,
+};
+
+export const CustomTrackingUrls = {
+  [AppRoutes.ROOT]: 'https://mijn.amsterdam.nl/home',
 };
 
 export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/login';
@@ -78,9 +107,9 @@ const DATAPUNT_API_BASE_URL = process.env.REACT_APP_DATAPUNT_API_URL;
 export type ApiName = StateKey | 'BAG' | 'AUTH' | 'AFVAL_OPHAAL_GEBIEDEN';
 
 export const ApiUrls: TypeIndex<ApiName, string> = {
-  MY_NOTIFICATIONS: `${API_BASE_URL}/mijn-meldingen`,
+  MELDINGEN: `${API_BASE_URL}/mijn-meldingen`,
   MY_CASES: `${API_BASE_URL}/focus/aanvragen`,
-  MY_TIPS: `${API_BASE_URL}/tips/gettips`,
+  MIJN_TIPS: `${API_BASE_URL}/tips/gettips`,
   BRP: `${API_BASE_URL}/brp/brp`,
   WMO: `${API_BASE_URL}/wmoned/voorzieningen`,
   FOCUS: `${API_BASE_URL}/focus/aanvragen`,
@@ -101,7 +130,7 @@ export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
   WMO: {
     postponeFetch: false,
   },
-  MY_TIPS: {
+  MIJN_TIPS: {
     postponeFetch: true, // Stays true because we're not fetching immediately
   },
 };
@@ -117,7 +146,7 @@ export const errorMessageMap: ErrorMessageMap = {
     name: 'Persoonsgegevens',
     error: 'Communicatie met api mislukt.',
   },
-  MY_NOTIFICATIONS: {
+  MELDINGEN: {
     name: 'Actueel',
     error: 'Communicatie met api mislukt.',
   },
@@ -125,7 +154,7 @@ export const errorMessageMap: ErrorMessageMap = {
     name: 'Mijn lopende aanvragen',
     error: 'Communicatie met api mislukt.',
   },
-  MY_TIPS: {
+  MIJN_TIPS: {
     name: 'Mijn tips',
     error: 'Communicatie met api mislukt.',
   },
