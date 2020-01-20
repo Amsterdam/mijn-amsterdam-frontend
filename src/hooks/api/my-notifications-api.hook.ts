@@ -1,6 +1,7 @@
 import { LinkProps } from 'App.types';
 import { AppState } from 'AppState';
-import { Chapter, WelcomeNotification } from 'config/App.constants';
+import { Chapter } from 'config/App.constants';
+import { WelcomeNotification } from 'config/StaticData';
 import { dateSort } from 'helpers/App';
 import { useLocalStorage } from 'hooks/storage.hook';
 import { useMemo } from 'react';
