@@ -114,7 +114,9 @@ export const useDataApi = (
             payload: result.message,
           });
           Sentry.captureMessage(
-            `API ERROR: ${result.message}, url: ${requestOptions.url}`
+            `API ERROR: ${result.message}, url: ${
+              requestOptions.url.split('?')[0]
+            }`
           );
         }
       }
