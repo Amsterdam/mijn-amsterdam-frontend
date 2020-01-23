@@ -1,4 +1,4 @@
-import { AppRoutes } from 'config/App.constants';
+import { AppRoutes } from 'config/Routing.constants';
 import { StatusLineItem } from 'components/StatusLine/StatusLine';
 import slug from 'slug';
 import { LinkProps } from '../App.types';

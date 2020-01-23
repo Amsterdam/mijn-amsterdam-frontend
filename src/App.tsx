@@ -21,11 +21,8 @@ import {
 } from 'react-router-dom';
 import useRouter from 'use-react-router';
 import ErrorBoundary from 'react-error-boundary';
-import {
-  AppRoutes,
-  FeatureToggle,
-  PrivateRoutes,
-} from './config/App.constants';
+import { FeatureToggle } from './config/App.constants';
+import { AppRoutes, PrivateRoutes } from './config/Routing.constants';
 import styles from './App.module.scss';
 import AppState, { SessionContext, SessionState } from './AppState';
 import MainFooter from './components/MainFooter/MainFooter';

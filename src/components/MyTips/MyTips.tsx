@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './MyTips.module.scss';
 import Heading from 'components/Heading/Heading';
-import { AppRoutes } from 'config/App.constants';
+import { AppRoutes } from 'config/Routing.constants';
 import { MyTip } from 'hooks/api/my-tips-api.hook';
 import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
 import Linkd from '../Button/Button';

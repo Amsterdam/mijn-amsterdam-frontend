@@ -3,7 +3,7 @@ import {
   CustomTrackingUrls,
   PageTitleMain,
   PageTitles,
-} from 'config/App.constants';
+} from 'config/Routing.constants';
 import { useEffect } from 'react';
 import { matchPath } from 'react-router-dom';
 import useRouter from 'use-react-router';

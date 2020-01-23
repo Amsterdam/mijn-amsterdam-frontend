@@ -6,7 +6,8 @@ import DataLinkTable from 'components/DataLinkTable/DataLinkTable';
 import styles from './Zorg.module.scss';
 import Alert from 'components/Alert/Alert';
 import Linkd, { LinkdInline } from 'components/Button/Button';
-import { ExternalUrls, ChapterTitles } from 'config/App.constants';
+import { ExternalUrls } from 'config/App.constants';
+import { ChapterTitles } from 'config/Chapter.constants';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 
 const DISPLAY_PROPS = {

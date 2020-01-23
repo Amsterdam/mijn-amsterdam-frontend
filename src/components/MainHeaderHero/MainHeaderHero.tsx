@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styles from './MainHeaderHero.module.scss';
 import useRouter from 'use-react-router';
-import { AppRoutes } from 'config/App.constants';
+import { AppRoutes } from 'config/Routing.constants';
 import { SessionContext } from 'AppState';
 import { matchPath } from 'react-router';
 

@@ -1,4 +1,5 @@
-import { LOGIN_URL, ExternalUrls } from 'config/App.constants';
+import { ExternalUrls } from 'config/App.constants';
+import { LOGIN_URL } from 'config/Api.constants';
 import { ReactComponent as BetaLabel } from 'assets/images/beta-label.svg';
 import DigiDLogo from 'assets/images/digid-logo.png';
 import Heading from 'components/Heading/Heading';

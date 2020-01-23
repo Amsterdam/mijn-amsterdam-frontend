@@ -1,4 +1,6 @@
-import { AppRoutes, ExternalUrls } from 'config/App.constants';
+import { ExternalUrls } from 'config/App.constants';
+import { AppRoutes } from 'config/Routing.constants';
+
 export type DirectLinkType =
   | 'MIJN_SUBSIDIE'
   | 'MIJN_OVERHEID_BERICHTEBOX'

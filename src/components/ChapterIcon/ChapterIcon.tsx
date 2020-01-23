@@ -8,13 +8,14 @@ import { ReactComponent as IconBelastingen } from 'assets/icons/belastingen.svg'
 import { ReactComponent as IconMyNotifications } from 'assets/icons/Bell.svg';
 import { ReactComponent as IconTips } from 'assets/icons/Tip.svg';
 import { ReactComponent as IconGarbage } from 'assets/icons/Huisvuilkalender.svg';
-import { Chapters, Chapter as ChapterType, Colors } from 'config/App.constants';
+import { Colors } from 'config/App.constants';
+import { Chapters, Chapter as ChapterType } from 'config/Chapter.constants';
 import { matchPath } from 'react-router';
 import { entries } from 'helpers/App';
 import styles from './ChapterIcon.module.scss';
 import classnames from 'classnames';
 import useRouter from 'use-react-router';
-import { AppRoutes } from '../../config/App.constants';
+import { AppRoutes } from 'config/Routing.constants';
 
 export interface ChapterIconProps {
   chapter?: ChapterType;
