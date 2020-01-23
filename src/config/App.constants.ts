@@ -1,9 +1,7 @@
-import { isProduction } from '../helpers/App';
-
 export const FeatureToggle = {
   myTipsoptInOutPersonalization: true,
   garbageInformationPage: true,
-  focusDocumentDownload: !isProduction(),
+  focusDocumentDownload: true,
 };
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
