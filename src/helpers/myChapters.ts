@@ -2,7 +2,8 @@ import {
   MenuItem,
   myChaptersMenuItems,
 } from 'components/MainNavBar/MainNavBar.constants';
-import { Chapters, FeatureToggle } from 'config/App.constants';
+import { FeatureToggle } from 'config/App.constants';
+import { Chapters } from 'config/Chapter.constants';
 import { isMokum } from 'data-formatting/brp';
 import { BrpApiState } from '../hooks/api/api.brp';
 import { ErfpachtApiState } from '../hooks/api/api.erfpacht';
