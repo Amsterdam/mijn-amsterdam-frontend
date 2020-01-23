@@ -1,5 +1,5 @@
 import { ReactComponent as AlertIcon } from 'assets/icons/Alert.svg';
-import { AppRoutes } from 'config/App.constants';
+import { AppRoutes } from 'config/Routing.constants';
 import { BrpResponseData } from 'data-formatting/brp';
 import { defaultDateFormat, getApiUrl } from 'helpers/App';
 import { useMemo } from 'react';

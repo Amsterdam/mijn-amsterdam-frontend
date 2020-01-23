@@ -3,7 +3,7 @@ import { OverviewPage, PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
 import { AppContext } from 'AppState';
 import DataLinkTable from 'components/DataLinkTable/DataLinkTable';
-import { ChapterTitles } from 'config/App.constants';
+import { ChapterTitles } from 'config/Chapter.constants';
 import styles from './Inkomen.module.scss';
 import { ExternalUrls } from 'config/App.constants';
 import Alert from 'components/Alert/Alert';

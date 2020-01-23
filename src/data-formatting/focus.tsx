@@ -1,14 +1,14 @@
-import { AppRoutes } from 'config/App.constants';
+import { AppRoutes } from 'config/Routing.constants';
 import { LinkProps } from 'App.types';
 import { addDays, differenceInCalendarDays, parseISO } from 'date-fns';
 import { defaultDateFormat } from 'helpers/App';
 import { MyNotification } from 'hooks/api/my-notifications-api.hook';
-import { Chapter, Chapters, FeatureToggle } from '../config/App.constants';
+import { FeatureToggle } from 'config/App.constants';
+import { Chapter, Chapters } from 'config/Chapter.constants';
 import { Document as GenericDocument } from '../components/DocumentList/DocumentList';
 import Linkd from 'components/Button/Button';
 import React from 'react';
-import { StatusLineItem } from 'components/StatusLine/StatusLine';
-import { StepType } from '../components/StatusLine/StatusLine';
+import { StatusLineItem, StepType } from 'components/StatusLine/StatusLine';
 import { generatePath } from 'react-router';
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
