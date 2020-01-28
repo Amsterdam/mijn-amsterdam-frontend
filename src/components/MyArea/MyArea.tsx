@@ -4,27 +4,18 @@ import { ReactComponent as Logo } from 'assets/images/logo-amsterdam.svg';
 import iconUrl, { ReactComponent as HomeIcon } from 'assets/icons/home.svg';
 import { ReactComponent as HomeIconSimple } from 'assets/icons/home-simple.svg';
 import Heading from 'components/Heading/Heading';
-import React, { HTMLProps, useEffect, useContext } from 'react';
+import React, { HTMLProps, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 import styles from './MyArea.module.scss';
 import Linkd from 'components/Button/Button';
 
 import 'leaflet/dist/leaflet.css';
-import {
-  Map,
-  TileLayer,
-  Marker,
-  useMapInstance,
-  MapContext,
-} from '@datapunt/react-maps';
-
-// import iconUrl from 'leaflet/dist/images/marker-icon.png';
-import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
-import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
+import L from 'leaflet';
+import { Map, TileLayer, Marker, useMapInstance } from '@datapunt/react-maps';
 
 import { ComponentChildren } from 'App.types';
-import { DEFAULT_ZOOM, LOCATION_ZOOM } from '../../config/Map.constants';
+import { LOCATION_ZOOM, DEFAULT_ZOOM } from '../../config/Map.constants';
 
 import {
   DEFAULT_MAP_OPTIONS,
@@ -43,11 +34,11 @@ interface HomeIconMarkerProps {
 }
 
 function HomeIconMarker({ center }: HomeIconMarkerProps) {
-  const { mapInstance, L } = useMapInstance();
+  const mapInstance = useMapInstance();
 
   useEffect(() => {
     if (center && mapInstance) {
-      mapInstance.setView(center);
+      mapInstance.setView(center, DEFAULT_ZOOM);
     }
   }, [center, mapInstance]);
 
@@ -73,23 +64,25 @@ interface ZoomControlComponentProps {
 }
 
 function ZoomControl({ center }: ZoomControlComponentProps) {
-  const { mapInstance } = useMapInstance();
+  const mapInstance = useMapInstance();
   return (
     <div className={styles.ZoomControl}>
       <button
-        onClick={() => mapInstance.setView(center, LOCATION_ZOOM)}
+        onClick={() =>
+          mapInstance && mapInstance.setView(center, LOCATION_ZOOM)
+        }
         className={styles.HomeButton}
       >
         <HomeIconSimple fill="#000" />
       </button>
       <button
-        onClick={() => mapInstance.zoomIn()}
+        onClick={() => mapInstance && mapInstance.zoomIn()}
         className={styles.ZoomInButton}
       >
         &#43;
       </button>
       <button
-        onClick={() => mapInstance.zoomOut()}
+        onClick={() => mapInstance && mapInstance.zoomOut()}
         className={styles.ZoomOutButton}
       >
         &minus;

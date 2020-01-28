@@ -7,7 +7,7 @@ import {
 import React, { useContext } from 'react';
 
 import styles from './MyArea.module.scss';
-import { isProduction, isAcceptance } from '../../helpers/App';
+import { isProduction, isAcceptance } from 'helpers/App';
 
 export default () => {
   const {
