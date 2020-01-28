@@ -64,7 +64,7 @@ export default function useMyArea(address?: string): MyAreaApiState {
           simple: `${MAP_URL}&center=${lat}%2C${lon}&zoom=${LOCATION_ZOOM}&marker=${lat}%2C${lon}&marker-icon=home`,
         });
 
-        setCentroid(locationCentroid);
+        setCentroid([lat, lon]);
       } else {
         setUrls({
           advanced: `${MAP_URL}&center=${DEFAULT_LAT}%2C${DEFAULT_LON}&zoom=${DEFAULT_ZOOM}`,
