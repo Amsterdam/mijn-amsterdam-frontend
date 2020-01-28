@@ -42,7 +42,6 @@
   },
   "dependencies": {
     "@datapunt/matomo-tracker-js": "0.0.15",
-    "@datapunt/react-maps": "^0.3.0",
     "@sentry/browser": "^5.10.0",
     "@types/axios": "^0.14.0",
     "@types/classnames": "^2.2.9",

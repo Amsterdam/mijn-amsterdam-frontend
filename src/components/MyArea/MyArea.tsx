@@ -1,23 +1,31 @@
 import { AppRoutes } from 'config/Routing.constants';
 import { ReactComponent as CloseIcon } from 'assets/icons/Close.svg';
 import { ReactComponent as Logo } from 'assets/images/logo-amsterdam.svg';
-import { ReactComponent as HomeIcon } from 'assets/icons/home.svg';
+import iconUrl, { ReactComponent as HomeIcon } from 'assets/icons/home.svg';
+import { ReactComponent as HomeIconSimple } from 'assets/icons/home-simple.svg';
 import Heading from 'components/Heading/Heading';
-import React, { HTMLProps } from 'react';
+import React, { HTMLProps, useEffect, useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 import styles from './MyArea.module.scss';
 import Linkd from 'components/Button/Button';
 
-import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Map, TileLayer, Marker } from '@datapunt/react-maps/es';
+import {
+  Map,
+  TileLayer,
+  Marker,
+  useMapInstance,
+  MapContext,
+} from '@datapunt/react-maps';
 
-import iconUrl from 'leaflet/dist/images/marker-icon.png';
+// import iconUrl from 'leaflet/dist/images/marker-icon.png';
 import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
 import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
 
 import { ComponentChildren } from 'App.types';
+import { DEFAULT_ZOOM, LOCATION_ZOOM } from '../../config/Map.constants';
+
 import {
   DEFAULT_MAP_OPTIONS,
   DEFAULT_TILE_LAYER_CONFIG,
@@ -28,6 +36,66 @@ interface MapDisplayComponentProps {
   center: Centroid;
   id: string;
   title: string;
+}
+
+interface HomeIconMarkerProps {
+  center: Centroid;
+}
+
+function HomeIconMarker({ center }: HomeIconMarkerProps) {
+  const { mapInstance, L } = useMapInstance();
+
+  useEffect(() => {
+    if (center && mapInstance) {
+      mapInstance.setView(center);
+    }
+  }, [center, mapInstance]);
+
+  return (
+    <Marker
+      options={{
+        icon: L.icon({
+          iconUrl,
+          iconRetinaUrl: iconUrl,
+          iconSize: [32, 32],
+          iconAnchor: [16, 16],
+          popupAnchor: [1, -34],
+          tooltipAnchor: [16, -28],
+        }),
+      }}
+      args={[center]}
+    />
+  );
+}
+
+interface ZoomControlComponentProps {
+  center: Centroid;
+}
+
+function ZoomControl({ center }: ZoomControlComponentProps) {
+  const { mapInstance } = useMapInstance();
+  return (
+    <div className={styles.ZoomControl}>
+      <button
+        onClick={() => mapInstance.setView(center, LOCATION_ZOOM)}
+        className={styles.HomeButton}
+      >
+        <HomeIconSimple fill="#000" />
+      </button>
+      <button
+        onClick={() => mapInstance.zoomIn()}
+        className={styles.ZoomInButton}
+      >
+        &#43;
+      </button>
+      <button
+        onClick={() => mapInstance.zoomOut()}
+        className={styles.ZoomOutButton}
+      >
+        &minus;
+      </button>
+    </div>
+  );
 }
 
 function MapDisplay({ center, id, title }: MapDisplayComponentProps) {
@@ -46,24 +114,8 @@ function MapDisplay({ center, id, title }: MapDisplayComponentProps) {
           console.log('click');
         },
       }}
-      options={DEFAULT_MAP_OPTIONS}
+      options={{ ...DEFAULT_MAP_OPTIONS, center }}
     >
-      <Marker
-        // setInstance={setMarkerInstance}
-        options={{
-          icon: L.icon({
-            iconUrl: iconUrl,
-            iconRetinaUrl: iconRetinaUrl,
-            shadowUrl: shadowUrl,
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
-            popupAnchor: [1, -34],
-            tooltipAnchor: [16, -28],
-            shadowSize: [41, 41],
-          }),
-        }}
-        args={[center]}
-      />
       <TileLayer
         options={{
           attribution:
@@ -72,6 +124,8 @@ function MapDisplay({ center, id, title }: MapDisplayComponentProps) {
         }}
         args={[DEFAULT_TILE_LAYER_CONFIG.url]}
       />
+      <HomeIconMarker center={center} />
+      <ZoomControl center={center} />
     </Map>
   );
 }
