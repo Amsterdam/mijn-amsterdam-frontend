@@ -35,7 +35,6 @@ export function getCrsRd(
   zeroScale = 3440.64,
   scales: number[] = []
 ) {
-  // eslint-disable-next-line no-const-assign,no-plusplus
   for (let i = 0; i <= maxZoom; i++) {
     scales.push(1 / (zeroScale * 0.5 ** i));
   }
