@@ -9,7 +9,7 @@ import { BrpApiState } from '../hooks/api/api.brp';
 import { ErfpachtApiState } from '../hooks/api/api.erfpacht';
 import { FocusApiState } from '../hooks/api/api.focus';
 import { GarbageApiState } from '../hooks/api/api.garbage';
-import { MyMapApiState } from '../hooks/api/api.mymap';
+import { MyAreaApiState } from '../hooks/api/api.myarea';
 import { WmoApiState } from '../hooks/api/api.wmo';
 
 interface getMyChaptersProps {
@@ -18,7 +18,7 @@ interface getMyChaptersProps {
   ERFPACHT: ErfpachtApiState;
   GARBAGE: GarbageApiState;
   BRP: BrpApiState;
-  MIJN_BUURT: MyMapApiState;
+  MIJN_BUURT: MyAreaApiState;
 }
 
 function isChapterActive(

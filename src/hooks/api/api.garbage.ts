@@ -1,6 +1,7 @@
 import { ExternalUrls } from 'config/App.constants';
+import { Centroid } from 'config/Map.constants';
 import { capitalizeFirstLetter, getApiUrl } from 'helpers/App';
-import { Centroid, getDistance } from 'helpers/geo';
+import { getDistance } from 'helpers/geo';
 import { useCallback, useMemo } from 'react';
 import { useDataApi } from './api.hook';
 import { ApiState, RefetchFunction } from './api.types';

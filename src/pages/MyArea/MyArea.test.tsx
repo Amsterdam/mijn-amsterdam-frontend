@@ -11,7 +11,7 @@ const appState = {
 it('Renders without crashing', () => {
   shallow(
     <AppState value={appState as AppStateInterface}>
-      <MyArea />
+      <MyAreaMap />
     </AppState>
   );
 });
