@@ -12,7 +12,7 @@ import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible
 import { getFullAddress } from 'data-formatting/brp';
 import classnames from 'classnames';
 import { GarbagePoint } from 'hooks/api/api.garbage';
-import { MyAreaMap } from 'components/MyArea/MyArea';
+import { MyAreaMapIFrame } from 'components/MyArea/MyArea';
 import Panel from 'components/Panel/Panel';
 import { useSessionStorage } from 'hooks/storage.hook';
 import { GarbageMoment } from 'hooks/api/api.garbage';
@@ -176,7 +176,7 @@ export default () => {
         onToggleCollapsed={toggleCollapsed.bind(null, 'garbageContainersOnMap')}
       >
         <div className={styles.GarbageContainerMap}>
-          <MyAreaMap url={garbageContainersMapUrl} />
+          <MyAreaMapIFrame url={garbageContainersMapUrl} />
         </div>
       </SectionCollapsible>
 

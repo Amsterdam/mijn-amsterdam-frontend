@@ -1,6 +1,6 @@
 import { AppContext } from 'AppState';
 import DirectLinks from 'components/DirectLinks/DirectLinks';
-import MyArea from 'components/MyArea/MyArea';
+import { MyAreaDashboard } from 'components/MyArea/MyArea';
 import MyCases from 'components/MyCases/MyCases';
 import MyChaptersPanel from 'components/MyChaptersPanel/MyChaptersPanel';
 import MyTips from 'components/MyTips/MyTips';
@@ -81,7 +81,7 @@ export default () => {
         />
 
         {!isPhoneScreen && (
-          <MyArea
+          <MyAreaDashboard
             url={mapUrl}
             data-tutorial-item="Hier ziet u informatie van de gemeente, bijvoorbeeld over afval, parkeren en bekendmakingen;left-top"
           />

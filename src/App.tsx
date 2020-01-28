@@ -5,7 +5,6 @@ import Dashboard from 'pages/Dashboard/Dashboard';
 import Inkomen from 'pages/Inkomen/Inkomen';
 import InkomenDetail from 'pages/InkomenDetail/InkomenDetail';
 import LandingPage from 'pages/Landing/Landing';
-import MyArea from 'pages/MyArea/MyArea';
 import MyTips from 'pages/MyTips/MyTips';
 import MyNotifications from 'pages/MyNotifications/MyNotifications';
 import Proclaimer from 'pages/Proclaimer/Proclaimer';
@@ -36,6 +35,7 @@ import useScript from 'hooks/useScript';
 import { isProduction } from './helpers/App';
 import GarbageInformation from 'pages/GarbageInformation/GarbageInformation';
 import { isAnalyticsEnabled, isSentryEnabled } from './env';
+import MyArea from './pages/MyArea/MyArea';
 
 function AppNotAuthenticated() {
   return (
@@ -105,7 +105,6 @@ function AppAuthenticated() {
             component={ZorgDetail}
           />
           <Route path={AppRoutes.ZORG} component={Zorg} />
-          <Route path={AppRoutes.MIJN_BUURT} component={MyArea} />
           <Route path={AppRoutes.PROCLAIMER} component={Proclaimer} />
           {FeatureToggle.garbageInformationPage && (
             <Route path={AppRoutes.AFVAL} component={GarbageInformation} />
