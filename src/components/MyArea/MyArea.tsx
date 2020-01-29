@@ -4,7 +4,14 @@ import { ReactComponent as Logo } from 'assets/images/logo-amsterdam.svg';
 import iconUrl, { ReactComponent as HomeIcon } from 'assets/icons/home.svg';
 import { ReactComponent as HomeIconSimple } from 'assets/icons/home-simple.svg';
 import Heading from 'components/Heading/Heading';
-import React, { HTMLProps, useEffect, useState, useRef, Ref } from 'react';
+import React, {
+  HTMLProps,
+  useEffect,
+  useState,
+  useRef,
+  Ref,
+  PropsWithChildren,
+} from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 import styles from './MyArea.module.scss';
@@ -14,8 +21,8 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { Map, TileLayer, Marker, useMapInstance } from '@datapunt/react-maps';
 
-import { ComponentChildren } from 'App.types';
 import { LOCATION_ZOOM, DEFAULT_ZOOM } from '../../config/Map.constants';
+import classnames from 'classnames';
 
 import {
   DEFAULT_MAP_OPTIONS,
@@ -123,6 +130,26 @@ interface ZoomControlComponentProps {
   homeZoom?: number;
 }
 
+type WithChildren<T> = Omit<HTMLProps<T>, 'type'>;
+
+type ZoomButtonProps = WithChildren<HTMLButtonElement>;
+
+function ZoomControlButton({ children, className, ...props }: ZoomButtonProps) {
+  return (
+    <button {...props} className={classnames(styles.ZoomButton, className)}>
+      {children}
+    </button>
+  );
+}
+
+function ZoomButton({ children, className, ...props }: ZoomButtonProps) {
+  return (
+    <ZoomControlButton {...props} className={styles.ZoomInOutButton}>
+      {children}
+    </ZoomControlButton>
+  );
+}
+
 function ZoomControl({
   center,
   homeZoom = LOCATION_ZOOM,
@@ -130,34 +157,26 @@ function ZoomControl({
   const mapInstance = useMapInstance();
   return (
     <div className={styles.ZoomControl}>
-      <button
+      <ZoomControlButton
         onClick={() => mapInstance && mapInstance.setView(center, homeZoom)}
-        className={styles.HomeButton}
       >
         <HomeIconSimple fill="#000" />
-      </button>
-      <button
-        onClick={() => mapInstance && mapInstance.zoomIn()}
-        className={styles.ZoomInButton}
-      >
+      </ZoomControlButton>
+      <ZoomButton onClick={() => mapInstance && mapInstance.zoomIn()}>
         &#43;
-      </button>
-      <button
-        onClick={() => mapInstance && mapInstance.zoomOut()}
-        className={styles.ZoomOutButton}
-      >
+      </ZoomButton>
+      <ZoomButton onClick={() => mapInstance && mapInstance.zoomOut()}>
         &minus;
-      </button>
+      </ZoomButton>
     </div>
   );
 }
 
-interface MapDisplayComponentProps {
+type MapDisplayComponentProps = PropsWithChildren<{
   center: Centroid;
   id: string;
   title: string;
-  children: ComponentChildren;
-}
+}>;
 
 function MapDisplay({ children, id, title, center }: MapDisplayComponentProps) {
   return (
@@ -211,11 +230,7 @@ function MyAreaLoader() {
   );
 }
 
-interface MyAreaMapContainerProps {
-  children: ComponentChildren;
-}
-
-function MyAreaMapContainer({ children }: MyAreaMapContainerProps) {
+function MyAreaMapContainer({ children }: PropsWithChildren<{}>) {
   return <div className={styles.MyAreaMapContainer}>{children}</div>;
 }
 
