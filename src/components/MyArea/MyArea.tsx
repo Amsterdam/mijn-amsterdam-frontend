@@ -4,7 +4,7 @@ import { ReactComponent as Logo } from 'assets/images/logo-amsterdam.svg';
 import iconUrl, { ReactComponent as HomeIcon } from 'assets/icons/home.svg';
 import { ReactComponent as HomeIconSimple } from 'assets/icons/home-simple.svg';
 import Heading from 'components/Heading/Heading';
-import React, { HTMLProps, useEffect } from 'react';
+import React, { HTMLProps, useEffect, useState, useRef, Ref } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 import styles from './MyArea.module.scss';
@@ -23,17 +23,86 @@ import {
   Centroid,
 } from 'config/Map.constants';
 
-interface MapDisplayComponentProps {
-  center: Centroid;
-  id: string;
-  title: string;
+const MaPopup = React.forwardRef(
+  ({ children }: any, ref: Ref<HTMLDivElement>) => {
+    return <div ref={ref}>{children}</div>;
+  }
+);
+MaPopup.displayName = 'Popup';
+
+const MaTooltip = React.forwardRef(
+  ({ children }: any, ref: Ref<HTMLDivElement>) => {
+    return <div ref={ref}>{children}</div>;
+  }
+);
+MaTooltip.displayName = 'Tooltip';
+
+function firstChildOfType(children: any, childType: any) {
+  return Array.isArray(children)
+    ? children.find(child => child && child.type === childType)
+    : children && children.type === childType
+    ? children
+    : null;
+}
+
+function useBindToMarker(component: any, markerInstance: any) {
+  const componentRef = useRef();
+  let name = '';
+  if (component) {
+    component = React.cloneElement(component, {
+      ref: componentRef,
+    });
+    name = component.type.displayName;
+  }
+  useEffect(() => {
+    if (componentRef.current && markerInstance) {
+      // Use the name of the child component to complete the bind method call.
+      // For example passing a Popup component will result in bindPopup(ref.current)
+      markerInstance['bind' + name](componentRef.current);
+    }
+  }, [componentRef, markerInstance, name]);
+
+  return component;
+}
+
+function MaMarker({ children, center, iconUrl }: any) {
+  const [markerInstance, setMarkerInstance] = useState();
+  let popup = useBindToMarker(
+    firstChildOfType(children, MaPopup),
+    markerInstance
+  );
+  let tooltip = useBindToMarker(
+    firstChildOfType(children, MaTooltip),
+    markerInstance
+  );
+  const icon = L.icon({
+    iconUrl,
+    iconRetinaUrl: iconUrl,
+    iconSize: [32, 32],
+    iconAnchor: [16, 16],
+    popupAnchor: [1, -34],
+    tooltipAnchor: [16, 0],
+  });
+
+  return (
+    <>
+      <Marker
+        setInstance={setMarkerInstance}
+        options={{ icon }}
+        args={[center]}
+      />
+      {popup}
+      {tooltip}
+    </>
+  );
 }
 
 interface HomeIconMarkerProps {
   center: Centroid;
+  address?: string;
 }
 
-function HomeIconMarker({ center }: HomeIconMarkerProps) {
+function HomeIconMarker({ center, address }: HomeIconMarkerProps) {
   const mapInstance = useMapInstance();
 
   useEffect(() => {
@@ -43,34 +112,26 @@ function HomeIconMarker({ center }: HomeIconMarkerProps) {
   }, [center, mapInstance]);
 
   return (
-    <Marker
-      options={{
-        icon: L.icon({
-          iconUrl,
-          iconRetinaUrl: iconUrl,
-          iconSize: [32, 32],
-          iconAnchor: [16, 16],
-          popupAnchor: [1, -34],
-          tooltipAnchor: [16, -28],
-        }),
-      }}
-      args={[center]}
-    />
+    <MaMarker iconUrl={iconUrl} center={center}>
+      {!!address && <MaTooltip>{address}</MaTooltip>}
+    </MaMarker>
   );
 }
 
 interface ZoomControlComponentProps {
   center: Centroid;
+  homeZoom?: number;
 }
 
-function ZoomControl({ center }: ZoomControlComponentProps) {
+function ZoomControl({
+  center,
+  homeZoom = LOCATION_ZOOM,
+}: ZoomControlComponentProps) {
   const mapInstance = useMapInstance();
   return (
     <div className={styles.ZoomControl}>
       <button
-        onClick={() =>
-          mapInstance && mapInstance.setView(center, LOCATION_ZOOM)
-        }
+        onClick={() => mapInstance && mapInstance.setView(center, homeZoom)}
         className={styles.HomeButton}
       >
         <HomeIconSimple fill="#000" />
@@ -91,34 +152,28 @@ function ZoomControl({ center }: ZoomControlComponentProps) {
   );
 }
 
-function MapDisplay({ center, id, title }: MapDisplayComponentProps) {
+interface MapDisplayComponentProps {
+  center: Centroid;
+  id: string;
+  title: string;
+  children: ComponentChildren;
+}
+
+function MapDisplay({ children, id, title, center }: MapDisplayComponentProps) {
   return (
     <Map
       id={id}
-      title={title}
+      aria-label={title}
       style={{ width: '100%', height: '100%' }}
-      events={{
-        zoomend: () => {
-          // eslint-disable-next-line no-console
-          console.log('zoomend');
-        },
-        click: () => {
-          // eslint-disable-next-line no-console
-          console.log('click');
-        },
-      }}
       options={{ ...DEFAULT_MAP_OPTIONS, center }}
     >
       <TileLayer
         options={{
-          attribution:
-            '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
           ...DEFAULT_TILE_LAYER_CONFIG.options,
         }}
         args={[DEFAULT_TILE_LAYER_CONFIG.url]}
       />
-      <HomeIconMarker center={center} />
-      <ZoomControl center={center} />
+      {children}
     </Map>
   );
 }
@@ -189,17 +244,22 @@ interface MyAreaMapComponentProps {
   id?: string;
   title?: string;
   center?: Centroid;
+  homeAddress?: string;
 }
 
 export function MyAreaMap({
   center,
   title = 'Kaart van Mijn buurt',
   id = 'map',
+  homeAddress,
 }: MyAreaMapComponentProps) {
   return (
     <MyAreaMapContainer>
       {!!center ? (
-        <MapDisplay title={title} id={id} center={center} />
+        <MapDisplay title={title} id={id} center={center}>
+          <HomeIconMarker center={center} address={homeAddress} />
+          <ZoomControl center={center} />
+        </MapDisplay>
       ) : (
         <MyAreaLoader />
       )}
