@@ -4,10 +4,11 @@ module.exports = {
   path: '/api/belasting/get',
   // delay: 11000,
   template: (_, queryParams) => {
-    return { status: 'ERROR', message: 'Invalid BSN' };
+    // return { status: 'ERROR', message: 'Invalid BSN' };
+    return belasting;
   },
   status(req, res, next) {
-    res.status(400);
+    // res.status(400);
     next();
   },
 };
