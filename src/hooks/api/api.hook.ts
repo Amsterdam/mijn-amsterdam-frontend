@@ -115,15 +115,16 @@ export function useDataApi<T>(
             payload: result.data,
           });
         }
-      } catch (result) {
+      } catch (error) {
         if (!didCancel) {
+          const errorMessage = error.response?.data.message || error.message;
           dispatch({
             type: ActionTypes.FETCH_FAILURE,
-            payload: result.message,
+            payload: errorMessage,
           });
           Sentry.captureMessage(
-            `API ERROR: ${result.message}, url: ${
-              requestOptions.url.split('?')[0]
+            `API ERROR: ${errorMessage}, url: ${
+              requestOptions.url.split('?')[0] // Don't log query params for privacy reasons
             }`
           );
         }

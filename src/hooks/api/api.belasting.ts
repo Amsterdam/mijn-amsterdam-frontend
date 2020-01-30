@@ -13,7 +13,8 @@ interface BelastingApiResponseContent {
 
 interface BelastingApiResponse {
   status: 'OK' | 'ERROR';
-  content: BelastingApiResponseContent;
+  content?: BelastingApiResponseContent;
+  message?: string;
 }
 
 interface BelastingApiContent {
@@ -34,18 +35,20 @@ function formatBelastingNotifications(notifications?: MyNotification[]) {
 }
 
 export default function useBelastingApi(): BelastingApiState {
+  const content = { meldingen: [], tips: [], isKnown: false };
   const [api] = useDataApi<BelastingApiResponse>(
     {
       url: getApiUrl('BELASTINGEN'),
     },
-    { content: { meldingen: [], tips: [], isKnown: false }, status: 'OK' }
+    { content, status: 'OK' }
   );
 
-  const { meldingen, ...restData } = api.data.content;
+  const { meldingen = [], ...restData } = api.data?.content || {};
 
   return {
     ...api,
     data: {
+      ...content,
       ...restData,
       notifications: formatBelastingNotifications(meldingen),
     },

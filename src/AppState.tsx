@@ -66,7 +66,7 @@ interface AppStateProps {
   value?: Partial<AppState>;
 }
 
-export function useAppState(value?: any) {
+export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
   const WMO = useWmoApi();
   const FOCUS = useFocusApi();
 
@@ -161,6 +161,7 @@ export function useAppState(value?: any) {
     ERFPACHT,
     MIJN_BUURT,
     GARBAGE,
+    BELASTINGEN,
   };
 }
 

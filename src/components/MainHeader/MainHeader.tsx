@@ -45,19 +45,24 @@ export default function MainHeader({
   const isHeroVisible = true;
   const appState = useContext(AppContext);
   const errors = entries(appState)
-    .filter(
-      ([stateKey, state]) =>
+    .filter(([stateKey, state]) => {
+      return (
         !excludedApiKeys.includes(stateKey) &&
         'isError' in state &&
         state.isError
-    )
-    .map(
-      ([stateKey]) =>
-        errorMessageMap[stateKey] || {
-          name: stateKey,
-          error: 'Communicatie met api mislukt.',
-        }
-    );
+      );
+    })
+    .map(([stateKey, state]) => {
+      return errorMessageMap[stateKey]
+        ? {
+            name: stateKey,
+            error: state?.errorMessage || errorMessageMap[stateKey]?.error,
+          }
+        : {
+            name: stateKey,
+            error: 'Communicatie met api mislukt.',
+          };
+    });
 
   const hasErrors = !!errors.length;
   const { location } = useRouter();
