@@ -8,9 +8,6 @@ module.exports = {
     if (body && body.optin) {
       items[0].title = 'PERSONAL: ' + items[0].title;
     }
-    return {
-      total: data.total,
-      items,
-    };
+    return { items };
   },
 };

@@ -3,7 +3,13 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { getDefaultState, useDataApi } from './api.hook';
 
-const DUMMY_RESPONSE = { foo: 'bar' };
+interface Response {
+  foo: 'bar';
+}
+
+type DummyResponse = Nullable<DummyResponse>;
+
+const DUMMY_RESPONSE: DummyResponse = { foo: 'bar' };
 const DUMMY_URL = 'http://test';
 
 describe('Api hook', () => {
@@ -12,18 +18,26 @@ describe('Api hook', () => {
   axMock.onGet(DUMMY_URL).reply(200, DUMMY_RESPONSE);
 
   it('should have a default state', () => {
-    const { result } = renderHook(() => useDataApi());
-    expect(result.current[0]).toEqual(getDefaultState());
+    const { result } = renderHook(() =>
+      useDataApi<DummyResponse>(undefined, null)
+    );
+    expect(result.current[0]).toEqual(getDefaultState<DummyResponse>(null));
   });
 
   it('should postpone immediate fetching', () => {
     const { result } = renderHook(() =>
-      useDataApi({
-        url: '',
-        postpone: true,
-      })
+      useDataApi<DummyResponse>(
+        {
+          url: '',
+          postpone: true,
+        },
+        null
+      )
     );
-    const state = { ...getDefaultState(), isLoading: false };
+    const state = {
+      ...getDefaultState<DummyResponse>(null),
+      isLoading: false,
+    };
     expect(result.current[0]).toEqual(state);
   });
 
@@ -32,7 +46,9 @@ describe('Api hook', () => {
       url: DUMMY_URL,
       postpone: true,
     };
-    const { result, waitForNextUpdate } = renderHook(() => useDataApi(options));
+    const { result, waitForNextUpdate } = renderHook(() =>
+      useDataApi<DummyResponse>(options, null)
+    );
 
     // make fetch call
     act(() => {
@@ -59,7 +75,9 @@ describe('Api hook', () => {
       url: DUMMY_URL,
       postpone: true,
     };
-    const { result, waitForNextUpdate } = renderHook(() => useDataApi(options));
+    const { result, waitForNextUpdate } = renderHook(() =>
+      useDataApi<DummyResponse>(options, null)
+    );
 
     // make fetch call
     act(() => {

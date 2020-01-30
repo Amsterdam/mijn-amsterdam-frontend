@@ -15,11 +15,19 @@ export const LAYERS_CONFIG =
 
 const SET_DEFAULT_ADDRESS_TIMEOUT = 10000;
 
+interface BagApiResult {
+  results: Array<{ centroid: Centroid }>;
+}
+
 export function useBagSearch(address?: string) {
-  return useDataApi({
-    url: BAG_SEARCH_ENDPOINT_URL + (address ? encodeURIComponent(address) : ''),
-    postpone: !address,
-  });
+  return useDataApi<BagApiResult>(
+    {
+      url:
+        BAG_SEARCH_ENDPOINT_URL + (address ? encodeURIComponent(address) : ''),
+      postpone: !address,
+    },
+    { results: [] }
+  );
 }
 
 export interface MyMapApiState {
@@ -27,7 +35,7 @@ export interface MyMapApiState {
     advanced: string;
     simple: string;
   };
-  centroid: Centroid | null;
+  centroid: Nullable<Centroid>;
   isDirty: boolean;
   isLoading: boolean;
   refetch: (address: string) => void;
@@ -36,19 +44,19 @@ export interface MyMapApiState {
 export default function useMyMap(address?: string): MyMapApiState {
   const [{ data, isLoading, isDirty }, refetch] = useBagSearch(address);
   const [urls, setUrls] = useState({ simple: '', advanced: '' });
-  const [centroid, setCentroid] = useState<Centroid | null>(null);
+  const [centroid, setCentroid] = useState<Nullable<Centroid>>(null);
   const [isDefaultMapLocation, setIsDefaultMapLocation] = useState(false);
   const showLegenda = !usePhoneScreen();
 
   const advancedUrl = urls.advanced;
 
   useEffect(() => {
-    const locationCentroid = !!(data && data.results && data.results.length)
+    const locationCentroid = !!data?.results.length
       ? data.results[0].centroid
-      : [];
+      : null;
 
     if (!advancedUrl && (isDirty || isDefaultMapLocation)) {
-      if (!!locationCentroid.length) {
+      if (!!locationCentroid && locationCentroid.length) {
         const [lon, lat] = locationCentroid;
 
         setUrls({

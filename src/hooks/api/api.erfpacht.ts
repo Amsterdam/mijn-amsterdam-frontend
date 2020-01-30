@@ -6,13 +6,14 @@ interface ErfpachtApiResponse {
   status: boolean;
 }
 
-export interface ErfpachtApiState extends ApiState {
-  data: ErfpachtApiResponse;
-}
+export type ErfpachtApiState = ApiState<ErfpachtApiResponse>;
 
 export default function useErfpachtApi(): ErfpachtApiState {
-  const [api] = useDataApi({
-    url: getApiUrl('ERFPACHT'),
-  });
+  const [api] = useDataApi<ErfpachtApiResponse>(
+    {
+      url: getApiUrl('ERFPACHT'),
+    },
+    { status: false }
+  );
   return api;
 }
