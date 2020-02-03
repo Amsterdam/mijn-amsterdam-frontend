@@ -112,7 +112,7 @@ export function useDataApi<T>(
         if (!didCancel) {
           dispatch({
             type: ActionTypes.FETCH_SUCCESS,
-            payload: result.data,
+            payload: result.data || initialData,
           });
         }
       } catch (error) {
