@@ -101,7 +101,7 @@ export interface FocusProduct {
   inspanningsperiode: number;
 }
 
-type FocusApiResponse = FocusProduct[];
+export type FocusApiResponse = FocusProduct[];
 
 // NOTE: MUST Keep in this order
 const processSteps: StepTitle[] = [

@@ -1,5 +1,6 @@
 import { StateKey } from 'AppState';
 import { ErrorMessageMap } from 'components/ErrorMessages/ErrorMessages';
+import { FeatureToggle } from './App.constants';
 
 export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/login';
 export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL || '/logout';
@@ -10,6 +11,7 @@ const DATAPUNT_API_BASE_URL = process.env.REACT_APP_DATAPUNT_API_URL;
 export type ApiName = StateKey | 'BAG' | 'AUTH' | 'AFVAL_OPHAAL_GEBIEDEN';
 
 export const ApiUrls: TypeIndex<ApiName, string> = {
+  BELASTINGEN: `${API_BASE_URL}/belasting/get`,
   MELDINGEN: `${API_BASE_URL}/mijn-meldingen`,
   MY_CASES: `${API_BASE_URL}/focus/aanvragen`,
   MIJN_TIPS: `${API_BASE_URL}/tips/gettips`,
@@ -35,6 +37,9 @@ export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
   },
   MIJN_TIPS: {
     postponeFetch: true, // Stays true because we're not fetching immediately
+  },
+  BELASTINGEN: {
+    postponeFetch: !FeatureToggle.belastingApiActive,
   },
 };
 
@@ -69,6 +74,10 @@ export const errorMessageMap: ErrorMessageMap = {
   },
   GARBAGE: {
     name: 'Afval',
+    error: 'Communicatie met api mislukt.',
+  },
+  BELASTINGEN: {
+    name: 'Belasting',
     error: 'Communicatie met api mislukt.',
   },
 };

@@ -1,16 +1,13 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import MainNavBar from './MainNavBar';
-import AppState, {
-  AppState as AppStateInterface,
-  SessionState,
-} from 'AppState';
+import AppState, { SessionState } from 'AppState';
 import { BrowserRouter } from 'react-router-dom';
-import { SessionApiState } from '../../hooks/api/session.api.hook';
+import * as session from '../../hooks/api/session.api.hook';
 import * as bliep from '../../hooks/media.hook';
-import { fireEvent } from 'react-test-renderer';
+import useSessionApi from '../../hooks/api/session.api.hook';
 
-const sessionState: SessionApiState = {
+const sessionState: session.SessionApiState = {
   isAuthenticated: true,
   isLoading: false,
   isError: false,
@@ -22,7 +19,7 @@ const sessionState: SessionApiState = {
   refetch: () => void 0,
 };
 
-const appState: Partial<AppStateInterface> = {
+const appState: any = {
   SESSION: sessionState,
   MY_CHAPTERS: {
     isLoading: false,
@@ -67,10 +64,26 @@ describe('MainNavBar', () => {
       hookSpies.useDesktopScreen = jest
         .spyOn(bliep, 'useDesktopScreen')
         .mockImplementation(() => false);
+      hookSpies.useSessionApi = jest
+        .spyOn(session, 'default')
+        .mockImplementation(() => {
+          return {
+            isError: false,
+            isPristine: false,
+            errorMessage: '',
+            isLoading: false,
+            isAuthenticated: true,
+            validUntil: 0,
+            validityInSeconds: 0,
+            isDirty: true,
+            refetch: () => void 0,
+          };
+        });
     });
     afterEach(() => {
       hookSpies.useTabletScreen.mockRestore();
       hookSpies.useDesktopScreen.mockRestore();
+      hookSpies.useSessionApi.mockRestore();
     });
     it('Renders burger menu on small screens', () => {
       expect(
@@ -85,7 +98,7 @@ describe('MainNavBar', () => {
         ).html()
       ).toMatchSnapshot();
     });
-    it('Opens and closes the burger menu', async () => {
+    it('Opens and closes the burger menu', () => {
       const component = mount(
         <BrowserRouter>
           <SessionState value={sessionState}>

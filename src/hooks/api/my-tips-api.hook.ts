@@ -1,11 +1,10 @@
 import { LinkProps } from 'App.types';
+import { AppState } from 'AppState';
 import { getApiConfigValue, getApiUrl } from 'helpers/App';
 import { useCookie } from 'hooks/storage.hook';
-import usePaginatedApi, {
-  PaginatedApiProps,
-  PaginatedApiState,
-  PaginatedItemsResponse,
-} from './paginated-api.hook';
+import { useCallback, useMemo } from 'react';
+import { useDataApi } from './api.hook';
+import { ApiRequestOptions, ApiState } from './api.types';
 
 export interface MyTip {
   datePublished: string;
@@ -15,79 +14,84 @@ export interface MyTip {
   link: LinkProps;
   imgUrl?: string;
   isPersonalized: boolean;
+  priority?: number;
 }
 
-export interface MyTipsResponse extends PaginatedItemsResponse {
+export interface MyTipsResponse {
   items: MyTip[];
 }
 
-export interface MyTipsApiState extends PaginatedApiState {
-  data: MyTipsResponse;
-  refetch: (requestData: any) => void;
+export type MyTipsApiState = ApiState<MyTipsResponse> & {
+  refetch: (data: any) => void;
   isOptIn: boolean;
   optIn: () => void;
   optOut: () => void;
-}
+};
 
-export function useOptIn(): [boolean, () => void, () => void] {
+export function useOptIn(): {
+  isOptIn: boolean;
+  optIn: () => void;
+  optOut: () => void;
+} {
   const [isOptIn, setOptIn] = useCookie('optInPersonalizedTips', 'no');
 
-  function optIn() {
+  const optIn = useCallback(() => {
     setOptIn('yes', { path: '/' });
-  }
+  }, [setOptIn]);
 
-  function optOut() {
+  const optOut = useCallback(() => {
     setOptIn('no', { path: '/' });
-  }
+  }, [setOptIn]);
 
-  return [isOptIn === 'yes', optIn, optOut];
+  return { isOptIn: isOptIn === 'yes', optIn, optOut };
 }
 
-export default function useMyTipsApi(
-  offset: number = 0,
-  limit: number = -1
-): MyTipsApiState {
-  const options: PaginatedApiProps = {
+export default function useMyTipsApi(): MyTipsApiState {
+  const options: ApiRequestOptions = {
     url: getApiUrl('MIJN_TIPS'),
-    offset,
-    limit,
     postpone: getApiConfigValue('MIJN_TIPS', 'postponeFetch', false),
     method: 'POST',
   };
 
-  const { data, refetch: originalRefetch, isDirty, ...rest } = usePaginatedApi(
-    options
+  const [api, originalRefetch] = useDataApi<MyTipsResponse>(options, {
+    items: [],
+  });
+  // const { data, isDirty, ...rest } = api;
+  const { isOptIn, optIn, optOut } = useOptIn();
+
+  const refetch = useCallback(
+    (requestData: AppState) => {
+      const {
+        BRP: brp,
+        FOCUS: focus,
+        ERFPACHT: erfpacht,
+        WMO: wmo,
+        BELASTINGEN: belasting,
+      } = requestData;
+      const requestDataFormatted = {
+        optin: isOptIn,
+        data: {
+          brp,
+          focus,
+          erfpacht,
+          wmo,
+          belasting,
+        },
+      };
+      originalRefetch({
+        data: requestDataFormatted,
+      });
+    },
+    [originalRefetch, isOptIn]
   );
 
-  const [isOptIn, optIn, optOut] = useOptIn();
-
-  function refetch({
-    BRP: brp,
-    FOCUS: focus,
-    ERFPACHT: erfpacht,
-    WMO: wmo,
-  }: any) {
-    const requestDataFormatted = {
-      optin: isOptIn,
-      data: {
-        brp,
-        focus,
-        erfpacht,
-        wmo,
-      },
+  return useMemo(() => {
+    return {
+      ...api,
+      refetch,
+      isOptIn,
+      optIn,
+      optOut,
     };
-    originalRefetch({
-      requestData: requestDataFormatted,
-    });
-  }
-
-  return {
-    ...rest,
-    isDirty,
-    data,
-    refetch,
-    isOptIn,
-    optIn,
-    optOut,
-  };
+  }, [api, refetch, optIn, optOut, isOptIn]);
 }

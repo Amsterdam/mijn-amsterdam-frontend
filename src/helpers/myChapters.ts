@@ -1,3 +1,4 @@
+import { AppState as AppStateInterface } from 'AppState';
 import {
   MenuItem,
   myChaptersMenuItems,
@@ -5,25 +6,10 @@ import {
 import { FeatureToggle } from 'config/App.constants';
 import { Chapters } from 'config/Chapter.constants';
 import { isMokum } from 'data-formatting/brp';
-import { BrpApiState } from '../hooks/api/api.brp';
-import { ErfpachtApiState } from '../hooks/api/api.erfpacht';
-import { FocusApiState } from '../hooks/api/api.focus';
-import { GarbageApiState } from '../hooks/api/api.garbage';
-import { MyMapApiState } from '../hooks/api/api.mymap';
-import { WmoApiState } from '../hooks/api/api.wmo';
-
-interface getMyChaptersProps {
-  WMO: WmoApiState;
-  FOCUS: FocusApiState;
-  ERFPACHT: ErfpachtApiState;
-  GARBAGE: GarbageApiState;
-  BRP: BrpApiState;
-  MIJN_BUURT: MyMapApiState;
-}
 
 function isChapterActive(
   item: MenuItem,
-  { WMO, FOCUS, ERFPACHT, GARBAGE, BRP }: getMyChaptersProps
+  { WMO, FOCUS, ERFPACHT, GARBAGE, BRP, BELASTINGEN }: AppStateInterface
 ) {
   switch (item.id) {
     case Chapters.INKOMEN:
@@ -35,10 +21,13 @@ function isChapterActive(
       );
 
     case Chapters.ZORG:
-      return !WMO.isLoading && !!WMO.data.items.length;
+      return !WMO.isLoading && !!WMO.data.length;
 
     case Chapters.BELASTINGEN:
-      return true; // SSO to belastingen, always visible for now.
+      return (
+        !BELASTINGEN.isLoading &&
+        (FeatureToggle.belastingApiActive ? BELASTINGEN.data.isKnown : true)
+      );
 
     case Chapters.AFVAL:
       return (
@@ -63,9 +52,17 @@ export interface MyChaptersApiState {
 }
 
 export default function getMyChapters(
-  apiStates: getMyChaptersProps
+  apiStates: AppStateInterface
 ): MyChaptersApiState {
-  const { WMO, FOCUS, ERFPACHT, GARBAGE, BRP, MIJN_BUURT } = apiStates;
+  const {
+    WMO,
+    FOCUS,
+    ERFPACHT,
+    GARBAGE,
+    BRP,
+    MIJN_BUURT,
+    BELASTINGEN,
+  } = apiStates;
 
   const wmoIsloading = WMO.isLoading;
   const focusIsloading = FOCUS.isLoading;
@@ -74,6 +71,7 @@ export default function getMyChapters(
   const brpIsLoading = BRP.isLoading;
   const garbageIsPristine = GARBAGE.isPristine;
   const myAreaIsLoading = MIJN_BUURT.isLoading;
+  const belastingIsLoading = BELASTINGEN.isLoading;
   const hasCentroid = !!MIJN_BUURT.centroid;
 
   const items = myChaptersMenuItems.filter(item => {
@@ -82,6 +80,7 @@ export default function getMyChapters(
   });
 
   const isLoading =
+    belastingIsLoading ||
     wmoIsloading ||
     brpIsLoading ||
     focusIsloading ||

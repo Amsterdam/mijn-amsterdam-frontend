@@ -15,6 +15,7 @@ import useMyMap from './hooks/api/api.mymap';
 import { getFullAddress, isMokum } from 'data-formatting/brp';
 import { getApiConfigValue } from 'helpers/App';
 import { GarbageApiState } from './hooks/api/api.garbage';
+import useBelastingApi, { BelastingApiState } from './hooks/api/api.belasting';
 import useGarbageApi from './hooks/api/api.garbage';
 import getMyChapters from './helpers/myChapters';
 
@@ -32,6 +33,7 @@ export interface AppState {
   ERFPACHT: ErfpachtApiState;
   GARBAGE: GarbageApiState;
   MIJN_BUURT: any;
+  BELASTINGEN: BelastingApiState;
 }
 
 export type StateKey = keyof AppState;
@@ -64,7 +66,7 @@ interface AppStateProps {
   value?: Partial<AppState>;
 }
 
-export function useAppState(value?: any) {
+export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
   const WMO = useWmoApi();
   const FOCUS = useFocusApi();
 
@@ -80,6 +82,7 @@ export function useAppState(value?: any) {
   };
 
   const BRP = useBrpApi();
+  const BELASTINGEN = useBelastingApi();
   const MIJN_TIPS = useMyTipsApi();
   const ERFPACHT = useErfpachtApi();
   const MIJN_BUURT = useMyMap();
@@ -91,14 +94,22 @@ export function useAppState(value?: any) {
     GARBAGE,
     BRP,
     MIJN_BUURT,
-  });
-  const MELDINGEN = useMyNotificationsApi({ FOCUS, BRP });
+    BELASTINGEN,
+  } as AppState);
+
+  const MELDINGEN = useMyNotificationsApi({
+    FOCUS,
+    BRP,
+    BELASTINGEN,
+  } as AppState);
 
   const tipsDependencies = [
     getApiConfigValue('WMO', 'postponeFetch', false) || WMO.isDirty,
     getApiConfigValue('FOCUS', 'postponeFetch', false) || FOCUS.isDirty,
     ERFPACHT.isDirty,
     BRP.isDirty,
+    getApiConfigValue('BELASTINGEN', 'postponeFetch', true) ||
+      BELASTINGEN.isDirty,
   ];
 
   const address = BRP?.data?.adres ? getFullAddress(BRP.data.adres) : '';
@@ -130,6 +141,7 @@ export function useAppState(value?: any) {
         FOCUS: FOCUS.rawData,
         ERFPACHT: ERFPACHT.data.status,
         BRP: BRP.data,
+        BELASTINGEN: BELASTINGEN.data,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -149,6 +161,7 @@ export function useAppState(value?: any) {
     ERFPACHT,
     MIJN_BUURT,
     GARBAGE,
+    BELASTINGEN,
   };
 }
 

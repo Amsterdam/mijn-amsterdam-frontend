@@ -22,27 +22,15 @@ export interface MyNotification {
   };
 }
 
-export interface MyNotificationsApiState extends ApiState {
-  data: {
-    items: MyNotification[];
-    total: number;
-  };
+interface NotificationState {
+  items: MyNotification[];
+  total: number;
 }
+
+export type MyNotificationsApiState = ApiState<NotificationState>;
 
 export function useMyNotificationsState() {
   return useLocalStorage('MELDINGEN', {});
-}
-
-function isUnread(
-  notification: MyNotification,
-  myNotificationsState: MyNotificationsApiState
-) {
-  return {
-    ...notification,
-    isUnread: myNotificationsState
-      ? !(notification.id in myNotificationsState)
-      : true,
-  };
 }
 
 // NOTE: Currently we only extract/construct notifications from the main focus api data which is not specifically tailored for this use.
@@ -51,9 +39,8 @@ function isUnread(
 export default ({
   FOCUS,
   BRP,
-}: Pick<AppState, 'FOCUS' | 'BRP'>): MyNotificationsApiState => {
-  const [myNotificationsState] = useMyNotificationsState();
-
+  BELASTINGEN,
+}: AppState): MyNotificationsApiState => {
   const items = useMemo(
     () =>
       [
@@ -63,16 +50,21 @@ export default ({
         ...FOCUS.data.notifications,
         // BRP Notifications
         ...BRP.notifications,
-      ]
-        .map(notification => isUnread(notification, myNotificationsState))
-        .sort(dateSort('datePublished', 'desc')),
-    [FOCUS.data.notifications, BRP.notifications, myNotificationsState]
+        // Belastingen
+        ...BELASTINGEN.data.notifications,
+      ].sort(dateSort('datePublished', 'desc')),
+    [
+      FOCUS.data.notifications,
+      BRP.notifications,
+      BELASTINGEN.data.notifications,
+    ]
   );
 
-  const isLoading = BRP.isLoading || FOCUS.isLoading;
-  const isError = BRP.isError || FOCUS.isError;
-  const isDirty = BRP.isDirty && FOCUS.isDirty;
-  const isPristine = BRP.isPristine && FOCUS.isPristine;
+  const isLoading = BRP.isLoading || FOCUS.isLoading || BELASTINGEN.isLoading;
+  const isError = BRP.isError || FOCUS.isError || BELASTINGEN.isError;
+  const isDirty = BRP.isDirty && FOCUS.isDirty && BELASTINGEN.isDirty;
+  const isPristine =
+    BRP.isPristine && FOCUS.isPristine && BELASTINGEN.isPristine;
 
   return useMemo(
     () => ({

@@ -7,16 +7,15 @@ import { useDataApi } from './api.hook';
 import { ApiState } from './api.types';
 import { MyNotification } from './my-notifications-api.hook';
 
-export interface BrpApiState extends ApiState {
-  data: BrpResponseData;
+export type BrpApiState = ApiState<BrpResponseData> & {
   notifications: MyNotification[];
-}
+};
 
 export type BrpKey = keyof BrpResponseData;
 
-export function useBrpApi(initialState = {}): BrpApiState {
+export function useBrpApi(): BrpApiState {
   const options = { url: getApiUrl('BRP') };
-  const [api] = useDataApi(options, initialState);
+  const [api] = useDataApi<BrpResponseData>(options, {} as BrpResponseData);
   const { data, ...rest } = api;
   const inOnderzoek = data?.adres?.inOnderzoek || false;
   const isOnbekendWaarheen = data?.persoon?.vertrokkenOnbekendWaarheen || false;

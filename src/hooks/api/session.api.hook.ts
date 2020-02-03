@@ -4,14 +4,17 @@ import { useMemo } from 'react';
 import { useDataApi } from './api.hook';
 import { ApiRequestOptions, ApiState } from './api.types';
 
-export interface SessionState {
+export interface SessionResponse {
   isAuthenticated: boolean;
   validUntil: number;
   validityInSeconds: number;
+}
+
+export interface SessionState {
   refetch: () => void;
 }
 
-const INITIAL_SESSION_STATE: Omit<SessionState, 'refetch'> = {
+const INITIAL_SESSION_STATE = {
   isAuthenticated: false,
   validUntil: -1,
   validityInSeconds: -1,
@@ -22,15 +25,14 @@ const requestOptions: ApiRequestOptions = {
   resetToInitialDataOnError: true,
 };
 
-export type SessionApiState = Omit<ApiState, 'data'> & SessionState;
+export type SessionApiState = Omit<ApiState<null>, 'data'> &
+  SessionState &
+  SessionResponse;
 
-export default function useSessionApi(
-  initialData = INITIAL_SESSION_STATE
-): SessionApiState {
-  const [{ data, isLoading, isDirty, ...rest }, refetch] = useDataApi(
-    requestOptions,
-    initialData
-  );
+export default function useSessionApi(): SessionApiState {
+  const [{ data, isLoading, isDirty, ...rest }, refetch] = useDataApi<
+    SessionResponse
+  >(requestOptions, INITIAL_SESSION_STATE);
 
   const { isAuthenticated, validUntil } = data;
 

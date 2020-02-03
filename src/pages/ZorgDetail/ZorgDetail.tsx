@@ -13,11 +13,7 @@ import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 
 export default () => {
   const {
-    WMO: {
-      data: { items },
-      isError,
-      isLoading,
-    },
+    WMO: { data: items, isError, isLoading },
   } = useContext(AppContext);
 
   const {
