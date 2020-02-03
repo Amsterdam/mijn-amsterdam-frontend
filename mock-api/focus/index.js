@@ -4,8 +4,6 @@ module.exports = {
   path: '/api/focus/aanvragen',
   // delay: 11000,
   template: (_, queryParams) => {
-    return {
-      items: focus,
-    };
+    return focus;
   },
 };

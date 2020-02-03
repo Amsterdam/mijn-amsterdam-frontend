@@ -16,11 +16,7 @@ const DISPLAY_PROPS = {
 
 export default () => {
   const {
-    WMO: {
-      data: { items },
-      isError,
-      isLoading,
-    },
+    WMO: { data: items, isError, isLoading },
   } = useContext(AppContext);
 
   const itemsActual = items.filter(item => item.isActual);

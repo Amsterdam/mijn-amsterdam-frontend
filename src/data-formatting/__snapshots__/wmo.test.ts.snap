@@ -167,92 +167,11 @@ Array [
   Object {
     "dateFinish": "08 maart 2020",
     "dateStart": "09 maart 2019",
-    "id": "dagbesteding-2",
+    "id": "ambulante-ondersteuning-2",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/dagbesteding-2",
-    },
-    "process": Array [
-      Object {
-        "datePublished": "2019-03-11T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            U hebt recht op 
-            dagbesteding
-             per
-             
-            09 maart 2019
-            .
-          </p>
-          <p>
-            <React.Fragment>
-              In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan indienen of 
-              <u>
-                hoe u van aanbieder kunt wisselen.
-              </u>
-            </React.Fragment>
-          </p>
-        </React.Fragment>,
-        "documents": Array [],
-        "id": "status-step-0",
-        "isChecked": true,
-        "isLastActive": false,
-        "status": "Besluit",
-        "stepType": "first-step",
-      },
-      Object {
-        "datePublished": "",
-        "description": <p>
-          Amstelring
-           is gestart met het leveren van 
-          dagbesteding
-          .
-        </p>,
-        "documents": Array [],
-        "id": "status-step-1",
-        "isChecked": false,
-        "isLastActive": true,
-        "status": "Levering gestart",
-        "stepType": "intermediate-step",
-      },
-      Object {
-        "datePublished": "",
-        "description": <p>
-          Niet van toepassing.
-        </p>,
-        "documents": Array [],
-        "id": "status-step-2",
-        "isChecked": false,
-        "isLastActive": false,
-        "status": "Levering gestopt",
-        "stepType": "intermediate-step",
-      },
-      Object {
-        "datePublished": "",
-        "description": <p>
-          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-        </p>,
-        "documents": Array [],
-        "id": "status-step-3",
-        "isChecked": false,
-        "isLastActive": false,
-        "status": "Einde recht",
-        "stepType": "last-step",
-      },
-    ],
-    "supplier": "Amstelring",
-    "supplierUrl": "",
-    "title": "Dagbesteding",
-  },
-  Object {
-    "dateFinish": "08 maart 2020",
-    "dateStart": "09 maart 2019",
-    "id": "ambulante-ondersteuning-3",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-3",
+      "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-2",
     },
     "process": Array [
       Object {
@@ -325,6 +244,87 @@ Array [
     "supplier": "Amstelring",
     "supplierUrl": "",
     "title": "Ambulante ondersteuning",
+  },
+  Object {
+    "dateFinish": "08 maart 2020",
+    "dateStart": "09 maart 2019",
+    "id": "dagbesteding-3",
+    "isActual": true,
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/zorg-en-ondersteuning/voorzieningen/dagbesteding-3",
+    },
+    "process": Array [
+      Object {
+        "datePublished": "2019-03-11T00:00:00",
+        "description": <React.Fragment>
+          <p>
+            U hebt recht op 
+            dagbesteding
+             per
+             
+            09 maart 2019
+            .
+          </p>
+          <p>
+            <React.Fragment>
+              In de brief leest u ook hoe u bezwaar kunt maken, een klacht kan indienen of 
+              <u>
+                hoe u van aanbieder kunt wisselen.
+              </u>
+            </React.Fragment>
+          </p>
+        </React.Fragment>,
+        "documents": Array [],
+        "id": "status-step-0",
+        "isChecked": true,
+        "isLastActive": false,
+        "status": "Besluit",
+        "stepType": "first-step",
+      },
+      Object {
+        "datePublished": "",
+        "description": <p>
+          Amstelring
+           is gestart met het leveren van 
+          dagbesteding
+          .
+        </p>,
+        "documents": Array [],
+        "id": "status-step-1",
+        "isChecked": false,
+        "isLastActive": true,
+        "status": "Levering gestart",
+        "stepType": "intermediate-step",
+      },
+      Object {
+        "datePublished": "",
+        "description": <p>
+          Niet van toepassing.
+        </p>,
+        "documents": Array [],
+        "id": "status-step-2",
+        "isChecked": false,
+        "isLastActive": false,
+        "status": "Levering gestopt",
+        "stepType": "intermediate-step",
+      },
+      Object {
+        "datePublished": "",
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
+        "documents": Array [],
+        "id": "status-step-3",
+        "isChecked": false,
+        "isLastActive": false,
+        "status": "Einde recht",
+        "stepType": "last-step",
+      },
+    ],
+    "supplier": "Amstelring",
+    "supplierUrl": "",
+    "title": "Dagbesteding",
   },
   Object {
     "dateFinish": "31 december 2019",
@@ -1397,62 +1397,13 @@ Array [
     "title": "Ambulante ondersteuning",
   },
   Object {
-    "dateFinish": "26 februari 2018",
-    "dateStart": "24 november 2017",
-    "id": "deur-tot-deur-plus-vervoer-18",
-    "isActual": false,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/deur-tot-deur-plus-vervoer-18",
-    },
-    "process": Array [
-      Object {
-        "datePublished": "2017-11-25T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            U hebt recht op een 
-            Deur tot deur Plus vervoer
-             per
-             
-            24 november 2017
-            . De vervoerspas ontvangt u per post.
-          </p>
-          <p>
-            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
-          </p>
-        </React.Fragment>,
-        "documents": Array [],
-        "id": "status-step-0",
-        "isChecked": true,
-        "isLastActive": false,
-        "status": "Besluit",
-        "stepType": "first-step",
-      },
-      Object {
-        "datePublished": "2018-02-26T00:00:00",
-        "description": <p>
-          Uw recht op Deur tot deur Plus vervoer is beëindigd per 26 februari 2018
-        </p>,
-        "documents": Array [],
-        "id": "status-step-1",
-        "isChecked": false,
-        "isLastActive": true,
-        "status": "Einde recht",
-        "stepType": "last-step",
-      },
-    ],
-    "supplier": "Transvision",
-    "supplierUrl": "",
-    "title": "Deur tot deur Plus vervoer",
-  },
-  Object {
     "dateFinish": "23 november 2018",
     "dateStart": "24 november 2017",
-    "id": "ambulante-ondersteuning-19",
+    "id": "ambulante-ondersteuning-18",
     "isActual": false,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-19",
+      "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-18",
     },
     "process": Array [
       Object {
@@ -1522,6 +1473,55 @@ Array [
     "supplier": "Amstelring",
     "supplierUrl": "",
     "title": "Ambulante ondersteuning",
+  },
+  Object {
+    "dateFinish": "26 februari 2018",
+    "dateStart": "24 november 2017",
+    "id": "deur-tot-deur-plus-vervoer-19",
+    "isActual": false,
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/zorg-en-ondersteuning/voorzieningen/deur-tot-deur-plus-vervoer-19",
+    },
+    "process": Array [
+      Object {
+        "datePublished": "2017-11-25T00:00:00",
+        "description": <React.Fragment>
+          <p>
+            U hebt recht op een 
+            Deur tot deur Plus vervoer
+             per
+             
+            24 november 2017
+            . De vervoerspas ontvangt u per post.
+          </p>
+          <p>
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
+          </p>
+        </React.Fragment>,
+        "documents": Array [],
+        "id": "status-step-0",
+        "isChecked": true,
+        "isLastActive": false,
+        "status": "Besluit",
+        "stepType": "first-step",
+      },
+      Object {
+        "datePublished": "2018-02-26T00:00:00",
+        "description": <p>
+          Uw recht op Deur tot deur Plus vervoer is beëindigd per 26 februari 2018
+        </p>,
+        "documents": Array [],
+        "id": "status-step-1",
+        "isChecked": false,
+        "isLastActive": true,
+        "status": "Einde recht",
+        "stepType": "last-step",
+      },
+    ],
+    "supplier": "Transvision",
+    "supplierUrl": "",
+    "title": "Deur tot deur Plus vervoer",
   },
   Object {
     "dateFinish": "08 maart 2018",
@@ -1968,88 +1968,11 @@ Array [
   Object {
     "dateFinish": "",
     "dateStart": "08 september 2014",
-    "id": "woonruimteaanpassing-26",
+    "id": "elektrische-hulpaandrijving-voor-rolstoel-26",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/woonruimteaanpassing-26",
-    },
-    "process": Array [
-      Object {
-        "datePublished": "2014-09-11T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            U hebt recht op een 
-            woonruimteaanpassing
-             per
-             
-            08 september 2014
-            .
-          </p>
-          <p>
-            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
-          </p>
-        </React.Fragment>,
-        "documents": Array [],
-        "id": "status-step-0",
-        "isChecked": true,
-        "isLastActive": false,
-        "status": "Besluit",
-        "stepType": "first-step",
-      },
-      Object {
-        "datePublished": "",
-        "description": <p>
-          De gemeente heeft opdracht gegeven aan
-           
-          Gebr Koenen B.V.
-           om de aanpassingen aan uw woning uit te voeren.
-        </p>,
-        "documents": Array [],
-        "id": "status-step-1",
-        "isChecked": true,
-        "isLastActive": false,
-        "status": "Opdracht gegeven",
-        "stepType": "intermediate-step",
-      },
-      Object {
-        "datePublished": "",
-        "description": <p>
-          Gebr Koenen B.V.
-           heeft aan ons doorgegeven dat de aanpassing aan uw woning is uitgevoerd.
-        </p>,
-        "documents": Array [],
-        "id": "status-step-2",
-        "isChecked": false,
-        "isLastActive": true,
-        "status": "Aanpassing uitgevoerd",
-        "stepType": "intermediate-step",
-      },
-      Object {
-        "datePublished": "",
-        "description": <p>
-          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-        </p>,
-        "documents": Array [],
-        "id": "status-step-3",
-        "isChecked": false,
-        "isLastActive": false,
-        "status": "Einde recht",
-        "stepType": "last-step",
-      },
-    ],
-    "supplier": "Gebr Koenen B.V.",
-    "supplierUrl": "",
-    "title": "Woonruimteaanpassing",
-  },
-  Object {
-    "dateFinish": "",
-    "dateStart": "08 september 2014",
-    "id": "elektrische-hulpaandrijving-voor-rolstoel-27",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/elektrische-hulpaandrijving-voor-rolstoel-27",
+      "to": "/zorg-en-ondersteuning/voorzieningen/elektrische-hulpaandrijving-voor-rolstoel-26",
     },
     "process": Array [
       Object {
@@ -2123,6 +2046,83 @@ Array [
     "supplier": "Medipoint B.V.",
     "supplierUrl": "",
     "title": "Elektrische hulpaandrijving voor rolstoel",
+  },
+  Object {
+    "dateFinish": "",
+    "dateStart": "08 september 2014",
+    "id": "woonruimteaanpassing-27",
+    "isActual": true,
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/zorg-en-ondersteuning/voorzieningen/woonruimteaanpassing-27",
+    },
+    "process": Array [
+      Object {
+        "datePublished": "2014-09-11T00:00:00",
+        "description": <React.Fragment>
+          <p>
+            U hebt recht op een 
+            woonruimteaanpassing
+             per
+             
+            08 september 2014
+            .
+          </p>
+          <p>
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
+          </p>
+        </React.Fragment>,
+        "documents": Array [],
+        "id": "status-step-0",
+        "isChecked": true,
+        "isLastActive": false,
+        "status": "Besluit",
+        "stepType": "first-step",
+      },
+      Object {
+        "datePublished": "",
+        "description": <p>
+          De gemeente heeft opdracht gegeven aan
+           
+          Gebr Koenen B.V.
+           om de aanpassingen aan uw woning uit te voeren.
+        </p>,
+        "documents": Array [],
+        "id": "status-step-1",
+        "isChecked": true,
+        "isLastActive": false,
+        "status": "Opdracht gegeven",
+        "stepType": "intermediate-step",
+      },
+      Object {
+        "datePublished": "",
+        "description": <p>
+          Gebr Koenen B.V.
+           heeft aan ons doorgegeven dat de aanpassing aan uw woning is uitgevoerd.
+        </p>,
+        "documents": Array [],
+        "id": "status-step-2",
+        "isChecked": false,
+        "isLastActive": true,
+        "status": "Aanpassing uitgevoerd",
+        "stepType": "intermediate-step",
+      },
+      Object {
+        "datePublished": "",
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
+        "documents": Array [],
+        "id": "status-step-3",
+        "isChecked": false,
+        "isLastActive": false,
+        "status": "Einde recht",
+        "stepType": "last-step",
+      },
+    ],
+    "supplier": "Gebr Koenen B.V.",
+    "supplierUrl": "",
+    "title": "Woonruimteaanpassing",
   },
   Object {
     "dateFinish": "",
@@ -2363,93 +2363,11 @@ Array [
   Object {
     "dateFinish": "",
     "dateStart": "05 oktober 2012",
-    "id": "douche-toiletstoel-verrijdbaarkantelbaarindividueel-aangepast-31",
+    "id": "handbewogen-rolstoel-31",
     "isActual": true,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/douche-toiletstoel-verrijdbaarkantelbaarindividueel-aangepast-31",
-    },
-    "process": Array [
-      Object {
-        "datePublished": "2012-10-05T00:00:00",
-        "description": <React.Fragment>
-          <p>
-            U hebt recht op een 
-            douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast)
-             per
-             
-            05 oktober 2012
-            .
-          </p>
-          <p>
-            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
-          </p>
-        </React.Fragment>,
-        "documents": Array [],
-        "id": "status-step-0",
-        "isChecked": true,
-        "isLastActive": false,
-        "status": "Besluit",
-        "stepType": "first-step",
-      },
-      Object {
-        "datePublished": "",
-        "description": <p>
-          De gemeente heeft opdracht gegeven aan
-           
-          Medipoint B.V.
-           om een 
-          douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast)
-           aan u te leveren.
-        </p>,
-        "documents": Array [],
-        "id": "status-step-1",
-        "isChecked": true,
-        "isLastActive": false,
-        "status": "Opdracht gegeven",
-        "stepType": "intermediate-step",
-      },
-      Object {
-        "datePublished": "",
-        "description": <p>
-          Medipoint B.V.
-           heeft aan ons doorgegeven dat een
-           
-          douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast)
-           bij u is afgeleverd.
-        </p>,
-        "documents": Array [],
-        "id": "status-step-2",
-        "isChecked": false,
-        "isLastActive": true,
-        "status": "Product geleverd",
-        "stepType": "intermediate-step",
-      },
-      Object {
-        "datePublished": "",
-        "description": <p>
-          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
-        </p>,
-        "documents": Array [],
-        "id": "status-step-3",
-        "isChecked": false,
-        "isLastActive": false,
-        "status": "Einde recht",
-        "stepType": "last-step",
-      },
-    ],
-    "supplier": "Medipoint B.V.",
-    "supplierUrl": "",
-    "title": "Douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast)",
-  },
-  Object {
-    "dateFinish": "",
-    "dateStart": "05 oktober 2012",
-    "id": "handbewogen-rolstoel-32",
-    "isActual": true,
-    "link": Object {
-      "title": "Meer informatie",
-      "to": "/zorg-en-ondersteuning/voorzieningen/handbewogen-rolstoel-32",
+      "to": "/zorg-en-ondersteuning/voorzieningen/handbewogen-rolstoel-31",
     },
     "process": Array [
       Object {
@@ -2523,6 +2441,88 @@ Array [
     "supplier": "Medipoint B.V.",
     "supplierUrl": "",
     "title": "Handbewogen rolstoel",
+  },
+  Object {
+    "dateFinish": "",
+    "dateStart": "05 oktober 2012",
+    "id": "douche-toiletstoel-verrijdbaarkantelbaarindividueel-aangepast-32",
+    "isActual": true,
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/zorg-en-ondersteuning/voorzieningen/douche-toiletstoel-verrijdbaarkantelbaarindividueel-aangepast-32",
+    },
+    "process": Array [
+      Object {
+        "datePublished": "2012-10-05T00:00:00",
+        "description": <React.Fragment>
+          <p>
+            U hebt recht op een 
+            douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast)
+             per
+             
+            05 oktober 2012
+            .
+          </p>
+          <p>
+            In de brief leest u ook hoe u bezwaar kunt maken of een klacht kan indienen.
+          </p>
+        </React.Fragment>,
+        "documents": Array [],
+        "id": "status-step-0",
+        "isChecked": true,
+        "isLastActive": false,
+        "status": "Besluit",
+        "stepType": "first-step",
+      },
+      Object {
+        "datePublished": "",
+        "description": <p>
+          De gemeente heeft opdracht gegeven aan
+           
+          Medipoint B.V.
+           om een 
+          douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast)
+           aan u te leveren.
+        </p>,
+        "documents": Array [],
+        "id": "status-step-1",
+        "isChecked": true,
+        "isLastActive": false,
+        "status": "Opdracht gegeven",
+        "stepType": "intermediate-step",
+      },
+      Object {
+        "datePublished": "",
+        "description": <p>
+          Medipoint B.V.
+           heeft aan ons doorgegeven dat een
+           
+          douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast)
+           bij u is afgeleverd.
+        </p>,
+        "documents": Array [],
+        "id": "status-step-2",
+        "isChecked": false,
+        "isLastActive": true,
+        "status": "Product geleverd",
+        "stepType": "intermediate-step",
+      },
+      Object {
+        "datePublished": "",
+        "description": <p>
+          Op het moment dat uw recht stopt, ontvangt u hiervan bericht.
+        </p>,
+        "documents": Array [],
+        "id": "status-step-3",
+        "isChecked": false,
+        "isLastActive": false,
+        "status": "Einde recht",
+        "stepType": "last-step",
+      },
+    ],
+    "supplier": "Medipoint B.V.",
+    "supplierUrl": "",
+    "title": "Douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast)",
   },
   Object {
     "dateFinish": "",

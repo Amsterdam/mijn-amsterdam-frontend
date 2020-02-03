@@ -3,7 +3,7 @@ import { capitalizeFirstLetter, getApiUrl } from 'helpers/App';
 import { Centroid, getDistance } from 'helpers/geo';
 import { useCallback, useMemo } from 'react';
 import { useDataApi } from './api.hook';
-import { ApiState, RefetchFunction } from './api.types';
+import { ApiState } from './api.types';
 
 // Reverse engineered from sourcecode at https://www.amsterdam.nl/afval/afvalwijzer/?adres=Dam%201
 
@@ -141,14 +141,9 @@ interface GarbageInfoApiResponseFormatted {
   centroid: Centroid | null;
 }
 
-export interface RawGarbageApiState extends ApiState {
-  data: GarbageInfoApiResponse;
-}
-
-export interface GarbageApiState extends ApiState {
-  data: GarbageInfoApiResponseFormatted;
-  refetch: (requestData: GarbageApiHookProps) => void;
-}
+export type GarbageApiState = ApiState<GarbageInfoApiResponseFormatted> & {
+  refetch: (data: GarbageApiHookProps) => void;
+};
 
 export interface GarbagePoint {
   naam: string;
@@ -174,54 +169,56 @@ export default function useGarbageApi({
 }: {
   centroid: Centroid | null;
 }): GarbageApiState {
-  const [api, refetch]: [RawGarbageApiState, RefetchFunction] = useDataApi({
-    postpone: true,
-    url: '',
-  });
+  const [api, refetch] = useDataApi<GarbageInfoApiResponse>(
+    {
+      postpone: true,
+      url: '',
+    },
+    {} as GarbageInfoApiResponse
+  );
 
-  const ophalen: GarbageMoment[] =
-    api.data.result && api.data.result.features && api.data.result.features
-      ? api.data.result.features.map(feature => {
-          const {
-            properties: {
-              type,
-              stadsdeel_naam,
-              tijd_tot,
-              tijd_vanaf,
-              ophaaldag,
-              opmerking,
-              aanbiedwijze,
-              frequentie,
-            },
-          } = feature;
-
-          return {
-            title: titles[type] || type,
-            stadsdeel: stadsdeel_naam,
+  const ophalen: GarbageMoment[] = api.data?.result?.features
+    ? api.data.result.features.map(feature => {
+        const {
+          properties: {
             type,
+            stadsdeel_naam,
+            tijd_tot,
+            tijd_vanaf,
+            ophaaldag,
+            opmerking,
             aanbiedwijze,
-            buitenZetten:
-              ophaaldag !== null
-                ? ophaaldag && tijd_vanaf && tijd_tot
-                  ? capitalizeFirstLetter(
-                      formatPickupDays(ophaaldag, tijd_vanaf, tijd_tot)
-                    )
-                  : ''
-                : '',
-            ophaaldag:
-              ophaaldag !== null
-                ? ophaaldag + (frequentie ? `, ${frequentie}` : '')
-                : /* fallback to*/ frequentie || '',
-            opmerking:
-              opmerking !== null
-                ? opmerking.replace(
-                    /(online)/gi,
-                    `<a rel="external noreferrer noopener" href="${ExternalUrls.AFVAL_AFSPRAAK_MAKEN}">online</a>`
+            frequentie,
+          },
+        } = feature;
+
+        return {
+          title: titles[type] || type,
+          stadsdeel: stadsdeel_naam,
+          type,
+          aanbiedwijze,
+          buitenZetten:
+            ophaaldag !== null
+              ? ophaaldag && tijd_vanaf && tijd_tot
+                ? capitalizeFirstLetter(
+                    formatPickupDays(ophaaldag, tijd_vanaf, tijd_tot)
                   )
-                : '',
-          };
-        })
-      : [];
+                : ''
+              : '',
+          ophaaldag:
+            ophaaldag !== null
+              ? ophaaldag + (frequentie ? `, ${frequentie}` : '')
+              : /* fallback to*/ frequentie || '',
+          opmerking:
+            opmerking !== null
+              ? opmerking.replace(
+                  /(online)/gi,
+                  `<a rel="external noreferrer noopener" href="${ExternalUrls.AFVAL_AFSPRAAK_MAKEN}">online</a>`
+                )
+              : '',
+        };
+      })
+    : [];
 
   const wegbrengen: GarbagePoint[] = useMemo(
     () =>

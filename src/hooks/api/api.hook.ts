@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/browser';
-import { Action, Unshaped } from 'App.types';
+import { Action } from 'App.types';
 import axios from 'axios';
-import { useEffect, useMemo, useReducer, useState } from 'react';
+import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { ApiRequestOptions, ApiState, RefetchFunction } from './api.types';
 
 /**
@@ -15,37 +15,39 @@ const ActionTypes = {
   FETCH_FAILURE: 'FETCH_FAILURE',
 };
 
-const createApiDataReducer = (
-  initialData: Unshaped = {},
+function createApiDataReducer<T>(
+  initialData: T,
   resetToInitialDataOnError: boolean = false
-) => (state: ApiState, action: Action): ApiState => {
-  switch (action.type) {
-    case ActionTypes.FETCH_INIT:
-      return { ...state, isLoading: true, isError: false };
-    case ActionTypes.FETCH_SUCCESS:
-      return {
-        ...state,
-        isLoading: false,
-        isError: false,
-        isPristine: false,
-        isDirty: true,
-        data: action.payload,
-        errorMessage: null,
-      };
-    case ActionTypes.FETCH_FAILURE:
-      return {
-        ...state,
-        isLoading: false,
-        isError: true,
-        isPristine: false,
-        isDirty: true,
-        data: resetToInitialDataOnError ? initialData : state.data,
-        errorMessage: action.payload,
-      };
-    default:
-      throw new Error();
-  }
-};
+) {
+  return (state: ApiState<T>, action: Action): ApiState<T> => {
+    switch (action.type) {
+      case ActionTypes.FETCH_INIT:
+        return { ...state, isLoading: true, isError: false };
+      case ActionTypes.FETCH_SUCCESS:
+        return {
+          ...state,
+          isLoading: false,
+          isError: false,
+          isPristine: false,
+          isDirty: true,
+          data: action.payload,
+          errorMessage: null,
+        };
+      case ActionTypes.FETCH_FAILURE:
+        return {
+          ...state,
+          isLoading: false,
+          isError: true,
+          isPristine: false,
+          isDirty: true,
+          data: resetToInitialDataOnError ? initialData : state.data,
+          errorMessage: action.payload,
+        };
+      default:
+        throw new Error();
+    }
+  };
+}
 
 // The data api request options object
 export const DEFAULT_REQUEST_OPTIONS: ApiRequestOptions = {
@@ -59,32 +61,38 @@ export const DEFAULT_REQUEST_OPTIONS: ApiRequestOptions = {
   timeout: 10 * 1000,
 };
 
-export const getDefaultState = (initialData = {}, postpone = false) => ({
-  isLoading: postpone === true ? false : true,
-  isError: false,
-  isPristine: true,
-  isDirty: false,
-  data: initialData,
-  errorMessage: null,
-});
+export function getDefaultState<T>(initialData: T, postpone = false) {
+  return {
+    isLoading: postpone === true ? false : true,
+    isError: false,
+    isPristine: true,
+    isDirty: false,
+    data: initialData,
+    errorMessage: null,
+  };
+}
 
-export const useDataApi = (
+export function useDataApi<T>(
   options: ApiRequestOptions = DEFAULT_REQUEST_OPTIONS,
-  initialData: Unshaped = {}
-): [ApiState, RefetchFunction] => {
+  initialData: T
+): [ApiState<T>, RefetchFunction] {
   const [requestOptions, setRequestOptions] = useState(options);
   const apiDataReducer = createApiDataReducer(initialData, true);
 
-  const refetch = useMemo(
-    () => (options: ApiRequestOptions) => {
-      setRequestOptions({ ...options, postpone: false });
+  const refetch = useCallback(
+    (refetchOptions: Partial<ApiRequestOptions>) => {
+      setRequestOptions(options => ({
+        ...options,
+        ...refetchOptions,
+        postpone: false,
+      }));
     },
     [setRequestOptions]
   );
 
   const [state, dispatch] = useReducer(
     apiDataReducer,
-    getDefaultState(initialData, requestOptions.postpone)
+    getDefaultState<T>(initialData, requestOptions.postpone)
   );
 
   useEffect(() => {
@@ -107,15 +115,16 @@ export const useDataApi = (
             payload: result.data,
           });
         }
-      } catch (result) {
+      } catch (error) {
         if (!didCancel) {
+          const errorMessage = error.response?.data.message || error.message;
           dispatch({
             type: ActionTypes.FETCH_FAILURE,
-            payload: result.message,
+            payload: errorMessage,
           });
           Sentry.captureMessage(
-            `API ERROR: ${result.message}, url: ${
-              requestOptions.url.split('?')[0]
+            `API ERROR: ${errorMessage}, url: ${
+              requestOptions.url.split('?')[0] // Don't log query params for privacy reasons
             }`
           );
         }
@@ -133,7 +142,7 @@ export const useDataApi = (
     // See: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
   }, [requestOptions]);
 
-  return useMemo<[ApiState, RefetchFunction]>(() => {
+  return useMemo(() => {
     return [state, refetch];
   }, [state, refetch]);
-};
+}

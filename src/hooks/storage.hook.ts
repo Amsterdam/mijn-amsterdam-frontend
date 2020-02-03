@@ -202,13 +202,13 @@ export function useCookie(
     return Cookies.get(key) || initialValue;
   });
 
-  const setValue = (
-    value: string | object,
-    options: Cookies.CookieAttributes
-  ) => {
-    setInnerValue(value);
-    Cookies.set(key, value, options);
-  };
+  const setValue = useCallback(
+    (value: string | object, options: Cookies.CookieAttributes) => {
+      setInnerValue(value);
+      Cookies.set(key, value, options);
+    },
+    [setInnerValue, key]
+  );
 
   return [item, setValue];
 }

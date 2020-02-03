@@ -10,13 +10,13 @@ export interface ApiRequestOptions {
   timeout?: number; // in ms
 }
 
-export interface ApiState {
+export interface ApiState<T> {
   isLoading: boolean;
   isError: boolean;
   isPristine: boolean;
   isDirty: boolean;
-  data: any;
+  data: T;
   errorMessage: string | null;
 }
 
-export type RefetchFunction = (options: ApiRequestOptions) => void;
+export type RefetchFunction = (options: Partial<ApiRequestOptions>) => void;

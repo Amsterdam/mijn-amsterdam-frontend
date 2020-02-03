@@ -1,52 +1,48 @@
 import {
+  FocusApiResponse,
   FocusItem,
   formatProductCollections,
   ProductCollection,
 } from 'data-formatting/focus';
 import { getApiConfigValue, getApiUrl } from 'helpers/App';
 import { useMemo } from 'react';
+import { useDataApi } from './api.hook';
+import { ApiState } from './api.types';
 import { MyNotification } from './my-notifications-api.hook';
-import usePaginatedApi, {
-  PaginatedApiState,
-  PaginatedItemsResponse,
-} from './paginated-api.hook';
 
-export interface FocusData extends PaginatedItemsResponse {
+export interface FocusData {
   items: FocusItem[];
   recentCases: FocusItem[];
   notifications: MyNotification[];
   products: ProductCollection;
 }
 
-export interface FocusApiState extends PaginatedApiState {
-  data: FocusData;
-}
+export type FocusApiState = ApiState<FocusData> & { rawData: FocusApiResponse };
 
-export default function useFocusApi(
-  offset: number = 0,
-  limit: number = -1
-): FocusApiState {
-  const { data, ...rest } = usePaginatedApi({
-    url: getApiUrl('FOCUS'),
-    offset,
-    limit,
-    postpone: getApiConfigValue('FOCUS', 'postponeFetch', false),
-  });
-
-  const { allItems, allNotifications, products } = useMemo(() => {
-    return formatProductCollections(data.items);
-  }, [data.items]);
-
-  const recentCases = allItems.filter(item => item.isRecent);
-
-  return {
-    ...rest,
-    data: {
-      ...data,
-      items: allItems,
-      notifications: allNotifications,
-      recentCases,
-      products,
+export default function useFocusApi(): FocusApiState {
+  const [api] = useDataApi<FocusApiResponse>(
+    {
+      url: getApiUrl('FOCUS'),
+      postpone: getApiConfigValue('FOCUS', 'postponeFetch', false),
     },
-  };
+    []
+  );
+
+  return useMemo(() => {
+    const { allItems, allNotifications, products } = formatProductCollections(
+      api.data
+    );
+
+    const recentCases = allItems.filter(item => item.isRecent);
+    return {
+      ...api,
+      rawData: api.data,
+      data: {
+        items: allItems,
+        notifications: allNotifications,
+        recentCases,
+        products,
+      },
+    };
+  }, [api]);
 }
