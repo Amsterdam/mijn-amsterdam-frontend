@@ -1,4 +1,4 @@
-FROM node:10.15.3 as build-deps
+FROM node:13.7.0 as build-deps
 
 ENV LOGOUT_URL=${LOGOUT_URL:-notset}
 # Indicating we are on a CI environment
