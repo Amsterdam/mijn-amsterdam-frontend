@@ -1,7 +1,7 @@
 const belasting = require('../json/belasting.json');
 
 module.exports = {
-  path: '/api/belasting/get',
+  path: '/api/belastingen/get',
   // delay: 11000,
   template: (_, queryParams) => {
     // return { status: 'ERROR', message: 'Invalid BSN' };
