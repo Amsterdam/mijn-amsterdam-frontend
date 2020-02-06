@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import MyArea from './MyArea';
+import { MyAreaMap } from './MyArea';
+import { DEFAULT_CENTROID } from 'config/Map.constants';
 
 it('Renders without crashing', () => {
-  shallow(<MyArea url="" />);
+  shallow(<MyAreaMap center={DEFAULT_CENTROID} title="My Map! test." />);
 });

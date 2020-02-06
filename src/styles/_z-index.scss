@@ -8,7 +8,8 @@ $z-index: (
   modal: 20,
   dialog: 21,
   tutorial-overlay: 1000,
-  tutorial-items: 1001
+  tutorial-items: 1001,
+  myarea-dashboard-overlay: 1001,
 );
 
 @function z-index($key) {

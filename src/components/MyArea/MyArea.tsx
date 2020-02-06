@@ -2,12 +2,24 @@ import { AppRoutes } from 'config/Routing.constants';
 import { ReactComponent as CloseIcon } from 'assets/icons/Close.svg';
 import { ReactComponent as Logo } from 'assets/images/logo-amsterdam.svg';
 import { ReactComponent as HomeIcon } from 'assets/icons/home.svg';
+
 import Heading from 'components/Heading/Heading';
-import React from 'react';
+import React, { HTMLProps, PropsWithChildren } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 import styles from './MyArea.module.scss';
 import Linkd from 'components/Button/Button';
+
+import {
+  Centroid,
+  IS_MY_AREA_2_ENABLED,
+  DEFAULT_MAP_DISPLAY_CONFIG,
+  MapDisplayOptions,
+} from 'config/Map.constants';
+import { MaZoomControl } from './MaZoomControl';
+import { MaMap } from './MaMap';
+import { HomeIconMarker } from './MaMarker';
+import { LOCATION_ZOOM } from 'config/Map.constants';
 
 export function MyAreaHeader() {
   return (
@@ -31,21 +43,10 @@ export function MyAreaHeader() {
   );
 }
 
-interface MyAreaMapComponentProps {
-  url: string;
-}
-
-export function MyAreaMap({ url }: MyAreaMapComponentProps) {
-  return !!url ? (
-    <iframe
-      id="mapIframe"
-      title="Kaart van mijn buurt"
-      src={url}
-      className={styles.MapContainer}
-    />
-  ) : (
-    <div className={styles.loadingText}>
-      <span className={styles.HomeLoader}>
+function MyAreaLoader() {
+  return (
+    <div className={styles.MyAreaLoader}>
+      <span>
         <HomeIcon aria-hidden="true" />
         Uw adres wordt opgezocht...
       </span>
@@ -53,15 +54,84 @@ export function MyAreaMap({ url }: MyAreaMapComponentProps) {
   );
 }
 
-interface MyAreaComponentProps {
-  url: string;
+function MyAreaMapContainer({ children }: PropsWithChildren<{}>) {
+  return <div className={styles.MyAreaMapContainer}>{children}</div>;
 }
 
-export default function MyArea({ url, ...otherProps }: MyAreaComponentProps) {
+interface MyAreaMapIframeProps {
+  url?: string;
+}
+
+export function MyAreaMapIFrame({ url }: MyAreaMapIframeProps) {
+  return (
+    <MyAreaMapContainer>
+      {!!url ? (
+        <iframe
+          id="mapIframe"
+          title="Kaart van mijn buurt"
+          src={url}
+          className={styles.MyAreaMapIFrame}
+        />
+      ) : (
+        <MyAreaLoader />
+      )}
+    </MyAreaMapContainer>
+  );
+}
+
+interface MyAreaMapComponentProps {
+  id?: string;
+  title?: string;
+  center?: Centroid;
+  homeAddress?: string;
+  options?: MapDisplayOptions;
+}
+
+export function MyAreaMap({
+  center,
+  title = 'Kaart van Mijn buurt',
+  id = 'map',
+  homeAddress,
+  options = DEFAULT_MAP_DISPLAY_CONFIG,
+}: MyAreaMapComponentProps) {
+  return (
+    <MyAreaMapContainer>
+      {!!center ? (
+        <MaMap title={title} id={id} zoom={options.zoom} center={center}>
+          <HomeIconMarker
+            center={center}
+            zoom={options.zoom}
+            address={homeAddress}
+          />
+          {!!options.zoomTools && <MaZoomControl center={center} />}
+        </MaMap>
+      ) : (
+        <MyAreaLoader />
+      )}
+    </MyAreaMapContainer>
+  );
+}
+
+interface MyAreaDashboardComponentProps extends HTMLProps<HTMLDivElement> {
+  center?: Centroid;
+  url?: string;
+}
+
+export function MyAreaDashboard({
+  center,
+  url,
+  ...otherProps
+}: MyAreaDashboardComponentProps) {
   return (
     <div {...otherProps} className={styles.MyArea}>
-      <MyAreaMap url={url} />
-      <NavLink to={AppRoutes.MIJN_BUURT} className={styles.Overlay}>
+      {IS_MY_AREA_2_ENABLED && !!center && (
+        <MyAreaMap
+          center={center}
+          options={{ zoomTools: false, zoom: LOCATION_ZOOM }}
+        />
+      )}
+      {!IS_MY_AREA_2_ENABLED && <MyAreaMapIFrame url={url} />}
+      <NavLink to={AppRoutes.MIJN_BUURT} className={styles.MapDashboardOverlay}>
         <div>
           <Heading size="large">Mijn buurt</Heading>
           <p>
