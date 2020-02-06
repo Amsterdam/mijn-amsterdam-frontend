@@ -1,4 +1,10 @@
-import React, { useRef, useEffect, useState, PropsWithChildren } from 'react';
+import React, {
+  useRef,
+  useEffect,
+  useState,
+  PropsWithChildren,
+  Component,
+} from 'react';
 import { firstChildOfType } from './utils';
 import { MaPopup } from './MaPopup';
 import { MaTooltip } from './MaTooltip';
@@ -6,10 +12,9 @@ import iconUrl from 'assets/icons/home.svg';
 
 import L from 'leaflet';
 import { Marker, useMapInstance } from '@datapunt/react-maps';
-import { DEFAULT_ZOOM } from 'config/Map.constants';
-import { Centroid } from '../../config/Map.constants';
+import { DEFAULT_ZOOM, Centroid } from 'config/Map.constants';
 
-function useBindToMarker(component: any, markerInstance: any) {
+function useBindComponentToMarker(component: any, markerInstance: any) {
   const componentRef = useRef();
   let name = '';
   if (component) {
@@ -33,20 +38,19 @@ type MaMarkerProps = PropsWithChildren<{ center: Centroid; iconUrl: string }>;
 
 function MaMarker({ children, center, iconUrl }: MaMarkerProps) {
   const [markerInstance, setMarkerInstance] = useState();
-  let popup = useBindToMarker(
+  const popup = useBindComponentToMarker(
     firstChildOfType(children, MaPopup),
     markerInstance
   );
-  let tooltip = useBindToMarker(
+  const tooltip = useBindComponentToMarker(
     firstChildOfType(children, MaTooltip),
     markerInstance
   );
   const icon = L.icon({
     iconUrl,
-    iconRetinaUrl: iconUrl,
     iconSize: [32, 32],
     iconAnchor: [16, 16],
-    popupAnchor: [1, -34],
+    // popupAnchor: [1, -34],
     tooltipAnchor: [16, 0],
   });
 
