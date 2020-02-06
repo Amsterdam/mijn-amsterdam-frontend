@@ -36,6 +36,7 @@ export default () => {
     MY_CHAPTERS: { items: myChapterItems, isLoading: isMyChaptersLoading },
     MIJN_BUURT: {
       url: { simple: mapUrl },
+      centroid,
     },
   } = useContext(AppContext);
 
@@ -83,6 +84,7 @@ export default () => {
         {!isPhoneScreen && (
           <MyAreaDashboard
             url={mapUrl}
+            center={centroid}
             data-tutorial-item="Hier ziet u informatie van de gemeente, bijvoorbeeld over afval, parkeren en bekendmakingen;left-top"
           />
         )}

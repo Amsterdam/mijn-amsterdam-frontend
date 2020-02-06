@@ -66,16 +66,21 @@ function MaMarker({ children, center, iconUrl }: MaMarkerProps) {
 interface HomeIconMarkerProps {
   center: Centroid;
   address?: string;
+  zoom?: number;
 }
 
-export function HomeIconMarker({ center, address }: HomeIconMarkerProps) {
+export function HomeIconMarker({
+  center,
+  zoom = DEFAULT_ZOOM,
+  address,
+}: HomeIconMarkerProps) {
   const mapInstance = useMapInstance();
 
   useEffect(() => {
     if (center && mapInstance) {
-      mapInstance.setView(center, DEFAULT_ZOOM);
+      mapInstance.setView(center, zoom);
     }
-  }, [center, mapInstance]);
+  }, [center, zoom, mapInstance]);
 
   return (
     <MaMarker iconUrl={iconUrl} center={center}>

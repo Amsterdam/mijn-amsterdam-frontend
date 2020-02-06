@@ -10,10 +10,16 @@ import { Link, NavLink } from 'react-router-dom';
 import styles from './MyArea.module.scss';
 import Linkd from 'components/Button/Button';
 
-import { Centroid } from 'config/Map.constants';
+import {
+  Centroid,
+  IS_MY_AREA_2_ENABLED,
+  DEFAULT_MAP_DISPLAY_CONFIG,
+  MapDisplayOptions,
+} from 'config/Map.constants';
 import { MaZoomControl } from './MaZoomControl';
 import { MaMap } from './MaMap';
 import { HomeIconMarker } from './MaMarker';
+import { LOCATION_ZOOM } from 'config/Map.constants';
 
 export function MyAreaHeader() {
   return (
@@ -78,6 +84,7 @@ interface MyAreaMapComponentProps {
   title?: string;
   center?: Centroid;
   homeAddress?: string;
+  options?: MapDisplayOptions;
 }
 
 export function MyAreaMap({
@@ -85,13 +92,18 @@ export function MyAreaMap({
   title = 'Kaart van Mijn buurt',
   id = 'map',
   homeAddress,
+  options = DEFAULT_MAP_DISPLAY_CONFIG,
 }: MyAreaMapComponentProps) {
   return (
     <MyAreaMapContainer>
       {!!center ? (
-        <MaMap title={title} id={id} center={center}>
-          <HomeIconMarker center={center} address={homeAddress} />
-          <MaZoomControl center={center} />
+        <MaMap title={title} id={id} zoom={options.zoom} center={center}>
+          <HomeIconMarker
+            center={center}
+            zoom={options.zoom}
+            address={homeAddress}
+          />
+          {!!options.zoomTools && <MaZoomControl center={center} />}
         </MaMap>
       ) : (
         <MyAreaLoader />
@@ -112,8 +124,13 @@ export function MyAreaDashboard({
 }: MyAreaDashboardComponentProps) {
   return (
     <div {...otherProps} className={styles.MyArea}>
-      {!!center && <MyAreaMap center={center} />}
-      {!!url && <MyAreaMapIFrame url={url} />}
+      {IS_MY_AREA_2_ENABLED && !!center && (
+        <MyAreaMap
+          center={center}
+          options={{ zoomTools: false, zoom: LOCATION_ZOOM }}
+        />
+      )}
+      {!IS_MY_AREA_2_ENABLED && <MyAreaMapIFrame url={url} />}
       <NavLink to={AppRoutes.MIJN_BUURT} className={styles.MapDashboardOverlay}>
         <div>
           <Heading size="large">Mijn buurt</Heading>

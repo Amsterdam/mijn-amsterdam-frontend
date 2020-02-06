@@ -1,5 +1,11 @@
+import { IS_ACCEPTANCE, IS_PRODUCTION } from 'env';
 import { getCrsRd } from 'helpers/geo';
 import { MapOptions } from 'leaflet';
+
+export interface MapDisplayOptions {
+  zoomTools: boolean;
+  zoom: number;
+}
 
 export type Lat = number;
 export type Lon = number;
@@ -38,3 +44,10 @@ export const DEFAULT_TILE_LAYER_CONFIG = {
 export const MAP_URL = process.env.REACT_APP_EMBED_MAP_URL;
 export const LAYERS_CONFIG =
   'lagen=overig%3A1%7Cverreg%3A1%7Cverbes%3A1%7Cterras%3A1%7Csplits%3A1%7Cspeela%3A1%7Crectif%3A1%7Coptijd%3A1%7Conttre%3A1%7Comgver%3A1%7Cmeldin%3A1%7Cmedede%3A1%7Cligpla%3A1%7Ckapver%3A1%7Cinspra%3A1%7Cexploi%3A1%7Cevever%3A1%7Cdrahor%3A1%7Cbespla%3A1%7Cwlokca%3A1%7Cwlotxtl%3A1%7Cwlopls%3A1%7Cwlogls%3A1%7Cwloppr%3A1%7Cwlorst%3A1%7Ctcevt%3A1%7Cpvg%3A0%7Cuitzpvg%3A0';
+
+export const IS_MY_AREA_2_ENABLED = !(IS_PRODUCTION || IS_ACCEPTANCE);
+
+export const DEFAULT_MAP_DISPLAY_CONFIG = {
+  zoomTools: true,
+  zoom: DEFAULT_ZOOM,
+};

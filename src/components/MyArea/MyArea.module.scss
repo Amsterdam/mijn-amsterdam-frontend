@@ -27,6 +27,7 @@
   display: flex;
   align-items: flex-end;
   text-decoration: none;
+  z-index: z-index(myarea-dashboard-overlay);
 
   div {
     background-color: $color-white;
