@@ -1,4 +1,4 @@
-import { Centroid } from 'config/Map.constants';
+import { Centroid, LatLngObject } from 'config/Map.constants';
 import L, { LatLng } from 'leaflet';
 import proj4, { InterfaceCoordinates } from 'proj4';
 
@@ -70,4 +70,8 @@ export function getCrsRd(
       zoom: (scale: number) => Math.log(1 / scale / zeroScale) / Math.log(0.5),
     },
   };
+}
+
+export function toLatLng([lon, lat]: Centroid): LatLngObject {
+  return { lat, lng: lon };
 }

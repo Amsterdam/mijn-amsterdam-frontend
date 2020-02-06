@@ -10,7 +10,9 @@ import {
 import { getApiUrl } from 'helpers/App';
 import { usePhoneScreen } from 'hooks/media.hook';
 import { useCallback, useEffect, useState } from 'react';
+import { DEFAULT_CENTROID } from '../../config/Map.constants';
 import { useDataApi } from './api.hook';
+import { ApiState } from './api.types';
 
 export const BAG_SEARCH_ENDPOINT_URL = `${getApiUrl('BAG')}?q=`;
 const SET_DEFAULT_ADDRESS_TIMEOUT = 10000;
@@ -30,21 +32,21 @@ export function useBagSearch(address?: string) {
   );
 }
 
-export interface MyAreaApiState {
+export type MyAreaApiState = ApiState<{
   url: {
     advanced: string;
     simple: string;
   };
-  centroid: Nullable<Centroid>;
-  isDirty: boolean;
-  isLoading: boolean;
+  centroid: Centroid;
+}> & {
   refetch: (address: string) => void;
-}
+};
 
 export default function useMyArea(address?: string): MyAreaApiState {
-  const [{ data, isLoading, isDirty }, refetch] = useBagSearch(address);
+  const [api, refetch] = useBagSearch(address);
+  const { data, isDirty } = api;
   const [urls, setUrls] = useState({ simple: '', advanced: '' });
-  const [centroid, setCentroid] = useState<Nullable<Centroid>>(null);
+  const [centroid, setCentroid] = useState<Centroid>(DEFAULT_CENTROID);
   const [isDefaultMapLocation, setIsDefaultMapLocation] = useState(false);
   const showLegenda = !usePhoneScreen();
 
@@ -64,7 +66,7 @@ export default function useMyArea(address?: string): MyAreaApiState {
           simple: `${MAP_URL}&center=${lat}%2C${lon}&zoom=${LOCATION_ZOOM}&marker=${lat}%2C${lon}&marker-icon=home`,
         });
 
-        setCentroid([lat, lon]);
+        setCentroid([lon, lat]);
       } else {
         setUrls({
           advanced: `${MAP_URL}&center=${DEFAULT_LAT}%2C${DEFAULT_LON}&zoom=${DEFAULT_ZOOM}`,
@@ -96,10 +98,11 @@ export default function useMyArea(address?: string): MyAreaApiState {
   );
 
   return {
-    url: urls,
-    centroid,
-    isDirty,
-    isLoading,
+    ...api,
+    data: {
+      url: urls,
+      centroid,
+    },
     refetch: refetchCallback,
   };
 }

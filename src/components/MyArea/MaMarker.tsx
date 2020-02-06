@@ -7,6 +7,7 @@ import iconUrl from 'assets/icons/home.svg';
 import L from 'leaflet';
 import { Marker, useMapInstance } from '@datapunt/react-maps';
 import { DEFAULT_ZOOM, Centroid } from 'config/Map.constants';
+import { toLatLng } from 'helpers/geo';
 
 function useBindComponentToMarker(component: any, markerInstance: any) {
   const componentRef = useRef();
@@ -53,7 +54,7 @@ function MaMarker({ children, center, iconUrl }: MaMarkerProps) {
       <Marker
         setInstance={setMarkerInstance}
         options={{ icon }}
-        args={[center]}
+        args={[toLatLng(center)]}
       />
       {popup}
       {tooltip}
@@ -76,7 +77,7 @@ export function HomeIconMarker({
 
   useEffect(() => {
     if (center && mapInstance) {
-      mapInstance.setView(center, zoom);
+      mapInstance.setView(toLatLng(center), zoom);
     }
   }, [center, zoom, mapInstance]);
 

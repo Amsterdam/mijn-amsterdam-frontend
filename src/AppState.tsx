@@ -11,7 +11,7 @@ import useWmoApi, { WmoApiState } from './hooks/api/api.wmo';
 import { MyTipsApiState } from './hooks/api/my-tips-api.hook';
 import { MyNotificationsApiState } from './hooks/api/my-notifications-api.hook';
 import { MyChaptersApiState } from './helpers/myChapters';
-import useMyArea from './hooks/api/api.myarea';
+import useMyArea, { MyAreaApiState } from './hooks/api/api.myarea';
 import { getFullAddress, isMokum } from 'data-formatting/brp';
 import { getApiConfigValue } from 'helpers/App';
 import { GarbageApiState } from './hooks/api/api.garbage';
@@ -32,7 +32,7 @@ export interface AppState {
   MY_CHAPTERS: MyChaptersApiState;
   ERFPACHT: ErfpachtApiState;
   GARBAGE: GarbageApiState;
-  MIJN_BUURT: any;
+  MIJN_BUURT: MyAreaApiState;
   BELASTINGEN: BelastingApiState;
 }
 
@@ -86,7 +86,7 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
   const MIJN_TIPS = useMyTipsApi();
   const ERFPACHT = useErfpachtApi();
   const MIJN_BUURT = useMyArea();
-  const GARBAGE = useGarbageApi({ centroid: MIJN_BUURT.centroid });
+  const GARBAGE = useGarbageApi({ centroid: MIJN_BUURT.data?.centroid });
   const MY_CHAPTERS = getMyChapters({
     WMO,
     FOCUS,
@@ -116,7 +116,7 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
   const mokum = isMokum(BRP);
   const refetchMyArea = MIJN_BUURT.refetch;
   const refetchGarbage = GARBAGE.refetch;
-  const centroid = MIJN_BUURT.centroid;
+  const centroid = MIJN_BUURT.data?.centroid;
 
   // Fetch lat/lon for addresss
   useEffect(() => {

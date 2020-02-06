@@ -13,8 +13,10 @@ import { IS_PRODUCTION, IS_ACCEPTANCE } from '../../env';
 export default () => {
   const {
     MIJN_BUURT: {
-      url: { advanced: mapUrl },
-      centroid,
+      data: {
+        url: { advanced: mapUrl },
+        centroid,
+      },
     },
     BRP,
   } = useContext(AppContext);
