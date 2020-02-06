@@ -1,10 +1,4 @@
-import React, {
-  useRef,
-  useEffect,
-  useState,
-  PropsWithChildren,
-  Component,
-} from 'react';
+import React, { useRef, useEffect, useState, PropsWithChildren } from 'react';
 import { firstChildOfType } from './utils';
 import { MaPopup } from './MaPopup';
 import { MaTooltip } from './MaTooltip';
