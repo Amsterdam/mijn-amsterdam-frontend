@@ -11,7 +11,7 @@ import useWmoApi, { WmoApiState } from './hooks/api/api.wmo';
 import { MyTipsApiState } from './hooks/api/my-tips-api.hook';
 import { MyNotificationsApiState } from './hooks/api/my-notifications-api.hook';
 import { MyChaptersApiState } from './helpers/myChapters';
-import useMyMap from './hooks/api/api.mymap';
+import useMyArea from './hooks/api/api.myarea';
 import { getFullAddress, isMokum } from 'data-formatting/brp';
 import { getApiConfigValue } from 'helpers/App';
 import { GarbageApiState } from './hooks/api/api.garbage';
@@ -85,7 +85,7 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
   const BELASTINGEN = useBelastingApi();
   const MIJN_TIPS = useMyTipsApi();
   const ERFPACHT = useErfpachtApi();
-  const MIJN_BUURT = useMyMap();
+  const MIJN_BUURT = useMyArea();
   const GARBAGE = useGarbageApi({ centroid: MIJN_BUURT.centroid });
   const MY_CHAPTERS = getMyChapters({
     WMO,

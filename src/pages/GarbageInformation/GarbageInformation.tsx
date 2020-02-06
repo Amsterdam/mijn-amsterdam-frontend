@@ -12,7 +12,7 @@ import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible
 import { getFullAddress } from 'data-formatting/brp';
 import classnames from 'classnames';
 import { GarbagePoint } from 'hooks/api/api.garbage';
-import { MyAreaMap } from 'components/MyArea/MyArea';
+import { MyAreaMapIFrame } from 'components/MyArea/MyArea';
 import Panel from 'components/Panel/Panel';
 import { useSessionStorage } from 'hooks/storage.hook';
 import { GarbageMoment } from 'hooks/api/api.garbage';
@@ -87,7 +87,7 @@ export default () => {
   }
 
   const garbageContainersMapUrl = centroid
-    ? `https://kaart.amsterdam.nl/afvalcontainers#17/${centroid[1]}/${centroid[0]}/topo/9749,9750,9751,9752,9753,9754/9748/`
+    ? `https://kaart.amsterdam.nl/afvalcontainers#17/${centroid[0]}/${centroid[1]}/topo/9749,9750,9751,9752,9753,9754/9748/`
     : '';
 
   const garbagePointCollapisble = (
@@ -176,7 +176,7 @@ export default () => {
         onToggleCollapsed={toggleCollapsed.bind(null, 'garbageContainersOnMap')}
       >
         <div className={styles.GarbageContainerMap}>
-          <MyAreaMap url={garbageContainersMapUrl} />
+          <MyAreaMapIFrame url={garbageContainersMapUrl} />
         </div>
       </SectionCollapsible>
 

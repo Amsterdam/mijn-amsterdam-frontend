@@ -1,6 +1,6 @@
 import { AppContext } from 'AppState';
 import DirectLinks from 'components/DirectLinks/DirectLinks';
-import MyArea from 'components/MyArea/MyArea';
+import { MyAreaDashboard } from 'components/MyArea/MyArea';
 import MyCases from 'components/MyCases/MyCases';
 import MyChaptersPanel from 'components/MyChaptersPanel/MyChaptersPanel';
 import MyTips from 'components/MyTips/MyTips';
@@ -36,6 +36,7 @@ export default () => {
     MY_CHAPTERS: { items: myChapterItems, isLoading: isMyChaptersLoading },
     MIJN_BUURT: {
       url: { simple: mapUrl },
+      centroid,
     },
   } = useContext(AppContext);
 
@@ -81,8 +82,9 @@ export default () => {
         />
 
         {!isPhoneScreen && (
-          <MyArea
+          <MyAreaDashboard
             url={mapUrl}
+            center={centroid}
             data-tutorial-item="Hier ziet u informatie van de gemeente, bijvoorbeeld over afval, parkeren en bekendmakingen;left-top"
           />
         )}
