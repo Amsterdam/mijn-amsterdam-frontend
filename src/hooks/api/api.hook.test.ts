@@ -88,4 +88,25 @@ describe('Api hook', () => {
 
     expect(result.current[0].isError).toBe(true);
   });
+
+  it('should return initial data when no content is served from api', async () => {
+    axMock.onGet(DUMMY_URL).reply(204, '');
+
+    const options = {
+      url: DUMMY_URL,
+      postpone: true,
+    };
+    const initialData = { foo: 'bar' };
+    const { result, waitForNextUpdate } = renderHook(() =>
+      useDataApi<DummyResponse>(options, initialData)
+    );
+    // make fetch call
+    act(() => {
+      result.current[1](options);
+    });
+
+    await waitForNextUpdate();
+
+    expect(result.current[0].data).toBe(initialData);
+  });
 });
