@@ -72,7 +72,7 @@ export default function getMyChapters(
   const garbageIsPristine = GARBAGE.isPristine;
   const myAreaIsLoading = MIJN_BUURT.isLoading;
   const belastingIsLoading = BELASTINGEN.isLoading;
-  const hasCentroid = !!MIJN_BUURT.centroid;
+  const hasCentroid = !!MIJN_BUURT.data?.centroid;
 
   const items = myChaptersMenuItems.filter(item => {
     // Check to see if Chapter has been loaded or if it is directly available

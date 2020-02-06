@@ -35,8 +35,10 @@ export default () => {
     },
     MY_CHAPTERS: { items: myChapterItems, isLoading: isMyChaptersLoading },
     MIJN_BUURT: {
-      url: { simple: mapUrl },
-      centroid,
+      data: {
+        url: { simple: mapUrl },
+        centroid,
+      },
     },
   } = useContext(AppContext);
 

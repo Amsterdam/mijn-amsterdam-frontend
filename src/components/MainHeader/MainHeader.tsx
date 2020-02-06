@@ -56,7 +56,10 @@ export default function MainHeader({
       return errorMessageMap[stateKey]
         ? {
             name: stateKey,
-            error: state?.errorMessage || errorMessageMap[stateKey]?.error,
+            error:
+              ('errorMessage' in state ? state.errorMessage : null) ||
+              errorMessageMap[stateKey]?.error ||
+              'Onbekende fout',
           }
         : {
             name: stateKey,
