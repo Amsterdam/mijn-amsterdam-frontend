@@ -11,7 +11,7 @@ const DATAPUNT_API_BASE_URL = process.env.REACT_APP_DATAPUNT_API_URL;
 export type ApiName = StateKey | 'BAG' | 'AUTH' | 'AFVAL_OPHAAL_GEBIEDEN';
 
 export const ApiUrls: TypeIndex<ApiName, string> = {
-  BELASTINGEN: `${API_BASE_URL}/belasting/get`,
+  BELASTINGEN: `${API_BASE_URL}/belastingen/get`,
   MELDINGEN: `${API_BASE_URL}/mijn-meldingen`,
   MY_CASES: `${API_BASE_URL}/focus/aanvragen`,
   MIJN_TIPS: `${API_BASE_URL}/tips/gettips`,

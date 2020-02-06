@@ -5,6 +5,7 @@ import Dashboard from 'pages/Dashboard/Dashboard';
 import Inkomen from 'pages/Inkomen/Inkomen';
 import InkomenDetail from 'pages/InkomenDetail/InkomenDetail';
 import LandingPage from 'pages/Landing/Landing';
+import MyArea from './pages/MyArea/MyArea';
 import MyTips from 'pages/MyTips/MyTips';
 import MyNotifications from 'pages/MyNotifications/MyNotifications';
 import Proclaimer from 'pages/Proclaimer/Proclaimer';
@@ -32,10 +33,8 @@ import classnames from 'classnames';
 import * as Sentry from '@sentry/browser';
 import ApplicationError from 'components/ApplicationError/ApplicationError';
 import useScript from 'hooks/useScript';
-import { isProduction } from './helpers/App';
 import GarbageInformation from 'pages/GarbageInformation/GarbageInformation';
-import { isAnalyticsEnabled, isSentryEnabled } from './env';
-import MyArea from './pages/MyArea/MyArea';
+import { IS_ANALYTICS_ENABLED, IS_SENTRY_ENABLED, IS_PRODUCTION } from './env';
 
 function AppNotAuthenticated() {
   return (
@@ -145,11 +144,11 @@ function AppLanding() {
 }
 
 export default function App() {
-  useAnalytics(isAnalyticsEnabled);
-  useScript('/js/usabilla.js', false, true, isProduction());
+  useAnalytics(IS_ANALYTICS_ENABLED);
+  useScript('/js/usabilla.js', false, true, IS_PRODUCTION);
 
   const sendToSentry = (error: Error, componentStack: string) => {
-    isSentryEnabled && Sentry.captureException(error);
+    IS_SENTRY_ENABLED && Sentry.captureException(error);
   };
 
   return (

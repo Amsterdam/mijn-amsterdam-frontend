@@ -1,6 +1,7 @@
 import * as Sentry from '@sentry/browser';
 import { Action } from 'App.types';
 import axios from 'axios';
+import { IS_SENTRY_ENABLED } from 'env';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { ApiRequestOptions, ApiState, RefetchFunction } from './api.types';
 
@@ -77,7 +78,8 @@ export function useDataApi<T>(
   initialData: T
 ): [ApiState<T>, RefetchFunction] {
   const [requestOptions, setRequestOptions] = useState(options);
-  const apiDataReducer = createApiDataReducer(initialData, true);
+  const [initialDataNoContent] = useState(initialData);
+  const apiDataReducer = createApiDataReducer(initialDataNoContent, true);
 
   const refetch = useCallback(
     (refetchOptions: Partial<ApiRequestOptions>) => {
@@ -92,7 +94,7 @@ export function useDataApi<T>(
 
   const [state, dispatch] = useReducer(
     apiDataReducer,
-    getDefaultState<T>(initialData, requestOptions.postpone)
+    getDefaultState<T>(initialDataNoContent, requestOptions.postpone)
   );
 
   useEffect(() => {
@@ -112,7 +114,7 @@ export function useDataApi<T>(
         if (!didCancel) {
           dispatch({
             type: ActionTypes.FETCH_SUCCESS,
-            payload: result.data,
+            payload: result.data || initialDataNoContent,
           });
         }
       } catch (error) {
@@ -122,11 +124,12 @@ export function useDataApi<T>(
             type: ActionTypes.FETCH_FAILURE,
             payload: errorMessage,
           });
-          Sentry.captureMessage(
-            `API ERROR: ${errorMessage}, url: ${
-              requestOptions.url.split('?')[0] // Don't log query params for privacy reasons
-            }`
-          );
+          IS_SENTRY_ENABLED &&
+            Sentry.captureMessage(
+              `API ERROR: ${errorMessage}, url: ${
+                requestOptions.url.split('?')[0] // Don't log query params for privacy reasons
+              }`
+            );
         }
       }
     };
@@ -140,7 +143,7 @@ export function useDataApi<T>(
     };
     // data passed here is used to compare if the effect should re-run.
     // See: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
-  }, [requestOptions]);
+  }, [requestOptions, initialDataNoContent]);
 
   return useMemo(() => {
     return [state, refetch];
