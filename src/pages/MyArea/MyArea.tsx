@@ -7,8 +7,8 @@ import {
 import React, { useContext } from 'react';
 
 import styles from './MyArea.module.scss';
-import { isProduction, isAcceptance } from 'helpers/App';
 import { getFullAddress } from 'data-formatting/brp';
+import { IS_PRODUCTION, IS_ACCEPTANCE } from '../../env';
 
 export default () => {
   const {
@@ -22,7 +22,7 @@ export default () => {
   return (
     <div className={styles.Container}>
       <MyAreaHeader />
-      {isProduction() || isAcceptance() ? (
+      {IS_PRODUCTION || IS_ACCEPTANCE ? (
         <MyAreaMapIFrame url={mapUrl} />
       ) : (
         <MyAreaMap
