@@ -10,6 +10,7 @@ export interface MapDisplayOptions {
 export type Lat = number;
 export type Lon = number;
 export type Centroid = [Lon, Lat];
+export type LatLngObject = { lat: Lat; lng: Lon };
 
 export const DEFAULT_LAT = 52.3717228;
 export const DEFAULT_LON = 4.8927377;
