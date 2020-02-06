@@ -1,6 +1,7 @@
 import * as Sentry from '@sentry/browser';
 import { Action } from 'App.types';
 import axios from 'axios';
+import { IS_SENTRY_ENABLED } from 'env';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { ApiRequestOptions, ApiState, RefetchFunction } from './api.types';
 
@@ -123,11 +124,12 @@ export function useDataApi<T>(
             type: ActionTypes.FETCH_FAILURE,
             payload: errorMessage,
           });
-          Sentry.captureMessage(
-            `API ERROR: ${errorMessage}, url: ${
-              requestOptions.url.split('?')[0] // Don't log query params for privacy reasons
-            }`
-          );
+          IS_SENTRY_ENABLED &&
+            Sentry.captureMessage(
+              `API ERROR: ${errorMessage}, url: ${
+                requestOptions.url.split('?')[0] // Don't log query params for privacy reasons
+              }`
+            );
         }
       }
     };
