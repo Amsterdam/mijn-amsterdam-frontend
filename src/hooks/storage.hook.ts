@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/browser';
+import { IS_SENTRY_ENABLED } from 'env';
 import * as Cookies from 'js-cookie';
 import { useCallback, useEffect, useState } from 'react';
 import { Unshaped } from '../App.types';
@@ -52,7 +53,7 @@ function useWindowStorage(
     try {
       return adapter.getItem(key);
     } catch (error) {
-      Sentry.captureException(error);
+      IS_SENTRY_ENABLED && Sentry.captureException(error);
     }
     return null;
   }, [adapter, key]);
@@ -74,7 +75,7 @@ function useWindowStorage(
       try {
         saveValueToLocalStorage(key, newValue);
       } catch (error) {
-        Sentry.captureException(error);
+        IS_SENTRY_ENABLED && Sentry.captureException(error);
       }
     },
     [key, saveValueToLocalStorage]
