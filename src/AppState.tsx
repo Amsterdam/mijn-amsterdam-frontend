@@ -6,7 +6,11 @@ import React, { createContext, useEffect } from 'react';
 
 import { ComponentChildren } from './App.types';
 import useErfpachtApi, { ErfpachtApiState } from './hooks/api/api.erfpacht';
-import useFocusApi, { FocusApiState } from './hooks/api/api.focus';
+import useFocusApi, {
+  FocusApiState,
+  useFocusInkomenSpecificatiesApi,
+  FocusInkomenSpecificatiesApiState,
+} from './hooks/api/api.focus';
 import useWmoApi, { WmoApiState } from './hooks/api/api.wmo';
 import { MyTipsApiState } from './hooks/api/my-tips-api.hook';
 import { MyNotificationsApiState } from './hooks/api/my-notifications-api.hook';
@@ -29,6 +33,7 @@ export interface AppState {
   MIJN_TIPS: MyTipsApiState;
   WMO: WmoApiState;
   FOCUS: FocusApiState;
+  FOCUS_INKOMEN_SPECIFICATIES: FocusInkomenSpecificatiesApiState;
   MY_CHAPTERS: MyChaptersApiState;
   ERFPACHT: ErfpachtApiState;
   GARBAGE: GarbageApiState;
@@ -69,6 +74,7 @@ interface AppStateProps {
 export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
   const WMO = useWmoApi();
   const FOCUS = useFocusApi();
+  const FOCUS_INKOMEN_SPECIFICATIES = useFocusInkomenSpecificatiesApi();
 
   const { data: focusData, ...rest } = FOCUS;
   // At the time of writing we only show recentCases from the Focus API.
@@ -157,6 +163,7 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
     MIJN_TIPS,
     WMO,
     FOCUS,
+    FOCUS_INKOMEN_SPECIFICATIES,
     MY_CHAPTERS,
     ERFPACHT,
     MIJN_BUURT,

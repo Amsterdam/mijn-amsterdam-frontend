@@ -1,5 +1,6 @@
 import { StateKey } from 'AppState';
 import { ErrorMessageMap } from 'components/ErrorMessages/ErrorMessages';
+import { IS_ACCEPTANCE, IS_PRODUCTION } from '../env';
 import { FeatureToggle } from './App.constants';
 
 export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/login';
@@ -18,6 +19,7 @@ export const ApiUrls: TypeIndex<ApiName, string> = {
   BRP: `${API_BASE_URL}/brp/brp`,
   WMO: `${API_BASE_URL}/wmoned/voorzieningen`,
   FOCUS: `${API_BASE_URL}/focus/aanvragen`,
+  FOCUS_INKOMEN_SPECIFICATIES: `${API_BASE_URL}/focus/inkomen-specificaties`,
   AUTH: `${API_BASE_URL}/auth/check`,
   ERFPACHT: `${API_BASE_URL}/erfpacht/check-erfpacht`,
   BAG: `${DATAPUNT_API_BASE_URL}/atlas/search/adres/`,
@@ -31,6 +33,9 @@ export interface ApiConfig {
 export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
   FOCUS: {
     postponeFetch: false,
+  },
+  FOCUS_INKOMEN_SPECIFICATIES: {
+    postponeFetch: IS_PRODUCTION || IS_ACCEPTANCE,
   },
   WMO: {
     postponeFetch: false,
