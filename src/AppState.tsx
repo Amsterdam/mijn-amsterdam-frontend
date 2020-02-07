@@ -86,7 +86,7 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
   const MIJN_TIPS = useMyTipsApi();
   const ERFPACHT = useErfpachtApi();
   const MIJN_BUURT = useMyArea();
-  const GARBAGE = useGarbageApi({ centroid: MIJN_BUURT.data?.centroid });
+  const GARBAGE = useGarbageApi();
   const MY_CHAPTERS = getMyChapters({
     WMO,
     FOCUS,
@@ -127,7 +127,7 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
 
   // Fetch garbage information for address at lat,lon
   useEffect(() => {
-    if (centroid !== null && mokum) {
+    if (centroid && mokum) {
       refetchGarbage({ centroid });
     }
   }, [mokum, centroid, refetchGarbage]);

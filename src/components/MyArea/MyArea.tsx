@@ -20,6 +20,7 @@ import { MaZoomControl } from './MaZoomControl';
 import { MaMap } from './MaMap';
 import { HomeIconMarker } from './MaMarker';
 import { LOCATION_ZOOM } from 'config/Map.constants';
+import classnames from 'classnames';
 
 export function MyAreaHeader() {
   return (
@@ -54,17 +55,25 @@ function MyAreaLoader() {
   );
 }
 
-function MyAreaMapContainer({ children }: PropsWithChildren<{}>) {
-  return <div className={styles.MyAreaMapContainer}>{children}</div>;
+function MyAreaMapContainer({
+  children,
+  className,
+}: PropsWithChildren<{ className?: string }>) {
+  return (
+    <div className={classnames(styles.MyAreaMapContainer, className)}>
+      {children}
+    </div>
+  );
 }
 
 interface MyAreaMapIframeProps {
   url?: string;
+  className?: string;
 }
 
-export function MyAreaMapIFrame({ url }: MyAreaMapIframeProps) {
+export function MyAreaMapIFrame({ url, className }: MyAreaMapIframeProps) {
   return (
-    <MyAreaMapContainer>
+    <MyAreaMapContainer className={className}>
       {!!url ? (
         <iframe
           id="mapIframe"
@@ -85,6 +94,7 @@ interface MyAreaMapComponentProps {
   center?: Centroid;
   homeAddress?: string;
   options?: MapDisplayOptions;
+  className?: string;
 }
 
 export function MyAreaMap({
@@ -93,9 +103,10 @@ export function MyAreaMap({
   id = 'map',
   homeAddress,
   options = DEFAULT_MAP_DISPLAY_CONFIG,
+  className,
 }: MyAreaMapComponentProps) {
   return (
-    <MyAreaMapContainer>
+    <MyAreaMapContainer className={className}>
       {!!center ? (
         <MaMap title={title} id={id} zoom={options.zoom} center={center}>
           <HomeIconMarker

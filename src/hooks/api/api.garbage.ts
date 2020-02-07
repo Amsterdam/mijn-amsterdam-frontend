@@ -2,7 +2,7 @@ import { ExternalUrls } from 'config/App.constants';
 import { Centroid } from 'config/Map.constants';
 import { capitalizeFirstLetter, getApiUrl } from 'helpers/App';
 import { getDistance } from 'helpers/geo';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useDataApi } from './api.hook';
 import { ApiState } from './api.types';
 
@@ -139,7 +139,7 @@ export interface GarbageMoment {
 interface GarbageInfoApiResponseFormatted {
   ophalen: GarbageMoment[];
   wegbrengen: GarbagePoint[];
-  centroid: Centroid | null;
+  centroid: Centroid | undefined;
 }
 
 export type GarbageApiState = ApiState<GarbageInfoApiResponseFormatted> & {
@@ -165,11 +165,9 @@ const titles: { [type: string]: string } = {
   grofvuil: 'Grofvuil',
 };
 
-export default function useGarbageApi({
-  centroid,
-}: {
-  centroid: Centroid | null;
-}): GarbageApiState {
+export default function useGarbageApi(centroid?: Centroid): GarbageApiState {
+  const [theCentroid, setTheCentroid] = useState(centroid);
+
   const [api, refetch] = useDataApi<GarbageInfoApiResponse>(
     {
       postpone: true,
@@ -288,9 +286,13 @@ export default function useGarbageApi({
   );
 
   const refetchCallback = useCallback(
-    ({ centroid: [lon, lat] }: GarbageApiHookProps) => {
+    ({ centroid }: GarbageApiHookProps) => {
+      setTheCentroid(centroid);
+      const [lon, lat] = centroid;
+      const url = `${getApiUrl('AFVAL_OPHAAL_GEBIEDEN')}?lat=${lat}&lon=${lon}`;
+
       refetch({
-        url: `${getApiUrl('AFVAL_OPHAAL_GEBIEDEN')}?lat=${lat}&lon=${lon}`,
+        url,
       });
     },
     [refetch]
@@ -299,7 +301,7 @@ export default function useGarbageApi({
   return {
     ...api,
     data: {
-      centroid,
+      centroid: theCentroid,
       ophalen,
       wegbrengen: wegbrengen.length
         ? wegbrengen.sort((itemA: any, itemB: any) => {

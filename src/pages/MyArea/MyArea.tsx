@@ -28,6 +28,7 @@ export default () => {
         <MyAreaMapIFrame url={mapUrl} />
       ) : (
         <MyAreaMap
+          className={styles.Map}
           center={centroid}
           homeAddress={BRP.data?.adres && getFullAddress(BRP.data.adres)}
         />
