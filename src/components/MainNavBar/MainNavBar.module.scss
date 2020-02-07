@@ -71,8 +71,11 @@
   position: absolute;
   margin-top: -8.1rem;
   right: calc((100vw - #{$main-boxed-width}) / 2);
-  display: flex;
-  align-items: center;
+  display: inline-block;
+
+  @include select(LoadingContent_LoadingContent) {
+    display: inline-block;
+  }
 
   > a {
     margin-left: 3.3rem;
