@@ -87,10 +87,10 @@ export default () => {
   }
 
   const garbageContainersMapUrl = centroid
-    ? `https://kaart.amsterdam.nl/afvalcontainers#17/${centroid[0]}/${centroid[1]}/topo/9749,9750,9751,9752,9753,9754/9748/`
+    ? `https://kaart.amsterdam.nl/afvalcontainers#19/${centroid[1]}/${centroid[0]}/topo/9749,9750,9751,9752,9753,9754/9748/`
     : '';
 
-  const garbagePointCollapisble = (
+  const garbagePointCollapsible = (
     id: string,
     item: GarbageMoment,
     isCollapsed: boolean
@@ -157,10 +157,10 @@ export default () => {
       )}
 
       {!!grofvuil &&
-        garbagePointCollapisble('grofvuil', grofvuil, isCollapsed('grofvuil'))}
+        garbagePointCollapsible('grofvuil', grofvuil, isCollapsed('grofvuil'))}
 
       {!!restafval &&
-        garbagePointCollapisble(
+        garbagePointCollapsible(
           'restafval',
           restafval,
           isCollapsed('restafval')
@@ -175,9 +175,10 @@ export default () => {
         isCollapsed={isCollapsed('garbageContainersOnMap')}
         onToggleCollapsed={toggleCollapsed.bind(null, 'garbageContainersOnMap')}
       >
-        <div className={styles.GarbageContainerMap}>
-          <MyAreaMapIFrame url={garbageContainersMapUrl} />
-        </div>
+        <MyAreaMapIFrame
+          className={styles.GarbageContainerMap}
+          url={garbageContainersMapUrl}
+        />
       </SectionCollapsible>
 
       <SectionCollapsible
