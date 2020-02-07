@@ -17,7 +17,7 @@ export const DEFAULT_LON = 4.8927377;
 export const DEFAULT_ZOOM = 10;
 export const LOCATION_ZOOM = 14;
 
-export const DEFAULT_CENTROID: Centroid = [DEFAULT_LAT, DEFAULT_LON];
+export const DEFAULT_CENTROID: Centroid = [DEFAULT_LON, DEFAULT_LAT];
 
 export const DEFAULT_MAP_OPTIONS = {
   center: DEFAULT_CENTROID,

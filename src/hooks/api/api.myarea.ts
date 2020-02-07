@@ -10,7 +10,6 @@ import {
 import { getApiUrl } from 'helpers/App';
 import { usePhoneScreen } from 'hooks/media.hook';
 import { useCallback, useEffect, useState } from 'react';
-import { DEFAULT_CENTROID } from '../../config/Map.constants';
 import { useDataApi } from './api.hook';
 import { ApiState } from './api.types';
 
@@ -37,7 +36,7 @@ export type MyAreaApiState = ApiState<{
     advanced: string;
     simple: string;
   };
-  centroid: Centroid;
+  centroid: Centroid | undefined;
 }> & {
   refetch: (address: string) => void;
 };
@@ -46,7 +45,7 @@ export default function useMyArea(address?: string): MyAreaApiState {
   const [api, refetch] = useBagSearch(address);
   const { data, isDirty } = api;
   const [urls, setUrls] = useState({ simple: '', advanced: '' });
-  const [centroid, setCentroid] = useState<Centroid>(DEFAULT_CENTROID);
+  const [centroid, setCentroid] = useState<Centroid>();
   const [isDefaultMapLocation, setIsDefaultMapLocation] = useState(false);
   const showLegenda = !usePhoneScreen();
 

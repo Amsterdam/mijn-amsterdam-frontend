@@ -5,6 +5,7 @@ import { ReactComponent as HomeIconSimple } from 'assets/icons/home-simple.svg';
 
 import styles from './MyArea.module.scss';
 import { useMapInstance } from '@datapunt/react-maps';
+import { toLatLng } from 'helpers/geo';
 
 interface ZoomControlComponentProps {
   center: Centroid;
@@ -37,9 +38,11 @@ export function MaZoomControl({
   return (
     <div className={styles.ZoomControl}>
       <ZoomControlButton
-        onClick={() => mapInstance && mapInstance.setView(center, homeZoom)}
+        onClick={() => {
+          mapInstance && mapInstance.setView(toLatLng(center), homeZoom);
+        }}
       >
-        <HomeIconSimple fill="#000" />
+        <HomeIconSimple width={30} height={30} fill="#000" />
       </ZoomControlButton>
       <ZoomButton onClick={() => mapInstance && mapInstance.zoomIn()}>
         &#43;
