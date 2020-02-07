@@ -1,0 +1,6 @@
+@import 'styles/_global.scss';
+@import '~leaflet/dist/leaflet.css';
+
+.leaflet-tile-pane {
+  z-index: z-index(map-tile-layer);
+}

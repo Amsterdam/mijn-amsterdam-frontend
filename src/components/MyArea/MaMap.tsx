@@ -5,9 +5,10 @@ import {
   DEFAULT_TILE_LAYER_CONFIG,
 } from 'config/Map.constants';
 import { Map, TileLayer } from '@datapunt/react-maps';
-import 'leaflet/dist/leaflet.css';
 import { DEFAULT_ZOOM } from 'config/Map.constants';
 import { toLatLng } from 'helpers/geo';
+
+import 'styles/map.scss';
 
 type MapDisplayComponentProps = PropsWithChildren<{
   center: Centroid;

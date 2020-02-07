@@ -139,7 +139,7 @@ export interface GarbageMoment {
 interface GarbageInfoApiResponseFormatted {
   ophalen: GarbageMoment[];
   wegbrengen: GarbagePoint[];
-  centroid: Centroid | null;
+  centroid: Centroid | undefined;
 }
 
 export type GarbageApiState = ApiState<GarbageInfoApiResponseFormatted> & {
@@ -165,11 +165,7 @@ const titles: { [type: string]: string } = {
   grofvuil: 'Grofvuil',
 };
 
-export default function useGarbageApi({
-  centroid,
-}: {
-  centroid: Centroid | null;
-}): GarbageApiState {
+export default function useGarbageApi(centroid?: Centroid): GarbageApiState {
   const [api, refetch] = useDataApi<GarbageInfoApiResponse>(
     {
       postpone: true,
