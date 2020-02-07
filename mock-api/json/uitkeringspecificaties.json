@@ -1,0 +1,287 @@
+[
+    {
+        "title": "Jaaropgave",
+        "type": "BIBI",
+        "datePublished": "2016-03-06T23:00:00.000Z",
+        "url": "http://example.org/document-0.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "BBS",
+        "datePublished": "2016-04-06T22:00:00.000Z",
+        "url": "http://example.org/document-1.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "STIMREG",
+        "datePublished": "2016-05-06T22:00:00.000Z",
+        "url": "http://example.org/document-2.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "datePublished": "2016-06-06T22:00:00.000Z",
+        "url": "http://example.org/document-3.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "PART",
+        "datePublished": "2016-07-06T22:00:00.000Z",
+        "url": "http://example.org/document-4.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "WKO",
+        "datePublished": "2016-08-06T22:00:00.000Z",
+        "url": "http://example.org/document-5.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "BBS",
+        "datePublished": "2016-09-06T22:00:00.000Z",
+        "url": "http://example.org/document-6.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "BBS",
+        "datePublished": "2016-10-06T22:00:00.000Z",
+        "url": "http://example.org/document-7.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "BBS",
+        "datePublished": "2016-11-06T23:00:00.000Z",
+        "url": "http://example.org/document-8.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "WKO",
+        "datePublished": "2016-12-06T23:00:00.000Z",
+        "url": "http://example.org/document-9.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "WKO",
+        "datePublished": "2017-01-06T23:00:00.000Z",
+        "url": "http://example.org/document-10.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "IOAZ",
+        "datePublished": "2017-02-06T23:00:00.000Z",
+        "url": "http://example.org/document-11.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "IOAZ",
+        "datePublished": "2017-03-06T23:00:00.000Z",
+        "url": "http://example.org/document-12.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "IOAW",
+        "datePublished": "2017-04-06T22:00:00.000Z",
+        "url": "http://example.org/document-13.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "WKO",
+        "datePublished": "2017-05-06T22:00:00.000Z",
+        "url": "http://example.org/document-14.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "WKO",
+        "datePublished": "2017-06-06T22:00:00.000Z",
+        "url": "http://example.org/document-15.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "datePublished": "2017-07-06T22:00:00.000Z",
+        "url": "http://example.org/document-16.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "BIBI",
+        "datePublished": "2017-08-06T22:00:00.000Z",
+        "url": "http://example.org/document-17.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "WKO",
+        "datePublished": "2017-09-06T22:00:00.000Z",
+        "url": "http://example.org/document-18.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "WKO",
+        "datePublished": "2017-10-06T22:00:00.000Z",
+        "url": "http://example.org/document-19.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "BBS",
+        "datePublished": "2017-11-06T23:00:00.000Z",
+        "url": "http://example.org/document-20.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "PART",
+        "datePublished": "2017-12-06T23:00:00.000Z",
+        "url": "http://example.org/document-21.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "PART",
+        "datePublished": "2018-01-06T23:00:00.000Z",
+        "url": "http://example.org/document-22.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "STIMREG",
+        "datePublished": "2018-02-06T23:00:00.000Z",
+        "url": "http://example.org/document-23.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "IOAZ",
+        "datePublished": "2018-03-06T23:00:00.000Z",
+        "url": "http://example.org/document-24.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "PART",
+        "datePublished": "2018-04-06T22:00:00.000Z",
+        "url": "http://example.org/document-25.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "WKO",
+        "datePublished": "2018-05-06T22:00:00.000Z",
+        "url": "http://example.org/document-26.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "BIBI",
+        "datePublished": "2018-06-06T22:00:00.000Z",
+        "url": "http://example.org/document-27.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "BBS",
+        "datePublished": "2018-07-06T22:00:00.000Z",
+        "url": "http://example.org/document-28.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "PART",
+        "datePublished": "2018-08-06T22:00:00.000Z",
+        "url": "http://example.org/document-29.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "IOAZ",
+        "datePublished": "2018-09-06T22:00:00.000Z",
+        "url": "http://example.org/document-30.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "IOAZ",
+        "datePublished": "2018-10-06T22:00:00.000Z",
+        "url": "http://example.org/document-31.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "STIMREG",
+        "datePublished": "2018-11-06T23:00:00.000Z",
+        "url": "http://example.org/document-32.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "BBS",
+        "datePublished": "2018-12-06T23:00:00.000Z",
+        "url": "http://example.org/document-33.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "datePublished": "2019-01-06T23:00:00.000Z",
+        "url": "http://example.org/document-34.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "WKO",
+        "datePublished": "2019-02-06T23:00:00.000Z",
+        "url": "http://example.org/document-35.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "STIMREG",
+        "datePublished": "2019-03-06T23:00:00.000Z",
+        "url": "http://example.org/document-36.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "PART",
+        "datePublished": "2019-04-06T22:00:00.000Z",
+        "url": "http://example.org/document-37.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "WKO",
+        "datePublished": "2019-05-06T22:00:00.000Z",
+        "url": "http://example.org/document-38.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "STIMREG",
+        "datePublished": "2019-06-06T22:00:00.000Z",
+        "url": "http://example.org/document-39.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "STIMREG",
+        "datePublished": "2019-07-06T22:00:00.000Z",
+        "url": "http://example.org/document-40.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "WKO",
+        "datePublished": "2019-08-06T22:00:00.000Z",
+        "url": "http://example.org/document-41.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "BBS",
+        "datePublished": "2019-09-06T22:00:00.000Z",
+        "url": "http://example.org/document-42.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "PART",
+        "datePublished": "2019-10-06T22:00:00.000Z",
+        "url": "http://example.org/document-43.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "IOAZ",
+        "datePublished": "2019-11-06T23:00:00.000Z",
+        "url": "http://example.org/document-44.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "PART",
+        "datePublished": "2019-12-06T23:00:00.000Z",
+        "url": "http://example.org/document-45.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "STIMREG",
+        "datePublished": "2020-01-06T23:00:00.000Z",
+        "url": "http://example.org/document-46.pdf"
+    },
+    {
+        "title": "Uitkeringspecificatie",
+        "type": "BBS",
+        "datePublished": "2020-02-06T23:00:00.000Z",
+        "url": "http://example.org/document-47.pdf"
+    }
+]
