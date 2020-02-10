@@ -7,7 +7,7 @@ import { FeatureToggle } from 'config/App.constants';
 import { Chapter, Chapters } from 'config/Chapter.constants';
 import { Document as GenericDocument } from '../components/DocumentList/DocumentList';
 import Linkd from 'components/Button/Button';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { StatusLineItem, StepType } from 'components/StatusLine/StatusLine';
 import { generatePath } from 'react-router';
 /**
@@ -1001,4 +1001,58 @@ export function altDocumentContent(
   ) : (
     ''
   );
+}
+
+export type FocusInkomenSpecificatieType =
+  | 'IOAZ'
+  | 'BBS'
+  | 'WKO'
+  | 'IOAW'
+  | 'STIMREG'
+  | 'BIBI'
+  | 'PART'
+  | 'BBZ';
+
+export const focusInkomenSpecificatieTypes: {
+  [type in FocusInkomenSpecificatieType]: string;
+} = {
+  IOAZ: 'IOAZ',
+  BBS: 'Bijzonder bijstand en stimuleringsregelingen',
+  WKO: 'Wet kinderopvang',
+  IOAW: 'IOAW',
+  STIMREG: 'Stimuleringsregelingen',
+  BIBI: 'Bijzonder bijstand',
+  PART: 'Participatiewet',
+  BBZ: 'BBZ',
+};
+
+export interface FocusInkomenSpecificatieFromSource {
+  title: string | ReactNode;
+  datePublished: string;
+  id: string;
+  url: string;
+  type: FocusInkomenSpecificatieType;
+}
+
+export interface FocusInkomenSpecificatie
+  extends FocusInkomenSpecificatieFromSource {
+  link: {
+    to: string;
+    title: string;
+  };
+}
+
+export function formatIncomeSpecifications(
+  items: FocusInkomenSpecificatieFromSource[]
+): FocusInkomenSpecificatie[] {
+  return items.map(item => {
+    return {
+      ...item,
+      title: <div>hey!</div>,
+      link: {
+        to: item.url,
+        title: 'Download specificatie',
+      },
+    };
+  });
 }

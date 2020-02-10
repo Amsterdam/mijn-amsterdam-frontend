@@ -9,6 +9,7 @@ import { ExternalUrls } from 'config/App.constants';
 import Alert from 'components/Alert/Alert';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import Linkd from 'components/Button/Button';
+import { AppRoutes } from 'config/Routing.constants';
 
 export default () => {
   const {
@@ -17,12 +18,19 @@ export default () => {
       isError,
       isLoading,
     },
+    FOCUS_INKOMEN_SPECIFICATIES: {
+      data: incomeSpecificationItems,
+      isError: isError2,
+      isLoading: isLoading2,
+    },
   } = useContext(AppContext);
 
   const items = Object.values(products).flatMap(product => product.items);
   const itemsRequested = items.filter(item => !item.hasDecision);
   const itemsDecided = items.filter(item => item.hasDecision);
   const hasActiveRequests = !!itemsRequested.length;
+  const hasActiveDescisions = !!itemsDecided.length;
+  const itemsSpecifications = incomeSpecificationItems.slice(0, 3);
 
   return (
     <OverviewPage className={styles.Inkomen}>
@@ -48,7 +56,7 @@ export default () => {
         )}
       </PageContent>
       <DataLinkTable
-        id="datalinktable-income-actual"
+        id="datalinktable-income-request-process"
         items={itemsRequested}
         title="Mijn lopende aanvragen"
         startCollapsed={false}
@@ -60,7 +68,7 @@ export default () => {
         noItemsMessage="U hebt op dit moment geen lopende aanvragen."
       />
       <DataLinkTable
-        id="datalinktable-income-granted"
+        id="datalinktable-income-request-process-decisions"
         items={itemsDecided}
         startCollapsed={hasActiveRequests}
         isLoading={isLoading}
@@ -71,6 +79,20 @@ export default () => {
         }}
         noItemsMessage="U hebt op dit moment geen besluiten."
       />
+      <DataLinkTable
+        id="datalinktable-income-specifications"
+        items={itemsSpecifications}
+        startCollapsed={hasActiveRequests || hasActiveDescisions}
+        isLoading={isLoading}
+        title="Uitkeringsspecificaties"
+        track={{
+          category: 'Werk en inkomen overzicht / Uitkeringsspecificaties',
+          name: 'Datatabel',
+        }}
+        noItemsMessage="Er zijn op dit moment geen uitkeringgspecificaties."
+      >
+        <Linkd href={AppRoutes['INKOMEN/SPECIFICATIES']}>Toon alles</Linkd>
+      </DataLinkTable>
     </OverviewPage>
   );
 };
