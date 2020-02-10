@@ -35,6 +35,7 @@ import ApplicationError from 'components/ApplicationError/ApplicationError';
 import useScript from 'hooks/useScript';
 import GarbageInformation from 'pages/GarbageInformation/GarbageInformation';
 import { IS_ANALYTICS_ENABLED, IS_SENTRY_ENABLED, IS_PRODUCTION } from './env';
+import InkomenSpecificaties from 'pages/InkomenSpecificaties/InkomenSpecificaties';
 
 function AppNotAuthenticated() {
   return (
@@ -93,6 +94,10 @@ function AppAuthenticated() {
           <Route
             path={AppRoutes['INKOMEN/BIJSTANDSUITKERING']}
             component={InkomenDetail}
+          />
+          <Route
+            path={AppRoutes['INKOMEN/SPECIFICATIES']}
+            component={InkomenSpecificaties}
           />
           <Route
             path={AppRoutes['INKOMEN/BIJZONDERE_BIJSTAND']}
