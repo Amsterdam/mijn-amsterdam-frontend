@@ -1,19 +1,22 @@
 import { LinkProps } from 'App.types';
 import Linkd from 'components/Button/Button';
 import { entries } from 'helpers/App';
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import styles from './DataLinkTable.module.scss';
 import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
 import { useSessionStorage } from 'hooks/storage.hook';
 
+export interface DataLinkTableItem {
+  id: string;
+  title: string | JSX.Element;
+  link: LinkProps;
+  [key: string]: string | number | ReactNode;
+}
+
 export interface DataLinkTableProps {
   id: string;
-  items: Array<{
-    title: string | JSX.Element;
-    link: LinkProps;
-    [key: string]: any;
-  }>;
+  items: DataLinkTableItem[];
   title?: string;
   noItemsMessage?: string;
   startCollapsed?: boolean;
@@ -35,7 +38,8 @@ export default function DataLinkTable({
   title,
   isLoading,
   track,
-}: DataLinkTableProps) {
+  children,
+}: WithChildren<DataLinkTableProps, ''>) {
   const [isCollapsed, setCollapsed] = useSessionStorage(id, startCollapsed);
 
   const displayPropEntries = displayProps
@@ -67,7 +71,7 @@ export default function DataLinkTable({
           </tr>
         </thead>
         <tbody>
-          {items.map(item => (
+          {items.map((item: DataLinkTableItem) => (
             <tr key={item.id} className={styles.TableRow}>
               <td className={styles.DisplayPropTitle}>
                 <Linkd tabIndex={isCollapsed ? -1 : 0} href={item.link.to}>
@@ -84,6 +88,7 @@ export default function DataLinkTable({
           ))}
         </tbody>
       </table>
+      {children}
     </SectionCollapsible>
   );
 }
