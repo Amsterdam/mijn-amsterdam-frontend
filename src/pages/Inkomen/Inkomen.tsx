@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { OverviewPage, PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
 import { AppContext } from 'AppState';
-import DataLinkTable from 'components/DataLinkTable/DataLinkTable';
 import { ChapterTitles } from 'config/Chapter.constants';
 import styles from './Inkomen.module.scss';
 import { ExternalUrls } from 'config/App.constants';
@@ -72,8 +71,8 @@ export default () => {
           </Alert>
         )}
       </PageContent>
-      <DataLinkTable
-        id="datalinktable-income-request-process"
+      <DataTable
+        id="DataTable-income-request-process"
         items={itemsRequested}
         title="Mijn lopende aanvragen"
         startCollapsed={false}
@@ -84,8 +83,8 @@ export default () => {
         }}
         noItemsMessage="U hebt op dit moment geen lopende aanvragen."
       />
-      <DataLinkTable
-        id="datalinktable-income-request-process-decisions"
+      <DataTable
+        id="DataTable-income-request-process-decisions"
         items={itemsDecided}
         startCollapsed={hasActiveRequests}
         isLoading={isLoading}
@@ -97,7 +96,7 @@ export default () => {
         noItemsMessage="U hebt op dit moment geen besluiten."
       />
       <DataTable
-        id="datalinktable-income-specifications-monthly"
+        id="DataTable-income-specifications-monthly"
         items={itemsSpecificationsMonthly}
         startCollapsed={hasActiveRequests || hasActiveDescisions}
         isLoading={isLoading2}
@@ -113,13 +112,14 @@ export default () => {
           name: 'Datatabel',
         }}
         noItemsMessage="Er zijn op dit moment geen uitkeringgspecificaties."
+        hasTitleLink={false}
       >
         <p className={styles.ShowAllButtonContainer}>
           <Linkd href={incomSpecificationsRouteMonthly}>Toon alles</Linkd>
         </p>
       </DataTable>
       <DataTable
-        id="datalinktable-income-specifications-yearly"
+        id="DataTable-income-specifications-yearly"
         items={itemsSpecificationsYearly}
         startCollapsed={hasActiveRequests || hasActiveDescisions}
         isLoading={isLoading2}
@@ -135,6 +135,7 @@ export default () => {
           name: 'Datatabel',
         }}
         noItemsMessage="Er zijn op dit moment geen Jaaropgaven."
+        hasTitleLink={false}
       >
         <p className={styles.ShowAllButtonContainer}>
           <Linkd href={incomSpecificationsRouteYearly}>Toon alles</Linkd>

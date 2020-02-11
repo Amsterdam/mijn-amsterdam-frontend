@@ -1,5 +1,9 @@
 @import 'styles/_global.scss';
 
 .InkomenSpecificaties {
-  
+
+}
+
+.TableSection {
+  @include centered-block;
 }

@@ -6,10 +6,12 @@ import { OverviewPage } from '../../components/Page/Page';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import { AppRoutes } from 'config/Routing.constants';
 import { ChapterTitles } from 'config/Chapter.constants';
-import DataLinkTable from 'components/DataLinkTable/DataLinkTable';
 import { AppContext } from 'AppState';
 import Alert from 'components/Alert/Alert';
 import useRouter from 'use-react-router';
+import DataTable from 'components/DataTable/DataTable';
+import Table from 'components/Table/Table';
+import Section from 'components/Section/Section';
 
 export default () => {
   const {
@@ -42,29 +44,27 @@ export default () => {
           </Alert>
         )}
       </PageContent>
-      <DataLinkTable
-        id="datalinktable-income-specifications"
-        items={itemsFiltered}
-        startCollapsed={false}
-        isLoading={isLoading}
+      <Section
+        className={styles.TableSection}
         title={
           isAnnualStatementOverviewPage
             ? 'Jaaropgaven'
             : 'Uitkeringsspecificaties'
         }
-        displayProps={{
-          title: 'Omschrijving',
-          type: 'Type',
-          displayDate: 'Datum',
-          documentUrl: 'Document',
-        }}
-        track={{
-          category: `Werk en inkomen Detail / Uitkeringsspecificaties ${isAnnualStatementOverviewPage &&
-            'jaaropgaven'}`,
-          name: 'Datatabel',
-        }}
+        isLoading={isLoading}
+        hasItems={!!itemsFiltered.length}
         noItemsMessage="Er zijn op dit moment nog geen documenten beschikbaar."
-      />
+      >
+        <Table
+          items={itemsFiltered}
+          displayProps={{
+            title: 'Omschrijving',
+            type: 'Type',
+            displayDate: 'Datum',
+            documentUrl: 'Document',
+          }}
+        />
+      </Section>
     </OverviewPage>
   );
 };
