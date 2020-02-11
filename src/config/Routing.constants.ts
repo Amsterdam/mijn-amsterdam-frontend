@@ -13,7 +13,7 @@ export const AppRoutes = {
   'INKOMEN/STADSPAS': '/werk-en-inkomen/stadspas/:id',
   'INKOMEN/BIJSTANDSUITKERING': '/werk-en-inkomen/bijstandsuitkering/:id',
   'INKOMEN/BIJZONDERE_BIJSTAND': '/werk-en-inkomen/bijzondere-bijstand/:id',
-  'INKOMEN/SPECIFICATIES': '/werk-en-inkomen/specificaties/:id',
+  'INKOMEN/SPECIFICATIES': '/werk-en-inkomen/uitkeringsspecificaties/:type?',
   MIJN_GEGEVENS: '/persoonlijke-gegevens',
   MIJN_BUURT: '/buurt',
   ABOUT: '/over-mijn-amsterdam',

@@ -1034,6 +1034,7 @@ export interface FocusInkomenSpecificatieFromSource {
   id: string;
   url: string;
   type: FocusInkomenSpecificatieType;
+  isAnnualStatement: boolean;
 }
 
 export interface FocusInkomenSpecificatie

@@ -11,6 +11,17 @@ import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import Linkd from 'components/Button/Button';
 import { AppRoutes } from 'config/Routing.constants';
 import DataTable from 'components/DataTable/DataTable';
+import { generatePath } from 'react-router-dom';
+
+const incomSpecificationsRouteMonthly = generatePath(
+  AppRoutes['INKOMEN/SPECIFICATIES']
+);
+const incomSpecificationsRouteYearly = generatePath(
+  AppRoutes['INKOMEN/SPECIFICATIES'],
+  {
+    type: 'jaaropgaven',
+  }
+);
 
 export default () => {
   const {
@@ -31,7 +42,12 @@ export default () => {
   const itemsDecided = items.filter(item => item.hasDecision);
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
-  const itemsSpecifications = incomeSpecificationItems.slice(0, 3);
+  const itemsSpecificationsMonthly = incomeSpecificationItems
+    .filter(item => !item.isAnnualStatement)
+    .slice(0, 3);
+  const itemsSpecificationsYearly = incomeSpecificationItems
+    .filter(item => item.isAnnualStatement)
+    .slice(0, 3);
 
   return (
     <OverviewPage className={styles.Inkomen}>
@@ -81,13 +97,13 @@ export default () => {
         noItemsMessage="U hebt op dit moment geen besluiten."
       />
       <DataTable
-        id="datalinktable-income-specifications"
-        items={itemsSpecifications}
+        id="datalinktable-income-specifications-monthly"
+        items={itemsSpecificationsMonthly}
         startCollapsed={hasActiveRequests || hasActiveDescisions}
         isLoading={isLoading2}
         title="Uitkeringsspecificaties"
         displayProps={{
-          title: 'Regeling',
+          title: 'Omschrijving',
           type: 'Type',
           displayDate: 'Datum',
           documentUrl: 'Document',
@@ -99,7 +115,29 @@ export default () => {
         noItemsMessage="Er zijn op dit moment geen uitkeringgspecificaties."
       >
         <p className={styles.ShowAllButtonContainer}>
-          <Linkd href={AppRoutes['INKOMEN/SPECIFICATIES']}>Toon alles</Linkd>
+          <Linkd href={incomSpecificationsRouteMonthly}>Toon alles</Linkd>
+        </p>
+      </DataTable>
+      <DataTable
+        id="datalinktable-income-specifications-yearly"
+        items={itemsSpecificationsYearly}
+        startCollapsed={hasActiveRequests || hasActiveDescisions}
+        isLoading={isLoading2}
+        title="Jaaropgaven"
+        displayProps={{
+          title: 'Omschrijving',
+          type: 'Type',
+          displayDate: 'Datum',
+          documentUrl: 'Document',
+        }}
+        track={{
+          category: 'Werk en inkomen overzicht / Jaaropgaven',
+          name: 'Datatabel',
+        }}
+        noItemsMessage="Er zijn op dit moment geen Jaaropgaven."
+      >
+        <p className={styles.ShowAllButtonContainer}>
+          <Linkd href={incomSpecificationsRouteYearly}>Toon alles</Linkd>
         </p>
       </DataTable>
     </OverviewPage>
