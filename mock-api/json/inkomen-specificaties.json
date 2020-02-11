@@ -22,6 +22,7 @@
     },
     {
         "title": "Uitkeringspecificatie",
+        "type": "STIMREG",
         "datePublished": "2016-06-06T22:00:00.000Z",
         "url": "http://example.org/document-3.pdf",
         "id": "item-3"
@@ -112,6 +113,7 @@
     },
     {
         "title": "Uitkeringspecificatie",
+        "type": "STIMREG",
         "datePublished": "2017-07-06T22:00:00.000Z",
         "url": "http://example.org/document-16.pdf",
         "id": "item-16"
@@ -237,6 +239,7 @@
     },
     {
         "title": "Uitkeringspecificatie",
+        "type": "STIMREG",
         "datePublished": "2019-01-06T23:00:00.000Z",
         "url": "http://example.org/document-34.pdf",
         "id": "item-34"
