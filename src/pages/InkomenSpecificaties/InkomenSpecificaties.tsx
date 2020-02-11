@@ -9,7 +9,7 @@ import { ChapterTitles } from 'config/Chapter.constants';
 import { AppContext } from 'AppState';
 import Alert from 'components/Alert/Alert';
 import useRouter from 'use-react-router';
-import DataTable from 'components/DataTable/DataTable';
+import TableSectionCollapsible from 'components/TableSectionCollapsible/TableSectionCollapsible';
 import Table from 'components/Table/Table';
 import Section from 'components/Section/Section';
 

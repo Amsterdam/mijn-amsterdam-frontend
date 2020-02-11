@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { OverviewPage, PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
 import { AppContext } from 'AppState';
-import DataTable from 'components/DataTable/DataTable';
+import TableSectionCollapsible from 'components/TableSectionCollapsible/TableSectionCollapsible';
 import styles from './Zorg.module.scss';
 import Alert from 'components/Alert/Alert';
 import Linkd, { LinkdInline } from 'components/Button/Button';
@@ -47,14 +47,14 @@ export default () => {
           </Alert>
         )}
       </PageContent>
-      <DataTable
-        id="DataTable-healthcare-granted"
+      <TableSectionCollapsible
+        id="TableSectionCollapsible-healthcare-granted"
         displayProps={DISPLAY_PROPS}
         items={itemsActual}
-        title="Mijn huidige voorzieningen"
+        title="Huidige voorzieningen"
         noItemsMessage="U hebt nog geen huidige voorzieningen."
         startCollapsed={false}
-        className={styles.DataTableCurrent}
+        className={styles.TableSectionCollapsibleCurrent}
         isLoading={isLoading}
         track={{
           category: 'Zorg en ondersteuning overzicht / Huidige voorzieningen',
@@ -62,11 +62,11 @@ export default () => {
         }}
       />
 
-      <DataTable
-        id="DataTable-healthcare-previous"
+      <TableSectionCollapsible
+        id="TableSectionCollapsible-healthcare-previous"
         displayProps={DISPLAY_PROPS}
         items={itemsPrevious}
-        title="Mijn eerdere voorzieningen"
+        title="Eerdere voorzieningen"
         noItemsMessage="U hebt geen eerdere voorzieningen."
         startCollapsed={hasActualItems}
         isLoading={isLoading}

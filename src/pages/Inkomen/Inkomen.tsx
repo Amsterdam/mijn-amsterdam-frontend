@@ -9,7 +9,7 @@ import Alert from 'components/Alert/Alert';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import Linkd from 'components/Button/Button';
 import { AppRoutes } from 'config/Routing.constants';
-import DataTable from 'components/DataTable/DataTable';
+import TableSectionCollapsible from 'components/TableSectionCollapsible/TableSectionCollapsible';
 import { generatePath } from 'react-router-dom';
 
 const incomSpecificationsRouteMonthly = generatePath(
@@ -71,10 +71,10 @@ export default () => {
           </Alert>
         )}
       </PageContent>
-      <DataTable
-        id="DataTable-income-request-process"
+      <TableSectionCollapsible
+        id="TableSectionCollapsible-income-request-process"
         items={itemsRequested}
-        title="Mijn lopende aanvragen"
+        title="Lopende aanvragen"
         startCollapsed={false}
         isLoading={isLoading}
         track={{
@@ -83,20 +83,20 @@ export default () => {
         }}
         noItemsMessage="U hebt op dit moment geen lopende aanvragen."
       />
-      <DataTable
-        id="DataTable-income-request-process-decisions"
+      <TableSectionCollapsible
+        id="TableSectionCollapsible-income-request-process-decisions"
         items={itemsDecided}
         startCollapsed={hasActiveRequests}
         isLoading={isLoading}
-        title="Mijn besluiten"
+        title="Besluiten"
         track={{
           category: 'Werk en inkomen overzicht / Besluiten',
           name: 'Datatabel',
         }}
         noItemsMessage="U hebt op dit moment geen besluiten."
       />
-      <DataTable
-        id="DataTable-income-specifications-monthly"
+      <TableSectionCollapsible
+        id="TableSectionCollapsible-income-specifications-monthly"
         items={itemsSpecificationsMonthly}
         startCollapsed={hasActiveRequests || hasActiveDescisions}
         isLoading={isLoading2}
@@ -117,9 +117,9 @@ export default () => {
         <p className={styles.ShowAllButtonContainer}>
           <Linkd href={incomSpecificationsRouteMonthly}>Toon alles</Linkd>
         </p>
-      </DataTable>
-      <DataTable
-        id="DataTable-income-specifications-yearly"
+      </TableSectionCollapsible>
+      <TableSectionCollapsible
+        id="TableSectionCollapsible-income-specifications-yearly"
         items={itemsSpecificationsYearly}
         startCollapsed={hasActiveRequests || hasActiveDescisions}
         isLoading={isLoading2}
@@ -140,7 +140,7 @@ export default () => {
         <p className={styles.ShowAllButtonContainer}>
           <Linkd href={incomSpecificationsRouteYearly}>Toon alles</Linkd>
         </p>
-      </DataTable>
+      </TableSectionCollapsible>
     </OverviewPage>
   );
 };

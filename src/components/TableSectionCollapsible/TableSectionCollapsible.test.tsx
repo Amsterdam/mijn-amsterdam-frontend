@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import DataTable from './DataTable';
+import TableSectionCollapsible from './TableSectionCollapsible';
 
 it('Renders without crashing', () => {
   shallow(
-    <DataTable
+    <TableSectionCollapsible
       isLoading={false}
       items={[]}
       track={{ category: 'test', name: 'Data tabel' }}

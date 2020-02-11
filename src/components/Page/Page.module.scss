@@ -44,7 +44,6 @@
 
   @include select(SectionCollapsible_SectionCollapsible) {
     @include centered-block;
-    margin-bottom: 2rem;
   }
 }
 
@@ -91,7 +90,7 @@
     margin-right: 1rem;
   }
 
-  + [class*="DataTable_DataTable"] {
+  + [class*="TableSectionCollapsible_TableSectionCollapsible"] {
     margin-top: 8rem;
   }
 }

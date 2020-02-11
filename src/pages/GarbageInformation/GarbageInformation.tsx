@@ -169,7 +169,8 @@ export default () => {
       <SectionCollapsible
         className={classnames(
           styles.InfoSection,
-          styles.InfoSection__fullWidth
+          !isCollapsed('garbageContainersOnMap') &&
+            styles.InfoSection__fullWidth
         )}
         title="Afvalcontainers in de buurt"
         isCollapsed={isCollapsed('garbageContainersOnMap')}
