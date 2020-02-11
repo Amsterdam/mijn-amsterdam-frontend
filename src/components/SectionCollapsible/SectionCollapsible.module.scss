@@ -1,13 +1,10 @@
 @import 'styles/_global.scss';
 
 .SectionCollapsible {
-  overflow: auto; // fixes margin of wrapped SectionCollapsible.Title being respected
+  margin-bottom: 1.8rem;
 
-  &.isCollapsed {
-
-    .CaretIcon {
-      transform: translateY(-50%) rotate(0);
-    }
+  &.isCollapsed .CaretIcon {
+    transform: translateY(-50%) rotate(0);
   }
 }
 
@@ -25,6 +22,7 @@
   position: relative;
   padding-left: 1em;
   margin: 0 auto;
+  margin-bottom: 1.8rem;
   transform: translateX(-2.2rem);
   max-width: 62rem;
 
@@ -51,9 +49,8 @@
 
 .Panel {
   overflow: hidden;
-  height: 0px;
+  height: 0;
   position: relative;
-  margin-top: 2rem;
   border-top: .1rem solid $color-neutral-grey2;
 
   @include mq-phone() {

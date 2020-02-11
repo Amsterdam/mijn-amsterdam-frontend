@@ -1,12 +1,12 @@
 import React from 'react';
 
-import styles from './DataTable.module.scss';
+import styles from './TableSectionCollapsible.module.scss';
 import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
 import { useSessionStorage } from 'hooks/storage.hook';
 import Table from 'components/Table/Table';
 import Linkd from 'components/Button/Button';
 
-export interface DataTableProps {
+export interface TableSectionCollapsibleProps {
   id: string;
   items: any[];
   title?: string;
@@ -23,7 +23,7 @@ export interface DataTableProps {
   };
 }
 
-export default function DataTable({
+export default function TableSectionCollapsible({
   // Message displayed if no items are provided to the component
   noItemsMessage,
 
@@ -57,7 +57,7 @@ export default function DataTable({
 
   // The title item is a link component
   hasTitleLink = true,
-}: WithChildren<DataTableProps, ''>) {
+}: WithChildren<TableSectionCollapsibleProps, ''>) {
   const [isCollapsed, setCollapsed] = useSessionStorage(id, startCollapsed);
 
   const itemsFinal = hasTitleLink
@@ -71,7 +71,7 @@ export default function DataTable({
 
   return (
     <SectionCollapsible
-      className={styles.DataTable}
+      className={styles.TableSectionCollapsible}
       title={title}
       noItemsMessage={noItemsMessage}
       isLoading={isLoading}

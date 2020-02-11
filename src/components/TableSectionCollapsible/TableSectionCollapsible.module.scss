@@ -1,6 +1,6 @@
 @import 'styles/_global.scss';
 
-.DataTable {
+.TableSectionCollapsible {
   border-bottom: 0.1rem solid $color-neutral-grey2;
 
   @include select(SectionCollapsible_Panel) {
