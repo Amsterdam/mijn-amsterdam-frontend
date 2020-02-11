@@ -3,3 +3,36 @@
 .Inkomen {
 
 }
+
+.ShowAllButtonContainer {
+  display: block;
+  border-top: 0.1rem solid $color-neutral-grey2;
+  margin: 0;
+  padding: 1.7rem 0;
+  display: flex;
+  justify-content: center;
+
+  @include mq-tablet() {
+    justify-content: left;
+  }
+}
+
+.DownloadLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  font-weight: bold;
+  color: $color-black;
+
+  &:hover {
+    color: $color-primary-red;
+    text-decoration: underline;
+
+    svg {
+      fill: $color-primary-red;
+    }
+  }
+  svg {
+    margin-right: .5rem;
+  }
+}

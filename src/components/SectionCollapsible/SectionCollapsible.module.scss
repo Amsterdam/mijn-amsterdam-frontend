@@ -80,3 +80,8 @@
   left: 0;
   right: 0;
 }
+
+.PanelInner {
+  display: flex;
+  flex-direction: column;
+}
