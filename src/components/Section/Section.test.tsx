@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import DataLinkTable from './DataLinkTable';
+import Section from './Section';
 
 it('Renders without crashing', () => {
-  shallow(<DataLinkTable />);
+  shallow(<Section />);
 });

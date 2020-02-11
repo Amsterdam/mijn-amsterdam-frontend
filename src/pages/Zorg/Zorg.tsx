@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { OverviewPage, PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
 import { AppContext } from 'AppState';
-import DataLinkTable from 'components/DataLinkTable/DataLinkTable';
+import DataTable from 'components/DataTable/DataTable';
 import styles from './Zorg.module.scss';
 import Alert from 'components/Alert/Alert';
 import Linkd, { LinkdInline } from 'components/Button/Button';
@@ -47,14 +47,14 @@ export default () => {
           </Alert>
         )}
       </PageContent>
-      <DataLinkTable
-        id="datalinktable-healthcare-granted"
+      <DataTable
+        id="DataTable-healthcare-granted"
         displayProps={DISPLAY_PROPS}
         items={itemsActual}
         title="Mijn huidige voorzieningen"
         noItemsMessage="U hebt nog geen huidige voorzieningen."
         startCollapsed={false}
-        className={styles.DataLinkTableCurrent}
+        className={styles.DataTableCurrent}
         isLoading={isLoading}
         track={{
           category: 'Zorg en ondersteuning overzicht / Huidige voorzieningen',
@@ -62,8 +62,8 @@ export default () => {
         }}
       />
 
-      <DataLinkTable
-        id="datalinktable-healthcare-previous"
+      <DataTable
+        id="DataTable-healthcare-previous"
         displayProps={DISPLAY_PROPS}
         items={itemsPrevious}
         title="Mijn eerdere voorzieningen"

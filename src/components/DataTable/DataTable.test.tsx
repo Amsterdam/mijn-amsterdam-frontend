@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import DataLinkTable from './DataTable';
+import DataTable from './DataTable';
 
 it('Renders without crashing', () => {
   shallow(
-    <DataLinkTable
+    <DataTable
       isLoading={false}
       items={[]}
       track={{ category: 'test', name: 'Data tabel' }}
