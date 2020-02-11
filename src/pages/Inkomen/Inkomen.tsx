@@ -10,6 +10,7 @@ import Alert from 'components/Alert/Alert';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import Linkd from 'components/Button/Button';
 import { AppRoutes } from 'config/Routing.constants';
+import DataTable from 'components/DataTable/DataTable';
 
 export default () => {
   const {
@@ -49,9 +50,9 @@ export default () => {
             Contact Werk en inkomen
           </Linkd>
         </p>
-        {isError && (
+        {(isError || isError2) && (
           <Alert type="warning">
-            We kunnen op dit moment geen gegevens tonen.
+            We kunnen op dit moment niet alle gegevens tonen.
           </Alert>
         )}
       </PageContent>
@@ -79,20 +80,28 @@ export default () => {
         }}
         noItemsMessage="U hebt op dit moment geen besluiten."
       />
-      <DataLinkTable
+      <DataTable
         id="datalinktable-income-specifications"
         items={itemsSpecifications}
         startCollapsed={hasActiveRequests || hasActiveDescisions}
-        isLoading={isLoading}
+        isLoading={isLoading2}
         title="Uitkeringsspecificaties"
+        displayProps={{
+          title: 'Regeling',
+          type: 'Type',
+          displayDate: 'Datum',
+          documentUrl: 'Document',
+        }}
         track={{
           category: 'Werk en inkomen overzicht / Uitkeringsspecificaties',
           name: 'Datatabel',
         }}
         noItemsMessage="Er zijn op dit moment geen uitkeringgspecificaties."
       >
-        <Linkd href={AppRoutes['INKOMEN/SPECIFICATIES']}>Toon alles</Linkd>
-      </DataLinkTable>
+        <p className={styles.ShowAllButtonContainer}>
+          <Linkd href={AppRoutes['INKOMEN/SPECIFICATIES']}>Toon alles</Linkd>
+        </p>
+      </DataTable>
     </OverviewPage>
   );
 };

@@ -10,6 +10,8 @@ import Linkd from 'components/Button/Button';
 import React, { ReactNode } from 'react';
 import { StatusLineItem, StepType } from 'components/StatusLine/StatusLine';
 import { generatePath } from 'react-router';
+import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
+import styles from 'pages/Inkomen/Inkomen.module.scss';
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
  */
@@ -1040,15 +1042,27 @@ export interface FocusInkomenSpecificatie
     to: string;
     title: string;
   };
+  displayDate: string;
+  documentUrl: ReactNode;
 }
 
 export function formatIncomeSpecifications(
   items: FocusInkomenSpecificatieFromSource[]
 ): FocusInkomenSpecificatie[] {
   return items.map(item => {
+    const displayDate = defaultDateFormat(item.datePublished);
     return {
       ...item,
-      title: <div>hey!</div>,
+      displayDate,
+      documentUrl: (
+        <a
+          href={item.url}
+          className={styles.DownloadLink}
+          download={`${displayDate}-${item.title}`}
+        >
+          <DownloadIcon width={14} height={14} /> Bekijk
+        </a>
+      ),
       link: {
         to: item.url,
         title: 'Download specificatie',
