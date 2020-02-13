@@ -1,6 +1,5 @@
 import React from 'react';
 import { ComponentChildren } from 'App.types';
-import { ReactComponent as CaretIcon } from 'assets/icons/Chevron-Right.svg';
 import classnames from 'classnames';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 

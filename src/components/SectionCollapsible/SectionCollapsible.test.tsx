@@ -7,13 +7,7 @@ import * as analytics from 'hooks/analytics.hook';
 
 describe('SectionCollapsible', () => {
   let component: ReactWrapper<typeof SectionCollapsible>;
-  let toggleCollapsed: () => void;
-
   const trackingSpy = jest.spyOn(analytics, 'trackEvent');
-
-  beforeEach(() => {
-    toggleCollapsed = jest.fn();
-  });
 
   afterEach(() => {
     component.unmount();
@@ -62,7 +56,7 @@ describe('SectionCollapsible', () => {
 
     expect(component.childAt(0).hasClass(styles.isCollapsed)).toEqual(true);
     component.find(`.Title button`).simulate('click');
-    expect(toggleCollapsed).toHaveBeenCalledTimes(1);
+    expect(component.childAt(0).hasClass(styles.isCollapsed)).toEqual(false);
   });
 
   it('should call trackEvent if tracking info is provided and section is expanded', () => {
