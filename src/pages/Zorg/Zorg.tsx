@@ -1,14 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { OverviewPage, PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
 import { AppContext } from 'AppState';
-import TableSectionCollapsible from 'components/TableSectionCollapsible/TableSectionCollapsible';
+import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
 import styles from './Zorg.module.scss';
 import Alert from 'components/Alert/Alert';
 import Linkd, { LinkdInline } from 'components/Button/Button';
 import { ExternalUrls } from 'config/App.constants';
 import { ChapterTitles } from 'config/Chapter.constants';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
+import Table, { addTitleLinkComponent } from 'components/Table/Table';
 
 const DISPLAY_PROPS = {
   title: '',
@@ -19,12 +20,17 @@ export default () => {
     WMO: { data: items, isError, isLoading },
   } = useContext(AppContext);
 
-  const itemsActual = items.filter(item => item.isActual);
-  const itemsPrevious = items.filter(item => !item.isActual);
+  const itemsActual = useMemo(() => {
+    return addTitleLinkComponent(items.filter(item => item.isActual));
+  }, [items]);
+  const itemsPrevious = useMemo(() => {
+    return addTitleLinkComponent(items.filter(item => !item.isActual));
+  }, [items]);
+
   const hasActualItems = !!itemsActual.length;
 
   return (
-    <OverviewPage>
+    <OverviewPage className={styles.ZorgOverviewPage}>
       <PageHeading icon={<ChapterIcon />}>{ChapterTitles.ZORG}</PageHeading>
       <PageContent>
         <p>
@@ -47,25 +53,23 @@ export default () => {
           </Alert>
         )}
       </PageContent>
-      <TableSectionCollapsible
-        id="TableSectionCollapsible-healthcare-granted"
-        displayProps={DISPLAY_PROPS}
-        items={itemsActual}
+      <SectionCollapsible
+        id="SectionCollapsible-healthcare-granted"
         title="Huidige voorzieningen"
         noItemsMessage="U hebt nog geen huidige voorzieningen."
         startCollapsed={false}
-        className={styles.TableSectionCollapsibleCurrent}
+        className={styles.SectionCollapsibleCurrent}
         isLoading={isLoading}
         track={{
           category: 'Zorg en ondersteuning overzicht / Huidige voorzieningen',
           name: 'Datatabel',
         }}
-      />
+      >
+        <Table displayProps={DISPLAY_PROPS} items={itemsActual} />
+      </SectionCollapsible>
 
-      <TableSectionCollapsible
-        id="TableSectionCollapsible-healthcare-previous"
-        displayProps={DISPLAY_PROPS}
-        items={itemsPrevious}
+      <SectionCollapsible
+        id="SectionCollapsible-healthcare-previous"
         title="Eerdere voorzieningen"
         noItemsMessage="U hebt geen eerdere voorzieningen."
         startCollapsed={hasActualItems}
@@ -74,7 +78,9 @@ export default () => {
           category: 'Zorg en ondersteuning overzicht / Eerdere voorzieningen',
           name: 'Datatabel',
         }}
-      />
+      >
+        <Table displayProps={DISPLAY_PROPS} items={itemsPrevious} />
+      </SectionCollapsible>
       <p className={styles.HistoricItemsMention}>
         Informatie van voor 1 januari 2018 kunt u hier niet inzien. Deze kunt u
         wel opvragen bij de Wmo Helpdesk.

@@ -149,15 +149,13 @@ export function InfoPanelCollapsible({
   panelData = {},
   startCollapsed = true,
 }: InfoPanelCollapsibleProps) {
-  const [isCollapsed, setCollapsed] = useSessionStorage(id, startCollapsed);
   return (
     <SectionCollapsible
+      id={`InfoPanelCollapsible-${id}`}
       className={styles.InfoPanelCollapsible}
       title={title}
       isLoading={false}
       hasItems={true}
-      isCollapsed={isCollapsed}
-      onToggleCollapsed={() => setCollapsed(!isCollapsed)}
     >
       <InfoPanel
         id={id}

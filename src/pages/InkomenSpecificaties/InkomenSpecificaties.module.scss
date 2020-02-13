@@ -1,9 +1,25 @@
 @import 'styles/_global.scss';
 
 .InkomenSpecificaties {
-
+  td:not(:nth-child(3)) {
+    font-weight: bold;
+    color: $color-black;
+  }
 }
 
 .TableSection {
   @include centered-block;
+
+  @include select(Heading_Heading) {
+    margin: 5rem auto;
+    max-width: 62rem;
+
+    @include mq-tablet {
+      margin-left: 9.5rem;
+    }
+
+    @include mq-phone {
+      margin-left: 0;
+    }
+  }
 }

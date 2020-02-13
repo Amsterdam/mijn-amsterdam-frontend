@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { OverviewPage, PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
 import { AppContext } from 'AppState';
@@ -9,8 +9,9 @@ import Alert from 'components/Alert/Alert';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import Linkd from 'components/Button/Button';
 import { AppRoutes } from 'config/Routing.constants';
-import TableSectionCollapsible from 'components/TableSectionCollapsible/TableSectionCollapsible';
 import { generatePath } from 'react-router-dom';
+import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
+import Table, { addTitleLinkComponent } from 'components/Table/Table';
 
 const incomSpecificationsRouteMonthly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES']
@@ -36,9 +37,16 @@ export default () => {
     },
   } = useContext(AppContext);
 
-  const items = Object.values(products).flatMap(product => product.items);
-  const itemsRequested = items.filter(item => !item.hasDecision);
-  const itemsDecided = items.filter(item => item.hasDecision);
+  const items = useMemo(
+    () => Object.values(products).flatMap(product => product.items),
+    [products]
+  );
+  const itemsRequested = useMemo(() => {
+    return addTitleLinkComponent(items.filter(item => !item.hasDecision));
+  }, [items]);
+  const itemsDecided = useMemo(() => {
+    return addTitleLinkComponent(items.filter(item => item.hasDecision));
+  }, [items]);
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
   const itemsSpecificationsMonthly = incomeSpecificationItems
@@ -71,9 +79,8 @@ export default () => {
           </Alert>
         )}
       </PageContent>
-      <TableSectionCollapsible
-        id="TableSectionCollapsible-income-request-process"
-        items={itemsRequested}
+      <SectionCollapsible
+        id="SectionCollapsible-income-request-process"
         title="Lopende aanvragen"
         startCollapsed={false}
         isLoading={isLoading}
@@ -82,10 +89,12 @@ export default () => {
           name: 'Datatabel',
         }}
         noItemsMessage="U hebt op dit moment geen lopende aanvragen."
-      />
-      <TableSectionCollapsible
-        id="TableSectionCollapsible-income-request-process-decisions"
-        items={itemsDecided}
+        className={styles.SectionCollapsibleRequests}
+      >
+        <Table items={itemsRequested} />
+      </SectionCollapsible>
+      <SectionCollapsible
+        id="SectionCollapsible-income-request-process-decisions"
         startCollapsed={hasActiveRequests}
         isLoading={isLoading}
         title="Besluiten"
@@ -94,53 +103,57 @@ export default () => {
           name: 'Datatabel',
         }}
         noItemsMessage="U hebt op dit moment geen besluiten."
-      />
-      <TableSectionCollapsible
-        id="TableSectionCollapsible-income-specifications-monthly"
-        items={itemsSpecificationsMonthly}
+      >
+        <Table items={itemsDecided} />
+      </SectionCollapsible>
+      <SectionCollapsible
+        id="SectionCollapsible-income-specifications-monthly"
         startCollapsed={hasActiveRequests || hasActiveDescisions}
         isLoading={isLoading2}
         title="Uitkeringsspecificaties"
-        displayProps={{
-          title: 'Omschrijving',
-          type: 'Type',
-          displayDate: 'Datum',
-          documentUrl: 'Document',
-        }}
         track={{
           category: 'Werk en inkomen overzicht / Uitkeringsspecificaties',
           name: 'Datatabel',
         }}
         noItemsMessage="Er zijn op dit moment geen uitkeringgspecificaties."
-        hasTitleLink={false}
       >
+        <Table
+          items={itemsSpecificationsMonthly}
+          displayProps={{
+            title: 'Omschrijving',
+            type: 'Type',
+            displayDate: 'Datum',
+            documentUrl: 'Document',
+          }}
+        />
         <p className={styles.ShowAllButtonContainer}>
           <Linkd href={incomSpecificationsRouteMonthly}>Toon alles</Linkd>
         </p>
-      </TableSectionCollapsible>
-      <TableSectionCollapsible
-        id="TableSectionCollapsible-income-specifications-yearly"
-        items={itemsSpecificationsYearly}
+      </SectionCollapsible>
+      <SectionCollapsible
+        id="SectionCollapsible-income-specifications-yearly"
         startCollapsed={hasActiveRequests || hasActiveDescisions}
         isLoading={isLoading2}
         title="Jaaropgaven"
-        displayProps={{
-          title: 'Omschrijving',
-          type: 'Type',
-          displayDate: 'Datum',
-          documentUrl: 'Document',
-        }}
         track={{
           category: 'Werk en inkomen overzicht / Jaaropgaven',
           name: 'Datatabel',
         }}
         noItemsMessage="Er zijn op dit moment geen Jaaropgaven."
-        hasTitleLink={false}
       >
+        <Table
+          items={itemsSpecificationsYearly}
+          displayProps={{
+            title: 'Omschrijving',
+            type: 'Type',
+            displayDate: 'Datum',
+            documentUrl: 'Document',
+          }}
+        />
         <p className={styles.ShowAllButtonContainer}>
           <Linkd href={incomSpecificationsRouteYearly}>Toon alles</Linkd>
         </p>
-      </TableSectionCollapsible>
+      </SectionCollapsible>
     </OverviewPage>
   );
 };

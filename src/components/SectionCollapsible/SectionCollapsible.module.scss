@@ -2,6 +2,7 @@
 
 .SectionCollapsible {
   margin-bottom: 1.8rem;
+  border-bottom: .1rem solid $color-neutral-grey2;
 
   &.isCollapsed .CaretIcon {
     transform: translateY(-50%) rotate(0);
@@ -51,11 +52,11 @@
   overflow: hidden;
   height: 0;
   position: relative;
-  border-top: .1rem solid $color-neutral-grey2;
+}
 
-  @include mq-phone() {
-    border-bottom: 0;
-  }
+.PanelInner {
+  display: flex;
+  flex-direction: column;
 }
 
 .NoItemsMessage {
@@ -78,7 +79,3 @@
   right: 0;
 }
 
-.PanelInner {
-  display: flex;
-  flex-direction: column;
-}
