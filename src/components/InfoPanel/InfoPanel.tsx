@@ -7,7 +7,6 @@ import { entries } from 'helpers/App';
 import classnames from 'classnames';
 import slug from 'slug';
 import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
-import { useSessionStorage } from 'hooks/storage.hook';
 
 export interface ActionLink {
   title: string;

@@ -2,9 +2,10 @@ import React from 'react';
 import styles from './Table.module.scss';
 import { entries } from 'helpers/App';
 import Linkd from 'components/Button/Button';
+import { Unshaped } from '../../App.types';
 
 export function addTitleLinkComponent(
-  items: any[],
+  items: Unshaped[],
   titleKey: string = 'title'
 ) {
   return items.map((item: any) => {
@@ -16,10 +17,10 @@ export function addTitleLinkComponent(
 }
 
 export interface TableProps {
-  items: any[];
+  items: Unshaped[];
   className?: string;
   titleKey?: string;
-  displayProps?: { [key: string]: string }; // key => Label. Will be displayed right of the title in the table
+  displayProps?: { [key: string]: string };
 }
 
 export default function Table({
@@ -27,22 +28,27 @@ export default function Table({
   displayProps,
   titleKey = 'title',
 }: TableProps) {
-  const displayPropEntries = displayProps
-    ? entries(displayProps).slice(titleKey in displayProps ? 1 : 0) // Don't use the $titleKey here, title is always fixed as first prop in the table;
-    : [];
-  const hasDisplayPropTableHeadingLabels = displayPropEntries.some(
-    ([, label]) => !!label
+  const displayPropsFinal = !displayProps
+    ? { [titleKey]: titleKey }
+    : displayProps;
+  const displayPropEntries = entries(displayPropsFinal).filter(
+    ([key]) => key !== titleKey
   );
+  const hasDisplayPropTableHeadingLabels = !!Object.keys(displayPropsFinal)
+    .length;
+
   return (
     <table className={styles.Table}>
       {hasDisplayPropTableHeadingLabels && (
         <thead>
           <tr className={styles.TableRow}>
-            <th className={styles.DisplayProp}>
-              {(displayProps && displayProps[titleKey]) || ' '}
-            </th>
-            {displayPropEntries.map(([, label]) => (
-              <th key={label} className={styles.DisplayProp}>
+            {!!items[0] && titleKey in items[0] && (
+              <th className={styles.DisplayProp}>
+                {displayPropsFinal[titleKey] || ' '}
+              </th>
+            )}
+            {displayPropEntries.map(([key, label]) => (
+              <th key={`th-${key}`} className={styles.DisplayProp}>
                 {label}
               </th>
             ))}
@@ -50,13 +56,16 @@ export default function Table({
         </thead>
       )}
       <tbody>
-        {items.map((item: any) => (
-          <tr key={item.id} className={styles.TableRow}>
-            {!!item[titleKey] && (
+        {items.map((item: Unshaped, index) => (
+          <tr
+            key={item.id || `${titleKey}-${index}`}
+            className={styles.TableRow}
+          >
+            {titleKey in item && (
               <td className={styles.DisplayPropTitle}>{item[titleKey]}</td>
             )}
             {displayPropEntries.map(([key, label]) => (
-              <td key={key} className={styles.DisplayProp}>
+              <td key={`td-${key}`} className={styles.DisplayProp}>
                 <span className={styles.DisplayPropLabel}>{label}:</span>
                 {item[key] || <span>&mdash;</span>}
               </td>
