@@ -26,7 +26,7 @@ export interface TableProps {
 export default function Table({
   items,
   displayProps,
-  titleKey = 'title',
+  titleKey = ' ',
 }: TableProps) {
   const displayPropsFinal = !displayProps
     ? { [titleKey]: titleKey }
