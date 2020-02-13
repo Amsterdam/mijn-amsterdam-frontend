@@ -1,7 +1,25 @@
 @import 'styles/_global.scss';
 
 .Inkomen {
+  td:not(:nth-child(3)) {
+    font-weight: bold;
+    color: $color-black;
+  }
+  td {
+    width: 20%;
+  }
+  @include select(Table_DisplayPropTitle) {
+    width: 30%;
+  }
+  @include select(PageContent) {
+    padding-bottom: 5rem;
+  }
+}
 
+
+.SectionCollapsibleRequests {
+  border-top: 0.1rem solid $color-neutral-grey2;
+  padding-top: 1.7rem;
 }
 
 .ShowAllButtonContainer {

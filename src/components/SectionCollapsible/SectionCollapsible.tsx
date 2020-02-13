@@ -11,12 +11,13 @@ import { trackEvent } from 'hooks/analytics.hook';
 import { useRef } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useDebouncedCallback } from 'use-debounce';
+import { useSessionStorage } from 'hooks/storage.hook';
 
 export interface SectionCollapsibleProps {
+  id: string;
   title?: string;
   noItemsMessage?: string;
-  isCollapsed: boolean;
-  onToggleCollapsed: () => void;
+  startCollapsed?: boolean;
   className?: string;
   isLoading?: boolean;
   track?: { category: string; name: string };
@@ -25,16 +26,17 @@ export interface SectionCollapsibleProps {
 }
 
 export default function SectionCollapsible({
+  id,
   title = '',
   noItemsMessage = '',
-  isCollapsed,
-  onToggleCollapsed,
+  startCollapsed = true,
   className,
   isLoading = false,
   hasItems = true,
   track,
   children,
 }: SectionCollapsibleProps) {
+  const [isCollapsed, setCollapsed] = useSessionStorage(id, startCollapsed);
   const contentRef = useRef<HTMLDivElement>(null);
   const [isReadyForAnimation, setReadyForAnimaton] = useState(false);
   const hasTitle = !!title;
@@ -72,7 +74,7 @@ export default function SectionCollapsible({
         action: 'Open klikken',
       });
     }
-    onToggleCollapsed && onToggleCollapsed();
+    setCollapsed(!isCollapsed);
   });
 
   const heightAnim = {
@@ -132,7 +134,6 @@ export default function SectionCollapsible({
           className={styles.Panel}
           style={heightAnimSpring}
         >
-          {/* paddingBottom to prevent margin collapsing */}
           <div className={styles.PanelInner} ref={contentRef}>
             {children}
           </div>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import SectionCollapsible from './SectionCollapsible';
 import styles from './SectionCollapsible.module.scss';
@@ -23,10 +23,10 @@ describe('SectionCollapsible', () => {
   it('should start uncollapsed', () => {
     component = mount(
       <SectionCollapsible
+        id="test-SectionCollapsible"
         isLoading={false}
         hasItems={true}
-        isCollapsed={false}
-        onToggleCollapsed={toggleCollapsed}
+        startCollapsed={false}
       >
         <div style={{ height: 500 }}>Boohoo!</div>
       </SectionCollapsible>
@@ -37,10 +37,9 @@ describe('SectionCollapsible', () => {
   it('should start collapsed', () => {
     component = mount(
       <SectionCollapsible
+        id="test-SectionCollapsible"
         isLoading={false}
         hasItems={true}
-        isCollapsed={true}
-        onToggleCollapsed={toggleCollapsed}
       >
         <div style={{ height: 500 }}>Boohoo!</div>
       </SectionCollapsible>
@@ -52,11 +51,10 @@ describe('SectionCollapsible', () => {
   it('should collapse/expand when clicking the title', () => {
     component = mount(
       <SectionCollapsible
+        id="test-SectionCollapsible"
         isLoading={false}
         hasItems={true}
         title="Click me!"
-        isCollapsed={true}
-        onToggleCollapsed={toggleCollapsed}
       >
         <div style={{ height: 500 }}>Boohoo!</div>
       </SectionCollapsible>
@@ -70,10 +68,9 @@ describe('SectionCollapsible', () => {
   it('should call trackEvent if tracking info is provided and section is expanded', () => {
     component = mount(
       <SectionCollapsible
+        id="test-SectionCollapsible"
         isLoading={false}
         hasItems={true}
-        isCollapsed={true}
-        onToggleCollapsed={toggleCollapsed}
         track={{ category: 'the category', name: 'the content thing' }}
         title="Click me!"
       >
@@ -92,11 +89,10 @@ describe('SectionCollapsible', () => {
   it('should show title and "no items message"', () => {
     component = mount(
       <SectionCollapsible
+        id="test-SectionCollapsible"
         title="My Items"
         isLoading={false}
         hasItems={false}
-        isCollapsed={true}
-        onToggleCollapsed={toggleCollapsed}
         noItemsMessage="No items"
       >
         <div style={{ height: 500 }}>Boohoo!</div>
