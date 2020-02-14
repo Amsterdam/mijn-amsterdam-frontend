@@ -1,0 +1,62 @@
+@import 'styles/_global.scss';
+
+
+.Pagination {
+
+}
+
+.PageList {
+  justify-content: space-between;
+  display: inline-flex;
+  padding: 0;
+  list-style-type: none;
+}
+
+.PageSelectButton {
+  background: none;
+  border: 0;
+  padding: 0;
+  width: 2.8rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin: 0 .2rem;
+
+  &:first-child {
+    margin-left: 0;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &:hover {
+    background-color: $color-neutral-grey2;
+  }
+
+  &.SelectedPage {
+    background-color: $color-neutral-grey4;
+    color: $color-white;
+  }
+
+  &.PagePrevButton,
+  &.PageNextButton {
+    width: auto;
+    padding: 0 .3rem;
+    font-weight: bold;
+
+    &:hover {
+      background-color: inherit;
+      color: $color-neutral-grey4;
+
+      svg {
+        fill: $color-neutral-grey4;
+      }
+    }
+
+    svg {
+      height: 100%;
+    }
+  }
+}

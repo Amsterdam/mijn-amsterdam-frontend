@@ -3,9 +3,8 @@ import {
   FocusInkomenSpecificatie,
   FocusInkomenSpecificatieFromSource,
   FocusItem,
+  formatFocusItems,
   formatIncomeSpecifications,
-  formatProductCollections,
-  ProductCollection,
 } from 'data-formatting/focus';
 import { getApiConfigValue, getApiUrl } from 'helpers/App';
 import { useMemo } from 'react';
@@ -37,7 +36,6 @@ export interface FocusData {
   items: FocusItem[];
   recentCases: FocusItem[];
   notifications: MyNotification[];
-  products: ProductCollection;
 }
 
 export type FocusApiState = ApiState<FocusData> & { rawData: FocusApiResponse };
@@ -52,19 +50,16 @@ export default function useFocusApi(): FocusApiState {
   );
 
   return useMemo(() => {
-    const { allItems, allNotifications, products } = formatProductCollections(
-      api.data
-    );
+    const { items, notifications } = formatFocusItems(api.data);
+    const recentCases = items.filter(item => item.isRecent);
 
-    const recentCases = allItems.filter(item => item.isRecent);
     return {
       ...api,
       rawData: api.data,
       data: {
-        items: allItems,
-        notifications: allNotifications,
+        items,
+        notifications,
         recentCases,
-        products,
       },
     };
   }, [api]);

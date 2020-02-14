@@ -10,7 +10,7 @@ import Linkd from 'components/Button/Button';
 import React, { ReactNode } from 'react';
 import { StatusLineItem, StepType } from 'components/StatusLine/StatusLine';
 import { generatePath } from 'react-router';
-import { ReactComponent as DownloadIcon } from 'assets/icons/Download.svg';
+import { ReactComponent as DocumentIcon } from 'assets/icons/Document.svg';
 import styles from 'pages/Inkomen/Inkomen.module.scss';
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
@@ -930,41 +930,23 @@ function formatFocusApiResponse(products: FocusApiResponse): FocusItem[] {
   return products.map(product => formatFocusProduct(product, d));
 }
 
-/**
- * Organise the data in a easy to access object so we can refer to
- * specific types of products when using the data throughout the app
- */
-export function formatProductCollections(items: FocusProduct[]) {
-  const allItems = formatFocusApiResponse(items);
-  const products: ProductCollection = {};
-  const allNotifications: MyNotification[] = [];
-
-  for (const item of allItems) {
-    const { productTitle } = item;
-    // Exclude Bijzondere Bijstand
-    if (productTitle !== ProductTitles.BijzondereBijstand) {
-      let productCollecton = products[productTitle];
-
-      if (!productCollecton) {
-        productCollecton = products[productTitle] = {
-          notifications: [],
-          items: [],
-        };
-      }
-
+export function formatFocusItems(sourceItems: FocusProduct[]) {
+  const items = formatFocusApiResponse(sourceItems).filter(
+    item => item.productTitle !== ProductTitles.BijzondereBijstand
+  );
+  const notifications = items.reduce<MyNotification[]>(
+    (notifications, item) => {
       if (item.notification) {
-        productCollecton.notifications.push(item.notification);
-        allNotifications.push(item.notification);
+        notifications.push(item.notification);
       }
-
-      productCollecton.items.push(item);
-    }
-  }
+      return notifications;
+    },
+    []
+  );
 
   return {
-    allItems,
-    allNotifications,
-    products,
+    notifications,
+    items,
   };
 }
 
@@ -1061,7 +1043,7 @@ export function formatIncomeSpecifications(
           className={styles.DownloadLink}
           download={`${displayDate}-${item.title}`}
         >
-          <DownloadIcon width={14} height={14} /> Bekijk
+          <DocumentIcon width={14} height={14} /> PDF
         </a>
       ),
       link: {
