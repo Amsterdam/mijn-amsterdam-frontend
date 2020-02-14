@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import styles from './Table.module.scss';
 import { entries } from 'helpers/App';
 import Linkd from 'components/Button/Button';
-import { Unshaped } from '../../App.types';
+import { Unshaped } from 'App.types';
+import classnames from 'classnames';
 
 export function addTitleLinkComponent(
   items: Unshaped[],
@@ -20,17 +21,16 @@ export interface TableProps {
   items: Unshaped[];
   className?: string;
   titleKey?: string;
-  displayProps?: { [key: string]: string };
+  displayProps?: { [key: string]: string | number | ReactNode };
 }
 
 export default function Table({
   items,
   displayProps,
-  titleKey = ' ',
+  titleKey = 'title',
+  className,
 }: TableProps) {
-  const displayPropsFinal = !displayProps
-    ? { [titleKey]: titleKey }
-    : displayProps;
+  const displayPropsFinal = !displayProps ? { [titleKey]: ' ' } : displayProps;
   const displayPropEntries = entries(displayPropsFinal).filter(
     ([key]) => key !== titleKey
   );
@@ -38,7 +38,7 @@ export default function Table({
     .length;
 
   return (
-    <table className={styles.Table}>
+    <table className={classnames(styles.Table, className)}>
       {hasDisplayPropTableHeadingLabels && (
         <thead>
           <tr className={styles.TableRow}>

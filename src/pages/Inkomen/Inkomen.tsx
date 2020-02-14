@@ -4,6 +4,7 @@ import PageHeading from 'components/PageHeading/PageHeading';
 import { AppContext } from 'AppState';
 import { ChapterTitles } from 'config/Chapter.constants';
 import styles from './Inkomen.module.scss';
+import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import { ExternalUrls } from 'config/App.constants';
 import Alert from 'components/Alert/Alert';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
@@ -12,6 +13,7 @@ import { AppRoutes } from 'config/Routing.constants';
 import { generatePath } from 'react-router-dom';
 import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
 import Table, { addTitleLinkComponent } from 'components/Table/Table';
+import { specificationsTableDisplayProps } from 'pages/InkomenSpecificaties/InkomenSpecificaties';
 
 const incomSpecificationsRouteMonthly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES']
@@ -26,7 +28,7 @@ const incomSpecificationsRouteYearly = generatePath(
 export default () => {
   const {
     FOCUS: {
-      data: { products },
+      data: { items },
       isError,
       isLoading,
     },
@@ -37,21 +39,20 @@ export default () => {
     },
   } = useContext(AppContext);
 
-  const items = useMemo(
-    () => Object.values(products).flatMap(product => product.items),
-    [products]
-  );
   const itemsRequested = useMemo(() => {
     return addTitleLinkComponent(items.filter(item => !item.hasDecision));
   }, [items]);
+
   const itemsDecided = useMemo(() => {
     return addTitleLinkComponent(items.filter(item => item.hasDecision));
   }, [items]);
+
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
   const itemsSpecificationsMonthly = incomeSpecificationItems
     .filter(item => !item.isAnnualStatement)
     .slice(0, 3);
+
   const itemsSpecificationsYearly = incomeSpecificationItems
     .filter(item => item.isAnnualStatement)
     .slice(0, 3);
@@ -84,6 +85,7 @@ export default () => {
         title="Lopende aanvragen"
         startCollapsed={false}
         isLoading={isLoading}
+        hasItems={hasActiveRequests}
         track={{
           category: 'Werk en inkomen overzicht / Lopende aanvragen',
           name: 'Datatabel',
@@ -97,6 +99,7 @@ export default () => {
         id="SectionCollapsible-income-request-process-decisions"
         startCollapsed={hasActiveRequests}
         isLoading={isLoading}
+        hasItems={hasActiveDescisions}
         title="Besluiten"
         track={{
           category: 'Werk en inkomen overzicht / Besluiten',
@@ -118,13 +121,9 @@ export default () => {
         noItemsMessage="Er zijn op dit moment geen uitkeringgspecificaties."
       >
         <Table
+          className={specicationsStyles.SpecificationsTable}
           items={itemsSpecificationsMonthly}
-          displayProps={{
-            title: 'Omschrijving',
-            type: 'Type',
-            displayDate: 'Datum',
-            documentUrl: 'Document',
-          }}
+          displayProps={specificationsTableDisplayProps}
         />
         <p className={styles.ShowAllButtonContainer}>
           <Linkd href={incomSpecificationsRouteMonthly}>Toon alles</Linkd>
@@ -142,13 +141,9 @@ export default () => {
         noItemsMessage="Er zijn op dit moment geen Jaaropgaven."
       >
         <Table
+          className={specicationsStyles.SpecificationsTable}
           items={itemsSpecificationsYearly}
-          displayProps={{
-            title: 'Omschrijving',
-            type: 'Type',
-            displayDate: 'Datum',
-            documentUrl: 'Document',
-          }}
+          displayProps={specificationsTableDisplayProps}
         />
         <p className={styles.ShowAllButtonContainer}>
           <Linkd href={incomSpecificationsRouteYearly}>Toon alles</Linkd>
