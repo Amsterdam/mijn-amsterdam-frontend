@@ -42,6 +42,7 @@ const responseData = {
     vertrokkenOnbekendWaarheen: true,
     datumVertrekUitNederland: '1967-01-01T00:00:00Z',
     aanduidingNaamgebruikOmschrijving: 'Eigen geslachtsnaam',
+    omschrijvingAdellijkeTitel: 'Hertogin',
     bsn: '129095205',
     geboortedatum: '1950-01-01T00:00:00Z',
     geboortelandnaam: 'Nederland',
