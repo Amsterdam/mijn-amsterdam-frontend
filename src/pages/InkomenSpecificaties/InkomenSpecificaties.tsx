@@ -37,13 +37,21 @@ export default () => {
       params: { type },
     },
   } = useRouter();
-  const today = format(new Date(), DATEPICKER_FORMAT);
+  const maxDate = new Date();
+  const minDate = new Date(
+    maxDate.getFullYear() - 10,
+    maxDate.getMonth(),
+    maxDate.getDate()
+  );
+  const maxDateString = format(maxDate, DATEPICKER_FORMAT);
+  const minDateString = format(minDate, DATEPICKER_FORMAT);
+
   const isAnnualStatementOverviewPage = type === 'jaaropgaven';
   const [isSearchPanelActive, setSearchPanelActive] = useState(false);
   const [selectedType, setSelectedType] = useState('');
   const [selectedDates, setSelectedDates] = useState<[string, string]>([
-    today,
-    today,
+    minDateString,
+    maxDateString,
   ]);
 
   const itemsByCategory = items.filter(item =>
@@ -62,10 +70,15 @@ export default () => {
   }, [itemsByCategory]);
 
   const [[startIndex, endIndex], setPageIndex] = useState(INITIAL_INDEX);
-
-  const itemsFiltered = itemsByCategory.filter(item =>
-    selectedType ? item.type === selectedType : true
-  );
+  const itemsFiltered = itemsByCategory
+    .filter(item => (selectedType ? item.type === selectedType : true))
+    .filter(item => {
+      const datePublished = new Date(item.datePublished);
+      return (
+        datePublished >= new Date(selectedDates[0]) &&
+        datePublished <= new Date(selectedDates[1])
+      );
+    });
 
   const itemsFilteredPaginated = itemsFiltered.slice(startIndex, endIndex + 1);
 
@@ -120,7 +133,7 @@ export default () => {
                 value={selectedType}
                 onChange={event => selectTypeFilter(event.target.value)}
               >
-                <option value="">Alle types</option>
+                <option value="">Alle types ({itemsByCategory.length})</option>
                 {options.map(([option, count]) => (
                   <option key={option} value={option}>
                     {option} ({count})
@@ -132,8 +145,8 @@ export default () => {
               Datum van
               <DateInput
                 className={styles.DatePicker}
-                fromDate={new Date(2010, 4, 12)}
-                toDate={new Date()}
+                minDate={minDate}
+                maxDate={maxDate}
                 value={selectedDates[0]}
                 onChange={dateStart =>
                   setSelectedDates(([, dateEnd]) => [dateStart, dateEnd])
@@ -144,8 +157,8 @@ export default () => {
               Datum tot
               <DateInput
                 className={styles.DatePicker}
-                fromDate={new Date()}
-                toDate={new Date()}
+                minDate={minDate}
+                maxDate={maxDate}
                 value={selectedDates[1]}
                 onChange={dateEnd =>
                   setSelectedDates(([dateStart]) => [dateStart, dateEnd])

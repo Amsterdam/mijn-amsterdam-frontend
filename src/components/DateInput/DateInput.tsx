@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import styles from './DateInput.module.scss';
-import { format, getDaysInMonth, parse } from 'date-fns';
+import { getDaysInMonth, format } from 'date-fns';
 import { range, getMonth } from 'helpers/App';
 import classnames from 'classnames';
 
@@ -15,16 +15,16 @@ export function isNativeDatePickerInputSupported() {
 export interface ComponentProps {
   onChange: (date: string) => void;
   value: string;
-  fromDate: Date;
-  toDate: Date;
+  minDate: Date;
+  maxDate: Date;
   className?: string;
 }
 
 export default function DateInput({
   onChange,
   value,
-  fromDate,
-  toDate,
+  minDate,
+  maxDate,
   className,
 }: ComponentProps) {
   const curDate = new Date(value);
@@ -35,38 +35,38 @@ export default function DateInput({
   ]);
 
   const fromMonth = useMemo(() => {
-    if (fromDate.getFullYear() === yearSelected) {
-      return fromDate.getMonth();
+    if (minDate.getFullYear() === yearSelected) {
+      return minDate.getMonth();
     }
     return 0;
-  }, [yearSelected, fromDate]);
+  }, [yearSelected, minDate]);
 
   const toMonth = useMemo(() => {
-    if (toDate.getFullYear() === yearSelected) {
-      return toDate.getMonth();
+    if (maxDate.getFullYear() === yearSelected) {
+      return maxDate.getMonth();
     }
     return 11;
-  }, [yearSelected, toDate]);
+  }, [yearSelected, maxDate]);
 
   const fromDay = useMemo(() => {
     if (
-      fromDate.getFullYear() === yearSelected &&
-      fromDate.getMonth() === monthSelected
+      minDate.getFullYear() === yearSelected &&
+      minDate.getMonth() === monthSelected
     ) {
-      return fromDate.getDate();
+      return minDate.getDate();
     }
     return 1;
-  }, [yearSelected, fromDate, monthSelected]);
+  }, [yearSelected, minDate, monthSelected]);
 
   const toDay = useMemo(() => {
     if (
-      toDate.getFullYear() === yearSelected &&
-      toDate.getMonth() === monthSelected
+      maxDate.getFullYear() === yearSelected &&
+      maxDate.getMonth() === monthSelected
     ) {
-      return toDate.getDate();
+      return maxDate.getDate();
     }
     return getDaysInMonth(monthSelected);
-  }, [yearSelected, toDate, monthSelected]);
+  }, [yearSelected, maxDate, monthSelected]);
 
   const hasNativeSupport = useMemo(() => {
     return isNativeDatePickerInputSupported();
@@ -78,6 +78,8 @@ export default function DateInput({
         <input
           className={classnames(styles.DateInput, className)}
           type="date"
+          min={format(minDate, 'yyyy-MM-dd')}
+          max={format(maxDate, 'yyyy-MM-dd')}
           value={value}
           onChange={event => onChange(event.target.value)}
         />
@@ -115,7 +117,7 @@ export default function DateInput({
             }}
             value={yearSelected}
           >
-            {range(fromDate.getFullYear(), toDate.getFullYear()).map(year => (
+            {range(minDate.getFullYear(), maxDate.getFullYear()).map(year => (
               <option key={year}>{year}</option>
             ))}
           </select>
