@@ -2,7 +2,7 @@
 
 .SpecificationsTable {
   td:not(:nth-child(3)) {
-    font-weight: bold;
+    font-weight: 500;
     color: $color-black;
   }
   tr td:nth-child(2) {
@@ -35,6 +35,25 @@
   }
 }
 
+.SearchButton {
+  @include button-unstyled;
+  font-weight: 500;
+  color: $color-neutral-grey4;
+
+  svg {
+    height: 1.3rem;
+    fill: $color-neutral-grey4;
+  }
+
+  &:hover {
+    color: $color-primary-red;
+    text-decoration: underline;
+    svg {
+      fill: $color-primary-red;
+    }
+  }
+}
+
 .SearchPanel {
   background-color: $color-neutral-grey1;
   width: 100%;
@@ -61,7 +80,9 @@
 .Pagination {
   margin: 0 auto;
   margin-top: 4rem;
-  max-width: 50%;
+  width: 50%;
+  display: flex;
+  justify-content: center;
 }
 
 .Select {

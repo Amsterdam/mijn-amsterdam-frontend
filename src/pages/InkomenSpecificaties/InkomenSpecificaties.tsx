@@ -14,6 +14,7 @@ import Section from 'components/Section/Section';
 import Pagination from 'components/Pagination/Pagination';
 import { format } from 'date-fns';
 import DateInput from 'components/DateInput/DateInput';
+import { ReactComponent as SearchIcon } from 'assets/icons/Search.svg';
 
 export const specificationsTableDisplayProps = {
   title: 'Omschrijving',
@@ -85,8 +86,11 @@ export default () => {
     return {
       ...specificationsTableDisplayProps,
       documentUrl: (
-        <button onClick={() => setSearchPanelActive(!isSearchPanelActive)}>
-          {isSearchPanelActive ? 'Verberg ' : ''} zoeken []
+        <button
+          className={styles.SearchButton}
+          onClick={() => setSearchPanelActive(!isSearchPanelActive)}
+        >
+          {isSearchPanelActive ? 'Verberg zoeken' : 'Zoeken'} <SearchIcon />
         </button>
       ),
     };
@@ -148,7 +152,10 @@ export default () => {
                 maxDate={maxDate}
                 value={selectedDates[0]}
                 onChange={dateStart =>
-                  setSelectedDates(([, dateEnd]) => [dateStart, dateEnd])
+                  setSelectedDates(([, dateEnd]) => [
+                    dateStart || minDateString,
+                    dateEnd || maxDateString,
+                  ])
                 }
               />
             </label>
@@ -160,7 +167,10 @@ export default () => {
                 maxDate={maxDate}
                 value={selectedDates[1]}
                 onChange={dateEnd =>
-                  setSelectedDates(([dateStart]) => [dateStart, dateEnd])
+                  setSelectedDates(([dateStart]) => [
+                    dateStart || minDateString,
+                    dateEnd || maxDateString,
+                  ])
                 }
               />
             </label>
