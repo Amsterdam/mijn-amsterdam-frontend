@@ -35,6 +35,7 @@ export interface Persoon {
   geslachtsnaam: string;
   omschrijvingBurgerlijkeStaat: string;
   omschrijvingGeslachtsaanduiding: string | null;
+  omschrijvingAdellijkeTitel: string | null;
   opgemaakteNaam: string;
   voornamen: string;
   nationaliteiten: Array<{ omschrijving: string }>;
@@ -95,6 +96,7 @@ export function isMokum(BRP: BrpApiState) {
 
 const persoon: ProfileLabels<Partial<Persoon>> = {
   voornamen: 'Voornamen',
+  omschrijvingAdellijkeTitel: 'Titel',
   voorvoegselGeslachtsnaam: 'Voorvoegsel',
   geslachtsnaam: 'Achternaam',
   omschrijvingGeslachtsaanduiding: 'Geslacht',
