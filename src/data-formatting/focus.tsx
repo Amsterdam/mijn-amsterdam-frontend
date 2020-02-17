@@ -1,7 +1,7 @@
 import { AppRoutes } from 'config/Routing.constants';
 import { LinkProps } from 'App.types';
 import { addDays, differenceInCalendarDays, parseISO } from 'date-fns';
-import { defaultDateFormat } from 'helpers/App';
+import { defaultDateFormat, dateSort } from 'helpers/App';
 import { MyNotification } from 'hooks/api/my-notifications-api.hook';
 import { FeatureToggle } from 'config/App.constants';
 import { Chapter, Chapters } from 'config/Chapter.constants';
@@ -1032,7 +1032,7 @@ export interface FocusInkomenSpecificatie
 export function formatIncomeSpecifications(
   items: FocusInkomenSpecificatieFromSource[]
 ): FocusInkomenSpecificatie[] {
-  return items.map(item => {
+  return items.sort(dateSort('datePublished', 'desc')).map(item => {
     const displayDate = defaultDateFormat(item.datePublished);
     return {
       ...item,

@@ -23,7 +23,7 @@ export const specificationsTableDisplayProps = {
   documentUrl: '',
 };
 
-const PAGE_SIZE = 4;
+const PAGE_SIZE = 10;
 const INITIAL_INDEX = [0, PAGE_SIZE - 1];
 const DATEPICKER_FORMAT = 'yyyy-MM-dd';
 
