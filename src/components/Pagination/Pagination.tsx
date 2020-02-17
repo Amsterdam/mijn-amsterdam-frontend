@@ -37,6 +37,7 @@ export default function Pagination({
   // Effect for resetting the current page when any of the settings change.
   useEffect(() => {
     selectPage(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [totalCount, pageSize, maxPages]);
 
   return (

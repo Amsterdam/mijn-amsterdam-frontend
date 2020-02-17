@@ -14,7 +14,6 @@ import Section from 'components/Section/Section';
 import Pagination from 'components/Pagination/Pagination';
 import { format } from 'date-fns';
 import DateInput from 'components/DateInput/DateInput';
-import classNames from 'classnames';
 
 export const specificationsTableDisplayProps = {
   title: 'Omschrijving',
