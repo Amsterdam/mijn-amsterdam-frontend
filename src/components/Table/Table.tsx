@@ -66,7 +66,9 @@ export default function Table({
             )}
             {displayPropEntries.map(([key, label]) => (
               <td key={`td-${key}`} className={styles.DisplayProp}>
-                <span className={styles.DisplayPropLabel}>{label}:</span>
+                {!!label && (
+                  <span className={styles.DisplayPropLabel}>{label}:</span>
+                )}
                 {item[key] || <span>&mdash;</span>}
               </td>
             ))}

@@ -81,21 +81,6 @@ export default () => {
     });
 
   const itemsFilteredPaginated = itemsFiltered.slice(startIndex, endIndex + 1);
-
-  const specificationsTableDisplayPropsWithSearch: any = useMemo(() => {
-    return {
-      ...specificationsTableDisplayProps,
-      documentUrl: (
-        <button
-          className={styles.SearchButton}
-          onClick={() => setSearchPanelActive(!isSearchPanelActive)}
-        >
-          {isSearchPanelActive ? 'Verberg zoeken' : 'Zoeken'} <SearchIcon />
-        </button>
-      ),
-    };
-  }, [isSearchPanelActive, setSearchPanelActive]);
-
   const selectTypeFilter = useCallback(type => {
     setSelectedType(type);
     setPageIndex(INITIAL_INDEX);
@@ -127,6 +112,12 @@ export default () => {
         hasItems={!!itemsFiltered.length}
         noItemsMessage="Er zijn op dit moment nog geen documenten beschikbaar."
       >
+        <button
+          className={styles.SearchButton}
+          onClick={() => setSearchPanelActive(!isSearchPanelActive)}
+        >
+          {isSearchPanelActive ? 'Verberg zoeken' : 'Zoeken'} <SearchIcon />
+        </button>
         {isSearchPanelActive && (
           <div className={styles.SearchPanel}>
             <label>
@@ -179,7 +170,7 @@ export default () => {
         <Table
           className={styles.SpecificationsTable}
           items={itemsFilteredPaginated}
-          displayProps={specificationsTableDisplayPropsWithSearch}
+          displayProps={specificationsTableDisplayProps}
         />
 
         {itemsFiltered.length > PAGE_SIZE && (

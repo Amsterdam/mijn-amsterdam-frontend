@@ -8,9 +8,11 @@
   tr td:nth-child(2) {
     width: 30%;
   }
-  tr td:last-of-type {
-    width: 70px;
-    text-align: right;
+  @include media-q('>=phone') {
+    tr td:last-of-type {
+      width: 70px;
+      text-align: right;
+    }
   }
   @include select(Table_DisplayPropTitle) {
     width: 30%;
@@ -40,6 +42,11 @@
   font-weight: 500;
   color: $color-neutral-grey4;
 
+  @include media-q('>=phone') {
+    float: right;
+    margin-bottom: -3rem;
+  }
+
   svg {
     height: 1.3rem;
     fill: $color-neutral-grey4;
@@ -48,6 +55,7 @@
   &:hover {
     color: $color-primary-red;
     text-decoration: underline;
+
     svg {
       fill: $color-primary-red;
     }
@@ -59,20 +67,26 @@
   width: 100%;
   display: flex;
   padding: 2rem;
-  justify-content: right;
   margin-bottom: 2rem;
+  flex-wrap: wrap;
+
+  @include media-q('<=phone') {
+    flex-direction: column;
+  }
 
   label {
     display: flex;
     flex-direction: column;
     flex: 2;
 
-    &:first-child {
-      margin-right: 2rem;
-      flex: 3;
-    }
-    &:last-child {
-      margin-left: 2rem;
+    @include media-q('>phone') {
+      &:first-child {
+        margin-right: 2rem;
+      }
+
+      &:last-child {
+        margin-left: 2rem;
+      }
     }
   }
 }

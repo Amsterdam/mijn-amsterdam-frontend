@@ -7,18 +7,23 @@
 .DateInputFallback {
   display: inline-flex;
   position: relative;
+
   select {
     @include inputSelect;
     padding-right: 1.6em;
+
     &:not(:first-of-type) {
       border-left: 0;
     }
+
     &:nth-child(1) {
       min-width: 7rem;
     }
+
     &:nth-child(2) {
       min-width: 11rem;
     }
+
     &:nth-child(3) {
       min-width: 9rem;
     }

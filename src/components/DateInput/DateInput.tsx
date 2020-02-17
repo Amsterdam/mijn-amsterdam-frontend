@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import styles from './DateInput.module.scss';
 import { getDaysInMonth, format } from 'date-fns';
 import { range, getMonth } from 'helpers/App';
@@ -28,11 +28,19 @@ export default function DateInput({
   className,
 }: ComponentProps) {
   const curDate = new Date(value);
-  const [[yearSelected, monthSelected, daySelected], setDate] = useState([
+  const [[yearSelected, monthSelected, daySelected], setDateState] = useState([
     curDate.getFullYear(),
     curDate.getMonth(),
     curDate.getDate(),
   ]);
+
+  const setDate = useCallback(
+    (date: [number, number, number]) => {
+      setDateState(date);
+      onChange(date.join('-'));
+    },
+    [onChange, setDateState]
+  );
 
   const fromMonth = useMemo(() => {
     if (minDate.getFullYear() === yearSelected) {
@@ -68,6 +76,10 @@ export default function DateInput({
     return getDaysInMonth(monthSelected);
   }, [yearSelected, maxDate, monthSelected]);
 
+  const daysInMonthSelected = useMemo(() => {
+    return getDaysInMonth(new Date(yearSelected, monthSelected, daySelected));
+  }, [yearSelected, monthSelected, daySelected]);
+
   const hasNativeSupport = useMemo(() => {
     return isNativeDatePickerInputSupported();
   }, []);
@@ -89,23 +101,29 @@ export default function DateInput({
           <select
             onChange={event => {
               const day = Number(event.target.value);
-              setDate(([year, month]) => [year, month, day]);
+              setDate([yearSelected, monthSelected, day]);
             }}
             value={daySelected}
           >
-            {range(fromDay, toDay).map(day => (
-              <option key={day}>{day}</option>
+            {range(1, daysInMonthSelected).map(day => (
+              <option disabled={day < fromDay || day > toDay} key={day}>
+                {day}
+              </option>
             ))}
           </select>
           <select
             onChange={event => {
               const month = Number(event.target.value);
-              setDate(([year, , day]) => [year, month, day]);
+              setDate([yearSelected, month, daySelected]);
             }}
             value={monthSelected}
           >
-            {range(fromMonth, toMonth).map(month => (
-              <option key={month} value={month}>
+            {range(0, 11).map(month => (
+              <option
+                disabled={month < fromMonth || month > toMonth}
+                key={month}
+                value={month}
+              >
                 {getMonth(month)}
               </option>
             ))}
@@ -113,7 +131,7 @@ export default function DateInput({
           <select
             onChange={event => {
               const year = Number(event.target.value);
-              setDate(([, month, day]) => [year, month, day]);
+              setDate([year, monthSelected, daySelected]);
             }}
             value={yearSelected}
           >
