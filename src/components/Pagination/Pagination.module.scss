@@ -32,12 +32,16 @@
   }
 
   &:hover {
-    background-color: $color-neutral-grey2;
+    color: $color-primary-red;
+    text-decoration: underline;
   }
 
   &.SelectedPage {
     background-color: $color-neutral-grey4;
     color: $color-white;
+    &:hover {
+      text-decoration: none;
+    }
   }
 
   &.PagePrevButton,
@@ -48,10 +52,11 @@
 
     &:hover {
       background-color: inherit;
-      color: $color-neutral-grey4;
+      color: $color-primary-red;
+      text-decoration: underline;
 
       svg {
-        fill: $color-neutral-grey4;
+        fill: $color-primary-red;
       }
     }
 
