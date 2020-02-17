@@ -112,12 +112,6 @@ export default () => {
         hasItems={!!itemsFiltered.length}
         noItemsMessage="Er zijn op dit moment nog geen documenten beschikbaar."
       >
-        <button
-          className={styles.SearchButton}
-          onClick={() => setSearchPanelActive(!isSearchPanelActive)}
-        >
-          {isSearchPanelActive ? 'Verberg zoeken' : 'Zoeken'} <SearchIcon />
-        </button>
         {isSearchPanelActive && (
           <div className={styles.SearchPanel}>
             <label>
@@ -166,6 +160,15 @@ export default () => {
               />
             </label>
           </div>
+        )}
+        {!isSearchPanelActive && (
+          <button
+            className={styles.SearchButton}
+            onClick={() => setSearchPanelActive(!isSearchPanelActive)}
+            disabled={isSearchPanelActive}
+          >
+            Zoeken <SearchIcon />
+          </button>
         )}
         <Table
           className={styles.SpecificationsTable}
