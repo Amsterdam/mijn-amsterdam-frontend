@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { ComponentChildren } from 'App.types';
 import classnames from 'classnames';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
@@ -8,7 +8,7 @@ import styles from './Section.module.scss';
 
 export interface SectionProps {
   title?: string;
-  noItemsMessage?: string;
+  noItemsMessage?: string | ReactNode;
   className?: string;
   isLoading?: boolean;
   track?: { category: string; name: string };

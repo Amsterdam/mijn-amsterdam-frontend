@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import styles from './DateInput.module.scss';
-import { getDaysInMonth, format } from 'date-fns';
+import { getDaysInMonth } from 'date-fns';
 import { range, getMonth } from 'helpers/App';
 import classnames from 'classnames';
 
@@ -15,9 +15,27 @@ export function isNativeDatePickerInputSupported() {
 export interface ComponentProps {
   onChange: (date: string) => void;
   value: string;
-  minDate: Date;
-  maxDate: Date;
+  minDate: string;
+  maxDate: string;
   className?: string;
+}
+
+function parseDateParts(value: string) {
+  return value.split('-').map((p, i) => Number(p) - (i === 1 ? 1 : 0));
+}
+
+function checkValiDateFormat(value: string) {
+  const parts = value.split('-');
+  return (
+    parts.length === 3 &&
+    parts[0].length === 4 &&
+    parts[1].length === 2 &&
+    parts[2].length === 2 &&
+    parseInt(parts[1], 10) >= 1 &&
+    parseInt(parts[1], 10) <= 12 &&
+    parseInt(parts[2], 10) >= 1 &&
+    parseInt(parts[2], 10) <= 31
+  );
 }
 
 export default function DateInput({
@@ -27,12 +45,23 @@ export default function DateInput({
   maxDate,
   className,
 }: ComponentProps) {
-  const curDate = new Date(value);
-  const [[yearSelected, monthSelected, daySelected], setDateState] = useState([
-    curDate.getFullYear(),
-    curDate.getMonth(),
-    curDate.getDate(),
-  ]);
+  const [[yearSelected, monthSelected, daySelected], setDateState] = useState(
+    parseDateParts(value)
+  );
+
+  if (!checkValiDateFormat(minDate)) {
+    console.info(
+      'minDate, maxDate and value should be provided in the following format: yyyy-MM-dd'
+    );
+  }
+
+  const minDateParts = useMemo(() => {
+    return parseDateParts(minDate);
+  }, [minDate]);
+
+  const maxDateParts = useMemo(() => {
+    return parseDateParts(maxDate);
+  }, [maxDate]);
 
   const setDate = useCallback(
     (date: [number, number, number]) => {
@@ -43,38 +72,32 @@ export default function DateInput({
   );
 
   const fromMonth = useMemo(() => {
-    if (minDate.getFullYear() === yearSelected) {
-      return minDate.getMonth();
+    if (minDateParts[0] === yearSelected) {
+      return minDateParts[1];
     }
     return 0;
-  }, [yearSelected, minDate]);
+  }, [yearSelected, minDateParts]);
 
   const toMonth = useMemo(() => {
-    if (maxDate.getFullYear() === yearSelected) {
-      return maxDate.getMonth();
+    if (maxDateParts[0] === yearSelected) {
+      return maxDateParts[1];
     }
     return 11;
-  }, [yearSelected, maxDate]);
+  }, [yearSelected, maxDateParts]);
 
   const fromDay = useMemo(() => {
-    if (
-      minDate.getFullYear() === yearSelected &&
-      minDate.getMonth() === monthSelected
-    ) {
-      return minDate.getDate();
+    if (minDateParts[0] === yearSelected && minDateParts[1] === monthSelected) {
+      return minDateParts[2];
     }
     return 1;
-  }, [yearSelected, minDate, monthSelected]);
+  }, [yearSelected, minDateParts, monthSelected]);
 
   const toDay = useMemo(() => {
-    if (
-      maxDate.getFullYear() === yearSelected &&
-      maxDate.getMonth() === monthSelected
-    ) {
-      return maxDate.getDate();
+    if (maxDateParts[0] === yearSelected && maxDateParts[1] === monthSelected) {
+      return maxDateParts[2];
     }
     return getDaysInMonth(monthSelected);
-  }, [yearSelected, maxDate, monthSelected]);
+  }, [yearSelected, maxDateParts, monthSelected]);
 
   const daysInMonthSelected = useMemo(() => {
     return getDaysInMonth(new Date(yearSelected, monthSelected, daySelected));
@@ -90,8 +113,8 @@ export default function DateInput({
         <input
           className={classnames(styles.DateInput, className)}
           type="date"
-          min={format(minDate, 'yyyy-MM-dd')}
-          max={format(maxDate, 'yyyy-MM-dd')}
+          min={minDate}
+          max={maxDate}
           value={value}
           onChange={event => onChange(event.target.value)}
         />
@@ -135,7 +158,7 @@ export default function DateInput({
             }}
             value={yearSelected}
           >
-            {range(minDate.getFullYear(), maxDate.getFullYear()).map(year => (
+            {range(minDateParts[0], maxDateParts[0]).map(year => (
               <option key={year}>{year}</option>
             ))}
           </select>

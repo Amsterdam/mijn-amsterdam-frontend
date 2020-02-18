@@ -1,6 +1,6 @@
 import { AppRoutes } from 'config/Routing.constants';
 import { LinkProps } from 'App.types';
-import { addDays, differenceInCalendarDays, parseISO } from 'date-fns';
+import { addDays, differenceInCalendarDays, parseISO, format } from 'date-fns';
 import { defaultDateFormat, dateSort } from 'helpers/App';
 import { MyNotification } from 'hooks/api/my-notifications-api.hook';
 import { FeatureToggle } from 'config/App.constants';
@@ -1041,7 +1041,9 @@ export function formatIncomeSpecifications(
         <a
           href={item.url}
           className={styles.DownloadLink}
-          download={`${displayDate}-${item.title}`}
+          download={`${format(new Date(item.datePublished), 'yyyy-MM-dd')}-${
+            item.title
+          }`}
         >
           <DocumentIcon width={14} height={14} /> PDF
         </a>

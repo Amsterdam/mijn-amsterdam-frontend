@@ -125,6 +125,10 @@ $buttons: (
     // }
   };
 
+  @include buttonStyle("inline") {
+    padding: 0;
+  }
+
   @include buttonStyle("plain") {
     &:hover {
       text-decoration: underline;

@@ -14,6 +14,7 @@ import Pagination from 'components/Pagination/Pagination';
 import { format } from 'date-fns';
 import DateInput from 'components/DateInput/DateInput';
 import { ReactComponent as SearchIcon } from 'assets/icons/Search.svg';
+import { Button } from '../../components/Button/Button';
 
 export const specificationsTableDisplayProps = {
   title: 'Omschrijving',
@@ -39,25 +40,24 @@ export default () => {
 
   const maxDate = useMemo(() => {
     if (items.length) {
-      return new Date(items[0].datePublished);
+      return items[0].datePublished;
     }
-    return new Date();
+    return format(new Date(), DATEPICKER_FORMAT);
   }, [items]);
+
   const minDate = useMemo(() => {
     if (items.length) {
-      return new Date(items[items.length - 1].datePublished);
+      return items[items.length - 1].datePublished;
     }
-    return new Date();
+    return format(new Date(), DATEPICKER_FORMAT);
   }, [items]);
-  const maxDateString = format(maxDate, DATEPICKER_FORMAT);
-  const minDateString = format(minDate, DATEPICKER_FORMAT);
 
   const isAnnualStatementOverviewPage = type === 'jaaropgaven';
   const [isSearchPanelActive, setSearchPanelActive] = useState(false);
   const [selectedType, setSelectedType] = useState('');
   const [selectedDates, setSelectedDates] = useState<[string, string]>([
-    minDateString,
-    maxDateString,
+    minDate,
+    maxDate,
   ]);
 
   const itemsByCategory = items.filter(item =>
@@ -76,6 +76,7 @@ export default () => {
   }, [itemsByCategory]);
 
   const [[startIndex, endIndex], setPageIndex] = useState(INITIAL_INDEX);
+
   const itemsFiltered = itemsByCategory
     .filter(item => (selectedType ? item.type === selectedType : true))
     .filter(item => {
@@ -91,6 +92,11 @@ export default () => {
     setSelectedType(type);
     setPageIndex(INITIAL_INDEX);
   }, []);
+
+  function resetSearch() {
+    setSelectedType('');
+    setSelectedDates([minDate, maxDate]);
+  }
 
   return (
     <OverviewPage className={styles.InkomenSpecificaties}>
@@ -116,7 +122,20 @@ export default () => {
         }
         isLoading={isLoading}
         hasItems={!!itemsFiltered.length}
-        noItemsMessage="Er zijn op dit moment nog geen documenten beschikbaar."
+        noItemsMessage={
+          <>
+            Er zijn op dit moment nog geen documenten beschikbaar.{' '}
+            {items.length !== itemsFiltered.length && (
+              <Button
+                onClick={resetSearch}
+                variant="inline"
+                className={styles.ResetButton}
+              >
+                Begin opnieuw
+              </Button>
+            )}
+          </>
+        }
       >
         {isSearchPanelActive && (
           <div className={styles.SearchPanel}>
@@ -142,12 +161,12 @@ export default () => {
                 minDate={minDate}
                 maxDate={maxDate}
                 value={selectedDates[0]}
-                onChange={dateStart =>
+                onChange={dateStart => {
                   setSelectedDates(([, dateEnd]) => [
-                    dateStart || minDateString,
-                    dateEnd || maxDateString,
-                  ])
-                }
+                    dateStart || minDate,
+                    dateEnd || maxDate,
+                  ]);
+                }}
               />
             </label>
             <label>
@@ -159,8 +178,8 @@ export default () => {
                 value={selectedDates[1]}
                 onChange={dateEnd =>
                   setSelectedDates(([dateStart]) => [
-                    dateStart || minDateString,
-                    dateEnd || maxDateString,
+                    dateStart || minDate,
+                    dateEnd || maxDate,
                   ])
                 }
               />

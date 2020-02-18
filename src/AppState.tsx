@@ -174,6 +174,7 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
 
 export default ({ children, value }: AppStateProps) => {
   const appState = value || useAppState();
+
   return (
     // TODO: Straight out partial appState assignments. Forcing type assignment here for !!!111!!1!!
     <AppContext.Provider value={appState as AppState}>
