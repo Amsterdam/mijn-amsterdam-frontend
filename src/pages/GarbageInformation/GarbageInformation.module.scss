@@ -1,20 +1,7 @@
 @import 'styles/_global.scss';
 
 .InfoSection {
-  padding-top: 2rem;
-}
-
-.GarbageInformation .InfoSection__fullWidth {
-  max-width: none;
-  width: 100%;
-
-  @include select(SectionCollapsible_Panel) {
-    border: 0;
-  }
-
-  + .InfoSection {
-    border-top: 1px solid $color-neutral-grey2;
-  }
+  transition: max-width 400ms ease;
 }
 
 @mixin GarbagePanel {
@@ -33,11 +20,6 @@
 
 .Panel {
   padding: 2rem 0;
-  border-top: .1rem solid $color-neutral-grey2;
-
-  &:first-child {
-    border-top: 0;
-  }
 
   @include select(Heading_Heading__tiny) {
     color: $color-neutral-grey4;
@@ -74,6 +56,12 @@
   max-width: $main-boxed-width;
   margin: 0 auto;
   margin-top: 4rem;
+  margin-bottom: 2rem;
+  border-top: 0.1rem solid $color-neutral-grey2;
+
+  > p {
+    font-weight: bold;
+  }
 
   @include mq-tablet() {
     margin: 0 2rem;
@@ -103,6 +91,11 @@
     @include select(Button_Icon) {
       transition: transform 100ms ease-in-out;
     }
+  }
+}
+.InfoSectionMap {
+  &[class*=SectionCollapsible]:not([class*=SectionCollapsible_isCollapsed]) {
+    max-width: 100%;
   }
 }
 

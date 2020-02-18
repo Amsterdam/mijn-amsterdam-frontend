@@ -1,15 +1,17 @@
 import { AppRoutes } from 'config/Routing.constants';
 import { LinkProps } from 'App.types';
-import { addDays, differenceInCalendarDays, parseISO } from 'date-fns';
-import { defaultDateFormat } from 'helpers/App';
+import { addDays, differenceInCalendarDays, parseISO, format } from 'date-fns';
+import { defaultDateFormat, dateSort } from 'helpers/App';
 import { MyNotification } from 'hooks/api/my-notifications-api.hook';
 import { FeatureToggle } from 'config/App.constants';
 import { Chapter, Chapters } from 'config/Chapter.constants';
 import { Document as GenericDocument } from '../components/DocumentList/DocumentList';
 import Linkd from 'components/Button/Button';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { StatusLineItem, StepType } from 'components/StatusLine/StatusLine';
 import { generatePath } from 'react-router';
+import { ReactComponent as DocumentIcon } from 'assets/icons/Document.svg';
+import styles from 'pages/Inkomen/Inkomen.module.scss';
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
  */
@@ -928,41 +930,23 @@ function formatFocusApiResponse(products: FocusApiResponse): FocusItem[] {
   return products.map(product => formatFocusProduct(product, d));
 }
 
-/**
- * Organise the data in a easy to access object so we can refer to
- * specific types of products when using the data throughout the app
- */
-export function formatProductCollections(items: FocusProduct[]) {
-  const allItems = formatFocusApiResponse(items);
-  const products: ProductCollection = {};
-  const allNotifications: MyNotification[] = [];
-
-  for (const item of allItems) {
-    const { productTitle } = item;
-    // Exclude Bijzondere Bijstand
-    if (productTitle !== ProductTitles.BijzondereBijstand) {
-      let productCollecton = products[productTitle];
-
-      if (!productCollecton) {
-        productCollecton = products[productTitle] = {
-          notifications: [],
-          items: [],
-        };
-      }
-
+export function formatFocusItems(sourceItems: FocusProduct[]) {
+  const items = formatFocusApiResponse(sourceItems).filter(
+    item => item.productTitle !== ProductTitles.BijzondereBijstand
+  );
+  const notifications = items.reduce<MyNotification[]>(
+    (notifications, item) => {
       if (item.notification) {
-        productCollecton.notifications.push(item.notification);
-        allNotifications.push(item.notification);
+        notifications.push(item.notification);
       }
-
-      productCollecton.items.push(item);
-    }
-  }
+      return notifications;
+    },
+    []
+  );
 
   return {
-    allItems,
-    allNotifications,
-    products,
+    notifications,
+    items,
   };
 }
 
@@ -1001,4 +985,73 @@ export function altDocumentContent(
   ) : (
     ''
   );
+}
+
+export type FocusInkomenSpecificatieType =
+  | 'IOAZ'
+  | 'BBS'
+  | 'WKO'
+  | 'IOAW'
+  | 'STIMREG'
+  | 'BIBI'
+  | 'PART'
+  | 'BBZ';
+
+export const focusInkomenSpecificatieTypes: {
+  [type in FocusInkomenSpecificatieType]: string;
+} = {
+  IOAZ: 'IOAZ',
+  BBS: 'Bijzonder bijstand en stimuleringsregelingen',
+  WKO: 'Wet kinderopvang',
+  IOAW: 'IOAW',
+  STIMREG: 'Stimuleringsregelingen',
+  BIBI: 'Bijzonder bijstand',
+  PART: 'Participatiewet',
+  BBZ: 'BBZ',
+};
+
+export interface FocusInkomenSpecificatieFromSource {
+  title: string | ReactNode;
+  datePublished: string;
+  id: string;
+  url: string;
+  type: FocusInkomenSpecificatieType;
+  isAnnualStatement: boolean;
+}
+
+export interface FocusInkomenSpecificatie
+  extends FocusInkomenSpecificatieFromSource {
+  link: {
+    to: string;
+    title: string;
+  };
+  displayDate: string;
+  documentUrl: ReactNode;
+}
+
+export function formatIncomeSpecifications(
+  items: FocusInkomenSpecificatieFromSource[]
+): FocusInkomenSpecificatie[] {
+  return items.sort(dateSort('datePublished', 'desc')).map(item => {
+    const displayDate = defaultDateFormat(item.datePublished);
+    return {
+      ...item,
+      displayDate,
+      documentUrl: (
+        <a
+          href={item.url}
+          className={styles.DownloadLink}
+          download={`${format(new Date(item.datePublished), 'yyyy-MM-dd')}-${
+            item.title
+          }`}
+        >
+          <DocumentIcon width={14} height={14} /> PDF
+        </a>
+      ),
+      link: {
+        to: item.url,
+        title: 'Download specificatie',
+      },
+    };
+  });
 }

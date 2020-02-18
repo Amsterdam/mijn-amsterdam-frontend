@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Table /> Renderd differently without $titleKey and $displayProps in data object 1`] = `"<table class=\\"Table\\"><thead><tr class=\\"TableRow\\"></tr></thead><tbody><tr class=\\"TableRow\\"></tr><tr class=\\"TableRow\\"></tr></tbody></table>"`;
+
+exports[`<Table /> Renderd differently without $titleKey and including $displayProps in data object 1`] = `"<table class=\\"Table\\"><thead><tr class=\\"TableRow\\"><th class=\\"DisplayProp\\">Datum</th></tr></thead><tbody><tr class=\\"TableRow\\"><td class=\\"DisplayProp\\"><span class=\\"DisplayPropLabel\\">Datum:</span>2019-08-06</td></tr><tr class=\\"TableRow\\"><td class=\\"DisplayProp\\"><span class=\\"DisplayPropLabel\\">Datum:</span>2013-08-06</td></tr></tbody></table>"`;
+
+exports[`<Table /> Renders the default 1`] = `"<table class=\\"Table\\"><thead><tr class=\\"TableRow\\"><th class=\\"DisplayProp\\"> </th></tr></thead><tbody><tr class=\\"TableRow\\"><td class=\\"DisplayPropTitle\\">Title 1</td></tr><tr class=\\"TableRow\\"><td class=\\"DisplayPropTitle\\">Foo the world</td></tr></tbody></table>"`;
+
+exports[`<Table /> Uses a different title key 1`] = `"<table class=\\"Table\\"><thead><tr class=\\"TableRow\\"><th class=\\"DisplayProp\\"> </th></tr></thead><tbody><tr class=\\"TableRow\\"><td class=\\"DisplayPropTitle\\">Title 1</td></tr><tr class=\\"TableRow\\"><td class=\\"DisplayPropTitle\\">Foo the world</td></tr></tbody></table>"`;

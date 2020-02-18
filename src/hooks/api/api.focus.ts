@@ -1,8 +1,10 @@
 import {
   FocusApiResponse,
+  FocusInkomenSpecificatie,
+  FocusInkomenSpecificatieFromSource,
   FocusItem,
-  formatProductCollections,
-  ProductCollection,
+  formatFocusItems,
+  formatIncomeSpecifications,
 } from 'data-formatting/focus';
 import { getApiConfigValue, getApiUrl } from 'helpers/App';
 import { useMemo } from 'react';
@@ -10,43 +12,12 @@ import { useDataApi } from './api.hook';
 import { ApiState } from './api.types';
 import { MyNotification } from './my-notifications-api.hook';
 
-export type FocusInkomenSpecificatieType =
-  | 'IOAZ'
-  | 'BBS'
-  | 'WKO'
-  | 'IOAW'
-  | 'STIMREG'
-  | 'BIBI'
-  | 'PART'
-  | 'BBZ';
-
-export const focusInkomenSpecificatieTypes: {
-  [type in FocusInkomenSpecificatieType]: string;
-} = {
-  IOAZ: 'IOAZ',
-  BBS: 'Bijzonder bijstand en stimuleringsregelingen',
-  WKO: 'Wet kinderopvang',
-  IOAW: 'IOAW',
-  STIMREG: 'Stimuleringsregelingen',
-  BIBI: 'Bijzonder bijstand',
-  PART: 'Participatiewet',
-  BBZ: 'BBZ',
-};
-
-export interface FocusInkomenSpecificatie {
-  title: string;
-  datePublished: string;
-  id: string;
-  url: string;
-  type: FocusInkomenSpecificatieType;
-}
-
 export type FocusInkomenSpecificatiesApiState = ApiState<
   FocusInkomenSpecificatie[]
 >;
 
 export function useFocusInkomenSpecificatiesApi(): FocusInkomenSpecificatiesApiState {
-  const [api] = useDataApi<FocusInkomenSpecificatie[]>(
+  const [api] = useDataApi<FocusInkomenSpecificatieFromSource[]>(
     {
       url: getApiUrl('FOCUS_INKOMEN_SPECIFICATIES'),
       postpone: getApiConfigValue(
@@ -58,14 +29,13 @@ export function useFocusInkomenSpecificatiesApi(): FocusInkomenSpecificatiesApiS
     []
   );
 
-  return api;
+  return { ...api, data: formatIncomeSpecifications(api.data) };
 }
 
 export interface FocusData {
   items: FocusItem[];
   recentCases: FocusItem[];
   notifications: MyNotification[];
-  products: ProductCollection;
 }
 
 export type FocusApiState = ApiState<FocusData> & { rawData: FocusApiResponse };
@@ -80,19 +50,16 @@ export default function useFocusApi(): FocusApiState {
   );
 
   return useMemo(() => {
-    const { allItems, allNotifications, products } = formatProductCollections(
-      api.data
-    );
+    const { items, notifications } = formatFocusItems(api.data);
+    const recentCases = items.filter(item => item.isRecent);
 
-    const recentCases = allItems.filter(item => item.isRecent);
     return {
       ...api,
       rawData: api.data,
       data: {
-        items: allItems,
-        notifications: allNotifications,
+        items,
+        notifications,
         recentCases,
-        products,
       },
     };
   }, [api]);

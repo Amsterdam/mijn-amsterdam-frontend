@@ -14,7 +14,6 @@ import classnames from 'classnames';
 import { GarbagePoint } from 'hooks/api/api.garbage';
 import { MyAreaMapIFrame } from 'components/MyArea/MyArea';
 import Panel from 'components/Panel/Panel';
-import { useSessionStorage } from 'hooks/storage.hook';
 import { GarbageMoment } from 'hooks/api/api.garbage';
 
 interface PanelProps {
@@ -62,45 +61,15 @@ export default () => {
     },
   } = useContext(AppContext);
 
-  const collapsedIndex = {
-    otherGarbagePoints: true,
-    wegbrengen: true,
-    grofvuil: true,
-    restafval: true,
-    garbageContainersOnMap: true,
-  };
-
-  const [isCollapsedIndex, setIsCollapsed] = useSessionStorage(
-    'garbagePoints',
-    collapsedIndex
-  );
-
-  function isCollapsed(key: string) {
-    return isCollapsedIndex && isCollapsedIndex[key];
-  }
-
-  function toggleCollapsed(key: string) {
-    setIsCollapsed({
-      ...isCollapsedIndex,
-      [key]: !isCollapsed(key),
-    });
-  }
-
   const garbageContainersMapUrl = centroid
     ? `https://kaart.amsterdam.nl/afvalcontainers#19/${centroid[1]}/${centroid[0]}/topo/9749,9750,9751,9752,9753,9754/9748/`
     : '';
 
-  const garbagePointCollapsible = (
-    id: string,
-    item: GarbageMoment,
-    isCollapsed: boolean
-  ) => (
+  const garbagePointCollapsible = (id: string, item: GarbageMoment) => (
     <SectionCollapsible
-      key={item.title}
+      id={id}
       className={styles.InfoSection}
       isLoading={isLoading}
-      isCollapsed={isCollapsed}
-      onToggleCollapsed={toggleCollapsed.bind(null, id)}
       title={item.title}
       hasItems={!!ophalen.length}
       noItemsMessage="Informatie over afval in uw buurt kan niet worden getoond"
@@ -156,24 +125,14 @@ export default () => {
         </GarbagePanel>
       )}
 
-      {!!grofvuil &&
-        garbagePointCollapsible('grofvuil', grofvuil, isCollapsed('grofvuil'))}
+      {!!grofvuil && garbagePointCollapsible('grofvuil', grofvuil)}
 
-      {!!restafval &&
-        garbagePointCollapsible(
-          'restafval',
-          restafval,
-          isCollapsed('restafval')
-        )}
+      {!!restafval && garbagePointCollapsible('restafval', restafval)}
 
       <SectionCollapsible
-        className={classnames(
-          styles.InfoSection,
-          styles.InfoSection__fullWidth
-        )}
+        id="garbageContainersOnMap"
+        className={classnames(styles.InfoSection, styles.InfoSectionMap)}
         title="Afvalcontainers in de buurt"
-        isCollapsed={isCollapsed('garbageContainersOnMap')}
-        onToggleCollapsed={toggleCollapsed.bind(null, 'garbageContainersOnMap')}
       >
         <MyAreaMapIFrame
           className={styles.GarbageContainerMap}
@@ -182,43 +141,14 @@ export default () => {
       </SectionCollapsible>
 
       <SectionCollapsible
+        id="wegbrengen"
         className={classnames(
           styles.InfoSection,
           styles.InfoSectionGarbagePoints
         )}
         title="Afvalpunten"
-        isCollapsed={isCollapsed('wegbrengen')}
-        onToggleCollapsed={toggleCollapsed.bind(null, 'wegbrengen')}
       >
-        <GarbagePointItem item={wegbrengen[0]} />
-        <div className={styles.ToggleOtherGarbagePointsButton}>
-          <Linkd
-            onClick={() => {
-              toggleCollapsed('otherGarbagePoints');
-            }}
-            className={
-              !isCollapsed('otherGarbagePoints')
-                ? styles.otherGarbagePointsExpanded
-                : ''
-            }
-          >
-            {isCollapsed('otherGarbagePoints')
-              ? 'Toon overige afvalpunten'
-              : 'Verberg overige afvalpunten'}
-          </Linkd>
-        </div>
-      </SectionCollapsible>
-      <SectionCollapsible
-        className={classnames(
-          styles.InfoSection,
-          styles.InfoSectionOtherGarbagePoints
-        )}
-        isCollapsed={
-          isCollapsed('wegbrengen') || isCollapsed('otherGarbagePoints')
-        }
-        onToggleCollapsed={toggleCollapsed.bind(null, 'otherGarbagePoints')}
-      >
-        {wegbrengen.slice(1).map(item => (
+        {wegbrengen.map(item => (
           <GarbagePointItem key={item.naam} item={item} />
         ))}
       </SectionCollapsible>

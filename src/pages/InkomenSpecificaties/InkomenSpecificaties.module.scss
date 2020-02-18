@@ -1,5 +1,108 @@
 @import 'styles/_global.scss';
 
-.InkomenSpecificaties {
-  
+.SpecificationsTable {
+  td:not(:nth-child(3)) {
+    font-weight: 500;
+    color: $color-black;
+  }
+  tr td:nth-child(2) {
+    width: 30%;
+  }
+  @include media-q('>=phone') {
+    tr td:last-of-type {
+      width: 70px;
+      text-align: right;
+    }
+  }
+  @include select(Table_DisplayPropTitle) {
+    width: 30%;
+  }
+}
+
+.TableSection {
+  @include centered-block;
+  position: relative;
+
+  @include select(Heading_Heading) {
+    margin: 5rem auto;
+    max-width: 62rem;
+
+    @include mq-tablet {
+      margin-left: 9.5rem;
+    }
+
+    @include mq-phone {
+      margin-left: 0;
+    }
+  }
+}
+
+.SearchButton {
+  @include button-unstyled;
+  font-weight: 500;
+  color: $color-neutral-grey4;
+
+  @include media-q('>=phone') {
+    float: right;
+    margin-bottom: -3rem;
+  }
+
+  svg {
+    height: 1.3rem;
+    fill: $color-neutral-grey4;
+  }
+
+  &:hover {
+    color: $color-primary-red;
+    text-decoration: underline;
+
+    svg {
+      fill: $color-primary-red;
+    }
+  }
+}
+
+.SearchResetButton {
+
+}
+
+.SearchPanel {
+  background-color: $color-neutral-grey1;
+  width: 100%;
+  display: flex;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+
+  @include media-q('<=phone') {
+    flex-direction: column;
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+
+    @include media-q('>phone') {
+      &:first-child {
+        margin-right: 2rem;
+      }
+
+      &:last-child {
+        margin-left: 2rem;
+      }
+    }
+  }
+}
+
+.Pagination {
+  margin: 0 auto;
+  margin-top: 4rem;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.Select {
+  @include inputSelect;
 }
