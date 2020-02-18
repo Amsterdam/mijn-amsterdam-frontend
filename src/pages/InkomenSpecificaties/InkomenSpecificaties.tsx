@@ -1,5 +1,4 @@
 import React from 'react';
-import { PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
 import styles from './InkomenSpecificaties.module.scss';
 import { OverviewPage } from '../../components/Page/Page';
