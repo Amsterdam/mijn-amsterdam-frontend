@@ -14,9 +14,9 @@ const MatomoTrackerConfig = {
 // Initialize connection with analytics
 export function useAnalytics(isEnabled: boolean = true) {
   if (isEnabled && hasSiteId && !MatomoInstance) {
-    // Instruct Matomo to not use cookies for tracking
-    const win = window as any;
-    (win._paq || (win._paq = [])).push(['disableCookies']);
+    // Instruct Matomo to not use cookies for tracking, disabled for now because Matomo doesn't seem to be working without cookies.
+    // const win = window as any;
+    // (win._paq || (win._paq = [])).push(['disableCookies']);
     MatomoInstance = new MatomoTracker(MatomoTrackerConfig);
   }
 }
