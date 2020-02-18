@@ -1,15 +1,20 @@
 import { AppState as AppStateInterface } from 'AppState';
-import {
-  MenuItem,
-  myChaptersMenuItems,
-} from 'components/MainNavBar/MainNavBar.constants';
+import { MenuItem } from 'components/MainNavBar/MainNavBar.constants';
 import { FeatureToggle } from 'config/App.constants';
-import { Chapters } from 'config/Chapter.constants';
+import { Chapters, myChaptersMenuItems } from 'config/Chapter.constants';
 import { isMokum } from 'data-formatting/brp';
 
 function isChapterActive(
   item: MenuItem,
-  { WMO, FOCUS, ERFPACHT, GARBAGE, BRP, BELASTINGEN }: AppStateInterface
+  {
+    WMO,
+    FOCUS,
+    ERFPACHT,
+    GARBAGE,
+    BRP,
+    BELASTINGEN,
+    MILIEUZONE,
+  }: AppStateInterface
 ) {
   switch (item.id) {
     case Chapters.INKOMEN:
@@ -22,6 +27,12 @@ function isChapterActive(
       return (
         !BELASTINGEN.isLoading &&
         (FeatureToggle.belastingApiActive ? BELASTINGEN.data.isKnown : true)
+      );
+
+    case Chapters.MILIEUZONE:
+      return (
+        !MILIEUZONE.isLoading &&
+        (FeatureToggle.MilieuzoneApiActive ? MILIEUZONE.data.isKnown : true)
       );
 
     case Chapters.AFVAL:
@@ -57,6 +68,7 @@ export default function getMyChapters(
     BRP,
     MIJN_BUURT,
     BELASTINGEN,
+    MILIEUZONE,
   } = apiStates;
 
   const wmoIsloading = WMO.isLoading;
@@ -67,6 +79,7 @@ export default function getMyChapters(
   const garbageIsPristine = GARBAGE.isPristine;
   const myAreaIsLoading = MIJN_BUURT.isLoading;
   const belastingIsLoading = BELASTINGEN.isLoading;
+  const MILIEUZONEIsLoading = MILIEUZONE.isLoading;
   const hasCentroid = !!MIJN_BUURT.data?.centroid;
 
   const items = myChaptersMenuItems.filter(item => {
@@ -76,6 +89,7 @@ export default function getMyChapters(
 
   const isLoading =
     belastingIsLoading ||
+    MILIEUZONEIsLoading ||
     wmoIsloading ||
     brpIsLoading ||
     focusIsloading ||

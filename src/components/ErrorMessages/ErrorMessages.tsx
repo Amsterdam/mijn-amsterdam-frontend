@@ -14,8 +14,6 @@ export interface Error {
   error: string;
 }
 
-export type ErrorMessageMap = Partial<Record<StateKey, Error>>;
-
 interface ComponentProps {
   className?: string;
   errors: Error[];

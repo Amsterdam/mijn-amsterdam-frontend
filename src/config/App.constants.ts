@@ -4,6 +4,7 @@ export const FeatureToggle = {
   garbageInformationPage: true,
   focusDocumentDownload: true,
   belastingApiActive: true,
+  MilieuzoneApiActive: true,
   focusUitkeringsspecificatiesActive: IS_DEVELOPMENT || IS_TEST,
 };
 
@@ -30,6 +31,7 @@ export const ExternalUrls = {
     'https://www.amsterdam.nl/bestuur-organisatie/werkenbij/',
   ZORG_LEES_MEER: 'https://www.amsterdam.nl/zorg-ondersteuning/',
   SSO_BELASTINGEN: 'https://belastingbalie.amsterdam.nl/digid.saml.php?start',
+  SSO_MILIEUZONE: process.env.REACT_APP_SSO_MILIEUZONE_URL,
   MIJN_SUBSIDIES: 'https://mijnsubsidies.amsterdam.nl/loket/',
   MIJN_AMSTERDAM_VEELGEVRAAGD:
     'https://www.amsterdam.nl/veelgevraagd/?productid={68422ECA-8C56-43EC-A9AA-B3DF190B5077}',

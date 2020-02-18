@@ -1,5 +1,4 @@
 import { StateKey } from 'AppState';
-import { ErrorMessageMap } from 'components/ErrorMessages/ErrorMessages';
 import { IS_ACCEPTANCE, IS_PRODUCTION } from '../env';
 import { FeatureToggle } from './App.constants';
 
@@ -24,6 +23,7 @@ export const ApiUrls: TypeIndex<ApiName, string> = {
   ERFPACHT: `${API_BASE_URL}/erfpacht/check-erfpacht`,
   BAG: `${DATAPUNT_API_BASE_URL}/atlas/search/adres/`,
   AFVAL_OPHAAL_GEBIEDEN: `${DATAPUNT_API_BASE_URL}/afvalophaalgebieden/search/`,
+  MILIEUZONE: `${DATAPUNT_API_BASE_URL}/milieuzone/get`,
 };
 
 export interface ApiConfig {
@@ -46,43 +46,7 @@ export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
   BELASTINGEN: {
     postponeFetch: !FeatureToggle.belastingApiActive,
   },
-};
-
-export const errorMessageMap: ErrorMessageMap = {
-  BRP: {
-    name: 'Persoonsgegevens',
-    error: 'Communicatie met api mislukt.',
-  },
-  MELDINGEN: {
-    name: 'Actueel',
-    error: 'Communicatie met api mislukt.',
-  },
-  MY_CASES: {
-    name: 'Mijn lopende aanvragen',
-    error: 'Communicatie met api mislukt.',
-  },
-  MIJN_TIPS: {
-    name: 'Mijn tips',
-    error: 'Communicatie met api mislukt.',
-  },
-  WMO: {
-    name: 'Zorg en ondersteuning',
-    error: 'Communicatie met api mislukt.',
-  },
-  FOCUS: {
-    name: 'Stadspas of Bijstandsuitkering',
-    error: 'Communicatie met api mislukt.',
-  },
-  ERFPACHT: {
-    name: 'Erfpacht',
-    error: 'Communicatie met api mislukt.',
-  },
-  GARBAGE: {
-    name: 'Afval',
-    error: 'Communicatie met api mislukt.',
-  },
-  BELASTINGEN: {
-    name: 'Belasting',
-    error: 'Communicatie met api mislukt.',
+  MILIEUZONE: {
+    postponeFetch: !FeatureToggle.MilieuzoneApiActive,
   },
 };

@@ -1,5 +1,4 @@
 import { AppRoutes } from 'config/Routing.constants';
-import { errorMessageMap } from 'config/Api.constants';
 import { AppContext, StateKey } from 'AppState';
 import { ReactComponent as BetaLabel } from 'assets/images/beta-label.svg';
 import { ReactComponent as AmsterdamLogoLarge } from 'assets/images/logo-amsterdam-large.svg';
@@ -16,6 +15,8 @@ import { Link } from 'react-router-dom';
 import styles from './MainHeader.module.scss';
 import Linkd from 'components/Button/Button';
 import useRouter from 'use-react-router';
+import { ChapterTitles } from '../../config/Chapter.constants';
+import { Chapter } from 'config/Chapter.constants';
 
 const excludedApiKeys: StateKey[] = ['MY_CHAPTERS', 'SESSION'];
 
@@ -53,18 +54,13 @@ export default function MainHeader({
       );
     })
     .map(([stateKey, state]) => {
-      return errorMessageMap[stateKey]
-        ? {
-            name: stateKey,
-            error:
-              ('errorMessage' in state ? state.errorMessage : null) ||
-              errorMessageMap[stateKey]?.error ||
-              'Onbekende fout',
-          }
-        : {
-            name: stateKey,
-            error: 'Communicatie met api mislukt.',
-          };
+      const name = ChapterTitles[stateKey as Chapter] || stateKey;
+      return {
+        name,
+        error:
+          ('errorMessage' in state ? state.errorMessage : null) ||
+          'Communicatie met api mislukt.',
+      };
     });
 
   const hasErrors = !!errors.length;
