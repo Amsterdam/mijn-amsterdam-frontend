@@ -1,10 +1,10 @@
-import { IS_DEVELOPMENT, IS_TEST } from '../env';
+import { IS_DEVELOPMENT, IS_PRODUCTION, IS_TEST } from '../env';
 export const FeatureToggle = {
   myTipsoptInOutPersonalization: true,
   garbageInformationPage: true,
   focusDocumentDownload: true,
-  belastingApiActive: true,
-  MilieuzoneApiActive: true,
+  belastingApiActive: !IS_PRODUCTION,
+  MilieuzoneApiActive: !IS_PRODUCTION,
   focusUitkeringsspecificatiesActive: IS_DEVELOPMENT || IS_TEST,
 };
 
