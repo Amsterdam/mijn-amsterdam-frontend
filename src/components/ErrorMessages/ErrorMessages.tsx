@@ -1,4 +1,3 @@
-import { StateKey } from 'AppState';
 import { ReactComponent as AlertIcon } from 'assets/icons/Alert.svg';
 import { ReactComponent as CloseIcon } from 'assets/icons/Close.svg';
 import classnames from 'classnames';
@@ -13,8 +12,6 @@ export interface Error {
   name: string;
   error: string;
 }
-
-export type ErrorMessageMap = Partial<Record<StateKey, Error>>;
 
 interface ComponentProps {
   className?: string;

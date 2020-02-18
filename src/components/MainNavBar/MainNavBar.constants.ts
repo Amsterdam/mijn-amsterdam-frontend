@@ -1,12 +1,9 @@
 import { LinkProps } from 'App.types';
-import { ReactComponent as BelastingenIcon } from 'assets/icons/belastingen.svg';
-import { ReactComponent as BurgerzakenIcon } from 'assets/icons/burgerzaken.svg';
-import { ReactComponent as IconGarbage } from 'assets/icons/Huisvuilkalender.svg';
-import { ReactComponent as InkomenIcon } from 'assets/icons/inkomen.svg';
-import { ReactComponent as WonenIcon } from 'assets/icons/wonen.svg';
-import { ReactComponent as ZorgIcon } from 'assets/icons/zorg.svg';
-import { ExternalUrls } from 'config/App.constants';
-import { Chapter, Chapters, ChapterTitles } from 'config/Chapter.constants';
+import {
+  Chapter,
+  ChapterTitles,
+  myChaptersMenuItems,
+} from 'config/Chapter.constants';
 import { AppRoutes } from 'config/Routing.constants';
 import { FunctionComponent, SVGProps } from 'react';
 
@@ -30,47 +27,6 @@ export const mainMenuItemId: { [key: string]: MainMenuId } = {
   MIJN_BUURT: 'MIJN_BUURT',
   MELDINGEN: 'MIJN_MELDINGEN',
 };
-
-export const myChaptersMenuItems: MenuItem[] = [
-  {
-    title: ChapterTitles.BELASTINGEN,
-    id: Chapters.BELASTINGEN,
-    to: ExternalUrls.SSO_BELASTINGEN,
-    Icon: BelastingenIcon,
-    rel: 'external',
-  },
-  {
-    title: ChapterTitles.BURGERZAKEN,
-    id: Chapters.BURGERZAKEN,
-    to: AppRoutes.BURGERZAKEN,
-    Icon: BurgerzakenIcon,
-  },
-  {
-    title: ChapterTitles.WONEN,
-    id: Chapters.WONEN,
-    to: ExternalUrls.SSO_ERFPACHT || '',
-    Icon: WonenIcon,
-    rel: 'external',
-  },
-  {
-    title: ChapterTitles.ZORG,
-    id: Chapters.ZORG,
-    to: AppRoutes.ZORG,
-    Icon: ZorgIcon,
-  },
-  {
-    title: ChapterTitles.INKOMEN,
-    id: Chapters.INKOMEN,
-    to: AppRoutes.INKOMEN,
-    Icon: InkomenIcon,
-  },
-  {
-    title: ChapterTitles.AFVAL,
-    id: Chapters.AFVAL,
-    to: AppRoutes.AFVAL,
-    Icon: IconGarbage,
-  },
-];
 
 export const MenuItemTitles = {
   HOME: ChapterTitles.ROOT,

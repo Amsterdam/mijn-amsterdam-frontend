@@ -22,6 +22,7 @@ import { GarbageApiState } from './hooks/api/api.garbage';
 import useBelastingApi, { BelastingApiState } from './hooks/api/api.belasting';
 import useGarbageApi from './hooks/api/api.garbage';
 import getMyChapters from './helpers/myChapters';
+import useMilieuzoneApi, { MilieuzoneApiState } from 'hooks/api/api.milieuzone';
 
 type MyCasesApiState = FocusApiState;
 
@@ -39,6 +40,7 @@ export interface AppState {
   GARBAGE: GarbageApiState;
   MIJN_BUURT: MyAreaApiState;
   BELASTINGEN: BelastingApiState;
+  MILIEUZONE: MilieuzoneApiState;
 }
 
 export type StateKey = keyof AppState;
@@ -89,6 +91,7 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
 
   const BRP = useBrpApi();
   const BELASTINGEN = useBelastingApi();
+  const MILIEUZONE = useMilieuzoneApi();
   const MIJN_TIPS = useMyTipsApi();
   const ERFPACHT = useErfpachtApi();
   const MIJN_BUURT = useMyArea();
@@ -101,12 +104,14 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
     BRP,
     MIJN_BUURT,
     BELASTINGEN,
+    MILIEUZONE,
   } as AppState);
 
   const MELDINGEN = useMyNotificationsApi({
     FOCUS,
     BRP,
     BELASTINGEN,
+    MILIEUZONE,
   } as AppState);
 
   const tipsDependencies = [
@@ -116,6 +121,8 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
     BRP.isDirty,
     getApiConfigValue('BELASTINGEN', 'postponeFetch', true) ||
       BELASTINGEN.isDirty,
+    getApiConfigValue('MILIEUZONE', 'postponeFetch', true) ||
+      MILIEUZONE.isDirty,
   ];
 
   const address = BRP?.data?.adres ? getFullAddress(BRP.data.adres) : '';
@@ -148,6 +155,7 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
         ERFPACHT: ERFPACHT.data.status,
         BRP: BRP.data,
         BELASTINGEN: BELASTINGEN.data,
+        MILIEUZONE: MILIEUZONE.data,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -169,6 +177,7 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
     MIJN_BUURT,
     GARBAGE,
     BELASTINGEN,
+    MILIEUZONE,
   };
 }
 
