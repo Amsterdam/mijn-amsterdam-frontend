@@ -134,6 +134,36 @@
   }
 }
 
+@mixin input() {
+  display: block;
+  color: $color-black;
+  padding: .6em 1.2em .5em .6em;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  border: 0.1rem solid $color-neutral-grey4;
+  border-radius: 0;
+}
+
+@mixin inputSelect() {
+  @include input();
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: $color-white;
+  background-image: url("../../assets/icons/Chevron-Down.svg");
+  background-repeat: no-repeat, repeat;
+  background-position: right .7em top 50%, 0 0;
+  background-size: .85em auto, 100%;
+
+  &::-ms-expand {
+    display: none;
+  }
+  option {
+    font-weight:normal;
+  }
+}
+
 @function str-split($string, $separator) {
   $i: str-index($string, $separator);
   @if $i != null {

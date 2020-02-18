@@ -13,12 +13,7 @@ function isChapterActive(
 ) {
   switch (item.id) {
     case Chapters.INKOMEN:
-      return (
-        !FOCUS.isLoading &&
-        !!Object.values(FOCUS.data.products).some(
-          product => !!product.items.length
-        )
-      );
+      return !FOCUS.isLoading && !!FOCUS.data.items.length;
 
     case Chapters.ZORG:
       return !WMO.isLoading && !!WMO.data.length;

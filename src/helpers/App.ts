@@ -91,3 +91,28 @@ export function isInteralUrl(url: string) {
 export function isExternalUrl(url: string) {
   return !isInteralUrl(url);
 }
+
+export function range(a: number, b: number) {
+  return Array.from(
+    (function*(x, y) {
+      while (x <= y) yield x++;
+    })(a, b)
+  );
+}
+
+export function getMonth(index: number) {
+  return [
+    'januari',
+    'februari',
+    'maart',
+    'april',
+    'mei',
+    'juni',
+    'juli',
+    'augustus',
+    'september',
+    'oktober',
+    'november',
+    'december',
+  ][index];
+}

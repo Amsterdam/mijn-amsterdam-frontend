@@ -1,8 +1,10 @@
+import { IS_DEVELOPMENT, IS_TEST } from '../env';
 export const FeatureToggle = {
   myTipsoptInOutPersonalization: true,
   garbageInformationPage: true,
   focusDocumentDownload: true,
   belastingApiActive: true,
+  focusUitkeringsspecificatiesActive: IS_DEVELOPMENT || IS_TEST,
 };
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options

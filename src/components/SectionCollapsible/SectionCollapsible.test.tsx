@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import SectionCollapsible from './SectionCollapsible';
 import styles from './SectionCollapsible.module.scss';
@@ -7,13 +7,7 @@ import * as analytics from 'hooks/analytics.hook';
 
 describe('SectionCollapsible', () => {
   let component: ReactWrapper<typeof SectionCollapsible>;
-  let toggleCollapsed: () => void;
-
   const trackingSpy = jest.spyOn(analytics, 'trackEvent');
-
-  beforeEach(() => {
-    toggleCollapsed = jest.fn();
-  });
 
   afterEach(() => {
     component.unmount();
@@ -23,10 +17,10 @@ describe('SectionCollapsible', () => {
   it('should start uncollapsed', () => {
     component = mount(
       <SectionCollapsible
+        id="test-SectionCollapsible"
         isLoading={false}
         hasItems={true}
-        isCollapsed={false}
-        onToggleCollapsed={toggleCollapsed}
+        startCollapsed={false}
       >
         <div style={{ height: 500 }}>Boohoo!</div>
       </SectionCollapsible>
@@ -37,10 +31,9 @@ describe('SectionCollapsible', () => {
   it('should start collapsed', () => {
     component = mount(
       <SectionCollapsible
+        id="test-SectionCollapsible"
         isLoading={false}
         hasItems={true}
-        isCollapsed={true}
-        onToggleCollapsed={toggleCollapsed}
       >
         <div style={{ height: 500 }}>Boohoo!</div>
       </SectionCollapsible>
@@ -52,11 +45,10 @@ describe('SectionCollapsible', () => {
   it('should collapse/expand when clicking the title', () => {
     component = mount(
       <SectionCollapsible
+        id="test-SectionCollapsible"
         isLoading={false}
         hasItems={true}
         title="Click me!"
-        isCollapsed={true}
-        onToggleCollapsed={toggleCollapsed}
       >
         <div style={{ height: 500 }}>Boohoo!</div>
       </SectionCollapsible>
@@ -64,16 +56,15 @@ describe('SectionCollapsible', () => {
 
     expect(component.childAt(0).hasClass(styles.isCollapsed)).toEqual(true);
     component.find(`.Title button`).simulate('click');
-    expect(toggleCollapsed).toHaveBeenCalledTimes(1);
+    expect(component.childAt(0).hasClass(styles.isCollapsed)).toEqual(false);
   });
 
   it('should call trackEvent if tracking info is provided and section is expanded', () => {
     component = mount(
       <SectionCollapsible
+        id="test-SectionCollapsible"
         isLoading={false}
         hasItems={true}
-        isCollapsed={true}
-        onToggleCollapsed={toggleCollapsed}
         track={{ category: 'the category', name: 'the content thing' }}
         title="Click me!"
       >
@@ -92,11 +83,10 @@ describe('SectionCollapsible', () => {
   it('should show title and "no items message"', () => {
     component = mount(
       <SectionCollapsible
+        id="test-SectionCollapsible"
         title="My Items"
         isLoading={false}
         hasItems={false}
-        isCollapsed={true}
-        onToggleCollapsed={toggleCollapsed}
         noItemsMessage="No items"
       >
         <div style={{ height: 500 }}>Boohoo!</div>

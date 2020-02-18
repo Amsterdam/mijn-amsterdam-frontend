@@ -22,11 +22,11 @@ describe('Chapter: Werk en inkomen', () => {
     );
     selectComponent('SectionCollapsible_SectionCollapsible', ':first').should(
       'contain',
-      'Mijn lopende aanvragen'
+      'Lopende aanvragen'
     );
     selectComponent('SectionCollapsible_SectionCollapsible', ':eq(1)').should(
       'contain',
-      'Mijn besluiten'
+      'Besluiten'
     );
   });
 
@@ -52,7 +52,7 @@ describe('Chapter: Werk en inkomen', () => {
   it('Should navigate between a detail page and overviewpage', () => {
     // Click first item of expanded list
     cy.get(
-      '[class*="SectionCollapsible_SectionCollapsible"]:first [class*="DataLinkTable_DisplayPropTitle"]:first > a'
+      '[class*="SectionCollapsible_SectionCollapsible"]:first [class*="Table_DisplayPropTitle"]:first > '
     ).click();
 
     assertPath('/werk-en-inkomen/stadspas/0-0');
@@ -72,7 +72,7 @@ describe('Chapter: Werk en inkomen', () => {
 
     // Click the first item of the jsut expanded list
     cy.get(
-      '[class*="SectionCollapsible_SectionCollapsible"]:eq(1) [class*="DataLinkTable_DisplayPropTitle"]:first > a'
+      '[class*="SectionCollapsible_SectionCollapsible"]:eq(1) [class*="Table_DisplayPropTitle"]:first > a'
     ).click();
 
     assertAtPage(
@@ -110,15 +110,14 @@ describe('Chapter: Werk en inkomen', () => {
   });
 
   it('Should be able to navigate to a detail page', () => {
-    cy.get('a')
-      .contains('Stadspas xxxx herstelTermijn')
-      .click();
+    selectComponent(
+      'SectionCollapsible_SectionCollapsible',
+      ':eq(1) tbody tr a:first'
+    ).click();
   });
 
   it('Should display the title and a link to go back', () => {
-    cy.get('h2')
-      .contains('Stadspas xxxx herstelTermijn')
-      .should('exist');
+    cy.get('h2:first').should('exist');
     cy.get('header')
       .get('a')
       .contains('Werk en inkomen')

@@ -66,6 +66,7 @@
     "http-proxy": "^1.18.0",
     "include-media": "^1.4.9",
     "js-cookie": "^2.2.1",
+    "jw-paginate": "^1.0.4",
     "leaflet": "^1.6.0",
     "mime-types": "^2.1.25",
     "proj4": "^2.6.0",
