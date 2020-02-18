@@ -50,7 +50,7 @@ export default function DateInput({
   );
 
   if (!checkValiDateFormat(minDate)) {
-    console.info(
+    throw new Error(
       'minDate, maxDate and value should be provided in the following format: yyyy-MM-dd'
     );
   }
