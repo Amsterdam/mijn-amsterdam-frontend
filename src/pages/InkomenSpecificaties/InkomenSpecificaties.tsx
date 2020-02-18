@@ -1,7 +1,7 @@
 import React, { useContext, useState, useMemo, useCallback } from 'react';
 import PageHeading from 'components/PageHeading/PageHeading';
 import styles from './InkomenSpecificaties.module.scss';
-import { OverviewPage } from 'components/Page/Page';
+import { OverviewPage, PageContent } from 'components/Page/Page';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import { AppRoutes } from 'config/Routing.constants';
 import { ChapterTitles } from 'config/Chapter.constants';
@@ -36,12 +36,19 @@ export default () => {
       params: { type },
     },
   } = useRouter();
-  const maxDate = new Date();
-  const minDate = new Date(
-    maxDate.getFullYear() - 10,
-    maxDate.getMonth(),
-    maxDate.getDate()
-  );
+
+  const maxDate = useMemo(() => {
+    if (items.length) {
+      return new Date(items[0].datePublished);
+    }
+    return new Date();
+  }, [items]);
+  const minDate = useMemo(() => {
+    if (items.length) {
+      return new Date(items[items.length - 1].datePublished);
+    }
+    return new Date();
+  }, [items]);
   const maxDateString = format(maxDate, DATEPICKER_FORMAT);
   const minDateString = format(minDate, DATEPICKER_FORMAT);
 
