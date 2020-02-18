@@ -1,4 +1,3 @@
-import { StateKey } from 'AppState';
 import { ReactComponent as AlertIcon } from 'assets/icons/Alert.svg';
 import { ReactComponent as CloseIcon } from 'assets/icons/Close.svg';
 import classnames from 'classnames';
