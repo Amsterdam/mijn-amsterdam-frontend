@@ -14,6 +14,7 @@ import { generatePath } from 'react-router-dom';
 import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
 import Table, { addTitleLinkComponent } from 'components/Table/Table';
 import { specificationsTableDisplayProps } from 'pages/InkomenSpecificaties/InkomenSpecificaties';
+import { FeatureToggle } from '../../config/App.constants';
 
 const incomSpecificationsRouteMonthly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES']
@@ -109,46 +110,50 @@ export default () => {
       >
         <Table items={itemsDecided} />
       </SectionCollapsible>
-      <SectionCollapsible
-        id="SectionCollapsible-income-specifications-monthly"
-        startCollapsed={hasActiveRequests || hasActiveDescisions}
-        isLoading={isLoading2}
-        title="Uitkeringsspecificaties"
-        track={{
-          category: 'Werk en inkomen overzicht / Uitkeringsspecificaties',
-          name: 'Datatabel',
-        }}
-        noItemsMessage="Er zijn op dit moment geen uitkeringgspecificaties."
-      >
-        <Table
-          className={specicationsStyles.SpecificationsTable}
-          items={itemsSpecificationsMonthly}
-          displayProps={specificationsTableDisplayProps}
-        />
-        <p className={styles.ShowAllButtonContainer}>
-          <Linkd href={incomSpecificationsRouteMonthly}>Toon alles</Linkd>
-        </p>
-      </SectionCollapsible>
-      <SectionCollapsible
-        id="SectionCollapsible-income-specifications-yearly"
-        startCollapsed={hasActiveRequests || hasActiveDescisions}
-        isLoading={isLoading2}
-        title="Jaaropgaven"
-        track={{
-          category: 'Werk en inkomen overzicht / Jaaropgaven',
-          name: 'Datatabel',
-        }}
-        noItemsMessage="Er zijn op dit moment geen Jaaropgaven."
-      >
-        <Table
-          className={specicationsStyles.SpecificationsTable}
-          items={itemsSpecificationsYearly}
-          displayProps={specificationsTableDisplayProps}
-        />
-        <p className={styles.ShowAllButtonContainer}>
-          <Linkd href={incomSpecificationsRouteYearly}>Toon alles</Linkd>
-        </p>
-      </SectionCollapsible>
+      {FeatureToggle.focusUitkeringsspecificatiesActive && (
+        <SectionCollapsible
+          id="SectionCollapsible-income-specifications-monthly"
+          startCollapsed={hasActiveRequests || hasActiveDescisions}
+          isLoading={isLoading2}
+          title="Uitkeringsspecificaties"
+          track={{
+            category: 'Werk en inkomen overzicht / Uitkeringsspecificaties',
+            name: 'Datatabel',
+          }}
+          noItemsMessage="Er zijn op dit moment geen uitkeringgspecificaties."
+        >
+          <Table
+            className={specicationsStyles.SpecificationsTable}
+            items={itemsSpecificationsMonthly}
+            displayProps={specificationsTableDisplayProps}
+          />
+          <p className={styles.ShowAllButtonContainer}>
+            <Linkd href={incomSpecificationsRouteMonthly}>Toon alles</Linkd>
+          </p>
+        </SectionCollapsible>
+      )}
+      {FeatureToggle.focusUitkeringsspecificatiesActive && (
+        <SectionCollapsible
+          id="SectionCollapsible-income-specifications-yearly"
+          startCollapsed={hasActiveRequests || hasActiveDescisions}
+          isLoading={isLoading2}
+          title="Jaaropgaven"
+          track={{
+            category: 'Werk en inkomen overzicht / Jaaropgaven',
+            name: 'Datatabel',
+          }}
+          noItemsMessage="Er zijn op dit moment geen Jaaropgaven."
+        >
+          <Table
+            className={specicationsStyles.SpecificationsTable}
+            items={itemsSpecificationsYearly}
+            displayProps={specificationsTableDisplayProps}
+          />
+          <p className={styles.ShowAllButtonContainer}>
+            <Linkd href={incomSpecificationsRouteYearly}>Toon alles</Linkd>
+          </p>
+        </SectionCollapsible>
+      )}
     </OverviewPage>
   );
 };
