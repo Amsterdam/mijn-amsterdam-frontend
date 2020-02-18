@@ -1,9 +1,5 @@
-import {
-  AppRoutes,
-  CustomTrackingUrls,
-  PageTitleMain,
-  PageTitles,
-} from 'config/Routing.constants';
+import { PageTitleMain, PageTitles } from 'config/PageTitle.constants';
+import { AppRoutes, CustomTrackingUrls } from 'config/Routing.constants';
 import { useEffect } from 'react';
 import { matchPath } from 'react-router-dom';
 import useRouter from 'use-react-router';
