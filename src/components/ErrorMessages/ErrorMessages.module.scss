@@ -9,7 +9,7 @@
   position: absolute;
   right: 0;
   left: auto;
-  overflow: hidden;
+  // overflow: hidden;
   z-index: 1;
 }
 
@@ -56,6 +56,18 @@
 
   top: 50%;
   transform: translateY(-50%);
+
+  &.isDismissed {
+    top: 0;
+    transform: translate(-4.8rem, -4.2rem);
+    @include mq-tablet {
+      transform: translate(-4.8rem, -6.6rem);
+    }
+    @include mq-phone {
+      transform: translate(-6rem, -3.3rem);
+    }
+    position: absolute;
+  }
 }
 
 .ErrorMessages.Dismissed .ToggleButton svg {
