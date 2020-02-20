@@ -36,11 +36,12 @@ export function useMyNotificationsState() {
 // NOTE: Currently we only extract/construct notifications from the main focus api data which is not specifically tailored for this use.
 // In the future we will get specifically tailored generic notification content from various api's which will be integrated in
 // a domain wide notifications stream.
-export default ({
+export default function useMyNotificationsApi({
   FOCUS,
   BRP,
   BELASTINGEN,
-}: AppState): MyNotificationsApiState => {
+  MILIEUZONE,
+}: AppState): MyNotificationsApiState {
   const items = useMemo(
     () =>
       [
@@ -52,19 +53,31 @@ export default ({
         ...BRP.notifications,
         // Belastingen
         ...BELASTINGEN.data.notifications,
+        // Milieuzones
+        ...MILIEUZONE.data.notifications,
       ].sort(dateSort('datePublished', 'desc')),
     [
       FOCUS.data.notifications,
       BRP.notifications,
       BELASTINGEN.data.notifications,
+      MILIEUZONE.data.notifications,
     ]
   );
 
-  const isLoading = BRP.isLoading || FOCUS.isLoading || BELASTINGEN.isLoading;
-  const isError = BRP.isError || FOCUS.isError || BELASTINGEN.isError;
-  const isDirty = BRP.isDirty && FOCUS.isDirty && BELASTINGEN.isDirty;
+  const isLoading =
+    BRP.isLoading ||
+    FOCUS.isLoading ||
+    BELASTINGEN.isLoading ||
+    MILIEUZONE.isLoading;
+  const isError =
+    BRP.isError || FOCUS.isError || BELASTINGEN.isError || MILIEUZONE.isError;
+  const isDirty =
+    BRP.isDirty && FOCUS.isDirty && BELASTINGEN.isDirty && MILIEUZONE.isDirty;
   const isPristine =
-    BRP.isPristine && FOCUS.isPristine && BELASTINGEN.isPristine;
+    BRP.isPristine &&
+    FOCUS.isPristine &&
+    BELASTINGEN.isPristine &&
+    MILIEUZONE.isPristine;
 
   return useMemo(
     () => ({
@@ -80,4 +93,4 @@ export default ({
     }),
     [isLoading, isError, isDirty, isPristine, items]
   );
-};
+}
