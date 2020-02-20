@@ -22,7 +22,7 @@ interface MilieuzoneApiContent {
 
 export type MilieuzoneApiState = ApiState<MilieuzoneApiContent>;
 
-function formatMILIEUZONENotifications(notifications?: MyNotification[]) {
+function formatMilieuzoneNotifications(notifications?: MyNotification[]) {
   return Array.isArray(notifications)
     ? notifications.map(notification => ({
         ...notification,
@@ -47,7 +47,7 @@ export default function useMilieuzoneApi(): MilieuzoneApiState {
     data: {
       ...content,
       ...restData,
-      notifications: formatMILIEUZONENotifications(meldingen),
+      notifications: formatMilieuzoneNotifications(meldingen),
     },
   };
 }
