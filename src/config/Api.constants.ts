@@ -47,6 +47,6 @@ export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
     postponeFetch: !FeatureToggle.belastingApiActive,
   },
   MILIEUZONE: {
-    postponeFetch: !FeatureToggle.MilieuzoneApiActive,
+    postponeFetch: !FeatureToggle.milieuzoneApiActive,
   },
 };
