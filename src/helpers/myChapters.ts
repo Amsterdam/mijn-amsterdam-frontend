@@ -32,7 +32,7 @@ function isChapterActive(
     case Chapters.MILIEUZONE:
       return (
         !MILIEUZONE.isLoading &&
-        (FeatureToggle.MilieuzoneApiActive ? MILIEUZONE.data.isKnown : true)
+        (FeatureToggle.milieuzoneApiActive ? MILIEUZONE.data.isKnown : false)
       );
 
     case Chapters.AFVAL:
