@@ -4,7 +4,7 @@ export const FeatureToggle = {
   garbageInformationPage: true,
   focusDocumentDownload: true,
   belastingApiActive: !IS_PRODUCTION,
-  MilieuzoneApiActive: !IS_PRODUCTION,
+  milieuzoneApiActive: !IS_PRODUCTION,
   focusUitkeringsspecificatiesActive: IS_DEVELOPMENT || IS_TEST,
 };
 
