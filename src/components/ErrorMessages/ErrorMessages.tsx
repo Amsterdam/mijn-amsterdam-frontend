@@ -56,7 +56,10 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
 
         <IconButton
           icon={!isDismissed ? CloseIcon : AlertIcon}
-          className={styles.ToggleButton}
+          className={classnames(
+            styles.ToggleButton,
+            isDismissed && styles.isDismissed
+          )}
           onClick={() => setDismissed(!isDismissed)}
           aria-label={isDismissed ? 'Toon bericht' : 'Verberg bericht'}
         />

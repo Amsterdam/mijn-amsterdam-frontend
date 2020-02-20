@@ -1,7 +1,7 @@
 const data = require('../json/milieuzone.json');
 
 module.exports = {
-  path: '/api/milieuzones/get',
+  path: '/api/milieu/get',
   // delay: 11000,
   template: (_, queryParams) => {
     // return { status: 'ERROR', message: 'Invalid BSN' };
