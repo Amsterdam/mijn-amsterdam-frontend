@@ -23,7 +23,7 @@ export const ApiUrls: TypeIndex<ApiName, string> = {
   ERFPACHT: `${API_BASE_URL}/erfpacht/check-erfpacht`,
   BAG: `${DATAPUNT_API_BASE_URL}/atlas/search/adres/`,
   AFVAL_OPHAAL_GEBIEDEN: `${DATAPUNT_API_BASE_URL}/afvalophaalgebieden/search/`,
-  MILIEUZONE: `${API_BASE_URL}/milieuzones/get`,
+  MILIEUZONE: `${API_BASE_URL}/milieu/get`,
 };
 
 export interface ApiConfig {
