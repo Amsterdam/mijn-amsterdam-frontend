@@ -34,7 +34,7 @@ services:
     environment:
       - CYPRESS_baseUrl=http://frontend:3000
       # - DEBUG=cypress:*
-      - no_proxy=localhost,frontend,api #needs to be lowercase as this takes precedence over the uppercase verion on the build server
+      - no_proxy=localhost,frontend,api #needs to be lowercase as this takes precedence over the uppercase version on the build server
     depends_on:
       - frontend
       - api
