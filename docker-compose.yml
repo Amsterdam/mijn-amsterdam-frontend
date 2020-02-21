@@ -13,7 +13,7 @@ services:
   api:
     build:
       context: .
-      target: build-deps
+      dockerfile: ./Dockerfile.test
       args:
         - BUILD_ENV=e2e
     volumes:
@@ -23,7 +23,7 @@ services:
   frontend:
     build:
       context: .
-      target: build-deps
+      dockerfile: ./Dockerfile.test
       args:
         - BUILD_ENV=e2e
     depends_on:

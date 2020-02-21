@@ -4,7 +4,8 @@ FROM node:10.15.3
 ENV CI=true
 # CRA will generate a file for the React runtime chunk, inlining it will cause issues with the CSP config
 ENV INLINE_RUNTIME_CHUNK=false
-ENV BUILD_ENV=test
+ARG BUILD_ENV=test
+ENV REACT_APP_BUILD_ENV=${BUILD_ENV}
 ENV APP_PORT=80
 ENV APP_HOST=mijn.ot.amsterdam.nl
 ENV MOCK_API_PORT=5000

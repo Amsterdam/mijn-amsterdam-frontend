@@ -29,6 +29,8 @@ ARG BUILD_ENV=production
 ARG BUILD_NUMBER=-1
 ARG COMMIT_HASH=unknown
 
+ENV REACT_APP_BUILD_ENV=${BUILD_ENV}
+
 # Builds are always production builds but can have differences in server environment (test/acceptance/production)
 # Try to overwrite the default production .env file if a BUILD_ENV is set as build-arg
 RUN sh scripts/env-copy.sh ${BUILD_ENV}
