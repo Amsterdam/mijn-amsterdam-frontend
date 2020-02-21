@@ -7,7 +7,7 @@ ENV INLINE_RUNTIME_CHUNK=false
 
 WORKDIR /app
 
-# Copy required files for building
+# Copy required files for compilation
 COPY package.json /app/
 COPY package-lock.json /app/
 
