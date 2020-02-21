@@ -15,8 +15,6 @@ module.exports = {
       userType,
     };
 
-    console.log(response);
-
     return response;
   },
 };

@@ -8,23 +8,7 @@ const port = process.env.APP_PORT || 3000;
 const apiHost = process.env.MOCK_API_HOST || 'localhost';
 const apiPort = process.env.MOCK_API_PORT || 5000;
 
-const SESSION_MAX_AGE = 150 * 1000; //15 * 60 * 1000; // 15 minutes
-
-// function loginPage(req, res, next) {
-//   if (!req.cookies[COOKIE_NAME]) {
-//     if (req.headers['x-userType'] === 'BEDRIJF') {
-//       return res.send('EHERKENNING');
-//     } else {
-//       const randomUserName = 'timmeh';
-//       return res.send(
-//         '<form action="/api/login" method="post"><input type="text" name="username" value="' +
-//           randomUserName +
-//           '"><button type="submit">login</button></form>'
-//       );
-//     }
-//   }
-//   next();
-// }
+const SESSION_MAX_AGE = 15 * 60 * 1000; // 15 minutes
 
 function handleLogin(req, res, next) {
   if (!req.session.user && ['/api/login', '/api1/login'].includes(req.url)) {
@@ -83,7 +67,6 @@ module.exports = function(app) {
       extended: true,
     })
   );
-  // app.get(['/api/login', '/api1/login'], loginPage);
   app.use(['/logout'], handleLogout);
   app.use(handleLogin);
   app.use(['/api', '/api1'], handleUnauthorized);

@@ -16,9 +16,6 @@ services:
       target: build-deps
       args:
         - BUILD_ENV=e2e
-    environment:
-      - APP_HOST=frontend
-      - APP_PORT=3000
     volumes:
       - ./mock-api:/app/mock-api
     command: npm run mock-api
@@ -32,6 +29,8 @@ services:
     depends_on:
       - api
     environment:
+      - APP_HOST=frontend
+      - APP_PORT=3000
       - MOCK_API_HOST=api
       - MOCK_API_PORT=5000
     command: npm run start
