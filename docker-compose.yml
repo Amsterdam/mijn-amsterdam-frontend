@@ -34,7 +34,7 @@ services:
     environment:
       - MOCK_API_HOST=api
       - MOCK_API_PORT=5000
-    command: npm run serve-build
+    command: npm run start
 
   e2e:
     image: cypress/included:3.4.1

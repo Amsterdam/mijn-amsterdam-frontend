@@ -19,17 +19,13 @@ COPY package-lock.json /app/
 RUN npm ci
 
 COPY tsconfig.json /app/
-COPY .env.test /app/.env.production
+COPY .env.test /app/.env
 COPY mock-api /app/mock-api
 COPY src /app/src/
-COPY scripts/proxy-serve.js /app/scripts/proxy-serve.js
 COPY public /app/public/
 
 # Setting the correct timezone for the build
 RUN rm /etc/localtime
 RUN ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
-
-# Some conditional setup
-RUN npm run build
 
 CMD ["npm", "run", "serve-dev"]

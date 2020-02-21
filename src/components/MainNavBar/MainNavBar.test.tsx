@@ -5,7 +5,6 @@ import AppState, { SessionState } from 'AppState';
 import { BrowserRouter } from 'react-router-dom';
 import * as session from '../../hooks/api/session.api.hook';
 import * as bliep from '../../hooks/media.hook';
-import useSessionApi from '../../hooks/api/session.api.hook';
 
 const sessionState: session.SessionApiState = {
   isAuthenticated: true,
@@ -17,6 +16,7 @@ const sessionState: session.SessionApiState = {
   validUntil: new Date().getTime(),
   validityInSeconds: 300,
   refetch: () => void 0,
+  userType: 'BURGER',
 };
 
 const appState: any = {

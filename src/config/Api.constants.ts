@@ -5,7 +5,13 @@ import { FeatureToggle } from './App.constants';
 export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/login';
 export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL || '/logout';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+let apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+
+if (window.location.pathname.startsWith('/api1/')) {
+  apiBaseUrl = `${apiBaseUrl}`.replace(/\/api/g, '/api1');
+}
+
+export const API_BASE_URL = apiBaseUrl;
 const DATAPUNT_API_BASE_URL = process.env.REACT_APP_DATAPUNT_API_URL;
 
 export type ApiName = StateKey | 'BAG' | 'AUTH' | 'AFVAL_OPHAAL_GEBIEDEN';
