@@ -14,7 +14,7 @@ services:
       dockerfile: ./Dockerfile.test
     volumes:
       - ./mock-api:/app/mock-api
-    command: run mock-api
+    command: npm run mock-api
 
   frontend:
     build:
@@ -25,7 +25,7 @@ services:
     environment:
       - REACT_APP_BUILD_ENV=e2e
       - HOST=frontend
-    command: run start
+    command: npm run start
 
   e2e:
     image: cypress/included:3.4.1

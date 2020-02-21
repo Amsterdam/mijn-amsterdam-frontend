@@ -23,4 +23,4 @@ COPY public /app/public/
 RUN rm /etc/localtime
 RUN ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
 
-ENTRYPOINT [ "npm" ]
+CMD ["npm", "run", "serve-dev"]
