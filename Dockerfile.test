@@ -1,4 +1,4 @@
-FROM node:10.15.3
+FROM node:13.7.0
 
 # Indicating we are on a CI environment
 ENV CI=true
