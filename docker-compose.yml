@@ -26,6 +26,7 @@ services:
       target: build-deps
       args:
         - BUILD_ENV=e2e
+        - REACT_APP_BUILD_ENV=e2e
     depends_on:
       - api
     environment:
