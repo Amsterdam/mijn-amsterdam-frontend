@@ -1,11 +1,11 @@
-import { IS_DEVELOPMENT, IS_PRODUCTION, IS_TEST } from '../env';
+import { IS_DEVELOPMENT, IS_PRODUCTION } from '../env';
 export const FeatureToggle = {
   myTipsoptInOutPersonalization: true,
   garbageInformationPage: true,
   focusDocumentDownload: true,
   belastingApiActive: !IS_PRODUCTION,
   milieuzoneApiActive: !IS_PRODUCTION,
-  focusUitkeringsspecificatiesActive: IS_DEVELOPMENT || IS_TEST,
+  focusUitkeringsspecificatiesActive: IS_DEVELOPMENT,
 };
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
