@@ -11,5 +11,7 @@
   "screenshotOnRunFailure": false,
   "viewportWidth": 1500,
   "viewportHeight": 1000,
-  "responseTimeout": 120000
+  "responseTimeout": 120000,
+  "pageLoadTimeout": 60000,
+  "defaultCommandTimeout": 10000
 }
