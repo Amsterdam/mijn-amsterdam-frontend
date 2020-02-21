@@ -5,6 +5,8 @@ const session = require('express-session');
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
 
+console.log('HOST:', host, port);
+
 const apiHost = process.env.MOCK_API_HOST || 'localhost';
 const apiPort = process.env.MOCK_API_PORT || 5000;
 

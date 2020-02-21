@@ -25,7 +25,6 @@ services:
     environment:
       - REACT_APP_BUILD_ENV=e2e
       - HOST=frontend
-      - host=frontend
       - MOCK_API_HOST=api
     command: npm run start
 
