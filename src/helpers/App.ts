@@ -22,7 +22,6 @@ export function formattedTimeFromSeconds(seconds: number, format = 'mm:ss') {
 
   const time = new Date(0, 0, 0, 0, mins, secs);
   const formattedTime = dateFormat(time, format);
-  console.log('s.:', seconds, secs, mins, time, formattedTime, format);
 
   return formattedTime;
 }
