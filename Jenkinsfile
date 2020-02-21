@@ -39,7 +39,6 @@ pipeline {
         PROJECT = "${PROJECT_PREFIX}e2e"
       }
       steps {
-        sh "printenv | sort"
         script { currentBuild.displayName = "E2E testing #${BUILD_NUMBER} (${COMMIT_HASH})" }
         sh "docker-compose -p ${PROJECT} up --build --exit-code-from e2e e2e"
       }
