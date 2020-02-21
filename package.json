@@ -11,7 +11,6 @@
     "release:major": "sh scripts/release.sh --major",
     "release:minor": "sh scripts/release.sh --minor",
     "serve-dev": "concurrently \"npm:start\" \"npm:mock-api\"",
-    "start-ci-dev": "npm run start & wait-on http://frontend:3000",
     "start": "react-scripts start",
     "test": "react-scripts test",
     "watch:mock-api": "nodemon --watch mock-api/ --exec npm run mock-api"
@@ -86,8 +85,7 @@
     "typescript": "^3.7.3",
     "use-debounce": "^3.3.0",
     "use-media": "^1.4.0",
-    "use-react-router": "^1.0.7",
-    "wait-on": "^4.0.0"
+    "use-react-router": "^1.0.7"
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^3.2.1",

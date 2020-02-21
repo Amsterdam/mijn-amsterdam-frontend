@@ -26,7 +26,7 @@ services:
       - REACT_APP_BUILD_ENV=e2e
       - HOST=frontend
       - MOCK_API_HOST=api
-    command: npm run start-ci-dev
+    command: npm run start
 
   e2e:
     image: cypress/included:3.4.1
@@ -41,3 +41,9 @@ services:
     volumes:
       - ./cypress:/e2e/cypress
       - ./cypress.json:/e2e/cypress.json
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://frontend:3000"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+    # command: sleep(10) & cypress run
