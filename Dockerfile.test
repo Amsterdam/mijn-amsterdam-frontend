@@ -20,7 +20,7 @@ COPY package-lock.json /app/
 RUN npm ci
 
 COPY tsconfig.json /app/
-COPY .env.test /app/.env
+COPY .env /app/.env
 COPY mock-api /app/mock-api
 COPY src /app/src/
 COPY public /app/public/
