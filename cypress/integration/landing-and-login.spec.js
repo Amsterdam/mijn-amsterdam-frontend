@@ -6,7 +6,7 @@ describe('Landing page and login', () => {
   }
 
   it('Visit logout url always returns to landing page', () => {
-    cy.visit('/api/logout');
+    cy.visit('/logout');
     atHome();
   });
 

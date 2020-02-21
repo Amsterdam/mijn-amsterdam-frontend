@@ -57,8 +57,6 @@ module.exports = function(app) {
       secret: 'keyboard cat',
       resave: false,
       saveUninitialized: true,
-      // cookie: { secure: true, httpOnly: true },
-      // rolling: true,
     })
   );
   app.use(
@@ -70,7 +68,7 @@ module.exports = function(app) {
   app.use(['/logout'], handleLogout);
   app.use(handleLogin);
   app.use(['/api', '/api1'], handleUnauthorized);
-  app.use(handleSession);
+  app.use(['/api', '/api1'], handleSession);
   app.use(
     ['/api', '/api1', '/mock-api'],
     createProxyMiddleware({
