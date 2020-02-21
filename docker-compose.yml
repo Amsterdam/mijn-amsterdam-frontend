@@ -1,4 +1,4 @@
-version: '3.5'
+version: '2.1'
 services:
   # Unit testing
   test-unit:
@@ -41,8 +41,9 @@ services:
       # - DEBUG=cypress:*
       - no_proxy=localhost,frontend,api #needs to be lowercase as this takes precedence over the uppercase version on the build server
     depends_on:
-      - frontend
-      - api
+      frontend:
+        condition: service_healthy
+      # - api
     restart: on-failure
     volumes:
       - ./cypress:/e2e/cypress
