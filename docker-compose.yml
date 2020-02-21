@@ -22,6 +22,11 @@ services:
       dockerfile: Dockerfile.test
     depends_on:
       - api
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://frontend:3000"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
     environment:
       - REACT_APP_BUILD_ENV=e2e
       - HOST=frontend
@@ -38,12 +43,8 @@ services:
     depends_on:
       - frontend
       - api
+    restart: on-failure
     volumes:
       - ./cypress:/e2e/cypress
       - ./cypress.json:/e2e/cypress.json
-    healthcheck:
-        test: ["CMD", "curl", "-f", "http://frontend:3000"]
-        interval: 30s
-        timeout: 10s
-        retries: 5
     # command: sleep(10) & cypress run
