@@ -9,7 +9,7 @@ import { IS_SENTRY_ENABLED, SENTRY_DSN } from './env';
 if (SENTRY_DSN && IS_SENTRY_ENABLED) {
   Sentry.init({
     dsn: SENTRY_DSN,
-    environment: process.env.REACT_APP_BUILD_ENV,
+    environment: process.env.REACT_APP_ENV,
   });
 }
 

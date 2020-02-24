@@ -17,7 +17,7 @@ services:
       dockerfile: Dockerfile
       target: build-deps
     environment:
-      - BUILD_ENV=e2e
+      - REACT_APP_ENV=e2e
       - HOST=e2e-frontend
       - MOCK_API_HOST=e2e-frontend
 

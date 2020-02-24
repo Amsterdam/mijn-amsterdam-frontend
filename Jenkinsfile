@@ -60,7 +60,6 @@ pipeline {
         sh "docker build -t ${IMAGE_TEST} " +
            "--shm-size 1G " +
            "--target=build-deps " +
-           "--build-arg BUILD_ENV=development " +
            "."
         sh "docker push ${IMAGE_TEST}"
       }
@@ -91,7 +90,7 @@ pipeline {
         script { currentBuild.displayName = "ACC Build #${BUILD_NUMBER} (${COMMIT_HASH})" }
         sh "docker build -t ${IMAGE_ACCEPTANCE} " +
            "--shm-size 1G " +
-           "--build-arg BUILD_ENV=acceptance " +
+           "--build-arg REACT_APP_ENV=acceptance " +
            "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
            "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
            "."
@@ -124,10 +123,9 @@ pipeline {
       }
       steps {
         script { currentBuild.displayName = "PROD:Build:#${BUILD_NUMBER} (${COMMIT_HASH})" }
-        // NOTE BUILD_ENV intentionally not set (using Dockerfile default)
         sh "docker build -t ${IMAGE_PRODUCTION} " +
            "--shm-size 1G " +
-           "--build-arg BUILD_ENV=production " +
+           "--build-arg REACT_APP_ENV=production " +
            "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
            "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
            "."
