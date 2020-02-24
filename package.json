@@ -2,8 +2,8 @@
   "name": "mijn-amsterdam-frontend",
   "version": "1.7.2",
   "scripts": {
-    "build": "react-scripts build",
-    "e2e:local": "REACT_APP_BUILD_ENV=e2e npm run build && concurrently \"npm:serve-build\" \"npx cypress open\" --kill-others --success first",
+    "build": "env-cmd --fallback -f ./.env.${REACT_APP_ENV} react-scripts build",
+    "e2e:local": "REACT_APP_ENV=e2e npm run build && concurrently \"npm:serve-build\" \"npx cypress open\" --kill-others --success first",
     "serve-build": "concurrently  \"npm:mock-api\" \"node scripts/serveBuild\"",
     "eject": "react-scripts eject",
     "mock-api": "npx dyson mock-api/ 5000",
@@ -52,18 +52,13 @@
     "@types/slug": "^0.9.1",
     "@types/throttle-debounce": "^2.1.0",
     "axios": "^0.19.2",
-    "body-parser": "^1.19.0",
     "classnames": "^2.2.6",
     "date-fns": "^2.9.0",
-    "express-session": "^1.17.0",
     "focus-trap-react": "^6.0.0",
-    "http-proxy": "^1.18.0",
-    "http-proxy-middleware": "^1.0.0",
     "include-media": "^1.4.9",
     "js-cookie": "^2.2.1",
     "jw-paginate": "^1.0.4",
     "leaflet": "^1.6.0",
-    "mime-types": "^2.1.26",
     "proj4": "^2.6.0",
     "react": "^16.12.0",
     "react-app-polyfill": "^1.0.6",
@@ -98,6 +93,10 @@
     "node-sass": "^4.13.1",
     "pre-commit": "^1.2.2",
     "prettier": "^1.19.1",
-    "react-test-renderer": "^16.12.0"
+    "react-test-renderer": "^16.12.0",
+    "http-proxy-middleware": "^1.0.0",
+    "express-session": "^1.17.0",
+    "body-parser": "^1.19.0",
+    "env-cmd": "^10.1.0"
   }
 }
