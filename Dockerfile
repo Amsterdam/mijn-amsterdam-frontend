@@ -16,7 +16,7 @@ RUN npm ci
 COPY public /app/public
 COPY src /app/src
 
-ARG PORT=3000
+ARG PORT=80
 ENV PORT=${PORT}
 ARG REACT_APP_ENV=development
 ENV REACT_APP_ENV=${REACT_APP_ENV}

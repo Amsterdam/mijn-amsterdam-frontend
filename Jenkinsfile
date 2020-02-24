@@ -59,7 +59,6 @@ pipeline {
         script { currentBuild.displayName = "TEST Build #${BUILD_NUMBER} (${COMMIT_HASH})" }
         sh "docker build -t ${IMAGE_TEST} " +
            "--shm-size 1G " +
-           "--build-arg PORT=80 " +
            "--target=build-deps " +
            "."
         sh "docker push ${IMAGE_TEST}"

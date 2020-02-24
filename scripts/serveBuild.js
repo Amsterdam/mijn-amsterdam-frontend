@@ -4,7 +4,7 @@ const setupProxy = require('../src/setupProxy');
 const app = express();
 
 const host = process.env.HOST || 'localhost';
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 80;
 
 // Use the same proxy as webpack-dev-server during development (npm start)
 setupProxy(app);

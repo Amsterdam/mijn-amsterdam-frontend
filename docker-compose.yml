@@ -25,7 +25,7 @@ services:
     image: cypress/included:3.4.1
     working_dir: /e2e
     environment:
-      - CYPRESS_baseUrl=http://e2e-frontend:3000
+      - CYPRESS_baseUrl=http://e2e-frontend:80
       # - DEBUG=cypress:*
       - no_proxy=localhost,e2e-frontend,api #needs to be lowercase as this takes precedence over the uppercase verion on the build server
     depends_on:
