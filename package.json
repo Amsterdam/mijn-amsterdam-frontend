@@ -2,7 +2,7 @@
   "name": "mijn-amsterdam-frontend",
   "version": "1.7.2",
   "scripts": {
-    "build": "env-cmd --fallback -f ./.env.${REACT_APP_ENV} react-scripts build",
+    "build": "env-cmd --fallback -f ./.env.${REACT_APP_ENV:=production} react-scripts build",
     "e2e:local": "REACT_APP_ENV=e2e npm run build && concurrently \"npm:serve-build\" \"npx cypress open\" --kill-others --success first",
     "serve-build": "concurrently  \"npm:mock-api\" \"node scripts/serveBuild\"",
     "eject": "react-scripts eject",
