@@ -1,23 +1,22 @@
-import { assertAtHome, selectComponent } from '../support/helpers';
+import { assertAtHome } from '../support/helpers';
 
 describe('Landing page and login', () => {
-  function atHome() {
+  function atLanding() {
     assertAtHome('Welkom op Mijn Amsterdam');
   }
 
   it('Visit logout url always returns to landing page', () => {
     cy.visit('/logout');
-    atHome();
+    atLanding();
   });
 
   it('Login button can be clicked, user is redirected to dashboard', () => {
     cy.contains('Inloggen met DigiD').click();
-    cy.location('pathname').should('eq', '/');
-    cy.contains('Actueel');
+    assertAtHome('Actueel');
   });
 
   it('Clicking logout button sends us back to the landing page', () => {
     cy.contains('Uitloggen').click();
-    atHome();
+    atLanding();
   });
 });

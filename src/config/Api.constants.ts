@@ -2,7 +2,7 @@ import { StateKey } from 'AppState';
 import { IS_ACCEPTANCE, IS_PRODUCTION } from '../env';
 import { FeatureToggle } from './App.constants';
 
-export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/login';
+export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/api/login';
 export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL || '/logout';
 
 let apiBaseUrl = process.env.REACT_APP_API_BASE_URL;

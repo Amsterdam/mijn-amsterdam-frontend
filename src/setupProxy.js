@@ -20,7 +20,7 @@ function handleLogin(req, res, next) {
 
 function handleLogout(req, res) {
   req.session.destroy();
-  return res.redirect(`http://${host}:${port}`);
+  return res.redirect(`/`);
 }
 
 function handleSession(req, res, next) {
