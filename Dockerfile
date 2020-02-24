@@ -28,7 +28,7 @@ RUN npm run build
 COPY mock-api /app/mock-api
 COPY scripts/serveBuild.js /app/scripts/serveBuild.js
 
-EXPOSE 80
+EXPOSE ${PORT}
 
 # Entrypoint used for serving frontend and mock-api used by e2e testsuite and test server (mijn.ot.amsterdam.nl)
 ENTRYPOINT npm run serve-build

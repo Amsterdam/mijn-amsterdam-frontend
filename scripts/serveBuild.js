@@ -13,7 +13,6 @@ app.use((req, res, next) => {
   if (req.url === '/') {
     req.url = '/index.html';
   }
-  console.log('requesting', req.url);
   next();
 });
 
