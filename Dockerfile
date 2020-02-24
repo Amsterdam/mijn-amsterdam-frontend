@@ -7,7 +7,14 @@ ENV INLINE_RUNTIME_CHUNK=false
 
 WORKDIR /app
 
-COPY .env* /app/
+# Set-up the .env files for copying based on current BUILD_ENV
+COPY .env.production /app/.env.production
+COPY .env.acceptance /app/.env.acceptance
+COPY .env /app/.env.development
+
+# Copy the Designated .env file
+COPY /app/.env.${BUILD_ENV} /app/.env.production
+
 COPY tsconfig.json /app/
 COPY package.json /app/
 COPY package-lock.json /app/
