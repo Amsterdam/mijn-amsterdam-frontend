@@ -16,8 +16,6 @@ RUN npm ci
 COPY public /app/public
 COPY src /app/src
 
-ARG PORT=80
-ENV PORT=${PORT}
 ARG REACT_APP_ENV=development
 ENV REACT_APP_ENV=${REACT_APP_ENV}
 
@@ -28,7 +26,7 @@ RUN npm run build
 COPY mock-api /app/mock-api
 COPY scripts/serveBuild.js /app/scripts/serveBuild.js
 
-EXPOSE ${PORT}
+EXPOSE 80
 
 # Entrypoint used for serving frontend and mock-api used by e2e testsuite and test server (mijn.ot.amsterdam.nl)
 ENTRYPOINT npm run serve-build
