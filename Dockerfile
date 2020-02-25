@@ -24,6 +24,10 @@ ENV REACT_APP_ENV=$REACT_APP_ENV
 # CRA will generate a file for the React runtime chunk, inlining it will cause issues with the CSP config
 ENV INLINE_RUNTIME_CHUNK=false
 
+# Setting the correct timezone for the build
+# RUN rm /etc/localtime
+RUN ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
+
 RUN npm run build
 
 RUN echo "date=`date`; env=${REACT_APP_ENV}" > /app/build/version.txt
