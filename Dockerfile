@@ -2,8 +2,6 @@ FROM node:13.7.0 as build-deps
 
 # Indicating we are on a CI environment
 ENV CI=true
-# CRA will generate a file for the React runtime chunk, inlining it will cause issues with the CSP config
-ENV INLINE_RUNTIME_CHUNK=false
 
 WORKDIR /app
 
@@ -15,15 +13,22 @@ RUN npm ci
 
 COPY public /app/public
 COPY src /app/src
+COPY .env* /app/
+
+# Actually building the application
+FROM build-deps as build-app
 
 ARG REACT_APP_ENV=development
 ENV REACT_APP_ENV=$REACT_APP_ENV
-
-COPY .env* /app/
-
-RUN if [ "$REACT_APP_ENV" != "test-unit" ]; then npm run build ; fi
-
 RUN echo "Current REACT_APP_ENV (node build image) = ${REACT_APP_ENV}"
+
+# CRA will generate a file for the React runtime chunk, inlining it will cause issues with the CSP config
+ENV INLINE_RUNTIME_CHUNK=false
+
+RUN npm run build
+
+# Serving the application
+FROM build-app as serve-test
 
 COPY mock-api /app/mock-api
 COPY scripts/serveBuild.js /app/scripts/serveBuild.js
@@ -57,7 +62,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
   && ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Copy the built application files to the current image
-COPY --from=build-deps /app/build /usr/share/nginx/html
+COPY --from=build-app /app/build /usr/share/nginx/html
 # Copy the correct robots file
 COPY --from=build-deps /app/src/public/robots.$REACT_APP_ENV.txt /usr/share/nginx/html/robots.txt
 

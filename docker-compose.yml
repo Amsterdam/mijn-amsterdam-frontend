@@ -15,7 +15,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: build-deps
+      target: serve-test
       args:
         - REACT_APP_ENV=e2e
     environment:

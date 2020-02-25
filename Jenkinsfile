@@ -26,7 +26,7 @@ pipeline {
       }
       post {
         always {
-          sh "docker-compose -p ${PROJECT} down -v || true"
+          sh "docker-compose -p ${PROJECT} down -v --rmi local || true"
         }
       }
     }
@@ -45,7 +45,7 @@ pipeline {
           junit 'cypress/results/test-report-*.xml'
         }
         always {
-          sh "docker-compose -p ${PROJECT} down -v || true"
+          sh "docker-compose -p ${PROJECT} down -v --rmi local || true"
         }
       }
     }
@@ -61,7 +61,7 @@ pipeline {
         script { currentBuild.displayName = "TEST Build #${BUILD_NUMBER} (${COMMIT_HASH})" }
         sh "docker build -t ${IMAGE_TEST} " +
            "--shm-size 1G " +
-           "--target=build-deps " +
+           "--target=serve-test " +
            "."
         sh "docker push ${IMAGE_TEST}"
       }
