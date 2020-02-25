@@ -41,8 +41,10 @@ pipeline {
         sh "docker-compose -p ${PROJECT} up --build --exit-code-from e2e-testsuite e2e-testsuite"
       }
       post {
-        always {
+        failure {
           junit 'cypress/results/test-report-*.xml'
+        }
+        always {
           sh "docker-compose -p ${PROJECT} down -v || true"
         }
       }
