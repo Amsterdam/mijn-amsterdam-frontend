@@ -21,7 +21,7 @@ ENV REACT_APP_ENV=${REACT_APP_ENV}
 
 COPY .env* /app/
 
-RUN npm run build
+RUN if [ "$REACT_APP_ENV" != "test-unit" ]; then npm run build ; fi
 
 COPY mock-api /app/mock-api
 COPY scripts/serveBuild.js /app/scripts/serveBuild.js

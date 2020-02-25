@@ -6,9 +6,9 @@ services:
       context: .
       dockerfile: Dockerfile
       target: build-deps
-    volumes:
-      - ./src:/app/src
-    command: npm test
+      args:
+        - REACT_APP_ENV=test-unit
+    entrypoint: npm test
 
   # E2E testing
   e2e-frontend:
