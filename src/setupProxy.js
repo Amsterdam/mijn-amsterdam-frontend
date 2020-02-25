@@ -59,7 +59,7 @@ module.exports = function(app) {
     session({
       secret: 'keyboard cat',
       resave: false,
-      saveUninitialized: true,
+      saveUninitialized: false,
     })
   );
   app.use(

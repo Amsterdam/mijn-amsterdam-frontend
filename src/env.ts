@@ -13,3 +13,5 @@ export const IS_MAPS_ENABLED = !IS_E2E;
 
 export const IS_ANALYTICS_ENABLED = IS_AP && !!ANALYTICS_SITE_ID;
 export const IS_SENTRY_ENABLED = IS_AP && !!SENTRY_DSN;
+
+console.info(`Build-Env:${ENV}`);

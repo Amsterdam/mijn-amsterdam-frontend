@@ -20,12 +20,14 @@ FROM build-deps as build-app
 
 ARG REACT_APP_ENV=development
 ENV REACT_APP_ENV=$REACT_APP_ENV
-RUN echo "Current REACT_APP_ENV (node build image) = ${REACT_APP_ENV}"
 
 # CRA will generate a file for the React runtime chunk, inlining it will cause issues with the CSP config
 ENV INLINE_RUNTIME_CHUNK=false
 
 RUN npm run build
+
+RUN echo "date=`date`; env=${REACT_APP_ENV}" > /app/build/version.txt
+RUN echo "Current REACT_APP_ENV (node build image) = ${REACT_APP_ENV}"
 
 # Serving the application
 FROM build-app as serve-test
