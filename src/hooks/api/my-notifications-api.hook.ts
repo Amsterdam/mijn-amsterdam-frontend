@@ -33,6 +33,13 @@ export function useMyNotificationsState() {
   return useLocalStorage('MELDINGEN', {});
 }
 
+function addChapterNamespaceToId(chapter: Chapter) {
+  return (item: MyNotification) => ({
+    ...item,
+    id: `${chapter}-${item.id}`,
+  });
+}
+
 // NOTE: Currently we only extract/construct notifications from the main focus api data which is not specifically tailored for this use.
 // In the future we will get specifically tailored generic notification content from various api's which will be integrated in
 // a domain wide notifications stream.
@@ -48,13 +55,17 @@ export default function useMyNotificationsApi({
         // Static content welcome message
         WelcomeNotification,
         // Focus notification items
-        ...FOCUS.data.notifications,
+        ...FOCUS.data.notifications.map(addChapterNamespaceToId('INKOMEN')),
         // BRP Notifications
-        ...BRP.notifications,
+        ...BRP.notifications.map(addChapterNamespaceToId('BURGERZAKEN')),
         // Belastingen
-        ...BELASTINGEN.data.notifications,
+        ...BELASTINGEN.data.notifications.map(
+          addChapterNamespaceToId('BELASTINGEN')
+        ),
         // Milieuzones
-        ...MILIEUZONE.data.notifications,
+        ...MILIEUZONE.data.notifications.map(
+          addChapterNamespaceToId('MILIEUZONE')
+        ),
       ].sort(dateSort('datePublished', 'desc')),
     [
       FOCUS.data.notifications,

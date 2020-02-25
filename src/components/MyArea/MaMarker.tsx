@@ -32,7 +32,7 @@ function useBindComponentToMarker(component: any, markerInstance: any) {
 type MaMarkerProps = PropsWithChildren<{ center: Centroid; iconUrl: string }>;
 
 function MaMarker({ children, center, iconUrl }: MaMarkerProps) {
-  const [markerInstance, setMarkerInstance] = useState();
+  const [markerInstance, setMarkerInstance] = useState<L.Marker<any>>();
   const popup = useBindComponentToMarker(
     firstChildOfType(children, MaPopup),
     markerInstance
