@@ -16,8 +16,9 @@ services:
       context: .
       dockerfile: Dockerfile
       target: build-deps
+      args:
+        - REACT_APP_ENV=e2e
     environment:
-      - REACT_APP_ENV=e2e
       - HOST=e2e-frontend
       - MOCK_API_HOST=e2e-frontend
 
