@@ -17,11 +17,13 @@ COPY public /app/public
 COPY src /app/src
 
 ARG REACT_APP_ENV=development
-ENV REACT_APP_ENV=${REACT_APP_ENV}
+ENV REACT_APP_ENV=$REACT_APP_ENV
 
 COPY .env* /app/
 
 RUN if [ "$REACT_APP_ENV" != "test-unit" ]; then npm run build ; fi
+
+RUN echo "Current REACT_APP_ENV (node build image) = ${REACT_APP_ENV}"
 
 COPY mock-api /app/mock-api
 COPY scripts/serveBuild.js /app/scripts/serveBuild.js
@@ -34,6 +36,9 @@ ENTRYPOINT npm run serve-build
 # Web server image
 FROM nginx:stable-alpine as deploy-prod
 
+ARG REACT_APP_ENV=production
+ENV REACT_APP_ENV=$REACT_APP_ENV
+RUN echo "Current REACT_APP_ENV (nginx deploy image) = ${REACT_APP_ENV}"
 ENV LOGOUT_URL=${LOGOUT_URL:-notset}
 
 # Setting the correct timezone for the build
@@ -54,7 +59,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 # Copy the built application files to the current image
 COPY --from=build-deps /app/build /usr/share/nginx/html
 # Copy the correct robots file
-COPY --from=build-deps /app/src/public/robots.${REACT_APP_ENV}.txt /usr/share/nginx/html/robots.txt
+COPY --from=build-deps /app/src/public/robots.$REACT_APP_ENV.txt /usr/share/nginx/html/robots.txt
 
 RUN echo "date=`date`; build=${BUILD_NUMBER}; env=${REACT_APP_ENV}; see also: https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${COMMIT_HASH}" > /usr/share/nginx/html/version.txt
 
