@@ -34,7 +34,7 @@ function handleSession(req, res, next) {
     req.session.user.validUntil &&
     req.session.user.validUntil < now
   ) {
-    req.session.destroy();
+    // req.session.destroy();
   }
 
   if (req.session.user) {
