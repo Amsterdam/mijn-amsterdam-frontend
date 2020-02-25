@@ -25,7 +25,7 @@ ENV REACT_APP_ENV=$REACT_APP_ENV
 ENV INLINE_RUNTIME_CHUNK=false
 
 # Setting the correct timezone for the build
-# RUN rm /etc/localtime
+RUN rm /etc/localtime
 RUN ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
 
 RUN npm run build
@@ -53,7 +53,6 @@ RUN echo "Current REACT_APP_ENV (nginx deploy image) = ${REACT_APP_ENV}"
 ENV LOGOUT_URL=${LOGOUT_URL:-notset}
 
 # Setting the correct timezone for the build
-# RUN rm /etc/localtime
 RUN ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
 
 # Default --build-args
