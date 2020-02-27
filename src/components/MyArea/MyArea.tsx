@@ -133,7 +133,7 @@ interface LayerConfig {
 export interface LayerPanelConfig {
   title: string;
   id: string;
-  onChange: (panelId: string, layerIds: string[]) => void;
+  onChange: (layerIds: string[]) => void;
   layers: LayerConfig[];
   activeLayerIds: string[];
 }
@@ -147,14 +147,24 @@ export function LayerPanel({
 }: LayerPanelConfig) {
   function toggleLayer(layerId: string) {
     onChange(
-      id,
       activeLayerIds.includes(layerId)
         ? activeLayerIds.filter(id => id !== layerId)
         : [...activeLayerIds, layerId]
     );
   }
+  const isAllLayersActive = activeLayerIds.length === layers.length;
   return (
     <div>
+      <label>
+        <input
+          type="checkbox"
+          checked={isAllLayersActive}
+          onChange={() =>
+            onChange(isAllLayersActive ? [] : layers.map(layer => layer.id))
+          }
+        />{' '}
+        {isAllLayersActive ? 'Verberge alle lagen' : 'Toon alle lagen'}
+      </label>
       <ul>
         {layers.map(layer => (
           <li>
@@ -211,7 +221,7 @@ export function MyAreaMap({
                 <LayerPanel
                   {...panel}
                   activeLayerIds={activeLayerIds[panel.id]}
-                  onChange={togglePanelLayerIds}
+                  onChange={layerIds => togglePanelLayerIds(panel.id, layerIds)}
                 />
               );
             })}
