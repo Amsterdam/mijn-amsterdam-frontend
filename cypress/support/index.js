@@ -20,5 +20,5 @@ import './commands';
 // require('./commands')
 
 Cypress.Cookies.defaults({
-  whitelist: 'connect.sid', // The session cookie from e2e tests
+  whitelist: ['ma-test-session', 'ma-test-session.sig'], // The session cookie from e2e tests
 });

@@ -21,8 +21,7 @@ export function selectComponent(componentName, selectorAddition = '') {
 
 export function goToDashboard() {
   it('Visit login url always redirects user to Dashboard page', () => {
-    cy.visit('/api/login');
-    assertAtHome('Actueel');
+    cy.login();
   });
 }
 
