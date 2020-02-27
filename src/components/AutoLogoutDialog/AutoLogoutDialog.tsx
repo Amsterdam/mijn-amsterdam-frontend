@@ -6,7 +6,13 @@ import { ComponentChildren } from 'App.types';
 import { formattedTimeFromSeconds } from 'helpers/App';
 import { useActivityThrottle } from 'hooks/useThrottledFn.hook';
 import { CounterProps, useCounter } from 'hooks/timer.hook';
-import React, { useEffect, useState, useContext, useCallback } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useContext,
+  useCallback,
+  useMemo,
+} from 'react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 
 import Modal from '../Modal/Modal';
@@ -91,9 +97,11 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   // Will open the dialog if maxCount is reached.
   const nSettings = { ...DefaultSettings, ...settings };
 
+  const maxCount =
+    nSettings.secondsBeforeDialogShow - nSettings.secondsBeforeAutoLogout; // Gives user T time to cancel the automatic logout
+
   const { resume, reset } = useCounter({
-    maxCount:
-      nSettings.secondsBeforeDialogShow - nSettings.secondsBeforeAutoLogout, // Gives user T time to cancel the automatic logout
+    maxCount,
     onMaxCount: () => {
       setOpen(true);
     },
@@ -152,6 +160,14 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const timeInactive = useMemo(() => {
+    return formattedTimeFromSeconds(maxCount);
+  }, [maxCount]);
+
+  if (!isOpen) {
+    return null;
+  }
+
   return (
     <Modal
       title={TITLE}
@@ -161,9 +177,8 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
     >
       <div className={styles.AutoLogoutDialog}>
         <p>
-          U bent langer dan{' '}
-          {formattedTimeFromSeconds(nSettings.secondsBeforeDialogShow, 'm')}{' '}
-          minuten niet actief geweest op Mijn Amsterdam.
+          U bent langer dan {timeInactive} minuten niet actief geweest op Mijn
+          Amsterdam.
         </p>
         <p className={styles.TimerText}>
           <CountDownTimer
@@ -172,8 +187,8 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
             onTick={onTick}
           />
           U wordt binnen{' '}
-          {formattedTimeFromSeconds(nSettings.secondsBeforeAutoLogout, 'm')}{' '}
-          minuten automatisch uitgelogd.
+          {formattedTimeFromSeconds(nSettings.secondsBeforeAutoLogout)} minuten
+          automatisch uitgelogd.
         </p>
         <p>Wilt u doorgaan of uitloggen?</p>
         <p className={ButtonStyles.ButtonGroup}>

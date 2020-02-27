@@ -21,6 +21,7 @@ import { MaMap } from './MaMap';
 import { HomeIconMarker } from './MaMarker';
 import { LOCATION_ZOOM } from 'config/Map.constants';
 import classnames from 'classnames';
+import { IS_MAPS_ENABLED } from 'env';
 
 export function MyAreaHeader() {
   return (
@@ -74,7 +75,7 @@ interface MyAreaMapIframeProps {
 export function MyAreaMapIFrame({ url, className }: MyAreaMapIframeProps) {
   return (
     <MyAreaMapContainer className={className}>
-      {!!url ? (
+      {!!url && IS_MAPS_ENABLED ? (
         <iframe
           id="mapIframe"
           title="Kaart van mijn buurt"
@@ -107,7 +108,7 @@ export function MyAreaMap({
 }: MyAreaMapComponentProps) {
   return (
     <MyAreaMapContainer className={className}>
-      {!!center ? (
+      {!!center && IS_MAPS_ENABLED ? (
         <MaMap title={title} id={id} zoom={options.zoom} center={center}>
           <HomeIconMarker
             center={center}

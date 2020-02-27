@@ -1,9 +1,8 @@
-import { assertAtHome, selectComponent } from '../support/helpers';
+import { selectComponent } from '../support/helpers';
 
 describe('Dashboard', () => {
   it('Visit login url always redirects user to Dashboard page', () => {
-    cy.visit('/api/login');
-    assertAtHome('Actueel');
+    cy.login();
   });
 
   it("Shows the Chapters Panel (Thema's)", () => {

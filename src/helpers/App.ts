@@ -19,9 +19,11 @@ export function defaultDateFormat(datestr: string | Date | number) {
 export function formattedTimeFromSeconds(seconds: number, format = 'mm:ss') {
   const secs = seconds % 60;
   const mins = (seconds - secs) / 60;
-  const time = new Date(0, 0, 0, 0, mins, secs);
 
-  return dateFormat(time, format);
+  const time = new Date(0, 0, 0, 0, mins, secs);
+  const formattedTime = dateFormat(time, format);
+
+  return formattedTime;
 }
 
 export function isDateInPast(date: string | Date, dateNow: string | Date) {

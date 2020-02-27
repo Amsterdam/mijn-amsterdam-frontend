@@ -5,11 +5,9 @@ pipeline {
     COMMIT_HASH = GIT_COMMIT.substring(0, 8)
     PROJECT_PREFIX = "${BRANCH_NAME}_${COMMIT_HASH}_${BUILD_NUMBER}_"
     IMAGE_BASE = "repo.secure.amsterdam.nl/mijnams/mijnamsterdam"
-    IMAGE_BUILD = "${IMAGE_BASE}:${COMMIT_HASH}"
     IMAGE_ACCEPTANCE = "${IMAGE_BASE}:acceptance"
     IMAGE_PRODUCTION = "${IMAGE_BASE}:production"
     IMAGE_TEST = "${IMAGE_BASE}:test"
-    IMAGE_LATEST = "${IMAGE_BASE}:latest"
   }
 
   stages {
@@ -28,7 +26,7 @@ pipeline {
       }
       post {
         always {
-          sh "docker-compose -p ${PROJECT} down -v || true"
+          sh "docker-compose -p ${PROJECT} down -v --rmi local || true"
         }
       }
     }
@@ -40,12 +38,14 @@ pipeline {
       }
       steps {
         script { currentBuild.displayName = "E2E testing #${BUILD_NUMBER} (${COMMIT_HASH})" }
-        sh "stdbuf -i0 -e0 -o0 docker-compose -p ${PROJECT} up --build --exit-code-from e2e e2e"
+        sh "docker-compose -p ${PROJECT} up --build --exit-code-from e2e-testsuite e2e-testsuite"
       }
       post {
-        always {
+        failure {
           junit 'cypress/results/test-report-*.xml'
-          sh "docker-compose -p ${PROJECT} down -v || true"
+        }
+        always {
+          sh "docker-compose -p ${PROJECT} down -v --rmi local || true"
         }
       }
     }
@@ -59,7 +59,10 @@ pipeline {
       }
       steps {
         script { currentBuild.displayName = "TEST Build #${BUILD_NUMBER} (${COMMIT_HASH})" }
-        sh "docker build -t ${IMAGE_TEST} -f ./Dockerfile.test --shm-size 1G ."
+        sh "docker build -t ${IMAGE_TEST} " +
+           "--shm-size 1G " +
+           "--target=serve-test " +
+           "."
         sh "docker push ${IMAGE_TEST}"
       }
     }
@@ -87,13 +90,13 @@ pipeline {
       }
       steps {
         script { currentBuild.displayName = "ACC Build #${BUILD_NUMBER} (${COMMIT_HASH})" }
-        sh "docker build -t ${IMAGE_BUILD} " +
-          "--shm-size 1G " +
-          "--build-arg BUILD_ENV=acceptance " +
-          "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
-          "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
-          "."
-        sh "docker push ${IMAGE_BUILD}"
+        sh "docker build -t ${IMAGE_ACCEPTANCE} " +
+           "--shm-size 1G " +
+           "--build-arg REACT_APP_ENV=acceptance " +
+           "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
+           "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
+           "."
+        sh "docker push ${IMAGE_ACCEPTANCE}"
       }
     }
 
@@ -104,9 +107,6 @@ pipeline {
       }
       steps {
         script { currentBuild.displayName = "ACC Deploy #${BUILD_NUMBER} (${COMMIT_HASH})" }
-        sh "docker pull ${IMAGE_BUILD}"
-        sh "docker tag ${IMAGE_BUILD} ${IMAGE_ACCEPTANCE}"
-        sh "docker push ${IMAGE_ACCEPTANCE}"
         build job: 'Subtask_Openstack_Playbook', parameters: [
           [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
           [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml']
@@ -125,16 +125,13 @@ pipeline {
       }
       steps {
         script { currentBuild.displayName = "PROD:Build:#${BUILD_NUMBER} (${COMMIT_HASH})" }
-        // NOTE BUILD_ENV intentionaly not set (using Dockerfile default)
         sh "docker build -t ${IMAGE_PRODUCTION} " +
-            "--shm-size 1G " +
-            "--build-arg BUILD_ENV=production " +
-            "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
-            "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
-            "."
-        sh "docker tag ${IMAGE_PRODUCTION} ${IMAGE_LATEST}"
+           "--shm-size 1G " +
+           "--build-arg REACT_APP_ENV=production " +
+           "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
+           "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
+           "."
         sh "docker push ${IMAGE_PRODUCTION}"
-        sh "docker push ${IMAGE_LATEST}"
       }
     }
 
