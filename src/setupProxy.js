@@ -54,6 +54,7 @@ module.exports = function(app) {
 
   app.use(
     session({
+      secret: 'some-secret-huh',
       saveUninitialized: false,
       rolling: true,
       unset: 'destroy',
