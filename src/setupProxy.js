@@ -29,6 +29,8 @@ function handleLogout(req, res) {
 }
 
 function handleUnauthorized(req, res, next) {
+  res.setHeader('X-process-id', process.pid);
+
   if (
     (!req.session.user || !req.session.user.isAuthenticated) &&
     req.url !== '/auth/check'
@@ -40,7 +42,6 @@ function handleUnauthorized(req, res, next) {
 }
 
 function handleSession(req, res, next) {
-  res.setHeader('X-process-id', process.pid);
   if (req.session.user && req.session.user.isAuthenticated) {
     // Prolongue session time
     const now = new Date().getTime();
