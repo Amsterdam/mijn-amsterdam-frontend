@@ -39,6 +39,7 @@ FROM build-app as serve-test
 COPY mock-api /app/mock-api
 COPY scripts/serveBuild.js /app/scripts/serveBuild.js
 
+ENV PORT=80
 EXPOSE 80
 
 # Entrypoint used for serving frontend and mock-api used by e2e testsuite and test server (mijn.ot.amsterdam.nl)

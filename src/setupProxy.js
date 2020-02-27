@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 
 const host = process.env.HOST || 'localhost';
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 3000;
 
 const apiHost = process.env.MOCK_API_HOST || 'localhost';
 const apiPort = process.env.MOCK_API_PORT || 5000;
@@ -17,6 +17,8 @@ function handleLogin(req, res, next) {
   ) {
     const userType = req.url.startsWith('/api1/') ? 'BEDRIJF' : 'BURGER';
     req.session.user = { isAuthenticated: true, userType };
+    req.session.cookie.maxAge = SESSION_MAX_AGE;
+    req.session.cookie.sameSite = 'strict';
   }
   next();
 }
@@ -34,7 +36,7 @@ function handleSession(req, res, next) {
     req.session.user.validUntil &&
     req.session.user.validUntil < now
   ) {
-    // req.session.destroy();
+    req.session.destroy();
   }
 
   if (req.session.user) {
@@ -60,6 +62,7 @@ module.exports = function(app) {
       secret: 'keyboard cat',
       resave: false,
       saveUninitialized: false,
+      rolling: true,
     })
   );
   app.use(
