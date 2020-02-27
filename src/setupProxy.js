@@ -18,6 +18,7 @@ function handleLogin(req, res, next) {
     const userType = req.url.startsWith('/api1/') ? 'BEDRIJF' : 'BURGER';
     req.session.user = { isAuthenticated: true, userType };
     req.session.cookie.maxAge = SESSION_MAX_AGE;
+    req.session.cookie.secure = req.protocol === 'https';
   }
   next();
 }
