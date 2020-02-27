@@ -16,7 +16,7 @@ describe('Landing page and login', () => {
   });
 
   it('Clicking logout button sends us back to the landing page', () => {
-    cy.contains('Uitloggen').click();
+    cy.visit('/logout');
     atLanding();
   });
 });
