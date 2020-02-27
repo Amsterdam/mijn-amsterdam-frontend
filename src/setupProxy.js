@@ -1,6 +1,6 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const bodyParser = require('body-parser');
-const session = require('express-session');
+const scookieSession = require('cookie-session');
 
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
@@ -11,30 +11,20 @@ const apiPort = process.env.MOCK_API_PORT || 5000;
 const SESSION_MAX_AGE = 15 * 60 * 1000; // 15 minutes
 
 function handleLogin(req, res, next) {
-  if (
-    !req.session.user &&
-    ['/api/login', '/api1/login', '/mock-api/login'].includes(req.url)
-  ) {
+  if (['/api/login', '/api1/login', '/mock-api/login'].includes(req.url)) {
     const userType = req.url.startsWith('/api1/') ? 'BEDRIJF' : 'BURGER';
-    req.session.user = { isAuthenticated: true, userType };
-    // req.session.cookie.maxAge = SESSION_MAX_AGE;
-    req.session.cookie.secure = req.protocol === 'https';
+    req.session = { isAuthenticated: true, userType };
   }
   next();
 }
 
 function handleLogout(req, res) {
-  req.session.destroy();
+  req.session = null;
   return res.redirect(`/`);
 }
 
 function handleUnauthorized(req, res, next) {
-  res.setHeader('X-process-id', process.pid);
-
-  if (
-    (!req.session.user || !req.session.user.isAuthenticated) &&
-    req.url !== '/auth/check'
-  ) {
+  if (!req.session.isAuthenticated && req.url !== '/auth/check') {
     res.status(403);
     return res.send('Unauthorized');
   }
@@ -42,11 +32,11 @@ function handleUnauthorized(req, res, next) {
 }
 
 function handleSession(req, res, next) {
-  if (req.session.user && req.session.user.isAuthenticated) {
+  if (req.session.isAuthenticated) {
     // Prolongue session time
     const now = new Date().getTime();
     const validUntil = new Date(now + SESSION_MAX_AGE).getTime();
-    req.session.user.validUntil = validUntil;
+    req.session.validUntil = validUntil;
   }
 
   next();
@@ -56,18 +46,11 @@ module.exports = function(app) {
   app.set('trust proxy', 1);
 
   app.use(
-    session({
-      genid: function(req) {
-        return 'sess' + Math.round(Math.random() * Date.now()); // use UUIDs for session IDs
-      },
-      name: 'ma-session',
-      secret: 'some-secret-huh',
-      saveUninitialized: false,
-      rolling: true,
-      unset: 'destroy',
-      cookies: {
-        expires: false,
-      },
+    scookieSession({
+      name: 'ma-test-session',
+      keys: ['for', 'simple', 'testing'],
+      httpOnly: true,
+      maxAge: SESSION_MAX_AGE,
     })
   );
   app.use(
@@ -88,9 +71,7 @@ module.exports = function(app) {
       onProxyReq(proxyReq, req) {
         proxyReq.setHeader(
           'x-session',
-          JSON.stringify(
-            req.session && req.session.user ? req.session.user : null
-          )
+          JSON.stringify(req.session && req.session ? req.session : null)
         );
       },
       pathRewrite: {
