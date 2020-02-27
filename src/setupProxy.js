@@ -18,7 +18,6 @@ function handleLogin(req, res, next) {
     const userType = req.url.startsWith('/api1/') ? 'BEDRIJF' : 'BURGER';
     req.session.user = { isAuthenticated: true, userType };
     req.session.cookie.maxAge = SESSION_MAX_AGE;
-    req.session.cookie.sameSite = 'Lax';
   }
   next();
 }
@@ -29,7 +28,10 @@ function handleLogout(req, res) {
 }
 
 function handleUnauthorized(req, res, next) {
-  if (!req.session.user && req.url !== '/auth/check') {
+  if (
+    (!req.session.user || !req.session.user.isAuthenticated) &&
+    req.url !== '/auth/check'
+  ) {
     res.status(403);
     return res.send('Unauthorized');
   }
@@ -37,18 +39,9 @@ function handleUnauthorized(req, res, next) {
 }
 
 function handleSession(req, res, next) {
-  const now = new Date().getTime();
-  // Request is made outside session time
-  if (
-    req.session.user &&
-    req.session.user.validUntil &&
-    req.session.user.validUntil < now
-  ) {
-    req.session.destroy();
-  }
-
   if (req.session.user && req.session.user.isAuthenticated) {
     // Prolongue session time
+    const now = new Date().getTime();
     const validUntil = new Date(now + SESSION_MAX_AGE).getTime();
     req.session.user.validUntil = validUntil;
   }
@@ -57,12 +50,13 @@ function handleSession(req, res, next) {
 }
 
 module.exports = function(app) {
+  app.set('trust proxy', 1);
+
   app.use(
     session({
-      secret: 'keyboard cat',
-      resave: true,
       saveUninitialized: false,
       rolling: true,
+      unset: 'destroy',
     })
   );
   app.use(
