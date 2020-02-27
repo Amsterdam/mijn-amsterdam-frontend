@@ -16,6 +16,7 @@
   min-height: 20rem;
   height: 100%;
   width: 100%;
+  position: relative;
 }
 
 .MapDashboardOverlay {
@@ -128,4 +129,14 @@
 .ZoomInOutButton {
   font-weight: bold;
   font-size: 1.6em;
+}
+
+.LayerPanelContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: $color-white;
+  padding: 2rem;
+  z-index: z-index(map-layer-panel-container);
 }

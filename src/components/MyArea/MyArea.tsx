@@ -4,7 +4,7 @@ import { ReactComponent as Logo } from 'assets/images/logo-amsterdam.svg';
 import { ReactComponent as HomeIcon } from 'assets/icons/home.svg';
 
 import Heading from 'components/Heading/Heading';
-import React, { HTMLProps, PropsWithChildren } from 'react';
+import React, { HTMLProps, PropsWithChildren, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 import styles from './MyArea.module.scss';
@@ -97,6 +97,82 @@ interface MyAreaMapComponentProps {
   className?: string;
 }
 
+const DEFAULT_LAYER_IDS_ACTIVE: { [panelId: string]: string[] } = {
+  afvalcontainers: [],
+};
+const LAYER_PANELS = [
+  {
+    id: 'afvalcontainers',
+    title: 'Afvalcontainers',
+    layers: [
+      {
+        title: 'Glas',
+        id: 'Glas',
+      },
+      {
+        title: 'Papier',
+        id: 'Papier',
+      },
+      {
+        title: 'Restafval',
+        id: 'Restafval',
+      },
+      {
+        title: 'Plastic',
+        id: 'Plastic',
+      },
+    ],
+  },
+];
+
+interface LayerConfig {
+  title: string;
+  id: string;
+}
+
+export interface LayerPanelConfig {
+  title: string;
+  id: string;
+  onChange: (panelId: string, layerIds: string[]) => void;
+  layers: LayerConfig[];
+  activeLayerIds: string[];
+}
+
+export function LayerPanel({
+  id,
+  title,
+  layers,
+  activeLayerIds,
+  onChange,
+}: LayerPanelConfig) {
+  function toggleLayer(layerId: string) {
+    onChange(
+      id,
+      activeLayerIds.includes(layerId)
+        ? activeLayerIds.filter(id => id !== layerId)
+        : [...activeLayerIds, layerId]
+    );
+  }
+  return (
+    <div>
+      <ul>
+        {layers.map(layer => (
+          <li>
+            <label>
+              <input
+                type="checkbox"
+                checked={activeLayerIds.includes(layer.id)}
+                onChange={() => toggleLayer(layer.id)}
+              />{' '}
+              {layer.title}
+            </label>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export function MyAreaMap({
   center,
   title = 'Kaart van Mijn buurt',
@@ -105,6 +181,19 @@ export function MyAreaMap({
   options = DEFAULT_MAP_DISPLAY_CONFIG,
   className,
 }: MyAreaMapComponentProps) {
+  const [activeLayerIds, setActiveLayerIds] = useState(
+    DEFAULT_LAYER_IDS_ACTIVE
+  );
+
+  function togglePanelLayerIds(panelId: string, layerIds: string[]) {
+    setActiveLayerIds(activePanelLayerIds => {
+      return {
+        ...activePanelLayerIds,
+        [panelId]: layerIds,
+      };
+    });
+  }
+
   return (
     <MyAreaMapContainer className={className}>
       {!!center ? (
@@ -115,6 +204,19 @@ export function MyAreaMap({
             address={homeAddress}
           />
           {!!options.zoomTools && <MaZoomControl center={center} />}
+          <aside className={styles.LayerPanelContainer}>
+            <h3>Kaartlagen</h3>
+            {LAYER_PANELS.map(panel => {
+              return (
+                <LayerPanel
+                  {...panel}
+                  activeLayerIds={activeLayerIds[panel.id]}
+                  onChange={togglePanelLayerIds}
+                />
+              );
+            })}
+          </aside>
+          >
         </MaMap>
       ) : (
         <MyAreaLoader />
