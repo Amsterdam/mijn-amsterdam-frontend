@@ -5,7 +5,7 @@ import { FeatureToggle } from './App.constants';
 export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/login';
 export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL || '/logout';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const DATAPUNT_API_BASE_URL = process.env.REACT_APP_DATAPUNT_API_URL;
 
 export type ApiName = StateKey | 'BAG' | 'AUTH' | 'AFVAL_OPHAAL_GEBIEDEN';

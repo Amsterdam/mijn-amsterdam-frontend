@@ -4,7 +4,7 @@ import { ReactComponent as Logo } from 'assets/images/logo-amsterdam.svg';
 import { ReactComponent as HomeIcon } from 'assets/icons/home.svg';
 
 import Heading from 'components/Heading/Heading';
-import React, { HTMLProps, PropsWithChildren, useState } from 'react';
+import React, { HTMLProps, PropsWithChildren } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 import styles from './MyArea.module.scss';
@@ -21,6 +21,7 @@ import { MaMap } from './MaMap';
 import { HomeIconMarker } from './MaMarker';
 import { LOCATION_ZOOM } from 'config/Map.constants';
 import classnames from 'classnames';
+import { Datasets } from './MaDatasets';
 
 export function MyAreaHeader() {
   return (
@@ -97,92 +98,6 @@ interface MyAreaMapComponentProps {
   className?: string;
 }
 
-const DEFAULT_LAYER_IDS_ACTIVE: { [panelId: string]: string[] } = {
-  afvalcontainers: [],
-};
-const LAYER_PANELS = [
-  {
-    id: 'afvalcontainers',
-    title: 'Afvalcontainers',
-    layers: [
-      {
-        title: 'Glas',
-        id: 'Glas',
-      },
-      {
-        title: 'Papier',
-        id: 'Papier',
-      },
-      {
-        title: 'Restafval',
-        id: 'Restafval',
-      },
-      {
-        title: 'Plastic',
-        id: 'Plastic',
-      },
-    ],
-  },
-];
-
-interface LayerConfig {
-  title: string;
-  id: string;
-}
-
-export interface LayerPanelConfig {
-  title: string;
-  id: string;
-  onChange: (layerIds: string[]) => void;
-  layers: LayerConfig[];
-  activeLayerIds: string[];
-}
-
-export function LayerPanel({
-  id,
-  title,
-  layers,
-  activeLayerIds,
-  onChange,
-}: LayerPanelConfig) {
-  function toggleLayer(layerId: string) {
-    onChange(
-      activeLayerIds.includes(layerId)
-        ? activeLayerIds.filter(id => id !== layerId)
-        : [...activeLayerIds, layerId]
-    );
-  }
-  const isAllLayersActive = activeLayerIds.length === layers.length;
-  return (
-    <div>
-      <label>
-        <input
-          type="checkbox"
-          checked={isAllLayersActive}
-          onChange={() =>
-            onChange(isAllLayersActive ? [] : layers.map(layer => layer.id))
-          }
-        />{' '}
-        {isAllLayersActive ? 'Verberge alle lagen' : 'Toon alle lagen'}
-      </label>
-      <ul>
-        {layers.map(layer => (
-          <li>
-            <label>
-              <input
-                type="checkbox"
-                checked={activeLayerIds.includes(layer.id)}
-                onChange={() => toggleLayer(layer.id)}
-              />{' '}
-              {layer.title}
-            </label>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
 export function MyAreaMap({
   center,
   title = 'Kaart van Mijn buurt',
@@ -191,19 +106,6 @@ export function MyAreaMap({
   options = DEFAULT_MAP_DISPLAY_CONFIG,
   className,
 }: MyAreaMapComponentProps) {
-  const [activeLayerIds, setActiveLayerIds] = useState(
-    DEFAULT_LAYER_IDS_ACTIVE
-  );
-
-  function togglePanelLayerIds(panelId: string, layerIds: string[]) {
-    setActiveLayerIds(activePanelLayerIds => {
-      return {
-        ...activePanelLayerIds,
-        [panelId]: layerIds,
-      };
-    });
-  }
-
   return (
     <MyAreaMapContainer className={className}>
       {!!center ? (
@@ -214,19 +116,7 @@ export function MyAreaMap({
             address={homeAddress}
           />
           {!!options.zoomTools && <MaZoomControl center={center} />}
-          <aside className={styles.LayerPanelContainer}>
-            <h3>Kaartlagen</h3>
-            {LAYER_PANELS.map(panel => {
-              return (
-                <LayerPanel
-                  {...panel}
-                  activeLayerIds={activeLayerIds[panel.id]}
-                  onChange={layerIds => togglePanelLayerIds(panel.id, layerIds)}
-                />
-              );
-            })}
-          </aside>
-          >
+          {!!options.datasets && <Datasets />}
         </MaMap>
       ) : (
         <MyAreaLoader />
@@ -250,7 +140,7 @@ export function MyAreaDashboard({
       {IS_MY_AREA_2_ENABLED && !!center && (
         <MyAreaMap
           center={center}
-          options={{ zoomTools: false, zoom: LOCATION_ZOOM }}
+          options={{ zoomTools: false, zoom: LOCATION_ZOOM, datasets: false }}
         />
       )}
       {!IS_MY_AREA_2_ENABLED && <MyAreaMapIFrame url={url} />}
