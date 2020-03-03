@@ -18,7 +18,10 @@ interface ClusteredMarkerLayerProps {
 export function ClusteredMarkerLayer({ items }: ClusteredMarkerLayerProps) {
   const map = useMapInstance();
   const [markerClusterGroup, storeMarkerCluster] = useState<any>(
-    (L as any).markerClusterGroup()
+    (L as any).markerClusterGroup({
+      spiderfyOnMaxZoom: false,
+      disableClusteringAtZoom: 16,
+    })
   );
 
   const [createMarkerClusterGroup] = useDebouncedCallback(items => {
