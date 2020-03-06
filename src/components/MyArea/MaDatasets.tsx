@@ -34,16 +34,16 @@ const activeDatasetIdsInitial = DATASET_GROUP_PANELS.reduce((acc, panel) => {
   });
 }, {});
 
-function getBoundingBox(map: L.Map | null) {
-  if (!map) {
-    return null;
-  }
-  const [lng1, lat1, lng2, lat2] = map
-    .getBounds()
-    .toBBoxString()
-    .split(',');
-  return [lat1, lng1, lat2, lng2].join(',');
-}
+// function getBoundingBox(map: L.Map | null) {
+//   if (!map) {
+//     return null;
+//   }
+//   const [lng1, lat1, lng2, lat2] = map
+//     .getBounds()
+//     .toBBoxString()
+//     .split(',');
+//   return [lat1, lng1, lat2, lng2].join(',');
+// }
 
 export function Datasets() {
   const map = useMapInstance();

@@ -10,7 +10,6 @@ import { toLatLng } from 'helpers/geo';
 
 import 'styles/map.scss';
 import classnames from 'classnames';
-import styles from './MaMap.module.scss';
 
 type MapDisplayComponentProps = PropsWithChildren<{
   center: Centroid;

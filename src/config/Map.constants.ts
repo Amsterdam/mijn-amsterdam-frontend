@@ -1,9 +1,9 @@
-import iconGFE from 'assets/icons/map/afval-gfe.svg';
-import iconGLAS from 'assets/icons/map/afval-glas.svg';
-import iconPAPIER from 'assets/icons/map/afval-papier.svg';
-import iconPLASTIC from 'assets/icons/map/afval-plastic.svg';
-import iconREST from 'assets/icons/map/afval-rest.svg';
-import iconTEXTIEL from 'assets/icons/map/afval-textiel.svg';
+// import iconGFE from 'assets/icons/map/afval-gfe.svg';
+// import iconGLAS from 'assets/icons/map/afval-glas.svg';
+// import iconPAPIER from 'assets/icons/map/afval-papier.svg';
+// import iconPLASTIC from 'assets/icons/map/afval-plastic.svg';
+// import iconREST from 'assets/icons/map/afval-rest.svg';
+// import iconTEXTIEL from 'assets/icons/map/afval-textiel.svg';
 import classnames from 'classnames';
 import { IS_ACCEPTANCE, IS_PRODUCTION } from 'env';
 import { capitalizeFirstLetter } from 'helpers/App';
@@ -11,14 +11,15 @@ import { getCrsRd } from 'helpers/geo';
 import L, { MapOptions } from 'leaflet';
 import styles from '../components/MyArea/MyArea.module.scss';
 
-const afvalcontainerIconUrls: Record<string, string> = {
-  gfe: iconGFE,
-  textiel: iconTEXTIEL,
-  glas: iconGLAS,
-  papier: iconPAPIER,
-  plastic: iconPLASTIC,
-  rest: iconREST,
-};
+// TODO: Implement later
+// const afvalcontainerIconUrls: Record<string, string> = {
+//   gfe: iconGFE,
+//   textiel: iconTEXTIEL,
+//   glas: iconGLAS,
+//   papier: iconPAPIER,
+//   plastic: iconPLASTIC,
+//   rest: iconREST,
+// };
 
 export interface MapDisplayOptions {
   zoomTools: boolean;
