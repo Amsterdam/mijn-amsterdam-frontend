@@ -16,7 +16,6 @@ import styles from './MainHeader.module.scss';
 import Linkd from 'components/Button/Button';
 import useRouter from 'use-react-router';
 import { ErrorNames } from '../../config/Api.constants';
-import { Chapter } from 'config/Chapter.constants';
 
 const excludedApiKeys: StateKey[] = ['MY_CHAPTERS', 'SESSION', 'MELDINGEN'];
 
