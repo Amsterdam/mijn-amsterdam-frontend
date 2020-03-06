@@ -9,7 +9,7 @@ import { DATASET_GROUP_PANELS } from 'config/Map.constants';
 import { DatasetPanel } from './MaDatasetPanel';
 import { ClusteredMarkerLayer } from './MaClusteredMarkerLayer';
 import styles from './MyArea.module.scss';
-import L, { Icon, DivIcon } from 'leaflet';
+import { Icon, DivIcon } from 'leaflet';
 
 type MapDatasetIcon = Icon | DivIcon | ((item: any) => Icon | DivIcon);
 
