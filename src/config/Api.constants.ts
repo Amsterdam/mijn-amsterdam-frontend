@@ -56,3 +56,18 @@ export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
     postponeFetch: !FeatureToggle.milieuzoneApiActive,
   },
 };
+
+export const ErrorNames: { [stateKey: string]: string } = {
+  BRP: 'Persoonlijke gegevens + actuele meldingen',
+  MY_CASES: 'Lopende zaken',
+  MIJN_TIPS: 'Tips',
+  WMO: 'Zorg en ondersteuning',
+  FOCUS: 'Werk en inkomen + actuele meldingen',
+  FOCUS_INKOMEN_SPECIFICATIES: 'Werk en inkomen + actuele meldingen',
+  MY_CHAPTERS: "Thema's",
+  ERFPACHT: 'Erfpacht',
+  GARBAGE: 'Afval',
+  MIJN_BUURT: 'Mijn buurt',
+  BELASTINGEN: 'Belastingen + meldingen',
+  MILIEUZONE: 'Milieuzone',
+};
