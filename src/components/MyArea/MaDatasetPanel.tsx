@@ -58,7 +58,13 @@ export function DatasetPanel({
       <ul className={styles.MapDatasetList}>
         {datasets.map(dataset => {
           return (
-            <li key={dataset.id} className={styles.MapDatasetListItem}>
+            <li
+              key={dataset.id}
+              className={classnames(
+                styles.MapDatasetListItem,
+                styles[`MapDatasetListItem--${dataset.id}`]
+              )}
+            >
               <label
                 className={classnames(
                   styles.MapDatasetListItemToggle,
@@ -70,6 +76,7 @@ export function DatasetPanel({
                   checked={dataset.isActive}
                   onChange={() => toggleDataset(dataset.id, !dataset.isActive)}
                 />{' '}
+                {/* <img src={dataset.iconUrl} alt="" width="20" height="20" /> */}
                 {dataset.title} {dataset.isLoading && '...'}
               </label>
             </li>

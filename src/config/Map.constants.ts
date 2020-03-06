@@ -4,10 +4,12 @@ import iconPAPIER from 'assets/icons/map/afval-papier.svg';
 import iconPLASTIC from 'assets/icons/map/afval-plastic.svg';
 import iconREST from 'assets/icons/map/afval-rest.svg';
 import iconTEXTIEL from 'assets/icons/map/afval-textiel.svg';
+import classnames from 'classnames';
 import { IS_ACCEPTANCE, IS_PRODUCTION } from 'env';
 import { capitalizeFirstLetter } from 'helpers/App';
 import { getCrsRd } from 'helpers/geo';
-import { MapOptions } from 'leaflet';
+import L, { MapOptions } from 'leaflet';
+import styles from '../components/MyArea/MyArea.module.scss';
 
 const afvalcontainerIconUrls: Record<string, string> = {
   gfe: iconGFE,
@@ -40,7 +42,7 @@ export const DEFAULT_MAP_OPTIONS = {
   center: DEFAULT_CENTROID,
   zoom: DEFAULT_ZOOM,
   maxZoom: 16,
-  minZoom: 3,
+  minZoom: 7,
   crs: getCrsRd(),
   zoomControl: false,
   attributionControl: false,
@@ -71,6 +73,15 @@ export const DEFAULT_MAP_DISPLAY_CONFIG = {
   datasets: true,
 };
 
+export function createMarkerIcon(label: string, className: string) {
+  return L.divIcon({
+    className: classnames(styles.MarkerIcon, className),
+    iconSize: [30, 30],
+    html: `<span class="${styles.MarkerIconLabel}">${label}</span>`,
+    iconAnchor: [15, 15],
+  });
+}
+
 export const DATASET_GROUP_PANELS = [
   {
     id: 'afvalcontainers',
@@ -79,9 +90,17 @@ export const DATASET_GROUP_PANELS = [
       id => {
         return {
           id,
-          iconUrl: afvalcontainerIconUrls[id],
-          title: `${capitalizeFirstLetter(id)} containers`,
-          isActive: ['glas', 'plastic'].includes(id),
+          // icon: L.icon({
+          //   iconUrl: afvalcontainerIconUrls[id],
+          //   iconAnchor: [20, 20],
+          // }),
+          icon: (item: any) =>
+            createMarkerIcon(
+              '1',
+              classnames(styles.AfvalContainer, styles['AfvalContainer--' + id])
+            ),
+          title: capitalizeFirstLetter(id),
+          isActive: true,
         };
       }
     ),

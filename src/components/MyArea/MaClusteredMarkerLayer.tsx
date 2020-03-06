@@ -6,9 +6,11 @@ import 'leaflet.markercluster/dist/leaflet.markercluster.js';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import { MapDatasetItem } from './MaDatasets';
 import styles from './MyArea.module.scss';
+import { LOCATION_ZOOM, createMarkerIcon } from 'config/Map.constants';
 
 const DEFAULT_ICON = L.divIcon({
   className: styles.MarkerIcon,
+  iconAnchor: [5, 5],
 });
 
 interface ClusteredMarkerLayerProps {
@@ -20,7 +22,13 @@ export function ClusteredMarkerLayer({ items }: ClusteredMarkerLayerProps) {
   const [markerClusterGroup, storeMarkerCluster] = useState<any>(
     (L as any).markerClusterGroup({
       spiderfyOnMaxZoom: false,
-      disableClusteringAtZoom: 16,
+      disableClusteringAtZoom: 14,
+      iconCreateFunction: function(cluster: any) {
+        return createMarkerIcon(
+          cluster.getChildCount(),
+          styles.MarkerClusterIcon
+        );
+      },
     })
   );
 
@@ -28,18 +36,26 @@ export function ClusteredMarkerLayer({ items }: ClusteredMarkerLayerProps) {
     // Apparently clearLayers and re-adding layers is faster https://github.com/Leaflet/Leaflet.markercluster/issues/59#issuecomment-9320628
     markerClusterGroup.clearLayers();
     if (items.length) {
-      markerClusterGroup.addLayers(
-        items.map((item: any) => {
-          return L.marker(item.latLng, {
-            title: item.title,
-            icon: item.icon
-              ? typeof item.icon === 'function'
-                ? item.icon(item)
-                : item.icon
-              : DEFAULT_ICON,
-          });
-        })
-      );
+      const markers: L.Marker[] = [];
+      items.forEach((item: any) => {
+        const marker = L.marker(L.latLng(item.latLng[0], item.latLng[1]), {
+          icon: item.icon
+            ? typeof item.icon === 'function'
+              ? item.icon(item)
+              : item.icon
+            : DEFAULT_ICON,
+        });
+        (marker as any).type = item.type;
+        markers.push(marker);
+        marker.bindPopup(`<b>${item.type}</b><br/>${item.title}`);
+      });
+
+      markerClusterGroup.addLayers(markers);
+      markerClusterGroup.on('click', (e: any) => {
+        if (!!e.layer.type) {
+          map!.setView(e.latlng, LOCATION_ZOOM);
+        }
+      });
 
       storeMarkerCluster(markerClusterGroup);
     }

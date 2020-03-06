@@ -6,7 +6,7 @@
     "e2e:ci": "concurrently \"npm:serve-build\" \"npm:mock-api\" \"npx cypress run\" --kill-others --success first",
     "eject": "react-scripts eject",
     "lint:staged": "lint-staged",
-    "mock-api": "npx dyson mock-api/ 5000",
+    "mock-api": "node mock-api/server",
     "release:bug": "sh scripts/release.sh --bug",
     "release:major": "sh scripts/release.sh --major",
     "release:minor": "sh scripts/release.sh --minor",

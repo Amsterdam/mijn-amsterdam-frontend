@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useState } from 'react';
 import {
   Centroid,
   DEFAULT_MAP_OPTIONS,
@@ -9,6 +9,8 @@ import { DEFAULT_ZOOM } from 'config/Map.constants';
 import { toLatLng } from 'helpers/geo';
 
 import 'styles/map.scss';
+import classnames from 'classnames';
+import styles from './MaMap.module.scss';
 
 type MapDisplayComponentProps = PropsWithChildren<{
   center: Centroid;
@@ -24,20 +26,33 @@ export function MaMap({
   center,
   zoom = DEFAULT_ZOOM,
 }: MapDisplayComponentProps) {
+  const [zzoom, setZoom] = useState(zoom);
+  const classes = classnames('map-zoom--' + zzoom);
   return (
-    <Map
-      id={id}
-      aria-label={title}
-      style={{ width: '100%', height: '100%' }}
-      options={{ ...DEFAULT_MAP_OPTIONS, zoom, center: toLatLng(center) }}
-    >
-      <TileLayer
-        options={{
-          ...DEFAULT_TILE_LAYER_CONFIG.options,
+    <div className={classes} style={{ height: '100%' }}>
+      <Map
+        id={id}
+        aria-label={title}
+        style={{ width: '100%', height: '100%' }}
+        events={{
+          zoomend: (e: any) => {
+            setZoom(e.target._zoom);
+          },
         }}
-        args={[DEFAULT_TILE_LAYER_CONFIG.url]}
-      />
-      {children}
-    </Map>
+        options={{
+          ...DEFAULT_MAP_OPTIONS,
+          zoom,
+          center: toLatLng(center),
+        }}
+      >
+        <TileLayer
+          options={{
+            ...DEFAULT_TILE_LAYER_CONFIG.options,
+          }}
+          args={[DEFAULT_TILE_LAYER_CONFIG.url]}
+        />
+        {children}
+      </Map>
+    </div>
   );
 }

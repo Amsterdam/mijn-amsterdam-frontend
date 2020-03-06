@@ -9,17 +9,19 @@ import { DATASET_GROUP_PANELS } from 'config/Map.constants';
 import { DatasetPanel } from './MaDatasetPanel';
 import { ClusteredMarkerLayer } from './MaClusteredMarkerLayer';
 import styles from './MyArea.module.scss';
-import L, { Icon } from 'leaflet';
+import L, { Icon, DivIcon } from 'leaflet';
+
+type MapDatasetIcon = Icon | DivIcon | ((item: any) => Icon | DivIcon);
 
 export interface MapDataset extends Dataset {
   title: string;
-  iconUrl: string;
+  icon: MapDatasetIcon;
   isLoading: boolean;
   isActive: boolean;
 }
 
 export interface MapDatasetItem extends DatasetItem {
-  icon: Icon;
+  icon: MapDatasetIcon;
 }
 
 const activeDatasetIdsInitial = DATASET_GROUP_PANELS.reduce((acc, panel) => {
@@ -31,6 +33,17 @@ const activeDatasetIdsInitial = DATASET_GROUP_PANELS.reduce((acc, panel) => {
     [panel.id]: activeDatasetIds,
   });
 }, {});
+
+function getBoundingBox(map: L.Map | null) {
+  if (!map) {
+    return null;
+  }
+  const [lng1, lat1, lng2, lat2] = map
+    .getBounds()
+    .toBBoxString()
+    .split(',');
+  return [lat1, lng1, lat2, lng2].join(',');
+}
 
 export function Datasets() {
   const map = useMapInstance();
@@ -60,13 +73,11 @@ export function Datasets() {
   }, [datasetGroups, activeDatasetIds]);
 
   const datasetIconsById = useMemo(() => {
-    const datasetIconsById: Record<DatasetItem['id'], Icon> = {};
+    const datasetIconsById: Record<DatasetItem['id'], MapDatasetIcon> = {};
     for (const dataset of DATASET_GROUP_PANELS.flatMap(
       panel => panel.datasets
     )) {
-      datasetIconsById[dataset.id] = L.icon({
-        iconUrl: dataset.iconUrl,
-      });
+      datasetIconsById[dataset.id] = dataset.icon;
     }
     return datasetIconsById;
   }, []);
@@ -74,6 +85,34 @@ export function Datasets() {
   function toggleActiveDatasetIds(panelId: string, datasetIds: string[]) {
     setActiveDatasetIds({ ...activeDatasetIds, [panelId]: datasetIds });
   }
+
+  // useEffect(() => {
+  //   if (map) {
+  //     const setBBox = () => {
+  //       console.log('meh');
+
+  //     };
+  //     let curZoom = map.getZoom();
+  //     const onZoomEnd = (event: any) => {
+  //       if (map.getZoom() < curZoom) {
+  //         console.log('from', curZoom, 'to', map.getZoom());
+  //         setBBox();
+  //       }
+  //     };
+  //     const onZoomStart = (event: any) => {
+  //       curZoom = map.getZoom();
+  //     };
+
+  //     map.addEventListener('load', setBBox);
+  //     map.addEventListener('zoomstart', onZoomStart);
+  //     map.addEventListener('zoomend', onZoomEnd);
+  //     return () => {
+  //       map.removeEventListener('load', setBBox);
+  //       map.removeEventListener('zoomend', onZoomEnd);
+  //       map.removeEventListener('zoomstart', onZoomStart);
+  //     };
+  //   }
+  // }, [map]);
 
   useEffect(() => {
     if (!map) {
@@ -87,14 +126,7 @@ export function Datasets() {
             !datasets.some(dataset => dataset.id === id)
         );
         if (idsToLoad.length) {
-          const [lng1, lat1, lng2, lat2] = map
-            .getBounds()
-            .toBBoxString()
-            .split(',');
-          const bbox = [lat1, lng1, lat2, lng2].join(',');
-          refetch(idsToLoad, {
-            bbox,
-          });
+          refetch(idsToLoad);
         }
       }
     );

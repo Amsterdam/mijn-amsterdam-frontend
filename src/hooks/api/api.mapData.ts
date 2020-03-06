@@ -10,6 +10,7 @@ export interface DatasetItem {
   id: string;
   title: string;
   latLng: LatLngTuple;
+  type: string;
   [key: string]: any;
 }
 

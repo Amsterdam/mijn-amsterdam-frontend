@@ -10,10 +10,9 @@ const configs = dyson.getConfigurations(options);
 const appBefore = dyson.createServer(options);
 
 appBefore.use(compression());
-appBefore.use((req, res, next) => {
-  console.log('jajjajajajjaja');
-  next();
-});
+// appBefore.use((req, res, next) => {
+//   next();
+// });
 
 // Start the server
 dyson.registerServices(appBefore, options, configs);
