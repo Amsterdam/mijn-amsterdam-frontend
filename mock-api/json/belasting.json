@@ -8,9 +8,9 @@
                 "id": 4,
                 "priority": 1,
                 "title": "Betaal uw aanslagen",
-                "url": {
+                "link": {
                     "title": "Betaal direct",
-                    "url": "https://example.com/aanslagen.php"
+                    "to": "https://example.com/aanslagen.php"
                 }
             }
         ],
@@ -21,9 +21,9 @@
                 "id": 5,
                 "priority": 10,
                 "title": "Automatische incasso",
-                "url": {
+                "link": {
                     "title": "Vraag direct aan",
-                    "url": "https://example.com/automatische.incasso.aanvragen.php"
+                    "to": "https://example.com/automatische.incasso.aanvragen.php"
                 }
             }
         ]
