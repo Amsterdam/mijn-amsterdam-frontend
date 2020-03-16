@@ -113,7 +113,6 @@ describe('AutoLogoutDialog', () => {
     component.update();
 
     continueButton = component.find('Button.continue-button');
-    expect(component.childAt(0).prop('isOpen')).toBe(false);
     expect(refetch).toHaveBeenCalledTimes(1);
     expect(continueButton).toHaveLength(0);
   });

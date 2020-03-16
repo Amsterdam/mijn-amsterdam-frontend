@@ -1,4 +1,3 @@
-import { AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS } from 'components/AutoLogoutDialog/AutoLogoutDialog';
 import { getApiUrl } from 'helpers/App';
 import { useMemo } from 'react';
 import { useDataApi } from './api.hook';
@@ -8,16 +7,18 @@ export interface SessionResponse {
   isAuthenticated: boolean;
   validUntil: number;
   validityInSeconds: number;
+  userType: 'BURGER' | 'BEDRIJF';
 }
 
 export interface SessionState {
   refetch: () => void;
 }
 
-const INITIAL_SESSION_STATE = {
+const INITIAL_SESSION_STATE: SessionResponse = {
   isAuthenticated: false,
   validUntil: -1,
   validityInSeconds: -1,
+  userType: 'BURGER',
 };
 
 const requestOptions: ApiRequestOptions = {
@@ -34,14 +35,11 @@ export default function useSessionApi(): SessionApiState {
     SessionResponse
   >(requestOptions, INITIAL_SESSION_STATE);
 
-  const { isAuthenticated, validUntil } = data;
+  const { isAuthenticated, validUntil, userType } = data;
 
   return useMemo(() => {
     const validityInSeconds = Math.max(
-      Math.round(
-        (validUntil - new Date().getTime()) / 1000 -
-          AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS
-      ),
+      Math.round((validUntil - new Date().getTime()) / 1000),
       0
     );
 
@@ -52,6 +50,7 @@ export default function useSessionApi(): SessionApiState {
       validUntil,
       validityInSeconds,
       isDirty,
+      userType,
       refetch: () => refetch(requestOptions),
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

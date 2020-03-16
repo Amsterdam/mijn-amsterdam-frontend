@@ -43,7 +43,11 @@ export interface MainNavLinkProps {
   title: string;
 }
 
-function SecondaryLinks() {
+interface SecondaryLinksProps {
+  userType: 'BURGER' | 'BEDRIJF';
+}
+
+function SecondaryLinks({ userType = 'BURGER' }: SecondaryLinksProps) {
   const {
     BRP: {
       data: { persoon },
@@ -201,7 +205,7 @@ export default function MainNavBar() {
     MY_CHAPTERS: { items: myChapterItems },
   } = appState;
   const session = useContext(SessionContext);
-  const { isAuthenticated } = session;
+  const { isAuthenticated, userType } = session;
   const hasBurgerMenu = useTabletScreen();
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
     undefined
@@ -299,7 +303,7 @@ export default function MainNavBar() {
             style={linkContainerAnimationProps}
           >
             {menuItemsComposed}
-            <SecondaryLinks />
+            <SecondaryLinks userType={userType} />
           </animated.div>
         </>
       )}

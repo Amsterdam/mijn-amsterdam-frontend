@@ -10,6 +10,5 @@
   "browser": "chrome",
   "screenshotOnRunFailure": false,
   "viewportWidth": 1500,
-  "viewportHeight": 1000,
-  "responseTimeout": 120000
+  "viewportHeight": 1000
 }

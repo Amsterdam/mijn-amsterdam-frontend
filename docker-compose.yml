@@ -4,48 +4,33 @@ services:
   test-unit:
     build:
       context: .
+      dockerfile: Dockerfile
       target: build-deps
       args:
-        - BUILD_ENV=test-unit # prevents Dockerfile from building the app when running unit tests
-    command: npm run test
+        - REACT_APP_ENV=test-unit
+    entrypoint: npm test
 
   # E2E testing
-  api:
+  e2e-frontend:
     build:
       context: .
-      target: build-deps
+      dockerfile: Dockerfile
+      target: serve-test
       args:
-        - BUILD_ENV=e2e
+        - REACT_APP_ENV=e2e
     environment:
-      - APP_HOST=frontend
-      - APP_PORT=3000
-    volumes:
-      - ./mock-api:/app/mock-api
-    command: npm run mock-api
+      - HOST=e2e-frontend
+      - MOCK_API_HOST=e2e-frontend
 
-  frontend:
-    build:
-      context: .
-      target: build-deps
-      args:
-        - BUILD_ENV=e2e
-    depends_on:
-      - api
-    environment:
-      - MOCK_API_HOST=api
-      - MOCK_API_PORT=5000
-    command: npm run serve-build
-
-  e2e:
+  e2e-testsuite:
     image: cypress/included:3.4.1
     working_dir: /e2e
     environment:
-      - CYPRESS_baseUrl=http://frontend:3000
+      - CYPRESS_baseUrl=http://e2e-frontend:80
       # - DEBUG=cypress:*
-      - no_proxy=localhost,frontend,api #needs to be lowercase as this takes precedence over the uppercase verion on the build server
+      - no_proxy=localhost,e2e-frontend,api #needs to be lowercase as this takes precedence over the uppercase verion on the build server
     depends_on:
-      - frontend
-      - api
+      - e2e-frontend
     volumes:
       - ./cypress:/e2e/cypress
       - ./cypress.json:/e2e/cypress.json

@@ -18,3 +18,7 @@ import './commands';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+Cypress.Cookies.defaults({
+  whitelist: ['ma-test-session', 'ma-test-session.sig'], // The session cookie from e2e tests
+});

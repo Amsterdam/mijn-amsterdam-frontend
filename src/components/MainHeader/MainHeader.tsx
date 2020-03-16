@@ -15,10 +15,9 @@ import { Link } from 'react-router-dom';
 import styles from './MainHeader.module.scss';
 import Linkd from 'components/Button/Button';
 import useRouter from 'use-react-router';
-import { ChapterTitles } from '../../config/Chapter.constants';
-import { Chapter } from 'config/Chapter.constants';
+import { ErrorNames } from '../../config/Api.constants';
 
-const excludedApiKeys: StateKey[] = ['MY_CHAPTERS', 'SESSION'];
+const excludedApiKeys: StateKey[] = ['MY_CHAPTERS', 'SESSION', 'MELDINGEN'];
 
 export interface MainHeaderProps {
   isAuthenticated?: boolean;
@@ -54,7 +53,7 @@ export default function MainHeader({
       );
     })
     .map(([stateKey, state]) => {
-      const name = ChapterTitles[stateKey as Chapter] || stateKey;
+      const name = ErrorNames[stateKey] || stateKey;
       return {
         name,
         error:
