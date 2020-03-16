@@ -1,4 +1,5 @@
 import { IS_DEVELOPMENT, IS_PRODUCTION } from '../env';
+
 export const FeatureToggle = {
   myTipsoptInOutPersonalization: true,
   garbageInformationPage: true,
