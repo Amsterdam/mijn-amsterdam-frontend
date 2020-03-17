@@ -38,9 +38,7 @@
 }
 
 .SearchButton {
-  // @include button-unstyled;
-  // font-weight: 500;
-  // color: $color-neutral-grey4;
+  margin-bottom: 1rem;
 
   @include media-q('>=phone') {
     float: right;

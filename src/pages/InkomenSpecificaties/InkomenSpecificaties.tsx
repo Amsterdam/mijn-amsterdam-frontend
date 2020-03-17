@@ -97,15 +97,6 @@ export default () => {
       );
     });
 
-  console.log(
-    'itemsByCategory',
-    itemsByCategory,
-    itemsFiltered,
-    selectedType,
-    selectedDates[0],
-    selectedDates[1]
-  );
-
   const itemsFilteredPaginated = itemsFiltered.slice(startIndex, endIndex + 1);
   const selectTypeFilter = useCallback(type => {
     setSelectedType(type);
