@@ -101,12 +101,12 @@ export default () => {
         startCollapsed={hasActiveRequests}
         isLoading={isLoading}
         hasItems={hasActiveDescisions}
-        title="Besluiten"
+        title="Afgehandelde aanvragen"
         track={{
-          category: 'Inkomen en Stadspas overzicht / Besluiten',
+          category: 'Inkomen en Stadspas overzicht / Afgehandelde aanvragen',
           name: 'Datatabel',
         }}
-        noItemsMessage="U hebt op dit moment geen besluiten."
+        noItemsMessage="U hebt op dit moment geen afgehandelde aanvragen."
       >
         <Table items={itemsDecided} />
       </SectionCollapsible>
