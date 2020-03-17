@@ -5,14 +5,14 @@ import {
   assertAtPage,
 } from '../support/helpers';
 
-describe('Chapter: Werk en inkomen', () => {
+describe('Chapter: Inkomen en Stadspas', () => {
   goToDashboard();
 
   it('should navigate to the overview page', () => {
     cy.get(
       '[class*="MyChaptersPanel_Links"] a[data-chapter-id="INKOMEN"]'
     ).click();
-    assertAtPage('Werk en inkomen', '/werk-en-inkomen');
+    assertAtPage('Inkomen en Stadspas', '/werk-en-inkomen');
   });
 
   it('should display 2 lists', () => {
@@ -60,7 +60,7 @@ describe('Chapter: Werk en inkomen', () => {
     // Go back
     selectComponent('PageHeading_BackLink').click();
 
-    assertAtPage('Werk en inkomen', '/werk-en-inkomen');
+    assertAtPage('Inkomen en Stadspas', '/werk-en-inkomen');
   });
 
   it('Should navigate to a detail page and show all the (completed) steps of a request', () => {
@@ -100,7 +100,7 @@ describe('Chapter: Werk en inkomen', () => {
 
     // Go back
     selectComponent('PageHeading_BackLink').click();
-    assertAtPage('Werk en inkomen', '/werk-en-inkomen');
+    assertAtPage('Inkomen en Stadspas', '/werk-en-inkomen');
 
     // Collapse the second list
     selectComponent(
@@ -120,7 +120,7 @@ describe('Chapter: Werk en inkomen', () => {
     cy.get('h2:first').should('exist');
     cy.get('header')
       .get('a')
-      .contains('Werk en inkomen')
+      .contains('Inkomen en Stadspas')
       .should('exist');
   });
 
