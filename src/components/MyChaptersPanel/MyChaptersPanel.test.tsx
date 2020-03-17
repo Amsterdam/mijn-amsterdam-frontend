@@ -23,7 +23,7 @@ const items: MenuItem[] = [
     id: 'ZORG',
     to: '/zorg-en-ondersteuning',
   },
-  { title: 'Werk en inkomen', id: 'INKOMEN', to: '/werk-en-inkomen' },
+  { title: 'Inkomen en Stadspas', id: 'INKOMEN', to: '/werk-en-inkomen' },
   { title: 'Afval', id: 'AFVAL', to: '/afval' },
 ];
 
