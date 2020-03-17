@@ -7,7 +7,6 @@ import {
   formatIncomeSpecifications,
 } from 'data-formatting/focus';
 import { MemoryRouter, Switch, Route } from 'react-router-dom';
-import { act } from 'react-dom/test-utils';
 
 const data: FocusInkomenSpecificatie[] = formatIncomeSpecifications([
   {

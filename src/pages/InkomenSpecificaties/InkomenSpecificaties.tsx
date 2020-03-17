@@ -17,7 +17,6 @@ import useRouter from 'use-react-router';
 import Table from 'components/Table/Table';
 import Section from 'components/Section/Section';
 import Pagination from 'components/Pagination/Pagination';
-import { format } from 'date-fns';
 import DateInput from 'components/DateInput/DateInput';
 import { ReactComponent as SearchIcon } from 'assets/icons/Search.svg';
 import { Button } from 'components/Button/Button';
@@ -31,7 +30,6 @@ export const specificationsTableDisplayProps = {
 
 const PAGE_SIZE = 10;
 const INITIAL_INDEX = [0, PAGE_SIZE - 1];
-const DATEPICKER_FORMAT = 'yyyy-MM-dd';
 
 export default () => {
   const {
