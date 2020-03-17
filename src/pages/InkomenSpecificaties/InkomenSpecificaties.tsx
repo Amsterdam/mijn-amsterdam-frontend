@@ -1,4 +1,10 @@
-import React, { useContext, useState, useMemo, useCallback } from 'react';
+import React, {
+  useContext,
+  useState,
+  useMemo,
+  useCallback,
+  useEffect,
+} from 'react';
 import PageHeading from 'components/PageHeading/PageHeading';
 import styles from './InkomenSpecificaties.module.scss';
 import { OverviewPage, PageContent } from 'components/Page/Page';
@@ -14,7 +20,7 @@ import Pagination from 'components/Pagination/Pagination';
 import { format } from 'date-fns';
 import DateInput from 'components/DateInput/DateInput';
 import { ReactComponent as SearchIcon } from 'assets/icons/Search.svg';
-import { Button } from '../../components/Button/Button';
+import { Button } from 'components/Button/Button';
 
 export const specificationsTableDisplayProps = {
   title: 'Omschrijving',
@@ -60,6 +66,10 @@ export default () => {
     maxDate,
   ]);
 
+  useEffect(() => {
+    setSelectedDates([minDate, maxDate]);
+  }, [minDate, maxDate]);
+
   const itemsByCategory = items.filter(item =>
     isAnnualStatementOverviewPage
       ? item.isAnnualStatement
@@ -86,6 +96,15 @@ export default () => {
         datePublished <= new Date(selectedDates[1])
       );
     });
+
+  console.log(
+    'itemsByCategory',
+    itemsByCategory,
+    itemsFiltered,
+    selectedType,
+    selectedDates[0],
+    selectedDates[1]
+  );
 
   const itemsFilteredPaginated = itemsFiltered.slice(startIndex, endIndex + 1);
   const selectTypeFilter = useCallback(type => {
@@ -187,13 +206,15 @@ export default () => {
           </div>
         )}
         {!isSearchPanelActive && (
-          <button
+          <Button
             className={styles.SearchButton}
             onClick={() => setSearchPanelActive(!isSearchPanelActive)}
             disabled={isSearchPanelActive}
+            icon={SearchIcon}
+            iconPosition="right"
           >
-            Zoeken <SearchIcon />
-          </button>
+            Zoeken
+          </Button>
         )}
         <Table
           className={styles.SpecificationsTable}
