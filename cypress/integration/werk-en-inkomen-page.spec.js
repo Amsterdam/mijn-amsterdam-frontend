@@ -26,7 +26,7 @@ describe('Chapter: Inkomen en Stadspas', () => {
     );
     selectComponent('SectionCollapsible_SectionCollapsible', ':eq(1)').should(
       'contain',
-      'Besluiten'
+      'Afgehandelde aanvragen'
     );
   });
 
