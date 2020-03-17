@@ -48,14 +48,14 @@ export default () => {
     if (items.length) {
       return items[0].datePublished;
     }
-    return format(new Date(), DATEPICKER_FORMAT);
+    return '';
   }, [items]);
 
   const minDate = useMemo(() => {
     if (items.length) {
       return items[items.length - 1].datePublished;
     }
-    return format(new Date(), DATEPICKER_FORMAT);
+    return '';
   }, [items]);
 
   const isAnnualStatementOverviewPage = type === 'jaaropgaven';
@@ -67,7 +67,9 @@ export default () => {
   ]);
 
   useEffect(() => {
-    setSelectedDates([minDate, maxDate]);
+    if (minDate && maxDate) {
+      setSelectedDates([minDate, maxDate]);
+    }
   }, [minDate, maxDate]);
 
   const itemsByCategory = items.filter(item =>
@@ -196,7 +198,7 @@ export default () => {
             </label>
           </div>
         )}
-        {!isSearchPanelActive && (
+        {!isSearchPanelActive && !!itemsFiltered.length && (
           <Button
             className={styles.SearchButton}
             onClick={() => setSearchPanelActive(!isSearchPanelActive)}
