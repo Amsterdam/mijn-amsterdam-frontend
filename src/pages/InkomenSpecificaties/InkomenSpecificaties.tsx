@@ -1,4 +1,10 @@
-import React, { useContext, useState, useMemo, useCallback } from 'react';
+import React, {
+  useContext,
+  useState,
+  useMemo,
+  useCallback,
+  useEffect,
+} from 'react';
 import PageHeading from 'components/PageHeading/PageHeading';
 import styles from './InkomenSpecificaties.module.scss';
 import { OverviewPage, PageContent } from 'components/Page/Page';
@@ -11,10 +17,9 @@ import useRouter from 'use-react-router';
 import Table from 'components/Table/Table';
 import Section from 'components/Section/Section';
 import Pagination from 'components/Pagination/Pagination';
-import { format } from 'date-fns';
 import DateInput from 'components/DateInput/DateInput';
 import { ReactComponent as SearchIcon } from 'assets/icons/Search.svg';
-import { Button } from '../../components/Button/Button';
+import { Button } from 'components/Button/Button';
 
 export const specificationsTableDisplayProps = {
   title: 'Omschrijving',
@@ -25,7 +30,6 @@ export const specificationsTableDisplayProps = {
 
 const PAGE_SIZE = 10;
 const INITIAL_INDEX = [0, PAGE_SIZE - 1];
-const DATEPICKER_FORMAT = 'yyyy-MM-dd';
 
 export default () => {
   const {
@@ -42,14 +46,14 @@ export default () => {
     if (items.length) {
       return items[0].datePublished;
     }
-    return format(new Date(), DATEPICKER_FORMAT);
+    return '';
   }, [items]);
 
   const minDate = useMemo(() => {
     if (items.length) {
       return items[items.length - 1].datePublished;
     }
-    return format(new Date(), DATEPICKER_FORMAT);
+    return '';
   }, [items]);
 
   const isAnnualStatementOverviewPage = type === 'jaaropgaven';
@@ -59,6 +63,12 @@ export default () => {
     minDate,
     maxDate,
   ]);
+
+  useEffect(() => {
+    if (minDate && maxDate) {
+      setSelectedDates([minDate, maxDate]);
+    }
+  }, [minDate, maxDate]);
 
   const itemsByCategory = items.filter(item =>
     isAnnualStatementOverviewPage
@@ -186,14 +196,16 @@ export default () => {
             </label>
           </div>
         )}
-        {!isSearchPanelActive && (
-          <button
+        {!isSearchPanelActive && !!itemsFiltered.length && (
+          <Button
             className={styles.SearchButton}
             onClick={() => setSearchPanelActive(!isSearchPanelActive)}
             disabled={isSearchPanelActive}
+            icon={SearchIcon}
+            iconPosition="right"
           >
-            Zoeken <SearchIcon />
-          </button>
+            Zoeken
+          </Button>
         )}
         <Table
           className={styles.SpecificationsTable}

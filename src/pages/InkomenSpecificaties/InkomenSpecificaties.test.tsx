@@ -7,7 +7,6 @@ import {
   formatIncomeSpecifications,
 } from 'data-formatting/focus';
 import { MemoryRouter, Switch, Route } from 'react-router-dom';
-import { act } from 'react-dom/test-utils';
 
 const data: FocusInkomenSpecificatie[] = formatIncomeSpecifications([
   {
@@ -78,9 +77,9 @@ describe('<InkomenSpecificaties />', () => {
     expect(component.html()).toMatchSnapshot();
   });
 
-  it('Allows filtering (search) the results', async () => {
+  it('Allows filtering (search) the results', () => {
     const component = mountComponentWithRoute('/');
-    component.find('.SearchButton').simulate('click');
+    component.find('button.SearchButton').simulate('click');
     expect(component.find('.SearchPanel')).toHaveLength(1);
     component.find('.Select').simulate('change', { target: { value: 'BBS' } });
     expect(component.find('tbody tr')).toHaveLength(1);

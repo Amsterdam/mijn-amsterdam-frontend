@@ -38,28 +38,19 @@
 }
 
 .SearchButton {
-  @include button-unstyled;
-  font-weight: 500;
-  color: $color-neutral-grey4;
+  margin-bottom: 1rem;
 
   @include media-q('>=phone') {
     float: right;
-    margin-bottom: -3rem;
+    margin-bottom: -1.8rem;
   }
 
   svg {
     height: 1.3rem;
-    fill: $color-neutral-grey4;
+    fill: $color-white;
   }
 
-  &:hover {
-    color: $color-primary-red;
-    text-decoration: underline;
 
-    svg {
-      fill: $color-primary-red;
-    }
-  }
 }
 
 .SearchResetButton {

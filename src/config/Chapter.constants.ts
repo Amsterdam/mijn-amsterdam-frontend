@@ -43,7 +43,7 @@ export const Chapters: { [chapter in Chapter]: Chapter } = {
 
 // These are used for PageHeadings and link title props for example.
 export const ChapterTitles: { [chapter in Chapter | 'MY_CASES']: string } = {
-  INKOMEN: 'Werk en inkomen',
+  INKOMEN: 'Inkomen en Stadspas',
   BURGERZAKEN: 'Burgerzaken',
   BELASTINGEN: 'Belastingen',
   WONEN: 'Erfpacht',

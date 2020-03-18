@@ -68,11 +68,11 @@ export default () => {
         </p>
         <p>
           <Linkd external={true} href={ExternalUrls.WPI_REGELINGEN}>
-            Naar alle regelingen voor Werk en inkomen
+            Naar alle regelingen voor Inkomen en Stadspas
           </Linkd>
           <br />
           <Linkd external={true} href={ExternalUrls.WPI_CONTACT}>
-            Contact Werk en inkomen
+            Contact Inkomen en Stadspas
           </Linkd>
         </p>
         {(isError || isError2) && (
@@ -88,7 +88,7 @@ export default () => {
         isLoading={isLoading}
         hasItems={hasActiveRequests}
         track={{
-          category: 'Werk en inkomen overzicht / Lopende aanvragen',
+          category: 'Inkomen en Stadspas overzicht / Lopende aanvragen',
           name: 'Datatabel',
         }}
         noItemsMessage="U hebt op dit moment geen lopende aanvragen."
@@ -101,12 +101,12 @@ export default () => {
         startCollapsed={hasActiveRequests}
         isLoading={isLoading}
         hasItems={hasActiveDescisions}
-        title="Besluiten"
+        title="Afgehandelde aanvragen"
         track={{
-          category: 'Werk en inkomen overzicht / Besluiten',
+          category: 'Inkomen en Stadspas overzicht / Afgehandelde aanvragen',
           name: 'Datatabel',
         }}
-        noItemsMessage="U hebt op dit moment geen besluiten."
+        noItemsMessage="U hebt op dit moment geen afgehandelde aanvragen."
       >
         <Table items={itemsDecided} />
       </SectionCollapsible>
@@ -117,7 +117,7 @@ export default () => {
           isLoading={isLoading2}
           title="Uitkeringsspecificaties"
           track={{
-            category: 'Werk en inkomen overzicht / Uitkeringsspecificaties',
+            category: 'Inkomen en Stadspas overzicht / Uitkeringsspecificaties',
             name: 'Datatabel',
           }}
           noItemsMessage="Er zijn op dit moment geen uitkeringgspecificaties."
@@ -139,7 +139,7 @@ export default () => {
           isLoading={isLoading2}
           title="Jaaropgaven"
           track={{
-            category: 'Werk en inkomen overzicht / Jaaropgaven',
+            category: 'Inkomen en Stadspas overzicht / Jaaropgaven',
             name: 'Datatabel',
           }}
           noItemsMessage="Er zijn op dit moment geen Jaaropgaven."
