@@ -63,12 +63,12 @@ export default () => {
       <PageHeading icon={<ChapterIcon />}>{ChapterTitles.INKOMEN}</PageHeading>
       <PageContent>
         <p>
-          Hieronder vindt u een overzicht van alle voorzieningen die u hebt ter
-          aanvulling of ondersteuning bij een laag inkomen.
+          Op deze pagina vindt u informatie over uw uitkering en de
+          ondersteuning die u krijgt omdat u weinig geld hebt.
         </p>
         <p>
-          <Linkd external={true} href={ExternalUrls.WPI_REGELINGEN}>
-            Naar alle regelingen voor Inkomen en Stadspas
+          <Linkd external={true} href={ExternalUrls.WPI_ALGEMEEN}>
+            Algemene informatie over werk en inkomen
           </Linkd>
           <br />
           <Linkd external={true} href={ExternalUrls.WPI_CONTACT}>
