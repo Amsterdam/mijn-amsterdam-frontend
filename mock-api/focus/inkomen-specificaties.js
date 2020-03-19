@@ -21,8 +21,10 @@ module.exports = {
     });
 
     return {
-      jaaropgaven,
-      uitkeringsspecificaties,
+      content: {
+        jaaropgaven,
+        uitkeringsspecificaties,
+      },
     };
   },
 };
