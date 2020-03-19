@@ -60,7 +60,7 @@ function SecondaryLinks({ userType = 'BURGER' }: SecondaryLinksProps) {
 
   useEffect(() => {
     if (hasFirstName) {
-      trackItemPresentation('Mijn gegevens', 'Link naar Profiel');
+      trackItemPresentation('Persoonsgegevens', 'Link naar Profiel');
     }
   }, [hasFirstName]);
 

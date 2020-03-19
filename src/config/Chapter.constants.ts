@@ -51,7 +51,7 @@ export const ChapterTitles: { [chapter in Chapter | 'MY_CASES']: string } = {
   ZORG: 'Zorg en ondersteuning',
   ROOT: 'Home',
   MELDINGEN: 'Actueel',
-  MIJN_GEGEVENS: 'Mijn gegevens',
+  MIJN_GEGEVENS: 'Persoonsgegevens',
   MIJN_BUURT: 'Mijn buurt',
   MIJN_TIPS: 'Mijn tips',
   AFVAL: 'Afval',
