@@ -40,13 +40,14 @@ function isChapterActive(
         FeatureToggle.garbageInformationPage &&
         !GARBAGE.isLoading &&
         GARBAGE.isDirty &&
-        BRP.data &&
-        BRP.data.persoon &&
-        BRP.data.persoon.mokum
+        !!BRP.data?.persoon.mokum
       );
 
     case Chapters.WONEN:
       return !ERFPACHT.isLoading && ERFPACHT.data.status === true;
+
+    case Chapters.MIJN_GEGEVENS:
+      return !BRP.isLoading && !!BRP.data?.persoon;
   }
 
   return false;

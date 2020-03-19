@@ -3,6 +3,7 @@ import { ReactComponent as IconMyNotifications } from 'assets/icons/Bell.svg';
 import { ReactComponent as IconBurgerZaken } from 'assets/icons/burgerzaken.svg';
 import { ReactComponent as IconGarbage } from 'assets/icons/Huisvuilkalender.svg';
 import { ReactComponent as IconInkomen } from 'assets/icons/inkomen.svg';
+import { ReactComponent as IconMijnGegevens } from 'assets/icons/MijnGegevens.svg';
 import { ReactComponent as IconMilieuzone } from 'assets/icons/milieuzone.svg';
 import { ReactComponent as IconTips } from 'assets/icons/Tip.svg';
 import { ReactComponent as IconWonen } from 'assets/icons/wonen.svg';
@@ -68,7 +69,7 @@ export const ChapterIcons: {
   BELASTINGEN: IconBelastingen,
   ZORG: IconZorg,
   MELDINGEN: IconMyNotifications,
-  MIJN_GEGEVENS: IconBurgerZaken,
+  MIJN_GEGEVENS: IconMijnGegevens,
   MILIEUZONE: IconMilieuzone,
   ROOT: IconBurgerZaken,
   MIJN_BUURT: IconBurgerZaken,
@@ -76,6 +77,12 @@ export const ChapterIcons: {
 };
 
 export const myChaptersMenuItems: MenuItem[] = [
+  {
+    title: ChapterTitles.MIJN_GEGEVENS,
+    id: Chapters.MIJN_GEGEVENS,
+    to: AppRoutes.MIJN_GEGEVENS,
+    Icon: ChapterIcons[Chapters.MIJN_GEGEVENS],
+  },
   {
     title: ChapterTitles.BELASTINGEN,
     id: Chapters.BELASTINGEN,
