@@ -2,10 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import InkomenSpecificaties from './InkomenSpecificaties';
 import AppState, { AppState as AppStateInterface } from 'AppState';
-import {
-  FocusInkomenSpecificatie,
-  formatIncomeSpecifications,
-} from 'data-formatting/focus';
+import { formatIncomeSpecifications } from 'data-formatting/focus';
 import { MemoryRouter, Switch, Route } from 'react-router-dom';
 import { IncomeSpecificationsResponse } from 'hooks/api/api.focus';
 
