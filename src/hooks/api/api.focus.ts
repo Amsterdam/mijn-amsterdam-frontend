@@ -12,12 +12,17 @@ import { useDataApi } from './api.hook';
 import { ApiState } from './api.types';
 import { MyNotification } from './my-notifications-api.hook';
 
+export interface IncomeSpecificationsResponse {
+  jaaropgaven: FocusInkomenSpecificatieFromSource[];
+  uitkeringsspecificaties: FocusInkomenSpecificatieFromSource[];
+}
+
 export type FocusInkomenSpecificatiesApiState = ApiState<
   FocusInkomenSpecificatie[]
 >;
 
 export function useFocusInkomenSpecificatiesApi(): FocusInkomenSpecificatiesApiState {
-  const [api] = useDataApi<FocusInkomenSpecificatieFromSource[]>(
+  const [api] = useDataApi<IncomeSpecificationsResponse>(
     {
       url: getApiUrl('FOCUS_INKOMEN_SPECIFICATIES'),
       postpone: getApiConfigValue(
@@ -26,7 +31,10 @@ export function useFocusInkomenSpecificatiesApi(): FocusInkomenSpecificatiesApiS
         false
       ),
     },
-    []
+    {
+      jaaropgaven: [],
+      uitkeringsspecificaties: [],
+    }
   );
 
   return { ...api, data: formatIncomeSpecifications(api.data) };

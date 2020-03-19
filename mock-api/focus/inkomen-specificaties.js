@@ -1,21 +1,28 @@
-const uitkeringsspecificaties = require('../json/inkomen-specificaties.json');
+const data = require('../json/inkomen-specificaties.json');
 
 module.exports = {
-  path: '/api/focus/uitkeringsspecificaties',
+  path: '/api/focus/combined',
   // delay: 11000,
   template: (_, queryParams) => {
-    return uitkeringsspecificaties.map((item, index) => {
+    const jaaropgaven = [];
+    const uitkeringsspecificaties = [];
+
+    data.forEach((item, index) => {
       if (index % 12 === 0) {
-        return {
+        jaaropgaven.push({
           ...item,
           title: 'Jaaropgave',
-          isAnnualStatement: true,
-        };
+        });
       }
-      return {
+      uitkeringsspecificaties.push({
         ...item,
         isAnnualStatement: false,
-      };
+      });
     });
+
+    return {
+      jaaropgaven,
+      uitkeringsspecificaties,
+    };
   },
 };

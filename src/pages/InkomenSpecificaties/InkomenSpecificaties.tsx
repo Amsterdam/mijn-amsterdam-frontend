@@ -119,7 +119,7 @@ export default () => {
       <PageContent>
         {isError && (
           <Alert type="warning">
-            We kunnen op dit moment niet alle gegevens tonen.
+            <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>
         )}
       </PageContent>
