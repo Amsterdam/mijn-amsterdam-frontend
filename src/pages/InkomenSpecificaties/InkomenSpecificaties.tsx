@@ -33,7 +33,11 @@ const INITIAL_INDEX = [0, PAGE_SIZE - 1];
 
 export default () => {
   const {
-    FOCUS_INKOMEN_SPECIFICATIES: { data: items, isError, isLoading },
+    FOCUS_INKOMEN_SPECIFICATIES: {
+      data: { jaaropgaven, uitkeringsspecificaties },
+      isError,
+      isLoading,
+    },
   } = useContext(AppContext);
 
   const {
@@ -41,6 +45,12 @@ export default () => {
       params: { type },
     },
   } = useRouter();
+
+  const isAnnualStatementOverviewPage = type === 'jaaropgaven';
+
+  const items = isAnnualStatementOverviewPage
+    ? jaaropgaven
+    : uitkeringsspecificaties;
 
   const maxDate = useMemo(() => {
     if (items.length) {
@@ -56,7 +66,6 @@ export default () => {
     return '';
   }, [items]);
 
-  const isAnnualStatementOverviewPage = type === 'jaaropgaven';
   const [isSearchPanelActive, setSearchPanelActive] = useState(false);
   const [selectedType, setSelectedType] = useState('');
   const [selectedDates, setSelectedDates] = useState<[string, string]>([
@@ -70,24 +79,18 @@ export default () => {
     }
   }, [minDate, maxDate]);
 
-  const itemsByCategory = items.filter(item =>
-    isAnnualStatementOverviewPage
-      ? item.isAnnualStatement
-      : !item.isAnnualStatement
-  );
-
   const options = useMemo(() => {
     return Array.from(
-      itemsByCategory.reduce((acc, item) => {
+      items.reduce((acc, item) => {
         acc.set(item.type, (acc.get(item.type) || 1) + 1);
         return acc;
       }, new Map<string, number>())
     );
-  }, [itemsByCategory]);
+  }, [items]);
 
   const [[startIndex, endIndex], setPageIndex] = useState(INITIAL_INDEX);
 
-  const itemsFiltered = itemsByCategory
+  const itemsFiltered = items
     .filter(item => (selectedType ? item.type === selectedType : true))
     .filter(item => {
       const datePublished = new Date(item.datePublished);
@@ -119,7 +122,7 @@ export default () => {
       <PageContent>
         {isError && (
           <Alert type="warning">
-            We kunnen op dit moment niet alle gegevens tonen.
+            <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>
         )}
       </PageContent>
@@ -156,7 +159,7 @@ export default () => {
                 value={selectedType}
                 onChange={event => selectTypeFilter(event.target.value)}
               >
-                <option value="">Alle types ({itemsByCategory.length})</option>
+                <option value="">Alle types ({items.length})</option>
                 {options.map(([option, count]) => (
                   <option key={option} value={option}>
                     {option} ({count})

@@ -7,41 +7,44 @@ import {
   formatIncomeSpecifications,
 } from 'data-formatting/focus';
 import { MemoryRouter, Switch, Route } from 'react-router-dom';
+import { IncomeSpecificationsResponse } from 'hooks/api/api.focus';
 
-const data: FocusInkomenSpecificatie[] = formatIncomeSpecifications([
-  {
-    title: 'Jaaropgave',
-    type: 'BIBI',
-    datePublished: '2016-03-06',
-    url: 'http://example.org/document-0.pdf',
-    id: 'item-0',
-    isAnnualStatement: true,
-  },
-  {
-    title: 'Uitkeringspecificatie',
-    type: 'BBS',
-    datePublished: '2016-04-06',
-    url: 'http://example.org/document-1.pdf',
-    id: 'item-1',
-    isAnnualStatement: false,
-  },
-  {
-    title: 'Uitkeringspecificatie',
-    type: 'STIMREG',
-    datePublished: '2016-05-06',
-    url: 'http://example.org/document-2.pdf',
-    id: 'item-2',
-    isAnnualStatement: false,
-  },
-  {
-    title: 'Uitkeringspecificatie',
-    type: 'STIMREG',
-    datePublished: '2016-06-06',
-    url: 'http://example.org/document-3.pdf',
-    id: 'item-3',
-    isAnnualStatement: false,
-  },
-]);
+const sourceData: IncomeSpecificationsResponse = {
+  jaaropgaven: [
+    {
+      title: 'Jaaropgave',
+      type: 'BIBI',
+      datePublished: '2016-03-06',
+      url: 'focus/document?id=x',
+      id: 'item-0',
+    },
+    {
+      title: 'Jaaropgave',
+      type: 'BIBI',
+      datePublished: '2016-03-06',
+      url: 'focus/document?id=x',
+      id: 'item-4',
+    },
+  ],
+  uitkeringsspecificaties: [
+    {
+      title: 'Uitkeringspecificatie',
+      type: 'BBS',
+      datePublished: '2016-04-06',
+      url: 'focus/document?id=x',
+      id: 'item-1',
+    },
+    {
+      title: 'Uitkeringspecificatie',
+      type: 'STIMREG',
+      datePublished: '2016-06-06',
+      url: 'focus/document?id=x',
+      id: 'item-3',
+    },
+  ],
+};
+
+const data = formatIncomeSpecifications(sourceData);
 
 const APP_STATE = {
   FOCUS_INKOMEN_SPECIFICATIES: {

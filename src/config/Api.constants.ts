@@ -24,7 +24,7 @@ export const ApiUrls: TypeIndex<ApiName, string> = {
   BRP: `${API_BASE_URL}/brp/brp`,
   WMO: `${API_BASE_URL}/wmoned/voorzieningen`,
   FOCUS: `${API_BASE_URL}/focus/aanvragen`,
-  FOCUS_INKOMEN_SPECIFICATIES: `${API_BASE_URL}/focus/uitkeringsspecificaties`,
+  FOCUS_INKOMEN_SPECIFICATIES: `${API_BASE_URL}/focus/combined`,
   AUTH: `${API_BASE_URL}/auth/check`,
   ERFPACHT: `${API_BASE_URL}/erfpacht/check-erfpacht`,
   BAG: `${DATAPUNT_API_BASE_URL}/atlas/search/adres/`,
