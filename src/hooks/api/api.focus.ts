@@ -17,9 +17,12 @@ export interface IncomeSpecificationsResponse {
   uitkeringsspecificaties: FocusInkomenSpecificatieFromSource[];
 }
 
-export type FocusInkomenSpecificatiesApiState = ApiState<
-  FocusInkomenSpecificatie[]
->;
+export interface IncomeSpecifications {
+  jaaropgaven: FocusInkomenSpecificatie[];
+  uitkeringsspecificaties: FocusInkomenSpecificatie[];
+}
+
+export type FocusInkomenSpecificatiesApiState = ApiState<IncomeSpecifications>;
 
 export function useFocusInkomenSpecificatiesApi(): FocusInkomenSpecificatiesApiState {
   const [api] = useDataApi<IncomeSpecificationsResponse>(

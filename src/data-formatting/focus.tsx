@@ -12,7 +12,10 @@ import { StatusLineItem, StepType } from 'components/StatusLine/StatusLine';
 import { generatePath } from 'react-router';
 import { ReactComponent as DocumentIcon } from 'assets/icons/Document.svg';
 import styles from 'pages/Inkomen/Inkomen.module.scss';
-import { IncomeSpecificationsResponse } from 'hooks/api/api.focus';
+import {
+  IncomeSpecificationsResponse,
+  IncomeSpecifications,
+} from 'hooks/api/api.focus';
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
  */
@@ -1017,7 +1020,6 @@ export interface FocusInkomenSpecificatieFromSource {
   id: string;
   url: string;
   type: FocusInkomenSpecificatieType;
-  isAnnualStatement: boolean;
 }
 
 export interface FocusInkomenSpecificatie
@@ -1030,39 +1032,41 @@ export interface FocusInkomenSpecificatie
   documentUrl: ReactNode;
 }
 
+function formatIncomSpecificationItem(
+  item: FocusInkomenSpecificatieFromSource
+): FocusInkomenSpecificatie {
+  const displayDate = defaultDateFormat(item.datePublished);
+  return {
+    ...item,
+    displayDate,
+    documentUrl: (
+      <a
+        href={item.url}
+        className={styles.DownloadLink}
+        download={`${format(new Date(item.datePublished), 'yyyy-MM-dd')}-${
+          item.title
+        }`}
+      >
+        <DocumentIcon width={14} height={14} /> PDF
+      </a>
+    ),
+    link: {
+      to: item.url,
+      title: 'Download specificatie',
+    },
+  };
+}
+
 export function formatIncomeSpecifications({
   jaaropgaven,
   uitkeringsspecificaties,
-}: IncomeSpecificationsResponse): FocusInkomenSpecificatie[] {
-  return [
-    ...jaaropgaven.map(item =>
-      Object.assign(item, { isAnnualStatement: true })
-    ),
-    ...uitkeringsspecificaties.map(item =>
-      Object.assign(item, { isAnnualStatement: false })
-    ),
-  ]
-    .sort(dateSort('datePublished', 'desc'))
-    .map(item => {
-      const displayDate = defaultDateFormat(item.datePublished);
-      return {
-        ...item,
-        displayDate,
-        documentUrl: (
-          <a
-            href={item.url}
-            className={styles.DownloadLink}
-            download={`${format(new Date(item.datePublished), 'yyyy-MM-dd')}-${
-              item.title
-            }`}
-          >
-            <DocumentIcon width={14} height={14} /> PDF
-          </a>
-        ),
-        link: {
-          to: item.url,
-          title: 'Download specificatie',
-        },
-      };
-    });
+}: IncomeSpecificationsResponse): IncomeSpecifications {
+  return {
+    jaaropgaven: jaaropgaven
+      .sort(dateSort('datePublished', 'desc'))
+      .map(formatIncomSpecificationItem),
+    uitkeringsspecificaties: uitkeringsspecificaties
+      .sort(dateSort('datePublished', 'desc'))
+      .map(formatIncomSpecificationItem),
+  };
 }

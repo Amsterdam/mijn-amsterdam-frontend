@@ -5,7 +5,7 @@ import { AppContext } from 'AppState';
 import { ChapterTitles } from 'config/Chapter.constants';
 import styles from './Inkomen.module.scss';
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
-import { ExternalUrls } from 'config/App.constants';
+import { ExternalUrls, FeatureToggle } from 'config/App.constants';
 import Alert from 'components/Alert/Alert';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import Linkd from 'components/Button/Button';
@@ -14,7 +14,6 @@ import { generatePath } from 'react-router-dom';
 import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
 import Table, { addTitleLinkComponent } from 'components/Table/Table';
 import { specificationsTableDisplayProps } from 'pages/InkomenSpecificaties/InkomenSpecificaties';
-import { FeatureToggle } from '../../config/App.constants';
 
 const incomSpecificationsRouteMonthly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES']
@@ -34,7 +33,7 @@ export default () => {
       isLoading,
     },
     FOCUS_INKOMEN_SPECIFICATIES: {
-      data: incomeSpecificationItems,
+      data: { jaaropgaven, uitkeringsspecificaties },
       isError: isError2,
       isLoading: isLoading2,
     },
@@ -50,13 +49,9 @@ export default () => {
 
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
-  const itemsSpecificationsMonthly = incomeSpecificationItems
-    .filter(item => !item.isAnnualStatement)
-    .slice(0, 3);
+  const itemsSpecificationsMonthly = uitkeringsspecificaties.slice(0, 3);
 
-  const itemsSpecificationsYearly = incomeSpecificationItems
-    .filter(item => item.isAnnualStatement)
-    .slice(0, 3);
+  const itemsSpecificationsYearly = jaaropgaven.slice(0, 3);
 
   return (
     <OverviewPage className={styles.Inkomen}>
