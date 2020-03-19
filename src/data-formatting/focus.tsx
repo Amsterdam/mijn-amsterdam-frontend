@@ -1038,6 +1038,7 @@ function formatIncomSpecificationItem(
     documentUrl: (
       <a
         href={`/api/${item.url}`}
+        rel="external noopener noreferrer"
         className={styles.DownloadLink}
         download={`${format(new Date(item.datePublished), 'yyyy-MM-dd')}-${
           item.title
