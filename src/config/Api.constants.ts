@@ -41,7 +41,7 @@ export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
     postponeFetch: false,
   },
   FOCUS_INKOMEN_SPECIFICATIES: {
-    postponeFetch: IS_PRODUCTION || IS_ACCEPTANCE,
+    postponeFetch: !FeatureToggle.focusUitkeringsspecificatiesActive,
   },
   WMO: {
     postponeFetch: false,
