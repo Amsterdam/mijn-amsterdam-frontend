@@ -137,7 +137,7 @@ export function MyAreaDashboard({
   ...otherProps
 }: MyAreaDashboardComponentProps) {
   return (
-    <div {...otherProps} className={styles.MyArea}>
+    <div {...otherProps} className={styles.MyAreaMapContainer}>
       {IS_MY_AREA_2_ENABLED && !!center && (
         <MyAreaMap
           center={center}
