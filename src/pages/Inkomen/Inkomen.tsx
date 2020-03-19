@@ -122,9 +122,11 @@ export default () => {
             items={itemsSpecificationsMonthly}
             displayProps={specificationsTableDisplayProps}
           />
-          <p className={styles.ShowAllButtonContainer}>
-            <Linkd href={incomSpecificationsRouteMonthly}>Toon alles</Linkd>
-          </p>
+          {uitkeringsspecificaties.length > 3 && (
+            <p className={styles.ShowAllButtonContainer}>
+              <Linkd href={incomSpecificationsRouteMonthly}>Toon alles</Linkd>
+            </p>
+          )}
         </SectionCollapsible>
       )}
       {FeatureToggle.focusUitkeringsspecificatiesActive && (
@@ -144,9 +146,11 @@ export default () => {
             items={itemsSpecificationsYearly}
             displayProps={specificationsTableDisplayProps}
           />
-          <p className={styles.ShowAllButtonContainer}>
-            <Linkd href={incomSpecificationsRouteYearly}>Toon alles</Linkd>
-          </p>
+          {jaaropgaven.length > 3 && (
+            <p className={styles.ShowAllButtonContainer}>
+              <Linkd href={incomSpecificationsRouteYearly}>Toon alles</Linkd>
+            </p>
+          )}
         </SectionCollapsible>
       )}
     </OverviewPage>
