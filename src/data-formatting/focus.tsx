@@ -1041,7 +1041,7 @@ function formatIncomSpecificationItem(
     displayDate,
     documentUrl: (
       <a
-        href={item.url}
+        href={`/api/${item.url}`}
         className={styles.DownloadLink}
         download={`${format(new Date(item.datePublished), 'yyyy-MM-dd')}-${
           item.title
@@ -1051,7 +1051,7 @@ function formatIncomSpecificationItem(
       </a>
     ),
     link: {
-      to: item.url,
+      to: `/api/${item.url}`,
       title: 'Download specificatie',
     },
   };
