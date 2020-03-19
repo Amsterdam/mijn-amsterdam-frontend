@@ -1,5 +1,4 @@
 import { StateKey } from 'AppState';
-import { IS_ACCEPTANCE, IS_PRODUCTION } from '../env';
 import { FeatureToggle } from './App.constants';
 
 export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/api/login';
