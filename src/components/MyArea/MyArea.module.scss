@@ -270,7 +270,7 @@
     }
   }
 }
-.AfvalContainer--gfe {
+.AfvalContainer--gft {
   @include closeUpZoom() {
     &:before {
       background-color: green;
@@ -286,7 +286,7 @@
 .MapDatasetListItem--plastic label:before {
   background-color: orange;
 }
-.MapDatasetListItem--gfe label:before {
+.MapDatasetListItem--gft label:before {
   background-color: green;
 }
 .MapDatasetListItem--rest label:before {

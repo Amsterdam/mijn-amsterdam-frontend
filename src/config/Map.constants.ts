@@ -1,4 +1,4 @@
-// import iconGFE from 'assets/icons/map/afval-gfe.svg';
+// import iconGFT from 'assets/icons/map/afval-gft.svg';
 // import iconGLAS from 'assets/icons/map/afval-glas.svg';
 // import iconPAPIER from 'assets/icons/map/afval-papier.svg';
 // import iconPLASTIC from 'assets/icons/map/afval-plastic.svg';
@@ -13,7 +13,7 @@ import styles from '../components/MyArea/MyArea.module.scss';
 
 // TODO: Implement later
 // const afvalcontainerIconUrls: Record<string, string> = {
-//   gfe: iconGFE,
+//   gft: iconGFT,
 //   textiel: iconTEXTIEL,
 //   glas: iconGLAS,
 //   papier: iconPAPIER,
@@ -87,7 +87,7 @@ export const DATASET_GROUP_PANELS = [
   {
     id: 'afvalcontainers',
     title: 'Afvalcontainers',
-    datasets: ['rest', 'papier', 'glas', 'plastic', 'textiel', 'gfe'].map(
+    datasets: ['rest', 'papier', 'glas', 'plastic', 'textiel', 'gft'].map(
       id => {
         return {
           id,

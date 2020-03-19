@@ -24,28 +24,31 @@ async function getData(types, params = {}) {
 
   return Promise.all(
     types.map(
-      // type => Promise.resolve(containersByType[type])
-      type =>
-        axios({
-          url: afvalApiUrl + getMapServerCollectionId(type),
-          params: queryParams,
-        })
+      type => Promise.resolve(containersByType[type])
+      // type =>
+      //   axios({
+      //     url: afvalApiUrl + getMapServerCollectionId(type),
+      //     params: queryParams,
+      //   })
     )
   ).then(responses => {
-    return responses.map((response, index) => {
-      return {
-        id: types[index],
-        items: response.data.features.map(item => {
-          const [lng, lat] = item.geometry.coordinates;
-          return {
-            id: item.properties.id_number,
-            latLng: [lat, lng],
-            title: item.properties.text,
-            type: item.properties.waste_name,
-          };
-        }),
-      };
-    });
+    return responses
+      .filter(resp => !!resp)
+      .map((response, index) => {
+        console.log('resp::', response);
+        return {
+          id: types[index],
+          items: response.data.features.map(item => {
+            const [lng, lat] = item.geometry.coordinates;
+            return {
+              id: item.properties.id_number,
+              latLng: [lat, lng],
+              title: item.properties.text,
+              type: item.properties.waste_name,
+            };
+          }),
+        };
+      });
   });
 }
 
