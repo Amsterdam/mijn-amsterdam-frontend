@@ -1,4 +1,5 @@
 import { IS_DEVELOPMENT, IS_PRODUCTION } from '../env';
+
 export const FeatureToggle = {
   myTipsoptInOutPersonalization: true,
   garbageInformationPage: true,
@@ -37,7 +38,7 @@ export const ExternalUrls = {
     'https://www.amsterdam.nl/veelgevraagd/?productid={68422ECA-8C56-43EC-A9AA-B3DF190B5077}',
   AMSTERDAM: 'https://www.amsterdam.nl',
   WPI_CONTACT: 'https://www.amsterdam.nl/werk-inkomen/contact/',
-  WPI_REGELINGEN: 'https://www.amsterdam.nl/werk-inkomen/uitkeringen/',
+  WPI_ALGEMEEN: 'https://www.amsterdam.nl/werk-inkomen',
   AFVAL: 'https://www.amsterdam.nl/afval/',
   AFVAL_AFSPRAAK_MAKEN:
     'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Grofvuil.aspx',

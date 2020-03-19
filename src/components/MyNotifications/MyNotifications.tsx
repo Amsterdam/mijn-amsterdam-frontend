@@ -18,6 +18,7 @@ import React from 'react';
 import useRouter from 'use-react-router';
 
 import styles from './MyNotifications.module.scss';
+import { isInteralUrl } from 'helpers/App';
 
 export interface MyNotificationsProps {
   items: MyNotification[];
@@ -73,6 +74,8 @@ export default function MyNotifications({
         )}
         {!isLoading &&
           items.map(item => {
+            const isLinkExternal =
+              !!item.link?.to && !isInteralUrl(item.link.to);
             return (
               <li
                 key={item.id}
@@ -113,19 +116,21 @@ export default function MyNotifications({
                   <p className={styles.Action}>
                     <Linkd
                       title={`Meer informatie over de melding: ${item.title}`}
-                      href={item.customLink ? '#' : item.link!.to}
+                      href={item.customLink ? '#' : item.link?.to}
+                      external={isLinkExternal}
                       onClick={event => {
-                        event.preventDefault();
                         if (item.customLink) {
                           item.customLink.callback();
+                          return false;
                         }
-                        if (item.link) {
+                        if (item.link && !isLinkExternal) {
                           showNotification(item.id, item.link.to);
+                          return false;
                         }
-                        return false;
                       }}
                     >
-                      {(item.link || item.customLink)!.title}
+                      {(item.link || item.customLink)?.title ||
+                        'Meer informatie'}{' '}
                     </Linkd>
                   </p>
                 )}
