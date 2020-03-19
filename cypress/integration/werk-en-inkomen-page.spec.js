@@ -15,10 +15,10 @@ describe('Chapter: Inkomen en Stadspas', () => {
     assertAtPage('Inkomen en Stadspas', '/werk-en-inkomen');
   });
 
-  it('should display 2 lists', () => {
+  it('should display lists', () => {
     selectComponent('SectionCollapsible_SectionCollapsible').should(
       'have.length',
-      2
+      4
     );
     selectComponent('SectionCollapsible_SectionCollapsible', ':first').should(
       'contain',
@@ -31,7 +31,7 @@ describe('Chapter: Inkomen en Stadspas', () => {
   });
 
   it('Should expand/collapse the list by clicking on the title', () => {
-    selectComponent('SectionCollapsible_isCollapsed').should('have.length', 1);
+    selectComponent('SectionCollapsible_isCollapsed').should('have.length', 3);
 
     // Collapse first list
     selectComponent(
@@ -39,8 +39,8 @@ describe('Chapter: Inkomen en Stadspas', () => {
       ':first button:first'
     ).click();
 
-    // We now have 2 collapsed lists
-    selectComponent('SectionCollapsible_isCollapsed').should('have.length', 2);
+    // We now have 3 collapsed lists
+    selectComponent('SectionCollapsible_isCollapsed').should('have.length', 4);
 
     // Expand the list again
     selectComponent(
