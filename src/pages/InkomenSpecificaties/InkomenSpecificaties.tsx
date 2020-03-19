@@ -20,6 +20,7 @@ import Pagination from 'components/Pagination/Pagination';
 import DateInput from 'components/DateInput/DateInput';
 import { ReactComponent as SearchIcon } from 'assets/icons/Search.svg';
 import { Button } from 'components/Button/Button';
+import { format } from 'date-fns';
 
 export const specificationsTableDisplayProps = {
   title: 'Omschrijving',
@@ -30,6 +31,7 @@ export const specificationsTableDisplayProps = {
 
 const PAGE_SIZE = 10;
 const INITIAL_INDEX = [0, PAGE_SIZE - 1];
+const DATE_INPUT_FORMAT = 'yyyy-MM-dd';
 
 export default () => {
   const {
@@ -56,14 +58,14 @@ export default () => {
     if (items.length) {
       return items[0].datePublished;
     }
-    return '';
+    return format(new Date(), DATE_INPUT_FORMAT);
   }, [items]);
 
   const minDate = useMemo(() => {
     if (items.length) {
       return items[items.length - 1].datePublished;
     }
-    return '';
+    return format(new Date(), DATE_INPUT_FORMAT);
   }, [items]);
 
   const [isSearchPanelActive, setSearchPanelActive] = useState(false);
