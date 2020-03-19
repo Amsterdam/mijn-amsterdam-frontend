@@ -10,38 +10,40 @@ import { MemoryRouter, Switch, Route } from 'react-router-dom';
 import { IncomeSpecificationsResponse } from 'hooks/api/api.focus';
 
 const sourceData: IncomeSpecificationsResponse = {
-  jaaropgaven: [
-    {
-      title: 'Jaaropgave',
-      type: 'BIBI',
-      datePublished: '2016-03-06',
-      url: 'focus/document?id=x',
-      id: 'item-0',
-    },
-    {
-      title: 'Jaaropgave',
-      type: 'BIBI',
-      datePublished: '2016-03-06',
-      url: 'focus/document?id=x',
-      id: 'item-4',
-    },
-  ],
-  uitkeringsspecificaties: [
-    {
-      title: 'Uitkeringspecificatie',
-      type: 'BBS',
-      datePublished: '2016-04-06',
-      url: 'focus/document?id=x',
-      id: 'item-1',
-    },
-    {
-      title: 'Uitkeringspecificatie',
-      type: 'STIMREG',
-      datePublished: '2016-06-06',
-      url: 'focus/document?id=x',
-      id: 'item-3',
-    },
-  ],
+  content: {
+    jaaropgaven: [
+      {
+        title: 'Jaaropgave',
+        type: 'BIBI',
+        datePublished: '2016-03-06',
+        url: 'focus/document?id=x',
+        id: 'item-0',
+      },
+      {
+        title: 'Jaaropgave',
+        type: 'BIBI',
+        datePublished: '2016-03-06',
+        url: 'focus/document?id=x',
+        id: 'item-4',
+      },
+    ],
+    uitkeringsspecificaties: [
+      {
+        title: 'Uitkeringspecificatie',
+        type: 'BBS',
+        datePublished: '2016-04-06',
+        url: 'focus/document?id=x',
+        id: 'item-1',
+      },
+      {
+        title: 'Uitkeringspecificatie',
+        type: 'STIMREG',
+        datePublished: '2016-06-06',
+        url: 'focus/document?id=x',
+        id: 'item-3',
+      },
+    ],
+  },
 };
 
 const data = formatIncomeSpecifications(sourceData);
