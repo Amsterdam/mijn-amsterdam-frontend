@@ -1024,10 +1024,6 @@ export interface FocusInkomenSpecificatieFromSource {
 
 export interface FocusInkomenSpecificatie
   extends FocusInkomenSpecificatieFromSource {
-  link: {
-    to: string;
-    title: string;
-  };
   displayDate: string;
   documentUrl: ReactNode;
 }
@@ -1050,10 +1046,6 @@ function formatIncomSpecificationItem(
         <DocumentIcon width={14} height={14} /> PDF
       </a>
     ),
-    link: {
-      to: `/api/${item.url}`,
-      title: 'Download specificatie',
-    },
   };
 }
 
