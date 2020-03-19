@@ -1051,8 +1051,7 @@ function formatIncomSpecificationItem(
 }
 
 export function formatIncomeSpecifications({
-  jaaropgaven,
-  uitkeringsspecificaties,
+  content: { jaaropgaven, uitkeringsspecificaties },
 }: IncomeSpecificationsResponse): IncomeSpecifications {
   return {
     jaaropgaven: jaaropgaven

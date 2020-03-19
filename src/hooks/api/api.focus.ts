@@ -13,8 +13,10 @@ import { ApiState } from './api.types';
 import { MyNotification } from './my-notifications-api.hook';
 
 export interface IncomeSpecificationsResponse {
-  jaaropgaven: FocusInkomenSpecificatieFromSource[];
-  uitkeringsspecificaties: FocusInkomenSpecificatieFromSource[];
+  content: {
+    jaaropgaven: FocusInkomenSpecificatieFromSource[];
+    uitkeringsspecificaties: FocusInkomenSpecificatieFromSource[];
+  };
 }
 
 export interface IncomeSpecifications {
@@ -35,8 +37,10 @@ export function useFocusInkomenSpecificatiesApi(): FocusInkomenSpecificatiesApiS
       ),
     },
     {
-      jaaropgaven: [],
-      uitkeringsspecificaties: [],
+      content: {
+        jaaropgaven: [],
+        uitkeringsspecificaties: [],
+      },
     }
   );
 
