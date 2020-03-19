@@ -5,7 +5,7 @@ describe('Profile page', () => {
 
   it('Clicking the profile link in the header shows the profile page', () => {
     selectComponent('MainNavBar_ProfileLink').click();
-    assertAtPage('Mijn gegevens', '/persoonlijke-gegevens');
+    assertAtPage('Persoonsgegevens', '/persoonlijke-gegevens');
   });
 
   it('Shows profile data', () => {
