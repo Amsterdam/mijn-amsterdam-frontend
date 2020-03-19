@@ -191,4 +191,7 @@
 
 .MainNavSubmenuLink {
   margin-bottom: 1rem;
+  @include mq-tablet() {
+    margin-bottom: 0;
+  }
 }
