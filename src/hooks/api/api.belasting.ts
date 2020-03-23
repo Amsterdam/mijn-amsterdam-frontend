@@ -1,4 +1,4 @@
-import { getApiUrl } from 'helpers/App';
+import { getApiConfigValue, getApiUrl } from 'helpers/App';
 import { Chapters } from '../../config/Chapter.constants';
 import { useDataApi } from './api.hook';
 import { ApiState } from './api.types';
@@ -39,6 +39,7 @@ export default function useBelastingApi(): BelastingApiState {
   const [api] = useDataApi<BelastingApiResponse>(
     {
       url: getApiUrl('BELASTINGEN'),
+      postpone: getApiConfigValue('BELASTINGEN', 'postponeFetch', true),
     },
     { content, status: 'OK' }
   );
