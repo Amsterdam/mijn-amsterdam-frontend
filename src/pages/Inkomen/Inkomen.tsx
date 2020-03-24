@@ -111,6 +111,7 @@ export default () => {
           startCollapsed={hasActiveRequests || hasActiveDescisions}
           isLoading={isLoading2}
           title="Uitkeringsspecificaties"
+          hasItems={!!uitkeringsspecificaties.length}
           track={{
             category: 'Inkomen en Stadspas overzicht / Uitkeringsspecificaties',
             name: 'Datatabel',
@@ -135,6 +136,7 @@ export default () => {
           startCollapsed={hasActiveRequests || hasActiveDescisions}
           isLoading={isLoading2}
           title="Jaaropgaven"
+          hasItems={!!jaaropgaven.length}
           track={{
             category: 'Inkomen en Stadspas overzicht / Jaaropgaven',
             name: 'Datatabel',
