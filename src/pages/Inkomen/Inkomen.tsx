@@ -25,6 +25,11 @@ const incomSpecificationsRouteYearly = generatePath(
   }
 );
 
+const decisionsDisplayProps = {
+  dateStart: 'Datum aanvraag',
+  datePublished: 'Datum besluit',
+};
+
 export default () => {
   const {
     FOCUS: {
@@ -103,7 +108,7 @@ export default () => {
         }}
         noItemsMessage="U hebt op dit moment geen afgehandelde aanvragen."
       >
-        <Table items={itemsDecided} />
+        <Table items={itemsDecided} displayProps={decisionsDisplayProps} />
       </SectionCollapsible>
       {FeatureToggle.focusUitkeringsspecificatiesActive && (
         <SectionCollapsible
@@ -111,6 +116,7 @@ export default () => {
           startCollapsed={hasActiveRequests || hasActiveDescisions}
           isLoading={isLoading2}
           title="Uitkeringsspecificaties"
+          hasItems={!!uitkeringsspecificaties.length}
           track={{
             category: 'Inkomen en Stadspas overzicht / Uitkeringsspecificaties',
             name: 'Datatabel',
@@ -135,6 +141,7 @@ export default () => {
           startCollapsed={hasActiveRequests || hasActiveDescisions}
           isLoading={isLoading2}
           title="Jaaropgaven"
+          hasItems={!!jaaropgaven.length}
           track={{
             category: 'Inkomen en Stadspas overzicht / Jaaropgaven',
             name: 'Datatabel',
