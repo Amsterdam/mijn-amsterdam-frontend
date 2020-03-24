@@ -25,6 +25,11 @@ const incomSpecificationsRouteYearly = generatePath(
   }
 );
 
+const decisionsDisplayProps = {
+  dateStart: 'Datum aanvraag',
+  datePublished: 'Datum besluit',
+};
+
 export default () => {
   const {
     FOCUS: {
@@ -103,7 +108,7 @@ export default () => {
         }}
         noItemsMessage="U hebt op dit moment geen afgehandelde aanvragen."
       >
-        <Table items={itemsDecided} />
+        <Table items={itemsDecided} displayProps={decisionsDisplayProps} />
       </SectionCollapsible>
       {FeatureToggle.focusUitkeringsspecificatiesActive && (
         <SectionCollapsible
