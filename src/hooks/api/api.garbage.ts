@@ -223,22 +223,22 @@ export default function useGarbageApi(centroid?: Centroid): GarbageApiState {
     () =>
       [
         {
-          naam: 'Afvalpunt De Faas (Oost, alleen voor bewoners)',
-          centroid: [4.97158187910041, 52.3710300144489] as Centroid,
-          adres: 'Faas Wilkesstraat 120<br>1095 MD Amsterdam',
-          telefoon: '020 5876145',
-          email: 'afvalpunten@aebamsterdam.nl',
-          openingstijden:
-            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt op de Henk Sneevlietweg 22 is elke zondag van 10.00 uur tot 16.00 uur open.',
-        },
-        {
           naam: 'Afvalpunt Henk Sneevlietweg (Nieuw-West)',
           centroid: [4.83347291303415, 52.3433575455427] as Centroid,
           adres: 'Henk Sneevlietweg 22&#xA0;<br>1066 VH&#xA0;&#xA0;Amsterdam',
           telefoon: '020 587 6126',
           email: 'afvalpunten@aebamsterdam.nl',
           openingstijden:
-            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt op de Henk Sneevlietweg 22 is elke zondag van 10.00 uur tot 16.00 uur open.',
+            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt Marie Baronlaan aan de Faas Wilkesstraat is voorlopig gesloten.',
+        },
+        {
+          naam: 'Afvalpunt Marie Baronlaan (Oost, geen bedrijfsafval)',
+          centroid: [4.97156727996261, 52.3710209755361] as Centroid,
+          adres: 'Marie Baronlaan <br>1095 MV Amsterdam',
+          telefoon: '020 5876145',
+          email: 'afvalpunten@aebamsterdam.nl',
+          openingstijden:
+            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt Marie Baronlaan aan de Faas Wilkesstraat is voorlopig gesloten.',
         },
         {
           naam: 'Afvalpunt Meerkerkdreef (Zuidoost)',
@@ -247,7 +247,7 @@ export default function useGarbageApi(centroid?: Centroid): GarbageApiState {
           telefoon: '020 587 6116',
           email: 'afvalpunten@aebamsterdam.nl',
           openingstijden:
-            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt op de Henk Sneevlietweg 22 is elke zondag van 10.00 uur tot 16.00 uur open.',
+            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt Marie Baronlaan aan de Faas Wilkesstraat is voorlopig gesloten.',
         },
         {
           naam: 'Afvalpunt Rozenburglaan (Oost)',
@@ -256,7 +256,7 @@ export default function useGarbageApi(centroid?: Centroid): GarbageApiState {
           telefoon: '020 587 6114',
           email: 'afvalpunten@aebamsterdam.nl',
           openingstijden:
-            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt op de Henk Sneevlietweg 22 is elke zondag van 10.00 uur tot 16.00 uur open.',
+            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt Marie Baronlaan aan de Faas Wilkesstraat is voorlopig gesloten.',
         },
         {
           naam: 'Afvalpunt Seineweg (Nieuw-West)',
@@ -265,7 +265,7 @@ export default function useGarbageApi(centroid?: Centroid): GarbageApiState {
           telefoon: '020 587 6144',
           email: 'afvalpunten@aebamsterdam.nl',
           openingstijden:
-            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt op de Henk Sneevlietweg 22 is elke zondag van 10.00 uur tot 16.00 uur open.',
+            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt Marie Baronlaan aan de Faas Wilkesstraat is voorlopig gesloten.',
         },
         {
           naam: 'Afvalpunt Struisgrasstraat (Noord)',
@@ -274,7 +274,7 @@ export default function useGarbageApi(centroid?: Centroid): GarbageApiState {
           telefoon: '020 587 6122',
           email: 'afvalpunten@aebamsterdam.nl',
           openingstijden:
-            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt op de Henk Sneevlietweg 22 is elke zondag van 10.00 uur tot 16.00 uur open.',
+            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt Marie Baronlaan aan de Faas Wilkesstraat is voorlopig gesloten.',
         },
       ].map(item => {
         return {
