@@ -44,13 +44,17 @@ export default function useBelastingApi(): BelastingApiState {
     { content, status: 'OK' }
   );
 
-  const { meldingen = [], ...restData } = api.data?.content || {};
+  const { meldingen = [], tips = [], ...restData } = api.data?.content || {};
+
+  // Temporary tips hack.
+  const prioritzedTips = tips.map(tip => Object.assign(tip, { priority: 100 }));
 
   return {
     ...api,
     data: {
       ...content,
       ...restData,
+      tips: prioritzedTips,
       notifications: formatBelastingNotifications(meldingen),
     },
   };
