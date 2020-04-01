@@ -1,24 +1,32 @@
 import { AFVALData } from '../services/afval';
 import { BAGData } from '../services/bag';
+import { BELASTINGData } from '../services/belasting';
 import { BRPData } from '../services/brp';
+import { ERFPACHTData } from '../services/erfpacht';
+import { FOCUSData } from '../services/focus';
+import { MILIEUZONEData } from '../services/milieuzone';
+import { TIPSData } from '../services/services-tips';
+import { WMOData } from '../services/wmo';
 
 export const API_BASE_PATH = '/bff';
 export const API_BASE_URL = 'http://localhost:5000/api';
 export const DATAPUNT_API_BASE_URL = 'https://api.data.amsterdam.nl';
 
 export interface UserData {
-  BELASTINGEN: any;
+  BELASTING: BELASTINGData;
   MELDINGEN: any;
   MY_CASES: any;
-  TIPS: any;
+  TIPS: TIPSData;
   BRP: BRPData;
-  WMO: any;
-  FOCUS: any;
-  ERFPACHT: any;
+  WMO: WMOData;
+  FOCUS: FOCUSData;
+  ERFPACHT: ERFPACHTData;
   BAG: BAGData;
   AFVAL: AFVALData;
-  MILIEUZONE: any;
+  MILIEUZONE: MILIEUZONEData;
 }
+
+export type ApiStateKey = keyof UserData;
 
 export const ApiUrls: Record<string, string> = {
   BELASTINGEN: `${API_BASE_URL}/belastingen/get`,
