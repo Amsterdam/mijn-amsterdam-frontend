@@ -1,5 +1,6 @@
 /// <reference path="./types.d.ts"/>
 
+import compression from 'compression';
 import cors from 'cors';
 import express from 'express';
 import session from 'express-session';
@@ -11,6 +12,7 @@ const PORT = process.env.BFF_API_PORT || 5001;
 const app = express();
 
 app.use(cors());
+app.use(compression());
 
 app.use(
   session({
@@ -23,14 +25,6 @@ app.use(
     // }
   })
 );
-
-// Initialize the session
-app.use((req, _res, next) => {
-  if (req.session && !req.session.userData) {
-    req.session.userData = {};
-  }
-  next();
-});
 
 app.use(API_BASE_PATH, router);
 

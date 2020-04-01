@@ -1,14 +1,17 @@
 import { Request, Response } from 'express';
-import { UserData } from '../config/app';
+import { getOrAddDataLoader } from '../helpers/dataLoaderCache';
 import { fetch as fetchAFVAL } from './afval';
 import { fetch as fetchBAG } from './bag';
 import { fetch as fetchBRP } from './brp';
 
-export async function loadSessionData(userData: UserData) {
-  const BRP = userData.BRP || (userData.BRP = await fetchBRP());
-  const BAG = userData.BAG || (userData.BAG = await fetchBAG(BRP.adres));
-  const AFVAL =
-    userData.AFVAL || (userData.AFVAL = await fetchAFVAL(BAG.latlng));
+export async function loadUserData(sessionID: SessionID) {
+  const BRP = await getOrAddDataLoader(sessionID, 'BRP', fetchBRP());
+  const BAG = await getOrAddDataLoader(sessionID, 'BAG', fetchBAG(BRP.adres));
+  const AFVAL = await getOrAddDataLoader(
+    sessionID,
+    'AFVAL',
+    fetchAFVAL(BAG.latlng)
+  );
 
   return {
     BRP,
@@ -18,11 +21,7 @@ export async function loadSessionData(userData: UserData) {
 }
 
 export async function handleRoute(req: Request, res: Response) {
-  const userData = req.session!.userData as UserData;
-
-  // const afvalData = await fetchAFVAL()
-
-  const { BRP, BAG, AFVAL } = await loadSessionData(userData);
+  const { BRP, BAG, AFVAL } = await loadUserData(req.sessionID!);
 
   return res.send({
     BAG,
