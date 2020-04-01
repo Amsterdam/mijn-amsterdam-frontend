@@ -41,8 +41,7 @@ export const ExternalUrls = {
   WPI_CONTACT: 'https://www.amsterdam.nl/werk-inkomen/contact/',
   WPI_ALGEMEEN: 'https://www.amsterdam.nl/werk-inkomen',
   AFVAL: 'https://www.amsterdam.nl/afval/',
-  AFVAL_AFSPRAAK_MAKEN:
-    'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Grofvuil.aspx',
+
   AMSTERDAM_COMPLAINTS_FROM:
     'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/scKlachtenformulier.aspx/fKlachtenformulier',
   AMSTERDAM_PRIVACY_PAGE: 'https://www.amsterdam.nl/privacy',
