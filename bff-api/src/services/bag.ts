@@ -22,7 +22,7 @@ export function formatBAGData(
 
 export function fetch(address: Adres) {
   const params = { q: getFullAddress(address) };
-  console.log('address', params);
+
   return requestSourceData<BAGSourceData>({
     url: ApiUrls.BAG,
     params,
