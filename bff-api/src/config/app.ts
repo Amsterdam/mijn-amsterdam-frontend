@@ -29,7 +29,7 @@ export interface UserData {
 export type ApiStateKey = keyof UserData;
 
 export const ApiUrls: Record<string, string> = {
-  BELASTINGEN: `${API_BASE_URL}/belastingen/get`,
+  BELASTING: `${API_BASE_URL}/belastingen/get`,
   MELDINGEN: `${API_BASE_URL}/mijn-meldingen`,
   MY_CASES: `${API_BASE_URL}/focus/aanvragen`,
   TIPS: `${API_BASE_URL}/tips/gettips`,
