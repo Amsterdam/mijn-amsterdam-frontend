@@ -1,11 +1,4 @@
-import {
-  AppRoutes,
-  Centroid,
-  DEFAULT_MAP_DISPLAY_CONFIG,
-  IS_MY_AREA_2_ENABLED,
-  LOCATION_ZOOM,
-  MapDisplayOptions,
-} from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
 import { Link, NavLink } from 'react-router-dom';
 import React, { HTMLProps, PropsWithChildren } from 'react';
 
@@ -20,6 +13,12 @@ import { MaMap } from './MaMap';
 import { MaZoomControl } from './MaZoomControl';
 import classnames from 'classnames';
 import styles from './MyArea.module.scss';
+import {
+  DEFAULT_MAP_DISPLAY_CONFIG,
+  IS_MY_AREA_2_ENABLED,
+  LOCATION_ZOOM,
+  MapDisplayOptions,
+} from './MyArea.constants';
 
 export function MyAreaHeader() {
   return (

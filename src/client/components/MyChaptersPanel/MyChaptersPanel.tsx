@@ -7,11 +7,11 @@ import {
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { MainNavSubmenuLink } from '../MainNavSubmenu/MainNavSubmenu';
-import { MenuItem } from '../MainNavBar/MainNavBar.constants';
 import Panel from '../Panel/Panel';
 import React from 'react';
 import styles from './MyChaptersPanel.module.scss';
 import { useDebounce } from 'use-debounce';
+import { MenuItem } from '../../config/menuItems';
 
 export interface MyChaptersPanelProps {
   title: string;

@@ -1,12 +1,12 @@
 import {
   AppRoutes,
-  ChapterIcons,
   Chapter as ChapterType,
   Chapters,
   Colors,
 } from '../../../universal/config';
 
-import { ReactComponent as IconBurgerZaken } from '../../assets/icons/burgerzaken.svg';
+import { ChapterIcons } from '../../config/chapterIcons';
+import { IconBurgerZaken } from '../../assets/icons';
 import React from 'react';
 import classnames from 'classnames';
 import { entries } from '../../../universal/helpers';

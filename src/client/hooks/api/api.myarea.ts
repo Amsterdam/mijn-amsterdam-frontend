@@ -1,18 +1,15 @@
+import { useCallback, useEffect, useState } from 'react';
+import { DEFAULT_LAT, DEFAULT_LON } from '../../../universal/config';
+import { getApiUrl } from '../../../universal/helpers';
 import {
-  Centroid,
-  DEFAULT_LAT,
-  DEFAULT_LON,
   DEFAULT_ZOOM,
   LAYERS_CONFIG,
   LOCATION_ZOOM,
   MAP_URL,
-} from '../../../universal/config';
-import { useCallback, useEffect, useState } from 'react';
-
-import { ApiState } from './api.types';
-import { getApiUrl } from '../../../universal/helpers';
-import { useDataApi } from './api.hook';
+} from '../../components/MyArea/MyArea.constants';
 import { usePhoneScreen } from '../../hooks/media.hook';
+import { useDataApi } from './api.hook';
+import { ApiState } from './api.types';
 
 export const BAG_SEARCH_ENDPOINT_URL = `${getApiUrl('BAG')}?q=`;
 const SET_DEFAULT_ADDRESS_TIMEOUT = 10000;

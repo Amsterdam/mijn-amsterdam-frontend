@@ -1,12 +1,5 @@
-import {
-  AppRoutes,
-  Chapter,
-  ChapterTitles,
-  myChaptersMenuItems,
-} from '../../../universal/config';
-import { FunctionComponent, SVGProps } from 'react';
-
-import { LinkProps } from '../../../universal/types/App.types';
+import { AppRoutes, Chapter, ChapterTitles } from '../../../universal/config';
+import { MenuItem, myChaptersMenuItems } from '../../config/menuItems';
 
 export type MainMenuId =
   | Chapter
@@ -14,13 +7,6 @@ export type MainMenuId =
   | 'MIJN_THEMAS'
   | 'MIJN_BUURT'
   | 'MIJN_UPDATES';
-
-export interface MenuItem extends LinkProps {
-  id: MainMenuId;
-  Icon?: FunctionComponent<SVGProps<SVGSVGElement>>;
-  submenuItems?: MenuItem[];
-  isLoading?: boolean;
-}
 
 export const mainMenuItemId: { [key: string]: MainMenuId } = {
   HOME: 'DASHBOARD',

@@ -7,7 +7,7 @@ export * from './erfpacht';
 export * from './focus';
 // export * from './mijnbuurt';
 export * from './milieuzone';
+export * from './mwmo';
 export * from './services-direct';
 export * from './services-related';
 export * from './services-tips';
-export * from './wmo';

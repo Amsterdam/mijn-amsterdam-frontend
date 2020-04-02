@@ -5,13 +5,13 @@ import {
 import React, { HTMLAttributes, MouseEvent, useEffect, useState } from 'react';
 
 import { Colors } from '../../../universal/config';
-import { MenuItem } from '../MainNavBar/MainNavBar.constants';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import styles from './MainNavSubmenu.module.scss';
 import { trackLink } from '../../hooks/analytics.hook';
 import { useDebouncedCallback } from 'use-debounce';
 import useRouter from 'use-react-router';
+import { MenuItem } from '../../config/menuItems';
 
 export interface MainNavSubmenuLinkProps
   extends LinkProps,
