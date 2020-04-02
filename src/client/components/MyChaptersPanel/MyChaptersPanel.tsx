@@ -1,4 +1,4 @@
-import { Chapter, ChapterTitles } from '../../config/Chapter.constants';
+import { Chapter, ChapterTitles } from '../../../universal/config';
 import {
   trackItemPresentation,
   useSessionCallbackOnceDebounced,

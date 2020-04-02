@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 
 import { ReactComponent as CaretIcon } from '../../assets/icons/Chevron-Right.svg';
-import { ComponentChildren } from '../../App.types';
+import { ComponentChildren } from '../../../universal/types/App.types';
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import classnames from 'classnames';
@@ -11,7 +11,7 @@ import { trackEvent } from '../../hooks/analytics.hook';
 import { useDebouncedCallback } from 'use-debounce';
 import { useRef } from 'react';
 import { useSessionStorage } from '../../hooks/storage.hook';
-import { withKeyPress } from '../../helpers/App';
+import { withKeyPress } from '../../../universal/helpers';
 
 export interface SectionCollapsibleProps {
   id: string;

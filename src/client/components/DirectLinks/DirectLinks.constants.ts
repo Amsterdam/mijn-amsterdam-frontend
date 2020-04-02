@@ -1,5 +1,4 @@
-import { AppRoutes } from '../../config/Routing.constants';
-import { ExternalUrls } from '../../config/App.constants';
+import { AppRoutes, ExternalUrls } from '../../../universal/config';
 
 export type DirectLinkType =
   | 'MIJN_SUBSIDIE'

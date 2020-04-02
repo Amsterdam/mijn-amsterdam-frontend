@@ -1,9 +1,8 @@
 import React, { ReactNode } from 'react';
 
-import Linkd from '../Button/Button';
-import { Unshaped } from '../../App.types';
+import { Unshaped } from '../../../universal/types/App.types';
 import classnames from 'classnames';
-import { entries, capitalizeFirstLetter } from '../../helpers/App';
+import { entries } from '../../../universal/helpers';
 import styles from './Table.module.scss';
 
 export function addTitleLinkComponent(

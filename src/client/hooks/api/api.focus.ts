@@ -6,7 +6,7 @@ import {
   formatFocusItems,
   formatIncomeSpecifications,
 } from '../../data-formatting/focus';
-import { getApiConfigValue, getApiUrl } from '../../helpers/App';
+import { getApiConfigValue, getApiUrl } from '../../../universal/helpers';
 
 import { ApiState } from './api.types';
 import { MyNotification } from './my-notifications-api.hook';

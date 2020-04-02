@@ -1,13 +1,15 @@
-import { PageContent, TextPage } from '../../components/Page/Page';
+import { ExternalUrls, LOGIN_URL } from '../../../universal/config';
+import {
+  Heading,
+  LinkdInline,
+  PageContent,
+  PageHeading,
+  TextPage,
+} from '../../components';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { ReactComponent as BetaLabel } from '../../assets/images/beta-label.svg';
 import DigiDLogo from '../../assets/images/digid-logo.png';
-import { ExternalUrls } from '../../config/App.constants';
-import Heading from '../../components/Heading/Heading';
-import { LOGIN_URL } from '../../config/Api.constants';
-import { LinkdInline } from '../../components/Button/Button';
-import PageHeading from '../../components/PageHeading/PageHeading';
 import classnames from 'classnames';
 import { clearSessionStorage } from '../../hooks/storage.hook';
 import styles from './Landing.module.scss';

@@ -1,6 +1,6 @@
 import AutoLogoutDialog, { AutoLogoutDialogSettings } from './AutoLogoutDialog';
 
-import { LOGOUT_URL } from '../../config/Api.constants';
+import { LOGOUT_URL } from '../../../universal/config';
 import React from 'react';
 import { SessionContext } from '../../AppState';
 import { mount } from 'enzyme';

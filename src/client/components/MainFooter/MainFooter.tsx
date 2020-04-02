@@ -1,7 +1,6 @@
+import { AppRoutes, ExternalUrls } from '../../../universal/config';
 import React, { useState } from 'react';
 
-import { AppRoutes } from '../../config/Routing.constants';
-import { ExternalUrls } from '../../config/App.constants';
 import { LinkList } from './MainFooter.constants';
 import Linkd from '../Button/Button';
 import { LinkdInline } from '../Button/Button';

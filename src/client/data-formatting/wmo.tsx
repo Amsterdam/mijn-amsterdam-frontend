@@ -3,10 +3,10 @@ import {
   dateSort,
   defaultDateFormat,
   isDateInPast,
-} from '../helpers/App';
+} from '../../universal/helpers';
 
-import { AppRoutes } from '../config/Routing.constants';
-import { LinkProps } from '../App.types';
+import { AppRoutes } from '../../universal/config';
+import { LinkProps } from '../../universal/types/App.types';
 import React from 'react';
 import { StatusLineItem } from '../components/StatusLine/StatusLine';
 import { StepType } from '../components/StatusLine/StatusLine';

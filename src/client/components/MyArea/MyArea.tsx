@@ -1,19 +1,19 @@
 import {
+  AppRoutes,
   Centroid,
   DEFAULT_MAP_DISPLAY_CONFIG,
   IS_MY_AREA_2_ENABLED,
+  LOCATION_ZOOM,
   MapDisplayOptions,
-} from '../../config/Map.constants';
+} from '../../../universal/config';
 import { Link, NavLink } from 'react-router-dom';
 import React, { HTMLProps, PropsWithChildren } from 'react';
 
-import { AppRoutes } from '../../config/Routing.constants';
 import { ReactComponent as CloseIcon } from '../../assets/icons/Close.svg';
 import Heading from '../Heading/Heading';
 import { ReactComponent as HomeIcon } from '../../assets/icons/home.svg';
 import { HomeIconMarker } from './MaMarker';
-import { IS_MAPS_ENABLED } from '../../../env';
-import { LOCATION_ZOOM } from '../../config/Map.constants';
+import { IS_MAPS_ENABLED } from '../../../universal/env';
 import Linkd from '../Button/Button';
 import { ReactComponent as Logo } from '../../assets/images/logo-amsterdam.svg';
 import { MaMap } from './MaMap';
@@ -96,7 +96,7 @@ interface MyAreaMapComponentProps {
   className?: string;
 }
 
-export function MyAreaMap({
+export default function MyAreaMap({
   center,
   title = 'Kaart van Mijn buurt',
   id = 'map',

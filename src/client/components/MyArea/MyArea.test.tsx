@@ -1,4 +1,4 @@
-import { DEFAULT_CENTROID } from '../../config/Map.constants';
+import { DEFAULT_CENTROID } from '../../../universal/config';
 import { MyAreaMap } from './MyArea';
 import React from 'react';
 import { shallow } from 'enzyme';

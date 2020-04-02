@@ -1,9 +1,9 @@
+import { Chapter, WelcomeNotification } from '../../../universal/config';
+
 import { ApiState } from './api.types';
 import { AppState } from '../../AppState';
-import { Chapter } from '../../config/Chapter.constants';
-import { LinkProps } from '../../App.types';
-import { WelcomeNotification } from '../../config/StaticData';
-import { dateSort } from '../../helpers/App';
+import { LinkProps } from '../../../universal/types/App.types';
+import { dateSort } from '../../../universal/helpers';
 import { useLocalStorage } from '../../hooks/storage.hook';
 import { useMemo } from 'react';
 

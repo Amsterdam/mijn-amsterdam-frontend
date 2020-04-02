@@ -1,4 +1,9 @@
-import { Chapter, Chapters } from '../config/Chapter.constants';
+import {
+  AppRoutes,
+  Chapter,
+  Chapters,
+  FeatureToggle,
+} from '../../universal/config';
 import {
   IncomeSpecifications,
   IncomeSpecificationsResponse,
@@ -6,13 +11,11 @@ import {
 import React, { ReactNode } from 'react';
 import { StatusLineItem, StepType } from '../components/StatusLine/StatusLine';
 import { addDays, differenceInCalendarDays, format, parseISO } from 'date-fns';
-import { dateSort, defaultDateFormat, dateFormat } from '../helpers/App';
+import { dateSort, defaultDateFormat } from '../../universal/helpers';
 
-import { AppRoutes } from '../config/Routing.constants';
 import { ReactComponent as DocumentIcon } from '../assets/icons/Document.svg';
-import { FeatureToggle } from '../config/App.constants';
 import { Document as GenericDocument } from '../components/DocumentList/DocumentList';
-import { LinkProps } from '../App.types';
+import { LinkProps } from '../../universal/types/App.types';
 import Linkd from '../components/Button/Button';
 import { MyNotification } from '../hooks/api/my-notifications-api.hook';
 import { generatePath } from 'react-router';

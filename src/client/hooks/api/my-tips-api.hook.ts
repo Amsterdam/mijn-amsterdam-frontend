@@ -1,9 +1,9 @@
 import { ApiRequestOptions, ApiState } from './api.types';
-import { getApiConfigValue, getApiUrl } from '../../helpers/App';
+import { getApiConfigValue, getApiUrl } from '../../../universal/helpers';
 import { useCallback, useMemo } from 'react';
 
 import { AppState } from '../../AppState';
-import { LinkProps } from '../../App.types';
+import { LinkProps } from '../../../universal/types/App.types';
 import { useCookie } from '../../hooks/storage.hook';
 import { useDataApi } from './api.hook';
 

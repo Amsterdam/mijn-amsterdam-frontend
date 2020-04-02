@@ -5,7 +5,7 @@ import Heading from '../Heading/Heading';
 import { LINKS } from './DirectLinks.constants';
 import Linkd from '../Button/Button';
 import classnames from 'classnames';
-import { entries } from '../../helpers/App';
+import { entries } from '../../../universal/helpers';
 import styles from './DirectLinks.module.scss';
 import { usePhoneScreen } from '../../hooks/media.hook';
 

@@ -4,7 +4,7 @@ import {
 } from '../../components/InfoPanel/InfoPanel';
 import { BrpApiState, BrpKey } from '../../hooks/api/api.brp';
 
-import { ExternalUrls } from '../../config/App.constants';
+import { ExternalUrls } from '../../../universal/config';
 import { isMokum } from '../../data-formatting/brp';
 
 type PanelKey = BrpKey | 'adresHistorisch' | 'verbintenisHistorisch';

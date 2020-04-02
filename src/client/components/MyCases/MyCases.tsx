@@ -1,5 +1,5 @@
 import ChapterIcon from '../ChapterIcon/ChapterIcon';
-import { Colors } from '../../config/App.constants';
+import { Colors } from '../../../universal/config';
 import { FocusItem } from '../../data-formatting/focus';
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';

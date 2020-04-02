@@ -1,8 +1,11 @@
-import { PageContent, TextPage } from '../../components/Page/Page';
+import {
+  LinkdInline,
+  PageContent,
+  PageHeading,
+  TextPage,
+} from '../../components';
 
-import { ExternalUrls } from '../../config/App.constants';
-import { LinkdInline } from '../../components/Button/Button';
-import PageHeading from '../../components/PageHeading/PageHeading';
+import { ExternalUrls } from '../../../universal/config';
 import React from 'react';
 
 export default () => {

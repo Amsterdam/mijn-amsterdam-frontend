@@ -1,16 +1,18 @@
+import {
+  DirectLinks,
+  MyAreaDashboard,
+  MyCases,
+  MyChaptersPanel,
+  MyNotifications,
+  MyTips,
+  Page,
+  PageHeading,
+} from '../../components';
 import React, { useContext } from 'react';
 
 import { AppContext } from '../../AppState';
-import { AppRoutes } from '../../config/Routing.constants';
-import DirectLinks from '../../components/DirectLinks/DirectLinks';
+import { AppRoutes } from '../../../universal/config';
 import { Link } from 'react-router-dom';
-import { MyAreaDashboard } from '../../components/MyArea/MyArea';
-import MyCases from '../../components/MyCases/MyCases';
-import MyChaptersPanel from '../../components/MyChaptersPanel/MyChaptersPanel';
-import MyNotifications from '../../components/MyNotifications/MyNotifications';
-import MyTips from '../../components/MyTips/MyTips';
-import Page from '../../components/Page/Page';
-import PageHeading from '../../components/PageHeading/PageHeading';
 import styles from './Dashboard.module.scss';
 import { usePhoneScreen } from '../../hooks/media.hook';
 

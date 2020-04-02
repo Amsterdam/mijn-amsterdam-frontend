@@ -1,9 +1,5 @@
-import { IS_ACCEPTANCE, IS_PRODUCTION } from '../../../env';
-import {
-  MyAreaHeader,
-  MyAreaMap,
-  MyAreaMapIFrame,
-} from '../../components/MyArea/MyArea';
+import { IS_ACCEPTANCE, IS_PRODUCTION } from '../../../universal/env';
+import { MyAreaHeader, MyAreaMap, MyAreaMapIFrame } from '../../components';
 import React, { useContext } from 'react';
 
 import { AppContext } from '../../AppState';

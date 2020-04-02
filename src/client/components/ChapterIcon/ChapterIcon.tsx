@@ -1,15 +1,15 @@
 import {
+  AppRoutes,
+  ChapterIcons,
   Chapter as ChapterType,
   Chapters,
-} from '../../config/Chapter.constants';
+  Colors,
+} from '../../../universal/config';
 
-import { AppRoutes } from '../../config/Routing.constants';
-import { ChapterIcons } from '../../config/Chapter.constants';
-import { Colors } from '../../config/App.constants';
 import { ReactComponent as IconBurgerZaken } from '../../assets/icons/burgerzaken.svg';
 import React from 'react';
 import classnames from 'classnames';
-import { entries } from '../../helpers/App';
+import { entries } from '../../../universal/helpers';
 import { matchPath } from 'react-router';
 import styles from './ChapterIcon.module.scss';
 import useRouter from 'use-react-router';

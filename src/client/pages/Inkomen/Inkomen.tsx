@@ -1,16 +1,24 @@
-import { ExternalUrls, FeatureToggle } from '../../config/App.constants';
-import { OverviewPage, PageContent } from '../../components/Page/Page';
+import {
+  Alert,
+  ChapterIcon,
+  Linkd,
+  OverviewPage,
+  PageContent,
+  PageHeading,
+  SectionCollapsible,
+  Table,
+} from '../../components';
+import {
+  AppRoutes,
+  ChapterTitles,
+  ExternalUrls,
+  FeatureToggle,
+} from '../../../universal/config';
 import React, { useContext, useMemo } from 'react';
-import Table, { addTitleLinkComponent } from '../../components/Table/Table';
 
-import Alert from '../../components/Alert/Alert';
 import { AppContext } from '../../AppState';
-import { AppRoutes } from '../../config/Routing.constants';
-import ChapterIcon from '../../components/ChapterIcon/ChapterIcon';
-import { ChapterTitles } from '../../config/Chapter.constants';
-import Linkd from '../../components/Button/Button';
-import PageHeading from '../../components/PageHeading/PageHeading';
-import SectionCollapsible from '../../components/SectionCollapsible/SectionCollapsible';
+import { addTitleLinkComponent } from '../../components/Button/Button';
+import { generatePath } from 'react-router-dom';
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import {
   annualStatementsTableDisplayProps,

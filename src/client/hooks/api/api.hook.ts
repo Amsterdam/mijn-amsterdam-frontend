@@ -3,8 +3,8 @@ import * as Sentry from '@sentry/browser';
 import { ApiRequestOptions, ApiState, RefetchFunction } from './api.types';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 
-import { Action } from '../../App.types';
-import { IS_SENTRY_ENABLED } from '../../../env';
+import { Action } from '../../../universal/types/App.types';
+import { IS_SENTRY_ENABLED } from '../../../universal/env';
 import axios from 'axios';
 
 /**

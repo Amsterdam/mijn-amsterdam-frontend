@@ -1,14 +1,16 @@
-import { DetailPage, PageContent } from '../../components/Page/Page';
+import {
+  Alert,
+  ChapterIcon,
+  DetailPage,
+  LoadingContent,
+  PageContent,
+  PageHeading,
+  StatusLine,
+} from '../../components';
+import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import React, { useContext } from 'react';
 
-import Alert from '../../components/Alert/Alert';
 import { AppContext } from '../../AppState';
-import { AppRoutes } from '../../config/Routing.constants';
-import ChapterIcon from '../../components/ChapterIcon/ChapterIcon';
-import { ChapterTitles } from '../../config/Chapter.constants';
-import LoadingContent from '../../components/LoadingContent/LoadingContent';
-import PageHeading from '../../components/PageHeading/PageHeading';
-import StatusLine from '../../components/StatusLine/StatusLine';
 import styles from './ZorgDetail.module.scss';
 import useRouter from 'use-react-router';
 

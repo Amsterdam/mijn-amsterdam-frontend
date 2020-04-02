@@ -1,11 +1,14 @@
-import { DetailPage, PageContent } from '../../components/Page/Page';
+import {
+  Alert,
+  ChapterIcon,
+  DetailPage,
+  MyNotifications,
+  PageContent,
+  PageHeading,
+} from '../../components';
 import React, { useContext } from 'react';
 
-import Alert from '../../components/Alert/Alert';
 import { AppContext } from '../../AppState';
-import ChapterIcon from '../../components/ChapterIcon/ChapterIcon';
-import MyNotifications from '../../components/MyNotifications/MyNotifications';
-import PageHeading from '../../components/PageHeading/PageHeading';
 import styles from './MyNotifications.module.scss';
 
 export default () => {

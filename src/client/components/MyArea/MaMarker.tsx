@@ -1,4 +1,4 @@
-import { Centroid, DEFAULT_ZOOM } from '../../config/Map.constants';
+import { Centroid, DEFAULT_ZOOM } from '../../../universal/config';
 import { Marker, useMapInstance } from '@datapunt/react-maps';
 import React, { PropsWithChildren, useEffect, useRef, useState } from 'react';
 
@@ -7,7 +7,7 @@ import { MaPopup } from './MaPopup';
 import { MaTooltip } from './MaTooltip';
 import { firstChildOfType } from './utils';
 import iconUrl from '../../assets/icons/home.svg';
-import { toLatLng } from '../../helpers/geo';
+import { toLatLng } from '../../../universal/helpers';
 
 function useBindComponentToMarker(component: any, markerInstance: any) {
   const componentRef = useRef();

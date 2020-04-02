@@ -1,8 +1,8 @@
-import { defaultDateFormat, getApiUrl } from '../../helpers/App';
+import { defaultDateFormat, getApiUrl } from '../../../universal/helpers';
 
 import { ReactComponent as AlertIcon } from '../../assets/icons/Alert.svg';
 import { ApiState } from './api.types';
-import { AppRoutes } from '../../config/Routing.constants';
+import { AppRoutes } from '../../../universal/config';
 import { BrpResponseData } from '../../data-formatting/brp';
 import { MyNotification } from './my-notifications-api.hook';
 import { useDataApi } from './api.hook';
