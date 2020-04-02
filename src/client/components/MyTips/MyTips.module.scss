@@ -1,0 +1,72 @@
+@import '../../styles/_global.scss';
+
+.MyTips {
+  width: auto;
+}
+
+.TipsList {
+  @include reset-list-style;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.TipItem {
+  width: calc((100% / 3) - 3%);
+  p {
+    margin-top: 1.2rem;
+  }
+  margin-bottom: 2rem;
+  @include mq-phone() {
+    width: 100%;
+  }
+}
+
+.ImageContainer {
+  margin: 0;
+  margin-bottom: 2rem;
+  padding-top: 67%;
+  position: relative;
+  overflow: hidden;
+}
+
+.Img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+  background: $color-white;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.HeaderBar {
+  display: flex;
+  margin: 0 0 1.6rem 0;
+  align-items: flex-end;
+
+  @include select(Button_Button) {
+    margin-left: 2rem;
+  }
+
+  .OptIn {
+    margin-left: auto;
+  }
+}
+
+.OptInOutInfo {
+  margin-top: 0;
+  margin-bottom: 4rem;
+}
+
+.OptInOutButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.OptInOutConfirmButton {
+  margin-left: 1rem;
+}

@@ -1,0 +1,123 @@
+@import '../../styles/_global.scss';
+
+.GarbageInformation {
+  @include select(PageContent) {
+    padding-bottom: 5rem;
+  }
+}
+
+.InfoSection {
+  transition: max-width 400ms ease;
+}
+
+@mixin GarbagePanel {
+  margin: 0 auto;
+  padding: 0;
+  max-width: 62rem;
+
+  @include mq-tablet {
+    margin-left: 9.5rem;
+  }
+
+  @include mq-phone {
+    margin-left: 0;
+  }
+}
+
+.Panel {
+  padding: 2rem 0;
+
+  @include select(Heading_Heading__tiny) {
+    color: $color-neutral-grey4;
+    font-weight: normal;
+    @include GarbagePanel;
+  }
+
+  p {
+    @include GarbagePanel;
+    margin-bottom: 2rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    > a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+}
+
+.AfvalPunten {
+  @include select(Heading_Heading__small) {
+    @include GarbagePanel;
+    margin-bottom: 2rem;
+  }
+  p > strong {
+    display: block;
+  }
+}
+
+.AddressPanel {
+  max-width: $main-boxed-width;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+  border-top: 0.1rem solid $color-neutral-grey2;
+
+  > p {
+    font-weight: bold;
+  }
+
+  @include mq-tablet() {
+    margin: 0 2rem;
+  }
+
+  @include mq-phone() {
+    margin: 0 1rem;
+  }
+}
+
+.DistanceToHome {
+  font-size: 1.3rem;
+  color: $color-neutral-grey4;
+  font-weight: normal;
+}
+
+.GarbageContainerMap {
+  height: 50rem;
+}
+
+.ToggleOtherGarbagePointsButton {
+  max-width: 62rem;
+  margin: 0 auto;
+
+  @include select(Button_Linkd) {
+    cursor: pointer;
+    @include select(Button_Icon) {
+      transition: transform 100ms ease-in-out;
+    }
+  }
+}
+.InfoSectionMap {
+  &[class*=SectionCollapsible]:not([class*=SectionCollapsible_isCollapsed]) {
+    max-width: 100%;
+  }
+}
+
+.InfoSectionOtherGarbagePoints {
+  padding-top: 0;
+  @include select(SectionCollapsible_Panel) {
+    border-top: 0;
+  }
+}
+
+.OpeningHours {
+  white-space: pre-wrap;
+}
+
+.otherGarbagePointsExpanded {
+  @include select(Button_Icon) {
+    transform: rotate(90deg);
+    position: relative;
+  }
+}

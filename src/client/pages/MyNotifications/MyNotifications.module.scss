@@ -1,0 +1,93 @@
+@import '../../styles/_global.scss';
+
+.PanelHeading {
+  border-bottom: 1px solid $color-neutral-grey2;
+  padding-top: 4rem;
+  padding-bottom: 1.6rem;
+  text-indent: 16rem;
+  margin: 0;
+
+  @include mq-tablet() {
+    text-indent: 0;
+  }
+  @include mq-phone() {
+    text-indent: 2.4rem;
+    padding-top: 0;
+  }
+}
+
+.MyNotifications {
+  position: relative;
+  margin-bottom: 6rem;
+
+  @include select(MyNotifications_MyNotifications) {
+    @include centered-block;
+  }
+
+  @include select(MyNotifications_Description) {
+    padding-right: 30rem;
+
+    @include mq-phone() {
+      padding-right: 2rem;
+    }
+  }
+
+  @include select(MyNotifications_MetaInfoSecondary) {
+    position: absolute;
+    right: 0;
+    top: 2rem;
+    width: 17.5rem;
+
+    @include mq-tablet() {
+      padding-right: 2rem;
+      position: static;
+      width: auto;
+    }
+
+    @include select(MyNotifications_ChapterIndication) {
+      display: block;
+
+      @include mq-tablet() {
+        display: initial;
+      }
+    }
+  }
+
+  @include select(MyNotifications_MyNotificationItem) {
+    padding-left: 16rem;
+
+    @include select(MyNotifications_Icon) {
+      left: 6.4rem;
+    }
+
+    aside {
+      time {
+        color: $color-neutral-grey4;
+      }
+    }
+
+    @include mq-tablet() {
+      padding-left: 3rem;
+
+      @include select(MyNotifications_MyNotificationItem) {
+        padding-left: 0;
+      }
+
+      aside {
+        width: auto;
+        position: static;
+      }
+    }
+    @include mq-phone() {
+      padding-left: 0;
+    }
+  }
+
+  @include select(MyNotifications_NoItemsInfo) {
+    text-indent: 16rem;
+
+    @include mq-phone() {
+      text-indent: 0;
+    }
+  }
+}

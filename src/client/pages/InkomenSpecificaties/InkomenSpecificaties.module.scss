@@ -1,0 +1,131 @@
+@import '../../styles/_global.scss';
+
+.SpecificationsTable {
+  tr td:first-child {
+    font-weight: 500;
+    color: $color-black;
+  }
+  tr td:nth-child(2) {
+    width: 30%;
+  }
+  @include media-q('>=phone') {
+    tr td:last-of-type {
+      width: 70px;
+      text-align: right;
+    }
+  }
+  @include select(Table_DisplayPropTitle) {
+    width: 30%;
+  }
+}
+
+.SpecificationsTable--annualStatements {
+  @include select(Table_DisplayPropTitle) {
+    width: 60%;
+  }
+  tr td:nth-child(2) {
+    width: calc(30% - 1em);
+  }
+}
+
+.TableSection {
+  @include centered-block;
+  position: relative;
+
+  @include select(Heading_Heading) {
+    margin: 5rem auto;
+    max-width: 62rem;
+
+    @include mq-tablet {
+      margin-left: 9.5rem;
+    }
+
+    @include mq-phone {
+      margin-left: 0;
+    }
+  }
+}
+
+.SearchButton {
+  margin-bottom: 2rem;
+
+  @include media-q('>=phone') {
+    float: right;
+  }
+
+  i {
+    height: 1.3rem;
+    font-style: normal;
+    position: relative;
+    transform: rotate(45deg) translateY(-.6rem) scale(.6);
+    transform-origin: center;
+  }
+
+  &Active {
+   i {
+     transform: rotate(-135deg) translateY(-.2rem) scale(.6) translateX(-.8rem);
+   }
+  }
+
+}
+
+.SearchResetButton {
+
+}
+
+.SearchPanel {
+  background-color: $color-neutral-grey1;
+  width: 100%;
+  display: flex;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+
+  @include media-q('<=phone') {
+    flex-direction: column;
+  }
+}
+
+.Pagination {
+  margin: 0 auto;
+  margin-top: 4rem;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.FilterInput {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+
+  > span {
+    display: inline-block;
+    margin-bottom: 3px;
+  }
+
+  @include media-q('>phone') {
+    &:first-child {
+      margin-right: 2rem;
+    }
+
+    &:last-child {
+      margin-left: 2rem;
+    }
+  }
+}
+
+.Select {
+  @include inputSelect;
+}
+
+.FilterActive {
+  border-color: $color-primary-darkblue;
+  outline: 1px solid $color-primary-darkblue;
+  color: $color-primary-darkblue;
+}
+
+.ResetFilterButton {
+  @include button-unstyled;
+  text-decoration: underline;
+}

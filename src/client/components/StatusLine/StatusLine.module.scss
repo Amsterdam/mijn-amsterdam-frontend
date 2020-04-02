@@ -1,0 +1,309 @@
+@import '../../styles/_global.scss';
+
+.StatusLine {
+  margin-bottom: 2rem;
+}
+
+.List {
+  @include reset-list-style;
+  padding: 1rem 0;
+}
+
+.ListHeading {
+  @include centered-block;
+  color: $color-neutral-grey4;
+  margin-bottom: 0;
+  font-weight: 500;
+}
+
+.StatusTitle {
+  display: block;
+}
+
+.StatusDate {
+  display: block;
+  white-space: nowrap;
+  color: $color-neutral-grey4;
+}
+
+.DownloadLink {
+  display: block;
+  font-weight: normal;
+  position: relative;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+
+  svg {
+    top: 0.2rem;
+    transform: none;
+  }
+}
+
+.DocumentDownloadItems {
+  @include reset-list-style;
+  @include select(DownloadLink) {
+    font-weight: 500;
+    white-space: pre-wrap;
+    svg {
+      margin-left: -17px;
+    }
+  }
+}
+
+@mixin connectLine() {
+  .Panel--status:before {
+    @content;
+  }
+}
+
+@mixin checkmark() {
+  .Panel--status:after {
+    @content;
+  }
+}
+
+.ListItem {
+  &Inner {
+    display: flex;
+    padding: 0 7.5rem;
+    border-top: 1px solid $color-neutral-grey2;
+
+    @include mq-tablet() {
+      display: block;
+      position: relative;
+      padding: 0 2rem;
+    }
+
+    @include mq-phone() {
+      padding: 0 1rem;
+    }
+  }
+
+  @include connectLine() {
+    content: '';
+    width: 0.2rem;
+    top: -0.1rem; // overlapping border-top of different color
+    bottom: -0.1rem; // overlapping border-top of different color
+    position: absolute;
+    left: -0.2rem; // place outside of element
+    background: $color-neutral-grey3;
+  }
+
+  @include checkmark() {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    left: -1.1rem;
+    background: $color-neutral-grey3;
+    color: $color-white;
+    text-align: center;
+    font-size: 0.8em;
+    font-weight: 600;
+    line-height: 1.5;
+
+    width: 3.2rem;
+    height: 3.2rem;
+    margin-left: -0.55rem;
+    top: 1.4rem;
+    background-size: 0.9em 0.9em;
+  }
+
+  &:not(.last-step-active):not(.single-step) {
+    @include checkmark() {
+      width: 2rem;
+      height: 2rem;
+      top: 2rem;
+      margin-left: 0;
+    }
+  }
+
+  .Panel {
+    position: relative;
+    padding: 1.8rem;
+    flex: 1;
+
+    > p {
+      margin: 0 0 2rem;
+    }
+
+    &--documents {
+      width: auto;
+      overflow: hidden;
+    }
+
+    &--description {
+      @include media-q(">tablet") {
+        flex: 0 0 38rem;
+      }
+    }
+
+    &--status {
+      padding: 1.8rem 0 1.8rem 8.5rem;
+    }
+
+    @include mq-tablet() {
+      &,
+      &--status {
+        padding: 1rem 1rem 1rem 3rem;
+        position: static;
+      }
+    }
+
+
+  }
+
+  &.single-step {
+    @include connectLine() {
+      display: none;
+    }
+  }
+
+  &.first-step {
+    &:not(.last-step-active) {
+      @include connectLine() {
+        background: linear-gradient(
+          to bottom,
+          transparent 0%,
+          transparent 3rem,
+          $color-primary-darkblue 3rem,
+          $color-primary-darkblue 100%
+        );
+      }
+    }
+    @include connectLine() {
+      background: linear-gradient(
+        to bottom,
+        $color-neutral-grey1 0%,
+        $color-neutral-grey1 3rem,
+        $color-neutral-grey3 3rem,
+        $color-neutral-grey1 100%
+      );
+    }
+  }
+
+  // Intermediate step, in a collapsed status line
+  &:not(.first-step):not(.last-step):not(.last-step-active):last-child {
+    @include connectLine() {
+      background: linear-gradient(
+        to bottom,
+        $color-primary-darkblue 0%,
+        $color-neutral-grey3 75%,
+        $color-neutral-grey1 100%
+      );
+    }
+  }
+
+  &.last-step {
+    @include connectLine() {
+      background: linear-gradient(
+        to bottom,
+        $color-neutral-grey3 0%,
+        $color-neutral-grey3 3rem,
+        transparent 0%
+      );
+    }
+
+    &.last-step-active {
+      @include connectLine() {
+        background: linear-gradient(
+          to bottom,
+          $color-primary-darkblue 0%,
+          $color-primary-darkblue 3rem,
+          transparent 0%
+        );
+      }
+    }
+  }
+}
+
+.last-step-active {
+  background-color: $color-neutral-grey1;
+
+  .ListItemInner {
+    border-top: 0;
+  }
+
+  + .ListItem .ListItemInner {
+    border-top: 0;
+  }
+
+   @include checkmark() {
+    width: 3.2rem;
+    height: 3.2rem;
+    margin-left: -0.55rem;
+    top: 1.4rem;
+    background: $color-primary-darkblue url('../../assets/icons/Checkmark__white.svg')
+      no-repeat center;
+    background-size: 0.9em 0.9em;
+  }
+
+  @include connectLine() {
+    background: linear-gradient(
+      to bottom,
+      $color-primary-darkblue 0%,
+      $color-primary-darkblue 3rem,
+      $color-neutral-grey3 3rem,
+      $color-neutral-grey3 100%
+    );
+  }
+
+  &.first-step {
+    @include connectLine() {
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        transparent 3rem,
+        $color-neutral-grey3 3rem,
+        $color-neutral-grey3 100%
+      );
+    }
+  }
+}
+
+.checked-step {
+  @include checkmark() {
+    background: $color-primary-darkblue url('../../assets/icons/Checkmark__white.svg')
+          no-repeat center;
+    background-size: 0.9em 0.9em;
+  }
+
+  @include connectLine() {
+    background: $color-primary-darkblue;
+  }
+}
+
+.NoStatusItems {
+  padding: 0;
+}
+
+.MoreStatus {
+  position: relative;
+  background-color: transparent;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  border: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0 0.4rem 0 0;
+  font-weight: 700;
+
+  svg {
+    height: 15px;
+    margin-top: 0.3rem;
+    transform: rotate(90deg);
+  }
+
+  &Closed {
+    svg {
+      transform: rotate(-90deg);
+    }
+  }
+}
+
+.altDocumentContent {
+  display: block;
+  > * {
+    margin-top: 0;
+  }
+}

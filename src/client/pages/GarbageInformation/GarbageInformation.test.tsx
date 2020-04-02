@@ -1,0 +1,14 @@
+import AppState from '../../AppState';
+import GarbageInformation from './GarbageInformation';
+import React from 'react';
+import { shallow } from 'enzyme';
+
+const APP_STATE = {}; // Add slice of the AppState here
+
+it('Renders without crashing', () => {
+  shallow(
+    <AppState value={APP_STATE}>
+      <GarbageInformation />
+    </AppState>
+  );
+});

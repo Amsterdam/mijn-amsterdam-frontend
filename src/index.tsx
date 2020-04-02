@@ -1,10 +1,13 @@
-import './polyfill';
+import './client/polyfill';
+import './client/styles/main.scss';
+
+import * as Sentry from '@sentry/browser';
+
+import { IS_SENTRY_ENABLED, SENTRY_DSN } from './env';
+
+import App from './client/App';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import 'styles/main.scss';
-import * as Sentry from '@sentry/browser';
-import { IS_SENTRY_ENABLED, SENTRY_DSN } from './env';
 
 if (SENTRY_DSN && IS_SENTRY_ENABLED) {
   Sentry.init({
