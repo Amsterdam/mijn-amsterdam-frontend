@@ -4,7 +4,11 @@ import { ApiUrls } from '../config/app';
 import { requestSourceData } from '../helpers/requestSourceData';
 import { MyTip } from './services-tips';
 
-export interface BELASTINGData {}
+export interface BELASTINGData {
+  isKnown: boolean;
+  notifications: MyNotification[];
+  tips: MyTip[];
+}
 
 interface BELASTINGSourceDataContent {
   isKnown: boolean;
@@ -18,12 +22,6 @@ interface BELASTINGSourceData {
   message?: string;
 }
 
-interface BelastingApiContent {
-  isKnown: boolean;
-  notifications: MyNotification[];
-  tips: MyTip[];
-}
-
 function formatBelastingNotifications(notifications?: MyNotification[]) {
   return Array.isArray(notifications)
     ? notifications.map(notification => ({
@@ -33,7 +31,9 @@ function formatBelastingNotifications(notifications?: MyNotification[]) {
     : [];
 }
 
-function formatBELASTINGData(sourceData: AxiosResponse<BELASTINGSourceData>) {
+function formatBELASTINGData(
+  sourceData: AxiosResponse<BELASTINGSourceData>
+): BELASTINGData {
   const { meldingen, tips, ...restData } = sourceData.data?.content || {
     meldingen: [],
     tips: [],
