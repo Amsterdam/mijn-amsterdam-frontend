@@ -225,12 +225,11 @@ export interface AFVALData {
 }
 
 export function formatAFVALData(
-  sourceData: AxiosResponse<AFVALSourceData>,
+  response: AxiosResponse<AFVALSourceData>,
   center: LatLngObject | null
 ): AFVALData {
-  console.log('sourceData', sourceData);
-  const ophalen: GarbageMoment[] = sourceData.data?.result?.features
-    ? sourceData.data.result.features.map(feature => {
+  const ophalen: GarbageMoment[] = response.data?.result?.features
+    ? response.data.result.features.map(feature => {
         const {
           properties: {
             type,

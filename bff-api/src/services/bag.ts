@@ -11,11 +11,9 @@ export interface BAGData {
   latlng: LatLngObject | null;
 }
 
-export function formatBAGData(
-  sourceData: AxiosResponse<BAGSourceData>
-): BAGData {
-  const centroid = !!sourceData.data?.results.length
-    ? sourceData.data.results[0].centroid
+export function formatBAGData(response: AxiosResponse<BAGSourceData>): BAGData {
+  const centroid = !!response.data?.results.length
+    ? response.data.results[0].centroid
     : null;
   return { latlng: centroid ? { lat: centroid[1], lng: centroid[0] } : null };
 }

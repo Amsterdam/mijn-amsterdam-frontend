@@ -29,9 +29,9 @@ function formatMILIEUZONENotifications(notifications?: MyNotification[]) {
 }
 
 function formatMILIEUZONEData(
-  sourceData: AxiosResponse<MILIEUZONESourceData>
+  response: AxiosResponse<MILIEUZONESourceData>
 ): MILIEUZONEData {
-  const { meldingen, ...restData } = sourceData.data?.content || {
+  const { meldingen, ...restData } = response.data?.content || {
     meldingen: [],
     isKnown: false,
   };

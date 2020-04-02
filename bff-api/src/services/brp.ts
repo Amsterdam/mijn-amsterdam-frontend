@@ -69,8 +69,8 @@ export function getFullAddress(adres: Adres) {
     ''} ${adres.huisnummertoevoeging || ''}`.trim();
 }
 
-export function formatBRPData(sourceData: AxiosResponse<BRPData>) {
-  return sourceData.data;
+export function formatBRPData(response: AxiosResponse<BRPData>) {
+  return response.data;
 }
 
 export function fetch() {
