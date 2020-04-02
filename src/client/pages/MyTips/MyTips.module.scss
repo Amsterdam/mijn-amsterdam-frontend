@@ -1,0 +1,12 @@
+@import '../../styles/_global.scss';
+
+.MyTips {
+  @include select(MyTips_MyTips) {
+    @include centered-block;
+  }
+}
+
+button.OptInOutToggleButton {
+  display: block;
+  margin: 4rem auto 7rem auto;
+}

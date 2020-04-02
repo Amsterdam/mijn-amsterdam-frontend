@@ -1,0 +1,131 @@
+@import '../../styles/_global.scss';
+
+.MyArea {
+  position: relative;
+  background-color: $color-neutral-grey1;
+}
+
+.MyAreaMapIFrame {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  border: none;
+}
+
+.MyAreaMapContainer {
+  min-height: 20rem;
+  height: 100%;
+  width: 100%;
+}
+
+.MapDashboardOverlay {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: flex-end;
+  text-decoration: none;
+  z-index: z-index(myarea-dashboard-overlay);
+
+  div {
+    background-color: $color-white;
+    padding: 2rem 4rem;
+    width: 42rem;
+    margin-left: 50%;
+  }
+}
+
+.LogoLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.Logo {
+  display: block;
+  height: 4.5rem;
+  width: 9.6rem;
+  margin-right: 0.8rem;
+
+  @include mq-phone() {
+    height: 3rem;
+    width: 6.6rem;
+    margin-right: 0;
+  }
+}
+
+.Header {
+  display: flex;
+  height: 5.5rem;
+  padding-left: 1.8rem;
+  padding-right: 1.8rem;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $color-white;
+
+  @include mq-phone() {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+.Title {
+  font-size: 2rem;
+  margin: 0;
+  margin-left: 1.5rem;
+  flex-grow: 1;
+  transform: translateY(-0.4rem);
+}
+
+.MyAreaLoader {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  > span {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  svg {
+    width: 3rem;
+    height: 3rem;
+    margin-right: 1rem;
+  }
+}
+
+.ZoomControl {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 401;
+  display: flex;
+  flex-direction: column;
+}
+
+.ZoomButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  width: 45px;
+  height: 45px;
+  border: 0;
+  text-align: center;
+  padding: 0;
+  margin-bottom: 5px;;
+
+  &:hover {
+    background-color: $color-neutral-grey2;
+  }
+}
+
+.ZoomInOutButton {
+  font-weight: bold;
+  font-size: 1.6em;
+}

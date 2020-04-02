@@ -1,0 +1,22 @@
+@import '../../styles/_global.scss';
+
+.DetailPageContent {
+  min-height: 4rem;
+}
+
+.InfoDetail {
+  border-top: 0.1rem solid $color-neutral-grey2;
+  padding-bottom: 1rem;
+  padding-top: 1.4rem;
+  color: $color-neutral-grey4;
+
+  strong {
+    color: $color-black;
+    display: block;
+  }
+
+  @include mq-tablet() {
+    margin-left: 7rem;
+  }
+
+}
