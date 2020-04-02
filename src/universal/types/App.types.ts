@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactNode, SVGProps } from 'react';
+import React, { ReactNode } from 'react';
 
 // Generic object interface
 export interface Unshaped {
@@ -19,5 +19,7 @@ export interface LinkProps {
   download?: string;
 }
 
-export type SVGComponent = FunctionComponent<SVGProps<SVGElement>>;
+export type SVGComponent = React.FunctionComponent<
+  React.SVGProps<SVGSVGElement>
+>;
 export type ComponentChildren = ReactNode;

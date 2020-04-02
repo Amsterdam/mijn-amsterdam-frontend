@@ -1,38 +1,17 @@
-import { IS_ACCEPTANCE, IS_PRODUCTION } from '../env';
-
 import { MapOptions } from 'leaflet';
-import { getCrsRd } from '../helpers';
+import { DEFAULT_LAT, DEFAULT_LON } from '../../../universal/config/map';
+import { IS_ACCEPTANCE, IS_PRODUCTION } from '../../../universal/env';
+import { getCrsRd } from './MyArea.helpers';
 
 export interface MapDisplayOptions {
   zoomTools: boolean;
   zoom: number;
 }
 
-export type Lat = number;
-export type Lon = number;
-export type Centroid = [Lon, Lat];
-export type LatLngObject = { lat: Lat; lng: Lon };
-
-export const DEFAULT_LAT = 52.3717228;
-export const DEFAULT_LON = 4.8927377;
 export const DEFAULT_ZOOM = 10;
 export const LOCATION_ZOOM = 14;
 
 export const DEFAULT_CENTROID: Centroid = [DEFAULT_LON, DEFAULT_LAT];
-
-export const DEFAULT_MAP_OPTIONS = {
-  center: DEFAULT_CENTROID,
-  zoom: DEFAULT_ZOOM,
-  maxZoom: 16,
-  minZoom: 3,
-  crs: getCrsRd(),
-  zoomControl: false,
-  attributionControl: false,
-  maxBounds: [
-    [52.25168, 4.64034],
-    [52.50536, 5.10737],
-  ],
-} as Partial<MapOptions>;
 
 export const DEFAULT_TILE_LAYER_CONFIG = {
   url: 'https://t{s}.data.amsterdam.nl/topo_rd/{z}/{x}/{y}.png',
@@ -53,3 +32,17 @@ export const DEFAULT_MAP_DISPLAY_CONFIG = {
   zoomTools: true,
   zoom: DEFAULT_ZOOM,
 };
+
+export const DEFAULT_MAP_OPTIONS = {
+  center: DEFAULT_CENTROID,
+  zoom: DEFAULT_ZOOM,
+  maxZoom: 16,
+  minZoom: 3,
+  crs: getCrsRd(),
+  zoomControl: false,
+  attributionControl: false,
+  maxBounds: [
+    [52.25168, 4.64034],
+    [52.50536, 5.10737],
+  ],
+} as Partial<MapOptions>;

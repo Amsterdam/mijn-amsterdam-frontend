@@ -1,13 +1,12 @@
-import { Centroid, ExternalUrls } from '../../../universal/config';
+import { useCallback, useMemo, useState } from 'react';
+import { ExternalUrls } from '../../../universal/config';
 import {
   capitalizeFirstLetter,
   getApiUrl,
   getDistance,
 } from '../../../universal/helpers';
-import { useCallback, useMemo, useState } from 'react';
-
-import { ApiState } from './api.types';
 import { useDataApi } from './api.hook';
+import { ApiState } from './api.types';
 
 // Reverse engineered from sourcecode at https://www.amsterdam.nl/afval/afvalwijzer/?adres=Dam%201
 

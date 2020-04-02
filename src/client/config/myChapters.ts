@@ -1,9 +1,9 @@
-import { Chapters, myChaptersMenuItems } from '../config/chapter';
+import { MenuItem, myChaptersMenuItems } from './menuItems';
 
-import { AppState as AppStateInterface } from '../../client/AppState';
-import { FeatureToggle } from '../config/app';
-import { MenuItem } from '../../client/components/MainNavBar/MainNavBar.constants';
-import { isMokum } from '../../client/data-formatting/brp';
+import { AppState as AppStateInterface } from '../AppState';
+import { Chapters } from '../../universal/config/chapter';
+import { FeatureToggle } from '../../universal/config/app';
+import { isMokum } from '../data-formatting/brp';
 
 function isChapterActive(
   item: MenuItem,

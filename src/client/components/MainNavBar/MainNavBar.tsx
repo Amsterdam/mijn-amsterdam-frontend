@@ -6,7 +6,6 @@ import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from '../MainNavSubmenu/MainNavSubmenu';
 import {
-  MenuItem,
   mainMenuItemId,
   mainMenuItems,
   submenuItems,
@@ -31,6 +30,7 @@ import { getFullName } from '../../data-formatting/brp';
 import styles from './MainNavBar.module.scss';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
 import useRouter from 'use-react-router';
+import { MenuItem } from '../../config/menuItems';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';

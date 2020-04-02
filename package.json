@@ -13,9 +13,9 @@
     "start": "react-scripts start",
     "test": "react-scripts test",
     "watch:mock-api": "nodemon --watch mock-api/ --exec npm run mock-api",
-    "watch:bff-api": "nodemon -e ts -w ./bff-api/src -x npm run bff-api:serve",
-    "bff-api:serve": "ts-node --project bff-api/tsconfig.json bff-api/src/app.ts",
-    "bff-api:build": "tsc --project bff-api/tsconfig.json"
+    "watch:bff-api": "nodemon -e ts -w ./src -x npm run bff-api:serve",
+    "bff-api:serve": "ts-node ./src/bffserver.ts",
+    "bff-api:build": "tsc src/server/"
   },
   "browserslist": [
     ">0.2%",

@@ -1,3 +1,5 @@
+import { BFFApiData } from '../../universal/config';
+import { entries } from '../../universal/helpers';
 import {
   dataCache,
   fetchBELASTING,
@@ -6,9 +8,6 @@ import {
   fetchMILIEUZONE,
   fetchWMO,
 } from './index';
-
-import { BFFApiData } from '../../universal/config';
-import { entries } from '../../universal/helpers';
 
 const userDataLoaderConfig = {
   FOCUS: fetchFOCUS,

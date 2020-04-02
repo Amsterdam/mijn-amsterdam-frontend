@@ -1,11 +1,10 @@
 import '../../styles/map.scss';
 
 import {
-  Centroid,
   DEFAULT_MAP_OPTIONS,
   DEFAULT_TILE_LAYER_CONFIG,
   DEFAULT_ZOOM,
-} from '../../../universal/config/map';
+} from './MyArea.constants';
 import { Map, TileLayer } from '@datapunt/react-maps';
 import React, { PropsWithChildren } from 'react';
 

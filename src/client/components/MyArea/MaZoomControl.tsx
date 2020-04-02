@@ -1,11 +1,10 @@
-import { Centroid, LOCATION_ZOOM } from '../../../universal/config';
-
 import { ReactComponent as HomeIconSimple } from '../../assets/icons/home-simple.svg';
 import React from 'react';
 import classnames from 'classnames';
 import styles from './MyArea.module.scss';
 import { toLatLng } from '../../../universal/helpers';
 import { useMapInstance } from '@datapunt/react-maps';
+import { LOCATION_ZOOM } from './MyArea.constants';
 
 interface ZoomControlComponentProps {
   center: Centroid;
