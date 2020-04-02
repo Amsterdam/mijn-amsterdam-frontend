@@ -7,7 +7,7 @@ import {
   useSessionCallbackOnceDebounced,
 } from '../../hooks/analytics.hook';
 
-import { AppRoutes } from '../../config/Routing.constants';
+import { AppRoutes } from '../../../universal/config';
 import { Button } from '../Button/Button';
 import { ReactComponent as ChevronIcon } from '../../assets/icons/Chevron-Right.svg';
 import Heading from '../Heading/Heading';
@@ -15,7 +15,7 @@ import Linkd from '../Button/Button';
 import { MyTip } from '../../hooks/api/my-tips-api.hook';
 import MyTipsOptInOutModal from './MyTipsOptInOutModal';
 import classnames from 'classnames';
-import { isExternalUrl } from '../../helpers/App';
+import { isExternalUrl } from '../../../universal/helpers';
 import styles from './MyTips.module.scss';
 
 export interface TipProps {

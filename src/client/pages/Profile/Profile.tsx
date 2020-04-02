@@ -1,20 +1,22 @@
-import { DetailPage, PageContent } from '../../components/Page/Page';
+import {
+  Alert,
+  ChapterIcon,
+  DetailPage,
+  InfoPanel,
+  InfoPanelCollapsible,
+  LinkdInline,
+  LoadingContent,
+  PageContent,
+  PageHeading,
+} from '../../components';
 import { PanelConfigFormatter, panelConfig } from './Profile.constants';
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 
-import Alert from '../../components/Alert/Alert';
 import { AppContext } from '../../AppState';
 import { BrpApiState } from '../../hooks/api/api.brp';
-import ChapterIcon from '../../components/ChapterIcon/ChapterIcon';
-import InfoPanel from '../../components/InfoPanel/InfoPanel';
-import { InfoPanelCollapsible } from '../../components/InfoPanel/InfoPanel';
-import { LinkdInline } from '../../components/Button/Button';
-import LoadingContent from '../../components/LoadingContent/LoadingContent';
-import PageHeading from '../../components/PageHeading/PageHeading';
-import { defaultDateFormat } from '../../helpers/App';
+import { defaultDateFormat } from '../../../universal/helpers';
 import { formatBrpProfileData } from '../../data-formatting/brp';
 import styles from './Profile.module.scss';
-import { useMemo } from 'react';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,

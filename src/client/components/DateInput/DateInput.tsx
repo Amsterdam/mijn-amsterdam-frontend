@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import { format, getDaysInMonth, parseISO, isValid } from 'date-fns';
-import { getMonth, range } from '../../helpers/App';
+import { getMonth, range } from '../../../universal/helpers';
 
 import classnames from 'classnames';
 import styles from './DateInput.module.scss';

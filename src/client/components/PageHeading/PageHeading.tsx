@@ -1,4 +1,7 @@
-import { ComponentChildren, LinkProps } from '../../App.types';
+import {
+  ComponentChildren,
+  LinkProps,
+} from '../../../universal/types/App.types';
 import Heading, { HeadingTagName } from '../Heading/Heading';
 import React, { HTMLProps } from 'react';
 

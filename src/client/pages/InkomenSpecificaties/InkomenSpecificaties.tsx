@@ -1,5 +1,16 @@
-
-import { OverviewPage, PageContent } from '../../components/Page/Page';
+import {
+  Alert,
+  Button,
+  ChapterIcon,
+  DateInput,
+  OverviewPage,
+  PageContent,
+  PageHeading,
+  Pagination,
+  Section,
+  Table,
+} from '../../components';
+import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import React, {
   useCallback,
   useContext,
@@ -8,21 +19,8 @@ import React, {
   useState,
 } from 'react';
 
-import Alert from '../../components/Alert/Alert';
 import { AppContext } from '../../AppState';
-import { AppRoutes } from '../../config/Routing.constants';
-import { Button } from '../../components/Button/Button';
-import ChapterIcon from '../../components/ChapterIcon/ChapterIcon';
-import { ChapterTitles } from '../../config/Chapter.constants';
-import classnames from 'classnames';
-import DateInput, {
-  isNativeDatePickerInputSupported,
-} from 'components/DateInput/DateInput';
-import PageHeading from '../../components/PageHeading/PageHeading';
-import Pagination from '../../components/Pagination/Pagination';
 import { ReactComponent as SearchIcon } from '../../assets/icons/Search.svg';
-import Section from '../../components/Section/Section';
-import Table from '../../components/Table/Table';
 import { format } from 'date-fns';
 import styles from './InkomenSpecificaties.module.scss';
 import useRouter from 'use-react-router';

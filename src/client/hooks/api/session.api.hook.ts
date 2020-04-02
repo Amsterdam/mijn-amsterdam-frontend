@@ -1,6 +1,6 @@
 import { ApiRequestOptions, ApiState } from './api.types';
 
-import { getApiUrl } from '../../helpers/App';
+import { getApiUrl } from '../../../universal/helpers';
 import { useDataApi } from './api.hook';
 import { useMemo } from 'react';
 

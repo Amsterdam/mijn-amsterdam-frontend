@@ -1,22 +1,20 @@
+import { AppRoutes, Colors } from '../../../universal/config';
 import {
   MyNotification,
   useMyNotificationsState,
 } from '../../hooks/api/my-notifications-api.hook';
+import { defaultDateFormat, isInteralUrl } from '../../../universal/helpers';
 import {
   trackItemPresentation,
   useSessionCallbackOnceDebounced,
 } from '../../hooks/analytics.hook';
 
-import { AppRoutes } from '../../config/Routing.constants';
 import ChapterIcon from '../ChapterIcon/ChapterIcon';
-import { Colors } from '../../config/App.constants';
 import Heading from '../Heading/Heading';
 import Linkd from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import React from 'react';
 import classNames from 'classnames';
-import { defaultDateFormat } from '../../helpers/App';
-import { isInteralUrl } from '../../helpers/App';
 import styles from './MyNotifications.module.scss';
 import useRouter from 'use-react-router';
 

@@ -1,6 +1,6 @@
 import { ReactComponent as AlertIcon } from '../../assets/icons/Alert.svg';
 import { ReactComponent as CheckmarkIcon } from '../../assets/icons/Checkmark.svg';
-import { ComponentChildren } from '../../App.types';
+import { ComponentChildren } from '../../../universal/types/App.types';
 import React from 'react';
 import classnames from 'classnames';
 import styles from './Alert.module.scss';

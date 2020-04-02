@@ -2,7 +2,7 @@ import { ReactComponent as DocumentIcon } from '../../assets/icons/Document.svg'
 import { ReactComponent as DownloadIcon } from '../../assets/icons/Download.svg';
 import Heading from '../Heading/Heading';
 import React from 'react';
-import { defaultDateFormat } from '../../helpers/App';
+import { defaultDateFormat } from '../../../universal/helpers';
 import styles from './DocumentList.module.scss';
 import { trackDownload } from '../../hooks/analytics.hook';
 

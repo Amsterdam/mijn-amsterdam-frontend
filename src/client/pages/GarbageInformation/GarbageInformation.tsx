@@ -1,18 +1,19 @@
-import { DetailPage, PageContent } from '../../components/Page/Page';
+import {
+  ChapterIcon,
+  DetailPage,
+  Heading,
+  Linkd,
+  MyAreaMapIFrame,
+  PageContent,
+  PageHeading,
+  Panel,
+  SectionCollapsible,
+} from '../../components';
+import { ChapterTitles, ExternalUrls } from '../../../universal/config';
+import { GarbageMoment, GarbagePoint } from '../../hooks/api/api.garbage';
 import React, { ReactNode, useContext } from 'react';
 
 import { AppContext } from '../../AppState';
-import ChapterIcon from '../../components/ChapterIcon/ChapterIcon';
-import { ChapterTitles } from '../../config/Chapter.constants';
-import { ExternalUrls } from '../../config/App.constants';
-import { GarbageMoment } from '../../hooks/api/api.garbage';
-import { GarbagePoint } from '../../hooks/api/api.garbage';
-import Heading from '../../components/Heading/Heading';
-import Linkd from '../../components/Button/Button';
-import { MyAreaMapIFrame } from '../../components/MyArea/MyArea';
-import PageHeading from '../../components/PageHeading/PageHeading';
-import Panel from '../../components/Panel/Panel';
-import SectionCollapsible from '../../components/SectionCollapsible/SectionCollapsible';
 import classnames from 'classnames';
 import { getFullAddress } from '../../data-formatting/brp';
 import styles from './GarbageInformation.module.scss';

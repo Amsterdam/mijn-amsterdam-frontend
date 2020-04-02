@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
 import { CloseButton } from '../Button/Button';
-import { ComponentChildren } from '../../App.types';
+import { ComponentChildren } from '../../../universal/types/App.types';
 import FocusTrap from 'focus-trap-react';
 import Heading from '../Heading/Heading';
 import ReactDOM from 'react-dom';

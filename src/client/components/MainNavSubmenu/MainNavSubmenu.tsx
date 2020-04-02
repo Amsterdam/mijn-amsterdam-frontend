@@ -1,7 +1,10 @@
-import { ComponentChildren, LinkProps } from '../../App.types';
+import {
+  ComponentChildren,
+  LinkProps,
+} from '../../../universal/types/App.types';
 import React, { HTMLAttributes, MouseEvent, useEffect, useState } from 'react';
 
-import { Colors } from '../../config/App.constants';
+import { Colors } from '../../../universal/config';
 import { MenuItem } from '../MainNavBar/MainNavBar.constants';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';

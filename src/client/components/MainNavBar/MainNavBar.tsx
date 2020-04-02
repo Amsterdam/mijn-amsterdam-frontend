@@ -1,5 +1,7 @@
 import { AppContext, SessionContext } from '../../AppState';
+import { AppRoutes, LOGOUT_URL } from '../../../universal/config';
 import { Link, NavLink } from 'react-router-dom';
+import Linkd, { Button } from '../Button/Button';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from '../MainNavSubmenu/MainNavSubmenu';
@@ -19,12 +21,8 @@ import React, {
 import { animated, useSpring } from 'react-spring';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
 
-import { AppRoutes } from '../../config/Routing.constants';
-import { Button } from '../Button/Button';
-import { ComponentChildren } from '../../App.types';
+import { ComponentChildren } from '../../../universal/types/App.types';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
-import { LOGOUT_URL } from '../../config/Api.constants';
-import Linkd from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { ReactComponent as LogoutIcon } from '../../assets/icons/Logout.svg';
 import Tutorial from '../Tutorial/Tutorial';

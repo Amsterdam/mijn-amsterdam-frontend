@@ -1,4 +1,9 @@
 import { BrpApiState, useBrpApi } from './hooks/api/api.brp';
+import {
+  MyChaptersApiState,
+  getApiConfigValue,
+  getMyChapters,
+} from '../universal/helpers';
 import React, { createContext, useEffect } from 'react';
 import { getFullAddress, getBagSearchAddress, isMokum } from './data-formatting/brp';
 import useBelastingApi, { BelastingApiState } from './hooks/api/api.belasting';
@@ -15,13 +20,10 @@ import useMyArea, { MyAreaApiState } from './hooks/api/api.myarea';
 import useSessionApi, { SessionApiState } from './hooks/api/session.api.hook';
 import useWmoApi, { WmoApiState } from './hooks/api/api.wmo';
 
-import { ComponentChildren } from './App.types';
+import { ComponentChildren } from '../universal/types/App.types';
 import { GarbageApiState } from './hooks/api/api.garbage';
-import { MyChaptersApiState } from './helpers/myChapters';
 import { MyNotificationsApiState } from './hooks/api/my-notifications-api.hook';
 import { MyTipsApiState } from './hooks/api/my-tips-api.hook';
-import { getApiConfigValue } from './helpers/App';
-import getMyChapters from './helpers/myChapters';
 import useGarbageApi from './hooks/api/api.garbage';
 import useMyNotificationsApi from 'hooks/api/my-notifications-api.hook';
 import useMyTipsApi from 'hooks/api/my-tips-api.hook';

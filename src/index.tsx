@@ -3,7 +3,7 @@ import './client/styles/main.scss';
 
 import * as Sentry from '@sentry/browser';
 
-import { IS_SENTRY_ENABLED, SENTRY_DSN } from './env';
+import { IS_SENTRY_ENABLED, SENTRY_DSN } from './universal/env';
 
 import App from './client/App';
 import React from 'react';

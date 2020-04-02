@@ -3,7 +3,7 @@ import {
   WmoItem,
   formatWmoApiResponse,
 } from '../../data-formatting/wmo';
-import { getApiConfigValue, getApiUrl } from '../../helpers/App';
+import { getApiConfigValue, getApiUrl } from '../../../universal/helpers';
 
 import { ApiState } from './api.types';
 import { useDataApi } from './api.hook';

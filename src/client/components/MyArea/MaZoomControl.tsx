@@ -1,10 +1,10 @@
-import { Centroid, LOCATION_ZOOM } from '../../config/Map.constants';
+import { Centroid, LOCATION_ZOOM } from '../../../universal/config';
 
 import { ReactComponent as HomeIconSimple } from '../../assets/icons/home-simple.svg';
 import React from 'react';
 import classnames from 'classnames';
 import styles from './MyArea.module.scss';
-import { toLatLng } from '../../helpers/geo';
+import { toLatLng } from '../../../universal/helpers';
 import { useMapInstance } from '@datapunt/react-maps';
 
 interface ZoomControlComponentProps {

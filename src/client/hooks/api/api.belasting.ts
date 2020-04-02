@@ -1,7 +1,7 @@
-import { getApiConfigValue, getApiUrl } from '../../helpers/App';
+import { getApiConfigValue, getApiUrl } from '../../../universal/helpers';
 
 import { ApiState } from './api.types';
-import { Chapters } from '../../config/Chapter.constants';
+import { Chapters } from '../../../universal/config';
 import { MyNotification } from './my-notifications-api.hook';
 import { MyTip } from './my-tips-api.hook';
 import { useDataApi } from './api.hook';

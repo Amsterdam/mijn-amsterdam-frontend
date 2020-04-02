@@ -1,6 +1,5 @@
-import { PageContent, TextPage } from '../../components/Page/Page';
+import { PageContent, PageHeading, TextPage } from '../../components';
 
-import PageHeading from '../../components/PageHeading/PageHeading';
 import React from 'react';
 
 export default () => {

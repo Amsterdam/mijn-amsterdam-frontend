@@ -2,9 +2,9 @@ import Heading from '../Heading/Heading';
 import Linkd from '../Button/Button';
 import React from 'react';
 import SectionCollapsible from '../SectionCollapsible/SectionCollapsible';
-import { Unshaped } from '../../App.types';
+import { Unshaped } from '../../../universal/types/App.types';
 import classnames from 'classnames';
-import { entries } from '../../helpers/App';
+import { entries } from '../../../universal/helpers';
 import slug from 'slugme';
 import styles from './InfoPanel.module.scss';
 

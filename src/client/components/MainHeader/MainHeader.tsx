@@ -1,19 +1,18 @@
 import { AppContext, StateKey } from '../../AppState';
+import { AppRoutes, ErrorNames } from '../../../universal/config';
 import React, { useContext } from 'react';
 import { useDesktopScreen, usePhoneScreen } from '../../hooks/media.hook';
 
 import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
 import { ReactComponent as AmsterdamLogoLarge } from '../../assets/images/logo-amsterdam-large.svg';
-import { AppRoutes } from '../../config/Routing.constants';
 import { ReactComponent as BetaLabel } from '../../assets/images/beta-label.svg';
 import ErrorMessages from '../ErrorMessages/ErrorMessages';
-import { ErrorNames } from '../../config/Api.constants';
 import Heading from '../Heading/Heading';
 import { Link } from 'react-router-dom';
 import Linkd from '../Button/Button';
 import MainHeaderHero from '../MainHeaderHero/MainHeaderHero';
 import MainNavBar from '../MainNavBar/MainNavBar';
-import { entries } from '../../helpers/App';
+import { entries } from '../../../universal/helpers';
 import styles from './MainHeader.module.scss';
 import useRouter from 'use-react-router';
 

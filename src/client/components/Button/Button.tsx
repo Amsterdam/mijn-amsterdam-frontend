@@ -4,6 +4,7 @@ import { ReactComponent as ChevronIcon } from '../../assets/icons/Chevron-Right.
 import { ReactComponent as CloseIcon } from '../../assets/icons/Close.svg';
 import { Link } from 'react-router-dom';
 import { ReactNode } from 'react';
+import { Unshaped } from '../../../universal/types/App.types';
 import classnames from 'classnames';
 import styles from './Button.module.scss';
 import { trackLink } from '../../hooks/analytics.hook';
@@ -248,4 +249,16 @@ export function CloseButton({
   ...props
 }: Omit<IconButtonProps, 'icon'>) {
   return <IconButton {...props} title={title} icon={CloseIcon} />;
+}
+
+export function addTitleLinkComponent(
+  items: Unshaped[],
+  titleKey: string = 'title'
+) {
+  return items.map((item: any) => {
+    return {
+      ...item,
+      [titleKey]: <Linkd href={item.link.to}>{item[titleKey]}</Linkd>,
+    };
+  });
 }

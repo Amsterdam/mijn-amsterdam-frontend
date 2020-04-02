@@ -4,12 +4,12 @@ import {
   Centroid,
   DEFAULT_MAP_OPTIONS,
   DEFAULT_TILE_LAYER_CONFIG,
-} from '../../config/Map.constants';
+  DEFAULT_ZOOM,
+} from '../../../universal/config/map';
 import { Map, TileLayer } from '@datapunt/react-maps';
 import React, { PropsWithChildren } from 'react';
 
-import { DEFAULT_ZOOM } from '../../config/Map.constants';
-import { toLatLng } from '../../helpers/geo';
+import { toLatLng } from '../../../universal/helpers';
 
 type MapDisplayComponentProps = PropsWithChildren<{
   center: Centroid;

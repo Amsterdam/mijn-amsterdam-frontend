@@ -1,4 +1,4 @@
-import { Unshaped } from '../../App.types';
+import { Unshaped } from '../../../universal/types/App.types';
 
 export interface ApiRequestOptions {
   url: string;

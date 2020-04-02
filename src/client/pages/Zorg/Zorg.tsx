@@ -1,15 +1,19 @@
-import Linkd, { LinkdInline } from '../../components/Button/Button';
-import { OverviewPage, PageContent } from '../../components/Page/Page';
+import {
+  Alert,
+  ChapterIcon,
+  Linkd,
+  LinkdInline,
+  OverviewPage,
+  PageContent,
+  PageHeading,
+  SectionCollapsible,
+  Table,
+} from '../../components';
+import { ChapterTitles, ExternalUrls } from '../../../universal/config';
 import React, { useContext, useMemo } from 'react';
-import Table, { addTitleLinkComponent } from '../../components/Table/Table';
 
-import Alert from '../../components/Alert/Alert';
 import { AppContext } from '../../AppState';
-import ChapterIcon from '../../components/ChapterIcon/ChapterIcon';
-import { ChapterTitles } from '../../config/Chapter.constants';
-import { ExternalUrls } from '../../config/App.constants';
-import PageHeading from '../../components/PageHeading/PageHeading';
-import SectionCollapsible from '../../components/SectionCollapsible/SectionCollapsible';
+import { addTitleLinkComponent } from '../../components/Button/Button';
 import styles from './Zorg.module.scss';
 
 const DISPLAY_PROPS = {
@@ -24,6 +28,7 @@ export default () => {
   const itemsActual = useMemo(() => {
     return addTitleLinkComponent(items.filter(item => item.isActual));
   }, [items]);
+
   const itemsPrevious = useMemo(() => {
     return addTitleLinkComponent(items.filter(item => !item.isActual));
   }, [items]);

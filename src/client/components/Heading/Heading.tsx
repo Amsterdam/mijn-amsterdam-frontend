@@ -1,6 +1,6 @@
 import React, { HTMLProps } from 'react';
 
-import { ComponentChildren } from '../../App.types';
+import { ComponentChildren } from '../../../universal/types/App.types';
 import classnames from 'classnames';
 import styles from './Heading.module.scss';
 

@@ -5,7 +5,7 @@ import { ReactComponent as CaretLeft } from '../../assets/icons/Chevron-Left.svg
 import { Document } from '../DocumentList/DocumentList';
 import { ReactComponent as DownloadIcon } from '../../assets/icons/Download.svg';
 import classnames from 'classnames';
-import { defaultDateFormat } from '../../helpers/App';
+import { defaultDateFormat } from '../../../universal/helpers';
 import styles from './StatusLine.module.scss';
 import { trackEvent } from '../../hooks/analytics.hook';
 import { useSessionStorage } from '../../hooks/storage.hook';

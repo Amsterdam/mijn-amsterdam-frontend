@@ -1,6 +1,7 @@
 import 'react-circular-progressbar/dist/styles.css';
 
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import { Colors, LOGOUT_URL } from '../../../universal/config';
 import { CounterProps, useCounter } from '../../hooks/timer.hook';
 import Linkd, { Button, ButtonStyles } from '../Button/Button';
 import React, {
@@ -11,13 +12,11 @@ import React, {
   useState,
 } from 'react';
 
-import { Colors } from '../../config/App.constants';
-import { ComponentChildren } from '../../App.types';
-import { LOGOUT_URL } from '../../config/Api.constants';
+import { ComponentChildren } from '../../../universal/types/App.types';
 import Modal from '../Modal/Modal';
 import { SessionContext } from '../../AppState';
 import classnames from 'classnames';
-import { formattedTimeFromSeconds } from '../../helpers/App';
+import { formattedTimeFromSeconds } from '../../../universal/helpers';
 import styles from './AutoLogoutDialog.module.scss';
 import { useActivityThrottle } from '../../hooks/useThrottledFn.hook';
 

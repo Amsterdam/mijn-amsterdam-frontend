@@ -1,15 +1,17 @@
-import { OverviewPage, PageContent } from '../../components/Page/Page';
+import {
+  Alert,
+  Button,
+  ChapterIcon,
+  MyTips,
+  MyTipsOptInOutModal,
+  OverviewPage,
+  PageContent,
+  PageHeading,
+} from '../../components';
+import { ChapterTitles, FeatureToggle } from '../../../universal/config';
 import React, { useContext, useState } from 'react';
 
-import Alert from '../../components/Alert/Alert';
 import { AppContext } from '../../AppState';
-import { Button } from '../../components/Button/Button';
-import ChapterIcon from '../../components/ChapterIcon/ChapterIcon';
-import { ChapterTitles } from '../../config/Chapter.constants';
-import { FeatureToggle } from '../../config/App.constants';
-import MyTips from '../../components/MyTips/MyTips';
-import MyTipsOptInOutModal from '../../components/MyTips/MyTipsOptInOutModal';
-import PageHeading from '../../components/PageHeading/PageHeading';
 import styles from './MyTips.module.scss';
 
 export default () => {

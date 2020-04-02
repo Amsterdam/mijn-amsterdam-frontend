@@ -1,5 +1,9 @@
-import { AppRoutes, CustomTrackingUrls } from '../config/Routing.constants';
-import { PageTitleMain, PageTitles } from '../config/PageTitle.constants';
+import {
+  AppRoutes,
+  CustomTrackingUrls,
+  PageTitleMain,
+  PageTitles,
+} from '../../universal/config';
 
 import { matchPath } from 'react-router-dom';
 import { trackPageView } from './analytics.hook';

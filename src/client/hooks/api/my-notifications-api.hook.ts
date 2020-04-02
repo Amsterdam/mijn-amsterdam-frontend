@@ -1,17 +1,4 @@
-<<<<<<< HEAD:src/hooks/api/my-notifications-api.hook.ts
-import { LinkProps } from 'App.types';
-import { AppState } from 'AppState';
-import { Chapter } from 'config/Chapter.constants';
-import {
-  WelcomeNotification,
-  MaintenanceNotification02,
-} from 'config/StaticData';
-import { dateSort } from 'helpers/App';
-import { useLocalStorage } from 'hooks/storage.hook';
-import { useMemo } from 'react';
-import { ApiState } from './api.types';
-import { MaintenanceNotification01 } from '../../config/StaticData';
-=======
+
 import { ApiState } from './api.types';
 import { AppState } from '../../AppState';
 import { Chapter } from '../../config/Chapter.constants';
@@ -20,7 +7,6 @@ import { WelcomeNotification } from '../../config/StaticData';
 import { dateSort } from '../../helpers/App';
 import { useLocalStorage } from '../../hooks/storage.hook';
 import { useMemo } from 'react';
->>>>>>> Refactored imports and folder:src/client/hooks/api/my-notifications-api.hook.ts
 
 export interface MyNotification {
   id: string;

@@ -1,10 +1,12 @@
-import { capitalizeFirstLetter, getApiUrl } from '../../helpers/App';
+import { Centroid, ExternalUrls } from '../../../universal/config';
+import {
+  capitalizeFirstLetter,
+  getApiUrl,
+  getDistance,
+} from '../../../universal/helpers';
 import { useCallback, useMemo, useState } from 'react';
 
 import { ApiState } from './api.types';
-import { Centroid } from '../../config/Map.constants';
-import { ExternalUrls } from '../../config/App.constants';
-import { getDistance } from '../../helpers/geo';
 import { useDataApi } from './api.hook';
 
 // Reverse engineered from sourcecode at https://www.amsterdam.nl/afval/afvalwijzer/?adres=Dam%201

@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/browser';
 
-import { AppRoutes, PrivateRoutes } from './config/Routing.constants';
+import { AppRoutes, FeatureToggle, PrivateRoutes } from '../universal/config';
 import AppState, { SessionContext, SessionState } from './AppState';
 import {
   BrowserRouter,
@@ -9,14 +9,17 @@ import {
   Switch,
   matchPath,
 } from 'react-router-dom';
-import { IS_ANALYTICS_ENABLED, IS_PRODUCTION, IS_SENTRY_ENABLED } from '../env';
+import {
+  IS_ANALYTICS_ENABLED,
+  IS_PRODUCTION,
+  IS_SENTRY_ENABLED,
+} from '../universal/env';
 import React, { useContext } from 'react';
 
 import ApplicationError from './components/ApplicationError/ApplicationError';
 import AutoLogoutDialog from './components/AutoLogoutDialog/AutoLogoutDialog';
 import Dashboard from './pages/Dashboard/Dashboard';
 import ErrorBoundary from 'react-error-boundary';
-import { FeatureToggle } from './config/App.constants';
 import GarbageInformation from './pages/GarbageInformation/GarbageInformation';
 import Inkomen from './pages/Inkomen/Inkomen';
 import InkomenDetail from './pages/InkomenDetail/InkomenDetail';

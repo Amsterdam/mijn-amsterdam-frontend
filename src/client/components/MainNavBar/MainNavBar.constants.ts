@@ -1,12 +1,12 @@
 import {
+  AppRoutes,
   Chapter,
   ChapterTitles,
   myChaptersMenuItems,
-} from '../../config/Chapter.constants';
+} from '../../../universal/config';
 import { FunctionComponent, SVGProps } from 'react';
 
-import { AppRoutes } from '../../config/Routing.constants';
-import { LinkProps } from '../../App.types';
+import { LinkProps } from '../../../universal/types/App.types';
 
 export type MainMenuId =
   | Chapter

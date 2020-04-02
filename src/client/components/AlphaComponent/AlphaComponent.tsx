@@ -1,4 +1,4 @@
-import { ComponentChildren } from '../../App.types';
+import { ComponentChildren } from '../../../universal/types/App.types';
 import React from 'react';
 import styles from './AlphaComponent.module.scss';
 

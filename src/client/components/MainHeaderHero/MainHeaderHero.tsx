@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import { AppRoutes } from '../../config/Routing.constants';
+import { AppRoutes } from '../../../universal/config';
 import { SessionContext } from '../../AppState';
 import { matchPath } from 'react-router';
 import styles from './MainHeaderHero.module.scss';

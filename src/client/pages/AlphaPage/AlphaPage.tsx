@@ -1,6 +1,5 @@
-import Page, { PageContent } from '../../components/Page/Page';
+import { Page, PageContent, PageHeading } from '../../components';
 
-import PageHeading from '../../components/PageHeading/PageHeading';
 import React from 'react';
 import styles from './AlphaPage.module.scss';
 

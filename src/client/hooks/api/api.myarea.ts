@@ -6,11 +6,11 @@ import {
   LAYERS_CONFIG,
   LOCATION_ZOOM,
   MAP_URL,
-} from '../../config/Map.constants';
+} from '../../../universal/config';
 import { useCallback, useEffect, useState } from 'react';
 
 import { ApiState } from './api.types';
-import { getApiUrl } from '../../helpers/App';
+import { getApiUrl } from '../../../universal/helpers';
 import { useDataApi } from './api.hook';
 import { usePhoneScreen } from '../../hooks/media.hook';
 

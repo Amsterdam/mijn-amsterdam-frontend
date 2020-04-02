@@ -1,17 +1,22 @@
+import {
+  Alert,
+  ChapterIcon,
+  DetailPage,
+  LoadingContent,
+  PageContent,
+  PageHeading,
+  StatusLine,
+} from '../../components';
+import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import React, { useContext } from 'react';
-import { PageContent } from 'components/Page/Page';
-import PageHeading from 'components/PageHeading/PageHeading';
-import { AppRoutes } from 'config/Routing.constants';
-import { ChapterTitles } from 'config/Chapter.constants';
-import { AppContext } from 'AppState';
-import useRouter from 'use-react-router';
-import StatusLine from 'components/StatusLine/StatusLine';
-import Alert from 'components/Alert/Alert';
-import LoadingContent from 'components/LoadingContent/LoadingContent';
-import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
-import { DetailPage } from 'components/Page/Page';
-import { altDocumentContent } from 'data-formatting/focus';
+
+import { AppContext } from '../../AppState';
+import { altDocumentContent } from '../../data-formatting/focus';
 import styles from './InkomenDetail.module.scss';
+import useRouter from 'use-react-router';
+
+import Linkd from '../../components/Button/Button';
+import { ExternalUrls } from '../../config/App.constants';
 
 export default () => {
   const {

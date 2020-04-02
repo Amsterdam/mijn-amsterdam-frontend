@@ -1,7 +1,7 @@
 import { ApiState } from './api.types';
-import { Chapters } from '../../config/Chapter.constants';
+import { Chapters } from '../../../universal/config';
 import { MyNotification } from './my-notifications-api.hook';
-import { getApiUrl, getApiConfigValue } from '../../helpers/App';
+import { getApiUrl, getApiConfigValue } from '../../../universal/helpers';
 import { useDataApi } from './api.hook';
 
 interface MilieuzoneApiResponseContent {
