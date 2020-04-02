@@ -26,8 +26,8 @@ interface TIPSRequestData {
   data: Partial<UserData>;
 }
 
-function formatTIPSData(sourceData: AxiosResponse<TIPSData>) {
-  return sourceData.data.items;
+function formatTIPSData(response: AxiosResponse<TIPSData>) {
+  return response.data.items;
 }
 
 function fetch(requestData: TIPSRequestData) {

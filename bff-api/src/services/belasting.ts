@@ -32,9 +32,9 @@ function formatBelastingNotifications(notifications?: MyNotification[]) {
 }
 
 function formatBELASTINGData(
-  sourceData: AxiosResponse<BELASTINGSourceData>
+  response: AxiosResponse<BELASTINGSourceData>
 ): BELASTINGData {
-  const { meldingen, tips, ...restData } = sourceData.data?.content || {
+  const { meldingen, tips, ...restData } = response.data?.content || {
     meldingen: [],
     tips: [],
     isKnown: false,
