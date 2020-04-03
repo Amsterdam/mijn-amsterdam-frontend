@@ -1,5 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
-import { MyNotification } from '../../hooks/api/my-notifications-api.hook';
+import { MyNotification } from '../../../server/services/services-notifications';
 import MyNotifications from './MyNotifications';
 import React from 'react';
 import { shallow } from 'enzyme';

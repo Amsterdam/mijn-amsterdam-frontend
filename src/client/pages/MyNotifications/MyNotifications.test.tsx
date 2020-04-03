@@ -1,15 +1,19 @@
-import AppState, { AppState as AppStateInterface } from '../../AppState';
-
+import { MockAppStateProvider } from '../../AppState';
 import MyNotifications from './MyNotifications';
 import React from 'react';
 import { shallow } from 'enzyme';
 
-const appState = { UPDATES: {} } as AppStateInterface;
+const appState = {
+  UPDATES: {
+    total: 0,
+    items: [],
+  },
+};
 
 it('Renders without crashing', () => {
   shallow(
-    <AppState value={appState}>
+    <MockAppStateProvider value={appState}>
       <MyNotifications />
-    </AppState>
+    </MockAppStateProvider>
   );
 });
