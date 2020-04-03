@@ -3,10 +3,10 @@ import { AppRoutes, ExternalUrls } from '../../../universal/config';
 export type DirectLinkType =
   | 'MIJN_SUBSIDIE'
   | 'MIJN_OVERHEID_BERICHTEBOX'
-  | 'MIJN_BUURT'
+  | 'BUURT'
   | 'FAQ'
   | 'AMSTERDAM'
-  | 'MIJN_TIPS';
+  | 'TIPS';
 
 export interface DirectLink {
   title: string;
@@ -17,15 +17,15 @@ export interface DirectLink {
 }
 
 export const LINKS: { [key in DirectLinkType]: DirectLink } = {
-  MIJN_BUURT: {
+  BUURT: {
     title: 'Mijn buurt',
-    url: AppRoutes.MIJN_BUURT,
+    url: AppRoutes.BUURT,
     isPhoneScreenLink: true,
     id: 'MyAreaHeader',
   },
-  MIJN_TIPS: {
+  TIPS: {
     title: 'Mijn tips',
-    url: AppRoutes.MIJN_TIPS,
+    url: AppRoutes.TIPS,
     isPhoneScreenLink: true,
     id: 'MyTipsHeader',
   },

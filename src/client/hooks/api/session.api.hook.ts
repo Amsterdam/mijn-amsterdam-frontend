@@ -1,6 +1,6 @@
 import { ApiRequestOptions, ApiState } from './api.types';
 
-import { getApiUrl } from '../../../universal/helpers';
+import { ApiUrls } from '../../../universal/config/api';
 import { useDataApi } from './api.hook';
 import { useMemo } from 'react';
 
@@ -23,7 +23,7 @@ const INITIAL_SESSION_STATE: SessionResponse = {
 };
 
 const requestOptions: ApiRequestOptions = {
-  url: getApiUrl('AUTH'),
+  url: ApiUrls.AUTH,
   resetToInitialDataOnError: true,
 };
 

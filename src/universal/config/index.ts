@@ -4,4 +4,3 @@ export * from './chapter';
 export * from './map';
 export * from './pages';
 export * from './routing';
-export * from './staticData';

@@ -3,7 +3,8 @@ import { MenuItem, myChaptersMenuItems } from './menuItems';
 import { AppState as AppStateInterface } from '../AppState';
 import { Chapters } from '../../universal/config/chapter';
 import { FeatureToggle } from '../../universal/config/app';
-import { isMokum } from '../data-formatting/brp';
+import { isLoading } from '../../universal/helpers';
+import { isMokum } from '../pages/Profile/formatData';
 
 function isChapterActive(
   item: MenuItem,
@@ -11,7 +12,7 @@ function isChapterActive(
     WMO,
     FOCUS,
     ERFPACHT,
-    GARBAGE,
+    AFVAL,
     BRP,
     BELASTINGEN,
     MILIEUZONE,
@@ -19,86 +20,72 @@ function isChapterActive(
 ) {
   switch (item.id) {
     case Chapters.INKOMEN:
-      return !FOCUS.isLoading && !!FOCUS.data.items.length;
+      return !isLoading(FOCUS);
 
     case Chapters.ZORG:
-      return !WMO.isLoading && !!WMO.data.length;
+      return !isLoading(WMO) && !!WMO?.items.length;
 
     case Chapters.BELASTINGEN:
       return (
-        !BELASTINGEN.isLoading &&
-        (FeatureToggle.belastingApiActive && !BELASTINGEN.isError
-          ? BELASTINGEN.data.isKnown
-          : true)
+        !isLoading(BELASTINGEN) &&
+        (FeatureToggle.belastingApiActive ? BELASTINGEN?.isKnown : true)
       );
 
     case Chapters.MILIEUZONE:
       return (
-        !MILIEUZONE.isLoading &&
-        (FeatureToggle.milieuzoneApiActive ? MILIEUZONE.data.isKnown : false)
+        !isLoading(MILIEUZONE) &&
+        (FeatureToggle.milieuzoneApiActive ? MILIEUZONE?.isKnown : false)
       );
 
     case Chapters.AFVAL:
       return (
         FeatureToggle.garbageInformationPage &&
-        !GARBAGE.isLoading &&
-        GARBAGE.isDirty &&
-        !!BRP.data?.persoon.mokum
+        !isLoading(AFVAL) &&
+        isMokum(BRP)
       );
 
     case Chapters.WONEN:
-      return !ERFPACHT.isLoading && ERFPACHT.data.status === true;
-
-    case Chapters.BURGERZAKEN:
-      return (
-        FeatureToggle.reisDocumentenActive &&
-        !BRP.isLoading &&
-        !!BRP.data.reisDocumenten
-      );
+      return !isLoading(ERFPACHT) && ERFPACHT?.status === true;
 
     case Chapters.MIJN_GEGEVENS:
-      return !BRP.isLoading && !!BRP.data?.persoon;
+      return !isLoading(BRP) && !!BRP?.persoon;
   }
 
   return false;
 }
 
-export interface MyChaptersApiState {
+export interface ChaptersState {
   items: MenuItem[];
   isLoading: boolean;
 }
 
-export function getMyChapters(
-  apiStates: AppStateInterface
-): MyChaptersApiState {
+export function getMyChapters(apiStates: AppStateInterface): ChaptersState {
   const {
     WMO,
     FOCUS,
     ERFPACHT,
-    GARBAGE,
+    AFVAL,
     BRP,
-    MIJN_BUURT,
+    BUURT,
     BELASTINGEN,
     MILIEUZONE,
   } = apiStates;
 
-  const wmoIsloading = WMO.isLoading;
-  const focusIsloading = FOCUS.isLoading;
-  const erfpachtIsloading = ERFPACHT.isLoading;
-  const isFromMokum = isMokum(BRP);
-  const brpIsLoading = BRP.isLoading;
-  const garbageIsPristine = GARBAGE.isPristine;
-  const myAreaIsLoading = MIJN_BUURT.isLoading;
-  const belastingIsLoading = BELASTINGEN.isLoading;
-  const MILIEUZONEIsLoading = MILIEUZONE.isLoading;
-  const hasCentroid = !!MIJN_BUURT.data?.centroid;
+  const wmoIsloading = isLoading(WMO);
+  const focusIsloading = isLoading(FOCUS);
+  const erfpachtIsloading = isLoading(ERFPACHT);
+  const brpIsLoading = isLoading(BRP);
+  const garbageIsLoading = isLoading(AFVAL);
+  const myAreaIsLoading = isLoading(BUURT);
+  const belastingIsLoading = isLoading(BELASTINGEN);
+  const MILIEUZONEIsLoading = isLoading(MILIEUZONE);
 
   const items = myChaptersMenuItems.filter(item => {
     // Check to see if Chapter has been loaded or if it is directly available
     return isChapterActive(item, apiStates);
   });
 
-  const isLoading =
+  const isChaptersLoading =
     belastingIsLoading ||
     MILIEUZONEIsLoading ||
     wmoIsloading ||
@@ -106,10 +93,10 @@ export function getMyChapters(
     focusIsloading ||
     myAreaIsLoading ||
     erfpachtIsloading ||
-    (garbageIsPristine && isFromMokum && hasCentroid);
+    garbageIsLoading;
 
   return {
     items,
-    isLoading,
+    isLoading: isChaptersLoading,
   };
 }

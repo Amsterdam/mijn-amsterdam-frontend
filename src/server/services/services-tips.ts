@@ -25,7 +25,7 @@ interface TIPSRequestData {
 }
 
 function formatTIPSData(response: AxiosResponse<TIPSData>) {
-  return response.data.items;
+  return response.data;
 }
 
 export function fetchTIPS(requestData: TIPSRequestData) {

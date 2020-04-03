@@ -1,7 +1,6 @@
 import * as Sentry from '@sentry/browser';
 
 import { AppRoutes, FeatureToggle, PrivateRoutes } from '../universal/config';
-import AppState, { SessionContext, SessionState } from './AppState';
 import {
   BrowserRouter,
   Redirect,
@@ -15,7 +14,9 @@ import {
   IS_SENTRY_ENABLED,
 } from '../universal/env';
 import React, { useContext } from 'react';
+import { SessionContext, SessionState } from './SessionState';
 
+import AppState from './AppState';
 import ApplicationError from './components/ApplicationError/ApplicationError';
 import AutoLogoutDialog from './components/AutoLogoutDialog/AutoLogoutDialog';
 import Dashboard from './pages/Dashboard/Dashboard';
@@ -82,7 +83,7 @@ function AppAuthenticated() {
 
   usePageChange();
 
-  return location.pathname === AppRoutes.MIJN_BUURT ? (
+  return location.pathname === AppRoutes.BUURT ? (
     <MyArea />
   ) : (
     <>
@@ -93,7 +94,7 @@ function AppAuthenticated() {
           <Redirect from={AppRoutes.API_LOGIN} to={AppRoutes.ROOT} />
           <Route path={AppRoutes.UPDATES} component={MyNotifications} />
           <Route path={AppRoutes.MIJN_GEGEVENS} component={Profile} />
-          <Route path={AppRoutes.MIJN_TIPS} component={MyTips} />
+          <Route path={AppRoutes.TIPS} component={MyTips} />
           <Route
             path={AppRoutes['INKOMEN/STADSPAS']}
             component={InkomenDetail}

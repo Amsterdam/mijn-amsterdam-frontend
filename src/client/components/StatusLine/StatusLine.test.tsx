@@ -1,12 +1,13 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import StatusLine from './StatusLine';
-import { formatWmoApiResponse, WmoItem } from 'data-formatting/wmo';
 import {
-  formatFocusProduct,
-  FocusProduct,
   FocusItem,
-} from '../../data-formatting/focus';
+  FocusProduct,
+  formatFocusProduct,
+} from '../../../server/services/focus';
+import { WmoItem, formatWmoApiResponse } from 'data-formatting/wmo';
+
+import React from 'react';
+import StatusLine from './StatusLine';
+import { shallow } from 'enzyme';
 
 describe('StatusLine', () => {
   it('Renders the correct html', () => {

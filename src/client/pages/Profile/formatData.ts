@@ -1,87 +1,20 @@
-import { defaultDateFormat, entries } from '../../universal/helpers';
+import { Adres, BRPData, Persoon, Verbintenis } from '../../../server/services';
+import { defaultDateFormat, entries } from '../../../universal/helpers';
 
-import { BrpApiState } from '../hooks/api/api.brp';
+/**
+ * The functionality in this file transforms the data from the api into a structure which is fit for loading
+ * into the Profile page data.
+ */
 
 type Value = any;
 type ProfileLabelValueFormatter =
   | string
   | [
-      string | ((key: string, item: any, brpData?: BrpResponseData) => string),
-      (value: any, item: any, brpData?: BrpResponseData) => Value
+      string | ((key: string, item: any, brpData?: BRPData) => string),
+      (value: any, item: any, brpData?: BRPData) => Value
     ];
 
 type ProfileLabels<T> = { [key in keyof T]: ProfileLabelValueFormatter };
-
-export interface ReisDocument {
-  documentNummer: string;
-  documentType: 'identiteitskaart' | 'paspoort';
-  datumUitgifte: string;
-  datumAfloop: string;
-  title: string;
-}
-
-export interface Adres {
-  straatnaam: string;
-  postcode: string;
-  woonplaatsNaam: string;
-  huisnummer: string;
-  huisnummertoevoeging: string | null;
-  huisletter: string | null;
-  begindatumVerblijf: string | null;
-  inOnderzoek: boolean;
-}
-
-export interface Persoon {
-  aanduidingNaamgebruikOmschrijving: string;
-  bsn: string;
-  geboortedatum: string;
-  overlijdensdatum: string | null;
-  geboortelandnaam: string;
-  geboorteplaatsnaam: string;
-  gemeentenaamInschrijving: string;
-  voorvoegselGeslachtsnaam: string | null;
-  geslachtsnaam: string;
-  omschrijvingBurgerlijkeStaat: string;
-  omschrijvingGeslachtsaanduiding: string | null;
-  omschrijvingAdellijkeTitel: string | null;
-  opgemaakteNaam: string;
-  voornamen: string;
-  nationaliteiten: Array<{ omschrijving: string }>;
-  mokum: boolean;
-  vertrokkenOnbekendWaarheen: boolean;
-  datumVertrekUitNederland: string;
-}
-
-interface Verbintenis {
-  datumOntbinding: string | null;
-  datumSluiting: string;
-  landnaamSluiting: string;
-  plaatsnaamSluitingOmschrijving: string;
-  soortVerbintenis: string;
-  soortVerbintenisOmschrijving: string;
-  persoon: Persoon;
-}
-
-interface Kind {
-  bsn: string;
-  geboortedatum: string;
-  geslachtsaanduiding: string;
-  geslachtsnaam: string;
-  overlijdensdatum: string;
-  voornamen: string;
-  voorvoegselGeslachtsnaam: string;
-}
-
-export interface BrpResponseData {
-  persoon: Persoon;
-  verbintenis?: Verbintenis;
-  verbintenisHistorisch?: Verbintenis[];
-  kinderen?: Kind[];
-  ouders: Persoon[];
-  adres: Adres;
-  adresHistorisch?: Adres[];
-  reisDocumenten?: ReisDocument[];
-}
 
 export function getFullName(persoon: Persoon) {
   return (
@@ -118,13 +51,13 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
   overlijdensdatum: ['Datum overlijden', value => defaultDateFormat(value)],
   geboorteplaatsnaam: [
     'Geboorteplaats',
-    (value, _item, brpResponseData) =>
-      brpResponseData?.persoon.mokum ? value || 'Onbekend' : '',
+    (value, _item, BRPData) =>
+      BRPData?.persoon.mokum ? value || 'Onbekend' : '',
   ],
   geboortelandnaam: [
     'Geboorteland',
-    (value, _item, brpResponseData) =>
-      brpResponseData?.persoon.mokum ? value || 'Onbekend' : '',
+    (value, _item, BRPData) =>
+      BRPData?.persoon.mokum ? value || 'Onbekend' : '',
   ],
   nationaliteiten: [
     'Nationaliteit',
@@ -138,7 +71,6 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
 const persoonSecundair: ProfileLabels<Partial<Persoon>> = {
   ...persoon,
 };
-
 persoonSecundair.geboorteplaatsnaam = 'Geboorteplaats';
 persoonSecundair.geboortelandnaam = 'Geboorteland';
 
@@ -195,11 +127,7 @@ export const brpInfoLabels = {
   verbintenis,
 };
 
-function format(
-  labelConfig: ProfileLabels<any>,
-  data: any,
-  brpData: BrpResponseData
-) {
+function format(labelConfig: ProfileLabels<any>, data: any, brpData: BRPData) {
   const formattedData = entries(labelConfig).reduce((acc, [key, formatter]) => {
     const labelFormatter = Array.isArray(formatter) ? formatter[0] : formatter;
     const label =
@@ -238,7 +166,7 @@ interface BrpProfileData {
   kinderen?: ProfileSection[];
 }
 
-export function formatBrpProfileData(brpData: BrpResponseData): BrpProfileData {
+export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
   const profileData: BrpProfileData = {
     persoon: format(brpInfoLabels.persoon, brpData.persoon, brpData),
     adres: format(brpInfoLabels.adres, brpData.adres, brpData),

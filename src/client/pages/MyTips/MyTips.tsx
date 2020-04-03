@@ -10,32 +10,23 @@ import {
 } from '../../components';
 import { ChapterTitles, FeatureToggle } from '../../../universal/config';
 import React, { useContext, useState } from 'react';
+import { isError, isLoading } from '../../../universal/helpers';
 
 import { AppContext } from '../../AppState';
 import styles from './MyTips.module.scss';
 
 export default () => {
-  const {
-    MIJN_TIPS: {
-      data: { items: myTips },
-      isLoading: isMyTipsLoading,
-      isError,
-      isPristine,
-      isOptIn,
-    },
-  } = useContext(AppContext);
+  const { TIPS } = useContext(AppContext);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   return (
     <OverviewPage className={styles.MyTips}>
-      <PageHeading icon={<ChapterIcon />}>
-        {ChapterTitles.MIJN_TIPS}
-      </PageHeading>
+      <PageHeading icon={<ChapterIcon />}>{ChapterTitles.TIPS}</PageHeading>
       {FeatureToggle.myTipsoptInOutPersonalization && (
         <PageContent>
           <p>
-            {!isOptIn ? (
+            {!TIPS.isOptIn ? (
               <>
                 U ziet nu algemene tips over voorzieningen en activiteiten in
                 Amsterdam. Op basis van uw informatie die bij de gemeente bekend
@@ -50,12 +41,12 @@ export default () => {
               </>
             )}
             <Button
-              variant={isOptIn ? 'secondary-inverted' : 'secondary'}
+              variant={TIPS.isOptIn ? 'secondary-inverted' : 'secondary'}
               className={styles.OptInOutToggleButton}
               onClick={() => setModalIsOpen(true)}
               aria-expanded={modalIsOpen}
             >
-              {isOptIn
+              {TIPS.isOptIn
                 ? 'Toon geen persoonlijke tips'
                 : 'Toon persoonlijke tips'}
             </Button>
@@ -64,7 +55,7 @@ export default () => {
             onClose={() => setModalIsOpen(false)}
             isOpen={modalIsOpen}
           />
-          {isError && (
+          {isError(TIPS) && (
             <Alert type="warning">
               <p>We kunnen op dit moment geen gegevens tonen.</p>
             </Alert>
@@ -73,9 +64,9 @@ export default () => {
       )}
       <MyTips
         showHeader={false}
-        isLoading={isPristine || isMyTipsLoading}
-        items={myTips}
-        isOptIn={isOptIn}
+        isLoading={isLoading(TIPS)}
+        items={TIPS?.items}
+        isOptIn={TIPS.isOptIn}
       />
     </OverviewPage>
   );

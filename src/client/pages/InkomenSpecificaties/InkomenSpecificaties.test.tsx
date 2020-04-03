@@ -4,7 +4,7 @@ import { MemoryRouter, Route, Switch } from 'react-router-dom';
 import { IncomeSpecificationsResponse } from '../../hooks/api/api.focus';
 import InkomenSpecificaties from './InkomenSpecificaties';
 import React from 'react';
-import { formatIncomeSpecifications } from '../../data-formatting/focus';
+import { formatIncomeSpecifications } from '../../../server/services/focus';
 import { mount } from 'enzyme';
 
 const sourceData: IncomeSpecificationsResponse = {

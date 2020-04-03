@@ -12,11 +12,9 @@ import {
 
 import { FeatureToggle } from './app';
 
-export const API_BASE_PATH = '/bff';
-
 export interface BFFApiData {
   BELASTINGEN: BELASTINGENData;
-  MELDINGEN: any;
+  UPDATES: any;
   MY_CASES: any;
   TIPS: TIPSData;
   BRP: BRPData;
@@ -30,6 +28,7 @@ export interface BFFApiData {
 
 export type ApiStateKey = keyof BFFApiData;
 
+export const API_BASE_PATH = '/bff';
 export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/api/login';
 export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL || '/logout';
 
@@ -39,6 +38,13 @@ export const API_BASE_URL = apiBaseUrl;
 const DATAPUNT_API_BASE_URL = process.env.REACT_APP_DATAPUNT_API_URL;
 
 export type ApiName = string;
+
+export const BFFApiUrls: Record<string, string> = {
+  SERVICES_RELATED: `${API_BASE_URL}/${API_BASE_PATH}/services/related`,
+  SERVICES_DIRECT: `${API_BASE_URL}/${API_BASE_PATH}/services/direct`,
+  SERVICES_TIPS: `${API_BASE_URL}/${API_BASE_PATH}/services/tips`,
+  SERVICES_UPDATES: `${API_BASE_URL}/${API_BASE_PATH}/services/updates`,
+};
 
 export const ApiUrls: Record<string, string> = {
   BELASTINGEN: `${API_BASE_URL}/belastingen/get`,

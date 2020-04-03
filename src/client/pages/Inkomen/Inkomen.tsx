@@ -15,6 +15,7 @@ import {
   FeatureToggle,
 } from '../../../universal/config';
 import React, { useContext, useMemo } from 'react';
+import { isError, isLoading } from '../../../universal/helpers';
 
 import { AppContext } from '../../AppState';
 import { addTitleLinkComponent } from '../../components/Button/Button';
@@ -42,32 +43,32 @@ const decisionsDisplayProps = {
 };
 
 export default () => {
-  const {
-    FOCUS: {
-      data: { items },
-      isError,
-      isLoading,
-    },
-    FOCUS_INKOMEN_SPECIFICATIES: {
-      data: { jaaropgaven, uitkeringsspecificaties },
-      isError: isError2,
-      isLoading: isLoading2,
-    },
-  } = useContext(AppContext);
+  const { FOCUS } = useContext(AppContext);
 
   const itemsRequested = useMemo(() => {
-    return addTitleLinkComponent(items.filter(item => !item.hasDecision));
-  }, [items]);
+    if (!FOCUS?.aanvragen) {
+      return [];
+    }
+    return addTitleLinkComponent(
+      FOCUS?.aanvragen.filter(item => !item.hasDecision)
+    );
+  }, [FOCUS]);
 
   const itemsDecided = useMemo(() => {
-    return addTitleLinkComponent(items.filter(item => item.hasDecision));
-  }, [items]);
+    if (!FOCUS?.aanvragen) {
+      return [];
+    }
+    return addTitleLinkComponent(
+      FOCUS?.aanvragen.filter(item => item.hasDecision)
+    );
+  }, [FOCUS]);
 
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
-  const itemsSpecificationsMonthly = uitkeringsspecificaties.slice(0, 3);
 
-  const itemsSpecificationsYearly = jaaropgaven.slice(0, 3);
+  const itemsSpecificationsMonthly =
+    FOCUS?.uitkeringsspecificaties.slice(0, 3) || [];
+  const itemsSpecificationsYearly = FOCUS?.jaaropgaven.slice(0, 3) || [];
 
   return (
     <OverviewPage className={styles.Inkomen}>
@@ -86,7 +87,7 @@ export default () => {
             Contact Inkomen en Stadspas
           </Linkd>
         </p>
-        {(isError || isError2) && (
+        {isError(FOCUS) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>
@@ -96,7 +97,7 @@ export default () => {
         id="SectionCollapsible-income-request-process"
         title="Lopende aanvragen"
         startCollapsed={false}
-        isLoading={isLoading}
+        isLoading={isLoading(FOCUS)}
         hasItems={hasActiveRequests}
         track={{
           category: 'Inkomen en Stadspas overzicht / Lopende aanvragen',
@@ -114,7 +115,7 @@ export default () => {
       <SectionCollapsible
         id="SectionCollapsible-income-request-process-decisions"
         startCollapsed={hasActiveRequests}
-        isLoading={isLoading}
+        isLoading={isLoading(FOCUS)}
         hasItems={hasActiveDescisions}
         title="Afgehandelde aanvragen"
         track={{
@@ -133,9 +134,9 @@ export default () => {
         <SectionCollapsible
           id="SectionCollapsible-income-specifications-monthly"
           startCollapsed={hasActiveRequests || hasActiveDescisions}
-          isLoading={isLoading2}
+          isLoading={isLoading(FOCUS)}
           title="Uitkeringsspecificaties"
-          hasItems={!!uitkeringsspecificaties.length}
+          hasItems={!!FOCUS?.uitkeringsspecificaties.length}
           track={{
             category: 'Inkomen en Stadspas overzicht / Uitkeringsspecificaties',
             name: 'Datatabel',
@@ -147,7 +148,7 @@ export default () => {
             items={itemsSpecificationsMonthly}
             displayProps={specificationsTableDisplayProps}
           />
-          {uitkeringsspecificaties.length > 3 && (
+          {FOCUS && FOCUS.uitkeringsspecificaties.length > 3 && (
             <p className={styles.ShowAllButtonContainer}>
               <Linkd href={incomSpecificationsRouteMonthly}>Toon alles</Linkd>
             </p>
@@ -158,9 +159,9 @@ export default () => {
         <SectionCollapsible
           id="SectionCollapsible-income-specifications-yearly"
           startCollapsed={hasActiveRequests || hasActiveDescisions}
-          isLoading={isLoading2}
+          isLoading={isLoading(FOCUS)}
           title="Jaaropgaven"
-          hasItems={!!jaaropgaven.length}
+          hasItems={!!FOCUS?.jaaropgaven.length}
           track={{
             category: 'Inkomen en Stadspas overzicht / Jaaropgaven',
             name: 'Datatabel',
@@ -175,7 +176,7 @@ export default () => {
             items={itemsSpecificationsYearly}
             displayProps={annualStatementsTableDisplayProps}
           />
-          {jaaropgaven.length > 3 && (
+          {FOCUS && FOCUS.jaaropgaven.length > 3 && (
             <p className={styles.ShowAllButtonContainer}>
               <Linkd href={incomSpecificationsRouteYearly}>Toon alles</Linkd>
             </p>

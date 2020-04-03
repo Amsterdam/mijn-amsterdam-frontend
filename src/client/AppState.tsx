@@ -1,197 +1,73 @@
-import { BrpApiState, useBrpApi } from './hooks/api/api.brp';
+import React, { createContext } from 'react';
 import {
-  MyChaptersApiState,
-  getApiConfigValue,
-  getMyChapters,
-} from '../universal/helpers';
-import React, { createContext, useEffect } from 'react';
-import { getFullAddress, getBagSearchAddress, isMokum } from './data-formatting/brp';
-import useBelastingApi, { BelastingApiState } from './hooks/api/api.belasting';
-import useErfpachtApi, { ErfpachtApiState } from './hooks/api/api.erfpacht';
-import useFocusApi, {
-  FocusApiState,
-  FocusInkomenSpecificatiesApiState,
-  useFocusInkomenSpecificatiesApi,
-} from './hooks/api/api.focus';
-import useMilieuzoneApi, {
-  MilieuzoneApiState,
-} from './hooks/api/api.milieuzone';
-import useMyArea, { MyAreaApiState } from './hooks/api/api.myarea';
-import useSessionApi, { SessionApiState } from './hooks/api/session.api.hook';
-import useWmoApi, { WmoApiState } from './hooks/api/api.wmo';
+  ServicesDirectData,
+  useServicesDirect,
+} from './hooks/api/api.services-direct';
+import { ServicesMapData, useServicesMap } from './hooks/api/api.services-map';
+import {
+  ServicesRelatedData,
+  useServicesRelated,
+} from './hooks/api/api.services-related';
+import {
+  ServicesTipsData,
+  useServicesTips,
+} from './hooks/api/api.services-tips';
+import {
+  ServicesUpdatesData,
+  useServicesUpdates,
+} from './hooks/api/api.services-updates';
 
+import { ChaptersState } from './config/myChapters';
 import { ComponentChildren } from '../universal/types/App.types';
-import { GarbageApiState } from './hooks/api/api.garbage';
-import { MyNotificationsApiState } from './hooks/api/my-notifications-api.hook';
-import { MyTipsApiState } from './hooks/api/my-tips-api.hook';
-import useGarbageApi from './hooks/api/api.garbage';
-import useMyNotificationsApi from './hooks/api/my-notifications-api.hook';
-import useMyTipsApi from './hooks/api/my-tips-api.hook';
-type MyCasesApiState = FocusApiState;
 
-export interface AppState {
-  BRP: BrpApiState;
-  SESSION: SessionApiState;
-  UPDATES: MyNotificationsApiState;
-  MY_CASES: MyCasesApiState;
-  MIJN_TIPS: MyTipsApiState;
-  WMO: WmoApiState;
-  FOCUS: FocusApiState;
-  FOCUS_INKOMEN_SPECIFICATIES: FocusInkomenSpecificatiesApiState;
-  MY_CHAPTERS: MyChaptersApiState;
-  ERFPACHT: ErfpachtApiState;
-  GARBAGE: GarbageApiState;
-  MIJN_BUURT: MyAreaApiState;
-  BELASTINGEN: BelastingApiState;
-  MILIEUZONE: MilieuzoneApiState;
+export interface AppState extends ServicesRelatedData, ServicesDirectData {
+  TIPS: ServicesTipsData;
+  CHAPTERS: ChaptersState;
+  BUURT: ServicesMapData;
+  UPDATES: ServicesUpdatesData;
 }
-
 export type StateKey = keyof AppState;
 
-// Use typecasting here to allow for proper state completion and use in deconstruction assignments.
 export const AppContext = createContext<AppState>({} as AppState);
-export const SessionContext = createContext<SessionApiState>(
-  {} as SessionApiState
-);
-
-interface SessionStateProps {
-  children: ComponentChildren;
-  value?: SessionApiState;
-}
-
-export function SessionState({ children, value }: SessionStateProps) {
-  let session: SessionApiState = useSessionApi();
-  if (value) {
-    session = value;
-  }
-  return (
-    <SessionContext.Provider value={session}>
-      {children}
-    </SessionContext.Provider>
-  );
-}
 
 interface AppStateProps {
-  children?: ComponentChildren;
-  value?: Partial<AppState>;
+  children: ComponentChildren;
 }
 
-export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
-  const WMO = useWmoApi();
-  const FOCUS = useFocusApi();
-  const FOCUS_INKOMEN_SPECIFICATIES = useFocusInkomenSpecificatiesApi();
+interface MockAppStateProps {
+  children: ComponentChildren;
+  value: Partial<AppState>;
+}
 
-  const { data: focusData, ...rest } = FOCUS;
-  // At the time of writing we only show recentCases from the Focus API.
-  const MY_CASES = {
-    data: {
-      ...focusData,
-      items: focusData.recentCases,
-      total: focusData.recentCases.length,
-    },
-    ...rest,
-  };
+export function useAppState(): AppState {
+  const servicesRelatedApi = useServicesRelated();
+  const servicesDirectApi = useServicesDirect();
+  const tipsApi = useServicesTips();
+  const updatesApi = useServicesUpdates();
+  const mapData = useServicesMap();
 
-  const BRP = useBrpApi();
-  const BELASTINGEN = useBelastingApi();
-  const MILIEUZONE = useMilieuzoneApi();
-  const MIJN_TIPS = useMyTipsApi();
-  const ERFPACHT = useErfpachtApi();
-  const MIJN_BUURT = useMyArea();
-  const GARBAGE = useGarbageApi();
-  const MY_CHAPTERS = getMyChapters({
-    WMO,
-    FOCUS,
-    ERFPACHT,
-    GARBAGE,
-    BRP,
-    MIJN_BUURT,
-    BELASTINGEN,
-    MILIEUZONE,
-  } as AppState);
-
-  const UPDATES = useMyNotificationsApi({
-    FOCUS,
-    BRP,
-    BELASTINGEN,
-    MILIEUZONE,
-    FOCUS_INKOMEN_SPECIFICATIES,
-  } as AppState);
-
-  const tipsDependencies = [
-    getApiConfigValue('WMO', 'postponeFetch', false) || WMO.isDirty,
-    getApiConfigValue('FOCUS', 'postponeFetch', false) || FOCUS.isDirty,
-    ERFPACHT.isDirty,
-    BRP.isDirty,
-    getApiConfigValue('BELASTINGEN', 'postponeFetch', true) ||
-      BELASTINGEN.isDirty,
-    getApiConfigValue('MILIEUZONE', 'postponeFetch', true) ||
-      MILIEUZONE.isDirty,
-  ];
-
-  const address = BRP?.data?.adres ? getBagSearchAddress(BRP.data.adres) : '';
-  const mokum = isMokum(BRP);
-  const refetchMyArea = MIJN_BUURT.refetch;
-  const refetchGarbage = GARBAGE.refetch;
-  const centroid = MIJN_BUURT.data?.centroid;
-
-  // Fetch lat/lon for addresss
-  useEffect(() => {
-    if (mokum && address) {
-      refetchMyArea(address);
-    }
-  }, [address, mokum, refetchMyArea]);
-
-  // Fetch garbage information for address at lat,lon
-  useEffect(() => {
-    if (centroid && mokum) {
-      refetchGarbage({ centroid });
-    }
-  }, [mokum, centroid, refetchGarbage]);
-
-  // Fetch tips when dependent sources are loaded
-  // TODO: Exclude api responses that returned error
-  useEffect(() => {
-    if (tipsDependencies.every(isReady => isReady)) {
-      MIJN_TIPS.refetch({
-        WMO: WMO.rawData,
-        FOCUS: FOCUS.rawData,
-        ERFPACHT: ERFPACHT.data.status,
-        BRP: BRP.data,
-        BELASTINGEN: BELASTINGEN.data,
-        MILIEUZONE: MILIEUZONE.data,
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...tipsDependencies, MIJN_TIPS.isOptIn]);
-
-  // NOTE: For now we can use this solution but we probably need some more finegrained memoization of the state as the app grows larger.
   return {
-    BRP,
-    // NOTE: If needed we can postpone immediate fetching of below data and start fetching in the component
-    // by calling the refetch method implemented in the api hooks.
-    UPDATES,
-    MY_CASES,
-    MIJN_TIPS,
-    WMO,
-    FOCUS,
-    FOCUS_INKOMEN_SPECIFICATIES,
-    MY_CHAPTERS,
-    ERFPACHT,
-    MIJN_BUURT,
-    GARBAGE,
-    BELASTINGEN,
-    MILIEUZONE,
+    ...servicesRelatedApi.data,
+    ...servicesDirectApi.data,
+    TIPS: tipsApi.data,
+    UPDATES: updatesApi.data,
+    CHAPTERS: {
+      isLoading: true,
+      items: [],
+    },
+    BUURT: mapData,
   };
 }
 
-export default ({ children, value }: AppStateProps) => {
-  const appState = value || useAppState();
-
+export function MockAppStateProvider({ children, value }: MockAppStateProps) {
   return (
-    // TODO: Straight out partial appState assignments. Forcing type assignment here for !!!111!!1!!
-    <AppContext.Provider value={appState as AppState}>
+    <AppContext.Provider value={value as AppState}>
       {children}
     </AppContext.Provider>
   );
-};
+}
+
+export default function AppStateProvider({ children }: AppStateProps) {
+  const appState = useAppState();
+  return <AppContext.Provider value={appState}>{children}</AppContext.Provider>;
+}

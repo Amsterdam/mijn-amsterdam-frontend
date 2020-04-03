@@ -3,31 +3,25 @@ import { MyAreaHeader, MyAreaMap, MyAreaMapIFrame } from '../../components';
 import React, { useContext } from 'react';
 
 import { AppContext } from '../../AppState';
-import { getFullAddress } from '../../data-formatting/brp';
+import { getFullAddress } from '../Profile/formatData';
 import styles from './MyArea.module.scss';
 
 export default () => {
-  const {
-    MIJN_BUURT: {
-      data: {
-        url: { advanced: mapUrl },
-        centroid,
-      },
-    },
-    BRP,
-  } = useContext(AppContext);
+  const { BUURT, BAG, BRP } = useContext(AppContext);
 
   return (
     <div className={styles.Container}>
       <MyAreaHeader />
       {IS_PRODUCTION || IS_ACCEPTANCE ? (
-        <MyAreaMapIFrame url={mapUrl} />
+        <MyAreaMapIFrame url={BUURT?.embedUrl} />
       ) : (
-        <MyAreaMap
-          className={styles.Map}
-          center={centroid}
-          homeAddress={BRP.data?.adres && getFullAddress(BRP.data.adres)}
-        />
+        !!BAG?.latlng && (
+          <MyAreaMap
+            className={styles.Map}
+            center={BAG?.latlng}
+            homeAddress={BRP?.adres && getFullAddress(BRP.adres)}
+          />
+        )
       )}
     </div>
   );

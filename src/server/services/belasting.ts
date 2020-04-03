@@ -1,7 +1,7 @@
 import { ApiUrls } from '../../universal/config';
 import { AxiosResponse } from 'axios';
 import { Chapter } from '../../universal/config/chapter';
-import { MyNotification } from '../../client/hooks/api/my-notifications-api.hook';
+import { MyNotification } from './services-notifications';
 import { MyTip } from './services-tips';
 import { requestSourceData } from '../../universal/helpers';
 

@@ -1,6 +1,8 @@
-import { ApiUrls } from '../../universal/config';
+import { ApiUrls, AppRoutes, Chapter } from '../../universal/config';
+import { defaultDateFormat, requestSourceData } from '../../universal/helpers';
+
 import { AxiosResponse } from 'axios';
-import { requestSourceData } from '../../universal/helpers';
+import { MyNotification } from './services-notifications';
 
 export interface Adres {
   straatnaam: string;
@@ -34,7 +36,7 @@ export interface Persoon {
   datumVertrekUitNederland: string;
 }
 
-interface Verbintenis {
+export interface Verbintenis {
   datumOntbinding: string | null;
   datumSluiting: string;
   landnaamSluiting: string;
@@ -44,7 +46,7 @@ interface Verbintenis {
   persoon: Persoon;
 }
 
-interface Kind {
+export interface Kind {
   bsn: string;
   geboortedatum: string;
   geslachtsaanduiding: string;
@@ -69,12 +71,51 @@ export function getFullAddress(adres: Adres) {
     ''} ${adres.huisnummertoevoeging || ''}`.trim();
 }
 
+export function formatBRPNotifications(data: BRPData) {
+  const inOnderzoek = data?.adres?.inOnderzoek || false;
+  const isOnbekendWaarheen = data?.persoon?.vertrokkenOnbekendWaarheen || false;
+  const dateLeft = data?.persoon?.datumVertrekUitNederland
+    ? defaultDateFormat(data?.persoon.datumVertrekUitNederland)
+    : 'Onbekend';
+
+  const notifications: MyNotification[] = [];
+
+  if (inOnderzoek) {
+    notifications.push({
+      chapter: 'BURGERZAKEN' as Chapter,
+      datePublished: new Date().toISOString(),
+      id: 'brpAdresInOnderzoek',
+      title: 'Adres in onderzoek',
+      description:
+        'Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat.',
+      link: {
+        to: AppRoutes.MIJN_GEGEVENS,
+        title: 'Meer informatie',
+      },
+    });
+  }
+
+  if (isOnbekendWaarheen) {
+    notifications.push({
+      chapter: 'BURGERZAKEN' as Chapter,
+      datePublished: new Date().toISOString(),
+      id: 'brpVertrokkenOnbekendWaarheen',
+      title: 'Vertrokken - onbekend waarheen',
+      description: `U staat sinds ${dateLeft} in Basisregistratie Personen (BRP) geregistreerd als 'vertrokken onbekend waarheen'.`,
+      link: {
+        to: AppRoutes.MIJN_GEGEVENS,
+        title: 'Meer informatie',
+      },
+    });
+  }
+
+  return notifications;
+}
+
 export function formatBRPData(response: AxiosResponse<BRPData>) {
   return response.data;
 }
 
 export function fetchBRP() {
-  return requestSourceData<BRPData>({ url: ApiUrls.BRP }).then(data =>
-    formatBRPData(data)
-  );
+  return requestSourceData<BRPData>({ url: ApiUrls.BRP }).then(formatBRPData);
 }

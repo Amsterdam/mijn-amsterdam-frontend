@@ -1,4 +1,4 @@
-import { FocusProduct, formatFocusProduct } from './focus';
+import { FocusProduct, formatFocusProduct } from '../../server/services/focus';
 
 const testData = [
   {

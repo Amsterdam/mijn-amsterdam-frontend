@@ -8,10 +8,8 @@ import {
 import { Map, TileLayer } from '@datapunt/react-maps';
 import React, { PropsWithChildren } from 'react';
 
-import { toLatLng } from '../../../universal/helpers';
-
 type MapDisplayComponentProps = PropsWithChildren<{
-  center: Centroid;
+  center: LatLngObject;
   id: string;
   title: string;
   zoom?: number;
@@ -29,7 +27,7 @@ export function MaMap({
       id={id}
       aria-label={title}
       style={{ width: '100%', height: '100%' }}
-      options={{ ...DEFAULT_MAP_OPTIONS, zoom, center: toLatLng(center) }}
+      options={{ ...DEFAULT_MAP_OPTIONS, zoom, center }}
     >
       <TileLayer
         options={{

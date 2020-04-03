@@ -18,15 +18,15 @@ export const ChapterIcons: {
   [chapter in Chapter]: SVGComponent;
 } = {
   AFVAL: IconGarbage,
-  MIJN_TIPS: IconTips,
+  TIPS: IconTips,
   WONEN: IconWonen,
   INKOMEN: IconInkomen,
   BELASTINGEN: IconBelastingen,
   ZORG: IconZorg,
-  MELDINGEN: IconMyNotifications,
+  UPDATES: IconMyNotifications,
   MIJN_GEGEVENS: IconMijnGegevens,
   MILIEUZONE: IconMilieuzone,
   ROOT: IconBurgerZaken,
-  MIJN_BUURT: IconBurgerZaken,
+  BUURT: IconBurgerZaken,
   BURGERZAKEN: IconBurgerZaken,
 };

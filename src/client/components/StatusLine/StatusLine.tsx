@@ -11,6 +11,7 @@ import { trackEvent } from '../../hooks/analytics.hook';
 import { useSessionStorage } from '../../hooks/storage.hook';
 
 export type StepType = 'first-step' | 'last-step' | 'intermediate-step';
+
 export interface StatusLineItem {
   id: string;
   status: string;
