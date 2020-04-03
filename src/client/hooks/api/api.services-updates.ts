@@ -1,8 +1,8 @@
-import { ApiState } from './api.types';
+import { ApiState, useDataApi } from './api.hook';
+
 import { BFFApiUrls } from '../../../universal/config';
 import { UPDATESData } from '../../../server/services/services-notifications';
 import { getApiConfigValue } from '../../../universal/helpers';
-import { useDataApi } from './api.hook';
 
 export type ServicesUpdatesData = UPDATESData;
 export type ServicesUpdatesApiState = ApiState<ServicesUpdatesData>;

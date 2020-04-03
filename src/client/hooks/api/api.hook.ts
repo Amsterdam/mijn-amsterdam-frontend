@@ -1,11 +1,31 @@
 import * as Sentry from '@sentry/browser';
 
-import { ApiRequestOptions, ApiState, RefetchFunction } from './api.types';
+import { Action, Unshaped } from '../../../universal/types/App.types';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 
-import { Action } from '../../../universal/types/App.types';
 import { IS_SENTRY_ENABLED } from '../../../universal/env';
 import axios from 'axios';
+
+export interface ApiRequestOptions {
+  url: string;
+  data?: any;
+  params?: Unshaped;
+  postpone?: boolean;
+  resetToInitialDataOnError?: boolean;
+  method?: 'GET' | 'POST';
+  timeout?: number; // in ms
+}
+
+export interface ApiState<T> {
+  isLoading: boolean;
+  isError: boolean;
+  isPristine: boolean;
+  isDirty: boolean;
+  data: T;
+  errorMessage: string | null;
+}
+
+export type RefetchFunction = (options: Partial<ApiRequestOptions>) => void;
 
 /**
  * Concepts in this hook are described in the following article:
