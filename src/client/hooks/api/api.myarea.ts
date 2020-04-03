@@ -1,3 +1,4 @@
+import { ApiState, useDataApi } from './api.hook';
 import { ApiUrls, DEFAULT_LAT, DEFAULT_LON } from '../../../universal/config';
 import {
   DEFAULT_ZOOM,
@@ -7,8 +8,6 @@ import {
 } from '../../components/MyArea/MyArea.constants';
 import { useCallback, useEffect, useState } from 'react';
 
-import { ApiState } from './api.types';
-import { useDataApi } from './api.hook';
 import { usePhoneScreen } from '../../hooks/media.hook';
 
 export const BAG_SEARCH_ENDPOINT_URL = `${ApiUrls.BAG}?q=`;

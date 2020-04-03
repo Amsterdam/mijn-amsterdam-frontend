@@ -1,11 +1,10 @@
+import { ApiState, useDataApi } from './api.hook';
 import { useCallback, useMemo } from 'react';
 
-import { ApiState } from './api.types';
 import { BFFApiUrls } from '../../../universal/config';
 import { TIPSData } from '../../../server/services';
 import { getApiConfigValue } from '../../../universal/helpers';
 import { useCookie } from '../storage.hook';
-import { useDataApi } from './api.hook';
 
 export interface ServicesTipsData extends TIPSData {
   isOptIn: boolean;

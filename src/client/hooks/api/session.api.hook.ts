@@ -1,7 +1,6 @@
-import { ApiRequestOptions, ApiState } from './api.types';
+import { ApiRequestOptions, ApiState, useDataApi } from './api.hook';
 
 import { ApiUrls } from '../../../universal/config/api';
-import { useDataApi } from './api.hook';
 import { useMemo } from 'react';
 
 export interface SessionResponse {

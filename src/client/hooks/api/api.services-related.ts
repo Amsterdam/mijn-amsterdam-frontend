@@ -1,8 +1,7 @@
+import { ApiState, useDataApi } from './api.hook';
 import { BFFApiData, BFFApiUrls } from '../../../universal/config';
 
-import { ApiState } from './api.types';
 import { getApiConfigValue } from '../../../universal/helpers';
-import { useDataApi } from './api.hook';
 
 export interface ServicesRelatedData {
   BRP: BFFApiData['BRP'] | null;
