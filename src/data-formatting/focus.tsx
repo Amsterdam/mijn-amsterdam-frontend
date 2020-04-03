@@ -1,21 +1,23 @@
-import { AppRoutes } from 'config/Routing.constants';
-import { LinkProps } from 'App.types';
-import { addDays, differenceInCalendarDays, parseISO, format } from 'date-fns';
-import { defaultDateFormat, dateSort } from 'helpers/App';
-import { MyNotification } from 'hooks/api/my-notifications-api.hook';
-import { FeatureToggle } from 'config/App.constants';
 import { Chapter, Chapters } from 'config/Chapter.constants';
-import { Document as GenericDocument } from '../components/DocumentList/DocumentList';
-import Linkd from 'components/Button/Button';
+import {
+  IncomeSpecifications,
+  IncomeSpecificationsResponse,
+} from 'hooks/api/api.focus';
 import React, { ReactNode } from 'react';
 import { StatusLineItem, StepType } from 'components/StatusLine/StatusLine';
-import { generatePath } from 'react-router';
+import { addDays, differenceInCalendarDays, format, parseISO } from 'date-fns';
+import { dateSort, defaultDateFormat } from 'helpers/App';
+
+import { AppRoutes } from 'config/Routing.constants';
 import { ReactComponent as DocumentIcon } from 'assets/icons/Document.svg';
+import { FeatureToggle } from 'config/App.constants';
+import { Document as GenericDocument } from '../components/DocumentList/DocumentList';
+import { LinkProps } from 'App.types';
+import Linkd from 'components/Button/Button';
+import { MyNotification } from 'hooks/api/my-notifications-api.hook';
+import { generatePath } from 'react-router';
 import styles from 'pages/Inkomen/Inkomen.module.scss';
-import {
-  IncomeSpecificationsResponse,
-  IncomeSpecifications,
-} from 'hooks/api/api.focus';
+
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
  */
@@ -32,7 +34,8 @@ export type RequestStatus =
   | 'Aanvraag'
   | 'Meer informatie nodig'
   | 'In behandeling'
-  | 'Besluit';
+  | 'Besluit'
+  | 'Bezwaar';
 
 // A decision can be made and currently have 3 values.
 type Decision = 'Toekenning' | 'Afwijzing' | 'Buiten Behandeling';
@@ -117,6 +120,14 @@ const processSteps: StepTitle[] = [
   'beslissing',
 ];
 
+export const stepLabels: Record<StepTitle, RequestStatus> = {
+  aanvraag: 'Aanvraag',
+  inBehandeling: 'In behandeling',
+  herstelTermijn: 'Meer informatie nodig',
+  beslissing: 'Besluit',
+  bezwaar: 'Bezwaar',
+};
+
 const DAYS_KEEP_RECENT = 28;
 
 // Object with properties that are used to replace strings in the generated messages above.
@@ -153,10 +164,12 @@ export interface ProcessStep extends StatusLineItem {
 
 export interface FocusItem {
   id: string;
+  dateStart: string;
   datePublished: string;
   title: JSX.Element | string;
   description: JSX.Element | string;
   latestStep: StepTitle;
+  status: string;
   hasDecision: boolean;
   isRecent: boolean;
 
@@ -202,7 +215,7 @@ export const Labels: LabelData = {
           `Wij hebben uw aanvraag voor een bijstandsuitkering ontvangen op ${data.dateStart}.`,
       },
       title: data => data.productTitle,
-      status: 'Aanvraag',
+      status: stepLabels.aanvraag,
       description: data => (
         <>
           <p>U hebt op {data.dateStart} een bijstandsuitkering aangevraagd.</p>
@@ -224,7 +237,7 @@ export const Labels: LabelData = {
           `Wij hebben uw aanvraag voor een bijstandsuitkering in behandeling genomen op ${data.datePublished}.`,
       },
       title: data => data.productTitle,
-      status: 'In behandeling',
+      status: stepLabels.inBehandeling,
       description: data => (
         <>
           <p>
@@ -259,7 +272,7 @@ export const Labels: LabelData = {
           'Er is meer informatie en tijd nodig om uw aanvraag voor een bijstandsuitkering te behandelen.',
       },
       title: data => data.productTitle,
-      status: 'Meer informatie nodig',
+      status: stepLabels.herstelTermijn,
       description: data => (
         <>
           <p>
@@ -284,7 +297,7 @@ export const Labels: LabelData = {
             `U heeft geen recht op een bijstandsuitkering (besluit: ${data.datePublished}).`,
         },
         title: data => data.productTitle,
-        status: 'Besluit',
+        status: stepLabels.beslissing,
         description:
           'U heeft geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.',
       },
@@ -295,7 +308,7 @@ export const Labels: LabelData = {
             `U heeft recht op een bijstandsuitkering (besluit: ${data.datePublished}).`,
         },
         title: data => data.productTitle,
-        status: 'Besluit',
+        status: stepLabels.beslissing,
         description: data => (
           <>
             <p>
@@ -321,7 +334,7 @@ export const Labels: LabelData = {
             `Uw aanvraag is buiten behandeling gesteld (besluit: ${data.datePublished}).`,
         },
         title: data => data.productTitle,
-        status: 'Besluit',
+        status: stepLabels.beslissing,
         description:
           'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
       },
@@ -336,7 +349,7 @@ export const Labels: LabelData = {
           `Wij hebben uw aanvraag voor bijzondere bijstand ontvangen op ${data.dateStart}.`,
       },
       title: data => data.productTitle,
-      status: 'Aanvraag',
+      status: stepLabels.aanvraag,
       description: data =>
         `U hebt op ${data.dateStart} een bijzondere bijstandsuitkering aangevraagd.`,
     },
@@ -347,7 +360,7 @@ export const Labels: LabelData = {
           `Wij hebben uw aanvraag voor bijzondere bijstand in behandeling genomen op ${data.datePublished}.`,
       },
       title: data => `${data.productTitle} in behandeling`,
-      status: 'In behandeling',
+      status: stepLabels.inBehandeling,
       description: data => (
         <p>
           Wij gaan nu bekijken of u recht hebt op bijzondere bijstand. Het kan
@@ -363,7 +376,7 @@ export const Labels: LabelData = {
           'Er is meer informatie en tijd nodig om uw aanvraag voor bijzondere bijstand te behandelen.',
       },
       title: data => data.productTitle,
-      status: 'Meer informatie nodig',
+      status: stepLabels.herstelTermijn,
       description: data => (
         <>
           <p>
@@ -388,7 +401,7 @@ export const Labels: LabelData = {
             `U heeft geen recht op bijzondere bijstand (besluit: ${data.datePublished}).`,
         },
         title: data => data.productTitle,
-        status: 'Besluit',
+        status: stepLabels.beslissing,
         description:
           'U heeft geen recht op bijzondere bijstand. Bekijk de brief voor meer details.',
       },
@@ -399,7 +412,7 @@ export const Labels: LabelData = {
             `U heeft recht op bijzondere bijstand (besluit: ${data.datePublished}).`,
         },
         title: data => data.productTitle,
-        status: 'Besluit',
+        status: stepLabels.beslissing,
         description:
           'U heeft recht op bijzondere bijstand. Bekijk de brief voor meer details.',
       },
@@ -411,7 +424,7 @@ export const Labels: LabelData = {
             `Uw aanvraag is buiten behandeling gesteld (besluit: ${data.datePublished}).`,
         },
         title: data => data.productTitle,
-        status: 'Besluit',
+        status: stepLabels.beslissing,
         description:
           'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
       },
@@ -426,7 +439,7 @@ export const Labels: LabelData = {
           `Wij hebben uw aanvraag voor een Stadspas ontvangen op ${data.dateStart}.`,
       },
       title: data => data.productTitle,
-      status: 'Aanvraag',
+      status: stepLabels.aanvraag,
       description: data =>
         `U hebt op ${data.datePublished} een Stadspas aangevraagd.`,
     },
@@ -437,7 +450,7 @@ export const Labels: LabelData = {
           `Wij hebben uw aanvraag voor een Stadspas in behandeling genomen op ${data.datePublished}.`,
       },
       title: data => data.productTitle,
-      status: 'In behandeling',
+      status: stepLabels.inBehandeling,
       description: data => (
         <>
           <p>
@@ -463,7 +476,7 @@ export const Labels: LabelData = {
           'Er is meer informatie en tijd nodig om uw aanvraag voor een Stadspas te behandelen.',
       },
       title: data => data.productTitle,
-      status: 'Meer informatie nodig',
+      status: stepLabels.herstelTermijn,
       description: data => (
         <>
           <p>
@@ -488,7 +501,7 @@ export const Labels: LabelData = {
             `U heeft geen recht op een Stadspas (besluit: ${data.datePublished}).`,
         },
         title: data => data.productTitle,
-        status: 'Besluit',
+        status: stepLabels.beslissing,
         description:
           'U heeft geen recht op een Stadspas. Bekijk de brief voor meer details.',
       },
@@ -499,7 +512,7 @@ export const Labels: LabelData = {
             'U heeft recht op een Stadspas. Bekijk de brief voor meer details.',
         },
         title: data => data.productTitle,
-        status: 'Besluit',
+        status: stepLabels.beslissing,
         description: data => (
           <>
             <p>
@@ -521,7 +534,7 @@ export const Labels: LabelData = {
             `Uw aanvraag is buiten behandeling gesteld (besluit: ${data.datePublished}).`,
         },
         title: data => data.productTitle,
-        status: 'Besluit',
+        status: stepLabels.beslissing,
         description:
           'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
       },
@@ -864,6 +877,7 @@ export function formatFocusProduct(
       ? parseLabelContent(stepLabels.description, sourceData)
       : '',
     latestStep,
+    status: stepLabels.status,
     isRecent,
     hasDecision,
     isGranted: hasDecision ? decision === getDecision('Toekenning') : null,

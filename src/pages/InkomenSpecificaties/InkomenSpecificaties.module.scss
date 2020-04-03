@@ -1,7 +1,7 @@
 @import 'styles/_global.scss';
 
 .SpecificationsTable {
-  td:not(:nth-child(3)) {
+  tr td:first-child {
     font-weight: 500;
     color: $color-black;
   }
@@ -38,11 +38,10 @@
 }
 
 .SearchButton {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 
   @include media-q('>=phone') {
     float: right;
-    margin-bottom: -1.8rem;
   }
 
   svg {

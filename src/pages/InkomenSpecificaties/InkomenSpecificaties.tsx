@@ -1,32 +1,39 @@
-import React, {
-  useContext,
-  useState,
-  useMemo,
-  useCallback,
-  useEffect,
-} from 'react';
-import PageHeading from 'components/PageHeading/PageHeading';
-import styles from './InkomenSpecificaties.module.scss';
 import { OverviewPage, PageContent } from 'components/Page/Page';
-import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
-import { AppRoutes } from 'config/Routing.constants';
-import { ChapterTitles } from 'config/Chapter.constants';
-import { AppContext } from 'AppState';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+
 import Alert from 'components/Alert/Alert';
-import useRouter from 'use-react-router';
-import Table from 'components/Table/Table';
-import Section from 'components/Section/Section';
-import Pagination from 'components/Pagination/Pagination';
-import DateInput from 'components/DateInput/DateInput';
-import { ReactComponent as SearchIcon } from 'assets/icons/Search.svg';
+import { AppContext } from 'AppState';
+import { AppRoutes } from 'config/Routing.constants';
 import { Button } from 'components/Button/Button';
+import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
+import { ChapterTitles } from 'config/Chapter.constants';
+import DateInput from 'components/DateInput/DateInput';
+import PageHeading from 'components/PageHeading/PageHeading';
+import Pagination from 'components/Pagination/Pagination';
+import { ReactComponent as SearchIcon } from 'assets/icons/Search.svg';
+import Section from 'components/Section/Section';
+import Table from 'components/Table/Table';
 import { format } from 'date-fns';
+import styles from './InkomenSpecificaties.module.scss';
+import useRouter from 'use-react-router';
 
 export const specificationsTableDisplayProps = {
   title: 'Omschrijving',
   type: 'Type',
   displayDate: 'Datum',
-  documentUrl: '',
+  documentUrl: 'Documenten',
+};
+
+export const annualStatementsTableDisplayProps = {
+  title: 'Omschrijving',
+  displayDate: 'Datum',
+  documentUrl: 'Documenten',
 };
 
 const PAGE_SIZE = 10;
@@ -56,14 +63,17 @@ export default () => {
 
   const maxDate = useMemo(() => {
     if (items.length) {
-      return items[0].datePublished;
+      return format(new Date(items[0].datePublished), DATE_INPUT_FORMAT);
     }
     return format(new Date(), DATE_INPUT_FORMAT);
   }, [items]);
 
   const minDate = useMemo(() => {
     if (items.length) {
-      return items[items.length - 1].datePublished;
+      return format(
+        new Date(items[items.length - 1].datePublished),
+        DATE_INPUT_FORMAT
+      );
     }
     return format(new Date(), DATE_INPUT_FORMAT);
   }, [items]);
@@ -103,6 +113,7 @@ export default () => {
     });
 
   const itemsFilteredPaginated = itemsFiltered.slice(startIndex, endIndex + 1);
+
   const selectTypeFilter = useCallback(type => {
     setSelectedType(type);
     setPageIndex(INITIAL_INDEX);
@@ -154,21 +165,23 @@ export default () => {
       >
         {isSearchPanelActive && (
           <div className={styles.SearchPanel}>
-            <label>
-              Type
-              <select
-                className={styles.Select}
-                value={selectedType}
-                onChange={event => selectTypeFilter(event.target.value)}
-              >
-                <option value="">Alle types ({items.length})</option>
-                {options.map(([option, count]) => (
-                  <option key={option} value={option}>
-                    {option} ({count})
-                  </option>
-                ))}
-              </select>
-            </label>
+            {itemsFiltered.some(item => !!item.type) && (
+              <label>
+                Type
+                <select
+                  className={styles.Select}
+                  value={selectedType}
+                  onChange={event => selectTypeFilter(event.target.value)}
+                >
+                  <option value="">Alle types ({items.length})</option>
+                  {options.map(([option, count]) => (
+                    <option key={option} value={option}>
+                      {option} ({count})
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
             <label>
               Datum van
               <DateInput
@@ -215,7 +228,11 @@ export default () => {
         <Table
           className={styles.SpecificationsTable}
           items={itemsFilteredPaginated}
-          displayProps={specificationsTableDisplayProps}
+          displayProps={
+            isAnnualStatementOverviewPage
+              ? annualStatementsTableDisplayProps
+              : specificationsTableDisplayProps
+          }
         />
 
         {itemsFiltered.length > PAGE_SIZE && (
