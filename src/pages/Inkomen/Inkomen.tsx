@@ -1,19 +1,23 @@
-import React, { useContext, useMemo } from 'react';
-import { OverviewPage, PageContent } from 'components/Page/Page';
-import PageHeading from 'components/PageHeading/PageHeading';
-import { AppContext } from 'AppState';
-import { ChapterTitles } from 'config/Chapter.constants';
-import styles from './Inkomen.module.scss';
-import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import { ExternalUrls, FeatureToggle } from 'config/App.constants';
-import Alert from 'components/Alert/Alert';
-import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
-import Linkd from 'components/Button/Button';
-import { AppRoutes } from 'config/Routing.constants';
-import { generatePath } from 'react-router-dom';
-import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
+import { OverviewPage, PageContent } from 'components/Page/Page';
+import React, { useContext, useMemo } from 'react';
 import Table, { addTitleLinkComponent } from 'components/Table/Table';
-import { specificationsTableDisplayProps } from 'pages/InkomenSpecificaties/InkomenSpecificaties';
+import {
+  annualStatementsTableDisplayProps,
+  specificationsTableDisplayProps,
+} from 'pages/InkomenSpecificaties/InkomenSpecificaties';
+
+import Alert from 'components/Alert/Alert';
+import { AppContext } from 'AppState';
+import { AppRoutes } from 'config/Routing.constants';
+import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
+import { ChapterTitles } from 'config/Chapter.constants';
+import Linkd from 'components/Button/Button';
+import PageHeading from 'components/PageHeading/PageHeading';
+import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
+import { generatePath } from 'react-router-dom';
+import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
+import styles from './Inkomen.module.scss';
 
 const incomSpecificationsRouteMonthly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES']
@@ -24,6 +28,11 @@ const incomSpecificationsRouteYearly = generatePath(
     type: 'jaaropgaven',
   }
 );
+
+const requestsDisplayProps = {
+  dateStart: 'Datum aanvraag',
+  status: 'Status',
+};
 
 const decisionsDisplayProps = {
   dateStart: 'Datum aanvraag',
@@ -94,7 +103,11 @@ export default () => {
         noItemsMessage="U hebt op dit moment geen lopende aanvragen."
         className={styles.SectionCollapsibleRequests}
       >
-        <Table items={itemsRequested} />
+        <Table
+          items={itemsRequested}
+          displayProps={requestsDisplayProps}
+          className={styles.Table}
+        />
       </SectionCollapsible>
       <SectionCollapsible
         id="SectionCollapsible-income-request-process-decisions"
@@ -108,7 +121,11 @@ export default () => {
         }}
         noItemsMessage="U hebt op dit moment geen afgehandelde aanvragen."
       >
-        <Table items={itemsDecided} displayProps={decisionsDisplayProps} />
+        <Table
+          items={itemsDecided}
+          displayProps={decisionsDisplayProps}
+          className={styles.Table}
+        />
       </SectionCollapsible>
       {FeatureToggle.focusUitkeringsspecificatiesActive && (
         <SectionCollapsible
@@ -151,7 +168,7 @@ export default () => {
           <Table
             className={specicationsStyles.SpecificationsTable}
             items={itemsSpecificationsYearly}
-            displayProps={specificationsTableDisplayProps}
+            displayProps={annualStatementsTableDisplayProps}
           />
           {jaaropgaven.length > 3 && (
             <p className={styles.ShowAllButtonContainer}>

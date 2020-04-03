@@ -4,6 +4,15 @@
 
 }
 
+.Table {
+  tr td:nth-child(2) {
+    width: 30%;
+  }
+  @include select(Table_DisplayPropTitle) {
+    width: 30%;
+  }
+}
+
 .SectionCollapsibleRequests {
   border-top: 0.1rem solid $color-neutral-grey2;
   padding-top: 1.7rem;
