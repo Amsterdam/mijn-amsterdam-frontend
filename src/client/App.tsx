@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/browser';
 
 import { AppRoutes, FeatureToggle, PrivateRoutes } from '../universal/config';
-import AppState, { SessionContext, SessionState } from './AppState';
+import AppState from './AppState';
 import {
   BrowserRouter,
   Redirect,
@@ -15,6 +15,7 @@ import {
   IS_SENTRY_ENABLED,
 } from '../universal/env';
 import React, { useContext } from 'react';
+import { SessionContext, SessionState } from './SessionState';
 
 import ApplicationError from './components/ApplicationError/ApplicationError';
 import AutoLogoutDialog from './components/AutoLogoutDialog/AutoLogoutDialog';

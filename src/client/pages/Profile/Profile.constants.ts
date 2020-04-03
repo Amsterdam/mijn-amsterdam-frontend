@@ -2,16 +2,19 @@ import {
   ActionLink,
   InfoPanelProps,
 } from '../../components/InfoPanel/InfoPanel';
-import { BrpApiState, BrpKey } from '../../hooks/api/api.brp';
 
+import { BRPData } from '../../../server/services/brp';
 import { ExternalUrls } from '../../../universal/config';
-import { isMokum } from '../../data-formatting/brp';
+import { ServicesRelatedData } from '../../hooks/api/api.services-related';
+import { isMokum } from './formatData';
 
-type PanelKey = BrpKey | 'adresHistorisch' | 'verbintenisHistorisch';
+type PanelKey = keyof BRPData | 'adresHistorisch' | 'verbintenisHistorisch';
 type PanelProps = Pick<InfoPanelProps, 'title' | 'actionLinks'>;
+
 export type PanelConfigFormatter =
   | PanelProps
-  | ((brpData: BrpApiState) => PanelProps);
+  | ((brpData: ServicesRelatedData['BRP']) => PanelProps);
+
 type PanelConfig = {
   [key in PanelKey]: PanelConfigFormatter;
 };

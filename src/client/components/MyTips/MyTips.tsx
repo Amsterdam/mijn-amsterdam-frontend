@@ -12,7 +12,7 @@ import { Button } from '../Button/Button';
 import { ReactComponent as ChevronIcon } from '../../assets/icons/Chevron-Right.svg';
 import Heading from '../Heading/Heading';
 import Linkd from '../Button/Button';
-import { MyTip } from '../../hooks/api/my-tips-api.hook';
+import { MyTip } from '../../../server/services';
 import MyTipsOptInOutModal from './MyTipsOptInOutModal';
 import classnames from 'classnames';
 import { isExternalUrl } from '../../../universal/helpers';
@@ -122,9 +122,7 @@ export default function MyTips({
       {showHeader && (
         <div className={styles.HeaderBar}>
           <Heading size="large">Mijn tips</Heading>
-          {!!items.length && (
-            <Linkd href={AppRoutes.MIJN_TIPS}>Mijn tips</Linkd>
-          )}
+          {!!items.length && <Linkd href={AppRoutes.TIPS}>Mijn tips</Linkd>}
           {showOptIn && (
             <Button
               lean={true}

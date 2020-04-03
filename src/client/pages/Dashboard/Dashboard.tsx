@@ -1,7 +1,5 @@
 import {
   DirectLinks,
-  MyAreaDashboard,
-  MyCases,
   MyChaptersPanel,
   MyNotifications,
   MyTips,
@@ -13,39 +11,26 @@ import React, { useContext } from 'react';
 import { AppContext } from '../../AppState';
 import { AppRoutes } from '../../../universal/config';
 import { Link } from 'react-router-dom';
+import { isLoading } from '../../../universal/helpers';
 import styles from './Dashboard.module.scss';
 import { usePhoneScreen } from '../../hooks/media.hook';
 
-const MAX_NOTIFICATIONS_VISIBLE = 3;
+const MAX_UPDATES_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
 
 export default () => {
   const {
-    UPDATES: {
-      data: { items: myNotificationItems, total: myNotificationsTotal },
-      isLoading: isMyNotificationsLoading,
-    },
-    MY_CASES: {
-      data: { items: myCases },
-      isLoading: isMyCasesLoading,
-    },
-    MIJN_TIPS: {
-      data: { items: myTips = [] },
-      isOptIn,
-      isLoading: isMyTipsLoading,
-      isPristine: isMyTipsPristine,
-    },
-    MY_CHAPTERS: { items: myChapterItems, isLoading: isMyChaptersLoading },
-    MIJN_BUURT: {
-      data: {
-        url: { simple: mapUrl },
-        centroid,
-      },
-    },
+    UPDATES,
+    // MY_CASES,
+    TIPS,
+    CHAPTERS: { items: myChapterItems, isLoading: isMyChaptersLoading },
+    // BUURT,
   } = useContext(AppContext);
 
-  const tipItems = myTips.slice(0, MAX_TIPS_VISIBLE);
+  const tipItems = TIPS.items.slice(0, MAX_TIPS_VISIBLE);
+  const updateItems = UPDATES?.items.slice(0, MAX_UPDATES_VISIBLE);
   const isPhoneScreen = usePhoneScreen();
+  const updatesTotal = UPDATES?.items.length || 0;
 
   return (
     <>
@@ -63,10 +48,10 @@ export default () => {
         </PageHeading>
         <div className={styles.TopContentContainer}>
           <MyNotifications
-            total={myNotificationItems.length}
-            items={myNotificationItems.slice(0, MAX_NOTIFICATIONS_VISIBLE)}
-            showMoreLink={myNotificationsTotal > MAX_NOTIFICATIONS_VISIBLE}
-            isLoading={isMyNotificationsLoading}
+            total={updatesTotal}
+            items={updateItems}
+            showMoreLink={updatesTotal > MAX_UPDATES_VISIBLE}
+            isLoading={isLoading(UPDATES)}
             trackCategory="Dashboard / Actueel"
           />
           <MyChaptersPanel
@@ -77,7 +62,7 @@ export default () => {
             trackCategory="Dashboard / Mijn Thema's"
           />
         </div>
-
+        {/*
         <MyCases
           isLoading={!!isMyCasesLoading}
           title="Mijn lopende aanvragen"
@@ -91,14 +76,14 @@ export default () => {
             center={centroid}
             data-tutorial-item="Hier ziet u informatie van de gemeente, bijvoorbeeld over afval, parkeren en bekendmakingen;left-top"
           />
-        )}
+        )} */}
 
         {!isPhoneScreen && (
           <MyTips
             data-tutorial-item="Hier geven wij u handige tips, bijvoorbeeld over de regelingen en voorzieningen van de gemeente;right-bottom"
-            isLoading={isMyTipsPristine || isMyTipsLoading}
+            isLoading={isLoading(TIPS)}
             items={tipItems}
-            isOptIn={isOptIn}
+            isOptIn={TIPS.isOptIn}
             showOptIn={true}
           />
         )}

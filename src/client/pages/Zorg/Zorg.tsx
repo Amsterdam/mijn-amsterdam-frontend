@@ -11,6 +11,7 @@ import {
 } from '../../components';
 import { ChapterTitles, ExternalUrls } from '../../../universal/config';
 import React, { useContext, useMemo } from 'react';
+import { isError, isLoading } from '../../../universal/helpers';
 
 import { AppContext } from '../../AppState';
 import { addTitleLinkComponent } from '../../components/Button/Button';
@@ -21,17 +22,21 @@ const DISPLAY_PROPS = {
 };
 
 export default () => {
-  const {
-    WMO: { data: items, isError, isLoading },
-  } = useContext(AppContext);
+  const { WMO } = useContext(AppContext);
 
   const itemsActual = useMemo(() => {
-    return addTitleLinkComponent(items.filter(item => item.isActual));
-  }, [items]);
+    if (!WMO?.items.length) {
+      return [];
+    }
+    return addTitleLinkComponent(WMO?.items.filter(item => item.isActual));
+  }, [WMO]);
 
   const itemsPrevious = useMemo(() => {
-    return addTitleLinkComponent(items.filter(item => !item.isActual));
-  }, [items]);
+    if (!WMO?.items.length) {
+      return [];
+    }
+    return addTitleLinkComponent(WMO?.items.filter(item => !item.isActual));
+  }, [WMO]);
 
   const hasActualItems = !!itemsActual.length;
 
@@ -53,7 +58,7 @@ export default () => {
             Lees hier meer over zorg en ondersteuning
           </Linkd>
         </p>
-        {isError && (
+        {isError(WMO) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>
@@ -66,7 +71,7 @@ export default () => {
         hasItems={!!itemsActual.length}
         startCollapsed={false}
         className={styles.SectionCollapsibleCurrent}
-        isLoading={isLoading}
+        isLoading={isLoading(WMO)}
         track={{
           category: 'Zorg en ondersteuning overzicht / Huidige voorzieningen',
           name: 'Datatabel',
@@ -81,7 +86,7 @@ export default () => {
         noItemsMessage="U hebt geen eerdere voorzieningen."
         hasItems={!!itemsPrevious.length}
         startCollapsed={hasActualItems}
-        isLoading={isLoading}
+        isLoading={isLoading(WMO)}
         track={{
           category: 'Zorg en ondersteuning overzicht / Eerdere voorzieningen',
           name: 'Datatabel',

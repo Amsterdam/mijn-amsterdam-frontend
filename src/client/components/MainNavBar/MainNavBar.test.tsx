@@ -1,12 +1,13 @@
 import * as bliep from '../../hooks/media.hook';
 import * as session from '../../hooks/api/session.api.hook';
 
-import AppState, { SessionState } from '../../AppState';
 import { mount, shallow } from 'enzyme';
 
+import AppState from '../../AppState';
 import { BrowserRouter } from 'react-router-dom';
 import MainNavBar from './MainNavBar';
 import React from 'react';
+import { SessionState } from '../../SessionState';
 
 const sessionState: session.SessionApiState = {
   isAuthenticated: true,
@@ -23,7 +24,7 @@ const sessionState: session.SessionApiState = {
 
 const appState: any = {
   SESSION: sessionState,
-  MY_CHAPTERS: {
+  CHAPTERS: {
     isLoading: false,
     items: [],
   },

@@ -1,17 +1,17 @@
-import { useCallback, useEffect, useState } from 'react';
-import { DEFAULT_LAT, DEFAULT_LON } from '../../../universal/config';
-import { getApiUrl } from '../../../universal/helpers';
+import { ApiUrls, DEFAULT_LAT, DEFAULT_LON } from '../../../universal/config';
 import {
   DEFAULT_ZOOM,
   LAYERS_CONFIG,
   LOCATION_ZOOM,
   MAP_URL,
 } from '../../components/MyArea/MyArea.constants';
-import { usePhoneScreen } from '../../hooks/media.hook';
-import { useDataApi } from './api.hook';
-import { ApiState } from './api.types';
+import { useCallback, useEffect, useState } from 'react';
 
-export const BAG_SEARCH_ENDPOINT_URL = `${getApiUrl('BAG')}?q=`;
+import { ApiState } from './api.types';
+import { useDataApi } from './api.hook';
+import { usePhoneScreen } from '../../hooks/media.hook';
+
+export const BAG_SEARCH_ENDPOINT_URL = `${ApiUrls.BAG}?q=`;
 const SET_DEFAULT_ADDRESS_TIMEOUT = 10000;
 
 interface BagApiResult {

@@ -3,17 +3,16 @@ import { MenuItem, myChaptersMenuItems } from './menuItems';
 import { AppState as AppStateInterface } from '../AppState';
 import { Chapters } from '../../universal/config/chapter';
 import { FeatureToggle } from '../../universal/config/app';
-import { isMokum } from '../data-formatting/brp';
+import { isLoading } from '../../universal/helpers';
+import { isMokum } from '../pages/Profile/formatData';
 
 function isChapterActive(
   item: MenuItem,
   {
     WMO,
     FOCUS,
-    FOCUS_TOZO,
-    FOCUS_SPECIFICATIONS,
     ERFPACHT,
-    GARBAGE,
+    AFVAL,
     BRP,
     BELASTINGEN,
     MILIEUZONE,
@@ -21,75 +20,62 @@ function isChapterActive(
 ) {
   switch (item.id) {
     case Chapters.INKOMEN:
-      return (
-        (!FOCUS.isLoading && !!FOCUS.data.items.length) ||
-        (!FOCUS_TOZO.isLoading && !!FOCUS_TOZO.data?.length) ||
-        (!FOCUS_SPECIFICATIONS.isLoading &&
-          !!(
-            FOCUS_SPECIFICATIONS.data?.jaaropgaven.length ||
-            FOCUS_SPECIFICATIONS.data?.uitkeringsspecificaties.length
-          ))
-      );
+      return !isLoading(FOCUS);
 
     case Chapters.ZORG:
-      return !WMO.isLoading && !!WMO.data.length;
+      return !isLoading(WMO) && !!WMO?.items.length;
 
     case Chapters.BELASTINGEN:
       return (
-        !BELASTINGEN.isLoading &&
-        (FeatureToggle.belastingApiActive && !BELASTINGEN.isError
-          ? BELASTINGEN.data.isKnown
-          : true)
+        !isLoading(BELASTINGEN) &&
+        (FeatureToggle.belastingApiActive ? BELASTINGEN?.isKnown : true)
       );
 
     case Chapters.MILIEUZONE:
       return (
-        !MILIEUZONE.isLoading &&
-        (FeatureToggle.milieuzoneApiActive ? MILIEUZONE.data.isKnown : false)
+        !isLoading(MILIEUZONE) &&
+        (FeatureToggle.milieuzoneApiActive ? MILIEUZONE?.isKnown : false)
       );
 
     case Chapters.AFVAL:
       return (
         FeatureToggle.garbageInformationPage &&
-        !GARBAGE.isLoading &&
-        GARBAGE.isDirty &&
-        !!BRP.data?.persoon.mokum
+        !isLoading(AFVAL) &&
+        isMokum(BRP)
       );
 
     case Chapters.WONEN:
-      return !ERFPACHT.isLoading && ERFPACHT.data.status === true;
+      return !isLoading(ERFPACHT) && ERFPACHT?.status === true;
 
     case Chapters.BURGERZAKEN:
       return (
         FeatureToggle.identiteitsbewijzenActive &&
         !BRP.isLoading &&
-        !!BRP.data.identiteitsbewijzen?.length
+        !!BRP.data.identiteitsbewijzen
       );
 
     case Chapters.MIJN_GEGEVENS:
-      return !BRP.isLoading && !!BRP.data?.persoon;
+      return !isLoading(BRP) && !!BRP?.persoon;
   }
 
   return false;
 }
 
-export interface MyChaptersApiState {
+export interface ChaptersState {
   items: MenuItem[];
   isLoading: boolean;
 }
 
-export function getMyChapters(
-  apiStates: AppStateInterface
-): MyChaptersApiState {
+export function getMyChapters(apiStates: AppStateInterface): ChaptersState {
   const {
     WMO,
     FOCUS,
     FOCUS_TOZO,
     FOCUS_SPECIFICATIONS,
     ERFPACHT,
-    GARBAGE,
+    AFVAL,
     BRP,
-    MIJN_BUURT,
+    BUURT,
     BELASTINGEN,
     MILIEUZONE,
   } = apiStates;
@@ -112,20 +98,18 @@ export function getMyChapters(
     return isChapterActive(item, apiStates);
   });
 
-  const isLoading =
+  const isChaptersLoading =
     belastingIsLoading ||
     MILIEUZONEIsLoading ||
     wmoIsloading ||
     brpIsLoading ||
     focusIsloading ||
-    focusTozoIsloading ||
-    focusSpecsIsloading ||
     myAreaIsLoading ||
     erfpachtIsloading ||
-    (garbageIsPristine && isFromMokum && hasCentroid);
+    garbageIsLoading;
 
   return {
     items,
-    isLoading,
+    isLoading: isChaptersLoading,
   };
 }

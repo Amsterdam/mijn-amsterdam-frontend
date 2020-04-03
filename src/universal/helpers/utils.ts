@@ -1,4 +1,4 @@
-import { ApiConfig, ApiName, ApiUrls } from '../config';
+import { ApiConfig, ApiName } from '../config';
 import { KeyboardEvent, MouseEvent } from 'react';
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
@@ -22,10 +22,6 @@ export function getApiConfigValue(
 ) {
   const cfg = ApiConfig[name] && ApiConfig[name]![param];
   return typeof cfg !== 'undefined' ? cfg : defaultValue;
-}
-
-export function getApiUrl(name: ApiName) {
-  return ApiUrls[name] || '';
 }
 
 /**

@@ -14,7 +14,7 @@ import React, {
 
 import { ComponentChildren } from '../../../universal/types/App.types';
 import Modal from '../Modal/Modal';
-import { SessionContext } from '../../AppState';
+import { SessionContext } from '../../SessionState';
 import classnames from 'classnames';
 import { formattedTimeFromSeconds } from '../../../universal/helpers';
 import styles from './AutoLogoutDialog.module.scss';

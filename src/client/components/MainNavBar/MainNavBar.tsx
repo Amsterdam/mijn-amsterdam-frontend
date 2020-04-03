@@ -1,15 +1,9 @@
-import { AppContext, SessionContext } from '../../AppState';
 import { AppRoutes, LOGOUT_URL } from '../../../universal/config';
 import { Link, NavLink } from 'react-router-dom';
 import Linkd, { Button } from '../Button/Button';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from '../MainNavSubmenu/MainNavSubmenu';
-import {
-  mainMenuItemId,
-  mainMenuItems,
-  submenuItems,
-} from './MainNavBar.constants';
 import React, {
   useCallback,
   useContext,
@@ -18,19 +12,26 @@ import React, {
   useState,
 } from 'react';
 import { animated, useSpring } from 'react-spring';
+import {
+  mainMenuItemId,
+  mainMenuItems,
+  submenuItems,
+} from './MainNavBar.constants';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
 
+import { AppContext } from '../../AppState';
 import { ComponentChildren } from '../../../universal/types/App.types';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { ReactComponent as LogoutIcon } from '../../assets/icons/Logout.svg';
+import { MenuItem } from '../../config/menuItems';
+import { SessionContext } from '../../SessionState';
 import Tutorial from '../Tutorial/Tutorial';
 import classnames from 'classnames';
-import { getFullName } from '../../data-formatting/brp';
+import { getFullName } from '../../pages/Profile/formatData';
 import styles from './MainNavBar.module.scss';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
 import useRouter from 'use-react-router';
-import { MenuItem } from '../../config/menuItems';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -46,13 +47,8 @@ interface SecondaryLinksProps {
 }
 
 function SecondaryLinks({ userType = 'BURGER' }: SecondaryLinksProps) {
-  const {
-    BRP: {
-      data: { persoon },
-      isError,
-    },
-  } = useContext(AppContext);
-
+  const { BRP } = useContext(AppContext);
+  const persoon = BRP?.persoon;
   const hasFirstName = !!(persoon && persoon.voornamen);
   const isDesktopScreen = useDesktopScreen();
 
@@ -65,7 +61,7 @@ function SecondaryLinks({ userType = 'BURGER' }: SecondaryLinksProps) {
   return (
     <div className={styles.secondaryLinks}>
       {isDesktopScreen && <FontEnlarger />}
-      {!isError && (
+      {!!persoon && (
         <Link
           to={AppRoutes.MIJN_GEGEVENS}
           className={styles.ProfileLink}
@@ -200,7 +196,7 @@ function BurgerButton({ isActive, toggleBurgerMenu }: BurgerButtonProps) {
 export default function MainNavBar() {
   const appState = useContext(AppContext);
   const {
-    MY_CHAPTERS: { items: myChapterItems },
+    CHAPTERS: { items: myChapterItems },
   } = appState;
   const session = useContext(SessionContext);
   const { isAuthenticated, userType } = session;
@@ -257,7 +253,7 @@ export default function MainNavBar() {
       let menuItem = item;
       if (item.id in submenuItems) {
         // Add dynamic chapter submenu items to the menu
-        if (item.id === mainMenuItemId.MY_CHAPTERS) {
+        if (item.id === mainMenuItemId.CHAPTERS) {
           menuItem = { ...item, submenuItems: myChapterItems };
         } else {
           menuItem = {

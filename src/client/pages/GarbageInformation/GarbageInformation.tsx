@@ -10,12 +10,13 @@ import {
   SectionCollapsible,
 } from '../../components';
 import { ChapterTitles, ExternalUrls } from '../../../universal/config';
-import { GarbageMoment, GarbagePoint } from '../../hooks/api/api.garbage';
+import { GarbageMoment, GarbagePoint } from '../../../server/services';
 import React, { ReactNode, useContext } from 'react';
 
 import { AppContext } from '../../AppState';
 import classnames from 'classnames';
-import { getFullAddress } from '../../data-formatting/brp';
+import { getFullAddress } from '../Profile/formatData';
+import { isLoading } from '../../../universal/helpers';
 import styles from './GarbageInformation.module.scss';
 
 interface PanelProps {
@@ -55,25 +56,19 @@ function GarbagePointItem({ item }: { item: GarbagePoint }) {
 }
 
 export default () => {
-  const {
-    BRP,
-    GARBAGE: {
-      isLoading,
-      data: { wegbrengen, ophalen, centroid },
-    },
-  } = useContext(AppContext);
+  const { BRP, AFVAL, BAG } = useContext(AppContext);
 
-  const garbageContainersMapUrl = centroid
-    ? `https://kaart.amsterdam.nl/afvalcontainers#19/${centroid[1]}/${centroid[0]}/topo/9749,9750,9751,9752,9753,9754/9748/`
+  const garbageContainersMapUrl = BAG?.latlng
+    ? `https://kaart.amsterdam.nl/afvalcontainers#19/${BAG.latlng.lat}/${BAG.latlng.lng}/topo/9749,9750,9751,9752,9753,9754/9748/`
     : '';
 
   const garbagePointCollapsible = (id: string, item: GarbageMoment) => (
     <SectionCollapsible
       id={id}
       className={styles.InfoSection}
-      isLoading={isLoading}
+      isLoading={isLoading(AFVAL)}
       title={item.title}
-      hasItems={!!ophalen.length}
+      hasItems={!!AFVAL?.ophalen.length}
       noItemsMessage="Informatie over afval in uw buurt kan niet worden getoond"
     >
       {!!item.aanbiedwijze && (
@@ -103,7 +98,7 @@ export default () => {
     </SectionCollapsible>
   );
 
-  const [restafval, grofvuil] = ophalen;
+  const [restafval, grofvuil] = AFVAL?.ophalen;
 
   return (
     <DetailPage className={styles.GarbageInformation}>
@@ -120,10 +115,10 @@ export default () => {
         </p>
       </PageContent>
 
-      {!!BRP.data?.adres && (
+      {!!BRP?.adres && (
         <GarbagePanel className={styles.AddressPanel}>
           <Heading size="tiny">Uw adres</Heading>
-          <p>{getFullAddress(BRP.data.adres)}</p>
+          <p>{getFullAddress(BRP?.adres)}</p>
         </GarbagePanel>
       )}
 
@@ -150,7 +145,7 @@ export default () => {
         )}
         title="Afvalpunten"
       >
-        {wegbrengen.map(item => (
+        {AFVAL?.wegbrengen.map(item => (
           <GarbagePointItem key={item.naam} item={item} />
         ))}
       </SectionCollapsible>

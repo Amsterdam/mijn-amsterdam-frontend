@@ -1,6 +1,6 @@
 import ChapterIcon from '../ChapterIcon/ChapterIcon';
 import { Colors } from '../../../universal/config';
-import { FocusItem } from '../../data-formatting/focus';
+import { FocusItem } from '../../../server/services/focus';
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { NavLink } from 'react-router-dom';

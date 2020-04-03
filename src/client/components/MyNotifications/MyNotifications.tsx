@@ -1,8 +1,4 @@
 import { AppRoutes, Colors } from '../../../universal/config';
-import {
-  MyNotification,
-  useMyNotificationsState,
-} from '../../hooks/api/my-notifications-api.hook';
 import { defaultDateFormat, isInteralUrl } from '../../../universal/helpers';
 import {
   trackItemPresentation,
@@ -13,7 +9,9 @@ import ChapterIcon from '../ChapterIcon/ChapterIcon';
 import Heading from '../Heading/Heading';
 import Linkd from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
+import { MyNotification as MyNotificationBase } from '../../../server/services/services-notifications';
 import React from 'react';
+import { SVGComponent } from '../../../universal/types/App.types';
 import classNames from 'classnames';
 import styles from './MyNotifications.module.scss';
 import useRouter from 'use-react-router';
@@ -27,6 +25,10 @@ export interface MyNotificationsProps {
   noContentNotification?: string;
 }
 
+interface MyNotification extends MyNotificationBase {
+  Icon?: SVGComponent;
+}
+
 export default function MyNotifications({
   items = [],
   total = 0,
@@ -36,17 +38,9 @@ export default function MyNotifications({
   noContentNotification = 'Er zijn op dit moment geen updates voor u.',
   ...otherProps
 }: MyNotificationsProps) {
-  const [
-    myNotificationsState,
-    setMyNotificationsState,
-  ] = useMyNotificationsState();
   const { history } = useRouter();
 
   function showNotification(id: string, to: string) {
-    setMyNotificationsState({
-      ...myNotificationsState,
-      [id]: true,
-    });
     history.push(to);
   }
 
@@ -132,7 +126,7 @@ export default function MyNotifications({
                       }}
                     >
                       {(item.link || item.customLink)?.title ||
-                        'Meer informatie'}{' '}
+                        'Meer informatie'}
                     </Linkd>
                   </p>
                 )}
@@ -145,7 +139,7 @@ export default function MyNotifications({
       )}
       {!isLoading && showMoreLink && (
         <p className={styles.FooterLink}>
-          <Linkd href={AppRoutes.MELDINGEN}>Alle meldingen</Linkd>
+          <Linkd href={AppRoutes.UPDATES}>Alle meldingen</Linkd>
         </p>
       )}
     </div>

@@ -5,20 +5,20 @@ export type MainMenuId =
   | Chapter
   | 'DASHBOARD'
   | 'MIJN_THEMAS'
-  | 'MIJN_BUURT'
+  | 'BUURT'
   | 'MIJN_UPDATES';
 
 export const mainMenuItemId: { [key: string]: MainMenuId } = {
   HOME: 'DASHBOARD',
-  MY_CHAPTERS: 'MIJN_THEMAS',
-  MIJN_BUURT: 'MIJN_BUURT',
+  CHAPTERS: 'MIJN_THEMAS',
+  BUURT: 'BUURT',
   UPDATES: 'MIJN_UPDATES',
 };
 
 export const MenuItemTitles = {
   HOME: ChapterTitles.ROOT,
-  MY_CHAPTERS: "Mijn thema's",
-  MIJN_BUURT: ChapterTitles.MIJN_BUURT,
+  CHAPTERS: "Mijn thema's",
+  BUURT: ChapterTitles.BUURT,
   UPDATES: ChapterTitles.UPDATES,
 };
 
@@ -29,14 +29,14 @@ export const mainMenuItems: MenuItem[] = [
     to: AppRoutes.ROOT,
   },
   {
-    title: MenuItemTitles.MY_CHAPTERS,
-    id: mainMenuItemId.MY_CHAPTERS,
+    title: MenuItemTitles.CHAPTERS,
+    id: mainMenuItemId.CHAPTERS,
     to: '',
   },
   {
-    title: MenuItemTitles.MIJN_BUURT,
-    id: mainMenuItemId.MIJN_BUURT,
-    to: AppRoutes.MIJN_BUURT,
+    title: MenuItemTitles.BUURT,
+    id: mainMenuItemId.BUURT,
+    to: AppRoutes.BUURT,
   },
   {
     title: MenuItemTitles.UPDATES,
@@ -46,5 +46,5 @@ export const mainMenuItems: MenuItem[] = [
 ];
 
 export const submenuItems: { [id: string]: MenuItem[] } = {
-  [mainMenuItemId.MY_CHAPTERS]: myChaptersMenuItems,
+  [mainMenuItemId.CHAPTERS]: myChaptersMenuItems,
 };

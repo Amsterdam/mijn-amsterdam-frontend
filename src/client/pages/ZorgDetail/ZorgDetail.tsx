@@ -9,15 +9,15 @@ import {
 } from '../../components';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import React, { useContext } from 'react';
+import { isError, isLoading } from '../../../universal/helpers';
 
 import { AppContext } from '../../AppState';
+import { StepType } from '../../components/StatusLine/StatusLine';
 import styles from './ZorgDetail.module.scss';
 import useRouter from 'use-react-router';
 
 export default () => {
-  const {
-    WMO: { data: items, isError, isLoading },
-  } = useContext(AppContext);
+  const { WMO } = useContext(AppContext);
 
   const {
     match: {
@@ -25,27 +25,40 @@ export default () => {
     },
   } = useRouter();
 
-  const WmoItem = items.find(item => item.id === id);
-  const noContent = !isLoading && !WmoItem;
+  const WmoItem = WMO?.items.find(item => item.id === id);
+  const noContent = !isLoading(WMO) && !WmoItem;
+  const lineItemsTotal = WmoItem?.process.length || 0;
+  const items =
+    WmoItem?.process.map((item, index) => {
+      const stepType: StepType =
+        index === lineItemsTotal
+          ? 'last-step'
+          : index === 0
+          ? 'first-step'
+          : 'intermediate-step';
+      return Object.assign(item, { stepType });
+    }) || [];
 
   return (
     <DetailPage>
       <PageHeading
         icon={<ChapterIcon />}
         backLink={{ to: AppRoutes.ZORG, title: ChapterTitles.ZORG }}
-        isLoading={isLoading}
+        isLoading={isLoading(WMO)}
       >
-        {WmoItem && WmoItem.title}
+        {WmoItem?.title}
       </PageHeading>
 
       <PageContent className={styles.DetailPageContent}>
-        {(isError || noContent) && (
+        {(isError(WMO) || noContent) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>
         )}
-        {isLoading && <LoadingContent className={styles.LoadingContentInfo} />}
-        {!!WmoItem && !!WmoItem.supplier && (
+        {isLoading(WMO) && (
+          <LoadingContent className={styles.LoadingContentInfo} />
+        )}
+        {!!WmoItem?.supplier && (
           <p className={styles.InfoDetail}>
             Aanbieder
             <strong>{WmoItem.supplier}</strong>
@@ -55,7 +68,7 @@ export default () => {
 
       {!!WmoItem && (
         <StatusLine
-          items={WmoItem.process}
+          items={items}
           trackCategory="Zorg en ondersteuning / Voorziening"
           id={id}
           altDocumentContent={(statusLineItem, stepNumber) => {

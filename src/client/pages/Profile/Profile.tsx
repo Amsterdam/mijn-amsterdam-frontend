@@ -11,16 +11,20 @@ import {
 } from '../../components';
 import { PanelConfigFormatter, panelConfig } from './Profile.constants';
 import React, { useContext, useMemo } from 'react';
+import {
+  defaultDateFormat,
+  isError,
+  isLoading,
+} from '../../../universal/helpers';
 
 import { AppContext } from '../../AppState';
-import { BrpApiState } from '../../hooks/api/api.brp';
-import { defaultDateFormat } from '../../../universal/helpers';
-import { formatBrpProfileData } from '../../data-formatting/brp';
+import { ServicesRelatedData } from '../../hooks/api/api.services-related';
+import { formatBrpProfileData } from './formatData';
 import styles from './Profile.module.scss';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,
-  BRP: BrpApiState
+  BRP: ServicesRelatedData['BRP']
 ) {
   if (typeof panelConfig === 'function') {
     return panelConfig(BRP);
@@ -31,11 +35,9 @@ function formatInfoPanelConfig(
 export default function Profile() {
   const { BRP } = useContext(AppContext);
 
-  const { isDirty, isError, data } = BRP;
   const brpProfileData = useMemo(() => {
-    const rData = isDirty && !isError ? data : null;
-    return rData ? formatBrpProfileData(rData) : rData;
-  }, [data, isDirty, isError]);
+    return BRP ? formatBrpProfileData(BRP) : BRP;
+  }, [BRP]);
 
   return (
     <DetailPage className={styles.Profile}>
@@ -48,7 +50,7 @@ export default function Profile() {
           dus dat deze gegevens kloppen.
         </p>
 
-        {BRP.isLoading && (
+        {isLoading(BRP) && (
           <div className={styles.LoadingContent}>
             <LoadingContent />
             <LoadingContent />
@@ -56,18 +58,18 @@ export default function Profile() {
           </div>
         )}
 
-        {BRP.isError && (
+        {isError(BRP) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>
         )}
 
-        {data.persoon?.vertrokkenOnbekendWaarheen && (
+        {BRP?.persoon.vertrokkenOnbekendWaarheen && (
           <Alert type="warning" className="vertrokkenOnbekendWaarheen">
             <p>
               U staat sinds{' '}
-              {data.persoon.datumVertrekUitNederland
-                ? defaultDateFormat(data.persoon.datumVertrekUitNederland)
+              {BRP?.persoon.datumVertrekUitNederland
+                ? defaultDateFormat(BRP?.persoon.datumVertrekUitNederland)
                 : 'enige tijd'}{' '}
               in de BRP geregistreerd als "vertrokken – onbekend waarheen".
             </p>
@@ -85,7 +87,7 @@ export default function Profile() {
           </Alert>
         )}
 
-        {data?.adres?.inOnderzoek && (
+        {BRP?.adres?.inOnderzoek && (
           <Alert type="warning" className="inOnderzoek">
             <p>
               Op dit moment onderzoeken wij of u nog steeds woont op het adres

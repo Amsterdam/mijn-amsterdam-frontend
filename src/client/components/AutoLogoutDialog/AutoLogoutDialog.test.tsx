@@ -2,7 +2,7 @@ import AutoLogoutDialog, { AutoLogoutDialogSettings } from './AutoLogoutDialog';
 
 import { LOGOUT_URL } from '../../../universal/config';
 import React from 'react';
-import { SessionContext } from '../../AppState';
+import { SessionContext } from '../../SessionState';
 import { mount } from 'enzyme';
 
 const ONE_SECOND_IN_MS = 1000;

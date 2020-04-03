@@ -1,7 +1,13 @@
-import { AppRoutes } from '../../../universal/config';
+import {
+  DEFAULT_MAP_DISPLAY_CONFIG,
+  IS_MY_AREA_2_ENABLED,
+  LOCATION_ZOOM,
+  MapDisplayOptions,
+} from './MyArea.constants';
 import { Link, NavLink } from 'react-router-dom';
 import React, { HTMLProps, PropsWithChildren } from 'react';
 
+import { AppRoutes } from '../../../universal/config';
 import { ReactComponent as CloseIcon } from '../../assets/icons/Close.svg';
 import Heading from '../Heading/Heading';
 import { ReactComponent as HomeIcon } from '../../assets/icons/home.svg';
@@ -13,12 +19,6 @@ import { MaMap } from './MaMap';
 import { MaZoomControl } from './MaZoomControl';
 import classnames from 'classnames';
 import styles from './MyArea.module.scss';
-import {
-  DEFAULT_MAP_DISPLAY_CONFIG,
-  IS_MY_AREA_2_ENABLED,
-  LOCATION_ZOOM,
-  MapDisplayOptions,
-} from './MyArea.constants';
 
 export function MyAreaHeader() {
   return (
@@ -89,7 +89,7 @@ export function MyAreaMapIFrame({ url, className }: MyAreaMapIframeProps) {
 interface MyAreaMapComponentProps {
   id?: string;
   title?: string;
-  center?: Centroid;
+  center?: LatLngObject;
   homeAddress?: string;
   options?: MapDisplayOptions;
   className?: string;
@@ -122,7 +122,7 @@ export default function MyAreaMap({
 }
 
 interface MyAreaDashboardComponentProps extends HTMLProps<HTMLDivElement> {
-  center?: Centroid;
+  center?: LatLngObject;
   url?: string;
 }
 
@@ -140,7 +140,7 @@ export function MyAreaDashboard({
         />
       )}
       {!IS_MY_AREA_2_ENABLED && <MyAreaMapIFrame url={url} />}
-      <NavLink to={AppRoutes.MIJN_BUURT} className={styles.MapDashboardOverlay}>
+      <NavLink to={AppRoutes.BUURT} className={styles.MapDashboardOverlay}>
         <div>
           <Heading size="large">Mijn buurt</Heading>
           <p>

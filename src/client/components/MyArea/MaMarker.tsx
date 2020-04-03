@@ -1,13 +1,12 @@
 import { Marker, useMapInstance } from '@datapunt/react-maps';
 import React, { PropsWithChildren, useEffect, useRef, useState } from 'react';
 
+import { DEFAULT_ZOOM } from './MyArea.constants';
 import L from 'leaflet';
 import { MaPopup } from './MaPopup';
 import { MaTooltip } from './MaTooltip';
 import { firstChildOfType } from './utils';
 import iconUrl from '../../assets/icons/home.svg';
-import { toLatLng } from '../../../universal/helpers';
-import { DEFAULT_ZOOM } from './MyArea.constants';
 
 function useBindComponentToMarker(component: any, markerInstance: any) {
   const componentRef = useRef();
@@ -29,7 +28,10 @@ function useBindComponentToMarker(component: any, markerInstance: any) {
   return component;
 }
 
-type MaMarkerProps = PropsWithChildren<{ center: Centroid; iconUrl: string }>;
+type MaMarkerProps = PropsWithChildren<{
+  center: LatLngObject;
+  iconUrl: string;
+}>;
 
 function MaMarker({ children, center, iconUrl }: MaMarkerProps) {
   const [markerInstance, setMarkerInstance] = useState<L.Marker<any>>();
@@ -54,7 +56,7 @@ function MaMarker({ children, center, iconUrl }: MaMarkerProps) {
       <Marker
         setInstance={setMarkerInstance}
         options={{ icon }}
-        args={[toLatLng(center)]}
+        args={[center]}
       />
       {popup}
       {tooltip}
@@ -63,7 +65,7 @@ function MaMarker({ children, center, iconUrl }: MaMarkerProps) {
 }
 
 interface HomeIconMarkerProps {
-  center: Centroid;
+  center: LatLngObject;
   address?: string;
   zoom?: number;
 }
@@ -77,7 +79,7 @@ export function HomeIconMarker({
 
   useEffect(() => {
     if (center && mapInstance) {
-      mapInstance.setView(toLatLng(center), zoom);
+      mapInstance.setView(center, zoom);
     }
   }, [center, zoom, mapInstance]);
 

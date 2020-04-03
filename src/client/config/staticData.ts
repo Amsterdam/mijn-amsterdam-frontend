@@ -1,6 +1,6 @@
-import { Chapters } from './chapter';
-import { ExternalUrls } from './app';
-import { MyNotification } from '../../client/hooks/api/my-notifications-api.hook';
+import { Chapters } from '../../universal/config/chapter';
+import { ExternalUrls } from '../../universal/config/app';
+import { MyNotification } from '../../server/services/services-notifications';
 
 export const WelcomeNotification: MyNotification = {
   id: 'welcome01',

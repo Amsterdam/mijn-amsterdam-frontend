@@ -1,13 +1,12 @@
 import { ReactComponent as HomeIconSimple } from '../../assets/icons/home-simple.svg';
+import { LOCATION_ZOOM } from './MyArea.constants';
 import React from 'react';
 import classnames from 'classnames';
 import styles from './MyArea.module.scss';
-import { toLatLng } from '../../../universal/helpers';
 import { useMapInstance } from '@datapunt/react-maps';
-import { LOCATION_ZOOM } from './MyArea.constants';
 
 interface ZoomControlComponentProps {
-  center: Centroid;
+  center: LatLngObject;
   homeZoom?: number;
 }
 
@@ -38,7 +37,7 @@ export function MaZoomControl({
     <div className={styles.ZoomControl}>
       <ZoomControlButton
         onClick={() => {
-          mapInstance && mapInstance.setView(toLatLng(center), homeZoom);
+          mapInstance && mapInstance.setView(center, homeZoom);
         }}
       >
         <HomeIconSimple width={30} height={30} fill="#000" />
