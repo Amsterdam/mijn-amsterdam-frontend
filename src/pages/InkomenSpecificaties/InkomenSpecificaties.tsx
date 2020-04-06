@@ -13,7 +13,6 @@ import { AppRoutes } from 'config/Routing.constants';
 import { Button } from 'components/Button/Button';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import { ChapterTitles } from 'config/Chapter.constants';
-import { DEFAULT_DATE_FORMAT } from '../../config/App.constants';
 import DateInput from 'components/DateInput/DateInput';
 import PageHeading from 'components/PageHeading/PageHeading';
 import Pagination from 'components/Pagination/Pagination';
@@ -62,32 +61,22 @@ export default () => {
     ? jaaropgaven
     : uitkeringsspecificaties;
 
-  const [selectedType, setSelectedType] = useState('');
-
-  const itemsFilteredByType = useMemo(() => {
-    return items.filter(item =>
-      selectedType ? item.type === selectedType : true
-    );
-  }, [items, selectedType]);
-
   const maxDate = useMemo(() => {
-    if (itemsFilteredByType.length) {
-      return new Date(itemsFilteredByType[0].datePublished);
+    if (items.length) {
+      return new Date(items[0].datePublished);
     }
     return new Date();
-  }, [itemsFilteredByType]);
+  }, [items]);
 
   const minDate = useMemo(() => {
-    if (itemsFilteredByType.length) {
-      return new Date(
-        itemsFilteredByType[itemsFilteredByType.length - 1].datePublished
-      );
+    if (items.length) {
+      return new Date(items[items.length - 1].datePublished);
     }
     return new Date();
-  }, [itemsFilteredByType]);
+  }, [items]);
 
   const [isSearchPanelActive, setSearchPanelActive] = useState(false);
-
+  const [selectedType, setSelectedType] = useState('');
   const [selectedDates, setSelectedDates] = useState<[Date, Date]>([
     minDate,
     maxDate,
@@ -110,13 +99,15 @@ export default () => {
 
   const [[startIndex, endIndex], setPageIndex] = useState(INITIAL_INDEX);
 
-  const itemsFiltered = items.filter(item => {
-    const datePublished = new Date(item.datePublished);
-    return (
-      datePublished >= new Date(selectedDates[0]) &&
-      datePublished <= new Date(selectedDates[1])
-    );
-  });
+  const itemsFiltered = items
+    .filter(item => (selectedType ? item.type === selectedType : true))
+    .filter(item => {
+      const datePublished = new Date(item.datePublished);
+      return (
+        datePublished >= new Date(selectedDates[0]) &&
+        datePublished <= new Date(selectedDates[1])
+      );
+    });
 
   const itemsFilteredPaginated = itemsFiltered.slice(startIndex, endIndex + 1);
 
@@ -197,8 +188,6 @@ export default () => {
               Datum van
               <DateInput
                 className={styles.DatePicker}
-                minDate={minDate}
-                maxDate={maxDate}
                 value={selectedDates[0]}
                 onChange={dateStart => {
                   setSelectedDates(([, dateEnd]) => [
@@ -212,8 +201,6 @@ export default () => {
               Datum tot
               <DateInput
                 className={styles.DatePicker}
-                minDate={minDate}
-                maxDate={maxDate}
                 value={selectedDates[1]}
                 onChange={dateEnd =>
                   setSelectedDates(([dateStart]) => [

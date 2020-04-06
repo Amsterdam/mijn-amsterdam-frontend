@@ -1045,10 +1045,13 @@ export interface FocusInkomenSpecificatie
 function formatIncomSpecificationItem(
   item: FocusInkomenSpecificatieFromSource
 ): FocusInkomenSpecificatie {
-  const displayDate = defaultDateFormat(item.datePublished);
+  // Strip down to primitive date value.
+  const datePublished = item.datePublished.split('T')[0];
+  const displayDate = defaultDateFormat(new Date(datePublished));
   return {
     ...item,
     displayDate,
+    datePublished,
     documentUrl: (
       <a
         href={`/api/${item.url}`}
