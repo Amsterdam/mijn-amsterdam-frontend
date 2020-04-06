@@ -18,7 +18,7 @@ export const AppRoutes = {
   PROCLAIMER: '/proclaimer',
   API_LOGIN: `${API_BASE_URL}/login`,
   MIJN_TIPS: '/overzicht-tips',
-  MELDINGEN: '/overzicht-meldingen',
+  MELDINGEN: '/overzicht-updates',
   AFVAL: '/afval',
 };
 
