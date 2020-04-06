@@ -1,11 +1,3 @@
-import { Colors } from 'config/App.constants';
-import { AppRoutes } from 'config/Routing.constants';
-import classNames from 'classnames';
-import Linkd from 'components/Button/Button';
-import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
-import Heading from 'components/Heading/Heading';
-import LoadingContent from 'components/LoadingContent/LoadingContent';
-import { defaultDateFormat } from 'helpers/App';
 import {
   MyNotification,
   useMyNotificationsState,
@@ -14,11 +6,19 @@ import {
   trackItemPresentation,
   useSessionCallbackOnceDebounced,
 } from 'hooks/analytics.hook';
-import React from 'react';
-import useRouter from 'use-react-router';
 
-import styles from './MyNotifications.module.scss';
+import { AppRoutes } from 'config/Routing.constants';
+import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
+import { Colors } from 'config/App.constants';
+import Heading from 'components/Heading/Heading';
+import Linkd from 'components/Button/Button';
+import LoadingContent from 'components/LoadingContent/LoadingContent';
+import React from 'react';
+import classNames from 'classnames';
+import { defaultDateFormat } from 'helpers/App';
 import { isInteralUrl } from 'helpers/App';
+import styles from './MyNotifications.module.scss';
+import useRouter from 'use-react-router';
 
 export interface MyNotificationsProps {
   items: MyNotification[];
@@ -35,7 +35,7 @@ export default function MyNotifications({
   showMoreLink = false,
   isLoading = true,
   trackCategory,
-  noContentNotification = 'Er zijn op dit moment geen meldingen voor u.',
+  noContentNotification = 'Er zijn op dit moment geen updates voor u.',
   ...otherProps
 }: MyNotificationsProps) {
   const [
@@ -53,7 +53,7 @@ export default function MyNotifications({
   }
 
   useSessionCallbackOnceDebounced(trackCategory, () =>
-    trackItemPresentation(trackCategory, 'Aantal meldingen', items.length)
+    trackItemPresentation(trackCategory, 'Aantal updates', items.length)
   );
 
   return (
@@ -143,7 +143,7 @@ export default function MyNotifications({
       )}
       {!isLoading && showMoreLink && (
         <p className={styles.FooterLink}>
-          <Linkd href={AppRoutes.MELDINGEN}>Alle meldingen</Linkd>
+          <Linkd href={AppRoutes.MELDINGEN}>Alle updates</Linkd>
         </p>
       )}
     </div>
