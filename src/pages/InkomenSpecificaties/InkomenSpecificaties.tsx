@@ -95,10 +95,6 @@ export default () => {
   useEffect(() => {
     if (minDate && maxDate) {
       setSelectedDates([minDate, maxDate]);
-      console.log(
-        format(minDate, DEFAULT_DATE_FORMAT),
-        format(maxDate, DEFAULT_DATE_FORMAT)
-      );
     }
   }, [minDate, maxDate]);
 
