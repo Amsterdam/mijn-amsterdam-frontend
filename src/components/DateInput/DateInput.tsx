@@ -1,8 +1,11 @@
-import React, { useState, useMemo, useCallback } from 'react';
-import styles from './DateInput.module.scss';
-import { getDaysInMonth } from 'date-fns';
-import { range, getMonth } from 'helpers/App';
+import React, { useCallback, useMemo, useState } from 'react';
+import { format, getDaysInMonth } from 'date-fns';
+import { getMonth, range } from 'helpers/App';
+
 import classnames from 'classnames';
+import styles from './DateInput.module.scss';
+
+const DATE_INPUT_FORMAT = 'yyyy-MM-dd';
 
 export function isNativeDatePickerInputSupported() {
   const input = document.createElement('input');
@@ -13,10 +16,10 @@ export function isNativeDatePickerInputSupported() {
 }
 
 export interface ComponentProps {
-  onChange: (date: string) => void;
-  value: string;
-  minDate: string;
-  maxDate: string;
+  onChange: (date: Date) => void;
+  value: Date;
+  minDate: Date;
+  maxDate: Date;
   className?: string;
 }
 
@@ -45,28 +48,30 @@ export default function DateInput({
   maxDate,
   className,
 }: ComponentProps) {
+  const valueDateFormatted = format(value, DATE_INPUT_FORMAT);
+  const minDateFormatted = format(minDate, DATE_INPUT_FORMAT);
+  const maxDateFormatted = format(maxDate, DATE_INPUT_FORMAT);
+
   const [[yearSelected, monthSelected, daySelected], setDateState] = useState(
-    parseDateParts(value)
+    parseDateParts(valueDateFormatted)
   );
 
-  if (!checkValiDateFormat(minDate)) {
-    throw new Error(
-      'minDate, maxDate and value should be provided in the following format: yyyy-MM-dd'
-    );
-  }
+  const initalValue = useMemo(() => {
+    return value;
+  }, []);
 
   const minDateParts = useMemo(() => {
-    return parseDateParts(minDate);
-  }, [minDate]);
+    return parseDateParts(minDateFormatted);
+  }, [minDateFormatted]);
 
   const maxDateParts = useMemo(() => {
-    return parseDateParts(maxDate);
-  }, [maxDate]);
+    return parseDateParts(maxDateFormatted);
+  }, [maxDateFormatted]);
 
   const setDate = useCallback(
     (date: [number, number, number]) => {
       setDateState(date);
-      onChange(date.join('-'));
+      onChange(new Date(date.join('-')));
     },
     [onChange, setDateState]
   );
@@ -113,10 +118,14 @@ export default function DateInput({
         <input
           className={classnames(styles.DateInput, className)}
           type="date"
-          min={minDate}
-          max={maxDate}
-          value={value}
-          onChange={event => onChange(event.target.value)}
+          min={minDateFormatted}
+          max={maxDateFormatted}
+          value={valueDateFormatted}
+          onChange={event => {
+            onChange(
+              event.target.value ? new Date(event.target.value) : initalValue
+            );
+          }}
         />
       )}
       {!hasNativeSupport && (

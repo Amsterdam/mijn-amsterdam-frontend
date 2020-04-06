@@ -13,6 +13,7 @@ import { AppRoutes } from 'config/Routing.constants';
 import { Button } from 'components/Button/Button';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import { ChapterTitles } from 'config/Chapter.constants';
+import { DEFAULT_DATE_FORMAT } from '../../config/App.constants';
 import DateInput from 'components/DateInput/DateInput';
 import PageHeading from 'components/PageHeading/PageHeading';
 import Pagination from 'components/Pagination/Pagination';
@@ -38,7 +39,6 @@ export const annualStatementsTableDisplayProps = {
 
 const PAGE_SIZE = 10;
 const INITIAL_INDEX = [0, PAGE_SIZE - 1];
-const DATE_INPUT_FORMAT = 'yyyy-MM-dd';
 
 export default () => {
   const {
@@ -61,26 +61,33 @@ export default () => {
     ? jaaropgaven
     : uitkeringsspecificaties;
 
+  const [selectedType, setSelectedType] = useState('');
+
+  const itemsFilteredByType = useMemo(() => {
+    return items.filter(item =>
+      selectedType ? item.type === selectedType : true
+    );
+  }, [items, selectedType]);
+
   const maxDate = useMemo(() => {
-    if (items.length) {
-      return format(new Date(items[0].datePublished), DATE_INPUT_FORMAT);
+    if (itemsFilteredByType.length) {
+      return new Date(itemsFilteredByType[0].datePublished);
     }
-    return format(new Date(), DATE_INPUT_FORMAT);
-  }, [items]);
+    return new Date();
+  }, [itemsFilteredByType]);
 
   const minDate = useMemo(() => {
-    if (items.length) {
-      return format(
-        new Date(items[items.length - 1].datePublished),
-        DATE_INPUT_FORMAT
+    if (itemsFilteredByType.length) {
+      return new Date(
+        itemsFilteredByType[itemsFilteredByType.length - 1].datePublished
       );
     }
-    return format(new Date(), DATE_INPUT_FORMAT);
-  }, [items]);
+    return new Date();
+  }, [itemsFilteredByType]);
 
   const [isSearchPanelActive, setSearchPanelActive] = useState(false);
-  const [selectedType, setSelectedType] = useState('');
-  const [selectedDates, setSelectedDates] = useState<[string, string]>([
+
+  const [selectedDates, setSelectedDates] = useState<[Date, Date]>([
     minDate,
     maxDate,
   ]);
@@ -88,13 +95,17 @@ export default () => {
   useEffect(() => {
     if (minDate && maxDate) {
       setSelectedDates([minDate, maxDate]);
+      console.log(
+        format(minDate, DEFAULT_DATE_FORMAT),
+        format(maxDate, DEFAULT_DATE_FORMAT)
+      );
     }
   }, [minDate, maxDate]);
 
   const options = useMemo(() => {
     return Array.from(
       items.reduce((acc, item) => {
-        acc.set(item.type, (acc.get(item.type) || 1) + 1);
+        acc.set(item.type, (acc.get(item.type) || 0) + 1);
         return acc;
       }, new Map<string, number>())
     );
@@ -102,15 +113,13 @@ export default () => {
 
   const [[startIndex, endIndex], setPageIndex] = useState(INITIAL_INDEX);
 
-  const itemsFiltered = items
-    .filter(item => (selectedType ? item.type === selectedType : true))
-    .filter(item => {
-      const datePublished = new Date(item.datePublished);
-      return (
-        datePublished >= new Date(selectedDates[0]) &&
-        datePublished <= new Date(selectedDates[1])
-      );
-    });
+  const itemsFiltered = items.filter(item => {
+    const datePublished = new Date(item.datePublished);
+    return (
+      datePublished >= new Date(selectedDates[0]) &&
+      datePublished <= new Date(selectedDates[1])
+    );
+  });
 
   const itemsFilteredPaginated = itemsFiltered.slice(startIndex, endIndex + 1);
 
