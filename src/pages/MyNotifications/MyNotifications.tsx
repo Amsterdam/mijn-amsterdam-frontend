@@ -1,12 +1,12 @@
-import { AppContext } from 'AppState';
-import Alert from 'components/Alert/Alert';
-import MyNotifications from 'components/MyNotifications/MyNotifications';
 import { DetailPage, PageContent } from 'components/Page/Page';
-import PageHeading from 'components/PageHeading/PageHeading';
 import React, { useContext } from 'react';
 
-import styles from './MyNotifications.module.scss';
+import Alert from 'components/Alert/Alert';
+import { AppContext } from 'AppState';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
+import MyNotifications from 'components/MyNotifications/MyNotifications';
+import PageHeading from 'components/PageHeading/PageHeading';
+import styles from './MyNotifications.module.scss';
 
 export default () => {
   const {
@@ -24,7 +24,7 @@ export default () => {
       <PageContent>
         {isError && (
           <Alert type="warning">
-            <p>Niet alle meldingen kunnen op dit moment worden getoond.</p>
+            <p>Niet alle updates kunnen op dit moment worden getoond.</p>
           </Alert>
         )}
       </PageContent>
@@ -32,7 +32,7 @@ export default () => {
         isLoading={isLoading}
         total={total}
         items={items}
-        noContentNotification="Er zijn op dit moment geen actuele meldingen voor u."
+        noContentNotification="Er zijn op dit moment geen actuele updates voor u."
         trackCategory="Actueel overzicht"
       />
     </DetailPage>

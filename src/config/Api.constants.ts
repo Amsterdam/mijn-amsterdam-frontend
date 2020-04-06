@@ -1,5 +1,5 @@
-import { StateKey } from 'AppState';
 import { FeatureToggle } from './App.constants';
+import { StateKey } from 'AppState';
 
 export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/api/login';
 export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL || '/logout';
@@ -17,7 +17,7 @@ export type ApiName = StateKey | 'BAG' | 'AUTH' | 'AFVAL_OPHAAL_GEBIEDEN';
 
 export const ApiUrls: TypeIndex<ApiName, string> = {
   BELASTINGEN: `${API_BASE_URL}/belastingen/get`,
-  MELDINGEN: `${API_BASE_URL}/mijn-meldingen`,
+  MELDINGEN: `${API_BASE_URL}/updates`,
   MY_CASES: `${API_BASE_URL}/focus/aanvragen`,
   MIJN_TIPS: `${API_BASE_URL}/tips/gettips`,
   BRP: `${API_BASE_URL}/brp/brp`,
@@ -57,16 +57,16 @@ export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
 };
 
 export const ErrorNames: { [stateKey: string]: string } = {
-  BRP: 'Persoonlijke gegevens + actuele meldingen',
+  BRP: 'Persoonlijke gegevens + actuele updates',
   MY_CASES: 'Lopende zaken',
   MIJN_TIPS: 'Tips',
   WMO: 'Zorg en ondersteuning',
-  FOCUS: 'Inkomen en Stadspas + actuele meldingen',
-  FOCUS_INKOMEN_SPECIFICATIES: 'Inkomen en Stadspas + actuele meldingen',
+  FOCUS: 'Inkomen en Stadspas + actuele updates',
+  FOCUS_INKOMEN_SPECIFICATIES: 'Inkomen en Stadspas + actuele updates',
   MY_CHAPTERS: "Thema's",
   ERFPACHT: 'Erfpacht',
   GARBAGE: 'Afval',
   MIJN_BUURT: 'Mijn buurt',
-  BELASTINGEN: 'Belastingen + meldingen',
+  BELASTINGEN: 'Belastingen + updates',
   MILIEUZONE: 'Milieuzone',
 };

@@ -1,28 +1,28 @@
 import { BrpApiState, useBrpApi } from 'hooks/api/api.brp';
-import useMyTipsApi from 'hooks/api/my-tips-api.hook';
-import useMyNotificationsApi from 'hooks/api/my-notifications-api.hook';
-import useSessionApi, { SessionApiState } from 'hooks/api/session.api.hook';
 import React, { createContext, useEffect } from 'react';
-
-import { ComponentChildren } from './App.types';
+import { getBagSearchAddress, isMokum } from 'data-formatting/brp';
+import useBelastingApi, { BelastingApiState } from './hooks/api/api.belasting';
 import useErfpachtApi, { ErfpachtApiState } from './hooks/api/api.erfpacht';
 import useFocusApi, {
   FocusApiState,
-  useFocusInkomenSpecificatiesApi,
   FocusInkomenSpecificatiesApiState,
+  useFocusInkomenSpecificatiesApi,
 } from './hooks/api/api.focus';
-import useWmoApi, { WmoApiState } from './hooks/api/api.wmo';
-import { MyTipsApiState } from './hooks/api/my-tips-api.hook';
-import { MyNotificationsApiState } from './hooks/api/my-notifications-api.hook';
-import { MyChaptersApiState } from './helpers/myChapters';
-import useMyArea, { MyAreaApiState } from './hooks/api/api.myarea';
-import { getFullAddress, isMokum } from 'data-formatting/brp';
-import { getApiConfigValue } from 'helpers/App';
-import { GarbageApiState } from './hooks/api/api.garbage';
-import useBelastingApi, { BelastingApiState } from './hooks/api/api.belasting';
-import useGarbageApi from './hooks/api/api.garbage';
-import getMyChapters from './helpers/myChapters';
 import useMilieuzoneApi, { MilieuzoneApiState } from 'hooks/api/api.milieuzone';
+import useMyArea, { MyAreaApiState } from './hooks/api/api.myarea';
+import useSessionApi, { SessionApiState } from 'hooks/api/session.api.hook';
+import useWmoApi, { WmoApiState } from './hooks/api/api.wmo';
+
+import { ComponentChildren } from './App.types';
+import { GarbageApiState } from './hooks/api/api.garbage';
+import { MyChaptersApiState } from './helpers/myChapters';
+import { MyNotificationsApiState } from './hooks/api/my-notifications-api.hook';
+import { MyTipsApiState } from './hooks/api/my-tips-api.hook';
+import { getApiConfigValue } from 'helpers/App';
+import getMyChapters from './helpers/myChapters';
+import useGarbageApi from './hooks/api/api.garbage';
+import useMyNotificationsApi from 'hooks/api/my-notifications-api.hook';
+import useMyTipsApi from 'hooks/api/my-tips-api.hook';
 
 type MyCasesApiState = FocusApiState;
 
@@ -125,7 +125,7 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
       MILIEUZONE.isDirty,
   ];
 
-  const address = BRP?.data?.adres ? getFullAddress(BRP.data.adres) : '';
+  const address = BRP?.data?.adres ? getBagSearchAddress(BRP.data.adres) : '';
   const mokum = isMokum(BRP);
   const refetchMyArea = MIJN_BUURT.refetch;
   const refetchGarbage = GARBAGE.refetch;
