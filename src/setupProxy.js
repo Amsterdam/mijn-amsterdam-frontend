@@ -69,10 +69,9 @@ module.exports = function(app) {
       target: `http://${apiHost}:${apiPort}`,
       changeOrigin: true,
       onProxyReq(proxyReq, req) {
-        proxyReq.setHeader(
-          'x-session',
-          JSON.stringify(req.session && req.session ? req.session : null)
-        );
+        if (req.session && req.session.isAuthenticated) {
+          proxyReq.setHeader('x-session', JSON.stringify(req.session));
+        }
       },
       pathRewrite: {
         '/mock-api': '/api',

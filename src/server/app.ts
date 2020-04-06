@@ -1,11 +1,10 @@
-import { API_BASE_PATH } from '../universal/config';
 import compression from 'compression';
 import cors from 'cors';
 import express from 'express';
 import { router } from './router';
 import session from 'express-session';
 
-const PORT = process.env.BFF_API_PORT || 5001;
+const PORT = process.env.BFF_API_PORT || 5000;
 
 const app = express();
 
@@ -24,8 +23,8 @@ app.use(
   })
 );
 
-app.use(API_BASE_PATH, router);
+app.use(router);
 
 app.listen(PORT, () => {
-  console.log('Mijn Amsterdam BFF api listening...');
+  console.log(`Mijn Amsterdam BFF api listening on ${PORT}...`);
 });

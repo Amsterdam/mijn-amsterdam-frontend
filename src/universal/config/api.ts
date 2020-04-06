@@ -28,23 +28,21 @@ export interface BFFApiData {
 
 export type ApiStateKey = keyof BFFApiData;
 
-export const API_BASE_PATH = '/bff';
 export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/api/login';
 export const LOGIN_EHERKENNING_URL = '/api1/login';
 export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL || '/logout';
-
-let apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
-
-export const API_BASE_URL = apiBaseUrl;
-const DATAPUNT_API_BASE_URL = process.env.REACT_APP_DATAPUNT_API_URL;
+export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || '/api';
+export const BFF_API_BASE_URL =
+  process.env.REACT_APP_BFF_API_BASE_URL || '/api/bff';
+export const DATAPUNT_API_BASE_URL = process.env.REACT_APP_DATAPUNT_API_URL;
 
 export type ApiName = string;
 
 export const BFFApiUrls: Record<string, string> = {
-  SERVICES_RELATED: `${API_BASE_URL}/${API_BASE_PATH}/services/related`,
-  SERVICES_DIRECT: `${API_BASE_URL}/${API_BASE_PATH}/services/direct`,
-  SERVICES_TIPS: `${API_BASE_URL}/${API_BASE_PATH}/services/tips`,
-  SERVICES_UPDATES: `${API_BASE_URL}/${API_BASE_PATH}/services/updates`,
+  SERVICES_RELATED: `${BFF_API_BASE_URL}/services/related`,
+  SERVICES_DIRECT: `${BFF_API_BASE_URL}/services/direct`,
+  SERVICES_TIPS: `${BFF_API_BASE_URL}/services/tips`,
+  SERVICES_UPDATES: `${BFF_API_BASE_URL}/services/updates`,
 };
 
 export const ApiUrls: Record<string, string> = {
