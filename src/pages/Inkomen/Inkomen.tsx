@@ -15,6 +15,7 @@ import { ChapterTitles } from 'config/Chapter.constants';
 import Linkd from 'components/Button/Button';
 import PageHeading from 'components/PageHeading/PageHeading';
 import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
+import classnames from 'classnames';
 import { generatePath } from 'react-router-dom';
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import styles from './Inkomen.module.scss';
@@ -166,7 +167,10 @@ export default () => {
           noItemsMessage="Er zijn op dit moment geen Jaaropgaven."
         >
           <Table
-            className={specicationsStyles.SpecificationsTable}
+            className={classnames(
+              specicationsStyles.SpecificationsTable,
+              specicationsStyles['SpecificationsTable--annualStatements']
+            )}
             items={itemsSpecificationsYearly}
             displayProps={annualStatementsTableDisplayProps}
           />

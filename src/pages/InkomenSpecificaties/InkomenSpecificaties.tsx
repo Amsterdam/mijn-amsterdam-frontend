@@ -20,6 +20,7 @@ import Pagination from 'components/Pagination/Pagination';
 import { ReactComponent as SearchIcon } from 'assets/icons/Search.svg';
 import Section from 'components/Section/Section';
 import Table from 'components/Table/Table';
+import classnames from 'classnames';
 import { format } from 'date-fns';
 import styles from './InkomenSpecificaties.module.scss';
 import useRouter from 'use-react-router';
@@ -130,7 +131,12 @@ export default () => {
   }
 
   return (
-    <OverviewPage className={styles.InkomenSpecificaties}>
+    <OverviewPage
+      className={classnames(
+        styles.InkomenSpecificaties,
+        styles['SpecificationsTable--annualStatements']
+      )}
+    >
       <PageHeading
         icon={<ChapterIcon />}
         backLink={{ to: AppRoutes.INKOMEN, title: ChapterTitles.INKOMEN }}
