@@ -1,34 +1,46 @@
-import React from 'react';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
+
 import DateInput from './DateInput';
+import React from 'react';
 
 describe('<DateInput />', () => {
   it('Renders without crashing', () => {
-    const minDate = '2019-01-01';
-    const maxDate = '2020-01-01';
     const onChange = () => void 0;
-    shallow(
+    shallow(<DateInput value={new Date('2019-11-11')} onChange={onChange} />);
+  });
+
+  it('Calls back with a Date from the native datepicker', () => {
+    const onChange = jest.fn(() => {});
+    const comp = mount(
+      <DateInput value={new Date('2019-11-11')} onChange={onChange} />
+    );
+    const event = {
+      preventDefault() {},
+      target: { value: '2019-11-12' },
+    };
+    comp.find('input.DateInput').simulate('change', event);
+
+    expect(onChange).toHaveBeenCalledWith(new Date('2019-11-12'));
+  });
+
+  it('Calls back with a Date from the replacement picker', () => {
+    const onChange = jest.fn(() => {});
+    const comp = mount(
       <DateInput
-        value="2019-11-11"
-        minDate={minDate}
-        maxDate={maxDate}
+        value={new Date('2019-11-11')}
+        hasNativeSupport={false}
         onChange={onChange}
       />
     );
-  });
-  it('Throws when supplying wrong date input', () => {
-    const minDate = '201-01-01';
-    const maxDate = '202-01-01';
-    const onChange = () => void 0;
-    expect(() =>
-      shallow(
-        <DateInput
-          value="2019-11-11"
-          minDate={minDate}
-          maxDate={maxDate}
-          onChange={onChange}
-        />
-      )
-    ).toThrowError();
+    const event = {
+      preventDefault() {},
+      target: { value: '12' },
+    };
+    const selectInputs = comp.find('select');
+    expect(selectInputs).toHaveLength(3);
+
+    selectInputs.at(1).simulate('change', event);
+
+    expect(onChange).toHaveBeenCalledWith(new Date('2019-12-11'));
   });
 });

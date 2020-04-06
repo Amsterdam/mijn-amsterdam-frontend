@@ -1,3 +1,6 @@
+import DateInput, {
+  isNativeDatePickerInputSupported,
+} from 'components/DateInput/DateInput';
 import { OverviewPage, PageContent } from 'components/Page/Page';
 import React, {
   useCallback,
@@ -13,14 +16,12 @@ import { AppRoutes } from 'config/Routing.constants';
 import { Button } from 'components/Button/Button';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import { ChapterTitles } from 'config/Chapter.constants';
-import DateInput from 'components/DateInput/DateInput';
 import PageHeading from 'components/PageHeading/PageHeading';
 import Pagination from 'components/Pagination/Pagination';
 import { ReactComponent as SearchIcon } from 'assets/icons/Search.svg';
 import Section from 'components/Section/Section';
 import Table from 'components/Table/Table';
 import classnames from 'classnames';
-import { format } from 'date-fns';
 import styles from './InkomenSpecificaties.module.scss';
 import useRouter from 'use-react-router';
 
@@ -39,7 +40,6 @@ export const annualStatementsTableDisplayProps = {
 
 const PAGE_SIZE = 10;
 const INITIAL_INDEX = [0, PAGE_SIZE - 1];
-const DATE_INPUT_FORMAT = 'yyyy-MM-dd';
 
 export default () => {
   const {
@@ -64,24 +64,21 @@ export default () => {
 
   const maxDate = useMemo(() => {
     if (items.length) {
-      return format(new Date(items[0].datePublished), DATE_INPUT_FORMAT);
+      return new Date(items[0].datePublished);
     }
-    return format(new Date(), DATE_INPUT_FORMAT);
+    return new Date();
   }, [items]);
 
   const minDate = useMemo(() => {
     if (items.length) {
-      return format(
-        new Date(items[items.length - 1].datePublished),
-        DATE_INPUT_FORMAT
-      );
+      return new Date(items[items.length - 1].datePublished);
     }
-    return format(new Date(), DATE_INPUT_FORMAT);
+    return new Date();
   }, [items]);
 
   const [isSearchPanelActive, setSearchPanelActive] = useState(false);
   const [selectedType, setSelectedType] = useState('');
-  const [selectedDates, setSelectedDates] = useState<[string, string]>([
+  const [selectedDates, setSelectedDates] = useState<[Date, Date]>([
     minDate,
     maxDate,
   ]);
@@ -95,7 +92,7 @@ export default () => {
   const options = useMemo(() => {
     return Array.from(
       items.reduce((acc, item) => {
-        acc.set(item.type, (acc.get(item.type) || 1) + 1);
+        acc.set(item.type, (acc.get(item.type) || 0) + 1);
         return acc;
       }, new Map<string, number>())
     );
@@ -192,9 +189,8 @@ export default () => {
               Datum van
               <DateInput
                 className={styles.DatePicker}
-                minDate={minDate}
-                maxDate={maxDate}
                 value={selectedDates[0]}
+                hasNativeSupport={isNativeDatePickerInputSupported()}
                 onChange={dateStart => {
                   setSelectedDates(([, dateEnd]) => [
                     dateStart || minDate,
@@ -207,9 +203,8 @@ export default () => {
               Datum tot
               <DateInput
                 className={styles.DatePicker}
-                minDate={minDate}
-                maxDate={maxDate}
                 value={selectedDates[1]}
+                hasNativeSupport={isNativeDatePickerInputSupported()}
                 onChange={dateEnd =>
                   setSelectedDates(([dateStart]) => [
                     dateStart || minDate,

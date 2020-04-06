@@ -1,8 +1,11 @@
-import React, { useState, useMemo, useCallback } from 'react';
-import styles from './DateInput.module.scss';
-import { getDaysInMonth } from 'date-fns';
-import { range, getMonth } from 'helpers/App';
+import React, { useCallback, useMemo, useState } from 'react';
+import { format, getDaysInMonth } from 'date-fns';
+import { getMonth, range } from 'helpers/App';
+
 import classnames from 'classnames';
+import styles from './DateInput.module.scss';
+
+const DATE_INPUT_FORMAT = 'yyyy-MM-dd';
 
 export function isNativeDatePickerInputSupported() {
   const input = document.createElement('input');
@@ -13,99 +16,44 @@ export function isNativeDatePickerInputSupported() {
 }
 
 export interface ComponentProps {
-  onChange: (date: string) => void;
-  value: string;
-  minDate: string;
-  maxDate: string;
+  onChange: (date: Date) => void;
+  value: Date;
   className?: string;
+  hasNativeSupport?: boolean;
 }
 
 function parseDateParts(value: string) {
-  return value.split('-').map((p, i) => Number(p) - (i === 1 ? 1 : 0));
-}
-
-function checkValiDateFormat(value: string) {
-  const parts = value.split('-');
-  return (
-    parts.length === 3 &&
-    parts[0].length === 4 &&
-    parts[1].length === 2 &&
-    parts[2].length === 2 &&
-    parseInt(parts[1], 10) >= 1 &&
-    parseInt(parts[1], 10) <= 12 &&
-    parseInt(parts[2], 10) >= 1 &&
-    parseInt(parts[2], 10) <= 31
-  );
+  return value.split('-').map((p, i) => Number(p));
 }
 
 export default function DateInput({
   onChange,
   value,
-  minDate,
-  maxDate,
   className,
+  hasNativeSupport = true,
 }: ComponentProps) {
+  const valueDateFormatted = format(value, DATE_INPUT_FORMAT);
+
   const [[yearSelected, monthSelected, daySelected], setDateState] = useState(
-    parseDateParts(value)
+    parseDateParts(valueDateFormatted)
   );
 
-  if (!checkValiDateFormat(minDate)) {
-    throw new Error(
-      'minDate, maxDate and value should be provided in the following format: yyyy-MM-dd'
-    );
-  }
-
-  const minDateParts = useMemo(() => {
-    return parseDateParts(minDate);
-  }, [minDate]);
-
-  const maxDateParts = useMemo(() => {
-    return parseDateParts(maxDate);
-  }, [maxDate]);
+  const initalValue = useMemo(() => {
+    return value;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const setDate = useCallback(
     (date: [number, number, number]) => {
       setDateState(date);
-      onChange(date.join('-'));
+      onChange(new Date(date.join('-')));
     },
     [onChange, setDateState]
   );
 
-  const fromMonth = useMemo(() => {
-    if (minDateParts[0] === yearSelected) {
-      return minDateParts[1];
-    }
-    return 0;
-  }, [yearSelected, minDateParts]);
-
-  const toMonth = useMemo(() => {
-    if (maxDateParts[0] === yearSelected) {
-      return maxDateParts[1];
-    }
-    return 11;
-  }, [yearSelected, maxDateParts]);
-
-  const fromDay = useMemo(() => {
-    if (minDateParts[0] === yearSelected && minDateParts[1] === monthSelected) {
-      return minDateParts[2];
-    }
-    return 1;
-  }, [yearSelected, minDateParts, monthSelected]);
-
-  const toDay = useMemo(() => {
-    if (maxDateParts[0] === yearSelected && maxDateParts[1] === monthSelected) {
-      return maxDateParts[2];
-    }
-    return getDaysInMonth(monthSelected);
-  }, [yearSelected, maxDateParts, monthSelected]);
-
   const daysInMonthSelected = useMemo(() => {
     return getDaysInMonth(new Date(yearSelected, monthSelected, daySelected));
   }, [yearSelected, monthSelected, daySelected]);
-
-  const hasNativeSupport = useMemo(() => {
-    return isNativeDatePickerInputSupported();
-  }, []);
 
   return (
     <>
@@ -113,10 +61,12 @@ export default function DateInput({
         <input
           className={classnames(styles.DateInput, className)}
           type="date"
-          min={minDate}
-          max={maxDate}
-          value={value}
-          onChange={event => onChange(event.target.value)}
+          value={valueDateFormatted}
+          onChange={event => {
+            onChange(
+              event.target.value ? new Date(event.target.value) : initalValue
+            );
+          }}
         />
       )}
       {!hasNativeSupport && (
@@ -129,9 +79,7 @@ export default function DateInput({
             value={daySelected}
           >
             {range(1, daysInMonthSelected).map(day => (
-              <option disabled={day < fromDay || day > toDay} key={day}>
-                {day}
-              </option>
+              <option key={day}>{day}</option>
             ))}
           </select>
           <select
@@ -141,13 +89,9 @@ export default function DateInput({
             }}
             value={monthSelected}
           >
-            {range(0, 11).map(month => (
-              <option
-                disabled={month < fromMonth || month > toMonth}
-                key={month}
-                value={month}
-              >
-                {getMonth(month)}
+            {range(1, 12).map(month => (
+              <option key={month} value={month}>
+                {getMonth(month - 1)}
               </option>
             ))}
           </select>
@@ -158,7 +102,10 @@ export default function DateInput({
             }}
             value={yearSelected}
           >
-            {range(minDateParts[0], maxDateParts[0]).map(year => (
+            {range(
+              Math.min(1900, yearSelected - 50),
+              Math.min(yearSelected + 100, new Date().getFullYear())
+            ).map(year => (
               <option key={year}>{year}</option>
             ))}
           </select>

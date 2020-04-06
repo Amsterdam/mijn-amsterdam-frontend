@@ -21,8 +21,10 @@
 
 .SpecificationsTable--annualStatements {
   @include select(Table_DisplayPropTitle) {
-    width: calc(60% + 30px);
-    padding-right: 2rem;
+    width: 60%;
+  }
+  tr td:nth-child(2) {
+    width: calc(30% - 1em);
   }
 }
 
