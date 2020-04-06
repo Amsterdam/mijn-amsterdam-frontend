@@ -1,10 +1,6 @@
 import { BrpApiState, useBrpApi } from 'hooks/api/api.brp';
 import React, { createContext, useEffect } from 'react';
-import {
-  getBagSearchAddress,
-  getFullAddress,
-  isMokum,
-} from 'data-formatting/brp';
+import { getBagSearchAddress, isMokum } from 'data-formatting/brp';
 import useBelastingApi, { BelastingApiState } from './hooks/api/api.belasting';
 import useErfpachtApi, { ErfpachtApiState } from './hooks/api/api.erfpacht';
 import useFocusApi, {
