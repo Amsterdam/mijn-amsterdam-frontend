@@ -7,10 +7,11 @@ import {
   formatIncomeSpecifications,
 } from 'data-formatting/focus';
 import { getApiConfigValue, getApiUrl } from 'helpers/App';
-import { useMemo } from 'react';
-import { useDataApi } from './api.hook';
+
 import { ApiState } from './api.types';
 import { MyNotification } from './my-notifications-api.hook';
+import { useDataApi } from './api.hook';
+import { useMemo } from 'react';
 
 export interface IncomeSpecificationsResponse {
   content: {
@@ -44,7 +45,10 @@ export function useFocusInkomenSpecificatiesApi(): FocusInkomenSpecificatiesApiS
     }
   );
 
-  return { ...api, data: formatIncomeSpecifications(api.data) };
+  return useMemo(
+    () => ({ ...api, data: formatIncomeSpecifications(api.data) }),
+    [api]
+  );
 }
 
 export interface FocusData {
