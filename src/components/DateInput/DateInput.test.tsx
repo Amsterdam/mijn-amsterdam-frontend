@@ -20,7 +20,7 @@ describe('<DateInput />', () => {
     };
     comp.find('input.DateInput').simulate('change', event);
 
-    expect(onChange).toHaveBeenCalledWith(jasmine.any(Date));
+    expect(onChange).toHaveBeenCalledWith(new Date('2019-11-12'));
   });
 
   it('Calls back with a Date from the replacement picker', () => {
@@ -34,13 +34,13 @@ describe('<DateInput />', () => {
     );
     const event = {
       preventDefault() {},
-      target: { value: '11' },
+      target: { value: '12' },
     };
     const selectInputs = comp.find('select');
     expect(selectInputs).toHaveLength(3);
 
     selectInputs.at(1).simulate('change', event);
 
-    expect(onChange).toHaveBeenCalledWith(jasmine.any(Date));
+    expect(onChange).toHaveBeenCalledWith(new Date('2019-12-11'));
   });
 });
