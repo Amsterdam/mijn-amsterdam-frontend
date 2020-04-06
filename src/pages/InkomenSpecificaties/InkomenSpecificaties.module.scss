@@ -19,6 +19,13 @@
   }
 }
 
+.SpecificationsTable--annualStatements {
+  @include select(Table_DisplayPropTitle) {
+    width: calc(60% + 30px);
+    padding-right: 2rem;
+  }
+}
+
 .TableSection {
   @include centered-block;
   position: relative;
