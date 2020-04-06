@@ -19,6 +19,7 @@ export interface ComponentProps {
   onChange: (date: Date) => void;
   value: Date;
   className?: string;
+  hasNativeSupport?: boolean;
 }
 
 function parseDateParts(value: string) {
@@ -29,6 +30,7 @@ export default function DateInput({
   onChange,
   value,
   className,
+  hasNativeSupport = true,
 }: ComponentProps) {
   const valueDateFormatted = format(value, DATE_INPUT_FORMAT);
 
@@ -52,10 +54,6 @@ export default function DateInput({
   const daysInMonthSelected = useMemo(() => {
     return getDaysInMonth(new Date(yearSelected, monthSelected, daySelected));
   }, [yearSelected, monthSelected, daySelected]);
-
-  const hasNativeSupport = useMemo(() => {
-    return isNativeDatePickerInputSupported();
-  }, []);
 
   return (
     <>

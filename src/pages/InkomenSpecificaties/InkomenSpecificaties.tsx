@@ -1,3 +1,6 @@
+import DateInput, {
+  isNativeDatePickerInputSupported,
+} from 'components/DateInput/DateInput';
 import { OverviewPage, PageContent } from 'components/Page/Page';
 import React, {
   useCallback,
@@ -13,7 +16,6 @@ import { AppRoutes } from 'config/Routing.constants';
 import { Button } from 'components/Button/Button';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import { ChapterTitles } from 'config/Chapter.constants';
-import DateInput from 'components/DateInput/DateInput';
 import PageHeading from 'components/PageHeading/PageHeading';
 import Pagination from 'components/Pagination/Pagination';
 import { ReactComponent as SearchIcon } from 'assets/icons/Search.svg';
@@ -188,6 +190,7 @@ export default () => {
               <DateInput
                 className={styles.DatePicker}
                 value={selectedDates[0]}
+                hasNativeSupport={isNativeDatePickerInputSupported()}
                 onChange={dateStart => {
                   setSelectedDates(([, dateEnd]) => [
                     dateStart || minDate,
@@ -201,6 +204,7 @@ export default () => {
               <DateInput
                 className={styles.DatePicker}
                 value={selectedDates[1]}
+                hasNativeSupport={isNativeDatePickerInputSupported()}
                 onChange={dateEnd =>
                   setSelectedDates(([dateStart]) => [
                     dateStart || minDate,
