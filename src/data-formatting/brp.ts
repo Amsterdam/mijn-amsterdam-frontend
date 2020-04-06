@@ -1,6 +1,6 @@
-import { entries } from 'helpers/App';
 import { BrpApiState } from 'hooks/api/api.brp';
 import { defaultDateFormat } from '../helpers/App';
+import { entries } from 'helpers/App';
 
 type Value = any;
 type ProfileLabelValueFormatter =
@@ -88,6 +88,10 @@ export function getFullName(persoon: Persoon) {
 export function getFullAddress(adres: Adres) {
   return `${adres.straatnaam} ${adres.huisnummer || ''} ${adres.huisletter ||
     ''} ${adres.huisnummertoevoeging || ''}`;
+}
+
+export function getBagSearchAddress(adres: Adres) {
+  return `${adres.straatnaam} ${adres.huisnummer || ''}`;
 }
 
 export function isMokum(BRP: BrpApiState) {
