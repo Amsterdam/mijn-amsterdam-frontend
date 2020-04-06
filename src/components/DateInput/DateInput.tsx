@@ -38,6 +38,7 @@ export default function DateInput({
 
   const initalValue = useMemo(() => {
     return value;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const setDate = useCallback(

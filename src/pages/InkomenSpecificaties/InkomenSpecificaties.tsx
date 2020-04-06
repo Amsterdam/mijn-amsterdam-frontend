@@ -20,7 +20,6 @@ import { ReactComponent as SearchIcon } from 'assets/icons/Search.svg';
 import Section from 'components/Section/Section';
 import Table from 'components/Table/Table';
 import classnames from 'classnames';
-import { format } from 'date-fns';
 import styles from './InkomenSpecificaties.module.scss';
 import useRouter from 'use-react-router';
 
