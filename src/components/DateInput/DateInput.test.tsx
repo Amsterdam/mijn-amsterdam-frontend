@@ -41,6 +41,6 @@ describe('<DateInput />', () => {
 
     selectInputs.at(1).simulate('change', event);
 
-    expect(onChange).toHaveBeenCalledWith(new Date('2019-12-11'));
+    expect(onChange).toHaveBeenCalledWith(new Date(2019, 12, 11));
   });
 });

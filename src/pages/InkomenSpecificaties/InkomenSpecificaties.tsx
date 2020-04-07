@@ -27,7 +27,7 @@ import useRouter from 'use-react-router';
 
 export const specificationsTableDisplayProps = {
   title: 'Omschrijving',
-  type: 'Type',
+  type: 'Regeling',
   displayDate: 'Datum',
   documentUrl: 'Documenten',
 };
@@ -111,6 +111,9 @@ export default () => {
     });
 
   const itemsFilteredPaginated = itemsFiltered.slice(startIndex, endIndex + 1);
+  const typeFilterActive = !!selectedType;
+  const minDateFilterActive = selectedDates[0] !== minDate;
+  const maxDateFilterActive = selectedDates[1] !== maxDate;
 
   const selectTypeFilter = useCallback(type => {
     setSelectedType(type);
@@ -126,7 +129,8 @@ export default () => {
     <OverviewPage
       className={classnames(
         styles.InkomenSpecificaties,
-        styles['SpecificationsTable--annualStatements']
+        isAnnualStatementOverviewPage &&
+          styles['SpecificationsTable--annualStatements']
       )}
     >
       <PageHeading
@@ -150,45 +154,71 @@ export default () => {
             : 'Uitkeringsspecificaties'
         }
         isLoading={isLoading}
-        hasItems={!!itemsFiltered.length}
+        hasItems={!!items.length}
         noItemsMessage={
-          <>
-            Er zijn op dit moment nog geen documenten beschikbaar.{' '}
-            {items.length !== itemsFiltered.length && (
-              <Button
-                onClick={resetSearch}
-                variant="inline"
-                className={styles.ResetButton}
-              >
-                Begin opnieuw
-              </Button>
-            )}
-          </>
+          'Er zijn op dit moment nog geen documenten beschikbaar.'
         }
       >
+        <Button
+          className={styles.SearchButton}
+          onClick={() => setSearchPanelActive(!isSearchPanelActive)}
+          disabled={isSearchPanelActive}
+          icon={SearchIcon}
+          iconPosition="right"
+        >
+          {isSearchPanelActive ? 'Verberg zoeken' : 'Zoeken'}
+        </Button>
+
         {isSearchPanelActive && (
           <div className={styles.SearchPanel}>
-            {itemsFiltered.some(item => !!item.type) && (
-              <label>
-                Type
+            {items.some(item => !!item.type) && (
+              <div className={styles.FilterInput}>
+                <span>
+                  Regeling{' '}
+                  {typeFilterActive && (
+                    <button
+                      className={styles.ResetFilterButton}
+                      onClick={() => setSelectedType('')}
+                    >
+                      resetten
+                    </button>
+                  )}
+                </span>
                 <select
-                  className={styles.Select}
+                  className={classnames(
+                    styles.Select,
+                    typeFilterActive && styles.FilterActive
+                  )}
                   value={selectedType}
                   onChange={event => selectTypeFilter(event.target.value)}
                 >
-                  <option value="">Alle types ({items.length})</option>
+                  <option value="">Alle regelingen ({items.length})</option>
                   {options.map(([option, count]) => (
                     <option key={option} value={option}>
                       {option} ({count})
                     </option>
                   ))}
                 </select>
-              </label>
+              </div>
             )}
-            <label>
-              Datum van
+            <div className={styles.FilterInput}>
+              <span>
+                Datum van{' '}
+                {minDateFilterActive && (
+                  <button
+                    className={styles.ResetFilterButton}
+                    onClick={() =>
+                      setSelectedDates(([, maxDate]) => [minDate, maxDate])
+                    }
+                  >
+                    resetten
+                  </button>
+                )}
+              </span>
               <DateInput
-                className={styles.DatePicker}
+                className={classnames(
+                  minDateFilterActive && styles.FilterActive
+                )}
                 value={selectedDates[0]}
                 hasNativeSupport={isNativeDatePickerInputSupported()}
                 onChange={dateStart => {
@@ -198,11 +228,25 @@ export default () => {
                   ]);
                 }}
               />
-            </label>
-            <label>
-              Datum tot
+            </div>
+            <div className={styles.FilterInput}>
+              <span>
+                Datum t/m{' '}
+                {maxDateFilterActive && (
+                  <button
+                    className={styles.ResetFilterButton}
+                    onClick={() =>
+                      setSelectedDates(([minDate]) => [minDate, maxDate])
+                    }
+                  >
+                    resetten
+                  </button>
+                )}
+              </span>
               <DateInput
-                className={styles.DatePicker}
+                className={classnames(
+                  maxDateFilterActive && styles.FilterActive
+                )}
                 value={selectedDates[1]}
                 hasNativeSupport={isNativeDatePickerInputSupported()}
                 onChange={dateEnd =>
@@ -212,29 +256,32 @@ export default () => {
                   ])
                 }
               />
-            </label>
+            </div>
           </div>
         )}
-        {!isSearchPanelActive && !!itemsFiltered.length && (
-          <Button
-            className={styles.SearchButton}
-            onClick={() => setSearchPanelActive(!isSearchPanelActive)}
-            disabled={isSearchPanelActive}
-            icon={SearchIcon}
-            iconPosition="right"
-          >
-            Zoeken
-          </Button>
+        {!itemsFiltered.length && (
+          <p>
+            Zoeken heeft geen resultaten opgeleverd.{' '}
+            <Button
+              onClick={resetSearch}
+              variant="inline"
+              className={styles.ResetButton}
+            >
+              Resetten
+            </Button>
+          </p>
         )}
-        <Table
-          className={styles.SpecificationsTable}
-          items={itemsFilteredPaginated}
-          displayProps={
-            isAnnualStatementOverviewPage
-              ? annualStatementsTableDisplayProps
-              : specificationsTableDisplayProps
-          }
-        />
+        {!!itemsFiltered.length && (
+          <Table
+            className={styles.SpecificationsTable}
+            items={itemsFilteredPaginated}
+            displayProps={
+              isAnnualStatementOverviewPage
+                ? annualStatementsTableDisplayProps
+                : specificationsTableDisplayProps
+            }
+          />
+        )}
 
         {itemsFiltered.length > PAGE_SIZE && (
           <Pagination
