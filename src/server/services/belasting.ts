@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios';
 import { Chapter } from '../../universal/config/chapter';
 import { MyNotification } from './services-notifications';
 import { MyTip } from './services-tips';
-import { requestSourceData } from '../../universal/helpers';
+import { requestSourceData } from '../helpers';
 
 export interface BELASTINGENData {
   isKnown: boolean;

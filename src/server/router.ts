@@ -62,7 +62,7 @@ router.use(
   async function handleRouteServicesDirect(req: Request, res: Response) {
     const userDataLoaders = loadServicesDirect(req.sessionID!);
 
-    Promise.all(Object.values(userDataLoaders)).then(
+    Promise.allSettled(Object.values(userDataLoaders)).then(
       ([FOCUS, WMO, ERFPACHT, BELASTINGEN, MILIEUZONE]) => {
         res.send({
           FOCUS,

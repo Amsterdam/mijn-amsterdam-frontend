@@ -29,6 +29,7 @@ import { SessionContext } from '../../SessionState';
 import Tutorial from '../Tutorial/Tutorial';
 import classnames from 'classnames';
 import { getFullName } from '../../pages/Profile/formatData';
+import { getMyChapters } from '../../../universal/helpers/myChapters';
 import styles from './MainNavBar.module.scss';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
 import useRouter from 'use-react-router';
@@ -195,15 +196,16 @@ function BurgerButton({ isActive, toggleBurgerMenu }: BurgerButtonProps) {
 
 export default function MainNavBar() {
   const appState = useContext(AppContext);
-  const {
-    CHAPTERS: { items: myChapterItems },
-  } = appState;
   const session = useContext(SessionContext);
   const { isAuthenticated, userType } = session;
   const hasBurgerMenu = useTabletScreen();
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
     undefined
   );
+  const {
+    items: myChapterItems,
+    isLoading: isMyChaptersLoading,
+  } = getMyChapters(appState);
 
   const { history, location } = useRouter();
   const [isTutorialVisible, setIsTutorialVisible] = useState(false);

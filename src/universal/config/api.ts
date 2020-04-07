@@ -99,3 +99,15 @@ export const ErrorNames: { [stateKey: string]: string } = {
   BELASTINGEN: 'Belastingen + updates',
   MILIEUZONE: 'Milieuzone',
 };
+
+export interface ApiErrorResponse {
+  message: string;
+  statusCode: number;
+  status: 'failure';
+}
+
+export type ApiSuccesResponse<T> = {
+  content: T;
+  status: 'success';
+  statusCode: number;
+};

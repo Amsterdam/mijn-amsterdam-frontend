@@ -1,10 +1,10 @@
-import { MenuItem, myChaptersMenuItems } from './menuItems';
+import { MenuItem, myChaptersMenuItems } from '../../client/config/menuItems';
 
-import { AppState as AppStateInterface } from '../AppState';
-import { Chapters } from '../../universal/config/chapter';
-import { FeatureToggle } from '../../universal/config/app';
-import { isLoading } from '../../universal/helpers';
-import { isMokum } from '../pages/Profile/formatData';
+import { AppState as AppStateInterface } from '../../client/AppState';
+import { Chapters } from '../config/chapter';
+import { FeatureToggle } from '../config/app';
+import { isLoading } from '.';
+import { isMokum } from '../../client/pages/Profile/formatData';
 
 function isChapterActive(
   item: MenuItem,
@@ -59,7 +59,7 @@ export interface ChaptersState {
   isLoading: boolean;
 }
 
-export function getMyChapters(apiStates: AppStateInterface): ChaptersState {
+export function getMyChapters(appState: AppStateInterface): ChaptersState {
   const {
     WMO,
     FOCUS,
@@ -69,7 +69,7 @@ export function getMyChapters(apiStates: AppStateInterface): ChaptersState {
     BUURT,
     BELASTINGEN,
     MILIEUZONE,
-  } = apiStates;
+  } = appState;
 
   const wmoIsloading = isLoading(WMO);
   const focusIsloading = isLoading(FOCUS);
@@ -82,7 +82,7 @@ export function getMyChapters(apiStates: AppStateInterface): ChaptersState {
 
   const items = myChaptersMenuItems.filter(item => {
     // Check to see if Chapter has been loaded or if it is directly available
-    return isChapterActive(item, apiStates);
+    return isChapterActive(item, appState);
   });
 
   const isChaptersLoading =

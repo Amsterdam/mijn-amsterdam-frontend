@@ -4,12 +4,12 @@ import {
   dateSort,
   defaultDateFormat,
   isDateInPast,
-  requestSourceData,
 } from '../../universal/helpers';
 
 import { AxiosResponse } from 'axios';
 import { LinkProps } from '../../universal/types/App.types';
 import { generatePath } from 'react-router';
+import { requestSourceData } from '../helpers';
 import slug from 'slug';
 
 // Example data

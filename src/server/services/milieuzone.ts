@@ -2,7 +2,7 @@ import { ApiUrls } from '../../universal/config';
 import { AxiosResponse } from 'axios';
 import { Chapter } from '../../universal/config/chapter';
 import { MyNotification } from './services-notifications';
-import { requestSourceData } from '../../universal/helpers';
+import { requestSourceData } from '../helpers';
 
 interface MILIEUZONESourceDataContent {
   isKnown: boolean;

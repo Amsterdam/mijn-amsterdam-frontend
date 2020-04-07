@@ -17,12 +17,11 @@ import {
   useServicesUpdates,
 } from './hooks/api/api.services-updates';
 
-import { ChaptersState } from './config/myChapters';
 import { ComponentChildren } from '../universal/types/App.types';
 
 export interface AppState extends ServicesRelatedData, ServicesDirectData {
   TIPS: ServicesTipsData;
-  CHAPTERS: ChaptersState;
+  // CHAPTERS: ChaptersState;
   BUURT: ServicesMapData;
   UPDATES: ServicesUpdatesData;
 }
@@ -51,10 +50,6 @@ export function useAppState(): AppState {
     ...servicesDirectApi.data,
     TIPS: tipsApi.data,
     UPDATES: updatesApi.data,
-    CHAPTERS: {
-      isLoading: true,
-      items: [],
-    },
     BUURT: mapData,
   };
 }

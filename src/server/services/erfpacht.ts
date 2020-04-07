@@ -1,5 +1,5 @@
 import { ApiUrls } from '../../universal/config';
-import { requestSourceData } from '../../universal/helpers';
+import { requestSourceData } from '../helpers';
 
 export interface ERFPACHTData {
   status: true;
