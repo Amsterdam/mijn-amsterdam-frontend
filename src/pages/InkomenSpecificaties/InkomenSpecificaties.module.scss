@@ -76,22 +76,6 @@
   @include media-q('<=phone') {
     flex-direction: column;
   }
-
-  label {
-    display: flex;
-    flex-direction: column;
-    flex: 2;
-
-    @include media-q('>phone') {
-      &:first-child {
-        margin-right: 2rem;
-      }
-
-      &:last-child {
-        margin-left: 2rem;
-      }
-    }
-  }
 }
 
 .Pagination {
@@ -102,6 +86,38 @@
   justify-content: center;
 }
 
+.FilterInput {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+
+  > span {
+    display: inline-block;
+    margin-bottom: 3px;
+  }
+
+  @include media-q('>phone') {
+    &:first-child {
+      margin-right: 2rem;
+    }
+
+    &:last-child {
+      margin-left: 2rem;
+    }
+  }
+}
+
 .Select {
   @include inputSelect;
+}
+
+.FilterActive {
+  border-color: $color-primary-darkblue;
+  outline: 1px solid $color-primary-darkblue;
+  color: $color-primary-darkblue;
+}
+
+.ResetFilterButton {
+  @include button-unstyled;
+  text-decoration: underline;
 }

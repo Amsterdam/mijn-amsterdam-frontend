@@ -1,10 +1,11 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import InkomenSpecificaties from './InkomenSpecificaties';
 import AppState, { AppState as AppStateInterface } from 'AppState';
-import { formatIncomeSpecifications } from 'data-formatting/focus';
-import { MemoryRouter, Switch, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Switch } from 'react-router-dom';
+
 import { IncomeSpecificationsResponse } from 'hooks/api/api.focus';
+import InkomenSpecificaties from './InkomenSpecificaties';
+import React from 'react';
+import { formatIncomeSpecifications } from 'data-formatting/focus';
+import { mount } from 'enzyme';
 
 const sourceData: IncomeSpecificationsResponse = {
   content: {
@@ -88,9 +89,9 @@ describe('<InkomenSpecificaties />', () => {
     (component.find('DateInput') as any)
       .at(0)
       .props()
-      .onChange('2021-01-01');
+      .onChange(new Date('2021-01-01'));
     component.update();
     expect(component.find('table')).toHaveLength(0);
-    expect(component.contains('Begin opnieuw')).toBe(true);
+    expect(component.contains('Resetten')).toBe(true);
   });
 });

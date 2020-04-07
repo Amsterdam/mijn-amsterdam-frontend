@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useMemo } from 'react';
+
+import { AppRoutes } from 'config/Routing.constants';
+import { matchPath } from 'react-router';
 import styles from './MainHeaderHero.module.scss';
 import useRouter from 'use-react-router';
-import { AppRoutes } from 'config/Routing.constants';
-import { SessionContext } from 'AppState';
-import { matchPath } from 'react-router';
 
 const LANDSCAPE_SCREEN_RATIO = 0.25;
 const PORTRAIT_SCREEN_RATIO = 0.4;
@@ -23,16 +23,16 @@ function imgUrl(
   )}-${imageName}.jpg`;
 }
 
-function useHeroSrc(isAuthenticated: boolean = false) {
+function useHeroSrc() {
   const { location } = useRouter();
   const isChapterPath = (path: string) =>
     !!matchPath(location.pathname, {
       path,
-      exact: true,
+      exact: false,
       strict: false,
     });
 
-  let imageName;
+  let imageName: string;
 
   switch (true) {
     case isChapterPath(AppRoutes.MIJN_GEGEVENS):
@@ -62,23 +62,21 @@ function useHeroSrc(isAuthenticated: boolean = false) {
   // LANDSCAPE_MEDIUM: '/header/Header-Desktop-1-720x288.jpg';
   // LANDSCAPE_LARGE: '/header/Header-Desktop-1-1080x432.jpg';
 
-  return {
-    PORTRAIT_SMALL: imgUrl(imageName, 360, 'portrait'),
-    PORTRAIT_SMALL_2X: imgUrl(imageName, 360, 'portrait', 2),
-    PORTRAIT_SMALL_3X: imgUrl(imageName, 360, 'portrait', 3),
-    LANDSCAPE_SMALL: imgUrl(imageName, 1024),
-    LANDSCAPE_MEDIUM: imgUrl(imageName, 1366),
-    LANDSCAPE_LARGE: imgUrl(imageName, 1600),
-  };
+  return useMemo(
+    () => ({
+      PORTRAIT_SMALL: imgUrl(imageName, 360, 'portrait'),
+      PORTRAIT_SMALL_2X: imgUrl(imageName, 360, 'portrait', 2),
+      PORTRAIT_SMALL_3X: imgUrl(imageName, 360, 'portrait', 3),
+      LANDSCAPE_SMALL: imgUrl(imageName, 1024),
+      LANDSCAPE_MEDIUM: imgUrl(imageName, 1366),
+      LANDSCAPE_LARGE: imgUrl(imageName, 1600),
+    }),
+    [imageName]
+  );
 }
 
-export interface MainHeaderHeroProps {
-  src: string;
-}
-
-export default function MainHeaderHero(props: Partial<MainHeaderHeroProps>) {
-  const session = useContext(SessionContext);
-  const srcSet = useHeroSrc(session.isAuthenticated);
+export default function MainHeaderHero() {
+  const srcSet = useHeroSrc();
 
   return (
     <div className={styles.MainHeaderHero}>
