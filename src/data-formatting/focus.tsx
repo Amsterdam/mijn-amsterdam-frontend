@@ -128,6 +128,8 @@ export const stepLabels: Record<StepTitle, RequestStatus> = {
   bezwaar: 'Bezwaar',
 };
 
+const stepStatusLabels = stepLabels;
+
 const DAYS_KEEP_RECENT = 28;
 
 // Object with properties that are used to replace strings in the generated messages above.
@@ -780,7 +782,9 @@ function formatStepData(
             formatFocusDocument(stepTitle, stepData.datum, document)
           )
         : [],
-    status: stepLabels ? stepLabels.status : '',
+    status: stepLabels
+      ? stepLabels.status
+      : stepStatusLabels[sourceData.latestStep],
     aboutStep: stepTitle,
     isLastActive: sourceData.isLastActive,
     isChecked: !sourceData.isLastActive,
@@ -877,7 +881,7 @@ export function formatFocusProduct(
       ? parseLabelContent(stepLabels.description, sourceData)
       : '',
     latestStep,
-    status: stepLabels.status,
+    status: stepLabels ? stepLabels.status : stepStatusLabels[latestStep],
     isRecent,
     hasDecision,
     isGranted: hasDecision ? decision === getDecision('Toekenning') : null,
