@@ -2,7 +2,7 @@ import { Adres, getFullAddress } from './brp';
 
 import { ApiUrls } from '../../universal/config';
 import { AxiosResponse } from 'axios';
-import { requestSourceData } from '../../universal/helpers';
+import { requestSourceData } from '../helpers';
 
 export interface BAGSourceData {
   results: Array<{ [key: string]: any; centroid: Centroid }>;

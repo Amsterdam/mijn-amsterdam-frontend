@@ -6,11 +6,12 @@ import {
   Page,
   PageHeading,
 } from '../../components';
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 
 import { AppContext } from '../../AppState';
 import { AppRoutes } from '../../../universal/config';
 import { Link } from 'react-router-dom';
+import { getMyChapters } from '../../../universal/helpers/myChapters';
 import { isLoading } from '../../../universal/helpers';
 import styles from './Dashboard.module.scss';
 import { usePhoneScreen } from '../../hooks/media.hook';
@@ -19,18 +20,18 @@ const MAX_UPDATES_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
 
 export default () => {
-  const {
-    UPDATES,
-    // MY_CASES,
-    TIPS,
-    CHAPTERS: { items: myChapterItems, isLoading: isMyChaptersLoading },
-    // BUURT,
-  } = useContext(AppContext);
+  const appState = useContext(AppContext);
+  const { TIPS, UPDATES } = appState;
 
   const tipItems = TIPS.items.slice(0, MAX_TIPS_VISIBLE);
   const updateItems = UPDATES?.items.slice(0, MAX_UPDATES_VISIBLE);
   const isPhoneScreen = usePhoneScreen();
   const updatesTotal = UPDATES?.items.length || 0;
+
+  const {
+    items: myChapterItems,
+    isLoading: isMyChaptersLoading,
+  } = getMyChapters(appState);
 
   return (
     <>

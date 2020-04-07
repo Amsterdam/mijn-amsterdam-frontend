@@ -2,7 +2,7 @@ import { ApiUrls, BFFApiData } from '../../universal/config';
 
 import { AxiosResponse } from 'axios';
 import { LinkProps } from '../../universal/types/App.types';
-import { requestSourceData } from '../../universal/helpers';
+import { requestSourceData } from '../helpers';
 
 export interface MyTip {
   datePublished: string;

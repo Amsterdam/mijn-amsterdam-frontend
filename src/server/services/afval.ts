@@ -1,11 +1,10 @@
+import { AxiosResponse } from 'axios';
+import { ApiUrls } from '../../universal/config';
 import {
   capitalizeFirstLetter,
   getApproximateDistance,
-  requestSourceData,
 } from '../../universal/helpers';
-
-import { ApiUrls } from '../../universal/config';
-import { AxiosResponse } from 'axios';
+import { requestSourceData } from '../helpers/request';
 
 const AFVAL_AFSPRAAK_MAKEN =
   'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Grofvuil.aspx';

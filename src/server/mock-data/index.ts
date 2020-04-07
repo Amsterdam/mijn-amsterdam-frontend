@@ -9,6 +9,14 @@ type MockDataConfig = Record<
   }
 >;
 
+function respondWithDelay(delayMS: number, data: any) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(data);
+    }, delayMS);
+  });
+}
+
 export const mockDataConfig: MockDataConfig = {
   [ApiUrls.BELASTINGEN]: {
     status: 200,
@@ -16,14 +24,14 @@ export const mockDataConfig: MockDataConfig = {
   },
   [ApiUrls.BRP]: {
     status: 200,
-    responseData: () => require('./json/brp.json'),
+    responseData: () => respondWithDelay(1000, require('./json/brp.json')),
   },
   [ApiUrls.WMO]: {
     status: 200,
     responseData: () => require('./json/wmo.json'),
   },
   [ApiUrls.FOCUS]: {
-    status: 200,
+    status: 500,
     responseData: () => require('./json/focus.json'),
   },
   [ApiUrls.FOCUS_INKOMEN_SPECIFICATIES]: {

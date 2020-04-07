@@ -1,4 +1,5 @@
 import {
+  ApiErrorMessage,
   ApiUrls,
   AppRoutes,
   Chapter,
@@ -6,13 +7,10 @@ import {
   FeatureToggle,
 } from '../../universal/config';
 import { addDays, differenceInCalendarDays, format, parseISO } from 'date-fns';
-import {
-  dateSort,
-  defaultDateFormat,
-  requestSourceData,
-} from '../../universal/helpers';
+import { dateSort, defaultDateFormat } from '../../universal/helpers';
+import { getResultFromSettledPromise, requestSourceData } from '../helpers';
 
-import { AxiosResponse } from 'axios';
+import { ApiSuccesResponse } from '../../universal/config/api';
 import { LinkProps } from '../../universal/types/App.types';
 import { MyNotification } from './services-notifications';
 import { ReactNode } from 'react';
@@ -987,27 +985,27 @@ export interface IncomeSpecifications {
 }
 
 export interface FOCUSData extends IncomeSpecifications {
-  aanvragen: FocusItem[];
-  recentCases: [];
-  notifications: MyNotification[];
+  aanvragen: FocusItem[] | ApiErrorMessage;
+  recentCases: [] | ApiErrorMessage;
+  notifications: MyNotification[] | ApiErrorMessage;
 }
 
 function formatFOCUSAanvragenData(
-  response: AxiosResponse<FOCUSAanvragenSourceData>
+  response: ApiSuccesResponse<FOCUSAanvragenSourceData>
 ): FocusItem[] {
   // const recentCases = items.filter(item => item.isRecent);
   const d = new Date();
-  return response.data
+  return response.content
     .map(product => formatFocusProduct(product, d))
     .filter(item => item.productTitle !== ProductTitles.BijzondereBijstand);
 }
 
 function formatFOCUSIncomeSpecificationsData(
-  response: AxiosResponse<FOCUSIncomeSpecificationSourceData>
+  response: ApiSuccesResponse<FOCUSIncomeSpecificationSourceData>
 ): IncomeSpecifications {
-  const { data } = response;
-  const jaaropgaven = data?.content.jaaropgaven || [];
-  const uitkeringsspecificaties = data?.content.uitkeringsspecificaties || [];
+  const jaaropgaven = response.content.content.jaaropgaven || [];
+  const uitkeringsspecificaties =
+    response.content.content.uitkeringsspecificaties || [];
 
   return {
     jaaropgaven: jaaropgaven
@@ -1022,26 +1020,48 @@ function formatFOCUSIncomeSpecificationsData(
 export async function fetchFOCUS(): Promise<FOCUSData> {
   const aanvragenRequest = requestSourceData<FOCUSAanvragenSourceData>({
     url: ApiUrls.FOCUS,
-  }).then(formatFOCUSAanvragenData);
+  });
 
   const incomeSpecificationsRequest = requestSourceData<
     FOCUSIncomeSpecificationSourceData
   >({
     url: ApiUrls.FOCUS_INKOMEN_SPECIFICATIES,
-  }).then(formatFOCUSIncomeSpecificationsData);
+  });
 
   const [
-    aanvragen,
-    { jaaropgaven, uitkeringsspecificaties },
-  ] = await Promise.all([aanvragenRequest, incomeSpecificationsRequest]);
+    aanvragenPromise,
+    incomeSpecificatiesPromise,
+  ] = await Promise.allSettled([aanvragenRequest, incomeSpecificationsRequest]);
 
-  const notifications = [
-    ...aanvragen,
-    ...jaaropgaven,
-    ...uitkeringsspecificaties,
-  ]
-    .filter(item => item.notification !== undefined)
-    .map<MyNotification>(item => item.notification as MyNotification);
+  let aanvragenResult = getResultFromSettledPromise<FOCUSAanvragenSourceData>(
+    aanvragenPromise
+  );
+
+  let incomeSpecificationsResult = getResultFromSettledPromise<
+    FOCUSIncomeSpecificationSourceData
+  >(incomeSpecificatiesPromise);
+
+  let notifications: MyNotification[] = [];
+
+  const aanvragen =
+    aanvragenResult.status === 'success'
+      ? formatFOCUSAanvragenData(aanvragenResult)
+      : aanvragenResult;
+
+  let jaaropgaven: FocusInkomenSpecificatie[] = [];
+  let uitkeringsspecificaties: FocusInkomenSpecificatie[] = [];
+
+  if (incomeSpecificationsResult.status === 'success') {
+    const formattedResponseData = formatFOCUSIncomeSpecificationsData(
+      incomeSpecificationsResult
+    );
+    jaaropgaven = formattedResponseData.jaaropgaven;
+    uitkeringsspecificaties = formattedResponseData.uitkeringsspecificaties;
+
+    notifications = [...aanvragen, ...jaaropgaven, ...uitkeringsspecificaties]
+      .filter(item => item.notification !== undefined)
+      .map<MyNotification>(item => item.notification as MyNotification);
+  }
 
   return {
     aanvragen,
