@@ -172,7 +172,7 @@ export default () => {
         {isSearchPanelActive && (
           <div className={styles.SearchPanel}>
             {items.some(item => !!item.type) && (
-              <label>
+              <div className={styles.FilterInput}>
                 <span>
                   Regeling{' '}
                   {typeFilterActive && (
@@ -199,9 +199,9 @@ export default () => {
                     </option>
                   ))}
                 </select>
-              </label>
+              </div>
             )}
-            <label>
+            <div className={styles.FilterInput}>
               <span>
                 Datum van{' '}
                 {minDateFilterActive && (
@@ -228,8 +228,8 @@ export default () => {
                   ]);
                 }}
               />
-            </label>
-            <label>
+            </div>
+            <div className={styles.FilterInput}>
               <span>
                 Datum t/m{' '}
                 {maxDateFilterActive && (
@@ -256,7 +256,7 @@ export default () => {
                   ])
                 }
               />
-            </label>
+            </div>
           </div>
         )}
         {!itemsFiltered.length && (

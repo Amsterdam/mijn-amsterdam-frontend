@@ -44,9 +44,9 @@ export default function DateInput({
   }, []);
 
   const setDate = useCallback(
-    (date: [number, number, number]) => {
-      setDateState(date);
-      onChange(new Date(date.join('-')));
+    ([year, month, day]: [number, number, number]) => {
+      setDateState([year, month, day]);
+      onChange(new Date(year, month, day));
     },
     [onChange, setDateState]
   );
