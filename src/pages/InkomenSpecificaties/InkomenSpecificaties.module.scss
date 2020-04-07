@@ -82,6 +82,11 @@
     flex-direction: column;
     flex: 2;
 
+    > span {
+      display: inline-block;
+      margin-bottom: 3px;
+    }
+
     @include media-q('>phone') {
       &:first-child {
         margin-right: 2rem;
@@ -104,4 +109,15 @@
 
 .Select {
   @include inputSelect;
+}
+
+.FilterActive {
+  border-color: $color-primary-darkblue;
+  outline: 1px solid $color-primary-darkblue;
+  color: $color-primary-darkblue;
+}
+
+.ResetFilterButton {
+  @include button-unstyled;
+  text-decoration: underline;
 }

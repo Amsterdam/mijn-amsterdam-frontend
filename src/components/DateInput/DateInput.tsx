@@ -72,6 +72,7 @@ export default function DateInput({
       {!hasNativeSupport && (
         <div className={classnames(styles.DateInputFallback, className)}>
           <select
+            className={styles.DateInputFallbackSelect}
             onChange={event => {
               const day = Number(event.target.value);
               setDate([yearSelected, monthSelected, day]);
@@ -83,6 +84,7 @@ export default function DateInput({
             ))}
           </select>
           <select
+            className={styles.DateInputFallbackSelect}
             onChange={event => {
               const month = Number(event.target.value);
               setDate([yearSelected, month, daySelected]);
@@ -96,6 +98,7 @@ export default function DateInput({
             ))}
           </select>
           <select
+            className={styles.DateInputFallbackSelect}
             onChange={event => {
               const year = Number(event.target.value);
               setDate([year, monthSelected, daySelected]);
