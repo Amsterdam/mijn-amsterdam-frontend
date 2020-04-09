@@ -1,7 +1,6 @@
-import { ApiState, useDataApi } from './api.hook';
 import { BFFApiData, BFFApiUrls } from '../../../universal/config';
-
 import { getApiConfigValue } from '../../../universal/helpers';
+import { ApiState, useDataApi } from './api.hook';
 
 export interface ServicesDirectData {
   FOCUS: BFFApiData['FOCUS'] | null;
@@ -15,7 +14,7 @@ export type ServicesDirectApiState = ApiState<ServicesDirectData>;
 
 const API_ID = 'SERVICES_DIRECT';
 
-export function useServicesDirect(): ServicesDirectApiState {
+export function useServicesDirect() {
   const [api] = useDataApi<ServicesDirectData>(
     {
       url: BFFApiUrls[API_ID],

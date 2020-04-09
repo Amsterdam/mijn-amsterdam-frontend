@@ -1,15 +1,14 @@
-import { BFFApiData } from '../../universal/config';
-import { entries } from '../../universal/helpers';
 import {
-  dataCache,
-  fetchBELASTING,
-  fetchERFPACHT,
   fetchFOCUS,
-  fetchMILIEUZONE,
   fetchWMO,
+  fetchERFPACHT,
+  fetchBELASTING,
+  fetchMILIEUZONE,
 } from './index';
+import { dataCache } from './sourceApiResponseCache';
+import { entries } from '../../universal/helpers';
 
-const userDataLoaderConfig = {
+const config = {
   FOCUS: fetchFOCUS,
   WMO: fetchWMO,
   ERFPACHT: fetchERFPACHT,
@@ -17,12 +16,33 @@ const userDataLoaderConfig = {
   MILIEUZONE: fetchMILIEUZONE,
 };
 
-export function loadServicesDirect(sessionID: SessionID) {
-  const index: Partial<BFFApiData> = {};
+export async function loadServicesDirect(sessionID: SessionID) {
+  const configEntries = entries(config);
 
-  entries(userDataLoaderConfig).forEach(([apiStateKey, fetch]) => {
-    index[apiStateKey] = dataCache.getOrAdd(sessionID, apiStateKey, fetch());
+  // Cache the promises for re-use
+  const promises = configEntries.map(([apiStateKey, fetchFn]) => {
+    const promise = fetchFn();
+    dataCache.add(sessionID, apiStateKey, promise);
+    return promise;
   });
 
-  return index;
+  // Create dynamic types for the given config
+  type ApiConfig = typeof config;
+  type ApiKey = keyof ApiConfig;
+  type ApiData = ResolvedType<ReturnType<ApiConfig[ApiKey]>>;
+  type ApiDataIndex = Record<ApiKey, ApiData>;
+
+  // Load wait for all promises to be resolved
+  // TODO: Fix by removin the as any assignment and use correct typing
+  const resolvedPromises: ApiData[] = await Promise.all(promises as any);
+
+  // combine resolved data into an index with the specific api keys
+  const data = resolvedPromises.reduce<ApiDataIndex>((acc, data, index) => {
+    const apiStateKey = configEntries[index][0];
+    return Object.assign(acc, {
+      [apiStateKey]: data,
+    });
+  }, {} as ApiDataIndex);
+
+  return data;
 }

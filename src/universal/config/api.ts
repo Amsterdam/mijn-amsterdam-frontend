@@ -1,32 +1,34 @@
 import {
-  AFVALData,
-  BAGData,
-  BELASTINGENData,
-  BRPData,
-  ERFPACHTData,
-  FOCUSData,
-  MILIEUZONEData,
-  TIPSData,
-  WMOData,
+  fetchWMO,
+  fetchBRP,
+  fetchTIPS,
+  fetchBELASTING,
+  fetchFOCUS,
+  fetchERFPACHT,
+  fetchBAG,
+  fetchAFVAL,
+  fetchMILIEUZONE,
 } from '../../server/services';
-
 import { FeatureToggle } from './app';
 
+type ApiResult<T extends (...args: any[]) => any> = ResolvedType<ReturnType<T>>;
+
 export interface BFFApiData {
-  BELASTINGEN: BELASTINGENData;
+  BELASTINGEN: ApiResult<typeof fetchBELASTING>;
   UPDATES: any;
   MY_CASES: any;
-  TIPS: TIPSData;
-  BRP: BRPData;
-  WMO: WMOData;
-  FOCUS: FOCUSData;
-  ERFPACHT: ERFPACHTData;
-  BAG: BAGData;
-  AFVAL: AFVALData;
-  MILIEUZONE: MILIEUZONEData;
+  TIPS: ApiResult<typeof fetchTIPS>;
+  BRP: ApiResult<typeof fetchBRP>;
+  WMO: ApiResult<typeof fetchWMO>;
+  FOCUS: ApiResult<typeof fetchFOCUS>;
+  ERFPACHT: ApiResult<typeof fetchERFPACHT>;
+  BAG: ApiResult<typeof fetchBAG>;
+  AFVAL: ApiResult<typeof fetchAFVAL>;
+  MILIEUZONE: ApiResult<typeof fetchMILIEUZONE>;
+  [key: string]: any;
 }
 
-export type ApiStateKey = keyof BFFApiData;
+export type ApiStateKey = keyof BFFApiData | string;
 
 export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/api/login';
 export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL || '/logout';
@@ -98,16 +100,4 @@ export const ErrorNames: { [stateKey: string]: string } = {
   MIJN_BUURT: 'Mijn buurt',
   BELASTINGEN: 'Belastingen + updates',
   MILIEUZONE: 'Milieuzone',
-};
-
-export interface ApiErrorResponse {
-  message: string;
-  statusCode: number;
-  status: 'failure';
-}
-
-export type ApiSuccesResponse<T> = {
-  content: T;
-  status: 'success';
-  statusCode: number;
 };

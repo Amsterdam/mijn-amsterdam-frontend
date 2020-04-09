@@ -1,8 +1,8 @@
 import { ApiUrls } from '../../universal/config';
-import { AxiosResponse } from 'axios';
+
 import { Chapter } from '../../universal/config/chapter';
-import { MyNotification } from './services-notifications';
-import { requestSourceData } from '../helpers';
+import { requestData } from '../helpers';
+import { MyNotification } from '../../universal/types/App.types';
 
 interface MILIEUZONESourceDataContent {
   isKnown: boolean;
@@ -30,9 +30,9 @@ function formatMILIEUZONENotifications(notifications?: MyNotification[]) {
 }
 
 function formatMILIEUZONEData(
-  response: AxiosResponse<MILIEUZONESourceData>
+  responseData: MILIEUZONESourceData
 ): MILIEUZONEData {
-  const { meldingen, ...restData } = response.data?.content || {
+  const { meldingen, ...restData } = responseData?.content || {
     meldingen: [],
     isKnown: false,
   };
@@ -44,7 +44,8 @@ function formatMILIEUZONEData(
 }
 
 export function fetchMILIEUZONE() {
-  return requestSourceData<MILIEUZONESourceData>({
+  return requestData<MILIEUZONEData>({
     url: ApiUrls.MILIEUZONE,
-  }).then(data => formatMILIEUZONEData(data));
+    transformResponse: formatMILIEUZONEData,
+  });
 }

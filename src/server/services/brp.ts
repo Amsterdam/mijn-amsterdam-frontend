@@ -1,9 +1,8 @@
 import { ApiUrls, AppRoutes, Chapter } from '../../universal/config';
 
-import { AxiosResponse } from 'axios';
-import { MyNotification } from './services-notifications';
 import { defaultDateFormat } from '../../universal/helpers';
-import { requestSourceData } from '../helpers';
+import { requestData } from '../helpers';
+import { MyNotification } from '../../universal/types/App.types';
 
 export interface Adres {
   straatnaam: string;
@@ -113,10 +112,8 @@ export function formatBRPNotifications(data: BRPData) {
   return notifications;
 }
 
-export function formatBRPData(response: AxiosResponse<BRPData>) {
-  return response.data;
-}
-
 export function fetchBRP() {
-  return requestSourceData<BRPData>({ url: ApiUrls.BRP }).then(formatBRPData);
+  return requestData<BRPData>({
+    url: ApiUrls.BRP,
+  });
 }

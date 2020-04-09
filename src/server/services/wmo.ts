@@ -6,10 +6,9 @@ import {
   isDateInPast,
 } from '../../universal/helpers';
 
-import { AxiosResponse } from 'axios';
 import { LinkProps } from '../../universal/types/App.types';
 import { generatePath } from 'react-router';
-import { requestSourceData } from '../helpers';
+import { requestData } from '../helpers';
 import slug from 'slug';
 
 // Example data
@@ -655,10 +654,10 @@ export interface WMOData {
 }
 
 export function formatWMOData(
-  response: AxiosResponse<WMOSourceData>,
+  responseData: WMOSourceData,
   today: Date
 ): WMOData {
-  const items = response.data
+  const items = responseData
     .sort(dateSort('VoorzieningIngangsdatum', 'desc'))
     .map((item, index) => {
       const {
@@ -722,8 +721,10 @@ export function formatWMOData(
   return { items };
 }
 
-export function fetchWMO(): Promise<WMOData> {
-  return requestSourceData<WMOSourceData>({
+export function fetchWMO() {
+  return requestData<WMOData>({
     url: ApiUrls.WMO,
-  }).then(response => formatWMOData(response, new Date()));
+    transformResponse: (responseData: WMOSourceData) =>
+      formatWMOData(responseData, new Date()),
+  });
 }

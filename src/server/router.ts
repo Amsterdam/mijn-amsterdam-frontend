@@ -1,6 +1,10 @@
-import { API_BASE_URL, BFF_API_BASE_URL } from '../universal/config';
 import express, { Request, Response } from 'express';
-import { fetchTIPS, loadServicesDirect, loadServicesRelated } from './services';
+import { API_BASE_URL, BFF_API_BASE_URL } from '../universal/config';
+import {
+  loadServicesGenerated,
+  loadServicesDirect,
+  loadServicesRelated,
+} from './services';
 
 export const router = express.Router();
 
@@ -27,51 +31,24 @@ router.use(`${API_BASE_URL}/auth/check`, function handleAuthentication(
 });
 
 router.use(
-  `${BFF_API_BASE_URL}/services/tips`,
-  async function handleRouteServicesTips(req: Request, res: Response) {
-    const relatedServicesData = await loadServicesRelated(req.sessionID!);
-    const directServicesData = await loadServicesDirect(req.sessionID!);
-
-    const tips = await fetchTIPS({
-      optin: !!req.cookies?.optInPersonalizedTips,
-      data: {
-        ...relatedServicesData,
-        ...directServicesData,
-      },
-    });
-
-    return res.send(tips);
+  `${BFF_API_BASE_URL}/services/generated`,
+  async function handleRouteServicesGenerated(req: Request, res: Response) {
+    return res.send(
+      await loadServicesGenerated(req.sessionID!, req.query.optin === '1')
+    );
   }
 );
 
 router.use(
   `${BFF_API_BASE_URL}/services/related`,
   async function handleRouteServicesRelated(req: Request, res: Response) {
-    const { BRP, BAG, AFVAL } = await loadServicesRelated(req.sessionID!);
-
-    return res.send({
-      BAG,
-      BRP,
-      AFVAL,
-    });
+    return res.send(await loadServicesRelated(req.sessionID!));
   }
 );
 
 router.use(
   `${BFF_API_BASE_URL}/services/direct`,
   async function handleRouteServicesDirect(req: Request, res: Response) {
-    const userDataLoaders = loadServicesDirect(req.sessionID!);
-
-    Promise.allSettled(Object.values(userDataLoaders)).then(
-      ([FOCUS, WMO, ERFPACHT, BELASTINGEN, MILIEUZONE]) => {
-        res.send({
-          FOCUS,
-          WMO,
-          ERFPACHT,
-          BELASTINGEN,
-          MILIEUZONE,
-        });
-      }
-    );
+    return res.send(await loadServicesDirect(req.sessionID!));
   }
 );

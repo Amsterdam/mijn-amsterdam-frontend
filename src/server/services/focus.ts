@@ -1,20 +1,26 @@
+import { addDays, differenceInCalendarDays, format, parseISO } from 'date-fns';
+import { ReactNode } from 'react';
+import { generatePath } from 'react-router-dom';
 import {
-  ApiErrorMessage,
   ApiUrls,
   AppRoutes,
   Chapter,
   Chapters,
   FeatureToggle,
 } from '../../universal/config';
-import { addDays, differenceInCalendarDays, format, parseISO } from 'date-fns';
-import { dateSort, defaultDateFormat } from '../../universal/helpers';
-import { getResultFromSettledPromise, requestSourceData } from '../helpers';
-
-import { ApiSuccesResponse } from '../../universal/config/api';
-import { LinkProps } from '../../universal/types/App.types';
-import { MyNotification } from './services-notifications';
-import { ReactNode } from 'react';
-import { generatePath } from 'react-router-dom';
+import {
+  dateSort,
+  defaultDateFormat,
+  getMixedResultStatus,
+  apiMixedResult,
+  ApiResponse,
+} from '../../universal/helpers';
+import {
+  LinkProps,
+  MyNotification,
+  MyCase,
+} from '../../universal/types/App.types';
+import { requestData } from '../helpers';
 
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
@@ -117,7 +123,7 @@ const processSteps: StepTitle[] = [
   'beslissing',
 ];
 
-const DAYS_KEEP_RECENT = 28;
+const DAYS_KEEP_RECENT = 2800;
 
 // Object with properties that are used to replace strings in the generated messages above.
 interface StepSourceData {
@@ -774,7 +780,7 @@ function formatStepData(
 // This function transforms the source data from the api into readable/presentable messages for the client.
 export function formatFocusProduct(
   product: FocusProduct,
-  compareData: Date
+  compareDate: Date
 ): FocusItem {
   const {
     _id: id,
@@ -795,7 +801,7 @@ export function formatFocusProduct(
   const decision = getDecision(rawDecision || '');
 
   // Determine if this items falls within a recent period (of xx days)
-  const isRecent = isRecentItem(decision, steps, compareData);
+  const isRecent = isRecentItem(decision, steps, compareDate);
 
   // The data about the latest step
   const latestStepData = steps[latestStep] as Step;
@@ -984,28 +990,21 @@ export interface IncomeSpecifications {
   uitkeringsspecificaties: FocusInkomenSpecificatie[];
 }
 
-export interface FOCUSData extends IncomeSpecifications {
-  aanvragen: FocusItem[] | ApiErrorMessage;
-  recentCases: [] | ApiErrorMessage;
-  notifications: MyNotification[] | ApiErrorMessage;
-}
-
-function formatFOCUSAanvragenData(
-  response: ApiSuccesResponse<FOCUSAanvragenSourceData>
+function transformFOCUSAanvragenData(
+  responsData: FOCUSAanvragenSourceData,
+  compareDate: Date
 ): FocusItem[] {
-  // const recentCases = items.filter(item => item.isRecent);
-  const d = new Date();
-  return response.content
-    .map(product => formatFocusProduct(product, d))
+  return responsData
+    .map(product => formatFocusProduct(product, compareDate))
     .filter(item => item.productTitle !== ProductTitles.BijzondereBijstand);
 }
 
-function formatFOCUSIncomeSpecificationsData(
-  response: ApiSuccesResponse<FOCUSIncomeSpecificationSourceData>
+function transformFOCUSIncomeSpecificationsData(
+  responsData: FOCUSIncomeSpecificationSourceData
 ): IncomeSpecifications {
-  const jaaropgaven = response.content.content.jaaropgaven || [];
+  const jaaropgaven = responsData.content.jaaropgaven || [];
   const uitkeringsspecificaties =
-    response.content.content.uitkeringsspecificaties || [];
+    responsData.content.uitkeringsspecificaties || [];
 
   return {
     jaaropgaven: jaaropgaven
@@ -1017,57 +1016,62 @@ function formatFOCUSIncomeSpecificationsData(
   };
 }
 
-export async function fetchFOCUS(): Promise<FOCUSData> {
-  const aanvragenRequest = requestSourceData<FOCUSAanvragenSourceData>({
+type FOCUSData = {
+  aanvragen: ApiResponse<FocusItem[]>;
+  inkomenSpecificaties: ApiResponse<IncomeSpecifications>;
+  cases: MyCase[];
+  notifications: MyNotification[];
+};
+
+export async function fetchFOCUS() {
+  const aanvragen = await requestData<FocusItem[]>({
     url: ApiUrls.FOCUS,
+    transformResponse: data => transformFOCUSAanvragenData(data, new Date()),
   });
 
-  const incomeSpecificationsRequest = requestSourceData<
-    FOCUSIncomeSpecificationSourceData
-  >({
+  const inkomenSpecificaties = await requestData<IncomeSpecifications>({
     url: ApiUrls.FOCUS_INKOMEN_SPECIFICATIES,
+    transformResponse: transformFOCUSIncomeSpecificationsData,
   });
 
-  const [
-    aanvragenPromise,
-    incomeSpecificatiesPromise,
-  ] = await Promise.allSettled([aanvragenRequest, incomeSpecificationsRequest]);
+  const notificationSources: any = [];
+  const cases: MyCase[] = [];
 
-  let aanvragenResult = getResultFromSettledPromise<FOCUSAanvragenSourceData>(
-    aanvragenPromise
-  );
-
-  let incomeSpecificationsResult = getResultFromSettledPromise<
-    FOCUSIncomeSpecificationSourceData
-  >(incomeSpecificatiesPromise);
-
-  let notifications: MyNotification[] = [];
-
-  const aanvragen =
-    aanvragenResult.status === 'success'
-      ? formatFOCUSAanvragenData(aanvragenResult)
-      : aanvragenResult;
-
-  let jaaropgaven: FocusInkomenSpecificatie[] = [];
-  let uitkeringsspecificaties: FocusInkomenSpecificatie[] = [];
-
-  if (incomeSpecificationsResult.status === 'success') {
-    const formattedResponseData = formatFOCUSIncomeSpecificationsData(
-      incomeSpecificationsResult
+  if (aanvragen.status === 'success') {
+    notificationSources.push(...aanvragen.content);
+    cases.push(
+      ...aanvragen.content
+        .filter(item => item.isRecent)
+        .map(item => {
+          return {
+            id: item.id,
+            title: item.title,
+            datePublished: item.datePublished,
+            link: item.link,
+            chapter: item.chapter,
+          };
+        })
     );
-    jaaropgaven = formattedResponseData.jaaropgaven;
-    uitkeringsspecificaties = formattedResponseData.uitkeringsspecificaties;
-
-    notifications = [...aanvragen, ...jaaropgaven, ...uitkeringsspecificaties]
-      .filter(item => item.notification !== undefined)
-      .map<MyNotification>(item => item.notification as MyNotification);
   }
 
-  return {
-    aanvragen,
-    jaaropgaven,
-    uitkeringsspecificaties,
-    recentCases: [],
-    notifications,
-  };
+  if (inkomenSpecificaties.status === 'success') {
+    notificationSources.push(...inkomenSpecificaties.content.jaaropgaven);
+    notificationSources.push(
+      ...inkomenSpecificaties.content.uitkeringsspecificaties
+    );
+  }
+
+  const notifications = notificationSources
+    .filter((item: any) => item.notification !== undefined)
+    .map((item: any) => item.notification as MyNotification);
+
+  return apiMixedResult<FOCUSData>(
+    {
+      aanvragen,
+      inkomenSpecificaties,
+      cases,
+      notifications,
+    },
+    getMixedResultStatus(aanvragen, inkomenSpecificaties)
+  );
 }

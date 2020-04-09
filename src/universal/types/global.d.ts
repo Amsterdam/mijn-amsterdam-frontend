@@ -15,3 +15,5 @@ type Centroid = [Lng, Lat];
 type LatLngObject = { lat: Lat; lng: Lng };
 
 type SessionID = string;
+
+type ResolvedType<T> = T extends PromiseLike<infer U> ? U : T;
