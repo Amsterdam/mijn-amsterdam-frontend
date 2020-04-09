@@ -1,10 +1,9 @@
-import { AxiosResponse } from 'axios';
 import { ApiUrls } from '../../universal/config';
 import {
   capitalizeFirstLetter,
   getApproximateDistance,
 } from '../../universal/helpers';
-import { requestSourceData } from '../helpers/request';
+import { requestData } from '../helpers/request';
 
 const AFVAL_AFSPRAAK_MAKEN =
   'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Grofvuil.aspx';
@@ -227,11 +226,11 @@ export interface AFVALData {
 }
 
 export function formatAFVALData(
-  response: AxiosResponse<AFVALSourceData>,
+  responseData: AFVALSourceData,
   center: LatLngObject | null
 ): AFVALData {
-  const ophalen: GarbageMoment[] = response.data?.result?.features
-    ? response.data.result.features.map(feature => {
+  const ophalen: GarbageMoment[] = responseData?.result?.features
+    ? responseData.result.features.map(feature => {
         const {
           properties: {
             type,
@@ -289,8 +288,9 @@ export function formatAFVALData(
 export function fetchAFVAL(center: LatLngObject | null) {
   const params = { lat: center?.lat, lon: center?.lng };
 
-  return requestSourceData<AFVALSourceData>({
+  return requestData<AFVALData>({
     url: ApiUrls.AFVAL,
     params,
-  }).then(data => formatAFVALData(data, center));
+    transformResponse: data => formatAFVALData(data, center),
+  });
 }

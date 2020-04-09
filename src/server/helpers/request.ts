@@ -1,14 +1,13 @@
-import { ApiErrorResponse, ApiSuccesResponse } from '../../universal/config';
-import axios, {
-  AxiosError,
-  AxiosPromise,
-  AxiosRequestConfig,
-  AxiosResponse,
-} from 'axios';
-
+import axios, { AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { capitalizeFirstLetter } from '../../universal/helpers/text';
 import { entries } from '../../universal/helpers/utils';
 import { mockDataConfig } from '../mock-data/index';
+import { apiSuccesResult, apiErrorResult } from '../../universal/helpers';
+
+const DEFAULT_REQUEST_CONFIG: AxiosRequestConfig = {
+  timeout: 4, // 10 seconds
+  timeoutErrorMessage: `De aanvraag van data bij deze api duurt te lang.`,
+};
 
 function enableMockAdapter() {
   const MockAdapter = require('axios-mock-adapter');
@@ -17,52 +16,44 @@ function enableMockAdapter() {
   const mock = new MockAdapter(axios);
 
   entries(mockDataConfig).forEach(
-    ([url, { status, responseData, method = 'get' }]) => {
+    async ([
+      url,
+      { status, responseData, method = 'get', timeout, networkError },
+    ]) => {
       const onMethod = `on${capitalizeFirstLetter(method)}`;
-      mock[onMethod](url).reply(
-        status,
-        typeof responseData === 'function' ? responseData() : responseData
-      );
+      const req = mock[onMethod](url);
+      if (timeout) {
+        req.timeout();
+      } else if (networkError) {
+        req.networkError();
+      } else {
+        req.reply(async () => {
+          const data = await responseData();
+          return [status, data];
+        });
+      }
     }
   );
 }
 
-function handleRequestError(error: AxiosError) {
-  console.log('handleRequestError', error);
+export interface RequestConfig<Source, Transformed> {
+  url: string;
+  format: (data: Source) => Transformed;
 }
 
-export function requestSourceData<T>(
-  config: AxiosRequestConfig
-): AxiosPromise<T> {
+export async function requestData<T>(config: AxiosRequestConfig) {
   if (process.env.NODE_ENV !== 'production') {
     enableMockAdapter();
   }
 
-  const request = axios(config);
-  request.catch(handleRequestError);
-  return request;
-}
-
-function apiErrorResult(reason: string): ApiErrorResponse {
-  return {
-    message: reason,
-    status: 'failure',
-    statusCode: 500,
-  };
-}
-
-function apiSuccesResult<T>(content: T): ApiSuccesResponse<T> {
-  return {
-    content,
-    status: 'success',
-    statusCode: 200,
-  };
-}
-
-export function getResultFromSettledPromise<T>(
-  promiseResult: PromiseSettledResult<AxiosResponse<T>>
-): ApiSuccesResponse<T> | ApiErrorResponse {
-  return promiseResult.status === 'fulfilled'
-    ? apiSuccesResult<T>(promiseResult.value.data)
-    : apiErrorResult(promiseResult.reason);
+  try {
+    const request: AxiosPromise<T> = axios({
+      ...DEFAULT_REQUEST_CONFIG,
+      ...config,
+    });
+    const response: AxiosResponse<T> = await request;
+    return apiSuccesResult<T>(response.data);
+  } catch (error) {
+    return apiErrorResult(error);
+  }
 }

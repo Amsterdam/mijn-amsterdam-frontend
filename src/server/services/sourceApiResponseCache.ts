@@ -1,36 +1,27 @@
 import { ApiStateKey, BFFApiData } from '../../universal/config';
 
-export const dataLoaderCache: Record<SessionID, BFFApiData> = {};
+type DataCache = Record<ApiStateKey, Promise<BFFApiData[ApiStateKey]>>;
+
+export const dataLoaderCache: Record<SessionID, DataCache> = {};
 
 function init(sessionID: SessionID) {
   if (!dataLoaderCache[sessionID]) {
-    dataLoaderCache[sessionID] = {} as BFFApiData;
+    dataLoaderCache[sessionID] = {};
   }
 }
 
 function add(
   sessionID: SessionID,
   apiStateKey: ApiStateKey,
-  dataLoaderPromise: Promise<any>
+  dataPromise: Promise<any>
 ) {
   init(sessionID);
-  return (dataLoaderCache[sessionID][apiStateKey] = dataLoaderPromise);
+  return (dataLoaderCache[sessionID][apiStateKey] = dataPromise);
 }
 
 function get(sessionID: SessionID, apiStateKey: ApiStateKey) {
   init(sessionID);
-  return dataLoaderCache[sessionID][apiStateKey] || null;
-}
-
-function getOrAdd(
-  sessionID: SessionID,
-  apiStateKey: ApiStateKey,
-  dataLoaderPromise: Promise<any>
-) {
-  return (
-    get(sessionID, apiStateKey) ||
-    add(sessionID, apiStateKey, dataLoaderPromise)
-  );
+  return dataLoaderCache[sessionID][apiStateKey] || Promise.resolve(null);
 }
 
 function clear(sessionID: SessionID, apiStateKey: ApiStateKey) {
@@ -51,5 +42,4 @@ export const dataCache = {
   clear,
   clearAll,
   get,
-  getOrAdd,
 };

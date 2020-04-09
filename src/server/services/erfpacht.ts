@@ -1,12 +1,12 @@
 import { ApiUrls } from '../../universal/config';
-import { requestSourceData } from '../helpers';
+import { requestData } from '../helpers';
 
 export interface ERFPACHTData {
   status: true;
 }
 
 export function fetchERFPACHT() {
-  return requestSourceData<ERFPACHTData>({
+  return requestData<ERFPACHTData>({
     url: ApiUrls.ERFPACHT,
-  }).then(response => response.data);
+  });
 }

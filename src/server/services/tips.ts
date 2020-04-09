@@ -1,8 +1,7 @@
 import { ApiUrls, BFFApiData } from '../../universal/config';
 
-import { AxiosResponse } from 'axios';
 import { LinkProps } from '../../universal/types/App.types';
-import { requestSourceData } from '../helpers';
+import { requestData } from '../helpers';
 
 export interface MyTip {
   datePublished: string;
@@ -19,19 +18,20 @@ export interface TIPSData {
   items: MyTip[];
 }
 
-interface TIPSRequestData {
+export interface TIPSRequestData {
   optin: boolean;
   data: Partial<BFFApiData>;
 }
 
-function formatTIPSData(response: AxiosResponse<TIPSData>) {
-  return response.data;
+function formatTIPSData(responseData: TIPSData) {
+  return responseData;
 }
 
-export function fetchTIPS(requestData: TIPSRequestData) {
-  return requestSourceData<TIPSData>({
+export function fetchTIPS(requestBody: TIPSRequestData) {
+  return requestData<TIPSData>({
     url: ApiUrls.TIPS,
     method: 'POST',
-    data: requestData,
-  }).then(formatTIPSData);
+    data: requestBody,
+    transformRequest: formatTIPSData,
+  });
 }

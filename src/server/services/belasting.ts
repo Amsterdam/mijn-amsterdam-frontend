@@ -1,9 +1,9 @@
 import { ApiUrls } from '../../universal/config';
-import { AxiosResponse } from 'axios';
+
 import { Chapter } from '../../universal/config/chapter';
-import { MyNotification } from './services-notifications';
-import { MyTip } from './services-tips';
-import { requestSourceData } from '../helpers';
+import { MyTip } from './tips';
+import { requestData } from '../helpers';
+import { MyNotification } from '../../universal/types/App.types';
 
 export interface BELASTINGENData {
   isKnown: boolean;
@@ -33,9 +33,9 @@ function formatBelastingNotifications(notifications?: MyNotification[]) {
 }
 
 function formatBELASTINGENData(
-  response: AxiosResponse<BELASTINGSourceData>
+  responseData: BELASTINGSourceData
 ): BELASTINGENData {
-  const { meldingen, tips, ...restData } = response.data?.content || {
+  const { meldingen, tips, ...restData } = responseData?.content || {
     meldingen: [],
     tips: [],
     isKnown: false,
@@ -52,7 +52,8 @@ function formatBELASTINGENData(
 }
 
 export function fetchBELASTING() {
-  return requestSourceData<BELASTINGSourceData>({
+  return requestData<BELASTINGENData>({
     url: ApiUrls.BELASTINGEN,
-  }).then(data => formatBELASTINGENData(data));
+    transformResponse: formatBELASTINGENData,
+  });
 }
