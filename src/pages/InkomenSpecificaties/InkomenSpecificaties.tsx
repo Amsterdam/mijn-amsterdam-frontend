@@ -89,9 +89,9 @@ export default () => {
     }
   }, [minDate, maxDate]);
 
-  const options = useMemo(() => {
+  const options: Array<[string, number]> = useMemo(() => {
     return Array.from(
-      items.reduce((acc, item) => {
+      items.reduce((acc: Map<string, number>, item) => {
         acc.set(item.type, (acc.get(item.type) || 0) + 1);
         return acc;
       }, new Map<string, number>())
@@ -123,6 +123,14 @@ export default () => {
   function resetSearch() {
     setSelectedType('');
     setSelectedDates([minDate, maxDate]);
+  }
+
+  function toggleSearchPanel() {
+    const isActive = !isSearchPanelActive;
+    setSearchPanelActive(isActive);
+    if (!isActive) {
+      resetSearch();
+    }
   }
 
   return (
@@ -161,7 +169,7 @@ export default () => {
       >
         <Button
           className={styles.SearchButton}
-          onClick={() => setSearchPanelActive(!isSearchPanelActive)}
+          onClick={toggleSearchPanel}
           disabled={isSearchPanelActive}
           icon={SearchIcon}
           iconPosition="right"
