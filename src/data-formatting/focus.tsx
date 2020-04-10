@@ -14,9 +14,10 @@ import { FeatureToggle } from 'config/App.constants';
 import { Document as GenericDocument } from '../components/DocumentList/DocumentList';
 import { LinkProps } from 'App.types';
 import Linkd from 'components/Button/Button';
-import { MyNotification } from 'hooks/api/my-notifications-api.hook';
+import { MyNotification } from '../hooks/api/my-notifications-api.hook';
 import { generatePath } from 'react-router';
 import styles from 'pages/Inkomen/Inkomen.module.scss';
+import { dateFormat } from '../helpers/App';
 
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
@@ -1046,6 +1047,10 @@ export interface FocusInkomenSpecificatie
   documentUrl: ReactNode;
 }
 
+function documentDownloadName(item: FocusInkomenSpecificatieFromSource) {
+  return `${format(new Date(item.datePublished), 'yyyy-MM-dd')}-${item.title}`;
+}
+
 function formatIncomSpecificationItem(
   item: FocusInkomenSpecificatieFromSource
 ): FocusInkomenSpecificatie {
@@ -1061,9 +1066,7 @@ function formatIncomSpecificationItem(
         href={`/api/${item.url}`}
         rel="external noopener noreferrer"
         className={styles.DownloadLink}
-        download={`${format(new Date(item.datePublished), 'yyyy-MM-dd')}-${
-          item.title
-        }`}
+        download={documentDownloadName(item)}
       >
         <DocumentIcon width={14} height={14} /> PDF
       </a>
@@ -1071,15 +1074,87 @@ function formatIncomSpecificationItem(
   };
 }
 
+export const incomSpecificationsRouteMonthly = generatePath(
+  AppRoutes['INKOMEN/SPECIFICATIES']
+);
+export const incomSpecificationsRouteYearly = generatePath(
+  AppRoutes['INKOMEN/SPECIFICATIES'],
+  {
+    type: 'jaaropgaven',
+  }
+);
+
+function formatIncomeSpecificationNotification(
+  type: 'jaaropgave' | 'uitkeringsspecificatie',
+  item: FocusInkomenSpecificatie
+): MyNotification {
+  if (type === 'jaaropgave') {
+    return {
+      id: 'nieuwe-jaaropgave',
+      datePublished: item.datePublished,
+      chapter: Chapters.INKOMEN,
+      title: 'Nieuwe jaaropgave',
+      description: `Uw jaaropgave ${dateFormat(
+        item.datePublished,
+        'yyyy'
+      )} staat voor u klaar.`,
+      link: {
+        to: item.url,
+        title: 'Bekijk jaaropgave',
+        download: documentDownloadName(item),
+      },
+    };
+  }
+  return {
+    id: 'nieuwe-uitkeringsspecificatie',
+    datePublished: item.datePublished,
+    chapter: Chapters.INKOMEN,
+    title: 'Nieuwe uitkeringsspecificatie',
+    description: `Uw uitkeringsspecificatie van ${dateFormat(
+      item.datePublished,
+      'MMM'
+    )} staat voor u klaar.`,
+    link: {
+      to: item.url,
+      title: 'Bekijk uitkeringsspecificatie',
+      download: documentDownloadName(item),
+    },
+  };
+}
+
 export function formatIncomeSpecifications({
   content: { jaaropgaven, uitkeringsspecificaties },
 }: IncomeSpecificationsResponse): IncomeSpecifications {
+  const uitkeringsspecificatiesFormatted = uitkeringsspecificaties
+    .sort(dateSort('datePublished', 'desc'))
+    .map(formatIncomSpecificationItem);
+
+  const jaaropgavenFormatted = jaaropgaven
+    .sort(dateSort('datePublished', 'desc'))
+    .map(formatIncomSpecificationItem);
+
+  const notifications: MyNotification[] = [];
+
+  if (uitkeringsspecificatiesFormatted.length) {
+    notifications.push(
+      formatIncomeSpecificationNotification(
+        'uitkeringsspecificatie',
+        uitkeringsspecificatiesFormatted[0]
+      )
+    );
+  }
+  if (jaaropgavenFormatted.length) {
+    notifications.push(
+      formatIncomeSpecificationNotification(
+        'jaaropgave',
+        jaaropgavenFormatted[0]
+      )
+    );
+  }
+
   return {
-    jaaropgaven: jaaropgaven
-      .sort(dateSort('datePublished', 'desc'))
-      .map(formatIncomSpecificationItem),
-    uitkeringsspecificaties: uitkeringsspecificaties
-      .sort(dateSort('datePublished', 'desc'))
-      .map(formatIncomSpecificationItem),
+    jaaropgaven: jaaropgavenFormatted,
+    uitkeringsspecificaties: uitkeringsspecificatiesFormatted,
+    notifications,
   };
 }

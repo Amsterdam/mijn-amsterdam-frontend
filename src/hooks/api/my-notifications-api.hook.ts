@@ -45,6 +45,7 @@ function addChapterNamespaceToId(chapter: Chapter) {
 // a domain wide notifications stream.
 export default function useMyNotificationsApi({
   FOCUS,
+  FOCUS_INKOMEN_SPECIFICATIES,
   BRP,
   BELASTINGEN,
   MILIEUZONE,
@@ -56,6 +57,9 @@ export default function useMyNotificationsApi({
         WelcomeNotification,
         // Focus notification items
         ...FOCUS.data.notifications.map(addChapterNamespaceToId('INKOMEN')),
+        ...FOCUS_INKOMEN_SPECIFICATIES.data.notifications.map(
+          addChapterNamespaceToId('INKOMEN')
+        ),
         // BRP Notifications
         ...BRP.notifications.map(addChapterNamespaceToId('BURGERZAKEN')),
         // Belastingen
@@ -72,6 +76,7 @@ export default function useMyNotificationsApi({
       BRP.notifications,
       BELASTINGEN.data.notifications,
       MILIEUZONE.data.notifications,
+      FOCUS_INKOMEN_SPECIFICATIES.data.notifications,
     ]
   );
 

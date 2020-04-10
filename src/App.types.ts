@@ -16,6 +16,7 @@ export interface LinkProps {
   title: string;
   target?: '_blank' | '_self' | '_parent' | '_top';
   rel?: string;
+  download?: string;
 }
 
 export type SVGComponent = FunctionComponent<SVGProps<SVGElement>>;

@@ -142,6 +142,7 @@ export default function Linkd({
   iconPosition = 'left',
   external = false,
   onClick,
+  download,
   ...otherProps
 }: LinkdProps) {
   const AnchorElement = 'a';
@@ -155,6 +156,10 @@ export default function Linkd({
     ...(LinkElement === Link ? { to: href } : { href }),
   };
 
+  const downloadProp = {
+    ...(download ? { download } : {}),
+  };
+
   let clickHandler = onClick;
 
   if (!!href && external && !clickHandler) {
@@ -166,6 +171,7 @@ export default function Linkd({
       {...otherProps}
       {...relProp}
       {...urlProp}
+      {...downloadProp}
       onClick={clickHandler}
       className={buttonStyle({
         lean,
