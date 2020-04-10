@@ -27,8 +27,8 @@ function enableMockAdapter() {
       } else if (networkError) {
         req.networkError();
       } else {
-        req.reply(async () => {
-          const data = await responseData();
+        req.reply(async (...args: any[]) => {
+          const data = await responseData(...args);
           return [status, data];
         });
       }

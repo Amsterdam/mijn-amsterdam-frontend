@@ -1,4 +1,5 @@
 import { ApiUrls } from '../../universal/config/api';
+import { MyTip } from '../services/tips';
 
 type MockDataConfig = Record<
   string,
@@ -51,6 +52,12 @@ export const mockDataConfig: MockDataConfig = {
   [ApiUrls.TIPS]: {
     status: 200,
     method: 'post',
-    responseData: () => require('./json/tips.json'),
+    responseData: (config: any) => {
+      const tips = require('./json/tips.json');
+      const items = tips.items.filter((tip: MyTip) =>
+        config.data?.optin ? true : !tip.isPersonalized
+      );
+      return Object.assign({}, tips, { items });
+    },
   },
 };

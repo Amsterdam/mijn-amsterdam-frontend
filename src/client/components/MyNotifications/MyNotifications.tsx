@@ -71,7 +71,10 @@ export default function MyNotifications({
               (!!item.link?.to && !isInteralUrl(item.link.to)) ||
               !!item.link?.download;
             return (
-              <li key={item.id} className={styles.MyNotificationItem}>
+              <li
+                key={`${item.chapter}-${item.id}`}
+                className={styles.MyNotificationItem}
+              >
                 <Heading className={styles.Title} el="h4" size="small">
                   {item.title}
                 </Heading>

@@ -5,6 +5,7 @@ import { Chapters } from '../config/chapter';
 import { FeatureToggle } from '../config/app';
 import { isLoading } from './index';
 import { isMokum } from '../../client/pages/Profile/formatData';
+import { isError } from './api';
 
 function isChapterActive(
   item: MenuItem,
@@ -12,7 +13,11 @@ function isChapterActive(
 ) {
   switch (item.id) {
     case Chapters.INKOMEN:
-      return !isLoading(FOCUS);
+      return (
+        !isLoading(FOCUS) &&
+        (!isError(FOCUS, 'aanvragen') ||
+          !isError(FOCUS, 'uitkeringsspecificaties'))
+      );
 
     case Chapters.ZORG:
       return !isLoading(WMO) && !!WMO.content?.items.length;

@@ -8,6 +8,7 @@ import {
   PageHeading,
   Panel,
   SectionCollapsible,
+  Alert,
 } from '../../components';
 import { ChapterTitles, ExternalUrls } from '../../../universal/config';
 import { GarbageMoment, GarbagePoint } from '../../../server/services';
@@ -16,7 +17,7 @@ import React, { ReactNode, useContext } from 'react';
 import { AppContext } from '../../AppState';
 import classnames from 'classnames';
 import { getFullAddress } from '../Profile/formatData';
-import { isLoading } from '../../../universal/helpers';
+import { isLoading, isError } from '../../../universal/helpers';
 import styles from './GarbageInformation.module.scss';
 
 interface PanelProps {
@@ -98,8 +99,8 @@ export default () => {
     </SectionCollapsible>
   );
 
-  const [restafval, grofvuil] = AFVAL.content?.ophalen;
-
+  const [restafval, grofvuil] = AFVAL.content?.ophalen || [];
+  console.log(AFVAL);
   return (
     <DetailPage className={styles.GarbageInformation}>
       <PageHeading icon={<ChapterIcon />}>{ChapterTitles.AFVAL}</PageHeading>
@@ -113,6 +114,11 @@ export default () => {
             Meer informatie over regels voor afval en hergebruik
           </Linkd>
         </p>
+        {isError(AFVAL) && (
+          <Alert type="warning">
+            <p>We kunnen op dit moment niet alle gegevens tonen.</p>
+          </Alert>
+        )}
       </PageContent>
 
       {!!BRP.content?.adres && (

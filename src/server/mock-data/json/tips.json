@@ -2,7 +2,8 @@
     "items": [
         {
             "datePublished": "2019-07-24",
-            "description": "U mag geen telegoon meer vasthouden op de fiets",
+            "isPersonalized": true,
+            "description": "U mag geen telefoon meer vasthouden op de fiets",
             "id": 1,
             "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/bellenopfiets.jpg",
             "link": {
@@ -10,7 +11,7 @@
                 "to": "https://www.rijksoverheid.nl/onderwerpen/fiets/vraag-en-antwoord/mag-ik-bellen-en-naar-muziek-luisteren-op-de-fiets"
             },
             "priority": 50,
-            "title": "Geen telefoon op de fiets"
+            "title": "PERSONALIZED: Geen telefoon op de fiets"
         },
         {
             "datePublished": "2019-08-18",

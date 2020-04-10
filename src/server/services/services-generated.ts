@@ -1,5 +1,4 @@
 import { fetchTIPS, TIPSRequestData } from './tips';
-import { dataCache } from './sourceApiResponseCache';
 import { loadServicesRelated } from './services-related';
 import { omit, apiSuccesResult } from '../../universal/helpers';
 import { loadServicesDirect } from './services-direct';
@@ -58,12 +57,7 @@ export async function loadServicesGenerated(
     }
   }
 
-  const promiseTIPS = fetchTIPS(tipsRequestData);
-  const tips: ResolvedType<typeof promiseTIPS> = await dataCache.add(
-    sessionID,
-    'TIPS',
-    promiseTIPS
-  );
+  const tips = await fetchTIPS(tipsRequestData);
 
   const notificationsResult = {
     items: notifications,
