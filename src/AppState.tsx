@@ -112,6 +112,7 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
     BRP,
     BELASTINGEN,
     MILIEUZONE,
+    FOCUS_INKOMEN_SPECIFICATIES,
   } as AppState);
 
   const tipsDependencies = [

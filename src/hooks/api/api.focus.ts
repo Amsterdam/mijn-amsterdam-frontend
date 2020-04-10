@@ -23,6 +23,7 @@ export interface IncomeSpecificationsResponse {
 export interface IncomeSpecifications {
   jaaropgaven: FocusInkomenSpecificatie[];
   uitkeringsspecificaties: FocusInkomenSpecificatie[];
+  notifications: MyNotification[];
 }
 
 export type FocusInkomenSpecificatiesApiState = ApiState<IncomeSpecifications>;
