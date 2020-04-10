@@ -6,7 +6,7 @@ import { MyNotification } from './my-notifications-api.hook';
 
 interface MilieuzoneApiResponseContent {
   isKnown: boolean;
-  meldingen: MyNotification[];
+  UPDATES: MyNotification[];
 }
 
 interface MilieuzoneApiResponse {
@@ -32,7 +32,7 @@ function formatMilieuzoneNotifications(notifications?: MyNotification[]) {
 }
 
 export default function useMilieuzoneApi(): MilieuzoneApiState {
-  const content = { meldingen: [], isKnown: false };
+  const content = { UPDATES: [], isKnown: false };
   const [api] = useDataApi<MilieuzoneApiResponse>(
     {
       url: getApiUrl('MILIEUZONE'),
@@ -40,14 +40,14 @@ export default function useMilieuzoneApi(): MilieuzoneApiState {
     { content, status: 'OK' }
   );
 
-  const { meldingen = [], ...restData } = api.data?.content || {};
+  const { UPDATES = [], ...restData } = api.data?.content || {};
 
   return {
     ...api,
     data: {
       ...content,
       ...restData,
-      notifications: formatMilieuzoneNotifications(meldingen),
+      notifications: formatMilieuzoneNotifications(UPDATES),
     },
   };
 }

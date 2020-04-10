@@ -12,6 +12,14 @@ type ProfileLabelValueFormatter =
 
 type ProfileLabels<T> = { [key in keyof T]: ProfileLabelValueFormatter };
 
+export interface ReisDocument {
+  documentNummer: string;
+  documentType: 'identiteitskaart' | 'paspoort';
+  datumUitgifte: string;
+  datumAfloop: string;
+  title: string;
+}
+
 export interface Adres {
   straatnaam: string;
   postcode: string;
@@ -72,6 +80,7 @@ export interface BrpResponseData {
   ouders: Persoon[];
   adres: Adres;
   adresHistorisch?: Adres[];
+  reisDocumenten?: ReisDocument[];
 }
 
 export function getFullName(persoon: Persoon) {

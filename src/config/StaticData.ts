@@ -4,7 +4,7 @@ import { Chapters } from './Chapter.constants';
 
 export const WelcomeNotification: MyNotification = {
   id: 'welcome01',
-  chapter: Chapters.MELDINGEN,
+  chapter: Chapters.UPDATES,
   datePublished: new Date(2019, 10, 11).toISOString(),
   title: 'Welkom op Mijn Amsterdam!',
   description:

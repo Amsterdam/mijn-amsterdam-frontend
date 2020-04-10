@@ -313,7 +313,7 @@
       },
       "beslissing":{
         "_id":3,
-        "datum":"2345-07-03T15:05:52+02:00",
+        "datum":"2020-02-03T15:05:52+02:00",
         "document":[
           {
             "$ref":"focus/document?id=660000000000011&isBulk=false&isDms=false",

@@ -1,0 +1,19 @@
+@import 'styles/_global.scss';
+
+.BurgerzakenDetail {
+
+}
+.DocumentProperties {
+  padding-top: 1rem;
+  p {
+    margin: 0;
+    border-top: .1rem solid $color-neutral-grey2;
+    padding-top: 1.7rem;
+    padding-bottom: 3rem;
+  }
+  color: $color-neutral-grey4;
+  strong {
+    display: block;
+    color: $color-black;
+  }
+}

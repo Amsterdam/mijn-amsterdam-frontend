@@ -102,12 +102,14 @@ export default function MyNotifications({
                     <em className={styles.ChapterIndication}>
                       {item.chapter.toLowerCase()}
                     </em>
-                    <time
-                      className={styles.Datum}
-                      dateTime={item.datePublished}
-                    >
-                      {defaultDateFormat(item.datePublished)}
-                    </time>
+                    {!item.hideDatePublished && (
+                      <time
+                        className={styles.Datum}
+                        dateTime={item.datePublished}
+                      >
+                        {defaultDateFormat(item.datePublished)}
+                      </time>
+                    )}
                   </div>
                 </aside>
                 {!!item.description && (
@@ -145,7 +147,7 @@ export default function MyNotifications({
       )}
       {!isLoading && showMoreLink && (
         <p className={styles.FooterLink}>
-          <Linkd href={AppRoutes.MELDINGEN}>Alle updates</Linkd>
+          <Linkd href={AppRoutes.UPDATES}>Alle updates</Linkd>
         </p>
       )}
     </div>

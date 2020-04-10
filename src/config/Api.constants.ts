@@ -17,7 +17,7 @@ export type ApiName = StateKey | 'BAG' | 'AUTH' | 'AFVAL_OPHAAL_GEBIEDEN';
 
 export const ApiUrls: TypeIndex<ApiName, string> = {
   BELASTINGEN: `${API_BASE_URL}/belastingen/get`,
-  MELDINGEN: `${API_BASE_URL}/updates`,
+  UPDATES: `${API_BASE_URL}/updates`,
   MY_CASES: `${API_BASE_URL}/focus/aanvragen`,
   MIJN_TIPS: `${API_BASE_URL}/tips/gettips`,
   BRP: `${API_BASE_URL}/brp/brp`,
