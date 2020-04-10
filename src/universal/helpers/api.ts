@@ -36,11 +36,26 @@ export type FEApiResponseData<T extends (...args: any[]) => any> = ResolvedType<
 export type ApiResponse<T> = ApiErrorResponse | ApiSuccessResponse<T>;
 
 export function isLoading(apiResponseData: any) {
-  return apiResponseData.content === null;
+  return apiResponseData.status === 'pristine';
 }
 
-export function isError(data: any) {
-  return data !== null && data.isError;
+export function isError(
+  apiResponseData:
+    | ApiErrorResponse
+    | ApiPristineResponse
+    | ApiSuccessResponse<any>
+    | ApiMixedResponse<any>
+    | ApiUnknownResponse,
+  responseKey?: string
+) {
+  return (
+    apiResponseData.status === 'failure' ||
+    apiResponseData.status === 'unknown' ||
+    (apiResponseData.status === 'mixed' && !responseKey) ||
+    (responseKey &&
+      apiResponseData.status === 'mixed' &&
+      apiResponseData.content[responseKey]?.status === 'failure')
+  );
 }
 
 export function apiErrorResult(error: AxiosError): ApiErrorResponse {

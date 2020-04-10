@@ -95,8 +95,9 @@ export const ErrorNames: { [stateKey: string]: string } = {
   FOCUS_INKOMEN_SPECIFICATIES: 'Inkomen en Stadspas + actuele updates',
   CHAPTERS: "Thema's",
   ERFPACHT: 'Erfpacht',
-  AFVAL: 'Afval',
+  AFVAL: 'Afval gegevens rond uw Lat/Lon locatie',
   BUURT: 'Mijn buurt',
-  BELASTINGEN: 'Belastingen + updates',
-  MILIEUZONE: 'Milieuzone',
+  BELASTINGEN: 'Belastingen + actuele updates',
+  MILIEUZONE: 'Milieuzone + actuele updates',
+  BAG: 'Lat/Lon locatie gegevens van uw adres.',
 };
