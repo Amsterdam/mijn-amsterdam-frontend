@@ -31,7 +31,7 @@ interface NotificationState {
 export type MyNotificationsApiState = ApiState<NotificationState>;
 
 export function useMyNotificationsState() {
-  return useLocalStorage('MELDINGEN', {});
+  return useLocalStorage('UPDATES', {});
 }
 
 function addChapterNamespaceToId(chapter: Chapter) {

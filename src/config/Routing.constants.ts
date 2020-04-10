@@ -19,7 +19,7 @@ export const AppRoutes = {
   PROCLAIMER: '/proclaimer',
   API_LOGIN: `${API_BASE_URL}/login`,
   MIJN_TIPS: '/overzicht-tips',
-  MELDINGEN: '/overzicht-updates',
+  UPDATES: '/overzicht-updates',
   AFVAL: '/afval',
 };
 

@@ -19,7 +19,7 @@ const MAX_TIPS_VISIBLE = 3;
 
 export default () => {
   const {
-    MELDINGEN: {
+    UPDATES: {
       data: { items: myNotificationItems, total: myNotificationsTotal },
       isLoading: isMyNotificationsLoading,
     },
@@ -54,7 +54,7 @@ export default () => {
         <PageHeading>
           <Link
             className={styles.MyNotificationsHeadingLink}
-            to={AppRoutes.MELDINGEN}
+            to={AppRoutes.UPDATES}
           >
             Actueel
           </Link>

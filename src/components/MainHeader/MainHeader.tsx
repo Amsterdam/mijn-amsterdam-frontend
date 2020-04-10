@@ -17,7 +17,7 @@ import Linkd from 'components/Button/Button';
 import useRouter from 'use-react-router';
 import { ErrorNames } from '../../config/Api.constants';
 
-const excludedApiKeys: StateKey[] = ['MY_CHAPTERS', 'SESSION', 'MELDINGEN'];
+const excludedApiKeys: StateKey[] = ['MY_CHAPTERS', 'SESSION', 'UPDATES'];
 
 export interface MainHeaderProps {
   isAuthenticated?: boolean;

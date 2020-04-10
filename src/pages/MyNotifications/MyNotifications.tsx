@@ -10,7 +10,7 @@ import styles from './MyNotifications.module.scss';
 
 export default () => {
   const {
-    MELDINGEN: {
+    UPDATES: {
       data: { items, total },
       isLoading,
       isError,

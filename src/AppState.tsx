@@ -29,7 +29,7 @@ type MyCasesApiState = FocusApiState;
 export interface AppState {
   BRP: BrpApiState;
   SESSION: SessionApiState;
-  MELDINGEN: MyNotificationsApiState;
+  UPDATES: MyNotificationsApiState;
   MY_CASES: MyCasesApiState;
   MIJN_TIPS: MyTipsApiState;
   WMO: WmoApiState;
@@ -107,7 +107,7 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
     MILIEUZONE,
   } as AppState);
 
-  const MELDINGEN = useMyNotificationsApi({
+  const UPDATES = useMyNotificationsApi({
     FOCUS,
     BRP,
     BELASTINGEN,
@@ -166,7 +166,7 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
     BRP,
     // NOTE: If needed we can postpone immediate fetching of below data and start fetching in the component
     // by calling the refetch method implemented in the api hooks.
-    MELDINGEN,
+    UPDATES,
     MY_CASES,
     MIJN_TIPS,
     WMO,

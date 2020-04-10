@@ -145,7 +145,7 @@ export default function MyNotifications({
       )}
       {!isLoading && showMoreLink && (
         <p className={styles.FooterLink}>
-          <Linkd href={AppRoutes.MELDINGEN}>Alle updates</Linkd>
+          <Linkd href={AppRoutes.UPDATES}>Alle updates</Linkd>
         </p>
       )}
     </div>
