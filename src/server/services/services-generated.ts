@@ -1,7 +1,7 @@
 import { fetchTIPS, TIPSRequestData } from './tips';
 import { dataCache } from './sourceApiResponseCache';
 import { loadServicesRelated } from './services-related';
-import { omit } from '../../universal/helpers';
+import { omit, apiSuccesResult } from '../../universal/helpers';
 import { loadServicesDirect } from './services-direct';
 import { MyNotification, MyCase } from '../../universal/types/App.types';
 
@@ -65,9 +65,16 @@ export async function loadServicesGenerated(
     promiseTIPS
   );
 
+  const notificationsResult = {
+    items: notifications,
+    total: notifications.length,
+  };
+
   return {
-    cases,
-    notifications,
-    tips,
+    CASES: apiSuccesResult<typeof cases>(cases),
+    NOTIFICATIONS: apiSuccesResult<typeof notificationsResult>(
+      notificationsResult
+    ),
+    TIPS: tips,
   };
 }

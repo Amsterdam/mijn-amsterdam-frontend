@@ -29,10 +29,11 @@ import { SessionContext } from '../../SessionState';
 import Tutorial from '../Tutorial/Tutorial';
 import classnames from 'classnames';
 import { getFullName } from '../../pages/Profile/formatData';
-import { getMyChapters } from '../../../universal/helpers/myChapters';
+import { getMyChapters } from '../../../universal/helpers';
 import styles from './MainNavBar.module.scss';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
 import useRouter from 'use-react-router';
+import { ChapterIcons } from '../../config/chapterIcons';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -49,7 +50,7 @@ interface SecondaryLinksProps {
 
 function SecondaryLinks({ userType = 'BURGER' }: SecondaryLinksProps) {
   const { BRP } = useContext(AppContext);
-  const persoon = BRP?.persoon;
+  const persoon = BRP?.status === 'success' ? BRP.content.persoon : null;
   const hasFirstName = !!(persoon && persoon.voornamen);
   const isDesktopScreen = useDesktopScreen();
 
@@ -100,7 +101,7 @@ function getMenuItem(item: MenuItem) {
   if (Array.isArray(item.submenuItems)) {
     return (
       <MainNavSubmenu key={item.id} title={item.title} id={item.id}>
-        {item.submenuItems.map(({ id, to, Icon, title, rel }) => {
+        {item.submenuItems.map(({ id, to, title, rel, chapter }) => {
           return (
             <MainNavSubmenuLink
               key={id}
@@ -108,7 +109,7 @@ function getMenuItem(item: MenuItem) {
               title={title}
               to={to}
               rel={rel}
-              Icon={Icon}
+              Icon={chapter ? ChapterIcons[chapter] : undefined}
               data-chapter-id={id}
             />
           );
@@ -202,10 +203,7 @@ export default function MainNavBar() {
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
     undefined
   );
-  const {
-    items: myChapterItems,
-    isLoading: isMyChaptersLoading,
-  } = getMyChapters(appState);
+  const { items: myChapterItems } = getMyChapters(appState);
 
   const { history, location } = useRouter();
   const [isTutorialVisible, setIsTutorialVisible] = useState(false);

@@ -1,10 +1,10 @@
-import { Chapters } from '../../universal/config/chapter';
 import { ExternalUrls } from '../../universal/config/app';
-import { MyNotification } from '../../server/services/services-notifications';
+import { Chapters } from '../../universal/config/chapter';
+import { MyNotification } from '../../universal/types/App.types';
 
 export const WelcomeNotification: MyNotification = {
   id: 'welcome01',
-  chapter: Chapters.UPDATES,
+  chapter: Chapters.NOTIFICATIONS,
   datePublished: new Date(2019, 10, 11).toISOString(),
   title: 'Welkom op Mijn Amsterdam!',
   description:

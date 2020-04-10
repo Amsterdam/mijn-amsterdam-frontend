@@ -25,7 +25,7 @@ export default () => {
     },
   } = useRouter();
 
-  const WmoItem = WMO?.items.find(item => item.id === id);
+  const WmoItem = WMO.content?.items.find(item => item.id === id);
   const noContent = !isLoading(WMO) && !WmoItem;
   const lineItemsTotal = WmoItem?.process.length || 0;
   const items =

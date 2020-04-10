@@ -4,7 +4,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 const appState = {
-  UPDATES: {
+  NOTIFICATIONS: {
     total: 0,
     items: [],
   },

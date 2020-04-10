@@ -1018,7 +1018,7 @@ function transformFOCUSIncomeSpecificationsData(
 
 type FOCUSData = {
   aanvragen: ApiResponse<FocusItem[]>;
-  inkomenSpecificaties: ApiResponse<IncomeSpecifications>;
+  specificaties: ApiResponse<IncomeSpecifications>;
   cases: MyCase[];
   notifications: MyNotification[];
 };
@@ -1029,7 +1029,7 @@ export async function fetchFOCUS() {
     transformResponse: data => transformFOCUSAanvragenData(data, new Date()),
   });
 
-  const inkomenSpecificaties = await requestData<IncomeSpecifications>({
+  const specificaties = await requestData<IncomeSpecifications>({
     url: ApiUrls.FOCUS_INKOMEN_SPECIFICATIES,
     transformResponse: transformFOCUSIncomeSpecificationsData,
   });
@@ -1054,11 +1054,9 @@ export async function fetchFOCUS() {
     );
   }
 
-  if (inkomenSpecificaties.status === 'success') {
-    notificationSources.push(...inkomenSpecificaties.content.jaaropgaven);
-    notificationSources.push(
-      ...inkomenSpecificaties.content.uitkeringsspecificaties
-    );
+  if (specificaties.status === 'success') {
+    notificationSources.push(...specificaties.content.jaaropgaven);
+    notificationSources.push(...specificaties.content.uitkeringsspecificaties);
   }
 
   const notifications = notificationSources
@@ -1068,10 +1066,10 @@ export async function fetchFOCUS() {
   return apiMixedResult<FOCUSData>(
     {
       aanvragen,
-      inkomenSpecificaties,
+      specificaties,
       cases,
       notifications,
     },
-    getMixedResultStatus(aanvragen, inkomenSpecificaties)
+    getMixedResultStatus(aanvragen, specificaties)
   );
 }

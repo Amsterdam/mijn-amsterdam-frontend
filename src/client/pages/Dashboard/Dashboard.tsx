@@ -1,3 +1,8 @@
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { AppRoutes } from '../../../universal/config';
+import { isLoading, getMyChapters } from '../../../universal/helpers';
+import { AppContext } from '../../AppState';
 import {
   DirectLinks,
   MyChaptersPanel,
@@ -6,27 +11,23 @@ import {
   Page,
   PageHeading,
 } from '../../components';
-import React, { useContext, useMemo } from 'react';
-
-import { AppContext } from '../../AppState';
-import { AppRoutes } from '../../../universal/config';
-import { Link } from 'react-router-dom';
-import { getMyChapters } from '../../../universal/helpers/myChapters';
-import { isLoading } from '../../../universal/helpers';
-import styles from './Dashboard.module.scss';
 import { usePhoneScreen } from '../../hooks/media.hook';
+import styles from './Dashboard.module.scss';
 
-const MAX_UPDATES_VISIBLE = 3;
+const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
 
 export default () => {
   const appState = useContext(AppContext);
-  const { TIPS, UPDATES } = appState;
+  const { TIPS, NOTIFICATIONS } = appState;
 
-  const tipItems = TIPS.items.slice(0, MAX_TIPS_VISIBLE);
-  const updateItems = UPDATES?.items.slice(0, MAX_UPDATES_VISIBLE);
+  const tipItems = TIPS.content?.items.slice(0, MAX_TIPS_VISIBLE) || [];
+  const notificationItems = NOTIFICATIONS.content?.items.slice(
+    0,
+    MAX_NOTIFICATIONS_VISIBLE
+  );
   const isPhoneScreen = usePhoneScreen();
-  const updatesTotal = UPDATES?.items.length || 0;
+  const NOTIFICATIONSTotal = NOTIFICATIONS.content?.items.length;
 
   const {
     items: myChapterItems,
@@ -42,17 +43,17 @@ export default () => {
         <PageHeading>
           <Link
             className={styles.MyNotificationsHeadingLink}
-            to={AppRoutes.UPDATES}
+            to={AppRoutes.NOTIFICATIONS}
           >
             Actueel
           </Link>
         </PageHeading>
         <div className={styles.TopContentContainer}>
           <MyNotifications
-            total={updatesTotal}
-            items={updateItems}
-            showMoreLink={updatesTotal > MAX_UPDATES_VISIBLE}
-            isLoading={isLoading(UPDATES)}
+            total={NOTIFICATIONSTotal}
+            items={notificationItems}
+            showMoreLink={NOTIFICATIONSTotal > MAX_NOTIFICATIONS_VISIBLE}
+            isLoading={isLoading(NOTIFICATIONS)}
             trackCategory="Dashboard / Actueel"
           />
           <MyChaptersPanel
@@ -84,7 +85,7 @@ export default () => {
             data-tutorial-item="Hier geven wij u handige tips, bijvoorbeeld over de regelingen en voorzieningen van de gemeente;right-bottom"
             isLoading={isLoading(TIPS)}
             items={tipItems}
-            isOptIn={TIPS.isOptIn}
+            isOptIn={TIPS.content?.isOptIn}
             showOptIn={true}
           />
         )}

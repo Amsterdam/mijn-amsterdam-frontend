@@ -26,7 +26,7 @@ export default () => {
       {FeatureToggle.myTipsoptInOutPersonalization && (
         <PageContent>
           <p>
-            {!TIPS.isOptIn ? (
+            {!TIPS.content?.isOptIn ? (
               <>
                 U ziet nu algemene tips over voorzieningen en activiteiten in
                 Amsterdam. Op basis van uw informatie die bij de gemeente bekend
@@ -41,12 +41,14 @@ export default () => {
               </>
             )}
             <Button
-              variant={TIPS.isOptIn ? 'secondary-inverted' : 'secondary'}
+              variant={
+                TIPS.content?.isOptIn ? 'secondary-inverted' : 'secondary'
+              }
               className={styles.OptInOutToggleButton}
               onClick={() => setModalIsOpen(true)}
               aria-expanded={modalIsOpen}
             >
-              {TIPS.isOptIn
+              {TIPS.content?.isOptIn
                 ? 'Toon geen persoonlijke tips'
                 : 'Toon persoonlijke tips'}
             </Button>
@@ -65,8 +67,8 @@ export default () => {
       <MyTips
         showHeader={false}
         isLoading={isLoading(TIPS)}
-        items={TIPS?.items}
-        isOptIn={TIPS.isOptIn}
+        items={TIPS.content?.items || []}
+        isOptIn={TIPS.content?.isOptIn}
       />
     </OverviewPage>
   );

@@ -4,7 +4,7 @@ import MyNotifications from './MyNotifications';
 import React from 'react';
 import { shallow } from 'enzyme';
 
-const UPDATES: MyNotification[] = [];
+const NOTIFICATIONS: MyNotification[] = [];
 const UPDATES_TOTAL = 10;
 
 it('Renders without crashing', () => {
@@ -12,7 +12,7 @@ it('Renders without crashing', () => {
     <BrowserRouter>
       <MyNotifications
         trackCategory="myNotifications"
-        items={UPDATES}
+        items={NOTIFICATIONS}
         total={UPDATES_TOTAL}
       />
     </BrowserRouter>

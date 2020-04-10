@@ -17,3 +17,7 @@ type LatLngObject = { lat: Lat; lng: Lng };
 type SessionID = string;
 
 type ResolvedType<T> = T extends PromiseLike<infer U> ? U : T;
+
+type NullableValues<T> = {
+  [P in keyof T]: null;
+};

@@ -1,3 +1,10 @@
+import React, { useContext, useMemo } from 'react';
+import {
+  defaultDateFormat,
+  isError,
+  isLoading,
+} from '../../../universal/helpers';
+import { AppContext } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
@@ -9,17 +16,9 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
-import { PanelConfigFormatter, panelConfig } from './Profile.constants';
-import React, { useContext, useMemo } from 'react';
-import {
-  defaultDateFormat,
-  isError,
-  isLoading,
-} from '../../../universal/helpers';
-
-import { AppContext } from '../../AppState';
 import { ServicesRelatedData } from '../../hooks/api/api.services-related';
 import { formatBrpProfileData } from './formatData';
+import { panelConfig, PanelConfigFormatter } from './Profile.constants';
 import styles from './Profile.module.scss';
 
 function formatInfoPanelConfig(
@@ -36,7 +35,7 @@ export default function Profile() {
   const { BRP } = useContext(AppContext);
 
   const brpProfileData = useMemo(() => {
-    return BRP ? formatBrpProfileData(BRP) : BRP;
+    return BRP.content ? formatBrpProfileData(BRP.content) : BRP.content;
   }, [BRP]);
 
   return (
@@ -64,12 +63,14 @@ export default function Profile() {
           </Alert>
         )}
 
-        {BRP?.persoon.vertrokkenOnbekendWaarheen && (
+        {BRP.content?.persoon.vertrokkenOnbekendWaarheen && (
           <Alert type="warning" className="vertrokkenOnbekendWaarheen">
             <p>
               U staat sinds{' '}
-              {BRP?.persoon.datumVertrekUitNederland
-                ? defaultDateFormat(BRP?.persoon.datumVertrekUitNederland)
+              {BRP.content?.persoon.datumVertrekUitNederland
+                ? defaultDateFormat(
+                    BRP.content?.persoon.datumVertrekUitNederland
+                  )
                 : 'enige tijd'}{' '}
               in de BRP geregistreerd als "vertrokken – onbekend waarheen".
             </p>
@@ -87,7 +88,7 @@ export default function Profile() {
           </Alert>
         )}
 
-        {BRP?.adres?.inOnderzoek && (
+        {BRP.content?.adres?.inOnderzoek && (
           <Alert type="warning" className="inOnderzoek">
             <p>
               Op dit moment onderzoeken wij of u nog steeds woont op het adres

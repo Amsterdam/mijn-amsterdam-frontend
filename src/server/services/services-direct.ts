@@ -29,14 +29,25 @@ export async function loadServicesDirect(sessionID: SessionID) {
   // Create dynamic types for the given config
   type ApiConfig = typeof config;
   type ApiKey = keyof ApiConfig;
-  type ApiData = ResolvedType<ReturnType<ApiConfig[ApiKey]>>;
-  type ApiDataIndex = Record<ApiKey, ApiData>;
+  type ApiData<K extends ApiKey> = ResolvedType<ReturnType<ApiConfig[K]>>;
+
+  //  TODO: How to creatae this dynamically?
+  type ApiDataIndex = {
+    FOCUS: ApiData<'FOCUS'>;
+    WMO: ApiData<'WMO'>;
+    ERFPACHT: ApiData<'ERFPACHT'>;
+    BELASTINGEN: ApiData<'BELASTINGEN'>;
+    MILIEUZONE: ApiData<'MILIEUZONE'>;
+  };
 
   // Load wait for all promises to be resolved
   // TODO: Fix by removin the as any assignment and use correct typing
-  const resolvedPromises: ApiData[] = await Promise.all(promises as any);
+  const resolvedPromises: ApiData<ApiKey>[] = await Promise.all(
+    promises as any
+  );
 
   // combine resolved data into an index with the specific api keys
+  // TODO: How to assign ApiDataIndex automatically
   const data = resolvedPromises.reduce<ApiDataIndex>((acc, data, index) => {
     const apiStateKey = configEntries[index][0];
     return Object.assign(acc, {

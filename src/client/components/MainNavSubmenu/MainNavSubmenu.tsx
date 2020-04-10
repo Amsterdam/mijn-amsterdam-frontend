@@ -11,13 +11,13 @@ import styles from './MainNavSubmenu.module.scss';
 import { trackLink } from '../../hooks/analytics.hook';
 import { useDebouncedCallback } from 'use-debounce';
 import useRouter from 'use-react-router';
-import { MenuItem } from '../../config/menuItems';
+import { SVGComponent } from '../../../universal/types/App.types';
 
 export interface MainNavSubmenuLinkProps
   extends LinkProps,
     Omit<HTMLAttributes<HTMLAnchorElement>, 'title'> {
   className?: string;
-  Icon: MenuItem['Icon'];
+  Icon?: SVGComponent;
 }
 
 export function MainNavSubmenuLink({

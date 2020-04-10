@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/browser';
 
 import { AppRoutes, FeatureToggle, PrivateRoutes } from '../universal/config';
-import AppState from './AppState';
+
 import {
   BrowserRouter,
   Redirect,
@@ -17,6 +17,7 @@ import {
 import React, { useContext } from 'react';
 import { SessionContext, SessionState } from './SessionState';
 
+import AppStateProvider from './AppStateProvider';
 import ApplicationError from './components/ApplicationError/ApplicationError';
 import AutoLogoutDialog from './components/AutoLogoutDialog/AutoLogoutDialog';
 import Dashboard from './pages/Dashboard/Dashboard';
@@ -183,9 +184,9 @@ function AppLanding() {
   // Render the main app only if we are authenticated
   return isAuthenticated ? (
     <>
-      <AppState>
+      <AppStateProvider>
         <AppAuthenticated />
-      </AppState>
+      </AppStateProvider>
       <AutoLogoutDialog settings={dialogTimeoutSettings} />
     </>
   ) : (

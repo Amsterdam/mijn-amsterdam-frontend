@@ -1,20 +1,21 @@
+import classNames from 'classnames';
+import React from 'react';
+import useRouter from 'use-react-router';
 import { AppRoutes, Colors } from '../../../universal/config';
 import { defaultDateFormat, isInteralUrl } from '../../../universal/helpers';
+import {
+  MyNotification as MyNotificationBase,
+  SVGComponent,
+} from '../../../universal/types/App.types';
 import {
   trackItemPresentation,
   useSessionCallbackOnceDebounced,
 } from '../../hooks/analytics.hook';
-
+import Linkd from '../Button/Button';
 import ChapterIcon from '../ChapterIcon/ChapterIcon';
 import Heading from '../Heading/Heading';
-import Linkd from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
-import { MyNotification as MyNotificationBase } from '../../../server/services/services-notifications';
-import React from 'react';
-import { SVGComponent } from '../../../universal/types/App.types';
-import classNames from 'classnames';
 import styles from './MyNotifications.module.scss';
-import useRouter from 'use-react-router';
 
 export interface MyNotificationsProps {
   items: MyNotification[];
@@ -70,13 +71,7 @@ export default function MyNotifications({
               (!!item.link?.to && !isInteralUrl(item.link.to)) ||
               !!item.link?.download;
             return (
-              <li
-                key={item.id}
-                className={classNames(
-                  styles.MyNotificationItem,
-                  item.isUnread && styles.isUnread
-                )}
-              >
+              <li key={item.id} className={styles.MyNotificationItem}>
                 <Heading className={styles.Title} el="h4" size="small">
                   {item.title}
                 </Heading>
@@ -139,7 +134,7 @@ export default function MyNotifications({
       )}
       {!isLoading && showMoreLink && (
         <p className={styles.FooterLink}>
-          <Linkd href={AppRoutes.UPDATES}>Alle meldingen</Linkd>
+          <Linkd href={AppRoutes.NOTIFICATIONS}>Alle meldingen</Linkd>
         </p>
       )}
     </div>

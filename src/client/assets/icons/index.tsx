@@ -1,3 +1,4 @@
+import React from 'react';
 export { ReactComponent as IconAlert } from './Alert.svg';
 export { ReactComponent as IconArrow__primaryWhite } from './Arrow__primary-white.svg';
 export { ReactComponent as IconBelastingen } from './belastingen.svg';

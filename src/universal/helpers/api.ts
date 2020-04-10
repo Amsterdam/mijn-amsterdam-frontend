@@ -2,6 +2,7 @@ import { AxiosError } from 'axios';
 
 export interface ApiErrorResponse {
   message: string;
+  content: null;
   statusCode: number | string;
   status: 'failure';
 }
@@ -17,15 +18,25 @@ export type ApiMixedResponse<T> = {
   status: 'mixed' | 'failure' | 'success';
 };
 
+export type ApiPristineResponse = {
+  content: null;
+  status: 'pristine';
+};
+
 export type ApiUnknownResponse = {
+  content: null;
   message: string;
   status: 'unknown';
 };
 
+export type FEApiResponseData<T extends (...args: any[]) => any> = ResolvedType<
+  ReturnType<T>
+>;
+
 export type ApiResponse<T> = ApiErrorResponse | ApiSuccessResponse<T>;
 
-export function isLoading(data: any) {
-  return data === null;
+export function isLoading(apiResponseData: any) {
+  return apiResponseData.content === null;
 }
 
 export function isError(data: any) {
@@ -34,6 +45,7 @@ export function isError(data: any) {
 
 export function apiErrorResult(error: AxiosError): ApiErrorResponse {
   return {
+    content: null,
     message: error.response?.data?.message || error.toString(),
     status: 'failure',
     statusCode: error.response?.status || 500,
@@ -58,9 +70,16 @@ export function apiMixedResult<T>(
   };
 }
 
+export function apiPristineResponseData<T>(content: T) {
+  return Object.entries(content).reduce((acc, [key], value) => {
+    return Object.assign(acc, { [key]: { content: null, status: 'pristine' } });
+  }, {} as Record<keyof T, ApiPristineResponse>);
+}
+
 export function apiUnknownResult(message: string): ApiUnknownResponse {
   return {
     message,
+    content: null,
     status: 'unknown',
   };
 }

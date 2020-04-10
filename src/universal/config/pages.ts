@@ -17,9 +17,9 @@ export const PageTitles = {
     'INKOMEN/BIJZONDERE_BIJSTAND'
   ]]: `Bijzondere bijstand | ${ChapterTitles.INKOMEN}`,
   [AppRoutes.MIJN_GEGEVENS]: `Profiel`,
-  [AppRoutes.MIJN_BUURT]: `Mijn buurt`,
+  [AppRoutes.BUURT]: `Mijn buurt`,
   [AppRoutes.PROCLAIMER]: `Proclaimer`,
-  [AppRoutes.MIJN_TIPS]: `Mijn Tips | overzicht`,
+  [AppRoutes.TIPS]: `Mijn Tips | overzicht`,
   [AppRoutes.UPDATES]: `${ChapterTitles.UPDATES} | overzicht`,
   [AppRoutes.AFVAL]: `${ChapterTitles.AFVAL} rond uw adres`,
 };
