@@ -75,7 +75,8 @@ export default function MyNotifications({
         {!isLoading &&
           items.map(item => {
             const isLinkExternal =
-              !!item.link?.to && !isInteralUrl(item.link.to);
+              (!!item.link?.to && !isInteralUrl(item.link.to)) ||
+              !!item.link?.download;
             return (
               <li
                 key={item.id}
@@ -120,6 +121,7 @@ export default function MyNotifications({
                       title={`Meer informatie over de melding: ${item.title}`}
                       href={item.customLink ? '#' : item.link?.to}
                       external={isLinkExternal}
+                      download={item.link?.download}
                       onClick={event => {
                         if (item.customLink) {
                           item.customLink.callback();
