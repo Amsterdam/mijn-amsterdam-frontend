@@ -16,7 +16,7 @@ import {
 import React, { useContext } from 'react';
 import { SessionContext, SessionState } from './SessionState';
 
-import AppState from './AppState';
+import AppStateProvider from './AppStateProvider';
 import ApplicationError from './components/ApplicationError/ApplicationError';
 import AutoLogoutDialog from './components/AutoLogoutDialog/AutoLogoutDialog';
 import Dashboard from './pages/Dashboard/Dashboard';
@@ -92,7 +92,7 @@ function AppAuthenticated() {
         <Switch>
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Redirect from={AppRoutes.API_LOGIN} to={AppRoutes.ROOT} />
-          <Route path={AppRoutes.UPDATES} component={MyNotifications} />
+          <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           <Route path={AppRoutes.MIJN_GEGEVENS} component={Profile} />
           <Route path={AppRoutes.TIPS} component={MyTips} />
           <Route
@@ -151,9 +151,9 @@ function AppLanding() {
   // Render the main app only if we are authenticated
   return isAuthenticated ? (
     <>
-      <AppState>
+      <AppStateProvider>
         <AppAuthenticated />
-      </AppState>
+      </AppStateProvider>
       <AutoLogoutDialog settings={dialogTimeoutSettings} />
     </>
   ) : (

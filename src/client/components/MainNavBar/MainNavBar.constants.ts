@@ -12,14 +12,14 @@ export const mainMenuItemId: { [key: string]: MainMenuId } = {
   HOME: 'DASHBOARD',
   CHAPTERS: 'MIJN_THEMAS',
   BUURT: 'BUURT',
-  UPDATES: 'MIJN_UPDATES',
+  NOTIFICATIONS: 'MIJN_UPDATES',
 };
 
 export const MenuItemTitles = {
   HOME: ChapterTitles.ROOT,
   CHAPTERS: "Mijn thema's",
   BUURT: ChapterTitles.BUURT,
-  UPDATES: ChapterTitles.UPDATES,
+  NOTIFICATIONS: ChapterTitles.NOTIFICATIONS,
 };
 
 export const mainMenuItems: MenuItem[] = [
@@ -39,9 +39,9 @@ export const mainMenuItems: MenuItem[] = [
     to: AppRoutes.BUURT,
   },
   {
-    title: MenuItemTitles.UPDATES,
-    id: mainMenuItemId.UPDATES,
-    to: AppRoutes.UPDATES,
+    title: MenuItemTitles.NOTIFICATIONS,
+    id: mainMenuItemId.NOTIFICATIONS,
+    to: AppRoutes.NOTIFICATIONS,
   },
 ];
 

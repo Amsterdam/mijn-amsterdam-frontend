@@ -15,11 +15,13 @@ export default () => {
       {IS_PRODUCTION || IS_ACCEPTANCE ? (
         <MyAreaMapIFrame url={BUURT?.embedUrl} />
       ) : (
-        !!BAG?.latlng && (
+        !!BAG.content?.latlng && (
           <MyAreaMap
             className={styles.Map}
-            center={BAG?.latlng}
-            homeAddress={BRP?.adres && getFullAddress(BRP.adres)}
+            center={BAG.content?.latlng}
+            homeAddress={
+              BRP.content?.adres && getFullAddress(BRP.content.adres)
+            }
           />
         )
       )}

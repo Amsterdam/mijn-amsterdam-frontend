@@ -42,8 +42,7 @@ export type ApiName = string;
 export const BFFApiUrls: Record<string, string> = {
   SERVICES_RELATED: `${BFF_API_BASE_URL}/services/related`,
   SERVICES_DIRECT: `${BFF_API_BASE_URL}/services/direct`,
-  SERVICES_TIPS: `${BFF_API_BASE_URL}/services/tips`,
-  SERVICES_UPDATES: `${BFF_API_BASE_URL}/services/updates`,
+  SERVICES_GENERATED: `${BFF_API_BASE_URL}/services/generated`,
 };
 
 export const ApiUrls: Record<string, string> = {
@@ -76,7 +75,7 @@ export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
   WMO: {
     postponeFetch: false,
   },
-  MIJN_TIPS: {
+  TIPS: {
     postponeFetch: true, // Stays true because we're not fetching immediately
   },
   BELASTINGEN: {
@@ -90,14 +89,14 @@ export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
 export const ErrorNames: { [stateKey: string]: string } = {
   BRP: 'Persoonlijke gegevens + actuele updates',
   MY_CASES: 'Lopende zaken',
-  MIJN_TIPS: 'Tips',
+  TIPS: 'Tips',
   WMO: 'Zorg en ondersteuning',
   FOCUS: 'Inkomen en Stadspas + actuele updates',
   FOCUS_INKOMEN_SPECIFICATIES: 'Inkomen en Stadspas + actuele updates',
-  MY_CHAPTERS: "Thema's",
+  CHAPTERS: "Thema's",
   ERFPACHT: 'Erfpacht',
-  GARBAGE: 'Afval',
-  MIJN_BUURT: 'Mijn buurt',
+  AFVAL: 'Afval',
+  BUURT: 'Mijn buurt',
   BELASTINGEN: 'Belastingen + updates',
   MILIEUZONE: 'Milieuzone',
 };

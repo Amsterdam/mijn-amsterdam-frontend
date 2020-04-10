@@ -1,29 +1,30 @@
-import { ApiState, useDataApi } from './api.hook';
-import { BFFApiData, BFFApiUrls } from '../../../universal/config';
+import { useDataApi } from './api.hook';
+import { BFFApiUrls } from '../../../universal/config';
 
-import { getApiConfigValue } from '../../../universal/helpers';
+import {
+  getApiConfigValue,
+  apiPristineResponseData,
+  FEApiResponseData,
+} from '../../../universal/helpers';
+import { loadServicesRelated } from '../../../server/services';
 
-export interface ServicesRelatedData {
-  BRP: BFFApiData['BRP'] | null;
-  BAG: BFFApiData['BAG'] | null;
-  AFVAL: BFFApiData['AFVAL'] | null;
-}
+const pristineResponseData = apiPristineResponseData({
+  BRP: null,
+  AFVAL: null,
+  BAG: null,
+});
 
-export type ServicesRelatedApiState = ApiState<ServicesRelatedData>;
+export type ServicesRelatedData = FEApiResponseData<typeof loadServicesRelated>;
 
 const API_ID = 'SERVICES_RELATED';
 
-export function useServicesRelated(): ServicesRelatedApiState {
-  const [api] = useDataApi<ServicesRelatedData>(
+export function useServicesRelated() {
+  const [api] = useDataApi<ServicesRelatedData | typeof pristineResponseData>(
     {
       url: BFFApiUrls[API_ID],
       postpone: getApiConfigValue(API_ID, 'postponeFetch', false),
     },
-    {
-      BRP: null,
-      AFVAL: null,
-      BAG: null,
-    }
+    pristineResponseData
   );
 
   return api;

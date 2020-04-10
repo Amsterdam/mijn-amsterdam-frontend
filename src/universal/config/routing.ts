@@ -14,11 +14,11 @@ export const AppRoutes = {
   'INKOMEN/BIJZONDERE_BIJSTAND': '/werk-en-inkomen/bijzondere-bijstand/:id',
   'INKOMEN/SPECIFICATIES': '/werk-en-inkomen/uitkeringsspecificaties/:type?',
   MIJN_GEGEVENS: '/persoonlijke-gegevens',
-  MIJN_BUURT: '/buurt',
+  BUURT: '/buurt',
   ABOUT: '/over-mijn-amsterdam',
   PROCLAIMER: '/proclaimer',
   API_LOGIN: `${API_BASE_URL}/login`,
-  MIJN_TIPS: '/overzicht-tips',
+  TIPS: '/overzicht-tips',
   UPDATES: '/overzicht-updates',
   AFVAL: '/afval',
 };

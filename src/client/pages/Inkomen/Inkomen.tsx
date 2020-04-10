@@ -44,31 +44,33 @@ const decisionsDisplayProps = {
 
 export default () => {
   const { FOCUS } = useContext(AppContext);
+  const focusContent = FOCUS.content;
+  const aanvragen = focusContent?.aanvragen?.content || [];
+  const uitkeringsspecificaties =
+    focusContent?.specificaties.content?.uitkeringsspecificaties || [];
+  const jaaropgaven = focusContent?.specificaties.content?.jaaropgaven || [];
 
   const itemsRequested = useMemo(() => {
-    if (!FOCUS?.aanvragen) {
+    if (!aanvragen) {
       return [];
     }
-    return addTitleLinkComponent(
-      FOCUS?.aanvragen.filter(item => !item.hasDecision)
-    );
-  }, [FOCUS]);
+    return addTitleLinkComponent(aanvragen.filter(item => !item.hasDecision));
+  }, [aanvragen]);
 
   const itemsDecided = useMemo(() => {
-    if (!FOCUS?.aanvragen) {
+    if (!aanvragen) {
       return [];
     }
-    return addTitleLinkComponent(
-      FOCUS?.aanvragen.filter(item => item.hasDecision)
-    );
-  }, [FOCUS]);
+    return addTitleLinkComponent(aanvragen.filter(item => item.hasDecision));
+  }, [aanvragen]);
 
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
 
-  const itemsSpecificationsMonthly =
-    FOCUS?.uitkeringsspecificaties.slice(0, 3) || [];
-  const itemsSpecificationsYearly = FOCUS?.jaaropgaven.slice(0, 3) || [];
+  const itemsSpecificationsMonthly = uitkeringsspecificaties.slice(0, 3) || [];
+  const itemsSpecificationsYearly = jaaropgaven.slice(0, 3) || [];
+
+  const isLoadingFocus = isLoading(FOCUS);
 
   return (
     <OverviewPage className={styles.Inkomen}>
@@ -97,7 +99,7 @@ export default () => {
         id="SectionCollapsible-income-request-process"
         title="Lopende aanvragen"
         startCollapsed={false}
-        isLoading={isLoading(FOCUS)}
+        isLoading={isLoadingFocus}
         hasItems={hasActiveRequests}
         track={{
           category: 'Inkomen en Stadspas overzicht / Lopende aanvragen',
@@ -115,7 +117,7 @@ export default () => {
       <SectionCollapsible
         id="SectionCollapsible-income-request-process-decisions"
         startCollapsed={hasActiveRequests}
-        isLoading={isLoading(FOCUS)}
+        isLoading={isLoadingFocus}
         hasItems={hasActiveDescisions}
         title="Afgehandelde aanvragen"
         track={{
@@ -134,9 +136,9 @@ export default () => {
         <SectionCollapsible
           id="SectionCollapsible-income-specifications-monthly"
           startCollapsed={hasActiveRequests || hasActiveDescisions}
-          isLoading={isLoading(FOCUS)}
+          isLoading={isLoadingFocus}
           title="Uitkeringsspecificaties"
-          hasItems={!!FOCUS?.uitkeringsspecificaties.length}
+          hasItems={!!uitkeringsspecificaties.length}
           track={{
             category: 'Inkomen en Stadspas overzicht / Uitkeringsspecificaties',
             name: 'Datatabel',
@@ -148,7 +150,7 @@ export default () => {
             items={itemsSpecificationsMonthly}
             displayProps={specificationsTableDisplayProps}
           />
-          {FOCUS && FOCUS.uitkeringsspecificaties.length > 3 && (
+          {uitkeringsspecificaties.length > 3 && (
             <p className={styles.ShowAllButtonContainer}>
               <Linkd href={incomSpecificationsRouteMonthly}>Toon alles</Linkd>
             </p>
@@ -159,9 +161,9 @@ export default () => {
         <SectionCollapsible
           id="SectionCollapsible-income-specifications-yearly"
           startCollapsed={hasActiveRequests || hasActiveDescisions}
-          isLoading={isLoading(FOCUS)}
+          isLoading={isLoadingFocus}
           title="Jaaropgaven"
-          hasItems={!!FOCUS?.jaaropgaven.length}
+          hasItems={!!jaaropgaven.length}
           track={{
             category: 'Inkomen en Stadspas overzicht / Jaaropgaven',
             name: 'Datatabel',
@@ -176,7 +178,7 @@ export default () => {
             items={itemsSpecificationsYearly}
             displayProps={annualStatementsTableDisplayProps}
           />
-          {FOCUS && FOCUS.jaaropgaven.length > 3 && (
+          {jaaropgaven.length > 3 && (
             <p className={styles.ShowAllButtonContainer}>
               <Linkd href={incomSpecificationsRouteYearly}>Toon alles</Linkd>
             </p>

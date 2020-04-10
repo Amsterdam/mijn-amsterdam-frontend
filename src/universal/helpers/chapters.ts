@@ -1,54 +1,48 @@
 import { MenuItem, myChaptersMenuItems } from '../../client/config/menuItems';
 
-import { AppState as AppStateInterface } from '../../client/AppState';
+import { AppState } from '../../client/AppState';
 import { Chapters } from '../config/chapter';
 import { FeatureToggle } from '../config/app';
-import { isLoading } from '.';
+import { isLoading } from './index';
 import { isMokum } from '../../client/pages/Profile/formatData';
 
 function isChapterActive(
   item: MenuItem,
-  {
-    WMO,
-    FOCUS,
-    ERFPACHT,
-    AFVAL,
-    BRP,
-    BELASTINGEN,
-    MILIEUZONE,
-  }: AppStateInterface
+  { WMO, FOCUS, ERFPACHT, AFVAL, BRP, BELASTINGEN, MILIEUZONE }: AppState
 ) {
   switch (item.id) {
     case Chapters.INKOMEN:
       return !isLoading(FOCUS);
 
     case Chapters.ZORG:
-      return !isLoading(WMO) && !!WMO?.items.length;
+      return !isLoading(WMO) && !!WMO.content?.items.length;
 
     case Chapters.BELASTINGEN:
       return (
         !isLoading(BELASTINGEN) &&
-        (FeatureToggle.belastingApiActive ? BELASTINGEN?.isKnown : true)
+        (FeatureToggle.belastingApiActive ? BELASTINGEN.content?.isKnown : true)
       );
 
     case Chapters.MILIEUZONE:
       return (
         !isLoading(MILIEUZONE) &&
-        (FeatureToggle.milieuzoneApiActive ? MILIEUZONE?.isKnown : false)
+        (FeatureToggle.milieuzoneApiActive
+          ? MILIEUZONE.content?.isKnown
+          : false)
       );
 
     case Chapters.AFVAL:
       return (
         FeatureToggle.garbageInformationPage &&
         !isLoading(AFVAL) &&
-        isMokum(BRP)
+        isMokum(BRP.content)
       );
 
     case Chapters.WONEN:
-      return !isLoading(ERFPACHT) && ERFPACHT?.status === true;
+      return !isLoading(ERFPACHT) && ERFPACHT.content?.status === true;
 
     case Chapters.MIJN_GEGEVENS:
-      return !isLoading(BRP) && !!BRP?.persoon;
+      return !isLoading(BRP) && !!BRP.content?.persoon;
   }
 
   return false;
@@ -59,7 +53,7 @@ export interface ChaptersState {
   isLoading: boolean;
 }
 
-export function getMyChapters(appState: AppStateInterface): ChaptersState {
+export function getMyChapters(appState: AppState): ChaptersState {
   const {
     WMO,
     FOCUS,

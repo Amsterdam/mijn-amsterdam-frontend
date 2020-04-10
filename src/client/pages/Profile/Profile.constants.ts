@@ -22,7 +22,7 @@ type PanelConfig = {
 export const panelConfig: PanelConfig = {
   persoon: BRP => ({
     title: 'Persoonlijke gegevens',
-    actionLinks: isMokum(BRP)
+    actionLinks: isMokum(BRP.content)
       ? [
           {
             title: 'Inzien of correctie doorgeven',
@@ -33,7 +33,7 @@ export const panelConfig: PanelConfig = {
       : [],
   }),
   adres: BRP => {
-    const title = isMokum(BRP)
+    const title = isMokum(BRP.content)
       ? 'Verhuizing doorgeven'
       : 'Verhuizing naar Amsterdam doorgeven';
     const actionLinks: ActionLink[] = [
@@ -50,7 +50,7 @@ export const panelConfig: PanelConfig = {
   },
   verbintenis: BRP => ({
     title: 'Burgerlijke staat',
-    actionLinks: isMokum(BRP)
+    actionLinks: isMokum(BRP.content)
       ? [
           {
             title: 'Inzien of correctie doorgeven',
@@ -62,7 +62,7 @@ export const panelConfig: PanelConfig = {
   }),
   verbintenisHistorisch: BRP => ({
     title: 'Voormalige verbintenissen',
-    actionLinks: isMokum(BRP)
+    actionLinks: isMokum(BRP.content)
       ? [
           {
             title: 'Inzien of correctie doorgeven',
@@ -78,7 +78,7 @@ export const panelConfig: PanelConfig = {
   },
   kinderen: BRP => ({
     title: 'Kinderen',
-    actionLinks: isMokum(BRP)
+    actionLinks: isMokum(BRP.content)
       ? [
           {
             title: 'Inzien of correctie doorgeven',

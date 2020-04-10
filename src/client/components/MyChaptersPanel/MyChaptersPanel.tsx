@@ -12,6 +12,7 @@ import React from 'react';
 import styles from './MyChaptersPanel.module.scss';
 import { useDebounce } from 'use-debounce';
 import { MenuItem } from '../../config/menuItems';
+import { ChapterIcons } from '../../config/chapterIcons';
 
 export interface MyChaptersPanelProps {
   title: string;
@@ -45,7 +46,7 @@ export default function MyChaptersPanel({
         {title}
       </Heading>
       <div className={styles.Links}>
-        {items.map(({ id, to, Icon, title, rel }) => {
+        {items.map(({ id, to, title, rel, chapter }) => {
           return (
             <MainNavSubmenuLink
               data-chapter-id={id}
@@ -53,7 +54,7 @@ export default function MyChaptersPanel({
               to={to}
               rel={rel}
               title={title}
-              Icon={Icon}
+              Icon={chapter ? ChapterIcons[chapter] : undefined}
             />
           );
         })}

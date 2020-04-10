@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, FunctionComponent, SVGProps } from 'react';
 import { Chapter } from '../config';
 
 // Generic object interface
@@ -20,9 +20,10 @@ export interface LinkProps {
   download?: string;
 }
 
-export type SVGComponent = React.FunctionComponent<
-  React.SVGProps<SVGSVGElement>
+export type SVGComponent = FunctionComponent<
+  SVGProps<SVGSVGElement> & { title?: string | undefined }
 >;
+
 export type ComponentChildren = ReactNode;
 
 export interface MyNotification {

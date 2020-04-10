@@ -58,8 +58,8 @@ function GarbagePointItem({ item }: { item: GarbagePoint }) {
 export default () => {
   const { BRP, AFVAL, BAG } = useContext(AppContext);
 
-  const garbageContainersMapUrl = BAG?.latlng
-    ? `https://kaart.amsterdam.nl/afvalcontainers#19/${BAG.latlng.lat}/${BAG.latlng.lng}/topo/9749,9750,9751,9752,9753,9754/9748/`
+  const garbageContainersMapUrl = BAG.content?.latlng
+    ? `https://kaart.amsterdam.nl/afvalcontainers#19/${BAG.content.latlng.lat}/${BAG.content.latlng.lng}/topo/9749,9750,9751,9752,9753,9754/9748/`
     : '';
 
   const garbagePointCollapsible = (id: string, item: GarbageMoment) => (
@@ -68,7 +68,7 @@ export default () => {
       className={styles.InfoSection}
       isLoading={isLoading(AFVAL)}
       title={item.title}
-      hasItems={!!AFVAL?.ophalen.length}
+      hasItems={!!AFVAL.content?.ophalen.length}
       noItemsMessage="Informatie over afval in uw buurt kan niet worden getoond"
     >
       {!!item.aanbiedwijze && (
@@ -98,7 +98,7 @@ export default () => {
     </SectionCollapsible>
   );
 
-  const [restafval, grofvuil] = AFVAL?.ophalen;
+  const [restafval, grofvuil] = AFVAL.content?.ophalen;
 
   return (
     <DetailPage className={styles.GarbageInformation}>
@@ -115,10 +115,10 @@ export default () => {
         </p>
       </PageContent>
 
-      {!!BRP?.adres && (
+      {!!BRP.content?.adres && (
         <GarbagePanel className={styles.AddressPanel}>
           <Heading size="tiny">Uw adres</Heading>
-          <p>{getFullAddress(BRP?.adres)}</p>
+          <p>{getFullAddress(BRP.content?.adres)}</p>
         </GarbagePanel>
       )}
 
@@ -145,7 +145,7 @@ export default () => {
         )}
         title="Afvalpunten"
       >
-        {AFVAL?.wegbrengen.map(item => (
+        {AFVAL.content?.wegbrengen.map(item => (
           <GarbagePointItem key={item.naam} item={item} />
         ))}
       </SectionCollapsible>

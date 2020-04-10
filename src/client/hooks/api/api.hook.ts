@@ -7,7 +7,7 @@ import { IS_SENTRY_ENABLED } from '../../../universal/env';
 import axios from 'axios';
 
 export interface ApiRequestOptions {
-  url: string;
+  url?: string;
   data?: any;
   params?: Unshaped;
   postpone?: boolean;
@@ -149,7 +149,7 @@ export function useDataApi<T>(
           IS_SENTRY_ENABLED &&
             Sentry.captureMessage(
               `API ERROR: ${errorMessage}, url: ${
-                requestOptions.url.split('?')[0] // Don't log query params for privacy reasons
+                requestOptions.url?.split('?')[0] // Don't log query params for privacy reasons
               }`
             );
         }
