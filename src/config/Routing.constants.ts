@@ -3,6 +3,7 @@ import { API_BASE_URL } from './Api.constants';
 export const AppRoutes = {
   ROOT: '/',
   BURGERZAKEN: '/burgerzaken',
+  BURGERZAKEN_DOCUMENT: '/burgerzaken/document/:id',
   WONEN: '/wonen',
   BELASTINGEN: '/belastingen',
   ZORG: '/zorg-en-ondersteuning',
@@ -18,7 +19,7 @@ export const AppRoutes = {
   PROCLAIMER: '/proclaimer',
   API_LOGIN: `${API_BASE_URL}/login`,
   MIJN_TIPS: '/overzicht-tips',
-  MELDINGEN: '/overzicht-updates',
+  UPDATES: '/overzicht-updates',
   AFVAL: '/afval',
 };
 

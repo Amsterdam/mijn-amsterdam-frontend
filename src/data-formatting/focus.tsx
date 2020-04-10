@@ -1099,7 +1099,7 @@ function formatIncomeSpecificationNotification(
         'yyyy'
       )} staat voor u klaar.`,
       link: {
-        to: item.url,
+        to: `/api/${item.url}`,
         title: 'Bekijk jaaropgave',
         download: documentDownloadName(item),
       },
@@ -1115,7 +1115,7 @@ function formatIncomeSpecificationNotification(
       'MMM'
     )} staat voor u klaar.`,
     link: {
-      to: item.url,
+      to: `/api/${item.url}`,
       title: 'Bekijk uitkeringsspecificatie',
       download: documentDownloadName(item),
     },

@@ -36,6 +36,8 @@ import useScript from 'hooks/useScript';
 import GarbageInformation from 'pages/GarbageInformation/GarbageInformation';
 import { IS_ANALYTICS_ENABLED, IS_SENTRY_ENABLED, IS_PRODUCTION } from './env';
 import InkomenSpecificaties from 'pages/InkomenSpecificaties/InkomenSpecificaties';
+import Burgerzaken from './pages/Burgerzaken/Burgerzaken';
+import BurgerzakenDetail from './pages/BurgerzakenDetail/BurgerzakenDetail';
 
 function AppNotAuthenticated() {
   return (
@@ -84,7 +86,7 @@ function AppAuthenticated() {
         <Switch>
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Redirect from={AppRoutes.API_LOGIN} to={AppRoutes.ROOT} />
-          <Route path={AppRoutes.MELDINGEN} component={MyNotifications} />
+          <Route path={AppRoutes.UPDATES} component={MyNotifications} />
           <Route path={AppRoutes.MIJN_GEGEVENS} component={Profile} />
           <Route path={AppRoutes.MIJN_TIPS} component={MyTips} />
           <Route
@@ -109,6 +111,11 @@ function AppAuthenticated() {
             component={ZorgDetail}
           />
           <Route path={AppRoutes.ZORG} component={Zorg} />
+          <Route
+            path={AppRoutes.BURGERZAKEN_DOCUMENT}
+            component={BurgerzakenDetail}
+          />
+          <Route path={AppRoutes.BURGERZAKEN} component={Burgerzaken} />
           <Route path={AppRoutes.PROCLAIMER} component={Proclaimer} />
           {FeatureToggle.garbageInformationPage && (
             <Route path={AppRoutes.AFVAL} component={GarbageInformation} />

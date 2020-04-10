@@ -46,6 +46,9 @@ function isChapterActive(
     case Chapters.WONEN:
       return !ERFPACHT.isLoading && ERFPACHT.data.status === true;
 
+    case Chapters.BURGERZAKEN:
+      return !BRP.isLoading && !!BRP.data.reisDocumenten;
+
     case Chapters.MIJN_GEGEVENS:
       return !BRP.isLoading && !!BRP.data?.persoon;
   }

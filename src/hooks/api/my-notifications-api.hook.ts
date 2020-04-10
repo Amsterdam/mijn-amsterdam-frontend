@@ -11,6 +11,7 @@ export interface MyNotification {
   id: string;
   chapter: Chapter;
   datePublished: string;
+  hideDatePublished?: boolean;
   title: string | JSX.Element;
   description: string | JSX.Element;
   link?: LinkProps;
@@ -30,7 +31,7 @@ interface NotificationState {
 export type MyNotificationsApiState = ApiState<NotificationState>;
 
 export function useMyNotificationsState() {
-  return useLocalStorage('MELDINGEN', {});
+  return useLocalStorage('UPDATES', {});
 }
 
 function addChapterNamespaceToId(chapter: Chapter) {

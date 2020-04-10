@@ -12,7 +12,7 @@ export type MainMenuId =
   | 'DASHBOARD'
   | 'MIJN_THEMAS'
   | 'MIJN_BUURT'
-  | 'MIJN_MELDINGEN';
+  | 'MIJN_UPDATES';
 
 export interface MenuItem extends LinkProps {
   id: MainMenuId;
@@ -25,14 +25,14 @@ export const mainMenuItemId: { [key: string]: MainMenuId } = {
   HOME: 'DASHBOARD',
   MY_CHAPTERS: 'MIJN_THEMAS',
   MIJN_BUURT: 'MIJN_BUURT',
-  MELDINGEN: 'MIJN_MELDINGEN',
+  UPDATES: 'MIJN_UPDATES',
 };
 
 export const MenuItemTitles = {
   HOME: ChapterTitles.ROOT,
   MY_CHAPTERS: "Mijn thema's",
   MIJN_BUURT: ChapterTitles.MIJN_BUURT,
-  MELDINGEN: ChapterTitles.MELDINGEN,
+  UPDATES: ChapterTitles.UPDATES,
 };
 
 export const mainMenuItems: MenuItem[] = [
@@ -52,9 +52,9 @@ export const mainMenuItems: MenuItem[] = [
     to: AppRoutes.MIJN_BUURT,
   },
   {
-    title: MenuItemTitles.MELDINGEN,
-    id: mainMenuItemId.MELDINGEN,
-    to: AppRoutes.MELDINGEN,
+    title: MenuItemTitles.UPDATES,
+    id: mainMenuItemId.UPDATES,
+    to: AppRoutes.UPDATES,
   },
 ];
 

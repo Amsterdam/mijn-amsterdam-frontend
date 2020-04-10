@@ -20,7 +20,7 @@ export type Chapter =
   | 'BELASTINGEN'
   | 'ZORG'
   | 'INKOMEN'
-  | 'MELDINGEN'
+  | 'UPDATES'
   | 'MIJN_BUURT'
   | 'MIJN_TIPS'
   | 'MIJN_GEGEVENS'
@@ -36,7 +36,7 @@ export const Chapters: { [chapter in Chapter]: Chapter } = {
   BELASTINGEN: 'BELASTINGEN',
   ZORG: 'ZORG',
   INKOMEN: 'INKOMEN',
-  MELDINGEN: 'MELDINGEN',
+  UPDATES: 'UPDATES',
   MIJN_TIPS: 'MIJN_TIPS',
   AFVAL: 'AFVAL',
   MILIEUZONE: 'MILIEUZONE',
@@ -50,7 +50,7 @@ export const ChapterTitles: { [chapter in Chapter | 'MY_CASES']: string } = {
   WONEN: 'Erfpacht',
   ZORG: 'Zorg en ondersteuning',
   ROOT: 'Home',
-  MELDINGEN: 'Actueel',
+  UPDATES: 'Actueel',
   MIJN_GEGEVENS: 'Mijn gegevens',
   MIJN_BUURT: 'Mijn buurt',
   MIJN_TIPS: 'Mijn tips',
@@ -68,7 +68,7 @@ export const ChapterIcons: {
   INKOMEN: IconInkomen,
   BELASTINGEN: IconBelastingen,
   ZORG: IconZorg,
-  MELDINGEN: IconMyNotifications,
+  UPDATES: IconMyNotifications,
   MIJN_GEGEVENS: IconMijnGegevens,
   MILIEUZONE: IconMilieuzone,
   ROOT: IconBurgerZaken,
@@ -91,17 +91,17 @@ export const myChaptersMenuItems: MenuItem[] = [
     rel: 'external',
   },
   {
-    title: ChapterTitles.BURGERZAKEN,
-    id: Chapters.BURGERZAKEN,
-    to: AppRoutes.BURGERZAKEN,
-    Icon: ChapterIcons[Chapters.BURGERZAKEN],
-  },
-  {
     title: ChapterTitles.WONEN,
     id: Chapters.WONEN,
     to: ExternalUrls.SSO_ERFPACHT || '',
     Icon: ChapterIcons[Chapters.WONEN],
     rel: 'external',
+  },
+  {
+    title: ChapterTitles.BURGERZAKEN,
+    id: Chapters.BURGERZAKEN,
+    to: AppRoutes.BURGERZAKEN,
+    Icon: ChapterIcons[Chapters.BURGERZAKEN],
   },
   {
     title: ChapterTitles.ZORG,

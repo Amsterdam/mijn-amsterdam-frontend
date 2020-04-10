@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import MyNotifications from './MyNotifications';
 import AppState, { AppState as AppStateInterface } from 'AppState';
 
-const appState = { MELDINGEN: {} } as AppStateInterface;
+const appState = { UPDATES: {} } as AppStateInterface;
 
 it('Renders without crashing', () => {
   shallow(
