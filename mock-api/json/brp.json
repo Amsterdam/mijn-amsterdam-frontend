@@ -154,5 +154,19 @@
       "voornamen": "Marwan",
       "voorvoegselGeslachtsnaam": null
     }
+  ],
+  "reisDocumenten": [
+    {
+      "documentNummer": "123ABC",
+      "documentType": "paspoort",
+      "datumUitgifte": "2010-10-10",
+      "datumAfloop": "2020-06-10"
+    },
+    {
+      "documentNummer": "CBA890",
+      "documentType": "identiteitskaart",
+      "datumUitgifte": "2016-05-29",
+      "datumAfloop": "2019-05-29"
+    }
   ]
 }

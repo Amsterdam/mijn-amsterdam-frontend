@@ -101,12 +101,14 @@ export default function MyNotifications({
                     <em className={styles.ChapterIndication}>
                       {item.chapter.toLowerCase()}
                     </em>
-                    <time
-                      className={styles.Datum}
-                      dateTime={item.datePublished}
-                    >
-                      {defaultDateFormat(item.datePublished)}
-                    </time>
+                    {!item.hideDatePublished && (
+                      <time
+                        className={styles.Datum}
+                        dateTime={item.datePublished}
+                      >
+                        {defaultDateFormat(item.datePublished)}
+                      </time>
+                    )}
                   </div>
                 </aside>
                 {!!item.description && (

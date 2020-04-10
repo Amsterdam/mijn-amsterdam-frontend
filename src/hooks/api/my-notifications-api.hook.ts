@@ -11,6 +11,7 @@ export interface MyNotification {
   id: string;
   chapter: Chapter;
   datePublished: string;
+  hideDatePublished?: boolean;
   title: string | JSX.Element;
   description: string | JSX.Element;
   link?: LinkProps;

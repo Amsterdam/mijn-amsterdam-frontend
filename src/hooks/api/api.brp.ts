@@ -6,15 +6,44 @@ import { useMemo } from 'react';
 import { useDataApi } from './api.hook';
 import { ApiState } from './api.types';
 import { MyNotification } from './my-notifications-api.hook';
+import { generatePath } from 'react-router-dom';
+import { differenceInCalendarDays } from 'date-fns';
 
 export type BrpApiState = ApiState<BrpResponseData> & {
   notifications: MyNotification[];
 };
 
-export type BrpKey = keyof BrpResponseData;
+export type BrpKey = keyof Omit<BrpResponseData, 'reisDocumenten'>;
+
+const options = { url: getApiUrl('BRP') };
+
+const BrpDocumentTitles: Record<string, string> = {
+  paspoort: 'Paspoort',
+  identiteitskaart: 'ID-kaart',
+  rijbewijs: 'Rijbewijs',
+};
+
+const BrpDocumentCallToAction: Record<
+  'isExpired' | 'willExpire',
+  Record<string, string>
+> = {
+  isExpired: {
+    paspoort:
+      'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/paspoort-aanvragen/',
+    identiteitskaart:
+      'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/id-kaart-aanvragen/',
+    rijbewijs: '',
+  },
+  willExpire: {
+    paspoort:
+      'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/paspoort-aanvragen/',
+    identiteitskaart:
+      'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/id-kaart-aanvragen/',
+    rijbewijs: '',
+  },
+};
 
 export function useBrpApi(): BrpApiState {
-  const options = { url: getApiUrl('BRP') };
   const [api] = useDataApi<BrpResponseData>(options, {} as BrpResponseData);
   const { data, ...rest } = api;
   const inOnderzoek = data?.adres?.inOnderzoek || false;
@@ -23,8 +52,90 @@ export function useBrpApi(): BrpApiState {
     ? defaultDateFormat(data.persoon.datumVertrekUitNederland)
     : 'Onbekend';
 
+  const dataFormatted = useMemo(() => {
+    if (!data.reisDocumenten) {
+      return data;
+    }
+    return Object.assign({}, data, {
+      reisDocumenten: data.reisDocumenten.map(document => {
+        const route = generatePath(AppRoutes.BURGERZAKEN_DOCUMENT, {
+          id: document.documentNummer,
+        });
+        return Object.assign({}, document, {
+          title: BrpDocumentTitles[document.documentType],
+          datumAfloop: defaultDateFormat(document.datumAfloop),
+          datumUitgifte: defaultDateFormat(document.datumUitgifte),
+          link: {
+            to: route,
+            title: document.documentType,
+          },
+        });
+      }),
+    });
+  }, [data]);
+
   const notifications = useMemo(() => {
     const notifications: MyNotification[] = [];
+
+    const expiredDocuments =
+      !!data.reisDocumenten &&
+      data.reisDocumenten.filter(
+        document => new Date(document.datumAfloop) < new Date()
+      );
+    const willExpireSoonDocuments =
+      !!data.reisDocumenten &&
+      data.reisDocumenten.filter(document => {
+        const days = differenceInCalendarDays(
+          new Date(document.datumAfloop),
+          new Date()
+        );
+
+        return days <= 120 && days > 0;
+      });
+
+    console.log(willExpireSoonDocuments);
+
+    if (!!expiredDocuments && expiredDocuments.length) {
+      expiredDocuments.forEach(document => {
+        const docTitle = BrpDocumentTitles[document.documentType];
+        notifications.push({
+          Icon: AlertIcon,
+          chapter: 'BURGERZAKEN',
+          datePublished: new Date().toISOString(),
+          hideDatePublished: true,
+          id: `${docTitle}-datum-afloop-verstreken`,
+          title: `Uw ${docTitle} is verlopen`,
+          description: `Sinds ${defaultDateFormat(
+            document.datumAfloop
+          )} is uw ${docTitle} niet meer geldig.`,
+          link: {
+            to: BrpDocumentCallToAction.isExpired[document.documentType],
+            title: `Vraag snel uw nieuwe ${docTitle} aan.`,
+          },
+        });
+      });
+    }
+
+    if (!!willExpireSoonDocuments && willExpireSoonDocuments.length) {
+      willExpireSoonDocuments.forEach(document => {
+        const docTitle = BrpDocumentTitles[document.documentType];
+        notifications.push({
+          Icon: AlertIcon,
+          chapter: 'BURGERZAKEN',
+          datePublished: new Date().toISOString(),
+          hideDatePublished: true,
+          id: `${document.documentType}-datum-afloop-binnekort`,
+          title: `Uw ${docTitle} verloopt binnenkort`,
+          description: `Vanaf ${defaultDateFormat(
+            document.datumAfloop
+          )} is uw ${docTitle} niet meer geldig.`,
+          link: {
+            to: BrpDocumentCallToAction.isExpired[document.documentType],
+            title: `Vraag snel uw nieuwe ${docTitle} aan.`,
+          },
+        });
+      });
+    }
 
     if (inOnderzoek) {
       notifications.push({
@@ -58,7 +169,7 @@ export function useBrpApi(): BrpApiState {
     }
 
     return notifications;
-  }, [inOnderzoek, isOnbekendWaarheen, dateLeft]);
+  }, [inOnderzoek, isOnbekendWaarheen, dateLeft, data]);
 
-  return { ...rest, data, notifications };
+  return { ...rest, data: dataFormatted, notifications };
 }
