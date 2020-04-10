@@ -1,4 +1,4 @@
-import { IS_PRODUCTION } from '../env';
+import { IS_PRODUCTION, IS_ACCEPTANCE } from '../env';
 
 export const FeatureToggle = {
   myTipsoptInOutPersonalization: true,
@@ -7,6 +7,7 @@ export const FeatureToggle = {
   belastingApiActive: !IS_PRODUCTION,
   milieuzoneApiActive: !IS_PRODUCTION,
   focusUitkeringsspecificatiesActive: !IS_PRODUCTION,
+  reisDocumentenActive: !IS_PRODUCTION && !IS_ACCEPTANCE,
 };
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options

@@ -93,8 +93,6 @@ export function useBrpApi(): BrpApiState {
         return days <= 120 && days > 0;
       });
 
-    console.log(willExpireSoonDocuments);
-
     if (!!expiredDocuments && expiredDocuments.length) {
       expiredDocuments.forEach(document => {
         const docTitle = BrpDocumentTitles[document.documentType];

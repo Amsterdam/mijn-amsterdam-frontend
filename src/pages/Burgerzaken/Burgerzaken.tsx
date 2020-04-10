@@ -48,6 +48,7 @@ export default () => {
         title="Mijn huidige documenten"
         noItemsMessage="Wij kunnen nog geen officiële documenten tonen."
         startCollapsed={false}
+        hasItems={!!documentItems.length}
         isLoading={isLoading}
         track={{
           category: 'Burgerzaken overzicht / Huidige documenten',
