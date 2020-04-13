@@ -3,6 +3,7 @@ import { ApiUrls } from '../../universal/config';
 import { Chapter } from '../../universal/config/chapter';
 import { requestData } from '../helpers';
 import { MyNotification } from '../../universal/types/App.types';
+import { getApiConfigValue } from '../../universal/helpers';
 
 interface MILIEUZONESourceDataContent {
   isKnown: boolean;
@@ -44,8 +45,11 @@ function formatMILIEUZONEData(
 }
 
 export function fetchMILIEUZONE() {
-  return requestData<MILIEUZONEData>({
-    url: ApiUrls.MILIEUZONE,
-    transformResponse: formatMILIEUZONEData,
-  });
+  return requestData<MILIEUZONEData>(
+    {
+      url: ApiUrls.MILIEUZONE,
+      transformResponse: formatMILIEUZONEData,
+    },
+    getApiConfigValue('MILIEUZONE', 'postponeFetch', true)
+  );
 }

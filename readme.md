@@ -105,3 +105,74 @@ run the cypress ui for e2e testing by firing up the api `npm run mock-api` and t
 
 - `docker build ./ --tag="mijn-amsterdam"`
 - `docker run -p 8080:80 -e LOGOUT_URL=test mijn-amsterdam`
+
+
+## BFF API response structure and status
+
+The BFF api returns 2 types of actual source content. object | array;
+```
+const someRealContent = { some: 'content' };
+const otherRealContent = [{ other: 'content' }, { other: 'content' }];
+```
+The BFF api returns `null` content on non-successful statuses (`status !== 'success'`)
+```
+const nullishContent = null;
+```
+
+### ApiSuccessResult`<T>`
+```
+const SOME_API_STATE_KEY = {
+  status: 'success',
+  content: T
+}
+```
+
+### ApiErrorResult
+```
+const ANOTHER_API_STATE_KEY = {
+  status: 'failure',
+  content: null,
+  message: 'The request failed due to an error in the source api'
+}
+```
+
+### ApiMixedResult
+(data fetched from multiple api's corresponding to 1 main ApiStateKey but can have mixed api responses)
+```
+const THE_API_STATE_KEY = {
+  status: 'mixed',
+  content: {
+    things: ApiSuccessResult<otherRealContent>, // corresponding error name: THE_API_STATE_KEY_`THINGS`
+    items: ApiErrorResult // corresponding error name: THE_API_STATE_KEY_`ITEMS`
+  },
+}
+```
+
+### ApiUnknownResult
+Is returned if a call to source api could not be made due to dependency failure. 
+For example if data from api1 needs to be passed to api2 but api1 returns with an error.
+```
+const API_STATE_KEY_DEP = {
+  status: 'dependency-failure',
+  content: null
+}
+```
+
+### ApiPostponeResult
+Can be used to postpone fetching to a source api for example if using a feature toggle
+```
+const API_STATE_KEY_4 = {
+  status: 'postpone',
+  content: null
+}
+```
+
+### ApiPristineResult
+Can be used to set initial data without having fetched data from a source api
+```
+const API_STATE_KEY_FOOBAR = {
+  status: 'pristine',
+  content: null
+}
+
+```

@@ -34,7 +34,6 @@ export default () => {
   }, [WMO]);
 
   const itemsPrevious = useMemo(() => {
-    console.log(WMO.content?.items);
     if (!WMO.content?.items.length) {
       return [];
     }

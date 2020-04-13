@@ -3,6 +3,7 @@ import { Adres, getFullAddress } from './brp';
 import { ApiUrls } from '../../universal/config';
 
 import { requestData } from '../helpers';
+import { toLatLng } from '../../universal/helpers/geo';
 
 export interface BAGSourceData {
   results: Array<{ [key: string]: any; centroid: Centroid }>;
@@ -17,7 +18,7 @@ export function formatBAGData(responseData: BAGSourceData): BAGData {
     ? responseData.results[0].centroid
     : null;
   return {
-    latlng: centroid ? { lat: centroid[1], lng: centroid[0] } : null,
+    latlng: centroid ? toLatLng(centroid) : null,
   };
 }
 
