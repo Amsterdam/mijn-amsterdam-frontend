@@ -1,13 +1,21 @@
 import { ApiUrls } from '../../universal/config/api';
 import { MyTip } from '../services/tips';
 
+export function resolveWithDelay(delayMS: number = 0, data: any) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(data);
+    }, delayMS);
+  });
+}
+
 type MockDataConfig = Record<
   string,
   {
     method?: 'post' | 'get';
     status: number;
     responseData: any;
-    timeout?: boolean;
+    delay?: number;
     networkError?: boolean;
   }
 >;
@@ -19,7 +27,10 @@ export const mockDataConfig: MockDataConfig = {
   },
   [ApiUrls.BRP]: {
     status: 200,
-    responseData: () => require('./json/brp.json'),
+    delay: 2500,
+    responseData: () => {
+      return require('./json/brp.json');
+    },
   },
   [ApiUrls.WMO]: {
     status: 200,

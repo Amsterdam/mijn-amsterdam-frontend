@@ -1,11 +1,31 @@
-import { ExternalUrls, FeatureToggle } from 'config/App.constants';
-import { OverviewPage, PageContent } from 'components/Page/Page';
+import {
+  Alert,
+  ChapterIcon,
+  Linkd,
+  OverviewPage,
+  PageContent,
+  PageHeading,
+  SectionCollapsible,
+  Table,
+} from '../../components';
+import {
+  AppRoutes,
+  ChapterTitles,
+  ExternalUrls,
+  FeatureToggle,
+} from '../../../universal/config';
 import React, { useContext, useMemo } from 'react';
-import Table, { addTitleLinkComponent } from 'components/Table/Table';
+import { isError, isLoading } from '../../../universal/helpers';
+
+import { AppContext } from '../../AppState';
+import { addTitleLinkComponent } from '../../components/Button/Button';
+import { generatePath } from 'react-router-dom';
+import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import {
   annualStatementsTableDisplayProps,
   specificationsTableDisplayProps,
-} from 'pages/InkomenSpecificaties/InkomenSpecificaties';
+} from '../../pages/InkomenSpecificaties/InkomenSpecificaties';
+import styles from './Inkomen.module.scss';
 
 import Alert from 'components/Alert/Alert';
 import { AppContext } from 'AppState';
@@ -13,24 +33,33 @@ import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import { ChapterTitles } from 'config/Chapter.constants';
 import Linkd from 'components/Button/Button';
 import PageHeading from 'components/PageHeading/PageHeading';
-import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
+import SectionCollapsible, {
+  SectionCollapsibleHeading,
+} from 'components/SectionCollapsible/SectionCollapsible';
 import classnames from 'classnames';
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import styles from './Inkomen.module.scss';
-import { dateSort } from '../../helpers/App';
+import useRouter from 'use-react-router';
+import { AppRoutes } from '../../config/Routing.constants';
 import {
   incomSpecificationsRouteMonthly,
   incomSpecificationsRouteYearly,
-} from '../../data-formatting/focus';
+} from '../../../server/services/focus';
+import classnames from 'classnames';
 
 const requestsDisplayProps = {
   dateStart: 'Datum aanvraag',
   status: 'Status',
 };
-
 const decisionsDisplayProps = {
   dateStart: 'Datum aanvraag',
   datePublished: 'Datum besluit',
+};
+
+const tozoDisplayProps = {
+  displayDate: 'Datum',
+  displayTime: 'Tijd',
+  status: 'Status',
 };
 
 export default () => {
@@ -40,44 +69,51 @@ export default () => {
       isError,
       isLoading,
     },
-    FOCUS_TOZO: { data: tozoItems, isError: isError3, isLoading: isLoading3 },
-    FOCUS_SPECIFICATIONS: {
+    FOCUS_TOZO: {
+      data: FocusTozoItem,
+      isError: isError3,
+      isLoading: isLoading3,
+    },
+    FOCUS_INKOMEN_SPECIFICATIES: {
       data: { jaaropgaven, uitkeringsspecificaties },
       isError: isError2,
       isLoading: isLoading2,
     },
   } = useContext(AppContext);
 
+  const { history } = useRouter();
+
+  const noTozo = true;
+
   const itemsRequested = useMemo(() => {
     const itemsRequested = items.filter(item => !item.hasDecision);
-    tozoItems?.forEach(FocusTozoItem => {
-      if (FocusTozoItem && !FocusTozoItem?.status.isComplete) {
-        const item = FocusTozoItem as any;
-        item.status = 'In behandeling';
-        itemsRequested.push(item);
-      }
-    });
+    if (FocusTozoItem && !FocusTozoItem?.status.isComplete) {
+      const item = FocusTozoItem as any;
+      item.status = 'In behandeling';
+      itemsRequested.push(item);
+    }
     return addTitleLinkComponent(
       itemsRequested.sort(dateSort('ISODatePublished', 'desc'))
     );
-  }, [items, tozoItems]);
+  }, [items, FocusTozoItem]);
 
   const itemsDecided = useMemo(() => {
     const itemsDecided = items.filter(item => item.hasDecision);
-    tozoItems?.forEach(FocusTozoItem => {
-      if (FocusTozoItem && FocusTozoItem?.status.isComplete) {
-        itemsDecided.push(FocusTozoItem as any);
-      }
-    });
+    if (FocusTozoItem && FocusTozoItem?.status.isComplete) {
+      itemsDecided.push(FocusTozoItem as any);
+    }
     return addTitleLinkComponent(
       itemsDecided.sort(dateSort('ISODatePublished', 'desc'))
     );
-  }, [items, tozoItems]);
+  }, [items, FocusTozoItem]);
 
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
   const itemsSpecificationsMonthly = uitkeringsspecificaties.slice(0, 3);
+
   const itemsSpecificationsYearly = jaaropgaven.slice(0, 3);
+
+  const isLoadingFocus = isLoading(FOCUS);
 
   return (
     <OverviewPage className={styles.Inkomen}>
@@ -96,7 +132,7 @@ export default () => {
             Contact Inkomen en Stadspas
           </Linkd>
         </p>
-        {(isError || isError2 || isError3) && (
+        {(isError(FOCUS, 'aanvragen') || isError(FOCUS, 'specificaties')) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>
@@ -106,7 +142,7 @@ export default () => {
         id="SectionCollapsible-income-request-process"
         title="Lopende aanvragen"
         startCollapsed={false}
-        isLoading={isLoading || isLoading3}
+        isLoading={isLoadingFocus}
         hasItems={hasActiveRequests}
         track={{
           category: 'Inkomen en Stadspas overzicht / Lopende aanvragen',
@@ -124,7 +160,7 @@ export default () => {
       <SectionCollapsible
         id="SectionCollapsible-income-request-process-decisions"
         startCollapsed={hasActiveRequests}
-        isLoading={isLoading || isLoading3}
+        isLoading={isLoadingFocus}
         hasItems={hasActiveDescisions}
         title="Afgehandelde aanvragen"
         track={{
@@ -143,7 +179,7 @@ export default () => {
         <SectionCollapsible
           id="SectionCollapsible-income-specifications-monthly"
           startCollapsed={hasActiveRequests || hasActiveDescisions}
-          isLoading={isLoading2}
+          isLoading={isLoadingFocus}
           title="Uitkeringsspecificaties"
           hasItems={!!uitkeringsspecificaties.length}
           track={{
@@ -168,7 +204,7 @@ export default () => {
         <SectionCollapsible
           id="SectionCollapsible-income-specifications-yearly"
           startCollapsed={hasActiveRequests || hasActiveDescisions}
-          isLoading={isLoading2}
+          isLoading={isLoadingFocus}
           title="Jaaropgaven"
           hasItems={!!jaaropgaven.length}
           track={{

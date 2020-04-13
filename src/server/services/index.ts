@@ -4,7 +4,6 @@ export * from './belasting';
 export * from './brp';
 export * from './erfpacht';
 export * from './focus';
-// export * from './mijnbuurt';
 export * from './milieuzone';
 export * from './wmo';
 export * from './tips';

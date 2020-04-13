@@ -12,6 +12,7 @@ import { useCookie } from '../storage.hook';
 import { useCallback, useMemo, useEffect } from 'react';
 import { TIPSData } from '../../../server/services/tips';
 import { WelcomeNotification } from '../../config/staticData';
+import { apiSuccesResult } from '../../../universal/helpers/api';
 
 const pristineResponseData = apiPristineResponseData({
   TIPS: { items: [] },
@@ -69,23 +70,35 @@ export function useServicesGenerated() {
     });
   }, [refetch, isOptIn]);
 
-  return useMemo(() => {
-    const tipsContent = api.data.TIPS.content;
+  const {
+    NOTIFICATIONS: notificationsSource,
+    TIPS: tipsSource,
+    CASES,
+  } = api.data;
 
-    if (tipsContent) {
-      Object.assign(tipsContent, { isOptIn, optIn, optOut });
+  const NOTIFICATIONS = useMemo(() => {
+    if (notificationsSource.status === 'success') {
+      return apiSuccesResult({
+        items: [...notificationsSource.content.items, WelcomeNotification],
+      });
+    }
+    return notificationsSource;
+  }, [notificationsSource]);
+
+  const TIPS = useMemo(() => {
+    if (tipsSource.status === 'success') {
+      return apiSuccesResult({ ...tipsSource.content, isOptIn, optIn, optOut });
     }
 
-    const notificationsContent = api.data.NOTIFICATIONS.content;
-    const items = (notificationsContent?.items || []).concat(
-      WelcomeNotification
-    );
+    return tipsSource;
+  }, [tipsSource, isOptIn, optIn, optOut]);
 
-    Object.assign(notificationsContent, {
-      items,
-      total: items.length,
-    });
-
-    return api;
-  }, [api, isOptIn, optIn, optOut]);
+  return {
+    ...api,
+    data: {
+      NOTIFICATIONS,
+      CASES,
+      TIPS,
+    },
+  };
 }

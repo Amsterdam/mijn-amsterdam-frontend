@@ -80,8 +80,9 @@ export const ApiConfig: Record<ApiStateKey, ApiConfig> = {
 
 export const ErrorNames: Record<ApiStateKey, string> = {
   BRP: 'Persoonlijke gegevens + actuele updates',
-  MY_CASES: 'Lopende zaken',
+  CASES: 'Lopende zaken',
   TIPS: 'Tips',
+  NOTIFICATIONS: 'Actuele updates',
   WMO: 'Zorg en ondersteuning',
   FOCUS_AANVRAGEN: 'Inkomen en Stadspas + actuele updates',
   FOCUS_SPECIFICATIES:

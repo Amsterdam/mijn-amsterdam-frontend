@@ -15,7 +15,6 @@ const sessionState: session.SessionApiState = {
   isError: false,
   isDirty: true,
   isPristine: false,
-  errorMessage: '',
   validUntil: new Date().getTime(),
   validityInSeconds: 300,
   refetch: () => void 0,
@@ -33,7 +32,6 @@ const appState: any = {
     isError: false,
     isDirty: true,
     isPristine: false,
-    errorMessage: '',
     data: {
       persoon: {
         opgemaakteNaam: 'Hey ho!',
@@ -73,7 +71,6 @@ describe('MainNavBar', () => {
           return {
             isError: false,
             isPristine: false,
-            errorMessage: '',
             isLoading: false,
             isAuthenticated: true,
             validUntil: 0,

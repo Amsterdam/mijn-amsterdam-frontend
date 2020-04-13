@@ -7,11 +7,13 @@ import {
   DEFAULT_LNG,
   LOCATION_ZOOM,
   LAYERS_CONFIG,
-  ApiResult,
 } from '../../universal/config';
 
 export async function loadServicesMap(sessionID: SessionID) {
-  const BAG: ApiResult<typeof fetchBAG> = await dataCache.get(sessionID, 'BAG');
+  const BAG: ResolvedType<ReturnType<typeof fetchBAG>> = await dataCache.get(
+    sessionID,
+    'BAG'
+  );
 
   let lat = DEFAULT_LAT;
   let lng = DEFAULT_LNG;

@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 
 import { IS_SENTRY_ENABLED } from '../../../universal/env';
 import axios from 'axios';
+import { apiErrorResponseData } from '../../../universal/helpers/api';
 
 export interface ApiRequestOptions {
   url?: string;
@@ -13,8 +14,9 @@ export interface ApiRequestOptions {
   postpone?: boolean;
   resetToInitialDataOnError?: boolean;
   method?: 'GET' | 'POST';
-  timeout?: number; // in ms
 }
+
+const REQUEST_TIMEOUT = 20000; // 20seconds;
 
 export interface ApiState<T> {
   isLoading: boolean;
@@ -22,7 +24,6 @@ export interface ApiState<T> {
   isPristine: boolean;
   isDirty: boolean;
   data: T;
-  errorMessage: string | null;
 }
 
 export type RefetchFunction = (options: Partial<ApiRequestOptions>) => void;
@@ -38,10 +39,7 @@ const ActionTypes = {
   FETCH_FAILURE: 'FETCH_FAILURE',
 };
 
-function createApiDataReducer<T>(
-  initialData: T,
-  resetToInitialDataOnError: boolean = false
-) {
+function createApiDataReducer<T>() {
   return (state: ApiState<T>, action: Action): ApiState<T> => {
     switch (action.type) {
       case ActionTypes.FETCH_INIT:
@@ -54,7 +52,6 @@ function createApiDataReducer<T>(
           isPristine: false,
           isDirty: true,
           data: action.payload,
-          errorMessage: null,
         };
       case ActionTypes.FETCH_FAILURE:
         return {
@@ -63,8 +60,7 @@ function createApiDataReducer<T>(
           isError: true,
           isPristine: false,
           isDirty: true,
-          data: resetToInitialDataOnError ? initialData : state.data,
-          errorMessage: action.payload,
+          data: action.payload,
         };
       default:
         throw new Error();
@@ -81,7 +77,7 @@ export const DEFAULT_REQUEST_OPTIONS: ApiRequestOptions = {
   // Postpone fetch when hook is called/set-up for the first time
   postpone: false,
   // timeout in ms
-  timeout: 10 * 1000,
+  // timeout: 2000,
 };
 
 export function getDefaultState<T>(initialData: T, postpone = false) {
@@ -91,7 +87,6 @@ export function getDefaultState<T>(initialData: T, postpone = false) {
     isPristine: true,
     isDirty: false,
     data: initialData,
-    errorMessage: null,
   };
 }
 
@@ -101,7 +96,7 @@ export function useDataApi<T>(
 ): [ApiState<T>, RefetchFunction] {
   const [requestOptions, setRequestOptions] = useState(options);
   const [initialDataNoContent] = useState(initialData);
-  const apiDataReducer = createApiDataReducer(initialDataNoContent, true);
+  const apiDataReducer = createApiDataReducer<T>();
 
   const refetch = useCallback(
     (refetchOptions: Partial<ApiRequestOptions>) => {
@@ -123,6 +118,12 @@ export function useDataApi<T>(
     let didCancel = false;
 
     const fetchData = async () => {
+      let source = axios.CancelToken.source();
+
+      setTimeout(() => {
+        source.cancel('Request timeout.');
+      }, REQUEST_TIMEOUT);
+
       dispatch({
         type: ActionTypes.FETCH_INIT,
       });
@@ -131,6 +132,7 @@ export function useDataApi<T>(
         const result = await axios({
           ...DEFAULT_REQUEST_OPTIONS,
           ...requestOptions,
+          cancelToken: source.token,
         });
 
         if (!didCancel) {
@@ -142,9 +144,10 @@ export function useDataApi<T>(
       } catch (error) {
         if (!didCancel) {
           const errorMessage = error.response?.data.message || error.message;
+          console.log('errorMessage', errorMessage);
           dispatch({
             type: ActionTypes.FETCH_FAILURE,
-            payload: errorMessage,
+            payload: apiErrorResponseData(initialDataNoContent, error),
           });
           IS_SENTRY_ENABLED &&
             Sentry.captureMessage(

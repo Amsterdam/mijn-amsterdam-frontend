@@ -63,9 +63,9 @@ export default function MyChaptersPanel({
         <LoadingContent
           className={styles.LoadingPlaceholder}
           barConfig={[
-            ['3.4rem', '3.4rem', '1rem'],
+            ['3.4rem', '3.4rem', '0'],
             ['auto', '1.6rem', '0'],
-            ['3.4rem', '3.4rem', '1rem'],
+            ['3.4rem', '3.4rem', '0'],
             ['auto', '1.6rem', '0'],
           ]}
         />

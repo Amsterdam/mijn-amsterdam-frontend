@@ -181,7 +181,6 @@ function getAppState() {
       isLoading: false,
       isPristine: false,
       isError: false,
-      errorMessage: '',
       data: JSON.parse(JSON.stringify(responseData)),
     },
   } as AppStateInterface;
