@@ -86,8 +86,8 @@ export function apiMixedResult<T>(
 }
 
 export function apiPristineResponseData<T>(content: T) {
-  return Object.entries(content).reduce((acc, [key], value) => {
-    return Object.assign(acc, { [key]: { content: null, status: 'pristine' } });
+  return Object.entries(content).reduce((acc, [key, content]) => {
+    return Object.assign(acc, { [key]: { content, status: 'pristine' } });
   }, {} as Record<keyof T, ApiPristineResponse>);
 }
 

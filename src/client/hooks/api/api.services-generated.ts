@@ -12,10 +12,11 @@ import { loadServicesGenerated } from '../../../server/services';
 import { useCookie } from '../storage.hook';
 import { useCallback, useMemo, useEffect } from 'react';
 import { TIPSData } from '../../../server/services/tips';
+import { WelcomeNotification } from '../../config/staticData';
 
 const pristineResponseData = apiPristineResponseData({
   TIPS: null,
-  NOTIFICATIONS: { items: [] },
+  NOTIFICATIONS: { items: [], total: 0 },
   CASES: null,
 });
 
@@ -30,6 +31,10 @@ export type ServicesGeneratedData = FEApiResponseData<
 > & {
   TIPS: ApiErrorResponse | ApiSuccessResponse<TIPSData & Optin>;
 };
+
+type ServicesGeneratedApiData =
+  | ServicesGeneratedData
+  | typeof pristineResponseData;
 
 const API_ID = 'SERVICES_GENERATED';
 
@@ -50,9 +55,7 @@ export function useOptIn(): Optin {
 export function useServicesGenerated() {
   const { isOptIn, optIn, optOut } = useOptIn();
 
-  const [api, refetch] = useDataApi<
-    ServicesGeneratedData | typeof pristineResponseData
-  >(
+  const [api, refetch] = useDataApi<ServicesGeneratedApiData>(
     {
       postpone: true,
     },
@@ -73,6 +76,16 @@ export function useServicesGenerated() {
     if (tipsContent) {
       Object.assign(tipsContent, { isOptIn, optIn, optOut });
     }
+
+    const notificationsContent = api.data.NOTIFICATIONS.content;
+    const items = (notificationsContent?.items || []).concat(
+      WelcomeNotification
+    );
+
+    Object.assign(notificationsContent, {
+      items,
+      total: items.length,
+    });
 
     return api;
   }, [api, isOptIn, optIn, optOut]);
