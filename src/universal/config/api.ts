@@ -11,12 +11,12 @@ import {
 } from '../../server/services';
 import { FeatureToggle } from './app';
 
-type ApiResult<T extends (...args: any[]) => any> = ResolvedType<ReturnType<T>>;
+export type ApiResult<T extends (...args: any[]) => any> = ResolvedType<
+  ReturnType<T>
+>;
 
 export interface BFFApiData {
   BELASTINGEN: ApiResult<typeof fetchBELASTING>;
-  UPDATES: any;
-  MY_CASES: any;
   TIPS: ApiResult<typeof fetchTIPS>;
   BRP: ApiResult<typeof fetchBRP>;
   WMO: ApiResult<typeof fetchWMO>;
@@ -37,15 +37,14 @@ export const BFF_API_BASE_URL =
   process.env.REACT_APP_BFF_API_BASE_URL || '/api/bff';
 export const DATAPUNT_API_BASE_URL = process.env.REACT_APP_DATAPUNT_API_URL;
 
-export type ApiName = string;
-
 export const BFFApiUrls: Record<string, string> = {
   SERVICES_RELATED: `${BFF_API_BASE_URL}/services/related`,
   SERVICES_DIRECT: `${BFF_API_BASE_URL}/services/direct`,
   SERVICES_GENERATED: `${BFF_API_BASE_URL}/services/generated`,
+  SERVICES_MAP: `${BFF_API_BASE_URL}/services/map`,
 };
 
-export const ApiUrls: Record<string, string> = {
+export const ApiUrls: Record<ApiStateKey, string> = {
   BELASTINGEN: `${API_BASE_URL}/belastingen/get`,
   UPDATES: `${API_BASE_URL}/updates`,
   MY_CASES: `${API_BASE_URL}/focus/aanvragen`,
@@ -65,7 +64,7 @@ export interface ApiConfig {
   postponeFetch: boolean;
 }
 
-export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
+export const ApiConfig: Record<ApiStateKey, ApiConfig> = {
   FOCUS: {
     postponeFetch: false,
   },
@@ -86,7 +85,7 @@ export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
   },
 };
 
-export const ErrorNames: { [stateKey: string]: string } = {
+export const ErrorNames: Record<ApiStateKey, string> = {
   BRP: 'Persoonlijke gegevens + actuele updates',
   MY_CASES: 'Lopende zaken',
   TIPS: 'Tips',

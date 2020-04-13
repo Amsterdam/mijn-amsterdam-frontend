@@ -1,9 +1,9 @@
 import { ReactComponent as HomeIconSimple } from '../../assets/icons/home-simple.svg';
-import { LOCATION_ZOOM } from './MyArea.constants';
 import React from 'react';
 import classnames from 'classnames';
 import styles from './MyArea.module.scss';
 import { useMapInstance } from '@datapunt/react-maps';
+import { LOCATION_ZOOM } from '../../../universal/config';
 
 interface ZoomControlComponentProps {
   center: LatLngObject;

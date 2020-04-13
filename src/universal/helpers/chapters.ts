@@ -65,7 +65,6 @@ export function getMyChapters(appState: AppState): ChaptersState {
     ERFPACHT,
     AFVAL,
     BRP,
-    BUURT,
     BELASTINGEN,
     MILIEUZONE,
   } = appState;
@@ -75,9 +74,8 @@ export function getMyChapters(appState: AppState): ChaptersState {
   const erfpachtIsloading = isLoading(ERFPACHT);
   const brpIsLoading = isLoading(BRP);
   const garbageIsLoading = isLoading(AFVAL);
-  const myAreaIsLoading = isLoading(BUURT);
   const belastingIsLoading = isLoading(BELASTINGEN);
-  const MILIEUZONEIsLoading = isLoading(MILIEUZONE);
+  const milieuzoneIsLoading = isLoading(MILIEUZONE);
 
   const items = myChaptersMenuItems.filter(item => {
     // Check to see if Chapter has been loaded or if it is directly available
@@ -86,11 +84,10 @@ export function getMyChapters(appState: AppState): ChaptersState {
 
   const isChaptersLoading =
     belastingIsLoading ||
-    MILIEUZONEIsLoading ||
+    milieuzoneIsLoading ||
     wmoIsloading ||
     brpIsLoading ||
     focusIsloading ||
-    myAreaIsLoading ||
     erfpachtIsloading ||
     garbageIsLoading;
 

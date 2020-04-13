@@ -1,4 +1,4 @@
-import { ApiConfig, ApiName } from '../config';
+import { ApiConfig, ApiStateKey } from '../config';
 import { KeyboardEvent, MouseEvent } from 'react';
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
@@ -16,7 +16,7 @@ export function withKeyPress<T>(fn: Function, keyName: string = 'enter') {
 }
 
 export function getApiConfigValue(
-  name: ApiName,
+  name: ApiStateKey,
   param: keyof ApiConfig,
   defaultValue: any
 ) {

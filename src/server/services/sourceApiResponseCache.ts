@@ -21,7 +21,8 @@ function add(
 
 function get(sessionID: SessionID, apiStateKey: ApiStateKey) {
   init(sessionID);
-  return dataLoaderCache[sessionID][apiStateKey] || Promise.resolve(null);
+  const p = dataLoaderCache[sessionID][apiStateKey];
+  return (p as typeof p) || Promise.resolve(null);
 }
 
 function clear(sessionID: SessionID, apiStateKey: ApiStateKey) {

@@ -35,8 +35,16 @@ export type FEApiResponseData<T extends (...args: any[]) => any> = ResolvedType<
 
 export type ApiResponse<T> = ApiErrorResponse | ApiSuccessResponse<T>;
 
-export function isLoading(apiResponseData: any) {
-  return apiResponseData.status === 'pristine';
+export function isLoading(
+  apiResponseData:
+    | ApiSuccessResponse<any>
+    | ApiErrorResponse
+    | ApiMixedResponse<any>
+    | ApiUnknownResponse
+    | ApiPristineResponse
+) {
+  // If no responseData was found, assumes it's still loading
+  return !!apiResponseData && apiResponseData.status === 'pristine';
 }
 
 export function isError(

@@ -1,14 +1,12 @@
 import ChapterIcon from '../ChapterIcon/ChapterIcon';
 import { Colors } from '../../../universal/config';
-import { FocusItem } from '../../../server/services/focus';
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { NavLink } from 'react-router-dom';
 import React from 'react';
 import classnames from 'classnames';
 import styles from './MyCases.module.scss';
-
-type MyCase = FocusItem; // NOTE: atm it's the only Case possible
+import { MyCase } from '../../../universal/types/App.types';
 
 interface CaseItemProps {
   item: MyCase;

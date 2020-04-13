@@ -3,7 +3,6 @@ import {
   ServicesDirectData,
   useServicesDirect,
 } from './hooks/api/api.services-direct';
-import { ServicesMapData, useServicesMap } from './hooks/api/api.services-map';
 import {
   ServicesRelatedData,
   useServicesRelated,
@@ -12,13 +11,14 @@ import {
   ServicesGeneratedData,
   useServicesGenerated,
 } from './hooks/api/api.services-generated';
+import { ServicesMapData, useServicesMap } from './hooks/api/api.services-map';
 
 export interface AppState
   extends ServicesRelatedData,
     ServicesDirectData,
-    ServicesGeneratedData {
-  BUURT: ServicesMapData;
-}
+    ServicesGeneratedData,
+    ServicesMapData {}
+
 export type StateKey = keyof AppState;
 
 export const AppContext = createContext<AppState>({} as AppState);
@@ -27,12 +27,12 @@ export function useAppState() {
   const servicesRelatedApi = useServicesRelated();
   const servicesDirectApi = useServicesDirect();
   const servicesGeneratedApi = useServicesGenerated();
-  const mapData = useServicesMap();
+  const servicesMapApi = useServicesMap();
 
   return {
     ...servicesRelatedApi.data,
     ...servicesDirectApi.data,
     ...servicesGeneratedApi.data,
-    BUURT: mapData,
+    ...servicesMapApi.data,
   };
 }

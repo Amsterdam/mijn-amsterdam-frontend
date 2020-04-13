@@ -95,7 +95,7 @@ export default () => {
             <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>
         )}
-        {isLoading && <LoadingContent />}
+        {isLoading(FOCUS.content?.aanvragen) && <LoadingContent />}
       </PageContent>
       {!!FocusItem && (
         <StatusLine

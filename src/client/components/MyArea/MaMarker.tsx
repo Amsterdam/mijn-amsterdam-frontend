@@ -1,12 +1,12 @@
 import { Marker, useMapInstance } from '@datapunt/react-maps';
 import React, { PropsWithChildren, useEffect, useRef, useState } from 'react';
 
-import { DEFAULT_ZOOM } from './MyArea.constants';
 import L from 'leaflet';
 import { MaPopup } from './MaPopup';
 import { MaTooltip } from './MaTooltip';
 import { firstChildOfType } from './utils';
 import iconUrl from '../../assets/icons/home.svg';
+import { DEFAULT_ZOOM } from '../../../universal/config';
 
 function useBindComponentToMarker(component: any, markerInstance: any) {
   const componentRef = useRef();

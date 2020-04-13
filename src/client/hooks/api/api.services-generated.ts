@@ -2,7 +2,6 @@ import { useDataApi } from './api.hook';
 import { BFFApiUrls } from '../../../universal/config';
 
 import {
-  getApiConfigValue,
   apiPristineResponseData,
   FEApiResponseData,
   ApiErrorResponse,
@@ -15,9 +14,9 @@ import { TIPSData } from '../../../server/services/tips';
 import { WelcomeNotification } from '../../config/staticData';
 
 const pristineResponseData = apiPristineResponseData({
-  TIPS: null,
+  TIPS: { items: [] },
   NOTIFICATIONS: { items: [], total: 0 },
-  CASES: null,
+  CASES: [],
 });
 
 export interface Optin {
