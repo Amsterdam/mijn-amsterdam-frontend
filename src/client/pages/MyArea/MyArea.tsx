@@ -13,7 +13,7 @@ export default () => {
     <div className={styles.Container}>
       <MyAreaHeader />
       {IS_PRODUCTION || IS_ACCEPTANCE ? (
-        <MyAreaMapIFrame url={BUURT?.embedUrl} />
+        <MyAreaMapIFrame url={BUURT.content?.embed.advanced} />
       ) : (
         !!BAG.content?.latlng && (
           <MyAreaMap

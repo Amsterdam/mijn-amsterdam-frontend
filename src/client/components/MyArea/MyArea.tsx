@@ -1,13 +1,12 @@
 import {
   DEFAULT_MAP_DISPLAY_CONFIG,
   IS_MY_AREA_2_ENABLED,
-  LOCATION_ZOOM,
   MapDisplayOptions,
 } from './MyArea.constants';
 import { Link, NavLink } from 'react-router-dom';
 import React, { HTMLProps, PropsWithChildren } from 'react';
 
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes, LOCATION_ZOOM } from '../../../universal/config';
 import { ReactComponent as CloseIcon } from '../../assets/icons/Close.svg';
 import Heading from '../Heading/Heading';
 import { ReactComponent as HomeIcon } from '../../assets/icons/home.svg';
@@ -122,7 +121,7 @@ export default function MyAreaMap({
 }
 
 interface MyAreaDashboardComponentProps extends HTMLProps<HTMLDivElement> {
-  center?: LatLngObject;
+  center?: LatLngObject | null;
   url?: string;
 }
 

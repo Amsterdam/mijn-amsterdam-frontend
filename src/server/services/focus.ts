@@ -123,7 +123,7 @@ const processSteps: StepTitle[] = [
   'beslissing',
 ];
 
-const DAYS_KEEP_RECENT = 2800;
+const DAYS_KEEP_RECENT = 28;
 
 // Object with properties that are used to replace strings in the generated messages above.
 interface StepSourceData {

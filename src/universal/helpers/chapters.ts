@@ -74,7 +74,6 @@ export function getMyChapters(appState: AppState): ChaptersState {
     ERFPACHT,
     AFVAL,
     BRP,
-    BUURT,
     BELASTINGEN,
     MILIEUZONE,
   } = appState;
@@ -99,7 +98,7 @@ export function getMyChapters(appState: AppState): ChaptersState {
 
   const isChaptersLoading =
     belastingIsLoading ||
-    MILIEUZONEIsLoading ||
+    milieuzoneIsLoading ||
     wmoIsloading ||
     brpIsLoading ||
     focusIsloading ||

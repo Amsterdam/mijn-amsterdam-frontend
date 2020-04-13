@@ -5,6 +5,7 @@ import {
   loadServicesDirect,
   loadServicesRelated,
 } from './services';
+import { loadServicesMap } from './services/services-map';
 
 export const router = express.Router();
 
@@ -50,5 +51,12 @@ router.use(
   `${BFF_API_BASE_URL}/services/direct`,
   async function handleRouteServicesDirect(req: Request, res: Response) {
     return res.send(await loadServicesDirect(req.sessionID!));
+  }
+);
+
+router.use(
+  `${BFF_API_BASE_URL}/services/map`,
+  async function handleRouteServicesMap(req: Request, res: Response) {
+    return res.send(await loadServicesMap(req.sessionID!));
   }
 );

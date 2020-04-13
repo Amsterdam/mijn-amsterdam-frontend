@@ -65,10 +65,8 @@ export async function loadServicesGenerated(
   };
 
   return {
-    CASES: apiSuccesResult<typeof cases>(cases),
-    NOTIFICATIONS: apiSuccesResult<typeof notificationsResult>(
-      notificationsResult
-    ),
+    CASES: apiSuccesResult(cases),
+    NOTIFICATIONS: apiSuccesResult(notificationsResult),
     TIPS: tips,
   };
 }

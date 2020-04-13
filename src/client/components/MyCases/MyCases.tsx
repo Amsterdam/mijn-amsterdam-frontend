@@ -1,19 +1,11 @@
 import ChapterIcon from '../ChapterIcon/ChapterIcon';
 import { Colors } from '../../../universal/config';
-import { FocusItem } from '../../../server/services/focus';
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { NavLink } from 'react-router-dom';
 import React from 'react';
 import classnames from 'classnames';
 import styles from './MyCases.module.scss';
-import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
-import { NavLink } from 'react-router-dom';
-import { Colors } from 'config/App.constants';
-import Heading from 'components/Heading/Heading';
-import LoadingContent from '../LoadingContent/LoadingContent';
-import { FocusItem } from 'data-formatting/focus';
-import classnames from 'classnames';
 
 type MyCase = FocusItem | FocusTozo; // NOTE: atm it's the only Case possible
 

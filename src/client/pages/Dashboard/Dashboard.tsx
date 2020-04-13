@@ -10,6 +10,8 @@ import {
   MyTips,
   Page,
   PageHeading,
+  MyCases,
+  MyAreaDashboard,
 } from '../../components';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import styles from './Dashboard.module.scss';
@@ -19,7 +21,7 @@ const MAX_TIPS_VISIBLE = 3;
 
 export default () => {
   const appState = useContext(AppContext);
-  const { TIPS, NOTIFICATIONS } = appState;
+  const { TIPS, NOTIFICATIONS, CASES, BUURT, BAG } = appState;
 
   const tipItems = TIPS.content?.items.slice(0, MAX_TIPS_VISIBLE) || [];
   const notificationItems = NOTIFICATIONS.content?.items.slice(
@@ -64,21 +66,21 @@ export default () => {
             trackCategory="Dashboard / Mijn Thema's"
           />
         </div>
-        {/*
+
         <MyCases
-          isLoading={!!isMyCasesLoading}
+          isLoading={isLoading(CASES)}
           title="Mijn lopende aanvragen"
           data-tutorial-item="Dit is een overzicht van uw lopende aanvragen of wijzigingen;right-top"
-          items={myCases}
+          items={CASES.content}
         />
 
         {!isPhoneScreen && (
           <MyAreaDashboard
-            url={mapUrl}
-            center={centroid}
+            url={BUURT.content?.embed.advanced}
+            center={BAG.content?.latlng}
             data-tutorial-item="Hier ziet u informatie van de gemeente, bijvoorbeeld over afval, parkeren en bekendmakingen;left-top"
           />
-        )} */}
+        )}
 
         {!isPhoneScreen && (
           <MyTips
