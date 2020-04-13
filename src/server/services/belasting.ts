@@ -4,6 +4,7 @@ import { Chapter } from '../../universal/config/chapter';
 import { MyTip } from './tips';
 import { requestData } from '../helpers';
 import { MyNotification } from '../../universal/types/App.types';
+import { getApiConfigValue } from '../../universal/helpers';
 
 export interface BELASTINGENData {
   isKnown: boolean;
@@ -52,8 +53,11 @@ function formatBELASTINGENData(
 }
 
 export function fetchBELASTING() {
-  return requestData<BELASTINGENData>({
-    url: ApiUrls.BELASTINGEN,
-    transformResponse: formatBELASTINGENData,
-  });
+  return requestData<BELASTINGENData>(
+    {
+      url: ApiUrls.BELASTINGEN,
+      transformResponse: formatBELASTINGENData,
+    },
+    getApiConfigValue('BELASTINGEN', 'postponeFetch', true)
+  );
 }

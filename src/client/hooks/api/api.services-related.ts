@@ -2,7 +2,6 @@ import { useDataApi } from './api.hook';
 import { BFFApiUrls } from '../../../universal/config';
 
 import {
-  getApiConfigValue,
   apiPristineResponseData,
   FEApiResponseData,
 } from '../../../universal/helpers';
@@ -22,7 +21,6 @@ export function useServicesRelated() {
   const [api] = useDataApi<ServicesRelatedData | typeof pristineResponseData>(
     {
       url: BFFApiUrls[API_ID],
-      postpone: getApiConfigValue(API_ID, 'postponeFetch', false),
     },
     pristineResponseData
   );

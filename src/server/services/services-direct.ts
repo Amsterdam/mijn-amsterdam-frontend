@@ -16,9 +16,9 @@ const config = {
   MILIEUZONE: fetchMILIEUZONE,
 };
 
-export async function loadServicesDirect(sessionID: SessionID) {
-  const configEntries = entries(config);
+const configEntries = entries(config);
 
+export async function loadServicesDirect(sessionID: SessionID) {
   // Cache the promises for re-use
   const promises = configEntries.map(([apiStateKey, fetchFn]) => {
     const promise = fetchFn();

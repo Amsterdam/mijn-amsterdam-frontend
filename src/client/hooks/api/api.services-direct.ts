@@ -1,6 +1,5 @@
 import { BFFApiUrls } from '../../../universal/config';
 import {
-  getApiConfigValue,
   FEApiResponseData,
   apiPristineResponseData,
 } from '../../../universal/helpers';
@@ -24,7 +23,6 @@ export function useServicesDirect() {
   const [api] = useDataApi<ServicesDirectData | typeof pristineResponseData>(
     {
       url: BFFApiUrls[API_ID],
-      postpone: getApiConfigValue(API_ID, 'postponeFetch', false),
     },
     pristineResponseData
   );

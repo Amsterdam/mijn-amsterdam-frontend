@@ -47,7 +47,7 @@ const sourceData: IncomeSpecificationsResponse = {
 const data = formatIncomeSpecifications(sourceData);
 
 const APP_STATE = {
-  FOCUS_INKOMEN_SPECIFICATIES: {
+  FOCUS_SPECIFICATIES: {
     data,
     isError: false,
     isLoading: false,

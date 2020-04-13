@@ -25,11 +25,11 @@ export const mockDataConfig: MockDataConfig = {
     status: 200,
     responseData: () => require('./json/wmo.json'),
   },
-  [ApiUrls.FOCUS]: {
+  [ApiUrls.FOCUS_AANVRAGEN]: {
     status: 200,
     responseData: () => require('./json/focus.json'),
   },
-  [ApiUrls.FOCUS_INKOMEN_SPECIFICATIES]: {
+  [ApiUrls.FOCUS_SPECIFICATIES]: {
     status: 200,
     responseData: () => require('./json/inkomen-specificaties.json'),
   },

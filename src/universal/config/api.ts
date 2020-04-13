@@ -46,13 +46,11 @@ export const BFFApiUrls: Record<string, string> = {
 
 export const ApiUrls: Record<ApiStateKey, string> = {
   BELASTINGEN: `${API_BASE_URL}/belastingen/get`,
-  UPDATES: `${API_BASE_URL}/updates`,
-  MY_CASES: `${API_BASE_URL}/focus/aanvragen`,
   TIPS: `${API_BASE_URL}/tips/gettips`,
   BRP: `${API_BASE_URL}/brp/brp`,
   WMO: `${API_BASE_URL}/wmoned/voorzieningen`,
-  FOCUS: `${API_BASE_URL}/focus/aanvragen`,
-  FOCUS_INKOMEN_SPECIFICATIES: `${API_BASE_URL}/focus/combined`,
+  FOCUS_AANVRAGEN: `${API_BASE_URL}/focus/aanvragen`,
+  FOCUS_SPECIFICATIES: `${API_BASE_URL}/focus/combined`,
   AUTH: `${API_BASE_URL}/auth/check`,
   ERFPACHT: `${API_BASE_URL}/erfpacht/check-erfpacht`,
   BAG: `${DATAPUNT_API_BASE_URL}/atlas/search/adres/`,
@@ -65,17 +63,11 @@ export interface ApiConfig {
 }
 
 export const ApiConfig: Record<ApiStateKey, ApiConfig> = {
-  FOCUS: {
-    postponeFetch: false,
-  },
-  FOCUS_INKOMEN_SPECIFICATIES: {
+  FOCUS_SPECIFICATIES: {
     postponeFetch: !FeatureToggle.focusUitkeringsspecificatiesActive,
   },
-  WMO: {
-    postponeFetch: false,
-  },
-  TIPS: {
-    postponeFetch: true, // Stays true because we're not fetching immediately
+  FOCUS_AANVRAGEN: {
+    postponeFetch: !FeatureToggle.focusAanvragenActive,
   },
   BELASTINGEN: {
     postponeFetch: !FeatureToggle.belastingApiActive,
@@ -90,8 +82,9 @@ export const ErrorNames: Record<ApiStateKey, string> = {
   MY_CASES: 'Lopende zaken',
   TIPS: 'Tips',
   WMO: 'Zorg en ondersteuning',
-  FOCUS: 'Inkomen en Stadspas + actuele updates',
-  FOCUS_INKOMEN_SPECIFICATIES: 'Inkomen en Stadspas + actuele updates',
+  FOCUS_AANVRAGEN: 'Inkomen en Stadspas + actuele updates',
+  FOCUS_SPECIFICATIES:
+    'Uitkeringsspecificaties en jaaropgaven + actuele updates',
   CHAPTERS: "Thema's",
   ERFPACHT: 'Erfpacht',
   AFVAL: 'Afval gegevens rond uw Lat/Lon locatie',

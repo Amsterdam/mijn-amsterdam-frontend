@@ -2,7 +2,7 @@ import { useDesktopScreen, usePhoneScreen } from '../../hooks/media.hook';
 
 import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
 import { ReactComponent as AmsterdamLogoLarge } from '../../assets/images/logo-amsterdam-large.svg';
-import { AppRoutes, ErrorNames } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
 import { ReactComponent as BetaLabel } from '../../assets/images/beta-label.svg';
 import ErrorMessages from '../ErrorMessages/ErrorMessages';
 import Heading from '../Heading/Heading';
@@ -14,7 +14,7 @@ import React, { useContext, useMemo } from 'react';
 import styles from './MainHeader.module.scss';
 import useRouter from 'use-react-router';
 import { AppContext } from '../../AppState';
-import { isError } from '../../../universal/helpers';
+import { getApiErrors } from '../../../universal/helpers/api';
 
 export interface MainHeaderProps {
   isAuthenticated?: boolean;
@@ -41,23 +41,7 @@ export default function MainHeader({
 }: MainHeaderProps) {
   const isHeroVisible = true;
   const appState = useContext(AppContext);
-  const errors = useMemo(
-    () =>
-      Object.entries(appState)
-        .filter(([stateKey, apiResponseData]) => {
-          return isError(apiResponseData);
-        })
-        .map(([stateKey, apiResponseData]) => {
-          const name = ErrorNames[stateKey] || stateKey;
-          return {
-            name,
-            error:
-              ('message' in apiResponseData ? apiResponseData.message : null) ||
-              'Communicatie met api mislukt.',
-          };
-        }),
-    [appState]
-  );
+  const errors = useMemo(() => getApiErrors(appState), [appState]);
 
   const hasErrors = !!errors.length;
   const { location } = useRouter();

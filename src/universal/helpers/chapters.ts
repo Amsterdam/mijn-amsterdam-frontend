@@ -15,8 +15,7 @@ function isChapterActive(
     case Chapters.INKOMEN:
       return (
         !isLoading(FOCUS) &&
-        (!isError(FOCUS, 'aanvragen') ||
-          !isError(FOCUS, 'uitkeringsspecificaties'))
+        !(isError(FOCUS, 'aanvragen') && isError(FOCUS, 'specificaties'))
       );
 
     case Chapters.ZORG:

@@ -12,7 +12,10 @@ export interface MapDisplayOptions {
   zoom: number;
 }
 
-export const DEFAULT_CENTROID: Centroid = [DEFAULT_LNG, DEFAULT_LAT];
+export const DEFAULT_CENTROID: LatLngObject = {
+  lng: DEFAULT_LNG,
+  lat: DEFAULT_LAT,
+};
 
 export const DEFAULT_TILE_LAYER_CONFIG = {
   url: 'https://t{s}.data.amsterdam.nl/topo_rd/{z}/{x}/{y}.png',

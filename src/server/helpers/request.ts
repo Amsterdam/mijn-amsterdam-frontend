@@ -2,7 +2,11 @@ import axios, { AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { capitalizeFirstLetter } from '../../universal/helpers/text';
 import { entries } from '../../universal/helpers/utils';
 import { mockDataConfig } from '../mock-data/index';
-import { apiSuccesResult, apiErrorResult } from '../../universal/helpers';
+import {
+  apiSuccesResult,
+  apiErrorResult,
+  apiPostponeResult,
+} from '../../universal/helpers';
 
 const DEFAULT_REQUEST_CONFIG: AxiosRequestConfig = {
   timeout: 4, // 10 seconds
@@ -41,9 +45,16 @@ export interface RequestConfig<Source, Transformed> {
   format: (data: Source) => Transformed;
 }
 
-export async function requestData<T>(config: AxiosRequestConfig) {
+export async function requestData<T>(
+  config: AxiosRequestConfig,
+  postpone: boolean = false
+) {
   if (process.env.NODE_ENV !== 'production') {
     enableMockAdapter();
+  }
+
+  if (postpone) {
+    return apiPostponeResult();
   }
 
   try {

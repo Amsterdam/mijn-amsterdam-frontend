@@ -11,7 +11,6 @@ import {
 import {
   dateSort,
   defaultDateFormat,
-  getMixedResultStatus,
   apiMixedResult,
   ApiResponse,
 } from '../../universal/helpers';
@@ -21,6 +20,7 @@ import {
   MyCase,
 } from '../../universal/types/App.types';
 import { requestData } from '../helpers';
+import { getApiConfigValue } from '../../universal/helpers/utils';
 
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
@@ -991,20 +991,21 @@ export interface IncomeSpecifications {
 }
 
 function transformFOCUSAanvragenData(
-  responsData: FOCUSAanvragenSourceData,
+  responseData: FOCUSAanvragenSourceData,
   compareDate: Date
 ): FocusItem[] {
-  return responsData
+  console.log(responseData);
+  return responseData
     .map(product => formatFocusProduct(product, compareDate))
     .filter(item => item.productTitle !== ProductTitles.BijzondereBijstand);
 }
 
 function transformFOCUSIncomeSpecificationsData(
-  responsData: FOCUSIncomeSpecificationSourceData
+  responseData: FOCUSIncomeSpecificationSourceData
 ): IncomeSpecifications {
-  const jaaropgaven = responsData.content.jaaropgaven || [];
+  const jaaropgaven = responseData.content.jaaropgaven || [];
   const uitkeringsspecificaties =
-    responsData.content.uitkeringsspecificaties || [];
+    responseData.content.uitkeringsspecificaties || [];
 
   return {
     jaaropgaven: jaaropgaven
@@ -1024,15 +1025,21 @@ type FOCUSData = {
 };
 
 export async function fetchFOCUS() {
-  const aanvragen = await requestData<FocusItem[]>({
-    url: ApiUrls.FOCUS,
-    transformResponse: data => transformFOCUSAanvragenData(data, new Date()),
-  });
+  const aanvragen = await requestData<FocusItem[]>(
+    {
+      url: ApiUrls.FOCUS_AANVRAGEN,
+      transformResponse: data => transformFOCUSAanvragenData(data, new Date()),
+    },
+    getApiConfigValue('FOCUS_AANVRAGEN', 'postponeFetch', true)
+  );
 
-  const specificaties = await requestData<IncomeSpecifications>({
-    url: ApiUrls.FOCUS_INKOMEN_SPECIFICATIES,
-    transformResponse: transformFOCUSIncomeSpecificationsData,
-  });
+  const specificaties = await requestData<IncomeSpecifications>(
+    {
+      url: ApiUrls.FOCUS_SPECIFICATIES,
+      transformResponse: transformFOCUSIncomeSpecificationsData,
+    },
+    getApiConfigValue('FOCUS_SPECIFICATIES', 'postponeFetch', true)
+  );
 
   const notificationSources: any = [];
   const cases: MyCase[] = [];
@@ -1063,13 +1070,10 @@ export async function fetchFOCUS() {
     .filter((item: any) => item.notification !== undefined)
     .map((item: any) => item.notification as MyNotification);
 
-  return apiMixedResult<FOCUSData>(
-    {
-      aanvragen,
-      specificaties,
-      cases,
-      notifications,
-    },
-    getMixedResultStatus(aanvragen, specificaties)
-  );
+  return apiMixedResult<FOCUSData>({
+    aanvragen,
+    specificaties,
+    cases,
+    notifications,
+  });
 }
