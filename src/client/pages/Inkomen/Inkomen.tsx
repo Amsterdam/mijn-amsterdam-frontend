@@ -89,7 +89,7 @@ export default () => {
             Contact Inkomen en Stadspas
           </Linkd>
         </p>
-        {isError(FOCUS) && (
+        {(isError(FOCUS, 'aanvragen') || isError(FOCUS, 'specificaties')) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>

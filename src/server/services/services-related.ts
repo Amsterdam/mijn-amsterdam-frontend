@@ -11,6 +11,7 @@ type AFVALResponseData =
 
 export async function loadServicesRelated(sessionID: SessionID) {
   const promiseBRP = fetchBRP();
+
   const BRP: ResolvedType<typeof promiseBRP> = await dataCache.add(
     sessionID,
     'BRP',
@@ -22,6 +23,7 @@ export async function loadServicesRelated(sessionID: SessionID) {
   );
 
   if (BRP.status === 'success') {
+    console.log('BRPO!', BRP);
     const promiseBAG = fetchBAG(BRP.content.adres);
     const BAG: ResolvedType<typeof promiseBAG> = await dataCache.add(
       sessionID,

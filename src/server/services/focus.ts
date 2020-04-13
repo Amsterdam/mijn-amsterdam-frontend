@@ -994,7 +994,6 @@ function transformFOCUSAanvragenData(
   responseData: FOCUSAanvragenSourceData,
   compareDate: Date
 ): FocusItem[] {
-  console.log(responseData);
   return responseData
     .map(product => formatFocusProduct(product, compareDate))
     .filter(item => item.productTitle !== ProductTitles.BijzondereBijstand);

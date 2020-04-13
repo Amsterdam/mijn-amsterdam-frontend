@@ -82,9 +82,12 @@ export function isError(
   );
 }
 
-export function apiErrorResult(error: AxiosError): ApiErrorResponse {
+export function apiErrorResult(
+  error: AxiosError,
+  content: any = null
+): ApiErrorResponse {
   return {
-    content: null,
+    content,
     message: error.response?.data?.message || error.toString(),
     status: 'failure',
   };
@@ -123,6 +126,20 @@ export function apiPristineResponseData<T>(content: T) {
   return Object.entries(content).reduce((acc, [key, content]) => {
     return Object.assign(acc, { [key]: { content, status: 'pristine' } });
   }, {} as Record<keyof T, ApiPristineResponse>);
+}
+
+export function apiErrorResponseData<T>(
+  pristineResponseData: T,
+  error: AxiosError<any>
+) {
+  return Object.entries(pristineResponseData).reduce(
+    (acc, [key, pristineResponseData]) => {
+      return Object.assign(acc, {
+        [key]: apiErrorResult(error, pristineResponseData.content),
+      });
+    },
+    {} as Record<keyof T, ApiErrorResponse>
+  );
 }
 
 export function getApiErrors(appState: AppState) {

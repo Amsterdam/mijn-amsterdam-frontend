@@ -18,7 +18,9 @@ import { SessionContext, SessionState } from './SessionState';
 
 import AppStateProvider from './AppStateProvider';
 import ApplicationError from './components/ApplicationError/ApplicationError';
-import AutoLogoutDialog from './components/AutoLogoutDialog/AutoLogoutDialog';
+import AutoLogoutDialog, {
+  DefaultAutologoutDialogSettings,
+} from './components/AutoLogoutDialog/AutoLogoutDialog';
 import Dashboard from './pages/Dashboard/Dashboard';
 import ErrorBoundary from 'react-error-boundary';
 import GarbageInformation from './pages/GarbageInformation/GarbageInformation';
@@ -145,7 +147,9 @@ function AppLanding() {
   }
 
   const dialogTimeoutSettings = {
-    secondsBeforeDialogShow: validityInSeconds,
+    secondsBeforeDialogShow:
+      validityInSeconds ||
+      DefaultAutologoutDialogSettings.secondsBeforeDialogShow,
   };
 
   // Render the main app only if we are authenticated

@@ -88,7 +88,7 @@ export function MyAreaMapIFrame({ url, className }: MyAreaMapIframeProps) {
 interface MyAreaMapComponentProps {
   id?: string;
   title?: string;
-  center?: LatLngObject;
+  center?: LatLngObject | null;
   homeAddress?: string;
   options?: MapDisplayOptions;
   className?: string;
@@ -131,8 +131,8 @@ export function MyAreaDashboard({
   ...otherProps
 }: MyAreaDashboardComponentProps) {
   return (
-    <div {...otherProps} className={styles.MyArea}>
-      {IS_MY_AREA_2_ENABLED && !!center && (
+    <div {...otherProps} className={styles.MapDashboard}>
+      {IS_MY_AREA_2_ENABLED && (
         <MyAreaMap
           center={center}
           options={{ zoomTools: false, zoom: LOCATION_ZOOM }}

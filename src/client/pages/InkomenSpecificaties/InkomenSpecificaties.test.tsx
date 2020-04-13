@@ -53,7 +53,6 @@ const APP_STATE = {
     isLoading: false,
     isPristine: false,
     isDirty: true,
-    errorMessage: '',
   },
 }; // Add slice of the AppState here
 

@@ -85,7 +85,7 @@ function CountDownTimer({
   );
 }
 
-const DefaultSettings = {
+export const DefaultAutologoutDialogSettings = {
   secondsBeforeDialogShow: AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS,
   secondsBeforeAutoLogout: AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS,
   secondsSessionRenewRequestInterval: SESSION_RENEW_INTERVAL_SECONDS,
@@ -94,7 +94,7 @@ const DefaultSettings = {
 export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
   const session = useContext(SessionContext);
   // Will open the dialog if maxCount is reached.
-  const nSettings = { ...DefaultSettings, ...settings };
+  const nSettings = { ...DefaultAutologoutDialogSettings, ...settings };
 
   const maxCount =
     nSettings.secondsBeforeDialogShow - nSettings.secondsBeforeAutoLogout; // Gives user T time to cancel the automatic logout
