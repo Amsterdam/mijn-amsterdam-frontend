@@ -10,7 +10,7 @@ import { loadServicesRelated } from '../../../server/services';
 const pristineResponseData = apiPristineResponseData({
   BRP: null,
   AFVAL: null,
-  BAG: null,
+  HOME: null,
 });
 
 export type ServicesRelatedData = FEApiResponseData<typeof loadServicesRelated>;

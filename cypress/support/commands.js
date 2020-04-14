@@ -12,7 +12,7 @@ import { assertAtHome } from '../support/helpers';
 //
 // -- This is a parent command --
 Cypress.Commands.add('login', () => {
-  cy.visit('/mock-api/login');
+  cy.visit('/api/login');
   assertAtHome('Actueel');
 });
 //

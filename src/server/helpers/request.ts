@@ -3,14 +3,20 @@ import { capitalizeFirstLetter } from '../../universal/helpers/text';
 import { entries } from '../../universal/helpers/utils';
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
 import {
+  ApiSuccessResponse,
+  ApiErrorResponse,
+} from '../../universal/helpers/api';
+import { Deferred } from './deferred';
+import {
   apiSuccesResult,
   apiErrorResult,
   apiPostponeResult,
 } from '../../universal/helpers';
 
-const REQUEST_TIMEOUT = 20000; // 20 seconds
-const DEFAULT_REQUEST_CONFIG: AxiosRequestConfig = {
+const DEFAULT_REQUEST_CONFIG: AxiosRequestConfig & { cancelTimeout: number } = {
   timeoutErrorMessage: `De aanvraag van data bij deze api duurt te lang.`,
+  method: 'get',
+  cancelTimeout: 20000, // 20 seconds
 };
 
 function enableMockAdapter() {
@@ -41,40 +47,72 @@ function enableMockAdapter() {
   );
 }
 
+if (process.env.REACT_APP_ENV !== 'production') {
+  enableMockAdapter();
+}
+
 export interface RequestConfig<Source, Transformed> {
   url: string;
   format: (data: Source) => Transformed;
 }
 
+const cache = new Map();
+
 export async function requestData<T>(
   config: AxiosRequestConfig,
-  postpone: boolean = false
+  postpone: boolean = false,
+  sessionID: SessionID = 'testje'
 ) {
-  if (process.env.NODE_ENV !== 'production') {
-    enableMockAdapter();
-  }
-
   if (postpone) {
     return apiPostponeResult();
   }
 
-  try {
-    const source = axios.CancelToken.source();
+  const source = axios.CancelToken.source();
 
+  const requestConfig = {
+    ...DEFAULT_REQUEST_CONFIG,
+    ...config,
+    cancelToken: source.token,
+  };
+
+  const cacheKey =
+    sessionID +
+    requestConfig.url +
+    (requestConfig.params ? JSON.stringify(requestConfig.params) : '');
+
+  if (cache.has(cacheKey)) {
+    return cache.get(cacheKey).promise as Promise<
+      ApiSuccessResponse<T> | ApiErrorResponse
+    >;
+  }
+
+  if (requestConfig.method?.toLowerCase() === 'get') {
+    cache.set(cacheKey, new Deferred<ApiSuccessResponse<T>>());
+  }
+
+  try {
+    // Request is cancelled after x ms
     setTimeout(() => {
       source.cancel('Request to source api timeout.');
-    }, REQUEST_TIMEOUT);
+    }, requestConfig.cancelTimeout);
 
-    const request: AxiosPromise<T> = axios({
-      ...DEFAULT_REQUEST_CONFIG,
-      ...config,
-      cancelToken: source.token,
-    });
-
+    const request: AxiosPromise<T> = axios(requestConfig);
     const response: AxiosResponse<T> = await request;
+    const responseData = apiSuccesResult<T>(response.data);
 
-    return apiSuccesResult<T>(response.data);
+    if (requestConfig.method?.toLowerCase() === 'get') {
+      cache.get(cacheKey).resolve(responseData);
+    }
+
+    return responseData;
   } catch (error) {
-    return apiErrorResult(error);
+    const responseData = apiErrorResult(error);
+
+    if (requestConfig.method?.toLowerCase() === 'get') {
+      cache.get(cacheKey).resolve(responseData);
+      cache.delete(cacheKey);
+    }
+
+    return responseData;
   }
 }

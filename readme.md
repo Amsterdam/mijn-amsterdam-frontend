@@ -9,7 +9,7 @@ To see the application quickly running locally, clone the repo and cd into the p
 
 ```
 $ npm install
-$ npm run mock-api
+$ npm run watch:bff-api
 $ npm start
 ```
 
@@ -76,9 +76,9 @@ rename your module files to `.scss`
 ### Mock Api
 
 We have a mock api which we try to keep up to date with the connections to the real api.
-To run the mock-api run the following command in the console `$ npm run watch:mock-api`. The script depends on `npm install -g nodemon`
+To run the bff-api, run the following command in the console `$ npm run watch:bff-api`. The script depends on `npm install -g nodemon`
 
-Whenever you need to update/add an api look for the correct api mock in `./mock-api` and make your changes.
+Whenever you need to update/add an api look for the correct api mock in `./src/server/mock-data` and make your changes.
 The server will restart automatically.
 
 ### Branch naming + PR
@@ -99,7 +99,7 @@ creates a [semver](https://semver.org/) version of the release tag and pushes it
 
 run e2e tests locally outside of docker by running the `npm run e2:ci` command
 run the e2e tests in the docker set-up by running the `docker-compose up --build --exit-code-from e2e e2e` command
-run the cypress ui for e2e testing by firing up the api `npm run mock-api` and the build `npm run serve-build` and then `cypress open`
+run the cypress ui for e2e testing by firing up the api `npm run watch:bff-api` and the build `npm run serve-build` and then `cypress open`
 
 ## Docker
 

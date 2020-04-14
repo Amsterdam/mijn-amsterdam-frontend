@@ -1,6 +1,4 @@
 import { apiSuccesResult } from '../../universal/helpers';
-import { dataCache } from './sourceApiResponseCache';
-import { fetchBAG } from './bag';
 import {
   MAP_URL,
   DEFAULT_LAT,
@@ -8,19 +6,17 @@ import {
   LOCATION_ZOOM,
   LAYERS_CONFIG,
 } from '../../universal/config';
+import { fetchHOME } from './home';
 
 export async function loadServicesMap(sessionID: SessionID) {
-  const BAG: ResolvedType<ReturnType<typeof fetchBAG>> = await dataCache.get(
-    sessionID,
-    'BAG'
-  );
+  const HOME = await fetchHOME(sessionID);
 
   let lat = DEFAULT_LAT;
   let lng = DEFAULT_LNG;
 
-  if (BAG.status === 'success') {
-    lat = BAG.content.latlng!.lat;
-    lng = BAG.content.latlng!.lat;
+  if (HOME.status === 'success') {
+    lat = HOME.content.latlng!.lat;
+    lng = HOME.content.latlng!.lat;
   }
 
   const embed = {

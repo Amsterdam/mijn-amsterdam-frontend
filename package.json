@@ -12,8 +12,8 @@
     "start": "react-scripts start",
     "test": "react-scripts test",
     "watch:bff-api": "nodemon -e ts -w ./src -x npm run bff-api:serve",
-    "bff-api:serve": "ts-node --project ./tsconfig.bff.json ./src/bffserver.ts",
-    "bff-api:build": "tsc src/server/"
+    "bff-api:serve": "REACT_APP_ENV=development env-cmd ts-node --project ./tsconfig.bff.json ./src/bffserver.ts",
+    "bff-api:build": "REACT_APP_ENV=production env-cmd -f ./.env.production tsc src/server/"
   },
   "browserslist": [
     ">0.2%",

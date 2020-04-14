@@ -93,5 +93,5 @@ export const ErrorNames: Record<ApiStateKey, string> = {
   BUURT: 'Mijn buurt',
   BELASTINGEN: 'Belastingen + actuele updates',
   MILIEUZONE: 'Milieuzone + actuele updates',
-  BAG: 'Lat/Lon locatie gegevens van uw adres.',
+  HOME: 'Lat/Lon locatie gegevens van uw adres.',
 };
