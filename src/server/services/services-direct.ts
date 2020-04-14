@@ -5,7 +5,6 @@ import {
   fetchBELASTING,
   fetchMILIEUZONE,
 } from './index';
-import { dataCache } from './sourceApiResponseCache';
 import { entries } from '../../universal/helpers';
 
 const config = {
@@ -20,10 +19,8 @@ const configEntries = entries(config);
 
 export async function loadServicesDirect(sessionID: SessionID) {
   // Cache the promises for re-use
-  const promises = configEntries.map(([apiStateKey, fetchFn]) => {
-    const promise = fetchFn();
-    dataCache.add(sessionID, apiStateKey, promise);
-    return promise;
+  const promises = configEntries.map(([apiStateKey, fetch]) => {
+    return fetch();
   });
 
   // Create dynamic types for the given config

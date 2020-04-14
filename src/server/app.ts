@@ -1,8 +1,7 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express from 'express';
 
 import compression from 'compression';
 import cors from 'cors';
-import { dataCache } from './services/sourceApiResponseCache';
 import { router } from './router';
 import session from 'express-session';
 
@@ -26,13 +25,6 @@ app.use(
 );
 
 app.use(router);
-
-app.use((req: Request, res: Response, next: NextFunction) => {
-  if (process.env.NODE_ENV !== 'production') {
-    dataCache.clearAll(req.sessionID!);
-  }
-  next();
-});
 
 app.listen(PORT, () => {
   console.log(`Mijn Amsterdam BFF api listening on ${PORT}...`);

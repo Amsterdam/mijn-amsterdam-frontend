@@ -21,7 +21,7 @@ const MAX_TIPS_VISIBLE = 3;
 
 export default () => {
   const appState = useContext(AppContext);
-  const { TIPS, NOTIFICATIONS, CASES, BUURT, BAG } = appState;
+  const { TIPS, NOTIFICATIONS, CASES, BUURT, HOME } = appState;
 
   const tipItems = TIPS.content?.items.slice(0, MAX_TIPS_VISIBLE) || [];
   const notificationItems = NOTIFICATIONS.content?.items.slice(
@@ -77,7 +77,7 @@ export default () => {
         {!isPhoneScreen && (
           <MyAreaDashboard
             url={BUURT.content?.embed.advanced}
-            center={BAG.content?.latlng}
+            center={HOME.content?.latlng}
             data-tutorial-item="Hier ziet u informatie van de gemeente, bijvoorbeeld over afval, parkeren en bekendmakingen;left-top"
           />
         )}

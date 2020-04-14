@@ -57,10 +57,10 @@ function GarbagePointItem({ item }: { item: GarbagePoint }) {
 }
 
 export default () => {
-  const { BRP, AFVAL, BAG } = useContext(AppContext);
+  const { BRP, AFVAL, HOME } = useContext(AppContext);
 
-  const garbageContainersMapUrl = BAG.content?.latlng
-    ? `https://kaart.amsterdam.nl/afvalcontainers#19/${BAG.content.latlng.lat}/${BAG.content.latlng.lng}/topo/9749,9750,9751,9752,9753,9754/9748/`
+  const garbageContainersMapUrl = HOME.content?.latlng
+    ? `https://kaart.amsterdam.nl/afvalcontainers#19/${HOME.content.latlng.lat}/${HOME.content.latlng.lng}/topo/9749,9750,9751,9752,9753,9754/9748/`
     : '';
 
   const garbagePointCollapsible = (id: string, item: GarbageMoment) => (
@@ -100,7 +100,7 @@ export default () => {
   );
 
   const [restafval, grofvuil] = AFVAL.content?.ophalen || [];
-  console.log(AFVAL);
+
   return (
     <DetailPage className={styles.GarbageInformation}>
       <PageHeading icon={<ChapterIcon />}>{ChapterTitles.AFVAL}</PageHeading>
