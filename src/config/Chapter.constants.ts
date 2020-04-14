@@ -91,18 +91,19 @@ export const myChaptersMenuItems: MenuItem[] = [
     rel: 'external',
   },
   {
+    title: ChapterTitles.BURGERZAKEN,
+    id: Chapters.BURGERZAKEN,
+    to: AppRoutes.BURGERZAKEN,
+    Icon: ChapterIcons[Chapters.BURGERZAKEN],
+  },
+  {
     title: ChapterTitles.WONEN,
     id: Chapters.WONEN,
     to: ExternalUrls.SSO_ERFPACHT || '',
     Icon: ChapterIcons[Chapters.WONEN],
     rel: 'external',
   },
-  {
-    title: ChapterTitles.BURGERZAKEN,
-    id: Chapters.BURGERZAKEN,
-    to: AppRoutes.BURGERZAKEN,
-    Icon: ChapterIcons[Chapters.BURGERZAKEN],
-  },
+
   {
     title: ChapterTitles.ZORG,
     id: Chapters.ZORG,

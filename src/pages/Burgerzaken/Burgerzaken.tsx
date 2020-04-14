@@ -8,10 +8,11 @@ import Alert from 'components/Alert/Alert';
 import { ChapterTitles } from 'config/Chapter.constants';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import Table, { addTitleLinkComponent } from 'components/Table/Table';
+import Linkd from '../../components/Button/Button';
 
 const DISPLAY_PROPS = {
   title: '',
-  datumAfloop: 'datum afloop document',
+  datumAfloop: 'Afloop document',
 };
 
 export default () => {
@@ -33,9 +34,23 @@ export default () => {
       </PageHeading>
       <PageContent>
         <p>
-          Hieronder ziet u informatie over uw officiële documenten, zoals uw
-          paspoort of rijbewijs. Als u gaat trouwen of een partnerschap aangaat,
-          dan ziet u hier de aankondiging.
+          Hieronder ziet u informatie over de looptijd van uw officiële
+          reisdocumenten, zoals ID-kaart of paspoort.
+        </p>
+        <p>
+          <Linkd
+            external={true}
+            href="https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/"
+          >
+            Meer informatie over paspoort en ID-kaart
+          </Linkd>
+          <br />
+          <Linkd
+            external={true}
+            href="https://www.amsterdam.nl/veelgevraagd/?productid={EFDC353E-5E80-4B9C-8431-2FBB950ECE7C}"
+          >
+            Paspoort kwijt?
+          </Linkd>
         </p>
         {isError && (
           <Alert type="warning">
@@ -46,6 +61,7 @@ export default () => {
       <SectionCollapsible
         id="SectionCollapsible-offical-documents"
         title="Mijn huidige documenten"
+        className={styles.SectionCollapsibleDocuments}
         noItemsMessage="Wij kunnen nog geen officiële documenten tonen."
         startCollapsed={false}
         hasItems={!!documentItems.length}

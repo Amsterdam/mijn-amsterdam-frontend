@@ -4,6 +4,7 @@ import { entries } from 'helpers/App';
 import Linkd from 'components/Button/Button';
 import { Unshaped } from 'App.types';
 import classnames from 'classnames';
+import { capitalizeFirstLetter } from '../../helpers/App';
 
 export function addTitleLinkComponent(
   items: Unshaped[],
@@ -12,7 +13,11 @@ export function addTitleLinkComponent(
   return items.map((item: any) => {
     return {
       ...item,
-      [titleKey]: <Linkd href={item.link.to}>{item[titleKey]}</Linkd>,
+      [titleKey]: (
+        <Linkd href={item.link.to}>
+          {capitalizeFirstLetter(item[titleKey])}
+        </Linkd>
+      ),
     };
   });
 }

@@ -52,10 +52,10 @@ export default () => {
               Documentnummer <strong>{DocumentItem.documentNummer}</strong>
             </p>
             <p>
-              Datum uitgifte <strong>{DocumentItem.datumUitgifte}</strong>
+              Uitgifte document <strong>{DocumentItem.datumUitgifte}</strong>
             </p>
             <p>
-              Datum afloop <strong>{DocumentItem.datumAfloop}</strong>
+              Afloop document <strong>{DocumentItem.datumAfloop}</strong>
             </p>
           </div>
         )}
