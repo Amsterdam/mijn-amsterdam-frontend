@@ -60,3 +60,17 @@ router.use(
     return res.send(await loadServicesMap(req.sessionID!));
   }
 );
+
+router.use(
+  `${BFF_API_BASE_URL}/services/all`,
+  async function handleRouteServicesMap(req: Request, res: Response) {
+    const data = {
+      ...(await loadServicesDirect(req.sessionID!)),
+      ...(await loadServicesRelated(req.sessionID!)),
+      ...(await loadServicesMap(req.sessionID!)),
+      ...(await loadServicesGenerated(req.sessionID!, req.query.optin === '1')),
+    };
+
+    return res.send(data);
+  }
+);
