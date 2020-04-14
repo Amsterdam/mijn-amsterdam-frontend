@@ -1112,7 +1112,7 @@ function formatIncomeSpecificationNotification(
     title: 'Nieuwe uitkeringsspecificatie',
     description: `Uw uitkeringsspecificatie van ${dateFormat(
       item.datePublished,
-      'MMM'
+      'MMMM yyyy'
     )} staat voor u klaar.`,
     link: {
       to: `/api/${item.url}`,
