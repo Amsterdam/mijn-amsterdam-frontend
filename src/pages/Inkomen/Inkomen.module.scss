@@ -1,7 +1,9 @@
 @import 'styles/_global.scss';
 
 .Inkomen {
-
+  @include select(PageContent) {
+    padding-bottom: 5rem;
+  }
 }
 
 .Table {

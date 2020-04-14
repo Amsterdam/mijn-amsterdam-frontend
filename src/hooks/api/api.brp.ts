@@ -18,9 +18,9 @@ export type BrpKey = keyof Omit<BrpResponseData, 'reisDocumenten'>;
 const options = { url: getApiUrl('BRP') };
 
 const BrpDocumentTitles: Record<string, string> = {
-  paspoort: 'Paspoort',
+  paspoort: 'paspoort',
   identiteitskaart: 'ID-kaart',
-  rijbewijs: 'Rijbewijs',
+  rijbewijs: 'rijbewijs',
 };
 
 const BrpDocumentCallToAction: Record<
@@ -108,7 +108,7 @@ export function useBrpApi(): BrpApiState {
           )} is uw ${docTitle} niet meer geldig.`,
           link: {
             to: BrpDocumentCallToAction.isExpired[document.documentType],
-            title: `Vraag snel uw nieuwe ${docTitle} aan.`,
+            title: `Vraag snel uw nieuwe ${docTitle} aan`,
           },
         });
       });
@@ -129,7 +129,7 @@ export function useBrpApi(): BrpApiState {
           )} is uw ${docTitle} niet meer geldig.`,
           link: {
             to: BrpDocumentCallToAction.isExpired[document.documentType],
-            title: `Vraag snel uw nieuwe ${docTitle} aan.`,
+            title: `Vraag snel uw nieuwe ${docTitle} aan`,
           },
         });
       });

@@ -1,5 +1,11 @@
 @import 'styles/_global.scss';
 
+.GarbageInformation {
+  @include select(PageContent) {
+    padding-bottom: 5rem;
+  }
+}
+
 .InfoSection {
   transition: max-width 400ms ease;
 }
@@ -55,7 +61,6 @@
 .AddressPanel {
   max-width: $main-boxed-width;
   margin: 0 auto;
-  margin-top: 4rem;
   margin-bottom: 2rem;
   border-top: 0.1rem solid $color-neutral-grey2;
 

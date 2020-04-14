@@ -55,7 +55,7 @@ export default () => {
               Datum uitgifte <strong>{DocumentItem.datumUitgifte}</strong>
             </p>
             <p>
-              Datum afloop <strong>{DocumentItem.datumAfloop}</strong>
+              Geldig tot <strong>{DocumentItem.datumAfloop}</strong>
             </p>
           </div>
         )}
