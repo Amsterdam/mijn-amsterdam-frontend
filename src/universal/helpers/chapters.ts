@@ -9,13 +9,22 @@ import { isError } from './api';
 
 function isChapterActive(
   item: MenuItem,
-  { WMO, FOCUS, ERFPACHT, AFVAL, BRP, BELASTINGEN, MILIEUZONE }: AppState
+  {
+    WMO,
+    FOCUS_SPECIFICATIES,
+    FOCUS_AANVRAGEN,
+    ERFPACHT,
+    AFVAL,
+    BRP,
+    BELASTINGEN,
+    MILIEUZONE,
+  }: AppState
 ) {
   switch (item.id) {
     case Chapters.INKOMEN:
       return (
-        !isLoading(FOCUS) &&
-        !(isError(FOCUS, 'AANVRAGEN') && isError(FOCUS, 'SPECIFICATIES'))
+        !(isLoading(FOCUS_AANVRAGEN) && isLoading(FOCUS_SPECIFICATIES)) &&
+        !(isError(FOCUS_AANVRAGEN) && isError(FOCUS_SPECIFICATIES))
       );
 
     case Chapters.ZORG:
@@ -60,7 +69,8 @@ export interface ChaptersState {
 export function getMyChapters(appState: AppState): ChaptersState {
   const {
     WMO,
-    FOCUS,
+    FOCUS_AANVRAGEN,
+    FOCUS_SPECIFICATIES,
     ERFPACHT,
     AFVAL,
     BRP,
@@ -69,7 +79,8 @@ export function getMyChapters(appState: AppState): ChaptersState {
   } = appState;
 
   const wmoIsloading = isLoading(WMO);
-  const focusIsloading = isLoading(FOCUS);
+  const focusAanvragenIsloading = isLoading(FOCUS_AANVRAGEN);
+  const focusSpecificatiesIsloading = isLoading(FOCUS_SPECIFICATIES);
   const erfpachtIsloading = isLoading(ERFPACHT);
   const brpIsLoading = isLoading(BRP);
   const garbageIsLoading = isLoading(AFVAL);
@@ -86,7 +97,8 @@ export function getMyChapters(appState: AppState): ChaptersState {
     milieuzoneIsLoading ||
     wmoIsloading ||
     brpIsLoading ||
-    focusIsloading ||
+    focusSpecificatiesIsloading ||
+    focusAanvragenIsloading ||
     erfpachtIsloading ||
     garbageIsLoading;
 

@@ -8,12 +8,7 @@ import {
   Chapters,
   FeatureToggle,
 } from '../../universal/config';
-import {
-  dateSort,
-  defaultDateFormat,
-  apiMixedResult,
-  ApiResponse,
-} from '../../universal/helpers';
+import { dateSort, defaultDateFormat } from '../../universal/helpers';
 import {
   LinkProps,
   MyNotification,
@@ -993,18 +988,46 @@ export interface IncomeSpecifications {
 function transformFOCUSAanvragenData(
   responseData: FOCUSAanvragenSourceData,
   compareDate: Date
-): FocusItem[] {
-  return responseData
+) {
+  const aanvragen = responseData
     .map(product => formatFocusProduct(product, compareDate))
     .filter(item => item.productTitle !== ProductTitles.BijzondereBijstand);
+
+  const notifications: MyNotification[] = aanvragen
+    .filter((item: any) => item.notification !== undefined)
+    .map((item: any) => item.notification as MyNotification);
+  const cases: MyCase[] = aanvragen
+    .filter(item => item.isRecent)
+    .map(item => {
+      return {
+        id: item.id,
+        title: item.title,
+        datePublished: item.datePublished,
+        link: item.link,
+        chapter: item.chapter,
+      };
+    });
+
+  return {
+    aanvragen,
+    notifications,
+    cases,
+  };
 }
 
 function transformFOCUSIncomeSpecificationsData(
   responseData: FOCUSIncomeSpecificationSourceData
-): IncomeSpecifications {
+) {
   const jaaropgaven = responseData.content.jaaropgaven || [];
   const uitkeringsspecificaties =
     responseData.content.uitkeringsspecificaties || [];
+
+  const notifications: MyNotification[] = [
+    ...jaaropgaven,
+    ...uitkeringsspecificaties,
+  ]
+    .filter((item: any) => item.notification !== undefined)
+    .map((item: any) => item.notification as MyNotification);
 
   return {
     jaaropgaven: jaaropgaven
@@ -1013,66 +1036,26 @@ function transformFOCUSIncomeSpecificationsData(
     uitkeringsspecificaties: uitkeringsspecificaties
       .sort(dateSort('datePublished', 'desc'))
       .map(formatIncomSpecificationItem),
+    notifications,
   };
 }
 
-type FOCUSData = {
-  AANVRAGEN: ApiResponse<FocusItem[]>;
-  SPECIFICATIES: ApiResponse<IncomeSpecifications>;
-  cases: MyCase[];
-  notifications: MyNotification[];
-};
-
-export async function fetchFOCUS() {
-  const aanvragen = await requestData<FocusItem[]>(
+export async function fetchFOCUSAanvragen() {
+  return requestData<FocusItem[]>(
     {
       url: ApiUrls.FOCUS_AANVRAGEN,
       transformResponse: data => transformFOCUSAanvragenData(data, new Date()),
     },
     getApiConfigValue('FOCUS_AANVRAGEN', 'postponeFetch', true)
   );
+}
 
-  const specificaties = await requestData<IncomeSpecifications>(
+export async function fetchFOCUSSpecificaties() {
+  return requestData<IncomeSpecifications>(
     {
       url: ApiUrls.FOCUS_SPECIFICATIES,
       transformResponse: transformFOCUSIncomeSpecificationsData,
     },
     getApiConfigValue('FOCUS_SPECIFICATIES', 'postponeFetch', true)
   );
-
-  const notificationSources: any = [];
-  const cases: MyCase[] = [];
-
-  if (aanvragen.status === 'success') {
-    notificationSources.push(...aanvragen.content);
-    cases.push(
-      ...aanvragen.content
-        .filter(item => item.isRecent)
-        .map(item => {
-          return {
-            id: item.id,
-            title: item.title,
-            datePublished: item.datePublished,
-            link: item.link,
-            chapter: item.chapter,
-          };
-        })
-    );
-  }
-
-  if (specificaties.status === 'success') {
-    notificationSources.push(...specificaties.content.jaaropgaven);
-    notificationSources.push(...specificaties.content.uitkeringsspecificaties);
-  }
-
-  const notifications = notificationSources
-    .filter((item: any) => item.notification !== undefined)
-    .map((item: any) => item.notification as MyNotification);
-
-  return apiMixedResult<FOCUSData>({
-    AANVRAGEN: aanvragen,
-    SPECIFICATIES: specificaties,
-    cases,
-    notifications,
-  });
 }

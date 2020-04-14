@@ -43,12 +43,12 @@ const decisionsDisplayProps = {
 };
 
 export default () => {
-  const { FOCUS } = useContext(AppContext);
-  const focusContent = FOCUS.content;
-  const aanvragen = focusContent?.AANVRAGEN?.content || [];
+  const { FOCUS_AANVRAGEN, FOCUS_SPECIFICATIES } = useContext(AppContext);
+
+  const aanvragen = FOCUS_AANVRAGEN.content || [];
   const uitkeringsspecificaties =
-    focusContent?.SPECIFICATIES.content?.uitkeringsspecificaties || [];
-  const jaaropgaven = focusContent?.SPECIFICATIES.content?.jaaropgaven || [];
+    FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties || [];
+  const jaaropgaven = FOCUS_SPECIFICATIES.content?.jaaropgaven || [];
 
   const itemsRequested = useMemo(() => {
     if (!aanvragen) {
@@ -70,7 +70,8 @@ export default () => {
   const itemsSpecificationsMonthly = uitkeringsspecificaties.slice(0, 3) || [];
   const itemsSpecificationsYearly = jaaropgaven.slice(0, 3) || [];
 
-  const isLoadingFocus = isLoading(FOCUS);
+  const isLoadingFocus =
+    isLoading(FOCUS_AANVRAGEN) || isLoading(FOCUS_SPECIFICATIES);
 
   return (
     <OverviewPage className={styles.Inkomen}>
@@ -89,7 +90,7 @@ export default () => {
             Contact Inkomen en Stadspas
           </Linkd>
         </p>
-        {(isError(FOCUS, 'AANVRAGEN') || isError(FOCUS, 'SPECIFICATIES')) && (
+        {(isError(FOCUS_AANVRAGEN) || isError(FOCUS_SPECIFICATIES)) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>

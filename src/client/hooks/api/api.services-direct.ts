@@ -7,7 +7,8 @@ import { ApiState, useDataApi } from './api.hook';
 import { loadServicesDirect } from '../../../server/services';
 
 const pristineResponseData = apiPristineResponseData({
-  FOCUS: null,
+  FOCUS_SPECIFICATIES: null,
+  FOCUS_AANVRAGEN: null,
   WMO: null,
   ERFPACHT: null,
   BELASTINGEN: null,
