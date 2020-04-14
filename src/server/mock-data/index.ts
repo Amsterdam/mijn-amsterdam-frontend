@@ -27,7 +27,7 @@ export const mockDataConfig: MockDataConfig = {
   },
   [ApiUrls.BRP]: {
     status: 200,
-    delay: 2500,
+    // delay: 2500,
     responseData: () => {
       return require('./json/brp.json');
     },

@@ -43,13 +43,7 @@ const PAGE_SIZE = 10;
 const INITIAL_INDEX = [0, PAGE_SIZE - 1];
 
 export default () => {
-  const {
-    FOCUS_INKOMEN_SPECIFICATIES: {
-      data: { jaaropgaven, uitkeringsspecificaties },
-      isError,
-      isLoading,
-    },
-  } = useContext(AppContext);
+  const { FOCUS } = useContext(AppContext);
 
   const {
     match: {
@@ -59,9 +53,10 @@ export default () => {
 
   const isAnnualStatementOverviewPage = type === 'jaaropgaven';
 
-  const items = isAnnualStatementOverviewPage
-    ? jaaropgaven
-    : uitkeringsspecificaties;
+  const items =
+    (isAnnualStatementOverviewPage
+      ? FOCUS.content?.SPECIFICATIES.content?.jaaropgaven
+      : FOCUS.content?.SPECIFICATIES.content?.uitkeringsspecificaties) || [];
 
   const maxDate = useMemo(() => {
     if (items.length) {

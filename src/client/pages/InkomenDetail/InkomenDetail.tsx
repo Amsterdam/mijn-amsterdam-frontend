@@ -65,10 +65,10 @@ export default () => {
     },
   } = useRouter();
 
-  const FocusItem = FOCUS.content?.aanvragen.content?.find(
+  const FocusItem = FOCUS.content?.AANVRAGEN.content?.find(
     item => item.id === id
   );
-  const noContent = !isLoading(FOCUS.content?.aanvragen) && !FocusItem;
+  const noContent = !isLoading(FOCUS.content?.AANVRAGEN) && !FocusItem;
   const lineItemsTotal = FocusItem?.process.length || 0;
   const items =
     FocusItem?.process.map((item, index) => {
@@ -90,12 +90,12 @@ export default () => {
         {FocusItem && FocusItem.title}
       </PageHeading>
       <PageContent className={styles.DetailPageContent}>
-        {(isError(FOCUS.content?.aanvragen) || noContent) && (
+        {(isError(FOCUS.content?.AANVRAGEN) || noContent) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>
         )}
-        {isLoading(FOCUS.content?.aanvragen) && <LoadingContent />}
+        {isLoading(FOCUS.content?.AANVRAGEN) && <LoadingContent />}
       </PageContent>
       {!!FocusItem && (
         <StatusLine

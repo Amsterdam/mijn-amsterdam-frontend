@@ -45,10 +45,10 @@ const decisionsDisplayProps = {
 export default () => {
   const { FOCUS } = useContext(AppContext);
   const focusContent = FOCUS.content;
-  const aanvragen = focusContent?.aanvragen?.content || [];
+  const aanvragen = focusContent?.AANVRAGEN?.content || [];
   const uitkeringsspecificaties =
-    focusContent?.specificaties.content?.uitkeringsspecificaties || [];
-  const jaaropgaven = focusContent?.specificaties.content?.jaaropgaven || [];
+    focusContent?.SPECIFICATIES.content?.uitkeringsspecificaties || [];
+  const jaaropgaven = focusContent?.SPECIFICATIES.content?.jaaropgaven || [];
 
   const itemsRequested = useMemo(() => {
     if (!aanvragen) {
@@ -89,7 +89,7 @@ export default () => {
             Contact Inkomen en Stadspas
           </Linkd>
         </p>
-        {(isError(FOCUS, 'aanvragen') || isError(FOCUS, 'specificaties')) && (
+        {(isError(FOCUS, 'AANVRAGEN') || isError(FOCUS, 'SPECIFICATIES')) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>

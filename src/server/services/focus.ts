@@ -1017,8 +1017,8 @@ function transformFOCUSIncomeSpecificationsData(
 }
 
 type FOCUSData = {
-  aanvragen: ApiResponse<FocusItem[]>;
-  specificaties: ApiResponse<IncomeSpecifications>;
+  AANVRAGEN: ApiResponse<FocusItem[]>;
+  SPECIFICATIES: ApiResponse<IncomeSpecifications>;
   cases: MyCase[];
   notifications: MyNotification[];
 };
@@ -1070,8 +1070,8 @@ export async function fetchFOCUS() {
     .map((item: any) => item.notification as MyNotification);
 
   return apiMixedResult<FOCUSData>({
-    aanvragen,
-    specificaties,
+    AANVRAGEN: aanvragen,
+    SPECIFICATIES: specificaties,
     cases,
     notifications,
   });
