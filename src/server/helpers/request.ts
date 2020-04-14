@@ -110,6 +110,7 @@ export async function requestData<T>(
 
     if (requestConfig.method?.toLowerCase() === 'get') {
       cache.get(cacheKey).resolve(responseData);
+      // Don't cache the errors
       cache.delete(cacheKey);
     }
 
