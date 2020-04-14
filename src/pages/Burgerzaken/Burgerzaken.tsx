@@ -12,7 +12,7 @@ import Linkd from '../../components/Button/Button';
 
 const DISPLAY_PROPS = {
   title: '',
-  datumAfloop: 'Afloop document',
+  datumAfloop: 'Geldig tot',
 };
 
 export default () => {
