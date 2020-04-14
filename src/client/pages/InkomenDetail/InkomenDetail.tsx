@@ -19,13 +19,7 @@ import Linkd from '../../components/Button/Button';
 import { ExternalUrls } from '../../config/App.constants';
 
 export default () => {
-  const {
-    FOCUS: {
-      data: { items },
-      isError,
-      isLoading,
-    },
-  } = useContext(AppContext);
+  const { FOCUS_AANVRAGEN } = useContext(AppContext);
 
   const {
     match: {
@@ -33,7 +27,7 @@ export default () => {
     },
   } = useRouter();
 
-  const FocusItem = items.find(item => item.id === id);
+  const FocusItem = FOCUS_AANVRAGEN.content.find(item => item.id === id);
   const noContent = !isLoading && !FocusItem;
 
   let title = 'Onbekend item';
@@ -56,7 +50,7 @@ export default () => {
             <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>
         )}
-        {isLoading(FOCUS.content?.aanvragen) && <LoadingContent />}
+        {isLoading(FOCUS_AANVRAGEN) && <LoadingContent />}
       </PageContent>
       {!!FocusItem && !!FocusItem.process && (
         <StatusLine

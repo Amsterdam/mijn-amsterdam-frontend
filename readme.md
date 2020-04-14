@@ -142,8 +142,8 @@ const ANOTHER_API_STATE_KEY = {
 const THE_API_STATE_KEY = {
   status: 'mixed',
   content: {
-    things: ApiSuccessResult<otherRealContent>, // corresponding error name: THE_API_STATE_KEY_`THINGS`
-    items: ApiErrorResult // corresponding error name: THE_API_STATE_KEY_`ITEMS`
+    THINGS: ApiSuccessResult<otherRealContent>, // corresponding error name: THE_API_STATE_KEY_`THINGS`
+    ITEMS: ApiErrorResult // corresponding error name: THE_API_STATE_KEY_`ITEMS`
   },
 }
 ```

@@ -8,7 +8,7 @@ import {
   apiPostponeResult,
 } from '../../universal/helpers';
 
-const REQUEST_TIMEOUT = 2000;
+const REQUEST_TIMEOUT = 20000; // 20 seconds
 const DEFAULT_REQUEST_CONFIG: AxiosRequestConfig = {
   timeoutErrorMessage: `De aanvraag van data bij deze api duurt te lang.`,
 };

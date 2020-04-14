@@ -27,20 +27,6 @@ import {
 } from '../../pages/InkomenSpecificaties/InkomenSpecificaties';
 import styles from './Inkomen.module.scss';
 
-import Alert from 'components/Alert/Alert';
-import { AppContext } from 'AppState';
-import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
-import { ChapterTitles } from 'config/Chapter.constants';
-import Linkd from 'components/Button/Button';
-import PageHeading from 'components/PageHeading/PageHeading';
-import SectionCollapsible, {
-  SectionCollapsibleHeading,
-} from 'components/SectionCollapsible/SectionCollapsible';
-import classnames from 'classnames';
-import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
-import styles from './Inkomen.module.scss';
-import useRouter from 'use-react-router';
-import { AppRoutes } from '../../config/Routing.constants';
 import {
   incomSpecificationsRouteMonthly,
   incomSpecificationsRouteYearly,
@@ -63,27 +49,12 @@ const tozoDisplayProps = {
 };
 
 export default () => {
-  const {
-    FOCUS: {
-      data: { items },
-      isError,
-      isLoading,
-    },
-    FOCUS_TOZO: {
-      data: FocusTozoItem,
-      isError: isError3,
-      isLoading: isLoading3,
-    },
-    FOCUS_INKOMEN_SPECIFICATIES: {
-      data: { jaaropgaven, uitkeringsspecificaties },
-      isError: isError2,
-      isLoading: isLoading2,
-    },
-  } = useContext(AppContext);
-
-  const { history } = useRouter();
-
-  const noTozo = true;
+  const { FOCUS } = useContext(AppContext);
+  const focusContent = FOCUS.content;
+  const aanvragen = focusContent?.aanvragen?.content || [];
+  const uitkeringsspecificaties =
+    focusContent?.specificaties.content?.uitkeringsspecificaties || [];
+  const jaaropgaven = focusContent?.specificaties.content?.jaaropgaven || [];
 
   const itemsRequested = useMemo(() => {
     const itemsRequested = items.filter(item => !item.hasDecision);
@@ -132,7 +103,7 @@ export default () => {
             Contact Inkomen en Stadspas
           </Linkd>
         </p>
-        {(isError(FOCUS, 'aanvragen') || isError(FOCUS, 'specificaties')) && (
+        {(isError(FOCUS, 'AANVRAGEN') || isError(FOCUS, 'SPECIFICATIES')) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>
