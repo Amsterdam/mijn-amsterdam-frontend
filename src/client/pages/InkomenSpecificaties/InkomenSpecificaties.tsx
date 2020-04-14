@@ -18,6 +18,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
+import { isError, isLoading } from '../../../universal/helpers';
 
 import { AppContext } from '../../AppState';
 import { ReactComponent as SearchIcon } from '../../assets/icons/Search.svg';
@@ -47,7 +48,7 @@ function Caret() {
 }
 
 export default () => {
-  const { FOCUS } = useContext(AppContext);
+  const { FOCUS_SPECIFICATIES } = useContext(AppContext);
 
   const {
     match: {
@@ -59,8 +60,8 @@ export default () => {
 
   const items =
     (isAnnualStatementOverviewPage
-      ? FOCUS.content?.SPECIFICATIES.content?.jaaropgaven
-      : FOCUS.content?.SPECIFICATIES.content?.uitkeringsspecificaties) || [];
+      ? FOCUS_SPECIFICATIES.content?.jaaropgaven
+      : FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties) || [];
 
   const maxDate = useMemo(() => {
     if (items.length) {
@@ -150,7 +151,7 @@ export default () => {
         Bijstandsuitkering {isAnnualStatementOverviewPage && 'Jaaropgaven'}
       </PageHeading>
       <PageContent>
-        {isError && (
+        {isError(FOCUS_SPECIFICATIES) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>
@@ -163,8 +164,8 @@ export default () => {
             ? 'Jaaropgaven'
             : 'Uitkeringsspecificaties'
         }
-        isLoading={isLoading}
-        hasItems={!!items.length}
+        isLoading={isLoading(FOCUS_SPECIFICATIES)}
+        hasItems={!!itemsFiltered.length}
         noItemsMessage={
           'Er zijn op dit moment nog geen documenten beschikbaar.'
         }

@@ -3,11 +3,12 @@ import {
   fetchBRP,
   fetchTIPS,
   fetchBELASTING,
-  fetchFOCUS,
   fetchERFPACHT,
   fetchBAG,
   fetchAFVAL,
   fetchMILIEUZONE,
+  fetchFOCUSAanvragen,
+  fetchFOCUSSpecificaties,
 } from '../../server/services';
 import { FeatureToggle } from './app';
 
@@ -20,7 +21,8 @@ export interface BFFApiData {
   TIPS: ApiResult<typeof fetchTIPS>;
   BRP: ApiResult<typeof fetchBRP>;
   WMO: ApiResult<typeof fetchWMO>;
-  FOCUS: ApiResult<typeof fetchFOCUS>;
+  FOCUS_AANVRAGEN: ApiResult<typeof fetchFOCUSAanvragen>;
+  FOCUS_SPECIFICATIES: ApiResult<typeof fetchFOCUSSpecificaties>;
   ERFPACHT: ApiResult<typeof fetchERFPACHT>;
   BAG: ApiResult<typeof fetchBAG>;
   AFVAL: ApiResult<typeof fetchAFVAL>;

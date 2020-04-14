@@ -33,26 +33,16 @@ export async function loadServicesGenerated(
       ]);
     }
 
-    if (responseData.status === 'mixed') {
-      tipsRequestData.data[apiStateKey] = Object.entries(
-        responseData.content
-      ).reduce((acc, [key, responseData]) => {
-        // NOTE: make sure the success response data doesn't return a status key with value success.
-        if ('status' in responseData && responseData.status === 'success') {
-          return Object.assign(acc, key, responseData.content);
-        }
-        return acc;
-      }, {});
-    }
-
     // Collection notifications and cases
-    if (responseData.status === 'success' || responseData.status === 'mixed') {
+    if (responseData.status === 'success') {
       if ('notifications' in responseData.content) {
         notifications.push(...responseData.content.notifications);
       }
 
       if ('cases' in responseData.content) {
-        cases.push(...responseData.content.cases);
+        // NOTE: using bracket notation here to satisfy the compiler
+        const responseContentCases = responseData.content['cases'] as MyCase[];
+        cases.push(...responseContentCases);
       }
     }
   }

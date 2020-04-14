@@ -13,11 +13,6 @@ export type ApiSuccessResponse<T> = {
   status: 'success';
 };
 
-export type ApiMixedResponse<T> = {
-  content: T;
-  status: 'mixed';
-};
-
 // This state is used for checking if we are expecting data from the api.
 export type ApiPristineResponse = {
   content: null;
@@ -50,7 +45,6 @@ export function isLoading(
   apiResponseData:
     | ApiSuccessResponse<any>
     | ApiErrorResponse
-    | ApiMixedResponse<any>
     | ApiPostponeResponse
     | ApiUnknownResponse
     | ApiPristineResponse
@@ -65,20 +59,12 @@ export function isError(
     | ApiPristineResponse
     | ApiSuccessResponse<any>
     | ApiPostponeResponse
-    | ApiMixedResponse<any>
     | ApiUnknownResponse,
   responseKey?: string
 ) {
   return (
     apiResponseData.status === 'failure' ||
-    apiResponseData.status === 'dependency-failure' ||
-    (apiResponseData.status === 'mixed' && !responseKey) ||
-    // Check if nested response has an error(like) status
-    (responseKey &&
-      apiResponseData.status === 'mixed' &&
-      !['success', 'postpone', 'pristine'].includes(
-        apiResponseData.content[responseKey]?.status
-      ))
+    apiResponseData.status === 'dependency-failure'
   );
 }
 
@@ -104,13 +90,6 @@ export function apiPostponeResult(): ApiPostponeResponse {
   return {
     content: null,
     status: 'postpone',
-  };
-}
-
-export function apiMixedResult<T>(content: T): ApiMixedResponse<T> {
-  return {
-    content,
-    status: 'mixed',
   };
 }
 
@@ -143,37 +122,17 @@ export function apiErrorResponseData<T>(
 }
 
 export function getApiErrors(appState: AppState) {
-  return (
-    Object.entries(appState)
-      // Search for nested api responses and flatten
-      .flatMap(([apiStateKey, apiResponseData]) => {
-        if (apiResponseData.status === 'mixed') {
-          return (
-            Object.entries(apiResponseData.content)
-              .filter(
-                ([key, response]: any) =>
-                  'status' in response && 'content' in response
-              )
-              // Map nested api response to error name key
-              .map(([key, response]: any) => [
-                `${apiStateKey}_${key.toUpperCase()}`,
-                response,
-              ])
-          );
-        }
-        return [[apiStateKey, apiResponseData]];
-      })
-      .filter(([, apiResponseData]: any) => {
-        return isError(apiResponseData);
-      })
-      .map(([stateKey, apiResponseData]: any) => {
-        const name = ErrorNames[stateKey] || stateKey;
-        return {
-          name,
-          error:
-            ('message' in apiResponseData ? apiResponseData.message : null) ||
-            'Communicatie met api mislukt.',
-        };
-      })
-  );
+  return Object.entries(appState)
+    .filter(([, apiResponseData]: any) => {
+      return isError(apiResponseData);
+    })
+    .map(([stateKey, apiResponseData]: any) => {
+      const name = ErrorNames[stateKey] || stateKey;
+      return {
+        name,
+        error:
+          ('message' in apiResponseData ? apiResponseData.message : null) ||
+          'Communicatie met api mislukt.',
+      };
+    });
 }

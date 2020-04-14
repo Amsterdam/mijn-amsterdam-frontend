@@ -9,13 +9,22 @@ import { isError } from './api';
 
 function isChapterActive(
   item: MenuItem,
-  { WMO, FOCUS, ERFPACHT, AFVAL, BRP, BELASTINGEN, MILIEUZONE }: AppState
+  {
+    WMO,
+    FOCUS_SPECIFICATIES,
+    FOCUS_AANVRAGEN,
+    ERFPACHT,
+    AFVAL,
+    BRP,
+    BELASTINGEN,
+    MILIEUZONE,
+  }: AppState
 ) {
   switch (item.id) {
     case Chapters.INKOMEN:
       return (
-        !isLoading(FOCUS) &&
-        !(isError(FOCUS, 'AANVRAGEN') && isError(FOCUS, 'SPECIFICATIES'))
+        !(isLoading(FOCUS_AANVRAGEN) && isLoading(FOCUS_SPECIFICATIES)) &&
+        !(isError(FOCUS_AANVRAGEN) && isError(FOCUS_SPECIFICATIES))
       );
 
     case Chapters.ZORG:
@@ -67,9 +76,8 @@ export interface ChaptersState {
 export function getMyChapters(appState: AppState): ChaptersState {
   const {
     WMO,
-    FOCUS,
-    FOCUS_TOZO,
-    FOCUS_SPECIFICATIONS,
+    FOCUS_AANVRAGEN,
+    FOCUS_SPECIFICATIES,
     ERFPACHT,
     AFVAL,
     BRP,
@@ -77,18 +85,14 @@ export function getMyChapters(appState: AppState): ChaptersState {
     MILIEUZONE,
   } = appState;
 
-  const wmoIsloading = WMO.isLoading;
-  const focusIsloading = FOCUS.isLoading;
-  const focusTozoIsloading = FOCUS_TOZO.isLoading;
-  const focusSpecsIsloading = FOCUS_SPECIFICATIONS.isLoading;
-  const erfpachtIsloading = ERFPACHT.isLoading;
-  const isFromMokum = isMokum(BRP);
-  const brpIsLoading = BRP.isLoading;
-  const garbageIsPristine = GARBAGE.isPristine;
-  const myAreaIsLoading = MIJN_BUURT.isLoading;
-  const belastingIsLoading = BELASTINGEN.isLoading;
-  const MILIEUZONEIsLoading = MILIEUZONE.isLoading;
-  const hasCentroid = !!MIJN_BUURT.data?.centroid;
+  const wmoIsloading = isLoading(WMO);
+  const focusAanvragenIsloading = isLoading(FOCUS_AANVRAGEN);
+  const focusSpecificatiesIsloading = isLoading(FOCUS_SPECIFICATIES);
+  const erfpachtIsloading = isLoading(ERFPACHT);
+  const brpIsLoading = isLoading(BRP);
+  const garbageIsLoading = isLoading(AFVAL);
+  const belastingIsLoading = isLoading(BELASTINGEN);
+  const milieuzoneIsLoading = isLoading(MILIEUZONE);
 
   const items = myChaptersMenuItems.filter(item => {
     // Check to see if Chapter has been loaded or if it is directly available
@@ -100,8 +104,8 @@ export function getMyChapters(appState: AppState): ChaptersState {
     milieuzoneIsLoading ||
     wmoIsloading ||
     brpIsLoading ||
-    focusIsloading ||
-    myAreaIsLoading ||
+    focusSpecificatiesIsloading ||
+    focusAanvragenIsloading ||
     erfpachtIsloading ||
     garbageIsLoading;
 

@@ -49,14 +49,14 @@ const tozoDisplayProps = {
 };
 
 export default () => {
-  const { FOCUS } = useContext(AppContext);
-  const focusContent = FOCUS.content;
-  const aanvragen = focusContent?.aanvragen?.content || [];
-  const uitkeringsspecificaties =
-    focusContent?.specificaties.content?.uitkeringsspecificaties || [];
-  const jaaropgaven = focusContent?.specificaties.content?.jaaropgaven || [];
+  const { FOCUS_AANVRAGEN, FOCUS_SPECIFICATIES } = useContext(AppContext);
 
-  const itemsRequested = useMemo(() => {
+  const aanvragen = FOCUS_AANVRAGEN.content || [];
+  const uitkeringsspecificaties =
+    FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties || [];
+  const jaaropgaven = FOCUS_SPECIFICATIES.content?.jaaropgaven || [];
+
+ const itemsRequested = useMemo(() => {
     const itemsRequested = items.filter(item => !item.hasDecision);
     if (FocusTozoItem && !FocusTozoItem?.status.isComplete) {
       const item = FocusTozoItem as any;
@@ -80,11 +80,12 @@ export default () => {
 
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
-  const itemsSpecificationsMonthly = uitkeringsspecificaties.slice(0, 3);
 
-  const itemsSpecificationsYearly = jaaropgaven.slice(0, 3);
+  const itemsSpecificationsMonthly = uitkeringsspecificaties.slice(0, 3) || [];
+  const itemsSpecificationsYearly = jaaropgaven.slice(0, 3) || [];
 
-  const isLoadingFocus = isLoading(FOCUS);
+  const isLoadingFocus =
+    isLoading(FOCUS_AANVRAGEN) || isLoading(FOCUS_SPECIFICATIES);
 
   return (
     <OverviewPage className={styles.Inkomen}>
@@ -103,7 +104,7 @@ export default () => {
             Contact Inkomen en Stadspas
           </Linkd>
         </p>
-        {(isError(FOCUS, 'AANVRAGEN') || isError(FOCUS, 'SPECIFICATIES')) && (
+        {(isError(FOCUS_AANVRAGEN) || isError(FOCUS_SPECIFICATIES)) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>
