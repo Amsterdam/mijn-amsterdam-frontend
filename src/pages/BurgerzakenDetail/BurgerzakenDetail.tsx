@@ -9,6 +9,7 @@ import useRouter from 'use-react-router';
 import Alert from 'components/Alert/Alert';
 import LoadingContent from 'components/LoadingContent/LoadingContent';
 import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
+import { capitalizeFirstLetter } from '../../helpers/App';
 
 export default () => {
   const {
@@ -36,7 +37,7 @@ export default () => {
         }}
         isLoading={isLoading}
       >
-        {DocumentItem?.title}
+        {capitalizeFirstLetter(DocumentItem?.title || 'Document')}
       </PageHeading>
 
       <PageContent className={styles.DetailPageContent}>
