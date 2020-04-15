@@ -1,4 +1,4 @@
-import { createContext, useCallback, useState } from 'react';
+import { createContext, useCallback, useState, useMemo } from 'react';
 import {
   ServicesDirectData,
   useServicesDirect,
@@ -30,29 +30,34 @@ export function useAppState(postponeAll: boolean = false) {
   const servicesGeneratedApi = useServicesGenerated(postponeAll);
   const servicesMapApi = useServicesMap(postponeAll);
 
-  return {
-    ...servicesRelatedApi.data,
-    ...servicesDirectApi.data,
-    ...servicesGeneratedApi.data,
-    ...servicesMapApi.data,
-  };
+  return useMemo(
+    () => ({
+      ...servicesRelatedApi.data,
+      ...servicesDirectApi.data,
+      ...servicesGeneratedApi.data,
+      ...servicesMapApi.data,
+    }),
+    [
+      servicesRelatedApi.data,
+      servicesDirectApi.data,
+      servicesGeneratedApi.data,
+      servicesMapApi.data,
+    ]
+  );
 }
+
 export function useAppStateSSE() {
   const pristineState = useAppState(true);
   const [state, setAppState] = useState<any>(pristineState);
 
   const onEvent = useCallback((message: any) => {
-    console.log(message);
     if (message?.data) {
-      console.log(message.lastEventId, JSON.parse(message.data));
       setAppState((state: any) => ({
         ...state,
-        [message.lastEventId]: JSON.parse(message.data),
+        ...JSON.parse(message.data),
       }));
     }
   }, []);
-
-  console.log('sse!');
 
   useSSEEvent('http://localhost:5000/stream', 'message', onEvent);
 

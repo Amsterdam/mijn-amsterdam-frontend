@@ -93,12 +93,16 @@ eventSourceRouter.all('/stream', async function(req, res) {
     'Cache-Control': 'no-cache',
   });
 
-  const BRP = await fetchBRP();
-
-  sendMessage(res, 'BRP', BRP);
-
-  setInterval(() => {
-    console.log('send');
-    res.write(`data: "test"\n\n`);
-  }, 1000);
+  loadServicesDirect(req.sessionID!).then(data => {
+    sendMessage(res, 'direct', data);
+  });
+  loadServicesRelated(req.sessionID!).then(data => {
+    sendMessage(res, 'related', data);
+  });
+  loadServicesMap(req.sessionID!).then(data => {
+    sendMessage(res, 'map', data);
+  });
+  loadServicesGenerated(req.sessionID!, req.query.optin === '1').then(data => {
+    sendMessage(res, 'generated', data);
+  });
 });
