@@ -1,9 +1,4 @@
-import { AppRoutes, LOGOUT_URL } from '../../../universal/config';
-import { Link, NavLink } from 'react-router-dom';
-import Linkd, { Button } from '../Button/Button';
-import MainNavSubmenu, {
-  MainNavSubmenuLink,
-} from '../MainNavSubmenu/MainNavSubmenu';
+import classnames from 'classnames';
 import React, {
   useCallback,
   useContext,
@@ -11,29 +6,33 @@ import React, {
   useMemo,
   useState,
 } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import { animated, useSpring } from 'react-spring';
+import useRouter from 'use-react-router';
+import { AppRoutes, LOGOUT_URL } from '../../../universal/config';
+import { getMyChapters, isLoading } from '../../../universal/helpers';
+import { ComponentChildren } from '../../../universal/types/App.types';
+import { AppContext } from '../../AppState';
+import { ReactComponent as LogoutIcon } from '../../assets/icons/Logout.svg';
+import { ChapterIcons } from '../../config/chapterIcons';
+import { MenuItem } from '../../config/menuItems';
+import { trackItemPresentation } from '../../hooks/analytics.hook';
+import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
+import { getFullName } from '../../pages/Profile/formatData';
+import { SessionContext } from '../../SessionState';
+import Linkd, { Button } from '../Button/Button';
+import FontEnlarger from '../FontEnlarger/FontEnlarger';
+import LoadingContent from '../LoadingContent/LoadingContent';
+import MainNavSubmenu, {
+  MainNavSubmenuLink,
+} from '../MainNavSubmenu/MainNavSubmenu';
+import Tutorial from '../Tutorial/Tutorial';
 import {
   mainMenuItemId,
   mainMenuItems,
   submenuItems,
 } from './MainNavBar.constants';
-import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
-
-import { AppContext } from '../../AppState';
-import { ComponentChildren } from '../../../universal/types/App.types';
-import FontEnlarger from '../FontEnlarger/FontEnlarger';
-import LoadingContent from '../LoadingContent/LoadingContent';
-import { ReactComponent as LogoutIcon } from '../../assets/icons/Logout.svg';
-import { MenuItem } from '../../config/menuItems';
-import { SessionContext } from '../../SessionState';
-import Tutorial from '../Tutorial/Tutorial';
-import classnames from 'classnames';
-import { getFullName } from '../../pages/Profile/formatData';
-import { getMyChapters } from '../../../universal/helpers';
 import styles from './MainNavBar.module.scss';
-import { trackItemPresentation } from '../../hooks/analytics.hook';
-import useRouter from 'use-react-router';
-import { ChapterIcons } from '../../config/chapterIcons';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -63,19 +62,21 @@ function SecondaryLinks({ userType = 'BURGER' }: SecondaryLinksProps) {
   return (
     <div className={styles.secondaryLinks}>
       {isDesktopScreen && <FontEnlarger />}
-      {!!persoon && (
-        <Link
-          to={AppRoutes.MIJN_GEGEVENS}
-          className={styles.ProfileLink}
-          data-tutorial-item="Hier kunt u uw algemene persoonsgegevens uit de gemeentelijke basisregistratie raadplegen, zoals uw woonadres;left-bottom"
-        >
-          {persoon && persoon.opgemaakteNaam ? (
-            getFullName(persoon)
-          ) : (
-            <LoadingContent barConfig={[['15rem', '1rem', '0']]} />
-          )}
-        </Link>
-      )}
+
+      <Link
+        to={AppRoutes.MIJN_GEGEVENS}
+        className={styles.ProfileLink}
+        data-tutorial-item="Hier kunt u uw algemene persoonsgegevens uit de gemeentelijke basisregistratie raadplegen, zoals uw woonadres;left-bottom"
+      >
+        {isLoading(BRP) ? (
+          <LoadingContent barConfig={[['15rem', '1rem', '0']]} />
+        ) : persoon?.opgemaakteNaam ? (
+          getFullName(persoon)
+        ) : (
+          'mijn gegevens'
+        )}
+      </Link>
+
       <Linkd
         href={LOGOUT_URL}
         external={true}
