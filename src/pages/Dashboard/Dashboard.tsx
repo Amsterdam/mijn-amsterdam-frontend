@@ -28,7 +28,7 @@ export default () => {
       isLoading: isMyCasesLoading,
     },
     MIJN_TIPS: {
-      data: { items: myTips },
+      data: { items: myTips = [] },
       isOptIn,
       isLoading: isMyTipsLoading,
       isPristine: isMyTipsPristine,
