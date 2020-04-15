@@ -7,7 +7,7 @@ import { MyTip } from './my-tips-api.hook';
 
 interface BelastingApiResponseContent {
   isKnown: boolean;
-  UPDATES: MyNotification[];
+  meldingen: MyNotification[];
   tips: MyTip[];
 }
 
@@ -35,7 +35,7 @@ function formatBelastingNotifications(notifications?: MyNotification[]) {
 }
 
 export default function useBelastingApi(): BelastingApiState {
-  const content = { UPDATES: [], tips: [], isKnown: false };
+  const content = { meldingen: [], tips: [], isKnown: false };
   const [api] = useDataApi<BelastingApiResponse>(
     {
       url: getApiUrl('BELASTINGEN'),
@@ -44,7 +44,7 @@ export default function useBelastingApi(): BelastingApiState {
     { content, status: 'OK' }
   );
 
-  const { UPDATES = [], tips = [], ...restData } = api.data?.content || {};
+  const { meldingen = [], tips = [], ...restData } = api.data?.content || {};
 
   // Temporary tips hack.
   const prioritzedTips = tips.map(tip => Object.assign(tip, { priority: 100 }));
@@ -55,7 +55,7 @@ export default function useBelastingApi(): BelastingApiState {
       ...content,
       ...restData,
       tips: prioritzedTips,
-      notifications: formatBelastingNotifications(UPDATES),
+      notifications: formatBelastingNotifications(meldingen),
     },
   };
 }
