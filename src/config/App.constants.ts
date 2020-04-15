@@ -4,7 +4,7 @@ export const FeatureToggle = {
   myTipsoptInOutPersonalization: true,
   garbageInformationPage: true,
   focusDocumentDownload: true,
-  belastingApiActive: !IS_PRODUCTION,
+  belastingApiActive: true,
   milieuzoneApiActive: !IS_PRODUCTION,
   focusUitkeringsspecificatiesActive: !IS_PRODUCTION,
   reisDocumentenActive: !IS_PRODUCTION && !IS_ACCEPTANCE,
