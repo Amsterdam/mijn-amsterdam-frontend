@@ -17,10 +17,11 @@ export type ServicesRelatedData = FEApiResponseData<typeof loadServicesRelated>;
 
 const API_ID = 'SERVICES_RELATED';
 
-export function useServicesRelated() {
+export function useServicesRelated(postpone: boolean = false) {
   const [api] = useDataApi<ServicesRelatedData | typeof pristineResponseData>(
     {
       url: BFFApiUrls[API_ID],
+      postpone,
     },
     pristineResponseData
   );

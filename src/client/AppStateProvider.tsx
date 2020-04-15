@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppContext, useAppState, AppState } from './AppState';
+import { AppContext, AppState, useAppStateSSE } from './AppState';
 import { ComponentChildren } from '../universal/types/App.types';
 
 interface AppStateProps {
@@ -20,7 +20,7 @@ export function MockAppStateProvider({ children, value }: MockAppStateProps) {
 }
 
 export default function AppStateProvider({ children }: AppStateProps) {
-  const appState = useAppState();
+  const appState = useAppStateSSE();
   return (
     <AppContext.Provider value={appState as any}>
       {children}

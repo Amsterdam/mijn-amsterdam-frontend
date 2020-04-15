@@ -6,8 +6,11 @@ import {
   loadServicesRelated,
 } from './services';
 import { loadServicesMap } from './services/services-map';
+import { fetchBRP } from './services/brp';
+import compression from 'compression';
 
 export const router = express.Router();
+export const eventSourceRouter = express.Router();
 
 router.use(`${API_BASE_URL}/auth/check`, function handleAuthentication(
   req: Request,
@@ -74,3 +77,28 @@ router.use(
     return res.send(data);
   }
 );
+
+function sendMessage(res: Response, id: string, data: any) {
+  const doStringify = typeof data !== 'string';
+  const payload = doStringify ? JSON.stringify(data) : data;
+  const message = `event: message\nid: ${id}\ndata: ${payload}\n\n`;
+  res.write(message);
+}
+
+eventSourceRouter.all('/stream', async function(req, res) {
+  // Tell the client we respond with an event stream
+  res.writeHead(200, {
+    // Connection: 'keep-alive',
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',
+  });
+
+  const BRP = await fetchBRP();
+
+  sendMessage(res, 'BRP', BRP);
+
+  setInterval(() => {
+    console.log('send');
+    res.write(`data: "test"\n\n`);
+  }, 1000);
+});

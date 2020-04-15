@@ -2,7 +2,7 @@ import express from 'express';
 
 import compression from 'compression';
 import cors from 'cors';
-import { router } from './router';
+import { router, eventSourceRouter } from './router';
 import session from 'express-session';
 
 const PORT = process.env.BFF_API_PORT || 5000;
@@ -10,7 +10,6 @@ const PORT = process.env.BFF_API_PORT || 5000;
 const app = express();
 
 app.use(cors());
-app.use(compression());
 
 app.use(
   session({
@@ -23,8 +22,8 @@ app.use(
     // }
   })
 );
-
-app.use(router);
+app.use(eventSourceRouter);
+app.use(compression(), router);
 
 app.listen(PORT, () => {
   console.log(`Mijn Amsterdam BFF api listening on ${PORT}...`);

@@ -20,10 +20,11 @@ export type ServicesDirectApiState = ApiState<ServicesDirectData>;
 
 const API_ID = 'SERVICES_DIRECT';
 
-export function useServicesDirect() {
+export function useServicesDirect(postpone: boolean = false) {
   const [api] = useDataApi<ServicesDirectData | typeof pristineResponseData>(
     {
       url: BFFApiUrls[API_ID],
+      postpone,
     },
     pristineResponseData
   );
