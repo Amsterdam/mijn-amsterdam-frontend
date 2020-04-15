@@ -14,10 +14,11 @@ const API_ID = 'SERVICES_MAP';
 
 export type ServicesMapData = FEApiResponseData<typeof loadServicesMap>;
 
-export function useServicesMap() {
+export function useServicesMap(postpone: boolean = false) {
   const [api] = useDataApi<ServicesMapData | typeof pristineResponseData>(
     {
       url: BFFApiUrls[API_ID],
+      postpone,
     },
     pristineResponseData
   );

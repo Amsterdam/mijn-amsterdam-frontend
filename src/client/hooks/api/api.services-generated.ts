@@ -52,7 +52,7 @@ export function useOptIn(): Optin {
   return { isOptIn: isOptIn === 'yes', optIn, optOut };
 }
 
-export function useServicesGenerated() {
+export function useServicesGenerated(postpone: boolean = false) {
   const { isOptIn, optIn, optOut } = useOptIn();
 
   const [api, refetch] = useDataApi<ServicesGeneratedApiData>(
@@ -63,12 +63,14 @@ export function useServicesGenerated() {
   );
 
   useEffect(() => {
-    refetch({
-      url: BFFApiUrls[API_ID],
-      params: { optin: isOptIn ? 1 : 0 },
-      postpone: false,
-    });
-  }, [refetch, isOptIn]);
+    if (!postpone) {
+      refetch({
+        url: BFFApiUrls[API_ID],
+        params: { optin: isOptIn ? 1 : 0 },
+        postpone: false,
+      });
+    }
+  }, [postpone, refetch, isOptIn]);
 
   const {
     NOTIFICATIONS: notificationsSource,
@@ -87,7 +89,12 @@ export function useServicesGenerated() {
 
   const TIPS = useMemo(() => {
     if (tipsSource.status === 'success') {
-      return apiSuccesResult({ ...tipsSource.content, isOptIn, optIn, optOut });
+      return apiSuccesResult({
+        ...tipsSource.content,
+        isOptIn,
+        optIn,
+        optOut,
+      });
     }
 
     return tipsSource;
