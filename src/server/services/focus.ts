@@ -8,7 +8,11 @@ import {
   Chapters,
   FeatureToggle,
 } from '../../universal/config';
-import { dateSort, defaultDateFormat } from '../../universal/helpers';
+import {
+  dateSort,
+  defaultDateFormat,
+  dateFormat,
+} from '../../universal/helpers';
 import {
   LinkProps,
   MyNotification,
@@ -972,13 +976,56 @@ export interface FocusInkomenSpecificatie
   notification?: MyNotification;
 }
 
-function formatIncomSpecificationItem(
+function documentDownloadName(item: FocusInkomenSpecificatieFromSource) {
+  return `${format(new Date(item.datePublished), 'yyyy-MM-dd')}-${item.title}`;
+}
+
+function formatIncomeSpecificationNotification(
+  type: 'jaaropgave' | 'uitkeringsspecificatie',
   item: FocusInkomenSpecificatieFromSource
+): MyNotification {
+  if (type === 'jaaropgave') {
+    return {
+      id: 'nieuwe-jaaropgave',
+      datePublished: item.datePublished,
+      chapter: Chapters.INKOMEN,
+      title: 'Nieuwe jaaropgave',
+      description: `Uw jaaropgave ${dateFormat(
+        item.datePublished,
+        'yyyy'
+      )} staat voor u klaar.`,
+      link: {
+        to: `/api/${item.url}`,
+        title: 'Bekijk jaaropgave',
+        download: documentDownloadName(item),
+      },
+    };
+  }
+  return {
+    id: 'nieuwe-uitkeringsspecificatie',
+    datePublished: item.datePublished,
+    chapter: Chapters.INKOMEN,
+    title: 'Nieuwe uitkeringsspecificatie',
+    description: `Uw uitkeringsspecificatie van ${dateFormat(
+      item.datePublished,
+      'MMMM yyyy'
+    )} staat voor u klaar.`,
+    link: {
+      to: `/api/${item.url}`,
+      title: 'Bekijk uitkeringsspecificatie',
+      download: documentDownloadName(item),
+    },
+  };
+}
+
+function formatIncomSpecificationItem(
+  item: FocusInkomenSpecificatieFromSource,
+  type: 'jaaropgave' | 'uitkeringsspecificatie'
 ): FocusInkomenSpecificatie {
   const displayDate = defaultDateFormat(item.datePublished);
   return {
     ...item,
-    notification: undefined, // TODO: implement!
+    notification: formatIncomeSpecificationNotification(type, item),
     displayDate,
     documentUrl: `<a
         href=${`/api/${item.url}`}
@@ -1020,6 +1067,7 @@ function transformFOCUSAanvragenData(
   const notifications: MyNotification[] = aanvragen
     .filter((item: any) => item.notification !== undefined)
     .map((item: any) => item.notification as MyNotification);
+
   const cases: MyCase[] = aanvragen
     .filter(item => item.isRecent)
     .map(item => {
@@ -1056,10 +1104,12 @@ function transformFOCUSIncomeSpecificationsData(
   return {
     jaaropgaven: jaaropgaven
       .sort(dateSort('datePublished', 'desc'))
-      .map(formatIncomSpecificationItem),
+      .map(item => formatIncomSpecificationItem(item, 'jaaropgave')),
     uitkeringsspecificaties: uitkeringsspecificaties
       .sort(dateSort('datePublished', 'desc'))
-      .map(formatIncomSpecificationItem),
+      .map(item =>
+        formatIncomSpecificationItem(item, 'uitkeringsspecificatie')
+      ),
     notifications,
   };
 }
