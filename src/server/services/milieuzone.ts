@@ -1,6 +1,6 @@
 import { ApiUrls } from '../../universal/config';
 
-import { Chapter } from '../../universal/config/chapter';
+import { Chapters } from '../../universal/config/chapter';
 import { requestData } from '../helpers';
 import { MyNotification } from '../../universal/types/App.types';
 import { getApiConfigValue } from '../../universal/helpers';
@@ -21,11 +21,11 @@ export interface MILIEUZONEData {
   notifications: MyNotification[];
 }
 
-function formatMILIEUZONENotifications(notifications?: MyNotification[]) {
+function transformMILIEUZONENotifications(notifications?: MyNotification[]) {
   return Array.isArray(notifications)
     ? notifications.map(notification => ({
         ...notification,
-        chapter: 'MILIEUZONE' as Chapter,
+        chapter: Chapters.MILIEUZONE,
       }))
     : [];
 }
@@ -40,7 +40,7 @@ function formatMILIEUZONEData(
 
   return {
     ...restData,
-    notifications: formatMILIEUZONENotifications(meldingen),
+    notifications: transformMILIEUZONENotifications(meldingen),
   };
 }
 
