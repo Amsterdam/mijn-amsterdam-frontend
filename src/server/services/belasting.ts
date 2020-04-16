@@ -1,10 +1,8 @@
-import { ApiUrls } from '../../universal/config';
-
-import { Chapter } from '../../universal/config/chapter';
-import { MyTip } from './tips';
-import { requestData } from '../helpers';
-import { MyNotification } from '../../universal/types/App.types';
+import { ApiUrls, Chapters } from '../../universal/config';
 import { getApiConfigValue } from '../../universal/helpers';
+import { MyNotification } from '../../universal/types/App.types';
+import { requestData } from '../helpers';
+import { MyTip } from './tips';
 
 export interface BELASTINGENData {
   isKnown: boolean;
@@ -24,16 +22,18 @@ interface BELASTINGSourceData {
   message?: string;
 }
 
-function formatBelastingNotifications(notifications?: MyNotification[]) {
-  return Array.isArray(notifications)
+function transformBelastingNotifications(notifications?: MyNotification[]) {
+  const notificationsTransformed = Array.isArray(notifications)
     ? notifications.map(notification => ({
         ...notification,
-        chapter: 'BELASTINGEN' as Chapter,
+        chapter: Chapters.BELASTINGEN,
       }))
     : [];
+
+  return notificationsTransformed;
 }
 
-function formatBELASTINGENData(
+function transformBELASTINGENData(
   responseData: BELASTINGSourceData
 ): BELASTINGENData {
   const { meldingen, tips, ...restData } = responseData?.content || {
@@ -48,7 +48,7 @@ function formatBELASTINGENData(
   return {
     ...restData,
     tips: prioritzedTips,
-    notifications: formatBelastingNotifications(meldingen),
+    notifications: transformBelastingNotifications(meldingen),
   };
 }
 
@@ -56,7 +56,7 @@ export function fetchBELASTING(sessionID: SessionID) {
   return requestData<BELASTINGENData>(
     {
       url: ApiUrls.BELASTINGEN,
-      transformResponse: formatBELASTINGENData,
+      transformResponse: transformBELASTINGENData,
     },
     sessionID,
     getApiConfigValue('BELASTINGEN', 'postponeFetch', true)
