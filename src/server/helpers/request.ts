@@ -14,16 +14,18 @@ import {
 } from '../../universal/helpers';
 
 const DEFAULT_REQUEST_CONFIG: AxiosRequestConfig & { cancelTimeout: number } = {
-  timeoutErrorMessage: `De aanvraag van data bij deze api duurt te lang.`,
-  method: 'get',
   cancelTimeout: 20000, // 20 seconds
 };
+
+const requestTApiData = axios.create({
+  responseType: 'json',
+});
 
 function enableMockAdapter() {
   const MockAdapter = require('axios-mock-adapter');
 
   // This sets the mock adapter on the default instance
-  const mock = new MockAdapter(axios);
+  const mock = new MockAdapter(requestTApiData);
 
   entries(mockDataConfig).forEach(
     async ([
@@ -58,10 +60,18 @@ export interface RequestConfig<Source, Transformed> {
 
 export const cache = new Map();
 
+export function clearCache(sessionID: SessionID) {
+  for (const cacheKey of cache.keys()) {
+    if (cacheKey.startsWith(sessionID)) {
+      cache.delete(cacheKey);
+    }
+  }
+}
+
 export async function requestData<T>(
   config: AxiosRequestConfig,
-  postpone: boolean = false,
-  sessionID: SessionID = 'testje'
+  sessionID: SessionID = 'testje',
+  postpone: boolean = false
 ) {
   if (postpone) {
     return apiPostponeResult();
@@ -82,7 +92,7 @@ export async function requestData<T>(
 
   if (cache.has(cacheKey)) {
     return cache.get(cacheKey).promise as Promise<
-      ApiSuccessResponse<T> | ApiErrorResponse
+      ApiSuccessResponse<T> | ApiErrorResponse<null>
     >;
   }
 
@@ -96,7 +106,7 @@ export async function requestData<T>(
       source.cancel('Request to source api timeout.');
     }, requestConfig.cancelTimeout);
 
-    const request: AxiosPromise<T> = axios(requestConfig);
+    const request: AxiosPromise<T> = requestTApiData(requestConfig);
     const response: AxiosResponse<T> = await request;
     const responseData = apiSuccesResult<T>(response.data);
 
@@ -106,7 +116,7 @@ export async function requestData<T>(
 
     return responseData;
   } catch (error) {
-    const responseData = apiErrorResult(error);
+    const responseData = apiErrorResult(error, null);
 
     if (requestConfig.method?.toLowerCase() === 'get') {
       cache.get(cacheKey).resolve(responseData);

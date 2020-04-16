@@ -2,8 +2,9 @@ import express from 'express';
 
 import compression from 'compression';
 import cors from 'cors';
-import { router, eventSourceRouter } from './router';
+import { router } from './router';
 import session from 'express-session';
+import { loadServicesSSE } from './services/services-sse';
 
 const PORT = process.env.BFF_API_PORT || 5000;
 
@@ -22,7 +23,6 @@ app.use(
     // }
   })
 );
-app.use(eventSourceRouter);
 app.use(compression(), router);
 
 app.listen(PORT, () => {

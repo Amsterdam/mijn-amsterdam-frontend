@@ -6,14 +6,14 @@ export type HOMEResponseData =
   | ApiUnknownResponse;
 
 export async function fetchHOME(sessionID: SessionID) {
-  const BRP = await fetchBRP();
+  const BRP = await fetchBRP(sessionID);
 
   let HOMEresponse: HOMEResponseData = apiUnknownResult(
     'De aanvraag voor BAG data kon niet worden gemaakt. BRP data is niet beschikbaar.'
   );
 
   if (BRP.status === 'success') {
-    const BAG = await fetchBAG(BRP.content.adres);
+    const BAG = await fetchBAG(sessionID, BRP.content.adres);
     HOMEresponse = BAG;
   }
 

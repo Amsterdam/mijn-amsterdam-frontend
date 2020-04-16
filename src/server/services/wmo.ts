@@ -721,10 +721,13 @@ export function formatWMOData(
   return { items };
 }
 
-export function fetchWMO() {
-  return requestData<WMOData>({
-    url: ApiUrls.WMO,
-    transformResponse: (responseData: WMOSourceData) =>
-      formatWMOData(responseData, new Date()),
-  });
+export function fetchWMO(sessionID: SessionID) {
+  return requestData<WMOData>(
+    {
+      url: ApiUrls.WMO,
+      transformResponse: (responseData: WMOSourceData) =>
+        formatWMOData(responseData, new Date()),
+    },
+    sessionID
+  );
 }

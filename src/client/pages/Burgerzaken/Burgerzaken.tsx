@@ -1,14 +1,19 @@
 import React, { useContext, useMemo } from 'react';
-import { OverviewPage, PageContent } from 'components/Page/Page';
-import PageHeading from 'components/PageHeading/PageHeading';
-import { AppContext } from 'AppState';
-import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
+import { ChapterTitles } from '../../../universal/config';
+import { isError, isLoading } from '../../../universal/helpers';
+import { AppContext } from '../../AppState';
+import {
+  Alert,
+  ChapterIcon,
+  Linkd,
+  OverviewPage,
+  PageContent,
+  PageHeading,
+  SectionCollapsible,
+  Table,
+} from '../../components';
+import { addTitleLinkComponent } from '../../components/Table/Table';
 import styles from './Burgerzaken.module.scss';
-import Alert from 'components/Alert/Alert';
-import { ChapterTitles } from 'config/Chapter.constants';
-import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
-import Table, { addTitleLinkComponent } from 'components/Table/Table';
-import Linkd from '../../components/Button/Button';
 
 const DISPLAY_PROPS = {
   title: '',
@@ -16,16 +21,14 @@ const DISPLAY_PROPS = {
 };
 
 export default () => {
-  const {
-    BRP: { data, isError, isLoading },
-  } = useContext(AppContext);
+  const { BRP } = useContext(AppContext);
 
   const documentItems = useMemo(() => {
-    if (!data.reisDocumenten) {
+    if (!BRP.content?.reisDocumenten) {
       return [];
     }
-    return addTitleLinkComponent(data.reisDocumenten);
-  }, [data]);
+    return addTitleLinkComponent(BRP.content?.reisDocumenten);
+  }, [BRP.content]);
 
   return (
     <OverviewPage className={styles.BurgerzakenOverviewPage}>
@@ -52,7 +55,7 @@ export default () => {
             Paspoort kwijt?
           </Linkd>
         </p>
-        {isError && (
+        {isError(BRP) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>
@@ -65,7 +68,7 @@ export default () => {
         noItemsMessage="Wij kunnen nog geen officiële documenten tonen."
         startCollapsed={false}
         hasItems={!!documentItems.length}
-        isLoading={isLoading}
+        isLoading={isLoading(BRP)}
         track={{
           category: 'Burgerzaken overzicht / Huidige documenten',
           name: 'Datatabel',

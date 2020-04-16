@@ -1,4 +1,4 @@
-import React, { ReactNode, FunctionComponent, SVGProps } from 'react';
+import { ReactNode, FunctionComponent, SVGProps } from 'react';
 import { Chapter } from '../config';
 
 // Generic object interface
@@ -33,6 +33,7 @@ export interface MyNotification {
   title: string;
   description: string;
   link?: LinkProps;
+  hideDatePublished?: boolean;
 
   // NOTE: Maybe move this to client?
   customLink?: {

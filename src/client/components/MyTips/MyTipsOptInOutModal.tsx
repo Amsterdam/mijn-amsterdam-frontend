@@ -4,6 +4,7 @@ import { AppContext } from '../../AppState';
 import { Button } from '../Button/Button';
 import Modal from '../Modal/Modal';
 import styles from './MyTips.module.scss';
+import { useOptIn } from '../../hooks/optin.hook';
 
 interface OptInOutModalProps {
   isOpen: boolean;
@@ -15,11 +16,11 @@ export default function MyTipsOptInOutModal({
   onClose,
 }: OptInOutModalProps) {
   const { TIPS } = useContext(AppContext);
+  const { isOptIn, optIn, optOut } = useOptIn();
 
   if (!TIPS.content) {
     return null;
   }
-  const { isOptIn, optIn, optOut } = TIPS.content;
 
   return (
     <Modal

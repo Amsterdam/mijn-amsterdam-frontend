@@ -44,12 +44,13 @@ function formatMILIEUZONEData(
   };
 }
 
-export function fetchMILIEUZONE() {
+export function fetchMILIEUZONE(sessionID: SessionID) {
   return requestData<MILIEUZONEData>(
     {
       url: ApiUrls.MILIEUZONE,
       transformResponse: formatMILIEUZONEData,
     },
+    sessionID,
     getApiConfigValue('MILIEUZONE', 'postponeFetch', true)
   );
 }

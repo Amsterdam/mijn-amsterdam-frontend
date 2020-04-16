@@ -52,12 +52,13 @@ function formatBELASTINGENData(
   };
 }
 
-export function fetchBELASTING() {
+export function fetchBELASTING(sessionID: SessionID) {
   return requestData<BELASTINGENData>(
     {
       url: ApiUrls.BELASTINGEN,
       transformResponse: formatBELASTINGENData,
     },
+    sessionID,
     getApiConfigValue('BELASTINGEN', 'postponeFetch', true)
   );
 }

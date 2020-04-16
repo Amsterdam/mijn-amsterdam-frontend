@@ -47,7 +47,7 @@ export async function loadServicesGenerated(
     }
   }
 
-  const tips = await fetchTIPS(tipsRequestData);
+  const tips = await fetchTIPS(sessionID, tipsRequestData);
 
   const notificationsResult = {
     items: notifications,

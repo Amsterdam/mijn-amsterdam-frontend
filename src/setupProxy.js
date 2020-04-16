@@ -11,24 +11,15 @@ const apiPort = process.env.MOCK_API_PORT || 5000;
 const SESSION_MAX_AGE = 15 * 60 * 1000; // 15 minutes
 
 function handleLogin(req, res, next) {
-  if (['/api/login'].includes(req.url)) {
-    const userType = req.url.startsWith('/api1/') ? 'BEDRIJF' : 'BURGER';
-    req.session = { isAuthenticated: true, userType };
-  }
-  next();
+  const userType = req.url.startsWith('/api1/') ? 'BEDRIJF' : 'BURGER';
+  req.session = { isAuthenticated: true, userType };
+
+  return res.redirect(`http://${host}:${port}`);
 }
 
 function handleLogout(req, res) {
   req.session = null;
   return res.redirect(`/`);
-}
-
-function handleUnauthorized(req, res, next) {
-  if (!req.session.isAuthenticated && req.url !== '/auth/check') {
-    res.status(403);
-    return res.send('Unauthorized');
-  }
-  next();
 }
 
 function handleSession(req, res, next) {
@@ -37,9 +28,11 @@ function handleSession(req, res, next) {
     const now = new Date().getTime();
     const validUntil = new Date(now + SESSION_MAX_AGE).getTime();
     req.session.validUntil = validUntil;
+    next();
+  } else {
+    res.status(403);
+    return res.send('Unauthorized');
   }
-
-  next();
 }
 
 module.exports = function(app) {
@@ -53,32 +46,26 @@ module.exports = function(app) {
       maxAge: SESSION_MAX_AGE,
     })
   );
+
   app.use(
     bodyParser.urlencoded({
       // to support URL-encoded bodies
       extended: true,
     })
   );
-  app.use(['/logout'], handleLogout);
-  app.use(handleLogin);
-  app.use(['/api'], handleUnauthorized);
-  app.use(['/api'], handleSession);
+
+  app.get('/logout', handleLogout);
+  app.get('/api/login', handleLogin);
+  app.all('/api', handleSession);
+  app.get('/api/auth/check', (req, res) => {
+    return res.send(req.session);
+  });
+
   app.use(
     ['/api'],
     createProxyMiddleware({
       target: `http://${apiHost}:${apiPort}`,
       changeOrigin: true,
-      onProxyReq(proxyReq, req) {
-        if (req.session && req.session.isAuthenticated) {
-          proxyReq.setHeader('x-session', JSON.stringify(req.session));
-        }
-      },
-      pathRewrite: {
-        '/api/login': `/`,
-      },
-      router: {
-        '/api/login': `http://${host}:${port}`,
-      },
     })
   );
 };

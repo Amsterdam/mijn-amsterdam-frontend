@@ -285,12 +285,15 @@ export function formatAFVALData(
   };
 }
 
-export function fetchAFVAL(center: LatLngObject | null) {
+export function fetchAFVAL(sessionID: SessionID, center: LatLngObject | null) {
   const params = { lat: center?.lat, lon: center?.lng };
 
-  return requestData<AFVALData>({
-    url: ApiUrls.AFVAL,
-    params,
-    transformResponse: data => formatAFVALData(data, center),
-  });
+  return requestData<AFVALData>(
+    {
+      url: ApiUrls.AFVAL,
+      params,
+      transformResponse: data => formatAFVALData(data, center),
+    },
+    sessionID
+  );
 }

@@ -36,8 +36,8 @@ export function getBagSearchAddress(adres: Adres) {
   return `${adres.straatnaam} ${adres.huisnummer || ''}`;
 }
 
-export function isMokum(BRP: BrpApiState) {
-  return !!BRP?.data?.persoon?.mokum;
+export function isMokum(BRP: BRPData | null) {
+  return !!BRP?.persoon.mokum;
 }
 
 const persoon: ProfileLabels<Partial<Persoon>> = {

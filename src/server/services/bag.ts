@@ -1,4 +1,4 @@
-import { Adres, getFullAddress } from './brp';
+import { Adres, getBagSearchAddress } from './brp';
 
 import { ApiUrls } from '../../universal/config';
 
@@ -22,12 +22,15 @@ export function formatBAGData(responseData: BAGSourceData): BAGData {
   };
 }
 
-export function fetchBAG(address: Adres) {
-  const params = { q: getFullAddress(address) };
+export function fetchBAG(sessionID: SessionID, address: Adres) {
+  const params = { q: getBagSearchAddress(address) };
 
-  return requestData<BAGData>({
-    url: ApiUrls.BAG,
-    params,
-    transformResponse: formatBAGData,
-  });
+  return requestData<BAGData>(
+    {
+      url: ApiUrls.BAG,
+      params,
+      transformResponse: formatBAGData,
+    },
+    sessionID
+  );
 }

@@ -15,6 +15,7 @@ import {
 } from '../../components';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import styles from './Dashboard.module.scss';
+import { useOptIn } from '../../hooks/optin.hook';
 
 const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
@@ -22,6 +23,7 @@ const MAX_TIPS_VISIBLE = 3;
 export default () => {
   const appState = useContext(AppContext);
   const { TIPS, NOTIFICATIONS, CASES, BUURT, HOME } = appState;
+  const { isOptIn } = useOptIn();
 
   const tipItems = TIPS.content?.items.slice(0, MAX_TIPS_VISIBLE) || [];
   const notificationItems = NOTIFICATIONS.content?.items.slice(
@@ -45,7 +47,7 @@ export default () => {
         <PageHeading>
           <Link
             className={styles.MyNotificationsHeadingLink}
-            to={AppRoutes.NOTIFICATIONS}
+            to={AppRoutes.UPDATES}
           >
             Actueel
           </Link>
@@ -87,7 +89,7 @@ export default () => {
             data-tutorial-item="Hier geven wij u handige tips, bijvoorbeeld over de regelingen en voorzieningen van de gemeente;right-bottom"
             isLoading={isLoading(TIPS)}
             items={tipItems}
-            isOptIn={TIPS.content?.isOptIn}
+            isOptIn={isOptIn}
             showOptIn={true}
           />
         )}
