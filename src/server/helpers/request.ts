@@ -12,6 +12,15 @@ import {
   apiErrorResult,
   apiPostponeResult,
 } from '../../universal/helpers';
+// import { IS_SENTRY_ENABLED, BFF_SENTRY_DSN, ENV } from '../../universal/env';
+// import * as Sentry from '@sentry/node';
+
+// if (BFF_SENTRY_DSN && IS_SENTRY_ENABLED) {
+//   Sentry.init({
+//     dsn: BFF_SENTRY_DSN,
+//     environment: ENV,
+//   });
+// }
 
 const DEFAULT_REQUEST_CONFIG: AxiosRequestConfig & { cancelTimeout: number } = {
   cancelTimeout: 20000, // 20 seconds
@@ -116,6 +125,9 @@ export async function requestData<T>(
 
     return responseData;
   } catch (error) {
+    console.log('error', error);
+    // IS_SENTRY_ENABLED && Sentry.captureException(error);
+
     const responseData = apiErrorResult(error, null);
 
     if (requestConfig.method?.toLowerCase() === 'get') {

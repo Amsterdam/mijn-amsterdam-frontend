@@ -8,7 +8,7 @@ import { ExternalUrls } from '../../../universal/config';
 import { ServicesRelatedData } from '../../hooks/api/api.services-related';
 import { isMokum } from './formatData';
 
-type PanelKey = keyof Omit<BRPData, 'reisDocumenten'>;
+type PanelKey = keyof Omit<BRPData, 'reisDocumenten' | 'notifications'>;
 type PanelProps = Pick<InfoPanelProps, 'title' | 'actionLinks'>;
 
 export type PanelConfigFormatter =

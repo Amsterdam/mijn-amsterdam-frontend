@@ -75,6 +75,7 @@ export interface BRPData {
   adres: Adres;
   adresHistorisch?: Adres[];
   reisDocumenten?: ReisDocument[];
+  notifications: MyNotification[];
 }
 
 const DAYS_BEFORE_EXPIRATION = 120;
@@ -114,7 +115,7 @@ export function getBagSearchAddress(adres: Adres) {
   return `${adres.straatnaam} ${adres.huisnummer || ''}`;
 }
 
-export function formatBRPNotifications(data: BRPData) {
+export function transformBRPNotifications(data: BRPData) {
   const now = new Date();
   const inOnderzoek = data?.adres?.inOnderzoek || false;
   const isOnbekendWaarheen = data?.persoon?.vertrokkenOnbekendWaarheen || false;
@@ -145,7 +146,7 @@ export function formatBRPNotifications(data: BRPData) {
     expiredDocuments.forEach(document => {
       const docTitle = BrpDocumentTitles[document.documentType];
       notifications.push({
-        chapter: Chapters.BURGERZAKEN,
+        chapter: 'ALERT',
         datePublished: now.toISOString(),
         hideDatePublished: true,
         id: `${docTitle}-datum-afloop-verstreken`,
@@ -165,7 +166,7 @@ export function formatBRPNotifications(data: BRPData) {
     willExpireSoonDocuments.forEach(document => {
       const docTitle = BrpDocumentTitles[document.documentType];
       notifications.push({
-        chapter: Chapters.BURGERZAKEN,
+        chapter: 'ALERT',
         datePublished: now.toISOString(),
         hideDatePublished: true,
         id: `${document.documentType}-datum-afloop-binnekort`,
@@ -183,7 +184,7 @@ export function formatBRPNotifications(data: BRPData) {
 
   if (inOnderzoek) {
     notifications.push({
-      chapter: Chapters.BURGERZAKEN,
+      chapter: 'ALERT',
       datePublished: now.toISOString(),
       id: 'brpAdresInOnderzoek',
       title: 'Adres in onderzoek',
@@ -198,7 +199,7 @@ export function formatBRPNotifications(data: BRPData) {
 
   if (isOnbekendWaarheen) {
     notifications.push({
-      chapter: Chapters.BURGERZAKEN,
+      chapter: 'ALERT',
       datePublished: now.toISOString(),
       id: 'brpVertrokkenOnbekendWaarheen',
       title: 'Vertrokken - onbekend waarheen',
@@ -214,7 +215,11 @@ export function formatBRPNotifications(data: BRPData) {
 }
 
 function transformBRPData(responseData: BRPData) {
-  if (responseData.reisDocumenten) {
+  Object.assign(responseData, {
+    notifications: transformBRPNotifications(responseData),
+  });
+
+  if (Array.isArray(responseData.reisDocumenten)) {
     Object.assign(responseData, {
       reisDocumenten: responseData.reisDocumenten.map(document => {
         const route = generatePath(AppRoutes.BURGERZAKEN_DOCUMENT, {
@@ -232,6 +237,7 @@ function transformBRPData(responseData: BRPData) {
       }),
     });
   }
+
   return responseData;
 }
 
