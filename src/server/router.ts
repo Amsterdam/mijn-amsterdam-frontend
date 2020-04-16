@@ -8,6 +8,7 @@ import {
 import { loadServicesMap } from './services/services-map';
 import { fetchBRP } from './services/brp';
 import compression from 'compression';
+import { cache } from './helpers/request';
 
 export const router = express.Router();
 export const eventSourceRouter = express.Router();
@@ -93,16 +94,36 @@ eventSourceRouter.all('/stream', async function(req, res) {
     'Cache-Control': 'no-cache',
   });
 
-  loadServicesDirect(req.sessionID!).then(data => {
+  const servicesDirect = loadServicesDirect(req.sessionID!).then(data => {
     sendMessage(res, 'direct', data);
   });
-  loadServicesRelated(req.sessionID!).then(data => {
+
+  const servicesRelated = loadServicesRelated(req.sessionID!).then(data => {
     sendMessage(res, 'related', data);
   });
-  loadServicesMap(req.sessionID!).then(data => {
+
+  const servicesMap = loadServicesMap(req.sessionID!).then(data => {
     sendMessage(res, 'map', data);
   });
-  loadServicesGenerated(req.sessionID!, req.query.optin === '1').then(data => {
+
+  const servicesGenerated = loadServicesGenerated(
+    req.sessionID!,
+    req.query.optin === '1'
+  ).then(data => {
     sendMessage(res, 'generated', data);
+  });
+
+  Promise.all([
+    servicesDirect,
+    servicesRelated,
+    servicesMap,
+    servicesGenerated,
+  ]).finally(() => {
+    for (const cacheKey of cache.keys()) {
+      console.log(cacheKey, cacheKey.startsWith('testje'));
+      if (cacheKey.startsWith('testje')) {
+        cache.delete(cacheKey);
+      }
+    }
   });
 });
