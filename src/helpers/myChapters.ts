@@ -26,7 +26,9 @@ function isChapterActive(
     case Chapters.BELASTINGEN:
       return (
         !BELASTINGEN.isLoading &&
-        (FeatureToggle.belastingApiActive ? BELASTINGEN.data.isKnown : true)
+        (FeatureToggle.belastingApiActive && !BELASTINGEN.isError
+          ? BELASTINGEN.data.isKnown
+          : true)
       );
 
     case Chapters.MILIEUZONE:
