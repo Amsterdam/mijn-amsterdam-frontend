@@ -1,18 +1,24 @@
-import { createContext, useCallback, useState, useMemo } from 'react';
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import {
   ServicesDirectData,
   useServicesDirect,
 } from './hooks/api/api.services-direct';
 import {
-  ServicesRelatedData,
-  useServicesRelated,
-} from './hooks/api/api.services-related';
-import {
   ServicesGeneratedData,
   useServicesGenerated,
 } from './hooks/api/api.services-generated';
 import { ServicesMapData, useServicesMap } from './hooks/api/api.services-map';
-import { useSSEEvent } from './hooks/useSSE';
+import {
+  ServicesRelatedData,
+  useServicesRelated,
+} from './hooks/api/api.services-related';
+import { useSSE } from './hooks/useSSE';
 
 export interface AppState
   extends ServicesRelatedData,
@@ -59,7 +65,7 @@ export function useAppStateSSE() {
     }
   }, []);
 
-  useSSEEvent('http://localhost:5000/stream', 'message', onEvent);
+  useSSE('http://localhost:5000/stream', 'message', onEvent);
 
   return state;
 }

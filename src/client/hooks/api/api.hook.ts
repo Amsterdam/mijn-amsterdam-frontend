@@ -1,22 +1,21 @@
 import * as Sentry from '@sentry/browser';
 
-import { Action, Unshaped } from '../../../universal/types/App.types';
+import { Action } from '../../../universal/types/App.types';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 
 import { IS_SENTRY_ENABLED } from '../../../universal/env';
 import axios from 'axios';
 import { apiErrorResponseData } from '../../../universal/helpers/api';
+import { AxiosRequestConfig } from 'axios';
 
-export interface ApiRequestOptions {
-  url?: string;
-  data?: any;
-  params?: Unshaped;
+export interface ApiRequestOptions extends AxiosRequestConfig {
   postpone?: boolean;
-  resetToInitialDataOnError?: boolean;
-  method?: 'GET' | 'POST';
 }
 
 const REQUEST_TIMEOUT = 20000; // 20seconds;
+const requestApiData = axios.create({
+  responseType: 'json', // default
+});
 
 export interface ApiState<T> {
   isLoading: boolean;
@@ -70,10 +69,6 @@ function createApiDataReducer<T>() {
 
 // The data api request options object
 export const DEFAULT_REQUEST_OPTIONS: ApiRequestOptions = {
-  // Url to data api endpoint
-  url: '',
-  // Request query params
-  params: {},
   // Postpone fetch when hook is called/set-up for the first time
   postpone: false,
   // timeout in ms
@@ -128,12 +123,14 @@ export function useDataApi<T>(
         type: ActionTypes.FETCH_INIT,
       });
 
+      const requestOptionsFinal = {
+        ...DEFAULT_REQUEST_OPTIONS,
+        ...requestOptions,
+        cancelToken: source.token,
+      };
+
       try {
-        const result = await axios({
-          ...DEFAULT_REQUEST_OPTIONS,
-          ...requestOptions,
-          cancelToken: source.token,
-        });
+        const result = await requestApiData(requestOptionsFinal);
 
         if (!didCancel) {
           dispatch({
@@ -143,8 +140,7 @@ export function useDataApi<T>(
         }
       } catch (error) {
         if (!didCancel) {
-          const errorMessage = error.response?.data.message || error.message;
-          console.log('errorMessage', errorMessage);
+          const errorMessage = error.response?.data?.message || error.message;
           dispatch({
             type: ActionTypes.FETCH_FAILURE,
             payload: apiErrorResponseData(initialDataNoContent, error),

@@ -2,9 +2,9 @@ import { AxiosError } from 'axios';
 import { AppState } from '../../client/AppState';
 import { ErrorNames } from '../config';
 
-export interface ApiErrorResponse {
+export interface ApiErrorResponse<T> {
   message: string;
-  content: null;
+  content: T;
   status: 'failure';
 }
 
@@ -14,8 +14,8 @@ export type ApiSuccessResponse<T> = {
 };
 
 // This state is used for checking if we are expecting data from the api.
-export type ApiPristineResponse = {
-  content: null;
+export type ApiPristineResponse<T> = {
+  content: T;
   status: 'pristine';
 };
 
@@ -37,17 +37,17 @@ export type FEApiResponseData<T extends (...args: any[]) => any> = ResolvedType<
 >;
 
 export type ApiResponse<T> =
-  | ApiErrorResponse
+  | ApiErrorResponse<T>
   | ApiSuccessResponse<T>
   | ApiPostponeResponse;
 
 export function isLoading(
   apiResponseData:
     | ApiSuccessResponse<any>
-    | ApiErrorResponse
+    | ApiErrorResponse<any>
     | ApiPostponeResponse
     | ApiUnknownResponse
-    | ApiPristineResponse
+    | ApiPristineResponse<any>
 ) {
   // If no responseData was found, assumes it's still loading
   return !!apiResponseData && apiResponseData.status === 'pristine';
@@ -55,8 +55,8 @@ export function isLoading(
 
 export function isError(
   apiResponseData:
-    | ApiErrorResponse
-    | ApiPristineResponse
+    | ApiErrorResponse<any>
+    | ApiPristineResponse<any>
     | ApiSuccessResponse<any>
     | ApiPostponeResponse
     | ApiUnknownResponse,
@@ -68,10 +68,10 @@ export function isError(
   );
 }
 
-export function apiErrorResult(
+export function apiErrorResult<T>(
   error: AxiosError,
-  content: any = null
-): ApiErrorResponse {
+  content: T
+): ApiErrorResponse<T> {
   return {
     content,
     message: error.response?.data?.message || error.toString(),
@@ -104,7 +104,7 @@ export function apiUnknownResult(message: string): ApiUnknownResponse {
 export function apiPristineResponseData<T>(content: T) {
   return Object.entries(content).reduce((acc, [key, content]) => {
     return Object.assign(acc, { [key]: { content, status: 'pristine' } });
-  }, {} as Record<keyof T, ApiPristineResponse>);
+  }, {} as Record<keyof T, ApiPristineResponse<T[keyof T]>>);
 }
 
 export function apiErrorResponseData<T>(
@@ -117,7 +117,7 @@ export function apiErrorResponseData<T>(
         [key]: apiErrorResult(error, pristineResponseData.content),
       });
     },
-    {} as Record<keyof T, ApiErrorResponse>
+    {} as Record<keyof T, ApiErrorResponse<any>>
   );
 }
 

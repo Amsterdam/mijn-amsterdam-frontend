@@ -38,6 +38,7 @@ export const mockDataConfig: MockDataConfig = {
   },
   [ApiUrls.FOCUS_AANVRAGEN]: {
     status: 200,
+    // delay: 3400,
     responseData: () => require('./json/focus.json'),
   },
   [ApiUrls.FOCUS_SPECIFICATIES]: {

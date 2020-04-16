@@ -4,6 +4,14 @@ import { defaultDateFormat } from '../../universal/helpers';
 import { requestData } from '../helpers';
 import { MyNotification } from '../../universal/types/App.types';
 
+export interface ReisDocument {
+  documentNummer: string;
+  documentType: 'identiteitskaart' | 'paspoort';
+  datumUitgifte: string;
+  datumAfloop: string;
+  title: string;
+}
+
 export interface Adres {
   straatnaam: string;
   postcode: string;
@@ -64,11 +72,16 @@ export interface BRPData {
   ouders: Persoon[];
   adres: Adres;
   adresHistorisch?: Adres[];
+  reisDocumenten?: ReisDocument[];
 }
 
 export function getFullAddress(adres: Adres) {
   return `${adres.straatnaam} ${adres.huisnummer || ''} ${adres.huisletter ||
     ''} ${adres.huisnummertoevoeging || ''}`.trim();
+}
+
+export function getBagSearchAddress(adres: Adres) {
+  return `${adres.straatnaam} ${adres.huisnummer || ''}`;
 }
 
 export function formatBRPNotifications(data: BRPData) {
@@ -112,8 +125,11 @@ export function formatBRPNotifications(data: BRPData) {
   return notifications;
 }
 
-export function fetchBRP() {
-  return requestData<BRPData>({
-    url: ApiUrls.BRP,
-  });
+export function fetchBRP(sessionID: SessionID) {
+  return requestData<BRPData>(
+    {
+      url: ApiUrls.BRP,
+    },
+    sessionID
+  );
 }

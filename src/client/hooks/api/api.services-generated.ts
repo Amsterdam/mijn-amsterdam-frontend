@@ -8,11 +8,11 @@ import {
   ApiSuccessResponse,
 } from '../../../universal/helpers';
 import { loadServicesGenerated } from '../../../server/services';
-import { useCookie } from '../storage.hook';
-import { useCallback, useMemo, useEffect } from 'react';
+import { useMemo, useEffect } from 'react';
 import { TIPSData } from '../../../server/services/tips';
 import { WelcomeNotification } from '../../config/staticData';
 import { apiSuccesResult } from '../../../universal/helpers/api';
+import { useOptIn } from '../optin.hook';
 
 const pristineResponseData = apiPristineResponseData({
   TIPS: { items: [] },
@@ -20,16 +20,10 @@ const pristineResponseData = apiPristineResponseData({
   CASES: [],
 });
 
-export interface Optin {
-  isOptIn: boolean;
-  optIn: () => void;
-  optOut: () => void;
-}
-
 export type ServicesGeneratedData = FEApiResponseData<
   typeof loadServicesGenerated
 > & {
-  TIPS: ApiErrorResponse | ApiSuccessResponse<TIPSData & Optin>;
+  TIPS: ApiErrorResponse<TIPSData> | ApiSuccessResponse<TIPSData>;
 };
 
 type ServicesGeneratedApiData =
@@ -38,22 +32,8 @@ type ServicesGeneratedApiData =
 
 const API_ID = 'SERVICES_GENERATED';
 
-export function useOptIn(): Optin {
-  const [isOptIn, setOptIn] = useCookie('optInPersonalizedTips', 'no');
-
-  const optIn = useCallback(() => {
-    setOptIn('yes', { path: '/' });
-  }, [setOptIn]);
-
-  const optOut = useCallback(() => {
-    setOptIn('no', { path: '/' });
-  }, [setOptIn]);
-
-  return { isOptIn: isOptIn === 'yes', optIn, optOut };
-}
-
 export function useServicesGenerated(postpone: boolean = false) {
-  const { isOptIn, optIn, optOut } = useOptIn();
+  const { isOptIn } = useOptIn();
 
   const [api, refetch] = useDataApi<ServicesGeneratedApiData>(
     {
@@ -92,13 +72,11 @@ export function useServicesGenerated(postpone: boolean = false) {
       return apiSuccesResult({
         ...tipsSource.content,
         isOptIn,
-        optIn,
-        optOut,
       });
     }
 
     return tipsSource;
-  }, [tipsSource, isOptIn, optIn, optOut]);
+  }, [tipsSource, isOptIn]);
 
   return {
     ...api,

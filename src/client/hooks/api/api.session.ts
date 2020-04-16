@@ -1,41 +1,56 @@
-import { ApiRequestOptions, ApiState, useDataApi } from './api.hook';
+import { ApiRequestOptions, useDataApi } from './api.hook';
 
 import { ApiUrls } from '../../../universal/config/api';
 import { useMemo } from 'react';
+import {
+  apiSuccesResult,
+  apiPristineResponseData,
+  ApiSuccessResponse,
+  ApiErrorResponse,
+} from '../../../universal/helpers/api';
 
-export interface SessionResponse {
+export type SessionData = {
   isAuthenticated: boolean;
   validUntil: number;
   validityInSeconds: number;
   userType: 'BURGER' | 'BEDRIJF';
-}
+};
 
 export interface SessionState {
   refetch: () => void;
 }
 
-const INITIAL_SESSION_STATE: SessionResponse = {
-  isAuthenticated: false,
-  validUntil: -1,
-  validityInSeconds: -1,
-  userType: 'BURGER',
-};
+const INITIAL_SESSION_STATE = apiPristineResponseData({
+  SESSION: {
+    isAuthenticated: false,
+    validUntil: -1,
+    validityInSeconds: -1,
+    userType: 'BURGER',
+  },
+});
 
 const requestOptions: ApiRequestOptions = {
   url: ApiUrls.AUTH,
-  resetToInitialDataOnError: true,
+  transformResponse(data) {
+    return {
+      SESSION: apiSuccesResult<SessionData>(data),
+    };
+  },
 };
 
-export type SessionApiState = Omit<ApiState<null>, 'data'> &
-  SessionState &
-  SessionResponse;
+type SessionResponseData =
+  | Record<
+      'SESSION',
+      ApiSuccessResponse<SessionData> | ApiErrorResponse<SessionData>
+    >
+  | typeof INITIAL_SESSION_STATE;
 
-export default function useSessionApi(): SessionApiState {
+export default function useSessionApi() {
   const [{ data, isLoading, isDirty, ...rest }, refetch] = useDataApi<
-    SessionResponse
+    SessionResponseData
   >(requestOptions, INITIAL_SESSION_STATE);
 
-  const { isAuthenticated, validUntil, userType } = data;
+  const { isAuthenticated, validUntil, userType } = data.SESSION.content;
 
   return useMemo(() => {
     const validityInSeconds = Math.max(

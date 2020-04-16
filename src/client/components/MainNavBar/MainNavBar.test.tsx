@@ -1,15 +1,15 @@
 import * as bliep from '../../hooks/media.hook';
-import * as session from '../../hooks/api/session.api.hook';
+import * as session from '../../hooks/api/api.session';
 
 import { mount, shallow } from 'enzyme';
 
-import AppState from '../../AppState';
 import { BrowserRouter } from 'react-router-dom';
 import MainNavBar from './MainNavBar';
 import React from 'react';
 import { SessionState } from '../../SessionState';
+import { MockAppStateProvider } from '../../AppStateProvider';
 
-const sessionState: session.SessionApiState = {
+const sessionState: any = {
   isAuthenticated: true,
   isLoading: false,
   isError: false,
@@ -46,9 +46,9 @@ describe('MainNavBar', () => {
       shallow(
         <BrowserRouter>
           <SessionState value={sessionState}>
-            <AppState value={appState}>
+            <MockAppStateProvider value={appState}>
               <MainNavBar />
-            </AppState>
+            </MockAppStateProvider>
           </SessionState>
         </BrowserRouter>
       ).html()
@@ -75,6 +75,7 @@ describe('MainNavBar', () => {
             isAuthenticated: true,
             validUntil: 0,
             validityInSeconds: 0,
+            userType: 'BURGER',
             isDirty: true,
             refetch: () => void 0,
           };
@@ -90,9 +91,9 @@ describe('MainNavBar', () => {
         shallow(
           <BrowserRouter>
             <SessionState value={sessionState}>
-              <AppState value={appState}>
+              <MockAppStateProvider value={appState}>
                 <MainNavBar />
-              </AppState>
+              </MockAppStateProvider>
             </SessionState>
           </BrowserRouter>
         ).html()
@@ -102,9 +103,9 @@ describe('MainNavBar', () => {
       const component = mount(
         <BrowserRouter>
           <SessionState value={sessionState}>
-            <AppState value={appState}>
+            <MockAppStateProvider value={appState}>
               <MainNavBar />
-            </AppState>
+            </MockAppStateProvider>
           </SessionState>
         </BrowserRouter>
       );

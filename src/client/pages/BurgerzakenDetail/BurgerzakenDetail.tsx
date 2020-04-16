@@ -1,20 +1,25 @@
 import React, { useContext } from 'react';
-import { DetailPage, PageContent } from 'components/Page/Page';
-import PageHeading from 'components/PageHeading/PageHeading';
-import styles from './BurgerzakenDetail.module.scss';
-import { ChapterTitles } from 'config/Chapter.constants';
-import { AppRoutes } from 'config/Routing.constants';
-import { AppContext } from 'AppState';
 import useRouter from 'use-react-router';
-import Alert from 'components/Alert/Alert';
-import LoadingContent from 'components/LoadingContent/LoadingContent';
-import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
-import { capitalizeFirstLetter } from '../../helpers/App';
+import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import {
+  capitalizeFirstLetter,
+  isError,
+  isLoading,
+} from '../../../universal/helpers';
+import { AppContext } from '../../AppState';
+import {
+  Alert,
+  ChapterIcon,
+  DetailPage,
+  LoadingContent,
+  PageContent,
+  PageHeading,
+} from '../../components';
+import styles from './BurgerzakenDetail.module.scss';
+import { ReisDocument } from '../../../server/services/brp';
 
 export default () => {
-  const {
-    BRP: { data, isError, isLoading },
-  } = useContext(AppContext);
+  const { BRP } = useContext(AppContext);
 
   const {
     match: {

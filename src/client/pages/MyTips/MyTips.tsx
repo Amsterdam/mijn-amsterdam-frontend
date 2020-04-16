@@ -14,10 +14,11 @@ import { isError, isLoading } from '../../../universal/helpers';
 
 import { AppContext } from '../../AppState';
 import styles from './MyTips.module.scss';
+import { useOptIn } from '../../hooks/optin.hook';
 
 export default () => {
   const { TIPS } = useContext(AppContext);
-
+  const { isOptIn } = useOptIn();
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   return (
@@ -26,7 +27,7 @@ export default () => {
       {FeatureToggle.myTipsoptInOutPersonalization && (
         <PageContent>
           <p>
-            {!TIPS.content?.isOptIn ? (
+            {!isOptIn ? (
               <>
                 U ziet nu algemene tips over voorzieningen en activiteiten in
                 Amsterdam. Op basis van uw informatie die bij de gemeente bekend
@@ -41,14 +42,12 @@ export default () => {
               </>
             )}
             <Button
-              variant={
-                TIPS.content?.isOptIn ? 'secondary-inverted' : 'secondary'
-              }
+              variant={isOptIn ? 'secondary-inverted' : 'secondary'}
               className={styles.OptInOutToggleButton}
               onClick={() => setModalIsOpen(true)}
               aria-expanded={modalIsOpen}
             >
-              {TIPS.content?.isOptIn
+              {isOptIn
                 ? 'Toon geen persoonlijke tips'
                 : 'Toon persoonlijke tips'}
             </Button>
@@ -68,7 +67,7 @@ export default () => {
         showHeader={false}
         isLoading={isLoading(TIPS)}
         items={TIPS.content?.items || []}
-        isOptIn={TIPS.content?.isOptIn}
+        isOptIn={isOptIn}
       />
     </OverviewPage>
   );

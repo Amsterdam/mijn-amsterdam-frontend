@@ -6,12 +6,10 @@ import {
   loadServicesRelated,
 } from './services';
 import { loadServicesMap } from './services/services-map';
-import { fetchBRP } from './services/brp';
-import compression from 'compression';
-import { cache } from './helpers/request';
+import { clearCache } from './helpers/request';
+import { loadServicesSSE } from './services/services-sse';
 
 export const router = express.Router();
-export const eventSourceRouter = express.Router();
 
 router.use(`${API_BASE_URL}/auth/check`, function handleAuthentication(
   req: Request,
@@ -75,55 +73,10 @@ router.use(
       ...(await loadServicesGenerated(req.sessionID!, req.query.optin === '1')),
     };
 
+    clearCache(req.sessionID!);
+
     return res.send(data);
   }
 );
 
-function sendMessage(res: Response, id: string, data: any) {
-  const doStringify = typeof data !== 'string';
-  const payload = doStringify ? JSON.stringify(data) : data;
-  const message = `event: message\nid: ${id}\ndata: ${payload}\n\n`;
-  res.write(message);
-}
-
-eventSourceRouter.all('/stream', async function(req, res) {
-  // Tell the client we respond with an event stream
-  res.writeHead(200, {
-    // Connection: 'keep-alive',
-    'Content-Type': 'text/event-stream',
-    'Cache-Control': 'no-cache',
-  });
-
-  const servicesDirect = loadServicesDirect(req.sessionID!).then(data => {
-    sendMessage(res, 'direct', data);
-  });
-
-  const servicesRelated = loadServicesRelated(req.sessionID!).then(data => {
-    sendMessage(res, 'related', data);
-  });
-
-  const servicesMap = loadServicesMap(req.sessionID!).then(data => {
-    sendMessage(res, 'map', data);
-  });
-
-  const servicesGenerated = loadServicesGenerated(
-    req.sessionID!,
-    req.query.optin === '1'
-  ).then(data => {
-    sendMessage(res, 'generated', data);
-  });
-
-  Promise.all([
-    servicesDirect,
-    servicesRelated,
-    servicesMap,
-    servicesGenerated,
-  ]).finally(() => {
-    for (const cacheKey of cache.keys()) {
-      console.log(cacheKey, cacheKey.startsWith('testje'));
-      if (cacheKey.startsWith('testje')) {
-        cache.delete(cacheKey);
-      }
-    }
-  });
-});
+router.use('/stream', loadServicesSSE);

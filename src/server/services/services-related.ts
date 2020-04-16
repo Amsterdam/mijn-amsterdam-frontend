@@ -7,7 +7,7 @@ type AFVALResponseData =
   | ApiUnknownResponse;
 
 export async function loadServicesRelated(sessionID: SessionID) {
-  const BRP = await fetchBRP();
+  const BRP = await fetchBRP(sessionID);
   const HOME = await fetchHOME(sessionID);
 
   let AFVALresponse: AFVALResponseData = apiUnknownResult(
@@ -15,7 +15,7 @@ export async function loadServicesRelated(sessionID: SessionID) {
   );
 
   if (HOME.status === 'success') {
-    const AFVAL = await fetchAFVAL(HOME.content.latlng);
+    const AFVAL = await fetchAFVAL(sessionID, HOME.content.latlng);
     AFVALresponse = AFVAL;
   }
 

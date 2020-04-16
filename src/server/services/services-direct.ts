@@ -8,12 +8,12 @@ import {
 } from './index';
 
 export async function loadServicesDirect(sessionID: SessionID) {
-  const fetchFOCUSAanvragenRequest = fetchFOCUSAanvragen();
-  const fetchFOCUSSpecificatiesRequest = fetchFOCUSSpecificaties();
-  const fetchWMORequest = fetchWMO();
-  const fetchERFPACHTRequest = fetchERFPACHT();
-  const fetchBELASTINGRequest = fetchBELASTING();
-  const fetchMILIEUZONERequest = fetchMILIEUZONE();
+  const fetchFOCUSAanvragenRequest = fetchFOCUSAanvragen(sessionID);
+  const fetchFOCUSSpecificatiesRequest = fetchFOCUSSpecificaties(sessionID);
+  const fetchWMORequest = fetchWMO(sessionID);
+  const fetchERFPACHTRequest = fetchERFPACHT(sessionID);
+  const fetchBELASTINGRequest = fetchBELASTING(sessionID);
+  const fetchMILIEUZONERequest = fetchMILIEUZONE(sessionID);
 
   const [
     FOCUS_AANVRAGEN,

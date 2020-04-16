@@ -5,8 +5,11 @@ export interface ERFPACHTData {
   status: true;
 }
 
-export function fetchERFPACHT() {
-  return requestData<ERFPACHTData>({
-    url: ApiUrls.ERFPACHT,
-  });
+export function fetchERFPACHT(sessionID: SessionID) {
+  return requestData<ERFPACHTData>(
+    {
+      url: ApiUrls.ERFPACHT,
+    },
+    sessionID
+  );
 }

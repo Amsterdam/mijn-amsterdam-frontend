@@ -41,7 +41,7 @@ export const mainMenuItems: MenuItem[] = [
   {
     title: MenuItemTitles.NOTIFICATIONS,
     id: mainMenuItemId.NOTIFICATIONS,
-    to: AppRoutes.NOTIFICATIONS,
+    to: AppRoutes.UPDATES,
   },
 ];
 

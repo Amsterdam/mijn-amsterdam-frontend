@@ -43,11 +43,7 @@ export interface MainNavLinkProps {
   title: string;
 }
 
-interface SecondaryLinksProps {
-  userType: 'BURGER' | 'BEDRIJF';
-}
-
-function SecondaryLinks({ userType = 'BURGER' }: SecondaryLinksProps) {
+function SecondaryLinks() {
   const { BRP } = useContext(AppContext);
   const persoon = BRP?.status === 'success' ? BRP.content.persoon : null;
   const hasFirstName = !!(persoon && persoon.voornamen);
@@ -199,7 +195,7 @@ function BurgerButton({ isActive, toggleBurgerMenu }: BurgerButtonProps) {
 export default function MainNavBar() {
   const appState = useContext(AppContext);
   const session = useContext(SessionContext);
-  const { isAuthenticated, userType } = session;
+  const { isAuthenticated } = session;
   const hasBurgerMenu = useTabletScreen();
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
     undefined
@@ -298,7 +294,7 @@ export default function MainNavBar() {
             style={linkContainerAnimationProps}
           >
             {menuItemsComposed}
-            <SecondaryLinks userType={userType} />
+            <SecondaryLinks />
           </animated.div>
         </>
       )}

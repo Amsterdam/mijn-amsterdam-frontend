@@ -1,14 +1,19 @@
 import React, { useContext, useMemo } from 'react';
-import { OverviewPage, PageContent } from 'components/Page/Page';
-import PageHeading from 'components/PageHeading/PageHeading';
-import { AppContext } from 'AppState';
-import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
+import { ChapterTitles } from '../../../universal/config';
+import { isError, isLoading } from '../../../universal/helpers';
+import { AppContext } from '../../AppState';
+import {
+  Alert,
+  ChapterIcon,
+  Linkd,
+  OverviewPage,
+  PageContent,
+  PageHeading,
+  SectionCollapsible,
+  Table,
+} from '../../components';
+import { addTitleLinkComponent } from '../../components/Table/Table';
 import styles from './Burgerzaken.module.scss';
-import Alert from 'components/Alert/Alert';
-import { ChapterTitles } from 'config/Chapter.constants';
-import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
-import Table, { addTitleLinkComponent } from 'components/Table/Table';
-import Linkd from '../../components/Button/Button';
 
 const DISPLAY_PROPS = {
   title: '',
@@ -16,12 +21,10 @@ const DISPLAY_PROPS = {
 };
 
 export default () => {
-  const {
-    BRP: { data, isError, isLoading },
-  } = useContext(AppContext);
+  const { BRP } = useContext(AppContext);
 
-  const documentItems = useMemo(() => {
-    if (!data.identiteitsbewijzen) {
+   const documentItems = useMemo(() => {
+    if (!BRP.content?.identiteitsbewijzen) {
       return [];
     }
     return addTitleLinkComponent(data.identiteitsbewijzen);

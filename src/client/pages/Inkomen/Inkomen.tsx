@@ -9,7 +9,6 @@ import {
   Table,
 } from '../../components';
 import {
-  AppRoutes,
   ChapterTitles,
   ExternalUrls,
   FeatureToggle,
@@ -19,7 +18,6 @@ import { isError, isLoading } from '../../../universal/helpers';
 
 import { AppContext } from '../../AppState';
 import { addTitleLinkComponent } from '../../components/Button/Button';
-import { generatePath } from 'react-router-dom';
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import {
   annualStatementsTableDisplayProps,
