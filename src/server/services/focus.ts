@@ -1025,7 +1025,6 @@ function formatIncomSpecificationItem(
   const displayDate = defaultDateFormat(item.datePublished);
   return {
     ...item,
-    notification: formatIncomeSpecificationNotification(type, item),
     displayDate,
     documentUrl: `<a
         href=${`/api/${item.url}`}
@@ -1090,26 +1089,36 @@ function transformFOCUSAanvragenData(
 function transformFOCUSIncomeSpecificationsData(
   responseData: FOCUSIncomeSpecificationSourceData
 ) {
-  const jaaropgaven = responseData.content.jaaropgaven || [];
-  const uitkeringsspecificaties =
-    responseData.content.uitkeringsspecificaties || [];
+  const jaaropgaven = (responseData.content.jaaropgaven || [])
+    .sort(dateSort('datePublished', 'desc'))
+    .map(item => formatIncomSpecificationItem(item, 'jaaropgave'));
 
-  const notifications: MyNotification[] = [
-    ...jaaropgaven,
-    ...uitkeringsspecificaties,
-  ]
-    .filter((item: any) => item.notification !== undefined)
-    .map((item: any) => item.notification as MyNotification);
+  const uitkeringsspecificaties = (
+    responseData.content.uitkeringsspecificaties || []
+  )
+    .sort(dateSort('datePublished', 'desc'))
+    .map(item => formatIncomSpecificationItem(item, 'uitkeringsspecificatie'));
+
+  const notifications: MyNotification[] = [];
+
+  if (jaaropgaven.length) {
+    notifications.push(
+      formatIncomeSpecificationNotification('jaaropgave', jaaropgaven[0])
+    );
+  }
+
+  if (uitkeringsspecificaties.length) {
+    notifications.push(
+      formatIncomeSpecificationNotification(
+        'uitkeringsspecificatie',
+        uitkeringsspecificaties[0]
+      )
+    );
+  }
 
   return {
-    jaaropgaven: jaaropgaven
-      .sort(dateSort('datePublished', 'desc'))
-      .map(item => formatIncomSpecificationItem(item, 'jaaropgave')),
-    uitkeringsspecificaties: uitkeringsspecificaties
-      .sort(dateSort('datePublished', 'desc'))
-      .map(item =>
-        formatIncomSpecificationItem(item, 'uitkeringsspecificatie')
-      ),
+    jaaropgaven: jaaropgaven,
+    uitkeringsspecificaties,
     notifications,
   };
 }

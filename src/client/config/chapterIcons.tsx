@@ -9,6 +9,7 @@ import {
   IconTips,
   IconWonen,
   IconZorg,
+  IconAlert,
 } from '../assets/icons';
 
 import { Chapter, Chapters } from '../../universal/config';
@@ -27,4 +28,5 @@ export const ChapterIcons: Record<Chapter, SVGComponent> = {
   [Chapters.TIPS]: IconTips,
   [Chapters.WONEN]: IconWonen,
   [Chapters.ZORG]: IconZorg,
+  ALERT: IconAlert,
 };
