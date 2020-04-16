@@ -56,7 +56,7 @@ export interface RequestConfig<Source, Transformed> {
   format: (data: Source) => Transformed;
 }
 
-const cache = new Map();
+export const cache = new Map();
 
 export async function requestData<T>(
   config: AxiosRequestConfig,
