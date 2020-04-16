@@ -656,68 +656,69 @@ export function formatWmoApiResponse(
   wmoApiResponseData: WmoApiResponse,
   today: Date
 ): WmoItem[] {
-  const items = Array.isArray(wmoApiResponseData)
-    ? wmoApiResponseData
-    : []
-        .sort(dateSort('VoorzieningIngangsdatum', 'desc'))
-        .map((item, index) => {
-          const {
-            Omschrijving: title,
-            VoorzieningIngangsdatum: dateStart,
-            VoorzieningEinddatum: dateFinish,
-            Leverancier: supplier,
-            Actueel: isActual,
-            Beschikkingsdatum: dateDecision,
-            Voorzieningsoortcode: itemTypeCode,
-            Leveringsvorm: deliveryType,
-          } = item;
+  if (!Array.isArray(wmoApiResponseData)) {
+    return [];
+  }
+  const items = wmoApiResponseData
+    .sort(dateSort('VoorzieningIngangsdatum', 'desc'))
+    .map((item, index) => {
+      const {
+        Omschrijving: title,
+        VoorzieningIngangsdatum: dateStart,
+        VoorzieningEinddatum: dateFinish,
+        Leverancier: supplier,
+        Actueel: isActual,
+        Beschikkingsdatum: dateDecision,
+        Voorzieningsoortcode: itemTypeCode,
+        Leveringsvorm: deliveryType,
+      } = item;
 
-          const {
-            StartdatumLeverancier: dateStartServiceDelivery,
-            EinddatumLeverancier: dateFinishServiceDelivery,
-            Opdrachtdatum: dateRequestOrderStart,
-          } = (item.Levering || {}) as WmoApiLevering;
+      const {
+        StartdatumLeverancier: dateStartServiceDelivery,
+        EinddatumLeverancier: dateFinishServiceDelivery,
+        Opdrachtdatum: dateRequestOrderStart,
+      } = (item.Levering || {}) as WmoApiLevering;
 
-          const id = slug(`${title}-${index}`).toLowerCase();
+      const id = slug(`${title}-${index}`).toLowerCase();
 
-          const process: WmoItem['process'] = formatWmoProcessItems(
-            {
-              title,
-              dateStart,
-              dateFinish: dateFinish || '',
-              supplier,
-              isActual,
-              dateDecision,
-              dateStartServiceDelivery,
-              dateFinishServiceDelivery: dateFinishServiceDelivery || '',
-              dateRequestOrderStart,
-              serviceDeliverySupplier: supplier || 'Onbekend',
-              itemTypeCode,
-              deliveryType,
-            },
-            today
-          );
+      const process: WmoItem['process'] = formatWmoProcessItems(
+        {
+          title,
+          dateStart,
+          dateFinish: dateFinish || '',
+          supplier,
+          isActual,
+          dateDecision,
+          dateStartServiceDelivery,
+          dateFinishServiceDelivery: dateFinishServiceDelivery || '',
+          dateRequestOrderStart,
+          serviceDeliverySupplier: supplier || 'Onbekend',
+          itemTypeCode,
+          deliveryType,
+        },
+        today
+      );
 
-          const route = generatePath(AppRoutes['ZORG/VOORZIENINGEN'], {
-            id,
-          });
+      const route = generatePath(AppRoutes['ZORG/VOORZIENINGEN'], {
+        id,
+      });
 
-          return {
-            id,
-            title: capitalizeFirstLetter(title),
-            dateStart: defaultDateFormat(dateStart),
-            dateFinish: dateFinish ? defaultDateFormat(dateFinish) : '',
-            supplier,
-            // TODO: See if we can get a url to the suppliers websites
-            supplierUrl: '',
-            isActual,
-            link: {
-              title: 'Meer informatie',
-              to: route,
-            },
-            process,
-          };
-        });
+      return {
+        id,
+        title: capitalizeFirstLetter(title),
+        dateStart: defaultDateFormat(dateStart),
+        dateFinish: dateFinish ? defaultDateFormat(dateFinish) : '',
+        supplier,
+        // TODO: See if we can get a url to the suppliers websites
+        supplierUrl: '',
+        isActual,
+        link: {
+          title: 'Meer informatie',
+          to: route,
+        },
+        process,
+      };
+    });
 
   return items;
 }
