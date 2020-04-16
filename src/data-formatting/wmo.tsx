@@ -656,6 +656,9 @@ export function formatWmoApiResponse(
   wmoApiResponseData: WmoApiResponse,
   today: Date
 ): WmoItem[] {
+  if (!Array.isArray(wmoApiResponseData)) {
+    return [];
+  }
   const items = wmoApiResponseData
     .sort(dateSort('VoorzieningIngangsdatum', 'desc'))
     .map((item, index) => {
