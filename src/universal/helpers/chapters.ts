@@ -31,6 +31,7 @@ function isChapterActive(
       return !isLoading(WMO) && !!WMO.content?.items.length;
 
     case Chapters.BELASTINGEN:
+      // Belastingen always visible if we receive an error from the api
       return (
         !isLoading(BELASTINGEN) &&
         (FeatureToggle.belastingApiActive && BELASTINGEN.status === 'success'
