@@ -1105,7 +1105,7 @@ export async function fetchFOCUSAanvragenGenerated(sessionID: SessionID) {
   const notifications: MyNotification[] = [];
   const cases: MyCase[] = [];
 
-  if (response.status === 'success') {
+  if (response.status === 'OK') {
     const aanvragen = response.content;
 
     for (const item of aanvragen) {
@@ -1147,7 +1147,7 @@ export async function fetchFOCUSSpecificationsGenerated(sessionID: SessionID) {
   const response = await fetchFOCUSSpecificaties(sessionID);
   const notifications: MyNotification[] = [];
 
-  if (response.status === 'success') {
+  if (response.status === 'OK') {
     const { jaaropgaven, uitkeringsspecificaties } = response.content;
 
     if (jaaropgaven.length) {

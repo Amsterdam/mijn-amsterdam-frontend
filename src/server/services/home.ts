@@ -12,7 +12,7 @@ export async function fetchHOME(sessionID: SessionID) {
     'De aanvraag voor BAG data kon niet worden gemaakt. BRP data is niet beschikbaar.'
   );
 
-  if (BRP.status === 'success') {
+  if (BRP.status === 'OK') {
     const BAG = await fetchBAG(sessionID, BRP.content.adres);
     HOMEresponse = BAG;
   }

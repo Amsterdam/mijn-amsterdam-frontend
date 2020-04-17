@@ -14,7 +14,7 @@ export async function loadServicesMap(sessionID: SessionID) {
   let lat = DEFAULT_LAT;
   let lng = DEFAULT_LNG;
 
-  if (HOME.status === 'success') {
+  if (HOME.status === 'OK') {
     lat = HOME.content.latlng!.lat;
     lng = HOME.content.latlng!.lat;
   }

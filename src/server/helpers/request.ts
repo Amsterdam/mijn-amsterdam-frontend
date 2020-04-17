@@ -126,7 +126,7 @@ export async function requestData<T>(
 
     return responseData;
   } catch (error) {
-    console.log('error', error);
+    console.log('ERROR', error);
     // IS_SENTRY_ENABLED && Sentry.captureException(error);
 
     const responseData = apiErrorResult(error, null);
