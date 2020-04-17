@@ -950,6 +950,9 @@ export function formatFocusProduct(
 
 function formatFocusApiResponse(products: FocusApiResponse): FocusItem[] {
   const d = new Date();
+  if (!Array.isArray(products)) {
+    return [];
+  }
   return products.map(product => formatFocusProduct(product, d));
 }
 
