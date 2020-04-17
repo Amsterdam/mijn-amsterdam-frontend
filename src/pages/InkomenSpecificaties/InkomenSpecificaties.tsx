@@ -231,7 +231,7 @@ export default () => {
                   minDateFilterActive && styles.FilterActive
                 )}
                 value={selectedDates[0]}
-                hasNativeSupport={false}
+                hasNativeSupport={isNativeDatePickerInputSupported()}
                 onChange={dateStart => {
                   setSelectedDates(([, dateEnd]) => [
                     dateStart || minDate,
@@ -259,7 +259,7 @@ export default () => {
                   maxDateFilterActive && styles.FilterActive
                 )}
                 value={selectedDates[1]}
-                hasNativeSupport={false}
+                hasNativeSupport={isNativeDatePickerInputSupported()}
                 onChange={dateEnd =>
                   setSelectedDates(([dateStart]) => [
                     dateStart || minDate,
