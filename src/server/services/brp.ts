@@ -251,7 +251,7 @@ export async function fetchBRPGenerated(sessionID: SessionID) {
   const BRP = await fetchBRP(sessionID);
   let notifications: MyNotification[] = [];
 
-  if (BRP.status === 'success') {
+  if (BRP.status === 'OK') {
     notifications = transformBRPNotifications(BRP.content);
   }
 

@@ -59,7 +59,7 @@ export function useServicesGenerated(postpone: boolean = false) {
   } = api.data;
 
   const NOTIFICATIONS = useMemo(() => {
-    if (notificationsSource.status === 'success') {
+    if (notificationsSource.status === 'OK') {
       return apiSuccesResult({
         items: [...notificationsSource.content.items, WelcomeNotification],
       });
@@ -68,7 +68,7 @@ export function useServicesGenerated(postpone: boolean = false) {
   }, [notificationsSource]);
 
   const TIPS = useMemo(() => {
-    if (tipsSource.status === 'success') {
+    if (tipsSource.status === 'OK') {
       return apiSuccesResult({
         ...tipsSource.content,
         isOptIn,

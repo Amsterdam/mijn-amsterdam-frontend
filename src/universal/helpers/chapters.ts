@@ -34,7 +34,7 @@ function isChapterActive(
       // Belastingen always visible if we receive an error from the api
       return (
         !isLoading(BELASTINGEN) &&
-        (FeatureToggle.belastingApiActive && BELASTINGEN.status === 'success'
+        (FeatureToggle.belastingApiActive && BELASTINGEN.status === 'OK'
           ? BELASTINGEN.content.isKnown
           : true)
       );

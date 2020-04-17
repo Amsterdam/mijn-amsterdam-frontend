@@ -14,7 +14,7 @@ export async function loadServicesRelated(sessionID: SessionID) {
     'De aanvraag voor AFVAL data kon niet worden gemaakt. HOME locatie data is niet beschikbaar.'
   );
 
-  if (HOME.status === 'success') {
+  if (HOME.status === 'OK') {
     const AFVAL = await fetchAFVAL(sessionID, HOME.content.latlng);
     AFVALresponse = AFVAL;
   }

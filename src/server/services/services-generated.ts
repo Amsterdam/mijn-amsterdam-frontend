@@ -69,7 +69,7 @@ export async function loadServicesGenerated(
         ...servicesRelated,
       }).reduce<Record<ApiStateKey, any>>(
         (acc, [apiStateKey, responseData]) => {
-          if (responseData.status === 'success') {
+          if (responseData.status === 'OK') {
             acc[apiStateKey] = responseData.content;
           }
           return acc;

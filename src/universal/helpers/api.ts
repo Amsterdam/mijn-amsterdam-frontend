@@ -5,31 +5,31 @@ import { ErrorNames } from '../config';
 export interface ApiErrorResponse<T> {
   message: string;
   content: T;
-  status: 'failure';
+  status: 'ERROR';
 }
 
 export type ApiSuccessResponse<T> = {
   content: T;
-  status: 'success';
+  status: 'OK';
 };
 
 // This state is used for checking if we are expecting data from the api.
 export type ApiPristineResponse<T> = {
   content: T;
-  status: 'pristine';
+  status: 'PRISTINE';
 };
 
 // Used of the request to the api must be postponed, for example when using a feature toggle.
 export type ApiPostponeResponse = {
   content: null;
-  status: 'postpone';
+  status: 'POSTPONE';
 };
 
 // Used if the request can't be made because of dependent requirements e.g using request params from data of another api which returns an error.
 export type ApiUnknownResponse = {
   content: null;
   message: string;
-  status: 'dependency-failure';
+  status: 'DEPENDENCY_ERROR';
 };
 
 export type FEApiResponseData<T extends (...args: any[]) => any> = ResolvedType<
@@ -50,7 +50,7 @@ export function isLoading(
     | ApiPristineResponse<any>
 ) {
   // If no responseData was found, assumes it's still loading
-  return !!apiResponseData && apiResponseData.status === 'pristine';
+  return !!apiResponseData && apiResponseData.status === 'PRISTINE';
 }
 
 export function isError(
@@ -63,8 +63,8 @@ export function isError(
   responseKey?: string
 ) {
   return (
-    apiResponseData.status === 'failure' ||
-    apiResponseData.status === 'dependency-failure'
+    apiResponseData.status === 'ERROR' ||
+    apiResponseData.status === 'DEPENDENCY_ERROR'
   );
 }
 
@@ -75,21 +75,21 @@ export function apiErrorResult<T>(
   return {
     content,
     message: error.response?.data?.message || error.toString(),
-    status: 'failure',
+    status: 'ERROR',
   };
 }
 
 export function apiSuccesResult<T>(content: T): ApiSuccessResponse<T> {
   return {
     content,
-    status: 'success',
+    status: 'OK',
   };
 }
 
 export function apiPostponeResult(): ApiPostponeResponse {
   return {
     content: null,
-    status: 'postpone',
+    status: 'POSTPONE',
   };
 }
 
@@ -97,13 +97,13 @@ export function apiUnknownResult(message: string): ApiUnknownResponse {
   return {
     message,
     content: null,
-    status: 'dependency-failure',
+    status: 'DEPENDENCY_ERROR',
   };
 }
 
 export function apiPristineResponseData<T>(content: T) {
   return Object.entries(content).reduce((acc, [key, content]) => {
-    return Object.assign(acc, { [key]: { content, status: 'pristine' } });
+    return Object.assign(acc, { [key]: { content, status: 'PRISTINE' } });
   }, {} as Record<keyof T, ApiPristineResponse<T[keyof T]>>);
 }
 
