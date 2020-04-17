@@ -38,11 +38,6 @@ export default function DateInput({
     setDateState([value.getFullYear(), value.getMonth(), value.getDate()]);
   }, [value]);
 
-  const initalValue = useMemo(() => {
-    return value;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const setDate = useCallback(
     ([year, month, day]: [number, number, number]) => {
       setDateState([year, month, day]);
@@ -76,8 +71,11 @@ export default function DateInput({
           value={valueFormatted}
           onChange={event => {
             if (event.target.value) {
-              let dateValue = parseISO(event.target.value);
-              onChange(event.target.value ? dateValue : initalValue);
+              const parsed = parseISO(event.target.value);
+              let dateValue = isValid(parsed) ? parsed : null;
+              if (dateValue !== null) {
+                onChange(dateValue);
+              }
             }
           }}
         />

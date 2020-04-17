@@ -24,7 +24,7 @@ import Table from 'components/Table/Table';
 import classnames from 'classnames';
 import styles from './InkomenSpecificaties.module.scss';
 import useRouter from 'use-react-router';
-import { parseISO, toDate } from 'date-fns';
+import { parseISO } from 'date-fns';
 
 export const specificationsTableDisplayProps = {
   title: 'Omschrijving',

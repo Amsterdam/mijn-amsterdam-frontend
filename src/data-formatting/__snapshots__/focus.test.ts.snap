@@ -2,6 +2,7 @@
 
 exports[`Focus data formatting format correctly Levensonderhoud--1-0 1`] = `
 Object {
+  "ISODatePublished": "2019-07-28T15:05:51+02:00",
   "chapter": "INKOMEN",
   "datePublished": "28 juli 2019",
   "dateStart": "24 juli 2019",
@@ -157,6 +158,7 @@ Object {
 
 exports[`Focus data formatting format correctly Levensonderhoud--1-1 1`] = `
 Object {
+  "ISODatePublished": "2019-05-07T15:05:51+02:00",
   "chapter": "INKOMEN",
   "datePublished": "07 mei 2019",
   "dateStart": "09 april 2019",
@@ -288,6 +290,7 @@ Object {
 
 exports[`Focus data formatting format correctly Levensonderhoud--1-2 1`] = `
 Object {
+  "ISODatePublished": "2019-06-08T15:05:51+02:00",
   "chapter": "INKOMEN",
   "datePublished": "08 juni 2019",
   "dateStart": "09 mei 2019",
@@ -467,6 +470,7 @@ Object {
 
 exports[`Focus data formatting format correctly Levensonderhoud--1-3 1`] = `
 Object {
+  "ISODatePublished": "2019-07-03T15:05:52+02:00",
   "chapter": "INKOMEN",
   "datePublished": "03 juli 2019",
   "dateStart": "08 juni 2019",
@@ -629,6 +633,7 @@ Object {
 
 exports[`Focus data formatting format correctly Stadspas--0-0 1`] = `
 Object {
+  "ISODatePublished": "2019-07-08T15:05:52+02:00",
   "chapter": "INKOMEN",
   "datePublished": "08 juli 2019",
   "dateStart": "08 juli 2019",
@@ -700,6 +705,7 @@ Object {
 
 exports[`Focus data formatting format correctly Stadspas--0-1 1`] = `
 Object {
+  "ISODatePublished": "2019-07-08T15:05:52+02:00",
   "chapter": "INKOMEN",
   "datePublished": "08 juli 2019",
   "dateStart": "07 juli 2019",
@@ -810,6 +816,7 @@ Object {
 
 exports[`Focus data formatting format correctly Stadspas--0-2 1`] = `
 Object {
+  "ISODatePublished": "2019-07-06T15:05:52+02:00",
   "chapter": "INKOMEN",
   "datePublished": "06 juli 2019",
   "dateStart": "03 juli 2019",
