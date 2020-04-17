@@ -2,7 +2,6 @@ import { loadServicesDirect } from './services-direct';
 import { loadServicesRelated } from './services-related';
 import { loadServicesMap } from './services-map';
 import { loadServicesGenerated } from './services-generated';
-import { clearCache } from '../helpers/request';
 import { Response, Request, NextFunction } from 'express';
 
 function sendMessage(
