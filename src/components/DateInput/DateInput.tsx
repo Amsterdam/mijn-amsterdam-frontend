@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState, useEffect } from 'react';
-import { format, getDaysInMonth, parseISO } from 'date-fns';
+import { format, getDaysInMonth, parseISO, isValid } from 'date-fns';
 import { getMonth, range } from 'helpers/App';
 
 import classnames from 'classnames';
@@ -55,17 +55,30 @@ export default function DateInput({
   const daysInMonthSelected = useMemo(() => {
     return getDaysInMonth(new Date(yearSelected, monthSelected, daySelected));
   }, [yearSelected, monthSelected, daySelected]);
+
+  let valueError = !isValid(value);
+  let valueFormatted = '';
+
+  if (!valueError) {
+    valueFormatted = format(value, DATE_INPUT_FORMAT);
+  }
+
   return (
     <>
       {hasNativeSupport && (
         <input
-          className={classnames(styles.DateInput, className)}
+          className={classnames(
+            styles.DateInput,
+            className,
+            valueError && styles.DateInputError
+          )}
           type="date"
-          value={format(value, DATE_INPUT_FORMAT)}
+          value={valueFormatted}
           onChange={event => {
-            onChange(
-              event.target.value ? parseISO(event.target.value) : initalValue
-            );
+            if (event.target.value) {
+              let dateValue = parseISO(event.target.value);
+              onChange(event.target.value ? dateValue : initalValue);
+            }
           }}
         />
       )}
