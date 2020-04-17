@@ -3,7 +3,7 @@ import { loadServicesRelated } from './services-related';
 import { loadServicesMap } from './services-map';
 import { loadServicesGenerated } from './services-generated';
 import { clearCache } from '../helpers/request';
-import { Response, Request } from 'express';
+import { Response, Request, NextFunction } from 'express';
 
 function sendMessage(
   res: Response,
@@ -18,7 +18,11 @@ function sendMessage(
   res.flush();
 }
 
-export async function loadServicesSSE(req: Request, res: Response) {
+export async function loadServicesSSE(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   // Tell the client we respond with an event stream
   res.writeHead(200, {
     'content-type': 'text/event-stream',
@@ -45,13 +49,13 @@ export async function loadServicesSSE(req: Request, res: Response) {
     sendMessage(res, 'generated', 'message', data);
   });
 
-  Promise.all([
+  await Promise.all([
     servicesDirect,
     servicesRelated,
     servicesMap,
     servicesGenerated,
   ]).finally(() => {
-    clearCache(req.sessionID!);
     sendMessage(res, 'close', 'close', null);
+    next();
   });
 }

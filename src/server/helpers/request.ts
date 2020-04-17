@@ -70,6 +70,7 @@ export interface RequestConfig<Source, Transformed> {
 export const cache = new Map();
 
 export function clearCache(sessionID: SessionID) {
+  console.log('!!!!', sessionID, '!!!!');
   for (const cacheKey of cache.keys()) {
     if (cacheKey.startsWith(sessionID)) {
       cache.delete(cacheKey);

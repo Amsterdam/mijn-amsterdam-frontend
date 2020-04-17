@@ -21,6 +21,7 @@ export interface TIPSData {
 export interface TIPSRequestData {
   optin: boolean;
   data: Partial<BFFApiData>;
+  tips: MyTip[];
 }
 
 function formatTIPSData(responseData: TIPSData) {
