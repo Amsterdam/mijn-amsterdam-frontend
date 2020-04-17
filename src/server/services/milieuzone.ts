@@ -35,7 +35,7 @@ function transformMILIEUZONEData(
   responseData: MILIEUZONESourceData
 ): MILIEUZONEData {
   const { isKnown } = responseData?.content || {
-    isKnown: true,
+    isKnown: false,
   };
 
   return {
