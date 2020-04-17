@@ -195,6 +195,7 @@ export interface FocusItem {
   description: string;
   latestStep: StepTitle;
   hasDecision: boolean;
+  decision: DecisionFormatted;
   isRecent: boolean;
 
   // The null values are used to indicate there is no decision made yet
@@ -892,6 +893,7 @@ export function formatFocusProduct(
     latestStep,
     status: stepLabels ? stepLabels.status : stepStatusLabels[latestStep],
     isRecent,
+    decision,
     hasDecision,
     isGranted: hasDecision ? decision === getDecision('Toekenning') : null,
     isDenied: hasDecision ? decision === getDecision('Afwijzing') : null,
@@ -1010,7 +1012,7 @@ function formatIncomeSpecificationNotification(
   };
 }
 
-function formatIncomSpecificationItem(
+function transformIncomSpecificationItem(
   item: FocusInkomenSpecificatieFromSource,
   type: 'jaaropgave' | 'uitkeringsspecificatie'
 ): FocusInkomenSpecificatie {
@@ -1064,13 +1066,15 @@ function transformFOCUSIncomeSpecificationsData(
 ) {
   const jaaropgaven = (responseData.content.jaaropgaven || [])
     .sort(dateSort('datePublished', 'desc'))
-    .map(item => formatIncomSpecificationItem(item, 'jaaropgave'));
+    .map(item => transformIncomSpecificationItem(item, 'jaaropgave'));
 
   const uitkeringsspecificaties = (
     responseData.content.uitkeringsspecificaties || []
   )
     .sort(dateSort('datePublished', 'desc'))
-    .map(item => formatIncomSpecificationItem(item, 'uitkeringsspecificatie'));
+    .map(item =>
+      transformIncomSpecificationItem(item, 'uitkeringsspecificatie')
+    );
 
   return {
     jaaropgaven,
@@ -1118,6 +1122,7 @@ export async function fetchFOCUSAanvragenGenerated(sessionID: SessionID) {
           productTitle: item.productTitle,
           dateStart: item.dateStart,
           datePublished: item.datePublished,
+          decision: item.decision,
         } as StepSourceData
       );
 
