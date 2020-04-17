@@ -4,6 +4,11 @@
   @include input;
 }
 
+.DateInputError {
+  border-color: $color-support-invalid!important;
+  outline-color: $color-support-invalid!important;
+}
+
 .DateInputFallback {
   display: inline-flex;
   position: relative;

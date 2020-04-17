@@ -143,6 +143,9 @@
   margin: 0;
   border: 0.1rem solid $color-neutral-grey4;
   border-radius: 0;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 @mixin inputSelect() {
