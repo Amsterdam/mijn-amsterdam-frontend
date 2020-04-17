@@ -22,10 +22,11 @@ import { isError, isLoading } from '../../../universal/helpers';
 
 import { AppContext } from '../../AppState';
 import { ReactComponent as SearchIcon } from '../../assets/icons/Search.svg';
-import { format, parseISO } from 'date-fns';
+import { parseISO } from 'date-fns';
 import styles from './InkomenSpecificaties.module.scss';
 import useRouter from 'use-react-router';
 import { isNativeDatePickerInputSupported } from '../../components/DateInput/DateInput';
+import classnames from 'classnames';
 
 export const specificationsTableDisplayProps = {
   title: 'Omschrijving',
