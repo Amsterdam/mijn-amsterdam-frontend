@@ -36,8 +36,8 @@ export function capitalizeFirstLetter(text: string) {
 
 export function dateSort(sortKey: string, direction: 'asc' | 'desc' = 'asc') {
   return (a: any, b: any) => {
-    const c = new Date(a[sortKey]).getTime();
-    const d = new Date(b[sortKey]).getTime();
+    const c = parseISO(a[sortKey]).getTime();
+    const d = parseISO(b[sortKey]).getTime();
 
     const s = direction === 'asc' ? c < d : d < c;
 

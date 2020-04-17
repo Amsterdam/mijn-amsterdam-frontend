@@ -169,6 +169,7 @@ export interface FocusItem {
   id: string;
   dateStart: string;
   datePublished: string;
+  ISODatePublished: string;
   title: JSX.Element | string;
   description: JSX.Element | string;
   latestStep: StepTitle;
@@ -867,6 +868,7 @@ export function formatFocusProduct(
 
     // Date on which the last updated information (Step) was published,
     datePublished: sourceData.datePublished || '',
+    ISODatePublished: latestStepData.datum || '',
 
     // Date on which the request process was first published
     dateStart: defaultDateFormat(dateStart),
@@ -953,7 +955,9 @@ function formatFocusApiResponse(products: FocusApiResponse): FocusItem[] {
   if (!Array.isArray(products)) {
     return [];
   }
-  return products.map(product => formatFocusProduct(product, d));
+  return products
+    .map(product => formatFocusProduct(product, d))
+    .sort(dateSort('ISODatePublished', 'desc'));
 }
 
 export function formatFocusItems(sourceItems: FocusProduct[]) {

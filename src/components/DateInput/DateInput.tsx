@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { format, getDaysInMonth } from 'date-fns';
+import React, { useCallback, useMemo, useState, useEffect } from 'react';
+import { format, getDaysInMonth, parseISO, isValid } from 'date-fns';
 import { getMonth, range } from 'helpers/App';
 
 import classnames from 'classnames';
@@ -22,31 +22,27 @@ export interface ComponentProps {
   hasNativeSupport?: boolean;
 }
 
-function parseDateParts(value: string) {
-  return value.split('-').map((p, i) => Number(p));
-}
-
 export default function DateInput({
   onChange,
   value,
   className,
   hasNativeSupport = true,
 }: ComponentProps) {
-  const valueDateFormatted = format(value, DATE_INPUT_FORMAT);
+  const [[yearSelected, monthSelected, daySelected], setDateState] = useState([
+    value.getFullYear(),
+    value.getMonth(),
+    value.getDate(),
+  ]);
 
-  const [[yearSelected, monthSelected, daySelected], setDateState] = useState(
-    parseDateParts(valueDateFormatted)
-  );
-
-  const initalValue = useMemo(() => {
-    return value;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useEffect(() => {
+    setDateState([value.getFullYear(), value.getMonth(), value.getDate()]);
+  }, [value]);
 
   const setDate = useCallback(
     ([year, month, day]: [number, number, number]) => {
       setDateState([year, month, day]);
-      onChange(new Date(year, month, day));
+      const date = new Date(year, month, day);
+      onChange(date);
     },
     [onChange, setDateState]
   );
@@ -55,17 +51,32 @@ export default function DateInput({
     return getDaysInMonth(new Date(yearSelected, monthSelected, daySelected));
   }, [yearSelected, monthSelected, daySelected]);
 
+  let valueError = !isValid(value);
+  let valueFormatted = '';
+
+  if (!valueError) {
+    valueFormatted = format(value, DATE_INPUT_FORMAT);
+  }
+
   return (
     <>
       {hasNativeSupport && (
         <input
-          className={classnames(styles.DateInput, className)}
+          className={classnames(
+            styles.DateInput,
+            className,
+            valueError && styles.DateInputError
+          )}
           type="date"
-          value={valueDateFormatted}
+          value={valueFormatted}
           onChange={event => {
-            onChange(
-              event.target.value ? new Date(event.target.value) : initalValue
-            );
+            if (event.target.value) {
+              const parsed = parseISO(event.target.value);
+              let dateValue = isValid(parsed) ? parsed : null;
+              if (dateValue !== null) {
+                onChange(dateValue);
+              }
+            }
           }}
         />
       )}
@@ -93,7 +104,7 @@ export default function DateInput({
           >
             {range(1, 12).map(month => (
               <option key={month} value={month}>
-                {getMonth(month - 1)}
+                {getMonth(month)}
               </option>
             ))}
           </select>

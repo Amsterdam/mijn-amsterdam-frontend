@@ -72,7 +72,7 @@ describe('Chapter: Inkomen en Stadspas', () => {
 
     // Click the first item of the jsut expanded list
     cy.get(
-      '[class*="SectionCollapsible_SectionCollapsible"]:eq(1) [class*="Table_DisplayPropTitle"]:first > a'
+      '[class*="SectionCollapsible_SectionCollapsible"]:eq(1) [class*="Table_DisplayPropTitle"]:eq(1) > a'
     ).click();
 
     assertAtPage(
