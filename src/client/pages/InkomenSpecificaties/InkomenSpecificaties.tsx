@@ -1,16 +1,17 @@
+import DateInput, {
+  isNativeDatePickerInputSupported,
+} from '../../components/DateInput/DateInput';
 import {
-  Alert,
-  Button,
-  ChapterIcon,
-  DateInput,
   OverviewPage,
   PageContent,
+  Alert,
+  Button,
   PageHeading,
   Pagination,
   Section,
   Table,
+  ChapterIcon,
 } from '../../components';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import React, {
   useCallback,
   useContext,
@@ -18,15 +19,15 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { isError, isLoading } from '../../../universal/helpers';
 
-import { AppContext } from '../../AppState';
-import { ReactComponent as SearchIcon } from '../../assets/icons/Search.svg';
-import { parseISO } from 'date-fns';
+import { IconSearch } from '../../assets/icons';
+import classnames from 'classnames';
 import styles from './InkomenSpecificaties.module.scss';
 import useRouter from 'use-react-router';
-import { isNativeDatePickerInputSupported } from '../../components/DateInput/DateInput';
-import classnames from 'classnames';
+import { parseISO } from 'date-fns';
+import { AppContext } from '../../AppState';
+import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { isError, isLoading } from '../../../universal/helpers';
 
 export const specificationsTableDisplayProps = {
   title: 'Omschrijving',
@@ -162,7 +163,7 @@ export default () => {
             : 'Uitkeringsspecificaties'
         }
         isLoading={isLoading(FOCUS_SPECIFICATIES)}
-        hasItems={!!itemsFiltered.length}
+        hasItems={!!items.length}
         noItemsMessage={
           'Er zijn op dit moment nog geen documenten beschikbaar.'
         }
@@ -171,7 +172,7 @@ export default () => {
           className={styles.SearchButton}
           onClick={toggleSearchPanel}
           disabled={isSearchPanelActive}
-          icon={SearchIcon}
+          icon={IconSearch}
           iconPosition="right"
         >
           {isSearchPanelActive ? 'Verberg zoeken' : 'Zoeken'}
