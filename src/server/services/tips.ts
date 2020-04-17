@@ -24,17 +24,12 @@ export interface TIPSRequestData {
   tips: MyTip[];
 }
 
-function formatTIPSData(responseData: TIPSData) {
-  return responseData;
-}
-
 export function fetchTIPS(sessionID: SessionID, requestBody: TIPSRequestData) {
   return requestData<TIPSData>(
     {
       url: ApiUrls.TIPS,
       method: 'POST',
       data: requestBody,
-      transformRequest: formatTIPSData,
     },
     sessionID
   );

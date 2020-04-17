@@ -657,6 +657,9 @@ export function formatWMOData(
   responseData: WMOSourceData,
   today: Date
 ): WMOData {
+  if (!Array.isArray(responseData)) {
+    return { items: [] };
+  }
   const items = responseData
     .sort(dateSort('VoorzieningIngangsdatum', 'desc'))
     .map((item, index) => {
