@@ -1051,11 +1051,12 @@ function transformFOCUSAanvragenData(
   responseData: FOCUSAanvragenSourceData,
   compareDate: Date
 ) {
-  const aanvragen = responseData
+  if (!Array.isArray(responseData)) {
+    return [];
+  }
+  return responseData
     .map(product => formatFocusProduct(product, compareDate))
-    .filter(item => item.productTitle !== ProductTitles.BijzondereBijstand);
-
-  return aanvragen;
+    .sort(dateSort('ISODatePublished', 'desc'));
 }
 
 function transformFOCUSIncomeSpecificationsData(
