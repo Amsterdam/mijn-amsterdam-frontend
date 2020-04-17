@@ -44,7 +44,7 @@ export default () => {
   const { FOCUS_AANVRAGEN, FOCUS_SPECIFICATIES } = useContext(AppContext);
 
   const aanvragen = FOCUS_AANVRAGEN.content || [];
-  console.log('aanvragen', aanvragen);
+
   const uitkeringsspecificaties =
     FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties || [];
   const jaaropgaven = FOCUS_SPECIFICATIES.content?.jaaropgaven || [];

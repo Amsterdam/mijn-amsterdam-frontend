@@ -189,7 +189,7 @@ export interface ProcessStep {
 export interface FocusItem {
   id: string;
   datePublished: string;
-  ISOdatePublished: string;
+  ISODatePublished: string;
   dateStart: string;
   title: string;
   description: string;
@@ -873,7 +873,7 @@ export function formatFocusProduct(
 
     // Date on which the last updated information (Step) was published,
     datePublished: sourceData.datePublished || '',
-    ISOdatePublished: latestStepData?.datum || '',
+    ISODatePublished: latestStepData?.datum || '',
 
     // Date on which the request process was first published
     dateStart: defaultDateFormat(dateStart),
