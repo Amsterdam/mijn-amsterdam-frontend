@@ -1,4 +1,4 @@
-import { ApiUrls, AppRoutes, Chapter, Chapters } from '../../universal/config';
+import { ApiUrls, AppRoutes } from '../../universal/config';
 
 import { defaultDateFormat } from '../../universal/helpers';
 import { requestData } from '../helpers';
@@ -11,6 +11,8 @@ export interface ReisDocument {
   documentType: 'identiteitskaart' | 'paspoort';
   datumUitgifte: string;
   datumAfloop: string;
+  ISOdatumUitgifte: string;
+  ISOdatumAfloop: string;
   title: string;
 }
 
@@ -128,14 +130,14 @@ export function transformBRPNotifications(data: BRPData) {
   const expiredDocuments =
     !!data.reisDocumenten &&
     data.reisDocumenten.filter(
-      document => new Date(document.datumAfloop) < now
+      document => new Date(document.ISOdatumAfloop) < now
     );
 
   const willExpireSoonDocuments =
     !!data.reisDocumenten &&
     data.reisDocumenten.filter(document => {
       const days = differenceInCalendarDays(
-        new Date(document.datumAfloop),
+        new Date(document.ISOdatumAfloop),
         now
       );
 
@@ -151,9 +153,7 @@ export function transformBRPNotifications(data: BRPData) {
         hideDatePublished: true,
         id: `${docTitle}-datum-afloop-verstreken`,
         title: `Uw ${docTitle} is verlopen`,
-        description: `Sinds ${defaultDateFormat(
-          document.datumAfloop
-        )} is uw ${docTitle} niet meer geldig.`,
+        description: `Sinds ${document.datumAfloop} is uw ${docTitle} niet meer geldig.`,
         link: {
           to: BrpDocumentCallToAction.isExpired[document.documentType],
           title: `Vraag snel uw nieuwe ${docTitle} aan`,
@@ -171,9 +171,7 @@ export function transformBRPNotifications(data: BRPData) {
         hideDatePublished: true,
         id: `${document.documentType}-datum-afloop-binnekort`,
         title: `Uw ${docTitle} verloopt binnenkort`,
-        description: `Vanaf ${defaultDateFormat(
-          document.datumAfloop
-        )} is uw ${docTitle} niet meer geldig.`,
+        description: `Vanaf ${document.datumAfloop} is uw ${docTitle} niet meer geldig.`,
         link: {
           to: BrpDocumentCallToAction.isExpired[document.documentType],
           title: `Vraag snel uw nieuwe ${docTitle} aan`,
@@ -215,10 +213,6 @@ export function transformBRPNotifications(data: BRPData) {
 }
 
 function transformBRPData(responseData: BRPData) {
-  Object.assign(responseData, {
-    notifications: transformBRPNotifications(responseData),
-  });
-
   if (Array.isArray(responseData.reisDocumenten)) {
     Object.assign(responseData, {
       reisDocumenten: responseData.reisDocumenten.map(document => {
@@ -228,7 +222,9 @@ function transformBRPData(responseData: BRPData) {
         return Object.assign({}, document, {
           title: BrpDocumentTitles[document.documentType],
           datumAfloop: defaultDateFormat(document.datumAfloop),
+          ISOdatumAfloop: document.datumAfloop,
           datumUitgifte: defaultDateFormat(document.datumUitgifte),
+          ISOdatumUitgifte: document.datumUitgifte,
           link: {
             to: route,
             title: document.documentType,
@@ -249,4 +245,17 @@ export function fetchBRP(sessionID: SessionID) {
     },
     sessionID
   );
+}
+
+export async function fetchBRPGenerated(sessionID: SessionID) {
+  const BRP = await fetchBRP(sessionID);
+  let notifications: MyNotification[] = [];
+
+  if (BRP.status === 'success') {
+    notifications = transformBRPNotifications(BRP.content);
+  }
+
+  return {
+    notifications,
+  };
 }

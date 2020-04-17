@@ -6,8 +6,6 @@ import { MyTip } from './tips';
 
 export interface BELASTINGENData {
   isKnown: boolean;
-  notifications: MyNotification[];
-  tips: MyTip[];
 }
 
 interface BELASTINGSourceDataContent {
@@ -36,19 +34,12 @@ function transformBelastingNotifications(notifications?: MyNotification[]) {
 function transformBELASTINGENData(
   responseData: BELASTINGSourceData
 ): BELASTINGENData {
-  const { meldingen, tips, ...restData } = responseData?.content || {
-    meldingen: [],
-    tips: [],
-    isKnown: false,
+  const { isKnown } = responseData?.content || {
+    isKnown: true,
   };
 
-  // TEMP HACK! OVERWRITE PRIORITY
-  const prioritzedTips = tips.map(tip => Object.assign(tip, { priority: 100 }));
-
   return {
-    ...restData,
-    tips: prioritzedTips,
-    notifications: transformBelastingNotifications(meldingen),
+    isKnown,
   };
 }
 
@@ -60,5 +51,55 @@ export function fetchBELASTING(sessionID: SessionID) {
     },
     sessionID,
     getApiConfigValue('BELASTINGEN', 'postponeFetch', true)
+  );
+}
+
+function transformBELASTINGENGenerated(responseData: BELASTINGSourceData) {
+  let notifications: MyNotification[] = [];
+  let tips: MyTip[] = [];
+
+  if (responseData.status === 'OK') {
+    // TEMP HACK! OVERRRIDE PRIORITY
+    if (responseData.content?.tips?.length) {
+      tips = responseData.content.tips.map(tip =>
+        Object.assign(tip, {
+          priority: 100,
+        })
+      );
+    }
+
+    if (responseData.content?.meldingen?.length) {
+      notifications = transformBelastingNotifications(
+        responseData.content.meldingen
+      );
+    }
+  }
+
+  return {
+    tips,
+    notifications,
+  };
+}
+
+export async function fetchBELASTINGGenerated(sessionID: SessionID) {
+  const response = await requestData<
+    ReturnType<typeof transformBELASTINGENGenerated>
+  >(
+    {
+      url: ApiUrls.BELASTINGEN,
+      transformResponse: transformBELASTINGENGenerated,
+    },
+    sessionID,
+    getApiConfigValue('BELASTINGEN', 'postponeFetch', true)
+  );
+
+  const notifications: MyNotification[] = [];
+  const tips: MyTip[] = [];
+
+  return (
+    response.content || {
+      tips,
+      notifications,
+    }
   );
 }

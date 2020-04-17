@@ -189,6 +189,8 @@ export interface ProcessStep {
 export interface FocusItem {
   id: string;
   datePublished: string;
+  ISOdatePublished: string;
+  dateStart: string;
   title: string;
   description: string;
   latestStep: StepTitle;
@@ -204,7 +206,7 @@ export interface FocusItem {
   link: LinkProps;
   process: ProcessStep[];
   productTitle: ProductTitle;
-  notification?: MyNotification;
+  productOrigin: ProductOrigin;
 }
 
 export interface ProductCollection {
@@ -871,6 +873,7 @@ export function formatFocusProduct(
 
     // Date on which the last updated information (Step) was published,
     datePublished: sourceData.datePublished || '',
+    ISOdatePublished: latestStepData?.datum || '',
 
     // Date on which the request process was first published
     dateStart: defaultDateFormat(dateStart),
@@ -882,6 +885,7 @@ export function formatFocusProduct(
 
     // The name of the product (Stadspas, Levensonderhoud ...)
     productTitle,
+    productOrigin,
     description: stepLabels
       ? parseLabelContent(stepLabels.description, sourceData)
       : '',
@@ -923,19 +927,7 @@ export function formatFocusProduct(
       }),
   };
 
-  const latestStepItem = item.process[item.process.length - 1];
-
-  const focusItem = {
-    ...item,
-    notification: formatFocusNotificationItem(
-      item,
-      latestStepItem,
-      productOrigin,
-      sourceData
-    ),
-  };
-
-  return focusItem;
+  return item;
 }
 
 export type FocusInkomenSpecificatieType =
@@ -1063,27 +1055,7 @@ function transformFOCUSAanvragenData(
     .map(product => formatFocusProduct(product, compareDate))
     .filter(item => item.productTitle !== ProductTitles.BijzondereBijstand);
 
-  const notifications: MyNotification[] = aanvragen
-    .filter((item: any) => item.notification !== undefined)
-    .map((item: any) => item.notification as MyNotification);
-
-  const cases: MyCase[] = aanvragen
-    .filter(item => item.isRecent)
-    .map(item => {
-      return {
-        id: item.id,
-        title: item.title,
-        datePublished: item.datePublished,
-        link: item.link,
-        chapter: item.chapter,
-      };
-    });
-
-  return {
-    aanvragen,
-    notifications,
-    cases,
-  };
+  return aanvragen;
 }
 
 function transformFOCUSIncomeSpecificationsData(
@@ -1099,27 +1071,9 @@ function transformFOCUSIncomeSpecificationsData(
     .sort(dateSort('datePublished', 'desc'))
     .map(item => formatIncomSpecificationItem(item, 'uitkeringsspecificatie'));
 
-  const notifications: MyNotification[] = [];
-
-  if (jaaropgaven.length) {
-    notifications.push(
-      formatIncomeSpecificationNotification('jaaropgave', jaaropgaven[0])
-    );
-  }
-
-  if (uitkeringsspecificaties.length) {
-    notifications.push(
-      formatIncomeSpecificationNotification(
-        'uitkeringsspecificatie',
-        uitkeringsspecificaties[0]
-      )
-    );
-  }
-
   return {
-    jaaropgaven: jaaropgaven,
+    jaaropgaven,
     uitkeringsspecificaties,
-    notifications,
   };
 }
 
@@ -1143,4 +1097,75 @@ export async function fetchFOCUSSpecificaties(sessionID: SessionID) {
     sessionID,
     getApiConfigValue('FOCUS_SPECIFICATIES', 'postponeFetch', true)
   );
+}
+
+export async function fetchFOCUSAanvragenGenerated(sessionID: SessionID) {
+  const response = await fetchFOCUSAanvragen(sessionID);
+  const notifications: MyNotification[] = [];
+  const cases: MyCase[] = [];
+
+  if (response.status === 'success') {
+    const aanvragen = response.content;
+
+    for (const item of aanvragen) {
+      const latestStepItem = item.process[item.process.length - 1];
+      const notification = formatFocusNotificationItem(
+        item,
+        latestStepItem,
+        item.productOrigin,
+        {
+          productTitle: item.productTitle,
+          dateStart: item.dateStart,
+          datePublished: item.datePublished,
+        } as StepSourceData
+      );
+
+      if (notification) {
+        notifications.push(notification);
+      }
+
+      if (item.isRecent) {
+        cases.push({
+          id: item.id,
+          title: item.title,
+          datePublished: item.datePublished,
+          link: item.link,
+          chapter: item.chapter,
+        });
+      }
+    }
+  }
+
+  return {
+    cases,
+    notifications,
+  };
+}
+
+export async function fetchFOCUSSpecificationsGenerated(sessionID: SessionID) {
+  const response = await fetchFOCUSSpecificaties(sessionID);
+  const notifications: MyNotification[] = [];
+
+  if (response.status === 'success') {
+    const { jaaropgaven, uitkeringsspecificaties } = response.content;
+
+    if (jaaropgaven.length) {
+      notifications.push(
+        formatIncomeSpecificationNotification('jaaropgave', jaaropgaven[0])
+      );
+    }
+
+    if (uitkeringsspecificaties.length) {
+      notifications.push(
+        formatIncomeSpecificationNotification(
+          'uitkeringsspecificatie',
+          uitkeringsspecificaties[0]
+        )
+      );
+    }
+  }
+
+  return {
+    notifications,
+  };
 }

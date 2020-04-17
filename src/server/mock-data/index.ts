@@ -65,8 +65,12 @@ export const mockDataConfig: MockDataConfig = {
     status: 200,
     method: 'post',
     responseData: (config: any) => {
+      let sourceTips: MyTip[] = [];
+      if (config.data?.tips.length) {
+        sourceTips = config.data.tips;
+      }
       const tips = require('./json/tips.json');
-      const items = tips.items.filter((tip: MyTip) =>
+      const items = [...tips.items, ...sourceTips].filter((tip: MyTip) =>
         config.data?.optin ? true : !tip.isPersonalized
       );
       return Object.assign({}, tips, { items });
