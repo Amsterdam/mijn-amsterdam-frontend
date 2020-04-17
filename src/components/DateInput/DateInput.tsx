@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { format, getDaysInMonth } from 'date-fns';
+import React, { useCallback, useMemo, useState, useEffect } from 'react';
+import { format, getDaysInMonth, parseISO } from 'date-fns';
 import { getMonth, range } from 'helpers/App';
 
 import classnames from 'classnames';
@@ -22,21 +22,21 @@ export interface ComponentProps {
   hasNativeSupport?: boolean;
 }
 
-function parseDateParts(value: string) {
-  return value.split('-').map((p, i) => Number(p));
-}
-
 export default function DateInput({
   onChange,
   value,
   className,
   hasNativeSupport = true,
 }: ComponentProps) {
-  const valueDateFormatted = format(value, DATE_INPUT_FORMAT);
+  const [[yearSelected, monthSelected, daySelected], setDateState] = useState([
+    value.getFullYear(),
+    value.getMonth(),
+    value.getDate(),
+  ]);
 
-  const [[yearSelected, monthSelected, daySelected], setDateState] = useState(
-    parseDateParts(valueDateFormatted)
-  );
+  useEffect(() => {
+    setDateState([value.getFullYear(), value.getMonth(), value.getDate()]);
+  }, [value]);
 
   const initalValue = useMemo(() => {
     return value;
@@ -46,7 +46,8 @@ export default function DateInput({
   const setDate = useCallback(
     ([year, month, day]: [number, number, number]) => {
       setDateState([year, month, day]);
-      onChange(new Date(year, month, day));
+      const date = new Date(year, month, day);
+      onChange(date);
     },
     [onChange, setDateState]
   );
@@ -54,17 +55,16 @@ export default function DateInput({
   const daysInMonthSelected = useMemo(() => {
     return getDaysInMonth(new Date(yearSelected, monthSelected, daySelected));
   }, [yearSelected, monthSelected, daySelected]);
-
   return (
     <>
       {hasNativeSupport && (
         <input
           className={classnames(styles.DateInput, className)}
           type="date"
-          value={valueDateFormatted}
+          value={format(value, DATE_INPUT_FORMAT)}
           onChange={event => {
             onChange(
-              event.target.value ? new Date(event.target.value) : initalValue
+              event.target.value ? parseISO(event.target.value) : initalValue
             );
           }}
         />
@@ -93,7 +93,7 @@ export default function DateInput({
           >
             {range(1, 12).map(month => (
               <option key={month} value={month}>
-                {getMonth(month - 1)}
+                {getMonth(month)}
               </option>
             ))}
           </select>

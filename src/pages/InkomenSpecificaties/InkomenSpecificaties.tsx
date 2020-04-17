@@ -24,6 +24,7 @@ import Table from 'components/Table/Table';
 import classnames from 'classnames';
 import styles from './InkomenSpecificaties.module.scss';
 import useRouter from 'use-react-router';
+import { parseISO, toDate } from 'date-fns';
 
 export const specificationsTableDisplayProps = {
   title: 'Omschrijving',
@@ -64,14 +65,14 @@ export default () => {
 
   const maxDate = useMemo(() => {
     if (items.length) {
-      return new Date(items[0].datePublished);
+      return parseISO(items[0].datePublished);
     }
     return new Date();
   }, [items]);
 
   const minDate = useMemo(() => {
     if (items.length) {
-      return new Date(items[items.length - 1].datePublished);
+      return parseISO(items[items.length - 1].datePublished);
     }
     return new Date();
   }, [items]);
@@ -84,6 +85,7 @@ export default () => {
   ]);
 
   useEffect(() => {
+    // Set initial date selection
     if (minDate && maxDate) {
       setSelectedDates([minDate, maxDate]);
     }
@@ -103,17 +105,18 @@ export default () => {
   const itemsFiltered = items
     .filter(item => (selectedType ? item.type === selectedType : true))
     .filter(item => {
-      const datePublished = new Date(item.datePublished);
+      const datePublished = parseISO(item.datePublished);
       return (
-        datePublished >= new Date(selectedDates[0]) &&
-        datePublished <= new Date(selectedDates[1])
+        datePublished >= selectedDates[0] && datePublished <= selectedDates[1]
       );
     });
 
   const itemsFilteredPaginated = itemsFiltered.slice(startIndex, endIndex + 1);
   const typeFilterActive = !!selectedType;
-  const minDateFilterActive = selectedDates[0] !== minDate;
-  const maxDateFilterActive = selectedDates[1] !== maxDate;
+  const minDateFilterActive =
+    selectedDates[0].toString() !== minDate.toString();
+  const maxDateFilterActive =
+    selectedDates[1].toString() !== maxDate.toString();
 
   const selectTypeFilter = useCallback(type => {
     setSelectedType(type);
@@ -216,7 +219,7 @@ export default () => {
                   <button
                     className={styles.ResetFilterButton}
                     onClick={() =>
-                      setSelectedDates(([, maxDate]) => [minDate, maxDate])
+                      setSelectedDates([minDate, selectedDates[1]])
                     }
                   >
                     resetten
@@ -228,7 +231,7 @@ export default () => {
                   minDateFilterActive && styles.FilterActive
                 )}
                 value={selectedDates[0]}
-                hasNativeSupport={isNativeDatePickerInputSupported()}
+                hasNativeSupport={false}
                 onChange={dateStart => {
                   setSelectedDates(([, dateEnd]) => [
                     dateStart || minDate,
@@ -243,9 +246,9 @@ export default () => {
                 {maxDateFilterActive && (
                   <button
                     className={styles.ResetFilterButton}
-                    onClick={() =>
-                      setSelectedDates(([minDate]) => [minDate, maxDate])
-                    }
+                    onClick={() => {
+                      setSelectedDates([selectedDates[0], maxDate]);
+                    }}
                   >
                     resetten
                   </button>
@@ -256,7 +259,7 @@ export default () => {
                   maxDateFilterActive && styles.FilterActive
                 )}
                 value={selectedDates[1]}
-                hasNativeSupport={isNativeDatePickerInputSupported()}
+                hasNativeSupport={false}
                 onChange={dateEnd =>
                   setSelectedDates(([dateStart]) => [
                     dateStart || minDate,
