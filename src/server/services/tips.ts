@@ -1,18 +1,7 @@
-import { ApiUrls, BFFApiData } from '../../universal/config';
+import { ApiUrls } from './config';
 
-import { LinkProps } from '../../universal/types/App.types';
+import { MyTip } from '../../universal/types';
 import { requestData } from '../helpers';
-
-export interface MyTip {
-  datePublished: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  link: LinkProps;
-  imgUrl?: string;
-  isPersonalized: boolean;
-  priority?: number;
-}
 
 export interface TIPSData {
   items: MyTip[];
@@ -20,7 +9,7 @@ export interface TIPSData {
 
 export interface TIPSRequestData {
   optin: boolean;
-  data: Partial<BFFApiData>;
+  data: any;
   tips: MyTip[];
 }
 

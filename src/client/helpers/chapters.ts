@@ -1,11 +1,9 @@
-import { MenuItem, myChaptersMenuItems } from '../../client/config/menuItems';
+import { MenuItem, myChaptersMenuItems } from '../config/menuItems';
 
-import { AppState } from '../../client/AppState';
-import { Chapters } from '../config/chapter';
-import { FeatureToggle } from '../config/app';
-import { isLoading } from './index';
-import { isMokum } from '../../client/pages/Profile/formatData';
-import { isError } from './api';
+import { AppState } from '../AppState';
+import { Chapters } from '../../universal/config/chapter';
+import { FeatureToggle } from '../../universal/config/app';
+import { isLoading, isError, isMokum } from '../../universal/helpers';
 
 function isChapterActive(
   item: MenuItem,

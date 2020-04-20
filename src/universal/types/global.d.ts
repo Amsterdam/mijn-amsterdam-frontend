@@ -4,6 +4,7 @@ type WithChildren<T, PropsToOmit> = Omit<HTMLProps<T>, PropsToOmit>;
 
 // TODO: Add typings for this function
 declare module 'use-debounce/lib/callback';
+declare module 'slugme';
 
 type Nullable<T> = T | null;
 

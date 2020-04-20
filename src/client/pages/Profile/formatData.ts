@@ -1,5 +1,9 @@
-import { Adres, BRPData, Persoon, Verbintenis } from '../../../server/services';
-import { defaultDateFormat, entries } from '../../../universal/helpers';
+import { Adres, BRPData, Persoon, Verbintenis } from '../../../universal/types';
+import {
+  defaultDateFormat,
+  entries,
+  getFullAddress,
+} from '../../../universal/helpers';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
@@ -15,30 +19,6 @@ type ProfileLabelValueFormatter =
     ];
 
 type ProfileLabels<T> = { [key in keyof T]: ProfileLabelValueFormatter };
-
-export function getFullName(persoon: Persoon) {
-  return (
-    persoon.opgemaakteNaam ||
-    `${persoon.voornamen} ${
-      persoon.voorvoegselGeslachtsnaam
-        ? persoon.voorvoegselGeslachtsnaam + ' '
-        : ''
-    }${persoon.geslachtsnaam}`
-  );
-}
-
-export function getFullAddress(adres: Adres) {
-  return `${adres.straatnaam} ${adres.huisnummer || ''} ${adres.huisletter ||
-    ''} ${adres.huisnummertoevoeging || ''}`;
-}
-
-export function getBagSearchAddress(adres: Adres) {
-  return `${adres.straatnaam} ${adres.huisnummer || ''}`;
-}
-
-export function isMokum(BRP: BRPData | null) {
-  return !!BRP?.persoon.mokum;
-}
 
 const persoon: ProfileLabels<Partial<Persoon>> = {
   voornamen: 'Voornamen',

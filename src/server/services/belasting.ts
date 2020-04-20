@@ -1,8 +1,7 @@
-import { ApiUrls, Chapters } from '../../universal/config';
-import { getApiConfigValue } from '../../universal/helpers';
-import { MyNotification } from '../../universal/types/App.types';
+import { Chapters } from '../../universal/config';
+import { MyNotification, MyTip } from '../../universal/types';
 import { requestData } from '../helpers';
-import { MyTip } from './tips';
+import { ApiUrls, getApiConfigValue } from './config';
 
 export interface BELASTINGENData {
   isKnown: boolean;

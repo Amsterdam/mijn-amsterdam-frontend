@@ -1,10 +1,10 @@
-import { BFFApiUrls } from '../../../universal/config';
 import {
   FEApiResponseData,
   apiPristineResponseData,
 } from '../../../universal/helpers';
 import { ApiState, useDataApi } from './api.hook';
 import { loadServicesDirect } from '../../../server/services';
+import { BFFApiUrls } from '../../config/api';
 
 const pristineResponseData = apiPristineResponseData({
   FOCUS_SPECIFICATIES: null,

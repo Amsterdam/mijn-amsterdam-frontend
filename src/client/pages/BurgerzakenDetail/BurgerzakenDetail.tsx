@@ -16,7 +16,7 @@ import {
   PageHeading,
 } from '../../components';
 import styles from './BurgerzakenDetail.module.scss';
-import { ReisDocument } from '../../../server/services/brp';
+import { ReisDocument } from '../../../universal/types';
 
 export default () => {
   const { BRP } = useContext(AppContext);

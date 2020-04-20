@@ -1,9 +1,7 @@
-import { Adres, getBagSearchAddress } from './brp';
-
-import { ApiUrls } from '../../universal/config';
-
+import { getBagSearchAddress, toLatLng } from '../../universal/helpers';
+import { Adres } from '../../universal/types';
 import { requestData } from '../helpers';
-import { toLatLng } from '../../universal/helpers/geo';
+import { ApiUrls } from './config';
 
 export interface BAGSourceData {
   results: Array<{ [key: string]: any; centroid: Centroid }>;

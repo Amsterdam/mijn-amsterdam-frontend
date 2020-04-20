@@ -12,6 +12,7 @@ import {
   ChapterTitles,
   ExternalUrls,
   FeatureToggle,
+  AppRoutes,
 } from '../../../universal/config';
 import React, { useContext, useMemo } from 'react';
 import { isError, isLoading } from '../../../universal/helpers';
@@ -25,16 +26,24 @@ import {
 } from '../../pages/InkomenSpecificaties/InkomenSpecificaties';
 import styles from './Inkomen.module.scss';
 
-import {
-  incomSpecificationsRouteMonthly,
-  incomSpecificationsRouteYearly,
-} from '../../../server/services/focus';
 import classnames from 'classnames';
+import { generatePath } from 'react-router-dom';
+
+export const incomSpecificationsRouteMonthly = generatePath(
+  AppRoutes['INKOMEN/SPECIFICATIES']
+);
+export const incomSpecificationsRouteYearly = generatePath(
+  AppRoutes['INKOMEN/SPECIFICATIES'],
+  {
+    type: 'jaaropgaven',
+  }
+);
 
 const requestsDisplayProps = {
   dateStart: 'Datum aanvraag',
   status: 'Status',
 };
+
 const decisionsDisplayProps = {
   dateStart: 'Datum aanvraag',
   datePublished: 'Datum besluit',

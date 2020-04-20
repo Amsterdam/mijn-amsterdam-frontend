@@ -3,7 +3,7 @@ import { MyAreaHeader, MyAreaMap, MyAreaMapIFrame } from '../../components';
 import React, { useContext } from 'react';
 
 import { AppContext } from '../../AppState';
-import { getFullAddress } from '../Profile/formatData';
+import { getFullAddress } from '../../../universal/helpers';
 import styles from './MyArea.module.scss';
 
 export default () => {

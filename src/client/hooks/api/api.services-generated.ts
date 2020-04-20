@@ -1,18 +1,16 @@
-import { useDataApi } from './api.hook';
-import { BFFApiUrls } from '../../../universal/config';
-
+import { useEffect, useMemo } from 'react';
+import { loadServicesGenerated, TIPSData } from '../../../server/services';
 import {
-  apiPristineResponseData,
-  FEApiResponseData,
   ApiErrorResponse,
+  apiPristineResponseData,
   ApiSuccessResponse,
+  FEApiResponseData,
 } from '../../../universal/helpers';
-import { loadServicesGenerated } from '../../../server/services';
-import { useMemo, useEffect } from 'react';
-import { TIPSData } from '../../../server/services/tips';
-import { WelcomeNotification } from '../../config/staticData';
 import { apiSuccesResult } from '../../../universal/helpers/api';
+import { BFFApiUrls } from '../../config/api';
+import { WelcomeNotification } from '../../config/staticData';
 import { useOptIn } from '../optin.hook';
+import { useDataApi } from './api.hook';
 
 const pristineResponseData = apiPristineResponseData({
   TIPS: { items: [] },

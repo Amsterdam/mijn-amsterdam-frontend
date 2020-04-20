@@ -11,14 +11,13 @@ import {
   Alert,
 } from '../../components';
 import { ChapterTitles, ExternalUrls } from '../../../universal/config';
-import { GarbageMoment, GarbagePoint } from '../../../server/services';
 import React, { ReactNode, useContext } from 'react';
 
 import { AppContext } from '../../AppState';
 import classnames from 'classnames';
-import { getFullAddress } from '../Profile/formatData';
-import { isLoading, isError } from '../../../universal/helpers';
+import { isLoading, isError, getFullAddress } from '../../../universal/helpers';
 import styles from './GarbageInformation.module.scss';
+import { GarbagePoint, GarbageMoment } from '../../../universal/types';
 
 interface PanelProps {
   children: ReactNode;

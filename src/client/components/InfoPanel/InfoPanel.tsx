@@ -5,7 +5,7 @@ import SectionCollapsible from '../SectionCollapsible/SectionCollapsible';
 import { Unshaped } from '../../../universal/types/App.types';
 import classnames from 'classnames';
 import { entries } from '../../../universal/helpers';
-import slug from 'slug';
+import slug from 'slugme';
 import styles from './InfoPanel.module.scss';
 
 export interface ActionLink {

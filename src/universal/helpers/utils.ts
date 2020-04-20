@@ -1,4 +1,3 @@
-import { ApiConfig, ApiStateKey } from '../config';
 import { KeyboardEvent, MouseEvent } from 'react';
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
@@ -13,15 +12,6 @@ export function withKeyPress<T>(fn: Function, keyName: string = 'enter') {
       fn(event);
     }
   };
-}
-
-export function getApiConfigValue(
-  name: ApiStateKey,
-  param: keyof ApiConfig,
-  defaultValue: any
-) {
-  const cfg = ApiConfig[name] && ApiConfig[name]![param];
-  return typeof cfg !== 'undefined' ? cfg : defaultValue;
 }
 
 /**

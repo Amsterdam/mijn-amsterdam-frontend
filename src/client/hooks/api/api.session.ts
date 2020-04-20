@@ -1,13 +1,12 @@
-import { ApiRequestOptions, useDataApi } from './api.hook';
-
-import { ApiUrls } from '../../../universal/config/api';
 import { useMemo } from 'react';
+import { AUTH_API_URL } from '../../../universal/config';
 import {
-  apiSuccesResult,
-  apiPristineResponseData,
-  ApiSuccessResponse,
   ApiErrorResponse,
+  apiPristineResponseData,
+  apiSuccesResult,
+  ApiSuccessResponse,
 } from '../../../universal/helpers/api';
+import { ApiRequestOptions, useDataApi } from './api.hook';
 
 export type SessionData = {
   isAuthenticated: boolean;
@@ -30,7 +29,7 @@ const INITIAL_SESSION_STATE = apiPristineResponseData({
 });
 
 const requestOptions: ApiRequestOptions = {
-  url: ApiUrls.AUTH,
+  url: AUTH_API_URL,
   transformResponse(data) {
     return {
       SESSION: apiSuccesResult<SessionData>(data),
