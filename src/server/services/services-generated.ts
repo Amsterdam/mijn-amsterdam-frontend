@@ -1,6 +1,6 @@
-import { fetchTIPS, TIPSRequestData, MyTip } from './tips';
+import { fetchTIPS, TIPSRequestData } from './tips';
 import { apiSuccesResult } from '../../universal/helpers';
-import { MyNotification, MyCase } from '../../universal/types/App.types';
+import { MyNotification, MyCase, MyTip } from '../../universal/types';
 import { fetchBRPGenerated } from './brp';
 import {
   fetchFOCUSAanvragenGenerated,
@@ -10,7 +10,7 @@ import { fetchBELASTINGGenerated } from './belasting';
 import { fetchMILIEUZONEGenerated } from './milieuzone';
 import { loadServicesRelated } from './services-related';
 import { loadServicesDirect } from './services-direct';
-import { ApiStateKey } from '../../universal/config';
+import { ApiStateKey } from './state';
 
 export async function loadServicesGenerated(
   sessionID: SessionID,

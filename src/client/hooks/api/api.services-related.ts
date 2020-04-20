@@ -1,11 +1,10 @@
-import { useDataApi } from './api.hook';
-import { BFFApiUrls } from '../../../universal/config';
-
+import { loadServicesRelated } from '../../../server/services';
 import {
   apiPristineResponseData,
   FEApiResponseData,
 } from '../../../universal/helpers';
-import { loadServicesRelated } from '../../../server/services';
+import { BFFApiUrls } from '../../config/api';
+import { useDataApi } from './api.hook';
 
 const pristineResponseData = apiPristineResponseData({
   BRP: null,

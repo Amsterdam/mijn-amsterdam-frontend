@@ -14,7 +14,7 @@ import React, { useContext, useMemo } from 'react';
 import styles from './MainHeader.module.scss';
 import useRouter from 'use-react-router';
 import { AppContext } from '../../AppState';
-import { getApiErrors } from '../../../universal/helpers/api';
+import { getApiErrors } from '../../config/api';
 
 export interface MainHeaderProps {
   isAuthenticated?: boolean;

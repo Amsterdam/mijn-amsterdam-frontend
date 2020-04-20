@@ -3,10 +3,10 @@ import {
   InfoPanelProps,
 } from '../../components/InfoPanel/InfoPanel';
 
-import { BRPData } from '../../../server/services/brp';
 import { ExternalUrls } from '../../../universal/config';
+import { isMokum } from '../../../universal/helpers';
 import { ServicesRelatedData } from '../../hooks/api/api.services-related';
-import { isMokum } from './formatData';
+import { BRPData } from '../../../universal/types';
 
 type PanelKey = keyof Omit<BRPData, 'reisDocumenten' | 'notifications'>;
 type PanelProps = Pick<InfoPanelProps, 'title' | 'actionLinks'>;

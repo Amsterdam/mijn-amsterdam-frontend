@@ -1,5 +1,5 @@
-import { ApiUrls } from '../../universal/config/api';
-import { MyTip } from '../services/tips';
+import { MyTip } from '../../universal/types';
+import { ApiUrls } from '../services/config';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
   return new Promise(resolve => {

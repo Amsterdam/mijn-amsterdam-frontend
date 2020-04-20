@@ -10,7 +10,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { animated, useSpring } from 'react-spring';
 import useRouter from 'use-react-router';
 import { AppRoutes, LOGOUT_URL } from '../../../universal/config';
-import { getMyChapters, isLoading } from '../../../universal/helpers';
+import { isLoading, getFullName } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types/App.types';
 import { AppContext } from '../../AppState';
 import { ReactComponent as LogoutIcon } from '../../assets/icons/Logout.svg';
@@ -18,7 +18,6 @@ import { ChapterIcons } from '../../config/chapterIcons';
 import { MenuItem } from '../../config/menuItems';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
-import { getFullName } from '../../pages/Profile/formatData';
 import { SessionContext } from '../../SessionState';
 import Linkd, { Button } from '../Button/Button';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
@@ -33,6 +32,7 @@ import {
   submenuItems,
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
+import { getMyChapters } from '../../helpers/chapters';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';

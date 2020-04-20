@@ -49,3 +49,14 @@ export interface MyCase {
   title: string;
   link: LinkProps;
 }
+
+export interface MyTip {
+  datePublished: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  link: LinkProps;
+  imgUrl?: string;
+  isPersonalized: boolean;
+  priority?: number;
+}

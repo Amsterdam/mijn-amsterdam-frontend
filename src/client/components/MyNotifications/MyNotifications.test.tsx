@@ -1,8 +1,8 @@
 import { BrowserRouter } from 'react-router-dom';
-import { MyNotification } from '../../../server/services/services-notifications';
 import MyNotifications from './MyNotifications';
 import React from 'react';
 import { shallow } from 'enzyme';
+import { MyNotification } from '../../../universal/types';
 
 const NOTIFICATIONS: MyNotification[] = [];
 const UPDATES_TOTAL = 10;

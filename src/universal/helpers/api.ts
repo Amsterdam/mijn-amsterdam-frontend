@@ -1,6 +1,4 @@
 import { AxiosError } from 'axios';
-import { AppState } from '../../client/AppState';
-import { ErrorNames } from '../config';
 
 export interface ApiErrorResponse<T> {
   message: string;
@@ -59,8 +57,7 @@ export function isError(
     | ApiPristineResponse<any>
     | ApiSuccessResponse<any>
     | ApiPostponeResponse
-    | ApiUnknownResponse,
-  responseKey?: string
+    | ApiUnknownResponse
 ) {
   return (
     apiResponseData.status === 'ERROR' ||
@@ -119,20 +116,4 @@ export function apiErrorResponseData<T>(
     },
     {} as Record<keyof T, ApiErrorResponse<any>>
   );
-}
-
-export function getApiErrors(appState: AppState) {
-  return Object.entries(appState)
-    .filter(([, apiResponseData]: any) => {
-      return isError(apiResponseData);
-    })
-    .map(([stateKey, apiResponseData]: any) => {
-      const name = ErrorNames[stateKey] || stateKey;
-      return {
-        name,
-        error:
-          ('message' in apiResponseData ? apiResponseData.message : null) ||
-          'Communicatie met api mislukt.',
-      };
-    });
 }

@@ -12,7 +12,7 @@ import { Button } from '../Button/Button';
 import { ReactComponent as ChevronIcon } from '../../assets/icons/Chevron-Right.svg';
 import Heading from '../Heading/Heading';
 import Linkd from '../Button/Button';
-import { MyTip } from '../../../server/services';
+import { MyTip } from '../../../universal/types';
 import MyTipsOptInOutModal from './MyTipsOptInOutModal';
 import classnames from 'classnames';
 import { isExternalUrl } from '../../../universal/helpers';

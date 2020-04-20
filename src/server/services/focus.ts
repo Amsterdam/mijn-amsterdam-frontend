@@ -2,7 +2,6 @@ import { addDays, differenceInCalendarDays, format, parseISO } from 'date-fns';
 import { ReactNode } from 'react';
 import { generatePath } from 'react-router-dom';
 import {
-  ApiUrls,
   AppRoutes,
   Chapter,
   Chapters,
@@ -19,7 +18,7 @@ import {
   MyCase,
 } from '../../universal/types/App.types';
 import { requestData } from '../helpers';
-import { getApiConfigValue } from '../../universal/helpers/utils';
+import { ApiUrls, getApiConfigValue } from './config';
 
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
@@ -130,16 +129,6 @@ export const stepLabels: Record<StepTitle, RequestStatus> = {
   beslissing: 'Besluit',
   bezwaar: 'Bezwaar',
 };
-
-export const incomSpecificationsRouteMonthly = generatePath(
-  AppRoutes['INKOMEN/SPECIFICATIES']
-);
-export const incomSpecificationsRouteYearly = generatePath(
-  AppRoutes['INKOMEN/SPECIFICATIES'],
-  {
-    type: 'jaaropgaven',
-  }
-);
 
 const stepStatusLabels = stepLabels;
 

@@ -1,7 +1,7 @@
-import { MyTip } from '../../hooks/api/my-tips-api.hook';
 import MyTips from './MyTips';
 import React from 'react';
 import { shallow } from 'enzyme';
+import { MyTip } from '../../../universal/types';
 
 const TIPS: MyTip[] = [];
 

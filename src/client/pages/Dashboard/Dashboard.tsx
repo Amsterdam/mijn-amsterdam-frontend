@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
-import { isLoading, getMyChapters } from '../../../universal/helpers';
+import { isLoading } from '../../../universal/helpers';
 import { AppContext } from '../../AppState';
 import {
   DirectLinks,
@@ -16,6 +16,7 @@ import {
 import { usePhoneScreen } from '../../hooks/media.hook';
 import styles from './Dashboard.module.scss';
 import { useOptIn } from '../../hooks/optin.hook';
+import { getMyChapters } from '../../helpers/chapters';
 
 const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;

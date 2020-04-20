@@ -1,4 +1,5 @@
-import { ApiUrls, AppRoutes } from '../../universal/config';
+import { AppRoutes } from '../../universal/config';
+import { ApiUrls } from './config';
 import {
   capitalizeFirstLetter,
   dateSort,
@@ -9,7 +10,7 @@ import {
 import { LinkProps } from '../../universal/types/App.types';
 import { generatePath } from 'react-router';
 import { requestData } from '../helpers';
-import slug from 'slug';
+import slug from 'slugme';
 
 // Example data
 // [

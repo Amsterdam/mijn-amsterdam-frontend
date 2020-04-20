@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "outDir": "build-bff",
     "target": "es6",
     "lib": [
       "esnext"
@@ -18,6 +19,7 @@
     "downlevelIteration": true
   },
   "include": [
-    "src"
+    "src/server",
+    "src/universal"
   ]
 }

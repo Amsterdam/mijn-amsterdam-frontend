@@ -1,9 +1,15 @@
-import { ApiUrls } from '../../universal/config';
 import {
   capitalizeFirstLetter,
   getApproximateDistance,
 } from '../../universal/helpers';
 import { requestData } from '../helpers/request';
+import { ApiUrls } from './config';
+import {
+  Stadsdeel,
+  GarbagePoint,
+  GarbageMoment,
+  AFVALData,
+} from '../../universal/types';
 
 const AFVAL_AFSPRAAK_MAKEN =
   'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Grofvuil.aspx';
@@ -103,16 +109,6 @@ function parsePickupTime(time: string) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
-enum Stadsdeel {
-  centrum = 'Centrum',
-  nieuwWest = 'Nieuw-West',
-  noord = 'Noord',
-  oost = 'Oost',
-  west = 'West',
-  zuid = 'Zuid',
-  zuidoost = 'Zuidoost',
-}
-
 interface AfvalOphaalGebied {
   aanbiedwijze: string;
   dataset: string;
@@ -128,26 +124,6 @@ interface AfvalOphaalGebied {
   website: string | null;
   ophalen: 'ja' | 'nee';
   frequentie: string | null;
-}
-
-export interface GarbageMoment {
-  title: string;
-  aanbiedwijze: string;
-  stadsdeel: Stadsdeel;
-  type: 'grofvuil' | 'huisvuil';
-  buitenZetten: string;
-  ophaaldag: string;
-  opmerking: string;
-}
-
-export interface GarbagePoint {
-  naam: string;
-  adres: string;
-  telefoon: string;
-  email: string;
-  latlng: LatLngObject;
-  distance?: number;
-  openingstijden?: string;
 }
 
 const titles: { [type: string]: string } = {
@@ -218,11 +194,6 @@ interface AFVALSourceData {
       properties: AfvalOphaalGebied;
     }>;
   };
-}
-
-export interface AFVALData {
-  ophalen: GarbageMoment[];
-  wegbrengen: GarbagePoint[];
 }
 
 export function formatAFVALData(
