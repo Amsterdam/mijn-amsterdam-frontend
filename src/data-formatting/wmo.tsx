@@ -1,6 +1,6 @@
 import { AppRoutes } from 'config/Routing.constants';
 import { StatusLineItem } from 'components/StatusLine/StatusLine';
-import slug from 'slug';
+import slug from 'slugme';
 import { LinkProps } from '../App.types';
 import {
   defaultDateFormat,
