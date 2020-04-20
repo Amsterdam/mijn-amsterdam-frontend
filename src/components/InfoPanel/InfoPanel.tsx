@@ -5,7 +5,7 @@ import Heading from 'components/Heading/Heading';
 import { Unshaped } from 'App.types';
 import { entries } from 'helpers/App';
 import classnames from 'classnames';
-import slug from 'slug';
+import slug from 'slugme';
 import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
 
 export interface ActionLink {
