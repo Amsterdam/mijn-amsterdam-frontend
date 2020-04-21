@@ -18,7 +18,6 @@ import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import { ChapterTitles } from 'config/Chapter.constants';
 import PageHeading from 'components/PageHeading/PageHeading';
 import Pagination from 'components/Pagination/Pagination';
-import { ReactComponent as SearchIcon } from 'assets/icons/Search.svg';
 import Section from 'components/Section/Section';
 import Table from 'components/Table/Table';
 import classnames from 'classnames';
