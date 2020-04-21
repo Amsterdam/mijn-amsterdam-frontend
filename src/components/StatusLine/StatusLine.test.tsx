@@ -2,11 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import StatusLine from './StatusLine';
 import { formatWmoApiResponse, WmoItem } from 'data-formatting/wmo';
-import {
-  formatFocusProduct,
-  FocusProduct,
-  FocusItem,
-} from '../../data-formatting/focus';
+import { formatFocusProduct } from '../../data-formatting/focus';
 
 describe('StatusLine', () => {
   it('Renders the correct html', () => {

@@ -102,7 +102,7 @@ export default function DateInput({
             }}
             value={monthSelected}
           >
-            {range(1, 12).map(month => (
+            {range(0, 11).map(month => (
               <option key={month} value={month}>
                 {getMonth(month)}
               </option>
