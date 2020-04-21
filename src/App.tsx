@@ -1,45 +1,57 @@
+import * as Sentry from '@sentry/browser';
+import classnames from 'classnames';
+import ApplicationError from 'components/ApplicationError/ApplicationError';
 import AutoLogoutDialog from 'components/AutoLogoutDialog/AutoLogoutDialog';
-import usePageChange from 'hooks/pageChange';
 import { useAnalytics } from 'hooks/analytics.hook';
+import usePageChange from 'hooks/pageChange';
+import useScript from 'hooks/useScript';
 import Dashboard from 'pages/Dashboard/Dashboard';
+import GarbageInformation from 'pages/GarbageInformation/GarbageInformation';
 import Inkomen from 'pages/Inkomen/Inkomen';
 import InkomenDetail from 'pages/InkomenDetail/InkomenDetail';
+import InkomenSpecificaties from 'pages/InkomenSpecificaties/InkomenSpecificaties';
 import LandingPage from 'pages/Landing/Landing';
-import MyArea from './pages/MyArea/MyArea';
-import MyTips from 'pages/MyTips/MyTips';
 import MyNotifications from 'pages/MyNotifications/MyNotifications';
+import MyTips from 'pages/MyTips/MyTips';
 import Proclaimer from 'pages/Proclaimer/Proclaimer';
 import Zorg from 'pages/Zorg/Zorg';
 import ZorgDetail from 'pages/ZorgDetail/ZorgDetail';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
+import ErrorBoundary from 'react-error-boundary';
 import {
   BrowserRouter,
+  matchPath,
   Redirect,
   Route,
   Switch,
-  matchPath,
 } from 'react-router-dom';
 import useRouter from 'use-react-router';
-import ErrorBoundary from 'react-error-boundary';
-import { FeatureToggle } from './config/App.constants';
-import { AppRoutes, PrivateRoutes } from './config/Routing.constants';
 import styles from './App.module.scss';
 import AppState, { SessionContext, SessionState } from './AppState';
 import MainFooter from './components/MainFooter/MainFooter';
 import MainHeader from './components/MainHeader/MainHeader';
-import NotFound from './pages/NotFound/NotFound';
-import Profile from './pages/Profile/Profile';
-import classnames from 'classnames';
-import * as Sentry from '@sentry/browser';
-import ApplicationError from 'components/ApplicationError/ApplicationError';
-import useScript from 'hooks/useScript';
-import GarbageInformation from 'pages/GarbageInformation/GarbageInformation';
-import { IS_ANALYTICS_ENABLED, IS_SENTRY_ENABLED, IS_PRODUCTION } from './env';
-import InkomenSpecificaties from 'pages/InkomenSpecificaties/InkomenSpecificaties';
+import { FeatureToggle } from './config/App.constants';
+import { AppRoutes, PrivateRoutes } from './config/Routing.constants';
+import { IS_ANALYTICS_ENABLED, IS_PRODUCTION, IS_SENTRY_ENABLED } from './env';
+import { useLocalStorage } from './hooks/storage.hook';
 import Burgerzaken from './pages/Burgerzaken/Burgerzaken';
 import BurgerzakenDetail from './pages/BurgerzakenDetail/BurgerzakenDetail';
+import MyArea from './pages/MyArea/MyArea';
+import NotFound from './pages/NotFound/NotFound';
+import Profile from './pages/Profile/Profile';
 
 function AppNotAuthenticated() {
+  const { location } = useRouter();
+
+  const [routeEntry, setRouteEntry] = useLocalStorage('RouteEntry', '');
+
+  if (!routeEntry || (routeEntry === '/' && location.pathname !== '/')) {
+    setRouteEntry(location.pathname);
+    console.log('unauth', location.pathname);
+  } else {
+    console.log('has!', routeEntry);
+  }
+
   return (
     <>
       <div className={classnames(styles.App, styles.NotYetAuthenticated)}>
@@ -59,8 +71,10 @@ function AppNotAuthenticated() {
                     })
                 )
               ) {
+                // Private routes are redirected to Home
                 return <Redirect to={AppRoutes.ROOT} />;
               }
+              // All other routes are presented with a 404 page
               return <Route component={NotFound} />;
             }}
           />
@@ -74,8 +88,18 @@ function AppNotAuthenticated() {
 function AppAuthenticated() {
   const { location } = useRouter();
   const session = useContext(SessionContext);
+  const [routeEntry, setRouteEntry] = useLocalStorage('RouteEntry');
+
+  const redirectAfterLogin = routeEntry || AppRoutes.ROOT;
 
   usePageChange();
+
+  useEffect(() => {
+    if (routeEntry) {
+      setRouteEntry('');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return location.pathname === AppRoutes.MIJN_BUURT ? (
     <MyArea />
@@ -84,11 +108,15 @@ function AppAuthenticated() {
       <MainHeader isAuthenticated={session.isAuthenticated} />
       <div className={styles.App} id="AppContent">
         <Switch>
+          <Redirect from={AppRoutes.API_LOGIN} to={redirectAfterLogin} />
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
-          <Redirect from={AppRoutes.API_LOGIN} to={AppRoutes.ROOT} />
           <Route path={AppRoutes.UPDATES} component={MyNotifications} />
           <Route path={AppRoutes.MIJN_GEGEVENS} component={Profile} />
           <Route path={AppRoutes.MIJN_TIPS} component={MyTips} />
+          <Route
+            path={AppRoutes['INKOMEN/TOZO_COVID19']}
+            component={InkomenDetail}
+          />
           <Route
             path={AppRoutes['INKOMEN/STADSPAS']}
             component={InkomenDetail}

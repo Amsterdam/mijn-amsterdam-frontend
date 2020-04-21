@@ -56,6 +56,9 @@ type ProductTitle =
   | 'Voorschot Bbz Corona regeling (Eenm.)'
   | string;
 
+export const TOZO_PRODUCT_TITLE: ProductTitle =
+  'Voorschot Bbz Corona regeling (Eenm.)';
+
 type TextPartContent = string | JSX.Element;
 type TextPartContentFormatter = (data: StepSourceData) => TextPartContent;
 type TextPartContents = TextPartContent | TextPartContentFormatter;
@@ -361,7 +364,7 @@ export const Labels: LabelData = {
     },
   },
   'Bijzondere Bijstand': {
-    'Voorschot Bbz Corona regeling (Eenm.)': {
+    [TOZO_PRODUCT_TITLE]: {
       aanvraag: {
         notification: {
           title: data =>
@@ -575,18 +578,6 @@ export const Labels: LabelData = {
   },
 };
 
-export const ProductTitles = {
-  Bijstandsuitkering: 'Levensonderhoud',
-  Stadspas: 'Stadspas',
-  BijzondereBijstand: 'Bijzondere bijstand',
-};
-
-export const ProductOrigins = {
-  Participatiewet: 'Participatiewet',
-  'Bijzondere Bijstand': 'Bijzondere Bijstand',
-  Minimafonds: 'Minimafonds',
-};
-
 // NOTE: Possibly deprecated because it seems document titles actually contain meaningful names in the latest api response.
 const DocumentTitles: { [originalTitle: string]: string } = {
   'LO: Aanvraag': 'Aanvraag bijstandsuitkering',
@@ -595,11 +586,21 @@ const DocumentTitles: { [originalTitle: string]: string } = {
   'LO: Herstel': 'Verzoek om aanvullende informatie van u',
 };
 
-const AppRoutesByProductOrigin = {
-  [ProductOrigins.Participatiewet]: AppRoutes['INKOMEN/BIJSTANDSUITKERING'],
-  [ProductOrigins.Minimafonds]: AppRoutes['INKOMEN/STADSPAS'],
-  [ProductOrigins['Bijzondere Bijstand']]:
-    AppRoutes['INKOMEN/BIJZONDERE_BIJSTAND'],
+type RoutesByProductOrigin = {
+  [origin in ProductOrigin]: { [productTitle in ProductTitle]: string };
+};
+
+const AppRoutesByProductOrigin: RoutesByProductOrigin = {
+  Participatiewet: {
+    Levensonderhoud: AppRoutes['INKOMEN/BIJSTANDSUITKERING'],
+  },
+  Minimafonds: {
+    Stadspas: AppRoutes['INKOMEN/STADSPAS'],
+  },
+  'Bijzondere Bijstand': {
+    'Bijzondere Bijstand': AppRoutes['INKOMEN/BIJZONDERE_BIJSTAND'],
+    [TOZO_PRODUCT_TITLE]: AppRoutes['INKOMEN/TOZO_COVID19'],
+  },
 };
 
 /** Checks if an item returned from the api is considered recent */
@@ -858,9 +859,7 @@ export function formatFocusProduct(
   const latestStepData = steps[latestStep] as Step;
 
   const hasDecision = steps.beslissing !== null;
-  console.log('----', '\n\n', Labels[productOrigin]);
-  console.log(productTitle, productOrigin, Labels[productOrigin][productTitle]);
-  // console.log(latestStep, Labels[productOrigin][productTitle][latestStep]);
+
   const stepLabels = !hasDecision
     ? (Labels[productOrigin][productTitle][latestStep] as Info)
     : (Labels[productOrigin][productTitle][latestStep] as InfoExtended)[
@@ -895,9 +894,12 @@ export function formatFocusProduct(
     stepTitle => !!steps[stepTitle]
   );
 
-  const route = generatePath(AppRoutesByProductOrigin[productOrigin], {
-    id,
-  });
+  const route = generatePath(
+    AppRoutesByProductOrigin[productOrigin][sourceData.productTitle],
+    {
+      id,
+    }
+  );
 
   const item = {
     id,
