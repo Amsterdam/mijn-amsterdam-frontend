@@ -86,6 +86,45 @@
     "soortProduct":"Minimafonds"
   },
   {
+    "_id":"000-1",
+    "_meest_recent":"inBehandeling",
+    "dienstverleningstermijn":null,
+    "naam":"Voorschot Bbz Corona regeling (Eenm.)",
+    "processtappen":{
+      "aanvraag":{
+        "_id":0,
+        "datum":"2020-04-29T15:05:52+02:00",
+        "document":[
+          {
+            "$ref":"focus/document?id=4400000004&isBulk=true&isDms=false",
+            "id":4400000004,
+            "isBulk":true,
+            "isDms":false,
+            "omschrijving":"Voorschot Bbz Corona regeling (Eenm.)"
+          },
+          {
+            "$ref":"focus/document?id=4400000005&isBulk=true&isDms=false",
+            "id":4400000005,
+            "isBulk":true,
+            "isDms":false,
+            "omschrijving":"Bbz Toekennen voorschot Tozo via batch"
+          }
+        ]
+      },
+      "beslissing":null,
+      "bezwaar":null,
+      "herstelTermijn":null,
+      "inBehandeling":{
+        "_id":1,
+        "datum":"2019-07-08T15:05:52+02:00",
+        "document":[
+
+        ]
+      }
+    },
+    "soortProduct":"Bijzondere Bijstand"
+  },
+  {
     "_id":"0-2",
     "_meest_recent":"herstelTermijn",
     "dienstverleningstermijn":42,
