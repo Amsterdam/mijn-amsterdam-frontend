@@ -19,10 +19,10 @@ export interface MenuItem extends LinkProps {
 
 export const myChaptersMenuItems: MenuItem[] = [
   {
-    title: ChapterTitles.MIJN_GEGEVENS,
-    id: Chapters.MIJN_GEGEVENS,
-    to: AppRoutes.MIJN_GEGEVENS,
-    chapter: Chapters.MIJN_GEGEVENS,
+    title: ChapterTitles.BRP,
+    id: Chapters.BRP,
+    to: AppRoutes.BRP,
+    chapter: Chapters.BRP,
   },
   {
     title: ChapterTitles.BELASTINGEN,

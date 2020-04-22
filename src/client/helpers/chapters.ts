@@ -62,7 +62,7 @@ function isChapterActive(
         !!BRP.data.identiteitsbewijzen
       );
 
-    case Chapters.MIJN_GEGEVENS:
+    case Chapters.BRP:
       return !isLoading(BRP) && !!BRP.content?.persoon;
   }
 

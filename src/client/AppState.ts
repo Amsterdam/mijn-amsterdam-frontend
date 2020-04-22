@@ -1,7 +1,4 @@
-import { createContext, useCallback, useState } from 'react';
-
-import { useSSE } from './hooks/useSSE';
-import { useOptIn } from './hooks/optin.hook';
+import { createContext } from 'react';
 
 import {
   apiPristineResult,

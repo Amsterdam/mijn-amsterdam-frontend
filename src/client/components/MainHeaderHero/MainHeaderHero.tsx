@@ -35,7 +35,7 @@ function useHeroSrc() {
   let imageName: string;
 
   switch (true) {
-    case isChapterPath(AppRoutes.MIJN_GEGEVENS):
+    case isChapterPath(AppRoutes.BRP):
       imageName = 'burgerzaken';
       break;
     case isChapterPath(AppRoutes.INKOMEN):

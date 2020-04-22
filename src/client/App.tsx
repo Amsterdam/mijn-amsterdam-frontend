@@ -122,7 +122,7 @@ function AppAuthenticated() {
           <Redirect from={AppRoutes.API1_LOGIN} to={redirectAfterLogin} />
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.UPDATES} component={MyNotifications} />
-          <Route path={AppRoutes.MIJN_GEGEVENS} component={Profile} />
+          <Route path={AppRoutes.BRP} component={Profile} />
           <Route path={AppRoutes.MIJN_TIPS} component={MyTips} />
           <Route
             path={AppRoutes['INKOMEN/STADSPAS']}

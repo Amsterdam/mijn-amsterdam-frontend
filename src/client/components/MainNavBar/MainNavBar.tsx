@@ -60,7 +60,7 @@ function SecondaryLinks() {
       {isDesktopScreen && <FontEnlarger />}
 
       <Link
-        to={AppRoutes.MIJN_GEGEVENS}
+        to={AppRoutes.BRP}
         className={styles.ProfileLink}
         data-tutorial-item="Hier kunt u uw algemene persoonsgegevens uit de gemeentelijke basisregistratie raadplegen, zoals uw woonadres;left-bottom"
       >

@@ -5,7 +5,7 @@ export type Chapter =
   | 'BURGERZAKEN'
   | 'BUURT'
   | 'INKOMEN'
-  | 'MIJN_GEGEVENS'
+  | 'BRP'
   | 'MILIEUZONE'
   | 'NOTIFICATIONS'
   | 'ROOT'
@@ -20,7 +20,7 @@ export const Chapters: Record<Chapter, Chapter> = {
   BURGERZAKEN: 'BURGERZAKEN',
   BUURT: 'BUURT',
   INKOMEN: 'INKOMEN',
-  MIJN_GEGEVENS: 'MIJN_GEGEVENS',
+  BRP: 'BRP',
   MILIEUZONE: 'MILIEUZONE',
   NOTIFICATIONS: 'NOTIFICATIONS',
   ROOT: 'ROOT',
@@ -30,15 +30,14 @@ export const Chapters: Record<Chapter, Chapter> = {
 };
 
 // These are used for PageHeadings and link title props for example.
-export const ChapterTitles: { [chapter in Chapter | 'MY_CASES']: string } = {
+export const ChapterTitles: { [chapter in Chapter]: string } = {
   AFVAL: 'Afval',
   BELASTINGEN: 'Belastingen',
   BURGERZAKEN: 'Burgerzaken',
   BUURT: 'Mijn buurt',
   INKOMEN: 'Inkomen en Stadspas',
-  MIJN_GEGEVENS: 'Mijn gegevens',
+  BRP: 'Mijn gegevens',
   MILIEUZONE: 'Milieuzone',
-  MY_CASES: 'Lopende zaken',
   NOTIFICATIONS: 'Actueel',
   ROOT: 'Home',
   TIPS: 'Mijn tips',

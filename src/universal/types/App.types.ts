@@ -34,6 +34,7 @@ export interface MyNotification {
   description: string;
   link?: LinkProps;
   hideDatePublished?: boolean;
+  isAlert?: boolean;
 
   // NOTE: Maybe move this to client?
   customLink?: {

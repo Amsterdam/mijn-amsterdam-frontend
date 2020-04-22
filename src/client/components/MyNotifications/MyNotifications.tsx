@@ -83,7 +83,7 @@ export default function MyNotifications({
                     <ChapterIcon
                       fill={Colors.primaryRed}
                       className={styles.Icon}
-                      chapter={item.chapter}
+                      chapter={item.isAlert ? 'ALERT' : item.chapter}
                     />
                   ) : (
                     <item.Icon className={styles.Icon} />

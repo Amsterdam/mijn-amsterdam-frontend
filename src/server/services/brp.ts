@@ -1,6 +1,6 @@
 import { differenceInCalendarDays } from 'date-fns';
 import { generatePath } from 'react-router-dom';
-import { AppRoutes } from '../../universal/config';
+import { AppRoutes, Chapters } from '../../universal/config';
 import { defaultDateFormat } from '../../universal/helpers';
 import { Adres, BRPData, MyNotification } from '../../universal/types';
 import { requestData } from '../helpers';
@@ -74,9 +74,10 @@ export function transformBRPNotifications(data: BRPData) {
     expiredDocuments.forEach(document => {
       const docTitle = BrpDocumentTitles[document.documentType];
       notifications.push({
-        chapter: 'ALERT',
+        chapter: Chapters.BURGERZAKEN,
         datePublished: now.toISOString(),
         hideDatePublished: true,
+        isAlert: true,
         id: `${docTitle}-datum-afloop-verstreken`,
         title: `Uw ${docTitle} is verlopen`,
         description: `Sinds ${document.datumAfloop} is uw ${docTitle} niet meer geldig.`,
@@ -92,8 +93,9 @@ export function transformBRPNotifications(data: BRPData) {
     willExpireSoonDocuments.forEach(document => {
       const docTitle = BrpDocumentTitles[document.documentType];
       notifications.push({
-        chapter: 'ALERT',
+        chapter: Chapters.BURGERZAKEN,
         datePublished: now.toISOString(),
+        isAlert: true,
         hideDatePublished: true,
         id: `${document.documentType}-datum-afloop-binnekort`,
         title: `Uw ${docTitle} verloopt binnenkort`,
@@ -108,14 +110,15 @@ export function transformBRPNotifications(data: BRPData) {
 
   if (inOnderzoek) {
     notifications.push({
-      chapter: 'ALERT',
+      chapter: Chapters.BRP,
       datePublished: now.toISOString(),
+      isAlert: true,
       id: 'brpAdresInOnderzoek',
       title: 'Adres in onderzoek',
       description:
         'Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat.',
       link: {
-        to: AppRoutes.MIJN_GEGEVENS,
+        to: AppRoutes.BRP,
         title: 'Meer informatie',
       },
     });
@@ -123,13 +126,14 @@ export function transformBRPNotifications(data: BRPData) {
 
   if (isOnbekendWaarheen) {
     notifications.push({
-      chapter: 'ALERT',
+      chapter: Chapters.BRP,
       datePublished: now.toISOString(),
+      isAlert: true,
       id: 'brpVertrokkenOnbekendWaarheen',
       title: 'Vertrokken - onbekend waarheen',
       description: `U staat sinds ${dateLeft} in Basisregistratie Personen (BRP) geregistreerd als 'vertrokken onbekend waarheen'.`,
       link: {
-        to: AppRoutes.MIJN_GEGEVENS,
+        to: AppRoutes.BRP,
         title: 'Meer informatie',
       },
     });
