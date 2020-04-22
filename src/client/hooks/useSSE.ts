@@ -26,7 +26,6 @@ export function useSSE(
     es.addEventListener(eventName, callback);
 
     return () => {
-      console.log('down boy!');
       es.removeEventListener('error', logError);
       es.removeEventListener('open', logOpen);
       es.removeEventListener('message', logMessage);

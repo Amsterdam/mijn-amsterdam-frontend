@@ -10,7 +10,6 @@ import { MainNavSubmenuLink } from '../MainNavSubmenu/MainNavSubmenu';
 import Panel from '../Panel/Panel';
 import React from 'react';
 import styles from './MyChaptersPanel.module.scss';
-import { useDebounce } from 'use-debounce';
 import { MenuItem } from '../../config/menuItems';
 import { ChapterIcons } from '../../config/chapterIcons';
 
@@ -30,7 +29,7 @@ export default function MyChaptersPanel({
   ...otherProps
 }: MyChaptersPanelProps) {
   // Use debounced value here because we want to avoid dependent loading flickr in the scenario: Api A done and Api B started request with data returned from B.
-  const [isLoadingDebounced] = useDebounce(isLoading, 200);
+
   useSessionCallbackOnceDebounced(trackCategory, () => {
     items.forEach(({ id }) => {
       trackItemPresentation(
@@ -59,7 +58,7 @@ export default function MyChaptersPanel({
           );
         })}
       </div>
-      {isLoadingDebounced && (
+      {isLoading && (
         <LoadingContent
           className={styles.LoadingPlaceholder}
           barConfig={[

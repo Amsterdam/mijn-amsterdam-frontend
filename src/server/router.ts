@@ -78,4 +78,4 @@ router.use(
   }
 );
 
-router.use('/stream', loadServicesSSE);
+router.use(`${BFF_API_BASE_URL}/services/stream`, loadServicesSSE);

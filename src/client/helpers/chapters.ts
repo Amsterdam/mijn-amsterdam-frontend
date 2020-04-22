@@ -33,7 +33,7 @@ function isChapterActive(
       return (
         !isLoading(BELASTINGEN) &&
         (FeatureToggle.belastingApiActive && BELASTINGEN.status === 'OK'
-          ? BELASTINGEN.content.isKnown
+          ? BELASTINGEN.content?.isKnown
           : true)
       );
 

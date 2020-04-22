@@ -2,8 +2,8 @@ import { useMemo } from 'react';
 import { AUTH_API_URL } from '../../../universal/config';
 import {
   ApiErrorResponse,
-  apiPristineResponseData,
   apiSuccesResult,
+  apiPristineResult,
   ApiSuccessResponse,
 } from '../../../universal/helpers/api';
 import { ApiRequestOptions, useDataApi } from './api.hook';
@@ -19,14 +19,14 @@ export interface SessionState {
   refetch: () => void;
 }
 
-const INITIAL_SESSION_STATE = apiPristineResponseData({
-  SESSION: {
+const INITIAL_SESSION_STATE = {
+  SESSION: apiPristineResult({
     isAuthenticated: false,
     validUntil: -1,
     validityInSeconds: -1,
     userType: 'BURGER',
-  },
-});
+  }),
+};
 
 const requestOptions: ApiRequestOptions = {
   url: AUTH_API_URL,
@@ -49,7 +49,7 @@ export default function useSessionApi() {
     SessionResponseData
   >(requestOptions, INITIAL_SESSION_STATE);
 
-  const { isAuthenticated, validUntil, userType } = data.SESSION.content;
+  const { isAuthenticated, validUntil, userType } = data.SESSION.content!; // SESSION.content is never null
 
   return useMemo(() => {
     const validityInSeconds = Math.max(

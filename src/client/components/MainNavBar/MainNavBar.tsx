@@ -45,7 +45,7 @@ export interface MainNavLinkProps {
 
 function SecondaryLinks() {
   const { BRP } = useContext(AppContext);
-  const persoon = BRP?.status === 'OK' ? BRP.content.persoon : null;
+  const persoon = BRP.content?.persoon || null;
   const hasFirstName = !!(persoon && persoon.voornamen);
   const isDesktopScreen = useDesktopScreen();
 

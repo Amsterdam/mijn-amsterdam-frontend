@@ -4,7 +4,7 @@ import {
   isError,
   isLoading,
 } from '../../../universal/helpers';
-import { AppContext } from '../../AppState';
+import { AppContext, AppState } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
@@ -16,14 +16,13 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
-import { ServicesRelatedData } from '../../hooks/api/api.services-related';
 import { formatBrpProfileData } from './formatData';
 import { panelConfig, PanelConfigFormatter } from './Profile.constants';
 import styles from './Profile.module.scss';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,
-  BRP: ServicesRelatedData['BRP']
+  BRP: AppState['BRP']
 ) {
   if (typeof panelConfig === 'function') {
     return panelConfig(BRP);

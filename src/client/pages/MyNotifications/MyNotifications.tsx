@@ -28,8 +28,8 @@ export default () => {
       </PageContent>
       <MyNotifications
         isLoading={isLoading(NOTIFICATIONS)}
-        total={NOTIFICATIONS.content.total}
-        items={NOTIFICATIONS.content.items}
+        total={NOTIFICATIONS.content!.total}
+        items={NOTIFICATIONS.content!.items}
         noContentNotification="Er zijn op dit moment geen actuele meldingen voor u."
         trackCategory="Actueel overzicht"
       />

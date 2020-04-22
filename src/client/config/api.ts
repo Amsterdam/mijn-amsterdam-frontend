@@ -3,10 +3,8 @@ import { isError } from 'util';
 import { AppState } from '../AppState';
 
 export const BFFApiUrls: Record<string, string> = {
-  SERVICES_RELATED: `${BFF_API_BASE_URL}/services/related`,
-  SERVICES_DIRECT: `${BFF_API_BASE_URL}/services/direct`,
-  SERVICES_GENERATED: `${BFF_API_BASE_URL}/services/generated`,
-  SERVICES_MAP: `${BFF_API_BASE_URL}/services/map`,
+  SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
+  SERVICES_SSE: `${BFF_API_BASE_URL}/services/stream`,
 };
 
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {

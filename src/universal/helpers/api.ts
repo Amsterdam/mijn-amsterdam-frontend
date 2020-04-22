@@ -13,7 +13,7 @@ export type ApiSuccessResponse<T> = {
 
 // This state is used for checking if we are expecting data from the api.
 export type ApiPristineResponse<T> = {
-  content: T;
+  content: T | null;
   status: 'PRISTINE';
 };
 
@@ -37,6 +37,7 @@ export type FEApiResponseData<T extends (...args: any[]) => any> = ResolvedType<
 export type ApiResponse<T> =
   | ApiErrorResponse<T>
   | ApiSuccessResponse<T>
+  | ApiPristineResponse<T>
   | ApiPostponeResponse;
 
 export function isLoading(
@@ -83,6 +84,13 @@ export function apiSuccesResult<T>(content: T): ApiSuccessResponse<T> {
   };
 }
 
+export function apiPristineResult<T>(content: T): ApiPristineResponse<T> {
+  return {
+    content,
+    status: 'PRISTINE',
+  };
+}
+
 export function apiPostponeResult(): ApiPostponeResponse {
   return {
     content: null,
@@ -96,12 +104,6 @@ export function apiUnknownResult(message: string): ApiUnknownResponse {
     content: null,
     status: 'DEPENDENCY_ERROR',
   };
-}
-
-export function apiPristineResponseData<T>(content: T) {
-  return Object.entries(content).reduce((acc, [key, content]) => {
-    return Object.assign(acc, { [key]: { content, status: 'PRISTINE' } });
-  }, {} as Record<keyof T, ApiPristineResponse<T[keyof T]>>);
 }
 
 export function apiErrorResponseData<T>(

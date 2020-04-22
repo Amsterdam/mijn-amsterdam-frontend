@@ -5,15 +5,15 @@ import {
 
 import { ExternalUrls } from '../../../universal/config';
 import { isMokum } from '../../../universal/helpers';
-import { ServicesRelatedData } from '../../hooks/api/api.services-related';
 import { BRPData } from '../../../universal/types';
+import { AppState } from '../../AppState';
 
 type PanelKey = keyof Omit<BRPData, 'reisDocumenten' | 'notifications'>;
 type PanelProps = Pick<InfoPanelProps, 'title' | 'actionLinks'>;
 
 export type PanelConfigFormatter =
   | PanelProps
-  | ((brpData: ServicesRelatedData['BRP']) => PanelProps);
+  | ((brpData: AppState['BRP']) => PanelProps);
 
 type PanelConfig = {
   [key in PanelKey]: PanelConfigFormatter;

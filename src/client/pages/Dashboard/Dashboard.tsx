@@ -26,13 +26,13 @@ export default () => {
   const { TIPS, NOTIFICATIONS, CASES, BUURT, HOME } = appState;
   const { isOptIn } = useOptIn();
 
-  const tipItems = TIPS.content?.items.slice(0, MAX_TIPS_VISIBLE) || [];
-  const notificationItems = NOTIFICATIONS.content?.items.slice(
+  const tipItems = TIPS.content!.items.slice(0, MAX_TIPS_VISIBLE);
+  const notificationItems = NOTIFICATIONS.content!.items.slice(
     0,
     MAX_NOTIFICATIONS_VISIBLE
   );
   const isPhoneScreen = usePhoneScreen();
-  const NOTIFICATIONSTotal = NOTIFICATIONS.content?.items.length;
+  const NOTIFICATIONSTotal = NOTIFICATIONS.content!.items.length;
 
   const {
     items: myChapterItems,
@@ -74,7 +74,7 @@ export default () => {
           isLoading={isLoading(CASES)}
           title="Mijn lopende aanvragen"
           data-tutorial-item="Dit is een overzicht van uw lopende aanvragen of wijzigingen;right-top"
-          items={CASES.content}
+          items={CASES.content!}
         />
 
         {!isPhoneScreen && (

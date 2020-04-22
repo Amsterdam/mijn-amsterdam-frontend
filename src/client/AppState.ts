@@ -1,65 +1,55 @@
-import { createContext, useCallback, useMemo, useState } from 'react';
-import {
-  ServicesDirectData,
-  useServicesDirect,
-} from './hooks/api/api.services-direct';
-import {
-  ServicesGeneratedData,
-  useServicesGenerated,
-} from './hooks/api/api.services-generated';
-import { ServicesMapData, useServicesMap } from './hooks/api/api.services-map';
-import {
-  ServicesRelatedData,
-  useServicesRelated,
-} from './hooks/api/api.services-related';
-import { useSSE } from './hooks/useSSE';
+import { createContext, useCallback, useState } from 'react';
 
-export interface AppState
-  extends ServicesRelatedData,
-    ServicesDirectData,
-    ServicesGeneratedData,
-    ServicesMapData {}
+import { useSSE } from './hooks/useSSE';
+import { useOptIn } from './hooks/optin.hook';
+
+import {
+  apiPristineResult,
+  FEApiResponseData,
+  ApiResponse,
+} from '../universal/helpers/api';
+import {
+  loadServicesGenerated,
+  loadServicesDirect,
+  loadServicesRelated,
+} from '../server/services';
+import { loadServicesMap } from '../server/services/services-map';
+
+export const PRISTINE_APPSTATE = {
+  // Generated
+  TIPS: apiPristineResult({ items: [] }),
+  NOTIFICATIONS: apiPristineResult({ items: [], total: 0 }),
+  CASES: apiPristineResult([]),
+
+  // Direct
+  FOCUS_SPECIFICATIES: apiPristineResult(null),
+  FOCUS_AANVRAGEN: apiPristineResult(null),
+  WMO: apiPristineResult(null),
+  ERFPACHT: apiPristineResult(null),
+  BELASTINGEN: apiPristineResult(null),
+  MILIEUZONE: apiPristineResult(null),
+
+  // Related
+  BRP: apiPristineResult(null),
+  AFVAL: apiPristineResult(null),
+  HOME: apiPristineResult(null),
+  BUURT: apiPristineResult(null),
+};
+
+type GeneratedResponse = FEApiResponseData<typeof loadServicesGenerated>;
+type DirectResponse = FEApiResponseData<typeof loadServicesDirect>;
+type MapsResponse = FEApiResponseData<typeof loadServicesMap>;
+type RelatedResponse = FEApiResponseData<typeof loadServicesRelated>;
+
+type ApiState = GeneratedResponse &
+  DirectResponse &
+  MapsResponse &
+  RelatedResponse;
+
+export type AppState = {
+  [key in keyof ApiState]: ApiResponse<ApiState[key]['content']>;
+};
 
 export type StateKey = keyof AppState;
 
-export const AppContext = createContext<AppState>({} as AppState);
-
-export function useAppState(postponeAll: boolean = false) {
-  const servicesRelatedApi = useServicesRelated(postponeAll);
-  const servicesDirectApi = useServicesDirect(postponeAll);
-  const servicesGeneratedApi = useServicesGenerated(postponeAll);
-  const servicesMapApi = useServicesMap(postponeAll);
-
-  return useMemo(
-    () => ({
-      ...servicesRelatedApi.data,
-      ...servicesDirectApi.data,
-      ...servicesGeneratedApi.data,
-      ...servicesMapApi.data,
-    }),
-    [
-      servicesRelatedApi.data,
-      servicesDirectApi.data,
-      servicesGeneratedApi.data,
-      servicesMapApi.data,
-    ]
-  );
-}
-
-export function useAppStateSSE() {
-  const pristineState = useAppState(true);
-  const [state, setAppState] = useState<any>(pristineState);
-
-  const onEvent = useCallback((message: any) => {
-    if (message?.data) {
-      setAppState((state: any) => ({
-        ...state,
-        ...JSON.parse(message.data),
-      }));
-    }
-  }, []);
-
-  useSSE('http://localhost:5000/stream', 'message', onEvent);
-
-  return state;
-}
+export const AppContext = createContext<AppState>(PRISTINE_APPSTATE);

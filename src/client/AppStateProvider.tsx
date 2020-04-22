@@ -1,6 +1,9 @@
-import React from 'react';
-import { AppContext, AppState, useAppStateSSE } from './AppState';
+import React, { useState, useCallback } from 'react';
+import { AppContext, AppState, PRISTINE_APPSTATE } from './AppState';
+import { useDataApi } from './hooks/api/api.hook';
+import { BFFApiUrls } from './config/api';
 import { ComponentChildren } from '../universal/types/App.types';
+import { useSSE } from './hooks/useSSE';
 
 interface AppStateProps {
   children: ComponentChildren;
@@ -20,10 +23,34 @@ export function MockAppStateProvider({ children, value }: MockAppStateProps) {
 }
 
 export default function AppStateProvider({ children }: AppStateProps) {
-  const appState = useAppStateSSE();
-  return (
-    <AppContext.Provider value={appState as any}>
-      {children}
-    </AppContext.Provider>
-  );
+  const [appState, setAppState] = useState<AppState>(PRISTINE_APPSTATE);
+  // IE11 and early edge versions don't have EventSource support. These browsers will use the the Sauron endpoint.
+  if (!('EventSource' in window)) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [api] = useDataApi<AppState | null>(
+      {
+        url: BFFApiUrls.SERVICES_SAURON,
+      },
+      null
+    );
+    if (api.data !== null) {
+      setAppState(api.data);
+    }
+  } else {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const onEvent = useCallback((message: any) => {
+      if (message?.data) {
+        setAppState((state: any) => ({
+          ...state,
+          ...JSON.parse(message.data),
+        }));
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useSSE(BFFApiUrls.SERVICES_SSE, 'message', onEvent);
+  }
+
+  return <AppContext.Provider value={appState}>{children}</AppContext.Provider>;
 }
