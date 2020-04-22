@@ -53,11 +53,19 @@
     float: right;
   }
 
-  svg {
+  i {
     height: 1.3rem;
-    fill: $color-white;
+    font-style: normal;
+    position: relative;
+    transform: rotate(45deg) translateY(-.6rem) scale(.6);
+    transform-origin: center;
   }
 
+  &Active {
+   i {
+     transform: rotate(-135deg) translateY(-.2rem) scale(.6) translateX(-.8rem);
+   }
+  }
 
 }
 

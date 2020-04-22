@@ -18,7 +18,6 @@ import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import { ChapterTitles } from 'config/Chapter.constants';
 import PageHeading from 'components/PageHeading/PageHeading';
 import Pagination from 'components/Pagination/Pagination';
-import { ReactComponent as SearchIcon } from 'assets/icons/Search.svg';
 import Section from 'components/Section/Section';
 import Table from 'components/Table/Table';
 import classnames from 'classnames';
@@ -41,6 +40,10 @@ export const annualStatementsTableDisplayProps = {
 
 const PAGE_SIZE = 10;
 const INITIAL_INDEX = [0, PAGE_SIZE - 1];
+
+function Caret() {
+  return <i className={styles.SearchButtonIcon}>&#9698;</i>;
+}
 
 export default () => {
   const {
@@ -171,13 +174,18 @@ export default () => {
         }
       >
         <Button
-          className={styles.SearchButton}
+          variant="secondary-inverted"
+          className={classnames(
+            styles.SearchButton,
+            isSearchPanelActive && styles.SearchButtonActive
+          )}
           onClick={toggleSearchPanel}
           disabled={isSearchPanelActive}
-          icon={SearchIcon}
+          icon={Caret}
           iconPosition="right"
+          aria-expanded={isSearchPanelActive}
         >
-          {isSearchPanelActive ? 'Verberg zoeken' : 'Zoeken'}
+          Zoeken
         </Button>
 
         {isSearchPanelActive && (
