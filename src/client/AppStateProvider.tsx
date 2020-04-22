@@ -4,6 +4,7 @@ import { useDataApi } from './hooks/api/api.hook';
 import { BFFApiUrls } from './config/api';
 import { ComponentChildren } from '../universal/types/App.types';
 import { useSSE } from './hooks/useSSE';
+import { transformAppState } from './data-transform/appState';
 
 interface AppStateProps {
   children: ComponentChildren;
@@ -30,6 +31,7 @@ export default function AppStateProvider({ children }: AppStateProps) {
     const [api] = useDataApi<AppState | null>(
       {
         url: BFFApiUrls.SERVICES_SAURON,
+        transformResponse: transformAppState,
       },
       null
     );
@@ -42,7 +44,7 @@ export default function AppStateProvider({ children }: AppStateProps) {
       if (message?.data) {
         setAppState((state: any) => ({
           ...state,
-          ...JSON.parse(message.data),
+          ...transformAppState(JSON.parse(message.data)),
         }));
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
