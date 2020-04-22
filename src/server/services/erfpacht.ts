@@ -1,4 +1,4 @@
-import { ApiUrls } from './config';
+import { ApiUrls, getApiConfigValue } from './config';
 import { requestData } from '../helpers';
 
 export interface ERFPACHTData {
@@ -10,6 +10,7 @@ export function fetchERFPACHT(sessionID: SessionID) {
     {
       url: ApiUrls.ERFPACHT,
     },
-    sessionID
+    sessionID,
+    getApiConfigValue('ERFPACHT', 'postponeFetch', false)
   );
 }

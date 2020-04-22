@@ -1078,7 +1078,7 @@ export async function fetchFOCUSAanvragen(sessionID: SessionID) {
       transformResponse: data => transformFOCUSAanvragenData(data, new Date()),
     },
     sessionID,
-    getApiConfigValue('FOCUS_AANVRAGEN', 'postponeFetch', true)
+    getApiConfigValue('FOCUS_AANVRAGEN', 'postponeFetch', false)
   );
 }
 
@@ -1089,7 +1089,7 @@ export async function fetchFOCUSSpecificaties(sessionID: SessionID) {
       transformResponse: transformFOCUSIncomeSpecificationsData,
     },
     sessionID,
-    getApiConfigValue('FOCUS_SPECIFICATIES', 'postponeFetch', true)
+    getApiConfigValue('FOCUS_SPECIFICATIES', 'postponeFetch', false)
   );
 }
 

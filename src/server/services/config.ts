@@ -22,7 +22,7 @@ export interface ApiConfig {
   postponeFetch: boolean;
 }
 
-export const ApiConfig: Record<ApiStateKey, ApiConfig> = {
+export const ApiConfig: Record<ApiStateKey | string, ApiConfig> = {
   FOCUS_SPECIFICATIES: {
     postponeFetch: !FeatureToggle.focusUitkeringsspecificatiesActive,
   },
@@ -32,7 +32,13 @@ export const ApiConfig: Record<ApiStateKey, ApiConfig> = {
   BELASTINGEN: {
     postponeFetch: !FeatureToggle.belastingApiActive,
   },
+  BELASTINGEN_GENERATED: {
+    postponeFetch: !FeatureToggle.belastingApiActive,
+  },
   MILIEUZONE: {
+    postponeFetch: !FeatureToggle.milieuzoneApiActive,
+  },
+  MILIEUZONE_GENERATED: {
     postponeFetch: !FeatureToggle.milieuzoneApiActive,
   },
 };

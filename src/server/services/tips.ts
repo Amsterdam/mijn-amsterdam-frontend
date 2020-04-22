@@ -1,4 +1,4 @@
-import { ApiUrls } from './config';
+import { ApiUrls, getApiConfigValue } from './config';
 
 import { MyTip } from '../../universal/types';
 import { requestData } from '../helpers';
@@ -25,6 +25,7 @@ export function fetchTIPS(sessionID: SessionID, requestBody: TIPSRequestData) {
       data: requestBody,
       transformRequest: transformTIPSRequest,
     },
-    sessionID
+    sessionID,
+    getApiConfigValue('TIPS', 'postponeFetch', false)
   );
 }

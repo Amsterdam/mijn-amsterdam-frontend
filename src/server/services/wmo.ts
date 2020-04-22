@@ -1,5 +1,5 @@
 import { AppRoutes } from '../../universal/config';
-import { ApiUrls } from './config';
+import { ApiUrls, getApiConfigValue } from './config';
 import {
   capitalizeFirstLetter,
   dateSort,
@@ -731,6 +731,7 @@ export function fetchWMO(sessionID: SessionID) {
       transformResponse: (responseData: WMOSourceData) =>
         formatWMOData(responseData, new Date()),
     },
-    sessionID
+    sessionID,
+    getApiConfigValue('WMO', 'postponeFetch', false)
   );
 }

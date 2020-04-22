@@ -49,7 +49,7 @@ export function fetchMILIEUZONE(sessionID: SessionID) {
       transformResponse: transformMILIEUZONEData,
     },
     sessionID,
-    getApiConfigValue('MILIEUZONE', 'postponeFetch', true)
+    getApiConfigValue('MILIEUZONE', 'postponeFetch', false)
   );
 }
 
@@ -78,7 +78,7 @@ export async function fetchMILIEUZONEGenerated(sessionID: SessionID) {
       transformResponse: transformMILIEUZONEGenerated,
     },
     sessionID,
-    getApiConfigValue('MILIEUZONE', 'postponeFetch', true)
+    getApiConfigValue('MILIEUZONE_GENERATED', 'postponeFetch', false)
   );
 
   const notifications: MyNotification[] = [];

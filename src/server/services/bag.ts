@@ -1,7 +1,7 @@
 import { getBagSearchAddress, toLatLng } from '../../universal/helpers';
 import { Adres } from '../../universal/types';
 import { requestData } from '../helpers';
-import { ApiUrls } from './config';
+import { ApiUrls, getApiConfigValue } from './config';
 
 export interface BAGSourceData {
   results: Array<{ [key: string]: any; centroid: Centroid }>;
@@ -29,6 +29,7 @@ export function fetchBAG(sessionID: SessionID, address: Adres) {
       params,
       transformResponse: formatBAGData,
     },
-    sessionID
+    sessionID,
+    getApiConfigValue('BAG', 'postponeFetch', false)
   );
 }

@@ -49,7 +49,7 @@ export function fetchBELASTING(sessionID: SessionID) {
       transformResponse: transformBELASTINGENData,
     },
     sessionID,
-    getApiConfigValue('BELASTINGEN', 'postponeFetch', true)
+    getApiConfigValue('BELASTINGEN', 'postponeFetch', false)
   );
 }
 
@@ -89,7 +89,7 @@ export async function fetchBELASTINGGenerated(sessionID: SessionID) {
       transformResponse: transformBELASTINGENGenerated,
     },
     sessionID,
-    getApiConfigValue('BELASTINGEN', 'postponeFetch', true)
+    getApiConfigValue('BELASTINGEN_GENERATED', 'postponeFetch', false)
   );
 
   const notifications: MyNotification[] = [];

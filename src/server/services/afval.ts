@@ -3,7 +3,7 @@ import {
   getApproximateDistance,
 } from '../../universal/helpers';
 import { requestData } from '../helpers/request';
-import { ApiUrls } from './config';
+import { ApiUrls, getApiConfigValue } from './config';
 import {
   Stadsdeel,
   GarbagePoint,
@@ -265,6 +265,7 @@ export function fetchAFVAL(sessionID: SessionID, center: LatLngObject | null) {
       params,
       transformResponse: data => formatAFVALData(data, center),
     },
-    sessionID
+    sessionID,
+    getApiConfigValue('AFVAL', 'postponeFetch', false)
   );
 }
