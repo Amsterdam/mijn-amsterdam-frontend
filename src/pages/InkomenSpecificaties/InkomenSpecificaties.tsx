@@ -183,6 +183,7 @@ export default () => {
           disabled={isSearchPanelActive}
           icon={Caret}
           iconPosition="right"
+          aria-expanded={isSearchPanelActive}
         >
           Zoeken
         </Button>
