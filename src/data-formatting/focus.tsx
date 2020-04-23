@@ -550,7 +550,7 @@ export const Labels: LabelData = {
 export const ProductTitles = {
   Bijstandsuitkering: 'Levensonderhoud',
   Stadspas: 'Stadspas',
-  BijzondereBijstand: 'Bijzondere bijstand',
+  BijzondereBijstand: 'Bijzondere Bijstand',
 };
 
 export const ProductOrigins = {
