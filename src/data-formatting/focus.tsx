@@ -53,11 +53,17 @@ type ProductOrigin = 'Participatiewet' | 'Bijzondere Bijstand' | 'Minimafonds';
 type ProductTitle =
   | 'Levensonderhoud'
   | 'Stadspas'
-  | 'Voorschot Bbz Corona regeling (Eenm.)'
+  | 'Voorschot Tozo (voor ondernemers) (Eenm.)'
   | string;
 
 export const TOZO_PRODUCT_TITLE: ProductTitle =
-  'Voorschot Bbz Corona regeling (Eenm.)';
+  'Voorschot Tozo (voor ondernemers) (Eenm.)';
+
+const formattedProductTitleWhitelisted = [
+  'Bijstandsuitkering',
+  'Stadspas',
+  TOZO_PRODUCT_TITLE,
+];
 
 type TextPartContent = string | JSX.Element;
 type TextPartContentFormatter = (data: StepSourceData) => TextPartContent;
@@ -77,10 +83,10 @@ type InfoExtended = { [decision: string]: Info };
 
 interface ProductType {
   aanvraag: Info;
-  inBehandeling: Info;
-  herstelTermijn: Info;
-  bezwaar: Info | null;
-  beslissing: InfoExtended;
+  inBehandeling: Info | null;
+  herstelTermijn: Info | null;
+  bezwaar?: Info | null;
+  beslissing: InfoExtended | null;
 }
 
 type LabelData = {
@@ -196,6 +202,7 @@ export interface FocusItem {
   link: LinkProps;
   process: ProcessStep[];
   productTitle: ProductTitle;
+  productOrigin: ProductOrigin;
   notification?: MyNotification;
 }
 
@@ -370,78 +377,80 @@ export const Labels: LabelData = {
           title: data =>
             `${data.productTitleTranslated}: Wij hebben uw aanvraag ontvangen`,
           description: data =>
-            `Wij hebben uw aanvraag voor Voorschot Bbz Corona regeling (Eenm.) ontvangen op ${data.dateStart}.`,
+            `Wij hebben uw aanvraag voor een ${data.productTitleTranslated} ontvangen op ${data.datePublished}`,
         },
         title: data => data.productTitleTranslated,
         status: stepLabels.aanvraag,
         description: data =>
-          `U hebt op ${data.dateStart} een Voorschot Bbz Corona regeling (Eenm.) aangevraagd.`,
+          `Wij hebben uw aanvraag voor een ${data.productTitleTranslated} ontvangen op ${data.datePublished}`,
       },
-      inBehandeling: {
-        notification: {
-          title: data =>
-            `${data.productTitleTranslated}: Wij behandelen uw aanvraag`,
-          description: data =>
-            `Wij hebben uw aanvraag voor Voorschot Bbz Corona regeling (Eenm.) in behandeling genomen op ${data.datePublished}.`,
-        },
-        title: data => `${data.productTitleTranslated} in behandeling`,
-        status: stepLabels.inBehandeling,
-        description: data => (
-          <p>
-            Wij gaan nu bekijken of u recht hebt op Voorschot Bbz Corona
-            regeling (Eenm.). Het kan zijn dat u nog extra informatie moet
-            opsturen. U ontvangt vóór {data.decisionDeadline1} ons besluit.
-          </p>
-        ),
-      },
-      herstelTermijn: {
-        notification: {
-          title: data => `${data.productTitleTranslated}: Neem actie`,
-          description:
-            'Er is meer informatie en tijd nodig om uw aanvraag voor Voorschot Bbz Corona regeling (Eenm.) te behandelen.',
-        },
-        title: data => data.productTitleTranslated,
-        status: stepLabels.herstelTermijn,
-        description: data => (
-          <>
-            <p>
-              Wij hebben meer informatie en tijd nodig om uw aanvraag te
-              verwerken. Bekijk de brief voor meer details. U moet de extra
-              informatie vóór {data.userActionDeadline} opsturen. Dan ontvangt u
-              vóór {data.decisionDeadline2} ons besluit.
-            </p>
-            <p>
-              Tip: Lever de informatie die wij gevraagd hebben zo spoedig
-              mogelijk in. Hoe eerder u ons de noodzakelijke informatie geeft,
-              hoe eerder wij verder kunnen met de behandeling van uw aanvraag.
-            </p>
-          </>
-        ),
-      },
+      inBehandeling: null,
+      herstelTermijn: null,
+      // inBehandeling: {
+      //   notification: {
+      //     title: data =>
+      //       `${data.productTitleTranslated}: Wij behandelen uw aanvraag`,
+      //     description: data =>
+      //       `Wij hebben uw aanvraag voor Voorschot Tozo (voor ondernemers) (Eenm.) in behandeling genomen op ${data.datePublished}.`,
+      //   },
+      //   title: data => `${data.productTitleTranslated} in behandeling`,
+      //   status: stepLabels.inBehandeling,
+      //   description: data => (
+      //     <p>
+      //       Wij gaan nu bekijken of u recht hebt op Voorschot Bbz Corona
+      //       regeling (Eenm.). Het kan zijn dat u nog extra informatie moet
+      //       opsturen. U ontvangt vóór {data.decisionDeadline1} ons besluit.
+      //     </p>
+      //   ),
+      // },
+      // herstelTermijn: {
+      //   notification: {
+      //     title: data => `${data.productTitleTranslated}: Neem actie`,
+      //     description:
+      //       'Er is meer informatie en tijd nodig om uw aanvraag voor Voorschot Tozo (voor ondernemers) (Eenm.) te behandelen.',
+      //   },
+      //   title: data => data.productTitleTranslated,
+      //   status: stepLabels.herstelTermijn,
+      //   description: data => (
+      //     <>
+      //       <p>
+      //         Wij hebben meer informatie en tijd nodig om uw aanvraag te
+      //         verwerken. Bekijk de brief voor meer details. U moet de extra
+      //         informatie vóór {data.userActionDeadline} opsturen. Dan ontvangt u
+      //         vóór {data.decisionDeadline2} ons besluit.
+      //       </p>
+      //       <p>
+      //         Tip: Lever de informatie die wij gevraagd hebben zo spoedig
+      //         mogelijk in. Hoe eerder u ons de noodzakelijke informatie geeft,
+      //         hoe eerder wij verder kunnen met de behandeling van uw aanvraag.
+      //       </p>
+      //     </>
+      //   ),
+      // },
       beslissing: {
         [getDecision('Afwijzing')]: {
           notification: {
             title: data =>
               `${data.productTitleTranslated}: Uw aanvraag is afgewezen`,
             description: data =>
-              `U heeft geen recht op Voorschot Bbz Corona regeling (Eenm.) (besluit: ${data.datePublished}).`,
+              `U heeft geen recht op ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
           },
           title: data => data.productTitleTranslated,
           status: stepLabels.beslissing,
-          description:
-            'U heeft geen recht op Voorschot Bbz Corona regeling (Eenm.). Bekijk de brief voor meer details.',
+          description: data =>
+            `U heeft geen recht op ${data.productTitleTranslated}. Bekijk de brief voor meer details.`,
         },
         [getDecision('Toekenning')]: {
           notification: {
             title: data =>
               `${data.productTitleTranslated}: Uw aanvraag is toegekend`,
             description: data =>
-              `U heeft recht op Voorschot Bbz Corona regeling (Eenm.) (besluit: ${data.datePublished}).`,
+              `U heeft recht op ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
           },
           title: data => data.productTitleTranslated,
           status: stepLabels.beslissing,
-          description:
-            'U heeft recht op Voorschot Bbz Corona regeling (Eenm.). Bekijk de brief voor meer details.',
+          description: data =>
+            `U heeft recht op ${data.productTitleTranslated}. Bekijk de brief voor meer details.`,
         },
         [getDecision('Buiten Behandeling')]: {
           notification: {
@@ -890,9 +899,12 @@ export function formatFocusProduct(
     stepType: 'intermediate-step',
   });
 
-  const processStepsFiltered = processSteps.filter(
-    stepTitle => !!steps[stepTitle]
-  );
+  // Only use the process steps that have data to show
+  const processStepsFiltered = processSteps.filter(stepTitle => {
+    return (
+      !!steps[stepTitle] && !!Labels[productOrigin][productTitle][stepTitle]
+    );
+  });
 
   const route = generatePath(
     AppRoutesByProductOrigin[productOrigin][sourceData.productTitle],
@@ -919,6 +931,7 @@ export function formatFocusProduct(
 
     // The name of the product (Stadspas, Levensonderhoud ...)
     productTitle: productTitleTranslated,
+    productOrigin,
     description: stepLabels
       ? parseLabelContent(stepLabels.description, sourceData)
       : '',
@@ -1000,8 +1013,8 @@ function formatFocusApiResponse(products: FocusApiResponse): FocusItem[] {
 }
 
 export function formatFocusItems(sourceItems: FocusProduct[]) {
-  const items = formatFocusApiResponse(sourceItems).filter(
-    item => item.productOrigin !== ProductOrigins['Bijzondere Bijstand']
+  const items = formatFocusApiResponse(sourceItems).filter(item =>
+    formattedProductTitleWhitelisted.includes(item.productTitle)
   );
   const notifications = items.reduce<MyNotification[]>(
     (notifications, item) => {

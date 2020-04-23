@@ -21,7 +21,7 @@ const testData: any = [
             id: 660000000000027,
             isBulk: false,
             isDms: false,
-            omschrijving: 'Voorschot Bbz Corona regeling (Eenm.)',
+            omschrijving: 'Voorschot Tozo (voor ondernemers) (Eenm.)',
           },
         ],
       },
