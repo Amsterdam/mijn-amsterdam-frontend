@@ -31,7 +31,7 @@ export default () => {
   const items =
     WmoItem?.process.map((item, index) => {
       const stepType: StepType =
-        index === lineItemsTotal
+        index === lineItemsTotal - 1
           ? 'last-step'
           : index === 0
           ? 'first-step'

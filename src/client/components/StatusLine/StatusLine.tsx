@@ -9,6 +9,7 @@ import { defaultDateFormat } from '../../../universal/helpers';
 import styles from './StatusLine.module.scss';
 import { trackEvent } from '../../hooks/analytics.hook';
 import { useSessionStorage } from '../../hooks/storage.hook';
+import SanitizedHtml from '../SanitizedHtml/SanitizedHtml';
 
 export type StepType =
   | 'first-step'
@@ -21,7 +22,7 @@ export interface StatusLineItem {
   status: string;
   stepType: StepType;
   datePublished: string;
-  description: string | JSX.Element;
+  description: string;
   documents: Document[];
   isLastActive: boolean;
   isChecked: boolean;
@@ -108,10 +109,12 @@ function StatusLineItem({
             {defaultDateFormat(item.datePublished)}
           </time>
         </div>
-        <div className={classnames(styles.Panel, styles['Panel--description'])}>
+        <SanitizedHtml
+          className={classnames(styles.Panel, styles['Panel--description'])}
+        >
           {item.description}
-        </div>
-        <div className={classnames(styles.Panel, styles['Panel--documents'])}>
+        </SanitizedHtml>
+        <div className={styles.Panel}>
           {!!altDocumentContentActual && (
             <span className={styles.altDocumentContent}>
               {altDocumentContentActual}

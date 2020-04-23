@@ -54,7 +54,7 @@ export interface WmoProcessItem {
   id: string;
   status: string;
   datePublished: string;
-  description: string | JSX.Element;
+  description: string;
   documents: Document[];
   isLastActive: boolean;
   isChecked: boolean;
@@ -214,12 +214,14 @@ const Labels: {
                     } is beëindigd per ${defaultDateFormat(data.dateFinish)}`
               }
             </p>
-            ${data.isActual &&
-              data.deliveryType === 'PGB' &&
-              `<p>
+            ${
+              data.isActual && data.deliveryType === 'PGB'
+                ? `<p>
                 Uiterlijk 8 weken voor de einddatum van uw PGB moet u een
                 verlenging aanvragen. Hoe u dit doet, leest u in uw besluit.
-              </p>`}
+              </p>`
+                : ''
+            }
           `,
       },
     ],
@@ -276,11 +278,14 @@ const Labels: {
               }
             </p>
 
-            ${data.isActual &&
-              `<p>
+            ${
+              data.isActual
+                ? `<p>
                 Uiterlijk 8 weken voor de einddatum van uw PGB moet u een
                 verlenging aanvragen. Hoe u dit doet, leest u in uw besluit.
-              </p>`}
+              </p>`
+                : ''
+            }
           `,
       },
     ],

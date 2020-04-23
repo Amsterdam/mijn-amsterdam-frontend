@@ -171,3 +171,27 @@ $buttons: (
     transform: translateY(1px);
   }
 }
+
+.LinkdSolo {
+  @extend .Button;
+  @extend .Button__lean;
+  @extend .Button__plain;
+  @extend .Linkd;
+
+  &:before {
+    content: '';
+    position: relative;
+    transform: translateY(2px);
+    display: inline-block;
+    width: 1.4rem;
+    height: 1.4rem;
+    background-image: url('../../assets/icons/Chevron-Right.svg');
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-size: auto 1.4rem;
+  }
+
+  &:hover:before {
+    background-image: url('../../assets/icons/Chevron-Right__primary-red.svg');
+  }
+}

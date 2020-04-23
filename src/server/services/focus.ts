@@ -234,12 +234,12 @@ export const Labels: LabelData = {
         `
           <p>U hebt op ${data.dateStart} een bijstandsuitkering aangevraagd.</p>
           <p>
-            <Linkd
+            <a
               href=${FocusExternalUrls.BijstandsUitkeringAanvragen}
-              external=${true}
+              rel="external noopener noreferrer"
             >
               Wat kunt u van ons verwachten?
-            </Linkd>
+            </a>
           </p>
         `,
     },
@@ -255,24 +255,22 @@ export const Labels: LabelData = {
         `
           <p>
             Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u
-            nog extra informatie moet opsturen. U ontvangt vóór ${
-              data.decisionDeadline1
-            } ons besluit.
+            nog extra informatie moet opsturen. U ontvangt vóór ${data.decisionDeadline1} ons besluit.
           </p>
           <p>
             Lees meer over uw
             <br />
-            <Linkd
+            <a
               href=${FocusExternalUrls.BijstandsUitkeringAanvragenRechten}
-              external=${true}
+              rel="external noopener noreferrer"
             >
               rechten
-            </Linkd> en <Linkd
+            </a> en <a
               href=${FocusExternalUrls.BijstandsUitkeringAanvragenPlichten}
-              external=${true}
+              rel="external noopener noreferrer"
             >
               plichten
-            </Linkd>
+            </a>
           </p>
         `,
     },
@@ -326,12 +324,12 @@ export const Labels: LabelData = {
               details.
             </p>
             <p>
-              <Linkd
+              <a
                 href=${FocusExternalUrls.BetaalDataUitkering}
-                external=${true}
+                rel="external noopener noreferrer"
               >
                 Bekijk hier de betaaldata van de uitkering
-              </Linkd>
+              </a>
             </p>
           `,
       },
@@ -524,9 +522,9 @@ export const Labels: LabelData = {
               U heeft recht op een Stadspas. Bekijk de brief voor meer details.
             </p>
             <p>
-              <Linkd href=${FocusExternalUrls.StadsPas} external={true}>
+              <a href=${FocusExternalUrls.StadsPas} external={true}>
                 Meer informatie over de stadspas
-              </Linkd>
+              </a>
             </p>
           `,
       },
@@ -1012,12 +1010,11 @@ function transformIncomSpecificationItem(
     documentUrl: `<a
         href=${`/api/${item.url}`}
         rel="external noopener noreferrer"
-        className={styles.DownloadLink}
         download=${`${format(new Date(item.datePublished), 'yyyy-MM-dd')}-${
           item.title
         }`}
       >
-        <DocumentIcon width=${14} height=${14} /> PDF
+        PDF
       </a>`,
   };
 }

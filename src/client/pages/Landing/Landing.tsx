@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ReactComponent as BetaLabel } from '../../assets/images/beta-label.svg';
 import DigiDLogo from 'assets/images/digid-logo.svg';
 import EherkenningLogo from 'assets/images/eherkenning-logo.svg';
-import { ExternalUrls } from '../../config/App.constants';
+import { ExternalUrls, LOGIN_URL_DIGID, LOGIN_EHERKENNING_URL } from '../../../universal/config';
 import Heading from '../../components/Heading/Heading';
 import { LOGIN_URL } from '../../config/Api.constants';
 import { LinkdInline } from '../../components/Button/Button';

@@ -1,4 +1,5 @@
 @import '../../styles/_global.scss';
+@import '../Button/Button.module.scss';
 
 .Table {
   width: 100%;
@@ -74,4 +75,25 @@
   color: $color-neutral-grey4;
   font-weight: normal;
   white-space: nowrap;
+
+  a {
+    @extend .LinkdSolo;
+
+    &:before {
+      content: '';
+      position: relative;
+      transform: translateY(3px);
+      display: inline-block;
+      width: 1.8rem;
+      height: 1.8rem;
+      background-image: url('../../assets/icons/Document.svg');
+      background-repeat: no-repeat;
+      background-position: 0 0;
+      background-size: auto 1.8rem;
+    }
+
+    &:hover:before {
+      background-image: url('../../assets/icons/Document.svg');
+    }
+  }
 }

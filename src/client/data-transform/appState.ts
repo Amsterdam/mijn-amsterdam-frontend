@@ -12,5 +12,6 @@ export function transformAppState(data: Partial<AppState>) {
   if ('NOTIFICATIONS' in data) {
     data['NOTIFICATIONS'] = transformNotifications(data.NOTIFICATIONS!);
   }
+
   return data;
 }
