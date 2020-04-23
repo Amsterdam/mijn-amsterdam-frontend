@@ -9,6 +9,7 @@ export const AppRoutes = {
   ZORG: '/zorg-en-ondersteuning',
   'ZORG/VOORZIENINGEN': '/zorg-en-ondersteuning/voorzieningen/:id',
   INKOMEN: '/werk-en-inkomen',
+  'INKOMEN/TOZO_COVID19': '/werk-en-inkomen/voorschot-bbz-corona-regeling',
   'INKOMEN/STADSPAS': '/werk-en-inkomen/stadspas/:id',
   'INKOMEN/BIJSTANDSUITKERING': '/werk-en-inkomen/bijstandsuitkering/:id',
   'INKOMEN/BIJZONDERE_BIJSTAND': '/werk-en-inkomen/bijzondere-bijstand/:id',

@@ -54,7 +54,7 @@ describe('StatusLine', () => {
         _id: '0-2',
         _meest_recent: 'herstelTermijn',
         dienstverleningstermijn: 42,
-        naam: 'Stadspas xxxx herstelTermijn',
+        naam: 'Stadspas',
         processtappen: {
           aanvraag: {
             datum: '2019-07-03T15:05:52+02:00',
