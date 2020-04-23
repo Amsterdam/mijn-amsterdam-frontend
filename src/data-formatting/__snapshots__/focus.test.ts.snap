@@ -4,7 +4,7 @@ exports[`Focus data formatting formats the focus source items correctly  1`] = `
 Object {
   "items": Array [
     Object {
-      "ISODatePublished": "2020-04-03T00:00:00+02:00",
+      "ISODatePublished": "2020-04-03T00:00:00",
       "chapter": "INKOMEN",
       "datePublished": "03 april 2020",
       "dateStart": "03 april 2020",
@@ -22,7 +22,7 @@ Object {
       },
       "notification": Object {
         "chapter": "INKOMEN",
-        "datePublished": "2020-04-03T00:00:00+02:00",
+        "datePublished": "2020-04-03T00:00:00",
         "description": "U heeft recht op Voorschot Tozo (voor ondernemers) (Eenm.) (besluit: 03 april 2020).",
         "id": "0-0-beslissing",
         "link": Object {
@@ -34,7 +34,7 @@ Object {
       "process": Array [
         Object {
           "aboutStep": "aanvraag",
-          "datePublished": "2020-04-03T00:00:00+02:00",
+          "datePublished": "2020-04-03T00:00:00",
           "description": "Wij hebben uw aanvraag voor een Voorschot Tozo (voor ondernemers) (Eenm.) ontvangen op 03 april 2020",
           "documents": Array [],
           "id": "0-0-aanvraag",
@@ -47,11 +47,11 @@ Object {
         },
         Object {
           "aboutStep": "beslissing",
-          "datePublished": "2020-04-03T00:00:00+02:00",
+          "datePublished": "2020-04-03T00:00:00",
           "description": "U heeft recht op Voorschot Tozo (voor ondernemers) (Eenm.). Bekijk de brief voor meer details.",
           "documents": Array [
             Object {
-              "datePublished": "2020-04-03T00:00:00+02:00",
+              "datePublished": "2020-04-03T00:00:00",
               "id": "660000000000027",
               "title": "Voorschot Tozo (voor ondernemers) (Eenm.)",
               "type": "beslissing",
@@ -1009,7 +1009,7 @@ Object {
   "notifications": Array [
     Object {
       "chapter": "INKOMEN",
-      "datePublished": "2020-04-03T00:00:00+02:00",
+      "datePublished": "2020-04-03T00:00:00",
       "description": "U heeft recht op Voorschot Tozo (voor ondernemers) (Eenm.) (besluit: 03 april 2020).",
       "id": "0-0-beslissing",
       "link": Object {

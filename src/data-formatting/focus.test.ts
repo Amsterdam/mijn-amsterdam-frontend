@@ -9,12 +9,12 @@ const testData: any = [
     processtappen: {
       aanvraag: {
         _id: 0,
-        datum: '2020-04-03T00:00:00+02:00',
+        datum: '2020-04-03T00:00:00',
         document: [],
       },
       beslissing: {
         _id: 3,
-        datum: '2020-04-03T00:00:00+02:00',
+        datum: '2020-04-03T00:00:00',
         document: [
           {
             $ref: 'focus/document?id=660000000000027&isBulk=false&isDms=false',
@@ -29,7 +29,7 @@ const testData: any = [
       herstelTermijn: null,
       inBehandeling: {
         _id: 1,
-        datum: '2020-04-03T00:00:00+02:00',
+        datum: '2020-04-03T00:00:00',
         document: [],
       },
     },
