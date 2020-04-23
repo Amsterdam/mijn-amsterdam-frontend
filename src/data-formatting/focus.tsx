@@ -186,6 +186,7 @@ export interface FocusItem {
   link: LinkProps;
   process: ProcessStep[];
   productTitle: ProductTitle;
+  productOrigin: ProductOrigin;
   notification?: MyNotification;
 }
 
@@ -547,12 +548,6 @@ export const Labels: LabelData = {
   },
 };
 
-export const ProductTitles = {
-  Bijstandsuitkering: 'Levensonderhoud',
-  Stadspas: 'Stadspas',
-  BijzondereBijstand: 'Bijzondere Bijstand',
-};
-
 export const ProductOrigins = {
   Participatiewet: 'Participatiewet',
   'Bijzondere Bijstand': 'Bijzondere Bijstand',
@@ -880,6 +875,7 @@ export function formatFocusProduct(
 
     // The name of the product (Stadspas, Levensonderhoud ...)
     productTitle,
+    productOrigin,
     description: stepLabels
       ? parseLabelContent(stepLabels.description, sourceData)
       : '',
@@ -962,7 +958,7 @@ function formatFocusApiResponse(products: FocusApiResponse): FocusItem[] {
 
 export function formatFocusItems(sourceItems: FocusProduct[]) {
   const items = formatFocusApiResponse(sourceItems).filter(
-    item => item.productTitle !== ProductTitles.BijzondereBijstand
+    item => item.productOrigin !== ProductOrigins['Bijzondere Bijstand']
   );
   const notifications = items.reduce<MyNotification[]>(
     (notifications, item) => {
