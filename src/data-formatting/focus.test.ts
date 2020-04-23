@@ -1,6 +1,6 @@
-import { FocusProduct, formatFocusProduct } from './focus';
+import { formatFocusItems } from './focus';
 
-const testData = [
+const testData: any = [
   {
     _id: '0-0',
     _meest_recent: 'beslissing',
@@ -366,10 +366,7 @@ const testData = [
 ];
 
 describe('Focus data formatting', () => {
-  testData.forEach(item => {
-    it('format correctly ' + item.naam + '--' + item._id, () => {
-      const d = new Date(2019, 7, 13);
-      expect(formatFocusProduct(item as FocusProduct, d)).toMatchSnapshot();
-    });
+  it('formats the focus source items correctly ', () => {
+    expect(formatFocusItems(testData)).toMatchSnapshot();
   });
 });
