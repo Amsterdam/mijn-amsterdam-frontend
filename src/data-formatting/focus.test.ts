@@ -3,6 +3,41 @@ import { FocusProduct, formatFocusProduct } from './focus';
 const testData = [
   {
     _id: '0-0',
+    _meest_recent: 'beslissing',
+    dienstverleningstermijn: 28,
+    naam: 'Voorschot Tozo (voor ondernemers) (Eenm.)',
+    processtappen: {
+      aanvraag: {
+        _id: 0,
+        datum: '2020-04-03T00:00:00+02:00',
+        document: [],
+      },
+      beslissing: {
+        _id: 3,
+        datum: '2020-04-03T00:00:00+02:00',
+        document: [
+          {
+            $ref: 'focus/document?id=660000000000027&isBulk=false&isDms=false',
+            id: 660000000000027,
+            isBulk: false,
+            isDms: false,
+            omschrijving: 'Voorschot Bbz Corona regeling (Eenm.)',
+          },
+        ],
+      },
+      bezwaar: null,
+      herstelTermijn: null,
+      inBehandeling: {
+        _id: 1,
+        datum: '2020-04-03T00:00:00+02:00',
+        document: [],
+      },
+    },
+    soortProduct: 'Bijzondere Bijstand',
+    typeBesluit: 'Toekenning',
+  },
+  {
+    _id: '0-0',
     _meest_recent: 'aanvraag',
     dienstverleningstermijn: 42,
     naam: 'Stadspas',

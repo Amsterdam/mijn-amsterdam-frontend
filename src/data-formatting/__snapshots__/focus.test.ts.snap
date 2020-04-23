@@ -953,3 +953,93 @@ Object {
   "title": "Stadspas",
 }
 `;
+
+exports[`Focus data formatting format correctly Voorschot Tozo (voor ondernemers) (Eenm.)--0-0 1`] = `
+Object {
+  "ISODatePublished": "2020-04-03T00:00:00+02:00",
+  "chapter": "INKOMEN",
+  "datePublished": "03 april 2020",
+  "dateStart": "03 april 2020",
+  "description": "U heeft recht op bijzondere bijstand. Bekijk de brief voor meer details.",
+  "hasDecision": true,
+  "id": "0-0",
+  "isDenied": false,
+  "isDiscarded": false,
+  "isGranted": true,
+  "isRecent": true,
+  "latestStep": "beslissing",
+  "link": Object {
+    "title": "Meer informatie",
+    "to": "/werk-en-inkomen/bijzondere-bijstand/0-0",
+  },
+  "notification": Object {
+    "chapter": "INKOMEN",
+    "datePublished": "2020-04-03T00:00:00+02:00",
+    "description": "U heeft recht op bijzondere bijstand (besluit: 03 april 2020).",
+    "id": "0-0-beslissing",
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/werk-en-inkomen/bijzondere-bijstand/0-0",
+    },
+    "title": "Voorschot Tozo (voor ondernemers) (Eenm.): Uw aanvraag is toegekend",
+  },
+  "process": Array [
+    Object {
+      "aboutStep": "aanvraag",
+      "datePublished": "2020-04-03T00:00:00+02:00",
+      "description": "U hebt op 03 april 2020 een bijzondere bijstandsuitkering aangevraagd.",
+      "documents": Array [],
+      "id": "0-0-aanvraag",
+      "isChecked": true,
+      "isLastActive": false,
+      "isRecent": true,
+      "status": "Aanvraag",
+      "stepType": "first-step",
+      "title": "Voorschot Tozo (voor ondernemers) (Eenm.)",
+    },
+    Object {
+      "aboutStep": "inBehandeling",
+      "datePublished": "2020-04-03T00:00:00+02:00",
+      "description": <p>
+        Wij gaan nu bekijken of u recht hebt op bijzondere bijstand. Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt vóór
+         
+        29 mei 2020
+         ons besluit.
+      </p>,
+      "documents": Array [],
+      "id": "0-0-inBehandeling",
+      "isChecked": true,
+      "isLastActive": false,
+      "isRecent": true,
+      "status": "In behandeling",
+      "stepType": "intermediate-step",
+      "title": "Voorschot Tozo (voor ondernemers) (Eenm.) in behandeling",
+    },
+    Object {
+      "aboutStep": "beslissing",
+      "datePublished": "2020-04-03T00:00:00+02:00",
+      "description": "U heeft recht op bijzondere bijstand. Bekijk de brief voor meer details.",
+      "documents": Array [
+        Object {
+          "datePublished": "2020-04-03T00:00:00+02:00",
+          "id": "660000000000027",
+          "title": "Voorschot Bbz Corona regeling (Eenm.)",
+          "type": "beslissing",
+          "url": "/api/focus/document?id=660000000000027&isBulk=false&isDms=false",
+        },
+      ],
+      "id": "0-0-beslissing",
+      "isChecked": false,
+      "isLastActive": true,
+      "isRecent": true,
+      "status": "Besluit",
+      "stepType": "last-step",
+      "title": "Voorschot Tozo (voor ondernemers) (Eenm.)",
+    },
+  ],
+  "productOrigin": "Bijzondere Bijstand",
+  "productTitle": "Voorschot Tozo (voor ondernemers) (Eenm.)",
+  "status": "Besluit",
+  "title": "Voorschot Tozo (voor ondernemers) (Eenm.)",
+}
+`;
