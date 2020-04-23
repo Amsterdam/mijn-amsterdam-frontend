@@ -20,13 +20,16 @@ export type StepType =
 export interface StatusLineItem {
   id: string;
   status: string;
-  stepType: StepType;
   datePublished: string;
   description: string;
   documents: Document[];
   isLastActive: boolean;
   isChecked: boolean;
   [key: string]: any;
+}
+
+export interface SteppedStatusLineItem extends StatusLineItem {
+  stepType: StepType;
 }
 
 type AltDocumentContent = string | JSX.Element;
@@ -177,9 +180,24 @@ export default function StatusLine({
     setCollapsed(!isCollapsed);
   }
 
+  const steppedItems: SteppedStatusLineItem[] = useMemo(() => {
+    const lineItemsTotal = items.length || 0;
+    return (
+      items.map((item, index) => {
+        const stepType: StepType =
+          index === lineItemsTotal - 1
+            ? 'last-step'
+            : index === 0
+            ? 'first-step'
+            : 'intermediate-step';
+        return Object.assign(item, { stepType });
+      }) || []
+    );
+  }, [items]);
+
   return (
     <>
-      {showToggleMore && items.length > 1 && (
+      {showToggleMore && steppedItems.length > 1 && (
         <ToggleMore
           isCollapsed={isCollapsed}
           toggleCollapsed={toggleCollapsed}
@@ -187,9 +205,9 @@ export default function StatusLine({
       )}
       <div className={classnames(styles.StatusLine, className)}>
         <h4 className={styles.ListHeading}>{statusLabel}</h4>
-        {!!items.length && (
+        {!!steppedItems.length && (
           <ul className={styles.List}>
-            {items.map((item, index) => (
+            {steppedItems.map((item, index) => (
               <StatusLineItem
                 style={{
                   display:
@@ -205,11 +223,11 @@ export default function StatusLine({
             ))}
           </ul>
         )}
-        {!items.length && (
+        {!steppedItems.length && (
           <p className={styles.NoStatusItems}>Er is geen status beschikbaar.</p>
         )}
       </div>
-      {showToggleMore && items.length > 1 && (
+      {showToggleMore && steppedItems.length > 1 && (
         <ToggleMore
           isCollapsed={isCollapsed}
           toggleCollapsed={toggleCollapsed}

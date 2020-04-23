@@ -2,10 +2,8 @@ import { fetchTIPS, TIPSRequestData } from './tips';
 import { apiSuccesResult } from '../../universal/helpers';
 import { MyNotification, MyCase, MyTip } from '../../universal/types';
 import { fetchBRPGenerated } from './brp';
-import {
-  fetchFOCUSAanvragenGenerated,
-  fetchFOCUSSpecificationsGenerated,
-} from './focus';
+import { fetchFOCUSAanvragenGenerated } from './focus-aanvragen';
+import { fetchFOCUSSpecificationsGenerated } from './focus-specificaties';
 import { fetchBELASTINGGenerated } from './belasting';
 import { fetchMILIEUZONEGenerated } from './milieuzone';
 import { loadServicesRelated } from './services-related';

@@ -12,7 +12,6 @@ import React, { useContext } from 'react';
 import { isError, isLoading } from '../../../universal/helpers';
 
 import { AppContext } from '../../AppState';
-import { StepType } from '../../components/StatusLine/StatusLine';
 import styles from './ZorgDetail.module.scss';
 import useRouter from 'use-react-router';
 
@@ -27,17 +26,6 @@ export default () => {
 
   const WmoItem = WMO.content?.items.find(item => item.id === id);
   const noContent = !isLoading(WMO) && !WmoItem;
-  const lineItemsTotal = WmoItem?.process.length || 0;
-  const items =
-    WmoItem?.process.map((item, index) => {
-      const stepType: StepType =
-        index === lineItemsTotal - 1
-          ? 'last-step'
-          : index === 0
-          ? 'first-step'
-          : 'intermediate-step';
-      return Object.assign(item, { stepType });
-    }) || [];
 
   return (
     <DetailPage>
@@ -68,7 +56,7 @@ export default () => {
 
       {!!WmoItem && (
         <StatusLine
-          items={items}
+          items={WmoItem?.process || []}
           trackCategory="Zorg en ondersteuning / Voorziening"
           id={id}
           altDocumentContent={(statusLineItem, stepNumber) => {

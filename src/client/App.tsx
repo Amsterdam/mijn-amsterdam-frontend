@@ -14,7 +14,7 @@ import {
   IS_PRODUCTION,
   IS_SENTRY_ENABLED,
 } from '../universal/env';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { SessionContext, SessionState } from './SessionState';
 
 import AppStateProvider from './AppStateProvider';
@@ -111,7 +111,7 @@ function AppAuthenticated() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return location.pathname === AppRoutes.MIJN_BUURT ? (
+  return location.pathname === AppRoutes.BUURT ? (
     <MyArea />
   ) : (
     <>
@@ -123,7 +123,7 @@ function AppAuthenticated() {
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.UPDATES} component={MyNotifications} />
           <Route path={AppRoutes.BRP} component={Profile} />
-          <Route path={AppRoutes.MIJN_TIPS} component={MyTips} />
+          <Route path={AppRoutes.TIPS} component={MyTips} />
           <Route
             path={AppRoutes['INKOMEN/STADSPAS']}
             component={InkomenDetail}

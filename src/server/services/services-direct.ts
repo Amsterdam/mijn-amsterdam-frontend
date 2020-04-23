@@ -31,6 +31,8 @@ export async function loadServicesDirect(sessionID: SessionID) {
     fetchMILIEUZONERequest,
   ]);
 
+  console.log('FOCUS_AANVRAGEN:', FOCUS_AANVRAGEN);
+
   return {
     FOCUS_AANVRAGEN,
     FOCUS_SPECIFICATIES,
