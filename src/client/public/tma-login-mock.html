@@ -2,12 +2,11 @@
 <html>
   <head>
     <title>Keuzescherm</title>
-    <link rel="stylesheet" type="text/css" href="style/aselect.css" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   </head>
   <body>
     <form
-      action="https://tma.acc.amsterdam.nl/aselectserver/server/saml20_ists_digid"
+      action="http://localhost:3000/api/tma"
       method="get"
       name="digid"
     >
@@ -19,20 +18,14 @@
       <input
         type="hidden"
         name="federation_url"
-        value="https://was-preprod1.digid.nl/saml/idp/metadata"
+        value="http://localhost:3000/api/tma"
       />
       <a href="javascript: document.digid.submit();">
-        <img
-          src="/styles/digid.png"
-          alt="DigiD"
-          height="225"
-          hspace="2"
-          width="225"
-        />
+        DigID
       </a>
     </form>
     <form
-      action="https://tma.acc.amsterdam.nl/aselectserver/server/saml20_ists_eherkenning2plus"
+      action="http://localhost:3000/api1/tma"
       method="get"
       name="eherkenning"
     >
@@ -47,13 +40,7 @@
         value="urn:etoegang:HM:00000003271247010000:entities:9119"
       />
       <a href="javascript: document.eherkenning.submit();">
-        <img
-          src="/styles/eherkenning.png"
-          alt="eHerkenning"
-          height="116"
-          hspace="2"
-          width="432"
-        />
+        EHerkenning
       </a>
     </form>
 

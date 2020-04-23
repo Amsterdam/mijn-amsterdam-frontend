@@ -10,6 +10,10 @@ const apiPort = process.env.MOCK_API_PORT || 5000;
 
 const SESSION_MAX_AGE = 15 * 60 * 1000; // 15 minutes
 
+function loginPage(req, res, next) {
+  return res.sendFile(__dirname + '/client/public/tma-login-mock.html');
+}
+
 function handleLogin(req, res, next) {
   const userType = req.url.startsWith('/api1/') ? 'BEDRIJF' : 'BURGER';
   req.session = { isAuthenticated: true, userType };
@@ -55,7 +59,8 @@ module.exports = function(app) {
   );
 
   app.get('/logout', handleLogout);
-  app.get('/api/login', handleLogin);
+  app.get(['/api/login'], loginPage);
+  app.get(['/api/tma', '/api1/tma'], handleLogin);
   app.all('/api', handleSession);
   app.get('/api/auth/check', (req, res) => {
     return res.send(req.session);
