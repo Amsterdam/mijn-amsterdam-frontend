@@ -47,9 +47,6 @@ function AppNotAuthenticated() {
 
   if (!routeEntry || (routeEntry === '/' && location.pathname !== '/')) {
     setRouteEntry(location.pathname);
-    console.log('unauth', location.pathname);
-  } else {
-    console.log('has!', routeEntry);
   }
 
   return (
