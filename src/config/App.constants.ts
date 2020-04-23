@@ -40,6 +40,8 @@ export const ExternalUrls = {
   AMSTERDAM: 'https://www.amsterdam.nl',
   WPI_CONTACT: 'https://www.amsterdam.nl/werk-inkomen/contact/',
   WPI_ALGEMEEN: 'https://www.amsterdam.nl/werk-inkomen',
+  WPI_TOZO:
+    "https://www.amsterdam.nl/ondernemen/veelgestelde-vragen-corona-ondernemers/ondersteuning-zelfstandigen-zzp'ers/",
   AFVAL: 'https://www.amsterdam.nl/afval/',
   AFVAL_AFSPRAAK_MAKEN:
     'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Grofvuil.aspx',

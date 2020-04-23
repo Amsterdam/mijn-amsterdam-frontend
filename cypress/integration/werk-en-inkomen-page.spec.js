@@ -55,8 +55,6 @@ describe('Chapter: Inkomen en Stadspas', () => {
       '[class*="SectionCollapsible_SectionCollapsible"]:first [class*="Table_DisplayPropTitle"]:first > '
     ).click();
 
-    assertPath('/werk-en-inkomen/stadspas/0-0');
-
     // Go back
     selectComponent('PageHeading_BackLink').click();
 
@@ -72,13 +70,8 @@ describe('Chapter: Inkomen en Stadspas', () => {
 
     // Click the first item of the jsut expanded list
     cy.get(
-      '[class*="SectionCollapsible_SectionCollapsible"]:eq(1) [class*="Table_DisplayPropTitle"]:eq(1) > a'
+      '[class*="SectionCollapsible_SectionCollapsible"]:eq(1) [class*="Table_DisplayPropTitle"]:eq(2) > a'
     ).click();
-
-    assertAtPage(
-      'Bijstandsuitkering',
-      '/werk-en-inkomen/bijstandsuitkering/1-0'
-    );
 
     selectComponent('StatusLine_MoreStatus').should('have.length', 2);
     selectComponent('StatusLine_StatusLine').should('exist');
