@@ -38,10 +38,10 @@ export const myChaptersMenuItems: MenuItem[] = [
     chapter: Chapters.BURGERZAKEN,
   },
   {
-    title: ChapterTitles.WONEN,
-    id: Chapters.WONEN,
+    title: ChapterTitles.ERFPACHT,
+    id: Chapters.ERFPACHT,
     to: ExternalUrls.SSO_ERFPACHT || '',
-    chapter: Chapters.WONEN,
+    chapter: Chapters.ERFPACHT,
     rel: 'external',
   },
   {

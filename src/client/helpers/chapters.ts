@@ -52,8 +52,8 @@ function isChapterActive(
         isMokum(BRP.content)
       );
 
-    case Chapters.WONEN:
-      return !isLoading(ERFPACHT) && ERFPACHT.content?.status === true;
+    case Chapters.ERFPACHT:
+      return !isLoading(ERFPACHT) && ERFPACHT.content?.isKnown === true;
 
     case Chapters.BURGERZAKEN:
       return (

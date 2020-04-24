@@ -14,7 +14,7 @@ const items: MenuItem[] = [
   },
   {
     title: 'Erfpacht',
-    id: 'WONEN',
+    id: 'ERFPACHT',
     to: 'https://example.org/erfpachtdingen',
     rel: 'external',
   },

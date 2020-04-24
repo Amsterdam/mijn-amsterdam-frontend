@@ -10,7 +10,7 @@ export type Chapter =
   | 'NOTIFICATIONS'
   | 'ROOT'
   | 'TIPS'
-  | 'WONEN'
+  | 'ERFPACHT'
   | 'ZORG'
   | string;
 
@@ -25,7 +25,7 @@ export const Chapters: Record<Chapter, Chapter> = {
   NOTIFICATIONS: 'NOTIFICATIONS',
   ROOT: 'ROOT',
   TIPS: 'TIPS',
-  WONEN: 'WONEN',
+  ERFPACHT: 'ERFPACHT',
   ZORG: 'ZORG',
 };
 
@@ -41,6 +41,6 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   NOTIFICATIONS: 'Actueel',
   ROOT: 'Home',
   TIPS: 'Mijn tips',
-  WONEN: 'Erfpacht',
+  ERFPACHT: 'Erfpacht',
   ZORG: 'Zorg en ondersteuning',
 };

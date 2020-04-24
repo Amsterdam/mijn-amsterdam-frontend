@@ -4,7 +4,7 @@ export const AppRoutes = {
   ROOT: '/',
   BURGERZAKEN: '/burgerzaken',
   BURGERZAKEN_DOCUMENT: '/burgerzaken/document/:id',
-  WONEN: '/wonen',
+  ERFPACHT: '/wonen',
   BELASTINGEN: '/belastingen',
   ZORG: '/zorg-en-ondersteuning',
   'ZORG/VOORZIENINGEN': '/zorg-en-ondersteuning/voorzieningen/:id',
