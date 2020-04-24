@@ -19,7 +19,6 @@ export function useOptIn(): OptIn {
   }, [setOptIn]);
 
   return useMemo(() => {
-    console.log('isOptin', isOptIn === 'yes');
     return { isOptIn: isOptIn === 'yes', optIn, optOut };
   }, [isOptIn, optIn, optOut]);
 }

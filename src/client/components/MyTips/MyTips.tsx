@@ -147,7 +147,6 @@ export default function MyTips({
   className,
   isLoading = true,
   showHeader = true,
-  showOptIn = false,
   ...otherProps
 }: MyTipsProps) {
   return (

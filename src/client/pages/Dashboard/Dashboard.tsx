@@ -15,7 +15,6 @@ import {
 } from '../../components';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import styles from './Dashboard.module.scss';
-import { useOptIn } from '../../hooks/optin.hook';
 import { getMyChapters } from '../../helpers/chapters';
 
 const MAX_NOTIFICATIONS_VISIBLE = 3;
@@ -89,7 +88,6 @@ export default () => {
             data-tutorial-item="Hier geven wij u handige tips, bijvoorbeeld over de regelingen en voorzieningen van de gemeente;right-bottom"
             isLoading={isLoading(TIPS)}
             items={tipItems}
-            showOptIn={true}
           />
         )}
         <DirectLinks data-tutorial-item="Hier kunt u meer algemene informatie vinden over Mijn Amsterdam, bijvoorbeeld waar u terecht kunt met uw vragen;right-bottom" />
