@@ -1,69 +1,116 @@
-import AppState, { AppState as AppStateInterface } from 'AppState';
+import { AppState } from '../../AppState';
 import { MemoryRouter, Route, Switch } from 'react-router-dom';
 
-import { FocusCombinedResponse } from 'hooks/api/api.focus';
 import InkomenSpecificaties from './InkomenSpecificaties';
 import React from 'react';
-import { formatIncomeSpecifications } from '../../../server/services/focus-specificaties';
 import { mount } from 'enzyme';
+import { MockAppStateProvider } from '../../AppStateProvider';
+import {
+  transformFOCUSIncomeSpecificationsData,
+  FOCUSIncomeSpecificationSourceData,
+} from '../../../server/services';
 
-const sourceData: FocusCombinedResponse = {
+const sourceData: FOCUSIncomeSpecificationSourceData = {
   content: {
     jaaropgaven: [
       {
+        datePublished: '2011-01-28T00:00:00+01:00',
+        id: '95330222',
         title: 'Jaaropgave',
-        type: 'BIBI',
-        datePublished: '2016-03-06',
-        url: 'focus/document?id=x',
-        id: 'item-0',
+        type: '',
+        url: 'focus/document?id=95330222&isBulk=false&isDms=false',
       },
       {
+        datePublished: '2019-01-04T00:00:00+01:00',
+        id: '20021871',
         title: 'Jaaropgave',
-        type: 'BIBI',
-        datePublished: '2016-03-06',
-        url: 'focus/document?id=x',
-        id: 'item-4',
+        type: '',
+        url: 'focus/document?id=20021871&isBulk=false&isDms=false',
+      },
+      {
+        datePublished: '2011-01-28T00:00:00+01:00',
+        id: '95330223',
+        title: 'Jaaropgave',
+        type: '',
+        url: 'focus/document?id=95330222&isBulk=false&isDms=false',
+      },
+      {
+        datePublished: '2019-01-04T00:00:00+01:00',
+        id: '20021872',
+        title: 'Jaaropgave',
+        type: '',
+        url: 'focus/document?id=20021871&isBulk=false&isDms=false',
       },
     ],
     uitkeringsspecificaties: [
       {
-        title: 'Uitkeringspecificatie',
-        type: 'BBS',
-        datePublished: '2016-04-06',
-        url: 'focus/document?id=x',
-        id: 'item-1',
+        datePublished: '2019-04-19T00:00:00+02:00',
+        id: '24267671',
+        title: 'Uitkeringsspecificatie',
+        type: 'Bijzondere Bijstand',
+        url: 'focus/document?id=24267671&isBulk=false&isDms=false',
       },
       {
-        title: 'Uitkeringspecificatie',
-        type: 'STIMREG',
-        datePublished: '2016-06-06',
-        url: 'focus/document?id=x',
-        id: 'item-3',
+        datePublished: '2019-04-19T00:00:00+02:00',
+        id: '24267681',
+        title: 'Uitkeringsspecificatie',
+        type: 'Participatiewet',
+        url: 'focus/document?id=24267681&isBulk=false&isDms=false',
+      },
+      {
+        datePublished: '2019-03-23T00:00:00+01:00',
+        id: '24078481',
+        title: 'Uitkeringsspecificatie',
+        type: 'Participatiewet',
+        url: 'focus/document?id=24078481&isBulk=false&isDms=false',
+      },
+      {
+        datePublished: '2019-03-23T00:00:00+01:00',
+        id: '24078491',
+        title: 'Uitkeringsspecificatie',
+        type: 'Bijzondere Bijstand',
+        url: 'focus/document?id=24078491&isBulk=false&isDms=false',
+      },
+      {
+        datePublished: '2014-01-18T00:00:00+01:00',
+        id: '30032581',
+        title: 'Uitkeringsspecificatie',
+        type: 'WWB',
+        url: 'focus/document?id=30032581&isBulk=false&isDms=false',
+      },
+      {
+        datePublished: '2019-05-18T00:00:00+02:00',
+        id: '31569261',
+        title: 'Uitkeringsspecificatie',
+        type: 'Participatiewet',
+        url: 'focus/document?id=31569261&isBulk=false&isDms=false',
+      },
+      {
+        datePublished: '2019-05-18T00:00:00+02:00',
+        id: '31569291',
+        title: 'Uitkeringsspecificatie',
+        type: 'Bijzondere Bijstand',
+        url: 'focus/document?id=31569291&isBulk=false&isDms=false',
       },
     ],
   },
+  status: 'OK',
 };
 
-const data = formatFocusCombined(sourceData);
+const content = transformFOCUSIncomeSpecificationsData(sourceData);
 
-const APP_STATE = {
-  FOCUS_INKOMEN_SPECIFICATIES: {
-    data,
-    isError: false,
-    isLoading: false,
-    isPristine: false,
-    isDirty: true,
-  },
-}; // Add slice of the AppState here
+const APP_STATE: Partial<AppState> = {
+  FOCUS_SPECIFICATIES: { content, status: 'OK' },
+};
 
 function mountComponentWithRoute(route: string) {
   return mount(
     <MemoryRouter initialEntries={[route]}>
-      <AppState value={APP_STATE as AppStateInterface}>
+      <MockAppStateProvider value={APP_STATE}>
         <Switch>
           <Route path="/:type?" component={InkomenSpecificaties} />
         </Switch>
-      </AppState>
+      </MockAppStateProvider>
     </MemoryRouter>
   );
 }

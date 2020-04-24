@@ -658,7 +658,7 @@ export interface WMOData {
   items: WmoItem[];
 }
 
-export function formatWMOData(
+export function transformWMOResponse(
   responseData: WMOSourceData,
   today: Date
 ): WMOData {
@@ -734,7 +734,7 @@ export function fetchWMO(sessionID: SessionID) {
     {
       url: ApiUrls.WMO,
       transformResponse: (responseData: WMOSourceData) =>
-        formatWMOData(responseData, new Date()),
+        transformWMOResponse(responseData, new Date()),
     },
     sessionID,
     getApiConfigValue('WMO', 'postponeFetch', false)

@@ -1,14 +1,17 @@
-import AppState from '../../AppState';
-import MyTips from './MyTips';
-import React from 'react';
 import { shallow } from 'enzyme';
+import React from 'react';
+import { AppState } from '../../AppState';
+import { MockAppStateProvider } from '../../AppStateProvider';
+import MyTips from './MyTips';
 
-const APP_STATE = { TIPS: { data: { items: [] } } };
+const APP_STATE: Partial<AppState> = {
+  TIPS: { content: { items: [] }, status: 'OK' },
+};
 
 it('Renders without crashing', () => {
   shallow(
-    <AppState value={APP_STATE}>
+    <MockAppStateProvider value={APP_STATE}>
       <MyTips />
-    </AppState>
+    </MockAppStateProvider>
   );
 });

@@ -1,14 +1,18 @@
-import AlphaPage from './AlphaPage';
-import AppState from '../../AppState';
-import React from 'react';
 import { shallow } from 'enzyme';
+import React from 'react';
+import { AppState } from '../../AppState';
+import { MockAppStateProvider } from '../../AppStateProvider';
+import AlphaPage from './AlphaPage';
 
-const APP_STATE = {}; // Add slice of the AppState here
+const STATE_KEY = 'BRP'; // Use correct state
+const APP_STATE: Partial<AppState> = {
+  [STATE_KEY]: { content: null, status: 'OK' },
+}; // Add slice of the AppState here
 
 it('Renders without crashing', () => {
   shallow(
-    <AppState value={APP_STATE}>
+    <MockAppStateProvider value={APP_STATE}>
       <AlphaPage />
-    </AppState>
+    </MockAppStateProvider>
   );
 });

@@ -3,5 +3,9 @@ import { shallow } from 'enzyme';
 import Section from './Section';
 
 it('Renders without crashing', () => {
-  shallow(<Section />);
+  shallow(
+    <Section>
+      <p>Hey!</p>
+    </Section>
+  );
 });

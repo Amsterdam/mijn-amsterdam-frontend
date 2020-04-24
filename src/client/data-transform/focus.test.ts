@@ -1,4 +1,4 @@
-import { formatFocusItems } from './focus';
+import { transformFOCUSAanvragenData } from '../../server/services';
 
 const testData: any = [
   {
@@ -367,6 +367,8 @@ const testData: any = [
 
 describe('Focus data formatting', () => {
   it('formats the focus source items correctly ', () => {
-    expect(formatFocusItems(testData, new Date(2020, 3, 10))).toMatchSnapshot();
+    expect(
+      transformFOCUSAanvragenData(testData, new Date('2018-01-01'))
+    ).toMatchSnapshot();
   });
 });

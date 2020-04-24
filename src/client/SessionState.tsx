@@ -1,8 +1,8 @@
 import React, { createContext } from 'react';
 import { ComponentChildren } from '../universal/types';
-import useSessionApi from './hooks/api/api.session';
+import { useSessionApi } from './hooks/api/api.session';
 
-type SessionApiState = ReturnType<typeof useSessionApi>;
+export type SessionApiState = ReturnType<typeof useSessionApi>;
 
 export const SessionContext = createContext<SessionApiState>(
   {} as ReturnType<typeof useSessionApi>

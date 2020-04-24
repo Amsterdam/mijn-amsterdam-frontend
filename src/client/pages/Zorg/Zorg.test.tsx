@@ -1,14 +1,17 @@
-import AppState from '../../AppState';
-import React from 'react';
-import Zorg from './Zorg';
 import { shallow } from 'enzyme';
+import React from 'react';
+import { AppState } from '../../AppState';
+import { MockAppStateProvider } from '../../AppStateProvider';
+import Zorg from './Zorg';
 
-const APP_STATE = { WMO: { data: { items: [] } } };
+const APP_STATE: Partial<AppState> = {
+  WMO: { content: { items: [] }, status: 'OK' },
+};
 
 it('Renders without crashing', () => {
   shallow(
-    <AppState value={APP_STATE}>
+    <MockAppStateProvider value={APP_STATE}>
       <Zorg />
-    </AppState>
+    </MockAppStateProvider>
   );
 });

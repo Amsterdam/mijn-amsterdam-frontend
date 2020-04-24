@@ -1,6 +1,5 @@
-import { formatWmoApiResponse, WmoApiResponse } from './wmo';
-
-const testData: WmoApiResponse = [
+import { transformWMOResponse, WMOSourceData } from '../../server/services/wmo';
+const testData: WMOSourceData = [
   {
     Omschrijving: 'handbewogen rolstoel',
     Wet: 1,
@@ -862,6 +861,6 @@ const testData: WmoApiResponse = [
 
 it('Should format WMO data correctly', () => {
   expect(
-    formatWmoApiResponse(testData, new Date(2019, 8, 20))
+    transformWMOResponse(testData, new Date(2019, 8, 20))
   ).toMatchSnapshot();
 });

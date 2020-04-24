@@ -4,10 +4,10 @@ import MockAdapter from 'axios-mock-adapter';
 import { getDefaultState, useDataApi } from './api.hook';
 
 interface Response {
-  foo: 'bar';
+  foo: string;
 }
 
-type DummyResponse = Nullable<DummyResponse>;
+type DummyResponse = Nullable<Response>;
 
 const DUMMY_RESPONSE: DummyResponse = { foo: 'bar' };
 const DUMMY_URL = 'http://test';

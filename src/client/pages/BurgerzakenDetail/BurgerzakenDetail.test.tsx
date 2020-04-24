@@ -1,14 +1,14 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import BurgerzakenDetail from './BurgerzakenDetail';
-import AppState from 'AppState';
+import { MockAppStateProvider } from '../../AppStateProvider';
 
 const APP_STATE = {}; // Add slice of the AppState here
 
 it('Renders without crashing', () => {
   shallow(
-    <AppState value={APP_STATE}>
+    <MockAppStateProvider value={APP_STATE}>
       <BurgerzakenDetail />
-    </AppState>
+    </MockAppStateProvider>
   );
 });

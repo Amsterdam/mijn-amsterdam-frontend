@@ -1,15 +1,14 @@
-import AppState, { AppState as AppStateInterface } from '../../AppState';
-
-import Landing from './Landing';
-import React from 'react';
 import { shallow } from 'enzyme';
+import React from 'react';
+import { SessionApiState, SessionState } from '../../SessionState';
+import Landing from './Landing';
 
-const appState = { SESSION: { isAuthenticated: false } } as AppStateInterface;
+const appState = { isAuthenticated: false } as SessionApiState;
 
 it('Renders without crashing', () => {
   shallow(
-    <AppState value={appState}>
+    <SessionState value={appState}>
       <Landing />
-    </AppState>
+    </SessionState>
   );
 });

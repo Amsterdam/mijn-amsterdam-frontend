@@ -84,7 +84,7 @@ export function HomeIconMarker({
   }, [center, zoom, mapInstance]);
 
   return (
-    <MaMarker iconUrl={iconUrl} center={center}>
+    <MaMarker iconUrl={homeIconUrl} center={center}>
       {!!address && <MaTooltip>{address}</MaTooltip>}
     </MaMarker>
   );

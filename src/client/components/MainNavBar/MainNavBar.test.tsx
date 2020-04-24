@@ -1,4 +1,4 @@
-import * as bliep from '../../hooks/media.hook';
+import * as mediaHook from '../../hooks/media.hook';
 import * as session from '../../hooks/api/api.session';
 
 import { mount, shallow } from 'enzyme';
@@ -60,13 +60,13 @@ describe('MainNavBar', () => {
 
     beforeEach(() => {
       hookSpies.useTabletScreen = jest
-        .spyOn(bliep, 'useTabletScreen')
+        .spyOn(mediaHook, 'useTabletScreen')
         .mockImplementation(() => true);
       hookSpies.useDesktopScreen = jest
-        .spyOn(bliep, 'useDesktopScreen')
+        .spyOn(mediaHook, 'useDesktopScreen')
         .mockImplementation(() => false);
       hookSpies.useSessionApi = jest
-        .spyOn(session, 'default')
+        .spyOn(session, 'useSessionApi')
         .mockImplementation(() => {
           return {
             isError: false,

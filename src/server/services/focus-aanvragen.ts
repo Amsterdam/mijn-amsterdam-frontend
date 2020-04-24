@@ -981,7 +981,7 @@ export function transformFocusSourceProduct(
   };
 }
 
-function transformFOCUSAanvragenData(
+export function transformFOCUSAanvragenData(
   responseData: FOCUSAanvragenSourceData,
   compareDate: Date
 ) {
@@ -995,11 +995,11 @@ function transformFOCUSAanvragenData(
     .sort(dateSort('ISODatePublished', 'desc'));
 }
 
-function fetchFOCUS(sessionID: SessionID) {
+function fetchFOCUS(sessionID: SessionID, compareDate: Date) {
   return requestData<FocusProductTransformed[]>(
     {
       url: ApiUrls.FOCUS_AANVRAGEN,
-      transformResponse: data => transformFOCUSAanvragenData(data, new Date()),
+      transformResponse: data => transformFOCUSAanvragenData(data, compareDate),
     },
     sessionID,
     getApiConfigValue('FOCUS_AANVRAGEN', 'postponeFetch', false)
@@ -1007,18 +1007,16 @@ function fetchFOCUS(sessionID: SessionID) {
 }
 
 export async function fetchFOCUSAanvragen(sessionID: SessionID) {
-  const response = await fetchFOCUS(sessionID);
+  const response = await fetchFOCUS(sessionID, new Date());
   if (response.status === 'OK') {
     const focusItems = response.content.map(prod => prod.item);
-
-    console.log('focusItems:::', response.content);
     return apiSuccesResult(focusItems);
   }
   return response;
 }
 
 export async function fetchFOCUSAanvragenGenerated(sessionID: SessionID) {
-  const response = await fetchFOCUS(sessionID);
+  const response = await fetchFOCUS(sessionID, new Date());
 
   let notifications: MyNotification[] = [];
   let cases: MyCase[] = [];

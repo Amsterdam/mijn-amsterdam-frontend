@@ -1,14 +1,17 @@
-import AppState from '../../AppState';
-import Inkomen from './Inkomen';
-import React from 'react';
 import { shallow } from 'enzyme';
+import React from 'react';
+import { MockAppStateProvider } from '../../AppStateProvider';
+import Inkomen from './Inkomen';
+import { AppState } from '../../AppState';
 
-const APP_STATE = { WMO: { data: { items: [] } } };
+const APP_STATE = { WMO: { content: { items: [] }, status: 'OK' } } as Partial<
+  AppState
+>;
 
 it('Renders without crashing', () => {
   shallow(
-    <AppState value={APP_STATE}>
+    <MockAppStateProvider value={APP_STATE}>
       <Inkomen />
-    </AppState>
+    </MockAppStateProvider>
   );
 });

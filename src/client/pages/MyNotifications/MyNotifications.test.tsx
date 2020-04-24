@@ -1,12 +1,16 @@
-import { MockAppStateProvider } from '../../AppState';
-import MyNotifications from './MyNotifications';
-import React from 'react';
 import { shallow } from 'enzyme';
+import React from 'react';
+import { MockAppStateProvider } from '../../AppStateProvider';
+import MyNotifications from './MyNotifications';
+import { AppState } from '../../AppState';
 
-const appState = {
+const appState: Partial<AppState> = {
   NOTIFICATIONS: {
-    total: 0,
-    items: [],
+    content: {
+      total: 0,
+      items: [],
+    },
+    status: 'OK',
   },
 };
 

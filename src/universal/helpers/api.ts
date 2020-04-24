@@ -30,6 +30,13 @@ export type ApiUnknownResponse = {
   status: 'DEPENDENCY_ERROR';
 };
 
+export type ResponseStatus =
+  | 'ERROR'
+  | 'OK'
+  | 'PRISTINE'
+  | 'POSTPONE'
+  | 'DEPENDENCY_ERROR';
+
 export type FEApiResponseData<T extends (...args: any[]) => any> = ResolvedType<
   ReturnType<T>
 >;

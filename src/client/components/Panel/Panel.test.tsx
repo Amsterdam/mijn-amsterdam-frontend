@@ -3,5 +3,9 @@ import { shallow } from 'enzyme';
 import Panel from './Panel';
 
 it('Renders without crashing', () => {
-  shallow(<Panel />);
+  shallow(
+    <Panel>
+      <p>hey!</p>
+    </Panel>
+  );
 });

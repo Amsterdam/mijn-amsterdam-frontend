@@ -18,7 +18,8 @@ export type FocusInkomenSpecificatieType =
   | 'STIMREG'
   | 'BIBI'
   | 'PART'
-  | 'BBZ';
+  | 'BBZ'
+  | string;
 
 export const focusInkomenSpecificatieTypes: {
   [type in FocusInkomenSpecificatieType]: string;
@@ -52,7 +53,7 @@ function documentDownloadName(item: FocusInkomenSpecificatieFromSource) {
   return `${format(new Date(item.datePublished), 'yyyy-MM-dd')}-${item.title}`;
 }
 
-function formatIncomeSpecificationNotification(
+function transformIncomeSpecificationNotification(
   type: 'jaaropgave' | 'uitkeringsspecificatie',
   item: FocusInkomenSpecificatieFromSource
 ): MyNotification {
@@ -114,6 +115,7 @@ export interface FOCUSIncomeSpecificationSourceDataContent {
 }
 
 export interface FOCUSIncomeSpecificationSourceData {
+  status: 'OK' | 'ERROR';
   content: FOCUSIncomeSpecificationSourceDataContent;
 }
 
@@ -122,7 +124,7 @@ export interface IncomeSpecifications {
   uitkeringsspecificaties: FocusInkomenSpecificatie[];
 }
 
-function transformFOCUSIncomeSpecificationsData(
+export function transformFOCUSIncomeSpecificationsData(
   responseData: FOCUSIncomeSpecificationSourceData
 ) {
   const jaaropgaven = (responseData.content.jaaropgaven || [])
@@ -163,13 +165,13 @@ export async function fetchFOCUSSpecificationsGenerated(sessionID: SessionID) {
 
     if (jaaropgaven.length) {
       notifications.push(
-        formatIncomeSpecificationNotification('jaaropgave', jaaropgaven[0])
+        transformIncomeSpecificationNotification('jaaropgave', jaaropgaven[0])
       );
     }
 
     if (uitkeringsspecificaties.length) {
       notifications.push(
-        formatIncomeSpecificationNotification(
+        transformIncomeSpecificationNotification(
           'uitkeringsspecificatie',
           uitkeringsspecificaties[0]
         )

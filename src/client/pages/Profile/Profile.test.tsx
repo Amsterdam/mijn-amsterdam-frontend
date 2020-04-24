@@ -1,10 +1,12 @@
-import AppState, { AppState as AppStateInterface } from '../../AppState';
+import { AppState } from '../../AppState';
 import { mount, shallow } from 'enzyme';
 
 import { BrowserRouter } from 'react-router-dom';
 import Profile from './Profile';
 import React from 'react';
 import { ReactNode } from 'react';
+import { MockAppStateProvider } from '../../AppStateProvider';
+import { ResponseStatus } from '../../../universal/helpers';
 
 const responseData = {
   adres: {
@@ -174,22 +176,20 @@ const responseData = {
   ],
 };
 
-function getAppState() {
+function getAppState(status: any = 'OK'): Partial<AppState> {
   return {
     BRP: {
-      isDirty: true,
-      isLoading: false,
-      isPristine: false,
-      isError: false,
-      data: JSON.parse(JSON.stringify(responseData)),
+      content:
+        status === 'OK' ? JSON.parse(JSON.stringify(responseData)) : null,
+      status,
     },
-  } as AppStateInterface;
+  };
 }
 
-function mountWithAppstate(appState: AppStateInterface, component: ReactNode) {
+function mountWithAppstate(appState: Partial<AppState>, component: ReactNode) {
   return mount(
     <BrowserRouter>
-      <AppState value={appState as AppStateInterface}>{component}</AppState>
+      <MockAppStateProvider value={appState}>{component}</MockAppStateProvider>
     </BrowserRouter>
   );
 }
@@ -206,9 +206,9 @@ describe('BRP Profile page', () => {
 
   it('Renders without crashing', () => {
     shallow(
-      <AppState value={getAppState()}>
+      <MockAppStateProvider value={getAppState()}>
         <Profile />
-      </AppState>
+      </MockAppStateProvider>
     );
   });
 
@@ -228,8 +228,10 @@ describe('BRP Profile page', () => {
 
   it('Does not display verbintenis information if not present', () => {
     const appState = getAppState();
-    delete appState.BRP.data.verbintenis;
-    delete appState.BRP.data.verbintenisHistorisch;
+    if (appState.BRP?.status === 'OK') {
+      delete appState.BRP.content!.verbintenis;
+      delete appState.BRP.content!.verbintenisHistorisch;
+    }
 
     const page = mountWithAppstate(appState, <Profile />);
 
@@ -238,9 +240,11 @@ describe('BRP Profile page', () => {
 
   it('Does not display country and place of birth when NOT a resident of Amsterdam', () => {
     const appState = getAppState();
-    appState.BRP.data.persoon.mokum = false;
-    appState.BRP.data.persoon.geboorteplaatsnaam = '';
-    appState.BRP.data.persoon.geboortelandnaam = '';
+    if (appState.BRP?.status === 'OK') {
+      appState.BRP.content!.persoon.mokum = false;
+      appState.BRP.content!.persoon.geboorteplaatsnaam = '';
+      appState.BRP.content!.persoon.geboortelandnaam = '';
+    }
 
     const page = mountWithAppstate(appState, <Profile />);
 
@@ -260,8 +264,10 @@ describe('BRP Profile page', () => {
 
   it('Displays onbekend as value for country and place of birth when IS resident of Amsterdam', () => {
     const appState = getAppState();
-    appState.BRP.data.persoon.geboorteplaatsnaam = '';
-    appState.BRP.data.persoon.geboortelandnaam = '';
+    if (appState.BRP?.status === 'OK') {
+      appState.BRP.content!.persoon.geboorteplaatsnaam = '';
+      appState.BRP.content!.persoon.geboortelandnaam = '';
+    }
 
     const page = mountWithAppstate(appState, <Profile />);
 
@@ -290,10 +296,7 @@ describe('BRP Profile page', () => {
   });
 
   it('Displays an alert if the api responds with an error', () => {
-    const appState = getAppState();
-    appState.BRP.isError = true;
-    appState.BRP.isDirty = true;
-
+    const appState = getAppState('ERROR');
     const page = mountWithAppstate(appState, <Profile />);
 
     expect(page.find(`.InfoPanel.Verbintenis`)).toHaveLength(0);

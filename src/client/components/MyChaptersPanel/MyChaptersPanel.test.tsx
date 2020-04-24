@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import MyChaptersPanel from './MyChaptersPanel';
-import { MenuItem } from '../MainNavBar/MainNavBar.constants';
 import { BrowserRouter } from 'react-router-dom';
+import { MenuItem } from '../../config/menuItems';
 
 const PANEL_TITLE = 'whoa!';
 const items: MenuItem[] = [

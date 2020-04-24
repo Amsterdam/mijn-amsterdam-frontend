@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { IconArrowRight, IconArrowLeft } from '../../assets/icons';
+import { IconChevronRight, IconChevronLeft } from '../../assets/icons';
 import classnames from 'classnames';
 import paginate from 'jw-paginate';
 import styles from './Pagination.module.scss';
@@ -51,7 +51,7 @@ export default function Pagination({
               styles.PagePrevButton
             )}
           >
-            <IconArrowLeft />
+            <IconChevronLeft />
             vorige
           </li>
         )}
@@ -76,7 +76,7 @@ export default function Pagination({
               styles.PageNextButton
             )}
           >
-            volgende <IconArrowRight />
+            volgende <IconChevronRight />
           </li>
         )}
       </ul>

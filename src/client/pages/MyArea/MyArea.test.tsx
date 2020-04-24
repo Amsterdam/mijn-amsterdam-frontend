@@ -1,17 +1,21 @@
-import AppState, { AppState as AppStateInterface } from '../../AppState';
+import { AppState } from '../../AppState';
 
 import MyArea from './MyArea';
 import React from 'react';
 import { shallow } from 'enzyme';
+import { MockAppStateProvider } from '../../AppStateProvider';
 
-const appState = {
-  BRP: {},
+const appState: Partial<AppState> = {
+  BRP: {
+    content: null,
+    status: 'PRISTINE',
+  },
 };
 
 it('Renders without crashing', () => {
   shallow(
-    <AppState value={appState as AppStateInterface}>
+    <MockAppStateProvider value={appState}>
       <MyArea />
-    </AppState>
+    </MockAppStateProvider>
   );
 });
