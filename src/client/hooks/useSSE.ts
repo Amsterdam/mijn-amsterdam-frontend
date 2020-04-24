@@ -1,5 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 
+const RECONNECT_TIMEOUT_MS = 500;
+
 export function useSSE(
   path: string,
   eventName: string,
@@ -24,18 +26,18 @@ export function useSSE(
     let unMounted = false;
     const handleError = (error: any) => {
       es.close();
-      console.log('SSE:error');
+      console.info('SSE:error');
       setTimeout(() => {
         if (!unMounted) {
-          console.log('SSE:reconnect-on-error');
+          console.info('SSE:reconnect-on-error');
           connect();
         }
-      }, 500);
+      }, RECONNECT_TIMEOUT_MS);
     };
-    const logOpen = () => console.log('SSE:open');
-    const logMessage = () => console.log('SSE:message');
+    const logOpen = () => console.info('SSE:open');
+    const logMessage = () => console.info('SSE:message');
     const closeEventSource = () => {
-      console.log('SSE:close');
+      console.info('SSE:close');
       es.close();
     };
 
