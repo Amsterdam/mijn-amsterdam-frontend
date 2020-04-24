@@ -121,7 +121,7 @@ function AppAuthenticated() {
           <Redirect from={AppRoutes.API_LOGIN} to={redirectAfterLogin} />
           <Redirect from={AppRoutes.API1_LOGIN} to={redirectAfterLogin} />
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
-          <Route path={AppRoutes.UPDATES} component={MyNotifications} />
+          <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           <Route path={AppRoutes.BRP} component={Profile} />
           <Route path={AppRoutes.TIPS} component={MyTips} />
           <Route

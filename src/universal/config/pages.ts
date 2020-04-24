@@ -20,6 +20,6 @@ export const PageTitles = {
   [AppRoutes.BUURT]: `Mijn buurt`,
   [AppRoutes.PROCLAIMER]: `Proclaimer`,
   [AppRoutes.TIPS]: `Mijn Tips | overzicht`,
-  [AppRoutes.UPDATES]: `${ChapterTitles.UPDATES} | overzicht`,
+  [AppRoutes.NOTIFICATIONS]: `${ChapterTitles.NOTIFICATIONS} | overzicht`,
   [AppRoutes.AFVAL]: `${ChapterTitles.AFVAL} rond uw adres`,
 };

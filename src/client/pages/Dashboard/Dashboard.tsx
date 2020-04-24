@@ -48,7 +48,7 @@ export default () => {
         <PageHeading>
           <Link
             className={styles.MyNotificationsHeadingLink}
-            to={AppRoutes.UPDATES}
+            to={AppRoutes.NOTIFICATIONS}
           >
             Actueel
           </Link>

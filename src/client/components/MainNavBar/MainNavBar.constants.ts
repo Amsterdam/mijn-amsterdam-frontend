@@ -1,13 +1,18 @@
 import { AppRoutes, Chapter, ChapterTitles } from '../../../universal/config';
 import { MenuItem, myChaptersMenuItems } from '../../config/menuItems';
 
-export type MainMenuId = Chapter | 'DASHBOARD' | 'THEMAS' | 'BUURT' | 'UPDATES';
+export type MainMenuId =
+  | Chapter
+  | 'DASHBOARD'
+  | 'THEMAS'
+  | 'BUURT'
+  | 'NOTIFICATIONS';
 
 export const mainMenuItemId: { [key: string]: MainMenuId } = {
   HOME: 'DASHBOARD',
   CHAPTERS: 'THEMAS',
   BUURT: 'BUURT',
-  NOTIFICATIONS: 'UPDATES',
+  NOTIFICATIONS: 'NOTIFICATIONS',
 };
 
 export const MenuItemTitles = {
@@ -36,7 +41,7 @@ export const mainMenuItems: MenuItem[] = [
   {
     title: MenuItemTitles.NOTIFICATIONS,
     id: mainMenuItemId.NOTIFICATIONS,
-    to: AppRoutes.UPDATES,
+    to: AppRoutes.NOTIFICATIONS,
   },
 ];
 

@@ -22,7 +22,7 @@ export const AppRoutes = {
   API_LOGIN: LOGIN_URL,
   API1_LOGIN: LOGIN_EHERKENNING_URL,
   TIPS: '/overzicht-tips',
-  UPDATES: '/overzicht-updates',
+  NOTIFICATIONS: '/overzicht-updates',
   AFVAL: '/afval',
   ACCESSIBILITY: '/toegankelijkheidsverklaring',
 };

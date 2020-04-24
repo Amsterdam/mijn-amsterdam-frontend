@@ -5,7 +5,7 @@ import { shallow } from 'enzyme';
 import { MyNotification } from '../../../universal/types';
 
 const NOTIFICATIONS: MyNotification[] = [];
-const UPDATES_TOTAL = 10;
+const NOTIFICATIONS_TOTAL = 10;
 
 it('Renders without crashing', () => {
   shallow(
@@ -13,7 +13,7 @@ it('Renders without crashing', () => {
       <MyNotifications
         trackCategory="myNotifications"
         items={NOTIFICATIONS}
-        total={UPDATES_TOTAL}
+        total={NOTIFICATIONS_TOTAL}
       />
     </BrowserRouter>
   );
