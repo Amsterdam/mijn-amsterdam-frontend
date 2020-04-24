@@ -1,7 +1,4 @@
-import {
-  ComponentChildren,
-  LinkProps,
-} from '../../../universal/types/App.types';
+import { ComponentChildren, LinkProps } from '../../../universal/types';
 import React, { HTMLAttributes, MouseEvent, useEffect, useState } from 'react';
 
 import { Colors } from '../../../universal/config';
@@ -11,7 +8,7 @@ import styles from './MainNavSubmenu.module.scss';
 import { trackLink } from '../../hooks/analytics.hook';
 import { useDebouncedCallback } from 'use-debounce';
 import useRouter from 'use-react-router';
-import { SVGComponent } from '../../../universal/types/App.types';
+import { SVGComponent } from '../../../universal/types';
 
 export interface MainNavSubmenuLinkProps
   extends LinkProps,

@@ -6,7 +6,7 @@ import {
   dateSort,
   defaultDateFormat,
 } from '../../universal/helpers';
-import { MyNotification } from '../../universal/types/App.types';
+import { MyNotification } from '../../universal/types';
 import { requestData } from '../helpers';
 import { ApiUrls, getApiConfigValue } from './config';
 

@@ -1,9 +1,8 @@
 import Linkd, { Button } from '../Button/Button';
 import React, { CSSProperties, useMemo } from 'react';
 
-import { ReactComponent as CaretLeft } from '../../assets/icons/Chevron-Left.svg';
+import { IconChevronLeft, IconDownload } from '../../assets/icons';
 import { Document } from '../DocumentList/DocumentList';
-import { ReactComponent as DownloadIcon } from '../../assets/icons/Download.svg';
 import classnames from 'classnames';
 import { defaultDateFormat } from '../../../universal/helpers';
 import styles from './StatusLine.module.scss';
@@ -71,7 +70,7 @@ function DownloadLink({ item }: DownloadLinkProps) {
       href={item.url}
       external={true}
       download={item.title}
-      icon={DownloadIcon}
+      icon={IconDownload}
     >
       {item.title}
     </Linkd>
@@ -145,7 +144,7 @@ function ToggleMore({ isCollapsed, toggleCollapsed }: ToggleMoreProps) {
         [styles.MoreStatusClosed]: isCollapsed,
       })}
       onClick={toggleCollapsed}
-      icon={CaretLeft}
+      icon={IconChevronLeft}
       variant="plain"
       aria-expanded={!isCollapsed}
       lean={true}

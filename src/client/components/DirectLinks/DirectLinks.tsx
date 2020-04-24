@@ -1,6 +1,6 @@
 import React, { HTMLAttributes } from 'react';
 
-import { ReactComponent as ExternalLinkIcon } from '../../assets/icons/External-Link.svg';
+import { IconExternalLink } from '../../assets/icons';
 import Heading from '../Heading/Heading';
 import { LINKS } from './DirectLinks.constants';
 import Linkd from '../Button/Button';
@@ -34,7 +34,7 @@ export default function DirectLinks({
             return (
               <li key={linkName}>
                 <Linkd
-                  icon={isExternalLink ? ExternalLinkIcon : ''}
+                  icon={isExternalLink ? IconExternalLink : ''}
                   id={id}
                   href={url}
                   external={isExternalLink}

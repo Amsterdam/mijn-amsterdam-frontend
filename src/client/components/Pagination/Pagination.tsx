@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { ReactComponent as ArrowLeftIcon } from '../../assets/icons/Chevron-Left.svg';
-import { ReactComponent as ArrowRightIcon } from '../../assets/icons/Chevron-Right.svg';
+import { IconArrowRight, IconArrowLeft } from '../../assets/icons';
 import classnames from 'classnames';
 import paginate from 'jw-paginate';
 import styles from './Pagination.module.scss';
@@ -52,7 +51,7 @@ export default function Pagination({
               styles.PagePrevButton
             )}
           >
-            <ArrowLeftIcon />
+            <IconArrowLeft />
             vorige
           </li>
         )}
@@ -77,7 +76,7 @@ export default function Pagination({
               styles.PageNextButton
             )}
           >
-            volgende <ArrowRightIcon />
+            volgende <IconArrowRight />
           </li>
         )}
       </ul>

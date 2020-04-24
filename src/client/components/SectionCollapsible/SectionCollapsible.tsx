@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import classnames from 'classnames';
+import React, { useEffect, useRef, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
-
-import { ReactComponent as CaretIcon } from '../../assets/icons/Chevron-Right.svg';
-import { ComponentChildren } from '../../../universal/types/App.types';
+import { useDebouncedCallback } from 'use-debounce';
+import { withKeyPress } from '../../../universal/helpers';
+import { ComponentChildren } from '../../../universal/types';
+import { IconChevronRight } from '../../assets/icons';
+import { trackEvent, useSessionStorage } from '../../hooks';
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
-import classnames from 'classnames';
 import styles from './SectionCollapsible.module.scss';
-import { trackEvent } from '../../hooks/analytics.hook';
-import { useDebouncedCallback } from 'use-debounce';
-import { useRef } from 'react';
-import { useSessionStorage } from '../../hooks/storage.hook';
-import { withKeyPress } from '../../../universal/helpers';
 
 export interface SectionCollapsibleProps {
   id: string;

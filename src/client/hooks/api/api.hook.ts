@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/browser';
 
-import { Action } from '../../../universal/types/App.types';
+import { Action } from '../../../universal/types';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 
 import { IS_SENTRY_ENABLED } from '../../../universal/env';

@@ -1,5 +1,5 @@
 import React, { createContext } from 'react';
-import { ComponentChildren } from '../universal/types/App.types';
+import { ComponentChildren } from '../universal/types';
 import useSessionApi from './hooks/api/api.session';
 
 type SessionApiState = ReturnType<typeof useSessionApi>;

@@ -11,11 +11,7 @@ import {
   defaultDateFormat,
   apiSuccesResult,
 } from '../../universal/helpers';
-import {
-  LinkProps,
-  MyCase,
-  MyNotification,
-} from '../../universal/types/App.types';
+import { LinkProps, MyCase, MyNotification } from '../../universal/types';
 import { requestData } from '../helpers';
 import { ApiUrls, getApiConfigValue } from './config';
 

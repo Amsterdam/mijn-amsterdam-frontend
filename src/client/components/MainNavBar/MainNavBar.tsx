@@ -10,12 +10,13 @@ import { Link, NavLink } from 'react-router-dom';
 import { animated, useSpring } from 'react-spring';
 import useRouter from 'use-react-router';
 import { AppRoutes, LOGOUT_URL } from '../../../universal/config';
-import { isLoading, getFullName } from '../../../universal/helpers';
-import { ComponentChildren } from '../../../universal/types/App.types';
+import { getFullName, isLoading } from '../../../universal/helpers';
+import { ComponentChildren } from '../../../universal/types';
 import { AppContext } from '../../AppState';
-import { ReactComponent as LogoutIcon } from '../../assets/icons/Logout.svg';
+import { IconLogout } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
 import { MenuItem } from '../../config/menuItems';
+import { getMyChapters } from '../../helpers/chapters';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
 import { SessionContext } from '../../SessionState';
@@ -32,7 +33,6 @@ import {
   submenuItems,
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
-import { getMyChapters } from '../../helpers/chapters';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -78,7 +78,7 @@ function SecondaryLinks() {
         external={true}
         lean={true}
         className={styles.LogoutLink}
-        icon={LogoutIcon}
+        icon={IconLogout}
       >
         Uitloggen
       </Linkd>

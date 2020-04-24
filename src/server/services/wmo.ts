@@ -7,7 +7,7 @@ import {
   isDateInPast,
 } from '../../universal/helpers';
 
-import { LinkProps } from '../../universal/types/App.types';
+import { LinkProps } from '../../universal/types';
 import { generatePath } from 'react-router';
 import { requestData } from '../helpers';
 import slug from 'slugme';

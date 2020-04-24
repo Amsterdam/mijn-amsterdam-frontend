@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import React, { ReactNode } from 'react';
 import { capitalizeFirstLetter, entries } from '../../../universal/helpers';
-import { Unshaped } from '../../../universal/types/App.types';
+import { Unshaped } from '../../../universal/types';
 import Linkd from '../Button/Button';
 import styles from './Table.module.scss';
 import SanitizedHtml from '../SanitizedHtml/SanitizedHtml';

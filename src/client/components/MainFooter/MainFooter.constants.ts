@@ -1,5 +1,5 @@
 import { ExternalUrls } from '../../../universal/config';
-import { LinkProps } from '../../../universal/types/App.types';
+import { LinkProps } from '../../../universal/types';
 
 export const LinkList: LinkProps[] = [
   {

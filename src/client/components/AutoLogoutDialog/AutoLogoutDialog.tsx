@@ -12,7 +12,7 @@ import React, {
   useState,
 } from 'react';
 
-import { ComponentChildren } from '../../../universal/types/App.types';
+import { ComponentChildren } from '../../../universal/types';
 import Modal from '../Modal/Modal';
 import { SessionContext } from '../../SessionState';
 import classnames from 'classnames';

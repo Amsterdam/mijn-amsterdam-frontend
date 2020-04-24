@@ -1,10 +1,9 @@
 import React, { AnchorHTMLAttributes, ButtonHTMLAttributes } from 'react';
 
-import { ReactComponent as ChevronIcon } from '../../assets/icons/Chevron-Right.svg';
-import { ReactComponent as CloseIcon } from '../../assets/icons/Close.svg';
+import { IconChevronRight, IconClose } from '../../assets/icons';
 import { Link } from 'react-router-dom';
 import { ReactNode } from 'react';
-import { Unshaped } from '../../../universal/types/App.types';
+import { Unshaped } from '../../../universal/types';
 import classnames from 'classnames';
 import styles from './Button.module.scss';
 import { trackLink } from '../../hooks/analytics.hook';
@@ -139,7 +138,7 @@ export default function Linkd({
   href,
   lean = true,
   variant = 'plain',
-  icon = ChevronIcon,
+  icon = IconChevronRight,
   iconSize,
   iconPosition = 'left',
   external = false,
@@ -248,7 +247,7 @@ export function CloseButton({
   title = 'Sluiten',
   ...props
 }: Omit<IconButtonProps, 'icon'>) {
-  return <IconButton {...props} title={title} icon={CloseIcon} />;
+  return <IconButton {...props} title={title} icon={IconClose} />;
 }
 
 export function addTitleLinkComponent(

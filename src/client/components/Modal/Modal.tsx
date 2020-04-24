@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 
 import { CloseButton } from '../Button/Button';
-import { ComponentChildren } from '../../../universal/types/App.types';
+import { ComponentChildren } from '../../../universal/types';
 import FocusTrap from 'focus-trap-react';
 import Heading from '../Heading/Heading';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import styles from './Modal.module.scss';
-import useModalRoot from '../../hooks/modalRoot.hook';
+import { useModalRoot } from '../../hooks';
 
 interface ModalProps {
   children: ComponentChildren;

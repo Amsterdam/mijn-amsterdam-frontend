@@ -1,6 +1,6 @@
 import { ExternalUrls } from '../../universal/config/app';
 import { Chapters } from '../../universal/config/chapter';
-import { MyNotification } from '../../universal/types/App.types';
+import { MyNotification } from '../../universal/types';
 
 export const WelcomeNotification: MyNotification = {
   id: 'welcome01',

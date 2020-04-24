@@ -1,12 +1,10 @@
-import { Button, IconButton } from '../Button/Button';
-import React, { useRef, useState } from 'react';
-
-import { ReactComponent as AlertIcon } from '../../assets/icons/Alert.svg';
-import { ReactComponent as CloseIcon } from '../../assets/icons/Close.svg';
-import Modal from '../Modal/Modal';
 import classnames from 'classnames';
-import styles from './ErrorMessages.module.scss';
+import React, { useRef, useState } from 'react';
+import { IconAlert, IconClose } from '../../assets/icons';
 import { useSessionStorage } from '../../hooks/storage.hook';
+import { Button, IconButton } from '../Button/Button';
+import Modal from '../Modal/Modal';
+import styles from './ErrorMessages.module.scss';
 
 export interface Error {
   name: string;
@@ -41,7 +39,7 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
     >
       <p className={styles.MessageBar}>
         <span className={styles.MessageBarInner}>
-          <AlertIcon aria-hidden="true" className={styles.AlertIcon} /> U ziet
+          <IconAlert aria-hidden="true" className={styles.AlertIcon} /> U ziet
           misschien niet al uw gegevens{' '}
           <Button
             lean={true}
@@ -55,7 +53,7 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
         </span>
 
         <IconButton
-          icon={!isDismissed ? CloseIcon : AlertIcon}
+          icon={!isDismissed ? IconClose : IconAlert}
           className={classnames(
             styles.ToggleButton,
             isDismissed && styles.isDismissed

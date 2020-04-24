@@ -5,7 +5,7 @@ import {
   ExternalUrls,
   Chapter,
 } from '../../universal/config';
-import { LinkProps, SVGComponent } from '../../universal/types/App.types';
+import { LinkProps, SVGComponent } from '../../universal/types';
 
 import { MainMenuId } from '../components/MainNavBar/MainNavBar.constants';
 

@@ -5,7 +5,7 @@ import L from 'leaflet';
 import { MaPopup } from './MaPopup';
 import { MaTooltip } from './MaTooltip';
 import { firstChildOfType } from './utils';
-import iconUrl from '../../assets/icons/home.svg';
+import homeIconUrl from '../../assets/icons/home.svg';
 import { DEFAULT_ZOOM } from '../../../universal/config';
 
 function useBindComponentToMarker(component: any, markerInstance: any) {
@@ -44,7 +44,7 @@ function MaMarker({ children, center, iconUrl }: MaMarkerProps) {
     markerInstance
   );
   const icon = L.icon({
-    iconUrl,
+    iconUrl: homeIconUrl,
     iconSize: [32, 32],
     iconAnchor: [16, 16],
     // popupAnchor: [1, -34],

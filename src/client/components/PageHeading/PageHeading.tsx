@@ -1,11 +1,8 @@
-import {
-  ComponentChildren,
-  LinkProps,
-} from '../../../universal/types/App.types';
+import { ComponentChildren, LinkProps } from '../../../universal/types';
 import Heading, { HeadingTagName } from '../Heading/Heading';
 import React, { HTMLProps } from 'react';
 
-import { ReactComponent as CaretLeft } from '../../assets/icons/Chevron-Left.svg';
+import { IconChevronLeft } from '../../assets/icons';
 import Linkd from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import composeClassNames from 'classnames';
@@ -46,7 +43,7 @@ export default function PageHeading({
       <div className={styles.HeadingInner}>
         {!!backLink && (
           <Linkd
-            icon={CaretLeft}
+            icon={IconChevronLeft}
             className={styles.BackLink}
             href={backLink.to}
           >

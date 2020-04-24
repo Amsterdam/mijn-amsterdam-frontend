@@ -9,7 +9,7 @@ import {
 
 import { AppRoutes } from '../../../universal/config';
 import { Button } from '../Button/Button';
-import { ReactComponent as ChevronIcon } from '../../assets/icons/Chevron-Right.svg';
+import { IconChevronRight } from '../../assets/icons';
 import Heading from '../Heading/Heading';
 import Linkd from '../Button/Button';
 import { MyTip } from '../../../universal/types';
@@ -129,7 +129,7 @@ export default function MyTips({
               variant="plain"
               onClick={() => setModalIsOpen(true)}
               className={styles.OptIn}
-              icon={ChevronIcon}
+              icon={IconChevronRight}
               aria-expanded={showOptIn}
             >
               {isOptIn

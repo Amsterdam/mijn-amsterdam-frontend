@@ -7,9 +7,8 @@ import { Link, NavLink } from 'react-router-dom';
 import React, { HTMLProps, PropsWithChildren } from 'react';
 
 import { AppRoutes, LOCATION_ZOOM } from '../../../universal/config';
-import { ReactComponent as CloseIcon } from '../../assets/icons/Close.svg';
+import { IconClose, IconHome } from '../../assets/icons';
 import Heading from '../Heading/Heading';
-import { ReactComponent as HomeIcon } from '../../assets/icons/home.svg';
 import { HomeIconMarker } from './MaMarker';
 import { IS_MAPS_ENABLED } from '../../../universal/env';
 import Linkd from '../Button/Button';
@@ -34,7 +33,7 @@ export function MyAreaHeader() {
         />
         <h1 className={styles.Title}>Mijn buurt</h1>
       </Link>
-      <Linkd iconPosition="right" icon={CloseIcon} href={AppRoutes.ROOT}>
+      <Linkd iconPosition="right" icon={IconClose} href={AppRoutes.ROOT}>
         Sluit kaart
       </Linkd>
     </div>
@@ -45,7 +44,7 @@ function MyAreaLoader() {
   return (
     <div className={styles.MyAreaLoader}>
       <span>
-        <HomeIcon aria-hidden="true" />
+        <IconHome aria-hidden="true" />
         Uw adres wordt opgezocht...
       </span>
     </div>

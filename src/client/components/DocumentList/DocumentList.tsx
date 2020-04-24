@@ -1,5 +1,4 @@
-import { ReactComponent as DocumentIcon } from '../../assets/icons/Document.svg';
-import { ReactComponent as DownloadIcon } from '../../assets/icons/Download.svg';
+import { IconDownload, IconDocument } from '../../assets/icons';
 import Heading from '../Heading/Heading';
 import React from 'react';
 import { defaultDateFormat } from '../../../universal/helpers';
@@ -36,10 +35,10 @@ export default function DocumentList({ items = [] }: DocumentListProps) {
                 href={item.url}
                 onClick={() => trackDownload(item.url)}
               >
-                <DocumentIcon aria-hidden="true" className={styles.Icon} />
+                <IconDocument aria-hidden="true" className={styles.Icon} />
                 <Heading el="h4" size="small">
                   {item.title}{' '}
-                  <DownloadIcon
+                  <IconDownload
                     aria-hidden="true"
                     className={styles.DownloadIcon}
                   />

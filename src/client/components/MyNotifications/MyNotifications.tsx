@@ -6,7 +6,7 @@ import { defaultDateFormat, isInteralUrl } from '../../../universal/helpers';
 import {
   MyNotification as MyNotificationBase,
   SVGComponent,
-} from '../../../universal/types/App.types';
+} from '../../../universal/types';
 import {
   trackItemPresentation,
   useSessionCallbackOnceDebounced,

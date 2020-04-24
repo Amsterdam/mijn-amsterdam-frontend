@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 
-import { ComponentChildren } from '../../../universal/types/App.types';
+import { ComponentChildren } from '../../../universal/types';
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import classnames from 'classnames';

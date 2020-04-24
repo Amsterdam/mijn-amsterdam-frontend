@@ -4,7 +4,7 @@ import * as Sentry from '@sentry/browser';
 import { useCallback, useEffect, useState } from 'react';
 
 import { IS_SENTRY_ENABLED } from '../../universal/env';
-import { Unshaped } from '../../universal/types/App.types';
+import { Unshaped } from '../../universal/types';
 
 interface LocalStorageHandler {
   value: string | null;

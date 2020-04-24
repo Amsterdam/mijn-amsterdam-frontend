@@ -13,7 +13,7 @@ import {
 } from '../assets/icons';
 
 import { Chapter, Chapters } from '../../universal/config';
-import { SVGComponent } from '../../universal/types/App.types';
+import { SVGComponent } from '../../universal/types';
 
 export const ChapterIcons: Record<Chapter, SVGComponent> = {
   [Chapters.AFVAL]: IconGarbage,

@@ -6,8 +6,7 @@ import { NavLink } from 'react-router-dom';
 import React from 'react';
 import classnames from 'classnames';
 import styles from './MyCases.module.scss';
-
-type MyCase = FocusItem | FocusTozo; // NOTE: atm it's the only Case possible
+import { MyCase } from '../../../universal/types';
 
 interface CaseItemProps {
   item: MyCase;

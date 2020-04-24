@@ -1,8 +1,7 @@
-import { ReactComponent as AlertIcon } from '../../assets/icons/Alert.svg';
-import { ReactComponent as CheckmarkIcon } from '../../assets/icons/Checkmark.svg';
-import { ComponentChildren } from '../../../universal/types/App.types';
-import React from 'react';
 import classnames from 'classnames';
+import React from 'react';
+import { ComponentChildren } from '../../../universal/types';
+import { IconAlert, IconCheckmark } from '../../assets/icons';
 import styles from './Alert.module.scss';
 
 export type AlertType = 'warning' | 'info' | 'success';
@@ -17,10 +16,10 @@ function getIcon(alertType: AlertType) {
   let Icon;
   switch (alertType) {
     case 'warning':
-      Icon = AlertIcon;
+      Icon = IconAlert;
       break;
     default:
-      Icon = CheckmarkIcon;
+      Icon = IconCheckmark;
       break;
   }
   return <Icon aria-hidden="true" className={styles.Icon} />;

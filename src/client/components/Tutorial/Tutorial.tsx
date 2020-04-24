@@ -1,15 +1,11 @@
-import React, { CSSProperties } from 'react';
-import { useEffect, useRef, useState } from 'react';
-
-import { ReactComponent as ArrowIcon } from '../../assets/icons/Arrow__primary-white.svg';
-import { CloseButton } from '../Button/Button';
-import FocusTrap from 'focus-trap-react';
-import ReactDOM from 'react-dom';
 import classnames from 'classnames';
+import FocusTrap from 'focus-trap-react';
+import React, { CSSProperties, useEffect, useRef, useState } from 'react';
+import ReactDOM from 'react-dom';
+import { IconArrowRrimaryWhite } from '../../assets/icons';
+import { useDetectResizing, useModalRoot, usePhoneScreen } from '../../hooks';
+import { CloseButton } from '../Button/Button';
 import styles from './Tutorial.module.scss';
-import useDetectResizing from '../../hooks/detectResize.hook';
-import useModalRoot from '../../hooks/modalRoot.hook';
-import { usePhoneScreen } from '../../hooks/media.hook';
 
 interface TutorialProps {
   onClose: () => void;
@@ -71,7 +67,7 @@ function TutorialItem({ el }: { el: any }) {
           <span ref={ref}>{text}</span>
         </p>
         <span aria-hidden="true" className={styles.ArrowIconContainer}>
-          <ArrowIcon className={styles.ArrowIcon} />
+          <IconArrowRrimaryWhite className={styles.ArrowIcon} />
         </span>
       </div>
     </div>

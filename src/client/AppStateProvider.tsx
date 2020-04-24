@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { AppContext, AppState, PRISTINE_APPSTATE } from './AppState';
 import { useDataApi } from './hooks/api/api.hook';
 import { BFFApiUrls } from './config/api';
-import { ComponentChildren } from '../universal/types/App.types';
+import { ComponentChildren } from '../universal/types';
 import { useSSE } from './hooks/useSSE';
 import { transformAppState } from './data-transform/appState';
 
