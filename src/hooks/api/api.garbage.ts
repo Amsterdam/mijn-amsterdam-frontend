@@ -224,57 +224,57 @@ export default function useGarbageApi(centroid?: Centroid): GarbageApiState {
       [
         {
           naam: 'Afvalpunt Henk Sneevlietweg (Nieuw-West)',
-          centroid: [4.83347291303415, 52.3433575455427] as Centroid,
+          centroid: [52.3433575455427, 4.83347291303415] as Centroid,
           adres: 'Henk Sneevlietweg 22&#xA0;<br>1066 VH&#xA0;&#xA0;Amsterdam',
           telefoon: '020 587 6126',
           email: 'afvalpunten@aebamsterdam.nl',
           openingstijden:
-            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt Marie Baronlaan aan de Faas Wilkesstraat is voorlopig gesloten.',
+            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nAlle afvalpunten zijn op Koningsdag (maandag 27 april 2020) geopend van 10.00 tot en met 16.00 uur.',
         },
         {
           naam: 'Afvalpunt Marie Baronlaan (Oost, geen bedrijfsafval)',
-          centroid: [4.97156727996261, 52.3710209755361] as Centroid,
+          centroid: [52.3710209755361, 4.97156727996261] as Centroid,
           adres: 'Marie Baronlaan <br>1095 MV Amsterdam',
           telefoon: '020 5876145',
           email: 'afvalpunten@aebamsterdam.nl',
           openingstijden:
-            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt Marie Baronlaan aan de Faas Wilkesstraat is voorlopig gesloten.',
+            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nAlle afvalpunten zijn op Koningsdag (maandag 27 april 2020) geopend van 10.00 tot en met 16.00 uur.',
         },
         {
           naam: 'Afvalpunt Meerkerkdreef (Zuidoost)',
-          centroid: [4.97786715111811, 52.302520488967] as Centroid,
+          centroid: [52.302520488967, 4.97786715111811] as Centroid,
           adres: 'Meerkerkdreef 31&#xA0;<br>1106 GZ &#xA0;Amsterdam',
           telefoon: '020 587 6116',
           email: 'afvalpunten@aebamsterdam.nl',
           openingstijden:
-            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt Marie Baronlaan aan de Faas Wilkesstraat is voorlopig gesloten.',
+            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nAlle afvalpunten zijn op Koningsdag (maandag 27 april 2020) geopend van 10.00 tot en met 16.00 uur.',
         },
         {
           naam: 'Afvalpunt Rozenburglaan (Oost)',
-          centroid: [4.93782666381194, 52.3388475386366] as Centroid,
+          centroid: [52.3388475386366, 4.93782666381194] as Centroid,
           adres: 'Rozenburglaan 1&#xA0;<br>1097 HK &#xA0;Amsterdam',
           telefoon: '020 587 6114',
           email: 'afvalpunten@aebamsterdam.nl',
           openingstijden:
-            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt Marie Baronlaan aan de Faas Wilkesstraat is voorlopig gesloten.',
+            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nAlle afvalpunten zijn op Koningsdag (maandag 27 april 2020) geopend van 10.00 tot en met 16.00 uur.',
         },
         {
           naam: 'Afvalpunt Seineweg (Nieuw-West)',
-          centroid: [4.82017500674289, 52.386058385908] as Centroid,
+          centroid: [52.386058385908, 4.82017500674289] as Centroid,
           adres: 'Seineweg 1&#xA0;<br>1043 BE&#xA0; Amsterdam',
           telefoon: '020 587 6144',
           email: 'afvalpunten@aebamsterdam.nl',
           openingstijden:
-            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt Marie Baronlaan aan de Faas Wilkesstraat is voorlopig gesloten.',
+            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nAlle afvalpunten zijn op Koningsdag (maandag 27 april 2020) geopend van 10.00 tot en met 16.00 uur.',
         },
         {
           naam: 'Afvalpunt Struisgrasstraat (Noord)',
-          centroid: [4.90786592615004, 52.3957390236765] as Centroid,
+          centroid: [52.3957390236765, 4.90786592615004] as Centroid,
           adres: 'Struisgrasstraat 33a <br>1032 KE &#xA0;Amsterdam',
           telefoon: '020 587 6122',
           email: 'afvalpunten@aebamsterdam.nl',
           openingstijden:
-            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt Marie Baronlaan aan de Faas Wilkesstraat is voorlopig gesloten.',
+            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nAlle afvalpunten zijn op Koningsdag (maandag 27 april 2020) geopend van 10.00 tot en met 16.00 uur.',
         },
       ].map(item => {
         return {
