@@ -24,7 +24,6 @@ const MAX_TIPS_VISIBLE = 3;
 export default () => {
   const appState = useContext(AppContext);
   const { TIPS, NOTIFICATIONS, CASES, BUURT, HOME } = appState;
-  const { isOptIn } = useOptIn();
 
   const tipItems = TIPS.content!.items.slice(0, MAX_TIPS_VISIBLE);
   const notificationItems = NOTIFICATIONS.content!.items.slice(
@@ -90,7 +89,6 @@ export default () => {
             data-tutorial-item="Hier geven wij u handige tips, bijvoorbeeld over de regelingen en voorzieningen van de gemeente;right-bottom"
             isLoading={isLoading(TIPS)}
             items={tipItems}
-            isOptIn={isOptIn}
             showOptIn={true}
           />
         )}

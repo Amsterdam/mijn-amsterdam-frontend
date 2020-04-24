@@ -1,5 +1,5 @@
 import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
   trackItemClick,
   trackItemPresentation,
@@ -17,6 +17,10 @@ import MyTipsOptInOutModal from './MyTipsOptInOutModal';
 import classnames from 'classnames';
 import { isExternalUrl } from '../../../universal/helpers';
 import styles from './MyTips.module.scss';
+import {
+  OptInContextProvider,
+  OptInContext,
+} from '../OptInContext/OptInContext';
 
 export interface TipProps {
   tip: MyTip;
@@ -107,56 +111,58 @@ function LoadingContentListItems() {
   return <>{elements}</>;
 }
 
+interface TipsOptInHeaderProps {
+  showTipsPageLink: boolean;
+}
+
+function TipsOptInHeader({ showTipsPageLink }: TipsOptInHeaderProps) {
+  const { isOptIn } = useContext(OptInContext);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  return (
+    <>
+      <div className={styles.HeaderBar}>
+        <Heading size="large">Mijn tips</Heading>
+        {showTipsPageLink && <Linkd href={AppRoutes.TIPS}>Mijn tips</Linkd>}
+        <Button
+          lean={true}
+          variant="plain"
+          onClick={() => setModalIsOpen(true)}
+          className={styles.OptIn}
+          icon={IconChevronRight}
+          aria-expanded={modalIsOpen}
+        >
+          {isOptIn ? 'Toon geen persoonlijke tips' : 'Toon persoonlijke tips'}
+        </Button>
+      </div>
+      <MyTipsOptInOutModal
+        isOpen={modalIsOpen}
+        onClose={() => setModalIsOpen(false)}
+      />
+    </>
+  );
+}
+
 export default function MyTips({
   items = [],
   className,
   isLoading = true,
   showHeader = true,
-  isOptIn = false,
   showOptIn = false,
   ...otherProps
 }: MyTipsProps) {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   return (
-    <div {...otherProps} className={classnames(styles.MyTips, className)}>
-      {showHeader && (
-        <div className={styles.HeaderBar}>
-          <Heading size="large">Mijn tips</Heading>
-          {!!items.length && <Linkd href={AppRoutes.TIPS}>Mijn tips</Linkd>}
-          {showOptIn && (
-            <Button
-              lean={true}
-              variant="plain"
-              onClick={() => setModalIsOpen(true)}
-              className={styles.OptIn}
-              icon={IconChevronRight}
-              aria-expanded={showOptIn}
-            >
-              {isOptIn
-                ? 'Toon geen persoonlijke tips'
-                : 'Toon persoonlijke tips'}
-            </Button>
-          )}
-        </div>
-      )}
-
-      <ul className={styles.TipsList}>
-        {isLoading && <LoadingContentListItems />}
-        {!isLoading &&
-          items.map((item, i) => <Tip key={item.title} tip={item} />)}
-      </ul>
-      {!isLoading && !items.length && (
-        <p>
-          We hebben op dit moment geen {isOptIn ? 'persoonlijke ' : ''}tips voor
-          u.
-        </p>
-      )}
-      {showOptIn && (
-        <MyTipsOptInOutModal
-          isOpen={modalIsOpen}
-          onClose={() => setModalIsOpen(false)}
-        />
-      )}
-    </div>
+    <OptInContextProvider>
+      <div {...otherProps} className={classnames(styles.MyTips, className)}>
+        {showHeader && <TipsOptInHeader showTipsPageLink={!!items.length} />}
+        <ul className={styles.TipsList}>
+          {isLoading && <LoadingContentListItems />}
+          {!isLoading &&
+            items.map((item, i) => <Tip key={item.title} tip={item} />)}
+        </ul>
+        {!isLoading && !items.length && (
+          <p>We hebben op dit moment geen tips voor u.</p>
+        )}
+      </div>
+    </OptInContextProvider>
   );
 }
