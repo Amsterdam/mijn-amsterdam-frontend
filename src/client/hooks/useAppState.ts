@@ -24,7 +24,12 @@ type ApiState = GeneratedResponse &
   MapsResponse &
   RelatedResponse;
 
-type AppStateController = any;
+type AppStateController = {
+  [key in keyof ApiState]?: {
+    fetch: (...args: any) => void;
+    [key: string]: any;
+  };
+};
 
 export type AppState = {
   [key in keyof ApiState]: ApiResponse<ApiState[key]['content']>;
