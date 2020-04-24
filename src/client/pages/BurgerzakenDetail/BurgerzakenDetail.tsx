@@ -49,7 +49,9 @@ export default () => {
             <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>
         )}
-        {isLoading && <LoadingContent className={styles.LoadingContentInfo} />}
+        {isLoading(BRP) && (
+          <LoadingContent className={styles.LoadingContentInfo} />
+        )}
         {!!DocumentItem && (
           <div className={styles.DocumentProperties}>
             <p>
