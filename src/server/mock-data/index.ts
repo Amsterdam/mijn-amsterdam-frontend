@@ -66,7 +66,7 @@ export const mockDataConfig: MockDataConfig = {
     method: 'post',
     responseData: (config: any) => {
       let sourceTips: MyTip[] = [];
-      if (config.data?.tips.length) {
+      if (config.data?.tips?.length) {
         sourceTips = config.data.tips;
       }
       const tips = require('./json/tips.json');

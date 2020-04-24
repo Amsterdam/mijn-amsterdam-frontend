@@ -1,4 +1,5 @@
 import { AxiosError } from 'axios';
+import { ApiResult } from '../../server/services/state';
 
 export interface ApiErrorResponse<T> {
   message: string;
@@ -124,5 +125,19 @@ export function apiErrorResponseData<T>(
       });
     },
     {} as Record<keyof T, ApiErrorResponse<any>>
+  );
+}
+
+export function unwrapResponseContent(responseData: {
+  [key: string]: ApiResponse<any>;
+}) {
+  return Object.entries(responseData).reduce(
+    (acc, [apiStateKey, { content, status }]) => {
+      if (status === 'OK') {
+        return Object.assign(acc, { [apiStateKey]: content });
+      }
+      return acc;
+    },
+    {}
   );
 }

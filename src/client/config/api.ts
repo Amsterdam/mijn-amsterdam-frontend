@@ -5,6 +5,7 @@ import { isError } from '../../universal/helpers';
 export const BFFApiUrls: Record<string, string> = {
   SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
   SERVICES_SSE: `${BFF_API_BASE_URL}/services/stream`,
+  SERVICES_TIPS: `${BFF_API_BASE_URL}/services/tips`,
 };
 
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {

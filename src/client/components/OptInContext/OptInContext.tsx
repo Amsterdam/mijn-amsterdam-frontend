@@ -14,6 +14,7 @@ interface SessionStateProps {
 
 export function OptInContextProvider({ children }: SessionStateProps) {
   const optInState = useOptIn();
+
   return (
     <OptInContext.Provider value={optInState}>{children}</OptInContext.Provider>
   );

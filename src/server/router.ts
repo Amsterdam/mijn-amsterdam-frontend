@@ -4,6 +4,7 @@ import {
   loadServicesGenerated,
   loadServicesDirect,
   loadServicesRelated,
+  fetchTIPS,
 } from './services';
 import { loadServicesMap } from './services/services-map';
 import { loadServicesSSE } from './services/services-sse';
@@ -60,6 +61,15 @@ router.use(
   }
 );
 
+router.post(`${BFF_API_BASE_URL}/services/tips`, async function handleRouteTips(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  res.send(await fetchTIPS(req.sessionID!, req.body));
+  next();
+});
+
 router.use(
   `${BFF_API_BASE_URL}/services/all`,
   async function handleRouteServicesMap(
@@ -71,7 +81,10 @@ router.use(
       ...(await loadServicesDirect(req.sessionID!)),
       ...(await loadServicesRelated(req.sessionID!)),
       ...(await loadServicesMap(req.sessionID!)),
-      ...(await loadServicesGenerated(req.sessionID!, req.query.optin === '1')),
+      ...(await loadServicesGenerated(
+        req.sessionID!,
+        req.cookies.optInPersonalizedTips === 'yes'
+      )),
     };
     res.send(data);
     next();

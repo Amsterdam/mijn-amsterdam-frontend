@@ -1,9 +1,11 @@
-import express, { Request } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 
 import compression from 'compression';
 import cors from 'cors';
 import { router } from './router';
 import session from 'express-session';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import { clearCache } from './helpers';
 
 const PORT = process.env.BFF_API_PORT || 5000;
@@ -11,6 +13,8 @@ const PORT = process.env.BFF_API_PORT || 5000;
 const app = express();
 
 app.use(cors());
+app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.use(
   session({
@@ -23,9 +27,15 @@ app.use(
 
 app.use(compression(), router);
 
-app.use((req: Request) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   const sessionID = req.sessionID!;
   clearCache(sessionID);
+  next();
+});
+
+app.use((req: Request, res: Response) => {
+  res.status(404);
+  return res.end('not found');
 });
 
 app.listen(PORT, () => {

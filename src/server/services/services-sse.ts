@@ -43,7 +43,7 @@ export async function loadServicesSSE(
 
   const servicesGenerated = loadServicesGenerated(
     req.sessionID!,
-    req.query.optin === '1'
+    req.cookies.optInPersonalizedTips === 'yes'
   ).then(data => {
     sendMessage(res, 'generated', 'message', data);
   });
