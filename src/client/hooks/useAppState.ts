@@ -103,7 +103,6 @@ export function useAppState() {
   useEffect(() => {
     if (TIPS.status !== 'PRISTINE') {
       const tipsState = transformAppState({ TIPS });
-      console.log('tipsState:', tipsState);
       setAppState(appState => {
         return Object.assign({}, appState, tipsState);
       });
