@@ -19,7 +19,7 @@ const sortedPageTitleRoutes = Object.keys(PageTitles).sort((a, b) => {
   return a.length < b.length ? 1 : -1;
 });
 
-export default function usePageChange() {
+export function usePageChange() {
   const { location } = useRouter();
 
   useEffect(() => {

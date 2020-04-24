@@ -1,4 +1,4 @@
-export default function useModalRoot(element?: HTMLElement) {
+export function useModalRoot(element?: HTMLElement) {
   const modalRootElement = element || document.getElementById('modal-root');
   if (!modalRootElement) {
     const modalRoot = document.createElement('div');

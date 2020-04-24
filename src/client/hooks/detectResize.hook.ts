@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { debounce } from 'throttle-debounce';
 
-export default function useDetectResizing(debounceMS: number = 400) {
+export function useDetectResizing(debounceMS: number = 400) {
   const [isResizing, setResizing] = useState(false);
 
   const debounceResize = debounce(debounceMS, () => {

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 const cachedScripts: string[] = [];
 
-export default function useScript(
+export function useScript(
   src: string,
   defer: boolean = false,
   async: boolean = true,

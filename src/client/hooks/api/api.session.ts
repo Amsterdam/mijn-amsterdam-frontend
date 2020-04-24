@@ -44,7 +44,7 @@ type SessionResponseData =
     >
   | typeof INITIAL_SESSION_STATE;
 
-export default function useSessionApi() {
+export function useSessionApi() {
   const [{ data, isLoading, isDirty, ...rest }, refetch] = useDataApi<
     SessionResponseData
   >(requestOptions, INITIAL_SESSION_STATE);

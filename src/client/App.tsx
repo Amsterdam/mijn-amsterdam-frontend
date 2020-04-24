@@ -1,57 +1,56 @@
 import * as Sentry from '@sentry/browser';
-
-import { AppRoutes, FeatureToggle, PrivateRoutes } from '../universal/config';
-
+import classnames from 'classnames';
+import React, { useContext, useEffect } from 'react';
+import ErrorBoundary from 'react-error-boundary';
 import {
   BrowserRouter,
+  matchPath,
   Redirect,
   Route,
   Switch,
-  matchPath,
 } from 'react-router-dom';
+import useRouter from 'use-react-router';
+import { AppRoutes, FeatureToggle, PrivateRoutes } from '../universal/config';
 import {
   IS_ANALYTICS_ENABLED,
   IS_PRODUCTION,
   IS_SENTRY_ENABLED,
 } from '../universal/env';
-import React, { useContext, useEffect } from 'react';
-import { SessionContext, SessionState } from './SessionState';
-
-import AppStateProvider from './AppStateProvider';
-import ApplicationError from './components/ApplicationError/ApplicationError';
-import AutoLogoutDialog, {
-  DefaultAutologoutDialogSettings,
-} from './components/AutoLogoutDialog/AutoLogoutDialog';
-import Dashboard from './pages/Dashboard/Dashboard';
-import ErrorBoundary from 'react-error-boundary';
-import GarbageInformation from './pages/GarbageInformation/GarbageInformation';
-import Inkomen from './pages/Inkomen/Inkomen';
-import InkomenDetail from './pages/InkomenDetail/InkomenDetail';
-import InkomenSpecificaties from './pages/InkomenSpecificaties/InkomenSpecificaties';
-import LandingPage from './pages/Landing/Landing';
-import MainFooter from './components/MainFooter/MainFooter';
-import MainHeader from './components/MainHeader/MainHeader';
-import MyArea from '././pages/MyArea/MyArea';
-import MyNotifications from './pages/MyNotifications/MyNotifications';
-import MyTips from './pages/MyTips/MyTips';
-import NotFound from './pages/NotFound/NotFound';
-import Proclaimer from './pages/Proclaimer/Proclaimer';
-import Profile from './pages/Profile/Profile';
-import Zorg from './pages/Zorg/Zorg';
-import ZorgDetail from './pages/ZorgDetail/ZorgDetail';
-import classnames from 'classnames';
 import styles from './App.module.scss';
-import { useAnalytics } from './hooks/analytics.hook';
-import { useLocalStorage } from './hooks/storage.hook';
-import usePageChange from './hooks/pageChange';
-import useRouter from 'use-react-router';
-import useScript from './hooks/useScript';
-import Burgerzaken from './pages/Burgerzaken/Burgerzaken';
-import BurgerzakenDetail from './pages/BurgerzakenDetail/BurgerzakenDetail';
-import MyArea from './pages/MyArea/MyArea';
-import NotFound from './pages/NotFound/NotFound';
-import Profile from './pages/Profile/Profile';
-import InkomenDetailTozo from 'pages/InkomenDetail/InkomenDetailTozo';
+import AppStateProvider from './AppStateProvider';
+import {
+  ApplicationError,
+  AutoLogoutDialog,
+  MainFooter,
+  MainHeader,
+} from './components';
+import { DefaultAutologoutDialogSettings } from './components/AutoLogoutDialog/AutoLogoutDialog';
+import {
+  useAnalytics,
+  useLocalStorage,
+  usePageChange,
+  useScript,
+} from './hooks';
+import {
+  Burgerzaken,
+  BurgerzakenDetail,
+  Dashboard,
+  GarbageInformation,
+  Inkomen,
+  InkomenDetail,
+  InkomenSpecificaties,
+  InkomenDetailTozo,
+  LandingPage,
+  MyArea,
+  MyNotifications,
+  MyTips,
+  NotFound,
+  Proclaimer,
+  Profile,
+  Zorg,
+  ZorgDetail,
+} from './pages';
+import { SessionContext, SessionState } from './SessionState';
 
 function AppNotAuthenticated() {
   const { location } = useRouter();
