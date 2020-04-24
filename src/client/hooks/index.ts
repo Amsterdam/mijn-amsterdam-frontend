@@ -1,6 +1,5 @@
 export * from './analytics.hook';
 export * from './detectResize.hook';
-export * from './index';
 export * from './media.hook';
 export * from './modalRoot.hook';
 export * from './optin.hook';
