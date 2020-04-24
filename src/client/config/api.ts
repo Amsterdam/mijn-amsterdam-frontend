@@ -1,6 +1,6 @@
 import { BFF_API_BASE_URL } from '../../universal/config';
-import { isError } from 'util';
 import { AppState } from '../AppState';
+import { isError } from '../../universal/helpers';
 
 export const BFFApiUrls: Record<string, string> = {
   SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
