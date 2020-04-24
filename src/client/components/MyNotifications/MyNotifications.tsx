@@ -16,6 +16,7 @@ import ChapterIcon from '../ChapterIcon/ChapterIcon';
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './MyNotifications.module.scss';
+import { ChapterTitles } from '../../../universal/config/chapter';
 
 export interface MyNotificationsProps {
   items: MyNotification[];
@@ -90,7 +91,7 @@ export default function MyNotifications({
                   )}
                   <div className={styles.MetaInfoSecondary}>
                     <em className={styles.ChapterIndication}>
-                      {item.chapter.toLowerCase()}
+                      {ChapterTitles[item.chapter]}
                     </em>
                     {!item.hideDatePublished && (
                       <time

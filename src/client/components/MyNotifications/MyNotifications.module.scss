@@ -70,7 +70,6 @@
 
 .ChapterIndication {
   font-style: normal;
-  text-transform: capitalize;
   display: none;
 
   @include mq-tablet() {
