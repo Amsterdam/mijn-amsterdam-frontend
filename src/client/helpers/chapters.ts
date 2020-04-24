@@ -66,7 +66,11 @@ function isChapterActive(
       return !isLoading(BRP) && !!BRP.content?.persoon;
 
     case Chapters.BURGERZAKEN:
-      return !isLoading(BRP) && !!BRP.content?.reisDocumenten?.length;
+      return (
+        FeatureToggle.reisDocumentenActive &&
+        !isLoading(BRP) &&
+        !!BRP.content?.reisDocumenten?.length
+      );
   }
 
   return false;
