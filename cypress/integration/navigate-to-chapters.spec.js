@@ -6,7 +6,7 @@ const assertNavigationForChapters = {
     title: 'Zorg en ondersteuning',
   },
   INKOMEN: {
-    path: '/werk-en-inkomen',
+    path: '/inkomen-en-stadspas',
     title: 'Inkomen en Stadspas',
   },
   AFVAL: {
