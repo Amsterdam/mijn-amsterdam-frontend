@@ -62,7 +62,7 @@ export const TOZO_PRODUCT_TITLE: ProductTitle =
 const formattedProductTitleWhitelisted = [
   'Bijstandsuitkering',
   'Stadspas',
-  TOZO_PRODUCT_TITLE,
+  // TOZO_PRODUCT_TITLE,
 ];
 
 type TextPartContent = string | JSX.Element;
