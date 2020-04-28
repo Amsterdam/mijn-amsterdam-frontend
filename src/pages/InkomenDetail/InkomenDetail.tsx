@@ -59,11 +59,13 @@ export default () => {
           : 'Onbekend item'}
       </PageHeading>
       <PageContent className={styles.DetailPageContent}>
-        <p>
-          <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
-            Ondersteuning voor zelfstandigen / zzp'ers vanwege corona
-          </Linkd>
-        </p>
+        {isTozoRoute && (
+          <p>
+            <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
+              Ondersteuning voor zelfstandigen / zzp'ers vanwege corona
+            </Linkd>
+          </p>
+        )}
         {(isError || noContent) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>
