@@ -12,7 +12,7 @@ describe('Chapter: Inkomen en Stadspas', () => {
     cy.get(
       '[class*="MyChaptersPanel_Links"] a[data-chapter-id="INKOMEN"]'
     ).click();
-    assertAtPage('Inkomen en Stadspas', '/werk-en-inkomen');
+    assertAtPage('Inkomen en Stadspas', '/inkomen-en-stadspas');
   });
 
   it('should display lists', () => {
@@ -58,7 +58,7 @@ describe('Chapter: Inkomen en Stadspas', () => {
     // Go back
     selectComponent('PageHeading_BackLink').click();
 
-    assertAtPage('Inkomen en Stadspas', '/werk-en-inkomen');
+    assertAtPage('Inkomen en Stadspas', '/inkomen-en-stadspas');
   });
 
   it('Should navigate to a detail page and show all the (completed) steps of a request', () => {
@@ -69,9 +69,7 @@ describe('Chapter: Inkomen en Stadspas', () => {
     ).click();
 
     // Click the first item of the jsut expanded list
-    cy.get(
-      '[class*="SectionCollapsible_SectionCollapsible"]:eq(1) [class*="Table_DisplayPropTitle"]:eq(2) > a'
-    ).click();
+    cy.get('a[href*="inkomen-en-stadspas/stadspas/0-2"]').click();
 
     selectComponent('StatusLine_MoreStatus').should('have.length', 2);
     selectComponent('StatusLine_StatusLine').should('exist');
@@ -93,7 +91,7 @@ describe('Chapter: Inkomen en Stadspas', () => {
 
     // Go back
     selectComponent('PageHeading_BackLink').click();
-    assertAtPage('Inkomen en Stadspas', '/werk-en-inkomen');
+    assertAtPage('Inkomen en Stadspas', '/inkomen-en-stadspas');
 
     // Collapse the second list
     selectComponent(
