@@ -18,6 +18,7 @@ import { MyNotification } from '../hooks/api/my-notifications-api.hook';
 import { generatePath } from 'react-router';
 import styles from 'pages/Inkomen/Inkomen.module.scss';
 import { dateFormat } from '../helpers/App';
+import { IS_PRODUCTION } from '../env';
 
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
@@ -29,6 +30,7 @@ type StepTitle =
   | 'inBehandeling'
   | 'herstelTermijn'
   | 'beslissing'
+  | 'voorschot'
   | 'bezwaar';
 
 export type RequestStatus =
@@ -36,7 +38,9 @@ export type RequestStatus =
   | 'Meer informatie nodig'
   | 'In behandeling'
   | 'Besluit'
-  | 'Bezwaar';
+  | 'Voorschot'
+  | 'Bezwaar'
+  | string;
 
 // A decision can be made and currently have 3 values.
 type Decision = 'Toekenning' | 'Afwijzing' | 'Buiten Behandeling';
@@ -59,11 +63,11 @@ type ProductTitle =
 export const TOZO_PRODUCT_TITLE: ProductTitle =
   'Voorschot Tozo (voor ondernemers) (Eenm.)';
 
-const formattedProductTitleWhitelisted = [
-  'Bijstandsuitkering',
-  'Stadspas',
-  // TOZO_PRODUCT_TITLE,
-];
+const formattedProductTitleWhitelisted = ['Bijstandsuitkering', 'Stadspas'];
+
+if (!IS_PRODUCTION) {
+  formattedProductTitleWhitelisted.push(TOZO_PRODUCT_TITLE);
+}
 
 type TextPartContent = string | JSX.Element;
 type TextPartContentFormatter = (data: StepSourceData) => TextPartContent;
@@ -84,6 +88,7 @@ type InfoExtended = { [decision: string]: Info };
 interface ProductType {
   aanvraag: Info;
   inBehandeling: Info | null;
+  voorschot?: Info | null;
   herstelTermijn: Info | null;
   bezwaar?: Info | null;
   beslissing: InfoExtended | null;
@@ -118,6 +123,7 @@ export interface FocusProduct {
   processtappen: {
     aanvraag: Step;
     inBehandeling: Step;
+    voorschot?: Step;
     herstelTermijn: Step;
     beslissing: Step;
     bezwaar: Step;
@@ -134,6 +140,7 @@ const processSteps: StepTitle[] = [
   'inBehandeling',
   'herstelTermijn',
   'beslissing',
+  'voorschot',
 ];
 
 export const stepLabels: Record<StepTitle, RequestStatus> = {
@@ -142,6 +149,7 @@ export const stepLabels: Record<StepTitle, RequestStatus> = {
   herstelTermijn: 'Meer informatie nodig',
   beslissing: 'Besluit',
   bezwaar: 'Bezwaar',
+  voorschot: 'Betaling voorschot',
 };
 
 const stepStatusLabels = stepLabels;
@@ -381,52 +389,47 @@ export const Labels: LabelData = {
         },
         title: data => data.productTitleTranslated,
         status: stepLabels.aanvraag,
-        description: data =>
-          `Wij hebben uw aanvraag voor een ${data.productTitleTranslated} ontvangen op ${data.datePublished}`,
+        description: data => (
+          <p>
+            Wij hebben uw aanvraag voor een {data.productTitleTranslated}{' '}
+            ontvangen op {data.datePublished}
+          </p>
+        ),
       },
-      inBehandeling: null,
-      herstelTermijn: null,
-      // inBehandeling: {
-      //   notification: {
-      //     title: data =>
-      //       `${data.productTitleTranslated}: Wij behandelen uw aanvraag`,
-      //     description: data =>
-      //       `Wij hebben uw aanvraag voor Voorschot Tozo (voor ondernemers) (Eenm.) in behandeling genomen op ${data.datePublished}.`,
-      //   },
-      //   title: data => `${data.productTitleTranslated} in behandeling`,
-      //   status: stepLabels.inBehandeling,
-      //   description: data => (
-      //     <p>
-      //       Wij gaan nu bekijken of u recht hebt op Voorschot Bbz Corona
-      //       regeling (Eenm.). Het kan zijn dat u nog extra informatie moet
-      //       opsturen. U ontvangt vóór {data.decisionDeadline1} ons besluit.
-      //     </p>
-      //   ),
-      // },
-      // herstelTermijn: {
-      //   notification: {
-      //     title: data => `${data.productTitleTranslated}: Neem actie`,
-      //     description:
-      //       'Er is meer informatie en tijd nodig om uw aanvraag voor Voorschot Tozo (voor ondernemers) (Eenm.) te behandelen.',
-      //   },
-      //   title: data => data.productTitleTranslated,
-      //   status: stepLabels.herstelTermijn,
-      //   description: data => (
-      //     <>
-      //       <p>
-      //         Wij hebben meer informatie en tijd nodig om uw aanvraag te
-      //         verwerken. Bekijk de brief voor meer details. U moet de extra
-      //         informatie vóór {data.userActionDeadline} opsturen. Dan ontvangt u
-      //         vóór {data.decisionDeadline2} ons besluit.
-      //       </p>
-      //       <p>
-      //         Tip: Lever de informatie die wij gevraagd hebben zo spoedig
-      //         mogelijk in. Hoe eerder u ons de noodzakelijke informatie geeft,
-      //         hoe eerder wij verder kunnen met de behandeling van uw aanvraag.
-      //       </p>
-      //     </>
-      //   ),
-      // },
+      // TODO: change step name
+      inBehandeling: {
+        notification: {
+          title: data =>
+            `${data.productTitleTranslated}: Wij hebben een voorschot betaald`,
+          description: data =>
+            `Wij hebben een voorschot van $BEDRAG TOZO uitkering aan u overgemaakt op $DATUM-VAN-OVERMAKEN`,
+        },
+        title: data => data.productTitleTranslated,
+        status: stepLabels.voorschot,
+        description: data => (
+          <p>
+            We hebben een voorschot van $BEDRAG aan u overgemaakt. Dit bedrag
+            staat rond $DATUM-OP-REKENING op uw rekening.
+          </p>
+        ),
+      },
+      herstelTermijn: {
+        notification: {
+          title: data => `${data.productTitleTranslated}: Neem actie`,
+          description: data =>
+            `Er is meer informatie en tijd nodig om uw aanvraag voor ${data.productTitleTranslated} te behandelen.`,
+        },
+        title: data => data.productTitleTranslated,
+        status: stepLabels.herstelTermijn,
+        description: data => (
+          <p>
+            Wij hebben meer informatie en tijd nodig om uw aanvraag te
+            beoordelen. In de brief leest u wat u moet opsturen. Doe dat vóór
+            $DATUM_HERSTELTERMIJN_EINDE. U ontvangt uiterlijk
+            $DATUM_HERSTELTERMIJN_REACTIE ons besluit.
+          </p>
+        ),
+      },
       beslissing: {
         [getDecision('Afwijzing')]: {
           notification: {
@@ -450,7 +453,7 @@ export const Labels: LabelData = {
           title: data => data.productTitleTranslated,
           status: stepLabels.beslissing,
           description: data =>
-            `U heeft recht op ${data.productTitleTranslated}. Bekijk de brief voor meer details.`,
+            `U heeft recht op ${data.productTitleTranslated} (besluit: ${data.datePublished}). Bekijk de brief voor meer details.`,
         },
         [getDecision('Buiten Behandeling')]: {
           notification: {
@@ -461,8 +464,8 @@ export const Labels: LabelData = {
           },
           title: data => data.productTitleTranslated,
           status: stepLabels.beslissing,
-          description:
-            'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
+          description: data =>
+            `Uw aanvraag is buiten behandeling gesteld (besluit: ${data.datePublished}). Bekijk de brief voor meer details.`,
         },
       },
       bezwaar: null,
