@@ -1,7 +1,16 @@
 version: '3.5'
 services:
   # Unit testing
-  test-unit:
+  test-unit-bff:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: build-deps
+      args:
+        - REACT_APP_ENV=test-unit
+    entrypoint: npm run bff-api:test
+
+  test-unit-client:
     build:
       context: .
       dockerfile: Dockerfile
@@ -15,7 +24,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: serve-test
+      target: serve-bff
+      entrypoint: npm run serve-e2e
       args:
         - REACT_APP_ENV=e2e
     environment:

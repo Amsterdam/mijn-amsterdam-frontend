@@ -1,5 +1,4 @@
 import { AxiosError } from 'axios';
-import { ApiResult } from '../../server/services/state';
 
 export interface ApiErrorResponse<T> {
   message: string;

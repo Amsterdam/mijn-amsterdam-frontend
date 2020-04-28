@@ -3,16 +3,19 @@
   "version": "1.15.0",
   "scripts": {
     "build": "env-cmd --fallback -f ./.env.${REACT_APP_ENV:=production} react-scripts build",
-    "e2e:local": "REACT_APP_ENV=e2e npm run build && concurrently \"npm:serve-build\" \"npx cypress open\" --kill-others --success first",
-    "serve-build": "concurrently  \"npm:bff-api:serve\" \"node scripts/serveBuild\"",
+    "e2e:local": "REACT_APP_ENV=e2e npm run build && concurrently \"npm:serve-e2e\" \"npx cypress open\" --kill-others --success first",
+    "serve-e2e": "REACT_APP_ENV=e2e npm run build && concurrently \"npm:bff-api:serve-dev\" \"node scripts/serveBuild\"",
+    "serve-test": "REACT_APP_ENV=development npm run build && concurrently \"npm:bff-api:serve-dev\" \"node scripts/serveBuild\"",
     "eject": "react-scripts eject",
     "release:bug": "sh scripts/release.sh --bug",
     "release:major": "sh scripts/release.sh --major",
     "release:minor": "sh scripts/release.sh --minor",
     "start": "react-scripts start",
     "test": "react-scripts test",
-    "watch:bff-api": "nodemon -e ts -w ./src -x npm run bff-api:serve",
-    "bff-api:serve": "REACT_APP_ENV=development env-cmd ts-node --project ./tsconfig.bff.json ./src/bffserver.ts",
+    "bff-api:watch-n-serve": "nodemon -e ts -w ./src -x npm run bff-api:serve-dev",
+    "bff-api:test": "",
+    "bff-api:serve-prod": "REACT_APP_ENV=production env-cmd -f ./.env.production node build-bff/server/app",
+    "bff-api:serve-dev": "REACT_APP_ENV=development env-cmd ts-node --project ./tsconfig.bff.json ./src/bffserver.ts",
     "bff-api:build": "REACT_APP_ENV=production env-cmd -f ./.env.production tsc --project ./tsconfig.bff.json"
   },
   "browserslist": [
