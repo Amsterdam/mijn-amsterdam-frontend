@@ -18,7 +18,7 @@ import { MyNotification } from '../hooks/api/my-notifications-api.hook';
 import { generatePath } from 'react-router';
 import styles from 'pages/Inkomen/Inkomen.module.scss';
 import { dateFormat } from '../helpers/App';
-import { IS_PRODUCTION } from '../env';
+import { IS_PRODUCTION, IS_ACCEPTANCE } from '../env';
 
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
@@ -65,7 +65,7 @@ export const TOZO_PRODUCT_TITLE: ProductTitle =
 
 const formattedProductTitleWhitelisted = ['Bijstandsuitkering', 'Stadspas'];
 
-if (!IS_PRODUCTION) {
+if (!IS_PRODUCTION && !IS_ACCEPTANCE) {
   formattedProductTitleWhitelisted.push(TOZO_PRODUCT_TITLE);
 }
 
