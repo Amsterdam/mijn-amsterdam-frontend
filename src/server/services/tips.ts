@@ -1,4 +1,4 @@
-import { ApiUrls, getApiConfigValue } from './config';
+import { ApiUrls, getApiConfigValue } from '../config';
 
 import { MyTip } from '../../universal/types';
 import { requestData } from '../helpers';

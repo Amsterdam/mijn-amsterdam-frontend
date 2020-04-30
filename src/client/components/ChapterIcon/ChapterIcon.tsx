@@ -1,18 +1,17 @@
+import classnames from 'classnames';
+import React from 'react';
+import { matchPath } from 'react-router';
+import useRouter from 'use-react-router';
 import {
   AppRoutes,
   Chapter as ChapterType,
   Chapters,
-  Colors,
 } from '../../../universal/config';
-
-import { ChapterIcons } from '../../config/chapterIcons';
-import { IconBurgerZaken } from '../../assets/icons';
-import React from 'react';
-import classnames from 'classnames';
 import { entries } from '../../../universal/helpers';
-import { matchPath } from 'react-router';
+import { IconBurgerZaken } from '../../assets/icons';
+import { Colors } from '../../config/app';
+import { ChapterIcons } from '../../config/chapterIcons';
 import styles from './ChapterIcon.module.scss';
-import useRouter from 'use-react-router';
 
 export interface ChapterIconProps {
   chapter?: ChapterType;

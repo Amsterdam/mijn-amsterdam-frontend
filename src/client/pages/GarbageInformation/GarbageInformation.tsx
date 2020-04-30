@@ -1,4 +1,11 @@
+import classnames from 'classnames';
+import React, { ReactNode, useContext } from 'react';
+import { ChapterTitles } from '../../../universal/config';
+import { getFullAddress, isError, isLoading } from '../../../universal/helpers';
+import { GarbageMoment, GarbagePoint } from '../../../universal/types';
+import { AppContext } from '../../AppState';
 import {
+  Alert,
   ChapterIcon,
   DetailPage,
   Heading,
@@ -8,16 +15,9 @@ import {
   PageHeading,
   Panel,
   SectionCollapsible,
-  Alert,
 } from '../../components';
-import { ChapterTitles, ExternalUrls } from '../../../universal/config';
-import React, { ReactNode, useContext } from 'react';
-
-import { AppContext } from '../../AppState';
-import classnames from 'classnames';
-import { isLoading, isError, getFullAddress } from '../../../universal/helpers';
+import { ExternalUrls } from '../../config/app';
 import styles from './GarbageInformation.module.scss';
-import { GarbagePoint, GarbageMoment } from '../../../universal/types';
 
 interface PanelProps {
   children: ReactNode;
@@ -156,12 +156,7 @@ export default () => {
       </SectionCollapsible>
       <PageContent>
         <p>
-          <Linkd
-            // variant="inline"
-            external={true}
-            href={ExternalUrls.AFVAL_MELDING_FORMULIER}
-            // icon=""
-          >
+          <Linkd external={true} href={ExternalUrls.AFVAL_MELDING_FORMULIER}>
             Klopt er iets niet? Geef het aan ons door.
           </Linkd>
         </p>

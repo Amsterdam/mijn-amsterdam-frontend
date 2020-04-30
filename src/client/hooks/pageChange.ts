@@ -1,14 +1,10 @@
-import {
-  AppRoutes,
-  CustomTrackingUrls,
-  PageTitleMain,
-  PageTitles,
-} from '../../universal/config';
+import { AppRoutes, CustomTrackingUrls } from '../../universal/config';
 
 import { matchPath } from 'react-router-dom';
 import { trackPageView } from './analytics.hook';
 import { useEffect } from 'react';
 import useRouter from 'use-react-router';
+import { PageTitles, PageTitleMain } from '../config/pages';
 
 const ExcludePageViewTrackingUrls = [AppRoutes.API_LOGIN];
 
@@ -40,7 +36,12 @@ export function usePageChange() {
 
     const route = sortedPageTitleRoutes[index];
 
-    const title = index !== -1 ? PageTitles[route] : PageTitleMain;
+    const title =
+      index !== -1
+        ? PageTitles[route]
+          ? PageTitles[route]
+          : PageTitleMain
+        : PageTitleMain;
 
     document.title = title;
 

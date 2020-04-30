@@ -8,7 +8,7 @@ import {
 } from '../../universal/helpers';
 import { MyNotification } from '../../universal/types';
 import { requestData } from '../helpers';
-import { ApiUrls, getApiConfigValue } from './config';
+import { ApiUrls, getApiConfigValue } from '../config';
 
 export type FocusInkomenSpecificatieType =
   | 'IOAZ'

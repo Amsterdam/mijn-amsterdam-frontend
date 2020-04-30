@@ -9,7 +9,7 @@ import React, {
 import { Link, NavLink } from 'react-router-dom';
 import { animated, useSpring } from 'react-spring';
 import useRouter from 'use-react-router';
-import { AppRoutes, LOGOUT_URL } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
 import { getFullName, isLoading } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
 import { AppContext } from '../../AppState';
@@ -33,6 +33,7 @@ import {
   submenuItems,
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
+import { LOGOUT_URL } from '../../config/api';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';

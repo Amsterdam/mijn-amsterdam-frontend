@@ -1,12 +1,11 @@
-import { AppRoutes, ExternalUrls } from '../../../universal/config';
-import React, { useState } from 'react';
-
-import { LinkList } from './MainFooter.constants';
-import Linkd from '../Button/Button';
-import { LinkdInline } from '../Button/Button';
 import classnames from 'classnames';
-import styles from './MainFooter.module.scss';
+import React, { useState } from 'react';
+import { AppRoutes } from '../../../universal/config';
+import { ExternalUrls } from '../../config/app';
 import { useDesktopScreen } from '../../hooks/media.hook';
+import Linkd, { LinkdInline } from '../Button/Button';
+import { LinkList } from './MainFooter.constants';
+import styles from './MainFooter.module.scss';
 
 interface PanelState {
   [panelId: string]: boolean;

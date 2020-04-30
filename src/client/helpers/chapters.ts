@@ -1,8 +1,7 @@
 import { MenuItem, myChaptersMenuItems } from '../config/menuItems';
 
 import { AppState } from '../AppState';
-import { Chapters } from '../../universal/config/chapter';
-import { FeatureToggle } from '../../universal/config/app';
+import { Chapters, FeatureToggle } from '../../universal/config';
 import { isLoading, isError, isMokum } from '../../universal/helpers';
 
 function isChapterActive(

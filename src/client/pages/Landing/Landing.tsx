@@ -1,19 +1,20 @@
-import { PageContent, TextPage } from '../../components/Page/Page';
+import { ExternalUrls, LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING, FeatureToggle } from '../../../universal/config';
+import {
+  Heading,
+  LinkdInline,
+  PageContent,
+  PageHeading,
+  TextPage,
+} from '../../components';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { ReactComponent as BetaLabel } from '../../assets/images/beta-label.svg';
 import DigiDLogo from 'assets/images/digid-logo.svg';
 import EherkenningLogo from 'assets/images/eherkenning-logo.svg';
-import { ExternalUrls, LOGIN_URL_DIGID, LOGIN_EHERKENNING_URL } from '../../../universal/config';
-import Heading from '../../components/Heading/Heading';
-import { LOGIN_URL } from '../../config/Api.constants';
-import { LinkdInline } from '../../components/Button/Button';
-import PageHeading from '../../components/PageHeading/PageHeading';
 import classnames from 'classnames';
 import { clearSessionStorage } from '../../hooks/storage.hook';
 import styles from './Landing.module.scss';
 import { trackPageView } from '../../hooks/analytics.hook';
-import { FeatureToggle } from '../../config/App.constants';
 
 export default () => {
   const loginButton = useRef(null);
@@ -96,7 +97,7 @@ export default () => {
               <a
                 ref={loginButton}
                 role="button"
-                href={LOGIN_EHERKENNING_URL}
+                href={LOGIN_URL_EHERKENNING}
                 onClick={() => setRedirecting(true)}
                 rel="noopener noreferrer"
                 className={classnames(

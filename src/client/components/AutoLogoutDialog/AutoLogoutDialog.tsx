@@ -1,9 +1,4 @@
-import 'react-circular-progressbar/dist/styles.css';
-
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import { Colors, LOGOUT_URL } from '../../../universal/config';
-import { CounterProps, useCounter } from '../../hooks/timer.hook';
-import Linkd, { Button, ButtonStyles } from '../Button/Button';
+import classnames from 'classnames';
 import React, {
   useCallback,
   useContext,
@@ -11,14 +6,18 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-
-import { ComponentChildren } from '../../../universal/types';
-import Modal from '../Modal/Modal';
-import { SessionContext } from '../../SessionState';
-import classnames from 'classnames';
+import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 import { formattedTimeFromSeconds } from '../../../universal/helpers';
-import styles from './AutoLogoutDialog.module.scss';
+import { ComponentChildren } from '../../../universal/types';
+import { LOGOUT_URL } from '../../config/api';
+import { Colors } from '../../config/app';
+import { CounterProps, useCounter } from '../../hooks/timer.hook';
 import { useActivityThrottle } from '../../hooks/useThrottledFn.hook';
+import { SessionContext } from '../../SessionState';
+import Linkd, { Button, ButtonStyles } from '../Button/Button';
+import Modal from '../Modal/Modal';
+import styles from './AutoLogoutDialog.module.scss';
 
 /**
  * This component is essentially a dialog with a countdown timer presented to the user

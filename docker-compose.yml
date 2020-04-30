@@ -25,12 +25,12 @@ services:
       context: .
       dockerfile: Dockerfile
       target: serve-bff
-      entrypoint: npm run serve-e2e
       args:
         - REACT_APP_ENV=e2e
+    entrypoint: npm run serve-build:e2e
     environment:
       - HOST=e2e-frontend
-      - MOCK_API_HOST=e2e-frontend
+      - REACT_APP_API_BASE_URL=http://e2e-frontend/api
 
   e2e-testsuite:
     image: cypress/included:3.4.1

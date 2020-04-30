@@ -13,7 +13,7 @@ import {
 } from '../../universal/helpers';
 import { LinkProps, MyCase, MyNotification } from '../../universal/types';
 import { requestData } from '../helpers';
-import { ApiUrls, getApiConfigValue } from './config';
+import { ApiUrls, getApiConfigValue } from '../config';
 
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.

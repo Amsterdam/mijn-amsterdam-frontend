@@ -1,12 +1,12 @@
+import classnames from 'classnames';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { MyCase } from '../../../universal/types';
+import { Colors } from '../../config/app';
 import ChapterIcon from '../ChapterIcon/ChapterIcon';
-import { Colors } from '../../../universal/config';
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
-import { NavLink } from 'react-router-dom';
-import React from 'react';
-import classnames from 'classnames';
 import styles from './MyCases.module.scss';
-import { MyCase } from '../../../universal/types';
 
 interface CaseItemProps {
   item: MyCase;

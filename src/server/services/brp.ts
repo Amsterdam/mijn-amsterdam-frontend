@@ -4,7 +4,7 @@ import { AppRoutes, Chapters } from '../../universal/config';
 import { defaultDateFormat } from '../../universal/helpers';
 import { Adres, BRPData, MyNotification } from '../../universal/types';
 import { requestData } from '../helpers';
-import { ApiUrls, getApiConfigValue } from './config';
+import { ApiUrls, getApiConfigValue } from '../config';
 
 const DAYS_BEFORE_EXPIRATION = 120;
 

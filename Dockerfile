@@ -32,9 +32,6 @@ FROM build-deps as build-app
 ARG REACT_APP_ENV=development
 ENV REACT_APP_ENV=$REACT_APP_ENV
 
-# CRA will generate a file for the React runtime chunk, inlining it will cause issues with the CSP config
-ENV INLINE_RUNTIME_CHUNK=false
-
 # Setting the correct timezone for the build
 RUN rm /etc/localtime
 RUN ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
@@ -55,11 +52,11 @@ RUN echo "Current REACT_APP_ENV (node build image) = ${REACT_APP_ENV}"
 ########################################################################################################################
 FROM build-app as serve-bff
 
-# COPY src/server/mock-data /app/mock-api
 COPY scripts/serveBuild.js /app/scripts/serveBuild.js
 
 ENV PORT=80
 EXPOSE 80
+
 
 ########################################################################################################################
 ########################################################################################################################

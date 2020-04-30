@@ -54,7 +54,6 @@ export interface MyCase {
 export interface MyTip {
   datePublished: string;
   title: string;
-  subtitle: string;
   description: string;
   link: LinkProps;
   imgUrl?: string;

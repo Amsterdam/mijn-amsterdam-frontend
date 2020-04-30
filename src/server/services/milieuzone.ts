@@ -1,5 +1,5 @@
 import { Chapters } from '../../universal/config';
-import { ApiUrls, getApiConfigValue } from './config';
+import { ApiUrls, getApiConfigValue } from '../config';
 import { MyNotification, MyTip } from '../../universal/types';
 import { requestData } from '../helpers';
 

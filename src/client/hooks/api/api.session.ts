@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { AUTH_API_URL } from '../../../universal/config';
 import {
   ApiErrorResponse,
   apiSuccesResult,
@@ -7,6 +6,7 @@ import {
   ApiSuccessResponse,
 } from '../../../universal/helpers/api';
 import { ApiRequestOptions, useDataApi } from './api.hook';
+import { AUTH_API_URL } from '../../config/api';
 
 export type SessionData = {
   isAuthenticated: boolean;

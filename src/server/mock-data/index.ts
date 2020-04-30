@@ -1,5 +1,15 @@
 import { MyTip } from '../../universal/types';
-import { ApiUrls } from '../services/config';
+import { ApiUrls } from '../config';
+
+import BELASTINGEN from './json/belasting.json';
+import BRP from './json/brp.json';
+import WMO from './json/wmo.json';
+import FOCUS_AANVRAGEN from './json/focus.json';
+import FOCUS_SPECIFICATIES from './json/inkomen-specificaties.json';
+import BAG from './json/bag.json';
+import AFVAL from './json/afvalophaalgebieden.json';
+import MILIEUZONE from './json/milieuzone.json';
+import TIPS from './json/tips.json';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
   return new Promise(resolve => {
@@ -23,27 +33,27 @@ type MockDataConfig = Record<
 export const mockDataConfig: MockDataConfig = {
   [ApiUrls.BELASTINGEN]: {
     status: 200,
-    responseData: () => require('./json/belasting.json'),
+    responseData: () => BELASTINGEN,
   },
   [ApiUrls.BRP]: {
     status: 200,
     // delay: 2500,
     responseData: () => {
-      return require('./json/brp.json');
+      return BRP;
     },
   },
   [ApiUrls.WMO]: {
     status: 200,
-    responseData: () => require('./json/wmo.json'),
+    responseData: () => WMO,
   },
   [ApiUrls.FOCUS_AANVRAGEN]: {
     status: 200,
     // delay: 3400,
-    responseData: () => require('./json/focus.json'),
+    responseData: () => FOCUS_AANVRAGEN,
   },
   [ApiUrls.FOCUS_SPECIFICATIES]: {
     status: 200,
-    responseData: () => require('./json/inkomen-specificaties.json'),
+    responseData: () => FOCUS_SPECIFICATIES,
   },
   [ApiUrls.ERFPACHT]: {
     status: 200,
@@ -51,15 +61,15 @@ export const mockDataConfig: MockDataConfig = {
   },
   [ApiUrls.BAG]: {
     status: 200,
-    responseData: () => require('./json/bag.json'),
+    responseData: () => BAG,
   },
   [ApiUrls.AFVAL]: {
     status: 200,
-    responseData: () => require('./json/afvalophaalgebieden.json'),
+    responseData: () => AFVAL,
   },
   [ApiUrls.MILIEUZONE]: {
     status: 200,
-    responseData: () => require('./json/milieuzone.json'),
+    responseData: () => MILIEUZONE,
   },
   [ApiUrls.TIPS]: {
     status: 200,
@@ -69,8 +79,11 @@ export const mockDataConfig: MockDataConfig = {
       if (config.data?.tips?.length) {
         sourceTips = config.data.tips;
       }
-      const tips = require('./json/tips.json');
-      const items = [...tips.items, ...sourceTips].filter((tip: MyTip) =>
+      const tips = TIPS;
+      const items = [
+        ...(tips.items as MyTip[]),
+        ...sourceTips,
+      ].filter((tip: MyTip) =>
         config.data?.optin ? true : !tip.isPersonalized
       );
       return Object.assign({}, tips, { items });

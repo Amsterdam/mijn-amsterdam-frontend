@@ -20,6 +20,6 @@ export function getBagSearchAddress(adres: Adres) {
   return `${adres.straatnaam} ${adres.huisnummer || ''}`;
 }
 
-export function isMokum(BRP: BRPData | null) {
-  return !!BRP?.persoon.mokum;
+export function isMokum(brpContent: BRPData | null) {
+  return !!brpContent?.persoon.mokum;
 }

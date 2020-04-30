@@ -3,7 +3,7 @@ import {
   getApproximateDistance,
 } from '../../universal/helpers';
 import { requestData } from '../helpers/request';
-import { ApiUrls, getApiConfigValue } from './config';
+import { ApiUrls, getApiConfigValue } from '../config';
 import {
   Stadsdeel,
   GarbagePoint,

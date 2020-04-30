@@ -1,7 +1,7 @@
 import { getBagSearchAddress, toLatLng } from '../../universal/helpers';
 import { Adres } from '../../universal/types';
 import { requestData } from '../helpers';
-import { ApiUrls, getApiConfigValue } from './config';
+import { ApiUrls, getApiConfigValue } from '../config';
 
 export interface BAGSourceData {
   results: Array<{ [key: string]: any; centroid: Centroid }>;

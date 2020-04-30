@@ -1,6 +1,9 @@
 import { useEffect, useState, useCallback } from 'react';
 
-const RECONNECT_TIMEOUT_MS = 500;
+const RECONNECT_TIMEOUT_MS = 1000;
+const MAX_RETRY_COUNT = 10;
+
+let retryCount = 0;
 
 export function useSSE(
   path: string,
@@ -27,14 +30,20 @@ export function useSSE(
     const handleError = (error: any) => {
       es.close();
       console.info('SSE:error');
-      setTimeout(() => {
-        if (!unMounted) {
-          console.info('SSE:reconnect-on-error');
-          connect();
-        }
-      }, RECONNECT_TIMEOUT_MS);
+      if (retryCount !== MAX_RETRY_COUNT) {
+        setTimeout(() => {
+          if (!unMounted) {
+            console.info('SSE:reconnect-on-error');
+            retryCount += 1;
+            connect();
+          }
+        }, RECONNECT_TIMEOUT_MS);
+      }
     };
-    const logOpen = () => console.info('SSE:open');
+    const handleOpen = () => {
+      retryCount = 0;
+      console.info('SSE:open');
+    };
     const logMessage = () => console.info('SSE:message');
     const closeEventSource = () => {
       console.info('SSE:close');
@@ -42,7 +51,7 @@ export function useSSE(
     };
 
     es.addEventListener('error', handleError);
-    es.addEventListener('open', logOpen);
+    es.addEventListener('open', handleOpen);
     es.addEventListener('message', logMessage);
     es.addEventListener('close', closeEventSource);
     es.addEventListener(eventName, callback);
@@ -50,7 +59,7 @@ export function useSSE(
     return () => {
       unMounted = true;
       es.removeEventListener('error', handleError);
-      es.removeEventListener('open', logOpen);
+      es.removeEventListener('open', handleOpen);
       es.removeEventListener('message', logMessage);
       es.removeEventListener('close', closeEventSource);
       es.removeEventListener(eventName, callback);

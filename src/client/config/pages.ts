@@ -1,5 +1,5 @@
-import { AppRoutes } from './routing';
-import { ChapterTitles } from './chapter';
+import { AppRoutes } from '../../universal/config/routing';
+import { ChapterTitles } from '../../universal/config/chapter';
 
 export const PageTitleMain = 'Mijn Amsterdam';
 

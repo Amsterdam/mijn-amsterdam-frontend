@@ -1,4 +1,4 @@
-import { ApiUrls, getApiConfigValue } from './config';
+import { ApiUrls, getApiConfigValue } from '../config';
 import { requestData } from '../helpers';
 
 interface ERFPACHTSourceData {

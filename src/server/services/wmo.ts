@@ -1,5 +1,5 @@
 import { AppRoutes } from '../../universal/config';
-import { ApiUrls, getApiConfigValue } from './config';
+import { ApiUrls, getApiConfigValue } from '../config';
 import {
   capitalizeFirstLetter,
   dateSort,

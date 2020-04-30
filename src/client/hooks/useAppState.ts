@@ -44,16 +44,19 @@ export const PRISTINE_APPSTATE = {
   CASES: apiPristineResult([]),
 
   // Direct
-  FOCUS_SPECIFICATIES: apiPristineResult(null),
-  FOCUS_AANVRAGEN: apiPristineResult(null),
-  WMO: apiPristineResult(null),
-  ERFPACHT: apiPristineResult(null),
-  BELASTINGEN: apiPristineResult(null),
-  MILIEUZONE: apiPristineResult(null),
+  FOCUS_SPECIFICATIES: apiPristineResult({
+    jaaropgaven: [],
+    uitkeringsspecificaties: [],
+  }),
+  FOCUS_AANVRAGEN: apiPristineResult([]),
+  WMO: apiPristineResult({ items: [] }),
+  ERFPACHT: apiPristineResult({ isKnown: false }),
+  BELASTINGEN: apiPristineResult({ isKnown: true }),
+  MILIEUZONE: apiPristineResult({ isKnown: false }),
 
   // Related
   BRP: apiPristineResult(null),
-  AFVAL: apiPristineResult(null),
+  AFVAL: apiPristineResult({ ophalen: [], wegbrengen: [] }),
   HOME: apiPristineResult(null),
   BUURT: apiPristineResult(null),
 
@@ -93,9 +96,12 @@ export function useAppState() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const onEvent = useCallback((message: any) => {
       if (message?.data) {
-        setAppState((state: any) =>
-          Object.assign({}, state, transformAppState(JSON.parse(message.data)))
-        );
+        setAppState((state: any) => {
+          const transformedMessageData = transformAppState(
+            JSON.parse(message.data)
+          );
+          return Object.assign({}, state, transformedMessageData);
+        });
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

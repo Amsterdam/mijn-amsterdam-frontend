@@ -1,6 +1,6 @@
-import { Breakpoints } from '../../universal/config';
 // Helper functions to determine screen size in JS
 import { useMedia } from 'use-media';
+import { Breakpoints } from '../config/app';
 
 const ua = window.navigator.userAgent;
 export const isIE = /MSIE|Trident/.test(ua);

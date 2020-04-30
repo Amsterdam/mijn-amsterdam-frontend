@@ -1,12 +1,11 @@
+import React from 'react';
 import {
   LinkdInline,
   PageContent,
   PageHeading,
   TextPage,
 } from '../../components';
-
-import { ExternalUrls } from '../../../universal/config';
-import React from 'react';
+import { ExternalUrls } from '../../config/app';
 
 export default () => {
   const complaintsFormUrl = ExternalUrls.AMSTERDAM_COMPLAINTS_FROM;

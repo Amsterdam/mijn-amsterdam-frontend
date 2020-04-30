@@ -58,7 +58,7 @@ function enableMockAdapter() {
   );
 }
 
-if (process.env.REACT_APP_ENV !== 'production') {
+if (process.env.BFF_ENV !== 'production') {
   enableMockAdapter();
 }
 

@@ -1,12 +1,14 @@
 import classNames from 'classnames';
 import React from 'react';
 import useRouter from 'use-react-router';
-import { AppRoutes, Colors } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
+import { ChapterTitles } from '../../../universal/config/chapter';
 import { defaultDateFormat, isInteralUrl } from '../../../universal/helpers';
 import {
   MyNotification as MyNotificationBase,
   SVGComponent,
 } from '../../../universal/types';
+import { Colors } from '../../config/app';
 import {
   trackItemPresentation,
   useSessionCallbackOnceDebounced,
@@ -16,7 +18,6 @@ import ChapterIcon from '../ChapterIcon/ChapterIcon';
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './MyNotifications.module.scss';
-import { ChapterTitles } from '../../../universal/config/chapter';
 
 export interface MyNotificationsProps {
   items: MyNotification[];

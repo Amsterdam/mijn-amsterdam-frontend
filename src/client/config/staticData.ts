@@ -1,4 +1,4 @@
-import { ExternalUrls } from '../../universal/config/app';
+import { ExternalUrls } from './app';
 import { Chapters } from '../../universal/config/chapter';
 import { MyNotification } from '../../universal/types';
 

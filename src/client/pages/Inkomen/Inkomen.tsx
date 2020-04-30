@@ -1,3 +1,13 @@
+import classnames from 'classnames';
+import React, { useContext, useMemo } from 'react';
+import { generatePath } from 'react-router-dom';
+import {
+  AppRoutes,
+  ChapterTitles,
+  FeatureToggle,
+} from '../../../universal/config';
+import { isError, isLoading } from '../../../universal/helpers';
+import { AppContext } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
@@ -8,26 +18,14 @@ import {
   SectionCollapsible,
   Table,
 } from '../../components';
-import {
-  ChapterTitles,
-  ExternalUrls,
-  FeatureToggle,
-  AppRoutes,
-} from '../../../universal/config';
-import React, { useContext, useMemo } from 'react';
-import { isError, isLoading } from '../../../universal/helpers';
-
-import { AppContext } from '../../AppState';
 import { addTitleLinkComponent } from '../../components/Button/Button';
-import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
+import { ExternalUrls } from '../../config/app';
 import {
   annualStatementsTableDisplayProps,
   specificationsTableDisplayProps,
 } from '../../pages/InkomenSpecificaties/InkomenSpecificaties';
+import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import styles from './Inkomen.module.scss';
-
-import classnames from 'classnames';
-import { generatePath } from 'react-router-dom';
 
 export const incomSpecificationsRouteMonthly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES']

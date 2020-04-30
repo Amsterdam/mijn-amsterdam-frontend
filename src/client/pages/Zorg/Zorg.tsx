@@ -1,3 +1,7 @@
+import React, { useContext, useMemo } from 'react';
+import { ChapterTitles } from '../../../universal/config';
+import { isError, isLoading } from '../../../universal/helpers';
+import { AppContext } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
@@ -9,12 +13,8 @@ import {
   SectionCollapsible,
   Table,
 } from '../../components';
-import { ChapterTitles, ExternalUrls } from '../../../universal/config';
-import React, { useContext, useMemo } from 'react';
-import { isError, isLoading } from '../../../universal/helpers';
-
-import { AppContext } from '../../AppState';
 import { addTitleLinkComponent } from '../../components/Button/Button';
+import { ExternalUrls } from '../../config/app';
 import styles from './Zorg.module.scss';
 
 const DISPLAY_PROPS = {

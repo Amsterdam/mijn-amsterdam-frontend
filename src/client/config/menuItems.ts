@@ -2,12 +2,12 @@ import {
   AppRoutes,
   ChapterTitles,
   Chapters,
-  ExternalUrls,
   Chapter,
 } from '../../universal/config';
 import { LinkProps, SVGComponent } from '../../universal/types';
 
 import { MainMenuId } from '../components/MainNavBar/MainNavBar.constants';
+import { ExternalUrls } from './app';
 
 export interface MenuItem extends LinkProps {
   id: MainMenuId;

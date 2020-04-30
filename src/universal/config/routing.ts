@@ -1,4 +1,4 @@
-import { LOGIN_URL, LOGIN_EHERKENNING_URL } from './api';
+import { TMA_LOGIN_URL_DIGID, TMA_LOGIN_URL_EHERKENNING } from './api';
 
 export const AppRoutes = {
   ROOT: '/',
@@ -19,8 +19,8 @@ export const AppRoutes = {
   BUURT: '/buurt',
   ABOUT: '/over-mijn-amsterdam',
   PROCLAIMER: '/proclaimer',
-  API_LOGIN: LOGIN_URL,
-  API1_LOGIN: LOGIN_EHERKENNING_URL,
+  API_LOGIN: LOGIN_URL_DIGID,
+  API1_LOGIN: LOGIN_URL_EHERKENNING,
   TIPS: '/overzicht-tips',
   NOTIFICATIONS: '/overzicht-updates',
   AFVAL: '/afval',
