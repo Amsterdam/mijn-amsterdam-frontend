@@ -10,7 +10,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import useRouter from 'use-react-router';
-import { AppRoutes, FeatureToggle, PrivateRoutes } from '../universal/config';
+import { AppRoutes, FeatureToggle } from '../universal/config';
 import {
   IS_ANALYTICS_ENABLED,
   IS_PRODUCTION,
@@ -51,6 +51,12 @@ import {
   ZorgDetail,
 } from './pages';
 import { SessionContext, SessionState } from './SessionState';
+import { TMA_LOGIN_URL } from './config/api';
+
+export const PublicRoutes = [AppRoutes.PROCLAIMER, TMA_LOGIN_URL];
+export const PrivateRoutes = Object.values(AppRoutes).filter(
+  path => !PublicRoutes.includes(path)
+);
 
 function AppNotAuthenticated() {
   const { location } = useRouter();
@@ -117,8 +123,8 @@ function AppAuthenticated() {
       <MainHeader isAuthenticated={session.isAuthenticated} />
       <div className={styles.App} id="AppContent">
         <Switch>
-          <Redirect from={AppRoutes.API_LOGIN} to={redirectAfterLogin} />
-          <Redirect from={AppRoutes.API1_LOGIN} to={redirectAfterLogin} />
+          <Redirect from={TMA_LOGIN_URL_DIGID} to={redirectAfterLogin} />
+          <Redirect from={TMA_LOGIN_URL_EHERKENNING} to={redirectAfterLogin} />
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           <Route path={AppRoutes.BRP} component={Profile} />

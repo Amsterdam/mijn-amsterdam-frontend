@@ -1,12 +1,12 @@
-import { AppRoutes, CustomTrackingUrls } from '../../universal/config';
-
-import { matchPath } from 'react-router-dom';
-import { trackPageView } from './analytics.hook';
 import { useEffect } from 'react';
+import { matchPath } from 'react-router-dom';
 import useRouter from 'use-react-router';
-import { PageTitles, PageTitleMain } from '../config/pages';
+import { CustomTrackingUrls } from '../../universal/config';
+import { TMA_LOGIN_URL } from '../config/api';
+import { PageTitleMain, PageTitles } from '../config/pages';
+import { trackPageView } from './analytics.hook';
 
-const ExcludePageViewTrackingUrls = [AppRoutes.API_LOGIN];
+const ExcludePageViewTrackingUrls = [TMA_LOGIN_URL];
 
 const sortedPageTitleRoutes = Object.keys(PageTitles).sort((a, b) => {
   if (a.length === b.length) {
