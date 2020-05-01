@@ -12,10 +12,9 @@ import {
   apiErrorResult,
   apiPostponeResult,
 } from '../../universal/helpers';
-// import { IS_SENTRY_ENABLED, BFF_SENTRY_DSN, ENV } from '../../universal/env';
 // import * as Sentry from '@sentry/node';
 
-// if (BFF_SENTRY_DSN && IS_SENTRY_ENABLED) {
+// if (BFF_SENTRY_DSN) {
 //   Sentry.init({
 //     dsn: BFF_SENTRY_DSN,
 //     environment: ENV,
@@ -58,7 +57,7 @@ function enableMockAdapter() {
   );
 }
 
-if (process.env.BFF_ENV !== 'production') {
+if (!process.env.BFF_DISABLE_MOCK_ADAPTER) {
   enableMockAdapter();
 }
 

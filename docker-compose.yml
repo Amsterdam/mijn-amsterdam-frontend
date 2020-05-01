@@ -6,8 +6,6 @@ services:
       context: .
       dockerfile: Dockerfile
       target: build-deps
-      args:
-        - REACT_APP_ENV=test-unit
     entrypoint: npm run bff-api:test
 
   test-unit-client:
@@ -27,16 +25,17 @@ services:
       target: serve-bff
       args:
         - REACT_APP_ENV=e2e
-    entrypoint: npm run serve-build:e2e
+    expose:
+      - "3000"
     environment:
-      - HOST=e2e-frontend
-      - BFF_MS_API_BASE_URL=http://e2e-frontend/api
+      - REDIRECT_AFTER_LOGIN=http://e2e-frontend:3000
+    entrypoint: npm run serve-build
 
   e2e-testsuite:
     image: cypress/included:3.4.1
     working_dir: /e2e
     environment:
-      - CYPRESS_baseUrl=http://e2e-frontend:80
+      - CYPRESS_baseUrl=http://e2e-frontend:3000
       # - DEBUG=cypress:*
       - no_proxy=localhost,e2e-frontend,api #needs to be lowercase as this takes precedence over the uppercase verion on the build server
     depends_on:

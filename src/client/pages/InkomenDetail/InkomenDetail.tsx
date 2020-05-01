@@ -6,17 +6,53 @@ import {
   PageContent,
   PageHeading,
   StatusLine,
+  Linkd,
 } from '../../components';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import React, { useContext } from 'react';
 
 import { AppContext } from '../../AppState';
-import { altDocumentContent } from '../../data-formatting/focus';
 import styles from './InkomenDetail.module.scss';
 import useRouter from 'use-react-router';
-
-import Linkd from '../../components/Button/Button';
 import { ExternalUrls } from '../../config/App.constants';
+import { StatusLineItem } from '../../components/StatusLine/StatusLine';
+
+export function altDocumentContent(
+  statusLineItem: StatusLineItem,
+  stepNumber: number
+) {
+  if (!!statusLineItem.documents.length) {
+    return '';
+  }
+
+  if (
+    statusLineItem.status === 'Meer informatie nodig' &&
+    statusLineItem.isRecent &&
+    !statusLineItem.isLastActive
+  ) {
+    return <b>U heeft deze brief per post ontvangen.</b>;
+  }
+
+  return ['Meer informatie nodig', 'Besluit'].includes(
+    statusLineItem.status
+  ) ? (
+    statusLineItem.isRecent ? (
+      <b>
+        U ontvangt
+        {statusLineItem.status === 'Besluit' ? 'dit besluit' : 'deze brief'} per
+        post.
+      </b>
+    ) : (
+      <b>
+        U heeft
+        {statusLineItem.status === 'Besluit' ? 'dit besluit' : 'deze brief'} per
+        post ontvangen.
+      </b>
+    )
+  ) : (
+    ''
+  );
+}
 
 export default () => {
   const { FOCUS_AANVRAGEN } = useContext(AppContext);

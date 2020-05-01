@@ -3,14 +3,13 @@ import { ApiStateKey } from './services/state';
 
 // Urls used in the BFF api
 // Microservices (Tussen Api) base url
-const HOST = process.env.HOST || 'localhost';
-const PORT = process.env.PORT || 'localhost';
+const BFF_HOST = process.env.BFF_HOST || 'localhost';
+const BFF_PORT = process.env.BFF_PORT || 5000;
 
 export const BFF_MS_API_BASE_URL =
-  process.env.BFF_MS_API_BASE_URL || `http://${HOST}:${PORT}/api`;
+  process.env.BFF_MS_API_BASE_URL || `http://${BFF_HOST}:${BFF_PORT}/api`;
 export const BFF_DATAPUNT_API_BASE_URL =
   process.env.BFF_DATAPUNT_API_BASE_URL || BFF_MS_API_BASE_URL;
-export const BFF_BASE_PATH = process.env.BFF_BASE_PATH || '/api/bff';
 
 export const ApiUrls: Record<ApiStateKey, string> = {
   BELASTINGEN: `${BFF_MS_API_BASE_URL}/belastingen/get`,

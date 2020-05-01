@@ -54,10 +54,6 @@ FROM build-app as serve-bff
 
 COPY scripts/serveBuild.js /app/scripts/serveBuild.js
 
-ENV PORT=80
-EXPOSE 80
-
-
 ########################################################################################################################
 ########################################################################################################################
 # Client Web server image
@@ -104,10 +100,6 @@ FROM node:13.7.0 as deploy-prod-bff
 
 WORKDIR /app
 
-ARG REACT_APP_ENV=production
-ENV REACT_APP_ENV=$REACT_APP_ENV
-RUN echo "Current REACT_APP_ENV (node BFF deploy image) = ${REACT_APP_ENV}"
-
 # Setting the correct timezone for the build
 RUN rm /etc/localtime
 RUN ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
@@ -117,9 +109,6 @@ COPY --from=build-app /app/build-bff /app/build-bff
 COPY --from=build-app /app/node_modules /app/node_modules
 COPY --from=build-app /app/.env.production /app/.env.production
 COPY --from=build-app /app/package.json /app/package.json
-
-ENV PORT=5000
-EXPOSE 5000
 
 # Run the app
 ENTRYPOINT npm run bff-api:serve-prod

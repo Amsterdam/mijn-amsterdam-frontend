@@ -7,7 +7,6 @@ import session from 'express-session';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import { clearCache } from './helpers';
-import { BFF_BASE_PATH } from './config';
 
 const PORT = process.env.BFF_API_PORT || 5000;
 
@@ -22,13 +21,13 @@ app.use(
     secret: 'xkcd', // from .env variable
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: process.env.BFF_ENV === 'production' },
+    cookie: { secure: !!process.env.BFF_SECURE_COOKIE },
   })
 );
 
 app.use(compression());
 // Mount the router at the base path
-app.use(BFF_BASE_PATH, router);
+app.use('/api/bff', router);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const sessionID = req.sessionID!;

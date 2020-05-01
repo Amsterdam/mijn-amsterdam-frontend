@@ -2,11 +2,16 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const bodyParser = require('body-parser');
 const scookieSession = require('cookie-session');
 
+// host + port for proxy
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
 
-const apiHost = process.env.MOCK_API_HOST || 'localhost';
-const apiPort = process.env.MOCK_API_PORT || 5000;
+const REDIRECT_AFTER_LOGIN =
+  process.env.REDIRECT_AFTER_LOGIN || `http://${host}:${port}`;
+
+// host + port for proxy target
+const apiHost = process.env.BFF_HOST || 'localhost';
+const apiPort = process.env.BFF_PORT || 5000;
 
 const SESSION_MAX_AGE = 15 * 60 * 1000; // 15 minutes
 
@@ -18,7 +23,7 @@ function handleLogin(req, res, next) {
   const userType = req.url.startsWith('/api1/') ? 'BEDRIJF' : 'BURGER';
   req.session = { isAuthenticated: true, userType };
 
-  return res.redirect(`http://${host}:${port}`);
+  return res.redirect(REDIRECT_AFTER_LOGIN);
 }
 
 function handleLogout(req, res) {

@@ -81,6 +81,17 @@ To run the bff-api, run the following command in the console `$ npm run watch:bf
 Whenever you need to update/add an api look for the correct api mock in `./src/server/mock-data` and make your changes.
 The server will restart automatically.
 
+// ENV variables to configure server runtime
+HOST=localhost
+PORT=3000
+BFF_PORT=5000
+BFF_HOST=localhost
+BFF_DATAPUNT_API_BASE_URL=/api
+BFF_MS_API_BASE_URL=/api
+BFF_SECURE_COOKIE=false
+BFF_DISABLE_MOCK_ADAPTER=false
+BFF_SENTRY_DSN=
+
 ### Branch naming + PR
 
 - When creating a new branch, preferably, branch off `master`
