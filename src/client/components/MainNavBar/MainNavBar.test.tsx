@@ -8,6 +8,7 @@ import MainNavBar from './MainNavBar';
 import React from 'react';
 import { SessionState } from '../../SessionState';
 import { MockAppStateProvider } from '../../AppStateProvider';
+import { PRISTINE_APPSTATE } from '../../hooks/useAppState';
 
 const sessionState: any = {
   isAuthenticated: true,
@@ -21,24 +22,21 @@ const sessionState: any = {
   userType: 'BURGER',
 };
 
-const appState: any = {
+const appState: any = Object.assign({}, PRISTINE_APPSTATE, {
   SESSION: sessionState,
   CHAPTERS: {
     isLoading: false,
     items: [],
   },
   BRP: {
-    isLoading: false,
-    isError: false,
-    isDirty: true,
-    isPristine: false,
-    data: {
+    status: 'OK',
+    content: {
       persoon: {
         opgemaakteNaam: 'Hey ho!',
       },
     },
   },
-};
+});
 
 describe('MainNavBar', () => {
   it('Renders correctly', () => {

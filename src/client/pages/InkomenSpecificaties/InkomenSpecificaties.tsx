@@ -165,7 +165,7 @@ export default () => {
             : 'Uitkeringsspecificaties'
         }
         isLoading={isLoading(FOCUS_SPECIFICATIES)}
-        hasItems={!!itemsFiltered.length}
+        hasItems={!!items.length}
         noItemsMessage={
           'Er zijn op dit moment nog geen documenten beschikbaar.'
         }

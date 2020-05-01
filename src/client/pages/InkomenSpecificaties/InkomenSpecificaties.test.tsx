@@ -130,7 +130,7 @@ describe('<InkomenSpecificaties />', () => {
     const component = mountComponentWithRoute('/');
     component.find('button.SearchButton').simulate('click');
     expect(component.find('.SearchPanel')).toHaveLength(1);
-    component.find('.Select').simulate('change', { target: { value: 'BBS' } });
+    component.find('.Select').simulate('change', { target: { value: 'WWB' } });
     expect(component.find('tbody tr')).toHaveLength(1);
     (component.find('DateInput') as any)
       .at(0)

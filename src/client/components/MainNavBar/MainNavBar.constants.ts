@@ -4,13 +4,13 @@ import { MenuItem, myChaptersMenuItems } from '../../config/menuItems';
 export type MainMenuId =
   | Chapter
   | 'DASHBOARD'
-  | 'THEMAS'
+  | 'MIJN_THEMAS'
   | 'BUURT'
   | 'NOTIFICATIONS';
 
 export const mainMenuItemId: { [key: string]: MainMenuId } = {
   HOME: 'DASHBOARD',
-  CHAPTERS: 'THEMAS',
+  CHAPTERS: 'MIJN_THEMAS',
   BUURT: 'BUURT',
   NOTIFICATIONS: 'NOTIFICATIONS',
 };
