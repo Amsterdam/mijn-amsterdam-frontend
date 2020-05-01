@@ -5,8 +5,8 @@ import useBelastingApi, { BelastingApiState } from './hooks/api/api.belasting';
 import useErfpachtApi, { ErfpachtApiState } from './hooks/api/api.erfpacht';
 import useFocusApi, {
   FocusApiState,
-  FocusInkomenSpecificatiesApiState,
-  useFocusInkomenSpecificatiesApi,
+  useFocusCombinedApi,
+  FocusCombinedApiState,
 } from './hooks/api/api.focus';
 import useMilieuzoneApi, { MilieuzoneApiState } from 'hooks/api/api.milieuzone';
 import useMyArea, { MyAreaApiState } from './hooks/api/api.myarea';
@@ -34,7 +34,7 @@ export interface AppState {
   MIJN_TIPS: MyTipsApiState;
   WMO: WmoApiState;
   FOCUS: FocusApiState;
-  FOCUS_INKOMEN_SPECIFICATIES: FocusInkomenSpecificatiesApiState;
+  FOCUS_COMBINED: FocusCombinedApiState;
   MY_CHAPTERS: MyChaptersApiState;
   ERFPACHT: ErfpachtApiState;
   GARBAGE: GarbageApiState;
@@ -76,7 +76,7 @@ interface AppStateProps {
 export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
   const WMO = useWmoApi();
   const FOCUS = useFocusApi();
-  const FOCUS_INKOMEN_SPECIFICATIES = useFocusInkomenSpecificatiesApi();
+  const FOCUS_COMBINED = useFocusCombinedApi();
 
   const { data: focusData, ...rest } = FOCUS;
   // At the time of writing we only show recentCases from the Focus API.
@@ -112,7 +112,7 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
     BRP,
     BELASTINGEN,
     MILIEUZONE,
-    FOCUS_INKOMEN_SPECIFICATIES,
+    FOCUS_COMBINED,
   } as AppState);
 
   const tipsDependencies = [
@@ -172,7 +172,7 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
     MIJN_TIPS,
     WMO,
     FOCUS,
-    FOCUS_INKOMEN_SPECIFICATIES,
+    FOCUS_COMBINED,
     MY_CHAPTERS,
     ERFPACHT,
     MIJN_BUURT,

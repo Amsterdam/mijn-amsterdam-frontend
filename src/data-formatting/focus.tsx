@@ -1,8 +1,5 @@
 import { Chapter, Chapters } from 'config/Chapter.constants';
-import {
-  IncomeSpecifications,
-  IncomeSpecificationsResponse,
-} from 'hooks/api/api.focus';
+import { FocusCombined, FocusCombinedResponse } from 'hooks/api/api.focus';
 import React, { ReactNode } from 'react';
 import { StatusLineItem, StepType } from 'components/StatusLine/StatusLine';
 import { addDays, differenceInCalendarDays, format, parseISO } from 'date-fns';
@@ -18,7 +15,6 @@ import { MyNotification } from '../hooks/api/my-notifications-api.hook';
 import { generatePath } from 'react-router';
 import styles from 'pages/Inkomen/Inkomen.module.scss';
 import { dateFormat } from '../helpers/App';
-import { IS_PRODUCTION, IS_ACCEPTANCE } from '../env';
 
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
@@ -58,27 +54,31 @@ type ProductTitle =
   | 'Levensonderhoud'
   | 'Stadspas'
   | 'Voorschot Tozo (voor ondernemers) (Eenm.)'
+  | 'Tozo aanvraagbevestiging'
   | string;
 
 export const TOZO_PRODUCT_TITLE: ProductTitle =
   'Voorschot Tozo (voor ondernemers) (Eenm.)';
 
-const formattedProductTitleWhitelisted = ['Bijstandsuitkering', 'Stadspas'];
+export const TOZO_REQUEST_CONFIRMATION: ProductTitle = 'Tozo aanvraagformulier';
 
-if (!IS_PRODUCTION && !IS_ACCEPTANCE) {
+const formattedProductTitleWhitelisted = ['Levensonderhoud', 'Stadspas'];
+
+if (FeatureToggle.tozoActive) {
   formattedProductTitleWhitelisted.push(TOZO_PRODUCT_TITLE);
 }
 
 type TextPartContent = string | JSX.Element;
 type TextPartContentFormatter = (data: StepSourceData) => TextPartContent;
+type TextPartContentFormatterString = (data: StepSourceData) => string;
 type TextPartContents = TextPartContent | TextPartContentFormatter;
 
 interface Info {
-  title: TextPartContents;
+  title: string | TextPartContentFormatterString;
   description: TextPartContents;
   status: RequestStatus;
   notification: {
-    title: TextPartContents;
+    title: string | TextPartContentFormatterString;
     description: TextPartContents;
   };
 }
@@ -91,7 +91,7 @@ interface ProductType {
   voorschot?: Info | null;
   herstelTermijn: Info | null;
   bezwaar?: Info | null;
-  beslissing: InfoExtended | null;
+  beslissing?: InfoExtended | null;
 }
 
 type LabelData = {
@@ -181,7 +181,7 @@ interface StepSourceData {
 export interface ProcessStep extends StatusLineItem {
   id: string;
   documents: GenericDocument[];
-  title: JSX.Element | string;
+  title: string;
   description: JSX.Element | string;
   datePublished: string;
   status: RequestStatus | '';
@@ -194,7 +194,7 @@ export interface FocusItem {
   dateStart: string;
   datePublished: string;
   ISODatePublished: string;
-  title: JSX.Element | string;
+  title: string;
   description: JSX.Element | string;
   latestStep: StepTitle;
   status: string;
@@ -379,6 +379,35 @@ export const Labels: LabelData = {
     },
   },
   'Bijzondere Bijstand': {
+    [TOZO_REQUEST_CONFIRMATION]: {
+      aanvraag: {
+        notification: {
+          title: data =>
+            `${data.productTitleTranslated}: Wij hebben uw aanvraag ontvangen`,
+          description: data =>
+            `Wij hebben uw aanvraag voor een ${data.productTitleTranslated} ontvangen op ${data.datePublished}`,
+        },
+        title: data => data.productTitleTranslated,
+        status: stepLabels.aanvraag,
+        description: data => (
+          <>
+            <p>
+              Wij hebben uw aanvraag voor een {data.productTitleTranslated}{' '}
+              ontvangen op {data.datePublished}
+            </p>
+            <p>Binnenkort kunt u de status van uw lopende aanvraag volgen.</p>
+            <p>
+              Volg de status van uw aanvraag <br />
+              <Linkd href={'/'}>Lening</Linkd> of{' '}
+              <Linkd href={'/'}>Uitkering</Linkd>
+            </p>
+          </>
+        ),
+      },
+      inBehandeling: null,
+      herstelTermijn: null,
+      beslissing: null,
+    },
     [TOZO_PRODUCT_TITLE]: {
       aanvraag: {
         notification: {
@@ -396,40 +425,8 @@ export const Labels: LabelData = {
           </p>
         ),
       },
-      // TODO: change step name
-      inBehandeling: {
-        notification: {
-          title: data =>
-            `${data.productTitleTranslated}: Wij hebben een voorschot betaald`,
-          description: data =>
-            `Wij hebben een voorschot van $BEDRAG TOZO uitkering aan u overgemaakt op $DATUM-VAN-OVERMAKEN`,
-        },
-        title: data => data.productTitleTranslated,
-        status: stepLabels.voorschot,
-        description: data => (
-          <p>
-            We hebben een voorschot van $BEDRAG aan u overgemaakt. Dit bedrag
-            staat rond $DATUM-OP-REKENING op uw rekening.
-          </p>
-        ),
-      },
-      herstelTermijn: {
-        notification: {
-          title: data => `${data.productTitleTranslated}: Neem actie`,
-          description: data =>
-            `Er is meer informatie en tijd nodig om uw aanvraag voor ${data.productTitleTranslated} te behandelen.`,
-        },
-        title: data => data.productTitleTranslated,
-        status: stepLabels.herstelTermijn,
-        description: data => (
-          <p>
-            Wij hebben meer informatie en tijd nodig om uw aanvraag te
-            beoordelen. In de brief leest u wat u moet opsturen. Doe dat vóór
-            $DATUM_HERSTELTERMIJN_EINDE. U ontvangt uiterlijk
-            $DATUM_HERSTELTERMIJN_REACTIE ons besluit.
-          </p>
-        ),
-      },
+      inBehandeling: null,
+      herstelTermijn: null,
       beslissing: {
         [getDecision('Afwijzing')]: {
           notification: {
@@ -611,7 +608,8 @@ const AppRoutesByProductOrigin: RoutesByProductOrigin = {
   },
   'Bijzondere Bijstand': {
     'Bijzondere Bijstand': AppRoutes['INKOMEN/BIJZONDERE_BIJSTAND'],
-    [TOZO_PRODUCT_TITLE]: AppRoutes['INKOMEN/TOZO_COVID19'],
+    [TOZO_PRODUCT_TITLE]: AppRoutes['INKOMEN/TOZO'],
+    [TOZO_REQUEST_CONFIRMATION]: AppRoutes['INKOMEN/TOZO'],
   },
 };
 
@@ -638,6 +636,8 @@ function translateProductTitle(title: ProductTitle) {
   switch (title) {
     case 'Levensonderhoud':
       return 'Bijstandsuitkering';
+    case TOZO_PRODUCT_TITLE:
+      return 'Voorschot Tozo';
   }
   return title;
 }
@@ -727,6 +727,19 @@ export function parseLabelContent(
   return rText;
 }
 
+export function parseLabelContentString(
+  text: string | TextPartContentFormatterString,
+  data: StepSourceData
+): string {
+  let rText = text || '';
+
+  if (typeof rText === 'function') {
+    return rText(data);
+  }
+
+  return rText;
+}
+
 // Returns the date before which a client has to respond with information regarding a request for a product.
 function calculateUserActionDeadline(
   stepData: Step,
@@ -790,7 +803,7 @@ export function formatFocusNotificationItem(
     title:
       stepLabelSource &&
       stepLabelSource.notification &&
-      parseLabelContent(stepLabelSource.notification.title, sourceData),
+      parseLabelContentString(stepLabelSource.notification.title, sourceData),
     description:
       stepLabelSource &&
       stepLabelSource.notification &&
@@ -818,7 +831,7 @@ function formatStepData(
   return {
     id: sourceData.id,
     title: stepLabels
-      ? parseLabelContent(stepLabels.title, sourceData)
+      ? parseLabelContentString(stepLabels.title, sourceData)
       : stepTitle,
     datePublished: stepData ? stepData.datum : '-',
     description: stepLabels
@@ -834,6 +847,59 @@ function formatStepData(
       ? stepLabels.status
       : stepStatusLabels[sourceData.latestStep],
     aboutStep: stepTitle,
+    isLastActive: sourceData.isLastActive,
+    isChecked: !sourceData.isLastActive,
+    stepType: sourceData.stepType,
+    isRecent: sourceData.isRecent,
+  };
+}
+
+function formatTozoDocumentStepData(
+  item: FocusCombinedItemFromSource
+): ProcessStep {
+  const sourceData = getStepSourceData({
+    id: item.id,
+    productTitle: TOZO_REQUEST_CONFIRMATION,
+    stepData: {
+      reden: 'Covid19',
+      datum: item.datePublished!,
+      document: [],
+    },
+    latestStep: 'aanvraag',
+    stepType: 'first-step',
+    isLastActive: true,
+    isRecent: false,
+    decision: 'toekenning',
+    dateStart: item.datePublished,
+    daysUserActionRequired: 0,
+    daysSupplierActionRequired: 0,
+    daysRecoveryAction: 0,
+  });
+  const productOrigin = 'Bijzondere Bijstand';
+  const stepLabels = Labels[productOrigin][TOZO_REQUEST_CONFIRMATION][
+    sourceData.latestStep
+  ] as Info;
+
+  return {
+    id: sourceData.id,
+    title: stepLabels
+      ? parseLabelContentString(stepLabels.title, sourceData)
+      : sourceData.latestStep,
+    datePublished: item.datePublished,
+    description: stepLabels
+      ? parseLabelContent(stepLabels.description, sourceData)
+      : '--NNB--',
+    documents: [
+      {
+        id: sourceData.id,
+        title: 'Uw aanvraag',
+        url: `/api/${item.url}`,
+        datePublished: item.datePublished,
+        type: 'aanvraag',
+      },
+    ],
+    status: stepLabels.status,
+    aboutStep: sourceData.latestStep,
     isLastActive: sourceData.isLastActive,
     isChecked: !sourceData.isLastActive,
     stepType: sourceData.stepType,
@@ -922,6 +988,7 @@ export function formatFocusProduct(
 
     // Date on which the last updated information (Step) was published,
     datePublished: sourceData.datePublished || '',
+    displayDate: sourceData.datePublished || '',
     ISODatePublished: latestStepData.datum || '',
 
     // Date on which the request process was first published
@@ -929,11 +996,11 @@ export function formatFocusProduct(
 
     // Regular title, can be turned into more elaborate descriptive information. E.g Bijstandsuitkering could become Uw Aanvraag voor een bijstandsuitkering.
     title: stepLabels
-      ? parseLabelContent(stepLabels.title, sourceData)
+      ? parseLabelContentString(stepLabels.title, sourceData)
       : productTitleTranslated,
 
     // The name of the product (Stadspas, Levensonderhoud ...)
-    productTitle: productTitleTranslated,
+    productTitle,
     productOrigin,
     description: stepLabels
       ? parseLabelContent(stepLabels.description, sourceData)
@@ -1087,6 +1154,8 @@ export type FocusInkomenSpecificatieType =
   | 'PART'
   | 'BBZ';
 
+export type FocusTozoDocumentType = 'E-AANVR-KBBZ' | 'E-AANVR-TOZO';
+
 export const focusInkomenSpecificatieTypes: {
   [type in FocusInkomenSpecificatieType]: string;
 } = {
@@ -1100,26 +1169,34 @@ export const focusInkomenSpecificatieTypes: {
   BBZ: 'BBZ',
 };
 
-export interface FocusInkomenSpecificatieFromSource {
-  title: string | ReactNode;
+export interface FocusCombinedItemFromSource {
+  title: string;
   datePublished: string;
   id: string;
   url: string;
   type: FocusInkomenSpecificatieType;
 }
 
-export interface FocusInkomenSpecificatie
-  extends FocusInkomenSpecificatieFromSource {
+export interface FocusInkomenSpecificatie extends FocusCombinedItemFromSource {
   displayDate: string;
   documentUrl: ReactNode;
 }
 
-function documentDownloadName(item: FocusInkomenSpecificatieFromSource) {
+export interface FocusTozoDocument extends FocusCombinedItemFromSource {
+  displayDate: string;
+  displayTime: string;
+  status: 'Ontvangen';
+  documentUrl: ReactNode;
+  link: LinkProps;
+  process: ProcessStep[];
+}
+
+function documentDownloadName(item: FocusCombinedItemFromSource) {
   return `${format(new Date(item.datePublished), 'yyyy-MM-dd')}-${item.title}`;
 }
 
 function formatIncomSpecificationItem(
-  item: FocusInkomenSpecificatieFromSource
+  item: FocusCombinedItemFromSource
 ): FocusInkomenSpecificatie {
   // Strip down to primitive date value.
   const datePublished = item.datePublished.split('T')[0];
@@ -1141,15 +1218,68 @@ function formatIncomSpecificationItem(
   };
 }
 
+function formatTozoDocumentItem(
+  item: FocusCombinedItemFromSource
+): FocusTozoDocument {
+  // // Strip down to primitive date value.
+  // const datePublished = item.datePublished.split('T')[0];
+  const displayDate = dateFormat(item.datePublished, 'dd MMMM yyyy');
+  const displayTime = dateFormat(item.datePublished, 'HH:mm');
+  const title = TOZO_REQUEST_CONFIRMATION;
+  return {
+    ...item,
+    title,
+    displayDate,
+    displayTime,
+    status: 'Ontvangen',
+    documentUrl: (
+      <a
+        href={`/api/${item.url}`}
+        rel="external noopener noreferrer"
+        className={styles.DownloadLink}
+        download={documentDownloadName(item)}
+      >
+        <DocumentIcon width={14} height={14} /> PDF
+      </a>
+    ),
+    link: {
+      to: generatePath(AppRoutes['INKOMEN/TOZO'], {
+        type: 'aanvraag-bevestiging',
+        id: item.id,
+      }),
+      title: 'Meer informatie over ' + title,
+    },
+    process: [formatTozoDocumentStepData(item)],
+  };
+}
+
 export const incomSpecificationsRouteMonthly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES']
 );
+
 export const incomSpecificationsRouteYearly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES'],
   {
     type: 'jaaropgaven',
   }
 );
+
+function formatTozoDocumentNotification(item: FocusCombinedItemFromSource) {
+  return {
+    id: 'tozo-aanvraag-' + item.id,
+    datePublished: item.datePublished,
+    chapter: Chapters.INKOMEN,
+    title: 'TOZO aanvraag',
+    description: `Uw tozo regeling aanvraag ${dateFormat(
+      item.datePublished,
+      'yyyy'
+    )} is binnengekomen.`,
+    link: {
+      to: item.url,
+      title: 'Bekijk aanvraag bevestiging',
+    },
+  };
+}
 
 function formatIncomeSpecificationNotification(
   type: 'jaaropgave' | 'uitkeringsspecificatie',
@@ -1189,9 +1319,9 @@ function formatIncomeSpecificationNotification(
   };
 }
 
-export function formatIncomeSpecifications({
-  content: { jaaropgaven, uitkeringsspecificaties },
-}: IncomeSpecificationsResponse): IncomeSpecifications {
+export function formatFocusCombined({
+  content: { jaaropgaven, uitkeringsspecificaties, tozodocumenten },
+}: FocusCombinedResponse): FocusCombined {
   const uitkeringsspecificatiesFormatted = uitkeringsspecificaties
     .sort(dateSort('datePublished', 'desc'))
     .map(formatIncomSpecificationItem);
@@ -1199,6 +1329,10 @@ export function formatIncomeSpecifications({
   const jaaropgavenFormatted = jaaropgaven
     .sort(dateSort('datePublished', 'desc'))
     .map(formatIncomSpecificationItem);
+
+  const tozodocumentenFormatted = tozodocumenten
+    .sort(dateSort('datePublished', 'desc'))
+    .map(formatTozoDocumentItem);
 
   const notifications: MyNotification[] = [];
 
@@ -1219,9 +1353,18 @@ export function formatIncomeSpecifications({
     );
   }
 
+  if (tozodocumentenFormatted.length) {
+    notifications.push(
+      ...tozodocumentenFormatted.map(item =>
+        formatTozoDocumentNotification(item)
+      )
+    );
+  }
+
   return {
     jaaropgaven: jaaropgavenFormatted,
     uitkeringsspecificaties: uitkeringsspecificatiesFormatted,
     notifications,
+    tozodocumenten: tozodocumentenFormatted,
   };
 }

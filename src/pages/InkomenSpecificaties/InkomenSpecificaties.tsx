@@ -47,7 +47,7 @@ function Caret() {
 
 export default () => {
   const {
-    FOCUS_INKOMEN_SPECIFICATIES: {
+    FOCUS_COMBINED: {
       data: { jaaropgaven, uitkeringsspecificaties },
       isError,
       isLoading,

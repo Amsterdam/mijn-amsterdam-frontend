@@ -1,10 +1,11 @@
 import {
   FocusApiResponse,
   FocusInkomenSpecificatie,
-  FocusInkomenSpecificatieFromSource,
+  FocusCombinedItemFromSource,
   FocusItem,
+  FocusTozoDocument,
   formatFocusItems,
-  formatIncomeSpecifications,
+  formatFocusCombined,
 } from 'data-formatting/focus';
 import { getApiConfigValue, getApiUrl } from 'helpers/App';
 
@@ -13,43 +14,47 @@ import { MyNotification } from './my-notifications-api.hook';
 import { useDataApi } from './api.hook';
 import { useMemo } from 'react';
 
-export interface IncomeSpecificationsResponse {
+export interface FocusCombinedResponse {
   content: {
-    jaaropgaven: FocusInkomenSpecificatieFromSource[];
-    uitkeringsspecificaties: FocusInkomenSpecificatieFromSource[];
+    jaaropgaven: FocusCombinedItemFromSource[];
+    uitkeringsspecificaties: FocusCombinedItemFromSource[];
+    tozodocumenten: FocusCombinedItemFromSource[];
   };
 }
 
-export interface IncomeSpecifications {
+export interface FocusCombined {
   jaaropgaven: FocusInkomenSpecificatie[];
   uitkeringsspecificaties: FocusInkomenSpecificatie[];
   notifications: MyNotification[];
+  tozodocumenten: FocusTozoDocument[];
 }
 
-export type FocusInkomenSpecificatiesApiState = ApiState<IncomeSpecifications>;
+export type FocusCombinedApiState = ApiState<FocusCombined>;
 
-export function useFocusInkomenSpecificatiesApi(): FocusInkomenSpecificatiesApiState {
-  const [api] = useDataApi<IncomeSpecificationsResponse>(
+export interface FocusData {
+  items: FocusItem[];
+  recentCases: FocusItem[];
+  notifications: MyNotification[];
+}
+
+export function useFocusCombinedApi(): FocusCombinedApiState {
+  const [api] = useDataApi<FocusCombinedResponse>(
     {
-      url: getApiUrl('FOCUS_INKOMEN_SPECIFICATIES'),
-      postpone: getApiConfigValue(
-        'FOCUS_INKOMEN_SPECIFICATIES',
-        'postponeFetch',
-        false
-      ),
+      url: getApiUrl('FOCUS_COMBINED'),
+      postpone: getApiConfigValue('FOCUS_COMBINED', 'postponeFetch', false),
     },
     {
       content: {
         jaaropgaven: [],
         uitkeringsspecificaties: [],
+        tozodocumenten: [],
       },
     }
   );
 
-  return useMemo(
-    () => ({ ...api, data: formatIncomeSpecifications(api.data) }),
-    [api]
-  );
+  return useMemo(() => ({ ...api, data: formatFocusCombined(api.data) }), [
+    api,
+  ]);
 }
 
 export interface FocusData {

@@ -9,12 +9,14 @@ export const AppRoutes = {
   ZORG: '/zorg-en-ondersteuning',
   'ZORG/VOORZIENINGEN': '/zorg-en-ondersteuning/voorzieningen/:id',
   INKOMEN: '/inkomen-en-stadspas',
-  'INKOMEN/TOZO_COVID19': '/inkomen-en-stadspas/voorschot-bbz-corona-regeling',
   'INKOMEN/STADSPAS': '/inkomen-en-stadspas/stadspas/:id',
   'INKOMEN/BIJSTANDSUITKERING': '/inkomen-en-stadspas/bijstandsuitkering/:id',
   'INKOMEN/BIJZONDERE_BIJSTAND': '/inkomen-en-stadspas/bijzondere-bijstand/:id',
   'INKOMEN/SPECIFICATIES':
     '/inkomen-en-stadspas/uitkeringsspecificaties/:type?',
+  'INKOMEN/TOZO': '/inkomen-en-stadspas/tozo/:type?/:id?',
+  'INKOMEN/TOZO_COVID19':
+    '/inkomen-en-stadspas/tozo/voorschot-bbz-corona-regeling',
   MIJN_GEGEVENS: '/persoonlijke-gegevens',
   MIJN_BUURT: '/buurt',
   ABOUT: '/over-mijn-amsterdam',

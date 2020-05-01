@@ -23,7 +23,7 @@ export const ApiUrls: TypeIndex<ApiName, string> = {
   BRP: `${API_BASE_URL}/brp/brp`,
   WMO: `${API_BASE_URL}/wmoned/voorzieningen`,
   FOCUS: `${API_BASE_URL}/focus/aanvragen`,
-  FOCUS_INKOMEN_SPECIFICATIES: `${API_BASE_URL}/focus/combined`,
+  FOCUS_COMBINED: `${API_BASE_URL}/focus/combined`,
   AUTH: `${API_BASE_URL}/auth/check`,
   ERFPACHT: `${API_BASE_URL}/erfpacht/check-erfpacht`,
   BAG: `${DATAPUNT_API_BASE_URL}/atlas/search/adres/`,
@@ -39,8 +39,8 @@ export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
   FOCUS: {
     postponeFetch: false,
   },
-  FOCUS_INKOMEN_SPECIFICATIES: {
-    postponeFetch: !FeatureToggle.focusUitkeringsspecificatiesActive,
+  FOCUS_COMBINED: {
+    postponeFetch: !FeatureToggle.focusCombinedActive,
   },
   WMO: {
     postponeFetch: false,
@@ -62,7 +62,8 @@ export const ErrorNames: { [stateKey: string]: string } = {
   MIJN_TIPS: 'Tips',
   WMO: 'Zorg en ondersteuning',
   FOCUS: 'Inkomen en Stadspas + actuele updates',
-  FOCUS_INKOMEN_SPECIFICATIES: 'Inkomen en Stadspas + actuele updates',
+  FOCUS_COMBINED:
+    'Uitkeringsspecificaties, Jaaropgaven en Tozo regelingen + actuele updates',
   MY_CHAPTERS: "Thema's",
   ERFPACHT: 'Erfpacht',
   GARBAGE: 'Afval',

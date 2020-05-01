@@ -24,6 +24,9 @@ export default () => {
       isError,
       isLoading,
     },
+    FOCUS_COMBINED: {
+      data: { tozodocumenten },
+    },
   } = useContext(AppContext);
 
   const {
@@ -34,17 +37,34 @@ export default () => {
   } = useRouter();
 
   const isTozoRoute = matchPath(pathname, {
-    path: AppRoutes['INKOMEN/TOZO_COVID19'],
+    path: AppRoutes['INKOMEN/TOZO'],
     exact: true,
     strict: false,
   });
 
-  const FocusItem = isTozoRoute
-    ? items.find(item => item.productTitle === TOZO_PRODUCT_TITLE)
-    : id
-    ? items.find(item => item.id === id)
-    : null;
-  const noContent = !isLoading && !FocusItem;
+  let FocusItem = null;
+  let TozoDocumentItem = null;
+
+  if (isTozoRoute) {
+    if (id) {
+      TozoDocumentItem = tozodocumenten.find(item => item.id === id);
+    } else {
+      // TODO: determine which item to show here
+      FocusItem = items.find(item => item.productTitle === TOZO_PRODUCT_TITLE);
+    }
+  } else if (id) {
+    FocusItem = items.find(item => item.id === id);
+  }
+
+  const noContent = !isLoading && !FocusItem && !TozoDocumentItem;
+
+  let title = isTozoRoute ? TOZO_PRODUCT_TITLE : 'Onbekend item';
+
+  if (FocusItem) {
+    title = FocusItem.title;
+  } else if (TozoDocumentItem) {
+    title = TozoDocumentItem.title;
+  }
 
   return (
     <DetailPage>
@@ -52,11 +72,7 @@ export default () => {
         icon={<ChapterIcon />}
         backLink={{ to: AppRoutes.INKOMEN, title: ChapterTitles.INKOMEN }}
       >
-        {FocusItem
-          ? FocusItem.title
-          : isTozoRoute
-          ? TOZO_PRODUCT_TITLE
-          : 'Onbekend item'}
+        {title}
       </PageHeading>
       <PageContent className={styles.DetailPageContent}>
         {isTozoRoute && (
@@ -73,10 +89,18 @@ export default () => {
         )}
         {isLoading && <LoadingContent />}
       </PageContent>
-      {!!FocusItem && (
+      {!!FocusItem && !!FocusItem.process && (
         <StatusLine
           trackCategory={`Inkomen en Stadspas / ${FocusItem.productTitle}`}
           items={FocusItem.process}
+          altDocumentContent={altDocumentContent}
+          id={id}
+        />
+      )}
+      {!!TozoDocumentItem && (
+        <StatusLine
+          trackCategory={`Inkomen en Stadspas / ${TozoDocumentItem.title}`}
+          items={TozoDocumentItem.process}
           altDocumentContent={altDocumentContent}
           id={id}
         />

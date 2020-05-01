@@ -17,6 +17,7 @@ import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible
 import classnames from 'classnames';
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import styles from './Inkomen.module.scss';
+import { TOZO_PRODUCT_TITLE } from '../../data-formatting/focus';
 import {
   incomSpecificationsRouteMonthly,
   incomSpecificationsRouteYearly,
@@ -32,6 +33,12 @@ const decisionsDisplayProps = {
   datePublished: 'Datum besluit',
 };
 
+const tozoDisplayProps = {
+  displayDate: 'Datum',
+  displayTime: 'Tijd',
+  status: 'Status',
+};
+
 export default () => {
   const {
     FOCUS: {
@@ -39,25 +46,40 @@ export default () => {
       isError,
       isLoading,
     },
-    FOCUS_INKOMEN_SPECIFICATIES: {
-      data: { jaaropgaven, uitkeringsspecificaties },
+    FOCUS_COMBINED: {
+      data: { jaaropgaven, uitkeringsspecificaties, tozodocumenten },
       isError: isError2,
       isLoading: isLoading2,
     },
   } = useContext(AppContext);
 
-  const itemsRequested = useMemo(() => {
-    return addTitleLinkComponent(items.filter(item => !item.hasDecision));
+  const itemsFiltered = useMemo(() => {
+    return items.filter(item => item.productTitle !== TOZO_PRODUCT_TITLE);
   }, [items]);
 
+  const itemsRequested = useMemo(() => {
+    return addTitleLinkComponent(
+      itemsFiltered.filter(item => !item.hasDecision)
+    );
+  }, [itemsFiltered]);
+
   const itemsDecided = useMemo(() => {
-    return addTitleLinkComponent(items.filter(item => item.hasDecision));
-  }, [items]);
+    return addTitleLinkComponent(
+      itemsFiltered.filter(item => item.hasDecision)
+    );
+  }, [itemsFiltered]);
+
+  const itemsTozo = useMemo(() => {
+    const tozoItems = items.filter(
+      item => item.productTitle === TOZO_PRODUCT_TITLE
+    );
+    console.log(tozoItems, tozodocumenten);
+    return addTitleLinkComponent([...tozoItems, ...tozodocumenten]);
+  }, [items, tozodocumenten]);
 
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
   const itemsSpecificationsMonthly = uitkeringsspecificaties.slice(0, 3);
-
   const itemsSpecificationsYearly = jaaropgaven.slice(0, 3);
 
   return (
@@ -83,6 +105,26 @@ export default () => {
           </Alert>
         )}
       </PageContent>
+      {!!itemsTozo.length && !isLoading && !isLoading2 && (
+        <SectionCollapsible
+          id="SectionCollapsible-tozo"
+          title="Tozo"
+          startCollapsed={false}
+          isLoading={false}
+          hasItems={true}
+          track={{
+            category: 'Inkomen en Stadspas overzicht / Tozo',
+            name: 'Datatabel',
+          }}
+          className={styles.SectionCollapsibleFirst}
+        >
+          <Table
+            items={itemsTozo}
+            displayProps={tozoDisplayProps}
+            className={styles.Table}
+          />
+        </SectionCollapsible>
+      )}
       <SectionCollapsible
         id="SectionCollapsible-income-request-process"
         title="Lopende aanvragen"
@@ -94,7 +136,7 @@ export default () => {
           name: 'Datatabel',
         }}
         noItemsMessage="U hebt op dit moment geen lopende aanvragen."
-        className={styles.SectionCollapsibleRequests}
+        className={!itemsTozo.length ? styles.SectionCollapsibleFirst : ''}
       >
         <Table
           items={itemsRequested}
@@ -120,7 +162,7 @@ export default () => {
           className={styles.Table}
         />
       </SectionCollapsible>
-      {FeatureToggle.focusUitkeringsspecificatiesActive && (
+      {FeatureToggle.focusCombinedActive && (
         <SectionCollapsible
           id="SectionCollapsible-income-specifications-monthly"
           startCollapsed={hasActiveRequests || hasActiveDescisions}
@@ -145,7 +187,7 @@ export default () => {
           )}
         </SectionCollapsible>
       )}
-      {FeatureToggle.focusUitkeringsspecificatiesActive && (
+      {FeatureToggle.focusCombinedActive && (
         <SectionCollapsible
           id="SectionCollapsible-income-specifications-yearly"
           startCollapsed={hasActiveRequests || hasActiveDescisions}
