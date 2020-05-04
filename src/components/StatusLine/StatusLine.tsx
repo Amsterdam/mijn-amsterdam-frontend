@@ -9,7 +9,12 @@ import { useSessionStorage } from 'hooks/storage.hook';
 import { trackEvent } from 'hooks/analytics.hook';
 import { ReactComponent as CaretLeft } from 'assets/icons/Chevron-Left.svg';
 
-export type StepType = 'first-step' | 'last-step' | 'intermediate-step';
+export type StepType =
+  | 'first-step'
+  | 'last-step'
+  | 'intermediate-step'
+  | 'single-step';
+
 export interface StatusLineItem {
   id: string;
   status: string;
@@ -33,6 +38,9 @@ interface StatusLineProps {
   trackCategory: string;
   altDocumentContent?: AltDocumentContent | ConditionalAltDocumentContent;
   id: string;
+  showToggleMore?: boolean;
+  statusLabel?: string;
+  className?: string;
 }
 
 interface StatusLineItemProps {
@@ -84,20 +92,25 @@ function StatusLineItem({
       id={item.id}
       className={classnames(
         styles.ListItem,
-        item.isLastActive && styles.LastActive,
-        item.isChecked && styles.Checked,
+        item.isLastActive && styles['last-step-active'],
+        item.isChecked && styles['checked-step'],
         item.stepType && styles[item.stepType]
       )}
     >
       <div className={styles.ListItemInner}>
-        <div className={styles.Panel} data-stepnumber={stepNumber}>
+        <div
+          className={classnames(styles.Panel, styles['Panel--status'])}
+          data-stepnumber={stepNumber}
+        >
           <strong className={styles.StatusTitle}>{item.status}</strong>
           <time className={styles.StatusDate}>
             {defaultDateFormat(item.datePublished)}
           </time>
         </div>
-        <div className={styles.Panel}>{item.description}</div>
-        <div className={styles.Panel}>
+        <div className={classnames(styles.Panel, styles['Panel--description'])}>
+          {item.description}
+        </div>
+        <div className={classnames(styles.Panel, styles['Panel--documents'])}>
           {!!altDocumentContentActual && (
             <span className={styles.altDocumentContent}>
               {altDocumentContentActual}
@@ -139,11 +152,14 @@ export default function StatusLine({
   items,
   trackCategory,
   altDocumentContent,
+  showToggleMore,
+  statusLabel = 'Status',
+  className,
   id,
 }: StatusLineProps) {
   const [isCollapsed, setCollapsed] = useSessionStorage(
     'STATUS_LINE_' + id,
-    true
+    showToggleMore
   );
 
   function toggleCollapsed() {
@@ -159,14 +175,14 @@ export default function StatusLine({
 
   return (
     <>
-      {items.length > 1 && (
+      {showToggleMore && items.length > 1 && (
         <ToggleMore
           isCollapsed={isCollapsed}
           toggleCollapsed={toggleCollapsed}
         />
       )}
-      <div className={styles.StatusLine}>
-        <h4 className={styles.ListHeading}>Status</h4>
+      <div className={classnames(styles.StatusLine, className)}>
+        <h4 className={styles.ListHeading}>{statusLabel}</h4>
         {!!items.length && (
           <ul className={styles.List}>
             {items.map((item, index) => (
@@ -189,7 +205,7 @@ export default function StatusLine({
           <p className={styles.NoStatusItems}>Er is geen status beschikbaar.</p>
         )}
       </div>
-      {items.length > 1 && (
+      {showToggleMore && items.length > 1 && (
         <ToggleMore
           isCollapsed={isCollapsed}
           toggleCollapsed={toggleCollapsed}

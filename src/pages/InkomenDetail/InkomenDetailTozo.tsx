@@ -18,11 +18,7 @@ import { ExternalUrls } from '../../config/App.constants';
 
 export default () => {
   const {
-    FOCUS: {
-      data: { items },
-      isError,
-      isLoading,
-    },
+    FOCUS_TOZO: { data: TozoItem, isError, isLoading },
   } = useContext(AppContext);
 
   const {
@@ -38,17 +34,16 @@ export default () => {
     strict: false,
   });
 
-  const FocusItem = items.find(item => item.id === id);
-  const noContent = !isLoading && !FocusItem;
+  const noContent = !isLoading && !TozoItem;
 
   let title = 'Onbekend item';
 
-  if (FocusItem) {
-    title = FocusItem.title;
+  if (TozoItem) {
+    title = TozoItem.title;
   }
 
   return (
-    <DetailPage>
+    <DetailPage className={styles.DetailPageTozo}>
       <PageHeading
         icon={<ChapterIcon />}
         backLink={{ to: AppRoutes.INKOMEN, title: ChapterTitles.INKOMEN }}
@@ -56,6 +51,11 @@ export default () => {
         {title}
       </PageHeading>
       <PageContent className={styles.DetailPageContent}>
+        <p>
+          Onderstaand ziet u de status van uw aanvraag voor een Tozo-uitkering
+          en/of een Tozo-lening. Indien u beide heeft aangevraagd, ontvangt u
+          voor beide onderstaand een apart besluit.
+        </p>
         {isTozoRoute && (
           <p>
             <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
@@ -70,12 +70,30 @@ export default () => {
         )}
         {isLoading && <LoadingContent />}
       </PageContent>
-      {!!FocusItem && !!FocusItem.process && (
+      <StatusLine
+        className={styles.AanvraagStatusLine}
+        trackCategory={`Inkomen en Stadspas / `}
+        statusLabel="Status Tozo aanvraag"
+        items={TozoItem.process.aanvraag}
+        altDocumentContent={altDocumentContent}
+        id={'inkomen-stadspas-detail-tozo-aanvraag'}
+      />
+      {!!TozoItem.process.uitkering.length && (
         <StatusLine
-          trackCategory={`Inkomen en Stadspas / ${FocusItem.productTitle}`}
-          items={FocusItem.process}
+          trackCategory={`Inkomen en Stadspas / `}
+          statusLabel="Status Tozo uitkering"
+          items={TozoItem.process.uitkering}
           altDocumentContent={altDocumentContent}
-          id={id}
+          id={'inkomen-stadspas-detail-tozo-uitkering'}
+        />
+      )}
+      {!!TozoItem.process.lening.length && (
+        <StatusLine
+          trackCategory={`Inkomen en Stadspas / `}
+          statusLabel="Status Tozo lening"
+          items={TozoItem.process.lening}
+          altDocumentContent={altDocumentContent}
+          id={'inkomen-stadspas-detail-tozo-lening'}
         />
       )}
     </DetailPage>

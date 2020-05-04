@@ -13,6 +13,7 @@
   @include centered-block;
   color: $color-neutral-grey4;
   margin-bottom: 0;
+  font-weight: 500;
 }
 
 .StatusTitle {
@@ -40,6 +41,19 @@
 
 .DocumentDownloadItems {
   @include reset-list-style;
+  white-space: pre-wrap;
+}
+
+@mixin connectLine() {
+  .Panel--status:before {
+    @content;
+  }
+}
+
+@mixin checkmark() {
+  .Panel--status:after {
+    @content;
+  }
 }
 
 .ListItem {
@@ -53,97 +67,117 @@
       position: relative;
       padding: 0 2rem;
     }
+
     @include mq-phone() {
       padding: 0 1rem;
     }
   }
-}
 
-.Panel {
-  position: relative;
-  padding: 1.8rem;
-  flex: 1;
-
-  > p {
-    margin: 0 0 2rem;
+  @include connectLine() {
+    content: '';
+    width: 0.2rem;
+    top: -0.1rem; // overlapping border-top of different color
+    bottom: -0.1rem; // overlapping border-top of different color
+    position: absolute;
+    left: -0.2rem; // place outside of element
+    background: $color-neutral-grey3;
   }
 
-  &:last-child {
-    width: auto;
-    overflow: hidden;
+  @include checkmark() {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    left: -1.1rem;
+    background: $color-neutral-grey3;
+    color: $color-white;
+    text-align: center;
+    font-size: 0.8em;
+    font-weight: 600;
+    line-height: 1.5;
+
+    width: 3.2rem;
+    height: 3.2rem;
+    margin-left: -0.55rem;
+    top: 1.4rem;
+    background-size: 0.9em 0.9em;
   }
 
-  &:nth-child(2) {
-    @include media-q(">tablet") {
-      flex: 0 0 38rem;
-    }
-  }
-
-  &:first-child {
-    padding: 1.8rem 0 1.8rem 8.5rem;
-
-    // Vertical line
-    &:before {
-      content: '';
-      width: 0.2rem;
-      top: -0.1rem; // overlapping border-top of different color
-      bottom: -0.1rem; // overlapping border-top of different color
-      position: absolute;
-      left: -0.2rem; // place outside of element
-      background: $color-neutral-grey3;
-    }
-
-    // Circle icon
-    &:after {
-      // content: attr(data-stepnumber);
-      content: '';
-      position: absolute;
+  &:not(.last-step-active):not(.single-step) {
+    @include checkmark() {
       width: 2rem;
       height: 2rem;
-      border-radius: 50%;
       top: 2rem;
-      left: -1.1rem;
-      background: $color-neutral-grey3;
-      color: $color-white;
-      text-align: center;
-      font-size: 0.8em;
-      font-weight: 600;
-      line-height: 1.5;
+      margin-left: 0;
     }
   }
 
-  @include mq-tablet() {
-    &,
-    &:first-child {
-      padding: 1rem 1rem 1rem 3rem;
-      position: static;
+  .Panel {
+    position: relative;
+    padding: 1.8rem;
+    flex: 1;
+
+    > p {
+      margin: 0 0 2rem;
+    }
+
+    &--documents {
+      width: auto;
+      overflow: hidden;
+    }
+
+    &--description {
+      @include media-q(">tablet") {
+        flex: 0 0 38rem;
+      }
+    }
+
+    &--status {
+      padding: 1.8rem 0 1.8rem 8.5rem;
+    }
+
+    @include mq-tablet() {
+      &,
+      &--status {
+        padding: 1rem 1rem 1rem 3rem;
+        position: static;
+      }
+    }
+
+
+  }
+
+  &.single-step {
+    @include connectLine() {
+      display: none;
     }
   }
-}
 
-.ListItem {
-  &.first-step:not(.LastActive) .Panel:first-child:before {
-    background: linear-gradient(
-      to bottom,
-      transparent 0%,
-      transparent 3rem,
-      $color-primary-darkblue 3rem,
-      $color-primary-darkblue 100%
-    );
+  &.first-step {
+    &:not(.last-step-active) {
+      @include connectLine() {
+        background: linear-gradient(
+          to bottom,
+          transparent 0%,
+          transparent 3rem,
+          $color-primary-darkblue 3rem,
+          $color-primary-darkblue 100%
+        );
+      }
+    }
+    @include connectLine() {
+      background: linear-gradient(
+        to bottom,
+        $color-neutral-grey1 0%,
+        $color-neutral-grey1 3rem,
+        $color-neutral-grey3 3rem,
+        $color-neutral-grey1 100%
+      );
+    }
   }
 
-  &.first-step .Panel:first-child:last-child:before {
-    background: linear-gradient(
-      to bottom,
-      $color-neutral-grey1 0%,
-      $color-neutral-grey1 3rem,
-      $color-neutral-grey3 3rem,
-      $color-neutral-grey1 100%
-    );
-  }
-
-  &:not(.first-step):not(.last-step):not(.LastActive) {
-    &:last-child .Panel:before {
+  // Intermediate step, in a collapsed status line
+  &:not(.first-step):not(.last-step):not(.last-step-active):last-child {
+    @include connectLine() {
       background: linear-gradient(
         to bottom,
         $color-primary-darkblue 0%,
@@ -153,72 +187,83 @@
     }
   }
 
-  &.last-step .Panel:first-child:before {
-    background: linear-gradient(
-      to bottom,
-      $color-neutral-grey3 0%,
-      $color-neutral-grey3 3rem,
-      transparent 0%
-    );
-  }
-  &.last-step.LastActive .Panel:first-child:before {
-    background: linear-gradient(
-      to bottom,
-      $color-primary-darkblue 0%,
-      $color-primary-darkblue 3rem,
-      transparent 0%
-    );
+  &.last-step {
+    @include connectLine() {
+      background: linear-gradient(
+        to bottom,
+        $color-neutral-grey3 0%,
+        $color-neutral-grey3 3rem,
+        transparent 0%
+      );
+    }
+
+    &.last-step-active {
+      @include connectLine() {
+        background: linear-gradient(
+          to bottom,
+          $color-primary-darkblue 0%,
+          $color-primary-darkblue 3rem,
+          transparent 0%
+        );
+      }
+    }
   }
 }
 
-.LastActive {
+.last-step-active {
   background-color: $color-neutral-grey1;
+
   .ListItemInner {
     border-top: 0;
   }
+
   + .ListItem .ListItemInner {
     border-top: 0;
   }
-  .Panel{
-    &:first-child:after {
-      width: 3.2rem;
-      height: 3.2rem;
-      margin-left: -0.55rem;
-      top: 1.4rem;
-      background: $color-primary-darkblue url('../../assets/icons/Checkmark__white.svg')
-        no-repeat center;
-      background-size: 0.9em 0.9em;
-    }
 
-    &:first-child:before {
-      background: linear-gradient(
+   @include checkmark() {
+    width: 3.2rem;
+    height: 3.2rem;
+    margin-left: -0.55rem;
+    top: 1.4rem;
+    background: $color-primary-darkblue url('../../assets/icons/Checkmark__white.svg')
+      no-repeat center;
+    background-size: 0.9em 0.9em;
+  }
+
+  @include connectLine() {
+    background: linear-gradient(
       to bottom,
       $color-primary-darkblue 0%,
       $color-primary-darkblue 3rem,
       $color-neutral-grey3 3rem,
       $color-neutral-grey3 100%
     );
+  }
+
+  &.first-step {
+    @include connectLine() {
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        transparent 3rem,
+        $color-neutral-grey3 3rem,
+        $color-neutral-grey3 100%
+      );
     }
   }
-  &.first-step .Panel:first-child:before {
-    background: linear-gradient(
-      to bottom,
-      transparent 0%,
-      transparent 3rem,
-      $color-neutral-grey3 3rem,
-      $color-neutral-grey3 100%
-    );
+}
+
+.checked-step {
+  @include checkmark() {
+    background: $color-primary-darkblue url('../../assets/icons/Checkmark__white.svg')
+          no-repeat center;
+    background-size: 0.9em 0.9em;
   }
-}
 
-.Checked .Panel:first-child:after {
-  background: $color-primary-darkblue url('../../assets/icons/Checkmark__white.svg')
-        no-repeat center;
-  background-size: 0.9em 0.9em;
-}
-
-.Checked .Panel:first-child:before {
-  background: $color-primary-darkblue;
+  @include connectLine() {
+    background: $color-primary-darkblue;
+  }
 }
 
 .NoStatusItems {

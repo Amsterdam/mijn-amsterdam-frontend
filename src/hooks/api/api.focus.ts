@@ -48,7 +48,7 @@ export interface FocusData {
   notifications: MyNotification[];
 }
 
-export function useFocusCombinedApi(): FocusCombinedApiState {
+function useFocusCombinedApi(): FocusCombinedApiState {
   const [api] = useDataApi<FocusCombinedResponse>(
     {
       url: getApiUrl('FOCUS_SPECIFICATIONS'),
@@ -70,32 +70,33 @@ export function useFocusCombinedApi(): FocusCombinedApiState {
   return api;
 }
 
-export function useFocusCombinedSpecificationsApi(): FocusCombinedSpecificationsApiState {
-  const api = useFocusCombinedApi();
-
+function useFocusCombinedSpecificationsApi(
+  apiCombined: ReturnType<typeof useFocusCombinedApi>
+): FocusCombinedSpecificationsApiState {
   return useMemo(
     () => ({
-      ...api,
-      data: formatFocusCombinedSpecifications(api.data),
+      ...apiCombined,
+      data: formatFocusCombinedSpecifications(apiCombined.data),
     }),
-    [api]
+    [apiCombined]
   );
 }
 
-export function useFocusCombinedTozoApi(): FocusTozoApiState {
-  const apiCombined = useFocusCombinedApi();
-  const apiFocus = useFocusApi();
-
+function useFocusCombinedTozoApi(
+  apiCombined: ReturnType<typeof useFocusCombinedApi>,
+  apiAanvragen: ReturnType<typeof useFocusAanvragenApi>
+): FocusTozoApiState {
+  console.log('apiCombined', apiCombined.data);
   return useMemo(
     () => ({
-      isLoading: apiCombined.isLoading || apiFocus.isLoading,
-      isDirty: apiCombined.isDirty || apiFocus.isDirty,
-      isError: apiCombined.isError || apiFocus.isError,
-      isPristine: apiCombined.isPristine && apiFocus.isPristine,
+      isLoading: apiCombined.isLoading || apiAanvragen.isLoading,
+      isDirty: apiCombined.isDirty || apiAanvragen.isDirty,
+      isError: apiCombined.isError || apiAanvragen.isError,
+      isPristine: apiCombined.isPristine && apiAanvragen.isPristine,
       errorMessage: '',
       data: formatFocusCombinedTozo({
         documenten: apiCombined.data.content.tozodocumenten,
-        aanvragen: apiFocus.rawData.filter(item =>
+        aanvragen: apiAanvragen.rawData.filter(item =>
           [
             TOZO_LENING_PRODUCT_TITLE,
             TOZO_UITKERING_PRODUCT_TITLE,
@@ -104,7 +105,7 @@ export function useFocusCombinedTozoApi(): FocusTozoApiState {
         ),
       }),
     }),
-    [apiCombined, apiFocus]
+    [apiCombined, apiAanvragen]
   );
 }
 
@@ -116,7 +117,7 @@ export interface FocusData {
 
 export type FocusApiState = ApiState<FocusData> & { rawData: FocusApiResponse };
 
-export default function useFocusApi(): FocusApiState {
+function useFocusAanvragenApi(): FocusApiState {
   const [api] = useDataApi<FocusApiResponse>(
     {
       url: getApiUrl('FOCUS'),
@@ -139,4 +140,18 @@ export default function useFocusApi(): FocusApiState {
       },
     };
   }, [api]);
+}
+
+export default function useFocusApi() {
+  const FOCUS_COMBINED = useFocusCombinedApi();
+  const AANVRAGEN = useFocusAanvragenApi();
+
+  const SPECIFICATIES = useFocusCombinedSpecificationsApi(FOCUS_COMBINED);
+  const TOZO = useFocusCombinedTozoApi(FOCUS_COMBINED, AANVRAGEN);
+
+  return {
+    AANVRAGEN,
+    SPECIFICATIES,
+    TOZO,
+  };
 }

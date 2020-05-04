@@ -15,6 +15,7 @@ import { MyNotification } from '../hooks/api/my-notifications-api.hook';
 import { generatePath } from 'react-router';
 import styles from 'pages/Inkomen/Inkomen.module.scss';
 import { dateFormat } from '../helpers/App';
+import { TOZO_VOORSCHOT_PRODUCT_TITLE } from './focus-tozo';
 
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
@@ -71,7 +72,7 @@ interface Info {
 type InfoExtended = { [decision: string]: Info };
 
 interface ProductType {
-  aanvraag: Info;
+  aanvraag: Info | null;
   inBehandeling: Info | null;
   voorschot?: Info | null;
   herstelTermijn: Info | null;
@@ -83,7 +84,7 @@ type LabelData = {
   [origin in ProductOrigin]: { [productTitle in ProductTitle]: ProductType };
 };
 
-interface Document {
+export interface FocusDocument {
   $ref: string;
   id: number;
   isBulk: boolean;
@@ -92,7 +93,7 @@ interface Document {
 }
 
 interface Step {
-  document: Document[];
+  document: FocusDocument[];
   datum: string;
   // status: RequestStatus;
   aantalDagenHerstelTermijn?: string;
@@ -106,12 +107,11 @@ export interface FocusProduct {
   typeBesluit: Decision;
   naam: string;
   processtappen: {
-    aanvraag: Step;
-    inBehandeling: Step;
-    voorschot?: Step;
-    herstelTermijn: Step;
-    beslissing: Step;
-    bezwaar: Step;
+    aanvraag: Step | null;
+    inBehandeling: Step | null;
+    herstelTermijn: Step | null;
+    beslissing: Step | null;
+    bezwaar: Step | null;
   };
   dienstverleningstermijn: number;
   inspanningsperiode: number;
@@ -361,7 +361,34 @@ export const Labels: LabelData = {
       bezwaar: null,
     },
   },
-  'Bijzondere Bijstand': {},
+  'Bijzondere Bijstand': {
+    [TOZO_VOORSCHOT_PRODUCT_TITLE]: {
+      aanvraag: null,
+      inBehandeling: null,
+      herstelTermijn: null,
+      bezwaar: null,
+      beslissing: {
+        [getDecision('Toekenning')]: {
+          notification: {
+            title: data =>
+              `${data.productTitleTranslated}: Uw aanvraag is toegekend`,
+            description: data =>
+              `U heeft recht op een ${data.productTitleTranslated}. Bekijk de brief voor meer details.`,
+          },
+          title: data => data.productTitleTranslated,
+          status: stepLabels.beslissing,
+          description: data => (
+            <>
+              <p>
+                U heeft recht op een {data.productTitleTranslated}. Bekijk de
+                brief voor meer details.
+              </p>
+            </>
+          ),
+        },
+      },
+    },
+  },
   Minimafonds: {
     Stadspas: {
       aanvraag: {
@@ -657,10 +684,10 @@ function calculateDecisionDeadline(
   );
 }
 
-function formatFocusDocument(
+export function formatFocusDocument(
   stepTitle: StepTitle,
   datePublished: string,
-  document: Document
+  document: FocusDocument
 ): GenericDocument {
   const { id, omschrijving: title, $ref: url } = document;
   return {
@@ -788,7 +815,7 @@ export function formatFocusProduct(
       : 0;
 
   // Start of the request process
-  const dateStart = steps.aanvraag.datum;
+  const dateStart = steps.aanvraag!.datum;
   const productTitleTranslated = translateProductTitle(productTitle);
   const sourceData = getStepSourceData({
     id: `${id}-${latestStep}`,

@@ -6,11 +6,20 @@ import {
   StepTitle,
   isRecentItem,
   getDecision,
+  formatFocusProduct,
+  FocusDocument,
 } from './focus';
-import { dateSort } from 'helpers/App';
+import { dateSort, dateFormat, defaultDateFormat } from 'helpers/App';
 import { Chapters } from 'config/Chapter.constants';
 import { AppRoutes } from 'config/Routing.constants';
 import { MyNotification } from '../hooks/api/my-notifications-api.hook';
+import { Document as GenericDocument } from '../components/DocumentList/DocumentList';
+
+const DocumentTitles: Record<string, string> = {
+  'E-AANVR-TOZO': 'aanvraag',
+  'E-AANVR-KBBZ': 'aanvraag',
+  'Voorschot Tozo (voor ondernemers) (Eenm.)': 'toekenning',
+};
 
 export type TozoProductTitle =
   | 'Lening Tozo'
@@ -47,9 +56,9 @@ export interface FocusTozo {
   dateStart: string;
   datePublished: string;
   status: {
-    lening: StepTitle;
-    uitkering: StepTitle;
-    voorschot: StepTitle;
+    lening: StepTitle | null;
+    uitkering: StepTitle | null;
+    voorschot: StepTitle | null;
   };
   hasDecision: {
     lening: boolean;
@@ -64,7 +73,24 @@ export interface FocusTozo {
   process: {
     lening: ProcessStep[];
     uitkering: ProcessStep[];
-    voorschot: ProcessStep[];
+    aanvraag: ProcessStep[];
+  };
+}
+
+function formatFocusTozoDocument(
+  datePublished: string,
+  document: FocusDocument,
+  hasDatePublished: boolean = true
+): GenericDocument {
+  const { id, omschrijving: title, $ref: url } = document;
+  return {
+    id: String(id),
+    title:
+      (DocumentTitles[title] || title) +
+      (hasDatePublished ? `\n${datePublished}` : ''),
+    url: `/api/${url}`,
+    datePublished,
+    type: 'PDF',
   };
 }
 
@@ -85,7 +111,7 @@ export function formatFocusCombinedTozo({
     const latestStep = getLatestStep(processSteps);
     return {
       ...item,
-      datePublished: processSteps[latestStep]?.datum,
+      datePublished: processSteps[latestStep]?.datum || '',
     };
   };
 
@@ -93,21 +119,32 @@ export function formatFocusCombinedTozo({
     .filter(item => item.naam === TOZO_LENING_PRODUCT_TITLE)
     .map(mapLastDatePublished)
     .sort(dateSort('datePublished'));
-  const lastAanvraagLening = aanvragenLening[aanvragenLening.length - 1];
+
+  const lastAanvraagLening = aanvragenLening.length
+    ? aanvragenLening[aanvragenLening.length - 1]
+    : null;
 
   const aanvragenVoorschot = aanvragen
     .filter(item => item.naam === TOZO_VOORSCHOT_PRODUCT_TITLE)
     .map(mapLastDatePublished)
     .sort(dateSort('datePublished'));
-  const lastAanvraagVoorschot =
-    aanvragenVoorschot[aanvragenVoorschot.length - 1];
+
+  const lastAanvraagVoorschot = aanvragenVoorschot.length
+    ? aanvragenVoorschot[aanvragenVoorschot.length - 1]
+    : null;
+
+  const firstAanvraagVoorschot = aanvragenVoorschot.length
+    ? aanvragenVoorschot[0]
+    : null;
 
   const aanvragenUitkering = aanvragen
     .filter(item => item.naam === TOZO_UITKERING_PRODUCT_TITLE)
     .map(mapLastDatePublished)
     .sort(dateSort('datePublished'));
-  const lastAanvraagUitkering =
-    aanvragenUitkering[aanvragenUitkering.length - 1];
+
+  const lastAanvraagUitkering = aanvragenUitkering.length
+    ? aanvragenUitkering[aanvragenUitkering.length - 1]
+    : null;
 
   const tozoDocuments = documenten.sort(dateSort('datePublished'));
 
@@ -118,20 +155,30 @@ export function formatFocusCombinedTozo({
     ...aanvragenLening,
   ].sort(dateSort('datePublished'));
 
-  const lastTozoItem = mix[mix.length - 1];
+  const lastTozoItem = mix.length ? mix[mix.length - 1] : null;
 
-  const lastAanvraagLeningDecisionDate = lastAanvraagLening.datePublished;
-  const lastAanvraagUitkeringDecisionDate = lastAanvraagUitkering.datePublished;
-  const lastAanvraagVoorschotDecisionDate = lastAanvraagVoorschot.datePublished;
+  const lastAanvraagLeningDecisionDate = lastAanvraagLening?.datePublished;
+  const lastAanvraagUitkeringDecisionDate =
+    lastAanvraagUitkering?.datePublished;
+  const lastAanvraagVoorschotDecisionDate =
+    lastAanvraagVoorschot?.datePublished;
 
   // Take last voorschot
-  const firstActivityDatePublished = mix[0].datePublished;
-  const lastActivityDatePublished = mix[mix.length - 1].datePublished;
+  const firstActivityDatePublished = mix.length ? mix[0].datePublished : '';
+  const lastActivityDatePublished = mix.length
+    ? mix[mix.length - 1].datePublished
+    : '';
 
   const status = {
-    lening: getLatestStep(lastAanvraagLening.processtappen),
-    uitkering: getLatestStep(lastAanvraagUitkering.processtappen),
-    voorschot: getLatestStep(lastAanvraagVoorschot.processtappen),
+    lening: lastAanvraagLening
+      ? getLatestStep(lastAanvraagLening.processtappen)
+      : null,
+    uitkering: lastAanvraagUitkering
+      ? getLatestStep(lastAanvraagUitkering.processtappen)
+      : null,
+    voorschot: lastAanvraagVoorschot
+      ? getLatestStep(lastAanvraagVoorschot.processtappen)
+      : null,
   };
 
   const hasDecision = {
@@ -141,22 +188,30 @@ export function formatFocusCombinedTozo({
   };
 
   const now = new Date();
-  const isRecent =
-    isRecentItem(
-      getDecision(lastAanvraagLening.typeBesluit),
-      lastAanvraagLening.processtappen,
-      now
-    ) ||
-    isRecentItem(
-      getDecision(lastAanvraagUitkering.typeBesluit),
-      lastAanvraagUitkering.processtappen,
-      now
-    ) ||
-    isRecentItem(
-      getDecision(lastAanvraagVoorschot.typeBesluit),
-      lastAanvraagVoorschot.processtappen,
-      now
-    );
+
+  const isRecentLening = lastAanvraagLening
+    ? isRecentItem(
+        getDecision(lastAanvraagLening.typeBesluit),
+        lastAanvraagLening.processtappen,
+        now
+      )
+    : false;
+  const isRecentUitkering = lastAanvraagUitkering
+    ? isRecentItem(
+        getDecision(lastAanvraagUitkering.typeBesluit),
+        lastAanvraagUitkering.processtappen,
+        now
+      )
+    : false;
+  const isRecentVoorschot = lastAanvraagVoorschot
+    ? isRecentItem(
+        getDecision(lastAanvraagVoorschot.typeBesluit),
+        lastAanvraagVoorschot.processtappen,
+        now
+      )
+    : false;
+
+  const isRecent = isRecentLening || isRecentUitkering || isRecentVoorschot;
 
   // let notificationDescription = '';
   // {
@@ -170,6 +225,57 @@ export function formatFocusCombinedTozo({
   //         title: 'Bekijk status',
   //       },
   //     }
+  const aanvraagStep: ProcessStep = {
+    id: 'aanvraag-step-0',
+    documents: tozoDocuments.map(doc => {
+      return {
+        id: doc.id,
+        title: `${DocumentTitles[doc.type] || doc.type}\n${dateFormat(
+          doc.datePublished,
+          'dd MMMM - HH:mm'
+        )}`,
+        url: `/api/${doc.url}`,
+        datePublished: doc.datePublished,
+        type: 'PDF',
+      };
+    }),
+    title: 'Aanvraag regeling',
+    description: `Wij hebben uw aanvraag voor een Tozo regeling ontvangen op ${defaultDateFormat(
+      firstActivityDatePublished
+    )}.`,
+    datePublished: firstActivityDatePublished,
+    status: 'Aanvraag',
+    aboutStep: 'aanvraag',
+    isRecent,
+    isChecked: true,
+    isLastActive: false, // Force large checkmark in UI
+    stepType: 'single-step',
+  };
+
+  let voorschotStep: ProcessStep | null = null;
+
+  if (firstAanvraagVoorschot) {
+    voorschotStep = {
+      id: 'aanvraag-step-01',
+      documents: aanvragenVoorschot.flatMap(voorschot => {
+        return voorschot.processtappen.beslissing!.document.map(doc => {
+          return formatFocusTozoDocument(
+            dateFormat(voorschot.datePublished, 'dd MMMM - HH:mm'),
+            doc
+          );
+        });
+      }),
+      title: 'Voorschot',
+      description: `Voorschot toegekend.`,
+      datePublished: firstAanvraagVoorschot.datePublished,
+      status: 'Voorschot',
+      aboutStep: 'beslissing',
+      isRecent,
+      isChecked: true,
+      isLastActive: true, // Force large checkmark in UI
+      stepType: 'single-step',
+    };
+  }
 
   const tozoProcessItem = {
     id: 'tozo-item-0',
@@ -187,9 +293,13 @@ export function formatFocusCombinedTozo({
       title: 'Bekijk status',
     },
     process: {
-      lening: [],
-      uitkering: [],
-      voorschot: [],
+      lening: lastAanvraagLening
+        ? formatFocusProduct(lastAanvraagLening, now).process
+        : [],
+      uitkering: lastAanvraagUitkering
+        ? formatFocusProduct(lastAanvraagUitkering, now).process
+        : [],
+      aanvraag: voorschotStep ? [aanvraagStep, voorschotStep] : [aanvraagStep],
     },
     notifications: {
       lening: null,
@@ -200,38 +310,3 @@ export function formatFocusCombinedTozo({
 
   return tozoProcessItem;
 }
-
-// function formatTozoDocumentItem(
-//   item: FocusCombinedItemFromSource
-// ): FocusTozoDocument {
-//   // // Strip down to primitive date value.
-//   // const datePublished = item.datePublished.split('T')[0];
-//   const displayDate = dateFormat(item.datePublished, 'dd MMMM yyyy');
-//   const displayTime = dateFormat(item.datePublished, 'HH:mm');
-//   const title = TOZO_REQUEST_CONFIRMATION;
-//   return {
-//     ...item,
-//     title,
-//     displayDate,
-//     displayTime,
-//     status: 'Ontvangen',
-//     documentUrl: (
-//       <a
-//         href={`/api/${item.url}`}
-//         rel="external noopener noreferrer"
-//         className={styles.DownloadLink}
-//         download={documentDownloadName(item)}
-//       >
-//         <DocumentIcon width={14} height={14} /> PDF
-//       </a>
-//     ),
-//     link: {
-//       to: generatePath(AppRoutes['INKOMEN/TOZO'], {
-//         type: 'aanvraag-bevestiging',
-//         id: item.id,
-//       }),
-//       title: 'Meer informatie over ' + title,
-//     },
-//     process: [formatTozoDocumentStepData(item)],
-//   };
-// }

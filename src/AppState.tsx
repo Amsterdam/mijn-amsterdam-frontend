@@ -6,7 +6,7 @@ import useErfpachtApi, { ErfpachtApiState } from './hooks/api/api.erfpacht';
 import useFocusApi, {
   FocusApiState,
   FocusCombinedSpecificationsApiState,
-  useFocusCombinedSpecificationsApi,
+  FocusTozoApiState,
 } from './hooks/api/api.focus';
 import useMilieuzoneApi, { MilieuzoneApiState } from 'hooks/api/api.milieuzone';
 import useMyArea, { MyAreaApiState } from './hooks/api/api.myarea';
@@ -35,6 +35,7 @@ export interface AppState {
   WMO: WmoApiState;
   FOCUS: FocusApiState;
   FOCUS_SPECIFICATIONS: FocusCombinedSpecificationsApiState;
+  FOCUS_TOZO: FocusTozoApiState;
   MY_CHAPTERS: MyChaptersApiState;
   ERFPACHT: ErfpachtApiState;
   GARBAGE: GarbageApiState;
@@ -75,8 +76,10 @@ interface AppStateProps {
 
 export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
   const WMO = useWmoApi();
-  const FOCUS = useFocusApi();
-  const FOCUS_SPECIFICATIONS = useFocusCombinedSpecificationsApi();
+  const FOCUS_ALL = useFocusApi();
+  const FOCUS = FOCUS_ALL.AANVRAGEN;
+  const FOCUS_SPECIFICATIONS = FOCUS_ALL.SPECIFICATIES;
+  const FOCUS_TOZO = FOCUS_ALL.TOZO;
 
   const { data: focusData, ...rest } = FOCUS;
   // At the time of writing we only show recentCases from the Focus API.
@@ -173,6 +176,7 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
     WMO,
     FOCUS,
     FOCUS_SPECIFICATIONS,
+    FOCUS_TOZO,
     MY_CHAPTERS,
     ERFPACHT,
     MIJN_BUURT,
