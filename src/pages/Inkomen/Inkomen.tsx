@@ -17,7 +17,6 @@ import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible
 import classnames from 'classnames';
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import styles from './Inkomen.module.scss';
-import { TOZO_PRODUCT_TITLE } from '../../data-formatting/focus';
 import {
   incomSpecificationsRouteMonthly,
   incomSpecificationsRouteYearly,
@@ -46,36 +45,22 @@ export default () => {
       isError,
       isLoading,
     },
-    FOCUS_COMBINED: {
-      data: { jaaropgaven, uitkeringsspecificaties, tozodocumenten },
+    FOCUS_SPECIFICATIONS: {
+      data: { jaaropgaven, uitkeringsspecificaties },
       isError: isError2,
       isLoading: isLoading2,
     },
   } = useContext(AppContext);
 
-  const itemsFiltered = useMemo(() => {
-    return items.filter(item => item.productTitle !== TOZO_PRODUCT_TITLE);
-  }, [items]);
+  const noTozo = true;
 
   const itemsRequested = useMemo(() => {
-    return addTitleLinkComponent(
-      itemsFiltered.filter(item => !item.hasDecision)
-    );
-  }, [itemsFiltered]);
+    return addTitleLinkComponent(items.filter(item => !item.hasDecision));
+  }, [items]);
 
   const itemsDecided = useMemo(() => {
-    return addTitleLinkComponent(
-      itemsFiltered.filter(item => item.hasDecision)
-    );
-  }, [itemsFiltered]);
-
-  const itemsTozo = useMemo(() => {
-    const tozoItems = items.filter(
-      item => item.productTitle === TOZO_PRODUCT_TITLE
-    );
-    console.log(tozoItems, tozodocumenten);
-    return addTitleLinkComponent([...tozoItems, ...tozodocumenten]);
-  }, [items, tozodocumenten]);
+    return addTitleLinkComponent(items.filter(item => item.hasDecision));
+  }, [items]);
 
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
@@ -105,7 +90,7 @@ export default () => {
           </Alert>
         )}
       </PageContent>
-      {!!itemsTozo.length && !isLoading && !isLoading2 && (
+      {/* {!!itemsTozo.length && !isLoading && !isLoading2 && (
         <SectionCollapsible
           id="SectionCollapsible-tozo"
           title="Tozo"
@@ -124,7 +109,7 @@ export default () => {
             className={styles.Table}
           />
         </SectionCollapsible>
-      )}
+      )} */}
       <SectionCollapsible
         id="SectionCollapsible-income-request-process"
         title="Lopende aanvragen"
@@ -136,7 +121,7 @@ export default () => {
           name: 'Datatabel',
         }}
         noItemsMessage="U hebt op dit moment geen lopende aanvragen."
-        className={!itemsTozo.length ? styles.SectionCollapsibleFirst : ''}
+        className={noTozo ? styles.SectionCollapsibleFirst : ''}
       >
         <Table
           items={itemsRequested}

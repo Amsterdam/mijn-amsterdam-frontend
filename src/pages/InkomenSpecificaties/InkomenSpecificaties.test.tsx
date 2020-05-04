@@ -47,7 +47,7 @@ const sourceData: FocusCombinedResponse = {
 const data = formatFocusCombined(sourceData);
 
 const APP_STATE = {
-  FOCUS_COMBINED: {
+  FOCUS_SPECIFICATIONS: {
     data,
     isError: false,
     isLoading: false,

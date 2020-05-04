@@ -3,9 +3,8 @@ import {
   FocusInkomenSpecificatie,
   FocusCombinedItemFromSource,
   FocusItem,
-  FocusTozoDocument,
   formatFocusItems,
-  formatFocusCombined,
+  formatFocusCombinedSpecifications,
 } from 'data-formatting/focus';
 import { getApiConfigValue, getApiUrl } from 'helpers/App';
 
@@ -13,6 +12,14 @@ import { ApiState } from './api.types';
 import { MyNotification } from './my-notifications-api.hook';
 import { useDataApi } from './api.hook';
 import { useMemo } from 'react';
+import {
+  formatFocusCombinedTozo,
+  TOZO_LENING_PRODUCT_TITLE,
+  TOZO_UITKERING_PRODUCT_TITLE,
+  TOZO_VOORSCHOT_PRODUCT_TITLE,
+  FocusTozoDocument,
+  FocusTozo,
+} from '../../data-formatting/focus-tozo';
 
 export interface FocusCombinedResponse {
   content: {
@@ -29,7 +36,11 @@ export interface FocusCombined {
   tozodocumenten: FocusTozoDocument[];
 }
 
-export type FocusCombinedApiState = ApiState<FocusCombined>;
+export type FocusCombinedApiState = ApiState<FocusCombinedResponse>;
+export type FocusCombinedSpecificationsApiState = ApiState<
+  Omit<FocusCombined, 'tozodocumenten'>
+>;
+export type FocusTozoApiState = ApiState<FocusTozo>;
 
 export interface FocusData {
   items: FocusItem[];
@@ -40,8 +51,12 @@ export interface FocusData {
 export function useFocusCombinedApi(): FocusCombinedApiState {
   const [api] = useDataApi<FocusCombinedResponse>(
     {
-      url: getApiUrl('FOCUS_COMBINED'),
-      postpone: getApiConfigValue('FOCUS_COMBINED', 'postponeFetch', false),
+      url: getApiUrl('FOCUS_SPECIFICATIONS'),
+      postpone: getApiConfigValue(
+        'FOCUS_SPECIFICATIONS',
+        'postponeFetch',
+        false
+      ),
     },
     {
       content: {
@@ -52,9 +67,45 @@ export function useFocusCombinedApi(): FocusCombinedApiState {
     }
   );
 
-  return useMemo(() => ({ ...api, data: formatFocusCombined(api.data) }), [
-    api,
-  ]);
+  return api;
+}
+
+export function useFocusCombinedSpecificationsApi(): FocusCombinedSpecificationsApiState {
+  const api = useFocusCombinedApi();
+
+  return useMemo(
+    () => ({
+      ...api,
+      data: formatFocusCombinedSpecifications(api.data),
+    }),
+    [api]
+  );
+}
+
+export function useFocusCombinedTozoApi(): FocusTozoApiState {
+  const apiCombined = useFocusCombinedApi();
+  const apiFocus = useFocusApi();
+
+  return useMemo(
+    () => ({
+      isLoading: apiCombined.isLoading || apiFocus.isLoading,
+      isDirty: apiCombined.isDirty || apiFocus.isDirty,
+      isError: apiCombined.isError || apiFocus.isError,
+      isPristine: apiCombined.isPristine && apiFocus.isPristine,
+      errorMessage: '',
+      data: formatFocusCombinedTozo({
+        documenten: apiCombined.data.content.tozodocumenten,
+        aanvragen: apiFocus.rawData.filter(item =>
+          [
+            TOZO_LENING_PRODUCT_TITLE,
+            TOZO_UITKERING_PRODUCT_TITLE,
+            TOZO_VOORSCHOT_PRODUCT_TITLE,
+          ].includes(item.naam)
+        ),
+      }),
+    }),
+    [apiCombined, apiFocus]
+  );
 }
 
 export interface FocusData {
