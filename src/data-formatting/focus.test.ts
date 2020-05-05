@@ -367,6 +367,6 @@ const testData: any = [
 
 describe('Focus data formatting', () => {
   it('formats the focus source items correctly ', () => {
-    expect(formatFocusItems(testData)).toMatchSnapshot();
+    expect(formatFocusItems(testData, new Date(2020, 3, 10))).toMatchSnapshot();
   });
 });

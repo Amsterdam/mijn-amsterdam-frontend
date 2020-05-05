@@ -22,7 +22,7 @@ export default () => {
     },
   } = useRouter();
 
-  const DocumentItem = data.reisDocumenten?.find(
+  const DocumentItem = data.identiteitsbewijzen?.find(
     item => item.documentNummer === id
   );
   const noContent = !isLoading && !DocumentItem;

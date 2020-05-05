@@ -21,10 +21,10 @@ export default () => {
   } = useContext(AppContext);
 
   const documentItems = useMemo(() => {
-    if (!data.reisDocumenten) {
+    if (!data.identiteitsbewijzen) {
       return [];
     }
-    return addTitleLinkComponent(data.reisDocumenten);
+    return addTitleLinkComponent(data.identiteitsbewijzen);
   }, [data]);
 
   return (
@@ -35,7 +35,7 @@ export default () => {
       <PageContent>
         <p>
           Hieronder ziet u informatie over de looptijd van uw officiële
-          reisdocumenten, zoals ID-kaart of paspoort.
+          identiteitsbewijzen, zoals ID-kaart of paspoort.
         </p>
         <p>
           <Linkd

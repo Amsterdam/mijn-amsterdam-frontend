@@ -155,7 +155,7 @@
       "voorvoegselGeslachtsnaam": null
     }
   ],
-  "reisDocumenten": [
+  "identiteitsbewijzen": [
     {
       "documentNummer": "123ABC",
       "documentType": "paspoort",
