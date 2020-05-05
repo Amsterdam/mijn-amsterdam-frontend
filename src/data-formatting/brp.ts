@@ -244,7 +244,7 @@ export function formatBrpProfileData(brpData: BrpResponseData): BrpProfileData {
     adres: format(brpInfoLabels.adres, brpData.adres, brpData),
   };
 
-  if (brpData.verbintenis) {
+  if (brpData.verbintenis && !!brpData.verbintenis.soortVerbintenis) {
     profileData.verbintenis = {
       ...format(brpInfoLabels.verbintenis, brpData.verbintenis, brpData),
       ...format(
