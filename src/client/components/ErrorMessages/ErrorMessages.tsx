@@ -72,7 +72,11 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
           <p>De volgende gegevens kunnen niet opgehaald worden:</p>
           <ul className={styles.ErrorList}>
             {errors.map(({ name, error }, index) => {
-              return <li key={`${name}-${index}`}>{name}</li>;
+              return (
+                <li key={`${name}-${index}`}>
+                  {name} <span className={styles.ErrorFromServer}>{error}</span>
+                </li>
+              );
             })}
           </ul>
           <p>

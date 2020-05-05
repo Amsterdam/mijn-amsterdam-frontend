@@ -25,6 +25,19 @@
   }
 }
 
+.ErrorFromServer {
+  display: block;
+  font-size: .8em;
+  color: $color-neutral-grey4;
+  display: none;
+}
+
+.ErrorList li:active {
+  .ErrorFromServer {
+    display: block;
+  }
+}
+
 .ErrorInfo {
   > p {
     margin-top: 0;

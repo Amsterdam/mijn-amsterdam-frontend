@@ -1,4 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
+import { IS_SENTRY_ENABLED } from '../../universal/env';
+import * as Sentry from '@sentry/browser';
 
 const RECONNECT_TIMEOUT_MS = 1000;
 const MAX_RETRY_COUNT = 10;
@@ -29,40 +31,45 @@ export function useSSE(
     let unMounted = false;
     const handleError = (error: any) => {
       es.close();
-      console.info('SSE:error');
+      IS_SENTRY_ENABLED && Sentry.captureMessage(`SSE:ERROR: ${error}`);
       if (retryCount !== MAX_RETRY_COUNT) {
         setTimeout(() => {
           if (!unMounted) {
-            console.info('SSE:reconnect-on-error');
             retryCount += 1;
             connect();
           }
         }, RECONNECT_TIMEOUT_MS);
+      } else {
+        IS_SENTRY_ENABLED &&
+          Sentry.captureMessage(`SSE:ERROR: Retry terminated`);
+        callback({
+          ALL: {
+            status: 'ERROR',
+            message:
+              'Could not connect to Event Source. Connection retry terminated.',
+          },
+        });
       }
     };
     const handleOpen = () => {
       retryCount = 0;
-      console.info('SSE:open');
     };
-    const logMessage = () => console.info('SSE:message');
     const closeEventSource = () => {
-      console.info('SSE:close');
       es.close();
     };
+    const onMessageEvent = (message: any) => callback(JSON.parse(message.data));
 
     es.addEventListener('error', handleError);
     es.addEventListener('open', handleOpen);
-    es.addEventListener('message', logMessage);
     es.addEventListener('close', closeEventSource);
-    es.addEventListener(eventName, callback);
+    es.addEventListener(eventName, onMessageEvent);
 
     return () => {
       unMounted = true;
       es.removeEventListener('error', handleError);
       es.removeEventListener('open', handleOpen);
-      es.removeEventListener('message', logMessage);
       es.removeEventListener('close', closeEventSource);
-      es.removeEventListener(eventName, callback);
+      es.removeEventListener(eventName, onMessageEvent);
     };
   }, [eventName, es, callback, connect]);
 }

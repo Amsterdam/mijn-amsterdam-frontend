@@ -33,6 +33,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BELASTINGEN: 'Belastingen + actuele updates',
   MILIEUZONE: 'Milieuzone + actuele updates',
   HOME: 'Lat/Lon locatie gegevens van uw adres.',
+  ALL: 'Alle databronnen',
 };
 
 export function getApiErrors(appState: AppState) {

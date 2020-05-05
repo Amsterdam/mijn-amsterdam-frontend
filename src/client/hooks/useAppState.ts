@@ -94,12 +94,10 @@ export function useAppState() {
     }
   } else {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const onEvent = useCallback((message: any) => {
-      if (message?.data) {
+    const onEvent = useCallback((messageData: any) => {
+      if (messageData) {
         setAppState((state: any) => {
-          const transformedMessageData = transformAppState(
-            JSON.parse(message.data)
-          );
+          const transformedMessageData = transformAppState(messageData);
           return Object.assign({}, state, transformedMessageData);
         });
       }
