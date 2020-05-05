@@ -70,7 +70,7 @@ export default function useFocusApi(): FocusApiState {
   );
 
   return useMemo(() => {
-    const { items, notifications } = formatFocusItems(api.data);
+    const { items, notifications } = formatFocusItems(api.data, new Date());
     const recentCases = items.filter(item => item.isRecent);
 
     return {
