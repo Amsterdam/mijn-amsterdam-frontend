@@ -1005,18 +1005,23 @@ export function formatFocusProduct(
   return focusItem;
 }
 
-function formatFocusApiResponse(products: FocusApiResponse): FocusItem[] {
-  const d = new Date();
+function formatFocusApiResponse(
+  products: FocusApiResponse,
+  compareDate: Date
+): FocusItem[] {
   if (!Array.isArray(products)) {
     return [];
   }
   return products
-    .map(product => formatFocusProduct(product, d))
+    .map(product => formatFocusProduct(product, compareDate))
     .sort(dateSort('ISODatePublished', 'desc'));
 }
 
-export function formatFocusItems(sourceItems: FocusProduct[]) {
-  const items = formatFocusApiResponse(sourceItems).filter(item =>
+export function formatFocusItems(
+  sourceItems: FocusProduct[],
+  compareDate: Date
+) {
+  const items = formatFocusApiResponse(sourceItems, compareDate).filter(item =>
     formattedProductTitleWhitelisted.includes(item.productTitle)
   );
   const notifications = items.reduce<MyNotification[]>(

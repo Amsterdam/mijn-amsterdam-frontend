@@ -13,7 +13,7 @@ export type BrpApiState = ApiState<BrpResponseData> & {
   notifications: MyNotification[];
 };
 
-export type BrpKey = keyof Omit<BrpResponseData, 'reisDocumenten'>;
+export type BrpKey = keyof Omit<BrpResponseData, 'identiteitsbewijzen'>;
 
 const options = { url: getApiUrl('BRP') };
 
@@ -53,11 +53,11 @@ export function useBrpApi(): BrpApiState {
     : 'Onbekend';
 
   const dataFormatted = useMemo(() => {
-    if (!data.reisDocumenten) {
+    if (!data.identiteitsbewijzen) {
       return data;
     }
     return Object.assign({}, data, {
-      reisDocumenten: data.reisDocumenten.map(document => {
+      identiteitsbewijzen: data.identiteitsbewijzen.map(document => {
         const route = generatePath(AppRoutes.BURGERZAKEN_DOCUMENT, {
           id: document.documentNummer,
         });
@@ -78,13 +78,13 @@ export function useBrpApi(): BrpApiState {
     const notifications: MyNotification[] = [];
 
     const expiredDocuments =
-      !!data.reisDocumenten &&
-      data.reisDocumenten.filter(
+      !!data.identiteitsbewijzen &&
+      data.identiteitsbewijzen.filter(
         document => new Date(document.datumAfloop) < new Date()
       );
     const willExpireSoonDocuments =
-      !!data.reisDocumenten &&
-      data.reisDocumenten.filter(document => {
+      !!data.identiteitsbewijzen &&
+      data.identiteitsbewijzen.filter(document => {
         const days = differenceInCalendarDays(
           new Date(document.datumAfloop),
           new Date()

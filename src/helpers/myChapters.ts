@@ -50,9 +50,9 @@ function isChapterActive(
 
     case Chapters.BURGERZAKEN:
       return (
-        FeatureToggle.reisDocumentenActive &&
+        FeatureToggle.identiteitsbewijzenActive &&
         !BRP.isLoading &&
-        !!BRP.data.reisDocumenten
+        !!BRP.data.identiteitsbewijzen
       );
 
     case Chapters.MIJN_GEGEVENS:
