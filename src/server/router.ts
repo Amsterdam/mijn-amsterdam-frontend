@@ -76,3 +76,8 @@ router.use(`/services/all`, async function handleRouteServicesMap(
 });
 
 router.use(`/services/stream`, loadServicesSSE);
+
+router.use(`/health`, (req: Request, res: Response, next: NextFunction) => {
+  res.send('OK');
+  next();
+});
