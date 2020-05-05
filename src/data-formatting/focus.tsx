@@ -15,7 +15,6 @@ import { MyNotification } from '../hooks/api/my-notifications-api.hook';
 import { generatePath } from 'react-router';
 import styles from 'pages/Inkomen/Inkomen.module.scss';
 import { dateFormat } from '../helpers/App';
-import { TOZO_VOORSCHOT_PRODUCT_TITLE } from './focus-tozo';
 
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
@@ -80,7 +79,7 @@ interface ProductType {
   beslissing?: InfoExtended | null;
 }
 
-type LabelData = {
+export type LabelData = {
   [origin in ProductOrigin]: { [productTitle in ProductTitle]: ProductType };
 };
 
@@ -361,34 +360,7 @@ export const Labels: LabelData = {
       bezwaar: null,
     },
   },
-  'Bijzondere Bijstand': {
-    [TOZO_VOORSCHOT_PRODUCT_TITLE]: {
-      aanvraag: null,
-      inBehandeling: null,
-      herstelTermijn: null,
-      bezwaar: null,
-      beslissing: {
-        [getDecision('Toekenning')]: {
-          notification: {
-            title: data =>
-              `${data.productTitleTranslated}: Uw aanvraag is toegekend`,
-            description: data =>
-              `U heeft recht op een ${data.productTitleTranslated}. Bekijk de brief voor meer details.`,
-          },
-          title: data => data.productTitleTranslated,
-          status: stepLabels.beslissing,
-          description: data => (
-            <>
-              <p>
-                U heeft recht op een {data.productTitleTranslated}. Bekijk de
-                brief voor meer details.
-              </p>
-            </>
-          ),
-        },
-      },
-    },
-  },
+  'Bijzondere Bijstand': {},
   Minimafonds: {
     Stadspas: {
       aanvraag: {
@@ -509,7 +481,7 @@ export const Labels: LabelData = {
 };
 
 // NOTE: Possibly deprecated because it seems document titles actually contain meaningful names in the latest api response.
-const DocumentTitles: { [originalTitle: string]: string } = {
+const DocumentTitles: Record<string, string> = {
   'LO: Aanvraag': 'Aanvraag bijstandsuitkering',
   'LO: Besluit': 'Besluit aanvraag bijstandsuitkering',
   'LO: In behandeling': 'Uw aanvraag is in behandeling genomen',
@@ -687,7 +659,8 @@ function calculateDecisionDeadline(
 export function formatFocusDocument(
   stepTitle: StepTitle,
   datePublished: string,
-  document: FocusDocument
+  document: FocusDocument,
+  DocumentTitles: Record<string, string>
 ): GenericDocument {
   const { id, omschrijving: title, $ref: url } = document;
   return {
@@ -703,7 +676,8 @@ export function formatFocusNotificationItem(
   item: FocusItem,
   step: ProcessStep,
   productOrigin: ProductOrigin,
-  sourceData: StepSourceData
+  sourceData: StepSourceData,
+  Labels: LabelData
 ): MyNotification {
   const stepLabels = Labels[productOrigin][sourceData.productTitle][
     step.aboutStep
@@ -736,7 +710,9 @@ function formatStepData(
   sourceData: StepSourceData,
   productOrigin: ProductOrigin,
   stepTitle: StepTitle,
-  stepData: Step
+  stepData: Step,
+  Labels: LabelData,
+  DocumentTitles: Record<string, string>
 ): ProcessStep {
   const stepLabels =
     !!sourceData.decision && stepTitle === 'beslissing'
@@ -757,7 +733,12 @@ function formatStepData(
     documents:
       stepData && FeatureToggle.focusDocumentDownload
         ? stepData.document.map(document =>
-            formatFocusDocument(stepTitle, stepData.datum, document)
+            formatFocusDocument(
+              stepTitle,
+              stepData.datum,
+              document,
+              DocumentTitles
+            )
           )
         : [],
     status: stepLabels
@@ -774,7 +755,9 @@ function formatStepData(
 // This function transforms the source data from the api into readable/presentable messages for the client.
 export function formatFocusProduct(
   product: FocusProduct,
-  compareData: Date
+  compareData: Date,
+  Labels: LabelData,
+  DocumentTitles: Record<string, string>
 ): FocusItem {
   const {
     _id: id,
@@ -917,7 +900,14 @@ export function formatFocusProduct(
           stepType,
         });
 
-        return formatStepData(sourceData, productOrigin, stepTitle, stepData);
+        return formatStepData(
+          sourceData,
+          productOrigin,
+          stepTitle,
+          stepData,
+          Labels,
+          DocumentTitles
+        );
       }),
   };
 
@@ -929,7 +919,8 @@ export function formatFocusProduct(
       item,
       latestStepItem,
       productOrigin,
-      sourceData
+      sourceData,
+      Labels
     ),
   };
 
@@ -942,7 +933,7 @@ function formatFocusApiResponse(products: FocusApiResponse): FocusItem[] {
     return [];
   }
   return products
-    .map(product => formatFocusProduct(product, d))
+    .map(product => formatFocusProduct(product, d, Labels, DocumentTitles))
     .sort(dateSort('ISODatePublished', 'desc'));
 }
 
@@ -1071,7 +1062,7 @@ function formatIncomSpecificationItem(
 export function getLatestStep(steps: FocusProduct['processtappen']) {
   return (
     [...processSteps].reverse().find(step => {
-      return step in steps && steps[step] !== null;
+      return steps[step] !== null;
     }) || processSteps[0]
   );
 }

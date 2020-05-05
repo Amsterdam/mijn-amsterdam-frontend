@@ -13,7 +13,7 @@ import { MyNotification } from './my-notifications-api.hook';
 import { useDataApi } from './api.hook';
 import { useMemo } from 'react';
 import {
-  formatFocusCombinedTozo,
+  formatFocusTozo,
   TOZO_LENING_PRODUCT_TITLE,
   TOZO_UITKERING_PRODUCT_TITLE,
   TOZO_VOORSCHOT_PRODUCT_TITLE,
@@ -94,7 +94,7 @@ function useFocusCombinedTozoApi(
       isError: apiCombined.isError || apiAanvragen.isError,
       isPristine: apiCombined.isPristine && apiAanvragen.isPristine,
       errorMessage: '',
-      data: formatFocusCombinedTozo({
+      data: formatFocusTozo({
         documenten: apiCombined.data.content.tozodocumenten,
         aanvragen: apiAanvragen.rawData.filter(item =>
           [

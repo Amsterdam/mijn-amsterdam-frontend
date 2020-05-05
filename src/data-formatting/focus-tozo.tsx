@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   FocusCombinedItemFromSource,
   getLatestStep,
@@ -8,6 +9,8 @@ import {
   getDecision,
   formatFocusProduct,
   FocusDocument,
+  LabelData,
+  stepLabels,
 } from './focus';
 import { dateSort, dateFormat, defaultDateFormat } from 'helpers/App';
 import { Chapters } from 'config/Chapter.constants';
@@ -15,10 +18,256 @@ import { AppRoutes } from 'config/Routing.constants';
 import { MyNotification } from '../hooks/api/my-notifications-api.hook';
 import { Document as GenericDocument } from '../components/DocumentList/DocumentList';
 
+export const TOZO_VOORSCHOT_PRODUCT_TITLE: TozoProductTitle =
+  'Voorschot Tozo (voor ondernemers) (Eenm.)';
+export const TOZO_LENING_PRODUCT_TITLE: TozoProductTitle = 'Lening Tozo';
+export const TOZO_UITKERING_PRODUCT_TITLE: TozoProductTitle = 'Uitkering Tozo';
+
 const DocumentTitles: Record<string, string> = {
   'E-AANVR-TOZO': 'aanvraag',
   'E-AANVR-KBBZ': 'aanvraag',
   'Voorschot Tozo (voor ondernemers) (Eenm.)': 'toekenning',
+  'Tegemoetkoming Ondernemers en Zelfstandigen': 'aanvraag',
+};
+
+const Labels: LabelData = {
+  Minimafonds: {},
+  Participatiewet: {
+    [TOZO_UITKERING_PRODUCT_TITLE]: {
+      aanvraag: {
+        notification: {
+          title: data =>
+            `${data.productTitleTranslated}: Wij hebben uw aanvraag ontvangen`,
+          description: data =>
+            `Wij hebben uw aanvraag voor een ${data.productTitleTranslated} ontvangen op ${data.dateStart}.`,
+        },
+        title: data => data.productTitleTranslated,
+        status: stepLabels.aanvraag,
+        description: data => (
+          <p>
+            U hebt op {data.dateStart} een {data.productTitleTranslated}{' '}
+            aangevraagd.
+          </p>
+        ),
+      },
+      inBehandeling: {
+        notification: {
+          title: data =>
+            `${data.productTitleTranslated}: Wij behandelen uw aanvraag`,
+          description: data =>
+            `Wij hebben uw aanvraag voor een ${data.productTitleTranslated} in behandeling genomen op ${data.datePublished}.`,
+        },
+        title: data => data.productTitleTranslated,
+        status: stepLabels.inBehandeling,
+        description: data => (
+          <p>
+            Wij gaan nu bekijken of u recht hebt op
+            {data.productTitleTranslated}. Het kan zijn dat u nog extra
+            informatie moet opsturen. U ontvangt vóór {data.decisionDeadline1}{' '}
+            ons besluit.
+          </p>
+        ),
+      },
+      herstelTermijn: {
+        notification: {
+          title: data => `${data.productTitleTranslated}: Neem actie`,
+          description: data =>
+            `Er is meer informatie en tijd nodig om uw aanvraag voor een ${data.productTitleTranslated} te behandelen.`,
+        },
+        title: data => data.productTitleTranslated,
+        status: stepLabels.herstelTermijn,
+        description: data => (
+          <>
+            <p>
+              Wij hebben meer informatie en tijd nodig om uw aanvraag te
+              verwerken. Bekijk de brief voor meer details. U moet de extra
+              informatie vóór {data.userActionDeadline} opsturen. Dan ontvangt u
+              vóór {data.decisionDeadline2} ons besluit.
+            </p>
+            <p>
+              Tip: Lever de informatie die wij gevraagd hebben zo spoedig
+              mogelijk in. Hoe eerder u ons de noodzakelijke informatie geeft,
+              hoe eerder wij verder kunnen met de behandeling van uw aanvraag.`
+            </p>
+          </>
+        ),
+      },
+      beslissing: {
+        [getDecision('Afwijzing')]: {
+          notification: {
+            title: data =>
+              `${data.productTitleTranslated}: Uw aanvraag is afgewezen`,
+            description: data =>
+              `U heeft geen recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
+          },
+          title: data => data.productTitleTranslated,
+          status: stepLabels.beslissing,
+          description: data =>
+            `U heeft geen recht op een ${data.productTitleTranslated}. Bekijk de brief voor meer details.`,
+        },
+        [getDecision('Toekenning')]: {
+          notification: {
+            title: data =>
+              `${data.productTitleTranslated}: Uw aanvraag is toegekend`,
+            description: data =>
+              `U heeft recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
+          },
+          title: data => data.productTitleTranslated,
+          status: stepLabels.beslissing,
+          description: data => (
+            <p>
+              U heeft recht op een {data.productTitleTranslated}. Bekijk de
+              brief voor meer details.
+            </p>
+          ),
+        },
+        [getDecision('Buiten Behandeling')]: {
+          notification: {
+            title: data =>
+              `${data.productTitleTranslated}: Uw aanvraag is buiten behandeling gesteld`,
+            description: data =>
+              `Uw aanvraag is buiten behandeling gesteld (besluit: ${data.datePublished}).`,
+          },
+          title: data => data.productTitleTranslated,
+          status: stepLabels.beslissing,
+          description:
+            'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
+        },
+      },
+      bezwaar: null,
+    },
+  },
+  'Bijzondere Bijstand': {
+    [TOZO_VOORSCHOT_PRODUCT_TITLE]: {
+      aanvraag: null,
+      inBehandeling: null,
+      herstelTermijn: null,
+      bezwaar: null,
+      beslissing: {
+        [getDecision('Toekenning')]: {
+          notification: {
+            title: data =>
+              `${data.productTitleTranslated}: Uw aanvraag is toegekend`,
+            description: data =>
+              `U heeft recht op een ${data.productTitleTranslated}. Bekijk de brief voor meer details.`,
+          },
+          title: data => data.productTitleTranslated,
+          status: stepLabels.beslissing,
+          description: data => (
+            <>
+              <p>
+                U heeft recht op een {data.productTitleTranslated}. Bekijk de
+                brief voor meer details.
+              </p>
+            </>
+          ),
+        },
+      },
+    },
+    [TOZO_LENING_PRODUCT_TITLE]: {
+      aanvraag: {
+        notification: {
+          title: data =>
+            `${data.productTitleTranslated}: Wij hebben uw aanvraag ontvangen`,
+          description: data =>
+            `Wij hebben uw aanvraag voor een ${data.productTitleTranslated} ontvangen op ${data.dateStart}.`,
+        },
+        title: data => data.productTitleTranslated,
+        status: stepLabels.aanvraag,
+        description: data => (
+          <p>
+            U hebt op {data.dateStart} een {data.productTitleTranslated}{' '}
+            aangevraagd.
+          </p>
+        ),
+      },
+      inBehandeling: {
+        notification: {
+          title: data =>
+            `${data.productTitleTranslated}: Wij behandelen uw aanvraag`,
+          description: data =>
+            `Wij hebben uw aanvraag voor een ${data.productTitleTranslated} in behandeling genomen op ${data.datePublished}.`,
+        },
+        title: data => data.productTitleTranslated,
+        status: stepLabels.inBehandeling,
+        description: data => (
+          <p>
+            Wij gaan nu bekijken of u recht hebt op
+            {data.productTitleTranslated}. Het kan zijn dat u nog extra
+            informatie moet opsturen. U ontvangt vóór {data.decisionDeadline1}{' '}
+            ons besluit.
+          </p>
+        ),
+      },
+      herstelTermijn: {
+        notification: {
+          title: data => `${data.productTitleTranslated}: Neem actie`,
+          description: data =>
+            `Er is meer informatie en tijd nodig om uw aanvraag voor een ${data.productTitleTranslated} te behandelen.`,
+        },
+        title: data => data.productTitleTranslated,
+        status: stepLabels.herstelTermijn,
+        description: data => (
+          <>
+            <p>
+              Wij hebben meer informatie en tijd nodig om uw aanvraag te
+              verwerken. Bekijk de brief voor meer details. U moet de extra
+              informatie vóór {data.userActionDeadline} opsturen. Dan ontvangt u
+              vóór {data.decisionDeadline2} ons besluit.
+            </p>
+            <p>
+              Tip: Lever de informatie die wij gevraagd hebben zo spoedig
+              mogelijk in. Hoe eerder u ons de noodzakelijke informatie geeft,
+              hoe eerder wij verder kunnen met de behandeling van uw aanvraag.`
+            </p>
+          </>
+        ),
+      },
+      beslissing: {
+        [getDecision('Afwijzing')]: {
+          notification: {
+            title: data =>
+              `${data.productTitleTranslated}: Uw aanvraag is afgewezen`,
+            description: data =>
+              `U heeft geen recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
+          },
+          title: data => data.productTitleTranslated,
+          status: stepLabels.beslissing,
+          description: data =>
+            `U heeft geen recht op een ${data.productTitleTranslated}. Bekijk de brief voor meer details.`,
+        },
+        [getDecision('Toekenning')]: {
+          notification: {
+            title: data =>
+              `${data.productTitleTranslated}: Uw aanvraag is toegekend`,
+            description: data =>
+              `U heeft recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
+          },
+          title: data => data.productTitleTranslated,
+          status: stepLabels.beslissing,
+          description: data => (
+            <p>
+              U heeft recht op een {data.productTitleTranslated}. Bekijk de
+              brief voor meer details.
+            </p>
+          ),
+        },
+        [getDecision('Buiten Behandeling')]: {
+          notification: {
+            title: data =>
+              `${data.productTitleTranslated}: Uw aanvraag is buiten behandeling gesteld`,
+            description: data =>
+              `Uw aanvraag is buiten behandeling gesteld (besluit: ${data.datePublished}).`,
+          },
+          title: data => data.productTitleTranslated,
+          status: stepLabels.beslissing,
+          description:
+            'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
+        },
+      },
+      bezwaar: null,
+    },
+  },
 };
 
 export type TozoProductTitle =
@@ -27,10 +276,6 @@ export type TozoProductTitle =
   | 'Voorschot Tozo (voor ondernemers) (Eenm.)'
   | string;
 
-export const TOZO_VOORSCHOT_PRODUCT_TITLE: TozoProductTitle =
-  'Voorschot Tozo (voor ondernemers) (Eenm.)';
-export const TOZO_LENING_PRODUCT_TITLE: TozoProductTitle = 'Lening Tozo';
-export const TOZO_UITKERING_PRODUCT_TITLE: TozoProductTitle = 'Uitkering Tozo';
 export type FocusTozoDocumentType = 'E-AANVR-KBBZ' | 'E-AANVR-TOZO';
 
 // if (FeatureToggle.tozoActive) {
@@ -94,7 +339,29 @@ function formatFocusTozoDocument(
   };
 }
 
-export function formatFocusCombinedTozo({
+type FocusTozoProduct = FocusProduct & { datePublished: string };
+
+function formatFocusProductTozo(
+  product: FocusTozoProduct,
+  tozoDocuments: FocusCombinedItemFromSource[],
+  compareDate: Date
+) {
+  // Find the matching Aanvraag document id and change the omschrijving of the document so that it is the same as shown next to the top aanvraag item
+  product.processtappen.aanvraag?.document.forEach(doc => {
+    const matchingTozoDocument = tozoDocuments.find(
+      tdoc => `${doc.id}` === `${tdoc.id}`
+    );
+    const datePublished = matchingTozoDocument
+      ? matchingTozoDocument.datePublished
+      : product.datePublished;
+    doc.omschrijving = `${DocumentTitles[doc.omschrijving] ||
+      doc.omschrijving}\n${dateFormat(datePublished, 'dd MMMM - HH:mm')}`;
+  });
+
+  return formatFocusProduct(product, compareDate, Labels, DocumentTitles);
+}
+
+export function formatFocusTozo({
   documenten,
   aanvragen,
 }: {
@@ -104,9 +371,7 @@ export function formatFocusCombinedTozo({
   let hasDecisionTozoLening = false;
   let hasDecisionTozoUitkering = false;
 
-  const mapLastDatePublished = (
-    item: FocusProduct
-  ): FocusProduct & { datePublished: string } => {
+  const mapLastDatePublished = (item: FocusProduct): FocusTozoProduct => {
     const processSteps = item.processtappen;
     const latestStep = getLatestStep(processSteps);
     return {
@@ -189,27 +454,32 @@ export function formatFocusCombinedTozo({
 
   const now = new Date();
 
-  const isRecentLening = lastAanvraagLening
-    ? isRecentItem(
-        getDecision(lastAanvraagLening.typeBesluit),
-        lastAanvraagLening.processtappen,
-        now
-      )
-    : false;
-  const isRecentUitkering = lastAanvraagUitkering
-    ? isRecentItem(
-        getDecision(lastAanvraagUitkering.typeBesluit),
-        lastAanvraagUitkering.processtappen,
-        now
-      )
-    : false;
-  const isRecentVoorschot = lastAanvraagVoorschot
-    ? isRecentItem(
-        getDecision(lastAanvraagVoorschot.typeBesluit),
-        lastAanvraagVoorschot.processtappen,
-        now
-      )
-    : false;
+  const isRecentLening =
+    lastAanvraagLening && lastAanvraagLening.typeBesluit
+      ? isRecentItem(
+          getDecision(lastAanvraagLening.typeBesluit),
+          lastAanvraagLening.processtappen,
+          now
+        )
+      : false;
+
+  const isRecentUitkering =
+    lastAanvraagUitkering && lastAanvraagUitkering.typeBesluit
+      ? isRecentItem(
+          getDecision(lastAanvraagUitkering.typeBesluit),
+          lastAanvraagUitkering.processtappen,
+          now
+        )
+      : false;
+
+  const isRecentVoorschot =
+    lastAanvraagVoorschot && lastAanvraagVoorschot.typeBesluit
+      ? isRecentItem(
+          getDecision(lastAanvraagVoorschot.typeBesluit),
+          lastAanvraagVoorschot.processtappen,
+          now
+        )
+      : false;
 
   const isRecent = isRecentLening || isRecentUitkering || isRecentVoorschot;
 
@@ -294,10 +564,11 @@ export function formatFocusCombinedTozo({
     },
     process: {
       lening: lastAanvraagLening
-        ? formatFocusProduct(lastAanvraagLening, now).process
+        ? formatFocusProductTozo(lastAanvraagLening, tozoDocuments, now).process
         : [],
       uitkering: lastAanvraagUitkering
-        ? formatFocusProduct(lastAanvraagUitkering, now).process
+        ? formatFocusProductTozo(lastAanvraagUitkering, tozoDocuments, now)
+            .process
         : [],
       aanvraag: voorschotStep ? [aanvraagStep, voorschotStep] : [aanvraagStep],
     },

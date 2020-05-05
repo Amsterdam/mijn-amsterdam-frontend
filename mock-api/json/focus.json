@@ -361,7 +361,7 @@
         "document": [
           {
             "$ref": "focus/document?id=660000000000027&isBulk=false&isDms=false",
-            "id": 660000000000027,
+            "id": 6600022000000027,
             "isBulk": false,
             "isDms": false,
             "omschrijving": "Voorschot Tozo (voor ondernemers) (Eenm.)"
@@ -378,5 +378,98 @@
     },
     "soortProduct": "Bijzondere Bijstand",
     "typeBesluit": "Toekenning"
+  },
+  {
+    "_id": "0-01",
+    "_meest_recent": "beslissing",
+    "dienstverleningstermijn": 28,
+    "naam": "Voorschot Tozo (voor ondernemers) (Eenm.)",
+    "processtappen": {
+      "aanvraag": {
+        "_id": 0,
+        "datum": "2020-05-12T00:00:00+02:00",
+        "document": []
+      },
+      "beslissing": {
+        "_id": 3,
+        "datum": "2020-05-12T00:00:00+02:00",
+        "document": [
+          {
+            "$ref": "focus/document?id=660044000000027&isBulk=false&isDms=false",
+            "id": 660000000000027,
+            "isBulk": false,
+            "isDms": false,
+            "omschrijving": "Voorschot Tozo (voor ondernemers) (Eenm.)"
+          }
+        ]
+      },
+      "bezwaar": null,
+      "herstelTermijn": null,
+      "inBehandeling": {
+        "_id": 1,
+        "datum": "2020-05-12T00:00:00+02:00",
+        "document": []
+      }
+    },
+    "soortProduct": "Bijzondere Bijstand",
+    "typeBesluit": "Toekenning"
+  },
+  {
+    "_id":"0-111",
+    "_meest_recent":"inBehandeling",
+    "dienstverleningstermijn":28,
+    "naam":"Uitkering Tozo",
+    "processtappen":{
+      "aanvraag":{
+        "_id":0,
+        "datum":"2020-04-17T15:05:52+02:00",
+        "document":[
+          {
+            "isBulk":true,
+            "isDms":false,
+            "omschrijving": "Tegemoetkoming Ondernemers en Zelfstandigen",
+            "id": 4400000031,
+            "$ref": "focus/document?id=4400000031&isBulk=true&isDms=false"
+          }
+        ]
+      },
+      "beslissing":null,
+      "bezwaar":null,
+      "herstelTermijn":null,
+      "inBehandeling":{
+        "_id":1,
+        "datum":"2020-04-25T15:05:52+02:00",
+        "document":[
+
+        ]
+      }
+    },
+    "soortProduct": "Participatiewet"
+  },
+  {
+    "_id":"0-3230",
+    "_meest_recent":"aanvraag",
+    "dienstverleningstermijn":28,
+    "naam":"Lening Tozo",
+    "processtappen":{
+      "aanvraag":{
+        "_id":0,
+        "datum":"2020-04-17T15:05:52+02:00",
+        "document":[
+          {
+            "isBulk":true,
+            "isDms":false,
+            "omschrijving": "Tegemoetkoming Ondernemers en Zelfstandigen",
+            "id": 4400000031,
+            "$ref": "focus/document?id=4400000031&isBulk=true&isDms=false"
+          }
+        ]
+      },
+      "beslissing":null,
+      "bezwaar":null,
+      "herstelTermijn":null,
+      "inBehandeling":null
+    },
+    "soortProduct":"Bijzondere Bijstand"
   }
 ]
