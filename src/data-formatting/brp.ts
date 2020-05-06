@@ -14,7 +14,7 @@ type ProfileLabels<T> = { [key in keyof T]: ProfileLabelValueFormatter };
 
 export interface IdentiteitsBewijs {
   documentNummer: string;
-  documentType: 'identiteitskaart' | 'paspoort';
+  documentType: 'europese identiteitskaart' | 'paspoort';
   datumUitgifte: string;
   datumAfloop: string;
   title: string;
