@@ -19,7 +19,7 @@ const options = { url: getApiUrl('BRP') };
 
 const BrpDocumentTitles: Record<string, string> = {
   paspoort: 'paspoort',
-  identiteitskaart: 'ID-kaart',
+  'europese identiteitskaart': 'ID-kaart',
   rijbewijs: 'rijbewijs',
 };
 
@@ -62,7 +62,8 @@ export function useBrpApi(): BrpApiState {
           id: document.documentNummer,
         });
         return Object.assign({}, document, {
-          title: BrpDocumentTitles[document.documentType],
+          title:
+            BrpDocumentTitles[document.documentType] || document.documentType,
           datumAfloop: defaultDateFormat(document.datumAfloop),
           datumUitgifte: defaultDateFormat(document.datumUitgifte),
           link: {
@@ -95,7 +96,8 @@ export function useBrpApi(): BrpApiState {
 
     if (!!expiredDocuments && expiredDocuments.length) {
       expiredDocuments.forEach(document => {
-        const docTitle = BrpDocumentTitles[document.documentType];
+        const docTitle =
+          BrpDocumentTitles[document.documentType] || document.documentType;
         notifications.push({
           Icon: AlertIcon,
           chapter: 'BURGERZAKEN',
@@ -116,7 +118,8 @@ export function useBrpApi(): BrpApiState {
 
     if (!!willExpireSoonDocuments && willExpireSoonDocuments.length) {
       willExpireSoonDocuments.forEach(document => {
-        const docTitle = BrpDocumentTitles[document.documentType];
+        const docTitle =
+          BrpDocumentTitles[document.documentType] || document.documentType;
         notifications.push({
           Icon: AlertIcon,
           chapter: 'BURGERZAKEN',
