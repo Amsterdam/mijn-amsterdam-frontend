@@ -30,14 +30,14 @@ const BrpDocumentCallToAction: Record<
   isExpired: {
     paspoort:
       'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/paspoort-aanvragen/',
-    identiteitskaart:
+    'europese identiteitskaart':
       'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/id-kaart-aanvragen/',
     rijbewijs: '',
   },
   willExpire: {
     paspoort:
       'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/paspoort-aanvragen/',
-    identiteitskaart:
+    'europese identiteitskaart':
       'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/id-kaart-aanvragen/',
     rijbewijs: '',
   },
