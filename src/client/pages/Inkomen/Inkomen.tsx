@@ -54,7 +54,11 @@ const tozoDisplayProps = {
 };
 
 export default () => {
-  const { FOCUS_AANVRAGEN, FOCUS_SPECIFICATIES } = useContext(AppContext);
+  const { FOCUS_AANVRAGEN, FOCUS_SPECIFICATIES, FOCUS_TOZO } = useContext(
+    AppContext
+  );
+
+  const noTozo = true;
 
   const aanvragen = FOCUS_AANVRAGEN.content || [];
 

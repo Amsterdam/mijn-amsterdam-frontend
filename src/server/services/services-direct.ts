@@ -1,6 +1,7 @@
 import {
   fetchFOCUSAanvragen,
   fetchFOCUSSpecificaties,
+  fetchFOCUSTozo,
   fetchWMO,
   fetchERFPACHT,
   fetchBELASTING,
@@ -10,6 +11,7 @@ import {
 export async function loadServicesDirect(sessionID: SessionID) {
   const fetchFOCUSAanvragenRequest = fetchFOCUSAanvragen(sessionID);
   const fetchFOCUSSpecificatiesRequest = fetchFOCUSSpecificaties(sessionID);
+  const fetchFOCUSTozoRequest = fetchFOCUSTozo(sessionID);
   const fetchWMORequest = fetchWMO(sessionID);
   const fetchERFPACHTRequest = fetchERFPACHT(sessionID);
   const fetchBELASTINGRequest = fetchBELASTING(sessionID);
@@ -18,6 +20,7 @@ export async function loadServicesDirect(sessionID: SessionID) {
   const [
     FOCUS_AANVRAGEN,
     FOCUS_SPECIFICATIES,
+    FOCUS_TOZO,
     WMO,
     ERFPACHT,
     BELASTINGEN,
@@ -25,6 +28,7 @@ export async function loadServicesDirect(sessionID: SessionID) {
   ] = await Promise.all([
     fetchFOCUSAanvragenRequest,
     fetchFOCUSSpecificatiesRequest,
+    fetchFOCUSTozoRequest,
     fetchWMORequest,
     fetchERFPACHTRequest,
     fetchBELASTINGRequest,
@@ -34,6 +38,7 @@ export async function loadServicesDirect(sessionID: SessionID) {
   return {
     FOCUS_AANVRAGEN,
     FOCUS_SPECIFICATIES,
+    FOCUS_TOZO,
     WMO,
     ERFPACHT,
     BELASTINGEN,

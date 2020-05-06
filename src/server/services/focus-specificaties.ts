@@ -9,17 +9,12 @@ import {
 import { MyNotification } from '../../universal/types';
 import { requestData } from '../helpers';
 import { ApiUrls, getApiConfigValue } from '../config';
-
-export type FocusInkomenSpecificatieType =
-  | 'IOAZ'
-  | 'BBS'
-  | 'WKO'
-  | 'IOAW'
-  | 'STIMREG'
-  | 'BIBI'
-  | 'PART'
-  | 'BBZ'
-  | string;
+import { apiSuccesResult } from '../../universal/helpers/api';
+import {
+  FocusInkomenSpecificatie as FocusInkomenSpecificatieFromSource,
+  FocusInkomenSpecificatieType,
+  fetchFOCUSCombined,
+} from './focus-combined';
 
 export const focusInkomenSpecificatieTypes: {
   [type in FocusInkomenSpecificatieType]: string;
@@ -33,14 +28,6 @@ export const focusInkomenSpecificatieTypes: {
   PART: 'Participatiewet',
   BBZ: 'BBZ',
 };
-
-export interface FocusInkomenSpecificatieFromSource {
-  title: string | ReactNode;
-  datePublished: string;
-  id: string;
-  url: string;
-  type: FocusInkomenSpecificatieType;
-}
 
 export interface FocusInkomenSpecificatie
   extends FocusInkomenSpecificatieFromSource {
@@ -114,25 +101,20 @@ export interface FOCUSIncomeSpecificationSourceDataContent {
   uitkeringsspecificaties: FocusInkomenSpecificatieFromSource[];
 }
 
-export interface FOCUSIncomeSpecificationSourceData {
-  status: 'OK' | 'ERROR';
-  content: FOCUSIncomeSpecificationSourceDataContent;
-}
-
 export interface IncomeSpecifications {
   jaaropgaven: FocusInkomenSpecificatie[];
   uitkeringsspecificaties: FocusInkomenSpecificatie[];
 }
 
 export function transformFOCUSIncomeSpecificationsData(
-  responseData: FOCUSIncomeSpecificationSourceData
+  responseContent: FOCUSIncomeSpecificationSourceDataContent
 ) {
-  const jaaropgaven = (responseData.content.jaaropgaven || [])
+  const jaaropgaven = (responseContent.jaaropgaven || [])
     .sort(dateSort('datePublished', 'desc'))
     .map(item => transformIncomSpecificationItem(item, 'jaaropgave'));
 
   const uitkeringsspecificaties = (
-    responseData.content.uitkeringsspecificaties || []
+    responseContent.uitkeringsspecificaties || []
   )
     .sort(dateSort('datePublished', 'desc'))
     .map(item =>
@@ -146,14 +128,13 @@ export function transformFOCUSIncomeSpecificationsData(
 }
 
 export async function fetchFOCUSSpecificaties(sessionID: SessionID) {
-  return requestData<IncomeSpecifications>(
-    {
-      url: ApiUrls.FOCUS_SPECIFICATIES,
-      transformResponse: transformFOCUSIncomeSpecificationsData,
-    },
-    sessionID,
-    getApiConfigValue('FOCUS_SPECIFICATIES', 'postponeFetch', false)
-  );
+  const combinedData = await fetchFOCUSCombined(sessionID);
+  if (combinedData.status === 'OK') {
+    return apiSuccesResult(
+      transformFOCUSIncomeSpecificationsData(combinedData.content)
+    );
+  }
+  return combinedData;
 }
 
 export async function fetchFOCUSSpecificationsGenerated(sessionID: SessionID) {

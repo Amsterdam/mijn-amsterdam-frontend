@@ -1,3 +1,8 @@
+import React, { useContext } from 'react';
+import useRouter from 'use-react-router';
+import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { isLoading, isError } from '../../../universal/helpers';
+import { AppContext } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
@@ -6,16 +11,9 @@ import {
   PageContent,
   PageHeading,
   StatusLine,
-  Linkd,
 } from '../../components';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
-import React, { useContext } from 'react';
-
-import { AppContext } from '../../AppState';
-import styles from './InkomenDetail.module.scss';
-import useRouter from 'use-react-router';
-import { ExternalUrls } from '../../config/App.constants';
 import { StatusLineItem } from '../../components/StatusLine/StatusLine';
+import styles from './InkomenDetail.module.scss';
 
 export function altDocumentContent(
   statusLineItem: StatusLineItem,
@@ -63,8 +61,8 @@ export default () => {
     },
   } = useRouter();
 
-  const FocusItem = FOCUS_AANVRAGEN.content.find(item => item.id === id);
-  const noContent = !isLoading && !FocusItem;
+  const FocusItem = FOCUS_AANVRAGEN.content?.find(item => item.id === id);
+  const noContent = !isLoading(FOCUS_AANVRAGEN) && !FocusItem;
 
   let title = 'Onbekend item';
 
@@ -81,7 +79,7 @@ export default () => {
         {title}
       </PageHeading>
       <PageContent className={styles.DetailPageContent}>
-        {(isError || noContent) && (
+        {(isError(FOCUS_AANVRAGEN) || noContent) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>

@@ -49,6 +49,7 @@ export const PRISTINE_APPSTATE = {
     uitkeringsspecificaties: [],
   }),
   FOCUS_AANVRAGEN: apiPristineResult([]),
+  FOCUS_TOZO: apiPristineResult(null),
   WMO: apiPristineResult({ items: [] }),
   ERFPACHT: apiPristineResult({ isKnown: false }),
   BELASTINGEN: apiPristineResult({ isKnown: true }),

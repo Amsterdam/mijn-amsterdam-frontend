@@ -1,17 +1,17 @@
 import { addDays, differenceInCalendarDays, parseISO } from 'date-fns';
 import { generatePath } from 'react-router-dom';
-import {
-  AppRoutes,
-  Chapters,
-  FeatureToggle,
-  TOZO_PRODUCT_TITLE,
-} from '../../universal/config';
+import { AppRoutes, Chapters, FeatureToggle } from '../../universal/config';
 import {
   dateSort,
   defaultDateFormat,
   apiSuccesResult,
 } from '../../universal/helpers';
-import { LinkProps, MyCase, MyNotification } from '../../universal/types';
+import {
+  LinkProps,
+  MyCase,
+  MyNotification,
+  GenericDocument,
+} from '../../universal/types';
 import { requestData } from '../helpers';
 import { ApiUrls, getApiConfigValue } from '../config';
 
@@ -20,7 +20,7 @@ import { ApiUrls, getApiConfigValue } from '../config';
  */
 
 // The process steps are in order of:
-type StepTitle =
+export type StepTitle =
   | 'aanvraag'
   | 'inBehandeling'
   | 'herstelTermijn'
@@ -38,25 +38,25 @@ export type RequestStatus =
 type Decision = 'Toekenning' | 'Afwijzing' | 'Buiten Behandeling';
 type DecisionFormatted = 'toekenning' | 'afwijzing' | 'buitenbehandeling';
 
-function getDecision(decision: Decision): DecisionFormatted {
+export function getDecision(decision: Decision): DecisionFormatted {
   return decision.toLocaleLowerCase().replace(/\s/gi, '') as DecisionFormatted;
+}
+
+export function getLatestStep(steps: FocusProduct['processtappen']) {
+  return (
+    [...processSteps].reverse().find(step => {
+      return steps[step] !== null;
+    }) || processSteps[0]
+  );
 }
 
 // The official terms of the Focus api "product categories" data how they are used within the Municipality of Amsterdam.
 type ProductOrigin = 'Participatiewet' | 'Bijzondere Bijstand' | 'Minimafonds';
 
 // The official terms of the Focus api "product" names how they are used within the Municipality of Amsterdam.
-type ProductTitle =
-  | 'Levensonderhoud'
-  | 'Stadspas'
-  | 'Voorschot Tozo (voor ondernemers) (Eenm.)'
-  | string;
+type ProductTitle = 'Levensonderhoud' | 'Stadspas' | string;
 
-const sourceProductsWhitelisted = [
-  'Levensonderhoud',
-  'Stadspas',
-  TOZO_PRODUCT_TITLE,
-];
+const sourceProductsWhitelisted = ['Levensonderhoud', 'Stadspas'];
 
 type TextPartContent = string;
 type TextPartContentFormatter = (data: StepSourceData) => TextPartContent;
@@ -75,18 +75,18 @@ interface Info {
 type InfoExtended = { [decision: string]: Info };
 
 interface ProductType {
-  aanvraag: Info;
+  aanvraag: Info | null;
   inBehandeling: Info | null;
   herstelTermijn: Info | null;
   bezwaar: Info | null;
   beslissing: InfoExtended | null;
 }
 
-type LabelData = {
+export type LabelData = {
   [origin in ProductOrigin]: { [productTitle in ProductTitle]: ProductType };
 };
 
-interface Document {
+export interface FocusDocument {
   $ref: string;
   id: number;
   isBulk: boolean;
@@ -95,7 +95,7 @@ interface Document {
 }
 
 interface Step {
-  document: Document[];
+  document: FocusDocument[];
   datum: string;
   // status: RequestStatus;
   aantalDagenHerstelTermijn?: string;
@@ -117,6 +117,7 @@ export interface FocusProduct {
   };
   dienstverleningstermijn: number;
   inspanningsperiode: number;
+  datePublished: string;
 }
 
 export type FOCUSAanvragenSourceData = FocusProduct[];
@@ -163,29 +164,21 @@ interface StepSourceData {
   isRecent: boolean;
 }
 
-interface FocusDocument {
-  id: string;
-  title: string;
-  url: string;
-  type: string;
-  datePublished: string;
-}
-
 export interface ProcessStep {
   id: string;
-  documents: FocusDocument[];
+  documents: GenericDocument[];
   title: string;
   description: string;
   datePublished: string;
   status: RequestStatus | '';
   isLastActive: boolean;
   isChecked: boolean;
+  stepType?: 'single-step';
 }
 
 export interface FocusItem {
   id: string;
   datePublished: string;
-  ISODatePublished: string;
   dateStart: string;
   title: string;
   description: string;
@@ -196,13 +189,6 @@ export interface FocusItem {
 
   link: LinkProps;
   process: ProcessStep[];
-}
-
-export interface ProductCollection {
-  [productTitle: string]: {
-    notifications: MyNotification[];
-    items: FocusItem[];
-  };
 }
 
 const FocusExternalUrls = {
@@ -353,63 +339,7 @@ export const Labels: LabelData = {
       bezwaar: null,
     },
   },
-  'Bijzondere Bijstand': {
-    [TOZO_PRODUCT_TITLE]: {
-      aanvraag: {
-        notification: {
-          title: data =>
-            `${data.productTitleTranslated}: Wij hebben uw aanvraag ontvangen`,
-          description: data =>
-            `Wij hebben uw aanvraag voor een ${data.productTitleTranslated} ontvangen op ${data.datePublished}`,
-        },
-        title: data => data.productTitleTranslated,
-        status: stepLabels.aanvraag,
-        description: data =>
-          `Wij hebben uw aanvraag voor een ${data.productTitleTranslated} ontvangen op ${data.datePublished}`,
-      },
-      inBehandeling: null,
-      herstelTermijn: null,
-      beslissing: {
-        [getDecision('Afwijzing')]: {
-          notification: {
-            title: data =>
-              `${data.productTitleTranslated}: Uw aanvraag is afgewezen`,
-            description: data =>
-              `U heeft geen recht op ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
-          },
-          title: data => data.productTitleTranslated,
-          status: stepStatusLabels.beslissing,
-          description: data =>
-            `U heeft geen recht op ${data.productTitleTranslated}. Bekijk de brief voor meer details.`,
-        },
-        [getDecision('Toekenning')]: {
-          notification: {
-            title: data =>
-              `${data.productTitleTranslated}: Uw aanvraag is toegekend`,
-            description: data =>
-              `U heeft recht op ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
-          },
-          title: data => data.productTitleTranslated,
-          status: stepStatusLabels.beslissing,
-          description: data =>
-            `U heeft recht op ${data.productTitleTranslated}. Bekijk de brief voor meer details.`,
-        },
-        [getDecision('Buiten Behandeling')]: {
-          notification: {
-            title: data =>
-              `${data.productTitleTranslated}: Uw aanvraag is buiten behandeling gesteld`,
-            description: data =>
-              `Uw aanvraag is buiten behandeling gesteld (besluit: ${data.datePublished}).`,
-          },
-          title: data => data.productTitleTranslated,
-          status: stepStatusLabels.beslissing,
-          description:
-            'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
-        },
-      },
-      bezwaar: null,
-    },
-  },
+  'Bijzondere Bijstand': {},
   Minimafonds: {
     Stadspas: {
       aanvraag: {
@@ -558,12 +488,11 @@ const AppRoutesByProductOrigin: RoutesByProductOrigin = {
   },
   'Bijzondere Bijstand': {
     'Bijzondere Bijstand': AppRoutes['INKOMEN/BIJZONDERE_BIJSTAND'],
-    [TOZO_PRODUCT_TITLE]: AppRoutes['INKOMEN/TOZO_COVID19'],
   },
 };
 
 /** Checks if an item returned from the api is considered recent */
-function isRecentItem(
+export function isRecentItem(
   decision: DecisionFormatted,
   steps: FocusProduct['processtappen'],
   compareDate: Date
@@ -701,11 +630,12 @@ function calculateDecisionDeadline(
   );
 }
 
-function formatFocusDocument(
+export function formatFocusDocument(
   stepTitle: StepTitle,
   datePublished: string,
-  document: Document
-): FocusDocument {
+  document: FocusDocument,
+  DocumentTitles: Record<string, string>
+): GenericDocument {
   const { id, omschrijving: title, $ref: url } = document;
   return {
     id: String(id),
@@ -719,28 +649,34 @@ function formatFocusDocument(
 export function formatFocusNotificationItem(
   item: FocusItem,
   step: ProcessStep,
-  sourceData: StepSourceData
+  sourceData: StepSourceData,
+  Labels: LabelData
 ): MyNotification {
-  const stepLabels = Labels[sourceData.productOrigin][sourceData.productTitle][
-    sourceData.latestStep
-  ] as any; // Can't work the right TS construct here atm.
+  const stepLabels =
+    Labels[sourceData.productOrigin][sourceData.productTitle][
+      sourceData.latestStep
+    ];
 
-  const stepLabelSource = !!sourceData.decision
-    ? stepLabels[sourceData.decision]
-    : stepLabels;
+  const stepLabelSource =
+    !!sourceData.decision && stepLabels
+      ? (stepLabels as InfoExtended)[sourceData.decision]
+      : stepLabels;
 
   return {
     id: `notification-${step.id}`,
     datePublished: step.datePublished,
     chapter: Chapters.INKOMEN,
     title:
-      stepLabelSource &&
-      stepLabelSource.notification &&
-      parseLabelContent(stepLabelSource.notification.title, sourceData),
+      stepLabelSource && stepLabelSource.notification
+        ? parseLabelContent(stepLabelSource.notification.title, sourceData)
+        : '',
     description:
-      stepLabelSource &&
-      stepLabelSource.notification &&
-      parseLabelContent(stepLabelSource.notification.description, sourceData),
+      stepLabelSource && stepLabelSource.notification
+        ? parseLabelContent(
+            stepLabelSource.notification.description,
+            sourceData
+          )
+        : '',
     link: {
       to: item.link.to,
       title: 'Meer informatie',
@@ -752,7 +688,9 @@ function formatStepData(
   sourceData: StepSourceData,
   productOrigin: ProductOrigin,
   stepTitle: StepTitle,
-  stepData: Step
+  stepData: Step,
+  Labels: LabelData,
+  DocumentTitles: Record<string, string>
 ): ProcessStep {
   const stepLabels =
     !!sourceData.decision && stepTitle === 'beslissing'
@@ -772,8 +710,8 @@ function formatStepData(
       : '--NNB--',
     documents:
       stepData && FeatureToggle.focusDocumentDownload
-        ? stepData.document.map(document =>
-            formatFocusDocument(stepTitle, stepData.datum, document)
+        ? stepData.document.map(doc =>
+            formatFocusDocument(stepTitle, stepData.datum, doc, DocumentTitles)
           )
         : [],
     status: stepLabels
@@ -789,13 +727,14 @@ interface FocusProductTransformed {
   item: FocusItem;
   notification: MyNotification;
   case: MyCase | null;
-  ISODatePublished: string;
 }
 
 // This function transforms the source data from the api into readable/presentable messages for the client.
 export function transformFocusSourceProduct(
   product: FocusProduct,
-  compareDate: Date
+  compareDate: Date,
+  Labels: LabelData,
+  DocumentTitles: Record<string, string>
 ): FocusProductTransformed {
   const {
     _id,
@@ -869,20 +808,18 @@ export function transformFocusSourceProduct(
     }
   );
 
-  const ISODatePublished = latestStepData?.datum || '';
-
   const item = {
     id,
     chapter: Chapters.INKOMEN,
 
     // Date on which the last updated information (Step) was published,
     datePublished: sourceData.datePublished || '',
-    ISODatePublished: latestStepData?.datum || '',
 
     // Date on which the request process was first published
     dateStart: defaultDateFormat(dateStart),
 
-    // Regular title, can be turned into more elaborate descriptive information. E.g Bijstandsuitkering could become Uw Aanvraag voor een bijstandsuitkering.
+    // Regular title, can be turned into more elaborate descriptive information.
+    // E.g Bijstandsuitkering could become Uw Aanvraag voor een bijstandsuitkering.
     title: stepLabels
       ? parseLabelContent(stepLabels.title, sourceData)
       : productTitleTranslated,
@@ -921,7 +858,14 @@ export function transformFocusSourceProduct(
           isRecent,
         });
 
-        return formatStepData(sourceData, productOrigin, stepTitle, stepData);
+        return formatStepData(
+          sourceData,
+          productOrigin,
+          stepTitle,
+          stepData,
+          Labels,
+          DocumentTitles
+        );
       }),
   };
 
@@ -929,8 +873,12 @@ export function transformFocusSourceProduct(
 
   return {
     item,
-    ISODatePublished,
-    notification: formatFocusNotificationItem(item, latestStepItem, sourceData),
+    notification: formatFocusNotificationItem(
+      item,
+      latestStepItem,
+      sourceData,
+      Labels
+    ),
     case: isRecent
       ? {
           id: `recent-case-${item.id}`,
@@ -945,40 +893,69 @@ export function transformFocusSourceProduct(
 
 export function transformFOCUSAanvragenData(
   responseData: FOCUSAanvragenSourceData,
-  compareDate: Date
-) {
+  compareDate: Date,
+  Labels: LabelData,
+  DocumentTitles: Record<string, string>
+): FocusProductTransformed[] {
   if (!Array.isArray(responseData)) {
     return [];
   }
 
   return responseData
     .filter(item => sourceProductsWhitelisted.includes(item.naam))
-    .map(product => transformFocusSourceProduct(product, compareDate))
-    .sort(dateSort('ISODatePublished', 'desc'));
+    .sort(dateSort('datePublished', 'desc'))
+    .map(product =>
+      transformFocusSourceProduct(product, compareDate, Labels, DocumentTitles)
+    );
 }
 
-function fetchFOCUS(sessionID: SessionID, compareDate: Date) {
-  return requestData<FocusProductTransformed[]>(
+export function fetchFOCUS(sessionID: SessionID) {
+  return requestData<FocusProduct[]>(
     {
       url: ApiUrls.FOCUS_AANVRAGEN,
-      transformResponse: data => transformFOCUSAanvragenData(data, compareDate),
+      transformResponse: data => {
+        return data.map((item: FocusProduct) => {
+          const processSteps = item.processtappen;
+          const latestStep = getLatestStep(processSteps);
+          return {
+            ...item,
+            datePublished: processSteps[latestStep]?.datum || '',
+          };
+        });
+      },
     },
     sessionID,
     getApiConfigValue('FOCUS_AANVRAGEN', 'postponeFetch', false)
   );
 }
 
-export async function fetchFOCUSAanvragen(sessionID: SessionID) {
-  const response = await fetchFOCUS(sessionID, new Date());
+async function fetchFOCUSAanvragenFormatted(sessionID: SessionID) {
+  const response = await fetchFOCUS(sessionID);
   if (response.status === 'OK') {
-    const focusItems = response.content.map(prod => prod.item);
+    const focusItemsSource = response.content.filter(item =>
+      sourceProductsWhitelisted.includes(item.naam)
+    );
+    const focusItems = transformFOCUSAanvragenData(
+      focusItemsSource,
+      new Date(),
+      Labels,
+      DocumentTitles
+    );
     return apiSuccesResult(focusItems);
   }
   return response;
 }
 
+export async function fetchFOCUSAanvragen(sessionID: SessionID) {
+  const responseFormatted = await fetchFOCUSAanvragenFormatted(sessionID);
+  if (responseFormatted.status === 'OK') {
+    return apiSuccesResult(responseFormatted.content.map(({ item }) => item));
+  }
+  return responseFormatted;
+}
+
 export async function fetchFOCUSAanvragenGenerated(sessionID: SessionID) {
-  const response = await fetchFOCUS(sessionID, new Date());
+  const response = await fetchFOCUSAanvragenFormatted(sessionID);
 
   let notifications: MyNotification[] = [];
   let cases: MyCase[] = [];

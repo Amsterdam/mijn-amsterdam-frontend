@@ -9,6 +9,7 @@ import {
   fetchMILIEUZONE,
   fetchFOCUSAanvragen,
   fetchFOCUSSpecificaties,
+  fetchFOCUSTozo,
 } from './index';
 
 export type ApiResult<T extends (...args: any[]) => any> = ResolvedType<
@@ -22,6 +23,7 @@ export interface BFFApiData {
   WMO: ApiResult<typeof fetchWMO>;
   FOCUS_AANVRAGEN: ApiResult<typeof fetchFOCUSAanvragen>;
   FOCUS_SPECIFICATIES: ApiResult<typeof fetchFOCUSSpecificaties>;
+  FOCUS_TOZO: ApiResult<typeof fetchFOCUSTozo>;
   ERFPACHT: ApiResult<typeof fetchERFPACHT>;
   BAG: ApiResult<typeof fetchBAG>;
   AFVAL: ApiResult<typeof fetchAFVAL>;

@@ -184,12 +184,12 @@ export default function StatusLine({
     return (
       items.map((item, index) => {
         const stepType: StepType =
-          index === lineItemsTotal - 1
+          index === lineItemsTotal - 1 && lineItemsTotal !== 1
             ? 'last-step'
             : index === 0
             ? 'first-step'
             : 'intermediate-step';
-        return Object.assign(item, { stepType });
+        return Object.assign(item, { stepType: item.stepType || stepType });
       }) || []
     );
   }, [items]);
@@ -210,7 +210,9 @@ export default function StatusLine({
               <StatusLineItem
                 style={{
                   display:
-                    !isCollapsed || (isCollapsed && item.isLastActive)
+                    !isCollapsed ||
+                    (isCollapsed && item.isLastActive) ||
+                    !showToggleMore
                       ? 'block'
                       : 'none',
                 }}

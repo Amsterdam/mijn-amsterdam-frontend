@@ -60,3 +60,11 @@ export interface MyTip {
   isPersonalized: boolean;
   priority?: number;
 }
+
+export interface GenericDocument {
+  id: string;
+  title: string;
+  url: string;
+  type: string;
+  datePublished: string;
+}

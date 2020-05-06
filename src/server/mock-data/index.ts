@@ -4,8 +4,8 @@ import { ApiUrls } from '../config';
 import BELASTINGEN from './json/belasting.json';
 import BRP from './json/brp.json';
 import WMO from './json/wmo.json';
-import FOCUS_AANVRAGEN from './json/focus.json';
-import FOCUS_SPECIFICATIES from './json/inkomen-specificaties.json';
+import FOCUS_AANVRAGEN from './json/focus-aanvragen.json';
+import FOCUS_COMBINED from './json/focus-combined.json';
 import BAG from './json/bag.json';
 import AFVAL from './json/afvalophaalgebieden.json';
 import MILIEUZONE from './json/milieuzone.json';
@@ -51,9 +51,9 @@ export const mockDataConfig: MockDataConfig = {
     // delay: 3400,
     responseData: () => FOCUS_AANVRAGEN,
   },
-  [ApiUrls.FOCUS_SPECIFICATIES]: {
+  [ApiUrls.FOCUS_COMBINED]: {
     status: 200,
-    responseData: () => FOCUS_SPECIFICATIES,
+    responseData: () => FOCUS_COMBINED,
   },
   [ApiUrls.ERFPACHT]: {
     status: 200,

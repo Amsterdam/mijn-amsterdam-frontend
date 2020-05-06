@@ -5,6 +5,7 @@ export * from './brp';
 export * from './erfpacht';
 export * from './focus-aanvragen';
 export * from './focus-specificaties';
+export * from './focus-tozo';
 export * from './milieuzone';
 export * from './wmo';
 export * from './tips';

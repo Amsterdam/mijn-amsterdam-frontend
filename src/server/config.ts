@@ -17,7 +17,7 @@ export const ApiUrls: Record<ApiStateKey, string> = {
   BRP: `${BFF_MS_API_BASE_URL}/brp/brp`,
   WMO: `${BFF_MS_API_BASE_URL}/wmoned/voorzieningen`,
   FOCUS_AANVRAGEN: `${BFF_MS_API_BASE_URL}/focus/aanvragen`,
-  FOCUS_SPECIFICATIES: `${BFF_MS_API_BASE_URL}/focus/combined`,
+  FOCUS_COMBINED: `${BFF_MS_API_BASE_URL}/focus/combined`,
   ERFPACHT: `${BFF_MS_API_BASE_URL}/erfpacht/check-erfpacht`,
   BAG: `${BFF_DATAPUNT_API_BASE_URL}/atlas/search/adres/`,
   AFVAL: `${BFF_DATAPUNT_API_BASE_URL}/afvalophaalgebieden/search/`,
@@ -29,8 +29,8 @@ export interface ApiConfig {
 }
 
 export const ApiConfig: Record<ApiStateKey | string, ApiConfig> = {
-  FOCUS_SPECIFICATIES: {
-    postponeFetch: !FeatureToggle.focusUitkeringsspecificatiesActive,
+  FOCUS_COMBINED: {
+    postponeFetch: !FeatureToggle.focusCombinedActive,
   },
   FOCUS_AANVRAGEN: {
     postponeFetch: !FeatureToggle.focusAanvragenActive,
