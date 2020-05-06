@@ -1,4 +1,4 @@
-import { transformFOCUSAanvragenData } from '../../server/services';
+import { transformFOCUSAanvragenData } from './focus-aanvragen';
 
 const testData: any = [
   {

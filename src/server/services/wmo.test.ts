@@ -1,4 +1,5 @@
-import { transformWMOResponse, WMOSourceData } from '../../server/services/wmo';
+import { transformWMOResponse, WMOSourceData } from './wmo';
+
 const testData: WMOSourceData = [
   {
     Omschrijving: 'handbewogen rolstoel',

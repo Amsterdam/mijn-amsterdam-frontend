@@ -40,7 +40,7 @@ export function getFullAddress(adres: Adres) {
 }
 
 export function getBagSearchAddress(adres: Adres) {
-  return `${adres.straatnaam} ${adres.huisnummer || ''}`;
+  return `${adres.straatnaam} ${adres.huisnummer || ''}`.trim();
 }
 
 export function transformBRPNotifications(data: BRPData) {

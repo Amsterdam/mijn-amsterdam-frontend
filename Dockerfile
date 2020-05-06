@@ -47,7 +47,7 @@ RUN echo "Current REACT_APP_ENV (node build image) = ${REACT_APP_ENV}"
 
 ########################################################################################################################
 ########################################################################################################################
-# Serving the application
+# Serving the application (test + e2e)
 ########################################################################################################################
 ########################################################################################################################
 FROM build-app as serve-bff
@@ -106,9 +106,11 @@ RUN ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
 
 # Copy the built application files to the current image
 COPY --from=build-app /app/build-bff /app/build-bff
+
+# Copy required node modules
 COPY --from=build-app /app/node_modules /app/node_modules
 COPY --from=build-app /app/.env.production /app/.env.production
 COPY --from=build-app /app/package.json /app/package.json
 
 # Run the app
-ENTRYPOINT npm run bff-api:serve-prod
+ENTRYPOINT npm run bff-api:serve-build

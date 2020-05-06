@@ -1,12 +1,14 @@
 import { apiSuccesResult } from '../../universal/helpers';
 import {
-  MAP_URL,
   DEFAULT_LAT,
   DEFAULT_LNG,
   LOCATION_ZOOM,
   LAYERS_CONFIG,
 } from '../../universal/config';
 import { fetchHOME } from './home';
+
+const MAP_URL =
+  'https://data.amsterdam.nl/data/?modus=kaart&achtergrond=topo_rd_zw&embed=true';
 
 export async function loadServicesMap(sessionID: SessionID) {
   const HOME = await fetchHOME(sessionID);
