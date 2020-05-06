@@ -181,6 +181,7 @@ export default function StatusLine({
 
   const steppedItems: SteppedStatusLineItem[] = useMemo(() => {
     const lineItemsTotal = items.length || 0;
+
     return (
       items.map((item, index) => {
         const stepType: StepType =
@@ -189,6 +190,7 @@ export default function StatusLine({
             : index === 0
             ? 'first-step'
             : 'intermediate-step';
+
         return Object.assign(item, { stepType: item.stepType || stepType });
       }) || []
     );
