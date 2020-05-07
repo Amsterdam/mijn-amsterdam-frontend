@@ -1,5 +1,5 @@
-import { ApiUrls, getApiConfigValue } from '../config';
-import { requestData } from '../helpers';
+import { ApiUrls, getApiConfigValue } from '../../config';
+import { requestData } from '../../helpers';
 
 export type FocusTozoDocumentType = 'E-AANVR-KBBZ' | 'E-AANVR-TOZO';
 

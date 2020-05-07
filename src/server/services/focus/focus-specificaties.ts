@@ -1,15 +1,15 @@
 import { format } from 'date-fns';
 import { ReactNode } from 'react';
-import { Chapters } from '../../universal/config';
+import { Chapters } from '../../../universal/config';
 import {
   dateFormat,
   dateSort,
   defaultDateFormat,
-} from '../../universal/helpers';
-import { MyNotification } from '../../universal/types';
-import { requestData } from '../helpers';
-import { ApiUrls, getApiConfigValue } from '../config';
-import { apiSuccesResult } from '../../universal/helpers/api';
+} from '../../../universal/helpers';
+import { MyNotification } from '../../../universal/types';
+import { requestData } from '../../helpers';
+import { ApiUrls, getApiConfigValue } from '../../config';
+import { apiSuccesResult } from '../../../universal/helpers/api';
 import {
   FocusInkomenSpecificatie as FocusInkomenSpecificatieFromSource,
   FocusInkomenSpecificatieType,
