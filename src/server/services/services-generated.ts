@@ -6,9 +6,11 @@ import { fetchFOCUSAanvragenGenerated } from './focus-aanvragen';
 import { fetchFOCUSSpecificationsGenerated } from './focus-specificaties';
 import { fetchBELASTINGGenerated } from './belasting';
 import { fetchMILIEUZONEGenerated } from './milieuzone';
+import { fetchFOCUSTOZOGenerated } from './focus-tozo';
 import { loadServicesRelated } from './services-related';
 import { loadServicesDirect } from './services-direct';
 import { ApiStateKey } from './state';
+import { dateSort } from '../../universal/helpers/date';
 
 export async function loadServicesGenerated(
   sessionID: SessionID,
@@ -20,6 +22,7 @@ export async function loadServicesGenerated(
     brpGenerated,
     focusAanvragenGenerated,
     focusSpecificatiesGenerated,
+    focusTozoGenerated,
     belastingGenerated,
     milieuzoneGenerated,
   ] = await Promise.all([
@@ -28,6 +31,7 @@ export async function loadServicesGenerated(
     fetchBRPGenerated(sessionID),
     fetchFOCUSAanvragenGenerated(sessionID),
     fetchFOCUSSpecificationsGenerated(sessionID),
+    fetchFOCUSTOZOGenerated(sessionID),
     fetchBELASTINGGenerated(sessionID),
     fetchMILIEUZONEGenerated(sessionID),
   ]);
@@ -43,6 +47,7 @@ export async function loadServicesGenerated(
     focusSpecificatiesGenerated,
     belastingGenerated,
     milieuzoneGenerated,
+    focusTozoGenerated,
   ]) {
     // Collection notifications and cases
     if ('notifications' in generatedContent) {
@@ -82,12 +87,14 @@ export async function loadServicesGenerated(
   const tips = await fetchTIPS(sessionID, tipsRequestData);
 
   const notificationsResult = {
-    items: notifications,
+    items: notifications
+      .sort(dateSort('datePublished', 'desc'))
+      .sort((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0)),
     total: notifications.length,
   };
 
   return {
-    CASES: apiSuccesResult(cases),
+    CASES: apiSuccesResult(cases.sort(dateSort('datePublished', 'desc'))),
     NOTIFICATIONS: apiSuccesResult(notificationsResult),
     TIPS: tips,
   };

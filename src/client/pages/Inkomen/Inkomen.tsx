@@ -48,9 +48,7 @@ const decisionsDisplayProps = {
 };
 
 const tozoDisplayProps = {
-  displayDate: 'Datum',
-  displayTime: 'Tijd',
-  status: 'Status',
+  displayDateStart: 'Datum aanvraag',
 };
 
 export default () => {
@@ -58,7 +56,7 @@ export default () => {
     AppContext
   );
 
-  const noTozo = true;
+  const noTozo = !FOCUS_TOZO.content;
 
   const aanvragen = FOCUS_AANVRAGEN.content || [];
 
@@ -88,6 +86,13 @@ export default () => {
     );
   }, [items, FocusTozoItem]);
 
+  const itemsTozo = useMemo(() => {
+    if (!FOCUS_TOZO.content) {
+      return [];
+    }
+    return addTitleLinkComponent([FOCUS_TOZO.content]);
+  }, [FOCUS_TOZO]);
+
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
 
@@ -114,7 +119,9 @@ export default () => {
             Contact Inkomen en Stadspas
           </Linkd>
         </p>
-        {(isError(FOCUS_AANVRAGEN) || isError(FOCUS_SPECIFICATIES)) && (
+        {(isError(FOCUS_AANVRAGEN) ||
+          isError(FOCUS_SPECIFICATIES) ||
+          isError(FOCUS_TOZO)) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>

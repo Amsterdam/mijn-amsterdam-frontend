@@ -14,7 +14,7 @@ export const AppRoutes = {
   'INKOMEN/BIJZONDERE_BIJSTAND': '/inkomen-en-stadspas/bijzondere-bijstand/:id',
   'INKOMEN/SPECIFICATIES':
     '/inkomen-en-stadspas/uitkeringsspecificaties/:type?',
-  'INKOMEN/TOZO': '/inkomen-en-stadspas/tozo/:type?/:id?',
+  'INKOMEN/TOZO': '/inkomen-en-stadspas/tozo',
   BRP: '/persoonlijke-gegevens',
   BUURT: '/buurt',
   ABOUT: '/over-mijn-amsterdam',
