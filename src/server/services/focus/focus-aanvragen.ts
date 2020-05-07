@@ -31,7 +31,6 @@ import {
   getLatestStep,
 } from './focus-helpers';
 import {
-  Decision,
   DecisionFormatted,
   ProductOrigin,
   RequestStatus,
@@ -39,38 +38,13 @@ import {
   InfoExtended,
   LabelData,
   Info,
-  FocusDocument,
+  FocusProduct,
+  Step,
 } from './focus-types';
 
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
  */
-
-interface Step {
-  document: FocusDocument[];
-  datum: string;
-  // status: RequestStatus;
-  aantalDagenHerstelTermijn?: string;
-  reden?: string;
-}
-
-// Shape of the data returned from the Api
-export interface FocusProduct {
-  _id: string;
-  soortProduct: ProductOrigin;
-  typeBesluit: Decision;
-  naam: string;
-  processtappen: {
-    aanvraag: Step;
-    inBehandeling: Step;
-    herstelTermijn: Step;
-    beslissing: Step;
-    bezwaar: Step;
-  };
-  dienstverleningstermijn: number;
-  inspanningsperiode: number;
-  datePublished: string;
-}
 
 export type FOCUSAanvragenSourceData = FocusProduct[];
 

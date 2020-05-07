@@ -4,9 +4,9 @@ import { requestData } from '../../helpers';
 export type FocusTozoDocumentType = 'E-AANVR-KBBZ' | 'E-AANVR-TOZO';
 
 export interface FocusTozoDocument {
-  title: string;
   datePublished: string;
   id: string;
+  description: string;
   url: string;
   type: FocusTozoDocumentType;
 }

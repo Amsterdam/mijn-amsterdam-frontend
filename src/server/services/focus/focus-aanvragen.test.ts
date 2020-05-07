@@ -1,6 +1,9 @@
-import { transformFOCUSAanvragenData } from './focus-aanvragen';
+import { transformFOCUSAanvragenData, FocusProduct } from './focus-aanvragen';
+import { Labels, DocumentTitles } from './focus-aanvragen-content';
+import { transformFocusTozo } from './focus-tozo';
+import { FocusTozoDocument } from './focus-combined';
 
-const testData: any = [
+const testData: FocusProduct[] = [
   {
     _id: '0-0',
     _meest_recent: 'beslissing',
@@ -363,12 +366,80 @@ const testData: any = [
     soortProduct: 'Participatiewet',
     typeBesluit: '  Buiten   BEHANDELING', // writing of the decision name is being normalized
   },
+  {
+    _id: '0-01',
+    _meest_recent: 'beslissing',
+    dienstverleningstermijn: 28,
+    naam: 'Voorschot Tozo (voor ondernemers) (Eenm.)',
+    processtappen: {
+      aanvraag: {
+        _id: 0,
+        datum: '2020-05-12T00:00:00+02:00',
+        document: [],
+      },
+      beslissing: {
+        _id: 3,
+        datum: '2020-05-12T00:00:00+02:00',
+        document: [
+          {
+            $ref: 'focus/document?id=660044000000027&isBulk=false&isDms=false',
+            id: 660000000000027,
+            isBulk: false,
+            isDms: false,
+            omschrijving: 'Voorschot Tozo (voor ondernemers) (Eenm.)',
+          },
+        ],
+      },
+      bezwaar: null,
+      herstelTermijn: null,
+      inBehandeling: {
+        _id: 1,
+        datum: '2020-05-12T00:00:00+02:00',
+        document: [],
+      },
+    },
+    soortProduct: 'Bijzondere Bijstand',
+    typeBesluit: 'Toekenning',
+  },
+];
+
+const tozoDocumenten: FocusTozoDocument[] = [
+  {
+    datePublished: '2020-03-31T18:59:46+02:00',
+    type: 'E-AANVR-TOZO',
+    description: 'Tegemoetkoming Ondernemers en Zelfstandigen',
+    id: '4400000031',
+    url: 'focus/document?id=4400000031&isBulk=true&isDms=false',
+  },
+  {
+    datePublished: '2020-03-26T15:18:44+01:00',
+    type: 'E-AANVR-KBBZ',
+    description: 'Verkorte Aanvraag BBZ',
+    id: '4400000024',
+    url: 'focus/document?id=4400000024&isBulk=true&isDms=false',
+  },
 ];
 
 describe('Focus data formatting', () => {
-  it('formats the focus source items correctly ', () => {
+  it('formats the focus aanvragen STADSPAS/BIJSTAND items correctly ', () => {
     expect(
-      transformFOCUSAanvragenData(testData, new Date('2018-01-01'))
+      transformFOCUSAanvragenData(
+        testData,
+        new Date('2018-01-01'),
+        Labels,
+        DocumentTitles
+      )
+    ).toMatchSnapshot();
+  });
+  it('formats the focus aanvragen TOZO items correctly ', () => {
+    expect(
+      transformFocusTozo({
+        documenten: tozoDocumenten,
+        aanvragen: testData,
+        Labels,
+        DocumentTitles,
+        compareDate: new Date('2020-04-01'),
+      })
     ).toMatchSnapshot();
   });
 });

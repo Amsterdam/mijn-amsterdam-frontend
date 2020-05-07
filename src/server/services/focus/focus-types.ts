@@ -1,3 +1,29 @@
+export interface Step {
+  document: FocusDocument[];
+  datum: string;
+  // status: RequestStatus;
+  aantalDagenHerstelTermijn?: string;
+  reden?: string;
+}
+
+// Shape of the data returned from the Api
+export interface FocusProduct {
+  _id: string;
+  soortProduct: ProductOrigin;
+  typeBesluit: Decision;
+  naam: string;
+  processtappen: {
+    aanvraag: Step | null;
+    inBehandeling: Step;
+    herstelTermijn: Step;
+    beslissing: Step;
+    bezwaar: Step;
+  };
+  dienstverleningstermijn: number;
+  inspanningsperiode: number;
+  datePublished: string;
+}
+
 // The process steps are in order of:
 export type StepTitle =
   | 'aanvraag'
