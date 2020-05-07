@@ -29,7 +29,6 @@ services:
       - "3000"
     environment:
       - REDIRECT_AFTER_LOGIN=http://e2e-frontend:3000
-    entrypoint: npm run serve-build
 
   e2e-testsuite:
     image: cypress/included:3.4.1

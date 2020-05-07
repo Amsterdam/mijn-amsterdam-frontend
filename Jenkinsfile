@@ -6,7 +6,9 @@ pipeline {
     PROJECT_PREFIX = "${BRANCH_NAME}_${COMMIT_HASH}_${BUILD_NUMBER}_"
     IMAGE_BASE = "docker-registry.secure.amsterdam.nl/mijnams/mijnamsterdam"
     IMAGE_ACCEPTANCE = "${IMAGE_BASE}:acceptance"
+    IMAGE_ACCEPTANCE_BFF = "${IMAGE_BASE}:bff:acceptance"
     IMAGE_PRODUCTION = "${IMAGE_BASE}:production"
+    IMAGE_PRODUCTION_BFF = "${IMAGE_BASE}:bff:production"
     IMAGE_TEST = "${IMAGE_BASE}:test"
   }
 
@@ -23,6 +25,7 @@ pipeline {
       steps {
         script { currentBuild.displayName = "Unit testing #${BUILD_NUMBER} (${COMMIT_HASH})" }
         sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit-client test-unit-client"
+        sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit-bff test-unit-bff"
       }
       post {
         always {
@@ -90,13 +93,24 @@ pipeline {
       }
       steps {
         script { currentBuild.displayName = "ACC Build #${BUILD_NUMBER} (${COMMIT_HASH})" }
+        // build the Front-end/nginx image
         sh "docker build -t ${IMAGE_ACCEPTANCE} " +
+           "--target=deploy-ap-frontend " +
            "--shm-size 1G " +
            "--build-arg REACT_APP_ENV=acceptance " +
            "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
            "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
            "."
         sh "docker push ${IMAGE_ACCEPTANCE}"
+
+        // build the BFF/node image
+        sh "docker build -t ${IMAGE_ACCEPTANCE_BFF} " +
+           "--target=deploy-ap-bff " +
+           "--shm-size 1G " +
+           "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
+           "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
+           "."
+        sh "docker push ${IMAGE_ACCEPTANCE_BFF}"
       }
     }
 
@@ -111,6 +125,11 @@ pipeline {
           [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
           [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml']
         ]
+        // Build the BFF
+        // build job: 'Subtask_Openstack_Playbook', parameters: [
+        //   [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
+        //   [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-bff.yml']
+        // ]
       }
     }
 
@@ -126,12 +145,23 @@ pipeline {
       steps {
         script { currentBuild.displayName = "PROD:Build:#${BUILD_NUMBER} (${COMMIT_HASH})" }
         sh "docker build -t ${IMAGE_PRODUCTION} " +
+           "--target=deploy-ap-frontend " +
            "--shm-size 1G " +
            "--build-arg REACT_APP_ENV=production " +
            "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
            "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
            "."
         sh "docker push ${IMAGE_PRODUCTION}"
+
+        // Build the BFF production image
+        // TODO: Pull ACC image, re tag and set ENV RUN variables
+        sh "docker build -t ${IMAGE_PRODUCTION_BFF} " +
+           "--target=deploy-ap-bff " +
+           "--shm-size 1G " +
+           "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
+           "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
+           "."
+        sh "docker push ${IMAGE_PRODUCTION_BFF}"
       }
     }
 
@@ -164,6 +194,12 @@ pipeline {
           [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
           [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml']
         ]
+
+        // Build the BFF
+        // build job: 'Subtask_Openstack_Playbook', parameters: [
+        //   [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
+        //   [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-bff.yml']
+        // ]
       }
     }
   }

@@ -8,7 +8,7 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import { clearCache } from './helpers';
 
-const PORT = process.env.BFF_API_PORT || 5000;
+const PORT = process.env.BFF_PORT || 5000;
 
 const app = express();
 

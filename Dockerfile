@@ -52,14 +52,20 @@ RUN echo "Current REACT_APP_ENV (node build image) = ${REACT_APP_ENV}"
 ########################################################################################################################
 FROM build-app as serve-bff
 
+ENV PORT=80
+ENV REDIRECT_AFTER_LOGIN=https://mijn.ot.amsterdam.nl
+
 COPY scripts/serveBuild.js /app/scripts/serveBuild.js
+
+# Serving both front-end and back-end on th test environment
+ENTRYPOINT npm run serve-build
 
 ########################################################################################################################
 ########################################################################################################################
 # Client Web server image
 ########################################################################################################################
 ########################################################################################################################
-FROM nginx:stable-alpine as deploy-prod-client
+FROM nginx:stable-alpine as deploy-ap-frontend
 
 ARG REACT_APP_ENV=production
 ENV REACT_APP_ENV=$REACT_APP_ENV
@@ -96,7 +102,7 @@ CMD envsubst '${LOGOUT_URL}' < /tmp/nginx-server-default.template.conf > /etc/ng
 # Bff Web server image
 ########################################################################################################################
 ########################################################################################################################
-FROM node:13.7.0 as deploy-prod-bff
+FROM node:13.7.0 as deploy-ap-bff
 
 WORKDIR /app
 
@@ -111,6 +117,8 @@ COPY --from=build-app /app/build-bff /app/build-bff
 COPY --from=build-app /app/node_modules /app/node_modules
 COPY --from=build-app /app/.env.production /app/.env.production
 COPY --from=build-app /app/package.json /app/package.json
+
+ENV BFF_PORT=80
 
 # Run the app
 ENTRYPOINT npm run bff-api:serve-build
