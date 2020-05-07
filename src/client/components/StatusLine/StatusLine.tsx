@@ -45,6 +45,7 @@ interface StatusLineProps {
   showToggleMore?: boolean;
   statusLabel?: string;
   className?: string;
+  maxStepCount?: number | -1; // Supply -1 if you want to treat each step as a single, not connected step
 }
 
 interface StatusLineItemProps {
@@ -161,6 +162,7 @@ export default function StatusLine({
   showToggleMore = true,
   statusLabel = 'Status',
   className,
+  maxStepCount,
   id,
 }: StatusLineProps) {
   const [isCollapsed, setCollapsed] = useSessionStorage(
@@ -184,17 +186,21 @@ export default function StatusLine({
 
     return (
       items.map((item, index) => {
-        const stepType: StepType =
-          index === lineItemsTotal - 1 && lineItemsTotal !== 1
-            ? 'last-step'
-            : index === 0
-            ? 'first-step'
-            : 'intermediate-step';
-
-        return Object.assign(item, { stepType: item.stepType || stepType });
+        let stepType: StepType = 'intermediate-step';
+        if (maxStepCount === -1) {
+          stepType = 'single-step';
+        } else if (index === 0) {
+          stepType = 'first-step';
+        } else if (
+          (typeof maxStepCount !== 'undefined' && index === maxStepCount - 1) ||
+          (typeof maxStepCount === 'undefined' && index === lineItemsTotal - 1)
+        ) {
+          stepType = 'last-step';
+        }
+        return Object.assign(item, { stepType });
       }) || []
     );
-  }, [items]);
+  }, [items, maxStepCount]);
 
   return (
     <>

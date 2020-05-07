@@ -15,6 +15,8 @@ import {
 import { StatusLineItem } from '../../components/StatusLine/StatusLine';
 import styles from './InkomenDetail.module.scss';
 
+export const MAX_STEP_COUNT_FOCUS_REUEST = 4;
+
 export function altDocumentContent(
   statusLineItem: StatusLineItem,
   stepNumber: number
@@ -90,6 +92,9 @@ export default () => {
         <StatusLine
           trackCategory={`Inkomen en Stadspas / ${FocusItem.title}`}
           items={FocusItem.process}
+          maxStepCount={
+            !FocusItem.hasDecision ? MAX_STEP_COUNT_FOCUS_REUEST : undefined
+          }
           altDocumentContent={altDocumentContent}
           id={id}
         />

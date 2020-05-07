@@ -13,7 +13,10 @@ import {
   StatusLine,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
-import { altDocumentContent } from './InkomenDetail';
+import {
+  altDocumentContent,
+  MAX_STEP_COUNT_FOCUS_REUEST,
+} from './InkomenDetail';
 import styles from './InkomenDetail.module.scss';
 
 export default () => {
@@ -61,6 +64,7 @@ export default () => {
           trackCategory={`Inkomen en Stadspas / `}
           statusLabel="Status Tozo aanvraag"
           items={TozoItem.process.aanvraag}
+          maxStepCount={-1}
           altDocumentContent={altDocumentContent}
           id={'inkomen-stadspas-detail-tozo-aanvraag'}
         />
@@ -71,6 +75,11 @@ export default () => {
           showToggleMore={false}
           statusLabel="Status Tozo uitkering"
           items={TozoItem.process.uitkering}
+          maxStepCount={
+            TozoItem.status.uitkering !== 'beslissing'
+              ? MAX_STEP_COUNT_FOCUS_REUEST
+              : undefined
+          }
           altDocumentContent={altDocumentContent}
           id={'inkomen-stadspas-detail-tozo-uitkering'}
         />
@@ -81,6 +90,11 @@ export default () => {
           showToggleMore={false}
           statusLabel="Status Tozo lening"
           items={TozoItem.process.lening}
+          maxStepCount={
+            TozoItem.status.lening !== 'beslissing'
+              ? MAX_STEP_COUNT_FOCUS_REUEST
+              : undefined
+          }
           altDocumentContent={altDocumentContent}
           id={'inkomen-stadspas-detail-tozo-lening'}
         />
