@@ -48,3 +48,7 @@ export function omit(obj: Record<string, any>, fields: string[]) {
   }
   return shallowCopy;
 }
+
+export function jsonCopy(data: any) {
+  return JSON.parse(JSON.stringify(data));
+}

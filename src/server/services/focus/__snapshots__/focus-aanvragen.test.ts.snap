@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Focus data formatting formats the focus aanvragen STADSPAS/BIJSTAND items correctly  1`] = `
+exports[`FOCUS_AANVRAGEN service formats the focus aanvragen STADSPAS/BIJSTAND items correctly  1`] = `
 Array [
   Object {
     "case": Object {
@@ -884,13 +884,13 @@ Array [
 ]
 `;
 
-exports[`Focus data formatting formats the focus aanvragen TOZO items correctly  1`] = `
+exports[`FOCUS_AANVRAGEN service formats the focus aanvragen TOZO items correctly  1`] = `
 Object {
   "chapter": "INKOMEN",
-  "datePublished": "2020-05-12T00:00:00+02:00",
+  "datePublished": "2020-04-03T00:00:00",
   "dateStart": "2020-03-26T15:18:44+01:00",
   "description": "",
-  "displayDatePublished": "12 mei 2020",
+  "displayDatePublished": "03 april 2020",
   "displayDateStart": "26 maart 2020",
   "hasDecision": Object {
     "lening": false,
@@ -948,14 +948,6 @@ Object {
 03 april - 00:00",
             "type": "PDF",
             "url": "/api/focus/document?id=660000000000027&isBulk=false&isDms=false",
-          },
-          Object {
-            "datePublished": "12 mei - 00:00",
-            "id": "660000000000027",
-            "title": "toekenning
-12 mei - 00:00",
-            "type": "PDF",
-            "url": "/api/focus/document?id=660044000000027&isBulk=false&isDms=false",
           },
         ],
         "id": "aanvraag-step-01",

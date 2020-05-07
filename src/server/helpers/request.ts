@@ -25,7 +25,7 @@ const DEFAULT_REQUEST_CONFIG: AxiosRequestConfig & { cancelTimeout: number } = {
   cancelTimeout: 20000, // 20 seconds
 };
 
-const requestTApiData = axios.create({
+export const axiosRequest = axios.create({
   responseType: 'json',
 });
 
@@ -33,7 +33,7 @@ function enableMockAdapter() {
   const MockAdapter = require('axios-mock-adapter');
 
   // This sets the mock adapter on the default instance
-  const mock = new MockAdapter(requestTApiData);
+  const mock = new MockAdapter(axiosRequest);
 
   entries(mockDataConfig).forEach(
     async ([
@@ -58,6 +58,7 @@ function enableMockAdapter() {
 }
 
 if (!process.env.BFF_DISABLE_MOCK_ADAPTER) {
+  console.info('Axios Mock adapter enabled');
   enableMockAdapter();
 }
 
@@ -114,7 +115,7 @@ export async function requestData<T>(
       source.cancel('Request to source api timeout.');
     }, requestConfig.cancelTimeout);
 
-    const request: AxiosPromise<T> = requestTApiData(requestConfig);
+    const request: AxiosPromise<T> = axiosRequest(requestConfig);
     const response: AxiosResponse<T> = await request;
     const responseData = apiSuccesResult<T>(response.data);
 
@@ -124,7 +125,6 @@ export async function requestData<T>(
 
     return responseData;
   } catch (error) {
-    console.log('ERROR', error);
     // IS_SENTRY_ENABLED && Sentry.captureException(error);
 
     const responseData = apiErrorResult(error, null);

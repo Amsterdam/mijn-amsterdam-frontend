@@ -1,4 +1,3 @@
-import { FocusProduct } from './focus-aanvragen';
 import { processSteps, DAYS_KEEP_RECENT } from './focus-aanvragen-content';
 import {
   StepTitle,
@@ -7,6 +6,7 @@ import {
   DecisionFormatted,
   TextPartContents,
   ProductTitle,
+  FocusProduct,
 } from './focus-types';
 import { GenericDocument } from '../../../universal/types';
 import { defaultDateFormat } from '../../../universal/helpers';
@@ -81,8 +81,8 @@ export function getDecision(decision: Decision): DecisionFormatted {
 export function getLatestStep(steps: FocusProduct['processtappen']) {
   return (
     [...processSteps].reverse().find(step => {
-      return steps[step] !== null;
-    }) || processSteps[0]
+      return step in steps && steps[step] !== null;
+    }) || 'aanvraag'
   );
 }
 
