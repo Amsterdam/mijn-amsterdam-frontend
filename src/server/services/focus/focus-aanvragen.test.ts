@@ -1,22 +1,25 @@
-import { transformFOCUSAanvragenData, FocusProduct } from './focus-aanvragen';
-import { Labels, DocumentTitles } from './focus-aanvragen-content';
+import { transformFOCUSAanvragenData } from './focus-aanvragen';
+import {
+  contentLabels,
+  contentDocumentTitles,
+} from './focus-aanvragen-content';
 import { transformFocusTozo } from './focus-tozo';
 import { FocusTozoDocument } from './focus-combined';
+import { FocusProduct, Decision } from './focus-types';
 
 const testData: FocusProduct[] = [
   {
-    _id: '0-0',
-    _meest_recent: 'beslissing',
+    _id: '123123123',
     dienstverleningstermijn: 28,
+    inspanningsperiode: 28,
+    datePublished: '2020-04-03T00:00:00',
     naam: 'Voorschot Tozo (voor ondernemers) (Eenm.)',
     processtappen: {
       aanvraag: {
-        _id: 0,
         datum: '2020-04-03T00:00:00',
         document: [],
       },
       beslissing: {
-        _id: 3,
         datum: '2020-04-03T00:00:00',
         document: [
           {
@@ -31,7 +34,6 @@ const testData: FocusProduct[] = [
       bezwaar: null,
       herstelTermijn: null,
       inBehandeling: {
-        _id: 1,
         datum: '2020-04-03T00:00:00',
         document: [],
       },
@@ -40,13 +42,13 @@ const testData: FocusProduct[] = [
     typeBesluit: 'Toekenning',
   },
   {
-    _id: '0-0',
-    _meest_recent: 'aanvraag',
+    _id: '123123123',
     dienstverleningstermijn: 42,
+    inspanningsperiode: 28,
+    datePublished: '2019-07-08T15:05:52+02:00',
     naam: 'Stadspas',
     processtappen: {
       aanvraag: {
-        _id: 0,
         datum: '2019-07-08T15:05:52+02:00',
         document: [
           {
@@ -80,13 +82,13 @@ const testData: FocusProduct[] = [
     soortProduct: 'Minimafonds',
   },
   {
-    _id: '0-1',
-    _meest_recent: 'inBehandeling',
+    _id: '123123123',
     dienstverleningstermijn: 42,
+    inspanningsperiode: 28,
+    datePublished: '2019-07-08T15:05:52+02:00',
     naam: 'Stadspas',
     processtappen: {
       aanvraag: {
-        _id: 0,
         datum: '2019-07-07T15:05:52+02:00',
         document: [
           {
@@ -116,7 +118,6 @@ const testData: FocusProduct[] = [
       bezwaar: null,
       herstelTermijn: null,
       inBehandeling: {
-        _id: 1,
         datum: '2019-07-08T15:05:52+02:00',
         document: [],
       },
@@ -124,13 +125,13 @@ const testData: FocusProduct[] = [
     soortProduct: 'Minimafonds',
   },
   {
-    _id: '0-2',
-    _meest_recent: 'herstelTermijn',
+    _id: '123123123',
     dienstverleningstermijn: 42,
+    inspanningsperiode: 28,
+    datePublished: '2019-07-06T15:05:52+02:00',
     naam: 'Stadspas',
     processtappen: {
       aanvraag: {
-        _id: 0,
         datum: '2019-07-03T15:05:52+02:00',
         document: [
           {
@@ -159,13 +160,11 @@ const testData: FocusProduct[] = [
       beslissing: null,
       bezwaar: null,
       herstelTermijn: {
-        _id: 2,
         aantalDagenHerstelTermijn: '10',
         datum: '2019-07-06T15:05:52+02:00',
         document: [],
       },
       inBehandeling: {
-        _id: 1,
         datum: '2019-07-04T15:05:52+02:00',
         document: [],
       },
@@ -173,14 +172,13 @@ const testData: FocusProduct[] = [
     soortProduct: 'Minimafonds',
   },
   {
-    _id: '1-0',
-    _meest_recent: 'beslissing',
+    _id: '123123123',
     dienstverleningstermijn: 21,
     inspanningsperiode: 28,
+    datePublished: '2019-07-28T15:05:51+02:00',
     naam: 'Levensonderhoud',
     processtappen: {
       aanvraag: {
-        _id: 0,
         datum: '2019-07-24T15:05:51+02:00',
         document: [
           {
@@ -193,7 +191,6 @@ const testData: FocusProduct[] = [
         ],
       },
       beslissing: {
-        _id: 3,
         datum: '2019-07-28T15:05:51+02:00',
         document: [
           {
@@ -208,7 +205,6 @@ const testData: FocusProduct[] = [
       bezwaar: null,
       herstelTermijn: null,
       inBehandeling: {
-        _id: 1,
         datum: '2019-07-25T15:05:51+02:00',
         document: [],
       },
@@ -217,14 +213,13 @@ const testData: FocusProduct[] = [
     typeBesluit: 'Toekenning',
   },
   {
-    _id: '1-1',
-    _meest_recent: 'beslissing',
+    _id: '123123123',
     dienstverleningstermijn: 21,
     inspanningsperiode: 28,
+    datePublished: '2019-05-07T15:05:51+02:00',
     naam: 'Levensonderhoud',
     processtappen: {
       aanvraag: {
-        _id: 0,
         datum: '2019-04-09T15:05:51+02:00',
         document: [
           {
@@ -237,7 +232,6 @@ const testData: FocusProduct[] = [
         ],
       },
       beslissing: {
-        _id: 3,
         datum: '2019-05-07T15:05:51+02:00',
         document: [
           {
@@ -253,7 +247,6 @@ const testData: FocusProduct[] = [
       bezwaar: null,
       herstelTermijn: null,
       inBehandeling: {
-        _id: 1,
         datum: '2019-04-11T15:05:51+02:00',
         document: [],
       },
@@ -262,14 +255,13 @@ const testData: FocusProduct[] = [
     typeBesluit: 'Afwijzing',
   },
   {
-    _id: '1-2',
-    _meest_recent: 'beslissing',
+    _id: '123123123',
     dienstverleningstermijn: 21,
     inspanningsperiode: 28,
+    datePublished: '2019-06-08T15:05:51+02:00',
     naam: 'Levensonderhoud',
     processtappen: {
       aanvraag: {
-        _id: 0,
         datum: '2019-05-09T15:05:51+02:00',
         document: [
           {
@@ -282,7 +274,6 @@ const testData: FocusProduct[] = [
         ],
       },
       beslissing: {
-        _id: 3,
         datum: '2019-06-08T15:05:51+02:00',
         document: [
           {
@@ -296,13 +287,11 @@ const testData: FocusProduct[] = [
       },
       bezwaar: null,
       herstelTermijn: {
-        _id: 2,
         aantalDagenHerstelTermijn: '20',
         datum: '2019-05-19T15:05:51+02:00',
         document: [],
       },
       inBehandeling: {
-        _id: 1,
         datum: '2019-05-11T15:05:51+02:00',
         document: [],
       },
@@ -311,14 +300,13 @@ const testData: FocusProduct[] = [
     typeBesluit: 'Toekenning',
   },
   {
-    _id: '1-3',
-    _meest_recent: 'beslissing',
+    _id: '123123123',
     dienstverleningstermijn: 21,
     inspanningsperiode: 28,
+    datePublished: '2019-07-03T15:05:52+02:00',
     naam: 'Levensonderhoud',
     processtappen: {
       aanvraag: {
-        _id: 0,
         datum: '2019-06-08T15:05:52+02:00',
         document: [
           {
@@ -338,7 +326,6 @@ const testData: FocusProduct[] = [
         ],
       },
       beslissing: {
-        _id: 3,
         datum: '2019-07-03T15:05:52+02:00',
         document: [
           {
@@ -352,33 +339,30 @@ const testData: FocusProduct[] = [
       },
       bezwaar: null,
       herstelTermijn: {
-        _id: 2,
         aantalDagenHerstelTermijn: '15',
         datum: '2019-06-13T15:05:52+02:00',
         document: [],
       },
       inBehandeling: {
-        _id: 1,
         datum: '2019-06-11T15:05:52+02:00',
         document: [],
       },
     },
     soortProduct: 'Participatiewet',
-    typeBesluit: '  Buiten   BEHANDELING', // writing of the decision name is being normalized
+    typeBesluit: '  Buiten   BEHANDELING' as Decision, // writing of the decision name is being normalized
   },
   {
-    _id: '0-01',
-    _meest_recent: 'beslissing',
+    _id: '123123123',
     dienstverleningstermijn: 28,
+    inspanningsperiode: 28,
+    datePublished: '2020-05-12T00:00:00+02:00',
     naam: 'Voorschot Tozo (voor ondernemers) (Eenm.)',
     processtappen: {
       aanvraag: {
-        _id: 0,
         datum: '2020-05-12T00:00:00+02:00',
         document: [],
       },
       beslissing: {
-        _id: 3,
         datum: '2020-05-12T00:00:00+02:00',
         document: [
           {
@@ -393,7 +377,6 @@ const testData: FocusProduct[] = [
       bezwaar: null,
       herstelTermijn: null,
       inBehandeling: {
-        _id: 1,
         datum: '2020-05-12T00:00:00+02:00',
         document: [],
       },
@@ -426,8 +409,8 @@ describe('Focus data formatting', () => {
       transformFOCUSAanvragenData(
         testData,
         new Date('2018-01-01'),
-        Labels,
-        DocumentTitles
+        contentLabels,
+        contentDocumentTitles
       )
     ).toMatchSnapshot();
   });
@@ -436,8 +419,8 @@ describe('Focus data formatting', () => {
       transformFocusTozo({
         documenten: tozoDocumenten,
         aanvragen: testData,
-        Labels,
-        DocumentTitles,
+        contentLabels,
+        contentDocumentTitles,
         compareDate: new Date('2020-04-01'),
       })
     ).toMatchSnapshot();

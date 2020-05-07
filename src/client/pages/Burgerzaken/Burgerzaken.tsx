@@ -27,8 +27,8 @@ export default () => {
     if (!BRP.content?.identiteitsbewijzen) {
       return [];
     }
-    return addTitleLinkComponent(data.identiteitsbewijzen);
-  }, [data]);
+    return addTitleLinkComponent(BRP.content?.identiteitsbewijzen);
+  }, [BRP.content]);
 
   return (
     <OverviewPage className={styles.BurgerzakenOverviewPage}>
@@ -38,7 +38,7 @@ export default () => {
       <PageContent>
         <p>
           Hieronder ziet u informatie over de looptijd van uw officiële
-          identiteitsbewijzen, zoals ID-kaart of paspoort.
+          reisdocumenten, zoals ID-kaart of paspoort.
         </p>
         <p>
           <Linkd
@@ -55,7 +55,7 @@ export default () => {
             Paspoort kwijt?
           </Linkd>
         </p>
-        {isError && (
+        {isError(BRP) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>
@@ -68,7 +68,7 @@ export default () => {
         noItemsMessage="Wij kunnen nog geen officiële documenten tonen."
         startCollapsed={false}
         hasItems={!!documentItems.length}
-        isLoading={isLoading}
+        isLoading={isLoading(BRP)}
         track={{
           category: 'Burgerzaken overzicht / Huidige documenten',
           name: 'Datatabel',

@@ -33,7 +33,7 @@ export const stepStatusLabels = stepLabels;
 export const DAYS_KEEP_RECENT = 28;
 
 // NOTE: Possibly deprecated because it seems document titles actually contain meaningful names in the latest api response.
-export const DocumentTitles: { [originalTitle: string]: string } = {
+export const contentDocumentTitles: { [originalTitle: string]: string } = {
   'LO: Aanvraag': 'Aanvraag bijstandsuitkering',
   'LO: Besluit': 'Besluit aanvraag bijstandsuitkering',
   'LO: In behandeling': 'Uw aanvraag is in behandeling genomen',
@@ -72,7 +72,7 @@ export const ProductOrigins = {
 
 /**
  * A library of messages and titles with which we construct the information shown to the client */
-export const Labels: LabelData = {
+export const contentLabels: LabelData = {
   Participatiewet: {
     Levensonderhoud: {
       aanvraag: {

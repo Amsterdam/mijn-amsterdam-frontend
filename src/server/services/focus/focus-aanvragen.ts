@@ -14,8 +14,8 @@ import {
 import { ApiUrls, getApiConfigValue } from '../../config';
 import { requestData } from '../../helpers';
 import {
-  DocumentTitles,
-  Labels,
+  contentDocumentTitles,
+  contentLabels,
   stepStatusLabels,
   processSteps,
   AppRoutesByProductOrigin,
@@ -40,6 +40,7 @@ import {
   Info,
   FocusProduct,
   Step,
+  DocumentTitles,
 } from './focus-types';
 
 /**
@@ -174,10 +175,10 @@ export function formatFocusNotificationItem(
   item: FocusItem,
   step: ProcessStep,
   sourceData: StepSourceData,
-  Labels: LabelData
+  contentLabels: LabelData
 ): MyNotification {
   const stepLabels =
-    Labels[sourceData.productOrigin][sourceData.productTitle][
+    contentLabels[sourceData.productOrigin][sourceData.productTitle][
       sourceData.latestStep
     ];
 
@@ -213,15 +214,17 @@ function formatStepData(
   productOrigin: ProductOrigin,
   stepTitle: StepTitle,
   stepData: Step,
-  Labels: LabelData,
-  DocumentTitles: Record<string, string>
+  contentLabels: LabelData,
+  contentDocumentTitles: DocumentTitles
 ): ProcessStep {
   const stepLabels =
     !!sourceData.decision && stepTitle === 'beslissing'
-      ? (Labels[productOrigin][sourceData.productTitle][
+      ? (contentLabels[productOrigin][sourceData.productTitle][
           stepTitle
         ] as InfoExtended)[sourceData.decision]
-      : (Labels[productOrigin][sourceData.productTitle][stepTitle] as Info);
+      : (contentLabels[productOrigin][sourceData.productTitle][
+          stepTitle
+        ] as Info);
 
   return {
     id: sourceData.id,
@@ -235,7 +238,12 @@ function formatStepData(
     documents:
       stepData && FeatureToggle.focusDocumentDownload
         ? stepData.document.map(doc =>
-            formatFocusDocument(stepTitle, stepData.datum, doc, DocumentTitles)
+            formatFocusDocument(
+              stepTitle,
+              stepData.datum,
+              doc,
+              contentDocumentTitles
+            )
           )
         : [],
     status: stepLabels
@@ -257,8 +265,8 @@ interface FocusProductTransformed {
 export function transformFocusSourceProduct(
   product: FocusProduct,
   compareDate: Date,
-  Labels: LabelData,
-  DocumentTitles: Record<string, string>
+  contentLabels: LabelData,
+  contentDocumentTitles: DocumentTitles
 ): FocusProductTransformed {
   const {
     _id,
@@ -289,8 +297,8 @@ export function transformFocusSourceProduct(
   const hasDecision = steps.beslissing !== null;
 
   const stepLabels = !hasDecision
-    ? (Labels[productOrigin][productTitle][latestStep] as Info)
-    : (Labels[productOrigin][productTitle][latestStep] as InfoExtended)[
+    ? (contentLabels[productOrigin][productTitle][latestStep] as Info)
+    : (contentLabels[productOrigin][productTitle][latestStep] as InfoExtended)[
         decision
       ];
 
@@ -301,7 +309,7 @@ export function transformFocusSourceProduct(
       : 0;
 
   // Start of the request process
-  const dateStart = steps.aanvraag.datum;
+  const dateStart = steps.aanvraag?.datum || '';
   const productTitleTranslated = translateProductTitle(productTitle);
   const sourceData = getStepSourceData({
     id,
@@ -321,7 +329,8 @@ export function transformFocusSourceProduct(
   // Only use the process steps that have data to show
   const processStepsFiltered = processSteps.filter(stepTitle => {
     return (
-      !!steps[stepTitle] && !!Labels[productOrigin][productTitle][stepTitle]
+      !!steps[stepTitle] &&
+      !!contentLabels[productOrigin][productTitle][stepTitle]
     );
   });
 
@@ -387,8 +396,8 @@ export function transformFocusSourceProduct(
           productOrigin,
           stepTitle,
           stepData,
-          Labels,
-          DocumentTitles
+          contentLabels,
+          contentDocumentTitles
         );
       }),
   };
@@ -401,7 +410,7 @@ export function transformFocusSourceProduct(
       item,
       latestStepItem,
       sourceData,
-      Labels
+      contentLabels
     ),
     case: isRecent
       ? {
@@ -418,8 +427,8 @@ export function transformFocusSourceProduct(
 export function transformFOCUSAanvragenData(
   responseData: FOCUSAanvragenSourceData,
   compareDate: Date,
-  Labels: LabelData,
-  DocumentTitles: Record<string, string>
+  contentLabels: LabelData,
+  contentDocumentTitles: DocumentTitles
 ): FocusProductTransformed[] {
   if (!Array.isArray(responseData)) {
     return [];
@@ -429,7 +438,12 @@ export function transformFOCUSAanvragenData(
     .filter(item => sourceProductsWhitelisted.includes(item.naam))
     .sort(dateSort('datePublished', 'desc'))
     .map(product =>
-      transformFocusSourceProduct(product, compareDate, Labels, DocumentTitles)
+      transformFocusSourceProduct(
+        product,
+        compareDate,
+        contentLabels,
+        contentDocumentTitles
+      )
     );
 }
 
@@ -462,8 +476,8 @@ async function fetchFOCUSAanvragenFormatted(sessionID: SessionID) {
     const focusItems = transformFOCUSAanvragenData(
       focusItemsSource,
       new Date(),
-      Labels,
-      DocumentTitles
+      contentLabels,
+      contentDocumentTitles
     );
     return apiSuccesResult(focusItems);
   }

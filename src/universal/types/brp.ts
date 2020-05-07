@@ -1,6 +1,6 @@
 import { MyNotification } from './App.types';
 
-export interface ReisDocument {
+export interface Identiteitsbewijs {
   documentNummer: string;
   documentType: 'identiteitskaart' | 'paspoort';
   datumUitgifte: string;
@@ -70,6 +70,6 @@ export interface BRPData {
   ouders: Persoon[];
   adres: Adres;
   adresHistorisch?: Adres[];
-  reisDocumenten?: ReisDocument[];
+  identiteitsbewijzen?: Identiteitsbewijs[];
   notifications: MyNotification[];
 }

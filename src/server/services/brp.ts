@@ -10,7 +10,7 @@ const DAYS_BEFORE_EXPIRATION = 120;
 
 const BrpDocumentTitles: Record<string, string> = {
   paspoort: 'paspoort',
-  identiteitskaart: 'ID-kaart',
+  'europese identiteitskaart': 'ID-kaart',
   rijbewijs: 'rijbewijs',
 };
 
@@ -21,14 +21,14 @@ const BrpDocumentCallToAction: Record<
   isExpired: {
     paspoort:
       'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/paspoort-aanvragen/',
-    identiteitskaart:
+    'europese identiteitskaart':
       'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/id-kaart-aanvragen/',
     rijbewijs: '',
   },
   willExpire: {
     paspoort:
       'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/paspoort-aanvragen/',
-    identiteitskaart:
+    'europese identiteitskaart':
       'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/id-kaart-aanvragen/',
     rijbewijs: '',
   },
@@ -43,8 +43,7 @@ export function getBagSearchAddress(adres: Adres) {
   return `${adres.straatnaam} ${adres.huisnummer || ''}`.trim();
 }
 
-export function transformBRPNotifications(data: BRPData) {
-  const now = new Date();
+export function transformBRPNotifications(data: BRPData, compareDate: Date) {
   const inOnderzoek = data?.adres?.inOnderzoek || false;
   const isOnbekendWaarheen = data?.persoon?.vertrokkenOnbekendWaarheen || false;
   const dateLeft = data?.persoon?.datumVertrekUitNederland
@@ -54,17 +53,17 @@ export function transformBRPNotifications(data: BRPData) {
   const notifications: MyNotification[] = [];
 
   const expiredDocuments =
-    !!data.reisDocumenten &&
-    data.reisDocumenten.filter(
-      document => new Date(document.ISOdatumAfloop) < now
+    !!data.identiteitsbewijzen &&
+    data.identiteitsbewijzen.filter(
+      document => new Date(document.ISOdatumAfloop) < compareDate
     );
 
   const willExpireSoonDocuments =
-    !!data.reisDocumenten &&
-    data.reisDocumenten.filter(document => {
+    !!data.identiteitsbewijzen &&
+    data.identiteitsbewijzen.filter(document => {
       const days = differenceInCalendarDays(
         new Date(document.ISOdatumAfloop),
-        now
+        compareDate
       );
 
       return days <= DAYS_BEFORE_EXPIRATION && days > 0;
@@ -72,10 +71,11 @@ export function transformBRPNotifications(data: BRPData) {
 
   if (!!expiredDocuments && expiredDocuments.length) {
     expiredDocuments.forEach(document => {
-      const docTitle = BrpDocumentTitles[document.documentType];
+      const docTitle =
+        BrpDocumentTitles[document.documentType] || document.documentType;
       notifications.push({
         chapter: Chapters.BURGERZAKEN,
-        datePublished: now.toISOString(),
+        datePublished: compareDate.toISOString(),
         hideDatePublished: true,
         isAlert: true,
         id: `${docTitle}-datum-afloop-verstreken`,
@@ -91,10 +91,11 @@ export function transformBRPNotifications(data: BRPData) {
 
   if (!!willExpireSoonDocuments && willExpireSoonDocuments.length) {
     willExpireSoonDocuments.forEach(document => {
-      const docTitle = BrpDocumentTitles[document.documentType];
+      const docTitle =
+        BrpDocumentTitles[document.documentType] || document.documentType;
       notifications.push({
         chapter: Chapters.BURGERZAKEN,
-        datePublished: now.toISOString(),
+        datePublished: compareDate.toISOString(),
         isAlert: true,
         hideDatePublished: true,
         id: `${document.documentType}-datum-afloop-binnekort`,
@@ -111,7 +112,7 @@ export function transformBRPNotifications(data: BRPData) {
   if (inOnderzoek) {
     notifications.push({
       chapter: Chapters.BRP,
-      datePublished: now.toISOString(),
+      datePublished: compareDate.toISOString(),
       isAlert: true,
       id: 'brpAdresInOnderzoek',
       title: 'Adres in onderzoek',
@@ -127,7 +128,7 @@ export function transformBRPNotifications(data: BRPData) {
   if (isOnbekendWaarheen) {
     notifications.push({
       chapter: Chapters.BRP,
-      datePublished: now.toISOString(),
+      datePublished: compareDate.toISOString(),
       isAlert: true,
       id: 'brpVertrokkenOnbekendWaarheen',
       title: 'Vertrokken - onbekend waarheen',
@@ -143,14 +144,15 @@ export function transformBRPNotifications(data: BRPData) {
 }
 
 function transformBRPData(responseData: BRPData) {
-  if (Array.isArray(responseData.reisDocumenten)) {
+  if (Array.isArray(responseData.identiteitsbewijzen)) {
     Object.assign(responseData, {
-      reisDocumenten: responseData.reisDocumenten.map(document => {
+      identiteitsbewijzen: responseData.identiteitsbewijzen.map(document => {
         const route = generatePath(AppRoutes.BURGERZAKEN_DOCUMENT, {
           id: document.documentNummer,
         });
         return Object.assign({}, document, {
-          title: BrpDocumentTitles[document.documentType],
+          title:
+            BrpDocumentTitles[document.documentType] || document.documentType,
           datumAfloop: defaultDateFormat(document.datumAfloop),
           ISOdatumAfloop: document.datumAfloop,
           datumUitgifte: defaultDateFormat(document.datumUitgifte),
@@ -183,7 +185,7 @@ export async function fetchBRPGenerated(sessionID: SessionID) {
   let notifications: MyNotification[] = [];
 
   if (BRP.status === 'OK') {
-    notifications = transformBRPNotifications(BRP.content);
+    notifications = transformBRPNotifications(BRP.content, new Date());
   }
 
   return {

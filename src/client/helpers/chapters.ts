@@ -66,9 +66,9 @@ function isChapterActive(
 
     case Chapters.BURGERZAKEN:
       return (
-        FeatureToggle.reisDocumentenActive &&
+        FeatureToggle.identiteitsbewijzenActive &&
         !isLoading(BRP) &&
-        !!BRP.content?.reisDocumenten?.length
+        !!BRP.content?.identiteitsbewijzen?.length
       );
   }
 

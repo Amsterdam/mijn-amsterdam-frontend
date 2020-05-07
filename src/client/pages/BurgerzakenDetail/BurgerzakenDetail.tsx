@@ -16,7 +16,7 @@ import {
   PageHeading,
 } from '../../components';
 import styles from './BurgerzakenDetail.module.scss';
-import { ReisDocument } from '../../../universal/types';
+import { Identiteitsbewijs } from '../../../universal/types';
 
 export default () => {
   const { BRP } = useContext(AppContext);
@@ -27,7 +27,7 @@ export default () => {
     },
   } = useRouter();
 
-  const DocumentItem = data.identiteitsbewijzen?.find(item => item.id === id);
+  const DocumentItem = BRP.content?.identiteitsbewijzen?.find(item => item.id === id);
   const noContent = !isLoading && !DocumentItem;
 
   return (
@@ -38,13 +38,13 @@ export default () => {
           to: AppRoutes.BURGERZAKEN,
           title: ChapterTitles.BURGERZAKEN,
         }}
-        isLoading={isLoading}
+        isLoading={isLoading(BRP)}
       >
         {capitalizeFirstLetter(DocumentItem?.title || 'Document')}
       </PageHeading>
 
       <PageContent className={styles.DetailPageContent}>
-        {(isError || noContent) && (
+        {(isError(BRP) || noContent) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>

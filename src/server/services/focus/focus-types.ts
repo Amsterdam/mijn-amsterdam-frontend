@@ -10,14 +10,14 @@ export interface Step {
 export interface FocusProduct {
   _id: string;
   soortProduct: ProductOrigin;
-  typeBesluit: Decision;
+  typeBesluit?: Decision;
   naam: string;
   processtappen: {
     aanvraag: Step | null;
-    inBehandeling: Step;
-    herstelTermijn: Step;
-    beslissing: Step;
-    bezwaar: Step;
+    inBehandeling: Step | null;
+    herstelTermijn: Step | null;
+    beslissing: Step | null;
+    bezwaar: Step | null;
   };
   dienstverleningstermijn: number;
   inspanningsperiode: number;
@@ -71,7 +71,7 @@ export interface Info {
 
 export type InfoExtended = { [decision: string]: Info };
 
-export interface ProductType {
+export interface ProductStepLabels {
   aanvraag: Info | null;
   inBehandeling: Info | null;
   herstelTermijn: Info | null;
@@ -80,7 +80,9 @@ export interface ProductType {
 }
 
 export type LabelData = {
-  [origin in ProductOrigin]: { [productTitle in ProductTitle]: ProductType };
+  [origin in ProductOrigin]: {
+    [productTitle in ProductTitle]: ProductStepLabels;
+  };
 };
 
 export type RoutesByProductOrigin = {
@@ -94,3 +96,5 @@ export interface FocusDocument {
   isDms: boolean;
   omschrijving: string;
 }
+
+export type DocumentTitles = Record<string, string>;

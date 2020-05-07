@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BRP data api + transformation should transform the source data into notifications 1`] = `
+Array [
+  Object {
+    "chapter": "BRP",
+    "datePublished": "2020-04-22T22:00:00.000Z",
+    "description": "Op dit moment onderzoeken wij of u nog steeds woont op het adres waar u ingeschreven staat.",
+    "id": "brpAdresInOnderzoek",
+    "isAlert": true,
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/persoonlijke-gegevens",
+    },
+    "title": "Adres in onderzoek",
+  },
+  Object {
+    "chapter": "BRP",
+    "datePublished": "2020-04-22T22:00:00.000Z",
+    "description": "U staat sinds 01 januari 1967 in Basisregistratie Personen (BRP) geregistreerd als 'vertrokken onbekend waarheen'.",
+    "id": "brpVertrokkenOnbekendWaarheen",
+    "isAlert": true,
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/persoonlijke-gegevens",
+    },
+    "title": "Vertrokken - onbekend waarheen",
+  },
+]
+`;

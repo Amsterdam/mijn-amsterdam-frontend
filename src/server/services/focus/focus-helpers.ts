@@ -90,12 +90,12 @@ export function formatFocusDocument(
   stepTitle: StepTitle,
   datePublished: string,
   document: FocusDocument,
-  DocumentTitles: Record<string, string>
+  contentDocumentTitles: DocumentTitles
 ): GenericDocument {
   const { id, omschrijving: title, $ref: url } = document;
   return {
     id: String(id),
-    title: DocumentTitles[title] || title,
+    title: contentDocumentTitles[title] || title,
     url: `/api/${url}`,
     datePublished,
     type: stepTitle,

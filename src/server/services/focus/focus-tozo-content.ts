@@ -8,14 +8,14 @@ export const TOZO_VOORSCHOT_PRODUCT_TITLE: TozoProductTitle =
 export const TOZO_LENING_PRODUCT_TITLE: TozoProductTitle = 'Lening Tozo';
 export const TOZO_UITKERING_PRODUCT_TITLE: TozoProductTitle = 'Uitkering Tozo';
 
-export const DocumentTitles: Record<string, string> = {
+export const contentDocumentTitles: DocumentTitles = {
   'E-AANVR-TOZO': 'aanvraag',
   'E-AANVR-KBBZ': 'aanvraag',
   'Voorschot Tozo (voor ondernemers) (Eenm.)': 'toekenning',
   'Tegemoetkoming Ondernemers en Zelfstandigen': 'aanvraag',
 };
 
-export const Labels: LabelData = {
+export const contentLabels: LabelData = {
   Minimafonds: {},
   Participatiewet: {
     [TOZO_UITKERING_PRODUCT_TITLE]: {

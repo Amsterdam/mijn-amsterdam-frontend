@@ -8,7 +8,7 @@ import { BRPData } from '../../../universal/types';
 import { AppState } from '../../AppState';
 import { ExternalUrls } from '../../config/app';
 
-type PanelKey = keyof Omit<BRPData, 'reisDocumenten' | 'notifications'>;
+type PanelKey = keyof Omit<BRPData, 'identiteitsbewijzen' | 'notifications'>;
 type PanelProps = Pick<InfoPanelProps, 'title' | 'actionLinks'>;
 
 export type PanelConfigFormatter =
