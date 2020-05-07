@@ -2,11 +2,13 @@ import {
   getBagSearchAddress,
   getFullAddress,
   transformBRPNotifications,
+  transformBRPData,
 } from './brp';
 import brpData from '../mock-data/json/brp.json';
 import { BRPData } from '../../universal/types/brp';
 
 const { adres } = brpData;
+const brpDataTyped: BRPData = brpData;
 
 describe('BRP data api + transformation', () => {
   it('should construct a bag search addresss', () => {
@@ -19,9 +21,13 @@ describe('BRP data api + transformation', () => {
     ).toBe('Burgemeester R\u00f6ellstr 1 X h');
   });
 
+  it('should transform the source data', () => {
+    expect(transformBRPData(brpDataTyped)).toMatchSnapshot();
+  });
+
   it('should transform the source data into notifications', () => {
     expect(
-      transformBRPNotifications(brpData as BRPData, new Date(2020, 3, 23))
+      transformBRPNotifications(brpDataTyped, new Date(2020, 3, 23))
     ).toMatchSnapshot();
   });
 });

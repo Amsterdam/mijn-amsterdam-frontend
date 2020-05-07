@@ -1,13 +1,9 @@
-import { MyNotification } from './App.types';
-
 export interface Identiteitsbewijs {
   documentNummer: string;
-  documentType: 'identiteitskaart' | 'paspoort';
+  documentType: 'europese identiteitskaart' | 'paspoort' | string;
   datumUitgifte: string;
   datumAfloop: string;
-  ISOdatumUitgifte: string;
-  ISOdatumAfloop: string;
-  title: string;
+  title?: string;
 }
 
 export interface Adres {
@@ -49,7 +45,7 @@ export interface Verbintenis {
   plaatsnaamSluitingOmschrijving: string;
   soortVerbintenis: string;
   soortVerbintenisOmschrijving: string;
-  persoon: Persoon;
+  persoon: Partial<Persoon>;
 }
 
 export interface Kind {
@@ -57,9 +53,9 @@ export interface Kind {
   geboortedatum: string;
   geslachtsaanduiding: string;
   geslachtsnaam: string;
-  overlijdensdatum: string;
+  overlijdensdatum: string | null;
   voornamen: string;
-  voorvoegselGeslachtsnaam: string;
+  voorvoegselGeslachtsnaam: string | null;
 }
 
 export interface BRPData {
@@ -67,9 +63,8 @@ export interface BRPData {
   verbintenis?: Verbintenis;
   verbintenisHistorisch?: Verbintenis[];
   kinderen?: Kind[];
-  ouders: Persoon[];
+  ouders: Partial<Persoon>[];
   adres: Adres;
   adresHistorisch?: Adres[];
   identiteitsbewijzen?: Identiteitsbewijs[];
-  notifications: MyNotification[];
 }

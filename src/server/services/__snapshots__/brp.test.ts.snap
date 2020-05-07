@@ -1,7 +1,217 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`BRP data api + transformation should transform the source data 1`] = `
+Object {
+  "adres": Object {
+    "begindatumVerblijf": "1967-01-01T00:00:00Z",
+    "huisletter": null,
+    "huisnummer": "1",
+    "huisnummertoevoeging": null,
+    "inOnderzoek": true,
+    "postcode": "1064 BH",
+    "straatnaam": "Burgemeester Röellstr",
+    "woonplaatsNaam": "Amsterdam",
+  },
+  "adresHistorisch": Array [
+    Object {
+      "begindatumVerblijf": "1967-01-01T00:00:00Z",
+      "huisletter": null,
+      "huisnummer": "1",
+      "huisnummertoevoeging": null,
+      "inOnderzoek": true,
+      "postcode": "1064 BH",
+      "straatnaam": "Burgemeester Röellstr",
+      "woonplaatsNaam": "Amsterdam",
+    },
+    Object {
+      "begindatumVerblijf": "1967-01-01T00:00:00Z",
+      "huisletter": null,
+      "huisnummer": "1",
+      "huisnummertoevoeging": null,
+      "inOnderzoek": true,
+      "postcode": "1064 BH",
+      "straatnaam": "Burgemeester Röellstr",
+      "woonplaatsNaam": "Amsterdam",
+    },
+  ],
+  "identiteitsbewijzen": Array [
+    Object {
+      "datumAfloop": "10 juni 2020",
+      "datumUitgifte": "10 oktober 2010",
+      "documentNummer": "123ABC",
+      "documentType": "paspoort",
+      "link": Object {
+        "title": "paspoort",
+        "to": "/burgerzaken/document/123ABC",
+      },
+      "title": "paspoort",
+    },
+    Object {
+      "datumAfloop": "29 mei 2019",
+      "datumUitgifte": "29 mei 2016",
+      "documentNummer": "CBA890",
+      "documentType": "europese identiteitskaart",
+      "link": Object {
+        "title": "europese identiteitskaart",
+        "to": "/burgerzaken/document/CBA890",
+      },
+      "title": "ID-kaart",
+    },
+  ],
+  "kinderen": Array [
+    Object {
+      "bsn": "123456780",
+      "geboortedatum": "2019-07-08T09:14:58.963Z",
+      "geslachtsaanduiding": "M",
+      "geslachtsnaam": "Kosterijk",
+      "overlijdensdatum": null,
+      "voornamen": "Yassine",
+      "voorvoegselGeslachtsnaam": null,
+    },
+    Object {
+      "bsn": "123456780",
+      "geboortedatum": "2019-07-08T09:14:58.963Z",
+      "geslachtsaanduiding": "M",
+      "geslachtsnaam": "Kosterijk",
+      "overlijdensdatum": "2019-07-08T09:14:58.963Z",
+      "voornamen": "Marwan",
+      "voorvoegselGeslachtsnaam": null,
+    },
+  ],
+  "ouders": Array [
+    Object {
+      "bsn": "123456780",
+      "geboortedatum": "1920-01-01T00:00:00Z",
+      "geboortelandnaam": "Nederland",
+      "geboorteplaatsnaam": "Lochem",
+      "geslachtsnaam": "Beemsterboer",
+      "nationaliteiten": Array [
+        Object {
+          "omschrijving": "Nederlandse",
+        },
+      ],
+      "omschrijvingGeslachtsaanduiding": "Man",
+      "opgemaakteNaam": "S. Beemsterboer",
+      "overlijdensdatum": null,
+      "voornamen": "Senior",
+      "voorvoegselGeslachtsnaam": null,
+    },
+    Object {
+      "bsn": "123456780",
+      "geboortedatum": "1920-01-01T00:00:00Z",
+      "geboortelandnaam": "Nederland",
+      "geboorteplaatsnaam": "Lochem",
+      "geslachtsnaam": "Beemsterboerin",
+      "nationaliteiten": Array [
+        Object {
+          "omschrijving": "Nederlandse",
+        },
+      ],
+      "omschrijvingGeslachtsaanduiding": "Vrouw",
+      "opgemaakteNaam": "Sa. Beemsterboer",
+      "overlijdensdatum": null,
+      "voornamen": "Seniora",
+      "voorvoegselGeslachtsnaam": null,
+    },
+  ],
+  "persoon": Object {
+    "aanduidingNaamgebruikOmschrijving": "Eigen geslachtsnaam",
+    "bsn": "129095205",
+    "datumVertrekUitNederland": "1967-01-01T00:00:00Z",
+    "geboortedatum": "1950-01-01T00:00:00Z",
+    "geboortelandnaam": "Nederland",
+    "geboorteplaatsnaam": "Lochem",
+    "gemeentenaamInschrijving": "Amsterdam",
+    "geslachtsnaam": "Beemsterboer",
+    "mokum": true,
+    "nationaliteiten": Array [
+      Object {
+        "omschrijving": "Nederlandse",
+      },
+      Object {
+        "omschrijving": "Turkse",
+      },
+    ],
+    "omschrijvingAdellijkeTitel": "Hertogin",
+    "omschrijvingBurgerlijkeStaat": "Gehuwd",
+    "omschrijvingGeslachtsaanduiding": "Man",
+    "opgemaakteNaam": "W. Beemsterboer",
+    "overlijdensdatum": null,
+    "vertrokkenOnbekendWaarheen": true,
+    "voornamen": "Wesley",
+    "voorvoegselGeslachtsnaam": null,
+  },
+  "verbintenis": Object {
+    "datumOntbinding": null,
+    "datumSluiting": "1999-01-01T01:01:01.000Z",
+    "landnaamSluiting": "Marokko",
+    "persoon": Object {
+      "bsn": "123456780",
+      "geboortedatum": "2019-07-08T09:14:58.963Z",
+      "geslachtsaanduiding": null,
+      "geslachtsnaam": "Bakker",
+      "overlijdensdatum": null,
+      "voornamen": "Souad",
+      "voorvoegselGeslachtsnaam": null,
+    },
+    "plaatsnaamSluitingOmschrijving": "Asilah",
+    "soortVerbintenis": "H",
+    "soortVerbintenisOmschrijving": "Huwelijk",
+  },
+  "verbintenisHistorisch": Array [
+    Object {
+      "datumOntbinding": "1998-07-08T09:14:58.963Z",
+      "datumSluiting": "1912-01-01T01:01:01.000Z",
+      "landnaamSluiting": "Marokko",
+      "persoon": Object {
+        "bsn": "123456780",
+        "geboortedatum": "2019-07-08T09:14:58.963Z",
+        "geslachtsaanduiding": null,
+        "geslachtsnaam": "Bakker",
+        "overlijdensdatum": null,
+        "voornamen": "Souad",
+        "voorvoegselGeslachtsnaam": null,
+      },
+      "plaatsnaamSluitingOmschrijving": "Asilah",
+      "soortVerbintenis": "H",
+      "soortVerbintenisOmschrijving": "Huwelijk",
+    },
+    Object {
+      "datumOntbinding": "2019-07-08T09:14:58.963Z",
+      "datumSluiting": "",
+      "landnaamSluiting": "Marokko",
+      "persoon": Object {
+        "bsn": "123456780",
+        "geboortedatum": "2019-07-08T09:14:58.963Z",
+        "geslachtsaanduiding": null,
+        "geslachtsnaam": "Bakker",
+        "overlijdensdatum": null,
+        "voornamen": "Souad",
+        "voorvoegselGeslachtsnaam": null,
+      },
+      "plaatsnaamSluitingOmschrijving": "Asilah",
+      "soortVerbintenis": "H",
+      "soortVerbintenisOmschrijving": "Huwelijk",
+    },
+  ],
+}
+`;
+
 exports[`BRP data api + transformation should transform the source data into notifications 1`] = `
 Array [
+  Object {
+    "chapter": "BURGERZAKEN",
+    "datePublished": "2020-04-22T22:00:00.000Z",
+    "description": "Vanaf 10 juni 2020 is uw paspoort niet meer geldig.",
+    "hideDatePublished": true,
+    "id": "paspoort-datum-afloop-binnekort",
+    "isAlert": true,
+    "link": Object {
+      "title": "Vraag snel uw nieuwe paspoort aan",
+      "to": "https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/paspoort-aanvragen/",
+    },
+    "title": "Uw paspoort verloopt binnenkort",
+  },
   Object {
     "chapter": "BRP",
     "datePublished": "2020-04-22T22:00:00.000Z",

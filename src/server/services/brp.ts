@@ -55,14 +55,14 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
   const expiredDocuments =
     !!data.identiteitsbewijzen &&
     data.identiteitsbewijzen.filter(
-      document => new Date(document.ISOdatumAfloop) < compareDate
+      document => new Date(document.datumAfloop) < compareDate
     );
 
   const willExpireSoonDocuments =
     !!data.identiteitsbewijzen &&
     data.identiteitsbewijzen.filter(document => {
       const days = differenceInCalendarDays(
-        new Date(document.ISOdatumAfloop),
+        new Date(document.datumAfloop),
         compareDate
       );
 
@@ -143,7 +143,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
   return notifications;
 }
 
-function transformBRPData(responseData: BRPData) {
+export function transformBRPData(responseData: BRPData) {
   if (Array.isArray(responseData.identiteitsbewijzen)) {
     Object.assign(responseData, {
       identiteitsbewijzen: responseData.identiteitsbewijzen.map(document => {
@@ -154,9 +154,7 @@ function transformBRPData(responseData: BRPData) {
           title:
             BrpDocumentTitles[document.documentType] || document.documentType,
           datumAfloop: defaultDateFormat(document.datumAfloop),
-          ISOdatumAfloop: document.datumAfloop,
           datumUitgifte: defaultDateFormat(document.datumUitgifte),
-          ISOdatumUitgifte: document.datumUitgifte,
           link: {
             to: route,
             title: document.documentType,
