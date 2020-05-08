@@ -54,7 +54,7 @@ export default () => {
         )}
         {isLoading && <LoadingContent />}
       </PageContent>
-      {!!TozoItem.process.aanvraag && (
+      {!!TozoItem?.process.aanvraag && (
         <StatusLine
           className={styles.AanvraagStatusLine}
           trackCategory={`Inkomen en Stadspas / Tozo aanvraag`}
@@ -65,7 +65,7 @@ export default () => {
           id={'inkomen-stadspas-detail-tozo-aanvraag'}
         />
       )}
-      {!!TozoItem.process.uitkering.length && (
+      {!!TozoItem?.process.uitkering.length && (
         <StatusLine
           trackCategory={`Inkomen en Stadspas / Tozo uitkering levensonderhoud`}
           statusLabel="Status Tozo uitkering levensonderhoud"
@@ -75,7 +75,7 @@ export default () => {
           id={'inkomen-stadspas-detail-tozo-uitkering'}
         />
       )}
-      {!!TozoItem.process.lening.length && (
+      {!!TozoItem?.process.lening.length && (
         <StatusLine
           trackCategory={`Inkomen en Stadspas / Tozo lening bedrijfskrediet`}
           statusLabel="Status Tozo lening bedrijfskrediet"

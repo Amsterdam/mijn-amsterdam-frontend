@@ -90,15 +90,17 @@ export default () => {
           </Alert>
         )}
       </PageContent>
-      <section>
-        <SectionCollapsibleHeading
-          isAriaExpanded={false}
-          toggleCollapsed={() => history.push(AppRoutes['INKOMEN/TOZO'])}
-          hasItems={true}
-        >
-          Tozo
-        </SectionCollapsibleHeading>
-      </section>
+      {FeatureToggle.tozoActive && (
+        <section>
+          <SectionCollapsibleHeading
+            isAriaExpanded={false}
+            toggleCollapsed={() => history.push(AppRoutes['INKOMEN/TOZO'])}
+            hasItems={true}
+          >
+            Tozo
+          </SectionCollapsibleHeading>
+        </section>
+      )}
       <SectionCollapsible
         id="SectionCollapsible-income-request-process"
         title="Lopende aanvragen"

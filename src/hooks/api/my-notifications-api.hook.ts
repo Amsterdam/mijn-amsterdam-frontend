@@ -73,9 +73,11 @@ export default function useMyNotificationsApi({
           addChapterNamespaceToId('MILIEUZONE')
         ),
         // Focus TOZO
-        ...(Object.values(FOCUS_TOZO.data.notifications).filter(
-          notification => notification !== null
-        ) as MyNotification[]),
+        ...(FOCUS_TOZO.data?.notifications
+          ? (Object.values(FOCUS_TOZO.data.notifications).filter(
+              notification => notification !== null
+            ) as MyNotification[])
+          : []),
       ].sort(dateSort('datePublished', 'desc')),
     [
       FOCUS.data.notifications,
@@ -83,7 +85,7 @@ export default function useMyNotificationsApi({
       BELASTINGEN.data.notifications,
       MILIEUZONE.data.notifications,
       FOCUS_SPECIFICATIONS.data.notifications,
-      FOCUS_TOZO.data.notifications,
+      FOCUS_TOZO.data,
     ]
   );
 

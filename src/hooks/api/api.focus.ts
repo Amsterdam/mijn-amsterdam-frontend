@@ -17,6 +17,7 @@ import {
   FocusTozoDocument,
   FocusTozo,
 } from '../../data-formatting/focus-tozo';
+import { FeatureToggle } from 'config/App.constants';
 
 export interface FocusCombinedResponse {
   content: {
@@ -37,7 +38,7 @@ export type FocusCombinedApiState = ApiState<FocusCombinedResponse>;
 export type FocusCombinedSpecificationsApiState = ApiState<
   Omit<FocusCombined, 'tozodocumenten'>
 >;
-export type FocusTozoApiState = ApiState<FocusTozo>;
+export type FocusTozoApiState = ApiState<FocusTozo | null>;
 
 export interface FocusData {
   items: FocusItem[];
@@ -90,10 +91,12 @@ function useFocusCombinedTozoApi(
       isError: apiCombined.isError || apiAanvragen.isError,
       isPristine: apiCombined.isPristine && apiAanvragen.isPristine,
       errorMessage: '',
-      data: formatFocusTozo({
-        documenten: apiCombined.data.content.tozodocumenten,
-        aanvragen: apiAanvragen.rawData,
-      }),
+      data: FeatureToggle.tozoActive
+        ? formatFocusTozo({
+            documenten: apiCombined.data.content.tozodocumenten || [],
+            aanvragen: apiAanvragen.rawData,
+          })
+        : null,
     }),
     [apiCombined, apiAanvragen]
   );

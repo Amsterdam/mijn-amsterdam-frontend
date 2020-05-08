@@ -127,10 +127,12 @@ function AppAuthenticated() {
             path={AppRoutes['INKOMEN/BIJZONDERE_BIJSTAND']}
             component={InkomenDetail}
           />
-          <Route
-            path={AppRoutes['INKOMEN/TOZO']}
-            component={InkomenDetailTozo}
-          />
+          {FeatureToggle.tozoActive && (
+            <Route
+              path={AppRoutes['INKOMEN/TOZO']}
+              component={InkomenDetailTozo}
+            />
+          )}
           <Route path={AppRoutes.INKOMEN} component={Inkomen} />
           <Route
             path={AppRoutes['ZORG/VOORZIENINGEN']}
