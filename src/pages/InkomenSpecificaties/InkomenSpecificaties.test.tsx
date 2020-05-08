@@ -1,13 +1,13 @@
 import AppState, { AppState as AppStateInterface } from 'AppState';
 import { MemoryRouter, Route, Switch } from 'react-router-dom';
 
-import { IncomeSpecificationsResponse } from 'hooks/api/api.focus';
+import { FocusCombinedResponse } from 'hooks/api/api.focus';
 import InkomenSpecificaties from './InkomenSpecificaties';
 import React from 'react';
-import { formatIncomeSpecifications } from 'data-formatting/focus';
 import { mount } from 'enzyme';
+import { formatFocusCombinedSpecifications } from 'data-formatting/focus';
 
-const sourceData: IncomeSpecificationsResponse = {
+const sourceData: FocusCombinedResponse = {
   content: {
     jaaropgaven: [
       {
@@ -41,13 +41,14 @@ const sourceData: IncomeSpecificationsResponse = {
         id: 'item-3',
       },
     ],
+    tozodocumenten: [],
   },
 };
 
-const data = formatIncomeSpecifications(sourceData);
+const data = formatFocusCombinedSpecifications(sourceData);
 
 const APP_STATE = {
-  FOCUS_INKOMEN_SPECIFICATIES: {
+  FOCUS_SPECIFICATIONS: {
     data,
     isError: false,
     isLoading: false,

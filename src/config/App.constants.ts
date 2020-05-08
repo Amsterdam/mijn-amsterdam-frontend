@@ -7,7 +7,9 @@ export const FeatureToggle = {
   belastingApiActive: true,
   milieuzoneApiActive: true,
   focusUitkeringsspecificatiesActive: !IS_PRODUCTION,
+  focusCombinedActive: !IS_PRODUCTION,
   identiteitsbewijzenActive: !IS_PRODUCTION,
+  tozoActive: !IS_PRODUCTION,
 };
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options

@@ -1,4 +1,4 @@
-const data = require('../json/inkomen-specificaties.json');
+const data = require('../json/focus-combined.json');
 
 module.exports = {
   path: '/api/focus/combined',

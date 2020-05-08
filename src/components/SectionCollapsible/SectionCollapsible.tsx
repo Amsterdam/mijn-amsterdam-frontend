@@ -25,6 +25,44 @@ export interface SectionCollapsibleProps {
   children: ComponentChildren;
 }
 
+export interface SectionCollapsibleHeadingProps {
+  hasItems: boolean;
+  children: ComponentChildren;
+  toggleCollapsed: (event: any) => void;
+  isAriaExpanded: boolean;
+}
+
+export function SectionCollapsibleHeading({
+  children,
+  hasItems,
+  toggleCollapsed,
+  isAriaExpanded,
+}: SectionCollapsibleHeadingProps) {
+  return (
+    <Heading
+      size="mediumLarge"
+      className={classnames(styles.Title, hasItems && styles.TitleWithItems)}
+    >
+      {hasItems ? (
+        <button
+          aria-expanded={isAriaExpanded}
+          className={styles.TitleToggle}
+          onKeyPress={event => hasItems && toggleCollapsed(event)}
+          onClick={event => hasItems && toggleCollapsed(event)}
+        >
+          <CaretIcon aria-hidden="true" className={styles.CaretIcon} />{' '}
+          {children}
+        </button>
+      ) : (
+        <>
+          <CaretIcon aria-hidden="true" className={styles.CaretIcon} />{' '}
+          {children}
+        </>
+      )}
+    </Heading>
+  );
+}
+
 export default function SectionCollapsible({
   id,
   title = '',
@@ -91,30 +129,13 @@ export default function SectionCollapsible({
   return (
     <section className={classes}>
       {hasTitle && (
-        <Heading
-          size="mediumLarge"
-          className={classnames(
-            styles.Title,
-            hasItems && styles.TitleWithItems
-          )}
+        <SectionCollapsibleHeading
+          isAriaExpanded={!isCollapsed}
+          toggleCollapsed={toggleCollapsed}
+          hasItems={hasItems}
         >
-          {hasItems ? (
-            <button
-              aria-expanded={!isCollapsed}
-              className={styles.TitleToggle}
-              onKeyPress={event => hasItems && toggleCollapsed(event)}
-              onClick={event => hasItems && toggleCollapsed(event)}
-            >
-              <CaretIcon aria-hidden="true" className={styles.CaretIcon} />{' '}
-              {title}
-            </button>
-          ) : (
-            <>
-              <CaretIcon aria-hidden="true" className={styles.CaretIcon} />{' '}
-              {title}
-            </>
-          )}
-        </Heading>
+          {title}
+        </SectionCollapsibleHeading>
       )}
       {isLoading && (
         <LoadingContent

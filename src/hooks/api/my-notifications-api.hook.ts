@@ -46,10 +46,11 @@ function addChapterNamespaceToId(chapter: Chapter) {
 // a domain wide notifications stream.
 export default function useMyNotificationsApi({
   FOCUS,
-  FOCUS_INKOMEN_SPECIFICATIES,
+  FOCUS_SPECIFICATIONS,
   BRP,
   BELASTINGEN,
   MILIEUZONE,
+  FOCUS_TOZO,
 }: AppState): MyNotificationsApiState {
   const items = useMemo(
     () =>
@@ -58,7 +59,7 @@ export default function useMyNotificationsApi({
         WelcomeNotification,
         // Focus notification items
         ...FOCUS.data.notifications.map(addChapterNamespaceToId('INKOMEN')),
-        ...FOCUS_INKOMEN_SPECIFICATIES.data.notifications.map(
+        ...FOCUS_SPECIFICATIONS.data.notifications.map(
           addChapterNamespaceToId('INKOMEN')
         ),
         // BRP Notifications
@@ -71,28 +72,45 @@ export default function useMyNotificationsApi({
         ...MILIEUZONE.data.notifications.map(
           addChapterNamespaceToId('MILIEUZONE')
         ),
+        // Focus TOZO
+        ...(FOCUS_TOZO.data?.notifications
+          ? (Object.values(FOCUS_TOZO.data.notifications).filter(
+              notification => notification !== null
+            ) as MyNotification[])
+          : []),
       ].sort(dateSort('datePublished', 'desc')),
     [
       FOCUS.data.notifications,
       BRP.notifications,
       BELASTINGEN.data.notifications,
       MILIEUZONE.data.notifications,
-      FOCUS_INKOMEN_SPECIFICATIES.data.notifications,
+      FOCUS_SPECIFICATIONS.data.notifications,
+      FOCUS_TOZO.data,
     ]
   );
 
   const isLoading =
     BRP.isLoading ||
     FOCUS.isLoading ||
+    FOCUS_TOZO.isLoading ||
     BELASTINGEN.isLoading ||
     MILIEUZONE.isLoading;
   const isError =
-    BRP.isError || FOCUS.isError || BELASTINGEN.isError || MILIEUZONE.isError;
+    BRP.isError ||
+    FOCUS.isError ||
+    BELASTINGEN.isError ||
+    MILIEUZONE.isError ||
+    FOCUS_TOZO.isError;
   const isDirty =
-    BRP.isDirty && FOCUS.isDirty && BELASTINGEN.isDirty && MILIEUZONE.isDirty;
+    BRP.isDirty &&
+    FOCUS.isDirty &&
+    BELASTINGEN.isDirty &&
+    MILIEUZONE.isDirty &&
+    FOCUS_TOZO.isDirty;
   const isPristine =
     BRP.isPristine &&
     FOCUS.isPristine &&
+    FOCUS_TOZO.isPristine &&
     BELASTINGEN.isPristine &&
     MILIEUZONE.isPristine;
 

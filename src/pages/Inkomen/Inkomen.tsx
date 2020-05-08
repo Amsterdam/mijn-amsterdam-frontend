@@ -13,10 +13,14 @@ import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import { ChapterTitles } from 'config/Chapter.constants';
 import Linkd from 'components/Button/Button';
 import PageHeading from 'components/PageHeading/PageHeading';
-import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
+import SectionCollapsible, {
+  SectionCollapsibleHeading,
+} from 'components/SectionCollapsible/SectionCollapsible';
 import classnames from 'classnames';
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import styles from './Inkomen.module.scss';
+import useRouter from 'use-react-router';
+import { AppRoutes } from '../../config/Routing.constants';
 import {
   incomSpecificationsRouteMonthly,
   incomSpecificationsRouteYearly,
@@ -39,12 +43,16 @@ export default () => {
       isError,
       isLoading,
     },
-    FOCUS_INKOMEN_SPECIFICATIES: {
+    FOCUS_SPECIFICATIONS: {
       data: { jaaropgaven, uitkeringsspecificaties },
       isError: isError2,
       isLoading: isLoading2,
     },
   } = useContext(AppContext);
+
+  const { history } = useRouter();
+
+  const noTozo = true;
 
   const itemsRequested = useMemo(() => {
     return addTitleLinkComponent(items.filter(item => !item.hasDecision));
@@ -57,7 +65,6 @@ export default () => {
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
   const itemsSpecificationsMonthly = uitkeringsspecificaties.slice(0, 3);
-
   const itemsSpecificationsYearly = jaaropgaven.slice(0, 3);
 
   return (
@@ -83,6 +90,17 @@ export default () => {
           </Alert>
         )}
       </PageContent>
+      {FeatureToggle.tozoActive && (
+        <section>
+          <SectionCollapsibleHeading
+            isAriaExpanded={false}
+            toggleCollapsed={() => history.push(AppRoutes['INKOMEN/TOZO'])}
+            hasItems={true}
+          >
+            Tozo
+          </SectionCollapsibleHeading>
+        </section>
+      )}
       <SectionCollapsible
         id="SectionCollapsible-income-request-process"
         title="Lopende aanvragen"
@@ -94,7 +112,7 @@ export default () => {
           name: 'Datatabel',
         }}
         noItemsMessage="U hebt op dit moment geen lopende aanvragen."
-        className={styles.SectionCollapsibleRequests}
+        className={noTozo ? styles.SectionCollapsibleFirst : ''}
       >
         <Table
           items={itemsRequested}
@@ -120,7 +138,7 @@ export default () => {
           className={styles.Table}
         />
       </SectionCollapsible>
-      {FeatureToggle.focusUitkeringsspecificatiesActive && (
+      {FeatureToggle.focusCombinedActive && (
         <SectionCollapsible
           id="SectionCollapsible-income-specifications-monthly"
           startCollapsed={hasActiveRequests || hasActiveDescisions}
@@ -145,7 +163,7 @@ export default () => {
           )}
         </SectionCollapsible>
       )}
-      {FeatureToggle.focusUitkeringsspecificatiesActive && (
+      {FeatureToggle.focusCombinedActive && (
         <SectionCollapsible
           id="SectionCollapsible-income-specifications-yearly"
           startCollapsed={hasActiveRequests || hasActiveDescisions}

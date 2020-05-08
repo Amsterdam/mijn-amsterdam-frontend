@@ -1,10 +1,10 @@
 import {
   FocusApiResponse,
   FocusInkomenSpecificatie,
-  FocusInkomenSpecificatieFromSource,
+  FocusCombinedItemFromSource,
   FocusItem,
   formatFocusItems,
-  formatIncomeSpecifications,
+  formatFocusCombinedSpecifications,
 } from 'data-formatting/focus';
 import { getApiConfigValue, getApiUrl } from 'helpers/App';
 
@@ -12,28 +12,46 @@ import { ApiState } from './api.types';
 import { MyNotification } from './my-notifications-api.hook';
 import { useDataApi } from './api.hook';
 import { useMemo } from 'react';
+import {
+  formatFocusTozo,
+  FocusTozoDocument,
+  FocusTozo,
+} from '../../data-formatting/focus-tozo';
+import { FeatureToggle } from 'config/App.constants';
 
-export interface IncomeSpecificationsResponse {
+export interface FocusCombinedResponse {
   content: {
-    jaaropgaven: FocusInkomenSpecificatieFromSource[];
-    uitkeringsspecificaties: FocusInkomenSpecificatieFromSource[];
+    jaaropgaven: FocusCombinedItemFromSource[];
+    uitkeringsspecificaties: FocusCombinedItemFromSource[];
+    tozodocumenten: FocusCombinedItemFromSource[];
   };
 }
 
-export interface IncomeSpecifications {
+export interface FocusCombined {
   jaaropgaven: FocusInkomenSpecificatie[];
   uitkeringsspecificaties: FocusInkomenSpecificatie[];
   notifications: MyNotification[];
+  tozodocumenten: FocusTozoDocument[];
 }
 
-export type FocusInkomenSpecificatiesApiState = ApiState<IncomeSpecifications>;
+export type FocusCombinedApiState = ApiState<FocusCombinedResponse>;
+export type FocusCombinedSpecificationsApiState = ApiState<
+  Omit<FocusCombined, 'tozodocumenten'>
+>;
+export type FocusTozoApiState = ApiState<FocusTozo | null>;
 
-export function useFocusInkomenSpecificatiesApi(): FocusInkomenSpecificatiesApiState {
-  const [api] = useDataApi<IncomeSpecificationsResponse>(
+export interface FocusData {
+  items: FocusItem[];
+  recentCases: FocusItem[];
+  notifications: MyNotification[];
+}
+
+function useFocusCombinedApi(): FocusCombinedApiState {
+  const [api] = useDataApi<FocusCombinedResponse>(
     {
-      url: getApiUrl('FOCUS_INKOMEN_SPECIFICATIES'),
+      url: getApiUrl('FOCUS_SPECIFICATIONS'),
       postpone: getApiConfigValue(
-        'FOCUS_INKOMEN_SPECIFICATIES',
+        'FOCUS_SPECIFICATIONS',
         'postponeFetch',
         false
       ),
@@ -42,13 +60,45 @@ export function useFocusInkomenSpecificatiesApi(): FocusInkomenSpecificatiesApiS
       content: {
         jaaropgaven: [],
         uitkeringsspecificaties: [],
+        tozodocumenten: [],
       },
     }
   );
 
+  return api;
+}
+
+function useFocusCombinedSpecificationsApi(
+  apiCombined: ReturnType<typeof useFocusCombinedApi>
+): FocusCombinedSpecificationsApiState {
   return useMemo(
-    () => ({ ...api, data: formatIncomeSpecifications(api.data) }),
-    [api]
+    () => ({
+      ...apiCombined,
+      data: formatFocusCombinedSpecifications(apiCombined.data),
+    }),
+    [apiCombined]
+  );
+}
+
+function useFocusCombinedTozoApi(
+  apiCombined: ReturnType<typeof useFocusCombinedApi>,
+  apiAanvragen: ReturnType<typeof useFocusAanvragenApi>
+): FocusTozoApiState {
+  return useMemo(
+    () => ({
+      isLoading: apiCombined.isLoading || apiAanvragen.isLoading,
+      isDirty: apiCombined.isDirty || apiAanvragen.isDirty,
+      isError: apiCombined.isError || apiAanvragen.isError,
+      isPristine: apiCombined.isPristine && apiAanvragen.isPristine,
+      errorMessage: '',
+      data: FeatureToggle.tozoActive
+        ? formatFocusTozo({
+            documenten: apiCombined.data.content.tozodocumenten || [],
+            aanvragen: apiAanvragen.rawData,
+          })
+        : null,
+    }),
+    [apiCombined, apiAanvragen]
   );
 }
 
@@ -60,7 +110,7 @@ export interface FocusData {
 
 export type FocusApiState = ApiState<FocusData> & { rawData: FocusApiResponse };
 
-export default function useFocusApi(): FocusApiState {
+function useFocusAanvragenApi(): FocusApiState {
   const [api] = useDataApi<FocusApiResponse>(
     {
       url: getApiUrl('FOCUS'),
@@ -83,4 +133,18 @@ export default function useFocusApi(): FocusApiState {
       },
     };
   }, [api]);
+}
+
+export default function useFocusApi() {
+  const FOCUS_COMBINED = useFocusCombinedApi();
+  const AANVRAGEN = useFocusAanvragenApi();
+
+  const SPECIFICATIES = useFocusCombinedSpecificationsApi(FOCUS_COMBINED);
+  const TOZO = useFocusCombinedTozoApi(FOCUS_COMBINED, AANVRAGEN);
+
+  return {
+    AANVRAGEN,
+    SPECIFICATIES,
+    TOZO,
+  };
 }
