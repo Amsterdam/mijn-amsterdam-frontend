@@ -1,25 +1,26 @@
+import * as Sentry from '@sentry/node';
 import axios, { AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { BFF_SENTRY_DSN, ENV, IS_SENTRY_ENABLED } from '../../universal/env';
+import {
+  apiErrorResult,
+  apiPostponeResult,
+  apiSuccesResult,
+} from '../../universal/helpers';
+import {
+  ApiErrorResponse,
+  ApiSuccessResponse,
+} from '../../universal/helpers/api';
 import { capitalizeFirstLetter } from '../../universal/helpers/text';
 import { entries } from '../../universal/helpers/utils';
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
-import {
-  ApiSuccessResponse,
-  ApiErrorResponse,
-} from '../../universal/helpers/api';
 import { Deferred } from './deferred';
-import {
-  apiSuccesResult,
-  apiErrorResult,
-  apiPostponeResult,
-} from '../../universal/helpers';
-// import * as Sentry from '@sentry/node';
 
-// if (BFF_SENTRY_DSN) {
-//   Sentry.init({
-//     dsn: BFF_SENTRY_DSN,
-//     environment: ENV,
-//   });
-// }
+if (BFF_SENTRY_DSN) {
+  Sentry.init({
+    dsn: BFF_SENTRY_DSN,
+    environment: ENV,
+  });
+}
 
 const DEFAULT_REQUEST_CONFIG: AxiosRequestConfig & { cancelTimeout: number } = {
   cancelTimeout: 20000, // 20 seconds
@@ -125,7 +126,7 @@ export async function requestData<T>(
 
     return responseData;
   } catch (error) {
-    // IS_SENTRY_ENABLED && Sentry.captureException(error);
+    IS_SENTRY_ENABLED && Sentry.captureException(error);
 
     const responseData = apiErrorResult(error, null);
 

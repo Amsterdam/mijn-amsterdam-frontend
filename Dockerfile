@@ -67,6 +67,10 @@ ENTRYPOINT npm run serve-build
 ########################################################################################################################
 FROM nginx:stable-alpine as deploy-ap-frontend
 
+LABEL name="mijnamsterdam FRONTEND"
+LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
+LABEL commit="https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${COMMIT_HASH}"
+
 ARG REACT_APP_ENV=production
 ENV REACT_APP_ENV=$REACT_APP_ENV
 RUN echo "Current REACT_APP_ENV (nginx CLIENT deploy image) = ${REACT_APP_ENV}"
@@ -103,6 +107,10 @@ CMD envsubst '${LOGOUT_URL}' < /tmp/nginx-server-default.template.conf > /etc/ng
 ########################################################################################################################
 ########################################################################################################################
 FROM node:13.7.0 as deploy-ap-bff
+
+LABEL name="mijnamsterdam BFF (Back-end for front-end)"
+LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
+LABEL commit="https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${COMMIT_HASH}"
 
 WORKDIR /app
 
