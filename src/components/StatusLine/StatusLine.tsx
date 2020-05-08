@@ -152,7 +152,7 @@ export default function StatusLine({
   items,
   trackCategory,
   altDocumentContent,
-  showToggleMore,
+  showToggleMore = true,
   statusLabel = 'Status',
   className,
   id,

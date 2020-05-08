@@ -481,7 +481,7 @@ export const Labels: LabelData = {
 };
 
 // NOTE: Possibly deprecated because it seems document titles actually contain meaningful names in the latest api response.
-const DocumentTitles: Record<string, string> = {
+export const DocumentTitles: Record<string, string> = {
   'LO: Aanvraag': 'Aanvraag bijstandsuitkering',
   'LO: Besluit': 'Besluit aanvraag bijstandsuitkering',
   'LO: In behandeling': 'Uw aanvraag is in behandeling genomen',
@@ -523,7 +523,7 @@ export function isRecentItem(
   return noDecision || hasRecentDecision;
 }
 
-function translateProductTitle(title: ProductTitle) {
+export function translateProductTitle(title: ProductTitle) {
   switch (title) {
     case 'Levensonderhoud':
       return 'Bijstandsuitkering';
@@ -752,6 +752,27 @@ function formatStepData(
   };
 }
 
+export function findLatestStepWithLabels({
+  productOrigin,
+  productTitle,
+  steps,
+  Labels,
+}: {
+  productOrigin: FocusProduct['soortProduct'];
+  productTitle: FocusProduct['naam'];
+  steps: FocusProduct['processtappen'];
+  Labels: LabelData;
+}) {
+  // Find the latest active step of the request process.
+  const latestStep = [...processSteps].reverse().find(step => {
+    const hasStepData = step in steps && steps[step] !== null;
+    const hasLabelData = !!Labels[productOrigin][productTitle][step];
+    return hasStepData && hasLabelData;
+  });
+
+  return latestStep;
+}
+
 // This function transforms the source data from the api into readable/presentable messages for the client.
 export function formatFocusProduct(
   product: FocusProduct,
@@ -769,11 +790,12 @@ export function formatFocusProduct(
     inspanningsperiode: daysUserActionRequired = 28,
   } = product;
 
-  // Find the latest active step of the request process.
-  const latestStep =
-    [...processSteps].reverse().find(step => {
-      return step in steps && steps[step] !== null;
-    }) || processSteps[0];
+  const latestStep = findLatestStepWithLabels({
+    productOrigin,
+    productTitle,
+    steps,
+    Labels,
+  })!;
 
   const decision = getDecision(rawDecision || '');
 
@@ -865,50 +887,49 @@ export function formatFocusProduct(
       title: 'Meer informatie', // TODO: How to get custom link title?
       to: route,
     },
-    process: processStepsFiltered
-      .filter(stepTitle => {
-        return !!steps[stepTitle];
-      })
-      .map((stepTitle, index) => {
-        const stepData = steps[stepTitle] as Step;
-        const isLastActive = stepTitle === latestStep;
-        let stepType: StepType = 'intermediate-step';
+    process: processStepsFiltered.map((stepTitle, index) => {
+      const stepData = steps[stepTitle] as Step;
+      const isLastActive = stepTitle === latestStep;
+      let stepType: StepType = 'intermediate-step';
 
-        switch (stepTitle) {
-          case 'aanvraag':
-            stepType = 'first-step';
-            break;
-          case 'beslissing':
-            stepType = 'last-step';
-            break;
-          default:
-            break;
-        }
+      switch (true) {
+        case index === 0 && latestStep !== 'beslissing':
+          stepType = 'first-step';
+          break;
+        case index === 0 && latestStep === 'beslissing':
+          stepType = 'single-step';
+          break;
+        case latestStep === 'beslissing':
+          stepType = 'last-step';
+          break;
+        default:
+          break;
+      }
 
-        const sourceData = getStepSourceData({
-          id: `${id}-${stepTitle}`,
-          productTitle,
-          decision,
-          latestStep,
-          stepData,
-          daysSupplierActionRequired,
-          daysUserActionRequired,
-          daysRecoveryAction,
-          dateStart,
-          isLastActive,
-          isRecent,
-          stepType,
-        });
+      const sourceData = getStepSourceData({
+        id: `${id}-${stepTitle}`,
+        productTitle,
+        decision,
+        latestStep,
+        stepData,
+        daysSupplierActionRequired,
+        daysUserActionRequired,
+        daysRecoveryAction,
+        dateStart,
+        isLastActive,
+        isRecent,
+        stepType,
+      });
 
-        return formatStepData(
-          sourceData,
-          productOrigin,
-          stepTitle,
-          stepData,
-          Labels,
-          DocumentTitles
-        );
-      }),
+      return formatStepData(
+        sourceData,
+        productOrigin,
+        stepTitle,
+        stepData,
+        Labels,
+        DocumentTitles
+      );
+    }),
   };
 
   const latestStepItem = item.process[item.process.length - 1];
@@ -927,21 +948,40 @@ export function formatFocusProduct(
   return focusItem;
 }
 
-function formatFocusApiResponse(products: FocusApiResponse): FocusItem[] {
-  const d = new Date();
+function formatFocusApiResponse(
+  products: FocusApiResponse,
+  compareDate: Date
+): FocusItem[] {
   if (!Array.isArray(products)) {
     return [];
   }
   return products
-    .map(product => formatFocusProduct(product, d, Labels, DocumentTitles))
+    .map(product =>
+      formatFocusProduct(product, compareDate, Labels, DocumentTitles)
+    )
     .sort(dateSort('ISODatePublished', 'desc'));
 }
 
-export function formatFocusItems(sourceItems: FocusProduct[]) {
+export function formatFocusItems(
+  sourceItems: FocusProduct[],
+  compareDate: Date
+) {
   const items = formatFocusApiResponse(
-    sourceItems.filter(item =>
-      formattedProductTitleWhitelisted.includes(item.naam)
-    )
+    sourceItems.filter(item => {
+      const isWhitelisted = formattedProductTitleWhitelisted.includes(
+        item.naam
+      );
+      const hasLatestStepWithLabels =
+        isWhitelisted &&
+        !!findLatestStepWithLabels({
+          productOrigin: item.soortProduct,
+          productTitle: item.naam,
+          steps: item.processtappen,
+          Labels,
+        });
+      return isWhitelisted && hasLatestStepWithLabels;
+    }),
+    compareDate
   );
   const notifications = items.reduce<MyNotification[]>(
     (notifications, item) => {

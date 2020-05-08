@@ -112,10 +112,6 @@ function AppAuthenticated() {
           <Route path={AppRoutes.MIJN_GEGEVENS} component={Profile} />
           <Route path={AppRoutes.MIJN_TIPS} component={MyTips} />
           <Route
-            path={AppRoutes['INKOMEN/TOZO_COVID19']}
-            component={InkomenDetailTozo}
-          />
-          <Route
             path={AppRoutes['INKOMEN/STADSPAS']}
             component={InkomenDetail}
           />

@@ -7,10 +7,5 @@
 .DetailPageTozo {
   .AanvraagStatusLine {
     padding-top: .3rem;
-    @include select(StatusLine_ListItem__) {
-      &:last-child {
-        border-top: .1rem solid $color-neutral-grey2;
-      }
-    }
   }
 }

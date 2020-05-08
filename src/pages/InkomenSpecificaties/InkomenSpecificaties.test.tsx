@@ -4,8 +4,8 @@ import { MemoryRouter, Route, Switch } from 'react-router-dom';
 import { FocusCombinedResponse } from 'hooks/api/api.focus';
 import InkomenSpecificaties from './InkomenSpecificaties';
 import React from 'react';
-import { formatFocusCombined } from 'data-formatting/focus';
 import { mount } from 'enzyme';
+import { formatFocusCombinedSpecifications } from 'data-formatting/focus';
 
 const sourceData: FocusCombinedResponse = {
   content: {
@@ -41,10 +41,11 @@ const sourceData: FocusCombinedResponse = {
         id: 'item-3',
       },
     ],
+    tozodocumenten: [],
   },
 };
 
-const data = formatFocusCombined(sourceData);
+const data = formatFocusCombinedSpecifications(sourceData);
 
 const APP_STATE = {
   FOCUS_SPECIFICATIONS: {

@@ -13,10 +13,14 @@ import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import { ChapterTitles } from 'config/Chapter.constants';
 import Linkd from 'components/Button/Button';
 import PageHeading from 'components/PageHeading/PageHeading';
-import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
+import SectionCollapsible, {
+  SectionCollapsibleHeading,
+} from 'components/SectionCollapsible/SectionCollapsible';
 import classnames from 'classnames';
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import styles from './Inkomen.module.scss';
+import useRouter from 'use-react-router';
+import { AppRoutes } from '../../config/Routing.constants';
 import {
   incomSpecificationsRouteMonthly,
   incomSpecificationsRouteYearly,
@@ -32,12 +36,6 @@ const decisionsDisplayProps = {
   datePublished: 'Datum besluit',
 };
 
-const tozoDisplayProps = {
-  displayDate: 'Datum',
-  displayTime: 'Tijd',
-  status: 'Status',
-};
-
 export default () => {
   const {
     FOCUS: {
@@ -51,6 +49,8 @@ export default () => {
       isLoading: isLoading2,
     },
   } = useContext(AppContext);
+
+  const { history } = useRouter();
 
   const noTozo = true;
 
@@ -90,26 +90,15 @@ export default () => {
           </Alert>
         )}
       </PageContent>
-      {/* {!!itemsTozo.length && !isLoading && !isLoading2 && (
-        <SectionCollapsible
-          id="SectionCollapsible-tozo"
-          title="Tozo"
-          startCollapsed={false}
-          isLoading={false}
+      <section>
+        <SectionCollapsibleHeading
+          isAriaExpanded={false}
+          toggleCollapsed={() => history.push(AppRoutes['INKOMEN/TOZO'])}
           hasItems={true}
-          track={{
-            category: 'Inkomen en Stadspas overzicht / Tozo',
-            name: 'Datatabel',
-          }}
-          className={styles.SectionCollapsibleFirst}
         >
-          <Table
-            items={itemsTozo}
-            displayProps={tozoDisplayProps}
-            className={styles.Table}
-          />
-        </SectionCollapsible>
-      )} */}
+          Tozo
+        </SectionCollapsibleHeading>
+      </section>
       <SectionCollapsible
         id="SectionCollapsible-income-request-process"
         title="Lopende aanvragen"

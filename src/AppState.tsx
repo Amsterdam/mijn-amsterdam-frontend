@@ -116,6 +116,7 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
     BELASTINGEN,
     MILIEUZONE,
     FOCUS_SPECIFICATIONS,
+    FOCUS_TOZO,
   } as AppState);
 
   const tipsDependencies = [

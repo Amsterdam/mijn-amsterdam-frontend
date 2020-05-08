@@ -14,9 +14,6 @@ import { useDataApi } from './api.hook';
 import { useMemo } from 'react';
 import {
   formatFocusTozo,
-  TOZO_LENING_PRODUCT_TITLE,
-  TOZO_UITKERING_PRODUCT_TITLE,
-  TOZO_VOORSCHOT_PRODUCT_TITLE,
   FocusTozoDocument,
   FocusTozo,
 } from '../../data-formatting/focus-tozo';
@@ -86,7 +83,6 @@ function useFocusCombinedTozoApi(
   apiCombined: ReturnType<typeof useFocusCombinedApi>,
   apiAanvragen: ReturnType<typeof useFocusAanvragenApi>
 ): FocusTozoApiState {
-  console.log('apiCombined', apiCombined.data);
   return useMemo(
     () => ({
       isLoading: apiCombined.isLoading || apiAanvragen.isLoading,
@@ -96,13 +92,7 @@ function useFocusCombinedTozoApi(
       errorMessage: '',
       data: formatFocusTozo({
         documenten: apiCombined.data.content.tozodocumenten,
-        aanvragen: apiAanvragen.rawData.filter(item =>
-          [
-            TOZO_LENING_PRODUCT_TITLE,
-            TOZO_UITKERING_PRODUCT_TITLE,
-            TOZO_VOORSCHOT_PRODUCT_TITLE,
-          ].includes(item.naam)
-        ),
+        aanvragen: apiAanvragen.rawData,
       }),
     }),
     [apiCombined, apiAanvragen]

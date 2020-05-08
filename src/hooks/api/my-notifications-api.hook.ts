@@ -50,6 +50,7 @@ export default function useMyNotificationsApi({
   BRP,
   BELASTINGEN,
   MILIEUZONE,
+  FOCUS_TOZO,
 }: AppState): MyNotificationsApiState {
   const items = useMemo(
     () =>
@@ -71,6 +72,10 @@ export default function useMyNotificationsApi({
         ...MILIEUZONE.data.notifications.map(
           addChapterNamespaceToId('MILIEUZONE')
         ),
+        // Focus TOZO
+        ...(Object.values(FOCUS_TOZO.data.notifications).filter(
+          notification => notification !== null
+        ) as MyNotification[]),
       ].sort(dateSort('datePublished', 'desc')),
     [
       FOCUS.data.notifications,
@@ -78,21 +83,32 @@ export default function useMyNotificationsApi({
       BELASTINGEN.data.notifications,
       MILIEUZONE.data.notifications,
       FOCUS_SPECIFICATIONS.data.notifications,
+      FOCUS_TOZO.data.notifications,
     ]
   );
 
   const isLoading =
     BRP.isLoading ||
     FOCUS.isLoading ||
+    FOCUS_TOZO.isLoading ||
     BELASTINGEN.isLoading ||
     MILIEUZONE.isLoading;
   const isError =
-    BRP.isError || FOCUS.isError || BELASTINGEN.isError || MILIEUZONE.isError;
+    BRP.isError ||
+    FOCUS.isError ||
+    BELASTINGEN.isError ||
+    MILIEUZONE.isError ||
+    FOCUS_TOZO.isError;
   const isDirty =
-    BRP.isDirty && FOCUS.isDirty && BELASTINGEN.isDirty && MILIEUZONE.isDirty;
+    BRP.isDirty &&
+    FOCUS.isDirty &&
+    BELASTINGEN.isDirty &&
+    MILIEUZONE.isDirty &&
+    FOCUS_TOZO.isDirty;
   const isPristine =
     BRP.isPristine &&
     FOCUS.isPristine &&
+    FOCUS_TOZO.isPristine &&
     BELASTINGEN.isPristine &&
     MILIEUZONE.isPristine;
 

@@ -3,10 +3,6 @@
 .SectionCollapsible {
   margin-bottom: 1.8rem;
   border-bottom: .1rem solid $color-neutral-grey2;
-
-  &.isCollapsed .CaretIcon {
-    transform: translateY(-50%) rotate(0);
-  }
 }
 
 .CaretIcon {
@@ -14,7 +10,7 @@
   width: 0.8em;
   position: absolute;
   top: 1.5rem;
-  transform: translateY(-50%) rotate(90deg);
+  transform: translateY(-50%) rotate(0);
   left: 0;
   transition: transform 200ms ease-out;
 }
@@ -46,6 +42,10 @@
   background: 0;
   font-weight: bold;
   padding: 0;
+
+  &[aria-expanded="true"] .CaretIcon {
+    transform: translateY(-50%) rotate(90deg);
+  }
 }
 
 .Panel {

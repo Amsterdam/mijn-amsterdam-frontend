@@ -41,7 +41,13 @@
 
 .DocumentDownloadItems {
   @include reset-list-style;
-  white-space: pre-wrap;
+  @include select(DownloadLink) {
+    font-weight: 500;
+    white-space: pre-wrap;
+    svg {
+      margin-left: -17px;
+    }
+  }
 }
 
 @mixin connectLine() {
