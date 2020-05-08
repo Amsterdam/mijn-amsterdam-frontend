@@ -39,6 +39,7 @@ import BurgerzakenDetail from './pages/BurgerzakenDetail/BurgerzakenDetail';
 import MyArea from './pages/MyArea/MyArea';
 import NotFound from './pages/NotFound/NotFound';
 import Profile from './pages/Profile/Profile';
+import InkomenDetailTozo from 'pages/InkomenDetail/InkomenDetailTozo';
 
 function AppNotAuthenticated() {
   const { location } = useRouter();
@@ -111,10 +112,6 @@ function AppAuthenticated() {
           <Route path={AppRoutes.MIJN_GEGEVENS} component={Profile} />
           <Route path={AppRoutes.MIJN_TIPS} component={MyTips} />
           <Route
-            path={AppRoutes['INKOMEN/TOZO_COVID19']}
-            component={InkomenDetail}
-          />
-          <Route
             path={AppRoutes['INKOMEN/STADSPAS']}
             component={InkomenDetail}
           />
@@ -130,6 +127,12 @@ function AppAuthenticated() {
             path={AppRoutes['INKOMEN/BIJZONDERE_BIJSTAND']}
             component={InkomenDetail}
           />
+          {FeatureToggle.tozoActive && (
+            <Route
+              path={AppRoutes['INKOMEN/TOZO']}
+              component={InkomenDetailTozo}
+            />
+          )}
           <Route path={AppRoutes.INKOMEN} component={Inkomen} />
           <Route
             path={AppRoutes['ZORG/VOORZIENINGEN']}
