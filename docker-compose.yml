@@ -28,6 +28,7 @@ services:
     expose:
       - "3000"
     environment:
+      - PORT=3000
       - REDIRECT_AFTER_LOGIN=http://e2e-frontend:3000
 
   e2e-testsuite:
