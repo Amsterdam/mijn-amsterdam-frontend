@@ -29,6 +29,7 @@ const DocumentTitles: Record<string, string> = {
   'E-AANVR-TOZO': 'Brief aanvraag',
   'E-AANVR-KBBZ': 'Brief aanvraag',
   'Voorschot Tozo (voor ondernemers) (Eenm.)': 'Brief betaling voorschot',
+  'Bbz Toekennen voorschot Tozo via batch 07 april': 'Brief betaling voorschot',
   'Tegemoetkoming Ondernemers en Zelfstandigen': 'aanvraag',
 };
 
@@ -113,7 +114,7 @@ const Labels: LabelData = {
               `U heeft recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
           },
           title: data => data.productTitleTranslated,
-          status: stepLabels.beslissing,
+          status: 'Voorschot',
           description: data => (
             <p>
               Uw voorschot Tozo uitkering is uitbetaald. Aan dit voorschot
