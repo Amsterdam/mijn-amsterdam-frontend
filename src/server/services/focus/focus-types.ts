@@ -41,6 +41,7 @@ export type RequestStatus =
 
 // A decision can be made and currently have 3 values.
 export type Decision = 'Toekenning' | 'Afwijzing' | 'Buiten Behandeling';
+
 export type DecisionFormatted =
   | 'toekenning'
   | 'afwijzing'

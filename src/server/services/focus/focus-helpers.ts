@@ -7,6 +7,7 @@ import {
   TextPartContents,
   ProductTitle,
   FocusProduct,
+  DocumentTitles,
 } from './focus-types';
 import { GenericDocument } from '../../../universal/types';
 import { defaultDateFormat } from '../../../universal/helpers';

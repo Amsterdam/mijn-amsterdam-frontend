@@ -14,33 +14,33 @@ import {
 import { ApiUrls, getApiConfigValue } from '../../config';
 import { requestData } from '../../helpers';
 import {
+  AppRoutesByProductOrigin,
   contentDocumentTitles,
   contentLabels,
-  stepStatusLabels,
   processSteps,
-  AppRoutesByProductOrigin,
+  stepStatusLabels,
 } from './focus-aanvragen-content';
 import {
-  translateProductTitle,
   calculateDecisionDeadline,
   calculateUserActionDeadline,
-  parseLabelContent,
   formatFocusDocument,
   getDecision,
-  isRecentItem,
   getLatestStep,
+  isRecentItem,
+  parseLabelContent,
+  translateProductTitle,
 } from './focus-helpers';
 import {
   DecisionFormatted,
-  ProductOrigin,
-  RequestStatus,
-  StepTitle,
+  DocumentTitles,
+  FocusProduct,
+  Info,
   InfoExtended,
   LabelData,
-  Info,
-  FocusProduct,
+  ProductOrigin,
+  RequestStatus,
   Step,
-  DocumentTitles,
+  StepTitle,
 } from './focus-types';
 
 /**
@@ -107,7 +107,7 @@ interface StepSourceDataArgs {
   latestStep: StepTitle;
   isLastActive: boolean;
   isRecent: boolean;
-  decision: DecisionFormatted;
+  decision?: DecisionFormatted;
   dateStart: string; // The official start date of the clients request process.
   daysUserActionRequired: number;
   daysSupplierActionRequired: number;
@@ -286,17 +286,15 @@ export function transformFocusSourceProduct(
 
   const id = `${_id}-${latestStep}`;
 
-  const decision = getDecision(rawDecision || '');
-
+  const hasDecision = !!rawDecision;
+  const decision = rawDecision ? getDecision(rawDecision) : undefined;
   // Determine if this items falls within a recent period (of xx days)
-  const isRecent = isRecentItem(decision, steps, compareDate);
+  const isRecent = decision ? isRecentItem(decision, steps, compareDate) : true;
 
   // The data about the latest step
   const latestStepData = steps[latestStep] as Step;
 
-  const hasDecision = steps.beslissing !== null;
-
-  const stepLabels = !hasDecision
+  const stepLabels = !decision
     ? (contentLabels[productOrigin][productTitle][latestStep] as Info)
     : (contentLabels[productOrigin][productTitle][latestStep] as InfoExtended)[
         decision

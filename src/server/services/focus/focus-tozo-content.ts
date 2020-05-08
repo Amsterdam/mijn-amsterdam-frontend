@@ -1,5 +1,5 @@
 import { TozoProductTitle } from './focus-tozo';
-import { LabelData } from './focus-types';
+import { LabelData, DocumentTitles } from './focus-types';
 import { stepLabels } from './focus-aanvragen-content';
 import { getDecision } from './focus-helpers';
 
