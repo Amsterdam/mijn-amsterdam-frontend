@@ -64,7 +64,7 @@ pipeline {
         script { currentBuild.displayName = "TEST Build #${BUILD_NUMBER} (${COMMIT_HASH})" }
         sh "docker build -t ${IMAGE_TEST} " +
            "--shm-size 1G " +
-           "--target=serve-bff " +
+           "--target=serve-ot-bff " +
            "."
         sh "docker push ${IMAGE_TEST}"
       }
