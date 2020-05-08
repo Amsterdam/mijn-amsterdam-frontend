@@ -103,14 +103,14 @@ pipeline {
            "."
         sh "docker push ${IMAGE_ACCEPTANCE}"
 
-        // build the BFF/node image
-        sh "docker build -t ${IMAGE_ACCEPTANCE_BFF} " +
-           "--target=deploy-ap-bff " +
-           "--shm-size 1G " +
-           "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
-           "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
-           "."
-        sh "docker push ${IMAGE_ACCEPTANCE_BFF}"
+        // // build the BFF/node image
+        // sh "docker build -t ${IMAGE_ACCEPTANCE_BFF} " +
+        //    "--target=deploy-ap-bff " +
+        //    "--shm-size 1G " +
+        //    "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
+        //    "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
+        //    "."
+        // sh "docker push ${IMAGE_ACCEPTANCE_BFF}"
       }
     }
 
@@ -155,13 +155,13 @@ pipeline {
 
         // Build the BFF production image
         // TODO: Pull ACC image, re tag and set ENV RUN variables
-        sh "docker build -t ${IMAGE_PRODUCTION_BFF} " +
-           "--target=deploy-ap-bff " +
-           "--shm-size 1G " +
-           "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
-           "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
-           "."
-        sh "docker push ${IMAGE_PRODUCTION_BFF}"
+        // sh "docker build -t ${IMAGE_PRODUCTION_BFF} " +
+        //    "--target=deploy-ap-bff " +
+        //    "--shm-size 1G " +
+        //    "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
+        //    "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
+        //    "."
+        // sh "docker push ${IMAGE_PRODUCTION_BFF}"
       }
     }
 

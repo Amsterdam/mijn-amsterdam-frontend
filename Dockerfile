@@ -50,7 +50,7 @@ RUN echo "Current REACT_APP_ENV (node build image) = ${REACT_APP_ENV}"
 # Serving the application (test (OT) + e2e)
 ########################################################################################################################
 ########################################################################################################################
-FROM build-app as serve-bff
+FROM build-app as serve-ot-bff
 
 ENV PORT=80
 ENV REDIRECT_AFTER_LOGIN=https://mijn.ot.amsterdam.nl
