@@ -893,13 +893,13 @@ export function formatFocusProduct(
       let stepType: StepType = 'intermediate-step';
 
       switch (true) {
-        case index === 0 && latestStep !== 'beslissing':
-          stepType = 'first-step';
-          break;
-        case index === 0 && latestStep === 'beslissing':
+        case index === 0 && stepTitle === 'beslissing':
           stepType = 'single-step';
           break;
-        case latestStep === 'beslissing':
+        case index === 0:
+          stepType = 'first-step';
+          break;
+        case stepTitle === 'beslissing':
           stepType = 'last-step';
           break;
         default:

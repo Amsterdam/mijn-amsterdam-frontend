@@ -77,7 +77,7 @@ Object {
           "isLastActive": false,
           "isRecent": false,
           "status": "Aanvraag",
-          "stepType": "single-step",
+          "stepType": "first-step",
           "title": "Bijstandsuitkering",
         },
         Object {
@@ -116,7 +116,7 @@ Object {
           "isLastActive": false,
           "isRecent": false,
           "status": "In behandeling",
-          "stepType": "last-step",
+          "stepType": "intermediate-step",
           "title": "Bijstandsuitkering",
         },
         Object {
@@ -540,7 +540,7 @@ Object {
           "isLastActive": false,
           "isRecent": false,
           "status": "Aanvraag",
-          "stepType": "single-step",
+          "stepType": "first-step",
           "title": "Bijstandsuitkering",
         },
         Object {
@@ -579,7 +579,7 @@ Object {
           "isLastActive": false,
           "isRecent": false,
           "status": "In behandeling",
-          "stepType": "last-step",
+          "stepType": "intermediate-step",
           "title": "Bijstandsuitkering",
         },
         Object {
@@ -603,7 +603,7 @@ Object {
           "isLastActive": false,
           "isRecent": false,
           "status": "Meer informatie nodig",
-          "stepType": "last-step",
+          "stepType": "intermediate-step",
           "title": "Bijstandsuitkering",
         },
         Object {
@@ -707,7 +707,7 @@ Object {
           "isLastActive": false,
           "isRecent": false,
           "status": "Aanvraag",
-          "stepType": "single-step",
+          "stepType": "first-step",
           "title": "Bijstandsuitkering",
         },
         Object {
@@ -746,7 +746,7 @@ Object {
           "isLastActive": false,
           "isRecent": false,
           "status": "In behandeling",
-          "stepType": "last-step",
+          "stepType": "intermediate-step",
           "title": "Bijstandsuitkering",
         },
         Object {
@@ -770,7 +770,7 @@ Object {
           "isLastActive": false,
           "isRecent": false,
           "status": "Meer informatie nodig",
-          "stepType": "last-step",
+          "stepType": "intermediate-step",
           "title": "Bijstandsuitkering",
         },
         Object {
@@ -874,7 +874,7 @@ Object {
           "isLastActive": false,
           "isRecent": false,
           "status": "Aanvraag",
-          "stepType": "single-step",
+          "stepType": "first-step",
           "title": "Bijstandsuitkering",
         },
         Object {
@@ -913,7 +913,7 @@ Object {
           "isLastActive": false,
           "isRecent": false,
           "status": "In behandeling",
-          "stepType": "last-step",
+          "stepType": "intermediate-step",
           "title": "Bijstandsuitkering",
         },
         Object {
