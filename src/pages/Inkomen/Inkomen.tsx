@@ -17,6 +17,7 @@ import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible
 import classnames from 'classnames';
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import styles from './Inkomen.module.scss';
+import { dateSort } from '../../helpers/App';
 import {
   incomSpecificationsRouteMonthly,
   incomSpecificationsRouteYearly,
@@ -61,7 +62,9 @@ export default () => {
     ) {
       itemsRequested.push(FocusTozoItem as any);
     }
-    return addTitleLinkComponent(itemsRequested);
+    return addTitleLinkComponent(
+      itemsRequested.sort(dateSort('ISODatePubblished'))
+    );
   }, [items, FocusTozoItem]);
 
   const itemsDecided = useMemo(() => {
@@ -72,7 +75,9 @@ export default () => {
     ) {
       itemsDecided.push(FocusTozoItem as any);
     }
-    return addTitleLinkComponent(itemsDecided);
+    return addTitleLinkComponent(
+      itemsDecided.sort(dateSort('ISODatePubblished'))
+    );
   }, [items, FocusTozoItem]);
 
   const hasActiveRequests = !!itemsRequested.length;
