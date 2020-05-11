@@ -13,14 +13,10 @@ import ChapterIcon from 'components/ChapterIcon/ChapterIcon';
 import { ChapterTitles } from 'config/Chapter.constants';
 import Linkd from 'components/Button/Button';
 import PageHeading from 'components/PageHeading/PageHeading';
-import SectionCollapsible, {
-  SectionCollapsibleHeading,
-} from 'components/SectionCollapsible/SectionCollapsible';
+import SectionCollapsible from 'components/SectionCollapsible/SectionCollapsible';
 import classnames from 'classnames';
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import styles from './Inkomen.module.scss';
-import useRouter from 'use-react-router';
-import { AppRoutes } from '../../config/Routing.constants';
 import {
   incomSpecificationsRouteMonthly,
   incomSpecificationsRouteYearly,
@@ -101,7 +97,7 @@ export default () => {
             Contact Inkomen en Stadspas
           </Linkd>
         </p>
-        {(isError || isError2) && (
+        {(isError || isError2 || isError3) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>
@@ -111,7 +107,7 @@ export default () => {
         id="SectionCollapsible-income-request-process"
         title="Lopende aanvragen"
         startCollapsed={false}
-        isLoading={isLoading}
+        isLoading={isLoading || isLoading3}
         hasItems={hasActiveRequests}
         track={{
           category: 'Inkomen en Stadspas overzicht / Lopende aanvragen',
@@ -129,7 +125,7 @@ export default () => {
       <SectionCollapsible
         id="SectionCollapsible-income-request-process-decisions"
         startCollapsed={hasActiveRequests}
-        isLoading={isLoading}
+        isLoading={isLoading || isLoading3}
         hasItems={hasActiveDescisions}
         title="Afgehandelde aanvragen"
         track={{
