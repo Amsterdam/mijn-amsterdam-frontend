@@ -340,6 +340,16 @@ function formatFocusTozoItems({
     ? aanvragenUitkering[0]
     : null;
 
+  // TODO: make process handle multiple items
+  // collect first aanvraag datum
+  // collect first decision uitkering
+  // collect first decision lening
+  // If uitkering and lening are less than XX weeks apart
+  // collect all documents before last decision date of uitkering or lening
+  // If uitkering and lening are more than XX weeks apart
+  // Start new Item
+  // collect first aanvraag datum after previous decision, start again
+
   const tozoDocuments = documenten.sort(dateSort('datePublished'));
 
   const aanvraagNotification = {
