@@ -13,6 +13,10 @@
   @include mq-phone() {
     margin: 0;
   }
+
+  &.hasBackLink {
+    margin-bottom: 4rem;
+  }
 }
 
 .Icon {
