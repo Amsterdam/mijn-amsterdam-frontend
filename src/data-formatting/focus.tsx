@@ -65,6 +65,7 @@ interface Info {
   notification: {
     title: string | TextPartContentFormatterString;
     description: TextPartContents;
+    linkTitle?: string;
   };
 }
 
@@ -501,6 +502,9 @@ const AppRoutesByProductOrigin: RoutesByProductOrigin = {
   },
   'Bijzondere Bijstand': {
     'Bijzondere Bijstand': AppRoutes['INKOMEN/BIJZONDERE_BIJSTAND'],
+    'Voorschot Tozo (voor ondernemers) (Eenm.)': AppRoutes['INKOMEN/TOZO'],
+    'Lening Tozo': AppRoutes['INKOMEN/TOZO'],
+    'Uitkering Tozo': AppRoutes['INKOMEN/TOZO'],
   },
 };
 
@@ -701,7 +705,12 @@ export function formatFocusNotificationItem(
       parseLabelContent(stepLabelSource.notification.description, sourceData),
     link: {
       to: item.link.to,
-      title: 'Meer informatie',
+      title:
+        (stepLabelSource &&
+          stepLabelSource.notification &&
+          stepLabelSource &&
+          stepLabelSource.notification.linkTitle) ||
+        'Meer informatie',
     },
   };
 }

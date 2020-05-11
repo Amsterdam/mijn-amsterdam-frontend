@@ -12,7 +12,6 @@ import {
   LabelData,
   stepLabels,
   findLatestStepWithLabels,
-  translateProductTitle,
 } from './focus';
 import { dateSort, dateFormat, defaultDateFormat } from 'helpers/App';
 import { Chapters } from 'config/Chapter.constants';
@@ -44,6 +43,7 @@ const Labels: LabelData = {
           title: data => `${data.productTitleTranslated}: Neem actie`,
           description: data =>
             `Er is meer informatie en tijd nodig om uw aanvraag voor een ${data.productTitleTranslated} te behandelen.`,
+          linkTitle: 'Bekijk uw Tozo status',
         },
         title: data => data.productTitleTranslated,
         status: stepLabels.herstelTermijn,
@@ -61,6 +61,7 @@ const Labels: LabelData = {
               `${data.productTitleTranslated}: Uw aanvraag is afgewezen`,
             description: data =>
               `U heeft geen recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
+            linkTitle: 'Bekijk uw Tozo status',
           },
           title: data => data.productTitleTranslated,
           status: stepLabels.beslissing,
@@ -73,6 +74,7 @@ const Labels: LabelData = {
               `${data.productTitleTranslated}: Uw aanvraag is toegekend`,
             description: data =>
               `U heeft recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
+            linkTitle: 'Bekijk uw Tozo status',
           },
           title: data => data.productTitleTranslated,
           status: stepLabels.beslissing,
@@ -89,6 +91,7 @@ const Labels: LabelData = {
               `${data.productTitleTranslated}: Uw aanvraag is buiten behandeling gesteld`,
             description: data =>
               `Uw aanvraag is buiten behandeling gesteld (besluit: ${data.datePublished!}).`,
+            linkTitle: 'Bekijk uw Tozo status',
           },
           title: data => data.productTitleTranslated,
           status: stepLabels.beslissing,
@@ -112,6 +115,7 @@ const Labels: LabelData = {
               `${data.productTitleTranslated}: Uw aanvraag is toegekend`,
             description: data =>
               `U heeft recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
+            linkTitle: 'Bekijk uw Tozo status',
           },
           title: data => data.productTitleTranslated,
           status: 'Voorschot',
@@ -132,6 +136,7 @@ const Labels: LabelData = {
           title: data => `${data.productTitleTranslated}: Neem actie`,
           description: data =>
             `Er is meer informatie en tijd nodig om uw aanvraag voor een ${data.productTitleTranslated} te behandelen.`,
+          linkTitle: 'Bekijk uw Tozo status',
         },
         title: data => data.productTitleTranslated,
         status: stepLabels.herstelTermijn,
@@ -149,6 +154,7 @@ const Labels: LabelData = {
               `${data.productTitleTranslated}: Uw aanvraag is afgewezen`,
             description: data =>
               `U heeft geen recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
+            linkTitle: 'Bekijk uw Tozo status',
           },
           title: data => data.productTitleTranslated,
           status: stepLabels.beslissing,
@@ -161,6 +167,7 @@ const Labels: LabelData = {
               `${data.productTitleTranslated}: Uw aanvraag is toegekend`,
             description: data =>
               `U heeft recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
+            linkTitle: 'Bekijk uw Tozo status',
           },
           title: data => data.productTitleTranslated,
           status: stepLabels.beslissing,
@@ -177,6 +184,7 @@ const Labels: LabelData = {
               `${data.productTitleTranslated}: Uw aanvraag is buiten behandeling gesteld`,
             description: data =>
               `Uw aanvraag is buiten behandeling gesteld (besluit: ${data.datePublished}).`,
+            linkTitle: 'Bekijk uw Tozo status',
           },
           title: data => data.productTitleTranslated,
           status: stepLabels.beslissing,
@@ -239,6 +247,14 @@ export interface FocusTozo {
     uitkering: ProcessStep[];
     aanvraag: ProcessStep[];
   };
+}
+
+function translateProductTitle(title: string) {
+  switch (title) {
+    case TOZO_VOORSCHOT_PRODUCT_TITLE:
+      return 'Voorschot Tozo';
+  }
+  return title;
 }
 
 function formatFocusTozoDocument(
@@ -538,7 +554,7 @@ function formatFocusTozoItems({
     dateStart: firstActivityDatePublished,
     datePublished: lastActivityDatePublished,
     ISODatePublished: lastActivityDatePublished,
-    title: 'Tijdelijke overbruggingsregeling zelfstandig ondernemers',
+    title: 'Tijdelijke overbruggingsregeling zelfstandig ondernemers (Tozo)',
     description: '',
     status,
     hasDecision,
@@ -592,8 +608,6 @@ export function formatFocusTozo({
   const documentenFiltered = documenten.filter(doc =>
     ['E-AANVR-TOZO', 'E-AANVR-KBBZ'].includes(doc.type)
   );
-
-  console.log(aanvragenFiltered, documentenFiltered);
 
   return formatFocusTozoItems({
     aanvragen: aanvragenFiltered,
