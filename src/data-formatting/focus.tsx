@@ -15,6 +15,11 @@ import { MyNotification } from '../hooks/api/my-notifications-api.hook';
 import { generatePath } from 'react-router';
 import styles from 'pages/Inkomen/Inkomen.module.scss';
 import { dateFormat } from '../helpers/App';
+import {
+  TOZO_VOORSCHOT_PRODUCT_TITLE,
+  TOZO_UITKERING_PRODUCT_TITLE,
+  TOZO_LENING_PRODUCT_TITLE,
+} from './focus-tozo';
 
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
