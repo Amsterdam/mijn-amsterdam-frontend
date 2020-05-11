@@ -549,7 +549,7 @@ function formatFocusTozoItems({
   const tozoProcessItem = {
     id: 'tozo-item-0',
     dateStart: defaultDateFormat(firstActivityDatePublished),
-    datePublished: lastActivityDatePublished,
+    datePublished: defaultDateFormat(lastActivityDatePublished),
     ISODatePublished: lastActivityDatePublished,
     title: 'Tozo regeling',
     description: '',
