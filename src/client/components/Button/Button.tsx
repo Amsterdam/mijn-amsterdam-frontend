@@ -3,7 +3,6 @@ import React, { AnchorHTMLAttributes, ButtonHTMLAttributes } from 'react';
 import { IconChevronRight, IconClose } from '../../assets/icons';
 import { Link } from 'react-router-dom';
 import { ReactNode } from 'react';
-import { Unshaped } from '../../../universal/types';
 import classnames from 'classnames';
 import styles from './Button.module.scss';
 import { trackLink } from '../../hooks/analytics.hook';

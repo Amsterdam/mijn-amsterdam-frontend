@@ -13,11 +13,9 @@ import {
   StatusLine,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
-import {
-  altDocumentContent,
-  MAX_STEP_COUNT_FOCUS_REUEST,
-} from './InkomenDetail';
+import { altDocumentContent } from './InkomenDetail';
 import styles from './InkomenDetail.module.scss';
+import { stepStatusLabels } from '../../../server/services/focus/focus-aanvragen-content';
 
 export default () => {
   const { FOCUS_TOZO } = useContext(AppContext);
@@ -47,7 +45,8 @@ export default () => {
         </p>
         <p>
           <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
-            Ondersteuning voor zelfstandigen / zzp'ers vanwege corona
+            Informatie over Tijdelijke overbruggingsregeling zelfstandig
+            ondernemers (Tozo)
           </Linkd>
         </p>
         {(isError(FOCUS_TOZO) || noContent) && (
@@ -57,13 +56,13 @@ export default () => {
         )}
         {isLoading(FOCUS_TOZO) && <LoadingContent />}
       </PageContent>
-      {!!TozoItem?.process.aanvraag.length && (
+      {!!TozoItem?.process.aanvraag && (
         <StatusLine
           className={styles.AanvraagStatusLine}
-          showToggleMore={false}
-          trackCategory={`Inkomen en Stadspas / `}
+          trackCategory={`Inkomen en Stadspas / Tozo aanvraag`}
           statusLabel="Status Tozo aanvraag"
           items={TozoItem.process.aanvraag}
+          showToggleMore={false}
           maxStepCount={-1}
           altDocumentContent={altDocumentContent}
           id={'inkomen-stadspas-detail-tozo-aanvraag'}
@@ -71,14 +70,15 @@ export default () => {
       )}
       {!!TozoItem?.process.uitkering.length && (
         <StatusLine
-          trackCategory={`Inkomen en Stadspas / `}
-          showToggleMore={false}
-          statusLabel="Status Tozo uitkering"
+          trackCategory={`Inkomen en Stadspas / Tozo uitkering levensonderhoud`}
+          statusLabel="Status Tozo uitkering levensonderhoud"
           items={TozoItem.process.uitkering}
+          showToggleMore={false}
           maxStepCount={
-            TozoItem.status.uitkering !== 'beslissing'
-              ? MAX_STEP_COUNT_FOCUS_REUEST
-              : undefined
+            TozoItem.process.uitkering.length === 1 &&
+            TozoItem.process.uitkering[0].status === stepStatusLabels.beslissing
+              ? -1
+              : 2
           }
           altDocumentContent={altDocumentContent}
           id={'inkomen-stadspas-detail-tozo-uitkering'}
@@ -86,14 +86,15 @@ export default () => {
       )}
       {!!TozoItem?.process.lening.length && (
         <StatusLine
-          trackCategory={`Inkomen en Stadspas / `}
-          showToggleMore={false}
-          statusLabel="Status Tozo lening"
+          trackCategory={`Inkomen en Stadspas / Tozo lening bedrijfskrediet`}
+          statusLabel="Status Tozo lening bedrijfskrediet"
           items={TozoItem.process.lening}
+          showToggleMore={false}
           maxStepCount={
-            TozoItem.status.lening !== 'beslissing'
-              ? MAX_STEP_COUNT_FOCUS_REUEST
-              : undefined
+            TozoItem.process.lening.length === 1 &&
+            TozoItem.process.lening[0].status === stepStatusLabels.beslissing
+              ? -1
+              : 2
           }
           altDocumentContent={altDocumentContent}
           id={'inkomen-stadspas-detail-tozo-lening'}

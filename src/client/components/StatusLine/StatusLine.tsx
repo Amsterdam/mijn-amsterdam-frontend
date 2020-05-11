@@ -117,7 +117,7 @@ function StatusLineItem({
         >
           {item.description}
         </SanitizedHtml>
-        <div className={styles.Panel}>
+        <div className={classnames(styles.Panel, styles['Panel--documents'])}>
           {!!altDocumentContentActual && (
             <span className={styles.altDocumentContent}>
               {altDocumentContentActual}
@@ -162,8 +162,8 @@ export default function StatusLine({
   showToggleMore = true,
   statusLabel = 'Status',
   className,
-  maxStepCount,
   id,
+  maxStepCount,
 }: StatusLineProps) {
   const [isCollapsed, setCollapsed] = useSessionStorage(
     'STATUS_LINE_' + id,
@@ -217,12 +217,11 @@ export default function StatusLine({
             {steppedItems.map((item, index) => (
               <StatusLineItem
                 style={{
-                  display:
-                    !isCollapsed ||
-                    (isCollapsed && item.isLastActive) ||
-                    !showToggleMore
+                  display: showToggleMore
+                    ? !isCollapsed || (isCollapsed && item.isLastActive)
                       ? 'block'
-                      : 'none',
+                      : 'none'
+                    : 'block',
                 }}
                 key={item.id}
                 item={item}
