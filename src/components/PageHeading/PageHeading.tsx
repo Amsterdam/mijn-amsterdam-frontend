@@ -28,7 +28,8 @@ export default function PageHeading({
 }: PageHeadingProps) {
   const classNames = composeClassNames(
     styles.PageHeading,
-    !!icon && styles.HasIcon,
+    !!icon && styles.hasIcon,
+    !!backLink && styles.hasBackLink,
     className
   );
   return (

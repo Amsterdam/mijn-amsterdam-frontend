@@ -28,7 +28,7 @@ import {
 
 const requestsDisplayProps = {
   dateStart: 'Datum aanvraag',
-  status: 'Status',
+  _status: 'Status',
 };
 
 const decisionsDisplayProps = {
@@ -43,6 +43,11 @@ export default () => {
       isError,
       isLoading,
     },
+    FOCUS_TOZO: {
+      data: FocusTozoItem,
+      isError: isError3,
+      isLoading: isLoading3,
+    },
     FOCUS_SPECIFICATIONS: {
       data: { jaaropgaven, uitkeringsspecificaties },
       isError: isError2,
@@ -50,17 +55,29 @@ export default () => {
     },
   } = useContext(AppContext);
 
-  const { history } = useRouter();
-
-  const noTozo = true;
-
   const itemsRequested = useMemo(() => {
-    return addTitleLinkComponent(items.filter(item => !item.hasDecision));
-  }, [items]);
+    const itemsRequested = items.filter(item => !item.hasDecision);
+    if (
+      !(
+        FocusTozoItem?.status.lening === 'beslissing' &&
+        FocusTozoItem?.status.uitkering === 'beslissing'
+      )
+    ) {
+      itemsRequested.push(FocusTozoItem as any);
+    }
+    return addTitleLinkComponent(itemsRequested);
+  }, [items, FocusTozoItem]);
 
   const itemsDecided = useMemo(() => {
-    return addTitleLinkComponent(items.filter(item => item.hasDecision));
-  }, [items]);
+    const itemsDecided = items.filter(item => item.hasDecision);
+    if (
+      FocusTozoItem?.status.lening === 'beslissing' &&
+      FocusTozoItem?.status.uitkering === 'beslissing'
+    ) {
+      itemsDecided.push(FocusTozoItem as any);
+    }
+    return addTitleLinkComponent(itemsDecided);
+  }, [items, FocusTozoItem]);
 
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
@@ -90,17 +107,6 @@ export default () => {
           </Alert>
         )}
       </PageContent>
-      {FeatureToggle.tozoActive && (
-        <section>
-          <SectionCollapsibleHeading
-            isAriaExpanded={false}
-            toggleCollapsed={() => history.push(AppRoutes['INKOMEN/TOZO'])}
-            hasItems={true}
-          >
-            Tozo
-          </SectionCollapsibleHeading>
-        </section>
-      )}
       <SectionCollapsible
         id="SectionCollapsible-income-request-process"
         title="Lopende aanvragen"
@@ -112,7 +118,7 @@ export default () => {
           name: 'Datatabel',
         }}
         noItemsMessage="U hebt op dit moment geen lopende aanvragen."
-        className={noTozo ? styles.SectionCollapsibleFirst : ''}
+        className={styles.SectionCollapsibleFirst}
       >
         <Table
           items={itemsRequested}

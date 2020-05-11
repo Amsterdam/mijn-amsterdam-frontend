@@ -15,6 +15,11 @@ import { MyNotification } from '../hooks/api/my-notifications-api.hook';
 import { generatePath } from 'react-router';
 import styles from 'pages/Inkomen/Inkomen.module.scss';
 import { dateFormat } from '../helpers/App';
+import {
+  TOZO_VOORSCHOT_PRODUCT_TITLE,
+  TOZO_UITKERING_PRODUCT_TITLE,
+  TOZO_LENING_PRODUCT_TITLE,
+} from './focus-tozo';
 
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
@@ -71,7 +76,7 @@ interface Info {
 
 type InfoExtended = { [decision: string]: Info };
 
-interface ProductType {
+export interface ProductType {
   aanvraag: Info | null;
   inBehandeling: Info | null;
   voorschot?: Info | null;
@@ -531,6 +536,12 @@ export function translateProductTitle(title: ProductTitle) {
   switch (title) {
     case 'Levensonderhoud':
       return 'Bijstandsuitkering';
+    case 'Voorschot Tozo (voor ondernemers) (Eenm.)':
+      return 'Voorschot Tozo';
+    case 'Lening t.b.v. bedrijfskrediet TOZO':
+      return 'Lening Tozo';
+    case 'Tijdelijke Overbruggingsregeling Zelfst. Ondern.':
+      return 'Uitkering Tozo';
   }
   return title;
 }
@@ -570,7 +581,6 @@ function getStepSourceData({
     stepData,
     daysRecoveryAction
   );
-
   return {
     id,
     productTitle,
@@ -669,7 +679,11 @@ export function formatFocusDocument(
   const { id, omschrijving: title, $ref: url } = document;
   return {
     id: String(id),
-    title: DocumentTitles[title] || title,
+    title: DocumentTitles[title]
+      ? DocumentTitles[
+          title
+        ] /* + `\n${dateFormat(datePublished, 'dd MMMM')}` */
+      : title,
     url: `/api/${url}`,
     datePublished,
     type: stepTitle,
@@ -795,7 +809,7 @@ export function formatFocusProduct(
     typeBesluit: rawDecision,
     processtappen: steps,
     naam: productTitle,
-    dienstverleningstermijn: daysSupplierActionRequired,
+    dienstverleningstermijn: daysSupplierActionRequired = 0,
     inspanningsperiode: daysUserActionRequired = 28,
   } = product;
 
