@@ -249,15 +249,3 @@ export function CloseButton({
 }: Omit<IconButtonProps, 'icon'>) {
   return <IconButton {...props} title={title} icon={IconClose} />;
 }
-
-export function addTitleLinkComponent(
-  items: Unshaped[],
-  titleKey: string = 'title'
-) {
-  return items.map((item: any) => {
-    return {
-      ...item,
-      [titleKey]: <Linkd href={item.link.to}>{item[titleKey]}</Linkd>,
-    };
-  });
-}

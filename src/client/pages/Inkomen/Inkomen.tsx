@@ -17,8 +17,9 @@ import {
   PageHeading,
   SectionCollapsible,
   Table,
+  SectionCollapsibleHeading,
+  addTitleLinkComponent,
 } from '../../components';
-import { addTitleLinkComponent } from '../../components/Button/Button';
 import { ExternalUrls } from '../../config/app';
 import {
   annualStatementsTableDisplayProps,
@@ -26,6 +27,7 @@ import {
 } from '../../pages/InkomenSpecificaties/InkomenSpecificaties';
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import styles from './Inkomen.module.scss';
+import useRouter from 'use-react-router';
 
 export const incomSpecificationsRouteMonthly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES']
@@ -47,17 +49,12 @@ const decisionsDisplayProps = {
   datePublished: 'Datum besluit',
 };
 
-const tozoDisplayProps = {
-  displayDateStart: 'Datum aanvraag',
-};
-
 export default () => {
   const { FOCUS_AANVRAGEN, FOCUS_SPECIFICATIES, FOCUS_TOZO } = useContext(
     AppContext
   );
-
+  const { history } = useRouter();
   const noTozo = !FOCUS_TOZO.content;
-
   const aanvragen = FOCUS_AANVRAGEN.content || [];
 
   const uitkeringsspecificaties =
@@ -85,13 +82,6 @@ export default () => {
       itemsDecided.sort(dateSort('ISODatePublished', 'desc'))
     );
   }, [items, FocusTozoItem]);
-
-  const itemsTozo = useMemo(() => {
-    if (!FOCUS_TOZO.content) {
-      return [];
-    }
-    return addTitleLinkComponent([FOCUS_TOZO.content]);
-  }, [FOCUS_TOZO]);
 
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;

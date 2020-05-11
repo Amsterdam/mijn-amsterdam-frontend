@@ -1,9 +1,9 @@
 import AutoLogoutDialog, { AutoLogoutDialogSettings } from './AutoLogoutDialog';
 
-import { LOGOUT_URL } from '../../../universal/config';
 import React from 'react';
 import { SessionContext } from '../../SessionState';
 import { mount } from 'enzyme';
+import { LOGOUT_URL } from '../../config/api';
 
 const ONE_SECOND_IN_MS = 1000;
 const DOC_TITLE = 'AutoLogoutDialog';

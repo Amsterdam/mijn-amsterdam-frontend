@@ -57,19 +57,12 @@ function isChapterActive(
     case Chapters.BURGERZAKEN:
       return (
         FeatureToggle.identiteitsbewijzenActive &&
-        !BRP.isLoading &&
-        !!BRP.data.identiteitsbewijzen
+        !isLoading(BRP) &&
+        !!BRP.content?.identiteitsbewijzen
       );
 
     case Chapters.BRP:
       return !isLoading(BRP) && !!BRP.content?.persoon;
-
-    case Chapters.BURGERZAKEN:
-      return (
-        FeatureToggle.identiteitsbewijzenActive &&
-        !isLoading(BRP) &&
-        !!BRP.content?.identiteitsbewijzen?.length
-      );
   }
 
   return false;

@@ -47,12 +47,12 @@ export function SectionCollapsibleHeading({
           onKeyPress={event => hasItems && toggleCollapsed(event)}
           onClick={event => hasItems && toggleCollapsed(event)}
         >
-          <CaretIcon aria-hidden="true" className={styles.CaretIcon} />{' '}
+          <IconChevronRight aria-hidden="true" className={styles.CaretIcon} />{' '}
           {children}
         </button>
       ) : (
         <>
-          <CaretIcon aria-hidden="true" className={styles.CaretIcon} />{' '}
+          <IconChevronRight aria-hidden="true" className={styles.CaretIcon} />{' '}
           {children}
         </>
       )}

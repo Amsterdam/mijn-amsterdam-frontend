@@ -11,8 +11,8 @@ import {
   PageHeading,
   SectionCollapsible,
   Table,
+  addTitleLinkComponent,
 } from '../../components';
-import { addTitleLinkComponent } from '../../components/Table/Table';
 import styles from './Burgerzaken.module.scss';
 
 const DISPLAY_PROPS = {
@@ -23,7 +23,7 @@ const DISPLAY_PROPS = {
 export default () => {
   const { BRP } = useContext(AppContext);
 
-   const documentItems = useMemo(() => {
+  const documentItems = useMemo(() => {
     if (!BRP.content?.identiteitsbewijzen) {
       return [];
     }

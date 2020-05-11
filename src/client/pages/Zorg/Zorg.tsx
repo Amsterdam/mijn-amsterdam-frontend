@@ -12,8 +12,8 @@ import {
   PageHeading,
   SectionCollapsible,
   Table,
+  addTitleLinkComponent,
 } from '../../components';
-import { addTitleLinkComponent } from '../../components/Button/Button';
 import { ExternalUrls } from '../../config/app';
 import styles from './Zorg.module.scss';
 
