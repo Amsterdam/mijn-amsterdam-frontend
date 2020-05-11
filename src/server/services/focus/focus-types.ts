@@ -37,7 +37,8 @@ export type RequestStatus =
   | 'Meer informatie nodig'
   | 'In behandeling'
   | 'Besluit'
-  | 'Bezwaar';
+  | 'Bezwaar'
+  | string;
 
 // A decision can be made and currently have 3 values.
 export type Decision = 'Toekenning' | 'Afwijzing' | 'Buiten Behandeling';
@@ -56,9 +57,15 @@ export type ProductOrigin =
 // The official terms of the Focus api "product" names how they are used within the Municipality of Amsterdam.
 export type ProductTitle = 'Levensonderhoud' | 'Stadspas' | string;
 
-export type TextPartContent = string;
-export type TextPartContentFormatter = (data: any) => TextPartContent;
-export type TextPartContents = TextPartContent | TextPartContentFormatter;
+export interface FocusSourceData {
+  datePublished: string;
+  productTitleTranslated: string;
+  dateStart: string;
+  decision: DecisionFormatted;
+  [key: string]: string;
+}
+
+export type TextPartContents = (data: FocusSourceData) => string;
 
 export interface Info {
   title: TextPartContents;
@@ -67,10 +74,13 @@ export interface Info {
   notification: {
     title: TextPartContents;
     description: TextPartContents;
+    linkTitle?: string;
   };
 }
 
-export type InfoExtended = { [decision: string]: Info };
+export type InfoExtended = {
+  [decision in DecisionFormatted]?: Info | null;
+};
 
 export interface ProductStepLabels {
   aanvraag: Info | null;

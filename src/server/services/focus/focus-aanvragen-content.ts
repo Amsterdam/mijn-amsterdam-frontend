@@ -5,7 +5,6 @@ import {
   LabelData,
 } from './focus-types';
 import { AppRoutes } from '../../../universal/config';
-import { getDecision } from './focus-helpers';
 
 export const stepLabels: Record<StepTitle, RequestStatus> = {
   aanvraag: 'Aanvraag',
@@ -132,7 +131,7 @@ export const contentLabels: LabelData = {
       herstelTermijn: {
         notification: {
           title: data => `${data.productTitleTranslated}: Neem actie`,
-          description:
+          description: data =>
             'Er is meer informatie en tijd nodig om uw aanvraag voor een bijstandsuitkering te behandelen.',
         },
         title: data => data.productTitleTranslated,
@@ -153,7 +152,7 @@ export const contentLabels: LabelData = {
         `,
       },
       beslissing: {
-        [getDecision('Afwijzing')]: {
+        afwijzing: {
           notification: {
             title: data =>
               `${data.productTitleTranslated}: Uw aanvraag is afgewezen`,
@@ -162,10 +161,10 @@ export const contentLabels: LabelData = {
           },
           title: data => data.productTitleTranslated,
           status: stepLabels.beslissing,
-          description:
+          description: data =>
             'U heeft geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.',
         },
-        [getDecision('Toekenning')]: {
+        toekenning: {
           notification: {
             title: data =>
               `${data.productTitleTranslated}: Uw aanvraag is toegekend`,
@@ -190,7 +189,7 @@ export const contentLabels: LabelData = {
             </p>
           `,
         },
-        [getDecision('Buiten Behandeling')]: {
+        buitenbehandeling: {
           notification: {
             title: data =>
               `${data.productTitleTranslated}: Uw aanvraag is buiten behandeling gesteld`,
@@ -199,7 +198,7 @@ export const contentLabels: LabelData = {
           },
           title: data => data.productTitleTranslated,
           status: stepLabels.beslissing,
-          description:
+          description: data =>
             'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
         },
       },
@@ -250,7 +249,7 @@ export const contentLabels: LabelData = {
       herstelTermijn: {
         notification: {
           title: data => `${data.productTitleTranslated}: Neem actie`,
-          description:
+          description: data =>
             'Er is meer informatie en tijd nodig om uw aanvraag voor een Stadspas te behandelen.',
         },
         title: data => data.productTitleTranslated,
@@ -271,7 +270,7 @@ export const contentLabels: LabelData = {
         `,
       },
       beslissing: {
-        [getDecision('Afwijzing')]: {
+        afwijzing: {
           notification: {
             title: data =>
               `${data.productTitleTranslated}: Uw aanvraag is afgewezen`,
@@ -280,14 +279,14 @@ export const contentLabels: LabelData = {
           },
           title: data => data.productTitleTranslated,
           status: stepLabels.beslissing,
-          description:
+          description: data =>
             'U heeft geen recht op een Stadspas. Bekijk de brief voor meer details.',
         },
-        [getDecision('Toekenning')]: {
+        toekenning: {
           notification: {
             title: data =>
               `${data.productTitleTranslated}: Uw aanvraag is toegekend`,
-            description:
+            description: data =>
               'U heeft recht op een Stadspas. Bekijk de brief voor meer details.',
           },
           title: data => data.productTitleTranslated,
@@ -304,7 +303,7 @@ export const contentLabels: LabelData = {
             </p>
           `,
         },
-        [getDecision('Buiten Behandeling')]: {
+        buitenbehandeling: {
           notification: {
             title: data =>
               `${data.productTitleTranslated}: Uw aanvraag is buiten behandeling gesteld`,
@@ -313,7 +312,7 @@ export const contentLabels: LabelData = {
           },
           title: data => data.productTitleTranslated,
           status: stepLabels.beslissing,
-          description:
+          description: data =>
             'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
         },
       },

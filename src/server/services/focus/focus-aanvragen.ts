@@ -28,7 +28,6 @@ import {
   getLatestStep,
   isRecentItem,
   parseLabelContent,
-  translateProductTitle,
 } from './focus-helpers';
 import {
   DecisionFormatted,
@@ -41,6 +40,7 @@ import {
   RequestStatus,
   Step,
   StepTitle,
+  ProductTitle,
 } from './focus-types';
 
 /**
@@ -114,6 +114,14 @@ interface StepSourceDataArgs {
   daysRecoveryAction: number; // The number of days a client has to provide more information about a request
 }
 
+function translateProductTitle(title: ProductTitle) {
+  switch (title) {
+    case 'Levensonderhoud':
+      return 'Bijstandsuitkering';
+  }
+  return title;
+}
+
 // Data for conveniently constructing the information shown to the client.
 function getStepSourceData({
   id,
@@ -182,29 +190,44 @@ export function formatFocusNotificationItem(
       sourceData.latestStep
     ];
 
-  const stepLabelSource =
-    !!sourceData.decision && stepLabels
-      ? (stepLabels as InfoExtended)[sourceData.decision]
-      : stepLabels;
+  let stepLabelSource = stepLabels;
+
+  if (
+    sourceData?.decision &&
+    stepLabels &&
+    sourceData?.decision in stepLabels &&
+    (stepLabels as InfoExtended)[sourceData.decision]
+  ) {
+    stepLabelSource = (stepLabels as InfoExtended)[sourceData.decision]!;
+  }
+
+  const notificationStepLabels = stepLabelSource as Info;
 
   return {
     id: `notification-${step.id}`,
     datePublished: step.datePublished,
     chapter: Chapters.INKOMEN,
     title:
-      stepLabelSource && stepLabelSource.notification
-        ? parseLabelContent(stepLabelSource.notification.title, sourceData)
+      stepLabelSource && notificationStepLabels.notification
+        ? parseLabelContent(
+            notificationStepLabels.notification.title,
+            sourceData
+          )
         : '',
     description:
-      stepLabelSource && stepLabelSource.notification
+      notificationStepLabels && notificationStepLabels.notification
         ? parseLabelContent(
-            stepLabelSource.notification.description,
+            notificationStepLabels.notification.description,
             sourceData
           )
         : '',
     link: {
       to: item.link.to,
-      title: 'Meer informatie',
+      title:
+        (notificationStepLabels &&
+          notificationStepLabels.notification &&
+          notificationStepLabels.notification.linkTitle) ||
+        'Meer informatie',
     },
   };
 }
@@ -279,10 +302,7 @@ export function transformFocusSourceProduct(
   } = product;
 
   // Find the latest active step of the request process.
-  const latestStep =
-    [...processSteps].reverse().find(step => {
-      return step in steps && steps[step] !== null;
-    }) || processSteps[0];
+  const latestStep = getLatestStep(steps);
 
   const id = `${_id}-${latestStep}`;
 

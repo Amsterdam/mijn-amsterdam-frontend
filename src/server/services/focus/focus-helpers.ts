@@ -8,6 +8,7 @@ import {
   ProductTitle,
   FocusProduct,
   DocumentTitles,
+  LabelData,
 } from './focus-types';
 import { GenericDocument } from '../../../universal/types';
 import { defaultDateFormat } from '../../../universal/helpers';
@@ -30,14 +31,6 @@ export function isRecentItem(
   }
 
   return noDecision || hasRecentDecision;
-}
-
-export function translateProductTitle(title: ProductTitle) {
-  switch (title) {
-    case 'Levensonderhoud':
-      return 'Bijstandsuitkering';
-  }
-  return title;
 }
 
 export function parseLabelContent(text: TextPartContents, data: any): string {
@@ -101,4 +94,25 @@ export function formatFocusDocument(
     datePublished,
     type: stepTitle,
   };
+}
+
+export function findLatestStepWithLabels({
+  productOrigin,
+  productTitle,
+  steps,
+  contentLabels,
+}: {
+  productOrigin: FocusProduct['soortProduct'];
+  productTitle: FocusProduct['naam'];
+  steps: FocusProduct['processtappen'];
+  contentLabels: LabelData;
+}) {
+  // Find the latest active step of the request process.
+  const latestStep = [...processSteps].reverse().find(step => {
+    const hasStepData = step in steps && steps[step] !== null;
+    const hasLabelData = !!contentLabels[productOrigin][productTitle][step];
+    return hasStepData && hasLabelData;
+  });
+
+  return latestStep;
 }
