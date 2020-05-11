@@ -63,13 +63,13 @@ describe('Chapter: Inkomen en Stadspas', () => {
 
   it('Should navigate to a detail page and show all the (completed) steps of a request', () => {
     // Expand the second list
-    // selectComponent(
-    //   'SectionCollapsible_SectionCollapsible',
-    //   ':eq(1) button:first'
-    // ).click();
+    selectComponent(
+      'SectionCollapsible_SectionCollapsible',
+      ':eq(1) button:first'
+    ).click();
 
     // Click the first item of the jsut expanded list
-    cy.get('a[href*="inkomen-en-stadspas/stadspas/0-2"]').click();
+    cy.get('a[href*="inkomen-en-stadspas/stadspas/2-0"]').click();
 
     selectComponent('StatusLine_MoreStatus').should('have.length', 2);
     selectComponent('StatusLine_StatusLine').should('exist');
