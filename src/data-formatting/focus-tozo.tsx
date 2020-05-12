@@ -55,14 +55,15 @@ const UitkeringLabels: ProductType = {
       <>
         <p>
           Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken.
-          Bekijk de brief voor meer details. U moet de extra informatie vóór{' '}
+          Bekijk de brief voor meer details.{' '}
+          {/*U moet de extra informatie vóór{' '}
           {data.userActionDeadline} opsturen. Dan ontvangt u vóór{' '}
-          {data.decisionDeadline2} ons besluit.
+    {data.decisionDeadline2} ons besluit.*/}
         </p>
         <p>
           Tip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk
           in. Hoe eerder u ons de noodzakelijke informatie geeft, hoe eerder wij
-          verder kunnen met de behandeling van uw aanvraag.`
+          verder kunnen met de behandeling van uw aanvraag.
         </p>
       </>
     ),
