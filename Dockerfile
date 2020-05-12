@@ -53,7 +53,8 @@ RUN echo "Current REACT_APP_ENV (node build image) = ${REACT_APP_ENV}"
 FROM build-app as serve-ot-bff
 
 ENV PORT=80
-ENV REDIRECT_AFTER_LOGIN=https://mijn.ot.amsterdam.nl
+ARG REDIRECT_AFTER_LOGIN=https://mijn.ot.amsterdam.nl
+ENV REDIRECT_AFTER_LOGIN=$REDIRECT_AFTER_LOGIN
 
 COPY scripts/serveBuild.js /app/scripts/serveBuild.js
 
@@ -113,6 +114,9 @@ LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
 LABEL commit="https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${COMMIT_HASH}"
 
 WORKDIR /app
+
+ARG BFF_MS_API_BASE_URL=http://mijn.amsterdam.nl/api
+ENV BFF_MS_API_BASE_URL=$BFF_MS_API_BASE_URL
 
 # Setting the correct timezone for the build
 RUN rm /etc/localtime

@@ -7,7 +7,7 @@ const BFF_HOST = process.env.BFF_HOST || 'localhost';
 const BFF_PORT = process.env.BFF_PORT || 5000;
 
 export const BFF_MS_API_BASE_URL =
-  process.env.BFF_MS_API_BASE_URL || `http://${BFF_HOST}:${BFF_PORT}/api`;
+  process.env.BFF_MS_API_BASE_URL || `http://${BFF_HOST}:${BFF_PORT}/test-api`;
 export const BFF_DATAPUNT_API_BASE_URL =
   process.env.BFF_DATAPUNT_API_BASE_URL || BFF_MS_API_BASE_URL;
 

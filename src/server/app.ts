@@ -27,7 +27,7 @@ app.use(
 
 app.use(compression());
 // Mount the router at the base path
-app.use('/api/bff', router);
+app.use(['/api/bff', '/api-test/bff'], router);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const sessionID = req.sessionID!;

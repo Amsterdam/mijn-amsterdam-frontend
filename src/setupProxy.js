@@ -63,16 +63,16 @@ module.exports = function(app) {
     })
   );
 
-  app.get('/logout', handleLogout);
-  app.get(['/api/login'], loginPage);
-  app.get(['/api/tma', '/api1/tma'], handleLogin);
-  app.all('/api', handleSession);
-  app.get('/api/auth/check', (req, res) => {
+  app.get(['/logout'], handleLogout);
+  app.get(['/api/login', '/api-test/login'], loginPage);
+  app.get(['/api/tma', '/api1/tma', '/api-test/tma'], handleLogin);
+  app.all(['/api', '/api-test'], handleSession);
+  app.get(['/api/auth/check', '/api-test/auth/check'], (req, res) => {
     return res.send(req.session);
   });
 
   app.use(
-    ['/api'],
+    ['/api', '/api-test'],
     createProxyMiddleware({
       target: `http://${apiHost}:${apiPort}`,
       changeOrigin: true,
