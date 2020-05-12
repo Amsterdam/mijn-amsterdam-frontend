@@ -56,7 +56,8 @@ export default () => {
       <SectionCollapsible
         id="SectionCollapsible-healthcare-granted"
         title="Huidige voorzieningen"
-        noItemsMessage="U hebt nog geen huidige voorzieningen."
+        noItemsMessage="U hebt geen huidige voorzieningen."
+        hasItems={!!itemsActual.length}
         startCollapsed={false}
         className={styles.SectionCollapsibleCurrent}
         isLoading={isLoading}
@@ -72,6 +73,7 @@ export default () => {
         id="SectionCollapsible-healthcare-previous"
         title="Eerdere voorzieningen"
         noItemsMessage="U hebt geen eerdere voorzieningen."
+        hasItems={!!itemsPrevious.length}
         startCollapsed={hasActualItems}
         isLoading={isLoading}
         track={{
