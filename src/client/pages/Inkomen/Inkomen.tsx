@@ -63,7 +63,7 @@ export default () => {
 
  const itemsRequested = useMemo(() => {
     const itemsRequested = items.filter(item => !item.hasDecision);
-    if (FocusTozoItem && !FocusTozoItem?.status.isComplete) {
+    if (FocusTozoItem && !FocusTozoItem?.status.isComplete && FeatureToggle.tozoActive) {
       const item = FocusTozoItem as any;
       item.status = 'In behandeling';
       itemsRequested.push(item);
@@ -75,7 +75,7 @@ export default () => {
 
   const itemsDecided = useMemo(() => {
     const itemsDecided = items.filter(item => item.hasDecision);
-    if (FocusTozoItem && FocusTozoItem?.status.isComplete) {
+    if (FocusTozoItem && FocusTozoItem?.status.isComplete && FeatureToggle.tozoActive) {
       itemsDecided.push(FocusTozoItem as any);
     }
     return addTitleLinkComponent(
