@@ -13,6 +13,9 @@ export const contentDocumentTitles: DocumentTitles = {
   'Voorschot Tozo (voor ondernemers) (Eenm.)': 'Brief betaling voorschot',
   'Bbz Toekennen voorschot Tozo via batch 07 april': 'Brief betaling voorschot',
   'Tegemoetkoming Ondernemers en Zelfstandigen': 'aanvraag',
+  'Hersteltermijn uitkering Tozo': 'Brief hersteltermijn',
+  'Voorschot Bbz Corona regeling (Eenm.)': 'Brief betaling voorschot',
+  'Bbz Toekennen voorschot Tozo via batch': 'Brief betaling voorschot',
 };
 
 export const contentLabels: LabelData = {
