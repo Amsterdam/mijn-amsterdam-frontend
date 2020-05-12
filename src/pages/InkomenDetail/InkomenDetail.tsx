@@ -55,7 +55,7 @@ export default () => {
       </PageContent>
       {!!FocusItem && !!FocusItem.process && (
         <StatusLine
-          trackCategory={`Inkomen en Stadspas / ${FocusItem.productTitle}`}
+          trackCategory={`Inkomen en Stadspas / ${FocusItem.title}`}
           items={FocusItem.process}
           altDocumentContent={altDocumentContent}
           id={id}

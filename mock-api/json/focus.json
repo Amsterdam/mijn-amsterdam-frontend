@@ -280,41 +280,6 @@
     "soortProduct": "Participatiewet"
   },
   {
-    "_id": "0-0",
-    "_meest_recent": "beslissing",
-    "dienstverleningstermijn": 28,
-    "naam": "Voorschot Tozo (voor ondernemers) (Eenm.)",
-    "processtappen": {
-      "aanvraag": {
-        "_id": 0,
-        "datum": "2020-04-01T00:00:00+02:00",
-        "document": []
-      },
-      "beslissing": {
-        "_id": 3,
-        "datum": "2020-04-01T00:00:00+02:00",
-        "document": [
-          {
-            "$ref": "focus/document?id=660000000000028&isBulk=false&isDms=false",
-            "id": 660000000000028,
-            "isBulk": false,
-            "isDms": false,
-            "omschrijving": "Voorschot Bbz Corona regeling (Eenm.)"
-          }
-        ]
-      },
-      "bezwaar": null,
-      "herstelTermijn": null,
-      "inBehandeling": {
-        "_id": 1,
-        "datum": "2020-04-01T00:00:00+02:00",
-        "document": []
-      }
-    },
-    "soortProduct": "Bijzondere Bijstand",
-    "typeBesluit": "Toekenning"
-  },
-  {
     "_id": "1-0",
     "_meest_recent": "herstelTermijn",
     "naam": "Tijdelijke Overbruggingsregeling Zelfst. Ondern.",
@@ -347,28 +312,6 @@
       }
     },
     "soortProduct": "Participatiewet"
-  },
-  {
-    "_id": "2-0",
-    "_meest_recent": "aanvraag",
-    "dienstverleningstermijn": 28,
-    "naam": "Lening t.b.v. bedrijfskrediet TOZO",
-    "processtappen": {
-      "aanvraag": {
-        "_id": 0,
-        "datum": "2020-04-28T00:00:00+02:00",
-        "document": []
-      },
-      "beslissing": null,
-      "bezwaar": null,
-      "herstelTermijn": null,
-      "inBehandeling": {
-        "_id": 1,
-        "datum": "2020-04-27T00:00:00+02:00",
-        "document": []
-      }
-    },
-    "soortProduct": "Bijzondere Bijstand"
   },
   {
     "_id": "0-0",
@@ -464,7 +407,20 @@
         ]
       },
       "bezwaar": null,
-      "herstelTermijn": null,
+      "herstelTermijn": {
+        "_id": 2,
+        "aantalDagenHerstelTermijn": "14",
+        "datum": "2020-04-29T15:05:53+02:00",
+        "document": [
+          {
+            "$ref": "focus/document?id=660000000000031&isBulk=false&isDms=false",
+            "id": 660000000000031,
+            "isBulk": false,
+            "isDms": false,
+            "omschrijving": "Hersteltermijn lening Tozo"
+          }
+        ]
+      },
       "inBehandeling": {
         "_id": 1,
         "datum": "2020-04-27T00:00:00+02:00",
