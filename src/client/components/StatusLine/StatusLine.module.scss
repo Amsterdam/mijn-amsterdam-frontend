@@ -1,4 +1,5 @@
 @import '../../styles/_global.scss';
+@import '../Button/Button.module.scss';
 
 .StatusLine {
   margin-bottom: 2rem;
@@ -124,6 +125,10 @@
 
     > p {
       margin: 0 0 2rem;
+
+      a {
+        @extend .LinkdSolo;
+      }
     }
 
     &--documents {
