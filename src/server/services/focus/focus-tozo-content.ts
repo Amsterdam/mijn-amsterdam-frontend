@@ -37,9 +37,7 @@ export const contentLabels: LabelData = {
           `
           <p>
             Wij hebben meer informatie en tijd nodig om uw aanvraag te
-            verwerken. Bekijk de brief voor meer details. U moet de extra
-            informatie vóór ${data.userActionDeadline} opsturen. Dan ontvangt u
-            vóór ${data.decisionDeadline2} ons besluit.
+            verwerken. Bekijk de brief voor meer details.
           </p>
           <p>
             Tip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk
