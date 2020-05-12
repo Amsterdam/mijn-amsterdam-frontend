@@ -23,8 +23,11 @@ import getMyChapters from './helpers/myChapters';
 import useGarbageApi from './hooks/api/api.garbage';
 import useMyNotificationsApi from 'hooks/api/my-notifications-api.hook';
 import useMyTipsApi from 'hooks/api/my-tips-api.hook';
+import { ApiState } from './hooks/api/api.types';
+import { FocusItem } from './data-formatting/focus';
+import { FocusTozo } from './data-formatting/focus-tozo';
 
-type MyCasesApiState = FocusApiState;
+type MyCasesApiState = ApiState<{ items: Array<FocusItem | FocusTozo> }>;
 
 export interface AppState {
   BRP: BrpApiState;
@@ -83,11 +86,16 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
 
   const { data: focusData, ...rest } = FOCUS;
   // At the time of writing we only show recentCases from the Focus API.
+  const items =
+    FOCUS_TOZO && FOCUS_TOZO.data?.isRecent
+      ? [FOCUS_TOZO.data, ...focusData.recentCases]
+      : focusData.recentCases;
+
   const MY_CASES = {
     data: {
       ...focusData,
-      items: focusData.recentCases,
-      total: focusData.recentCases.length,
+      items,
+      total: items.length,
     },
     ...rest,
   };

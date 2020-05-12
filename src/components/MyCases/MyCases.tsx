@@ -7,8 +7,9 @@ import Heading from 'components/Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { FocusItem } from 'data-formatting/focus';
 import classnames from 'classnames';
+import { FocusTozo } from '../../data-formatting/focus-tozo';
 
-type MyCase = FocusItem; // NOTE: atm it's the only Case possible
+type MyCase = FocusItem | FocusTozo; // NOTE: atm it's the only Case possible
 
 interface CaseItemProps {
   item: MyCase;

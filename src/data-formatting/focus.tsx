@@ -179,21 +179,12 @@ export interface FocusItem {
   ISODatePublished: string;
   title: string;
   description: JSX.Element | string;
-  latestStep: StepTitle;
   status: string;
   hasDecision: boolean;
   isRecent: boolean;
-
-  // The null values are used to indicate there is no decision made yet
-  isGranted: boolean | null;
-  isDenied: boolean | null;
-  isDiscarded: boolean | null;
-
   chapter: Chapter;
   link: LinkProps;
   process: ProcessStep[];
-  productTitle: ProductTitle;
-  productOrigin: ProductOrigin;
   notification?: MyNotification;
 }
 
@@ -886,9 +877,6 @@ export function formatFocusProduct(
       ? parseLabelContentString(stepLabels.title, sourceData)
       : productTitleTranslated,
 
-    // The name of the product (Stadspas, Levensonderhoud ...)
-    productTitle,
-    productOrigin,
     description: stepLabels
       ? parseLabelContent(stepLabels.description, sourceData)
       : '',
@@ -896,11 +884,6 @@ export function formatFocusProduct(
     status: stepLabels ? stepLabels.status : stepStatusLabels[latestStep],
     isRecent,
     hasDecision,
-    isGranted: hasDecision ? decision === getDecision('Toekenning') : null,
-    isDenied: hasDecision ? decision === getDecision('Afwijzing') : null,
-    isDiscarded: hasDecision
-      ? decision === getDecision('Buiten Behandeling')
-      : null,
     link: {
       title: 'Meer informatie', // TODO: How to get custom link title?
       to: route,
@@ -1033,10 +1016,11 @@ export function altDocumentContent(
     return <b>U heeft deze brief per post ontvangen.</b>;
   }
 
-  return ['Meer informatie nodig', 'Besluit'].includes(
-    statusLineItem.status
-  ) ? (
-    statusLineItem.isRecent ? (
+  if (
+    ['Meer informatie nodig', 'Besluit'].includes(statusLineItem.status) &&
+    statusLineItem.datePublished !== ''
+  ) {
+    return statusLineItem.isRecent ? (
       <b>
         U ontvangt{' '}
         {statusLineItem.status === 'Besluit' ? 'dit besluit' : 'deze brief'} per
@@ -1048,10 +1032,10 @@ export function altDocumentContent(
         {statusLineItem.status === 'Besluit' ? 'dit besluit' : 'deze brief'} per
         post ontvangen.
       </b>
-    )
-  ) : (
-    ''
-  );
+    );
+  }
+
+  return '';
 }
 
 export type FocusInkomenSpecificatieType =
