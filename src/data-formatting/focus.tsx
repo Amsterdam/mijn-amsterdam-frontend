@@ -804,7 +804,7 @@ export function formatFocusProduct(
     typeBesluit: rawDecision,
     processtappen: steps,
     naam: productTitle,
-    dienstverleningstermijn: daysSupplierActionRequired = 0,
+    dienstverleningstermijn: daysSupplierActionRequired = 28,
     inspanningsperiode: daysUserActionRequired = 28,
   } = product;
 

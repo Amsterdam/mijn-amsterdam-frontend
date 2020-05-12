@@ -54,12 +54,7 @@ export default () => {
 
   const itemsRequested = useMemo(() => {
     const itemsRequested = items.filter(item => !item.hasDecision);
-    if (
-      !(
-        FocusTozoItem?.status.lening === 'beslissing' &&
-        FocusTozoItem?.status.uitkering === 'beslissing'
-      )
-    ) {
+    if (!FocusTozoItem?.status.isComplete) {
       itemsRequested.push(FocusTozoItem as any);
     }
     return addTitleLinkComponent(
@@ -69,10 +64,7 @@ export default () => {
 
   const itemsDecided = useMemo(() => {
     const itemsDecided = items.filter(item => item.hasDecision);
-    if (
-      FocusTozoItem?.status.lening === 'beslissing' &&
-      FocusTozoItem?.status.uitkering === 'beslissing'
-    ) {
+    if (FocusTozoItem?.status.isComplete) {
       itemsDecided.push(FocusTozoItem as any);
     }
     return addTitleLinkComponent(

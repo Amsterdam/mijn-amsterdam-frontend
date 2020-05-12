@@ -52,10 +52,19 @@ const UitkeringLabels: ProductType = {
     title: data => data.productTitleTranslated,
     status: stepLabels.herstelTermijn,
     description: data => (
-      <p>
-        Er is meer informatie en tijd nodig om uw aanvraag te behandelen. Bekijk
-        de brief voor meer details.
-      </p>
+      <>
+        <p>
+          Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken.
+          Bekijk de brief voor meer details. U moet de extra informatie vóór{' '}
+          {data.userActionDeadline} opsturen. Dan ontvangt u vóór{' '}
+          {data.decisionDeadline2} ons besluit.
+        </p>
+        <p>
+          Tip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk
+          in. Hoe eerder u ons de noodzakelijke informatie geeft, hoe eerder wij
+          verder kunnen met de behandeling van uw aanvraag.`
+        </p>
+      </>
     ),
   },
   beslissing: {
@@ -124,8 +133,8 @@ const VoorschotLabels: ProductType = {
       status: 'Voorschot',
       description: data => (
         <p>
-          Uw voorschot Tozo uitkering is uitbetaald. Aan dit voorschot gelden
-          voorwaarden. De voorwaarden vindt u in de brief.
+          U heeft recht op een {data.productTitleTranslated}. Bekijk de brief
+          voor meer details.
         </p>
       ),
     },
@@ -145,10 +154,19 @@ const LeningLabels: ProductType = {
     title: data => data.productTitleTranslated,
     status: stepLabels.herstelTermijn,
     description: data => (
-      <p>
-        Er is meer informatie en tijd nodig om uw aanvraag te behandelen. Bekijk
-        de brief voor meer details.
-      </p>
+      <>
+        <p>
+          Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken.
+          Bekijk de brief voor meer details. U moet de extra informatie vóór{' '}
+          {data.userActionDeadline} opsturen. Dan ontvangt u vóór{' '}
+          {data.decisionDeadline2} ons besluit.
+        </p>
+        <p>
+          Tip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk
+          in. Hoe eerder u ons de noodzakelijke informatie geeft, hoe eerder wij
+          verder kunnen met de behandeling van uw aanvraag.
+        </p>
+      </>
     ),
   },
   beslissing: {
@@ -236,6 +254,7 @@ export interface FocusTozo {
     lening: StepTitle | null;
     uitkering: StepTitle | null;
     voorschot: StepTitle | null;
+    isComplete: boolean;
   };
   hasDecision: {
     lening: boolean;
@@ -386,16 +405,25 @@ function formatFocusTozoItems({
     ? mix[mix.length - 1].datePublished
     : '';
 
+  const voorschotStatus = firstAanvraagVoorschot
+    ? getLatestStep(firstAanvraagVoorschot.processtappen)
+    : null;
+  const leningStatus = firstAanvraagLening
+    ? getLatestStep(firstAanvraagLening.processtappen)
+    : null;
+  const uitkeringStatus = firstAanvraagUitkering
+    ? getLatestStep(firstAanvraagUitkering.processtappen)
+    : null;
+
+  const isComplete = [voorschotStatus, leningStatus, uitkeringStatus]
+    .filter(status => !!status)
+    .every(status => status === 'beslissing');
+
   const status = {
-    lening: firstAanvraagLening
-      ? getLatestStep(firstAanvraagLening.processtappen)
-      : null,
-    uitkering: firstAanvraagUitkering
-      ? getLatestStep(firstAanvraagUitkering.processtappen)
-      : null,
-    voorschot: firstAanvraagVoorschot
-      ? getLatestStep(firstAanvraagVoorschot.processtappen)
-      : null,
+    lening: leningStatus,
+    uitkering: uitkeringStatus,
+    voorschot: voorschotStatus,
+    isComplete,
   };
 
   const hasDecision = {
