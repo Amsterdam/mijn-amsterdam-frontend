@@ -441,7 +441,7 @@
   },
   {
     "_id": "2-0",
-    "_meest_recent": "aanvraag",
+    "_meest_recent": "beslissing",
     "dienstverleningstermijn": 28,
     "naam": "Lening t.b.v. bedrijfskrediet TOZO",
     "processtappen": {
@@ -450,7 +450,19 @@
         "datum": "2020-04-28T00:00:00+02:00",
         "document": []
       },
-      "beslissing": null,
+      "beslissing": {
+        "_id": 3,
+        "datum": "2020-05-01T00:00:00+02:00",
+        "document": [
+          {
+            "$ref": "focus/document?id=660000000000028&isBulk=false&isDms=false",
+            "id": 660000000000028,
+            "isBulk": false,
+            "isDms": false,
+            "omschrijving": "Lening t.b.v. bedrijfskrediet TOZO"
+          }
+        ]
+      },
       "bezwaar": null,
       "herstelTermijn": null,
       "inBehandeling": {
@@ -459,6 +471,7 @@
         "document": []
       }
     },
-    "soortProduct": "Bijzondere Bijstand"
+    "soortProduct": "Bijzondere Bijstand",
+    "typeBesluit": "Toekenning"
   }
 ]
