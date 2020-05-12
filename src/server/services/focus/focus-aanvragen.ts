@@ -297,7 +297,7 @@ export function transformFocusSourceProduct(
     typeBesluit: rawDecision,
     processtappen: steps,
     naam: productTitle,
-    dienstverleningstermijn: daysSupplierActionRequired,
+    dienstverleningstermijn: daysSupplierActionRequired = 28,
     inspanningsperiode: daysUserActionRequired = 28,
   } = product;
 
