@@ -6,6 +6,8 @@ services:
       context: .
       dockerfile: Dockerfile
       target: build-deps
+    environment:
+      - BFF_DISABLE_MOCK_ADAPTER=true
     entrypoint: npm run bff-api:test
 
   test-unit-client:
@@ -13,8 +15,6 @@ services:
       context: .
       dockerfile: Dockerfile
       target: build-deps
-      args:
-        - REACT_APP_ENV=test-unit
     entrypoint: npm test
 
   # E2E testing
@@ -23,11 +23,10 @@ services:
       context: .
       dockerfile: Dockerfile
       target: serve-ot-bff
-      args:
-        - REACT_APP_ENV=e2e
     expose:
       - "3000"
     environment:
+      - BFF_ENV=development
       - PORT=3000
       - REDIRECT_AFTER_LOGIN=http://e2e-frontend:3000
 

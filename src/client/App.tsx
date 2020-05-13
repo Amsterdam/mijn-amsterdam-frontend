@@ -11,11 +11,7 @@ import {
 } from 'react-router-dom';
 import useRouter from 'use-react-router';
 import { AppRoutes, FeatureToggle } from '../universal/config';
-import {
-  IS_ANALYTICS_ENABLED,
-  IS_PRODUCTION,
-  IS_SENTRY_ENABLED,
-} from '../universal/env';
+import { IS_PRODUCTION } from '../universal/config/env';
 import styles from './App.module.scss';
 import AppStateProvider from './AppStateProvider';
 import {
@@ -52,6 +48,7 @@ import {
 } from './pages';
 import { SessionContext, SessionState } from './SessionState';
 import { TMA_LOGIN_URL } from './config/api';
+import { getOtapEnvItem } from '../universal/config/env';
 
 export const PublicRoutes = [AppRoutes.PROCLAIMER, TMA_LOGIN_URL];
 export const PrivateRoutes = Object.values(AppRoutes).filter(
@@ -204,11 +201,11 @@ function AppLanding() {
 }
 
 export default function App() {
-  useAnalytics(IS_ANALYTICS_ENABLED);
+  useAnalytics(!!getOtapEnvItem('analyticsId'));
   useScript('/js/usabilla.js', false, true, IS_PRODUCTION);
 
   const sendToSentry = (error: Error, componentStack: string) => {
-    IS_SENTRY_ENABLED && Sentry.captureException(error);
+    getOtapEnvItem('sentryDsn') && Sentry.captureException(error);
   };
 
   return (

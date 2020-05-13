@@ -1,21 +1,11 @@
-import {
-  DEFAULT_MAP_DISPLAY_CONFIG,
-  IS_MY_AREA_2_ENABLED,
-  MapDisplayOptions,
-} from './MyArea.constants';
-import { Link, NavLink } from 'react-router-dom';
-import React, { HTMLProps, PropsWithChildren } from 'react';
-
-import { AppRoutes, LOCATION_ZOOM } from '../../../universal/config';
-import { IconClose, IconHome } from '../../assets/icons';
-import Heading from '../Heading/Heading';
-import { HomeIconMarker } from './MaMarker';
-import { IS_MAPS_ENABLED } from '../../../universal/env';
-import Linkd from '../Button/Button';
-import { ReactComponent as Logo } from '../../assets/images/logo-amsterdam.svg';
-import { MaMap } from './MaMap';
-import { MaZoomControl } from './MaZoomControl';
 import classnames from 'classnames';
+import React, { HTMLProps, PropsWithChildren } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { AppRoutes, IS_AP } from '../../../universal/config';
+import { IconClose, IconHome } from '../../assets/icons';
+import { ReactComponent as Logo } from '../../assets/images/logo-amsterdam.svg';
+import Linkd from '../Button/Button';
+import Heading from '../Heading/Heading';
 import styles from './MyArea.module.scss';
 
 export function MyAreaHeader() {
@@ -70,7 +60,7 @@ interface MyAreaMapIframeProps {
 export function MyAreaMapIFrame({ url, className }: MyAreaMapIframeProps) {
   return (
     <MyAreaMapContainer className={className}>
-      {!!url && IS_MAPS_ENABLED ? (
+      {!!url && IS_AP ? (
         <iframe
           id="mapIframe"
           title="Kaart van mijn buurt"
@@ -84,40 +74,40 @@ export function MyAreaMapIFrame({ url, className }: MyAreaMapIframeProps) {
   );
 }
 
-interface MyAreaMapComponentProps {
-  id?: string;
-  title?: string;
-  center?: LatLngObject | null;
-  homeAddress?: string;
-  options?: MapDisplayOptions;
-  className?: string;
-}
+// interface MyAreaMapComponentProps {
+//   id?: string;
+//   title?: string;
+//   center?: LatLngObject | null;
+//   homeAddress?: string;
+//   options?: MapDisplayOptions;
+//   className?: string;
+// }
 
-export default function MyAreaMap({
-  center,
-  title = 'Kaart van Mijn buurt',
-  id = 'map',
-  homeAddress,
-  options = DEFAULT_MAP_DISPLAY_CONFIG,
-  className,
-}: MyAreaMapComponentProps) {
-  return (
-    <MyAreaMapContainer className={className}>
-      {!!center && IS_MAPS_ENABLED ? (
-        <MaMap title={title} id={id} zoom={options.zoom} center={center}>
-          <HomeIconMarker
-            center={center}
-            zoom={options.zoom}
-            address={homeAddress}
-          />
-          {!!options.zoomTools && <MaZoomControl center={center} />}
-        </MaMap>
-      ) : (
-        <MyAreaLoader />
-      )}
-    </MyAreaMapContainer>
-  );
-}
+// export default function MyAreaMap({
+//   center,
+//   title = 'Kaart van Mijn buurt',
+//   id = 'map',
+//   homeAddress,
+//   options = DEFAULT_MAP_DISPLAY_CONFIG,
+//   className,
+// }: MyAreaMapComponentProps) {
+//   return (
+//     <MyAreaMapContainer className={className}>
+//       {!!center ? (
+//         <MaMap title={title} id={id} zoom={options.zoom} center={center}>
+//           <HomeIconMarker
+//             center={center}
+//             zoom={options.zoom}
+//             address={homeAddress}
+//           />
+//           {!!options.zoomTools && <MaZoomControl center={center} />}
+//         </MaMap>
+//       ) : (
+//         <MyAreaLoader />
+//       )}
+//     </MyAreaMapContainer>
+//   );
+// }
 
 interface MyAreaDashboardComponentProps extends HTMLProps<HTMLDivElement> {
   center?: LatLngObject | null;
@@ -131,13 +121,7 @@ export function MyAreaDashboard({
 }: MyAreaDashboardComponentProps) {
   return (
     <div {...otherProps} className={styles.MapDashboard}>
-      {IS_MY_AREA_2_ENABLED && (
-        <MyAreaMap
-          center={center}
-          options={{ zoomTools: false, zoom: LOCATION_ZOOM }}
-        />
-      )}
-      {!IS_MY_AREA_2_ENABLED && <MyAreaMapIFrame url={url} />}
+      {IS_AP && <MyAreaMapIFrame url={url} />}
       <NavLink to={AppRoutes.BUURT} className={styles.MapDashboardOverlay}>
         <div>
           <Heading size="large">Mijn buurt</Heading>

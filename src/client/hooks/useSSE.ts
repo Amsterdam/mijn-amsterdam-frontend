@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
-import { IS_SENTRY_ENABLED } from '../../universal/env';
 import * as Sentry from '@sentry/browser';
+import { getOtapEnvItem } from '../../universal/config';
 
 const RECONNECT_TIMEOUT_MS = 1000;
 const MAX_RETRY_COUNT = 10;
@@ -31,7 +31,8 @@ export function useSSE(
     let unMounted = false;
     const handleError = (error: any) => {
       es.close();
-      IS_SENTRY_ENABLED && Sentry.captureMessage(`SSE:ERROR: ${error}`);
+      getOtapEnvItem('sentryDsn') &&
+        Sentry.captureMessage(`SSE:ERROR: ${error}`);
       if (retryCount !== MAX_RETRY_COUNT) {
         setTimeout(() => {
           if (!unMounted) {
@@ -40,7 +41,7 @@ export function useSSE(
           }
         }, RECONNECT_TIMEOUT_MS);
       } else {
-        IS_SENTRY_ENABLED &&
+        getOtapEnvItem('sentryDsn') &&
           Sentry.captureMessage(`SSE:ERROR: Retry terminated`);
         callback({
           ALL: {

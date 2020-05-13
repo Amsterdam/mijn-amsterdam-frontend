@@ -1,4 +1,4 @@
-import { IS_PRODUCTION, IS_ACCEPTANCE } from '../../universal/env';
+import { IS_PRODUCTION } from '../../universal/env';
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
 export const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
@@ -10,6 +10,7 @@ export const FeatureToggle = {
   belastingApiActive: true,
   milieuzoneApiActive: true,
   focusUitkeringsspecificatiesActive: true,
+  focusAanvragenActive: true,
   focusCombinedActive: true,
   identiteitsbewijzenActive: true,
   tozoActive: true,

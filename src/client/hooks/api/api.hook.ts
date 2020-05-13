@@ -3,10 +3,10 @@ import * as Sentry from '@sentry/browser';
 import { Action } from '../../../universal/types';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 
-import { IS_SENTRY_ENABLED } from '../../../universal/env';
 import axios from 'axios';
 import { apiErrorResponseData } from '../../../universal/helpers/api';
 import { AxiosRequestConfig } from 'axios';
+import { getOtapEnvItem } from '../../../universal/config';
 
 export interface ApiRequestOptions extends AxiosRequestConfig {
   postpone?: boolean;
@@ -145,7 +145,7 @@ export function useDataApi<T>(
             type: ActionTypes.FETCH_FAILURE,
             payload: apiErrorResponseData(initialDataNoContent, error),
           });
-          IS_SENTRY_ENABLED &&
+          getOtapEnvItem('sentryDsn') &&
             Sentry.captureMessage(
               `API ERROR: ${errorMessage}, url: ${
                 requestOptions.url?.split('?')[0] // Don't log query params for privacy reasons

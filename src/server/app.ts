@@ -1,14 +1,13 @@
-import express, { Request, Response, NextFunction } from 'express';
-
-import compression from 'compression';
-import cors from 'cors';
-import { router } from './router';
-import session from 'express-session';
 import bodyParser from 'body-parser';
+import compression from 'compression';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import express, { NextFunction, Request, Response } from 'express';
+import session from 'express-session';
+import { IS_AP } from '../universal/config/env';
+import { BFF_PORT } from './config';
 import { clearCache } from './helpers';
-
-const PORT = process.env.BFF_PORT || 5000;
+import { router } from './router';
 
 const app = express();
 
@@ -21,7 +20,7 @@ app.use(
     secret: 'xkcd', // from .env variable
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: !!process.env.BFF_SECURE_COOKIE },
+    cookie: { secure: IS_AP },
   })
 );
 
@@ -40,6 +39,6 @@ app.use((req: Request, res: Response) => {
   return res.end('not found');
 });
 
-app.listen(PORT, () => {
-  console.log(`Mijn Amsterdam BFF api listening on ${PORT}...`);
+app.listen(BFF_PORT, () => {
+  console.log(`Mijn Amsterdam BFF api listening on ${BFF_PORT}...`);
 });

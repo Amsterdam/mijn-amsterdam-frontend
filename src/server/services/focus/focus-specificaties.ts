@@ -15,6 +15,7 @@ import {
   FocusInkomenSpecificatieType,
   fetchFOCUSCombined,
 } from './focus-combined';
+import { API_BASE_PATH } from '../../../universal/config/api';
 
 export const focusInkomenSpecificatieTypes: {
   [type in FocusInkomenSpecificatieType]: string;
@@ -55,7 +56,7 @@ function transformIncomeSpecificationNotification(
         'yyyy'
       )} staat voor u klaar.`,
       link: {
-        to: `/api/${item.url}`,
+        to: `${API_BASE_PATH}/${item.url}`,
         title: 'Bekijk jaaropgave',
         download: documentDownloadName(item),
       },
@@ -71,7 +72,7 @@ function transformIncomeSpecificationNotification(
       'MMMM yyyy'
     )} staat voor u klaar.`,
     link: {
-      to: `/api/${item.url}`,
+      to: `${API_BASE_PATH}/${item.url}`,
       title: 'Bekijk uitkeringsspecificatie',
       download: documentDownloadName(item),
     },
@@ -87,7 +88,7 @@ function transformIncomSpecificationItem(
     ...item,
     displayDate,
     documentUrl: `<a
-        href=${`/api/${item.url}`}
+        href=${`${API_BASE_PATH}/${item.url}`}
         rel="external noopener noreferrer"
         download=${documentDownloadName(item)}
       >

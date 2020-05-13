@@ -19,8 +19,6 @@ RUN npm ci
 
 COPY public /app/public
 COPY src /app/src
-COPY .env* /app/
-
 
 ########################################################################################################################
 ########################################################################################################################
@@ -29,8 +27,9 @@ COPY .env* /app/
 ########################################################################################################################
 FROM build-deps as build-app
 
-ARG REACT_APP_ENV=development
-ENV REACT_APP_ENV=$REACT_APP_ENV
+ENV BROWSER=none
+ENV CI=true
+ENV INLINE_RUNTIME_CHUNK=false
 
 # Setting the correct timezone for the build
 RUN rm /etc/localtime
@@ -41,10 +40,6 @@ RUN npm run build
 # Build bff
 RUN npm run bff-api:build
 
-RUN echo "date=`date`; env=${REACT_APP_ENV}" > /app/build/version.txt
-RUN echo "Current REACT_APP_ENV (node build image) = ${REACT_APP_ENV}"
-
-
 ########################################################################################################################
 ########################################################################################################################
 # Serving the application (test (OT) + e2e)
@@ -53,8 +48,8 @@ RUN echo "Current REACT_APP_ENV (node build image) = ${REACT_APP_ENV}"
 FROM build-app as serve-ot-bff
 
 ENV PORT=80
-ARG REDIRECT_AFTER_LOGIN=https://mijn.ot.amsterdam.nl
-ENV REDIRECT_AFTER_LOGIN=$REDIRECT_AFTER_LOGIN
+ENV REDIRECT_AFTER_LOGIN=https://mijn.ot.amsterdam.nl
+ENV BFF_ENV=development
 
 COPY scripts/serveBuild.js /app/scripts/serveBuild.js
 
@@ -70,19 +65,11 @@ FROM nginx:stable-alpine as deploy-ap-frontend
 
 LABEL name="mijnamsterdam FRONTEND"
 LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
-LABEL commit="https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${COMMIT_HASH}"
 
-ARG REACT_APP_ENV=production
-ENV REACT_APP_ENV=$REACT_APP_ENV
-RUN echo "Current REACT_APP_ENV (nginx CLIENT deploy image) = ${REACT_APP_ENV}"
 ENV LOGOUT_URL=${LOGOUT_URL:-notset}
 
 # Setting the correct timezone for the build
 RUN ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
-
-# Default --build-args
-ARG BUILD_NUMBER=-1
-ARG COMMIT_HASH=unknown
 
 COPY conf/nginx-server-default.template.conf /tmp/nginx-server-default.template.conf
 COPY conf/nginx.conf /etc/nginx/nginx.conf
@@ -93,13 +80,27 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 
 # Copy the built application files to the current image
 COPY --from=build-app /app/build /usr/share/nginx/html
-# Copy the correct robots file
-COPY --from=build-deps /app/src/client/public/robots.$REACT_APP_ENV.txt /usr/share/nginx/html/robots.txt
-
-RUN echo "date=`date`; build=${BUILD_NUMBER}; env=${REACT_APP_ENV}; see also: https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${COMMIT_HASH}" > /usr/share/nginx/html/version.txt
 
 # Use LOGOUT_URL for nginx rewrite directive
 CMD envsubst '${LOGOUT_URL}' < /tmp/nginx-server-default.template.conf > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
+
+
+########################################################################################################################
+########################################################################################################################
+# Front-end Web server image Acceptance
+########################################################################################################################
+########################################################################################################################
+FROM deploy-ap-frontend as deploy-acceptance-frontend
+COPY --from=build-deps /app/src/client/public/robots.acceptance.txt /usr/share/nginx/html/robots.txt
+
+########################################################################################################################
+########################################################################################################################
+# Front-end Web server image Production
+########################################################################################################################
+########################################################################################################################
+FROM deploy-ap-frontend as deploy-production-frontend
+COPY --from=build-deps /app/src/client/public/robots.production.txt /usr/share/nginx/html/robots.txt
+
 
 
 ########################################################################################################################
@@ -109,14 +110,12 @@ CMD envsubst '${LOGOUT_URL}' < /tmp/nginx-server-default.template.conf > /etc/ng
 ########################################################################################################################
 FROM node:13.7.0 as deploy-ap-bff
 
+ENV BFF_ENV=production
+
 LABEL name="mijnamsterdam BFF (Back-end for front-end)"
 LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
-LABEL commit="https://github.com/Amsterdam/mijn-amsterdam-frontend/commit/${COMMIT_HASH}"
 
 WORKDIR /app
-
-ARG BFF_MS_API_BASE_URL=http://mijn.amsterdam.nl/api
-ENV BFF_MS_API_BASE_URL=$BFF_MS_API_BASE_URL
 
 # Setting the correct timezone for the build
 RUN rm /etc/localtime

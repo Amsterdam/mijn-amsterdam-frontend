@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/node';
 import axios, { AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { BFF_SENTRY_DSN, ENV, IS_SENTRY_ENABLED } from '../../universal/env';
+import { ENV, getOtapEnvItem, IS_AP } from '../../universal/config/env';
 import {
   apiErrorResult,
   apiPostponeResult,
@@ -15,9 +15,9 @@ import { entries } from '../../universal/helpers/utils';
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
 import { Deferred } from './deferred';
 
-if (BFF_SENTRY_DSN) {
+if (getOtapEnvItem('bffSentryDsn')) {
   Sentry.init({
-    dsn: BFF_SENTRY_DSN,
+    dsn: getOtapEnvItem('bffSentryDsn'),
     environment: ENV,
   });
 }
@@ -58,7 +58,7 @@ function enableMockAdapter() {
   );
 }
 
-if (!process.env.BFF_DISABLE_MOCK_ADAPTER) {
+if (!IS_AP && !process.env.BFF_DISABLE_MOCK_ADAPTER) {
   console.info('Axios Mock adapter enabled');
   enableMockAdapter();
 }
@@ -126,7 +126,7 @@ export async function requestData<T>(
 
     return responseData;
   } catch (error) {
-    IS_SENTRY_ENABLED && Sentry.captureException(error);
+    getOtapEnvItem('sentryDsn') && Sentry.captureException(error);
 
     const responseData = apiErrorResult(error, null);
 

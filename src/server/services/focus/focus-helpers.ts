@@ -13,6 +13,7 @@ import {
 import { GenericDocument } from '../../../universal/types';
 import { defaultDateFormat } from '../../../universal/helpers';
 import { addDays, parseISO, differenceInCalendarDays } from 'date-fns';
+import { API_BASE_PATH } from '../../../universal/config/api';
 
 /** Checks if an item returned from the api is considered recent */
 export function isRecentItem(
@@ -90,7 +91,7 @@ export function formatFocusDocument(
   return {
     id: String(id),
     title: contentDocumentTitles[title] || title,
-    url: `/api/${url}`,
+    url: `${API_BASE_PATH}/${url}`,
     datePublished,
     type: stepTitle,
   };

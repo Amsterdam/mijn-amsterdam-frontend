@@ -1,15 +1,14 @@
 import { AppState } from '../AppState';
 import { isError } from '../../universal/helpers';
+import { API_BASE_PATH } from '../../universal/config/api';
 
 // Urls directly used from front-end
-export const TMA_LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/api/login';
+export const TMA_LOGIN_URL = `${API_BASE_PATH}/login`;
 export const LOGIN_URL_DIGID = `${TMA_LOGIN_URL}?target=digid`;
 export const LOGIN_URL_EHERKENNING = `${TMA_LOGIN_URL}?target=eherkenning`;
-export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL || '/logout';
-export const BFF_API_BASE_URL =
-  process.env.REACT_APP_BFF_API_BASE_URL || '/api/bff';
-export const AUTH_API_URL =
-  process.env.REACT_APP_AUTH_API_URL || `/api/auth/check`;
+export const LOGOUT_URL = '/logout';
+export const BFF_API_BASE_URL = `${API_BASE_PATH}/bff`;
+export const AUTH_API_URL = `${API_BASE_PATH}${API_BASE_PATH}/auth/check`;
 
 export const BFFApiUrls: Record<string, string> = {
   SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,

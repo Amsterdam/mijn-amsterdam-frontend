@@ -95,11 +95,8 @@ pipeline {
         script { currentBuild.displayName = "ACC Build #${BUILD_NUMBER} (${COMMIT_HASH})" }
         // build the Front-end/nginx image
         sh "docker build -t ${IMAGE_ACCEPTANCE} " +
-           "--target=deploy-ap-frontend " +
+           "--target=deploy-acceptance-frontend " +
            "--shm-size 1G " +
-           "--build-arg REACT_APP_ENV=acceptance " +
-           "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
-           "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
            "."
         sh "docker push ${IMAGE_ACCEPTANCE}"
 
@@ -107,8 +104,6 @@ pipeline {
         // sh "docker build -t ${IMAGE_ACCEPTANCE_BFF} " +
         //    "--target=deploy-ap-bff " +
         //    "--shm-size 1G " +
-        //    "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
-        //    "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
         //    "."
         // sh "docker push ${IMAGE_ACCEPTANCE_BFF}"
       }
@@ -145,11 +140,8 @@ pipeline {
       steps {
         script { currentBuild.displayName = "PROD:Build:#${BUILD_NUMBER} (${COMMIT_HASH})" }
         sh "docker build -t ${IMAGE_PRODUCTION} " +
-           "--target=deploy-ap-frontend " +
+           "--target=deploy-production-frontend " +
            "--shm-size 1G " +
-           "--build-arg REACT_APP_ENV=production " +
-           "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
-           "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
            "."
         sh "docker push ${IMAGE_PRODUCTION}"
 
@@ -158,8 +150,6 @@ pipeline {
         // sh "docker build -t ${IMAGE_PRODUCTION_BFF} " +
         //    "--target=deploy-ap-bff " +
         //    "--shm-size 1G " +
-        //    "--build-arg BUILD_NUMBER=${BUILD_NUMBER} " +
-        //    "--build-arg COMMIT_HASH=${COMMIT_HASH} " +
         //    "."
         // sh "docker push ${IMAGE_PRODUCTION_BFF}"
       }

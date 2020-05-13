@@ -22,7 +22,6 @@ export { default as MainNavBar } from './MainNavBar/MainNavBar';
 export { default as MainNavSubmenu } from './MainNavSubmenu/MainNavSubmenu';
 export { default as Modal } from './Modal/Modal';
 export {
-  default as MyAreaMap,
   MyAreaDashboard,
   MyAreaHeader,
   MyAreaMapIFrame,

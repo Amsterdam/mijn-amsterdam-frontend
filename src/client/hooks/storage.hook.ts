@@ -3,8 +3,8 @@ import * as Sentry from '@sentry/browser';
 
 import { useCallback, useEffect, useState } from 'react';
 
-import { IS_SENTRY_ENABLED } from '../../universal/env';
 import { Unshaped } from '../../universal/types';
+import { getOtapEnvItem } from '../../universal/config';
 
 interface LocalStorageHandler {
   value: string | null;
@@ -55,7 +55,7 @@ function useWindowStorage(
     try {
       return adapter.getItem(key);
     } catch (error) {
-      IS_SENTRY_ENABLED && Sentry.captureException(error);
+      getOtapEnvItem('sentryDsn') && Sentry.captureException(error);
     }
     return null;
   }, [adapter, key]);
@@ -77,7 +77,7 @@ function useWindowStorage(
       try {
         saveValueToLocalStorage(key, newValue);
       } catch (error) {
-        IS_SENTRY_ENABLED && Sentry.captureException(error);
+        getOtapEnvItem('sentryDsn') && Sentry.captureException(error);
       }
     },
     [key, saveValueToLocalStorage]

@@ -1,3 +1,5 @@
+import { getOtapEnvItem } from '../../universal/config';
+
 export const ExternalUrls = {
   CHANGE_PERSONAL_DATA:
     'https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D',
@@ -5,7 +7,7 @@ export const ExternalUrls = {
     'https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/',
   CONTACT_FORM:
     'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx',
-  SSO_ERFPACHT: process.env.REACT_APP_ERFPACHT_URL,
+  SSO_ERFPACHT: getOtapEnvItem('ssoErfpachtUrl'),
   BERICHTENBOX: 'https://mijn.overheid.nl/berichtenbox/inbox/',
   CONTACT_GENERAL: 'https://www.amsterdam.nl/contact/',
   AMSTERDAM_NEWSLETTER:
@@ -18,7 +20,7 @@ export const ExternalUrls = {
     'https://www.amsterdam.nl/bestuur-organisatie/werkenbij/',
   ZORG_LEES_MEER: 'https://www.amsterdam.nl/zorg-ondersteuning/',
   SSO_BELASTINGEN: 'https://belastingbalie.amsterdam.nl/digid.saml.php?start',
-  SSO_MILIEUZONE: process.env.REACT_APP_SSO_MILIEUZONE_URL,
+  SSO_MILIEUZONE: getOtapEnvItem('ssoMilieuzoneUrl'),
   MIJN_SUBSIDIES: 'https://mijnsubsidies.amsterdam.nl/loket/',
   MIJN_AMSTERDAM_VEELGEVRAAGD:
     'https://www.amsterdam.nl/veelgevraagd/?productid={68422ECA-8C56-43EC-A9AA-B3DF190B5077}',
