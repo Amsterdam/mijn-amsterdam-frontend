@@ -58,7 +58,7 @@ export default () => {
       itemsRequested.push(FocusTozoItem as any);
     }
     return addTitleLinkComponent(
-      itemsRequested.sort(dateSort('ISODatePubblished'))
+      itemsRequested.sort(dateSort('ISODatePublished', 'desc'))
     );
   }, [items, FocusTozoItem]);
 
@@ -68,7 +68,7 @@ export default () => {
       itemsDecided.push(FocusTozoItem as any);
     }
     return addTitleLinkComponent(
-      itemsDecided.sort(dateSort('ISODatePubblished'))
+      itemsDecided.sort(dateSort('ISODatePublished', 'desc'))
     );
   }, [items, FocusTozoItem]);
 
