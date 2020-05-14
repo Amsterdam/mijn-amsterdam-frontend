@@ -43,84 +43,6 @@ const DocumentTitles: Record<string, string> = {
   'Toekennen lening Tozo': 'Brief besluit lening',
 };
 
-const UitkeringLabels: ProductType = {
-  aanvraag: null,
-  inBehandeling: null,
-  herstelTermijn: {
-    notification: {
-      title: data => `${data.productTitleTranslated}: Neem actie`,
-      description: data =>
-        `Er is meer informatie en tijd nodig om uw aanvraag te behandelen. `,
-      linkTitle: 'Bekijk uw Tozo status',
-    },
-    title: data => data.productTitleTranslated,
-    linkTitle: 'Bekijk uw Tozo status',
-    linkTo: AppRoutes['INKOMEN/TOZO'],
-    status: stepLabels.herstelTermijn,
-    description: data => (
-      <p>
-        Er is meer informatie en tijd nodig om uw aanvraag te behandelen. Bekijk
-        de brief voor meer details.
-      </p>
-    ),
-  },
-  beslissing: {
-    [getDecision('Afwijzing')]: {
-      notification: {
-        title: data =>
-          `${data.productTitleTranslated}: Uw aanvraag is afgewezen`,
-        description: data =>
-          `U hebt geen recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
-        linkTitle: 'Bekijk uw Tozo status',
-      },
-      title: data => data.productTitleTranslated,
-      linkTitle: 'Bekijk uw Tozo status',
-      linkTo: AppRoutes['INKOMEN/TOZO'],
-      status: stepLabels.beslissing,
-      description: data => (
-        <p>
-          U hebt geen recht op een ${data.productTitleTranslated} (besluit:
-          {data.datePublished}).
-        </p>
-      ),
-    },
-    [getDecision('Toekenning')]: {
-      notification: {
-        title: data =>
-          `${data.productTitleTranslated}: Uw aanvraag is toegekend`,
-        description: data =>
-          `U hebt recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
-        linkTitle: 'Bekijk uw Tozo status',
-      },
-      title: data => data.productTitleTranslated,
-      linkTitle: 'Bekijk uw Tozo status',
-      linkTo: AppRoutes['INKOMEN/TOZO'],
-      status: stepLabels.beslissing,
-      description: data => (
-        <p>
-          `U hebt recht op een ${data.productTitleTranslated} (besluit:
-          {data.datePublished}).`,
-        </p>
-      ),
-    },
-    [getDecision('Buiten Behandeling')]: {
-      notification: {
-        title: data =>
-          `${data.productTitleTranslated}: Uw aanvraag is buiten behandeling gesteld`,
-        description: data =>
-          `Uw aanvraag is buiten behandeling gesteld (besluit: ${data.datePublished!}).`,
-        linkTitle: 'Bekijk uw Tozo status',
-      },
-      title: data => data.productTitleTranslated,
-      linkTitle: 'Bekijk uw Tozo status',
-      linkTo: AppRoutes['INKOMEN/TOZO'],
-      status: stepLabels.beslissing,
-      description: 'Uw aanvraag is buiten behandeling gesteld.',
-    },
-  },
-  bezwaar: null,
-};
-
 const VoorschotLabels: ProductType = {
   aanvraag: null,
   inBehandeling: null,
@@ -129,8 +51,9 @@ const VoorschotLabels: ProductType = {
   beslissing: {
     [getDecision('Toekenning')]: {
       notification: {
-        title: data =>
-          `${data.productTitleTranslated}: Uw aanvraag is toegekend`,
+        title: data => {
+          return `${data.productTitleTranslated}: wij hebben een voorschot betaald`;
+        },
         description: data =>
           `Wij hebben een voorschot naar uw rekening overgemaakt.`,
         linkTitle: 'Bekijk uw Tozo status',
@@ -149,12 +72,90 @@ const VoorschotLabels: ProductType = {
   },
 };
 
+const UitkeringLabels: ProductType = {
+  aanvraag: null,
+  inBehandeling: null,
+  herstelTermijn: {
+    notification: {
+      title: data => `${data.productTitleTranslated}: meer informatie nodig`,
+      description: data =>
+        `Er is meer informatie en tijd nodig om uw aanvraag te behandelen. `,
+      linkTitle: 'Bekijk uw Tozo status',
+    },
+    title: data => data.productTitleTranslated,
+    linkTitle: 'Bekijk uw Tozo status',
+    linkTo: AppRoutes['INKOMEN/TOZO'],
+    status: stepLabels.herstelTermijn,
+    description: data => (
+      <p>
+        Er is meer informatie en tijd nodig om uw aanvraag te behandelen. Bekijk
+        de brief voor meer details.
+      </p>
+    ),
+  },
+  beslissing: {
+    [getDecision('Afwijzing')]: {
+      notification: {
+        title: data =>
+          `${data.productTitleTranslated}: uw aanvraag is afgewezen`,
+        description: data =>
+          `U hebt geen recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
+        linkTitle: 'Bekijk uw Tozo status',
+      },
+      title: data => data.productTitleTranslated,
+      linkTitle: 'Bekijk uw Tozo status',
+      linkTo: AppRoutes['INKOMEN/TOZO'],
+      status: stepLabels.beslissing,
+      description: data => (
+        <p>
+          U hebt geen recht op een ${data.productTitleTranslated} (besluit:
+          {data.datePublished}).
+        </p>
+      ),
+    },
+    [getDecision('Toekenning')]: {
+      notification: {
+        title: data =>
+          `${data.productTitleTranslated}: uw aanvraag is toegekend`,
+        description: data =>
+          `U hebt recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
+        linkTitle: 'Bekijk uw Tozo status',
+      },
+      title: data => data.productTitleTranslated,
+      linkTitle: 'Bekijk uw Tozo status',
+      linkTo: AppRoutes['INKOMEN/TOZO'],
+      status: stepLabels.beslissing,
+      description: data => (
+        <p>
+          `U hebt recht op een ${data.productTitleTranslated} (besluit:
+          {data.datePublished}).`,
+        </p>
+      ),
+    },
+    [getDecision('Buiten Behandeling')]: {
+      notification: {
+        title: data =>
+          `${data.productTitleTranslated}: uw aanvraag is buiten behandeling gesteld`,
+        description: data =>
+          `Uw aanvraag is buiten behandeling gesteld (besluit: ${data.datePublished!}).`,
+        linkTitle: 'Bekijk uw Tozo status',
+      },
+      title: data => data.productTitleTranslated,
+      linkTitle: 'Bekijk uw Tozo status',
+      linkTo: AppRoutes['INKOMEN/TOZO'],
+      status: stepLabels.beslissing,
+      description: 'Uw aanvraag is buiten behandeling gesteld.',
+    },
+  },
+  bezwaar: null,
+};
+
 const LeningLabels: ProductType = {
   aanvraag: null,
   inBehandeling: null,
   herstelTermijn: {
     notification: {
-      title: data => `${data.productTitleTranslated}: Neem actie`,
+      title: data => `${data.productTitleTranslated}: meer informatie nodig`,
       description: data =>
         `Er is meer informatie en tijd nodig om uw aanvraag te behandelen. `,
       linkTitle: 'Bekijk uw Tozo status',
@@ -174,7 +175,7 @@ const LeningLabels: ProductType = {
     [getDecision('Afwijzing')]: {
       notification: {
         title: data =>
-          `${data.productTitleTranslated}: Uw aanvraag is afgewezen`,
+          `${data.productTitleTranslated}: uw aanvraag is afgewezen`,
         description: data =>
           `U heeft geen recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
         linkTitle: 'Bekijk uw Tozo status',
@@ -184,13 +185,16 @@ const LeningLabels: ProductType = {
       linkTo: AppRoutes['INKOMEN/TOZO'],
       status: stepLabels.beslissing,
       description: data => (
-        <p>U heeft geen recht op een ${data.productTitleTranslated}.</p>
+        <p>
+          U heeft geen recht op een ${data.productTitleTranslated} (besluit:
+          {data.datePublished}).
+        </p>
       ),
     },
     [getDecision('Toekenning')]: {
       notification: {
         title: data =>
-          `${data.productTitleTranslated}: Uw aanvraag is toegekend`,
+          `${data.productTitleTranslated}: uw aanvraag is toegekend`,
         description: data =>
           `U heeft recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
         linkTitle: 'Bekijk uw Tozo status',
@@ -200,13 +204,16 @@ const LeningLabels: ProductType = {
       linkTo: AppRoutes['INKOMEN/TOZO'],
       status: stepLabels.beslissing,
       description: data => (
-        <p>U heeft recht op een {data.productTitleTranslated}.</p>
+        <p>
+          U heeft recht op een {data.productTitleTranslated} (besluit:
+          {data.datePublished}).
+        </p>
       ),
     },
     [getDecision('Buiten Behandeling')]: {
       notification: {
         title: data =>
-          `${data.productTitleTranslated}: Uw aanvraag is buiten behandeling gesteld`,
+          `${data.productTitleTranslated}: uw aanvraag is buiten behandeling gesteld`,
         description: data =>
           `Uw aanvraag is buiten behandeling gesteld (besluit: ${data.datePublished}).`,
         linkTitle: 'Bekijk uw Tozo status',
@@ -280,18 +287,17 @@ export interface FocusTozo {
   status: {
     lening: StepTitle | null;
     uitkering: StepTitle | null;
-    voorschot: StepTitle | null;
     isComplete: boolean;
   };
   hasDecision: {
     lening: boolean;
     uitkering: boolean;
-    voorschot: boolean;
   };
   notifications: {
     lening: MyNotification | null;
     uitkering: MyNotification | null;
-    voorschot: MyNotification | null;
+    voorschot: MyNotification[];
+    aanvraag: MyNotification[];
   };
   process: {
     lening: ProcessStep[];
@@ -301,16 +307,13 @@ export interface FocusTozo {
 }
 
 function formatFocusTozoDocument(
-  datePublished: string,
   document: FocusDocument,
-  hasDatePublished: boolean = true
+  datePublished: string
 ): GenericDocument {
   const { id, omschrijving: title, $ref: url } = document;
   return {
     id: String(id),
-    title:
-      (DocumentTitles[title] || title) +
-      (hasDatePublished ? `\n${datePublished}` : ''),
+    title: DocumentTitles[title] || title,
     url: `/api/${url}`,
     datePublished,
     type: 'PDF',
@@ -398,26 +401,22 @@ function formatFocusTozoItems({
 
   const tozoDocuments = documenten.sort(dateSort('datePublished'));
 
-  const aanvraagNotification = {
-    id: 'tozo-regeling-notification-aanvraag',
-    datePublished: tozoDocuments.length
-      ? tozoDocuments[tozoDocuments.length - 1]?.datePublished
-      : '',
-    chapter: Chapters.INKOMEN,
-    title: 'Tozo-aanvraag: Wij hebben uw aanvraag ontvangen',
-    description: `Wij hebben uw aanvraag Tozo ontvangen op ${
-      tozoDocuments.length
-        ? dateFormat(
-            tozoDocuments[tozoDocuments.length - 1].datePublished,
-            'dd MMMM - HH:mm'
-          )
-        : ''
-    }`,
-    link: {
-      to: AppRoutes['INKOMEN/TOZO'],
-      title: 'Bekijk uw Tozo status',
-    },
-  };
+  const aanvraagNotifications = tozoDocuments.map((aanvraag, index) => {
+    return {
+      id: 'tozo-regeling-notification-aanvraag-' + index,
+      datePublished: aanvraag.datePublished,
+      chapter: Chapters.INKOMEN,
+      title: 'Tozo-aanvraag: Wij hebben uw aanvraag ontvangen',
+      description: `Wij hebben uw aanvraag Tozo ontvangen op ${dateFormat(
+        aanvraag.datePublished,
+        'dd MMMM - HH:mm'
+      )}`,
+      link: {
+        to: AppRoutes['INKOMEN/TOZO'],
+        title: 'Bekijk uw Tozo status',
+      },
+    };
+  });
 
   const mix = [
     ...tozoDocuments,
@@ -432,9 +431,6 @@ function formatFocusTozoItems({
     ? mix[mix.length - 1].datePublished
     : '';
 
-  const voorschotStatus = firstAanvraagVoorschot
-    ? getLatestStep(firstAanvraagVoorschot.processtappen)
-    : null;
   const leningStatus = firstAanvraagLening
     ? getLatestStep(firstAanvraagLening.processtappen)
     : null;
@@ -442,21 +438,19 @@ function formatFocusTozoItems({
     ? getLatestStep(firstAanvraagUitkering.processtappen)
     : null;
 
-  const isComplete = [voorschotStatus, leningStatus, uitkeringStatus]
+  const isComplete = [leningStatus, uitkeringStatus]
     .filter(status => !!status)
     .every(status => status === 'beslissing');
 
   const status = {
     lening: leningStatus,
     uitkering: uitkeringStatus,
-    voorschot: voorschotStatus,
     isComplete,
   };
 
   const hasDecision = {
     lening: status.lening === 'beslissing',
     uitkering: status.uitkering === 'beslissing',
-    voorschot: status.voorschot === 'beslissing',
   };
 
   const now = new Date();
@@ -518,7 +512,7 @@ function formatFocusTozoItems({
   };
 
   let voorschotten: ProcessStep[] = [];
-  let voorschotNotification: MyNotification | null = null;
+  let voorschotNotifications: MyNotification[] = [];
 
   const {
     process: leningSteps = [],
@@ -542,7 +536,7 @@ function formatFocusTozoItems({
     uitkeringSteps.push(fakeDecisionStep);
   }
 
-  if (firstAanvraagVoorschot && lastAanvraagVoorschot !== null) {
+  if (aanvragenVoorschot.length) {
     const voorschotLabels = Labels['Bijzondere Bijstand'][
       TOZO_VOORSCHOT_PRODUCT_TITLE
     ].beslissing![getDecision('Toekenning')];
@@ -553,43 +547,14 @@ function formatFocusTozoItems({
       voorschotLabels.notification.description;
     const voorschotLabelsNotificationTitle = voorschotLabels.notification.title;
 
-    voorschotNotification = {
-      id: 'tozo-regeling-notification-voorschot',
-      datePublished: lastAanvraagVoorschot.datePublished,
-      chapter: Chapters.INKOMEN,
-      title:
-        typeof voorschotLabelsNotificationTitle === 'function'
-          ? voorschotLabelsNotificationTitle({
-              productTitleTranslated: translateProductTitle(
-                firstAanvraagVoorschot.naam
-              ),
-            } as any)
-          : voorschotLabelsNotificationTitle,
-      description:
-        typeof voorschotLabelsNotificationDescription === 'function'
-          ? voorschotLabelsNotificationDescription({
-              datePublished: defaultDateFormat(
-                firstAanvraagVoorschot.datePublished
-              ),
-              productTitleTranslated: translateProductTitle(
-                firstAanvraagVoorschot.naam
-              ),
-            } as any)
-          : voorschotLabelsNotificationDescription,
-      link: {
-        to: AppRoutes['INKOMEN/TOZO'],
-        title: 'Bekijk uw Tozo status',
-      },
-    };
-
     voorschotten = aanvragenVoorschot.map((voorschot, index) => {
       return {
         id: 'voorschot-' + index,
         documents:
           voorschot.processtappen.beslissing!.document.map(doc => {
             return formatFocusTozoDocument(
-              dateFormat(voorschot.datePublished, 'dd MMMM'),
-              doc
+              doc,
+              dateFormat(voorschot.datePublished, 'dd MMMM')
             );
           }) || [],
         title:
@@ -612,6 +577,31 @@ function formatFocusTozoItems({
         isChecked: true,
         isLastActive: !(leningSteps.length || uitkeringSteps.length), // Force large checkmark in UI
         stepType: 'single-step',
+      };
+    });
+
+    voorschotNotifications = aanvragenVoorschot.map(voorschot => {
+      return {
+        id: 'tozo-regeling-notification-voorschot',
+        datePublished: voorschot.datePublished,
+        chapter: Chapters.INKOMEN,
+        title:
+          typeof voorschotLabelsNotificationTitle === 'function'
+            ? voorschotLabelsNotificationTitle({
+                productTitleTranslated: translateProductTitle(voorschot.naam),
+              } as any)
+            : voorschotLabelsNotificationTitle,
+        description:
+          typeof voorschotLabelsNotificationDescription === 'function'
+            ? voorschotLabelsNotificationDescription({
+                datePublished: defaultDateFormat(voorschot.datePublished),
+                productTitleTranslated: translateProductTitle(voorschot.naam),
+              } as any)
+            : voorschotLabelsNotificationDescription,
+        link: {
+          to: AppRoutes['INKOMEN/TOZO'],
+          title: 'Bekijk uw Tozo status',
+        },
       };
     });
   }
@@ -639,10 +629,10 @@ function formatFocusTozoItems({
         : [aanvraagStep],
     },
     notifications: {
-      aanvraag: aanvraagNotification,
+      aanvraag: aanvraagNotifications,
       lening: leningNotification,
       uitkering: uitkeringNotification,
-      voorschot: voorschotNotification,
+      voorschot: voorschotNotifications,
     },
   };
 
