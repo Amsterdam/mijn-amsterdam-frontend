@@ -1,13 +1,17 @@
 function getBrowserEnv() {
   let otapServerEnvFrontend = 'development';
+
   // eslint-disable-next-line
   const isAcceptanceServer = eval(
     "window.location.host === 'acc.amsterdam.nl'"
   );
+
   // eslint-disable-next-line
   const isProductionServer = eval("window.location.host === 'amsterdam.nl'");
+
   // eslint-disable-next-line
   const isTestServer = eval("window.location.host === 'mijn.ot.amsterdam.nl'");
+
   switch (true) {
     case isTestServer:
       otapServerEnvFrontend = 'test';
@@ -33,7 +37,7 @@ function getBrowserEnv() {
 function isBrowser() {
   try {
     // eslint-disable-next-line
-    eval('window.location');
+    eval('window');
     return true;
   } catch (error) {
     return false;
@@ -44,7 +48,7 @@ export const ENV = `${
   isBrowser() ? getBrowserEnv() : process.env.BFF_ENV || 'development'
 }` as OtapEnvName;
 
-console.info(`App running in ${ENV} mode.`);
+process.env.NODE_ENV !== 'test' && console.info(`App running in ${ENV} mode.`);
 
 export const IS_ACCEPTANCE = ENV === 'acceptance';
 export const IS_PRODUCTION = ENV === 'production';

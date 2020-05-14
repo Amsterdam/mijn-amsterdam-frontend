@@ -3,6 +3,10 @@ import {
   contentLabels,
   contentDocumentTitles,
 } from './focus-aanvragen-content';
+import {
+  contentLabels as contentLabelsTozo,
+  contentDocumentTitles as contentDocumentTitlesTozo,
+} from './focus-tozo-content';
 import { transformFocusTozo } from './focus-tozo';
 import { FocusTozoDocument } from './focus-combined';
 import { FocusProduct, Decision } from './focus-types';
@@ -425,8 +429,8 @@ describe('FOCUS_AANVRAGEN service', () => {
       transformFocusTozo({
         documenten: tozoDocumenten,
         aanvragen: testData,
-        contentLabels,
-        contentDocumentTitles,
+        contentLabels: contentLabelsTozo,
+        contentDocumentTitles: contentDocumentTitlesTozo,
         compareDate: new Date('2020-04-01'),
       })
     ).toMatchSnapshot();

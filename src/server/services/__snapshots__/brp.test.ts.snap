@@ -36,24 +36,24 @@ Object {
   ],
   "identiteitsbewijzen": Array [
     Object {
-      "datumAfloop": "10 juni 2020",
-      "datumUitgifte": "10 oktober 2010",
-      "documentNummer": "123ABC",
+      "datumAfloop": "15 oktober 2025",
+      "datumUitgifte": "15 oktober 2015",
+      "documentNummer": "PP57XKG54",
       "documentType": "paspoort",
       "link": Object {
         "title": "paspoort",
-        "to": "/burgerzaken/document/123ABC",
+        "to": "/burgerzaken/document/PP57XKG54",
       },
       "title": "paspoort",
     },
     Object {
-      "datumAfloop": "29 mei 2019",
-      "datumUitgifte": "29 mei 2016",
-      "documentNummer": "CBA890",
+      "datumAfloop": "15 oktober 2025",
+      "datumUitgifte": "15 oktober 2015",
+      "documentNummer": "ID814FDY3",
       "documentType": "europese identiteitskaart",
       "link": Object {
         "title": "europese identiteitskaart",
-        "to": "/burgerzaken/document/CBA890",
+        "to": "/burgerzaken/document/ID814FDY3",
       },
       "title": "ID-kaart",
     },
@@ -199,19 +199,6 @@ Object {
 
 exports[`BRP data api + transformation should transform the source data into notifications 1`] = `
 Array [
-  Object {
-    "chapter": "BURGERZAKEN",
-    "datePublished": "2020-04-22T22:00:00.000Z",
-    "description": "Vanaf 10 juni 2020 is uw paspoort niet meer geldig.",
-    "hideDatePublished": true,
-    "id": "paspoort-datum-afloop-binnekort",
-    "isAlert": true,
-    "link": Object {
-      "title": "Vraag snel uw nieuwe paspoort aan",
-      "to": "https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/paspoort-aanvragen/",
-    },
-    "title": "Uw paspoort verloopt binnenkort",
-  },
   Object {
     "chapter": "BRP",
     "datePublished": "2020-04-22T22:00:00.000Z",

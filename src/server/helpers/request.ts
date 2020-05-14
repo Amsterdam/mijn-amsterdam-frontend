@@ -14,6 +14,7 @@ import { capitalizeFirstLetter } from '../../universal/helpers/text';
 import { entries } from '../../universal/helpers/utils';
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
 import { Deferred } from './deferred';
+import memoryCache from 'memory-cache';
 
 if (getOtapEnvItem('bffSentryDsn')) {
   Sentry.init({
@@ -22,13 +23,18 @@ if (getOtapEnvItem('bffSentryDsn')) {
   });
 }
 
+const CACHE_KEEP_MAX_MS = 60 * 1000; // 1 minute. We expect that all requests will resolve within this total timeframe.
+
 const DEFAULT_REQUEST_CONFIG: AxiosRequestConfig & { cancelTimeout: number } = {
   cancelTimeout: 20000, // 20 seconds
+  method: 'get',
 };
 
 export const axiosRequest = axios.create({
   responseType: 'json',
 });
+
+export const cache = new memoryCache.Cache<string, any>();
 
 function enableMockAdapter() {
   const MockAdapter = require('axios-mock-adapter');
@@ -68,19 +74,17 @@ export interface RequestConfig<Source, Transformed> {
   format: (data: Source) => Transformed;
 }
 
-export const cache = new Map();
-
 export function clearCache(sessionID: SessionID) {
   for (const cacheKey of cache.keys()) {
     if (cacheKey.startsWith(sessionID)) {
-      cache.delete(cacheKey);
+      cache.del(cacheKey);
     }
   }
 }
 
 export async function requestData<T>(
   config: AxiosRequestConfig,
-  sessionID: SessionID = 'testje',
+  sessionID: SessionID,
   postpone: boolean = false
 ) {
   if (postpone) {
@@ -95,19 +99,32 @@ export async function requestData<T>(
     cancelToken: source.token,
   };
 
-  const cacheKey =
-    sessionID +
-    requestConfig.url +
-    (requestConfig.params ? JSON.stringify(requestConfig.params) : '');
+  const isGetRequest = requestConfig.method?.toLowerCase() === 'get';
 
-  if (cache.has(cacheKey)) {
-    return cache.get(cacheKey).promise as Promise<
+  // Construct a cache key based on unique properties of a request
+  const cacheKey = [
+    sessionID,
+    requestConfig.method,
+    requestConfig.url,
+    requestConfig.params ? JSON.stringify(requestConfig.params) : 'no-params',
+  ].join('-');
+
+  //Check if a cache key for this particular request exists
+  const cacheEntry = cache.get(cacheKey);
+
+  if (cacheEntry !== null) {
+    return cacheEntry.promise as Promise<
       ApiSuccessResponse<T> | ApiErrorResponse<null>
     >;
   }
 
-  if (requestConfig.method?.toLowerCase() === 'get') {
-    cache.set(cacheKey, new Deferred<ApiSuccessResponse<T>>());
+  // Set the cache Deferred
+  if (isGetRequest) {
+    cache.put(
+      cacheKey,
+      new Deferred<ApiSuccessResponse<T>>(),
+      CACHE_KEEP_MAX_MS
+    );
   }
 
   try {
@@ -120,7 +137,8 @@ export async function requestData<T>(
     const response: AxiosResponse<T> = await request;
     const responseData = apiSuccesResult<T>(response.data);
 
-    if (requestConfig.method?.toLowerCase() === 'get') {
+    // Use the cache Deferred for resolving the response
+    if (isGetRequest) {
       cache.get(cacheKey).resolve(responseData);
     }
 
@@ -130,10 +148,11 @@ export async function requestData<T>(
 
     const responseData = apiErrorResult(error, null);
 
-    if (requestConfig.method?.toLowerCase() === 'get') {
+    if (isGetRequest) {
+      // Resolve with error
       cache.get(cacheKey).resolve(responseData);
       // Don't cache the errors
-      cache.delete(cacheKey);
+      cache.del(cacheKey);
     }
 
     return responseData;
