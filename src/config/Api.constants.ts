@@ -62,6 +62,7 @@ export const ErrorNames: { [stateKey: string]: string } = {
   MIJN_TIPS: 'Tips',
   WMO: 'Zorg en ondersteuning',
   FOCUS: 'Inkomen en Stadspas + actuele updates',
+  FOCUS_TOZO: 'Tozo status + actuele updates',
   FOCUS_SPECIFICATIONS:
     'Uitkeringsspecificaties, Jaaropgaven en Tozo regelingen + actuele updates',
   MY_CHAPTERS: "Thema's",
