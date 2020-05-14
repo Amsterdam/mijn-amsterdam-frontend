@@ -6,8 +6,8 @@ export const FeatureToggle = {
   focusDocumentDownload: true,
   belastingApiActive: true,
   milieuzoneApiActive: true,
-  focusUitkeringsspecificatiesActive: !IS_PRODUCTION,
-  focusCombinedActive: !IS_PRODUCTION,
+  focusUitkeringsspecificatiesActive: true,
+  focusCombinedActive: true,
   identiteitsbewijzenActive: !IS_PRODUCTION,
   tozoActive: !IS_PRODUCTION,
 };
