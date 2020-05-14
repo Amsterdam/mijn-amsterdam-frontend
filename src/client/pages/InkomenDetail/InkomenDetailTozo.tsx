@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { stepStatusLabels } from '../../../server/services/focus/focus-aanvragen-content';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import { AppContext } from '../../AppState';
@@ -15,7 +16,6 @@ import {
 import { ExternalUrls } from '../../config/app';
 import { altDocumentContent } from './InkomenDetail';
 import styles from './InkomenDetail.module.scss';
-import { stepStatusLabels } from '../../../server/services/focus/focus-aanvragen-content';
 
 export default () => {
   const { FOCUS_TOZO } = useContext(AppContext);
@@ -60,7 +60,7 @@ export default () => {
         <StatusLine
           className={styles.AanvraagStatusLine}
           trackCategory={`Inkomen en Stadspas / Tozo aanvraag`}
-          statusLabel="Status Tozo aanvraag"
+          statusLabel="Tozo-aanvraag"
           items={TozoItem.process.aanvraag}
           showToggleMore={false}
           maxStepCount={-1}
@@ -71,7 +71,7 @@ export default () => {
       {!!TozoItem?.process.uitkering.length && (
         <StatusLine
           trackCategory={`Inkomen en Stadspas / Tozo uitkering levensonderhoud`}
-          statusLabel="Status Tozo uitkering levensonderhoud"
+          statusLabel="Tozo-uitkering"
           items={TozoItem.process.uitkering}
           showToggleMore={false}
           maxStepCount={
@@ -87,7 +87,7 @@ export default () => {
       {!!TozoItem?.process.lening.length && (
         <StatusLine
           trackCategory={`Inkomen en Stadspas / Tozo lening bedrijfskrediet`}
-          statusLabel="Status Tozo lening bedrijfskrediet"
+          statusLabel="Tozo-lening"
           items={TozoItem.process.lening}
           showToggleMore={false}
           maxStepCount={

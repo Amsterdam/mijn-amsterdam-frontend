@@ -71,10 +71,13 @@ export interface Info {
   title: TextPartContents;
   description: TextPartContents;
   status: RequestStatus;
+  linkTitle?: string;
+  linkTo?: string;
   notification: {
     title: TextPartContents;
     description: TextPartContents;
     linkTitle?: string;
+    linkTo?: string;
   };
 }
 

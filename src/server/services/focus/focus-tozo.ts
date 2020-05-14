@@ -1,406 +1,199 @@
-import React from 'react';
+import { API_BASE_PATH, AppRoutes, Chapters } from '../../../universal/config';
 import {
-  FocusCombinedItemFromSource,
-  getLatestStep,
-  FocusProduct,
+  dateFormat,
+  dateSort,
+  defaultDateFormat,
+  apiSuccesResult,
+  apiUnknownResult,
+} from '../../../universal/helpers';
+import {
+  GenericDocument,
+  MyCase,
+  MyNotification,
+} from '../../../universal/types';
+import {
+  fetchFOCUS,
   ProcessStep,
-  StepTitle,
+  transformFocusSourceProduct,
+} from './focus-aanvragen';
+import { fetchFOCUSCombined, FocusTozoDocument } from './focus-combined';
+import {
+  findLatestStepWithLabels,
+  getLatestStep,
   isRecentItem,
   getDecision,
-  formatFocusProduct,
+} from './focus-helpers';
+import {
+  contentDocumentTitles,
+  contentLabels,
+  fakeDecisionStep,
+  FocusTozo,
+  TOZO_LENING_PRODUCT_TITLE,
+  TOZO_UITKERING_PRODUCT_TITLE,
+  TOZO_VOORSCHOT_PRODUCT_TITLE,
+  translateProductTitle,
+} from './focus-tozo-content';
+import {
+  DocumentTitles,
+  FocusProduct,
   FocusDocument,
   LabelData,
-  stepLabels,
-  ProductType,
-  translateProductTitle,
-} from './focus';
-import { dateSort, dateFormat, defaultDateFormat } from 'helpers/App';
-import { Chapters } from 'config/Chapter.constants';
-import { AppRoutes } from 'config/Routing.constants';
-import { MyNotification } from '../hooks/api/my-notifications-api.hook';
-import { Document as GenericDocument } from '../components/DocumentList/DocumentList';
-import { Chapter } from '../config/Chapter.constants';
-import { LinkProps } from '../App.types';
-import { generatePath } from 'react-router';
+} from './focus-types';
 
-export const TOZO_VOORSCHOT_PRODUCT_TITLE: TozoProductTitle =
-  'Voorschot Tozo (voor ondernemers) (Eenm.)';
-export const TOZO_LENING_PRODUCT_TITLE: TozoProductTitle =
-  'Tozo Bedrijfskapitaal (voor ondernemers)';
-export const TOZO_UITKERING_PRODUCT_TITLE: TozoProductTitle =
-  'Tozo Levensonderhoud (voor ondernemers)';
-
-const DocumentTitles: Record<string, string> = {
-  // Aanvraag
-  'E-AANVR-TOZO': 'Ontvangst- bevestiging Aanvraag',
-  'E-AANVR-KBBZ': 'Ontvangst- bevestiging Aanvraag',
-
-  // Voorschot
-  'Voorschot Bbz Corona regeling (Eenm.)': 'Brief betaling voorschot',
-  'Bbz Toekennen voorschot Tozo via batch': 'Brief betaling voorschot',
-
-  // Uitkering
-  'Hersteltermijn uitkering Tozo': 'Brief meer informatie',
-  'Afwijzen uitkering Tozo': 'Brief besluit uitkering',
-  'Toekennen uitkering Tozo': 'Brief besluit uitkering',
-  'Tozo Toekennen': 'Brief besluit uitkering',
-  'Tozo Hersteltermijn': 'Brief meer informatie',
-
-  // Lening
-  'Hersteltermijn lening Tozo': 'Brief meer informatie',
-  'Afwijzen lening Tozo': 'Brief besluit lening',
-  'Toekennen lening Tozo': 'Brief besluit lening',
-};
-
-const VoorschotLabels: ProductType = {
-  aanvraag: null,
-  inBehandeling: null,
-  herstelTermijn: null,
-  bezwaar: null,
-  beslissing: {
-    [getDecision('Toekenning')]: {
-      notification: {
-        title: data => {
-          return `${data.productTitleTranslated}: Wij hebben een voorschot betaald`;
-        },
-        description: data =>
-          `Wij hebben een voorschot naar uw rekening overgemaakt.`,
-        linkTitle: 'Bekijk uw Tozo status',
-      },
-      title: data => data.productTitleTranslated,
-      linkTitle: 'Bekijk uw Tozo status',
-      linkTo: AppRoutes['INKOMEN/TOZO'],
-      status: 'Voorschot',
-      description: data => (
-        <p>
-          Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
-          voorwaarden in de brief.
-        </p>
-      ),
-    },
-  },
-};
-
-const UitkeringLabels: ProductType = {
-  aanvraag: null,
-  inBehandeling: null,
-  herstelTermijn: {
-    notification: {
-      title: data => `${data.productTitleTranslated}: Neem actie`,
-      description: data =>
-        `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.`,
-      linkTitle: 'Bekijk uw Tozo status',
-    },
-    title: data => data.productTitleTranslated,
-    linkTitle: 'Bekijk uw Tozo status',
-    linkTo: AppRoutes['INKOMEN/TOZO'],
-    status: stepLabels.herstelTermijn,
-    description: data => (
-      <p>
-        Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken.
-        Bekijk de brief voor meer details.
-      </p>
-    ),
-  },
-  beslissing: {
-    [getDecision('Afwijzing')]: {
-      notification: {
-        title: data =>
-          `${data.productTitleTranslated}: Uw aanvraag is afgewezen`,
-        description: data =>
-          `U hebt geen recht op een ${data.productTitleTranslated} (besluit ${data.datePublished}).`,
-        linkTitle: 'Bekijk uw Tozo status',
-      },
-      title: data => data.productTitleTranslated,
-      linkTitle: 'Bekijk uw Tozo status',
-      linkTo: AppRoutes['INKOMEN/TOZO'],
-      status: stepLabels.beslissing,
-      description: data => (
-        <p>
-          U hebt geen recht op een {data.productTitleTranslated}. Bekijk de
-          brief voor meer details.
-        </p>
-      ),
-    },
-    [getDecision('Toekenning')]: {
-      notification: {
-        title: data =>
-          `${data.productTitleTranslated}: Uw aanvraag is toegekend`,
-        description: data =>
-          `U hebt recht op een ${data.productTitleTranslated} (besluit ${data.datePublished}).`,
-        linkTitle: 'Bekijk uw Tozo status',
-      },
-      title: data => data.productTitleTranslated,
-      linkTitle: 'Bekijk uw Tozo status',
-      linkTo: AppRoutes['INKOMEN/TOZO'],
-      status: stepLabels.beslissing,
-      description: data => (
-        <p>
-          U hebt recht op een {data.productTitleTranslated}. Bekijk de brief
-          voor meer details.
-        </p>
-      ),
-    },
-    [getDecision('Buiten Behandeling')]: {
-      notification: {
-        title: data =>
-          `${data.productTitleTranslated}: Uw aanvraag is buiten behandeling gesteld`,
-        description: data =>
-          `Uw aanvraag is buiten behandeling gesteld (besluit ${data.datePublished!}).`,
-        linkTitle: 'Bekijk uw Tozo status',
-      },
-      title: data => data.productTitleTranslated,
-      linkTitle: 'Bekijk uw Tozo status',
-      linkTo: AppRoutes['INKOMEN/TOZO'],
-      status: stepLabels.beslissing,
-      description: (
-        <p>
-          Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer
-          details.
-        </p>
-      ),
-    },
-  },
-  bezwaar: null,
-};
-
-const LeningLabels: ProductType = {
-  aanvraag: null,
-  inBehandeling: null,
-  herstelTermijn: {
-    notification: {
-      title: data => `${data.productTitleTranslated}: Neem actie`,
-      description: data =>
-        `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.`,
-      linkTitle: 'Bekijk uw Tozo status',
-    },
-    title: data => data.productTitleTranslated,
-    status: stepLabels.herstelTermijn,
-    linkTitle: 'Bekijk uw Tozo status',
-    linkTo: AppRoutes['INKOMEN/TOZO'],
-    description: data => (
-      <p>
-        Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken.
-        Bekijk de brief voor meer details.
-      </p>
-    ),
-  },
-  beslissing: {
-    [getDecision('Afwijzing')]: {
-      notification: {
-        title: data =>
-          `${data.productTitleTranslated}: Uw aanvraag is afgewezen`,
-        description: data =>
-          `U hebt geen recht op een ${data.productTitleTranslated} (besluit ${data.datePublished}).`,
-        linkTitle: 'Bekijk uw Tozo status',
-      },
-      title: data => data.productTitleTranslated,
-      linkTitle: 'Bekijk uw Tozo status',
-      linkTo: AppRoutes['INKOMEN/TOZO'],
-      status: stepLabels.beslissing,
-      description: data => (
-        <p>
-          U hebt geen recht op een {data.productTitleTranslated}. Bekijk de
-          brief voor meer details.
-        </p>
-      ),
-    },
-    [getDecision('Toekenning')]: {
-      notification: {
-        title: data =>
-          `${data.productTitleTranslated}: Uw aanvraag is toegekend`,
-        description: data =>
-          `U hebt recht op een ${data.productTitleTranslated} (besluit ${data.datePublished}).`,
-        linkTitle: 'Bekijk uw Tozo status',
-      },
-      title: data => data.productTitleTranslated,
-      linkTitle: 'Bekijk uw Tozo status',
-      linkTo: AppRoutes['INKOMEN/TOZO'],
-      status: stepLabels.beslissing,
-      description: data => (
-        <p>
-          U hebt recht op een {data.productTitleTranslated}. Bekijk de brief
-          voor meer details.
-        </p>
-      ),
-    },
-    [getDecision('Buiten Behandeling')]: {
-      notification: {
-        title: data =>
-          `${data.productTitleTranslated}: Uw aanvraag is buiten behandeling gesteld`,
-        description: data =>
-          `Uw aanvraag is buiten behandeling gesteld (besluit ${data.datePublished}).`,
-        linkTitle: 'Bekijk uw Tozo status',
-      },
-      title: data => data.productTitleTranslated,
-      linkTitle: 'Bekijk uw Tozo status',
-      linkTo: AppRoutes['INKOMEN/TOZO'],
-      status: stepLabels.beslissing,
-      description: (
-        <p>
-          Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer
-          details.
-        </p>
-      ),
-    },
-  },
-  bezwaar: null,
-};
-
-const Labels: LabelData = {
-  Minimafonds: {},
-  Participatiewet: {
-    [TOZO_UITKERING_PRODUCT_TITLE]: UitkeringLabels,
-  },
-  'Bijzondere Bijstand': {
-    [TOZO_VOORSCHOT_PRODUCT_TITLE]: VoorschotLabels,
-    [TOZO_LENING_PRODUCT_TITLE]: LeningLabels,
-  },
-};
-
-const fakeDecisionStep: ProcessStep = {
-  id: 'fake-decision-filler',
-  title: '',
-  status: 'Besluit',
-  datePublished: '',
-  documents: [],
-  isChecked: false,
-  isLastActive: false,
-  stepType: 'last-step',
-  aboutStep: 'beslissing',
-  isRecent: false,
-  description: (
-    <p>
-      Zodra we alle benodigde informatie binnen hebben, ontvangt u een besluit.
-    </p>
-  ),
-};
-
-export type TozoProductTitle =
-  | 'Lening Tozo'
-  | 'Uitkering Tozo'
-  | 'Voorschot Tozo (voor ondernemers) (Eenm.)'
-  | string;
-
-export type FocusTozoDocumentType = 'E-AANVR-KBBZ' | 'E-AANVR-TOZO';
-
-export interface FocusTozoDocument extends FocusCombinedItemFromSource {
-  dateStart: string;
-}
-
-export interface FocusTozo {
-  id: string;
-  chapter: Chapter;
-  link: LinkProps;
-  title: string;
-  isRecent: boolean;
-  dateStart: string;
-  datePublished: string;
-  ISODatePublished: string;
-  description: string;
-  status: {
-    lening: StepTitle | null;
-    uitkering: StepTitle | null;
-    isComplete: boolean;
-  };
-  hasDecision: {
-    lening: boolean;
-    uitkering: boolean;
-  };
-  notifications: {
-    lening: MyNotification | null;
-    uitkering: MyNotification | null;
-    voorschot: MyNotification[];
-    aanvraag: MyNotification[];
-  };
-  process: {
-    lening: ProcessStep[];
-    uitkering: ProcessStep[];
-    aanvraag: ProcessStep[];
-  };
-}
-
-function formatFocusTozoDocument(
+function transformFocusTozoDocument(
+  datePublished: string,
   document: FocusDocument,
-  datePublished: string
+  contentDocumentTitles: DocumentTitles
 ): GenericDocument {
   const { id, omschrijving: title, $ref: url } = document;
   return {
     id: String(id),
-    title: DocumentTitles[title] || title,
-    url: `/api/${url}`,
+    title: contentDocumentTitles[title] || title,
+    url: `${API_BASE_PATH}/${url}`,
     datePublished,
     type: 'PDF',
   };
 }
 
-type FocusTozoProduct = FocusProduct & {
-  datePublished: string;
-  dateStart: string;
-};
+type FocusTozoProduct = FocusProduct & { datePublished: string };
 
-type TozoSet = {
-  aanvragen: FocusTozoProduct[];
-  voorschotten: FocusTozoProduct[];
-  documenten: FocusTozoDocument[];
-};
+interface TransformFocusProductTozoProps {
+  product: FocusTozoProduct;
+  tozoDocuments: FocusTozoDocument[];
+  compareDate: Date;
+  contentLabels: LabelData;
+  contentDocumentTitles: DocumentTitles;
+}
 
-const mapDates = (item: FocusProduct): FocusTozoProduct => {
-  const processSteps = item.processtappen;
-  const latestStep = getLatestStep(processSteps);
-  return {
-    ...item,
-    datePublished: processSteps[latestStep]?.datum || '',
-    dateStart: processSteps.aanvraag?.datum || '',
-  };
-};
+function transformFocusProductTozo({
+  product,
+  tozoDocuments,
+  compareDate,
+  contentLabels,
+  contentDocumentTitles,
+}: TransformFocusProductTozoProps) {
+  product.naam = translateProductTitle(product.naam);
+  // Find the matching Aanvraag document id and change the omschrijving of the document so that it is the same as shown next to the top aanvraag item
+  product.processtappen.aanvraag?.document.forEach(doc => {
+    const matchingTozoDocument = tozoDocuments.find(
+      tdoc => `${doc.id}` === `${tdoc.id}`
+    );
+    const datePublished = matchingTozoDocument
+      ? matchingTozoDocument.datePublished
+      : product.datePublished;
+    doc.omschrijving = `${contentDocumentTitles[doc.omschrijving] ||
+      doc.omschrijving}\n${dateFormat(datePublished, 'dd MMMM - HH:mm')}`;
+  });
 
-function formatFocusTozoItem({
+  return transformFocusSourceProduct(
+    product,
+    compareDate,
+    contentLabels,
+    contentDocumentTitles
+  );
+}
+
+function transformFocusTozoItems({
   documenten,
-  voorschotten,
   aanvragen,
+  contentLabels,
+  contentDocumentTitles,
+  compareDate,
 }: {
   documenten: FocusTozoDocument[];
-  aanvragen: FocusTozoProduct[];
-  voorschotten: FocusTozoProduct[];
-}): FocusTozo {
-  const mix = [...documenten, ...voorschotten, ...aanvragen];
-  const firstActivity = mix.sort(dateSort('dateStart', 'desc')).pop();
-  const unknownId = 'unknown-first-activity';
-  const firstActivityDatePublished = firstActivity?.dateStart || unknownId;
+  aanvragen: FocusProduct[];
+  contentLabels: LabelData;
+  contentDocumentTitles: DocumentTitles;
+  compareDate: Date;
+}) {
+  const mapLastDatePublished = (item: FocusProduct): FocusTozoProduct => {
+    const processSteps = item.processtappen;
+    const latestStep = getLatestStep(processSteps);
+    return {
+      ...item,
+      datePublished: processSteps[latestStep]?.datum || '',
+    };
+  };
 
-  const lastActivityDatePublished = [
-    ...documenten,
-    ...voorschotten,
-    ...aanvragen,
-  ]
-    .sort(dateSort('datePublished'))
-    .pop()!.datePublished;
+  const aanvragenLening = aanvragen
+    .filter(item => item.naam === TOZO_LENING_PRODUCT_TITLE)
+    .map(mapLastDatePublished)
+    .sort(dateSort('datePublished'));
 
-  const id =
-    'aanvraag-' +
-    (firstActivity ? firstActivity.id || firstActivity?._id : unknownId);
-
-  const aanvraagLening = aanvragen.find(
-    item => item.naam === TOZO_LENING_PRODUCT_TITLE
-  );
-
-  const aanvraagUitkering = aanvragen.find(
-    item => item.naam === TOZO_UITKERING_PRODUCT_TITLE
-  );
-
-  const leningStatus = aanvraagLening
-    ? getLatestStep(aanvraagLening.processtappen)
+  const firstAanvraagLening = aanvragenLening.length
+    ? aanvragenLening[0]
     : null;
 
-  const uitkeringStatus = aanvraagUitkering
-    ? getLatestStep(aanvraagUitkering.processtappen)
+  const aanvragenVoorschot = aanvragen
+    .filter(item => item.naam === TOZO_VOORSCHOT_PRODUCT_TITLE)
+    .map(mapLastDatePublished)
+    .sort(dateSort('datePublished'));
+
+  const lastAanvraagVoorschot = aanvragenVoorschot.length
+    ? aanvragenVoorschot[aanvragenVoorschot.length - 1]
     : null;
 
-  const statusses = [leningStatus, uitkeringStatus].filter(status => !!status);
-  const isComplete = statusses.length
-    ? statusses.every(status => status === 'beslissing')
-    : false;
+  const aanvragenUitkering = aanvragen
+    .filter(item => item.naam === TOZO_UITKERING_PRODUCT_TITLE)
+    .map(mapLastDatePublished)
+    .sort(dateSort('datePublished'));
+
+  const firstAanvraagUitkering = aanvragenUitkering.length
+    ? aanvragenUitkering[0]
+    : null;
+
+  // TODO: make process handle multiple items
+  // collect first aanvraag datum
+  // collect first decision uitkering
+  // collect first decision lening
+  // If uitkering and lening are less than XX weeks apart
+  // collect all documents before last decision date of uitkering or lening
+  // If uitkering and lening are more than XX weeks apart
+  // Start new Item
+  // collect first aanvraag datum after previous decision, start again
+
+  const tozoDocuments = documenten.sort(dateSort('datePublished'));
+
+  const aanvraagNotifications = tozoDocuments.map((aanvraag, index) => {
+    return {
+      id: 'tozo-regeling-notification-aanvraag-' + index,
+      datePublished: aanvraag.datePublished,
+      chapter: Chapters.INKOMEN,
+      title: 'Tozo-aanvraag: Wij hebben uw aanvraag ontvangen',
+      description: `Wij hebben uw aanvraag Tozo ontvangen op ${dateFormat(
+        aanvraag.datePublished,
+        'dd MMMM - HH:mm'
+      )}`,
+      link: {
+        to: AppRoutes['INKOMEN/TOZO'],
+        title: 'Bekijk uw Tozo status',
+      },
+    };
+  });
+
+  const mix = [
+    ...tozoDocuments,
+    ...aanvragenVoorschot,
+    ...aanvragenUitkering,
+    ...aanvragenLening,
+  ].sort(dateSort('datePublished'));
+
+  // Take last voorschot
+  const firstActivityDatePublished = mix.length ? mix[0].datePublished : '';
+  const lastActivityDatePublished = mix.length
+    ? mix[mix.length - 1].datePublished
+    : '';
+
+  const leningStatus = firstAanvraagLening
+    ? getLatestStep(firstAanvraagLening.processtappen)
+    : null;
+  const uitkeringStatus = firstAanvraagUitkering
+    ? getLatestStep(firstAanvraagUitkering.processtappen)
+    : null;
+
+  const isComplete = [leningStatus, uitkeringStatus]
+    .filter(status => !!status)
+    .every(status => status === 'beslissing');
 
   const status = {
     lening: leningStatus,
@@ -413,34 +206,40 @@ function formatFocusTozoItem({
     uitkering: status.uitkering === 'beslissing',
   };
 
-  const now = new Date();
-
   const isRecentLening =
-    aanvraagLening && aanvraagLening.typeBesluit
+    firstAanvraagLening && firstAanvraagLening.typeBesluit
       ? isRecentItem(
-          getDecision(aanvraagLening.typeBesluit),
-          aanvraagLening.processtappen,
-          now
+          getDecision(firstAanvraagLening.typeBesluit),
+          firstAanvraagLening.processtappen,
+          compareDate
         )
-      : true;
+      : false;
 
   const isRecentUitkering =
-    aanvraagUitkering && aanvraagUitkering.typeBesluit
+    firstAanvraagUitkering && firstAanvraagUitkering.typeBesluit
       ? isRecentItem(
-          getDecision(aanvraagUitkering.typeBesluit),
-          aanvraagUitkering.processtappen,
-          now
+          getDecision(firstAanvraagUitkering.typeBesluit),
+          firstAanvraagUitkering.processtappen,
+          compareDate
         )
-      : true;
+      : false;
 
-  const isRecent = isRecentLening || isRecentUitkering;
+  const isRecentVoorschot =
+    lastAanvraagVoorschot && lastAanvraagVoorschot.typeBesluit
+      ? isRecentItem(
+          getDecision(lastAanvraagVoorschot.typeBesluit),
+          lastAanvraagVoorschot.processtappen,
+          compareDate
+        )
+      : false;
 
+  const isRecent = isRecentLening || isRecentUitkering || isRecentVoorschot;
   const aanvraagStep: ProcessStep = {
-    id: 'aanvraag-step-' + id,
-    documents: documenten.map(doc => {
+    id: 'aanvraag-step-0',
+    documents: tozoDocuments.map(doc => {
       return {
         id: doc.id,
-        title: `${DocumentTitles[doc.type] || doc.type}\n${dateFormat(
+        title: `${contentDocumentTitles[doc.type] || doc.type}\n${dateFormat(
           doc.datePublished,
           'dd MMMM - HH:mm'
         )}`,
@@ -455,86 +254,72 @@ function formatFocusTozoItem({
     )}.`,
     datePublished: firstActivityDatePublished,
     status: 'Aanvraag',
-    aboutStep: 'aanvraag',
-    isRecent,
     isChecked: true,
-    isLastActive: false, // Force large checkmark in UI
-    stepType: 'single-step',
+    isLastActive: !(
+      lastAanvraagVoorschot &&
+      firstAanvraagLening &&
+      firstAanvraagUitkering
+    ),
   };
 
-  const aanvraagNotifications = documenten.map((doc, index) => {
-    return {
-      id: 'tozo-regeling-notification-aanvraag-' + index + '-' + id,
-      datePublished: doc.datePublished,
-      chapter: Chapters.INKOMEN,
-      title: 'Tozo-aanvraag: Wij hebben uw aanvraag ontvangen',
-      description: `Wij hebben uw aanvraag Tozo ontvangen op ${dateFormat(
-        doc.datePublished,
-        'dd MMMM - HH:mm'
-      )}`,
-      link: {
-        to: generatePath(AppRoutes['INKOMEN/TOZO'], { id }),
-        title: 'Bekijk uw Tozo status',
-      },
-    };
-  });
-
-  let voorschottenSteps: ProcessStep[] = [];
-  let voorschotNotifications: MyNotification[] = [];
-
   const {
-    process: leningSteps = [],
+    item: { process: leningSteps = [] } = {},
     notification: leningNotification = null,
-  } = aanvraagLening
-    ? formatFocusProduct(aanvraagLening, now, Labels, DocumentTitles) || {}
+  } = firstAanvraagLening
+    ? transformFocusProductTozo({
+        product: firstAanvraagLening,
+        tozoDocuments,
+        compareDate,
+        contentLabels,
+        contentDocumentTitles,
+      })
     : {};
-
-  if (leningNotification && leningNotification.link) {
-    leningNotification.link.to = generatePath(AppRoutes['INKOMEN/TOZO'], {
-      id,
-    });
-  }
 
   if (leningStatus === 'herstelTermijn') {
     leningSteps.push(fakeDecisionStep);
   }
 
   const {
-    process: uitkeringSteps = [],
+    item: { process: uitkeringSteps = [] } = {},
     notification: uitkeringNotification = null,
-  } = aanvraagUitkering
-    ? formatFocusProduct(aanvraagUitkering, now, Labels, DocumentTitles) || {}
+  } = firstAanvraagUitkering
+    ? transformFocusProductTozo({
+        product: firstAanvraagUitkering,
+        tozoDocuments,
+        compareDate,
+        contentLabels,
+        contentDocumentTitles,
+      })
     : {};
-
-  if (uitkeringNotification && uitkeringNotification.link) {
-    uitkeringNotification.link.to = generatePath(AppRoutes['INKOMEN/TOZO'], {
-      id,
-    });
-  }
 
   if (uitkeringStatus === 'herstelTermijn') {
     uitkeringSteps.push(fakeDecisionStep);
   }
 
-  if (voorschotten.length) {
-    const voorschotLabels = Labels['Bijzondere Bijstand'][
-      TOZO_VOORSCHOT_PRODUCT_TITLE
-    ].beslissing![getDecision('Toekenning')];
+  let voorschotten: ProcessStep[] = [];
+  let voorschotNotifications: MyNotification[] = [];
 
-    const voorschotLabelsTitle = voorschotLabels.title;
-    const voorschotLabelsDescription = voorschotLabels.description;
+  if (aanvragenVoorschot.length) {
+    const voorschotLabels =
+      contentLabels['Bijzondere Bijstand']['Tozo-voorschot'].beslissing
+        ?.toekenning;
+
+    const voorschotLabelsTitle = voorschotLabels?.title;
+    const voorschotLabelsDescription = voorschotLabels?.description;
     const voorschotLabelsNotificationDescription =
-      voorschotLabels.notification.description;
-    const voorschotLabelsNotificationTitle = voorschotLabels.notification.title;
+      voorschotLabels?.notification.description;
+    const voorschotLabelsNotificationTitle =
+      voorschotLabels?.notification.title;
 
-    voorschottenSteps = voorschotten.map((voorschot, index) => {
+    voorschotten = aanvragenVoorschot.map((voorschot, index) => {
       return {
-        id: 'voorschot-' + index + '-' + id,
+        id: 'voorschot-' + index,
         documents:
           voorschot.processtappen.beslissing!.document.map(doc => {
-            return formatFocusTozoDocument(
+            return transformFocusTozoDocument(
+              dateFormat(voorschot.datePublished, 'dd MMMM'),
               doc,
-              dateFormat(voorschot.datePublished, 'dd MMMM')
+              contentDocumentTitles
             );
           }) || [],
         title:
@@ -542,27 +327,25 @@ function formatFocusTozoItem({
             ? voorschotLabelsTitle({
                 productTitleTranslated: translateProductTitle(voorschot.naam),
               } as any)
-            : voorschotLabelsTitle,
+            : 'Tozo-voorschot',
         description:
           typeof voorschotLabelsDescription === 'function'
             ? voorschotLabelsDescription({
                 datePublished: voorschot.datePublished,
                 productTitleTranslated: translateProductTitle(voorschot.naam),
               } as any)
-            : voorschotLabelsDescription,
+            : 'Uw Tozo-voorschot is toegekend.',
         datePublished: voorschot.datePublished,
-        status: voorschotLabels.status,
-        aboutStep: 'beslissing',
+        status: voorschotLabels?.status || 'Toegekend',
         isRecent,
         isChecked: true,
         isLastActive: !(leningSteps.length || uitkeringSteps.length), // Force large checkmark in UI
-        stepType: 'single-step',
       };
     });
 
-    voorschotNotifications = voorschotten.map((voorschot, index) => {
+    voorschotNotifications = aanvragenVoorschot.map(voorschot => {
       return {
-        id: 'tozo-regeling-notification-voorschot-' + index + '-' + id,
+        id: 'tozo-regeling-notification-voorschot',
         datePublished: voorschot.datePublished,
         chapter: Chapters.INKOMEN,
         title:
@@ -570,16 +353,16 @@ function formatFocusTozoItem({
             ? voorschotLabelsNotificationTitle({
                 productTitleTranslated: translateProductTitle(voorschot.naam),
               } as any)
-            : voorschotLabelsNotificationTitle,
+            : 'Tozo-voorschot',
         description:
           typeof voorschotLabelsNotificationDescription === 'function'
             ? voorschotLabelsNotificationDescription({
                 datePublished: defaultDateFormat(voorschot.datePublished),
                 productTitleTranslated: translateProductTitle(voorschot.naam),
               } as any)
-            : voorschotLabelsNotificationDescription,
+            : 'Er is een update in de status van uw Tozo-aanvraag',
         link: {
-          to: generatePath(AppRoutes['INKOMEN/TOZO'], { id }),
+          to: AppRoutes['INKOMEN/TOZO'],
           title: 'Bekijk uw Tozo status',
         },
       };
@@ -587,14 +370,10 @@ function formatFocusTozoItem({
   }
 
   const tozoProcessItem = {
-    id,
+    id: 'tozo-item-0',
     dateStart: defaultDateFormat(firstActivityDatePublished),
-    datePublished: lastActivityDatePublished
-      ? defaultDateFormat(lastActivityDatePublished)
-      : firstActivityDatePublished,
-    ISODatePublished: lastActivityDatePublished
-      ? lastActivityDatePublished
-      : firstActivityDatePublished,
+    datePublished: defaultDateFormat(lastActivityDatePublished),
+    ISODatePublished: lastActivityDatePublished,
     title: 'Tozo-aanvraag',
     description: '',
     status,
@@ -602,16 +381,14 @@ function formatFocusTozoItem({
     isRecent,
     chapter: Chapters.INKOMEN,
     link: {
-      to: generatePath(AppRoutes['INKOMEN/TOZO'], {
-        id,
-      }),
+      to: AppRoutes['INKOMEN/TOZO'],
       title: 'Bekijk uw Tozo status',
     },
     process: {
       lening: leningSteps,
       uitkering: uitkeringSteps,
-      aanvraag: voorschottenSteps.length
-        ? [aanvraagStep, ...voorschottenSteps]
+      aanvraag: voorschotten.length
+        ? [aanvraagStep, ...voorschotten]
         : [aanvraagStep],
     },
     notifications: {
@@ -625,12 +402,18 @@ function formatFocusTozoItem({
   return tozoProcessItem;
 }
 
-export function formatFocusTozo({
+export function transformFocusTozo({
   aanvragen,
   documenten,
+  contentLabels,
+  contentDocumentTitles,
+  compareDate,
 }: {
-  documenten: FocusCombinedItemFromSource[];
+  documenten: FocusTozoDocument[];
   aanvragen: FocusProduct[];
+  contentLabels: LabelData;
+  contentDocumentTitles: DocumentTitles;
+  compareDate: Date;
 }) {
   const aanvragenFiltered = aanvragen.filter(item => {
     const isWhiteListed = [
@@ -639,209 +422,96 @@ export function formatFocusTozo({
       TOZO_VOORSCHOT_PRODUCT_TITLE,
     ].includes(item.naam);
 
-    return isWhiteListed;
+    const hasLatestStepWithLabels =
+      isWhiteListed &&
+      !!findLatestStepWithLabels({
+        productOrigin: item.soortProduct,
+        productTitle: translateProductTitle(item.naam),
+        steps: item.processtappen,
+        contentLabels,
+      });
+    return isWhiteListed && hasLatestStepWithLabels;
   });
 
-  const documentenFiltered: FocusTozoDocument[] = documenten
-    .filter(doc => ['E-AANVR-TOZO', 'E-AANVR-KBBZ'].includes(doc.type))
-    .map(item => ({ ...item, dateStart: item.datePublished })) // for convience
-    .sort(dateSort('datePublished', 'asc'));
-
-  const aanvragenSorted = aanvragenFiltered
-    .map(mapDates)
-    .filter(aanvraag => {
-      return (
-        aanvraag.naam === TOZO_LENING_PRODUCT_TITLE ||
-        aanvraag.naam === TOZO_UITKERING_PRODUCT_TITLE
-      );
-    })
-    .sort(dateSort('dateStart'));
-
-  const voorschottenSorted = aanvragenFiltered
-    .map(mapDates)
-    .filter(aanvraag => {
-      return aanvraag.naam === TOZO_VOORSCHOT_PRODUCT_TITLE;
-    })
-    .sort(dateSort('dateStart'));
-
-  let process: FocusTozoProduct[] = [];
-  const processes: Array<FocusTozoProduct[]> = [];
-
-  const newProcess = (aanvraag?: FocusTozoProduct) => {
-    // Start a new process.
-    aanvraag && process.push(aanvraag);
-    processes.push(process);
-    process = [];
-  };
-
-  for (const aanvraag of aanvragenSorted) {
-    const previousProcess = processes.length
-      ? [...processes[processes.length - 1]]
-      : null;
-
-    const lastDecisionItem = previousProcess
-      ? previousProcess
-          .reverse()
-          .filter((item): item is FocusTozoProduct => item !== undefined)
-          .find(item => item.processtappen.beslissing !== null)
-      : null;
-
-    const previousDateDecision =
-      lastDecisionItem &&
-      lastDecisionItem.processtappen.beslissing &&
-      new Date(lastDecisionItem.processtappen.beslissing.datum);
-
-    const dateRequest =
-      aanvraag.processtappen.aanvraag &&
-      new Date(aanvraag.processtappen.aanvraag.datum);
-
-    // A request can be about max 2 products
-    if (process.length === 2) {
-      newProcess();
-    }
-
-    // A request can have 2 distinct products
-    if (process.length && process[0].naam === aanvraag.naam) {
-      newProcess();
-    }
-
-    if (aanvraag.processtappen.beslissing !== null) {
-      // Has 1 decision item in previous set. A set can have max 2 decision items
-      const hasOnePreviousDecision =
-        !!previousProcess && previousProcess.length === 1 && !!lastDecisionItem;
-      if (
-        previousDateDecision &&
-        dateRequest &&
-        dateRequest < previousDateDecision &&
-        hasOnePreviousDecision
-      ) {
-        // Add item to previous processs, it was started before the decision date of the previous item so it's likely to belong to that set of items.
-        processes[processes.length - 1].push(aanvraag);
-      } else {
-        process.push(aanvraag);
-      }
-    } else {
-      process.push(aanvraag);
-    }
-  }
-
-  // Add the remaining set to the processes.
-  if (process.length) {
-    processes.push(process);
-  }
-
-  const items: TozoSet[] = processes.map(
-    (aanvragen: FocusTozoProduct[], index: number) => {
-      const prevProcess = processes[index - 1] || null;
-
-      const [first, second] = aanvragen;
-
-      let prevProcessDate = null;
-
-      const maybeCurrentDecisionDate =
-        second?.processtappen.beslissing?.datum ||
-        first?.processtappen.beslissing?.datum ||
-        null;
-
-      if (
-        prevProcess &&
-        prevProcess[prevProcess.length - 1] &&
-        prevProcess[prevProcess.length - 1].processtappen.beslissing
-      ) {
-        prevProcessDate = prevProcess[prevProcess.length - 1].processtappen
-          .beslissing!.datum;
-      }
-
-      const documenten = findDocuments(
-        prevProcessDate,
-        maybeCurrentDecisionDate,
-        documentenFiltered
-      );
-
-      const voorschotten = findVoorschotten(
-        prevProcessDate,
-        maybeCurrentDecisionDate,
-        voorschottenSorted
-      );
-
-      return {
-        aanvragen,
-        voorschotten,
-        documenten,
-      };
-    }
+  const documentenFiltered = documenten.filter(doc =>
+    ['E-AANVR-TOZO', 'E-AANVR-KBBZ'].includes(doc.type)
   );
 
-  if (items.length) {
-    const tozoItemsFormatted: FocusTozo[] = items.map(
-      ({ documenten, aanvragen, voorschotten }) =>
-        formatFocusTozoItem({
-          aanvragen,
-          voorschotten,
-          documenten,
-        })
-    );
+  return transformFocusTozoItems({
+    aanvragen: aanvragenFiltered,
+    documenten: documentenFiltered,
+    contentLabels,
+    contentDocumentTitles,
+    compareDate,
+  });
+}
 
-    const allDocumentsAddedToSet = tozoItemsFormatted.flatMap(item => {
-      return item.process.aanvraag[0].documents;
+function transformFocusTozoRecentCases(tozoItem: FocusTozo) {
+  return tozoItem.isRecent
+    ? [
+        {
+          id: tozoItem.id,
+          chapter: Chapters.INKOMEN,
+          datePublished: tozoItem.datePublished,
+          title: tozoItem.title,
+          link: {
+            to: AppRoutes['INKOMEN/TOZO'],
+            title: 'Bekijk uw Tozo status',
+          },
+        },
+      ]
+    : [];
+}
+
+export async function fetchFOCUSTozo(sessionID: SessionID) {
+  const responseAanvragen = fetchFOCUS(sessionID);
+  const responseCombined = fetchFOCUSCombined(sessionID);
+
+  const [aanvragen, combined] = await Promise.all([
+    responseAanvragen,
+    responseCombined,
+  ]);
+
+  if (combined.status === 'OK' && aanvragen.status === 'OK') {
+    const tozoItem = transformFocusTozo({
+      aanvragen: aanvragen.content.filter(item =>
+        [
+          TOZO_LENING_PRODUCT_TITLE,
+          TOZO_UITKERING_PRODUCT_TITLE,
+          TOZO_VOORSCHOT_PRODUCT_TITLE,
+        ].includes(item.naam)
+      ),
+      documenten: combined.content.tozodocumenten,
+      contentLabels,
+      contentDocumentTitles,
+      compareDate: new Date(),
     });
-
-    // There are still documents provided that can't be coupled to any uitkering or lening request.
-    if (allDocumentsAddedToSet.length !== documentenFiltered.length) {
-      const orphanDocuments = documentenFiltered.filter(
-        doc => !allDocumentsAddedToSet.find(aDoc => aDoc.id === doc.id)
-      );
-      // Put all the orphaned documents in an active request process
-      if (orphanDocuments.length) {
-        return [
-          ...tozoItemsFormatted,
-          formatFocusTozoItem({
-            aanvragen: [],
-            voorschotten: [],
-            documenten: orphanDocuments,
-          }),
-        ];
-      }
-    }
-
-    return tozoItemsFormatted;
-  } else if (documentenFiltered.length || voorschottenSorted.length) {
-    return [
-      formatFocusTozoItem({
-        aanvragen: [],
-        voorschotten: voorschottenSorted,
-        documenten: documentenFiltered,
-      }),
-    ];
+    return apiSuccesResult(tozoItem);
   }
 
-  return [];
+  return apiUnknownResult('Cannot construct TOZO item');
 }
 
-function findDocuments(
-  fromDate: string | null,
-  toDate: string | null,
-  documents: FocusTozoDocument[]
-) {
-  return documents.filter((doc: FocusTozoDocument) => {
-    const datePublished = new Date(doc.datePublished);
-    return (
-      (fromDate === null || datePublished > new Date(fromDate)) &&
-      (toDate === null || datePublished <= new Date(toDate))
-    );
-  });
-}
+export async function fetchFOCUSTOZOGenerated(sessionID: SessionID) {
+  const response = await fetchFOCUSTozo(sessionID);
 
-function findVoorschotten(
-  fromDate: string | null,
-  toDate: string | null,
-  voorschotten: FocusTozoProduct[]
-) {
-  return voorschotten.filter((voorschot: FocusTozoProduct) => {
-    const dateStart = new Date(voorschot.dateStart);
-    return (
-      (fromDate === null || dateStart > new Date(fromDate)) &&
-      (toDate === null || dateStart <= new Date(toDate))
+  let notifications: MyNotification[] = [];
+  let cases: MyCase[] = [];
+
+  if (response.status === 'OK') {
+    const tozoItemNotifications = Object.values(
+      response.content.notifications
+    ).flatMap(x => x);
+    notifications = tozoItemNotifications.filter(
+      (notification: MyNotification | null): notification is MyNotification => {
+        return notification !== null;
+      }
     );
-  });
+    cases = transformFocusTozoRecentCases(response.content);
+  }
+
+  return {
+    cases,
+    notifications,
+  };
 }

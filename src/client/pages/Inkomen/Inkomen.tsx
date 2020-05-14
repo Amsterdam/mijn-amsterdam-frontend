@@ -6,9 +6,10 @@ import {
   ChapterTitles,
   FeatureToggle,
 } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
+import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { AppContext } from '../../AppState';
 import {
+  addTitleLinkComponent,
   Alert,
   ChapterIcon,
   Linkd,
@@ -17,8 +18,6 @@ import {
   PageHeading,
   SectionCollapsible,
   Table,
-  SectionCollapsibleHeading,
-  addTitleLinkComponent,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
 import {
@@ -27,7 +26,6 @@ import {
 } from '../../pages/InkomenSpecificaties/InkomenSpecificaties';
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import styles from './Inkomen.module.scss';
-import useRouter from 'use-react-router';
 
 export const incomSpecificationsRouteMonthly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES']
@@ -53,17 +51,19 @@ export default () => {
   const { FOCUS_AANVRAGEN, FOCUS_SPECIFICATIES, FOCUS_TOZO } = useContext(
     AppContext
   );
-  const { history } = useRouter();
-  const noTozo = !FOCUS_TOZO.content;
   const aanvragen = FOCUS_AANVRAGEN.content || [];
-
+  const FocusTozoItem = FOCUS_TOZO.content;
   const uitkeringsspecificaties =
     FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties || [];
   const jaaropgaven = FOCUS_SPECIFICATIES.content?.jaaropgaven || [];
 
- const itemsRequested = useMemo(() => {
-    const itemsRequested = items.filter(item => !item.hasDecision);
-    if (FocusTozoItem && !FocusTozoItem?.status.isComplete && FeatureToggle.tozoActive) {
+  const itemsRequested = useMemo(() => {
+    const itemsRequested = aanvragen.filter(item => !item.hasDecision);
+    if (
+      FocusTozoItem &&
+      !FocusTozoItem?.status.isComplete &&
+      FeatureToggle.tozoActive
+    ) {
       const item = FocusTozoItem as any;
       item.status = 'In behandeling';
       itemsRequested.push(item);
@@ -71,17 +71,21 @@ export default () => {
     return addTitleLinkComponent(
       itemsRequested.sort(dateSort('ISODatePublished', 'desc'))
     );
-  }, [items, FocusTozoItem]);
+  }, [aanvragen, FocusTozoItem]);
 
   const itemsDecided = useMemo(() => {
-    const itemsDecided = items.filter(item => item.hasDecision);
-    if (FocusTozoItem && FocusTozoItem?.status.isComplete && FeatureToggle.tozoActive) {
+    const itemsDecided = aanvragen.filter(item => item.hasDecision);
+    if (
+      FocusTozoItem &&
+      FocusTozoItem?.status.isComplete &&
+      FeatureToggle.tozoActive
+    ) {
       itemsDecided.push(FocusTozoItem as any);
     }
     return addTitleLinkComponent(
       itemsDecided.sort(dateSort('ISODatePublished', 'desc'))
     );
-  }, [items, FocusTozoItem]);
+  }, [aanvragen, FocusTozoItem]);
 
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
@@ -89,8 +93,8 @@ export default () => {
   const itemsSpecificationsMonthly = uitkeringsspecificaties.slice(0, 3) || [];
   const itemsSpecificationsYearly = jaaropgaven.slice(0, 3) || [];
 
-  const isLoadingFocus =
-    isLoading(FOCUS_AANVRAGEN) || isLoading(FOCUS_SPECIFICATIES);
+  const isLoadingFocus = isLoading(FOCUS_AANVRAGEN) || isLoading(FOCUS_TOZO);
+  const isLoadingFocusSpecificaties = isLoading(FOCUS_SPECIFICATIES);
 
   return (
     <OverviewPage className={styles.Inkomen}>
@@ -158,7 +162,7 @@ export default () => {
         <SectionCollapsible
           id="SectionCollapsible-income-specifications-monthly"
           startCollapsed={hasActiveRequests || hasActiveDescisions}
-          isLoading={isLoadingFocus}
+          isLoading={isLoadingFocusSpecificaties}
           title="Uitkeringsspecificaties"
           hasItems={!!uitkeringsspecificaties.length}
           track={{

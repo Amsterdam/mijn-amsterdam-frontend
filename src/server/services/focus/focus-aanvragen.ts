@@ -222,7 +222,11 @@ export function formatFocusNotificationItem(
           )
         : '',
     link: {
-      to: item.link.to,
+      to:
+        (notificationStepLabels &&
+          notificationStepLabels.notification &&
+          notificationStepLabels.notification.linkTo) ||
+        item.link.to,
       title:
         (notificationStepLabels &&
           notificationStepLabels.notification &&
@@ -383,8 +387,8 @@ export function transformFocusSourceProduct(
     isRecent,
     hasDecision,
     link: {
-      title: 'Meer informatie', // TODO: How to get custom link title?
-      to: route,
+      title: stepLabels?.linkTitle || 'Meer informatie',
+      to: stepLabels?.linkTo || route,
     },
     process: processStepsFiltered
       .filter(stepTitle => {
