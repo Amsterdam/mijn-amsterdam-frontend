@@ -49,13 +49,14 @@ export function useSessionApi() {
     SessionResponseData
   >(requestOptions, INITIAL_SESSION_STATE);
 
-  const { isAuthenticated, validUntil, userType } = data.SESSION.content!; // SESSION.content is never null
+  const { isAuthenticated, validUntil, userType } = data?.SESSION.content || {
+    isAuthenticated: false,
+  };
 
   return useMemo(() => {
-    const validityInSeconds = Math.max(
-      Math.round((validUntil - new Date().getTime()) / 1000),
-      0
-    );
+    const validityInSeconds = validUntil
+      ? Math.max(Math.round((validUntil - new Date().getTime()) / 1000), 0)
+      : 0;
 
     return {
       ...rest,
