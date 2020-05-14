@@ -64,18 +64,18 @@ module.exports = function(app) {
   );
 
   app.get(['/logout'], handleLogout);
-  app.get(['/api/login', '/api-test/login'], loginPage);
+  app.get(['/api/login', '/test-api/login'], loginPage);
   app.get(
-    ['/api/tma', '/api1/tma', '/api-test/tma', '/api1-test/tma'],
+    ['/api/tma', '/api1/tma', '/test-api/tma', '/api1-test/tma'],
     handleLogin
   );
-  app.all(['/api', '/api-test'], handleSession);
-  app.get(['/api/auth/check', '/api-test/auth/check'], (req, res) => {
+  app.all(['/api', '/test-api'], handleSession);
+  app.get(['/api/auth/check', '/test-api/auth/check'], (req, res) => {
     return res.send(req.session);
   });
 
   app.use(
-    ['/api', '/api-test'],
+    ['/api', '/test-api'],
     createProxyMiddleware({
       target: `http://${apiHost}:${apiPort}`,
       changeOrigin: true,
