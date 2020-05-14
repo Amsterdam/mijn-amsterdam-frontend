@@ -108,7 +108,7 @@ const UitkeringLabels: ProductType = {
       status: stepLabels.beslissing,
       description: data => (
         <p>
-          U hebt geen recht op een ${data.productTitleTranslated} (besluit:
+          U hebt geen recht op een {data.productTitleTranslated} (besluit:
           {data.datePublished}).
         </p>
       ),
@@ -186,7 +186,7 @@ const LeningLabels: ProductType = {
       status: stepLabels.beslissing,
       description: data => (
         <p>
-          U heeft geen recht op een ${data.productTitleTranslated} (besluit:
+          U heeft geen recht op een {data.productTitleTranslated} (besluit:
           {data.datePublished}).
         </p>
       ),
