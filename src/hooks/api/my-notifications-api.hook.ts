@@ -74,9 +74,11 @@ export default function useMyNotificationsApi({
         ),
         // Focus TOZO
         ...(FOCUS_TOZO.data?.notifications
-          ? (Object.values(FOCUS_TOZO.data.notifications).filter(
-              notification => notification !== null
-            ) as MyNotification[])
+          ? (Object.values(FOCUS_TOZO.data.notifications)
+              .flatMap(x => x)
+              .filter(
+                notification => notification !== null
+              ) as MyNotification[])
           : []),
       ].sort(dateSort('datePublished', 'desc')),
     [

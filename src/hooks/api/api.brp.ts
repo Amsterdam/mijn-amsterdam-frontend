@@ -90,7 +90,6 @@ export function useBrpApi(): BrpApiState {
           new Date(document.datumAfloop),
           new Date()
         );
-
         return days <= 120 && days > 0;
       });
 

@@ -157,15 +157,15 @@
   ],
   "identiteitsbewijzen": [
     {
-      "documentNummer": "123ABC",
-      "documentType": "paspoort",
-      "datumUitgifte": "2010-10-10",
-      "datumAfloop": "2020-06-10"
-    },
-    {
       "datumAfloop": "2025-10-15T00:00:00Z",
       "datumUitgifte": "2015-10-15T00:00:00Z",
-      "documentNummer": "ID814FDY3",
+      "documentNummer": "PP57XKG54",
+      "documentType": "paspoort"
+    },
+    {
+      "datumAfloop": "2020-09-11T00:00:00Z",
+      "datumUitgifte": "2010-09-11T00:00:00Z",
+      "documentNummer": "IE9962819",
       "documentType": "europese identiteitskaart"
     }
   ]

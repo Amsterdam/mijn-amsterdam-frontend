@@ -30,7 +30,7 @@ export type StepTitle =
 
 export type RequestStatus =
   | 'Aanvraag'
-  | 'Meer informatie nodig'
+  | 'Informatie nodig'
   | 'In behandeling'
   | 'Besluit'
   | 'Voorschot'
@@ -62,10 +62,13 @@ interface Info {
   title: string | TextPartContentFormatterString;
   description: TextPartContents;
   status: RequestStatus;
+  linkTitle?: string;
+  linkTo?: string;
   notification: {
     title: string | TextPartContentFormatterString;
     description: TextPartContents;
     linkTitle?: string;
+    linkTo?: string;
   };
 }
 
@@ -130,7 +133,7 @@ const processSteps: StepTitle[] = [
 export const stepLabels: Record<StepTitle, RequestStatus> = {
   aanvraag: 'Aanvraag',
   inBehandeling: 'In behandeling',
-  herstelTermijn: 'Meer informatie nodig',
+  herstelTermijn: 'Informatie nodig',
   beslissing: 'Besluit',
   bezwaar: 'Bezwaar',
 };
@@ -491,12 +494,7 @@ const AppRoutesByProductOrigin: RoutesByProductOrigin = {
   Minimafonds: {
     Stadspas: AppRoutes['INKOMEN/STADSPAS'],
   },
-  'Bijzondere Bijstand': {
-    'Bijzondere Bijstand': AppRoutes['INKOMEN/BIJZONDERE_BIJSTAND'],
-    'Voorschot Tozo (voor ondernemers) (Eenm.)': AppRoutes['INKOMEN/TOZO'],
-    'Lening Tozo': AppRoutes['INKOMEN/TOZO'],
-    'Uitkering Tozo': AppRoutes['INKOMEN/TOZO'],
-  },
+  'Bijzondere Bijstand': {},
 };
 
 /** Checks if an item returned from the api is considered recent */
@@ -523,11 +521,11 @@ export function translateProductTitle(title: ProductTitle) {
     case 'Levensonderhoud':
       return 'Bijstandsuitkering';
     case 'Voorschot Tozo (voor ondernemers) (Eenm.)':
-      return 'Voorschot Tozo';
+      return 'Tozo-voorschot';
     case 'Lening t.b.v. bedrijfskrediet TOZO':
-      return 'Lening Tozo';
+      return 'Tozo-lening';
     case 'Tijdelijke Overbruggingsregeling Zelfst. Ondern.':
-      return 'Uitkering Tozo';
+      return 'Tozo-uitkering';
   }
   return title;
 }
@@ -704,11 +702,14 @@ export function formatFocusNotificationItem(
       stepLabelSource.notification &&
       parseLabelContent(stepLabelSource.notification.description, sourceData),
     link: {
-      to: item.link.to,
+      to:
+        (stepLabelSource &&
+          stepLabelSource.notification &&
+          stepLabelSource.notification.linkTo) ||
+        item.link.to,
       title:
         (stepLabelSource &&
           stepLabelSource.notification &&
-          stepLabelSource &&
           stepLabelSource.notification.linkTitle) ||
         'Meer informatie',
     },
@@ -885,8 +886,8 @@ export function formatFocusProduct(
     isRecent,
     hasDecision,
     link: {
-      title: 'Meer informatie', // TODO: How to get custom link title?
-      to: route,
+      to: (stepLabels && stepLabels.linkTo) || route,
+      title: (stepLabels && stepLabels.linkTitle) || 'Meer informatie',
     },
     process: processStepsFiltered.map((stepTitle, index) => {
       const stepData = steps[stepTitle] as Step;
@@ -1009,7 +1010,7 @@ export function altDocumentContent(
   }
 
   if (
-    statusLineItem.status === 'Meer informatie nodig' &&
+    statusLineItem.status === 'Informatie nodig' &&
     statusLineItem.isRecent &&
     !statusLineItem.isLastActive
   ) {
@@ -1017,7 +1018,7 @@ export function altDocumentContent(
   }
 
   if (
-    ['Meer informatie nodig', 'Besluit'].includes(statusLineItem.status) &&
+    ['Informatie nodig', 'Besluit'].includes(statusLineItem.status) &&
     statusLineItem.datePublished !== ''
   ) {
     return statusLineItem.isRecent ? (
