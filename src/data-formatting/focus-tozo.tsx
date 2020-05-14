@@ -372,10 +372,6 @@ function formatFocusTozoItems({
     .map(mapLastDatePublished)
     .sort(dateSort('datePublished'));
 
-  const firstAanvraagVoorschot = aanvragenVoorschot.length
-    ? aanvragenVoorschot[0]
-    : null;
-
   const lastAanvraagVoorschot = aanvragenVoorschot.length
     ? aanvragenVoorschot[aanvragenVoorschot.length - 1]
     : null;
@@ -474,10 +470,10 @@ function formatFocusTozoItems({
       : false;
 
   const isRecentVoorschot =
-    firstAanvraagVoorschot && firstAanvraagVoorschot.typeBesluit
+    lastAanvraagVoorschot && lastAanvraagVoorschot.typeBesluit
       ? isRecentItem(
-          getDecision(firstAanvraagVoorschot.typeBesluit),
-          firstAanvraagVoorschot.processtappen,
+          getDecision(lastAanvraagVoorschot.typeBesluit),
+          lastAanvraagVoorschot.processtappen,
           now
         )
       : false;

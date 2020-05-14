@@ -684,7 +684,7 @@ export function formatFocusNotificationItem(
   const stepLabels = Labels[productOrigin][sourceData.productTitle][
     step.aboutStep
   ] as any; // Can't work the right TS construct here atm.
-  console.log('item.link.t0', item);
+
   const stepLabelSource = !!sourceData.decision
     ? stepLabels[sourceData.decision]
     : stepLabels;
