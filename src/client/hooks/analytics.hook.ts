@@ -1,14 +1,19 @@
 import MatomoTracker from '@datapunt/matomo-tracker-js';
-import { TrackEventParams } from '@datapunt/matomo-tracker-js/lib/types';
+import {
+  TrackEventParams,
+  UserOptions,
+} from '@datapunt/matomo-tracker-js/lib/types';
 import { useDebouncedCallback } from 'use-debounce';
 import { useSessionStorage } from './storage.hook';
 import { getOtapEnvItem } from '../../universal/config';
 
 let MatomoInstance: MatomoTracker;
+
 const siteId = getOtapEnvItem('analyticsId') || -1;
 const hasSiteId = siteId !== -1 && !!siteId;
-const MatomoTrackerConfig = {
-  urlBase: 'https://analytics.data.amsterdam.nl/',
+
+const MatomoTrackerConfig: UserOptions = {
+  urlBase: getOtapEnvItem('analyticsUrlBase') || '',
   siteId,
 };
 

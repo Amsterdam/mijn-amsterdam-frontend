@@ -42,7 +42,7 @@ function isBrowser() {
 
 export const ENV = `${
   isBrowser() ? getBrowserEnv() : process.env.BFF_ENV || 'development'
-}` as keyof OtapEnv;
+}` as OtapEnvName;
 
 console.info(`App running in ${ENV} mode.`);
 
@@ -50,35 +50,44 @@ export const IS_ACCEPTANCE = ENV === 'acceptance';
 export const IS_PRODUCTION = ENV === 'production';
 export const IS_AP = IS_ACCEPTANCE || IS_PRODUCTION;
 
-interface OtapEnv {
-  development: Record<string, any>;
-  test: Record<string, any>;
-  acceptance: Record<string, any>;
-  production: Record<string, any>;
+interface EnvVars {
+  analyticsId?: number;
+  analyticsUrlBase?: string;
+  sentryDsn?: string;
+  bffSentryDsn?: string;
+  ssoErfpachtUrl?: string;
+  ssoMilieuzoneUrl?: string;
 }
+
+type OtapEnvName = 'development' | 'test' | 'acceptance' | 'production';
+
+type OtapEnv = { [name in OtapEnvName]: EnvVars };
 
 const otapServerEnv: OtapEnv = {
   development: {},
   test: {},
   acceptance: {
     analyticsId: 25,
+    analyticsUrlBase: 'https://analytics.data.amsterdam.nl/',
     sentryDsn:
       'https://d9bff634090c4624bce9ba7d8f0875dd@sentry.data.amsterdam.nl/13',
     bffSentryDsn: '',
-    ssoErfpachturl:
+    ssoErfpachtUrl:
       'https://mijnerfpacht.acc.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
     ssoMilieuzoneUrl: 'https://ontheffingen-acc.amsterdam.nl/publiek/aanvragen',
   },
   production: {
     analyticsId: 28,
+    analyticsUrlBase: 'https://analytics.data.amsterdam.nl/',
     sentryDsn:
       'https://d9bff634090c4624bce9ba7d8f0875dd@sentry.data.amsterdam.nl/13',
     bffSentryDsn: '',
-    ssoErfpachturl:
+    ssoErfpachtUrl:
       'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
     ssoMilieuzoneUrl: 'https://ontheffingen.amsterdam.nl/publiek/aanvragen',
   },
 };
 
-export const getOtapEnvItem = (key: string) =>
-  otapServerEnv[ENV] && otapServerEnv[ENV][key];
+export function getOtapEnvItem<K extends keyof EnvVars>(key: K) {
+  return otapServerEnv[ENV] && otapServerEnv[ENV][key];
+}
