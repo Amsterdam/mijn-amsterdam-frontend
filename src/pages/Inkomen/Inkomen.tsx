@@ -25,7 +25,7 @@ import {
 
 const requestsDisplayProps = {
   dateStart: 'Datum aanvraag',
-  _status: 'Status',
+  status: 'Status',
 };
 
 const decisionsDisplayProps = {
@@ -55,7 +55,9 @@ export default () => {
   const itemsRequested = useMemo(() => {
     const itemsRequested = items.filter(item => !item.hasDecision);
     if (FocusTozoItem && !FocusTozoItem?.status.isComplete) {
-      itemsRequested.push(FocusTozoItem as any);
+      const item = FocusTozoItem as any;
+      item.status = 'In behandeling';
+      itemsRequested.push(item);
     }
     return addTitleLinkComponent(
       itemsRequested.sort(dateSort('ISODatePublished', 'desc'))
