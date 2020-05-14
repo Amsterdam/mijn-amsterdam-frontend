@@ -109,7 +109,7 @@ export async function requestData<T>(
     requestConfig.params ? JSON.stringify(requestConfig.params) : 'no-params',
   ].join('-');
 
-  //Check if a cache key for this particular request exists
+  // Check if a cache key for this particular request exists
   const cacheEntry = cache.get(cacheKey);
 
   if (cacheEntry !== null) {
