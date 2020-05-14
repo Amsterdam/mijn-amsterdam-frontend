@@ -12,7 +12,7 @@ import { router } from './router';
 const app = express();
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '1mb' }));
 app.use(cookieParser());
 
 app.use(
