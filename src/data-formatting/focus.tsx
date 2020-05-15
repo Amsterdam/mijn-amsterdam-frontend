@@ -522,9 +522,9 @@ export function translateProductTitle(title: ProductTitle) {
       return 'Bijstandsuitkering';
     case 'Voorschot Tozo (voor ondernemers) (Eenm.)':
       return 'Tozo-voorschot';
-    case 'Lening t.b.v. bedrijfskrediet TOZO':
+    case 'Tozo Bedrijfskapitaal (voor ondernemers)':
       return 'Tozo-lening';
-    case 'Tijdelijke Overbruggingsregeling Zelfst. Ondern.':
+    case 'Tozo Levensonderhoud (voor ondernemers)':
       return 'Tozo-uitkering';
   }
   return title;
