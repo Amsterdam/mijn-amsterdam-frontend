@@ -261,7 +261,7 @@
   {
     "_id": "3-0",
     "_meest_recent": "aanvraag",
-    "naam": "Tijdelijke Overbruggingsregeling Zelfst. Ondern.",
+    "naam": "Tozo Levensonderhoud (voor ondernemers)",
     "processtappen": {
       "aanvraag": {
         "_id": 0,
@@ -282,7 +282,7 @@
   {
     "_id": "1-0",
     "_meest_recent": "herstelTermijn",
-    "naam": "Tijdelijke Overbruggingsregeling Zelfst. Ondern.",
+    "naam": "Tozo Levensonderhoud (voor ondernemers)",
     "processtappen": {
       "aanvraag": {
         "_id": 0,
@@ -351,7 +351,7 @@
   {
     "_id": "1-0",
     "_meest_recent": "herstelTermijn",
-    "naam": "Tijdelijke Overbruggingsregeling Zelfst. Ondern.",
+    "naam": "Tozo Levensonderhoud (voor ondernemers)",
     "processtappen": {
       "aanvraag": {
         "_id": 0,
@@ -386,7 +386,7 @@
     "_id": "2-0",
     "_meest_recent": "beslissing",
     "dienstverleningstermijn": 28,
-    "naam": "Lening t.b.v. bedrijfskrediet TOZO",
+    "naam": "Tozo Bedrijfskapitaal (voor ondernemers)",
     "processtappen": {
       "aanvraag": {
         "_id": 0,
@@ -402,7 +402,7 @@
             "id": 660000000000028,
             "isBulk": false,
             "isDms": false,
-            "omschrijving": "Lening t.b.v. bedrijfskrediet TOZO"
+            "omschrijving": "Tozo Bedrijfskapitaal (voor ondernemers)"
           }
         ]
       },
