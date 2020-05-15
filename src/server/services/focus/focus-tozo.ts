@@ -20,29 +20,22 @@ import {
   contentLabels,
   fakeDecisionStep,
   FocusTozo,
-  tozoContentDocumentTitles,
-  tozoProductTitleTranslations,
   TOZO_LENING_PRODUCT_TITLE,
   TOZO_UITKERING_PRODUCT_TITLE,
   TOZO_VOORSCHOT_PRODUCT_TITLE,
+  tozoTitleTranslations,
 } from './focus-tozo-content';
-import {
-  DocumentTitles,
-  FocusItemStep,
-  FocusProduct,
-  LabelData,
-} from './focus-types';
+import { FocusItemStep, FocusProduct, LabelData } from './focus-types';
+import { translateFocusProduct } from './focus-helpers';
 
 function transformFocusTozoItems({
   documenten,
   aanvragen,
   contentLabels,
-  contentDocumentTitles,
 }: {
   documenten: FocusTozoDocument[];
   aanvragen: FocusProduct[];
   contentLabels: LabelData;
-  contentDocumentTitles: DocumentTitles;
 }) {
   const aanvragenLening = aanvragen.filter(
     item => item.title === TOZO_LENING_PRODUCT_TITLE
@@ -132,7 +125,7 @@ function transformFocusTozoItems({
   const documents = tozoDocuments.map(doc => {
     return {
       id: doc.id,
-      title: `${contentDocumentTitles[doc.type] || doc.type}\n${dateFormat(
+      title: `${tozoTitleTranslations[doc.type] || doc.type}\n${dateFormat(
         doc.datePublished,
         'dd MMMM - HH:mm'
       )}`,
@@ -234,11 +227,7 @@ function transformFocusTozoRecentCases(tozoItem: FocusTozo, compareDate: Date) {
 }
 
 export async function fetchFOCUSTozo(sessionID: SessionID) {
-  const responseAanvragen = fetchFOCUS(
-    sessionID,
-    tozoProductTitleTranslations,
-    tozoContentDocumentTitles
-  );
+  const responseAanvragen = fetchFOCUS(sessionID);
 
   const responseCombined = fetchFOCUSCombined(sessionID);
 
@@ -248,18 +237,23 @@ export async function fetchFOCUSTozo(sessionID: SessionID) {
   ]);
 
   if (combined.status === 'OK' && aanvragen.status === 'OK') {
-    const tozoItem = transformFocusTozoItems({
-      aanvragen: aanvragen.content.filter(item =>
+    const aanvragenNormalized = aanvragen.content
+      .filter(product =>
         [
           TOZO_LENING_PRODUCT_TITLE,
           TOZO_UITKERING_PRODUCT_TITLE,
           TOZO_VOORSCHOT_PRODUCT_TITLE,
-        ].includes(item.title)
-      ),
+        ].includes(product.title)
+      )
+      .map(product => translateFocusProduct(product, tozoTitleTranslations))
+      .sort(dateSort('datePublished', 'desc'));
+
+    const tozoItem = transformFocusTozoItems({
+      aanvragen: aanvragenNormalized,
       documenten: combined.content.tozodocumenten,
       contentLabels,
-      contentDocumentTitles: tozoContentDocumentTitles,
     });
+
     return apiSuccesResult(tozoItem);
   }
 

@@ -21,14 +21,11 @@ export const stepStatusLabels = stepLabels;
 export const DAYS_KEEP_RECENT = 28;
 
 // NOTE: Possibly deprecated because it seems document titles actually contain meaningful names in the latest api response.
-export const contentDocumentTitleTranslations: DocumentTitles = {
+export const titleTranslations: DocumentTitles = {
   'LO: Aanvraag': 'Aanvraag bijstandsuitkering',
   'LO: Besluit': 'Besluit aanvraag bijstandsuitkering',
   'LO: In behandeling': 'Uw aanvraag is in behandeling genomen',
   'LO: Herstel': 'Verzoek om aanvullende informatie van u',
-};
-
-export const contentProductTitleTranslations: DocumentTitles = {
   Levensonderhoud: 'Bijstandsuitkering',
 };
 
@@ -48,7 +45,7 @@ export const FocusExternalUrls = {
  * A library of messages and titles with which we construct the information shown to the client */
 export const contentLabels: LabelData = {
   Participatiewet: {
-    Levensonderhoud: {
+    Bijstandsuitkering: {
       aanvraag: {
         notification: {
           title: product =>
@@ -176,7 +173,6 @@ export const contentLabels: LabelData = {
       },
     },
   },
-  'Bijzondere Bijstand': {},
   Minimafonds: {
     Stadspas: {
       aanvraag: {

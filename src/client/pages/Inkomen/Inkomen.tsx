@@ -58,7 +58,10 @@ export default () => {
   const jaaropgaven = FOCUS_SPECIFICATIES.content?.jaaropgaven || [];
 
   const itemsRequested = useMemo(() => {
-    const itemsRequested = aanvragen.filter(item => !item.hasDecision);
+    const itemsRequested = aanvragen.filter(
+      item => !item.steps.some(step => step.title === 'beslissing')
+    );
+    console.log('aanvragen::', aanvragen);
     if (
       FocusTozoItem &&
       !FocusTozoItem?.status.isComplete &&
@@ -74,7 +77,9 @@ export default () => {
   }, [aanvragen, FocusTozoItem]);
 
   const itemsDecided = useMemo(() => {
-    const itemsDecided = aanvragen.filter(item => item.hasDecision);
+    const itemsDecided = aanvragen.filter(item =>
+      item.steps.some(step => step.title === 'beslissing')
+    );
     if (
       FocusTozoItem &&
       FocusTozoItem?.status.isComplete &&

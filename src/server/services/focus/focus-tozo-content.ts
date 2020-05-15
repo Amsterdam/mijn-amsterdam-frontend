@@ -22,7 +22,7 @@ export const TOZO_LENING_PRODUCT_TITLE: TozoProductTitle =
 export const TOZO_UITKERING_PRODUCT_TITLE: TozoProductTitle =
   'Tijdelijke Overbruggingsregeling Zelfst. Ondern.';
 
-export const tozoContentDocumentTitles: DocumentTitles = {
+export const tozoTitleTranslations: DocumentTitles = {
   'E-AANVR-TOZO': 'Brief aanvraag',
   'E-AANVR-KBBZ': 'Brief aanvraag',
   'Voorschot Bbz Corona regeling (Eenm.)': 'Brief betaling voorschot',
@@ -33,9 +33,6 @@ export const tozoContentDocumentTitles: DocumentTitles = {
   'Hersteltermijn lening Tozo': 'Brief meer informatie',
   'Afwijzen lening Tozo': 'Brief besluit lening',
   'Toekennen lening Tozo': 'Brief besluit lening',
-};
-
-export const tozoProductTitleTranslations: DocumentTitles = {
   [TOZO_VOORSCHOT_PRODUCT_TITLE]: 'Tozo-voorschot',
   [TOZO_LENING_PRODUCT_TITLE]: 'Tozo-lening',
   [TOZO_UITKERING_PRODUCT_TITLE]: 'Tozo-uitkering',
@@ -53,8 +50,6 @@ const VoorschotLabels: ProductStepLabels = {
         linkTitle: product => 'Bekijk uw Tozo status',
       },
       title: product => product.title,
-      linkTitle: 'Bekijk uw Tozo status',
-      linkTo: AppRoutes['INKOMEN/TOZO'],
       status: 'Voorschot',
       description: product =>
         `<p>
@@ -74,8 +69,6 @@ const UitkeringLabels: ProductStepLabels = {
       linkTitle: product => 'Bekijk uw Tozo status',
     },
     title: product => product.title,
-    linkTitle: 'Bekijk uw Tozo status',
-    linkTo: AppRoutes['INKOMEN/TOZO'],
     status: stepLabels.herstelTermijn,
     description: product =>
       `<p>
@@ -92,8 +85,6 @@ const UitkeringLabels: ProductStepLabels = {
         linkTitle: product => 'Bekijk uw Tozo status',
       },
       title: product => product.title,
-      linkTitle: 'Bekijk uw Tozo status',
-      linkTo: AppRoutes['INKOMEN/TOZO'],
       status: stepLabels.beslissing,
       description: product =>
         `<p>
@@ -109,8 +100,6 @@ const UitkeringLabels: ProductStepLabels = {
         linkTitle: product => 'Bekijk uw Tozo status',
       },
       title: product => product.title,
-      linkTitle: 'Bekijk uw Tozo status',
-      linkTo: AppRoutes['INKOMEN/TOZO'],
       status: stepLabels.beslissing,
       description: product =>
         `<p>
@@ -127,8 +116,6 @@ const UitkeringLabels: ProductStepLabels = {
         linkTitle: product => 'Bekijk uw Tozo status',
       },
       title: product => product.title,
-      linkTitle: 'Bekijk uw Tozo status',
-      linkTo: AppRoutes['INKOMEN/TOZO'],
       status: stepLabels.beslissing,
       description: product =>
         '<p>Uw aanvraag is buiten behandeling gesteld.</p>',
@@ -146,8 +133,6 @@ const LeningLabels: ProductStepLabels = {
     },
     title: product => product.title,
     status: stepLabels.herstelTermijn,
-    linkTitle: 'Bekijk uw Tozo status',
-    linkTo: AppRoutes['INKOMEN/TOZO'],
     description: product =>
       `<p>
         Er is meer informatie en tijd nodig om uw aanvraag te behandelen. Bekijk
@@ -163,8 +148,6 @@ const LeningLabels: ProductStepLabels = {
         linkTitle: product => 'Bekijk uw Tozo status',
       },
       title: product => product.title,
-      linkTitle: 'Bekijk uw Tozo status',
-      linkTo: AppRoutes['INKOMEN/TOZO'],
       status: stepLabels.beslissing,
       description: product =>
         `<p>
@@ -180,8 +163,6 @@ const LeningLabels: ProductStepLabels = {
         linkTitle: product => 'Bekijk uw Tozo status',
       },
       title: product => product.title,
-      linkTitle: 'Bekijk uw Tozo status',
-      linkTo: AppRoutes['INKOMEN/TOZO'],
       status: stepLabels.beslissing,
       description: product =>
         `<p>
@@ -198,8 +179,6 @@ const LeningLabels: ProductStepLabels = {
         linkTitle: product => 'Bekijk uw Tozo status',
       },
       title: product => product.title,
-      linkTitle: 'Bekijk uw Tozo status',
-      linkTo: AppRoutes['INKOMEN/TOZO'],
       status: stepLabels.beslissing,
       description: product =>
         '<p>Uw aanvraag is buiten behandeling gesteld.</p>',

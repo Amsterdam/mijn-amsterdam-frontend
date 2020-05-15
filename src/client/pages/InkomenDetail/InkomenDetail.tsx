@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import useRouter from 'use-react-router';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
-import { isLoading, isError } from '../../../universal/helpers';
+import { isError, isLoading } from '../../../universal/helpers';
 import { AppContext } from '../../AppState';
 import {
   Alert,
@@ -65,7 +65,8 @@ export default () => {
 
   const FocusItem = FOCUS_AANVRAGEN.content?.find(item => item.id === id);
   const noContent = !isLoading(FOCUS_AANVRAGEN) && !FocusItem;
-
+  const hasDecision =
+    FocusItem && FocusItem.steps.some(step => step.title === 'beslissing');
   let title = 'Onbekend item';
 
   if (FocusItem) {
@@ -88,13 +89,11 @@ export default () => {
         )}
         {isLoading(FOCUS_AANVRAGEN) && <LoadingContent />}
       </PageContent>
-      {!!FocusItem && !!FocusItem.process && (
+      {!!FocusItem && !!FocusItem.steps && (
         <StatusLine
           trackCategory={`Inkomen en Stadspas / ${FocusItem.title}`}
-          items={FocusItem.process}
-          maxStepCount={
-            !FocusItem.hasDecision ? MAX_STEP_COUNT_FOCUS_REUEST : undefined
-          }
+          items={FocusItem.steps}
+          maxStepCount={!hasDecision ? MAX_STEP_COUNT_FOCUS_REUEST : undefined}
           altDocumentContent={altDocumentContent}
           id={id}
         />

@@ -1,4 +1,4 @@
-import { GenericDocument } from '../../../universal/types/App.types';
+import { GenericDocument, LinkProps } from '../../../universal/types/App.types';
 // The process steps are in order of:
 export type StepTitle =
   | 'aanvraag'
@@ -88,8 +88,6 @@ export interface FocusStepContent {
   title: TextPartContents;
   description: TextPartContents;
   status: RequestStatus;
-  linkTitle?: string;
-  linkTo?: string;
   notification: {
     title: TextPartContents;
     description: TextPartContents;
@@ -110,11 +108,11 @@ export interface ProductStepLabels {
   beslissing?: FocusStepContentDecision;
 }
 
-export type LabelData = {
-  [origin in productType]?: {
-    [productTitle in ProductTitle]?: ProductStepLabels;
+export interface LabelData {
+  [productType: string]: {
+    [productTitle: string]: ProductStepLabels;
   };
-};
+}
 
 export type DocumentTitles = Record<string, string>;
 
@@ -135,4 +133,5 @@ export interface FocusItem {
   dateStart: string;
   title: string;
   steps: FocusItemStep[];
+  link: LinkProps;
 }

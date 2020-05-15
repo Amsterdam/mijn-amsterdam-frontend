@@ -56,27 +56,27 @@ export default () => {
         )}
         {isLoading(FOCUS_TOZO) && <LoadingContent />}
       </PageContent>
-      {!!TozoItem?.process.aanvraag && (
+      {!!TozoItem?.steps.aanvraag && (
         <StatusLine
           className={styles.AanvraagStatusLine}
           trackCategory={`Inkomen en Stadspas / Tozo aanvraag`}
           statusLabel="Tozo-aanvraag"
-          items={TozoItem.process.aanvraag}
+          items={TozoItem.steps.aanvraag}
           showToggleMore={false}
           maxStepCount={-1}
           altDocumentContent={altDocumentContent}
           id={'inkomen-stadspas-detail-tozo-aanvraag'}
         />
       )}
-      {!!TozoItem?.process.uitkering.length && (
+      {!!TozoItem?.steps.uitkering.length && (
         <StatusLine
           trackCategory={`Inkomen en Stadspas / Tozo uitkering levensonderhoud`}
           statusLabel="Tozo-uitkering"
-          items={TozoItem.process.uitkering}
+          items={TozoItem.steps.uitkering}
           showToggleMore={false}
           maxStepCount={
-            TozoItem.process.uitkering.length === 1 &&
-            TozoItem.process.uitkering[0].status === stepStatusLabels.beslissing
+            TozoItem.steps.uitkering.length === 1 &&
+            TozoItem.steps.uitkering[0].status === stepStatusLabels.beslissing
               ? -1
               : 2
           }
@@ -84,15 +84,15 @@ export default () => {
           id={'inkomen-stadspas-detail-tozo-uitkering'}
         />
       )}
-      {!!TozoItem?.process.lening.length && (
+      {!!TozoItem?.steps.lening.length && (
         <StatusLine
           trackCategory={`Inkomen en Stadspas / Tozo lening bedrijfskrediet`}
           statusLabel="Tozo-lening"
-          items={TozoItem.process.lening}
+          items={TozoItem.steps.lening}
           showToggleMore={false}
           maxStepCount={
-            TozoItem.process.lening.length === 1 &&
-            TozoItem.process.lening[0].status === stepStatusLabels.beslissing
+            TozoItem.steps.lening.length === 1 &&
+            TozoItem.steps.lening[0].status === stepStatusLabels.beslissing
               ? -1
               : 2
           }

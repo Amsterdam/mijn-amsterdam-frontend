@@ -1,9 +1,7 @@
 import { addDays, differenceInCalendarDays, parseISO } from 'date-fns';
-import { AppRoutes, Chapters } from '../../../universal/config';
-import { API_BASE_PATH } from '../../../universal/config/api';
+import { AppRoutes, Chapters, API_BASE_PATH } from '../../../universal/config';
 import { defaultDateFormat, omit } from '../../../universal/helpers';
-import { GenericDocument } from '../../../universal/types';
-import { MyCase } from '../../../universal/types/App.types';
+import { GenericDocument, MyCase } from '../../../universal/types';
 import { DAYS_KEEP_RECENT, processSteps } from './focus-aanvragen-content';
 import {
   Decision,
@@ -17,6 +15,7 @@ import {
   FocusProductStep,
   FocusProductStepFromSource,
   FocusStepContent,
+  FocusStepContentDecision,
   LabelData,
   StepTitle,
   TextPartContents,
@@ -61,8 +60,8 @@ export function calculateUserActionDeadline(
 // Returns the date before which municipality has to inform the client about a decision that has been made regarding his/her request for a product.
 export function calculateDecisionDeadline(
   dateStart: string,
-  daysSupplierActionRequired: number,
-  daysUserActionRequired: number,
+  daysSupplierActionRequired: number = 28,
+  daysUserActionRequired: number = 28,
   daysRecoveryAction: number = 0
 ) {
   return defaultDateFormat(
@@ -88,13 +87,12 @@ export function getLatestStep(steps: FocusProductStep[]) {
 export function formatFocusDocument(
   datePublished: string,
   document: FocusDocumentFromSource,
-  contentDocumentTitles: DocumentTitles,
   documentType: string
 ): GenericDocument {
   const { id, omschrijving: title, $ref: url } = document;
   return {
     id: String(id),
-    title: contentDocumentTitles[title] || title,
+    title,
     url: `${API_BASE_PATH}/${url}`,
     datePublished,
     type: documentType,
@@ -106,25 +104,21 @@ export function findStepsContent(
   contentLabels: LabelData
 ) {
   const stepsContent: { [stepTitle in StepTitle]?: FocusStepContent } = {};
+  const labelContent = contentLabels[product.type][product.title];
 
   processSteps.forEach(stepTitle => {
     const stepData = product.steps.find(step => step.title === stepTitle);
-    const stepContent =
-      contentLabels &&
-      contentLabels[product.type] &&
-      contentLabels[product.type]![product.title] &&
-      contentLabels[product.type]![product.title]![stepTitle];
-
+    const stepContent = labelContent[stepTitle];
     if (stepData && stepContent) {
-      const decision = product.decision;
       if (
         stepTitle === 'beslissing' &&
-        decision &&
-        'toekenning' in stepContent &&
-        stepContent[decision]
+        product.decision &&
+        product.decision in stepContent
       ) {
-        stepsContent[stepTitle] = stepContent[decision];
-      } else if (!decision && !('toekenning' in stepContent) && stepContent) {
+        stepsContent[stepTitle] = (stepContent as FocusStepContentDecision)[
+          product.decision
+        ];
+      } else if (stepTitle !== 'beslissing') {
         stepsContent[stepTitle] = stepContent as FocusStepContent;
       }
     }
@@ -134,56 +128,53 @@ export function findStepsContent(
 }
 
 function normalizeFocusSourceProductStep(
-  [stepTitle, stepData]: [StepTitle, FocusProductStepFromSource],
-  contentDocumentTitles: DocumentTitles
+  product: FocusProductFromSource,
+  [stepTitle, stepData]: [StepTitle, FocusProductStepFromSource]
 ) {
   const stepNormalized: FocusProductStep = {
-    id: `step-${stepTitle}`,
+    id: `${product._id}-step-${stepTitle}`,
     title: stepTitle,
     documents:
       stepData.document.map(sourceDocument =>
-        formatFocusDocument(
-          stepData.datum,
-          sourceDocument,
-          contentDocumentTitles,
-          'PDF'
-        )
+        formatFocusDocument(stepData.datum, sourceDocument, 'PDF')
       ) || [],
     datePublished: stepData.datum,
-    aantalDagenHerstelTermijn:
-      stepTitle === 'herstelTermijn' && stepData.aantalDagenHerstelTermijn
-        ? parseInt(stepData.aantalDagenHerstelTermijn, 10)
-        : 0,
   };
+
+  if (stepTitle === 'herstelTermijn' && stepData.aantalDagenHerstelTermijn) {
+    stepNormalized.aantalDagenHerstelTermijn = parseInt(
+      stepData.aantalDagenHerstelTermijn,
+      10
+    );
+  }
+
   return stepNormalized;
 }
 
-export function normalizeFocusSourceProduct(
-  item: FocusProductFromSource,
-  titleTranslations: Record<FocusProductFromSource['naam'], string>,
-  contentDocumentTitles: DocumentTitles
-) {
-  const processSteps = item.processtappen;
+export function normalizeFocusSourceProduct(product: FocusProductFromSource) {
+  const processSteps = product.processtappen;
 
-  const steps = Object.entries(item.processtappen)
+  const steps = Object.entries(product.processtappen)
     .filter(
       (stepEntry): stepEntry is [StepTitle, FocusProductStepFromSource] =>
         stepEntry[1] !== null
     )
-    .map(step => normalizeFocusSourceProductStep(step, contentDocumentTitles));
+    .map(step => normalizeFocusSourceProductStep(product, step));
 
   const latestStep = getLatestStep(steps);
 
   return {
-    id: `${item._id}-${latestStep}`,
-    title: titleTranslations[item.naam] || item.naam,
-    type: item.soortProduct,
-    decision: item.typeBesluit ? getDecision(item.typeBesluit) : undefined,
+    id: `${product._id}-${latestStep}`,
+    title: product.naam,
+    type: product.soortProduct,
+    decision: product.typeBesluit
+      ? getDecision(product.typeBesluit)
+      : undefined,
     steps,
     datePublished: processSteps[latestStep]?.datum || '',
     dateStart: processSteps.aanvraag?.datum || '',
-    dienstverleningstermijn: item.dienstverleningstermijn,
-    inspanningsperiode: item.inspanningsperiode,
+    dienstverleningstermijn: product.dienstverleningstermijn,
+    inspanningsperiode: product.inspanningsperiode,
   };
 }
 
@@ -245,6 +236,7 @@ export function transformFocusProduct(
   contentLabels: LabelData
 ): FocusItem {
   const stepsContent = findStepsContent(product, contentLabels);
+
   const steps = product.steps
     .map(stepData => {
       const stepContent = stepsContent[stepData.title];
@@ -261,7 +253,12 @@ export function transformFocusProduct(
     'inspanningsperiode',
   ]);
 
-  return Object.assign(productSanitized, { steps });
+  const link = {
+    title: 'Meer informatie',
+    to: AppRoutes['INKOMEN'],
+  };
+
+  return Object.assign({}, productSanitized, { steps, link });
 }
 
 export function transformFocusProductNotification(
@@ -313,4 +310,19 @@ export function transformFocusProductRecentCase(product: {
       title: 'Meer informatie',
     },
   };
+}
+
+export function translateFocusProduct(
+  product: FocusProduct,
+  titleTranslations: DocumentTitles
+) {
+  product.title = titleTranslations[product.title] || product.title;
+
+  product.steps.forEach(step => {
+    step.documents.forEach(doc => {
+      doc.title = titleTranslations[doc.title] || doc.title;
+    });
+  });
+
+  return product;
 }
