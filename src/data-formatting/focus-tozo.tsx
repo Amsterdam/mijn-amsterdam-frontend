@@ -127,8 +127,8 @@ const UitkeringLabels: ProductType = {
       status: stepLabels.beslissing,
       description: data => (
         <p>
-          `U hebt recht op een ${data.productTitleTranslated} (besluit:
-          {data.datePublished}).`,
+          U hebt recht op een {data.productTitleTranslated} (besluit:
+          {data.datePublished}).
         </p>
       ),
     },
