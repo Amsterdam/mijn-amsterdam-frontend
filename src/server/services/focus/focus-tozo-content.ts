@@ -1,10 +1,13 @@
 import { AppRoutes, Chapter } from '../../../universal/config';
-import { LinkProps, MyNotification } from '../../../universal/types';
+import {
+  LinkProps,
+  MyNotification,
+  GenericDocument,
+} from '../../../universal/types';
 import { stepLabels } from './focus-aanvragen-content';
-import { GenericDocument } from '../../../universal/types/App.types';
-import { FocusItemStep } from './focus-types';
 import {
   DocumentTitles,
+  FocusItemStep,
   LabelData,
   ProductStepLabels,
   StepTitle,

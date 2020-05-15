@@ -1,7 +1,9 @@
 import { addDays, differenceInCalendarDays, parseISO } from 'date-fns';
+import { AppRoutes, Chapters } from '../../../universal/config';
 import { API_BASE_PATH } from '../../../universal/config/api';
 import { defaultDateFormat, omit } from '../../../universal/helpers';
 import { GenericDocument } from '../../../universal/types';
+import { MyCase } from '../../../universal/types/App.types';
 import { DAYS_KEEP_RECENT, processSteps } from './focus-aanvragen-content';
 import {
   Decision,
@@ -19,8 +21,6 @@ import {
   StepTitle,
   TextPartContents,
 } from './focus-types';
-import { Chapters, AppRoutes } from '../../../universal/config';
-import { MyCase } from '../../../universal/types/App.types';
 
 /** Checks if an item returned from the api is considered recent */
 export function isRecentItem(

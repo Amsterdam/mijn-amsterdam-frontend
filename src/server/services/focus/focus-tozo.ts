@@ -9,37 +9,29 @@ import {
 import { MyCase, MyNotification } from '../../../universal/types';
 import { fetchFOCUS } from './focus-aanvragen';
 import { fetchFOCUSCombined, FocusTozoDocument } from './focus-combined';
-import { transformFocusProductNotification } from './focus-helpers';
 import {
   getLatestStep,
-  transformFocusProduct,
   isRecentItem,
+  transformFocusProduct,
+  transformFocusProductNotification,
   transformFocusProductRecentCase,
 } from './focus-helpers';
 import {
-  tozoContentDocumentTitles,
   contentLabels,
   fakeDecisionStep,
   FocusTozo,
+  tozoContentDocumentTitles,
+  tozoProductTitleTranslations,
   TOZO_LENING_PRODUCT_TITLE,
   TOZO_UITKERING_PRODUCT_TITLE,
   TOZO_VOORSCHOT_PRODUCT_TITLE,
-  tozoProductTitleTranslations,
 } from './focus-tozo-content';
 import {
   DocumentTitles,
+  FocusItemStep,
   FocusProduct,
   LabelData,
-  FocusItemStep,
 } from './focus-types';
-
-interface TransformFocusProductTozoProps {
-  product: FocusProduct;
-  tozoDocuments: FocusTozoDocument[];
-  compareDate: Date;
-  contentLabels: LabelData;
-  contentDocumentTitles: DocumentTitles;
-}
 
 function transformFocusTozoItems({
   documenten,
@@ -282,9 +274,12 @@ export async function fetchFOCUSTOZOGenerated(sessionID: SessionID) {
   let cases: MyCase[] = [];
 
   if (response.status === 'OK') {
-    const tozoItemNotifications = Object.values(
-      response.content.notifications
-    ).flatMap(x => x);
+    const tozoItemNotifications = Object.values(response.content.notifications)
+      .filter(
+        (notifications): notifications is MyNotification[] =>
+          notifications !== null
+      )
+      .flatMap(x => x);
 
     notifications = tozoItemNotifications.filter(
       (notification: MyNotification | null): notification is MyNotification => {
