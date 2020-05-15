@@ -26,9 +26,9 @@ import { LinkProps } from '../App.types';
 export const TOZO_VOORSCHOT_PRODUCT_TITLE: TozoProductTitle =
   'Voorschot Tozo (voor ondernemers) (Eenm.)';
 export const TOZO_LENING_PRODUCT_TITLE: TozoProductTitle =
-  'Lening t.b.v. bedrijfskrediet TOZO';
+  'Tozo Bedrijfskapitaal (voor ondernemers)';
 export const TOZO_UITKERING_PRODUCT_TITLE: TozoProductTitle =
-  'Tijdelijke Overbruggingsregeling Zelfst. Ondern.';
+  'Tozo Levensonderhoud (voor ondernemers)';
 
 const DocumentTitles: Record<string, string> = {
   'E-AANVR-TOZO': 'Brief aanvraag',
