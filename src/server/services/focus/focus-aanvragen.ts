@@ -13,8 +13,9 @@ import {
 } from '../../../universal/types';
 import { ApiUrls, getApiConfigValue } from '../../config';
 import { requestData } from '../../helpers';
+import { findStepsWithLabels } from './focus-helpers';
 import {
-  AppRoutesByProductOrigin,
+  AppRoutesByproductType,
   contentDocumentTitles,
   contentLabels,
   processSteps,
@@ -36,11 +37,11 @@ import {
   Info,
   InfoExtended,
   LabelData,
-  ProductOrigin,
+  productType,
   RequestStatus,
-  Step,
   StepTitle,
   ProductTitle,
+  FocusProductFromSource,
 } from './focus-types';
 
 /**
@@ -56,7 +57,7 @@ interface StepSourceData {
   id: string;
   productTitle: string;
   productTitleTranslated: string;
-  productOrigin: ProductOrigin;
+  productType: productType;
   decision?: DecisionFormatted;
   datePublished?: string; // Generic date term for use as designated date about an item.
   decisionDeadline1?: string;
@@ -91,7 +92,7 @@ export interface FocusItem {
   title: string;
   description: string;
 
-  // To determine in which list these items must occur.
+  // To determine in which list these items must be placed.
   hasDecision: boolean;
   isRecent: boolean;
 
@@ -103,7 +104,7 @@ interface StepSourceDataArgs {
   stepData: Step;
   id: string;
   productTitle: string;
-  productOrigin: ProductOrigin;
+  productType: productType;
   latestStep: StepTitle;
   isLastActive: boolean;
   isRecent: boolean;
@@ -126,7 +127,7 @@ function translateProductTitle(title: ProductTitle) {
 function getStepSourceData({
   id,
   productTitle,
-  productOrigin,
+  productType,
   stepData,
   latestStep,
   isLastActive,
@@ -147,7 +148,7 @@ function getStepSourceData({
     id,
     productTitle,
     productTitleTranslated: translateProductTitle(productTitle),
-    productOrigin,
+    productType,
     latestStep,
     decision,
     daysUserActionRequired,
@@ -186,7 +187,7 @@ export function formatFocusNotificationItem(
   contentLabels: LabelData
 ): MyNotification {
   const stepLabels =
-    contentLabels[sourceData.productOrigin][sourceData.productTitle][
+    contentLabels[sourceData.productType][sourceData.productTitle][
       sourceData.latestStep
     ];
 
@@ -238,7 +239,7 @@ export function formatFocusNotificationItem(
 
 function formatStepData(
   sourceData: StepSourceData,
-  productOrigin: ProductOrigin,
+  productType: productType,
   stepTitle: StepTitle,
   stepData: Step,
   contentLabels: LabelData,
@@ -246,10 +247,10 @@ function formatStepData(
 ): ProcessStep {
   const stepLabels =
     !!sourceData.decision && stepTitle === 'beslissing'
-      ? (contentLabels[productOrigin][sourceData.productTitle][
+      ? (contentLabels[productType][sourceData.productTitle][
           stepTitle
         ] as InfoExtended)[sourceData.decision]
-      : (contentLabels[productOrigin][sourceData.productTitle][
+      : (contentLabels[productType][sourceData.productTitle][
           stepTitle
         ] as Info);
 
@@ -297,32 +298,33 @@ export function transformFocusSourceProduct(
 ): FocusProductTransformed {
   const {
     _id,
-    soortProduct: productOrigin,
-    typeBesluit: rawDecision,
+    soortProduct: productType,
+    typeBesluit,
     processtappen: steps,
-    naam: productTitle,
-    dienstverleningstermijn: daysSupplierActionRequired = 28,
-    inspanningsperiode: daysUserActionRequired = 28,
+    title: productTitle,
+    datePublished,
+    dienstverleningstermijn = 28,
+    inspanningsperiode = 28,
   } = product;
 
   // Find the latest active step of the request process.
   const latestStep = getLatestStep(steps);
-
   const id = `${_id}-${latestStep}`;
+  const decision = typeBesluit ? getDecision(typeBesluit) : undefined;
 
-  const hasDecision = !!rawDecision;
-  const decision = rawDecision ? getDecision(rawDecision) : undefined;
   // Determine if this items falls within a recent period (of xx days)
   const isRecent = decision ? isRecentItem(decision, steps, compareDate) : true;
 
   // The data about the latest step
-  const latestStepData = steps[latestStep] as Step;
+  // const latestStepData = steps[latestStep] as Step;
 
-  const stepLabels = !decision
-    ? (contentLabels[productOrigin][productTitle][latestStep] as Info)
-    : (contentLabels[productOrigin][productTitle][latestStep] as InfoExtended)[
-        decision
-      ];
+  const stepLabels = findStepsWithLabels({
+    productType,
+    productTitle,
+    steps,
+    decision,
+    contentLabels,
+  });
 
   // within x days a person is required to take action
   const daysRecoveryAction =
@@ -330,119 +332,11 @@ export function transformFocusSourceProduct(
       ? parseInt(steps.herstelTermijn.aantalDagenHerstelTermijn, 10)
       : 0;
 
-  // Start of the request process
-  const dateStart = steps.aanvraag?.datum || '';
-  const productTitleTranslated = translateProductTitle(productTitle);
-  const sourceData = getStepSourceData({
-    id,
-    productTitle,
-    productOrigin,
-    decision,
-    latestStep,
-    stepData: latestStepData,
-    dateStart,
-    daysSupplierActionRequired,
-    daysUserActionRequired,
-    daysRecoveryAction,
-    isLastActive: false,
-    isRecent,
-  });
-
-  // Only use the process steps that have data to show
-  const processStepsFiltered = processSteps.filter(stepTitle => {
-    return (
-      !!steps[stepTitle] &&
-      !!contentLabels[productOrigin][productTitle][stepTitle]
-    );
-  });
-
-  const route = generatePath(
-    AppRoutesByProductOrigin[productOrigin][productTitle],
-    {
-      id,
-    }
-  );
-
-  const item = {
-    id,
-    chapter: Chapters.INKOMEN,
-
-    // Date on which the last updated information (Step) was published,
-    datePublished: sourceData.datePublished || '',
-
-    // Date on which the request process was first published
-    dateStart: defaultDateFormat(dateStart),
-
-    // Regular title, can be turned into more elaborate descriptive information.
-    // E.g Bijstandsuitkering could become Uw Aanvraag voor een bijstandsuitkering.
-    title: stepLabels
-      ? parseLabelContent(stepLabels.title, sourceData)
-      : productTitleTranslated,
-
-    description: stepLabels
-      ? parseLabelContent(stepLabels.description, sourceData)
-      : '',
-
-    status: stepLabels ? stepLabels.status : stepStatusLabels[latestStep],
-    isRecent,
-    hasDecision,
-    link: {
-      title: stepLabels?.linkTitle || 'Meer informatie',
-      to: stepLabels?.linkTo || route,
-    },
-    process: processStepsFiltered
-      .filter(stepTitle => {
-        return !!steps[stepTitle];
-      })
-      .map((stepTitle, index) => {
-        const stepData = steps[stepTitle] as Step;
-        const isLastActive = stepTitle === latestStep;
-
-        const sourceData = getStepSourceData({
-          id: `${id}-${stepTitle}`,
-          productTitle,
-          productOrigin,
-          decision,
-          latestStep,
-          stepData,
-          daysSupplierActionRequired,
-          daysUserActionRequired,
-          daysRecoveryAction,
-          dateStart,
-          isLastActive,
-          isRecent,
-        });
-
-        return formatStepData(
-          sourceData,
-          productOrigin,
-          stepTitle,
-          stepData,
-          contentLabels,
-          contentDocumentTitles
-        );
-      }),
-  };
-
-  const latestStepItem = item.process[item.process.length - 1];
-
   return {
-    item,
-    notification: formatFocusNotificationItem(
-      item,
-      latestStepItem,
-      sourceData,
-      contentLabels
-    ),
-    case: isRecent
-      ? {
-          id: `recent-case-${item.id}`,
-          title: item.title,
-          datePublished: item.datePublished,
-          link: item.link,
-          chapter: Chapters.INKOMEN,
-        }
-      : null,
+    id,
+    title,
+    datePublished,
+    processSteps: [],
   };
 }
 
@@ -457,7 +351,6 @@ export function transformFOCUSAanvragenData(
   }
 
   return responseData
-    .filter(item => sourceProductsWhitelisted.includes(item.naam))
     .sort(dateSort('datePublished', 'desc'))
     .map(product =>
       transformFocusSourceProduct(
@@ -470,16 +363,31 @@ export function transformFOCUSAanvragenData(
 }
 
 export function fetchFOCUS(sessionID: SessionID) {
-  return requestData<FocusProduct[]>(
+  const sourceDataNormalized = requestData<FocusProduct[]>(
     {
       url: ApiUrls.FOCUS_AANVRAGEN,
       transformResponse: data => {
-        return data.map((item: FocusProduct) => {
+        return data.filter((item: FocusProductFromSource) => sourceProductsWhitelisted.includes(item.naam)).map((item: FocusProductFromSource) => {
           const processSteps = item.processtappen;
           const latestStep = getLatestStep(processSteps);
+
           return {
-            ...item,
+            id: `${item._id}-${latestStep}`,
+            title: translateProductTitle(item.naam),
+            type: item.soortProduct,
+            decision: item.typeBesluit ? getDecision(item.typeBesluit)
+            steps: Object.entries(item.processtappen).filter(
+              ([stepTitle, stepData]) => stepData !== null
+            ).map(([stepTitle, stepData]) => {
+              return {
+                title: stepTitle,
+                documents: stepData?.document.map(sourceDocument => formatFocusDocument(stepTitle, stepData.datum, sourceDocument, contentDocumentTitles)),
+                datePublished: stepData.datum,
+              }
+            }),
             datePublished: processSteps[latestStep]?.datum || '',
+            dienstverleningstermijn: item.dienstverleningstermijn,
+            inspanningsperiode: item.inspanningsperiode,
           };
         });
       },
@@ -487,6 +395,8 @@ export function fetchFOCUS(sessionID: SessionID) {
     sessionID,
     getApiConfigValue('FOCUS_AANVRAGEN', 'postponeFetch', false)
   );
+
+  return sourceDataNormalized;
 }
 
 async function fetchFOCUSAanvragenFormatted(sessionID: SessionID) {

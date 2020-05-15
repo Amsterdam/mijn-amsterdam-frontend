@@ -1,5 +1,5 @@
 import {
-  RoutesByProductOrigin,
+  RoutesByproductType,
   StepTitle,
   RequestStatus,
   LabelData,
@@ -39,7 +39,7 @@ export const contentDocumentTitles: { [originalTitle: string]: string } = {
   'LO: Herstel': 'Verzoek om aanvullende informatie van u',
 };
 
-export const AppRoutesByProductOrigin: RoutesByProductOrigin = {
+export const AppRoutesByproductType: RoutesByproductType = {
   Participatiewet: {
     Levensonderhoud: AppRoutes['INKOMEN/BIJSTANDSUITKERING'],
   },
@@ -63,7 +63,7 @@ export const FocusExternalUrls = {
   StadsPas: 'https://www.amsterdam.nl/stadspas',
 };
 
-export const ProductOrigins = {
+export const productTypes = {
   Participatiewet: 'Participatiewet',
   'Bijzondere Bijstand': 'Bijzondere Bijstand',
   Minimafonds: 'Minimafonds',

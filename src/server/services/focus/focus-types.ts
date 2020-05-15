@@ -1,29 +1,4 @@
-export interface Step {
-  document: FocusDocument[];
-  datum: string;
-  // status: RequestStatus;
-  aantalDagenHerstelTermijn?: string;
-  reden?: string;
-}
-
-// Shape of the data returned from the Api
-export interface FocusProduct {
-  _id: string;
-  soortProduct: ProductOrigin;
-  typeBesluit?: Decision;
-  naam: string;
-  processtappen: {
-    aanvraag: Step | null;
-    inBehandeling: Step | null;
-    herstelTermijn: Step | null;
-    beslissing: Step | null;
-    bezwaar: Step | null;
-  };
-  dienstverleningstermijn: number;
-  inspanningsperiode: number;
-  datePublished: string;
-}
-
+import { GenericDocument } from '../../../universal/types/App.types';
 // The process steps are in order of:
 export type StepTitle =
   | 'aanvraag'
@@ -31,6 +6,44 @@ export type StepTitle =
   | 'herstelTermijn'
   | 'beslissing'
   | 'bezwaar';
+
+export interface FocusProductStepFromSource {
+  document: FocusDocument[];
+  datum: string;
+  // status: RequestStatus;
+  aantalDagenHerstelTermijn?: string;
+  reden?: string;
+}
+
+export interface FocusProductStep {
+  title: StepTitle;
+  documents: GenericDocument[];
+  datePublished: string;
+}
+
+// Shape of the data returned from the Api
+export interface FocusProductFromSource {
+  _id: string;
+  soortProduct: productType;
+  typeBesluit?: Decision;
+  naam: string;
+  processtappen: {
+    [stepTitle in StepTitle]: FocusProductStepFromSource | null;
+  };
+  dienstverleningstermijn: number;
+  inspanningsperiode: number;
+}
+
+export interface FocusProduct {
+  id: string;
+  title: string;
+  datePublished: string;
+  productType: productType;
+  decision?: DecisionFormatted;
+  steps: FocusProductStep[];
+  dienstverleningstermijn: number;
+  inspanningsperiode: number;
+}
 
 export type RequestStatus =
   | 'Aanvraag'
@@ -49,7 +62,7 @@ export type DecisionFormatted =
   | 'buitenbehandeling';
 
 // The official terms of the Focus api "product categories" data how they are used within the Municipality of Amsterdam.
-export type ProductOrigin =
+export type productType =
   | 'Participatiewet'
   | 'Bijzondere Bijstand'
   | 'Minimafonds';
@@ -79,11 +92,12 @@ export interface Info {
     linkTitle?: string;
     linkTo?: string;
   };
+  isDecisionInfo: false;
 }
 
 export type InfoExtended = {
   [decision in DecisionFormatted]?: Info | null;
-};
+} & { isDecisionInfo: true };
 
 export interface ProductStepLabels {
   aanvraag: Info | null;
@@ -94,13 +108,13 @@ export interface ProductStepLabels {
 }
 
 export type LabelData = {
-  [origin in ProductOrigin]: {
+  [origin in productType]: {
     [productTitle in ProductTitle]: ProductStepLabels;
   };
 };
 
-export type RoutesByProductOrigin = {
-  [origin in ProductOrigin]: { [productTitle in ProductTitle]: string };
+export type RoutesByproductType = {
+  [origin in productType]: { [productTitle in ProductTitle]: string };
 };
 
 export interface FocusDocument {

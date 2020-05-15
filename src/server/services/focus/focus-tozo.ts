@@ -425,7 +425,7 @@ export function transformFocusTozo({
     const hasLatestStepWithLabels =
       isWhiteListed &&
       !!findLatestStepWithLabels({
-        productOrigin: item.soortProduct,
+        productType: item.soortProduct,
         productTitle: translateProductTitle(item.naam),
         steps: item.processtappen,
         contentLabels,

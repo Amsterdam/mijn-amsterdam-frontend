@@ -9,11 +9,15 @@ import {
   FocusProduct,
   DocumentTitles,
   LabelData,
+  Info,
+  FocusProductFromSource,
+  FocusProductStep,
 } from './focus-types';
 import { GenericDocument } from '../../../universal/types';
 import { defaultDateFormat } from '../../../universal/helpers';
 import { addDays, parseISO, differenceInCalendarDays } from 'date-fns';
 import { API_BASE_PATH } from '../../../universal/config/api';
+import { Decision, FocusProductStepFromSource } from './focus-types';
 
 /** Checks if an item returned from the api is considered recent */
 export function isRecentItem(
@@ -82,28 +86,27 @@ export function getLatestStep(steps: FocusProduct['processtappen']) {
 }
 
 export function formatFocusDocument(
-  stepTitle: StepTitle,
   datePublished: string,
   document: FocusDocument,
-  contentDocumentTitles: DocumentTitles
+  documentType: string
 ): GenericDocument {
   const { id, omschrijving: title, $ref: url } = document;
   return {
     id: String(id),
-    title: contentDocumentTitles[title] || title,
+    title,
     url: `${API_BASE_PATH}/${url}`,
     datePublished,
-    type: stepTitle,
+    type: documentType,
   };
 }
 
 export function findLatestStepWithLabels({
-  productOrigin,
+  productType,
   productTitle,
   steps,
   contentLabels,
 }: {
-  productOrigin: FocusProduct['soortProduct'];
+  productType: FocusProduct['soortProduct'];
   productTitle: FocusProduct['naam'];
   steps: FocusProduct['processtappen'];
   contentLabels: LabelData;
@@ -111,9 +114,71 @@ export function findLatestStepWithLabels({
   // Find the latest active step of the request process.
   const latestStep = [...processSteps].reverse().find(step => {
     const hasStepData = step in steps && steps[step] !== null;
-    const hasLabelData = !!contentLabels[productOrigin][productTitle][step];
+    const hasLabelData = !!contentLabels[productType][productTitle][step];
     return hasStepData && hasLabelData;
   });
 
   return latestStep;
+}
+
+export function findStepsWithLabels({
+  productType,
+  productTitle,
+  steps,
+  decision,
+  contentLabels,
+}: {
+  productType: FocusProduct['soortProduct'];
+  productTitle: FocusProduct['naam'];
+  steps: FocusProduct['processtappen'];
+  decision?: DecisionFormatted;
+  contentLabels: LabelData;
+}) {
+  const stepsWithLabels: Info[] = processSteps
+    .map(step => {
+      const hasStepData = step in steps && steps[step] !== null;
+      const hasLabelData = !!contentLabels[productType][productTitle][step];
+
+      if (hasStepData && hasLabelData) {
+        const stepLabels = contentLabels[productType][productTitle][step];
+        if (
+          stepLabels &&
+          stepLabels.isDecisionInfo &&
+          decision &&
+          stepLabels[decision]
+        ) {
+          return stepLabels[decision];
+        }
+      }
+      return null;
+    })
+    .filter((step): step is Info => step !== null);
+
+  return stepsWithLabels;
+}
+
+export function normalizeFocusSourceProduct(item: FocusProductFromSource, titleTranslations: Record<FocusProductFromSource['naam'], string>) {
+  const processSteps = item.processtappen;
+  const latestStep = getLatestStep(processSteps);
+  const steps = Object.entries(item.processtappen).filter(
+      ([stepTitle, stepData]) => stepData !== null // TODO: Make explicit filter TS typing
+    ).map((stepEntry) => {
+      const [stepTitle, stepData]: [StepTitle, FocusProductStepFromSource] = stepEntry;
+      const stepNormalized: FocusProductStep = {
+        title: stepTitle,
+        documents: stepData.document.map(sourceDocument => formatFocusDocument(stepData.datum, sourceDocument, 'PDF')) || [],
+        datePublished: stepData.datum,
+      }
+      return stepNormalized;
+    })
+  return {
+    id: `${item._id}-${latestStep}`,
+    title: titleTranslations[item.naam] || item.naam,
+    type: item.soortProduct,
+    decision: item.typeBesluit ? getDecision(item.typeBesluit)
+    steps,
+    datePublished: processSteps[latestStep]?.datum || '',
+    dienstverleningstermijn: item.dienstverleningstermijn,
+    inspanningsperiode: item.inspanningsperiode,
+  };
 }
