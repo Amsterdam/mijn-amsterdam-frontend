@@ -7,21 +7,35 @@ export type StepTitle =
   | 'beslissing'
   | 'bezwaar';
 
+// The official terms of the Focus api "product" names how they are used within the Municipality of Amsterdam.
+export type ProductTitle = 'Levensonderhoud' | 'Stadspas' | string;
+
+// A decision can be made and currently have 3 values.
+export type Decision = 'Toekenning' | 'Afwijzing' | 'Buiten Behandeling';
+
+// The official terms of the Focus api "product categories" data how they are used within the Municipality of Amsterdam.
+export type productType =
+  | 'Participatiewet'
+  | 'Bijzondere Bijstand'
+  | 'Minimafonds';
+
+// Shape of the data returned from the Api
+export interface FocusDocumentFromSource {
+  $ref: string;
+  id: number;
+  isBulk: boolean;
+  isDms: boolean;
+  omschrijving: string;
+}
+
 export interface FocusProductStepFromSource {
-  document: FocusDocument[];
+  document: FocusDocumentFromSource[];
   datum: string;
   // status: RequestStatus;
   aantalDagenHerstelTermijn?: string;
   reden?: string;
 }
 
-export interface FocusProductStep {
-  title: StepTitle;
-  documents: GenericDocument[];
-  datePublished: string;
-}
-
-// Shape of the data returned from the Api
 export interface FocusProductFromSource {
   _id: string;
   soortProduct: productType;
@@ -34,11 +48,21 @@ export interface FocusProductFromSource {
   inspanningsperiode: number;
 }
 
+// Normalized source producs
+export interface FocusProductStep {
+  id: string;
+  title: StepTitle;
+  documents: GenericDocument[];
+  datePublished: string;
+  aantalDagenHerstelTermijn?: number;
+}
+
 export interface FocusProduct {
   id: string;
   title: string;
+  dateStart: string;
   datePublished: string;
-  productType: productType;
+  type: productType;
   decision?: DecisionFormatted;
   steps: FocusProductStep[];
   dienstverleningstermijn: number;
@@ -53,34 +77,14 @@ export type RequestStatus =
   | 'Bezwaar'
   | string;
 
-// A decision can be made and currently have 3 values.
-export type Decision = 'Toekenning' | 'Afwijzing' | 'Buiten Behandeling';
-
 export type DecisionFormatted =
   | 'toekenning'
   | 'afwijzing'
   | 'buitenbehandeling';
 
-// The official terms of the Focus api "product categories" data how they are used within the Municipality of Amsterdam.
-export type productType =
-  | 'Participatiewet'
-  | 'Bijzondere Bijstand'
-  | 'Minimafonds';
+export type TextPartContents = (data: FocusProduct, customData?: any) => string;
 
-// The official terms of the Focus api "product" names how they are used within the Municipality of Amsterdam.
-export type ProductTitle = 'Levensonderhoud' | 'Stadspas' | string;
-
-export interface FocusSourceData {
-  datePublished: string;
-  productTitleTranslated: string;
-  dateStart: string;
-  decision: DecisionFormatted;
-  [key: string]: string;
-}
-
-export type TextPartContents = (data: FocusSourceData) => string;
-
-export interface Info {
+export interface FocusStepContent {
   title: TextPartContents;
   description: TextPartContents;
   status: RequestStatus;
@@ -92,37 +96,43 @@ export interface Info {
     linkTitle?: string;
     linkTo?: string;
   };
-  isDecisionInfo: false;
 }
 
-export type InfoExtended = {
-  [decision in DecisionFormatted]?: Info | null;
-} & { isDecisionInfo: true };
+export type FocusStepContentDecision = {
+  [decision in DecisionFormatted]?: FocusStepContent;
+};
 
 export interface ProductStepLabels {
-  aanvraag: Info | null;
-  inBehandeling: Info | null;
-  herstelTermijn: Info | null;
-  bezwaar: Info | null;
-  beslissing: InfoExtended | null;
+  aanvraag?: FocusStepContent;
+  inBehandeling?: FocusStepContent;
+  herstelTermijn?: FocusStepContent;
+  bezwaar?: FocusStepContent;
+  beslissing?: FocusStepContentDecision;
 }
 
 export type LabelData = {
-  [origin in productType]: {
-    [productTitle in ProductTitle]: ProductStepLabels;
+  [origin in productType]?: {
+    [productTitle in ProductTitle]?: ProductStepLabels;
   };
 };
 
-export type RoutesByproductType = {
-  [origin in productType]: { [productTitle in ProductTitle]: string };
-};
+export type DocumentTitles = Record<string, string>;
 
-export interface FocusDocument {
-  $ref: string;
-  id: number;
-  isBulk: boolean;
-  isDms: boolean;
-  omschrijving: string;
+export interface FocusItemStep {
+  id: string;
+  documents: GenericDocument[];
+  title: string;
+  description: string;
+  datePublished: string;
+  status: RequestStatus | '';
+  isLastActive: boolean;
+  isChecked: boolean;
 }
 
-export type DocumentTitles = Record<string, string>;
+export interface FocusItem {
+  id: string;
+  datePublished: string;
+  dateStart: string;
+  title: string;
+  steps: FocusItemStep[];
+}

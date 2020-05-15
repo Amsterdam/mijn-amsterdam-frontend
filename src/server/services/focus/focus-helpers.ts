@@ -1,48 +1,43 @@
-import { processSteps, DAYS_KEEP_RECENT } from './focus-aanvragen-content';
+import { addDays, differenceInCalendarDays, parseISO } from 'date-fns';
+import { API_BASE_PATH } from '../../../universal/config/api';
+import { defaultDateFormat, omit } from '../../../universal/helpers';
+import { GenericDocument } from '../../../universal/types';
+import { DAYS_KEEP_RECENT, processSteps } from './focus-aanvragen-content';
 import {
-  StepTitle,
-  FocusDocument,
   Decision,
   DecisionFormatted,
-  TextPartContents,
-  ProductTitle,
-  FocusProduct,
   DocumentTitles,
-  LabelData,
-  Info,
+  FocusDocumentFromSource,
+  FocusItem,
+  FocusItemStep,
+  FocusProduct,
   FocusProductFromSource,
   FocusProductStep,
+  FocusProductStepFromSource,
+  FocusStepContent,
+  LabelData,
+  StepTitle,
+  TextPartContents,
 } from './focus-types';
-import { GenericDocument } from '../../../universal/types';
-import { defaultDateFormat } from '../../../universal/helpers';
-import { addDays, parseISO, differenceInCalendarDays } from 'date-fns';
-import { API_BASE_PATH } from '../../../universal/config/api';
-import { Decision, FocusProductStepFromSource } from './focus-types';
 
 /** Checks if an item returned from the api is considered recent */
-export function isRecentItem(
-  decision: DecisionFormatted,
-  steps: FocusProduct['processtappen'],
-  compareDate: Date
-) {
-  const noDecision = !decision;
-
-  let hasRecentDecision = false;
-
-  if (steps.beslissing !== null) {
-    hasRecentDecision =
-      differenceInCalendarDays(compareDate, new Date(steps.beslissing.datum)) <
-      DAYS_KEEP_RECENT;
-  }
-
-  return noDecision || hasRecentDecision;
+export function isRecentItem(steps: FocusProductStep[], compareDate: Date) {
+  return steps.some(
+    step =>
+      step.title === 'beslissing' &&
+      differenceInCalendarDays(compareDate, new Date(step.datePublished)) <
+        DAYS_KEEP_RECENT
+  );
 }
 
-export function parseLabelContent(text: TextPartContents, data: any): string {
+export function parseLabelContent(
+  text: TextPartContents,
+  product: FocusProduct & Record<string, string>
+): string {
   let rText = text || '';
 
   if (typeof rText === 'function') {
-    return rText(data);
+    return rText(product);
   }
 
   return rText;
@@ -77,108 +72,189 @@ export function getDecision(decision: Decision): DecisionFormatted {
   return decision.toLocaleLowerCase().replace(/\s/gi, '') as DecisionFormatted;
 }
 
-export function getLatestStep(steps: FocusProduct['processtappen']) {
+export function getLatestStep(steps: FocusProductStep[]) {
   return (
-    [...processSteps].reverse().find(step => {
-      return step in steps && steps[step] !== null;
+    [...processSteps].reverse().find(stepTitle => {
+      return !!steps.find(stepData => stepTitle === stepData.title);
     }) || 'aanvraag'
   );
 }
 
 export function formatFocusDocument(
   datePublished: string,
-  document: FocusDocument,
+  document: FocusDocumentFromSource,
+  contentDocumentTitles: DocumentTitles,
   documentType: string
 ): GenericDocument {
   const { id, omschrijving: title, $ref: url } = document;
   return {
     id: String(id),
-    title,
+    title: contentDocumentTitles[title] || title,
     url: `${API_BASE_PATH}/${url}`,
     datePublished,
     type: documentType,
   };
 }
 
-export function findLatestStepWithLabels({
-  productType,
-  productTitle,
-  steps,
-  contentLabels,
-}: {
-  productType: FocusProduct['soortProduct'];
-  productTitle: FocusProduct['naam'];
-  steps: FocusProduct['processtappen'];
-  contentLabels: LabelData;
-}) {
-  // Find the latest active step of the request process.
-  const latestStep = [...processSteps].reverse().find(step => {
-    const hasStepData = step in steps && steps[step] !== null;
-    const hasLabelData = !!contentLabels[productType][productTitle][step];
-    return hasStepData && hasLabelData;
+export function findStepsContent(
+  product: FocusProduct,
+  contentLabels: LabelData
+) {
+  const stepsContent: { [stepTitle in StepTitle]?: FocusStepContent } = {};
+
+  processSteps.forEach(stepTitle => {
+    const stepData = product.steps.find(step => step.title === stepTitle);
+    const stepContent =
+      contentLabels &&
+      contentLabels[product.type] &&
+      contentLabels[product.type]![product.title] &&
+      contentLabels[product.type]![product.title]![stepTitle];
+
+    if (stepData && stepContent) {
+      const decision = product.decision;
+      if (
+        stepTitle === 'beslissing' &&
+        decision &&
+        'toekenning' in stepContent &&
+        stepContent[decision]
+      ) {
+        stepsContent[stepTitle] = stepContent[decision];
+      } else if (!decision && !('toekenning' in stepContent) && stepContent) {
+        stepsContent[stepTitle] = stepContent as FocusStepContent;
+      }
+    }
   });
 
-  return latestStep;
+  return stepsContent;
 }
 
-export function findStepsWithLabels({
-  productType,
-  productTitle,
-  steps,
-  decision,
-  contentLabels,
-}: {
-  productType: FocusProduct['soortProduct'];
-  productTitle: FocusProduct['naam'];
-  steps: FocusProduct['processtappen'];
-  decision?: DecisionFormatted;
-  contentLabels: LabelData;
-}) {
-  const stepsWithLabels: Info[] = processSteps
-    .map(step => {
-      const hasStepData = step in steps && steps[step] !== null;
-      const hasLabelData = !!contentLabels[productType][productTitle][step];
-
-      if (hasStepData && hasLabelData) {
-        const stepLabels = contentLabels[productType][productTitle][step];
-        if (
-          stepLabels &&
-          stepLabels.isDecisionInfo &&
-          decision &&
-          stepLabels[decision]
-        ) {
-          return stepLabels[decision];
-        }
-      }
-      return null;
-    })
-    .filter((step): step is Info => step !== null);
-
-  return stepsWithLabels;
+function normalizeFocusSourceProductStep(
+  [stepTitle, stepData]: [StepTitle, FocusProductStepFromSource],
+  contentDocumentTitles: DocumentTitles
+) {
+  const stepNormalized: FocusProductStep = {
+    id: `step-${stepTitle}`,
+    title: stepTitle,
+    documents:
+      stepData.document.map(sourceDocument =>
+        formatFocusDocument(
+          stepData.datum,
+          sourceDocument,
+          contentDocumentTitles,
+          'PDF'
+        )
+      ) || [],
+    datePublished: stepData.datum,
+    aantalDagenHerstelTermijn:
+      stepTitle === 'herstelTermijn' && stepData.aantalDagenHerstelTermijn
+        ? parseInt(stepData.aantalDagenHerstelTermijn, 10)
+        : 0,
+  };
+  return stepNormalized;
 }
 
-export function normalizeFocusSourceProduct(item: FocusProductFromSource, titleTranslations: Record<FocusProductFromSource['naam'], string>) {
+export function normalizeFocusSourceProduct(
+  item: FocusProductFromSource,
+  titleTranslations: Record<FocusProductFromSource['naam'], string>,
+  contentDocumentTitles: DocumentTitles
+) {
   const processSteps = item.processtappen;
-  const latestStep = getLatestStep(processSteps);
-  const steps = Object.entries(item.processtappen).filter(
-      ([stepTitle, stepData]) => stepData !== null // TODO: Make explicit filter TS typing
-    ).map((stepEntry) => {
-      const [stepTitle, stepData]: [StepTitle, FocusProductStepFromSource] = stepEntry;
-      const stepNormalized: FocusProductStep = {
-        title: stepTitle,
-        documents: stepData.document.map(sourceDocument => formatFocusDocument(stepData.datum, sourceDocument, 'PDF')) || [],
-        datePublished: stepData.datum,
-      }
-      return stepNormalized;
-    })
+
+  const steps = Object.entries(item.processtappen)
+    .filter(
+      (stepEntry): stepEntry is [StepTitle, FocusProductStepFromSource] =>
+        stepEntry[1] !== null
+    )
+    .map(step => normalizeFocusSourceProductStep(step, contentDocumentTitles));
+
+  const latestStep = getLatestStep(steps);
+
   return {
     id: `${item._id}-${latestStep}`,
     title: titleTranslations[item.naam] || item.naam,
     type: item.soortProduct,
-    decision: item.typeBesluit ? getDecision(item.typeBesluit)
+    decision: item.typeBesluit ? getDecision(item.typeBesluit) : undefined,
     steps,
     datePublished: processSteps[latestStep]?.datum || '',
+    dateStart: processSteps.aanvraag?.datum || '',
     dienstverleningstermijn: item.dienstverleningstermijn,
     inspanningsperiode: item.inspanningsperiode,
   };
+}
+
+export function fillStepContent(
+  product: FocusProduct,
+  stepData: FocusProductStep,
+  stepContent: FocusStepContent
+): FocusItemStep {
+  const additionalInformationStep = product.steps.find(
+    step => step.title === 'herstelTermijn'
+  );
+
+  let aantalDagenHerstelTermijn = 0;
+  if (additionalInformationStep) {
+    aantalDagenHerstelTermijn =
+      additionalInformationStep.aantalDagenHerstelTermijn || 0;
+  }
+
+  // deadline corresponding to the 'inBehandeling' step.
+  const decisionDeadline1 = calculateDecisionDeadline(
+    product.dateStart,
+    product.dienstverleningstermijn,
+    product.inspanningsperiode,
+    0
+  );
+
+  // deadline for the Municiaplity corresponding to the 'herstelTermijn' step.
+  const decisionDeadline2 = calculateDecisionDeadline(
+    product.dateStart,
+    product.dienstverleningstermijn,
+    product.inspanningsperiode,
+    aantalDagenHerstelTermijn
+  );
+
+  // deadline for the Client (Civilian) corresponding to the 'herstelTermijn' step.
+  const userActionDeadline = calculateUserActionDeadline(
+    stepData.datePublished,
+    aantalDagenHerstelTermijn
+  );
+
+  const customData = {
+    decisionDeadline1,
+    decisionDeadline2,
+    userActionDeadline,
+  };
+
+  return Object.assign({}, stepData, {
+    title: stepContent.title(product, customData),
+    description: stepContent.description(product, customData),
+    status: stepContent.status,
+    isLastActive: false,
+    isChecked: false,
+  });
+}
+
+// This function transforms the source data from the api into readable/presentable messages for the client.
+export function transformFocusProduct(
+  product: FocusProduct,
+  contentLabels: LabelData
+): FocusItem {
+  const stepsContent = findStepsContent(product, contentLabels);
+  const steps = product.steps
+    .map(stepData => {
+      const stepContent = stepsContent[stepData.title];
+      if (stepContent) {
+        return fillStepContent(product, stepData, stepContent);
+      }
+      return null;
+    })
+    .filter((stepData): stepData is FocusItemStep => stepData !== null);
+
+  const productSanitized = omit(product, [
+    'steps',
+    'dienstverleningstermijn',
+    'inspanningsperiode',
+  ]);
+
+  return Object.assign(productSanitized, { steps });
 }

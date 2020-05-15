@@ -1,10 +1,9 @@
 import {
-  RoutesByproductType,
   StepTitle,
   RequestStatus,
   LabelData,
+  ProductTitle,
 } from './focus-types';
-import { AppRoutes } from '../../../universal/config';
 
 export const stepLabels: Record<StepTitle, RequestStatus> = {
   aanvraag: 'Aanvraag',
@@ -22,33 +21,23 @@ export const processSteps: StepTitle[] = [
   'beslissing',
 ];
 
-export const ProductTitles = {
-  Bijstandsuitkering: 'Levensonderhoud',
-  Stadspas: 'Stadspas',
-  BijzondereBijstand: 'Bijzondere bijstand',
-};
-
 export const stepStatusLabels = stepLabels;
 export const DAYS_KEEP_RECENT = 28;
 
 // NOTE: Possibly deprecated because it seems document titles actually contain meaningful names in the latest api response.
-export const contentDocumentTitles: { [originalTitle: string]: string } = {
+export const contentDocumentTitleTranslations: {
+  [originalTitle: string]: string;
+} = {
   'LO: Aanvraag': 'Aanvraag bijstandsuitkering',
   'LO: Besluit': 'Besluit aanvraag bijstandsuitkering',
   'LO: In behandeling': 'Uw aanvraag is in behandeling genomen',
   'LO: Herstel': 'Verzoek om aanvullende informatie van u',
 };
 
-export const AppRoutesByproductType: RoutesByproductType = {
-  Participatiewet: {
-    Levensonderhoud: AppRoutes['INKOMEN/BIJSTANDSUITKERING'],
-  },
-  Minimafonds: {
-    Stadspas: AppRoutes['INKOMEN/STADSPAS'],
-  },
-  'Bijzondere Bijstand': {
-    'Bijzondere Bijstand': AppRoutes['INKOMEN/BIJZONDERE_BIJSTAND'],
-  },
+export const contentProductTitleTranslations: {
+  [sourceProductTitle in ProductTitle]: string;
+} = {
+  Levensonderhoud: 'Bijstandsuitkering',
 };
 
 export const FocusExternalUrls = {
@@ -63,12 +52,6 @@ export const FocusExternalUrls = {
   StadsPas: 'https://www.amsterdam.nl/stadspas',
 };
 
-export const productTypes = {
-  Participatiewet: 'Participatiewet',
-  'Bijzondere Bijstand': 'Bijzondere Bijstand',
-  Minimafonds: 'Minimafonds',
-};
-
 /**
  * A library of messages and titles with which we construct the information shown to the client */
 export const contentLabels: LabelData = {
@@ -76,16 +59,16 @@ export const contentLabels: LabelData = {
     Levensonderhoud: {
       aanvraag: {
         notification: {
-          title: data =>
-            `${data.productTitleTranslated}: Wij hebben uw aanvraag ontvangen`,
-          description: data =>
-            `Wij hebben uw aanvraag voor een bijstandsuitkering ontvangen op ${data.dateStart}.`,
+          title: product =>
+            `${product.title}: Wij hebben uw aanvraag ontvangen`,
+          description: product =>
+            `Wij hebben uw aanvraag voor een bijstandsuitkering ontvangen op ${product.dateStart}.`,
         },
-        title: data => data.productTitleTranslated,
+        title: product => product.title,
         status: stepLabels.aanvraag,
-        description: data =>
+        description: product =>
           `
-          <p>U hebt op ${data.dateStart} een bijstandsuitkering aangevraagd.</p>
+          <p>U hebt op ${product.dateStart} een bijstandsuitkering aangevraagd.</p>
           <p>
             <a
               href=${FocusExternalUrls.BijstandsUitkeringAanvragen}
@@ -98,18 +81,17 @@ export const contentLabels: LabelData = {
       },
       inBehandeling: {
         notification: {
-          title: data =>
-            `${data.productTitleTranslated}: Wij behandelen uw aanvraag`,
-          description: data =>
-            `Wij hebben uw aanvraag voor een bijstandsuitkering in behandeling genomen op ${data.datePublished}.`,
+          title: product => `${product.title}: Wij behandelen uw aanvraag`,
+          description: product =>
+            `Wij hebben uw aanvraag voor een bijstandsuitkering in behandeling genomen op ${product.datePublished}.`,
         },
-        title: data => data.productTitleTranslated,
+        title: product => product.title,
         status: stepLabels.inBehandeling,
-        description: data =>
+        description: (product, customData) =>
           `
           <p>
             Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u
-            nog extra informatie moet opsturen. U ontvangt vóór ${data.decisionDeadline1} ons besluit.
+            nog extra informatie moet opsturen. U ontvangt vóór ${customData.decisionDeadline1} ons besluit.
           </p>
           <p>
             Lees meer over uw
@@ -130,19 +112,19 @@ export const contentLabels: LabelData = {
       },
       herstelTermijn: {
         notification: {
-          title: data => `${data.productTitleTranslated}: Neem actie`,
-          description: data =>
+          title: product => `${product.title}: Neem actie`,
+          description: product =>
             'Er is meer informatie en tijd nodig om uw aanvraag voor een bijstandsuitkering te behandelen.',
         },
-        title: data => data.productTitleTranslated,
+        title: product => product.title,
         status: stepLabels.herstelTermijn,
-        description: data =>
+        description: (product, customData) =>
           `
           <p>
             Wij hebben meer informatie en tijd nodig om uw aanvraag te
             verwerken. Bekijk de brief voor meer details. U moet de extra
-            informatie vóór ${data.userActionDeadline} opsturen. Dan ontvangt u
-            vóór ${data.decisionDeadline2} ons besluit.
+            informatie vóór ${customData.userActionDeadline} opsturen. Dan ontvangt u
+            vóór ${customData.decisionDeadline2} ons besluit.
           </p>
           <p>
             Tip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk
@@ -154,26 +136,24 @@ export const contentLabels: LabelData = {
       beslissing: {
         afwijzing: {
           notification: {
-            title: data =>
-              `${data.productTitleTranslated}: Uw aanvraag is afgewezen`,
-            description: data =>
-              `U heeft geen recht op een bijstandsuitkering (besluit: ${data.datePublished}).`,
+            title: product => `${product.title}: Uw aanvraag is afgewezen`,
+            description: product =>
+              `U heeft geen recht op een bijstandsuitkering (besluit: ${product.datePublished}).`,
           },
-          title: data => data.productTitleTranslated,
+          title: product => product.title,
           status: stepLabels.beslissing,
-          description: data =>
+          description: product =>
             'U heeft geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.',
         },
         toekenning: {
           notification: {
-            title: data =>
-              `${data.productTitleTranslated}: Uw aanvraag is toegekend`,
-            description: data =>
-              `U heeft recht op een bijstandsuitkering (besluit: ${data.datePublished}).`,
+            title: product => `${product.title}: Uw aanvraag is toegekend`,
+            description: product =>
+              `U heeft recht op een bijstandsuitkering (besluit: ${product.datePublished}).`,
           },
-          title: data => data.productTitleTranslated,
+          title: product => product.title,
           status: stepLabels.beslissing,
-          description: data =>
+          description: product =>
             `
             <p>
               U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer
@@ -191,18 +171,17 @@ export const contentLabels: LabelData = {
         },
         buitenbehandeling: {
           notification: {
-            title: data =>
-              `${data.productTitleTranslated}: Uw aanvraag is buiten behandeling gesteld`,
-            description: data =>
-              `Uw aanvraag is buiten behandeling gesteld (besluit: ${data.datePublished}).`,
+            title: product =>
+              `${product.title}: Uw aanvraag is buiten behandeling gesteld`,
+            description: product =>
+              `Uw aanvraag is buiten behandeling gesteld (besluit: ${product.datePublished}).`,
           },
-          title: data => data.productTitleTranslated,
+          title: product => product.title,
           status: stepLabels.beslissing,
-          description: data =>
+          description: product =>
             'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
         },
       },
-      bezwaar: null,
     },
   },
   'Bijzondere Bijstand': {},
@@ -210,30 +189,29 @@ export const contentLabels: LabelData = {
     Stadspas: {
       aanvraag: {
         notification: {
-          title: data =>
-            `${data.productTitleTranslated}: Wij hebben uw aanvraag ontvangen`,
-          description: data =>
-            `Wij hebben uw aanvraag voor een Stadspas ontvangen op ${data.dateStart}.`,
+          title: product =>
+            `${product.title}: Wij hebben uw aanvraag ontvangen`,
+          description: product =>
+            `Wij hebben uw aanvraag voor een Stadspas ontvangen op ${product.dateStart}.`,
         },
-        title: data => data.productTitleTranslated,
+        title: product => product.title,
         status: stepLabels.aanvraag,
-        description: data =>
-          `U hebt op ${data.datePublished} een Stadspas aangevraagd.`,
+        description: product =>
+          `U hebt op ${product.datePublished} een Stadspas aangevraagd.`,
       },
       inBehandeling: {
         notification: {
-          title: data =>
-            `${data.productTitleTranslated}: Wij behandelen uw aanvraag`,
-          description: data =>
-            `Wij hebben uw aanvraag voor een Stadspas in behandeling genomen op ${data.datePublished}.`,
+          title: product => `${product.title}: Wij behandelen uw aanvraag`,
+          description: product =>
+            `Wij hebben uw aanvraag voor een Stadspas in behandeling genomen op ${product.datePublished}.`,
         },
-        title: data => data.productTitleTranslated,
+        title: product => product.title,
         status: stepLabels.inBehandeling,
-        description: data =>
+        description: (product, customData) =>
           `
           <p>
             Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt
-            vóór ${data.decisionDeadline1} ons besluit.
+            vóór ${customData.decisionDeadline1} ons besluit.
           </p>
           <p>
             <strong>
@@ -248,19 +226,19 @@ export const contentLabels: LabelData = {
       },
       herstelTermijn: {
         notification: {
-          title: data => `${data.productTitleTranslated}: Neem actie`,
-          description: data =>
+          title: product => `${product.title}: Neem actie`,
+          description: product =>
             'Er is meer informatie en tijd nodig om uw aanvraag voor een Stadspas te behandelen.',
         },
-        title: data => data.productTitleTranslated,
+        title: product => product.title,
         status: stepLabels.herstelTermijn,
-        description: data =>
+        description: (product, customData) =>
           `
           <p>
             Wij hebben meer informatie en tijd nodig om uw aanvraag te
             verwerken. Bekijk de brief voor meer details. U moet de extra
-            informatie vóór {data.userActionDeadline} opsturen. Dan ontvangt u
-            vóór ${data.decisionDeadline2} ons besluit.
+            informatie vóór ${customData.userActionDeadline} opsturen. Dan ontvangt u
+            vóór ${customData.decisionDeadline2} ons besluit.
           </p>
           <p>
             Tip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk
@@ -272,26 +250,24 @@ export const contentLabels: LabelData = {
       beslissing: {
         afwijzing: {
           notification: {
-            title: data =>
-              `${data.productTitleTranslated}: Uw aanvraag is afgewezen`,
-            description: data =>
-              `U heeft geen recht op een Stadspas (besluit: ${data.datePublished}).`,
+            title: product => `${product.title}: Uw aanvraag is afgewezen`,
+            description: product =>
+              `U heeft geen recht op een Stadspas (besluit: ${product.datePublished}).`,
           },
-          title: data => data.productTitleTranslated,
+          title: product => product.title,
           status: stepLabels.beslissing,
-          description: data =>
+          description: product =>
             'U heeft geen recht op een Stadspas. Bekijk de brief voor meer details.',
         },
         toekenning: {
           notification: {
-            title: data =>
-              `${data.productTitleTranslated}: Uw aanvraag is toegekend`,
-            description: data =>
+            title: product => `${product.title}: Uw aanvraag is toegekend`,
+            description: product =>
               'U heeft recht op een Stadspas. Bekijk de brief voor meer details.',
           },
-          title: data => data.productTitleTranslated,
+          title: product => product.title,
           status: stepLabels.beslissing,
-          description: data =>
+          description: product =>
             `
             <p>
               U heeft recht op een Stadspas. Bekijk de brief voor meer details.
@@ -305,18 +281,17 @@ export const contentLabels: LabelData = {
         },
         buitenbehandeling: {
           notification: {
-            title: data =>
-              `${data.productTitleTranslated}: Uw aanvraag is buiten behandeling gesteld`,
-            description: data =>
-              `Uw aanvraag is buiten behandeling gesteld (besluit: ${data.datePublished}).`,
+            title: product =>
+              `${product.title}: Uw aanvraag is buiten behandeling gesteld`,
+            description: product =>
+              `Uw aanvraag is buiten behandeling gesteld (besluit: ${product.datePublished}).`,
           },
-          title: data => data.productTitleTranslated,
+          title: product => product.title,
           status: stepLabels.beslissing,
-          description: data =>
+          description: product =>
             'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
         },
       },
-      bezwaar: null,
     },
   },
 };

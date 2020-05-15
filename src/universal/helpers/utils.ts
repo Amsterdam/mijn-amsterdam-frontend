@@ -38,16 +38,11 @@ export function range(a: number, b: number) {
   );
 }
 
-export function omit(obj: Record<string, any>, fields: string[]) {
-  const shallowCopy = {
-    ...obj,
-  };
-  for (let i = 0; i < fields.length; i++) {
-    const key = fields[i];
-    delete shallowCopy[key];
-  }
-  return shallowCopy;
-}
+export const omit = <T, U extends keyof T>(obj: T, keys: U[]): Omit<T, U> =>
+  (Object.keys(obj) as U[]).reduce(
+    (acc, curr) => (keys.includes(curr) ? acc : { ...acc, [curr]: obj[curr] }),
+    {} as Omit<T, U>
+  );
 
 export function jsonCopy(data: any) {
   return JSON.parse(JSON.stringify(data));
