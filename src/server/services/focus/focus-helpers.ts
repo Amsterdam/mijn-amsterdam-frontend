@@ -19,9 +19,14 @@ import {
   StepTitle,
   TextPartContents,
 } from './focus-types';
+import { Chapters, AppRoutes } from '../../../universal/config';
+import { MyCase } from '../../../universal/types/App.types';
 
 /** Checks if an item returned from the api is considered recent */
-export function isRecentItem(steps: FocusProductStep[], compareDate: Date) {
+export function isRecentItem(
+  steps: Array<{ title: string; datePublished: string }>,
+  compareDate: Date
+) {
   return steps.some(
     step =>
       step.title === 'beslissing' &&
@@ -257,4 +262,55 @@ export function transformFocusProduct(
   ]);
 
   return Object.assign(productSanitized, { steps });
+}
+
+export function transformFocusProductNotification(
+  product: FocusProduct,
+  contentLabels: LabelData
+) {
+  const latestStepTitle = getLatestStep(product.steps);
+  const stepsContent = findStepsContent(product, contentLabels)[
+    latestStepTitle
+  ];
+  const titleTransform = stepsContent?.notification.title;
+  const descriptionTransform = stepsContent?.notification.title;
+  const linkTitleTransform = stepsContent?.notification.linkTitle;
+  const linkToTransform = stepsContent?.notification.linkTo;
+
+  return {
+    id: `${product.id}-notification`,
+    datePublished: product.datePublished,
+    chapter: Chapters.INKOMEN,
+    title: titleTransform
+      ? titleTransform(product)
+      : `Update: ${product.title} aanvraag.`,
+    description: descriptionTransform
+      ? descriptionTransform(product)
+      : `Er zijn updates in uw ${product.title} aanvraag.`,
+    link: {
+      to: linkToTransform
+        ? linkToTransform(product)
+        : AppRoutes['INKOMEN/TOZO'],
+      title: linkTitleTransform
+        ? linkTitleTransform(product)
+        : 'Bekijk uw Tozo status',
+    },
+  };
+}
+
+export function transformFocusProductRecentCase(product: {
+  id: string;
+  datePublished: string;
+  title: string;
+}): MyCase {
+  return {
+    id: `${product.id}-case`,
+    datePublished: product.datePublished,
+    chapter: Chapters.INKOMEN,
+    title: product.title,
+    link: {
+      to: AppRoutes['INKOMEN/TOZO'],
+      title: 'Meer informatie',
+    },
+  };
 }

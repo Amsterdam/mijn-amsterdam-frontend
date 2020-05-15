@@ -93,8 +93,8 @@ export interface FocusStepContent {
   notification: {
     title: TextPartContents;
     description: TextPartContents;
-    linkTitle?: string;
-    linkTo?: string;
+    linkTitle?: TextPartContents;
+    linkTo?: TextPartContents;
   };
 }
 

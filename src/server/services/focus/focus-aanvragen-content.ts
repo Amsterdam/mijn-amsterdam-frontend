@@ -1,9 +1,5 @@
-import {
-  StepTitle,
-  RequestStatus,
-  LabelData,
-  ProductTitle,
-} from './focus-types';
+import { DocumentTitles } from './focus-types';
+import { StepTitle, RequestStatus, LabelData } from './focus-types';
 
 export const stepLabels: Record<StepTitle, RequestStatus> = {
   aanvraag: 'Aanvraag',
@@ -25,18 +21,14 @@ export const stepStatusLabels = stepLabels;
 export const DAYS_KEEP_RECENT = 28;
 
 // NOTE: Possibly deprecated because it seems document titles actually contain meaningful names in the latest api response.
-export const contentDocumentTitleTranslations: {
-  [originalTitle: string]: string;
-} = {
+export const contentDocumentTitleTranslations: DocumentTitles = {
   'LO: Aanvraag': 'Aanvraag bijstandsuitkering',
   'LO: Besluit': 'Besluit aanvraag bijstandsuitkering',
   'LO: In behandeling': 'Uw aanvraag is in behandeling genomen',
   'LO: Herstel': 'Verzoek om aanvullende informatie van u',
 };
 
-export const contentProductTitleTranslations: {
-  [sourceProductTitle in ProductTitle]: string;
-} = {
+export const contentProductTitleTranslations: DocumentTitles = {
   Levensonderhoud: 'Bijstandsuitkering',
 };
 
