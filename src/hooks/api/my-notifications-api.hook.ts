@@ -73,12 +73,15 @@ export default function useMyNotificationsApi({
           addChapterNamespaceToId('MILIEUZONE')
         ),
         // Focus TOZO
-        ...(FOCUS_TOZO.data?.notifications
-          ? (Object.values(FOCUS_TOZO.data.notifications)
-              .flatMap(x => x)
-              .filter(
-                notification => notification !== null
-              ) as MyNotification[])
+        ...(FOCUS_TOZO.data?.length
+          ? FOCUS_TOZO.data.flatMap(
+              item =>
+                Object.values(item.notifications)
+                  .flatMap(x => x)
+                  .filter(
+                    notification => notification !== null
+                  ) as MyNotification[]
+            )
           : []),
       ].sort(dateSort('datePublished', 'desc')),
     [

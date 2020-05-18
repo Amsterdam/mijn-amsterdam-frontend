@@ -87,8 +87,11 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
   const { data: focusData, ...rest } = FOCUS;
   // At the time of writing we only show recentCases from the Focus API.
   const items =
-    FOCUS_TOZO && FOCUS_TOZO.data?.isRecent
-      ? [FOCUS_TOZO.data, ...focusData.recentCases]
+    FOCUS_TOZO && FOCUS_TOZO.data?.length
+      ? [
+          ...FOCUS_TOZO.data?.filter(item => item.isRecent),
+          ...focusData.recentCases,
+        ]
       : focusData.recentCases;
 
   const MY_CASES = {
@@ -110,6 +113,8 @@ export function useAppState(value?: any): Omit<AppState, 'SESSION'> {
   const MY_CHAPTERS = getMyChapters({
     WMO,
     FOCUS,
+    FOCUS_TOZO,
+    FOCUS_SPECIFICATIONS,
     ERFPACHT,
     GARBAGE,
     BRP,

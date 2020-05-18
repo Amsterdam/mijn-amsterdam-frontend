@@ -101,10 +101,7 @@ describe('Chapter: Inkomen en Stadspas', () => {
   });
 
   it('Should be able to navigate to a detail page', () => {
-    selectComponent(
-      'SectionCollapsible_SectionCollapsible',
-      ':eq(1) tbody tr a:first'
-    ).click();
+    cy.get('a[href*="inkomen-en-stadspas/stadspas/2-2"]').click();
   });
 
   it('Should display the title and a link to go back', () => {

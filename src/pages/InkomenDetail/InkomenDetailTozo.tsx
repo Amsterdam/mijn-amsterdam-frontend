@@ -13,12 +13,22 @@ import { altDocumentContent } from 'data-formatting/focus';
 import styles from './InkomenDetail.module.scss';
 import Linkd from '../../components/Button/Button';
 import { ExternalUrls } from '../../config/App.constants';
+import useRouter from 'use-react-router';
 
 export default () => {
   const {
-    FOCUS_TOZO: { data: TozoItem, isError, isLoading },
+    FOCUS_TOZO: { data: tozoItems, isError, isLoading },
   } = useContext(AppContext);
 
+  const {
+    match: {
+      params: { id },
+    },
+  } = useRouter();
+
+  const TozoItem = tozoItems?.length
+    ? tozoItems.find(item => item.id === id)
+    : null;
   const noContent = !isLoading && !TozoItem;
 
   let title = 'Onbekend item';
