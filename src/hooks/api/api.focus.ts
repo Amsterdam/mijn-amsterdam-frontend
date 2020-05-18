@@ -38,7 +38,7 @@ export type FocusCombinedApiState = ApiState<FocusCombinedResponse>;
 export type FocusCombinedSpecificationsApiState = ApiState<
   Omit<FocusCombined, 'tozodocumenten'>
 >;
-export type FocusTozoApiState = ApiState<FocusTozo | null>;
+export type FocusTozoApiState = ApiState<FocusTozo[] | null>;
 
 export interface FocusData {
   items: FocusItem[];
