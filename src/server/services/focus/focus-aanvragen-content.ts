@@ -1,5 +1,6 @@
 import { DocumentTitles } from './focus-types';
 import { StepTitle, RequestStatus, LabelData } from './focus-types';
+import { AppRoutes } from '../../../universal/config/routing';
 
 export const stepLabels: Record<StepTitle, RequestStatus> = {
   aanvraag: 'Aanvraag',
@@ -46,6 +47,10 @@ export const FocusExternalUrls = {
 export const contentLabels: LabelData = {
   Participatiewet: {
     Bijstandsuitkering: {
+      link: {
+        to: AppRoutes['INKOMEN/BIJSTANDSUITKERING'],
+        title: 'Meer',
+      },
       aanvraag: {
         notification: {
           title: product =>
@@ -175,6 +180,10 @@ export const contentLabels: LabelData = {
   },
   Minimafonds: {
     Stadspas: {
+      link: {
+        to: AppRoutes['INKOMEN/STADSPAS'],
+        title: 'Meer informatie',
+      },
       aanvraag: {
         notification: {
           title: product =>

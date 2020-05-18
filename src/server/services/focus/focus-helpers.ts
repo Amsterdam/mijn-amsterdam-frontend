@@ -3,6 +3,7 @@ import { AppRoutes, Chapters, API_BASE_PATH } from '../../../universal/config';
 import { defaultDateFormat, omit } from '../../../universal/helpers';
 import { GenericDocument, MyCase } from '../../../universal/types';
 import { DAYS_KEEP_RECENT, processSteps } from './focus-aanvragen-content';
+import { LinkProps } from '../../../universal/types/App.types';
 import {
   Decision,
   DecisionFormatted,
@@ -103,7 +104,10 @@ export function findStepsContent(
   product: FocusProduct,
   contentLabels: LabelData
 ) {
-  const stepsContent: { [stepTitle in StepTitle]?: FocusStepContent } = {};
+  const stepsContent: { [stepTitle in StepTitle]?: FocusStepContent } & {
+    link?: LinkProps;
+  } = {};
+
   const labelContent = contentLabels[product.type][product.title];
 
   processSteps.forEach(stepTitle => {
@@ -123,6 +127,10 @@ export function findStepsContent(
       }
     }
   });
+
+  if ('link' in labelContent) {
+    stepsContent.link = labelContent.link;
+  }
 
   return stepsContent;
 }
@@ -254,8 +262,8 @@ export function transformFocusProduct(
   ]);
 
   const link = {
-    title: 'Meer informatie',
-    to: AppRoutes['INKOMEN'],
+    title: stepsContent.link?.title || 'Meer informatie',
+    to: stepsContent.link?.to || AppRoutes['INKOMEN'],
   };
 
   return Object.assign({}, productSanitized, { steps, link });

@@ -106,6 +106,7 @@ export interface ProductStepLabels {
   herstelTermijn?: FocusStepContent;
   bezwaar?: FocusStepContent;
   beslissing?: FocusStepContentDecision;
+  link?: LinkProps;
 }
 
 export interface LabelData {
