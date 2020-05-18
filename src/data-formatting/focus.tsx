@@ -1162,9 +1162,10 @@ function formatIncomeSpecificationNotification(
 export function formatFocusCombinedSpecifications(
   combinedResponseData: FocusCombinedResponse
 ): Omit<FocusCombined, 'tozodocumenten'> {
-  const {
-    content: { jaaropgaven = [], uitkeringsspecificaties = [] },
-  } = combinedResponseData;
+  const { content } = combinedResponseData;
+
+  const jaaropgaven = content?.jaaropgaven || [];
+  const uitkeringsspecificaties = content?.uitkeringsspecificaties || [];
 
   const uitkeringsspecificatiesFormatted = uitkeringsspecificaties
     .sort(dateSort('datePublished', 'desc'))

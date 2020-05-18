@@ -93,7 +93,7 @@ function useFocusCombinedTozoApi(
       errorMessage: '',
       data: FeatureToggle.tozoActive
         ? formatFocusTozo({
-            documenten: apiCombined.data.content.tozodocumenten || [],
+            documenten: apiCombined.data.content?.tozodocumenten || [],
             aanvragen: apiAanvragen.rawData,
           })
         : null,
