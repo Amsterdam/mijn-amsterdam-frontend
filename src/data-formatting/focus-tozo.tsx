@@ -31,13 +31,22 @@ export const TOZO_UITKERING_PRODUCT_TITLE: TozoProductTitle =
   'Tozo Levensonderhoud (voor ondernemers)';
 
 const DocumentTitles: Record<string, string> = {
+  // Aanvraag
   'E-AANVR-TOZO': 'Brief aanvraag',
   'E-AANVR-KBBZ': 'Brief aanvraag',
+
+  // Voorschot
   'Voorschot Bbz Corona regeling (Eenm.)': 'Brief betaling voorschot',
   'Bbz Toekennen voorschot Tozo via batch': 'Brief betaling voorschot',
+
+  // Uitkering
   'Hersteltermijn uitkering Tozo': 'Brief meer informatie',
   'Afwijzen uitkering Tozo': 'Brief besluit uitkering',
   'Toekennen uitkering Tozo': 'Brief besluit uitkering',
+  'Tozo Toekennen': 'Brief besluit uitkering',
+  'Tozo Hersteltermijn': 'Brief meer informatie',
+
+  // Lening
   'Hersteltermijn lening Tozo': 'Brief meer informatie',
   'Afwijzen lening Tozo': 'Brief besluit lening',
   'Toekennen lening Tozo': 'Brief besluit lening',
