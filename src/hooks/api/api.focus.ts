@@ -120,7 +120,10 @@ function useFocusAanvragenApi(): FocusApiState {
   );
 
   return useMemo(() => {
-    const { items, notifications } = formatFocusItems(api.data, new Date());
+    const { items, notifications } = formatFocusItems(
+      api.data || [],
+      new Date()
+    );
     const recentCases = items.filter(item => item.isRecent);
 
     return {
