@@ -47,7 +47,10 @@ const VoorschotLabels: ProductStepLabels = {
         },
         description: product =>
           `Wij hebben een voorschot naar uw rekening overgemaakt.`,
-        linkTitle: product => 'Bekijk uw Tozo status',
+        link: product => ({
+          title: 'Bekijk uw Tozo status',
+          to: '',
+        }),
       },
       title: product => product.title,
       status: 'Voorschot',
@@ -66,7 +69,10 @@ const UitkeringLabels: ProductStepLabels = {
       title: product => `${product.title}: meer informatie nodig`,
       description: product =>
         `Er is meer informatie en tijd nodig om uw aanvraag te behandelen. `,
-      linkTitle: product => 'Bekijk uw Tozo status',
+      link: product => ({
+        title: 'Bekijk uw Tozo status',
+        to: '',
+      }),
     },
     title: product => product.title,
     status: stepLabels.herstelTermijn,
@@ -82,7 +88,10 @@ const UitkeringLabels: ProductStepLabels = {
         title: product => `${product.title}: uw aanvraag is afgewezen`,
         description: product =>
           `U hebt geen recht op een ${product.title} (besluit: ${product.datePublished}).`,
-        linkTitle: product => 'Bekijk uw Tozo status',
+        link: product => ({
+          title: 'Bekijk uw Tozo status',
+          to: '',
+        }),
       },
       title: product => product.title,
       status: stepLabels.beslissing,
@@ -97,7 +106,10 @@ const UitkeringLabels: ProductStepLabels = {
         title: product => `${product.title}: uw aanvraag is toegekend`,
         description: product =>
           `U hebt recht op een ${product.title} (besluit: ${product.datePublished}).`,
-        linkTitle: product => 'Bekijk uw Tozo status',
+        link: product => ({
+          title: 'Bekijk uw Tozo status',
+          to: '',
+        }),
       },
       title: product => product.title,
       status: stepLabels.beslissing,
@@ -113,7 +125,10 @@ const UitkeringLabels: ProductStepLabels = {
           `${product.title}: uw aanvraag is buiten behandeling gesteld`,
         description: product =>
           `Uw aanvraag is buiten behandeling gesteld (besluit: ${product.datePublished!}).`,
-        linkTitle: product => 'Bekijk uw Tozo status',
+        link: product => ({
+          title: 'Bekijk uw Tozo status',
+          to: '',
+        }),
       },
       title: product => product.title,
       status: stepLabels.beslissing,
@@ -129,7 +144,10 @@ const LeningLabels: ProductStepLabels = {
       title: product => `${product.title}: meer informatie nodig`,
       description: product =>
         `Er is meer informatie en tijd nodig om uw aanvraag te behandelen. `,
-      linkTitle: product => 'Bekijk uw Tozo status',
+      link: product => ({
+        title: 'Bekijk uw Tozo status',
+        to: '',
+      }),
     },
     title: product => product.title,
     status: stepLabels.herstelTermijn,
@@ -145,7 +163,10 @@ const LeningLabels: ProductStepLabels = {
         title: product => `${product.title}: uw aanvraag is afgewezen`,
         description: product =>
           `<p>U hebt geen recht op een ${product.title} (besluit: ${product.datePublished}).</p>`,
-        linkTitle: product => 'Bekijk uw Tozo status',
+        link: product => ({
+          title: 'Bekijk uw Tozo status',
+          to: '',
+        }),
       },
       title: product => product.title,
       status: stepLabels.beslissing,
@@ -160,7 +181,10 @@ const LeningLabels: ProductStepLabels = {
         title: product => `${product.title}: uw aanvraag is toegekend`,
         description: product =>
           `U hebt recht op een ${product.title} (besluit: ${product.datePublished}).`,
-        linkTitle: product => 'Bekijk uw Tozo status',
+        link: product => ({
+          title: 'Bekijk uw Tozo status',
+          to: '',
+        }),
       },
       title: product => product.title,
       status: stepLabels.beslissing,
@@ -176,7 +200,10 @@ const LeningLabels: ProductStepLabels = {
           `${product.title}: uw aanvraag is buiten behandeling gesteld`,
         description: product =>
           `Uw aanvraag is buiten behandeling gesteld (besluit: ${product.datePublished}).`,
-        linkTitle: product => 'Bekijk uw Tozo status',
+        link: product => ({
+          title: 'Bekijk uw Tozo status',
+          to: '',
+        }),
       },
       title: product => product.title,
       status: stepLabels.beslissing,

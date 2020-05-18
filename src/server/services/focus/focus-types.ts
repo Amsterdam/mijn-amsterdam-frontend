@@ -83,6 +83,7 @@ export type DecisionFormatted =
   | 'buitenbehandeling';
 
 export type TextPartContents = (data: FocusProduct, customData?: any) => string;
+export type LinkContents = (data: FocusProduct, customData?: any) => LinkProps;
 
 export interface FocusStepContent {
   title: TextPartContents;
@@ -91,8 +92,7 @@ export interface FocusStepContent {
   notification: {
     title: TextPartContents;
     description: TextPartContents;
-    linkTitle?: TextPartContents;
-    linkTo?: TextPartContents;
+    link?: LinkContents;
   };
 }
 
@@ -106,7 +106,7 @@ export interface ProductStepLabels {
   herstelTermijn?: FocusStepContent;
   bezwaar?: FocusStepContent;
   beslissing?: FocusStepContentDecision;
-  link?: LinkProps;
+  link?: LinkContents;
 }
 
 export interface LabelData {
@@ -132,6 +132,9 @@ export interface FocusItem {
   id: string;
   datePublished: string;
   dateStart: string;
+  displayDateStart: string;
+  displayDatePublished: string;
+  status: RequestStatus;
   title: string;
   steps: FocusItemStep[];
   link: LinkProps;

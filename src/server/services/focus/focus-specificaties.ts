@@ -32,7 +32,7 @@ export const focusInkomenSpecificatieTypes: {
 
 export interface FocusInkomenSpecificatie
   extends FocusInkomenSpecificatieFromSource {
-  displayDate: string;
+  displayDatePublished: string;
   documentUrl: ReactNode;
   notification?: MyNotification;
 }
@@ -83,10 +83,10 @@ function transformIncomSpecificationItem(
   item: FocusInkomenSpecificatieFromSource,
   type: 'jaaropgave' | 'uitkeringsspecificatie'
 ): FocusInkomenSpecificatie {
-  const displayDate = defaultDateFormat(item.datePublished);
+  const displayDatePublished = defaultDateFormat(item.datePublished);
   return {
     ...item,
-    displayDate,
+    displayDatePublished,
     documentUrl: `<a
         href=${`${API_BASE_PATH}/${item.url}`}
         rel="external noopener noreferrer"

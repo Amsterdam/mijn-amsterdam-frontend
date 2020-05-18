@@ -30,13 +30,13 @@ import classnames from 'classnames';
 export const specificationsTableDisplayProps = {
   title: 'Omschrijving',
   type: 'Regeling',
-  displayDate: 'Datum',
+  displayDatePublished: 'Datum',
   documentUrl: 'Documenten',
 };
 
 export const annualStatementsTableDisplayProps = {
   title: 'Omschrijving',
-  displayDate: 'Datum',
+  displayDatePublished: 'Datum',
   documentUrl: 'Documenten',
 };
 

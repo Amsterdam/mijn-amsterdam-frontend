@@ -128,8 +128,8 @@ export function findStepsContent(
     }
   });
 
-  if ('link' in labelContent) {
-    stepsContent.link = labelContent.link;
+  if (labelContent.link) {
+    stepsContent.link = labelContent.link(product);
   }
 
   return stepsContent;
@@ -245,10 +245,11 @@ export function transformFocusProduct(
 ): FocusItem {
   const stepsContent = findStepsContent(product, contentLabels);
 
-  const steps = product.steps
-    .map(stepData => {
-      const stepContent = stepsContent[stepData.title];
-      if (stepContent) {
+  const steps = processSteps
+    .map(stepTitle => {
+      const stepContent = stepsContent[stepTitle];
+      const stepData = product.steps.find(step => step.title === stepTitle);
+      if (stepContent && stepData) {
         return fillStepContent(product, stepData, stepContent);
       }
       return null;
@@ -266,7 +267,13 @@ export function transformFocusProduct(
     to: stepsContent.link?.to || AppRoutes['INKOMEN'],
   };
 
-  return Object.assign({}, productSanitized, { steps, link });
+  return Object.assign({}, productSanitized, {
+    steps,
+    link,
+    displayDateStart: defaultDateFormat(productSanitized.dateStart),
+    displayDatePublished: defaultDateFormat(productSanitized.datePublished),
+    status: steps[steps.length - 1].status,
+  });
 }
 
 export function transformFocusProductNotification(
@@ -279,8 +286,7 @@ export function transformFocusProductNotification(
   ];
   const titleTransform = stepsContent?.notification.title;
   const descriptionTransform = stepsContent?.notification.title;
-  const linkTitleTransform = stepsContent?.notification.linkTitle;
-  const linkToTransform = stepsContent?.notification.linkTo;
+  const linkTransform = stepsContent?.notification.link;
 
   return {
     id: `${product.id}-notification`,
@@ -292,14 +298,12 @@ export function transformFocusProductNotification(
     description: descriptionTransform
       ? descriptionTransform(product)
       : `Er zijn updates in uw ${product.title} aanvraag.`,
-    link: {
-      to: linkToTransform
-        ? linkToTransform(product)
-        : AppRoutes['INKOMEN/TOZO'],
-      title: linkTitleTransform
-        ? linkTitleTransform(product)
-        : 'Bekijk uw Tozo status',
-    },
+    link: linkTransform
+      ? linkTransform(product)
+      : {
+          to: AppRoutes['INKOMEN/TOZO'],
+          title: 'Bekijk uw Tozo status',
+        },
   };
 }
 

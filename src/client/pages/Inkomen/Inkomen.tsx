@@ -38,13 +38,13 @@ export const incomSpecificationsRouteYearly = generatePath(
 );
 
 const requestsDisplayProps = {
-  dateStart: 'Datum aanvraag',
+  displayDateStart: 'Datum aanvraag',
   status: 'Status',
 };
 
 const decisionsDisplayProps = {
-  dateStart: 'Datum aanvraag',
-  datePublished: 'Datum besluit',
+  displayDateStart: 'Datum aanvraag',
+  displayDatePublished: 'Datum besluit',
 };
 
 export default () => {
@@ -59,9 +59,9 @@ export default () => {
 
   const itemsRequested = useMemo(() => {
     const itemsRequested = aanvragen.filter(
-      item => !item.steps.some(step => step.title === 'beslissing')
+      item => !item.steps.some(step => step.status === 'Besluit')
     );
-    console.log('aanvragen::', aanvragen);
+
     if (
       FocusTozoItem &&
       !FocusTozoItem?.status.isComplete &&
@@ -71,6 +71,7 @@ export default () => {
       item.status = 'In behandeling';
       itemsRequested.push(item);
     }
+
     return addTitleLinkComponent(
       itemsRequested.sort(dateSort('ISODatePublished', 'desc'))
     );
@@ -78,8 +79,9 @@ export default () => {
 
   const itemsDecided = useMemo(() => {
     const itemsDecided = aanvragen.filter(item =>
-      item.steps.some(step => step.title === 'beslissing')
+      item.steps.some(step => step.status === 'Besluit')
     );
+
     if (
       FocusTozoItem &&
       FocusTozoItem?.status.isComplete &&
@@ -87,6 +89,7 @@ export default () => {
     ) {
       itemsDecided.push(FocusTozoItem as any);
     }
+
     return addTitleLinkComponent(
       itemsDecided.sort(dateSort('ISODatePublished', 'desc'))
     );
