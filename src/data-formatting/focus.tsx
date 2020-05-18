@@ -1159,9 +1159,13 @@ function formatIncomeSpecificationNotification(
   };
 }
 
-export function formatFocusCombinedSpecifications({
-  content: { jaaropgaven, uitkeringsspecificaties },
-}: FocusCombinedResponse): Omit<FocusCombined, 'tozodocumenten'> {
+export function formatFocusCombinedSpecifications(
+  combinedResponseData: FocusCombinedResponse
+): Omit<FocusCombined, 'tozodocumenten'> {
+  const {
+    content: { jaaropgaven = [], uitkeringsspecificaties = [] },
+  } = combinedResponseData;
+
   const uitkeringsspecificatiesFormatted = uitkeringsspecificaties
     .sort(dateSort('datePublished', 'desc'))
     .map(formatIncomSpecificationItem);
