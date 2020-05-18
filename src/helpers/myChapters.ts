@@ -9,6 +9,8 @@ function isChapterActive(
   {
     WMO,
     FOCUS,
+    FOCUS_TOZO,
+    FOCUS_SPECIFICATIONS,
     ERFPACHT,
     GARBAGE,
     BRP,
@@ -18,7 +20,15 @@ function isChapterActive(
 ) {
   switch (item.id) {
     case Chapters.INKOMEN:
-      return !FOCUS.isLoading && !!FOCUS.data.items.length;
+      return (
+        (!FOCUS.isLoading && !!FOCUS.data.items.length) ||
+        (!FOCUS_TOZO.isLoading && !!FOCUS_TOZO.data?.length) ||
+        (!FOCUS_SPECIFICATIONS.isLoading &&
+          !!(
+            FOCUS_SPECIFICATIONS.data?.jaaropgaven.length ||
+            FOCUS_SPECIFICATIONS.data?.uitkeringsspecificaties.length
+          ))
+      );
 
     case Chapters.ZORG:
       return !WMO.isLoading && !!WMO.data.length;
@@ -73,6 +83,8 @@ export default function getMyChapters(
   const {
     WMO,
     FOCUS,
+    FOCUS_TOZO,
+    FOCUS_SPECIFICATIONS,
     ERFPACHT,
     GARBAGE,
     BRP,
@@ -83,6 +95,8 @@ export default function getMyChapters(
 
   const wmoIsloading = WMO.isLoading;
   const focusIsloading = FOCUS.isLoading;
+  const focusTozoIsloading = FOCUS_TOZO.isLoading;
+  const focusSpecsIsloading = FOCUS_SPECIFICATIONS.isLoading;
   const erfpachtIsloading = ERFPACHT.isLoading;
   const isFromMokum = isMokum(BRP);
   const brpIsLoading = BRP.isLoading;
@@ -103,6 +117,8 @@ export default function getMyChapters(
     wmoIsloading ||
     brpIsLoading ||
     focusIsloading ||
+    focusTozoIsloading ||
+    focusSpecsIsloading ||
     myAreaIsLoading ||
     erfpachtIsloading ||
     (garbageIsPristine && isFromMokum && hasCentroid);
