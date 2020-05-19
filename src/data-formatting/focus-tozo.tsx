@@ -441,7 +441,7 @@ function formatFocusTozoItem({
         type: 'PDF',
       };
     }),
-    title: 'Tozo-aanvraag',
+    title: 'Uw Tozo-aanvraag',
     description: `Wij hebben uw aanvraag Tozo ontvangen op ${defaultDateFormat(
       firstActivityDatePublished
     )}.`,
