@@ -54,8 +54,7 @@ export default () => {
         </p>
         <p>
           <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
-            Informatie over Tijdelijke overbruggingsregeling zelfstandig
-            ondernemers (Tozo)
+            Meer informatie over de Tozo
           </Linkd>
         </p>
         {(isError || noContent) && (
