@@ -100,12 +100,12 @@ pipeline {
            "."
         sh "docker push ${IMAGE_ACCEPTANCE}"
 
-        // // build the BFF/node image
-        // sh "docker build -t ${IMAGE_ACCEPTANCE_BFF} " +
-        //    "--target=deploy-ap-bff " +
-        //    "--shm-size 1G " +
-        //    "."
-        // sh "docker push ${IMAGE_ACCEPTANCE_BFF}"
+        // build the BFF/node image
+        sh "docker build -t ${IMAGE_ACCEPTANCE_BFF} " +
+           "--target=deploy-ap-bff " +
+           "--shm-size 1G " +
+           "."
+        sh "docker push ${IMAGE_ACCEPTANCE_BFF}"
       }
     }
 
@@ -121,10 +121,10 @@ pipeline {
           [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml']
         ]
         // Build the BFF
-        // build job: 'Subtask_Openstack_Playbook', parameters: [
-        //   [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
-        //   [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-bff.yml']
-        // ]
+        build job: 'Subtask_Openstack_Playbook', parameters: [
+          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
+          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-bff.yml']
+        ]
       }
     }
 
@@ -147,11 +147,11 @@ pipeline {
 
         // Build the BFF production image
         // TODO: Pull ACC image, re tag and set ENV RUN variables
-        // sh "docker build -t ${IMAGE_PRODUCTION_BFF} " +
-        //    "--target=deploy-ap-bff " +
-        //    "--shm-size 1G " +
-        //    "."
-        // sh "docker push ${IMAGE_PRODUCTION_BFF}"
+        sh "docker build -t ${IMAGE_PRODUCTION_BFF} " +
+           "--target=deploy-ap-bff " +
+           "--shm-size 1G " +
+           "."
+        sh "docker push ${IMAGE_PRODUCTION_BFF}"
       }
     }
 
@@ -186,10 +186,10 @@ pipeline {
         ]
 
         // Build the BFF
-        // build job: 'Subtask_Openstack_Playbook', parameters: [
-        //   [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
-        //   [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-bff.yml']
-        // ]
+        build job: 'Subtask_Openstack_Playbook', parameters: [
+          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
+          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-bff.yml']
+        ]
       }
     }
   }
