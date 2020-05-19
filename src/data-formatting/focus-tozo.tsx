@@ -724,18 +724,12 @@ export function formatFocusTozo({
         prevDate = prev[prev.length - 1].processtappen.beslissing!.datum;
       }
 
-      const documenten = findDocuments(
-        prevDate,
-        toDate,
-        documentenFiltered,
-        index === processes.length - 1
-      );
+      const documenten = findDocuments(prevDate, toDate, documentenFiltered);
 
       const voorschotten = findVoorschotten(
         prevDate,
         toDate,
-        voorschottenSorted,
-        index === processes.length - 1
+        voorschottenSorted
       );
 
       return {
@@ -761,15 +755,13 @@ export function formatFocusTozo({
 function findDocuments(
   fromDate: string | null,
   toDate: string | null,
-  documents: FocusTozoDocument[],
-  addRemaining: boolean
+  documents: FocusTozoDocument[]
 ) {
   return documents.filter((doc: FocusTozoDocument) => {
     const datePublished = new Date(doc.datePublished);
     return (
-      ((fromDate === null || datePublished > new Date(fromDate)) &&
-        (toDate === null || datePublished <= new Date(toDate))) ||
-      (addRemaining && toDate !== null && datePublished > new Date(toDate))
+      (fromDate === null || datePublished > new Date(fromDate)) &&
+      (toDate === null || datePublished <= new Date(toDate))
     );
   });
 }
@@ -777,15 +769,13 @@ function findDocuments(
 function findVoorschotten(
   fromDate: string | null,
   toDate: string | null,
-  voorschotten: FocusTozoProduct[],
-  addRemaining: boolean
+  voorschotten: FocusTozoProduct[]
 ) {
   return voorschotten.filter((voorschot: FocusTozoProduct) => {
     const dateStart = new Date(voorschot.dateStart);
     return (
-      ((fromDate === null || dateStart > new Date(fromDate)) &&
-        (toDate === null || dateStart <= new Date(toDate))) ||
-      (addRemaining && toDate !== null && dateStart > new Date(toDate))
+      (fromDate === null || dateStart > new Date(fromDate)) &&
+      (toDate === null || dateStart <= new Date(toDate))
     );
   });
 }
