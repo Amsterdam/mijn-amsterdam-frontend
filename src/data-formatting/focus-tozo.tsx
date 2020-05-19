@@ -587,7 +587,7 @@ function formatFocusTozoItem({
     ISODatePublished: lastActivityDatePublished
       ? lastActivityDatePublished
       : firstActivityDatePublished,
-    title: 'Uw Tozo-aanvraag',
+    title: 'Tozo-aanvraag',
     description: '',
     status,
     hasDecision,
