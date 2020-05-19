@@ -680,10 +680,12 @@ export function formatFocusTozo({
       aanvraag.processtappen.aanvraag &&
       new Date(aanvraag.processtappen.aanvraag.datum);
 
+    // A request can be about max 2 products
     if (process.length === 2) {
       newProcess();
     }
 
+    // A request can have 2 distinct products
     if (process.length && process[0].naam === aanvraag.naam) {
       newProcess();
     }
