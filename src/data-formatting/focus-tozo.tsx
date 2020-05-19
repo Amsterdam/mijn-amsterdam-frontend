@@ -627,6 +627,7 @@ export function formatFocusTozo({
         steps: item.processtappen,
         Labels,
       });
+
     return isWhiteListed && hasLatestStepWithLabels;
   });
 
@@ -652,8 +653,15 @@ export function formatFocusTozo({
     })
     .sort(dateSort('dateStart'));
 
-  let process = [];
+  let process: FocusTozoProduct[] = [];
   const processes: Array<FocusTozoProduct[]> = [];
+
+  const newProcess = (aanvraag?: FocusTozoProduct) => {
+    // Start a new process.
+    aanvraag && process.push(aanvraag);
+    processes.push(process);
+    process = [];
+  };
 
   for (const aanvraag of aanvragenSorted) {
     const lastDecisionItem = processes.length
@@ -672,6 +680,16 @@ export function formatFocusTozo({
       aanvraag.processtappen.aanvraag &&
       new Date(aanvraag.processtappen.aanvraag.datum);
 
+    // A request can be about max 2 products
+    if (process.length === 2) {
+      newProcess();
+    }
+
+    // A request can have 2 distinct products
+    if (process.length && process[0].naam === aanvraag.naam) {
+      newProcess();
+    }
+
     if (aanvraag.processtappen.beslissing !== null) {
       // Has 1 decision item in previous set. A set can have max 2 decision items
       const hasOneDecision = processes.length
@@ -688,10 +706,7 @@ export function formatFocusTozo({
         // Add item to previous processs, it was started before the decision date of the previous item so it's likely to belong to that set of items.
         processes[processes.length - 1].push(aanvraag);
       } else {
-        // Start a new process.
-        process.push(aanvraag);
-        processes.push(process);
-        process = [];
+        newProcess(aanvraag);
       }
     } else {
       process.push(aanvraag);
