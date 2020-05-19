@@ -414,7 +414,7 @@ function formatFocusTozoItem({
           aanvraagLening.processtappen,
           now
         )
-      : false;
+      : true;
 
   const isRecentUitkering =
     aanvraagUitkering && aanvraagUitkering.typeBesluit
@@ -423,7 +423,7 @@ function formatFocusTozoItem({
           aanvraagUitkering.processtappen,
           now
         )
-      : false;
+      : true;
 
   const isRecent = isRecentLening || isRecentUitkering;
 
