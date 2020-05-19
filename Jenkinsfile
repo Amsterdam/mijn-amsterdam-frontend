@@ -6,9 +6,9 @@ pipeline {
     PROJECT_PREFIX = "${BRANCH_NAME}_${COMMIT_HASH}_${BUILD_NUMBER}_"
     IMAGE_BASE = "docker-registry.secure.amsterdam.nl/mijnams/mijnamsterdam"
     IMAGE_ACCEPTANCE = "${IMAGE_BASE}:acceptance"
-    IMAGE_ACCEPTANCE_BFF = "${IMAGE_BASE}:bff:acceptance"
+    IMAGE_ACCEPTANCE_BFF = "${IMAGE_BASE}_bff:acceptance"
     IMAGE_PRODUCTION = "${IMAGE_BASE}:production"
-    IMAGE_PRODUCTION_BFF = "${IMAGE_BASE}:bff:production"
+    IMAGE_PRODUCTION_BFF = "${IMAGE_BASE}_bff:production"
     IMAGE_TEST = "${IMAGE_BASE}:test"
   }
 
