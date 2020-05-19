@@ -119,7 +119,7 @@ const UitkeringLabels: ProductType = {
       status: stepLabels.beslissing,
       description: data => (
         <p>
-          U hebt geen recht op een {data.productTitleTranslated} (besluit:
+          U hebt geen recht op een {data.productTitleTranslated} (besluit{' '}
           {data.datePublished}).
         </p>
       ),
@@ -138,7 +138,7 @@ const UitkeringLabels: ProductType = {
       status: stepLabels.beslissing,
       description: data => (
         <p>
-          U hebt recht op een {data.productTitleTranslated} (besluit:
+          U hebt recht op een {data.productTitleTranslated} (besluit{' '}
           {data.datePublished}).
         </p>
       ),
@@ -155,7 +155,7 @@ const UitkeringLabels: ProductType = {
       linkTitle: 'Bekijk uw Tozo status',
       linkTo: AppRoutes['INKOMEN/TOZO'],
       status: stepLabels.beslissing,
-      description: 'Uw aanvraag is buiten behandeling gesteld.',
+      description: <p>Uw aanvraag is buiten behandeling gesteld.</p>,
     },
   },
   bezwaar: null,
@@ -197,7 +197,7 @@ const LeningLabels: ProductType = {
       status: stepLabels.beslissing,
       description: data => (
         <p>
-          U hebt geen recht op een {data.productTitleTranslated} (besluit:
+          U hebt geen recht op een {data.productTitleTranslated} (besluit{' '}
           {data.datePublished}).
         </p>
       ),
@@ -216,7 +216,7 @@ const LeningLabels: ProductType = {
       status: stepLabels.beslissing,
       description: data => (
         <p>
-          U hebt recht op een {data.productTitleTranslated} (besluit:
+          U hebt recht op een {data.productTitleTranslated} (besluit{' '}
           {data.datePublished}).
         </p>
       ),
@@ -233,7 +233,7 @@ const LeningLabels: ProductType = {
       linkTitle: 'Bekijk uw Tozo status',
       linkTo: AppRoutes['INKOMEN/TOZO'],
       status: stepLabels.beslissing,
-      description: 'Uw aanvraag is buiten behandeling gesteld.',
+      description: <p>Uw aanvraag is buiten behandeling gesteld.</p>,
     },
   },
   bezwaar: null,
