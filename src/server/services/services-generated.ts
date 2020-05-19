@@ -1,5 +1,8 @@
 import { fetchTIPS, TIPSRequestData } from './tips';
-import { apiSuccesResult } from '../../universal/helpers';
+import {
+  apiSuccesResult,
+  unwrapResponseContent,
+} from '../../universal/helpers';
 import { MyNotification, MyCase, MyTip } from '../../universal/types';
 import { fetchBRPGenerated } from './brp';
 import { fetchFOCUSAanvragenGenerated } from './focus/focus-aanvragen';
@@ -66,23 +69,15 @@ export async function loadServicesGenerated(
   }
 
   const tipsRequestData: TIPSRequestData = {
-    data: {
-      ...Object.entries({
-        ...servicesDirect,
-        ...servicesRelated,
-      }).reduce<Record<ApiStateKey, any>>(
-        (acc, [apiStateKey, responseData]) => {
-          if (responseData.status === 'OK') {
-            acc[apiStateKey] = responseData.content;
-          }
-          return acc;
-        },
-        {}
-      ),
-    },
+    data: unwrapResponseContent({
+      ...servicesDirect,
+      ...servicesRelated,
+    } as any),
     tips: sourceTips,
     optin,
   };
+
+  console.log('tipsRequestData:', tipsRequestData);
 
   const tips = await fetchTIPS(sessionID, tipsRequestData);
 
