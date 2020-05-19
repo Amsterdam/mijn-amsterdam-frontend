@@ -359,7 +359,7 @@ Object {
           "title": "Meer informatie",
           "to": "/inkomen-en-stadspas/stadspas/0-2",
         },
-        "title": "Stadspas: neem actie",
+        "title": "Stadspas: Neem actie",
       },
       "process": Array [
         Object {
@@ -952,7 +952,7 @@ Object {
         "title": "Meer informatie",
         "to": "/inkomen-en-stadspas/stadspas/0-2",
       },
-      "title": "Stadspas: neem actie",
+      "title": "Stadspas: Neem actie",
     },
     Object {
       "chapter": "INKOMEN",
