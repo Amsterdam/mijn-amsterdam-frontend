@@ -63,7 +63,7 @@ const VoorschotLabels: ProductType = {
     [getDecision('Toekenning')]: {
       notification: {
         title: data => {
-          return `${data.productTitleTranslated}: wij hebben een voorschot betaald`;
+          return `${data.productTitleTranslated}: Wij hebben een voorschot betaald`;
         },
         description: data =>
           `Wij hebben een voorschot naar uw rekening overgemaakt.`,
