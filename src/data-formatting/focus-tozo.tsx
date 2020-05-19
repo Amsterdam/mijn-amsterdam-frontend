@@ -188,7 +188,7 @@ const LeningLabels: ProductType = {
         title: data =>
           `${data.productTitleTranslated}: uw aanvraag is afgewezen`,
         description: data =>
-          `U heeft geen recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
+          `U hebt geen recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
         linkTitle: 'Bekijk uw Tozo status',
       },
       title: data => data.productTitleTranslated,
@@ -197,7 +197,7 @@ const LeningLabels: ProductType = {
       status: stepLabels.beslissing,
       description: data => (
         <p>
-          U heeft geen recht op een {data.productTitleTranslated} (besluit:
+          U hebt geen recht op een {data.productTitleTranslated} (besluit:
           {data.datePublished}).
         </p>
       ),
@@ -207,7 +207,7 @@ const LeningLabels: ProductType = {
         title: data =>
           `${data.productTitleTranslated}: uw aanvraag is toegekend`,
         description: data =>
-          `U heeft recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
+          `U hebt recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
         linkTitle: 'Bekijk uw Tozo status',
       },
       title: data => data.productTitleTranslated,
@@ -216,7 +216,7 @@ const LeningLabels: ProductType = {
       status: stepLabels.beslissing,
       description: data => (
         <p>
-          U heeft recht op een {data.productTitleTranslated} (besluit:
+          U hebt recht op een {data.productTitleTranslated} (besluit:
           {data.datePublished}).
         </p>
       ),
