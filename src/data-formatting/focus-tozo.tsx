@@ -372,7 +372,7 @@ function formatFocusTozoItem({
     .sort(dateSort('datePublished'))
     .pop()!.datePublished;
 
-  const id = 'tozo-item-' + slug(firstActivityDatePublished);
+  const id = 'aanvraag-' + slug(firstActivityDatePublished);
 
   const aanvraagLening = aanvragen.find(
     item => item.naam === TOZO_LENING_PRODUCT_TITLE
