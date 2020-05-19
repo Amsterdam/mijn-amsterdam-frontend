@@ -1,7 +1,7 @@
 import { fetchTIPS, TIPSRequestData } from './tips';
 import {
   apiSuccesResult,
-  unwrapResponseContent,
+  unwrapApiResponseContent,
 } from '../../universal/helpers';
 import { MyNotification, MyCase, MyTip } from '../../universal/types';
 import { fetchBRPGenerated } from './brp';
@@ -69,10 +69,10 @@ export async function loadServicesGenerated(
   }
 
   const tipsRequestData: TIPSRequestData = {
-    data: unwrapResponseContent({
+    data: unwrapApiResponseContent({
       ...servicesDirect,
       ...servicesRelated,
-    } as any),
+    }),
     tips: sourceTips,
     optin,
   };

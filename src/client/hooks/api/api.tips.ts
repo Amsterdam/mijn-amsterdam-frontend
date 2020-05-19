@@ -5,7 +5,7 @@ import { useDataApi } from './api.hook';
 import { PRISTINE_APPSTATE } from '../useAppState';
 import {
   ApiResponse,
-  unwrapResponseContent,
+  unwrapApiResponseContent,
 } from '../../../universal/helpers/api';
 
 function transformResponse(response: ApiResponse<TIPSData>) {
@@ -28,7 +28,7 @@ export function useTipsApi() {
 
   const fetchTipsFinal = useCallback(
     (isOptIn: boolean, appState: any) => {
-      const requestData = unwrapResponseContent(appState);
+      const requestData = unwrapApiResponseContent(appState);
       fetchTips({
         url: BFFApiUrls.SERVICES_TIPS,
         method: 'POST',

@@ -75,7 +75,7 @@ const otapServerEnv: OtapEnv = {
     analyticsUrlBase: 'https://analytics.data.amsterdam.nl/',
     sentryDsn:
       'https://d9bff634090c4624bce9ba7d8f0875dd@sentry.data.amsterdam.nl/13',
-    bffSentryDsn: '',
+    bffSentryDsn: process.env.BFF_SENTRY_DSN || '',
     ssoErfpachtUrl:
       'https://mijnerfpacht.acc.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
     ssoMilieuzoneUrl: 'https://ontheffingen-acc.amsterdam.nl/publiek/aanvragen',
@@ -85,7 +85,7 @@ const otapServerEnv: OtapEnv = {
     analyticsUrlBase: 'https://analytics.data.amsterdam.nl/',
     sentryDsn:
       'https://d9bff634090c4624bce9ba7d8f0875dd@sentry.data.amsterdam.nl/13',
-    bffSentryDsn: '',
+    bffSentryDsn: process.env.BFF_SENTRY_DSN || '',
     ssoErfpachtUrl:
       'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
     ssoMilieuzoneUrl: 'https://ontheffingen.amsterdam.nl/publiek/aanvragen',

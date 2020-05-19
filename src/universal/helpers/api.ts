@@ -127,8 +127,8 @@ export function apiErrorResponseData<T>(
   );
 }
 
-export function unwrapResponseContent(responseData: {
-  [key: string]: ApiResponse<any>;
+export function unwrapApiResponseContent(responseData: {
+  [key: string]: { status: string; content?: any };
 }) {
   return Object.entries(responseData).reduce(
     (acc, [apiStateKey, { content, status }]) => {
