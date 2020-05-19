@@ -278,7 +278,7 @@ export const Labels: LabelData = {
       },
       herstelTermijn: {
         notification: {
-          title: data => `${data.productTitleTranslated}: neem actie`,
+          title: data => `${data.productTitleTranslated}: Neem actie`,
           description:
             'Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.',
         },
@@ -399,7 +399,7 @@ export const Labels: LabelData = {
       },
       herstelTermijn: {
         notification: {
-          title: data => `${data.productTitleTranslated}: neem actie`,
+          title: data => `${data.productTitleTranslated}: Neem actie`,
           description:
             'Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.',
         },
