@@ -88,9 +88,9 @@ const UitkeringLabels: ProductType = {
   inBehandeling: null,
   herstelTermijn: {
     notification: {
-      title: data => `${data.productTitleTranslated}: meer informatie nodig`,
+      title: data => `${data.productTitleTranslated}: neem actie`,
       description: data =>
-        `Er is meer informatie en tijd nodig om uw aanvraag te behandelen. `,
+        `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.`,
       linkTitle: 'Bekijk uw Tozo status',
     },
     title: data => data.productTitleTranslated,
@@ -99,8 +99,8 @@ const UitkeringLabels: ProductType = {
     status: stepLabels.herstelTermijn,
     description: data => (
       <p>
-        Er is meer informatie en tijd nodig om uw aanvraag te behandelen. Bekijk
-        de brief voor meer details.
+        Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken.
+        Bekijk de brief voor meer details.
       </p>
     ),
   },
@@ -110,7 +110,7 @@ const UitkeringLabels: ProductType = {
         title: data =>
           `${data.productTitleTranslated}: uw aanvraag is afgewezen`,
         description: data =>
-          `U hebt geen recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
+          `U hebt geen recht op een ${data.productTitleTranslated} (besluit ${data.datePublished}).`,
         linkTitle: 'Bekijk uw Tozo status',
       },
       title: data => data.productTitleTranslated,
@@ -119,8 +119,8 @@ const UitkeringLabels: ProductType = {
       status: stepLabels.beslissing,
       description: data => (
         <p>
-          U hebt geen recht op een {data.productTitleTranslated} (besluit{' '}
-          {data.datePublished}).
+          U hebt geen recht op een {data.productTitleTranslated}. Bekijk de
+          brief voor meer details.
         </p>
       ),
     },
@@ -129,7 +129,7 @@ const UitkeringLabels: ProductType = {
         title: data =>
           `${data.productTitleTranslated}: uw aanvraag is toegekend`,
         description: data =>
-          `U hebt recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
+          `U hebt recht op een ${data.productTitleTranslated} (besluit ${data.datePublished}).`,
         linkTitle: 'Bekijk uw Tozo status',
       },
       title: data => data.productTitleTranslated,
@@ -138,8 +138,8 @@ const UitkeringLabels: ProductType = {
       status: stepLabels.beslissing,
       description: data => (
         <p>
-          U hebt recht op een {data.productTitleTranslated} (besluit{' '}
-          {data.datePublished}).
+          U hebt recht op een {data.productTitleTranslated}. Bekijk de brief
+          voor meer details.
         </p>
       ),
     },
@@ -148,14 +148,19 @@ const UitkeringLabels: ProductType = {
         title: data =>
           `${data.productTitleTranslated}: uw aanvraag is buiten behandeling gesteld`,
         description: data =>
-          `Uw aanvraag is buiten behandeling gesteld (besluit: ${data.datePublished!}).`,
+          `Uw aanvraag is buiten behandeling gesteld (besluit ${data.datePublished!}).`,
         linkTitle: 'Bekijk uw Tozo status',
       },
       title: data => data.productTitleTranslated,
       linkTitle: 'Bekijk uw Tozo status',
       linkTo: AppRoutes['INKOMEN/TOZO'],
       status: stepLabels.beslissing,
-      description: <p>Uw aanvraag is buiten behandeling gesteld.</p>,
+      description: (
+        <p>
+          Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer
+          details.
+        </p>
+      ),
     },
   },
   bezwaar: null,
@@ -166,9 +171,9 @@ const LeningLabels: ProductType = {
   inBehandeling: null,
   herstelTermijn: {
     notification: {
-      title: data => `${data.productTitleTranslated}: meer informatie nodig`,
+      title: data => `${data.productTitleTranslated}: neem actie`,
       description: data =>
-        `Er is meer informatie en tijd nodig om uw aanvraag te behandelen. `,
+        `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.`,
       linkTitle: 'Bekijk uw Tozo status',
     },
     title: data => data.productTitleTranslated,
@@ -177,8 +182,8 @@ const LeningLabels: ProductType = {
     linkTo: AppRoutes['INKOMEN/TOZO'],
     description: data => (
       <p>
-        Er is meer informatie en tijd nodig om uw aanvraag te behandelen. Bekijk
-        de brief voor meer details.
+        Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken.
+        Bekijk de brief voor meer details.
       </p>
     ),
   },
@@ -188,7 +193,7 @@ const LeningLabels: ProductType = {
         title: data =>
           `${data.productTitleTranslated}: uw aanvraag is afgewezen`,
         description: data =>
-          `U hebt geen recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
+          `U hebt geen recht op een ${data.productTitleTranslated} (besluit ${data.datePublished}).`,
         linkTitle: 'Bekijk uw Tozo status',
       },
       title: data => data.productTitleTranslated,
@@ -197,8 +202,8 @@ const LeningLabels: ProductType = {
       status: stepLabels.beslissing,
       description: data => (
         <p>
-          U hebt geen recht op een {data.productTitleTranslated} (besluit{' '}
-          {data.datePublished}).
+          U hebt geen recht op een {data.productTitleTranslated}. Bekijk de
+          brief voor meer details.
         </p>
       ),
     },
@@ -207,7 +212,7 @@ const LeningLabels: ProductType = {
         title: data =>
           `${data.productTitleTranslated}: uw aanvraag is toegekend`,
         description: data =>
-          `U hebt recht op een ${data.productTitleTranslated} (besluit: ${data.datePublished}).`,
+          `U hebt recht op een ${data.productTitleTranslated} (besluit ${data.datePublished}).`,
         linkTitle: 'Bekijk uw Tozo status',
       },
       title: data => data.productTitleTranslated,
@@ -216,8 +221,8 @@ const LeningLabels: ProductType = {
       status: stepLabels.beslissing,
       description: data => (
         <p>
-          U hebt recht op een {data.productTitleTranslated} (besluit{' '}
-          {data.datePublished}).
+          U hebt recht op een {data.productTitleTranslated}. Bekijk de brief
+          voor meer details.
         </p>
       ),
     },
@@ -226,14 +231,19 @@ const LeningLabels: ProductType = {
         title: data =>
           `${data.productTitleTranslated}: uw aanvraag is buiten behandeling gesteld`,
         description: data =>
-          `Uw aanvraag is buiten behandeling gesteld (besluit: ${data.datePublished}).`,
+          `Uw aanvraag is buiten behandeling gesteld (besluit ${data.datePublished}).`,
         linkTitle: 'Bekijk uw Tozo status',
       },
       title: data => data.productTitleTranslated,
       linkTitle: 'Bekijk uw Tozo status',
       linkTo: AppRoutes['INKOMEN/TOZO'],
       status: stepLabels.beslissing,
-      description: <p>Uw aanvraag is buiten behandeling gesteld.</p>,
+      description: (
+        <p>
+          Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer
+          details.
+        </p>
+      ),
     },
   },
   bezwaar: null,
