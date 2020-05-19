@@ -62,7 +62,7 @@ function isChapterActive(
       return (
         FeatureToggle.identiteitsbewijzenActive &&
         !BRP.isLoading &&
-        !!BRP.data.identiteitsbewijzen
+        !!BRP.data.identiteitsbewijzen?.length
       );
 
     case Chapters.MIJN_GEGEVENS:
