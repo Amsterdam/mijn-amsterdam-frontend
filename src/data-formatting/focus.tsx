@@ -702,11 +702,13 @@ export function formatFocusNotificationItem(
       stepLabelSource.notification &&
       parseLabelContent(stepLabelSource.notification.description, sourceData),
     link: {
-      to:
+      to: generatePath(
         (stepLabelSource &&
           stepLabelSource.notification &&
           stepLabelSource.notification.linkTo) ||
-        item.link.to,
+          item.link.to,
+        { id: item.id }
+      ),
       title:
         (stepLabelSource &&
           stepLabelSource.notification &&
@@ -886,7 +888,10 @@ export function formatFocusProduct(
     isRecent,
     hasDecision,
     link: {
-      to: (stepLabels && stepLabels.linkTo) || route,
+      to:
+        stepLabels && stepLabels.linkTo
+          ? generatePath(stepLabels.linkTo, { id })
+          : route,
       title: (stepLabels && stepLabels.linkTitle) || 'Meer informatie',
     },
     process: processStepsFiltered.map((stepTitle, index) => {

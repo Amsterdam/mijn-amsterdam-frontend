@@ -372,6 +372,8 @@ function formatFocusTozoItem({
     .sort(dateSort('datePublished'))
     .pop()!.datePublished;
 
+  const id = 'tozo-item-' + slug(firstActivityDatePublished);
+
   const aanvraagLening = aanvragen.find(
     item => item.naam === TOZO_LENING_PRODUCT_TITLE
   );
@@ -379,23 +381,6 @@ function formatFocusTozoItem({
   const aanvraagUitkering = aanvragen.find(
     item => item.naam === TOZO_UITKERING_PRODUCT_TITLE
   );
-
-  const aanvraagNotifications = documenten.map((doc, index) => {
-    return {
-      id: 'tozo-regeling-notification-aanvraag-' + index,
-      datePublished: doc.datePublished,
-      chapter: Chapters.INKOMEN,
-      title: 'Tozo-aanvraag: Wij hebben uw aanvraag ontvangen',
-      description: `Wij hebben uw aanvraag Tozo ontvangen op ${dateFormat(
-        doc.datePublished,
-        'dd MMMM - HH:mm'
-      )}`,
-      link: {
-        to: AppRoutes['INKOMEN/TOZO'],
-        title: 'Bekijk uw Tozo status',
-      },
-    };
-  });
 
   const leningStatus = aanvraagLening
     ? getLatestStep(aanvraagLening.processtappen)
@@ -443,7 +428,7 @@ function formatFocusTozoItem({
   const isRecent = isRecentLening || isRecentUitkering;
 
   const aanvraagStep: ProcessStep = {
-    id: 'aanvraag-step-0',
+    id: 'aanvraag-step-' + id,
     documents: documenten.map(doc => {
       return {
         id: doc.id,
@@ -469,6 +454,23 @@ function formatFocusTozoItem({
     stepType: 'single-step',
   };
 
+  const aanvraagNotifications = documenten.map((doc, index) => {
+    return {
+      id: 'tozo-regeling-notification-aanvraag-' + index + '-' + id,
+      datePublished: doc.datePublished,
+      chapter: Chapters.INKOMEN,
+      title: 'Tozo-aanvraag: Wij hebben uw aanvraag ontvangen',
+      description: `Wij hebben uw aanvraag Tozo ontvangen op ${dateFormat(
+        doc.datePublished,
+        'dd MMMM - HH:mm'
+      )}`,
+      link: {
+        to: generatePath(AppRoutes['INKOMEN/TOZO'], { id }),
+        title: 'Bekijk uw Tozo status',
+      },
+    };
+  });
+
   let voorschottenSteps: ProcessStep[] = [];
   let voorschotNotifications: MyNotification[] = [];
 
@@ -478,6 +480,12 @@ function formatFocusTozoItem({
   } = aanvraagLening
     ? formatFocusProduct(aanvraagLening, now, Labels, DocumentTitles)
     : {};
+
+  if (leningNotification && leningNotification.link) {
+    leningNotification.link.to = generatePath(AppRoutes['INKOMEN/TOZO'], {
+      id,
+    });
+  }
 
   if (leningStatus === 'herstelTermijn') {
     leningSteps.push(fakeDecisionStep);
@@ -489,6 +497,12 @@ function formatFocusTozoItem({
   } = aanvraagUitkering
     ? formatFocusProduct(aanvraagUitkering, now, Labels, DocumentTitles)
     : {};
+
+  if (uitkeringNotification && uitkeringNotification.link) {
+    uitkeringNotification.link.to = generatePath(AppRoutes['INKOMEN/TOZO'], {
+      id,
+    });
+  }
 
   if (uitkeringStatus === 'herstelTermijn') {
     uitkeringSteps.push(fakeDecisionStep);
@@ -507,7 +521,7 @@ function formatFocusTozoItem({
 
     voorschottenSteps = voorschotten.map((voorschot, index) => {
       return {
-        id: 'voorschot-' + index,
+        id: 'voorschot-' + index + '-' + id,
         documents:
           voorschot.processtappen.beslissing!.document.map(doc => {
             return formatFocusTozoDocument(
@@ -538,9 +552,9 @@ function formatFocusTozoItem({
       };
     });
 
-    voorschotNotifications = voorschotten.map(voorschot => {
+    voorschotNotifications = voorschotten.map((voorschot, index) => {
       return {
-        id: 'tozo-regeling-notification-voorschot',
+        id: 'tozo-regeling-notification-voorschot-' + index + '-' + id,
         datePublished: voorschot.datePublished,
         chapter: Chapters.INKOMEN,
         title:
@@ -557,14 +571,12 @@ function formatFocusTozoItem({
               } as any)
             : voorschotLabelsNotificationDescription,
         link: {
-          to: AppRoutes['INKOMEN/TOZO'],
+          to: generatePath(AppRoutes['INKOMEN/TOZO'], { id }),
           title: 'Bekijk uw Tozo status',
         },
       };
     });
   }
-
-  const id = 'tozo-item-' + slug(firstActivityDatePublished);
 
   const tozoProcessItem = {
     id,
