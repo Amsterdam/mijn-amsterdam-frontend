@@ -728,7 +728,7 @@ export function formatFocusTozo({
         // Add item to previous processs, it was started before the decision date of the previous item so it's likely to belong to that set of items.
         processes[processes.length - 1].push(aanvraag);
       } else {
-        newProcess(aanvraag);
+        process.push(aanvraag);
       }
     } else {
       process.push(aanvraag);
