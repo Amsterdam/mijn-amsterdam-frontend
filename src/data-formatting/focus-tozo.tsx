@@ -807,11 +807,11 @@ export function formatFocusTozo({
     }
 
     return tozoItemsFormatted;
-  } else if (documenten.length) {
+  } else if (documentenFiltered.length || voorschottenSorted.length) {
     return [
       formatFocusTozoItem({
         aanvragen: [],
-        voorschotten: [],
+        voorschotten: voorschottenSorted,
         documenten: documentenFiltered,
       }),
     ];
