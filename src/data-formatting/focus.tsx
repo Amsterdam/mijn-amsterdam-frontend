@@ -790,7 +790,7 @@ export function formatFocusProduct(
   compareData: Date,
   Labels: LabelData,
   DocumentTitles: Record<string, string>
-): FocusItem {
+): FocusItem | null {
   const {
     _id: id,
     soortProduct: productOrigin,
@@ -815,6 +815,10 @@ export function formatFocusProduct(
 
   // The data about the latest step
   const latestStepData = steps[latestStep] as Step;
+
+  if (!latestStepData) {
+    return null;
+  }
 
   const hasDecision = steps.beslissing !== null;
 
@@ -965,6 +969,7 @@ function formatFocusApiResponse(
     .map(product =>
       formatFocusProduct(product, compareDate, Labels, DocumentTitles)
     )
+    .filter((product): product is FocusItem => product !== null)
     .sort(dateSort('ISODatePublished', 'desc'));
 }
 

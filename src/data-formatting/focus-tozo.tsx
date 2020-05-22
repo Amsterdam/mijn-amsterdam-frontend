@@ -400,9 +400,10 @@ function formatFocusTozoItem({
     ? getLatestStep(aanvraagUitkering.processtappen)
     : null;
 
-  const isComplete = [leningStatus, uitkeringStatus]
-    .filter(status => !!status)
-    .every(status => status === 'beslissing');
+  const statusses = [leningStatus, uitkeringStatus].filter(status => !!status);
+  const isComplete = statusses.length
+    ? statusses.every(status => status === 'beslissing')
+    : false;
 
   const status = {
     lening: leningStatus,
@@ -488,7 +489,7 @@ function formatFocusTozoItem({
     process: leningSteps = [],
     notification: leningNotification = null,
   } = aanvraagLening
-    ? formatFocusProduct(aanvraagLening, now, Labels, DocumentTitles)
+    ? formatFocusProduct(aanvraagLening, now, Labels, DocumentTitles) || {}
     : {};
 
   if (leningNotification && leningNotification.link) {
@@ -505,7 +506,7 @@ function formatFocusTozoItem({
     process: uitkeringSteps = [],
     notification: uitkeringNotification = null,
   } = aanvraagUitkering
-    ? formatFocusProduct(aanvraagUitkering, now, Labels, DocumentTitles)
+    ? formatFocusProduct(aanvraagUitkering, now, Labels, DocumentTitles) || {}
     : {};
 
   if (uitkeringNotification && uitkeringNotification.link) {
@@ -641,16 +642,7 @@ export function formatFocusTozo({
       TOZO_VOORSCHOT_PRODUCT_TITLE,
     ].includes(item.naam);
 
-    const hasLatestStepWithLabels =
-      isWhiteListed &&
-      !!findLatestStepWithLabels({
-        productOrigin: item.soortProduct,
-        productTitle: item.naam,
-        steps: item.processtappen,
-        Labels,
-      });
-
-    return isWhiteListed && hasLatestStepWithLabels;
+    return isWhiteListed;
   });
 
   const documentenFiltered: FocusTozoDocument[] = documenten
@@ -787,6 +779,28 @@ export function formatFocusTozo({
           documenten,
         })
     );
+
+    const allDocumentsAddedToSet = tozoItemsFormatted.flatMap(item => {
+      return item.process.aanvraag[0].documents;
+    });
+
+    // There are still documents provided that can't be coupled to any uitkering or lening request.
+    if (allDocumentsAddedToSet.length !== documentenFiltered.length) {
+      const orphanDocuments = documentenFiltered.filter(
+        doc => !allDocumentsAddedToSet.find(aDoc => aDoc.id === doc.id)
+      );
+      // Put all the orphaned documents in an active request process
+      if (orphanDocuments.length) {
+        return [
+          ...tozoItemsFormatted,
+          formatFocusTozoItem({
+            aanvragen: [],
+            voorschotten: [],
+            documenten: orphanDocuments,
+          }),
+        ];
+      }
+    }
 
     return tozoItemsFormatted;
   } else if (documenten.length) {
