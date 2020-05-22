@@ -734,30 +734,35 @@ export function formatFocusTozo({
 
   const items: TozoSet[] = processes.map(
     (aanvragen: FocusTozoProduct[], index: number) => {
-      const prev = processes[index - 1] || null;
+      const prevProcess = processes[index - 1] || null;
 
       const [first, second] = aanvragen;
 
-      let prevDate = null;
+      let prevProcessDate = null;
 
-      const toDate =
-        first?.processtappen.beslissing?.datum ||
+      const maybeCurrentDecisionDate =
         second?.processtappen.beslissing?.datum ||
+        first?.processtappen.beslissing?.datum ||
         null;
 
       if (
-        prev &&
-        prev[prev.length - 1] &&
-        prev[prev.length - 1].processtappen.beslissing
+        prevProcess &&
+        prevProcess[prevProcess.length - 1] &&
+        prevProcess[prevProcess.length - 1].processtappen.beslissing
       ) {
-        prevDate = prev[prev.length - 1].processtappen.beslissing!.datum;
+        prevProcessDate = prevProcess[prevProcess.length - 1].processtappen
+          .beslissing!.datum;
       }
 
-      const documenten = findDocuments(prevDate, toDate, documentenFiltered);
+      const documenten = findDocuments(
+        prevProcessDate,
+        maybeCurrentDecisionDate,
+        documentenFiltered
+      );
 
       const voorschotten = findVoorschotten(
-        prevDate,
-        toDate,
+        prevProcessDate,
+        maybeCurrentDecisionDate,
         voorschottenSorted
       );
 
