@@ -686,8 +686,12 @@ export function formatFocusTozo({
   };
 
   for (const aanvraag of aanvragenSorted) {
-    const lastDecisionItem = processes.length
+    const previousProcess = processes.length
       ? [...processes[processes.length - 1]]
+      : null;
+
+    const lastDecisionItem = previousProcess
+      ? previousProcess
           .reverse()
           .filter((item): item is FocusTozoProduct => item !== undefined)
           .find(item => item.processtappen.beslissing !== null)
@@ -714,16 +718,13 @@ export function formatFocusTozo({
 
     if (aanvraag.processtappen.beslissing !== null) {
       // Has 1 decision item in previous set. A set can have max 2 decision items
-      const hasOneDecision = processes.length
-        ? processes[processes.length - 1].filter(
-            (item: any) => item.processtappen.beslissing !== null
-          ).length === 1
-        : false;
+      const hasOnePreviousDecision =
+        !!previousProcess && previousProcess.length === 1 && !!lastDecisionItem;
       if (
         previousDateDecision &&
         dateRequest &&
         dateRequest < previousDateDecision &&
-        hasOneDecision
+        hasOnePreviousDecision
       ) {
         // Add item to previous processs, it was started before the decision date of the previous item so it's likely to belong to that set of items.
         processes[processes.length - 1].push(aanvraag);
@@ -777,16 +778,28 @@ export function formatFocusTozo({
     }
   );
 
-  const tozoItemsFormatted: FocusTozo[] = items.map(
-    ({ documenten, aanvragen, voorschotten }) =>
-      formatFocusTozoItem({
-        aanvragen,
-        voorschotten,
-        documenten,
-      })
-  );
+  if (items.length) {
+    const tozoItemsFormatted: FocusTozo[] = items.map(
+      ({ documenten, aanvragen, voorschotten }) =>
+        formatFocusTozoItem({
+          aanvragen,
+          voorschotten,
+          documenten,
+        })
+    );
 
-  return tozoItemsFormatted;
+    return tozoItemsFormatted;
+  } else if (documenten.length) {
+    return [
+      formatFocusTozoItem({
+        aanvragen: [],
+        voorschotten: [],
+        documenten: documentenFiltered,
+      }),
+    ];
+  }
+
+  return [];
 }
 
 function findDocuments(
