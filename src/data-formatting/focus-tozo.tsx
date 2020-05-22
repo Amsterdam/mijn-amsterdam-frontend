@@ -11,7 +11,6 @@ import {
   FocusDocument,
   LabelData,
   stepLabels,
-  findLatestStepWithLabels,
   ProductType,
   translateProductTitle,
 } from './focus';
