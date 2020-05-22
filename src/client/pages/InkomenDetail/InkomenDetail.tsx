@@ -26,16 +26,14 @@ export function altDocumentContent(
   }
 
   if (
-    statusLineItem.status === 'Meer informatie nodig' &&
+    statusLineItem.status === 'Informatie nodig' &&
     statusLineItem.isRecent &&
-    !statusLineItem.isLastActive
+    !statusLineItem.isActive
   ) {
     return <b>U heeft deze brief per post ontvangen.</b>;
   }
 
-  return ['Meer informatie nodig', 'Besluit'].includes(
-    statusLineItem.status
-  ) ? (
+  return ['Informatie nodig', 'Besluit'].includes(statusLineItem.status) ? (
     statusLineItem.isRecent ? (
       <b>
         U ontvangt
@@ -66,7 +64,7 @@ export default () => {
   const FocusItem = FOCUS_AANVRAGEN.content?.find(item => item.id === id);
   const noContent = !isLoading(FOCUS_AANVRAGEN) && !FocusItem;
   const hasDecision =
-    FocusItem && FocusItem.steps.some(step => step.title === 'beslissing');
+    FocusItem && FocusItem.steps.some(step => step.status === 'Besluit');
   let title = 'Onbekend item';
 
   if (FocusItem) {
@@ -93,8 +91,8 @@ export default () => {
         <StatusLine
           trackCategory={`Inkomen en Stadspas / ${FocusItem.title}`}
           items={FocusItem.steps}
+          showToggleMore={false}
           maxStepCount={!hasDecision ? MAX_STEP_COUNT_FOCUS_REUEST : undefined}
-          altDocumentContent={altDocumentContent}
           id={id}
         />
       )}

@@ -14,7 +14,6 @@ import {
   StatusLine,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
-import { altDocumentContent } from './InkomenDetail';
 import styles from './InkomenDetail.module.scss';
 
 export default () => {
@@ -64,7 +63,6 @@ export default () => {
           items={TozoItem.steps.aanvraag}
           showToggleMore={false}
           maxStepCount={-1}
-          altDocumentContent={altDocumentContent}
           id={'inkomen-stadspas-detail-tozo-aanvraag'}
         />
       )}
@@ -80,7 +78,6 @@ export default () => {
               ? -1
               : 2
           }
-          altDocumentContent={altDocumentContent}
           id={'inkomen-stadspas-detail-tozo-uitkering'}
         />
       )}
@@ -96,7 +93,6 @@ export default () => {
               ? -1
               : 2
           }
-          altDocumentContent={altDocumentContent}
           id={'inkomen-stadspas-detail-tozo-lening'}
         />
       )}

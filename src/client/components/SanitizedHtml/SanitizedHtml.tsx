@@ -1,7 +1,7 @@
 import sanitizeHtml from 'sanitize-html';
 import React, { memo } from 'react';
 
-const TAGS_ALLOWED = ['a', 'p', 'br', 'strong', 'em', 'i', 'b', 'div'];
+const TAGS_ALLOWED = ['a', 'p', 'br', 'strong', 'em', 'i', 'b', 'div', 'u'];
 const ATTR_ALLOWED = {
   a: ['href', 'name', 'target', 'rel'],
 };
@@ -23,7 +23,7 @@ function SanitizedHtmlTag({
   children,
   allowedTags = TAGS_ALLOWED,
   allowedAttributes = ATTR_ALLOWED,
-  className = '',
+  className,
 }: SanitizedHtmlTagProps) {
   const config = Object.assign(DEFAULT_CONFIG, {
     allowedTags,

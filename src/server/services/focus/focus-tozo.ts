@@ -145,7 +145,7 @@ function transformFocusTozoItems({
     datePublished: firstActivityDatePublished,
     status: 'Aanvraag',
     isChecked: true,
-    isLastActive: !(
+    isActive: !(
       lastAanvraagVoorschot &&
       firstAanvraagLening &&
       firstAanvraagUitkering

@@ -2,11 +2,12 @@ import { DocumentTitles } from './focus-types';
 import { StepTitle, RequestStatus, LabelData } from './focus-types';
 import { AppRoutes } from '../../../universal/config/routing';
 import { generatePath } from 'react-router-dom';
+import { defaultDateFormat } from '../../../universal/helpers';
 
 export const stepLabels: Record<StepTitle, RequestStatus> = {
   aanvraag: 'Aanvraag',
   inBehandeling: 'In behandeling',
-  herstelTermijn: 'Meer informatie nodig',
+  herstelTermijn: 'Informatie nodig',
   beslissing: 'Besluit',
   bezwaar: 'Bezwaar',
 };
@@ -61,7 +62,6 @@ export const contentLabels: LabelData = {
           description: product =>
             `Wij hebben uw aanvraag voor een bijstandsuitkering ontvangen op ${product.dateStart}.`,
         },
-        title: product => product.title,
         status: stepLabels.aanvraag,
         description: product =>
           `
@@ -80,9 +80,10 @@ export const contentLabels: LabelData = {
         notification: {
           title: product => `${product.title}: Wij behandelen uw aanvraag`,
           description: product =>
-            `Wij hebben uw aanvraag voor een bijstandsuitkering in behandeling genomen op ${product.datePublished}.`,
+            `Wij hebben uw aanvraag voor een bijstandsuitkering in behandeling genomen op ${defaultDateFormat(
+              product.datePublished
+            )}.`,
         },
-        title: product => product.title,
         status: stepLabels.inBehandeling,
         description: (product, customData) =>
           `
@@ -113,7 +114,6 @@ export const contentLabels: LabelData = {
           description: product =>
             'Er is meer informatie en tijd nodig om uw aanvraag voor een bijstandsuitkering te behandelen.',
         },
-        title: product => product.title,
         status: stepLabels.herstelTermijn,
         description: (product, customData) =>
           `
@@ -135,9 +135,10 @@ export const contentLabels: LabelData = {
           notification: {
             title: product => `${product.title}: Uw aanvraag is afgewezen`,
             description: product =>
-              `U heeft geen recht op een bijstandsuitkering (besluit: ${product.datePublished}).`,
+              `U heeft geen recht op een bijstandsuitkering (besluit ${defaultDateFormat(
+                product.datePublished
+              )}).`,
           },
-          title: product => product.title,
           status: stepLabels.beslissing,
           description: product =>
             'U heeft geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.',
@@ -146,9 +147,10 @@ export const contentLabels: LabelData = {
           notification: {
             title: product => `${product.title}: Uw aanvraag is toegekend`,
             description: product =>
-              `U heeft recht op een bijstandsuitkering (besluit: ${product.datePublished}).`,
+              `U heeft recht op een bijstandsuitkering (besluit ${defaultDateFormat(
+                product.datePublished
+              )}).`,
           },
-          title: product => product.title,
           status: stepLabels.beslissing,
           description: product =>
             `
@@ -171,9 +173,10 @@ export const contentLabels: LabelData = {
             title: product =>
               `${product.title}: Uw aanvraag is buiten behandeling gesteld`,
             description: product =>
-              `Uw aanvraag is buiten behandeling gesteld (besluit: ${product.datePublished}).`,
+              `Uw aanvraag is buiten behandeling gesteld (besluit ${defaultDateFormat(
+                product.datePublished
+              )}).`,
           },
-          title: product => product.title,
           status: stepLabels.beslissing,
           description: product =>
             'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
@@ -196,18 +199,20 @@ export const contentLabels: LabelData = {
           description: product =>
             `Wij hebben uw aanvraag voor een Stadspas ontvangen op ${product.dateStart}.`,
         },
-        title: product => product.title,
         status: stepLabels.aanvraag,
         description: product =>
-          `U hebt op ${product.datePublished} een Stadspas aangevraagd.`,
+          `U hebt op ${defaultDateFormat(
+            product.datePublished
+          )} een Stadspas aangevraagd.`,
       },
       inBehandeling: {
         notification: {
           title: product => `${product.title}: Wij behandelen uw aanvraag`,
           description: product =>
-            `Wij hebben uw aanvraag voor een Stadspas in behandeling genomen op ${product.datePublished}.`,
+            `Wij hebben uw aanvraag voor een Stadspas in behandeling genomen op ${defaultDateFormat(
+              product.datePublished
+            )}.`,
         },
-        title: product => product.title,
         status: stepLabels.inBehandeling,
         description: (product, customData) =>
           `
@@ -232,7 +237,6 @@ export const contentLabels: LabelData = {
           description: product =>
             'Er is meer informatie en tijd nodig om uw aanvraag voor een Stadspas te behandelen.',
         },
-        title: product => product.title,
         status: stepLabels.herstelTermijn,
         description: (product, customData) =>
           `
@@ -254,9 +258,10 @@ export const contentLabels: LabelData = {
           notification: {
             title: product => `${product.title}: Uw aanvraag is afgewezen`,
             description: product =>
-              `U heeft geen recht op een Stadspas (besluit: ${product.datePublished}).`,
+              `U heeft geen recht op een Stadspas (besluit ${defaultDateFormat(
+                product.datePublished
+              )}).`,
           },
-          title: product => product.title,
           status: stepLabels.beslissing,
           description: product =>
             'U heeft geen recht op een Stadspas. Bekijk de brief voor meer details.',
@@ -267,7 +272,6 @@ export const contentLabels: LabelData = {
             description: product =>
               'U heeft recht op een Stadspas. Bekijk de brief voor meer details.',
           },
-          title: product => product.title,
           status: stepLabels.beslissing,
           description: product =>
             `
@@ -286,9 +290,10 @@ export const contentLabels: LabelData = {
             title: product =>
               `${product.title}: Uw aanvraag is buiten behandeling gesteld`,
             description: product =>
-              `Uw aanvraag is buiten behandeling gesteld (besluit: ${product.datePublished}).`,
+              `Uw aanvraag is buiten behandeling gesteld (besluit ${defaultDateFormat(
+                product.datePublished
+              )}).`,
           },
-          title: product => product.title,
           status: stepLabels.beslissing,
           description: product =>
             'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',

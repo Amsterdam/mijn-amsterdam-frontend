@@ -1,3 +1,8 @@
+import React, { useContext, useMemo } from 'react';
+import useRouter from 'use-react-router';
+import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { isError, isLoading } from '../../../universal/helpers';
+import { AppContext } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
@@ -7,13 +12,7 @@ import {
   PageHeading,
   StatusLine,
 } from '../../components';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
-import React, { useContext } from 'react';
-import { isError, isLoading } from '../../../universal/helpers';
-
-import { AppContext } from '../../AppState';
 import styles from './ZorgDetail.module.scss';
-import useRouter from 'use-react-router';
 
 export default () => {
   const { WMO } = useContext(AppContext);
@@ -27,6 +26,28 @@ export default () => {
   const WmoItem = WMO.content?.items.find(item => item.id === id);
   const noContent = !isLoading(WMO) && !WmoItem;
 
+  const steps = useMemo(() => {
+    if (!WmoItem) {
+      return [];
+    }
+    return WmoItem.process.map((step, index) => {
+      if (index === 0 && !step.documents.length) {
+        return Object.assign(step, {
+          altDocumentContent: (
+            <p>
+              <strong>
+                {WmoItem.isActual
+                  ? 'U krijgt dit besluit per post.'
+                  : 'U hebt dit besluit per post ontvangen.'}
+              </strong>
+            </p>
+          ),
+        });
+      }
+      return step;
+    });
+  }, [WmoItem]);
+
   return (
     <DetailPage>
       <PageHeading
@@ -34,7 +55,7 @@ export default () => {
         backLink={{ to: AppRoutes.ZORG, title: ChapterTitles.ZORG }}
         isLoading={isLoading(WMO)}
       >
-        {WmoItem?.title}
+        {WmoItem?.title || 'Zorg detailpagina'}
       </PageHeading>
 
       <PageContent className={styles.DetailPageContent}>
@@ -54,26 +75,11 @@ export default () => {
         )}
       </PageContent>
 
-      {!!WmoItem && (
-        <StatusLine
-          items={WmoItem?.process || []}
-          trackCategory="Zorg en ondersteuning / Voorziening"
-          id={id}
-          altDocumentContent={(statusLineItem, stepNumber) => {
-            return !statusLineItem.documents.length && stepNumber === 1 ? (
-              <p>
-                <strong>
-                  {WmoItem.isActual
-                    ? 'U krijgt dit besluit per post.'
-                    : 'U hebt dit besluit per post ontvangen.'}
-                </strong>
-              </p>
-            ) : (
-              ''
-            );
-          }}
-        />
-      )}
+      <StatusLine
+        items={steps}
+        trackCategory="Zorg en ondersteuning / Voorziening"
+        id={id}
+      />
     </DetailPage>
   );
 };

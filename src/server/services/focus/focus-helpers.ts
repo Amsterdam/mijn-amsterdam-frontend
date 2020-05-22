@@ -230,11 +230,10 @@ export function fillStepContent(
   };
 
   return Object.assign({}, stepData, {
-    title: stepContent.title(product, customData),
     description: stepContent.description(product, customData),
     status: stepContent.status,
-    isLastActive: false,
-    isChecked: false,
+    isActive: getLatestStep(product.steps) === stepData.title,
+    isChecked: true,
   });
 }
 

@@ -50,13 +50,13 @@ interface Document {
   datePublished: string;
 }
 
-export interface WmoProcessItem {
+export interface WmoProcessStep {
   id: string;
   status: string;
   datePublished: string;
   description: string;
   documents: Document[];
-  isLastActive: boolean;
+  isActive: boolean;
   isChecked: boolean;
 }
 
@@ -67,7 +67,7 @@ export interface WmoItem {
   supplierUrl: string; // Leverancier url
   isActual: boolean; // Indicates if this item is designated Current or Previous
   link: LinkProps;
-  process: WmoProcessItem[];
+  process: WmoProcessStep[];
 }
 
 function isDateInFuture(dateStr: string | Date, compareDate: Date) {
@@ -98,7 +98,7 @@ const Labels: {
         data: WmoSourceData,
         today: Date
       ) => boolean;
-      isLastActive: (
+      isActive: (
         stepIndex: number,
         data: WmoSourceData,
         today: Date
@@ -116,8 +116,8 @@ const Labels: {
       {
         status: 'Besluit',
         datePublished: data => data.dateDecision,
-        isChecked: (stepIndex, data) => data.isActual === false,
-        isLastActive: (stepIndex, data) => data.isActual === true,
+        isChecked: (stepIndex, data) => data.isActual === true,
+        isActive: (stepIndex, data) => data.isActual === true,
         description: data =>
           `
             <p>
@@ -136,7 +136,7 @@ const Labels: {
         status: 'Einde recht',
         datePublished: data => (data.isActual ? '' : data.dateFinish),
         isChecked: () => false,
-        isLastActive: (stepIndex, data) => data.isActual === false,
+        isActive: (stepIndex, data) => data.isActual === false,
         description: data =>
           `<p>
             ${
@@ -183,8 +183,8 @@ const Labels: {
       {
         status: 'Besluit',
         datePublished: data => data.dateDecision,
-        isChecked: (stepIndex, data) => data.isActual === false,
-        isLastActive: (stepIndex, data) => data.isActual === true,
+        isChecked: (stepIndex, data) => data.isActual === true,
+        isActive: (stepIndex, data) => data.isActual === true,
         description: data =>
           `
             <p>
@@ -202,7 +202,7 @@ const Labels: {
         status: 'Einde recht',
         datePublished: data => (data.isActual ? '' : data.dateFinish),
         isChecked: () => false,
-        isLastActive: (stepIndex, data) => data.isActual === false,
+        isActive: (stepIndex, data) => data.isActual === false,
         description: data =>
           `
             <p>
@@ -246,8 +246,8 @@ const Labels: {
       {
         status: 'Besluit',
         datePublished: data => data.dateDecision,
-        isChecked: (stepIndex, data) => data.isActual === false,
-        isLastActive: (stepIndex, data) => data.isActual === true,
+        isChecked: (stepIndex, data) => data.isActual === true,
+        isActive: (stepIndex, data) => data.isActual === true,
         description: data =>
           `
             <p>
@@ -265,7 +265,7 @@ const Labels: {
         status: 'Einde recht',
         datePublished: data => data.dateFinish || '',
         isChecked: () => false,
-        isLastActive: (stepIndex, data) => data.isActual === false,
+        isActive: (stepIndex, data) => data.isActual === false,
         description: data =>
           `
             <p>
@@ -319,7 +319,7 @@ const Labels: {
         status: 'Besluit',
         datePublished: data => data.dateDecision,
         isChecked: (stepIndex, sourceData: WmoSourceData) => true,
-        isLastActive: (stepIndex, sourceData: WmoSourceData) => false,
+        isActive: (stepIndex, sourceData: WmoSourceData) => false,
         description: (data: WmoSourceData) => {
           return `
               <p>
@@ -363,7 +363,7 @@ const Labels: {
         isChecked: (stepIndex, sourceData: WmoSourceData, today: Date) =>
           sourceData.isActual === false ||
           isDateInPast(sourceData.dateFinish, today),
-        isLastActive: (stepIndex, sourceData: WmoSourceData, today: Date) =>
+        isActive: (stepIndex, sourceData: WmoSourceData, today: Date) =>
           sourceData.isActual === true &&
           isDateInFuture(sourceData.dateFinish, today),
         description: data =>
@@ -377,7 +377,7 @@ const Labels: {
         isChecked: (stepIndex, sourceData: WmoSourceData, today: Date) =>
           sourceData.isActual === false ||
           isDateInPast(sourceData.dateFinish, today),
-        isLastActive: (stepIndex, sourceData: WmoSourceData) => false,
+        isActive: (stepIndex, sourceData: WmoSourceData) => false,
         description: data =>
           `<p>
             ${
@@ -393,7 +393,7 @@ const Labels: {
         datePublished: (data, today) =>
           isDateInFuture(data.dateFinish, today) ? '' : data.dateFinish,
         isChecked: () => false,
-        isLastActive: (stepIndex, sourceData: WmoSourceData, today: Date) =>
+        isActive: (stepIndex, sourceData: WmoSourceData, today: Date) =>
           sourceData.isActual === false ||
           isDateInPast(sourceData.dateFinish, today),
         description: (data, today) =>
@@ -421,7 +421,7 @@ const Labels: {
         status: 'Besluit',
         datePublished: data => data.dateDecision,
         isChecked: () => true,
-        isLastActive: () => false,
+        isActive: () => false,
         description: data =>
           `
             <p>
@@ -441,7 +441,7 @@ const Labels: {
         isChecked: (stepIndex, data, today: Date) =>
           data.isActual === false ||
           isDateInPast(data.dateStartServiceDelivery, today),
-        isLastActive: (stepIndex, data, today: Date) =>
+        isActive: (stepIndex, data, today: Date) =>
           data.isActual
             ? isDateInFuture(data.dateStartServiceDelivery, today)
             : false,
@@ -453,8 +453,8 @@ const Labels: {
       {
         status: 'Product geleverd',
         datePublished: () => '',
-        isChecked: (stepIndex, data) => data.isActual === false,
-        isLastActive: (stepIndex, data, today: Date) =>
+        isChecked: (stepIndex, data) => data.isActual === true,
+        isActive: (stepIndex, data, today: Date) =>
           data.isActual
             ? isDateInPast(data.dateStartServiceDelivery, today)
             : false,
@@ -467,7 +467,7 @@ const Labels: {
         status: 'Einde recht',
         datePublished: data => (data.isActual ? '' : data.dateFinish),
         isChecked: () => false,
-        isLastActive: (stepIndex, data) => data.isActual === false,
+        isActive: (stepIndex, data) => data.isActual === false,
         description: data =>
           `<p>
             ${
@@ -492,7 +492,7 @@ const Labels: {
         status: 'Besluit',
         datePublished: data => data.dateDecision,
         isChecked: () => true,
-        isLastActive: () => false,
+        isActive: () => false,
         description: data =>
           `
             <p>
@@ -512,7 +512,7 @@ const Labels: {
         isChecked: (stepIndex, data, today: Date) =>
           data.isActual === false ||
           isDateInPast(data.dateStartServiceDelivery, today),
-        isLastActive: (stepIndex, data, today: Date) =>
+        isActive: (stepIndex, data, today: Date) =>
           data.isActual
             ? isDateInFuture(data.dateStartServiceDelivery, today)
             : false,
@@ -525,8 +525,8 @@ const Labels: {
       {
         status: 'Aanpassing uitgevoerd',
         datePublished: () => '',
-        isChecked: (stepIndex, data) => data.isActual === false,
-        isLastActive: (stepIndex, data, today: Date) =>
+        isChecked: (stepIndex, data) => data.isActual === true,
+        isActive: (stepIndex, data, today: Date) =>
           data.isActual
             ? isDateInPast(data.dateStartServiceDelivery, today)
             : false,
@@ -540,7 +540,7 @@ const Labels: {
         status: 'Einde recht',
         datePublished: data => (data.isActual ? '' : data.dateFinish),
         isChecked: () => false,
-        isLastActive: (stepIndex, data) => data.isActual === false,
+        isActive: (stepIndex, data) => data.isActual === false,
         description: data =>
           `<p>
             ${
@@ -570,10 +570,10 @@ function parseLabelContent(
   return rText;
 }
 
-function formatWmoProcessItems(
+function formatWmoProcessSteps(
   data: WmoSourceData,
   today: Date
-): WmoProcessItem[] {
+): WmoProcessStep[] {
   const labelData = Object.values(Labels).find((labelData, index) => {
     const type = data.deliveryType || '';
     return (
@@ -583,7 +583,7 @@ function formatWmoProcessItems(
   });
 
   if (labelData) {
-    const items: WmoProcessItem[] = labelData.statusItems.map(
+    const items: WmoProcessStep[] = labelData.statusItems.map(
       (statusItem, index) => {
         const datePublished = parseLabelContent(
           statusItem.datePublished,
@@ -596,7 +596,7 @@ function formatWmoProcessItems(
           status: statusItem.status,
           description: parseLabelContent(statusItem.description, data, today),
           datePublished,
-          isLastActive: statusItem.isLastActive(index, data, today),
+          isActive: statusItem.isActive(index, data, today),
           isChecked: statusItem.isChecked(index, data, today),
           documents: [], // NOTE: To be implemented late 2020
         };
@@ -687,7 +687,7 @@ export function transformWMOResponse(
 
       const id = slug(`${title}-${index}`).toLowerCase();
 
-      const process: WmoItem['process'] = formatWmoProcessItems(
+      const process: WmoItem['process'] = formatWmoProcessSteps(
         {
           title,
           dateStart,

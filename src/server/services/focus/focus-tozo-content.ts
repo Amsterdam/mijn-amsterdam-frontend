@@ -52,7 +52,6 @@ const VoorschotLabels: ProductStepLabels = {
           to: '',
         }),
       },
-      title: product => product.title,
       status: 'Voorschot',
       description: product =>
         `<p>
@@ -66,7 +65,7 @@ const VoorschotLabels: ProductStepLabels = {
 const UitkeringLabels: ProductStepLabels = {
   herstelTermijn: {
     notification: {
-      title: product => `${product.title}: meer informatie nodig`,
+      title: product => `${product.title}: Informatie nodig`,
       description: product =>
         `Er is meer informatie en tijd nodig om uw aanvraag te behandelen. `,
       link: product => ({
@@ -74,7 +73,6 @@ const UitkeringLabels: ProductStepLabels = {
         to: '',
       }),
     },
-    title: product => product.title,
     status: stepLabels.herstelTermijn,
     description: product =>
       `<p>
@@ -93,7 +91,6 @@ const UitkeringLabels: ProductStepLabels = {
           to: '',
         }),
       },
-      title: product => product.title,
       status: stepLabels.beslissing,
       description: product =>
         `<p>
@@ -111,7 +108,6 @@ const UitkeringLabels: ProductStepLabels = {
           to: '',
         }),
       },
-      title: product => product.title,
       status: stepLabels.beslissing,
       description: product =>
         `<p>
@@ -130,7 +126,6 @@ const UitkeringLabels: ProductStepLabels = {
           to: '',
         }),
       },
-      title: product => product.title,
       status: stepLabels.beslissing,
       description: product =>
         '<p>Uw aanvraag is buiten behandeling gesteld.</p>',
@@ -141,7 +136,7 @@ const UitkeringLabels: ProductStepLabels = {
 const LeningLabels: ProductStepLabels = {
   herstelTermijn: {
     notification: {
-      title: product => `${product.title}: meer informatie nodig`,
+      title: product => `${product.title}: Informatie nodig`,
       description: product =>
         `Er is meer informatie en tijd nodig om uw aanvraag te behandelen. `,
       link: product => ({
@@ -149,7 +144,6 @@ const LeningLabels: ProductStepLabels = {
         to: '',
       }),
     },
-    title: product => product.title,
     status: stepLabels.herstelTermijn,
     description: product =>
       `<p>
@@ -168,7 +162,6 @@ const LeningLabels: ProductStepLabels = {
           to: '',
         }),
       },
-      title: product => product.title,
       status: stepLabels.beslissing,
       description: product =>
         `<p>
@@ -186,7 +179,6 @@ const LeningLabels: ProductStepLabels = {
           to: '',
         }),
       },
-      title: product => product.title,
       status: stepLabels.beslissing,
       description: product =>
         `<p>
@@ -205,7 +197,6 @@ const LeningLabels: ProductStepLabels = {
           to: '',
         }),
       },
-      title: product => product.title,
       status: stepLabels.beslissing,
       description: product =>
         '<p>Uw aanvraag is buiten behandeling gesteld.</p>',
@@ -231,7 +222,7 @@ export const fakeDecisionStep: FocusItemStep = {
   datePublished: '',
   documents: [],
   isChecked: false,
-  isLastActive: false,
+  isActive: false,
   description: `<p>
       Zodra we alle benodigde informatie binnen hebben, ontvangt u een besluit.
     </p>`,

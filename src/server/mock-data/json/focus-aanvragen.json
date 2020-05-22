@@ -311,7 +311,7 @@
     "processtappen": {
       "aanvraag": {
         "_id": 0,
-        "datum": "2020-05-03T15:05:53+02:00",
+        "datum": "2020-04-28T15:05:53+02:00",
         "document": []
       },
       "beslissing": null,
@@ -319,7 +319,7 @@
       "herstelTermijn": null,
       "inBehandeling": {
         "_id": 1,
-        "datum": "2020-05-04T15:05:53+02:00",
+        "datum": "2020-04-27T15:05:53+02:00",
         "document": []
       }
     },

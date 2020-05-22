@@ -71,7 +71,7 @@ export interface FocusProduct {
 
 export type RequestStatus =
   | 'Aanvraag'
-  | 'Meer informatie nodig'
+  | 'Informatie nodig'
   | 'In behandeling'
   | 'Besluit'
   | 'Bezwaar'
@@ -86,7 +86,6 @@ export type TextPartContents = (data: FocusProduct, customData?: any) => string;
 export type LinkContents = (data: FocusProduct, customData?: any) => LinkProps;
 
 export interface FocusStepContent {
-  title: TextPartContents;
   description: TextPartContents;
   status: RequestStatus;
   notification: {
@@ -124,7 +123,7 @@ export interface FocusItemStep {
   description: string;
   datePublished: string;
   status: RequestStatus | '';
-  isLastActive: boolean;
+  isActive: boolean;
   isChecked: boolean;
 }
 

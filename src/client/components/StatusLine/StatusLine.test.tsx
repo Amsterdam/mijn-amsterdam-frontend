@@ -20,7 +20,7 @@ describe('<StatusLine />', () => {
           datePublished: '2020-01-10',
         },
       ],
-      isLastActive: false,
+      isActive: false,
       isChecked: true,
     },
   ];
