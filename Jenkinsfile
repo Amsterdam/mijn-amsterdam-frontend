@@ -110,8 +110,12 @@ pipeline {
     }
 
     stage('Deploy ACC') {
-      when { branch 'master' }
-      when { branch 'test-acc' }
+      when {
+        anyOf {
+          branch 'master';
+          branch 'test-acc';
+        }
+      }
       options {
         timeout(time: 5, unit: 'MINUTES')
       }
