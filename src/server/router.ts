@@ -4,13 +4,14 @@ import {
   loadServicesDirect,
   loadServicesRelated,
   fetchTIPS,
+  fetchFOCUSTozo,
 } from './services';
 import { loadServicesMap } from './services/services-map';
 import { loadServicesSSE } from './services/services-sse';
 
 export const router = express.Router();
 
-router.use(`/services/generated`, async function handleRouteServicesGenerated(
+router.get(`/services/generated`, async function handleRouteServicesGenerated(
   req: Request,
   res: Response,
   next: NextFunction
@@ -21,7 +22,7 @@ router.use(`/services/generated`, async function handleRouteServicesGenerated(
   next();
 });
 
-router.use(`/services/related`, async function handleRouteServicesRelated(
+router.get(`/services/related`, async function handleRouteServicesRelated(
   req: Request,
   res: Response,
   next: NextFunction
@@ -30,7 +31,19 @@ router.use(`/services/related`, async function handleRouteServicesRelated(
   next();
 });
 
-router.use(`/services/direct`, async function handleRouteServicesDirect(
+router.get(
+  `/services/direct/focus/tozo`,
+  async function handleRouteServicesDirect(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    res.send(await fetchFOCUSTozo(req.sessionID!));
+    next();
+  }
+);
+
+router.get(`/services/direct`, async function handleRouteServicesDirect(
   req: Request,
   res: Response,
   next: NextFunction
@@ -39,7 +52,7 @@ router.use(`/services/direct`, async function handleRouteServicesDirect(
   next();
 });
 
-router.use(`/services/map`, async function handleRouteServicesMap(
+router.get(`/services/map`, async function handleRouteServicesMap(
   req: Request,
   res: Response,
   next: NextFunction
@@ -57,7 +70,7 @@ router.post(`/services/tips`, async function handleRouteTips(
   next();
 });
 
-router.use(`/services/all`, async function handleRouteServicesMap(
+router.get(`/services/all`, async function handleRouteServicesMap(
   req: Request,
   res: Response,
   next: NextFunction
@@ -75,9 +88,9 @@ router.use(`/services/all`, async function handleRouteServicesMap(
   next();
 });
 
-router.use(`/services/stream`, loadServicesSSE);
+router.get(`/services/stream`, loadServicesSSE);
 
-router.use(
+router.get(
   `/status/health`,
   (req: Request, res: Response, next: NextFunction) => {
     res.send('OK');

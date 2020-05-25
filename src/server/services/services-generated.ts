@@ -9,7 +9,7 @@ import { fetchFOCUSAanvragenGenerated } from './focus/focus-aanvragen';
 import { fetchFOCUSSpecificationsGenerated } from './focus/focus-specificaties';
 import { fetchBELASTINGGenerated } from './belasting';
 import { fetchMILIEUZONEGenerated } from './milieuzone';
-import { fetchFOCUSTOZOGenerated } from './focus/focus-tozo';
+import { fetchFOCUSTozoGenerated } from './focus/focus-tozo';
 import { loadServicesRelated } from './services-related';
 import { loadServicesDirect } from './services-direct';
 import { ApiStateKey } from './state';
@@ -34,7 +34,7 @@ export async function loadServicesGenerated(
     fetchBRPGenerated(sessionID),
     fetchFOCUSAanvragenGenerated(sessionID),
     fetchFOCUSSpecificationsGenerated(sessionID),
-    fetchFOCUSTOZOGenerated(sessionID),
+    fetchFOCUSTozoGenerated(sessionID),
     fetchBELASTINGGenerated(sessionID),
     fetchMILIEUZONEGenerated(sessionID),
   ]);

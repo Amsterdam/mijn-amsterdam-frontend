@@ -123,8 +123,8 @@ export interface FocusItemStep {
   description: string;
   datePublished: string;
   status: RequestStatus | '';
-  isActive: boolean;
-  isChecked: boolean;
+  isActive?: boolean;
+  isChecked?: boolean;
 }
 
 export interface FocusItem {

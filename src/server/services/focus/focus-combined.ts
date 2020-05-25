@@ -40,7 +40,14 @@ export async function fetchFOCUSCombined(sessionID: SessionID) {
   return requestData<FocusCombinedSourceResponse>(
     {
       url: ApiUrls.FOCUS_COMBINED,
-      transformResponse: ({ content }) => content,
+      transformResponse: ({ content }) => {
+        return Object.assign(content, {
+          tozodocumenten: content.tozodocumenten.map(
+            (item: FocusTozoDocument) =>
+              Object.assign(item, { dateStart: item.datePublished })
+          ),
+        });
+      },
     },
     sessionID,
     getApiConfigValue('FOCUS_COMBINED', 'postponeFetch', false)

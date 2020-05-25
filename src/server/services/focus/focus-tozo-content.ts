@@ -12,15 +12,18 @@ import {
   ProductStepLabels,
   StepTitle,
 } from './focus-types';
+import { defaultDateFormat } from '../../../universal/helpers';
+
+export const TOZO_AANVRAAG_STEP_ID = 'aanvraag-step-tozo';
 
 export const TOZO_VOORSCHOT_PRODUCT_TITLE: TozoProductTitle =
   'Voorschot Tozo (voor ondernemers) (Eenm.)';
 
 export const TOZO_LENING_PRODUCT_TITLE: TozoProductTitle =
-  'Lening t.b.v. bedrijfskrediet TOZO';
+  'Tozo Bedrijfskapitaal (voor ondernemers)';
 
 export const TOZO_UITKERING_PRODUCT_TITLE: TozoProductTitle =
-  'Tijdelijke Overbruggingsregeling Zelfst. Ondern.';
+  'Tozo Levensonderhoud (voor ondernemers)';
 
 export const tozoTitleTranslations: DocumentTitles = {
   'E-AANVR-TOZO': 'Brief aanvraag',
@@ -63,6 +66,22 @@ const VoorschotLabels: ProductStepLabels = {
 };
 
 const UitkeringLabels: ProductStepLabels = {
+  aanvraag: {
+    notification: {
+      title: product => `${product.title}: Wij hebben uw aanvraag ontvangen`,
+      description: product =>
+        `Wij hebben uw aanvraag voor een ${product.title} ontvangen op ${product.dateStart}.`,
+      link: product => ({
+        title: 'Bekijk uw Tozo status',
+        to: '',
+      }),
+    },
+    status: stepLabels.aanvraag,
+    description: product =>
+      `U hebt op ${defaultDateFormat(product.datePublished)} een ${
+        product.title
+      } aangevraagd.`,
+  },
   herstelTermijn: {
     notification: {
       title: product => `${product.title}: Informatie nodig`,
@@ -134,6 +153,22 @@ const UitkeringLabels: ProductStepLabels = {
 };
 
 const LeningLabels: ProductStepLabels = {
+  aanvraag: {
+    notification: {
+      title: product => `${product.title}: Wij hebben uw aanvraag ontvangen`,
+      description: product =>
+        `Wij hebben uw aanvraag voor een ${product.title} ontvangen op ${product.dateStart}.`,
+      link: product => ({
+        title: 'Bekijk uw Tozo status',
+        to: '',
+      }),
+    },
+    status: stepLabels.aanvraag,
+    description: product =>
+      `U hebt op ${defaultDateFormat(product.datePublished)} een ${
+        product.title
+      } aangevraagd.`,
+  },
   herstelTermijn: {
     notification: {
       title: product => `${product.title}: Informatie nodig`,

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import useRouter from 'use-react-router';
 import { stepStatusLabels } from '../../../server/services/focus/focus-aanvragen-content';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
@@ -19,7 +20,14 @@ import styles from './InkomenDetail.module.scss';
 export default () => {
   const { FOCUS_TOZO } = useContext(AppContext);
 
-  const TozoItem = FOCUS_TOZO.content;
+  const tozoItems = FOCUS_TOZO.content || [];
+  const {
+    match: {
+      params: { id },
+    },
+  } = useRouter();
+
+  const TozoItem = tozoItems.find(item => item.id === id);
   const noContent = !isLoading(FOCUS_TOZO) && !TozoItem;
 
   let title = 'Onbekend item';

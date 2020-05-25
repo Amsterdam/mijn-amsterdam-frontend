@@ -1,6 +1,6 @@
 [
   {
-    "_id": "0-0",
+    "_id": "y1-lening",
     "_meest_recent": "beslissing",
     "dienstverleningstermijn": 28,
     "naam": "Tozo Bedrijfskapitaal (voor ondernemers)",
@@ -151,7 +151,7 @@
     "soortProduct": "Participatiewet"
   },
   {
-    "_id": "1-3",
+    "_id": "x1-uitkering",
     "_meest_recent": "beslissing",
     "naam": "Tozo Levensonderhoud (voor ondernemers)",
     "processtappen": {
@@ -305,13 +305,13 @@
     "typeBesluit": "Buiten Behandeling"
   },
   {
-    "_id": "3-0",
+    "_id": "x2-aanvraag-uitkering",
     "_meest_recent": "aanvraag",
     "naam": "Tozo Levensonderhoud (voor ondernemers)",
     "processtappen": {
       "aanvraag": {
         "_id": 0,
-        "datum": "2020-04-28T15:05:53+02:00",
+        "datum": "2020-04-27T15:05:53+02:00",
         "document": []
       },
       "beslissing": null,
@@ -319,7 +319,7 @@
       "herstelTermijn": null,
       "inBehandeling": {
         "_id": 1,
-        "datum": "2020-04-27T15:05:53+02:00",
+        "datum": "2020-04-28T15:05:53+02:00",
         "document": []
       }
     },

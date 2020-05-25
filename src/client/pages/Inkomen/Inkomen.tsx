@@ -52,7 +52,7 @@ export default () => {
     AppContext
   );
   const aanvragen = FOCUS_AANVRAGEN.content || [];
-  const FocusTozoItem = FOCUS_TOZO.content;
+  const tozoItems = FOCUS_TOZO.content || [];
   const uitkeringsspecificaties =
     FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties || [];
   const jaaropgaven = FOCUS_SPECIFICATIES.content?.jaaropgaven || [];
@@ -62,38 +62,32 @@ export default () => {
       item => !item.steps.some(step => step.status === 'Besluit')
     );
 
-    if (
-      FocusTozoItem &&
-      !FocusTozoItem?.status.isComplete &&
-      FeatureToggle.tozoActive
-    ) {
-      const item = FocusTozoItem as any;
-      item.status = 'In behandeling';
-      itemsRequested.push(item);
+    if (tozoItems.length && FeatureToggle.tozoActive) {
+      itemsRequested.push(
+        ...(tozoItems.filter(tozoItem => !tozoItem.status.isComplete) as any)
+      );
     }
 
     return addTitleLinkComponent(
       itemsRequested.sort(dateSort('ISODatePublished', 'desc'))
     );
-  }, [aanvragen, FocusTozoItem]);
+  }, [aanvragen, tozoItems]);
 
   const itemsDecided = useMemo(() => {
     const itemsDecided = aanvragen.filter(item =>
       item.steps.some(step => step.status === 'Besluit')
     );
 
-    if (
-      FocusTozoItem &&
-      FocusTozoItem?.status.isComplete &&
-      FeatureToggle.tozoActive
-    ) {
-      itemsDecided.push(FocusTozoItem as any);
+    if (tozoItems.length && FeatureToggle.tozoActive) {
+      itemsDecided.push(
+        ...(tozoItems.filter(tozoItem => tozoItem.status.isComplete) as any)
+      );
     }
 
     return addTitleLinkComponent(
       itemsDecided.sort(dateSort('ISODatePublished', 'desc'))
     );
-  }, [aanvragen, FocusTozoItem]);
+  }, [aanvragen, tozoItems]);
 
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
