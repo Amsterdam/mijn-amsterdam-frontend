@@ -67,7 +67,6 @@ LABEL name="mijnamsterdam FRONTEND"
 LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
 
 ENV LOGOUT_URL=${LOGOUT_URL:-notset}
-ENV TZ=Europe/Amsterdam
 
 # Setting the correct timezone for the build
 RUN ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
@@ -112,7 +111,6 @@ COPY --from=build-deps /app/src/client/public/robots.production.txt /usr/share/n
 FROM node:13.7.0 as deploy-ap-bff
 
 ENV BFF_ENV=production
-ENV TZ=Europe/Amsterdam
 
 LABEL name="mijnamsterdam BFF (Back-end for front-end)"
 LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
