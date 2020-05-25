@@ -230,6 +230,7 @@ export function fillStepContent(
   };
 
   return Object.assign({}, stepData, {
+    product: product.title,
     description: stepContent.description(product, customData),
     status: stepContent.status,
     isActive: getLatestStep(product.steps) === stepData.title,

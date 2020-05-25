@@ -123,6 +123,7 @@ export interface FocusItemStep {
   description: string;
   datePublished: string;
   status: RequestStatus | '';
+  product?: string;
   isActive?: boolean;
   isChecked?: boolean;
 }

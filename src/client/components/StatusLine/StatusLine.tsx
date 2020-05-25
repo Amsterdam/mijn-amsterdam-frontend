@@ -24,8 +24,8 @@ export interface StatusLineItem {
   datePublished: string;
   description: string;
   documents: Document[];
-  isActive: boolean;
-  isChecked: boolean;
+  isActive?: boolean;
+  isChecked?: boolean;
   [key: string]: any;
 }
 
@@ -340,8 +340,8 @@ export default function StatusLine({
                   index={index}
                   total={items.length}
                   max={maxStepCount}
-                  isActive={item.isActive}
-                  isChecked={item.isChecked}
+                  isActive={Boolean(item.isActive)}
+                  isChecked={Boolean(item.isChecked)}
                 />
                 <StatusLinePanelStatus
                   datePublished={item.datePublished}

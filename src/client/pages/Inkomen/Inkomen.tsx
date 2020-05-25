@@ -26,6 +26,7 @@ import {
 } from '../../pages/InkomenSpecificaties/InkomenSpecificaties';
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import styles from './Inkomen.module.scss';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 
 export const incomSpecificationsRouteMonthly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES']
@@ -64,12 +65,19 @@ export default () => {
 
     if (tozoItems.length && FeatureToggle.tozoActive) {
       itemsRequested.push(
-        ...(tozoItems.filter(tozoItem => !tozoItem.status.isComplete) as any)
+        ...tozoItems.filter(tozoItem => tozoItem.status !== 'Besluit')
       );
     }
 
     return addTitleLinkComponent(
-      itemsRequested.sort(dateSort('ISODatePublished', 'desc'))
+      itemsRequested
+        .map(item =>
+          Object.assign(item, {
+            displayDatePublished: defaultDateFormat(item.datePublished),
+            displayDateStart: defaultDateFormat(item.dateStart),
+          })
+        )
+        .sort(dateSort('datePublished', 'desc'))
     );
   }, [aanvragen, tozoItems]);
 
@@ -80,12 +88,19 @@ export default () => {
 
     if (tozoItems.length && FeatureToggle.tozoActive) {
       itemsDecided.push(
-        ...(tozoItems.filter(tozoItem => tozoItem.status.isComplete) as any)
+        ...tozoItems.filter(tozoItem => tozoItem.status === 'Besluit')
       );
     }
 
     return addTitleLinkComponent(
-      itemsDecided.sort(dateSort('ISODatePublished', 'desc'))
+      itemsDecided
+        .map(item =>
+          Object.assign(item, {
+            displayDatePublished: defaultDateFormat(item.datePublished),
+            displayDateStart: defaultDateFormat(item.dateStart),
+          })
+        )
+        .sort(dateSort('datePublished', 'desc'))
     );
   }, [aanvragen, tozoItems]);
 

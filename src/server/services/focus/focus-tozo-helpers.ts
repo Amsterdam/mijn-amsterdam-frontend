@@ -227,11 +227,12 @@ function createTozoAanvraagStep(
   const aanvraag: FocusItemStep = {
     id: TOZO_AANVRAAG_STEP_ID,
     documents,
+    product: 'Tozo-aanvraag-documenten',
     title: 'Tozo-aanvraag',
     description: `Wij hebben uw aanvraag Tozo ontvangen op ${defaultDateFormat(
-      documents[documents.length - 1].datePublished
+      documents[0].datePublished
     )}.`,
-    datePublished: documents[documents.length - 1].datePublished,
+    datePublished: documents[0].datePublished,
     status: 'Aanvraag',
   };
 
@@ -278,6 +279,10 @@ export function createFocusItemTozo(steps: FocusItemStep[]) {
   const status = getTozoStatus(steps);
   const id = `tozo-item-${slug(firstActivityDatePublished)}`;
 
+  const stepsOrganized = steps.sort((a: FocusItemStep, b: FocusItemStep) =>
+    a.product! > b.product! ? 1 : 0
+  );
+
   return {
     id,
     dateStart: firstActivityDatePublished,
@@ -289,7 +294,7 @@ export function createFocusItemTozo(steps: FocusItemStep[]) {
       to: generatePath(AppRoutes['INKOMEN/TOZO'], { id }),
       title: 'Bekijk uw Tozo status',
     },
-    steps,
+    steps: stepsOrganized,
   };
 }
 

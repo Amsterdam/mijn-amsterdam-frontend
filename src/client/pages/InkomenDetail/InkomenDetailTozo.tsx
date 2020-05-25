@@ -27,6 +27,8 @@ export default () => {
     },
   } = useRouter();
 
+  console.log(tozoItems);
+
   const TozoItem = tozoItems.find(item => item.id === id);
   const noContent = !isLoading(FOCUS_TOZO) && !TozoItem;
 
@@ -35,6 +37,16 @@ export default () => {
   if (TozoItem) {
     title = TozoItem.title;
   }
+
+  const uitkeringSteps = TozoItem?.steps.filter(
+    step => step.product === 'Tozo-uitkering'
+  );
+  const leningSteps = TozoItem?.steps.filter(
+    step => step.product === 'Tozo-lening'
+  );
+  const aanvraagSteps = TozoItem?.steps.filter(
+    step => step.product === 'Tozo-aanvraag-documenten'
+  );
 
   return (
     <DetailPage className={styles.DetailPageTozo}>
@@ -63,41 +75,41 @@ export default () => {
         )}
         {isLoading(FOCUS_TOZO) && <LoadingContent />}
       </PageContent>
-      {!!TozoItem?.steps.aanvraag && (
+      {!!(aanvraagSteps && aanvraagSteps.length) && (
         <StatusLine
           className={styles.AanvraagStatusLine}
           trackCategory={`Inkomen en Stadspas / Tozo aanvraag`}
           statusLabel="Tozo-aanvraag"
-          items={TozoItem.steps.aanvraag}
+          items={aanvraagSteps}
           showToggleMore={false}
           maxStepCount={-1}
           id={'inkomen-stadspas-detail-tozo-aanvraag'}
         />
       )}
-      {!!TozoItem?.steps.uitkering.length && (
+      {!!(uitkeringSteps && uitkeringSteps.length) && (
         <StatusLine
           trackCategory={`Inkomen en Stadspas / Tozo uitkering levensonderhoud`}
           statusLabel="Tozo-uitkering"
-          items={TozoItem.steps.uitkering}
+          items={uitkeringSteps}
           showToggleMore={false}
           maxStepCount={
-            TozoItem.steps.uitkering.length === 1 &&
-            TozoItem.steps.uitkering[0].status === stepStatusLabels.beslissing
+            uitkeringSteps.length === 1 &&
+            uitkeringSteps[0].status === stepStatusLabels.beslissing
               ? -1
               : 2
           }
           id={'inkomen-stadspas-detail-tozo-uitkering'}
         />
       )}
-      {!!TozoItem?.steps.lening.length && (
+      {!!(leningSteps && leningSteps.length) && (
         <StatusLine
           trackCategory={`Inkomen en Stadspas / Tozo lening bedrijfskrediet`}
           statusLabel="Tozo-lening"
-          items={TozoItem.steps.lening}
+          items={leningSteps}
           showToggleMore={false}
           maxStepCount={
-            TozoItem.steps.lening.length === 1 &&
-            TozoItem.steps.lening[0].status === stepStatusLabels.beslissing
+            leningSteps.length === 1 &&
+            leningSteps[0].status === stepStatusLabels.beslissing
               ? -1
               : 2
           }
