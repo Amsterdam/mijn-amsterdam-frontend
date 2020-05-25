@@ -244,55 +244,57 @@ export function formatBrpProfileData(brpData: BrpResponseData): BrpProfileData {
     adres: format(brpInfoLabels.adres, brpData.adres, brpData),
   };
 
-  if (brpData.verbintenis && !!brpData.verbintenis.soortVerbintenis) {
-    profileData.verbintenis = {
-      ...format(brpInfoLabels.verbintenis, brpData.verbintenis, brpData),
-      ...format(
-        brpInfoLabels.persoonSecundair,
-        brpData.verbintenis.persoon,
-        brpData
-      ),
-    };
-  }
+  if (!!brpData?.persoon.mokum) {
+    if (brpData.verbintenis && !!brpData.verbintenis.soortVerbintenis) {
+      profileData.verbintenis = {
+        ...format(brpInfoLabels.verbintenis, brpData.verbintenis, brpData),
+        ...format(
+          brpInfoLabels.persoonSecundair,
+          brpData.verbintenis.persoon,
+          brpData
+        ),
+      };
+    }
 
-  if (
-    Array.isArray(brpData.verbintenisHistorisch) &&
-    brpData.verbintenisHistorisch.length
-  ) {
-    const verbintenisHistorisch = brpData.verbintenisHistorisch.map(
-      verbintenis => {
-        return {
-          ...format(brpInfoLabels.verbintenis, verbintenis, brpData),
-          ...format(
-            brpInfoLabels.persoonSecundair,
-            verbintenis.persoon,
-            brpData
-          ),
-        };
-      }
-    );
-    profileData.verbintenisHistorisch = verbintenisHistorisch;
-  }
+    if (
+      Array.isArray(brpData.verbintenisHistorisch) &&
+      brpData.verbintenisHistorisch.length
+    ) {
+      const verbintenisHistorisch = brpData.verbintenisHistorisch.map(
+        verbintenis => {
+          return {
+            ...format(brpInfoLabels.verbintenis, verbintenis, brpData),
+            ...format(
+              brpInfoLabels.persoonSecundair,
+              verbintenis.persoon,
+              brpData
+            ),
+          };
+        }
+      );
+      profileData.verbintenisHistorisch = verbintenisHistorisch;
+    }
 
-  if (Array.isArray(brpData.kinderen) && brpData.kinderen.length) {
-    profileData.kinderen = brpData.kinderen.map(kind =>
-      format(brpInfoLabels.persoonSecundair, kind, brpData)
-    );
-  }
+    if (Array.isArray(brpData.kinderen) && brpData.kinderen.length) {
+      profileData.kinderen = brpData.kinderen.map(kind =>
+        format(brpInfoLabels.persoonSecundair, kind, brpData)
+      );
+    }
 
-  if (Array.isArray(brpData.ouders) && brpData.ouders.length) {
-    profileData.ouders = brpData.ouders.map(ouder =>
-      format(brpInfoLabels.persoonSecundair, ouder, brpData)
-    );
-  }
+    if (Array.isArray(brpData.ouders) && brpData.ouders.length) {
+      profileData.ouders = brpData.ouders.map(ouder =>
+        format(brpInfoLabels.persoonSecundair, ouder, brpData)
+      );
+    }
 
-  if (
-    Array.isArray(brpData.adresHistorisch) &&
-    brpData.adresHistorisch.length
-  ) {
-    profileData.adresHistorisch = brpData.adresHistorisch.map(adres =>
-      format(brpInfoLabels.adres, adres, brpData)
-    );
+    if (
+      Array.isArray(brpData.adresHistorisch) &&
+      brpData.adresHistorisch.length
+    ) {
+      profileData.adresHistorisch = brpData.adresHistorisch.map(adres =>
+        format(brpInfoLabels.adres, adres, brpData)
+      );
+    }
   }
 
   return profileData;
