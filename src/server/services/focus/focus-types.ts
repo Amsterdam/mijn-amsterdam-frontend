@@ -131,8 +131,6 @@ export interface FocusItem {
   id: string;
   datePublished: string;
   dateStart: string;
-  displayDateStart: string;
-  displayDatePublished: string;
   status: RequestStatus;
   title: string;
   steps: FocusItemStep[];

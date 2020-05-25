@@ -7,8 +7,8 @@ import {
   isRecentItem,
   normalizeFocusSourceProduct,
   transformFocusProduct,
-  transformFocusProductNotification,
-  transformFocusProductRecentCase,
+  createFocusProductNotification,
+  createFocusProductRecentCase,
   translateFocusProduct,
 } from './focus-helpers';
 import { tozoTitleTranslations } from './focus-tozo-content';
@@ -72,12 +72,12 @@ export async function fetchFOCUSAanvragenGenerated(sessionID: SessionID) {
       .map(product => translateFocusProduct(product, tozoTitleTranslations));
 
     notifications = focusProductsNormalized.map(product =>
-      transformFocusProductNotification(product, contentLabels)
+      createFocusProductNotification(product, contentLabels)
     );
 
     cases = focusProductsNormalized
       .filter(product => isRecentItem(product.steps, compareDate))
-      .map(prod => transformFocusProductRecentCase(prod));
+      .map(prod => createFocusProductRecentCase(prod));
   }
 
   return {

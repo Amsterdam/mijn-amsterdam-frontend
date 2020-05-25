@@ -11,6 +11,7 @@ import {
   LabelData,
   ProductStepLabels,
   StepTitle,
+  RequestStatus,
 } from './focus-types';
 import { defaultDateFormat } from '../../../universal/helpers';
 
@@ -268,38 +269,3 @@ export type TozoProductTitle =
   | 'Uitkering Tozo'
   | 'Voorschot Tozo (voor ondernemers) (Eenm.)'
   | string;
-
-export type FocusTozoDocumentType = 'E-AANVR-KBBZ' | 'E-AANVR-TOZO';
-
-export interface FocusTozoDocument extends GenericDocument {
-  displayDate: string;
-  displayTime: string;
-  status: 'Ontvangen';
-  process: FocusItemStep[];
-}
-
-export interface FocusTozo {
-  id: string;
-  chapter: Chapter;
-  link: LinkProps;
-  title: string;
-  dateStart: string;
-  datePublished: string;
-  description: string;
-  status: {
-    lening: StepTitle | null;
-    uitkering: StepTitle | null;
-    isComplete: boolean;
-  };
-  notifications: {
-    lening: MyNotification | null;
-    uitkering: MyNotification | null;
-    voorschot: MyNotification[];
-    aanvraag: MyNotification[];
-  };
-  steps: {
-    lening: FocusItemStep[];
-    uitkering: FocusItemStep[];
-    aanvraag: FocusItemStep[];
-  };
-}
