@@ -3,23 +3,23 @@
     "_id": "0-0",
     "_meest_recent": "beslissing",
     "dienstverleningstermijn": 28,
-    "naam": "Voorschot Tozo (voor ondernemers) (Eenm.)",
+    "naam": "Tozo Bedrijfskapitaal (voor ondernemers)",
     "processtappen": {
       "aanvraag": {
         "_id": 0,
-        "datum": "2020-04-07T00:00:00+02:00",
+        "datum": "2020-04-07T15:05:53+02:00",
         "document": []
       },
       "beslissing": {
         "_id": 3,
-        "datum": "2020-04-07T00:00:00+02:00",
+        "datum": "2020-04-15T00:00:00+02:00",
         "document": [
           {
-            "$ref": "focus/document?id=660000000000025&isBulk=false&isDms=false",
-            "id": 660000000000025,
+            "$ref": "focus/document?id=660000000000039&isBulk=false&isDms=false",
+            "id": 660000000000039,
             "isBulk": false,
             "isDms": false,
-            "omschrijving": "Bbz Toekennen voorschot Tozo via batch"
+            "omschrijving": "Toekennen lening Tozo"
           }
         ]
       },
@@ -27,7 +27,7 @@
       "herstelTermijn": null,
       "inBehandeling": {
         "_id": 1,
-        "datum": "2020-04-07T00:00:00+02:00",
+        "datum": "2020-04-07T15:05:53+02:00",
         "document": []
       }
     },
@@ -151,6 +151,52 @@
     "soortProduct": "Participatiewet"
   },
   {
+    "_id": "1-3",
+    "_meest_recent": "beslissing",
+    "naam": "Tozo Levensonderhoud (voor ondernemers)",
+    "processtappen": {
+      "aanvraag": {
+        "_id": 0,
+        "datum": "2020-04-03T15:05:53+02:00",
+        "document": []
+      },
+      "beslissing": {
+        "_id": 3,
+        "datum": "2020-04-10T00:00:00+02:00",
+        "document": [
+          {
+            "$ref": "focus/document?id=660000000000037&isBulk=false&isDms=false",
+            "id": 660000000000037,
+            "isBulk": false,
+            "isDms": false,
+            "omschrijving": "Tozo Toekennen"
+          }
+        ]
+      },
+      "bezwaar": null,
+      "herstelTermijn": {
+        "_id": 2,
+        "datum": "2020-04-06T15:05:53+02:00",
+        "document": [
+          {
+            "$ref": "focus/document?id=660000000000038&isBulk=false&isDms=false",
+            "id": 660000000000038,
+            "isBulk": false,
+            "isDms": false,
+            "omschrijving": "Tozo Hersteltermijn"
+          }
+        ]
+      },
+      "inBehandeling": {
+        "_id": 1,
+        "datum": "2020-04-03T15:05:53+02:00",
+        "document": []
+      }
+    },
+    "soortProduct": "Participatiewet",
+    "typeBesluit": "Toekenning"
+  },
+  {
     "_id": "2-0",
     "_meest_recent": "beslissing",
     "dienstverleningstermijn": 56,
@@ -265,7 +311,7 @@
     "processtappen": {
       "aanvraag": {
         "_id": 0,
-        "datum": "2020-04-28T15:05:53+02:00",
+        "datum": "2020-05-03T15:05:53+02:00",
         "document": []
       },
       "beslissing": null,
@@ -273,319 +319,10 @@
       "herstelTermijn": null,
       "inBehandeling": {
         "_id": 1,
-        "datum": "2020-04-27T15:05:53+02:00",
+        "datum": "2020-05-04T15:05:53+02:00",
         "document": []
       }
     },
     "soortProduct": "Participatiewet"
-  },
-  {
-    "_id": "1-0",
-    "_meest_recent": "herstelTermijn",
-    "naam": "Tozo Levensonderhoud (voor ondernemers)",
-    "processtappen": {
-      "aanvraag": {
-        "_id": 0,
-        "datum": "2020-04-28T15:05:53+02:00",
-        "document": []
-      },
-      "beslissing": null,
-      "bezwaar": null,
-      "herstelTermijn": {
-        "_id": 2,
-        "aantalDagenHerstelTermijn": "14",
-        "datum": "2020-04-29T15:05:53+02:00",
-        "document": [
-          {
-            "$ref": "focus/document?id=660000000000031&isBulk=false&isDms=false",
-            "id": 660000000000031,
-            "isBulk": false,
-            "isDms": false,
-            "omschrijving": "Hersteltermijn uitkering Tozo"
-          }
-        ]
-      },
-      "inBehandeling": {
-        "_id": 1,
-        "datum": "2020-04-27T15:05:53+02:00",
-        "document": []
-      }
-    },
-    "soortProduct": "Participatiewet"
-  },
-  {
-    "_id": "0-0",
-    "_meest_recent": "beslissing",
-    "dienstverleningstermijn": 28,
-    "naam": "Voorschot Tozo (voor ondernemers) (Eenm.)",
-    "processtappen": {
-      "aanvraag": {
-        "_id": 0,
-        "datum": "2020-04-01T00:00:00+02:00",
-        "document": []
-      },
-      "beslissing": {
-        "_id": 3,
-        "datum": "2020-04-01T00:00:00+02:00",
-        "document": [
-          {
-            "$ref": "focus/document?id=660000000000028&isBulk=false&isDms=false",
-            "id": 660000000000028,
-            "isBulk": false,
-            "isDms": false,
-            "omschrijving": "Voorschot Bbz Corona regeling (Eenm.)"
-          }
-        ]
-      },
-      "bezwaar": null,
-      "herstelTermijn": null,
-      "inBehandeling": {
-        "_id": 1,
-        "datum": "2020-04-01T00:00:00+02:00",
-        "document": []
-      }
-    },
-    "soortProduct": "Bijzondere Bijstand",
-    "typeBesluit": "Toekenning"
-  },
-  {
-    "_id": "1-0",
-    "_meest_recent": "herstelTermijn",
-    "naam": "Tozo Levensonderhoud (voor ondernemers)",
-    "processtappen": {
-      "aanvraag": {
-        "_id": 0,
-        "datum": "2020-04-28T15:05:53+02:00",
-        "document": []
-      },
-      "beslissing": null,
-      "bezwaar": null,
-      "herstelTermijn": {
-        "_id": 2,
-        "aantalDagenHerstelTermijn": "14",
-        "datum": "2020-04-29T15:05:53+02:00",
-        "document": [
-          {
-            "$ref": "focus/document?id=660000000000031&isBulk=false&isDms=false",
-            "id": 660000000000031,
-            "isBulk": false,
-            "isDms": false,
-            "omschrijving": "Hersteltermijn uitkering Tozo"
-          }
-        ]
-      },
-      "inBehandeling": {
-        "_id": 1,
-        "datum": "2020-04-27T15:05:53+02:00",
-        "document": []
-      }
-    },
-    "soortProduct": "Participatiewet"
-  },
-  {
-    "_id": "2-0",
-    "_meest_recent": "beslissing",
-    "dienstverleningstermijn": 28,
-    "naam": "Tozo Bedrijfskapitaal (voor ondernemers)",
-    "processtappen": {
-      "aanvraag": {
-        "_id": 0,
-        "datum": "2020-04-28T00:00:00+02:00",
-        "document": []
-      },
-      "beslissing": {
-        "_id": 3,
-        "datum": "2020-05-01T00:00:00+02:00",
-        "document": [
-          {
-            "$ref": "focus/document?id=660000000000028&isBulk=false&isDms=false",
-            "id": 660000000000028,
-            "isBulk": false,
-            "isDms": false,
-            "omschrijving": "Tozo Bedrijfskapitaal (voor ondernemers)"
-          }
-        ]
-      },
-      "bezwaar": null,
-      "herstelTermijn": {
-        "_id": 2,
-        "aantalDagenHerstelTermijn": "14",
-        "datum": "2020-04-29T15:05:53+02:00",
-        "document": [
-          {
-            "$ref": "focus/document?id=660000000000031&isBulk=false&isDms=false",
-            "id": 660000000000031,
-            "isBulk": false,
-            "isDms": false,
-            "omschrijving": "Hersteltermijn lening Tozo"
-          }
-        ]
-      },
-      "inBehandeling": {
-        "_id": 1,
-        "datum": "2020-04-27T00:00:00+02:00",
-        "document": []
-      }
-    },
-    "soortProduct": "Bijzondere Bijstand",
-    "typeBesluit": "Toekenning"
-  },
-  {
-    "_id": "0-0",
-    "_meest_recent": "beslissing",
-    "dienstverleningstermijn": 28,
-    "naam": "Voorschot Tozo (voor ondernemers) (Eenm.)",
-    "processtappen": {
-      "aanvraag": {
-        "_id": 0,
-        "datum": "2020-04-07T00:00:00+02:00",
-        "document": []
-      },
-      "beslissing": {
-        "_id": 3,
-        "datum": "2020-04-07T00:00:00+02:00",
-        "document": [
-          {
-            "$ref": "focus/document?id=660000000000025&isBulk=false&isDms=false",
-            "id": 660000000000025,
-            "isBulk": false,
-            "isDms": false,
-            "omschrijving": "Bbz Toekennen voorschot Tozo via batch"
-          }
-        ]
-      },
-      "bezwaar": null,
-      "herstelTermijn": null,
-      "inBehandeling": {
-        "_id": 1,
-        "datum": "2020-04-07T00:00:00+02:00",
-        "document": []
-      }
-    },
-    "soortProduct": "Bijzondere Bijstand",
-    "typeBesluit": "Toekenning"
-  },
-  {
-    "_id": "0-ss0",
-    "_meest_recent": "beslissing",
-    "dienstverleningstermijn": 28,
-    "naam": "Voorschot Tozo (voor ondernemers) (Eenm.)",
-    "processtappen": {
-      "aanvraag": {
-        "_id": 0,
-        "datum": "2020-05-07T00:00:00+02:00",
-        "document": []
-      },
-      "beslissing": {
-        "_id": 3,
-        "datum": "2020-05-07T00:00:00+02:00",
-        "document": [
-          {
-            "$ref": "focus/document?id=660000000000025&isBulk=false&isDms=false",
-            "id": 660000000000025,
-            "isBulk": false,
-            "isDms": false,
-            "omschrijving": "Bbz Toekennen voorschot Tozo via batch"
-          }
-        ]
-      },
-      "bezwaar": null,
-      "herstelTermijn": null,
-      "inBehandeling": {
-        "_id": 1,
-        "datum": "2020-04-07T00:00:00+02:00",
-        "document": []
-      }
-    },
-    "soortProduct": "Bijzondere Bijstand",
-    "typeBesluit": "Toekenning"
-  },
-  {
-    "_id": "0-1",
-    "_meest_recent": "beslissing",
-    "dienstverleningstermijn": 28,
-    "naam": "Tozo Bedrijfskapitaal (voor ondernemers)",
-    "processtappen": {
-      "aanvraag": {
-        "_id": 0,
-        "datum": "2020-04-07T15:05:53+02:00",
-        "document": []
-      },
-      "beslissing": {
-        "_id": 3,
-        "datum": "2020-04-15T00:00:00+02:00",
-        "document": []
-      },
-      "bezwaar": null,
-      "herstelTermijn": null,
-      "inBehandeling": {
-        "_id": 1,
-        "datum": "2020-04-07T15:05:53+02:00",
-        "document": []
-      }
-    },
-    "soortProduct": "Bijzondere Bijstand",
-    "typeBesluit": "Toekenning"
-  },
-  {
-    "_id": "1-3",
-    "_meest_recent": "beslissing",
-    "naam": "Tozo Levensonderhoud (voor ondernemers)",
-    "processtappen": {
-      "aanvraag": {
-        "_id": 0,
-        "datum": "2020-04-03T15:05:53+02:00",
-        "document": []
-      },
-      "beslissing": {
-        "_id": 3,
-        "datum": "2020-04-10T00:00:00+02:00",
-        "document": []
-      },
-      "bezwaar": null,
-      "herstelTermijn": {
-        "_id": 2,
-        "datum": "2020-04-06T15:05:53+02:00",
-        "document": []
-      },
-      "inBehandeling": {
-        "_id": 1,
-        "datum": "2020-04-03T15:05:53+02:00",
-        "document": []
-      }
-    },
-    "soortProduct": "Participatiewet",
-    "typeBesluit": "Toekenning"
-  },
-  {
-    "_id": "3-0",
-    "_meest_recent": "beslissing",
-    "naam": "Tozo Levensonderhoud (voor ondernemers)",
-    "processtappen": {
-      "aanvraag": {
-        "_id": 0,
-        "datum": "2020-04-07T15:05:53+02:00",
-        "document": []
-      },
-      "beslissing": {
-        "_id": 3,
-        "datum": "2020-04-11T00:00:00+02:00",
-        "document": [],
-        "reden": "Reden afwijzing Tozo uitkering"
-      },
-      "bezwaar": null,
-      "herstelTermijn": {
-        "_id": 2,
-        "datum": "2020-04-08T15:05:53+02:00",
-        "document": []
-      },
-      "inBehandeling": {
-        "_id": 1,
-        "datum": "2020-04-07T15:05:53+02:00",
-        "document": []
-      }
-    },
-    "soortProduct": "Participatiewet",
-    "typeBesluit": "Afwijzing"
   }
 ]
