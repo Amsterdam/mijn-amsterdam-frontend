@@ -1,5 +1,5 @@
 import Linkd, { Button } from '../Button/Button';
-import React, { CSSProperties, useMemo } from 'react';
+import React, { CSSProperties } from 'react';
 
 import { IconChevronLeft, IconDownload } from '../../assets/icons';
 import { Document } from '../DocumentList/DocumentList';
