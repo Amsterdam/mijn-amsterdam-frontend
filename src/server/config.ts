@@ -1,14 +1,17 @@
 import { FeatureToggle } from '../universal/config';
 import { ApiStateKey } from './services/state';
-import { API_BASE_PATH } from '../universal/config/api';
 import { IS_AP } from '../universal/config/env';
 
+const API_BASE_PATH = IS_AP ? '' : '/test-api';
 // Urls used in the BFF api
 // Microservices (Tussen Api) base url
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';
-export const BFF_PORT = process.env.BFF_PORT || 5000;
+export const BFF_PORT =
+  process.env.BFF_PORT !== undefined ? process.env.BFF_PORT : 5000;
 
-export const BFF_MS_API_BASE_URL = `http://${BFF_HOST}:${BFF_PORT}${API_BASE_PATH}`;
+export const BFF_MS_API_BASE_URL = `http://${BFF_HOST}${
+  BFF_PORT ? `:${BFF_PORT}` : ''
+}${API_BASE_PATH}`;
 export const BFF_DATAPUNT_API_BASE_URL = IS_AP
   ? 'https://api.data.amsterdam.nl'
   : BFF_MS_API_BASE_URL;

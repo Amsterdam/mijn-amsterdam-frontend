@@ -1,21 +1,19 @@
 import { format } from 'date-fns';
 import { ReactNode } from 'react';
 import { Chapters } from '../../../universal/config';
+import { API_BASE_PATH } from '../../../universal/config/api';
 import {
   dateFormat,
   dateSort,
   defaultDateFormat,
 } from '../../../universal/helpers';
-import { MyNotification } from '../../../universal/types';
-import { requestData } from '../../helpers';
-import { ApiUrls, getApiConfigValue } from '../../config';
 import { apiSuccesResult } from '../../../universal/helpers/api';
+import { MyNotification } from '../../../universal/types';
 import {
+  fetchFOCUSCombined,
   FocusInkomenSpecificatie as FocusInkomenSpecificatieFromSource,
   FocusInkomenSpecificatieType,
-  fetchFOCUSCombined,
 } from './focus-combined';
-import { API_BASE_PATH } from '../../../universal/config/api';
 
 export const focusInkomenSpecificatieTypes: {
   [type in FocusInkomenSpecificatieType]: string;
