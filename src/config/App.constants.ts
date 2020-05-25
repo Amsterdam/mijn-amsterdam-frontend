@@ -8,7 +8,7 @@ export const FeatureToggle = {
   milieuzoneApiActive: true,
   focusUitkeringsspecificatiesActive: true,
   focusCombinedActive: true,
-  identiteitsbewijzenActive: !IS_PRODUCTION,
+  identiteitsbewijzenActive: true,
   tozoActive: !IS_PRODUCTION,
 };
 
