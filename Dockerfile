@@ -68,9 +68,6 @@ LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
 
 ENV LOGOUT_URL=${LOGOUT_URL:-notset}
 
-# Setting the correct timezone for the build
-RUN ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
-
 COPY conf/nginx-server-default.template.conf /tmp/nginx-server-default.template.conf
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
@@ -116,10 +113,6 @@ LABEL name="mijnamsterdam BFF (Back-end for front-end)"
 LABEL repository-url="https://github.com/Amsterdam/mijn-amsterdam-frontend"
 
 WORKDIR /app
-
-# Setting the correct timezone for the build
-RUN rm /etc/localtime
-RUN ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
 
 # Copy the built application files to the current image
 COPY --from=build-app /app/build-bff /app/build-bff
