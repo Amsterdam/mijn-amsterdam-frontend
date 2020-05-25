@@ -47,3 +47,15 @@ export const omit = <T, U extends keyof T>(obj: T, keys: U[]): Omit<T, U> =>
 export function jsonCopy(data: any) {
   return JSON.parse(JSON.stringify(data));
 }
+
+export function sortAlpha(key: string) {
+  return (a: Record<string, any>, b: Record<string, any>) => {
+    if (a[key] < b[key]) {
+      return -1;
+    }
+    if (a[key] > b[key]) {
+      return 1;
+    }
+    return 0;
+  };
+}

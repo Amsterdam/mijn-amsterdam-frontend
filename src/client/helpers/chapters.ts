@@ -10,6 +10,7 @@ function isChapterActive(
     WMO,
     FOCUS_SPECIFICATIES,
     FOCUS_AANVRAGEN,
+    FOCUS_TOZO,
     ERFPACHT,
     AFVAL,
     BRP,
@@ -21,6 +22,7 @@ function isChapterActive(
     case Chapters.INKOMEN:
       return (
         !(isLoading(FOCUS_AANVRAGEN) && isLoading(FOCUS_SPECIFICATIES)) &&
+        !(isLoading(FOCUS_TOZO) && isLoading(FOCUS_TOZO)) &&
         !(isError(FOCUS_AANVRAGEN) && isError(FOCUS_SPECIFICATIES))
       );
 
@@ -58,7 +60,7 @@ function isChapterActive(
       return (
         FeatureToggle.identiteitsbewijzenActive &&
         !isLoading(BRP) &&
-        !!BRP.content?.identiteitsbewijzen
+        !!BRP.content?.identiteitsbewijzen?.length
       );
 
     case Chapters.BRP:
@@ -78,6 +80,7 @@ export function getMyChapters(appState: AppState): ChaptersState {
     WMO,
     FOCUS_AANVRAGEN,
     FOCUS_SPECIFICATIES,
+    FOCUS_TOZO,
     ERFPACHT,
     AFVAL,
     BRP,
@@ -88,6 +91,7 @@ export function getMyChapters(appState: AppState): ChaptersState {
   const wmoIsloading = isLoading(WMO);
   const focusAanvragenIsloading = isLoading(FOCUS_AANVRAGEN);
   const focusSpecificatiesIsloading = isLoading(FOCUS_SPECIFICATIES);
+  const focusTozoIsloading = isLoading(FOCUS_TOZO);
   const erfpachtIsloading = isLoading(ERFPACHT);
   const brpIsLoading = isLoading(BRP);
   const garbageIsLoading = isLoading(AFVAL);
@@ -106,6 +110,7 @@ export function getMyChapters(appState: AppState): ChaptersState {
     brpIsLoading ||
     focusSpecificatiesIsloading ||
     focusAanvragenIsloading ||
+    focusTozoIsloading ||
     erfpachtIsloading ||
     garbageIsLoading;
 

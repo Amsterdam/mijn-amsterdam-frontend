@@ -5,6 +5,7 @@ import {
   dateFormat,
   dateSort,
   defaultDateFormat,
+  sortAlpha,
 } from '../../../universal/helpers';
 import { GenericDocument } from '../../../universal/types';
 import { stepLabels } from './focus-aanvragen-content';
@@ -278,10 +279,9 @@ export function createFocusItemTozo(steps: FocusItemStep[]) {
 
   const status = getTozoStatus(steps);
   const id = `tozo-item-${slug(firstActivityDatePublished)}`;
+  let stepsOrganized = steps.sort(sortAlpha('product'));
 
-  const stepsOrganized = steps.sort((a: FocusItemStep, b: FocusItemStep) =>
-    a.product! > b.product! ? 1 : 0
-  );
+  stepsOrganized = stepsOrganized.filter(step => step.title !== 'aanvraag');
 
   return {
     id,

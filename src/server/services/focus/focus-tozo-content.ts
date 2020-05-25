@@ -1,19 +1,11 @@
-import { AppRoutes, Chapter } from '../../../universal/config';
-import {
-  LinkProps,
-  MyNotification,
-  GenericDocument,
-} from '../../../universal/types';
+import { defaultDateFormat } from '../../../universal/helpers';
 import { stepLabels } from './focus-aanvragen-content';
 import {
   DocumentTitles,
   FocusItemStep,
   LabelData,
   ProductStepLabels,
-  StepTitle,
-  RequestStatus,
 } from './focus-types';
-import { defaultDateFormat } from '../../../universal/helpers';
 
 export const TOZO_AANVRAAG_STEP_ID = 'aanvraag-step-tozo';
 
