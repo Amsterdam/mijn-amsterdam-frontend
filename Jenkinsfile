@@ -64,7 +64,6 @@ pipeline {
         script { currentBuild.displayName = "TEST Build #${BUILD_NUMBER} (${COMMIT_HASH})" }
         sh "docker build -t ${IMAGE_TEST} " +
            "--shm-size 1G " +
-           "-e TZ=Europe/Amsterdam " +
            "--target=serve-ot-bff " +
            "."
         sh "docker push ${IMAGE_TEST}"
@@ -97,7 +96,6 @@ pipeline {
         // build the Front-end/nginx image
         sh "docker build -t ${IMAGE_ACCEPTANCE} " +
            "--target=deploy-acceptance-frontend " +
-           "-e TZ=Europe/Amsterdam " +
            "--shm-size 1G " +
            "."
         sh "docker push ${IMAGE_ACCEPTANCE}"
@@ -105,7 +103,6 @@ pipeline {
         // build the BFF/node image
         sh "docker build -t ${IMAGE_ACCEPTANCE_BFF} " +
            "--target=deploy-ap-bff " +
-           "-e TZ=Europe/Amsterdam " +
            "--shm-size 1G " +
            "."
         sh "docker push ${IMAGE_ACCEPTANCE_BFF}"
