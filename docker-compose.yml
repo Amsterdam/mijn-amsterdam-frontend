@@ -8,6 +8,7 @@ services:
       target: build-deps
     environment:
       - BFF_DISABLE_MOCK_ADAPTER=true
+      - TZ=Europe/Amsterdam
     entrypoint: npm run bff-api:test
 
   test-unit-client:
