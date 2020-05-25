@@ -126,7 +126,6 @@ COPY --from=build-app /app/build-bff /app/build-bff
 
 # Copy required node modules
 COPY --from=build-app /app/node_modules /app/node_modules
-COPY --from=build-app /app/.env.production /app/.env.production
 COPY --from=build-app /app/package.json /app/package.json
 
 ENV BFF_PORT=80
