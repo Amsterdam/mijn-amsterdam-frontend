@@ -124,7 +124,5 @@ COPY --from=build-app /app/build-bff /app/build-bff
 COPY --from=build-app /app/node_modules /app/node_modules
 COPY --from=build-app /app/package.json /app/package.json
 
-ENV BFF_PORT=80
-
 # Run the app
 ENTRYPOINT npm run bff-api:serve-build
