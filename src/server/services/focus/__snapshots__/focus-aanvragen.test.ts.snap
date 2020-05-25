@@ -1,48 +1,645 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FOCUS_AANVRAGEN service formats the focus aanvragen STADSPAS/BIJSTAND items correctly  1`] = `
+exports[`FOCUS_AANVRAGEN service Normalizes the focus aanvragen items correctly  1`] = `
 Array [
   Object {
-    "case": Object {
-      "chapter": "INKOMEN",
-      "datePublished": "28 juli 2019",
-      "id": "recent-case-123123123-beslissing",
-      "link": Object {
-        "title": "Meer informatie",
-        "to": "/inkomen-en-stadspas/bijstandsuitkering/123123123-beslissing",
+    "datePublished": "2020-04-03T00:00:00",
+    "dateStart": "2020-04-03T00:00:00",
+    "decision": "toekenning",
+    "dienstverleningstermijn": 28,
+    "id": "123123123-beslissing",
+    "inspanningsperiode": 28,
+    "steps": Array [
+      Object {
+        "datePublished": "2020-04-03T00:00:00",
+        "documents": Array [],
+        "id": "123123123-step-aanvraag",
+        "title": "aanvraag",
       },
-      "title": "Bijstandsuitkering",
+      Object {
+        "datePublished": "2020-04-03T00:00:00",
+        "documents": Array [
+          Object {
+            "datePublished": "2020-04-03T00:00:00",
+            "id": "660000000000027",
+            "title": "Voorschot Tozo (voor ondernemers) (Eenm.)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000027&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-beslissing",
+        "title": "beslissing",
+      },
+      Object {
+        "datePublished": "2020-04-03T00:00:00",
+        "documents": Array [],
+        "id": "123123123-step-inBehandeling",
+        "title": "inBehandeling",
+      },
+    ],
+    "title": "Voorschot Tozo (voor ondernemers) (Eenm.)",
+    "type": "Bijzondere Bijstand",
+  },
+  Object {
+    "datePublished": "2019-07-08T15:05:52+02:00",
+    "dateStart": "2019-07-08T15:05:52+02:00",
+    "decision": undefined,
+    "dienstverleningstermijn": 42,
+    "id": "123123123-aanvraag",
+    "inspanningsperiode": 28,
+    "steps": Array [
+      Object {
+        "datePublished": "2019-07-08T15:05:52+02:00",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-07-08T15:05:52+02:00",
+            "id": "4400000004",
+            "title": "Aanvraag Stadspas (papier)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000004&isBulk=true&isDms=false",
+          },
+          Object {
+            "datePublished": "2019-07-08T15:05:52+02:00",
+            "id": "4400000005",
+            "title": "Aanvraag Stadspas (balie)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000005&isBulk=true&isDms=false",
+          },
+          Object {
+            "datePublished": "2019-07-08T15:05:52+02:00",
+            "id": "4400000006",
+            "title": "Aanvraag Stadspas (digitaal)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000006&isBulk=true&isDms=false",
+          },
+        ],
+        "id": "123123123-step-aanvraag",
+        "title": "aanvraag",
+      },
+    ],
+    "title": "Stadspas",
+    "type": "Minimafonds",
+  },
+  Object {
+    "datePublished": "2019-07-08T15:05:52+02:00",
+    "dateStart": "2019-07-07T15:05:52+02:00",
+    "decision": undefined,
+    "dienstverleningstermijn": 42,
+    "id": "123123123-inBehandeling",
+    "inspanningsperiode": 28,
+    "steps": Array [
+      Object {
+        "datePublished": "2019-07-07T15:05:52+02:00",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-07-07T15:05:52+02:00",
+            "id": "4400000004",
+            "title": "Aanvraag Stadspas (papier)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000004&isBulk=true&isDms=false",
+          },
+          Object {
+            "datePublished": "2019-07-07T15:05:52+02:00",
+            "id": "4400000005",
+            "title": "Aanvraag Stadspas (balie)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000005&isBulk=true&isDms=false",
+          },
+          Object {
+            "datePublished": "2019-07-07T15:05:52+02:00",
+            "id": "4400000006",
+            "title": "Aanvraag Stadspas (digitaal)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000006&isBulk=true&isDms=false",
+          },
+        ],
+        "id": "123123123-step-aanvraag",
+        "title": "aanvraag",
+      },
+      Object {
+        "datePublished": "2019-07-08T15:05:52+02:00",
+        "documents": Array [],
+        "id": "123123123-step-inBehandeling",
+        "title": "inBehandeling",
+      },
+    ],
+    "title": "Stadspas",
+    "type": "Minimafonds",
+  },
+  Object {
+    "datePublished": "2019-07-06T15:05:52+02:00",
+    "dateStart": "2019-07-03T15:05:52+02:00",
+    "decision": undefined,
+    "dienstverleningstermijn": 42,
+    "id": "123123123-herstelTermijn",
+    "inspanningsperiode": 28,
+    "steps": Array [
+      Object {
+        "datePublished": "2019-07-03T15:05:52+02:00",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-07-03T15:05:52+02:00",
+            "id": "4400000004",
+            "title": "Aanvraag Stadspas (papier)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000004&isBulk=true&isDms=false",
+          },
+          Object {
+            "datePublished": "2019-07-03T15:05:52+02:00",
+            "id": "4400000005",
+            "title": "Aanvraag Stadspas (balie)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000005&isBulk=true&isDms=false",
+          },
+          Object {
+            "datePublished": "2019-07-03T15:05:52+02:00",
+            "id": "4400000006",
+            "title": "Aanvraag Stadspas (digitaal)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000006&isBulk=true&isDms=false",
+          },
+        ],
+        "id": "123123123-step-aanvraag",
+        "title": "aanvraag",
+      },
+      Object {
+        "aantalDagenHerstelTermijn": 10,
+        "datePublished": "2019-07-06T15:05:52+02:00",
+        "documents": Array [],
+        "id": "123123123-step-herstelTermijn",
+        "title": "herstelTermijn",
+      },
+      Object {
+        "datePublished": "2019-07-04T15:05:52+02:00",
+        "documents": Array [],
+        "id": "123123123-step-inBehandeling",
+        "title": "inBehandeling",
+      },
+    ],
+    "title": "Stadspas",
+    "type": "Minimafonds",
+  },
+  Object {
+    "datePublished": "2019-07-28T15:05:51+02:00",
+    "dateStart": "2019-07-24T15:05:51+02:00",
+    "decision": "toekenning",
+    "dienstverleningstermijn": 21,
+    "id": "123123123-beslissing",
+    "inspanningsperiode": 28,
+    "steps": Array [
+      Object {
+        "datePublished": "2019-07-24T15:05:51+02:00",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-07-24T15:05:51+02:00",
+            "id": "660000000000004",
+            "title": "Aanvraag WWB (GALO)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000004&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-aanvraag",
+        "title": "aanvraag",
+      },
+      Object {
+        "datePublished": "2019-07-28T15:05:51+02:00",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-07-28T15:05:51+02:00",
+            "id": "660000000000005",
+            "title": "Afwijzen Levensonderhoud (BIJ)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000005&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-beslissing",
+        "title": "beslissing",
+      },
+      Object {
+        "datePublished": "2019-07-25T15:05:51+02:00",
+        "documents": Array [],
+        "id": "123123123-step-inBehandeling",
+        "title": "inBehandeling",
+      },
+    ],
+    "title": "Levensonderhoud",
+    "type": "Participatiewet",
+  },
+  Object {
+    "datePublished": "2019-05-07T15:05:51+02:00",
+    "dateStart": "2019-04-09T15:05:51+02:00",
+    "decision": "afwijzing",
+    "dienstverleningstermijn": 21,
+    "id": "123123123-beslissing",
+    "inspanningsperiode": 28,
+    "steps": Array [
+      Object {
+        "datePublished": "2019-04-09T15:05:51+02:00",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-04-09T15:05:51+02:00",
+            "id": "660000000000006",
+            "title": "Aanvraag WWB (GALO)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000006&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-aanvraag",
+        "title": "aanvraag",
+      },
+      Object {
+        "datePublished": "2019-05-07T15:05:51+02:00",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-05-07T15:05:51+02:00",
+            "id": "660000000000007",
+            "title": "Afwijzen Levensonderhoud",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000007&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-beslissing",
+        "title": "beslissing",
+      },
+      Object {
+        "datePublished": "2019-04-11T15:05:51+02:00",
+        "documents": Array [],
+        "id": "123123123-step-inBehandeling",
+        "title": "inBehandeling",
+      },
+    ],
+    "title": "Levensonderhoud",
+    "type": "Participatiewet",
+  },
+  Object {
+    "datePublished": "2019-06-08T15:05:51+02:00",
+    "dateStart": "2019-05-09T15:05:51+02:00",
+    "decision": "toekenning",
+    "dienstverleningstermijn": 21,
+    "id": "123123123-beslissing",
+    "inspanningsperiode": 28,
+    "steps": Array [
+      Object {
+        "datePublished": "2019-05-09T15:05:51+02:00",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-05-09T15:05:51+02:00",
+            "id": "660000000000008",
+            "title": "Aanvraag WWB (GALO)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000008&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-aanvraag",
+        "title": "aanvraag",
+      },
+      Object {
+        "datePublished": "2019-06-08T15:05:51+02:00",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-06-08T15:05:51+02:00",
+            "id": "660000000000009",
+            "title": "Toekennen Levensonderhoud (BIJ)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000009&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-beslissing",
+        "title": "beslissing",
+      },
+      Object {
+        "aantalDagenHerstelTermijn": 20,
+        "datePublished": "2019-05-19T15:05:51+02:00",
+        "documents": Array [],
+        "id": "123123123-step-herstelTermijn",
+        "title": "herstelTermijn",
+      },
+      Object {
+        "datePublished": "2019-05-11T15:05:51+02:00",
+        "documents": Array [],
+        "id": "123123123-step-inBehandeling",
+        "title": "inBehandeling",
+      },
+    ],
+    "title": "Levensonderhoud",
+    "type": "Participatiewet",
+  },
+  Object {
+    "datePublished": "2019-07-03T15:05:52+02:00",
+    "dateStart": "2019-06-08T15:05:52+02:00",
+    "decision": "buitenbehandeling",
+    "dienstverleningstermijn": 21,
+    "id": "123123123-beslissing",
+    "inspanningsperiode": 28,
+    "steps": Array [
+      Object {
+        "datePublished": "2019-06-08T15:05:52+02:00",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-06-08T15:05:52+02:00",
+            "id": "660000000000010",
+            "title": "Aanvraag WWB (GALO)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000010&isBulk=false&isDms=false",
+          },
+          Object {
+            "datePublished": "2019-06-08T15:05:52+02:00",
+            "id": "660000000000019",
+            "title": "Aanvraag WWB (GALO)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000019&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-aanvraag",
+        "title": "aanvraag",
+      },
+      Object {
+        "datePublished": "2019-07-03T15:05:52+02:00",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-07-03T15:05:52+02:00",
+            "id": "660000000000011",
+            "title": "Niet in behandeling nemen",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000011&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-beslissing",
+        "title": "beslissing",
+      },
+      Object {
+        "aantalDagenHerstelTermijn": 15,
+        "datePublished": "2019-06-13T15:05:52+02:00",
+        "documents": Array [],
+        "id": "123123123-step-herstelTermijn",
+        "title": "herstelTermijn",
+      },
+      Object {
+        "datePublished": "2019-06-11T15:05:52+02:00",
+        "documents": Array [],
+        "id": "123123123-step-inBehandeling",
+        "title": "inBehandeling",
+      },
+    ],
+    "title": "Levensonderhoud",
+    "type": "Participatiewet",
+  },
+  Object {
+    "datePublished": "2020-05-12T00:00:00+02:00",
+    "dateStart": "2020-05-12T00:00:00+02:00",
+    "decision": undefined,
+    "dienstverleningstermijn": 28,
+    "id": "999999-aanvraag",
+    "inspanningsperiode": 28,
+    "steps": Array [
+      Object {
+        "datePublished": "2020-05-12T00:00:00+02:00",
+        "documents": Array [],
+        "id": "999999-step-aanvraag",
+        "title": "aanvraag",
+      },
+    ],
+    "title": "Bijzondere bijstand",
+    "type": "Bijzondere Bijstand",
+  },
+]
+`;
+
+exports[`FOCUS_AANVRAGEN service Transforms the normalized focus aanvragen items correctly  1`] = `
+Array [
+  Object {
+    "datePublished": "2019-07-08T15:05:52+02:00",
+    "dateStart": "2019-07-08T15:05:52+02:00",
+    "decision": undefined,
+    "id": "123123123-aanvraag",
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/inkomen-en-stadspas/stadspas/123123123-aanvraag",
     },
-    "item": Object {
-      "chapter": "INKOMEN",
-      "datePublished": "28 juli 2019",
-      "dateStart": "24 juli 2019",
-      "description": "
-            <p>
-              U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer
-              details.
-            </p>
-            <p>
-              <a
-                href=https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D
-                rel=\\"external noopener noreferrer\\"
-              >
-                Bekijk hier de betaaldata van de uitkering
-              </a>
-            </p>
-          ",
-      "hasDecision": true,
-      "id": "123123123-beslissing",
-      "isRecent": true,
-      "link": Object {
-        "title": "Meer informatie",
-        "to": "/inkomen-en-stadspas/bijstandsuitkering/123123123-beslissing",
+    "status": "Aanvraag",
+    "steps": Array [
+      Object {
+        "datePublished": "2019-07-08T15:05:52+02:00",
+        "description": "U hebt op 08 juli 2019 een Stadspas aangevraagd.",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-07-08T15:05:52+02:00",
+            "id": "4400000004",
+            "title": "Aanvraag Stadspas (papier)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000004&isBulk=true&isDms=false",
+          },
+          Object {
+            "datePublished": "2019-07-08T15:05:52+02:00",
+            "id": "4400000005",
+            "title": "Aanvraag Stadspas (balie)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000005&isBulk=true&isDms=false",
+          },
+          Object {
+            "datePublished": "2019-07-08T15:05:52+02:00",
+            "id": "4400000006",
+            "title": "Aanvraag Stadspas (digitaal)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000006&isBulk=true&isDms=false",
+          },
+        ],
+        "id": "123123123-step-aanvraag",
+        "isActive": true,
+        "isChecked": true,
+        "product": "Stadspas",
+        "status": "Aanvraag",
+        "title": "aanvraag",
       },
-      "process": Array [
-        Object {
-          "datePublished": "2019-07-24T15:05:51+02:00",
-          "description": "
-          <p>U hebt op 24 juli 2019 een bijstandsuitkering aangevraagd.</p>
+    ],
+    "title": "Stadspas",
+    "type": "Minimafonds",
+  },
+  Object {
+    "datePublished": "2019-07-08T15:05:52+02:00",
+    "dateStart": "2019-07-07T15:05:52+02:00",
+    "decision": undefined,
+    "id": "123123123-inBehandeling",
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/inkomen-en-stadspas/stadspas/123123123-inBehandeling",
+    },
+    "status": "In behandeling",
+    "steps": Array [
+      Object {
+        "datePublished": "2019-07-07T15:05:52+02:00",
+        "description": "U hebt op 08 juli 2019 een Stadspas aangevraagd.",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-07-07T15:05:52+02:00",
+            "id": "4400000004",
+            "title": "Aanvraag Stadspas (papier)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000004&isBulk=true&isDms=false",
+          },
+          Object {
+            "datePublished": "2019-07-07T15:05:52+02:00",
+            "id": "4400000005",
+            "title": "Aanvraag Stadspas (balie)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000005&isBulk=true&isDms=false",
+          },
+          Object {
+            "datePublished": "2019-07-07T15:05:52+02:00",
+            "id": "4400000006",
+            "title": "Aanvraag Stadspas (digitaal)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000006&isBulk=true&isDms=false",
+          },
+        ],
+        "id": "123123123-step-aanvraag",
+        "isActive": false,
+        "isChecked": true,
+        "product": "Stadspas",
+        "status": "Aanvraag",
+        "title": "aanvraag",
+      },
+      Object {
+        "datePublished": "2019-07-08T15:05:52+02:00",
+        "description": "
+          <p>
+            Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt
+            vóór 15 september 2019 ons besluit.
+          </p>
+          <p>
+            <strong>
+              Let op: Deze statusinformatie betreft alleen uw aanvraag voor een
+              Stadspas.
+            </strong>
+            <br />
+            Uw eventuele andere Hulp bij Laag Inkomen producten worden via post
+            en/of telefoon afgehandeld.
+          </p>
+        ",
+        "documents": Array [],
+        "id": "123123123-step-inBehandeling",
+        "isActive": true,
+        "isChecked": true,
+        "product": "Stadspas",
+        "status": "In behandeling",
+        "title": "inBehandeling",
+      },
+    ],
+    "title": "Stadspas",
+    "type": "Minimafonds",
+  },
+  Object {
+    "datePublished": "2019-07-06T15:05:52+02:00",
+    "dateStart": "2019-07-03T15:05:52+02:00",
+    "decision": undefined,
+    "id": "123123123-herstelTermijn",
+    "link": Object {
+      "title": "Meer informatie",
+      "to": "/inkomen-en-stadspas/stadspas/123123123-herstelTermijn",
+    },
+    "status": "Informatie nodig",
+    "steps": Array [
+      Object {
+        "datePublished": "2019-07-03T15:05:52+02:00",
+        "description": "U hebt op 06 juli 2019 een Stadspas aangevraagd.",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-07-03T15:05:52+02:00",
+            "id": "4400000004",
+            "title": "Aanvraag Stadspas (papier)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000004&isBulk=true&isDms=false",
+          },
+          Object {
+            "datePublished": "2019-07-03T15:05:52+02:00",
+            "id": "4400000005",
+            "title": "Aanvraag Stadspas (balie)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000005&isBulk=true&isDms=false",
+          },
+          Object {
+            "datePublished": "2019-07-03T15:05:52+02:00",
+            "id": "4400000006",
+            "title": "Aanvraag Stadspas (digitaal)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000006&isBulk=true&isDms=false",
+          },
+        ],
+        "id": "123123123-step-aanvraag",
+        "isActive": false,
+        "isChecked": true,
+        "product": "Stadspas",
+        "status": "Aanvraag",
+        "title": "aanvraag",
+      },
+      Object {
+        "datePublished": "2019-07-04T15:05:52+02:00",
+        "description": "
+          <p>
+            Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt
+            vóór 11 september 2019 ons besluit.
+          </p>
+          <p>
+            <strong>
+              Let op: Deze statusinformatie betreft alleen uw aanvraag voor een
+              Stadspas.
+            </strong>
+            <br />
+            Uw eventuele andere Hulp bij Laag Inkomen producten worden via post
+            en/of telefoon afgehandeld.
+          </p>
+        ",
+        "documents": Array [],
+        "id": "123123123-step-inBehandeling",
+        "isActive": false,
+        "isChecked": true,
+        "product": "Stadspas",
+        "status": "In behandeling",
+        "title": "inBehandeling",
+      },
+      Object {
+        "aantalDagenHerstelTermijn": 10,
+        "datePublished": "2019-07-06T15:05:52+02:00",
+        "description": "
+          <p>
+            Wij hebben meer informatie en tijd nodig om uw aanvraag te
+            verwerken. Bekijk de brief voor meer details. U moet de extra
+            informatie vóór 16 juli 2019 opsturen. Dan ontvangt u
+            vóór 21 september 2019 ons besluit.
+          </p>
+          <p>
+            Tip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk
+            in. Hoe eerder u ons de noodzakelijke informatie geeft, hoe eerder
+            wij verder kunnen met de behandeling van uw aanvraag.
+          </p>
+        ",
+        "documents": Array [],
+        "id": "123123123-step-herstelTermijn",
+        "isActive": true,
+        "isChecked": true,
+        "product": "Stadspas",
+        "status": "Informatie nodig",
+        "title": "herstelTermijn",
+      },
+    ],
+    "title": "Stadspas",
+    "type": "Minimafonds",
+  },
+  Object {
+    "datePublished": "2019-07-28T15:05:51+02:00",
+    "dateStart": "2019-07-24T15:05:51+02:00",
+    "decision": "toekenning",
+    "id": "123123123-beslissing",
+    "link": Object {
+      "title": "Meer",
+      "to": "/inkomen-en-stadspas/bijstandsuitkering/123123123-beslissing",
+    },
+    "status": "Besluit",
+    "steps": Array [
+      Object {
+        "datePublished": "2019-07-24T15:05:51+02:00",
+        "description": "
+          <p>U hebt op 2019-07-24T15:05:51+02:00 een bijstandsuitkering aangevraagd.</p>
           <p>
             <a
               href=https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D
@@ -52,24 +649,25 @@ Array [
             </a>
           </p>
         ",
-          "documents": Array [
-            Object {
-              "datePublished": "2019-07-24T15:05:51+02:00",
-              "id": "660000000000004",
-              "title": "Aanvraag WWB (GALO)",
-              "type": "aanvraag",
-              "url": "/test-api/focus/document?id=660000000000004&isBulk=false&isDms=false",
-            },
-          ],
-          "id": "123123123-beslissing-aanvraag",
-          "isChecked": true,
-          "isLastActive": false,
-          "status": "Aanvraag",
-          "title": "Bijstandsuitkering",
-        },
-        Object {
-          "datePublished": "2019-07-25T15:05:51+02:00",
-          "description": "
+        "documents": Array [
+          Object {
+            "datePublished": "2019-07-24T15:05:51+02:00",
+            "id": "660000000000004",
+            "title": "Aanvraag WWB (GALO)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000004&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-aanvraag",
+        "isActive": false,
+        "isChecked": true,
+        "product": "Bijstandsuitkering",
+        "status": "Aanvraag",
+        "title": "aanvraag",
+      },
+      Object {
+        "datePublished": "2019-07-25T15:05:51+02:00",
+        "description": "
           <p>
             Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u
             nog extra informatie moet opsturen. U ontvangt vóór 11 september 2019 ons besluit.
@@ -90,16 +688,17 @@ Array [
             </a>
           </p>
         ",
-          "documents": Array [],
-          "id": "123123123-beslissing-inBehandeling",
-          "isChecked": true,
-          "isLastActive": false,
-          "status": "In behandeling",
-          "title": "Bijstandsuitkering",
-        },
-        Object {
-          "datePublished": "2019-07-28T15:05:51+02:00",
-          "description": "
+        "documents": Array [],
+        "id": "123123123-step-inBehandeling",
+        "isActive": false,
+        "isChecked": true,
+        "product": "Bijstandsuitkering",
+        "status": "In behandeling",
+        "title": "inBehandeling",
+      },
+      Object {
+        "datePublished": "2019-07-28T15:05:51+02:00",
+        "description": "
             <p>
               U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer
               details.
@@ -113,377 +712,41 @@ Array [
               </a>
             </p>
           ",
-          "documents": Array [
-            Object {
-              "datePublished": "2019-07-28T15:05:51+02:00",
-              "id": "660000000000005",
-              "title": "Afwijzen Levensonderhoud (BIJ)",
-              "type": "beslissing",
-              "url": "/test-api/focus/document?id=660000000000005&isBulk=false&isDms=false",
-            },
-          ],
-          "id": "123123123-beslissing-beslissing",
-          "isChecked": false,
-          "isLastActive": true,
-          "status": "Besluit",
-          "title": "Bijstandsuitkering",
-        },
-      ],
-      "status": "Besluit",
-      "title": "Bijstandsuitkering",
-    },
-    "notification": Object {
-      "chapter": "INKOMEN",
-      "datePublished": "2019-07-28T15:05:51+02:00",
-      "description": "U heeft recht op een bijstandsuitkering (besluit: 28 juli 2019).",
-      "id": "notification-123123123-beslissing-beslissing",
-      "link": Object {
-        "title": "Meer informatie",
-        "to": "/inkomen-en-stadspas/bijstandsuitkering/123123123-beslissing",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-07-28T15:05:51+02:00",
+            "id": "660000000000005",
+            "title": "Afwijzen Levensonderhoud (BIJ)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000005&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-beslissing",
+        "isActive": true,
+        "isChecked": true,
+        "product": "Bijstandsuitkering",
+        "status": "Besluit",
+        "title": "beslissing",
       },
-      "title": "Bijstandsuitkering: Uw aanvraag is toegekend",
-    },
+    ],
+    "title": "Bijstandsuitkering",
+    "type": "Participatiewet",
   },
   Object {
-    "case": Object {
-      "chapter": "INKOMEN",
-      "datePublished": "08 juli 2019",
-      "id": "recent-case-123123123-aanvraag",
-      "link": Object {
-        "title": "Meer informatie",
-        "to": "/inkomen-en-stadspas/stadspas/123123123-aanvraag",
-      },
-      "title": "Stadspas",
+    "datePublished": "2019-05-07T15:05:51+02:00",
+    "dateStart": "2019-04-09T15:05:51+02:00",
+    "decision": "afwijzing",
+    "id": "123123123-beslissing",
+    "link": Object {
+      "title": "Meer",
+      "to": "/inkomen-en-stadspas/bijstandsuitkering/123123123-beslissing",
     },
-    "item": Object {
-      "chapter": "INKOMEN",
-      "datePublished": "08 juli 2019",
-      "dateStart": "08 juli 2019",
-      "description": "U hebt op 08 juli 2019 een Stadspas aangevraagd.",
-      "hasDecision": false,
-      "id": "123123123-aanvraag",
-      "isRecent": true,
-      "link": Object {
-        "title": "Meer informatie",
-        "to": "/inkomen-en-stadspas/stadspas/123123123-aanvraag",
-      },
-      "process": Array [
-        Object {
-          "datePublished": "2019-07-08T15:05:52+02:00",
-          "description": "U hebt op 08 juli 2019 een Stadspas aangevraagd.",
-          "documents": Array [
-            Object {
-              "datePublished": "2019-07-08T15:05:52+02:00",
-              "id": "4400000004",
-              "title": "Aanvraag Stadspas (papier)",
-              "type": "aanvraag",
-              "url": "/test-api/focus/document?id=4400000004&isBulk=true&isDms=false",
-            },
-            Object {
-              "datePublished": "2019-07-08T15:05:52+02:00",
-              "id": "4400000005",
-              "title": "Aanvraag Stadspas (balie)",
-              "type": "aanvraag",
-              "url": "/test-api/focus/document?id=4400000005&isBulk=true&isDms=false",
-            },
-            Object {
-              "datePublished": "2019-07-08T15:05:52+02:00",
-              "id": "4400000006",
-              "title": "Aanvraag Stadspas (digitaal)",
-              "type": "aanvraag",
-              "url": "/test-api/focus/document?id=4400000006&isBulk=true&isDms=false",
-            },
-          ],
-          "id": "123123123-aanvraag-aanvraag",
-          "isChecked": false,
-          "isLastActive": true,
-          "status": "Aanvraag",
-          "title": "Stadspas",
-        },
-      ],
-      "status": "Aanvraag",
-      "title": "Stadspas",
-    },
-    "notification": Object {
-      "chapter": "INKOMEN",
-      "datePublished": "2019-07-08T15:05:52+02:00",
-      "description": "Wij hebben uw aanvraag voor een Stadspas ontvangen op 08 juli 2019.",
-      "id": "notification-123123123-aanvraag-aanvraag",
-      "link": Object {
-        "title": "Meer informatie",
-        "to": "/inkomen-en-stadspas/stadspas/123123123-aanvraag",
-      },
-      "title": "Stadspas: Wij hebben uw aanvraag ontvangen",
-    },
-  },
-  Object {
-    "case": Object {
-      "chapter": "INKOMEN",
-      "datePublished": "08 juli 2019",
-      "id": "recent-case-123123123-inBehandeling",
-      "link": Object {
-        "title": "Meer informatie",
-        "to": "/inkomen-en-stadspas/stadspas/123123123-inBehandeling",
-      },
-      "title": "Stadspas",
-    },
-    "item": Object {
-      "chapter": "INKOMEN",
-      "datePublished": "08 juli 2019",
-      "dateStart": "07 juli 2019",
-      "description": "
-          <p>
-            Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt
-            vóór 15 september 2019 ons besluit.
-          </p>
-          <p>
-            <strong>
-              Let op: Deze statusinformatie betreft alleen uw aanvraag voor een
-              Stadspas.
-            </strong>
-            <br />
-            Uw eventuele andere Hulp bij Laag Inkomen producten worden via post
-            en/of telefoon afgehandeld.
-          </p>
-        ",
-      "hasDecision": false,
-      "id": "123123123-inBehandeling",
-      "isRecent": true,
-      "link": Object {
-        "title": "Meer informatie",
-        "to": "/inkomen-en-stadspas/stadspas/123123123-inBehandeling",
-      },
-      "process": Array [
-        Object {
-          "datePublished": "2019-07-07T15:05:52+02:00",
-          "description": "U hebt op 07 juli 2019 een Stadspas aangevraagd.",
-          "documents": Array [
-            Object {
-              "datePublished": "2019-07-07T15:05:52+02:00",
-              "id": "4400000004",
-              "title": "Aanvraag Stadspas (papier)",
-              "type": "aanvraag",
-              "url": "/test-api/focus/document?id=4400000004&isBulk=true&isDms=false",
-            },
-            Object {
-              "datePublished": "2019-07-07T15:05:52+02:00",
-              "id": "4400000005",
-              "title": "Aanvraag Stadspas (balie)",
-              "type": "aanvraag",
-              "url": "/test-api/focus/document?id=4400000005&isBulk=true&isDms=false",
-            },
-            Object {
-              "datePublished": "2019-07-07T15:05:52+02:00",
-              "id": "4400000006",
-              "title": "Aanvraag Stadspas (digitaal)",
-              "type": "aanvraag",
-              "url": "/test-api/focus/document?id=4400000006&isBulk=true&isDms=false",
-            },
-          ],
-          "id": "123123123-inBehandeling-aanvraag",
-          "isChecked": true,
-          "isLastActive": false,
-          "status": "Aanvraag",
-          "title": "Stadspas",
-        },
-        Object {
-          "datePublished": "2019-07-08T15:05:52+02:00",
-          "description": "
-          <p>
-            Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt
-            vóór 15 september 2019 ons besluit.
-          </p>
-          <p>
-            <strong>
-              Let op: Deze statusinformatie betreft alleen uw aanvraag voor een
-              Stadspas.
-            </strong>
-            <br />
-            Uw eventuele andere Hulp bij Laag Inkomen producten worden via post
-            en/of telefoon afgehandeld.
-          </p>
-        ",
-          "documents": Array [],
-          "id": "123123123-inBehandeling-inBehandeling",
-          "isChecked": false,
-          "isLastActive": true,
-          "status": "In behandeling",
-          "title": "Stadspas",
-        },
-      ],
-      "status": "In behandeling",
-      "title": "Stadspas",
-    },
-    "notification": Object {
-      "chapter": "INKOMEN",
-      "datePublished": "2019-07-08T15:05:52+02:00",
-      "description": "Wij hebben uw aanvraag voor een Stadspas in behandeling genomen op 08 juli 2019.",
-      "id": "notification-123123123-inBehandeling-inBehandeling",
-      "link": Object {
-        "title": "Meer informatie",
-        "to": "/inkomen-en-stadspas/stadspas/123123123-inBehandeling",
-      },
-      "title": "Stadspas: Wij behandelen uw aanvraag",
-    },
-  },
-  Object {
-    "case": Object {
-      "chapter": "INKOMEN",
-      "datePublished": "06 juli 2019",
-      "id": "recent-case-123123123-herstelTermijn",
-      "link": Object {
-        "title": "Meer informatie",
-        "to": "/inkomen-en-stadspas/stadspas/123123123-herstelTermijn",
-      },
-      "title": "Stadspas",
-    },
-    "item": Object {
-      "chapter": "INKOMEN",
-      "datePublished": "06 juli 2019",
-      "dateStart": "03 juli 2019",
-      "description": "
-          <p>
-            Wij hebben meer informatie en tijd nodig om uw aanvraag te
-            verwerken. Bekijk de brief voor meer details. U moet de extra
-            informatie vóór {data.userActionDeadline} opsturen. Dan ontvangt u
-            vóór 21 september 2019 ons besluit.
-          </p>
-          <p>
-            Tip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk
-            in. Hoe eerder u ons de noodzakelijke informatie geeft, hoe eerder
-            wij verder kunnen met de behandeling van uw aanvraag.
-          </p>
-        ",
-      "hasDecision": false,
-      "id": "123123123-herstelTermijn",
-      "isRecent": true,
-      "link": Object {
-        "title": "Meer informatie",
-        "to": "/inkomen-en-stadspas/stadspas/123123123-herstelTermijn",
-      },
-      "process": Array [
-        Object {
-          "datePublished": "2019-07-03T15:05:52+02:00",
-          "description": "U hebt op 03 juli 2019 een Stadspas aangevraagd.",
-          "documents": Array [
-            Object {
-              "datePublished": "2019-07-03T15:05:52+02:00",
-              "id": "4400000004",
-              "title": "Aanvraag Stadspas (papier)",
-              "type": "aanvraag",
-              "url": "/test-api/focus/document?id=4400000004&isBulk=true&isDms=false",
-            },
-            Object {
-              "datePublished": "2019-07-03T15:05:52+02:00",
-              "id": "4400000005",
-              "title": "Aanvraag Stadspas (balie)",
-              "type": "aanvraag",
-              "url": "/test-api/focus/document?id=4400000005&isBulk=true&isDms=false",
-            },
-            Object {
-              "datePublished": "2019-07-03T15:05:52+02:00",
-              "id": "4400000006",
-              "title": "Aanvraag Stadspas (digitaal)",
-              "type": "aanvraag",
-              "url": "/test-api/focus/document?id=4400000006&isBulk=true&isDms=false",
-            },
-          ],
-          "id": "123123123-herstelTermijn-aanvraag",
-          "isChecked": true,
-          "isLastActive": false,
-          "status": "Aanvraag",
-          "title": "Stadspas",
-        },
-        Object {
-          "datePublished": "2019-07-04T15:05:52+02:00",
-          "description": "
-          <p>
-            Het kan zijn dat u nog extra informatie moet opsturen. U ontvangt
-            vóór 11 september 2019 ons besluit.
-          </p>
-          <p>
-            <strong>
-              Let op: Deze statusinformatie betreft alleen uw aanvraag voor een
-              Stadspas.
-            </strong>
-            <br />
-            Uw eventuele andere Hulp bij Laag Inkomen producten worden via post
-            en/of telefoon afgehandeld.
-          </p>
-        ",
-          "documents": Array [],
-          "id": "123123123-herstelTermijn-inBehandeling",
-          "isChecked": true,
-          "isLastActive": false,
-          "status": "In behandeling",
-          "title": "Stadspas",
-        },
-        Object {
-          "datePublished": "2019-07-06T15:05:52+02:00",
-          "description": "
-          <p>
-            Wij hebben meer informatie en tijd nodig om uw aanvraag te
-            verwerken. Bekijk de brief voor meer details. U moet de extra
-            informatie vóór {data.userActionDeadline} opsturen. Dan ontvangt u
-            vóór 21 september 2019 ons besluit.
-          </p>
-          <p>
-            Tip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk
-            in. Hoe eerder u ons de noodzakelijke informatie geeft, hoe eerder
-            wij verder kunnen met de behandeling van uw aanvraag.
-          </p>
-        ",
-          "documents": Array [],
-          "id": "123123123-herstelTermijn-herstelTermijn",
-          "isChecked": false,
-          "isLastActive": true,
-          "status": "Meer informatie nodig",
-          "title": "Stadspas",
-        },
-      ],
-      "status": "Meer informatie nodig",
-      "title": "Stadspas",
-    },
-    "notification": Object {
-      "chapter": "INKOMEN",
-      "datePublished": "2019-07-06T15:05:52+02:00",
-      "description": "Er is meer informatie en tijd nodig om uw aanvraag voor een Stadspas te behandelen.",
-      "id": "notification-123123123-herstelTermijn-herstelTermijn",
-      "link": Object {
-        "title": "Meer informatie",
-        "to": "/inkomen-en-stadspas/stadspas/123123123-herstelTermijn",
-      },
-      "title": "Stadspas: Neem actie",
-    },
-  },
-  Object {
-    "case": Object {
-      "chapter": "INKOMEN",
-      "datePublished": "03 juli 2019",
-      "id": "recent-case-123123123-beslissing",
-      "link": Object {
-        "title": "Meer informatie",
-        "to": "/inkomen-en-stadspas/bijstandsuitkering/123123123-beslissing",
-      },
-      "title": "Bijstandsuitkering",
-    },
-    "item": Object {
-      "chapter": "INKOMEN",
-      "datePublished": "03 juli 2019",
-      "dateStart": "08 juni 2019",
-      "description": "Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.",
-      "hasDecision": true,
-      "id": "123123123-beslissing",
-      "isRecent": true,
-      "link": Object {
-        "title": "Meer informatie",
-        "to": "/inkomen-en-stadspas/bijstandsuitkering/123123123-beslissing",
-      },
-      "process": Array [
-        Object {
-          "datePublished": "2019-06-08T15:05:52+02:00",
-          "description": "
-          <p>U hebt op 08 juni 2019 een bijstandsuitkering aangevraagd.</p>
+    "status": "Besluit",
+    "steps": Array [
+      Object {
+        "datePublished": "2019-04-09T15:05:51+02:00",
+        "description": "
+          <p>U hebt op 2019-04-09T15:05:51+02:00 een bijstandsuitkering aangevraagd.</p>
           <p>
             <a
               href=https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D
@@ -493,333 +756,25 @@ Array [
             </a>
           </p>
         ",
-          "documents": Array [
-            Object {
-              "datePublished": "2019-06-08T15:05:52+02:00",
-              "id": "660000000000010",
-              "title": "Aanvraag WWB (GALO)",
-              "type": "aanvraag",
-              "url": "/test-api/focus/document?id=660000000000010&isBulk=false&isDms=false",
-            },
-            Object {
-              "datePublished": "2019-06-08T15:05:52+02:00",
-              "id": "660000000000019",
-              "title": "Aanvraag WWB (GALO)",
-              "type": "aanvraag",
-              "url": "/test-api/focus/document?id=660000000000019&isBulk=false&isDms=false",
-            },
-          ],
-          "id": "123123123-beslissing-aanvraag",
-          "isChecked": true,
-          "isLastActive": false,
-          "status": "Aanvraag",
-          "title": "Bijstandsuitkering",
-        },
-        Object {
-          "datePublished": "2019-06-11T15:05:52+02:00",
-          "description": "
-          <p>
-            Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u
-            nog extra informatie moet opsturen. U ontvangt vóór 27 juli 2019 ons besluit.
-          </p>
-          <p>
-            Lees meer over uw
-            <br />
-            <a
-              href=https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d
-              rel=\\"external noopener noreferrer\\"
-            >
-              rechten
-            </a> en <a
-              href=https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d
-              rel=\\"external noopener noreferrer\\"
-            >
-              plichten
-            </a>
-          </p>
-        ",
-          "documents": Array [],
-          "id": "123123123-beslissing-inBehandeling",
-          "isChecked": true,
-          "isLastActive": false,
-          "status": "In behandeling",
-          "title": "Bijstandsuitkering",
-        },
-        Object {
-          "datePublished": "2019-06-13T15:05:52+02:00",
-          "description": "
-          <p>
-            Wij hebben meer informatie en tijd nodig om uw aanvraag te
-            verwerken. Bekijk de brief voor meer details. U moet de extra
-            informatie vóór 28 juni 2019 opsturen. Dan ontvangt u
-            vóór 11 augustus 2019 ons besluit.
-          </p>
-          <p>
-            Tip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk
-            in. Hoe eerder u ons de noodzakelijke informatie geeft, hoe eerder
-            wij verder kunnen met de behandeling van uw aanvraag.
-          </p>
-        ",
-          "documents": Array [],
-          "id": "123123123-beslissing-herstelTermijn",
-          "isChecked": true,
-          "isLastActive": false,
-          "status": "Meer informatie nodig",
-          "title": "Bijstandsuitkering",
-        },
-        Object {
-          "datePublished": "2019-07-03T15:05:52+02:00",
-          "description": "Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.",
-          "documents": Array [
-            Object {
-              "datePublished": "2019-07-03T15:05:52+02:00",
-              "id": "660000000000011",
-              "title": "Niet in behandeling nemen",
-              "type": "beslissing",
-              "url": "/test-api/focus/document?id=660000000000011&isBulk=false&isDms=false",
-            },
-          ],
-          "id": "123123123-beslissing-beslissing",
-          "isChecked": false,
-          "isLastActive": true,
-          "status": "Besluit",
-          "title": "Bijstandsuitkering",
-        },
-      ],
-      "status": "Besluit",
-      "title": "Bijstandsuitkering",
-    },
-    "notification": Object {
-      "chapter": "INKOMEN",
-      "datePublished": "2019-07-03T15:05:52+02:00",
-      "description": "Uw aanvraag is buiten behandeling gesteld (besluit: 03 juli 2019).",
-      "id": "notification-123123123-beslissing-beslissing",
-      "link": Object {
-        "title": "Meer informatie",
-        "to": "/inkomen-en-stadspas/bijstandsuitkering/123123123-beslissing",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-04-09T15:05:51+02:00",
+            "id": "660000000000006",
+            "title": "Aanvraag WWB (GALO)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000006&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-aanvraag",
+        "isActive": false,
+        "isChecked": true,
+        "product": "Bijstandsuitkering",
+        "status": "Aanvraag",
+        "title": "aanvraag",
       },
-      "title": "Bijstandsuitkering: Uw aanvraag is buiten behandeling gesteld",
-    },
-  },
-  Object {
-    "case": Object {
-      "chapter": "INKOMEN",
-      "datePublished": "08 juni 2019",
-      "id": "recent-case-123123123-beslissing",
-      "link": Object {
-        "title": "Meer informatie",
-        "to": "/inkomen-en-stadspas/bijstandsuitkering/123123123-beslissing",
-      },
-      "title": "Bijstandsuitkering",
-    },
-    "item": Object {
-      "chapter": "INKOMEN",
-      "datePublished": "08 juni 2019",
-      "dateStart": "09 mei 2019",
-      "description": "
-            <p>
-              U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer
-              details.
-            </p>
-            <p>
-              <a
-                href=https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D
-                rel=\\"external noopener noreferrer\\"
-              >
-                Bekijk hier de betaaldata van de uitkering
-              </a>
-            </p>
-          ",
-      "hasDecision": true,
-      "id": "123123123-beslissing",
-      "isRecent": true,
-      "link": Object {
-        "title": "Meer informatie",
-        "to": "/inkomen-en-stadspas/bijstandsuitkering/123123123-beslissing",
-      },
-      "process": Array [
-        Object {
-          "datePublished": "2019-05-09T15:05:51+02:00",
-          "description": "
-          <p>U hebt op 09 mei 2019 een bijstandsuitkering aangevraagd.</p>
-          <p>
-            <a
-              href=https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D
-              rel=\\"external noopener noreferrer\\"
-            >
-              Wat kunt u van ons verwachten?
-            </a>
-          </p>
-        ",
-          "documents": Array [
-            Object {
-              "datePublished": "2019-05-09T15:05:51+02:00",
-              "id": "660000000000008",
-              "title": "Aanvraag WWB (GALO)",
-              "type": "aanvraag",
-              "url": "/test-api/focus/document?id=660000000000008&isBulk=false&isDms=false",
-            },
-          ],
-          "id": "123123123-beslissing-aanvraag",
-          "isChecked": true,
-          "isLastActive": false,
-          "status": "Aanvraag",
-          "title": "Bijstandsuitkering",
-        },
-        Object {
-          "datePublished": "2019-05-11T15:05:51+02:00",
-          "description": "
-          <p>
-            Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u
-            nog extra informatie moet opsturen. U ontvangt vóór 27 juni 2019 ons besluit.
-          </p>
-          <p>
-            Lees meer over uw
-            <br />
-            <a
-              href=https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d
-              rel=\\"external noopener noreferrer\\"
-            >
-              rechten
-            </a> en <a
-              href=https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d
-              rel=\\"external noopener noreferrer\\"
-            >
-              plichten
-            </a>
-          </p>
-        ",
-          "documents": Array [],
-          "id": "123123123-beslissing-inBehandeling",
-          "isChecked": true,
-          "isLastActive": false,
-          "status": "In behandeling",
-          "title": "Bijstandsuitkering",
-        },
-        Object {
-          "datePublished": "2019-05-19T15:05:51+02:00",
-          "description": "
-          <p>
-            Wij hebben meer informatie en tijd nodig om uw aanvraag te
-            verwerken. Bekijk de brief voor meer details. U moet de extra
-            informatie vóór 08 juni 2019 opsturen. Dan ontvangt u
-            vóór 17 juli 2019 ons besluit.
-          </p>
-          <p>
-            Tip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk
-            in. Hoe eerder u ons de noodzakelijke informatie geeft, hoe eerder
-            wij verder kunnen met de behandeling van uw aanvraag.
-          </p>
-        ",
-          "documents": Array [],
-          "id": "123123123-beslissing-herstelTermijn",
-          "isChecked": true,
-          "isLastActive": false,
-          "status": "Meer informatie nodig",
-          "title": "Bijstandsuitkering",
-        },
-        Object {
-          "datePublished": "2019-06-08T15:05:51+02:00",
-          "description": "
-            <p>
-              U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer
-              details.
-            </p>
-            <p>
-              <a
-                href=https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D
-                rel=\\"external noopener noreferrer\\"
-              >
-                Bekijk hier de betaaldata van de uitkering
-              </a>
-            </p>
-          ",
-          "documents": Array [
-            Object {
-              "datePublished": "2019-06-08T15:05:51+02:00",
-              "id": "660000000000009",
-              "title": "Toekennen Levensonderhoud (BIJ)",
-              "type": "beslissing",
-              "url": "/test-api/focus/document?id=660000000000009&isBulk=false&isDms=false",
-            },
-          ],
-          "id": "123123123-beslissing-beslissing",
-          "isChecked": false,
-          "isLastActive": true,
-          "status": "Besluit",
-          "title": "Bijstandsuitkering",
-        },
-      ],
-      "status": "Besluit",
-      "title": "Bijstandsuitkering",
-    },
-    "notification": Object {
-      "chapter": "INKOMEN",
-      "datePublished": "2019-06-08T15:05:51+02:00",
-      "description": "U heeft recht op een bijstandsuitkering (besluit: 08 juni 2019).",
-      "id": "notification-123123123-beslissing-beslissing",
-      "link": Object {
-        "title": "Meer informatie",
-        "to": "/inkomen-en-stadspas/bijstandsuitkering/123123123-beslissing",
-      },
-      "title": "Bijstandsuitkering: Uw aanvraag is toegekend",
-    },
-  },
-  Object {
-    "case": Object {
-      "chapter": "INKOMEN",
-      "datePublished": "07 mei 2019",
-      "id": "recent-case-123123123-beslissing",
-      "link": Object {
-        "title": "Meer informatie",
-        "to": "/inkomen-en-stadspas/bijstandsuitkering/123123123-beslissing",
-      },
-      "title": "Bijstandsuitkering",
-    },
-    "item": Object {
-      "chapter": "INKOMEN",
-      "datePublished": "07 mei 2019",
-      "dateStart": "09 april 2019",
-      "description": "U heeft geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.",
-      "hasDecision": true,
-      "id": "123123123-beslissing",
-      "isRecent": true,
-      "link": Object {
-        "title": "Meer informatie",
-        "to": "/inkomen-en-stadspas/bijstandsuitkering/123123123-beslissing",
-      },
-      "process": Array [
-        Object {
-          "datePublished": "2019-04-09T15:05:51+02:00",
-          "description": "
-          <p>U hebt op 09 april 2019 een bijstandsuitkering aangevraagd.</p>
-          <p>
-            <a
-              href=https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D
-              rel=\\"external noopener noreferrer\\"
-            >
-              Wat kunt u van ons verwachten?
-            </a>
-          </p>
-        ",
-          "documents": Array [
-            Object {
-              "datePublished": "2019-04-09T15:05:51+02:00",
-              "id": "660000000000006",
-              "title": "Aanvraag WWB (GALO)",
-              "type": "aanvraag",
-              "url": "/test-api/focus/document?id=660000000000006&isBulk=false&isDms=false",
-            },
-          ],
-          "id": "123123123-beslissing-aanvraag",
-          "isChecked": true,
-          "isLastActive": false,
-          "status": "Aanvraag",
-          "title": "Bijstandsuitkering",
-        },
-        Object {
-          "datePublished": "2019-04-11T15:05:51+02:00",
-          "description": "
+      Object {
+        "datePublished": "2019-04-11T15:05:51+02:00",
+        "description": "
           <p>
             Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u
             nog extra informatie moet opsturen. U ontvangt vóór 28 mei 2019 ons besluit.
@@ -840,168 +795,641 @@ Array [
             </a>
           </p>
         ",
-          "documents": Array [],
-          "id": "123123123-beslissing-inBehandeling",
-          "isChecked": true,
-          "isLastActive": false,
-          "status": "In behandeling",
-          "title": "Bijstandsuitkering",
-        },
-        Object {
-          "datePublished": "2019-05-07T15:05:51+02:00",
-          "description": "U heeft geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.",
-          "documents": Array [
-            Object {
-              "datePublished": "2019-05-07T15:05:51+02:00",
-              "id": "660000000000007",
-              "title": "Afwijzen Levensonderhoud",
-              "type": "beslissing",
-              "url": "/test-api/focus/document?id=660000000000007&isBulk=false&isDms=false",
-            },
-          ],
-          "id": "123123123-beslissing-beslissing",
-          "isChecked": false,
-          "isLastActive": true,
-          "status": "Besluit",
-          "title": "Bijstandsuitkering",
-        },
-      ],
-      "status": "Besluit",
-      "title": "Bijstandsuitkering",
-    },
-    "notification": Object {
-      "chapter": "INKOMEN",
-      "datePublished": "2019-05-07T15:05:51+02:00",
-      "description": "U heeft geen recht op een bijstandsuitkering (besluit: 07 mei 2019).",
-      "id": "notification-123123123-beslissing-beslissing",
-      "link": Object {
-        "title": "Meer informatie",
-        "to": "/inkomen-en-stadspas/bijstandsuitkering/123123123-beslissing",
+        "documents": Array [],
+        "id": "123123123-step-inBehandeling",
+        "isActive": false,
+        "isChecked": true,
+        "product": "Bijstandsuitkering",
+        "status": "In behandeling",
+        "title": "inBehandeling",
       },
-      "title": "Bijstandsuitkering: Uw aanvraag is afgewezen",
+      Object {
+        "datePublished": "2019-05-07T15:05:51+02:00",
+        "description": "U heeft geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-05-07T15:05:51+02:00",
+            "id": "660000000000007",
+            "title": "Afwijzen Levensonderhoud",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000007&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-beslissing",
+        "isActive": true,
+        "isChecked": true,
+        "product": "Bijstandsuitkering",
+        "status": "Besluit",
+        "title": "beslissing",
+      },
+    ],
+    "title": "Bijstandsuitkering",
+    "type": "Participatiewet",
+  },
+  Object {
+    "datePublished": "2019-06-08T15:05:51+02:00",
+    "dateStart": "2019-05-09T15:05:51+02:00",
+    "decision": "toekenning",
+    "id": "123123123-beslissing",
+    "link": Object {
+      "title": "Meer",
+      "to": "/inkomen-en-stadspas/bijstandsuitkering/123123123-beslissing",
     },
+    "status": "Besluit",
+    "steps": Array [
+      Object {
+        "datePublished": "2019-05-09T15:05:51+02:00",
+        "description": "
+          <p>U hebt op 2019-05-09T15:05:51+02:00 een bijstandsuitkering aangevraagd.</p>
+          <p>
+            <a
+              href=https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D
+              rel=\\"external noopener noreferrer\\"
+            >
+              Wat kunt u van ons verwachten?
+            </a>
+          </p>
+        ",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-05-09T15:05:51+02:00",
+            "id": "660000000000008",
+            "title": "Aanvraag WWB (GALO)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000008&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-aanvraag",
+        "isActive": false,
+        "isChecked": true,
+        "product": "Bijstandsuitkering",
+        "status": "Aanvraag",
+        "title": "aanvraag",
+      },
+      Object {
+        "datePublished": "2019-05-11T15:05:51+02:00",
+        "description": "
+          <p>
+            Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u
+            nog extra informatie moet opsturen. U ontvangt vóór 27 juni 2019 ons besluit.
+          </p>
+          <p>
+            Lees meer over uw
+            <br />
+            <a
+              href=https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d
+              rel=\\"external noopener noreferrer\\"
+            >
+              rechten
+            </a> en <a
+              href=https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d
+              rel=\\"external noopener noreferrer\\"
+            >
+              plichten
+            </a>
+          </p>
+        ",
+        "documents": Array [],
+        "id": "123123123-step-inBehandeling",
+        "isActive": false,
+        "isChecked": true,
+        "product": "Bijstandsuitkering",
+        "status": "In behandeling",
+        "title": "inBehandeling",
+      },
+      Object {
+        "aantalDagenHerstelTermijn": 20,
+        "datePublished": "2019-05-19T15:05:51+02:00",
+        "description": "
+          <p>
+            Wij hebben meer informatie en tijd nodig om uw aanvraag te
+            verwerken. Bekijk de brief voor meer details. U moet de extra
+            informatie vóór 08 juni 2019 opsturen. Dan ontvangt u
+            vóór 17 juli 2019 ons besluit.
+          </p>
+          <p>
+            Tip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk
+            in. Hoe eerder u ons de noodzakelijke informatie geeft, hoe eerder
+            wij verder kunnen met de behandeling van uw aanvraag.
+          </p>
+        ",
+        "documents": Array [],
+        "id": "123123123-step-herstelTermijn",
+        "isActive": false,
+        "isChecked": true,
+        "product": "Bijstandsuitkering",
+        "status": "Informatie nodig",
+        "title": "herstelTermijn",
+      },
+      Object {
+        "datePublished": "2019-06-08T15:05:51+02:00",
+        "description": "
+            <p>
+              U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer
+              details.
+            </p>
+            <p>
+              <a
+                href=https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D
+                rel=\\"external noopener noreferrer\\"
+              >
+                Bekijk hier de betaaldata van de uitkering
+              </a>
+            </p>
+          ",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-06-08T15:05:51+02:00",
+            "id": "660000000000009",
+            "title": "Toekennen Levensonderhoud (BIJ)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000009&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-beslissing",
+        "isActive": true,
+        "isChecked": true,
+        "product": "Bijstandsuitkering",
+        "status": "Besluit",
+        "title": "beslissing",
+      },
+    ],
+    "title": "Bijstandsuitkering",
+    "type": "Participatiewet",
+  },
+  Object {
+    "datePublished": "2019-07-03T15:05:52+02:00",
+    "dateStart": "2019-06-08T15:05:52+02:00",
+    "decision": "buitenbehandeling",
+    "id": "123123123-beslissing",
+    "link": Object {
+      "title": "Meer",
+      "to": "/inkomen-en-stadspas/bijstandsuitkering/123123123-beslissing",
+    },
+    "status": "Besluit",
+    "steps": Array [
+      Object {
+        "datePublished": "2019-06-08T15:05:52+02:00",
+        "description": "
+          <p>U hebt op 2019-06-08T15:05:52+02:00 een bijstandsuitkering aangevraagd.</p>
+          <p>
+            <a
+              href=https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7BEC85F0ED-0D9E-46F3-8B2E-E80403D3D5EA%7D#case_%7BB7EF73CD-8A99-4F60-AB6D-02CB9A6BAF6F%7D
+              rel=\\"external noopener noreferrer\\"
+            >
+              Wat kunt u van ons verwachten?
+            </a>
+          </p>
+        ",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-06-08T15:05:52+02:00",
+            "id": "660000000000010",
+            "title": "Aanvraag WWB (GALO)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000010&isBulk=false&isDms=false",
+          },
+          Object {
+            "datePublished": "2019-06-08T15:05:52+02:00",
+            "id": "660000000000019",
+            "title": "Aanvraag WWB (GALO)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000019&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-aanvraag",
+        "isActive": false,
+        "isChecked": true,
+        "product": "Bijstandsuitkering",
+        "status": "Aanvraag",
+        "title": "aanvraag",
+      },
+      Object {
+        "datePublished": "2019-06-11T15:05:52+02:00",
+        "description": "
+          <p>
+            Wij gaan nu bekijken of u recht hebt op bijstand. Het kan zijn dat u
+            nog extra informatie moet opsturen. U ontvangt vóór 27 juli 2019 ons besluit.
+          </p>
+          <p>
+            Lees meer over uw
+            <br />
+            <a
+              href=https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?caseid=%7bF00E2134-0317-4981-BAE6-A4802403C2C5%7d
+              rel=\\"external noopener noreferrer\\"
+            >
+              rechten
+            </a> en <a
+              href=https://www.amsterdam.nl/veelgevraagd/hoe-vraag-ik-een-bijstandsuitkering-aan/?productid=%7b42A997C5-4FCA-4BC2-BF8A-95DFF6BE7121%7d
+              rel=\\"external noopener noreferrer\\"
+            >
+              plichten
+            </a>
+          </p>
+        ",
+        "documents": Array [],
+        "id": "123123123-step-inBehandeling",
+        "isActive": false,
+        "isChecked": true,
+        "product": "Bijstandsuitkering",
+        "status": "In behandeling",
+        "title": "inBehandeling",
+      },
+      Object {
+        "aantalDagenHerstelTermijn": 15,
+        "datePublished": "2019-06-13T15:05:52+02:00",
+        "description": "
+          <p>
+            Wij hebben meer informatie en tijd nodig om uw aanvraag te
+            verwerken. Bekijk de brief voor meer details. U moet de extra
+            informatie vóór 28 juni 2019 opsturen. Dan ontvangt u
+            vóór 11 augustus 2019 ons besluit.
+          </p>
+          <p>
+            Tip: Lever de informatie die wij gevraagd hebben zo spoedig mogelijk
+            in. Hoe eerder u ons de noodzakelijke informatie geeft, hoe eerder
+            wij verder kunnen met de behandeling van uw aanvraag.
+          </p>
+        ",
+        "documents": Array [],
+        "id": "123123123-step-herstelTermijn",
+        "isActive": false,
+        "isChecked": true,
+        "product": "Bijstandsuitkering",
+        "status": "Informatie nodig",
+        "title": "herstelTermijn",
+      },
+      Object {
+        "datePublished": "2019-07-03T15:05:52+02:00",
+        "description": "Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-07-03T15:05:52+02:00",
+            "id": "660000000000011",
+            "title": "Niet in behandeling nemen",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000011&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-beslissing",
+        "isActive": true,
+        "isChecked": true,
+        "product": "Bijstandsuitkering",
+        "status": "Besluit",
+        "title": "beslissing",
+      },
+    ],
+    "title": "Bijstandsuitkering",
+    "type": "Participatiewet",
   },
 ]
 `;
 
-exports[`FOCUS_AANVRAGEN service formats the focus aanvragen TOZO items correctly  1`] = `
-Object {
-  "ISODatePublished": "2020-04-03T00:00:00",
-  "chapter": "INKOMEN",
-  "datePublished": "03 april 2020",
-  "dateStart": "26 maart 2020",
-  "description": "",
-  "hasDecision": Object {
-    "lening": false,
-    "uitkering": false,
-  },
-  "id": "tozo-item-0",
-  "isRecent": true,
-  "link": Object {
-    "title": "Bekijk uw Tozo status",
-    "to": "/inkomen-en-stadspas/tozo",
-  },
-  "notifications": Object {
-    "aanvraag": Array [
+exports[`FOCUS_AANVRAGEN service Translates some property values of the normalized focus aanvragen items correctly  1`] = `
+Array [
+  Object {
+    "datePublished": "2019-07-08T15:05:52+02:00",
+    "dateStart": "2019-07-08T15:05:52+02:00",
+    "decision": undefined,
+    "dienstverleningstermijn": 42,
+    "id": "123123123-aanvraag",
+    "inspanningsperiode": 28,
+    "steps": Array [
       Object {
-        "chapter": "INKOMEN",
-        "datePublished": "2020-03-26T15:18:44+01:00",
-        "description": "Wij hebben uw aanvraag Tozo ontvangen op 26 maart - 15:18",
-        "id": "tozo-regeling-notification-aanvraag-0",
-        "link": Object {
-          "title": "Bekijk uw Tozo status",
-          "to": "/inkomen-en-stadspas/tozo",
-        },
-        "title": "Tozo-aanvraag: Wij hebben uw aanvraag ontvangen",
-      },
-      Object {
-        "chapter": "INKOMEN",
-        "datePublished": "2020-03-31T18:59:46+02:00",
-        "description": "Wij hebben uw aanvraag Tozo ontvangen op 31 maart - 18:59",
-        "id": "tozo-regeling-notification-aanvraag-1",
-        "link": Object {
-          "title": "Bekijk uw Tozo status",
-          "to": "/inkomen-en-stadspas/tozo",
-        },
-        "title": "Tozo-aanvraag: Wij hebben uw aanvraag ontvangen",
-      },
-    ],
-    "lening": null,
-    "uitkering": null,
-    "voorschot": Array [
-      Object {
-        "chapter": "INKOMEN",
-        "datePublished": "2020-04-03T00:00:00",
-        "description": "Wij hebben een voorschot naar uw rekening overgemaakt.",
-        "id": "tozo-regeling-notification-voorschot",
-        "link": Object {
-          "title": "Bekijk uw Tozo status",
-          "to": "/inkomen-en-stadspas/tozo",
-        },
-        "title": "Tozo-voorschot: wij hebben een voorschot betaald",
-      },
-    ],
-  },
-  "process": Object {
-    "aanvraag": Array [
-      Object {
-        "datePublished": "2020-03-26T15:18:44+01:00",
-        "description": "Wij hebben uw aanvraag Tozo ontvangen op 26 maart 2020.",
+        "datePublished": "2019-07-08T15:05:52+02:00",
         "documents": Array [
           Object {
-            "datePublished": "2020-03-26T15:18:44+01:00",
-            "id": "4400000024",
-            "title": "Brief aanvraag
-26 maart - 15:18",
+            "datePublished": "2019-07-08T15:05:52+02:00",
+            "id": "4400000004",
+            "title": "Aanvraag Stadspas (papier)",
             "type": "PDF",
-            "url": "/api/focus/document?id=4400000024&isBulk=true&isDms=false",
+            "url": "/test-api/focus/document?id=4400000004&isBulk=true&isDms=false",
           },
           Object {
-            "datePublished": "2020-03-31T18:59:46+02:00",
-            "id": "4400000031",
-            "title": "Brief aanvraag
-31 maart - 18:59",
+            "datePublished": "2019-07-08T15:05:52+02:00",
+            "id": "4400000005",
+            "title": "Aanvraag Stadspas (balie)",
             "type": "PDF",
-            "url": "/api/focus/document?id=4400000031&isBulk=true&isDms=false",
+            "url": "/test-api/focus/document?id=4400000005&isBulk=true&isDms=false",
           },
-        ],
-        "id": "aanvraag-step-0",
-        "isChecked": true,
-        "isLastActive": true,
-        "status": "Aanvraag",
-        "title": "Tozo-aanvraag",
-      },
-      Object {
-        "datePublished": "2020-04-03T00:00:00",
-        "description": "<p>
-          Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
-          voorwaarden in de brief.
-        </p>",
-        "documents": Array [
           Object {
-            "datePublished": "03 april",
-            "id": "660000000000027",
-            "title": "Voorschot Tozo (voor ondernemers) (Eenm.)",
+            "datePublished": "2019-07-08T15:05:52+02:00",
+            "id": "4400000006",
+            "title": "Aanvraag Stadspas (digitaal)",
             "type": "PDF",
-            "url": "/test-api/focus/document?id=660000000000027&isBulk=false&isDms=false",
+            "url": "/test-api/focus/document?id=4400000006&isBulk=true&isDms=false",
           },
         ],
-        "id": "voorschot-0",
-        "isChecked": true,
-        "isLastActive": true,
-        "isRecent": true,
-        "status": "Voorschot",
-        "title": "Tozo-voorschot",
+        "id": "123123123-step-aanvraag",
+        "title": "aanvraag",
       },
     ],
-    "lening": Array [],
-    "uitkering": Array [],
+    "title": "Stadspas",
+    "type": "Minimafonds",
   },
-  "status": Object {
-    "isComplete": true,
-    "lening": null,
-    "uitkering": null,
+  Object {
+    "datePublished": "2019-07-08T15:05:52+02:00",
+    "dateStart": "2019-07-07T15:05:52+02:00",
+    "decision": undefined,
+    "dienstverleningstermijn": 42,
+    "id": "123123123-inBehandeling",
+    "inspanningsperiode": 28,
+    "steps": Array [
+      Object {
+        "datePublished": "2019-07-07T15:05:52+02:00",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-07-07T15:05:52+02:00",
+            "id": "4400000004",
+            "title": "Aanvraag Stadspas (papier)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000004&isBulk=true&isDms=false",
+          },
+          Object {
+            "datePublished": "2019-07-07T15:05:52+02:00",
+            "id": "4400000005",
+            "title": "Aanvraag Stadspas (balie)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000005&isBulk=true&isDms=false",
+          },
+          Object {
+            "datePublished": "2019-07-07T15:05:52+02:00",
+            "id": "4400000006",
+            "title": "Aanvraag Stadspas (digitaal)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000006&isBulk=true&isDms=false",
+          },
+        ],
+        "id": "123123123-step-aanvraag",
+        "title": "aanvraag",
+      },
+      Object {
+        "datePublished": "2019-07-08T15:05:52+02:00",
+        "documents": Array [],
+        "id": "123123123-step-inBehandeling",
+        "title": "inBehandeling",
+      },
+    ],
+    "title": "Stadspas",
+    "type": "Minimafonds",
   },
-  "title": "Tozo-aanvraag",
-}
+  Object {
+    "datePublished": "2019-07-06T15:05:52+02:00",
+    "dateStart": "2019-07-03T15:05:52+02:00",
+    "decision": undefined,
+    "dienstverleningstermijn": 42,
+    "id": "123123123-herstelTermijn",
+    "inspanningsperiode": 28,
+    "steps": Array [
+      Object {
+        "datePublished": "2019-07-03T15:05:52+02:00",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-07-03T15:05:52+02:00",
+            "id": "4400000004",
+            "title": "Aanvraag Stadspas (papier)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000004&isBulk=true&isDms=false",
+          },
+          Object {
+            "datePublished": "2019-07-03T15:05:52+02:00",
+            "id": "4400000005",
+            "title": "Aanvraag Stadspas (balie)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000005&isBulk=true&isDms=false",
+          },
+          Object {
+            "datePublished": "2019-07-03T15:05:52+02:00",
+            "id": "4400000006",
+            "title": "Aanvraag Stadspas (digitaal)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=4400000006&isBulk=true&isDms=false",
+          },
+        ],
+        "id": "123123123-step-aanvraag",
+        "title": "aanvraag",
+      },
+      Object {
+        "aantalDagenHerstelTermijn": 10,
+        "datePublished": "2019-07-06T15:05:52+02:00",
+        "documents": Array [],
+        "id": "123123123-step-herstelTermijn",
+        "title": "herstelTermijn",
+      },
+      Object {
+        "datePublished": "2019-07-04T15:05:52+02:00",
+        "documents": Array [],
+        "id": "123123123-step-inBehandeling",
+        "title": "inBehandeling",
+      },
+    ],
+    "title": "Stadspas",
+    "type": "Minimafonds",
+  },
+  Object {
+    "datePublished": "2019-07-28T15:05:51+02:00",
+    "dateStart": "2019-07-24T15:05:51+02:00",
+    "decision": "toekenning",
+    "dienstverleningstermijn": 21,
+    "id": "123123123-beslissing",
+    "inspanningsperiode": 28,
+    "steps": Array [
+      Object {
+        "datePublished": "2019-07-24T15:05:51+02:00",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-07-24T15:05:51+02:00",
+            "id": "660000000000004",
+            "title": "Aanvraag WWB (GALO)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000004&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-aanvraag",
+        "title": "aanvraag",
+      },
+      Object {
+        "datePublished": "2019-07-28T15:05:51+02:00",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-07-28T15:05:51+02:00",
+            "id": "660000000000005",
+            "title": "Afwijzen Levensonderhoud (BIJ)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000005&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-beslissing",
+        "title": "beslissing",
+      },
+      Object {
+        "datePublished": "2019-07-25T15:05:51+02:00",
+        "documents": Array [],
+        "id": "123123123-step-inBehandeling",
+        "title": "inBehandeling",
+      },
+    ],
+    "title": "Bijstandsuitkering",
+    "type": "Participatiewet",
+  },
+  Object {
+    "datePublished": "2019-05-07T15:05:51+02:00",
+    "dateStart": "2019-04-09T15:05:51+02:00",
+    "decision": "afwijzing",
+    "dienstverleningstermijn": 21,
+    "id": "123123123-beslissing",
+    "inspanningsperiode": 28,
+    "steps": Array [
+      Object {
+        "datePublished": "2019-04-09T15:05:51+02:00",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-04-09T15:05:51+02:00",
+            "id": "660000000000006",
+            "title": "Aanvraag WWB (GALO)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000006&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-aanvraag",
+        "title": "aanvraag",
+      },
+      Object {
+        "datePublished": "2019-05-07T15:05:51+02:00",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-05-07T15:05:51+02:00",
+            "id": "660000000000007",
+            "title": "Afwijzen Levensonderhoud",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000007&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-beslissing",
+        "title": "beslissing",
+      },
+      Object {
+        "datePublished": "2019-04-11T15:05:51+02:00",
+        "documents": Array [],
+        "id": "123123123-step-inBehandeling",
+        "title": "inBehandeling",
+      },
+    ],
+    "title": "Bijstandsuitkering",
+    "type": "Participatiewet",
+  },
+  Object {
+    "datePublished": "2019-06-08T15:05:51+02:00",
+    "dateStart": "2019-05-09T15:05:51+02:00",
+    "decision": "toekenning",
+    "dienstverleningstermijn": 21,
+    "id": "123123123-beslissing",
+    "inspanningsperiode": 28,
+    "steps": Array [
+      Object {
+        "datePublished": "2019-05-09T15:05:51+02:00",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-05-09T15:05:51+02:00",
+            "id": "660000000000008",
+            "title": "Aanvraag WWB (GALO)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000008&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-aanvraag",
+        "title": "aanvraag",
+      },
+      Object {
+        "datePublished": "2019-06-08T15:05:51+02:00",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-06-08T15:05:51+02:00",
+            "id": "660000000000009",
+            "title": "Toekennen Levensonderhoud (BIJ)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000009&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-beslissing",
+        "title": "beslissing",
+      },
+      Object {
+        "aantalDagenHerstelTermijn": 20,
+        "datePublished": "2019-05-19T15:05:51+02:00",
+        "documents": Array [],
+        "id": "123123123-step-herstelTermijn",
+        "title": "herstelTermijn",
+      },
+      Object {
+        "datePublished": "2019-05-11T15:05:51+02:00",
+        "documents": Array [],
+        "id": "123123123-step-inBehandeling",
+        "title": "inBehandeling",
+      },
+    ],
+    "title": "Bijstandsuitkering",
+    "type": "Participatiewet",
+  },
+  Object {
+    "datePublished": "2019-07-03T15:05:52+02:00",
+    "dateStart": "2019-06-08T15:05:52+02:00",
+    "decision": "buitenbehandeling",
+    "dienstverleningstermijn": 21,
+    "id": "123123123-beslissing",
+    "inspanningsperiode": 28,
+    "steps": Array [
+      Object {
+        "datePublished": "2019-06-08T15:05:52+02:00",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-06-08T15:05:52+02:00",
+            "id": "660000000000010",
+            "title": "Aanvraag WWB (GALO)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000010&isBulk=false&isDms=false",
+          },
+          Object {
+            "datePublished": "2019-06-08T15:05:52+02:00",
+            "id": "660000000000019",
+            "title": "Aanvraag WWB (GALO)",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000019&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-aanvraag",
+        "title": "aanvraag",
+      },
+      Object {
+        "datePublished": "2019-07-03T15:05:52+02:00",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-07-03T15:05:52+02:00",
+            "id": "660000000000011",
+            "title": "Niet in behandeling nemen",
+            "type": "PDF",
+            "url": "/test-api/focus/document?id=660000000000011&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "123123123-step-beslissing",
+        "title": "beslissing",
+      },
+      Object {
+        "aantalDagenHerstelTermijn": 15,
+        "datePublished": "2019-06-13T15:05:52+02:00",
+        "documents": Array [],
+        "id": "123123123-step-herstelTermijn",
+        "title": "herstelTermijn",
+      },
+      Object {
+        "datePublished": "2019-06-11T15:05:52+02:00",
+        "documents": Array [],
+        "id": "123123123-step-inBehandeling",
+        "title": "inBehandeling",
+      },
+    ],
+    "title": "Bijstandsuitkering",
+    "type": "Participatiewet",
+  },
+]
 `;

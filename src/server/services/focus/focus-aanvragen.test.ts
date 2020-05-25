@@ -1,29 +1,33 @@
-import { transformFOCUSAanvragenData } from './focus-aanvragen';
-import {
-  contentLabels,
-  contentDocumentTitles,
-} from './focus-aanvragen-content';
+import { contentLabels, titleTranslations } from './focus-aanvragen-content';
 import {
   contentLabels as contentLabelsTozo,
-  contentDocumentTitles as contentDocumentTitlesTozo,
+  tozoTitleTranslations,
 } from './focus-tozo-content';
-import { transformFocusTozo } from './focus-tozo';
 import { FocusTozoDocument } from './focus-combined';
-import { FocusProduct, Decision } from './focus-types';
+import {
+  FocusProduct,
+  Decision,
+  FocusProductFromSource,
+  FocusItemStep,
+  FocusProductStep,
+} from './focus-types';
 import {
   isRecentItem,
   calculateUserActionDeadline,
   calculateDecisionDeadline,
   getDecision,
   getLatestStep,
+  normalizeFocusSourceProduct,
+  translateFocusProduct,
+  transformFocusProduct,
 } from './focus-helpers';
+import { focusAanvragenProducten } from './focus-aanvragen';
 
-const testData: FocusProduct[] = [
+const testData: FocusProductFromSource[] = [
   {
     _id: '123123123',
     dienstverleningstermijn: 28,
     inspanningsperiode: 28,
-    datePublished: '2020-04-03T00:00:00',
     naam: 'Voorschot Tozo (voor ondernemers) (Eenm.)',
     processtappen: {
       aanvraag: {
@@ -56,7 +60,6 @@ const testData: FocusProduct[] = [
     _id: '123123123',
     dienstverleningstermijn: 42,
     inspanningsperiode: 28,
-    datePublished: '2019-07-08T15:05:52+02:00',
     naam: 'Stadspas',
     processtappen: {
       aanvraag: {
@@ -96,7 +99,6 @@ const testData: FocusProduct[] = [
     _id: '123123123',
     dienstverleningstermijn: 42,
     inspanningsperiode: 28,
-    datePublished: '2019-07-08T15:05:52+02:00',
     naam: 'Stadspas',
     processtappen: {
       aanvraag: {
@@ -139,7 +141,6 @@ const testData: FocusProduct[] = [
     _id: '123123123',
     dienstverleningstermijn: 42,
     inspanningsperiode: 28,
-    datePublished: '2019-07-06T15:05:52+02:00',
     naam: 'Stadspas',
     processtappen: {
       aanvraag: {
@@ -186,7 +187,6 @@ const testData: FocusProduct[] = [
     _id: '123123123',
     dienstverleningstermijn: 21,
     inspanningsperiode: 28,
-    datePublished: '2019-07-28T15:05:51+02:00',
     naam: 'Levensonderhoud',
     processtappen: {
       aanvraag: {
@@ -227,7 +227,6 @@ const testData: FocusProduct[] = [
     _id: '123123123',
     dienstverleningstermijn: 21,
     inspanningsperiode: 28,
-    datePublished: '2019-05-07T15:05:51+02:00',
     naam: 'Levensonderhoud',
     processtappen: {
       aanvraag: {
@@ -269,7 +268,6 @@ const testData: FocusProduct[] = [
     _id: '123123123',
     dienstverleningstermijn: 21,
     inspanningsperiode: 28,
-    datePublished: '2019-06-08T15:05:51+02:00',
     naam: 'Levensonderhoud',
     processtappen: {
       aanvraag: {
@@ -314,7 +312,6 @@ const testData: FocusProduct[] = [
     _id: '123123123',
     dienstverleningstermijn: 21,
     inspanningsperiode: 28,
-    datePublished: '2019-07-03T15:05:52+02:00',
     naam: 'Levensonderhoud',
     processtappen: {
       aanvraag: {
@@ -366,7 +363,6 @@ const testData: FocusProduct[] = [
     _id: '999999',
     dienstverleningstermijn: 28,
     inspanningsperiode: 28,
-    datePublished: '2020-05-12T00:00:00+02:00',
     naam: 'Bijzondere bijstand',
     processtappen: {
       aanvraag: {
@@ -400,54 +396,42 @@ const tozoDocumenten: FocusTozoDocument[] = [
 ];
 
 describe('FOCUS_AANVRAGEN service', () => {
-  it('formats the focus aanvragen STADSPAS/BIJSTAND items correctly ', () => {
+  it('Normalizes the focus aanvragen items correctly ', () => {
+    expect(testData.map(normalizeFocusSourceProduct)).toMatchSnapshot();
+  });
+
+  it('Translates some property values of the normalized focus aanvragen items correctly ', () => {
     expect(
-      transformFOCUSAanvragenData(
-        testData,
-        new Date('2018-01-01'),
-        contentLabels,
-        contentDocumentTitles
-      )
+      testData
+        .map(normalizeFocusSourceProduct)
+        .filter(product => focusAanvragenProducten.includes(product.title))
+        .map(product => translateFocusProduct(product, titleTranslations))
     ).toMatchSnapshot();
   });
-  it('leaves out BIJZONDER BIJSTAND items ', () => {
-    const data = transformFOCUSAanvragenData(
-      testData,
-      new Date('2018-01-01'),
-      contentLabels,
-      contentDocumentTitles
-    );
+
+  it('Transforms the normalized focus aanvragen items correctly ', () => {
     expect(
-      // Filter out allowed items
-      data.filter(
-        ({ item }) => !['Stadspas', 'Bijstandsuitkering'].includes(item.title)
-      )
-    ).toStrictEqual([]);
-  });
-  it('formats the focus aanvragen TOZO items correctly ', () => {
-    expect(
-      transformFocusTozo({
-        documenten: tozoDocumenten,
-        aanvragen: testData,
-        contentLabels: contentLabelsTozo,
-        contentDocumentTitles: contentDocumentTitlesTozo,
-        compareDate: new Date('2020-04-01'),
-      })
+      testData
+        .map(normalizeFocusSourceProduct)
+        .filter(product => focusAanvragenProducten.includes(product.title))
+        .map(product => translateFocusProduct(product, titleTranslations))
+        .map(product => transformFocusProduct(product, contentLabels))
     ).toMatchSnapshot();
   });
 
   it('isRecentItem should be different', () => {
-    const steps = {
-      beslissing: {
-        datum: '2020-05-07',
+    const steps = [
+      {
+        datePublished: '2020-05-07',
+        title: 'beslissing',
       },
-    } as FocusProduct['processtappen'];
+    ] as FocusItemStep[];
 
     const compareToDate = new Date('2020-05-12');
-    expect(isRecentItem('afwijzing', steps, compareToDate)).toBe(true);
+    expect(isRecentItem(steps, compareToDate)).toBe(true);
 
-    steps.beslissing!.datum = '2019-04-01';
-    expect(isRecentItem('afwijzing', steps, compareToDate)).toBe(false);
+    steps[0].datePublished = '2019-04-01';
+    expect(isRecentItem(steps, compareToDate)).toBe(false);
   });
 
   it('calculates deadline correctly', () => {
@@ -466,17 +450,29 @@ describe('FOCUS_AANVRAGEN service', () => {
   });
 
   it('get the correct step', () => {
-    const steps = {
-      beslissing: {
-        datum: '2020-05-07',
+    const steps = [
+      {
+        datePublished: '2020-05-01',
+        title: 'aanvraag',
       },
-    } as FocusProduct['processtappen'];
+      {
+        datePublished: '2020-05-07',
+        title: 'beslissing',
+      },
+    ] as FocusProductStep[];
     expect(getLatestStep(steps)).toBe('beslissing');
   });
   it('get the correct step', () => {
-    const steps = {
-      bliep: {},
-    } as any;
+    const steps = [
+      {
+        datePublished: '2020-05-01',
+        title: 'blap',
+      },
+      {
+        datePublished: '2020-05-07',
+        title: 'blip',
+      },
+    ] as any[];
     expect(getLatestStep(steps)).toBe('aanvraag');
   });
 });

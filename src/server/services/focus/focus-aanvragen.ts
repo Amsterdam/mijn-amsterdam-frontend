@@ -37,7 +37,7 @@ export function fetchFOCUS(sessionID: SessionID) {
   return sourceDataNormalized;
 }
 
-const focusAanvragenProducten = ['Levensonderhoud', 'Stadspas'];
+export const focusAanvragenProducten = ['Levensonderhoud', 'Stadspas'];
 
 export async function fetchFOCUSAanvragen(sessionID: SessionID) {
   const response = await fetchFOCUS(sessionID);
