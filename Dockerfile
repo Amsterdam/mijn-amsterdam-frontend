@@ -108,7 +108,7 @@ COPY --from=build-deps /app/src/client/public/robots.production.txt /usr/share/n
 ########################################################################################################################
 ########################################################################################################################
 FROM node:13.7.0 as deploy-ap-bff
-
+ENV BFF_HOST=http://acc.mijn.data.amsterdam.nl
 ENV BFF_ENV=production
 ENV TZ=Europe/Amsterdam
 
