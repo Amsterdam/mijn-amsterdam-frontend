@@ -23,7 +23,7 @@ pipeline {
         PROJECT = "${PROJECT_PREFIX}unit"
       }
       steps {
-        script { currentBuild.displayName = "Unit testing #${BUILD_NUMBER} (${COMMIT_HASH})" }
+        script { currentBuild.displayName = "Unit testing #${BUILD_NUMBER}" }
         // sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit-client test-unit-client"
         sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit-bff test-unit-bff"
       }
@@ -40,7 +40,7 @@ pipeline {
     //     PROJECT = "${PROJECT_PREFIX}e2e"
     //   }
     //   steps {
-    //     script { currentBuild.displayName = "E2E testing #${BUILD_NUMBER} (${COMMIT_HASH})" }
+    //     script { currentBuild.displayName = "E2E testing #${BUILD_NUMBER}" }
     //     sh "docker-compose -p ${PROJECT} up --build --exit-code-from e2e-testsuite e2e-testsuite"
     //   }
     //   post {
@@ -61,7 +61,7 @@ pipeline {
         timeout(time: 30, unit: 'MINUTES')
       }
       steps {
-        script { currentBuild.displayName = "TEST Build #${BUILD_NUMBER} (${COMMIT_HASH})" }
+        script { currentBuild.displayName = "TEST Build #${BUILD_NUMBER}" }
         sh "docker build -t ${IMAGE_TEST} " +
            "--shm-size 1G " +
            "--target=serve-ot-bff " +
@@ -76,7 +76,7 @@ pipeline {
         timeout(time: 5, unit: 'MINUTES')
       }
       steps {
-        script { currentBuild.displayName = "TEST Deploy #${BUILD_NUMBER} (${COMMIT_HASH})" }
+        script { currentBuild.displayName = "TEST Deploy #${BUILD_NUMBER}" }
         build job: 'Subtask_Openstack_Playbook', parameters: [
           [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
           [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend-test.yml']
@@ -92,7 +92,7 @@ pipeline {
         timeout(time: 10, unit: 'MINUTES')
       }
       steps {
-        script { currentBuild.displayName = "ACC Build #${BUILD_NUMBER} (${COMMIT_HASH})" }
+        script { currentBuild.displayName = "ACC Build #${BUILD_NUMBER}" }
         // build the Front-end/nginx image
         sh "docker build -t ${IMAGE_ACCEPTANCE} " +
            "--target=deploy-acceptance-frontend " +
@@ -120,7 +120,7 @@ pipeline {
         timeout(time: 5, unit: 'MINUTES')
       }
       steps {
-        script { currentBuild.displayName = "ACC Deploy #${BUILD_NUMBER} (${COMMIT_HASH})" }
+        script { currentBuild.displayName = "ACC Deploy #${BUILD_NUMBER}" }
         build job: 'Subtask_Openstack_Playbook', parameters: [
           [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
           [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml']
@@ -143,7 +143,7 @@ pipeline {
     //     timeout(time: 10, unit: 'MINUTES')
     //   }
     //   steps {
-    //     script { currentBuild.displayName = "PROD:Build:#${BUILD_NUMBER} (${COMMIT_HASH})" }
+    //     script { currentBuild.displayName = "PROD:Build:#${BUILD_NUMBER}" }
     //     sh "docker build -t ${IMAGE_PRODUCTION} " +
     //        "--target=deploy-production-frontend " +
     //        "--shm-size 1G " +
@@ -168,7 +168,7 @@ pipeline {
     //     timeout(time: 120, unit: 'MINUTES')
     //   }
     //   steps {
-    //     script { currentBuild.displayName = "PROD:Deploy approval:#${BUILD_NUMBER} (${COMMIT_HASH})" }
+    //     script { currentBuild.displayName = "PROD:Deploy approval:#${BUILD_NUMBER}" }
     //     script {
     //       input "Deploy to Production?"
     //       echo "Okay, moving on"
@@ -184,7 +184,7 @@ pipeline {
     //     timeout(time: 5, unit: 'MINUTES')
     //   }
     //   steps {
-    //     script { currentBuild.displayName = "PROD:Deploy:#${BUILD_NUMBER} (${COMMIT_HASH})" }
+    //     script { currentBuild.displayName = "PROD:Deploy:#${BUILD_NUMBER}" }
     //     build job: 'Subtask_Openstack_Playbook', parameters: [
     //       [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
     //       [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml']
