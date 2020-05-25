@@ -1,3 +1,3 @@
-import { IS_PRODUCTION } from './env';
+import { IS_AP } from './env';
 
-export const API_BASE_PATH = IS_PRODUCTION ? '/api' : '/test-api';
+export const API_BASE_PATH = IS_AP ? '/api' : '/test-api';
