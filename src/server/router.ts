@@ -105,18 +105,43 @@ router.get(
 );
 
 router.get('/routing', async (req: Request, res: Response) => {
-  const r0 = await axiosRequest({ url: 'http://example.org/' });
-  console.log('\n', '----'.repeat(20), '\n\n', r0.data);
-  const r1 = await axiosRequest({ url: 'https://mijn.acc.amsterdam.nl' });
-  console.log('\n', '----'.repeat(20), '\n\n', r1.data);
+  try {
+    const r0 = await axiosRequest({
+      url: 'http://example.org/',
+      timeout: 2000,
+    });
+    console.log('\n', '----'.repeat(20), '\n\n', r0.data);
+  } catch (e) {
+    console.log(e.toString());
+  }
+  try {
+    const r1 = await axiosRequest({
+      url: 'https://mijn.acc.amsterdam.nl',
+      timeout: 2000,
+    });
+    console.log('\n', '----'.repeat(20), '\n\n', r1.data);
+  } catch (e) {
+    console.log(e.toString());
+  }
   // const headerNames = ['']
   // const headers = {
 
-  // }
-  const r2 = await axiosRequest({
-    url: 'https://mijn.acc.amsterdam.nl/api/focus/aanvragen',
-    headers: req.rawHeaders,
-  });
-  console.log('\n', '----'.repeat(20), '\n\n', req.rawHeaders, '\n\n', r2.data);
+  try {
+    const r2 = await axiosRequest({
+      url: 'https://mijn.acc.amsterdam.nl/api/focus/aanvragen',
+      headers: req.rawHeaders,
+      timeout: 2000,
+    });
+    console.log(
+      '\n',
+      '----'.repeat(20),
+      '\n\n',
+      req.rawHeaders,
+      '\n\n',
+      r2.data
+    );
+  } catch (e) {
+    console.log(e.toString());
+  }
   res.send('end');
 });
