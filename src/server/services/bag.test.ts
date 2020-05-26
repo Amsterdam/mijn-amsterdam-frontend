@@ -40,7 +40,7 @@ describe('BAG service', () => {
       huisnummer: 25,
     } as any;
 
-    const rs = await fetchBAG('x', address);
+    const rs = await fetchBAG('x', 'saml', address);
 
     expect(rs).toStrictEqual({
       status: 'OK',
@@ -54,7 +54,7 @@ describe('BAG service', () => {
   });
 
   it('Bag api should fail correct;y', async () => {
-    const rs = await fetchBAG('x', {} as any);
+    const rs = await fetchBAG('x', 'saml', {} as any);
 
     expect(rs).toStrictEqual({
       status: 'ERROR',
