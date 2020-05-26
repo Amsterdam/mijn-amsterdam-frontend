@@ -15,6 +15,7 @@ import {
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
 import { Deferred } from './deferred';
 import memoryCache from 'memory-cache';
+import { TMA_SAML_HEADER, BFF_MS_API_BASE_URL } from '../config';
 
 const CACHE_KEEP_MAX_MS = 60 * 1000; // 1 minute. We expect that all requests will resolve within this total timeframe.
 
@@ -91,6 +92,13 @@ export async function requestData<T>(
     ...config,
     cancelToken: source.token,
   };
+
+  if (requestConfig.url?.startsWith(BFF_MS_API_BASE_URL)) {
+    if (!requestConfig.headers) {
+      requestConfig.headers = {};
+    }
+    requestConfig.headers[TMA_SAML_HEADER] = sessionID;
+  }
 
   const isGetRequest = requestConfig.method?.toLowerCase() === 'get';
 

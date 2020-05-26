@@ -1,22 +1,26 @@
 import { FeatureToggle } from '../universal/config';
 import { ApiStateKey } from './services/state';
-import { IS_AP } from '../universal/config/env';
+import { IS_AP, IS_PRODUCTION, IS_ACCEPTANCE } from '../universal/config/env';
+
+export const TMA_SAML_HEADER = 'x-saml-attribute-token1';
 
 // Urls used in the BFF api
 // Microservices (Tussen Api) base url
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
 
-const API_BASE_PATH = IS_AP ? '' : '/test-api';
-const BFF_MS_API_HOST = process.env.BFF_MS_API_HOST || 'localhost';
-const BFF_MS_API_PORT =
-  process.env.BFF_MS_API_PORT !== undefined
-    ? process.env.BFF_MS_API_PORT
-    : 5000;
+const API_BASE_PATH = IS_AP ? '/api' : '/test-api';
 
-const port = BFF_MS_API_PORT ? `:${BFF_MS_API_PORT}` : '';
+const BFF_MS_API_HOST = IS_PRODUCTION
+  ? 'mijn.amsterdam.nl'
+  : IS_ACCEPTANCE
+  ? 'mijn.acc.amsterdam.nl'
+  : 'localhost';
 
-export const BFF_MS_API_BASE_URL = `http://${BFF_MS_API_HOST}${port}${API_BASE_PATH}`;
+const BFF_MS_API_PORT = IS_AP ? '' : ':5000';
+const BFF_MS_API_PROTOCOL = IS_AP ? 'https://' : 'http://';
+
+export const BFF_MS_API_BASE_URL = `${BFF_MS_API_PROTOCOL}://${BFF_MS_API_HOST}${BFF_MS_API_PORT}${API_BASE_PATH}`;
 
 export const BFF_DATAPUNT_API_BASE_URL = IS_AP
   ? 'https://api.data.amsterdam.nl'

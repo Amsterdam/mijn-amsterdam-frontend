@@ -12,9 +12,10 @@ import express, {
 } from 'express';
 import session from 'express-session';
 import { IS_AP, getOtapEnvItem, ENV } from '../universal/config/env';
-import { BFF_PORT } from './config';
+import { BFF_PORT, TMA_SAML_HEADER } from './config';
 import { clearCache } from './helpers';
 import { router } from './router';
+import uid from 'uid-safe';
 
 if (getOtapEnvItem('bffSentryDsn')) {
   Sentry.init({
@@ -37,6 +38,9 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: { secure: IS_AP },
+    genid: function(req: Request) {
+      return (req.headers[TMA_SAML_HEADER] as string) || uid.sync(24);
+    },
   })
 );
 
