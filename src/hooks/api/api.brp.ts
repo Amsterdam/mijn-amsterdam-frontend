@@ -20,6 +20,7 @@ const options = { url: getApiUrl('BRP') };
 const BrpDocumentTitles: Record<string, string> = {
   paspoort: 'paspoort',
   'europese identiteitskaart': 'ID-kaart',
+  'nederlandse identiteitskaart': 'ID-kaart',
   rijbewijs: 'rijbewijs',
 };
 
