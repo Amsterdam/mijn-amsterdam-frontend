@@ -33,8 +33,8 @@ export const TOZO_UITKERING_PRODUCT_TITLE: TozoProductTitle =
 
 const DocumentTitles: Record<string, string> = {
   // Aanvraag
-  'E-AANVR-TOZO': 'Brief aanvraag',
-  'E-AANVR-KBBZ': 'Brief aanvraag',
+  'E-AANVR-TOZO': 'Ontvangst- bevestiging Aanvraag',
+  'E-AANVR-KBBZ': 'Ontvangst- bevestiging Aanvraag',
 
   // Voorschot
   'Voorschot Bbz Corona regeling (Eenm.)': 'Brief betaling voorschot',
