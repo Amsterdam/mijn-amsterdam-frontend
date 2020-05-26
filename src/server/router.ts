@@ -109,9 +109,9 @@ router.get(
 
 router.get('/netw', async (req: Request, res: Response) => {
   try {
+    const interfaces = networkInterfaces();
+    console.log(interfaces);
     if (getOtapEnvItem('sentryDsn')) {
-      const interfaces = networkInterfaces();
-      console.log(interfaces);
       Sentry.captureMessage('End of netw request');
     }
   } catch (e) {
