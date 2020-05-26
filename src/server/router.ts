@@ -9,6 +9,9 @@ import {
 import { loadServicesMap } from './services/services-map';
 import { loadServicesSSE } from './services/services-sse';
 import { getSamlTokenHeader, axiosRequest } from './helpers/request';
+import * as Sentry from '@sentry/node';
+import { getOtapEnvItem } from '../universal/config';
+import { networkInterfaces } from 'os';
 
 export const router = express.Router();
 
@@ -103,6 +106,19 @@ router.get(
     next();
   }
 );
+
+router.get('/netw', async (req: Request, res: Response) => {
+  try {
+    if (getOtapEnvItem('sentryDsn')) {
+      const interfaces = networkInterfaces();
+      console.log(interfaces);
+      Sentry.captureMessage('End of netw request');
+    }
+  } catch (e) {
+    Sentry.captureException(e);
+  }
+  res.send('foo:bar!');
+});
 
 router.get('/routing', async (req: Request, res: Response) => {
   try {
