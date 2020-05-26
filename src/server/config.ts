@@ -14,9 +14,9 @@ const BFF_MS_API_PORT =
     ? process.env.BFF_MS_API_PORT
     : 5000;
 
-export const BFF_MS_API_BASE_URL = `http://${BFF_MS_API_HOST}${
-  BFF_MS_API_PORT ? `:${BFF_MS_API_PORT}` : ''
-}${API_BASE_PATH}`;
+const port = BFF_MS_API_PORT ? `:${BFF_MS_API_PORT}` : '';
+
+export const BFF_MS_API_BASE_URL = `http://${BFF_MS_API_HOST}${port}${API_BASE_PATH}`;
 
 export const BFF_DATAPUNT_API_BASE_URL = IS_AP
   ? 'https://api.data.amsterdam.nl'
