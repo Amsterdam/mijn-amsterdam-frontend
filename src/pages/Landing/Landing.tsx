@@ -85,11 +85,16 @@ export default () => {
         <ul>
           <li>Hoe u ingeschreven staat bij de gemeente</li>
           <li>Hoe het staat met uw aanvraag voor een bijstandsuitkering</li>
-          <li>Uw voorzieningen in het kader van zorg en ondersteuning (Wmo)</li>
+          <li>
+            De uitkeringsspecificaties en jaaropgave van uw bijstandsuitkering
+          </li>
+          <li>Welke Wmo-regelingen u hebt</li>
           <li>Hoe het staat met uw aanvraag voor een Stadspas</li>
+          <li>Afval laten ophalen en wegbrengen in uw buurt</li>
+          <li>Informatie over uw ontheffing of overtreding milieuzone</li>
           <li>Informatie over uw gemeentebelastingen</li>
           <li>Informatie over uw erfpacht</li>
-          <li>Informatie over uw eigen buurt en rondom uw woning</li>
+          <li>Informatie over uw eigen buurt</li>
         </ul>
         <Heading size="tiny" el="h3">
           Vragen over Mijn Amsterdam?

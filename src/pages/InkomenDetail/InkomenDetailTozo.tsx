@@ -48,9 +48,9 @@ export default () => {
       <PageContent className={styles.DetailPageContent}>
         <p>
           Onderstaand ziet u de status van uw aanvraag voor een Tozo-uitkering
-          en/of een Tozo-lening. Indien u beide heeft aangevraagd, ontvangt u
-          voor beide onderstaand een apart besluit. Informatie die u hier ziet
-          is een werkdag vertraagd.
+          en/of een Tozo-bedrijfskapitaal. Indien u beide heeft aangevraagd,
+          ontvangt u voor beide een apart besluit. Informatie die u hier ziet is
+          een werkdag vertraagd.
         </p>
         <p>
           <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
@@ -87,12 +87,12 @@ export default () => {
       )}
       {!!TozoItem?.process.lening.length && (
         <StatusLine
-          trackCategory={`Inkomen en Stadspas / Tozo-lening`}
-          statusLabel="Status Tozo-lening"
+          trackCategory={`Inkomen en Stadspas / Tozo-bedrijfskapitaal`}
+          statusLabel="Status Tozo-bedrijfskapitaal"
           items={TozoItem.process.lening}
           showToggleMore={false}
           altDocumentContent={altDocumentContent}
-          id={'inkomen-stadspas-detail-tozo-lening'}
+          id={'inkomen-stadspas-detail-Tozo-bedrijfskapitaal'}
         />
       )}
     </DetailPage>
