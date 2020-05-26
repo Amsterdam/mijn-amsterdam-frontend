@@ -13,12 +13,12 @@ export const BFF_PORT = process.env.BFF_PORT || 5000;
 const API_BASE_PATH = IS_AP ? '/api' : '/test-api';
 
 const BFF_MS_API_HOST = IS_PRODUCTION
-  ? 'mijn.amsterdam.nl'
+  ? process.env.BFF_MS_API_HOST || 'mijn.amsterdam.nl'
   : IS_ACCEPTANCE
-  ? 'mijn.acc.amsterdam.nl'
+  ? process.env.BFF_MS_API_HOST || 'mijn.acc.amsterdam.nl'
   : 'localhost';
 
-const BFF_MS_API_PORT = IS_AP ? '' : ':5000';
+const BFF_MS_API_PORT = IS_AP ? '' : `:${process.env.BFF_MS_API_PORT || 5000}`;
 const BFF_MS_API_PROTOCOL = IS_AP ? 'https' : 'http';
 
 export const BFF_MS_API_BASE_URL = `${BFF_MS_API_PROTOCOL}://${BFF_MS_API_HOST}${BFF_MS_API_PORT}${API_BASE_PATH}`;
