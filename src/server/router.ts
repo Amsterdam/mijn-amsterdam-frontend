@@ -112,7 +112,7 @@ router.get('/routing', async (req: Request, res: Response) => {
     });
     console.log('\n', '----'.repeat(20), '\n\n', r0.data);
   } catch (e) {
-    console.log(e.toString());
+    res.send('r0--' + e.toString());
   }
   try {
     const r1 = await axiosRequest({
@@ -121,7 +121,7 @@ router.get('/routing', async (req: Request, res: Response) => {
     });
     console.log('\n', '----'.repeat(20), '\n\n', r1.data);
   } catch (e) {
-    console.log(e.toString());
+    res.send('r1--' + e.toString());
   }
   // const headerNames = ['']
   // const headers = {
@@ -141,7 +141,7 @@ router.get('/routing', async (req: Request, res: Response) => {
       r2.data
     );
   } catch (e) {
-    console.log(e.toString());
+    res.send('r2--' + e.toString());
   }
   res.send('end');
 });
