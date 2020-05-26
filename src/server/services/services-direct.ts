@@ -8,14 +8,20 @@ import {
   fetchMILIEUZONE,
 } from './index';
 
-export async function loadServicesDirect(sessionID: SessionID) {
-  const fetchFOCUSAanvragenRequest = fetchFOCUSAanvragen(sessionID);
-  const fetchFOCUSSpecificatiesRequest = fetchFOCUSSpecificaties(sessionID);
-  const fetchFOCUSTozoRequest = fetchFOCUSTozo(sessionID);
-  const fetchWMORequest = fetchWMO(sessionID);
-  const fetchERFPACHTRequest = fetchERFPACHT(sessionID);
-  const fetchBELASTINGRequest = fetchBELASTING(sessionID);
-  const fetchMILIEUZONERequest = fetchMILIEUZONE(sessionID);
+export async function loadServicesDirect(
+  sessionID: SessionID,
+  samlToken: string
+) {
+  const fetchFOCUSAanvragenRequest = fetchFOCUSAanvragen(sessionID, samlToken);
+  const fetchFOCUSSpecificatiesRequest = fetchFOCUSSpecificaties(
+    sessionID,
+    samlToken
+  );
+  const fetchFOCUSTozoRequest = fetchFOCUSTozo(sessionID, samlToken);
+  const fetchWMORequest = fetchWMO(sessionID, samlToken);
+  const fetchERFPACHTRequest = fetchERFPACHT(sessionID, samlToken);
+  const fetchBELASTINGRequest = fetchBELASTING(sessionID, samlToken);
+  const fetchMILIEUZONERequest = fetchMILIEUZONE(sessionID, samlToken);
 
   const [
     FOCUS_AANVRAGEN,

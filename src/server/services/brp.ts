@@ -167,19 +167,23 @@ export function transformBRPData(responseData: BRPData) {
   return responseData;
 }
 
-export function fetchBRP(sessionID: SessionID) {
+export function fetchBRP(sessionID: SessionID, samlToken: string) {
   return requestData<BRPData>(
     {
       url: ApiUrls.BRP,
       transformResponse: transformBRPData,
     },
     sessionID,
+    samlToken,
     getApiConfigValue('BRP', 'postponeFetch', false)
   );
 }
 
-export async function fetchBRPGenerated(sessionID: SessionID) {
-  const BRP = await fetchBRP(sessionID);
+export async function fetchBRPGenerated(
+  sessionID: SessionID,
+  samlToken: string
+) {
+  const BRP = await fetchBRP(sessionID, samlToken);
   let notifications: MyNotification[] = [];
 
   if (BRP.status === 'OK') {

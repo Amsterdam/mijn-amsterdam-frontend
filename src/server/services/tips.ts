@@ -17,7 +17,11 @@ function transformTIPSRequest(requestData: TIPSData) {
   return requestData;
 }
 
-export function fetchTIPS(sessionID: SessionID, requestBody: TIPSRequestData) {
+export function fetchTIPS(
+  sessionID: SessionID,
+  samlToken: string,
+  requestBody: TIPSRequestData
+) {
   return requestData<TIPSData>(
     {
       url: ApiUrls.TIPS,
@@ -26,6 +30,7 @@ export function fetchTIPS(sessionID: SessionID, requestBody: TIPSRequestData) {
       transformRequest: transformTIPSRequest,
     },
     sessionID,
+    samlToken,
     getApiConfigValue('TIPS', 'postponeFetch', false)
   );
 }

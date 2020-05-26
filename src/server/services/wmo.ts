@@ -729,7 +729,7 @@ export function transformWMOResponse(
   return { items };
 }
 
-export function fetchWMO(sessionID: SessionID) {
+export function fetchWMO(sessionID: SessionID, samlToken: string) {
   return requestData<WMOData>(
     {
       url: ApiUrls.WMO,
@@ -737,6 +737,7 @@ export function fetchWMO(sessionID: SessionID) {
         transformWMOResponse(responseData, new Date()),
     },
     sessionID,
+    samlToken,
     getApiConfigValue('WMO', 'postponeFetch', false)
   );
 }

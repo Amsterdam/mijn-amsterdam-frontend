@@ -17,7 +17,7 @@ import { FocusProduct, FocusProductFromSource } from './focus-types';
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
  */
-export function fetchFOCUS(sessionID: SessionID) {
+export function fetchFOCUS(sessionID: SessionID, samlToken: string) {
   const sourceDataNormalized = requestData<FocusProduct[]>(
     {
       url: ApiUrls.FOCUS_AANVRAGEN,
@@ -31,6 +31,7 @@ export function fetchFOCUS(sessionID: SessionID) {
           .sort(dateSort('datePublished', 'desc')) || [],
     },
     sessionID,
+    samlToken,
     getApiConfigValue('FOCUS_AANVRAGEN', 'postponeFetch', false)
   );
 
@@ -39,8 +40,11 @@ export function fetchFOCUS(sessionID: SessionID) {
 
 export const focusAanvragenProducten = ['Levensonderhoud', 'Stadspas'];
 
-export async function fetchFOCUSAanvragen(sessionID: SessionID) {
-  const response = await fetchFOCUS(sessionID);
+export async function fetchFOCUSAanvragen(
+  sessionID: SessionID,
+  samlToken: string
+) {
+  const response = await fetchFOCUS(sessionID, samlToken);
 
   if (response.status === 'OK') {
     // Filter out the products that we use for the lopende/afgehandelde aanvragen
@@ -59,8 +63,11 @@ export async function fetchFOCUSAanvragen(sessionID: SessionID) {
   return response;
 }
 
-export async function fetchFOCUSAanvragenGenerated(sessionID: SessionID) {
-  const response = await fetchFOCUS(sessionID);
+export async function fetchFOCUSAanvragenGenerated(
+  sessionID: SessionID,
+  samlToken: string
+) {
+  const response = await fetchFOCUS(sessionID, samlToken);
   const compareDate = new Date();
 
   let notifications: MyNotification[] = [];

@@ -42,13 +42,14 @@ function transformMILIEUZONEData(
   };
 }
 
-export function fetchMILIEUZONE(sessionID: SessionID) {
+export function fetchMILIEUZONE(sessionID: SessionID, samlToken: string) {
   return requestData<MILIEUZONEData>(
     {
       url: ApiUrls.MILIEUZONE,
       transformResponse: transformMILIEUZONEData,
     },
     sessionID,
+    samlToken,
     getApiConfigValue('MILIEUZONE', 'postponeFetch', false)
   );
 }
@@ -69,7 +70,10 @@ function transformMILIEUZONEGenerated(responseData: MILIEUZONESourceData) {
   };
 }
 
-export async function fetchMILIEUZONEGenerated(sessionID: SessionID) {
+export async function fetchMILIEUZONEGenerated(
+  sessionID: SessionID,
+  samlToken: string
+) {
   const response = await requestData<
     ReturnType<typeof transformMILIEUZONEGenerated>
   >(
@@ -78,6 +82,7 @@ export async function fetchMILIEUZONEGenerated(sessionID: SessionID) {
       transformResponse: transformMILIEUZONEGenerated,
     },
     sessionID,
+    samlToken,
     getApiConfigValue('MILIEUZONE_GENERATED', 'postponeFetch', false)
   );
 

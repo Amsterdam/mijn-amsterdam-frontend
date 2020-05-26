@@ -126,8 +126,11 @@ export function transformFOCUSIncomeSpecificationsData(
   };
 }
 
-export async function fetchFOCUSSpecificaties(sessionID: SessionID) {
-  const combinedData = await fetchFOCUSCombined(sessionID);
+export async function fetchFOCUSSpecificaties(
+  sessionID: SessionID,
+  samlToken: string
+) {
+  const combinedData = await fetchFOCUSCombined(sessionID, samlToken);
   if (combinedData.status === 'OK') {
     return apiSuccesResult(
       transformFOCUSIncomeSpecificationsData(combinedData.content)
@@ -136,8 +139,11 @@ export async function fetchFOCUSSpecificaties(sessionID: SessionID) {
   return combinedData;
 }
 
-export async function fetchFOCUSSpecificationsGenerated(sessionID: SessionID) {
-  const response = await fetchFOCUSSpecificaties(sessionID);
+export async function fetchFOCUSSpecificationsGenerated(
+  sessionID: SessionID,
+  samlToken: string
+) {
+  const response = await fetchFOCUSSpecificaties(sessionID, samlToken);
   const notifications: MyNotification[] = [];
 
   if (response.status === 'OK') {

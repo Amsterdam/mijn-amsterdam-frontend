@@ -20,7 +20,11 @@ export function formatBAGData(responseData: BAGSourceData): BAGData {
   };
 }
 
-export function fetchBAG(sessionID: SessionID, address: Adres) {
+export function fetchBAG(
+  sessionID: SessionID,
+  samlToken: string,
+  address: Adres
+) {
   const params = { q: getBagSearchAddress(address) };
 
   return requestData<BAGData>(
@@ -30,6 +34,7 @@ export function fetchBAG(sessionID: SessionID, address: Adres) {
       transformResponse: formatBAGData,
     },
     sessionID,
+    samlToken,
     getApiConfigValue('BAG', 'postponeFetch', false)
   );
 }

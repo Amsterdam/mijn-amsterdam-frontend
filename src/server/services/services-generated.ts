@@ -16,6 +16,7 @@ import { fetchTIPS, TIPSRequestData } from './tips';
 
 export async function loadServicesGenerated(
   sessionID: SessionID,
+  samlToken: string,
   optin: boolean = false
 ) {
   const [
@@ -28,14 +29,14 @@ export async function loadServicesGenerated(
     belastingGenerated,
     milieuzoneGenerated,
   ] = await Promise.all([
-    loadServicesDirect(sessionID),
-    loadServicesRelated(sessionID),
-    fetchBRPGenerated(sessionID),
-    fetchFOCUSAanvragenGenerated(sessionID),
-    fetchFOCUSSpecificationsGenerated(sessionID),
-    fetchFOCUSTozoGenerated(sessionID),
-    fetchBELASTINGGenerated(sessionID),
-    fetchMILIEUZONEGenerated(sessionID),
+    loadServicesDirect(sessionID, samlToken),
+    loadServicesRelated(sessionID, samlToken),
+    fetchBRPGenerated(sessionID, samlToken),
+    fetchFOCUSAanvragenGenerated(sessionID, samlToken),
+    fetchFOCUSSpecificationsGenerated(sessionID, samlToken),
+    fetchFOCUSTozoGenerated(sessionID, samlToken),
+    fetchBELASTINGGenerated(sessionID, samlToken),
+    fetchMILIEUZONEGenerated(sessionID, samlToken),
   ]);
 
   const notifications: MyNotification[] = [];
@@ -78,7 +79,7 @@ export async function loadServicesGenerated(
 
   console.log('tipsRequestData:', tipsRequestData);
 
-  const tips = await fetchTIPS(sessionID, tipsRequestData);
+  const tips = await fetchTIPS(sessionID, samlToken, tipsRequestData);
 
   const notificationsResult = {
     items: notifications

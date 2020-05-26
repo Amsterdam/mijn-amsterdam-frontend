@@ -36,7 +36,10 @@ export interface FocusCombinedSourceResponse {
   tozodocumenten: FocusTozoDocument[];
 }
 
-export async function fetchFOCUSCombined(sessionID: SessionID) {
+export async function fetchFOCUSCombined(
+  sessionID: SessionID,
+  samlToken: string
+) {
   return requestData<FocusCombinedSourceResponse>(
     {
       url: ApiUrls.FOCUS_COMBINED,
@@ -51,6 +54,7 @@ export async function fetchFOCUSCombined(sessionID: SessionID) {
       },
     },
     sessionID,
+    samlToken,
     getApiConfigValue('FOCUS_COMBINED', 'postponeFetch', false)
   );
 }

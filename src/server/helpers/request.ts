@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/node';
+import { Request } from 'express';
 import axios, { AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { getOtapEnvItem, IS_AP } from '../../universal/config/env';
 import {
@@ -78,6 +79,7 @@ export function clearCache(sessionID: SessionID) {
 
 export async function requestData<T>(
   config: AxiosRequestConfig,
+  samlToken: string,
   sessionID: SessionID,
   postpone: boolean = false
 ) {
@@ -93,11 +95,11 @@ export async function requestData<T>(
     cancelToken: source.token,
   };
 
-  if (requestConfig.url?.startsWith(BFF_MS_API_BASE_URL)) {
+  if (requestConfig.url?.startsWith(BFF_MS_API_BASE_URL) && samlToken) {
     if (!requestConfig.headers) {
       requestConfig.headers = {};
     }
-    requestConfig.headers[TMA_SAML_HEADER] = sessionID;
+    requestConfig.headers[TMA_SAML_HEADER] = samlToken;
   }
 
   const isGetRequest = requestConfig.method?.toLowerCase() === 'get';
@@ -158,4 +160,8 @@ export async function requestData<T>(
 
     return responseData;
   }
+}
+
+export function getSamlTokenHeader(req: Request) {
+  return (req.headers[TMA_SAML_HEADER] || '') as string;
 }

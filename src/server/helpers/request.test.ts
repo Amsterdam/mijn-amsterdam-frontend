@@ -17,6 +17,8 @@ describe('requestData.ts', () => {
   const SESS_ID_1 = 'x1';
   const SESS_ID_2 = 'y2';
 
+  const SAML_TOKEN = 'xxx1010101xxxx';
+
   const CACHE_KEY_1 = `${SESS_ID_1}-get-${DUMMY_URL}-no-params`;
   const CACHE_KEY_2 = `${SESS_ID_2}-get-${DUMMY_URL}-no-params`;
 
@@ -47,6 +49,7 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL,
       },
+      SAML_TOKEN,
       SESS_ID_1
     );
 
@@ -58,6 +61,7 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL,
       },
+      SAML_TOKEN,
       SESS_ID_1
     );
 
@@ -73,6 +77,7 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL,
       },
+      SAML_TOKEN,
       SESS_ID_1
     );
 
@@ -80,6 +85,7 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL,
       },
+      SAML_TOKEN,
       SESS_ID_2
     );
 
@@ -105,6 +111,7 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL,
       },
+      SAML_TOKEN,
       SESS_ID_1,
       true
     );
@@ -117,6 +124,7 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL_2,
       },
+      SAML_TOKEN,
       SESS_ID_1
     );
 

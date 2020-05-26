@@ -8,6 +8,7 @@ import {
 } from './services';
 import { loadServicesMap } from './services/services-map';
 import { loadServicesSSE } from './services/services-sse';
+import { getSamlTokenHeader } from './helpers/request';
 
 export const router = express.Router();
 
@@ -17,7 +18,11 @@ router.get(`/services/generated`, async function handleRouteServicesGenerated(
   next: NextFunction
 ) {
   res.send(
-    await loadServicesGenerated(req.sessionID!, req.query.optin === '1')
+    await loadServicesGenerated(
+      req.sessionID!,
+      getSamlTokenHeader(req),
+      req.query.optin === '1'
+    )
   );
   next();
 });
@@ -27,7 +32,7 @@ router.get(`/services/related`, async function handleRouteServicesRelated(
   res: Response,
   next: NextFunction
 ) {
-  res.send(await loadServicesRelated(req.sessionID!));
+  res.send(await loadServicesRelated(req.sessionID!, getSamlTokenHeader(req)));
   next();
 });
 
@@ -38,7 +43,7 @@ router.get(
     res: Response,
     next: NextFunction
   ) {
-    res.send(await fetchFOCUSTozo(req.sessionID!));
+    res.send(await fetchFOCUSTozo(req.sessionID!, getSamlTokenHeader(req)));
     next();
   }
 );
@@ -48,7 +53,7 @@ router.get(`/services/direct`, async function handleRouteServicesDirect(
   res: Response,
   next: NextFunction
 ) {
-  res.send(await loadServicesDirect(req.sessionID!));
+  res.send(await loadServicesDirect(req.sessionID!, getSamlTokenHeader(req)));
   next();
 });
 
@@ -57,7 +62,7 @@ router.get(`/services/map`, async function handleRouteServicesMap(
   res: Response,
   next: NextFunction
 ) {
-  res.send(await loadServicesMap(req.sessionID!));
+  res.send(await loadServicesMap(req.sessionID!, getSamlTokenHeader(req)));
   next();
 });
 
@@ -66,7 +71,7 @@ router.post(`/services/tips`, async function handleRouteTips(
   res: Response,
   next: NextFunction
 ) {
-  res.send(await fetchTIPS(req.sessionID!, req.body));
+  res.send(await fetchTIPS(req.sessionID!, getSamlTokenHeader(req), req.body));
   next();
 });
 
@@ -76,11 +81,12 @@ router.get(`/services/all`, async function handleRouteServicesMap(
   next: NextFunction
 ) {
   const data = {
-    ...(await loadServicesDirect(req.sessionID!)),
-    ...(await loadServicesRelated(req.sessionID!)),
-    ...(await loadServicesMap(req.sessionID!)),
+    ...(await loadServicesDirect(req.sessionID!, getSamlTokenHeader(req))),
+    ...(await loadServicesRelated(req.sessionID!, getSamlTokenHeader(req))),
+    ...(await loadServicesMap(req.sessionID!, getSamlTokenHeader(req))),
     ...(await loadServicesGenerated(
       req.sessionID!,
+      getSamlTokenHeader(req),
       req.cookies.optInPersonalizedTips === 'yes'
     )),
   };

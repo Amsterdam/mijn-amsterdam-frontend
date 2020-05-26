@@ -2,7 +2,7 @@ import {
   capitalizeFirstLetter,
   getApproximateDistance,
 } from '../../universal/helpers';
-import { requestData } from '../helpers/request';
+import { requestData, getSamlTokenHeader } from '../helpers/request';
 import { ApiUrls, getApiConfigValue } from '../config';
 import {
   Stadsdeel,
@@ -256,7 +256,11 @@ export function formatAFVALData(
   };
 }
 
-export function fetchAFVAL(sessionID: SessionID, center: LatLngObject | null) {
+export function fetchAFVAL(
+  sessionID: SessionID,
+  samlToken: string,
+  center: LatLngObject | null
+) {
   const params = { lat: center?.lat, lon: center?.lng };
 
   return requestData<AFVALData>(
@@ -265,6 +269,7 @@ export function fetchAFVAL(sessionID: SessionID, center: LatLngObject | null) {
       params,
       transformResponse: data => formatAFVALData(data, center),
     },
+    samlToken,
     sessionID,
     getApiConfigValue('AFVAL', 'postponeFetch', false)
   );

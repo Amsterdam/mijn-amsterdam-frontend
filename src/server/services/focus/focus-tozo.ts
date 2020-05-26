@@ -26,9 +26,12 @@ import {
   createFocusTozoAanvraagNotification,
 } from './focus-tozo-helpers';
 
-async function fetchFOCUSTozoNormalized(sessionID: SessionID) {
-  const responseAanvragen = fetchFOCUS(sessionID);
-  const responseCombined = fetchFOCUSCombined(sessionID);
+async function fetchFOCUSTozoNormalized(
+  sessionID: SessionID,
+  samlToken: string
+) {
+  const responseAanvragen = fetchFOCUS(sessionID, samlToken);
+  const responseCombined = fetchFOCUSCombined(sessionID, samlToken);
 
   const [aanvragen, combined] = await Promise.all([
     responseAanvragen,
@@ -64,8 +67,8 @@ async function fetchFOCUSTozoNormalized(sessionID: SessionID) {
   return apiUnknownResult('Cannot construct TOZO item');
 }
 
-export async function fetchFOCUSTozo(sessionID: SessionID) {
-  const response = await fetchFOCUSTozoNormalized(sessionID);
+export async function fetchFOCUSTozo(sessionID: SessionID, samlToken: string) {
+  const response = await fetchFOCUSTozoNormalized(sessionID, samlToken);
 
   if (response.status === 'OK') {
     const { aanvragen, voorschotten, documenten } = response.content;
@@ -86,9 +89,15 @@ export async function fetchFOCUSTozo(sessionID: SessionID) {
   return response;
 }
 
-export async function fetchFOCUSTozoGenerated(sessionID: SessionID) {
-  const responseNormalized = await fetchFOCUSTozoNormalized(sessionID);
-  const responseTransformed = await fetchFOCUSTozo(sessionID);
+export async function fetchFOCUSTozoGenerated(
+  sessionID: SessionID,
+  samlToken: string
+) {
+  const responseNormalized = await fetchFOCUSTozoNormalized(
+    sessionID,
+    samlToken
+  );
+  const responseTransformed = await fetchFOCUSTozo(sessionID, samlToken);
   const compareDate = new Date();
 
   const notifications: MyNotification[] = [];

@@ -3,6 +3,7 @@ import { loadServicesRelated } from './services-related';
 import { loadServicesMap } from './services-map';
 import { loadServicesGenerated } from './services-generated';
 import { Response, Request, NextFunction } from 'express';
+import { getSamlTokenHeader } from '../helpers/request';
 
 function sendMessage(
   res: Response,
@@ -29,20 +30,30 @@ export async function loadServicesSSE(
     connection: 'keep-alive',
   });
 
-  const servicesDirect = loadServicesDirect(req.sessionID!).then(data => {
+  const servicesDirect = loadServicesDirect(
+    req.sessionID!,
+    getSamlTokenHeader(req)
+  ).then(data => {
     sendMessage(res, 'direct', 'message', data);
   });
 
-  const servicesRelated = loadServicesRelated(req.sessionID!).then(data => {
+  const servicesRelated = loadServicesRelated(
+    req.sessionID!,
+    getSamlTokenHeader(req)
+  ).then(data => {
     sendMessage(res, 'related', 'message', data);
   });
 
-  const servicesMap = loadServicesMap(req.sessionID!).then(data => {
+  const servicesMap = loadServicesMap(
+    req.sessionID!,
+    getSamlTokenHeader(req)
+  ).then(data => {
     sendMessage(res, 'map', 'message', data);
   });
 
   const servicesGenerated = loadServicesGenerated(
     req.sessionID!,
+    getSamlTokenHeader(req),
     req.cookies.optInPersonalizedTips === 'yes'
   ).then(data => {
     sendMessage(res, 'generated', 'message', data);

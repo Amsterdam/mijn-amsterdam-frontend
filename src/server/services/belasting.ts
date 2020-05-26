@@ -42,13 +42,14 @@ function transformBELASTINGENData(
   };
 }
 
-export function fetchBELASTING(sessionID: SessionID) {
+export function fetchBELASTING(sessionID: SessionID, samlToken: string) {
   return requestData<BELASTINGENData>(
     {
       url: ApiUrls.BELASTINGEN,
       transformResponse: transformBELASTINGENData,
     },
     sessionID,
+    samlToken,
     getApiConfigValue('BELASTINGEN', 'postponeFetch', false)
   );
 }
@@ -80,7 +81,10 @@ function transformBELASTINGENGenerated(responseData: BELASTINGSourceData) {
   };
 }
 
-export async function fetchBELASTINGGenerated(sessionID: SessionID) {
+export async function fetchBELASTINGGenerated(
+  sessionID: SessionID,
+  samlToken: string
+) {
   const response = await requestData<
     ReturnType<typeof transformBELASTINGENGenerated>
   >(
@@ -89,6 +93,7 @@ export async function fetchBELASTINGGenerated(sessionID: SessionID) {
       transformResponse: transformBELASTINGENGenerated,
     },
     sessionID,
+    samlToken,
     getApiConfigValue('BELASTINGEN_GENERATED', 'postponeFetch', false)
   );
 
