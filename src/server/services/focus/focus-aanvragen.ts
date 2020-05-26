@@ -23,12 +23,12 @@ export function fetchFOCUS(sessionID: SessionID) {
       url: ApiUrls.FOCUS_AANVRAGEN,
 
       // Normalize the focus source response.
-      transformResponse: data =>
+      transformResponse: (data = []) =>
         data
-          .map((product: FocusProductFromSource) =>
+          ?.map((product: FocusProductFromSource) =>
             normalizeFocusSourceProduct(product)
           )
-          .sort(dateSort('datePublished', 'desc')),
+          .sort(dateSort('datePublished', 'desc')) || [],
     },
     sessionID,
     getApiConfigValue('FOCUS_AANVRAGEN', 'postponeFetch', false)
