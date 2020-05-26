@@ -269,8 +269,8 @@ export function fetchAFVAL(
       params,
       transformResponse: data => formatAFVALData(data, center),
     },
-    samlToken,
     sessionID,
+    samlToken,
     getApiConfigValue('AFVAL', 'postponeFetch', false)
   );
 }

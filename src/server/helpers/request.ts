@@ -79,8 +79,8 @@ export function clearCache(sessionID: SessionID) {
 
 export async function requestData<T>(
   config: AxiosRequestConfig,
-  samlToken: string,
   sessionID: SessionID,
+  samlToken: string,
   postpone: boolean = false
 ) {
   if (postpone) {
