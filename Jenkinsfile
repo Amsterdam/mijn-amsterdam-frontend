@@ -94,11 +94,11 @@ pipeline {
       steps {
         script { currentBuild.displayName = "ACC Build #${BUILD_NUMBER}" }
         // build the Front-end/nginx image
-        sh "docker build -t ${IMAGE_ACCEPTANCE} " +
-           "--target=deploy-acceptance-frontend " +
-           "--shm-size 1G " +
-           "."
-        sh "docker push ${IMAGE_ACCEPTANCE}"
+        // sh "docker build -t ${IMAGE_ACCEPTANCE} " +
+        //    "--target=deploy-acceptance-frontend " +
+        //    "--shm-size 1G " +
+        //    "."
+        // sh "docker push ${IMAGE_ACCEPTANCE}"
 
         // build the BFF/node image
         sh "docker build -t ${IMAGE_ACCEPTANCE_BFF} " +
@@ -121,10 +121,10 @@ pipeline {
       }
       steps {
         script { currentBuild.displayName = "ACC Deploy #${BUILD_NUMBER}" }
-        build job: 'Subtask_Openstack_Playbook', parameters: [
-          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
-          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml']
-        ]
+        // build job: 'Subtask_Openstack_Playbook', parameters: [
+        //   [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
+        //   [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml']
+        // ]
         // Build the BFF
         build job: 'Subtask_Openstack_Playbook', parameters: [
           [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
