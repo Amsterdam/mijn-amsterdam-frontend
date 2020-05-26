@@ -10,12 +10,12 @@ export const TMA_UID = 'x-unique-id';
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
 
-const API_BASE_PATH = IS_AP ? '/api' : '/test-api';
+const API_BASE_PATH = IS_AP ? '' : '/test-api';
 
 const BFF_MS_API_HOST = IS_PRODUCTION
   ? process.env.BFF_MS_API_HOST || 'mijn.amsterdam.nl'
   : IS_ACCEPTANCE
-  ? process.env.BFF_MS_API_HOST || 'mijn.acc.amsterdam.nl'
+  ? process.env.BFF_MS_API_HOST || 'acc.mijn.data.amsterdam.nl'
   : 'localhost';
 
 const BFF_MS_API_PORT = IS_AP ? '' : `:${process.env.BFF_MS_API_PORT || 5000}`;
