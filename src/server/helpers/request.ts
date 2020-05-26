@@ -147,7 +147,13 @@ export async function requestData<T>(
 
     return responseData;
   } catch (error) {
-    getOtapEnvItem('sentryDsn') && Sentry.captureException(error);
+    if (getOtapEnvItem('sentryDsn')) {
+      if (error instanceof Error) {
+        Sentry.captureException(error);
+      } else {
+        Sentry.captureMessage(error?.message || 'Unknown errormessage');
+      }
+    }
 
     const responseData = apiErrorResult(error, null);
 
