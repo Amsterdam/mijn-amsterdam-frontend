@@ -40,12 +40,13 @@ export async function fetchFOCUSCombined(sessionID: SessionID) {
   return requestData<FocusCombinedSourceResponse>(
     {
       url: ApiUrls.FOCUS_COMBINED,
-      transformResponse: ({ content }) => {
+      transformResponse: ({ content = {} }) => {
         return Object.assign(content, {
-          tozodocumenten: content.tozodocumenten.map(
-            (item: FocusTozoDocument) =>
-              Object.assign(item, { dateStart: item.datePublished })
-          ),
+          tozodocumenten: Array.isArray(content?.tozodocumenten)
+            ? content.tozodocumenten.map((item: FocusTozoDocument) =>
+                Object.assign(item, { dateStart: item.datePublished })
+              )
+            : [],
         });
       },
     },
