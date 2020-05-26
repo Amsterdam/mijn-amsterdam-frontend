@@ -35,7 +35,7 @@ function enableMockAdapter() {
   const MockAdapter = require('axios-mock-adapter');
 
   // This sets the mock adapter on the default instance
-  const mock = new MockAdapter(axiosRequest);
+  const mock = new MockAdapter(axiosRequest, { onNoMatch: 'passthrough' });
 
   entries(mockDataConfig).forEach(
     async ([

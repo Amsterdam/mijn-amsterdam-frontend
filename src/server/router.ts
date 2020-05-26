@@ -105,13 +105,18 @@ router.get(
 );
 
 router.get('/routing', async (req: Request, res: Response) => {
-  const r0 = await axiosRequest({ url: 'https://tweakers.net' });
-  console.log(r0);
+  const r0 = await axiosRequest({ url: 'http://example.org/' });
+  console.log('\n', '----'.repeat(20), '\n\n', r0.data);
   const r1 = await axiosRequest({ url: 'https://mijn.acc.amsterdam.nl' });
-  console.log(r1);
+  console.log('\n', '----'.repeat(20), '\n\n', r1.data);
+  // const headerNames = ['']
+  // const headers = {
+
+  // }
   const r2 = await axiosRequest({
     url: 'https://mijn.acc.amsterdam.nl/api/focus/aanvragen',
-    headers: req.headers,
+    headers: req.rawHeaders,
   });
-  console.log(r2);
+  console.log('\n', '----'.repeat(20), '\n\n', req.rawHeaders, '\n\n', r2.data);
+  res.send('end');
 });
