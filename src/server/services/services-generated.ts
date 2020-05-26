@@ -77,8 +77,6 @@ export async function loadServicesGenerated(
     optin,
   };
 
-  console.log('tipsRequestData:', tipsRequestData);
-
   const tips = await fetchTIPS(sessionID, samlToken, tipsRequestData);
 
   const notificationsResult = {

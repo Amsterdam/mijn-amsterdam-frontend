@@ -151,6 +151,7 @@ export async function requestData<T>(
       if (error instanceof Error) {
         Sentry.captureException(error);
       } else {
+        console.log(requestConfig);
         Sentry.captureMessage(error?.message || 'Unknown errormessage');
       }
     }
