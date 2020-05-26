@@ -143,14 +143,16 @@ export function useStorage(
   initialValue: any,
   adapter: Storage | MemoryAdapter = localStorage
 ) {
-  const { value: item, set: setValue } = useWindowStorage(
-    key,
-    JSON.stringify(initialValue),
-    adapter
-  );
+  let val = null;
+  try {
+    val = JSON.stringify(initialValue);
+  } catch (e) {}
 
+  const { value: item, set: setValue } = useWindowStorage(key, val, adapter);
   const setItem = (newValue: string) => {
-    setValue(JSON.stringify(newValue));
+    try {
+      setValue(JSON.stringify(newValue));
+    } catch (e) {}
   };
 
   try {

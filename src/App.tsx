@@ -86,7 +86,7 @@ function AppNotAuthenticated() {
 function AppAuthenticated() {
   const { location } = useRouter();
   const session = useContext(SessionContext);
-  const [routeEntry, setRouteEntry] = useLocalStorage('RouteEntry');
+  const [routeEntry, setRouteEntry] = useLocalStorage('RouteEntry', '');
 
   const redirectAfterLogin = routeEntry || AppRoutes.ROOT;
 
