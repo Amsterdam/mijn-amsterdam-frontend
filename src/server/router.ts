@@ -159,5 +159,8 @@ router.get('/routing', async (req: Request, res: Response) => {
   } catch (e) {
     res.send('r2--' + e.toString());
   }
+  if (getOtapEnvItem('sentryDsn')) {
+    Sentry.captureMessage('End of routing request');
+  }
   res.send('end');
 });
