@@ -120,24 +120,25 @@ router.get('/netw', async (req: Request, res: Response) => {
   res.send('foo:bar!');
 });
 
-router.get('/routing', async (req: Request, res: Response) => {
+router.get('/logz', async (req: Request, res: Response) => {
   try {
     const r0 = await axiosRequest({
       url: 'http://example.org/',
       timeout: 2000,
     });
     console.log('\n', '----'.repeat(20), '\n\n', r0.data);
+    getOtapEnvItem('sentryDsn') && Sentry.captureMessage(r0.data);
   } catch (e) {
-    res.send('r0--' + e.toString());
+    return res.send('r0--' + e.toString());
   }
   try {
     const r1 = await axiosRequest({
       url: 'https://mijn.acc.amsterdam.nl',
       timeout: 2000,
     });
-    console.log('\n', '----'.repeat(20), '\n\n', r1.data);
+    getOtapEnvItem('sentryDsn') && Sentry.captureMessage(r1.data);
   } catch (e) {
-    res.send('r1--' + e.toString());
+    return res.send('r1--' + e.toString());
   }
   // const headerNames = ['']
   // const headers = {
@@ -148,16 +149,9 @@ router.get('/routing', async (req: Request, res: Response) => {
       headers: req.rawHeaders,
       timeout: 2000,
     });
-    console.log(
-      '\n',
-      '----'.repeat(20),
-      '\n\n',
-      req.rawHeaders,
-      '\n\n',
-      r2.data
-    );
+    getOtapEnvItem('sentryDsn') && Sentry.captureMessage(r2.data);
   } catch (e) {
-    res.send('r2--' + e.toString());
+    return res.send('r2--' + e.toString());
   }
   if (getOtapEnvItem('sentryDsn')) {
     Sentry.captureMessage('End of routing request');
