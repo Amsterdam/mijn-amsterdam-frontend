@@ -153,7 +153,11 @@ export function useStorage(
     setValue(JSON.stringify(newValue));
   };
 
-  return [item !== null ? JSON.parse(item) : item, setItem];
+  try {
+    return [item !== null ? JSON.parse(item) : item, setItem];
+  } catch (e) {
+    return [null, setItem];
+  }
 }
 
 export function useLocalStorage<Value>(
