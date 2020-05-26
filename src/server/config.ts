@@ -18,7 +18,7 @@ const BFF_MS_API_HOST = IS_PRODUCTION
   : 'localhost';
 
 const BFF_MS_API_PORT = IS_AP ? '' : ':5000';
-const BFF_MS_API_PROTOCOL = IS_AP ? 'https://' : 'http://';
+const BFF_MS_API_PROTOCOL = IS_AP ? 'https' : 'http';
 
 export const BFF_MS_API_BASE_URL = `${BFF_MS_API_PROTOCOL}://${BFF_MS_API_HOST}${BFF_MS_API_PORT}${API_BASE_PATH}`;
 
