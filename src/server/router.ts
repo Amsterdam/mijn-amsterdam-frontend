@@ -8,7 +8,7 @@ import {
 } from './services';
 import { loadServicesMap } from './services/services-map';
 import { loadServicesSSE } from './services/services-sse';
-import { getSamlTokenHeader } from './helpers/request';
+import { getSamlTokenHeader, axiosRequest } from './helpers/request';
 
 export const router = express.Router();
 
@@ -103,3 +103,15 @@ router.get(
     next();
   }
 );
+
+router.get('/routing', async (req: Request, res: Response) => {
+  const r0 = await axiosRequest({ url: 'https://tweakers.net' });
+  console.log(r0);
+  const r1 = await axiosRequest({ url: 'https://mijn.acc.amsterdam.nl' });
+  console.log(r1);
+  const r2 = await axiosRequest({
+    url: 'https://mijn.acc.amsterdam.nl/api/focus/aanvragen',
+    headers: req.headers,
+  });
+  console.log(r2);
+});

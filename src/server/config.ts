@@ -15,7 +15,7 @@ const API_BASE_PATH = IS_AP ? '' : '/test-api';
 const BFF_MS_API_HOST = IS_PRODUCTION
   ? process.env.BFF_MS_API_HOST || 'mijn.amsterdam.nl'
   : IS_ACCEPTANCE
-  ? process.env.BFF_MS_API_HOST || 'acc.mijn.data.amsterdam.nl'
+  ? process.env.BFF_MS_API_HOST || 'mijn.acc.amsterdam.nl'
   : 'localhost';
 
 const BFF_MS_API_PORT = IS_AP ? '' : `:${process.env.BFF_MS_API_PORT || 5000}`;
