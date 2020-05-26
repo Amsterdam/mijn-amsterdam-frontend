@@ -49,8 +49,8 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL,
       },
-      SAML_TOKEN,
-      SESS_ID_1
+      SESS_ID_1,
+      SAML_TOKEN
     );
 
     expect(rs).toStrictEqual(apiSuccesResult(DUMMY_RESPONSE));
@@ -61,8 +61,8 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL,
       },
-      SAML_TOKEN,
-      SESS_ID_1
+      SESS_ID_1,
+      SAML_TOKEN
     );
 
     expect(await cache.get(CACHE_KEY_1).promise).toStrictEqual(rs);
@@ -77,16 +77,16 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL,
       },
-      SAML_TOKEN,
-      SESS_ID_1
+      SESS_ID_1,
+      SAML_TOKEN
     );
 
     const rs2 = await requestData(
       {
         url: DUMMY_URL,
       },
-      SAML_TOKEN,
-      SESS_ID_2
+      SESS_ID_2,
+      SAML_TOKEN
     );
 
     expect(await cache.get(CACHE_KEY_1).promise).toStrictEqual(
@@ -111,8 +111,8 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL,
       },
-      SAML_TOKEN,
       SESS_ID_1,
+      SAML_TOKEN,
       true
     );
 
@@ -124,8 +124,8 @@ describe('requestData.ts', () => {
       {
         url: DUMMY_URL_2,
       },
-      SAML_TOKEN,
-      SESS_ID_1
+      SESS_ID_1,
+      SAML_TOKEN
     );
 
     expect(rs).toStrictEqual(
