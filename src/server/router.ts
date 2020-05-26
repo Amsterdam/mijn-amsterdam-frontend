@@ -8,10 +8,11 @@ import {
 } from './services';
 import { loadServicesMap } from './services/services-map';
 import { loadServicesSSE } from './services/services-sse';
-import { getSamlTokenHeader, axiosRequest } from './helpers/request';
+import { getSamlTokenHeader } from './helpers/request';
 import * as Sentry from '@sentry/node';
 import { getOtapEnvItem } from '../universal/config';
 import { networkInterfaces } from 'os';
+import axios, { AxiosRequestConfig } from 'axios';
 
 export const router = express.Router();
 
@@ -120,41 +121,27 @@ router.get('/netw', async (req: Request, res: Response) => {
   res.send('foo:bar!');
 });
 
-router.get('/logz', async (req: Request, res: Response) => {
+router.get('/log-url', async (req: Request, res: Response) => {
+  const withHeaders = !!req.query.withHeaders;
+  const url = (req.query.url || 'http://example.org') as string;
+  let response = 'checked';
   try {
-    const r0 = await axiosRequest({
-      url: 'http://example.org/',
+    const cfg: AxiosRequestConfig = {
+      url,
       timeout: 2000,
-    });
-    console.log('\n', '----'.repeat(20), '\n\n', r0.data);
-    getOtapEnvItem('sentryDsn') && Sentry.captureMessage(r0.data);
+    };
+    if (withHeaders) {
+      cfg.headers = req.rawHeaders;
+    }
+    console.log(cfg);
+    const r0 = await axios(cfg);
+    response = r0.data;
   } catch (e) {
-    return res.send('r0--' + e.toString());
+    response = e;
+    console.log(e);
+    if (getOtapEnvItem('sentryDsn')) {
+      Sentry.captureException(e);
+    }
   }
-  try {
-    const r1 = await axiosRequest({
-      url: 'https://mijn.acc.amsterdam.nl',
-      timeout: 2000,
-    });
-    getOtapEnvItem('sentryDsn') && Sentry.captureMessage(r1.data);
-  } catch (e) {
-    return res.send('r1--' + e.toString());
-  }
-  // const headerNames = ['']
-  // const headers = {
-
-  try {
-    const r2 = await axiosRequest({
-      url: 'https://mijn.acc.amsterdam.nl/api/focus/aanvragen',
-      headers: req.rawHeaders,
-      timeout: 2000,
-    });
-    getOtapEnvItem('sentryDsn') && Sentry.captureMessage(r2.data);
-  } catch (e) {
-    return res.send('r2--' + e.toString());
-  }
-  if (getOtapEnvItem('sentryDsn')) {
-    Sentry.captureMessage('End of routing request');
-  }
-  res.send('end');
+  return res.send(response + 'fin');
 });
