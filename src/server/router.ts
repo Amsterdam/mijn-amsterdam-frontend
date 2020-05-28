@@ -11,6 +11,7 @@ import { loadServicesMap } from './services/services-map';
 import { loadServicesSSE } from './services/services-sse';
 import { fetchFOCUSCombined } from './services/focus/focus-combined';
 import { fetchFOCUSRaw } from './services/focus/focus-aanvragen';
+import { fetchBRP } from './services/brp';
 
 export const router = express.Router();
 
@@ -41,6 +42,22 @@ router.get(`/services/related`, async function handleRouteServicesRelated(
   try {
     res.send(
       await loadServicesRelated(req.sessionID!, getSamlTokenHeader(req))
+    );
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+});
+
+router.get(`/services/related/brp/raw`, async function handleRouteServicesRelated(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    res.send(
+      await fetchBRP(req.sessionID!, getSamlTokenHeader(req), true)
     );
     next();
   } catch (error) {
