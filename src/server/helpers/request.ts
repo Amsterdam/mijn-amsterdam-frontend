@@ -130,42 +130,23 @@ export async function requestData<T>(
     );
   }
 
-  try {
-    // Request is cancelled after x ms
-    setTimeout(() => {
-      source.cancel('Request to source api timeout.');
-    }, requestConfig.cancelTimeout);
+  // Request is cancelled after x ms
+  setTimeout(() => {
+    source.cancel('Request to source api timeout.');
+  }, requestConfig.cancelTimeout);
 
-    const request: AxiosPromise<T> = axiosRequest(requestConfig);
-    const response: AxiosResponse<T> = await request;
-    const responseData = apiSuccesResult<T>(response.data);
+  const request: AxiosPromise<T> = axiosRequest(requestConfig);
+  const response: AxiosResponse<T> = await request;
+  const responseData = apiSuccesResult<T>(response.data);
 
-    // Use the cache Deferred for resolving the response
-    if (isGetRequest) {
-      cache.get(cacheKey).resolve(responseData);
-    }
-
-    return responseData;
-  } catch (error) {
-    if (getOtapEnvItem('sentryDsn')) {
-      if (error instanceof Error) {
-        Sentry.captureException(error);
-      } else {
-        Sentry.captureMessage(error?.message || 'Unknown errormessage');
-      }
-    }
-
-    const responseData = apiErrorResult(error, null);
-
-    if (isGetRequest) {
-      // Resolve with error
-      cache.get(cacheKey).resolve(responseData);
-      // Don't cache the errors
-      cache.del(cacheKey);
-    }
-
-    return responseData;
+  // Use the cache Deferred for resolving the response
+  if (isGetRequest) {
+    cache.get(cacheKey).resolve(responseData);
   }
+
+  console.log(responseData);
+
+  return responseData;
 }
 
 export function getSamlTokenHeader(req: Request) {

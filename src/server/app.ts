@@ -56,6 +56,33 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
+// Optional fallthrough error handler
+app.use(function onError(err, req: Request, res: Response) {
+  // if (getOtapEnvItem('sentryDsn')) {
+  //   if (error instanceof Error) {
+  //     Sentry.captureException(error);
+  //   } else {
+  //     Sentry.captureMessage(error?.message || 'Unknown errormessage');
+  //   }
+  // }
+
+  // const responseData = apiErrorResult(err, null);
+
+  // if (isGetRequest) {
+  //   // Resolve with error
+  //   cache.get(cacheKey).resolve(responseData);
+  //   // Don't cache the errors
+  //   cache.del(cacheKey);
+  // }
+
+  // return responseData;
+  // The error id is attached to `res.sentry` to be returned
+  // and optionally displayed to the user for support.
+  res.statusCode = 500;
+  // @ts-ignore
+  res.end(res.sentry + '\n');
+});
+
 app.use((req: Request, res: Response) => {
   res.status(404);
   return res.end('not found');
