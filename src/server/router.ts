@@ -48,22 +48,22 @@ router.get(`/services/related`, async function handleRouteServicesRelated(
     next(error);
   }
 });
-});
 
-router.get(`/services/related/brp/raw`, async function handleRouteServicesRelated(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  try {
-    res.send(
-      await fetchBRP(req.sessionID!, getSamlTokenHeader(req), true)
-    );
-    next();
-  } catch (error) {
-    next(error);
+router.get(
+  `/services/related/brp/raw`,
+  async function handleRouteServicesRelated(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      res.send(await fetchBRP(req.sessionID!, getSamlTokenHeader(req), true));
+      next();
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 router.get(
   `/services/direct/focus/tozo`,
