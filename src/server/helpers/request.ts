@@ -145,6 +145,8 @@ export async function requestData<T>(
       cache.get(cacheKey).resolve(responseData);
     }
 
+    console.log(requestConfig.url, responseData);
+
     return responseData;
   } catch (error) {
     if (isGetRequest) {
