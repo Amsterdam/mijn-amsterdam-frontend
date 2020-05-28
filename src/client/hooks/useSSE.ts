@@ -1,6 +1,5 @@
-import { useEffect, useState, useCallback } from 'react';
 import * as Sentry from '@sentry/browser';
-import { getOtapEnvItem } from '../../universal/config';
+import { useCallback, useEffect, useState } from 'react';
 
 const RECONNECT_TIMEOUT_MS = 1000;
 const MAX_RETRY_COUNT = 10;
