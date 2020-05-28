@@ -24,6 +24,7 @@ export function fetchFOCUS(sessionID: SessionID, samlToken: string) {
 
       // Normalize the focus source response.
       transformResponse: (data = []) => {
+        console.log(data);
         if (Array.isArray(data)) {
           return data
             .map((product: FocusProductFromSource) =>
@@ -31,7 +32,6 @@ export function fetchFOCUS(sessionID: SessionID, samlToken: string) {
             )
             .sort(dateSort('datePublished', 'desc'));
         }
-        console.log(data);
         return [];
       },
     },

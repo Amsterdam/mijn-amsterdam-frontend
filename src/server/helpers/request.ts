@@ -140,6 +140,8 @@ export async function requestData<T>(
     const response: AxiosResponse<T> = await request;
     const responseData = apiSuccesResult<T>(response.data);
 
+    console.log('Response for', requestConfig.url, responseData);
+
     // Use the cache Deferred for resolving the response
     if (isGetRequest) {
       cache.get(cacheKey).resolve(responseData);
@@ -151,7 +153,6 @@ export async function requestData<T>(
       if (error instanceof Error) {
         Sentry.captureException(error);
       } else {
-        console.log(requestConfig);
         Sentry.captureMessage(error?.message || 'Unknown errormessage');
       }
     }

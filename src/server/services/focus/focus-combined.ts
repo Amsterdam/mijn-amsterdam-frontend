@@ -43,15 +43,6 @@ export async function fetchFOCUSCombined(
   return requestData<FocusCombinedSourceResponse>(
     {
       url: ApiUrls.FOCUS_COMBINED,
-      transformResponse: ({ content = {} }) => {
-        return Object.assign(content, {
-          tozodocumenten: Array.isArray(content?.tozodocumenten)
-            ? content.tozodocumenten.map((item: FocusTozoDocument) =>
-                Object.assign(item, { dateStart: item.datePublished })
-              )
-            : [],
-        });
-      },
     },
     sessionID,
     samlToken,

@@ -1,7 +1,43 @@
 {
   "content": {
-    "jaaropgaven": [],
+    "jaaropgaven": [
+      {
+        "datePublished": "2011-01-28T00:00:00+01:00",
+        "id": "95330222",
+        "title": "Jaaropgave",
+        "type": "",
+        "url": "focus/document?id=95330222&isBulk=false&isDms=false"
+      },
+      {
+        "datePublished": "2019-01-04T00:00:00+01:00",
+        "id": "20021871",
+        "title": "Jaaropgave",
+        "type": "",
+        "url": "focus/document?id=20021871&isBulk=false&isDms=false"
+      }
+    ],
     "tozodocumenten": [
+      {
+        "datePublished": "2020-04-10T15:31:28+02:00",
+        "description": "Tegemoetkoming Ondernemers en Zelfstandigen",
+        "id": "4400000034",
+        "type": "E-AANVR-TOZO",
+        "url": "focus/document?id=4400000034&isBulk=true&isDms=false"
+      },
+      {
+        "datePublished": "2020-03-26T18:00:59+01:00",
+        "description": "Tegemoetkoming Ondernemers en Zelfstandigen",
+        "id": "4400000027",
+        "type": "E-AANVR-TOZO",
+        "url": "focus/document?id=4400000027&isBulk=true&isDms=false"
+      },
+      {
+        "datePublished": "2020-04-01T21:14:15+02:00",
+        "description": "Tegemoetkoming Ondernemers en Zelfstandigen",
+        "id": "4400000033",
+        "type": "E-AANVR-TOZO",
+        "url": "focus/document?id=4400000033&isBulk=true&isDms=false"
+      },
       {
         "datePublished": "2020-03-18T17:04:17+01:00",
         "description": "Tegemoetkoming Ondernemers en Zelfstandigen",
@@ -10,7 +46,57 @@
         "url": "focus/document?id=4400000019&isBulk=true&isDms=false"
       }
     ],
-    "uitkeringsspecificaties": []
+    "uitkeringsspecificaties": [
+      {
+        "datePublished": "2019-04-19T00:00:00+02:00",
+        "id": "24267671",
+        "title": "Uitkeringsspecificatie",
+        "type": "Bijzondere Bijstand",
+        "url": "focus/document?id=24267671&isBulk=false&isDms=false"
+      },
+      {
+        "datePublished": "2019-04-19T00:00:00+02:00",
+        "id": "24267681",
+        "title": "Uitkeringsspecificatie",
+        "type": "Participatiewet",
+        "url": "focus/document?id=24267681&isBulk=false&isDms=false"
+      },
+      {
+        "datePublished": "2019-03-23T00:00:00+01:00",
+        "id": "24078481",
+        "title": "Uitkeringsspecificatie",
+        "type": "Participatiewet",
+        "url": "focus/document?id=24078481&isBulk=false&isDms=false"
+      },
+      {
+        "datePublished": "2019-03-23T00:00:00+01:00",
+        "id": "24078491",
+        "title": "Uitkeringsspecificatie",
+        "type": "Bijzondere Bijstand",
+        "url": "focus/document?id=24078491&isBulk=false&isDms=false"
+      },
+      {
+        "datePublished": "2014-01-18T00:00:00+01:00",
+        "id": "30032581",
+        "title": "Uitkeringsspecificatie",
+        "type": "WWB",
+        "url": "focus/document?id=30032581&isBulk=false&isDms=false"
+      },
+      {
+        "datePublished": "2019-05-18T00:00:00+02:00",
+        "id": "31569261",
+        "title": "Uitkeringsspecificatie",
+        "type": "Participatiewet",
+        "url": "focus/document?id=31569261&isBulk=false&isDms=false"
+      },
+      {
+        "datePublished": "2019-05-18T00:00:00+02:00",
+        "id": "31569291",
+        "title": "Uitkeringsspecificatie",
+        "type": "Bijzondere Bijstand",
+        "url": "focus/document?id=31569291&isBulk=false&isDms=false"
+      }
+    ]
   },
   "status": "OK"
 }
