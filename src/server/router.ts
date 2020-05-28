@@ -1,7 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { getSamlTokenHeader } from './helpers/request';
 import {
-  fetchFOCUSTozo,
   fetchTIPS,
   loadServicesDirect,
   loadServicesGenerated,
@@ -9,9 +8,6 @@ import {
 } from './services';
 import { loadServicesMap } from './services/services-map';
 import { loadServicesSSE } from './services/services-sse';
-import { fetchFOCUSCombined } from './services/focus/focus-combined';
-import { fetchFOCUSRaw } from './services/focus/focus-aanvragen';
-import { fetchBRP } from './services/brp';
 
 export const router = express.Router();
 
@@ -48,63 +44,6 @@ router.get(`/services/related`, async function handleRouteServicesRelated(
     next(error);
   }
 });
-
-router.get(
-  `/services/related/brp/raw`,
-  async function handleRouteServicesRelated(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) {
-    try {
-      res.send(await fetchBRP(req.sessionID!, getSamlTokenHeader(req), true));
-      next();
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-router.get(
-  `/services/direct/focus/tozo`,
-  async function handleRouteServicesDirect(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) {
-    try {
-      res.json(await fetchFOCUSTozo(req.sessionID!, getSamlTokenHeader(req)));
-      next();
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-router.get(
-  `/services/direct/focus/raw`,
-  async function handleRouteServicesDirect(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) {
-    try {
-      res.json({
-        FOCUS_COMBINED: await fetchFOCUSCombined(
-          req.sessionID!,
-          getSamlTokenHeader(req)
-        ),
-        FOCUS_AANVRAGEN: await fetchFOCUSRaw(
-          req.sessionID!,
-          getSamlTokenHeader(req)
-        ),
-      });
-      next();
-    } catch (error) {
-      next(error);
-    }
-  }
-);
 
 router.get(`/services/direct`, async function handleRouteServicesDirect(
   req: Request,
