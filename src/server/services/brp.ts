@@ -5,6 +5,7 @@ import { defaultDateFormat } from '../../universal/helpers';
 import { Adres, BRPData, MyNotification } from '../../universal/types';
 import { requestData } from '../helpers';
 import { ApiUrls, getApiConfigValue } from '../config';
+import { AxiosRequestConfig } from 'axios';
 
 const DAYS_BEFORE_EXPIRATION = 120;
 
@@ -167,12 +168,19 @@ export function transformBRPData(responseData: BRPData) {
   return responseData;
 }
 
-export function fetchBRP(sessionID: SessionID, samlToken: string) {
+export function fetchBRP(
+  sessionID: SessionID,
+  samlToken: string,
+  isRaw: boolean = false
+) {
+  const options: AxiosRequestConfig = {
+    url: ApiUrls.BRP,
+  };
+  if (!isRaw) {
+    options.transformResponse = transformBRPData;
+  }
   return requestData<BRPData>(
-    {
-      url: ApiUrls.BRP,
-      transformResponse: transformBRPData,
-    },
+    options,
     sessionID,
     samlToken,
     getApiConfigValue('BRP', 'postponeFetch', false)
