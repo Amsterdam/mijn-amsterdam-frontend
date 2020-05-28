@@ -22,7 +22,6 @@ import { Document as GenericDocument } from '../components/DocumentList/Document
 import { Chapter } from '../config/Chapter.constants';
 import { LinkProps } from '../App.types';
 import { generatePath } from 'react-router';
-import slug from 'slugme';
 
 export const TOZO_VOORSCHOT_PRODUCT_TITLE: TozoProductTitle =
   'Voorschot Tozo (voor ondernemers) (Eenm.)';
