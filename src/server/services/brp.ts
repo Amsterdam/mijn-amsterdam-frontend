@@ -159,17 +159,12 @@ export function transformBRPData(responseData: BRPData) {
   return responseData;
 }
 
-export function fetchBRP(
-  sessionID: SessionID,
-  samlToken: string,
-  isRaw: boolean = false
-) {
+export function fetchBRP(sessionID: SessionID, samlToken: string) {
   const options: AxiosRequestConfig = {
     url: ApiUrls.BRP,
+    transformResponse: transformBRPData,
   };
-  if (!isRaw) {
-    options.transformResponse = transformBRPData;
-  }
+
   return requestData<BRPData>(
     options,
     sessionID,
