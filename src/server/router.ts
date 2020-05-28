@@ -1,7 +1,4 @@
-import * as Sentry from '@sentry/node';
-import axios, { AxiosRequestConfig } from 'axios';
 import express, { NextFunction, Request, Response } from 'express';
-import { getOtapEnvItem } from '../universal/config';
 import { getSamlTokenHeader } from './helpers/request';
 import {
   fetchFOCUSTozo,
@@ -12,6 +9,7 @@ import {
 } from './services';
 import { loadServicesMap } from './services/services-map';
 import { loadServicesSSE } from './services/services-sse';
+import { fetchFOCUSCombined } from './services/focus/focus-combined';
 
 export const router = express.Router();
 
@@ -58,6 +56,24 @@ router.get(
   ) {
     try {
       res.json(await fetchFOCUSTozo(req.sessionID!, getSamlTokenHeader(req)));
+      next();
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  `/services/direct/focus/combined`,
+  async function handleRouteServicesDirect(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      res.json(
+        await fetchFOCUSCombined(req.sessionID!, getSamlTokenHeader(req))
+      );
       next();
     } catch (error) {
       next(error);

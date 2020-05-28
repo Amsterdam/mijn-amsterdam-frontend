@@ -1,6 +1,6 @@
 import {
-  apiSuccesResult,
   apiDependencyError,
+  apiSuccesResult,
   dateSort,
 } from '../../../universal/helpers';
 import { MyCase, MyNotification } from '../../../universal/types';
@@ -19,13 +19,12 @@ import {
   TOZO_UITKERING_PRODUCT_TITLE,
   TOZO_VOORSCHOT_PRODUCT_TITLE,
 } from './focus-tozo-content';
-import { FocusItem } from './focus-types';
-import * as Sentry from '@sentry/node';
 import {
-  createTozoProductSetStepsCollection,
   createFocusItemTozo,
   createFocusTozoAanvraagNotification,
+  createTozoProductSetStepsCollection,
 } from './focus-tozo-helpers';
+import { FocusItem } from './focus-types';
 
 async function fetchFOCUSTozoNormalized(
   sessionID: SessionID,

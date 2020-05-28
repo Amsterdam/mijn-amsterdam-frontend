@@ -256,15 +256,18 @@ function createTozoAanvraagStep(
     };
   });
 
+  let description = 'Wij hebben uw aanvraag Tozo ontvangen';
+
   const aanvraag: FocusItemStep = {
     id: TOZO_AANVRAAG_STEP_ID,
     documents,
     product: 'Tozo-aanvraag-documenten',
     title: 'Tozo-aanvraag',
-    description: `Wij hebben uw aanvraag Tozo ontvangen op ${defaultDateFormat(
-      documents[0].datePublished
-    )}.`,
-    datePublished: documents[0].datePublished,
+    description:
+      description + documents.length
+        ? `op ${defaultDateFormat(documents[0].datePublished)}.`
+        : '',
+    datePublished: documents.length ? documents[0].datePublished : '',
     status: 'Aanvraag',
     isChecked: true,
     isActive: true,
