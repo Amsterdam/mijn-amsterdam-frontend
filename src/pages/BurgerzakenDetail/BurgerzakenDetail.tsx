@@ -22,9 +22,7 @@ export default () => {
     },
   } = useRouter();
 
-  const DocumentItem = data.identiteitsbewijzen?.find(
-    item => item.documentNummer === id
-  );
+  const DocumentItem = data.identiteitsbewijzen?.find(item => item.id === id);
   const noContent = !isLoading && !DocumentItem;
 
   return (
