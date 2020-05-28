@@ -44,8 +44,10 @@ export default () => {
   const leningSteps = TozoItem?.steps.filter(
     step => step.product === 'Tozo-lening'
   );
-  const aanvraagSteps = TozoItem?.steps.filter(
-    step => step.product === 'Tozo-aanvraag-documenten'
+  const aanvraagAndVoorschotSteps = TozoItem?.steps.filter(
+    step =>
+      step.product === 'Tozo-aanvraag-documenten' ||
+      step.product === 'Tozo-voorschot'
   );
 
   return (

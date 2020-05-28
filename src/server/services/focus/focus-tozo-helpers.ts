@@ -1,5 +1,4 @@
 import { generatePath } from 'react-router-dom';
-import slug from 'slugme';
 import { AppRoutes, Chapters } from '../../../universal/config';
 import {
   dateFormat,
@@ -155,7 +154,6 @@ export function createTozoProductSetStepsCollection({
 
   stepCollection = collection.map((productSet, index) => {
     const [first, second] = productSet;
-    const dateStart = new Date(second?.dateStart || first?.dateStart);
     const datePublished = new Date(
       second?.datePublished || first?.datePublished
     );
