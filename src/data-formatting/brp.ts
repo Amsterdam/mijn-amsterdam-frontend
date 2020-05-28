@@ -13,6 +13,7 @@ type ProfileLabelValueFormatter =
 type ProfileLabels<T> = { [key in keyof T]: ProfileLabelValueFormatter };
 
 export interface IdentiteitsBewijs {
+  id: string;
   documentNummer: string;
   documentType: 'europese identiteitskaart' | 'paspoort';
   datumUitgifte: string;

@@ -365,13 +365,10 @@ function formatFocusTozoItem({
   aanvragen: FocusTozoProduct[];
   voorschotten: FocusTozoProduct[];
 }): FocusTozo {
-  const firstActivityDatePublished = [
-    ...documenten,
-    ...voorschotten,
-    ...aanvragen,
-  ]
-    .sort(dateSort('dateStart', 'desc'))
-    .pop()!.dateStart;
+  const mix = [...documenten, ...voorschotten, ...aanvragen];
+  const firstActivity = mix.sort(dateSort('dateStart', 'desc')).pop();
+  const unknownId = 'unknown-first-activity';
+  const firstActivityDatePublished = firstActivity?.dateStart || unknownId;
 
   const lastActivityDatePublished = [
     ...documenten,
@@ -381,7 +378,9 @@ function formatFocusTozoItem({
     .sort(dateSort('datePublished'))
     .pop()!.datePublished;
 
-  const id = 'aanvraag-' + slug(firstActivityDatePublished);
+  const id =
+    'aanvraag-' +
+    (firstActivity ? firstActivity.id || firstActivity?._id : unknownId);
 
   const aanvraagLening = aanvragen.find(
     item => item.naam === TOZO_LENING_PRODUCT_TITLE
