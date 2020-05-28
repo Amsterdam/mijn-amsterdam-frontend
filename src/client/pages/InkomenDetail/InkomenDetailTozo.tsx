@@ -77,12 +77,12 @@ export default () => {
         )}
         {isLoading(FOCUS_TOZO) && <LoadingContent />}
       </PageContent>
-      {!!(aanvraagSteps && aanvraagSteps.length) && (
+      {!!(aanvraagAndVoorschotSteps && aanvraagAndVoorschotSteps.length) && (
         <StatusLine
           className={styles.AanvraagStatusLine}
           trackCategory={`Inkomen en Stadspas / Tozo aanvraag`}
           statusLabel="Tozo-aanvraag"
-          items={aanvraagSteps}
+          items={aanvraagAndVoorschotSteps}
           showToggleMore={false}
           maxStepCount={-1}
           id={'inkomen-stadspas-detail-tozo-aanvraag'}
