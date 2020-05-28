@@ -522,7 +522,7 @@ export function translateProductTitle(title: ProductTitle) {
     case 'Voorschot Tozo (voor ondernemers) (Eenm.)':
       return 'Tozo-voorschot';
     case 'Tozo Bedrijfskapitaal (voor ondernemers)':
-      return 'Tozo-bedrijfskapitaal';
+      return 'Tozo-lening';
     case 'Tozo Levensonderhoud (voor ondernemers)':
       return 'Tozo-uitkering';
   }
