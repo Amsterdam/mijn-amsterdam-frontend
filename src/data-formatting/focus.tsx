@@ -106,6 +106,7 @@ interface Step {
 // Shape of the data returned from the Api
 export interface FocusProduct {
   _id: string;
+  id?: string;
   soortProduct: ProductOrigin;
   typeBesluit: Decision;
   naam: string;
@@ -1075,6 +1076,7 @@ export interface FocusCombinedItemFromSource {
   title: string;
   datePublished: string;
   id: string;
+  _id?: string;
   url: string;
   type: FocusInkomenSpecificatieType;
 }
