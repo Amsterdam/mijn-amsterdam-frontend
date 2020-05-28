@@ -54,7 +54,7 @@ async function fetchFOCUSTozoNormalized(
       .sort(dateSort('dateStart'));
 
     const documenten = Array.isArray(FOCUS_COMBINED.content.tozodocumenten)
-      ? FOCUS_COMBINED.content.tozodocumenten
+      ? FOCUS_COMBINED.content?.tozodocumenten
           .filter(doc => ['E-AANVR-TOZO', 'E-AANVR-KBBZ'].includes(doc.type))
           .sort(dateSort('dateStart'))
       : [];
