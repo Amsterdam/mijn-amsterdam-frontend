@@ -73,7 +73,7 @@ router.get(
     res: Response,
     next: NextFunction
   ) {
-    res.send(await fetchFOCUSTozo(req.sessionID!, getSamlTokenHeader(req)));
+    res.json(await fetchFOCUSTozo(req.sessionID!, getSamlTokenHeader(req)));
     next();
   }
 );
@@ -83,7 +83,7 @@ router.get(`/services/direct`, async function handleRouteServicesDirect(
   res: Response,
   next: NextFunction
 ) {
-  res.send(await loadServicesDirect(req.sessionID!, getSamlTokenHeader(req)));
+  res.json(await loadServicesDirect(req.sessionID!, getSamlTokenHeader(req)));
   next();
 });
 
@@ -92,7 +92,7 @@ router.get(`/services/map`, async function handleRouteServicesMap(
   res: Response,
   next: NextFunction
 ) {
-  res.send(await loadServicesMap(req.sessionID!, getSamlTokenHeader(req)));
+  res.json(await loadServicesMap(req.sessionID!, getSamlTokenHeader(req)));
   next();
 });
 
@@ -101,7 +101,7 @@ router.post(`/services/tips`, async function handleRouteTips(
   res: Response,
   next: NextFunction
 ) {
-  res.send(await fetchTIPS(req.sessionID!, getSamlTokenHeader(req), req.body));
+  res.json(await fetchTIPS(req.sessionID!, getSamlTokenHeader(req), req.body));
   next();
 });
 
@@ -120,7 +120,7 @@ router.get(`/services/all`, async function handleRouteServicesMap(
       req.cookies.optInPersonalizedTips === 'yes'
     )),
   };
-  res.send(data);
+  res.json(data);
   next();
 });
 

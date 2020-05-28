@@ -20,6 +20,7 @@ import {
   TOZO_VOORSCHOT_PRODUCT_TITLE,
 } from './focus-tozo-content';
 import { FocusItem } from './focus-types';
+import * as Sentry from '@sentry/node';
 import {
   createTozoProductSetStepsCollection,
   createFocusItemTozo,
@@ -53,9 +54,13 @@ async function fetchFOCUSTozoNormalized(
       .map(product => translateFocusProduct(product, tozoTitleTranslations))
       .sort(dateSort('dateStart'));
 
-    const documenten = combined.content.tozodocumenten
-      .filter(doc => ['E-AANVR-TOZO', 'E-AANVR-KBBZ'].includes(doc.type))
-      .sort(dateSort('dateStart'));
+    const documenten =
+      combined.content?.tozodocumenten
+        .filter(doc => ['E-AANVR-TOZO', 'E-AANVR-KBBZ'].includes(doc.type))
+        .sort(dateSort('dateStart')) || [];
+
+    console.log(aanvragen, combined);
+    Sentry.captureMessage('Testing content ' + Object.keys(combined).join(','));
 
     return apiSuccesResult({
       aanvragen: aanvragenNormalized,
