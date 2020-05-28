@@ -54,10 +54,11 @@ async function fetchFOCUSTozoNormalized(
       .map(product => translateFocusProduct(product, tozoTitleTranslations))
       .sort(dateSort('dateStart'));
 
-    const documenten =
-      FOCUS_COMBINED.content?.tozodocumenten
-        .filter(doc => ['E-AANVR-TOZO', 'E-AANVR-KBBZ'].includes(doc.type))
-        .sort(dateSort('dateStart')) || [];
+    const documenten = Array.isArray(FOCUS_COMBINED.content.tozodocumenten)
+      ? FOCUS_COMBINED.content.tozodocumenten
+          .filter(doc => ['E-AANVR-TOZO', 'E-AANVR-KBBZ'].includes(doc.type))
+          .sort(dateSort('dateStart'))
+      : [];
 
     return apiSuccesResult({
       aanvragen: aanvragenNormalized,
