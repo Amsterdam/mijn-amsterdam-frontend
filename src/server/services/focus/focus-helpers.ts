@@ -127,10 +127,6 @@ export function findStepsContent(
     }
   });
 
-  if (labelContent.link) {
-    stepsContent.link = labelContent.link(product);
-  }
-
   return stepsContent;
 }
 
@@ -288,9 +284,9 @@ export function createFocusProductNotification(
   const stepsContent = findStepsContent(product, contentLabels)[
     latestStepTitle
   ];
-  const titleTransform = stepsContent?.notification.title;
-  const descriptionTransform = stepsContent?.notification.title;
-  const linkTransform = stepsContent?.notification.link;
+  const titleTransform = stepsContent?.notification?.title;
+  const descriptionTransform = stepsContent?.notification?.title;
+  const linkTransform = stepsContent?.notification?.link;
 
   return {
     id: `${product.id}-notification`,
@@ -302,12 +298,13 @@ export function createFocusProductNotification(
     description: descriptionTransform
       ? descriptionTransform(product)
       : `Er zijn updates in uw ${product.title} aanvraag.`,
-    link: linkTransform
-      ? linkTransform(product)
-      : {
-          to: AppRoutes.INKOMEN,
-          title: 'Meer informatie',
-        },
+    link: Object.assign(
+      {
+        to: AppRoutes.INKOMEN,
+        title: 'Meer informatie',
+      },
+      linkTransform ? linkTransform(product) : {}
+    ),
   };
 }
 
