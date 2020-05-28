@@ -10,6 +10,7 @@ import {
 import { loadServicesMap } from './services/services-map';
 import { loadServicesSSE } from './services/services-sse';
 import { fetchFOCUSCombined } from './services/focus/focus-combined';
+import { fetchFOCUSRaw } from './services/focus/focus-aanvragen';
 
 export const router = express.Router();
 
@@ -64,16 +65,23 @@ router.get(
 );
 
 router.get(
-  `/services/direct/focus/combined`,
+  `/services/direct/focus/raw`,
   async function handleRouteServicesDirect(
     req: Request,
     res: Response,
     next: NextFunction
   ) {
     try {
-      res.json(
-        await fetchFOCUSCombined(req.sessionID!, getSamlTokenHeader(req))
-      );
+      res.json({
+        FOCUS_COMBINED: await fetchFOCUSCombined(
+          req.sessionID!,
+          getSamlTokenHeader(req)
+        ),
+        FOCUS_AANVRAGEN: await fetchFOCUSRaw(
+          req.sessionID!,
+          getSamlTokenHeader(req)
+        ),
+      });
       next();
     } catch (error) {
       next(error);

@@ -16,7 +16,11 @@ import {
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
 import { Deferred } from './deferred';
 import memoryCache from 'memory-cache';
-import { TMA_SAML_HEADER, BFF_MS_API_BASE_URL } from '../config';
+import {
+  TMA_SAML_HEADER,
+  BFF_MS_API_BASE_URL,
+  BFF_REQUEST_CACHE_ENABLED,
+} from '../config';
 
 const CACHE_KEEP_MAX_MS = 60 * 1000; // 1 minute. We expect that all requests will resolve within this total timeframe.
 
@@ -115,7 +119,7 @@ export async function requestData<T>(
   // Check if a cache key for this particular request exists
   const cacheEntry = cache.get(cacheKey);
 
-  if (cacheEntry !== null) {
+  if (BFF_REQUEST_CACHE_ENABLED && cacheEntry !== null) {
     return cacheEntry.promise as Promise<
       ApiSuccessResponse<T> | ApiErrorResponse<null>
     >;

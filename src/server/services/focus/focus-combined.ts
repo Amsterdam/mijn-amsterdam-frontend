@@ -43,7 +43,7 @@ export async function fetchFOCUSCombined(
   return requestData<FocusCombinedSourceResponse>(
     {
       url: ApiUrls.FOCUS_COMBINED,
-      transformResponse: ({ content = {} }) => content,
+      transformResponse: response => response.content,
     },
     sessionID,
     samlToken,
