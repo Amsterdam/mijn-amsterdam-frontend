@@ -1,11 +1,7 @@
-import {
-  getBagSearchAddress,
-  getFullAddress,
-  transformBRPNotifications,
-  transformBRPData,
-} from './brp';
-import brpData from '../mock-data/json/brp.json';
+import { getBagSearchAddress, getFullAddress } from '../../universal/helpers';
 import { BRPData } from '../../universal/types/brp';
+import brpData from '../mock-data/json/brp.json';
+import { transformBRPData, transformBRPNotifications } from './brp';
 
 const { adres } = brpData;
 const brpDataTyped: BRPData = brpData;
