@@ -25,7 +25,7 @@ pipeline {
       steps {
         script { currentBuild.displayName = "Unit testing #${BUILD_NUMBER}" }
         // sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit-client test-unit-client"
-        sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit-bff test-unit-bff"
+        // sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit-bff test-unit-bff"
       }
       post {
         always {
