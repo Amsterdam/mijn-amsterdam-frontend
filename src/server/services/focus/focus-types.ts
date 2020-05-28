@@ -83,12 +83,15 @@ export type DecisionFormatted =
   | 'buitenbehandeling';
 
 export type TextPartContents = (data: FocusProduct, customData?: any) => string;
-export type LinkContents = (data: FocusProduct, customData?: any) => LinkProps;
+export type LinkContents = (
+  data: FocusProduct,
+  customData?: any
+) => Partial<LinkProps>;
 
 export interface FocusStepContent {
   description: TextPartContents;
   status: RequestStatus;
-  notification: {
+  notification?: {
     title: TextPartContents;
     description: TextPartContents;
     link?: LinkContents;

@@ -1,18 +1,17 @@
-import express, { Request, Response, NextFunction } from 'express';
+import * as Sentry from '@sentry/node';
+import axios, { AxiosRequestConfig } from 'axios';
+import express, { NextFunction, Request, Response } from 'express';
+import { getOtapEnvItem } from '../universal/config';
+import { getSamlTokenHeader } from './helpers/request';
 import {
-  loadServicesGenerated,
-  loadServicesDirect,
-  loadServicesRelated,
-  fetchTIPS,
   fetchFOCUSTozo,
+  fetchTIPS,
+  loadServicesDirect,
+  loadServicesGenerated,
+  loadServicesRelated,
 } from './services';
 import { loadServicesMap } from './services/services-map';
 import { loadServicesSSE } from './services/services-sse';
-import { getSamlTokenHeader } from './helpers/request';
-import * as Sentry from '@sentry/node';
-import { getOtapEnvItem } from '../universal/config';
-import { networkInterfaces } from 'os';
-import axios, { AxiosRequestConfig } from 'axios';
 
 export const router = express.Router();
 
