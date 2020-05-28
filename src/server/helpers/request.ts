@@ -142,6 +142,7 @@ export async function requestData<T>(
 
     const request: AxiosPromise<T> = axiosRequest(requestConfig);
     const response: AxiosResponse<T> = await request;
+    console.log(typeof response.data, requestConfig);
     const responseData = apiSuccesResult<T>(response.data);
 
     // Use the cache Deferred for resolving the response
