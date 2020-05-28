@@ -35,15 +35,6 @@ const BrpDocumentCallToAction: Record<
   },
 };
 
-export function getFullAddress(adres: Adres) {
-  return `${adres.straatnaam} ${adres.huisnummer || ''} ${adres.huisletter ||
-    ''} ${adres.huisnummertoevoeging || ''}`.trim();
-}
-
-export function getBagSearchAddress(adres: Adres) {
-  return `${adres.straatnaam} ${adres.huisnummer || ''}`.trim();
-}
-
 export function transformBRPNotifications(data: BRPData, compareDate: Date) {
   const inOnderzoek = data?.adres?.inOnderzoek || false;
   const isOnbekendWaarheen = data?.persoon?.vertrokkenOnbekendWaarheen || false;

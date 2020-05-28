@@ -21,6 +21,7 @@ if (getOtapEnvItem('bffSentryDsn')) {
   Sentry.init({
     dsn: getOtapEnvItem('bffSentryDsn'),
     environment: ENV,
+    integrations: [new Sentry.Integrations.Console()],
   });
 }
 
