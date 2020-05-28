@@ -17,6 +17,19 @@ import { FocusProduct, FocusProductFromSource } from './focus-types';
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
  */
+export function fetchFOCUSRaw(sessionID: SessionID, samlToken: string) {
+  const sourceDataRaw = requestData<FocusProduct[]>(
+    {
+      url: ApiUrls.FOCUS_AANVRAGEN,
+    },
+    sessionID,
+    samlToken,
+    getApiConfigValue('FOCUS_AANVRAGEN', 'postponeFetch', false)
+  );
+
+  return sourceDataRaw;
+}
+
 export function fetchFOCUS(sessionID: SessionID, samlToken: string) {
   const sourceDataNormalized = requestData<FocusProduct[]>(
     {

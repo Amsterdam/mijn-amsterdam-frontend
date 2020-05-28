@@ -9,9 +9,11 @@ import {
   loadServicesDirect,
   loadServicesGenerated,
   loadServicesRelated,
+  fetchFOCUSRaw,
 } from './services';
 import { loadServicesMap } from './services/services-map';
 import { loadServicesSSE } from './services/services-sse';
+import { fetchFOCUSCombined } from './services/focus/focus-combined';
 
 export const router = express.Router();
 
@@ -38,6 +40,31 @@ router.get(`/services/related`, async function handleRouteServicesRelated(
   res.send(await loadServicesRelated(req.sessionID!, getSamlTokenHeader(req)));
   next();
 });
+
+router.get(
+  `/services/direct/focus/raw`,
+  async function handleRouteServicesDirect(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const [aanvragen, combined] = await Promise.all([
+        fetchFOCUSRaw(req.sessionID!, getSamlTokenHeader(req)),
+        fetchFOCUSCombined(req.sessionID!, getSamlTokenHeader(req)),
+      ]);
+      res.send({
+        aanvragen,
+        combined,
+      });
+    } catch (error) {
+      if (getOtapEnvItem('sentryDsn')) {
+        Sentry.captureException(error);
+      }
+    }
+    next();
+  }
+);
 
 router.get(
   `/services/direct/focus/tozo`,
