@@ -172,10 +172,13 @@ export async function requestData<T>(
       }
 
       const responseData = apiErrorResult(error, null, sentryId);
-      // Resolve with error
-      cache.get(cacheKey).resolve(responseData);
-      // Don't cache the errors
-      cache.del(cacheKey);
+
+      if (cache.get(cacheKey)) {
+        // Resolve with error
+        cache.get(cacheKey).resolve(responseData);
+        // Don't cache the errors
+        cache.del(cacheKey);
+      }
 
       return responseData;
     }
