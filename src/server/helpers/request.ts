@@ -162,8 +162,6 @@ export async function requestData<T>(
         );
       }
 
-      console.log();
-
       const responseData = apiErrorResult(error, null, sentryId);
       // Resolve with error
       cache.get(cacheKey).resolve(responseData);
