@@ -106,27 +106,3 @@ router.get(
     next();
   }
 );
-
-router.get('/log-url', async (req: Request, res: Response) => {
-  const withHeaders = !!req.query.withHeaders;
-  const url = (req.query.url || 'http://example.org') as string;
-  let response = 'checked';
-  try {
-    const cfg: AxiosRequestConfig = {
-      url,
-      timeout: 2000,
-    };
-    if (withHeaders) {
-      cfg.headers = req.headers;
-    }
-    console.log(cfg);
-    const r0 = await axios(cfg);
-    response = r0.data;
-  } catch (e) {
-    response = e;
-    if (getOtapEnvItem('sentryDsn')) {
-      Sentry.captureException(e);
-    }
-  }
-  return res.send(response + 'fin');
-});
