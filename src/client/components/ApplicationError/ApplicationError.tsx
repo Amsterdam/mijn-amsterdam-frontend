@@ -12,8 +12,6 @@ export default function ApplicationError({
       <p>
         <strong>Error:</strong> {error && error.toString()}
       </p>
-      <h3>Stacktrace:</h3>
-      <pre>{componentStack}</pre>
     </div>
   );
 }
