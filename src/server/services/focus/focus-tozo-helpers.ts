@@ -22,32 +22,39 @@ import {
   LabelData,
 } from './focus-types';
 
-interface collectTozoDocumentsAndVoorschottenProps {
-  filter: (item: FocusProduct | FocusTozoDocument) => boolean;
-  voorschotten: FocusProduct[];
+interface collectTozoDocumentsProps {
+  filter: (item: FocusTozoDocument) => boolean;
   documenten: FocusTozoDocument[];
   titleTranslations: DocumentTitles;
+}
+
+interface collectTozoVoorschottenProps {
+  filter: (item: FocusProduct) => boolean;
+  voorschotten: FocusProduct[];
   contentLabels: LabelData;
 }
 
-function collectTozoDocumentsAndVoorschotten({
+function collectTozoDocuments({
   filter,
-  voorschotten,
   documenten,
   titleTranslations,
-  contentLabels,
-}: collectTozoDocumentsAndVoorschottenProps) {
-  const stepSet: FocusItemStep[] = [];
-  const documentenFiltered = documenten.filter(filter);
-  const voorschottenFiltered = voorschotten.filter(filter);
+}: collectTozoDocumentsProps) {
+  const documentenFiltered = documenten?.filter(filter);
 
-  if (documentenFiltered.length) {
-    const aanvraagItem = createTozoAanvraagStep(
-      documentenFiltered,
-      titleTranslations
-    );
-    stepSet.push(aanvraagItem);
+  if (documentenFiltered?.length) {
+    return createTozoAanvraagStep(documentenFiltered, titleTranslations);
   }
+
+  return null;
+}
+
+function collectTozoVoorschotten({
+  filter,
+  voorschotten,
+  contentLabels,
+}: collectTozoVoorschottenProps) {
+  const stepSet: FocusItemStep[] = [];
+  const voorschottenFiltered = voorschotten.filter(filter);
 
   if (voorschottenFiltered.length) {
     stepSet.push(
@@ -76,9 +83,9 @@ export function createTozoProductSetStepsCollection({
   titleTranslations,
   contentLabels,
 }: createTozoProductSetStepsCollectionProps) {
-  let productSet: FocusProduct[] = [];
   const collection: Array<FocusProduct[]> = [];
 
+  let productSet: FocusProduct[] = [];
   let stepCollection: Array<FocusItemStep[]> = [];
 
   // If there are no aanvragen products available, just gather the voorschotten and aanvraagdocumenten.
@@ -148,6 +155,7 @@ export function createTozoProductSetStepsCollection({
 
   stepCollection = collection.map((productSet, index) => {
     const [first, second] = productSet;
+    const dateStart = new Date(second?.dateStart || first?.dateStart);
     const datePublished = new Date(
       second?.datePublished || first?.datePublished
     );
@@ -169,38 +177,63 @@ export function createTozoProductSetStepsCollection({
       stepSet.push(...transformFocusProductSteps(second, stepsContent));
     }
 
-    let filter: collectTozoDocumentsAndVoorschottenProps['filter'];
+    let documentsFilter: collectTozoDocumentsProps['filter'];
+    let voorschottenFilter: collectTozoVoorschottenProps['filter'];
 
     if (index === 0) {
       // Collect all documents and voorschotten prior to the last update date in the first set
-      filter = item => {
-        return new Date(item.datePublished) < datePublished;
+      documentsFilter = item => {
+        return new Date(item.datePublished) <= datePublished;
+      };
+      voorschottenFilter = item => {
+        return new Date(item.dateStart) <= datePublished;
       };
     } else if (index === collection.length - 1 && prevDatePublished) {
       // collect all documents and voorschotten published after last update date
-      filter = item => {
-        return new Date(item.datePublished) >= prevDatePublished;
+      documentsFilter = item => {
+        return new Date(item.datePublished) > prevDatePublished;
+      };
+      voorschottenFilter = item => {
+        return new Date(item.dateStart) > prevDatePublished;
       };
     } else {
-      filter = item => {
+      documentsFilter = item => {
         const published = new Date(item.datePublished);
         return (
           !!prevDatePublished &&
-          published >= prevDatePublished &&
-          published < datePublished
+          published > prevDatePublished &&
+          published <= datePublished
+        );
+      };
+      voorschottenFilter = item => {
+        const start = new Date(item.dateStart);
+        return (
+          !!prevDatePublished &&
+          start > prevDatePublished &&
+          start <= datePublished
         );
       };
     }
 
-    stepSet.push(
-      ...collectTozoDocumentsAndVoorschotten({
-        filter,
-        documenten,
-        voorschotten,
-        titleTranslations: tozoTitleTranslations,
-        contentLabels,
-      })
-    );
+    const generatedDocumentStep = collectTozoDocuments({
+      filter: documentsFilter,
+      documenten,
+      titleTranslations: tozoTitleTranslations,
+    });
+
+    if (generatedDocumentStep) {
+      stepSet.push(generatedDocumentStep);
+    }
+
+    const generatedVoorschottenSteps = collectTozoVoorschotten({
+      filter: voorschottenFilter,
+      voorschotten,
+      contentLabels,
+    });
+
+    if (generatedVoorschottenSteps?.length) {
+      stepSet.push(...generatedVoorschottenSteps);
+    }
 
     return stepSet.sort(dateSort('datePublished'));
   });
@@ -273,16 +306,19 @@ function getTozoStatus(steps: FocusItemStep[]) {
 
 export function createFocusItemTozo(steps: FocusItemStep[]) {
   const lastStep = steps[steps.length - 1];
-  const firstActivityDatePublished =
-    steps[0]?.documents[0]?.datePublished || lastStep.datePublished;
-  const lastActivityDatePublished = lastStep.datePublished;
+  const mix = [...steps];
+  const firstActivity = mix.sort(dateSort('dateStart', 'desc')).pop();
+  const unknownId = 'unknown-first-activity';
+  const firstActivityDatePublished = firstActivity?.datePublished || unknownId;
 
+  const id = 'aanvraag-' + (firstActivity ? firstActivity.id : unknownId);
+  const lastActivityDatePublished = lastStep.datePublished;
   const status = getTozoStatus(steps);
-  const id = `tozo-item-${slug(firstActivityDatePublished)}`;
+
   let stepsOrganized = steps.sort(sortAlpha('product'));
 
   stepsOrganized = stepsOrganized.filter(step => step.title !== 'aanvraag');
-
+  // console.log(steps);
   return {
     id,
     dateStart: firstActivityDatePublished,

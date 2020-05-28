@@ -1,4 +1,5 @@
 export interface Identiteitsbewijs {
+  id: string;
   documentNummer: string;
   documentType: 'europese identiteitskaart' | 'paspoort' | string;
   datumUitgifte: string;

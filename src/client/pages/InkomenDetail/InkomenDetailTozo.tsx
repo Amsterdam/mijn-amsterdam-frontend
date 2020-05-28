@@ -54,7 +54,7 @@ export default () => {
         icon={<ChapterIcon />}
         backLink={{ to: AppRoutes.INKOMEN, title: ChapterTitles.INKOMEN }}
       >
-        {title}
+        Uw {title}
       </PageHeading>
       <PageContent className={styles.DetailPageContent}>
         <p>
