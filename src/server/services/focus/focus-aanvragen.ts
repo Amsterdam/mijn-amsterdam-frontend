@@ -23,12 +23,17 @@ export function fetchFOCUS(sessionID: SessionID, samlToken: string) {
       url: ApiUrls.FOCUS_AANVRAGEN,
 
       // Normalize the focus source response.
-      transformResponse: (data = []) =>
-        data
-          ?.map((product: FocusProductFromSource) =>
-            normalizeFocusSourceProduct(product)
-          )
-          .sort(dateSort('datePublished', 'desc')) || [],
+      transformResponse: (data = []) => {
+        if (Array.isArray(data)) {
+          return data
+            .map((product: FocusProductFromSource) =>
+              normalizeFocusSourceProduct(product)
+            )
+            .sort(dateSort('datePublished', 'desc'));
+        }
+        console.log(data);
+        return [];
+      },
     },
     sessionID,
     samlToken,

@@ -266,6 +266,8 @@ function createTozoAanvraagStep(
     )}.`,
     datePublished: documents[0].datePublished,
     status: 'Aanvraag',
+    isChecked: true,
+    isActive: true,
   };
 
   return aanvraag;
