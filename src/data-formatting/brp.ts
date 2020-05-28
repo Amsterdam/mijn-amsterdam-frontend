@@ -85,14 +85,14 @@ export interface BrpResponseData {
 }
 
 export function getFullName(persoon: Persoon) {
-  return (
-    persoon.opgemaakteNaam ||
-    `${persoon.voornamen} ${
-      persoon.voorvoegselGeslachtsnaam
-        ? persoon.voorvoegselGeslachtsnaam + ' '
-        : ''
-    }${persoon.geslachtsnaam}`
-  );
+  return persoon
+    ? persoon.opgemaakteNaam ||
+        `${persoon.voornamen} ${
+          persoon.voorvoegselGeslachtsnaam
+            ? persoon.voorvoegselGeslachtsnaam + ' '
+            : ''
+        }${persoon.geslachtsnaam}`
+    : '';
 }
 
 export function getFullAddress(adres: Adres) {
@@ -241,8 +241,8 @@ interface BrpProfileData {
 
 export function formatBrpProfileData(brpData: BrpResponseData): BrpProfileData {
   const profileData: BrpProfileData = {
-    persoon: format(brpInfoLabels.persoon, brpData.persoon, brpData),
-    adres: format(brpInfoLabels.adres, brpData.adres, brpData),
+    persoon: format(brpInfoLabels.persoon, brpData.persoon || {}, brpData),
+    adres: format(brpInfoLabels.adres, brpData.adres || {}, brpData),
   };
 
   if (!!brpData?.persoon.mokum) {
