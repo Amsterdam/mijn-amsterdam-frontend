@@ -152,7 +152,7 @@ export async function requestData<T>(
     const responseData = apiSuccesResult<T>(response.data);
 
     // Use the cache Deferred for resolving the response
-    if (isGetRequest) {
+    if (isGetRequest && cache.get(cacheKey)) {
       cache.get(cacheKey).resolve(responseData);
     }
 
