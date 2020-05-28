@@ -1,21 +1,23 @@
 import { fetchBAG, fetchBRP } from './index';
-import { ApiUnknownResponse, apiUnknownResult } from '../../universal/helpers';
+import {
+  ApiDependencyErrorResponse,
+  apiDependencyError,
+} from '../../universal/helpers';
 
 export type HOMEResponseData =
   | ResolvedType<ReturnType<typeof fetchBAG>>
-  | ApiUnknownResponse;
+  | ApiDependencyErrorResponse;
 
 export async function fetchHOME(sessionID: SessionID, samlToken: string) {
   const BRP = await fetchBRP(sessionID, samlToken);
 
-  let HOMEresponse: HOMEResponseData = apiUnknownResult(
-    'De aanvraag voor BAG data kon niet worden gemaakt. BRP data is niet beschikbaar.'
-  );
+  let HOME: HOMEResponseData;
 
   if (BRP.status === 'OK') {
-    const BAG = await fetchBAG(sessionID, samlToken, BRP.content.adres);
-    HOMEresponse = BAG;
+    HOME = await fetchBAG(sessionID, samlToken, BRP.content.adres);
+  } else {
+    HOME = apiDependencyError({ BRP });
   }
 
-  return HOMEresponse;
+  return HOME;
 }

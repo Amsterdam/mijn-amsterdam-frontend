@@ -1,10 +1,13 @@
 import { fetchAFVAL, fetchBRP } from './index';
-import { ApiUnknownResponse, apiUnknownResult } from '../../universal/helpers';
+import {
+  ApiDependencyErrorResponse,
+  apiDependencyError,
+} from '../../universal/helpers';
 import { fetchHOME } from './home';
 
 type AFVALResponseData =
   | ResolvedType<ReturnType<typeof fetchAFVAL>>
-  | ApiUnknownResponse;
+  | ApiDependencyErrorResponse;
 
 export async function loadServicesRelated(
   sessionID: SessionID,
@@ -13,18 +16,17 @@ export async function loadServicesRelated(
   const BRP = await fetchBRP(sessionID, samlToken);
   const HOME = await fetchHOME(sessionID, samlToken);
 
-  let AFVALresponse: AFVALResponseData = apiUnknownResult(
-    'De aanvraag voor AFVAL data kon niet worden gemaakt. HOME locatie data is niet beschikbaar.'
-  );
+  let AFVAL: AFVALResponseData;
 
   if (HOME.status === 'OK') {
-    const AFVAL = await fetchAFVAL(sessionID, samlToken, HOME.content.latlng);
-    AFVALresponse = AFVAL;
+    AFVAL = await fetchAFVAL(sessionID, samlToken, HOME.content.latlng);
+  } else {
+    AFVAL = apiDependencyError({ BRP, HOME });
   }
 
   return {
     BRP,
     HOME,
-    AFVAL: AFVALresponse,
+    AFVAL,
   };
 }

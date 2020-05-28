@@ -130,23 +130,49 @@ export async function requestData<T>(
     );
   }
 
-  // Request is cancelled after x ms
-  setTimeout(() => {
-    source.cancel('Request to source api timeout.');
-  }, requestConfig.cancelTimeout);
+  try {
+    // Request is cancelled after x ms
+    setTimeout(() => {
+      source.cancel('Request to source api timeout.');
+    }, requestConfig.cancelTimeout);
 
-  const request: AxiosPromise<T> = axiosRequest(requestConfig);
-  const response: AxiosResponse<T> = await request;
-  const responseData = apiSuccesResult<T>(response.data);
+    const request: AxiosPromise<T> = axiosRequest(requestConfig);
+    const response: AxiosResponse<T> = await request;
+    const responseData = apiSuccesResult<T>(response.data);
 
-  // Use the cache Deferred for resolving the response
-  if (isGetRequest) {
-    cache.get(cacheKey).resolve(responseData);
+    // Use the cache Deferred for resolving the response
+    if (isGetRequest) {
+      cache.get(cacheKey).resolve(responseData);
+    }
+
+    return responseData;
+  } catch (error) {
+    if (isGetRequest) {
+      // We're returning a result here so a failed request will not prevent other succeeded request needed for a response
+      // to the client to pass through.
+      let sentryId;
+
+      if (error instanceof Error) {
+        sentryId = Sentry.captureException(error);
+      } else {
+        sentryId = Sentry.captureMessage(
+          error?.message || 'Unknown errormessage'
+        );
+      }
+
+      console.log();
+
+      const responseData = apiErrorResult(error, null, sentryId);
+      // Resolve with error
+      cache.get(cacheKey).resolve(responseData);
+      // Don't cache the errors
+      cache.del(cacheKey);
+
+      return responseData;
+    }
+
+    throw error;
   }
-
-  console.log(responseData);
-
-  return responseData;
 }
 
 export function getSamlTokenHeader(req: Request) {

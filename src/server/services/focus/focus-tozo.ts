@@ -1,6 +1,6 @@
 import {
   apiSuccesResult,
-  apiUnknownResult,
+  apiDependencyError,
   dateSort,
 } from '../../../universal/helpers';
 import { MyCase, MyNotification } from '../../../universal/types';
@@ -34,13 +34,13 @@ async function fetchFOCUSTozoNormalized(
   const responseAanvragen = fetchFOCUS(sessionID, samlToken);
   const responseCombined = fetchFOCUSCombined(sessionID, samlToken);
 
-  const [aanvragen, combined] = await Promise.all([
+  const [FOCUS_AANVRAGEN, FOCUS_COMBINED] = await Promise.all([
     responseAanvragen,
     responseCombined,
   ]);
 
-  if (combined.status === 'OK' && aanvragen.status === 'OK') {
-    const aanvragenNormalized = aanvragen.content
+  if (FOCUS_COMBINED.status === 'OK' && FOCUS_AANVRAGEN.status === 'OK') {
+    const aanvragenNormalized = FOCUS_AANVRAGEN.content
       .filter(product =>
         [TOZO_LENING_PRODUCT_TITLE, TOZO_UITKERING_PRODUCT_TITLE].includes(
           product.title
@@ -49,18 +49,15 @@ async function fetchFOCUSTozoNormalized(
       .map(product => translateFocusProduct(product, tozoTitleTranslations))
       .sort(dateSort('dateStart'));
 
-    const voorschottenNormalized = aanvragen.content
+    const voorschottenNormalized = FOCUS_AANVRAGEN.content
       .filter(product => [TOZO_VOORSCHOT_PRODUCT_TITLE].includes(product.title))
       .map(product => translateFocusProduct(product, tozoTitleTranslations))
       .sort(dateSort('dateStart'));
 
     const documenten =
-      combined.content?.tozodocumenten
+      FOCUS_COMBINED.content?.tozodocumenten
         .filter(doc => ['E-AANVR-TOZO', 'E-AANVR-KBBZ'].includes(doc.type))
         .sort(dateSort('dateStart')) || [];
-
-    console.log(aanvragen, combined);
-    Sentry.captureMessage('Testing content ' + Object.keys(combined).join(','));
 
     return apiSuccesResult({
       aanvragen: aanvragenNormalized,
@@ -69,7 +66,7 @@ async function fetchFOCUSTozoNormalized(
     });
   }
 
-  return apiUnknownResult('Cannot construct TOZO item');
+  return apiDependencyError({ FOCUS_AANVRAGEN, FOCUS_COMBINED });
 }
 
 export async function fetchFOCUSTozo(sessionID: SessionID, samlToken: string) {

@@ -29,10 +29,11 @@ export function useSSE(
       return;
     }
     let unMounted = false;
+
     const handleError = (error: any) => {
       es.close();
-      getOtapEnvItem('sentryDsn') &&
-        Sentry.captureMessage(`SSE:ERROR: ${error}`);
+      Sentry.captureMessage(`SSE:ERROR: ${error}`);
+
       if (retryCount !== MAX_RETRY_COUNT) {
         setTimeout(() => {
           if (!unMounted) {
@@ -41,8 +42,8 @@ export function useSSE(
           }
         }, RECONNECT_TIMEOUT_MS);
       } else {
-        getOtapEnvItem('sentryDsn') &&
-          Sentry.captureMessage(`SSE:ERROR: Retry terminated`);
+        Sentry.captureMessage(`SSE:ERROR: Retry terminated`);
+
         callback({
           ALL: {
             status: 'ERROR',

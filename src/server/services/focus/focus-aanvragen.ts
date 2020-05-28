@@ -37,7 +37,9 @@ export function fetchFOCUS(sessionID: SessionID, samlToken: string) {
 
       // Normalize the focus source response.
       transformResponse: (data = []) => {
-        console.log(data);
+        if (true) {
+          throw new Error('onooooo!');
+        }
         if (Array.isArray(data)) {
           return data
             .map((product: FocusProductFromSource) =>

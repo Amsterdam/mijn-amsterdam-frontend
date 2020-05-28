@@ -4,6 +4,7 @@ export interface ApiErrorResponse<T> {
   message: string;
   content: T;
   status: 'ERROR';
+  sentry?: string;
 }
 
 export type ApiSuccessResponse<T> = {
@@ -24,10 +25,11 @@ export type ApiPostponeResponse = {
 };
 
 // Used if the request can't be made because of dependent requirements e.g using request params from data of another api which returns an error.
-export type ApiUnknownResponse = {
+export type ApiDependencyErrorResponse = {
   content: null;
   message: string;
   status: 'DEPENDENCY_ERROR';
+  sentry?: string;
 };
 
 export type ResponseStatus =
@@ -45,28 +47,15 @@ export type ApiResponse<T> =
   | ApiErrorResponse<T>
   | ApiSuccessResponse<T>
   | ApiPristineResponse<T>
-  | ApiPostponeResponse;
+  | ApiPostponeResponse
+  | ApiDependencyErrorResponse;
 
-export function isLoading(
-  apiResponseData:
-    | ApiSuccessResponse<any>
-    | ApiErrorResponse<any>
-    | ApiPostponeResponse
-    | ApiUnknownResponse
-    | ApiPristineResponse<any>
-) {
+export function isLoading(apiResponseData: ApiResponse<any>) {
   // If no responseData was found, assumes it's still loading
   return !!apiResponseData && apiResponseData.status === 'PRISTINE';
 }
 
-export function isError(
-  apiResponseData:
-    | ApiErrorResponse<any>
-    | ApiPristineResponse<any>
-    | ApiSuccessResponse<any>
-    | ApiPostponeResponse
-    | ApiUnknownResponse
-) {
+export function isError(apiResponseData: ApiResponse<any>) {
   return (
     apiResponseData.status === 'ERROR' ||
     apiResponseData.status === 'DEPENDENCY_ERROR'
@@ -75,13 +64,20 @@ export function isError(
 
 export function apiErrorResult<T>(
   error: AxiosError,
-  content: T
+  content: T,
+  sentryId?: string
 ): ApiErrorResponse<T> {
-  return {
+  const errorResponse: ApiErrorResponse<T> = {
     content,
     message: error.response?.data?.message || error.toString(),
     status: 'ERROR',
   };
+
+  if (sentryId) {
+    errorResponse.sentry = sentryId;
+  }
+
+  return errorResponse;
 }
 
 export function apiSuccesResult<T>(content: T): ApiSuccessResponse<T> {
@@ -105,9 +101,21 @@ export function apiPostponeResult(): ApiPostponeResponse {
   };
 }
 
-export function apiUnknownResult(message: string): ApiUnknownResponse {
+export function apiDependencyError(
+  apiResponses: Record<string, ApiResponse<unknown>>
+): ApiDependencyErrorResponse {
   return {
-    message,
+    message: Object.entries(apiResponses).reduce((acc, [key, response]) => {
+      if (
+        response.status === 'ERROR' ||
+        response.status === 'DEPENDENCY_ERROR'
+      ) {
+        acc += `[${key}] ${response.message} ${
+          response.sentry ? `\nsentry: ${response.sentry}` : ''
+        }\n`;
+      }
+      return acc;
+    }, ``),
     content: null,
     status: 'DEPENDENCY_ERROR',
   };
