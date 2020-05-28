@@ -49,7 +49,7 @@ export const ExternalUrls = {
     'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/scKlachtenformulier.aspx/fKlachtenformulier',
   AMSTERDAM_PRIVACY_PAGE: 'https://www.amsterdam.nl/privacy',
   AFVAL_MELDING_FORMULIER:
-    'https://formulier.amsterdam.nl/mail/afval/afvalwijzer/',
+    'https://formulier.amsterdam.nl/thema/afval-grondstoffen/klopt-afvalwijzer/Reactie/',
 };
 
 // NOTE: Keep up-to-date with _colors.scss
