@@ -58,17 +58,19 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-// Optional fallthrough error handler
-app.use(function onError(
-  err: Error,
-  req: Request,
-  res: Response,
-  _next: NextFunction
-) {
-  // @ts-ignore
-  const responseData = apiErrorResult(err, null, res.sentry);
-  res.status(500).json(responseData);
-});
+if (IS_AP) {
+  // Optional fallthrough error handler
+  app.use(function onError(
+    err: Error,
+    req: Request,
+    res: Response,
+    _next: NextFunction
+  ) {
+    // @ts-ignore
+    const responseData = apiErrorResult(err, null, res.sentry);
+    res.status(500).json(responseData);
+  });
+}
 
 app.use((req: Request, res: Response) => {
   res.status(404);

@@ -1,6 +1,11 @@
 import * as Sentry from '@sentry/node';
 import { Request } from 'express';
-import axios, { AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, {
+  AxiosPromise,
+  AxiosRequestConfig,
+  AxiosResponse,
+  AxiosTransformer,
+} from 'axios';
 import { getOtapEnvItem, IS_AP } from '../../universal/config/env';
 import {
   apiErrorResult,
@@ -99,6 +104,13 @@ export async function requestData<T>(
     cancelToken: source.token,
   };
 
+  if (requestConfig.transformResponse) {
+    requestConfig.transformResponse = [].concat(
+      axios.defaults.transformResponse as any,
+      requestConfig.transformResponse as any
+    );
+  }
+
   if (requestConfig.url?.startsWith(BFF_MS_API_BASE_URL) && samlToken) {
     if (!requestConfig.headers) {
       requestConfig.headers = {};
@@ -142,15 +154,12 @@ export async function requestData<T>(
 
     const request: AxiosPromise<T> = axiosRequest(requestConfig);
     const response: AxiosResponse<T> = await request;
-    console.log(typeof response.data, requestConfig);
     const responseData = apiSuccesResult<T>(response.data);
 
     // Use the cache Deferred for resolving the response
     if (isGetRequest) {
       cache.get(cacheKey).resolve(responseData);
     }
-
-    console.log(requestConfig.url, responseData);
 
     return responseData;
   } catch (error) {

@@ -19,6 +19,10 @@ export function resolveWithDelay(delayMS: number = 0, data: any) {
   });
 }
 
+function simulateJsonResponse(data: any) {
+  return JSON.stringify(data);
+}
+
 type MockDataConfig = Record<
   string,
   {
@@ -33,43 +37,43 @@ type MockDataConfig = Record<
 export const mockDataConfig: MockDataConfig = {
   [ApiUrls.BELASTINGEN]: {
     status: 200,
-    responseData: () => BELASTINGEN,
+    responseData: () => simulateJsonResponse(BELASTINGEN),
   },
   [ApiUrls.BRP]: {
     status: 200,
     // delay: 2500,
     responseData: () => {
-      return BRP;
+      return simulateJsonResponse(BRP);
     },
   },
   [ApiUrls.WMO]: {
     status: 200,
-    responseData: () => WMO,
+    responseData: () => simulateJsonResponse(WMO),
   },
   [ApiUrls.FOCUS_AANVRAGEN]: {
     status: 200,
     // delay: 3400,
-    responseData: () => FOCUS_AANVRAGEN,
+    responseData: () => simulateJsonResponse(FOCUS_AANVRAGEN),
   },
   [ApiUrls.FOCUS_COMBINED]: {
     status: 200,
-    responseData: () => FOCUS_COMBINED,
+    responseData: () => simulateJsonResponse(FOCUS_COMBINED),
   },
   [ApiUrls.ERFPACHT]: {
     status: 200,
-    responseData: () => ({ status: true }),
+    responseData: () => simulateJsonResponse({ status: true }),
   },
   [ApiUrls.BAG]: {
     status: 200,
-    responseData: () => BAG,
+    responseData: () => simulateJsonResponse(BAG),
   },
   [ApiUrls.AFVAL]: {
     status: 200,
-    responseData: () => AFVAL,
+    responseData: () => simulateJsonResponse(AFVAL),
   },
   [ApiUrls.MILIEUZONE]: {
     status: 200,
-    responseData: () => MILIEUZONE,
+    responseData: () => simulateJsonResponse(MILIEUZONE),
   },
   [ApiUrls.TIPS]: {
     status: 200,
@@ -86,7 +90,7 @@ export const mockDataConfig: MockDataConfig = {
       ].filter((tip: MyTip) =>
         config.data?.optin ? true : !tip.isPersonalized
       );
-      return Object.assign({}, tips, { items });
+      return simulateJsonResponse(Object.assign({}, tips, { items }));
     },
   },
 };

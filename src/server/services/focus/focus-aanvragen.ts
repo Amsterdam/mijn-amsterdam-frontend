@@ -93,7 +93,7 @@ export async function fetchFOCUSAanvragenGenerated(
   if (response.status === 'OK') {
     const focusProductsNormalized = response.content
       .filter(product => focusAanvragenProducten.includes(product.title))
-      .map(product => translateFocusProduct(product, tozoTitleTranslations));
+      .map(product => translateFocusProduct(product, titleTranslations));
 
     notifications = focusProductsNormalized.map(product =>
       createFocusProductNotification(product, contentLabels)
