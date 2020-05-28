@@ -1,31 +1,26 @@
 import * as Sentry from '@sentry/node';
+import axios, { AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Request } from 'express';
-import axios, {
-  AxiosPromise,
-  AxiosRequestConfig,
-  AxiosResponse,
-  AxiosTransformer,
-} from 'axios';
-import { getOtapEnvItem, IS_AP } from '../../universal/config/env';
+import memoryCache from 'memory-cache';
+import { IS_AP } from '../../universal/config/env';
 import {
   apiErrorResult,
   apiPostponeResult,
   apiSuccesResult,
-  entries,
   capitalizeFirstLetter,
+  entries,
 } from '../../universal/helpers';
 import {
   ApiErrorResponse,
   ApiSuccessResponse,
 } from '../../universal/helpers/api';
-import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
-import { Deferred } from './deferred';
-import memoryCache from 'memory-cache';
 import {
-  TMA_SAML_HEADER,
   BFF_MS_API_BASE_URL,
   BFF_REQUEST_CACHE_ENABLED,
+  TMA_SAML_HEADER,
 } from '../config';
+import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
+import { Deferred } from './deferred';
 
 const CACHE_KEEP_MAX_MS = 60 * 1000; // 1 minute. We expect that all requests will resolve within this total timeframe.
 

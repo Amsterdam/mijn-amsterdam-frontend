@@ -4,14 +4,13 @@ import { ApiUrls, getApiConfigValue } from '../../config';
 import { requestData } from '../../helpers';
 import { contentLabels, titleTranslations } from './focus-aanvragen-content';
 import {
+  createFocusProductNotification,
+  createFocusProductRecentCase,
   isRecentItem,
   normalizeFocusSourceProduct,
   transformFocusProduct,
-  createFocusProductNotification,
-  createFocusProductRecentCase,
   translateFocusProduct,
 } from './focus-helpers';
-import { tozoTitleTranslations } from './focus-tozo-content';
 import { FocusProduct, FocusProductFromSource } from './focus-types';
 
 /**
