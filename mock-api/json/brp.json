@@ -160,13 +160,15 @@
       "datumAfloop": "2025-10-15T00:00:00Z",
       "datumUitgifte": "2015-10-15T00:00:00Z",
       "documentNummer": "PP57XKG54",
-      "documentType": "paspoort"
+      "documentType": "paspoort",
+      "id": "een-hash-van-documentnummer-1"
     },
     {
       "datumAfloop": "2020-09-11T00:00:00Z",
       "datumUitgifte": "2010-09-11T00:00:00Z",
       "documentNummer": "IE9962819",
-      "documentType": "europese identiteitskaart"
+      "documentType": "europese identiteitskaart",
+      "id": "een-hash-van-documentnummer-2"
     }
   ]
 }

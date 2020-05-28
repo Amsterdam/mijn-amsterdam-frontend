@@ -60,7 +60,7 @@ export function useBrpApi(): BrpApiState {
     return Object.assign({}, data, {
       identiteitsbewijzen: data.identiteitsbewijzen.map(document => {
         const route = generatePath(AppRoutes.BURGERZAKEN_DOCUMENT, {
-          id: document.documentNummer,
+          id: document.id,
         });
         return Object.assign({}, document, {
           title:
