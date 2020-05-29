@@ -1,6 +1,6 @@
 import { addDays, differenceInCalendarDays, parseISO } from 'date-fns';
 import { API_BASE_PATH, AppRoutes, Chapters } from '../../../universal/config';
-import { defaultDateFormat, omit } from '../../../universal/helpers';
+import { defaultDateFormat, omit, hash } from '../../../universal/helpers';
 import { GenericDocument, MyCase } from '../../../universal/types';
 import { DAYS_KEEP_RECENT, processSteps } from './focus-aanvragen-content';
 import {
@@ -176,7 +176,7 @@ export function normalizeFocusSourceProduct(product: FocusProductFromSource) {
   const latestStep = getLatestStep(steps);
 
   return {
-    id: `${product._id}-${latestStep}`,
+    id: 'aanvraag-' + hash(`${product._id}-${latestStep}`),
     title: product.naam,
     type: product.soortProduct,
     decision: product.typeBesluit
@@ -264,6 +264,7 @@ export function transformFocusProduct(
   contentLabels: LabelData
 ): FocusItem {
   const stepsContent = findStepsContent(product, contentLabels);
+  const productContent = findProductContent(product, contentLabels);
   const steps = transformFocusProductSteps(product, stepsContent);
 
   const productSanitized = omit(product, [
@@ -277,7 +278,7 @@ export function transformFocusProduct(
       title: 'Meer informatie',
       to: AppRoutes.INKOMEN,
     },
-    stepsContent.link ? stepsContent.link(product) : null
+    productContent.link ? productContent.link(product) : null
   );
 
   return Object.assign({}, productSanitized, {

@@ -61,12 +61,12 @@ export default () => {
         <p>
           Onderstaand ziet u de status van uw aanvraag voor een Tozo-uitkering
           en/of een Tozo-lening. Indien u beide heeft aangevraagd, ontvangt u
-          voor beide onderstaand een apart besluit.
+          voor beide een apart besluit. Informatie die u hier ziet is een
+          werkdag vertraagd.
         </p>
         <p>
           <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
-            Informatie over Tijdelijke overbruggingsregeling zelfstandig
-            ondernemers (Tozo)
+            Meer informatie over de Tozo
           </Linkd>
         </p>
         {(isError(FOCUS_TOZO) || noContent) && (

@@ -4,6 +4,7 @@ import {
   dateFormat,
   dateSort,
   defaultDateFormat,
+  hash,
 } from '../../../universal/helpers';
 import { GenericDocument } from '../../../universal/types';
 import { FocusTozoDocument } from './focus-combined';
@@ -375,7 +376,7 @@ export function createFocusItemTozo(steps: FocusItemStep[]) {
   const unknownId = 'unknown-first-activity';
   const firstActivityDatePublished = firstActivity?.datePublished || unknownId;
 
-  const id = 'aanvraag-' + (firstActivity ? firstActivity.id : unknownId);
+  const id = 'aanvraag-' + hash(firstActivityDatePublished);
   const lastActivityDatePublished = lastStep.datePublished;
   const status = getTozoStatus(steps);
 
