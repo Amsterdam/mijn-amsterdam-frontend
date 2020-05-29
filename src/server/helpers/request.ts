@@ -147,6 +147,10 @@ export async function requestData<T>(
       source.cancel('Request to source api timeout.');
     }, requestConfig.cancelTimeout);
 
+    if (!IS_PRODUCTION) {
+      console.log(requestConfig);
+    }
+
     const request: AxiosPromise<T> = axiosRequest(requestConfig);
     const response: AxiosResponse<T> = await request;
     const responseData = apiSuccesResult<T>(response.data);
@@ -154,10 +158,6 @@ export async function requestData<T>(
     // Use the cache Deferred for resolving the response
     if (isGetRequest && cache.get(cacheKey)) {
       cache.get(cacheKey).resolve(responseData);
-    }
-
-    if (!IS_PRODUCTION) {
-      console.log(requestConfig);
     }
 
     return responseData;
