@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/node';
 import axios, { AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Request } from 'express';
 import memoryCache from 'memory-cache';
-import { IS_AP } from '../../universal/config/env';
+import { IS_AP, IS_PRODUCTION } from '../../universal/config/env';
 import {
   apiErrorResult,
   apiPostponeResult,
@@ -154,6 +154,10 @@ export async function requestData<T>(
     // Use the cache Deferred for resolving the response
     if (isGetRequest && cache.get(cacheKey)) {
       cache.get(cacheKey).resolve(responseData);
+    }
+
+    if (!IS_PRODUCTION) {
+      console.log(requestConfig);
     }
 
     return responseData;
