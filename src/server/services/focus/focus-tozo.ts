@@ -126,6 +126,7 @@ export async function fetchFOCUSTozoGenerated(
 
       notifications.push(
         ...responseTransformed.content.flatMap(item => {
+          console.log('item:', item);
           return item.steps[0].documents.map(doc =>
             createFocusTozoAanvraagNotification(item.id, doc)
           );

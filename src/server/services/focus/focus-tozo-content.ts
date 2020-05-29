@@ -1,4 +1,3 @@
-import { defaultDateFormat } from '../../../universal/helpers';
 import { stepLabels } from './focus-aanvragen-content';
 import {
   DocumentTitles,
@@ -227,7 +226,7 @@ export const contentLabels: LabelData = {
 
 export const fakeDecisionStep: FocusItemStep = {
   id: 'fake-decision-filler',
-  title: '',
+  title: 'fake-beslissing',
   status: 'Besluit',
   datePublished: '',
   documents: [],

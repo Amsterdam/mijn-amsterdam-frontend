@@ -405,24 +405,17 @@
         "datum": "2020-04-28T15:05:53+02:00",
         "document": []
       },
-      "beslissing": {
-        "_id": 3,
-        "datum": "2020-05-07T00:00:00+02:00",
-        "document": [
-          {
-            "$ref": "focus/document?id=660000000000030&isBulk=false&isDms=false",
-            "id": 660000000000030,
-            "isBulk": false,
-            "isDms": false,
-            "omschrijving": "Tozo Toekennen"
-          }
-        ]
-      },
+      "beslissing": null,
       "bezwaar": null,
-      "herstelTermijn": null,
+      "herstelTermijn": {
+        "_id": 2,
+        "aantalDagenHerstelTermijn": "15",
+        "datum": "2020-05-03T15:05:53+02:00",
+        "document": []
+      },
       "inBehandeling": {
         "_id": 1,
-        "datum": "2020-04-27T15:05:53+02:00",
+        "datum": "2020-05-01T15:05:53+02:00",
         "document": []
       }
     },

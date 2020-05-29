@@ -7,10 +7,10 @@ import {
   sortAlpha,
 } from '../../../universal/helpers';
 import { GenericDocument } from '../../../universal/types';
-import { stepLabels } from './focus-aanvragen-content';
 import { FocusTozoDocument } from './focus-combined';
 import { findStepsContent, transformFocusProductSteps } from './focus-helpers';
 import {
+  fakeDecisionStep,
   tozoTitleTranslations,
   TOZO_AANVRAAG_STEP_ID,
 } from './focus-tozo-content';
@@ -41,7 +41,10 @@ function collectTozoDocuments({
   const documentenFiltered = documenten?.filter(filter);
 
   if (documentenFiltered?.length) {
-    return createTozoAanvraagStep(documentenFiltered, titleTranslations);
+    return createTozoAanvraagDocumentsStep(
+      documentenFiltered,
+      titleTranslations
+    );
   }
 
   return null;
@@ -90,7 +93,7 @@ export function createTozoProductSetStepsCollection({
   // If there are no aanvragen products available, just gather the voorschotten and aanvraagdocumenten.
   if (!aanvragen.length) {
     stepCollection.push([
-      createTozoAanvraagStep(documenten, titleTranslations),
+      createTozoAanvraagDocumentsStep(documenten, titleTranslations),
       ...voorschotten.flatMap(voorschot => {
         const stepsContent = findStepsContent(voorschot, contentLabels);
         return transformFocusProductSteps(voorschot, stepsContent);
@@ -163,16 +166,38 @@ export function createTozoProductSetStepsCollection({
         ? new Date(prevSecond?.datePublished || prevFirst?.datePublished)
         : null;
 
-    const stepSet: FocusItemStep[] = [];
+    let stepSet: FocusItemStep[] = [];
 
     if (first) {
       const stepsContent = findStepsContent(first, contentLabels);
-      stepSet.push(...transformFocusProductSteps(first, stepsContent));
+      const steps = transformFocusProductSteps(first, stepsContent);
+      const lastStep = steps[steps.length - 1];
+
+      if (lastStep.title === 'herstelTermijn') {
+        steps.push(
+          Object.assign({}, fakeDecisionStep, {
+            product: first.title,
+            datePublished: lastStep.datePublished,
+          })
+        );
+      }
+      stepSet.push(...steps);
     }
 
     if (second) {
       const stepsContent = findStepsContent(second, contentLabels);
-      stepSet.push(...transformFocusProductSteps(second, stepsContent));
+      const steps = transformFocusProductSteps(second, stepsContent);
+      const lastStep = steps[steps.length - 1];
+
+      if (lastStep.title === 'herstelTermijn') {
+        steps.push(
+          Object.assign({}, fakeDecisionStep, {
+            product: second.title,
+            datePublished: lastStep.datePublished,
+          })
+        );
+      }
+      stepSet.push(...steps);
     }
 
     let documentsFilter: collectTozoDocumentsProps['filter'];
@@ -213,16 +238,6 @@ export function createTozoProductSetStepsCollection({
       };
     }
 
-    const generatedDocumentStep = collectTozoDocuments({
-      filter: documentsFilter,
-      documenten,
-      titleTranslations: tozoTitleTranslations,
-    });
-
-    if (generatedDocumentStep) {
-      stepSet.push(generatedDocumentStep);
-    }
-
     const generatedVoorschottenSteps = collectTozoVoorschotten({
       filter: voorschottenFilter,
       voorschotten,
@@ -233,36 +248,81 @@ export function createTozoProductSetStepsCollection({
       stepSet.push(...generatedVoorschottenSteps);
     }
 
-    return stepSet.sort(dateSort('datePublished'));
+    const generatedDocumentStep = collectTozoDocuments({
+      filter: documentsFilter,
+      documenten,
+      titleTranslations: tozoTitleTranslations,
+    });
+
+    stepSet = stepSet.sort(dateSort('datePublished'));
+
+    if (generatedDocumentStep) {
+      stepSet.unshift(generatedDocumentStep);
+    } else {
+      // Create an aanvraag step without document
+      stepSet.unshift(createTozoAanvraagWithoutDocumentsStep(stepSet[0]));
+    }
+
+    console.log(
+      stepSet.map(item => {
+        return {
+          title: item.title,
+          product: item.product,
+          datePublished: item.datePublished,
+        };
+      })
+    );
+
+    return stepSet;
   });
 
   return stepCollection;
 }
 
-function createTozoAanvraagStep(
+function createTozoAanvraagWithoutDocumentsStep(step: FocusItemStep) {
+  let description = 'Wij hebben uw aanvraag Tozo ontvangen';
+
+  const aanvraag: FocusItemStep = {
+    id: TOZO_AANVRAAG_STEP_ID,
+    documents: [],
+    product: 'Tozo-regeling',
+    title: 'aanvraag',
+    description,
+    datePublished: step.datePublished,
+    status: 'Aanvraag',
+    isChecked: true,
+    isActive: true,
+  };
+
+  return aanvraag;
+}
+
+function createTozoAanvraagDocumentsStep(
   tozoDocuments: FocusTozoDocument[],
   titleTranslations: DocumentTitles
 ) {
-  const documents = tozoDocuments.map(doc => {
-    return {
-      id: doc.id,
-      title: `${titleTranslations[doc.type] || doc.type}\n${dateFormat(
-        doc.datePublished,
-        'dd MMMM - HH:mm'
-      )}`,
-      url: `/api/${doc.url}`,
-      datePublished: doc.datePublished,
-      type: 'PDF',
-    };
-  });
+  const documents = tozoDocuments
+    .map(doc => {
+      return {
+        id: doc.id,
+        title: `${titleTranslations[doc.type] || doc.type}\n${dateFormat(
+          doc.datePublished,
+          'dd MMMM - HH:mm'
+        )}`,
+        url: `/api/${doc.url}`,
+        datePublished: doc.datePublished,
+        type: 'PDF',
+      };
+    })
+    .sort(dateSort('datePublished'));
 
   let description = 'Wij hebben uw aanvraag Tozo ontvangen';
 
   const aanvraag: FocusItemStep = {
     id: TOZO_AANVRAAG_STEP_ID,
     documents,
-    product: 'Tozo-aanvraag-documenten',
-    title: 'Tozo-aanvraag',
+    product: 'Tozo-regeling',
+    title: 'aanvraag',
     description:
       description + documents.length
         ? `op ${defaultDateFormat(documents[0].datePublished)}.`
@@ -277,30 +337,27 @@ function createTozoAanvraagStep(
 }
 
 function getTozoStatus(steps: FocusItemStep[]) {
-  const aanvraagSteps = steps.filter(
-    step => step.status === stepLabels.aanvraag
+  const actualProductSteps = steps.filter(
+    step => step.product === 'Tozo-uitkering' || step.product === 'Tozo-lening'
   );
-  const beslissingSteps = steps.filter(
-    step => step.status === stepLabels.beslissing
+  const aanvraagSteps = actualProductSteps.filter(
+    step => step.title === 'aanvraag'
+  );
+  const beslissingSteps = actualProductSteps.filter(
+    step => step.title === 'beslissing'
   );
 
-  if (
-    aanvraagSteps.length === 1 &&
-    aanvraagSteps[0].id === TOZO_AANVRAAG_STEP_ID
-  ) {
+  if (steps.length === 1 && steps[0].id === TOZO_AANVRAAG_STEP_ID) {
     // 1 general aanvraag
     return 'Aanvraag';
-  } else if (
-    aanvraagSteps.length === 1 &&
-    aanvraagSteps[0].id !== TOZO_AANVRAAG_STEP_ID
-  ) {
+  } else if (aanvraagSteps.length === 1) {
     // Uitkering OR Lening aanvraag only, just display the last status
     return aanvraagSteps[aanvraagSteps.length - 1].status;
-  } else if (aanvraagSteps.length === 3 && beslissingSteps.length === 2) {
+  } else if (
+    aanvraagSteps.length >= 1 &&
+    aanvraagSteps.length === beslissingSteps.length
+  ) {
     // 3 aanvragen, 1 general AND 1 uitkering AND 1 lening
-    return 'Besluit';
-  } else if (aanvraagSteps.length === 2 && beslissingSteps.length === 1) {
-    // 2 aanvragen, 1 general AND (1 uitkering OR 1 lening)
     return 'Besluit';
   }
 
@@ -308,9 +365,9 @@ function getTozoStatus(steps: FocusItemStep[]) {
 }
 
 export function createFocusItemTozo(steps: FocusItemStep[]) {
-  const lastStep = steps[steps.length - 1];
-  const mix = [...steps];
-  const firstActivity = mix.sort(dateSort('dateStart', 'desc')).pop();
+  const stepsWithDate = steps.filter(item => !!item.datePublished);
+  const lastStep = stepsWithDate[stepsWithDate.length - 1];
+  const firstActivity = stepsWithDate.sort(dateSort('dateStart', 'desc')).pop();
   const unknownId = 'unknown-first-activity';
   const firstActivityDatePublished = firstActivity?.datePublished || unknownId;
 
@@ -318,10 +375,16 @@ export function createFocusItemTozo(steps: FocusItemStep[]) {
   const lastActivityDatePublished = lastStep.datePublished;
   const status = getTozoStatus(steps);
 
-  let stepsOrganized = steps.sort(sortAlpha('product'));
+  const stepsOrganized = steps
+    .filter(
+      step => step.product === 'Tozo-regeling' || step.title !== 'aanvraag'
+    )
+    .map(step => {
+      return step.title === 'fake-beslissing'
+        ? Object.assign(step, { datePublished: '' })
+        : step;
+    });
 
-  stepsOrganized = stepsOrganized.filter(step => step.title !== 'aanvraag');
-  // console.log(steps);
   return {
     id,
     dateStart: firstActivityDatePublished,

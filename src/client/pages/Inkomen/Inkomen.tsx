@@ -59,8 +59,8 @@ export default () => {
   const jaaropgaven = FOCUS_SPECIFICATIES.content?.jaaropgaven || [];
 
   const itemsRequested = useMemo(() => {
-    const itemsRequested = aanvragen.filter(
-      item => !item.steps.some(step => step.status === 'Besluit')
+    const itemsRequested = aanvragen.filter(item =>
+      item.steps.every(step => step.title !== 'beslissing')
     );
 
     if (tozoItems.length && FeatureToggle.tozoActive) {
@@ -83,7 +83,7 @@ export default () => {
 
   const itemsDecided = useMemo(() => {
     const itemsDecided = aanvragen.filter(item =>
-      item.steps.some(step => step.status === 'Besluit')
+      item.steps.some(step => step.title === 'beslissing')
     );
 
     if (tozoItems.length && FeatureToggle.tozoActive) {

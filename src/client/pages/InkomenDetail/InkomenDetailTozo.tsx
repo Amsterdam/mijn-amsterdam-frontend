@@ -46,8 +46,7 @@ export default () => {
   );
   const aanvraagAndVoorschotSteps = TozoItem?.steps.filter(
     step =>
-      step.product === 'Tozo-aanvraag-documenten' ||
-      step.product === 'Tozo-voorschot'
+      step.product === 'Tozo-regeling' || step.product === 'Tozo-voorschot'
   );
 
   return (

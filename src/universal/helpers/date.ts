@@ -31,18 +31,11 @@ export function isDateInPast(date: string | Date, dateNow: string | Date) {
 
 export function dateSort(sortKey: string, direction: 'asc' | 'desc' = 'asc') {
   return (a: any, b: any) => {
-    const c = parseISO(a[sortKey]).getTime();
-    const d = parseISO(b[sortKey]).getTime();
+    const c = parseISO(a[sortKey]);
+    const d = parseISO(b[sortKey]);
 
-    const s = direction === 'asc' ? c < d : d < c;
-
-    if (s) {
-      return -1;
-    } else if (c === d) {
-      return 0;
-    } else {
-      return 1;
-    }
+    // @ts-ignore
+    return direction === 'asc' ? c - d : d - c;
   };
 }
 
