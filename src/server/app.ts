@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/node';
+import { CaptureConsole } from '@sentry/integrations';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
@@ -21,7 +22,7 @@ if (getOtapEnvItem('bffSentryDsn')) {
   Sentry.init({
     dsn: getOtapEnvItem('bffSentryDsn'),
     environment: ENV,
-    integrations: [new Sentry.Integrations.Console()],
+    integrations: [new CaptureConsole()],
   });
 }
 
@@ -56,6 +57,12 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   const sessionID = req.sessionID!;
   clearCache(sessionID);
   next();
+});
+
+app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+  const sessionID = req.sessionID!;
+  clearCache(sessionID);
+  next(error);
 });
 
 if (IS_AP) {
