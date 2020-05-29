@@ -57,7 +57,7 @@ export const ApiConfig: TypeIndex<ApiName, ApiConfig> = {
 };
 
 export const ErrorNames: { [stateKey: string]: string } = {
-  BRP: 'Persoonlijke gegevens + actuele updates',
+  BRP: 'Persoonlijke gegevens, burgerzaken + actuele updates',
   MY_CASES: 'Lopende zaken',
   MIJN_TIPS: 'Tips',
   WMO: 'Zorg en ondersteuning',

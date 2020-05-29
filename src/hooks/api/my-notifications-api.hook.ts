@@ -6,6 +6,8 @@ import { dateSort } from 'helpers/App';
 import { useLocalStorage } from 'hooks/storage.hook';
 import { useMemo } from 'react';
 import { ApiState } from './api.types';
+import { dateFormat, defaultDateFormat } from '../../helpers/App';
+import { MaintenanceNotification } from '../../config/StaticData';
 
 export interface MyNotification {
   id: string;
@@ -52,47 +54,52 @@ export default function useMyNotificationsApi({
   MILIEUZONE,
   FOCUS_TOZO,
 }: AppState): MyNotificationsApiState {
-  const items = useMemo(
-    () =>
-      [
-        // Static content welcome message
-        WelcomeNotification,
-        // Focus notification items
-        ...FOCUS.data.notifications.map(addChapterNamespaceToId('INKOMEN')),
-        ...FOCUS_SPECIFICATIONS.data.notifications.map(
-          addChapterNamespaceToId('INKOMEN')
-        ),
-        // BRP Notifications
-        ...BRP.notifications.map(addChapterNamespaceToId('BURGERZAKEN')),
-        // Belastingen
-        ...BELASTINGEN.data.notifications.map(
-          addChapterNamespaceToId('BELASTINGEN')
-        ),
-        // Milieuzones
-        ...MILIEUZONE.data.notifications.map(
-          addChapterNamespaceToId('MILIEUZONE')
-        ),
-        // Focus TOZO
-        ...(FOCUS_TOZO.data?.length
-          ? FOCUS_TOZO.data.flatMap(
-              item =>
-                Object.values(item.notifications)
-                  .flatMap(x => x)
-                  .filter(
-                    notification => notification !== null
-                  ) as MyNotification[]
-            )
-          : []),
-      ].sort(dateSort('datePublished', 'desc')),
-    [
-      FOCUS.data.notifications,
-      BRP.notifications,
-      BELASTINGEN.data.notifications,
-      MILIEUZONE.data.notifications,
-      FOCUS_SPECIFICATIONS.data.notifications,
-      FOCUS_TOZO.data,
-    ]
-  );
+  const items = useMemo(() => {
+    const notifications = [
+      // Static content welcome message
+      WelcomeNotification,
+      // Focus notification items
+      ...FOCUS.data.notifications.map(addChapterNamespaceToId('INKOMEN')),
+      ...FOCUS_SPECIFICATIONS.data.notifications.map(
+        addChapterNamespaceToId('INKOMEN')
+      ),
+      // BRP Notifications
+      ...BRP.notifications.map(addChapterNamespaceToId('BURGERZAKEN')),
+      // Belastingen
+      ...BELASTINGEN.data.notifications.map(
+        addChapterNamespaceToId('BELASTINGEN')
+      ),
+      // Milieuzones
+      ...MILIEUZONE.data.notifications.map(
+        addChapterNamespaceToId('MILIEUZONE')
+      ),
+      // Focus TOZO
+      ...(FOCUS_TOZO.data?.length
+        ? FOCUS_TOZO.data.flatMap(
+            item =>
+              Object.values(item.notifications)
+                .flatMap(x => x)
+                .filter(
+                  notification => notification !== null
+                ) as MyNotification[]
+          )
+        : []),
+    ];
+    if (
+      defaultDateFormat(MaintenanceNotification.datePublished) ===
+      defaultDateFormat(new Date())
+    ) {
+      notifications.push(MaintenanceNotification);
+    }
+    return notifications.sort(dateSort('datePublished', 'desc'));
+  }, [
+    FOCUS.data.notifications,
+    BRP.notifications,
+    BELASTINGEN.data.notifications,
+    MILIEUZONE.data.notifications,
+    FOCUS_SPECIFICATIONS.data.notifications,
+    FOCUS_TOZO.data,
+  ]);
 
   const isLoading =
     BRP.isLoading ||

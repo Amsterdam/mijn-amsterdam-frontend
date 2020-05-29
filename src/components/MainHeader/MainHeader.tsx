@@ -46,10 +46,10 @@ export default function MainHeader({
   const appState = useContext(AppContext);
   const errors = entries(appState)
     .filter(([stateKey, state]) => {
+      const isError = 'isError' in state && state.isError;
       return (
-        !excludedApiKeys.includes(stateKey) &&
-        'isError' in state &&
-        state.isError
+        (!excludedApiKeys.includes(stateKey) && isError) ||
+        (['GARBAGE', 'MIJN_BUURT'].includes(stateKey) && appState.BRP.isError)
       );
     })
     .map(([stateKey, state]) => {
