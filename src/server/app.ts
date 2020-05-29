@@ -24,13 +24,12 @@ import { router } from './router';
 import { apiErrorResult } from '../universal/helpers';
 
 if (getOtapEnvItem('bffSentryDsn')) {
-  const options = {
+  const options: Sentry.NodeOptions = {
     dsn: getOtapEnvItem('bffSentryDsn'),
     environment: ENV,
-    integrations: [],
   };
   if (!IS_PRODUCTION) {
-    options.integrations.push(new CaptureConsole());
+    options.integrations = [new CaptureConsole()];
   }
   Sentry.init(options);
 }
