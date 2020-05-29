@@ -13,10 +13,6 @@ export interface TIPSRequestData {
   tips: MyTip[];
 }
 
-function transformTIPSRequest(requestData: TIPSData) {
-  return requestData;
-}
-
 export function fetchTIPS(
   sessionID: SessionID,
   samlToken: string,
@@ -27,7 +23,6 @@ export function fetchTIPS(
       url: ApiUrls.TIPS,
       method: 'POST',
       data: requestBody,
-      transformRequest: transformTIPSRequest,
     },
     sessionID,
     samlToken,
