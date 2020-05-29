@@ -29,7 +29,11 @@ if (getOtapEnvItem('bffSentryDsn')) {
     environment: ENV,
   };
   if (!IS_PRODUCTION) {
-    options.integrations = [new CaptureConsole()];
+    options.integrations = [
+      new CaptureConsole({
+        levels: ['log', 'error', 'time', 'timeLog', 'timeEnd'],
+      }),
+    ];
   }
   Sentry.init(options);
 }
@@ -93,5 +97,5 @@ app.use((req: Request, res: Response) => {
 });
 
 app.listen(BFF_PORT, () => {
-  console.log(`Mijn Amsterdam BFF api listening on ${BFF_PORT}...`);
+  console.info(`Mijn Amsterdam BFF api listening on ${BFF_PORT}...`);
 });

@@ -148,12 +148,21 @@ export async function requestData<T>(
     }, requestConfig.cancelTimeout);
 
     if (!IS_PRODUCTION) {
-      console.log(requestConfig);
+      console.time(requestConfig.url);
     }
 
     const request: AxiosPromise<T> = axiosRequest(requestConfig);
     const response: AxiosResponse<T> = await request;
+
+    if (!IS_PRODUCTION) {
+      console.timeLog(requestConfig.url);
+    }
+
     const responseData = apiSuccesResult<T>(response.data);
+
+    if (!IS_PRODUCTION) {
+      console.timeEnd(requestConfig.url);
+    }
 
     // Use the cache Deferred for resolving the response
     if (isGetRequest && cache.get(cacheKey)) {
