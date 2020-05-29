@@ -3,7 +3,7 @@ import { ApiStateKey } from './services/state';
 import { IS_AP, IS_PRODUCTION, IS_ACCEPTANCE } from '../universal/config/env';
 
 export const TMA_SAML_HEADER = 'x-saml-attribute-token1';
-export const BFF_REQUEST_CACHE_ENABLED = IS_AP;
+export const BFF_REQUEST_CACHE_ENABLED = true;
 
 // Urls used in the BFF api
 // Microservices (Tussen Api) base url
