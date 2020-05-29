@@ -12,18 +12,27 @@ import express, {
   ErrorRequestHandler,
 } from 'express';
 import session from 'express-session';
-import { IS_AP, getOtapEnvItem, ENV } from '../universal/config/env';
+import {
+  IS_AP,
+  getOtapEnvItem,
+  ENV,
+  IS_PRODUCTION,
+} from '../universal/config/env';
 import { BFF_PORT } from './config';
 import { clearCache } from './helpers';
 import { router } from './router';
 import { apiErrorResult } from '../universal/helpers';
 
 if (getOtapEnvItem('bffSentryDsn')) {
-  Sentry.init({
+  const options = {
     dsn: getOtapEnvItem('bffSentryDsn'),
     environment: ENV,
-    integrations: [new CaptureConsole()],
-  });
+    integrations: [],
+  };
+  if (!IS_PRODUCTION) {
+    options.integrations.push(new CaptureConsole());
+  }
+  Sentry.init(options);
 }
 
 const app = express();
