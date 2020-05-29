@@ -10,7 +10,7 @@ import {
   normalizeFocusSourceProduct,
   transformFocusProduct,
   translateFocusProduct,
-} from './focus-helpers';
+} from './focus-aanvragen-helpers';
 import { FocusProduct, FocusProductFromSource } from './focus-types';
 
 /**

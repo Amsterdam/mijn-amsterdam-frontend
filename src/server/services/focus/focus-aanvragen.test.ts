@@ -20,7 +20,7 @@ import {
   normalizeFocusSourceProduct,
   translateFocusProduct,
   transformFocusProduct,
-} from './focus-helpers';
+} from './focus-aanvragen-helpers';
 import { focusAanvragenProducten } from './focus-aanvragen';
 
 const testData: FocusProductFromSource[] = [

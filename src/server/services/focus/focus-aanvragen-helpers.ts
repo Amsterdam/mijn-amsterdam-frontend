@@ -1,7 +1,7 @@
 import { addDays, differenceInCalendarDays, parseISO } from 'date-fns';
 import { API_BASE_PATH, AppRoutes, Chapters } from '../../../universal/config';
 import { defaultDateFormat, omit } from '../../../universal/helpers';
-import { GenericDocument, LinkProps, MyCase } from '../../../universal/types';
+import { GenericDocument, MyCase } from '../../../universal/types';
 import { DAYS_KEEP_RECENT, processSteps } from './focus-aanvragen-content';
 import {
   Decision,
@@ -19,6 +19,7 @@ import {
   LabelData,
   StepTitle,
   TextPartContents,
+  ProductStepLabels,
 } from './focus-types';
 
 /** Checks if an item returned from the api is considered recent */
@@ -99,15 +100,22 @@ export function formatFocusDocument(
   };
 }
 
+export function findProductContent(
+  product: FocusProduct,
+  contentLabels: LabelData
+) {
+  return contentLabels[product.type][product.title];
+}
+
 export function findStepsContent(
   product: FocusProduct,
   contentLabels: LabelData
 ) {
-  const stepsContent: { [stepTitle in StepTitle]?: FocusStepContent } & {
-    link?: LinkProps;
+  const stepsContent: ProductStepLabels & {
+    beslissing?: FocusStepContent;
   } = {};
 
-  const labelContent = contentLabels[product.type][product.title];
+  const labelContent = findProductContent(product, contentLabels);
 
   processSteps.forEach(stepTitle => {
     const stepData = product.steps.find(step => step.title === stepTitle);
@@ -264,10 +272,13 @@ export function transformFocusProduct(
     'inspanningsperiode',
   ]);
 
-  const link = {
-    title: stepsContent.link?.title || 'Meer informatie',
-    to: stepsContent.link?.to || AppRoutes.INKOMEN,
-  };
+  const link = Object.assign(
+    {
+      title: 'Meer informatie',
+      to: AppRoutes.INKOMEN,
+    },
+    stepsContent.link ? stepsContent.link(product) : null
+  );
 
   return Object.assign({}, productSanitized, {
     steps,
@@ -284,9 +295,11 @@ export function createFocusProductNotification(
   const stepsContent = findStepsContent(product, contentLabels)[
     latestStepTitle
   ];
+  const productContent = findProductContent(product, contentLabels);
   const titleTransform = stepsContent?.notification?.title;
   const descriptionTransform = stepsContent?.notification?.title;
-  const linkTransform = stepsContent?.notification?.link;
+  const linkTransform =
+    stepsContent?.notification?.link || productContent?.link;
 
   return {
     id: `${product.id}-notification`,
@@ -329,13 +342,19 @@ export function translateFocusProduct(
   product: FocusProduct,
   titleTranslations: DocumentTitles
 ) {
-  product.title = titleTranslations[product.title] || product.title;
+  const prod = Object.assign({}, product);
 
-  product.steps.forEach(step => {
-    step.documents.forEach(doc => {
-      doc.title = titleTranslations[doc.title] || doc.title;
+  prod.title = titleTranslations[prod.title] || prod.title;
+
+  prod.steps = prod.steps.map(step => {
+    return Object.assign({}, step, {
+      documents: step.documents.map(doc => {
+        return Object.assign({}, doc, {
+          title: titleTranslations[doc.title] || doc.title,
+        });
+      }),
     });
   });
 
-  return product;
+  return prod;
 }

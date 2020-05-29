@@ -4,11 +4,13 @@ import {
   dateFormat,
   dateSort,
   defaultDateFormat,
-  sortAlpha,
 } from '../../../universal/helpers';
 import { GenericDocument } from '../../../universal/types';
 import { FocusTozoDocument } from './focus-combined';
-import { findStepsContent, transformFocusProductSteps } from './focus-helpers';
+import {
+  findStepsContent,
+  transformFocusProductSteps,
+} from './focus-aanvragen-helpers';
 import {
   fakeDecisionStep,
   tozoTitleTranslations,
@@ -91,6 +93,7 @@ export function createTozoProductSetStepsCollection({
   let stepCollection: Array<FocusItemStep[]> = [];
 
   // If there are no aanvragen products available, just gather the voorschotten and aanvraagdocumenten.
+  // and display them in a single set
   if (!aanvragen.length) {
     stepCollection.push([
       createTozoAanvraagDocumentsStep(documenten, titleTranslations),
@@ -108,6 +111,8 @@ export function createTozoProductSetStepsCollection({
     productSet = [];
   };
 
+  // Go through the aanvragen which consist of Lening and Uitkering.
+  // A Set can have at maximum 1 uitkering and/or 1 lening
   for (const item of aanvragen) {
     const previousProductSet =
       collection.length > 0 ? collection[collection.length - 1] : null;
@@ -153,7 +158,16 @@ export function createTozoProductSetStepsCollection({
     }
   }
 
+  // Finally add the last Set to the collection
   newProductSet();
+
+  // Go through the current collection and gather Voorschotten and Documents to create an Aanvraag step
+  // Also if an Uitkering or Lening product is encountered with latest step 'herstelTermijn', add a fake decision step so
+  // the UI can display the next step in the process.
+  //
+  // - All documents are combined and attached to the first 'Aanvraag regeling' step.
+  // - Documents and Voorschotten with publish dates between first activity of a Set and Last activity of a Set are collected.
+  // - A set with Lening and/or Uitkering is enriched with a fake decision step if the last step in the process is 'herstelTermijn'
 
   stepCollection = collection.map((productSet, index) => {
     const [first, second] = productSet;
@@ -174,6 +188,7 @@ export function createTozoProductSetStepsCollection({
       const lastStep = steps[steps.length - 1];
 
       if (lastStep.title === 'herstelTermijn') {
+        // Add the fake step
         steps.push(
           Object.assign({}, fakeDecisionStep, {
             product: first.title,
@@ -190,6 +205,7 @@ export function createTozoProductSetStepsCollection({
       const lastStep = steps[steps.length - 1];
 
       if (lastStep.title === 'herstelTermijn') {
+        // Add the fake step
         steps.push(
           Object.assign({}, fakeDecisionStep, {
             product: second.title,
@@ -259,19 +275,9 @@ export function createTozoProductSetStepsCollection({
     if (generatedDocumentStep) {
       stepSet.unshift(generatedDocumentStep);
     } else {
-      // Create an aanvraag step without document
+      // Create an aanvraag step without documents
       stepSet.unshift(createTozoAanvraagWithoutDocumentsStep(stepSet[0]));
     }
-
-    console.log(
-      stepSet.map(item => {
-        return {
-          title: item.title,
-          product: item.product,
-          datePublished: item.datePublished,
-        };
-      })
-    );
 
     return stepSet;
   });
@@ -280,14 +286,12 @@ export function createTozoProductSetStepsCollection({
 }
 
 function createTozoAanvraagWithoutDocumentsStep(step: FocusItemStep) {
-  let description = 'Wij hebben uw aanvraag Tozo ontvangen';
-
   const aanvraag: FocusItemStep = {
     id: TOZO_AANVRAAG_STEP_ID,
     documents: [],
     product: 'Tozo-regeling',
     title: 'aanvraag',
-    description,
+    description: 'Wij hebben uw aanvraag Tozo ontvangen',
     datePublished: step.datePublished,
     status: 'Aanvraag',
     isChecked: true,
@@ -348,7 +352,7 @@ function getTozoStatus(steps: FocusItemStep[]) {
   );
 
   if (steps.length === 1 && steps[0].id === TOZO_AANVRAAG_STEP_ID) {
-    // 1 general aanvraag
+    // 1 Regeling aanvraag
     return 'Aanvraag';
   } else if (aanvraagSteps.length === 1) {
     // Uitkering OR Lening aanvraag only, just display the last status
@@ -357,7 +361,7 @@ function getTozoStatus(steps: FocusItemStep[]) {
     aanvraagSteps.length >= 1 &&
     aanvraagSteps.length === beslissingSteps.length
   ) {
-    // 3 aanvragen, 1 general AND 1 uitkering AND 1 lening
+    // Every aanvraag step has a beslissing step so a decision is made.
     return 'Besluit';
   }
 
@@ -380,6 +384,7 @@ export function createFocusItemTozo(steps: FocusItemStep[]) {
       step => step.product === 'Tozo-regeling' || step.title !== 'aanvraag'
     )
     .map(step => {
+      // Remove the publish date of the fake step so it won't be presented in the UI
       return step.title === 'fake-beslissing'
         ? Object.assign(step, { datePublished: '' })
         : step;

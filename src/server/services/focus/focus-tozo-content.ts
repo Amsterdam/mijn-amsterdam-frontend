@@ -1,4 +1,7 @@
 import { stepLabels } from './focus-aanvragen-content';
+import { FocusProduct } from './focus-types';
+import { generatePath } from 'react-router-dom';
+import { AppRoutes } from '../../../universal/config/routing';
 import {
   DocumentTitles,
   FocusItemStep,
@@ -43,6 +46,12 @@ export const tozoTitleTranslations: DocumentTitles = {
 };
 
 const VoorschotLabels: ProductStepLabels = {
+  link: (product: FocusProduct) => {
+    return {
+      to: generatePath(AppRoutes['INKOMEN/TOZO'], { id: product.id }),
+      title: 'Bekijk uw Tozo status',
+    };
+  },
   beslissing: {
     toekenning: {
       notification: {
@@ -51,9 +60,6 @@ const VoorschotLabels: ProductStepLabels = {
         },
         description: product =>
           `Wij hebben een voorschot naar uw rekening overgemaakt.`,
-        link: product => ({
-          title: 'Bekijk uw Tozo status',
-        }),
       },
       status: 'Voorschot',
       description: product =>
@@ -66,6 +72,12 @@ const VoorschotLabels: ProductStepLabels = {
 };
 
 const UitkeringLabels: ProductStepLabels = {
+  link: (product: FocusProduct) => {
+    return {
+      to: generatePath(AppRoutes['INKOMEN/TOZO'], { id: product.id }),
+      title: 'Bekijk uw Tozo status',
+    };
+  },
   // Step is only here to catch data from the api with an Aanvraag step. We don't actually show this step in the front-end but functionality
   // requires data to have matching labels for them to be processed by the service. By putting 'fake' data here we can process normally and
   // remove the aanvraag step manually after processing
@@ -78,9 +90,6 @@ const UitkeringLabels: ProductStepLabels = {
       title: product => `${product.title}: Neem actie`,
       description: product =>
         `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.`,
-      link: product => ({
-        title: 'Bekijk uw Tozo status',
-      }),
     },
     status: stepLabels.herstelTermijn,
     description: product =>
@@ -95,9 +104,6 @@ const UitkeringLabels: ProductStepLabels = {
         title: product => `${product.title}: Uw aanvraag is afgewezen`,
         description: product =>
           `U hebt geen recht op een ${product.title} (besluit: ${product.datePublished}).`,
-        link: product => ({
-          title: 'Bekijk uw Tozo status',
-        }),
       },
       status: stepLabels.beslissing,
       description: product =>
@@ -111,9 +117,6 @@ const UitkeringLabels: ProductStepLabels = {
         title: product => `${product.title}: Uw aanvraag is toegekend`,
         description: product =>
           `U hebt recht op een ${product.title} (besluit: ${product.datePublished}).`,
-        link: product => ({
-          title: 'Bekijk uw Tozo status',
-        }),
       },
       status: stepLabels.beslissing,
       description: product =>
@@ -128,9 +131,6 @@ const UitkeringLabels: ProductStepLabels = {
           `${product.title}: Uw aanvraag is buiten behandeling gesteld`,
         description: product =>
           `Uw aanvraag is buiten behandeling gesteld (besluit: ${product.datePublished!}).`,
-        link: product => ({
-          title: 'Bekijk uw Tozo status',
-        }),
       },
       status: stepLabels.beslissing,
       description: product =>
@@ -141,6 +141,12 @@ const UitkeringLabels: ProductStepLabels = {
 };
 
 const LeningLabels: ProductStepLabels = {
+  link: (product: FocusProduct) => {
+    return {
+      to: generatePath(AppRoutes['INKOMEN/TOZO'], { id: product.id }),
+      title: 'Bekijk uw Tozo status',
+    };
+  },
   // See comment above UitkeringLabels.aanvraag
   aanvraag: {
     status: stepLabels.aanvraag,
@@ -151,9 +157,6 @@ const LeningLabels: ProductStepLabels = {
       title: product => `${product.title}: Neem actie`,
       description: product =>
         `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.`,
-      link: product => ({
-        title: 'Bekijk uw Tozo status',
-      }),
     },
     status: stepLabels.herstelTermijn,
     description: product =>
@@ -168,9 +171,6 @@ const LeningLabels: ProductStepLabels = {
         title: product => `${product.title}: Uw aanvraag is afgewezen`,
         description: product =>
           `U hebt geen recht op een ${product.title} (besluit: ${product.datePublished}).`,
-        link: product => ({
-          title: 'Bekijk uw Tozo status',
-        }),
       },
       status: stepLabels.beslissing,
       description: product =>
@@ -184,9 +184,6 @@ const LeningLabels: ProductStepLabels = {
         title: product => `${product.title}: Uw aanvraag is toegekend`,
         description: product =>
           `U hebt recht op een ${product.title} (besluit: ${product.datePublished}).`,
-        link: product => ({
-          title: 'Bekijk uw Tozo status',
-        }),
       },
       status: stepLabels.beslissing,
       description: product =>
@@ -201,9 +198,6 @@ const LeningLabels: ProductStepLabels = {
           `${product.title}: Uw aanvraag is buiten behandeling gesteld`,
         description: product =>
           `Uw aanvraag is buiten behandeling gesteld (besluit: ${product.datePublished}).`,
-        link: product => ({
-          title: 'Bekijk uw Tozo status',
-        }),
       },
       status: stepLabels.beslissing,
       description: product =>

@@ -11,7 +11,7 @@ import {
   createFocusProductRecentCase,
   isRecentItem,
   translateFocusProduct,
-} from './focus-helpers';
+} from './focus-aanvragen-helpers';
 import {
   contentLabels,
   tozoTitleTranslations,
@@ -40,16 +40,17 @@ async function fetchFOCUSTozoNormalized(
 
   if (FOCUS_COMBINED.status === 'OK' && FOCUS_AANVRAGEN.status === 'OK') {
     const aanvragenNormalized = FOCUS_AANVRAGEN.content
-      .filter(product =>
-        [TOZO_LENING_PRODUCT_TITLE, TOZO_UITKERING_PRODUCT_TITLE].includes(
-          product.title
-        )
-      )
+      .filter(product => {
+        return (
+          TOZO_LENING_PRODUCT_TITLE === product.title ||
+          TOZO_UITKERING_PRODUCT_TITLE === product.title
+        );
+      })
       .map(product => translateFocusProduct(product, tozoTitleTranslations))
       .sort(dateSort('dateStart'));
 
     const voorschottenNormalized = FOCUS_AANVRAGEN.content
-      .filter(product => [TOZO_VOORSCHOT_PRODUCT_TITLE].includes(product.title))
+      .filter(product => TOZO_VOORSCHOT_PRODUCT_TITLE === product.title)
       .map(product => translateFocusProduct(product, tozoTitleTranslations))
       .sort(dateSort('dateStart'));
 
@@ -107,7 +108,7 @@ export async function fetchFOCUSTozoGenerated(
 
   if (responseNormalized.status === 'OK') {
     const { aanvragen, voorschotten } = responseNormalized.content;
-
+    console.log(responseNormalized);
     for (const item of aanvragen) {
       notifications.push(createFocusProductNotification(item, contentLabels));
     }
@@ -126,7 +127,6 @@ export async function fetchFOCUSTozoGenerated(
 
       notifications.push(
         ...responseTransformed.content.flatMap(item => {
-          console.log('item:', item);
           return item.steps[0].documents.map(doc =>
             createFocusTozoAanvraagNotification(item.id, doc)
           );
