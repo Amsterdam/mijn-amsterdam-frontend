@@ -23,6 +23,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   NOTIFICATIONS: 'Actuele updates',
   WMO: 'Zorg en ondersteuning',
   FOCUS_AANVRAGEN: 'Inkomen en Stadspas + actuele updates',
+  FOCUS_TOZO: 'Tozo aanvraag regeling status',
   FOCUS_SPECIFICATIES:
     'Uitkeringsspecificaties en jaaropgaven + actuele updates',
   CHAPTERS: "Thema's",
