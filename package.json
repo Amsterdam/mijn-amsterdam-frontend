@@ -1,6 +1,6 @@
 {
   "name": "mijn-amsterdam-frontend",
-  "version": "1.14.2",
+  "version": "1.15.0",
   "scripts": {
     "build": "env-cmd --fallback -f ./.env.${REACT_APP_ENV:=production} react-scripts build",
     "e2e:local": "REACT_APP_ENV=e2e npm run build && concurrently \"npm:serve-build\" \"npx cypress open\" --kill-others --success first",
