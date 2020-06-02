@@ -6,7 +6,7 @@ import { dateSort } from 'helpers/App';
 import { useLocalStorage } from 'hooks/storage.hook';
 import { useMemo } from 'react';
 import { ApiState } from './api.types';
-import { dateFormat, defaultDateFormat } from '../../helpers/App';
+import { defaultDateFormat } from '../../helpers/App';
 import { MaintenanceNotification } from '../../config/StaticData';
 
 export interface MyNotification {
