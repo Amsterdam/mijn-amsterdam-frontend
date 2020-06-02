@@ -21,3 +21,13 @@ export const WelcomeNotification: MyNotification = {
     title: 'Laat ons weten wat u ervan vindt',
   },
 };
+
+export const MaintenanceNotification: MyNotification = {
+  id: 'maintenance01',
+  chapter: Chapters.UPDATES,
+  datePublished: new Date(2020, 5, 6).toISOString(),
+  title: 'Onderhoud Mijn Amsterdam',
+  description: `Vanwege onderhoud is een deel van Mijn Amsterdam nu niet zichtbaar.
+    Het gaat om uw persoonsgegevens, de gegevens van uw paspoort of ID-kaart en uw adres op de kaart.
+    Vanaf 13:00 uur ziet u al uw gegevens weer. Onze excuses voor het ongemak.`,
+};
