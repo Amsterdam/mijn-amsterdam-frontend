@@ -22,6 +22,6 @@ export default function useWmo(): WmoApiState {
   return {
     ...rest,
     rawData: data,
-    data: formatWmoApiResponse(data, new Date()),
+    data: formatWmoApiResponse(Array.isArray(data) ? data : [], new Date()),
   };
 }

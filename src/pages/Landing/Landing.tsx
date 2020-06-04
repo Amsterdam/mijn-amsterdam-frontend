@@ -1,6 +1,5 @@
 import { ExternalUrls } from 'config/App.constants';
 import { LOGIN_URL } from 'config/Api.constants';
-import { ReactComponent as BetaLabel } from 'assets/images/beta-label.svg';
 import DigiDLogo from 'assets/images/digid-logo.png';
 import Heading from 'components/Heading/Heading';
 import { TextPage, PageContent } from 'components/Page/Page';
@@ -28,12 +27,6 @@ export default () => {
     <TextPage>
       <PageHeading className={styles.Heading}>
         Welkom op Mijn Amsterdam
-        <BetaLabel
-          aria-hidden="true"
-          role="img"
-          aria-label="Beta versie"
-          className={styles.BetaLogo}
-        />
       </PageHeading>
       <PageContent id="AppContent">
         <p>

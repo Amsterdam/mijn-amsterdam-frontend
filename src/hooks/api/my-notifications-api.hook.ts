@@ -1,13 +1,15 @@
 import { LinkProps } from 'App.types';
 import { AppState } from 'AppState';
 import { Chapter } from 'config/Chapter.constants';
-import { WelcomeNotification } from 'config/StaticData';
+import {
+  WelcomeNotification,
+  MaintenanceNotification02,
+} from 'config/StaticData';
 import { dateSort } from 'helpers/App';
 import { useLocalStorage } from 'hooks/storage.hook';
 import { useMemo } from 'react';
 import { ApiState } from './api.types';
-import { defaultDateFormat } from '../../helpers/App';
-import { MaintenanceNotification } from '../../config/StaticData';
+import { MaintenanceNotification01 } from '../../config/StaticData';
 
 export interface MyNotification {
   id: string;
@@ -85,11 +87,11 @@ export default function useMyNotificationsApi({
           )
         : []),
     ];
-    if (
-      defaultDateFormat(MaintenanceNotification.datePublished) ===
-      defaultDateFormat(new Date())
-    ) {
-      notifications.push(MaintenanceNotification);
+    if (new Date() <= new Date(2020, 5, 6)) {
+      notifications.push(MaintenanceNotification01);
+    }
+    if (new Date() <= new Date(2020, 5, 8)) {
+      notifications.push(MaintenanceNotification02);
     }
     return notifications.sort(dateSort('datePublished', 'desc'));
   }, [
