@@ -3,7 +3,6 @@ import { useDesktopScreen, usePhoneScreen } from '../../hooks/media.hook';
 import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
 import { ReactComponent as AmsterdamLogoLarge } from '../../assets/images/logo-amsterdam-large.svg';
 import { AppRoutes } from '../../../universal/config';
-import { ReactComponent as BetaLabel } from '../../assets/images/beta-label.svg';
 import ErrorMessages from '../ErrorMessages/ErrorMessages';
 import Heading from '../Heading/Heading';
 import { Link } from 'react-router-dom';
@@ -72,9 +71,6 @@ export default function MainHeader({
             <TheHeading />
           </span>
         )}
-        <div className={styles.betaLabel}>
-          <BetaLabel role="img" aria-label="Beta" />
-        </div>
       </div>
       {isAuthenticated && <MainNavBar />}
       {hasErrors && (

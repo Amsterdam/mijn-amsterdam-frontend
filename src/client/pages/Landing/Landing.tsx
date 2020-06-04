@@ -1,4 +1,8 @@
-import { ExternalUrls, LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING, FeatureToggle } from '../../../universal/config';
+import DigiDLogo from '../../assets/images/digid-logo.svg';
+import EherkenningLogo from '../../assets/images/eherkenning-logo.svg';
+import classnames from 'classnames';
+import React, { useEffect, useRef, useState } from 'react';
+import { FeatureToggle } from '../../../universal/config';
 import {
   Heading,
   LinkdInline,
@@ -6,15 +10,10 @@ import {
   PageHeading,
   TextPage,
 } from '../../components';
-import React, { useEffect, useRef, useState } from 'react';
-
-import { ReactComponent as BetaLabel } from '../../assets/images/beta-label.svg';
-import DigiDLogo from 'assets/images/digid-logo.svg';
-import EherkenningLogo from 'assets/images/eherkenning-logo.svg';
-import classnames from 'classnames';
-import { clearSessionStorage } from '../../hooks/storage.hook';
+import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
+import { trackPageView, clearSessionStorage } from '../../hooks';
 import styles from './Landing.module.scss';
-import { trackPageView } from '../../hooks/analytics.hook';
+import { ExternalUrls } from '../../config/app';
 
 export default () => {
   const loginButton = useRef(null);
@@ -56,7 +55,7 @@ export default () => {
             <a
               ref={loginButton}
               role="button"
-              href={LOGIN_URL}
+              href={LOGIN_URL_DIGID}
               onClick={() => setRedirecting(true)}
               rel="noopener noreferrer"
               className={classnames(

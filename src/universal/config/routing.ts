@@ -1,5 +1,3 @@
-import { TMA_LOGIN_URL_DIGID, TMA_LOGIN_URL_EHERKENNING } from './api';
-
 export const AppRoutes = {
   ROOT: '/',
   BURGERZAKEN: '/burgerzaken',
@@ -19,8 +17,8 @@ export const AppRoutes = {
   BUURT: '/buurt',
   ABOUT: '/over-mijn-amsterdam',
   PROCLAIMER: '/proclaimer',
-  API_LOGIN: TMA_LOGIN_URL_DIGID,
-  API1_LOGIN: TMA_LOGIN_URL_EHERKENNING,
+  API_LOGIN: '/api/login',
+  API1_LOGIN: '/api1/login',
   TIPS: '/overzicht-tips',
   NOTIFICATIONS: '/overzicht-updates',
   AFVAL: '/afval',

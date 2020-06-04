@@ -1,3 +1,5 @@
+import { IS_PRODUCTION } from './env';
+
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
 export const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
 
