@@ -24,9 +24,14 @@ export const AppRoutes = {
   MIJN_TIPS: '/overzicht-tips',
   UPDATES: '/overzicht-updates',
   AFVAL: '/afval',
+  ACCESSIBILITY: '/toegankelijkheidsverklaring',
 };
 
-export const PublicRoutes = [AppRoutes.PROCLAIMER, AppRoutes.API_LOGIN];
+export const PublicRoutes = [
+  AppRoutes.PROCLAIMER,
+  AppRoutes.API_LOGIN,
+  AppRoutes.ACCESSIBILITY,
+];
 export const PrivateRoutes = Object.values(AppRoutes).filter(
   path => !PublicRoutes.includes(path)
 );
