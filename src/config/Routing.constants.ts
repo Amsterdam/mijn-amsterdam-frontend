@@ -1,4 +1,4 @@
-import { API_BASE_URL } from './Api.constants';
+import { LOGIN_URL, LOGIN_EHERKENNING_URL } from './Api.constants';
 
 export const AppRoutes = {
   ROOT: '/',
@@ -19,7 +19,8 @@ export const AppRoutes = {
   MIJN_BUURT: '/buurt',
   ABOUT: '/over-mijn-amsterdam',
   PROCLAIMER: '/proclaimer',
-  API_LOGIN: `${API_BASE_URL}/login`,
+  API_LOGIN: LOGIN_URL,
+  API1_LOGIN: LOGIN_EHERKENNING_URL,
   MIJN_TIPS: '/overzicht-tips',
   UPDATES: '/overzicht-updates',
   AFVAL: '/afval',
