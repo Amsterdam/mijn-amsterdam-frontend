@@ -14,6 +14,7 @@ import LandingPage from 'pages/Landing/Landing';
 import MyNotifications from 'pages/MyNotifications/MyNotifications';
 import MyTips from 'pages/MyTips/MyTips';
 import Proclaimer from 'pages/Proclaimer/Proclaimer';
+import Accessibility from 'pages/Accessibility/Accessibility';
 import Zorg from 'pages/Zorg/Zorg';
 import ZorgDetail from 'pages/ZorgDetail/ZorgDetail';
 import React, { useContext, useEffect } from 'react';
@@ -146,6 +147,7 @@ function AppAuthenticated() {
           />
           <Route path={AppRoutes.BURGERZAKEN} component={Burgerzaken} />
           <Route path={AppRoutes.PROCLAIMER} component={Proclaimer} />
+          <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           {FeatureToggle.garbageInformationPage && (
             <Route path={AppRoutes.AFVAL} component={GarbageInformation} />
           )}
