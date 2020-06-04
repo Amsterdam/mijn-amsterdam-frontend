@@ -1,6 +1,7 @@
 import { ExternalUrls } from 'config/App.constants';
-import { LOGIN_URL } from 'config/Api.constants';
-import DigiDLogo from 'assets/images/digid-logo.png';
+import { LOGIN_URL, LOGIN_EHERKENNING_URL } from 'config/Api.constants';
+import DigiDLogo from 'assets/images/digid-logo.svg';
+import EherkenningLogo from 'assets/images/eherkenning-logo.svg';
 import Heading from 'components/Heading/Heading';
 import { TextPage, PageContent } from 'components/Page/Page';
 import PageHeading from 'components/PageHeading/PageHeading';
@@ -11,6 +12,7 @@ import { trackPageView } from 'hooks/analytics.hook';
 import classnames from 'classnames';
 import { clearSessionStorage } from 'hooks/storage.hook';
 import { LinkdInline } from 'components/Button/Button';
+import { FeatureToggle } from '../../config/App.constants';
 
 export default () => {
   const loginButton = useRef(null);
@@ -28,71 +30,107 @@ export default () => {
       <PageHeading className={styles.Heading}>
         Welkom op Mijn Amsterdam
       </PageHeading>
-      <PageContent id="AppContent">
+      <PageContent className={styles.LandingContent} id="AppContent">
         <p>
-          Welkom op Mijn Amsterdam: uw persoonlijke digitale pagina bij de
-          gemeente Amsterdam. Hier ziet u op één centrale plek welke gegevens de
-          gemeente van u heeft vastgelegd. En ziet u ook welke producten en
-          diensten u heeft bij de gemeente. Wat de status is en hoe u het kunt
+          Welkom op Mijn Amsterdam: uw persoonlijke online pagina bij de
+          gemeente Amsterdam. Hier ziet u op 1 centrale plek welke gegevens de
+          gemeente van u heeft vastgelegd. U ziet ook wat u hebt aangevraagd bij
+          de gemeente en hoe het met uw aanvraag staat. En hoe u het kunt
           doorgeven als er iets niet klopt.
         </p>
         <p>
-          Nog niet al uw informatie is via Mijn Amsterdam zichtbaar. We
-          ontwikkelen stap voor stap. Er komen steeds meer producten en diensten
-          bij.
+          Nog niet al uw informatie is op Mijn Amsterdam zichtbaar. We
+          ontwikkelen stap voor stap. Er komt steeds meer bij.
         </p>
-        <Heading size="mediumLarge" el="h2">
-          Log in op uw persoonlijke pagina
+        <Heading className={styles.LoginHeading} size="mediumLarge" el="h2">
+          Log in op Mijn Amsterdam
         </Heading>
-        <p>
-          <a
-            ref={loginButton}
-            role="button"
-            href={LOGIN_URL}
-            onClick={() => setRedirecting(true)}
-            rel="noopener noreferrer"
+
+        <div className={styles.LoginOption}>
+          <Heading size="tiny" el="h3">
+            Voor particulieren
+          </Heading>
+          <p>
+            <a
+              ref={loginButton}
+              role="button"
+              href={LOGIN_URL}
+              onClick={() => setRedirecting(true)}
+              rel="noopener noreferrer"
+              className={classnames(
+                styles.LoginBtn,
+                isRedirecting && styles.LoginBtnDisabled
+              )}
+            >
+              <span className={styles.LoginLogoWrap}>
+                <img
+                  src={DigiDLogo}
+                  alt="DigiD logo"
+                  className={styles.LoginLogo}
+                />
+              </span>
+              <span className={styles.LoginButtonText}>
+                {isRedirecting ? 'Bezig met inloggen...' : 'Inloggen met DigiD'}
+              </span>
+            </a>
+          </p>
+          <Heading size="tiny" el="h4">
+            Hebt u nog geen DigiD? Regel dit dan eerst.
+          </Heading>
+          <p>
+            Ga naar <a href="https://www.digid.nl/aanvragen">DigiD aanvragen</a>
+          </p>
+        </div>
+        {FeatureToggle.eherkenningActive && (
+          <div
             className={classnames(
-              styles.LoginBtn,
-              isRedirecting && styles.LoginBtnDisabled
+              styles.LoginOption,
+              styles['LoginOption--eherkenning']
             )}
           >
-            <img
-              src={DigiDLogo}
-              alt="DigiD logo"
-              className={styles.LoginLogo}
-            />
-            <span>
-              {isRedirecting ? 'Bezig met inloggen...' : 'Inloggen met DigiD'}
-            </span>
-          </a>
-        </p>
-        <Heading size="tiny" el="h3">
-          Hebt u nog geen DigiD? Regel dit dan eerst.
-        </Heading>
-        <p>
-          Ga naar <a href="https://www.digid.nl/aanvragen">DigiD aanvragen</a>
-        </p>
-        <Heading size="tiny" el="h3">
-          Op dit moment kunt u deze informatie vinden op Mijn Amsterdam:
-        </Heading>
-        <ul>
-          <li>Hoe u ingeschreven staat bij de gemeente</li>
-          <li>Hoe het staat met uw aanvraag voor een bijstandsuitkering</li>
-          <li>
-            De uitkeringsspecificaties en jaaropgave van uw bijstandsuitkering
-          </li>
-          <li>Welke Wmo-regelingen u hebt</li>
-          <li>Hoe het staat met uw aanvraag voor een Stadspas</li>
-          <li>Afval laten ophalen en wegbrengen in uw buurt</li>
-          <li>Informatie over uw ontheffing of overtreding milieuzone</li>
-          <li>Informatie over uw gemeentebelastingen</li>
-          <li>Informatie over uw erfpacht</li>
-          <li>Informatie over uw eigen buurt</li>
-        </ul>
+            <Heading size="tiny" el="h3">
+              Voor ondernermers
+            </Heading>
+            <p>
+              <a
+                ref={loginButton}
+                role="button"
+                href={LOGIN_EHERKENNING_URL}
+                onClick={() => setRedirecting(true)}
+                rel="noopener noreferrer"
+                className={classnames(
+                  styles.LoginBtn,
+                  styles['LoginBtn--eherkenning'],
+                  isRedirecting && styles.LoginBtnDisabled
+                )}
+              >
+                <span className={styles.LoginLogoWrap}>
+                  <img
+                    src={EherkenningLogo}
+                    alt="eHerkenning logo"
+                    className={styles.LoginLogo}
+                  />
+                </span>
+                <span className={styles.LoginButtonText}>
+                  {isRedirecting
+                    ? 'Bezig met inloggen...'
+                    : 'Inloggen met EHerkenning'}
+                </span>
+              </a>
+            </p>
+            <Heading size="tiny" el="h4">
+              U heeft EHerkenning niveau 2+ nodig om in te loggen.
+            </Heading>
+            <p>
+              Ga naar <a href="https://eherkenning.nl">eherkenning.nl</a> voor
+              meer informatie.
+            </p>
+          </div>
+        )}
         <Heading size="tiny" el="h3">
           Vragen over Mijn Amsterdam?
         </Heading>
-        <p>
+        <p className={styles.FaqInfo}>
           Kijk bij{' '}
           <LinkdInline
             external={true}

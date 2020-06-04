@@ -107,6 +107,7 @@ function AppAuthenticated() {
       <div className={styles.App} id="AppContent">
         <Switch>
           <Redirect from={AppRoutes.API_LOGIN} to={redirectAfterLogin} />
+          <Redirect from={AppRoutes.API1_LOGIN} to={redirectAfterLogin} />
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.UPDATES} component={MyNotifications} />
           <Route path={AppRoutes.MIJN_GEGEVENS} component={Profile} />
