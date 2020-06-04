@@ -55,21 +55,6 @@
   }
 }
 
-.betaLabel {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 5rem;
-  width: 5rem;
-  overflow: hidden;
-  display: block;
-
-  @include mq-tablet() {
-    height: 3rem;
-    width: 3rem;
-  }
-}
-
 .ErrorMessages {
   position: absolute;
   top: 16rem;

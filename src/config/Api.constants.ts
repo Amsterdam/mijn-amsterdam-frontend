@@ -61,10 +61,10 @@ export const ErrorNames: { [stateKey: string]: string } = {
   MY_CASES: 'Lopende zaken',
   MIJN_TIPS: 'Tips',
   WMO: 'Zorg en ondersteuning',
-  FOCUS: 'Inkomen en Stadspas + actuele updates',
+  FOCUS: 'Inkomen en Stadspas en Tozo regelingen + actuele updates',
   FOCUS_TOZO: 'Tozo status + actuele updates',
   FOCUS_SPECIFICATIONS:
-    'Uitkeringsspecificaties, Jaaropgaven en Tozo regelingen + actuele updates',
+    'Uitkeringsspecificaties, Jaaropgaven + actuele updates',
   MY_CHAPTERS: "Thema's",
   ERFPACHT: 'Erfpacht',
   GARBAGE: 'Afval',
