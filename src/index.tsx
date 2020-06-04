@@ -10,6 +10,7 @@ if (SENTRY_DSN && IS_SENTRY_ENABLED) {
   Sentry.init({
     dsn: SENTRY_DSN,
     environment: process.env.REACT_APP_ENV,
+    ignoreErrors: ['a[b].target.className.indexOf is not a function'], // Chrome => google translate extension bug
   });
 }
 
