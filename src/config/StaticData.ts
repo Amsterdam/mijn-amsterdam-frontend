@@ -22,12 +22,22 @@ export const WelcomeNotification: MyNotification = {
   },
 };
 
-export const MaintenanceNotification: MyNotification = {
+export const MaintenanceNotification01: MyNotification = {
   id: 'maintenance01',
   chapter: Chapters.UPDATES,
-  datePublished: new Date(2020, 5, 6).toISOString(),
+  datePublished: new Date().toISOString(),
   title: 'Onderhoud Mijn Amsterdam',
-  description: `Vanwege onderhoud is een deel van Mijn Amsterdam nu niet zichtbaar.
+  description: `Vanwege onderhoud is een deel van Mijn Amsterdam op 6 juni 2020 niet zichtbaar.
     Het gaat om uw persoonsgegevens, de gegevens van uw paspoort of ID-kaart en uw adres op de kaart.
-    Vanaf 13:00 uur ziet u al uw gegevens weer. Onze excuses voor het ongemak.`,
+    Onze excuses voor het ongemak.`,
+};
+
+export const MaintenanceNotification02: MyNotification = {
+  id: 'maintenance02',
+  chapter: Chapters.UPDATES,
+  datePublished: new Date().toISOString(),
+  title: 'Onderhoud Mijn Amsterdam',
+  description: `Vanwege onderhoud is een deel van Mijn Amsterdam op 8 juni 2020 niet zichtbaar.
+    Het gaat om uw ontheffing(en) voor, en overtredingen in de milieuzone.
+    Onze excuses voor het ongemak.`,
 };
