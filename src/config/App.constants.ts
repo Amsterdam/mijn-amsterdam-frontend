@@ -1,3 +1,4 @@
+import { IS_PRODUCTION } from '../env';
 export const FeatureToggle = {
   myTipsoptInOutPersonalization: true,
   garbageInformationPage: true,
@@ -8,6 +9,7 @@ export const FeatureToggle = {
   focusCombinedActive: true,
   identiteitsbewijzenActive: true,
   tozoActive: true,
+  eherkenningActive: !IS_PRODUCTION,
 };
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options

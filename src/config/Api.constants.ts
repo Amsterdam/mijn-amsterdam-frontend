@@ -2,13 +2,10 @@ import { FeatureToggle } from './App.constants';
 import { StateKey } from 'AppState';
 
 export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL || '/api/login';
+export const LOGIN_EHERKENNING_URL = '/api1/login';
 export const LOGOUT_URL = process.env.REACT_APP_LOGOUT_URL || '/logout';
 
 let apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
-
-if (window.location.pathname.startsWith('/api1/')) {
-  apiBaseUrl = `${apiBaseUrl}`.replace(/\/api/g, '/api1');
-}
 
 export const API_BASE_URL = apiBaseUrl;
 const DATAPUNT_API_BASE_URL = process.env.REACT_APP_DATAPUNT_API_URL;
