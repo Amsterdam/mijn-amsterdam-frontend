@@ -48,6 +48,7 @@ import {
   ZorgDetail,
 } from './pages';
 import { SessionContext, SessionState } from './SessionState';
+import Accessibility from './pages/AlphaPage/Accessibility/Accessibility';
 
 export const PublicRoutes = [
   AppRoutes.PROCLAIMER,
@@ -74,6 +75,7 @@ function AppNotAuthenticated() {
         <Switch>
           <Route exact path={AppRoutes.ROOT} component={LandingPage} />
           <Route path={AppRoutes.PROCLAIMER} component={Proclaimer} />
+          <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           <Route
             render={({ location: { pathname } }) => {
               if (
@@ -166,6 +168,7 @@ function AppAuthenticated() {
           {FeatureToggle.garbageInformationPage && (
             <Route path={AppRoutes.AFVAL} component={GarbageInformation} />
           )}
+          <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           <Route component={NotFound} />
         </Switch>
       </div>

@@ -30,6 +30,7 @@ export const PublicRoutes = [
   AppRoutes.API_LOGIN,
   AppRoutes.ACCESSIBILITY,
 ];
+
 export const PrivateRoutes = Object.values(AppRoutes).filter(
   path => !PublicRoutes.includes(path)
 );
