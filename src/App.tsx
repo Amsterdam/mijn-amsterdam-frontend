@@ -58,6 +58,7 @@ function AppNotAuthenticated() {
         <Switch>
           <Route exact path={AppRoutes.ROOT} component={LandingPage} />
           <Route path={AppRoutes.PROCLAIMER} component={Proclaimer} />
+          <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           <Route
             render={({ location: { pathname } }) => {
               if (
