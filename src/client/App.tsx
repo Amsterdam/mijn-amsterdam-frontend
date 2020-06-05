@@ -10,7 +10,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import useRouter from 'use-react-router';
-import { AppRoutes, FeatureToggle } from '../universal/config';
+import { AppRoutes, FeatureToggle, PrivateRoutes } from '../universal/config';
 import { getOtapEnvItem, IS_PRODUCTION } from '../universal/config/env';
 import styles from './App.module.scss';
 import AppStateProvider from './AppStateProvider';
@@ -21,7 +21,7 @@ import {
   MainHeader,
 } from './components';
 import { DefaultAutologoutDialogSettings } from './components/AutoLogoutDialog/AutoLogoutDialog';
-import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from './config/api';
+import { TMA_LOGIN_URL_DIGID, TMA_LOGIN_URL_EHERKENNING } from './config/api';
 import {
   useAnalytics,
   useLocalStorage,
@@ -47,17 +47,8 @@ import {
   Zorg,
   ZorgDetail,
 } from './pages';
-import { SessionContext, SessionState } from './SessionState';
 import Accessibility from './pages/AlphaPage/Accessibility/Accessibility';
-
-export const PublicRoutes = [
-  AppRoutes.PROCLAIMER,
-  LOGIN_URL_DIGID,
-  LOGIN_URL_EHERKENNING,
-];
-export const PrivateRoutes = Object.values(AppRoutes).filter(
-  path => !PublicRoutes.includes(path)
-);
+import { SessionContext, SessionState } from './SessionState';
 
 function AppNotAuthenticated() {
   const { location } = useRouter();
@@ -125,8 +116,8 @@ function AppAuthenticated() {
       <MainHeader isAuthenticated={session.isAuthenticated} />
       <div className={styles.App} id="AppContent">
         <Switch>
-          <Redirect from={LOGIN_URL_DIGID} to={redirectAfterLogin} />
-          <Redirect from={LOGIN_URL_EHERKENNING} to={redirectAfterLogin} />
+          <Redirect from={TMA_LOGIN_URL_DIGID} to={redirectAfterLogin} />
+          <Redirect from={TMA_LOGIN_URL_EHERKENNING} to={redirectAfterLogin} />
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           <Route path={AppRoutes.BRP} component={Profile} />
