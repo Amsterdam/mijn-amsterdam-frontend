@@ -18,7 +18,7 @@ export async function loadServicesMap(sessionID: SessionID, samlToken: string) {
 
   if (HOME.status === 'OK') {
     lat = HOME.content.latlng!.lat;
-    lng = HOME.content.latlng!.lat;
+    lng = HOME.content.latlng!.lng;
   }
 
   const embed = {

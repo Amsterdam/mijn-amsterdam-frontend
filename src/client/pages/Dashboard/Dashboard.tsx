@@ -77,7 +77,7 @@ export default () => {
 
         {!isPhoneScreen && (
           <MyAreaDashboard
-            url={BUURT.content?.embed.advanced}
+            url={BUURT.content?.embed.simple}
             center={HOME.content?.latlng}
             data-tutorial-item="Hier ziet u informatie van de gemeente, bijvoorbeeld over afval, parkeren en bekendmakingen;left-top"
           />
