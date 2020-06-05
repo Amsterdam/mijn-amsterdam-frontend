@@ -27,8 +27,6 @@ export default () => {
     },
   } = useRouter();
 
-  console.log(tozoItems);
-
   const TozoItem = tozoItems.find(item => item.id === id);
   const noContent = !isLoading(FOCUS_TOZO) && !TozoItem;
 
