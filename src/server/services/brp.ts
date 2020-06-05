@@ -137,10 +137,11 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
 
 export function transformBRPData(responseData: BRPData) {
   if (Array.isArray(responseData.identiteitsbewijzen)) {
+    // Transform Identiteitsbewijzen
     Object.assign(responseData, {
       identiteitsbewijzen: responseData.identiteitsbewijzen.map(document => {
         const route = generatePath(AppRoutes.BURGERZAKEN_DOCUMENT, {
-          id: document.documentNummer,
+          id: document.id,
         });
         return Object.assign({}, document, {
           title:

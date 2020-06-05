@@ -14,10 +14,11 @@ export type ProductTitle = 'Levensonderhoud' | 'Stadspas' | string;
 export type Decision = 'Toekenning' | 'Afwijzing' | 'Buiten Behandeling';
 
 // The official terms of the Focus api "product categories" data how they are used within the Municipality of Amsterdam.
-export type productType =
+export type ProductType =
   | 'Participatiewet'
   | 'Bijzondere Bijstand'
-  | 'Minimafonds';
+  | 'Minimafonds'
+  | string;
 
 // Shape of the data returned from the Api
 export interface FocusDocumentFromSource {
@@ -38,7 +39,7 @@ export interface FocusProductStepFromSource {
 
 export interface FocusProductFromSource {
   _id: string;
-  soortProduct: productType;
+  soortProduct: ProductType;
   typeBesluit?: Decision;
   naam: string;
   processtappen: {
@@ -62,11 +63,30 @@ export interface FocusProduct {
   title: string;
   dateStart: string;
   datePublished: string;
-  type: productType;
+  type: ProductType;
   decision?: DecisionFormatted;
   steps: FocusProductStep[];
-  dienstverleningstermijn: number;
-  inspanningsperiode: number;
+  dienstverleningstermijn?: number;
+  inspanningsperiode?: number;
+}
+
+export interface FocusItemStep {
+  id: string;
+  documents: GenericDocument[];
+  title: StepTitle;
+  description: string;
+  datePublished: string;
+  status: RequestStatus | '';
+  product?: string;
+  isActive?: boolean;
+  isChecked?: boolean;
+  decision?: DecisionFormatted;
+}
+
+export interface FocusItem extends FocusProduct {
+  status: RequestStatus;
+  steps: FocusItemStep[];
+  link: LinkProps;
 }
 
 export type RequestStatus =
@@ -84,7 +104,7 @@ export type DecisionFormatted =
 
 export type TextPartContents = (data: FocusProduct, customData?: any) => string;
 export type LinkContents = (
-  data: FocusProduct,
+  data: FocusProduct | FocusItem,
   customData?: any
 ) => Partial<LinkProps>;
 
@@ -112,31 +132,9 @@ export interface ProductStepLabels {
 }
 
 export interface LabelData {
-  [productType: string]: {
+  [ProductType: string]: {
     [productTitle: string]: ProductStepLabels;
   };
 }
 
 export type DocumentTitles = Record<string, string>;
-
-export interface FocusItemStep {
-  id: string;
-  documents: GenericDocument[];
-  title: string;
-  description: string;
-  datePublished: string;
-  status: RequestStatus | '';
-  product?: string;
-  isActive?: boolean;
-  isChecked?: boolean;
-}
-
-export interface FocusItem {
-  id: string;
-  datePublished: string;
-  dateStart: string;
-  status: RequestStatus;
-  title: string;
-  steps: FocusItemStep[];
-  link: LinkProps;
-}

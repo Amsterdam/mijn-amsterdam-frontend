@@ -25,6 +25,7 @@ export default () => {
   }, []);
 
   const [isRedirecting, setRedirecting] = useState(false);
+  const [isRedirectingEherkenning, setRedirectingEherkenning] = useState(false);
 
   return (
     <TextPage>
@@ -60,7 +61,8 @@ export default () => {
               rel="noopener noreferrer"
               className={classnames(
                 styles.LoginBtn,
-                isRedirecting && styles.LoginBtnDisabled
+                (isRedirecting || isRedirectingEherkenning) &&
+                  styles.LoginBtnDisabled
               )}
             >
               <span className={styles.LoginLogoWrap}>
@@ -97,12 +99,13 @@ export default () => {
                 ref={loginButton}
                 role="button"
                 href={LOGIN_URL_EHERKENNING}
-                onClick={() => setRedirecting(true)}
+                onClick={() => setRedirectingEherkenning(true)}
                 rel="noopener noreferrer"
                 className={classnames(
                   styles.LoginBtn,
                   styles['LoginBtn--eherkenning'],
-                  isRedirecting && styles.LoginBtnDisabled
+                  (isRedirecting || isRedirectingEherkenning) &&
+                    styles.LoginBtnDisabled
                 )}
               >
                 <span className={styles.LoginLogoWrap}>
@@ -113,7 +116,7 @@ export default () => {
                   />
                 </span>
                 <span className={styles.LoginButtonText}>
-                  {isRedirecting
+                  {isRedirectingEherkenning
                     ? 'Bezig met inloggen...'
                     : 'Inloggen met EHerkenning'}
                 </span>

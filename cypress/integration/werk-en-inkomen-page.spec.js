@@ -1,12 +1,11 @@
 import {
-  goToDashboard,
+  itShouldLogoutAndInAgain,
   selectComponent,
-  assertPath,
   assertAtPage,
 } from '../support/helpers';
 
 describe('Chapter: Inkomen en Stadspas', () => {
-  goToDashboard();
+  itShouldLogoutAndInAgain();
 
   it('should navigate to the overview page', () => {
     cy.get(

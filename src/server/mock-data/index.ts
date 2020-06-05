@@ -83,16 +83,17 @@ export const mockDataConfig: MockDataConfig = {
     status: 200,
     method: 'post',
     responseData: (config: any) => {
+      const requestData = JSON.parse(config.data);
       let sourceTips: MyTip[] = [];
-      if (config.data?.tips?.length) {
-        sourceTips = config.data.tips;
+      if (requestData?.tips?.length) {
+        sourceTips = requestData.tips;
       }
       const tips = JSON.parse(loadMockApiResponseJson(TIPS));
       const items = [
         ...(tips.items as MyTip[]),
         ...sourceTips,
       ].filter((tip: MyTip) =>
-        config.data?.optin ? true : !tip.isPersonalized
+        requestData?.optin ? true : !tip.isPersonalized
       );
       return JSON.stringify(Object.assign({}, tips, { items }));
     },

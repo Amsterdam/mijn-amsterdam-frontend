@@ -20,6 +20,7 @@ import {
   StepTitle,
   TextPartContents,
   ProductStepLabels,
+  ProductType,
 } from './focus-types';
 
 /** Checks if an item returned from the api is considered recent */
@@ -27,11 +28,13 @@ export function isRecentItem(
   steps: Array<{ title: string; datePublished: string }>,
   compareDate: Date
 ) {
-  return steps.some(
-    step =>
-      step.title === 'beslissing' &&
-      differenceInCalendarDays(compareDate, new Date(step.datePublished)) <
-        DAYS_KEEP_RECENT
+  return (
+    steps.some(
+      step =>
+        step.title === 'beslissing' &&
+        differenceInCalendarDays(compareDate, new Date(step.datePublished)) <
+          DAYS_KEEP_RECENT
+    ) || steps.every(step => step.title !== 'beslissing')
   );
 }
 
@@ -77,7 +80,7 @@ export function getDecision(decision: Decision): DecisionFormatted {
   return decision.toLocaleLowerCase().replace(/\s/gi, '') as DecisionFormatted;
 }
 
-export function getLatestStep(steps: FocusProductStep[]) {
+export function getLatestStep(steps: Array<{ title: string }>) {
   return (
     [...processSteps].reverse().find(stepTitle => {
       return !!steps.find(stepData => stepTitle === stepData.title);
@@ -101,14 +104,14 @@ export function formatFocusDocument(
 }
 
 export function findProductContent(
-  product: FocusProduct,
+  product: { type: ProductType; title: string },
   contentLabels: LabelData
 ) {
   return contentLabels[product.type][product.title];
 }
 
 export function findStepsContent(
-  product: FocusProduct,
+  product: FocusProduct | FocusItem,
   contentLabels: LabelData
 ) {
   const stepsContent: ProductStepLabels & {
@@ -118,8 +121,10 @@ export function findStepsContent(
   const labelContent = findProductContent(product, contentLabels);
 
   processSteps.forEach(stepTitle => {
-    const stepData = product.steps.find(step => step.title === stepTitle);
+    const steps: Array<{ title: StepTitle }> = product.steps;
+    const stepData = steps.find(step => step.title === stepTitle);
     const stepContent = labelContent[stepTitle];
+
     if (stepData && stepContent) {
       if (
         stepTitle === 'beslissing' &&
@@ -234,6 +239,7 @@ export function fillStepContent(
   };
 
   return Object.assign({}, stepData, {
+    decision: product.decision,
     product: product.title,
     description: stepContent.description(product, customData),
     status: stepContent.status,
@@ -267,11 +273,7 @@ export function transformFocusProduct(
   const productContent = findProductContent(product, contentLabels);
   const steps = transformFocusProductSteps(product, stepsContent);
 
-  const productSanitized = omit(product, [
-    'steps',
-    'dienstverleningstermijn',
-    'inspanningsperiode',
-  ]);
+  const productSanitized = omit(product, ['steps']);
 
   const link = Object.assign(
     {
@@ -288,54 +290,45 @@ export function transformFocusProduct(
   });
 }
 
-export function createFocusProductNotification(
-  product: FocusProduct,
+export function createFocusNotification(
+  item: FocusItem,
   contentLabels: LabelData
 ) {
-  const latestStepTitle = getLatestStep(product.steps);
-  const stepsContent = findStepsContent(product, contentLabels)[
-    latestStepTitle
-  ];
-  const productContent = findProductContent(product, contentLabels);
+  const latestStepTitle = getLatestStep(item.steps);
+  const stepsContent = findStepsContent(item, contentLabels)[latestStepTitle];
+  const itemContent = findProductContent(item, contentLabels);
+
   const titleTransform = stepsContent?.notification?.title;
   const descriptionTransform = stepsContent?.notification?.title;
-  const linkTransform =
-    stepsContent?.notification?.link || productContent?.link;
+  const linkTransform = stepsContent?.notification?.link || itemContent?.link;
 
   return {
-    id: `${product.id}-notification`,
-    datePublished: product.datePublished,
+    id: `${item.id}-notification`,
+    datePublished: item.datePublished,
     chapter: Chapters.INKOMEN,
     title: titleTransform
-      ? titleTransform(product)
-      : `Update: ${product.title} aanvraag.`,
+      ? titleTransform(item)
+      : `Update: ${item.title} aanvraag.`,
     description: descriptionTransform
-      ? descriptionTransform(product)
-      : `Er zijn updates in uw ${product.title} aanvraag.`,
+      ? descriptionTransform(item)
+      : `Er zijn updates in uw ${item.title} aanvraag.`,
     link: Object.assign(
       {
         to: AppRoutes.INKOMEN,
         title: 'Meer informatie',
       },
-      linkTransform ? linkTransform(product) : {}
+      linkTransform ? linkTransform(item) : {}
     ),
   };
 }
 
-export function createFocusProductRecentCase(product: {
-  id: string;
-  datePublished: string;
-  title: string;
-}): MyCase {
+export function createFocusRecentCase(item: FocusItem): MyCase {
   return {
-    id: `${product.id}-case`,
-    datePublished: product.datePublished,
+    id: `${item.id}-case`,
+    title: item.title,
+    link: item.link,
     chapter: Chapters.INKOMEN,
-    title: product.title,
-    link: {
-      to: AppRoutes.INKOMEN,
-      title: 'Meer informatie',
-    },
+    datePublished: item.datePublished,
   };
 }
 

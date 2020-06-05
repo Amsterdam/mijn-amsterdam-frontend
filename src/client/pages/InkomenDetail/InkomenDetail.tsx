@@ -91,7 +91,7 @@ export default () => {
         <StatusLine
           trackCategory={`Inkomen en Stadspas / ${FocusItem.title}`}
           items={FocusItem.steps}
-          showToggleMore={false}
+          showToggleMore={true}
           maxStepCount={!hasDecision ? MAX_STEP_COUNT_FOCUS_REUEST : undefined}
           id={id}
         />

@@ -7,11 +7,11 @@ import {
   hash,
 } from '../../../universal/helpers';
 import { GenericDocument } from '../../../universal/types';
-import { FocusTozoDocument } from './focus-combined';
 import {
   findStepsContent,
   transformFocusProductSteps,
 } from './focus-aanvragen-helpers';
+import { FocusTozoDocument } from './focus-combined';
 import {
   fakeDecisionStep,
   tozoTitleTranslations,
@@ -19,8 +19,11 @@ import {
 } from './focus-tozo-content';
 import {
   DocumentTitles,
+  FocusItem,
   FocusItemStep,
   FocusProduct,
+  FocusStepContent,
+  FocusStepContentDecision,
   LabelData,
 } from './focus-types';
 
@@ -191,7 +194,7 @@ export function createTozoProductSetStepsCollection({
       if (lastStep.title === 'herstelTermijn') {
         // Add the fake step
         steps.push(
-          Object.assign({}, fakeDecisionStep, {
+          Object.assign({}, fakeDecisionStep as FocusItemStep, {
             product: first.title,
             datePublished: lastStep.datePublished,
           })
@@ -208,7 +211,7 @@ export function createTozoProductSetStepsCollection({
       if (lastStep.title === 'herstelTermijn') {
         // Add the fake step
         steps.push(
-          Object.assign({}, fakeDecisionStep, {
+          Object.assign({}, fakeDecisionStep as FocusItemStep, {
             product: second.title,
             datePublished: lastStep.datePublished,
           })
@@ -329,9 +332,10 @@ function createTozoAanvraagDocumentsStep(
     product: 'Tozo-regeling',
     title: 'aanvraag',
     description:
-      description + documents.length
-        ? `op ${defaultDateFormat(documents[0].datePublished)}.`
-        : '',
+      description +
+      (documents.length
+        ? ` op ${defaultDateFormat(documents[0].datePublished)}.`
+        : ''),
     datePublished: documents.length ? documents[0].datePublished : '',
     status: 'Aanvraag',
     isChecked: true,
@@ -386,7 +390,7 @@ export function createFocusItemTozo(steps: FocusItemStep[]) {
     )
     .map(step => {
       // Remove the publish date of the fake step so it won't be presented in the UI
-      return step.title === 'fake-beslissing'
+      return (step.title as any) === 'dummy-beslissing'
         ? Object.assign(step, { datePublished: '' })
         : step;
     });
@@ -397,6 +401,7 @@ export function createFocusItemTozo(steps: FocusItemStep[]) {
     datePublished: lastActivityDatePublished,
     title: 'Tozo-aanvraag',
     status,
+    type: 'Tozo',
     chapter: Chapters.INKOMEN,
     link: {
       to: generatePath(AppRoutes['INKOMEN/TOZO'], { id }),
@@ -414,7 +419,7 @@ export function createFocusTozoAanvraagNotification(
     id: 'tozo-regeling-notification-aanvraag-' + document.id,
     datePublished: document.datePublished,
     chapter: Chapters.INKOMEN,
-    title: 'Tozo-aanvraag: Wij hebben uw aanvraag ontvangen',
+    title: 'Tozo: Wij hebben uw aanvraag ontvangen',
     description: `Wij hebben uw aanvraag Tozo ontvangen op ${dateFormat(
       document.datePublished,
       'dd MMMM - HH:mm'
@@ -423,5 +428,55 @@ export function createFocusTozoAanvraagNotification(
       to: generatePath(AppRoutes['INKOMEN/TOZO'], { id: focusItemId }),
       title: 'Bekijk uw Tozo status',
     },
+  };
+}
+
+export function createFocusTozoStepNotification(
+  item: FocusItem,
+  step: FocusItemStep,
+  contentLabels: LabelData,
+  titleTranslations: DocumentTitles
+) {
+  const productContent =
+    contentLabels['Bijzondere Bijstand'][step.product!] ||
+    contentLabels['Participatiewet'][step.product!];
+
+  let stepsContent = productContent[step.title];
+
+  if (step.decision) {
+    stepsContent = (stepsContent as FocusStepContentDecision)[
+      step.decision
+    ] as FocusStepContent;
+  } else {
+    stepsContent = stepsContent as FocusStepContent;
+  }
+
+  const itemWithOriginalProductTitleTranslated = Object.assign({}, item, {
+    title: titleTranslations[step.product!] || step.product,
+  });
+
+  const titleTransform = stepsContent?.notification?.title;
+  const descriptionTransform = stepsContent?.notification?.description;
+  const link = stepsContent?.notification?.link
+    ? stepsContent.notification.link(itemWithOriginalProductTitleTranslated)
+    : itemWithOriginalProductTitleTranslated.link;
+
+  return {
+    id: `${item.id}-${step.id}-notification`,
+    datePublished: step.datePublished,
+    chapter: Chapters.INKOMEN,
+    title: titleTransform
+      ? titleTransform(itemWithOriginalProductTitleTranslated)
+      : `Update: Tozo-aanvraag.`,
+    description: descriptionTransform
+      ? descriptionTransform(itemWithOriginalProductTitleTranslated)
+      : `Er zijn updates in uw Tozo-aanvraag.`,
+    link: Object.assign(
+      {
+        to: AppRoutes.INKOMEN,
+        title: 'Meer informatie',
+      },
+      link
+    ),
   };
 }

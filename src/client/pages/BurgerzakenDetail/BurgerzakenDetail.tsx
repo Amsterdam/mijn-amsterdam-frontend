@@ -16,7 +16,6 @@ import {
   PageHeading,
 } from '../../components';
 import styles from './BurgerzakenDetail.module.scss';
-import { Identiteitsbewijs } from '../../../universal/types';
 
 export default () => {
   const { BRP } = useContext(AppContext);
@@ -27,7 +26,9 @@ export default () => {
     },
   } = useRouter();
 
-  const DocumentItem = BRP.content?.identiteitsbewijzen?.find(item => item.id === id);
+  const DocumentItem = BRP.content?.identiteitsbewijzen?.find(
+    item => item.id === id
+  );
   const noContent = !isLoading && !DocumentItem;
 
   return (

@@ -21,7 +21,6 @@ export function useTipsApi() {
       url: BFFApiUrls.SERVICES_TIPS,
       postpone: true,
       transformResponse,
-      // withCredentials: true,
     },
     pristineData
   );

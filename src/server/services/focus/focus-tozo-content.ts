@@ -1,5 +1,5 @@
 import { stepLabels } from './focus-aanvragen-content';
-import { FocusProduct } from './focus-types';
+import { FocusProduct, StepTitle } from './focus-types';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config/routing';
 import {
@@ -8,6 +8,7 @@ import {
   LabelData,
   ProductStepLabels,
 } from './focus-types';
+import { defaultDateFormat } from '../../../universal/helpers';
 
 export const TOZO_AANVRAAG_STEP_ID = 'aanvraag-step-tozo';
 
@@ -103,7 +104,9 @@ const UitkeringLabels: ProductStepLabels = {
       notification: {
         title: product => `${product.title}: Uw aanvraag is afgewezen`,
         description: product =>
-          `U hebt geen recht op een ${product.title} (besluit: ${product.datePublished}).`,
+          `U hebt geen recht op een ${
+            product.title
+          } (besluit: ${defaultDateFormat(product.datePublished)}).`,
       },
       status: stepLabels.beslissing,
       description: product =>
@@ -116,7 +119,9 @@ const UitkeringLabels: ProductStepLabels = {
       notification: {
         title: product => `${product.title}: Uw aanvraag is toegekend`,
         description: product =>
-          `U hebt recht op een ${product.title} (besluit: ${product.datePublished}).`,
+          `U hebt recht op een ${product.title} (besluit: ${defaultDateFormat(
+            product.datePublished
+          )}).`,
       },
       status: stepLabels.beslissing,
       description: product =>
@@ -130,7 +135,9 @@ const UitkeringLabels: ProductStepLabels = {
         title: product =>
           `${product.title}: Uw aanvraag is buiten behandeling gesteld`,
         description: product =>
-          `Uw aanvraag is buiten behandeling gesteld (besluit: ${product.datePublished!}).`,
+          `Uw aanvraag is buiten behandeling gesteld (besluit: ${defaultDateFormat(
+            product.datePublished
+          )}).`,
       },
       status: stepLabels.beslissing,
       description: product =>
@@ -170,7 +177,9 @@ const LeningLabels: ProductStepLabels = {
       notification: {
         title: product => `${product.title}: Uw aanvraag is afgewezen`,
         description: product =>
-          `U hebt geen recht op een ${product.title} (besluit: ${product.datePublished}).`,
+          `U hebt geen recht op een ${
+            product.title
+          } (besluit: ${defaultDateFormat(product.datePublished)}).`,
       },
       status: stepLabels.beslissing,
       description: product =>
@@ -183,7 +192,9 @@ const LeningLabels: ProductStepLabels = {
       notification: {
         title: product => `${product.title}: Uw aanvraag is toegekend`,
         description: product =>
-          `U hebt recht op een ${product.title} (besluit: ${product.datePublished}).`,
+          `U hebt recht op een ${product.title} (besluit: ${defaultDateFormat(
+            product.datePublished
+          )}).`,
       },
       status: stepLabels.beslissing,
       description: product =>
@@ -197,7 +208,9 @@ const LeningLabels: ProductStepLabels = {
         title: product =>
           `${product.title}: Uw aanvraag is buiten behandeling gesteld`,
         description: product =>
-          `Uw aanvraag is buiten behandeling gesteld (besluit: ${product.datePublished}).`,
+          `Uw aanvraag is buiten behandeling gesteld (besluit: ${defaultDateFormat(
+            product.datePublished
+          )}).`,
       },
       status: stepLabels.beslissing,
       description: product =>
@@ -218,9 +231,9 @@ export const contentLabels: LabelData = {
   },
 };
 
-export const fakeDecisionStep: FocusItemStep = {
+export const fakeDecisionStep = {
   id: 'fake-decision-filler',
-  title: 'fake-beslissing',
+  title: 'dummy-beslissing',
   status: 'Besluit',
   datePublished: '',
   documents: [],

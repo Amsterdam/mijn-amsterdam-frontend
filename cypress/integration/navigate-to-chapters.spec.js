@@ -1,4 +1,8 @@
-import { goToDashboard, selectComponent, assertPath } from '../support/helpers';
+import {
+  itShouldLogoutAndInAgain,
+  selectComponent,
+  assertPath,
+} from '../support/helpers';
 
 const assertNavigationForChapters = {
   ZORG: {
@@ -16,7 +20,7 @@ const assertNavigationForChapters = {
 };
 
 describe('Navigate to Chapters', () => {
-  goToDashboard();
+  itShouldLogoutAndInAgain();
 
   Object.entries(assertNavigationForChapters).forEach(
     ([id, { path, title }]) => {

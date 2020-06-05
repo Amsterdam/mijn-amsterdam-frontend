@@ -60,7 +60,9 @@ export const contentLabels: LabelData = {
           title: product =>
             `${product.title}: Wij hebben uw aanvraag ontvangen`,
           description: product =>
-            `Wij hebben uw aanvraag voor een bijstandsuitkering ontvangen op ${product.dateStart}.`,
+            `Wij hebben uw aanvraag voor een bijstandsuitkering ontvangen op ${defaultDateFormat(
+              product.dateStart
+            )}.`,
         },
         status: stepLabels.aanvraag,
         description: product =>
@@ -197,7 +199,9 @@ export const contentLabels: LabelData = {
           title: product =>
             `${product.title}: Wij hebben uw aanvraag ontvangen`,
           description: product =>
-            `Wij hebben uw aanvraag voor een Stadspas ontvangen op ${product.dateStart}.`,
+            `Wij hebben uw aanvraag voor een Stadspas ontvangen op ${defaultDateFormat(
+              product.dateStart
+            )}.`,
         },
         status: stepLabels.aanvraag,
         description: product =>

@@ -5,16 +5,16 @@ import {
 } from '../../../universal/helpers';
 import { MyCase, MyNotification } from '../../../universal/types';
 import { fetchFOCUS } from './focus-aanvragen';
-import { fetchFOCUSCombined } from './focus-combined';
 import {
-  createFocusProductNotification,
-  createFocusProductRecentCase,
+  createFocusRecentCase,
   isRecentItem,
   translateFocusProduct,
 } from './focus-aanvragen-helpers';
+import { fetchFOCUSCombined } from './focus-combined';
 import {
   contentLabels,
   tozoTitleTranslations,
+  TOZO_AANVRAAG_STEP_ID,
   TOZO_LENING_PRODUCT_TITLE,
   TOZO_UITKERING_PRODUCT_TITLE,
   TOZO_VOORSCHOT_PRODUCT_TITLE,
@@ -22,6 +22,7 @@ import {
 import {
   createFocusItemTozo,
   createFocusTozoAanvraagNotification,
+  createFocusTozoStepNotification,
   createTozoProductSetStepsCollection,
 } from './focus-tozo-helpers';
 import { FocusItem } from './focus-types';
@@ -96,43 +97,76 @@ export async function fetchFOCUSTozoGenerated(
   sessionID: SessionID,
   samlToken: string
 ) {
-  const responseNormalized = await fetchFOCUSTozoNormalized(
-    sessionID,
-    samlToken
-  );
   const responseTransformed = await fetchFOCUSTozo(sessionID, samlToken);
   const compareDate = new Date();
 
   const notifications: MyNotification[] = [];
   const cases: MyCase[] = [];
 
-  if (responseNormalized.status === 'OK') {
-    const { aanvragen, voorschotten } = responseNormalized.content;
-    console.log(responseNormalized);
-    for (const item of aanvragen) {
-      notifications.push(createFocusProductNotification(item, contentLabels));
-    }
-
-    for (const item of voorschotten) {
-      notifications.push(createFocusProductNotification(item, contentLabels));
-    }
-
-    // use the transformed content here because documents are coupled to aanvragen and producten
-    if (responseTransformed.status === 'OK') {
-      for (const item of responseTransformed.content) {
-        if (isRecentItem(item.steps, compareDate)) {
-          cases.push(createFocusProductRecentCase(item));
-        }
+  // use the transformed content here because documents are coupled to aanvragen and producten
+  if (responseTransformed.status === 'OK') {
+    for (const item of responseTransformed.content) {
+      if (isRecentItem(item.steps, compareDate)) {
+        cases.push(createFocusRecentCase(item));
       }
-
-      notifications.push(
-        ...responseTransformed.content.flatMap(item => {
-          return item.steps[0].documents.map(doc =>
-            createFocusTozoAanvraagNotification(item.id, doc)
-          );
-        })
-      );
     }
+
+    notifications.push(
+      ...responseTransformed.content.flatMap(item => {
+        const notifications = [];
+
+        for (const step of item.steps) {
+          if (step.id === TOZO_AANVRAAG_STEP_ID) {
+            for (const document of step.documents) {
+              notifications.push(
+                createFocusTozoAanvraagNotification(item.id, document)
+              );
+            }
+          } else if (step.product === 'Tozo-voorschot') {
+            notifications.push(
+              createFocusTozoStepNotification(
+                item,
+                step,
+                contentLabels,
+                tozoTitleTranslations
+              )
+            );
+          }
+        }
+
+        const lastUitkeringStep = item.steps
+          .filter(step => step.product === 'Tozo-uitkering')
+          .pop();
+
+        if (lastUitkeringStep) {
+          notifications.push(
+            createFocusTozoStepNotification(
+              item,
+              lastUitkeringStep,
+              contentLabels,
+              tozoTitleTranslations
+            )
+          );
+        }
+
+        const lastLeningStep = item.steps
+          .filter(step => step.product === 'Tozo-lening')
+          .pop();
+
+        if (lastLeningStep) {
+          notifications.push(
+            createFocusTozoStepNotification(
+              item,
+              lastLeningStep,
+              contentLabels,
+              tozoTitleTranslations
+            )
+          );
+        }
+
+        return notifications;
+      })
+    );
   }
 
   return {

@@ -33,7 +33,6 @@
     "datumVertrekUitNederland": "1967-01-01T00:00:00Z",
     "aanduidingNaamgebruikOmschrijving": "Eigen geslachtsnaam",
     "omschrijvingAdellijkeTitel": "Hertogin",
-    "overlijdensdatum": null,
     "bsn": "129095205",
     "geboortedatum": "1950-01-01T00:00:00Z",
     "geboortelandnaam": "Nederland",
@@ -58,7 +57,6 @@
   "ouders": [{
     "geboortedatum": "1920-01-01T00:00:00Z",
     "geboortelandnaam": "Nederland",
-    "overlijdensdatum": null,
     "geboorteplaatsnaam": "Lochem",
     "geslachtsnaam": "Beemsterboer",
     "nationaliteiten": [
@@ -75,7 +73,6 @@
     "geboortedatum": "1920-01-01T00:00:00Z",
     "geboortelandnaam": "Nederland",
     "geboorteplaatsnaam": "Lochem",
-    "overlijdensdatum": null,
     "geslachtsnaam": "Beemsterboerin",
     "bsn": "123456780",
     "nationaliteiten": [
