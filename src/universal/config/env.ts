@@ -3,7 +3,7 @@ function getBrowserEnv() {
 
   // eslint-disable-next-line
   const isAcceptanceServer = eval(
-    "window.location.host === 'acc.amsterdam.nl'"
+    "window.location.host === 'mijn.acc.amsterdam.nl'"
   );
 
   // eslint-disable-next-line
