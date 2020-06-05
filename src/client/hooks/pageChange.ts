@@ -2,11 +2,14 @@ import { useEffect } from 'react';
 import { matchPath } from 'react-router-dom';
 import useRouter from 'use-react-router';
 import { CustomTrackingUrls } from '../../universal/config';
-import { TMA_LOGIN_URL } from '../config/api';
+import { TMA_LOGIN_URL_DIGID, TMA_LOGIN_URL_EHERKENNING } from '../config/api';
 import { PageTitleMain, PageTitles } from '../config/pages';
 import { trackPageView } from './analytics.hook';
 
-const ExcludePageViewTrackingUrls = [TMA_LOGIN_URL];
+const ExcludePageViewTrackingUrls = [
+  TMA_LOGIN_URL_DIGID,
+  TMA_LOGIN_URL_EHERKENNING,
+];
 
 const sortedPageTitleRoutes = Object.keys(PageTitles).sort((a, b) => {
   if (a.length === b.length) {
