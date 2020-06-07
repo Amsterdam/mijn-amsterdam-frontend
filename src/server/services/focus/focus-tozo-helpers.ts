@@ -111,8 +111,10 @@ export function createTozoProductSetStepsCollection({
   }
 
   const newProductSet = () => {
-    collection.push(productSet);
-    productSet = [];
+    if (productSet.length) {
+      collection.push(productSet);
+      productSet = [];
+    }
   };
 
   // Go through the aanvragen which consist of Lening and Uitkering.
@@ -278,7 +280,7 @@ export function createTozoProductSetStepsCollection({
 
     if (generatedDocumentStep) {
       stepSet.unshift(generatedDocumentStep);
-    } else {
+    } else if (stepSet[0]) {
       // Create an aanvraag step without documents
       stepSet.unshift(createTozoAanvraagWithoutDocumentsStep(stepSet[0]));
     }
