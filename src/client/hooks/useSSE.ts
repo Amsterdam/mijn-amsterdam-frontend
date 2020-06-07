@@ -31,7 +31,6 @@ export function useSSE(
 
     const handleError = (error: any) => {
       es.close();
-      Sentry.captureMessage(`SSE:ERROR: ${error}`);
 
       if (retryCount !== MAX_RETRY_COUNT) {
         setTimeout(() => {
@@ -42,6 +41,7 @@ export function useSSE(
         }, RECONNECT_TIMEOUT_MS);
       } else {
         Sentry.captureMessage(`SSE:ERROR: Retry terminated`);
+        Sentry.captureException(error);
 
         callback({
           ALL: {
