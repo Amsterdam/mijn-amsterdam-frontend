@@ -13,7 +13,7 @@ export interface ApiRequestOptions extends AxiosRequestConfig {
 }
 
 const REQUEST_TIMEOUT = 20000; // 20seconds;
-const requestApiData = axios.create({
+export const requestApiData = axios.create({
   responseType: 'json', // default
 });
 
