@@ -21,9 +21,16 @@ function isChapterActive(
   switch (item.id) {
     case Chapters.INKOMEN:
       return (
-        !(isLoading(FOCUS_AANVRAGEN) && isLoading(FOCUS_SPECIFICATIES)) &&
-        !(isLoading(FOCUS_TOZO) && isLoading(FOCUS_TOZO)) &&
-        !(isError(FOCUS_AANVRAGEN) && isError(FOCUS_SPECIFICATIES))
+        !(
+          isLoading(FOCUS_AANVRAGEN) &&
+          isLoading(FOCUS_SPECIFICATIES) &&
+          isLoading(FOCUS_TOZO) &&
+          isLoading(FOCUS_TOZO)
+        ) &&
+        (!!FOCUS_AANVRAGEN.content?.length ||
+          !!FOCUS_TOZO.content?.length ||
+          !!FOCUS_SPECIFICATIES.content?.jaaropgaven.length ||
+          !!FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties.length)
       );
 
     case Chapters.ZORG:

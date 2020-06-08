@@ -174,7 +174,6 @@ export function createTozoProductSetStepsCollection({
   // - All documents are combined and attached to the first 'Aanvraag regeling' step.
   // - Documents and Voorschotten with publish dates between first activity of a Set and Last activity of a Set are collected.
   // - A set with Lening and/or Uitkering is enriched with a fake decision step if the last step in the process is 'herstelTermijn'
-  console.log('collection!!', collection);
   stepCollection = collection.map((productSet, index) => {
     const [first, second] = productSet;
     const datePublished = new Date(
@@ -376,7 +375,6 @@ function getTozoStatus(steps: FocusItemStep[]) {
 }
 
 export function createFocusItemTozo(steps: FocusItemStep[]) {
-  console.log('steps:', steps);
   const stepsWithDate = steps.filter(item => !!item.datePublished);
   const lastStep = stepsWithDate[stepsWithDate.length - 1];
   const firstActivity = stepsWithDate.sort(dateSort('dateStart', 'desc')).pop();
