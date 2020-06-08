@@ -18,7 +18,7 @@ export const BFFApiUrls: Record<string, string> = {
 };
 
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
-  BRP: 'Persoonlijke gegevens + actuele updates',
+  BRP: 'Persoonlijke gegevens, Identiteitsbwijzen + actuele updates',
   CASES: 'Lopende zaken',
   TIPS: 'Tips',
   NOTIFICATIONS: 'Actuele updates',

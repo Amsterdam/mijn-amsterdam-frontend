@@ -23,14 +23,14 @@ export async function loadServicesSSE(
   res: Response,
   next: NextFunction
 ) {
-  // Tell the client we respond with an event stream
-  res.writeHead(200, {
-    'content-type': 'text/event-stream',
-    'cache-control': 'no-cache',
-    connection: 'keep-alive',
-  });
-
   try {
+    // Tell the client we respond with an event stream
+    res.writeHead(200, {
+      'content-type': 'text/event-stream',
+      'cache-control': 'no-cache',
+      connection: 'keep-alive',
+    });
+
     const servicesDirect = loadServicesDirect(
       req.sessionID!,
       getSamlTokenHeader(req)
