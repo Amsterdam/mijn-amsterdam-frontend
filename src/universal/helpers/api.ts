@@ -125,6 +125,9 @@ export function apiErrorResponseData<T>(
   pristineResponseData: T,
   error: AxiosError<any>
 ) {
+  if (!pristineResponseData) {
+    return pristineResponseData;
+  }
   return Object.entries(pristineResponseData).reduce(
     (acc, [key, pristineResponseData]) => {
       return Object.assign(acc, {

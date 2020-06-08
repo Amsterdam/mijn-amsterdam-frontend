@@ -1,16 +1,14 @@
 function getBrowserEnv() {
   let otapServerEnvFrontend = 'development';
 
-  // eslint-disable-next-line
-  const isAcceptanceServer = eval(
-    "window.location.host === 'mijn.acc.amsterdam.nl'"
-  );
+  // @ts-ignore
+  const isAcceptanceServer = window.location.host === 'mijn.acc.amsterdam.nl';
 
-  // eslint-disable-next-line
-  const isProductionServer = eval("window.location.host === 'amsterdam.nl'");
+  // @ts-ignore
+  const isProductionServer = window.location.host === 'amsterdam.nl';
 
-  // eslint-disable-next-line
-  const isTestServer = eval("window.location.host === 'mijn.ot.amsterdam.nl'");
+  // @ts-ignore
+  const isTestServer = window.location.host === 'mijn.ot.amsterdam.nl';
 
   switch (true) {
     case isTestServer:
@@ -35,13 +33,8 @@ function getBrowserEnv() {
 }
 
 function isBrowser() {
-  try {
-    // eslint-disable-next-line
-    eval('window');
-    return true;
-  } catch (error) {
-    return false;
-  }
+  // @ts-ignore
+  return typeof window !== 'undefined' && window.document;
 }
 
 export const ENV = `${
