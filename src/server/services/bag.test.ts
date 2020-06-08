@@ -16,6 +16,8 @@ describe('BAG service', () => {
   axMock
     .onGet(ApiUrls.BAG, { params: { q: 'straatje 25' } })
     .reply(200, DUMMY_RESPONSE);
+
+  // Error response
   axMock.onGet(ApiUrls.BAG, { params: { q: 'undefined' } }).reply(500);
 
   it('should extraxt a lat/lon object', () => {
