@@ -2,16 +2,11 @@ import * as Sentry from '@sentry/browser';
 import classnames from 'classnames';
 import React, { useContext, useEffect } from 'react';
 import ErrorBoundary from 'react-error-boundary';
-import {
-  BrowserRouter,
-  matchPath,
-  Redirect,
-  Route,
-  Switch,
-} from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import useRouter from 'use-react-router';
-import { AppRoutes, FeatureToggle, PrivateRoutes } from '../universal/config';
+import { AppRoutes, FeatureToggle } from '../universal/config';
 import { getOtapEnvItem, IS_PRODUCTION } from '../universal/config/env';
+import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
 import AppStateProvider from './AppStateProvider';
 import {
@@ -49,7 +44,6 @@ import {
 } from './pages';
 import Accessibility from './pages/AlphaPage/Accessibility/Accessibility';
 import { SessionContext, SessionState } from './SessionState';
-import { isPrivateRoute } from '../universal/helpers';
 
 function AppNotAuthenticated() {
   const { location } = useRouter();
