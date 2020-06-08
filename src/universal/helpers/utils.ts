@@ -1,4 +1,6 @@
 import { KeyboardEvent, MouseEvent } from 'react';
+import { matchPath } from 'react-router-dom';
+import { PrivateRoutes } from '../config';
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
 export const entries = Object.entries as <T>(
@@ -23,6 +25,17 @@ export function isInteralUrl(url: string) {
     url.match(/mijn\.(acc\.)?amsterdam.nl/) !== null ||
     url.startsWith('/') ||
     !url.startsWith('http')
+  );
+}
+
+export function isPrivateRoute(pathname: string) {
+  return PrivateRoutes.some(
+    path =>
+      !!matchPath(pathname, {
+        path,
+        exact: true,
+        strict: false,
+      })
   );
 }
 

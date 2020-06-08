@@ -49,13 +49,18 @@ import {
 } from './pages';
 import Accessibility from './pages/AlphaPage/Accessibility/Accessibility';
 import { SessionContext, SessionState } from './SessionState';
+import { isPrivateRoute } from '../universal/helpers';
 
 function AppNotAuthenticated() {
   const { location } = useRouter();
 
   const [routeEntry, setRouteEntry] = useLocalStorage('RouteEntry', '');
 
-  if (!routeEntry || (routeEntry === '/' && location.pathname !== '/')) {
+  if (
+    (!routeEntry || routeEntry === '/') &&
+    location.pathname !== '/' &&
+    isPrivateRoute(location.pathname)
+  ) {
     setRouteEntry(location.pathname);
   }
 
@@ -69,16 +74,7 @@ function AppNotAuthenticated() {
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           <Route
             render={({ location: { pathname } }) => {
-              if (
-                PrivateRoutes.some(
-                  path =>
-                    !!matchPath(pathname, {
-                      path,
-                      exact: true,
-                      strict: false,
-                    })
-                )
-              ) {
+              if (isPrivateRoute(pathname)) {
                 // Private routes are redirected to Home
                 return <Redirect to={AppRoutes.ROOT} />;
               }
