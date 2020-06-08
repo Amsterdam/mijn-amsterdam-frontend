@@ -42,9 +42,8 @@ const app = express();
 
 if (IS_AP) {
   app.set('trust proxy', 1);
+  app.use(Sentry.Handlers.requestHandler() as RequestHandler);
 }
-
-app.use(Sentry.Handlers.requestHandler() as RequestHandler);
 
 app.use(cors());
 app.use(bodyParser.json({ limit: '1mb' }));
@@ -63,7 +62,9 @@ app.use(compression());
 // Mount the router at the base path
 app.use(IS_AP ? '/bff' : '/test-api/bff', router);
 
-app.use(Sentry.Handlers.errorHandler() as ErrorRequestHandler);
+if (IS_AP) {
+  app.use(Sentry.Handlers.errorHandler() as ErrorRequestHandler);
+}
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const sessionID = req.sessionID!;

@@ -164,11 +164,11 @@ export async function requestData<T>(
       let sentryId;
 
       if (error instanceof Error) {
-        sentryId = Sentry.captureException(error);
+        sentryId = IS_AP ? Sentry.captureException(error) : '';
       } else {
-        sentryId = Sentry.captureMessage(
-          error?.message || 'Unknown errormessage'
-        );
+        sentryId = IS_AP
+          ? Sentry.captureMessage(error?.message || 'Unknown errormessage')
+          : '';
       }
 
       const responseData = apiErrorResult(error, null, sentryId);
