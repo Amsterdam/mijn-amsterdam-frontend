@@ -124,6 +124,18 @@ describe('The happy path', () => {
         // Click the detail page link
         // Could fail if we show a link that has same url segment structure. E.g mijn.amsterdan.nl/burgerzaken/docment/x vs amsterdan.nl/burgerzaken/document/x
         cy.get('a[href*="' + detailUrl + '"]:eq(0)').click({ force: true });
+
+        // Expand the statusline component should it be rendered collapsed
+        cy.get('body').then($body => {
+          if ($body.text().includes('Toon alles')) {
+            cy.get('button')
+              .contains('Toon alles')
+              .click();
+            cy.get('[class*="StatusLine_ListItem"]')
+              .its('length')
+              .should('be.gte', 2);
+          }
+        });
       } else {
         selectComponent('MyChaptersPanel_Links')
           .find('a[href*="' + pathname + '"]:eq(0)')
@@ -136,8 +148,10 @@ describe('The happy path', () => {
 
       selectComponent('LoadingContent_LoadingContent').should('not.exist');
 
-      cy.wait(500);
-      cy.screenshot();
+      if (!process.env.CI) {
+        cy.wait(500);
+        cy.screenshot();
+      }
     });
   }
 });

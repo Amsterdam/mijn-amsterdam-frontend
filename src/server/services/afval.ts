@@ -134,57 +134,57 @@ const titles: { [type: string]: string } = {
 const garbagePoints: GarbagePoint[] = [
   {
     naam: 'Afvalpunt Henk Sneevlietweg (Nieuw-West)',
-    latlng: { lat: 52.3433575455427, lng: 4.83347291303415 },
+    latlng: { lng: 4.83347291303415, lat: 52.3433575455427 },
     adres: 'Henk Sneevlietweg 22&#xA0;<br>1066 VH&#xA0;&#xA0;Amsterdam',
     telefoon: '020 587 6126',
     email: 'afvalpunten@aebamsterdam.nl',
     openingstijden:
-      'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt Marie Baronlaan aan de Faas Wilkesstraat is voorlopig gesloten.',
+      'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nAlle afvalpunten zijn op Koningsdag (maandag 27 april 2020) geopend van 10.00 tot en met 16.00 uur.',
   },
   {
     naam: 'Afvalpunt Marie Baronlaan (Oost, geen bedrijfsafval)',
-    latlng: { lat: 52.3710209755361, lng: 4.97156727996261 },
+    latlng: { lng: 4.97156727996261, lat: 52.3710209755361 },
     adres: 'Marie Baronlaan <br>1095 MV Amsterdam',
     telefoon: '020 5876145',
     email: 'afvalpunten@aebamsterdam.nl',
     openingstijden:
-      'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt Marie Baronlaan aan de Faas Wilkesstraat is voorlopig gesloten.',
+      'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nAlle afvalpunten zijn op Koningsdag (maandag 27 april 2020) geopend van 10.00 tot en met 16.00 uur.',
   },
   {
     naam: 'Afvalpunt Meerkerkdreef (Zuidoost)',
-    latlng: { lat: 52.302520488967, lng: 4.97786715111811 },
+    latlng: { lng: 4.97786715111811, lat: 52.302520488967 },
     adres: 'Meerkerkdreef 31&#xA0;<br>1106 GZ &#xA0;Amsterdam',
     telefoon: '020 587 6116',
     email: 'afvalpunten@aebamsterdam.nl',
     openingstijden:
-      'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt Marie Baronlaan aan de Faas Wilkesstraat is voorlopig gesloten.',
+      'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nAlle afvalpunten zijn op Koningsdag (maandag 27 april 2020) geopend van 10.00 tot en met 16.00 uur.',
   },
   {
     naam: 'Afvalpunt Rozenburglaan (Oost)',
-    latlng: { lat: 52.3388475386366, lng: 4.93782666381194 },
+    latlng: { lng: 4.93782666381194, lat: 52.3388475386366 },
     adres: 'Rozenburglaan 1&#xA0;<br>1097 HK &#xA0;Amsterdam',
     telefoon: '020 587 6114',
     email: 'afvalpunten@aebamsterdam.nl',
     openingstijden:
-      'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt Marie Baronlaan aan de Faas Wilkesstraat is voorlopig gesloten.',
+      'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nAlle afvalpunten zijn op Koningsdag (maandag 27 april 2020) geopend van 10.00 tot en met 16.00 uur.',
   },
   {
     naam: 'Afvalpunt Seineweg (Nieuw-West)',
-    latlng: { lat: 52.386058385908, lng: 4.82017500674289 },
+    latlng: { lng: 4.82017500674289, lat: 52.386058385908 },
     adres: 'Seineweg 1&#xA0;<br>1043 BE&#xA0; Amsterdam',
     telefoon: '020 587 6144',
     email: 'afvalpunten@aebamsterdam.nl',
     openingstijden:
-      'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt Marie Baronlaan aan de Faas Wilkesstraat is voorlopig gesloten.',
+      'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nAlle afvalpunten zijn op Koningsdag (maandag 27 april 2020) geopend van 10.00 tot en met 16.00 uur.',
   },
   {
     naam: 'Afvalpunt Struisgrasstraat (Noord)',
-    latlng: { lat: 52.3957390236765, lng: 4.90786592615004 },
+    latlng: { lng: 4.90786592615004, lat: 52.3957390236765 },
     adres: 'Struisgrasstraat 33a <br>1032 KE &#xA0;Amsterdam',
     telefoon: '020 587 6122',
     email: 'afvalpunten@aebamsterdam.nl',
     openingstijden:
-      'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nHet Afvalpunt Marie Baronlaan aan de Faas Wilkesstraat is voorlopig gesloten.',
+      'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nAlle afvalpunten zijn op Koningsdag (maandag 27 april 2020) geopend van 10.00 tot en met 16.00 uur.',
   },
 ];
 
