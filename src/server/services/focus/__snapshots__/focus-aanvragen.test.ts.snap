@@ -7,7 +7,7 @@ Array [
     "dateStart": "2020-04-03T00:00:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 28,
-    "id": "123123123-beslissing",
+    "id": "aanvraag-399318441",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -45,7 +45,7 @@ Array [
     "dateStart": "2019-07-08T15:05:52+02:00",
     "decision": undefined,
     "dienstverleningstermijn": 42,
-    "id": "123123123-aanvraag",
+    "id": "aanvraag-226183637",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -85,7 +85,7 @@ Array [
     "dateStart": "2019-07-07T15:05:52+02:00",
     "decision": undefined,
     "dienstverleningstermijn": 42,
-    "id": "123123123-inBehandeling",
+    "id": "aanvraag-4147155538",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -131,7 +131,7 @@ Array [
     "dateStart": "2019-07-03T15:05:52+02:00",
     "decision": undefined,
     "dienstverleningstermijn": 42,
-    "id": "123123123-herstelTermijn",
+    "id": "aanvraag-2371148170",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -184,7 +184,7 @@ Array [
     "dateStart": "2019-07-24T15:05:51+02:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 21,
-    "id": "123123123-beslissing",
+    "id": "aanvraag-399318441",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -230,7 +230,7 @@ Array [
     "dateStart": "2019-04-09T15:05:51+02:00",
     "decision": "afwijzing",
     "dienstverleningstermijn": 21,
-    "id": "123123123-beslissing",
+    "id": "aanvraag-399318441",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -276,7 +276,7 @@ Array [
     "dateStart": "2019-05-09T15:05:51+02:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 21,
-    "id": "123123123-beslissing",
+    "id": "aanvraag-399318441",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -329,7 +329,7 @@ Array [
     "dateStart": "2019-06-08T15:05:52+02:00",
     "decision": "buitenbehandeling",
     "dienstverleningstermijn": 21,
-    "id": "123123123-beslissing",
+    "id": "aanvraag-399318441",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -389,7 +389,7 @@ Array [
     "dateStart": "2020-05-12T00:00:00+02:00",
     "decision": undefined,
     "dienstverleningstermijn": 28,
-    "id": "999999-aanvraag",
+    "id": "aanvraag-3471293669",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -411,10 +411,12 @@ Array [
     "datePublished": "2019-07-08T15:05:52+02:00",
     "dateStart": "2019-07-08T15:05:52+02:00",
     "decision": undefined,
-    "id": "123123123-aanvraag",
+    "dienstverleningstermijn": 42,
+    "id": "aanvraag-226183637",
+    "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen-en-stadspas/stadspas/123123123-aanvraag",
+      "to": "/inkomen-en-stadspas/stadspas/aanvraag-226183637",
     },
     "status": "Aanvraag",
     "steps": Array [
@@ -459,10 +461,12 @@ Array [
     "datePublished": "2019-07-08T15:05:52+02:00",
     "dateStart": "2019-07-07T15:05:52+02:00",
     "decision": undefined,
-    "id": "123123123-inBehandeling",
+    "dienstverleningstermijn": 42,
+    "id": "aanvraag-4147155538",
+    "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen-en-stadspas/stadspas/123123123-inBehandeling",
+      "to": "/inkomen-en-stadspas/stadspas/aanvraag-4147155538",
     },
     "status": "In behandeling",
     "steps": Array [
@@ -532,10 +536,12 @@ Array [
     "datePublished": "2019-07-06T15:05:52+02:00",
     "dateStart": "2019-07-03T15:05:52+02:00",
     "decision": undefined,
-    "id": "123123123-herstelTermijn",
+    "dienstverleningstermijn": 42,
+    "id": "aanvraag-2371148170",
+    "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen-en-stadspas/stadspas/123123123-herstelTermijn",
+      "to": "/inkomen-en-stadspas/stadspas/aanvraag-2371148170",
     },
     "status": "Informatie nodig",
     "steps": Array [
@@ -629,10 +635,12 @@ Array [
     "datePublished": "2019-07-28T15:05:51+02:00",
     "dateStart": "2019-07-24T15:05:51+02:00",
     "decision": "toekenning",
-    "id": "123123123-beslissing",
+    "dienstverleningstermijn": 21,
+    "id": "aanvraag-399318441",
+    "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer",
-      "to": "/inkomen-en-stadspas/bijstandsuitkering/123123123-beslissing",
+      "to": "/inkomen-en-stadspas/bijstandsuitkering/aanvraag-399318441",
     },
     "status": "Besluit",
     "steps": Array [
@@ -698,6 +706,7 @@ Array [
       },
       Object {
         "datePublished": "2019-07-28T15:05:51+02:00",
+        "decision": "toekenning",
         "description": "
             <p>
               U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer
@@ -736,10 +745,12 @@ Array [
     "datePublished": "2019-05-07T15:05:51+02:00",
     "dateStart": "2019-04-09T15:05:51+02:00",
     "decision": "afwijzing",
-    "id": "123123123-beslissing",
+    "dienstverleningstermijn": 21,
+    "id": "aanvraag-399318441",
+    "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer",
-      "to": "/inkomen-en-stadspas/bijstandsuitkering/123123123-beslissing",
+      "to": "/inkomen-en-stadspas/bijstandsuitkering/aanvraag-399318441",
     },
     "status": "Besluit",
     "steps": Array [
@@ -805,6 +816,7 @@ Array [
       },
       Object {
         "datePublished": "2019-05-07T15:05:51+02:00",
+        "decision": "afwijzing",
         "description": "U heeft geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.",
         "documents": Array [
           Object {
@@ -830,10 +842,12 @@ Array [
     "datePublished": "2019-06-08T15:05:51+02:00",
     "dateStart": "2019-05-09T15:05:51+02:00",
     "decision": "toekenning",
-    "id": "123123123-beslissing",
+    "dienstverleningstermijn": 21,
+    "id": "aanvraag-399318441",
+    "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer",
-      "to": "/inkomen-en-stadspas/bijstandsuitkering/123123123-beslissing",
+      "to": "/inkomen-en-stadspas/bijstandsuitkering/aanvraag-399318441",
     },
     "status": "Besluit",
     "steps": Array [
@@ -923,6 +937,7 @@ Array [
       },
       Object {
         "datePublished": "2019-06-08T15:05:51+02:00",
+        "decision": "toekenning",
         "description": "
             <p>
               U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer
@@ -961,10 +976,12 @@ Array [
     "datePublished": "2019-07-03T15:05:52+02:00",
     "dateStart": "2019-06-08T15:05:52+02:00",
     "decision": "buitenbehandeling",
-    "id": "123123123-beslissing",
+    "dienstverleningstermijn": 21,
+    "id": "aanvraag-399318441",
+    "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer",
-      "to": "/inkomen-en-stadspas/bijstandsuitkering/123123123-beslissing",
+      "to": "/inkomen-en-stadspas/bijstandsuitkering/aanvraag-399318441",
     },
     "status": "Besluit",
     "steps": Array [
@@ -1061,6 +1078,7 @@ Array [
       },
       Object {
         "datePublished": "2019-07-03T15:05:52+02:00",
+        "decision": "buitenbehandeling",
         "description": "Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.",
         "documents": Array [
           Object {
@@ -1092,7 +1110,7 @@ Array [
     "dateStart": "2019-07-08T15:05:52+02:00",
     "decision": undefined,
     "dienstverleningstermijn": 42,
-    "id": "123123123-aanvraag",
+    "id": "aanvraag-226183637",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -1132,7 +1150,7 @@ Array [
     "dateStart": "2019-07-07T15:05:52+02:00",
     "decision": undefined,
     "dienstverleningstermijn": 42,
-    "id": "123123123-inBehandeling",
+    "id": "aanvraag-4147155538",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -1178,7 +1196,7 @@ Array [
     "dateStart": "2019-07-03T15:05:52+02:00",
     "decision": undefined,
     "dienstverleningstermijn": 42,
-    "id": "123123123-herstelTermijn",
+    "id": "aanvraag-2371148170",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -1231,7 +1249,7 @@ Array [
     "dateStart": "2019-07-24T15:05:51+02:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 21,
-    "id": "123123123-beslissing",
+    "id": "aanvraag-399318441",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -1277,7 +1295,7 @@ Array [
     "dateStart": "2019-04-09T15:05:51+02:00",
     "decision": "afwijzing",
     "dienstverleningstermijn": 21,
-    "id": "123123123-beslissing",
+    "id": "aanvraag-399318441",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -1323,7 +1341,7 @@ Array [
     "dateStart": "2019-05-09T15:05:51+02:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 21,
-    "id": "123123123-beslissing",
+    "id": "aanvraag-399318441",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -1376,7 +1394,7 @@ Array [
     "dateStart": "2019-06-08T15:05:52+02:00",
     "decision": "buitenbehandeling",
     "dienstverleningstermijn": 21,
-    "id": "123123123-beslissing",
+    "id": "aanvraag-399318441",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
