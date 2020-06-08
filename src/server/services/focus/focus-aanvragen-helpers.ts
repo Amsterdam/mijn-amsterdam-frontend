@@ -238,14 +238,18 @@ export function fillStepContent(
     userActionDeadline,
   };
 
-  return Object.assign({}, stepData, {
-    decision: product.decision,
-    product: product.title,
-    description: stepContent.description(product, customData),
-    status: stepContent.status,
-    isActive: getLatestStep(product.steps) === stepData.title,
-    isChecked: true,
-  });
+  return Object.assign(
+    {},
+    stepData,
+    {
+      product: product.title,
+      description: stepContent.description(product, customData),
+      status: stepContent.status,
+      isActive: getLatestStep(product.steps) === stepData.title,
+      isChecked: true,
+    },
+    stepData.title === 'beslissing' ? { decision: product.decision } : null
+  );
 }
 
 export function transformFocusProductSteps(

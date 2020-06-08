@@ -98,7 +98,7 @@ export function createTozoProductSetStepsCollection({
 
   // If there are no aanvragen products available, just gather the voorschotten and aanvraagdocumenten.
   // and display them in a single set
-  if (!aanvragen.length) {
+  if (!aanvragen.length && (voorschotten.length || documenten.length)) {
     stepCollection.push([
       createTozoAanvraagDocumentsStep(documenten, titleTranslations),
       ...voorschotten.flatMap(voorschot => {
@@ -174,7 +174,7 @@ export function createTozoProductSetStepsCollection({
   // - All documents are combined and attached to the first 'Aanvraag regeling' step.
   // - Documents and Voorschotten with publish dates between first activity of a Set and Last activity of a Set are collected.
   // - A set with Lening and/or Uitkering is enriched with a fake decision step if the last step in the process is 'herstelTermijn'
-
+  console.log('collection!!', collection);
   stepCollection = collection.map((productSet, index) => {
     const [first, second] = productSet;
     const datePublished = new Date(
@@ -193,7 +193,7 @@ export function createTozoProductSetStepsCollection({
       const steps = transformFocusProductSteps(first, stepsContent);
       const lastStep = steps[steps.length - 1];
 
-      if (lastStep.title === 'herstelTermijn') {
+      if (lastStep?.title === 'herstelTermijn') {
         // Add the fake step
         steps.push(
           Object.assign({}, fakeDecisionStep as FocusItemStep, {
@@ -210,7 +210,7 @@ export function createTozoProductSetStepsCollection({
       const steps = transformFocusProductSteps(second, stepsContent);
       const lastStep = steps[steps.length - 1];
 
-      if (lastStep.title === 'herstelTermijn') {
+      if (lastStep?.title === 'herstelTermijn') {
         // Add the fake step
         steps.push(
           Object.assign({}, fakeDecisionStep as FocusItemStep, {
@@ -376,6 +376,7 @@ function getTozoStatus(steps: FocusItemStep[]) {
 }
 
 export function createFocusItemTozo(steps: FocusItemStep[]) {
+  console.log('steps:', steps);
   const stepsWithDate = steps.filter(item => !!item.datePublished);
   const lastStep = stepsWithDate[stepsWithDate.length - 1];
   const firstActivity = stepsWithDate.sort(dateSort('dateStart', 'desc')).pop();

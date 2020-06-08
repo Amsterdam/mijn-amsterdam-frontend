@@ -77,6 +77,10 @@ export async function fetchFOCUSTozo(sessionID: SessionID, samlToken: string) {
   if (response.status === 'OK') {
     const { aanvragen, voorschotten, documenten } = response.content;
 
+    if (!aanvragen.length && !voorschotten.length && !documenten.length) {
+      return apiSuccesResult([]);
+    }
+
     const collection = createTozoProductSetStepsCollection({
       aanvragen,
       voorschotten,
