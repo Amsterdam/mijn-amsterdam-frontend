@@ -23,53 +23,49 @@ export async function loadServicesSSE(
   res: Response,
   next: NextFunction
 ) {
-  try {
-    // Tell the client we respond with an event stream
-    res.writeHead(200, {
-      'content-type': 'text/event-stream',
-      'cache-control': 'no-cache',
-      connection: 'keep-alive',
-    });
+  // Tell the client we respond with an event stream
+  res.writeHead(200, {
+    'content-type': 'text/event-stream',
+    'cache-control': 'no-cache',
+    connection: 'keep-alive',
+  });
 
-    const servicesDirect = loadServicesDirect(
-      req.sessionID!,
-      getSamlTokenHeader(req)
-    ).then(data => {
-      sendMessage(res, 'direct', 'message', data);
-    });
+  const servicesDirect = loadServicesDirect(
+    req.sessionID!,
+    getSamlTokenHeader(req)
+  ).then(data => {
+    sendMessage(res, 'direct', 'message', data);
+  });
 
-    const servicesRelated = loadServicesRelated(
-      req.sessionID!,
-      getSamlTokenHeader(req)
-    ).then(data => {
-      sendMessage(res, 'related', 'message', data);
-    });
+  const servicesRelated = loadServicesRelated(
+    req.sessionID!,
+    getSamlTokenHeader(req)
+  ).then(data => {
+    sendMessage(res, 'related', 'message', data);
+  });
 
-    const servicesMap = loadServicesMap(
-      req.sessionID!,
-      getSamlTokenHeader(req)
-    ).then(data => {
-      sendMessage(res, 'map', 'message', data);
-    });
+  const servicesMap = loadServicesMap(
+    req.sessionID!,
+    getSamlTokenHeader(req)
+  ).then(data => {
+    sendMessage(res, 'map', 'message', data);
+  });
 
-    const servicesGenerated = loadServicesGenerated(
-      req.sessionID!,
-      getSamlTokenHeader(req),
-      req.cookies.optInPersonalizedTips === 'yes'
-    ).then(data => {
-      sendMessage(res, 'generated', 'message', data);
-    });
+  const servicesGenerated = loadServicesGenerated(
+    req.sessionID!,
+    getSamlTokenHeader(req),
+    req.cookies.optInPersonalizedTips === 'yes'
+  ).then(data => {
+    sendMessage(res, 'generated', 'message', data);
+  });
 
-    await Promise.all([
-      servicesDirect,
-      servicesRelated,
-      servicesMap,
-      servicesGenerated,
-    ]).finally(() => {
-      sendMessage(res, 'close', 'close', null);
-      next();
-    });
-  } catch (error) {
-    next(error);
-  }
+  await Promise.all([
+    servicesDirect,
+    servicesRelated,
+    servicesMap,
+    servicesGenerated,
+  ]).finally(() => {
+    sendMessage(res, 'close', 'close', null);
+    next();
+  });
 }
