@@ -40,8 +40,15 @@ export function useSSE(
           }
         }, RECONNECT_TIMEOUT_MS);
       } else {
-        Sentry.captureMessage(`SSE:ERROR: Retry terminated`);
-        Sentry.captureException(error);
+        if (error instanceof Error) {
+          Sentry.captureMessage(`SSE:ERROR: Retry terminated`);
+          Sentry.captureException(error);
+        } else {
+          Sentry.captureMessage(
+            `SSE:ERROR: Retry terminated`,
+            error.toString()
+          );
+        }
 
         callback({
           ALL: {
