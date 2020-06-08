@@ -229,7 +229,7 @@ export default function useGarbageApi(centroid?: Centroid): GarbageApiState {
           telefoon: '020 587 6126',
           email: 'afvalpunten@aebamsterdam.nl',
           openingstijden:
-            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nAlle afvalpunten zijn op Koningsdag (maandag 27 april 2020) geopend van 10.00 tot en met 16.00 uur.',
+            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\n Het afvalpunt Henk Sneevlietweg is elke zondag open van 10.00 tot 16.00 uur.',
         },
         {
           naam: 'Afvalpunt Marie Baronlaan (Oost, geen bedrijfsafval)',
@@ -238,7 +238,7 @@ export default function useGarbageApi(centroid?: Centroid): GarbageApiState {
           telefoon: '020 5876145',
           email: 'afvalpunten@aebamsterdam.nl',
           openingstijden:
-            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nAlle afvalpunten zijn op Koningsdag (maandag 27 april 2020) geopend van 10.00 tot en met 16.00 uur.',
+            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\n Het afvalpunt Henk Sneevlietweg is elke zondag open van 10.00 tot 16.00 uur.',
         },
         {
           naam: 'Afvalpunt Meerkerkdreef (Zuidoost)',
@@ -247,7 +247,7 @@ export default function useGarbageApi(centroid?: Centroid): GarbageApiState {
           telefoon: '020 587 6116',
           email: 'afvalpunten@aebamsterdam.nl',
           openingstijden:
-            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nAlle afvalpunten zijn op Koningsdag (maandag 27 april 2020) geopend van 10.00 tot en met 16.00 uur.',
+            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\n Het afvalpunt Henk Sneevlietweg is elke zondag open van 10.00 tot 16.00 uur.',
         },
         {
           naam: 'Afvalpunt Rozenburglaan (Oost)',
@@ -256,7 +256,7 @@ export default function useGarbageApi(centroid?: Centroid): GarbageApiState {
           telefoon: '020 587 6114',
           email: 'afvalpunten@aebamsterdam.nl',
           openingstijden:
-            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nAlle afvalpunten zijn op Koningsdag (maandag 27 april 2020) geopend van 10.00 tot en met 16.00 uur.',
+            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\n Het afvalpunt Henk Sneevlietweg is elke zondag open van 10.00 tot 16.00 uur.',
         },
         {
           naam: 'Afvalpunt Seineweg (Nieuw-West)',
@@ -265,7 +265,7 @@ export default function useGarbageApi(centroid?: Centroid): GarbageApiState {
           telefoon: '020 587 6144',
           email: 'afvalpunten@aebamsterdam.nl',
           openingstijden:
-            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nAlle afvalpunten zijn op Koningsdag (maandag 27 april 2020) geopend van 10.00 tot en met 16.00 uur.',
+            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\n Het afvalpunt Henk Sneevlietweg is elke zondag open van 10.00 tot 16.00 uur.',
         },
         {
           naam: 'Afvalpunt Struisgrasstraat (Noord)',
@@ -274,7 +274,7 @@ export default function useGarbageApi(centroid?: Centroid): GarbageApiState {
           telefoon: '020 587 6122',
           email: 'afvalpunten@aebamsterdam.nl',
           openingstijden:
-            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\nAlle afvalpunten zijn op Koningsdag (maandag 27 april 2020) geopend van 10.00 tot en met 16.00 uur.',
+            'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\n Het afvalpunt Henk Sneevlietweg is elke zondag open van 10.00 tot 16.00 uur.',
         },
       ].map(item => {
         return {
