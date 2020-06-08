@@ -9,10 +9,10 @@
     "release:major": "sh scripts/release.sh --major",
     "release:minor": "sh scripts/release.sh --minor",
     "start": "react-scripts start",
-    "test": "react-scripts test",
+    "test": "react-scripts test src/client",
     "test-e2e": "REACT_APP_ENV=e2e; react-scripts build && npm run bff-api:build && concurrently \"npm:serve-build\" \"npx cypress open\" --kill-others --success first",
     "bff-api:watch": "nodemon -e ts -w ./src -x npm run bff-api:serve-dev",
-    "bff-api:test": "BFF_DISABLE_MOCK_ADAPTER=true react-scripts test src/server",
+    "bff-api:test": "react-scripts test src/server",
     "bff-api:serve-build": "node build-bff/server/app",
     "bff-api:serve-dev": "ts-node --project ./tsconfig.bff.json ./src/bffserver.ts",
     "bff-api:build": "tsc --project ./tsconfig.bff.json"

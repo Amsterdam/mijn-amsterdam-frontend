@@ -74,41 +74,6 @@ export function MyAreaMapIFrame({ url, className }: MyAreaMapIframeProps) {
   );
 }
 
-// interface MyAreaMapComponentProps {
-//   id?: string;
-//   title?: string;
-//   center?: LatLngObject | null;
-//   homeAddress?: string;
-//   options?: MapDisplayOptions;
-//   className?: string;
-// }
-
-// export default function MyAreaMap({
-//   center,
-//   title = 'Kaart van Mijn buurt',
-//   id = 'map',
-//   homeAddress,
-//   options = DEFAULT_MAP_DISPLAY_CONFIG,
-//   className,
-// }: MyAreaMapComponentProps) {
-//   return (
-//     <MyAreaMapContainer className={className}>
-//       {!!center ? (
-//         <MaMap title={title} id={id} zoom={options.zoom} center={center}>
-//           <HomeIconMarker
-//             center={center}
-//             zoom={options.zoom}
-//             address={homeAddress}
-//           />
-//           {!!options.zoomTools && <MaZoomControl center={center} />}
-//         </MaMap>
-//       ) : (
-//         <MyAreaLoader />
-//       )}
-//     </MyAreaMapContainer>
-//   );
-// }
-
 interface MyAreaDashboardComponentProps extends HTMLProps<HTMLDivElement> {
   center?: LatLngObject | null;
   url?: string;
