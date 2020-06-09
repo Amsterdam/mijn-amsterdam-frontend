@@ -1,4 +1,5 @@
 export { default as AlphaPage } from './AlphaPage/AlphaPage';
+export { default as Accessibility } from './Accessibility/Accessibility';
 export { default as Burgerzaken } from './Burgerzaken/Burgerzaken';
 export { default as BurgerzakenDetail } from './BurgerzakenDetail/BurgerzakenDetail';
 export { default as Dashboard } from './Dashboard/Dashboard';

@@ -41,8 +41,8 @@ import {
   Profile,
   Zorg,
   ZorgDetail,
+  Accessibility,
 } from './pages';
-import Accessibility from './pages/Accessibility/Accessibility';
 import { SessionContext, SessionState } from './SessionState';
 
 function AppNotAuthenticated() {
