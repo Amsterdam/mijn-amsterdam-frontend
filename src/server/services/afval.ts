@@ -2,14 +2,14 @@ import {
   capitalizeFirstLetter,
   getApproximateDistance,
 } from '../../universal/helpers';
-import { requestData, getSamlTokenHeader } from '../helpers/request';
-import { ApiUrls, getApiConfigValue } from '../config';
 import {
-  Stadsdeel,
-  GarbagePoint,
-  GarbageMoment,
   AFVALData,
+  GarbageMoment,
+  GarbagePoint,
+  Stadsdeel,
 } from '../../universal/types';
+import { ApiUrls, getApiConfigValue } from '../config';
+import { requestData } from '../helpers/request';
 
 const AFVAL_AFSPRAAK_MAKEN =
   'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Grofvuil.aspx';

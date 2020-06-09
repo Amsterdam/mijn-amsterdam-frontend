@@ -22,11 +22,15 @@ import {
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
 import { Deferred } from './deferred';
 
-const CACHE_KEEP_MAX_MS = 60 * 1000; // 1 minute. We expect that all requests will resolve within this total timeframe.
+export interface DataRequestConfig extends AxiosRequestConfig {
+  cacheTimeout?: number;
+  cancelTimeout?: number;
+}
 
-const DEFAULT_REQUEST_CONFIG: AxiosRequestConfig & { cancelTimeout: number } = {
+const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
   cancelTimeout: 20000, // 20 seconds
   method: 'get',
+  cacheTimeout: 60 * 1000, // 1 minute. We expect that all requests will resolve within this total timeframe.,
 };
 
 export const axiosRequest = axios.create({
@@ -82,7 +86,7 @@ export function clearCache(sessionID: SessionID) {
 }
 
 export async function requestData<T>(
-  config: AxiosRequestConfig,
+  config: DataRequestConfig,
   sessionID: SessionID,
   samlToken: string,
   postpone: boolean = false
@@ -93,7 +97,7 @@ export async function requestData<T>(
 
   const source = axios.CancelToken.source();
 
-  const requestConfig = {
+  const requestConfig: DataRequestConfig = {
     ...DEFAULT_REQUEST_CONFIG,
     ...config,
     cancelToken: source.token,
@@ -137,7 +141,7 @@ export async function requestData<T>(
     cache.put(
       cacheKey,
       new Deferred<ApiSuccessResponse<T>>(),
-      CACHE_KEEP_MAX_MS
+      requestConfig.cacheTimeout
     );
   }
 
@@ -145,7 +149,7 @@ export async function requestData<T>(
     // Request is cancelled after x ms
     setTimeout(() => {
       source.cancel('Request to source api timeout.');
-    }, requestConfig.cancelTimeout);
+    }, requestConfig.cancelTimeout!);
 
     const request: AxiosPromise<T> = axiosRequest(requestConfig);
     const response: AxiosResponse<T> = await request;

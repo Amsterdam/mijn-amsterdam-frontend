@@ -1,0 +1,46 @@
+{
+  "applicatie": {
+    "url": "https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/",
+    "title": "Dit ziet u in Mijn Amsterdam",
+    "label": "Dit ziet u in Mijn Amsterdam",
+    "meta": {
+      "meta": {
+        "gegevens": {
+          "gebruik-amsterdamse-kaartmateriaal": "0",
+          "geen-share-buttons": "0",
+          "auteur": "RC (Administrator)",
+          "aanmaakdatum": "20200520",
+          "brondatum": "20200520",
+          "toon-basisafbeelding": {
+            "label": "bovenaan",
+            "value": "boven"
+          },
+          "samenvatting": "<div><p>Nog niet al uw informatie is via Mijn Amsterdam zichtbaar. Er komt steeds meer bij. Hier vindt u een overzicht van persoonlijke informatie die al wel beschikbaar is.</p></div>"
+        },
+        "typering": {
+          "opnemen-in-newsfeed": "0"
+        }
+      }
+    },
+    "inhoud": {
+      "bladwijzers-verbergen": "0",
+      "kaart-verbergen": "0",
+      "samenvatting-verbergen": "0",
+      "inleiding": "<div><p>Nog niet al uw informatie is via Mijn Amsterdam zichtbaar. Er komt steeds meer bij. Hier vindt u een overzicht van persoonlijke informatie die al wel beschikbaar is.</p></div>",
+      "tekst": "<div><h4 id=\"he982bde8-c0f2-4b42-bdcf-4d13e3c62ac7\"><strong>Op dit moment kunt u deze informatie vinden in Mijn Amsterdam:</strong></h4><ul><li>Hoe u ingeschreven staat bij de gemeente</li><li>Gegevens van uw paspoort of ID-kaart</li><li>Hoe het staat met uw aanvraag voor een bijstandsuitkering</li><li>De uitkeringsspecificaties en jaaropgave van uw bijstandsuitkering</li><li>Hoe het staat met uw aanvraag voor de Tijdelijke overbruggingsregeling zelfstandig ondernemers</li><li>Welke Wmo-regelingen u hebt</li><li>Hoe het staat met uw aanvraag voor een Stadspas</li><li>Afval laten ophalen en wegbrengen in uw buurt</li><li>Informatie over uw ontheffing of overtreding milieuzone</li><li>Informatie over uw gemeentebelastingen</li><li>Informatie over uw erfpacht</li><li>Informatie over uw eigen buurt</li></ul></div>"
+    },
+    "reactiemogelijkheid": {
+      "reactiemogelijkheid": {
+        "aan": "0",
+        "actief": "0",
+        "omgekeerd-chronologisch-sorteren": "1",
+        "geen-titel": "1",
+        "emailadres-verplicht": "0",
+        "aantal-reacties-per-pagina": "30",
+        "captcha-gebruiken": "1",
+        "e-mailadres-verbergen": "1"
+      }
+    },
+    "diagram": {}
+  }
+}

@@ -12,6 +12,7 @@ const BAG = './json/bag.json';
 const AFVAL = './json/afvalophaalgebieden.json';
 const MILIEUZONE = './json/milieuzone.json';
 const TIPS = './json/tips.json';
+const AMSTERDAM_CONTENT = './json/amsterdam-nl-content-uitleg.json';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
   return new Promise(resolve => {
@@ -78,6 +79,10 @@ export const mockDataConfig: MockDataConfig = {
   [ApiUrls.MILIEUZONE]: {
     status: 200,
     responseData: () => loadMockApiResponseJson(MILIEUZONE),
+  },
+  [ApiUrls.AMSTERDAM_CONTENT]: {
+    status: 200,
+    responseData: () => loadMockApiResponseJson(AMSTERDAM_CONTENT),
   },
   [ApiUrls.TIPS]: {
     status: 200,
