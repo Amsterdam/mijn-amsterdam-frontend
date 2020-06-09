@@ -82,6 +82,7 @@ export default () => {
           items={aanvraagAndVoorschotSteps}
           showToggleMore={false}
           maxStepCount={-1}
+          highlightKey={false}
           id={'inkomen-stadspas-detail-tozo-aanvraag'}
         />
       )}

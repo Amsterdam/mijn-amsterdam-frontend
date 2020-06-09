@@ -1,16 +1,15 @@
-import Linkd, { Button } from '../Button/Button';
-import React, { CSSProperties } from 'react';
-
-import { IconChevronLeft, IconDownload } from '../../assets/icons';
-import { Document } from '../DocumentList/DocumentList';
 import classnames from 'classnames';
+import React, { CSSProperties } from 'react';
 import { defaultDateFormat } from '../../../universal/helpers';
-import styles from './StatusLine.module.scss';
-import { trackEvent } from '../../hooks/analytics.hook';
-import { useSessionStorage } from '../../hooks/storage.hook';
-import SanitizedHtml from '../SanitizedHtml/SanitizedHtml';
 import { ComponentChildren } from '../../../universal/types';
 import { GenericDocument } from '../../../universal/types/App.types';
+import { IconChevronLeft, IconDownload } from '../../assets/icons';
+import { trackEvent } from '../../hooks/analytics.hook';
+import { useSessionStorage } from '../../hooks/storage.hook';
+import Linkd, { Button } from '../Button/Button';
+import { Document } from '../DocumentList/DocumentList';
+import SanitizedHtml from '../SanitizedHtml/SanitizedHtml';
+import styles from './StatusLine.module.scss';
 
 export type StepType =
   | 'first-step'
@@ -26,6 +25,7 @@ export interface StatusLineItem {
   documents: Document[];
   isActive?: boolean;
   isChecked?: boolean;
+  isHighlight?: boolean;
   [key: string]: any;
 }
 
@@ -286,6 +286,7 @@ interface StatusLineProps {
   statusLabel?: string;
   className?: string;
   maxStepCount?: number | -1; // Supply -1 if you want to treat each step as a single, not connected step
+  highlightKey?: string | false;
 }
 
 export default function StatusLine({
@@ -296,6 +297,7 @@ export default function StatusLine({
   className,
   id,
   maxStepCount,
+  highlightKey = 'isActive',
 }: StatusLineProps) {
   const [isCollapsed, setCollapsed] = useSessionStorage(
     'STATUS_LINE_' + id,
@@ -328,6 +330,7 @@ export default function StatusLine({
             {items.map((item, index) => (
               <StatusLineItem
                 key={`step-${item.status}-${index}`}
+                highlight={highlightKey ? !!item[highlightKey] : false}
                 style={{
                   display: showToggleMore
                     ? !isCollapsed || (isCollapsed && item.isActive)
