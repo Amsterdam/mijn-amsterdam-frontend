@@ -76,6 +76,7 @@ export const PRISTINE_APPSTATE = {
 export function useAppState() {
   const { TIPS, fetch: fetchTips } = useTipsApi();
 
+  // The controller is used for close coupling of state refetch methods .
   const controller = useMemo(() => {
     return {
       TIPS: {

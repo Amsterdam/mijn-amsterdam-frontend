@@ -26,7 +26,6 @@ export const PublicRoutes = [
   AppRoutes.PROCLAIMER,
   AppRoutes.API_LOGIN,
   AppRoutes.ACCESSIBILITY,
-  AppRoutes.GENERAL_INFO,
 ];
 
 export const PrivateRoutes = Object.values(AppRoutes).filter(

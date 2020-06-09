@@ -67,7 +67,6 @@ function AppNotAuthenticated() {
           <Route exact path={AppRoutes.ROOT} component={LandingPage} />
           <Route path={AppRoutes.PROCLAIMER} component={Proclaimer} />
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
-          <Route path={AppRoutes.GENERAL_INFO} component={GeneralInfo} />
           <Route
             render={({ location: { pathname } }) => {
               if (isPrivateRoute(pathname)) {

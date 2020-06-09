@@ -55,7 +55,6 @@ export async function loadServicesCMSContent(
     {
       url: ApiUrls.CMS_CONTENT_GENERAL_INFO,
       transformResponse: responseData => {
-        console.log(responseData);
         return {
           generalInfo: {
             title: responseData.applicatie.title,
