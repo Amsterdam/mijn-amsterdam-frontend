@@ -4,6 +4,7 @@ import {
   DEFAULT_LNG,
   LOCATION_ZOOM,
   LAYERS_CONFIG,
+  DEFAULT_ZOOM,
 } from '../../universal/config';
 import { fetchHOME } from './home';
 
@@ -22,7 +23,7 @@ export async function loadServicesMap(sessionID: SessionID, samlToken: string) {
   }
 
   const embed = {
-    advanced: `${MAP_URL}&center=${lat}%2C${lng}&zoom=${LOCATION_ZOOM}&marker=${lat}%2C${lng}&marker-icon=home&${LAYERS_CONFIG}&legenda=true`,
+    advanced: `${MAP_URL}&center=${lat}%2C${lng}&zoom=${DEFAULT_ZOOM}&marker=${lat}%2C${lng}&marker-icon=home&${LAYERS_CONFIG}&legenda=true`,
     simple: `${MAP_URL}&center=${lat}%2C${lng}&zoom=${LOCATION_ZOOM}&marker=${lat}%2C${lng}&marker-icon=home`,
   };
 

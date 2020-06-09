@@ -7,6 +7,7 @@ import { ReactComponent as Logo } from '../../assets/images/logo-amsterdam.svg';
 import Linkd from '../Button/Button';
 import Heading from '../Heading/Heading';
 import styles from './MyArea.module.scss';
+import { getOtapEnvItem } from '../../../universal/config/env';
 
 export function MyAreaHeader() {
   return (
@@ -60,7 +61,7 @@ interface MyAreaMapIframeProps {
 export function MyAreaMapIFrame({ url, className }: MyAreaMapIframeProps) {
   return (
     <MyAreaMapContainer className={className}>
-      {!!url && IS_AP ? (
+      {!!url && getOtapEnvItem('isMyAreaMapEnabled') ? (
         <iframe
           id="mapIframe"
           title="Kaart van mijn buurt"
@@ -86,7 +87,7 @@ export function MyAreaDashboard({
 }: MyAreaDashboardComponentProps) {
   return (
     <div {...otherProps} className={styles.MapDashboard}>
-      {IS_AP && <MyAreaMapIFrame url={url} />}
+      {getOtapEnvItem('isMyAreaMapEnabled') && <MyAreaMapIFrame url={url} />}
       <NavLink to={AppRoutes.BUURT} className={styles.MapDashboardOverlay}>
         <div>
           <Heading size="large">Mijn buurt</Heading>

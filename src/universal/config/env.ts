@@ -54,6 +54,7 @@ interface EnvVars {
   bffSentryDsn?: string;
   ssoErfpachtUrl?: string;
   ssoMilieuzoneUrl?: string;
+  isMyAreaMapEnabled?: boolean;
 }
 
 type OtapEnvName = 'development' | 'test' | 'acceptance' | 'production';
@@ -61,7 +62,9 @@ type OtapEnvName = 'development' | 'test' | 'acceptance' | 'production';
 type OtapEnv = { [name in OtapEnvName]: EnvVars };
 
 const otapServerEnv: OtapEnv = {
-  development: {},
+  development: {
+    isMyAreaMapEnabled: true,
+  },
   test: {},
   acceptance: {
     analyticsId: 25,
@@ -72,6 +75,7 @@ const otapServerEnv: OtapEnv = {
     ssoErfpachtUrl:
       'https://mijnerfpacht.acc.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
     ssoMilieuzoneUrl: 'https://ontheffingen-acc.amsterdam.nl/publiek/aanvragen',
+    isMyAreaMapEnabled: true,
   },
   production: {
     analyticsId: 28,
@@ -82,6 +86,7 @@ const otapServerEnv: OtapEnv = {
     ssoErfpachtUrl:
       'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
     ssoMilieuzoneUrl: 'https://ontheffingen.amsterdam.nl/publiek/aanvragen',
+    isMyAreaMapEnabled: true,
   },
 };
 

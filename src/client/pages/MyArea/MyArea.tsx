@@ -1,8 +1,7 @@
-import { IS_AP } from '../../../universal/config/env';
-import { MyAreaHeader, MyAreaMapIFrame } from '../../components';
 import React, { useContext } from 'react';
-
+import { getOtapEnvItem } from '../../../universal/config/env';
 import { AppContext } from '../../AppState';
+import { MyAreaHeader, MyAreaMapIFrame } from '../../components';
 import styles from './MyArea.module.scss';
 
 export default () => {
@@ -11,7 +10,9 @@ export default () => {
   return (
     <div className={styles.Container}>
       <MyAreaHeader />
-      {IS_AP && <MyAreaMapIFrame url={BUURT.content?.embed.advanced} />}
+      {getOtapEnvItem('isMyAreaMapEnabled') && (
+        <MyAreaMapIFrame url={BUURT.content?.embed.advanced} />
+      )}
     </div>
   );
 };
