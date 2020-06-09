@@ -4,7 +4,6 @@ import { PRISTINE_APPSTATE } from '../hooks/useAppState';
 import { dateSort } from '../../universal/helpers/date';
 
 function transformNotifications(NOTIFICATIONS: AppState['NOTIFICATIONS']) {
-  console.log('NOTIFICATIONS:', NOTIFICATIONS);
   if (NOTIFICATIONS.status === 'OK') {
     NOTIFICATIONS.content.push(WelcomeNotification);
     NOTIFICATIONS.content.sort(dateSort('datePublished', 'desc'));
