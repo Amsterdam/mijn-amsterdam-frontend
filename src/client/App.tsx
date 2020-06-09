@@ -41,8 +41,9 @@ import {
   Profile,
   Zorg,
   ZorgDetail,
-  Accessibility,
+  GeneralInfo,
 } from './pages';
+import Accessibility from './pages/Accessibility/Accessibility';
 import { SessionContext, SessionState } from './SessionState';
 
 function AppNotAuthenticated() {
@@ -66,6 +67,7 @@ function AppNotAuthenticated() {
           <Route exact path={AppRoutes.ROOT} component={LandingPage} />
           <Route path={AppRoutes.PROCLAIMER} component={Proclaimer} />
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
+          <Route path={AppRoutes.GENERAL_INFO} component={GeneralInfo} />
           <Route
             render={({ location: { pathname } }) => {
               if (isPrivateRoute(pathname)) {
@@ -146,6 +148,7 @@ function AppAuthenticated() {
             <Route path={AppRoutes.AFVAL} component={GarbageInformation} />
           )}
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
+          <Route path={AppRoutes.GENERAL_INFO} component={GeneralInfo} />
           <Route component={NotFound} />
         </Switch>
       </div>

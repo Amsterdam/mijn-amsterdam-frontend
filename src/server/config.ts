@@ -38,7 +38,7 @@ export const ApiUrls: Record<ApiStateKey, string> = {
   BAG: `${BFF_DATAPUNT_API_BASE_URL}/atlas/search/adres/`,
   AFVAL: `${BFF_DATAPUNT_API_BASE_URL}/afvalophaalgebieden/search/`,
   MILIEUZONE: `${BFF_MS_API_BASE_URL}/milieu/get`,
-  AMSTERDAM_CONTENT: `https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data`,
+  CMS_CONTENT_GENERAL_INFO: `https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data`,
 };
 
 export interface ApiConfig {

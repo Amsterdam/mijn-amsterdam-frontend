@@ -145,24 +145,36 @@
   }
 }
 
-.TutorialBtn {
+.InfoButtons {
   height: $main-header-navbar-height;
+  position: absolute;
+  top: $main-header-topbar-height;
+  right: calc(50% - #{$main-boxed-width} / 2);
+  display: flex;
+  align-items: center;
+
+  &Open {
+    display: none;
+  }
+
+  > * {
+    font-weight: 500;
+    color: $color-black;
+    font-size: 1.8rem;
+
+    + * {
+      margin-left: 2rem;
+    }
+  }
+}
+
+.TutorialBtn {
   background-size: 2.4rem;
   background-repeat: no-repeat;
   background-position: center;
   border: 0;
   background-color: transparent;
-  position: absolute;
-  top: $main-header-topbar-height;
-  right: calc(50% - #{$main-boxed-width} / 2);
-  font-weight: 500;
-  color: $color-black;
-  font-size: 1.8rem;
   padding: 0;
-
-  &Open {
-    display: none;
-  }
 
   @include mq-tablet() {
     top: $main-header-topbar-height--tablet;

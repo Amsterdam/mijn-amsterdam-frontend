@@ -14,3 +14,4 @@ export * from './services-direct';
 export * from './services-related';
 export * from './services-generated';
 export * from './services-map';
+export * from './services-cmscontent';

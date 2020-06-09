@@ -300,29 +300,41 @@ export default function MainNavBar() {
         </>
       )}
 
-      {location.pathname === AppRoutes.ROOT && (
-        <>
-          <Button
-            className={classnames(
-              styles.TutorialBtn,
-              isTutorialVisible && styles.TutorialBtnOpen
+      <div
+        className={classnames(
+          styles.InfoButtons,
+          isTutorialVisible && styles.InfoButtonsOpen
+        )}
+      >
+        {location.pathname === AppRoutes.ROOT && (
+          <>
+            <Button
+              className={styles.TutorialBtn}
+              onClick={() => {
+                setIsTutorialVisible(!isTutorialVisible);
+              }}
+              variant="plain"
+              aria-expanded={isTutorialVisible}
+              lean={true}
+            >
+              Rondleiding
+            </Button>
+            {isTutorialVisible && (
+              <Tutorial
+                onClose={() => setIsTutorialVisible(!isTutorialVisible)}
+              />
             )}
-            onClick={() => {
-              setIsTutorialVisible(!isTutorialVisible);
-            }}
-            variant="plain"
-            aria-expanded={isTutorialVisible}
-            lean={true}
-          >
-            Uitleg
-          </Button>
-          {isTutorialVisible && (
-            <Tutorial
-              onClose={() => setIsTutorialVisible(!isTutorialVisible)}
-            />
-          )}
-        </>
-      )}
+          </>
+        )}
+        <Linkd
+          href={AppRoutes.GENERAL_INFO}
+          variant="plain"
+          icon={''}
+          lean={true}
+        >
+          Uitleg
+        </Linkd>
+      </div>
     </nav>
   );
 }

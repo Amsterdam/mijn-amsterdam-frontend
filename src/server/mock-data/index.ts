@@ -80,7 +80,7 @@ export const mockDataConfig: MockDataConfig = {
     status: 200,
     responseData: () => loadMockApiResponseJson(MILIEUZONE),
   },
-  [ApiUrls.AMSTERDAM_CONTENT]: {
+  [ApiUrls.CMS_CONTENT_GENERAL_INFO]: {
     status: 200,
     responseData: () => loadMockApiResponseJson(AMSTERDAM_CONTENT),
   },

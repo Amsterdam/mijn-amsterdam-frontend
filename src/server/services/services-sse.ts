@@ -1,9 +1,10 @@
-import { loadServicesDirect } from './services-direct';
-import { loadServicesRelated } from './services-related';
-import { loadServicesMap } from './services-map';
-import { loadServicesGenerated } from './services-generated';
-import { Response, Request, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { getSamlTokenHeader } from '../helpers/request';
+import { loadServicesCMSContent } from './services-cmscontent';
+import { loadServicesDirect } from './services-direct';
+import { loadServicesGenerated } from './services-generated';
+import { loadServicesMap } from './services-map';
+import { loadServicesRelated } from './services-related';
 
 function sendMessage(
   res: Response,
@@ -59,11 +60,19 @@ export async function loadServicesSSE(
     sendMessage(res, 'generated', 'message', data);
   });
 
+  const servicesCMSContent = loadServicesCMSContent(
+    req.sessionID!,
+    getSamlTokenHeader(req)
+  ).then(data => {
+    sendMessage(res, 'cmscontent', 'message', data);
+  });
+
   await Promise.all([
     servicesDirect,
     servicesRelated,
     servicesMap,
     servicesGenerated,
+    servicesCMSContent,
   ]).finally(() => {
     sendMessage(res, 'close', 'close', null);
     next();

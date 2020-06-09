@@ -12,17 +12,20 @@ import {
   loadServicesDirect,
   loadServicesRelated,
   loadServicesMap,
+  loadServicesCMSContent,
 } from '../../server/services';
 
 type GeneratedResponse = FEApiResponseData<typeof loadServicesGenerated>;
 type DirectResponse = FEApiResponseData<typeof loadServicesDirect>;
 type MapsResponse = FEApiResponseData<typeof loadServicesMap>;
 type RelatedResponse = FEApiResponseData<typeof loadServicesRelated>;
+type CMSContentResponse = FEApiResponseData<typeof loadServicesCMSContent>;
 
 type ApiState = GeneratedResponse &
   DirectResponse &
   MapsResponse &
-  RelatedResponse;
+  RelatedResponse &
+  CMSContentResponse;
 
 type AppStateController = {
   [key in keyof ApiState]?: {
@@ -60,6 +63,11 @@ export const PRISTINE_APPSTATE = {
   AFVAL: apiPristineResult({ ophalen: [], wegbrengen: [] }),
   HOME: apiPristineResult(null),
   BUURT: apiPristineResult(null),
+
+  // CMS content
+  CMS_CONTENT: apiPristineResult({
+    generalInfo: null,
+  }),
 
   // Probeersel
   controller: {},

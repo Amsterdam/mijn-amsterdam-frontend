@@ -8,6 +8,7 @@ import {
 } from './services';
 import { loadServicesMap } from './services/services-map';
 import { loadServicesSSE } from './services/services-sse';
+import { loadServicesCMSContent } from './services/services-cmscontent';
 
 export const router = express.Router();
 
@@ -38,6 +39,21 @@ router.get(`/services/related`, async function handleRouteServicesRelated(
   try {
     res.send(
       await loadServicesRelated(req.sessionID!, getSamlTokenHeader(req))
+    );
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get(`/services/cmscontent`, async function handleRouteServicesRelated(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    res.send(
+      await loadServicesCMSContent(req.sessionID!, getSamlTokenHeader(req))
     );
     next();
   } catch (error) {
@@ -93,6 +109,10 @@ router.get(`/services/all`, async function handleRouteServicesMap(
 ) {
   try {
     const data = {
+      ...(await loadServicesCMSContent(
+        req.sessionID!,
+        getSamlTokenHeader(req)
+      )),
       ...(await loadServicesDirect(req.sessionID!, getSamlTokenHeader(req))),
       ...(await loadServicesRelated(req.sessionID!, getSamlTokenHeader(req))),
       ...(await loadServicesMap(req.sessionID!, getSamlTokenHeader(req))),
