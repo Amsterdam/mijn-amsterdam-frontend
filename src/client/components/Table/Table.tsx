@@ -4,7 +4,7 @@ import { capitalizeFirstLetter, entries } from '../../../universal/helpers';
 import { Unshaped } from '../../../universal/types';
 import Linkd from '../Button/Button';
 import styles from './Table.module.scss';
-import SanitizedHtml from '../SanitizedHtml/SanitizedHtml';
+import InnerHtml from '../InnerHtml/InnerHtml';
 
 export function addTitleLinkComponent(
   items: Unshaped[],
@@ -75,7 +75,7 @@ export default function Table({
                   <span className={styles.DisplayPropLabel}>{label}:</span>
                 )}
                 {item[key] ? (
-                  <SanitizedHtml>{item[key]}</SanitizedHtml>
+                  <InnerHtml>{item[key]}</InnerHtml>
                 ) : (
                   <span>&mdash;</span>
                 )}

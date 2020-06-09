@@ -1,5 +1,9 @@
-import sanitizeHtml from 'sanitize-html';
+// import sanitizeHtml from 'sanitize-html';
 import React, { memo } from 'react';
+
+function sanitizeHtml(items: any, config: any) {
+  return items;
+}
 
 const TAGS_ALLOWED = ['a', 'p', 'br', 'strong', 'em', 'i', 'b', 'div', 'u'];
 const ATTR_ALLOWED = {
@@ -10,7 +14,7 @@ const DEFAULT_CONFIG = {
   disallowedTagsMode: 'escape',
 };
 
-interface SanitizedHtmlTagProps {
+interface InnerHtmlTagProps {
   wrapWithTagName?: keyof JSX.IntrinsicElements;
   children: string;
   allowedTags?: string[];
@@ -18,13 +22,13 @@ interface SanitizedHtmlTagProps {
   className?: string;
 }
 
-function SanitizedHtmlTag({
+function InnerHtmlTag({
   wrapWithTagName = 'div',
   children,
   allowedTags = TAGS_ALLOWED,
   allowedAttributes = ATTR_ALLOWED,
   className,
-}: SanitizedHtmlTagProps) {
+}: InnerHtmlTagProps) {
   const config = Object.assign(DEFAULT_CONFIG, {
     allowedTags,
     allowedAttributes,
@@ -38,4 +42,4 @@ function SanitizedHtmlTag({
   );
 }
 
-export default memo(SanitizedHtmlTag);
+export default memo(InnerHtmlTag);

@@ -8,7 +8,7 @@ import { trackEvent } from '../../hooks/analytics.hook';
 import { useSessionStorage } from '../../hooks/storage.hook';
 import Linkd, { Button } from '../Button/Button';
 import { Document } from '../DocumentList/DocumentList';
-import SanitizedHtml from '../SanitizedHtml/SanitizedHtml';
+import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './StatusLine.module.scss';
 
 export type StepType =
@@ -89,7 +89,7 @@ export function StatusLinePanelDescription({
 }: StatusLinePanelDescriptionProps) {
   return (
     <StatusLinePanel name="description">
-      <SanitizedHtml className={styles.PanelContent}>{content}</SanitizedHtml>
+      <InnerHtml className={styles.PanelContent}>{content}</InnerHtml>
     </StatusLinePanel>
   );
 }
