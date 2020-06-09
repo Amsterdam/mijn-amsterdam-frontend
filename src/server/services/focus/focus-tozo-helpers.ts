@@ -360,9 +360,9 @@ function getTozoStatus(steps: FocusItemStep[]) {
   if (steps.length === 1 && steps[0].id === TOZO_AANVRAAG_STEP_ID) {
     // 1 Regeling aanvraag
     return 'Aanvraag';
-  } else if (aanvraagSteps.length === 1) {
+  } else if (actualProductSteps.length === 1) {
     // Uitkering OR Lening aanvraag only, just display the last status
-    return aanvraagSteps[aanvraagSteps.length - 1].status;
+    return actualProductSteps[actualProductSteps.length - 1].status;
   } else if (
     aanvraagSteps.length >= 1 &&
     aanvraagSteps.length === beslissingSteps.length
@@ -375,9 +375,11 @@ function getTozoStatus(steps: FocusItemStep[]) {
 }
 
 export function createFocusItemTozo(steps: FocusItemStep[]) {
-  const stepsWithDate = steps.filter(item => !!item.datePublished);
+  const stepsWithDate = steps
+    .filter(item => !!item.datePublished)
+    .sort(dateSort('datePublished'));
   const lastStep = stepsWithDate[stepsWithDate.length - 1];
-  const firstActivity = stepsWithDate.sort(dateSort('dateStart', 'desc')).pop();
+  const firstActivity = stepsWithDate[0];
   const unknownId = 'unknown-first-activity';
   const firstActivityDatePublished = firstActivity?.datePublished || unknownId;
 
