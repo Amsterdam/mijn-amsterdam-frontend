@@ -286,7 +286,7 @@ interface StatusLineProps {
   statusLabel?: string;
   className?: string;
   maxStepCount?: number | -1; // Supply -1 if you want to treat each step as a single, not connected step
-  highlightKey?: string | false;
+  highlightKey?: string | false; // key of data item which corresponding value is cast to a boolean and controls wether this item gets the highlight class
 }
 
 export default function StatusLine({
