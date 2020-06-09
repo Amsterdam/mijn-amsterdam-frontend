@@ -67,7 +67,9 @@ export const contentLabels: LabelData = {
         status: stepLabels.aanvraag,
         description: product =>
           `
-          <p>U hebt op ${product.dateStart} een bijstandsuitkering aangevraagd.</p>
+          <p>U hebt op ${defaultDateFormat(
+            product.dateStart
+          )} een bijstandsuitkering aangevraagd.</p>
           <p>
             <a
               href=${FocusExternalUrls.BijstandsUitkeringAanvragen}
