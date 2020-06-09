@@ -14,6 +14,7 @@ import {
   addTitleLinkComponent,
 } from '../../components';
 import styles from './Burgerzaken.module.scss';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 
 const DISPLAY_PROPS = {
   title: '',
@@ -27,7 +28,13 @@ export default () => {
     if (!BRP.content?.identiteitsbewijzen) {
       return [];
     }
-    return addTitleLinkComponent(BRP.content?.identiteitsbewijzen);
+    const items = BRP.content?.identiteitsbewijzen.map(item => {
+      return {
+        ...item,
+        datumAfloop: defaultDateFormat(item.datumAfloop),
+      };
+    });
+    return addTitleLinkComponent(items);
   }, [BRP.content]);
 
   return (

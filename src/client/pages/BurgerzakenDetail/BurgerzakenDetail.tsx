@@ -5,6 +5,7 @@ import {
   capitalizeFirstLetter,
   isError,
   isLoading,
+  defaultDateFormat,
 } from '../../../universal/helpers';
 import { AppContext } from '../../AppState';
 import {
@@ -59,10 +60,12 @@ export default () => {
               Documentnummer <strong>{DocumentItem.documentNummer}</strong>
             </p>
             <p>
-              Datum uitgifte <strong>{DocumentItem.datumUitgifte}</strong>
+              Datum uitgifte{' '}
+              <strong>{defaultDateFormat(DocumentItem.datumUitgifte)}</strong>
             </p>
             <p>
-              Geldig tot <strong>{DocumentItem.datumAfloop}</strong>
+              Geldig tot{' '}
+              <strong>{defaultDateFormat(DocumentItem.datumAfloop)}</strong>
             </p>
           </div>
         )}

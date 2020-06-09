@@ -72,7 +72,9 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
         isAlert: true,
         id: `${docTitle}-datum-afloop-verstreken`,
         title: `Uw ${docTitle} is verlopen`,
-        description: `Sinds ${document.datumAfloop} is uw ${docTitle} niet meer geldig.`,
+        description: `Sinds ${defaultDateFormat(
+          document.datumAfloop
+        )} is uw ${docTitle} niet meer geldig.`,
         link: {
           to: BrpDocumentCallToAction.isExpired[document.documentType],
           title: `Vraag snel uw nieuwe ${docTitle} aan`,
@@ -80,6 +82,12 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
       });
     });
   }
+
+  console.log(
+    willExpireSoonDocuments,
+    expiredDocuments,
+    data.identiteitsbewijzen
+  );
 
   if (!!willExpireSoonDocuments && willExpireSoonDocuments.length) {
     willExpireSoonDocuments.forEach(document => {
@@ -92,7 +100,9 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
         hideDatePublished: true,
         id: `${document.documentType}-datum-afloop-binnekort`,
         title: `Uw ${docTitle} verloopt binnenkort`,
-        description: `Vanaf ${document.datumAfloop} is uw ${docTitle} niet meer geldig.`,
+        description: `Vanaf ${defaultDateFormat(
+          document.datumAfloop
+        )} is uw ${docTitle} niet meer geldig.`,
         link: {
           to: BrpDocumentCallToAction.isExpired[document.documentType],
           title: `Vraag snel uw nieuwe ${docTitle} aan`,
@@ -146,8 +156,8 @@ export function transformBRPData(responseData: BRPData) {
         return Object.assign({}, document, {
           title:
             BrpDocumentTitles[document.documentType] || document.documentType,
-          datumAfloop: defaultDateFormat(document.datumAfloop),
-          datumUitgifte: defaultDateFormat(document.datumUitgifte),
+          datumAfloop: document.datumAfloop,
+          datumUitgifte: document.datumUitgifte,
           link: {
             to: route,
             title: document.documentType,
