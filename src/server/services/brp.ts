@@ -44,24 +44,20 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
 
   const notifications: MyNotification[] = [];
 
-  const expiredDocuments =
-    !!data.identiteitsbewijzen &&
-    data.identiteitsbewijzen.filter(
-      document => new Date(document.datumAfloop) < compareDate
+  const expiredDocuments = data.identiteitsbewijzen?.filter(
+    document => new Date(document.datumAfloop) < compareDate
+  );
+
+  const willExpireSoonDocuments = data.identiteitsbewijzen?.filter(document => {
+    const days = differenceInCalendarDays(
+      new Date(document.datumAfloop),
+      compareDate
     );
 
-  const willExpireSoonDocuments =
-    !!data.identiteitsbewijzen &&
-    data.identiteitsbewijzen.filter(document => {
-      const days = differenceInCalendarDays(
-        new Date(document.datumAfloop),
-        compareDate
-      );
+    return days <= DAYS_BEFORE_EXPIRATION && days > 0;
+  });
 
-      return days <= DAYS_BEFORE_EXPIRATION && days > 0;
-    });
-
-  if (!!expiredDocuments && expiredDocuments.length) {
+  if (expiredDocuments?.length) {
     expiredDocuments.forEach(document => {
       const docTitle =
         BrpDocumentTitles[document.documentType] || document.documentType;
@@ -83,13 +79,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
     });
   }
 
-  console.log(
-    willExpireSoonDocuments,
-    expiredDocuments,
-    data.identiteitsbewijzen
-  );
-
-  if (!!willExpireSoonDocuments && willExpireSoonDocuments.length) {
+  if (willExpireSoonDocuments?.length) {
     willExpireSoonDocuments.forEach(document => {
       const docTitle =
         BrpDocumentTitles[document.documentType] || document.documentType;
