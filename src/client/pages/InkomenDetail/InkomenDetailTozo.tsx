@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import useRouter from 'use-react-router';
-import { stepStatusLabels } from '../../../server/services/focus/focus-aanvragen-content';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import { AppContext } from '../../AppState';
@@ -94,7 +93,7 @@ export default () => {
           showToggleMore={false}
           maxStepCount={
             uitkeringSteps.length === 1 &&
-            uitkeringSteps[0].status === stepStatusLabels.beslissing
+            uitkeringSteps[0].status === 'Besluit'
               ? -1
               : 2
           }
@@ -108,8 +107,7 @@ export default () => {
           items={leningSteps}
           showToggleMore={false}
           maxStepCount={
-            leningSteps.length === 1 &&
-            leningSteps[0].status === stepStatusLabels.beslissing
+            leningSteps.length === 1 && leningSteps[0].status === 'Besluit'
               ? -1
               : 2
           }

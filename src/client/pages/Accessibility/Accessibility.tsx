@@ -4,7 +4,7 @@ import {
   PageHeading,
   PageContent,
   LinkdInline,
-} from '../../../components';
+} from '../../components';
 
 export default () => {
   return (

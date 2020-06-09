@@ -11,8 +11,8 @@ import {
   loadServicesGenerated,
   loadServicesDirect,
   loadServicesRelated,
+  loadServicesMap,
 } from '../../server/services';
-import { loadServicesMap } from '../../server/services/services-map';
 
 type GeneratedResponse = FEApiResponseData<typeof loadServicesGenerated>;
 type DirectResponse = FEApiResponseData<typeof loadServicesDirect>;

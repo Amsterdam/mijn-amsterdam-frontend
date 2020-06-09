@@ -42,7 +42,7 @@ import {
   Zorg,
   ZorgDetail,
 } from './pages';
-import Accessibility from './pages/AlphaPage/Accessibility/Accessibility';
+import Accessibility from './pages/Accessibility/Accessibility';
 import { SessionContext, SessionState } from './SessionState';
 
 function AppNotAuthenticated() {
