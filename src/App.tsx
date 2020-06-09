@@ -42,12 +42,27 @@ import NotFound from './pages/NotFound/NotFound';
 import Profile from './pages/Profile/Profile';
 import InkomenDetailTozo from 'pages/InkomenDetail/InkomenDetailTozo';
 
+function isPrivateRoute(pathname: string) {
+  return PrivateRoutes.some(
+    path =>
+      !!matchPath(pathname, {
+        path,
+        exact: true,
+        strict: false,
+      })
+  );
+}
+
 function AppNotAuthenticated() {
   const { location } = useRouter();
 
   const [routeEntry, setRouteEntry] = useLocalStorage('RouteEntry', '');
 
-  if (!routeEntry || (routeEntry === '/' && location.pathname !== '/')) {
+  if (
+    (!routeEntry || routeEntry === '/') &&
+    location.pathname !== '/' &&
+    isPrivateRoute(location.pathname)
+  ) {
     setRouteEntry(location.pathname);
   }
 
@@ -61,16 +76,7 @@ function AppNotAuthenticated() {
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           <Route
             render={({ location: { pathname } }) => {
-              if (
-                PrivateRoutes.some(
-                  path =>
-                    !!matchPath(pathname, {
-                      path,
-                      exact: true,
-                      strict: false,
-                    })
-                )
-              ) {
+              if (isPrivateRoute(pathname)) {
                 // Private routes are redirected to Home
                 return <Redirect to={AppRoutes.ROOT} />;
               }

@@ -87,10 +87,10 @@ export default function useMyNotificationsApi({
           )
         : []),
     ];
-    if (new Date() <= new Date(2020, 5, 6)) {
+    if (new Date() < new Date('2020-06-07')) {
       notifications.push(MaintenanceNotification01);
     }
-    if (new Date() <= new Date(2020, 5, 8)) {
+    if (new Date() < new Date('2020-06-09')) {
       notifications.push(MaintenanceNotification02);
     }
     return notifications.sort(dateSort('datePublished', 'desc'));
