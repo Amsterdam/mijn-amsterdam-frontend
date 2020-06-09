@@ -40,7 +40,7 @@ export type AppState = {
 export const PRISTINE_APPSTATE = {
   // Generated
   TIPS: apiPristineResult({ items: [] }),
-  NOTIFICATIONS: apiPristineResult({ items: [], total: 0 }),
+  NOTIFICATIONS: apiPristineResult([]),
   CASES: apiPristineResult([]),
 
   // Direct

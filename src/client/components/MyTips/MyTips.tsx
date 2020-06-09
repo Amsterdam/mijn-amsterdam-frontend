@@ -91,6 +91,7 @@ export interface MyTipsProps {
   isLoading: boolean;
   showHeader?: boolean;
   showOptIn?: boolean;
+  noContentMessage?: string;
 }
 
 function LoadingContentListItems() {
@@ -147,6 +148,7 @@ export default function MyTips({
   className,
   isLoading = true,
   showHeader = true,
+  noContentMessage = 'We hebben op dit moment geen tips voor u.',
   ...otherProps
 }: MyTipsProps) {
   return (
@@ -159,7 +161,7 @@ export default function MyTips({
             items.map((item, i) => <Tip key={item.title} tip={item} />)}
         </ul>
         {!isLoading && !items.length && (
-          <p>We hebben op dit moment geen tips voor u.</p>
+          <p className={styles.NoContentMessage}>{noContentMessage}</p>
         )}
       </div>
     </OptInContextProvider>

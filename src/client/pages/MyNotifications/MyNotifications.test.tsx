@@ -6,10 +6,7 @@ import { AppState } from '../../AppState';
 
 const appState: Partial<AppState> = {
   NOTIFICATIONS: {
-    content: {
-      total: 0,
-      items: [],
-    },
+    content: [],
     status: 'OK',
   },
 };

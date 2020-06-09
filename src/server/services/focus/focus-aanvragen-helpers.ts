@@ -303,7 +303,7 @@ export function createFocusNotification(
   const itemContent = findProductContent(item, contentLabels);
 
   const titleTransform = stepsContent?.notification?.title;
-  const descriptionTransform = stepsContent?.notification?.title;
+  const descriptionTransform = stepsContent?.notification?.description;
   const linkTransform = stepsContent?.notification?.link || itemContent?.link;
 
   return {

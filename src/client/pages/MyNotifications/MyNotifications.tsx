@@ -21,7 +21,9 @@ export default () => {
 
   const [[startIndex, endIndex], setPageIndex] = useState(INITIAL_INDEX);
   const itemsPaginated =
-    NOTIFICATIONS.content?.items.slice(startIndex, endIndex + 1) || [];
+    NOTIFICATIONS.content?.slice(startIndex, endIndex + 1) || [];
+
+  const total = NOTIFICATIONS.content?.length || itemsPaginated.length;
 
   return (
     <DetailPage className={styles.MyNotifications}>
@@ -37,18 +39,19 @@ export default () => {
       </PageContent>
       <MyNotifications
         isLoading={isLoading(NOTIFICATIONS)}
-        total={NOTIFICATIONS.content!.total}
         items={itemsPaginated}
         noContentNotification="Er zijn op dit moment geen actuele meldingen voor u."
         trackCategory="Actueel overzicht"
       />
-      {itemsPaginated.length > PAGE_SIZE && (
-        <Pagination
-          className={styles.Pagination}
-          totalCount={NOTIFICATIONS.content!.total}
-          pageSize={PAGE_SIZE}
-          onPageClick={(page, ...index) => setPageIndex(index)}
-        />
+      {total > PAGE_SIZE && (
+        <PageContent>
+          <Pagination
+            className={styles.Pagination}
+            totalCount={total}
+            pageSize={PAGE_SIZE}
+            onPageClick={(page, ...index) => setPageIndex(index)}
+          />
+        </PageContent>
       )}
     </DetailPage>
   );

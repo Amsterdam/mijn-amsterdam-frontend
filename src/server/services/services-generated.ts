@@ -79,13 +79,10 @@ export async function loadServicesGenerated(
 
   const tips = await fetchTIPS(sessionID, samlToken, tipsRequestData);
 
-  const notificationsResult = {
-    items: notifications
-      .sort(dateSort('datePublished', 'desc'))
-      // Put the alerts on the top regardless of the publication date
-      .sort((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0)),
-    total: notifications.length,
-  };
+  const notificationsResult = notifications
+    .sort(dateSort('datePublished', 'desc'))
+    // Put the alerts on the top regardless of the publication date
+    .sort((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0));
 
   return {
     CASES: apiSuccesResult(cases.sort(dateSort('datePublished', 'desc'))),

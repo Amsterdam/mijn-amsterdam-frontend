@@ -25,12 +25,10 @@ export default () => {
   const { TIPS, NOTIFICATIONS, CASES, BUURT, HOME } = appState;
 
   const tipItems = TIPS.content!.items.slice(0, MAX_TIPS_VISIBLE);
-  const notificationItems = NOTIFICATIONS.content!.items.slice(
-    0,
-    MAX_NOTIFICATIONS_VISIBLE
-  );
+  const notificationItems =
+    NOTIFICATIONS.content?.slice(0, MAX_NOTIFICATIONS_VISIBLE) || [];
   const isPhoneScreen = usePhoneScreen();
-  const NOTIFICATIONSTotal = NOTIFICATIONS.content!.items.length;
+  const NOTIFICATIONSTotal = NOTIFICATIONS.content?.length || 0;
 
   const {
     items: myChapterItems,
@@ -53,7 +51,6 @@ export default () => {
         </PageHeading>
         <div className={styles.TopContentContainer}>
           <MyNotifications
-            total={NOTIFICATIONSTotal}
             items={notificationItems}
             showMoreLink={NOTIFICATIONSTotal > MAX_NOTIFICATIONS_VISIBLE}
             isLoading={isLoading(NOTIFICATIONS)}

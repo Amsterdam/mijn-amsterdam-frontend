@@ -1,13 +1,13 @@
 import classnames from 'classnames';
 import React, { HTMLProps, PropsWithChildren } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { AppRoutes, IS_AP } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
+import { getOtapEnvItem } from '../../../universal/config/env';
 import { IconClose, IconHome } from '../../assets/icons';
 import { ReactComponent as Logo } from '../../assets/images/logo-amsterdam.svg';
 import Linkd from '../Button/Button';
 import Heading from '../Heading/Heading';
 import styles from './MyArea.module.scss';
-import { getOtapEnvItem } from '../../../universal/config/env';
 
 export function MyAreaHeader() {
   return (

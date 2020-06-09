@@ -21,7 +21,6 @@ import styles from './MyNotifications.module.scss';
 
 export interface MyNotificationsProps {
   items: MyNotification[];
-  total: number;
   showMoreLink?: boolean;
   isLoading?: boolean;
   trackCategory: string;
@@ -34,7 +33,6 @@ interface MyNotification extends MyNotificationBase {
 
 export default function MyNotifications({
   items = [],
-  total = 0,
   showMoreLink = false,
   isLoading = true,
   trackCategory,
