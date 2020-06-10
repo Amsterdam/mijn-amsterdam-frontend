@@ -1,12 +1,16 @@
 import { AppState } from '../AppState';
 import { isError } from '../../universal/helpers';
-import { API_BASE_PATH } from '../../universal/config/api';
+import { IS_AP, API_BASE_PATH } from '../../universal/config';
 
 // Urls directly used from front-end
 export const TMA_LOGIN_URL_DIGID = `${API_BASE_PATH}/login`;
 export const TMA_LOGIN_URL_EHERKENNING = `${API_BASE_PATH}1/login`;
-export const LOGIN_URL_DIGID = `${TMA_LOGIN_URL_DIGID}?target=digid`;
-export const LOGIN_URL_EHERKENNING = `${TMA_LOGIN_URL_EHERKENNING}?target=eherkenning`;
+export const LOGIN_URL_DIGID = `${TMA_LOGIN_URL_DIGID}${
+  !IS_AP ? '?target=digid' : ''
+}`;
+export const LOGIN_URL_EHERKENNING = `${TMA_LOGIN_URL_EHERKENNING}${
+  !IS_AP ? '?target=eherkenning' : ''
+}`;
 export const LOGOUT_URL = '/logout';
 export const BFF_API_BASE_URL = `${API_BASE_PATH}/bff`;
 export const AUTH_API_URL = `${API_BASE_PATH}/auth/check`;
