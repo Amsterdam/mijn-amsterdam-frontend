@@ -58,7 +58,9 @@ export async function loadServicesCMSContent(
         return {
           generalInfo: {
             title: responseData.applicatie.title,
-            content: sanitizeCmsContent(responseData.applicatie.inhoud.tekst),
+            content:
+              sanitizeCmsContent(responseData.applicatie.inhoud.inleiding) +
+              sanitizeCmsContent(responseData.applicatie.inhoud.tekst),
           },
         };
       },
