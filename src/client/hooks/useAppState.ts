@@ -99,9 +99,14 @@ export function useAppState() {
       },
       null
     );
-    if (api.data !== null) {
-      setAppState(api.data);
-    }
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => {
+      if (api.data !== null) {
+        setAppState(
+          Object.assign({ controller: appState.controller }, api.data)
+        );
+      }
+    }, [appState.controller, api.data]);
   } else {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const onEvent = useCallback((messageData: any) => {
