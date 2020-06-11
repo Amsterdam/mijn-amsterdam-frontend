@@ -137,9 +137,9 @@ describe('requestData.ts', () => {
     // @ts-ignore
     expect(rs.sentry).toBe('x');
 
-    const error = new Error('Network Error').toString();
+    const error = new Error('Network Error');
 
-    expect(rs).toStrictEqual(apiErrorResult(error, null, 'x'));
+    expect(rs).toStrictEqual(apiErrorResult(error.toString(), null, 'x'));
 
     expect(capture).toHaveBeenCalledWith(error, {
       tags: {
