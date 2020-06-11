@@ -6,6 +6,7 @@ import {
   apiPostponeResult,
   apiErrorResult,
 } from '../../universal/helpers/api';
+import * as Sentry from '@sentry/node';
 
 describe('requestData.ts', () => {
   const DUMMY_RESPONSE = { foo: 'bar' };
@@ -120,6 +121,11 @@ describe('requestData.ts', () => {
   });
 
   it('A requests responds with error', async () => {
+    // @ts-ignore
+    const capture = (Sentry.captureException = jest.fn(() => {
+      return 'x';
+    }));
+
     const rs = await requestData(
       {
         url: DUMMY_URL_2,
@@ -128,8 +134,22 @@ describe('requestData.ts', () => {
       SAML_TOKEN
     );
 
-    expect(rs).toStrictEqual(
-      apiErrorResult(new Error('Network Error') as AxiosError, null)
-    );
+    // @ts-ignore
+    expect(rs.sentry).toBe('x');
+
+    const error = new Error('Network Error') as AxiosError;
+
+    expect(rs).toStrictEqual(apiErrorResult(error, null, 'x'));
+
+    expect(capture).toHaveBeenCalledWith(error, {
+      tags: {
+        url: DUMMY_URL_2,
+      },
+      extra: {
+        module: 'request',
+      },
+    });
+
+    capture.mockRestore();
   });
 });

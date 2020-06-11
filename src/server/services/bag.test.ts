@@ -4,6 +4,7 @@ import { ApiUrls } from '../config';
 import bagData from '../mock-data/json/bag.json';
 import { fetchBAG, formatBAGData } from './bag';
 import { axiosRequest } from '../helpers/request';
+import * as Sentry from '@sentry/node';
 
 describe('BAG service', () => {
   const axMock = new MockAdapter(axiosRequest);
@@ -56,12 +57,19 @@ describe('BAG service', () => {
   });
 
   it('Bag api should fail correct;y', async () => {
+    // @ts-ignore
+    const capture = (Sentry.captureException = jest.fn(() => {
+      return 'x';
+    }));
     const rs = await fetchBAG('x', 'saml', {} as any);
 
     expect(rs).toStrictEqual({
       status: 'ERROR',
       message: 'Error: Request failed with status code 500',
       content: null,
+      sentry: 'x',
     });
+
+    capture.mockRestore();
   });
 });

@@ -1,12 +1,8 @@
 import * as Sentry from '@sentry/browser';
-
-import { Action } from '../../../universal/types';
+import axios, { AxiosRequestConfig } from 'axios';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
-
-import axios from 'axios';
 import { apiErrorResponseData } from '../../../universal/helpers/api';
-import { AxiosRequestConfig } from 'axios';
-import { getOtapEnvItem } from '../../../universal/config';
+import { Action } from '../../../universal/types';
 
 export interface ApiRequestOptions extends AxiosRequestConfig {
   postpone?: boolean;
