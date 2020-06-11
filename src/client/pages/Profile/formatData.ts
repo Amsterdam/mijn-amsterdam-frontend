@@ -47,6 +47,7 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
         ? value.map(({ omschrijving }) => omschrijving).join(' ')
         : null,
   ],
+  omschrijvingIndicatieGeheim: 'Geheimhouding',
 };
 
 const persoonSecundair: ProfileLabels<Partial<Persoon>> = {
