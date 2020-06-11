@@ -1,5 +1,3 @@
-import { AxiosError } from 'axios';
-
 export interface ApiErrorResponse<T> {
   message: string;
   content: T;
