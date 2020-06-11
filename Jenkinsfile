@@ -139,68 +139,68 @@ pipeline {
 
     // PRODUCTION
 
-    // stage('Build PROD') {
-    //   when {
-    //     branch 'production-release-v*'
-    //   }
-    //   options {
-    //     timeout(time: 10, unit: 'MINUTES')
-    //   }
-    //   steps {
-    //     script { currentBuild.displayName = "PROD:Build:#${BUILD_NUMBER}" }
-    //     sh "docker build -t ${IMAGE_PRODUCTION} " +
-    //        "--target=deploy-production-frontend " +
-    //        "--shm-size 1G " +
-    //        "."
-    //     sh "docker push ${IMAGE_PRODUCTION}"
+    stage('Build PROD') {
+      when {
+        branch 'production-release-v*'
+      }
+      options {
+        timeout(time: 10, unit: 'MINUTES')
+      }
+      steps {
+        script { currentBuild.displayName = "PROD:Build:#${BUILD_NUMBER}" }
+        sh "docker build -t ${IMAGE_PRODUCTION} " +
+           "--target=deploy-production-frontend " +
+           "--shm-size 1G " +
+           "."
+        sh "docker push ${IMAGE_PRODUCTION}"
 
-    //     // Build the BFF production image
-    //     // TODO: Pull ACC image, re tag and set ENV RUN variables
-    //     sh "docker build -t ${IMAGE_PRODUCTION_BFF} " +
-    //        "--target=deploy-ap-bff " +
-    //        "--shm-size 1G " +
-    //        "."
-    //     sh "docker push ${IMAGE_PRODUCTION_BFF}"
-    //   }
-    // }
+        // Build the BFF production image
+        // TODO: Pull ACC image, re tag and set ENV RUN variables
+        sh "docker build -t ${IMAGE_PRODUCTION_BFF} " +
+           "--target=deploy-ap-bff " +
+           "--shm-size 1G " +
+           "."
+        sh "docker push ${IMAGE_PRODUCTION_BFF}"
+      }
+    }
 
-    // stage('Deploy PROD - Waiting for approval') {
-    //   when {
-    //     branch 'production-release-v*'
-    //   }
-    //   options {
-    //     timeout(time: 120, unit: 'MINUTES')
-    //   }
-    //   steps {
-    //     script { currentBuild.displayName = "PROD:Deploy approval:#${BUILD_NUMBER}" }
-    //     script {
-    //       input "Deploy to Production?"
-    //       echo "Okay, moving on"
-    //     }
-    //   }
-    // }
+    stage('Deploy PROD - Waiting for approval') {
+      when {
+        branch 'production-release-v*'
+      }
+      options {
+        timeout(time: 120, unit: 'MINUTES')
+      }
+      steps {
+        script { currentBuild.displayName = "PROD:Deploy approval:#${BUILD_NUMBER}" }
+        script {
+          input "Deploy to Production?"
+          echo "Okay, moving on"
+        }
+      }
+    }
 
-    // stage('Deploy PROD') {
-    //   when {
-    //     branch 'production-release-v*'
-    //   }
-    //   options {
-    //     timeout(time: 5, unit: 'MINUTES')
-    //   }
-    //   steps {
-    //     script { currentBuild.displayName = "PROD:Deploy:#${BUILD_NUMBER}" }
-    //     build job: 'Subtask_Openstack_Playbook', parameters: [
-    //       [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
-    //       [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml']
-    //     ]
+    stage('Deploy PROD') {
+      when {
+        branch 'production-release-v*'
+      }
+      options {
+        timeout(time: 5, unit: 'MINUTES')
+      }
+      steps {
+        script { currentBuild.displayName = "PROD:Deploy:#${BUILD_NUMBER}" }
+        build job: 'Subtask_Openstack_Playbook', parameters: [
+          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
+          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml']
+        ]
 
-    //     // Build the BFF
-    //     build job: 'Subtask_Openstack_Playbook', parameters: [
-    //       [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
-    //       [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-bff.yml']
-    //     ]
-    //   }
-    // }
+        // Build the BFF
+        build job: 'Subtask_Openstack_Playbook', parameters: [
+          [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
+          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-bff.yml']
+        ]
+      }
+    }
   }
 
   post {
