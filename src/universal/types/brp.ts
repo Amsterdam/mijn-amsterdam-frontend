@@ -8,10 +8,10 @@ export interface Identiteitsbewijs {
 }
 
 export interface Adres {
-  straatnaam: string;
-  postcode: string;
-  woonplaatsNaam: string;
-  huisnummer: string;
+  straatnaam: string | null;
+  postcode: string | null;
+  woonplaatsNaam: string | null;
+  huisnummer: string | null;
   huisnummertoevoeging: string | null;
   huisletter: string | null;
   begindatumVerblijf: string | null;
@@ -19,20 +19,20 @@ export interface Adres {
 }
 
 export interface Persoon {
-  aanduidingNaamgebruikOmschrijving: string;
-  bsn: string;
-  geboortedatum: string;
+  aanduidingNaamgebruikOmschrijving: string | null;
+  bsn: string | null;
+  geboortedatum: string | null;
   overlijdensdatum: string | null;
-  geboortelandnaam: string;
-  geboorteplaatsnaam: string;
-  gemeentenaamInschrijving: string;
+  geboortelandnaam: string | null;
+  geboorteplaatsnaam: string | null;
+  gemeentenaamInschrijving: string | null;
   voorvoegselGeslachtsnaam: string | null;
-  geslachtsnaam: string;
-  omschrijvingBurgerlijkeStaat: string;
+  geslachtsnaam: string | null;
+  omschrijvingBurgerlijkeStaat: string | null;
   omschrijvingGeslachtsaanduiding: string | null;
   omschrijvingAdellijkeTitel: string | null;
-  opgemaakteNaam: string;
-  voornamen: string;
+  opgemaakteNaam: string | null;
+  voornamen: string | null;
   nationaliteiten: Array<{ omschrijving: string }>;
   mokum: boolean;
   vertrokkenOnbekendWaarheen: boolean;
@@ -55,12 +55,12 @@ export interface VerbintenisHistorisch extends Verbintenis {
 }
 
 export interface Kind {
-  bsn: string;
-  geboortedatum: string;
-  geslachtsaanduiding: string;
-  geslachtsnaam: string;
+  bsn: string | null;
+  geboortedatum: string | null;
+  geslachtsaanduiding: string | null;
+  geslachtsnaam: string | null;
   overlijdensdatum: string | null;
-  voornamen: string;
+  voornamen: string | null;
   voorvoegselGeslachtsnaam: string | null;
 }
 
