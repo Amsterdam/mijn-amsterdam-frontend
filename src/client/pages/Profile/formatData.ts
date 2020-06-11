@@ -3,8 +3,13 @@ import {
   entries,
   getFullAddress,
 } from '../../../universal/helpers';
-import { Adres, BRPData, Persoon, Verbintenis } from '../../../universal/types';
-import { VerbintenisHistorisch } from '../../../universal/types/brp';
+import {
+  Adres,
+  BRPData,
+  Persoon,
+  Verbintenis,
+  VerbintenisHistorisch,
+} from '../../../universal/types';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
