@@ -166,9 +166,7 @@ export async function requestData<T>(
       // We're returning a result here so a failed request will not prevent other succeeded request needed for a response
       // to the client to pass through.
       const sentryId = Sentry.captureException(
-        error.isAxiosError
-          ? error
-          : new Error(error?.message || 'Unknown error message'),
+        error.isAxiosError ? new Error(error?.message) : error,
         {
           tags: {
             url: requestConfig.url!,
