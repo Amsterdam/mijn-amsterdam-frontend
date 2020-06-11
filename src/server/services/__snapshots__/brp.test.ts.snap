@@ -36,8 +36,8 @@ Object {
   ],
   "identiteitsbewijzen": Array [
     Object {
-      "datumAfloop": "15 oktober 2025",
-      "datumUitgifte": "15 oktober 2015",
+      "datumAfloop": "2025-10-15T00:00:00Z",
+      "datumUitgifte": "2015-10-15T00:00:00Z",
       "documentNummer": "PP57XKG54",
       "documentType": "paspoort",
       "id": "een-hash-van-documentnummer-1",
@@ -48,8 +48,8 @@ Object {
       "title": "paspoort",
     },
     Object {
-      "datumAfloop": "11 september 2020",
-      "datumUitgifte": "11 september 2010",
+      "datumAfloop": "2020-09-11T00:00:00Z",
+      "datumUitgifte": "2010-09-11T00:00:00Z",
       "documentNummer": "IE9962819",
       "documentType": "europese identiteitskaart",
       "id": "een-hash-van-documentnummer-2",
