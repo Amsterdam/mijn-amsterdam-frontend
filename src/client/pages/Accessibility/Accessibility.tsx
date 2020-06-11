@@ -10,7 +10,7 @@ import {
 export default () => {
   return (
     <TextPage>
-      <PageHeading>Toegankelijkheidsverklaring</PageHeading>
+      <PageHeading>Volledige toegankelijkheidsverklaring</PageHeading>
       <PageContent>
         <p>
           De gemeente Amsterdam wil dat iedereen Mijn Amsterdam kan gebruiken.
@@ -51,9 +51,9 @@ export default () => {
         <ul>
           <li>Pdf-bestanden zijn nog niet altijd toegankelijk.</li>
           <li>
-            De persoonlijke plattegrond ‘Mijn Buurt’ is nog niet goed
-            toegankelijk. We werken eraan om deze zo snel mogelijk aan de
-            vereisten te laten voldoen.
+            De persoonlijke plattegrond ‘Mijn Buurt’ is nog niet helemaal
+            toegankelijk. We werken eraan om de plattegrond zo snel mogelijk
+            toegankelijk te maken.
           </li>
         </ul>
         <Heading el="h3" size="small">
@@ -69,12 +69,12 @@ export default () => {
             Tijdelijk besluit digitale toegankelijkheid overheid
           </LinkdInline>
           . In dat besluit staat ook dat wij een toegankelijkheidsverklaring op
-          Mijn Amsterdam moeten zetten. Lees hier onze volledige{' '}
+          Mijn Amsterdam moeten zetten. Lees hier onze{' '}
           <LinkdInline
             external={true}
             href={'/toegankelijkheidsverklaring-mijn-amsterdam-20200520.html'}
           >
-            toegankelijkheidsverklaring
+            volledige toegankelijkheidsverklaring
           </LinkdInline>
           .
         </p>
