@@ -37,7 +37,7 @@ export interface Persoon {
   mokum: boolean;
   vertrokkenOnbekendWaarheen: boolean;
   datumVertrekUitNederland: string;
-  omschrijvingIndicatieGeheim: string | null;
+  omschrijvingIndicatieGeheim?: string | null;
 }
 
 export interface Verbintenis {
@@ -51,7 +51,7 @@ export interface Verbintenis {
 }
 
 export interface VerbintenisHistorisch extends Verbintenis {
-  redenOntbindingOmschrijving: string | null;
+  redenOntbindingOmschrijving?: string | null;
 }
 
 export interface Kind {
