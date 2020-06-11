@@ -16,6 +16,9 @@ services:
       context: .
       dockerfile: Dockerfile
       target: build-deps
+    environment:
+      - BFF_DISABLE_MOCK_ADAPTER=true
+      - TZ=Europe/Amsterdam
     entrypoint: npm test
 
   # E2E testing
