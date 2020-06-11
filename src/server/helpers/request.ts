@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/node';
 import axios, { AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Request } from 'express';
 import memoryCache from 'memory-cache';
-import { IS_AP, IS_PRODUCTION } from '../../universal/config/env';
+import { IS_AP } from '../../universal/config/env';
 import {
   apiErrorResult,
   apiPostponeResult,
@@ -168,11 +168,14 @@ export async function requestData<T>(
       let sentryId;
 
       if (error instanceof Error) {
-        sentryId = IS_AP ? Sentry.captureException(error) : '';
+        Sentry.withScope(scope => {
+          scope.setTag('url', requestConfig.url!);
+          sentryId = Sentry.captureException(error);
+        });
       } else {
-        sentryId = IS_AP
-          ? Sentry.captureMessage(error?.message || 'Unknown errormessage')
-          : '';
+        sentryId = Sentry.captureMessage(
+          error?.message || 'Unknown errormessage'
+        );
       }
 
       const responseData = apiErrorResult(error, null, sentryId);

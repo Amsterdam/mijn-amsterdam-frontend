@@ -55,7 +55,7 @@ function useWindowStorage(
     try {
       return adapter.getItem(key);
     } catch (error) {
-      getOtapEnvItem('sentryDsn') && Sentry.captureException(error);
+      Sentry.captureException(error);
     }
     return null;
   }, [adapter, key]);
@@ -77,7 +77,7 @@ function useWindowStorage(
       try {
         saveValueToLocalStorage(key, newValue);
       } catch (error) {
-        getOtapEnvItem('sentryDsn') && Sentry.captureException(error);
+        Sentry.captureException(error);
       }
     },
     [key, saveValueToLocalStorage]

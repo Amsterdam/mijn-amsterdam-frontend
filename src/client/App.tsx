@@ -190,7 +190,7 @@ export default function App() {
   useScript('/js/usabilla.js', false, true, IS_PRODUCTION);
 
   const sendToSentry = (error: Error, componentStack: string) => {
-    getOtapEnvItem('sentryDsn') && Sentry.captureException(error);
+    Sentry.captureException(error);
   };
 
   return (

@@ -63,9 +63,11 @@ type OtapEnv = { [name in OtapEnvName]: EnvVars };
 
 const otapServerEnv: OtapEnv = {
   development: {
-    isMyAreaMapEnabled: true,
+    isMyAreaMapEnabled: false,
   },
-  test: {},
+  test: {
+    isMyAreaMapEnabled: false,
+  },
   acceptance: {
     analyticsId: 25,
     analyticsUrlBase: 'https://analytics.data.amsterdam.nl/',

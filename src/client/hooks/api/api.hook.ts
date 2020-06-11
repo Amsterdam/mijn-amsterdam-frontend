@@ -145,12 +145,11 @@ export function useDataApi<T>(
             type: ActionTypes.FETCH_FAILURE,
             payload: apiErrorResponseData(initialDataNoContent, error),
           });
-          getOtapEnvItem('sentryDsn') &&
-            Sentry.captureMessage(
-              `API ERROR: ${errorMessage}, url: ${
-                requestOptions.url?.split('?')[0] // Don't log query params for privacy reasons
-              }`
-            );
+          Sentry.captureMessage(
+            `API ERROR: ${errorMessage}, url: ${
+              requestOptions.url?.split('?')[0] // Don't log query params for privacy reasons
+            }`
+          );
         }
       }
     };
