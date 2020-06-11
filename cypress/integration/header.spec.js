@@ -1,8 +1,9 @@
-import { selectComponent } from '../support/helpers';
+import { selectComponent, itShouldLogoutAndInAgain } from '../support/helpers';
 
 describe('Header', () => {
+  itShouldLogoutAndInAgain();
+
   it('Header shows Hero', () => {
-    cy.login();
     selectComponent('MainHeaderHero_MainHeaderHero').should('exist');
   });
 

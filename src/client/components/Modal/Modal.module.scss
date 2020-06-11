@@ -1,0 +1,87 @@
+@import '../../styles/_global.scss';
+
+@keyframes fadeIn {
+  from {
+    background-color: rgba(0, 0, 0, .2);
+  }
+
+  to {
+    background-color: rgba(0, 0, 0, .5);
+  }
+}
+
+.Modal {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  animation-duration: 200ms;
+  animation-name: fadeIn;
+  animation-fill-mode: forwards;
+  z-index: z-index(modal);
+}
+
+.ModalContainer {
+  display: none;
+
+  &:last-child {
+    display: block;
+  }
+}
+
+.Dialog {
+  background-color: $color-white;
+  position: fixed;
+  z-index: z-index(dialog);
+
+  &.Boxed {
+    max-width: $main-boxed-width;
+    width: calc(100% - 2rem);
+  }
+
+  &.HorizontallyCentered {
+    left: 50%;
+    transform: translateX(-50%)
+  }
+
+  &.HorizontallyLeft {
+    left: 0;
+  }
+
+  &.HorizontallyRight {
+    right: 0;
+  }
+
+  &.VerticallyCentered {
+    max-height: 100vh;
+    overflow: auto;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &.HorizontallyCentered {
+      transform: translateX(-50%) translateY(-50%);
+    }
+  }
+
+  &.VerticallyTop {
+    top: 0;
+  }
+
+  &.VerticallyBottom {
+    bottom: 0;
+  }
+}
+
+.Header {
+  display: flex;
+  border-bottom: 1px solid $color-neutral-grey4;
+  padding: 1rem 1.5rem;
+  padding-bottom: .8rem;
+  align-items: center;
+}
+
+.Content {
+  padding: 1.5rem;
+}
+

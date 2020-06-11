@@ -1,13 +1,24 @@
 version: '3.5'
 services:
   # Unit testing
-  test-unit:
+  test-unit-bff:
     build:
       context: .
       dockerfile: Dockerfile
       target: build-deps
-      args:
-        - REACT_APP_ENV=test-unit
+    environment:
+      - BFF_DISABLE_MOCK_ADAPTER=true
+      - TZ=Europe/Amsterdam
+    entrypoint: npm run bff-api:test
+
+  test-unit-client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: build-deps
+    environment:
+      - BFF_DISABLE_MOCK_ADAPTER=true
+      - TZ=Europe/Amsterdam
     entrypoint: npm test
 
   # E2E testing
@@ -15,18 +26,19 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: serve-test
-      args:
-        - REACT_APP_ENV=e2e
+      target: serve-ot-bff
+    expose:
+      - "3000"
     environment:
-      - HOST=e2e-frontend
-      - MOCK_API_HOST=e2e-frontend
+      - BFF_ENV=development
+      - PORT=3000
+      - REDIRECT_AFTER_LOGIN=http://e2e-frontend:3000
 
   e2e-testsuite:
     image: cypress/included:3.4.1
     working_dir: /e2e
     environment:
-      - CYPRESS_baseUrl=http://e2e-frontend:80
+      - CYPRESS_baseUrl=http://e2e-frontend:3000
       # - DEBUG=cypress:*
       - no_proxy=localhost,e2e-frontend,api #needs to be lowercase as this takes precedence over the uppercase verion on the build server
     depends_on:

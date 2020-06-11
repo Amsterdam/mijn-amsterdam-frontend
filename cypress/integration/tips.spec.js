@@ -1,7 +1,7 @@
-import { goToDashboard, selectComponent } from '../support/helpers';
+import { itShouldLogoutAndInAgain, selectComponent } from '../support/helpers';
 
 describe('Navigate to Chapters', () => {
-  goToDashboard();
+  itShouldLogoutAndInAgain();
 
   it('should open the Tips opt-in modal', () => {
     selectComponent('MyTips_OptIn').should('exist');

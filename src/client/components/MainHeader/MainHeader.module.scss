@@ -1,0 +1,106 @@
+@import '../../styles/_global.scss';
+
+.header {
+
+}
+
+.topBar {
+  @include centered-max;
+  height: $main-header-topbar-height;
+  display: flex;
+
+  @include select(Heading) {
+    margin: 0.4em 0 0;
+  }
+
+  @include mq-tablet() {
+    max-width: none;
+    height: $main-header-topbar-height--tablet;
+
+    @include select(Heading) {
+      margin: 1rem 0 0 2rem;
+      font-size: 1.8rem; // Overrides the default responsive size
+    }
+  }
+}
+
+.logoLink {
+  display: flex;
+  color: inherit;
+  text-decoration: none;
+  transform: translateX(-3rem);
+
+  @include mq-tablet() {
+    transform: translateX(0);
+  }
+}
+
+.logo {
+  position: relative;
+  left: 0;
+  margin-right: 4rem;
+  top: 2rem;
+  width: 9rem;
+  height: 6.8rem;
+
+  @include mq-tablet() {
+    left: 2rem;
+    top: -0.5rem;
+    width: 9.3rem; // translates approx. height of 4rem
+    margin-right: 1rem;
+  }
+
+  @include mq-phone() {
+    left: 1rem;
+  }
+}
+
+.ErrorMessages {
+  position: absolute;
+  top: 16rem;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: $main-boxed-width;
+  width: 100%;
+  z-index: z-index(header-error-messages);
+
+  @include mq-tablet() {
+    width: calc(100% - 4rem);
+    top: 14rem;
+  }
+
+  @include mq-phone() {
+    position: static;
+    transform: none;
+    left: auto;
+    width: 100%;
+  }
+}
+
+.DirectSkipLinks {
+  position: absolute;
+  top: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+
+  @include mq-tablet() {
+    top: 1rem;
+  }
+
+  > a {
+    position: absolute;
+    margin: 0 auto;
+    z-index: 1;
+    opacity: 0;
+    white-space: nowrap;
+    margin-left: -500rem;
+
+    &:focus {
+      margin-left: 0;
+      z-index: 2;
+      opacity: 1;
+      position: static;
+    }
+  }
+}

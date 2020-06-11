@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "src/",
+    "outDir": "build/client",
     "target": "es5",
     "lib": [
       "dom",

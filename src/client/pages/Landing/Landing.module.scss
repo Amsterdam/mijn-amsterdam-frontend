@@ -1,0 +1,95 @@
+@import '../../styles/_global.scss';
+
+.LoginBtn {
+  display: inline-flex;
+  height: 5rem;
+  width: 28rem; // ie11 fallback
+  width: fit-content;
+  text-decoration: none;
+  align-items: center;
+
+  .LoginButtonText {
+    background-color: $color-primary-red;
+    color: $color-white;
+    font-weight: 700;
+    padding-right: 1.3rem;
+    padding-left: 1.3rem;
+    line-height: 5rem;
+  }
+
+  + p {
+    margin-top: 1rem;
+  }
+}
+
+.LoginBtn--eherkenning {
+  .LoginButtonText {
+    background-color: $color-support-darkblue;
+  }
+}
+
+.LoginBtnDisabled {
+  cursor: progress;
+  span {
+    background-color: $color-neutral-grey2 !important;
+    border-color: $color-neutral-grey2 !important;
+    cursor: not-allowed;
+    pointer-events: none;
+    color: $color-neutral-grey3 !important;
+  }
+  & {
+    filter: grayscale(100%);
+  }
+}
+
+.LandingContent {
+  > p:last-of-type {
+    margin-bottom: 9rem;
+  }
+}
+
+.LoginLogo {
+  width: 5rem;
+}
+
+.LoginHeading {
+  padding-top: 2.6rem;
+  padding-bottom: 1.2rem;
+}
+
+.LoginOption {
+  border-top: .1rem solid $color-neutral-grey2;
+  padding-top: 2.6rem;
+  padding-bottom: 1rem;
+
+  p:last-of-type {
+    margin-top: 0;
+  }
+
+  &--eherkenning {
+    margin-bottom: 3rem;
+
+    .LoginLogoWrap {
+      background-color: transparent;
+    }
+  }
+}
+
+.LoginLogoWrap {
+  display: inline-flex;
+  align-items: center;
+  height: 5rem;
+  width: 5rem;
+  margin-right: 1rem;
+  background-color: #000;
+}
+
+.FaqInfo {
+  margin: 0;
+}
+
+.Heading {
+  @include IE11 {
+    overflow: hidden;
+  }
+}

@@ -1,0 +1,274 @@
+@import '../../styles/_global.scss';
+@import '../Button/Button.module.scss';
+
+.StatusLine {
+  margin-bottom: 2rem;
+}
+
+.List {
+  @include reset-list-style;
+  padding: 1rem 0;
+}
+
+.ListHeading {
+  @include centered-block;
+  color: $color-neutral-grey4;
+  margin-bottom: 0;
+  font-weight: 500;
+}
+
+.StatusTitle {
+  display: block;
+}
+
+.StatusDate {
+  display: block;
+  white-space: nowrap;
+  color: $color-neutral-grey4;
+}
+
+.DownloadLink {
+  display: block;
+  font-weight: normal;
+  position: relative;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+
+  svg {
+    top: 0.2rem;
+    transform: none;
+  }
+}
+
+.DocumentDownloadItems {
+  @include reset-list-style;
+  @include select(DownloadLink) {
+    font-weight: 500;
+    white-space: pre-wrap;
+    svg {
+      margin-left: -17px;
+    }
+  }
+}
+
+.ConnectLine {
+  display: block;
+  width: 0.2rem;
+  top: -0.1rem; // overlapping border-top of different color
+  bottom: -0.1rem; // overlapping border-top of different color
+  position: absolute;
+  left: 50%;
+  background: $color-neutral-grey3;
+
+  &--checked {
+    background: $color-primary-darkblue;
+  }
+
+  &--start {
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 3rem,
+      $color-neutral-grey3 3rem,
+      $color-neutral-grey3 100%
+    );
+  }
+  &--start-checked {
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 3rem,
+      $color-primary-darkblue 3rem,
+      $color-primary-darkblue 100%
+    );
+  }
+  &--start-faded {
+    background: linear-gradient(
+      to bottom,
+      $color-neutral-grey1 0%,
+      $color-neutral-grey1 3rem,
+      $color-neutral-grey3 3rem,
+      $color-neutral-grey1 100%
+    );
+  }
+  &--middle-faded {
+    background: linear-gradient(
+      to bottom,
+      $color-primary-darkblue 0%,
+      $color-neutral-grey3 75%,
+      $color-neutral-grey1 100%
+    );
+  }
+  &--middle-checked-next {
+    background: linear-gradient(
+      to bottom,
+      $color-primary-darkblue 0%,
+      $color-primary-darkblue 3rem,
+      $color-neutral-grey3 3rem,
+      $color-neutral-grey3 100%
+    );
+  }
+  &--end {
+     background: linear-gradient(
+      to bottom,
+      $color-neutral-grey3 0%,
+      $color-neutral-grey3 3rem,
+      transparent 0%
+    );
+  }
+  &--end-active,
+  &--end-checked {
+    background: linear-gradient(
+      to bottom,
+      $color-primary-darkblue 0%,
+      $color-primary-darkblue 3rem,
+      transparent 0%
+    );
+  }
+}
+
+.Checkmark {
+  display: block;
+  position: relative;
+  border-radius: 50%;
+  left: -1.1rem;
+  color: $color-white;
+  text-align: center;
+  font-size: 0.8em;
+  font-weight: 600;
+  line-height: 1.5;
+  width: 2rem;
+  height: 2rem;
+  top: 2rem;
+  left: calc(50% - .9rem);
+
+  background-color: $color-neutral-grey3;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 0.9em 0.9em;
+
+  &--active,
+  &--checked {
+    background-color: $color-primary-darkblue;
+    background-image: url('../../assets/icons/Checkmark__white.svg');
+  }
+
+  &--single {
+    // bliep
+  }
+
+  &--active {
+    width: 3.2rem;
+    height: 3.2rem;
+    left: calc(50% - 1.5rem);
+    top: 1.4rem;
+  }
+}
+
+.StatusConnection {
+  position: relative;
+  width: 3.4rem;
+}
+
+.ListItem {
+  &--highlight {
+    background-color: $color-neutral-grey1;
+
+    &, + .ListItem {
+      @include select(StatusLine_ListItemInner) {
+        border-top: 0;
+      }
+    }
+  }
+
+  &Inner {
+    display: flex;
+    padding: 0 7.5rem 0 6.2rem;
+    border-top: 1px solid $color-neutral-grey2;
+
+    @include mq-tablet() {
+      display: block;
+      position: relative;
+      padding: 0 2rem;
+    }
+
+    @include mq-phone() {
+      padding: 0 1rem;
+    }
+  }
+
+  .Panel {
+    position: relative;
+    padding: 1.8rem;
+    flex: 1;
+
+    &--documents {
+      width: auto;
+      overflow: hidden;
+    }
+
+    &--description {
+      @include media-q(">tablet") {
+        flex: 0 0 38rem;
+      }
+    }
+
+    &--status {
+      padding: 1.8rem 0 1.8rem 6.5rem;
+    }
+
+    @include mq-tablet() {
+      &,
+      &--status {
+        padding: 1rem 1rem 1rem 3rem;
+        position: static;
+      }
+    }
+  }
+
+  .PanelContent {
+    > p {
+      margin: 0 0 2rem;
+
+      a {
+        @extend .LinkdSolo;
+      }
+    }
+  }
+}
+
+.NoStatusItems {
+  padding: 0;
+}
+
+.MoreStatus {
+  position: relative;
+  background-color: transparent;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  border: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0 0.4rem 0 0;
+  font-weight: 700;
+
+  svg {
+    height: 15px;
+    margin-top: 0.3rem;
+    transform: rotate(90deg);
+  }
+
+  &Closed {
+    svg {
+      transform: rotate(-90deg);
+    }
+  }
+}
+
+.altDocumentContent {
+  display: block;
+  > * {
+    margin-top: 0;
+  }
+}

@@ -1,0 +1,99 @@
+@import '../../styles/_global.scss';
+@import '../Button/Button.module.scss';
+
+.Table {
+  width: 100%;
+  border: 0;
+  border-collapse: collapse;
+
+  tr:first-of-type td {
+    border-top: 0;;
+  }
+
+  @include mq-phone() {
+    display: grid;
+    tr,
+    td,
+    tbody {
+      display: block;
+    }
+    td:not(:first-child) {
+      display: block;
+    }
+    thead {
+      display: none;
+    }
+    tr:last-of-type td {
+      border-bottom: 0;
+    }
+  }
+  thead th {
+    border-bottom: 0.1rem solid $color-neutral-grey2;
+    padding-bottom: .5rem;
+  }
+}
+
+.TableRow {
+  td {
+    padding: 1em 1em 1em 0;
+    vertical-align: top;
+    border-top: 0.1rem solid $color-neutral-grey2;
+  }
+  th {
+    text-align: left;
+    color: $color-neutral-grey4;
+    font-weight: 500;
+  }
+  @include mq-phone() {
+    padding-top: .5rem;
+    border-top: 0.1rem solid $color-neutral-grey2;
+    td {
+      border-top: 0;
+      padding: 0;
+      &:last-child {
+        padding-bottom: 1rem;
+      }
+    }
+  }
+}
+
+.DisplayPropTitle {
+  @include select(ButtonLink_ButtonLink) {
+    white-space: normal;
+    display: block;
+  }
+}
+.DisplayPropLabel {
+  display: none;
+  padding-right: 0.3rem;
+
+  @include mq-phone() {
+    display: initial;
+  }
+}
+.DisplayProp {
+  color: $color-neutral-grey4;
+  font-weight: normal;
+  white-space: nowrap;
+
+  a {
+    @extend .LinkdSolo;
+
+    &:before {
+      content: '';
+      position: relative;
+      transform: translateY(3px);
+      display: inline-block;
+      width: 1.8rem;
+      height: 1.8rem;
+      background-image: url('../../assets/icons/Document.svg');
+      background-repeat: no-repeat;
+      background-position: 0 0;
+      background-size: auto 1.8rem;
+    }
+
+    &:hover:before {
+      background-image: url('../../assets/icons/Document.svg');
+    }
+  }
+}

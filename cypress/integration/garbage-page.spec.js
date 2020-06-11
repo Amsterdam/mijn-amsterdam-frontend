@@ -1,11 +1,11 @@
-import { goToDashboard, assertAtPage } from '../support/helpers';
+import { itShouldLogoutAndInAgain, assertAtPage } from '../support/helpers';
 
 function getChapterLink() {
   return cy.get('[class*="MyChaptersPanel_Links"] a[data-chapter-id=AFVAL]');
 }
 
 describe('Garbage page', () => {
-  goToDashboard();
+  itShouldLogoutAndInAgain();
 
   it('Shows garbage chapter', () => {
     getChapterLink().should('exist');

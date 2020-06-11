@@ -1,0 +1,32 @@
+@import '../../styles/_global.scss';
+
+.Verbintenis {
+  [class*='InfoPanel_InfoPanelTable'] + [class*='InfoPanel_InfoPanelTable'] {
+    margin-top: 10rem;
+  }
+  [class*='InfoPanelTableRow__voornamen'] {
+      th,
+      td {
+        padding-top: 3rem;
+      }
+    }
+}
+
+.Intro {
+  margin-bottom: 10rem;
+}
+
+.LoadingContent {
+  > * {
+    margin-bottom: 6rem;
+  }
+}
+
+.DefaultPanel {
+  @include centered-block;
+  margin-bottom: 5rem;
+}
+
+.CollapsiblePanel {
+  margin-bottom: 5rem;
+}

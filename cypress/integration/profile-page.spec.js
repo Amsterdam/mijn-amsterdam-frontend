@@ -1,7 +1,11 @@
-import { selectComponent, assertAtPage, login } from '../support/helpers';
+import {
+  selectComponent,
+  assertAtPage,
+  itShouldLogin,
+} from '../support/helpers';
 
 describe('Profile page', () => {
-  login();
+  itShouldLogin();
 
   it('Clicking the profile link in the header shows the profile page', () => {
     selectComponent('MainNavBar_ProfileLink').click();

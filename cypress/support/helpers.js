@@ -19,15 +19,21 @@ export function selectComponent(componentName, selectorAddition = '') {
   return cy.get('[class*="' + componentName + '"]' + selectorAddition + '');
 }
 
-export function goToDashboard() {
-  it('Visit login url always redirects user to Dashboard page', () => {
-    cy.login();
+export function itShouldLogin() {
+  it('Visit login url always shows the dashboard', () => {
+    cy.visit('/test-api/login?target=digid');
+    assertAtHome('Actueel');
   });
 }
 
-export function login() {
-  it('The profile link is visible in the header', () => {
-    cy.login();
-    selectComponent('MainNavBar_ProfileLink').contains('W. Beemsterboer');
+export function itShouldLogout() {
+  it('Visit logout url always returns to landing page', () => {
+    cy.visit('/logout');
+    assertAtHome('Welkom op Mijn Amsterdam');
   });
+}
+
+export function itShouldLogoutAndInAgain() {
+  itShouldLogout();
+  itShouldLogin();
 }

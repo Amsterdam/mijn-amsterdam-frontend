@@ -1,0 +1,180 @@
+import {
+  apiDependencyError,
+  apiSuccesResult,
+  dateSort,
+} from '../../../universal/helpers';
+import { MyCase, MyNotification } from '../../../universal/types';
+import { fetchFOCUS } from './focus-aanvragen';
+import {
+  createFocusRecentCase,
+  isRecentItem,
+  translateFocusProduct,
+} from './focus-aanvragen-helpers';
+import { fetchFOCUSCombined } from './focus-combined';
+import {
+  contentLabels,
+  tozoTitleTranslations,
+  TOZO_AANVRAAG_STEP_ID,
+  TOZO_LENING_PRODUCT_TITLE,
+  TOZO_UITKERING_PRODUCT_TITLE,
+  TOZO_VOORSCHOT_PRODUCT_TITLE,
+} from './focus-tozo-content';
+import {
+  createFocusItemTozo,
+  createFocusTozoAanvraagNotification,
+  createFocusTozoStepNotification,
+  createTozoProductSetStepsCollection,
+} from './focus-tozo-helpers';
+import { FocusItem } from './focus-types';
+
+async function fetchFOCUSTozoNormalized(
+  sessionID: SessionID,
+  samlToken: string
+) {
+  const responseAanvragen = fetchFOCUS(sessionID, samlToken);
+  const responseCombined = fetchFOCUSCombined(sessionID, samlToken);
+
+  const [FOCUS_AANVRAGEN, FOCUS_COMBINED] = await Promise.all([
+    responseAanvragen,
+    responseCombined,
+  ]);
+
+  if (FOCUS_COMBINED.status === 'OK' && FOCUS_AANVRAGEN.status === 'OK') {
+    const aanvragenNormalized = FOCUS_AANVRAGEN.content
+      .filter(product => {
+        return (
+          TOZO_LENING_PRODUCT_TITLE === product.title ||
+          TOZO_UITKERING_PRODUCT_TITLE === product.title
+        );
+      })
+      .map(product => translateFocusProduct(product, tozoTitleTranslations))
+      .sort(dateSort('dateStart'));
+
+    const voorschottenNormalized = FOCUS_AANVRAGEN.content
+      .filter(product => TOZO_VOORSCHOT_PRODUCT_TITLE === product.title)
+      .map(product => translateFocusProduct(product, tozoTitleTranslations))
+      .sort(dateSort('dateStart'));
+
+    const documenten = Array.isArray(FOCUS_COMBINED.content.tozodocumenten)
+      ? FOCUS_COMBINED.content?.tozodocumenten
+          .filter(doc => ['E-AANVR-TOZO', 'E-AANVR-KBBZ'].includes(doc.type))
+          .sort(dateSort('dateStart'))
+      : [];
+
+    return apiSuccesResult({
+      aanvragen: aanvragenNormalized,
+      voorschotten: voorschottenNormalized,
+      documenten,
+    });
+  }
+
+  return apiDependencyError({ FOCUS_AANVRAGEN, FOCUS_COMBINED });
+}
+
+export async function fetchFOCUSTozo(sessionID: SessionID, samlToken: string) {
+  const response = await fetchFOCUSTozoNormalized(sessionID, samlToken);
+
+  if (response.status === 'OK') {
+    const { aanvragen, voorschotten, documenten } = response.content;
+
+    if (!aanvragen.length && !voorschotten.length && !documenten.length) {
+      return apiSuccesResult([]);
+    }
+
+    const collection = createTozoProductSetStepsCollection({
+      aanvragen,
+      voorschotten,
+      documenten,
+      titleTranslations: tozoTitleTranslations,
+      contentLabels: contentLabels,
+    });
+
+    const tozoItems: FocusItem[] = collection.map(createFocusItemTozo);
+
+    return apiSuccesResult(tozoItems);
+  }
+
+  return response;
+}
+
+export async function fetchFOCUSTozoGenerated(
+  sessionID: SessionID,
+  samlToken: string
+) {
+  const responseTransformed = await fetchFOCUSTozo(sessionID, samlToken);
+  const compareDate = new Date();
+
+  const notifications: MyNotification[] = [];
+  const cases: MyCase[] = [];
+
+  // use the transformed content here because documents are coupled to aanvragen and producten
+  if (responseTransformed.status === 'OK') {
+    for (const item of responseTransformed.content) {
+      if (isRecentItem(item.steps, compareDate)) {
+        cases.push(createFocusRecentCase(item));
+      }
+    }
+
+    notifications.push(
+      ...responseTransformed.content.flatMap(item => {
+        const notifications = [];
+
+        for (const step of item.steps) {
+          if (step.id === TOZO_AANVRAAG_STEP_ID) {
+            for (const document of step.documents) {
+              notifications.push(
+                createFocusTozoAanvraagNotification(item.id, document)
+              );
+            }
+          } else if (step.product === 'Tozo-voorschot') {
+            notifications.push(
+              createFocusTozoStepNotification(
+                item,
+                step,
+                contentLabels,
+                tozoTitleTranslations
+              )
+            );
+          }
+        }
+
+        const lastUitkeringStep = item.steps
+          .filter(step => step.product === 'Tozo-uitkering')
+          .pop();
+
+        if (lastUitkeringStep) {
+          notifications.push(
+            createFocusTozoStepNotification(
+              item,
+              lastUitkeringStep,
+              contentLabels,
+              tozoTitleTranslations
+            )
+          );
+        }
+
+        const lastLeningStep = item.steps
+          .filter(step => step.product === 'Tozo-lening')
+          .pop();
+
+        if (lastLeningStep) {
+          notifications.push(
+            createFocusTozoStepNotification(
+              item,
+              lastLeningStep,
+              contentLabels,
+              tozoTitleTranslations
+            )
+          );
+        }
+
+        return notifications;
+      })
+    );
+  }
+
+  return {
+    cases,
+    notifications,
+  };
+}
