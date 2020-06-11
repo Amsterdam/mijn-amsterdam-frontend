@@ -15,7 +15,14 @@ export default () => {
         <p>
           De gemeente Amsterdam wil dat iedereen Mijn Amsterdam kan gebruiken.
           Komt u toch een pagina tegen die u niet kunt lezen of gebruiken? Meld
-          het via ons contactformulier.
+          het via ons{' '}
+          <LinkdInline
+            external={true}
+            href="https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx"
+          >
+            contactformulier
+          </LinkdInline>
+          .
         </p>
 
         <Heading el="h3" size="small">
@@ -54,10 +61,15 @@ export default () => {
         </Heading>
 
         <p>
-          De eisen voor een toegankelijke website staan in het Tijdelijk besluit
-          digitale toegankelijkheid overheid. In dat besluit staat ook dat wij
-          een toegankelijkheidsverklaring op Mijn Amsterdam moeten zetten. Lees
-          hier onze volledige{' '}
+          De eisen voor een toegankelijke website staan in het{' '}
+          <LinkdInline
+            external={true}
+            href="https://wetten.overheid.nl/BWBR0040936/2018-07-01"
+          >
+            Tijdelijk besluit digitale toegankelijkheid overheid
+          </LinkdInline>
+          . In dat besluit staat ook dat wij een toegankelijkheidsverklaring op
+          Mijn Amsterdam moeten zetten. Lees hier onze volledige{' '}
           <LinkdInline
             external={true}
             href={'/toegankelijkheidsverklaring-mijn-amsterdam-20200520.html'}
