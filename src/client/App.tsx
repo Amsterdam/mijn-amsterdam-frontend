@@ -190,7 +190,11 @@ export default function App() {
   useScript('/js/usabilla.js', false, true, IS_PRODUCTION);
 
   const sendToSentry = (error: Error, componentStack: string) => {
-    Sentry.captureException(error);
+    Sentry.captureException(error, {
+      extra: {
+        componentStack,
+      },
+    });
   };
 
   return (

@@ -165,18 +165,19 @@ export async function requestData<T>(
     if (isGetRequest) {
       // We're returning a result here so a failed request will not prevent other succeeded request needed for a response
       // to the client to pass through.
-      let sentryId;
-
-      if (error instanceof Error) {
-        Sentry.withScope(scope => {
-          scope.setTag('url', requestConfig.url!);
-          sentryId = Sentry.captureException(error);
-        });
-      } else {
-        sentryId = Sentry.captureMessage(
-          error?.message || 'Unknown errormessage'
-        );
-      }
+      const sentryId = Sentry.captureException(
+        error instanceof Error
+          ? error
+          : error?.message || 'Unknown error message',
+        {
+          tags: {
+            url: requestConfig.url!,
+          },
+          extra: {
+            module: 'request',
+          },
+        }
+      );
 
       const responseData = apiErrorResult(error, null, sentryId);
 

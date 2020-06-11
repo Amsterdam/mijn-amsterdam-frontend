@@ -1,10 +1,7 @@
-import * as Cookies from 'js-cookie';
 import * as Sentry from '@sentry/browser';
-
+import * as Cookies from 'js-cookie';
 import { useCallback, useEffect, useState } from 'react';
-
 import { Unshaped } from '../../universal/types';
-import { getOtapEnvItem } from '../../universal/config';
 
 interface LocalStorageHandler {
   value: string | null;
@@ -55,7 +52,13 @@ function useWindowStorage(
     try {
       return adapter.getItem(key);
     } catch (error) {
-      Sentry.captureException(error);
+      Sentry.captureException(error, {
+        extra: {
+          module: 'storage',
+          method: 'get',
+          key,
+        },
+      });
     }
     return null;
   }, [adapter, key]);
@@ -77,7 +80,13 @@ function useWindowStorage(
       try {
         saveValueToLocalStorage(key, newValue);
       } catch (error) {
-        Sentry.captureException(error);
+        Sentry.captureException(error, {
+          extra: {
+            module: 'storage',
+            method: 'set',
+            key,
+          },
+        });
       }
     },
     [key, saveValueToLocalStorage]

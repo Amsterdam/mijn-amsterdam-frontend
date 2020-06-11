@@ -40,12 +40,15 @@ export function useSSE(
           }
         }, RECONNECT_TIMEOUT_MS);
       } else {
-        Sentry.withScope(scope => {
-          scope.setExtra('sse:error', 'Retry terminated');
-          Sentry.captureException(
-            error instanceof Error ? error : error.toString()
-          );
-        });
+        Sentry.captureException(
+          error instanceof Error ? error : error.toString(),
+          {
+            extra: {
+              module: 'sse hook',
+              name: 'Retry terminated',
+            },
+          }
+        );
 
         callback({
           ALL: {
