@@ -181,7 +181,11 @@ export async function requestData<T>(
         }
       );
 
-      const responseData = apiErrorResult(error, null, sentryId);
+      const responseData = apiErrorResult(
+        error?.response?.data?.message || error.toString(),
+        null,
+        sentryId
+      );
 
       if (cache.get(cacheKey)) {
         // Resolve with error

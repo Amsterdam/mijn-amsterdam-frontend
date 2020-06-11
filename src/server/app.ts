@@ -70,7 +70,7 @@ app.use(function onError(
   _next: NextFunction
 ) {
   // @ts-ignore
-  const responseData = apiErrorResult(err, null, res.sentry);
+  const responseData = apiErrorResult(err.toString(), null, res.sentry);
   res.status(500).json(responseData);
 });
 

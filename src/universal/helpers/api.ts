@@ -63,13 +63,13 @@ export function isError(apiResponseData: ApiResponse<any>) {
 }
 
 export function apiErrorResult<T>(
-  error: AxiosError,
+  error: string,
   content: T,
   sentryId?: string
 ): ApiErrorResponse<T> {
   const errorResponse: ApiErrorResponse<T> = {
     content,
-    message: error.response?.data?.message || error.toString(),
+    message: error,
     status: 'ERROR',
   };
 
@@ -123,7 +123,7 @@ export function apiDependencyError(
 
 export function apiErrorResponseData<T>(
   pristineResponseData: T,
-  error: AxiosError<any>
+  error: string
 ) {
   if (!pristineResponseData) {
     return pristineResponseData;

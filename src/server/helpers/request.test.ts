@@ -137,7 +137,7 @@ describe('requestData.ts', () => {
     // @ts-ignore
     expect(rs.sentry).toBe('x');
 
-    const error = new Error('Network Error') as AxiosError;
+    const error = new Error('Network Error').toString();
 
     expect(rs).toStrictEqual(apiErrorResult(error, null, 'x'));
 
