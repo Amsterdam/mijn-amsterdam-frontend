@@ -84,10 +84,6 @@ describe('The happy path', () => {
   itShouldLogout();
   itShouldLogin();
 
-  it('Should navigate to DASHBOARD', () => {
-    cy.screenshot();
-  });
-
   for (const [
     chapter,
     { pathname, isDetailPage, isPermanentPage, hasCollapsiblePanels },
@@ -147,11 +143,6 @@ describe('The happy path', () => {
       }
 
       selectComponent('LoadingContent_LoadingContent').should('not.exist');
-
-      if (!process.env.CI) {
-        cy.wait(500);
-        cy.screenshot();
-      }
     });
   }
 });

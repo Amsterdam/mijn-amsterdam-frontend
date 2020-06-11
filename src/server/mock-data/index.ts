@@ -1,18 +1,16 @@
 import { MyTip } from '../../universal/types';
 import { ApiUrls } from '../config';
-import { readFileSync } from 'fs';
-import path from 'path';
 
-const BELASTINGEN = './json/belasting.json';
-const BRP = './json/brp.json';
-const WMO = './json/wmo.json';
-const FOCUS_AANVRAGEN = './json/focus-aanvragen.json';
-const FOCUS_COMBINED = './json/focus-combined.json';
-const BAG = './json/bag.json';
-const AFVAL = './json/afvalophaalgebieden.json';
-const MILIEUZONE = './json/milieuzone.json';
-const TIPS = './json/tips.json';
-const AMSTERDAM_CONTENT = './json/amsterdam-nl-content-uitleg.json';
+import BELASTINGEN from './json/belasting.json';
+import BRP from './json/brp.json';
+import WMO from './json/wmo.json';
+import FOCUS_AANVRAGEN from './json/focus-aanvragen.json';
+import FOCUS_COMBINED from './json/focus-combined.json';
+import BAG from './json/bag.json';
+import AFVAL from './json/afvalophaalgebieden.json';
+import MILIEUZONE from './json/milieuzone.json';
+import TIPS from './json/tips.json';
+import AMSTERDAM_CONTENT from './json/amsterdam-nl-content-uitleg.json';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
   return new Promise(resolve => {
@@ -22,10 +20,8 @@ export function resolveWithDelay(delayMS: number = 0, data: any) {
   });
 }
 
-function loadMockApiResponseJson(fileName: string) {
-  return readFileSync(path.join(__dirname, fileName), {
-    encoding: 'utf8',
-  }).toString();
+async function loadMockApiResponseJson(data: any) {
+  return JSON.stringify(data);
 }
 
 type MockDataConfig = Record<
@@ -42,58 +38,57 @@ type MockDataConfig = Record<
 export const mockDataConfig: MockDataConfig = {
   [ApiUrls.BELASTINGEN]: {
     status: 200,
-    responseData: () => loadMockApiResponseJson(BELASTINGEN),
+    responseData: async () => await loadMockApiResponseJson(BELASTINGEN),
   },
   [ApiUrls.BRP]: {
     status: 200,
     // delay: 2500,
-    responseData: () => {
-      return loadMockApiResponseJson(BRP);
-    },
+    responseData: async () => await loadMockApiResponseJson(BRP),
   },
   [ApiUrls.WMO]: {
     status: 200,
-    responseData: () => loadMockApiResponseJson(WMO),
+    responseData: async () => await loadMockApiResponseJson(WMO),
   },
   [ApiUrls.FOCUS_AANVRAGEN]: {
     status: 200,
     // delay: 3400,
-    responseData: () => loadMockApiResponseJson(FOCUS_AANVRAGEN),
+    responseData: async () => await loadMockApiResponseJson(FOCUS_AANVRAGEN),
   },
   [ApiUrls.FOCUS_COMBINED]: {
     status: 200,
-    responseData: () => loadMockApiResponseJson(FOCUS_COMBINED),
+    responseData: async () => await loadMockApiResponseJson(FOCUS_COMBINED),
   },
   [ApiUrls.ERFPACHT]: {
     status: 200,
-    responseData: () => JSON.stringify({ status: true }),
+    responseData: async () => await JSON.stringify({ status: true }),
   },
   [ApiUrls.BAG]: {
     status: 200,
-    responseData: () => loadMockApiResponseJson(BAG),
+    responseData: async () => await loadMockApiResponseJson(BAG),
   },
   [ApiUrls.AFVAL]: {
     status: 200,
-    responseData: () => loadMockApiResponseJson(AFVAL),
+    responseData: async () => await loadMockApiResponseJson(AFVAL),
   },
   [ApiUrls.MILIEUZONE]: {
     status: 200,
-    responseData: () => loadMockApiResponseJson(MILIEUZONE),
+    responseData: async () => await loadMockApiResponseJson(MILIEUZONE),
   },
   [ApiUrls.CMS_CONTENT_GENERAL_INFO]: {
     status: 200,
-    responseData: () => loadMockApiResponseJson(AMSTERDAM_CONTENT),
+    responseData: async () => await loadMockApiResponseJson(AMSTERDAM_CONTENT),
   },
   [ApiUrls.TIPS]: {
     status: 200,
     method: 'post',
-    responseData: (config: any) => {
+    responseData: async (config: any) => {
       const requestData = JSON.parse(config.data);
       let sourceTips: MyTip[] = [];
       if (requestData?.tips?.length) {
         sourceTips = requestData.tips;
       }
-      const tips = JSON.parse(loadMockApiResponseJson(TIPS));
+      const content = await loadMockApiResponseJson(TIPS);
+      const tips = JSON.parse(content);
       const items = [
         ...(tips.items as MyTip[]),
         ...sourceTips,

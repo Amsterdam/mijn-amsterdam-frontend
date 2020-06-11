@@ -21,6 +21,7 @@ import {
 } from '../config';
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
 import { Deferred } from './deferred';
+import { AxiosError } from 'axios';
 
 export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
@@ -166,8 +167,8 @@ export async function requestData<T>(
       // We're returning a result here so a failed request will not prevent other succeeded request needed for a response
       // to the client to pass through.
       const sentryId = Sentry.captureException(
-        error instanceof Error
-          ? error
+        error.isAxiosError
+          ? error.toString()
           : error?.message || 'Unknown error message',
         {
           tags: {
@@ -175,6 +176,7 @@ export async function requestData<T>(
           },
           extra: {
             module: 'request',
+            status: error?.response?.status,
           },
         }
       );

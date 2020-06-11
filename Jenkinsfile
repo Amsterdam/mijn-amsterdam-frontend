@@ -38,24 +38,24 @@ pipeline {
       }
     }
 
-    // stage('E2E testing') {
-    //   when { not { branch 'test' } }
-    //   environment {
-    //     PROJECT = "${PROJECT_PREFIX}e2e"
-    //   }
-    //   steps {
-    //     script { currentBuild.displayName = "E2E testing #${BUILD_NUMBER}" }
-    //     sh "docker-compose -p ${PROJECT} up --build --exit-code-from e2e-testsuite e2e-testsuite"
-    //   }
-    //   post {
-    //     failure {
-    //       junit 'cypress/results/test-report-*.xml'
-    //     }
-    //     always {
-    //       sh "docker-compose -p ${PROJECT} down -v --rmi local || true"
-    //     }
-    //   }
-    // }
+    stage('E2E testing') {
+      when { not { branch 'test' } }
+      environment {
+        PROJECT = "${PROJECT_PREFIX}e2e"
+      }
+      steps {
+        script { currentBuild.displayName = "E2E testing #${BUILD_NUMBER}" }
+        sh "docker-compose -p ${PROJECT} up --build --exit-code-from e2e-testsuite e2e-testsuite"
+      }
+      post {
+        failure {
+          junit 'cypress/results/test-report-*.xml'
+        }
+        always {
+          sh "docker-compose -p ${PROJECT} down -v --rmi local || true"
+        }
+      }
+    }
 
     // TEST
 

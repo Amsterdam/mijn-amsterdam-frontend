@@ -1,9 +1,7 @@
-import { selectComponent } from '../support/helpers';
+import { itShouldLogoutAndInAgain, selectComponent } from '../support/helpers';
 
 describe('Dashboard', () => {
-  it('Visit login url always redirects user to Dashboard page', () => {
-    cy.login();
-  });
+  itShouldLogoutAndInAgain();
 
   it("Shows the Chapters Panel (Thema's)", () => {
     selectComponent('MyChaptersPanel_MyChaptersPanel').contains("Mijn thema's");
@@ -20,7 +18,7 @@ describe('Dashboard', () => {
   });
 
   it('Shows MyArea', () => {
-    selectComponent('MyArea_MyArea').should('exist');
+    selectComponent('MyArea_MapDashboard').should('exist');
   });
 
   it('Shows MyTips', () => {
