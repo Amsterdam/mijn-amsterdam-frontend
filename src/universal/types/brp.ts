@@ -49,6 +49,10 @@ export interface Verbintenis {
   persoon: Partial<Persoon>;
 }
 
+export interface VerbintenisHistorisch extends Verbintenis {
+  redenOntbindingOmschrijving: string | null;
+}
+
 export interface Kind {
   bsn: string;
   geboortedatum: string;
@@ -62,7 +66,7 @@ export interface Kind {
 export interface BRPData {
   persoon: Persoon;
   verbintenis?: Verbintenis;
-  verbintenisHistorisch?: Verbintenis[];
+  verbintenisHistorisch?: VerbintenisHistorisch[];
   kinderen?: Kind[];
   ouders: Partial<Persoon>[];
   adres: Adres;

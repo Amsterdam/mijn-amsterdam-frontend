@@ -1,11 +1,11 @@
+import { AxiosRequestConfig } from 'axios';
 import { differenceInCalendarDays } from 'date-fns';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, Chapters } from '../../universal/config';
 import { defaultDateFormat } from '../../universal/helpers';
-import { Adres, BRPData, MyNotification } from '../../universal/types';
-import { requestData } from '../helpers';
+import { BRPData, MyNotification } from '../../universal/types';
 import { ApiUrls, getApiConfigValue } from '../config';
-import { AxiosRequestConfig } from 'axios';
+import { requestData } from '../helpers';
 
 const DAYS_BEFORE_EXPIRATION = 120;
 

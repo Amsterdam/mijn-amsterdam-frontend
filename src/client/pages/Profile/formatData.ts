@@ -1,9 +1,10 @@
-import { Adres, BRPData, Persoon, Verbintenis } from '../../../universal/types';
 import {
   defaultDateFormat,
   entries,
   getFullAddress,
 } from '../../../universal/helpers';
+import { Adres, BRPData, Persoon, Verbintenis } from '../../../universal/types';
+import { VerbintenisHistorisch } from '../../../universal/types/brp';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
@@ -100,11 +101,18 @@ const verbintenis: ProfileLabels<Partial<Verbintenis> & Partial<Persoon>> = {
   landnaamSluiting: 'Land',
 };
 
+const verbintenisHistorisch: ProfileLabels<Partial<VerbintenisHistorisch> &
+  Partial<Persoon>> = {
+  ...verbintenis,
+  redenOntbindingOmschrijving: 'Reden ontbinding',
+};
+
 export const brpInfoLabels = {
   persoon,
   persoonSecundair,
   adres,
   verbintenis,
+  verbintenisHistorisch,
 };
 
 function format(labelConfig: ProfileLabels<any>, data: any, brpData: BRPData) {
@@ -171,7 +179,11 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
       const verbintenisHistorisch = brpData.verbintenisHistorisch.map(
         verbintenis => {
           return {
-            ...format(brpInfoLabels.verbintenis, verbintenis, brpData),
+            ...format(
+              brpInfoLabels.verbintenisHistorisch,
+              verbintenis,
+              brpData
+            ),
             ...format(
               brpInfoLabels.persoonSecundair,
               verbintenis.persoon,
