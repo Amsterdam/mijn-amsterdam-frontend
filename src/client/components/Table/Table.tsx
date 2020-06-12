@@ -39,8 +39,9 @@ export default function Table({
   const displayPropEntries = entries(displayPropsFinal).filter(
     ([key]) => key !== titleKey
   );
-  const hasDisplayPropTableHeadingLabels = !!Object.keys(displayPropsFinal)
-    .length;
+  const hasDisplayPropTableHeadingLabels = !!Object.keys(
+    displayPropsFinal
+  ).filter(titleKey => !!displayPropsFinal[titleKey]).length;
 
   return (
     <table className={classnames(styles.Table, className)}>
