@@ -65,6 +65,9 @@ export const ApiConfig: Record<ApiStateKey | string, ApiConfig> = {
   MILIEUZONE_GENERATED: {
     postponeFetch: !FeatureToggle.milieuzoneApiActive,
   },
+  VERGUNNINGEN: {
+    postponeFetch: !FeatureToggle.vergunningenActive,
+  },
 };
 
 export function getApiConfigValue(
