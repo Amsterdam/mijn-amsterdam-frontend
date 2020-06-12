@@ -124,6 +124,7 @@ Object {
     "geboorteplaatsnaam": "Lochem",
     "gemeentenaamInschrijving": "Amsterdam",
     "geslachtsnaam": "Beemsterboer",
+    "indicatieGeheim": true,
     "mokum": true,
     "nationaliteiten": Array [
       Object {
@@ -136,7 +137,6 @@ Object {
     "omschrijvingAdellijkeTitel": "Hertogin",
     "omschrijvingBurgerlijkeStaat": "Gehuwd",
     "omschrijvingGeslachtsaanduiding": "Man",
-    "omschrijvingIndicatieGeheim": "Niet zonder toestemming aan derden ter uitvoering van een algemeen verbindend voorschrift en niet aan vrije derden en niet aan kerken",
     "opgemaakteNaam": "W. Beemsterboer",
     "overlijdensdatum": null,
     "vertrokkenOnbekendWaarheen": true,

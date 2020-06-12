@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   defaultDateFormat,
   entries,
@@ -10,6 +11,7 @@ import {
   Verbintenis,
   VerbintenisHistorisch,
 } from '../../../universal/types';
+import { LinkdInline } from '../../components/index';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
@@ -52,7 +54,21 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
         ? value.map(({ omschrijving }) => omschrijving).join(' ')
         : null,
   ],
-  omschrijvingIndicatieGeheim: 'Geheimhouding',
+  indicatieGeheim: [
+    'Geheimhouding',
+    (value, _item, BRPData) =>
+      value ? (
+        <>
+          Voor dit adres geldt{' '}
+          <LinkdInline
+            external={true}
+            href="https://www.amsterdam.nl/veelgevraagd/?productid=%7B1833F1D4-05A2-4870-BDEE-20DC3A37ED1C%7D"
+          >
+            geheimhouding
+          </LinkdInline>
+        </>
+      ) : null,
+  ],
 };
 
 const persoonSecundair: ProfileLabels<Partial<Persoon>> = {
