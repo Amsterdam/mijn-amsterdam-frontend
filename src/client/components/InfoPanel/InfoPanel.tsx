@@ -57,7 +57,9 @@ function InfoPanelActionLinks({ actionLinks }: InfoPanelActionLinksProps) {
 
 function getValue(value: any) {
   if (Array.isArray(value) || typeof value === 'object') {
-    return JSON.stringify(value);
+    try {
+      return JSON.stringify(value);
+    } catch (error) {}
   }
   return value;
 }

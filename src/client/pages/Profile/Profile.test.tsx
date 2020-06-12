@@ -1,12 +1,9 @@
-import { AppState } from '../../AppState';
 import { mount, shallow } from 'enzyme';
-
+import React, { ReactNode } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import Profile from './Profile';
-import React from 'react';
-import { ReactNode } from 'react';
+import { AppState } from '../../AppState';
 import { MockAppStateProvider } from '../../AppStateProvider';
-import { ResponseStatus } from '../../../universal/helpers';
+import Profile from './Profile';
 
 const responseData = {
   adres: {
