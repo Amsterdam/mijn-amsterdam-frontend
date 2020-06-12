@@ -7,6 +7,7 @@ import {
   fetchBELASTING,
   fetchMILIEUZONE,
 } from './index';
+import { fetchVergunningen } from './vergunningen';
 
 export async function loadServicesDirect(
   sessionID: SessionID,
@@ -22,6 +23,7 @@ export async function loadServicesDirect(
   const fetchERFPACHTRequest = fetchERFPACHT(sessionID, samlToken);
   const fetchBELASTINGRequest = fetchBELASTING(sessionID, samlToken);
   const fetchMILIEUZONERequest = fetchMILIEUZONE(sessionID, samlToken);
+  const fetchVergunningenRequest = fetchVergunningen(sessionID, samlToken);
 
   const [
     FOCUS_AANVRAGEN,
@@ -31,6 +33,7 @@ export async function loadServicesDirect(
     ERFPACHT,
     BELASTINGEN,
     MILIEUZONE,
+    VERGUNNINGEN,
   ] = await Promise.all([
     fetchFOCUSAanvragenRequest,
     fetchFOCUSSpecificatiesRequest,
@@ -39,6 +42,7 @@ export async function loadServicesDirect(
     fetchERFPACHTRequest,
     fetchBELASTINGRequest,
     fetchMILIEUZONERequest,
+    fetchVergunningenRequest,
   ]);
 
   return {
@@ -49,5 +53,6 @@ export async function loadServicesDirect(
     ERFPACHT,
     BELASTINGEN,
     MILIEUZONE,
+    VERGUNNINGEN,
   };
 }

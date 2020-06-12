@@ -45,6 +45,7 @@ import {
 } from './pages';
 import Accessibility from './pages/Accessibility/Accessibility';
 import { SessionContext, SessionState } from './SessionState';
+import Vergunningen from './pages/Vergunningen/Vergunningen';
 
 function AppNotAuthenticated() {
   const { location } = useRouter();
@@ -148,6 +149,7 @@ function AppAuthenticated() {
           )}
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           <Route path={AppRoutes.GENERAL_INFO} component={GeneralInfo} />
+          <Route path={AppRoutes.VERGUNNINGEN} component={Vergunningen} />
           <Route component={NotFound} />
         </Switch>
       </div>

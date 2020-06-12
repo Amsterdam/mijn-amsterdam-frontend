@@ -20,6 +20,7 @@ export const AppRoutes = {
   AFVAL: '/afval',
   ACCESSIBILITY: '/toegankelijkheidsverklaring',
   GENERAL_INFO: '/uitleg',
+  VERGUNNINGEN: '/vergunningen',
 };
 
 export const PublicRoutes = [

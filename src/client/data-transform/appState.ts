@@ -1,7 +1,6 @@
-import { AppState } from '../AppState';
-import { WelcomeNotification } from '../config/staticData';
-import { PRISTINE_APPSTATE } from '../hooks/useAppState';
 import { dateSort } from '../../universal/helpers/date';
+import { AppState, PRISTINE_APPSTATE } from '../AppState';
+import { WelcomeNotification } from '../config/staticData';
 
 function transformNotifications(NOTIFICATIONS: AppState['NOTIFICATIONS']) {
   if (NOTIFICATIONS.status === 'OK') {

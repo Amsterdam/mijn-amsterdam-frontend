@@ -38,6 +38,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BELASTINGEN: 'Belastingen + actuele updates',
   MILIEUZONE: 'Milieuzone + actuele updates',
   HOME: 'Lat/Lon locatie gegevens van uw adres.',
+  VERGUNNINGEN: 'Vergunningen + actuele updates',
   ALL: 'Alle databronnen',
 };
 

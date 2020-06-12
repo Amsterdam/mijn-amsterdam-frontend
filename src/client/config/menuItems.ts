@@ -63,6 +63,12 @@ export const myChaptersMenuItems: MenuItem[] = [
     chapter: Chapters.AFVAL,
   },
   {
+    title: ChapterTitles.VERGUNNINGEN,
+    id: Chapters.VERGUNNINGEN,
+    to: AppRoutes.VERGUNNINGEN,
+    chapter: Chapters.VERGUNNINGEN,
+  },
+  {
     title: ChapterTitles.MILIEUZONE,
     id: Chapters.MILIEUZONE,
     to: ExternalUrls.SSO_MILIEUZONE || '',

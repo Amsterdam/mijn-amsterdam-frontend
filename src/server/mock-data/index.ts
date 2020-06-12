@@ -78,6 +78,10 @@ export const mockDataConfig: MockDataConfig = {
     status: 200,
     responseData: async () => await loadMockApiResponseJson(AMSTERDAM_CONTENT),
   },
+  [ApiUrls.VERGUNNINGEN]: {
+    status: 200,
+    responseData: async () => await loadMockApiResponseJson([null]),
+  },
   [ApiUrls.TIPS]: {
     status: 200,
     method: 'post',
