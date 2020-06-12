@@ -1,0 +1,32 @@
+@import '../../styles/_global.scss';
+
+.InfoDetail {
+  border-top: 0.1rem solid $color-neutral-grey2;
+  padding-bottom: 2.5rem;
+  padding-top: 1.6rem;
+  color: $color-neutral-grey4;
+
+  .Label {
+    padding-bottom: .4rem;
+    display: block;
+  }
+
+  .Value {
+    color: $color-black;
+    display: block;
+    font-weight: 500;
+    font-size: 1.8rem;
+  }
+
+  @include mq-tablet() {
+    margin-left: 7rem;
+  }
+
+}
+
+.InfoDetailGroup {
+  display: flex;
+  > * {
+    flex: 1;
+  }
+}

@@ -15,7 +15,7 @@ export function addTitleLinkComponent(
       ...item,
       [titleKey]: (
         <Linkd href={item.link.to}>
-          {capitalizeFirstLetter(item[titleKey]) || 'uhhhh'}
+          {capitalizeFirstLetter(item[titleKey]) || 'uhhhh oh'}
         </Linkd>
       ),
     };

@@ -22,6 +22,7 @@
   margin-bottom: 1.8rem;
   transform: translateX(-2.2rem);
   max-width: 62rem;
+  white-space: nowrap;
 
   @include mq-tablet() {
     margin-left: 9.5rem;

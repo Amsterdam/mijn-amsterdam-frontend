@@ -11,6 +11,7 @@ import AFVAL from './json/afvalophaalgebieden.json';
 import MILIEUZONE from './json/milieuzone.json';
 import TIPS from './json/tips.json';
 import AMSTERDAM_CONTENT from './json/amsterdam-nl-content-uitleg.json';
+import VERGUNNINGEN from './json/vergunningen.json';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
   return new Promise(resolve => {
@@ -80,7 +81,7 @@ export const mockDataConfig: MockDataConfig = {
   },
   [ApiUrls.VERGUNNINGEN]: {
     status: 200,
-    responseData: async () => await loadMockApiResponseJson([null]),
+    responseData: async () => await loadMockApiResponseJson(VERGUNNINGEN),
   },
   [ApiUrls.TIPS]: {
     status: 200,

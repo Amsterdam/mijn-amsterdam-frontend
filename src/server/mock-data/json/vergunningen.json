@@ -1,16 +1,17 @@
 [
   {
-    "status": "",
-    "title": "",
-    "identifier": "",
-    "caseType": "",
-    "dateRequest": "",
-    "dateFrom": "",
-    "dateEnd": "",
-    "timeStart": "",
-    "timeEnd": "",
-    "kenteken": "",
-    "location": "",
-    "isActual": ""
+    "id": "hash(identifier)",
+    "status": "Verleend",
+    "title": "FIETSENREKKEN VERWIJDEREN/Vossiusstraat 3 T/M 11/ 11-07-2020",
+    "identifier": "Z/20/1750359",
+    "caseType": "Tijdelijke verkeersmaatregel",
+    "dateRequest": "2020-04-16",
+    "dateValidStart": "2020-03-10",
+    "dateValidEnd": "2020-07-11",
+    "timeValidStart": "08:00",
+    "timeValidEnd": "16:00",
+    "kenteken": null,
+    "location": null,
+    "isActual": true
   }
 ]

@@ -11,6 +11,7 @@ import {
   PageContent,
   PageHeading,
   StatusLine,
+  InfoDetail,
 } from '../../components';
 import styles from './ZorgDetail.module.scss';
 
@@ -68,10 +69,7 @@ export default () => {
           <LoadingContent className={styles.LoadingContentInfo} />
         )}
         {!!WmoItem?.supplier && (
-          <p className={styles.InfoDetail}>
-            Aanbieder
-            <strong>{WmoItem.supplier}</strong>
-          </p>
+          <InfoDetail label="Aanbieder" value={WmoItem.supplier} />
         )}
       </PageContent>
 

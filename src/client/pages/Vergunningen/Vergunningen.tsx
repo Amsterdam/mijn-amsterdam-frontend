@@ -5,27 +5,41 @@ import { AppContext } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
-  Linkd,
+  // Linkd,
   PageContent,
   PageHeading,
   SectionCollapsible,
   Table,
+  addTitleLinkComponent,
 } from '../../components';
 import { OverviewPage } from '../../components/Page/Page';
 import styles from './Vergunningen.module.scss';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 
 const DISPLAY_PROPS = {
-  identifier: '',
-  caseType: '',
-  title: '',
-  dateStart: '',
+  identifier: 'Zaakkenmerk',
+  caseType: 'Soort vergunning',
+  title: 'Omschrijving',
+  dateRequest: 'Aanvraagdatum',
 };
 
 export default () => {
   const { VERGUNNINGEN } = useContext(AppContext);
 
   const vergunningenActual = useMemo(() => {
-    return VERGUNNINGEN.content?.filter(x => x) || [];
+    if (!VERGUNNINGEN.content?.length) {
+      return [];
+    }
+    const items = VERGUNNINGEN.content
+      .filter(x => x)
+      .map(item => {
+        return {
+          ...item,
+          title: item.title.slice(0, 40) + '...',
+          dateRequest: defaultDateFormat(item.dateRequest),
+        };
+      });
+    return addTitleLinkComponent(items, 'identifier');
   }, [VERGUNNINGEN.content]);
 
   return (
@@ -63,7 +77,11 @@ export default () => {
           name: 'Datatabel',
         }}
       >
-        <Table displayProps={DISPLAY_PROPS} items={vergunningenActual} />
+        <Table
+          titleKey="identifier"
+          displayProps={DISPLAY_PROPS}
+          items={vergunningenActual}
+        />
       </SectionCollapsible>
     </OverviewPage>
   );

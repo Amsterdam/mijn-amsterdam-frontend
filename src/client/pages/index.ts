@@ -16,5 +16,7 @@ export { default as MyTips } from './MyTips/MyTips';
 export { default as NotFound } from './NotFound/NotFound';
 export { default as Proclaimer } from './Proclaimer/Proclaimer';
 export { default as Profile } from './Profile/Profile';
+export { default as VergunningDetail } from './VergunningDetail/VergunningDetail';
+export { default as Vergunningen } from './Vergunningen/Vergunningen';
 export { default as Zorg } from './Zorg/Zorg';
 export { default as ZorgDetail } from './ZorgDetail/ZorgDetail';
