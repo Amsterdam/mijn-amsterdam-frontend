@@ -39,11 +39,11 @@ export default () => {
           u meestal een evenementenvergunning nodig, maar soms is een melding
           voldoende. Kijk hier hoe het werkt.
         </p>
-        <p>
+        {/* <p>
           <Linkd external={true} href="https://mijn.amsterdam.nl/">
             Meer informatie op amsterdam.nl
           </Linkd>
-        </p>
+        </p> */}
         {isError(VERGUNNINGEN) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>
