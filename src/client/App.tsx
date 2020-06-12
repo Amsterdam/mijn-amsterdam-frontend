@@ -49,17 +49,17 @@ import {
 import { SessionContext, SessionState } from './SessionState';
 
 function AppNotAuthenticated() {
-  // const { location } = useRouter();
+  const { location } = useRouter();
 
-  // const [routeEntry, setRouteEntry] = useLocalStorage('RouteEntry', '');
+  const [routeEntry, setRouteEntry] = useLocalStorage('RouteEntry', '');
 
-  // if (
-  //   (!routeEntry || routeEntry === '/') &&
-  //   location.pathname !== '/' &&
-  //   isPrivateRoute(location.pathname)
-  // ) {
-  //   setRouteEntry(location.pathname);
-  // }
+  if (
+    (!routeEntry || routeEntry === '/') &&
+    location.pathname !== '/' &&
+    isPrivateRoute(location.pathname)
+  ) {
+    setRouteEntry(location.pathname);
+  }
 
   return (
     <>
@@ -71,7 +71,6 @@ function AppNotAuthenticated() {
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           <Route
             render={({ location: { pathname } }) => {
-              console.log('loc:', pathname);
               if (isPrivateRoute(pathname)) {
                 // Private routes are redirected to Home
                 return <Redirect to={AppRoutes.ROOT} />;
