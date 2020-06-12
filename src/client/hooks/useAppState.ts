@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
-import { useDataApi } from './api/api.hook';
+import { useDataApi, requestApiData } from './api/api.hook';
 import { BFFApiUrls } from '../config/api';
 import { useSSE } from './useSSE';
 import { transformAppState } from '../data-transform/appState';
@@ -28,10 +28,14 @@ export function useAppState() {
     const [api] = useDataApi<AppState | null>(
       {
         url: BFFApiUrls.SERVICES_SAURON,
-        transformResponse: transformAppState,
+        transformResponse: [
+          ...requestApiData.defaults.transformResponse,
+          transformAppState,
+        ],
       },
       null
     );
+    console.log(api, BFFApiUrls.SERVICES_SAURON);
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       if (api.data !== null) {

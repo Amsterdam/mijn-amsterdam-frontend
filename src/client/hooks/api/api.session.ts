@@ -5,7 +5,7 @@ import {
   apiPristineResult,
   ApiSuccessResponse,
 } from '../../../universal/helpers/api';
-import { ApiRequestOptions, useDataApi } from './api.hook';
+import { ApiRequestOptions, useDataApi, requestApiData } from './api.hook';
 import { AUTH_API_URL } from '../../config/api';
 
 export type SessionData = {
@@ -30,11 +30,14 @@ const INITIAL_SESSION_STATE = {
 
 const requestOptions: ApiRequestOptions = {
   url: AUTH_API_URL,
-  transformResponse(data) {
-    return {
-      SESSION: apiSuccesResult<SessionData>(data),
-    };
-  },
+  transformResponse: [
+    ...requestApiData.defaults.transformResponse,
+    data => {
+      return {
+        SESSION: apiSuccesResult<SessionData>(data),
+      };
+    },
+  ],
 };
 
 type SessionResponseData =
