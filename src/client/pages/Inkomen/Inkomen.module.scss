@@ -13,6 +13,15 @@
   @include select(Table_DisplayPropTitle) {
     width: 30%;
   }
+
+  @include mq-tablet() {
+    tr td:nth-child(2) {
+      width: 100%;
+    }
+    @include select(Table_DisplayPropTitle) {
+      width: 100%;
+    }
+  }
 }
 
 .SectionCollapsibleFirst {

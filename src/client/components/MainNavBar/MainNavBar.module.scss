@@ -157,6 +157,15 @@
     display: none;
   }
 
+  @include mq-tablet() {
+    top: $main-header-topbar-height--tablet;
+    right: 0.5rem;
+
+    &Open {
+      top: 7rem;
+    }
+  }
+
   > * {
     font-weight: 500;
     color: $color-black;
@@ -175,15 +184,6 @@
   border: 0;
   background-color: transparent;
   padding: 0;
-
-  @include mq-tablet() {
-    top: $main-header-topbar-height--tablet;
-    right: 0.5rem;
-
-    &Open {
-      top: 7rem;
-    }
-  }
 }
 
 .LogoutLink,

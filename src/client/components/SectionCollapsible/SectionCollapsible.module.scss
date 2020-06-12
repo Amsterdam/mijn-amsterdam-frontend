@@ -26,6 +26,7 @@
 
   @include mq-tablet() {
     margin-left: 9.5rem;
+    white-space: initial;
   }
   @include mq-phone() {
     margin-left: 0;
@@ -43,6 +44,7 @@
   background: 0;
   font-weight: bold;
   padding: 0;
+  text-align: left;
 
   &[aria-expanded="true"] .CaretIcon {
     transform: translateY(-50%) rotate(90deg);

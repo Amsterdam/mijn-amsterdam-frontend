@@ -52,14 +52,6 @@
 
   @include select(StatusLine_ListItemInner__) {
     @include centered-block;
-
-    @include mq-tablet() {
-      margin-left: 7rem;
-    }
-
-    @include mq-phone() {
-      margin-left: 4rem;
-    }
   }
 
   @include select(StatusLine_NoStatusItems, StatusLine_ListHeading) {
