@@ -3,6 +3,7 @@ import { ChapterTitles } from '../../../universal/config/index';
 import { ChapterIcon, PageContent, PageHeading } from '../../components';
 import { OverviewPage } from '../../components/Page/Page';
 import styles from './Vergunningen.module.scss';
+import { Colors } from '../../config/app';
 
 export default () => {
   return (
