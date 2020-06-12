@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { ChapterTitles } from '../../../universal/config/index';
-import { isError } from '../../../universal/helpers';
+import { isError, isLoading } from '../../../universal/helpers';
 import { AppContext } from '../../AppState';
 import {
   Alert,
@@ -8,12 +8,25 @@ import {
   Linkd,
   PageContent,
   PageHeading,
+  SectionCollapsible,
+  Table,
 } from '../../components';
 import { OverviewPage } from '../../components/Page/Page';
 import styles from './Vergunningen.module.scss';
 
+const DISPLAY_PROPS = {
+  identifier: '',
+  caseType: '',
+  title: '',
+  dateStart: '',
+};
+
 export default () => {
   const { VERGUNNINGEN } = useContext(AppContext);
+
+  const vergunningenActual = useMemo(() => {
+    return VERGUNNINGEN.content?.filter(x => x) || [];
+  }, [VERGUNNINGEN.content]);
 
   return (
     <OverviewPage className={styles.Vergunningen}>
@@ -37,6 +50,21 @@ export default () => {
           </Alert>
         )}
       </PageContent>
+      <SectionCollapsible
+        id="SectionCollapsible-vergunningen-actual"
+        title="Voorlopige vergunningen (toegekend onder voorbehoud)"
+        noItemsMessage="U hebt geen voorlopige vergunningen (toegekend onder voorbehoud)."
+        hasItems={!!vergunningenActual.length}
+        startCollapsed={false}
+        className={styles.SectionCollapsibleCurrent}
+        isLoading={isLoading(VERGUNNINGEN)}
+        track={{
+          category: 'Vergunningen overzicht / Voorlopige vergunningen',
+          name: 'Datatabel',
+        }}
+      >
+        <Table displayProps={DISPLAY_PROPS} items={vergunningenActual} />
+      </SectionCollapsible>
     </OverviewPage>
   );
 };

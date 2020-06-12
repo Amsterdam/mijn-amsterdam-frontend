@@ -1,10 +1,19 @@
-import { requestData } from '../helpers';
 import { ApiUrls, getApiConfigValue } from '../config';
-import { GenericDocument } from '../../universal/types/App.types';
+import { requestData } from '../helpers';
 
 export interface VergunningSource {
+  status: string;
   title: string;
-  documents: GenericDocument[];
+  identifier: string;
+  caseType: string;
+  dateRequest: string;
+  dateFrom: string;
+  dateEnd: string;
+  timeStart: string;
+  timeEnd: string;
+  isActual: boolean;
+  kenteken?: string;
+  location?: string;
 }
 
 export type VergunningenSourceData = VergunningSource[];
