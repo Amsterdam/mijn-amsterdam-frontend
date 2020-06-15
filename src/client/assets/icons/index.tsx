@@ -29,3 +29,4 @@ export { ReactComponent as IconSearch } from './Search.svg';
 export { ReactComponent as IconTips } from './Tip.svg';
 export { ReactComponent as IconWonen } from './wonen.svg';
 export { ReactComponent as IconZorg } from './zorg.svg';
+export { ReactComponent as IconVergunningen } from './vergunningen.svg';

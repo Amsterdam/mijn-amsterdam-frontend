@@ -14,6 +14,7 @@ export {
   default as InfoPanel,
   InfoPanelCollapsible,
 } from './InfoPanel/InfoPanel';
+export { default as InfoDetail } from './InfoDetail/InfoDetail';
 export { default as LoadingContent } from './LoadingContent/LoadingContent';
 export { default as MainFooter } from './MainFooter/MainFooter';
 export { default as MainHeader } from './MainHeader/MainHeader';

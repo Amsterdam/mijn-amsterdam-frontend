@@ -2,11 +2,11 @@ import { useCallback, useMemo } from 'react';
 import { TIPSData } from '../../../server/services/tips';
 import { BFFApiUrls } from '../../config/api';
 import { useDataApi } from './api.hook';
-import { PRISTINE_APPSTATE } from '../useAppState';
 import {
   ApiResponse,
   unwrapApiResponseContent,
 } from '../../../universal/helpers/api';
+import { PRISTINE_APPSTATE } from '../../AppState';
 
 function transformResponse(response: ApiResponse<TIPSData>) {
   return {
@@ -15,7 +15,7 @@ function transformResponse(response: ApiResponse<TIPSData>) {
 }
 
 export function useTipsApi() {
-  const pristineData = transformResponse(PRISTINE_APPSTATE['TIPS']);
+  const pristineData = transformResponse(PRISTINE_APPSTATE.TIPS);
   const [api, fetchTips] = useDataApi<{ TIPS: ApiResponse<TIPSData> }>(
     {
       url: BFFApiUrls.SERVICES_TIPS,

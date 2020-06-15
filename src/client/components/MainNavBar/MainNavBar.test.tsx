@@ -8,7 +8,7 @@ import MainNavBar from './MainNavBar';
 import React from 'react';
 import { SessionState } from '../../SessionState';
 import { MockAppStateProvider } from '../../AppStateProvider';
-import { PRISTINE_APPSTATE } from '../../hooks/useAppState';
+import { PRISTINE_APPSTATE } from '../../AppState';
 
 const sessionState: any = {
   isAuthenticated: true,

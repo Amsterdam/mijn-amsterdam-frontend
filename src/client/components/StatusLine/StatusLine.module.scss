@@ -51,6 +51,21 @@
   }
 }
 
+.StatusConnection {
+  position: relative;
+  width: 3.4rem;
+
+  @include mq-tablet() {
+    position: absolute;
+    height: 100%;
+    left: 2.6rem;
+  }
+
+  @include mq-phone() {
+    left: 1rem;
+  }
+}
+
 .ConnectLine {
   display: block;
   width: 0.2rem;
@@ -165,11 +180,6 @@
   }
 }
 
-.StatusConnection {
-  position: relative;
-  width: 3.4rem;
-}
-
 .ListItem {
   &--highlight {
     background-color: $color-neutral-grey1;
@@ -189,11 +199,11 @@
     @include mq-tablet() {
       display: block;
       position: relative;
-      padding: 0 2rem;
+      padding: 0 1rem 0 6.8rem;
     }
 
     @include mq-phone() {
-      padding: 0 1rem;
+      padding: 0 1rem 0 4rem;
     }
   }
 
@@ -220,7 +230,7 @@
     @include mq-tablet() {
       &,
       &--status {
-        padding: 1rem 1rem 1rem 3rem;
+        padding: 1.8rem 1rem 1rem 3rem;
         position: static;
       }
     }

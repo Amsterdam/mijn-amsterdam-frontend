@@ -15,6 +15,7 @@ import {
   LoadingContent,
   PageContent,
   PageHeading,
+  InfoDetail,
 } from '../../components';
 import styles from './BurgerzakenDetail.module.scss';
 
@@ -55,19 +56,20 @@ export default () => {
           <LoadingContent className={styles.LoadingContentInfo} />
         )}
         {!!DocumentItem && (
-          <div className={styles.DocumentProperties}>
-            <p>
-              Documentnummer <strong>{DocumentItem.documentNummer}</strong>
-            </p>
-            <p>
-              Datum uitgifte{' '}
-              <strong>{defaultDateFormat(DocumentItem.datumUitgifte)}</strong>
-            </p>
-            <p>
-              Geldig tot{' '}
-              <strong>{defaultDateFormat(DocumentItem.datumAfloop)}</strong>
-            </p>
-          </div>
+          <>
+            <InfoDetail
+              label="Documentnummer"
+              value={DocumentItem.documentNummer}
+            />
+            <InfoDetail
+              label="Datum uitgifte"
+              value={defaultDateFormat(DocumentItem.datumUitgifte)}
+            />
+            <InfoDetail
+              label="Geldig tot"
+              value={defaultDateFormat(DocumentItem.datumAfloop)}
+            />
+          </>
         )}
       </PageContent>
     </DetailPage>

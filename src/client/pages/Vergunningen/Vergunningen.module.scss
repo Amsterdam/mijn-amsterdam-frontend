@@ -1,0 +1,7 @@
+@import '../../styles/_global.scss';
+
+.Vergunningen {
+  @include select(PageContent) {
+    padding-bottom: 5rem;
+  }
+}

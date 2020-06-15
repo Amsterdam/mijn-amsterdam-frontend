@@ -42,8 +42,10 @@ import {
   Zorg,
   ZorgDetail,
   GeneralInfo,
+  Vergunningen,
+  VergunningDetail,
+  Accessibility,
 } from './pages';
-import Accessibility from './pages/Accessibility/Accessibility';
 import { SessionContext, SessionState } from './SessionState';
 
 function AppNotAuthenticated() {
@@ -148,6 +150,11 @@ function AppAuthenticated() {
           )}
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           <Route path={AppRoutes.GENERAL_INFO} component={GeneralInfo} />
+          <Route
+            path={AppRoutes['VERGUNNINGEN/DETAIL']}
+            component={VergunningDetail}
+          />
+          <Route path={AppRoutes.VERGUNNINGEN} component={Vergunningen} />
           <Route component={NotFound} />
         </Switch>
       </div>

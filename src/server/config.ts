@@ -39,6 +39,7 @@ export const ApiUrls: Record<ApiStateKey, string> = {
   AFVAL: `${BFF_DATAPUNT_API_BASE_URL}/afvalophaalgebieden/search/`,
   MILIEUZONE: `${BFF_MS_API_BASE_URL}/milieu/get`,
   CMS_CONTENT_GENERAL_INFO: `https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data`,
+  VERGUNNINGEN: `${BFF_MS_API_BASE_URL}/vergunningen/get`,
 };
 
 export interface ApiConfig {
@@ -63,6 +64,9 @@ export const ApiConfig: Record<ApiStateKey | string, ApiConfig> = {
   },
   MILIEUZONE_GENERATED: {
     postponeFetch: !FeatureToggle.milieuzoneApiActive,
+  },
+  VERGUNNINGEN: {
+    postponeFetch: !FeatureToggle.vergunningenActive,
   },
 };
 

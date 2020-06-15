@@ -1,77 +1,10 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
-import { useDataApi } from './api/api.hook';
+import { useDataApi, requestApiData } from './api/api.hook';
 import { BFFApiUrls } from '../config/api';
 import { useSSE } from './useSSE';
 import { transformAppState } from '../data-transform/appState';
 import { useTipsApi } from './api/api.tips';
-import { apiPristineResult } from '../../universal/helpers';
-
-import { FEApiResponseData, ApiResponse } from '../../universal/helpers/api';
-import {
-  loadServicesGenerated,
-  loadServicesDirect,
-  loadServicesRelated,
-  loadServicesMap,
-  loadServicesCMSContent,
-} from '../../server/services';
-
-type GeneratedResponse = FEApiResponseData<typeof loadServicesGenerated>;
-type DirectResponse = FEApiResponseData<typeof loadServicesDirect>;
-type MapsResponse = FEApiResponseData<typeof loadServicesMap>;
-type RelatedResponse = FEApiResponseData<typeof loadServicesRelated>;
-type CMSContentResponse = FEApiResponseData<typeof loadServicesCMSContent>;
-
-type ApiState = GeneratedResponse &
-  DirectResponse &
-  MapsResponse &
-  RelatedResponse &
-  CMSContentResponse;
-
-type AppStateController = {
-  [key in keyof ApiState]?: {
-    fetch: (...args: any) => void;
-    [key: string]: any;
-  };
-};
-
-export type AppState = {
-  [key in keyof ApiState]: ApiResponse<ApiState[key]['content']>;
-} & {
-  controller: AppStateController;
-};
-
-export const PRISTINE_APPSTATE = {
-  // Generated
-  TIPS: apiPristineResult({ items: [] }),
-  NOTIFICATIONS: apiPristineResult([]),
-  CASES: apiPristineResult([]),
-
-  // Direct
-  FOCUS_SPECIFICATIES: apiPristineResult({
-    jaaropgaven: [],
-    uitkeringsspecificaties: [],
-  }),
-  FOCUS_AANVRAGEN: apiPristineResult([]),
-  FOCUS_TOZO: apiPristineResult(null),
-  WMO: apiPristineResult({ items: [] }),
-  ERFPACHT: apiPristineResult({ isKnown: false }),
-  BELASTINGEN: apiPristineResult({ isKnown: true }),
-  MILIEUZONE: apiPristineResult({ isKnown: false }),
-
-  // Related
-  BRP: apiPristineResult(null),
-  AFVAL: apiPristineResult({ ophalen: [], wegbrengen: [] }),
-  HOME: apiPristineResult(null),
-  BUURT: apiPristineResult(null),
-
-  // CMS content
-  CMS_CONTENT: apiPristineResult({
-    generalInfo: null,
-  }),
-
-  // Probeersel
-  controller: {},
-};
+import { PRISTINE_APPSTATE, AppState } from '../AppState';
 
 export function useAppState() {
   const { TIPS, fetch: fetchTips } = useTipsApi();
@@ -95,10 +28,14 @@ export function useAppState() {
     const [api] = useDataApi<AppState | null>(
       {
         url: BFFApiUrls.SERVICES_SAURON,
-        transformResponse: transformAppState,
+        transformResponse: [
+          ...requestApiData.defaults.transformResponse,
+          transformAppState,
+        ],
       },
       null
     );
+    console.log(api, BFFApiUrls.SERVICES_SAURON);
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       if (api.data !== null) {

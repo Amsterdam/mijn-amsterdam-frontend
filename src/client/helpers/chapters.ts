@@ -15,6 +15,7 @@ function isChapterActive(
     BRP,
     BELASTINGEN,
     MILIEUZONE,
+    VERGUNNINGEN,
   }: AppState
 ) {
   switch (item.id) {
@@ -71,6 +72,9 @@ function isChapterActive(
 
     case Chapters.BRP:
       return !isLoading(BRP) && !!BRP.content?.persoon;
+
+    case Chapters.VERGUNNINGEN:
+      return !isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length;
   }
 
   return false;
@@ -92,6 +96,7 @@ export function getMyChapters(appState: AppState): ChaptersState {
     BRP,
     BELASTINGEN,
     MILIEUZONE,
+    VERGUNNINGEN,
   } = appState;
 
   const wmoIsloading = isLoading(WMO);
@@ -103,6 +108,7 @@ export function getMyChapters(appState: AppState): ChaptersState {
   const garbageIsLoading = isLoading(AFVAL);
   const belastingIsLoading = isLoading(BELASTINGEN);
   const milieuzoneIsLoading = isLoading(MILIEUZONE);
+  const vergunnunigenIsLoading = isLoading(VERGUNNINGEN);
 
   const items = myChaptersMenuItems.filter(item => {
     // Check to see if Chapter has been loaded or if it is directly available
@@ -118,6 +124,7 @@ export function getMyChapters(appState: AppState): ChaptersState {
     focusAanvragenIsloading ||
     focusTozoIsloading ||
     erfpachtIsloading ||
+    vergunnunigenIsLoading ||
     garbageIsLoading;
 
   return {

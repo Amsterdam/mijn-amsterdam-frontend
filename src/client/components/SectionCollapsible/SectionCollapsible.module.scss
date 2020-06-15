@@ -17,14 +17,16 @@
 
 .Title {
   position: relative;
-  padding-left: 1em;
+  padding-left: .96em;
   margin: 0 auto;
   margin-bottom: 1.8rem;
   transform: translateX(-2.2rem);
   max-width: 62rem;
+  white-space: nowrap;
 
   @include mq-tablet() {
     margin-left: 9.5rem;
+    white-space: initial;
   }
   @include mq-phone() {
     margin-left: 0;
@@ -42,6 +44,7 @@
   background: 0;
   font-weight: bold;
   padding: 0;
+  text-align: left;
 
   &[aria-expanded="true"] .CaretIcon {
     transform: translateY(-50%) rotate(90deg);
@@ -57,6 +60,7 @@
 .PanelInner {
   display: flex;
   flex-direction: column;
+  padding-top: 1.4rem;
 }
 
 .NoItemsMessage {
