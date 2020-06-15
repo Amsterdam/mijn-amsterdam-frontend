@@ -11,15 +11,16 @@ type AFVALResponseData =
 
 export async function loadServicesRelated(
   sessionID: SessionID,
-  samlToken: string
+  samlToken: string,
+  raw: boolean = false
 ) {
-  const BRP = await fetchBRP(sessionID, samlToken);
+  const BRP = await fetchBRP(sessionID, samlToken, raw);
   const HOME = await fetchHOME(sessionID, samlToken);
 
   let AFVAL: AFVALResponseData;
 
   if (HOME.status === 'OK') {
-    AFVAL = await fetchAFVAL(sessionID, samlToken, HOME.content.latlng);
+    AFVAL = await fetchAFVAL(sessionID, samlToken, HOME.content.latlng, raw);
   } else {
     AFVAL = apiDependencyError({ BRP, HOME });
   }

@@ -259,7 +259,8 @@ export function formatAFVALData(
 export function fetchAFVAL(
   sessionID: SessionID,
   samlToken: string,
-  center: LatLngObject | null
+  center: LatLngObject | null,
+  raw: boolean = false
 ) {
   const params = { lat: center?.lat, lon: center?.lng };
 
@@ -267,7 +268,7 @@ export function fetchAFVAL(
     {
       url: ApiUrls.AFVAL,
       params,
-      transformResponse: data => formatAFVALData(data, center),
+      transformResponse: data => (raw ? data : formatAFVALData(data, center)),
     },
     sessionID,
     samlToken,

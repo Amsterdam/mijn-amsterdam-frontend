@@ -13,6 +13,7 @@ import { fetchMILIEUZONEGenerated } from './milieuzone';
 import { loadServicesDirect } from './services-direct';
 import { loadServicesRelated } from './services-related';
 import { fetchTIPS, TIPSRequestData } from './tips';
+import { loadServicesRaw } from './services-raw';
 
 export async function loadServicesGenerated(
   sessionID: SessionID,
@@ -20,8 +21,7 @@ export async function loadServicesGenerated(
   optin: boolean = false
 ) {
   const [
-    servicesDirect,
-    servicesRelated,
+    tips,
     brpGenerated,
     focusAanvragenGenerated,
     focusSpecificatiesGenerated,
@@ -29,8 +29,7 @@ export async function loadServicesGenerated(
     belastingGenerated,
     milieuzoneGenerated,
   ] = await Promise.all([
-    loadServicesDirect(sessionID, samlToken),
-    loadServicesRelated(sessionID, samlToken),
+    loadServicesTips(sessionID, samlToken, optin),
     fetchBRPGenerated(sessionID, samlToken),
     fetchFOCUSAanvragenGenerated(sessionID, samlToken),
     fetchFOCUSSpecificationsGenerated(sessionID, samlToken),
@@ -68,17 +67,6 @@ export async function loadServicesGenerated(
     }
   }
 
-  const tipsRequestData: TIPSRequestData = {
-    data: unwrapApiResponseContent({
-      ...servicesDirect,
-      ...servicesRelated,
-    }),
-    tips: sourceTips,
-    optin,
-  };
-
-  const tips = await fetchTIPS(sessionID, samlToken, tipsRequestData);
-
   const notificationsResult = notifications
     .sort(dateSort('datePublished', 'desc'))
     // Put the alerts on the top regardless of the publication date
@@ -96,6 +84,22 @@ export async function loadServicesTips(
   samlToken: string,
   optin: boolean = false
 ) {
-  const response = await loadServicesGenerated(sessionID, samlToken, optin);
-  return response.TIPS;
+  const data = await loadServicesRaw(sessionID, samlToken);
+
+  const tipsRequestData: TIPSRequestData = {
+    data,
+    tips: Object.values(data).flatMap((apiData: any) => {
+      if (apiData !== null && typeof apiData === 'object') {
+        if (apiData?.content?.tips) {
+          return apiData.content.tips;
+        } else if (apiData?.tips) {
+          return apiData.tips;
+        }
+      }
+      return [];
+    }),
+    optin,
+  };
+
+  return fetchTIPS(sessionID, samlToken, tipsRequestData);
 }

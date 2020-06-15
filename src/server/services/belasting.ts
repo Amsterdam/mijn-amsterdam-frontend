@@ -42,11 +42,16 @@ function transformBELASTINGENData(
   };
 }
 
-export function fetchBELASTING(sessionID: SessionID, samlToken: string) {
+export function fetchBELASTING(
+  sessionID: SessionID,
+  samlToken: string,
+  raw: boolean = false
+) {
   return requestData<BELASTINGENData>(
     {
       url: ApiUrls.BELASTINGEN,
-      transformResponse: transformBELASTINGENData,
+      transformResponse: responseData =>
+        raw ? responseData : transformBELASTINGENData(responseData),
     },
     sessionID,
     samlToken,
@@ -59,13 +64,8 @@ function transformBELASTINGENGenerated(responseData: BELASTINGSourceData) {
   let tips: MyTip[] = [];
 
   if (responseData.status === 'OK') {
-    // TEMP HACK! OVERRRIDE PRIORITY
     if (responseData.content?.tips?.length) {
-      tips = responseData.content.tips.map(tip =>
-        Object.assign(tip, {
-          priority: 100,
-        })
-      );
+      tips = responseData.content.tips;
     }
 
     if (responseData.content?.meldingen?.length) {

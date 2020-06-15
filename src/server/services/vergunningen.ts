@@ -46,11 +46,16 @@ export function transformVergunningenData(
   });
 }
 
-export function fetchVergunningen(sessionID: SessionID, samlToken: string) {
+export function fetchVergunningen(
+  sessionID: SessionID,
+  samlToken: string,
+  raw: boolean = false
+) {
   return requestData<VergunningenData>(
     {
       url: ApiUrls.VERGUNNINGEN,
-      transformResponse: transformVergunningenData,
+      transformResponse: responseData =>
+        raw ? responseData : transformVergunningenData(responseData),
     },
     sessionID,
     samlToken,

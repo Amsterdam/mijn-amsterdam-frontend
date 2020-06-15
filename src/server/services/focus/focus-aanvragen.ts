@@ -11,18 +11,26 @@ import {
   transformFocusProduct,
   translateFocusProduct,
 } from './focus-aanvragen-helpers';
-import { FocusProduct, FocusProductFromSource } from './focus-types';
+import { FocusProduct, FocusProductFromSource, FocusItem } from './focus-types';
 
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
  */
-export function fetchFOCUS(sessionID: SessionID, samlToken: string) {
+export function fetchFOCUS(
+  sessionID: SessionID,
+  samlToken: string,
+  raw: boolean = false
+) {
   const sourceDataNormalized = requestData<FocusProduct[]>(
     {
       url: ApiUrls.FOCUS_AANVRAGEN,
 
       // Normalize the focus source response.
       transformResponse: (data = []) => {
+        if (raw) {
+          return data;
+        }
+
         if (Array.isArray(data)) {
           return data
             .map((product: FocusProductFromSource) =>
@@ -45,9 +53,14 @@ export const focusAanvragenProducten = ['Levensonderhoud', 'Stadspas'];
 
 export async function fetchFOCUSAanvragen(
   sessionID: SessionID,
-  samlToken: string
+  samlToken: string,
+  raw: boolean = false
 ) {
-  const response = await fetchFOCUS(sessionID, samlToken);
+  const response = await fetchFOCUS(sessionID, samlToken, raw);
+
+  if (raw) {
+    return response;
+  }
 
   if (response.status === 'OK') {
     // Filter out the products that we use for the lopende/afgehandelde aanvragen
@@ -77,14 +90,16 @@ export async function fetchFOCUSAanvragenGenerated(
   let cases: MyCase[] = [];
 
   if (focusItemsResponse.status === 'OK') {
+    const items = focusItemsResponse.content as FocusItem[];
+
     notifications =
-      focusItemsResponse.content?.map(focusItem =>
+      items.map(focusItem =>
         createFocusNotification(focusItem, contentLabels)
       ) || [];
 
     cases =
-      focusItemsResponse.content
-        ?.filter(focusItem => isRecentItem(focusItem.steps, compareDate))
+      items
+        .filter(focusItem => isRecentItem(focusItem.steps, compareDate))
         .map(focusItem => createFocusRecentCase(focusItem)) || [];
   }
 

@@ -14,6 +14,7 @@ import {
 } from '../../components';
 import { StatusLineItem } from '../../components/StatusLine/StatusLine';
 import styles from './InkomenDetail.module.scss';
+import { FocusItem } from '../../../server/services/focus/focus-types';
 
 export const MAX_STEP_COUNT_FOCUS_REUEST = 4;
 
@@ -60,15 +61,15 @@ export default () => {
       params: { id },
     },
   } = useRouter();
-
-  const FocusItem = FOCUS_AANVRAGEN.content?.find(item => item.id === id);
-  const noContent = !isLoading(FOCUS_AANVRAGEN) && !FocusItem;
+  const aanvragen = (FOCUS_AANVRAGEN.content || []) as FocusItem[];
+  const focusItem = aanvragen.find(item => item.id === id);
+  const noContent = !isLoading(FOCUS_AANVRAGEN) && !focusItem;
   const hasDecision =
-    FocusItem && FocusItem.steps.some(step => step.status === 'Besluit');
+    focusItem && focusItem.steps.some(step => step.status === 'Besluit');
   let title = 'Onbekend item';
 
-  if (FocusItem) {
-    title = FocusItem.title;
+  if (focusItem) {
+    title = focusItem.title;
   }
 
   return (
@@ -87,10 +88,10 @@ export default () => {
         )}
         {isLoading(FOCUS_AANVRAGEN) && <LoadingContent />}
       </PageContent>
-      {!!FocusItem && !!FocusItem.steps && (
+      {!!focusItem && !!focusItem.steps && (
         <StatusLine
-          trackCategory={`Inkomen en Stadspas / ${FocusItem.title}`}
-          items={FocusItem.steps}
+          trackCategory={`Inkomen en Stadspas / ${focusItem.title}`}
+          items={focusItem.steps}
           showToggleMore={true}
           maxStepCount={!hasDecision ? MAX_STEP_COUNT_FOCUS_REUEST : undefined}
           id={id}
