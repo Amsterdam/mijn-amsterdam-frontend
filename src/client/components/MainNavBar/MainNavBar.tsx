@@ -13,7 +13,7 @@ import { AppRoutes } from '../../../universal/config';
 import { getFullName, isLoading } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
 import { AppContext } from '../../AppState';
-import { IconLogout } from '../../assets/icons';
+import { IconLogout, IconMyNotifications } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
 import { MenuItem } from '../../config/menuItems';
 import { getMyChapters } from '../../helpers/chapters';
@@ -327,13 +327,12 @@ export default function MainNavBar() {
           </>
         )}
         <Linkd
+          className={styles.GeneralInfoLink}
           href={AppRoutes.GENERAL_INFO}
           variant="plain"
-          icon={''}
+          icon={IconMyNotifications}
           lean={true}
-        >
-          Uitleg
-        </Linkd>
+        />
       </div>
     </nav>
   );
