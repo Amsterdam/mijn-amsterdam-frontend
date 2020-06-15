@@ -20,7 +20,11 @@ function loginPage(req, res, next) {
 }
 
 function handleLogin(req, res, next) {
-  const userType = req.url.startsWith('/api1/') ? 'BEDRIJF' : 'BURGER';
+  console.log('url:', req.url);
+  const userType =
+    req.url.startsWith('/api1/') || req.url.startsWith('/test-api1/')
+      ? 'BEDRIJF'
+      : 'BURGER';
   req.session = { isAuthenticated: true, userType };
 
   return res.redirect(REDIRECT_AFTER_LOGIN);
