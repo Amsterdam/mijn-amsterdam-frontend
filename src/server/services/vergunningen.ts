@@ -31,6 +31,9 @@ export type VergunningenData = Vergunning[];
 export function transformVergunningenData(
   responseData: VergunningenSourceData
 ): VergunningenData {
+  if (!Array.isArray(responseData)) {
+    return [];
+  }
   return responseData.map(item => {
     return Object.assign(item, {
       link: {
