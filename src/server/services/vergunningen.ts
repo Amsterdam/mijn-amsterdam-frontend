@@ -31,6 +31,9 @@ export type VergunningenData = Vergunning[];
 export function transformVergunningenData(
   responseData: VergunningenSourceData
 ): VergunningenData {
+  if (!Array.isArray(responseData)) {
+    return [];
+  }
   return responseData.map(item => {
     return Object.assign(item, {
       link: {
@@ -43,11 +46,16 @@ export function transformVergunningenData(
   });
 }
 
-export function fetchVergunningen(sessionID: SessionID, samlToken: string) {
+export function fetchVergunningen(
+  sessionID: SessionID,
+  samlToken: string,
+  raw: boolean = false
+) {
   return requestData<VergunningenData>(
     {
       url: ApiUrls.VERGUNNINGEN,
-      transformResponse: transformVergunningenData,
+      transformResponse: responseData =>
+        raw ? responseData : transformVergunningenData(responseData),
     },
     sessionID,
     samlToken,

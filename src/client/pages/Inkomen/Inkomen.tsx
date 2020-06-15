@@ -27,6 +27,7 @@ import {
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import styles from './Inkomen.module.scss';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import { FocusItem } from '../../../server/services/focus/focus-types';
 
 export const incomSpecificationsRouteMonthly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES']
@@ -52,7 +53,7 @@ export default () => {
   const { FOCUS_AANVRAGEN, FOCUS_SPECIFICATIES, FOCUS_TOZO } = useContext(
     AppContext
   );
-  const aanvragen = FOCUS_AANVRAGEN.content || [];
+  const aanvragen = (FOCUS_AANVRAGEN.content || []) as FocusItem[];
   const tozoItems = FOCUS_TOZO.content || [];
   const uitkeringsspecificaties =
     FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties || [];

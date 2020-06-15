@@ -35,7 +35,6 @@ export function useAppState() {
       },
       null
     );
-    console.log(api, BFFApiUrls.SERVICES_SAURON);
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       if (api.data !== null) {

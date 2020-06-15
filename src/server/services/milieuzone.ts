@@ -42,11 +42,16 @@ function transformMILIEUZONEData(
   };
 }
 
-export function fetchMILIEUZONE(sessionID: SessionID, samlToken: string) {
+export function fetchMILIEUZONE(
+  sessionID: SessionID,
+  samlToken: string,
+  raw: boolean = false
+) {
   return requestData<MILIEUZONEData>(
     {
       url: ApiUrls.MILIEUZONE,
-      transformResponse: transformMILIEUZONEData,
+      transformResponse: responseData =>
+        raw ? responseData : transformMILIEUZONEData(responseData),
     },
     sessionID,
     samlToken,

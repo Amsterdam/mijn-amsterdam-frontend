@@ -96,7 +96,7 @@ export const mockDataConfig: MockDataConfig = {
       const tips = JSON.parse(content);
       const items = [
         ...(tips.items as MyTip[]),
-        ...sourceTips,
+        ...sourceTips.map(tip => Object.assign(tip, { isPersonalized: true })),
       ].filter((tip: MyTip) =>
         requestData?.optin ? tip.isPersonalized : !tip.isPersonalized
       );

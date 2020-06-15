@@ -1,12 +1,9 @@
 import { useCallback, useMemo } from 'react';
 import { TIPSData } from '../../../server/services/tips';
+import { ApiResponse } from '../../../universal/helpers/api';
+import { PRISTINE_APPSTATE } from '../../AppState';
 import { BFFApiUrls } from '../../config/api';
 import { useDataApi } from './api.hook';
-import {
-  ApiResponse,
-  unwrapApiResponseContent,
-} from '../../../universal/helpers/api';
-import { PRISTINE_APPSTATE } from '../../AppState';
 
 function transformResponse(response: ApiResponse<TIPSData>) {
   return {
@@ -26,13 +23,10 @@ export function useTipsApi() {
   );
 
   const fetchTipsFinal = useCallback(
-    (isOptIn: boolean, appState: any) => {
-      const requestData = unwrapApiResponseContent(appState);
+    (isOptIn: boolean) => {
       fetchTips({
         url: BFFApiUrls.SERVICES_TIPS,
-        method: 'POST',
-        data: {
-          data: requestData,
+        params: {
           optin: isOptIn,
         },
         postpone: false,

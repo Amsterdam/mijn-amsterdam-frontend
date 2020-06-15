@@ -729,12 +729,16 @@ export function transformWMOResponse(
   return { items };
 }
 
-export function fetchWMO(sessionID: SessionID, samlToken: string) {
+export function fetchWMO(
+  sessionID: SessionID,
+  samlToken: string,
+  raw: boolean = false
+) {
   return requestData<WMOData>(
     {
       url: ApiUrls.WMO,
       transformResponse: (responseData: WMOSourceData) =>
-        transformWMOResponse(responseData, new Date()),
+        raw ? responseData : transformWMOResponse(responseData, new Date()),
     },
     sessionID,
     samlToken,
