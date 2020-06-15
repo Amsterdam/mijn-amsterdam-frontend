@@ -34,22 +34,11 @@ export default () => {
       </PageHeading>
       <PageContent className={styles.LandingContent} id="AppContent">
         <p>
-          Welkom op Mijn Amsterdam: uw persoonlijke online pagina bij de
-          gemeente Amsterdam. Hier ziet u op 1 centrale plek welke gegevens de
-          gemeente van u heeft vastgelegd. U ziet ook wat u hebt aangevraagd bij
-          de gemeente en hoe het met uw aanvraag staat. En hoe u het kunt
-          doorgeven als er iets niet klopt.
+          Mijn Amsterdam is uw persoonlijke online pagina bij de gemeente
+          Amsterdam.
         </p>
-        <p>
-          Nog niet al uw informatie is op Mijn Amsterdam zichtbaar. We
-          ontwikkelen stap voor stap. Er komt steeds meer bij.
-        </p>
-        <Heading className={styles.LoginHeading} size="mediumLarge" el="h2">
-          Log in op Mijn Amsterdam
-        </Heading>
-
         <div className={styles.LoginOption}>
-          <Heading size="tiny" el="h3">
+          <Heading className={styles.LoginOptionHeading} size="tiny" el="h3">
             Voor particulieren
           </Heading>
           <p>
@@ -91,8 +80,8 @@ export default () => {
               styles['LoginOption--eherkenning']
             )}
           >
-            <Heading size="tiny" el="h3">
-              Voor ondernermers
+            <Heading className={styles.LoginOptionHeading} size="tiny" el="h3">
+              Voor ondernemers
             </Heading>
             <p>
               <a
@@ -131,7 +120,7 @@ export default () => {
             </p>
           </div>
         )}
-        <Heading size="tiny" el="h3">
+        <Heading size="tiny" el="h4">
           Vragen over Mijn Amsterdam?
         </Heading>
         <p className={styles.FaqInfo}>
