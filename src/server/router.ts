@@ -5,6 +5,7 @@ import {
   loadServicesDirect,
   loadServicesGenerated,
   loadServicesRelated,
+  loadServicesTips,
 } from './services';
 import { loadServicesMap } from './services/services-map';
 import { loadServicesSSE } from './services/services-sse';
@@ -87,14 +88,18 @@ router.get(`/services/map`, async function handleRouteServicesMap(
   }
 });
 
-router.post(`/services/tips`, async function handleRouteTips(
+router.get(`/services/tips`, async function handleRouteTips(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
   try {
     res.json(
-      await fetchTIPS(req.sessionID!, getSamlTokenHeader(req), req.body)
+      await loadServicesTips(
+        req.sessionID!,
+        getSamlTokenHeader(req),
+        req.query.optin === 'true'
+      )
     );
     next();
   } catch (error) {

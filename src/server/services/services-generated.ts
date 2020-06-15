@@ -90,3 +90,12 @@ export async function loadServicesGenerated(
     TIPS: tips,
   };
 }
+
+export async function loadServicesTips(
+  sessionID: SessionID,
+  samlToken: string,
+  optin: boolean = false
+) {
+  const response = await loadServicesGenerated(sessionID, samlToken, optin);
+  return response.TIPS;
+}
