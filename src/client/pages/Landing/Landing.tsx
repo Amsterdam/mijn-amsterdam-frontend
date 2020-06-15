@@ -33,6 +33,10 @@ export default () => {
         Welkom op Mijn Amsterdam
       </PageHeading>
       <PageContent className={styles.LandingContent} id="AppContent">
+        <p>
+          Mijn Amsterdam is uw persoonlijke online pagina bij de gemeente
+          Amsterdam.
+        </p>
         <div className={styles.LoginOption}>
           <Heading className={styles.LoginOptionHeading} size="tiny" el="h3">
             Voor particulieren
@@ -116,18 +120,6 @@ export default () => {
             </p>
           </div>
         )}
-        <p>
-          Mijn Amsterdam is uw persoonlijke online pagina bij de gemeente
-          Amsterdam. Hier ziet u op 1 centrale plek welke gegevens de gemeente
-          van u heeft vastgelegd. U ziet ook wat u hebt aangevraagd bij de
-          gemeente en hoe het met uw aanvraag staat. En hoe u het kunt doorgeven
-          als er iets niet klopt.
-        </p>
-        <p>
-          Nog niet al uw informatie is op Mijn Amsterdam zichtbaar. We
-          ontwikkelen stap voor stap. Er komt steeds meer bij.
-        </p>
-
         <Heading size="tiny" el="h4">
           Vragen over Mijn Amsterdam?
         </Heading>
