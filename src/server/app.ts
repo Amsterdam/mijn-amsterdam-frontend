@@ -4,18 +4,17 @@ import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, {
+  ErrorRequestHandler,
   NextFunction,
   Request,
-  Response,
   RequestHandler,
-  ErrorRequestHandler,
+  Response,
 } from 'express';
 import session from 'express-session';
-import { IS_AP, getOtapEnvItem, ENV } from '../universal/config/env';
-import { BFF_PORT } from './config';
-import { clearSessionCache } from './helpers';
-import { router } from './router';
+import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { apiErrorResult } from '../universal/helpers';
+import { BFF_PORT } from './config';
+import { router } from './router';
 
 const options: Sentry.NodeOptions = {
   dsn: getOtapEnvItem('bffSentryDsn'),
@@ -26,10 +25,8 @@ Sentry.init(options);
 
 const app = express();
 
-if (true) {
-  app.set('trust proxy', 1);
-  app.use(Sentry.Handlers.requestHandler() as RequestHandler);
-}
+app.set('trust proxy', 1);
+app.use(Sentry.Handlers.requestHandler() as RequestHandler);
 
 app.use(cors());
 app.use(bodyParser.json({ limit: '1mb' }));
