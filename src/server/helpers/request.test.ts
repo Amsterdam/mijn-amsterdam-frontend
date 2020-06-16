@@ -143,12 +143,14 @@ describe('requestData.ts', () => {
 
     expect(rs).toStrictEqual(apiErrorResult(error.toString(), null, 'x'));
 
-    expect(capture).toHaveBeenCalledWith(error.message, {
+    expect(capture).toHaveBeenCalledWith(`unknown: ${error.message}`, {
       tags: {
         url: DUMMY_URL_2,
       },
       extra: {
         module: 'request',
+        status: undefined,
+        apiName: 'unknown',
       },
     });
 
