@@ -1,7 +1,4 @@
-import {
-  apiSuccesResult,
-  unwrapApiResponseContent,
-} from '../../universal/helpers';
+import { apiSuccesResult } from '../../universal/helpers';
 import { dateSort } from '../../universal/helpers/date';
 import { MyCase, MyNotification, MyTip } from '../../universal/types';
 import { fetchBELASTINGGenerated } from './belasting';
@@ -10,10 +7,8 @@ import { fetchFOCUSAanvragenGenerated } from './focus/focus-aanvragen';
 import { fetchFOCUSSpecificationsGenerated } from './focus/focus-specificaties';
 import { fetchFOCUSTozoGenerated } from './focus/focus-tozo';
 import { fetchMILIEUZONEGenerated } from './milieuzone';
-import { loadServicesDirect } from './services-direct';
-import { loadServicesRelated } from './services-related';
-import { fetchTIPS, TIPSRequestData } from './tips';
 import { loadServicesRaw } from './services-raw';
+import { fetchTIPS, TIPSRequestData } from './tips';
 
 export async function loadServicesGenerated(
   sessionID: SessionID,
