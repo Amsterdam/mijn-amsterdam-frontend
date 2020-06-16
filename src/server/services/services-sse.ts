@@ -67,7 +67,7 @@ export async function loadServicesSSE(
     sendMessage(res, 'cmscontent', 'message', data);
   });
 
-  await Promise.all([
+  await Promise.allSettled([
     servicesDirect,
     servicesRelated,
     servicesMap,

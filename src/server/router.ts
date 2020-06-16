@@ -126,7 +126,7 @@ router.get(`/services/all`, async function handleRouteServicesMap(
   next: NextFunction
 ) {
   try {
-    const servicesResult = await Promise.allSettled([
+    const servicesResult = await Promise.all([
       loadServicesCMSContent(req.sessionID!, getSamlTokenHeader(req)),
       loadServicesDirect(req.sessionID!, getSamlTokenHeader(req)),
       loadServicesRelated(req.sessionID!, getSamlTokenHeader(req)),
