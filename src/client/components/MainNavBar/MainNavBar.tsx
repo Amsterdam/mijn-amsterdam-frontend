@@ -13,7 +13,7 @@ import { AppRoutes } from '../../../universal/config';
 import { getFullName, isLoading } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
 import { AppContext } from '../../AppState';
-import { IconLogout, IconMyNotifications } from '../../assets/icons';
+import { IconLogout, IconInfo } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
 import { MenuItem } from '../../config/menuItems';
 import { getMyChapters } from '../../helpers/chapters';
@@ -330,7 +330,7 @@ export default function MainNavBar() {
           className={styles.GeneralInfoLink}
           href={AppRoutes.GENERAL_INFO}
           variant="plain"
-          icon={IconMyNotifications}
+          icon={IconInfo}
           lean={true}
         />
       </div>
