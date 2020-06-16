@@ -27,5 +27,5 @@ export function getBagSearchAddress(adres: Adres) {
 }
 
 export function isMokum(brpContent: BRPData | null) {
-  return !!brpContent?.persoon.mokum;
+  return !!brpContent?.persoon?.mokum;
 }
