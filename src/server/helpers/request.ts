@@ -161,20 +161,27 @@ export async function requestData<T>(
       const api = Object.entries(ApiUrls).find(
         ([, url]) => requestConfig.url === url
       );
+      const apiName = api ? api[0] : 'unknown';
       const sentryId = shouldCaptureMessage
-        ? Sentry.captureMessage(error?.message ? error.message : error, {
+        ? Sentry.captureMessage(
+            `${apiName}: ${error?.message ? error.message : error}`,
+            {
+              tags: {
+                url: requestConfig.url!,
+              },
+              extra: {
+                module: 'request',
+                status: error?.response?.status,
+                apiName,
+              },
+            }
+          )
+        : Sentry.captureException(error, {
             tags: {
               url: requestConfig.url!,
             },
             extra: {
-              module: 'request',
-              status: error?.response?.status,
-              api: api ? api[0] : 'unknown',
-            },
-          })
-        : Sentry.captureException(error, {
-            tags: {
-              url: requestConfig.url!,
+              apiName,
             },
           });
 
