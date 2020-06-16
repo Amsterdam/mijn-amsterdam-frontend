@@ -1,6 +1,5 @@
-import { ApiUrls, getApiConfigValue } from '../config';
-
 import { MyTip } from '../../universal/types';
+import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 
 export interface TIPSData {
@@ -19,13 +18,11 @@ export function fetchTIPS(
   requestBody: TIPSRequestData
 ) {
   return requestData<TIPSData>(
-    {
-      url: ApiUrls.TIPS,
+    getApiConfig('TIPS', {
       method: 'POST',
       data: requestBody,
-    },
+    }),
     sessionID,
-    samlToken,
-    getApiConfigValue('TIPS', 'postponeFetch', false)
+    samlToken
   );
 }

@@ -1,7 +1,7 @@
 import { Chapters } from '../../universal/config';
 import { MyNotification, MyTip } from '../../universal/types';
+import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
-import { ApiUrls, getApiConfigValue } from '../config';
 
 export interface BELASTINGENData {
   isKnown: boolean;
@@ -48,14 +48,12 @@ export function fetchBELASTING(
   raw: boolean = false
 ) {
   return requestData<BELASTINGENData>(
-    {
-      url: ApiUrls.BELASTINGEN,
-      transformResponse: responseData =>
+    getApiConfig('BELASTINGEN', {
+      transformResponse: (responseData: BELASTINGSourceData) =>
         raw ? responseData : transformBELASTINGENData(responseData),
-    },
+    }),
     sessionID,
-    samlToken,
-    getApiConfigValue('BELASTINGEN', 'postponeFetch', false)
+    samlToken
   );
 }
 
@@ -88,13 +86,11 @@ export async function fetchBELASTINGGenerated(
   const response = await requestData<
     ReturnType<typeof transformBELASTINGENGenerated>
   >(
-    {
-      url: ApiUrls.BELASTINGEN,
+    getApiConfig('BELASTINGEN', {
       transformResponse: transformBELASTINGENGenerated,
-    },
+    }),
     sessionID,
-    samlToken,
-    getApiConfigValue('BELASTINGEN_GENERATED', 'postponeFetch', false)
+    samlToken
   );
 
   const notifications: MyNotification[] = [];

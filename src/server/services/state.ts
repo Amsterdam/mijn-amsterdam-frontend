@@ -28,7 +28,7 @@ export interface BFFApiData {
   BAG: ApiResult<typeof fetchBAG>;
   AFVAL: ApiResult<typeof fetchAFVAL>;
   MILIEUZONE: ApiResult<typeof fetchMILIEUZONE>;
-  [key: string]: any;
+  // [key: string]: any;
 }
 
-export type ApiStateKey = keyof BFFApiData | string;
+export type ApiStateKey = keyof BFFApiData;

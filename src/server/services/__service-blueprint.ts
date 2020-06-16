@@ -1,5 +1,5 @@
 import { requestData } from '../helpers';
-import { ApiUrls, getApiConfigValue } from '../config';
+import { getApiConfig } from '../config';
 import { GenericDocument } from '../../universal/types/App.types';
 
 /**
@@ -28,14 +28,14 @@ export function transformServiceNameData(
   return responseData;
 }
 
+const SERVICE_NAME = 'BRP'; // Change to your service name
+
 export function fetchServiceName(sessionID: SessionID, samlToken: string) {
   return requestData<ServiceNameData>(
-    {
-      url: ApiUrls.SERVICE_NAME,
+    getApiConfig(SERVICE_NAME, {
       transformResponse: transformServiceNameData,
-    },
+    }),
     sessionID,
-    samlToken,
-    getApiConfigValue('SERVICE_NAME', 'postponeFetch', false)
+    samlToken
   );
 }

@@ -111,10 +111,10 @@ describe('requestData.ts', () => {
     const rs = await requestData(
       {
         url: DUMMY_URL,
+        postponeFetch: true,
       },
       SESS_ID_1,
-      SAML_TOKEN,
-      true
+      SAML_TOKEN
     );
 
     expect(rs).toStrictEqual(apiPostponeResult());

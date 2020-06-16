@@ -1,5 +1,5 @@
 import { Chapters } from '../../universal/config';
-import { ApiUrls, getApiConfigValue } from '../config';
+import { ApiUrls, getApiConfig } from '../config';
 import { MyNotification, MyTip } from '../../universal/types';
 import { requestData } from '../helpers';
 
@@ -48,14 +48,12 @@ export function fetchMILIEUZONE(
   raw: boolean = false
 ) {
   return requestData<MILIEUZONEData>(
-    {
-      url: ApiUrls.MILIEUZONE,
-      transformResponse: responseData =>
+    getApiConfig('MILIEUZONE', {
+      transformResponse: (responseData: MILIEUZONESourceData) =>
         raw ? responseData : transformMILIEUZONEData(responseData),
-    },
+    }),
     sessionID,
-    samlToken,
-    getApiConfigValue('MILIEUZONE', 'postponeFetch', false)
+    samlToken
   );
 }
 
@@ -82,13 +80,11 @@ export async function fetchMILIEUZONEGenerated(
   const response = await requestData<
     ReturnType<typeof transformMILIEUZONEGenerated>
   >(
-    {
-      url: ApiUrls.MILIEUZONE,
+    getApiConfig('MILIEUZONE', {
       transformResponse: transformMILIEUZONEGenerated,
-    },
+    }),
     sessionID,
-    samlToken,
-    getApiConfigValue('MILIEUZONE_GENERATED', 'postponeFetch', false)
+    samlToken
   );
 
   const notifications: MyNotification[] = [];

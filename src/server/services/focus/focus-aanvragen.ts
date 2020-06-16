@@ -1,6 +1,6 @@
 import { apiSuccesResult, dateSort } from '../../../universal/helpers';
 import { MyCase, MyNotification } from '../../../universal/types';
-import { ApiUrls, getApiConfigValue } from '../../config';
+import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { contentLabels, titleTranslations } from './focus-aanvragen-content';
 import {
@@ -11,7 +11,7 @@ import {
   transformFocusProduct,
   translateFocusProduct,
 } from './focus-aanvragen-helpers';
-import { FocusProduct, FocusProductFromSource, FocusItem } from './focus-types';
+import { FocusItem, FocusProduct, FocusProductFromSource } from './focus-types';
 
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
@@ -22,9 +22,7 @@ export function fetchFOCUS(
   raw: boolean = false
 ) {
   const sourceDataNormalized = requestData<FocusProduct[]>(
-    {
-      url: ApiUrls.FOCUS_AANVRAGEN,
-
+    getApiConfig('FOCUS_AANVRAGEN', {
       // Normalize the focus source response.
       transformResponse: (data = []) => {
         if (raw) {
@@ -40,10 +38,9 @@ export function fetchFOCUS(
         }
         return [];
       },
-    },
+    }),
     sessionID,
-    samlToken,
-    getApiConfigValue('FOCUS_AANVRAGEN', 'postponeFetch', false)
+    samlToken
   );
 
   return sourceDataNormalized;
