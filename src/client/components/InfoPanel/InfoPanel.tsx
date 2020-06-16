@@ -56,7 +56,7 @@ function InfoPanelActionLinks({ actionLinks }: InfoPanelActionLinksProps) {
 }
 
 function getValue(value: any) {
-  if (value instanceof React.Component) {
+  if (React.isValidElement(value)) {
     return value;
   }
   if (Array.isArray(value) || typeof value === 'object') {
