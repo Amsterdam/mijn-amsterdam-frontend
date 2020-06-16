@@ -75,6 +75,6 @@ export async function loadServicesSSE(
     servicesCMSContent,
   ]).finally(() => {
     sendMessage(res, 'close', 'close', null);
-    next();
+    res.end();
   });
 }
