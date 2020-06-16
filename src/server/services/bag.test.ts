@@ -58,7 +58,7 @@ describe('BAG service', () => {
 
   it('Bag api should fail correct;y', async () => {
     // @ts-ignore
-    const capture = (Sentry.captureException = jest.fn(() => {
+    const capture = (Sentry.captureMessage = jest.fn(() => {
       return 'x';
     }));
     const rs = await fetchBAG('x', 'saml', {} as any);

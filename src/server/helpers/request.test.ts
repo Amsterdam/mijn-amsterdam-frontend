@@ -122,9 +122,11 @@ describe('requestData.ts', () => {
 
   it('A requests responds with error', async () => {
     // @ts-ignore
-    const capture = (Sentry.captureException = jest.fn(() => {
-      return 'x';
-    }));
+    const capture = (Sentry.captureException = Sentry.captureMessage = jest.fn(
+      () => {
+        return 'x';
+      }
+    ));
 
     const rs = await requestData(
       {
@@ -141,7 +143,7 @@ describe('requestData.ts', () => {
 
     expect(rs).toStrictEqual(apiErrorResult(error.toString(), null, 'x'));
 
-    expect(capture).toHaveBeenCalledWith(error, {
+    expect(capture).toHaveBeenCalledWith(error.message, {
       tags: {
         url: DUMMY_URL_2,
       },
