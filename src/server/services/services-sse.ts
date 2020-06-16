@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/node';
 import { NextFunction, Request, Response } from 'express';
 import { getSamlTokenHeader } from '../helpers/request';
 import { loadServicesCMSContent } from './services-cmscontent';
@@ -34,38 +35,65 @@ export async function loadServicesSSE(
   const servicesDirect = loadServicesDirect(
     req.sessionID!,
     getSamlTokenHeader(req)
-  ).then(data => {
-    sendMessage(res, 'direct', 'message', data);
-  });
+  )
+    .then(data => {
+      sendMessage(res, 'direct', 'message', data);
+    })
+    .catch(error =>
+      Sentry.captureException(error, {
+        extra: { module: 'services-sse', serviceName: 'direct' },
+      })
+    );
 
   const servicesRelated = loadServicesRelated(
     req.sessionID!,
     getSamlTokenHeader(req)
-  ).then(data => {
-    sendMessage(res, 'related', 'message', data);
-  });
+  )
+    .then(data => {
+      sendMessage(res, 'related', 'message', data);
+    })
+    .catch(error =>
+      Sentry.captureException(error, {
+        extra: { module: 'services-sse', serviceName: 'related' },
+      })
+    );
 
-  const servicesMap = loadServicesMap(
-    req.sessionID!,
-    getSamlTokenHeader(req)
-  ).then(data => {
-    sendMessage(res, 'map', 'message', data);
-  });
+  const servicesMap = loadServicesMap(req.sessionID!, getSamlTokenHeader(req))
+    .then(data => {
+      sendMessage(res, 'map', 'message', data);
+    })
+    .catch(error =>
+      Sentry.captureException(error, {
+        extra: { module: 'services-sse', serviceName: 'map' },
+      })
+    );
 
   const servicesGenerated = loadServicesGenerated(
     req.sessionID!,
     getSamlTokenHeader(req),
     req.cookies.optInPersonalizedTips === 'yes'
-  ).then(data => {
-    sendMessage(res, 'generated', 'message', data);
-  });
+  )
+    .then(data => {
+      sendMessage(res, 'generated', 'message', data);
+    })
+    .catch(error =>
+      Sentry.captureException(error, {
+        extra: { module: 'services-sse', serviceName: 'generated' },
+      })
+    );
 
   const servicesCMSContent = loadServicesCMSContent(
     req.sessionID!,
     getSamlTokenHeader(req)
-  ).then(data => {
-    sendMessage(res, 'cmscontent', 'message', data);
-  });
+  )
+    .then(data => {
+      sendMessage(res, 'cmscontent', 'message', data);
+    })
+    .catch(error =>
+      Sentry.captureException(error, {
+        extra: { module: 'services-sse', serviceName: 'cmscontent' },
+      })
+    );
 
   await Promise.allSettled([
     servicesDirect,
