@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/node';
-import axios, { AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosPromise, AxiosResponse } from 'axios';
 import { Request } from 'express';
 import memoryCache from 'memory-cache';
 import { IS_AP } from '../../universal/config/env';
@@ -17,21 +17,12 @@ import {
 import {
   BFF_MS_API_BASE_URL,
   BFF_REQUEST_CACHE_ENABLED,
+  DataRequestConfig,
   TMA_SAML_HEADER,
+  DEFAULT_REQUEST_CONFIG,
 } from '../config';
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
 import { Deferred } from './deferred';
-
-export interface DataRequestConfig extends AxiosRequestConfig {
-  cacheTimeout?: number;
-  cancelTimeout?: number;
-}
-
-const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
-  cancelTimeout: 20000, // 20 seconds
-  method: 'get',
-  cacheTimeout: 60 * 1000, // 1 minute. We expect that all requests will resolve within this total timeframe.,
-};
 
 export const axiosRequest = axios.create({
   responseType: 'json',
@@ -77,7 +68,7 @@ export interface RequestConfig<Source, Transformed> {
   format: (data: Source) => Transformed;
 }
 
-export function clearCache(sessionID: SessionID) {
+export function clearSessionCache(sessionID: SessionID) {
   for (const cacheKey of cache.keys()) {
     if (cacheKey.startsWith(sessionID)) {
       cache.del(cacheKey);
@@ -88,13 +79,8 @@ export function clearCache(sessionID: SessionID) {
 export async function requestData<T>(
   config: DataRequestConfig,
   sessionID: SessionID,
-  samlToken: string,
-  postpone: boolean = false
+  samlToken: string
 ) {
-  if (postpone) {
-    return apiPostponeResult();
-  }
-
   const source = axios.CancelToken.source();
 
   const requestConfig: DataRequestConfig = {
@@ -102,6 +88,10 @@ export async function requestData<T>(
     ...config,
     cancelToken: source.token,
   };
+
+  if (requestConfig.postponeFetch) {
+    return apiPostponeResult();
+  }
 
   if (requestConfig.transformResponse) {
     requestConfig.transformResponse = [].concat(

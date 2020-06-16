@@ -1,6 +1,6 @@
 import sanitizeHtml from 'sanitize-html';
+import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
-import { ApiUrls } from '../config';
 
 const TAGS_ALLOWED = [
   'a',
@@ -52,9 +52,8 @@ export async function loadServicesCMSContent(
   samlToken: string
 ) {
   const generalInfoPageResponse = await requestData<CMSContent>(
-    {
-      url: ApiUrls.CMS_CONTENT_GENERAL_INFO,
-      transformResponse: responseData => {
+    getApiConfig('CMS_CONTENT_GENERAL_INFO', {
+      transformResponse: (responseData: any) => {
         return {
           generalInfo: {
             title: responseData.applicatie.title,
@@ -64,8 +63,7 @@ export async function loadServicesCMSContent(
           },
         };
       },
-      cacheTimeout: 1 * 60 * 60 * 1000, // 1 hour
-    },
+    }),
     sessionID,
     samlToken
   );

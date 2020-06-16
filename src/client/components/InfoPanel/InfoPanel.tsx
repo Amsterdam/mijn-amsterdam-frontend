@@ -56,6 +56,9 @@ function InfoPanelActionLinks({ actionLinks }: InfoPanelActionLinksProps) {
 }
 
 function getValue(value: any) {
+  if (value instanceof React.Component) {
+    return value;
+  }
   if (Array.isArray(value) || typeof value === 'object') {
     try {
       return JSON.stringify(value);

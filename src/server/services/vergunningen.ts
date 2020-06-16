@@ -1,8 +1,8 @@
-import { ApiUrls, getApiConfigValue } from '../config';
-import { requestData } from '../helpers';
-import { LinkProps } from '../../universal/types/App.types';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes } from '../../universal/config/routing';
+import { LinkProps } from '../../universal/types/App.types';
+import { getApiConfig } from '../config';
+import { requestData } from '../helpers';
 
 export interface VergunningSource {
   id: string;
@@ -52,13 +52,11 @@ export function fetchVergunningen(
   raw: boolean = false
 ) {
   return requestData<VergunningenData>(
-    {
-      url: ApiUrls.VERGUNNINGEN,
-      transformResponse: responseData =>
+    getApiConfig('VERGUNNINGEN', {
+      transformResponse: (responseData: VergunningenSourceData) =>
         raw ? responseData : transformVergunningenData(responseData),
-    },
+    }),
     sessionID,
-    samlToken,
-    getApiConfigValue('VERGUNNINGEN', 'postponeFetch', false)
+    samlToken
   );
 }

@@ -1,4 +1,4 @@
-import { ApiUrls, getApiConfigValue } from '../config';
+import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 
 interface ERFPACHTSourceData {
@@ -19,13 +19,11 @@ export function fetchERFPACHT(
   raw: boolean = false
 ) {
   return requestData<ERFPACHTData>(
-    {
-      url: ApiUrls.ERFPACHT,
+    getApiConfig('ERFPACHT', {
       transformResponse: (responseData: ERFPACHTSourceData) =>
         raw ? responseData : transformResponse(responseData),
-    },
+    }),
     sessionID,
-    samlToken,
-    getApiConfigValue('ERFPACHT', 'postponeFetch', false)
+    samlToken
   );
 }

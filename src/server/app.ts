@@ -13,7 +13,7 @@ import express, {
 import session from 'express-session';
 import { IS_AP, getOtapEnvItem, ENV } from '../universal/config/env';
 import { BFF_PORT } from './config';
-import { clearCache } from './helpers';
+import { clearSessionCache } from './helpers';
 import { router } from './router';
 import { apiErrorResult } from '../universal/helpers';
 
@@ -50,17 +50,12 @@ app.use(IS_AP ? '/bff' : '/test-api/bff', router);
 
 app.use(Sentry.Handlers.errorHandler() as ErrorRequestHandler);
 
-app.use((req: Request, res: Response, next: NextFunction) => {
-  const sessionID = req.sessionID!;
-  clearCache(sessionID);
-  next();
-});
-
-app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-  const sessionID = req.sessionID!;
-  clearCache(sessionID);
-  next(error);
-});
+// Force Clear the cache after all the services requests are done.
+// app.use((req: Request, res: Response, next: NextFunction) => {
+//   const sessionID = req.sessionID!;
+//   clearSessionCache(sessionID);
+//   next();
+// });
 
 // Optional fallthrough error handler
 app.use(function onError(

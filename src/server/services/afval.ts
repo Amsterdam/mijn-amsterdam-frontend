@@ -8,7 +8,7 @@ import {
   GarbagePoint,
   Stadsdeel,
 } from '../../universal/types';
-import { ApiUrls, getApiConfigValue } from '../config';
+import { getApiConfig } from '../config';
 import { requestData } from '../helpers/request';
 
 const AFVAL_AFSPRAAK_MAKEN =
@@ -265,13 +265,12 @@ export function fetchAFVAL(
   const params = { lat: center?.lat, lon: center?.lng };
 
   return requestData<AFVALData>(
-    {
-      url: ApiUrls.AFVAL,
+    getApiConfig('AFVAL', {
       params,
-      transformResponse: data => (raw ? data : formatAFVALData(data, center)),
-    },
+      transformResponse: (data: AFVALSourceData) =>
+        raw ? data : formatAFVALData(data, center),
+    }),
     sessionID,
-    samlToken,
-    getApiConfigValue('AFVAL', 'postponeFetch', false)
+    samlToken
   );
 }

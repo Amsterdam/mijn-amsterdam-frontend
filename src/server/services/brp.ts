@@ -1,10 +1,9 @@
-import { AxiosRequestConfig } from 'axios';
 import { differenceInCalendarDays } from 'date-fns';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, Chapters } from '../../universal/config';
 import { defaultDateFormat } from '../../universal/helpers';
 import { BRPData, MyNotification } from '../../universal/types';
-import { ApiUrls, getApiConfigValue } from '../config';
+import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 
 const DAYS_BEFORE_EXPIRATION = 120;
@@ -165,18 +164,12 @@ export function fetchBRP(
   samlToken: string,
   raw: boolean = false
 ) {
-  const options: AxiosRequestConfig = {
-    url: ApiUrls.BRP,
-    transformResponse: responseData =>
+  const options = getApiConfig('BRP', {
+    transformResponse: (responseData: BRPData) =>
       raw ? responseData : transformBRPData(responseData),
-  };
+  });
 
-  return requestData<BRPData>(
-    options,
-    sessionID,
-    samlToken,
-    getApiConfigValue('BRP', 'postponeFetch', false)
-  );
+  return requestData<BRPData>(options, sessionID, samlToken);
 }
 
 export async function fetchBRPGenerated(

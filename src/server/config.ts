@@ -1,6 +1,7 @@
 import { FeatureToggle } from '../universal/config';
 import { ApiStateKey } from './services/state';
 import { IS_AP, IS_PRODUCTION, IS_ACCEPTANCE } from '../universal/config/env';
+import { AxiosRequestConfig } from 'axios';
 
 export const TMA_SAML_HEADER = 'x-saml-attribute-token1';
 export const BFF_REQUEST_CACHE_ENABLED = true;
@@ -27,54 +28,88 @@ export const BFF_DATAPUNT_API_BASE_URL = IS_AP
   ? 'https://api.data.amsterdam.nl'
   : BFF_MS_API_BASE_URL;
 
-export const ApiUrls: Record<ApiStateKey, string> = {
-  BELASTINGEN: `${BFF_MS_API_BASE_URL}/belastingen/get`,
-  TIPS: `${BFF_MS_API_BASE_URL}/tips/gettips`,
-  BRP: `${BFF_MS_API_BASE_URL}/brp/brp`,
-  WMO: `${BFF_MS_API_BASE_URL}/wmoned/voorzieningen`,
-  FOCUS_AANVRAGEN: `${BFF_MS_API_BASE_URL}/focus/aanvragen`,
-  FOCUS_COMBINED: `${BFF_MS_API_BASE_URL}/focus/combined`,
-  ERFPACHT: `${BFF_MS_API_BASE_URL}/erfpacht/check-erfpacht`,
-  BAG: `${BFF_DATAPUNT_API_BASE_URL}/atlas/search/adres/`,
-  AFVAL: `${BFF_DATAPUNT_API_BASE_URL}/afvalophaalgebieden/search/`,
-  MILIEUZONE: `${BFF_MS_API_BASE_URL}/milieu/get`,
-  CMS_CONTENT_GENERAL_INFO: `https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data`,
-  VERGUNNINGEN: `${BFF_MS_API_BASE_URL}/vergunningen/get`,
-};
-
-export interface ApiConfig {
-  postponeFetch: boolean;
+export interface DataRequestConfig extends AxiosRequestConfig {
+  cacheTimeout?: number;
+  cancelTimeout?: number;
+  postponeFetch?: boolean;
 }
 
-export const ApiConfig: Record<ApiStateKey | string, ApiConfig> = {
+const ONE_SECOND_MS = 1000;
+const ONE_MINUTE_MS = 60 * ONE_SECOND_MS;
+const ONE_HOUR_MS = 60 * ONE_MINUTE_MS;
+
+export const DEFAULT_API_CACHE_TTL_MS = 30 * ONE_SECOND_MS; // 30 seconds
+export const DEFAULT_CANCEL_TIMEOUT_MS = 20 * ONE_SECOND_MS; // 20 seconds
+
+export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
+  cancelTimeout: DEFAULT_CANCEL_TIMEOUT_MS,
+  method: 'get',
+  cacheTimeout: DEFAULT_API_CACHE_TTL_MS,
+  postponeFetch: false,
+};
+
+type SourceApiKey =
+  | 'WMO'
+  | 'FOCUS_COMBINED'
+  | 'FOCUS_AANVRAGEN'
+  | 'BELASTINGEN'
+  | 'MILIEUZONE'
+  | 'VERGUNNINGEN'
+  | 'CMS_CONTENT_GENERAL_INFO'
+  | 'TIPS'
+  | 'BRP'
+  | 'ERFPACHT'
+  | 'BAG'
+  | 'AFVAL';
+
+type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
+
+export const ApiConfig: ApiDataRequestConfig = {
+  WMO: {
+    url: `${BFF_MS_API_BASE_URL}/wmoned/voorzieningen`,
+  },
   FOCUS_COMBINED: {
+    url: `${BFF_MS_API_BASE_URL}/focus/combined`,
     postponeFetch: !FeatureToggle.focusCombinedActive,
   },
   FOCUS_AANVRAGEN: {
+    url: `${BFF_MS_API_BASE_URL}/focus/aanvragen`,
     postponeFetch: !FeatureToggle.focusAanvragenActive,
   },
   BELASTINGEN: {
-    postponeFetch: !FeatureToggle.belastingApiActive,
-  },
-  BELASTINGEN_GENERATED: {
+    url: `${BFF_MS_API_BASE_URL}/belastingen/get`,
     postponeFetch: !FeatureToggle.belastingApiActive,
   },
   MILIEUZONE: {
-    postponeFetch: !FeatureToggle.milieuzoneApiActive,
-  },
-  MILIEUZONE_GENERATED: {
+    url: `${BFF_MS_API_BASE_URL}/milieu/get`,
     postponeFetch: !FeatureToggle.milieuzoneApiActive,
   },
   VERGUNNINGEN: {
+    url: `${BFF_MS_API_BASE_URL}/vergunningen/get`,
     postponeFetch: !FeatureToggle.vergunningenActive,
+  },
+  CMS_CONTENT_GENERAL_INFO: {
+    url: `https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data`,
+    cacheTimeout: ONE_HOUR_MS,
+  },
+  TIPS: {
+    url: `${BFF_MS_API_BASE_URL}/tips/gettips`,
+  },
+  BRP: { url: `${BFF_MS_API_BASE_URL}/brp/brp` },
+  ERFPACHT: { url: `${BFF_MS_API_BASE_URL}/erfpacht/check-erfpacht` },
+  BAG: { url: `${BFF_DATAPUNT_API_BASE_URL}/atlas/search/adres/` },
+  AFVAL: {
+    url: `${BFF_DATAPUNT_API_BASE_URL}/afvalophaalgebieden/search/`,
   },
 };
 
-export function getApiConfigValue(
-  name: ApiStateKey,
-  param: keyof ApiConfig,
-  defaultValue: any
-) {
-  const cfg = ApiConfig[name] && ApiConfig[name]![param];
-  return typeof cfg !== 'undefined' ? cfg : defaultValue;
+export const ApiUrls = Object.entries(ApiConfig).reduce(
+  (acc, [apiName, { url }]) => {
+    return Object.assign(acc, { [apiName]: url || '' });
+  },
+  {} as Record<SourceApiKey, string>
+);
+
+export function getApiConfig(name: SourceApiKey, config?: DataRequestConfig) {
+  return Object.assign(ApiConfig[name] || {}, config || {});
 }

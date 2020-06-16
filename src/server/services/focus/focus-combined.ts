@@ -1,4 +1,4 @@
-import { ApiUrls, getApiConfigValue } from '../../config';
+import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 
 export type FocusTozoDocumentType = 'E-AANVR-KBBZ' | 'E-AANVR-TOZO';
@@ -42,12 +42,11 @@ export async function fetchFOCUSCombined(
   raw: boolean = false
 ) {
   return requestData<FocusCombinedSourceResponse>(
-    {
-      url: ApiUrls.FOCUS_COMBINED,
-      transformResponse: response => (raw ? response : response.content),
-    },
+    getApiConfig('FOCUS_COMBINED', {
+      transformResponse: (response: { content: FocusCombinedSourceResponse }) =>
+        raw ? response : response.content,
+    }),
     sessionID,
-    samlToken,
-    getApiConfigValue('FOCUS_COMBINED', 'postponeFetch', false)
+    samlToken
   );
 }

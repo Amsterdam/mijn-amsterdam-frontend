@@ -1,16 +1,15 @@
+import { generatePath } from 'react-router';
+import slug from 'slugme';
 import { AppRoutes } from '../../universal/config';
-import { ApiUrls, getApiConfigValue } from '../config';
 import {
   capitalizeFirstLetter,
   dateSort,
   defaultDateFormat,
   isDateInPast,
 } from '../../universal/helpers';
-
 import { LinkProps } from '../../universal/types';
-import { generatePath } from 'react-router';
+import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
-import slug from 'slugme';
 
 // Example data
 // [
@@ -735,13 +734,11 @@ export function fetchWMO(
   raw: boolean = false
 ) {
   return requestData<WMOData>(
-    {
-      url: ApiUrls.WMO,
+    getApiConfig('WMO', {
       transformResponse: (responseData: WMOSourceData) =>
         raw ? responseData : transformWMOResponse(responseData, new Date()),
-    },
+    }),
     sessionID,
-    samlToken,
-    getApiConfigValue('WMO', 'postponeFetch', false)
+    samlToken
   );
 }
