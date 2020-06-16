@@ -20,8 +20,8 @@ export function useSSE(
 
   useEffect(() => {
     if (retryCount !== MAX_RETRY_COUNT) {
-      console.info('Connecting to SSE, current retrycount:', retryCount);
       retryCount += 1;
+      console.info('Connecting to SSE, current retrycount:', retryCount);
       connect();
     }
     // eslint-disable-next-line
