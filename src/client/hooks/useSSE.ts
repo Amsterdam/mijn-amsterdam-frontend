@@ -19,7 +19,11 @@ export function useSSE(
   }, [path]);
 
   useEffect(() => {
-    connect();
+    if (retryCount !== MAX_RETRY_COUNT) {
+      console.info('Connecting to SSE, current retrycount:', retryCount);
+      retryCount += 1;
+      connect();
+    }
     // eslint-disable-next-line
   }, []);
 
@@ -36,7 +40,6 @@ export function useSSE(
       if (retryCount !== MAX_RETRY_COUNT) {
         retryTimeout = setTimeout(() => {
           if (!unMounted) {
-            retryCount += 1;
             connect();
           }
         }, RECONNECT_TIMEOUT_MS);
@@ -61,9 +64,11 @@ export function useSSE(
       }
     };
     const handleOpen = () => {
+      console.info('Open SSE connection');
       retryCount = 0;
     };
     const closeEventSource = () => {
+      console.info('Close SSE connection');
       es.close();
     };
     const onMessageEvent = (message: any) => callback(JSON.parse(message.data));
@@ -75,6 +80,7 @@ export function useSSE(
 
     return () => {
       unMounted = true;
+      console.info('Unmounting SSE hook');
       if (retryTimeout) {
         clearTimeout(retryTimeout);
       }

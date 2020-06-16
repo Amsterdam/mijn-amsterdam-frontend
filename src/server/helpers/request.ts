@@ -23,6 +23,7 @@ import {
 } from '../config';
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
 import { Deferred } from './deferred';
+import { ApiUrls } from '../config';
 
 export const axiosRequest = axios.create({
   responseType: 'json',
@@ -157,6 +158,9 @@ export async function requestData<T>(
       // to the client to pass through.
       const shouldCaptureMessage =
         error.isAxiosError || (!(error instanceof Error) && !!error?.message);
+      const api = Object.entries(ApiUrls).find(
+        ([, url]) => requestConfig.url === url
+      );
       const sentryId = shouldCaptureMessage
         ? Sentry.captureMessage(error?.message ? error.message : error, {
             tags: {
@@ -165,6 +169,7 @@ export async function requestData<T>(
             extra: {
               module: 'request',
               status: error?.response?.status,
+              api: api ? api[0] : 'unknown',
             },
           })
         : Sentry.captureException(error, {
