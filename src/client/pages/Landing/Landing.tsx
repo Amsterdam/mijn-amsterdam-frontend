@@ -38,9 +38,11 @@ export default () => {
           Amsterdam.
         </p>
         <div className={styles.LoginOption}>
-          {/* <Heading className={styles.LoginOptionHeading} size="tiny" el="h3">
-            Voor particulieren
-          </Heading> */}
+          {FeatureToggle.eherkenningActive && (
+            <Heading className={styles.LoginOptionHeading} size="tiny" el="h3">
+              Voor particulieren
+            </Heading>
+          )}
           <p>
             <a
               ref={loginButton}

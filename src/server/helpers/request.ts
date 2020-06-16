@@ -155,18 +155,21 @@ export async function requestData<T>(
     if (isGetRequest) {
       // We're returning a result here so a failed request will not prevent other succeeded request needed for a response
       // to the client to pass through.
-      const sentryId = Sentry.captureException(
-        error.isAxiosError ? new Error(error?.message) : error,
-        {
-          tags: {
-            url: requestConfig.url!,
-          },
-          extra: {
-            module: 'request',
-            status: error?.response?.status,
-          },
-        }
-      );
+      const sentryId = error.isAxiosError
+        ? Sentry.captureMessage(error?.message ? error.message : error, {
+            tags: {
+              url: requestConfig.url!,
+            },
+            extra: {
+              module: 'request',
+              status: error?.response?.status,
+            },
+          })
+        : Sentry.captureException(error, {
+            tags: {
+              url: requestConfig.url!,
+            },
+          });
 
       const responseData = apiErrorResult(
         error?.response?.data?.message || error.toString(),
