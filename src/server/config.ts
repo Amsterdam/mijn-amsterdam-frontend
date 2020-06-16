@@ -13,7 +13,7 @@ export const BFF_PORT = process.env.BFF_PORT || 5000;
 const API_BASE_PATH = IS_AP ? '/api' : '/test-api';
 
 const BFF_MS_API_HOST = IS_PRODUCTION
-  ? process.env.BFF_MS_API_HOST || 'mijn.amsterdam.nl'
+  ? process.env.BFF_MS_API_HOST || 'mijn.data.amsterdam.nl'
   : IS_ACCEPTANCE
   ? process.env.BFF_MS_API_HOST || 'acc.mijn.data.amsterdam.nl'
   : 'localhost';
