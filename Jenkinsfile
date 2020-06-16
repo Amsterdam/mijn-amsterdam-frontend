@@ -91,7 +91,14 @@ pipeline {
     // ACCEPTANCE
 
     stage('Build ACC') {
-      when { not { branch 'test' } }
+      when {
+        not {
+          anyOf {
+            branch 'production-release-v*';
+            branch 'test';
+          }
+        }
+      }
       options {
         timeout(time: 10, unit: 'MINUTES')
       }
