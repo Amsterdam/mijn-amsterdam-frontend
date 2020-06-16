@@ -5,7 +5,7 @@ function getBrowserEnv() {
   const isAcceptanceServer = window.location.host === 'mijn.acc.amsterdam.nl';
 
   // @ts-ignore
-  const isProductionServer = window.location.host === 'amsterdam.nl';
+  const isProductionServer = window.location.host === 'mijn.amsterdam.nl';
 
   // @ts-ignore
   const isTestServer = window.location.host === 'mijn.ot.amsterdam.nl';
