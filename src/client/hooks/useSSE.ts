@@ -28,12 +28,13 @@ export function useSSE(
       return;
     }
     let unMounted = false;
+    let retryTimeout: any;
 
     const handleError = (error: any) => {
       es.close();
 
       if (retryCount !== MAX_RETRY_COUNT) {
-        setTimeout(() => {
+        retryTimeout = setTimeout(() => {
           if (!unMounted) {
             retryCount += 1;
             connect();
@@ -74,6 +75,9 @@ export function useSSE(
 
     return () => {
       unMounted = true;
+      if (retryTimeout) {
+        clearTimeout(retryTimeout);
+      }
       es.removeEventListener('error', handleError);
       es.removeEventListener('open', handleOpen);
       es.removeEventListener('close', closeEventSource);

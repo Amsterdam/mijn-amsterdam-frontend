@@ -54,7 +54,6 @@ export function useAppState() {
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useSSE(BFFApiUrls.SERVICES_SSE, 'message', onEvent);
   }
