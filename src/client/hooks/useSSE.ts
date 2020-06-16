@@ -40,8 +40,8 @@ export function useSSE(
           }
         }, RECONNECT_TIMEOUT_MS);
       } else {
-        Sentry.captureException(
-          error instanceof Error ? error : error.toString(),
+        Sentry.captureMessage(
+          "EventSource can't establish a connection to the server.",
           {
             extra: {
               module: 'sse hook',
@@ -54,7 +54,7 @@ export function useSSE(
           ALL: {
             status: 'ERROR',
             message:
-              'Could not connect to Event Source. Connection retry terminated.',
+              "EventSource can't establish a connection to the server. Connection retry terminated.",
           },
         });
       }
