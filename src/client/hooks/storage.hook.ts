@@ -131,8 +131,14 @@ function useWindowStorage(
     init();
   }, [init]);
 
+  let hasLocalStorage = false;
+
+  try {
+    hasLocalStorage = adapter === localStorage;
+  } catch (e) {}
+
   useEffect(() => {
-    if (adapter === localStorage) {
+    if (hasLocalStorage) {
       window.addEventListener('storage', onStorageEvent);
       return () => {
         window.removeEventListener('storage', onStorageEvent);
