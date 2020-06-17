@@ -69,3 +69,12 @@ select,
 button {
   line-height: inherit;
 }
+
+h4 {
+  @include heading-small;
+  margin: 0;
+}
+h5 {
+  @include heading-tiny;
+  margin: 0;
+}

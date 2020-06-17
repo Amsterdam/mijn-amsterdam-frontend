@@ -16,7 +16,8 @@ const TAGS_ALLOWED = [
   'ol',
   'dt',
   'dd',
-  // 'h4',
+  'h4',
+  'h5',
   // 'h3',
 ];
 const ATTR_ALLOWED = {
