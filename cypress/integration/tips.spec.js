@@ -22,10 +22,7 @@ describe('Navigate to Chapters', () => {
     selectComponent('MyTips_OptInOutConfirmButton').click();
     selectComponent('Modal_Modal').should('not.exist');
 
-    selectComponent('MyTips_OptIn').should(
-      'contain',
-      'Toon geen persoonlijke tips'
-    );
+    selectComponent('MyTips_OptIn').should('contain', 'Toon alle tips');
     cy.get(
       '[class*="MyTips_TipItem__"]:first [class*="Heading_Heading"]'
     ).should('contain', 'PERSONAL');
