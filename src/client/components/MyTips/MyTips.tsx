@@ -91,7 +91,6 @@ export interface MyTipsProps {
   isLoading: boolean;
   showHeader?: boolean;
   showOptIn?: boolean;
-  noContentMessage?: string;
 }
 
 function LoadingContentListItems() {
@@ -132,7 +131,7 @@ function TipsOptInHeader({ showTipsPageLink }: TipsOptInHeaderProps) {
           icon={IconChevronRight}
           aria-expanded={modalIsOpen}
         >
-          {isOptIn ? 'Toon geen persoonlijke tips' : 'Toon persoonlijke tips'}
+          {isOptIn ? 'Toon alle tips' : 'Toon persoonlijke tips'}
         </Button>
       </div>
       <MyTipsOptInOutModal
@@ -143,12 +142,22 @@ function TipsOptInHeader({ showTipsPageLink }: TipsOptInHeaderProps) {
   );
 }
 
+function MyTipsNoContentMessage() {
+  const { isOptIn } = useContext(OptInContext);
+  return (
+    <p className={styles.NoContentMessage}>
+      {isOptIn
+        ? 'We hebben op dit moment geen persoonlijke tips voor u.'
+        : 'We hebben op dit moment geen tips voor u.'}
+    </p>
+  );
+}
+
 export default function MyTips({
   items = [],
   className,
   isLoading = true,
   showHeader = true,
-  noContentMessage = 'We hebben op dit moment geen tips voor u.',
   ...otherProps
 }: MyTipsProps) {
   return (
@@ -160,9 +169,7 @@ export default function MyTips({
           {!isLoading &&
             items.map((item, i) => <Tip key={item.title} tip={item} />)}
         </ul>
-        {!isLoading && !items.length && (
-          <p className={styles.NoContentMessage}>{noContentMessage}</p>
-        )}
+        {!isLoading && !items.length && <MyTipsNoContentMessage />}
       </div>
     </OptInContextProvider>
   );
