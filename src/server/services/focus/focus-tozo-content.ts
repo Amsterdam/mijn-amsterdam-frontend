@@ -1,14 +1,13 @@
-import { stepLabels } from './focus-aanvragen-content';
-import { FocusProduct, StepTitle } from './focus-types';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config/routing';
+import { defaultDateFormat } from '../../../universal/helpers';
+import { stepLabels } from './focus-aanvragen-content';
 import {
   DocumentTitles,
-  FocusItemStep,
+  FocusProduct,
   LabelData,
   ProductStepLabels,
 } from './focus-types';
-import { defaultDateFormat } from '../../../universal/helpers';
 
 export const TOZO_AANVRAAG_STEP_ID = 'aanvraag-step-tozo';
 

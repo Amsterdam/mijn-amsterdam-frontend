@@ -378,10 +378,12 @@ export function createFocusItemTozo(steps: FocusItemStep[]) {
   const stepsWithDate = steps
     .filter(item => !!item.datePublished)
     .sort(dateSort('datePublished'));
+  const aanvraagStep = steps.find(step => step.id === TOZO_AANVRAAG_STEP_ID);
   const lastStep = stepsWithDate[stepsWithDate.length - 1];
   const firstActivity = stepsWithDate[0];
   const unknownId = 'unknown-first-activity';
-  const firstActivityDatePublished = firstActivity?.datePublished || unknownId;
+  const firstActivityDatePublished =
+    aanvraagStep?.datePublished || firstActivity?.datePublished || unknownId;
 
   const id = 'aanvraag-' + hash(firstActivityDatePublished);
   const lastActivityDatePublished = lastStep.datePublished;
@@ -419,7 +421,7 @@ export function createFocusTozoAanvraagNotification(
   document: GenericDocument
 ) {
   return {
-    id: 'tozo-regeling-notification-aanvraag-' + document.id,
+    id: 'tozo-notification-' + document.id,
     datePublished: document.datePublished,
     chapter: Chapters.INKOMEN,
     title: 'Tozo: Wij hebben uw aanvraag ontvangen',
