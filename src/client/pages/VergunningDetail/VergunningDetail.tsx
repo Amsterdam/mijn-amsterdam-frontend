@@ -29,8 +29,6 @@ export default () => {
   const VergunningItem = VERGUNNINGEN.content?.find(item => item.id === id);
   const noContent = !isLoading(VERGUNNINGEN) && !VergunningItem;
 
-  console.log(VergunningItem);
-
   return (
     <DetailPage>
       <PageHeading
