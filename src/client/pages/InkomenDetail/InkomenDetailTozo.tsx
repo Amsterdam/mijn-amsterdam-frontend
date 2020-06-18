@@ -15,6 +15,7 @@ import {
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
 import styles from './InkomenDetail.module.scss';
+import * as Sentry from '@sentry/browser';
 
 export default () => {
   const { FOCUS_TOZO } = useContext(AppContext);
@@ -26,7 +27,18 @@ export default () => {
     },
   } = useRouter();
 
-  const TozoItem = tozoItems.find(item => item.id === id);
+  let TozoItem = tozoItems.find(item => item.id === id);
+
+  if (!TozoItem && tozoItems.length >= 1) {
+    Sentry.captureMessage('Tozo Item not found', {
+      extra: {
+        requestedId: id,
+        availableIds: tozoItems.map(item => item.id),
+      },
+    });
+    TozoItem = tozoItems[tozoItems.length - 1];
+  }
+
   const noContent = !isLoading(FOCUS_TOZO) && !TozoItem;
 
   let title = 'Onbekend item';

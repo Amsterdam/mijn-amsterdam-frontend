@@ -18,6 +18,7 @@ import ChapterIcon from '../ChapterIcon/ChapterIcon';
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './MyNotifications.module.scss';
+import { trackItemClick } from '../../hooks/analytics.hook';
 
 export interface MyNotificationsProps {
   items: MyNotification[];
@@ -113,6 +114,7 @@ export default function MyNotifications({
                       external={isLinkExternal}
                       download={item.link?.download}
                       onClick={event => {
+                        trackItemClick(trackCategory, item.title);
                         if (item.customLink) {
                           item.customLink.callback();
                           return false;
