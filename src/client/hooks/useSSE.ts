@@ -35,6 +35,8 @@ export function useSSE(
     let retryTimeout: any;
 
     const handleError = (error: any) => {
+      console.info('Error in SSE connection');
+
       es.close();
 
       if (retryCount !== MAX_RETRY_COUNT) {
