@@ -15,6 +15,7 @@ import {
 import { OverviewPage } from '../../components/Page/Page';
 import styles from './Vergunningen.module.scss';
 import { defaultDateFormat } from '../../../universal/helpers/date';
+import { Vergunning } from '../../../server/services/vergunningen';
 
 const DISPLAY_PROPS = {
   identifier: 'Zaakkenmerk',
@@ -26,21 +27,36 @@ const DISPLAY_PROPS = {
 export default () => {
   const { VERGUNNINGEN } = useContext(AppContext);
 
-  const vergunningenActual = useMemo(() => {
+  const vergunningen: Vergunning[] = useMemo(() => {
     if (!VERGUNNINGEN.content?.length) {
       return [];
     }
-    const items = VERGUNNINGEN.content
+    const items: Vergunning[] = VERGUNNINGEN.content
       .filter(x => x)
       .map(item => {
         return {
           ...item,
-          title: item.title.slice(0, 40) + '...',
+          title:
+            item.title.length > 45
+              ? item.title.slice(0, 40) + '...'
+              : item.title,
           dateRequest: defaultDateFormat(item.dateRequest),
         };
       });
     return addTitleLinkComponent(items, 'identifier');
   }, [VERGUNNINGEN.content]);
+
+  const vergunningenPrevious = useMemo(() => {
+    return vergunningen.filter(
+      vergunning => vergunning.status === 'Afgehandeld'
+    );
+  }, [vergunningen]);
+
+  const vergunningenActual = useMemo(() => {
+    return vergunningen.filter(
+      vergunning => vergunning.status !== 'Afgehandeld'
+    );
+  }, [vergunningen]);
 
   return (
     <OverviewPage className={styles.Vergunningen}>
@@ -51,7 +67,7 @@ export default () => {
         <p>
           Wilt u een evenement organiseren op straat of in een gebouw? Dan hebt
           u meestal een evenementenvergunning nodig, maar soms is een melding
-          voldoende. Kijk hier hoe het werkt.
+          voldoende.
         </p>
         {/* <p>
           <Linkd external={true} href="https://mijn.amsterdam.nl/">
@@ -66,14 +82,14 @@ export default () => {
       </PageContent>
       <SectionCollapsible
         id="SectionCollapsible-vergunningen-actual"
-        title="Voorlopige vergunningen (toegekend onder voorbehoud)"
-        noItemsMessage="U hebt geen voorlopige vergunningen (toegekend onder voorbehoud)."
+        title="Lopende vergunningsaanvragen"
+        noItemsMessage="U hebt geen lopende vergunningsaanvragen."
         hasItems={!!vergunningenActual.length}
         startCollapsed={false}
         className={styles.SectionCollapsibleCurrent}
         isLoading={isLoading(VERGUNNINGEN)}
         track={{
-          category: 'Vergunningen overzicht / Voorlopige vergunningen',
+          category: 'Vergunningen overzicht / Lopende vergunningsaanvragen',
           name: 'Datatabel',
         }}
       >
@@ -81,6 +97,25 @@ export default () => {
           titleKey="identifier"
           displayProps={DISPLAY_PROPS}
           items={vergunningenActual}
+        />
+      </SectionCollapsible>
+      <SectionCollapsible
+        id="SectionCollapsible-vergunningen-previous"
+        title="Eerdere vergunningsaanvragen"
+        noItemsMessage="U hebt geen eerdere vergunningsaanvragen."
+        hasItems={!!vergunningenPrevious.length}
+        startCollapsed={false}
+        className={styles.SectionCollapsibleCurrent}
+        isLoading={isLoading(VERGUNNINGEN)}
+        track={{
+          category: 'Vergunningen overzicht / Lopende vergunningsaanvragen',
+          name: 'Datatabel',
+        }}
+      >
+        <Table
+          titleKey="identifier"
+          displayProps={DISPLAY_PROPS}
+          items={vergunningenPrevious}
         />
       </SectionCollapsible>
     </OverviewPage>

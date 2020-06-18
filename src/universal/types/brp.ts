@@ -1,10 +1,16 @@
-export interface Identiteitsbewijs {
+import { LinkProps } from './App.types';
+
+export interface IdentiteitsbewijsFromSource {
   id: string;
   documentNummer: string;
   documentType: 'europese identiteitskaart' | 'paspoort' | string;
   datumUitgifte: string;
   datumAfloop: string;
-  title?: string;
+}
+
+export interface Identiteitsbewijs extends IdentiteitsbewijsFromSource {
+  title: string;
+  link: LinkProps;
 }
 
 export interface Adres {
@@ -64,7 +70,7 @@ export interface Kind {
   voorvoegselGeslachtsnaam: string | null;
 }
 
-export interface BRPData {
+export interface BRPDataFromSource {
   persoon: Persoon;
   verbintenis?: Verbintenis;
   verbintenisHistorisch?: VerbintenisHistorisch[];
@@ -72,5 +78,9 @@ export interface BRPData {
   ouders: Partial<Persoon>[];
   adres: Adres;
   adresHistorisch?: Adres[];
+  identiteitsbewijzen?: IdentiteitsbewijsFromSource[];
+}
+
+export interface BRPData extends BRPDataFromSource {
   identiteitsbewijzen?: Identiteitsbewijs[];
 }

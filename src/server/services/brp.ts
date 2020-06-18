@@ -2,7 +2,11 @@ import { differenceInCalendarDays } from 'date-fns';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, Chapters } from '../../universal/config';
 import { defaultDateFormat } from '../../universal/helpers';
-import { BRPData, MyNotification } from '../../universal/types';
+import {
+  BRPData,
+  BRPDataFromSource,
+  MyNotification,
+} from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 
@@ -134,7 +138,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
   return notifications;
 }
 
-export function transformBRPData(responseData: BRPData) {
+export function transformBRPData(responseData: BRPDataFromSource) {
   if (Array.isArray(responseData.identiteitsbewijzen)) {
     // Transform Identiteitsbewijzen
     Object.assign(responseData, {
@@ -156,7 +160,7 @@ export function transformBRPData(responseData: BRPData) {
     });
   }
 
-  return responseData;
+  return responseData as BRPData;
 }
 
 export function fetchBRP(
@@ -165,7 +169,7 @@ export function fetchBRP(
   raw: boolean = false
 ) {
   const options = getApiConfig('BRP', {
-    transformResponse: (responseData: BRPData) =>
+    transformResponse: (responseData: BRPDataFromSource) =>
       raw ? responseData : transformBRPData(responseData),
   });
 

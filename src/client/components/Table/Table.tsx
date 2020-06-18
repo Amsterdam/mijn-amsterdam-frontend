@@ -7,15 +7,18 @@ import styles from './Table.module.scss';
 import InnerHtml from '../InnerHtml/InnerHtml';
 
 export function addTitleLinkComponent(
-  items: Unshaped[],
+  items: any[],
   titleKey: string = 'title'
 ) {
-  return items.map((item: any) => {
+  return items.map(item => {
+    if (!item.link?.to) {
+      return item;
+    }
     return {
       ...item,
       [titleKey]: (
         <Linkd href={item.link.to}>
-          {capitalizeFirstLetter(item[titleKey]) || 'uhhhh oh'}
+          {capitalizeFirstLetter(item[titleKey]) || 'Onbekend item'}
         </Linkd>
       ),
     };
