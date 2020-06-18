@@ -84,7 +84,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.milieuzoneApiActive,
   },
   VERGUNNINGEN: {
-    url: `${BFF_MS_API_BASE_URL}/vergunningen/get`,
+    url: `${BFF_MS_API_BASE_URL}/decosjoin/getvergunningen`,
     postponeFetch: !FeatureToggle.vergunningenActive,
   },
   CMS_CONTENT_GENERAL_INFO: {
