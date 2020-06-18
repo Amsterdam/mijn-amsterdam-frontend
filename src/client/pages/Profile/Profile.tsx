@@ -82,7 +82,7 @@ export default function Profile() {
               >
                 afspraak
               </LinkdInline>{' '}
-              maken .
+              maken.
             </p>
           </Alert>
         )}
@@ -91,25 +91,26 @@ export default function Profile() {
           <Alert type="warning" className="inOnderzoek">
             <p>
               Op dit moment onderzoeken wij of u nog steeds woont op het adres
-              waar u ingeschreven staat. Kijk voor{' '}
-              <LinkdInline
-                external={true}
-                href="https://www.amsterdam.nl/veelgevraagd/?productid={49AB6693-E7FA-4642-82F4-D14D87E02C72}"
-              >
-                meer
-              </LinkdInline>{' '}
-              informatie over onderzoek naar uw inschrijving in de
-              Basisregistratie Personen (BRP).
+              waar u ingeschreven staat.
             </p>
             <p>
-              Kloppen uw gegevens niet? Voorkom een boete en stuur een bericht
-              naar{' '}
-              <a
+              U heeft hierover een brief ontvangen. Heeft u nog niet gereageerd?
+              Voorkom een boete en stuur een bericht naar{' '}
+              <LinkdInline
+                external={true}
                 href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
-                rel="external noopener noreferrer"
               >
                 adresonderzoek.basisinformatie@amsterdam.nl
-              </a>
+              </LinkdInline>
+              .
+            </p>
+            <p>
+              <LinkdInline
+                external={true}
+                href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
+              >
+                Meer informatie
+              </LinkdInline>
               .
             </p>
           </Alert>
