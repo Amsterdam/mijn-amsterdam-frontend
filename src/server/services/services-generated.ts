@@ -9,6 +9,7 @@ import { fetchFOCUSTozoGenerated } from './focus/focus-tozo';
 import { fetchMILIEUZONEGenerated } from './milieuzone';
 import { loadServicesRaw } from './services-raw';
 import { fetchTIPS, TIPSRequestData } from './tips';
+import { fetchVergunningenGenerated } from './vergunningen';
 
 export async function loadServicesGenerated(
   sessionID: SessionID,
@@ -23,6 +24,7 @@ export async function loadServicesGenerated(
     focusTozoGenerated,
     belastingGenerated,
     milieuzoneGenerated,
+    vergunningenGenerated,
   ] = await Promise.all([
     loadServicesTips(sessionID, samlToken, optin),
     fetchBRPGenerated(sessionID, samlToken),
@@ -31,6 +33,7 @@ export async function loadServicesGenerated(
     fetchFOCUSTozoGenerated(sessionID, samlToken),
     fetchBELASTINGGenerated(sessionID, samlToken),
     fetchMILIEUZONEGenerated(sessionID, samlToken),
+    fetchVergunningenGenerated(sessionID, samlToken),
   ]);
 
   const notifications: MyNotification[] = [];
@@ -45,6 +48,7 @@ export async function loadServicesGenerated(
     belastingGenerated,
     milieuzoneGenerated,
     focusTozoGenerated,
+    vergunningenGenerated,
   ]) {
     // Collection notifications and cases
     if ('notifications' in generatedContent) {
