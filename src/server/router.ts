@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { getSamlTokenHeader } from './helpers/request';
+import { getSamlTokenHeader, requestData } from './helpers/request';
 import {
   loadServicesDirect,
   loadServicesGenerated,
@@ -10,6 +10,8 @@ import {
   loadServicesMap,
 } from './services';
 import { loadServicesSSE } from './services/services-sse';
+import { requestApiData } from '../client/hooks/api/api.hook';
+import { BFF_MS_API_BASE_URL } from './config';
 
 export const router = express.Router();
 
@@ -148,6 +150,28 @@ router.get(`/services/all`, async function handleRouteServicesMap(
 });
 
 router.get(`/services/stream`, loadServicesSSE);
+
+router.get(`/source-api`, async function(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  if (!req.query.path) {
+    next();
+  }
+
+  try {
+    const responseData = await requestData(
+      {
+        url: BFF_MS_API_BASE_URL + req.query.path,
+      },
+      req.sessionID!,
+      getSamlTokenHeader(req)
+    );
+    res.json(responseData);
+  } catch (e) {}
+  next();
+});
 
 router.get(
   `/status/health`,

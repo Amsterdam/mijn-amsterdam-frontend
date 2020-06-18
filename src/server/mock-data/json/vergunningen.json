@@ -1,17 +1,89 @@
-[
-  {
-    "id": "hash(identifier)",
-    "status": "Verleend",
-    "title": "FIETSENREKKEN VERWIJDEREN/Vossiusstraat 3 T/M 11/ 11-07-2020",
-    "identifier": "Z/20/1750359",
-    "caseType": "Tijdelijke verkeersmaatregel",
-    "dateRequest": "2020-04-16",
-    "dateValidStart": "2020-03-10",
-    "dateValidEnd": "2020-07-11",
-    "timeValidStart": "08:00",
-    "timeValidEnd": "16:00",
-    "kenteken": null,
-    "location": null,
-    "isActual": true
-  }
-]
+{
+  "content": [
+    {
+      "caseType": "TVM - RVV - Object",
+      "dateEndInclusive": null,
+      "dateFrom": null,
+      "dateRequest": "2020-05-03T00:00:00",
+      "identifier": "Z/20/1592521",
+      "isActual": false,
+      "kenteken": null,
+      "location": null,
+      "status": "Toewijzen",
+      "timeEnd": "17:00",
+      "timeStart": "18:00",
+      "title": "7,5 ton ontheffing"
+    },
+    {
+      "caseType": "TVM - RVV - Object",
+      "dateEndInclusive": "2020-06-16",
+      "dateFrom": "2020-06-16",
+      "dateRequest": "2020-06-08T00:00:00",
+      "identifier": "Z/20/1592761",
+      "isActual": false,
+      "kenteken": null,
+      "location": null,
+      "status": "Ontvangen",
+      "timeEnd": null,
+      "timeStart": null,
+      "title": "SB RVV ontheffing hele stad"
+    },
+    {
+      "caseType": "TVM - RVV - Object",
+      "dateEndInclusive": "2020-06-25",
+      "dateFrom": "2020-06-25",
+      "dateRequest": "2020-06-17T00:00:00",
+      "identifier": "Z/20/1595179",
+      "isActual": false,
+      "kenteken": null,
+      "location": null,
+      "status": "Afgehandeld",
+      "timeEnd": "09:00",
+      "timeStart": "19:00",
+      "title": "SB RVV ontheffing hele stad"
+    },
+    {
+      "caseType": "TVM - RVV - Object",
+      "dateEndInclusive": "2020-05-27",
+      "dateFrom": "2020-05-27",
+      "dateRequest": "2020-05-18T00:00:00",
+      "identifier": "Z/20/1592675",
+      "isActual": false,
+      "kenteken": null,
+      "location": null,
+      "status": "Afgehandeld",
+      "timeEnd": null,
+      "timeStart": null,
+      "title": "Wacht op online betaling"
+    },
+    {
+      "caseType": "TVM - RVV - Object",
+      "dateEndInclusive": "2020-07-06T00:00:00",
+      "dateFrom":  "2020-07-03T00:00:00",
+      "dateRequest": "2020-05-06T00:00:00",
+      "identifier": "Z/20/1592552",
+      "isActual": false,
+      "kenteken": null,
+      "location": "Lopikhof 1 1108GH Amsterdam",
+      "status": "Ontvangen",
+      "timeEnd": "12:00",
+      "timeStart": "18:00",
+      "title": "Nellestein RVV ontheffing"
+    },
+    {
+      "caseType": "TVM - RVV - Object",
+      "dateEndInclusive": null,
+      "dateFrom": null,
+      "dateRequest": "2020-06-16T00:00:00",
+      "identifier": "Z/20/1593633",
+      "isActual": false,
+      "kenteken": null,
+      "location": null,
+      "status": "Ontvangen",
+      "timeEnd": null,
+      "timeStart": null,
+      "title": "Wacht op online betaling"
+    }
+  ],
+  "status": "OK"
+}

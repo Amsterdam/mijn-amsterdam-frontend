@@ -29,6 +29,8 @@ export default () => {
   const VergunningItem = VERGUNNINGEN.content?.find(item => item.id === id);
   const noContent = !isLoading(VERGUNNINGEN) && !VergunningItem;
 
+  console.log(VergunningItem);
+
   return (
     <DetailPage>
       <PageHeading
@@ -65,17 +67,21 @@ export default () => {
           <InfoDetail
             label="Vanaf"
             value={
-              VergunningItem?.dateValidStart
-                ? defaultDateFormat(VergunningItem.dateValidStart)
-                : '-'
+              (VergunningItem?.dateFrom
+                ? defaultDateFormat(VergunningItem.dateFrom)
+                : '-') +
+              (VergunningItem?.timeStart
+                ? ' - ' + VergunningItem.timeStart
+                : '')
             }
           />
           <InfoDetail
             label="Tot en met"
             value={
-              VergunningItem?.dateValidEnd
-                ? defaultDateFormat(VergunningItem.dateValidEnd)
-                : '-'
+              (VergunningItem?.dateEnd
+                ? defaultDateFormat(VergunningItem.dateEnd)
+                : '-') +
+              (VergunningItem?.timeEnd ? ' - ' + VergunningItem.timeEnd : '')
             }
           />
         </InfoDetailGroup>

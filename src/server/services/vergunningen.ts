@@ -3,26 +3,32 @@ import { AppRoutes } from '../../universal/config/routing';
 import { LinkProps } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import { hash } from '../../universal/helpers/utils';
+import { dateSort } from '../../universal/helpers/date';
 
 export interface VergunningSource {
-  id: string;
   status: string;
   title: string;
   identifier: string;
   caseType: string;
   dateRequest: string;
-  dateValidStart: string;
-  dateValidEnd: string;
-  timeValidStart: string;
-  timeValidEnd: string;
+  dateFrom: string | null;
+  dateEndInclusive: string | null; // datum t/m
+  timeStart: string | null;
+  timeEnd: string | null;
   isActual: boolean;
-  kenteken?: string;
-  location?: string;
+  kenteken?: string | null;
+  location?: string | null;
 }
 
-export type VergunningenSourceData = VergunningSource[];
+export type VergunningenSourceData = {
+  content?: VergunningSource[];
+  status: 'OK' | 'ERROR';
+};
 
-export interface Vergunning extends VergunningSource {
+export interface Vergunning extends Omit<VergunningSource, 'dateEndInclusive'> {
+  id: string;
+  dateEnd: string | null;
   link: LinkProps;
 }
 
@@ -31,19 +37,29 @@ export type VergunningenData = Vergunning[];
 export function transformVergunningenData(
   responseData: VergunningenSourceData
 ): VergunningenData {
-  if (!Array.isArray(responseData)) {
+  if (!Array.isArray(responseData?.content)) {
     return [];
   }
-  return responseData.map(item => {
-    return Object.assign(item, {
+
+  const vergunningen: Vergunning[] = responseData?.content?.map(item => {
+    const id = `vergunning-${hash(
+      item.identifier || item.caseType + item.dateRequest
+    )}`;
+    const dateEnd = item.dateEndInclusive;
+    delete item.dateEndInclusive;
+    const vergunning = Object.assign({}, item, {
+      id,
+      dateEnd,
       link: {
         to: generatePath(AppRoutes['VERGUNNINGEN/DETAIL'], {
-          id: item.id,
+          id,
         }),
         title: item.identifier,
       },
     });
+    return vergunning;
   });
+  return vergunningen.sort(dateSort('dateRequest', 'desc'));
 }
 
 export function fetchVergunningen(
