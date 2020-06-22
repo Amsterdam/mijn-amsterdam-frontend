@@ -44,7 +44,7 @@ RUN npm run bff-api:build
 ########################################################################################################################
 FROM build-app as serve-ot-bff
 
-ENV REACT_APP_BUILD_ENV=development
+ENV REACT_APP_ENV=development
 ENV PORT=80
 ENV REDIRECT_AFTER_LOGIN=https://mijn.ot.amsterdam.nl
 ENV BFF_ENV=development
