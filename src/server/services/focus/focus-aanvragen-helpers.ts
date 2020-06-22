@@ -1,6 +1,7 @@
+import * as Sentry from '@sentry/node';
 import { addDays, differenceInCalendarDays, parseISO } from 'date-fns';
 import { API_BASE_PATH, AppRoutes, Chapters } from '../../../universal/config';
-import { defaultDateFormat, omit, hash } from '../../../universal/helpers';
+import { defaultDateFormat, hash, omit } from '../../../universal/helpers';
 import { GenericDocument, MyCase } from '../../../universal/types';
 import { DAYS_KEEP_RECENT, processSteps } from './focus-aanvragen-content';
 import {
@@ -17,10 +18,10 @@ import {
   FocusStepContent,
   FocusStepContentDecision,
   LabelData,
-  StepTitle,
-  TextPartContents,
   ProductStepLabels,
   ProductType,
+  StepTitle,
+  TextPartContents,
 } from './focus-types';
 
 /** Checks if an item returned from the api is considered recent */
@@ -107,7 +108,18 @@ export function findProductContent(
   product: { type: ProductType; title: string },
   contentLabels: LabelData
 ) {
-  return contentLabels[product.type][product.title];
+  const labelContent = contentLabels[product.type][product.title];
+
+  if (!labelContent) {
+    Sentry.captureMessage('TOZO: Unknown product label content', {
+      extra: {
+        productType: product.type,
+        productTitle: product.title,
+      },
+    });
+  }
+
+  return labelContent;
 }
 
 export function findStepsContent(
@@ -123,7 +135,7 @@ export function findStepsContent(
   processSteps.forEach(stepTitle => {
     const steps: Array<{ title: StepTitle }> = product.steps;
     const stepData = steps.find(step => step.title === stepTitle);
-    const stepContent = labelContent[stepTitle];
+    const stepContent = labelContent && labelContent[stepTitle];
 
     if (stepData && stepContent) {
       if (

@@ -7,6 +7,8 @@ FROM node:13.7.0 as build-deps
 
 # Indicating we are on a CI environment
 ENV CI=true
+ARG REACT_APP_BUILD_ENV=production
+ENV REACT_APP_BUILD_ENV=$REACT_APP_BUILD_ENV
 
 WORKDIR /app
 
@@ -31,13 +33,6 @@ ENV BROWSER=none
 ENV CI=true
 ENV INLINE_RUNTIME_CHUNK=false
 ENV TZ=Europe/Amsterdam
-
-ARG REACT_APP_BUILD_ENV=production
-ENV REACT_APP_BUILD_ENV=$REACT_APP_BUILD_ENV
-
-# Setting the correct timezone for the build
-RUN rm /etc/localtime
-RUN ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
 
 # Build client
 RUN npm run build
