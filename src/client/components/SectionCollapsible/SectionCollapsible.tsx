@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, ReactNode } from 'react';
 import { animated, useSpring } from 'react-spring';
 import { useDebouncedCallback } from 'use-debounce';
 import { withKeyPress } from '../../../universal/helpers';
@@ -12,7 +12,7 @@ import styles from './SectionCollapsible.module.scss';
 
 export interface SectionCollapsibleProps {
   id: string;
-  title?: string;
+  title?: string | ReactNode;
   noItemsMessage?: string;
   startCollapsed?: boolean;
   className?: string;
@@ -60,6 +60,19 @@ export function SectionCollapsibleHeading({
   );
 }
 
+interface SectionCollapsibleBodyProps {
+  children: ComponentChildren;
+  className?: string;
+}
+
+export function SectionCollapsibleBody({
+  children,
+  className,
+}: SectionCollapsibleBodyProps) {
+  const classes = classnames(styles.SectionCollapsible, className);
+  return <section className={classes}>{children}</section>;
+}
+
 export default function SectionCollapsible({
   id,
   title = '',
@@ -96,12 +109,6 @@ export default function SectionCollapsible({
     }
   }, [isLoading, hasItems]);
 
-  const classes = classnames(
-    styles.SectionCollapsible,
-    (!hasItems || isCollapsed) && styles.isCollapsed,
-    className
-  );
-
   const toggleCollapsed = withKeyPress<HTMLSpanElement>(() => {
     if (isCollapsed && track) {
       trackEvent({
@@ -124,7 +131,7 @@ export default function SectionCollapsible({
   const heightAnimSpring = useSpring(heightAnim);
 
   return (
-    <section className={classes}>
+    <SectionCollapsibleBody className={className}>
       {hasTitle && (
         <SectionCollapsibleHeading
           isAriaExpanded={!isCollapsed}
@@ -157,6 +164,6 @@ export default function SectionCollapsible({
           </div>
         </animated.div>
       )}
-    </section>
+    </SectionCollapsibleBody>
   );
 }

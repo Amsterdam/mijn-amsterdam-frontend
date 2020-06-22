@@ -8,6 +8,7 @@ import {
   loadServicesCMSContent,
   loadServicesRaw,
   loadServicesMap,
+  fetchAFVAL,
 } from './services';
 import { loadServicesSSE } from './services/services-sse';
 import { requestApiData } from '../client/hooks/api/api.hook';

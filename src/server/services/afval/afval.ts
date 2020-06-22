@@ -1,15 +1,8 @@
-import {
-  capitalizeFirstLetter,
-  getApproximateDistance,
-} from '../../universal/helpers';
-import {
-  AFVALData,
-  GarbageMoment,
-  GarbagePoint,
-  Stadsdeel,
-} from '../../universal/types';
-import { getApiConfig } from '../config';
-import { requestData } from '../helpers/request';
+import { capitalizeFirstLetter } from '../../../universal/helpers';
+import { GarbageRetrievalMoment, Stadsdeel } from '../../../universal/types';
+import { getApiConfig } from '../../config';
+import { requestData } from '../../helpers/request';
+import { scrapeGarbageCenterData } from './afvalpunten';
 
 const AFVAL_AFSPRAAK_MAKEN =
   'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Grofvuil.aspx';
@@ -131,63 +124,6 @@ const titles: { [type: string]: string } = {
   grofvuil: 'Grofvuil',
 };
 
-const garbagePoints: GarbagePoint[] = [
-  {
-    naam: 'Afvalpunt Henk Sneevlietweg (Nieuw-West)',
-    latlng: { lat: 52.3433575455427, lng: 4.83347291303415 },
-    adres: 'Henk Sneevlietweg 22&#xA0;<br>1066 VH&#xA0;&#xA0;Amsterdam',
-    telefoon: '020 587 6126',
-    email: 'afvalpunten@aebamsterdam.nl',
-    openingstijden:
-      'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\n Het afvalpunt Henk Sneevlietweg is elke zondag open van 10.00 tot 16.00 uur.',
-  },
-  {
-    naam: 'Afvalpunt Marie Baronlaan (Oost, geen bedrijfsafval)',
-    latlng: { lat: 52.3710209755361, lng: 4.97156727996261 },
-    adres: 'Marie Baronlaan <br>1095 MV Amsterdam',
-    telefoon: '020 5876145',
-    email: 'afvalpunten@aebamsterdam.nl',
-    openingstijden:
-      'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\n Het afvalpunt Henk Sneevlietweg is elke zondag open van 10.00 tot 16.00 uur.',
-  },
-  {
-    naam: 'Afvalpunt Meerkerkdreef (Zuidoost)',
-    latlng: { lat: 52.302520488967, lng: 4.97786715111811 },
-    adres: 'Meerkerkdreef 31&#xA0;<br>1106 GZ &#xA0;Amsterdam',
-    telefoon: '020 587 6116',
-    email: 'afvalpunten@aebamsterdam.nl',
-    openingstijden:
-      'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\n Het afvalpunt Henk Sneevlietweg is elke zondag open van 10.00 tot 16.00 uur.',
-  },
-  {
-    naam: 'Afvalpunt Rozenburglaan (Oost)',
-    latlng: { lat: 52.3388475386366, lng: 4.93782666381194 },
-    adres: 'Rozenburglaan 1&#xA0;<br>1097 HK &#xA0;Amsterdam',
-    telefoon: '020 587 6114',
-    email: 'afvalpunten@aebamsterdam.nl',
-    openingstijden:
-      'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\n Het afvalpunt Henk Sneevlietweg is elke zondag open van 10.00 tot 16.00 uur.',
-  },
-  {
-    naam: 'Afvalpunt Seineweg (Nieuw-West)',
-    latlng: { lat: 52.386058385908, lng: 4.82017500674289 },
-    adres: 'Seineweg 1&#xA0;<br>1043 BE&#xA0; Amsterdam',
-    telefoon: '020 587 6144',
-    email: 'afvalpunten@aebamsterdam.nl',
-    openingstijden:
-      'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\n Het afvalpunt Henk Sneevlietweg is elke zondag open van 10.00 tot 16.00 uur.',
-  },
-  {
-    naam: 'Afvalpunt Struisgrasstraat (Noord)',
-    latlng: { lat: 52.3957390236765, lng: 4.90786592615004 },
-    adres: 'Struisgrasstraat 33a <br>1032 KE &#xA0;Amsterdam',
-    telefoon: '020 587 6122',
-    email: 'afvalpunten@aebamsterdam.nl',
-    openingstijden:
-      'De Afvalpunten zijn open van maandag tot en met zaterdag van 08.00 tot 17.00 uur.\n\n Het afvalpunt Henk Sneevlietweg is elke zondag open van 10.00 tot 16.00 uur.',
-  },
-];
-
 interface AFVALSourceData {
   result: {
     features: Array<{
@@ -196,12 +132,11 @@ interface AFVALSourceData {
   };
 }
 
-export function formatAFVALData(
-  responseData: AFVALSourceData,
-  center: LatLngObject | null
-): AFVALData {
-  const ophalen: GarbageMoment[] = responseData?.result?.features
-    ? responseData.result.features.map(feature => {
+export function transformGarbageRetrievalData(
+  afvalSourceData: AFVALSourceData
+) {
+  const ophalen: GarbageRetrievalMoment[] = afvalSourceData?.result?.features
+    ? afvalSourceData.result.features.map(feature => {
         const {
           properties: {
             type,
@@ -243,34 +178,25 @@ export function formatAFVALData(
       })
     : [];
 
-  const wegbrengen = garbagePoints.map(item => {
-    return {
-      ...item,
-      distance: center ? getApproximateDistance(center, item.latlng) : 0,
-    };
-  });
-
-  return {
-    ophalen,
-    wegbrengen,
-  };
+  return ophalen;
 }
 
-export function fetchAFVAL(
+export async function fetchAFVAL(
   sessionID: SessionID,
   samlToken: string,
   center: LatLngObject | null,
   raw: boolean = false
 ) {
   const params = { lat: center?.lat, lon: center?.lng };
-
-  return requestData<AFVALData>(
+  const garbageMomentData = await requestData<GarbageRetrievalMoment[]>(
     getApiConfig('AFVAL', {
       params,
       transformResponse: (data: AFVALSourceData) =>
-        raw ? data : formatAFVALData(data, center),
+        raw ? data : transformGarbageRetrievalData(data),
     }),
     sessionID,
     samlToken
   );
+
+  return garbageMomentData;
 }

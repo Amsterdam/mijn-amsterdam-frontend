@@ -16,9 +16,9 @@ const TAGS_ALLOWED = [
   'ol',
   'dt',
   'dd',
+  'h3',
   'h4',
   'h5',
-  // 'h3',
 ];
 const ATTR_ALLOWED = {
   a: ['href', 'name', 'target', 'rel'],
@@ -28,11 +28,16 @@ const DEFAULT_CONFIG = {
   disallowedTagsMode: 'discard',
 };
 
-function sanitizeCmsContent(
+export function sanitizeCmsContent(
   content: string,
   options = {
     allowedTags: TAGS_ALLOWED,
     allowedAttributes: ATTR_ALLOWED,
+
+    // Filter out empty tags
+    exclusiveFilter: function(frame: any) {
+      return !frame.text.trim();
+    },
   }
 ) {
   const config = Object.assign(DEFAULT_CONFIG, options);
