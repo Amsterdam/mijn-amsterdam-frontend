@@ -68,7 +68,6 @@ pipeline {
         script { currentBuild.displayName = "TEST Build #${BUILD_NUMBER}" }
         sh "docker build -t ${IMAGE_TEST} " +
            "--shm-size 1G " +
-           "--build-arg REACT_APP_BUILD_ENV=development " +
            "--target=serve-ot-bff " +
            "."
         sh "docker push ${IMAGE_TEST}"
