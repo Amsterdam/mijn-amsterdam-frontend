@@ -378,23 +378,6 @@ const testData: FocusProductFromSource[] = [
   },
 ];
 
-const tozoDocumenten: FocusTozoDocument[] = [
-  {
-    datePublished: '2020-03-31T18:59:46+02:00',
-    type: 'E-AANVR-TOZO',
-    description: 'Tegemoetkoming Ondernemers en Zelfstandigen',
-    id: '4400000031',
-    url: 'focus/document?id=4400000031&isBulk=true&isDms=false',
-  },
-  {
-    datePublished: '2020-03-26T15:18:44+01:00',
-    type: 'E-AANVR-KBBZ',
-    description: 'Verkorte Aanvraag BBZ',
-    id: '4400000024',
-    url: 'focus/document?id=4400000024&isBulk=true&isDms=false',
-  },
-];
-
 describe('FOCUS_AANVRAGEN service', () => {
   it('Normalizes the focus aanvragen items correctly ', () => {
     expect(testData.map(normalizeFocusSourceProduct)).toMatchSnapshot();

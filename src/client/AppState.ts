@@ -58,7 +58,8 @@ export const PRISTINE_APPSTATE = {
 
   // Related
   BRP: apiPristineResult(null),
-  AFVAL: apiPristineResult({ ophalen: [], wegbrengen: [] }),
+  AFVAL: apiPristineResult([]),
+  AFVALPUNTEN: apiPristineResult({ centers: [], openingHours: '' }),
   HOME: apiPristineResult(null),
   BUURT: apiPristineResult(null),
 

@@ -1,4 +1,4 @@
-export * from './afval';
+export * from './afval/afval';
 export * from './bag';
 export * from './belasting';
 export * from './brp';

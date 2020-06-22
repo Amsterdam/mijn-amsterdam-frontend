@@ -8,7 +8,7 @@ export enum Stadsdeel {
   zuidoost = 'Zuidoost',
 }
 
-export interface GarbageMoment {
+export interface GarbageRetrievalMoment {
   title: string;
   aanbiedwijze: string;
   stadsdeel: Stadsdeel;
@@ -18,17 +18,16 @@ export interface GarbageMoment {
   opmerking: string;
 }
 
-export interface GarbagePoint {
-  naam: string;
-  adres: string;
-  telefoon: string;
-  email: string;
+export interface GarbageCenter {
+  title: string;
   latlng: LatLngObject;
-  distance?: number;
-  openingstijden?: string;
+  url: string;
+  address: string;
+  phone: string;
+  email: string;
+  distance: number;
+  openingHours: string;
 }
 
-export interface AFVALData {
-  ophalen: GarbageMoment[];
-  wegbrengen: GarbagePoint[];
-}
+export type AFVALData = GarbageRetrievalMoment[];
+export type AFVALPUNTENData = GarbageCenter[];
