@@ -25,12 +25,12 @@ services:
   e2e-frontend:
     build:
       context: .
+      args:
+        - REACT_APP_ENV=development
       dockerfile: Dockerfile
       target: serve-ot-bff
     expose:
       - "3000"
-    args:
-      - REACT_APP_ENV=development
     environment:
       - BFF_ENV=development
       - PORT=3000
