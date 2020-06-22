@@ -30,6 +30,10 @@
   text-decoration: none;
   transform: translateX(-3rem);
 
+  a {
+    text-decoration: none;
+  }
+
   @include mq-tablet() {
     transform: translateX(0);
   }

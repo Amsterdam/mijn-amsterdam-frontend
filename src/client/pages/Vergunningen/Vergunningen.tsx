@@ -65,9 +65,9 @@ export default () => {
       </PageHeading>
       <PageContent>
         <p>
-          Wilt u een evenement organiseren op straat of in een gebouw? Dan hebt
-          u meestal een evenementenvergunning nodig, maar soms is een melding
-          voldoende.
+          Nam scelerisque odio id pellentesque accumsan. Cras suscipit commodo
+          lectus et lacinia. Ut suscipit tempus velit quis viverra. Pellentesque
+          luctus purus mauris, id viverra ligula dictum in.
         </p>
         {/* <p>
           <Linkd external={true} href="https://mijn.amsterdam.nl/">

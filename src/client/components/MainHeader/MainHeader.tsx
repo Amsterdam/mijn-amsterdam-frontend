@@ -19,29 +19,13 @@ export interface MainHeaderProps {
   isAuthenticated?: boolean;
 }
 
-function TheHeading() {
-  const Logo = useDesktopScreen() ? AmsterdamLogoLarge : AmsterdamLogo;
-  return (
-    <>
-      <Logo
-        role="img"
-        aria-label="Gemeente Amsterdam logo"
-        className={styles.logo}
-      />
-      <Heading size="large" el="h1">
-        Mijn Amsterdam
-      </Heading>
-    </>
-  );
-}
-
 export default function MainHeader({
   isAuthenticated = false,
 }: MainHeaderProps) {
   const isHeroVisible = true;
   const appState = useContext(AppContext);
   const errors = useMemo(() => getApiErrors(appState), [appState]);
-
+  const Logo = useDesktopScreen() ? AmsterdamLogoLarge : AmsterdamLogo;
   const hasErrors = !!errors.length;
   const { location } = useRouter();
 
@@ -58,19 +42,29 @@ export default function MainHeader({
         </nav>
       )}
       <div className={styles.topBar}>
-        {location.pathname !== AppRoutes.ROOT ? (
-          <Link
-            className={styles.logoLink}
-            to={AppRoutes.ROOT}
-            title="Terug naar home"
+        <span className={styles.logoLink}>
+          <a
+            href={'https://www.amsterdam.nl'}
+            rel="external noreferrer noopener"
           >
-            <TheHeading />
-          </Link>
-        ) : (
-          <span className={styles.logoLink}>
-            <TheHeading />
-          </span>
-        )}
+            <Logo
+              role="img"
+              aria-label="Gemeente Amsterdam logo"
+              className={styles.logo}
+            />
+          </a>
+          {location.pathname !== AppRoutes.ROOT ? (
+            <Heading size="large" el="h1">
+              <Link to={AppRoutes.ROOT} title="Terug naar home">
+                Mijn Amsterdam
+              </Link>
+            </Heading>
+          ) : (
+            <Heading size="large" el="h1">
+              Mijn Amsterdam
+            </Heading>
+          )}
+        </span>
       </div>
       {isAuthenticated && <MainNavBar />}
       {hasErrors && (
