@@ -15,6 +15,7 @@ const DAYS_BEFORE_EXPIRATION = 120;
 const BrpDocumentTitles: Record<string, string> = {
   paspoort: 'paspoort',
   'europese identiteitskaart': 'ID-kaart',
+  'nederlandse identiteitskaart': 'ID-kaart',
   rijbewijs: 'rijbewijs',
 };
 
