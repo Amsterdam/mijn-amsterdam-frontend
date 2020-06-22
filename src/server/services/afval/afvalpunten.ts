@@ -102,7 +102,6 @@ async function scrapeOpeningstijden(url: string) {
   const cachedData = cache.get(cacheKey);
 
   if (cachedData) {
-    console.log('return cached! openingstijden');
     return cachedData as string;
   }
 
@@ -133,7 +132,6 @@ async function scrapeAfvalpuntGeoLocations() {
   const cachedData = cache.get(cacheKey);
 
   if (cachedData) {
-    console.log('return cached! geolocations');
     return cachedData as ScrapedGeoLocation[];
   }
   /**
