@@ -1,10 +1,7 @@
-import * as analytics from '../../hooks/analytics.hook';
-
-import { ReactWrapper, mount } from 'enzyme';
-
+import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
+import * as analytics from '../../hooks/analytics.hook';
 import SectionCollapsible from './SectionCollapsible';
-import styles from './SectionCollapsible.module.scss';
 
 describe('SectionCollapsible', () => {
   let component: ReactWrapper<typeof SectionCollapsible>;
@@ -22,11 +19,15 @@ describe('SectionCollapsible', () => {
         isLoading={false}
         hasItems={true}
         startCollapsed={false}
+        title="test!"
       >
         <div style={{ height: 500 }}>Boohoo!</div>
       </SectionCollapsible>
     );
-    expect(component.childAt(0).hasClass(styles.isCollapsed)).toEqual(false);
+    expect(
+      (component.find('SectionCollapsibleHeading').props() as any)
+        .isAriaExpanded
+    ).toBe(true);
   });
 
   it('should start collapsed', () => {
@@ -35,12 +36,16 @@ describe('SectionCollapsible', () => {
         id="test-SectionCollapsible"
         isLoading={false}
         hasItems={true}
+        title="test"
       >
         <div style={{ height: 500 }}>Boohoo!</div>
       </SectionCollapsible>
     );
 
-    expect(component.childAt(0).hasClass(styles.isCollapsed)).toEqual(true);
+    expect(
+      (component.find('SectionCollapsibleHeading').props() as any)
+        .isAriaExpanded
+    ).toBe(false);
   });
 
   it('should collapse/expand when clicking the title', () => {
@@ -55,9 +60,15 @@ describe('SectionCollapsible', () => {
       </SectionCollapsible>
     );
 
-    expect(component.childAt(0).hasClass(styles.isCollapsed)).toEqual(true);
+    expect(
+      (component.find('SectionCollapsibleHeading').props() as any)
+        .isAriaExpanded
+    ).toBe(false);
     component.find(`.Title button`).simulate('click');
-    expect(component.childAt(0).hasClass(styles.isCollapsed)).toEqual(false);
+    expect(
+      (component.find('SectionCollapsibleHeading').props() as any)
+        .isAriaExpanded
+    ).toBe(true);
   });
 
   it('should call trackEvent if tracking info is provided and section is expanded', () => {

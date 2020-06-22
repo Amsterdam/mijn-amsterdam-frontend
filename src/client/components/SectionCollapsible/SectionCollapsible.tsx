@@ -62,20 +62,14 @@ export function SectionCollapsibleHeading({
 
 interface SectionCollapsibleBodyProps {
   children: ComponentChildren;
-  isCollapsed: boolean;
   className?: string;
 }
 
 export function SectionCollapsibleBody({
   children,
-  isCollapsed,
   className,
 }: SectionCollapsibleBodyProps) {
-  const classes = classnames(
-    styles.SectionCollapsible,
-    isCollapsed && styles.isCollapsed,
-    className
-  );
+  const classes = classnames(styles.SectionCollapsible, className);
   return <section className={classes}>{children}</section>;
 }
 
@@ -137,7 +131,7 @@ export default function SectionCollapsible({
   const heightAnimSpring = useSpring(heightAnim);
 
   return (
-    <SectionCollapsibleBody isCollapsed={isCollapsed}>
+    <SectionCollapsibleBody>
       {hasTitle && (
         <SectionCollapsibleHeading
           isAriaExpanded={!isCollapsed}
