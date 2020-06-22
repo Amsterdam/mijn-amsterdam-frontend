@@ -108,15 +108,17 @@ export async function fetchVergunningenGenerated(
 ) {
   const vergunningen = await fetchVergunningen(sessionID, samlToken);
 
-  const cases =
-    vergunningen.content
-      ?.filter(vergunning => vergunning.status !== 'Afgehandeld')
-      .map(createVergunningRecentCase) || [];
+  const cases = Array.isArray(vergunningen.content)
+    ? vergunningen.content
+        .filter(vergunning => vergunning.status !== 'Afgehandeld')
+        .map(createVergunningRecentCase)
+    : [];
 
-  const notifications =
-    vergunningen.content
-      ?.filter(vergunning => vergunning.status !== 'Afgehandeld')
-      .map(createVergunningNotification) || [];
+  const notifications = Array.isArray(vergunningen.content)
+    ? vergunningen.content
+        .filter(vergunning => vergunning.status !== 'Afgehandeld')
+        .map(createVergunningNotification)
+    : [];
 
   return {
     cases,
