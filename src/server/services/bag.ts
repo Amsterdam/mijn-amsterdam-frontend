@@ -12,7 +12,7 @@ export interface BAGData {
 }
 
 export function formatBAGData(responseData: BAGSourceData): BAGData {
-  const centroid = !!responseData?.results.length
+  const centroid = !!responseData?.results?.length
     ? responseData.results[0].centroid
     : null;
   return {
