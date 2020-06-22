@@ -1,38 +1,5 @@
 function getBrowserEnv() {
-  let otapServerEnvFrontend = 'development';
-
-  // @ts-ignore
-  const isAcceptanceServer = window.location.host === 'mijn.acc.amsterdam.nl';
-
-  const isProductionServer =
-    // @ts-ignore
-    window.location.host === 'mijn.amsterdam.nl' ||
-    // @ts-ignore
-    window.location.host === 'www.mijn.amsterdam.nl';
-
-  // @ts-ignore
-  const isTestServer = window.location.host === 'mijn.ot.amsterdam.nl';
-
-  switch (true) {
-    case isTestServer:
-      otapServerEnvFrontend = 'test';
-      break;
-    case isAcceptanceServer:
-      otapServerEnvFrontend = 'acceptance';
-      break;
-    case isProductionServer:
-      otapServerEnvFrontend = 'production';
-      break;
-  }
-
-  if (isAcceptanceServer) {
-    otapServerEnvFrontend = 'acceptance';
-  }
-  if (isProductionServer) {
-    otapServerEnvFrontend = 'production';
-  }
-
-  return otapServerEnvFrontend;
+  return process.env.REACT_APP_ENV || 'production';
 }
 
 function isBrowser() {
