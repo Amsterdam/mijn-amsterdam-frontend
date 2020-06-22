@@ -1,15 +1,5 @@
 @import '../../styles/_global.scss';
 
-.GarbageInformation {
-  @include select(PageContent) {
-    padding-bottom: 5rem;
-  }
-}
-
-.InfoSection {
-  transition: max-width 400ms ease;
-}
-
 @mixin GarbagePanel {
   margin: 0 auto;
   padding: 0;
@@ -24,8 +14,22 @@
   }
 }
 
+.GarbageInformation {
+  @include select(PageContent) {
+    padding-bottom: 5rem;
+  }
+}
+
+.InfoSection {
+  transition: max-width 400ms ease;
+}
+
 .Panel {
-  padding: 2rem 0;
+  padding: 0 0 2rem 0;
+
+  &:first-child {
+    padding-top: 0;
+  }
 
   @include select(Heading_Heading__tiny) {
     color: $color-neutral-grey4;
@@ -33,14 +37,24 @@
     @include GarbagePanel;
   }
 
-  p {
+  .htmlContent,
+  > p {
     @include GarbagePanel;
     margin-bottom: 2rem;
+  }
 
-    &:last-child {
-      margin-bottom: 0;
+  .htmlContent h4,
+  .htmlContent h3 {
+    font-size: 1.6rem;
+    margin: 0;
+  }
+  .htmlContent > p {
+    &:first-child {
+      margin-top: 0;
     }
-
+  }
+  .htmlContent,
+  > p {
     > a {
       color: inherit;
       text-decoration: none;
@@ -48,19 +62,17 @@
   }
 }
 
-.AfvalPunten {
-  @include select(Heading_Heading__small) {
+.Panel {
+  .AfvalpuntContentHeading {
     @include GarbagePanel;
     margin-bottom: 2rem;
-  }
-  p > strong {
-    display: block;
   }
 }
 
 .AddressPanel {
   max-width: $main-boxed-width;
   margin: 0 auto;
+  padding-top: 2rem;
   margin-bottom: 2rem;
   border-top: 0.1rem solid $color-neutral-grey2;
 
@@ -87,7 +99,7 @@
   height: 50rem;
 }
 
-.ToggleOtherGarbagePointsButton {
+.ToggleOtherGarbageCentersButton {
   max-width: 62rem;
   margin: 0 auto;
 
@@ -98,26 +110,24 @@
     }
   }
 }
+
 .InfoSectionMap {
+  border: 0;
   &[class*=SectionCollapsible]:not([class*=SectionCollapsible_isCollapsed]) {
     max-width: 100%;
   }
 }
 
-.InfoSectionOtherGarbagePoints {
-  padding-top: 0;
-  @include select(SectionCollapsible_Panel) {
-    border-top: 0;
-  }
-}
-
 .OpeningHours {
-  white-space: pre-wrap;
-}
+   > *:not(:first-child) {
+    background-color: $color-neutral-grey1;
+    padding: 1rem;
+    margin: 0;
+    // display: none;
+  }
 
-.otherGarbagePointsExpanded {
-  @include select(Button_Icon) {
-    transform: rotate(90deg);
-    position: relative;
+  > ul {
+    padding-left: 3rem!important; // sorry...
   }
 }
+

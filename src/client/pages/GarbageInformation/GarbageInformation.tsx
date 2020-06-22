@@ -2,13 +2,17 @@ import classnames from 'classnames';
 import React, { ReactNode, useContext } from 'react';
 import { ChapterTitles } from '../../../universal/config';
 import { getFullAddress, isError, isLoading } from '../../../universal/helpers';
-import { GarbageMoment, GarbagePoint } from '../../../universal/types';
+import {
+  GarbageCenter,
+  GarbageRetrievalMoment,
+} from '../../../universal/types';
 import { AppContext } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
   DetailPage,
   Heading,
+  InnerHtml,
   Linkd,
   MyAreaMapIFrame,
   PageContent,
@@ -30,45 +34,52 @@ function GarbagePanel({ children, className }: PanelProps) {
   );
 }
 
-function GarbagePointItem({ item }: { item: GarbagePoint }) {
+function GarbageCenterItem({ item }: { item: GarbageCenter }) {
   return (
     <GarbagePanel className={styles.AfvalPunten}>
-      <Heading size="small">
-        {item.naam}{' '}
+      <Heading size="medium" className={styles.AfvalpuntContentHeading}>
+        {item.title}{' '}
         {item.distance !== 0 && (
           <span className={styles.DistanceToHome}>+/-{item.distance}KM</span>
         )}
       </Heading>
       <Heading size="tiny">Adres</Heading>
-      <p dangerouslySetInnerHTML={{ __html: item.adres }} />
+      <InnerHtml wrapWithTagName="p">{item.address}</InnerHtml>
       <Heading size="tiny">Telefoon</Heading>
       <p>
-        <a href={`tel:${item.telefoon}`}>{item.telefoon}</a>
+        <a href={`tel:${item.phone}`}>{item.phone}</a>
       </p>
       <Heading size="tiny">E-mail</Heading>
       <p>
         <a href={`mailto:${item.email}`}>{item.email}</a>
       </p>
       <Heading size="tiny">Openingstijden</Heading>
-      <p className={styles.OpeningHours}>{item.openingstijden}</p>
+      <InnerHtml
+        className={classnames(styles.htmlContent, styles.OpeningHours)}
+      >
+        {item.openingHours}
+      </InnerHtml>
     </GarbagePanel>
   );
 }
 
 export default () => {
-  const { BRP, AFVAL, HOME } = useContext(AppContext);
+  const { BRP, AFVAL, AFVALPUNTEN, HOME } = useContext(AppContext);
 
   const garbageContainersMapUrl = HOME.content?.latlng
     ? `https://kaart.amsterdam.nl/afvalcontainers#19/${HOME.content.latlng.lat}/${HOME.content.latlng.lng}/topo/9749,9750,9751,9752,9753,9754/9748/`
     : '';
 
-  const garbagePointCollapsible = (id: string, item: GarbageMoment) => (
+  const garbagePointCollapsible = (
+    id: string,
+    item: GarbageRetrievalMoment
+  ) => (
     <SectionCollapsible
       id={id}
       className={styles.InfoSection}
       isLoading={isLoading(AFVAL)}
       title={item.title}
-      hasItems={!!AFVAL.content?.ophalen.length}
+      hasItems={!!AFVAL.content?.length}
       noItemsMessage="Informatie over afval in uw buurt kan niet worden getoond"
     >
       {!!item.aanbiedwijze && (
@@ -92,13 +103,13 @@ export default () => {
       {!!item.opmerking && (
         <GarbagePanel>
           <Heading size="tiny">Opmerking</Heading>
-          <p dangerouslySetInnerHTML={{ __html: item.opmerking }} />
+          <InnerHtml wrapWithTagName="p">{item.opmerking}</InnerHtml>
         </GarbagePanel>
       )}
     </SectionCollapsible>
   );
 
-  const [restafval, grofvuil] = AFVAL.content?.ophalen || [];
+  const [restafval, grofvuil] = AFVAL.content || [];
 
   return (
     <DetailPage className={styles.GarbageInformation}>
@@ -141,7 +152,6 @@ export default () => {
           url={garbageContainersMapUrl}
         />
       </SectionCollapsible>
-
       <SectionCollapsible
         id="wegbrengen"
         className={classnames(
@@ -149,18 +159,17 @@ export default () => {
           styles.InfoSectionGarbagePoints
         )}
         title="Afvalpunten"
+        isLoading={isLoading(AFVALPUNTEN)}
       >
-        {AFVAL.content?.wegbrengen.map(item => (
-          <GarbagePointItem key={item.naam} item={item} />
+        {AFVALPUNTEN.content?.centers.map((item, index) => (
+          <GarbageCenterItem key={item.title} item={item} />
         ))}
-      </SectionCollapsible>
-      <PageContent>
         <p>
           <Linkd external={true} href={ExternalUrls.AFVAL_MELDING_FORMULIER}>
             Klopt er iets niet? Geef het aan ons door.
           </Linkd>
         </p>
-      </PageContent>
+      </SectionCollapsible>
     </DetailPage>
   );
 };
