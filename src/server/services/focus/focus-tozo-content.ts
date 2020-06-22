@@ -223,6 +223,7 @@ export const contentLabels: LabelData = {
   Minimafonds: {},
   Participatiewet: {
     'Tozo-uitkering': UitkeringLabels,
+    'Tozo-lening': LeningLabels,
   },
   'Bijzondere Bijstand': {
     'Tozo-voorschot': VoorschotLabels,
