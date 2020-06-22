@@ -131,7 +131,7 @@ export default function SectionCollapsible({
   const heightAnimSpring = useSpring(heightAnim);
 
   return (
-    <SectionCollapsibleBody>
+    <SectionCollapsibleBody className={className}>
       {hasTitle && (
         <SectionCollapsibleHeading
           isAriaExpanded={!isCollapsed}
