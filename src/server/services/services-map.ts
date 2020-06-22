@@ -23,9 +23,14 @@ export async function loadServicesMap(sessionID: SessionID, samlToken: string) {
   }
 
   const embed = {
-    advanced: `${MAP_URL}&center=${lat}%2C${lng}&zoom=${DEFAULT_ZOOM}&marker=${lat}%2C${lng}&marker-icon=home&${LAYERS_CONFIG}&legenda=true`,
-    simple: `${MAP_URL}&center=${lat}%2C${lng}&zoom=${LOCATION_ZOOM}&marker=${lat}%2C${lng}&marker-icon=home`,
+    advanced: `${MAP_URL}&center=${lat}%2C${lng}&zoom=${DEFAULT_ZOOM}&marker=${lat}%2C${lng}&${LAYERS_CONFIG}&legenda=true`,
+    simple: `${MAP_URL}&center=${lat}%2C${lng}&zoom=${LOCATION_ZOOM}&marker=${lat}%2C${lng}`,
   };
+
+  if (lat !== DEFAULT_LAT && lng !== DEFAULT_LNG) {
+    embed.advanced += '&marker-icon=home';
+    embed.simple += '&marker-icon=home';
+  }
 
   return { BUURT: apiSuccesResult({ embed }) };
 }
