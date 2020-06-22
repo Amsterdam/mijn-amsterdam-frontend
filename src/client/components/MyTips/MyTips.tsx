@@ -164,7 +164,12 @@ export default function MyTips({
     <OptInContextProvider>
       <div {...otherProps} className={classnames(styles.MyTips, className)}>
         {showHeader && <TipsOptInHeader showTipsPageLink={!!items.length} />}
-        <ul className={styles.TipsList}>
+        <ul
+          className={classnames(
+            styles.TipsList,
+            isLoading && styles.TipsListLoading
+          )}
+        >
           {isLoading && <LoadingContentListItems />}
           {!isLoading &&
             items.map((item, i) => <Tip key={item.title} tip={item} />)}

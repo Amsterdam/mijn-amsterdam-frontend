@@ -65,7 +65,10 @@ export function useAppState() {
       setAppState(appState => {
         return Object.assign({}, appState, tipsState);
       });
+    } else {
+      setAppState(Object.assign({}, appState, { TIPS }));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [TIPS]);
 
   return appState;

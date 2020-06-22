@@ -36,9 +36,14 @@ export function useTipsApi() {
   );
 
   return useMemo(() => {
+    let responseData = api.data;
+    if (api.isLoading) {
+      const pristineData = transformResponse({ ...PRISTINE_APPSTATE.TIPS });
+      responseData = pristineData;
+    }
     return {
-      ...api.data,
+      ...responseData,
       fetch: fetchTipsFinal,
     };
-  }, [api.data, fetchTipsFinal]);
+  }, [api, fetchTipsFinal]);
 }
