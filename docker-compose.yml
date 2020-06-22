@@ -29,6 +29,8 @@ services:
       target: serve-ot-bff
     expose:
       - "3000"
+    args:
+      - REACT_APP_ENV=development
     environment:
       - BFF_ENV=development
       - PORT=3000
