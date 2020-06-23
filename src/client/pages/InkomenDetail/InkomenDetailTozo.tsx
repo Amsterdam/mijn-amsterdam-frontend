@@ -12,6 +12,7 @@ import {
   PageContent,
   PageHeading,
   StatusLine,
+  Heading,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
 import styles from './InkomenDetail.module.scss';
@@ -73,6 +74,16 @@ export default () => {
           voor beide een apart besluit. Informatie die u hier ziet is een
           werkdag vertraagd.
         </p>
+        <div className={styles.Tozo2Alert}>
+          <Heading size="tiny">
+            Hebt u na 1 juni 2020 ook Tozo 2 aangevraagd?
+          </Heading>
+          <p>
+            Wij werken er hard aan om ook die aanvraag in Mijn Amsterdam te
+            tonen. Als het zover is, ziet u uw aanvraag vanzelf hier
+            verschijnen.
+          </p>
+        </div>
         <p>
           <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
             Meer informatie over de Tozo
