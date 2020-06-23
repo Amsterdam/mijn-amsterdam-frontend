@@ -10,7 +10,8 @@ import BAG from './json/bag.json';
 import AFVAL from './json/afvalophaalgebieden.json';
 import MILIEUZONE from './json/milieuzone.json';
 import TIPS from './json/tips.json';
-import AMSTERDAM_CONTENT from './json/amsterdam-nl-content-uitleg.json';
+import AMSTERDAM_CONTENT_GENERAL_INFO from './json/amsterdam-nl-content-uitleg.json';
+import AMSTERDAM_CONTENT_FOOTER from './json/amsterdam-nl-content-footer.json';
 import VERGUNNINGEN from './json/vergunningen.json';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
@@ -77,7 +78,13 @@ export const mockDataConfig: MockDataConfig = {
   },
   [ApiUrls.CMS_CONTENT_GENERAL_INFO]: {
     status: 200,
-    responseData: async () => await loadMockApiResponseJson(AMSTERDAM_CONTENT),
+    responseData: async () =>
+      await loadMockApiResponseJson(AMSTERDAM_CONTENT_GENERAL_INFO),
+  },
+  [ApiUrls.CMS_CONTENT_FOOTER]: {
+    status: 200,
+    responseData: async () =>
+      await loadMockApiResponseJson(AMSTERDAM_CONTENT_FOOTER),
   },
   [ApiUrls.VERGUNNINGEN]: {
     status: 200,

@@ -7,6 +7,7 @@
 
 .InnerContainer {
   @include centered-block;
+  width: 100%;
 }
 
 .TopBar {
@@ -20,8 +21,13 @@
     }
   }
 
+  p {
+    margin: 0;
+  }
+
   h3 {
     margin-top: 0;
+    margin-bottom: 1rem;
   }
 
   ul {
@@ -30,7 +36,7 @@
     margin: 0;
 
     li {
-      margin-bottom: 1rem;
+      margin-bottom: .8rem;
       @include select(Button__plain) {
         &, &:visited {
           color: $color-white;
@@ -50,17 +56,15 @@
 .BottomBar {
   background-color: $color-white;
   height: 4.4rem;
-  padding-top: 1rem;
+  display: flex;
+  flex-direction: row;
 
-  a {
-    margin-right: 8rem;
+  .InnerContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
   }
 
-  @include mq-tablet() {
-    a {
-      margin-right: 3rem;
-    }
-  }
 }
 
 .Panel {
@@ -109,20 +113,49 @@
   }
 }
 
-.ContactPanel {
-  width: 80rem;
+.Panel:nth-child(1) {
+  width: 40rem;
+
+  ul {
+    list-style-type: none;
+    padding-left: 3.4rem;
+    margin: 1rem;
+
+    li {
+      margin: 0;
+      position: relative;
+      margin-bottom: .6rem;
+      padding-left: 1.8rem;
+
+      &:before {
+        font-size: 100%;
+        color: $color-white;
+        content: '\25A0';
+        display: block;
+        left: 0;
+        max-height: 0;
+        max-width: 0;
+        position: absolute ;
+      }
+      strong {
+        display: block;
+      }
+    }
+  }
 
   @include mq-tablet() {
     width: 100%;
   }
 }
 
-.FollowPanel {
-  margin: 0 3rem;
-  width: 60rem;
+.Panel:nth-child(2) {
+  width: 24rem;
 
   li {
     white-space: nowrap;
+    a {
+      font-weight: bold;
+    }
   }
 
   @include mq-tablet() {
@@ -131,7 +164,8 @@
   }
 }
 
-.TodoPanel {
+.Panel:nth-child(3) {
+  width: 32rem;
   @include mq-tablet() {
     width: 100%;
   }

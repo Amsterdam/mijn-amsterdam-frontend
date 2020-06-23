@@ -73,6 +73,7 @@ export const PRISTINE_APPSTATE = {
   // CMS content
   CMS_CONTENT: apiPristineResult({
     generalInfo: null,
+    footer: null,
   }),
 
   VERGUNNINGEN: apiPristineResult([]),
