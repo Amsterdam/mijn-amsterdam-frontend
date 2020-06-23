@@ -3,11 +3,11 @@ import React, { CSSProperties } from 'react';
 import { defaultDateFormat } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
 import { GenericDocument } from '../../../universal/types/App.types';
-import { IconChevronLeft, IconDownload } from '../../assets/icons';
+import { IconChevronLeft } from '../../assets/icons';
 import { trackEvent } from '../../hooks/analytics.hook';
 import { useSessionStorage } from '../../hooks/storage.hook';
-import Linkd, { Button } from '../Button/Button';
-import { Document } from '../DocumentList/DocumentList';
+import { Button } from '../Button/Button';
+import DocumentList from '../DocumentList/DocumentList';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './StatusLine.module.scss';
 
@@ -22,7 +22,7 @@ export interface StatusLineItem {
   status: string;
   datePublished: string;
   description: string;
-  documents: Document[];
+  documents: GenericDocument[];
   isActive?: boolean;
   isChecked?: boolean;
   isHighlight?: boolean;
@@ -30,24 +30,6 @@ export interface StatusLineItem {
 }
 
 type AltDocumentContent = string | JSX.Element;
-
-interface DownloadLinkProps {
-  item: Document;
-}
-
-function DownloadLink({ item }: DownloadLinkProps) {
-  return (
-    <Linkd
-      className={styles.DownloadLink}
-      href={item.url}
-      external={true}
-      download={item.title}
-      icon={IconDownload}
-    >
-      {item.title}
-    </Linkd>
-  );
-}
 
 interface StatusLinePanelProps {
   children: ComponentChildren;
@@ -108,15 +90,7 @@ export function StatusLinePanelDocuments({
       {!!altDocumentContent && (
         <span className={styles.altDocumentContent}>{altDocumentContent}</span>
       )}
-      {!!documents.length && (
-        <ul className={styles.DocumentDownloadItems}>
-          {documents.map(document => (
-            <li key={document.id}>
-              <DownloadLink key={document.id} item={document} />
-            </li>
-          ))}
-        </ul>
-      )}
+      {!!documents.length && <DocumentList documents={documents} />}
     </StatusLinePanel>
   );
 }
