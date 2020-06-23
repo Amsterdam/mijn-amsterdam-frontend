@@ -4,7 +4,6 @@
   display: block;
   font-weight: normal;
   position: relative;
-  margin-bottom: 1rem;
   line-height: 1.2;
   font-weight: 500;
   white-space: pre-wrap;
@@ -18,6 +17,8 @@
 .DocumentListItem {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: .6rem;
 }
 
 .DocumentList {
@@ -26,6 +27,7 @@
   &--expandedView {
     @include select('DocumentLink') {
       font-weight: normal;
+      font-size: 1.6rem;
     }
   }
 }
