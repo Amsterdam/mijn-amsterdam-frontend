@@ -25,7 +25,7 @@ function FooterBlock({
   title,
   links,
   description,
-  startOpen = true,
+  startOpen = false,
 }: FooterBlockProps) {
   const titleRole = useDesktopScreen() ? 'columnheader' : 'button';
   const [isOpen, toggleOpen] = useState(startOpen);

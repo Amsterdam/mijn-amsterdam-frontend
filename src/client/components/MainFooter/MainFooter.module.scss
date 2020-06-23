@@ -12,6 +12,7 @@
 
 .TopBar {
   display: flex;
+  min-height: 30rem;
   padding: 3rem 0 5rem;
 
   &, a, a:hover {
