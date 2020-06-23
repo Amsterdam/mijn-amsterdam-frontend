@@ -7,7 +7,7 @@ export const WelcomeNotification: MyNotification = {
   chapter: Chapters.NOTIFICATIONS,
   datePublished: new Date(2019, 10, 11).toISOString(),
   title: 'Welkom op Mijn Amsterdam!',
-  hideDatePublished: false,
+  hideDatePublished: true,
   description:
     'Deze website is nog volop in ontwikkeling. Gaandeweg komt meer informatie voor u beschikbaar.',
   customLink: {
