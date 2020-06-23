@@ -10,6 +10,7 @@
   padding: 1rem 0;
 
   @include select(DocumentList_DocumentLink) {
+    margin-bottom: 1rem;
     svg {
       margin-left: -17px;
     }

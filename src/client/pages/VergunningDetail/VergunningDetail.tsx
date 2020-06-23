@@ -18,6 +18,9 @@ import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
 import styles from './VergunningDetail.module.scss';
+import StatusLine, {
+  StatusLineItem,
+} from '../../components/StatusLine/StatusLine';
 
 export default () => {
   const { VERGUNNINGEN } = useContext(AppContext);
@@ -45,6 +48,39 @@ export default () => {
       title: 'Document 2',
       type: 'PDF',
       datePublished: '2020-04-04',
+    },
+  ];
+
+  const statusLineItems: StatusLineItem[] = [
+    {
+      id: 'item-1',
+      status: 'Ontvangen',
+      datePublished: '2020-04-16',
+      description: '',
+      documents: [],
+      isActive: false,
+      isChecked: true,
+      isHighlight: false,
+    },
+    {
+      id: 'item-2',
+      status: 'In behandeling',
+      datePublished: '2020-05-03',
+      description: '',
+      documents: [],
+      isActive: true,
+      isChecked: true,
+      isHighlight: true,
+    },
+    {
+      id: 'item-3',
+      status: 'Afgehandeld',
+      datePublished: '',
+      description: '',
+      documents: [],
+      isActive: false,
+      isChecked: false,
+      isHighlight: false,
     },
   ];
 
@@ -107,6 +143,12 @@ export default () => {
           value={<DocumentList documents={documents} isExpandedView={true} />}
         />
       </PageContent>
+      <StatusLine
+        trackCategory={`Vergunningen detail / status`}
+        items={statusLineItems}
+        showToggleMore={false}
+        id={`vergunning-detail-${id}`}
+      />
     </DetailPage>
   );
 };
