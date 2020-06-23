@@ -113,6 +113,17 @@
 
 .InfoSectionMap {
   border: 0;
+  // hairline that represents the same width as other sections. The map is set at 100% vw, the default border will expand to that with and thus mismatching design.
+  &:after {
+    position: absolute;
+    display: block;
+    content: '';
+    border-bottom: .1rem solid $color-neutral-grey2;
+    width: 94rem;
+    max-width: calc(100% - 2rem);
+    left: 50%;
+    transform: translateX(-50%);
+  }
   &[class*=SectionCollapsible]:not([class*=SectionCollapsible_isCollapsed]) {
     max-width: 100%;
   }
