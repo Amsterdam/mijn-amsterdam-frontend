@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import styles from './InfoDetail.module.scss';
 import { ComponentChildren } from '../../../universal/types/App.types';
 
@@ -8,7 +8,7 @@ export interface InfoDetailGroupProps {
 
 export interface InfoDetailProps {
   label: string;
-  value: string | number;
+  value: string | number | ReactNode;
 }
 
 export function InfoDetailGroup({ children }: InfoDetailGroupProps) {

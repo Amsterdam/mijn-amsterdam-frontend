@@ -1,54 +1,61 @@
-import { IconDownload, IconDocument } from '../../assets/icons';
-import Heading from '../Heading/Heading';
 import React from 'react';
-import { defaultDateFormat } from '../../../universal/helpers';
+import { IconDownload } from '../../assets/icons';
+import { Linkd } from '../index';
 import styles from './DocumentList.module.scss';
-import { trackDownload } from '../../hooks/analytics.hook';
+import { GenericDocument } from '../../../universal/types/App.types';
+import classnames from 'classnames';
 
-export interface Document {
-  id: string;
-  title: string;
-  url: string;
-  type: string;
-  datePublished: string;
+interface DocumentLinkProps {
+  document: GenericDocument;
+  label?: string;
 }
 
-export interface DocumentListProps {
-  items: Document[];
+interface DocumentListProps {
+  documents: GenericDocument[];
+  isExpandedView?: boolean;
 }
 
-export default function DocumentList({ items = [] }: DocumentListProps) {
+export function DocumentLink({ document, label }: DocumentLinkProps) {
   return (
-    <div className={styles.DocumentList}>
-      <ul>
-        {items.map(item => {
-          return (
-            <li key={item.id} className={styles.DocumentListItem}>
-              <aside className={styles.MetaInfo}>
-                <em className={styles.TypeIndication}>{item.type}</em>
-                <time className={styles.Datum} dateTime={item.datePublished}>
-                  {defaultDateFormat(item.datePublished)}
-                </time>
-              </aside>
-              <a
-                className={styles.DownloadLink}
-                href={item.url}
-                onClick={() => trackDownload(item.url)}
-              >
-                <IconDocument aria-hidden="true" className={styles.Icon} />
-                <Heading el="h4" size="small">
-                  {item.title}{' '}
-                  <IconDownload
-                    aria-hidden="true"
-                    className={styles.DownloadIcon}
-                  />
-                </Heading>
-                <div className={styles.FileType}>PDF</div>
-              </a>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+    <Linkd
+      className={styles.DocumentLink}
+      href={document.url}
+      external={true}
+      download={document.title}
+      icon={IconDownload}
+    >
+      {label || document.title}
+    </Linkd>
+  );
+}
+
+export default function DocumentList({
+  documents,
+  isExpandedView = false,
+}: DocumentListProps) {
+  return (
+    <ul
+      className={classnames(
+        styles.DocumentList,
+        isExpandedView && styles[`DocumentList--expandedView`]
+      )}
+    >
+      {documents.map(document => (
+        <li className={styles.DocumentListItem} key={document.id}>
+          {isExpandedView ? (
+            <>
+              {document.title}
+              <DocumentLink
+                key={document.id}
+                document={document}
+                label="Download"
+              />
+            </>
+          ) : (
+            <DocumentLink key={document.id} document={document} />
+          )}
+        </li>
+      ))}
+    </ul>
   );
 }

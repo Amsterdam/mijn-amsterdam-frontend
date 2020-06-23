@@ -8,6 +8,12 @@
 .List {
   @include reset-list-style;
   padding: 1rem 0;
+
+  @include select(DocumentList_DocumentLink) {
+    svg {
+      margin-left: -17px;
+    }
+  }
 }
 
 .ListHeading {
@@ -25,30 +31,6 @@
   display: block;
   white-space: nowrap;
   color: $color-neutral-grey4;
-}
-
-.DownloadLink {
-  display: block;
-  font-weight: normal;
-  position: relative;
-  margin-bottom: 1rem;
-  line-height: 1.2;
-
-  svg {
-    top: 0.2rem;
-    transform: none;
-  }
-}
-
-.DocumentDownloadItems {
-  @include reset-list-style;
-  @include select(DownloadLink) {
-    font-weight: 500;
-    white-space: pre-wrap;
-    svg {
-      margin-left: -17px;
-    }
-  }
 }
 
 .StatusConnection {

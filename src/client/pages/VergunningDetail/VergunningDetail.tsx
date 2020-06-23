@@ -2,20 +2,22 @@ import React, { useContext } from 'react';
 import useRouter from 'use-react-router';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
+import { defaultDateFormat } from '../../../universal/helpers/date';
+import { GenericDocument } from '../../../universal/types/App.types';
 import { AppContext } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
   DetailPage,
+  DocumentList,
   LoadingContent,
   PageContent,
   PageHeading,
 } from '../../components';
-import styles from './VergunningDetail.module.scss';
-import { defaultDateFormat } from '../../../universal/helpers/date';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
+import styles from './VergunningDetail.module.scss';
 
 export default () => {
   const { VERGUNNINGEN } = useContext(AppContext);
@@ -28,6 +30,23 @@ export default () => {
 
   const VergunningItem = VERGUNNINGEN.content?.find(item => item.id === id);
   const noContent = !isLoading(VERGUNNINGEN) && !VergunningItem;
+
+  const documents: GenericDocument[] = [
+    {
+      id: 'doc-1',
+      url: 'http://example.org/bla',
+      title: 'Document 1',
+      type: 'PDF',
+      datePublished: '2020-04-04',
+    },
+    {
+      id: 'doc-2',
+      url: 'http://example.org/bla',
+      title: 'Document 2',
+      type: 'PDF',
+      datePublished: '2020-04-04',
+    },
+  ];
 
   return (
     <DetailPage>
@@ -83,6 +102,10 @@ export default () => {
             }
           />
         </InfoDetailGroup>
+        <InfoDetail
+          label="Documenten"
+          value={<DocumentList documents={documents} isExpandedView={true} />}
+        />
       </PageContent>
     </DetailPage>
   );
