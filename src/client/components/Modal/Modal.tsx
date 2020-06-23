@@ -138,7 +138,7 @@ export function Dialog({
                 {showCloseButton && (
                   <CloseButton
                     title="Overlay sluiten"
-                    iconSize="100%"
+                    iconSize={{ width: '100%', height: '100%' }}
                     className={classnames(styles.CloseButton, 'ButtonClose')}
                     onClick={() => typeof onClose === 'function' && onClose()}
                   />

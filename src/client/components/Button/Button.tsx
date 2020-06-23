@@ -7,13 +7,18 @@ import classnames from 'classnames';
 import styles from './Button.module.scss';
 import { trackLink } from '../../hooks/analytics.hook';
 
+interface IconSize {
+  width: string;
+  height: string;
+}
+
 interface CustomButtonProps {
   variant?: 'primary' | 'secondary' | 'secondary-inverted' | 'plain' | 'inline';
   isDisabled?: boolean;
   iconPosition?: 'left' | 'right';
   className?: string;
   icon?: any;
-  iconSize?: string;
+  iconSize?: IconSize;
   lean?: boolean;
 }
 
@@ -43,7 +48,7 @@ type ButtonBodyProps = Pick<
 interface PositionedIconProps {
   position?: 'left' | 'right';
   icon?: any;
-  iconSize?: string;
+  iconSize?: IconSize;
 }
 
 function buttonStyle({
@@ -63,15 +68,15 @@ function buttonStyle({
 
 function PositionedIcon({
   icon,
-  iconSize = '14px',
+  iconSize = { width: '12px', height: '12px' },
   position,
 }: PositionedIconProps) {
   const Icon = icon;
   return (
     <Icon
       aria-hidden="true"
-      width={iconSize}
-      height={iconSize}
+      width={iconSize.width}
+      height={iconSize.height}
       className={classnames(styles.Icon, styles[`Icon__${position}`])}
     />
   );
@@ -138,7 +143,7 @@ export default function Linkd({
   lean = true,
   variant = 'plain',
   icon = IconChevronRight,
-  iconSize,
+  iconSize = { width: '12px', height: '12px' },
   iconPosition = 'left',
   external = false,
   onClick,
@@ -221,7 +226,7 @@ export interface IconButtonProps
 export function IconButton({
   className,
   icon,
-  iconSize = '32px',
+  iconSize = { width: '32px', height: '32px' },
   ...otherProps
 }: IconButtonProps) {
   const Icon = icon;

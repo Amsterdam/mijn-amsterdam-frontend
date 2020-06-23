@@ -55,6 +55,7 @@ type SourceApiKey =
   | 'MILIEUZONE'
   | 'VERGUNNINGEN'
   | 'CMS_CONTENT_GENERAL_INFO'
+  | 'CMS_CONTENT_FOOTER'
   | 'TIPS'
   | 'BRP'
   | 'ERFPACHT'
@@ -89,7 +90,11 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   CMS_CONTENT_GENERAL_INFO: {
     url: `https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data`,
-    cacheTimeout: ONE_HOUR_MS,
+    cacheTimeout: 4 * ONE_HOUR_MS,
+  },
+  CMS_CONTENT_FOOTER: {
+    url: `https://www.amsterdam.nl/algemene_onderdelen/overige/footer/?AppIdt=app-data`,
+    cacheTimeout: 4 * ONE_HOUR_MS,
   },
   TIPS: {
     url: `${BFF_MS_API_BASE_URL}/tips/gettips`,
