@@ -138,17 +138,21 @@ export default () => {
             }
           />
         </InfoDetailGroup>
-        <InfoDetail
-          label="Documenten"
-          value={<DocumentList documents={documents} isExpandedView={true} />}
-        />
+        {!!documents.length && (
+          <InfoDetail
+            label="Documenten"
+            value={<DocumentList documents={documents} isExpandedView={true} />}
+          />
+        )}
       </PageContent>
-      <StatusLine
-        trackCategory={`Vergunningen detail / status`}
-        items={statusLineItems}
-        showToggleMore={false}
-        id={`vergunning-detail-${id}`}
-      />
+      {!!statusLineItems.length && (
+        <StatusLine
+          trackCategory={`Vergunningen detail / status`}
+          items={statusLineItems}
+          showToggleMore={false}
+          id={`vergunning-detail-${id}`}
+        />
+      )}
     </DetailPage>
   );
 };
