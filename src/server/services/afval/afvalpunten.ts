@@ -2,6 +2,7 @@ import scrapeIt from 'scrape-it';
 import {
   apiSuccesResult,
   getApproximateDistance,
+  ApiSuccessResponse,
 } from '../../../universal/helpers';
 import memoryCache from 'memory-cache';
 import { sanitizeCmsContent } from '../index';
@@ -234,14 +235,18 @@ export async function scrapeGarbageCenterData(center: LatLngObject | null) {
     }
   );
 
-  return new Promise((resolve, reject) => {
-    const responseData: AfvalpuntenResponseData = {
-      centers: garbageCenterData.sort(sortAlpha('distance')),
-      openingHours,
-      datePublished: new Date().toISOString(),
-    };
-    fs.writeFile(fileName, JSON.stringify(responseData), error => {
-      resolve(apiSuccesResult(responseData));
-    });
-  });
+  const afvalResult: ApiSuccessResponse<AfvalpuntenResponseData> = await new Promise(
+    (resolve, reject) => {
+      const responseData: AfvalpuntenResponseData = {
+        centers: garbageCenterData.sort(sortAlpha('distance')),
+        openingHours,
+        datePublished: new Date().toISOString(),
+      };
+      fs.writeFile(fileName, JSON.stringify(responseData), error => {
+        resolve(apiSuccesResult(responseData));
+      });
+    }
+  );
+
+  return afvalResult;
 }
