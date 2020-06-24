@@ -7,9 +7,13 @@ import memoryCache from 'memory-cache';
 import { sanitizeCmsContent } from '../index';
 import { GarbageCenter } from '../../../universal/types/afval';
 import { sortAlpha } from '../../../universal/helpers/utils';
+import fs from 'fs';
+import path from 'path';
+import { sub } from 'date-fns';
 
 export const cache = new memoryCache.Cache<string, any>();
-const AFVALPUNT_CACHE_TTL = 24 * 60 * 60 * 1000; // 1 day
+const AFVALPUNT_CACHE_HOURS_TTL = 24; // 1 day
+const AFVALPUNT_SCRAPE_CACHE_TTL = 60 * 1000; // 1 minute
 
 interface ScrapedOpeningsTijden {
   openingstijden: { content: string };
@@ -28,6 +32,12 @@ interface ScrapedDetailInfoTable {
 }
 
 type ScrapedGeoAndDetail = ScrapedGeoLocation & ScrapedDetailInfo;
+
+interface AfvalpuntenResponseData {
+  centers: GarbageCenter[];
+  openingHours: string;
+  datePublished: string;
+}
 
 const tableLabelTranslation: Record<string, string> = {
   openingstijden: 'openingHours',
@@ -92,7 +102,7 @@ async function scrapeDetailInfo(item: ScrapedGeoLocation) {
     ...tableData,
   };
 
-  cache.put(cacheKey, itemCombined, AFVALPUNT_CACHE_TTL);
+  cache.put(cacheKey, itemCombined, AFVALPUNT_SCRAPE_CACHE_TTL);
 
   return itemCombined;
 }
@@ -122,7 +132,7 @@ async function scrapeOpeningstijden(url: string) {
     scrapeResult.data.openingstijden.content
   );
 
-  cache.put(cacheKey, openingstijdenSanitized, AFVALPUNT_CACHE_TTL);
+  cache.put(cacheKey, openingstijdenSanitized, AFVALPUNT_SCRAPE_CACHE_TTL);
 
   return openingstijdenSanitized;
 }
@@ -166,12 +176,39 @@ async function scrapeAfvalpuntGeoLocations() {
     }
   );
 
-  cache.put(cacheKey, scrapeResult.data.items, AFVALPUNT_CACHE_TTL);
+  cache.put(cacheKey, scrapeResult.data.items, AFVALPUNT_SCRAPE_CACHE_TTL);
 
   return scrapeResult.data.items;
 }
 
 export async function scrapeGarbageCenterData(center: LatLngObject | null) {
+  // TODO: Return cached file
+  const fileName = path.join(
+    __dirname,
+    '../../',
+    'mock-data/json/afvalpunten.json'
+  );
+  const cachedFileContents: AfvalpuntenResponseData | null = await new Promise(
+    resolve => {
+      fs.readFile(fileName, { encoding: 'utf8' }, (error, contents) => {
+        if (!error) {
+          resolve(JSON.parse(contents));
+        } else {
+          resolve(null);
+        }
+      });
+    }
+  );
+
+  if (
+    cachedFileContents &&
+    (sub(new Date(), { hours: AFVALPUNT_CACHE_HOURS_TTL }) <
+      new Date(cachedFileContents.datePublished) ||
+      process.env.BFF_DISABLE_MOCK_ADAPTER) // Development and e2e testing will always serve cached file
+  ) {
+    return apiSuccesResult(cachedFileContents);
+  }
+
   const afvalpuntGeoLocations = await scrapeAfvalpuntGeoLocations();
 
   const detailedItems = await Promise.all(
@@ -197,8 +234,14 @@ export async function scrapeGarbageCenterData(center: LatLngObject | null) {
     }
   );
 
-  return apiSuccesResult({
-    centers: garbageCenterData.sort(sortAlpha('distance')),
-    openingHours,
+  return new Promise((resolve, reject) => {
+    const responseData: AfvalpuntenResponseData = {
+      centers: garbageCenterData.sort(sortAlpha('distance')),
+      openingHours,
+      datePublished: new Date().toISOString(),
+    };
+    fs.writeFile(fileName, JSON.stringify(responseData), error => {
+      resolve(apiSuccesResult(responseData));
+    });
   });
 }

@@ -6,6 +6,7 @@ import { loadServicesDirect } from './services-direct';
 import { loadServicesGenerated } from './services-generated';
 import { loadServicesMap } from './services-map';
 import { loadServicesRelated } from './services-related';
+import { loadServicesAfval } from './services-afval';
 
 function sendMessage(
   res: Response,
@@ -58,6 +59,19 @@ export async function loadServicesSSE(
       })
     );
 
+  const servicesAfval = loadServicesAfval(
+    req.sessionID!,
+    getSamlTokenHeader(req)
+  )
+    .then(data => {
+      sendMessage(res, 'related', 'message', data);
+    })
+    .catch(error =>
+      Sentry.captureException(error, {
+        extra: { module: 'services-sse', serviceName: 'afval' },
+      })
+    );
+
   const servicesMap = loadServicesMap(req.sessionID!, getSamlTokenHeader(req))
     .then(data => {
       sendMessage(res, 'map', 'message', data);
@@ -101,6 +115,7 @@ export async function loadServicesSSE(
     servicesMap,
     servicesGenerated,
     servicesCMSContent,
+    servicesAfval,
   ]).finally(() => {
     sendMessage(res, 'close', 'close', null);
     res.end();
