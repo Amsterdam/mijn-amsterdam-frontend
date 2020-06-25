@@ -22,7 +22,7 @@ export const BFFApiUrls: Record<string, string> = {
 };
 
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
-  BRP: 'Persoonlijke gegevens, Identiteitsbwijzen + actuele updates',
+  BRP: 'Persoonlijke gegevens, Identiteitsbewijzen + actuele updates',
   CASES: 'Lopende zaken',
   TIPS: 'Tips',
   NOTIFICATIONS: 'Actuele updates',
@@ -40,6 +40,8 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   HOME: 'Lat/Lon locatie gegevens van uw adres.',
   VERGUNNINGEN: 'Vergunningen + actuele updates',
   ALL: 'Alle databronnen',
+  CMS_CONTENT: 'Uitleg pagina',
+  AFVALPUNTEN: 'Afvalpunten',
 };
 
 export function getApiErrors(appState: AppState) {
