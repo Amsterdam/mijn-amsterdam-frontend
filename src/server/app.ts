@@ -25,7 +25,7 @@ Sentry.init(options);
 
 const app = express();
 
-app.set('trust proxy', 1);
+app.set('trust proxy', true);
 app.use(Sentry.Handlers.requestHandler() as RequestHandler);
 
 app.use(cors());
@@ -38,6 +38,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: { secure: IS_AP },
+    proxy: true,
   })
 );
 
