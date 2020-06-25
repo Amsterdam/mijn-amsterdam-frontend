@@ -68,12 +68,6 @@ export default () => {
         Uw {title}
       </PageHeading>
       <PageContent className={styles.DetailPageContent}>
-        <p>
-          Onderstaand ziet u de status van uw aanvraag voor een Tozo-uitkering
-          en/of een Tozo-lening. Indien u beide heeft aangevraagd, ontvangt u
-          voor beide een apart besluit. Informatie die u hier ziet is een
-          werkdag vertraagd.
-        </p>
         <div className={styles.Tozo2Alert}>
           <Heading size="tiny">
             Hebt u na 1 juni 2020 ook Tozo 2 aangevraagd?
@@ -84,6 +78,12 @@ export default () => {
             verschijnen.
           </p>
         </div>
+        <p>
+          Onderstaand ziet u de status van uw aanvraag voor een Tozo-uitkering
+          en/of een Tozo-lening. Indien u beide heeft aangevraagd, ontvangt u
+          voor beide een apart besluit. Informatie die u hier ziet is een
+          werkdag vertraagd.
+        </p>
         <p>
           <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
             Meer informatie over de Tozo
