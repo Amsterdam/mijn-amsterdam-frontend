@@ -1,5 +1,6 @@
+import * as Sentry from '@sentry/node';
 import express, { NextFunction, Request, Response } from 'express';
-import { getSamlTokenHeader, requestData } from './helpers/request';
+import { getSamlTokenHeader, requestData, log } from './helpers/request';
 import {
   loadServicesDirect,
   loadServicesGenerated,
@@ -144,6 +145,14 @@ router.get(`/services/all`, async function handleRouteServicesMap(
     res.json(
       servicesResult.reduce((acc, result) => Object.assign(acc, result), {})
     );
+
+    Sentry.captureMessage('Request log ALL', {
+      extra: {
+        sessionId: req.sessionID!,
+        log: log[req.sessionID!],
+      },
+    });
+    delete log[req.sessionID!];
     next();
   } catch (error) {
     next(error);
