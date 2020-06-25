@@ -16,6 +16,7 @@ function isChapterActive(
     BELASTINGEN,
     MILIEUZONE,
     VERGUNNINGEN,
+    HOME,
   }: AppState
 ) {
   switch (item.id) {
@@ -57,6 +58,7 @@ function isChapterActive(
       return (
         FeatureToggle.garbageInformationPage &&
         !isLoading(AFVAL) &&
+        !isLoading(HOME) &&
         isMokum(BRP.content)
       );
 
