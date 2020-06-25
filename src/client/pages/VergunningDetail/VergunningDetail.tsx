@@ -1,8 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import useRouter from 'use-react-router';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
-import { defaultDateFormat } from '../../../universal/helpers/date';
+import {
+  isError,
+  isLoading,
+  defaultDateFormat,
+} from '../../../universal/helpers';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { AppContext } from '../../AppState';
 import {
@@ -33,56 +36,47 @@ export default () => {
 
   const VergunningItem = VERGUNNINGEN.content?.find(item => item.id === id);
   const noContent = !isLoading(VERGUNNINGEN) && !VergunningItem;
+  const documents: GenericDocument[] = [];
 
-  const documents: GenericDocument[] = [
-    {
-      id: 'doc-1',
-      url: 'http://example.org/bla',
-      title: 'Document 1',
-      type: 'PDF',
-      datePublished: '2020-04-04',
-    },
-    {
-      id: 'doc-2',
-      url: 'http://example.org/bla',
-      title: 'Document 2',
-      type: 'PDF',
-      datePublished: '2020-04-04',
-    },
-  ];
+  const statusLineItems: StatusLineItem[] = useMemo(() => {
+    if (!VergunningItem) {
+      return [];
+    }
 
-  const statusLineItems: StatusLineItem[] = [
-    {
-      id: 'item-1',
-      status: 'Ontvangen',
-      datePublished: '2020-04-16',
-      description: '',
-      documents: [],
-      isActive: false,
-      isChecked: true,
-      isHighlight: false,
-    },
-    {
-      id: 'item-2',
-      status: 'In behandeling',
-      datePublished: '2020-05-03',
-      description: '',
-      documents: [],
-      isActive: true,
-      isChecked: true,
-      isHighlight: true,
-    },
-    {
-      id: 'item-3',
-      status: 'Afgehandeld',
-      datePublished: '',
-      description: '',
-      documents: [],
-      isActive: false,
-      isChecked: false,
-      isHighlight: false,
-    },
-  ];
+    const isDone = VergunningItem.status === 'Afgehandeld';
+    return [
+      {
+        id: 'item-1',
+        status: 'Ontvangen',
+        datePublished: VergunningItem.dateRequest,
+        description: '',
+        documents: [],
+        isActive: false,
+        isChecked: true,
+        isHighlight: false,
+      },
+      {
+        id: 'item-2',
+        status: 'In behandeling',
+        datePublished: VergunningItem.dateRequest,
+        description: '',
+        documents: [],
+        isActive: !isDone,
+        isChecked: true,
+        isHighlight: !isDone,
+      },
+      {
+        id: 'item-3',
+        status: 'Afgehandeld',
+        datePublished: VergunningItem.dateOutcome || '',
+        description: '',
+        documents: [],
+        isActive: isDone,
+        isChecked: isDone,
+        isHighlight: isDone,
+      },
+    ];
+  }, [VergunningItem]);
 
   return (
     <DetailPage>
@@ -138,6 +132,9 @@ export default () => {
             }
           />
         </InfoDetailGroup>
+        {!!VergunningItem?.outcome && (
+          <InfoDetail label="Resultaat" value={VergunningItem.outcome} />
+        )}
         {!!documents.length && (
           <InfoDetail
             label="Documenten"
@@ -147,6 +144,7 @@ export default () => {
       </PageContent>
       {!!statusLineItems.length && (
         <StatusLine
+          className={styles.VergunningStatus}
           trackCategory={`Vergunningen detail / status`}
           items={statusLineItems}
           showToggleMore={false}
