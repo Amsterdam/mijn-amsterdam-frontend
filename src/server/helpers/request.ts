@@ -34,7 +34,7 @@ export const cache = new memoryCache.Cache<string, any>();
 function enableMockAdapter() {
   const MockAdapter = require('axios-mock-adapter');
 
-  // This sets the mock adapter on the default instance
+  // This sets the mock adapter on the default instance, let unmatched request passthrough to the requested urls.
   const mock = new MockAdapter(axiosRequest, { onNoMatch: 'passthrough' });
 
   entries(mockDataConfig).forEach(
@@ -58,6 +58,8 @@ function enableMockAdapter() {
     }
   );
 }
+
+export const log: any = {};
 
 if (!IS_AP && !process.env.BFF_DISABLE_MOCK_ADAPTER) {
   console.info('Axios Mock adapter enabled');
@@ -101,6 +103,7 @@ export async function requestData<T>(
     );
   }
 
+  // The SAML token is passedthrough to the source api's
   if (requestConfig.url?.startsWith(BFF_MS_API_BASE_URL) && samlToken) {
     if (!requestConfig.headers) {
       requestConfig.headers = {};
@@ -136,15 +139,28 @@ export async function requestData<T>(
     );
   }
 
+  if (!log[sessionID]) {
+    log[sessionID] = {};
+  }
+  if (!log[sessionID][requestConfig.url!]) {
+    log[sessionID][requestConfig.url!] = 0;
+  }
+
+  log[sessionID][requestConfig.url!] += 1;
+
+  let cancelTimeout;
+
   try {
     // Request is cancelled after x ms
-    setTimeout(() => {
+    cancelTimeout = setTimeout(() => {
       source.cancel('Request to source api timeout.');
     }, requestConfig.cancelTimeout!);
 
     const request: AxiosPromise<T> = axiosRequest(requestConfig);
     const response: AxiosResponse<T> = await request;
     const responseData = apiSuccesResult<T>(response.data);
+
+    clearTimeout(cancelTimeout);
 
     // Use the cache Deferred for resolving the response
     if (isGetRequest && cache.get(cacheKey)) {

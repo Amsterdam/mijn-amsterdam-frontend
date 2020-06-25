@@ -1,11 +1,12 @@
 import * as Sentry from '@sentry/node';
 import { NextFunction, Request, Response } from 'express';
-import { getSamlTokenHeader } from '../helpers/request';
+import { getSamlTokenHeader, log } from '../helpers/request';
 import { loadServicesCMSContent } from './services-cmscontent';
 import { loadServicesDirect } from './services-direct';
 import { loadServicesGenerated } from './services-generated';
 import { loadServicesMap } from './services-map';
 import { loadServicesRelated } from './services-related';
+import { loadServicesAfval } from './services-afval';
 
 function sendMessage(
   res: Response,
@@ -58,6 +59,19 @@ export async function loadServicesSSE(
       })
     );
 
+  const servicesAfval = loadServicesAfval(
+    req.sessionID!,
+    getSamlTokenHeader(req)
+  )
+    .then(data => {
+      sendMessage(res, 'related', 'message', data);
+    })
+    .catch(error =>
+      Sentry.captureException(error, {
+        extra: { module: 'services-sse', serviceName: 'afval' },
+      })
+    );
+
   const servicesMap = loadServicesMap(req.sessionID!, getSamlTokenHeader(req))
     .then(data => {
       sendMessage(res, 'map', 'message', data);
@@ -101,8 +115,17 @@ export async function loadServicesSSE(
     servicesMap,
     servicesGenerated,
     servicesCMSContent,
+    servicesAfval,
   ]).finally(() => {
     sendMessage(res, 'close', 'close', null);
+
+    Sentry.captureMessage('Request log SSE', {
+      extra: {
+        sessionId: req.sessionID!,
+        log: log[req.sessionID!],
+      },
+    });
+    delete log[req.sessionID!];
     res.end();
   });
 }

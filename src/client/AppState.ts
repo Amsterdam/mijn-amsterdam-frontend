@@ -12,17 +12,20 @@ import {
   ApiResponse,
   apiPristineResult,
 } from '../universal/helpers/api';
+import { loadServicesAfval } from '../server/services/services-afval';
 
 type GeneratedResponse = FEApiResponseData<typeof loadServicesGenerated>;
 type DirectResponse = FEApiResponseData<typeof loadServicesDirect>;
 type MapsResponse = FEApiResponseData<typeof loadServicesMap>;
 type RelatedResponse = FEApiResponseData<typeof loadServicesRelated>;
 type CMSContentResponse = FEApiResponseData<typeof loadServicesCMSContent>;
+type AfvalResponse = FEApiResponseData<typeof loadServicesAfval>;
 
 type ApiState = GeneratedResponse &
   DirectResponse &
   MapsResponse &
   RelatedResponse &
+  AfvalResponse &
   CMSContentResponse;
 
 type AppStateController = {
@@ -59,7 +62,11 @@ export const PRISTINE_APPSTATE = {
   // Related
   BRP: apiPristineResult(null),
   AFVAL: apiPristineResult([]),
-  AFVALPUNTEN: apiPristineResult({ centers: [], openingHours: '' }),
+  AFVALPUNTEN: apiPristineResult({
+    centers: [],
+    openingHours: '',
+    datePublished: '',
+  }),
   HOME: apiPristineResult(null),
   BUURT: apiPristineResult(null),
 

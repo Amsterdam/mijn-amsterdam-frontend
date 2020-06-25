@@ -1,21 +1,29 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import useRouter from 'use-react-router';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
+import {
+  isError,
+  isLoading,
+  defaultDateFormat,
+} from '../../../universal/helpers';
+import { GenericDocument } from '../../../universal/types/App.types';
 import { AppContext } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
   DetailPage,
+  DocumentList,
   LoadingContent,
   PageContent,
   PageHeading,
 } from '../../components';
-import styles from './VergunningDetail.module.scss';
-import { defaultDateFormat } from '../../../universal/helpers/date';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
+import styles from './VergunningDetail.module.scss';
+import StatusLine, {
+  StatusLineItem,
+} from '../../components/StatusLine/StatusLine';
 
 export default () => {
   const { VERGUNNINGEN } = useContext(AppContext);
@@ -28,6 +36,47 @@ export default () => {
 
   const VergunningItem = VERGUNNINGEN.content?.find(item => item.id === id);
   const noContent = !isLoading(VERGUNNINGEN) && !VergunningItem;
+  const documents: GenericDocument[] = [];
+
+  const statusLineItems: StatusLineItem[] = useMemo(() => {
+    if (!VergunningItem) {
+      return [];
+    }
+
+    const isDone = VergunningItem.status === 'Afgehandeld';
+    return [
+      {
+        id: 'item-1',
+        status: 'Ontvangen',
+        datePublished: VergunningItem.dateRequest,
+        description: '',
+        documents: [],
+        isActive: false,
+        isChecked: true,
+        isHighlight: false,
+      },
+      {
+        id: 'item-2',
+        status: 'In behandeling',
+        datePublished: VergunningItem.dateRequest,
+        description: '',
+        documents: [],
+        isActive: !isDone,
+        isChecked: true,
+        isHighlight: !isDone,
+      },
+      {
+        id: 'item-3',
+        status: 'Afgehandeld',
+        datePublished: VergunningItem.dateOutcome || '',
+        description: '',
+        documents: [],
+        isActive: isDone,
+        isChecked: isDone,
+        isHighlight: isDone,
+      },
+    ];
+  }, [VergunningItem]);
 
   return (
     <DetailPage>
@@ -83,7 +132,25 @@ export default () => {
             }
           />
         </InfoDetailGroup>
+        {!!VergunningItem?.outcome && (
+          <InfoDetail label="Resultaat" value={VergunningItem.outcome} />
+        )}
+        {!!documents.length && (
+          <InfoDetail
+            label="Documenten"
+            value={<DocumentList documents={documents} isExpandedView={true} />}
+          />
+        )}
       </PageContent>
+      {!!statusLineItems.length && (
+        <StatusLine
+          className={styles.VergunningStatus}
+          trackCategory={`Vergunningen detail / status`}
+          items={statusLineItems}
+          showToggleMore={false}
+          id={`vergunning-detail-${id}`}
+        />
+      )}
     </DetailPage>
   );
 };
