@@ -183,7 +183,6 @@ async function scrapeAfvalpuntGeoLocations() {
 }
 
 export async function scrapeGarbageCenterData(center: LatLngObject | null) {
-  // TODO: Return cached file
   const fileName = path.join(
     __dirname,
     '../../',
@@ -205,7 +204,7 @@ export async function scrapeGarbageCenterData(center: LatLngObject | null) {
     cachedFileContents &&
     (sub(new Date(), { hours: AFVALPUNT_CACHE_HOURS_TTL }) <
       new Date(cachedFileContents.datePublished) ||
-      process.env.BFF_DISABLE_MOCK_ADAPTER) // Development and e2e testing will always serve cached file
+      !process.env.BFF_DISABLE_MOCK_ADAPTER) // Development and e2e testing will always serve cached file
   ) {
     return apiSuccesResult(cachedFileContents);
   }
