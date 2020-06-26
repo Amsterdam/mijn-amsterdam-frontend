@@ -8,8 +8,8 @@ import {
 } from '../../hooks/analytics.hook';
 
 import { AppRoutes } from '../../../universal/config';
-import { Button } from '../Button/Button';
-import { IconChevronRight } from '../../assets/icons';
+import { Button, IconButton } from '../Button/Button';
+import { IconChevronRight, IconInfo, IconClose } from '../../assets/icons';
 import Heading from '../Heading/Heading';
 import Linkd from '../Button/Button';
 import { MyTip } from '../../../universal/types';
@@ -58,11 +58,31 @@ const Tip = ({ tip }: TipProps) => {
     trackItemPresentation(presentationCategory, tipTitle(tip.title))
   );
 
+  const [isFlipped, setIsFlipped] = useState(false);
+
   return (
     <li className={styles.TipItem}>
       <article>
         <figure className={styles.ImageContainer}>
           <img alt="" src={imgUrl} className={styles.Img} />
+          {!!tip.selectionCriteria && (
+            <>
+              {isFlipped && (
+                <div className={styles.TipFlip}>{tip.selectionCriteria}</div>
+              )}
+              <IconButton
+                className={styles.TipFlipButton}
+                icon={isFlipped ? IconClose : IconInfo}
+                title={
+                  !isFlipped
+                    ? 'Waarom u deze tip ziet.'
+                    : 'Sluit tip informatie'
+                }
+                onClick={() => setIsFlipped(!isFlipped)}
+                iconFill="#ffffff"
+              />
+            </>
+          )}
         </figure>
         <Heading el="h4">{tip.title}</Heading>
         <p>{tip.description}</p>

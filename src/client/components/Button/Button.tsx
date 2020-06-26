@@ -13,6 +13,7 @@ interface CustomButtonProps {
   iconPosition?: 'left' | 'right';
   className?: string;
   icon?: any;
+  iconFill?: string;
   iconSize?: string;
   lean?: boolean;
 }
@@ -35,7 +36,7 @@ type buttonStyleProps = Pick<
 
 type ButtonBodyProps = Pick<
   CustomButtonProps,
-  'icon' | 'iconPosition' | 'iconSize'
+  'icon' | 'iconPosition' | 'iconSize' | 'iconFill'
 > & {
   children: ReactNode;
 };
@@ -44,6 +45,7 @@ interface PositionedIconProps {
   position?: 'left' | 'right';
   icon?: any;
   iconSize?: string;
+  iconFill?: string;
 }
 
 function buttonStyle({
@@ -64,6 +66,7 @@ function buttonStyle({
 function PositionedIcon({
   icon,
   iconSize = '14px',
+  iconFill = '#000',
   position,
 }: PositionedIconProps) {
   const Icon = icon;
@@ -72,6 +75,7 @@ function PositionedIcon({
       aria-hidden="true"
       width={iconSize}
       height={iconSize}
+      fill={iconFill}
       className={classnames(styles.Icon, styles[`Icon__${position}`])}
     />
   );
@@ -81,6 +85,7 @@ function ButtonBody({
   icon,
   iconSize,
   iconPosition,
+  iconFill,
   children,
 }: ButtonBodyProps) {
   return (
@@ -89,6 +94,7 @@ function ButtonBody({
         <PositionedIcon
           iconSize={iconSize}
           icon={icon}
+          iconFill={iconFill}
           position={iconPosition}
         />
       )}
@@ -97,6 +103,7 @@ function ButtonBody({
         <PositionedIcon
           iconSize={iconSize}
           icon={icon}
+          iconFill={iconFill}
           position={iconPosition}
         />
       )}
@@ -222,6 +229,7 @@ export function IconButton({
   className,
   icon,
   iconSize = '32px',
+  iconFill = '#000',
   ...otherProps
 }: IconButtonProps) {
   const Icon = icon;
@@ -237,6 +245,7 @@ export function IconButton({
         height={iconSize}
         className={styles.Icon}
         aria-hidden={true}
+        fill={iconFill}
       />
     </Button>
   );
