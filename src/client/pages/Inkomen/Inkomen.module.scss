@@ -11,7 +11,7 @@
     width: 30%;
   }
   @include select(Table_DisplayPropTitle) {
-    width: 30%;
+    width: 50%;
   }
 
   @include mq-tablet() {

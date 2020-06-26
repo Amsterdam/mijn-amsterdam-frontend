@@ -36,7 +36,7 @@ const pageConfig = {
   },
   'INKOMEN/SPECIFICATIES': {
     isDetailPage: true,
-    pathname: '/inkomen-en-stadspas/uitkeringsspecificaties/:type?',
+    pathname: '/inkomen-en-stadspas/uitkeringsspecificaties',
   },
   'INKOMEN/TOZO': {
     isDetailPage: true,

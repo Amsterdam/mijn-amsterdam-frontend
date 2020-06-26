@@ -49,14 +49,15 @@ export default () => {
   }
 
   const uitkeringSteps = TozoItem?.steps.filter(
-    step => step.product === 'Tozo-uitkering'
+    step => step.product === `${TozoItem?.productTitle}-uitkering`
   );
   const leningSteps = TozoItem?.steps.filter(
-    step => step.product === 'Tozo-lening'
+    step => step.product === `${TozoItem?.productTitle}-lening`
   );
   const aanvraagAndVoorschotSteps = TozoItem?.steps.filter(
     step =>
-      step.product === 'Tozo-regeling' || step.product === 'Tozo-voorschot'
+      step.product === `${TozoItem?.productTitle}-regeling` ||
+      step.product === `${TozoItem?.productTitle}-voorschot`
   );
 
   return (
@@ -65,29 +66,37 @@ export default () => {
         icon={<ChapterIcon />}
         backLink={{ to: AppRoutes.INKOMEN, title: ChapterTitles.INKOMEN }}
       >
-        Uw {title}
+        {TozoItem?.productTitle}
       </PageHeading>
       <PageContent className={styles.DetailPageContent}>
-        <div className={styles.Tozo2Alert}>
-          <Heading size="tiny">
-            Hebt u na 1 juni 2020 ook Tozo 2 aangevraagd?
-          </Heading>
-          <p>
-            Wij werken er hard aan om ook die aanvraag in Mijn Amsterdam te
-            tonen. Als het zover is, ziet u uw aanvraag vanzelf hier
-            verschijnen.
-          </p>
-        </div>
+        {TozoItem?.productTitle === 'Tozo 1' && (
+          <div className={styles.Tozo2Alert}>
+            <Heading size="tiny">
+              Hebt u na 1 juni 2020 ook Tozo 2 aangevraagd?
+            </Heading>
+            <p>
+              Wij werken er hard aan om ook die aanvraag in Mijn Amsterdam te
+              tonen. Als het zover is, ziet u uw aanvraag vanzelf hier
+              verschijnen.
+            </p>
+          </div>
+        )}
         <p>
-          Onderstaand ziet u de status van uw aanvraag voor een Tozo-uitkering
-          en/of een Tozo-lening. Indien u beide heeft aangevraagd, ontvangt u
-          voor beide een apart besluit. Informatie die u hier ziet is een
-          werkdag vertraagd.
+          Onderstaand ziet u de status van uw aanvraag voor een{' '}
+          {TozoItem?.productTitle}-uitkering en/of een {TozoItem?.productTitle}
+          -lening. Indien u beide heeft aangevraagd, ontvangt u voor beide een
+          apart besluit. Informatie die u hier ziet is een werkdag vertraagd.
         </p>
         <p>
-          <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
-            Meer informatie over de Tozo
-          </Linkd>
+          {TozoItem?.productTitle === 'Tozo 1' ? (
+            <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
+              Meer informatie over de {TozoItem?.title}
+            </Linkd>
+          ) : (
+            <Linkd external={true} href={ExternalUrls.WPI_TOZO2}>
+              Meer informatie over de {TozoItem?.title}
+            </Linkd>
+          )}
         </p>
         {(isError(FOCUS_TOZO) || noContent) && (
           <Alert type="warning">
@@ -99,8 +108,8 @@ export default () => {
       {!!(aanvraagAndVoorschotSteps && aanvraagAndVoorschotSteps.length) && (
         <StatusLine
           className={styles.AanvraagStatusLine}
-          trackCategory={`Inkomen en Stadspas / Tozo aanvraag`}
-          statusLabel="Tozo-aanvraag"
+          trackCategory={`Inkomen en Stadspas / ${TozoItem?.productTitle} aanvraag`}
+          statusLabel={`${TozoItem?.productTitle}-aanvraag`}
           items={aanvraagAndVoorschotSteps}
           showToggleMore={false}
           maxStepCount={-1}
@@ -110,8 +119,8 @@ export default () => {
       )}
       {!!(uitkeringSteps && uitkeringSteps.length) && (
         <StatusLine
-          trackCategory={`Inkomen en Stadspas / Tozo uitkering levensonderhoud`}
-          statusLabel="Tozo-uitkering"
+          trackCategory={`Inkomen en Stadspas / ${TozoItem?.productTitle} uitkering levensonderhoud`}
+          statusLabel={`${TozoItem?.productTitle}-uitkering`}
           items={uitkeringSteps}
           showToggleMore={false}
           maxStepCount={
@@ -125,8 +134,8 @@ export default () => {
       )}
       {!!(leningSteps && leningSteps.length) && (
         <StatusLine
-          trackCategory={`Inkomen en Stadspas / Tozo lening bedrijfskrediet`}
-          statusLabel="Tozo-lening"
+          trackCategory={`Inkomen en Stadspas / ${TozoItem?.productTitle} lening bedrijfskrediet`}
+          statusLabel={`${TozoItem?.productTitle}-lening`}
           items={leningSteps}
           showToggleMore={false}
           maxStepCount={

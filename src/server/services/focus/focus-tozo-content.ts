@@ -10,6 +10,7 @@ import {
 } from './focus-types';
 
 export const TOZO_AANVRAAG_STEP_ID = 'aanvraag-step-tozo';
+export const TOZO_DUMMY_DECISION_STEP_ID = 'dummy-beslissing';
 
 export const TOZO_VOORSCHOT_PRODUCT_TITLE =
   'Voorschot Tozo (voor ondernemers) (Eenm.)';
@@ -20,10 +21,29 @@ export const TOZO_LENING_PRODUCT_TITLE =
 export const TOZO_UITKERING_PRODUCT_TITLE =
   'Tozo Levensonderhoud (voor ondernemers)';
 
+// Tozo 2 aangevraagd na 20 juni 2020
+export const TOZO2_VOORSCHOT_PRODUCT_TITLE =
+  'Voorschot Tozo 2 (voor ondernemers) (Eenm.)';
+
+export const TOZO2_LENING_PRODUCT_TITLE =
+  'Tozo 2 Bedrijfskapitaal (voor ondernemers)';
+
+export const TOZO2_UITKERING_PRODUCT_TITLE =
+  'Tozo 2 Levensonderhoud (voor ondernemers)';
+
+export const TOZO_AANVRAAG_DOCUMENT_TYPES = [
+  'E-AANVR-TOZO',
+  'E-AANVR-TOZ2',
+  'E-AANVR-KBBZ',
+];
+
 export const tozoTitleTranslations: DocumentTitles = {
-  // Aanvraag
+  // Aanvraag Tozo 1
   'E-AANVR-TOZO': 'Ontvangst- bevestiging Aanvraag',
   'E-AANVR-KBBZ': 'Ontvangst- bevestiging Aanvraag',
+
+  // Aanvraag Tozo 2
+  'E-AANVR-TOZ2': 'Ontvangst- bevestiging Aanvraag',
 
   // Voorschot
   'Voorschot Bbz Corona regeling (Eenm.)': 'Brief betaling voorschot',
@@ -40,9 +60,16 @@ export const tozoTitleTranslations: DocumentTitles = {
   'Hersteltermijn lening Tozo': 'Brief meer informatie',
   'Afwijzen lening Tozo': 'Brief besluit lening',
   'Toekennen lening Tozo': 'Brief besluit lening',
-  [TOZO_VOORSCHOT_PRODUCT_TITLE]: 'Tozo-voorschot',
-  [TOZO_LENING_PRODUCT_TITLE]: 'Tozo-lening',
-  [TOZO_UITKERING_PRODUCT_TITLE]: 'Tozo-uitkering',
+
+  // Tozo 1
+  [TOZO_VOORSCHOT_PRODUCT_TITLE]: 'Tozo 1-voorschot',
+  [TOZO_LENING_PRODUCT_TITLE]: 'Tozo 1-lening',
+  [TOZO_UITKERING_PRODUCT_TITLE]: 'Tozo 1-uitkering',
+
+  // Tozo 2
+  [TOZO2_VOORSCHOT_PRODUCT_TITLE]: 'Tozo 2-voorschot',
+  [TOZO2_LENING_PRODUCT_TITLE]: 'Tozo 2-lening',
+  [TOZO2_UITKERING_PRODUCT_TITLE]: 'Tozo 2-uitkering',
 };
 
 const VoorschotLabels: ProductStepLabels = {
@@ -222,17 +249,23 @@ const LeningLabels: ProductStepLabels = {
 export const contentLabels: LabelData = {
   Minimafonds: {},
   Participatiewet: {
-    'Tozo-uitkering': UitkeringLabels,
-    'Tozo-lening': LeningLabels,
+    'Tozo 1-uitkering': UitkeringLabels,
+    'Tozo 1-lening': LeningLabels,
+    // Tozo 2
+    'Tozo 2-uitkering': UitkeringLabels,
+    'Tozo 2-lening': LeningLabels,
   },
   'Bijzondere Bijstand': {
-    'Tozo-voorschot': VoorschotLabels,
-    'Tozo-lening': LeningLabels,
+    'Tozo 1-voorschot': VoorschotLabels,
+    'Tozo 1-lening': LeningLabels,
+    // Tozo 2
+    'Tozo 2-voorschot': VoorschotLabels,
+    'Tozo 2-lening': LeningLabels,
   },
 };
 
 export const fakeDecisionStep = {
-  id: 'fake-decision-filler',
+  id: TOZO_DUMMY_DECISION_STEP_ID,
   title: 'dummy-beslissing',
   status: 'Besluit',
   datePublished: '',
