@@ -96,7 +96,7 @@ export function createVergunningNotification(item: Vergunning) {
     datePublished: item.dateRequest,
     chapter: Chapters.VERGUNNINGEN,
     title: 'Uw vergunningsaanvraag',
-    description: item.title,
+    description: 'Er is een update in uw lopende vergunningsaanvraag.',
     link: {
       to: item.link.to,
       title: 'Bekijk vergunningsaanvraag',
@@ -118,7 +118,7 @@ export async function fetchVergunningenGenerated(
 
   const notifications = Array.isArray(vergunningen.content)
     ? vergunningen.content
-        .filter(vergunning => vergunning.status !== 'Afgehandeld')
+        // .filter(vergunning => vergunning.status !== 'Afgehandeld')
         .map(createVergunningNotification)
     : [];
 
