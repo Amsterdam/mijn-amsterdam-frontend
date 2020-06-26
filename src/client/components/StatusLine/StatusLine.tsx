@@ -10,6 +10,7 @@ import { Button } from '../Button/Button';
 import DocumentList from '../DocumentList/DocumentList';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './StatusLine.module.scss';
+import Heading from '../Heading/Heading';
 
 export type StepType =
   | 'first-step'
@@ -298,7 +299,9 @@ export default function StatusLine({
         />
       )}
       <div className={classnames(styles.StatusLine, className)}>
-        <h4 className={styles.ListHeading}>{statusLabel}</h4>
+        <Heading size="tiny" el="h4" className={styles.ListHeading}>
+          {statusLabel}
+        </Heading>
         {!!items.length && (
           <ul className={styles.List}>
             {items.map((item, index) => (

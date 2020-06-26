@@ -356,6 +356,8 @@ export function translateFocusProduct(
 
   prod.title = titleTranslations[prod.title] || prod.title;
 
+  prod.productTitle = prod.title.startsWith('Tozo 2') ? 'Tozo 2' : 'Tozo 1';
+
   prod.steps = prod.steps.map(step => {
     return Object.assign({}, step, {
       documents: step.documents.map(doc => {

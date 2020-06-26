@@ -68,6 +68,7 @@ export interface FocusProduct {
   steps: FocusProductStep[];
   dienstverleningstermijn?: number;
   inspanningsperiode?: number;
+  productTitle?: string;
 }
 
 export interface FocusItemStep {
