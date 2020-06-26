@@ -96,7 +96,7 @@ export function createVergunningNotification(item: Vergunning) {
     datePublished: item.dateRequest,
     chapter: Chapters.VERGUNNINGEN,
     title: 'Uw vergunningsaanvraag',
-    description: 'Er is een update in uw lopende vergunningsaanvraag.',
+    description: 'Er is een update in uw vergunningsaanvraag.',
     link: {
       to: item.link.to,
       title: 'Bekijk vergunningsaanvraag',
