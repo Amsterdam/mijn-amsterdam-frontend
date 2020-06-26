@@ -66,7 +66,7 @@ function GarbageCenterItem({ item }: { item: GarbageCenter }) {
 export default () => {
   const { BRP, AFVAL, AFVALPUNTEN, HOME } = useContext(AppContext);
 
-  const garbageContainersMapUrl = HOME.content?.latlng
+  const garbageContainersMapUrl = HOME?.content?.latlng
     ? `https://kaart.amsterdam.nl/afvalcontainers#19/${HOME.content.latlng.lat}/${HOME.content.latlng.lng}/topo/9749,9750,9751,9752,9753,9754/9748/`
     : '';
 
