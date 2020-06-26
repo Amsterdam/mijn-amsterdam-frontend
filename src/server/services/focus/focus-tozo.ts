@@ -13,11 +13,16 @@ import {
 import { fetchFOCUSCombined } from './focus-combined';
 import {
   contentLabels,
+  TOZO2_LENING_PRODUCT_TITLE,
+  TOZO2_UITKERING_PRODUCT_TITLE,
+  TOZO2_VOORSCHOT_PRODUCT_TITLE,
   tozoTitleTranslations,
+  TOZO_AANVRAAG_DOCUMENT_TYPES,
   TOZO_AANVRAAG_STEP_ID,
   TOZO_LENING_PRODUCT_TITLE,
   TOZO_UITKERING_PRODUCT_TITLE,
   TOZO_VOORSCHOT_PRODUCT_TITLE,
+  TOZO_DUMMY_DECISION_STEP_ID,
 } from './focus-tozo-content';
 import {
   createFocusItemTozo,
@@ -44,20 +49,33 @@ async function fetchFOCUSTozoNormalized(
       .filter(product => {
         return (
           TOZO_LENING_PRODUCT_TITLE === product.title ||
-          TOZO_UITKERING_PRODUCT_TITLE === product.title
+          TOZO_UITKERING_PRODUCT_TITLE === product.title ||
+          TOZO2_LENING_PRODUCT_TITLE === product.title ||
+          TOZO2_UITKERING_PRODUCT_TITLE === product.title
         );
       })
       .map(product => translateFocusProduct(product, tozoTitleTranslations))
       .sort(dateSort('dateStart'));
 
     const voorschottenNormalized = FOCUS_AANVRAGEN.content
-      .filter(product => TOZO_VOORSCHOT_PRODUCT_TITLE === product.title)
+      .filter(
+        product =>
+          TOZO_VOORSCHOT_PRODUCT_TITLE === product.title ||
+          TOZO2_VOORSCHOT_PRODUCT_TITLE === product.title
+      )
       .map(product => translateFocusProduct(product, tozoTitleTranslations))
       .sort(dateSort('dateStart'));
 
     const documenten = Array.isArray(FOCUS_COMBINED.content.tozodocumenten)
       ? FOCUS_COMBINED.content?.tozodocumenten
-          .filter(doc => ['E-AANVR-TOZO', 'E-AANVR-KBBZ'].includes(doc.type))
+          .filter(doc => TOZO_AANVRAAG_DOCUMENT_TYPES.includes(doc.type))
+          .map(document => {
+            return {
+              ...document,
+              productTitle:
+                document.type === 'E-AANVR-TOZ2' ? 'Tozo 2' : 'Tozo 1',
+            };
+          })
           .sort(dateSort('dateStart'))
       : [];
 
@@ -81,15 +99,28 @@ export async function fetchFOCUSTozo(sessionID: SessionID, samlToken: string) {
       return apiSuccesResult([]);
     }
 
-    const collection = createTozoProductSetStepsCollection({
-      aanvragen,
-      voorschotten,
-      documenten,
-      titleTranslations: tozoTitleTranslations,
-      contentLabels: contentLabels,
-    });
+    const tozoItems: FocusItem[] = [];
 
-    const tozoItems: FocusItem[] = collection.map(createFocusItemTozo);
+    for (const productTitle of ['Tozo 1', 'Tozo 2']) {
+      const collection = createTozoProductSetStepsCollection({
+        aanvragen: aanvragen.filter(
+          aanvraag => aanvraag.productTitle === productTitle
+        ),
+        voorschotten: voorschotten.filter(
+          voorschot => voorschot.productTitle === productTitle
+        ),
+        documenten: documenten.filter(
+          document => document.productTitle === productTitle
+        ),
+        titleTranslations: tozoTitleTranslations,
+        contentLabels: contentLabels,
+        productTitle,
+      });
+
+      tozoItems.push(
+        ...collection.map(steps => createFocusItemTozo(steps, productTitle))
+      );
+    }
 
     return apiSuccesResult(tozoItems);
   }
@@ -123,10 +154,14 @@ export async function fetchFOCUSTozoGenerated(
           if (step.id === TOZO_AANVRAAG_STEP_ID) {
             for (const document of step.documents) {
               notifications.push(
-                createFocusTozoAanvraagNotification(item.id, document)
+                createFocusTozoAanvraagNotification(
+                  item.id,
+                  document,
+                  item.productTitle
+                )
               );
             }
-          } else if (step.product === 'Tozo-voorschot') {
+          } else if (step.product === `${item.productTitle}-voorschot`) {
             notifications.push(
               createFocusTozoStepNotification(
                 item,
@@ -139,7 +174,11 @@ export async function fetchFOCUSTozoGenerated(
         }
 
         const lastUitkeringStep = item.steps
-          .filter(step => step.product === 'Tozo-uitkering')
+          .filter(
+            step =>
+              step.product === `${item.productTitle}-uitkering` &&
+              step.id !== TOZO_DUMMY_DECISION_STEP_ID
+          )
           .pop();
 
         if (lastUitkeringStep) {
@@ -154,7 +193,11 @@ export async function fetchFOCUSTozoGenerated(
         }
 
         const lastLeningStep = item.steps
-          .filter(step => step.product === 'Tozo-lening')
+          .filter(
+            step =>
+              step.product === `${item.productTitle}-lening` &&
+              step.id !== TOZO_DUMMY_DECISION_STEP_ID
+          )
           .pop();
 
         if (lastLeningStep) {
