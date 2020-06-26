@@ -23,6 +23,7 @@ import {
   TOZO_LENING_PRODUCT_TITLE,
   TOZO_UITKERING_PRODUCT_TITLE,
   TOZO_VOORSCHOT_PRODUCT_TITLE,
+  TOZO_PRODUCT_TITLES,
 } from './focus-tozo-content';
 import {
   createFocusItemTozo,
@@ -31,6 +32,7 @@ import {
   createTozoProductSetStepsCollection,
 } from './focus-tozo-helpers';
 import { FocusItem } from './focus-types';
+import { FeatureToggle } from '../../../universal/config/app';
 
 async function fetchFOCUSTozoNormalized(
   sessionID: SessionID,
@@ -47,12 +49,7 @@ async function fetchFOCUSTozoNormalized(
   if (FOCUS_COMBINED.status === 'OK' && FOCUS_AANVRAGEN.status === 'OK') {
     const aanvragenNormalized = FOCUS_AANVRAGEN.content
       .filter(product => {
-        return (
-          TOZO_LENING_PRODUCT_TITLE === product.title ||
-          TOZO_UITKERING_PRODUCT_TITLE === product.title ||
-          TOZO2_LENING_PRODUCT_TITLE === product.title ||
-          TOZO2_UITKERING_PRODUCT_TITLE === product.title
-        );
+        return TOZO_PRODUCT_TITLES.includes(product.title);
       })
       .map(product => translateFocusProduct(product, tozoTitleTranslations))
       .sort(dateSort('dateStart'));
@@ -61,7 +58,8 @@ async function fetchFOCUSTozoNormalized(
       .filter(
         product =>
           TOZO_VOORSCHOT_PRODUCT_TITLE === product.title ||
-          TOZO2_VOORSCHOT_PRODUCT_TITLE === product.title
+          (FeatureToggle.tozo2active &&
+            TOZO2_VOORSCHOT_PRODUCT_TITLE === product.title)
       )
       .map(product => translateFocusProduct(product, tozoTitleTranslations))
       .sort(dateSort('dateStart'));
@@ -73,7 +71,9 @@ async function fetchFOCUSTozoNormalized(
             return {
               ...document,
               productTitle:
-                document.type === 'E-AANVR-TOZ2' ? 'Tozo 2' : 'Tozo 1',
+                FeatureToggle.tozo2active && document.type === 'E-AANVR-TOZ2'
+                  ? 'Tozo 2'
+                  : 'Tozo 1',
             };
           })
           .sort(dateSort('dateStart'))

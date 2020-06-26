@@ -15,15 +15,15 @@ import {
   ApiSuccessResponse,
 } from '../../universal/helpers/api';
 import {
+  ApiUrls,
   BFF_MS_API_BASE_URL,
   BFF_REQUEST_CACHE_ENABLED,
   DataRequestConfig,
-  TMA_SAML_HEADER,
   DEFAULT_REQUEST_CONFIG,
+  TMA_SAML_HEADER,
 } from '../config';
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
 import { Deferred } from './deferred';
-import { ApiUrls } from '../config';
 
 export const axiosRequest = axios.create({
   responseType: 'json',
@@ -58,8 +58,6 @@ function enableMockAdapter() {
     }
   );
 }
-
-export const log: any = {};
 
 if (!IS_AP && !process.env.BFF_DISABLE_MOCK_ADAPTER) {
   console.info('Axios Mock adapter enabled');
@@ -138,15 +136,6 @@ export async function requestData<T>(
       requestConfig.cacheTimeout
     );
   }
-
-  if (!log[sessionID]) {
-    log[sessionID] = {};
-  }
-  if (!log[sessionID][requestConfig.url!]) {
-    log[sessionID][requestConfig.url!] = 0;
-  }
-
-  log[sessionID][requestConfig.url!] += 1;
 
   let cancelTimeout;
 

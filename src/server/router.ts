@@ -1,19 +1,16 @@
-import * as Sentry from '@sentry/node';
 import express, { NextFunction, Request, Response } from 'express';
-import { getSamlTokenHeader, requestData, log } from './helpers/request';
+import { BFF_MS_API_BASE_URL } from './config';
+import { getSamlTokenHeader, requestData } from './helpers/request';
 import {
+  loadServicesCMSContent,
   loadServicesDirect,
   loadServicesGenerated,
+  loadServicesMap,
+  loadServicesRaw,
   loadServicesRelated,
   loadServicesTips,
-  loadServicesCMSContent,
-  loadServicesRaw,
-  loadServicesMap,
-  fetchAFVAL,
 } from './services';
 import { loadServicesSSE } from './services/services-sse';
-import { requestApiData } from '../client/hooks/api/api.hook';
-import { BFF_MS_API_BASE_URL } from './config';
 
 export const router = express.Router();
 
@@ -146,13 +143,6 @@ router.get(`/services/all`, async function handleRouteServicesMap(
       servicesResult.reduce((acc, result) => Object.assign(acc, result), {})
     );
 
-    Sentry.captureMessage('Request log ALL', {
-      extra: {
-        sessionId: req.sessionID!,
-        log: log[req.sessionID!],
-      },
-    });
-    delete log[req.sessionID!];
     next();
   } catch (error) {
     next(error);

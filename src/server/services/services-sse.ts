@@ -1,12 +1,12 @@
 import * as Sentry from '@sentry/node';
 import { NextFunction, Request, Response } from 'express';
-import { getSamlTokenHeader, log } from '../helpers/request';
+import { getSamlTokenHeader } from '../helpers/request';
+import { loadServicesAfval } from './services-afval';
 import { loadServicesCMSContent } from './services-cmscontent';
 import { loadServicesDirect } from './services-direct';
 import { loadServicesGenerated } from './services-generated';
 import { loadServicesMap } from './services-map';
 import { loadServicesRelated } from './services-related';
-import { loadServicesAfval } from './services-afval';
 
 function sendMessage(
   res: Response,
@@ -118,14 +118,6 @@ export async function loadServicesSSE(
     servicesAfval,
   ]).finally(() => {
     sendMessage(res, 'close', 'close', null);
-
-    Sentry.captureMessage('Request log SSE', {
-      extra: {
-        sessionId: req.sessionID!,
-        log: log[req.sessionID!],
-      },
-    });
-    delete log[req.sessionID!];
     res.end();
   });
 }
