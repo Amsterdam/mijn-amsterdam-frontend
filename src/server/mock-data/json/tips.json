@@ -11,6 +11,7 @@
                 "to": "https://www.rijksoverheid.nl/onderwerpen/fiets/vraag-en-antwoord/mag-ik-bellen-en-naar-muziek-luisteren-op-de-fiets"
             },
             "priority": 50,
+            "reason": "Op basis van leeftijd, en aantal kinderen",
             "title": "PERSONALIZED: Geen telefoon op de fiets"
         },
         {
@@ -23,6 +24,7 @@
                 "to": "/buurt"
             },
             "priority": 40,
+            "reason": "Op basis van leeftijd, en aantal kinderen",
             "title": "Mijn buurt"
         },
         {
@@ -35,6 +37,7 @@
                 "to": "https://www.amsterdam.nl/afval/grofvuil/grofvuil-wegbrengen/"
             },
             "priority": 25,
+            "reason": "Op basis van leeftijd, en aantal kinderen",
             "title": "Grofvuil"
         },
         {
@@ -47,6 +50,7 @@
                 "to": "https://www.vca.nu/vacaturebank/"
             },
             "priority": 20,
+            "reason": "Op basis van leeftijd, en aantal kinderen",
             "title": "Vrijwilliger worden?"
         },
         {
@@ -59,6 +63,7 @@
                 "to": "https://www.amsterdam.nl/veelgevraagd/?productid=%7B2214F853-B9F5-41F6-934B-B1616D8E0949%7D#%7B7E4E60A9-F809-4FC9-B7EB-9C06B3DB4513%7D"
             },
             "priority": 20,
+            "reason": "Op basis van leeftijd, en aantal kinderen",
             "title": "Geveltuin"
         },
         {
@@ -71,6 +76,7 @@
                 "to": "https://www.ggd.amsterdam.nl/ggd/contact/reizigersvaccinatie/vaccinaties.jpg"
             },
             "priority": 20,
+            "reason": "Op basis van leeftijd, en aantal kinderen",
             "title": "Vaccinaties"
         },
         {
@@ -83,6 +89,7 @@
                 "to": "/"
             },
             "priority": 20,
+            "reason": "Op basis van leeftijd, en aantal kinderen",
             "title": "Kom snel terug"
         }
     ],

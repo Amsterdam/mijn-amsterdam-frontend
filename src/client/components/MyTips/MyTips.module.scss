@@ -78,3 +78,25 @@
 .TipsListLoading {
   min-height: 39.5rem;
 }
+
+.TipFlipButton {
+  position: absolute;
+  right: .8rem;
+  bottom: .8rem;
+  &:hover {
+    @include select(Button_Icon) {
+      fill: #fff;
+    }
+  }
+}
+
+.TipFlip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, .7);
+  padding: 1rem;
+  color: $color-white;
+}
