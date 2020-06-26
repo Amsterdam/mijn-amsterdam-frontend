@@ -26,8 +26,8 @@ export async function loadServicesAfval(
   let AFVALPUNTEN: AFVALPUNTENResponseData;
 
   if (HOME.status === 'OK') {
-    AFVAL = await fetchAFVAL(sessionID, samlToken, HOME.content.latlng, raw);
-    AFVALPUNTEN = await scrapeGarbageCenterData(HOME.content.latlng);
+    AFVAL = await fetchAFVAL(sessionID, samlToken, HOME.content?.latlng, raw);
+    AFVALPUNTEN = await scrapeGarbageCenterData(HOME.content?.latlng);
   } else {
     AFVAL = apiDependencyError({ BRP, HOME });
     AFVALPUNTEN = apiDependencyError({ BRP, HOME });
