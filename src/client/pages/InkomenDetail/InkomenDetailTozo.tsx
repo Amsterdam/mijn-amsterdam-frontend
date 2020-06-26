@@ -66,7 +66,7 @@ export default () => {
         icon={<ChapterIcon />}
         backLink={{ to: AppRoutes.INKOMEN, title: ChapterTitles.INKOMEN }}
       >
-        Uw {title}
+        {TozoItem?.productTitle}
       </PageHeading>
       <PageContent className={styles.DetailPageContent}>
         {TozoItem?.productTitle === 'Tozo 1' && (
