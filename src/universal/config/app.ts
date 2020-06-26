@@ -14,6 +14,7 @@ export const FeatureToggle = {
   focusCombinedActive: true,
   identiteitsbewijzenActive: true,
   tozoActive: true,
+  tozo2active: !IS_PRODUCTION,
   eherkenningActive: !IS_AP,
   vergunningenActive: !IS_PRODUCTION,
 };

@@ -2,6 +2,7 @@ import { generatePath } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config/routing';
 import { defaultDateFormat } from '../../../universal/helpers';
 import { stepLabels } from './focus-aanvragen-content';
+import { FeatureToggle } from '../../../universal/config/app';
 import {
   DocumentTitles,
   FocusProduct,
@@ -36,6 +37,20 @@ export const TOZO_AANVRAAG_DOCUMENT_TYPES = [
   'E-AANVR-TOZ2',
   'E-AANVR-KBBZ',
 ];
+
+export const TOZO_PRODUCT_TITLES = [
+  TOZO_VOORSCHOT_PRODUCT_TITLE,
+  TOZO_LENING_PRODUCT_TITLE,
+  TOZO_UITKERING_PRODUCT_TITLE,
+];
+
+if (FeatureToggle.tozo2active) {
+  TOZO_PRODUCT_TITLES.push(
+    TOZO2_VOORSCHOT_PRODUCT_TITLE,
+    TOZO2_LENING_PRODUCT_TITLE,
+    TOZO2_UITKERING_PRODUCT_TITLE
+  );
+}
 
 export const tozoTitleTranslations: DocumentTitles = {
   // Aanvraag Tozo 1
