@@ -65,11 +65,9 @@ const Tip = ({ tip }: TipProps) => {
       <article>
         <figure className={styles.ImageContainer}>
           <img alt="" src={imgUrl} className={styles.Img} />
-          {!!tip.selectionCriteria && (
+          {!!tip.reason && (
             <>
-              {isFlipped && (
-                <div className={styles.TipFlip}>{tip.selectionCriteria}</div>
-              )}
+              {isFlipped && <div className={styles.TipFlip}>{tip.reason}</div>}
               <IconButton
                 className={styles.TipFlipButton}
                 icon={isFlipped ? IconClose : IconInfo}
