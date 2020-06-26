@@ -19,10 +19,10 @@ import {
   tozoTitleTranslations,
   TOZO_AANVRAAG_DOCUMENT_TYPES,
   TOZO_AANVRAAG_STEP_ID,
+  TOZO_DUMMY_DECISION_STEP_ID,
   TOZO_LENING_PRODUCT_TITLE,
   TOZO_UITKERING_PRODUCT_TITLE,
   TOZO_VOORSCHOT_PRODUCT_TITLE,
-  TOZO_DUMMY_DECISION_STEP_ID,
 } from './focus-tozo-content';
 import {
   createFocusItemTozo,
@@ -157,7 +157,7 @@ export async function fetchFOCUSTozoGenerated(
                 createFocusTozoAanvraagNotification(
                   item.id,
                   document,
-                  item.productTitle
+                  item.productTitle || 'Tozo'
                 )
               );
             }
