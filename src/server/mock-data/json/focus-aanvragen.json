@@ -3,23 +3,23 @@
     "_id": "0-0",
     "_meest_recent": "beslissing",
     "dienstverleningstermijn": 28,
-    "naam": "Tozo Bedrijfskapitaal (voor ondernemers)",
+    "naam": "Voorschot Tozo (voor ondernemers) (Eenm.)",
     "processtappen": {
       "aanvraag": {
         "_id": 0,
-        "datum": "2020-04-07T15:05:53+02:00",
+        "datum": "2020-04-03T00:00:00+02:00",
         "document": []
       },
       "beslissing": {
         "_id": 3,
-        "datum": "2020-04-15T00:00:00+02:00",
+        "datum": "2020-04-03T00:00:00+02:00",
         "document": [
           {
-            "$ref": "focus/document?id=660000000000039&isBulk=false&isDms=false",
-            "id": 660000000000039,
+            "$ref": "focus/document?id=660000000000027&isBulk=false&isDms=false",
+            "id": 660000000000027,
             "isBulk": false,
             "isDms": false,
-            "omschrijving": "Toekennen lening Tozo"
+            "omschrijving": "Voorschot Bbz Corona regeling (Eenm.)"
           }
         ]
       },
@@ -27,7 +27,7 @@
       "herstelTermijn": null,
       "inBehandeling": {
         "_id": 1,
-        "datum": "2020-04-07T15:05:53+02:00",
+        "datum": "2020-04-03T00:00:00+02:00",
         "document": []
       }
     },
@@ -36,151 +36,24 @@
   },
   {
     "_id": "1-0",
-    "_meest_recent": "beslissing",
-    "dienstverleningstermijn": 21,
-    "inspanningsperiode": 28,
-    "naam": "Levensonderhoud",
-    "processtappen": {
-      "aanvraag": {
-        "_id": 0,
-        "datum": "2017-08-17T15:05:52+02:00",
-        "document": []
-      },
-      "beslissing": {
-        "_id": 3,
-        "datum": "2017-08-21T15:05:52+02:00",
-        "document": [],
-        "reden": "Weet ik veel"
-      },
-      "bezwaar": null,
-      "herstelTermijn": {
-        "_id": 2,
-        "aantalDagenHerstelTermijn": "10",
-        "datum": "2017-08-18T15:05:52+02:00",
-        "document": [
-          {
-            "$ref": "focus/document?id=4400000007&isBulk=true&isDms=false",
-            "id": 4400000007,
-            "isBulk": true,
-            "isDms": false,
-            "omschrijving": "Formulier Inlichtingen Klant"
-          },
-          {
-            "$ref": "focus/document?id=4400000010&isBulk=true&isDms=false",
-            "id": 4400000010,
-            "isBulk": true,
-            "isDms": false,
-            "omschrijving": "Formulier Inlichtingen partner"
-          },
-          {
-            "$ref": "focus/document?id=4400000008&isBulk=true&isDms=false",
-            "id": 4400000008,
-            "isBulk": true,
-            "isDms": false,
-            "omschrijving": "Aanvraagformulier WWB (kort)"
-          }
-        ]
-      },
-      "inBehandeling": {
-        "_id": 1,
-        "datum": "2017-08-17T15:05:52+02:00",
-        "document": []
-      }
-    },
-    "soortProduct": "Participatiewet",
-    "typeBesluit": "Afwijzing"
-  },
-  {
-    "_id": "1-1",
-    "_meest_recent": "beslissing",
-    "dienstverleningstermijn": 21,
-    "inspanningsperiode": 28,
-    "naam": "Levensonderhoud",
-    "processtappen": {
-      "aanvraag": {
-        "_id": 0,
-        "datum": "2018-03-25T15:05:52+02:00",
-        "document": []
-      },
-      "beslissing": {
-        "_id": 3,
-        "datum": "2018-04-25T15:05:52+02:00",
-        "document": []
-      },
-      "bezwaar": null,
-      "herstelTermijn": {
-        "_id": 2,
-        "aantalDagenHerstelTermijn": "10",
-        "datum": "2018-04-24T15:05:52+02:00",
-        "document": [
-          {
-            "$ref": "focus/document?id=4400000011&isBulk=true&isDms=false",
-            "id": 4400000011,
-            "isBulk": true,
-            "isDms": false,
-            "omschrijving": "Formulier Inlichtingen partner"
-          }
-        ]
-      },
-      "inBehandeling": {
-        "_id": 1,
-        "datum": "2018-03-26T15:05:52+02:00",
-        "document": []
-      }
-    },
-    "soortProduct": "Participatiewet",
-    "typeBesluit": "Toekenning"
-  },
-  {
-    "_id": "1-2",
-    "_meest_recent": "aanvraag",
-    "dienstverleningstermijn": 21,
-    "inspanningsperiode": 28,
-    "naam": "Levensonderhoud",
-    "processtappen": {
-      "aanvraag": {
-        "_id": 0,
-        "datum": "2019-05-31T15:05:52+02:00",
-        "document": []
-      },
-      "beslissing": null,
-      "bezwaar": null,
-      "herstelTermijn": null,
-      "inBehandeling": null
-    },
-    "soortProduct": "Participatiewet"
-  },
-  {
-    "_id": "1-3",
-    "_meest_recent": "beslissing",
+    "_meest_recent": "herstelTermijn",
     "naam": "Tozo Levensonderhoud (voor ondernemers)",
     "processtappen": {
       "aanvraag": {
         "_id": 0,
-        "datum": "2020-04-03T15:05:53+02:00",
+        "datum": "2020-04-28T15:05:53+02:00",
         "document": []
       },
-      "beslissing": {
-        "_id": 3,
-        "datum": "2020-04-10T00:00:00+02:00",
-        "document": [
-          {
-            "$ref": "focus/document?id=660000000000037&isBulk=false&isDms=false",
-            "id": 660000000000037,
-            "isBulk": false,
-            "isDms": false,
-            "omschrijving": "Tozo Toekennen"
-          }
-        ]
-      },
+      "beslissing": null,
       "bezwaar": null,
       "herstelTermijn": {
         "_id": 2,
-        "datum": "2020-04-06T15:05:53+02:00",
+        "aantalDagenHerstelTermijn": "14",
+        "datum": "2020-04-29T15:05:53+02:00",
         "document": [
           {
-            "$ref": "focus/document?id=660000000000038&isBulk=false&isDms=false",
-            "id": 660000000000038,
+            "$ref": "focus/document?id=660000000000029&isBulk=false&isDms=false",
+            "id": 660000000000029,
             "isBulk": false,
             "isDms": false,
             "omschrijving": "Tozo Hersteltermijn"
@@ -189,7 +62,263 @@
       },
       "inBehandeling": {
         "_id": 1,
-        "datum": "2020-04-03T15:05:53+02:00",
+        "datum": "2020-04-27T15:05:53+02:00",
+        "document": []
+      }
+    },
+    "soortProduct": "Participatiewet"
+  },
+  {
+    "_id": "1-1",
+    "_meest_recent": "inBehandeling",
+    "naam": "Tozo 2 Levensonderhoud (voor ondernemers)",
+    "processtappen": {
+      "aanvraag": {
+        "_id": 0,
+        "datum": "2020-06-15T16:36:02+02:00",
+        "document": []
+      },
+      "beslissing": null,
+      "bezwaar": null,
+      "herstelTermijn": null,
+      "inBehandeling": {
+        "_id": 1,
+        "datum": "2020-06-15T16:36:02+02:00",
+        "document": []
+      }
+    },
+    "soortProduct": "Participatiewet"
+  },
+  {
+    "_id": "1-2",
+    "_meest_recent": "beslissing",
+    "dienstverleningstermijn": 21,
+    "inspanningsperiode": 28,
+    "naam": "Levensonderhoud",
+    "processtappen": {
+      "aanvraag": {
+        "_id": 0,
+        "datum": "2019-07-24T15:05:51+02:00",
+        "document": [
+          {
+            "$ref": "focus/document?id=660000000000004&isBulk=false&isDms=false",
+            "id": 660000000000004,
+            "isBulk": false,
+            "isDms": false,
+            "omschrijving": "Aanvraag WWB (GALO)"
+          }
+        ]
+      },
+      "beslissing": {
+        "_id": 3,
+        "datum": "2019-07-28T15:05:51+02:00",
+        "document": [
+          {
+            "$ref": "focus/document?id=660000000000005&isBulk=false&isDms=false",
+            "id": 660000000000005,
+            "isBulk": false,
+            "isDms": false,
+            "omschrijving": "Afwijzen Levensonderhoud (BIJ)"
+          }
+        ]
+      },
+      "bezwaar": null,
+      "herstelTermijn": null,
+      "inBehandeling": {
+        "_id": 1,
+        "datum": "2019-07-25T15:05:51+02:00",
+        "document": []
+      }
+    },
+    "soortProduct": "Participatiewet",
+    "typeBesluit": "Toekenning"
+  },
+  {
+    "_id": "1-3",
+    "_meest_recent": "beslissing",
+    "dienstverleningstermijn": 21,
+    "inspanningsperiode": 28,
+    "naam": "Levensonderhoud",
+    "processtappen": {
+      "aanvraag": {
+        "_id": 0,
+        "datum": "2019-04-09T15:05:51+02:00",
+        "document": [
+          {
+            "$ref": "focus/document?id=660000000000006&isBulk=false&isDms=false",
+            "id": 660000000000006,
+            "isBulk": false,
+            "isDms": false,
+            "omschrijving": "Aanvraag WWB (GALO)"
+          }
+        ]
+      },
+      "beslissing": {
+        "_id": 3,
+        "datum": "2019-05-07T15:05:51+02:00",
+        "document": [
+          {
+            "$ref": "focus/document?id=660000000000007&isBulk=false&isDms=false",
+            "id": 660000000000007,
+            "isBulk": false,
+            "isDms": false,
+            "omschrijving": "Afwijzen Levensonderhoud"
+          }
+        ],
+        "reden": "Test LO"
+      },
+      "bezwaar": null,
+      "herstelTermijn": null,
+      "inBehandeling": {
+        "_id": 1,
+        "datum": "2019-04-11T15:05:51+02:00",
+        "document": []
+      }
+    },
+    "soortProduct": "Participatiewet",
+    "typeBesluit": "Afwijzing"
+  },
+  {
+    "_id": "1-4",
+    "_meest_recent": "beslissing",
+    "dienstverleningstermijn": 21,
+    "inspanningsperiode": 28,
+    "naam": "Levensonderhoud",
+    "processtappen": {
+      "aanvraag": {
+        "_id": 0,
+        "datum": "2019-05-09T15:05:51+02:00",
+        "document": [
+          {
+            "$ref": "focus/document?id=660000000000008&isBulk=false&isDms=false",
+            "id": 660000000000008,
+            "isBulk": false,
+            "isDms": false,
+            "omschrijving": "Aanvraag WWB (GALO)"
+          }
+        ]
+      },
+      "beslissing": {
+        "_id": 3,
+        "datum": "2019-06-08T15:05:51+02:00",
+        "document": [
+          {
+            "$ref": "focus/document?id=660000000000009&isBulk=false&isDms=false",
+            "id": 660000000000009,
+            "isBulk": false,
+            "isDms": false,
+            "omschrijving": "Toekennen Levensonderhoud (BIJ)"
+          }
+        ]
+      },
+      "bezwaar": null,
+      "herstelTermijn": {
+        "_id": 2,
+        "aantalDagenHerstelTermijn": "20",
+        "datum": "2019-05-19T15:05:51+02:00",
+        "document": [
+          {
+            "$ref": "focus/document?id=4400000002&isBulk=true&isDms=false",
+            "id": 4400000002,
+            "isBulk": true,
+            "isDms": false,
+            "omschrijving": "Formulier Inlichtingen partner"
+          }
+        ]
+      },
+      "inBehandeling": {
+        "_id": 1,
+        "datum": "2019-05-11T15:05:51+02:00",
+        "document": []
+      }
+    },
+    "soortProduct": "Participatiewet",
+    "typeBesluit": "Toekenning"
+  },
+  {
+    "_id": "1-5",
+    "_meest_recent": "beslissing",
+    "dienstverleningstermijn": 21,
+    "inspanningsperiode": 28,
+    "naam": "Levensonderhoud",
+    "processtappen": {
+      "aanvraag": {
+        "_id": 0,
+        "datum": "2019-06-08T15:05:52+02:00",
+        "document": [
+          {
+            "$ref": "focus/document?id=660000000000010&isBulk=false&isDms=false",
+            "id": 660000000000010,
+            "isBulk": false,
+            "isDms": false,
+            "omschrijving": "Aanvraag WWB (GALO)"
+          },
+          {
+            "$ref": "focus/document?id=660000000000019&isBulk=false&isDms=false",
+            "id": 660000000000019,
+            "isBulk": false,
+            "isDms": false,
+            "omschrijving": "Aanvraag WWB (GALO)"
+          }
+        ]
+      },
+      "beslissing": {
+        "_id": 3,
+        "datum": "2019-07-03T15:05:52+02:00",
+        "document": [
+          {
+            "$ref": "focus/document?id=660000000000011&isBulk=false&isDms=false",
+            "id": 660000000000011,
+            "isBulk": false,
+            "isDms": false,
+            "omschrijving": "Niet in behandeling nemen"
+          }
+        ]
+      },
+      "bezwaar": null,
+      "herstelTermijn": {
+        "_id": 2,
+        "aantalDagenHerstelTermijn": "15",
+        "datum": "2019-06-13T15:05:52+02:00",
+        "document": [
+          {
+            "$ref": "focus/document?id=4400000003&isBulk=true&isDms=false",
+            "id": 4400000003,
+            "isBulk": true,
+            "isDms": false,
+            "omschrijving": "Aanvraagformulier WWB (kort)"
+          }
+        ]
+      },
+      "inBehandeling": {
+        "_id": 1,
+        "datum": "2019-06-11T15:05:52+02:00",
+        "document": []
+      }
+    },
+    "soortProduct": "Participatiewet",
+    "typeBesluit": "Buiten Behandeling"
+  },
+  {
+    "_id": "1-6",
+    "_meest_recent": "beslissing",
+    "naam": "Tozo Bedrijfskapitaal (voor ondernemers)",
+    "processtappen": {
+      "aanvraag": {
+        "_id": 0,
+        "datum": "2020-04-28T00:00:00+02:00",
+        "document": []
+      },
+      "beslissing": {
+        "_id": 3,
+        "datum": "2020-05-07T15:05:53+02:00",
+        "document": []
+      },
+      "bezwaar": null,
+      "herstelTermijn": null,
+      "inBehandeling": {
+        "_id": 1,
+        "datum": "2020-04-27T00:00:00+02:00",
         "document": []
       }
     },
@@ -198,85 +327,99 @@
   },
   {
     "_id": "2-0",
-    "_meest_recent": "beslissing",
+    "_meest_recent": "aanvraag",
     "dienstverleningstermijn": 56,
     "naam": "Stadspas",
     "processtappen": {
       "aanvraag": {
         "_id": 0,
-        "datum": "2019-04-08T15:05:52+02:00",
-        "document": []
-      },
-      "beslissing": {
-        "_id": 3,
-        "datum": "2019-04-28T00:00:00+02:00",
-        "document": [],
-        "reden": "Test Stadspas"
-      },
-      "bezwaar": null,
-      "herstelTermijn": null,
-      "inBehandeling": {
-        "_id": 1,
-        "datum": "2019-04-10T15:05:52+02:00",
-        "document": []
-      }
-    },
-    "soortProduct": "Minimafonds",
-    "typeBesluit": "Afwijzing"
-  },
-  {
-    "_id": "2-1",
-    "_meest_recent": "beslissing",
-    "dienstverleningstermijn": 56,
-    "naam": "Stadspas",
-    "processtappen": {
-      "aanvraag": {
-        "_id": 0,
-        "datum": "2019-05-08T15:05:52+02:00",
+        "datum": "2019-07-08T15:05:52+02:00",
         "document": [
           {
-            "$ref": "focus/document?id=4400000013&isBulk=true&isDms=false",
-            "id": 4400000013,
+            "$ref": "focus/document?id=4400000004&isBulk=true&isDms=false",
+            "id": 4400000004,
+            "isBulk": true,
+            "isDms": false,
+            "omschrijving": "Aanvraag Stadspas (papier)"
+          },
+          {
+            "$ref": "focus/document?id=4400000016&isBulk=true&isDms=false",
+            "id": 4400000016,
+            "isBulk": true,
+            "isDms": false,
+            "omschrijving": "Aanvraag Stadspas (papier)"
+          },
+          {
+            "$ref": "focus/document?id=4400000005&isBulk=true&isDms=false",
+            "id": 4400000005,
             "isBulk": true,
             "isDms": false,
             "omschrijving": "Aanvraag Stadspas (balie)"
+          },
+          {
+            "$ref": "focus/document?id=4400000017&isBulk=true&isDms=false",
+            "id": 4400000017,
+            "isBulk": true,
+            "isDms": false,
+            "omschrijving": "Aanvraag Stadspas (balie)"
+          },
+          {
+            "$ref": "focus/document?id=4400000006&isBulk=true&isDms=false",
+            "id": 4400000006,
+            "isBulk": true,
+            "isDms": false,
+            "omschrijving": "Aanvraag Stadspas (digitaal)"
           }
         ]
       },
-      "beslissing": {
-        "_id": 3,
-        "datum": "2019-06-07T15:05:52+02:00",
-        "document": []
-      },
+      "beslissing": null,
       "bezwaar": null,
-      "herstelTermijn": {
-        "_id": 2,
-        "aantalDagenHerstelTermijn": "20",
-        "datum": "2019-05-17T15:05:52+02:00",
-        "document": []
-      },
-      "inBehandeling": {
-        "_id": 1,
-        "datum": "2019-05-10T15:05:52+02:00",
-        "document": []
-      }
+      "herstelTermijn": null,
+      "inBehandeling": null
     },
-    "soortProduct": "Minimafonds",
-    "typeBesluit": "Toekenning"
+    "soortProduct": "Minimafonds"
   },
   {
-    "_id": "2-2",
-    "_meest_recent": "beslissing",
+    "_id": "2-1",
+    "_meest_recent": "herstelTermijn",
     "dienstverleningstermijn": 56,
     "naam": "Stadspas",
     "processtappen": {
       "aanvraag": {
         "_id": 0,
-        "datum": "2019-06-08T15:05:53+02:00",
+        "datum": "2019-07-07T15:05:52+02:00",
         "document": [
           {
-            "$ref": "focus/document?id=4400000014&isBulk=true&isDms=false",
-            "id": 4400000014,
+            "$ref": "focus/document?id=4400000004&isBulk=true&isDms=false",
+            "id": 4400000004,
+            "isBulk": true,
+            "isDms": false,
+            "omschrijving": "Aanvraag Stadspas (papier)"
+          },
+          {
+            "$ref": "focus/document?id=4400000016&isBulk=true&isDms=false",
+            "id": 4400000016,
+            "isBulk": true,
+            "isDms": false,
+            "omschrijving": "Aanvraag Stadspas (papier)"
+          },
+          {
+            "$ref": "focus/document?id=4400000005&isBulk=true&isDms=false",
+            "id": 4400000005,
+            "isBulk": true,
+            "isDms": false,
+            "omschrijving": "Aanvraag Stadspas (balie)"
+          },
+          {
+            "$ref": "focus/document?id=4400000017&isBulk=true&isDms=false",
+            "id": 4400000017,
+            "isBulk": true,
+            "isDms": false,
+            "omschrijving": "Aanvraag Stadspas (balie)"
+          },
+          {
+            "$ref": "focus/document?id=4400000006&isBulk=true&isDms=false",
+            "id": 4400000006,
             "isBulk": true,
             "isDms": false,
             "omschrijving": "Aanvraag Stadspas (digitaal)"
@@ -285,44 +428,110 @@
       },
       "beslissing": {
         "_id": 3,
-        "datum": "2019-06-23T15:05:53+02:00",
-        "document": []
+        "datum": "2019-07-08T15:05:52+02:00",
+        "document": [
+          {
+            "$ref": "focus/document?id=660000000000021&isBulk=false&isDms=false",
+            "id": 660000000000021,
+            "isBulk": false,
+            "isDms": false,
+            "omschrijving": "Stadspas Besluit [afwijzing of toekenning]"
+          }
+        ]
       },
       "bezwaar": null,
       "herstelTermijn": {
         "_id": 2,
-        "aantalDagenHerstelTermijn": "15",
-        "datum": "2019-06-13T15:05:53+02:00",
-        "document": []
+        "aantalDagenHerstelTermijn": "20",
+        "datum": "2019-07-18T15:05:52+02:00",
+        "document": [
+          {
+            "$ref": "focus/document?id=660000000000020&isBulk=false&isDms=false",
+            "id": 660000000000020,
+            "isBulk": false,
+            "isDms": false,
+            "omschrijving": "Verzoek om informatie, hersteltermijn"
+          }
+        ]
       },
       "inBehandeling": {
         "_id": 1,
-        "datum": "2019-06-11T15:05:53+02:00",
+        "datum": "2019-07-08T15:05:52+02:00",
         "document": []
       }
     },
     "soortProduct": "Minimafonds",
-    "typeBesluit": "Buiten Behandeling"
+    "typeBesluit": "Toekenning"
   },
   {
-    "_id": "3-0",
-    "_meest_recent": "aanvraag",
-    "naam": "Tozo Levensonderhoud (voor ondernemers)",
+    "_id": "2-2",
+    "_meest_recent": "herstelTermijn",
+    "dienstverleningstermijn": 56,
+    "naam": "Stadspas",
     "processtappen": {
       "aanvraag": {
         "_id": 0,
-        "datum": "2020-05-03T15:05:53+02:00",
-        "document": []
+        "datum": "2019-07-03T15:05:52+02:00",
+        "document": [
+          {
+            "$ref": "focus/document?id=4400000004&isBulk=true&isDms=false",
+            "id": 4400000004,
+            "isBulk": true,
+            "isDms": false,
+            "omschrijving": "Aanvraag Stadspas (papier)"
+          },
+          {
+            "$ref": "focus/document?id=4400000016&isBulk=true&isDms=false",
+            "id": 4400000016,
+            "isBulk": true,
+            "isDms": false,
+            "omschrijving": "Aanvraag Stadspas (papier)"
+          },
+          {
+            "$ref": "focus/document?id=4400000005&isBulk=true&isDms=false",
+            "id": 4400000005,
+            "isBulk": true,
+            "isDms": false,
+            "omschrijving": "Aanvraag Stadspas (balie)"
+          },
+          {
+            "$ref": "focus/document?id=4400000017&isBulk=true&isDms=false",
+            "id": 4400000017,
+            "isBulk": true,
+            "isDms": false,
+            "omschrijving": "Aanvraag Stadspas (balie)"
+          },
+          {
+            "$ref": "focus/document?id=4400000006&isBulk=true&isDms=false",
+            "id": 4400000006,
+            "isBulk": true,
+            "isDms": false,
+            "omschrijving": "Aanvraag Stadspas (digitaal)"
+          }
+        ]
       },
       "beslissing": null,
       "bezwaar": null,
-      "herstelTermijn": null,
+      "herstelTermijn": {
+        "_id": 2,
+        "aantalDagenHerstelTermijn": "10",
+        "datum": "2019-07-06T15:05:52+02:00",
+        "document": [
+          {
+            "$ref": "focus/document?id=660000000000020&isBulk=false&isDms=false",
+            "id": 660000000000020,
+            "isBulk": false,
+            "isDms": false,
+            "omschrijving": "Verzoek om informatie, hersteltermijn"
+          }
+        ]
+      },
       "inBehandeling": {
         "_id": 1,
-        "datum": "2020-05-04T15:05:53+02:00",
+        "datum": "2019-07-04T15:05:52+02:00",
         "document": []
       }
     },
-    "soortProduct": "Participatiewet"
+    "soortProduct": "Minimafonds"
   }
 ]

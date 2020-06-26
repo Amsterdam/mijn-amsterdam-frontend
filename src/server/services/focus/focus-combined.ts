@@ -1,7 +1,10 @@
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 
-export type FocusTozoDocumentType = 'E-AANVR-KBBZ' | 'E-AANVR-TOZO';
+export type FocusTozoDocumentType =
+  | 'E-AANVR-KBBZ'
+  | 'E-AANVR-TOZO'
+  | 'E-AANVR-TOZ2';
 
 export interface FocusTozoDocument {
   datePublished: string;
@@ -9,6 +12,7 @@ export interface FocusTozoDocument {
   description: string;
   url: string;
   type: FocusTozoDocumentType;
+  productTitle: string;
 }
 
 export type FocusInkomenSpecificatieType =

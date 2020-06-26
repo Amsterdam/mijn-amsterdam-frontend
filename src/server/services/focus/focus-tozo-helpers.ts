@@ -31,6 +31,7 @@ interface collectTozoDocumentsProps {
   filter: (item: FocusTozoDocument) => boolean;
   documenten: FocusTozoDocument[];
   titleTranslations: DocumentTitles;
+  productTitle: string;
 }
 
 interface collectTozoVoorschottenProps {
@@ -43,13 +44,15 @@ function collectTozoDocuments({
   filter,
   documenten,
   titleTranslations,
+  productTitle,
 }: collectTozoDocumentsProps) {
   const documentenFiltered = documenten?.filter(filter);
 
   if (documentenFiltered?.length) {
     return createTozoAanvraagDocumentsStep(
       documentenFiltered,
-      titleTranslations
+      titleTranslations,
+      productTitle
     );
   }
 
@@ -82,6 +85,7 @@ interface createTozoProductSetStepsCollectionProps {
   documenten: FocusTozoDocument[];
   titleTranslations: DocumentTitles;
   contentLabels: LabelData;
+  productTitle: string;
 }
 
 export function createTozoProductSetStepsCollection({
@@ -90,6 +94,7 @@ export function createTozoProductSetStepsCollection({
   documenten,
   titleTranslations,
   contentLabels,
+  productTitle,
 }: createTozoProductSetStepsCollectionProps) {
   const collection: Array<FocusProduct[]> = [];
 
@@ -98,9 +103,14 @@ export function createTozoProductSetStepsCollection({
 
   // If there are no aanvragen products available, just gather the voorschotten and aanvraagdocumenten.
   // and display them in a single set
+
   if (!aanvragen.length && (voorschotten.length || documenten.length)) {
     stepCollection.push([
-      createTozoAanvraagDocumentsStep(documenten, titleTranslations),
+      createTozoAanvraagDocumentsStep(
+        documenten,
+        titleTranslations,
+        productTitle
+      ),
       ...voorschotten.flatMap(voorschot => {
         const stepsContent = findStepsContent(voorschot, contentLabels);
         return transformFocusProductSteps(voorschot, stepsContent);
@@ -273,6 +283,7 @@ export function createTozoProductSetStepsCollection({
       filter: documentsFilter,
       documenten,
       titleTranslations: tozoTitleTranslations,
+      productTitle,
     });
 
     stepSet = stepSet.sort(dateSort('datePublished'));
@@ -281,7 +292,9 @@ export function createTozoProductSetStepsCollection({
       stepSet.unshift(generatedDocumentStep);
     } else if (stepSet[0]) {
       // Create an aanvraag step without documents
-      stepSet.unshift(createTozoAanvraagWithoutDocumentsStep(stepSet[0]));
+      stepSet.unshift(
+        createTozoAanvraagWithoutDocumentsStep(stepSet[0], productTitle)
+      );
     }
 
     return stepSet;
@@ -290,13 +303,16 @@ export function createTozoProductSetStepsCollection({
   return stepCollection;
 }
 
-function createTozoAanvraagWithoutDocumentsStep(step: FocusItemStep) {
+function createTozoAanvraagWithoutDocumentsStep(
+  step: FocusItemStep,
+  productTitle: string
+) {
   const aanvraag: FocusItemStep = {
     id: TOZO_AANVRAAG_STEP_ID,
     documents: [],
-    product: 'Tozo-regeling',
+    product: `${productTitle}-regeling`,
     title: 'aanvraag',
-    description: 'Wij hebben uw aanvraag Tozo ontvangen',
+    description: `Wij hebben uw aanvraag ${productTitle} ontvangen`,
     datePublished: step.datePublished,
     status: 'Aanvraag',
     isChecked: true,
@@ -308,7 +324,8 @@ function createTozoAanvraagWithoutDocumentsStep(step: FocusItemStep) {
 
 function createTozoAanvraagDocumentsStep(
   tozoDocuments: FocusTozoDocument[],
-  titleTranslations: DocumentTitles
+  titleTranslations: DocumentTitles,
+  productTitle: string
 ) {
   const documents = tozoDocuments
     .map(doc => {
@@ -325,12 +342,12 @@ function createTozoAanvraagDocumentsStep(
     })
     .sort(dateSort('datePublished'));
 
-  let description = 'Wij hebben uw aanvraag Tozo ontvangen';
+  let description = `Wij hebben uw aanvraag ${productTitle} ontvangen`;
 
   const aanvraag: FocusItemStep = {
     id: TOZO_AANVRAAG_STEP_ID,
     documents,
-    product: 'Tozo-regeling',
+    product: `${productTitle}-regeling`,
     title: 'aanvraag',
     description:
       description +
@@ -346,9 +363,11 @@ function createTozoAanvraagDocumentsStep(
   return aanvraag;
 }
 
-function getTozoStatus(steps: FocusItemStep[]) {
+function getTozoStatus(steps: FocusItemStep[], productTitle: string) {
   const actualProductSteps = steps.filter(
-    step => step.product === 'Tozo-uitkering' || step.product === 'Tozo-lening'
+    step =>
+      step.product === `${productTitle}-uitkering` ||
+      step.product === `${productTitle}-lening`
   );
   const aanvraagSteps = actualProductSteps.filter(
     step => step.title === 'aanvraag'
@@ -374,7 +393,10 @@ function getTozoStatus(steps: FocusItemStep[]) {
   return 'In behandeling';
 }
 
-export function createFocusItemTozo(steps: FocusItemStep[]) {
+export function createFocusItemTozo(
+  steps: FocusItemStep[],
+  productTitle: string
+) {
   const stepsWithDate = steps
     .filter(item => !!item.datePublished)
     .sort(dateSort('datePublished'));
@@ -387,11 +409,12 @@ export function createFocusItemTozo(steps: FocusItemStep[]) {
 
   const id = 'aanvraag-' + hash(firstActivityDatePublished);
   const lastActivityDatePublished = lastStep.datePublished;
-  const status = getTozoStatus(steps);
+  const status = getTozoStatus(steps, productTitle);
 
   const stepsOrganized = steps
     .filter(
-      step => step.product === 'Tozo-regeling' || step.title !== 'aanvraag'
+      step =>
+        step.product === `${productTitle}-regeling` || step.title !== 'aanvraag'
     )
     .map(step => {
       // Remove the publish date of the fake step so it won't be presented in the UI
@@ -400,17 +423,23 @@ export function createFocusItemTozo(steps: FocusItemStep[]) {
         : step;
     });
 
+  const title =
+    productTitle === 'Tozo 2'
+      ? 'Tozo 2 (aangevraagd na 1 juni 2020)'
+      : 'Tozo 1 (aangevraagd voor 1 juni 2020)';
+
   return {
     id,
     dateStart: firstActivityDatePublished,
     datePublished: lastActivityDatePublished,
-    title: 'Tozo-aanvraag',
+    title,
     status,
+    productTitle,
     type: 'Tozo',
     chapter: Chapters.INKOMEN,
     link: {
       to: generatePath(AppRoutes['INKOMEN/TOZO'], { id }),
-      title: 'Bekijk uw Tozo status',
+      title: `Bekijk uw ${productTitle} status`,
     },
     steps: stepsOrganized,
   };
@@ -418,20 +447,21 @@ export function createFocusItemTozo(steps: FocusItemStep[]) {
 
 export function createFocusTozoAanvraagNotification(
   focusItemId: string,
-  document: GenericDocument
+  document: GenericDocument,
+  productTitle: string
 ) {
   return {
     id: 'tozo-notification-' + document.id,
     datePublished: document.datePublished,
     chapter: Chapters.INKOMEN,
-    title: 'Tozo: Wij hebben uw aanvraag ontvangen',
-    description: `Wij hebben uw aanvraag Tozo ontvangen op ${dateFormat(
+    title: `${productTitle}: Wij hebben uw aanvraag ontvangen`,
+    description: `Wij hebben uw aanvraag ${productTitle} ontvangen op ${dateFormat(
       document.datePublished,
       'dd MMMM - HH:mm'
     )}`,
     link: {
       to: generatePath(AppRoutes['INKOMEN/TOZO'], { id: focusItemId }),
-      title: 'Bekijk uw Tozo status',
+      title: `Bekijk uw ${productTitle} status`,
     },
   };
 }
@@ -446,14 +476,12 @@ export function createFocusTozoStepNotification(
     contentLabels['Bijzondere Bijstand'][step.product!] ||
     contentLabels['Participatiewet'][step.product!];
 
-  let stepsContent = productContent[step.title];
+  let stepsContent = productContent[step.title] as FocusStepContent;
 
   if (step.decision) {
     stepsContent = (stepsContent as FocusStepContentDecision)[
       step.decision
     ] as FocusStepContent;
-  } else {
-    stepsContent = stepsContent as FocusStepContent;
   }
 
   const itemWithOriginalProductTitleTranslated = Object.assign({}, item, {
@@ -472,10 +500,10 @@ export function createFocusTozoStepNotification(
     chapter: Chapters.INKOMEN,
     title: titleTransform
       ? titleTransform(itemWithOriginalProductTitleTranslated)
-      : `Update: Tozo-aanvraag.`,
+      : `Update: ${item.productTitle}-aanvraag.`,
     description: descriptionTransform
       ? descriptionTransform(itemWithOriginalProductTitleTranslated)
-      : `Er zijn updates in uw Tozo-aanvraag.`,
+      : `Er zijn updates in uw ${item.productTitle}-aanvraag.`,
     link: Object.assign(
       {
         to: AppRoutes.INKOMEN,

@@ -1,27 +1,21 @@
+import { focusAanvragenProducten } from './focus-aanvragen';
 import { contentLabels, titleTranslations } from './focus-aanvragen-content';
 import {
-  contentLabels as contentLabelsTozo,
-  tozoTitleTranslations,
-} from './focus-tozo-content';
-import { FocusTozoDocument } from './focus-combined';
-import {
-  FocusProduct,
-  Decision,
-  FocusProductFromSource,
-  FocusItemStep,
-  FocusProductStep,
-} from './focus-types';
-import {
-  isRecentItem,
-  calculateUserActionDeadline,
   calculateDecisionDeadline,
+  calculateUserActionDeadline,
   getDecision,
   getLatestStep,
+  isRecentItem,
   normalizeFocusSourceProduct,
-  translateFocusProduct,
   transformFocusProduct,
+  translateFocusProduct,
 } from './focus-aanvragen-helpers';
-import { focusAanvragenProducten } from './focus-aanvragen';
+import {
+  Decision,
+  FocusItemStep,
+  FocusProductFromSource,
+  FocusProductStep,
+} from './focus-types';
 
 const testData: FocusProductFromSource[] = [
   {
