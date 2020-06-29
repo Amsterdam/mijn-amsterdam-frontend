@@ -18,44 +18,44 @@ pipeline {
 
   stages {
 
-    // stage('Unit tests') {
-    //   when { not { branch 'test' } } // Skip unit tests when pushing directly to test (for speed)
-    //   options {
-    //     timeout(time: 5, unit: 'MINUTES')
-    //   }
-    //   environment {
-    //     PROJECT = "${PROJECT_PREFIX}unit"
-    //   }
-    //   steps {
-    //     script { currentBuild.displayName = "Unit testing #${BUILD_NUMBER}" }
-    //     sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit-client test-unit-client"
-    //     sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit-bff test-unit-bff"
-    //   }
-    //   post {
-    //     always {
-    //       sh "docker-compose -p ${PROJECT} down -v --rmi local || true"
-    //     }
-    //   }
-    // }
+    stage('Unit tests') {
+      when { not { branch 'test' } } // Skip unit tests when pushing directly to test (for speed)
+      options {
+        timeout(time: 5, unit: 'MINUTES')
+      }
+      environment {
+        PROJECT = "${PROJECT_PREFIX}unit"
+      }
+      steps {
+        script { currentBuild.displayName = "Unit testing #${BUILD_NUMBER}" }
+        sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit-client test-unit-client"
+        sh "docker-compose -p ${PROJECT} up --build --exit-code-from test-unit-bff test-unit-bff"
+      }
+      post {
+        always {
+          sh "docker-compose -p ${PROJECT} down -v --rmi local || true"
+        }
+      }
+    }
 
-    // stage('E2E testing') {
-    //   when { not { branch 'test' } }
-    //   environment {
-    //     PROJECT = "${PROJECT_PREFIX}e2e"
-    //   }
-    //   steps {
-    //     script { currentBuild.displayName = "E2E testing #${BUILD_NUMBER}" }
-    //     sh "docker-compose -p ${PROJECT} up --build --exit-code-from e2e-testsuite e2e-testsuite"
-    //   }
-    //   post {
-    //     failure {
-    //       junit 'cypress/results/test-report-*.xml'
-    //     }
-    //     always {
-    //       sh "docker-compose -p ${PROJECT} down -v --rmi local || true"
-    //     }
-    //   }
-    // }
+    stage('E2E testing') {
+      when { not { branch 'test' } }
+      environment {
+        PROJECT = "${PROJECT_PREFIX}e2e"
+      }
+      steps {
+        script { currentBuild.displayName = "E2E testing #${BUILD_NUMBER}" }
+        sh "docker-compose -p ${PROJECT} up --build --exit-code-from e2e-testsuite e2e-testsuite"
+      }
+      post {
+        failure {
+          junit 'cypress/results/test-report-*.xml'
+        }
+        always {
+          sh "docker-compose -p ${PROJECT} down -v --rmi local || true"
+        }
+      }
+    }
 
     // TEST
 
