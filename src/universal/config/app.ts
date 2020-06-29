@@ -1,4 +1,4 @@
-import { IS_AP, IS_PRODUCTION } from './env';
+import { IS_PRODUCTION } from './env';
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
 export const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
@@ -15,6 +15,6 @@ export const FeatureToggle = {
   identiteitsbewijzenActive: true,
   tozoActive: true,
   tozo2active: !IS_PRODUCTION,
-  eherkenningActive: !IS_AP,
+  eherkenningActive: !IS_PRODUCTION,
   vergunningenActive: !IS_PRODUCTION,
 };
