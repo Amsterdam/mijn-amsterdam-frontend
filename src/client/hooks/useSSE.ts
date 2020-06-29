@@ -1,6 +1,10 @@
 import * as Sentry from '@sentry/browser';
 import { useCallback, useEffect, useState } from 'react';
 
+let connectionCounter = 0;
+const WAIT_MS_BEFORE_RETRY = 2000;
+const MAX_RETRY_COUNT = 4;
+
 export function useSSE(
   path: string,
   eventName: string,
@@ -10,12 +14,13 @@ export function useSSE(
 
   const connect = useCallback(() => {
     const es = new EventSource(path);
+    connectionCounter += 1;
+    console.info('Connecting to SSE', connectionCounter);
     setEventSource(es);
   }, [path]);
 
   useEffect(() => {
     if (!es) {
-      console.info('Connecting to SSE');
       connect();
     }
   }, [es, connect]);
@@ -30,17 +35,23 @@ export function useSSE(
 
       es.close();
 
-      Sentry.captureMessage(
-        "EventSource can't establish a connection to the server."
-      );
+      setTimeout(() => {
+        if (connectionCounter !== MAX_RETRY_COUNT) {
+          connect();
+        }
+      }, WAIT_MS_BEFORE_RETRY);
 
-      callback({
-        ALL: {
-          status: 'ERROR',
-          message:
-            "EventSource can't establish a connection to the server. Connection retry terminated.",
-        },
-      });
+      if (connectionCounter === MAX_RETRY_COUNT) {
+        const errorMessage = `EventSource can't establish a connection to the server after ${connectionCounter} tries.`;
+        Sentry.captureMessage(errorMessage);
+
+        callback({
+          ALL: {
+            status: 'ERROR',
+            message: errorMessage,
+          },
+        });
+      }
     };
     const handleOpen = () => {
       console.info('Open SSE connection');
