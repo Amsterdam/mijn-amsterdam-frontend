@@ -10,12 +10,12 @@ import { MainNavSubmenuLink } from '../MainNavSubmenu/MainNavSubmenu';
 import Panel from '../Panel/Panel';
 import React from 'react';
 import styles from './MyChaptersPanel.module.scss';
-import { MenuItem } from '../../config/menuItems';
 import { ChapterIcons } from '../../config/chapterIcons';
+import { ChapterMenuItem } from '../../config/menuItems';
 
 export interface MyChaptersPanelProps {
   title: string;
-  items: MenuItem[];
+  items: ChapterMenuItem[];
   isLoading: boolean;
   trackCategory: string;
   className?: string;
@@ -32,10 +32,7 @@ export default function MyChaptersPanel({
 
   useSessionCallbackOnceDebounced(trackCategory, () => {
     items.forEach(({ id }) => {
-      trackItemPresentation(
-        trackCategory,
-        `Thema ${ChapterTitles[id as Chapter] || id}`
-      );
+      trackItemPresentation(trackCategory, `Thema ${ChapterTitles[id] || id}`);
     });
   });
 
@@ -45,7 +42,7 @@ export default function MyChaptersPanel({
         {title}
       </Heading>
       <div className={styles.Links}>
-        {items.map(({ id, to, title, rel, chapter }) => {
+        {items.map(({ id, to, title, rel }) => {
           return (
             <MainNavSubmenuLink
               data-chapter-id={id}
@@ -53,7 +50,7 @@ export default function MyChaptersPanel({
               to={to}
               rel={rel}
               title={title}
-              Icon={chapter ? ChapterIcons[chapter] : undefined}
+              Icon={ChapterIcons[id]}
             />
           );
         })}

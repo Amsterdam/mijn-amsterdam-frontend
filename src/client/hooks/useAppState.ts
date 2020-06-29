@@ -47,12 +47,15 @@ export function useAppState() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const onEvent = useCallback((messageData: any) => {
       if (messageData) {
-        setAppState((state: any) => {
-          const transformedMessageData = transformAppState(messageData);
-          return Object.assign({}, state, transformedMessageData);
+        const transformedMessageData = transformAppState(messageData);
+        setAppState(appState => {
+          const appStateUpdated = {
+            ...appState,
+            ...transformedMessageData,
+          };
+          return appStateUpdated;
         });
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useSSE(BFFApiUrls.SERVICES_SSE, 'message', onEvent);

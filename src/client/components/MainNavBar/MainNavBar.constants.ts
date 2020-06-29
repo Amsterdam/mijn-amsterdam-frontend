@@ -1,12 +1,18 @@
 import { AppRoutes, Chapter, ChapterTitles } from '../../../universal/config';
-import { MenuItem, myChaptersMenuItems } from '../../config/menuItems';
+import { ChapterMenuItem, myChaptersMenuItems } from '../../config/menuItems';
+import { LinkProps } from '../../../universal/types';
 
-export type MainMenuId =
+type MainMenuId =
   | Chapter
   | 'DASHBOARD'
   | 'MIJN_THEMAS'
   | 'BUURT'
   | 'NOTIFICATIONS';
+
+export interface MenuItem extends LinkProps {
+  id: MainMenuId;
+  submenuItems?: ChapterMenuItem[];
+}
 
 export const mainMenuItemId: { [key: string]: MainMenuId } = {
   HOME: 'DASHBOARD',
@@ -45,6 +51,6 @@ export const mainMenuItems: MenuItem[] = [
   },
 ];
 
-export const submenuItems: { [id: string]: MenuItem[] } = {
+export const submenuItems: { [id: string]: ChapterMenuItem[] } = {
   [mainMenuItemId.CHAPTERS]: myChaptersMenuItems,
 };

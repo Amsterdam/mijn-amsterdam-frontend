@@ -50,7 +50,7 @@ export type ApiResponse<T> =
 
 export function isLoading(apiResponseData: ApiResponse<any>) {
   // If no responseData was found, assumes it's still loading
-  return !!apiResponseData && apiResponseData.status === 'PRISTINE';
+  return !apiResponseData || apiResponseData.status === 'PRISTINE';
 }
 
 export function isError(apiResponseData: ApiResponse<any>) {

@@ -15,7 +15,6 @@ import { ComponentChildren } from '../../../universal/types';
 import { AppContext } from '../../AppState';
 import { IconLogout, IconInfo } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
-import { MenuItem } from '../../config/menuItems';
 import { getMyChapters } from '../../helpers/chapters';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
@@ -31,6 +30,7 @@ import {
   mainMenuItemId,
   mainMenuItems,
   submenuItems,
+  MenuItem,
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
 import { LOGOUT_URL } from '../../config/api';
@@ -70,7 +70,7 @@ function SecondaryLinks() {
         ) : persoon?.opgemaakteNaam ? (
           getFullName(persoon)
         ) : (
-          'mijn gegevens'
+          'Mijn gegevens'
         )}
       </Link>
 
@@ -99,7 +99,7 @@ function getMenuItem(item: MenuItem) {
   if (Array.isArray(item.submenuItems)) {
     return (
       <MainNavSubmenu key={item.id} title={item.title} id={item.id}>
-        {item.submenuItems.map(({ id, to, title, rel, chapter }) => {
+        {item.submenuItems.map(({ id, to, title, rel }) => {
           return (
             <MainNavSubmenuLink
               key={id}
@@ -107,7 +107,7 @@ function getMenuItem(item: MenuItem) {
               title={title}
               to={to}
               rel={rel}
-              Icon={chapter ? ChapterIcons[chapter] : undefined}
+              Icon={ChapterIcons[id]}
               data-chapter-id={id}
             />
           );

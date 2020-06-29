@@ -1,10 +1,11 @@
-import { Chapters, FeatureToggle } from '../../universal/config';
+import { Chapters, FeatureToggle, Chapter } from '../../universal/config';
 import { isLoading, isMokum } from '../../universal/helpers';
 import { AppState } from '../AppState';
-import { MenuItem, myChaptersMenuItems } from '../config/menuItems';
+import { ChapterMenuItem, myChaptersMenuItems } from '../config/menuItems';
+import { ApiResponse } from '../../universal/helpers/api';
 
 function isChapterActive(
-  item: MenuItem,
+  item: ChapterMenuItem,
   {
     WMO,
     FOCUS_SPECIFICATIES,
@@ -34,7 +35,7 @@ function isChapterActive(
           !!FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties?.length)
       );
 
-    case Chapters.ZORG:
+    case Chapters.WMO:
       return !isLoading(WMO) && !!WMO.content?.items?.length;
 
     case Chapters.BELASTINGEN:
@@ -83,54 +84,20 @@ function isChapterActive(
 }
 
 export interface ChaptersState {
-  items: MenuItem[];
+  items: ChapterMenuItem[];
   isLoading: boolean;
 }
 
 export function getMyChapters(appState: AppState): ChaptersState {
-  const {
-    WMO,
-    FOCUS_AANVRAGEN,
-    FOCUS_SPECIFICATIES,
-    FOCUS_TOZO,
-    ERFPACHT,
-    AFVAL,
-    BRP,
-    BELASTINGEN,
-    MILIEUZONE,
-    VERGUNNINGEN,
-  } = appState;
-
-  const wmoIsloading = isLoading(WMO);
-  const focusAanvragenIsloading = isLoading(FOCUS_AANVRAGEN);
-  const focusSpecificatiesIsloading = isLoading(FOCUS_SPECIFICATIES);
-  const focusTozoIsloading = isLoading(FOCUS_TOZO);
-  const erfpachtIsloading = isLoading(ERFPACHT);
-  const brpIsLoading = isLoading(BRP);
-  const garbageIsLoading = isLoading(AFVAL);
-  const belastingIsLoading = isLoading(BELASTINGEN);
-  const milieuzoneIsLoading = isLoading(MILIEUZONE);
-  const vergunnunigenIsLoading = isLoading(VERGUNNINGEN);
-
   const items = myChaptersMenuItems.filter(item => {
     // Check to see if Chapter has been loaded or if it is directly available
     return isChapterActive(item, appState);
   });
 
-  const isChaptersLoading =
-    belastingIsLoading ||
-    milieuzoneIsLoading ||
-    wmoIsloading ||
-    brpIsLoading ||
-    focusSpecificatiesIsloading ||
-    focusAanvragenIsloading ||
-    focusTozoIsloading ||
-    erfpachtIsloading ||
-    vergunnunigenIsLoading ||
-    garbageIsLoading;
-
   return {
     items,
-    isLoading: isChaptersLoading,
+    isLoading: Object.entries(appState)
+      .filter(([key]) => key !== 'controller')
+      .some(([key, apiState]) => isLoading(apiState as ApiResponse<any>)),
   };
 }
