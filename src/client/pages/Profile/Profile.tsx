@@ -91,26 +91,28 @@ export default function Profile() {
           <Alert type="warning" className="inOnderzoek">
             <p>
               Op dit moment onderzoeken wij of u nog steeds woont op het adres
-              waar u ingeschreven staat.
-            </p>
-            <p>
-              U heeft hierover een brief ontvangen. Heeft u nog niet gereageerd?
-              Voorkom een boete en stuur een bericht naar{' '}
-              <LinkdInline
-                external={true}
-                href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
-              >
-                adresonderzoek.basisinformatie@amsterdam.nl
-              </LinkdInline>
-              .
-            </p>
-            <p>
+              waar u ingeschreven staat. Kijk voor{' '}
               <LinkdInline
                 external={true}
                 href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
               >
-                Meer informatie
+                meer
+              </LinkdInline>{' '}
+              informatie over een adresonderzoek op{' '}
+              <LinkdInline external={true} href="https://www.amsterdam.nl">
+                amsterdam.nl
               </LinkdInline>
+              .
+            </p>
+            <p>
+              Kloppen uw gegevens niet? Voorkom een boete en stuur een e-mail
+              naar{' '}
+              <a
+                href="mailto:adresonderzoek.basisinformatie@amsterdam.nl"
+                rel="external noopener noreferrer"
+              >
+                adresonderzoek.basisinformatie@amsterdam.nl
+              </a>
               .
             </p>
           </Alert>
