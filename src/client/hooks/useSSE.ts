@@ -18,8 +18,7 @@ export function useSSE(
       console.info('Connecting to SSE');
       connect();
     }
-    // eslint-disable-next-line
-  }, [es]);
+  }, [es, connect]);
 
   useEffect(() => {
     if (!es) {
