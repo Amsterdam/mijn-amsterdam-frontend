@@ -1,6 +1,10 @@
 import { Chapters, FeatureToggle } from '../../universal/config';
-import { isLoading, isMokum } from '../../universal/helpers';
-import { ApiResponse } from '../../universal/helpers/api';
+import {
+  ApiResponse,
+  isError,
+  isLoading,
+  isMokum,
+} from '../../universal/helpers';
 import { AppState } from '../AppState';
 import { ChapterMenuItem, myChaptersMenuItems } from '../config/menuItems';
 
@@ -98,6 +102,10 @@ export function getMyChapters(appState: AppState): ChaptersState {
     items,
     isLoading: Object.entries(appState)
       .filter(([key]) => key !== 'controller')
-      .some(([key, apiState]) => isLoading(apiState as ApiResponse<any>)),
+      .some(
+        ([key, apiState]) =>
+          isLoading(apiState as ApiResponse<any>) &&
+          !isError(apiState as ApiResponse<any>)
+      ),
   };
 }
