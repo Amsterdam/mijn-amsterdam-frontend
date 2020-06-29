@@ -20,8 +20,8 @@ export interface VergunningSource {
   isActual: boolean;
   kenteken?: string | null;
   location?: string | null;
-  outcome?: string | null;
-  dateOutcome?: string | null;
+  decision?: string | null;
+  dateDecision?: string | null;
 }
 
 export type VergunningenSourceData = {

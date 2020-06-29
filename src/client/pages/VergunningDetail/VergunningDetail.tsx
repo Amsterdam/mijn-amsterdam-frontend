@@ -68,7 +68,7 @@ export default () => {
       {
         id: 'item-3',
         status: 'Afgehandeld',
-        datePublished: VergunningItem.dateOutcome || '',
+        datePublished: VergunningItem.dateDecision || '',
         description: '',
         documents: [],
         isActive: isDone,
@@ -132,8 +132,8 @@ export default () => {
             }
           />
         </InfoDetailGroup>
-        {!!VergunningItem?.outcome && (
-          <InfoDetail label="Resultaat" value={VergunningItem.outcome} />
+        {!!VergunningItem?.decision && (
+          <InfoDetail label="Resultaat" value={VergunningItem.decision} />
         )}
         {!!documents.length && (
           <InfoDetail
