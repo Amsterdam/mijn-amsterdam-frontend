@@ -35,7 +35,7 @@ function isChapterActive(
           !!FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties?.length)
       );
 
-    case Chapters.WMO:
+    case Chapters.ZORG:
       return !isLoading(WMO) && !!WMO.content?.items?.length;
 
     case Chapters.BELASTINGEN:
