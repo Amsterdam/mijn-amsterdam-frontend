@@ -1,17 +1,16 @@
-import { Chapter, ChapterTitles } from '../../../universal/config';
+import React from 'react';
+import { ChapterTitles } from '../../../universal/config';
+import { ChapterIcons } from '../../config/chapterIcons';
+import { ChapterMenuItem } from '../../config/menuItems';
 import {
   trackItemPresentation,
   useSessionCallbackOnceDebounced,
 } from '../../hooks/analytics.hook';
-
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import { MainNavSubmenuLink } from '../MainNavSubmenu/MainNavSubmenu';
 import Panel from '../Panel/Panel';
-import React from 'react';
 import styles from './MyChaptersPanel.module.scss';
-import { ChapterIcons } from '../../config/chapterIcons';
-import { ChapterMenuItem } from '../../config/menuItems';
 
 export interface MyChaptersPanelProps {
   title: string;
