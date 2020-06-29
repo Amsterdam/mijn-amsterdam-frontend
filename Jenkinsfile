@@ -106,6 +106,7 @@ pipeline {
         script { currentBuild.displayName = "ACC Build #${BUILD_NUMBER}" }
         // build the Front-end/nginx image
         sh "docker build -t ${IMAGE_ACCEPTANCE} " +
+           "--build-arg REACT_APP_ENV=acceptance " +
            "--target=deploy-acceptance-frontend " +
            "--shm-size 1G " +
            "."
