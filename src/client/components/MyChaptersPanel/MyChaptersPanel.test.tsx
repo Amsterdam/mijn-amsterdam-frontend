@@ -2,10 +2,10 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import MyChaptersPanel from './MyChaptersPanel';
 import { BrowserRouter } from 'react-router-dom';
-import { MenuItem } from '../../config/menuItems';
+import { ChapterMenuItem } from '../../config/menuItems';
 
 const PANEL_TITLE = 'whoa!';
-const items: MenuItem[] = [
+const items: ChapterMenuItem[] = [
   {
     title: 'Belastingen',
     id: 'BELASTINGEN',
