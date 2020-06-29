@@ -62,11 +62,15 @@ export const mockDataConfig: MockDataConfig = {
   },
   [ApiUrls.ERFPACHT]: {
     status: 200,
-    responseData: async () => await JSON.stringify({ status: true }),
+    responseData: async (...args: any) => {
+      return await JSON.stringify({ status: true });
+    },
   },
   [ApiUrls.BAG]: {
     status: 200,
-    responseData: async () => await loadMockApiResponseJson(BAG),
+    responseData: async (...args: any) => {
+      return await loadMockApiResponseJson(BAG);
+    },
   },
   [ApiUrls.AFVAL]: {
     status: 200,

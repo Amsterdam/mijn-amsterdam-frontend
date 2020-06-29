@@ -20,11 +20,7 @@ function loginPage(req, res, next) {
 }
 
 function handleLogin(req, res, next) {
-  console.log('url:', req.url);
-  const userType =
-    req.url.startsWith('/api1/') || req.url.startsWith('/test-api1/')
-      ? 'BEDRIJF'
-      : 'BURGER';
+  const userType = req.url.startsWith('/test-api1/') ? 'BEDRIJF' : 'BURGER';
   req.session = { isAuthenticated: true, userType };
 
   return res.redirect(REDIRECT_AFTER_LOGIN);
@@ -70,13 +66,13 @@ module.exports = function(app) {
   app.get(['/logout'], handleLogout);
   app.get(['/sso-page'], loginPage);
   app.get(['/test-api/login', '/test-api1/login'], handleLogin);
-  app.all(['/test-api'], handleSession);
+  app.all(['/test-api', '/test-api1'], handleSession);
   app.get(['/test-api/auth/check', '/test-api1/auth/check'], (req, res) => {
     return res.send(req.session);
   });
 
   app.use(
-    ['/test-api'],
+    ['/test-api', '/test-api1'],
     createProxyMiddleware({
       target: `http://${apiHost}:${apiPort}`,
       changeOrigin: true,

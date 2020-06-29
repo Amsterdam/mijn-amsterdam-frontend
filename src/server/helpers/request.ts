@@ -36,7 +36,6 @@ function enableMockAdapter() {
 
   // This sets the mock adapter on the default instance, let unmatched request passthrough to the requested urls.
   const mock = new MockAdapter(axiosRequest, { onNoMatch: 'passthrough' });
-
   entries(mockDataConfig).forEach(
     async ([
       url,
