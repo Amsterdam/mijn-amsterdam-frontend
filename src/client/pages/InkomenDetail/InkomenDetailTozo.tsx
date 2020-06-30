@@ -42,7 +42,7 @@ export default () => {
 
   const noContent = !isLoading(FOCUS_TOZO) && !TozoItem;
 
-  let title = 'Onbekend item';
+  let title = 'Tozo';
 
   if (TozoItem) {
     title = TozoItem.title;
@@ -66,7 +66,11 @@ export default () => {
         icon={<ChapterIcon />}
         backLink={{ to: AppRoutes.INKOMEN, title: ChapterTitles.INKOMEN }}
       >
-        {TozoItem?.productTitle || title}
+        {isLoading(FOCUS_TOZO) ? (
+          <LoadingContent barConfig={[['20rem', '3rem', '0']]} />
+        ) : (
+          TozoItem?.productTitle || title
+        )}
       </PageHeading>
       <PageContent className={styles.DetailPageContent}>
         {TozoItem?.productTitle === 'Tozo 1' && (
