@@ -47,6 +47,7 @@ export function useAppState() {
 
   useEffect(() => {
     if (!isDataRequested && isTheOneEndpoint && api.isPristine) {
+      console.info('Using the Sauron endpoint.');
       fetchSauron({
         ...sauronRequestOptions,
         postpone: false,
