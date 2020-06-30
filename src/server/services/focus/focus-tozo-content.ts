@@ -14,13 +14,13 @@ export const TOZO_AANVRAAG_STEP_ID = 'aanvraag-step-tozo';
 export const TOZO_DUMMY_DECISION_STEP_ID = 'dummy-beslissing';
 
 export const TOZO_VOORSCHOT_PRODUCT_TITLE =
-  'Voorschot Tozo (voor ondernemers) (Eenm.)';
+  'Voorschot Tozo1 (voor ondernemers) (Eenm.)';
 
 export const TOZO_LENING_PRODUCT_TITLE =
-  'Tozo Bedrijfskapitaal (voor ondernemers)';
+  'Tozo1 Bedrijfskapitaal (voor ondernemers)';
 
 export const TOZO_UITKERING_PRODUCT_TITLE =
-  'Tozo Levensonderhoud (voor ondernemers)';
+  'Tozo 1 Levensonderhoud (voor ondernemers)';
 
 // Tozo 2 aangevraagd na 20 juni 2020
 export const TOZO2_VOORSCHOT_PRODUCT_TITLE =

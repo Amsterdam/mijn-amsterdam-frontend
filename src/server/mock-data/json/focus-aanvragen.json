@@ -3,7 +3,7 @@
     "_id": "0-0",
     "_meest_recent": "beslissing",
     "dienstverleningstermijn": 28,
-    "naam": "Voorschot Tozo (voor ondernemers) (Eenm.)",
+    "naam": "Voorschot Tozo1 (voor ondernemers) (Eenm.)",
     "processtappen": {
       "aanvraag": {
         "_id": 0,
@@ -37,7 +37,7 @@
   {
     "_id": "1-0",
     "_meest_recent": "herstelTermijn",
-    "naam": "Tozo Levensonderhoud (voor ondernemers)",
+    "naam": "Tozo 1 Levensonderhoud (voor ondernemers)",
     "processtappen": {
       "aanvraag": {
         "_id": 0,
@@ -302,7 +302,7 @@
   {
     "_id": "1-6",
     "_meest_recent": "beslissing",
-    "naam": "Tozo Bedrijfskapitaal (voor ondernemers)",
+    "naam": "Tozo1 Bedrijfskapitaal (voor ondernemers)",
     "processtappen": {
       "aanvraag": {
         "_id": 0,
