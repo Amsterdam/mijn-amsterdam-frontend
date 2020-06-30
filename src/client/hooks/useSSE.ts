@@ -3,12 +3,14 @@ import { useCallback, useEffect, useState } from 'react';
 
 let connectionCounter = 0;
 const WAIT_MS_BEFORE_RETRY = 2000;
-const MAX_RETRY_COUNT = 4;
+export const MAX_RETRY_COUNT = 4;
+export const SSE_ERROR_MESSAGE = 'sse-error';
 
 export function useSSE(
   path: string,
   eventName: string,
-  callback: (message: any) => void
+  callback: (message: any) => void,
+  postpone: boolean
 ) {
   const [es, setEventSource] = useState<EventSource | null>(null);
 
@@ -20,13 +22,13 @@ export function useSSE(
   }, [path]);
 
   useEffect(() => {
-    if (!es) {
+    if (!es && !postpone) {
       connect();
     }
-  }, [es, connect]);
+  }, [es, connect, postpone]);
 
   useEffect(() => {
-    if (!es) {
+    if (!es || postpone) {
       return;
     }
 
@@ -45,12 +47,7 @@ export function useSSE(
         const errorMessage = `EventSource can't establish a connection to the server after ${connectionCounter} tries.`;
         Sentry.captureMessage(errorMessage);
 
-        callback({
-          ALL: {
-            status: 'ERROR',
-            message: errorMessage,
-          },
-        });
+        callback(SSE_ERROR_MESSAGE);
       }
     };
     const handleOpen = () => {
@@ -74,5 +71,5 @@ export function useSSE(
       es.removeEventListener('close', closeEventSource);
       es.removeEventListener(eventName, onMessageEvent);
     };
-  }, [eventName, es, callback, connect]);
+  }, [eventName, es, callback, connect, postpone]);
 }

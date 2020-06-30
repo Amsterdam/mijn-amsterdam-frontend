@@ -40,12 +40,12 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
   geboorteplaatsnaam: [
     'Geboorteplaats',
     (value, _item, BRPData) =>
-      BRPData?.persoon.mokum ? value || 'Onbekend' : '',
+      BRPData?.persoon.mokum ? value || 'Onbekend' : value,
   ],
   geboortelandnaam: [
     'Geboorteland',
     (value, _item, BRPData) =>
-      BRPData?.persoon.mokum ? value || 'Onbekend' : '',
+      BRPData?.persoon.mokum ? value || 'Onbekend' : value,
   ],
   nationaliteiten: [
     'Nationaliteit',

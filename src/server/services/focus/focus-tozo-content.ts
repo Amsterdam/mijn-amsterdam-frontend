@@ -263,6 +263,9 @@ const LeningLabels: ProductStepLabels = {
 
 export const contentLabels: LabelData = {
   Minimafonds: {},
+
+  // It's unclear wether the Tozo products belong to Bijzonder Bijstand or Participatiewet.
+  // We've seen products been categorised under bot Bijzondere Bijstand as well as Participatiewet.
   Participatiewet: {
     'Tozo 1-uitkering': UitkeringLabels,
     'Tozo 1-lening': LeningLabels,
@@ -273,11 +276,13 @@ export const contentLabels: LabelData = {
     'Tozo 2-voorschot': VoorschotLabels,
   },
   'Bijzondere Bijstand': {
-    'Tozo 1-voorschot': VoorschotLabels,
+    'Tozo 1-uitkering': UitkeringLabels,
     'Tozo 1-lening': LeningLabels,
+    'Tozo 1-voorschot': VoorschotLabels,
     // Tozo 2
-    'Tozo 2-voorschot': VoorschotLabels,
+    'Tozo 2-uitkering': UitkeringLabels,
     'Tozo 2-lening': LeningLabels,
+    'Tozo 2-voorschot': VoorschotLabels,
   },
 };
 
