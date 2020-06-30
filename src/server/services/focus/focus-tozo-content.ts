@@ -266,9 +266,11 @@ export const contentLabels: LabelData = {
   Participatiewet: {
     'Tozo 1-uitkering': UitkeringLabels,
     'Tozo 1-lening': LeningLabels,
+    'Tozo 1-voorschot': VoorschotLabels,
     // Tozo 2
     'Tozo 2-uitkering': UitkeringLabels,
     'Tozo 2-lening': LeningLabels,
+    'Tozo 2-voorschot': VoorschotLabels,
   },
   'Bijzondere Bijstand': {
     'Tozo 1-voorschot': VoorschotLabels,
