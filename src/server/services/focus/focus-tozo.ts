@@ -1,3 +1,4 @@
+import { FeatureToggle } from '../../../universal/config/app';
 import {
   apiDependencyError,
   apiSuccesResult,
@@ -13,17 +14,13 @@ import {
 import { fetchFOCUSCombined } from './focus-combined';
 import {
   contentLabels,
-  TOZO2_LENING_PRODUCT_TITLE,
-  TOZO2_UITKERING_PRODUCT_TITLE,
   TOZO2_VOORSCHOT_PRODUCT_TITLE,
   tozoTitleTranslations,
   TOZO_AANVRAAG_DOCUMENT_TYPES,
   TOZO_AANVRAAG_STEP_ID,
   TOZO_DUMMY_DECISION_STEP_ID,
-  TOZO_LENING_PRODUCT_TITLE,
-  TOZO_UITKERING_PRODUCT_TITLE,
-  TOZO_VOORSCHOT_PRODUCT_TITLE,
   TOZO_PRODUCT_TITLES,
+  TOZO_VOORSCHOT_PRODUCT_TITLE,
 } from './focus-tozo-content';
 import {
   createFocusItemTozo,
@@ -32,7 +29,6 @@ import {
   createTozoProductSetStepsCollection,
 } from './focus-tozo-helpers';
 import { FocusItem } from './focus-types';
-import { FeatureToggle } from '../../../universal/config/app';
 
 async function fetchFOCUSTozoNormalized(
   sessionID: SessionID,

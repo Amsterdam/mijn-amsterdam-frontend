@@ -406,7 +406,6 @@ export function createFocusItemTozo(
   const unknownId = 'unknown-first-activity';
   const firstActivityDatePublished =
     aanvraagStep?.datePublished || firstActivity?.datePublished || unknownId;
-
   const id = 'aanvraag-' + hash(firstActivityDatePublished);
   const lastActivityDatePublished = lastStep.datePublished;
   const status = getTozoStatus(steps, productTitle);
