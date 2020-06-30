@@ -114,7 +114,9 @@ export async function fetchFOCUSTozo(sessionID: SessionID, samlToken: string) {
       });
 
       tozoItems.push(
-        ...collection.map(steps => createFocusItemTozo(steps, productTitle))
+        ...collection
+          .filter(steps => !!steps.length)
+          .map(steps => createFocusItemTozo(steps, productTitle))
       );
     }
 
