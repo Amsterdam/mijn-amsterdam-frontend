@@ -11,6 +11,7 @@ import {
   loadServicesTips,
 } from './services';
 import { loadServicesSSE } from './services/services-sse';
+import { loadServicesAfval } from './services/services-afval';
 
 export const router = express.Router();
 
@@ -132,6 +133,7 @@ router.get(`/services/all`, async function handleRouteServicesMap(
       loadServicesDirect(req.sessionID!, getSamlTokenHeader(req)),
       loadServicesRelated(req.sessionID!, getSamlTokenHeader(req)),
       loadServicesMap(req.sessionID!, getSamlTokenHeader(req)),
+      loadServicesAfval(req.sessionID!, getSamlTokenHeader(req)),
       loadServicesGenerated(
         req.sessionID!,
         getSamlTokenHeader(req),
