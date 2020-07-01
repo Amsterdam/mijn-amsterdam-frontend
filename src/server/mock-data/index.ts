@@ -42,6 +42,16 @@ export const mockDataConfig: MockDataConfig = {
     status: 200,
     responseData: async () => await loadMockApiResponseJson(BELASTINGEN),
   },
+  [ApiUrls.AUTH]: {
+    status: 200,
+    // delay: 2500,
+    responseData: async () => {
+      return {
+        isAuthenticated: true,
+        userType: 'BEDRIJF',
+      };
+    },
+  },
   [ApiUrls.BRP]: {
     status: 200,
     // delay: 2500,

@@ -13,6 +13,22 @@ import { loadServicesSSE } from './services/services-sse';
 
 export const router = express.Router();
 
+router.get(`/auth/check`, async function authCheck(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const options = getApiConfig('AUTH');
+  const responseData = await requestData<BRPData>(
+    options,
+    req.sessionID!,
+    getSamlTokenHeader(req)
+  );
+
+  res.json(responseData.content);
+  next();
+});
+
 router.get(`/services/generated`, async function handleRouteServicesGenerated(
   req: Request,
   res: Response,

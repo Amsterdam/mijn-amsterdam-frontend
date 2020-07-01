@@ -48,6 +48,7 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
 };
 
 type SourceApiKey =
+  | 'AUTH'
   | 'WMO'
   | 'FOCUS_COMBINED'
   | 'FOCUS_AANVRAGEN'
@@ -65,6 +66,9 @@ type SourceApiKey =
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
 export const ApiConfig: ApiDataRequestConfig = {
+  AUTH: {
+    url: `${BFF_MS_API_BASE_URL}/auth/check`,
+  },
   WMO: {
     url: `${BFF_MS_API_BASE_URL}/wmoned/voorzieningen`,
   },
