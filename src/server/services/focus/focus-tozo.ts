@@ -96,14 +96,6 @@ export async function fetchFOCUSTozo(sessionID: SessionID, samlToken: string) {
       return apiSuccesResult([]);
     }
 
-    Sentry.captureMessage('Tozo items', {
-      extra: {
-        aanvragen,
-        voorschotten,
-        documenten,
-      },
-    });
-
     const tozoItems: FocusItem[] = [];
 
     for (const productTitle of ['Tozo 1', 'Tozo 2']) {
