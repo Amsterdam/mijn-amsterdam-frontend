@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/node';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, Chapters } from '../../../universal/config';
 import {
@@ -402,12 +403,23 @@ export function createFocusItemTozo(
     .sort(dateSort('datePublished'));
   const aanvraagStep = steps.find(step => step.id === TOZO_AANVRAAG_STEP_ID);
   const lastStep = stepsWithDate[stepsWithDate.length - 1];
+
+  if (!lastStep) {
+    Sentry.captureMessage('Unknown steps', {
+      extra: {
+        steps,
+        productTitle,
+      },
+    });
+  }
+
   const firstActivity = stepsWithDate[0];
   const unknownId = 'unknown-first-activity';
   const firstActivityDatePublished =
-    aanvraagStep?.datePublished || firstActivity?.datePublished || unknownId;
-  const id = 'aanvraag-' + hash(firstActivityDatePublished);
-  const lastActivityDatePublished = lastStep.datePublished;
+    aanvraagStep?.datePublished || firstActivity?.datePublished || '';
+  const id = 'aanvraag-' + hash(firstActivityDatePublished || unknownId);
+  const lastActivityDatePublished =
+    lastStep?.datePublished || firstActivityDatePublished;
   const status = getTozoStatus(steps, productTitle);
 
   const stepsOrganized = steps
