@@ -199,8 +199,6 @@ export async function requestData<T>(
       if (cache.get(cacheKey)) {
         // Resolve with error
         cache.get(cacheKey).resolve(responseData);
-        // Don't cache the errors
-        cache.del(cacheKey);
       }
 
       return responseData;
