@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/node';
 import { FeatureToggle } from '../../../universal/config/app';
 import {
   apiDependencyError,
@@ -95,6 +96,14 @@ export async function fetchFOCUSTozo(sessionID: SessionID, samlToken: string) {
       return apiSuccesResult([]);
     }
 
+    Sentry.captureMessage('Tozo items', {
+      extra: {
+        aanvragen,
+        voorschotten,
+        documenten,
+      },
+    });
+
     const tozoItems: FocusItem[] = [];
 
     for (const productTitle of ['Tozo 1', 'Tozo 2']) {
@@ -114,7 +123,9 @@ export async function fetchFOCUSTozo(sessionID: SessionID, samlToken: string) {
       });
 
       tozoItems.push(
-        ...collection.map(steps => createFocusItemTozo(steps, productTitle))
+        ...collection
+          .filter(steps => !!steps.length)
+          .map(steps => createFocusItemTozo(steps, productTitle))
       );
     }
 
