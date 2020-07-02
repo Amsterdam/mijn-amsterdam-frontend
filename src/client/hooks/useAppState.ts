@@ -1,13 +1,13 @@
 import * as Sentry from '@sentry/browser';
 import { useState, useCallback, useEffect, useMemo } from 'react';
-import { useDataApi, requestApiData } from './api/api.hook';
+import { useDataApi, requestApiData, pollBffHealth } from './api/api.hook';
 import { BFFApiUrls } from '../config/api';
 import { useSSE, SSE_ERROR_MESSAGE } from './useSSE';
 import { transformAppState } from '../data-transform/appState';
 import { useTipsApi } from './api/api.tips';
 import { PRISTINE_APPSTATE, AppState } from '../AppState';
 
-const sauronRequestOptions = {
+const fallbackServiceRequestOptions = {
   url: BFFApiUrls.SERVICES_SAURON,
   postpone: true,
   transformResponse: [
@@ -18,13 +18,13 @@ const sauronRequestOptions = {
 
 /**
  * The primary communication is the EventSource. In the case the EventSource can't connect to the server, a number of retries will take place.
- * If the EventSource fails the Sauron endpoint /all will be used in a last attempt to fetch the data needed to display a fruity application.
+ * If the EventSource fails the Fallback service endpoint /all will be used in a last attempt to fetch the data needed to display a fruity application.
  * If that fails we just can't connect to the server for whatever reason. Sentry error handling might have information about this scenario.
  */
 export function useAppState() {
-  const hasEventSourceSupport = 'EventSource' in window; // IE11 and early edge versions don't have EventSource support. These browsers will use the the Sauron endpoint.
+  const hasEventSourceSupport = 'EventSource' in window; // IE11 and early edge versions don't have EventSource support. These browsers will use the the Fallback service endpoint.
   const { TIPS, fetch: fetchTips } = useTipsApi();
-  const [isTheOneEndpoint, setSauronFallback] = useState(
+  const [isFallbackServiceEnabled, setFallbackServiceEnabled] = useState(
     !hasEventSourceSupport
   );
   const [isDataRequested, setIsDateRequested] = useState(false);
@@ -42,29 +42,56 @@ export function useAppState() {
     Object.assign({}, PRISTINE_APPSTATE, { controller })
   );
 
-  const [api, fetchSauron] = useDataApi<AppState | null>(
-    sauronRequestOptions,
+  const [api, fetchFallbackService] = useDataApi<AppState | null>(
+    fallbackServiceRequestOptions,
     null
   );
 
+  function appStateError(message: string) {
+    setAppState(appState =>
+      Object.assign({}, appState, {
+        ALL: {
+          status: 'ERROR',
+          message,
+        },
+      })
+    );
+  }
+
+  // If no EvenSource support or EventSource fails, the Fallback service endpoint is used for fetching all the data.
   useEffect(() => {
-    if (!isDataRequested && isTheOneEndpoint && api.isPristine) {
+    if (!isDataRequested && isFallbackServiceEnabled && api.isPristine) {
+      // If we have EventSource support but in the case it failed
       if (hasEventSourceSupport) {
-        Sentry.captureMessage('SSE Failed, using Sauron');
+        console.log('SSE Failed, using Fallback service');
+        Sentry.captureMessage('SSE Failed, using Fallback service');
+
+        // We don't know why it failed, ashortcoming of EventSource error handling, so we poll for server health which is a likely source of failure.
+        pollBffHealth()
+          .then(() => {
+            fetchFallbackService({
+              ...fallbackServiceRequestOptions,
+              postpone: false,
+            });
+          })
+          .catch(appStateError);
+      } else {
+        // If we don't have EventSource support start with the Fallback service immediately
+        fetchFallbackService({
+          ...fallbackServiceRequestOptions,
+          postpone: false,
+        });
       }
-      fetchSauron({
-        ...sauronRequestOptions,
-        postpone: false,
-      });
     }
   }, [
-    fetchSauron,
-    isTheOneEndpoint,
+    fetchFallbackService,
+    isFallbackServiceEnabled,
     api.isPristine,
     isDataRequested,
     hasEventSourceSupport,
   ]);
 
+  // Update the appState with data fetched by the Fallback service endpoint
   useEffect(() => {
     if (isDataRequested) {
       return;
@@ -73,39 +100,34 @@ export function useAppState() {
       setAppState(appState => Object.assign({}, appState, api.data));
       setIsDateRequested(true);
     } else if (api.isError) {
+      // In the case of no EventSource support we only use the Fallback service endpoint without polling
       const errorMessage =
         'Services.all endpoint could not be reached or returns an error. ' +
-        (isTheOneEndpoint ? 'Sauron fallback enabled.' : '');
+        (isFallbackServiceEnabled ? 'Fallback service fallback enabled.' : '');
 
-      setAppState(appState =>
-        Object.assign({}, appState, {
-          ALL: {
-            status: 'ERROR',
-            message: errorMessage,
-          },
-        })
-      );
+      appStateError(errorMessage);
       setIsDateRequested(true);
     }
-  }, [appState, api, isTheOneEndpoint, isDataRequested]);
+  }, [appState, api, isFallbackServiceEnabled, isDataRequested]);
 
-  // The EventSource will only be used if we're not using theOneEndpoint.
+  // The EventSource will only be used if we have EventSource support
   const onEvent = useCallback((messageData: any) => {
     if (messageData && messageData !== SSE_ERROR_MESSAGE) {
       const transformedMessageData = transformAppState(messageData);
       setAppState(appState => {
         const appStateUpdated = {
           ...appState,
+          // Should there be an
           ...transformedMessageData,
         };
         return appStateUpdated;
       });
     } else if (messageData === SSE_ERROR_MESSAGE) {
-      setSauronFallback(true);
+      setFallbackServiceEnabled(true);
     }
   }, []);
 
-  useSSE(BFFApiUrls.SERVICES_SSE, 'message', onEvent, isTheOneEndpoint);
+  useSSE(BFFApiUrls.SERVICES_SSE, 'message', onEvent, isFallbackServiceEnabled);
 
   // Add TIPS to AppState if they are refetched
   useEffect(() => {

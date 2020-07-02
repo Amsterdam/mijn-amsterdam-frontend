@@ -3,12 +3,16 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { apiErrorResponseData } from '../../../universal/helpers/api';
 import { Action } from '../../../universal/types';
+import { BFF_API_HEALTH_URL } from '../../config/api';
 
 export interface ApiRequestOptions extends AxiosRequestConfig {
   postpone?: boolean;
 }
 
 const REQUEST_TIMEOUT = 20000; // 20seconds;
+const MAX_POLL_COUNT = 5;
+const POLL_INTERVAL_MS = 1000;
+
 export const requestApiData = axios.create({
   responseType: 'json', // default
 });
@@ -141,20 +145,12 @@ export function useDataApi<T>(
             type: ActionTypes.FETCH_FAILURE,
             payload: apiErrorResponseData(initialDataNoContent, error),
           });
-          if (error instanceof Error) {
-            Sentry.captureException(error, {
-              extra: {
-                errorMessage,
-                url: requestOptions.url?.split('?')[0],
-              },
-            });
-          } else {
-            Sentry.captureMessage(
-              `API ERROR: ${errorMessage}, url: ${
-                requestOptions.url?.split('?')[0] // Don't log query params for privacy reasons
-              }`
-            );
-          }
+          Sentry.captureException(error, {
+            extra: {
+              errorMessage,
+              url: requestOptions.url?.split('?')[0],
+            },
+          });
         }
       }
     };
@@ -173,4 +169,32 @@ export function useDataApi<T>(
   return useMemo(() => {
     return [state, refetch];
   }, [state, refetch]);
+}
+
+export function pollBffHealth() {
+  let pollCount = 0;
+
+  return new Promise((resolve, reject) => {
+    function poll() {
+      setTimeout(() => {
+        if (pollCount <= MAX_POLL_COUNT) {
+          axios({ url: BFF_API_HEALTH_URL })
+            .then(() => {
+              Sentry.captureMessage(
+                `Polling for health succeeded after ${pollCount} tries.`
+              );
+              resolve();
+            })
+            .catch(() => {
+              poll();
+            });
+        } else {
+          Sentry.captureMessage(`Polling for health failed.`);
+          reject('Could not connect to server, BFF not healthy.');
+        }
+      }, POLL_INTERVAL_MS);
+      pollCount += 1;
+    }
+    poll();
+  });
 }

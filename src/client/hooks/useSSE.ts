@@ -57,7 +57,19 @@ export function useSSE(
       console.info('Close SSE connection');
       es.close();
     };
-    const onMessageEvent = (message: any) => callback(JSON.parse(message.data));
+    const onMessageEvent = (message: any) => {
+      try {
+        callback(JSON.parse(message.data));
+      } catch (error) {
+        Sentry.captureException(error, {
+          extra: {
+            hook: 'useSSE',
+            event: 'onMessage',
+          },
+        });
+        callback(SSE_ERROR_MESSAGE);
+      }
+    };
 
     es.addEventListener('error', handleError);
     es.addEventListener('open', handleOpen);
