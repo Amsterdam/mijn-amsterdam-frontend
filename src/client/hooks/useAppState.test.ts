@@ -16,7 +16,7 @@ describe('useAppState', () => {
     }
   );
   const fetchTips = jest.fn();
-  const fetchSauron = jest.fn();
+  const fetchFallbackService = jest.fn();
 
   // @ts-ignore
   const useTipsApi = (tipsHook.useTipsApi = jest.fn(() => {
@@ -27,6 +27,8 @@ describe('useAppState', () => {
   const useSSE = (sseHook.useSSE = useSSEMock);
   // @ts-ignore
   const useDataApi = (dataApiHook.useDataApi = jest.fn());
+  // @ts-ignore
+  const pollBffHealth = (dataApiHook.pollBffHealth = jest.fn());
 
   useDataApi.mockReturnValue([
     {
@@ -36,7 +38,7 @@ describe('useAppState', () => {
       isPristine: true,
       isDirty: false,
     },
-    fetchSauron,
+    fetchFallbackService,
   ]);
 
   const initialAppState = Object.assign({}, PRISTINE_APPSTATE, {
@@ -45,10 +47,11 @@ describe('useAppState', () => {
 
   beforeEach(() => {
     fetchTips.mockClear();
-    fetchSauron.mockClear();
+    fetchFallbackService.mockClear();
     useDataApi.mockClear();
     useTipsApi.mockClear();
     useSSE.mockClear();
+    pollBffHealth.mockClear();
   });
 
   it('Should start with the SSE endpoint', async () => {
@@ -68,31 +71,31 @@ describe('useAppState', () => {
     expect(useDataApi).toBeCalledTimes(2);
     expect(useSSE).toBeCalledTimes(2);
 
-    expect(fetchSauron).toBeCalledTimes(0);
+    expect(fetchFallbackService).toBeCalledTimes(0);
 
     expect(result.current).toEqual(
       Object.assign({}, initialAppState, stateSliceMock)
     );
   });
 
-  it('Should start with the Sauron endpoint for browsers that do not have window.EventSource', () => {
+  it('Should start with the Fallback service endpoint for browsers that do not have window.EventSource', () => {
     delete (window as any).EventSource;
     const appState = renderHook(() => useAppState());
 
     expect(appState.result.current).toEqual(initialAppState);
     expect(useDataApi).toBeCalledTimes(1);
     expect(useSSE).toBeCalledTimes(1);
-    expect(fetchSauron).toBeCalledTimes(1);
+    expect(fetchFallbackService).toBeCalledTimes(1);
   });
 
-  it('Should use Sauron endpoint if EventSource fails to connect', async () => {
+  it('Should use Fallback service endpoint if EventSource fails to connect', async () => {
     (window as any).EventSource = true;
     const appState = renderHook(() => useAppState());
 
     expect(appState.result.current).toEqual(initialAppState);
     expect(useDataApi).toBeCalledTimes(1);
     expect(useSSE).toBeCalledTimes(1);
-    expect(fetchSauron).toBeCalledTimes(0);
+    expect(fetchFallbackService).toBeCalledTimes(0);
 
     useDataApi.mockReturnValueOnce([
       {
@@ -102,16 +105,19 @@ describe('useAppState', () => {
         isPristine: true,
         isDirty: false,
       },
-      fetchSauron,
+      fetchFallbackService,
     ]);
+
+    pollBffHealth.mockResolvedValueOnce('ok');
 
     act(() => {
       onEventCallback(SSE_ERROR_MESSAGE);
     });
 
-    expect(fetchSauron).toBeCalledTimes(1);
+    await expect(pollBffHealth).toHaveBeenCalled();
 
-    // Rendered again because setState to use sauron triggers update and then again when fetchSauron triggers a setState call
+    expect(fetchFallbackService).toBeCalledTimes(1);
+
     expect(useDataApi).toBeCalledTimes(3);
     expect(useSSE).toBeCalledTimes(3);
 
@@ -120,16 +126,16 @@ describe('useAppState', () => {
     );
   });
 
-  it('Should respond with an appState error entry if Sauron and SSE both fail.', async () => {
+  it('Should respond with an appState error entry if Fallback service and SSE both fail.', async () => {
     (window as any).EventSource = true;
     const appState = renderHook(() => useAppState());
 
     expect(appState.result.current).toEqual(initialAppState);
     expect(useDataApi).toBeCalledTimes(1);
     expect(useSSE).toBeCalledTimes(1);
-    expect(fetchSauron).toBeCalledTimes(0);
+    expect(fetchFallbackService).toBeCalledTimes(0);
 
-    useDataApi.mockReturnValueOnce([
+    useDataApi.mockReturnValue([
       {
         isLoading: false,
         isError: true,
@@ -137,16 +143,20 @@ describe('useAppState', () => {
         isPristine: true,
         isDirty: false,
       },
-      fetchSauron,
+      fetchFallbackService,
     ]);
+
+    pollBffHealth.mockRejectedValue('nok');
 
     act(() => {
       onEventCallback(SSE_ERROR_MESSAGE);
     });
 
-    expect(fetchSauron).toBeCalledTimes(1);
+    await expect(pollBffHealth).toHaveBeenCalled();
 
-    // Rendered again because setState to use sauron triggers update and then again when fetchSauron triggers a setState call
+    expect(fetchFallbackService).toBeCalledTimes(0);
+
+    // Rendered again because setState to use Fallback service triggers update and then again when fetchFallbackService triggers a setState call
     expect(useDataApi).toBeCalledTimes(3);
     expect(useSSE).toBeCalledTimes(3);
 
@@ -155,7 +165,7 @@ describe('useAppState', () => {
         ALL: {
           status: 'ERROR',
           message:
-            'Services.all endpoint could not be reached or returns an error. Sauron fallback enabled.',
+            'Services.all endpoint could not be reached or returns an error. Fallback service fallback enabled.',
         },
       })
     );

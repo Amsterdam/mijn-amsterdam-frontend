@@ -176,23 +176,24 @@ export function pollBffHealth() {
 
   return new Promise((resolve, reject) => {
     function poll() {
-      setTimeout(() => {
-        if (pollCount <= MAX_POLL_COUNT) {
-          axios({ url: BFF_API_HEALTH_URL })
-            .then(() => {
-              Sentry.captureMessage(
-                `Polling for health succeeded after ${pollCount} tries.`
-              );
-              resolve();
-            })
-            .catch(() => {
+      if (pollCount <= MAX_POLL_COUNT) {
+        axios({ url: BFF_API_HEALTH_URL })
+          .then(() => {
+            Sentry.captureMessage(
+              `Polling for health succeeded after ${pollCount} tries.`
+            );
+            resolve();
+          })
+          .catch(() => {
+            setTimeout(() => {
               poll();
-            });
-        } else {
-          Sentry.captureMessage(`Polling for health failed.`);
-          reject('Could not connect to server, BFF not healthy.');
-        }
-      }, POLL_INTERVAL_MS);
+            }, POLL_INTERVAL_MS);
+          });
+      } else {
+        Sentry.captureMessage(`Polling for health failed.`);
+        reject('Could not connect to server, BFF not healthy.');
+      }
+
       pollCount += 1;
     }
     poll();

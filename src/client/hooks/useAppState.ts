@@ -100,7 +100,7 @@ export function useAppState() {
       setAppState(appState => Object.assign({}, appState, api.data));
       setIsDateRequested(true);
     } else if (api.isError) {
-      // In the case of no EventSource support we only use the Fallback service endpoint without polling
+      // If everything fails, this is the final state update.
       const errorMessage =
         'Services.all endpoint could not be reached or returns an error. ' +
         (isFallbackServiceEnabled ? 'Fallback service fallback enabled.' : '');
