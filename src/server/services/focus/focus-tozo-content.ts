@@ -23,11 +23,9 @@ export const TOZO_UITKERING_PRODUCT_TITLE =
   'Tozo 1 Levensonderhoud (voor ondernemers)';
 
 // Tozo 2 aangevraagd na 20 juni 2020
-export const TOZO2_VOORSCHOT_PRODUCT_TITLE =
-  'Voorschot Tozo 2 (voor ondernemers) (Eenm.)';
+export const TOZO2_VOORSCHOT_PRODUCT_TITLE = 'Voorschot Tozo 2';
 
-export const TOZO2_LENING_PRODUCT_TITLE =
-  'Tozo 2 Bedrijfskapitaal (voor ondernemers)';
+export const TOZO2_LENING_PRODUCT_TITLE = 'Tozo 2 Bedrijfskapitaal';
 
 export const TOZO2_UITKERING_PRODUCT_TITLE =
   'Tozo 2 Levensonderhoud (voor ondernemers)';
