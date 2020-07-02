@@ -22,9 +22,11 @@ const sauronRequestOptions = {
  * If that fails we just can't connect to the server for whatever reason. Sentry error handling might have information about this scenario.
  */
 export function useAppState() {
-  const hasEventSourceSupport = !('EventSource' in window); // IE11 and early edge versions don't have EventSource support. These browsers will use the the Sauron endpoint.
+  const hasEventSourceSupport = 'EventSource' in window; // IE11 and early edge versions don't have EventSource support. These browsers will use the the Sauron endpoint.
   const { TIPS, fetch: fetchTips } = useTipsApi();
-  const [isTheOneEndpoint, setSauronFallback] = useState(hasEventSourceSupport);
+  const [isTheOneEndpoint, setSauronFallback] = useState(
+    !hasEventSourceSupport
+  );
   const [isDataRequested, setIsDateRequested] = useState(false);
 
   // The controller is used for close coupling of state refetch methods. You can put fetch methods here that can be called from components.
