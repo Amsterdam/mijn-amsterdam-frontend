@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/browser';
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import { useDataApi, requestApiData } from './api/api.hook';
 import { BFFApiUrls } from '../config/api';
@@ -15,6 +16,8 @@ const sauronRequestOptions = {
   ],
 };
 
+const hasEventSourceSupport = !('EventSource' in window); // IE11 and early edge versions don't have EventSource support. These browsers will use the the Sauron endpoint.
+
 /**
  * The primary communication is the EventSource. In the case the EventSource can't connect to the server, a number of retries will take place.
  * If the EventSource fails the Sauron endpoint /all will be used in a last attempt to fetch the data needed to display a fruity application.
@@ -22,9 +25,7 @@ const sauronRequestOptions = {
  */
 export function useAppState() {
   const { TIPS, fetch: fetchTips } = useTipsApi();
-  const [isTheOneEndpoint, setSauronFallback] = useState(
-    !('EventSource' in window) // IE11 and early edge versions don't have EventSource support. These browsers will use the the Sauron endpoint.
-  );
+  const [isTheOneEndpoint, setSauronFallback] = useState(hasEventSourceSupport);
   const [isDataRequested, setIsDateRequested] = useState(false);
 
   // The controller is used for close coupling of state refetch methods. You can put fetch methods here that can be called from components.
@@ -47,7 +48,9 @@ export function useAppState() {
 
   useEffect(() => {
     if (!isDataRequested && isTheOneEndpoint && api.isPristine) {
-      console.info('Using the Sauron endpoint.');
+      if (hasEventSourceSupport) {
+        Sentry.captureMessage('SSE Failed, using Sauron');
+      }
       fetchSauron({
         ...sauronRequestOptions,
         postpone: false,
