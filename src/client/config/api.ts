@@ -46,17 +46,19 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
 };
 
 export function getApiErrors(appState: AppState) {
-  return Object.entries(appState)
-    .filter(([, apiResponseData]: any) => {
-      return isError(apiResponseData);
-    })
-    .map(([stateKey, apiResponseData]: any) => {
-      const name = ErrorNames[stateKey] || stateKey;
-      return {
-        name,
-        error:
-          ('message' in apiResponseData ? apiResponseData.message : null) ||
-          'Communicatie met api mislukt.',
-      };
-    });
+  return !!appState
+    ? Object.entries(appState)
+        .filter(([, apiResponseData]: any) => {
+          return isError(apiResponseData);
+        })
+        .map(([stateKey, apiResponseData]: any) => {
+          const name = ErrorNames[stateKey] || stateKey;
+          return {
+            name,
+            error:
+              ('message' in apiResponseData ? apiResponseData.message : null) ||
+              'Communicatie met api mislukt.',
+          };
+        })
+    : [];
 }

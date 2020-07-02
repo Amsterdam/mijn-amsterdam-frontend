@@ -100,12 +100,14 @@ export function getMyChapters(appState: AppState): ChaptersState {
 
   return {
     items,
-    isLoading: Object.entries(appState)
-      .filter(([key]) => key !== 'controller')
-      .some(
-        ([key, apiState]) =>
-          isLoading(apiState as ApiResponse<any>) &&
-          !isError(apiState as ApiResponse<any>)
-      ),
+    isLoading:
+      !!appState &&
+      Object.entries(appState)
+        .filter(([key]) => key !== 'controller')
+        .some(
+          ([key, apiState]) =>
+            isLoading(apiState as ApiResponse<any>) &&
+            !isError(apiState as ApiResponse<any>)
+        ),
   };
 }
