@@ -69,27 +69,6 @@
     "soortProduct": "Participatiewet"
   },
   {
-    "_id": "1-1",
-    "_meest_recent": "inBehandeling",
-    "naam": "Tozo 2 Levensonderhoud (voor ondernemers)",
-    "processtappen": {
-      "aanvraag": {
-        "_id": 0,
-        "datum": "2020-06-15T16:36:02+02:00",
-        "document": []
-      },
-      "beslissing": null,
-      "bezwaar": null,
-      "herstelTermijn": null,
-      "inBehandeling": {
-        "_id": 1,
-        "datum": "2020-06-15T16:36:02+02:00",
-        "document": []
-      }
-    },
-    "soortProduct": "Participatiewet"
-  },
-  {
     "_id": "1-2",
     "_meest_recent": "beslissing",
     "dienstverleningstermijn": 21,
@@ -533,5 +512,99 @@
       }
     },
     "soortProduct": "Minimafonds"
+  },
+  {
+    "_id": "0-1",
+    "_meest_recent": "beslissing",
+    "naam": "Voorschot Tozo 2",
+    "processtappen": {
+      "aanvraag": {
+        "_id": 0,
+        "datum": "2020-06-30T15:05:00+02:00",
+        "document": []
+      },
+      "beslissing": {
+        "_id": 3,
+        "datum": "2020-06-30T15:05:00+02:00",
+        "document": []
+      },
+      "bezwaar": null,
+      "herstelTermijn": null,
+      "inBehandeling": {
+        "_id": 1,
+        "datum": "2020-06-30T15:05:00+02:00",
+        "document": []
+      }
+    },
+    "soortProduct": "Participatiewet",
+    "typeBesluit": "Toekenning"
+  },
+  {
+    "_id": "0-2",
+    "_meest_recent": "beslissing",
+    "naam": "Tozo 2 Levensonderhoud (voor ondernemers)",
+    "processtappen": {
+      "aanvraag": {
+        "_id": 0,
+        "datum": "2020-07-01T15:05:00+02:00",
+        "document": []
+      },
+      "beslissing": {
+        "_id": 3,
+        "datum": "2020-07-01T15:05:00+02:00",
+        "document": [
+          {
+            "$ref": "focus/document?id=660000000000070&isBulk=false&isDms=false",
+            "id": 660000000000070,
+            "isBulk": false,
+            "isDms": false,
+            "omschrijving": "Tozo2 Toekennen"
+          }
+        ]
+      },
+      "bezwaar": null,
+      "herstelTermijn": null,
+      "inBehandeling": {
+        "_id": 1,
+        "datum": "2020-07-01T15:05:00+02:00",
+        "document": []
+      }
+    },
+    "soortProduct": "Participatiewet",
+    "typeBesluit": "Toekenning"
+  },
+  {
+    "_id": "0-3",
+    "_meest_recent": "beslissing",
+    "naam": "Tozo 2 Bedrijfskapitaal",
+    "processtappen": {
+      "aanvraag": {
+        "_id": 0,
+        "datum": "2020-07-01T15:05:00+02:00",
+        "document": []
+      },
+      "beslissing": {
+        "_id": 3,
+        "datum": "2020-07-01T15:05:00+02:00",
+        "document": [
+          {
+            "$ref": "focus/document?id=660000000000071&isBulk=false&isDms=false",
+            "id": 660000000000071,
+            "isBulk": false,
+            "isDms": false,
+            "omschrijving": "Tozo2 Toekennen bedrijfskapitaal"
+          }
+        ]
+      },
+      "bezwaar": null,
+      "herstelTermijn": null,
+      "inBehandeling": {
+        "_id": 1,
+        "datum": "2020-07-01T15:05:00+02:00",
+        "document": []
+      }
+    },
+    "soortProduct": "Participatiewet",
+    "typeBesluit": "Toekenning"
   }
 ]
