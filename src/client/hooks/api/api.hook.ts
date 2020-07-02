@@ -141,11 +141,20 @@ export function useDataApi<T>(
             type: ActionTypes.FETCH_FAILURE,
             payload: apiErrorResponseData(initialDataNoContent, error),
           });
-          Sentry.captureMessage(
-            `API ERROR: ${errorMessage}, url: ${
-              requestOptions.url?.split('?')[0] // Don't log query params for privacy reasons
-            }`
-          );
+          if (error instanceof Error) {
+            Sentry.captureException(error, {
+              extra: {
+                errorMessage,
+                url: requestOptions.url?.split('?')[0],
+              },
+            });
+          } else {
+            Sentry.captureMessage(
+              `API ERROR: ${errorMessage}, url: ${
+                requestOptions.url?.split('?')[0] // Don't log query params for privacy reasons
+              }`
+            );
+          }
         }
       }
     };
