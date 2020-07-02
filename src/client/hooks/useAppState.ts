@@ -55,7 +55,13 @@ export function useAppState() {
         postpone: false,
       });
     }
-  }, [fetchSauron, isTheOneEndpoint, api.isPristine, isDataRequested]);
+  }, [
+    fetchSauron,
+    isTheOneEndpoint,
+    api.isPristine,
+    isDataRequested,
+    hasEventSourceSupport,
+  ]);
 
   useEffect(() => {
     if (isDataRequested) {
