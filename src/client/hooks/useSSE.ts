@@ -22,7 +22,7 @@ export function useSSE(
   }, [path]);
 
   useEffect(() => {
-    if (!es && !postpone) {
+    if (!es && !postpone && connectionCounter !== MAX_RETRY_COUNT) {
       connect();
     }
   }, [es, connect, postpone]);
