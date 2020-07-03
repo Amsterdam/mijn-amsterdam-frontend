@@ -418,7 +418,7 @@ Array [
       "title": "Meer informatie",
       "to": "/inkomen-en-stadspas/stadspas/aanvraag-226183637",
     },
-    "productTitle": "Tozo 1",
+    "productTitle": "Stadspas",
     "status": "Aanvraag",
     "steps": Array [
       Object {
@@ -469,7 +469,7 @@ Array [
       "title": "Meer informatie",
       "to": "/inkomen-en-stadspas/stadspas/aanvraag-4147155538",
     },
-    "productTitle": "Tozo 1",
+    "productTitle": "Stadspas",
     "status": "In behandeling",
     "steps": Array [
       Object {
@@ -545,7 +545,7 @@ Array [
       "title": "Meer informatie",
       "to": "/inkomen-en-stadspas/stadspas/aanvraag-2371148170",
     },
-    "productTitle": "Tozo 1",
+    "productTitle": "Stadspas",
     "status": "Informatie nodig",
     "steps": Array [
       Object {
@@ -645,7 +645,7 @@ Array [
       "title": "Meer",
       "to": "/inkomen-en-stadspas/bijstandsuitkering/aanvraag-399318441",
     },
-    "productTitle": "Tozo 1",
+    "productTitle": "Bijstandsuitkering",
     "status": "Besluit",
     "steps": Array [
       Object {
@@ -756,7 +756,7 @@ Array [
       "title": "Meer",
       "to": "/inkomen-en-stadspas/bijstandsuitkering/aanvraag-399318441",
     },
-    "productTitle": "Tozo 1",
+    "productTitle": "Bijstandsuitkering",
     "status": "Besluit",
     "steps": Array [
       Object {
@@ -854,7 +854,7 @@ Array [
       "title": "Meer",
       "to": "/inkomen-en-stadspas/bijstandsuitkering/aanvraag-399318441",
     },
-    "productTitle": "Tozo 1",
+    "productTitle": "Bijstandsuitkering",
     "status": "Besluit",
     "steps": Array [
       Object {
@@ -989,7 +989,7 @@ Array [
       "title": "Meer",
       "to": "/inkomen-en-stadspas/bijstandsuitkering/aanvraag-399318441",
     },
-    "productTitle": "Tozo 1",
+    "productTitle": "Bijstandsuitkering",
     "status": "Besluit",
     "steps": Array [
       Object {
@@ -1119,7 +1119,7 @@ Array [
     "dienstverleningstermijn": 42,
     "id": "aanvraag-226183637",
     "inspanningsperiode": 28,
-    "productTitle": "Tozo 1",
+    "productTitle": "Stadspas",
     "steps": Array [
       Object {
         "datePublished": "2019-07-08T15:05:52+02:00",
@@ -1160,7 +1160,7 @@ Array [
     "dienstverleningstermijn": 42,
     "id": "aanvraag-4147155538",
     "inspanningsperiode": 28,
-    "productTitle": "Tozo 1",
+    "productTitle": "Stadspas",
     "steps": Array [
       Object {
         "datePublished": "2019-07-07T15:05:52+02:00",
@@ -1207,7 +1207,7 @@ Array [
     "dienstverleningstermijn": 42,
     "id": "aanvraag-2371148170",
     "inspanningsperiode": 28,
-    "productTitle": "Tozo 1",
+    "productTitle": "Stadspas",
     "steps": Array [
       Object {
         "datePublished": "2019-07-03T15:05:52+02:00",
@@ -1261,7 +1261,7 @@ Array [
     "dienstverleningstermijn": 21,
     "id": "aanvraag-399318441",
     "inspanningsperiode": 28,
-    "productTitle": "Tozo 1",
+    "productTitle": "Bijstandsuitkering",
     "steps": Array [
       Object {
         "datePublished": "2019-07-24T15:05:51+02:00",
@@ -1308,7 +1308,7 @@ Array [
     "dienstverleningstermijn": 21,
     "id": "aanvraag-399318441",
     "inspanningsperiode": 28,
-    "productTitle": "Tozo 1",
+    "productTitle": "Bijstandsuitkering",
     "steps": Array [
       Object {
         "datePublished": "2019-04-09T15:05:51+02:00",
@@ -1355,7 +1355,7 @@ Array [
     "dienstverleningstermijn": 21,
     "id": "aanvraag-399318441",
     "inspanningsperiode": 28,
-    "productTitle": "Tozo 1",
+    "productTitle": "Bijstandsuitkering",
     "steps": Array [
       Object {
         "datePublished": "2019-05-09T15:05:51+02:00",
@@ -1409,7 +1409,7 @@ Array [
     "dienstverleningstermijn": 21,
     "id": "aanvraag-399318441",
     "inspanningsperiode": 28,
-    "productTitle": "Tozo 1",
+    "productTitle": "Bijstandsuitkering",
     "steps": Array [
       Object {
         "datePublished": "2019-06-08T15:05:52+02:00",
