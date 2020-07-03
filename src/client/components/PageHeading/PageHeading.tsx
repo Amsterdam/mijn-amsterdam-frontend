@@ -50,14 +50,15 @@ export default function PageHeading({
             {backLink.title}
           </Linkd>
         )}
-        {isLoading && (
-          <LoadingContent
-            className={styles.LoadingContentHeading}
-            barConfig={[['50%', '3rem', '0']]}
-          />
-        )}
         <Heading el={el} size="large">
-          {!isLoading && children}
+          {!isLoading ? (
+            <LoadingContent
+              className={styles.LoadingContentHeading}
+              barConfig={[['50%', '3rem', '0']]}
+            />
+          ) : (
+            children
+          )}
         </Heading>
       </div>
     </header>
