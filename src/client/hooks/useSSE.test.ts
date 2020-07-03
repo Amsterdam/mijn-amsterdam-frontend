@@ -39,10 +39,12 @@ describe('useAppState', () => {
 
   beforeAll(() => {
     (window as any).console.info = jest.fn();
+    (window as any).console.error = jest.fn();
   });
 
   afterAll(() => {
     (window as any).console.info.mockRestore();
+    (window as any).console.error.mockRestore();
   });
 
   beforeEach(() => {
