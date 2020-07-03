@@ -65,12 +65,9 @@ export default () => {
       <PageHeading
         icon={<ChapterIcon />}
         backLink={{ to: AppRoutes.INKOMEN, title: ChapterTitles.INKOMEN }}
+        isLoading={isLoading(FOCUS_TOZO)}
       >
-        {isLoading(FOCUS_TOZO) ? (
-          <LoadingContent barConfig={[['20rem', '3rem', '0']]} />
-        ) : (
-          TozoItem?.productTitle || title
-        )}
+        {TozoItem?.productTitle || title}
       </PageHeading>
       <PageContent className={styles.DetailPageContent}>
         {TozoItem?.productTitle === 'Tozo 1' && (

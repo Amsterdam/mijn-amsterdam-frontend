@@ -147,6 +147,7 @@ export default () => {
       <PageHeading
         icon={<ChapterIcon />}
         backLink={{ to: AppRoutes.INKOMEN, title: ChapterTitles.INKOMEN }}
+        isLoading={isLoading(FOCUS_SPECIFICATIES)}
       >
         Bijstandsuitkering {isAnnualStatementOverviewPage && 'Jaaropgaven'}
       </PageHeading>

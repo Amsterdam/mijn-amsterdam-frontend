@@ -116,7 +116,12 @@ export default () => {
 
   return (
     <OverviewPage className={styles.Inkomen}>
-      <PageHeading icon={<ChapterIcon />}>{ChapterTitles.INKOMEN}</PageHeading>
+      <PageHeading
+        isLoading={isLoadingFocus && isLoadingFocusSpecificaties}
+        icon={<ChapterIcon />}
+      >
+        {ChapterTitles.INKOMEN}
+      </PageHeading>
       <PageContent>
         <p>
           Op deze pagina vindt u informatie over uw uitkering en de

@@ -114,7 +114,9 @@ export default () => {
 
   return (
     <DetailPage className={styles.GarbageInformation}>
-      <PageHeading icon={<ChapterIcon />}>{ChapterTitles.AFVAL}</PageHeading>
+      <PageHeading isLoading={isLoading(AFVAL)} icon={<ChapterIcon />}>
+        {ChapterTitles.AFVAL}
+      </PageHeading>
       <PageContent>
         <p>
           Hieronder vindt u een overzicht van alle huis- en grofvuil

@@ -46,7 +46,9 @@ export default () => {
 
   return (
     <OverviewPage className={styles.ZorgOverviewPage}>
-      <PageHeading icon={<ChapterIcon />}>{ChapterTitles.ZORG}</PageHeading>
+      <PageHeading isLoading={isLoading(WMO)} icon={<ChapterIcon />}>
+        {ChapterTitles.ZORG}
+      </PageHeading>
       <PageContent>
         <p>
           Hieronder ziet u uw regelingen en hulpmiddelen vanuit de Wmo. Hebt u
