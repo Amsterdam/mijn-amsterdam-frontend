@@ -77,6 +77,7 @@ export default () => {
       <PageHeading
         icon={<ChapterIcon />}
         backLink={{ to: AppRoutes.INKOMEN, title: ChapterTitles.INKOMEN }}
+        isLoading={isLoading(FOCUS_AANVRAGEN)}
       >
         {title}
       </PageHeading>

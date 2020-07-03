@@ -16,12 +16,8 @@ export default () => {
 
   return (
     <TextPage>
-      <PageHeading>
-        {isLoading(CMS_CONTENT) ? (
-          <LoadingContent barConfig={[['20rem', '3rem', '0']]} />
-        ) : (
-          generalInfo?.title || 'Over Mijn Amsterdam'
-        )}
+      <PageHeading isLoading={isLoading(CMS_CONTENT)}>
+        {generalInfo?.title || 'Over Mijn Amsterdam'}
       </PageHeading>
       <PageContent>
         {isError(CMS_CONTENT) && (
