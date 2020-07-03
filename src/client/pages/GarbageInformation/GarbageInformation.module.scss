@@ -119,7 +119,7 @@
     display: block;
     content: '';
     border-bottom: .1rem solid $color-neutral-grey2;
-    width: 94rem;
+    width: $main-boxed-width;
     max-width: calc(100% - 2rem);
     left: 50%;
     transform: translateX(-50%);

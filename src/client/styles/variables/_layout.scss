@@ -1,5 +1,5 @@
 $main-max-width: 100%;
-$main-boxed-width: 94rem;
+$main-boxed-width: 96rem;
 $main-min-width: 32rem;
 $IE11-min-width: 98rem;
 
@@ -14,9 +14,6 @@ $main-header-hero-heading-overlap: 8.5rem;
 $main-header-total-height: $main-header-topbar-height +
   $main-header-navbar-height + $main-header-hero-height -
   $main-header-hero-heading-overlap;
-
-// Desktop Footer
-$main-footer-min-height: 20rem;
 
 // Phone screens
 $main-header-navbar-width--phone: $main-min-width;

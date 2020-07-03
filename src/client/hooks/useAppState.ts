@@ -133,6 +133,10 @@ export function useAppState() {
       setAppState(appState => {
         return Object.assign({}, appState, tipsState);
       });
+    } else {
+      setAppState(appState =>
+        Object.assign({}, appState, { TIPS: PRISTINE_APPSTATE.TIPS })
+      );
     }
   }, [TIPS]);
 

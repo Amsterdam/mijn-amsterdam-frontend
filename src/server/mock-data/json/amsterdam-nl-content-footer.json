@@ -1,0 +1,183 @@
+{
+  "applicatie": {
+    "url": "https://www.amsterdam.nl/algemene_onderdelen/overige/footer/",
+    "title": "Footer nieuw",
+    "label": "Footer",
+    "meta": {
+      "meta": {
+        "gegevens": {
+          "samenvatting": "<div>\r\n                <p>Gemeente Amsterdam</p>\r\n              </div>"
+        },
+        "typering": {
+          "opnemen-in-amsterdammail": "0"
+        }
+      }
+    },
+    "standaardopties": {
+      "feedback": "1",
+      "mail-de-redactie": "1",
+      "mail-dit-artikel": "1",
+      "print": "1",
+      "spreek": "0",
+      "naar-boven": "1",
+      "toevoegen-aan-mijn-applicaties": "0"
+    },
+    "uitgebreide-opties": {
+      "voeg-toe-aan-mijn-links": "0",
+      "feeds-op-deze-pagina": "1",
+      "deel-deze-pagina": "1",
+      "deel-deze-pagina-facebook": "1",
+      "deel-deze-pagina-twitter": "1",
+      "deel-deze-pagina-googleplus": "0",
+      "deel-deze-pagina-linkedin": "1",
+      "deel-deze-pagina-whatsapp": "1"
+    },
+    "blok": {
+      "zijbalk": [
+        {
+          "lijst": [
+            {
+              "omschrijving": {
+                "titel": "Over deze site"
+              },
+              "verwijzing": [
+                {
+                  "intern": [
+                    {
+                      "link": {
+                        "label": "Colofon",
+                        "url": "https://www.amsterdam.nl/overdezesite/"
+                      }
+                    },
+                    {
+                      "link": {
+                        "label": "Privacy en cookies",
+                        "url": "https://www.amsterdam.nl/privacy/"
+                      }
+                    },
+                    {
+                      "link": {
+                        "label": "Webarchief",
+                        "url": "https://www.amsterdam.nl/nieuwsarchief/"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "omschrijving": {
+                "titel": "Contact",
+                "tekst": "<div>\r\n                  <p>Hebt u een vraag en kunt u het antwoord niet vinden op deze website? Neem dan contact met ons op.</p>\r\n                  <ul>\r\n                    <li>\r\n                      <a href=\"https://formulieren.amsterdam.nl/tripleforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx\" class=\"externLink\">Contactformulier</a>\r\n                    </li>\r\n                    <li>\r\n                      <strong>Bel het telefoonnummer <a href=\"tel:14020\" class=\"externLink\">14 020</a><br /></strong>maandag tot en met vrijdag van 08.00 tot 18.00 uur</li>\r\n                    <li>\r\n                      <a itemtype=\"1\" pagetype=\"subhome\" class=\"siteLink ptsubhome\" resolved=\"true\" href=\"https://www.amsterdam.nl/contact/\">Contactgegevens en openingstijden</a>\r\n                    </li>\r\n                  </ul>\r\n                </div>"
+              }
+            },
+            {
+              "omschrijving": {
+                "titel": "Volg de gemeente"
+              },
+              "verwijzing": [
+                {
+                  "intern": [
+                    {
+                      "link": {
+                        "label": "Nieuwsbrief Amsterdam.nl",
+                        "url": "https://www.amsterdam.nl/nieuwsbrief/"
+                      }
+                    },
+                    {
+                      "link": {
+                        "label": "Werkenbij",
+                        "url": "https://www.amsterdam.nl/bestuur-organisatie/werkenbij/"
+                      }
+                    }
+                  ],
+                  "extern": [
+                    {
+                      "link": {
+                        "label": "Twitter",
+                        "url": "https://twitter.com/AmsterdamNL"
+                      },
+                      "openen-in": {
+                        "label": "Huidig venster",
+                        "value": "self"
+                      }
+                    },
+                    {
+                      "link": {
+                        "label": "Facebook",
+                        "url": "https://www.facebook.com/gemeenteamsterdam"
+                      },
+                      "openen-in": {
+                        "label": "Huidig venster",
+                        "value": "self"
+                      }
+                    },
+                    {
+                      "link": {
+                        "label": "Instagram",
+                        "url": "https://www.instagram.com/gemeenteamsterdam/"
+                      },
+                      "openen-in": {
+                        "label": "Huidig venster",
+                        "value": "self"
+                      }
+                    },
+                    {
+                      "link": {
+                        "label": "LinkedIn",
+                        "url": "https://www.linkedin.com/company/gemeente-amsterdam"
+                      },
+                      "openen-in": {
+                        "label": "Huidig venster",
+                        "value": "self"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "omschrijving": {
+                "titel": "Uit in Amsterdam",
+                "tekst": "<div>\r\n                  <p>Wat is er te doen in Amsterdam? Informatie over toerisme, cultuur, uitgaan, evenementen en meer vindt u op <a href=\"http://www.iamsterdam.com\" class=\"externLink\">Iamsterdam.com</a></p>\r\n                </div>"
+              }
+            },
+            {
+              "verwijzing": [
+                {
+                  "intern": [
+                    {
+                      "link": {
+                        "label": "Over deze site",
+                        "url": "https://www.amsterdam.nl/overdezesite/"
+                      }
+                    },
+                    {
+                      "link": {
+                        "label": "Privacy",
+                        "url": "https://www.amsterdam.nl/privacy/"
+                      }
+                    },
+                    {
+                      "link": {
+                        "label": "Cookies op deze site",
+                        "url": "https://www.amsterdam.nl/privacy/cookies-site/"
+                      }
+                    },
+                    {
+                      "link": {
+                        "label": "Webarchief",
+                        "url": "https://www.amsterdam.nl/nieuwsarchief/"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "diagram": {}
+  }
+}
