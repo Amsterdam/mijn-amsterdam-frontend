@@ -30,6 +30,7 @@ export const TOZO2_LENING_PRODUCT_TITLE = 'Tozo 2 Bedrijfskapitaal';
 export const TOZO2_UITKERING_PRODUCT_TITLE =
   'Tozo 2 Levensonderhoud (voor ondernemers)';
 
+// Used to filter the tozo documents from the api response
 export const TOZO_AANVRAAG_DOCUMENT_TYPES = [
   'E-AANVR-TOZO',
   'E-AANVR-TOZ2',
@@ -56,21 +57,33 @@ export const tozoTitleTranslations: DocumentTitles = {
   // Aanvraag Tozo 2
   'E-AANVR-TOZ2': 'Ontvangst- bevestiging Aanvraag',
 
-  // Voorschot
+  // Product documenten vertalingen
   'Voorschot Bbz Corona regeling (Eenm.)': 'Brief betaling voorschot',
+  'Bbz Toekennen voorschot Tozo': 'Brief betaling voorschot',
   'Bbz Toekennen voorschot Tozo via batch': 'Brief betaling voorschot',
-
-  // Uitkering
-  'Hersteltermijn uitkering Tozo': 'Brief meer informatie',
+  'Hersteltermijn uitkering Tozo': 'Brief hersteltermijn',
   'Afwijzen uitkering Tozo': 'Brief besluit uitkering',
   'Toekennen uitkering Tozo': 'Brief besluit uitkering',
   'Tozo Toekennen': 'Brief besluit uitkering',
+  'Tozo Afwijzen': 'Brief besluit [type]',
+  'Tozo Buiten behandeling laten': 'Brief besluit [type]',
   'Tozo Hersteltermijn': 'Brief meer informatie',
-
-  // Lening
   'Hersteltermijn lening Tozo': 'Brief meer informatie',
   'Afwijzen lening Tozo': 'Brief besluit lening',
   'Toekennen lening Tozo': 'Brief besluit lening',
+  'Tozo Toekennen bedrijfskapitaal': 'Brief besluit lening ',
+  'Tozo Toekennen via batch': 'Brief besluit uitkering',
+  'Tozo Intrekken met terugvordering voorschot': 'Brief besluit uitkering',
+  'Tozo Intrekken': 'Brief besluit [type]',
+  'Tozo Vrije beschikking': 'Brief besluit [type]',
+  'Tozo2 Toekennen voorschot via batch': 'Brief betaling voorschot',
+  'Tozo2 Toekennen': 'Brief besluit [type]',
+  'Tozo2 Afwijzen': 'Brief besluit [type]',
+  'Tozo2 Buiten behandeling laten': 'Brief besluit [type]',
+  'Tozo2 Hersteltermijn': 'Brief meer informatie',
+  'Tozo2 Toekennen bedrijfskapitaal': 'Brief besluit lening',
+  'Tozo2 Intrekken met terugvordering voorschot': 'Brief besluit uitkering',
+  'Tozo2 Intrekken': 'Brief besluit [type]',
 
   // Tozo 1
   [TOZO_VOORSCHOT_PRODUCT_TITLE]: 'Tozo 1-voorschot',

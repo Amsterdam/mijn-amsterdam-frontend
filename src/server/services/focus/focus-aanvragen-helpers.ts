@@ -355,8 +355,7 @@ export function translateFocusProduct(
   const prod = Object.assign({}, product);
 
   prod.title = titleTranslations[prod.title] || prod.title;
-
-  prod.productTitle = prod.title.startsWith('Tozo 2') ? 'Tozo 2' : 'Tozo 1';
+  prod.productTitle = prod.title;
 
   prod.steps = prod.steps.map(step => {
     return Object.assign({}, step, {

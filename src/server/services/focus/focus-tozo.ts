@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/node';
 import { FeatureToggle } from '../../../universal/config/app';
 import {
   apiDependencyError,
@@ -7,11 +6,7 @@ import {
 } from '../../../universal/helpers';
 import { MyCase, MyNotification } from '../../../universal/types';
 import { fetchFOCUS } from './focus-aanvragen';
-import {
-  createFocusRecentCase,
-  isRecentItem,
-  translateFocusProduct,
-} from './focus-aanvragen-helpers';
+import { createFocusRecentCase, isRecentItem } from './focus-aanvragen-helpers';
 import { fetchFOCUSCombined } from './focus-combined';
 import {
   contentLabels,
@@ -28,6 +23,7 @@ import {
   createFocusTozoAanvraagNotification,
   createFocusTozoStepNotification,
   createTozoProductSetStepsCollection,
+  translateFocusTozoProduct,
 } from './focus-tozo-helpers';
 import { FocusItem } from './focus-types';
 
@@ -48,7 +44,7 @@ async function fetchFOCUSTozoNormalized(
       .filter(product => {
         return TOZO_PRODUCT_TITLES.includes(product.title);
       })
-      .map(product => translateFocusProduct(product, tozoTitleTranslations))
+      .map(product => translateFocusTozoProduct(product, tozoTitleTranslations))
       .sort(dateSort('dateStart'));
 
     const voorschottenNormalized = FOCUS_AANVRAGEN.content
@@ -58,7 +54,7 @@ async function fetchFOCUSTozoNormalized(
           (FeatureToggle.tozo2active &&
             TOZO2_VOORSCHOT_PRODUCT_TITLE === product.title)
       )
-      .map(product => translateFocusProduct(product, tozoTitleTranslations))
+      .map(product => translateFocusTozoProduct(product, tozoTitleTranslations))
       .sort(dateSort('dateStart'));
 
     const documenten = Array.isArray(FOCUS_COMBINED.content.tozodocumenten)

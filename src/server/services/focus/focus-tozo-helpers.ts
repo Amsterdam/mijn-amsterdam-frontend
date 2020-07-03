@@ -28,7 +28,7 @@ import {
   LabelData,
 } from './focus-types';
 
-interface collectTozoDocumentsProps {
+interface collectTozoAanvraagDocumentsProps {
   filter: (item: FocusTozoDocument) => boolean;
   documenten: FocusTozoDocument[];
   titleTranslations: DocumentTitles;
@@ -41,12 +41,12 @@ interface collectTozoVoorschottenProps {
   contentLabels: LabelData;
 }
 
-function collectTozoDocuments({
+function collectTozoAanvraagDocuments({
   filter,
   documenten,
   titleTranslations,
   productTitle,
-}: collectTozoDocumentsProps) {
+}: collectTozoAanvraagDocumentsProps) {
   const documentenFiltered = documenten?.filter(filter);
 
   if (documentenFiltered?.length) {
@@ -78,6 +78,35 @@ function collectTozoVoorschotten({
   }
 
   return stepSet;
+}
+
+export function translateFocusTozoProduct(
+  product: FocusProduct,
+  titleTranslations: DocumentTitles
+) {
+  const prod = Object.assign({}, product);
+
+  prod.title = titleTranslations[prod.title] || prod.title; // Translates to Tozo x-uitkering or to Tozo x-lening
+  prod.productTitle = prod.title.startsWith('Tozo 2') ? 'Tozo 2' : 'Tozo 1';
+
+  // Get the type part of the title
+  const productType = prod.title.split('-')[1];
+
+  prod.steps = prod.steps.map(step => {
+    return Object.assign({}, step, {
+      documents: step.documents.map(doc => {
+        const translatedTitle = titleTranslations[doc.title];
+        const title = translatedTitle
+          ? translatedTitle.replace(/\[type\]/g, productType || '') // Some documents can represent both uitkering or lening, add the type here.
+          : doc.title;
+        return Object.assign({}, doc, {
+          title,
+        });
+      }),
+    });
+  });
+
+  return prod;
 }
 
 interface createTozoProductSetStepsCollectionProps {
@@ -232,7 +261,7 @@ export function createTozoProductSetStepsCollection({
       stepSet.push(...steps);
     }
 
-    let documentsFilter: collectTozoDocumentsProps['filter'];
+    let documentsFilter: collectTozoAanvraagDocumentsProps['filter'];
     let voorschottenFilter: collectTozoVoorschottenProps['filter'];
 
     if (index === 0) {
@@ -280,7 +309,7 @@ export function createTozoProductSetStepsCollection({
       stepSet.push(...generatedVoorschottenSteps);
     }
 
-    const generatedDocumentStep = collectTozoDocuments({
+    const generatedDocumentStep = collectTozoAanvraagDocuments({
       filter: documentsFilter,
       documenten,
       titleTranslations: tozoTitleTranslations,
