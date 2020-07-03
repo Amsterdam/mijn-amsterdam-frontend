@@ -39,7 +39,7 @@ export default () => {
 
   return (
     <OverviewPage className={styles.BurgerzakenOverviewPage}>
-      <PageHeading icon={<ChapterIcon />}>
+      <PageHeading isLoading={isLoading(BRP)} icon={<ChapterIcon />}>
         {ChapterTitles.BURGERZAKEN}
       </PageHeading>
       <PageContent>

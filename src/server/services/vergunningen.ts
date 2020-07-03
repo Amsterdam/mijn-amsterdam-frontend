@@ -8,7 +8,7 @@ import { dateSort } from '../../universal/helpers/date';
 import { Chapters } from '../../universal/config/index';
 
 export interface VergunningSource {
-  status: string;
+  status: 'Toewijzen' | 'Afgehandeld' | 'Ontvangen' | string;
   title: string;
   identifier: string;
   caseType: string;
@@ -91,15 +91,33 @@ export function createVergunningRecentCase(item: Vergunning): MyCase {
 }
 
 export function createVergunningNotification(item: Vergunning) {
+  const title = 'Vergunningsaanvraag';
+  let description = 'Er is een update in uw vergunningsaanvraag.';
+  let datePublished = item.dateRequest;
+
+  switch (true) {
+    case item.status === 'Afgehandeld' && item.decision !== 'Verleend':
+      description = `Uw vergunningsaanvraag ${item.caseType} is niet verleend`;
+      datePublished = item.dateDecision || item.dateRequest;
+      break;
+    case item.status === 'Afgehandeld' && item.decision === 'Verleend':
+      description = `Uw vergunningsaanvraag ${item.caseType} is verleend`;
+      datePublished = item.dateDecision || item.dateRequest;
+      break;
+    case item.status !== 'Afgehandeld':
+      description = `Uw vergunningsaanvraag ${item.caseType} is geregistreerd`;
+      break;
+  }
+
   return {
     id: `vergunning-${item.id}-notification`,
-    datePublished: item.dateRequest,
+    datePublished,
     chapter: Chapters.VERGUNNINGEN,
-    title: 'Uw vergunningsaanvraag',
-    description: 'Er is een update in uw vergunningsaanvraag.',
+    title,
+    description,
     link: {
       to: item.link.to,
-      title: 'Bekijk vergunningsaanvraag',
+      title: 'Bekijk details',
     },
   };
 }

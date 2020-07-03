@@ -13,8 +13,8 @@
       "timeEnd": "17:00",
       "timeStart": "18:00",
       "title": "7,5 ton ontheffing",
-      "outcome": null,
-      "dateOutcome": null
+      "decision": null,
+      "dateDecision": null
     },
     {
       "caseType": "TVM - RVV - Object",
@@ -29,8 +29,8 @@
       "timeEnd": null,
       "timeStart": null,
       "title": "SB RVV ontheffing hele stad",
-      "outcome": null,
-      "dateOutcome": null
+      "decision": null,
+      "dateDecision": null
     },
     {
       "caseType": "TVM - RVV - Object",
@@ -45,8 +45,8 @@
       "timeEnd": "09:00",
       "timeStart": "19:00",
       "title": "SB RVV ontheffing hele stad",
-      "outcome": "Afgewezen",
-      "dateOutcome": "2020-06-29T00:00:00"
+      "decision": "Afgewezen",
+      "dateDecision": "2020-06-29T00:00:00"
     },
     {
       "caseType": "TVM - RVV - Object",
@@ -61,8 +61,8 @@
       "timeEnd": null,
       "timeStart": null,
       "title": "Wacht op online betaling",
-      "outcome": "Verleend",
-      "dateOutcome": "2020-05-23T00:00:00"
+      "decision": "Verleend",
+      "dateDecision": "2020-05-23T00:00:00"
     },
     {
       "caseType": "TVM - RVV - Object",
@@ -77,8 +77,8 @@
       "timeEnd": "12:00",
       "timeStart": "18:00",
       "title": "Nellestein RVV ontheffing",
-      "outcome": null,
-      "dateOutcome": null
+      "decision": null,
+      "dateDecision": null
     },
     {
       "caseType": "TVM - RVV - Object",
@@ -93,8 +93,8 @@
       "timeEnd": null,
       "timeStart": null,
       "title": "Wacht op online betaling",
-      "outcome": null,
-      "dateOutcome": null
+      "decision": null,
+      "dateDecision": null
     }
   ],
   "status": "OK"

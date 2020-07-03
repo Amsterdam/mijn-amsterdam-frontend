@@ -39,7 +39,9 @@ export default function Profile() {
 
   return (
     <DetailPage className={styles.Profile}>
-      <PageHeading icon={<ChapterIcon />}>Mijn gegevens</PageHeading>
+      <PageHeading icon={<ChapterIcon />} isLoading={isLoading(BRP)}>
+        Mijn gegevens
+      </PageHeading>
       <PageContent className={styles.Intro}>
         <p>
           In de Basisregistratie Personen legt de gemeente persoonsgegevens over

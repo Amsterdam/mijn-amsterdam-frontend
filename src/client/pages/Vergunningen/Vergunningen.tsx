@@ -60,7 +60,7 @@ export default () => {
 
   return (
     <OverviewPage className={styles.Vergunningen}>
-      <PageHeading icon={<ChapterIcon />}>
+      <PageHeading isLoading={isLoading(VERGUNNINGEN)} icon={<ChapterIcon />}>
         {ChapterTitles.VERGUNNINGEN}
       </PageHeading>
       <PageContent>
