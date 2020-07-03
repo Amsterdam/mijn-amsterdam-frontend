@@ -7,6 +7,8 @@ import { useDesktopScreen } from '../../hooks/media.hook';
 import Linkd from '../Button/Button';
 import { InnerHtml } from '../index';
 import styles from './MainFooter.module.scss';
+import footerData from './amsterdam-nl-footer-data.json';
+import { CMSFooterContent } from '../../../server/services';
 
 interface PanelState {
   [panelId: string]: boolean;
@@ -52,7 +54,8 @@ function FooterBlock({
 
 export default function MainFooter() {
   const { CMS_CONTENT } = useContext(AppContext);
-  const footerItems = CMS_CONTENT.content?.footer || [];
+  const footerItems =
+    CMS_CONTENT.content?.footer || (footerData as CMSFooterContent) || [];
 
   return (
     <footer className={styles.MainFooter} id="MainFooter">

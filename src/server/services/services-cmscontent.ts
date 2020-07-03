@@ -59,7 +59,7 @@ interface FooterBlock {
   links: LinkProps[];
 }
 
-type CMSFooterContent = FooterBlock[];
+export type CMSFooterContent = FooterBlock[];
 
 export async function loadServicesCMSContent(
   sessionID: SessionID,
