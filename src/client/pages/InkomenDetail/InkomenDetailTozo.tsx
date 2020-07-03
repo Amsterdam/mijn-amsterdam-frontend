@@ -87,21 +87,24 @@ export default () => {
         )}
         <p>
           Onderstaand ziet u de status van uw aanvraag voor een{' '}
-          {TozoItem?.productTitle}-uitkering en/of een {TozoItem?.productTitle}
+          {TozoItem?.productTitle || 'Tozo'}-uitkering en/of een{' '}
+          {TozoItem?.productTitle || 'Tozo'}
           -lening. Indien u beide heeft aangevraagd, ontvangt u voor beide een
           apart besluit. Informatie die u hier ziet is een werkdag vertraagd.
         </p>
-        <p>
-          {TozoItem?.productTitle === 'Tozo 1' ? (
-            <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
-              Meer informatie over de {TozoItem?.title}
-            </Linkd>
-          ) : (
-            <Linkd external={true} href={ExternalUrls.WPI_TOZO2}>
-              Meer informatie over de {TozoItem?.title}
-            </Linkd>
-          )}
-        </p>
+        {!isLoading(FOCUS_TOZO) && (
+          <p>
+            {TozoItem?.productTitle === 'Tozo 1' ? (
+              <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
+                Meer informatie over de {TozoItem?.title}
+              </Linkd>
+            ) : (
+              <Linkd external={true} href={ExternalUrls.WPI_TOZO2}>
+                Meer informatie over de {TozoItem?.title}
+              </Linkd>
+            )}
+          </p>
+        )}
         {(isError(FOCUS_TOZO) || noContent) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>
