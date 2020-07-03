@@ -21,7 +21,7 @@ export async function loadServicesMap(sessionID: SessionID, samlToken: string) {
 
   let embed = {
     advanced: `${MAP_URL}&center=${lat}%2C${lng}&zoom=${CITY_ZOOM}&${CITY_LAYERS_CONFIG}&legenda=true`,
-    simple: `${MAP_URL}&center=${lat}%2C${lng}&zoom=${LOCATION_ZOOM}`,
+    simple: `${MAP_URL}&center=${lat}%2C${lng}&zoom=${CITY_ZOOM}`,
   };
 
   if (HOME.status === 'OK' && HOME.content?.latlng) {
