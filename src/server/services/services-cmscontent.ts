@@ -112,10 +112,18 @@ export async function loadServicesCMSContent(
             };
 
             if (item.verwijzing && item.verwijzing[0]) {
-              const links = [
-                ...(item.verwijzing[0]?.intern || []),
-                ...(item.verwijzing[0]?.extern || []),
-              ]
+              const verwijzing = item.verwijzing[0];
+              const intern = Array.isArray(verwijzing.intern)
+                ? verwijzing.intern
+                : typeof verwijzing.intern === 'object'
+                ? [verwijzing.intern]
+                : [];
+              const extern = Array.isArray(verwijzing.extern)
+                ? verwijzing.extern
+                : typeof verwijzing.extern === 'object'
+                ? [verwijzing.extern]
+                : [];
+              const links = [...intern, ...extern]
                 .filter(item => !!item.link)
                 .map(item => {
                   const { link } = item;

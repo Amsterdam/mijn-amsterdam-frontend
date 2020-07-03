@@ -77,21 +77,17 @@
               },
               "verwijzing": [
                 {
-                  "intern": [
+                  "extern": [
                     {
                       "link": {
-                        "label": "Nieuwsbrief Amsterdam.nl",
-                        "url": "https://www.amsterdam.nl/nieuwsbrief/"
+                        "label": "Nieuwsbrief amsterdam.nl",
+                        "url": "https://action.spike.email/104050/Subscribe/9f53558f-601d-4db8-97d6-a78bccd6e39d?culture=nl-NL"
+                      },
+                      "openen-in": {
+                        "label": "Huidig venster",
+                        "value": "self"
                       }
                     },
-                    {
-                      "link": {
-                        "label": "Werkenbij",
-                        "url": "https://www.amsterdam.nl/bestuur-organisatie/werkenbij/"
-                      }
-                    }
-                  ],
-                  "extern": [
                     {
                       "link": {
                         "label": "Twitter",
@@ -132,7 +128,13 @@
                         "value": "self"
                       }
                     }
-                  ]
+                  ],
+                  "intern": {
+                    "link": {
+                      "label": "Werkenbij",
+                      "url": "https://www.amsterdam.nl/bestuur-organisatie/werkenbij/"
+                    }
+                  }
                 }
               ]
             },

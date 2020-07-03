@@ -2,7 +2,7 @@
   {
     "id": "1596231333",
     "title": "Contact",
-    "description": "<p>Hebt u een vraag en kunt u het antwoord niet vinden op deze website? Neem dan contact met ons op.</p><ul>  <li>    <a href=\"https://formulieren.amsterdam.nl/tripleforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx\">Contactformulier</a>  </li>  <li>    <strong>Bel het telefoonnummer <a href=\"tel:14020\">14 020</a></strong>maandag tot en met vrijdag van 08.00 tot 18.00 uur</li>  <li>    <a href=\"https://www.amsterdam.nl/contact/\">Contactgegevens en openingstijden</a>  </li></ul>",
+    "description": "<p>Hebt u een vraag en kunt u het antwoord niet vinden op deze website? Neem dan contact met ons op.</p>\r\n                  <ul>\r\n                    <li>\r\n                      <a href=\"https://formulieren.amsterdam.nl/tripleforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx\">Contactformulier</a>\r\n                    </li>\r\n                    <li>\r\n                      <strong>Bel het telefoonnummer <a href=\"tel:14020\">14 020</a></strong>maandag tot en met vrijdag van 08.00 tot 18.00 uur</li>\r\n                    <li>\r\n                      <a href=\"https://www.amsterdam.nl/contact/\">Contactgegevens en openingstijden</a>\r\n                    </li>\r\n                  </ul>",
     "links": []
   },
   {
@@ -11,12 +11,12 @@
     "description": null,
     "links": [
       {
-        "to": "https://www.amsterdam.nl/nieuwsbrief/",
-        "title": "Nieuwsbrief Amsterdam.nl"
-      },
-      {
         "to": "https://www.amsterdam.nl/bestuur-organisatie/werkenbij/",
         "title": "Werkenbij"
+      },
+      {
+        "to": "https://action.spike.email/104050/Subscribe/9f53558f-601d-4db8-97d6-a78bccd6e39d?culture=nl-NL",
+        "title": "Nieuwsbrief amsterdam.nl"
       },
       {
         "to": "https://twitter.com/AmsterdamNL",
