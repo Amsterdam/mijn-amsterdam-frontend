@@ -106,7 +106,7 @@ export async function loadServicesCMSContent(
               id: hash(item.omschrijving.titel),
               title: item.omschrijving.titel,
               description: item.omschrijving.tekst
-                ? sanitizeCmsContent(item.omschrijving.tekst)
+                ? sanitizeCmsContent(item.omschrijving.tekst).trim()
                 : null,
               links: [],
             };

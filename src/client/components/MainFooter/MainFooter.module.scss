@@ -2,7 +2,6 @@
 
 .MainFooter {
   background-color: $color-neutral-grey4;
-  min-height: $main-footer-min-height;
 }
 
 .InnerContainer {
@@ -13,6 +12,9 @@
 .TopBar {
   display: flex;
   min-height: 30rem;
+  @include mq-tablet {
+    min-height: 16.7rem;
+  }
   padding: 3rem 0 5rem;
 
   &, a, a:hover {
@@ -76,7 +78,7 @@
 
     h3 {
       padding-left: 2.8rem;
-      margin-top: 2rem;
+      margin-top: 1.4rem;
       width: fit-content;
 
       &:before {

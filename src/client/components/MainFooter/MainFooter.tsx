@@ -38,7 +38,7 @@ function FooterBlock({
       {!!links.length && (
         <ul>
           {links.map(link => (
-            <li>
+            <li key={link.title}>
               <Linkd external={true} href={link.to}>
                 {link.title}
               </Linkd>
@@ -53,8 +53,6 @@ function FooterBlock({
 export default function MainFooter() {
   const { CMS_CONTENT } = useContext(AppContext);
   const footerItems = CMS_CONTENT.content?.footer || [];
-
-  console.log(CMS_CONTENT.content?.footer);
 
   return (
     <footer className={styles.MainFooter} id="MainFooter">
