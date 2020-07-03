@@ -5,7 +5,7 @@ import { BFFApiUrls } from '../config/api';
 import { useSSE, SSE_ERROR_MESSAGE } from './useSSE';
 import { transformAppState } from '../data-transform/appState';
 import { useTipsApi } from './api/api.tips';
-import { PRISTINE_APPSTATE, AppState } from '../AppState';
+import { PRISTINE_APPSTATE, AppState, createAllErrorState } from '../AppState';
 
 const fallbackServiceRequestOptions = {
   url: BFFApiUrls.SERVICES_SAURON,
@@ -48,14 +48,12 @@ export function useAppState() {
   );
 
   function appStateError(message: string) {
-    setAppState(appState =>
-      Object.assign({}, appState, {
-        ALL: {
-          status: 'ERROR',
-          message,
-        },
-      })
-    );
+    Sentry.captureMessage('Could not load any data sources.', {
+      extra: {
+        message,
+      },
+    });
+    setAppState(appState => createAllErrorState(appState, message));
   }
 
   // If no EvenSource support or EventSource fails, the Fallback service endpoint is used for fetching all the data.
@@ -63,8 +61,7 @@ export function useAppState() {
     if (!isDataRequested && isFallbackServiceEnabled && api.isPristine) {
       // If we have EventSource support but in the case it failed
       if (hasEventSourceSupport) {
-        console.log('SSE Failed, using Fallback service');
-        Sentry.captureMessage('SSE Failed, using Fallback service');
+        console.info('SSE Failed, using Fallback service');
 
         // We don't know why it failed, ashortcoming of EventSource error handling, so we poll for server health which is a likely source of failure.
         pollBffHealth()

@@ -178,7 +178,7 @@ router.get(`/source-api`, async function(
 router.get(
   `/status/health`,
   (req: Request, res: Response, next: NextFunction) => {
-    res.send('OK');
+    res.json({ status: 'OK' });
     next();
   }
 );

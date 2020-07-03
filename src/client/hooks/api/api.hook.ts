@@ -71,8 +71,6 @@ function createApiDataReducer<T>() {
 export const DEFAULT_REQUEST_OPTIONS: ApiRequestOptions = {
   // Postpone fetch when hook is called/set-up for the first time
   postpone: false,
-  // timeout in ms
-  // timeout: 2000,
 };
 
 export function getDefaultState<T>(initialData: T, postpone = false) {
@@ -111,11 +109,12 @@ export function useDataApi<T>(
 
   useEffect(() => {
     let didCancel = false;
+    let requestTimeout;
 
     const fetchData = async () => {
       let source = axios.CancelToken.source();
 
-      setTimeout(() => {
+      requestTimeout = setTimeout(() => {
         source.cancel('Request timeout.');
       }, REQUEST_TIMEOUT);
 
@@ -145,14 +144,24 @@ export function useDataApi<T>(
             type: ActionTypes.FETCH_FAILURE,
             payload: apiErrorResponseData(initialDataNoContent, error),
           });
-          Sentry.captureException(error, {
-            extra: {
-              errorMessage,
-              url: requestOptions.url?.split('?')[0],
-            },
-          });
+          if (!(error instanceof Error)) {
+            Sentry.captureMessage(errorMessage, {
+              extra: {
+                url: requestOptions.url?.split('?')[0],
+              },
+            });
+          } else {
+            Sentry.captureException(error, {
+              extra: {
+                errorMessage,
+                url: requestOptions.url?.split('?')[0],
+              },
+            });
+          }
         }
       }
+
+      clearTimeout(requestTimeout);
     };
 
     if (requestOptions.postpone !== true && requestOptions.url !== '') {
@@ -175,14 +184,25 @@ export function pollBffHealth() {
   let pollCount = 0;
 
   return new Promise((resolve, reject) => {
+    function fail(reject: any) {
+      Sentry.captureMessage(`Polling for health failed.`);
+      reject('Could not connect to server, BFF not healthy.');
+    }
     function poll() {
       if (pollCount <= MAX_POLL_COUNT) {
-        axios({ url: BFF_API_HEALTH_URL })
-          .then(() => {
-            Sentry.captureMessage(
-              `Polling for health succeeded after ${pollCount} tries.`
-            );
-            resolve();
+        axios({ url: BFF_API_HEALTH_URL, responseType: 'json' })
+          .then((response: { data: { status: 'OK' } | string }) => {
+            if (
+              typeof response.data !== 'string' &&
+              response.data?.status === 'OK'
+            ) {
+              Sentry.captureMessage(
+                `Polling for health succeeded after ${pollCount} tries.`
+              );
+              resolve();
+            } else {
+              fail(reject);
+            }
           })
           .catch(() => {
             setTimeout(() => {
@@ -190,8 +210,7 @@ export function pollBffHealth() {
             }, POLL_INTERVAL_MS);
           });
       } else {
-        Sentry.captureMessage(`Polling for health failed.`);
-        reject('Could not connect to server, BFF not healthy.');
+        fail(reject);
       }
 
       pollCount += 1;

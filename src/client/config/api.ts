@@ -54,6 +54,7 @@ export function getApiErrors(appState: AppState) {
         .map(([stateKey, apiResponseData]: any) => {
           const name = ErrorNames[stateKey] || stateKey;
           return {
+            stateKey,
             name,
             error:
               ('message' in apiResponseData ? apiResponseData.message : null) ||

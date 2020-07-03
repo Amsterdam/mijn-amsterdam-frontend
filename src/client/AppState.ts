@@ -81,4 +81,15 @@ export const PRISTINE_APPSTATE = {
   controller: {},
 };
 
+export const ALL_ERROR_STATE_KEY = 'ALL';
+
+export function createAllErrorState(state: AppState, message: string) {
+  return Object.assign({}, state, {
+    [ALL_ERROR_STATE_KEY]: {
+      status: 'ERROR',
+      message,
+    },
+  });
+}
+
 export const AppContext = createContext<AppState>(PRISTINE_APPSTATE);

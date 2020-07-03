@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/browser';
 import { useCallback, useEffect, useState } from 'react';
 
 let connectionCounter = 0;
@@ -17,7 +16,7 @@ export function useSSE(
   const connect = useCallback(() => {
     const es = new EventSource(path);
     connectionCounter += 1;
-    console.info('Connecting to SSE', connectionCounter);
+    console.info('[SSE] Connect ', connectionCounter);
     setEventSource(es);
   }, [path]);
 
@@ -33,7 +32,7 @@ export function useSSE(
     }
 
     const handleError = (error: any) => {
-      console.info('Error in SSE connection');
+      console.info('[SSE] Error connecting');
 
       es.close();
 
@@ -44,29 +43,24 @@ export function useSSE(
       }, WAIT_MS_BEFORE_RETRY);
 
       if (connectionCounter === MAX_RETRY_COUNT) {
-        const errorMessage = `EventSource can't establish a connection to the server after ${connectionCounter} tries.`;
-        Sentry.captureMessage(errorMessage);
-
+        console.error(
+          `[SSE] can't establish connection after ${connectionCounter} tries.`
+        );
         callback(SSE_ERROR_MESSAGE);
       }
     };
     const handleOpen = () => {
-      console.info('Open SSE connection');
+      console.info('[SSE] Open connection');
     };
     const closeEventSource = () => {
-      console.info('Close SSE connection');
+      console.info('[SSE] Close connection');
       es.close();
     };
     const onMessageEvent = (message: any) => {
       try {
         callback(JSON.parse(message.data));
       } catch (error) {
-        Sentry.captureException(error, {
-          extra: {
-            hook: 'useSSE',
-            event: 'onMessage',
-          },
-        });
+        console.error('[SSE] Parsing sse message data failed.');
         callback(SSE_ERROR_MESSAGE);
       }
     };
@@ -77,7 +71,8 @@ export function useSSE(
     es.addEventListener(eventName, onMessageEvent);
 
     return () => {
-      console.info('Unmounting SSE hook');
+      console.info('[SSE] Unmounting hook');
+      es.close();
       es.removeEventListener('error', handleError);
       es.removeEventListener('open', handleOpen);
       es.removeEventListener('close', closeEventSource);

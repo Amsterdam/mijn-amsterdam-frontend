@@ -1,14 +1,17 @@
 import classnames from 'classnames';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import { ALL_ERROR_STATE_KEY } from '../../AppState';
 import { IconAlert, IconClose } from '../../assets/icons';
 import { useSessionStorage } from '../../hooks/storage.hook';
-import { Button, IconButton } from '../Button/Button';
+import { Button, IconButton, LinkdInline } from '../Button/Button';
 import Modal from '../Modal/Modal';
 import styles from './ErrorMessages.module.scss';
+import { LOGOUT_URL } from '../../config/api';
 
 export interface Error {
   name: string;
   error: string;
+  stateKey: string;
 }
 
 interface ComponentProps {
@@ -22,11 +25,20 @@ export function useErrorMessagesDismissed() {
 
 export default function ErrorMessages({ className, errors }: ComponentProps) {
   const el = useRef(null);
+  const isAllErrorMessage = errors.some(
+    error => error.stateKey === ALL_ERROR_STATE_KEY
+  );
   const [isModalOpen, setModalOpen] = useState(false);
   const top = el.current
     ? (el.current! as HTMLElement).getBoundingClientRect().top
     : 0;
   const [isDismissed, setDismissed] = useErrorMessagesDismissed();
+
+  useEffect(() => {
+    if (isAllErrorMessage) {
+      setModalOpen(true);
+    }
+  }, [isAllErrorMessage]);
 
   return (
     <div
@@ -81,7 +93,14 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
           </ul>
           <p>
             {/* TODO: Arrange correct text here */}
-            Probeer het later nog eens.
+            Probeer het later nog eens.{' '}
+            {isAllErrorMessage ? (
+              <LinkdInline external={true} href={LOGOUT_URL}>
+                Nu uitloggen
+              </LinkdInline>
+            ) : (
+              ''
+            )}
           </p>
           <Button onClick={() => setModalOpen(false)}>Oké</Button>
         </div>
