@@ -17,6 +17,7 @@ function EventSourceMock() {
 }
 
 EventSourceMock.prototype.init = jest.fn();
+EventSourceMock.prototype.readyState = 'x';
 EventSourceMock.prototype.close = jest.fn();
 EventSourceMock.prototype.addEventListener = jest.fn(
   (eventName: string, handler: (args: any) => void) => {

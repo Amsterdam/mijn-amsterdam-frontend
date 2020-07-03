@@ -72,7 +72,12 @@ export function useSSE(
 
     return () => {
       console.info('[SSE] Unmounting hook');
-      es.close();
+      if (
+        es.readyState === EventSource.OPEN ||
+        es.readyState === EventSource.CONNECTING
+      ) {
+        es.close();
+      }
       es.removeEventListener('error', handleError);
       es.removeEventListener('open', handleOpen);
       es.removeEventListener('close', closeEventSource);
