@@ -11,6 +11,7 @@ import { sortAlpha } from '../../../universal/helpers/utils';
 import fs from 'fs';
 import path from 'path';
 import { sub } from 'date-fns';
+import cachedAfvalPunten from '../../mock-data/json/afvalpunten.json';
 
 export const cache = new memoryCache.Cache<string, any>();
 const AFVALPUNT_CACHE_HOURS_TTL = 24; // 1 day
@@ -188,23 +189,20 @@ export async function scrapeGarbageCenterData(center: LatLngObject | null) {
     '../../',
     'mock-data/json/afvalpunten.json'
   );
-  const cachedFileContents: AfvalpuntenResponseData | null = await new Promise(
-    resolve => {
-      fs.readFile(fileName, { encoding: 'utf8' }, (error, contents) => {
-        if (!error) {
-          resolve(JSON.parse(contents));
-        } else {
-          resolve(null);
-        }
-      });
-    }
+  const cachedFileContents: AfvalpuntenResponseData | null = await import(
+    fileName
   );
+
+  // Development and e2e testing will always serve cached file
+  const isMockAdapterEnabled = !process.env.BFF_DISABLE_MOCK_ADAPTER;
 
   if (
     cachedFileContents &&
-    (sub(new Date(), { hours: AFVALPUNT_CACHE_HOURS_TTL }) <
-      new Date(cachedFileContents.datePublished) ||
-      !process.env.BFF_DISABLE_MOCK_ADAPTER) // Development and e2e testing will always serve cached file
+    (isMockAdapterEnabled ||
+      // Last cached file was written not longer than AFVALPUNT_CACHE_HOURS_TTL ago
+      sub(new Date(), {
+        hours: AFVALPUNT_CACHE_HOURS_TTL,
+      }) < new Date(cachedFileContents.datePublished))
   ) {
     return apiSuccesResult(cachedFileContents);
   }
@@ -222,7 +220,9 @@ export async function scrapeGarbageCenterData(center: LatLngObject | null) {
   );
 
   const detailedItemsWithOpeningHours = detailedItems.map(detailedItem => {
-    return Object.assign(detailedItem, { openingHours });
+    return Object.assign(detailedItem, {
+      openingHours,
+    });
   });
 
   const garbageCenterData: GarbageCenter[] = detailedItemsWithOpeningHours.map(
