@@ -24,7 +24,7 @@ export default () => {
   const appState = useContext(AppContext);
   const { TIPS, NOTIFICATIONS, CASES, BUURT, HOME } = appState;
 
-  const tipItems = TIPS.content!.items.slice(0, MAX_TIPS_VISIBLE);
+  const tipItems = TIPS.content?.items.slice(0, MAX_TIPS_VISIBLE) || [];
   const notificationItems =
     NOTIFICATIONS.content?.slice(0, MAX_NOTIFICATIONS_VISIBLE) || [];
   const isPhoneScreen = usePhoneScreen();
