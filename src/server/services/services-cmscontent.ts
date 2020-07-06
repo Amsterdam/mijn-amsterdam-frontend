@@ -2,8 +2,9 @@ import sanitizeHtml from 'sanitize-html';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { LinkProps } from '../../universal/types/App.types';
-import { apiSuccesResult } from '../../universal/helpers/api';
+import { apiSuccesResult, ApiResponse } from '../../universal/helpers/api';
 import { hash } from '../../universal/helpers/utils';
+import { FeatureToggle } from '../../universal/config/app';
 
 const TAGS_ALLOWED = [
   'a',
@@ -148,28 +149,21 @@ export async function loadServicesCMSContent(
     samlToken
   );
 
-  const [generalInfo, footer] = await Promise.all([
-    generalInfoPageRequest,
-    footerInfoPageRequest,
-  ]);
+  const requests: Promise<
+    ApiResponse<CMSPageContent | CMSFooterContent | null>
+  >[] = [generalInfoPageRequest, footerInfoPageRequest];
+
+  const [generalInfo, footer] = await Promise.all(requests);
 
   let generalInfoContent = generalInfo.content;
   let footerContent = footer.content;
 
-  if (generalInfo.status !== 'OK') {
-    // From cache?
-    generalInfoContent = { title: '', content: '' };
-  }
-
-  if (footer.status !== 'OK') {
-    // From cache?
-    footerContent = [];
-  }
+  const cmsContent = {
+    generalInfo: generalInfoContent as CMSPageContent | null,
+    footer: footerContent as CMSFooterContent | null,
+  };
 
   return {
-    CMS_CONTENT: apiSuccesResult({
-      generalInfo: generalInfoContent,
-      footer: footerContent,
-    }),
+    CMS_CONTENT: apiSuccesResult(cmsContent),
   };
 }

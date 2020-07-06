@@ -20,11 +20,12 @@ export default () => {
         {generalInfo?.title || 'Over Mijn Amsterdam'}
       </PageHeading>
       <PageContent>
-        {isError(CMS_CONTENT) && (
-          <Alert type="warning">
-            <p>We kunnen de inhoud van deze pagina nu niet weergeven.</p>
-          </Alert>
-        )}
+        {isError(CMS_CONTENT) ||
+          (generalInfo === null && (
+            <Alert type="warning">
+              <p>We kunnen de inhoud van deze pagina nu niet weergeven.</p>
+            </Alert>
+          ))}
         {isLoading(CMS_CONTENT) && <LoadingContent />}
         {generalInfo?.content && <InnerHtml>{generalInfo?.content}</InnerHtml>}
       </PageContent>

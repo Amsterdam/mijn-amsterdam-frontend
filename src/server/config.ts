@@ -95,6 +95,7 @@ export const ApiConfig: ApiDataRequestConfig = {
   CMS_CONTENT_FOOTER: {
     url: `https://www.amsterdam.nl/algemene_onderdelen/overige/footer/?AppIdt=app-data`,
     cacheTimeout: 4 * ONE_HOUR_MS,
+    postponeFetch: !FeatureToggle.cmsFooterActive,
   },
   TIPS: {
     url: `${BFF_MS_API_BASE_URL}/tips/gettips`,

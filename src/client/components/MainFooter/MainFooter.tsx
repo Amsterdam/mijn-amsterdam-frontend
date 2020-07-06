@@ -10,10 +10,6 @@ import styles from './MainFooter.module.scss';
 import footerData from './amsterdam-nl-footer-data.json';
 import { CMSFooterContent } from '../../../server/services';
 
-interface PanelState {
-  [panelId: string]: boolean;
-}
-
 interface FooterBlockProps {
   startOpen?: boolean;
   id: string;
