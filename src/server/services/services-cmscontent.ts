@@ -124,7 +124,7 @@ export async function loadServicesCMSContent(
                 : typeof verwijzing.extern === 'object'
                 ? [verwijzing.extern]
                 : [];
-              const links = [...intern, ...extern]
+              const links = [...extern, ...intern]
                 .filter(item => !!item.link)
                 .map(item => {
                   const { link } = item;
