@@ -51,7 +51,7 @@ export default function PageHeading({
           </Linkd>
         )}
         <Heading el={el} size="large">
-          {!isLoading ? (
+          {isLoading ? (
             <LoadingContent
               className={styles.LoadingContentHeading}
               barConfig={[['50%', '3rem', '0']]}
