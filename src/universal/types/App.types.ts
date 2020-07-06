@@ -59,7 +59,7 @@ export interface MyTip {
   imgUrl?: string;
   isPersonalized: boolean;
   priority?: number;
-  reason?: string;
+  reason: string[];
 }
 
 export interface GenericDocument {
