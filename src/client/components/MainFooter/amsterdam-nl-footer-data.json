@@ -11,10 +11,6 @@
     "description": null,
     "links": [
       {
-        "to": "https://www.amsterdam.nl/bestuur-organisatie/werkenbij/",
-        "title": "Werkenbij"
-      },
-      {
         "to": "https://action.spike.email/104050/Subscribe/9f53558f-601d-4db8-97d6-a78bccd6e39d?culture=nl-NL",
         "title": "Nieuwsbrief amsterdam.nl"
       },
@@ -33,6 +29,10 @@
       {
         "to": "https://www.linkedin.com/company/gemeente-amsterdam",
         "title": "LinkedIn"
+      },
+      {
+        "to": "https://www.amsterdam.nl/bestuur-organisatie/werkenbij/",
+        "title": "Werkenbij"
       }
     ]
   },
