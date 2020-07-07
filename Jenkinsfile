@@ -125,7 +125,7 @@ pipeline {
     stage('Deploy ACC') {
       when {
         anyOf {
-          branch 'master';
+          branch 'main';
           branch 'test-acc';
         }
       }
