@@ -65,9 +65,10 @@ export default () => {
       </PageHeading>
       <PageContent>
         <p>
-          Nam scelerisque odio id pellentesque accumsan. Cras suscipit commodo
-          lectus et lacinia. Ut suscipit tempus velit quis viverra. Pellentesque
-          luctus purus mauris, id viverra ligula dictum in.
+          Hier ziet u een overzicht van uw aanvragen voor vergunningen en
+          ontheffingen. Op dit moment ziet u alleen uw aanvragen voor een
+          RVV-verkeersontheffing, een tijdelijke verkeersmaatregel en een
+          objectvergunning. Andere vergunningen komen er later bij.
         </p>
         {/* <p>
           <Linkd external={true} href="https://mijn.amsterdam.nl/">
