@@ -60,12 +60,17 @@
   background-color: $color-white;
   height: 4.4rem;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  justify-content: center;
 
   .InnerContainer {
     display: flex;
-    justify-content: center;
-    flex-direction: column;
+    flex-direction: row;
+    @include select(Link) {
+      margin-right: 3rem;
+      font-size: .9em;
+      font-weight: bold;
+    }
   }
 
 }

@@ -9,6 +9,7 @@ import { InnerHtml } from '../index';
 import styles from './MainFooter.module.scss';
 import footerData from './amsterdam-nl-footer-data.json';
 import { CMSFooterContent } from '../../../server/services';
+import { isExternalUrl } from '../../../universal/helpers/utils';
 
 interface FooterBlockProps {
   startOpen?: boolean;
@@ -50,19 +51,30 @@ function FooterBlock({
 
 export default function MainFooter() {
   const { CMS_CONTENT } = useContext(AppContext);
-  const footerItems =
-    CMS_CONTENT.content?.footer || (footerData as CMSFooterContent) || [];
+  const footer = CMS_CONTENT.content?.footer ||
+    (footerData as CMSFooterContent) || { blocks: [], sub: [] };
 
   return (
     <footer className={styles.MainFooter} id="MainFooter">
       <div className={classnames(styles.TopBar, styles.InnerContainer)}>
-        {footerItems.map(footerItem => {
+        {footer.blocks.map(footerItem => {
           return <FooterBlock key={footerItem.id} {...footerItem} />;
         })}
       </div>
       <div className={styles.BottomBar}>
         <div className={styles.InnerContainer}>
           <Linkd href={AppRoutes.PROCLAIMER}>Proclaimer</Linkd>
+          {footer.sub.map(link => {
+            return (
+              <Linkd
+                key={link.title}
+                href={link.to}
+                external={isExternalUrl(link.to)}
+              >
+                {link.title}
+              </Linkd>
+            );
+          })}
         </div>
       </div>
     </footer>

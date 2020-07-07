@@ -1,45 +1,61 @@
-[
-  {
-    "id": "1596231333",
-    "title": "Contact",
-    "description": "<p>Hebt u een vraag en kunt u het antwoord niet vinden op deze website? Neem dan contact met ons op.</p>\r\n                  <ul>\r\n                    <li>\r\n                      <a href=\"https://formulieren.amsterdam.nl/tripleforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx\">Contactformulier</a>\r\n                    </li>\r\n                    <li>\r\n                      <strong>Bel het telefoonnummer <a href=\"tel:14020\">14 020</a></strong>maandag tot en met vrijdag van 08.00 tot 18.00 uur</li>\r\n                    <li>\r\n                      <a href=\"https://www.amsterdam.nl/contact/\">Contactgegevens en openingstijden</a>\r\n                    </li>\r\n                  </ul>",
-    "links": []
-  },
-  {
-    "id": "481454086",
-    "title": "Volg de gemeente",
-    "description": null,
-    "links": [
-      {
-        "to": "https://action.spike.email/104050/Subscribe/9f53558f-601d-4db8-97d6-a78bccd6e39d?culture=nl-NL",
-        "title": "Nieuwsbrief amsterdam.nl"
-      },
-      {
-        "to": "https://twitter.com/AmsterdamNL",
-        "title": "Twitter"
-      },
-      {
-        "to": "https://www.facebook.com/gemeenteamsterdam",
-        "title": "Facebook"
-      },
-      {
-        "to": "https://www.instagram.com/gemeenteamsterdam/",
-        "title": "Instagram"
-      },
-      {
-        "to": "https://www.linkedin.com/company/gemeente-amsterdam",
-        "title": "LinkedIn"
-      },
-      {
-        "to": "https://www.amsterdam.nl/bestuur-organisatie/werkenbij/",
-        "title": "Werkenbij"
-      }
-    ]
-  },
-  {
-    "id": "2694051070",
-    "title": "Uit in Amsterdam",
-    "description": "<p>Wat is er te doen in Amsterdam? Informatie over toerisme, cultuur, uitgaan, evenementen en meer vindt u op <a href=\"http://www.iamsterdam.com\">Iamsterdam.com</a></p>",
-    "links": []
-  }
-]
+{
+  "blocks": [
+    {
+      "id": "1596231333",
+      "title": "Contact",
+      "description": "<p>Hebt u een vraag en kunt u het antwoord niet vinden op deze website? Neem dan contact met ons op.</p>\r\n                  <ul>\r\n                    <li>\r\n                      <a href=\"https://formulieren.amsterdam.nl/tripleforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx\">Contactformulier</a>\r\n                    </li>\r\n                    <li>\r\n                      <strong>Bel het telefoonnummer <a href=\"tel:14020\">14 020</a></strong>maandag tot en met vrijdag van 08.00 tot 18.00 uur</li>\r\n                    <li>\r\n                      <a href=\"https://www.amsterdam.nl/contact/\">Contactgegevens en openingstijden</a>\r\n                    </li>\r\n                  </ul>",
+      "links": []
+    },
+    {
+      "id": "481454086",
+      "title": "Volg de gemeente",
+      "description": null,
+      "links": [
+        {
+          "to": "https://action.spike.email/104050/Subscribe/9f53558f-601d-4db8-97d6-a78bccd6e39d?culture=nl-NL",
+          "title": "Nieuwsbrief amsterdam.nl"
+        },
+        {
+          "to": "https://twitter.com/AmsterdamNL",
+          "title": "Twitter"
+        },
+        {
+          "to": "https://www.facebook.com/gemeenteamsterdam",
+          "title": "Facebook"
+        },
+        {
+          "to": "https://www.instagram.com/gemeenteamsterdam/",
+          "title": "Instagram"
+        },
+        {
+          "to": "https://www.linkedin.com/company/gemeente-amsterdam",
+          "title": "LinkedIn"
+        },
+        {
+          "to": "https://www.amsterdam.nl/bestuur-organisatie/werkenbij/",
+          "title": "Werkenbij"
+        }
+      ]
+    },
+    {
+      "id": "2694051070",
+      "title": "Uit in Amsterdam",
+      "description": "<p>Wat is er te doen in Amsterdam? Informatie over toerisme, cultuur, uitgaan, evenementen en meer vindt u op <a href=\"http://www.iamsterdam.com\">Iamsterdam.com</a></p>",
+      "links": []
+    }
+  ],
+  "sub": [
+    {
+      "to": "https://www.amsterdam.nl/overdezesite/",
+      "title": "Over Amsterdam.nl"
+    },
+    {
+      "to": "https://www.amsterdam.nl/privacy/",
+      "title": "Privacy"
+    },
+    {
+      "to": "https://www.amsterdam.nl/nieuwsarchief/",
+      "title": "Webarchief"
+    }
+  ]
+}

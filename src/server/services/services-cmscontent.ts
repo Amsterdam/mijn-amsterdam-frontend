@@ -1,10 +1,9 @@
 import sanitizeHtml from 'sanitize-html';
+import { ApiResponse, apiSuccesResult } from '../../universal/helpers/api';
+import { hash } from '../../universal/helpers/utils';
+import { LinkProps } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
-import { LinkProps } from '../../universal/types/App.types';
-import { apiSuccesResult, ApiResponse } from '../../universal/helpers/api';
-import { hash } from '../../universal/helpers/utils';
-import { FeatureToggle } from '../../universal/config/app';
 
 const TAGS_ALLOWED = [
   'a',
@@ -60,7 +59,10 @@ interface FooterBlock {
   links: LinkProps[];
 }
 
-export type CMSFooterContent = FooterBlock[];
+export interface CMSFooterContent {
+  blocks: FooterBlock[];
+  sub: LinkProps[];
+}
 
 export async function loadServicesCMSContent(
   sessionID: SessionID,
@@ -90,7 +92,11 @@ export async function loadServicesCMSContent(
           return [];
         }
 
-        const footer = [];
+        const footer: CMSFooterContent = {
+          blocks: [],
+          sub: [],
+        };
+
         let currentBlock: FooterBlock | null = null;
 
         for (const [index, item] of items.entries()) {
@@ -101,7 +107,7 @@ export async function loadServicesCMSContent(
 
           if (item.omschrijving) {
             if (currentBlock) {
-              footer.push(currentBlock);
+              footer.blocks.push(currentBlock);
             }
             currentBlock = {
               id: hash(item.omschrijving.titel),
@@ -135,11 +141,43 @@ export async function loadServicesCMSContent(
                 });
               currentBlock.links = links;
             }
+          } else if (item.verwijzing?.length) {
+            const otherLinks = item.verwijzing.flatMap(
+              (verwijzing: {
+                intern: Array<{ link: { label: string; url: string } }>;
+                extern: Array<{ link: { label: string; url: string } }>;
+              }) => {
+                const links = [
+                  ...(verwijzing.intern || []),
+                  ...(verwijzing.extern || []),
+                ];
+                const subLinks = [];
+                subLinks.push(
+                  ...links
+                    .filter(
+                      ({ link }) => !!link && !link.url.match(/(cookies)/g)
+                    )
+                    .map(({ link }) => {
+                      let title = link.label;
+                      if (link.url.match(/over/g)) {
+                        title = 'Over Amsterdam.nl';
+                      }
+                      return {
+                        to: link.url,
+                        title,
+                      };
+                    })
+                );
+
+                return subLinks;
+              }
+            );
+            footer.sub.push(...otherLinks);
           }
         }
 
         if (currentBlock) {
-          footer.push(currentBlock);
+          footer.blocks.push(currentBlock);
         }
 
         return footer;
