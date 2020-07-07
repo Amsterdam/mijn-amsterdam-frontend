@@ -50,7 +50,10 @@ export type ApiResponse<T> =
 
 export function isLoading(apiResponseData: ApiResponse<any>) {
   // If no responseData was found, assumes it's still loading
-  return !apiResponseData || apiResponseData.status === 'PRISTINE';
+  return (
+    (!apiResponseData && !isError(apiResponseData)) ||
+    apiResponseData.status === 'PRISTINE'
+  );
 }
 
 export function isError(apiResponseData: ApiResponse<any>) {
@@ -148,4 +151,19 @@ export function unwrapApiResponseContent(responseData: {
     },
     {}
   );
+}
+
+export function getSettledResult<T extends any>(
+  result: PromiseSettledResult<T>
+) {
+  if (result.status === 'fulfilled') {
+    return result.value;
+  }
+  let errorMessage = result.reason.toString();
+  try {
+    errorMessage = result.reason.message || result.reason.toString();
+  } catch (error) {
+    errorMessage = 'An error occurred';
+  }
+  return apiErrorResult(errorMessage, null);
 }

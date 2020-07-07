@@ -26,6 +26,7 @@ import {
   translateFocusTozoProduct,
 } from './focus-tozo-helpers';
 import { FocusItem } from './focus-types';
+import { getSettledResult } from '../../../universal/helpers/api';
 
 async function fetchFOCUSTozoNormalized(
   sessionID: SessionID,
@@ -34,10 +35,13 @@ async function fetchFOCUSTozoNormalized(
   const responseAanvragen = fetchFOCUS(sessionID, samlToken);
   const responseCombined = fetchFOCUSCombined(sessionID, samlToken);
 
-  const [FOCUS_AANVRAGEN, FOCUS_COMBINED] = await Promise.all([
+  const [aanvragenResult, combinedResult] = await Promise.allSettled([
     responseAanvragen,
     responseCombined,
   ]);
+
+  const FOCUS_AANVRAGEN = getSettledResult(aanvragenResult);
+  const FOCUS_COMBINED = getSettledResult(combinedResult);
 
   if (FOCUS_COMBINED.status === 'OK' && FOCUS_AANVRAGEN.status === 'OK') {
     const aanvragenNormalized = FOCUS_AANVRAGEN.content

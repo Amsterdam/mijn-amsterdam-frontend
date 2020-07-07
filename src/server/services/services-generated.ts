@@ -1,4 +1,5 @@
 import { apiSuccesResult } from '../../universal/helpers';
+import { getSettledResult } from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
 import { MyCase, MyNotification, MyTip } from '../../universal/types';
 import { fetchBELASTINGGenerated } from './belasting';
@@ -17,15 +18,15 @@ export async function loadServicesGenerated(
   optin: boolean = false
 ) {
   const [
-    tips,
-    brpGenerated,
-    focusAanvragenGenerated,
-    focusSpecificatiesGenerated,
-    focusTozoGenerated,
-    belastingGenerated,
-    milieuzoneGenerated,
-    vergunningenGenerated,
-  ] = await Promise.all([
+    tipsResult,
+    brpGeneratedResult,
+    focusAanvragenGeneratedResult,
+    focusSpecificatiesGeneratedResult,
+    focusTozoGeneratedResult,
+    belastingGeneratedResult,
+    milieuzoneGeneratedResult,
+    vergunningenGeneratedResult,
+  ] = await Promise.allSettled([
     loadServicesTips(sessionID, samlToken, optin),
     fetchBRPGenerated(sessionID, samlToken),
     fetchFOCUSAanvragenGenerated(sessionID, samlToken),
@@ -35,6 +36,19 @@ export async function loadServicesGenerated(
     fetchMILIEUZONEGenerated(sessionID, samlToken),
     fetchVergunningenGenerated(sessionID, samlToken),
   ]);
+
+  const tips = getSettledResult(tipsResult);
+  const brpGenerated = getSettledResult(brpGeneratedResult);
+  const focusAanvragenGenerated = getSettledResult(
+    focusAanvragenGeneratedResult
+  );
+  const focusSpecificatiesGenerated = getSettledResult(
+    focusSpecificatiesGeneratedResult
+  );
+  const focusTozoGenerated = getSettledResult(focusTozoGeneratedResult);
+  const belastingGenerated = getSettledResult(belastingGeneratedResult);
+  const milieuzoneGenerated = getSettledResult(milieuzoneGeneratedResult);
+  const vergunningenGenerated = getSettledResult(vergunningenGeneratedResult);
 
   const notifications: MyNotification[] = [];
   const cases: MyCase[] = [];

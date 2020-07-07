@@ -1,5 +1,9 @@
 import sanitizeHtml from 'sanitize-html';
-import { ApiResponse, apiSuccesResult } from '../../universal/helpers/api';
+import {
+  ApiResponse,
+  apiSuccesResult,
+  getSettledResult,
+} from '../../universal/helpers/api';
 import { hash } from '../../universal/helpers/utils';
 import { LinkProps } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
@@ -191,10 +195,10 @@ export async function loadServicesCMSContent(
     ApiResponse<CMSPageContent | CMSFooterContent | null>
   >[] = [generalInfoPageRequest, footerInfoPageRequest];
 
-  const [generalInfo, footer] = await Promise.all(requests);
+  const [generalInfo, footer] = await Promise.allSettled(requests);
 
-  let generalInfoContent = generalInfo.content;
-  let footerContent = footer.content;
+  let generalInfoContent = getSettledResult(generalInfo).content;
+  let footerContent = getSettledResult(footer).content;
 
   const cmsContent = {
     generalInfo: generalInfoContent as CMSPageContent | null,

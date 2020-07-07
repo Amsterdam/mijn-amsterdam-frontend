@@ -8,6 +8,7 @@ import {
   fetchMILIEUZONE,
 } from './index';
 import { fetchVergunningen } from './vergunningen';
+import { getSettledResult } from '../../universal/helpers/api';
 
 export async function loadServicesDirect(
   sessionID: SessionID,
@@ -40,7 +41,7 @@ export async function loadServicesDirect(
     BELASTINGEN,
     MILIEUZONE,
     VERGUNNINGEN,
-  ] = await Promise.all([
+  ] = await Promise.allSettled([
     fetchFOCUSAanvragenRequest,
     fetchFOCUSSpecificatiesRequest,
     fetchFOCUSTozoRequest,
@@ -52,13 +53,13 @@ export async function loadServicesDirect(
   ]);
 
   return {
-    FOCUS_AANVRAGEN,
-    FOCUS_SPECIFICATIES,
-    FOCUS_TOZO,
-    WMO,
-    ERFPACHT,
-    BELASTINGEN,
-    MILIEUZONE,
-    VERGUNNINGEN,
+    FOCUS_AANVRAGEN: getSettledResult(FOCUS_AANVRAGEN),
+    FOCUS_SPECIFICATIES: getSettledResult(FOCUS_SPECIFICATIES),
+    FOCUS_TOZO: getSettledResult(FOCUS_TOZO),
+    WMO: getSettledResult(WMO),
+    ERFPACHT: getSettledResult(ERFPACHT),
+    BELASTINGEN: getSettledResult(BELASTINGEN),
+    MILIEUZONE: getSettledResult(MILIEUZONE),
+    VERGUNNINGEN: getSettledResult(VERGUNNINGEN),
   };
 }
