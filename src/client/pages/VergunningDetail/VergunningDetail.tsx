@@ -100,10 +100,7 @@ export default () => {
         {isLoading(VERGUNNINGEN) && (
           <LoadingContent className={styles.LoadingContentInfo} />
         )}
-        <InfoDetail
-          label="Zaakkenmerk"
-          value={VergunningItem?.identifier || '-'}
-        />
+        <InfoDetail label="Kenmerk" value={VergunningItem?.identifier || '-'} />
         <InfoDetail
           label="Soort vergunning"
           value={VergunningItem?.caseType || '-'}

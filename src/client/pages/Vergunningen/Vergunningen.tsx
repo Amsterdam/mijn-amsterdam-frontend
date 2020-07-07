@@ -18,10 +18,9 @@ import { defaultDateFormat } from '../../../universal/helpers/date';
 import { Vergunning } from '../../../server/services/vergunningen';
 
 const DISPLAY_PROPS = {
-  identifier: 'Zaakkenmerk',
+  identifier: 'Kenmerk',
   caseType: 'Soort vergunning',
-  title: 'Omschrijving',
-  dateRequest: 'Aanvraagdatum',
+  dateRequest: 'Aangevraagd',
 };
 
 export default () => {
@@ -83,7 +82,7 @@ export default () => {
       </PageContent>
       <SectionCollapsible
         id="SectionCollapsible-vergunningen-actual"
-        title="Lopende vergunningsaanvragen"
+        title="Mijn lopende aanvragen voor vergunningen en ontheffingen"
         noItemsMessage="U hebt geen lopende vergunningsaanvragen."
         hasItems={!!vergunningenActual.length}
         startCollapsed={false}
@@ -95,6 +94,7 @@ export default () => {
         }}
       >
         <Table
+          className={styles.Table}
           titleKey="identifier"
           displayProps={DISPLAY_PROPS}
           items={vergunningenActual}
@@ -102,7 +102,7 @@ export default () => {
       </SectionCollapsible>
       <SectionCollapsible
         id="SectionCollapsible-vergunningen-previous"
-        title="Eerdere vergunningsaanvragen"
+        title="Mijn eerdere aanvragen voor vergunningen en ontheffingen"
         noItemsMessage="U hebt geen eerdere vergunningsaanvragen."
         hasItems={!!vergunningenPrevious.length}
         startCollapsed={false}
@@ -114,6 +114,7 @@ export default () => {
         }}
       >
         <Table
+          className={styles.Table}
           titleKey="identifier"
           displayProps={DISPLAY_PROPS}
           items={vergunningenPrevious}

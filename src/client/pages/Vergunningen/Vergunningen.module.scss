@@ -5,3 +5,21 @@
     padding-bottom: 5rem;
   }
 }
+
+.Table {
+  tr td:nth-child(2) {
+    width: 45%;
+  }
+  @include select(Table_DisplayPropTitle) {
+    width: 42%;
+  }
+
+  @include mq-tablet() {
+    tr td:nth-child(2) {
+      width: 100%;
+    }
+    @include select(Table_DisplayPropTitle) {
+      width: 100%;
+    }
+  }
+}
