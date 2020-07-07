@@ -164,7 +164,7 @@ export async function loadServicesCMSContent(
                     .map(({ link }) => {
                       let title = link.label;
                       if (link.url.match(/over/g)) {
-                        title = 'Over Amsterdam.nl';
+                        title = 'Over amsterdam.nl';
                       }
                       return {
                         to: link.url,
