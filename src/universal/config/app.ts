@@ -17,5 +17,5 @@ export const FeatureToggle = {
   tozo2active: !IS_PRODUCTION,
   eherkenningActive: !IS_PRODUCTION,
   vergunningenActive: !IS_PRODUCTION,
-  cmsFooterActive: !IS_PRODUCTION,
+  cmsFooterActive: true,
 };
