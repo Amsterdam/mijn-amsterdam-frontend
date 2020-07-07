@@ -11,7 +11,11 @@ export type StepTitle =
 export type ProductTitle = 'Levensonderhoud' | 'Stadspas' | string;
 
 // A decision can be made and currently have 3 values.
-export type Decision = 'Toekenning' | 'Afwijzing' | 'Buiten Behandeling';
+export type Decision =
+  | 'Toekenning'
+  | 'Afwijzing'
+  | 'Buiten Behandeling'
+  | 'Intrekking';
 
 // The official terms of the Focus api "product categories" data how they are used within the Municipality of Amsterdam.
 export type ProductType =
@@ -101,6 +105,7 @@ export type RequestStatus =
 export type DecisionFormatted =
   | 'toekenning'
   | 'afwijzing'
+  | 'intrekking'
   | 'buitenbehandeling';
 
 export type TextPartContents = (data: FocusProduct, customData?: any) => string;

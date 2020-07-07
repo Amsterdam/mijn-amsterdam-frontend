@@ -194,6 +194,19 @@ const UitkeringLabels: ProductStepLabels = {
         `<p>Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer
           details.</p>`,
     },
+    intrekking: {
+      notification: {
+        title: product => `${product.title}: Uw aanvraag is ingetrokken`,
+        description: product =>
+          `Uw aanvraag is ingetrokken (besluit: ${defaultDateFormat(
+            product.datePublished
+          )}).`,
+      },
+      status: stepLabels.beslissing,
+      description: product =>
+        `<p>Uw aanvraag is ingetrokken. Bekijk de brief voor meer
+          details.</p>`,
+    },
   },
 };
 
@@ -265,6 +278,19 @@ const LeningLabels: ProductStepLabels = {
       status: stepLabels.beslissing,
       description: product =>
         `<p>Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer
+          details.</p>`,
+    },
+    intrekking: {
+      notification: {
+        title: product => `${product.title}: Uw aanvraag is ingetrokken`,
+        description: product =>
+          `Uw aanvraag is ingetrokken (besluit: ${defaultDateFormat(
+            product.datePublished
+          )}).`,
+      },
+      status: stepLabels.beslissing,
+      description: product =>
+        `<p>Uw aanvraag is ingetrokken. Bekijk de brief voor meer
           details.</p>`,
     },
   },
