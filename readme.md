@@ -20,7 +20,7 @@ $ npm start
 ## Accessibility + Targeted browsers
 
 The Mijn Amsterdam design and development team works hard to ensure mijn.amsterdam.nl is [accessible](https://mijn.amsterdam.nl/toegankelijkheidsverklaring). 
-Not all browsers in the world are supported. The targeted browsers can be found [here](https://github.com/Amsterdam/mijn-amsterdam-frontend/blob/master/package.json#L17).
+Not all browsers in the world are supported. The targeted browsers can be found [here](https://github.com/Amsterdam/mijn-amsterdam-frontend/blob/main/package.json#L17).
 
 ## React application
 
@@ -62,14 +62,14 @@ The codebase is also written in typescript so a compilation step is required for
 
 ### Branch naming + PR
 
-- When creating a new branch, preferably, branch off `master`
+- When creating a new branch, preferably, branch off `main`
 - When creating a branch, start the name with a ticket number from Jira e.g: `mijn-1234-update-logo`
-- Try to rebase on master and squash commits when PR'ing to it so we keep a fairly clean commit log on Master
+- Try to rebase on main and squash commits when PR'ing to it so we keep a fairly clean commit log on Main
 
 ### Continuous integration / Continuous deployment
 
-We currently work with a trunk based development approach. [see also](https://trunkbaseddevelopment.com) This means we have relatively short lived branches and only 1 main branch (master)
-The master branch should always be production worthy in terms of functionality, stability and code quality.
+We currently work with a trunk based development approach. [see also](https://trunkbaseddevelopment.com) This means we have relatively short lived branches and only 1 main branch (main)
+The main branch should always be production worthy in terms of functionality, stability and code quality.
 Every release to production is accompanied with a release tag in the from of: `release-v1.2.3`. Whenever you are about create a release, use the `npm run release:(major|minor|bug)` command. This command
 creates a [semver](https://semver.org/) version of the release tag and pushes it to origin. The CI/CD pipeline will automatically detect the tag and starts building a production image.
 
