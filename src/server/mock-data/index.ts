@@ -92,7 +92,6 @@ export const mockDataConfig: MockDataConfig = {
   },
   [ApiUrls.TIPS]: {
     status: 200,
-    delay: 3000,
     method: 'post',
     responseData: async (config: any) => {
       const requestData = JSON.parse(config.data);
