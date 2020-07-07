@@ -23,7 +23,7 @@ const fallbackServiceRequestOptions = {
  */
 export function useAppState() {
   const hasEventSourceSupport = 'EventSource' in window; // IE11 and early edge versions don't have EventSource support. These browsers will use the the Fallback service endpoint.
-  const { TIPS, fetch: fetchTips } = useTipsApi();
+  const { TIPS, fetch: fetchTips, isLoading: isLoadingTips } = useTipsApi();
   const [isFallbackServiceEnabled, setFallbackServiceEnabled] = useState(
     !hasEventSourceSupport
   );
@@ -128,17 +128,17 @@ export function useAppState() {
 
   // Add TIPS to AppState if they are refetched
   useEffect(() => {
-    if (TIPS.status !== 'PRISTINE') {
+    if (
+      !isLoadingTips &&
+      TIPS.status !== 'PRISTINE' &&
+      TIPS.content !== appState.TIPS.content
+    ) {
       const tipsState = transformAppState({ TIPS });
-      setAppState(appState => {
-        return Object.assign({}, appState, tipsState);
-      });
-    } else {
-      setAppState(appState =>
-        Object.assign({}, appState, { TIPS: PRISTINE_APPSTATE.TIPS })
-      );
+      setAppState(Object.assign({}, appState, tipsState));
+    } else if (isLoadingTips && TIPS.content !== appState.TIPS.content) {
+      setAppState(Object.assign({}, appState, { TIPS }));
     }
-  }, [TIPS]);
+  }, [TIPS, appState, isLoadingTips]);
 
   return appState;
 }

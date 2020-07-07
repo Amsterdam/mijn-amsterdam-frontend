@@ -5,17 +5,17 @@ import { isLoading } from '../../../universal/helpers';
 import { AppContext } from '../../AppState';
 import {
   DirectLinks,
+  MyAreaDashboard,
+  MyCases,
   MyChaptersPanel,
   MyNotifications,
   MyTips,
   Page,
   PageHeading,
-  MyCases,
-  MyAreaDashboard,
 } from '../../components';
+import { getMyChapters } from '../../helpers/chapters';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import styles from './Dashboard.module.scss';
-import { getMyChapters } from '../../helpers/chapters';
 
 const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;

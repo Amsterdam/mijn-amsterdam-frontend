@@ -3,7 +3,7 @@ import { TIPSData } from '../../../server/services/tips';
 import { ApiResponse } from '../../../universal/helpers/api';
 import { PRISTINE_APPSTATE } from '../../AppState';
 import { BFFApiUrls } from '../../config/api';
-import { useDataApi } from './api.hook';
+import { useDataApi, requestApiData } from './api.hook';
 
 function transformResponse(response: ApiResponse<TIPSData>) {
   return {
@@ -17,7 +17,10 @@ export function useTipsApi() {
     {
       url: BFFApiUrls.SERVICES_TIPS,
       postpone: true,
-      transformResponse,
+      transformResponse: [
+        ...requestApiData.defaults.transformResponse,
+        transformResponse,
+      ],
     },
     pristineData
   );
@@ -44,6 +47,7 @@ export function useTipsApi() {
     return {
       ...responseData,
       fetch: fetchTipsFinal,
+      isLoading: api.isLoading,
     };
   }, [api, fetchTipsFinal]);
 }

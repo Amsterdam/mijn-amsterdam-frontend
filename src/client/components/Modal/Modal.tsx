@@ -22,13 +22,6 @@ interface ModalProps {
   appendTo?: HTMLElement;
 }
 
-function setScrollYProp() {
-  document.documentElement.style.setProperty(
-    '--scroll-y',
-    `${window.scrollY}px`
-  );
-}
-
 export default function Modal({
   children,
   ...props
@@ -60,12 +53,11 @@ export function Dialog({
     if (isOpen === undefined) {
       return;
     }
+
     if (isOpen) {
-      const scrollY = document.documentElement.style.getPropertyValue(
-        '--scroll-y'
-      );
+      const scrollY = window.scrollY || window.pageYOffset;
       const body = document.body;
-      body.style.top = `-${scrollY}`;
+      body.style.top = `-${scrollY}px`;
       body.classList.add('has-modal');
     } else {
       const body = document.body;
@@ -73,11 +65,9 @@ export function Dialog({
       body.style.top = '';
       window.scrollTo(0, parseInt(scrollY || '0') * -1);
     }
-    window.addEventListener('scroll', setScrollYProp);
 
     return () => {
       document.body.classList.remove('has-modal');
-      window.removeEventListener('scroll', setScrollYProp);
     };
   }, [isOpen]);
 
