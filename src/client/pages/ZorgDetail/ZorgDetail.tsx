@@ -24,7 +24,7 @@ export default () => {
     },
   } = useRouter();
 
-  const WmoItem = WMO.content?.items.find(item => item.id === id);
+  const WmoItem = WMO.content?.find(item => item.id === id);
   const noContent = !isLoading(WMO) && !WmoItem;
 
   const steps = useMemo(() => {

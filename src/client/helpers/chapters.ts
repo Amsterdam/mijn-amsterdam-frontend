@@ -40,7 +40,7 @@ function isChapterActive(
       );
 
     case Chapters.ZORG:
-      return !isLoading(WMO) && !!WMO.content?.items?.length;
+      return !isLoading(WMO) && !!WMO.content?.length;
 
     case Chapters.BELASTINGEN:
       // Belastingen always visible if we receive an error from the api

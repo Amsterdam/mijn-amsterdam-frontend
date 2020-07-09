@@ -65,15 +65,10 @@ export function transformVergunningenData(
   return vergunningen.sort(dateSort('dateRequest', 'desc'));
 }
 
-export function fetchVergunningen(
-  sessionID: SessionID,
-  samlToken: string,
-  raw: boolean = false
-) {
+export function fetchVergunningen(sessionID: SessionID, samlToken: string) {
   return requestData<VergunningenData>(
     getApiConfig('VERGUNNINGEN', {
-      transformResponse: (responseData: VergunningenSourceData) =>
-        raw ? responseData : transformVergunningenData(responseData),
+      transformResponse: transformVergunningenData,
     }),
     sessionID,
     samlToken

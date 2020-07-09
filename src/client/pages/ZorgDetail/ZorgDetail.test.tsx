@@ -5,7 +5,7 @@ import { MockAppStateProvider } from '../../AppStateProvider';
 import ZorgDetail from './ZorgDetail';
 
 const APP_STATE: Partial<AppState> = {
-  WMO: { content: { items: [] }, status: 'OK' },
+  WMO: { content: [], status: 'OK' },
 };
 
 it('Renders without crashing', () => {

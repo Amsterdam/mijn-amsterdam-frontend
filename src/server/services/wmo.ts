@@ -653,16 +653,14 @@ export interface WmoApiItem {
 }
 
 export type WMOSourceData = WmoApiItem[];
-export interface WMOData {
-  items: WmoItem[];
-}
+export type WMOData = WmoItem[];
 
 export function transformWMOResponse(
   responseData: WMOSourceData,
   today: Date
 ): WMOData {
   if (!Array.isArray(responseData)) {
-    return { items: [] };
+    return [];
   }
   const items = responseData
     .sort(dateSort('VoorzieningIngangsdatum', 'desc'))
@@ -725,18 +723,14 @@ export function transformWMOResponse(
       };
     });
 
-  return { items };
+  return items;
 }
 
-export function fetchWMO(
-  sessionID: SessionID,
-  samlToken: string,
-  raw: boolean = false
-) {
+export function fetchWMO(sessionID: SessionID, samlToken: string) {
   return requestData<WMOData>(
     getApiConfig('WMO', {
       transformResponse: (responseData: WMOSourceData) =>
-        raw ? responseData : transformWMOResponse(responseData, new Date()),
+        transformWMOResponse(responseData, new Date()),
     }),
     sessionID,
     samlToken

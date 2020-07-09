@@ -1,12 +1,15 @@
 import * as Sentry from '@sentry/node';
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
+import {
+  loadServicesAfval,
+  loadServicesCMSContent,
+  loadServicesDirect,
+  loadServicesGenerated,
+  loadServicesMap,
+  loadServicesRelated,
+  loadServicesTips,
+} from './index';
 import { getSamlTokenHeader } from '../helpers/request';
-import { loadServicesAfval } from './services-afval';
-import { loadServicesCMSContent } from './services-cmscontent';
-import { loadServicesDirect } from './services-direct';
-import { loadServicesGenerated } from './services-generated';
-import { loadServicesMap } from './services-map';
-import { loadServicesRelated } from './services-related';
 
 function sendMessage(
   res: Response,
@@ -21,11 +24,24 @@ function sendMessage(
   res.flush();
 }
 
-export async function loadServicesSSE(
-  req: Request,
+function addServiceResultHandler(
   res: Response,
-  next: NextFunction
+  servicePromise: Promise<any>,
+  serviceName: string
 ) {
+  return servicePromise
+    .then(data => {
+      sendMessage(res, serviceName, 'message', data);
+      return data;
+    })
+    .catch(error =>
+      Sentry.captureException(error, {
+        extra: { module: 'services-sse', serviceName },
+      })
+    );
+}
+
+export async function loadServicesSSE(req: Request, res: Response) {
   // Tell the client we respond with an event stream
   res.writeHead(200, {
     'content-type': 'text/event-stream',
@@ -36,87 +52,59 @@ export async function loadServicesSSE(
   const servicesDirect = loadServicesDirect(
     req.sessionID!,
     getSamlTokenHeader(req)
-  )
-    .then(data => {
-      sendMessage(res, 'direct', 'message', data);
-    })
-    .catch(error =>
-      Sentry.captureException(error, {
-        extra: { module: 'services-sse', serviceName: 'direct' },
-      })
-    );
+  );
+
+  addServiceResultHandler(res, servicesDirect, 'direct');
 
   const servicesRelated = loadServicesRelated(
     req.sessionID!,
     getSamlTokenHeader(req)
-  )
-    .then(data => {
-      sendMessage(res, 'related', 'message', data);
-    })
-    .catch(error =>
-      Sentry.captureException(error, {
-        extra: { module: 'services-sse', serviceName: 'related' },
-      })
-    );
+  );
+
+  addServiceResultHandler(res, servicesRelated, 'related');
 
   const servicesAfval = loadServicesAfval(
     req.sessionID!,
     getSamlTokenHeader(req)
-  )
-    .then(data => {
-      sendMessage(res, 'related', 'message', data);
-    })
-    .catch(error =>
-      Sentry.captureException(error, {
-        extra: { module: 'services-sse', serviceName: 'afval' },
-      })
-    );
+  );
 
-  const servicesMap = loadServicesMap(req.sessionID!, getSamlTokenHeader(req))
-    .then(data => {
-      sendMessage(res, 'map', 'message', data);
-    })
-    .catch(error =>
-      Sentry.captureException(error, {
-        extra: { module: 'services-sse', serviceName: 'map' },
-      })
-    );
+  addServiceResultHandler(res, servicesAfval, 'afval');
 
-  const servicesGenerated = loadServicesGenerated(
-    req.sessionID!,
-    getSamlTokenHeader(req),
-    req.cookies.optInPersonalizedTips === 'yes'
-  )
-    .then(data => {
-      sendMessage(res, 'generated', 'message', data);
-    })
-    .catch(error =>
-      Sentry.captureException(error, {
-        extra: { module: 'services-sse', serviceName: 'generated' },
-      })
-    );
+  const servicesMap = loadServicesMap(req.sessionID!, getSamlTokenHeader(req));
+
+  addServiceResultHandler(res, servicesMap, 'map');
 
   const servicesCMSContent = loadServicesCMSContent(
     req.sessionID!,
     getSamlTokenHeader(req)
-  )
-    .then(data => {
-      sendMessage(res, 'cmscontent', 'message', data);
-    })
-    .catch(error =>
-      Sentry.captureException(error, {
-        extra: { module: 'services-sse', serviceName: 'cmscontent' },
-      })
-    );
+  );
 
-  await Promise.allSettled([
+  addServiceResultHandler(res, servicesCMSContent, 'cmscontent');
+
+  const servicesGenerated = loadServicesGenerated(
+    req.sessionID!,
+    getSamlTokenHeader(req)
+  );
+
+  addServiceResultHandler(res, servicesGenerated, 'generated');
+
+  const tipsRequestDataServiceResults = await Promise.all([
     servicesDirect,
     servicesRelated,
-    servicesMap,
-    servicesGenerated,
-    servicesCMSContent,
-    servicesAfval,
-  ]).finally(() => {
+  ]);
+
+  const optin = req.cookies.optInPersonalizedTips === 'yes';
+
+  const tipsResult = loadServicesTips(
+    req.sessionID!,
+    getSamlTokenHeader(req),
+    tipsRequestDataServiceResults,
+    optin
+  );
+
+  addServiceResultHandler(res, tipsResult, 'tips');
+
+  tipsResult.finally(() => {
     sendMessage(res, 'close', 'close', null);
     res.end();
   });

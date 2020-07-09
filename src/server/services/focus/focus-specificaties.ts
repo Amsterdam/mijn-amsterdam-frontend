@@ -128,14 +128,9 @@ export function transformFOCUSIncomeSpecificationsData(
 
 export async function fetchFOCUSSpecificaties(
   sessionID: SessionID,
-  samlToken: string,
-  raw: boolean = false
+  samlToken: string
 ) {
-  const combinedData = await fetchFOCUSCombined(sessionID, samlToken, raw);
-
-  if (raw) {
-    return combinedData;
-  }
+  const combinedData = await fetchFOCUSCombined(sessionID, samlToken);
 
   if (combinedData.status === 'OK') {
     return apiSuccesResult(

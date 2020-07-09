@@ -184,15 +184,13 @@ export function transformGarbageRetrievalData(
 export async function fetchAFVAL(
   sessionID: SessionID,
   samlToken: string,
-  center: LatLngObject | null,
-  raw: boolean = false
+  center: LatLngObject | null
 ) {
   const params = { lat: center?.lat, lon: center?.lng };
   const garbageMomentData = await requestData<GarbageRetrievalMoment[]>(
     getApiConfig('AFVAL', {
       params,
-      transformResponse: (data: AFVALSourceData) =>
-        raw ? data : transformGarbageRetrievalData(data),
+      transformResponse: transformGarbageRetrievalData,
     }),
     sessionID,
     samlToken

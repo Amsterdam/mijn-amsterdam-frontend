@@ -13,15 +13,10 @@ function transformResponse(data: ERFPACHTSourceData): ERFPACHTData {
   return { isKnown: data.status };
 }
 
-export function fetchERFPACHT(
-  sessionID: SessionID,
-  samlToken: string,
-  raw: boolean = false
-) {
+export function fetchERFPACHT(sessionID: SessionID, samlToken: string) {
   return requestData<ERFPACHTData>(
     getApiConfig('ERFPACHT', {
-      transformResponse: (responseData: ERFPACHTSourceData) =>
-        raw ? responseData : transformResponse(responseData),
+      transformResponse: transformResponse,
     }),
     sessionID,
     samlToken

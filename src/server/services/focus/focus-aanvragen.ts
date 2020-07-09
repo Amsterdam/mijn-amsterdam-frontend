@@ -16,19 +16,11 @@ import { FocusItem, FocusProduct, FocusProductFromSource } from './focus-types';
 /**
  * Focus api data has to be transformed extensively to make it readable and presentable to a client.
  */
-export function fetchFOCUS(
-  sessionID: SessionID,
-  samlToken: string,
-  raw: boolean = false
-) {
+export function fetchFOCUS(sessionID: SessionID, samlToken: string) {
   const sourceDataNormalized = requestData<FocusProduct[]>(
     getApiConfig('FOCUS_AANVRAGEN', {
       // Normalize the focus source response.
       transformResponse: (data = []) => {
-        if (raw) {
-          return data;
-        }
-
         if (Array.isArray(data)) {
           return data
             .map((product: FocusProductFromSource) =>
@@ -50,14 +42,9 @@ export const focusAanvragenProducten = ['Levensonderhoud', 'Stadspas'];
 
 export async function fetchFOCUSAanvragen(
   sessionID: SessionID,
-  samlToken: string,
-  raw: boolean = false
+  samlToken: string
 ) {
-  const response = await fetchFOCUS(sessionID, samlToken, raw);
-
-  if (raw) {
-    return response;
-  }
+  const response = await fetchFOCUS(sessionID, samlToken);
 
   if (response.status === 'OK') {
     // Filter out the products that we use for the lopende/afgehandelde aanvragen

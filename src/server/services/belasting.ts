@@ -2,9 +2,12 @@ import { Chapters } from '../../universal/config';
 import { MyNotification, MyTip } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import { omit } from '../../universal/helpers';
 
 export interface BELASTINGENData {
   isKnown: boolean;
+  notifications: MyNotification[];
+  tips: MyTip[];
 }
 
 interface BELASTINGSourceDataContent {
@@ -33,73 +36,52 @@ function transformBelastingNotifications(notifications?: MyNotification[]) {
 function transformBELASTINGENData(
   responseData: BELASTINGSourceData
 ): BELASTINGENData {
-  const { isKnown } = responseData?.content || {
+  const { isKnown, meldingen, tips } = responseData?.content || {
     isKnown: true,
+    meldingen: [],
+    tips: [],
   };
 
   return {
     isKnown,
+    notifications: transformBelastingNotifications(meldingen),
+    tips,
   };
 }
 
-export function fetchBELASTING(
+export async function fetchBELASTING(
   sessionID: SessionID,
   samlToken: string,
-  raw: boolean = false
+  includeNotifications: boolean = false
 ) {
-  return requestData<BELASTINGENData>(
+  const response = await requestData<BELASTINGENData>(
     getApiConfig('BELASTINGEN', {
-      transformResponse: (responseData: BELASTINGSourceData) =>
-        raw ? responseData : transformBELASTINGENData(responseData),
+      transformResponse: transformBELASTINGENData,
     }),
     sessionID,
     samlToken
   );
-}
 
-function transformBELASTINGENGenerated(responseData: BELASTINGSourceData) {
-  let notifications: MyNotification[] = [];
-  let tips: MyTip[] = [];
-
-  if (responseData.status === 'OK') {
-    if (responseData.content?.tips?.length) {
-      tips = responseData.content.tips;
-    }
-
-    if (responseData.content?.meldingen?.length) {
-      notifications = transformBelastingNotifications(
-        responseData.content.meldingen
-      );
-    }
+  if (!includeNotifications) {
+    return Object.assign({}, response, {
+      content: response.content
+        ? omit(response.content, ['notifications'])
+        : null,
+    });
   }
 
-  return {
-    tips,
-    notifications,
-  };
+  return response;
 }
 
 export async function fetchBELASTINGGenerated(
   sessionID: SessionID,
   samlToken: string
 ) {
-  const response = await requestData<
-    ReturnType<typeof transformBELASTINGENGenerated>
-  >(
-    getApiConfig('BELASTINGEN', {
-      transformResponse: transformBELASTINGENGenerated,
-    }),
-    sessionID,
-    samlToken
-  );
+  let notifications: MyNotification[] = [];
 
-  const notifications: MyNotification[] = [];
-  const tips: MyTip[] = [];
-
-  return (
-    response.content || {
-      tips,
-      notifications,
-    }
-  );
+  const response = await fetchBELASTING(sessionID, samlToken, true);
+  if (response.status === 'OK') {
+    notifications = response.content.notifications;
+  }
+  return { notifications };
 }

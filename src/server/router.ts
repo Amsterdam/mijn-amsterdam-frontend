@@ -6,13 +6,10 @@ import {
   loadServicesDirect,
   loadServicesGenerated,
   loadServicesMap,
-  loadServicesRaw,
   loadServicesRelated,
-  loadServicesTips,
 } from './services';
+import { loadServicesAll } from './services/services-all';
 import { loadServicesSSE } from './services/services-sse';
-import { loadServicesAfval } from './services/services-afval';
-import { getSettledResult } from '../universal/helpers/api';
 
 export const router = express.Router();
 
@@ -23,11 +20,7 @@ router.get(`/services/generated`, async function handleRouteServicesGenerated(
 ) {
   try {
     res.send(
-      await loadServicesGenerated(
-        req.sessionID!,
-        getSamlTokenHeader(req),
-        req.query.optin === '1'
-      )
+      await loadServicesGenerated(req.sessionID!, getSamlTokenHeader(req))
     );
     next();
   } catch (error) {
@@ -44,19 +37,6 @@ router.get(`/services/related`, async function handleRouteServicesRelated(
     res.send(
       await loadServicesRelated(req.sessionID!, getSamlTokenHeader(req))
     );
-    next();
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.get(`/services/rawsource`, async function handleRouteServicesRelated(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  try {
-    res.json(await loadServicesRaw(req.sessionID!, getSamlTokenHeader(req)));
     next();
   } catch (error) {
     next(error);
@@ -110,13 +90,13 @@ router.get(`/services/tips`, async function handleRouteTips(
   next: NextFunction
 ) {
   try {
-    res.json(
-      await loadServicesTips(
-        req.sessionID!,
-        getSamlTokenHeader(req),
-        req.query.optin === 'true'
-      )
+    const optin = req.query.optin === 'true';
+    const data = await loadServicesAll(
+      req.sessionID!,
+      getSamlTokenHeader(req),
+      optin
     );
+    res.json(data.TIPS);
     next();
   } catch (error) {
     next(error);
@@ -129,22 +109,14 @@ router.get(`/services/all`, async function handleRouteServicesMap(
   next: NextFunction
 ) {
   try {
-    const servicesResult = await Promise.all([
-      loadServicesCMSContent(req.sessionID!, getSamlTokenHeader(req)),
-      loadServicesDirect(req.sessionID!, getSamlTokenHeader(req)),
-      loadServicesRelated(req.sessionID!, getSamlTokenHeader(req)),
-      loadServicesMap(req.sessionID!, getSamlTokenHeader(req)),
-      loadServicesAfval(req.sessionID!, getSamlTokenHeader(req)),
-      loadServicesGenerated(
-        req.sessionID!,
-        getSamlTokenHeader(req),
-        req.cookies.optInPersonalizedTips === 'yes'
-      ),
-    ]);
-
-    res.json(
-      servicesResult.reduce((acc, result) => Object.assign(acc, result), {})
+    const optin = req.cookies.optInPersonalizedTips === 'yes';
+    const servicesResult = await loadServicesAll(
+      req.sessionID!,
+      getSamlTokenHeader(req),
+      optin
     );
+
+    res.json(servicesResult);
 
     next();
   } catch (error) {

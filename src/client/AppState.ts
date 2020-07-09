@@ -6,6 +6,7 @@ import {
   loadServicesRelated,
   loadServicesMap,
   loadServicesCMSContent,
+  loadServicesTips,
 } from '../server/services';
 import {
   FEApiResponseData,
@@ -20,13 +21,15 @@ type MapsResponse = FEApiResponseData<typeof loadServicesMap>;
 type RelatedResponse = FEApiResponseData<typeof loadServicesRelated>;
 type CMSContentResponse = FEApiResponseData<typeof loadServicesCMSContent>;
 type AfvalResponse = FEApiResponseData<typeof loadServicesAfval>;
+type TipsResponse = FEApiResponseData<typeof loadServicesTips>;
 
 type ApiState = GeneratedResponse &
   DirectResponse &
   MapsResponse &
   RelatedResponse &
   AfvalResponse &
-  CMSContentResponse;
+  CMSContentResponse &
+  TipsResponse;
 
 type AppStateController = {
   [key in keyof ApiState]?: {
@@ -43,7 +46,7 @@ export type AppState = {
 
 export const PRISTINE_APPSTATE = {
   // Generated
-  TIPS: apiPristineResult({ items: [] }),
+  TIPS: apiPristineResult([]),
   NOTIFICATIONS: apiPristineResult([]),
   CASES: apiPristineResult([]),
 
@@ -53,8 +56,8 @@ export const PRISTINE_APPSTATE = {
     uitkeringsspecificaties: [],
   }),
   FOCUS_AANVRAGEN: apiPristineResult([]),
-  FOCUS_TOZO: apiPristineResult(null),
-  WMO: apiPristineResult({ items: [] }),
+  FOCUS_TOZO: apiPristineResult([]),
+  WMO: apiPristineResult([]),
   ERFPACHT: apiPristineResult({ isKnown: false }),
   BELASTINGEN: apiPristineResult({ isKnown: true }),
   MILIEUZONE: apiPristineResult({ isKnown: false }),

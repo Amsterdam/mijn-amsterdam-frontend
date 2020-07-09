@@ -4,9 +4,7 @@ import { AppState } from '../../AppState';
 import { MockAppStateProvider } from '../../AppStateProvider';
 import InkomenDetail from './InkomenDetail';
 
-const APP_STATE = { WMO: { content: { items: [] }, status: 'OK' } } as Partial<
-  AppState
->;
+const APP_STATE = { WMO: { content: [], status: 'OK' } } as Partial<AppState>;
 
 it('Renders without crashing', () => {
   shallow(

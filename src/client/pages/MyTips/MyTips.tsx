@@ -84,7 +84,7 @@ export default () => {
       <MyTips
         showHeader={false}
         isLoading={isLoading(TIPS)}
-        items={TIPS.content?.items || []}
+        items={TIPS.content || []}
       />
     </OverviewPage>
   );

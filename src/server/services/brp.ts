@@ -164,14 +164,9 @@ export function transformBRPData(responseData: BRPDataFromSource) {
   return responseData as BRPData;
 }
 
-export function fetchBRP(
-  sessionID: SessionID,
-  samlToken: string,
-  raw: boolean = false
-) {
+export function fetchBRP(sessionID: SessionID, samlToken: string) {
   const options = getApiConfig('BRP', {
-    transformResponse: (responseData: BRPDataFromSource) =>
-      raw ? responseData : transformBRPData(responseData),
+    transformResponse: transformBRPData,
   });
 
   return requestData<BRPData>(options, sessionID, samlToken);
