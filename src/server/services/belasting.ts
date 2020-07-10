@@ -6,8 +6,8 @@ import { omit } from '../../universal/helpers';
 
 export interface BELASTINGENData {
   isKnown: boolean;
-  notifications: MyNotification[];
-  tips: MyTip[];
+  notifications?: MyNotification[];
+  tips?: MyTip[];
 }
 
 interface BELASTINGSourceDataContent {

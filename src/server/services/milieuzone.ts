@@ -1,12 +1,12 @@
 import { Chapters } from '../../universal/config';
-import { ApiUrls, getApiConfig } from '../config';
-import { MyNotification, MyTip } from '../../universal/types';
-import { requestData } from '../helpers';
 import { omit } from '../../universal/helpers';
+import { MyNotification, MyTip } from '../../universal/types';
+import { getApiConfig } from '../config';
+import { requestData } from '../helpers';
 
 export interface MILIEUZONEData {
   isKnown: boolean;
-  notifications: MyNotification[];
+  notifications?: MyNotification[];
 }
 
 interface MILIEUZONESourceDataContent {
