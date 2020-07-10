@@ -77,7 +77,7 @@ export async function fetchMILIEUZONEGenerated(
   let notifications: MyNotification[] = [];
 
   const response = await fetchMILIEUZONE(sessionID, samlToken, true);
-  if (response.status === 'OK') {
+  if (response.status === 'OK' && response.content.notifications) {
     notifications = response.content.notifications;
   }
   return { notifications };
