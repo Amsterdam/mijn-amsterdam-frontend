@@ -3,10 +3,9 @@ import { fetchHOME } from './home';
 
 export async function loadServicesRelated(
   sessionID: SessionID,
-  samlToken: string,
-  raw: boolean = false
+  samlToken: string
 ) {
-  const BRP = await fetchBRP(sessionID, samlToken, raw);
+  const BRP = await fetchBRP(sessionID, samlToken);
   const HOME = await fetchHOME(sessionID, samlToken);
 
   return {

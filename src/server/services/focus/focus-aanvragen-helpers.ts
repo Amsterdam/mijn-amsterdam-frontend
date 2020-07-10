@@ -160,7 +160,7 @@ function normalizeFocusSourceProductStep(
   [stepTitle, stepData]: [StepTitle, FocusProductStepFromSource]
 ) {
   const stepNormalized: FocusProductStep = {
-    id: `${product._id}-step-${stepTitle}`,
+    id: stepTitle,
     title: stepTitle,
     documents:
       stepData.document.map(sourceDocument =>
@@ -191,9 +191,10 @@ export function normalizeFocusSourceProduct(product: FocusProductFromSource) {
     .map(step => normalizeFocusSourceProductStep(product, step));
 
   const latestStep = getLatestStep(steps);
+  const id = hash(`${product._id}-${latestStep}`);
 
   return {
-    id: 'aanvraag-' + hash(`${product._id}-${latestStep}`),
+    id,
     title: product.naam,
     type: product.soortProduct,
     decision: product.typeBesluit

@@ -25,21 +25,17 @@ export default () => {
   const { WMO } = useContext(AppContext);
 
   const itemsActual = useMemo(() => {
-    if (!WMO.content?.items.length) {
+    if (!WMO.content?.length) {
       return [];
     }
-    return addTitleLinkComponent(
-      WMO.content?.items.filter(item => item.isActual)
-    );
+    return addTitleLinkComponent(WMO.content?.filter(item => item.isActual));
   }, [WMO]);
 
   const itemsPrevious = useMemo(() => {
-    if (!WMO.content?.items.length) {
+    if (!WMO.content?.length) {
       return [];
     }
-    return addTitleLinkComponent(
-      WMO.content?.items.filter(item => !item.isActual)
-    );
+    return addTitleLinkComponent(WMO.content?.filter(item => !item.isActual));
   }, [WMO]);
 
   const hasActualItems = !!itemsActual.length;

@@ -16,17 +16,16 @@ type AFVALPUNTENResponseData =
 
 export async function loadServicesAfval(
   sessionID: SessionID,
-  samlToken: string,
-  raw: boolean = false
+  samlToken: string
 ) {
-  const BRP = await fetchBRP(sessionID, samlToken, raw);
+  const BRP = await fetchBRP(sessionID, samlToken);
   const HOME = await fetchHOME(sessionID, samlToken);
 
   let AFVAL: AFVALResponseData;
   let AFVALPUNTEN: AFVALPUNTENResponseData;
 
   if (HOME.status === 'OK') {
-    AFVAL = await fetchAFVAL(sessionID, samlToken, HOME.content?.latlng, raw);
+    AFVAL = await fetchAFVAL(sessionID, samlToken, HOME.content?.latlng);
     AFVALPUNTEN = await scrapeGarbageCenterData(HOME.content?.latlng);
   } else {
     AFVAL = apiDependencyError({ BRP, HOME });

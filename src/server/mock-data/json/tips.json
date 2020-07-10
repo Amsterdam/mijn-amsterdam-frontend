@@ -1,97 +1,94 @@
-{
-    "items": [
-        {
-            "datePublished": "2019-07-24",
-            "isPersonalized": true,
-            "description": "U mag geen telefoon meer vasthouden op de fiets",
-            "id": 1,
-            "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/bellenopfiets.jpg",
-            "link": {
-                "title": "Meer informatie",
-                "to": "https://www.rijksoverheid.nl/onderwerpen/fiets/vraag-en-antwoord/mag-ik-bellen-en-naar-muziek-luisteren-op-de-fiets"
-            },
-            "priority": 50,
-            "reason": ["Op basis van common sense"],
-            "title": "PERSONALIZED: Geen telefoon op de fiets"
-        },
-        {
-            "datePublished": "2019-08-18",
-            "description": "Kijk waar het dichtstbijzijnde Afvalpunt is. En welke vergunningen de gemeente heeft uitgegeven in uw buurt",
-            "id": 9,
-            "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/afvalpunt.jpg",
-            "link": {
-                "title": "Kijk op de kaart",
-                "to": "/buurt"
-            },
-            "priority": 40,
-            "reason": [],
-            "title": "Mijn buurt"
-        },
-        {
-            "datePublished": "2019-07-24",
-            "description": "Op een Afvalpunt kunt u uw grofvuil, klein chemisch afval en tweedehands spullen inleveren",
-            "id": 3,
-            "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/grofvuil.jpg",
-            "link": {
-                "title": "Adressen Afvalpunten",
-                "to": "https://www.amsterdam.nl/afval/grofvuil/grofvuil-wegbrengen/"
-            },
-            "priority": 25,
-            "reason": [],
-            "title": "Grofvuil"
-        },
-        {
-            "datePublished": "2019-07-24",
-            "description": "Er is altijd vrijwilligerswerk dat bij u past\nBekijk de vacature",
-            "id": 2,
-            "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/vrijwilliger.jpg",
-            "link": {
-                "title": "Vrijwilligerscentrale Amsterdam",
-                "to": "https://www.vca.nu/vacaturebank/"
-            },
-            "priority": 20,
-            "reason": [],
-            "title": "Vrijwilliger worden?"
-        },
-        {
-            "datePublished": "2019-07-24",
-            "description": "Bekijk hoe u gratis een geveltuin kunt aanvragen bij uw stadsdeel. Of hoe u de geveltuin kunt laten verwijderen.",
-            "id": 4,
-            "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/geveltuin.jpg",
-            "link": {
-                "title": "Meer informatie",
-                "to": "https://www.amsterdam.nl/veelgevraagd/?productid=%7B2214F853-B9F5-41F6-934B-B1616D8E0949%7D#%7B7E4E60A9-F809-4FC9-B7EB-9C06B3DB4513%7D"
-            },
-            "priority": 20,
-            "reason": [],
-            "title": "Geveltuin"
-        },
-        {
-            "datePublished": "2019-07-24",
-            "description": "De GGD geeft advies en alle vaccinaties die u nodig hebt voor uw vakantie naar het buitenland",
-            "id": 5,
-            "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/vaccinaties.jpg",
-            "link": {
-                "title": "Meer informatie",
-                "to": "https://www.ggd.amsterdam.nl/ggd/contact/reizigersvaccinatie/vaccinaties.jpg"
-            },
-            "priority": 20,
-            "reason": [],
-            "title": "Vaccinaties"
-        },
-        {
-            "datePublished": "2019-07-24",
-            "description": "U vindt hier steeds weer nieuwe onderwerpen! Bekijk de nieuwe onderwerpen",
-            "id": 7,
-            "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/nieuweaansluiting.jpg",
-            "link": {
-                "title": "Bekijk de nieuwe onderwerpen",
-                "to": "/"
-            },
-            "priority": 20,
-            "reason": [],
-            "title": "Kom snel terug"
-        }
-    ],
-    "total": 7
-}
+[
+  {
+      "datePublished": "2019-07-24",
+      "isPersonalized": true,
+      "description": "U mag geen telefoon meer vasthouden op de fiets",
+      "id": 1,
+      "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/bellenopfiets.jpg",
+      "link": {
+          "title": "Meer informatie",
+          "to": "https://www.rijksoverheid.nl/onderwerpen/fiets/vraag-en-antwoord/mag-ik-bellen-en-naar-muziek-luisteren-op-de-fiets"
+      },
+      "priority": 50,
+      "reason": ["Op basis van common sense"],
+      "title": "PERSONALIZED: Geen telefoon op de fiets"
+  },
+  {
+      "datePublished": "2019-08-18",
+      "description": "Kijk waar het dichtstbijzijnde Afvalpunt is. En welke vergunningen de gemeente heeft uitgegeven in uw buurt",
+      "id": 9,
+      "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/afvalpunt.jpg",
+      "link": {
+          "title": "Kijk op de kaart",
+          "to": "/buurt"
+      },
+      "priority": 40,
+      "reason": [],
+      "title": "Mijn buurt"
+  },
+  {
+      "datePublished": "2019-07-24",
+      "description": "Op een Afvalpunt kunt u uw grofvuil, klein chemisch afval en tweedehands spullen inleveren",
+      "id": 3,
+      "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/grofvuil.jpg",
+      "link": {
+          "title": "Adressen Afvalpunten",
+          "to": "https://www.amsterdam.nl/afval/grofvuil/grofvuil-wegbrengen/"
+      },
+      "priority": 25,
+      "reason": [],
+      "title": "Grofvuil"
+  },
+  {
+      "datePublished": "2019-07-24",
+      "description": "Er is altijd vrijwilligerswerk dat bij u past\nBekijk de vacature",
+      "id": 2,
+      "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/vrijwilliger.jpg",
+      "link": {
+          "title": "Vrijwilligerscentrale Amsterdam",
+          "to": "https://www.vca.nu/vacaturebank/"
+      },
+      "priority": 20,
+      "reason": [],
+      "title": "Vrijwilliger worden?"
+  },
+  {
+      "datePublished": "2019-07-24",
+      "description": "Bekijk hoe u gratis een geveltuin kunt aanvragen bij uw stadsdeel. Of hoe u de geveltuin kunt laten verwijderen.",
+      "id": 4,
+      "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/geveltuin.jpg",
+      "link": {
+          "title": "Meer informatie",
+          "to": "https://www.amsterdam.nl/veelgevraagd/?productid=%7B2214F853-B9F5-41F6-934B-B1616D8E0949%7D#%7B7E4E60A9-F809-4FC9-B7EB-9C06B3DB4513%7D"
+      },
+      "priority": 20,
+      "reason": [],
+      "title": "Geveltuin"
+  },
+  {
+      "datePublished": "2019-07-24",
+      "description": "De GGD geeft advies en alle vaccinaties die u nodig hebt voor uw vakantie naar het buitenland",
+      "id": 5,
+      "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/vaccinaties.jpg",
+      "link": {
+          "title": "Meer informatie",
+          "to": "https://www.ggd.amsterdam.nl/ggd/contact/reizigersvaccinatie/vaccinaties.jpg"
+      },
+      "priority": 20,
+      "reason": [],
+      "title": "Vaccinaties"
+  },
+  {
+      "datePublished": "2019-07-24",
+      "description": "U vindt hier steeds weer nieuwe onderwerpen! Bekijk de nieuwe onderwerpen",
+      "id": 7,
+      "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/nieuweaansluiting.jpg",
+      "link": {
+          "title": "Bekijk de nieuwe onderwerpen",
+          "to": "/"
+      },
+      "priority": 20,
+      "reason": [],
+      "title": "Kom snel terug"
+  }
+]

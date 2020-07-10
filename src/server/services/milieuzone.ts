@@ -1,10 +1,12 @@
 import { Chapters } from '../../universal/config';
-import { ApiUrls, getApiConfig } from '../config';
+import { omit } from '../../universal/helpers';
 import { MyNotification, MyTip } from '../../universal/types';
+import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 
 export interface MILIEUZONEData {
   isKnown: boolean;
+  notifications?: MyNotification[];
 }
 
 interface MILIEUZONESourceDataContent {
@@ -33,65 +35,50 @@ function transformMILIEUZONENotifications(notifications?: MyNotification[]) {
 function transformMILIEUZONEData(
   responseData: MILIEUZONESourceData
 ): MILIEUZONEData {
-  const { isKnown } = responseData?.content || {
+  const { isKnown, meldingen } = responseData?.content || {
     isKnown: false,
+    meldingen: [],
   };
 
   return {
     isKnown,
+    notifications: transformMILIEUZONENotifications(meldingen),
   };
 }
 
-export function fetchMILIEUZONE(
+export async function fetchMILIEUZONE(
   sessionID: SessionID,
   samlToken: string,
-  raw: boolean = false
+  includeNotifications: boolean = false
 ) {
-  return requestData<MILIEUZONEData>(
+  const response = await requestData<MILIEUZONEData>(
     getApiConfig('MILIEUZONE', {
-      transformResponse: (responseData: MILIEUZONESourceData) =>
-        raw ? responseData : transformMILIEUZONEData(responseData),
+      transformResponse: transformMILIEUZONEData,
     }),
     sessionID,
     samlToken
   );
-}
 
-function transformMILIEUZONEGenerated(responseData: MILIEUZONESourceData) {
-  let notifications: MyNotification[] = [];
-
-  if (responseData.status === 'OK') {
-    if (responseData.content?.meldingen?.length) {
-      notifications = transformMILIEUZONENotifications(
-        responseData.content.meldingen
-      );
-    }
+  if (!includeNotifications) {
+    return Object.assign({}, response, {
+      content: response.content
+        ? omit(response.content, ['notifications'])
+        : null,
+    });
   }
 
-  return {
-    notifications,
-  };
+  return response;
 }
 
 export async function fetchMILIEUZONEGenerated(
   sessionID: SessionID,
   samlToken: string
 ) {
-  const response = await requestData<
-    ReturnType<typeof transformMILIEUZONEGenerated>
-  >(
-    getApiConfig('MILIEUZONE', {
-      transformResponse: transformMILIEUZONEGenerated,
-    }),
-    sessionID,
-    samlToken
-  );
+  let notifications: MyNotification[] = [];
 
-  const notifications: MyNotification[] = [];
-
-  return (
-    response.content || {
-      notifications,
-    }
-  );
+  const response = await fetchMILIEUZONE(sessionID, samlToken, true);
+  if (response.status === 'OK' && response.content.notifications) {
+    notifications = response.content.notifications;
+  }
+  return { notifications };
 }

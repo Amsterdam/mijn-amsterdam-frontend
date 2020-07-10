@@ -15,4 +15,4 @@ export * from './services-related';
 export * from './services-generated';
 export * from './services-map';
 export * from './services-cmscontent';
-export * from './services-raw';
+export * from './services-afval';

@@ -42,13 +42,12 @@ export interface FocusCombinedSourceResponse {
 
 export async function fetchFOCUSCombined(
   sessionID: SessionID,
-  samlToken: string,
-  raw: boolean = false
+  samlToken: string
 ) {
   return requestData<FocusCombinedSourceResponse>(
     getApiConfig('FOCUS_COMBINED', {
       transformResponse: (response: { content: FocusCombinedSourceResponse }) =>
-        raw ? response : response.content,
+        response.content,
     }),
     sessionID,
     samlToken
