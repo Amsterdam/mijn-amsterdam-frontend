@@ -12,6 +12,7 @@ import {
   PageHeading,
   StatusLine,
   InfoDetail,
+  LinkdInline,
 } from '../../components';
 import styles from './ZorgDetail.module.scss';
 
@@ -62,7 +63,12 @@ export default () => {
       <PageContent className={styles.DetailPageContent}>
         {(isError(WMO) || noContent) && (
           <Alert type="warning">
-            <p>We kunnen op dit moment geen gegevens tonen.</p>
+            <p>
+              We kunnen op dit moment geen gegevens tonen.{' '}
+              <LinkdInline href={AppRoutes.ZORG}>
+                Naar het overzicht
+              </LinkdInline>
+            </p>
           </Alert>
         )}
         {isLoading(WMO) && (
@@ -73,11 +79,13 @@ export default () => {
         )}
       </PageContent>
 
-      <StatusLine
-        items={steps}
-        trackCategory="Zorg en ondersteuning / Voorziening"
-        id={id}
-      />
+      {!!WmoItem && (
+        <StatusLine
+          items={steps}
+          trackCategory="Zorg en ondersteuning / Voorziening"
+          id={id}
+        />
+      )}
     </DetailPage>
   );
 };
