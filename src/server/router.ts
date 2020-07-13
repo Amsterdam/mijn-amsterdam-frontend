@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { BFF_MS_API_BASE_URL } from './config';
+import { BFF_MS_API_BASE_URL, getApiConfig } from './config';
 import { getSamlTokenHeader, requestData } from './helpers/request';
 import {
   loadServicesCMSContent,
@@ -10,6 +10,7 @@ import {
 } from './services';
 import { loadServicesAll } from './services/services-all';
 import { loadServicesSSE } from './services/services-sse';
+import { BRPData } from '../universal/types';
 
 export const router = express.Router();
 
