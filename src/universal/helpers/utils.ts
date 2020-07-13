@@ -88,7 +88,7 @@ export function hash(str: string) {
   return `${hash >>> 0}`;
 }
 
-// Recursively omit keys from objects. Important: Objects with all keys omitted will remain in the data.
+// Recursively omit keys from objects. Important: Objects with all keys omitted will remain in the data empty.
 export function deepOmitKeys(data: any, omitKeys: string[] = []): any {
   if (Array.isArray(data)) {
     return data.map(item => deepOmitKeys(data, omitKeys));
