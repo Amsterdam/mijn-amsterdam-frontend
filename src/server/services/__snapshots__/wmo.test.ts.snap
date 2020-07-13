@@ -11,7 +11,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/vervoerskostenvergoeding-rolstoeltaxi-of-vervoer-derden-0",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2019-09-25T00:00:00",
         "description": "
@@ -57,7 +57,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/hulp-bij-het-huishouden-1",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2019-04-15T00:00:00",
         "description": "
@@ -124,7 +124,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/dagbesteding-2",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2019-03-14T00:00:00",
         "description": "
@@ -191,7 +191,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-3",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2019-03-11T00:00:00",
         "description": "
@@ -258,7 +258,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/dagbesteding-2019-2-4",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2019-03-11T00:00:00",
         "description": "
@@ -325,7 +325,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-5",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2019-01-31T00:00:00",
         "description": "
@@ -392,7 +392,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-6",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2019-01-31T00:00:00",
         "description": "
@@ -458,7 +458,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-7",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2018-11-29T00:00:00",
         "description": "
@@ -524,7 +524,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-8",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2018-11-22T00:00:00",
         "description": "
@@ -591,7 +591,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/woonruimteaanpassing-9",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2018-12-27T00:00:00",
         "description": "
@@ -658,7 +658,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/handbewogen-rolstoel-voor-semi-permanent-gebruik-10",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2018-09-17T00:00:00",
         "description": "
@@ -723,7 +723,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/woonruimteaanpassing-11",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2018-07-20T00:00:00",
         "description": "
@@ -790,7 +790,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/dagbesteding-12",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2018-08-20T00:00:00",
         "description": "
@@ -856,7 +856,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/woonruimteaanpassing-13",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2018-05-09T00:00:00",
         "description": "
@@ -923,7 +923,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/hulp-bij-het-huishouden-14",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2018-04-25T00:00:00",
         "description": "
@@ -989,7 +989,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/dagbesteding-2019-15",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2018-04-19T00:00:00",
         "description": "
@@ -1055,7 +1055,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/deur-tot-deur-plus-vervoer-16",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2018-04-06T00:00:00",
         "description": "
@@ -1099,7 +1099,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-17",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2018-03-22T00:00:00",
         "description": "
@@ -1165,7 +1165,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-18",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2018-08-13T00:00:00",
         "description": "
@@ -1231,7 +1231,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-19",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2018-01-01T00:00:00",
         "description": "
@@ -1297,7 +1297,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/hulp-bij-het-huishouden-pgb-20",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2018-01-12T00:00:00",
         "description": "
@@ -1344,7 +1344,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/ambulante-ondersteuning-21",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2017-11-24T00:00:00",
         "description": "
@@ -1410,7 +1410,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/deur-tot-deur-plus-vervoer-22",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2017-11-25T00:00:00",
         "description": "
@@ -1454,7 +1454,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/dagbesteding-23",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2017-06-01T00:00:00",
         "description": "
@@ -1520,7 +1520,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/hulp-bij-het-huishouden-24",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2017-06-01T00:00:00",
         "description": "
@@ -1586,7 +1586,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/dagbesteding-25",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2017-06-01T00:00:00",
         "description": "
@@ -1652,7 +1652,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/hulp-bij-het-huishouden-26",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2017-06-01T00:00:00",
         "description": "
@@ -1718,7 +1718,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/specialistische-jeugdhulp-27",
     },
-    "process": Array [],
+    "steps": Array [],
     "supplier": undefined,
     "supplierUrl": "",
     "title": "Specialistische jeugdhulp",
@@ -1732,7 +1732,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/deur-tot-deur-plus-vervoer-28",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2016-04-15T00:00:00",
         "description": "
@@ -1776,7 +1776,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/woonruimteaanpassing-29",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2015-06-23T00:00:00",
         "description": "
@@ -1843,7 +1843,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/scootmobiel-voor-buitengebruik-30",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2005-03-21T00:00:00",
         "description": "
@@ -1908,7 +1908,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/elektrische-hulpaandrijving-voor-rolstoel-31",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2014-09-09T00:00:00",
         "description": "
@@ -1973,7 +1973,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/woonruimteaanpassing-32",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2014-09-11T00:00:00",
         "description": "
@@ -2040,7 +2040,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/woonruimteaanpassing-33",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2013-12-09T00:00:00",
         "description": "
@@ -2107,7 +2107,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/deur-tot-deur-samenreizend-vervoer-34",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2013-11-05T00:00:00",
         "description": "
@@ -2151,7 +2151,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/woonruimteaanpassing-35",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2013-05-17T00:00:00",
         "description": "
@@ -2218,7 +2218,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/kinderspeelvoertuig-36",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2013-05-13T00:00:00",
         "description": "
@@ -2283,7 +2283,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/handbewogen-rolstoel-37",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2012-10-05T00:00:00",
         "description": "
@@ -2348,7 +2348,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/douche-toiletstoel-verrijdbaarkantelbaarindividueel-aangepast-38",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2012-10-05T00:00:00",
         "description": "
@@ -2413,7 +2413,7 @@ Array [
       "title": "Meer informatie",
       "to": "/zorg-en-ondersteuning/voorzieningen/kamer-tot-kamer-vervoer-1-39",
     },
-    "process": Array [
+    "steps": Array [
       Object {
         "datePublished": "2012-08-07T00:00:00",
         "description": "

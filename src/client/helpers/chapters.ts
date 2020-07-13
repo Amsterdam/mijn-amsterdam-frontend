@@ -97,17 +97,17 @@ export function getMyChapters(appState: AppState): ChaptersState {
     // Check to see if Chapter has been loaded or if it is directly available
     return isChapterActive(item, appState);
   });
-
   return {
     items,
     isLoading:
       !!appState &&
       Object.entries(appState)
         .filter(([key]) => key !== 'controller')
-        .some(
-          ([key, apiState]) =>
+        .some(([key, apiState]) => {
+          const loading =
             isLoading(apiState as ApiResponse<any>) &&
-            !isError(apiState as ApiResponse<any>)
-        ),
+            !isError(apiState as ApiResponse<any>);
+          return loading;
+        }),
   };
 }

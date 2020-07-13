@@ -87,3 +87,23 @@ export function hash(str: string) {
    * signed int to an unsigned by doing an unsigned bitshift. */
   return `${hash >>> 0}`;
 }
+
+// Recursively omit keys from objects. Important: Objects with all keys omitted will remain in the data.
+export function deepOmitKeys(data: any, omitKeys: string[] = []): any {
+  if (Array.isArray(data)) {
+    return data.map(item => deepOmitKeys(data, omitKeys));
+  } else if (data !== null && typeof data === 'object') {
+    const rdata: Record<string, any> = omit(data, omitKeys);
+    for (const [key, value] of Object.entries(rdata)) {
+      if (Array.isArray(value)) {
+        rdata[key] = rdata[key].map((item: any) =>
+          deepOmitKeys(item, omitKeys)
+        );
+      } else if (typeof value === 'object') {
+        rdata[key] = deepOmitKeys(value, omitKeys);
+      }
+    }
+    return rdata;
+  }
+  return data;
+}

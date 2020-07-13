@@ -31,7 +31,7 @@ export default () => {
     if (!WmoItem) {
       return [];
     }
-    return WmoItem.process.map((step, index) => {
+    return WmoItem.steps.map((step, index) => {
       if (index === 0 && !step.documents.length) {
         return Object.assign(step, {
           altDocumentContent: (
