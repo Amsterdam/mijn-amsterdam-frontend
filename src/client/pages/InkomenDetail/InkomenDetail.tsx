@@ -11,6 +11,7 @@ import {
   PageContent,
   PageHeading,
   StatusLine,
+  LinkdInline,
 } from '../../components';
 import { StatusLineItem } from '../../components/StatusLine/StatusLine';
 import styles from './InkomenDetail.module.scss';
@@ -84,7 +85,12 @@ export default () => {
       <PageContent className={styles.DetailPageContent}>
         {(isError(FOCUS_AANVRAGEN) || noContent) && (
           <Alert type="warning">
-            <p>We kunnen op dit moment geen gegevens tonen.</p>
+            <p>
+              We kunnen op dit moment geen gegevens tonen.{' '}
+              <LinkdInline href={AppRoutes.INKOMEN}>
+                Naar het overzicht
+              </LinkdInline>
+            </p>
           </Alert>
         )}
         {isLoading(FOCUS_AANVRAGEN) && <LoadingContent />}

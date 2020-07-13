@@ -1,4 +1,4 @@
-import { ApiResponse } from '../../universal/helpers';
+import { ApiResponse, deepOmitKeys } from '../../universal/helpers';
 import { MyTip } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
@@ -45,10 +45,10 @@ function extractSuccessResponseContent(
 function createTipsRequestDataFromServiceResults(
   servicesResults: ServiceResults
 ) {
-  return servicesResults.reduce(
-    (acc, result) => Object.assign(acc, extractSuccessResponseContent(result)),
-    {}
-  );
+  return servicesResults.reduce((acc, result) => {
+    const data = extractSuccessResponseContent(result);
+    return Object.assign(acc, deepOmitKeys(data, ['description']));
+  }, {});
 }
 
 export async function loadServicesTips(
@@ -57,8 +57,9 @@ export async function loadServicesTips(
   servicesResults: ServiceResults,
   optin: boolean = false
 ) {
+  const data = createTipsRequestDataFromServiceResults(servicesResults);
   const tipsRequestData: TIPSRequestData = {
-    data: createTipsRequestDataFromServiceResults(servicesResults),
+    data,
     optin,
   };
 

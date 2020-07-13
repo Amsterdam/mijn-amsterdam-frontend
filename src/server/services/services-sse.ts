@@ -104,7 +104,16 @@ export async function loadServicesSSE(req: Request, res: Response) {
 
   addServiceResultHandler(res, tipsResult, 'tips');
 
-  tipsResult.finally(() => {
+  // Wait for all services to have responded and then end the stream.
+  Promise.allSettled([
+    servicesDirect,
+    servicesRelated,
+    servicesAfval,
+    servicesMap,
+    servicesCMSContent,
+    servicesGenerated,
+    tipsResult,
+  ]).then(() => {
     sendMessage(res, 'close', 'close', null);
     res.end();
   });

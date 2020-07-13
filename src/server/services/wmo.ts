@@ -66,7 +66,7 @@ export interface WmoItem {
   supplierUrl: string; // Leverancier url
   isActual: boolean; // Indicates if this item is designated Current or Previous
   link: LinkProps;
-  process: WmoProcessStep[];
+  steps: WmoProcessStep[];
 }
 
 function isDateInFuture(dateStr: string | Date, compareDate: Date) {
@@ -684,7 +684,7 @@ export function transformWMOResponse(
 
       const id = slug(`${title}-${index}`).toLowerCase();
 
-      const process: WmoItem['process'] = formatWmoProcessSteps(
+      const steps: WmoItem['steps'] = formatWmoProcessSteps(
         {
           title,
           dateStart,
@@ -719,7 +719,7 @@ export function transformWMOResponse(
           title: 'Meer informatie',
           to: route,
         },
-        process,
+        steps,
       };
     });
 
