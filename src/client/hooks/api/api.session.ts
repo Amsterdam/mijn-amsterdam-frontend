@@ -1,12 +1,12 @@
-import { useMemo, useEffect } from 'react';
+import { useMemo } from 'react';
 import {
   ApiErrorResponse,
-  apiSuccesResult,
   apiPristineResult,
+  apiSuccesResult,
   ApiSuccessResponse,
 } from '../../../universal/helpers/api';
-import { ApiRequestOptions, useDataApi, requestApiData } from './api.hook';
-import { AUTH_API_URL, isCommercialPathMatch } from '../../config/api';
+import { AUTH_API_URL } from '../../config/api';
+import { ApiRequestOptions, requestApiData, useDataApi } from './api.hook';
 
 export type SessionData = {
   isAuthenticated: boolean;
@@ -33,23 +33,9 @@ const requestOptions: ApiRequestOptions = {
   responseType: 'text',
   transformResponse: [
     ...requestApiData.defaults.transformResponse,
-    (data: SessionData | string) => {
-      // If we land on the commercial entry route after login we have to extract an sso url from the response for additional authentication.
-      // This authentication is done because it makes it possible to use only one api basepath instead of multiple (/api/ vs /api1/). After reload
-      // we have no way of knowing which basepath we have to authenticate against.
-      if (isCommercialPathMatch && typeof data === 'string') {
-        const reg = new RegExp(/top\.location="(.*)"/gi);
-        const matches = reg.exec(data as string);
-        const matchedUrl = matches && matches[1];
-
-        if (matchedUrl) {
-          return matchedUrl;
-        }
-      }
+    (data: SessionData) => {
       return {
-        SESSION: apiSuccesResult<SessionData>(
-          typeof data === 'string' ? INITIAL_SESSION_CONTENT : data
-        ),
+        SESSION: apiSuccesResult<SessionData>(data),
       };
     },
   ],
@@ -64,21 +50,13 @@ type SessionResponseData =
 
 export function useSessionApi() {
   const [{ data, isLoading, isDirty, ...rest }, refetch] = useDataApi<
-    SessionResponseData | string
+    SessionResponseData
   >(requestOptions, INITIAL_SESSION_STATE);
 
-  // If api returned a string for response it means we have to authenticate via another route as well
-  useEffect(() => {
-    if (typeof data === 'string') {
-      refetch({
-        ...requestOptions,
-        url: data,
-      });
-    }
-  }, [data, refetch]);
-
   const { isAuthenticated, validUntil, userType } =
-    typeof data !== 'string' && data !== null && data.SESSION.content !== null
+    typeof data.SESSION?.content !== 'string' &&
+    data !== null &&
+    data.SESSION.content !== null
       ? data.SESSION.content
       : INITIAL_SESSION_CONTENT;
 

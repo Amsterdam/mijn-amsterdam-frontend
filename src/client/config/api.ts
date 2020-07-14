@@ -1,6 +1,7 @@
 import { AppState } from '../AppState';
 import { isError } from '../../universal/helpers';
 import { IS_AP, API_BASE_PATH } from '../../universal/config';
+import { sub } from 'date-fns';
 
 // Urls directly used from front-end
 export const TMA_LOGIN_URL_DIGID = `${API_BASE_PATH}/login`;
@@ -16,12 +17,32 @@ export const TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT = IS_AP
 export const LOGIN_URL_DIGID = TMA_LOGIN_URL_DIGID;
 export const LOGIN_URL_EHERKENNING = TMA_LOGIN_URL_EHERKENNING;
 
-export let isCommercialPathMatch =
+let isCommercialPathMatch =
   window.location.pathname === '/api1/login' ||
   window.location.pathname === '/test-api1-login';
 
-export const BFF_API_BASE_URL = `${API_BASE_PATH}/bff`;
-export const AUTH_API_URL = `${API_BASE_PATH}/auth/check`;
+try {
+  const commercialUserLastLogin = localStorage.getItem(
+    'commercialUserLastLogin'
+  );
+  if (
+    !isCommercialPathMatch &&
+    commercialUserLastLogin &&
+    sub(new Date(), {
+      minutes: 10,
+    }) <= new Date(commercialUserLastLogin)
+  ) {
+    isCommercialPathMatch = true;
+  }
+  if (isCommercialPathMatch) {
+    localStorage.setItem('commercialUserLastLogin', new Date().toISOString());
+  }
+} catch (error) {}
+
+const API_BASE_PATH_MODDED = API_BASE_PATH + (isCommercialPathMatch ? '1' : '');
+
+export const BFF_API_BASE_URL = `${API_BASE_PATH_MODDED}/bff`;
+export const AUTH_API_URL = `${API_BASE_PATH_MODDED}/auth/check`;
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
 export const LOGOUT_URL = '/logout';
 

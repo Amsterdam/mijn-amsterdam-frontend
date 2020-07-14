@@ -60,7 +60,11 @@ function enableMockAdapter() {
             delay,
             await responseData(...args)
           );
-          return [status, data, headers];
+          return [
+            typeof status === 'function' ? status(...args) : status,
+            data,
+            headers,
+          ];
         });
       }
     }

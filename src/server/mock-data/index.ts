@@ -26,11 +26,15 @@ async function loadMockApiResponseJson(data: any) {
   return JSON.stringify(data);
 }
 
+function isCommercialUser(config: any) {
+  return config?.headers[DEV_USER_TYPE_HEADER] === 'BEDRIJF';
+}
+
 type MockDataConfig = Record<
   string,
   {
     method?: 'post' | 'get';
-    status: number;
+    status: (args?: any) => number;
     responseData: any;
     delay?: number;
     networkError?: boolean;
@@ -41,65 +45,117 @@ type MockDataConfig = Record<
 
 export const mockDataConfig: MockDataConfig = {
   [ApiUrls.BELASTINGEN]: {
-    status: 200,
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return 'no-content';
+      }
       return await loadMockApiResponseJson(BELASTINGEN);
     },
   },
   [ApiUrls.BRP]: {
-    status: 200,
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     // delay: 2500,
-    responseData: async () => await loadMockApiResponseJson(BRP),
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return 'no-content';
+      }
+      return await loadMockApiResponseJson(BRP);
+    },
   },
   [ApiUrls.WMO]: {
-    status: 200,
-    responseData: async () => await loadMockApiResponseJson(WMO),
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return 'no-content';
+      }
+      return await loadMockApiResponseJson(WMO);
+    },
   },
   [ApiUrls.FOCUS_AANVRAGEN]: {
-    status: 200,
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     // delay: 3400,
-    responseData: async () => await loadMockApiResponseJson(FOCUS_AANVRAGEN),
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return 'no-content';
+      }
+      return await loadMockApiResponseJson(FOCUS_AANVRAGEN);
+    },
   },
   [ApiUrls.FOCUS_COMBINED]: {
-    status: 200,
-    responseData: async () => await loadMockApiResponseJson(FOCUS_COMBINED),
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return 'no-content';
+      }
+      return await loadMockApiResponseJson(FOCUS_COMBINED);
+    },
   },
   [ApiUrls.ERFPACHT]: {
-    status: 200,
-    responseData: async (...args: any) => {
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return 'no-content';
+      }
       return await JSON.stringify({ status: true });
     },
   },
   [ApiUrls.BAG]: {
-    status: 200,
-    responseData: async (...args: any) => {
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return 'no-content';
+      }
       return await loadMockApiResponseJson(BAG);
     },
   },
   [ApiUrls.AFVAL]: {
-    status: 200,
-    responseData: async () => await loadMockApiResponseJson(AFVAL),
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return 'no-content';
+      }
+      return await loadMockApiResponseJson(AFVAL);
+    },
   },
   [ApiUrls.MILIEUZONE]: {
-    status: 200,
-    responseData: async () => await loadMockApiResponseJson(MILIEUZONE),
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return 'no-content';
+      }
+      return await loadMockApiResponseJson(MILIEUZONE);
+    },
   },
   [ApiUrls.CMS_CONTENT_GENERAL_INFO]: {
-    status: 200,
-    responseData: async () =>
-      await loadMockApiResponseJson(AMSTERDAM_CONTENT_GENERAL_INFO),
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return 'no-content';
+      }
+      return await loadMockApiResponseJson(AMSTERDAM_CONTENT_GENERAL_INFO);
+    },
   },
   [ApiUrls.CMS_CONTENT_FOOTER]: {
-    status: 200,
-    responseData: async () =>
-      await loadMockApiResponseJson(AMSTERDAM_CONTENT_FOOTER),
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return 'no-content';
+      }
+      return await loadMockApiResponseJson(AMSTERDAM_CONTENT_FOOTER);
+    },
   },
   [ApiUrls.VERGUNNINGEN]: {
-    status: 200,
-    responseData: async () => await loadMockApiResponseJson(VERGUNNINGEN),
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return 'no-content';
+      }
+      return await loadMockApiResponseJson(VERGUNNINGEN);
+    },
   },
   [ApiUrls.TIPS]: {
-    status: 200,
+    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     method: 'post',
     responseData: async (config: any) => {
       const requestData = JSON.parse(config.data);

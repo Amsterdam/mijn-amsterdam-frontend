@@ -21,10 +21,13 @@ function handleLogin(req, res, next) {
     isCommercialUser ? 'test-api1-login' : 'test-api-login'
   }`;
 
+  const userType = isCommercialUser ? 'BEDRIJF' : 'BURGER';
+
   req.session = {
     isAuthenticated: true,
-    userType: isCommercialUser ? 'BEDRIJF' : 'BURGER',
+    userType,
   };
+
   return res.redirect(redirectUrlAfterLogin);
 }
 
@@ -66,24 +69,9 @@ module.exports = function(app) {
   );
 
   app.get(['/logout'], handleLogout);
-  app.get(['/tma-sso'], (req, res) => {
-    req.session.ssoRedirected = true;
-    return res.redirect(`${REDIRECT_AFTER_LOGIN}/test-api/auth/check`);
-  });
   app.get(['/test-api/login', '/test-api1/login'], handleLogin);
   app.use(['/test-api', '/test-api1'], handleSession);
   app.get(['/test-api/auth/check', '/test-api1/auth/check'], (req, res) => {
-    if (
-      !req.session.ssoRedirected &&
-      ((req.session.userType === 'BURGER' && req.url.includes('api1/')) ||
-        (req.session.userType === 'BEDRIJF' && !req.url.includes('api1/')))
-    ) {
-      return res.send(`<html><head><title>A-Select Filter Redirect</title>
-<meta http-equiv="refresh" content="0;url=${REDIRECT_AFTER_LOGIN}/tma-sso?request=login1&a-select-server=tma.acc.amsterdam.nl&rid=RAC5A8D8755F8BA50458A4336E05BD75EF4990DC2">
-<script language="javascript">top.location="${REDIRECT_AFTER_LOGIN}/tma-sso?request=login1&a-select-server=tma.acc.amsterdam.nl&rid=RAC5A8D8755F8BA50458A4336E05BD75EF4990DC2";</script>
-</head><body></body></html>
-`);
-    }
     return res.send(req.session);
   });
 
