@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { BRPData } from '../universal/types';
-import { BFF_MS_API_BASE_URL, getApiConfig } from './config';
+import { BFF_MS_API_BASE_URL, getApiConfig, BffEndpoints } from './config';
 import { getSamlTokenHeader, requestData } from './helpers/request';
 import {
   loadServicesCMSContent,
@@ -16,7 +16,7 @@ import { loadServicesAll } from './services/services-all';
 
 export const router = express.Router();
 
-router.get(`/auth/check`, async function authCheck(
+router.get(BffEndpoints.AUTH_CHECK, async function authCheck(
   req: Request,
   res: Response,
   next: NextFunction
@@ -65,65 +65,79 @@ router.get(`/auth/check`, async function authCheck(
   next();
 });
 
-router.get(`/services/generated`, async function handleRouteServicesGenerated(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  try {
-    res.send(
-      await loadServicesGenerated(req.sessionID!, getSamlTokenHeader(req))
-    );
-    next();
-  } catch (error) {
-    next(error);
+router.get(
+  BffEndpoints.SERVICES_GENERATED,
+  async function handleRouteServicesGenerated(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      res.send(
+        await loadServicesGenerated(req.sessionID!, getSamlTokenHeader(req))
+      );
+      next();
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
-router.get(`/services/related`, async function handleRouteServicesRelated(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  try {
-    res.send(
-      await loadServicesRelated(req.sessionID!, getSamlTokenHeader(req))
-    );
-    next();
-  } catch (error) {
-    next(error);
+router.get(
+  BffEndpoints.SERVICES_RELATED,
+  async function handleRouteServicesRelated(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      res.send(
+        await loadServicesRelated(req.sessionID!, getSamlTokenHeader(req))
+      );
+      next();
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
-router.get(`/services/cmscontent`, async function handleRouteServicesRelated(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  try {
-    res.send(
-      await loadServicesCMSContent(req.sessionID!, getSamlTokenHeader(req))
-    );
-    next();
-  } catch (error) {
-    next(error);
+router.get(
+  BffEndpoints.SERVICES_CMSCONTENT,
+  async function handleRouteServicesCMSContent(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      res.send(
+        await loadServicesCMSContent(req.sessionID!, getSamlTokenHeader(req))
+      );
+      next();
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
-router.get(`/services/direct`, async function handleRouteServicesDirect(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  try {
-    res.json(await loadServicesDirect(req.sessionID!, getSamlTokenHeader(req)));
-    next();
-  } catch (error) {
-    next(error);
+router.get(
+  BffEndpoints.SERVICES_DIRECT,
+  async function handleRouteServicesDirect(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      res.json(
+        await loadServicesDirect(req.sessionID!, getSamlTokenHeader(req))
+      );
+      next();
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
-router.get(`/services/map`, async function handleRouteServicesMap(
+router.get(BffEndpoints.SERVICES_MAP, async function handleRouteServicesMap(
   req: Request,
   res: Response,
   next: NextFunction
@@ -136,7 +150,7 @@ router.get(`/services/map`, async function handleRouteServicesMap(
   }
 });
 
-router.get(`/services/tips`, async function handleRouteTips(
+router.get(BffEndpoints.SERVICES_TIPS, async function handleRouteTips(
   req: Request,
   res: Response,
   next: NextFunction
@@ -155,7 +169,7 @@ router.get(`/services/tips`, async function handleRouteTips(
   }
 });
 
-router.get(`/services/all`, async function handleRouteServicesMap(
+router.get(BffEndpoints.SERVICES_ALL, async function handleRouteServicesAll(
   req: Request,
   res: Response,
   next: NextFunction
@@ -176,32 +190,10 @@ router.get(`/services/all`, async function handleRouteServicesMap(
   }
 });
 
-router.get(`/services/stream`, loadServicesSSE);
-
-router.get(`/source-api`, async function(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  if (!req.query.path) {
-    next();
-  }
-
-  try {
-    const responseData = await requestData(
-      {
-        url: BFF_MS_API_BASE_URL + req.query.path,
-      },
-      req.sessionID!,
-      getSamlTokenHeader(req)
-    );
-    res.json(responseData);
-  } catch (e) {}
-  next();
-});
+router.get(BffEndpoints.SERVICES_STREAM, loadServicesSSE);
 
 router.get(
-  `/status/health`,
+  BffEndpoints.HEALTH,
   (req: Request, res: Response, next: NextFunction) => {
     res.json({ status: 'OK' });
     next();

@@ -13,7 +13,7 @@ import express, {
 import session from 'express-session';
 import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { apiErrorResult } from '../universal/helpers';
-import { BFF_PORT, PUBLIC_API_URLS } from './config';
+import { BFF_PORT, PUBLIC_BFF_ENDPOINTS, BffEndpoints } from './config';
 import { router } from './router';
 import { getSamlTokenHeader } from './helpers/request';
 
@@ -25,6 +25,7 @@ const options: Sentry.NodeOptions = {
 Sentry.init(options);
 
 const app = express();
+const BASE_PATH = IS_AP ? '/bff' : '/test-api/bff';
 
 app.set('trust proxy', true);
 app.use(Sentry.Handlers.requestHandler() as RequestHandler);
@@ -48,32 +49,31 @@ app.use(compression());
 // Crude security measure
 app.use((req: Request, res: Response, next: NextFunction) => {
   const samlToken = getSamlTokenHeader(req);
-  if (PUBLIC_API_URLS.includes(req.url)) {
+
+  if (PUBLIC_BFF_ENDPOINTS.some(path => req.path === `${BASE_PATH}${path}`)) {
     if (samlToken) {
       next(new Error('Saml token disallowed for public endpoint.'));
     } else {
       next();
     }
-  } else {
+  } else if (
+    // Check if path exists in endpoints
+    Object.values(BffEndpoints).some(path => req.path === `${BASE_PATH}${path}`)
+  ) {
     if (samlToken) {
       next();
     } else {
       next(new Error('Saml token required for secure endpoint.'));
     }
+  } else {
+    next();
   }
 });
 
 // Mount the router at the base path
-app.use(IS_AP ? '/bff' : '/test-api/bff', router);
+app.use(BASE_PATH, router);
 
 app.use(Sentry.Handlers.errorHandler() as ErrorRequestHandler);
-
-// Force Clear the cache after all the services requests are done.
-// app.use((req: Request, res: Response, next: NextFunction) => {
-//   const sessionID = req.sessionID!;
-//   clearSessionCache(sessionID);
-//   next();
-// });
 
 // Optional fallthrough error handler
 app.use(function onError(

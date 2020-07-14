@@ -113,8 +113,6 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
 };
 
-export const PUBLIC_API_URLS: string[] = [];
-
 export const ApiUrls = Object.entries(ApiConfig).reduce(
   (acc, [apiName, { url }]) => {
     return Object.assign(acc, { [apiName]: url || '' });
@@ -125,3 +123,18 @@ export const ApiUrls = Object.entries(ApiConfig).reduce(
 export function getApiConfig(name: SourceApiKey, config?: DataRequestConfig) {
   return Object.assign(ApiConfig[name] || {}, config || {});
 }
+
+export const BffEndpoints = {
+  AUTH_CHECK: `/auth/check`,
+  SERVICES_GENERATED: `/services/generated`,
+  SERVICES_RELATED: `/services/related`,
+  SERVICES_CMSCONTENT: `/services/cmscontent`,
+  SERVICES_DIRECT: `/services/direct`,
+  SERVICES_MAP: `/services/map`,
+  SERVICES_TIPS: `/services/tips`,
+  SERVICES_ALL: `/services/all`,
+  SERVICES_STREAM: `/services/stream`,
+  HEALTH: `/status/health`,
+};
+
+export const PUBLIC_BFF_ENDPOINTS: string[] = [BffEndpoints.HEALTH];
