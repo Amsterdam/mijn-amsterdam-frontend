@@ -124,7 +124,6 @@ export function getApiConfig(name: SourceApiKey, config?: DataRequestConfig) {
 }
 
 export const BffEndpoints = {
-  AUTH_CHECK: `/auth/check`,
   SERVICES_GENERATED: `/services/generated`,
   SERVICES_RELATED: `/services/related`,
   SERVICES_CMSCONTENT: `/services/cmscontent`,
