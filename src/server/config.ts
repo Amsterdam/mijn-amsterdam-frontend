@@ -113,6 +113,8 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
 };
 
+export const PUBLIC_API_URLS: string[] = [];
+
 export const ApiUrls = Object.entries(ApiConfig).reduce(
   (acc, [apiName, { url }]) => {
     return Object.assign(acc, { [apiName]: url || '' });

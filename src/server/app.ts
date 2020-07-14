@@ -13,8 +13,9 @@ import express, {
 import session from 'express-session';
 import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { apiErrorResult } from '../universal/helpers';
-import { BFF_PORT } from './config';
+import { BFF_PORT, PUBLIC_API_URLS } from './config';
 import { router } from './router';
+import { getSamlTokenHeader } from './helpers/request';
 
 const options: Sentry.NodeOptions = {
   dsn: getOtapEnvItem('bffSentryDsn'),
@@ -43,6 +44,25 @@ app.use(
 );
 
 app.use(compression());
+
+// Crude security measure
+app.use((req: Request, res: Response, next: NextFunction) => {
+  const samlToken = getSamlTokenHeader(req);
+  if (PUBLIC_API_URLS.includes(req.url)) {
+    if (samlToken) {
+      next(new Error('Saml token disallowed for public endpoint.'));
+    } else {
+      next();
+    }
+  } else {
+    if (samlToken) {
+      next();
+    } else {
+      next(new Error('Saml token required for secure endpoint.'));
+    }
+  }
+});
+
 // Mount the router at the base path
 app.use(IS_AP ? '/bff' : '/test-api/bff', router);
 

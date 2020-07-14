@@ -29,19 +29,16 @@ router.get(`/auth/check`, async function authCheck(
     getSamlTokenHeader(req)
   );
 
-  Sentry.captureMessage('auth/check', {
-    extra: {
-      headers: req.headers,
-    },
-  });
+  const r1 = responseData;
 
   if (typeof responseData.content === 'string') {
     const reg = new RegExp(/top\.location="(.*)"/gi);
     const matches = reg.exec(responseData.content as string);
     const matchedUrl = matches && matches[1];
+    console.info('matches', matches);
     if (matchedUrl) {
       const reqUrl = new url.URL(matchedUrl);
-      console.log(
+      console.info(
         'reqUrl.origin + reqUrl.pathname',
         reqUrl.origin + reqUrl.pathname,
         reqUrl.searchParams
@@ -56,7 +53,13 @@ router.get(`/auth/check`, async function authCheck(
       );
     }
   }
-  console.log(responseData);
+
+  Sentry.captureMessage('auth/check', {
+    extra: {
+      contentType1: typeof r1.content,
+      contentType2: typeof responseData.content,
+    },
+  });
 
   res.json(responseData.content);
   next();
