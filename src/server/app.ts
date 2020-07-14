@@ -13,7 +13,12 @@ import express, {
 import session from 'express-session';
 import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { apiErrorResult } from '../universal/helpers';
-import { BFF_PORT, PUBLIC_BFF_ENDPOINTS, BffEndpoints } from './config';
+import {
+  BFF_PORT,
+  PUBLIC_BFF_ENDPOINTS,
+  BffEndpoints,
+  TMA_SAML_HEADER,
+} from './config';
 import { router } from './router';
 import { getPassthroughRequestHeaders, send404 } from './helpers/request';
 
@@ -48,7 +53,6 @@ app.use(compression());
 
 // Basic security measure
 app.use((req: Request, res: Response, next: NextFunction) => {
-  console.log(req.headers);
   const passthroughRequestHeaders = getPassthroughRequestHeaders(req);
   const isBffEndpoint = Object.values(BffEndpoints).some(
     path => req.path === `${BASE_PATH}${path}`
@@ -64,14 +68,14 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   // Check if this is a request to a public endpoint
   if (isBffPublicEndpoint) {
     // We don't expect saml token header for this endpoint.
-    if (passthroughRequestHeaders) {
+    if (passthroughRequestHeaders[TMA_SAML_HEADER]) {
       next(new Error('Saml token disallowed for public endpoint.'));
     } else {
       next();
     }
   } else {
     // We expect saml token header to be present for non-public endpoint.
-    if (passthroughRequestHeaders) {
+    if (passthroughRequestHeaders[TMA_SAML_HEADER]) {
       next();
     } else {
       next(new Error('Saml token required for secure endpoint.'));
