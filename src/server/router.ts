@@ -61,8 +61,9 @@ router.get(BffEndpoints.AUTH_CHECK, async function authCheck(
 
   Sentry.captureMessage('auth/check', {
     extra: {
-      contentType1: typeof r1.content,
-      contentType2: typeof responseData.content,
+      options,
+      contentType1: r1.content,
+      contentType2: responseData.content,
     },
   });
 
