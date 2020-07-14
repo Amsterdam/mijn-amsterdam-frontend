@@ -17,7 +17,7 @@ export const LOGIN_URL_DIGID = TMA_LOGIN_URL_DIGID;
 export const LOGIN_URL_EHERKENNING = TMA_LOGIN_URL_EHERKENNING;
 
 export const BFF_API_BASE_URL = `${API_BASE_PATH}/bff`;
-export const AUTH_API_URL = `${BFF_API_BASE_URL}/auth/check`;
+export const AUTH_API_URL = `${API_BASE_PATH}/auth/check`;
 export const LOGOUT_URL = '/logout';
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
 

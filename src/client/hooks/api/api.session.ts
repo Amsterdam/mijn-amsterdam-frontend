@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import {
   ApiErrorResponse,
   apiSuccesResult,
@@ -49,10 +49,32 @@ type SessionResponseData =
 
 export function useSessionApi() {
   const [{ data, isLoading, isDirty, ...rest }, refetch] = useDataApi<
-    SessionResponseData
+    SessionResponseData | string
   >(requestOptions, INITIAL_SESSION_STATE);
 
-  const { isAuthenticated, validUntil, userType } = data?.SESSION.content || {
+  let redirectThroughRoute: string = '';
+  console.log('session data', data);
+  if (typeof data === 'string') {
+    const reg = new RegExp(/top\.location="(.*)"/gi);
+    const matches = reg.exec(data as string);
+    const matchedUrl = matches && matches[1];
+    if (matchedUrl) {
+      redirectThroughRoute = matchedUrl;
+    }
+  }
+
+  useEffect(() => {
+    if (redirectThroughRoute) {
+      console.log('refetch:', redirectThroughRoute);
+      refetch({
+        ...requestOptions,
+        url: redirectThroughRoute,
+      });
+    }
+  }, [refetch, redirectThroughRoute]);
+
+  const { isAuthenticated, validUntil, userType } = (typeof data !== 'string' &&
+    data?.SESSION.content) || {
     isAuthenticated: false,
   };
 

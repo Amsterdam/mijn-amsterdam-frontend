@@ -35,6 +35,10 @@ function handleLogout(req, res) {
 
 function handleSession(req, res, next) {
   if (req.session.isAuthenticated) {
+    // Prolongue session time
+    const now = new Date().getTime();
+    const validUntil = new Date(now + SESSION_MAX_AGE).getTime();
+    req.session.validUntil = validUntil;
     next();
   } else {
     res.status(403);
@@ -64,6 +68,9 @@ module.exports = function(app) {
   app.get(['/logout'], handleLogout);
   app.get(['/test-api/login', '/test-api1/login'], handleLogin);
   app.use(['/test-api', '/test-api1'], handleSession);
+  app.get(['/test-api/auth/check', '/test-api1/auth/check'], (req, res) => {
+    return res.send(req.session);
+  });
 
   app.use(
     ['/test-api', '/test-api1'],
