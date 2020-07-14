@@ -34,6 +34,9 @@ const requestOptions: ApiRequestOptions = {
   transformResponse: [
     ...requestApiData.defaults.transformResponse,
     (data: SessionData | string) => {
+      // If we land on the commercial entry route after login we have to extract an sso url from the response for additional authentication.
+      // This authentication is done because it makes it possible to use only one api basepath instead of multiple (/api/ vs /api1/). After reload
+      // we have no way of knowing which basepath we have to authenticate against.
       if (isCommercialPathMatch && typeof data === 'string') {
         const reg = new RegExp(/top\.location="(.*)"/gi);
         const matches = reg.exec(data as string);
@@ -63,6 +66,8 @@ export function useSessionApi() {
   const [{ data, isLoading, isDirty, ...rest }, refetch] = useDataApi<
     SessionResponseData | string
   >(requestOptions, INITIAL_SESSION_STATE);
+
+  // If api returned a string for response it means we have to authenticate via another route as well
   useEffect(() => {
     if (typeof data === 'string') {
       refetch({

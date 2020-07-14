@@ -42,15 +42,8 @@ type MockDataConfig = Record<
 export const mockDataConfig: MockDataConfig = {
   [ApiUrls.BELASTINGEN]: {
     status: 200,
-    responseData: async () => await loadMockApiResponseJson(BELASTINGEN),
-  },
-  [ApiUrls.AUTH]: {
-    status: 200,
     responseData: async (config: any) => {
-      return JSON.stringify({
-        isAuthenticated: true,
-        userType: config.headers[DEV_USER_TYPE_HEADER],
-      });
+      return await loadMockApiResponseJson(BELASTINGEN);
     },
   },
   [ApiUrls.BRP]: {
