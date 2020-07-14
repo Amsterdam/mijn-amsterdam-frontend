@@ -34,6 +34,8 @@ import {
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
 import { LOGOUT_URL } from '../../config/api';
+import { BRPData } from '../../../universal/types/brp';
+import { SessionData } from '../../hooks/api/api.session';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -44,11 +46,30 @@ export interface MainNavLinkProps {
   title: string;
 }
 
+interface ProfileNameProps {
+  persoon?: BRPData['persoon'];
+  userType?: SessionData['userType'];
+}
+
+function ProfileName({ persoon, userType }: ProfileNameProps) {
+  return (
+    <span
+      className={classnames(
+        styles.ProfileName,
+        styles[`ProfileName--${userType}`]
+      )}
+    >
+      {persoon?.opgemaakteNaam ? getFullName(persoon) : 'Mijn gegevens'}
+    </span>
+  );
+}
+
 function SecondaryLinks() {
   const { BRP } = useContext(AppContext);
   const persoon = BRP.content?.persoon || null;
   const hasFirstName = !!(persoon && persoon.voornamen);
   const isDesktopScreen = useDesktopScreen();
+  const session = useContext(SessionContext);
 
   useEffect(() => {
     if (hasFirstName) {
@@ -67,10 +88,11 @@ function SecondaryLinks() {
       >
         {isLoading(BRP) ? (
           <LoadingContent barConfig={[['15rem', '1rem', '0']]} />
-        ) : persoon?.opgemaakteNaam ? (
-          getFullName(persoon)
         ) : (
-          'Mijn gegevens'
+          <ProfileName
+            persoon={BRP.content?.persoon}
+            userType={session.userType}
+          />
         )}
       </Link>
 

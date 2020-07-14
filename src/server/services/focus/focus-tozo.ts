@@ -30,10 +30,13 @@ import { getSettledResult } from '../../../universal/helpers/api';
 
 async function fetchFOCUSTozoNormalized(
   sessionID: SessionID,
-  samlToken: string
+  passthroughRequestHeaders: Record<string, string>
 ) {
-  const responseAanvragen = fetchFOCUS(sessionID, samlToken);
-  const responseCombined = fetchFOCUSCombined(sessionID, samlToken);
+  const responseAanvragen = fetchFOCUS(sessionID, passthroughRequestHeaders);
+  const responseCombined = fetchFOCUSCombined(
+    sessionID,
+    passthroughRequestHeaders
+  );
 
   const [aanvragenResult, combinedResult] = await Promise.allSettled([
     responseAanvragen,
@@ -86,8 +89,14 @@ async function fetchFOCUSTozoNormalized(
   return apiDependencyError({ FOCUS_AANVRAGEN, FOCUS_COMBINED });
 }
 
-export async function fetchFOCUSTozo(sessionID: SessionID, samlToken: string) {
-  const response = await fetchFOCUSTozoNormalized(sessionID, samlToken);
+export async function fetchFOCUSTozo(
+  sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>
+) {
+  const response = await fetchFOCUSTozoNormalized(
+    sessionID,
+    passthroughRequestHeaders
+  );
 
   if (response.status === 'OK') {
     const { aanvragen, voorschotten, documenten } = response.content;
@@ -129,9 +138,12 @@ export async function fetchFOCUSTozo(sessionID: SessionID, samlToken: string) {
 
 export async function fetchFOCUSTozoGenerated(
   sessionID: SessionID,
-  samlToken: string
+  passthroughRequestHeaders: Record<string, string>
 ) {
-  const responseTransformed = await fetchFOCUSTozo(sessionID, samlToken);
+  const responseTransformed = await fetchFOCUSTozo(
+    sessionID,
+    passthroughRequestHeaders
+  );
   const compareDate = new Date();
 
   const notifications: MyNotification[] = [];

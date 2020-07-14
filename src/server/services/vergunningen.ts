@@ -65,13 +65,16 @@ export function transformVergunningenData(
   return vergunningen.sort(dateSort('dateRequest', 'desc'));
 }
 
-export function fetchVergunningen(sessionID: SessionID, samlToken: string) {
+export function fetchVergunningen(
+  sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>
+) {
   return requestData<VergunningenData>(
     getApiConfig('VERGUNNINGEN', {
       transformResponse: transformVergunningenData,
     }),
     sessionID,
-    samlToken
+    passthroughRequestHeaders
   );
 }
 
@@ -119,9 +122,12 @@ export function createVergunningNotification(item: Vergunning) {
 
 export async function fetchVergunningenGenerated(
   sessionID: SessionID,
-  samlToken: string
+  passthroughRequestHeaders: Record<string, string>
 ) {
-  const vergunningen = await fetchVergunningen(sessionID, samlToken);
+  const vergunningen = await fetchVergunningen(
+    sessionID,
+    passthroughRequestHeaders
+  );
 
   const cases = Array.isArray(vergunningen.content)
     ? vergunningen.content

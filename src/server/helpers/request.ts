@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/node';
 import axios, { AxiosPromise, AxiosResponse } from 'axios';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import memoryCache from 'memory-cache';
 import { IS_AP } from '../../universal/config/env';
 import {
@@ -21,6 +21,7 @@ import {
   DataRequestConfig,
   DEFAULT_REQUEST_CONFIG,
   TMA_SAML_HEADER,
+  DEV_USER_TYPE_HEADER,
 } from '../config';
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
 import { Deferred } from './deferred';
@@ -99,7 +100,7 @@ function getRequestConfigCacheKey(
 export async function requestData<T>(
   config: DataRequestConfig,
   sessionID: SessionID,
-  samlToken: string
+  passthroughRequestHeaders: Record<string, string>
 ) {
   const source = axios.CancelToken.source();
 
@@ -120,12 +121,11 @@ export async function requestData<T>(
     );
   }
 
-  // The SAML token is passedthrough to the source api's
-  if (requestConfig.url?.startsWith(BFF_MS_API_BASE_URL) && samlToken) {
-    if (!requestConfig.headers) {
-      requestConfig.headers = {};
-    }
-    requestConfig.headers[TMA_SAML_HEADER] = samlToken;
+  if (
+    requestConfig.url?.startsWith(BFF_MS_API_BASE_URL) &&
+    passthroughRequestHeaders
+  ) {
+    requestConfig.headers = passthroughRequestHeaders;
   }
 
   const isGetRequest = requestConfig.method?.toLowerCase() === 'get';
@@ -226,6 +226,19 @@ export async function requestData<T>(
   }
 }
 
-export function getSamlTokenHeader(req: Request) {
-  return (req.headers[TMA_SAML_HEADER] || '') as string;
+export function getPassthroughRequestHeaders(req: Request) {
+  const passthroughHeaders: Record<string, string> = {
+    [TMA_SAML_HEADER]: (req.headers[TMA_SAML_HEADER] || '') as string,
+  };
+  if (!IS_AP) {
+    passthroughHeaders[DEV_USER_TYPE_HEADER] = (req.headers[
+      DEV_USER_TYPE_HEADER
+    ] || '') as string;
+  }
+  return passthroughHeaders;
+}
+
+export function send404(res: Response) {
+  res.status(404);
+  return res.end('not found');
 }

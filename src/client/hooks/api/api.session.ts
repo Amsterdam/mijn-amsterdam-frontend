@@ -25,14 +25,14 @@ const INITIAL_SESSION_STATE = {
     validUntil: -1,
     validityInSeconds: -1,
     userType: 'BURGER',
-  }),
+  } as SessionData),
 };
 
 const requestOptions: ApiRequestOptions = {
   url: AUTH_API_URL,
   transformResponse: [
     ...requestApiData.defaults.transformResponse,
-    data => {
+    (data: SessionData) => {
       return {
         SESSION: apiSuccesResult<SessionData>(data),
       };

@@ -214,3 +214,9 @@
     margin-bottom: 0;
   }
 }
+
+.ProfileName {
+  &--BEDRIJF {
+    color: $color-support-purple;
+  }
+}

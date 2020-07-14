@@ -9,7 +9,7 @@ import {
   loadServicesRelated,
   loadServicesTips,
 } from './index';
-import { getSamlTokenHeader } from '../helpers/request';
+import { getPassthroughRequestHeaders } from '../helpers/request';
 
 function sendMessage(
   res: Response,
@@ -51,39 +51,42 @@ export async function loadServicesSSE(req: Request, res: Response) {
 
   const servicesDirect = loadServicesDirect(
     req.sessionID!,
-    getSamlTokenHeader(req)
+    getPassthroughRequestHeaders(req)
   );
 
   addServiceResultHandler(res, servicesDirect, 'direct');
 
   const servicesRelated = loadServicesRelated(
     req.sessionID!,
-    getSamlTokenHeader(req)
+    getPassthroughRequestHeaders(req)
   );
 
   addServiceResultHandler(res, servicesRelated, 'related');
 
   const servicesAfval = loadServicesAfval(
     req.sessionID!,
-    getSamlTokenHeader(req)
+    getPassthroughRequestHeaders(req)
   );
 
   addServiceResultHandler(res, servicesAfval, 'afval');
 
-  const servicesMap = loadServicesMap(req.sessionID!, getSamlTokenHeader(req));
+  const servicesMap = loadServicesMap(
+    req.sessionID!,
+    getPassthroughRequestHeaders(req)
+  );
 
   addServiceResultHandler(res, servicesMap, 'map');
 
   const servicesCMSContent = loadServicesCMSContent(
     req.sessionID!,
-    getSamlTokenHeader(req)
+    getPassthroughRequestHeaders(req)
   );
 
   addServiceResultHandler(res, servicesCMSContent, 'cmscontent');
 
   const servicesGenerated = loadServicesGenerated(
     req.sessionID!,
-    getSamlTokenHeader(req)
+    getPassthroughRequestHeaders(req)
   );
 
   addServiceResultHandler(res, servicesGenerated, 'generated');
@@ -97,7 +100,7 @@ export async function loadServicesSSE(req: Request, res: Response) {
 
   const tipsResult = loadServicesTips(
     req.sessionID!,
-    getSamlTokenHeader(req),
+    getPassthroughRequestHeaders(req),
     tipsRequestDataServiceResults,
     optin
   );

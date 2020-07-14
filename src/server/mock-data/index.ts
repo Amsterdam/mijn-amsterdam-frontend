@@ -1,5 +1,5 @@
 import { MyTip } from '../../universal/types';
-import { ApiUrls } from '../config';
+import { ApiUrls, DEV_USER_TYPE_HEADER } from '../config';
 
 import BELASTINGEN from './json/belasting.json';
 import BRP from './json/brp.json';
@@ -46,24 +46,10 @@ export const mockDataConfig: MockDataConfig = {
   },
   [ApiUrls.AUTH]: {
     status: 200,
-    responseData: async () => {
-      const loginType = '';
-      return `
-        <html><head><title>A-Select Filter Redirect</title>
-        <meta http-equiv="refresh" content="0;url=http://localhost:5000/aselectserver/server?request=${loginType}&a-select-server=tma.acc.amsterdam.nl&rid=R1DB2771723C56E9FF9706CFD4B2050A7A1DC3A1B">
-        <script language="javascript">top.location="http://localhost:5000/aselectserver/server?request=${loginType}&a-select-server=tma.acc.amsterdam.nl&rid=R1DB2771723C56E9FF9706CFD4B2050A7A1DC3A1B";</script>
-        </head><body></body></html>
-        `;
-    },
-  },
-  'http://localhost:5000/aselectserver/server': {
-    status: 200,
     responseData: async (config: any) => {
-      const userType =
-        config.params.get('request') === 'login1' ? 'BEDRIJF' : 'BURGER';
       return JSON.stringify({
         isAuthenticated: true,
-        userType,
+        userType: config.headers[DEV_USER_TYPE_HEADER],
       });
     },
   },
@@ -94,7 +80,6 @@ export const mockDataConfig: MockDataConfig = {
   [ApiUrls.BAG]: {
     status: 200,
     responseData: async (...args: any) => {
-      console.log('bagbag');
       return await loadMockApiResponseJson(BAG);
     },
   },

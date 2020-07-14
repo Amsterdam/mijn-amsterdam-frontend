@@ -13,8 +13,11 @@ import { fetchHOME } from './home';
 const MAP_URL =
   'https://data.amsterdam.nl/data/?modus=kaart&achtergrond=topo_rd_zw&embed=true';
 
-export async function loadServicesMap(sessionID: SessionID, samlToken: string) {
-  const HOME = await fetchHOME(sessionID, samlToken);
+export async function loadServicesMap(
+  sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>
+) {
+  const HOME = await fetchHOME(sessionID, passthroughRequestHeaders);
 
   let lat = DEFAULT_LAT;
   let lng = DEFAULT_LNG;

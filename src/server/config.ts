@@ -2,7 +2,8 @@ import { AxiosRequestConfig } from 'axios';
 import { FeatureToggle, API_BASE_PATH } from '../universal/config';
 import { IS_ACCEPTANCE, IS_AP, IS_PRODUCTION } from '../universal/config/env';
 
-export const TMA_SAML_HEADER = 'x-saml-attribute-token1';
+export const TMA_SAML_HEADER: string = 'x-saml-attribute-token1';
+export const DEV_USER_TYPE_HEADER: string = 'x-user-type';
 export const BFF_REQUEST_CACHE_ENABLED = true;
 
 // Urls used in the BFF api

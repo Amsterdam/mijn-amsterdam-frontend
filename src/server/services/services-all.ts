@@ -10,15 +10,33 @@ import {
 
 export async function loadServicesAll(
   sessionID: SessionID,
-  samlToken: string,
+  passthroughRequestHeaders: Record<string, string>,
   optin: boolean
 ) {
-  const servicesDirectPromise = loadServicesDirect(sessionID, samlToken);
-  const servicesRelatePromise = loadServicesRelated(sessionID, samlToken);
-  const servicesMapPromise = loadServicesMap(sessionID, samlToken);
-  const servicesCMSContPromise = loadServicesCMSContent(sessionID, samlToken);
-  const servicesAfvalPromise = loadServicesAfval(sessionID, samlToken);
-  const servicesGeneratedPromise = loadServicesGenerated(sessionID, samlToken);
+  const servicesDirectPromise = loadServicesDirect(
+    sessionID,
+    passthroughRequestHeaders
+  );
+  const servicesRelatePromise = loadServicesRelated(
+    sessionID,
+    passthroughRequestHeaders
+  );
+  const servicesMapPromise = loadServicesMap(
+    sessionID,
+    passthroughRequestHeaders
+  );
+  const servicesCMSContPromise = loadServicesCMSContent(
+    sessionID,
+    passthroughRequestHeaders
+  );
+  const servicesAfvalPromise = loadServicesAfval(
+    sessionID,
+    passthroughRequestHeaders
+  );
+  const servicesGeneratedPromise = loadServicesGenerated(
+    sessionID,
+    passthroughRequestHeaders
+  );
 
   const serviceResults = await Promise.all([
     servicesDirectPromise,
@@ -36,7 +54,7 @@ export async function loadServicesAll(
 
   const tipsResult = await loadServicesTips(
     sessionID,
-    samlToken,
+    passthroughRequestHeaders,
     tipsRequestDataServiceResults,
     optin
   );

@@ -12,19 +12,37 @@ import { getSettledResult } from '../../universal/helpers/api';
 
 export async function loadServicesDirect(
   sessionID: SessionID,
-  samlToken: string
+  passthroughRequestHeaders: Record<string, string>
 ) {
-  const fetchFOCUSAanvragenRequest = fetchFOCUSAanvragen(sessionID, samlToken);
+  const fetchFOCUSAanvragenRequest = fetchFOCUSAanvragen(
+    sessionID,
+    passthroughRequestHeaders
+  );
   const fetchFOCUSSpecificatiesRequest = fetchFOCUSSpecificaties(
     sessionID,
-    samlToken
+    passthroughRequestHeaders
   );
-  const fetchFOCUSTozoRequest = fetchFOCUSTozo(sessionID, samlToken);
-  const fetchWMORequest = fetchWMO(sessionID, samlToken);
-  const fetchERFPACHTRequest = fetchERFPACHT(sessionID, samlToken);
-  const fetchBELASTINGRequest = fetchBELASTING(sessionID, samlToken);
-  const fetchMILIEUZONERequest = fetchMILIEUZONE(sessionID, samlToken);
-  const fetchVergunningenRequest = fetchVergunningen(sessionID, samlToken);
+  const fetchFOCUSTozoRequest = fetchFOCUSTozo(
+    sessionID,
+    passthroughRequestHeaders
+  );
+  const fetchWMORequest = fetchWMO(sessionID, passthroughRequestHeaders);
+  const fetchERFPACHTRequest = fetchERFPACHT(
+    sessionID,
+    passthroughRequestHeaders
+  );
+  const fetchBELASTINGRequest = fetchBELASTING(
+    sessionID,
+    passthroughRequestHeaders
+  );
+  const fetchMILIEUZONERequest = fetchMILIEUZONE(
+    sessionID,
+    passthroughRequestHeaders
+  );
+  const fetchVergunningenRequest = fetchVergunningen(
+    sessionID,
+    passthroughRequestHeaders
+  );
 
   const [
     FOCUS_AANVRAGEN,

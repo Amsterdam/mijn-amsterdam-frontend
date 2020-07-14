@@ -3,10 +3,10 @@ import { fetchHOME } from './home';
 
 export async function loadServicesRelated(
   sessionID: SessionID,
-  samlToken: string
+  passthroughRequestHeaders: Record<string, string>
 ) {
-  const BRP = await fetchBRP(sessionID, samlToken);
-  const HOME = await fetchHOME(sessionID, samlToken);
+  const BRP = await fetchBRP(sessionID, passthroughRequestHeaders);
+  const HOME = await fetchHOME(sessionID, passthroughRequestHeaders);
 
   return {
     BRP,

@@ -15,7 +15,7 @@ import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { apiErrorResult } from '../universal/helpers';
 import { BFF_PORT, PUBLIC_BFF_ENDPOINTS, BffEndpoints } from './config';
 import { router } from './router';
-import { getSamlTokenHeader } from './helpers/request';
+import { getPassthroughRequestHeaders, send404 } from './helpers/request';
 
 const options: Sentry.NodeOptions = {
   dsn: getOtapEnvItem('bffSentryDsn'),
@@ -46,27 +46,36 @@ app.use(
 
 app.use(compression());
 
-// Crude security measure
+// Basic security measure
 app.use((req: Request, res: Response, next: NextFunction) => {
-  const samlToken = getSamlTokenHeader(req);
+  console.log(req.headers);
+  const passthroughRequestHeaders = getPassthroughRequestHeaders(req);
+  const isBffEndpoint = Object.values(BffEndpoints).some(
+    path => req.path === `${BASE_PATH}${path}`
+  );
+  const isBffPublicEndpoint = PUBLIC_BFF_ENDPOINTS.some(
+    path => req.path === `${BASE_PATH}${path}`
+  );
+  // Exit early if request is not made to a bff endpoint.
+  if (!isBffEndpoint) {
+    send404(res);
+  }
 
-  if (PUBLIC_BFF_ENDPOINTS.some(path => req.path === `${BASE_PATH}${path}`)) {
-    if (samlToken) {
+  // Check if this is a request to a public endpoint
+  if (isBffPublicEndpoint) {
+    // We don't expect saml token header for this endpoint.
+    if (passthroughRequestHeaders) {
       next(new Error('Saml token disallowed for public endpoint.'));
     } else {
       next();
     }
-  } else if (
-    // Check if path exists in endpoints
-    Object.values(BffEndpoints).some(path => req.path === `${BASE_PATH}${path}`)
-  ) {
-    if (samlToken) {
+  } else {
+    // We expect saml token header to be present for non-public endpoint.
+    if (passthroughRequestHeaders) {
       next();
     } else {
       next(new Error('Saml token required for secure endpoint.'));
     }
-  } else {
-    next();
   }
 });
 
@@ -88,8 +97,7 @@ app.use(function onError(
 });
 
 app.use((req: Request, res: Response) => {
-  res.status(404);
-  return res.end('not found');
+  send404(res);
 });
 
 app.listen(BFF_PORT, () => {

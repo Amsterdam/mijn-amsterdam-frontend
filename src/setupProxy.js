@@ -16,11 +16,15 @@ const apiPort = process.env.BFF_PORT || 5000;
 const SESSION_MAX_AGE = 15 * 60 * 1000; // 15 minutes
 
 function handleLogin(req, res, next) {
-  req.session = { isAuthenticated: true };
   const isCommercialUser = req.url.includes('/test-api1/');
   const redirectUrlAfterLogin = `${REDIRECT_AFTER_LOGIN}/${
     isCommercialUser ? 'test-api1-login' : 'test-api-login'
   }`;
+
+  req.session = {
+    isAuthenticated: true,
+    userType: isCommercialUser ? 'BEDRIJF' : 'BURGER',
+  };
   return res.redirect(redirectUrlAfterLogin);
 }
 
@@ -68,6 +72,9 @@ module.exports = function(app) {
       changeOrigin: true,
       onProxyReq: function onProxyReq(proxyReq, req, res) {
         proxyReq.setHeader('x-saml-attribute-token1', 'foobar');
+        if (req.session.userType) {
+          proxyReq.setHeader('x-user-type', req.session.userType);
+        }
       },
     })
   );

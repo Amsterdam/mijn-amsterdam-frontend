@@ -183,7 +183,7 @@ export function transformGarbageRetrievalData(
 
 export async function fetchAFVAL(
   sessionID: SessionID,
-  samlToken: string,
+  passthroughRequestHeaders: Record<string, string>,
   center: LatLngObject | null
 ) {
   const params = { lat: center?.lat, lon: center?.lng };
@@ -193,7 +193,7 @@ export async function fetchAFVAL(
       transformResponse: transformGarbageRetrievalData,
     }),
     sessionID,
-    samlToken
+    passthroughRequestHeaders
   );
 
   return garbageMomentData;

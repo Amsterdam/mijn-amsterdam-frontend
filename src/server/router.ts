@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { BRPData } from '../universal/types';
 import { BFF_MS_API_BASE_URL, getApiConfig, BffEndpoints } from './config';
-import { getSamlTokenHeader, requestData } from './helpers/request';
+import { getPassthroughRequestHeaders, requestData } from './helpers/request';
 import {
   loadServicesCMSContent,
   loadServicesDirect,
@@ -13,6 +13,7 @@ import { loadServicesSSE } from './services/services-sse';
 import * as Sentry from '@sentry/node';
 import url from 'url';
 import { loadServicesAll } from './services/services-all';
+import { IS_AP } from '../universal/config/env';
 
 export const router = express.Router();
 
@@ -26,11 +27,15 @@ router.get(BffEndpoints.AUTH_CHECK, async function authCheck(
   let responseData = await requestData<BRPData>(
     options,
     req.sessionID!,
-    getSamlTokenHeader(req)
+    getPassthroughRequestHeaders(req)
   );
 
   const r1 = responseData;
 
+  /**
+   * In production set-up we are presented with a html page that redirects us
+   * so our eHerkenning session is validated through the Digid route.
+   */
   if (typeof responseData.content === 'string') {
     const reg = new RegExp(/top\.location="(.*)"/gi);
     const matches = reg.exec(responseData.content as string);
@@ -49,7 +54,7 @@ router.get(BffEndpoints.AUTH_CHECK, async function authCheck(
           params: reqUrl.searchParams,
         }),
         req.sessionID!,
-        getSamlTokenHeader(req)
+        getPassthroughRequestHeaders(req)
       );
     }
   }
@@ -74,7 +79,10 @@ router.get(
   ) {
     try {
       res.send(
-        await loadServicesGenerated(req.sessionID!, getSamlTokenHeader(req))
+        await loadServicesGenerated(
+          req.sessionID!,
+          getPassthroughRequestHeaders(req)
+        )
       );
       next();
     } catch (error) {
@@ -92,7 +100,10 @@ router.get(
   ) {
     try {
       res.send(
-        await loadServicesRelated(req.sessionID!, getSamlTokenHeader(req))
+        await loadServicesRelated(
+          req.sessionID!,
+          getPassthroughRequestHeaders(req)
+        )
       );
       next();
     } catch (error) {
@@ -110,7 +121,10 @@ router.get(
   ) {
     try {
       res.send(
-        await loadServicesCMSContent(req.sessionID!, getSamlTokenHeader(req))
+        await loadServicesCMSContent(
+          req.sessionID!,
+          getPassthroughRequestHeaders(req)
+        )
       );
       next();
     } catch (error) {
@@ -128,7 +142,10 @@ router.get(
   ) {
     try {
       res.json(
-        await loadServicesDirect(req.sessionID!, getSamlTokenHeader(req))
+        await loadServicesDirect(
+          req.sessionID!,
+          getPassthroughRequestHeaders(req)
+        )
       );
       next();
     } catch (error) {
@@ -143,7 +160,9 @@ router.get(BffEndpoints.SERVICES_MAP, async function handleRouteServicesMap(
   next: NextFunction
 ) {
   try {
-    res.json(await loadServicesMap(req.sessionID!, getSamlTokenHeader(req)));
+    res.json(
+      await loadServicesMap(req.sessionID!, getPassthroughRequestHeaders(req))
+    );
     next();
   } catch (error) {
     next(error);
@@ -159,7 +178,7 @@ router.get(BffEndpoints.SERVICES_TIPS, async function handleRouteTips(
     const optin = req.query.optin === 'true';
     const data = await loadServicesAll(
       req.sessionID!,
-      getSamlTokenHeader(req),
+      getPassthroughRequestHeaders(req),
       optin
     );
     res.json(data.TIPS);
@@ -178,7 +197,7 @@ router.get(BffEndpoints.SERVICES_ALL, async function handleRouteServicesAll(
     const optin = req.cookies.optInPersonalizedTips === 'yes';
     const servicesResult = await loadServicesAll(
       req.sessionID!,
-      getSamlTokenHeader(req),
+      getPassthroughRequestHeaders(req),
       optin
     );
 
