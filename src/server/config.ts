@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from 'axios';
-import { FeatureToggle } from '../universal/config';
+import { FeatureToggle, API_BASE_PATH } from '../universal/config';
 import { IS_ACCEPTANCE, IS_AP, IS_PRODUCTION } from '../universal/config/env';
 
 export const TMA_SAML_HEADER = 'x-saml-attribute-token1';
@@ -9,8 +9,6 @@ export const BFF_REQUEST_CACHE_ENABLED = true;
 // Microservices (Tussen Api) base url
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
-
-const API_BASE_PATH = IS_AP ? '/api' : '/test-api';
 
 const BFF_MS_API_HOST = IS_PRODUCTION
   ? process.env.BFF_MS_API_HOST || 'mijn.data.amsterdam.nl'

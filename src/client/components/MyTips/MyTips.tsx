@@ -37,7 +37,7 @@ const Tip = ({ tip }: TipProps) => {
 
   useEffect(() => {
     const image = new Image();
-    const url = '' + tip.imgUrl;
+    const url = tip.imgUrl;
     if (url) {
       image.addEventListener('load', () => {
         setImgUrl(url);
@@ -70,10 +70,7 @@ const Tip = ({ tip }: TipProps) => {
               {isFlipped && (
                 <div className={styles.TipFlip}>
                   {tip.reason.map(reason => (
-                    <>
-                      {reason}
-                      <br />
-                    </>
+                    <span key={reason}>{reason}</span>
                   ))}
                 </div>
               )}

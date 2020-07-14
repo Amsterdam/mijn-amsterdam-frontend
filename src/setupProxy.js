@@ -18,11 +18,10 @@ const SESSION_MAX_AGE = 15 * 60 * 1000; // 15 minutes
 function handleLogin(req, res, next) {
   req.session = { isAuthenticated: true };
   const isCommercialUser = req.url.includes('/test-api1/');
-  return res.redirect(
-    `${REDIRECT_AFTER_LOGIN}${
-      isCommercialUser ? 'test-api1-login' : 'test-api-login'
-    }`
-  );
+  const redirectUrlAfterLogin = `${REDIRECT_AFTER_LOGIN}/${
+    isCommercialUser ? 'test-api1-login' : 'test-api-login'
+  }`;
+  return res.redirect(redirectUrlAfterLogin);
 }
 
 function handleLogout(req, res) {
@@ -67,6 +66,9 @@ module.exports = function(app) {
     createProxyMiddleware({
       target: `http://${apiHost}:${apiPort}`,
       changeOrigin: true,
+      onProxyReq: function onProxyReq(proxyReq, req, res) {
+        proxyReq.setHeader('x-saml-attribute-token1', 'foobar');
+      },
     })
   );
 };
