@@ -39,10 +39,18 @@ function enableMockAdapter() {
   entries(mockDataConfig).forEach(
     async ([
       url,
-      { status, responseData, method = 'get', networkError, delay },
+      {
+        status,
+        responseData,
+        method = 'get',
+        networkError,
+        delay,
+        headers,
+        params,
+      },
     ]) => {
       const onMethod = `on${capitalizeFirstLetter(method)}`;
-      const req = mock[onMethod](url);
+      const req = mock[onMethod](url, params);
       if (networkError) {
         req.networkError();
       } else {
@@ -51,7 +59,7 @@ function enableMockAdapter() {
             delay,
             await responseData(...args)
           );
-          return [status, data];
+          return [status, data, headers];
         });
       }
     }
@@ -74,6 +82,18 @@ export function clearSessionCache(sessionID: SessionID) {
       cache.del(cacheKey);
     }
   }
+}
+
+function getRequestConfigCacheKey(
+  sessionID: string,
+  requestConfig: DataRequestConfig
+) {
+  return [
+    sessionID,
+    requestConfig.method,
+    requestConfig.url,
+    requestConfig.params ? JSON.stringify(requestConfig.params) : 'no-params',
+  ].join('-');
 }
 
 export async function requestData<T>(
@@ -111,12 +131,7 @@ export async function requestData<T>(
   const isGetRequest = requestConfig.method?.toLowerCase() === 'get';
 
   // Construct a cache key based on unique properties of a request
-  const cacheKey = [
-    sessionID,
-    requestConfig.method,
-    requestConfig.url,
-    requestConfig.params ? JSON.stringify(requestConfig.params) : 'no-params',
-  ].join('-');
+  const cacheKey = getRequestConfigCacheKey(sessionID, requestConfig);
 
   // Check if a cache key for this particular request exists
   const cacheEntry = cache.get(cacheKey);
@@ -128,7 +143,11 @@ export async function requestData<T>(
   }
 
   // Set the cache Deferred
-  if (isGetRequest) {
+  if (
+    isGetRequest &&
+    !!requestConfig.cacheTimeout &&
+    requestConfig.cacheTimeout > 0
+  ) {
     cache.put(
       cacheKey,
       new Deferred<ApiSuccessResponse<T>>(),

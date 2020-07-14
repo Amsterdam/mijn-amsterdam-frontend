@@ -5,15 +5,20 @@ import { IS_AP, API_BASE_PATH } from '../../universal/config';
 // Urls directly used from front-end
 export const TMA_LOGIN_URL_DIGID = `${API_BASE_PATH}/login`;
 export const TMA_LOGIN_URL_EHERKENNING = `${API_BASE_PATH}1/login`;
-export const LOGIN_URL_DIGID = `${TMA_LOGIN_URL_DIGID}${
-  !IS_AP ? '?target=digid' : ''
-}`;
-export const LOGIN_URL_EHERKENNING = `${TMA_LOGIN_URL_EHERKENNING}${
-  !IS_AP ? '?target=eherkenning' : ''
-}`;
-export const LOGOUT_URL = '/logout';
+
+export const TMA_LOGIN_URL_DIGID_AFTER_REDIRECT = IS_AP
+  ? TMA_LOGIN_URL_DIGID
+  : `/test-api-login`;
+export const TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT = IS_AP
+  ? TMA_LOGIN_URL_EHERKENNING
+  : `/test-api1-login`;
+
+export const LOGIN_URL_DIGID = TMA_LOGIN_URL_DIGID;
+export const LOGIN_URL_EHERKENNING = TMA_LOGIN_URL_EHERKENNING;
+
 export const BFF_API_BASE_URL = `${API_BASE_PATH}/bff`;
-export const AUTH_API_URL = `${API_BASE_PATH}/auth/check`;
+export const AUTH_API_URL = `${BFF_API_BASE_URL}/auth/check`;
+export const LOGOUT_URL = '/logout';
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
 
 export const BFFApiUrls: Record<string, string> = {

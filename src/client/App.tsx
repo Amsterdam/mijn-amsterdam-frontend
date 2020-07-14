@@ -16,7 +16,10 @@ import {
   MainHeader,
 } from './components';
 import { DefaultAutologoutDialogSettings } from './components/AutoLogoutDialog/AutoLogoutDialog';
-import { TMA_LOGIN_URL_DIGID, TMA_LOGIN_URL_EHERKENNING } from './config/api';
+import {
+  TMA_LOGIN_URL_DIGID_AFTER_REDIRECT,
+  TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT,
+} from './config/api';
 import {
   useAnalytics,
   useLocalStorage,
@@ -109,8 +112,14 @@ function AppAuthenticated() {
       <MainHeader isAuthenticated={session.isAuthenticated} />
       <div className={styles.App} id="AppContent">
         <Switch>
-          <Redirect from={TMA_LOGIN_URL_DIGID} to={redirectAfterLogin} />
-          <Redirect from={TMA_LOGIN_URL_EHERKENNING} to={redirectAfterLogin} />
+          <Redirect
+            from={TMA_LOGIN_URL_DIGID_AFTER_REDIRECT}
+            to={redirectAfterLogin}
+          />
+          <Redirect
+            from={TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT}
+            to={redirectAfterLogin}
+          />
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           <Route path={AppRoutes.BRP} component={Profile} />

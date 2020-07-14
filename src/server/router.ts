@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
+import { BRPData } from '../universal/types';
 import { BFF_MS_API_BASE_URL, getApiConfig } from './config';
 import { getSamlTokenHeader, requestData } from './helpers/request';
 import {
@@ -8,9 +9,10 @@ import {
   loadServicesMap,
   loadServicesRelated,
 } from './services';
-import { loadServicesAll } from './services/services-all';
 import { loadServicesSSE } from './services/services-sse';
-import { BRPData } from '../universal/types';
+import * as Sentry from '@sentry/node';
+import url from 'url';
+import { loadServicesAll } from './services/services-all';
 
 export const router = express.Router();
 
@@ -20,11 +22,41 @@ router.get(`/auth/check`, async function authCheck(
   next: NextFunction
 ) {
   const options = getApiConfig('AUTH');
-  const responseData = await requestData<BRPData>(
+
+  let responseData = await requestData<BRPData>(
     options,
     req.sessionID!,
     getSamlTokenHeader(req)
   );
+
+  Sentry.captureMessage('auth/check', {
+    extra: {
+      headers: req.headers,
+    },
+  });
+
+  if (typeof responseData.content === 'string') {
+    const reg = new RegExp(/top\.location="(.*)"/gi);
+    const matches = reg.exec(responseData.content as string);
+    const matchedUrl = matches && matches[1];
+    if (matchedUrl) {
+      const reqUrl = new url.URL(matchedUrl);
+      console.log(
+        'reqUrl.origin + reqUrl.pathname',
+        reqUrl.origin + reqUrl.pathname,
+        reqUrl.searchParams
+      );
+      responseData = await requestData<BRPData>(
+        Object.assign({}, options, {
+          url: reqUrl.origin + reqUrl.pathname,
+          params: reqUrl.searchParams,
+        }),
+        req.sessionID!,
+        getSamlTokenHeader(req)
+      );
+    }
+  }
+  console.log(responseData);
 
   res.json(responseData.content);
   next();

@@ -15,15 +15,14 @@ const apiPort = process.env.BFF_PORT || 5000;
 
 const SESSION_MAX_AGE = 15 * 60 * 1000; // 15 minutes
 
-function loginPage(req, res, next) {
-  return res.sendFile(__dirname + '/client/public/tma-login-mock.html');
-}
-
 function handleLogin(req, res, next) {
-  const userType = req.url.startsWith('/test-api1/') ? 'BEDRIJF' : 'BURGER';
-  req.session = { isAuthenticated: true, userType };
-
-  return res.redirect(REDIRECT_AFTER_LOGIN);
+  req.session = { isAuthenticated: true };
+  const isCommercialUser = req.url.includes('/test-api1/');
+  return res.redirect(
+    `${REDIRECT_AFTER_LOGIN}${
+      isCommercialUser ? 'test-api1-login' : 'test-api-login'
+    }`
+  );
 }
 
 function handleLogout(req, res) {
@@ -33,10 +32,6 @@ function handleLogout(req, res) {
 
 function handleSession(req, res, next) {
   if (req.session.isAuthenticated) {
-    // Prolongue session time
-    const now = new Date().getTime();
-    const validUntil = new Date(now + SESSION_MAX_AGE).getTime();
-    req.session.validUntil = validUntil;
     next();
   } else {
     res.status(403);
@@ -64,12 +59,8 @@ module.exports = function(app) {
   );
 
   app.get(['/logout'], handleLogout);
-  app.get(['/sso-page'], loginPage);
   app.get(['/test-api/login', '/test-api1/login'], handleLogin);
-  app.all(['/test-api', '/test-api1'], handleSession);
-  app.get(['/test-api/auth/check', '/test-api1/auth/check'], (req, res) => {
-    return res.send(req.session);
-  });
+  app.use(['/test-api', '/test-api1'], handleSession);
 
   app.use(
     ['/test-api', '/test-api1'],

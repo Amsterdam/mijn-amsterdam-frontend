@@ -34,6 +34,8 @@ type MockDataConfig = Record<
     responseData: any;
     delay?: number;
     networkError?: boolean;
+    headers?: Record<string, string>;
+    params?: Record<string, string>;
   }
 >;
 
@@ -44,12 +46,25 @@ export const mockDataConfig: MockDataConfig = {
   },
   [ApiUrls.AUTH]: {
     status: 200,
-    // delay: 2500,
     responseData: async () => {
-      return {
+      const loginType = '';
+      return `
+        <html><head><title>A-Select Filter Redirect</title>
+        <meta http-equiv="refresh" content="0;url=http://localhost:5000/aselectserver/server?request=${loginType}&a-select-server=tma.acc.amsterdam.nl&rid=R1DB2771723C56E9FF9706CFD4B2050A7A1DC3A1B">
+        <script language="javascript">top.location="http://localhost:5000/aselectserver/server?request=${loginType}&a-select-server=tma.acc.amsterdam.nl&rid=R1DB2771723C56E9FF9706CFD4B2050A7A1DC3A1B";</script>
+        </head><body></body></html>
+        `;
+    },
+  },
+  'http://localhost:5000/aselectserver/server': {
+    status: 200,
+    responseData: async (config: any) => {
+      const userType =
+        config.params.get('request') === 'login1' ? 'BEDRIJF' : 'BURGER';
+      return JSON.stringify({
         isAuthenticated: true,
-        userType: 'BEDRIJF',
-      };
+        userType,
+      });
     },
   },
   [ApiUrls.BRP]: {
@@ -79,6 +94,7 @@ export const mockDataConfig: MockDataConfig = {
   [ApiUrls.BAG]: {
     status: 200,
     responseData: async (...args: any) => {
+      console.log('bagbag');
       return await loadMockApiResponseJson(BAG);
     },
   },

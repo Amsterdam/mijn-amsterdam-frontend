@@ -68,6 +68,7 @@ type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 export const ApiConfig: ApiDataRequestConfig = {
   AUTH: {
     url: `${BFF_MS_API_BASE_URL}/auth/check`,
+    cacheTimeout: 0,
   },
   WMO: {
     url: `${BFF_MS_API_BASE_URL}/wmoned/voorzieningen`,
