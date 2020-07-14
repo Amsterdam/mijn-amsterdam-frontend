@@ -32,25 +32,24 @@ export const BFFApiUrls: Record<string, string> = {
 };
 
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
-  BRP: 'Persoonlijke gegevens, Identiteitsbewijzen + actuele updates',
+  BRP: 'Persoonlijke gegevens, paspoort, ID-kaart + actuele updates',
   CASES: 'Lopende zaken',
   TIPS: 'Tips',
   NOTIFICATIONS: 'Actuele updates',
   WMO: 'Zorg en ondersteuning',
   FOCUS_AANVRAGEN: 'Inkomen en Stadspas + actuele updates',
-  FOCUS_TOZO: 'Tozo aanvraag regeling status',
+  FOCUS_TOZO: 'Aanvraag Tozo',
   FOCUS_SPECIFICATIES:
     'Uitkeringsspecificaties en jaaropgaven + actuele updates',
-  CHAPTERS: "Thema's",
   ERFPACHT: 'Erfpacht',
-  AFVAL: 'Afval gegevens rond uw adres.',
+  AFVAL: 'Afvalgegevens rond uw adres',
   BUURT: 'Mijn buurt',
   BELASTINGEN: 'Belastingen + actuele updates',
   MILIEUZONE: 'Milieuzone + actuele updates',
-  HOME: 'Uw locatie op de kaart.',
+  HOME: 'Uw locatie op de kaart',
   VERGUNNINGEN: 'Vergunningen + actuele updates',
-  ALL: 'Alle databronnen',
-  CMS_CONTENT: 'Uitleg pagina',
+  ALL: 'Alle gegevens', // indien data helemaal niet opgehaald kan worden
+  CMS_CONTENT: 'Uitleg Mijn Amsterdam',
   AFVALPUNTEN: 'Afvalpunten',
 };
 
