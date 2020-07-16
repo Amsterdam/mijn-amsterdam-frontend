@@ -70,7 +70,7 @@ export interface CMSFooterContent {
 
 export async function loadServicesCMSContent(
   sessionID: SessionID,
-  samlToken: string
+  passthroughRequestHeaders: Record<string, string>
 ) {
   const generalInfoPageRequest = requestData<CMSPageContent>(
     getApiConfig('CMS_CONTENT_GENERAL_INFO', {
@@ -84,7 +84,7 @@ export async function loadServicesCMSContent(
       },
     }),
     sessionID,
-    samlToken
+    passthroughRequestHeaders
   );
 
   const footerInfoPageRequest = requestData<CMSFooterContent>(
@@ -188,7 +188,7 @@ export async function loadServicesCMSContent(
       },
     }),
     sessionID,
-    samlToken
+    passthroughRequestHeaders
   );
 
   const requests: Promise<

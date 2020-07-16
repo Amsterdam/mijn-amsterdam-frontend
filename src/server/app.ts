@@ -10,10 +10,15 @@ import express, {
   RequestHandler,
   Response,
 } from 'express';
-import session from 'express-session';
-import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
+import { ENV, getOtapEnvItem } from '../universal/config/env';
 import { apiErrorResult } from '../universal/helpers';
-import { BFF_PORT } from './config';
+import { BFF_BASE_PATH, BFF_PORT } from './config';
+import {
+  clearSession,
+  exitEarly,
+  secureValidation,
+  sessionID,
+} from './helpers/app';
 import { router } from './router';
 
 const options: Sentry.NodeOptions = {
@@ -31,29 +36,22 @@ app.use(Sentry.Handlers.requestHandler() as RequestHandler);
 app.use(cors());
 app.use(bodyParser.json({ limit: '1mb' }));
 app.use(cookieParser());
-
-app.use(
-  session({
-    secret: process.env.BFF_COOKIE_SESSION_SECRET || 'development',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: IS_AP },
-    proxy: true,
-  })
-);
-
 app.use(compression());
+
+// Basic security measure
+app.use(exitEarly);
+app.use(secureValidation);
+
+// Generate session id
+app.use(sessionID);
+
 // Mount the router at the base path
-app.use(IS_AP ? '/bff' : '/test-api/bff', router);
+app.use(BFF_BASE_PATH, router);
+
+// Destroy the session as soon as the api requests are all processed
+app.use(clearSession);
 
 app.use(Sentry.Handlers.errorHandler() as ErrorRequestHandler);
-
-// Force Clear the cache after all the services requests are done.
-// app.use((req: Request, res: Response, next: NextFunction) => {
-//   const sessionID = req.sessionID!;
-//   clearSessionCache(sessionID);
-//   next();
-// });
 
 // Optional fallthrough error handler
 app.use(function onError(
@@ -68,8 +66,7 @@ app.use(function onError(
 });
 
 app.use((req: Request, res: Response) => {
-  res.status(404);
-  return res.end('not found');
+  res.end();
 });
 
 app.listen(BFF_PORT, () => {

@@ -128,9 +128,12 @@ export function transformFOCUSIncomeSpecificationsData(
 
 export async function fetchFOCUSSpecificaties(
   sessionID: SessionID,
-  samlToken: string
+  passthroughRequestHeaders: Record<string, string>
 ) {
-  const combinedData = await fetchFOCUSCombined(sessionID, samlToken);
+  const combinedData = await fetchFOCUSCombined(
+    sessionID,
+    passthroughRequestHeaders
+  );
 
   if (combinedData.status === 'OK') {
     return apiSuccesResult(
@@ -142,9 +145,12 @@ export async function fetchFOCUSSpecificaties(
 
 export async function fetchFOCUSSpecificationsGenerated(
   sessionID: SessionID,
-  samlToken: string
+  passthroughRequestHeaders: Record<string, string>
 ) {
-  const response = await fetchFOCUSSpecificaties(sessionID, samlToken);
+  const response = await fetchFOCUSSpecificaties(
+    sessionID,
+    passthroughRequestHeaders
+  );
   const notifications: MyNotification[] = [];
 
   if (response.status === 'OK') {

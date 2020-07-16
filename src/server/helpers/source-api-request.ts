@@ -1,6 +1,5 @@
 import * as Sentry from '@sentry/node';
 import axios, { AxiosPromise, AxiosResponse } from 'axios';
-import { Request } from 'express';
 import memoryCache from 'memory-cache';
 import { IS_AP } from '../../universal/config/env';
 import {
@@ -20,7 +19,6 @@ import {
   BFF_REQUEST_CACHE_ENABLED,
   DataRequestConfig,
   DEFAULT_REQUEST_CONFIG,
-  TMA_SAML_HEADER,
 } from '../config';
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
 import { Deferred } from './deferred';
@@ -36,14 +34,21 @@ function enableMockAdapter() {
 
   // This sets the mock adapter on the default instance, let unmatched request passthrough to the requested urls.
   const mock = new MockAdapter(axiosRequest, { onNoMatch: 'passthrough' });
-
   entries(mockDataConfig).forEach(
     async ([
       url,
-      { status, responseData, method = 'get', networkError, delay },
+      {
+        status,
+        responseData,
+        method = 'get',
+        networkError,
+        delay,
+        headers,
+        params,
+      },
     ]) => {
       const onMethod = `on${capitalizeFirstLetter(method)}`;
-      const req = mock[onMethod](url);
+      const req = mock[onMethod](url, params);
       if (networkError) {
         req.networkError();
       } else {
@@ -52,7 +57,11 @@ function enableMockAdapter() {
             delay,
             await responseData(...args)
           );
-          return [status, data];
+          return [
+            typeof status === 'function' ? status(...args) : status,
+            data,
+            headers,
+          ];
         });
       }
     }
@@ -77,10 +86,22 @@ export function clearSessionCache(sessionID: SessionID) {
   }
 }
 
+function getRequestConfigCacheKey(
+  sessionID: string,
+  requestConfig: DataRequestConfig
+) {
+  return [
+    sessionID,
+    requestConfig.method,
+    requestConfig.url,
+    requestConfig.params ? JSON.stringify(requestConfig.params) : 'no-params',
+  ].join('-');
+}
+
 export async function requestData<T>(
   config: DataRequestConfig,
   sessionID: SessionID,
-  samlToken: string
+  passthroughRequestHeaders: Record<string, string>
 ) {
   const source = axios.CancelToken.source();
 
@@ -101,23 +122,17 @@ export async function requestData<T>(
     );
   }
 
-  // The SAML token is passedthrough to the source api's
-  if (requestConfig.url?.startsWith(BFF_MS_API_BASE_URL) && samlToken) {
-    if (!requestConfig.headers) {
-      requestConfig.headers = {};
-    }
-    requestConfig.headers[TMA_SAML_HEADER] = samlToken;
+  if (
+    requestConfig.url?.startsWith(BFF_MS_API_BASE_URL) &&
+    passthroughRequestHeaders
+  ) {
+    requestConfig.headers = passthroughRequestHeaders;
   }
 
   const isGetRequest = requestConfig.method?.toLowerCase() === 'get';
 
   // Construct a cache key based on unique properties of a request
-  const cacheKey = [
-    sessionID,
-    requestConfig.method,
-    requestConfig.url,
-    requestConfig.params ? JSON.stringify(requestConfig.params) : 'no-params',
-  ].join('-');
+  const cacheKey = getRequestConfigCacheKey(sessionID, requestConfig);
 
   // Check if a cache key for this particular request exists
   const cacheEntry = cache.get(cacheKey);
@@ -129,7 +144,11 @@ export async function requestData<T>(
   }
 
   // Set the cache Deferred
-  if (isGetRequest) {
+  if (
+    isGetRequest &&
+    !!requestConfig.cacheTimeout &&
+    requestConfig.cacheTimeout > 0
+  ) {
     cache.put(
       cacheKey,
       new Deferred<ApiSuccessResponse<T>>(),
@@ -145,7 +164,7 @@ export async function requestData<T>(
       source.cancel('Request to source api timeout.');
     }, requestConfig.cancelTimeout!);
 
-    const request: AxiosPromise<T> = axiosRequest(requestConfig);
+    const request: AxiosPromise<T> = axiosRequest.request(requestConfig);
     const response: AxiosResponse<T> = await request;
     const responseData = apiSuccesResult<T>(response.data);
 
@@ -158,56 +177,48 @@ export async function requestData<T>(
 
     return responseData;
   } catch (error) {
-    if (isGetRequest) {
-      // We're returning a result here so a failed request will not prevent other succeeded request needed for a response
-      // to the client to pass through.
-      const shouldCaptureMessage =
-        error.isAxiosError || (!(error instanceof Error) && !!error?.message);
-      const api = Object.entries(ApiUrls).find(
-        ([, url]) => requestConfig.url === url
-      );
-      const apiName = api ? api[0] : 'unknown';
-      const sentryId = shouldCaptureMessage
-        ? Sentry.captureMessage(
-            `${apiName}: ${error?.message ? error.message : error}`,
-            {
-              tags: {
-                url: requestConfig.url!,
-              },
-              extra: {
-                module: 'request',
-                status: error?.response?.status,
-                apiName,
-              },
-            }
-          )
-        : Sentry.captureException(error, {
+    // We're returning a result here so a failed request will not prevent other succeeded request needed for a response
+    // to the client to pass through.
+    const shouldCaptureMessage =
+      error.isAxiosError || (!(error instanceof Error) && !!error?.message);
+    const api = Object.entries(ApiUrls).find(
+      ([, url]) => requestConfig.url === url
+    );
+    const apiName = api ? api[0] : 'unknown';
+    const sentryId = shouldCaptureMessage
+      ? Sentry.captureMessage(
+          `${apiName}: ${error?.message ? error.message : error}`,
+          {
             tags: {
               url: requestConfig.url!,
             },
             extra: {
+              module: 'request',
+              status: error?.response?.status,
               apiName,
             },
-          });
+          }
+        )
+      : Sentry.captureException(error, {
+          tags: {
+            url: requestConfig.url!,
+          },
+          extra: {
+            apiName,
+          },
+        });
 
-      const responseData = apiErrorResult(
-        error?.response?.data?.message || error.toString(),
-        null,
-        sentryId
-      );
+    const responseData = apiErrorResult(
+      error?.response?.data?.message || error.toString(),
+      null,
+      sentryId
+    );
 
-      if (cache.get(cacheKey)) {
-        // Resolve with error
-        cache.get(cacheKey).resolve(responseData);
-      }
-
-      return responseData;
+    if (cache.get(cacheKey)) {
+      // Resolve with error
+      cache.get(cacheKey).resolve(responseData);
     }
 
-    throw error;
+    return responseData;
   }
-}
-
-export function getSamlTokenHeader(req: Request) {
-  return (req.headers[TMA_SAML_HEADER] || '') as string;
 }

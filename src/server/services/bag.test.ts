@@ -3,7 +3,7 @@ import { jsonCopy } from '../../universal/helpers';
 import { ApiUrls } from '../config';
 import bagData from '../mock-data/json/bag.json';
 import { fetchBAG, formatBAGData } from './bag';
-import { axiosRequest } from '../helpers/request';
+import { axiosRequest } from '../helpers/source-api-request';
 import * as Sentry from '@sentry/node';
 
 describe('BAG service', () => {
@@ -43,7 +43,7 @@ describe('BAG service', () => {
       huisnummer: 25,
     } as any;
 
-    const rs = await fetchBAG('x', 'saml', address);
+    const rs = await fetchBAG('x', { x: 'saml' }, address);
 
     expect(rs).toStrictEqual({
       status: 'OK',
@@ -61,7 +61,7 @@ describe('BAG service', () => {
     const capture = (Sentry.captureMessage = jest.fn(() => {
       return 'x';
     }));
-    const rs = await fetchBAG('x', 'saml', {} as any);
+    const rs = await fetchBAG('x', { x: 'saml' }, {} as any);
 
     expect(rs).toStrictEqual({
       status: 'ERROR',

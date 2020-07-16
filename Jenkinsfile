@@ -19,7 +19,14 @@ pipeline {
   stages {
 
     stage('Unit tests') {
-      when { not { branch 'test' } } // Skip unit tests when pushing directly to test (for speed)
+      when {
+        not {
+          anyOf {
+            branch 'test';
+            branch 'test-acc';
+          }
+        }
+      }
       options {
         timeout(time: 5, unit: 'MINUTES')
       }
@@ -39,7 +46,14 @@ pipeline {
     }
 
     stage('E2E testing') {
-      when { not { branch 'test' } }
+      when {
+        not {
+          anyOf {
+            branch 'test';
+            branch 'test-acc';
+          }
+        }
+      }
       environment {
         PROJECT = "${PROJECT_PREFIX}e2e"
       }

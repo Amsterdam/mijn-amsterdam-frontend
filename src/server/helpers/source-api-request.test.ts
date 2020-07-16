@@ -1,37 +1,39 @@
-import { requestData, axiosRequest, cache } from './request';
+import { requestData, axiosRequest, cache } from './source-api-request';
 import MockAdapter from 'axios-mock-adapter';
-import { AxiosError } from 'axios';
+import axios from 'axios';
 import {
   apiSuccesResult,
   apiPostponeResult,
   apiErrorResult,
 } from '../../universal/helpers/api';
 import * as Sentry from '@sentry/node';
+import {
+  TMA_SAML_HEADER,
+  DEFAULT_REQUEST_CONFIG,
+  BFF_MS_API_BASE_URL,
+} from '../config';
 
 describe('requestData.ts', () => {
   const DUMMY_RESPONSE = { foo: 'bar' };
   const DUMMY_RESPONSE_2 = { foo: 'baz' };
 
-  const DUMMY_URL = 'https://url';
-  const DUMMY_URL_2 = 'https://url/error';
+  const DUMMY_URL = BFF_MS_API_BASE_URL + '/1';
+  const DUMMY_URL_2 = BFF_MS_API_BASE_URL + '/2';
 
   const SESS_ID_1 = 'x1';
   const SESS_ID_2 = 'y2';
 
   const SAML_TOKEN = 'xxx1010101xxxx';
+  const HEADERS = { [TMA_SAML_HEADER]: SAML_TOKEN };
 
   const CACHE_KEY_1 = `${SESS_ID_1}-get-${DUMMY_URL}-no-params`;
   const CACHE_KEY_2 = `${SESS_ID_2}-get-${DUMMY_URL}-no-params`;
 
   let axMock: any;
+  let axiosRequestSpy: any;
 
   beforeAll(() => {
     jest.useFakeTimers();
-  });
-
-  afterEach(() => {
-    axMock.restore();
-    cache.clear();
   });
 
   beforeEach(() => {
@@ -43,6 +45,13 @@ describe('requestData.ts', () => {
       .replyOnce(200, DUMMY_RESPONSE_2);
 
     axMock.onGet(DUMMY_URL_2).networkError();
+    axiosRequestSpy = jest.spyOn(axiosRequest, 'request');
+  });
+
+  afterEach(() => {
+    axMock.restore();
+    cache.clear();
+    axiosRequestSpy.mockRestore();
   });
 
   it('A requests succeeds', async () => {
@@ -51,10 +60,23 @@ describe('requestData.ts', () => {
         url: DUMMY_URL,
       },
       SESS_ID_1,
-      SAML_TOKEN
+      HEADERS
     );
 
     expect(rs).toStrictEqual(apiSuccesResult(DUMMY_RESPONSE));
+  });
+
+  it('Should make request with passthrough headers', async () => {
+    await requestData(
+      {
+        url: DUMMY_URL,
+      },
+      SESS_ID_1,
+      HEADERS
+    );
+
+    expect(axiosRequestSpy).toHaveBeenCalledTimes(1);
+    expect(axiosRequestSpy.mock.calls[0][0].headers).toEqual(HEADERS);
   });
 
   it('Caches the response', async () => {
@@ -63,7 +85,7 @@ describe('requestData.ts', () => {
         url: DUMMY_URL,
       },
       SESS_ID_1,
-      SAML_TOKEN
+      HEADERS
     );
 
     expect(await cache.get(CACHE_KEY_1).promise).toStrictEqual(rs);
@@ -79,7 +101,7 @@ describe('requestData.ts', () => {
         url: DUMMY_URL,
       },
       SESS_ID_1,
-      SAML_TOKEN
+      HEADERS
     );
 
     const rs2 = await requestData(
@@ -87,7 +109,7 @@ describe('requestData.ts', () => {
         url: DUMMY_URL,
       },
       SESS_ID_2,
-      SAML_TOKEN
+      HEADERS
     );
 
     expect(await cache.get(CACHE_KEY_1).promise).toStrictEqual(
@@ -114,9 +136,10 @@ describe('requestData.ts', () => {
         postponeFetch: true,
       },
       SESS_ID_1,
-      SAML_TOKEN
+      HEADERS
     );
 
+    expect(axiosRequestSpy).toHaveBeenCalledTimes(0);
     expect(rs).toStrictEqual(apiPostponeResult());
   });
 
@@ -133,7 +156,7 @@ describe('requestData.ts', () => {
         url: DUMMY_URL_2,
       },
       SESS_ID_1,
-      SAML_TOKEN
+      HEADERS
     );
 
     // @ts-ignore

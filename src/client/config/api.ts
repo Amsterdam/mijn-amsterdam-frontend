@@ -1,20 +1,37 @@
-import { AppState } from '../AppState';
+import * as Cookies from 'js-cookie';
+import {
+  API_BASE_PATH,
+  COOKIE_KEY_COMMERCIAL_LOGIN,
+  IS_AP,
+} from '../../universal/config';
 import { isError } from '../../universal/helpers';
-import { IS_AP, API_BASE_PATH } from '../../universal/config';
+import { AppState } from '../AppState';
+
+export const IS_COMMERCIAL_PATH_MATCH =
+  /\/(test-)?api1(-|\/)login/g.test(window.location.pathname) ||
+  !!Cookies.get(COOKIE_KEY_COMMERCIAL_LOGIN);
 
 // Urls directly used from front-end
 export const TMA_LOGIN_URL_DIGID = `${API_BASE_PATH}/login`;
 export const TMA_LOGIN_URL_EHERKENNING = `${API_BASE_PATH}1/login`;
-export const LOGIN_URL_DIGID = `${TMA_LOGIN_URL_DIGID}${
-  !IS_AP ? '?target=digid' : ''
-}`;
-export const LOGIN_URL_EHERKENNING = `${TMA_LOGIN_URL_EHERKENNING}${
-  !IS_AP ? '?target=eherkenning' : ''
-}`;
-export const LOGOUT_URL = '/logout';
-export const BFF_API_BASE_URL = `${API_BASE_PATH}/bff`;
-export const AUTH_API_URL = `${API_BASE_PATH}/auth/check`;
+
+export const TMA_LOGIN_URL_DIGID_AFTER_REDIRECT = IS_AP
+  ? TMA_LOGIN_URL_DIGID
+  : `/test-api-login`;
+export const TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT = IS_AP
+  ? TMA_LOGIN_URL_EHERKENNING
+  : `/test-api1-login`;
+
+export const LOGIN_URL_DIGID = TMA_LOGIN_URL_DIGID;
+export const LOGIN_URL_EHERKENNING = TMA_LOGIN_URL_EHERKENNING;
+
+const API_BASE_PATH_MODDED =
+  API_BASE_PATH + (IS_COMMERCIAL_PATH_MATCH ? '1' : '');
+
+export const BFF_API_BASE_URL = `${API_BASE_PATH_MODDED}/bff`;
+export const AUTH_API_URL = `${API_BASE_PATH_MODDED}/auth/check`;
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
+export const LOGOUT_URL = '/logout';
 
 export const BFFApiUrls: Record<string, string> = {
   SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
@@ -23,25 +40,24 @@ export const BFFApiUrls: Record<string, string> = {
 };
 
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
-  BRP: 'Persoonlijke gegevens, Identiteitsbewijzen + actuele updates',
+  BRP: 'Persoonlijke gegevens, paspoort, ID-kaart + actuele updates',
   CASES: 'Lopende zaken',
   TIPS: 'Tips',
   NOTIFICATIONS: 'Actuele updates',
   WMO: 'Zorg en ondersteuning',
   FOCUS_AANVRAGEN: 'Inkomen en Stadspas + actuele updates',
-  FOCUS_TOZO: 'Tozo aanvraag regeling status',
+  FOCUS_TOZO: 'Aanvraag Tozo',
   FOCUS_SPECIFICATIES:
     'Uitkeringsspecificaties en jaaropgaven + actuele updates',
-  CHAPTERS: "Thema's",
   ERFPACHT: 'Erfpacht',
-  AFVAL: 'Afval gegevens rond uw adres.',
+  AFVAL: 'Afvalgegevens rond uw adres',
   BUURT: 'Mijn buurt',
   BELASTINGEN: 'Belastingen + actuele updates',
   MILIEUZONE: 'Milieuzone + actuele updates',
-  HOME: 'Uw locatie op de kaart.',
+  HOME: 'Uw locatie op de kaart',
   VERGUNNINGEN: 'Vergunningen + actuele updates',
-  ALL: 'Alle databronnen',
-  CMS_CONTENT: 'Uitleg pagina',
+  ALL: 'Alle gegevens', // indien data helemaal niet opgehaald kan worden
+  CMS_CONTENT: 'Uitleg Mijn Amsterdam',
   AFVALPUNTEN: 'Afvalpunten',
 };
 

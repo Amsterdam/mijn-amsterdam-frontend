@@ -1,12 +1,12 @@
 import classnames from 'classnames';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ALL_ERROR_STATE_KEY } from '../../AppState';
 import { IconAlert, IconClose } from '../../assets/icons';
 import { useSessionStorage } from '../../hooks/storage.hook';
+import { SessionContext } from '../../SessionState';
 import { Button, IconButton, LinkdInline } from '../Button/Button';
 import Modal from '../Modal/Modal';
 import styles from './ErrorMessages.module.scss';
-import { LOGOUT_URL } from '../../config/api';
 
 export interface Error {
   name: string;
@@ -25,6 +25,7 @@ export function useErrorMessagesDismissed() {
 
 export default function ErrorMessages({ className, errors }: ComponentProps) {
   const el = useRef(null);
+  const session = useContext(SessionContext);
   const isAllErrorMessage = errors.some(
     error => error.stateKey === ALL_ERROR_STATE_KEY
   );
@@ -95,7 +96,11 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
             {/* TODO: Arrange correct text here */}
             Probeer het later nog eens.{' '}
             {isAllErrorMessage ? (
-              <LinkdInline external={true} href={LOGOUT_URL}>
+              <LinkdInline
+                external={true}
+                role="button"
+                onClick={() => session.logout()}
+              >
                 Nu uitloggen
               </LinkdInline>
             ) : (

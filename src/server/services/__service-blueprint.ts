@@ -30,12 +30,15 @@ export function transformServiceNameData(
 
 const SERVICE_NAME = 'BRP'; // Change to your service name
 
-export function fetchServiceName(sessionID: SessionID, samlToken: string) {
+export function fetchServiceName(
+  sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>
+) {
   return requestData<ServiceNameData>(
     getApiConfig(SERVICE_NAME, {
       transformResponse: transformServiceNameData,
     }),
     sessionID,
-    samlToken
+    passthroughRequestHeaders
   );
 }

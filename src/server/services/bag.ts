@@ -22,7 +22,7 @@ export function formatBAGData(responseData: BAGSourceData): BAGData {
 
 export function fetchBAG(
   sessionID: SessionID,
-  samlToken: string,
+  passthroughRequestHeaders: Record<string, string>,
   address: Adres
 ) {
   const params = { q: getBagSearchAddress(address) };
@@ -33,6 +33,6 @@ export function fetchBAG(
       transformResponse: formatBAGData,
     }),
     sessionID,
-    samlToken
+    passthroughRequestHeaders
   );
 }

@@ -726,13 +726,16 @@ export function transformWMOResponse(
   return items;
 }
 
-export function fetchWMO(sessionID: SessionID, samlToken: string) {
+export function fetchWMO(
+  sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>
+) {
   return requestData<WMOData>(
     getApiConfig('WMO', {
       transformResponse: (responseData: WMOSourceData) =>
         transformWMOResponse(responseData, new Date()),
     }),
     sessionID,
-    samlToken
+    passthroughRequestHeaders
   );
 }

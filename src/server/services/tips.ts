@@ -11,9 +11,9 @@ export interface TIPSRequestData {
   data: any;
 }
 
-export function fetchTIPS(
+export async function fetchTIPS(
   sessionID: SessionID,
-  samlToken: string,
+  passthroughRequestHeaders: Record<string, string>,
   requestBody: TIPSRequestData
 ) {
   return requestData<TIPSData>(
@@ -22,7 +22,7 @@ export function fetchTIPS(
       data: requestBody,
     }),
     sessionID,
-    samlToken
+    passthroughRequestHeaders
   );
 }
 
@@ -53,7 +53,7 @@ function createTipsRequestDataFromServiceResults(
 
 export async function loadServicesTips(
   sessionID: SessionID,
-  samlToken: string,
+  passthroughRequestHeaders: Record<string, string>,
   servicesResults: ServiceResults,
   optin: boolean = false
 ) {
@@ -63,7 +63,13 @@ export async function loadServicesTips(
     optin,
   };
 
+  const TIPS = await fetchTIPS(
+    sessionID,
+    passthroughRequestHeaders,
+    tipsRequestData
+  );
+
   return {
-    TIPS: await fetchTIPS(sessionID, samlToken, tipsRequestData),
+    TIPS,
   };
 }

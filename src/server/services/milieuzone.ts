@@ -48,7 +48,7 @@ function transformMILIEUZONEData(
 
 export async function fetchMILIEUZONE(
   sessionID: SessionID,
-  samlToken: string,
+  passthroughRequestHeaders: Record<string, string>,
   includeNotifications: boolean = false
 ) {
   const response = await requestData<MILIEUZONEData>(
@@ -56,7 +56,7 @@ export async function fetchMILIEUZONE(
       transformResponse: transformMILIEUZONEData,
     }),
     sessionID,
-    samlToken
+    passthroughRequestHeaders
   );
 
   if (!includeNotifications) {
@@ -72,11 +72,15 @@ export async function fetchMILIEUZONE(
 
 export async function fetchMILIEUZONEGenerated(
   sessionID: SessionID,
-  samlToken: string
+  passthroughRequestHeaders: Record<string, string>
 ) {
   let notifications: MyNotification[] = [];
 
-  const response = await fetchMILIEUZONE(sessionID, samlToken, true);
+  const response = await fetchMILIEUZONE(
+    sessionID,
+    passthroughRequestHeaders,
+    true
+  );
   if (response.status === 'OK' && response.content.notifications) {
     notifications = response.content.notifications;
   }

@@ -12,7 +12,7 @@ import { fetchVergunningenGenerated } from './vergunningen';
 
 export async function loadServicesGenerated(
   sessionID: SessionID,
-  samlToken: string
+  passthroughRequestHeaders: Record<string, string>
 ) {
   const [
     brpGeneratedResult,
@@ -23,13 +23,13 @@ export async function loadServicesGenerated(
     milieuzoneGeneratedResult,
     vergunningenGeneratedResult,
   ] = await Promise.allSettled([
-    fetchBRPGenerated(sessionID, samlToken),
-    fetchFOCUSAanvragenGenerated(sessionID, samlToken),
-    fetchFOCUSSpecificationsGenerated(sessionID, samlToken),
-    fetchFOCUSTozoGenerated(sessionID, samlToken),
-    fetchBELASTINGGenerated(sessionID, samlToken),
-    fetchMILIEUZONEGenerated(sessionID, samlToken),
-    fetchVergunningenGenerated(sessionID, samlToken),
+    fetchBRPGenerated(sessionID, passthroughRequestHeaders),
+    fetchFOCUSAanvragenGenerated(sessionID, passthroughRequestHeaders),
+    fetchFOCUSSpecificationsGenerated(sessionID, passthroughRequestHeaders),
+    fetchFOCUSTozoGenerated(sessionID, passthroughRequestHeaders),
+    fetchBELASTINGGenerated(sessionID, passthroughRequestHeaders),
+    fetchMILIEUZONEGenerated(sessionID, passthroughRequestHeaders),
+    fetchVergunningenGenerated(sessionID, passthroughRequestHeaders),
   ]);
 
   const brpGenerated = getSettledResult(brpGeneratedResult);

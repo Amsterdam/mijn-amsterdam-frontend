@@ -15,15 +15,20 @@ const apiPort = process.env.BFF_PORT || 5000;
 
 const SESSION_MAX_AGE = 15 * 60 * 1000; // 15 minutes
 
-function loginPage(req, res, next) {
-  return res.sendFile(__dirname + '/client/public/tma-login-mock.html');
-}
-
 function handleLogin(req, res, next) {
-  const userType = req.url.startsWith('/api1/') ? 'BEDRIJF' : 'BURGER';
-  req.session = { isAuthenticated: true, userType };
+  const isCommercialUser = req.url.includes('/test-api1/');
+  const redirectUrlAfterLogin = `${REDIRECT_AFTER_LOGIN}/${
+    isCommercialUser ? 'test-api1-login' : 'test-api-login'
+  }`;
 
-  return res.redirect(REDIRECT_AFTER_LOGIN);
+  const userType = isCommercialUser ? 'BEDRIJF' : 'BURGER';
+
+  req.session = {
+    isAuthenticated: true,
+    userType,
+  };
+
+  return res.redirect(redirectUrlAfterLogin);
 }
 
 function handleLogout(req, res) {
@@ -64,18 +69,26 @@ module.exports = function(app) {
   );
 
   app.get(['/logout'], handleLogout);
-  app.get(['/sso-page'], loginPage);
   app.get(['/test-api/login', '/test-api1/login'], handleLogin);
-  app.all(['/test-api'], handleSession);
+  app.use(['/test-api', '/test-api1'], handleSession);
   app.get(['/test-api/auth/check', '/test-api1/auth/check'], (req, res) => {
     return res.send(req.session);
   });
 
   app.use(
-    ['/test-api'],
+    ['/test-api', '/test-api1'],
     createProxyMiddleware({
       target: `http://${apiHost}:${apiPort}`,
       changeOrigin: true,
+      pathRewrite: {
+        '/test-api1': '/test-api',
+      },
+      onProxyReq: function onProxyReq(proxyReq, req, res) {
+        proxyReq.setHeader('x-saml-attribute-token1', 'foobar');
+        if (req.session.userType) {
+          proxyReq.setHeader('x-user-type', req.session.userType);
+        }
+      },
     })
   );
 };

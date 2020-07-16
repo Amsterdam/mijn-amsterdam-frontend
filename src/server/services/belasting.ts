@@ -51,7 +51,7 @@ function transformBELASTINGENData(
 
 export async function fetchBELASTING(
   sessionID: SessionID,
-  samlToken: string,
+  passthroughRequestHeaders: Record<string, string>,
   includeNotifications: boolean = false
 ) {
   const response = await requestData<BELASTINGENData>(
@@ -59,7 +59,7 @@ export async function fetchBELASTING(
       transformResponse: transformBELASTINGENData,
     }),
     sessionID,
-    samlToken
+    passthroughRequestHeaders
   );
 
   if (!includeNotifications) {
@@ -75,11 +75,15 @@ export async function fetchBELASTING(
 
 export async function fetchBELASTINGGenerated(
   sessionID: SessionID,
-  samlToken: string
+  passthroughRequestHeaders: Record<string, string>
 ) {
   let notifications: MyNotification[] = [];
 
-  const response = await fetchBELASTING(sessionID, samlToken, true);
+  const response = await fetchBELASTING(
+    sessionID,
+    passthroughRequestHeaders,
+    true
+  );
   if (response.status === 'OK' && response.content.notifications) {
     notifications = response.content.notifications;
   }

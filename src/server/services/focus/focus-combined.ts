@@ -42,7 +42,7 @@ export interface FocusCombinedSourceResponse {
 
 export async function fetchFOCUSCombined(
   sessionID: SessionID,
-  samlToken: string
+  passthroughRequestHeaders: Record<string, string>
 ) {
   return requestData<FocusCombinedSourceResponse>(
     getApiConfig('FOCUS_COMBINED', {
@@ -50,6 +50,6 @@ export async function fetchFOCUSCombined(
         response.content,
     }),
     sessionID,
-    samlToken
+    passthroughRequestHeaders
   );
 }

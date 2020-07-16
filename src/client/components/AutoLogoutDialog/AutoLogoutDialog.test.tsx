@@ -1,9 +1,7 @@
-import AutoLogoutDialog, { AutoLogoutDialogSettings } from './AutoLogoutDialog';
-
+import { mount } from 'enzyme';
 import React from 'react';
 import { SessionContext } from '../../SessionState';
-import { mount } from 'enzyme';
-import { LOGOUT_URL } from '../../config/api';
+import AutoLogoutDialog, { AutoLogoutDialogSettings } from './AutoLogoutDialog';
 
 const ONE_SECOND_IN_MS = 1000;
 const DOC_TITLE = 'AutoLogoutDialog';
@@ -12,9 +10,11 @@ describe('AutoLogoutDialog', () => {
   window.scrollTo = jest.fn();
 
   const refetch = jest.fn(() => {});
+  const logout = jest.fn(() => {});
 
   const session: any = {
     refetch,
+    logout,
   };
 
   const settings: AutoLogoutDialogSettings = {
@@ -97,7 +97,7 @@ describe('AutoLogoutDialog', () => {
       ONE_SECOND_IN_MS * settings.secondsBeforeAutoLogout!
     );
     component.update();
-    expect(window.location.href).toBe(LOGOUT_URL);
+    expect(logout).toHaveBeenCalled();
   });
 
   it('fires callback when clicking continue button', () => {

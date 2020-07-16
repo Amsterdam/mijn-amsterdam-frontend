@@ -1,16 +1,16 @@
 import { AxiosRequestConfig } from 'axios';
-import { FeatureToggle } from '../universal/config';
+import { FeatureToggle, API_BASE_PATH } from '../universal/config';
 import { IS_ACCEPTANCE, IS_AP, IS_PRODUCTION } from '../universal/config/env';
 
-export const TMA_SAML_HEADER = 'x-saml-attribute-token1';
+export const TMA_SAML_HEADER: string = 'x-saml-attribute-token1';
+export const DEV_USER_TYPE_HEADER: string = 'x-user-type';
 export const BFF_REQUEST_CACHE_ENABLED = true;
 
 // Urls used in the BFF api
 // Microservices (Tussen Api) base url
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
-
-const API_BASE_PATH = IS_AP ? '/api' : '/test-api';
+export const BFF_BASE_PATH = IS_AP ? '/bff' : '/test-api/bff';
 
 const BFF_MS_API_HOST = IS_PRODUCTION
   ? process.env.BFF_MS_API_HOST || 'mijn.data.amsterdam.nl'
@@ -48,6 +48,7 @@ export const DEFAULT_REQUEST_CONFIG: DataRequestConfig = {
 };
 
 type SourceApiKey =
+  | 'AUTH'
   | 'WMO'
   | 'FOCUS_COMBINED'
   | 'FOCUS_AANVRAGEN'
@@ -65,6 +66,10 @@ type SourceApiKey =
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
 export const ApiConfig: ApiDataRequestConfig = {
+  AUTH: {
+    url: `${BFF_MS_API_BASE_URL}/auth/check`,
+    cacheTimeout: 0,
+  },
   WMO: {
     url: `${BFF_MS_API_BASE_URL}/wmoned/voorzieningen`,
   },
@@ -118,3 +123,12 @@ export const ApiUrls = Object.entries(ApiConfig).reduce(
 export function getApiConfig(name: SourceApiKey, config?: DataRequestConfig) {
   return Object.assign(ApiConfig[name] || {}, config || {});
 }
+
+export const BffEndpoints = {
+  SERVICES_TIPS: `/services/tips`,
+  SERVICES_ALL: `/services/all`,
+  SERVICES_STREAM: `/services/stream`,
+  HEALTH: `/status/health`,
+};
+
+export const PUBLIC_BFF_ENDPOINTS: string[] = [BffEndpoints.HEALTH];
