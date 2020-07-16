@@ -188,12 +188,12 @@ function AppLanding() {
 
   // Render the main app only if we are authenticated
   return isAuthenticated ? (
-    <RecoilRoot>
+    <>
       <AppStateProvider>
         <AppAuthenticated />
       </AppStateProvider>
       <AutoLogoutDialog settings={dialogTimeoutSettings} />
-    </RecoilRoot>
+    </>
   ) : (
     <AppNotAuthenticated />
   );
@@ -212,15 +212,17 @@ export default function App() {
   };
 
   return (
-    <BrowserRouter>
-      <ErrorBoundary
-        onError={sendToSentry}
-        FallbackComponent={ApplicationError}
-      >
-        <SessionState>
-          <AppLanding />
-        </SessionState>
-      </ErrorBoundary>
-    </BrowserRouter>
+    <RecoilRoot>
+      <BrowserRouter>
+        <ErrorBoundary
+          onError={sendToSentry}
+          FallbackComponent={ApplicationError}
+        >
+          <SessionState>
+            <AppLanding />
+          </SessionState>
+        </ErrorBoundary>
+      </BrowserRouter>
+    </RecoilRoot>
   );
 }
