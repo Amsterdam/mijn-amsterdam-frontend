@@ -3,7 +3,7 @@ import { jsonCopy } from '../../universal/helpers';
 import { ApiUrls } from '../config';
 import bagData from '../mock-data/json/bag.json';
 import { fetchBAG, formatBAGData } from './bag';
-import { axiosRequest } from '../helpers/request';
+import { axiosRequest } from '../helpers/source-api-request';
 import * as Sentry from '@sentry/node';
 
 describe('BAG service', () => {

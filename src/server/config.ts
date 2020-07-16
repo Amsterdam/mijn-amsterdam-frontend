@@ -10,6 +10,7 @@ export const BFF_REQUEST_CACHE_ENABLED = true;
 // Microservices (Tussen Api) base url
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
+export const BFF_BASE_PATH = IS_AP ? '/bff' : '/test-api/bff';
 
 const BFF_MS_API_HOST = IS_PRODUCTION
   ? process.env.BFF_MS_API_HOST || 'mijn.data.amsterdam.nl'
@@ -124,11 +125,6 @@ export function getApiConfig(name: SourceApiKey, config?: DataRequestConfig) {
 }
 
 export const BffEndpoints = {
-  SERVICES_GENERATED: `/services/generated`,
-  SERVICES_RELATED: `/services/related`,
-  SERVICES_CMSCONTENT: `/services/cmscontent`,
-  SERVICES_DIRECT: `/services/direct`,
-  SERVICES_MAP: `/services/map`,
   SERVICES_TIPS: `/services/tips`,
   SERVICES_ALL: `/services/all`,
   SERVICES_STREAM: `/services/stream`,

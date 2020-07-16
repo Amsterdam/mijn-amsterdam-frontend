@@ -11,7 +11,7 @@ export interface TIPSRequestData {
   data: any;
 }
 
-export function fetchTIPS(
+export async function fetchTIPS(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
   requestBody: TIPSRequestData
@@ -63,11 +63,13 @@ export async function loadServicesTips(
     optin,
   };
 
+  const TIPS = await fetchTIPS(
+    sessionID,
+    passthroughRequestHeaders,
+    tipsRequestData
+  );
+
   return {
-    TIPS: await fetchTIPS(
-      sessionID,
-      passthroughRequestHeaders,
-      tipsRequestData
-    ),
+    TIPS,
   };
 }

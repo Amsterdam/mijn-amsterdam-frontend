@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/node';
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import {
   loadServicesAfval,
   loadServicesCMSContent,
@@ -9,7 +9,7 @@ import {
   loadServicesRelated,
   loadServicesTips,
 } from './index';
-import { getPassthroughRequestHeaders } from '../helpers/request';
+import { getPassthroughRequestHeaders } from '../helpers/app';
 
 function sendMessage(
   res: Response,
@@ -41,7 +41,11 @@ function addServiceResultHandler(
     );
 }
 
-export async function loadServicesSSE(req: Request, res: Response) {
+export async function loadServicesSSE(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   // Tell the client we respond with an event stream
   res.writeHead(200, {
     'content-type': 'text/event-stream',
@@ -49,43 +53,45 @@ export async function loadServicesSSE(req: Request, res: Response) {
     connection: 'keep-alive',
   });
 
+  const sessionID = res.locals.sessionID;
+
   const servicesDirect = loadServicesDirect(
-    req.sessionID!,
+    sessionID,
     getPassthroughRequestHeaders(req)
   );
 
   addServiceResultHandler(res, servicesDirect, 'direct');
 
   const servicesRelated = loadServicesRelated(
-    req.sessionID!,
+    sessionID,
     getPassthroughRequestHeaders(req)
   );
 
   addServiceResultHandler(res, servicesRelated, 'related');
 
   const servicesAfval = loadServicesAfval(
-    req.sessionID!,
+    sessionID,
     getPassthroughRequestHeaders(req)
   );
 
   addServiceResultHandler(res, servicesAfval, 'afval');
 
   const servicesMap = loadServicesMap(
-    req.sessionID!,
+    sessionID,
     getPassthroughRequestHeaders(req)
   );
 
   addServiceResultHandler(res, servicesMap, 'map');
 
   const servicesCMSContent = loadServicesCMSContent(
-    req.sessionID!,
+    sessionID,
     getPassthroughRequestHeaders(req)
   );
 
   addServiceResultHandler(res, servicesCMSContent, 'cmscontent');
 
   const servicesGenerated = loadServicesGenerated(
-    req.sessionID!,
+    sessionID,
     getPassthroughRequestHeaders(req)
   );
 
@@ -98,14 +104,14 @@ export async function loadServicesSSE(req: Request, res: Response) {
 
   const optin = req.cookies.optInPersonalizedTips === 'yes';
 
-  const tipsResult = loadServicesTips(
-    req.sessionID!,
+  const servicesTips = loadServicesTips(
+    sessionID,
     getPassthroughRequestHeaders(req),
     tipsRequestDataServiceResults,
     optin
   );
 
-  addServiceResultHandler(res, tipsResult, 'tips');
+  addServiceResultHandler(res, servicesTips, 'tips');
 
   // Wait for all services to have responded and then end the stream.
   Promise.allSettled([
@@ -115,9 +121,9 @@ export async function loadServicesSSE(req: Request, res: Response) {
     servicesMap,
     servicesCMSContent,
     servicesGenerated,
-    tipsResult,
+    servicesTips,
   ]).then(() => {
     sendMessage(res, 'close', 'close', null);
-    res.end();
+    next();
   });
 }

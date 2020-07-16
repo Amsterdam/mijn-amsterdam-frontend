@@ -1,6 +1,5 @@
 import * as Sentry from '@sentry/node';
 import axios, { AxiosPromise, AxiosResponse } from 'axios';
-import { Request, Response } from 'express';
 import memoryCache from 'memory-cache';
 import { IS_AP } from '../../universal/config/env';
 import {
@@ -20,8 +19,6 @@ import {
   BFF_REQUEST_CACHE_ENABLED,
   DataRequestConfig,
   DEFAULT_REQUEST_CONFIG,
-  TMA_SAML_HEADER,
-  DEV_USER_TYPE_HEADER,
 } from '../config';
 import { mockDataConfig, resolveWithDelay } from '../mock-data/index';
 import { Deferred } from './deferred';
@@ -180,69 +177,48 @@ export async function requestData<T>(
 
     return responseData;
   } catch (error) {
-    if (isGetRequest) {
-      // We're returning a result here so a failed request will not prevent other succeeded request needed for a response
-      // to the client to pass through.
-      const shouldCaptureMessage =
-        error.isAxiosError || (!(error instanceof Error) && !!error?.message);
-      const api = Object.entries(ApiUrls).find(
-        ([, url]) => requestConfig.url === url
-      );
-      const apiName = api ? api[0] : 'unknown';
-      const sentryId = shouldCaptureMessage
-        ? Sentry.captureMessage(
-            `${apiName}: ${error?.message ? error.message : error}`,
-            {
-              tags: {
-                url: requestConfig.url!,
-              },
-              extra: {
-                module: 'request',
-                status: error?.response?.status,
-                apiName,
-              },
-            }
-          )
-        : Sentry.captureException(error, {
+    // We're returning a result here so a failed request will not prevent other succeeded request needed for a response
+    // to the client to pass through.
+    const shouldCaptureMessage =
+      error.isAxiosError || (!(error instanceof Error) && !!error?.message);
+    const api = Object.entries(ApiUrls).find(
+      ([, url]) => requestConfig.url === url
+    );
+    const apiName = api ? api[0] : 'unknown';
+    const sentryId = shouldCaptureMessage
+      ? Sentry.captureMessage(
+          `${apiName}: ${error?.message ? error.message : error}`,
+          {
             tags: {
               url: requestConfig.url!,
             },
             extra: {
+              module: 'request',
+              status: error?.response?.status,
               apiName,
             },
-          });
+          }
+        )
+      : Sentry.captureException(error, {
+          tags: {
+            url: requestConfig.url!,
+          },
+          extra: {
+            apiName,
+          },
+        });
 
-      const responseData = apiErrorResult(
-        error?.response?.data?.message || error.toString(),
-        null,
-        sentryId
-      );
+    const responseData = apiErrorResult(
+      error?.response?.data?.message || error.toString(),
+      null,
+      sentryId
+    );
 
-      if (cache.get(cacheKey)) {
-        // Resolve with error
-        cache.get(cacheKey).resolve(responseData);
-      }
-
-      return responseData;
+    if (cache.get(cacheKey)) {
+      // Resolve with error
+      cache.get(cacheKey).resolve(responseData);
     }
 
-    throw error;
+    return responseData;
   }
-}
-
-export function getPassthroughRequestHeaders(req: Request) {
-  const passthroughHeaders: Record<string, string> = {
-    [TMA_SAML_HEADER]: (req.headers[TMA_SAML_HEADER] || '') as string,
-  };
-  if (!IS_AP) {
-    passthroughHeaders[DEV_USER_TYPE_HEADER] = (req.headers[
-      DEV_USER_TYPE_HEADER
-    ] || '') as string;
-  }
-  return passthroughHeaders;
-}
-
-export function send404(res: Response) {
-  res.status(404);
-  return res.end('not found');
 }
