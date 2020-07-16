@@ -63,7 +63,6 @@ export default function MainFooter() {
       </div>
       <div className={styles.BottomBar}>
         <div className={styles.InnerContainer}>
-          <Linkd href={AppRoutes.PROCLAIMER}>Proclaimer</Linkd>
           {footer.sub.map(link => {
             return (
               <Linkd

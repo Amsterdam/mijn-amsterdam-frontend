@@ -40,7 +40,6 @@ import {
   MyNotifications,
   MyTips,
   NotFound,
-  Proclaimer,
   Profile,
   Zorg,
   ZorgDetail,
@@ -70,7 +69,6 @@ function AppNotAuthenticated() {
         <MainHeader />
         <Switch>
           <Route exact path={AppRoutes.ROOT} component={LandingPage} />
-          <Route path={AppRoutes.PROCLAIMER} component={Proclaimer} />
           <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
           <Route
             render={({ location: { pathname } }) => {
@@ -153,7 +151,6 @@ function AppAuthenticated() {
             component={BurgerzakenDetail}
           />
           <Route path={AppRoutes.BURGERZAKEN} component={Burgerzaken} />
-          <Route path={AppRoutes.PROCLAIMER} component={Proclaimer} />
           {FeatureToggle.garbageInformationPage && (
             <Route path={AppRoutes.AFVAL} component={GarbageInformation} />
           )}

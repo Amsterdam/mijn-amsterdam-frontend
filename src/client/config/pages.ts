@@ -14,7 +14,6 @@ export const PageTitles = {
   [AppRoutes['INKOMEN/STADSPAS']]: `Stadspas | ${ChapterTitles.INKOMEN}`,
   [AppRoutes.BRP]: `Profiel`,
   [AppRoutes.BUURT]: `Mijn buurt`,
-  [AppRoutes.PROCLAIMER]: `Proclaimer`,
   [AppRoutes.TIPS]: `Mijn Tips | overzicht`,
   [AppRoutes.NOTIFICATIONS]: `${ChapterTitles.NOTIFICATIONS} | overzicht`,
   [AppRoutes.AFVAL]: `${ChapterTitles.AFVAL} rond uw adres`,

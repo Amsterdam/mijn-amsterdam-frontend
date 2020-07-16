@@ -12,7 +12,6 @@ export const AppRoutes = {
   'INKOMEN/TOZO': '/inkomen-en-stadspas/tozo/:id?',
   BRP: '/persoonlijke-gegevens',
   BUURT: '/buurt',
-  PROCLAIMER: '/proclaimer',
   API_LOGIN: '/api/login',
   API1_LOGIN: '/api1/login',
   TIPS: '/overzicht-tips',
@@ -24,11 +23,7 @@ export const AppRoutes = {
   'VERGUNNINGEN/DETAIL': '/vergunningen/detail/:id',
 };
 
-export const PublicRoutes = [
-  AppRoutes.PROCLAIMER,
-  AppRoutes.API_LOGIN,
-  AppRoutes.ACCESSIBILITY,
-];
+export const PublicRoutes = [AppRoutes.API_LOGIN, AppRoutes.ACCESSIBILITY];
 
 export const PrivateRoutes = Object.values(AppRoutes).filter(
   path => !PublicRoutes.includes(path)

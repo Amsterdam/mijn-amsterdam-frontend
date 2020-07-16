@@ -162,10 +162,7 @@ export async function loadServicesCMSContent(
                       ({ link }) => !!link && !link.url.match(/(cookies)/g)
                     )
                     .map(({ link }) => {
-                      let title = link.label;
-                      if (link.url.match(/over/g)) {
-                        title = 'Over amsterdam.nl';
-                      }
+                      const title = link.label;
                       return {
                         to: link.url,
                         title,
