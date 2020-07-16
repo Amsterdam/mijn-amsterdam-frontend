@@ -36,6 +36,8 @@ try {
   }
   if (isCommercialPathMatch) {
     localStorage.setItem('commercialUserLastLogin', new Date().toISOString());
+  } else {
+    localStorage.removeItem('commercialUserLastLogin');
   }
 } catch (error) {}
 
