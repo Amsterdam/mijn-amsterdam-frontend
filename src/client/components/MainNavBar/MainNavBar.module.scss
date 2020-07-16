@@ -77,12 +77,13 @@
     display: inline-block;
   }
 
-  > a {
+  .ProfileName {
     margin-left: 3.3rem;
+    margin-right: 3.3rem;
     font-weight: normal;
     text-decoration: none;
 
-    &:hover {
+    a:hover {
       color: $color-primary-red;
       text-decoration: underline;
     }
@@ -219,4 +220,15 @@
   &--BEDRIJF {
     color: $color-support-purple;
   }
+}
+
+.ProfileLink--active {
+  color: red;
+}
+.ProfileLink--commercial {
+  margin-left: 2rem;;
+}
+
+.ProfileLink--private {
+
 }

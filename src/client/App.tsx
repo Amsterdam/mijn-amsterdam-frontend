@@ -49,6 +49,7 @@ import {
   Accessibility,
 } from './pages';
 import { SessionContext, SessionState } from './SessionState';
+import { RecoilRoot } from 'recoil';
 
 function AppNotAuthenticated() {
   const { location } = useRouter();
@@ -187,12 +188,12 @@ function AppLanding() {
 
   // Render the main app only if we are authenticated
   return isAuthenticated ? (
-    <>
+    <RecoilRoot>
       <AppStateProvider>
         <AppAuthenticated />
       </AppStateProvider>
       <AutoLogoutDialog settings={dialogTimeoutSettings} />
-    </>
+    </RecoilRoot>
   ) : (
     <AppNotAuthenticated />
   );

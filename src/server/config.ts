@@ -61,7 +61,8 @@ type SourceApiKey =
   | 'BRP'
   | 'ERFPACHT'
   | 'BAG'
-  | 'AFVAL';
+  | 'AFVAL'
+  | 'KVK';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
@@ -110,6 +111,9 @@ export const ApiConfig: ApiDataRequestConfig = {
   BAG: { url: `${BFF_DATAPUNT_API_BASE_URL}/atlas/search/adres/` },
   AFVAL: {
     url: `${BFF_DATAPUNT_API_BASE_URL}/afvalophaalgebieden/search/`,
+  },
+  KVK: {
+    url: `${BFF_MS_API_BASE_URL}/kvk/handelsregister`,
   },
 };
 

@@ -5,12 +5,13 @@ import React, {
   useEffect,
   useMemo,
   useState,
+  ReactNode,
 } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { animated, useSpring } from 'react-spring';
 import useRouter from 'use-react-router';
 import { AppRoutes } from '../../../universal/config';
-import { getFullName, isLoading } from '../../../universal/helpers';
+import { getFullName } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
 import { AppContext } from '../../AppState';
 import { IconInfo } from '../../assets/icons';
@@ -36,6 +37,8 @@ import styles from './MainNavBar.module.scss';
 import { BRPData } from '../../../universal/types/brp';
 import { SessionData } from '../../hooks/api/api.session';
 import LogoutLink from '../LogoutLink/LogoutLink';
+import { KVKSourceDataContent } from '../../../server/services/kvk';
+import { useCommercialProfileToggle } from '../../hooks/useCommercialProfileToggle';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -46,27 +49,105 @@ export interface MainNavLinkProps {
   title: string;
 }
 
+interface PrivateProfileNameProps {
+  person?: BRPData['persoon'];
+}
+
+function PrivateProfileName({ person }: PrivateProfileNameProps) {
+  return (
+    <Link to={AppRoutes.BRP} className={styles['ProfileLink--private']}>
+      {person?.opgemaakteNaam ? getFullName(person) : 'Mijn gegevens'}
+    </Link>
+  );
+}
+
+interface CommercialProfileNameProps {
+  company?: KVKSourceDataContent;
+}
+
+function CommercialProfileName({ company }: CommercialProfileNameProps) {
+  return (
+    <Link to={AppRoutes.BRP} className={styles['ProfileLink--commercial']}>
+      {company?.name || 'Mijn bedrijf'}
+    </Link>
+  );
+}
+
+interface PrivateCommercialProfileToggleProps {
+  person?: BRPData['persoon'];
+  company?: KVKSourceDataContent;
+}
+
+function PrivateCommercialProfileToggle({
+  person,
+  company,
+}: PrivateCommercialProfileToggleProps) {
+  const [isCommercial, setIsCommercial] = useCommercialProfileToggle();
+  console.log('iscom', isCommercial);
+  return (
+    <>
+      <Linkd
+        onClick={() => setIsCommercial(false)}
+        icon={null}
+        className={classnames(
+          styles['ProfileLink--private'],
+          !isCommercial && styles['ProfileLink--active']
+        )}
+      >
+        {person?.opgemaakteNaam ? getFullName(person) : 'Mijn gegevens'}
+      </Linkd>
+      <Linkd
+        onClick={() => setIsCommercial(true)}
+        icon={null}
+        className={classnames(
+          styles['ProfileLink--commercial'],
+          isCommercial && styles['ProfileLink--active']
+        )}
+      >
+        {company?.name || 'Zakelijk'}
+      </Linkd>
+    </>
+  );
+}
+
 interface ProfileNameProps {
-  persoon?: BRPData['persoon'];
-  bedrijf?: BRPData['persoon'];
+  person?: BRPData['persoon'] | null;
+  company?: KVKSourceDataContent | null;
   userType?: SessionData['userType'];
 }
 
-function ProfileName({ persoon, bedrijf, userType }: ProfileNameProps) {
+function ProfileName({ person, company, userType }: ProfileNameProps) {
+  const nameContent = useMemo(() => {
+    let nameContent: undefined | string | ReactNode;
+    switch (true) {
+      case !!person && !company:
+        nameContent = <PrivateProfileName person={person!} />;
+        break;
+      case !!(person && company):
+        nameContent = <PrivateCommercialProfileToggle person={person!} />;
+        break;
+      case !person && !!company:
+        nameContent = <CommercialProfileName company={company!} />;
+        break;
+    }
+    return nameContent;
+  }, [person, company]);
+
   return (
     <span
+      data-tutorial-item="Hier ziet u uw persoonsgegevens, zoals uw adres en geboortedatum;left-bottom"
       className={classnames(
         styles.ProfileName,
         styles[`ProfileName--${userType}`]
       )}
     >
-      {persoon?.opgemaakteNaam ? getFullName(persoon) : 'Mijn gegevens'}
+      {nameContent || <LoadingContent barConfig={[['15rem', '1rem', '0']]} />}
     </span>
   );
 }
 
 function SecondaryLinks() {
-  const { BRP } = useContext(AppContext);
+  const { BRP, KVK } = useContext(AppContext);
   const persoon = BRP.content?.persoon || null;
   const hasFirstName = !!(persoon && persoon.voornamen);
   const isDesktopScreen = useDesktopScreen();
@@ -81,22 +162,11 @@ function SecondaryLinks() {
   return (
     <div className={styles.secondaryLinks}>
       {isDesktopScreen && <FontEnlarger />}
-
-      <Link
-        to={AppRoutes.BRP}
-        className={styles.ProfileLink}
-        data-tutorial-item="Hier ziet u uw persoonsgegevens, zoals uw adres en geboortedatum;left-bottom"
-      >
-        {isLoading(BRP) ? (
-          <LoadingContent barConfig={[['15rem', '1rem', '0']]} />
-        ) : (
-          <ProfileName
-            persoon={BRP.content?.persoon}
-            userType={session.userType}
-          />
-        )}
-      </Link>
-
+      <ProfileName
+        person={BRP.content?.persoon}
+        company={KVK.content}
+        userType={session.userType}
+      />
       <LogoutLink>Uitloggen</LogoutLink>
     </div>
   );

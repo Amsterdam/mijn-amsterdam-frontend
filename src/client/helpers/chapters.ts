@@ -22,6 +22,7 @@ function isChapterActive(
     MILIEUZONE,
     VERGUNNINGEN,
     HOME,
+    KVK,
   }: AppState
 ) {
   switch (item.id) {
@@ -82,6 +83,14 @@ function isChapterActive(
 
     case Chapters.VERGUNNINGEN:
       return !isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length;
+
+    // case Chapters.KVK:
+    //   return (
+    //     !isLoading(BRP) &&
+    //     !isLoading(KVK) &&
+    //     BRP.content?.kvkNummer &&
+    //     !!KVK.content?.name
+    //   );
   }
 
   return false;

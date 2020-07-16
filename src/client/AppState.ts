@@ -81,6 +81,9 @@ export const PRISTINE_APPSTATE = {
 
   VERGUNNINGEN: apiPristineResult([]),
 
+  // KVK / Handelsregister
+  KVK: apiPristineResult(null),
+
   // Use the controller to add functionality for refetching app state
   controller: {},
 };
