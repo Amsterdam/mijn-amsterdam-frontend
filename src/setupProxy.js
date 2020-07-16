@@ -23,16 +23,6 @@ function handleLogin(req, res, next) {
 
   const userType = isCommercialUser ? 'BEDRIJF' : 'BURGER';
 
-  console.log(
-    'r:',
-    req.session && req.session.isAuthenticated,
-    req.session && req.session.userType,
-    {
-      isAuthenticated: true,
-      userType,
-    }
-  );
-
   req.session = {
     isAuthenticated: true,
     userType,
@@ -96,7 +86,6 @@ module.exports = function(app) {
       onProxyReq: function onProxyReq(proxyReq, req, res) {
         proxyReq.setHeader('x-saml-attribute-token1', 'foobar');
         if (req.session.userType) {
-          console.log('proxy request user type', req.session.userType);
           proxyReq.setHeader('x-user-type', req.session.userType);
         }
       },

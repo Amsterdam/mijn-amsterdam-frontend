@@ -105,7 +105,6 @@ export function useSessionApi() {
 
   useEffect(() => {
     const onBeforeUnload = () => {
-      console.log('sessionValidMaxAge:', sessionValidMaxAge);
       if (sessionValidMaxAge > 0) {
         saveUserTypeForReloadingAndNewTabs(sessionValidMaxAge);
       }
