@@ -92,7 +92,6 @@ function PrivateCommercialProfileToggle({
   company,
 }: PrivateCommercialProfileToggleProps) {
   const [isCommercial, setIsCommercial] = useCommercialProfileToggle();
-  console.log('iscom', isCommercial);
   return (
     <>
       <Button
