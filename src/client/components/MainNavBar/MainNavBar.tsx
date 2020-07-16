@@ -13,7 +13,7 @@ import { AppRoutes } from '../../../universal/config';
 import { getFullName, isLoading } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
 import { AppContext } from '../../AppState';
-import { IconLogout, IconInfo } from '../../assets/icons';
+import { IconInfo } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
 import { getMyChapters } from '../../helpers/chapters';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
@@ -33,9 +33,9 @@ import {
   MenuItem,
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
-import { LOGOUT_URL } from '../../config/api';
 import { BRPData } from '../../../universal/types/brp';
 import { SessionData } from '../../hooks/api/api.session';
+import LogoutLink from '../LogoutLink/LogoutLink';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -96,15 +96,7 @@ function SecondaryLinks() {
         )}
       </Link>
 
-      <Linkd
-        href={LOGOUT_URL}
-        external={true}
-        lean={true}
-        className={styles.LogoutLink}
-        icon={IconLogout}
-      >
-        Uitloggen
-      </Linkd>
+      <LogoutLink>Uitloggen</LogoutLink>
     </div>
   );
 }

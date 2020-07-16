@@ -10,7 +10,6 @@ import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { formattedTimeFromSeconds } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
-import { LOGOUT_URL } from '../../config/api';
 import { Colors } from '../../config/app';
 import { CounterProps, useCounter } from '../../hooks/timer.hook';
 import { useActivityThrottle } from '../../hooks/useThrottledFn.hook';
@@ -113,7 +112,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
 
   function showLoginScreen() {
     setContinueButtonVisibility(false);
-    window.location.href = LOGOUT_URL;
+    session.logout();
   }
 
   function continueUsingApp() {
@@ -206,7 +205,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
             className={classnames('logout-button', styles.LogoutButton)}
             external={true}
             icon=""
-            href={LOGOUT_URL}
+            onClick={() => session.logout()}
             role="button"
           >
             {continueButtonIsVisible

@@ -1,7 +1,15 @@
-import { AppState } from '../AppState';
+import * as Cookies from 'js-cookie';
+import {
+  API_BASE_PATH,
+  COOKIE_KEY_COMMERCIAL_LOGIN,
+  IS_AP,
+} from '../../universal/config';
 import { isError } from '../../universal/helpers';
-import { IS_AP, API_BASE_PATH } from '../../universal/config';
-import { sub } from 'date-fns';
+import { AppState } from '../AppState';
+
+export const IS_COMMERCIAL_PATH_MATCH =
+  /\/(test-)?api1(-|\/)login/g.test(window.location.pathname) ||
+  !!Cookies.get(COOKIE_KEY_COMMERCIAL_LOGIN);
 
 // Urls directly used from front-end
 export const TMA_LOGIN_URL_DIGID = `${API_BASE_PATH}/login`;
@@ -17,31 +25,8 @@ export const TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT = IS_AP
 export const LOGIN_URL_DIGID = TMA_LOGIN_URL_DIGID;
 export const LOGIN_URL_EHERKENNING = TMA_LOGIN_URL_EHERKENNING;
 
-let isCommercialPathMatch =
-  window.location.pathname === '/api1/login' ||
-  window.location.pathname === '/test-api1-login';
-
-try {
-  const commercialUserLastLogin = localStorage.getItem(
-    'commercialUserLastLogin'
-  );
-  if (
-    !isCommercialPathMatch &&
-    commercialUserLastLogin &&
-    sub(new Date(), {
-      minutes: 10,
-    }) <= new Date(commercialUserLastLogin)
-  ) {
-    isCommercialPathMatch = true;
-  }
-  if (isCommercialPathMatch) {
-    localStorage.setItem('commercialUserLastLogin', new Date().toISOString());
-  } else {
-    localStorage.removeItem('commercialUserLastLogin');
-  }
-} catch (error) {}
-
-const API_BASE_PATH_MODDED = API_BASE_PATH + (isCommercialPathMatch ? '1' : '');
+const API_BASE_PATH_MODDED =
+  API_BASE_PATH + (IS_COMMERCIAL_PATH_MATCH ? '1' : '');
 
 export const BFF_API_BASE_URL = `${API_BASE_PATH_MODDED}/bff`;
 export const AUTH_API_URL = `${API_BASE_PATH_MODDED}/auth/check`;
