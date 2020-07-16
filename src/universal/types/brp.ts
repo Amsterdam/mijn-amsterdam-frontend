@@ -71,6 +71,7 @@ export interface Kind {
 }
 
 export interface BRPDataFromSource {
+  kvkNummer: string;
   persoon: Persoon;
   verbintenis?: Verbintenis;
   verbintenisHistorisch?: VerbintenisHistorisch[];
