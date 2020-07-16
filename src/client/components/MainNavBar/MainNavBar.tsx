@@ -48,10 +48,11 @@ export interface MainNavLinkProps {
 
 interface ProfileNameProps {
   persoon?: BRPData['persoon'];
+  bedrijf?: BRPData['persoon'];
   userType?: SessionData['userType'];
 }
 
-function ProfileName({ persoon, userType }: ProfileNameProps) {
+function ProfileName({ persoon, bedrijf, userType }: ProfileNameProps) {
   return (
     <span
       className={classnames(
