@@ -14,7 +14,7 @@ import { AppRoutes } from '../../../universal/config';
 import { getFullName } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
 import { AppContext } from '../../AppState';
-import { IconInfo } from '../../assets/icons';
+import { IconInfo, IconProfile, IconSuitcase } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
 import { getMyChapters } from '../../helpers/chapters';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
@@ -55,7 +55,10 @@ interface PrivateProfileNameProps {
 
 function PrivateProfileName({ person }: PrivateProfileNameProps) {
   return (
-    <Link to={AppRoutes.BRP} className={styles['ProfileLink--private']}>
+    <Link
+      to={AppRoutes.BRP}
+      className={classnames(styles.ProfileLink, styles['ProfileLink--private'])}
+    >
       {person?.opgemaakteNaam ? getFullName(person) : 'Mijn gegevens'}
     </Link>
   );
@@ -67,7 +70,13 @@ interface CommercialProfileNameProps {
 
 function CommercialProfileName({ company }: CommercialProfileNameProps) {
   return (
-    <Link to={AppRoutes.BRP} className={styles['ProfileLink--commercial']}>
+    <Link
+      to={AppRoutes.BRP}
+      className={classnames(
+        styles.ProfileLink,
+        styles['ProfileLink--commercial']
+      )}
+    >
       {company?.name || 'Mijn bedrijf'}
     </Link>
   );
@@ -86,26 +95,32 @@ function PrivateCommercialProfileToggle({
   console.log('iscom', isCommercial);
   return (
     <>
-      <Linkd
+      <Button
         onClick={() => setIsCommercial(false)}
-        icon={null}
+        icon={IconProfile}
+        variant="plain"
+        lean={true}
         className={classnames(
+          styles.ProfileLink,
           styles['ProfileLink--private'],
           !isCommercial && styles['ProfileLink--active']
         )}
       >
         {person?.opgemaakteNaam ? getFullName(person) : 'Mijn gegevens'}
-      </Linkd>
-      <Linkd
+      </Button>
+      <Button
         onClick={() => setIsCommercial(true)}
-        icon={null}
+        icon={IconSuitcase}
+        variant="plain"
+        lean={true}
         className={classnames(
+          styles.ProfileLink,
           styles['ProfileLink--commercial'],
           isCommercial && styles['ProfileLink--active']
         )}
       >
         {company?.name || 'Zakelijk'}
-      </Linkd>
+      </Button>
     </>
   );
 }

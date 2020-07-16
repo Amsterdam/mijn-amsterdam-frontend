@@ -69,7 +69,7 @@
 
 .secondaryLinks {
   position: absolute;
-  margin-top: -8.1rem;
+  margin-top: -8.9rem;
   right: calc((100vw - #{$main-boxed-width}) / 2);
   display: inline-block;
 
@@ -222,13 +222,28 @@
   }
 }
 
+.ProfileLink {
+  margin-left: 3.3rem;
+  svg {
+    position: absolute;;
+    width: 1.2em;
+    height: 1.3em;
+    margin-left: -2.6rem;
+  }
+}
 .ProfileLink--active {
-  color: red;
+  // font-weight: bold;
+  color: $color-support-blue;
+  text-decoration: underline;
+
+  svg {
+    fill: $color-support-blue;
+  }
 }
 .ProfileLink--commercial {
-  margin-left: 2rem;;
+  margin-left: 4rem;
 }
 
 .ProfileLink--private {
-
+  margin-left: 2rem;
 }
