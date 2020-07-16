@@ -56,10 +56,6 @@ const pageConfig = {
     isPermanentPage: true,
     pathname: '/buurt',
   },
-  PROCLAIMER: {
-    isPermanentPage: true,
-    pathname: '/proclaimer',
-  },
   TIPS: {
     isPermanentPage: true,
     pathname: '/overzicht-tips',
