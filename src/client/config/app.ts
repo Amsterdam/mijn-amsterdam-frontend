@@ -38,6 +38,7 @@ export const ExternalUrls = {
   AMSTERDAM_PRIVACY_PAGE: 'https://www.amsterdam.nl/privacy',
   AFVAL_MELDING_FORMULIER:
     'https://formulier.amsterdam.nl/mail/afval/afvalwijzer/',
+  KREFIA: getOtapEnvItem('krefiaDirectLink'),
 };
 
 // NOTE: Keep up-to-date with _colors.scss

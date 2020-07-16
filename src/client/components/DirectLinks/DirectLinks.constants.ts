@@ -7,11 +7,12 @@ export type DirectLinkType =
   | 'BUURT'
   | 'FAQ'
   | 'AMSTERDAM'
-  | 'TIPS';
+  | 'TIPS'
+  | 'KREFIA';
 
 export interface DirectLink {
   title: string;
-  url: string;
+  url?: string;
   isPhoneScreenLink?: true;
   isExternalLink?: true;
   id?: string;
@@ -33,6 +34,11 @@ export const LINKS: { [key in DirectLinkType]: DirectLink } = {
   MIJN_SUBSIDIE: {
     title: 'Mijn Subsidies',
     url: ExternalUrls.MIJN_SUBSIDIES,
+    isExternalLink: true,
+  },
+  KREFIA: {
+    title: 'Kredieten en budgetbeheer (Krefia)',
+    url: ExternalUrls.KREFIA,
     isExternalLink: true,
   },
   FAQ: {
