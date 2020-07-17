@@ -11,6 +11,7 @@ import {
   SectionCollapsible,
   Table,
   addTitleLinkComponent,
+  Linkd,
 } from '../../components';
 import { OverviewPage } from '../../components/Page/Page';
 import styles from './Vergunningen.module.scss';
@@ -75,11 +76,11 @@ export default () => {
           RVV-verkeersontheffing, een tijdelijke verkeersmaatregel en een
           objectvergunning. Andere vergunningen komen er later bij.
         </p>
-        {/* <p>
-          <Linkd external={true} href="https://mijn.amsterdam.nl/">
+        <p>
+          <Linkd external={true} href="https://amsterdam.nl/">
             Meer informatie op amsterdam.nl
           </Linkd>
-        </p> */}
+        </p>
         {isError(VERGUNNINGEN) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>
