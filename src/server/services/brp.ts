@@ -77,7 +77,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
         )} is uw ${docTitle} niet meer geldig.`,
         link: {
           to: BrpDocumentCallToAction.isExpired[document.documentType],
-          title: `Vraag snel uw nieuwe ${docTitle} aan`,
+          title: `Vraag uw nieuwe ${docTitle} aan`,
         },
       });
     });
@@ -99,7 +99,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
         )} is uw ${docTitle} niet meer geldig.`,
         link: {
           to: BrpDocumentCallToAction.isExpired[document.documentType],
-          title: `Vraag snel uw nieuwe ${docTitle} aan`,
+          title: `Vraag uw nieuwe ${docTitle} aan`,
         },
       });
     });

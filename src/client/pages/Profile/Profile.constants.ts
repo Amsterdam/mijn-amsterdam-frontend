@@ -61,7 +61,7 @@ export const panelConfig: PanelConfig = {
       : [],
   }),
   verbintenisHistorisch: BRP => ({
-    title: 'Voormalige verbintenissen',
+    title: 'Eerdere huwelijken of partnerschappen',
     actionLinks: isMokum(BRP.content)
       ? [
           {

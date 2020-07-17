@@ -44,8 +44,8 @@ export default () => {
       </PageHeading>
       <PageContent>
         <p>
-          Hieronder ziet u informatie over de looptijd van uw officiële
-          identiteitsbewijzen, zoals ID-kaart of paspoort.
+          Hier ziet u tot wanneer uw paspoort of ID-kaart geldig is. Als u
+          doorklikt ziet u ook het documentnummer en de datum van uitgifte.
         </p>
         <p>
           <Linkd
@@ -53,13 +53,6 @@ export default () => {
             href="https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/"
           >
             Meer informatie over paspoort en ID-kaart
-          </Linkd>
-          <br />
-          <Linkd
-            external={true}
-            href="https://www.amsterdam.nl/veelgevraagd/?productid={EFDC353E-5E80-4B9C-8431-2FBB950ECE7C}"
-          >
-            Paspoort kwijt?
           </Linkd>
         </p>
         {isError(BRP) && (

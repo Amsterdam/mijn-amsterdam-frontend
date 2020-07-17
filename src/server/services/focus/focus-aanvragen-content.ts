@@ -52,7 +52,7 @@ export const contentLabels: LabelData = {
         to: generatePath(AppRoutes['INKOMEN/BIJSTANDSUITKERING'], {
           id: product.id,
         }),
-        title: 'Meer',
+        title: 'Meer informatie',
       }),
       aanvraag: {
         notification: {
@@ -113,7 +113,7 @@ export const contentLabels: LabelData = {
       },
       herstelTermijn: {
         notification: {
-          title: product => `${product.title}: Neem actie`,
+          title: product => `${product.title}: Meer informatie nodig`,
           description: product =>
             'Er is meer informatie en tijd nodig om uw aanvraag voor een bijstandsuitkering te behandelen.',
         },
@@ -238,7 +238,7 @@ export const contentLabels: LabelData = {
       },
       herstelTermijn: {
         notification: {
-          title: product => `${product.title}: Neem actie`,
+          title: product => `${product.title}: Meer informatie nodig`,
           description: product =>
             'Er is meer informatie en tijd nodig om uw aanvraag voor een Stadspas te behandelen.',
         },

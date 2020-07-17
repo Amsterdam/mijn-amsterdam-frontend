@@ -119,12 +119,11 @@ export default () => {
       </PageHeading>
       <PageContent>
         <p>
-          Hieronder vindt u een overzicht van alle huis- en grofvuil
-          voorzieningen rond uw adres.
+          Bekijk waar u uw afval kwijt kunt en hoe u uw afval kunt scheiden.
         </p>
         <p>
           <Linkd href={ExternalUrls.AFVAL} external={true}>
-            Meer informatie over regels voor afval en hergebruik
+            De regels voor afval en hergebruik
           </Linkd>
         </p>
         {isError(AFVAL) && (
@@ -167,12 +166,14 @@ export default () => {
         {AFVALPUNTEN.content?.centers.map((item, index) => (
           <GarbageCenterItem key={item.title} item={item} />
         ))}
+      </SectionCollapsible>
+      <PageContent>
         <p>
           <Linkd external={true} href={ExternalUrls.AFVAL_MELDING_FORMULIER}>
-            Klopt er iets niet? Geef het aan ons door.
+            Kloppen de dagen, tijden of adressen niet? Geef het aan ons door.
           </Linkd>
         </p>
-      </SectionCollapsible>
+      </PageContent>
     </DetailPage>
   );
 };

@@ -9,7 +9,7 @@ export const WelcomeNotification: MyNotification = {
   title: 'Welkom op Mijn Amsterdam!',
   hideDatePublished: true,
   description:
-    'Deze website is nog volop in ontwikkeling. Gaandeweg komt meer informatie voor u beschikbaar.',
+    'Mijn Amsterdam is nog volop in ontwikkeling. Er komt steeds meer informatie bij.',
   customLink: {
     callback: () => {
       const usabilla = (window as any).usabilla_live;

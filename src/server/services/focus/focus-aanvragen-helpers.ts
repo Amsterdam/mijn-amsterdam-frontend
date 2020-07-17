@@ -332,11 +332,11 @@ export function createFocusNotification(
       : `Update: ${item.title} aanvraag.`,
     description: descriptionTransform
       ? descriptionTransform(item)
-      : `Er zijn updates in uw ${item.title} aanvraag.`,
+      : `U hebt updates over uw ${item.title}-aanvraag.`,
     link: Object.assign(
       {
         to: AppRoutes.INKOMEN,
-        title: 'Meer informatie',
+        title: 'Bekijk hoe het met uw aanvraag staat',
       },
       linkTransform ? linkTransform(item) : {}
     ),

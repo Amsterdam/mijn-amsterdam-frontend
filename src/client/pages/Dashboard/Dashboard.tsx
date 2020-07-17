@@ -39,7 +39,7 @@ export default () => {
     <>
       <Page
         className={styles.Dashboard}
-        data-tutorial-item="Hier ziet u nieuwe berichten van onze afdelingen die uw aandacht vragen;right-top"
+        data-tutorial-item="Hier ziet u nieuwe berichten van onze afdelingen;right-top"
       >
         <PageHeading>
           <Link
@@ -60,7 +60,7 @@ export default () => {
             isLoading={isMyChaptersLoading}
             items={myChapterItems}
             title="Mijn thema's"
-            data-tutorial-item="Dit zijn de onderwerpen waarover u iets heeft bij de gemeente;right-top"
+            data-tutorial-item="Over deze onderwerpen hebben wij informatie voor u;right-top"
             trackCategory="Dashboard / Mijn Thema's"
           />
         </div>
@@ -68,7 +68,7 @@ export default () => {
         <MyCases
           isLoading={isLoading(CASES)}
           title="Mijn lopende aanvragen"
-          data-tutorial-item="Dit is een overzicht van uw lopende aanvragen of wijzigingen;right-top"
+          data-tutorial-item="Hier staan de aanvragen waar de gemeente nog een besluit over moet nemen;right-top"
           items={CASES.content!}
         />
 
@@ -76,18 +76,18 @@ export default () => {
           <MyAreaDashboard
             url={BUURT.content?.embed.simple}
             center={HOME.content?.latlng}
-            data-tutorial-item="Hier ziet u informatie van de gemeente, bijvoorbeeld over afval, parkeren en bekendmakingen;left-top"
+            data-tutorial-item="Op deze kaart ziet u informatie van de gemeente, bijvoorbeeld over afval, parkeren en vergunningen;left-top"
           />
         )}
 
         {!isPhoneScreen && (
           <MyTips
-            data-tutorial-item="Hier geven wij u handige tips, bijvoorbeeld over de regelingen en voorzieningen van de gemeente;right-bottom"
+            data-tutorial-item="Hier geven wij u handige tips, bijvoorbeeld over regelingen van de gemeente;right-bottom"
             isLoading={isLoading(TIPS)}
             items={tipItems}
           />
         )}
-        <DirectLinks data-tutorial-item="Hier kunt u meer algemene informatie vinden over Mijn Amsterdam, bijvoorbeeld waar u terecht kunt met uw vragen;right-bottom" />
+        <DirectLinks data-tutorial-item="Hier staan links naar andere websites;right-bottom" />
       </Page>
     </>
   );

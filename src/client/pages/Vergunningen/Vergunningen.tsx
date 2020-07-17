@@ -109,14 +109,14 @@ export default () => {
       </SectionCollapsible>
       <SectionCollapsible
         id="SectionCollapsible-vergunningen-previous"
-        title="Afgehandelde aanvragen"
-        noItemsMessage="U hebt geen afgehandelde aanvragen."
+        title="Eerdere aanvragen"
+        noItemsMessage="U hebt geen eerdere aanvragen."
         hasItems={!!vergunningenPrevious.length}
         startCollapsed={false}
         className={styles.SectionCollapsibleCurrent}
         isLoading={isLoading(VERGUNNINGEN)}
         track={{
-          category: 'Vergunningen overzicht / Afgehandelde aanvragen',
+          category: 'Vergunningen overzicht / Eerdere aanvragen',
           name: 'Datatabel',
         }}
       >

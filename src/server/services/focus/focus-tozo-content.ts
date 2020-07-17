@@ -51,11 +51,11 @@ if (FeatureToggle.tozo2active) {
 
 export const tozoTitleTranslations: DocumentTitles = {
   // Aanvraag Tozo 1
-  'E-AANVR-TOZO': 'Ontvangst- bevestiging Aanvraag',
-  'E-AANVR-KBBZ': 'Ontvangst- bevestiging Aanvraag',
+  'E-AANVR-TOZO': 'Ontvangst- bevestiging aanvraag',
+  'E-AANVR-KBBZ': 'Ontvangst- bevestiging aanvraag',
 
   // Aanvraag Tozo 2
-  'E-AANVR-TOZ2': 'Ontvangst- bevestiging Aanvraag',
+  'E-AANVR-TOZ2': 'Ontvangst- bevestiging aanvraag',
 
   // Product documenten vertalingen
   'Voorschot Bbz Corona regeling (Eenm.)': 'Brief betaling voorschot',
@@ -138,7 +138,7 @@ const UitkeringLabels: ProductStepLabels = {
   },
   herstelTermijn: {
     notification: {
-      title: product => `${product.title}: Neem actie`,
+      title: product => `${product.title}: Meer informatie nodig`,
       description: product =>
         `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.`,
     },
@@ -224,7 +224,7 @@ const LeningLabels: ProductStepLabels = {
   },
   herstelTermijn: {
     notification: {
-      title: product => `${product.title}: Neem actie`,
+      title: product => `${product.title}: Meer informatie nodig`,
       description: product =>
         `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.`,
     },

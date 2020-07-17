@@ -60,7 +60,7 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
             onClick={() => setModalOpen(true)}
             aria-label="Meer informatie over waarom u mischien niet alle gegevens ziet."
           >
-            meer informatie
+            Meer informatie
           </Button>
           .
         </span>
@@ -82,7 +82,7 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
         contentVerticalPosition={el.current ? Math.max(top, 0) : 'center'}
       >
         <div className={styles.ErrorInfo}>
-          <p>De volgende gegevens kunnen niet opgehaald worden:</p>
+          <p>Deze gegevens kunnen wij nu niet voor u ophalen:</p>
           <ul className={styles.ErrorList}>
             {errors.map(({ name, error }, index) => {
               return (
@@ -93,7 +93,6 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
             })}
           </ul>
           <p>
-            {/* TODO: Arrange correct text here */}
             Probeer het later nog eens.{' '}
             {isAllErrorMessage ? (
               <LinkdInline
@@ -101,13 +100,13 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
                 role="button"
                 onClick={() => session.logout()}
               >
-                Nu uitloggen
+                Uitloggen
               </LinkdInline>
             ) : (
               ''
             )}
           </p>
-          <Button onClick={() => setModalOpen(false)}>Oké</Button>
+          <Button onClick={() => setModalOpen(false)}>OK</Button>
         </div>
       </Modal>
     </div>

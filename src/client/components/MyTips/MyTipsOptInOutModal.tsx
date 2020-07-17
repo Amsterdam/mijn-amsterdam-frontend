@@ -30,10 +30,9 @@ export default function MyTipsOptInOutModal({
         <p className={styles.OptInOutInfo}>
           {!isOptIn ? (
             <>
-              U ziet nu algemene tips over voorzieningen en activiteiten in
-              Amsterdam. Op basis van uw informatie die bij de gemeente bekend
-              is kunnen we u ook informatie tonen die beter bij uw persoonlijk
-              situatie past.
+              U ziet nu algemene tips. Wij kunnen u ook tips tonen die beter bij
+              uw persoonlijke situatie passen. Wij maken dan gebruik van de
+              gegevens die wij van u hebben.
             </>
           ) : (
             <>

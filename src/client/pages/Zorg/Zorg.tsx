@@ -68,14 +68,15 @@ export default () => {
       </PageContent>
       <SectionCollapsible
         id="SectionCollapsible-healthcare-granted"
-        title="Huidige voorzieningen"
-        noItemsMessage="U hebt geen huidige voorzieningen."
+        title="Huidige regelingen en hulpmiddelen"
+        noItemsMessage="U hebt geen huidige regelingen en hulpmiddelen."
         hasItems={!!itemsActual.length}
         startCollapsed={false}
         className={styles.SectionCollapsibleCurrent}
         isLoading={isLoading(WMO)}
         track={{
-          category: 'Zorg en ondersteuning overzicht / Huidige voorzieningen',
+          category:
+            'Zorg en ondersteuning overzicht / Huidige regelingen en hulpmiddelen',
           name: 'Datatabel',
         }}
       >
@@ -84,21 +85,22 @@ export default () => {
 
       <SectionCollapsible
         id="SectionCollapsible-healthcare-previous"
-        title="Eerdere voorzieningen"
-        noItemsMessage="U hebt geen eerdere voorzieningen."
+        title="Eerdere regelingen en hulpmiddelen"
+        noItemsMessage="U hebt geen eerdere regelingen en hulpmiddelen."
         hasItems={!!itemsPrevious.length}
         startCollapsed={hasActualItems}
         isLoading={isLoading(WMO)}
         track={{
-          category: 'Zorg en ondersteuning overzicht / Eerdere voorzieningen',
+          category:
+            'Zorg en ondersteuning overzicht / Eerdere regelingen en hulpmiddelen',
           name: 'Datatabel',
         }}
       >
         <Table displayProps={DISPLAY_PROPS} items={itemsPrevious} />
       </SectionCollapsible>
       <p className={styles.HistoricItemsMention}>
-        Informatie van voor 1 januari 2018 kunt u hier niet inzien. Deze kunt u
-        wel opvragen bij de Wmo Helpdesk.
+        U ziet hier alleen informatie vanaf 1 januari 2018. Bel voor informatie
+        van eerdere jaren de Wmo Helpdesk: 0800 0643.
       </p>
     </OverviewPage>
   );

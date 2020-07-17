@@ -52,7 +52,7 @@ export default () => {
           <li>Pdf-bestanden zijn nog niet altijd toegankelijk.</li>
           <li>
             De persoonlijke plattegrond ‘Mijn Buurt’ is nog niet helemaal
-            toegankelijk. We werken eraan om de plattegrond zo snel mogelijk
+            toegankelijk. We werken eraan om de plattegrond zo volledig
             toegankelijk te maken.
           </li>
         </ul>

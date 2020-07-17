@@ -84,7 +84,7 @@ function SecondaryLinks() {
       <Link
         to={AppRoutes.BRP}
         className={styles.ProfileLink}
-        data-tutorial-item="Hier kunt u uw algemene persoonsgegevens uit de gemeentelijke basisregistratie raadplegen, zoals uw woonadres;left-bottom"
+        data-tutorial-item="Hier ziet u uw persoonsgegevens, zoals uw adres en geboortedatum;left-bottom"
       >
         {isLoading(BRP) ? (
           <LoadingContent barConfig={[['15rem', '1rem', '0']]} />

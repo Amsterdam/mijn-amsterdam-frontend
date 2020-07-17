@@ -50,7 +50,7 @@ export async function fetchFOCUSAanvragen(
   const response = await fetchFOCUS(sessionID, passthroughRequestHeaders);
 
   if (response.status === 'OK') {
-    // Filter out the products that we use for the lopende/afgehandelde aanvragen
+    // Filter out the products that we use for the lopende/eerdere aanvragen
     const focusProductsNormalized = response.content
       .filter(product => focusAanvragenProducten.includes(product.title))
       .map(product => translateFocusProduct(product, titleTranslations));

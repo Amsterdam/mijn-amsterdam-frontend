@@ -168,12 +168,12 @@ export default () => {
         startCollapsed={hasActiveRequests}
         isLoading={isLoadingFocus}
         hasItems={hasActiveDescisions}
-        title="Afgehandelde aanvragen"
+        title="Eerdere aanvragen"
         track={{
-          category: 'Inkomen en Stadspas overzicht / Afgehandelde aanvragen',
+          category: 'Inkomen en Stadspas overzicht / Eerdere aanvragen',
           name: 'Datatabel',
         }}
-        noItemsMessage="U hebt op dit moment geen afgehandelde aanvragen."
+        noItemsMessage="U hebt op dit moment geen eerdere aanvragen."
       >
         <Table
           items={itemsDecided}
@@ -217,7 +217,7 @@ export default () => {
             category: 'Inkomen en Stadspas overzicht / Jaaropgaven',
             name: 'Datatabel',
           }}
-          noItemsMessage="Er zijn op dit moment geen Jaaropgaven."
+          noItemsMessage="Er zijn op dit moment geen jaaropgaven."
         >
           <Table
             className={classnames(
