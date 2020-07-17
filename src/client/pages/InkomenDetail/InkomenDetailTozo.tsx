@@ -1,5 +1,6 @@
+import * as Sentry from '@sentry/browser';
 import React, { useContext } from 'react';
-import useRouter from 'use-react-router';
+import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import { AppContext } from '../../AppState';
@@ -7,26 +8,21 @@ import {
   Alert,
   ChapterIcon,
   DetailPage,
+  Heading,
   Linkd,
   LoadingContent,
   PageContent,
   PageHeading,
   StatusLine,
-  Heading,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
 import styles from './InkomenDetail.module.scss';
-import * as Sentry from '@sentry/browser';
 
 export default () => {
   const { FOCUS_TOZO } = useContext(AppContext);
 
   const tozoItems = FOCUS_TOZO.content || [];
-  const {
-    match: {
-      params: { id },
-    },
-  } = useRouter();
+  const { id } = useParams();
 
   let TozoItem = tozoItems.find(item => item.id === id);
 

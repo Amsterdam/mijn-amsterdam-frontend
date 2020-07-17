@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import useRouter from 'use-react-router';
+import { useHistory } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import { defaultDateFormat, isInteralUrl } from '../../../universal/helpers';
@@ -40,7 +40,7 @@ export default function MyNotifications({
   noContentNotification = 'Er zijn op dit moment geen updates voor u.',
   ...otherProps
 }: MyNotificationsProps) {
-  const { history } = useRouter();
+  const history = useHistory();
 
   function showNotification(id: string, to: string) {
     history.push(to);

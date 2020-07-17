@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import useRouter from 'use-react-router';
+import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
   capitalizeFirstLetter,
@@ -21,12 +21,7 @@ import styles from './BurgerzakenDetail.module.scss';
 
 export default () => {
   const { BRP } = useContext(AppContext);
-
-  const {
-    match: {
-      params: { id },
-    },
-  } = useRouter();
+  const { id } = useParams();
 
   const DocumentItem = BRP.content?.identiteitsbewijzen?.find(
     item => item.id === id

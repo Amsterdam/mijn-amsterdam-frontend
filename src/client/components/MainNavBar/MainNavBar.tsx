@@ -1,28 +1,32 @@
 import classnames from 'classnames';
 import React, {
+  ReactNode,
   useCallback,
   useContext,
   useEffect,
   useMemo,
   useState,
-  ReactNode,
 } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink, useLocation, useHistory } from 'react-router-dom';
 import { animated, useSpring } from 'react-spring';
-import useRouter from 'use-react-router';
+import { KVKSourceDataContent } from '../../../server/services/kvk';
 import { AppRoutes } from '../../../universal/config';
 import { getFullName } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
+import { BRPData } from '../../../universal/types/brp';
 import { AppContext } from '../../AppState';
 import { IconInfo, IconProfile, IconSuitcase } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
 import { getMyChapters } from '../../helpers/chapters';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
+import { SessionData } from '../../hooks/api/api.session';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
+import { useCommercialProfileToggle } from '../../hooks/useCommercialProfileToggle';
 import { SessionContext } from '../../SessionState';
 import Linkd, { Button } from '../Button/Button';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
 import LoadingContent from '../LoadingContent/LoadingContent';
+import LogoutLink from '../LogoutLink/LogoutLink';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from '../MainNavSubmenu/MainNavSubmenu';
@@ -30,15 +34,10 @@ import Tutorial from '../Tutorial/Tutorial';
 import {
   mainMenuItemId,
   mainMenuItems,
-  submenuItems,
   MenuItem,
+  submenuItems,
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
-import { BRPData } from '../../../universal/types/brp';
-import { SessionData } from '../../hooks/api/api.session';
-import LogoutLink from '../LogoutLink/LogoutLink';
-import { KVKSourceDataContent } from '../../../server/services/kvk';
-import { useCommercialProfileToggle } from '../../hooks/useCommercialProfileToggle';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -160,7 +159,7 @@ interface ProfileNameProps {
 }
 
 function ProfileName({ person, company, userType }: ProfileNameProps) {
-  const { location } = useRouter();
+  const history = useHistory();
   const nameContent = useMemo(() => {
     let nameContent: undefined | string | ReactNode;
 
@@ -171,7 +170,7 @@ function ProfileName({ person, company, userType }: ProfileNameProps) {
             person={person!}
             isActive={false}
             hasTutorial={true}
-            onClick={() => (location.pathname = AppRoutes.BRP)}
+            onClick={() => history.push(AppRoutes.BRP)}
           />
         );
         break;
@@ -184,13 +183,13 @@ function ProfileName({ person, company, userType }: ProfileNameProps) {
             company={company!}
             isActive={false}
             hasTutorial={true}
-            onClick={() => (location.pathname = AppRoutes.BRP)}
+            onClick={() => history.push(AppRoutes.BRP)}
           />
         );
         break;
     }
     return nameContent;
-  }, [person, company]);
+  }, [person, company, history]);
 
   return (
     <span
@@ -345,8 +344,7 @@ export default function MainNavBar() {
     undefined
   );
   const { items: myChapterItems } = getMyChapters(appState);
-
-  const { history, location } = useRouter();
+  const location = useLocation();
   const [isTutorialVisible, setIsTutorialVisible] = useState(false);
 
   const onClickOutsideBurgermenu = useCallback(
@@ -381,7 +379,7 @@ export default function MainNavBar() {
   // Hides small screen menu on route change
   useEffect(() => {
     toggleBurgerMenu(false);
-  }, [history.location]);
+  }, [location.pathname]);
 
   const {
     linkContainerAnimationProps,

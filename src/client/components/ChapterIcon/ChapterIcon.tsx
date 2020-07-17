@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import React from 'react';
 import { matchPath } from 'react-router';
-import useRouter from 'use-react-router';
+import { useLocation } from 'react-router-dom';
 import {
   AppRoutes,
   Chapter as ChapterType,
@@ -24,7 +24,7 @@ export default function ChapterIcon({
   fill = Colors.black,
   className,
 }: ChapterIconProps) {
-  const { location } = useRouter();
+  const location = useLocation();
 
   let matchChapter: ChapterType = chapter || Chapters.ROOT;
 

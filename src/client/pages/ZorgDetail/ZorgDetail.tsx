@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from 'react';
-import useRouter from 'use-react-router';
+import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import { AppContext } from '../../AppState';
@@ -7,23 +7,19 @@ import {
   Alert,
   ChapterIcon,
   DetailPage,
+  InfoDetail,
+  LinkdInline,
   LoadingContent,
   PageContent,
   PageHeading,
   StatusLine,
-  InfoDetail,
-  LinkdInline,
 } from '../../components';
 import styles from './ZorgDetail.module.scss';
 
 export default () => {
   const { WMO } = useContext(AppContext);
 
-  const {
-    match: {
-      params: { id },
-    },
-  } = useRouter();
+  const { id } = useParams();
 
   const WmoItem = WMO.content?.find(item => item.id === id);
   const noContent = !isLoading(WMO) && !WmoItem;

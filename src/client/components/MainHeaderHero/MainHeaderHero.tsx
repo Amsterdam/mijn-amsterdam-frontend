@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import { AppRoutes } from '../../../universal/config';
 import { matchPath } from 'react-router';
 import styles from './MainHeaderHero.module.scss';
-import useRouter from 'use-react-router';
+import { useLocation } from 'react-router-dom';
 import classnames from 'classnames';
 import { useCommercialProfileToggle } from '../../hooks/useCommercialProfileToggle';
 
@@ -26,7 +26,7 @@ function imgUrl(
 }
 
 function useHeroSrc() {
-  const { location } = useRouter();
+  const location = useLocation();
   const isChapterPath = (path: string) =>
     !!matchPath(location.pathname, {
       path,

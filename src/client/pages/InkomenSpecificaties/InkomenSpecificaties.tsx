@@ -1,3 +1,16 @@
+import classnames from 'classnames';
+import { parseISO } from 'date-fns';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import { useParams } from 'react-router-dom';
+import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { isError, isLoading } from '../../../universal/helpers';
+import { AppContext } from '../../AppState';
 import {
   Alert,
   Button,
@@ -10,22 +23,8 @@ import {
   Section,
   Table,
 } from '../../components';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import { isError, isLoading } from '../../../universal/helpers';
-
-import { AppContext } from '../../AppState';
-import { parseISO } from 'date-fns';
-import styles from './InkomenSpecificaties.module.scss';
-import useRouter from 'use-react-router';
 import { isNativeDatePickerInputSupported } from '../../components/DateInput/DateInput';
-import classnames from 'classnames';
+import styles from './InkomenSpecificaties.module.scss';
 
 export const specificationsTableDisplayProps = {
   title: 'Omschrijving',
@@ -50,11 +49,7 @@ function Caret() {
 export default () => {
   const { FOCUS_SPECIFICATIES } = useContext(AppContext);
 
-  const {
-    match: {
-      params: { type },
-    },
-  } = useRouter();
+  const { type } = useParams();
 
   const isAnnualStatementOverviewPage = type === 'jaaropgaven';
 

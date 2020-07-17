@@ -2,8 +2,13 @@ import * as Sentry from '@sentry/browser';
 import classnames from 'classnames';
 import React, { useContext, useEffect } from 'react';
 import ErrorBoundary from 'react-error-boundary';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import useRouter from 'use-react-router';
+import {
+  BrowserRouter,
+  Redirect,
+  Route,
+  Switch,
+  useLocation,
+} from 'react-router-dom';
 import { AppRoutes, FeatureToggle } from '../universal/config';
 import { getOtapEnvItem, IS_PRODUCTION } from '../universal/config/env';
 import { isPrivateRoute } from '../universal/helpers';
@@ -52,7 +57,7 @@ import { SessionContext, SessionState } from './SessionState';
 import { RecoilRoot } from 'recoil';
 
 function AppNotAuthenticated() {
-  const { location } = useRouter();
+  const location = useLocation();
 
   const [routeEntry, setRouteEntry] = useLocalStorage('RouteEntry', '');
 
@@ -89,7 +94,7 @@ function AppNotAuthenticated() {
 }
 
 function AppAuthenticated() {
-  const { location } = useRouter();
+  const location = useLocation();
   const session = useContext(SessionContext);
   const [routeEntry, setRouteEntry] = useLocalStorage('RouteEntry', '');
 
