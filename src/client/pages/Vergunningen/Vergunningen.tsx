@@ -23,6 +23,12 @@ const DISPLAY_PROPS = {
   dateRequest: 'Aangevraagd',
 };
 
+const DISPLAY_PROPS_HISTORY = {
+  identifier: 'Kenmerk',
+  caseType: 'Soort vergunning',
+  decision: 'Resultaat',
+};
+
 export default () => {
   const { VERGUNNINGEN } = useContext(AppContext);
 
@@ -82,14 +88,14 @@ export default () => {
       </PageContent>
       <SectionCollapsible
         id="SectionCollapsible-vergunningen-actual"
-        title="Mijn lopende aanvragen voor vergunningen en ontheffingen"
-        noItemsMessage="U hebt geen lopende vergunningsaanvragen."
+        title="Lopende aanvragen"
+        noItemsMessage="U hebt geen lopende aanvragen."
         hasItems={!!vergunningenActual.length}
         startCollapsed={false}
         className={styles.SectionCollapsibleCurrent}
         isLoading={isLoading(VERGUNNINGEN)}
         track={{
-          category: 'Vergunningen overzicht / Lopende vergunningsaanvragen',
+          category: 'Vergunningen overzicht / Lopende aanvragen',
           name: 'Datatabel',
         }}
       >
@@ -102,21 +108,21 @@ export default () => {
       </SectionCollapsible>
       <SectionCollapsible
         id="SectionCollapsible-vergunningen-previous"
-        title="Mijn eerdere aanvragen voor vergunningen en ontheffingen"
-        noItemsMessage="U hebt geen eerdere vergunningsaanvragen."
+        title="Afgehandelde aanvragen"
+        noItemsMessage="U hebt geen afgehandelde aanvragen."
         hasItems={!!vergunningenPrevious.length}
         startCollapsed={false}
         className={styles.SectionCollapsibleCurrent}
         isLoading={isLoading(VERGUNNINGEN)}
         track={{
-          category: 'Vergunningen overzicht / Lopende vergunningsaanvragen',
+          category: 'Vergunningen overzicht / Afgehandelde aanvragen',
           name: 'Datatabel',
         }}
       >
         <Table
           className={styles.Table}
           titleKey="identifier"
-          displayProps={DISPLAY_PROPS}
+          displayProps={DISPLAY_PROPS_HISTORY}
           items={vergunningenPrevious}
         />
       </SectionCollapsible>
