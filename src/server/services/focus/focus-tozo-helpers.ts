@@ -363,7 +363,7 @@ function createTozoAanvraagDocumentsStep(
         id: doc.id,
         title: `${titleTranslations[doc.type] || doc.type}\n${dateFormat(
           doc.datePublished,
-          'dd MMMM om HH:mm'
+          `dd MMMM 'om' HH:mm`
         )} uur`,
         url: `/api/${doc.url}`,
         datePublished: doc.datePublished,
@@ -497,7 +497,7 @@ export function createFocusTozoAanvraagNotification(
     title: `${productTitle}: Wij hebben uw aanvraag ontvangen`,
     description: `Wij hebben uw aanvraag ${productTitle} ontvangen op ${dateFormat(
       document.datePublished,
-      'dd MMMM om HH:mm'
+      `dd MMMM 'om' HH:mm`
     )} uur`,
     link: {
       to: generatePath(AppRoutes['INKOMEN/TOZO'], { id: focusItemId }),
