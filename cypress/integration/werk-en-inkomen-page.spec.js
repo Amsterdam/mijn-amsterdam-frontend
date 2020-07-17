@@ -15,17 +15,13 @@ describe('Chapter: Inkomen en Stadspas', () => {
   });
 
   it('should display lists', () => {
-    // selectComponent('SectionCollapsible_SectionCollapsible').should(
-    //   'have.length',
-    //   4
-    // );
     selectComponent('SectionCollapsible_SectionCollapsible', ':first').should(
       'contain',
       'Lopende aanvragen'
     );
     selectComponent('SectionCollapsible_SectionCollapsible', ':eq(1)').should(
       'contain',
-      'Afgehandelde aanvragen'
+      'Eerdere aanvragen'
     );
   });
 
