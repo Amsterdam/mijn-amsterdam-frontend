@@ -1,3 +1,6 @@
+import { AppState, AppContext } from '../AppState';
+import { useContext, useMemo } from 'react';
+
 import { Chapters, FeatureToggle } from '../../universal/config';
 import {
   ApiResponse,
@@ -5,8 +8,12 @@ import {
   isLoading,
   isMokum,
 } from '../../universal/helpers';
-import { AppState } from '../AppState';
-import { ChapterMenuItem, myChaptersMenuItems } from '../config/menuItems';
+import {
+  ChapterMenuItem,
+  myChaptersMenuItems,
+  myChaptersMenuItemsCommercial,
+} from '../config/menuItems';
+import { useCommercialProfile } from './useCommercialProfile';
 
 function isChapterActive(
   item: ChapterMenuItem,
@@ -31,7 +38,6 @@ function isChapterActive(
         !(
           isLoading(FOCUS_AANVRAGEN) &&
           isLoading(FOCUS_SPECIFICATIES) &&
-          isLoading(FOCUS_TOZO) &&
           isLoading(FOCUS_TOZO)
         ) &&
         (!!FOCUS_AANVRAGEN.content?.length ||
@@ -84,13 +90,8 @@ function isChapterActive(
     case Chapters.VERGUNNINGEN:
       return !isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length;
 
-    // case Chapters.KVK:
-    //   return (
-    //     !isLoading(BRP) &&
-    //     !isLoading(KVK) &&
-    //     BRP.content?.kvkNummer &&
-    //     !!KVK.content?.name
-    //   );
+    case Chapters.KVK:
+      return !isLoading(KVK) && !!KVK.content?.name;
   }
 
   return false;
@@ -101,22 +102,33 @@ export interface ChaptersState {
   isLoading: boolean;
 }
 
-export function getMyChapters(appState: AppState): ChaptersState {
-  const items = myChaptersMenuItems.filter(item => {
+export function useChapters(): ChaptersState {
+  const appState = useContext(AppContext);
+  const [isCommercialProfile] = useCommercialProfile();
+  const chapterItems = isCommercialProfile
+    ? myChaptersMenuItemsCommercial
+    : myChaptersMenuItems;
+  const items = chapterItems.filter(item => {
     // Check to see if Chapter has been loaded or if it is directly available
     return isChapterActive(item, appState);
   });
-  return {
-    items,
-    isLoading:
-      !!appState &&
-      Object.entries(appState)
-        .filter(([key]) => key !== 'controller')
-        .some(([key, apiState]) => {
-          const loading =
-            isLoading(apiState as ApiResponse<any>) &&
-            !isError(apiState as ApiResponse<any>);
-          return loading;
-        }),
-  };
+
+  console.log('isCommercialProfile', isCommercialProfile);
+
+  return useMemo(
+    () => ({
+      items,
+      isLoading:
+        !!appState &&
+        chapterItems
+          .map(({ id }) => ({ id, apiState: appState[id as keyof AppState] }))
+          .filter(({ id, apiState }) => !!apiState)
+          .some(({ id, apiState }) => {
+            const apiStateTyped = apiState as ApiResponse<any>;
+            const loading = isLoading(apiStateTyped) && !isError(apiStateTyped);
+            return loading;
+          }),
+    }),
+    [items, chapterItems, appState]
+  );
 }

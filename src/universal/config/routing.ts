@@ -11,6 +11,7 @@ export const AppRoutes = {
     '/inkomen-en-stadspas/uitkeringsspecificaties/:type?',
   'INKOMEN/TOZO': '/inkomen-en-stadspas/tozo/:id?',
   BRP: '/persoonlijke-gegevens',
+  KVK: '/gegevens-handelsregister',
   BUURT: '/buurt',
   API_LOGIN: '/api/login',
   API1_LOGIN: '/api1/login',

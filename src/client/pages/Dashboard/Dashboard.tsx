@@ -13,9 +13,9 @@ import {
   Page,
   PageHeading,
 } from '../../components';
-import { getMyChapters } from '../../helpers/chapters';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import styles from './Dashboard.module.scss';
+import { useChapters } from '../../hooks/useChapters';
 
 const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
@@ -33,7 +33,7 @@ export default () => {
   const {
     items: myChapterItems,
     isLoading: isMyChaptersLoading,
-  } = getMyChapters(appState);
+  } = useChapters();
 
   return (
     <>

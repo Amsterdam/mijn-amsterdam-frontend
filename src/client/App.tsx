@@ -55,6 +55,7 @@ import {
 } from './pages';
 import { SessionContext, SessionState } from './SessionState';
 import { RecoilRoot } from 'recoil';
+import ProfileCommercial from './pages/Profile/ProfileCommercial';
 
 function AppNotAuthenticated() {
   const location = useLocation();
@@ -127,6 +128,7 @@ function AppAuthenticated() {
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           <Route path={AppRoutes.BRP} component={Profile} />
+          <Route path={AppRoutes.KVK} component={ProfileCommercial} />
           <Route path={AppRoutes.TIPS} component={MyTips} />
           <Route
             path={AppRoutes['INKOMEN/STADSPAS']}

@@ -7,7 +7,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { NavLink, useLocation, useHistory } from 'react-router-dom';
+import { NavLink, useHistory, useLocation } from 'react-router-dom';
 import { animated, useSpring } from 'react-spring';
 import { KVKSourceDataContent } from '../../../server/services/kvk';
 import { AppRoutes } from '../../../universal/config';
@@ -17,11 +17,11 @@ import { BRPData } from '../../../universal/types/brp';
 import { AppContext } from '../../AppState';
 import { IconInfo, IconProfile, IconSuitcase } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
-import { getMyChapters } from '../../helpers/chapters';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
 import { SessionData } from '../../hooks/api/api.session';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
-import { useCommercialProfileToggle } from '../../hooks/useCommercialProfileToggle';
+import { useChapters } from '../../hooks/useChapters';
+import { useCommercialProfile } from '../../hooks/useCommercialProfile';
 import { SessionContext } from '../../SessionState';
 import Linkd, { Button } from '../Button/Button';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
@@ -133,7 +133,7 @@ function PrivateCommercialProfileToggle({
   person,
   company,
 }: PrivateCommercialProfileToggleProps) {
-  const [isCommercial, setIsCommercial] = useCommercialProfileToggle();
+  const [isCommercial, setIsCommercial] = useCommercialProfile();
   return (
     <>
       <PrivateProfileName
@@ -183,7 +183,7 @@ function ProfileName({ person, company, userType }: ProfileNameProps) {
             company={company!}
             isActive={false}
             hasTutorial={true}
-            onClick={() => history.push(AppRoutes.BRP)}
+            onClick={() => history.push(AppRoutes.KVK)}
           />
         );
         break;
@@ -336,14 +336,12 @@ function BurgerButton({ isActive, toggleBurgerMenu }: BurgerButtonProps) {
 }
 
 export default function MainNavBar() {
-  const appState = useContext(AppContext);
   const session = useContext(SessionContext);
-  const { isAuthenticated } = session;
   const hasBurgerMenu = useTabletScreen();
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
     undefined
   );
-  const { items: myChapterItems } = getMyChapters(appState);
+  const { items: myChapterItems } = useChapters();
   const location = useLocation();
   const [isTutorialVisible, setIsTutorialVisible] = useState(false);
 
@@ -420,7 +418,7 @@ export default function MainNavBar() {
         />
       )}
 
-      {isAuthenticated && (
+      {session.isAuthenticated && (
         <>
           {hasBurgerMenu && (
             <animated.div

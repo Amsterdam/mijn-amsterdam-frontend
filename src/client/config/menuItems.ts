@@ -62,3 +62,39 @@ export const myChaptersMenuItems: ChapterMenuItem[] = [
     rel: 'external',
   },
 ];
+
+export const myChaptersMenuItemsCommercial: ChapterMenuItem[] = [
+  {
+    title: ChapterTitles.KVK,
+    id: Chapters.KVK,
+    to: AppRoutes.KVK,
+  },
+  {
+    title: ChapterTitles.BELASTINGEN,
+    id: Chapters.BELASTINGEN,
+    to: ExternalUrls.SSO_BELASTINGEN,
+    rel: 'external',
+  },
+  {
+    title: ChapterTitles.ERFPACHT,
+    id: Chapters.ERFPACHT,
+    to: ExternalUrls.SSO_ERFPACHT || '',
+    rel: 'external',
+  },
+  {
+    title: ChapterTitles.AFVAL,
+    id: Chapters.AFVAL,
+    to: AppRoutes.AFVAL,
+  },
+  {
+    title: ChapterTitles.VERGUNNINGEN,
+    id: Chapters.VERGUNNINGEN,
+    to: AppRoutes.VERGUNNINGEN,
+  },
+  {
+    title: ChapterTitles.MILIEUZONE,
+    id: Chapters.MILIEUZONE,
+    to: ExternalUrls.SSO_MILIEUZONE || '',
+    rel: 'external',
+  },
+];

@@ -5,7 +5,7 @@ import { matchPath } from 'react-router';
 import styles from './MainHeaderHero.module.scss';
 import { useLocation } from 'react-router-dom';
 import classnames from 'classnames';
-import { useCommercialProfileToggle } from '../../hooks/useCommercialProfileToggle';
+import { useCommercialProfile } from '../../hooks/useCommercialProfile';
 
 const LANDSCAPE_SCREEN_RATIO = 0.25;
 const PORTRAIT_SCREEN_RATIO = 0.4;
@@ -79,7 +79,7 @@ function useHeroSrc() {
 
 export default function MainHeaderHero() {
   const srcSet = useHeroSrc();
-  const [isCommercial] = useCommercialProfileToggle();
+  const [isCommercial] = useCommercialProfile();
 
   return (
     <div
