@@ -56,6 +56,7 @@ import { SessionContext, SessionState } from './SessionState';
 import { RecoilRoot } from 'recoil';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import { useAppState } from './hooks/useAppState';
+import { useTipsApi } from './hooks/api/useTipsApi';
 
 function AppNotAuthenticated() {
   const location = useLocation();
@@ -96,6 +97,7 @@ function AppNotAuthenticated() {
 
 function AppAuthenticated() {
   useAppState();
+  useTipsApi();
   const location = useLocation();
   const session = useContext(SessionContext);
   const [routeEntry, setRouteEntry] = useLocalStorage('RouteEntry', '');

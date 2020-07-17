@@ -1,27 +1,22 @@
-import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
-import React, { useEffect, useState, useContext } from 'react';
+import classnames from 'classnames';
+import React, { useEffect, useState } from 'react';
+import { AppRoutes, FeatureToggle } from '../../../universal/config';
+import { isExternalUrl } from '../../../universal/helpers';
+import { MyTip } from '../../../universal/types';
+import { IconChevronRight, IconClose, IconInfo } from '../../assets/icons';
 import {
   trackItemClick,
   trackItemPresentation,
   trackLink,
   useSessionCallbackOnceDebounced,
 } from '../../hooks/analytics.hook';
-
-import { AppRoutes } from '../../../universal/config';
-import { Button, IconButton } from '../Button/Button';
-import { IconChevronRight, IconInfo, IconClose } from '../../assets/icons';
+import { useOptIn } from '../../hooks/useOptIn';
+import Linkd, { Button, IconButton } from '../Button/Button';
 import Heading from '../Heading/Heading';
-import Linkd from '../Button/Button';
-import { MyTip } from '../../../universal/types';
-import MyTipsOptInOutModal from './MyTipsOptInOutModal';
-import classnames from 'classnames';
-import { isExternalUrl } from '../../../universal/helpers';
+import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
 import styles from './MyTips.module.scss';
-import { FeatureToggle } from '../../../universal/config/app';
-import {
-  OptInContextProvider,
-  OptInContext,
-} from '../OptInContext/OptInContext';
+import MyTipsOptInOutModal from './MyTipsOptInOutModal';
+import { useTipsApi } from '../../hooks/api/useTipsApi';
 
 export interface TipProps {
   tip: MyTip;
@@ -141,7 +136,7 @@ interface TipsOptInHeaderProps {
 }
 
 function TipsOptInHeader({ showTipsPageLink }: TipsOptInHeaderProps) {
-  const { isOptIn } = useContext(OptInContext);
+  const { isOptIn } = useOptIn();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   return (
     <>
@@ -168,7 +163,7 @@ function TipsOptInHeader({ showTipsPageLink }: TipsOptInHeaderProps) {
 }
 
 function MyTipsNoContentMessage() {
-  const { isOptIn } = useContext(OptInContext);
+  const { isOptIn } = useOptIn();
   return (
     <p className={styles.NoContentMessage}>
       {isOptIn
@@ -186,21 +181,19 @@ export default function MyTips({
   ...otherProps
 }: MyTipsProps) {
   return (
-    <OptInContextProvider>
-      <div {...otherProps} className={classnames(styles.MyTips, className)}>
-        {showHeader && <TipsOptInHeader showTipsPageLink={!!items.length} />}
-        <ul
-          className={classnames(
-            styles.TipsList,
-            isLoading && styles.TipsListLoading
-          )}
-        >
-          {isLoading && <LoadingContentListItems />}
-          {!isLoading &&
-            items.map((item, i) => <Tip key={item.title} tip={item} />)}
-        </ul>
-        {!isLoading && !items.length && <MyTipsNoContentMessage />}
-      </div>
-    </OptInContextProvider>
+    <div {...otherProps} className={classnames(styles.MyTips, className)}>
+      {showHeader && <TipsOptInHeader showTipsPageLink={!!items.length} />}
+      <ul
+        className={classnames(
+          styles.TipsList,
+          isLoading && styles.TipsListLoading
+        )}
+      >
+        {isLoading && <LoadingContentListItems />}
+        {!isLoading &&
+          items.map((item, i) => <Tip key={item.title} tip={item} />)}
+      </ul>
+      {!isLoading && !items.length && <MyTipsNoContentMessage />}
+    </div>
   );
 }

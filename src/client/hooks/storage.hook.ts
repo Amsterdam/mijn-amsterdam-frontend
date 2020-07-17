@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/browser';
-import * as Cookies from 'js-cookie';
 import { useCallback, useEffect, useState } from 'react';
 import { Unshaped } from '../../universal/types';
 
@@ -213,26 +212,4 @@ export function clearLocalStorage() {
   try {
     localStorage.clear();
   } catch (error) {}
-}
-
-export function useCookie(
-  key: string,
-  initialValue: string | object
-): [
-  string | object,
-  (value: string | object, options: Cookies.CookieAttributes) => void
-] {
-  const [item, setInnerValue] = useState(() => {
-    return Cookies.get(key) || initialValue;
-  });
-
-  const setValue = useCallback(
-    (value: string | object, options: Cookies.CookieAttributes) => {
-      setInnerValue(value);
-      Cookies.set(key, value, options);
-    },
-    [setInnerValue, key]
-  );
-
-  return [item, setValue];
 }

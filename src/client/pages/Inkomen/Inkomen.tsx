@@ -1,13 +1,14 @@
 import classnames from 'classnames';
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
+import { FocusItem } from '../../../server/services/focus/focus-types';
 import {
   AppRoutes,
   ChapterTitles,
   FeatureToggle,
 } from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
-
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   addTitleLinkComponent,
   Alert,
@@ -20,15 +21,13 @@ import {
   Table,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
+import { useAppStateAtom } from '../../hooks/useAppState';
 import {
   annualStatementsTableDisplayProps,
   specificationsTableDisplayProps,
 } from '../../pages/InkomenSpecificaties/InkomenSpecificaties';
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import styles from './Inkomen.module.scss';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { FocusItem } from '../../../server/services/focus/focus-types';
-import { useAppStateAtom } from '../../hooks/useAppState';
 
 export const incomSpecificationsRouteMonthly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES']
@@ -61,7 +60,7 @@ export default () => {
   const uitkeringsspecificaties =
     FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties || [];
   const jaaropgaven = FOCUS_SPECIFICATIES.content?.jaaropgaven || [];
-
+  console.log('wah');
   const itemsRequested = useMemo(() => {
     const itemsRequested = aanvragen.filter(item =>
       item.steps.every(step => step.title !== 'beslissing')
@@ -111,8 +110,14 @@ export default () => {
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
 
-  const itemsSpecificationsMonthly = uitkeringsspecificaties.slice(0, 3) || [];
-  const itemsSpecificationsYearly = jaaropgaven.slice(0, 3) || [];
+  const itemsSpecificationsMonthly = useMemo(
+    () => uitkeringsspecificaties.slice(0, 3) || [],
+    [uitkeringsspecificaties]
+  );
+  const itemsSpecificationsYearly = useMemo(
+    () => jaaropgaven.slice(0, 3) || [],
+    [jaaropgaven]
+  );
 
   const isLoadingFocus = isLoading(FOCUS_AANVRAGEN) || isLoading(FOCUS_TOZO);
   const isLoadingFocusSpecificaties = isLoading(FOCUS_SPECIFICATIES);

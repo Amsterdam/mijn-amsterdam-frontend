@@ -1,5 +1,5 @@
 import * as mediaHook from '../../hooks/media.hook';
-import * as session from '../../hooks/api/api.session';
+import * as session from '../../hooks/api/useSessionApi';
 
 import { mount, shallow } from 'enzyme';
 

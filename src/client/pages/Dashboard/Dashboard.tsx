@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { isLoading } from '../../../universal/helpers';
@@ -24,9 +24,14 @@ export default () => {
   const appState = useAppStateAtom();
   const { TIPS, NOTIFICATIONS, CASES, BUURT, HOME } = appState;
 
-  const tipItems = TIPS.content?.slice(0, MAX_TIPS_VISIBLE) || [];
-  const notificationItems =
-    NOTIFICATIONS.content?.slice(0, MAX_NOTIFICATIONS_VISIBLE) || [];
+  const tipItems = useMemo(() => {
+    return TIPS.content?.slice(0, MAX_TIPS_VISIBLE) || [];
+  }, [TIPS.content]);
+
+  const notificationItems = useMemo(() => {
+    return NOTIFICATIONS.content?.slice(0, MAX_NOTIFICATIONS_VISIBLE) || [];
+  }, [NOTIFICATIONS.content]);
+
   const isPhoneScreen = usePhoneScreen();
   const NOTIFICATIONSTotal = NOTIFICATIONS.content?.length || 0;
 

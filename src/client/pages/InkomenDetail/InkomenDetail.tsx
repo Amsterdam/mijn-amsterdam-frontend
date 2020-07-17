@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { FocusItem } from '../../../server/services/focus/focus-types';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
-
 import {
   Alert,
   ChapterIcon,
@@ -15,8 +14,8 @@ import {
   StatusLine,
 } from '../../components';
 import { StatusLineItem } from '../../components/StatusLine/StatusLine';
-import styles from './InkomenDetail.module.scss';
 import { useAppStateAtom } from '../../hooks/useAppState';
+import styles from './InkomenDetail.module.scss';
 
 export const MAX_STEP_COUNT_FOCUS_REUEST = 4;
 

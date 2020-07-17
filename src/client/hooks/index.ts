@@ -2,7 +2,7 @@ export * from './analytics.hook';
 export * from './detectResize.hook';
 export * from './media.hook';
 export * from './modalRoot.hook';
-export * from './optin.hook';
+export * from './useOptIn';
 export * from './pageChange';
 export * from './storage.hook';
 export * from './timer.hook';

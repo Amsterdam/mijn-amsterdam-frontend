@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import MockAdapter from 'axios-mock-adapter';
-import { getDefaultState, useDataApi, requestApiData } from './api.hook';
+import { getDefaultState, useDataApi, requestApiData } from './useDataApi';
 
 interface Response {
   foo: string;

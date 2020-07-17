@@ -12,7 +12,7 @@ import {
   IS_COMMERCIAL_PATH_MATCH,
   LOGOUT_URL,
 } from '../../config/api';
-import { ApiRequestOptions, requestApiData, useDataApi } from './api.hook';
+import { ApiRequestOptions, requestApiData, useDataApi } from './useDataApi';
 
 export type SessionData = {
   isAuthenticated: boolean;

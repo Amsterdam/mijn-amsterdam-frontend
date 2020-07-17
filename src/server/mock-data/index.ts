@@ -57,7 +57,7 @@ export const mockDataConfig: MockDataConfig = {
   },
   [ApiUrls.BRP]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
-    // delay: 2500,
+    delay: 2500,
     responseData: async (config: any) => {
       if (isCommercialUser(config)) {
         return 'no-content';
@@ -168,6 +168,7 @@ export const mockDataConfig: MockDataConfig = {
   [ApiUrls.TIPS]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
     method: 'post',
+    delay: 4000,
     responseData: async (config: any) => {
       const requestData = JSON.parse(config.data);
       const content = await loadMockApiResponseJson(TIPS);

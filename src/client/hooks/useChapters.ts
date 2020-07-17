@@ -114,7 +114,7 @@ export function useChapters(): ChaptersState {
     return isChapterActive(item, appState);
   });
 
-  console.log('isCommercialProfile', isCommercialProfile);
+  // console.log('isCommercialProfile', isCommercialProfile);
 
   return useMemo(
     () => ({

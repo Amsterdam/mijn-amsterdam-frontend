@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import { PRISTINE_APPSTATE } from '../AppState';
-import * as dataApiHook from './api/api.hook';
-import * as tipsHook from './api/api.tips';
+import * as dataApiHook from './api/useDataApi';
+import * as tipsHook from './api/useTipsApi';
 import { useAppState } from './useAppState';
 import * as sseHook from './useSSE';
 import { SSE_ERROR_MESSAGE } from './useSSE';
