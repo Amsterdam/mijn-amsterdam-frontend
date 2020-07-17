@@ -218,7 +218,7 @@
 
 .ProfileName {
   &--BEDRIJF {
-    color: $color-support-purple;
+    // color: $color-support-purple;
   }
 }
 
@@ -240,10 +240,10 @@
     fill: $color-support-blue;
   }
 }
-.ProfileLink--commercial {
-  margin-left: 4rem;
-}
 
 .ProfileLink--private {
   margin-left: 2rem;
+  + .ProfileLink--commercial {
+    margin-left: 4rem;
+  }
 }

@@ -33,10 +33,13 @@ export const AUTH_API_URL = `${API_BASE_PATH_MODDED}/auth/check`;
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
 export const LOGOUT_URL = '/logout';
 
+const BFF_API_BASE_URL_MODDED =
+  BFF_API_BASE_URL + (IS_COMMERCIAL_PATH_MATCH ? '/commercial' : '');
+
 export const BFFApiUrls: Record<string, string> = {
-  SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
-  SERVICES_SSE: `${BFF_API_BASE_URL}/services/stream`,
-  SERVICES_TIPS: `${BFF_API_BASE_URL}/services/tips`,
+  SERVICES_SAURON: `${BFF_API_BASE_URL_MODDED}/services/all`,
+  SERVICES_SSE: `${BFF_API_BASE_URL_MODDED}/services/stream`,
+  SERVICES_TIPS: `${BFF_API_BASE_URL_MODDED}/services/tips`,
 };
 
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {

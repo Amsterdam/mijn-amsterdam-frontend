@@ -21,9 +21,9 @@ export async function loadServicesRelated(
 
   if (BRP.status === 'OK') {
     KVK = await fetchKVK(
-      BRP.content.kvkNummer,
       sessionID,
-      passthroughRequestHeaders
+      passthroughRequestHeaders,
+      BRP.content.kvkNummer
     );
   } else {
     KVK = apiDependencyError({ BRP });

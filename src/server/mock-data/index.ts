@@ -13,7 +13,8 @@ import TIPS from './json/tips.json';
 import AMSTERDAM_CONTENT_GENERAL_INFO from './json/amsterdam-nl-content-uitleg.json';
 import AMSTERDAM_CONTENT_FOOTER from './json/amsterdam-nl-content-footer.json';
 import VERGUNNINGEN from './json/vergunningen.json';
-import KVK from './json/kvk-handelsregister.json';
+import KVK1 from './json/kvk-handelsregister.json';
+import KVK2 from './json/kvk-handelsregister2.json';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
   return new Promise(resolve => {
@@ -156,12 +157,12 @@ export const mockDataConfig: MockDataConfig = {
     },
   },
   [ApiUrls.KVK]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
       if (isCommercialUser(config)) {
-        return 'no-content';
+        return await loadMockApiResponseJson(KVK2);
       }
-      return await loadMockApiResponseJson(KVK);
+      return await loadMockApiResponseJson(KVK1);
     },
   },
   [ApiUrls.TIPS]: {

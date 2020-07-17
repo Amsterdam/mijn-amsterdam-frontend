@@ -20,6 +20,7 @@ import {
   sessionID,
 } from './helpers/app';
 import { router } from './router';
+import { routerCommercial } from './router-commercial';
 
 const options: Sentry.NodeOptions = {
   dsn: getOtapEnvItem('bffSentryDsn'),
@@ -47,6 +48,7 @@ app.use(sessionID);
 
 // Mount the router at the base path
 app.use(BFF_BASE_PATH, router);
+app.use(BFF_BASE_PATH + '/commercial', routerCommercial);
 
 // Destroy the session as soon as the api requests are all processed
 app.use(clearSession);

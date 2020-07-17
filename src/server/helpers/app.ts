@@ -11,15 +11,22 @@ import {
 import { clearSessionCache } from './source-api-request';
 import uid from 'uid-safe';
 
+export function isValidRequestPath(requestPath: string, path: string) {
+  return (
+    requestPath === `${BFF_BASE_PATH}${path}` ||
+    `${BFF_BASE_PATH}/commercial/${path}`
+  );
+}
+
 export function isBffEndpoint(requestPath: string) {
-  return Object.values(BffEndpoints).some(
-    path => requestPath === `${BFF_BASE_PATH}${path}`
+  return Object.values(BffEndpoints).some(path =>
+    isValidRequestPath(requestPath, path)
   );
 }
 
 export function isBffPublicEndpoint(requestPath: string) {
-  return PUBLIC_BFF_ENDPOINTS.some(
-    path => requestPath === `${BFF_BASE_PATH}${path}`
+  return PUBLIC_BFF_ENDPOINTS.some(path =>
+    isValidRequestPath(requestPath, path)
   );
 }
 

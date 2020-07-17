@@ -51,34 +51,77 @@ export interface MainNavLinkProps {
 
 interface PrivateProfileNameProps {
   person?: BRPData['persoon'];
+  onClick?: (event: any) => void;
+  isActive: boolean;
+  hasTutorial: boolean;
 }
 
-function PrivateProfileName({ person }: PrivateProfileNameProps) {
+function PrivateProfileName({
+  person,
+  onClick,
+  isActive,
+  hasTutorial,
+}: PrivateProfileNameProps) {
   return (
-    <Link
-      to={AppRoutes.BRP}
-      className={classnames(styles.ProfileLink, styles['ProfileLink--private'])}
+    <Button
+      onClick={onClick}
+      icon={IconProfile}
+      variant="plain"
+      lean={true}
+      className={classnames(
+        styles.ProfileLink,
+        styles['ProfileLink--private'],
+        isActive && styles['ProfileLink--active']
+      )}
     >
-      {person?.opgemaakteNaam ? getFullName(person) : 'Mijn gegevens'}
-    </Link>
+      <span
+        data-tutorial-item={
+          hasTutorial
+            ? 'Hier ziet u uw persoonsgegevens, zoals uw adres en geboortedatum;right-bottom'
+            : ''
+        }
+      >
+        {person?.opgemaakteNaam ? getFullName(person) : 'Mijn gegevens'}
+      </span>
+    </Button>
   );
 }
 
 interface CommercialProfileNameProps {
   company?: KVKSourceDataContent;
+  onClick?: (event: any) => void;
+  isActive: boolean;
+  hasTutorial: boolean;
 }
 
-function CommercialProfileName({ company }: CommercialProfileNameProps) {
+function CommercialProfileName({
+  company,
+  onClick,
+  isActive,
+  hasTutorial,
+}: CommercialProfileNameProps) {
   return (
-    <Link
-      to={AppRoutes.BRP}
+    <Button
+      onClick={onClick}
+      icon={IconSuitcase}
+      variant="plain"
+      lean={true}
       className={classnames(
         styles.ProfileLink,
-        styles['ProfileLink--commercial']
+        styles['ProfileLink--commercial'],
+        isActive && styles['ProfileLink--active']
       )}
     >
-      {company?.name || 'Mijn bedrijf'}
-    </Link>
+      <span
+        data-tutorial-item={
+          hasTutorial
+            ? 'Hier kunt u uw algemene bedrijfsgegevens uit het KVK handelsregister raadplegen;left-bottom'
+            : ''
+        }
+      >
+        {company?.name || 'Zakelijk'}
+      </span>
+    </Button>
   );
 }
 
@@ -94,32 +137,18 @@ function PrivateCommercialProfileToggle({
   const [isCommercial, setIsCommercial] = useCommercialProfileToggle();
   return (
     <>
-      <Button
+      <PrivateProfileName
+        person={person}
+        isActive={!isCommercial}
+        hasTutorial={!isCommercial}
         onClick={() => setIsCommercial(false)}
-        icon={IconProfile}
-        variant="plain"
-        lean={true}
-        className={classnames(
-          styles.ProfileLink,
-          styles['ProfileLink--private'],
-          !isCommercial && styles['ProfileLink--active']
-        )}
-      >
-        {person?.opgemaakteNaam ? getFullName(person) : 'Mijn gegevens'}
-      </Button>
-      <Button
+      />
+      <CommercialProfileName
+        company={company}
+        isActive={isCommercial}
+        hasTutorial={isCommercial}
         onClick={() => setIsCommercial(true)}
-        icon={IconSuitcase}
-        variant="plain"
-        lean={true}
-        className={classnames(
-          styles.ProfileLink,
-          styles['ProfileLink--commercial'],
-          isCommercial && styles['ProfileLink--active']
-        )}
-      >
-        {company?.name || 'Zakelijk'}
-      </Button>
+      />
     </>
   );
 }
@@ -131,17 +160,33 @@ interface ProfileNameProps {
 }
 
 function ProfileName({ person, company, userType }: ProfileNameProps) {
+  const { location } = useRouter();
   const nameContent = useMemo(() => {
     let nameContent: undefined | string | ReactNode;
+
     switch (true) {
       case !!person && !company:
-        nameContent = <PrivateProfileName person={person!} />;
+        nameContent = (
+          <PrivateProfileName
+            person={person!}
+            isActive={false}
+            hasTutorial={true}
+            onClick={() => (location.pathname = AppRoutes.BRP)}
+          />
+        );
         break;
       case !!(person && company):
         nameContent = <PrivateCommercialProfileToggle person={person!} />;
         break;
       case !person && !!company:
-        nameContent = <CommercialProfileName company={company!} />;
+        nameContent = (
+          <CommercialProfileName
+            company={company!}
+            isActive={false}
+            hasTutorial={true}
+            onClick={() => (location.pathname = AppRoutes.BRP)}
+          />
+        );
         break;
     }
     return nameContent;
@@ -149,7 +194,6 @@ function ProfileName({ person, company, userType }: ProfileNameProps) {
 
   return (
     <span
-      data-tutorial-item="Hier ziet u uw persoonsgegevens, zoals uw adres en geboortedatum;left-bottom"
       className={classnames(
         styles.ProfileName,
         styles[`ProfileName--${userType}`]
