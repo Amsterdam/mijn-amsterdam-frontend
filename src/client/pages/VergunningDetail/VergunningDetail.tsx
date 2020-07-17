@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
@@ -7,7 +7,6 @@ import {
   isLoading,
 } from '../../../universal/helpers';
 import { GenericDocument } from '../../../universal/types/App.types';
-import { AppContext } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
@@ -23,10 +22,11 @@ import InfoDetail, {
 import StatusLine, {
   StatusLineItem,
 } from '../../components/StatusLine/StatusLine';
+import { useAppStateAtom } from '../../hooks/useAppState';
 import styles from './VergunningDetail.module.scss';
 
 export default () => {
-  const { VERGUNNINGEN } = useContext(AppContext);
+  const { VERGUNNINGEN } = useAppStateAtom();
 
   const { id } = useParams();
 

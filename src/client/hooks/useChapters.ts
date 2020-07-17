@@ -1,5 +1,5 @@
-import { AppState, AppContext } from '../AppState';
-import { useContext, useMemo } from 'react';
+import { AppState } from '../AppState';
+import { useMemo } from 'react';
 
 import { Chapters, FeatureToggle } from '../../universal/config';
 import {
@@ -14,6 +14,7 @@ import {
   myChaptersMenuItemsCommercial,
 } from '../config/menuItems';
 import { useCommercialProfile } from './useCommercialProfile';
+import { useAppStateAtom } from './useAppState';
 
 function isChapterActive(
   item: ChapterMenuItem,
@@ -103,7 +104,7 @@ export interface ChaptersState {
 }
 
 export function useChapters(): ChaptersState {
-  const appState = useContext(AppContext);
+  const appState = useAppStateAtom();
   const [isCommercialProfile] = useCommercialProfile();
   const chapterItems = isCommercialProfile
     ? myChaptersMenuItemsCommercial

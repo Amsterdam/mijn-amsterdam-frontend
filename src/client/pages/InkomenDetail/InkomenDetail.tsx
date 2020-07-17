@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { FocusItem } from '../../../server/services/focus/focus-types';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
-import { AppContext } from '../../AppState';
+
 import {
   Alert,
   ChapterIcon,
@@ -16,6 +16,7 @@ import {
 } from '../../components';
 import { StatusLineItem } from '../../components/StatusLine/StatusLine';
 import styles from './InkomenDetail.module.scss';
+import { useAppStateAtom } from '../../hooks/useAppState';
 
 export const MAX_STEP_COUNT_FOCUS_REUEST = 4;
 
@@ -55,7 +56,7 @@ export function altDocumentContent(
 }
 
 export default () => {
-  const { FOCUS_AANVRAGEN } = useContext(AppContext);
+  const { FOCUS_AANVRAGEN } = useAppStateAtom();
 
   const { id } = useParams();
   const aanvragen = (FOCUS_AANVRAGEN.content || []) as FocusItem[];

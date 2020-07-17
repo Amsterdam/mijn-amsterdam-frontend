@@ -14,12 +14,12 @@ import { AppRoutes } from '../../../universal/config';
 import { getFullName } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
 import { BRPData } from '../../../universal/types/brp';
-import { AppContext } from '../../AppState';
 import { IconInfo, IconProfile, IconSuitcase } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
 import { SessionData } from '../../hooks/api/api.session';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
+import { useAppStateAtom } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
 import { useCommercialProfile } from '../../hooks/useCommercialProfile';
 import { SessionContext } from '../../SessionState';
@@ -204,7 +204,7 @@ function ProfileName({ person, company, userType }: ProfileNameProps) {
 }
 
 function SecondaryLinks() {
-  const { BRP, KVK } = useContext(AppContext);
+  const { BRP, KVK } = useAppStateAtom();
   const persoon = BRP.content?.persoon || null;
   const hasFirstName = !!(persoon && persoon.voornamen);
   const isDesktopScreen = useDesktopScreen();

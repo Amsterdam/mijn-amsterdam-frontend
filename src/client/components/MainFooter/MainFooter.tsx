@@ -3,12 +3,13 @@ import React, { useContext, useState } from 'react';
 import { CMSFooterContent } from '../../../server/services';
 import { isExternalUrl } from '../../../universal/helpers/utils';
 import { LinkProps } from '../../../universal/types/index';
-import { AppContext } from '../../AppState';
+
 import { useDesktopScreen } from '../../hooks/media.hook';
 import Linkd from '../Button/Button';
 import { InnerHtml } from '../index';
 import footerData from './amsterdam-nl-footer-data.json';
 import styles from './MainFooter.module.scss';
+import { useAppStateAtom } from '../../hooks/useAppState';
 
 interface FooterBlockProps {
   startOpen?: boolean;
@@ -49,7 +50,7 @@ function FooterBlock({
 }
 
 export default function MainFooter() {
-  const { CMS_CONTENT } = useContext(AppContext);
+  const { CMS_CONTENT } = useAppStateAtom();
   const footer = CMS_CONTENT.content?.footer ||
     (footerData as CMSFooterContent) || { blocks: [], sub: [] };
 

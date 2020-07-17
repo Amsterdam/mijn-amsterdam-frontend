@@ -1,22 +1,22 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
+import { Vergunning } from '../../../server/services/vergunningen';
 import { ChapterTitles } from '../../../universal/config/index';
 import { isError, isLoading } from '../../../universal/helpers';
-import { AppContext } from '../../AppState';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
+  addTitleLinkComponent,
   Alert,
   ChapterIcon,
+  Linkd,
   // Linkd,
   PageContent,
   PageHeading,
   SectionCollapsible,
   Table,
-  addTitleLinkComponent,
-  Linkd,
 } from '../../components';
 import { OverviewPage } from '../../components/Page/Page';
+import { useAppStateAtom } from '../../hooks/useAppState';
 import styles from './Vergunningen.module.scss';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { Vergunning } from '../../../server/services/vergunningen';
 
 const DISPLAY_PROPS = {
   caseType: 'Soort vergunning',
@@ -31,7 +31,7 @@ const DISPLAY_PROPS_HISTORY = {
 };
 
 export default () => {
-  const { VERGUNNINGEN } = useContext(AppContext);
+  const { VERGUNNINGEN } = useAppStateAtom();
 
   const vergunningen: Vergunning[] = useMemo(() => {
     if (!VERGUNNINGEN.content?.length) {

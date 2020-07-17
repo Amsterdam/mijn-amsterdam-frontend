@@ -13,7 +13,6 @@ import { AppRoutes, FeatureToggle } from '../universal/config';
 import { getOtapEnvItem, IS_PRODUCTION } from '../universal/config/env';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
-import AppStateProvider from './AppStateProvider';
 import {
   ApplicationError,
   AutoLogoutDialog,
@@ -56,6 +55,7 @@ import {
 import { SessionContext, SessionState } from './SessionState';
 import { RecoilRoot } from 'recoil';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
+import { useAppState } from './hooks/useAppState';
 
 function AppNotAuthenticated() {
   const location = useLocation();
@@ -95,6 +95,7 @@ function AppNotAuthenticated() {
 }
 
 function AppAuthenticated() {
+  useAppState();
   const location = useLocation();
   const session = useContext(SessionContext);
   const [routeEntry, setRouteEntry] = useLocalStorage('RouteEntry', '');
@@ -196,9 +197,7 @@ function AppLanding() {
   // Render the main app only if we are authenticated
   return isAuthenticated ? (
     <>
-      <AppStateProvider>
-        <AppAuthenticated />
-      </AppStateProvider>
+      <AppAuthenticated />
       <AutoLogoutDialog settings={dialogTimeoutSettings} />
     </>
   ) : (

@@ -41,9 +41,7 @@ describe('useAppState', () => {
     fetchFallbackService,
   ]);
 
-  const initialAppState = Object.assign({}, PRISTINE_APPSTATE, {
-    controller: { TIPS: { fetch: fetchTips } },
-  });
+  const initialAppState = PRISTINE_APPSTATE;
 
   beforeAll(() => {
     (window as any).console.info = jest.fn();

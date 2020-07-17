@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { isLoading } from '../../../universal/helpers';
-import { AppContext } from '../../AppState';
 import {
   DirectLinks,
   MyAreaDashboard,
@@ -14,14 +13,15 @@ import {
   PageHeading,
 } from '../../components';
 import { usePhoneScreen } from '../../hooks/media.hook';
-import styles from './Dashboard.module.scss';
+import { useAppStateAtom } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
+import styles from './Dashboard.module.scss';
 
 const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
 
 export default () => {
-  const appState = useContext(AppContext);
+  const appState = useAppStateAtom();
   const { TIPS, NOTIFICATIONS, CASES, BUURT, HOME } = appState;
 
   const tipItems = TIPS.content?.slice(0, MAX_TIPS_VISIBLE) || [];

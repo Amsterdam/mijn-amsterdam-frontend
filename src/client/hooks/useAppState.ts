@@ -1,11 +1,12 @@
 import * as Sentry from '@sentry/browser';
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useDataApi, requestApiData, pollBffHealth } from './api/api.hook';
 import { BFFApiUrls } from '../config/api';
 import { useSSE, SSE_ERROR_MESSAGE } from './useSSE';
 import { transformAppState } from '../data-transform/appState';
 import { useTipsApi } from './api/api.tips';
 import { PRISTINE_APPSTATE, AppState, createAllErrorState } from '../AppState';
+import { atom, useRecoilState } from 'recoil';
 
 const fallbackServiceRequestOptions = {
   url: BFFApiUrls.SERVICES_SAURON,
@@ -16,6 +17,11 @@ const fallbackServiceRequestOptions = {
   ],
 };
 
+const appStateAtom = atom<AppState>({
+  key: 'appState',
+  default: PRISTINE_APPSTATE, // default value (aka initial value)
+});
+
 /**
  * The primary communication is the EventSource. In the case the EventSource can't connect to the server, a number of retries will take place.
  * If the EventSource fails the Fallback service endpoint /all will be used in a last attempt to fetch the data needed to display a fruity application.
@@ -23,24 +29,13 @@ const fallbackServiceRequestOptions = {
  */
 export function useAppState() {
   const hasEventSourceSupport = 'EventSource' in window; // IE11 and early edge versions don't have EventSource support. These browsers will use the the Fallback service endpoint.
-  const { TIPS, fetch: fetchTips, isLoading: isLoadingTips } = useTipsApi();
+  const { TIPS, isLoading: isLoadingTips } = useTipsApi();
   const [isFallbackServiceEnabled, setFallbackServiceEnabled] = useState(
     !hasEventSourceSupport
   );
   const [isDataRequested, setIsDateRequested] = useState(false);
 
-  // The controller is used for close coupling of state refetch methods. You can put fetch methods here that can be called from components.
-  const controller = useMemo(() => {
-    return {
-      TIPS: {
-        fetch: fetchTips,
-      },
-    };
-  }, [fetchTips]);
-
-  const [appState, setAppState] = useState<AppState>(
-    Object.assign({}, PRISTINE_APPSTATE, { controller })
-  );
+  const [appState, setAppState] = useRecoilState(appStateAtom);
 
   const [api, fetchFallbackService] = useDataApi<AppState | null>(
     fallbackServiceRequestOptions,
@@ -141,4 +136,8 @@ export function useAppState() {
   }, [TIPS, appState, isLoadingTips]);
 
   return appState;
+}
+
+export function useAppStateAtom() {
+  return useRecoilState(appStateAtom)[0];
 }

@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+import { isError, isLoading } from '../../../universal/helpers';
 import {
   Alert,
   ChapterIcon,
@@ -7,17 +9,14 @@ import {
   PageHeading,
   Pagination,
 } from '../../components';
-import React, { useContext, useState } from 'react';
-import { isError, isLoading } from '../../../universal/helpers';
-
-import { AppContext } from '../../AppState';
+import { useAppStateAtom } from '../../hooks/useAppState';
 import styles from './MyNotifications.module.scss';
 
 const PAGE_SIZE = 10;
 const INITIAL_INDEX = [0, PAGE_SIZE - 1];
 
 export default () => {
-  const { NOTIFICATIONS } = useContext(AppContext);
+  const { NOTIFICATIONS } = useAppStateAtom();
 
   const [[startIndex, endIndex], setPageIndex] = useState(INITIAL_INDEX);
   const itemsPaginated =

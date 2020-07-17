@@ -31,17 +31,8 @@ type ApiState = GeneratedResponse &
   CMSContentResponse &
   TipsResponse;
 
-type AppStateController = {
-  [key in keyof ApiState]?: {
-    fetch: (...args: any) => void;
-    [key: string]: any;
-  };
-};
-
 export type AppState = {
   [key in keyof ApiState]: ApiResponse<ApiState[key]['content']>;
-} & {
-  controller: AppStateController;
 };
 
 export const PRISTINE_APPSTATE = {
@@ -83,9 +74,6 @@ export const PRISTINE_APPSTATE = {
 
   // KVK / Handelsregister
   KVK: apiPristineResult(null),
-
-  // Use the controller to add functionality for refetching app state
-  controller: {},
 };
 
 export const ALL_ERROR_STATE_KEY = 'ALL';

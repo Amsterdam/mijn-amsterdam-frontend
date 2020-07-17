@@ -1,16 +1,9 @@
 import classnames from 'classnames';
 import { parseISO } from 'date-fns';
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
-import { AppContext } from '../../AppState';
 import {
   Alert,
   Button,
@@ -24,6 +17,7 @@ import {
   Table,
 } from '../../components';
 import { isNativeDatePickerInputSupported } from '../../components/DateInput/DateInput';
+import { useAppStateAtom } from '../../hooks/useAppState';
 import styles from './InkomenSpecificaties.module.scss';
 
 export const specificationsTableDisplayProps = {
@@ -47,7 +41,7 @@ function Caret() {
 }
 
 export default () => {
-  const { FOCUS_SPECIFICATIES } = useContext(AppContext);
+  const { FOCUS_SPECIFICATIES } = useAppStateAtom();
 
   const { type } = useParams();
 

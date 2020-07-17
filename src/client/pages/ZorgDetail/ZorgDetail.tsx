@@ -1,8 +1,7 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
-import { AppContext } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
@@ -14,10 +13,11 @@ import {
   PageHeading,
   StatusLine,
 } from '../../components';
+import { useAppStateAtom } from '../../hooks/useAppState';
 import styles from './ZorgDetail.module.scss';
 
 export default () => {
-  const { WMO } = useContext(AppContext);
+  const { WMO } = useAppStateAtom();
 
   const { id } = useParams();
 
@@ -30,7 +30,7 @@ export default () => {
     }
     return WmoItem.steps.map((step, index) => {
       if (index === 0 && !step.documents.length) {
-        return Object.assign(step, {
+        return Object.assign({}, step, {
           altDocumentContent: (
             <p>
               <strong>

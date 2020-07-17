@@ -1,3 +1,7 @@
+import React, { useContext, useState } from 'react';
+import { ChapterTitles, FeatureToggle } from '../../../universal/config';
+import { isError, isLoading } from '../../../universal/helpers';
+import { ComponentChildren } from '../../../universal/types/App.types';
 import {
   Alert,
   Button,
@@ -8,17 +12,12 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
-import { ChapterTitles, FeatureToggle } from '../../../universal/config';
-import React, { useContext, useState } from 'react';
-import { isError, isLoading } from '../../../universal/helpers';
-
-import { AppContext } from '../../AppState';
-import styles from './MyTips.module.scss';
 import {
   OptInContext,
   OptInContextProvider,
 } from '../../components/OptInContext/OptInContext';
-import { ComponentChildren } from '../../../universal/types/App.types';
+import { useAppStateAtom } from '../../hooks/useAppState';
+import styles from './MyTips.module.scss';
 
 interface OptInPageContentProps {
   children: ComponentChildren;
@@ -63,7 +62,7 @@ function OptInPageContent({ children }: OptInPageContentProps) {
 }
 
 export default () => {
-  const { TIPS } = useContext(AppContext);
+  const { TIPS } = useAppStateAtom();
 
   return (
     <OverviewPage className={styles.MyTips}>

@@ -1,9 +1,8 @@
 import * as Sentry from '@sentry/browser';
-import React, { useContext } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
-import { AppContext } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
@@ -16,10 +15,11 @@ import {
   StatusLine,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
+import { useAppStateAtom } from '../../hooks/useAppState';
 import styles from './InkomenDetail.module.scss';
 
 export default () => {
-  const { FOCUS_TOZO } = useContext(AppContext);
+  const { FOCUS_TOZO } = useAppStateAtom();
 
   const tozoItems = FOCUS_TOZO.content || [];
   const { id } = useParams();

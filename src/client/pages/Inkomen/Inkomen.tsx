@@ -7,7 +7,7 @@ import {
   FeatureToggle,
 } from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
-import { AppContext } from '../../AppState';
+
 import {
   addTitleLinkComponent,
   Alert,
@@ -28,6 +28,7 @@ import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.mod
 import styles from './Inkomen.module.scss';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { FocusItem } from '../../../server/services/focus/focus-types';
+import { useAppStateAtom } from '../../hooks/useAppState';
 
 export const incomSpecificationsRouteMonthly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES']
@@ -50,9 +51,11 @@ const decisionsDisplayProps = {
 };
 
 export default () => {
-  const { FOCUS_AANVRAGEN, FOCUS_SPECIFICATIES, FOCUS_TOZO } = useContext(
-    AppContext
-  );
+  const {
+    FOCUS_AANVRAGEN,
+    FOCUS_SPECIFICATIES,
+    FOCUS_TOZO,
+  } = useAppStateAtom();
   const aanvragen = (FOCUS_AANVRAGEN.content || []) as FocusItem[];
   const tozoItems = FOCUS_TOZO.content || [];
   const uitkeringsspecificaties =
@@ -72,12 +75,12 @@ export default () => {
 
     return addTitleLinkComponent(
       itemsRequested
-        .map(item =>
-          Object.assign(item, {
+        .map(item => {
+          return Object.assign({}, item, {
             displayDatePublished: defaultDateFormat(item.datePublished),
             displayDateStart: defaultDateFormat(item.dateStart),
-          })
-        )
+          });
+        })
         .sort(dateSort('datePublished', 'desc'))
     );
   }, [aanvragen, tozoItems]);
@@ -95,12 +98,12 @@ export default () => {
 
     return addTitleLinkComponent(
       itemsDecided
-        .map(item =>
-          Object.assign(item, {
+        .map(item => {
+          return Object.assign({}, item, {
             displayDatePublished: defaultDateFormat(item.datePublished),
             displayDateStart: defaultDateFormat(item.dateStart),
-          })
-        )
+          });
+        })
         .sort(dateSort('datePublished', 'desc'))
     );
   }, [aanvragen, tozoItems]);

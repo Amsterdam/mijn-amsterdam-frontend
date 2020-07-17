@@ -1,10 +1,10 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import {
   defaultDateFormat,
   isError,
   isLoading,
 } from '../../../universal/helpers';
-import { AppContext, AppState } from '../../AppState';
+import { AppState } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
@@ -16,6 +16,7 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
+import { useAppStateAtom } from '../../hooks/useAppState';
 import { formatBrpProfileData } from './formatData';
 import { panelConfig, PanelConfigFormatter } from './Profile.constants';
 import styles from './Profile.module.scss';
@@ -31,7 +32,7 @@ function formatInfoPanelConfig(
 }
 
 export default function Profile() {
-  const { BRP } = useContext(AppContext);
+  const { BRP } = useAppStateAtom();
 
   const brpProfileData = useMemo(() => {
     return BRP.content ? formatBrpProfileData(BRP.content) : BRP.content;

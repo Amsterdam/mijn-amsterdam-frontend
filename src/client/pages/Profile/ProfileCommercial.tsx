@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { isError, isLoading } from '../../../universal/helpers';
-import { AppContext } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
@@ -10,10 +9,11 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
+import { useAppStateAtom } from '../../hooks/useAppState';
 import styles from './Profile.module.scss';
 
 export default function ProfileCommercial() {
-  const { KVK } = useContext(AppContext);
+  const { KVK } = useAppStateAtom();
 
   return (
     <DetailPage className={styles.Profile}>
