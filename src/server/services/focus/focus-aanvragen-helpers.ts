@@ -1,9 +1,14 @@
 import * as Sentry from '@sentry/node';
-import { addDays, differenceInCalendarDays, parseISO } from 'date-fns';
+import { addDays, parseISO } from 'date-fns';
 import { API_BASE_PATH, AppRoutes, Chapters } from '../../../universal/config';
-import { defaultDateFormat, hash, omit } from '../../../universal/helpers';
+import {
+  defaultDateFormat,
+  hash,
+  omit,
+  isRecentCase,
+} from '../../../universal/helpers';
 import { GenericDocument, MyCase } from '../../../universal/types';
-import { DAYS_KEEP_RECENT, processSteps } from './focus-aanvragen-content';
+import { processSteps } from './focus-aanvragen-content';
 import {
   Decision,
   DecisionFormatted,
@@ -33,8 +38,7 @@ export function isRecentItem(
     steps.some(
       step =>
         step.title === 'beslissing' &&
-        differenceInCalendarDays(compareDate, new Date(step.datePublished)) <
-          DAYS_KEEP_RECENT
+        isRecentCase(step.datePublished, compareDate)
     ) || steps.every(step => step.title !== 'beslissing')
   );
 }

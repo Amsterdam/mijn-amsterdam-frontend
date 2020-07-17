@@ -19,3 +19,5 @@ export const FeatureToggle = {
   vergunningenActive: !IS_PRODUCTION,
   cmsFooterActive: true,
 };
+
+export const DAYS_KEEP_RECENT = 28;

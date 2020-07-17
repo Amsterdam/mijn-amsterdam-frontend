@@ -3,7 +3,7 @@ import { AppRoutes } from '../../universal/config/routing';
 import { LinkProps, MyCase } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
-import { hash } from '../../universal/helpers/utils';
+import { hash, isRecentCase } from '../../universal/helpers/utils';
 import { dateSort } from '../../universal/helpers/date';
 import { Chapters } from '../../universal/config/index';
 
@@ -128,10 +128,16 @@ export async function fetchVergunningenGenerated(
     sessionID,
     passthroughRequestHeaders
   );
+  const compareDate = new Date();
 
   const cases = Array.isArray(vergunningen.content)
     ? vergunningen.content
-        .filter(vergunning => vergunning.status !== 'Afgehandeld')
+        .filter(
+          vergunning =>
+            vergunning.status !== 'Afgehandeld' ||
+            (vergunning.dateDecision &&
+              isRecentCase(vergunning.dateDecision, compareDate))
+        )
         .map(createVergunningRecentCase)
     : [];
 

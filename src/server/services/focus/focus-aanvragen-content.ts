@@ -21,7 +21,6 @@ export const processSteps: StepTitle[] = [
 ];
 
 export const stepStatusLabels = stepLabels;
-export const DAYS_KEEP_RECENT = 28;
 
 // NOTE: Possibly deprecated because it seems document titles actually contain meaningful names in the latest api response.
 export const titleTranslations: DocumentTitles = {

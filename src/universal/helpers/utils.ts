@@ -1,6 +1,7 @@
+import { differenceInCalendarDays } from 'date-fns';
 import { KeyboardEvent, MouseEvent } from 'react';
 import { matchPath } from 'react-router-dom';
-import { PrivateRoutes } from '../config';
+import { PrivateRoutes, DAYS_KEEP_RECENT } from '../config';
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
 export const entries = Object.entries as <T>(
@@ -106,4 +107,12 @@ export function deepOmitKeys(data: any, omitKeys: string[] = []): any {
     return rdata;
   }
   return data;
+}
+
+/** Checks if an item returned from the api is considered recent */
+export function isRecentCase(datePublished: string, compareDate: Date) {
+  return (
+    differenceInCalendarDays(compareDate, new Date(datePublished)) <
+    DAYS_KEEP_RECENT
+  );
 }
