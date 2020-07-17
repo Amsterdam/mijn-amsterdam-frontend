@@ -72,12 +72,7 @@ export function secureValidation(
 
   // Check if this is a request to a public endpoint
   if (isBffPublicEndpoint(req.path)) {
-    // We don't expect saml token header for this endpoint.
-    if (passthroughRequestHeaders[TMA_SAML_HEADER]) {
-      next(new Error('Saml token disallowed for public endpoint.'));
-    } else {
-      next();
-    }
+    next();
   } else {
     // We expect saml token header to be present for non-public endpoint.
     if (passthroughRequestHeaders[TMA_SAML_HEADER]) {
