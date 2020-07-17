@@ -49,7 +49,8 @@ function FooterBlock({
 }
 
 export default function MainFooter() {
-  const { CMS_CONTENT } = useAppStateAtom();
+  const atom = useAppStateAtom();
+  const { CMS_CONTENT } = atom;
   const footer = CMS_CONTENT.content?.footer ||
     (footerData as CMSFooterContent) || { blocks: [], sub: [] };
 

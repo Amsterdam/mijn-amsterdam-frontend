@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/browser';
 import classnames from 'classnames';
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import ErrorBoundary from 'react-error-boundary';
 import {
   BrowserRouter,
@@ -52,11 +52,12 @@ import {
   VergunningDetail,
   Accessibility,
 } from './pages';
-import { SessionContext, SessionState } from './SessionState';
+
 import { RecoilRoot } from 'recoil';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import { useAppState } from './hooks/useAppState';
 import { useTipsApi } from './hooks/api/useTipsApi';
+import { useSessionValue, useSessionApi } from './hooks/api/useSessionApi';
 
 function AppNotAuthenticated() {
   const location = useLocation();
@@ -99,7 +100,7 @@ function AppAuthenticated() {
   useAppState();
   useTipsApi();
   const location = useLocation();
-  const session = useContext(SessionContext);
+  const session = useSessionValue();
   const [routeEntry, setRouteEntry] = useLocalStorage('RouteEntry', '');
 
   const redirectAfterLogin = routeEntry || AppRoutes.ROOT;
@@ -181,8 +182,7 @@ function AppAuthenticated() {
 }
 
 function AppLanding() {
-  const session = useContext(SessionContext);
-
+  const session = useSessionApi();
   const { isPristine, isAuthenticated, validityInSeconds } = session;
 
   // If session was previously authenticated we don't want to show the loader again
@@ -226,9 +226,7 @@ export default function App() {
           onError={sendToSentry}
           FallbackComponent={ApplicationError}
         >
-          <SessionState>
-            <AppLanding />
-          </SessionState>
+          <AppLanding />
         </ErrorBoundary>
       </BrowserRouter>
     </RecoilRoot>

@@ -23,7 +23,7 @@ export function usePageChange() {
 
   useEffect(() => {
     // Scroll to top on route change
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
 
     // Change Page title on route change
     const index = sortedPageTitleRoutes.findIndex(route => {

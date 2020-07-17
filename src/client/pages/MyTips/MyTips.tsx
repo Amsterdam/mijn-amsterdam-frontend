@@ -63,7 +63,7 @@ export default () => {
 
   return (
     <OverviewPage className={styles.MyTips}>
-      <PageHeading isLoading={isLoading(TIPS)} icon={<ChapterIcon />}>
+      <PageHeading isLoading={false} icon={<ChapterIcon />}>
         {ChapterTitles.TIPS}
       </PageHeading>
       {FeatureToggle.myTipsoptInOutPersonalization && (

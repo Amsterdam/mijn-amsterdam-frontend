@@ -1,18 +1,18 @@
 import Cookies from 'js-cookie';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
+import { atom, useRecoilState } from 'recoil';
 import { COOKIE_KEY_COMMERCIAL_LOGIN } from '../../../universal/config';
-import {
-  ApiErrorResponse,
-  apiPristineResult,
-  apiSuccesResult,
-  ApiSuccessResponse,
-} from '../../../universal/helpers/api';
 import {
   AUTH_API_URL,
   IS_COMMERCIAL_PATH_MATCH,
   LOGOUT_URL,
 } from '../../config/api';
-import { ApiRequestOptions, requestApiData, useDataApi } from './useDataApi';
+import { ApiRequestOptions, useDataApi, requestApiData } from './useDataApi';
+import { ApiSuccessResponse } from '../../../universal/helpers';
+import {
+  apiSuccesResult,
+  ApiErrorResponse,
+} from '../../../universal/helpers/api';
 
 export type SessionData = {
   isAuthenticated: boolean;
@@ -21,18 +21,6 @@ export type SessionData = {
   userType: 'BURGER' | 'BEDRIJF';
 };
 
-export interface SessionState {
-  refetch: () => void;
-  logout: () => void;
-}
-
-type SessionResponseData =
-  | Record<
-      'SESSION',
-      ApiSuccessResponse<SessionData> | ApiErrorResponse<SessionData>
-    >
-  | typeof INITIAL_SESSION_STATE;
-
 const INITIAL_SESSION_CONTENT: SessionData = {
   isAuthenticated: false,
   validUntil: -1,
@@ -40,8 +28,21 @@ const INITIAL_SESSION_CONTENT: SessionData = {
   userType: 'BURGER',
 };
 
-const INITIAL_SESSION_STATE = {
-  SESSION: apiPristineResult(INITIAL_SESSION_CONTENT),
+export interface SessionState extends SessionData {
+  refetch: () => void;
+  logout: () => void;
+  isPristine: boolean;
+  isDirty: boolean;
+  isLoading: boolean;
+}
+
+const INITIAL_SESSION_STATE: SessionState = {
+  ...INITIAL_SESSION_CONTENT,
+  isLoading: true,
+  isPristine: true,
+  isDirty: false,
+  refetch: () => void 0,
+  logout: () => void 0,
 };
 
 const requestOptions: ApiRequestOptions = {
@@ -56,6 +57,11 @@ const requestOptions: ApiRequestOptions = {
     },
   ],
 };
+
+type SessionResponseData = Record<
+  'SESSION',
+  ApiSuccessResponse<SessionData> | ApiErrorResponse<SessionData>
+>;
 
 function setExplicitLogout() {
   Cookies.remove(COOKIE_KEY_COMMERCIAL_LOGIN);
@@ -85,22 +91,29 @@ function getValidityInSeconds(validUntil: number) {
     : 0;
 }
 
+export const sessionAtom = atom<SessionState>({
+  key: 'sessionState',
+  default: INITIAL_SESSION_STATE, // default value (aka initial value)
+});
+
 export function useSessionApi() {
-  const [{ data, isLoading, isDirty, ...rest }, refetch] = useDataApi<
-    SessionResponseData
-  >(requestOptions, INITIAL_SESSION_STATE);
+  const [sessionResponse, refetch] = useDataApi<SessionResponseData>(
+    requestOptions,
+    { SESSION: apiSuccesResult(INITIAL_SESSION_CONTENT) }
+  );
+  const {
+    data: {
+      SESSION: { content: sessionData },
+    },
+    isLoading,
+    isDirty,
+    isPristine,
+  } = sessionResponse;
 
-  const hasValidSessionData =
-    typeof data.SESSION?.content !== 'string' &&
-    data !== null &&
-    data.SESSION.content !== null;
-
-  const { isAuthenticated, validUntil, userType } = hasValidSessionData
-    ? data.SESSION.content!
-    : INITIAL_SESSION_CONTENT;
+  const [session, setSession] = useSessionAtom();
 
   const sessionValidMaxAge = getValidityInSeconds(
-    data.SESSION.content?.validUntil || INITIAL_SESSION_CONTENT.validUntil
+    sessionData.validUntil || INITIAL_SESSION_CONTENT.validUntil
   );
 
   useEffect(() => {
@@ -115,18 +128,33 @@ export function useSessionApi() {
     };
   }, [sessionValidMaxAge]);
 
-  return useMemo(() => {
-    return {
-      ...rest,
-      isLoading,
-      isAuthenticated,
-      validUntil,
+  useEffect(() => {
+    setSession(() => ({
+      ...sessionData,
       validityInSeconds: sessionValidMaxAge,
+      isLoading,
       isDirty,
-      userType,
-      refetch: () => refetch(requestOptions),
+      isPristine,
+      refetch: () => refetch({ ...requestOptions, postpone: false }),
       logout: () => logoutSession(),
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [validUntil, sessionValidMaxAge, isLoading]);
+    }));
+  }, [
+    sessionData,
+    sessionValidMaxAge,
+    isLoading,
+    isDirty,
+    isPristine,
+    refetch,
+    setSession,
+  ]);
+
+  return session;
+}
+
+export function useSessionAtom() {
+  return useRecoilState(sessionAtom);
+}
+
+export function useSessionValue() {
+  return useRecoilState(sessionAtom)[0];
 }

@@ -1,19 +1,13 @@
 import classnames from 'classnames';
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { formattedTimeFromSeconds } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
 import { Colors } from '../../config/app';
+import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { CounterProps, useCounter } from '../../hooks/timer.hook';
 import { useActivityThrottle } from '../../hooks/useThrottledFn.hook';
-import { SessionContext } from '../../SessionState';
 import Linkd, { Button, ButtonStyles } from '../Button/Button';
 import Modal from '../Modal/Modal';
 import styles from './AutoLogoutDialog.module.scss';
@@ -90,7 +84,7 @@ export const DefaultAutologoutDialogSettings = {
 };
 
 export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
-  const session = useContext(SessionContext);
+  const session = useSessionValue();
   // Will open the dialog if maxCount is reached.
   const nSettings = { ...DefaultAutologoutDialogSettings, ...settings };
 

@@ -1,9 +1,9 @@
 import classnames from 'classnames';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ALL_ERROR_STATE_KEY } from '../../AppState';
 import { IconAlert, IconClose } from '../../assets/icons';
+import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { useSessionStorage } from '../../hooks/storage.hook';
-import { SessionContext } from '../../SessionState';
 import { Button, IconButton, LinkdInline } from '../Button/Button';
 import Modal from '../Modal/Modal';
 import styles from './ErrorMessages.module.scss';
@@ -25,7 +25,7 @@ export function useErrorMessagesDismissed() {
 
 export default function ErrorMessages({ className, errors }: ComponentProps) {
   const el = useRef(null);
-  const session = useContext(SessionContext);
+  const session = useSessionValue();
   const isAllErrorMessage = errors.some(
     error => error.stateKey === ALL_ERROR_STATE_KEY
   );

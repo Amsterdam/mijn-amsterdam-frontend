@@ -2,7 +2,6 @@ import classnames from 'classnames';
 import React, {
   ReactNode,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useState,
@@ -17,12 +16,11 @@ import { BRPData } from '../../../universal/types/brp';
 import { IconInfo, IconProfile, IconSuitcase } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
-import { SessionData } from '../../hooks/api/useSessionApi';
+import { SessionData, useSessionValue } from '../../hooks/api/useSessionApi';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
 import { useAppStateAtom } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
 import { useCommercialProfile } from '../../hooks/useCommercialProfile';
-import { SessionContext } from '../../SessionState';
 import Linkd, { Button } from '../Button/Button';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
 import LoadingContent from '../LoadingContent/LoadingContent';
@@ -208,7 +206,7 @@ function SecondaryLinks() {
   const persoon = BRP.content?.persoon || null;
   const hasFirstName = !!(persoon && persoon.voornamen);
   const isDesktopScreen = useDesktopScreen();
-  const session = useContext(SessionContext);
+  const session = useSessionValue();
 
   useEffect(() => {
     if (hasFirstName) {
@@ -336,7 +334,7 @@ function BurgerButton({ isActive, toggleBurgerMenu }: BurgerButtonProps) {
 }
 
 export default function MainNavBar() {
-  const session = useContext(SessionContext);
+  const session = useSessionValue();
   const hasBurgerMenu = useTabletScreen();
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
     undefined
