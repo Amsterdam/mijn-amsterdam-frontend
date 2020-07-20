@@ -17,6 +17,7 @@ import MyTipsOptInOutModal from './MyTipsOptInOutModal';
 import classnames from 'classnames';
 import { isExternalUrl } from '../../../universal/helpers';
 import styles from './MyTips.module.scss';
+import { FeatureToggle } from '../../../universal/config/app';
 import {
   OptInContextProvider,
   OptInContext,
@@ -65,7 +66,7 @@ const Tip = ({ tip }: TipProps) => {
       <article>
         <figure className={styles.ImageContainer}>
           <img alt="" src={imgUrl} className={styles.Img} />
-          {!!tip.reason?.length && (
+          {FeatureToggle.tipsFlipActive && !!tip.reason?.length && (
             <>
               {isFlipped && (
                 <div className={styles.TipFlip}>
