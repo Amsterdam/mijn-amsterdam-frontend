@@ -26,7 +26,7 @@ export default function DirectLinks({
       </Heading>
       <ul className={styles.LinkList}>
         {entries(LINKS)
-          .filter(([, { url }]) => !!url)
+          .filter(([, { url, isActive }]) => !!url && isActive)
           .filter(([, { isPhoneScreenLink }]) =>
             !isPhoneScreen ? isPhoneScreenLink !== true : true
           )
