@@ -21,6 +21,12 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     profileTypes: ['private'],
   },
   {
+    title: ChapterTitles.KVK,
+    id: Chapters.KVK,
+    to: AppRoutes.KVK,
+    profileTypes: ['private-commercial', 'commercial'],
+  },
+  {
     title: ChapterTitles.BELASTINGEN,
     id: Chapters.BELASTINGEN,
     to: ExternalUrls.SSO_BELASTINGEN,
@@ -70,12 +76,6 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     to: ExternalUrls.SSO_MILIEUZONE || '',
     rel: 'external',
     profileTypes: ['private', 'private-commercial', 'commercial'],
-  },
-  {
-    title: ChapterTitles.KVK,
-    id: Chapters.KVK,
-    to: AppRoutes.KVK,
-    profileTypes: ['private-commercial', 'commercial'],
   },
 ];
 
