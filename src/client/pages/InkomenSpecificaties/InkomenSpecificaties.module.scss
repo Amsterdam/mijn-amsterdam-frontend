@@ -34,7 +34,7 @@
 
   @include select(Heading_Heading) {
     margin: 5rem auto;
-    max-width: 62rem;
+    max-width: 64rem;
 
     @include mq-tablet {
       margin-left: 9.5rem;

@@ -20,7 +20,7 @@
 .TextPage {
 
   @include select(PageHeading_HeadingInner) {
-    @include centered-max(62rem);;
+    @include centered-max(64rem);;
     width: calc(100% - 4rem);
     margin: 0 auto;
 
@@ -69,7 +69,7 @@
 }
 
 .PageContent {
-  @include centered-max(62rem);
+  @include centered-max(64rem);
 
   @include mq-tablet() {
     margin-left: 11.5rem;

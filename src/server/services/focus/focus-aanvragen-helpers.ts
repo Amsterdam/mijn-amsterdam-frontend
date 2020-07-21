@@ -136,22 +136,24 @@ export function findStepsContent(
 
   const labelContent = findProductContent(product, contentLabels);
 
-  processSteps.forEach(stepTitle => {
+  processSteps.forEach((stepTitle: string) => {
     const steps: Array<{ title: StepTitle }> = product.steps;
     const stepData = steps.find(step => step.title === stepTitle);
-    const stepContent = labelContent && labelContent[stepTitle];
+    if (labelContent && stepTitle in labelContent) {
+      const stepContent = labelContent[stepTitle];
 
-    if (stepData && stepContent) {
-      if (
-        stepTitle === 'beslissing' &&
-        product.decision &&
-        product.decision in stepContent
-      ) {
-        stepsContent[stepTitle] = (stepContent as FocusStepContentDecision)[
-          product.decision
-        ];
-      } else if (stepTitle !== 'beslissing') {
-        stepsContent[stepTitle] = stepContent as FocusStepContent;
+      if (stepData && stepContent) {
+        if (
+          stepTitle === 'beslissing' &&
+          product.decision &&
+          product.decision in stepContent
+        ) {
+          stepsContent[stepTitle] = (stepContent as FocusStepContentDecision)[
+            product.decision
+          ];
+        } else if (stepTitle !== 'beslissing') {
+          stepsContent[stepTitle] = stepContent as FocusStepContent;
+        }
       }
     }
   });

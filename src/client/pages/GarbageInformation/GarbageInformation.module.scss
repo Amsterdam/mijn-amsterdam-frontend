@@ -3,7 +3,7 @@
 @mixin GarbagePanel {
   margin: 0 auto;
   padding: 0;
-  max-width: 62rem;
+  max-width: 64rem;
 
   @include mq-tablet {
     margin-left: 9.5rem;
@@ -100,7 +100,7 @@
 }
 
 .ToggleOtherGarbageCentersButton {
-  max-width: 62rem;
+  max-width: 64rem;
   margin: 0 auto;
 
   @include select(Button_Linkd) {
