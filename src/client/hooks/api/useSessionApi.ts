@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { atom, useRecoilState } from 'recoil';
 import { COOKIE_KEY_COMMERCIAL_LOGIN } from '../../../universal/config';
 import {
@@ -9,6 +9,7 @@ import {
 } from '../../config/api';
 import { ApiRequestOptions, useDataApi, requestApiData } from './useDataApi';
 import { ApiSuccessResponse } from '../../../universal/helpers';
+import { clearSessionStorage } from '../storage.hook';
 import {
   apiSuccesResult,
   ApiErrorResponse,
@@ -80,11 +81,6 @@ function saveUserTypeForReloadingAndNewTabs(maxAge: number) {
   }
 }
 
-function logoutSession() {
-  setExplicitLogout();
-  window.location.href = LOGOUT_URL;
-}
-
 function getValidityInSeconds(validUntil: number) {
   return validUntil
     ? Math.max(Math.round((validUntil - new Date().getTime()) / 1000), 0)
@@ -93,7 +89,7 @@ function getValidityInSeconds(validUntil: number) {
 
 export const sessionAtom = atom<SessionState>({
   key: 'sessionState',
-  default: INITIAL_SESSION_STATE, // default value (aka initial value)
+  default: INITIAL_SESSION_STATE,
 });
 
 export function useSessionApi() {
@@ -115,6 +111,12 @@ export function useSessionApi() {
   const sessionValidMaxAge = getValidityInSeconds(
     sessionData.validUntil || INITIAL_SESSION_CONTENT.validUntil
   );
+
+  const logoutSession = useCallback(() => {
+    setExplicitLogout();
+    clearSessionStorage();
+    window.location.href = LOGOUT_URL;
+  }, []);
 
   useEffect(() => {
     const onBeforeUnload = () => {

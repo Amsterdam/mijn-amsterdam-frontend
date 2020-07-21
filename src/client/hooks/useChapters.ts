@@ -1,6 +1,4 @@
-import { AppState } from '../AppState';
 import { useMemo } from 'react';
-
 import { Chapters, FeatureToggle } from '../../universal/config';
 import {
   ApiResponse,
@@ -8,13 +6,10 @@ import {
   isLoading,
   isMokum,
 } from '../../universal/helpers';
-import {
-  ChapterMenuItem,
-  myChaptersMenuItems,
-  myChaptersMenuItemsCommercial,
-} from '../config/menuItems';
-import { useCommercialProfile } from './useCommercialProfile';
+import { AppState } from '../AppState';
+import { ChapterMenuItem, chaptersByProfileType } from '../config/menuItems';
 import { useAppStateAtom } from './useAppState';
+import { useProfileType } from './useProfileType';
 
 function isChapterActive(
   item: ChapterMenuItem,
@@ -103,12 +98,14 @@ export interface ChaptersState {
   isLoading: boolean;
 }
 
+export function useChapterMenuItems() {
+  const [profileType] = useProfileType();
+  return chaptersByProfileType[profileType] || [];
+}
+
 export function useChapters(): ChaptersState {
   const appState = useAppStateAtom();
-  const [isCommercialProfile] = useCommercialProfile();
-  const chapterItems = isCommercialProfile
-    ? myChaptersMenuItemsCommercial
-    : myChaptersMenuItems;
+  const chapterItems = useChapterMenuItems();
   const items = chapterItems.filter(item => {
     // Check to see if Chapter has been loaded or if it is directly available
     return isChapterActive(item, appState);

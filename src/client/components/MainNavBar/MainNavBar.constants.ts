@@ -1,6 +1,6 @@
 import { AppRoutes, Chapter, ChapterTitles } from '../../../universal/config';
-import { ChapterMenuItem, myChaptersMenuItems } from '../../config/menuItems';
 import { LinkProps } from '../../../universal/types';
+import { ChapterMenuItem } from '../../config/menuItems';
 
 type MainMenuId =
   | Chapter
@@ -50,7 +50,3 @@ export const mainMenuItems: MenuItem[] = [
     to: AppRoutes.NOTIFICATIONS,
   },
 ];
-
-export const submenuItems: { [id: string]: ChapterMenuItem[] } = {
-  [mainMenuItemId.CHAPTERS]: myChaptersMenuItems,
-};

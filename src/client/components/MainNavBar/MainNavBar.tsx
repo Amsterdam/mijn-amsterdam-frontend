@@ -19,8 +19,8 @@ import { trackItemPresentation } from '../../hooks/analytics.hook';
 import { SessionData, useSessionValue } from '../../hooks/api/useSessionApi';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
 import { useAppStateAtom } from '../../hooks/useAppState';
-import { useChapters } from '../../hooks/useChapters';
-import { useCommercialProfile } from '../../hooks/useCommercialProfile';
+import { useChapterMenuItems } from '../../hooks/useChapters';
+import { useProfileType } from '../../hooks/useProfileType';
 import Linkd, { Button } from '../Button/Button';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
 import LoadingContent from '../LoadingContent/LoadingContent';
@@ -33,7 +33,6 @@ import {
   mainMenuItemId,
   mainMenuItems,
   MenuItem,
-  submenuItems,
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
 
@@ -131,20 +130,20 @@ function PrivateCommercialProfileToggle({
   person,
   company,
 }: PrivateCommercialProfileToggleProps) {
-  const [isCommercial, setIsCommercial] = useCommercialProfile();
+  const [profileType, setProfileType] = useProfileType();
   return (
     <>
       <PrivateProfileName
         person={person}
-        isActive={!isCommercial}
-        hasTutorial={!isCommercial}
-        onClick={() => setIsCommercial(false)}
+        isActive={profileType === 'private'}
+        hasTutorial={profileType === 'private'}
+        onClick={() => setProfileType('private')}
       />
       <CommercialProfileName
         company={company}
-        isActive={isCommercial}
-        hasTutorial={isCommercial}
-        onClick={() => setIsCommercial(true)}
+        isActive={profileType === 'private-commercial'}
+        hasTutorial={profileType === 'private-commercial'}
+        onClick={() => setProfileType('private-commercial')}
       />
     </>
   );
@@ -339,7 +338,7 @@ export default function MainNavBar() {
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
     undefined
   );
-  const { items: myChapterItems } = useChapters();
+  const myChapterItems = useChapterMenuItems();
   const location = useLocation();
   const [isTutorialVisible, setIsTutorialVisible] = useState(false);
 
@@ -386,17 +385,12 @@ export default function MainNavBar() {
   const menuItemsComposed = useMemo(() => {
     return mainMenuItems.map(item => {
       let menuItem = item;
-      if (item.id in submenuItems) {
-        // Add dynamic chapter submenu items to the menu
-        if (item.id === mainMenuItemId.CHAPTERS) {
-          menuItem = { ...item, submenuItems: myChapterItems };
-        } else {
-          menuItem = {
-            ...item,
-            submenuItems: submenuItems[item.id],
-          };
-        }
+
+      // Add dynamic chapter submenu items to the menu
+      if (item.id === mainMenuItemId.CHAPTERS) {
+        menuItem = { ...item, submenuItems: myChapterItems };
       }
+
       return getMenuItem(menuItem);
     });
   }, [myChapterItems]);

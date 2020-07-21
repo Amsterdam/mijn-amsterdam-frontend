@@ -18,7 +18,7 @@ const fallbackServiceRequestOptions = {
 
 export const appStateAtom = atom<AppState>({
   key: 'appState',
-  default: PRISTINE_APPSTATE, // default value (aka initial value)
+  default: PRISTINE_APPSTATE,
 });
 
 /**
@@ -41,14 +41,14 @@ export function useAppState() {
     null
   );
 
-  function appStateError(message: string) {
+  const appStateError = useCallback((message: string) => {
     Sentry.captureMessage('Could not load any data sources.', {
       extra: {
         message,
       },
     });
     setAppState(appState => createAllErrorState(appState, message));
-  }
+  }, []);
 
   // If no EvenSource support or EventSource fails, the Fallback service endpoint is used for fetching all the data.
   useEffect(() => {
@@ -80,6 +80,7 @@ export function useAppState() {
     api.isPristine,
     isDataRequested,
     hasEventSourceSupport,
+    appStateError,
   ]);
 
   // Update the appState with data fetched by the Fallback service endpoint
@@ -99,40 +100,36 @@ export function useAppState() {
       appStateError(errorMessage);
       setIsDateRequested(true);
     }
-  }, [appState, api, isFallbackServiceEnabled, isDataRequested]);
+  }, [
+    appState,
+    api,
+    isFallbackServiceEnabled,
+    isDataRequested,
+    appStateError,
+    setAppState,
+  ]);
 
   // The EventSource will only be used if we have EventSource support
-  const onEvent = useCallback((messageData: any) => {
-    if (messageData && messageData !== SSE_ERROR_MESSAGE) {
-      const transformedMessageData = transformAppState(messageData);
-      setAppState(appState => {
-        const appStateUpdated = {
-          ...appState,
-          // Should there be an
-          ...transformedMessageData,
-        };
-        return appStateUpdated;
-      });
-    } else if (messageData === SSE_ERROR_MESSAGE) {
-      setFallbackServiceEnabled(true);
-    }
-  }, []);
+  const onEvent = useCallback(
+    (messageData: any) => {
+      if (messageData && messageData !== SSE_ERROR_MESSAGE) {
+        const transformedMessageData = transformAppState(messageData);
+        setAppState(appState => {
+          const appStateUpdated = {
+            ...appState,
+            // Should there be an
+            ...transformedMessageData,
+          };
+          return appStateUpdated;
+        });
+      } else if (messageData === SSE_ERROR_MESSAGE) {
+        setFallbackServiceEnabled(true);
+      }
+    },
+    [setAppState]
+  );
 
   useSSE(BFFApiUrls.SERVICES_SSE, 'message', onEvent, isFallbackServiceEnabled);
-
-  // // Add TIPS to AppState if they are refetched
-  // useEffect(() => {
-  //   if (
-  //     !isLoadingTips &&
-  //     TIPS.status !== 'PRISTINE' &&
-  //     TIPS.content !== appState.TIPS.content
-  //   ) {
-  //     const tipsState = transformAppState({ TIPS });
-  //     setAppState(Object.assign({}, appState, tipsState));
-  //   } else if (isLoadingTips && TIPS.content !== appState.TIPS.content) {
-  //     setAppState(Object.assign({}, appState, { TIPS }));
-  //   }
-  // }, [TIPS, appState, isLoadingTips]);
 
   return appState;
 }

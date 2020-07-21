@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Koffer zakelijk</title>
-    <path d="M23,8 L23,3.1 L9,3.1 L9,8 L0,8 L0,30 L32,30 L32,8 L23,8 Z M11,5.1 L21,5.1 L21,8 L11,8 L11,5.1 Z M28,26 L4,26 L4,12 L28,12 L28,26 Z" id="Shape"></path>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Zakelijk icoon</title>
+  <g stroke="none" stroke-width="1" fill-rule="evenodd">
+    <path d="M5,2.97961426 L9,2.97961426 L9,1 L5,1 L5,2.97961426 Z M10,2.987854 L10,-4.52970994e-14 L8.393,-4.52970994e-14 L5.593,-4.52970994e-14 L4.01574707,-4.52970994e-14 L4.01574707,2.987854 L-8.04389888e-12,2.97961426 C-8.04389888e-12,2.97137451 -8.04389888e-12,7 -8.04389888e-12,7 C-8.04389888e-12,7 1.66666667,7 5,7 L5.0178833,6.01672363 L9.00457764,6.01672363 L9.00457764,7 L14,7 C14,7 14.005188,2.987854 14,2.987854 L10,2.987854 Z M5,9 L5,8.00289917 L-7.67941266e-13,8.00289917 L-7.67941266e-13,14 L14,14 L14,8.00289917 L9,8.00289917 L9,8.99398804 L5,9 Z"></path>
+  </g>
 </svg>

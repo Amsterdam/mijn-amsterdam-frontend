@@ -20,3 +20,5 @@ type ResolvedType<T> = T extends PromiseLike<infer U> ? U : T;
 type NullableValues<T> = {
   [P in keyof T]: null;
 };
+
+type ProfileType = 'private' | 'private-commercial' | 'commercial';
