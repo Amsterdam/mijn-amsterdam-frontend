@@ -19,7 +19,7 @@ export const FeatureToggle = {
   vergunningenActive: !IS_PRODUCTION,
   cmsFooterActive: true,
   KrefiaDirectLinkActive: !IS_PRODUCTION,
-  tipsFlipActive: !IS_PRODUCTION,
+  tipsFlipActive: true,
 };
 
 export const DAYS_KEEP_RECENT = 28;
