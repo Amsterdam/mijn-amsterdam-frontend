@@ -164,7 +164,7 @@ export function createTozoItem(productTitle: string, steps: FocusItemStep[]) {
     chapter: Chapters.INKOMEN,
     link: {
       to: generatePath(AppRoutes['INKOMEN/TOZO'], { id }),
-      title: `Bekijk uw ${productTitle} status`,
+      title: `Bekijk hoe het met uw aanvraag staat`,
     },
     steps,
   };
@@ -182,7 +182,7 @@ export function createTozoDocumentStepNotifications(
     description: step.notificationDescription || '',
     link: {
       to: generatePath(AppRoutes['INKOMEN/TOZO'], { id: item.id }),
-      title: 'Meer informatie',
+      title: 'Bekijk hoe het met uw aanvraag staat',
     },
   }));
 }

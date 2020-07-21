@@ -8,10 +8,13 @@
 
 .Table {
   tr td:nth-child(2) {
-    width: 45%;
+    width: 40%;
+  }
+  tr td:nth-child(3) {
+    width: 20%;
   }
   @include select(Table_DisplayPropTitle) {
-    width: 42%;
+    width: 40%;
   }
 
   @include mq-tablet() {

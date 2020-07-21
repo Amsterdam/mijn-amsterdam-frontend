@@ -39,7 +39,7 @@ export default function Profile() {
 
   return (
     <DetailPage className={styles.Profile}>
-      <PageHeading icon={<ChapterIcon />} isLoading={isLoading(BRP)}>
+      <PageHeading icon={<ChapterIcon />} isLoading={false}>
         Mijn gegevens
       </PageHeading>
       <PageContent className={styles.Intro}>
@@ -76,15 +76,13 @@ export default function Profile() {
               in de BRP geregistreerd als "vertrokken – onbekend waarheen".
             </p>
             <p>
-              U kunt uw huidige adres doorgeven bij het Stadsloket. U moet
-              hiervoor een{' '}
+              U kunt uw huidige adres doorgeven bij het Stadsloket.{' '}
               <LinkdInline
                 external={true}
                 href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
               >
-                afspraak
-              </LinkdInline>{' '}
-              maken.
+                U moet hiervoor een afspraak maken.
+              </LinkdInline>
             </p>
           </Alert>
         )}
@@ -93,15 +91,12 @@ export default function Profile() {
           <Alert type="warning" className="inOnderzoek">
             <p>
               Op dit moment onderzoeken wij of u nog steeds woont op het adres
-              waar u ingeschreven staat. Kijk voor{' '}
+              waar u ingeschreven staat.{' '}
               <LinkdInline
                 external={true}
                 href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BCAE578D9-A593-40FC-97C6-46BEA5B51319%7D"
               >
-                meer
-              </LinkdInline>{' '}
-              informatie over een adresonderzoek op{' '}
-              <LinkdInline external={true} href="https://www.amsterdam.nl">
+                Kijk voor meer informatie over een adresonderzoek op
                 amsterdam.nl
               </LinkdInline>
               .

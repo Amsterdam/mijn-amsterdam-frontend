@@ -86,15 +86,12 @@ const afwijzenLabels: FocusStepContent = {
 const buitenBehandelingLabels: FocusStepContent = {
   notification: {
     title: document =>
-      `${document.productTitle}: Uw aanvraag is buiten behandeling gesteld`,
-    description: document =>
-      `Uw aanvraag is buiten behandeling gesteld (besluit: ${defaultDateFormat(
-        document.datePublished
-      )}).`,
+      `${document.productTitle}: Wij behandelen uw aanvraag niet meer`,
+    description: document => `Bekijk de brief voor meer details.`,
   },
   status: stepLabels.beslissing,
   description: document =>
-    `<p>Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer
+    `<p>Wij behandelen uw aanvraag niet meer. Bekijk de brief voor meer
           details.</p>`,
 };
 
