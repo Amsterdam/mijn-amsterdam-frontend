@@ -79,8 +79,7 @@
 
   .ProfileName {
     margin-left: 3.3rem;
-    margin-right: 3.3rem;
-    font-weight: normal;
+    margin-right: 2.8rem;
     text-decoration: none;
 
     a:hover {
@@ -100,7 +99,6 @@
       &, &:hover {
         border-top: 0.1rem solid $color-neutral-grey2;
       }
-      font-weight: bold;
       font-size: 1.5rem;
       margin: 0;
       padding-left: 1.6rem;
@@ -223,7 +221,8 @@
 }
 
 .ProfileLink {
-  margin-left: 3.3rem;
+  margin-left: 1.3rem;
+  font-weight: normal;
   svg {
     position: absolute;;
     width: 1.2em;
@@ -232,9 +231,8 @@
   }
 }
 .ProfileLink--active {
-  // font-weight: bold;
   color: $color-support-blue;
-  text-decoration: underline;
+  // text-decoration: underline;
 
   svg {
     fill: $color-support-blue;
@@ -244,6 +242,6 @@
 .ProfileLink--private {
   margin-left: 2rem;
   + .ProfileLink--commercial {
-    margin-left: 4rem;
+    margin-left: 5.3rem;
   }
 }

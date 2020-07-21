@@ -62,7 +62,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   ALL: 'Alle gegevens', // indien data helemaal niet opgehaald kan worden
   CMS_CONTENT: 'Uitleg Mijn Amsterdam',
   AFVALPUNTEN: 'Afvalpunten',
-  KVK: 'KvK / Handelsregister',
+  KVK: 'Mijn onderneming',
 };
 
 export function getApiErrors(appState: AppState) {

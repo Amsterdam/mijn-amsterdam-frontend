@@ -12,7 +12,7 @@ router.get(BffEndpoints.SERVICES_TIPS, async function handleRouteTips(
   next: NextFunction
 ) {
   try {
-    const optin = req.query.optin === 'true';
+    const optin = req.cookies.optInPersonalizedTips === 'yes';
     const data = await loadServicesAll(
       res.locals.sessionID,
       getPassthroughRequestHeaders(req),

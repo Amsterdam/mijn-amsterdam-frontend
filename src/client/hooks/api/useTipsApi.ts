@@ -37,9 +37,6 @@ export function useTipsApi() {
       setPrevOptIn(isOptIn);
       fetchTips({
         url: BFFApiUrls.SERVICES_TIPS,
-        params: {
-          optin: isOptIn,
-        },
         postpone: false,
       });
     }
