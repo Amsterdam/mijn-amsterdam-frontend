@@ -1,8 +1,21 @@
 import { requestData } from '../helpers';
 import { getApiConfig } from '../config';
 
+export interface AddresCommercial {
+  straatnaam: string | null;
+  postcode: string | null;
+  woonplaatsNaam: string | null;
+  huisnummer: string | null;
+  huisnummertoevoeging: string | null;
+  huisletter: string | null;
+  begindatumVerblijf: string | null;
+  inOnderzoek: boolean;
+}
+
 export interface KVKSourceDataContent {
   name: string;
+  address: AddresCommercial;
+  mokum: boolean;
 }
 export interface KVKSourceData {
   content: KVKSourceDataContent;

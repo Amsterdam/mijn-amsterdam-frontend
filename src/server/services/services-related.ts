@@ -1,14 +1,7 @@
 import { fetchBRP } from './index';
 import { fetchHOME } from './home';
 import { fetchKVK } from './kvk';
-import {
-  apiDependencyError,
-  ApiDependencyErrorResponse,
-} from '../../universal/helpers/api';
-
-type KVKResponseData =
-  | ResolvedType<ReturnType<typeof fetchKVK>>
-  | ApiDependencyErrorResponse;
+import { apiDependencyError } from '../../universal/helpers/api';
 
 export async function loadServicesRelated(
   sessionID: SessionID,
@@ -17,7 +10,7 @@ export async function loadServicesRelated(
   const BRP = await fetchBRP(sessionID, passthroughRequestHeaders);
   const HOME = await fetchHOME(sessionID, passthroughRequestHeaders);
 
-  let KVK: KVKResponseData;
+  let KVK;
 
   if (BRP.status === 'OK') {
     KVK = await fetchKVK(

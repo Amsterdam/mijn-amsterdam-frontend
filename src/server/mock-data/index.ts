@@ -47,11 +47,11 @@ type MockDataConfig = Record<
 
 export const mockDataConfig: MockDataConfig = {
   [ApiUrls.BELASTINGEN]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
+      // if (isCommercialUser(config)) {
+      //   return 'no-content';
+      // }
       return await loadMockApiResponseJson(BELASTINGEN);
     },
   },
@@ -94,64 +94,64 @@ export const mockDataConfig: MockDataConfig = {
     },
   },
   [ApiUrls.ERFPACHT]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
+      // if (isCommercialUser(config)) {
+      //   return 'no-content';
+      // }
       return await JSON.stringify({ status: true });
     },
   },
   [ApiUrls.BAG]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
+      // if (isCommercialUser(config)) {
+      //   return 'no-content';
+      // }
       return await loadMockApiResponseJson(BAG);
     },
   },
   [ApiUrls.AFVAL]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
+      // if (isCommercialUser(config)) {
+      //   return 'no-content';
+      // }
       return await loadMockApiResponseJson(AFVAL);
     },
   },
   [ApiUrls.MILIEUZONE]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
+      // if (isCommercialUser(config)) {
+      //   return await loadMockApiResponseJson(MILIEUZONE);
+      // }
       return await loadMockApiResponseJson(MILIEUZONE);
     },
   },
   [ApiUrls.CMS_CONTENT_GENERAL_INFO]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
+      // if (isCommercialUser(config)) {
+      //   return 'no-content';
+      // }
       return await loadMockApiResponseJson(AMSTERDAM_CONTENT_GENERAL_INFO);
     },
   },
   [ApiUrls.CMS_CONTENT_FOOTER]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
+      // if (isCommercialUser(config)) {
+      //   return 'no-content';
+      // }
       return await loadMockApiResponseJson(AMSTERDAM_CONTENT_FOOTER);
     },
   },
   [ApiUrls.VERGUNNINGEN]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
       if (isCommercialUser(config)) {
-        return 'no-content';
+        return await loadMockApiResponseJson(VERGUNNINGEN);
       }
       return await loadMockApiResponseJson(VERGUNNINGEN);
     },
@@ -166,7 +166,7 @@ export const mockDataConfig: MockDataConfig = {
     },
   },
   [ApiUrls.TIPS]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     method: 'post',
     responseData: async (config: any) => {
       const requestData = JSON.parse(config.data);

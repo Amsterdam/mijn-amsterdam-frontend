@@ -2,7 +2,6 @@ import { capitalizeFirstLetter } from '../../../universal/helpers';
 import { GarbageRetrievalMoment, Stadsdeel } from '../../../universal/types';
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers/source-api-request';
-import { scrapeGarbageCenterData } from './afvalpunten';
 
 const AFVAL_AFSPRAAK_MAKEN =
   'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Grofvuil.aspx';

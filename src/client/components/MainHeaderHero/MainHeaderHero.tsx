@@ -27,6 +27,8 @@ function imgUrl(
 
 function useHeroSrc() {
   const location = useLocation();
+  const [profileType] = useProfileType();
+  const isCommercialHeader = profileType !== 'private';
   const isChapterPath = (path: string) =>
     !!matchPath(location.pathname, {
       path,
@@ -37,6 +39,9 @@ function useHeroSrc() {
   let imageName: string;
 
   switch (true) {
+    case isCommercialHeader:
+      imageName = 'zakelijk';
+      break;
     case isChapterPath(AppRoutes.BRP):
       imageName = 'burgerzaken';
       break;

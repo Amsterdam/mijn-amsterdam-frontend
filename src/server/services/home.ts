@@ -1,14 +1,6 @@
-import { fetchBAG, fetchBRP } from './index';
+import { apiDependencyError, isMokum } from '../../universal/helpers';
 import { apiSuccesResult } from '../../universal/helpers/api';
-import {
-  ApiDependencyErrorResponse,
-  apiDependencyError,
-  isMokum,
-} from '../../universal/helpers';
-
-export type HOMEResponseData =
-  | ResolvedType<ReturnType<typeof fetchBAG>>
-  | ApiDependencyErrorResponse;
+import { fetchBAG, fetchBRP } from './index';
 
 export async function fetchHOME(
   sessionID: SessionID,
@@ -16,7 +8,7 @@ export async function fetchHOME(
 ) {
   const BRP = await fetchBRP(sessionID, passthroughRequestHeaders);
 
-  let HOME: HOMEResponseData;
+  let HOME;
 
   if (BRP.status === 'OK' && isMokum(BRP.content)) {
     HOME = await fetchBAG(

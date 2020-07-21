@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { BffEndpoints } from './config';
 import { loadServicesAll } from './services/services-all';
-import { loadServicesSSECommercial } from './services/services-sse';
+import { loadServicesSSECommercial } from './services/services-sse-commercial';
 import { getPassthroughRequestHeaders } from './helpers/app';
 
 export const routerCommercial = express.Router();

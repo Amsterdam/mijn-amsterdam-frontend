@@ -1,4 +1,8 @@
-import { getBagSearchAddress, toLatLng } from '../../universal/helpers';
+import {
+  getBagSearchAddress,
+  toLatLng,
+  apiErrorResult,
+} from '../../universal/helpers';
 import { Adres } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
@@ -25,6 +29,10 @@ export function fetchBAG(
   passthroughRequestHeaders: Record<string, string>,
   address: Adres
 ) {
+  if (!address) {
+    return apiErrorResult('Could not query BAG, no address supplied.', null);
+  }
+
   const params = { q: getBagSearchAddress(address) };
 
   return requestData<BAGData>(

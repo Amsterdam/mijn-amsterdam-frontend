@@ -7,14 +7,14 @@ import {
 import {
   loadServicesAfval,
   loadServicesCMSContent,
-  loadServicesDirect,
-  loadServicesGenerated,
+  loadServicesDirectCommercial,
   loadServicesMap,
-  loadServicesRelated,
+  loadServicesRelatedCommercial,
   loadServicesTips,
 } from './index';
+import { loadServicesGeneratedCommercial } from './services-generated-commercial';
 
-export async function loadServicesSSE(
+export async function loadServicesSSECommercial(
   req: Request,
   res: Response,
   next: NextFunction
@@ -29,13 +29,19 @@ export async function loadServicesSSE(
   const sessionID = res.locals.sessionID;
   const passThroughHeaders = getPassthroughRequestHeaders(req);
 
-  const servicesDirect = loadServicesDirect(sessionID, passThroughHeaders);
-
-  addServiceResultHandler(res, servicesDirect, 'direct');
-
-  const servicesRelated = loadServicesRelated(sessionID, passThroughHeaders);
+  const servicesRelated = loadServicesRelatedCommercial(
+    sessionID,
+    passThroughHeaders
+  );
 
   addServiceResultHandler(res, servicesRelated, 'related');
+
+  const servicesDirect = loadServicesDirectCommercial(
+    sessionID,
+    passThroughHeaders
+  );
+
+  addServiceResultHandler(res, servicesDirect, 'direct');
 
   const servicesAfval = loadServicesAfval(sessionID, passThroughHeaders);
 
@@ -52,19 +58,19 @@ export async function loadServicesSSE(
 
   addServiceResultHandler(res, servicesCMSContent, 'cmscontent');
 
-  const servicesGenerated = loadServicesGenerated(
+  const servicesGenerated = loadServicesGeneratedCommercial(
     sessionID,
     passThroughHeaders
   );
 
   addServiceResultHandler(res, servicesGenerated, 'generated');
 
+  const optin = req.cookies.optInPersonalizedTips === 'yes';
+
   const tipsRequestDataServiceResults = await Promise.all([
     servicesDirect,
     servicesRelated,
   ]);
-
-  const optin = req.cookies.optInPersonalizedTips === 'yes';
 
   const servicesTips = loadServicesTips(
     sessionID,
@@ -75,17 +81,10 @@ export async function loadServicesSSE(
 
   addServiceResultHandler(res, servicesTips, 'tips');
 
-  // Wait for all services to have responded and then end the stream.
-  Promise.allSettled([
-    servicesDirect,
-    servicesRelated,
-    servicesAfval,
-    servicesMap,
-    servicesCMSContent,
-    servicesGenerated,
-    servicesTips,
-  ]).then(() => {
-    sendMessage(res, 'close', 'close', null);
-    next();
-  });
+  Promise.allSettled([servicesRelated, servicesDirect, servicesTips]).then(
+    () => {
+      sendMessage(res, 'close', 'close', null);
+      next();
+    }
+  );
 }

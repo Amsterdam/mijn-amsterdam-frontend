@@ -1,4 +1,4 @@
-import { Persoon, Adres, BRPData } from '../types';
+import { Persoon } from '../types';
 
 export function getFullName(persoon: Persoon) {
   return persoon
@@ -13,19 +13,29 @@ export function getFullName(persoon: Persoon) {
     : '';
 }
 
-export function getFullAddress(adres: Adres) {
+export function getFullAddress(adres: {
+  straatnaam: string | null;
+  huisnummer: string | null;
+  huisnummertoevoeging: string | null;
+  huisletter: string | null;
+}) {
   return adres
     ? `${adres.straatnaam} ${adres.huisnummer || ''} ${adres.huisletter ||
         ''} ${adres.huisnummertoevoeging || ''}`.trim()
     : 'unknown address';
 }
 
-export function getBagSearchAddress(adres: Adres) {
+export function getBagSearchAddress(adres: {
+  straatnaam: string | null;
+  huisnummer: string | null;
+}) {
   return adres
     ? `${adres.straatnaam} ${adres.huisnummer || ''}`.trim()
     : 'unknown address';
 }
 
-export function isMokum(brpContent: BRPData | null) {
-  return !!brpContent?.persoon?.mokum;
+export function isMokum(
+  brpContent: { mokum?: boolean; persoon?: { mokum: boolean } } | null
+) {
+  return !!brpContent?.persoon?.mokum || !!brpContent?.mokum;
 }
