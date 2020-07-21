@@ -169,7 +169,11 @@ export default () => {
       </SectionCollapsible>
       <PageContent>
         <p>
-          <Linkd external={true} href={ExternalUrls.AFVAL_MELDING_FORMULIER}>
+          <Linkd
+            className={styles.ContactLink}
+            external={true}
+            href={ExternalUrls.AFVAL_MELDING_FORMULIER}
+          >
             Kloppen de dagen, tijden of adressen niet? Geef het aan ons door.
           </Linkd>
         </p>

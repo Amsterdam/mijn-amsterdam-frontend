@@ -78,6 +78,7 @@
 
   > p {
     font-weight: bold;
+    font-size: 1.4em;
   }
 
   @include mq-tablet() {
@@ -142,3 +143,10 @@
   }
 }
 
+.ContactLink {
+  margin-left: -1.8rem;
+
+  @include mq-phone {
+    margin-left: 0;
+  }
+}
