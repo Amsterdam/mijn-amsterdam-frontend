@@ -5,14 +5,14 @@ import {
   sendMessage,
 } from '../helpers/app';
 import {
-  loadServicesAfval,
+  loadServicesAfvalCommercial,
   loadServicesCMSContent,
   loadServicesDirectCommercial,
-  loadServicesMap,
+  loadServicesGeneratedCommercial,
   loadServicesRelatedCommercial,
+  loadServicesMapCommercial,
   loadServicesTips,
 } from './index';
-import { loadServicesGeneratedCommercial } from './services-generated-commercial';
 
 export async function loadServicesSSECommercial(
   req: Request,
@@ -43,11 +43,14 @@ export async function loadServicesSSECommercial(
 
   addServiceResultHandler(res, servicesDirect, 'direct');
 
-  const servicesAfval = loadServicesAfval(sessionID, passThroughHeaders);
+  const servicesAfval = loadServicesAfvalCommercial(
+    sessionID,
+    passThroughHeaders
+  );
 
   addServiceResultHandler(res, servicesAfval, 'afval');
 
-  const servicesMap = loadServicesMap(sessionID, passThroughHeaders);
+  const servicesMap = loadServicesMapCommercial(sessionID, passThroughHeaders);
 
   addServiceResultHandler(res, servicesMap, 'map');
 

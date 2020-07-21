@@ -17,5 +17,7 @@ export * from './services-related-commercial';
 export * from './services-generated';
 export * from './services-generated-commercial';
 export * from './services-map';
+export * from './services-map-commercial';
 export * from './services-cmscontent';
 export * from './services-afval';
+export * from './services-afval-commercial';
