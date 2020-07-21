@@ -18,7 +18,7 @@ export default function ProfileCommercial() {
   return (
     <DetailPage className={styles.Profile}>
       <PageHeading icon={<ChapterIcon />} isLoading={isLoading(KVK)}>
-        Gegevens handelsregister
+        Mijn onderneming
       </PageHeading>
       <PageContent className={styles.Intro}>
         <p>Lorum ipsum dolimit et cetera</p>

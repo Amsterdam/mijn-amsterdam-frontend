@@ -48,5 +48,5 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   ERFPACHT: 'Erfpacht',
   ZORG: 'Zorg en ondersteuning',
   VERGUNNINGEN: 'Vergunningen',
-  KVK: 'KvK / Handelsregister',
+  KVK: 'Mijn onderneming',
 };
