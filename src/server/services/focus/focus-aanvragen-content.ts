@@ -179,7 +179,7 @@ export const contentLabels: LabelData = {
           },
           status: stepLabels.beslissing,
           description: product =>
-            ' Wij behandelen uw aanvraag niet meer. Bekijk de brief voor meer details.',
+            'Wij behandelen uw aanvraag niet meer. Bekijk de brief voor meer details.',
         },
       },
     },
@@ -295,7 +295,7 @@ export const contentLabels: LabelData = {
           },
           status: stepLabels.beslissing,
           description: product =>
-            ' Wij behandelen uw aanvraag niet meer. Bekijk de brief voor meer details.',
+            'Wij behandelen uw aanvraag niet meer. Bekijk de brief voor meer details.',
         },
       },
     },
