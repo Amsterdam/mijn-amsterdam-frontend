@@ -5,7 +5,8 @@ export type StepTitle =
   | 'inBehandeling'
   | 'herstelTermijn'
   | 'beslissing'
-  | 'bezwaar';
+  | 'bezwaar'
+  | string;
 
 // The official terms of the Focus api "product" names how they are used within the Municipality of Amsterdam.
 export type ProductTitle = 'Levensonderhoud' | 'Stadspas' | string;
@@ -86,6 +87,8 @@ export interface FocusItemStep {
   isActive?: boolean;
   isChecked?: boolean;
   decision?: DecisionFormatted;
+  notificationTitle?: string;
+  notificationDescription?: string;
 }
 
 export interface FocusItem extends FocusProduct {
@@ -108,11 +111,8 @@ export type DecisionFormatted =
   | 'intrekking'
   | 'buitenbehandeling';
 
-export type TextPartContents = (data: FocusProduct, customData?: any) => string;
-export type LinkContents = (
-  data: FocusProduct | FocusItem,
-  customData?: any
-) => Partial<LinkProps>;
+export type TextPartContents = (data: any, customData?: any) => string;
+export type LinkContents = (data: any, customData?: any) => Partial<LinkProps>;
 
 export interface FocusStepContent {
   description: TextPartContents;
@@ -135,6 +135,7 @@ export interface ProductStepLabels {
   bezwaar?: FocusStepContent;
   beslissing?: FocusStepContentDecision;
   link?: LinkContents;
+  [key: string]: any;
 }
 
 export interface LabelData {

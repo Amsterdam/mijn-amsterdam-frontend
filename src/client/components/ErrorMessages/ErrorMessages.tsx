@@ -53,7 +53,7 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
       <p className={styles.MessageBar}>
         <span className={styles.MessageBarInner}>
           <IconAlert aria-hidden="true" className={styles.AlertIcon} /> U ziet
-          misschien niet al uw gegevens{' '}
+          misschien niet al uw gegevens.{' '}
           <Button
             lean={true}
             variant="inline"

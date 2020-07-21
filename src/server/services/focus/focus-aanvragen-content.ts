@@ -174,15 +174,12 @@ export const contentLabels: LabelData = {
         buitenbehandeling: {
           notification: {
             title: product =>
-              `${product.title}: Uw aanvraag is buiten behandeling gesteld`,
-            description: product =>
-              `Uw aanvraag is buiten behandeling gesteld (besluit ${defaultDateFormat(
-                product.datePublished
-              )}).`,
+              `${product.title}: Wij behandelen uw aanvraag niet meer`,
+            description: product => `Bekijk de brief voor meer details.`,
           },
           status: stepLabels.beslissing,
           description: product =>
-            'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
+            'Wij behandelen uw aanvraag niet meer. Bekijk de brief voor meer details.',
         },
       },
     },
@@ -293,15 +290,12 @@ export const contentLabels: LabelData = {
         buitenbehandeling: {
           notification: {
             title: product =>
-              `${product.title}: Uw aanvraag is buiten behandeling gesteld`,
-            description: product =>
-              `Uw aanvraag is buiten behandeling gesteld (besluit ${defaultDateFormat(
-                product.datePublished
-              )}).`,
+              `${product.title}: Wij behandelen uw aanvraag niet meer`,
+            description: product => `Bekijk de brief voor meer details.`,
           },
           status: stepLabels.beslissing,
           description: product =>
-            'Uw aanvraag is buiten behandeling gesteld. Bekijk de brief voor meer details.',
+            'Wij behandelen uw aanvraag niet meer. Bekijk de brief voor meer details.',
         },
       },
     },
