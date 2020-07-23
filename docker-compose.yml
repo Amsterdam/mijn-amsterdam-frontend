@@ -9,6 +9,7 @@ services:
     environment:
       - BFF_DISABLE_MOCK_ADAPTER=true
       - BFF_ENV=test
+      - REACT_APP_ENV=test
       - TZ=Europe/Amsterdam
     entrypoint: npm run bff-api:test
 
