@@ -1,4 +1,8 @@
-import { apiSuccesResult, dateSort } from '../../../universal/helpers';
+import {
+  apiDependencyError,
+  apiSuccesResult,
+  dateSort,
+} from '../../../universal/helpers';
 import { MyCase, MyNotification } from '../../../universal/types';
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
@@ -70,7 +74,7 @@ export async function fetchFOCUSAanvragenGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  const focusItemsResponse = await fetchFOCUSAanvragen(
+  const FOCUS_AANVRAGEN = await fetchFOCUSAanvragen(
     sessionID,
     passthroughRequestHeaders
   );
@@ -79,8 +83,8 @@ export async function fetchFOCUSAanvragenGenerated(
   let notifications: MyNotification[] = [];
   let cases: MyCase[] = [];
 
-  if (focusItemsResponse.status === 'OK') {
-    const items = focusItemsResponse.content as FocusItem[];
+  if (FOCUS_AANVRAGEN.status === 'OK') {
+    const items = FOCUS_AANVRAGEN.content as FocusItem[];
 
     notifications =
       items.map(focusItem =>
@@ -91,10 +95,12 @@ export async function fetchFOCUSAanvragenGenerated(
       items
         .filter(focusItem => isRecentItem(focusItem.steps, compareDate))
         .map(focusItem => createFocusRecentCase(focusItem)) || [];
+
+    return apiSuccesResult({
+      cases,
+      notifications,
+    });
   }
 
-  return {
-    cases,
-    notifications,
-  };
+  return apiDependencyError({ FOCUS_AANVRAGEN });
 }

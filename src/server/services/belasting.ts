@@ -3,6 +3,10 @@ import { MyNotification, MyTip } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { omit } from '../../universal/helpers';
+import {
+  apiSuccesResult,
+  apiDependencyError,
+} from '../../universal/helpers/api';
 
 export interface BELASTINGENData {
   isKnown: boolean;
@@ -77,15 +81,17 @@ export async function fetchBELASTINGGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  let notifications: MyNotification[] = [];
-
-  const response = await fetchBELASTING(
+  const BELASTING = await fetchBELASTING(
     sessionID,
     passthroughRequestHeaders,
     true
   );
-  if (response.status === 'OK' && response.content.notifications) {
-    notifications = response.content.notifications;
+  if (BELASTING.status === 'OK') {
+    if (BELASTING.content.notifications) {
+      return apiSuccesResult({
+        notifications: BELASTING.content.notifications,
+      });
+    }
   }
-  return { notifications };
+  return apiDependencyError({ BELASTING });
 }

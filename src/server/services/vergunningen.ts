@@ -132,29 +132,34 @@ export async function fetchVergunningenGenerated(
   passthroughRequestHeaders: Record<string, string>,
   compareDate?: Date
 ) {
-  const vergunningen = await fetchVergunningen(
+  const VERGUNNINGEN = await fetchVergunningen(
     sessionID,
     passthroughRequestHeaders
   );
-  const compareToDate = compareDate || new Date();
 
-  const cases = Array.isArray(vergunningen.content)
-    ? vergunningen.content
-        .filter(
-          vergunning =>
-            vergunning.status !== 'Afgehandeld' ||
-            (vergunning.dateDecision &&
-              isRecentCase(vergunning.dateDecision, compareToDate))
-        )
-        .map(createVergunningRecentCase)
-    : [];
+  if (VERGUNNINGEN.status === 'OK') {
+    const compareToDate = compareDate || new Date();
 
-  const notifications = Array.isArray(vergunningen.content)
-    ? vergunningen.content.map(createVergunningNotification)
+    const cases = Array.isArray(VERGUNNINGEN.content)
+      ? VERGUNNINGEN.content
+          .filter(
+            vergunning =>
+              vergunning.status !== 'Afgehandeld' ||
+              (vergunning.dateDecision &&
+                isRecentCase(vergunning.dateDecision, compareToDate))
+          )
+          .map(createVergunningRecentCase)
+      : [];
+
+  const notifications = Array.isArray(VERGUNNINGEN.content)
+    ? VERGUNNINGEN.content.map(createVergunningNotification)
     : [];
 
   return {
     cases,
     notifications,
   };
+}
+
+  return apiDependencyError({ VERGUNNINGEN });
 }

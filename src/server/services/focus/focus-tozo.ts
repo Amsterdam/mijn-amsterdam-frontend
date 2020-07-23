@@ -1,3 +1,4 @@
+import { apiSuccesResult, dateSort } from '../../../universal/helpers';
 import { isRecentCase } from '../../../universal/helpers/utils';
 import { MyCase, MyNotification } from '../../../universal/types/App.types';
 import { stepStatusLabels } from './focus-aanvragen-content';
@@ -28,16 +29,16 @@ export async function fetchFOCUSTozoGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  const tozoItems = await fetchFOCUSTozo(sessionID, passthroughRequestHeaders);
+  const TOZO = await fetchFOCUSTozo(sessionID, passthroughRequestHeaders);
 
-  if (tozoItems.status === 'OK') {
+  if (TOZO.status === 'OK') {
     const compareDate = new Date();
 
-    const notifications: MyNotification[] = tozoItems.content.flatMap(item =>
+    const notifications: MyNotification[] = TOZO.content.flatMap(item =>
       createTozoDocumentStepNotifications(item)
     );
 
-    const cases: MyCase[] = tozoItems.content
+    const cases: MyCase[] = TOZO.content
       .filter(
         item =>
           isRecentCase(item.datePublished, compareDate) ||
@@ -46,11 +47,11 @@ export async function fetchFOCUSTozoGenerated(
       .map(createFocusRecentCase)
       .filter(recentCase => recentCase !== null);
 
-    return {
+    return apiSuccesResult({
       cases,
       notifications,
-    };
+    });
   }
 
-  return tozoItems;
+  return apiDependencyError({ TOZO });
 }

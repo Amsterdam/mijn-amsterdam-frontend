@@ -3,6 +3,10 @@ import { omit } from '../../universal/helpers';
 import { MyNotification, MyTip } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import {
+  apiDependencyError,
+  apiSuccesResult,
+} from '../../universal/helpers/api';
 
 export interface MILIEUZONEData {
   isKnown: boolean;
@@ -74,15 +78,17 @@ export async function fetchMILIEUZONEGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  let notifications: MyNotification[] = [];
-
-  const response = await fetchMILIEUZONE(
+  const MILIEUZONE = await fetchMILIEUZONE(
     sessionID,
     passthroughRequestHeaders,
     true
   );
-  if (response.status === 'OK' && response.content.notifications) {
-    notifications = response.content.notifications;
+  if (MILIEUZONE.status === 'OK' && MILIEUZONE.content.notifications) {
+    if (MILIEUZONE.content.notifications) {
+      return apiSuccesResult({
+        notifications: MILIEUZONE.content.notifications,
+      });
+    }
   }
-  return { notifications };
+  return apiDependencyError({ MILIEUZONE });
 }

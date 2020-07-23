@@ -7,7 +7,10 @@ import {
   dateSort,
   defaultDateFormat,
 } from '../../../universal/helpers';
-import { apiSuccesResult } from '../../../universal/helpers/api';
+import {
+  apiSuccesResult,
+  apiDependencyError,
+} from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
 import {
   fetchFOCUSCombined,
@@ -147,14 +150,17 @@ export async function fetchFOCUSSpecificationsGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  const response = await fetchFOCUSSpecificaties(
+  const FOCUS_SPECIFICATIES = await fetchFOCUSSpecificaties(
     sessionID,
     passthroughRequestHeaders
   );
   const notifications: MyNotification[] = [];
 
-  if (response.status === 'OK') {
-    const { jaaropgaven, uitkeringsspecificaties } = response.content;
+  if (FOCUS_SPECIFICATIES.status === 'OK') {
+    const {
+      jaaropgaven,
+      uitkeringsspecificaties,
+    } = FOCUS_SPECIFICATIES.content;
 
     if (jaaropgaven.length) {
       notifications.push(
@@ -170,9 +176,13 @@ export async function fetchFOCUSSpecificationsGenerated(
         )
       );
     }
+
+    return apiSuccesResult({
+      notifications,
+    });
   }
 
-  return {
-    notifications,
-  };
+  return apiDependencyError({
+    FOCUS_SPECIFICATIES,
+  });
 }
