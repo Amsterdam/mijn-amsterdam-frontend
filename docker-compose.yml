@@ -14,12 +14,13 @@ services:
   test-unit-client:
     build:
       context: .
+      args:
+        - BFF_ENV=test
+        - REACT_APP_ENV=test
       dockerfile: Dockerfile
       target: build-deps
     environment:
       - BFF_DISABLE_MOCK_ADAPTER=true
-      - BFF_ENV=test
-      - REACT_APP_ENV=test
       - TZ=Europe/Amsterdam
     entrypoint: npm test
 
