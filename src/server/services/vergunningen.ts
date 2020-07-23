@@ -45,9 +45,9 @@ export function transformVergunningenData(
   }
 
   const vergunningen: Vergunning[] = responseData?.content?.map(item => {
-    const id = `vergunning-${hash(
-      item.identifier || item.caseType + item.dateRequest
-    )}`;
+    const id = hash(
+      `vergunning-${item.identifier || item.caseType + item.dateRequest}`
+    );
     const dateEnd = item.dateEndInclusive;
     delete item.dateEndInclusive;
     const vergunning = Object.assign({}, item, {

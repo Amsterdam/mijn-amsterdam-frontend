@@ -1,17 +1,12 @@
-import { requestData, axiosRequest, cache } from './source-api-request';
-import MockAdapter from 'axios-mock-adapter';
-import axios from 'axios';
-import {
-  apiSuccesResult,
-  apiPostponeResult,
-  apiErrorResult,
-} from '../../universal/helpers/api';
 import * as Sentry from '@sentry/node';
+import MockAdapter from 'axios-mock-adapter';
 import {
-  TMA_SAML_HEADER,
-  DEFAULT_REQUEST_CONFIG,
-  BFF_MS_API_BASE_URL,
-} from '../config';
+  apiErrorResult,
+  apiPostponeResult,
+  apiSuccesResult,
+} from '../../universal/helpers/api';
+import { BFF_MS_API_BASE_URL, TMA_SAML_HEADER } from '../config';
+import { axiosRequest, cache, requestData } from './source-api-request';
 
 describe('requestData.ts', () => {
   const DUMMY_RESPONSE = { foo: 'bar' };
