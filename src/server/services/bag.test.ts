@@ -57,19 +57,12 @@ describe('BAG service', () => {
   });
 
   it('Bag api should fail correct;y', async () => {
-    // @ts-ignore
-    const capture = (Sentry.captureMessage = jest.fn(() => {
-      return 'x';
-    }));
     const rs = await fetchBAG('x', { x: 'saml' }, {} as any);
 
     expect(rs).toStrictEqual({
       status: 'ERROR',
       message: 'Error: Request failed with status code 500',
       content: null,
-      sentry: 'x',
     });
-
-    capture.mockRestore();
   });
 });

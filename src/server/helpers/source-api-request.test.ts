@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/node';
 import MockAdapter from 'axios-mock-adapter';
 import {
   apiErrorResult,
@@ -139,13 +138,6 @@ describe('requestData.ts', () => {
   });
 
   it('A requests responds with error', async () => {
-    // @ts-ignore
-    const capture = (Sentry.captureException = Sentry.captureMessage = jest.fn(
-      () => {
-        return 'x';
-      }
-    ));
-
     const rs = await requestData(
       {
         url: DUMMY_URL_2,
@@ -154,24 +146,8 @@ describe('requestData.ts', () => {
       HEADERS
     );
 
-    // @ts-ignore
-    expect(rs.sentry).toBe('x');
-
     const error = new Error('Network Error');
 
-    expect(rs).toStrictEqual(apiErrorResult(error.toString(), null, 'x'));
-
-    expect(capture).toHaveBeenCalledWith(`unknown: ${error.message}`, {
-      tags: {
-        url: DUMMY_URL_2,
-      },
-      extra: {
-        module: 'request',
-        status: undefined,
-        apiName: 'unknown',
-      },
-    });
-
-    capture.mockRestore();
+    expect(rs).toStrictEqual(apiErrorResult(error.toString(), null, null));
   });
 });
