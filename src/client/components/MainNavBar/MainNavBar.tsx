@@ -152,16 +152,16 @@ function PrivateCommercialProfileToggle({
 interface ProfileNameProps {
   person?: BRPData['persoon'] | null;
   company?: KVKSourceDataContent | null;
-  userType?: SessionData['userType'];
+  profileType: ProfileType;
 }
 
-function ProfileName({ person, company, userType }: ProfileNameProps) {
+function ProfileName({ person, company, profileType }: ProfileNameProps) {
   const history = useHistory();
   const nameContent = useMemo(() => {
     let nameContent: undefined | string | ReactNode;
 
-    switch (true) {
-      case !!person && !company:
+    switch (profileType) {
+      case 'private':
         nameContent = (
           <PrivateProfileName
             person={person!}
@@ -171,10 +171,10 @@ function ProfileName({ person, company, userType }: ProfileNameProps) {
           />
         );
         break;
-      case !!(person && company):
+      case 'private-commercial':
         nameContent = <PrivateCommercialProfileToggle person={person!} />;
         break;
-      case !person && !!company:
+      case 'commercial':
         nameContent = (
           <CommercialProfileName
             company={company!}
@@ -186,13 +186,13 @@ function ProfileName({ person, company, userType }: ProfileNameProps) {
         break;
     }
     return nameContent;
-  }, [person, company, history]);
+  }, [person, company, profileType, history]);
 
   return (
     <span
       className={classnames(
         styles.ProfileName,
-        styles[`ProfileName--${userType}`]
+        styles[`ProfileName--${profileType}`]
       )}
     >
       {nameContent || <LoadingContent barConfig={[['15rem', '1rem', '0']]} />}
@@ -205,7 +205,7 @@ function SecondaryLinks() {
   const persoon = BRP.content?.persoon || null;
   const hasFirstName = !!(persoon && persoon.voornamen);
   const isDesktopScreen = useDesktopScreen();
-  const session = useSessionValue();
+  const [profileType] = useProfileType();
 
   useEffect(() => {
     if (hasFirstName) {
@@ -219,7 +219,7 @@ function SecondaryLinks() {
       <ProfileName
         person={BRP.content?.persoon}
         company={KVK.content}
-        userType={session.userType}
+        profileType={profileType}
       />
       <LogoutLink>Uitloggen</LogoutLink>
     </div>
