@@ -17,9 +17,9 @@ export function InfoDetailGroup({ children }: InfoDetailGroupProps) {
 
 export default function InfoDetail({ label, value }: InfoDetailProps) {
   return (
-    <div className={styles.InfoDetail}>
+    <p className={styles.InfoDetail}>
       <span className={styles.Label}>{label}</span>
       <span className={styles.Value}>{value}</span>
-    </div>
+    </p>
   );
 }
