@@ -3,9 +3,11 @@ import { atom, useRecoilState } from 'recoil';
 import { IS_COMMERCIAL_PATH_MATCH } from '../config/api';
 import { useSessionStorage } from './storage.hook';
 
+const initialProfileType = IS_COMMERCIAL_PATH_MATCH ? 'commercial' : 'private';
+
 const profileTypeState = atom<ProfileType>({
   key: 'profileType',
-  default: IS_COMMERCIAL_PATH_MATCH ? 'commercial' : 'private',
+  default: initialProfileType as ProfileType,
 });
 
 export function useProfileType() {
