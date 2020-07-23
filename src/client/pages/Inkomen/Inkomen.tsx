@@ -60,7 +60,7 @@ export default () => {
   const uitkeringsspecificaties =
     FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties || [];
   const jaaropgaven = FOCUS_SPECIFICATIES.content?.jaaropgaven || [];
-  console.log('wah');
+
   const itemsRequested = useMemo(() => {
     const itemsRequested = aanvragen.filter(item =>
       item.steps.every(step => step.title !== 'beslissing')
