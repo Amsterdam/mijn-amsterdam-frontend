@@ -50,6 +50,14 @@ const pageConfig = {
     hasCollapsiblePanels: true,
     pathname: '/afval',
   },
+  VERGUNNINGEN: {
+    hasCollapsiblePanels: true,
+    pathname: '/vergunningen',
+  },
+  'VERGUNNINGEN/DETAIL': {
+    isDetailpage: true,
+    pathname: '/vergunningen/detail/:id?',
+  },
 
   // Permanent non conditional pages
   BUURT: {
