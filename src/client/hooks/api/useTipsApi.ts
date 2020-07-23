@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { TIPSData } from '../../../server/services/tips';
 import { ApiResponse } from '../../../universal/helpers/api';
 import { PRISTINE_APPSTATE } from '../../AppState';
@@ -6,6 +6,7 @@ import { BFFApiUrls } from '../../config/api';
 import { useAppStateGetter, useAppStateSetter } from '../useAppState';
 import { useOptIn } from '../useOptIn';
 import { requestApiData, useDataApi } from './useDataApi';
+import { useProfileType } from '../useProfileType';
 
 function transformResponse(response: ApiResponse<TIPSData>) {
   return {
@@ -20,15 +21,19 @@ export function useTipsApi() {
   const [prevOptIn, setPrevOptIn] = useState(isOptIn);
   const setAppState = useAppStateSetter();
   const appState = useAppStateGetter();
-  const [api, fetchTips] = useDataApi<{ TIPS: ApiResponse<TIPSData> }>(
-    {
-      url: BFFApiUrls.SERVICES_TIPS,
+  const [profileType] = useProfileType();
+  const requestConfig = useMemo(() => {
+    return {
+      url: BFFApiUrls[profileType].SERVICES_TIPS,
       postpone: true,
       transformResponse: [
         ...requestApiData.defaults.transformResponse,
         transformResponse,
       ],
-    },
+    };
+  }, [profileType]);
+  const [api, fetchTips] = useDataApi<{ TIPS: ApiResponse<TIPSData> }>(
+    requestConfig,
     pristineData
   );
 
@@ -36,11 +41,11 @@ export function useTipsApi() {
     if (prevOptIn !== isOptIn && !api.isLoading) {
       setPrevOptIn(isOptIn);
       fetchTips({
-        url: BFFApiUrls.SERVICES_TIPS,
+        ...requestConfig,
         postpone: false,
       });
     }
-  }, [isOptIn, prevOptIn, fetchTips, api.isLoading]);
+  }, [isOptIn, prevOptIn, fetchTips, api.isLoading, requestConfig]);
 
   useEffect(() => {
     if (api.isLoading && appState.TIPS !== pristineData.TIPS) {

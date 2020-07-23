@@ -1,14 +1,14 @@
 import * as Sentry from '@sentry/browser';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 import { atom, useRecoilState } from 'recoil';
 import { AppState, createAllErrorState, PRISTINE_APPSTATE } from '../AppState';
 import { BFFApiUrls } from '../config/api';
 import { transformAppState } from '../data-transform/appState';
 import { pollBffHealth, requestApiData, useDataApi } from './api/useDataApi';
 import { SSE_ERROR_MESSAGE, useSSE } from './useSSE';
+import { useProfileType } from './useProfileType';
 
 const fallbackServiceRequestOptions = {
-  url: BFFApiUrls.SERVICES_SAURON,
   postpone: true,
   transformResponse: [
     ...requestApiData.defaults.transformResponse,
@@ -21,21 +21,20 @@ export const appStateAtom = atom<AppState>({
   default: PRISTINE_APPSTATE,
 });
 
+const hasEventSourceSupport = 'EventSource' in window; // IE11 and early edge versions don't have EventSource support. These browsers will use the the Fallback service endpoint.
+
 /**
  * The primary communication is the EventSource. In the case the EventSource can't connect to the server, a number of retries will take place.
  * If the EventSource fails the Fallback service endpoint /all will be used in a last attempt to fetch the data needed to display a fruity application.
  * If that fails we just can't connect to the server for whatever reason. Sentry error handling might have information about this scenario.
  */
 export function useAppState() {
-  const hasEventSourceSupport = 'EventSource' in window; // IE11 and early edge versions don't have EventSource support. These browsers will use the the Fallback service endpoint.
-  // const { TIPS, isLoading: isLoadingTips } = useTipsApi();
   const [isFallbackServiceEnabled, setFallbackServiceEnabled] = useState(
     !hasEventSourceSupport
   );
-  const [isDataRequested, setIsDateRequested] = useState(false);
-
+  const [isDataRequested, setIsDataRequested] = useState(false);
+  const [profileType] = useProfileType();
   const [appState, setAppState] = useRecoilState(appStateAtom);
-
   const [api, fetchFallbackService] = useDataApi<AppState | null>(
     fallbackServiceRequestOptions,
     null
@@ -62,6 +61,7 @@ export function useAppState() {
           .then(() => {
             fetchFallbackService({
               ...fallbackServiceRequestOptions,
+              url: BFFApiUrls[profileType].SERVICES_SAURON,
               postpone: false,
             });
           })
@@ -70,6 +70,7 @@ export function useAppState() {
         // If we don't have EventSource support start with the Fallback service immediately
         fetchFallbackService({
           ...fallbackServiceRequestOptions,
+          url: BFFApiUrls[profileType].SERVICES_SAURON,
           postpone: false,
         });
       }
@@ -79,8 +80,8 @@ export function useAppState() {
     isFallbackServiceEnabled,
     api.isPristine,
     isDataRequested,
-    hasEventSourceSupport,
     appStateError,
+    profileType,
   ]);
 
   // Update the appState with data fetched by the Fallback service endpoint
@@ -89,16 +90,15 @@ export function useAppState() {
       return;
     }
     if (api.data !== null && !api.isLoading && !api.isError) {
+      setIsDataRequested(true);
       setAppState(appState => Object.assign({}, appState, api.data));
-      setIsDateRequested(true);
     } else if (api.isError) {
       // If everything fails, this is the final state update.
       const errorMessage =
         'Services.all endpoint could not be reached or returns an error. ' +
         (isFallbackServiceEnabled ? 'Fallback service fallback enabled.' : '');
-
+      setIsDataRequested(true);
       appStateError(errorMessage);
-      setIsDateRequested(true);
     }
   }, [
     appState,
@@ -129,7 +129,11 @@ export function useAppState() {
     [setAppState]
   );
 
-  useSSE(BFFApiUrls.SERVICES_SSE, 'message', onEvent, isFallbackServiceEnabled);
+  const path = useMemo(() => {
+    return BFFApiUrls[profileType].SERVICES_SSE;
+  }, [profileType]);
+
+  useSSE(path, 'message', onEvent, isFallbackServiceEnabled);
 
   return appState;
 }
