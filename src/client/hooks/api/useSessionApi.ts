@@ -148,6 +148,7 @@ export function useSessionApi() {
     isPristine,
     refetch,
     setSession,
+    logoutSession,
   ]);
 
   return session;
