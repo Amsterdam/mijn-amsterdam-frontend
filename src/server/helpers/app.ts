@@ -14,7 +14,7 @@ import uid from 'uid-safe';
 export function isValidRequestPath(requestPath: string, path: string) {
   return (
     requestPath === `${BFF_BASE_PATH}${path}` ||
-    `${BFF_BASE_PATH}/commercial/${path}`
+    requestPath === `${BFF_BASE_PATH}/commercial${path}`
   );
 }
 
