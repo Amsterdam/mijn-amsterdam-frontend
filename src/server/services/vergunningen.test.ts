@@ -7,6 +7,7 @@ import {
   fetchVergunningen,
   transformVergunningenData,
   VergunningenSourceData,
+  fetchVergunningenGenerated,
 } from './vergunningen';
 
 describe('Vergunningen service', () => {
@@ -33,7 +34,7 @@ describe('Vergunningen service', () => {
     ).toMatchSnapshot();
   });
 
-  it('should respond with a success response', async () => {
+  it('FetchVergunningen: should respond with a success response', async () => {
     ApiConfig.VERGUNNINGEN.url = DUMMY_URL_1;
     const response = await fetchVergunningen('x', { x: 'saml' });
     const successResponse = {
@@ -62,5 +63,15 @@ describe('Vergunningen service', () => {
       status: 'ERROR',
     };
     expect(response).toStrictEqual(errorResponse);
+  });
+
+  it('FetchVergunningenGenerated: should respond with a success response', async () => {
+    ApiConfig.VERGUNNINGEN.url = DUMMY_URL_1;
+    const response = await fetchVergunningenGenerated(
+      'x',
+      { x: 'saml' },
+      new Date('2020-06-23')
+    );
+    expect(response).toMatchSnapshot(response);
   });
 });

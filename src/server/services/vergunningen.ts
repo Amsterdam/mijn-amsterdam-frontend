@@ -122,13 +122,14 @@ export function createVergunningNotification(item: Vergunning) {
 
 export async function fetchVergunningenGenerated(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  passthroughRequestHeaders: Record<string, string>,
+  compareDate?: Date
 ) {
   const vergunningen = await fetchVergunningen(
     sessionID,
     passthroughRequestHeaders
   );
-  const compareDate = new Date();
+  const compareToDate = compareDate || new Date();
 
   const cases = Array.isArray(vergunningen.content)
     ? vergunningen.content
@@ -136,7 +137,7 @@ export async function fetchVergunningenGenerated(
           vergunning =>
             vergunning.status !== 'Afgehandeld' ||
             (vergunning.dateDecision &&
-              isRecentCase(vergunning.dateDecision, compareDate))
+              isRecentCase(vergunning.dateDecision, compareToDate))
         )
         .map(createVergunningRecentCase)
     : [];
