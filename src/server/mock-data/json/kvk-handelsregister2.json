@@ -1,5 +1,6 @@
 {
   "content": {
+    "mokum": true,
     "onderneming": {
       "handelsnaam": "Take out Thai food B.V.",
       "overigeHandelsnamen": [],
@@ -35,6 +36,7 @@
         "postadres": null,
         "telefoonnummer": "0612345600",
         "websites": ["https://www.takeoutthaifood.nl"],
+        "email": "info@takeoutthaifood.nl",
         "fax": "08890876543",
         "activiteiten": "Maaltijdbereiding",
         "datumAanvang": "2011-08-09",

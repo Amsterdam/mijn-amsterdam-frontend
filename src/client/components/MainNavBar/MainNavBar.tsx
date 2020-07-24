@@ -118,7 +118,7 @@ function CommercialProfileName({
             : ''
         }
       >
-        {company?.name || 'Zakelijk'}
+        {company?.onderneming?.handelsnaam || 'Zakelijk'}
       </span>
     </Button>
   );

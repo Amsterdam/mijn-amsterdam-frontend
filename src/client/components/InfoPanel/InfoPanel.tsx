@@ -137,9 +137,7 @@ export default function InfoPanel({
           omitPairWithFalseyValues={omitPairWithFalseyValues}
           panelData={panelData}
         />
-        {!!actionLinks.length && (
-          <InfoPanelActionLinks actionLinks={actionLinks} />
-        )}
+        <InfoPanelActionLinks actionLinks={actionLinks || []} />
       </div>
     </div>
   );

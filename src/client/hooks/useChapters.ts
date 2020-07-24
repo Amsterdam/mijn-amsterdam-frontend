@@ -87,7 +87,7 @@ function isChapterActive(
       return !isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length;
 
     case Chapters.KVK:
-      return !isLoading(KVK) && !!KVK.content?.name;
+      return !isLoading(KVK) && !!KVK.content?.onderneming?.handelsnaam;
   }
 
   return false;

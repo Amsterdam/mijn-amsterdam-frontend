@@ -58,6 +58,7 @@ import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import { useAppState } from './hooks/useAppState';
 import { useTipsApi } from './hooks/api/useTipsApi';
 import { useSessionValue, useSessionApi } from './hooks/api/useSessionApi';
+import { useProfileTypeValue } from './hooks/useProfileType';
 
 function AppNotAuthenticated() {
   const location = useLocation();
@@ -101,6 +102,7 @@ function AppAuthenticated() {
   useTipsApi();
   const location = useLocation();
   const session = useSessionValue();
+  const profileType = useProfileTypeValue();
   const [routeEntry, setRouteEntry] = useLocalStorage('RouteEntry', '');
 
   const redirectAfterLogin = routeEntry || AppRoutes.ROOT;
@@ -131,6 +133,11 @@ function AppAuthenticated() {
           />
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
+          {profileType !== 'private' ? (
+            <Redirect from={AppRoutes.BRP} to={AppRoutes.KVK} />
+          ) : (
+            <Redirect from={AppRoutes.KVK} to={AppRoutes.BRP} />
+          )}
           <Route path={AppRoutes.BRP} component={Profile} />
           <Route path={AppRoutes.KVK} component={ProfileCommercial} />
           <Route path={AppRoutes.TIPS} component={MyTips} />

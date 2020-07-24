@@ -13,8 +13,8 @@ import TIPS from './json/tips.json';
 import AMSTERDAM_CONTENT_GENERAL_INFO from './json/amsterdam-nl-content-uitleg.json';
 import AMSTERDAM_CONTENT_FOOTER from './json/amsterdam-nl-content-footer.json';
 import VERGUNNINGEN from './json/vergunningen.json';
-import KVK1 from './json/kvk-handelsregister.json';
 import KVK2 from './json/kvk-handelsregister2.json';
+const KVK1 = KVK2;
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
   return new Promise(resolve => {
