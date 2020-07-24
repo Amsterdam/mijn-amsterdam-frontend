@@ -16,7 +16,6 @@ import Heading from '../Heading/Heading';
 import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
 import styles from './MyTips.module.scss';
 import MyTipsOptInOutModal from './MyTipsOptInOutModal';
-import { useTipsApi } from '../../hooks/api/useTipsApi';
 
 export interface TipProps {
   tip: MyTip;
