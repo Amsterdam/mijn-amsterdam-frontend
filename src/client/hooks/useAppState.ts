@@ -1,12 +1,12 @@
 import * as Sentry from '@sentry/browser';
-import { useCallback, useEffect, useState, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { atom, useRecoilState } from 'recoil';
 import { AppState, createAllErrorState, PRISTINE_APPSTATE } from '../AppState';
 import { BFFApiUrls } from '../config/api';
 import { transformAppState } from '../data-transform/appState';
 import { pollBffHealth, requestApiData, useDataApi } from './api/useDataApi';
+import { useProfileTypeValue } from './useProfileType';
 import { SSE_ERROR_MESSAGE, useSSE } from './useSSE';
-import { useProfileType } from './useProfileType';
 
 const fallbackServiceRequestOptions = {
   postpone: true,
@@ -32,7 +32,7 @@ export function useAppState() {
     !hasEventSourceSupport
   );
   const [isDataRequested, setIsDataRequested] = useState(false);
-  const [profileType] = useProfileType();
+  const profileType = useProfileTypeValue();
   const [appState, setAppState] = useRecoilState(appStateAtom);
   const [api, fetchFallbackService] = useDataApi<AppState | null>(
     fallbackServiceRequestOptions,

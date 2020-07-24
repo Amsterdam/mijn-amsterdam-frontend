@@ -31,3 +31,7 @@ export function useProfileType() {
 
   return state;
 }
+
+export function useProfileTypeValue() {
+  return useRecoilState(profileTypeState)[0];
+}

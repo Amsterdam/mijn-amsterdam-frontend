@@ -5,7 +5,7 @@ import { matchPath } from 'react-router';
 import styles from './MainHeaderHero.module.scss';
 import { useLocation } from 'react-router-dom';
 import classnames from 'classnames';
-import { useProfileType } from '../../hooks/useProfileType';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 
 const LANDSCAPE_SCREEN_RATIO = 0.25;
 const PORTRAIT_SCREEN_RATIO = 0.4;
@@ -27,7 +27,7 @@ function imgUrl(
 
 function useHeroSrc() {
   const location = useLocation();
-  const [profileType] = useProfileType();
+  const profileType = useProfileTypeValue();
   const isCommercialHeader = profileType !== 'private';
   const isChapterPath = (path: string) =>
     !!matchPath(location.pathname, {
@@ -84,7 +84,7 @@ function useHeroSrc() {
 
 export default function MainHeaderHero() {
   const srcSet = useHeroSrc();
-  const [profileType] = useProfileType();
+  const profileType = useProfileTypeValue();
 
   return (
     <div

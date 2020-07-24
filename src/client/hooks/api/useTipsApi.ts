@@ -1,12 +1,12 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { TIPSData } from '../../../server/services/tips';
 import { ApiResponse } from '../../../universal/helpers/api';
 import { PRISTINE_APPSTATE } from '../../AppState';
 import { BFFApiUrls } from '../../config/api';
 import { useAppStateGetter, useAppStateSetter } from '../useAppState';
 import { useOptIn } from '../useOptIn';
+import { useProfileTypeValue } from '../useProfileType';
 import { requestApiData, useDataApi } from './useDataApi';
-import { useProfileType } from '../useProfileType';
 
 function transformResponse(response: ApiResponse<TIPSData>) {
   return {
@@ -21,7 +21,7 @@ export function useTipsApi() {
   const [prevOptIn, setPrevOptIn] = useState(isOptIn);
   const setAppState = useAppStateSetter();
   const appState = useAppStateGetter();
-  const [profileType] = useProfileType();
+  const profileType = useProfileTypeValue();
   const requestConfig = useMemo(() => {
     return {
       url: BFFApiUrls[profileType].SERVICES_TIPS,
@@ -32,6 +32,7 @@ export function useTipsApi() {
       ],
     };
   }, [profileType]);
+
   const [api, fetchTips] = useDataApi<{ TIPS: ApiResponse<TIPSData> }>(
     requestConfig,
     pristineData

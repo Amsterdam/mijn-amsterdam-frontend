@@ -20,7 +20,10 @@ import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
 import { useAppStateAtom } from '../../hooks/useAppState';
 import { useChapterMenuItems } from '../../hooks/useChapters';
-import { useProfileType } from '../../hooks/useProfileType';
+import {
+  useProfileType,
+  useProfileTypeValue,
+} from '../../hooks/useProfileType';
 import Linkd, { Button } from '../Button/Button';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
 import LoadingContent from '../LoadingContent/LoadingContent';
@@ -131,6 +134,7 @@ function PrivateCommercialProfileToggle({
   company,
 }: PrivateCommercialProfileToggleProps) {
   const [profileType, setProfileType] = useProfileType();
+
   return (
     <>
       <PrivateProfileName
@@ -160,8 +164,8 @@ function ProfileName({ person, company, profileType }: ProfileNameProps) {
   const nameContent = useMemo(() => {
     let nameContent: undefined | string | ReactNode;
 
-    switch (profileType) {
-      case 'private':
+    switch (true) {
+      case !!person && !company:
         nameContent = (
           <PrivateProfileName
             person={person!}
@@ -171,10 +175,10 @@ function ProfileName({ person, company, profileType }: ProfileNameProps) {
           />
         );
         break;
-      case 'private-commercial':
+      case !!person && !!company:
         nameContent = <PrivateCommercialProfileToggle person={person!} />;
         break;
-      case 'commercial':
+      case !!company && !person:
         nameContent = (
           <CommercialProfileName
             company={company!}
@@ -186,7 +190,7 @@ function ProfileName({ person, company, profileType }: ProfileNameProps) {
         break;
     }
     return nameContent;
-  }, [person, company, profileType, history]);
+  }, [person, company, history]);
 
   return (
     <span
@@ -205,7 +209,7 @@ function SecondaryLinks() {
   const persoon = BRP.content?.persoon || null;
   const hasFirstName = !!(persoon && persoon.voornamen);
   const isDesktopScreen = useDesktopScreen();
-  const [profileType] = useProfileType();
+  const profileType = useProfileTypeValue();
 
   useEffect(() => {
     if (hasFirstName) {

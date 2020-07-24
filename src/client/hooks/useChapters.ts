@@ -9,7 +9,7 @@ import {
 import { AppState } from '../AppState';
 import { ChapterMenuItem, chaptersByProfileType } from '../config/menuItems';
 import { useAppStateAtom } from './useAppState';
-import { useProfileType } from './useProfileType';
+import { useProfileTypeValue } from './useProfileType';
 
 function isChapterActive(
   item: ChapterMenuItem,
@@ -99,7 +99,7 @@ export interface ChaptersState {
 }
 
 export function useChapterMenuItems() {
-  const [profileType] = useProfileType();
+  const profileType = useProfileTypeValue();
   return chaptersByProfileType[profileType] || [];
 }
 
