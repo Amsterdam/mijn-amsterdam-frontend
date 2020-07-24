@@ -6,4 +6,8 @@ describe('<AlphaComponent />', () => {
   it('Renders without crashing', () => {
     shallow(<AlphaComponent />);
   });
+
+  it('Matches the default snapshot', () => {
+    expect(shallow(<AlphaComponent />).html()).toMatchSnapshot();
+  });
 });

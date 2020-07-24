@@ -1,20 +1,38 @@
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import React from 'react';
-import { AppState } from '../../AppState';
-import { MockAppStateProvider } from '../../AppStateProvider';
+import { generatePath } from 'react-router-dom';
+import { MutableSnapshot } from 'recoil';
+import { AppRoutes } from '../../../universal/config/routing';
+import { appStateAtom } from '../../hooks/useAppState';
+import MockApp from '../MockApp';
 import AlphaPage from './AlphaPage';
 
-const STATE_KEY = 'BRP'; // Use correct state
-const APP_STATE: Partial<AppState> = {
-  [STATE_KEY]: { content: null, status: 'OK' },
-}; // Add slice of the AppState here
+const testState = {
+  STATE_SLICE1: { status: 'OK', content: null },
+};
+
+function initializeState(snapshot: MutableSnapshot) {
+  snapshot.set(appStateAtom, testState);
+}
 
 describe('<AlphaPage />', () => {
+  const routeEntry = generatePath(AppRoutes.ROOT);
+  const routePath = AppRoutes.ROOT;
+
   it('Renders without crashing', () => {
-    shallow(
-      <MockAppStateProvider value={APP_STATE}>
-        <AlphaPage />
-      </MockAppStateProvider>
-    );
+    shallow(<AlphaPage />);
+  });
+
+  it('Matches the Full Page snapshot', () => {
+    const html = mount(
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={AlphaPage}
+        initializeState={initializeState}
+      />
+    ).html();
+
+    expect(html).toMatchSnapshot();
   });
 });
