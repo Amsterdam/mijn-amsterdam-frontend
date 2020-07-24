@@ -6,6 +6,7 @@ import { requestData } from '../helpers';
 import { hash, isRecentCase } from '../../universal/helpers/utils';
 import { dateSort } from '../../universal/helpers/date';
 import { Chapters } from '../../universal/config/index';
+import { apiDependencyError } from '../../universal/helpers';
 
 export interface VergunningSource {
   status: 'Toewijzen' | 'Afgehandeld' | 'Ontvangen' | string;
@@ -155,11 +156,11 @@ export async function fetchVergunningenGenerated(
     ? VERGUNNINGEN.content.map(createVergunningNotification)
     : [];
 
-  return {
-    cases,
-    notifications,
-  };
-}
+    return {
+      cases,
+      notifications,
+    };
+  }
 
   return apiDependencyError({ VERGUNNINGEN });
 }
