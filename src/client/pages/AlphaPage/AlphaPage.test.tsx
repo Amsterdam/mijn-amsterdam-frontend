@@ -9,10 +9,12 @@ const APP_STATE: Partial<AppState> = {
   [STATE_KEY]: { content: null, status: 'OK' },
 }; // Add slice of the AppState here
 
-it('Renders without crashing', () => {
-  shallow(
-    <MockAppStateProvider value={APP_STATE}>
-      <AlphaPage />
-    </MockAppStateProvider>
-  );
+describe('<AlphaPage />', () => {
+  it('Renders without crashing', () => {
+    shallow(
+      <MockAppStateProvider value={APP_STATE}>
+        <AlphaPage />
+      </MockAppStateProvider>
+    );
+  });
 });
