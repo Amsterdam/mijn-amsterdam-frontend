@@ -9,7 +9,7 @@ interface MockAppProps {
   component: React.Component | any;
 }
 
-export default function MockAppAtRoute({
+export default function MockApp({
   routePath,
   routeEntry,
   initializeState,

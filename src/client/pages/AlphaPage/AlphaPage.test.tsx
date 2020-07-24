@@ -34,7 +34,6 @@ describe('<AlphaPage />', () => {
 
   it('Matches the Full Page snapshot', () => {
     const html = mount(<Component />).html();
-
     expect(html).toMatchSnapshot();
   });
 });
