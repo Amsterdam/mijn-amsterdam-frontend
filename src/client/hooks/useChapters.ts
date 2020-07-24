@@ -108,7 +108,7 @@ export function useChapters(): ChaptersState {
   const chapterItems = useChapterMenuItems();
   const items = chapterItems.filter(item => {
     // Check to see if Chapter has been loaded or if it is directly available
-    return isChapterActive(item, appState);
+    return item.id in appState && isChapterActive(item, appState);
   });
 
   return useMemo(

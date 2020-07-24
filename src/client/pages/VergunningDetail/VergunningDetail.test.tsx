@@ -1,46 +1,49 @@
-import { shallow, mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import React from 'react';
-import { AppState } from '../../AppState';
-import { MockAppStateProvider } from '../../AppStateProvider';
-import VergunningDetail from './VergunningDetail';
-import { transformVergunningenData } from '../../../server/services/vergunningen';
+import { generatePath } from 'react-router-dom';
+import { MutableSnapshot } from 'recoil';
 import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
-import { generatePath, MemoryRouter, Route } from 'react-router-dom';
+import { transformVergunningenData } from '../../../server/services/vergunningen';
 import { AppRoutes } from '../../../universal/config/routing';
+import { appStateAtom } from '../../hooks/useAppState';
+import MockApp from '../MockApp';
+import VergunningDetail from './VergunningDetail';
 
-const STATE_KEY = 'VERGUNNINGEN'; // Use correct state
 const content = transformVergunningenData(vergunningenData as any);
-const APP_STATE: Partial<AppState> = {
-  [STATE_KEY]: {
-    content,
+
+const testState = {
+  VERGUNNINGEN: {
     status: 'OK',
+    content,
   },
 };
 
-describe('VergunningDetail', () => {
-  const testDetailPageUrl = generatePath(AppRoutes['VERGUNNINGEN/DETAIL'], {
+function initializeState(snapshot: MutableSnapshot) {
+  snapshot.set(appStateAtom, testState);
+}
+
+describe('<Vergunningen />', () => {
+  const routeEntry = generatePath(AppRoutes['VERGUNNINGEN/DETAIL'], {
     id: content[0].id,
   });
+  const routePath = AppRoutes['VERGUNNINGEN/DETAIL'];
+
+  const Component = () => (
+    <MockApp
+      routeEntry={routeEntry}
+      routePath={routePath}
+      component={VergunningDetail}
+      initializeState={initializeState}
+    />
+  );
 
   it('Renders without crashing', () => {
-    shallow(
-      <MockAppStateProvider value={APP_STATE}>
-        <VergunningDetail />
-      </MockAppStateProvider>
-    );
+    shallow(<Component />);
   });
 
-  it('Matches the snapshot', () => {
-    expect(
-      mount(
-        <MemoryRouter initialEntries={[testDetailPageUrl]}>
-          <MockAppStateProvider value={APP_STATE}>
-            <Route path={AppRoutes['VERGUNNINGEN/DETAIL']}>
-              <VergunningDetail />
-            </Route>
-          </MockAppStateProvider>
-        </MemoryRouter>
-      ).html()
-    ).toMatchSnapshot();
+  it('Matches the Full Page snapshot', () => {
+    const html = mount(<Component />).html();
+
+    expect(html).toMatchSnapshot();
   });
 });

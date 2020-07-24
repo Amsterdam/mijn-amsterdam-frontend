@@ -1,17 +1,72 @@
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import React from 'react';
-import { AppState } from '../../AppState';
-import { MockAppStateProvider } from '../../AppStateProvider';
+import { generatePath } from 'react-router-dom';
+import { MutableSnapshot } from 'recoil';
+import { AppRoutes } from '../../../universal/config/routing';
+import { appStateAtom } from '../../hooks/useAppState';
+import MockApp from '../MockApp';
 import MyTips from './MyTips';
 
-const APP_STATE: Partial<AppState> = {
-  TIPS: { content: { items: [] }, status: 'OK' },
+const testState = {
+  TIPS: {
+    status: 'OK',
+    content: [
+      {
+        id: 'Tip1',
+        title: 'Tip!!',
+        description: 'Tip over dingen',
+        datePublished: '2020-07-24',
+        isPersonalized: true,
+        reason: ['U ziet deze tip omdat!'],
+        link: {
+          to: '/tip-zaak-1',
+          title: 'Linkje!',
+        },
+      },
+      {
+        id: 'Tip2',
+        title: 'Tip2!!',
+        description: 'Tip2  over dingen',
+        datePublished: '2020-07-24',
+        isPersonalized: false,
+        reason: [],
+        link: {
+          to: '/tip',
+          title: 'Linkje!',
+        },
+      },
+    ],
+  },
 };
 
-it('Renders without crashing', () => {
-  shallow(
-    <MockAppStateProvider value={APP_STATE}>
-      <MyTips />
-    </MockAppStateProvider>
+function initializeState(snapshot: MutableSnapshot) {
+  snapshot.set(appStateAtom, testState);
+}
+
+describe('<MyTips />', () => {
+  beforeAll(() => {
+    (window.scrollTo as any) = jest.fn();
+  });
+
+  const routeEntry = generatePath(AppRoutes.TIPS);
+  const routePath = AppRoutes.TIPS;
+
+  const Component = () => (
+    <MockApp
+      routeEntry={routeEntry}
+      routePath={routePath}
+      component={MyTips}
+      initializeState={initializeState}
+    />
   );
+
+  it('Renders without crashing', () => {
+    shallow(<Component />);
+  });
+
+  it('Matches the Full Page snapshot', () => {
+    const html = mount(<Component />).html();
+
+    expect(html).toMatchSnapshot();
+  });
 });

@@ -19,19 +19,21 @@ describe('<AlphaPage />', () => {
   const routeEntry = generatePath(AppRoutes.ROOT);
   const routePath = AppRoutes.ROOT;
 
+  const Component = () => (
+    <MockApp
+      routeEntry={routeEntry}
+      routePath={routePath}
+      component={AlphaPage}
+      initializeState={initializeState}
+    />
+  );
+
   it('Renders without crashing', () => {
-    shallow(<AlphaPage />);
+    shallow(<Component />);
   });
 
   it('Matches the Full Page snapshot', () => {
-    const html = mount(
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={AlphaPage}
-        initializeState={initializeState}
-      />
-    ).html();
+    const html = mount(<Component />).html();
 
     expect(html).toMatchSnapshot();
   });

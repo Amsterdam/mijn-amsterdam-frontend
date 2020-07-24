@@ -5,18 +5,19 @@ import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config/routing';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import InkomenDetail from './InkomenDetail';
+import InkomenDetailTozo from './InkomenDetailTozo';
 
 const testState = {
-  FOCUS_AANVRAGEN: {
+  FOCUS_TOZO: {
     status: 'OK',
     content: [
       {
         id: 'aanvraag-1',
-        title: 'Aanvraag inkomen item',
+        title: 'Aanvraag Tozo na xxx',
         datePublished: '2020-07-24',
         dateStart: '2020-07-14',
         status: 'Besluit',
+        productTitle: 'Tozo 1',
         steps: [
           {
             id: 'step1',
@@ -31,7 +32,7 @@ const testState = {
             description: '<p>Uw aanvraag is binngekomen</p>',
             datePublished: '2020-07-24',
             status: 'aanvraag',
-            product: 'Bijstandsuitkering',
+            product: 'Tozo 1',
             isActive: true,
             isChecked: true,
             decision: undefined,
@@ -54,17 +55,17 @@ function initializeState(snapshot: MutableSnapshot) {
   snapshot.set(appStateAtom, testState);
 }
 
-describe('<InkomenDetail />', () => {
-  const routeEntry = generatePath(AppRoutes['INKOMEN/BIJSTANDSUITKERING'], {
-    id: testState.FOCUS_AANVRAGEN.content[0].id,
+describe('<InkomenDetailTozo />', () => {
+  const routeEntry = generatePath(AppRoutes['INKOMEN/TOZO'], {
+    id: testState.FOCUS_TOZO.content[0].id,
   });
-  const routePath = AppRoutes['INKOMEN/BIJSTANDSUITKERING'];
+  const routePath = AppRoutes['INKOMEN/TOZO'];
 
   const Component = () => (
     <MockApp
       routeEntry={routeEntry}
       routePath={routePath}
-      component={InkomenDetail}
+      component={InkomenDetailTozo}
       initializeState={initializeState}
     />
   );
