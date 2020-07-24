@@ -52,14 +52,14 @@ export function isLoading(apiResponseData: ApiResponse<any>) {
   // If no responseData was found, assumes it's still loading
   return (
     (!apiResponseData && !isError(apiResponseData)) ||
-    apiResponseData.status === 'PRISTINE'
+    apiResponseData?.status === 'PRISTINE'
   );
 }
 
 export function isError(apiResponseData: ApiResponse<any>) {
   return (
-    apiResponseData.status === 'ERROR' ||
-    apiResponseData.status === 'DEPENDENCY_ERROR'
+    apiResponseData?.status === 'ERROR' ||
+    apiResponseData?.status === 'DEPENDENCY_ERROR'
   );
 }
 
