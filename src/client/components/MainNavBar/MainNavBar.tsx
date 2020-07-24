@@ -16,7 +16,7 @@ import { BRPData } from '../../../universal/types/brp';
 import { IconInfo, IconProfile, IconSuitcase } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
-import { SessionData, useSessionValue } from '../../hooks/api/useSessionApi';
+import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
 import { useAppStateAtom } from '../../hooks/useAppState';
 import { useChapterMenuItems } from '../../hooks/useChapters';

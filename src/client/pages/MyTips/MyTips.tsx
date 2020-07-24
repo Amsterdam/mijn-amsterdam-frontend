@@ -12,8 +12,8 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
-import { useOptIn } from '../../hooks/useOptIn';
 import { useAppStateAtom } from '../../hooks/useAppState';
+import { useOptIn } from '../../hooks/useOptIn';
 import styles from './MyTips.module.scss';
 
 interface OptInPageContentProps {

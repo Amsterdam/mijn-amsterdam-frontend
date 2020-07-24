@@ -39,14 +39,17 @@ export function useAppState() {
     null
   );
 
-  const appStateError = useCallback((message: string) => {
-    Sentry.captureMessage('Could not load any data sources.', {
-      extra: {
-        message,
-      },
-    });
-    setAppState(appState => createAllErrorState(appState, message));
-  }, []);
+  const appStateError = useCallback(
+    (message: string) => {
+      Sentry.captureMessage('Could not load any data sources.', {
+        extra: {
+          message,
+        },
+      });
+      setAppState(appState => createAllErrorState(appState, message));
+    },
+    [setAppState]
+  );
 
   // If no EvenSource support or EventSource fails, the Fallback service endpoint is used for fetching all the data.
   useEffect(() => {

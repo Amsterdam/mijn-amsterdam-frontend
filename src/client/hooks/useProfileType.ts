@@ -22,6 +22,7 @@ export function useProfileType() {
     if (profileType) {
       setState(profileType);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

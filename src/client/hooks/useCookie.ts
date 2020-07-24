@@ -19,12 +19,13 @@ export function useCookie(
       Cookies.set(name, value, options);
       setCookie(cookies => Object.assign({}, cookies, { [name]: value }));
     },
-    [setCookie]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   );
 
   useEffect(() => {
     setCookieAtomValue(valueInitial);
-  }, [setCookieAtomValue]);
+  }, [setCookieAtomValue, valueInitial]);
 
   return [cookies[name] || valueInitial, setCookieAtomValue];
 }
