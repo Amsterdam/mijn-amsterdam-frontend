@@ -25,7 +25,6 @@ export function useProfileType() {
   }, []);
 
   useEffect(() => {
-    console.log('effect2', stateValue);
     setSessionState(stateValue);
   }, [stateValue, setSessionState]);
 
