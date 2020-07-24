@@ -50,6 +50,14 @@ const pageConfig = {
     hasCollapsiblePanels: true,
     pathname: '/afval',
   },
+  VERGUNNINGEN: {
+    hasCollapsiblePanels: true,
+    pathname: '/vergunningen',
+  },
+  'VERGUNNINGEN/DETAIL': {
+    isDetailPage: true,
+    pathname: '/vergunningen/detail/:id',
+  },
 
   // Permanent non conditional pages
   BUURT: {
@@ -103,7 +111,6 @@ describe('The happy path', () => {
       } else if (isDetailPage) {
         const [detailUrl] = pathname.split(':');
         const [, chapterUrl] = detailUrl.split('/');
-
         // First click the chapter
         selectComponent('MyChaptersPanel_Links')
           .find('a[href*="' + chapterUrl + '"]:eq(0)')

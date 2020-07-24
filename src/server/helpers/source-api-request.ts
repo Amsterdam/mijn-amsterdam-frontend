@@ -185,7 +185,7 @@ export async function requestData<T>(
       ([, url]) => requestConfig.url === url
     );
     const apiName = api ? api[0] : 'unknown';
-    const sentryId = shouldCaptureMessage
+    const capturedId = shouldCaptureMessage
       ? Sentry.captureMessage(
           `${apiName}: ${error?.message ? error.message : error}`,
           {
@@ -207,6 +207,7 @@ export async function requestData<T>(
             apiName,
           },
         });
+    const sentryId = !IS_AP ? null : capturedId;
 
     const responseData = apiErrorResult(
       error?.response?.data?.message || error.toString(),

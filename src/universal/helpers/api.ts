@@ -66,7 +66,7 @@ export function isError(apiResponseData: ApiResponse<any>) {
 export function apiErrorResult<T>(
   error: string,
   content: T,
-  sentryId?: string
+  sentryId?: string | null
 ): ApiErrorResponse<T> {
   const errorResponse: ApiErrorResponse<T> = {
     content,
