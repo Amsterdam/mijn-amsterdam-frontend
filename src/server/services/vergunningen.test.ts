@@ -72,6 +72,6 @@ describe('Vergunningen service', () => {
       { x: 'saml' },
       new Date('2020-06-23')
     );
-    expect(response).toMatchSnapshot(response);
+    expect(response).toMatchSnapshot();
   });
 });

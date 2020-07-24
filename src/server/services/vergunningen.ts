@@ -1,12 +1,17 @@
 import { generatePath } from 'react-router-dom';
 import { AppRoutes } from '../../universal/config/routing';
-import { LinkProps, MyCase } from '../../universal/types/App.types';
+import {
+  LinkProps,
+  MyCase,
+  MyNotification,
+} from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { hash, isRecentCase } from '../../universal/helpers/utils';
 import { dateSort } from '../../universal/helpers/date';
 import { Chapters } from '../../universal/config/index';
 import { apiDependencyError } from '../../universal/helpers';
+import { apiSuccesResult } from '../../universal/helpers/api';
 
 export interface VergunningSource {
   status: 'Toewijzen' | 'Afgehandeld' | 'Ontvangen' | string;
@@ -141,7 +146,7 @@ export async function fetchVergunningenGenerated(
   if (VERGUNNINGEN.status === 'OK') {
     const compareToDate = compareDate || new Date();
 
-    const cases = Array.isArray(VERGUNNINGEN.content)
+    const cases: MyCase[] = Array.isArray(VERGUNNINGEN.content)
       ? VERGUNNINGEN.content
           .filter(
             vergunning =>
@@ -152,14 +157,14 @@ export async function fetchVergunningenGenerated(
           .map(createVergunningRecentCase)
       : [];
 
-  const notifications = Array.isArray(VERGUNNINGEN.content)
-    ? VERGUNNINGEN.content.map(createVergunningNotification)
-    : [];
+    const notifications: MyNotification[] = Array.isArray(VERGUNNINGEN.content)
+      ? VERGUNNINGEN.content.map(createVergunningNotification)
+      : [];
 
-    return {
+    return apiSuccesResult({
       cases,
       notifications,
-    };
+    });
   }
 
   return apiDependencyError({ VERGUNNINGEN });
