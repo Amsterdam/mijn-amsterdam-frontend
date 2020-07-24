@@ -165,11 +165,14 @@ export function useStorage(
   } catch (e) {}
 
   const { value: item, set: setValue } = useWindowStorage(key, val, adapter);
-  const setItem = (newValue: string) => {
-    try {
-      setValue(JSON.stringify(newValue));
-    } catch (e) {}
-  };
+  const setItem = useCallback(
+    (newValue: string) => {
+      try {
+        setValue(JSON.stringify(newValue));
+      } catch (e) {}
+    },
+    [setValue]
+  );
 
   try {
     return [item !== null ? JSON.parse(item) : item, setItem];

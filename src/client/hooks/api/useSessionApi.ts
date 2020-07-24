@@ -37,7 +37,7 @@ export interface SessionState extends SessionData {
   isLoading: boolean;
 }
 
-const INITIAL_SESSION_STATE: SessionState = {
+export const INITIAL_SESSION_STATE: SessionState = {
   ...INITIAL_SESSION_CONTENT,
   isLoading: true,
   isPristine: true,

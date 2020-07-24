@@ -5,10 +5,13 @@ import * as tipsHook from './api/useTipsApi';
 import { useAppState } from './useAppState';
 import * as sseHook from './useSSE';
 import { SSE_ERROR_MESSAGE } from './useSSE';
+import * as recoil from 'recoil';
+import * as profileTypeHook from './useProfileType';
 
 describe('useAppState', () => {
   let onEventCallback: any;
   const stateSliceMock = { FOO: { content: { hello: 'world' } } };
+  const initialAppState = PRISTINE_APPSTATE;
 
   const useSSEMock = jest.fn(
     (endpoint, messageName, callback: (messageData: any) => void, postpone) => {
@@ -18,11 +21,22 @@ describe('useAppState', () => {
   const fetchTips = jest.fn();
   const fetchFallbackService = jest.fn();
 
+  let appData: any = initialAppState;
+  const setAppState = jest.fn(data => {
+    appData = data(appData);
+  });
+  const useRecoilStateMock = jest.fn(() => [appData, setAppState]);
+  const useProfileTypeMock = jest.fn(() => ['private']);
+
   // @ts-ignore
   const useTipsApi = (tipsHook.useTipsApi = jest.fn(() => {
     return { TIPS: { status: 'PRISTINE', content: null }, fetch: fetchTips };
   }));
 
+  // @ts-ignore
+  const useProfileType = (profileTypeHook.useProfileType = useProfileTypeMock);
+  // @ts-ignore
+  const useRecoilState = (recoil.useRecoilState = useRecoilStateMock);
   // @ts-ignore
   const useSSE = (sseHook.useSSE = useSSEMock);
   // @ts-ignore
@@ -41,8 +55,6 @@ describe('useAppState', () => {
     fetchFallbackService,
   ]);
 
-  const initialAppState = PRISTINE_APPSTATE;
-
   beforeAll(() => {
     (window as any).console.info = jest.fn();
     (window as any).console.error = jest.fn();
@@ -54,12 +66,15 @@ describe('useAppState', () => {
   });
 
   beforeEach(() => {
+    appData = initialAppState;
     fetchTips.mockClear();
     fetchFallbackService.mockClear();
     useDataApi.mockClear();
     useTipsApi.mockClear();
     useSSE.mockClear();
     pollBffHealth.mockClear();
+    useRecoilState.mockClear();
+    useProfileType.mockClear();
   });
 
   it('Should start with the SSE endpoint', async () => {
@@ -76,14 +91,11 @@ describe('useAppState', () => {
       onEventCallback(stateSliceMock);
     });
 
-    expect(useDataApi).toBeCalledTimes(2);
-    expect(useSSE).toBeCalledTimes(2);
+    expect(setAppState).toBeCalledTimes(1);
 
     expect(fetchFallbackService).toBeCalledTimes(0);
 
-    expect(result.current).toEqual(
-      Object.assign({}, initialAppState, stateSliceMock)
-    );
+    expect(appData).toEqual(Object.assign({}, initialAppState, stateSliceMock));
   });
 
   it('Should start with the Fallback service endpoint for browsers that do not have window.EventSource', () => {
