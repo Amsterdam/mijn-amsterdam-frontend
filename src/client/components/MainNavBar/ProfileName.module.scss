@@ -1,0 +1,39 @@
+@import '../../styles/_global.scss';
+
+.ProfileName {
+  margin-left: 3.3rem;
+  margin-right: 2.8rem;
+  text-decoration: none;
+
+  a:hover {
+    color: $color-primary-red;
+    text-decoration: underline;
+  }
+}
+
+.ProfileLink {
+  margin-left: 1.3rem;
+  font-weight: normal;
+  svg {
+    position: absolute;;
+    width: 1.2em;
+    height: 1.3em;
+    margin-left: -2.6rem;
+  }
+}
+
+.ProfileLink--active {
+  color: $color-support-blue;
+  // text-decoration: underline;
+
+  svg {
+    fill: $color-support-blue;
+  }
+}
+
+.ProfileLink--private {
+  margin-left: 2rem;
+  + .ProfileLink--commercial {
+    margin-left: 5.3rem;
+  }
+}

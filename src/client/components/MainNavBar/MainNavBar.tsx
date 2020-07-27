@@ -1,32 +1,19 @@
 import classnames from 'classnames';
-import React, {
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import { NavLink, useHistory, useLocation } from 'react-router-dom';
-import { animated, useSpring } from 'react-spring';
-import { KVKSourceDataContent } from '../../../server/services/kvk';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
+import { animated } from 'react-spring';
 import { AppRoutes } from '../../../universal/config';
-import { getFullName } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
-import { BRPData } from '../../../universal/types/brp';
-import { IconInfo, IconProfile, IconSuitcase } from '../../assets/icons';
+import { IconInfo } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
 import { useAppStateAtom } from '../../hooks/useAppState';
 import { useChapterMenuItems } from '../../hooks/useChapters';
-import {
-  useProfileType,
-  useProfileTypeValue,
-} from '../../hooks/useProfileType';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 import Linkd, { Button } from '../Button/Button';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
-import LoadingContent from '../LoadingContent/LoadingContent';
 import LogoutLink from '../LogoutLink/LogoutLink';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
@@ -38,6 +25,8 @@ import {
   MenuItem,
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
+import { ProfileName } from './ProfileName';
+import { useBurgerMenuAnimation } from './useBurgerMenuAnimation';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -46,162 +35,6 @@ export interface MainNavLinkProps {
   to: string;
   children: ComponentChildren;
   title: string;
-}
-
-interface PrivateProfileNameProps {
-  person?: BRPData['persoon'];
-  onClick?: (event: any) => void;
-  isActive: boolean;
-  hasTutorial: boolean;
-}
-
-function PrivateProfileName({
-  person,
-  onClick,
-  isActive,
-  hasTutorial,
-}: PrivateProfileNameProps) {
-  return (
-    <Button
-      onClick={onClick}
-      icon={IconProfile}
-      variant="plain"
-      lean={true}
-      className={classnames(
-        styles.ProfileLink,
-        styles['ProfileLink--private'],
-        isActive && styles['ProfileLink--active']
-      )}
-    >
-      <span
-        data-tutorial-item={
-          hasTutorial
-            ? 'Hier ziet u uw persoonsgegevens, zoals uw adres en geboortedatum;right-bottom'
-            : ''
-        }
-      >
-        {person?.opgemaakteNaam ? getFullName(person) : 'Mijn gegevens'}
-      </span>
-    </Button>
-  );
-}
-
-interface CommercialProfileNameProps {
-  company?: KVKSourceDataContent;
-  onClick?: (event: any) => void;
-  isActive: boolean;
-  hasTutorial: boolean;
-}
-
-function CommercialProfileName({
-  company,
-  onClick,
-  isActive,
-  hasTutorial,
-}: CommercialProfileNameProps) {
-  return (
-    <Button
-      onClick={onClick}
-      icon={IconSuitcase}
-      variant="plain"
-      lean={true}
-      className={classnames(
-        styles.ProfileLink,
-        styles['ProfileLink--commercial'],
-        isActive && styles['ProfileLink--active']
-      )}
-    >
-      <span
-        data-tutorial-item={
-          hasTutorial
-            ? 'Hier kunt u uw algemene bedrijfsgegevens uit het KVK handelsregister raadplegen;left-bottom'
-            : ''
-        }
-      >
-        {company?.onderneming?.handelsnaam || 'Zakelijk'}
-      </span>
-    </Button>
-  );
-}
-
-interface PrivateCommercialProfileToggleProps {
-  person?: BRPData['persoon'];
-  company?: KVKSourceDataContent;
-}
-
-function PrivateCommercialProfileToggle({
-  person,
-  company,
-}: PrivateCommercialProfileToggleProps) {
-  const [profileType, setProfileType] = useProfileType();
-
-  return (
-    <>
-      <PrivateProfileName
-        person={person}
-        isActive={profileType === 'private'}
-        hasTutorial={profileType === 'private'}
-        onClick={() => setProfileType('private')}
-      />
-      <CommercialProfileName
-        company={company}
-        isActive={profileType === 'private-commercial'}
-        hasTutorial={profileType === 'private-commercial'}
-        onClick={() => setProfileType('private-commercial')}
-      />
-    </>
-  );
-}
-
-interface ProfileNameProps {
-  person?: BRPData['persoon'] | null;
-  company?: KVKSourceDataContent | null;
-  profileType: ProfileType;
-}
-
-function ProfileName({ person, company, profileType }: ProfileNameProps) {
-  const history = useHistory();
-  const nameContent = useMemo(() => {
-    let nameContent: undefined | string | ReactNode;
-
-    switch (true) {
-      case !!person && !company:
-        nameContent = (
-          <PrivateProfileName
-            person={person!}
-            isActive={false}
-            hasTutorial={true}
-            onClick={() => history.push(AppRoutes.BRP)}
-          />
-        );
-        break;
-      case !!person && !!company:
-        nameContent = <PrivateCommercialProfileToggle person={person!} />;
-        break;
-      case !!company && !person:
-        nameContent = (
-          <CommercialProfileName
-            company={company!}
-            isActive={false}
-            hasTutorial={true}
-            onClick={() => history.push(AppRoutes.KVK)}
-          />
-        );
-        break;
-    }
-    return nameContent;
-  }, [person, company, history]);
-
-  return (
-    <span
-      className={classnames(
-        styles.ProfileName,
-        styles[`ProfileName--${profileType}`]
-      )}
-    >
-      {nameContent || <LoadingContent barConfig={[['15rem', '1rem', '0']]} />}
-    </span>
-  );
 }
 
 function SecondaryLinks() {
@@ -264,56 +97,6 @@ function getMenuItem(item: MenuItem) {
       {item.title}
     </MainNavLink>
   );
-}
-
-function useBurgerMenuAnimation(isBurgerMenuVisible: boolean | undefined) {
-  const config = {
-    mass: 0.3,
-    tension: 400,
-  };
-
-  const linkContainerAnim = {
-    immediate: isBurgerMenuVisible === undefined,
-    reverse: isBurgerMenuVisible,
-    left: -400,
-    config,
-    from: {
-      left: 0,
-    },
-  };
-
-  const backdropAnim = {
-    immediate: isBurgerMenuVisible === undefined,
-    reverse: isBurgerMenuVisible,
-    opacity: 0,
-    from: {
-      opacity: 1,
-    },
-  };
-
-  const left: any = {
-    immediate: isBurgerMenuVisible !== false,
-    reverse: !isBurgerMenuVisible,
-    left: 0,
-    config,
-    from: {
-      left: -1000,
-    },
-  };
-
-  if (!isBurgerMenuVisible) {
-    left.delay = 300;
-  }
-
-  const linkContainerAnimationProps = useSpring(linkContainerAnim);
-  const backdropAnimationProps = useSpring(backdropAnim);
-  const leftProps = useSpring(left);
-
-  return {
-    linkContainerAnimationProps,
-    backdropAnimationProps,
-    leftProps,
-  };
 }
 
 interface BurgerButtonProps {

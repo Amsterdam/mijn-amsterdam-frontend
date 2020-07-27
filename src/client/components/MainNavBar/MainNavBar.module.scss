@@ -77,17 +77,6 @@
     display: inline-block;
   }
 
-  .ProfileName {
-    margin-left: 3.3rem;
-    margin-right: 2.8rem;
-    text-decoration: none;
-
-    a:hover {
-      color: $color-primary-red;
-      text-decoration: underline;
-    }
-  }
-
   @include mq-tablet() {
     position: static;
     display: block;
@@ -211,31 +200,5 @@
   margin-bottom: 1rem;
   @include mq-tablet() {
     margin-bottom: 0;
-  }
-}
-
-.ProfileLink {
-  margin-left: 1.3rem;
-  font-weight: normal;
-  svg {
-    position: absolute;;
-    width: 1.2em;
-    height: 1.3em;
-    margin-left: -2.6rem;
-  }
-}
-.ProfileLink--active {
-  color: $color-support-blue;
-  // text-decoration: underline;
-
-  svg {
-    fill: $color-support-blue;
-  }
-}
-
-.ProfileLink--private {
-  margin-left: 2rem;
-  + .ProfileLink--commercial {
-    margin-left: 5.3rem;
   }
 }
