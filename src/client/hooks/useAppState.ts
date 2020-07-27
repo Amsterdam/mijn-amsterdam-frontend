@@ -1,12 +1,13 @@
 import * as Sentry from '@sentry/browser';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { atom, useRecoilState } from 'recoil';
+import { atom, useRecoilState, useRecoilValue, selectorFamily } from 'recoil';
 import { AppState, createAllErrorState, PRISTINE_APPSTATE } from '../AppState';
 import { BFFApiUrls } from '../config/api';
 import { transformAppState } from '../data-transform/appState';
 import { pollBffHealth, requestApiData, useDataApi } from './api/useDataApi';
 import { useProfileTypeValue } from './useProfileType';
 import { SSE_ERROR_MESSAGE, useSSE } from './useSSE';
+import { Chapters } from '../../universal/config/chapter';
 
 const fallbackServiceRequestOptions = {
   postpone: true,
@@ -141,13 +142,33 @@ export function useAppState() {
   return appState;
 }
 
-export function useAppStateAtom() {
-  return useAppStateGetter();
-}
 export function useAppStateGetter() {
-  return useRecoilState(appStateAtom)[0];
+  return useRecoilValue(appStateAtom);
 }
 
 export function useAppStateSetter() {
   return useRecoilState(appStateAtom)[1];
+}
+
+const appStateNotificationsSelector = selectorFamily({
+  key: 'appStateNotifications',
+  get: (profileType: ProfileType) => ({ get }) => {
+    const appState = get(appStateAtom);
+
+    if (
+      profileType === 'private-commercial' &&
+      appState.NOTIFICATIONS.content
+    ) {
+      return appState.NOTIFICATIONS.content.filter(
+        notification => notification.chapter !== Chapters.BRP
+      );
+    }
+
+    return appState.NOTIFICATIONS.content || [];
+  },
+});
+
+export function useAppStateNotifications() {
+  const profileType = useProfileTypeValue();
+  return useRecoilValue(appStateNotificationsSelector(profileType));
 }

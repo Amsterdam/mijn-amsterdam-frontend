@@ -20,7 +20,7 @@ import {
   SectionCollapsible,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
-import { useAppStateAtom } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './GarbageInformation.module.scss';
 
 interface PanelProps {
@@ -64,7 +64,7 @@ function GarbageCenterItem({ item }: { item: GarbageCenter }) {
 }
 
 export default () => {
-  const { BRP, AFVAL, AFVALPUNTEN, HOME } = useAppStateAtom();
+  const { BRP, AFVAL, AFVALPUNTEN, HOME } = useAppStateGetter();
   let garbageContainersMapUrl = '';
 
   if (HOME && HOME?.content?.latlng?.lng && HOME?.content?.latlng?.lat) {

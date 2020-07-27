@@ -13,11 +13,11 @@ import {
   PageHeading,
   StatusLine,
 } from '../../components';
-import { useAppStateAtom } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './ZorgDetail.module.scss';
 
 export default () => {
-  const { WMO } = useAppStateAtom();
+  const { WMO } = useAppStateGetter();
 
   const { id } = useParams();
 

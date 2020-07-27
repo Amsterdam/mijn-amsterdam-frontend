@@ -21,7 +21,7 @@ import {
   Table,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
-import { useAppStateAtom } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import {
   annualStatementsTableDisplayProps,
   specificationsTableDisplayProps,
@@ -54,7 +54,7 @@ export default () => {
     FOCUS_AANVRAGEN,
     FOCUS_SPECIFICATIES,
     FOCUS_TOZO,
-  } = useAppStateAtom();
+  } = useAppStateGetter();
   const aanvragen = (FOCUS_AANVRAGEN.content || []) as FocusItem[];
   const tozoItems = FOCUS_TOZO.content || [];
   const uitkeringsspecificaties =

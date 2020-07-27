@@ -22,11 +22,11 @@ import InfoDetail, {
 import StatusLine, {
   StatusLineItem,
 } from '../../components/StatusLine/StatusLine';
-import { useAppStateAtom } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './VergunningDetail.module.scss';
 
 export default () => {
-  const { VERGUNNINGEN } = useAppStateAtom();
+  const { VERGUNNINGEN } = useAppStateGetter();
 
   const { id } = useParams();
 

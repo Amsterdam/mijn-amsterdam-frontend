@@ -9,7 +9,7 @@ import { ChapterIcons } from '../../config/chapterIcons';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
-import { useAppStateAtom } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import { useChapterMenuItems } from '../../hooks/useChapters';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import Linkd, { Button } from '../Button/Button';
@@ -38,7 +38,7 @@ export interface MainNavLinkProps {
 }
 
 function SecondaryLinks() {
-  const { BRP, KVK } = useAppStateAtom();
+  const { BRP, KVK } = useAppStateGetter();
   const persoon = BRP.content?.persoon || null;
   const hasFirstName = !!(persoon && persoon.voornamen);
   const isDesktopScreen = useDesktopScreen();

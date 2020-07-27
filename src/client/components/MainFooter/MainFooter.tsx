@@ -4,7 +4,7 @@ import { CMSFooterContent } from '../../../server/services';
 import { isExternalUrl } from '../../../universal/helpers/utils';
 import { LinkProps } from '../../../universal/types/index';
 import { useDesktopScreen } from '../../hooks/media.hook';
-import { useAppStateAtom } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import Linkd from '../Button/Button';
 import { InnerHtml } from '../index';
 import footerData from './amsterdam-nl-footer-data.json';
@@ -49,7 +49,7 @@ function FooterBlock({
 }
 
 export default function MainFooter() {
-  const atom = useAppStateAtom();
+  const atom = useAppStateGetter();
   const { CMS_CONTENT } = atom;
   const footer = CMS_CONTENT.content?.footer ||
     (footerData as CMSFooterContent) || { blocks: [], sub: [] };

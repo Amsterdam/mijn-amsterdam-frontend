@@ -16,7 +16,7 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
-import { useAppStateAtom } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import { formatBrpProfileData } from './formatData';
 import { panelConfig, PanelConfigFormatter } from './Profile.constants';
 import styles from './Profile.module.scss';
@@ -33,7 +33,7 @@ function formatInfoPanelConfig(
 }
 
 export default function Profile() {
-  const { BRP } = useAppStateAtom();
+  const { BRP } = useAppStateGetter();
 
   const brpProfileData = useMemo(() => {
     return BRP.content ? formatBrpProfileData(BRP.content) : BRP.content;

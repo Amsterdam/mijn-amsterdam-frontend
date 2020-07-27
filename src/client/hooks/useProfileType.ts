@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import { atom, useRecoilState } from 'recoil';
+import { atom, useRecoilState, useRecoilValue } from 'recoil';
 import { IS_COMMERCIAL_PATH_MATCH } from '../config/api';
 import { useSessionStorage } from './storage.hook';
 
 const initialProfileType = IS_COMMERCIAL_PATH_MATCH ? 'commercial' : 'private';
 
-const profileTypeState = atom<ProfileType>({
+export const profileTypeState = atom<ProfileType>({
   key: 'profileType',
   default: initialProfileType as ProfileType,
 });
@@ -18,6 +18,7 @@ export function useProfileType() {
     stateValue
   );
 
+  // If we encounter a profileType stored in the SessionStorage, transfer it to the recoil state on first load.
   useEffect(() => {
     if (profileType) {
       setState(profileType);
@@ -33,5 +34,5 @@ export function useProfileType() {
 }
 
 export function useProfileTypeValue() {
-  return useRecoilState(profileTypeState)[0];
+  return useRecoilValue(profileTypeState);
 }

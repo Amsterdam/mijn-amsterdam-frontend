@@ -14,7 +14,7 @@ import {
   StatusLine,
 } from '../../components';
 import { StatusLineItem } from '../../components/StatusLine/StatusLine';
-import { useAppStateAtom } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './InkomenDetail.module.scss';
 
 export const MAX_STEP_COUNT_FOCUS_REUEST = 4;
@@ -55,7 +55,7 @@ export function altDocumentContent(
 }
 
 export default () => {
-  const { FOCUS_AANVRAGEN } = useAppStateAtom();
+  const { FOCUS_AANVRAGEN } = useAppStateGetter();
 
   const { id } = useParams();
   const aanvragen = (FOCUS_AANVRAGEN.content || []) as FocusItem[];

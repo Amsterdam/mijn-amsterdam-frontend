@@ -15,11 +15,11 @@ import {
   StatusLine,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
-import { useAppStateAtom } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './InkomenDetail.module.scss';
 
 export default () => {
-  const { FOCUS_TOZO } = useAppStateAtom();
+  const { FOCUS_TOZO } = useAppStateGetter();
 
   const tozoItems = FOCUS_TOZO.content || [];
   const { id } = useParams();

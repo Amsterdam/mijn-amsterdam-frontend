@@ -8,7 +8,7 @@ import {
 } from '../../universal/helpers';
 import { AppState } from '../AppState';
 import { ChapterMenuItem, chaptersByProfileType } from '../config/menuItems';
-import { useAppStateAtom } from './useAppState';
+import { useAppStateGetter } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
 
 function isChapterActive(
@@ -104,7 +104,7 @@ export function useChapterMenuItems() {
 }
 
 export function useChapters(): ChaptersState {
-  const appState = useAppStateAtom();
+  const appState = useAppStateGetter();
   const chapterItems = useChapterMenuItems();
 
   const items = chapterItems.filter(item => {

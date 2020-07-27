@@ -14,7 +14,7 @@ import {
   Table,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
-import { useAppStateAtom } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Zorg.module.scss';
 
 const DISPLAY_PROPS = {
@@ -22,7 +22,7 @@ const DISPLAY_PROPS = {
 };
 
 export default () => {
-  const { WMO } = useAppStateAtom();
+  const { WMO } = useAppStateGetter();
 
   const itemsActual = useMemo(() => {
     if (!WMO.content?.length) {

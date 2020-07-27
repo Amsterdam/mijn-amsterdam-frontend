@@ -13,7 +13,7 @@ import {
   SectionCollapsible,
   Table,
 } from '../../components';
-import { useAppStateAtom } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Burgerzaken.module.scss';
 
 const DISPLAY_PROPS = {
@@ -22,7 +22,7 @@ const DISPLAY_PROPS = {
 };
 
 export default () => {
-  const { BRP } = useAppStateAtom();
+  const { BRP } = useAppStateGetter();
 
   const documentItems = useMemo(() => {
     if (!BRP.content?.identiteitsbewijzen) {

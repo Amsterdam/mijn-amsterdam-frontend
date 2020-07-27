@@ -11,7 +11,7 @@ import {
   InfoPanelCollapsible,
   LinkdInline,
 } from '../../components';
-import { useAppStateAtom } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Profile.module.scss';
 import { AppState } from '../../AppState';
 import {
@@ -66,7 +66,7 @@ function InfoPanelContent({
 }
 
 export default function ProfileCommercial() {
-  const { KVK } = useAppStateAtom();
+  const { KVK } = useAppStateGetter();
 
   const kvkProfileData = useMemo(() => {
     return KVK.content ? formatKvkProfileData(KVK.content) : KVK.content;

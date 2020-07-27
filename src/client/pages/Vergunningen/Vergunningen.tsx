@@ -15,7 +15,7 @@ import {
   Table,
 } from '../../components';
 import { OverviewPage } from '../../components/Page/Page';
-import { useAppStateAtom } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Vergunningen.module.scss';
 
 const DISPLAY_PROPS = {
@@ -31,7 +31,7 @@ const DISPLAY_PROPS_HISTORY = {
 };
 
 export default () => {
-  const { VERGUNNINGEN } = useAppStateAtom();
+  const { VERGUNNINGEN } = useAppStateGetter();
 
   const vergunningen: Vergunning[] = useMemo(() => {
     if (!VERGUNNINGEN.content?.length) {

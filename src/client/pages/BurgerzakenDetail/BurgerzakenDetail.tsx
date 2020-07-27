@@ -17,10 +17,10 @@ import {
   PageHeading,
 } from '../../components';
 import styles from './BurgerzakenDetail.module.scss';
-import { useAppStateAtom } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
 
 export default () => {
-  const { BRP } = useAppStateAtom();
+  const { BRP } = useAppStateGetter();
   const { id } = useParams();
 
   const DocumentItem = BRP.content?.identiteitsbewijzen?.find(

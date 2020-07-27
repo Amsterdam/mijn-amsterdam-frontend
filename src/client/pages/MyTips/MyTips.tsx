@@ -12,7 +12,7 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
-import { useAppStateAtom } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import { useOptIn } from '../../hooks/useOptIn';
 import styles from './MyTips.module.scss';
 
@@ -59,7 +59,7 @@ function OptInPageContent({ children }: OptInPageContentProps) {
 }
 
 export default () => {
-  const { TIPS } = useAppStateAtom();
+  const { TIPS } = useAppStateGetter();
 
   return (
     <OverviewPage className={styles.MyTips}>

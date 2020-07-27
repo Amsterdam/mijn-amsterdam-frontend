@@ -13,7 +13,10 @@ import {
   PageHeading,
 } from '../../components';
 import { usePhoneScreen } from '../../hooks/media.hook';
-import { useAppStateAtom } from '../../hooks/useAppState';
+import {
+  useAppStateGetter,
+  useAppStateNotifications,
+} from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
 import styles from './Dashboard.module.scss';
 
@@ -21,19 +24,20 @@ const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
 
 export default () => {
-  const appState = useAppStateAtom();
+  const appState = useAppStateGetter();
   const { TIPS, NOTIFICATIONS, CASES, BUURT, HOME } = appState;
+  const notifications = useAppStateNotifications();
 
   const tipItems = useMemo(() => {
     return TIPS.content?.slice(0, MAX_TIPS_VISIBLE) || [];
   }, [TIPS.content]);
 
   const notificationItems = useMemo(() => {
-    return NOTIFICATIONS.content?.slice(0, MAX_NOTIFICATIONS_VISIBLE) || [];
-  }, [NOTIFICATIONS.content]);
+    return notifications.slice(0, MAX_NOTIFICATIONS_VISIBLE);
+  }, [notifications]);
 
   const isPhoneScreen = usePhoneScreen();
-  const NOTIFICATIONSTotal = NOTIFICATIONS.content?.length || 0;
+  const NOTIFICATIONSTotal = notifications.length;
 
   const {
     items: myChapterItems,

@@ -17,7 +17,7 @@ import {
   Table,
 } from '../../components';
 import { isNativeDatePickerInputSupported } from '../../components/DateInput/DateInput';
-import { useAppStateAtom } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './InkomenSpecificaties.module.scss';
 
 export const specificationsTableDisplayProps = {
@@ -41,7 +41,7 @@ function Caret() {
 }
 
 export default () => {
-  const { FOCUS_SPECIFICATIES } = useAppStateAtom();
+  const { FOCUS_SPECIFICATIES } = useAppStateGetter();
 
   const { type } = useParams();
 

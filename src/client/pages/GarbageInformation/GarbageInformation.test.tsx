@@ -7,7 +7,7 @@ import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import GarbageInformation from './GarbageInformation';
 
-//const { BRP, AFVAL, AFVALPUNTEN, HOME } = useAppStateAtom();
+//const { BRP, AFVAL, AFVALPUNTEN, HOME } = useAppStateGetter();
 
 const restafval = {
   title: 'Gooi zakken in container',

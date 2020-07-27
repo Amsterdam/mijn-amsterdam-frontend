@@ -13,7 +13,7 @@ import React, { useMemo } from 'react';
 import styles from './MainHeader.module.scss';
 import { useLocation } from 'react-router-dom';
 import { getApiErrors } from '../../config/api';
-import { useAppStateAtom } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
 
 export interface MainHeaderProps {
   isAuthenticated?: boolean;
@@ -23,7 +23,7 @@ export default function MainHeader({
   isAuthenticated = false,
 }: MainHeaderProps) {
   const isHeroVisible = true;
-  const appState = useAppStateAtom();
+  const appState = useAppStateGetter();
   const errors = useMemo(() => getApiErrors(appState), [appState]);
   const Logo = useDesktopScreen() ? AmsterdamLogoLarge : AmsterdamLogo;
   const hasErrors = !!errors.length;

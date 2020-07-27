@@ -8,10 +8,10 @@ import {
   PageHeading,
   TextPage,
 } from '../../components';
-import { useAppStateAtom } from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
 
 export default () => {
-  const { CMS_CONTENT } = useAppStateAtom();
+  const { CMS_CONTENT } = useAppStateGetter();
   const generalInfo = CMS_CONTENT.content?.generalInfo;
 
   return (
