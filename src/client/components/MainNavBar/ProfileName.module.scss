@@ -14,6 +14,17 @@
     color: $color-primary-red;
     text-decoration: underline;
   }
+
+  @include mq-phone() {
+    display: block;
+    margin: 0;
+    padding: 1rem 2rem;
+    border-top: .1rem solid $color-neutral-grey2;
+
+    @include select(Button_Button) {
+      display: block;
+    }
+  }
 }
 
 .ProfileLink {
@@ -27,6 +38,10 @@
     margin-left: -2.6rem;
     top: 50%;
     transform: translateY(-50%);
+  }
+
+  @include mq-phone() {
+    margin-left: 5rem;
   }
 }
 
@@ -43,5 +58,10 @@
   margin-left: 2rem;
   + .ProfileLink--commercial {
     margin-left: 5.3rem;
+
+    @include mq-phone() {
+      margin-left: 2rem;
+      margin-top: 1rem;
+    }
   }
 }
