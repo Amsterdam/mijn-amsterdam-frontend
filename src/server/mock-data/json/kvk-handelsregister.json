@@ -1,6 +1,46 @@
 {
   "content": {
-    "name": "ZZP bedrijf XYZ"
+    "mokum": true,
+    "onderneming": {
+      "handelsnaam": "Take out Thai food B.V.",
+      "overigeHandelsnamen": [],
+      "rechtsvorm": "BV",
+      "hoofdactiviteit": "Maaltijden verkoop en levering aan huis",
+      "overigeActiviteiten": [],
+      "datumAanvang": "2004-06-14",
+      "datumEinde": null,
+      "aantalWerkzamePersonen": 4
+    },
+     "rechtspersonen": [
+      {
+        "bsn": "123123123",
+        "kvkNummer": "098098"
+      }
+    ],
+    "vestigingen": [
+      {
+        "vestigingsnummer": "1505",
+        "handelsnaam": "Take out Thai food B.V.",
+        "isHoofdvestiging": true,
+        "aantalWerkzamePersonen": 4,
+        "bezoekadres": {
+          "straatnaam": "Kloveniersburgwal",
+          "postcode": "1012 DH",
+          "woonplaatsnaam": "Amsterdam",
+          "huisnummer": "16",
+          "huisnummertoevoeging": "II",
+          "huisletter": null
+        },
+        "postadres": null,
+        "telefoonnummer": "0612345600",
+        "websites": ["https://www.takeoutthaifood.nl"],
+        "email": "info@takeoutthaifood.nl",
+        "fax": "08890876543",
+        "activiteiten": "Maaltijdbereiding",
+        "datumAanvang": "2011-08-09",
+        "datumEinde": null
+      }
+    ]
   },
   "status": "OK"
 }

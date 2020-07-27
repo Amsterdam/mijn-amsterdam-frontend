@@ -114,19 +114,33 @@ export const panelConfigCommercial: PanelConfig<KVKPanelKey> = {
       : [],
   }),
   rechtspersonen: KVK => ({
-    title: 'Rechtspersonen',
+    title:
+      KVK.content?.rechtspersonen.length &&
+      KVK.content.rechtspersonen.length > 1
+        ? 'Rechtspersonen'
+        : 'Rechtspersoon',
     actionLinks: [],
   }),
   vestigingen: KVK => ({
-    title: 'Vestigingen',
+    title:
+      KVK.content?.vestigingen.length && KVK.content.vestigingen.length > 1
+        ? 'Vestigingen'
+        : 'Vestiging',
     actionLinks: [],
   }),
   aandeelhouders: KVK => ({
-    title: 'Aandeelhouders',
+    title:
+      KVK.content?.aandeelhouders.length &&
+      KVK.content.aandeelhouders.length > 1
+        ? 'Aandeelhouders'
+        : 'Aandeelhouder',
     actionLinks: [],
   }),
   bestuurders: KVK => ({
-    title: 'Bestuurders',
+    title:
+      KVK.content?.bestuurders.length && KVK.content.bestuurders.length > 1
+        ? 'Bestuurders'
+        : 'Bestuurder',
     actionLinks: [],
   }),
 };

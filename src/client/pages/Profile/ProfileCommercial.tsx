@@ -19,6 +19,7 @@ import {
   panelConfigCommercial,
 } from './Profile.constants';
 import { formatKvkProfileData } from './formatDataCommercial';
+import { ProfileSection } from './formatData';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,
@@ -28,6 +29,40 @@ function formatInfoPanelConfig(
     return panelConfig(KVK);
   }
   return panelConfig;
+}
+
+interface InfoPanelContentProps {
+  id: string;
+  items: any[];
+  KVKData: AppState['KVK'];
+  panelConfig: PanelConfigFormatter;
+  profileData: ProfileSection;
+}
+
+function InfoPanelContent({
+  id,
+  items,
+  KVKData,
+  panelConfig,
+  profileData,
+}: InfoPanelContentProps) {
+  if (!items?.length) {
+    return null;
+  }
+  return items.length > 1 ? (
+    <InfoPanelCollapsible
+      id={id}
+      className={styles.CollapsiblePanel}
+      {...formatInfoPanelConfig(panelConfig, KVKData)}
+      panelData={profileData}
+    />
+  ) : (
+    <InfoPanel
+      className={styles.DefaultPanel}
+      {...formatInfoPanelConfig(panelConfig, KVKData)}
+      panelData={profileData}
+    />
+  );
 }
 
 export default function ProfileCommercial() {
@@ -81,39 +116,43 @@ export default function ProfileCommercial() {
         />
       )}
 
-      {!!kvkProfileData?.rechtspersonen && (
-        <InfoPanelCollapsible
-          id="profile-commercial-rechtspersonen"
-          className={styles.CollapsiblePanel}
-          {...formatInfoPanelConfig(panelConfigCommercial.rechtspersonen, KVK)}
-          panelData={kvkProfileData.rechtspersonen}
+      {!!KVK.content?.rechtspersonen && kvkProfileData?.rechtspersonen && (
+        <InfoPanelContent
+          id="kvk-rechtspersonen"
+          KVKData={KVK}
+          items={KVK.content.rechtspersonen}
+          panelConfig={panelConfigCommercial.rechtspersonen}
+          profileData={kvkProfileData.rechtspersonen}
         />
       )}
 
-      {!!kvkProfileData?.vestigingen && (
-        <InfoPanelCollapsible
-          id="profile-commercial-vestigingen"
-          className={styles.CollapsiblePanel}
-          {...formatInfoPanelConfig(panelConfigCommercial.vestigingen, KVK)}
-          panelData={kvkProfileData.vestigingen}
+      {!!KVK.content?.vestigingen && kvkProfileData?.vestigingen && (
+        <InfoPanelContent
+          id="kvk-vestigingen"
+          KVKData={KVK}
+          items={KVK.content.vestigingen}
+          panelConfig={panelConfigCommercial.vestigingen}
+          profileData={kvkProfileData.vestigingen}
         />
       )}
 
-      {!!kvkProfileData?.aandeelhouders && (
-        <InfoPanelCollapsible
-          id="profile-commercial-aandeelhouders"
-          className={styles.CollapsiblePanel}
-          {...formatInfoPanelConfig(panelConfigCommercial.aandeelhouders, KVK)}
-          panelData={kvkProfileData.aandeelhouders}
+      {!!KVK.content?.aandeelhouders && kvkProfileData?.aandeelhouders && (
+        <InfoPanelContent
+          id="kvk-aandeelhouders"
+          KVKData={KVK}
+          items={KVK.content.aandeelhouders}
+          panelConfig={panelConfigCommercial.aandeelhouders}
+          profileData={kvkProfileData.aandeelhouders}
         />
       )}
 
-      {!!kvkProfileData?.bestuurders && (
-        <InfoPanelCollapsible
-          id="profile-commercial-bestuurders"
-          className={styles.CollapsiblePanel}
-          {...formatInfoPanelConfig(panelConfigCommercial.bestuurders, KVK)}
-          panelData={kvkProfileData.bestuurders}
+      {!!KVK.content?.bestuurders && kvkProfileData?.bestuurders && (
+        <InfoPanelContent
+          id="kvk-bestuurders"
+          KVKData={KVK}
+          items={KVK.content.bestuurders}
+          panelConfig={panelConfigCommercial.bestuurders}
+          profileData={kvkProfileData.bestuurders}
         />
       )}
     </DetailPage>

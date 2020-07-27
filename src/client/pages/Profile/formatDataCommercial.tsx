@@ -80,9 +80,12 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
   aantalWerkzamePersonen: 'Werkzame personen',
 };
 
-const rechtspersoon: ProfileLabels<Partial<Rechtspersoon>> = {
+const rechtspersoon: ProfileLabels<Partial<Rechtspersoon> & {
+  bsn?: string;
+}> = {
   rsin: 'RSIN',
   kvkNummer: 'KVKnummer',
+  bsn: 'BSN',
   statutaireNaam: 'Statutaire naam',
   statutaireVestigingsplaats: 'Vestiging',
 };
