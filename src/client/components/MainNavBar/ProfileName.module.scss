@@ -5,6 +5,11 @@
   margin-right: 2.8rem;
   text-decoration: none;
 
+  @include select(Button_Button) {
+    position: relative;
+    display: inline-block;
+  }
+
   a:hover {
     color: $color-primary-red;
     text-decoration: underline;
@@ -14,11 +19,14 @@
 .ProfileLink {
   margin-left: 1.3rem;
   font-weight: normal;
+
   svg {
     position: absolute;;
     width: 1.2em;
     height: 1.3em;
     margin-left: -2.6rem;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
 
