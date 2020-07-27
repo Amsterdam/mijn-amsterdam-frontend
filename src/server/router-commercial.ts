@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { BffEndpoints } from './config';
-import { loadServicesAll } from './services/services-all';
+import { loadServicesAllCommercial } from './services/services-all-commercial';
 import { loadServicesSSECommercial } from './services/services-sse-commercial';
 import { getPassthroughRequestHeaders } from './helpers/app';
 
@@ -13,7 +13,7 @@ routerCommercial.get(BffEndpoints.SERVICES_TIPS, async function handleRouteTips(
 ) {
   try {
     const optin = req.cookies.optInPersonalizedTips === 'yes';
-    const data = await loadServicesAll(
+    const data = await loadServicesAllCommercial(
       res.locals.sessionID,
       getPassthroughRequestHeaders(req),
       optin
@@ -34,7 +34,7 @@ routerCommercial.get(
   ) {
     try {
       const optin = req.cookies.optInPersonalizedTips === 'yes';
-      const servicesResult = await loadServicesAll(
+      const servicesResult = await loadServicesAllCommercial(
         res.locals.sessionID,
         getPassthroughRequestHeaders(req),
         optin

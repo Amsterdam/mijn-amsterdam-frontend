@@ -8,7 +8,7 @@ import {
   loadServicesTips,
 } from './index';
 
-export async function loadServicesAll(
+export async function loadServicesAllCommercial(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
   optin: boolean
