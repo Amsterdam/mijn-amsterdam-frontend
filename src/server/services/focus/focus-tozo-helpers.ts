@@ -1,8 +1,16 @@
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, Chapters } from '../../../universal/config';
-import { dateFormat, hash } from '../../../universal/helpers';
+import {
+  apiSuccesResult,
+  dateFormat,
+  hash,
+  dateSort,
+} from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types/App.types';
-import { FocusTozoDocument } from './focus-combined';
+import {
+  FocusCombinedSourceResponse,
+  FocusTozoDocument,
+} from './focus-combined';
 import {
   documentStatusTranslation,
   FocusTozoLabelTranslations,
@@ -187,4 +195,52 @@ export function createTozoDocumentStepNotifications(
       title: 'Bekijk hoe het met uw aanvraag staat',
     },
   }));
+}
+
+export function createTozoResult(
+  tozodocumenten: FocusCombinedSourceResponse['tozodocumenten']
+) {
+  const documents: FocusTozoDocument[] = Array.isArray(tozodocumenten)
+    ? tozodocumenten
+        // .filter(doc => TOZO_AANVRAAG_DOCUMENT_TYPES.includes(doc.type))
+        .map(document => {
+          return {
+            ...document,
+            productTitle: getProductTitleForDocument(document),
+          };
+        })
+        .sort(dateSort('datePublished'))
+    : [];
+
+  const tozoSteps: Array<FocusItemStep | null> = documents.map(document =>
+    createTozoDocumentStep(document)
+  );
+
+  if (!tozoSteps.length) {
+    return apiSuccesResult([]);
+  }
+
+  const tozo1Steps = tozoSteps.filter(
+    (step: FocusItemStep | null): step is FocusItemStep =>
+      step !== null && step.product === 'Tozo 1'
+  );
+
+  const tozo2Steps = tozoSteps.filter(
+    (step: FocusItemStep | null): step is FocusItemStep =>
+      step !== null && step.product === 'Tozo 2'
+  );
+
+  const tozo1Item = tozo1Steps.length && createTozoItem('Tozo 1', tozo1Steps);
+  const tozo2Item = tozo2Steps.length && createTozoItem('Tozo 2', tozo2Steps);
+  const tozoItems: FocusItem[] = [];
+
+  if (tozo1Item) {
+    tozoItems.push(tozo1Item);
+  }
+
+  if (tozo2Item) {
+    tozoItems.push(tozo2Item);
+  }
+
+  return apiSuccesResult(tozoItems);
 }
