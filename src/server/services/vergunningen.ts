@@ -109,6 +109,9 @@ export function createVergunningNotification(item: Vergunning) {
     case item.status !== 'Afgehandeld':
       description = `Uw vergunningsaanvraag ${item.caseType} is geregistreerd`;
       break;
+    case item.status === 'Afgehandeld':
+      description = `Uw vergunningsaanvraag ${item.caseType} is afgehandeld`;
+      break;
   }
 
   return {
