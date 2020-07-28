@@ -1,6 +1,6 @@
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, Chapters } from '../../../universal/config';
-import { dateFormat, hash, dateSort } from '../../../universal/helpers';
+import { dateFormat, hash } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types/App.types';
 import { FocusTozoDocument } from './focus-combined';
 import {
@@ -8,7 +8,7 @@ import {
   FocusTozoLabelTranslations,
   FocusTozoStepType,
 } from './focus-tozo-content';
-import { FocusItemStep, FocusStepContent, FocusItem } from './focus-types';
+import { FocusItem, FocusItemStep, FocusStepContent } from './focus-types';
 
 export function getProductTitleForDocument(document: FocusTozoDocument) {
   const documentStepLabelSet = getStepLabels(document);
@@ -121,6 +121,8 @@ export function createTozoDocumentStep(document: FocusTozoDocument) {
   const id = hash(
     `${document.productTitle}-${stepType}-${document.id}-${document.datePublished}`
   );
+
+  document.productSpecific = labelSet.productSpecific;
 
   const step: FocusItemStep = {
     id,
