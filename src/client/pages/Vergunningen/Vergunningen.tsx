@@ -19,14 +19,14 @@ import { defaultDateFormat } from '../../../universal/helpers/date';
 import { Vergunning } from '../../../server/services/vergunningen';
 
 const DISPLAY_PROPS = {
-  identifier: 'Kenmerk',
   caseType: 'Soort vergunning',
+  identifier: 'Kenmerk',
   dateRequest: 'Aangevraagd',
 };
 
 const DISPLAY_PROPS_HISTORY = {
-  identifier: 'Kenmerk',
   caseType: 'Soort vergunning',
+  identifier: 'Kenmerk',
   decision: 'Resultaat',
 };
 
@@ -49,7 +49,7 @@ export default () => {
           dateRequest: defaultDateFormat(item.dateRequest),
         };
       });
-    return addTitleLinkComponent(items, 'identifier');
+    return addTitleLinkComponent(items, 'caseType');
   }, [VERGUNNINGEN.content]);
 
   const vergunningenPrevious = useMemo(() => {
@@ -72,13 +72,16 @@ export default () => {
       <PageContent>
         <p>
           Hier ziet u een overzicht van uw aanvragen voor vergunningen en
-          ontheffingen. Op dit moment ziet u alleen uw aanvragen voor een
+          ontheffingen. Op dit moment ziet u hier uw aanvragen voor een
           RVV-verkeersontheffing, een tijdelijke verkeersmaatregel en een
           objectvergunning. Andere vergunningen komen er later bij.
         </p>
         <p>
-          <Linkd external={true} href="https://amsterdam.nl/">
-            Meer informatie op amsterdam.nl
+          <Linkd
+            external={true}
+            href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BE4341B52-1FC0-4E17-AB68-2B3AFE15160A%7D"
+          >
+            Ontheffing RVV en TVM aanvragen
           </Linkd>
         </p>
         {isError(VERGUNNINGEN) && (
@@ -102,7 +105,7 @@ export default () => {
       >
         <Table
           className={styles.Table}
-          titleKey="identifier"
+          titleKey="caseType"
           displayProps={DISPLAY_PROPS}
           items={vergunningenActual}
         />
@@ -122,7 +125,7 @@ export default () => {
       >
         <Table
           className={styles.Table}
-          titleKey="identifier"
+          titleKey="caseType"
           displayProps={DISPLAY_PROPS_HISTORY}
           items={vergunningenPrevious}
         />

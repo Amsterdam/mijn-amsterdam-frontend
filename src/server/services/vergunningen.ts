@@ -94,8 +94,12 @@ export function createVergunningNotification(item: Vergunning) {
   let datePublished = item.dateRequest;
 
   switch (true) {
-    case item.status === 'Afgehandeld' && item.decision !== 'Verleend':
+    case item.status === 'Afgehandeld' && item.decision === 'Niet verleend':
       description = `Uw vergunningsaanvraag ${item.caseType} is niet verleend`;
+      datePublished = item.dateDecision || item.dateRequest;
+      break;
+    case item.status === 'Afgehandeld' && item.decision === 'Ingetrokken':
+      description = `Uw vergunningsaanvraag ${item.caseType} is ingetrokken`;
       datePublished = item.dateDecision || item.dateRequest;
       break;
     case item.status === 'Afgehandeld' && item.decision === 'Verleend':
@@ -143,9 +147,7 @@ export async function fetchVergunningenGenerated(
     : [];
 
   const notifications = Array.isArray(vergunningen.content)
-    ? vergunningen.content
-        // .filter(vergunning => vergunning.status !== 'Afgehandeld')
-        .map(createVergunningNotification)
+    ? vergunningen.content.map(createVergunningNotification)
     : [];
 
   return {
