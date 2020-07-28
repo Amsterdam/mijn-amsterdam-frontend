@@ -58,6 +58,12 @@ export const omit = <T, U extends keyof T>(obj: T, keys: U[]): Omit<T, U> =>
     {} as Omit<T, U>
   );
 
+export function pick<T>(source: T, keys: string[]) {
+  return Object.fromEntries(
+    Object.entries(source).filter(([key]) => keys.includes(key))
+  );
+}
+
 export function jsonCopy(data: any) {
   return JSON.parse(JSON.stringify(data));
 }

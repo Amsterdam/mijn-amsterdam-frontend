@@ -37,19 +37,18 @@ export const BFFApiUrls: Record<ProfileType, Record<string, string>> = {
   private: {
     SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
     SERVICES_SSE: `${BFF_API_BASE_URL}/services/stream`,
-    SERVICES_TIPS: `${BFF_API_BASE_URL}/services/tips`,
   },
   'private-commercial': {
     SERVICES_SAURON: `${BFF_API_BASE_URL}/private-commercial/services/all`,
     SERVICES_SSE: `${BFF_API_BASE_URL}/private-commercial/services/stream`,
-    SERVICES_TIPS: `${BFF_API_BASE_URL}/private-commercial/services/tips`,
   },
   commercial: {
     SERVICES_SAURON: `${BFF_API_BASE_URL}/commercial/services/all`,
     SERVICES_SSE: `${BFF_API_BASE_URL}/commercial/services/stream`,
-    SERVICES_TIPS: `${BFF_API_BASE_URL}/commercial/services/tips`,
   },
 };
+
+export const SERVICES_TIPS_URL = `${BFF_API_BASE_URL}/services/tips`;
 
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BRP: 'Persoonlijke gegevens, paspoort, ID-kaart + actuele updates',

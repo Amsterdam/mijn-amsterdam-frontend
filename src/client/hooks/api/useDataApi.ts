@@ -142,7 +142,7 @@ export function useDataApi<T>(
           const errorMessage = error.response?.data?.message || error.message;
           dispatch({
             type: ActionTypes.FETCH_FAILURE,
-            payload: apiErrorResponseData(initialDataNoContent, error),
+            payload: apiErrorResponseData(initialDataNoContent, errorMessage),
           });
           if (!(error instanceof Error)) {
             Sentry.captureMessage(errorMessage, {

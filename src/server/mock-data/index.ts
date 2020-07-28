@@ -172,14 +172,17 @@ export const mockDataConfig: MockDataConfig = {
       const requestData = JSON.parse(config.data);
       const content = await loadMockApiResponseJson(TIPS);
       const tips = JSON.parse(content);
-      const sourceTips = Object.values(requestData.data)
-        .filter(
-          responseContent =>
-            typeof responseContent === 'object' &&
-            responseContent !== null &&
-            'tips' in responseContent
-        )
-        .flatMap((responseContent: any) => responseContent.tips);
+
+      const sourceTips = requestData?.data
+        ? Object.values(requestData.data)
+            .filter(
+              responseContent =>
+                typeof responseContent === 'object' &&
+                responseContent !== null &&
+                'tips' in responseContent
+            )
+            .flatMap((responseContent: any) => responseContent.tips)
+        : [];
 
       const items = [
         ...(tips as MyTip[]),

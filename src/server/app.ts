@@ -1,7 +1,6 @@
 import * as Sentry from '@sentry/node';
 import bodyParser from 'body-parser';
 import compression from 'compression';
-import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, {
   ErrorRequestHandler,
@@ -19,13 +18,16 @@ import {
   secureValidation,
   sessionID,
 } from './helpers/app';
-import { router } from './router';
 import { routerCommercial } from './router-commercial';
+import { routerCommon } from './router-common';
+import { routerPrivate } from './router-private';
+
+const isDebug = ENV === 'development';
 
 const options: Sentry.NodeOptions = {
   dsn: getOtapEnvItem('bffSentryDsn'),
   environment: ENV,
-  debug: ENV === 'development',
+  debug: isDebug,
 };
 Sentry.init(options);
 
@@ -36,7 +38,6 @@ app.use(Sentry.Handlers.requestHandler() as RequestHandler);
 
 app.use(cors());
 app.use(bodyParser.json({ limit: '1mb' }));
-app.use(cookieParser());
 app.use(compression());
 
 // Basic security measure
@@ -46,8 +47,11 @@ app.use(secureValidation);
 // Generate session id
 app.use(sessionID);
 
-// Mount the router at the base path
-app.use(BFF_BASE_PATH, router);
+// Mount the routers at the base path
+app.use(BFF_BASE_PATH, routerCommon);
+// Private profiles
+app.use(BFF_BASE_PATH, routerPrivate);
+// Commercial profiles
 app.use(BFF_BASE_PATH + '/commercial', routerCommercial);
 
 // Destroy the session as soon as the api requests are all processed
@@ -72,5 +76,7 @@ app.use((req: Request, res: Response) => {
 });
 
 app.listen(BFF_PORT, () => {
-  console.info(`Mijn Amsterdam BFF api listening on ${BFF_PORT}...`);
+  console.info(
+    `Mijn Amsterdam BFF api listening on ${BFF_PORT}... [debug: ${isDebug}]`
+  );
 });

@@ -1,3 +1,5 @@
+import { Request } from 'express';
+import { getPassthroughRequestHeaders } from '../helpers/app';
 import {
   loadServicesAfvalCommercial,
   loadServicesCMSContent,
@@ -5,14 +7,14 @@ import {
   loadServicesGeneratedCommercial,
   loadServicesMapCommercial,
   loadServicesRelatedCommercial,
-  loadServicesTips,
 } from './index';
 
 export async function loadServicesAllCommercial(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
-  optin: boolean
+  req: Request
 ) {
+  const passthroughRequestHeaders = getPassthroughRequestHeaders(req);
+
   const servicesDirectPromise = loadServicesDirectCommercial(
     sessionID,
     passthroughRequestHeaders
@@ -47,23 +49,6 @@ export async function loadServicesAllCommercial(
     servicesGeneratedPromise,
   ]);
 
-  const tipsRequestDataServiceResults = await Promise.all([
-    servicesDirectPromise,
-    servicesRelatePromise,
-  ]);
-
-  const tipsResult = await loadServicesTips(
-    sessionID,
-    passthroughRequestHeaders,
-    tipsRequestDataServiceResults,
-    optin
-  );
-
-  const responseAll = Object.assign({}, tipsResult);
-
   // Merge all service results into 1 response object
-  return serviceResults.reduce(
-    (acc, result) => Object.assign(acc, result),
-    responseAll
-  );
+  return serviceResults.reduce((acc, result) => Object.assign(acc, result), {});
 }

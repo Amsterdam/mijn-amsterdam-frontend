@@ -1,62 +1,55 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TIPSData } from '../../../server/services/tips';
 import { ApiResponse } from '../../../universal/helpers/api';
-import { PRISTINE_APPSTATE } from '../../AppState';
-import { BFFApiUrls } from '../../config/api';
-import { useAppStateGetter, useAppStateSetter } from '../useAppState';
+import { AppState, PRISTINE_APPSTATE } from '../../AppState';
+import { SERVICES_TIPS_URL } from '../../config/api';
+import { useAppStateSetter } from '../useAppState';
 import { useOptIn } from '../useOptIn';
 import { useProfileTypeValue } from '../useProfileType';
-import { requestApiData, useDataApi } from './useDataApi';
+import { useDataApi } from './useDataApi';
 
-function transformResponse(response: ApiResponse<TIPSData>) {
-  return {
-    TIPS: response,
-  };
-}
+const pristineData = { TIPS: PRISTINE_APPSTATE.TIPS };
 
-const pristineData = transformResponse(PRISTINE_APPSTATE.TIPS);
+const requestConfig = {
+  url: SERVICES_TIPS_URL,
+  postpone: true,
+};
 
 export function useTipsApi() {
   const { isOptIn } = useOptIn();
-  const [prevOptIn, setPrevOptIn] = useState(isOptIn);
-  const setAppState = useAppStateSetter();
-  const appState = useAppStateGetter();
   const profileType = useProfileTypeValue();
-  const requestConfig = useMemo(() => {
-    return {
-      url: BFFApiUrls[profileType].SERVICES_TIPS,
-      postpone: true,
-      transformResponse: [
-        ...requestApiData.defaults.transformResponse,
-        transformResponse,
-      ],
-    };
-  }, [profileType]);
 
   const [api, fetchTips] = useDataApi<{ TIPS: ApiResponse<TIPSData> }>(
     requestConfig,
     pristineData
   );
+  const setAppState = useAppStateSetter();
+
+  const fetchTrigger = `${profileType}-${isOptIn}`;
+  const [loadingTrigger, setLoadingTrigger] = useState<null | string>(null);
 
   useEffect(() => {
-    if (prevOptIn !== isOptIn && !api.isLoading) {
-      setPrevOptIn(isOptIn);
+    if (fetchTrigger !== loadingTrigger) {
+      setLoadingTrigger(fetchTrigger);
       fetchTips({
         ...requestConfig,
-        postpone: false,
+        params: {
+          profileType,
+          optin: isOptIn,
+        },
       });
     }
-  }, [isOptIn, prevOptIn, fetchTips, api.isLoading, requestConfig]);
+  }, [isOptIn, fetchTrigger, loadingTrigger, fetchTips, profileType]);
 
   useEffect(() => {
-    if (api.isLoading && appState.TIPS !== pristineData.TIPS) {
-      setAppState(Object.assign({}, appState, pristineData));
-    } else if (
+    if (
       !api.isLoading &&
       api.isDirty &&
-      appState.TIPS !== api.data.TIPS
+      api.data.TIPS !== PRISTINE_APPSTATE.TIPS
     ) {
-      setAppState(Object.assign({}, appState, api.data));
+      setAppState((appState: AppState) => {
+        return Object.assign({}, appState, api.data);
+      });
     }
-  }, [api, appState, setAppState]);
+  }, [api, setAppState]);
 }

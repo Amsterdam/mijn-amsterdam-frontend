@@ -11,7 +11,6 @@ import {
   loadServicesGenerated,
   loadServicesMap,
   loadServicesRelated,
-  loadServicesTips,
 } from './index';
 
 export async function loadServicesSSE(
@@ -59,22 +58,6 @@ export async function loadServicesSSE(
 
   addServiceResultHandler(res, servicesGenerated, 'generated');
 
-  const tipsRequestDataServiceResults = await Promise.all([
-    servicesDirect,
-    servicesRelated,
-  ]);
-
-  const optin = req.cookies.optInPersonalizedTips === 'yes';
-
-  const servicesTips = loadServicesTips(
-    sessionID,
-    passThroughHeaders,
-    tipsRequestDataServiceResults,
-    optin
-  );
-
-  addServiceResultHandler(res, servicesTips, 'tips');
-
   // Wait for all services to have responded and then end the stream.
   Promise.allSettled([
     servicesDirect,
@@ -83,7 +66,6 @@ export async function loadServicesSSE(
     servicesMap,
     servicesCMSContent,
     servicesGenerated,
-    servicesTips,
   ]).then(() => {
     sendMessage(res, 'close', 'close', null);
     next();

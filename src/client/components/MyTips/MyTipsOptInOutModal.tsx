@@ -45,10 +45,8 @@ export default function MyTipsOptInOutModal({
             onClick={() => {
               if (isOptIn) {
                 optOut();
-                // controller.TIPS?.fetch(false);
               } else {
                 optIn();
-                // controller.TIPS?.fetch(true);
               }
               onClose();
             }}

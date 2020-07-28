@@ -9,9 +9,8 @@ import {
   loadServicesCMSContent,
   loadServicesDirectCommercial,
   loadServicesGeneratedCommercial,
-  loadServicesRelatedCommercial,
   loadServicesMapCommercial,
-  loadServicesTips,
+  loadServicesRelatedCommercial,
 } from './index';
 
 export async function loadServicesSSECommercial(
@@ -68,26 +67,8 @@ export async function loadServicesSSECommercial(
 
   addServiceResultHandler(res, servicesGenerated, 'generated');
 
-  const optin = req.cookies.optInPersonalizedTips === 'yes';
-
-  const tipsRequestDataServiceResults = await Promise.all([
-    servicesDirect,
-    servicesRelated,
-  ]);
-
-  const servicesTips = loadServicesTips(
-    sessionID,
-    passThroughHeaders,
-    tipsRequestDataServiceResults,
-    optin
-  );
-
-  addServiceResultHandler(res, servicesTips, 'tips');
-
-  Promise.allSettled([servicesRelated, servicesDirect, servicesTips]).then(
-    () => {
-      sendMessage(res, 'close', 'close', null);
-      next();
-    }
-  );
+  Promise.allSettled([servicesRelated, servicesDirect]).then(() => {
+    sendMessage(res, 'close', 'close', null);
+    next();
+  });
 }
