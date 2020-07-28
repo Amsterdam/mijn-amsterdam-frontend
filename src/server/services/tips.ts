@@ -79,6 +79,10 @@ export async function loadServicesTips(sessionID: string, req: Request) {
     optin: !!params.optin,
   };
 
+  if (params.profileType) {
+    tipsRequestData.profileType = params.profileType;
+  }
+
   if (params.optin) {
     const tipsRequestDataServiceResults = await Promise.all([
       loadServicesDirect(sessionID, passthroughRequestHeaders),
@@ -90,10 +94,6 @@ export async function loadServicesTips(sessionID: string, req: Request) {
     );
 
     tipsRequestData.data = data;
-
-    if (params.profileType) {
-      tipsRequestData.profileType = params.profileType;
-    }
   }
 
   const TIPS = await fetchTIPS(

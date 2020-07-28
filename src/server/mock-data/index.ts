@@ -187,9 +187,18 @@ export const mockDataConfig: MockDataConfig = {
       const items = [
         ...(tips as MyTip[]),
         ...sourceTips.map(tip => Object.assign(tip, { isPersonalized: true })),
-      ].filter((tip: MyTip) =>
-        requestData?.optin ? tip.isPersonalized : !tip.isPersonalized
-      );
+      ]
+        .filter((tip: MyTip) =>
+          requestData?.optin ? tip.isPersonalized : !tip.isPersonalized
+        )
+        .map(tip => {
+          if (requestData.profileType !== 'private') {
+            return Object.assign(tip, {
+              title: `[${tip.profileType}]${tip.title}`,
+            });
+          }
+          return tip;
+        });
       return JSON.stringify(items);
     },
   },
