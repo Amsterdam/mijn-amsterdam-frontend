@@ -194,7 +194,7 @@ export const mockDataConfig: MockDataConfig = {
         .map(tip => {
           if (requestData.profileType !== 'private') {
             return Object.assign(tip, {
-              title: `[${tip.profileType}]${tip.title}`,
+              title: `[${requestData.profileType}] ${tip.title}`,
             });
           }
           return tip;
