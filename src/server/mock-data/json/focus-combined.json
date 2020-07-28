@@ -18,6 +18,244 @@
     ],
     "tozodocumenten": [
       {
+        "description": "Afwijzen uitkering Tozo",
+        "datePublished": "2020-05-12T04:46:18.408Z",
+        "type": "",
+        "id": "3038546045",
+        "url": "focus/document?id=3038546045"
+      },
+      {
+        "description": "Tozo Afwijzen",
+        "datePublished": "2020-04-10T07:40:46.652Z",
+        "type": "",
+        "id": "2825960169",
+        "url": "focus/document?id=2825960169"
+      },
+      {
+        "description": "Afwijzen lening Tozo",
+        "datePublished": "2020-05-03T00:11:20.137Z",
+        "type": "",
+        "id": "1086455086",
+        "url": "focus/document?id=1086455086"
+      },
+      {
+        "description": "Tozo afwijzen via batch",
+        "datePublished": "2020-04-08T08:40:50.368Z",
+        "type": "",
+        "id": "2256126955",
+        "url": "focus/document?id=2256126955"
+      },
+      {
+        "description": "Tozo2 Afwijzen",
+        "datePublished": "2020-05-14T05:11:18.182Z",
+        "type": "",
+        "id": "3004175291",
+        "url": "focus/document?id=3004175291"
+      },
+      {
+        "description": "Tozo2 afwijzen via batch",
+        "datePublished": "2020-04-01T07:21:55.883Z",
+        "type": "",
+        "id": "1531067513",
+        "url": "focus/document?id=1531067513"
+      },
+      {
+        "description": "Voorschot Bbz Corona regeling (Eenm.)",
+        "datePublished": "2020-05-01T08:12:42.508Z",
+        "type": "",
+        "id": "4079322899",
+        "url": "focus/document?id=4079322899"
+      },
+      {
+        "description": "Bbz Toekennen voorschot Tozo",
+        "datePublished": "2020-05-24T05:59:59.913Z",
+        "type": "",
+        "id": "1566258221",
+        "url": "focus/document?id=1566258221"
+      },
+      {
+        "description": "Bbz Toekennen voorschot Tozo via batch",
+        "datePublished": "2020-05-22T09:17:21.030Z",
+        "type": "",
+        "id": "1644651407",
+        "url": "focus/document?id=1644651407"
+      },
+      {
+        "description": "Tozo2 Toekennen voorschot via batch",
+        "datePublished": "2020-04-25T04:07:38.357Z",
+        "type": "",
+        "id": "2878292903",
+        "url": "focus/document?id=2878292903"
+      },
+      {
+        "description": "Toekennen uitkering Tozo",
+        "datePublished": "2020-04-23T06:31:15.357Z",
+        "type": "",
+        "id": "4242655908",
+        "url": "focus/document?id=4242655908"
+      },
+      {
+        "description": "Tozo Toekennen",
+        "datePublished": "2020-05-12T10:09:08.865Z",
+        "type": "",
+        "id": "2999683472",
+        "url": "focus/document?id=2999683472"
+      },
+      {
+        "description": "Toekennen lening Tozo",
+        "datePublished": "2020-04-13T19:41:36.937Z",
+        "type": "",
+        "id": "1577042327",
+        "url": "focus/document?id=1577042327"
+      },
+      {
+        "description": "Tozo Toekennen bedrijfskapitaal",
+        "datePublished": "2020-05-13T23:53:07.762Z",
+        "type": "",
+        "id": "3149735612",
+        "url": "focus/document?id=3149735612"
+      },
+      {
+        "description": "Tozo Vrije beschikking",
+        "datePublished": "2020-05-18T07:16:42.924Z",
+        "type": "",
+        "id": "761801503",
+        "url": "focus/document?id=761801503"
+      },
+      {
+        "description": "Tozo Toekennen via batch",
+        "datePublished": "2020-05-19T20:16:34.894Z",
+        "type": "",
+        "id": "165689906",
+        "url": "focus/document?id=165689906"
+      },
+      {
+        "description": "Tozo2 Toekennen",
+        "datePublished": "2020-05-16T14:31:30.165Z",
+        "type": "",
+        "id": "272974434",
+        "url": "focus/document?id=272974434"
+      },
+      {
+        "description": "Tozo2 Toekennen bedrijfskapitaal",
+        "datePublished": "2020-05-13T01:54:25.641Z",
+        "type": "",
+        "id": "902396110",
+        "url": "focus/document?id=902396110"
+      },
+      {
+        "description": "Tozo2 Toekennen via batch",
+        "datePublished": "2020-05-24T02:01:58.471Z",
+        "type": "",
+        "id": "1088667008",
+        "url": "focus/document?id=1088667008"
+      },
+      {
+        "description": "Tozo Buiten behandeling laten",
+        "datePublished": "2020-04-14T21:11:11.735Z",
+        "type": "",
+        "id": "185352789",
+        "url": "focus/document?id=185352789"
+      },
+      {
+        "description": "Tozo2 Buiten behandeling laten",
+        "datePublished": "2020-05-17T01:51:49.043Z",
+        "type": "",
+        "id": "1886900679",
+        "url": "focus/document?id=1886900679"
+      },
+      {
+        "description": "Tozo Intrekken",
+        "datePublished": "2020-05-12T12:42:04.558Z",
+        "type": "",
+        "id": "3730340",
+        "url": "focus/document?id=3730340"
+      },
+      {
+        "description": "Tozo Intrekken met terugvordering voorschot",
+        "datePublished": "2020-05-09T18:16:06.894Z",
+        "type": "",
+        "id": "4096635254",
+        "url": "focus/document?id=4096635254"
+      },
+      {
+        "description": "Tozo2 Intrekken met terugvordering voorschot",
+        "datePublished": "2020-04-01T10:29:00.100Z",
+        "type": "",
+        "id": "2103163716",
+        "url": "focus/document?id=2103163716"
+      },
+      {
+        "description": "Tozo2 Intrekken",
+        "datePublished": "2020-04-07T07:52:32.224Z",
+        "type": "",
+        "id": "218062038",
+        "url": "focus/document?id=218062038"
+      },
+      {
+        "description": "Hersteltermijn uitkering Tozo",
+        "datePublished": "2020-03-29T15:43:50.511Z",
+        "type": "",
+        "id": "2270450253",
+        "url": "focus/document?id=2270450253"
+      },
+      {
+        "description": "Tozo Hersteltermijn",
+        "datePublished": "2020-05-24T21:15:19.986Z",
+        "type": "",
+        "id": "1698655321",
+        "url": "focus/document?id=1698655321"
+      },
+      {
+        "description": "Hersteltermijn lening Tozo",
+        "datePublished": "2020-04-01T04:32:38.528Z",
+        "type": "",
+        "id": "2655077854",
+        "url": "focus/document?id=2655077854"
+      },
+      {
+        "description": "Tozo2 Hersteltermijn",
+        "datePublished": "2020-05-12T12:58:13.121Z",
+        "type": "",
+        "id": "277609291",
+        "url": "focus/document?id=277609291"
+      },
+      {
+        "description": "E-AANVR-TOZO",
+        "datePublished": "2020-05-26T16:07:20.241Z",
+        "type": "",
+        "id": "2197118628",
+        "url": "focus/document?id=2197118628"
+      },
+      {
+        "description": "E-AANVR-KBBZ",
+        "datePublished": "2020-04-17T04:34:38.060Z",
+        "type": "",
+        "id": "1462198587",
+        "url": "focus/document?id=1462198587"
+      },
+      {
+        "description": "E-AANVR-TOZ2",
+        "datePublished": "2020-03-30T07:40:23.283Z",
+        "type": "",
+        "id": "715216441",
+        "url": "focus/document?id=715216441"
+      },
+      {
+        "description": "Tozo Vrije beschikking",
+        "datePublished": "2020-04-26T09:51:07.848Z",
+        "type": "",
+        "id": "761801503",
+        "url": "focus/document?id=761801503"
+      },
+      {
+        "description": "Tozo2 Vrije beschikking",
+        "datePublished": "2020-05-26T17:29:22.037Z",
+        "type": "",
+        "id": "3711988301",
+        "url": "focus/document?id=3711988301"
+      },
+      {
         "datePublished": "2020-03-31T18:59:46+02:00",
         "description": "Tegemoetkoming Ondernemers en Zelfstandigen",
         "id": "4400000031",

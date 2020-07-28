@@ -1,6 +1,16 @@
-import { defaultDateFormat, dateFormat } from '../../../universal/helpers';
+import { dateFormat, defaultDateFormat } from '../../../universal/helpers';
 import { stepLabels } from './focus-aanvragen-content';
-import { FocusStepContent, FocusItemStep } from './focus-types';
+import { FocusTozoDocument } from './focus-combined';
+import { FocusStepContent } from './focus-types';
+
+function productName(
+  document: Pick<FocusTozoDocument, 'productTitle' | 'productSpecific'>
+) {
+  const hasProductSpecific = !!document.productSpecific;
+  return `${hasProductSpecific ? 'de ' : ''}${document.productTitle}${
+    hasProductSpecific ? ` ${document.productSpecific}` : ''
+  }`;
+}
 
 const aanvraagLabels: FocusStepContent = {
   notification: {
@@ -53,33 +63,34 @@ const herstelTermijnLabels: FocusStepContent = {
 
 const toekennenLabels: FocusStepContent = {
   notification: {
-    title: document => `${document.productTitle}: Uw aanvraag is toegekend`,
+    title: document => `${productName(document)}: Uw aanvraag is toegekend`,
     description: document =>
-      `U hebt recht op een ${
-        document.productTitle
-      } (besluit: ${defaultDateFormat(document.datePublished)}).`,
+      `U hebt recht op ${productName(document)} (besluit: ${defaultDateFormat(
+        document.datePublished
+      )}).`,
   },
   status: stepLabels.beslissing,
   description: document =>
     `<p>
-          U hebt recht op een ${document.productTitle}. Bekijk de brief
+          U hebt recht op ${productName(document)}. Bekijk de brief
           voor meer details.
         </p>`,
 };
 
 const afwijzenLabels: FocusStepContent = {
   notification: {
-    title: document => `${document.productTitle}: Uw aanvraag is afgewezen`,
+    title: document => `${productName(document)}: Uw aanvraag is afgewezen`,
     description: document =>
-      `U hebt geen recht op een ${
-        document.productTitle
-      } (besluit: ${defaultDateFormat(document.datePublished)}).`,
+      `U hebt geen recht op ${productName(
+        document
+      )} (besluit: ${defaultDateFormat(document.datePublished)}).`,
   },
   status: stepLabels.beslissing,
   description: document =>
     `<p>
-        U hebt geen recht op een ${document.productTitle}. Bekijk de
-        brief voor meer details.
+        U hebt geen recht op ${productName(
+          document
+        )}. Bekijk de brief voor meer details.
       </p>`,
 };
 
@@ -91,22 +102,29 @@ const buitenBehandelingLabels: FocusStepContent = {
   },
   status: stepLabels.beslissing,
   description: document =>
-    `<p>Wij behandelen uw aanvraag niet meer. Bekijk de brief voor meer
-          details.</p>`,
+    `<p>Wij behandelen uw aanvraag voor ${document.productTitle} niet meer. Bekijk de brief voor meer details.</p>`,
 };
 
 const intrekkenLabels: FocusStepContent = {
   notification: {
-    title: document => `${document.productTitle}: Uw aanvraag is ingetrokken`,
+    title: document => `${document.productTitle}: Aanvraag ingetrokken`,
     description: document =>
-      `Uw aanvraag is ingetrokken (besluit: ${defaultDateFormat(
-        document.datePublished
-      )}).`,
+      `U hebt uw ${document.productTitle} aanvraag ingetrokken.`,
   },
   status: stepLabels.beslissing,
   description: document =>
-    `<p>Uw aanvraag is ingetrokken. Bekijk de brief voor meer
-          details.</p>`,
+    `<p>U hebt uw ${document.productTitle} aanvraag ingetrokken. Bekijk de brief voor meer details.</p>`,
+};
+
+const vrijeBeschikkingLabels: FocusStepContent = {
+  notification: {
+    title: document => `${document.productTitle}: Besluit aanvraag`,
+    description: document =>
+      `Wij hebben een besluit genomen over uw ${document.productTitle} aanvraag.`,
+  },
+  status: stepLabels.beslissing,
+  description: document =>
+    `<p>Wij hebben een besluit genomen over uw ${document.productTitle} aanvraag. Bekijk de brief voor meer details.</p>`,
 };
 
 export type FocusTozoStepType =
@@ -116,12 +134,14 @@ export type FocusTozoStepType =
   | 'afwijzen'
   | 'buitenBehandeling'
   | 'intrekken'
+  | 'vrijeBeschikking'
   | 'voorschot';
 
 export type FocusTozoLabelTranslations = {
   step: FocusStepContent;
   documentTitle: string;
   product: 'Tozo 1' | 'Tozo 2';
+  productSpecific: 'uitkering' | 'lening' | 'voorschot' | 'aanvraag' | '';
 };
 
 export type FocusTozoLabelSet = Record<string, FocusTozoLabelTranslations>;
@@ -134,23 +154,39 @@ export const documentStatusTranslation: {
       step: afwijzenLabels,
       documentTitle: 'Brief besluit',
       product: 'Tozo 1',
+      productSpecific: 'uitkering',
     },
     'Tozo Afwijzen': {
       step: afwijzenLabels,
-      documentTitle: 'Brief besluit',
+      documentTitle: 'Besluit afwijzing',
       product: 'Tozo 1',
+      productSpecific: '',
     },
     'Afwijzen lening Tozo': {
       step: afwijzenLabels,
       documentTitle: 'Brief besluit',
       product: 'Tozo 1',
+      productSpecific: 'lening',
+    },
+    'Tozo afwijzen via batch': {
+      step: afwijzenLabels,
+      documentTitle: 'Besluit afwijzing',
+      product: 'Tozo 1',
+      productSpecific: '',
     },
 
     // TOZO-2
     'Tozo2 Afwijzen': {
       step: afwijzenLabels,
-      documentTitle: 'Brief besluit',
+      documentTitle: 'Besluit afwijzing',
       product: 'Tozo 2',
+      productSpecific: '',
+    },
+    'Tozo2 afwijzen via batch': {
+      step: afwijzenLabels,
+      documentTitle: 'Besluit afwijzing',
+      product: 'Tozo 2',
+      productSpecific: '',
     },
   },
   voorschot: {
@@ -158,16 +194,19 @@ export const documentStatusTranslation: {
       step: voorschotToekennenLabels,
       documentTitle: 'Brief betaling voorschot',
       product: 'Tozo 1',
+      productSpecific: 'voorschot',
     },
     'Bbz Toekennen voorschot Tozo': {
       step: voorschotToekennenLabels,
       documentTitle: 'Brief betaling voorschot',
       product: 'Tozo 1',
+      productSpecific: 'voorschot',
     },
     'Bbz Toekennen voorschot Tozo via batch': {
       step: voorschotToekennenLabels,
       documentTitle: 'Brief betaling voorschot',
       product: 'Tozo 1',
+      productSpecific: 'voorschot',
     },
 
     // TOZO-2
@@ -175,6 +214,7 @@ export const documentStatusTranslation: {
       step: voorschotToekennenLabels,
       documentTitle: 'Brief betaling voorschot',
       product: 'Tozo 2',
+      productSpecific: 'voorschot',
     },
   },
   toekennen: {
@@ -182,81 +222,101 @@ export const documentStatusTranslation: {
       step: toekennenLabels,
       documentTitle: 'Brief besluit uitkering',
       product: 'Tozo 1',
+      productSpecific: 'uitkering',
     },
     'Tozo Toekennen': {
       step: toekennenLabels,
-      documentTitle: 'Brief besluit',
+      documentTitle: 'Besluit toekenning uitkering',
       product: 'Tozo 1',
+      productSpecific: 'uitkering',
     },
     'Toekennen lening Tozo': {
       step: toekennenLabels,
       documentTitle: 'Brief besluit lening',
       product: 'Tozo 1',
+      productSpecific: 'lening',
     },
     'Tozo Toekennen bedrijfskapitaal': {
       step: toekennenLabels,
-      documentTitle: 'Brief besluit lening',
+      documentTitle: 'Besluit toekenning lening',
       product: 'Tozo 1',
+      productSpecific: 'lening',
     },
     'Tozo Vrije beschikking': {
       step: toekennenLabels,
-      documentTitle: 'Brief besluit',
+      documentTitle: 'Besluit Tozo 1 aanvraag',
       product: 'Tozo 1',
+      productSpecific: '',
     },
     'Tozo Toekennen via batch': {
       step: toekennenLabels,
-      documentTitle: 'Brief besluit',
+      documentTitle: 'Besluit toekenning uitkering',
       product: 'Tozo 1',
+      productSpecific: 'uitkering',
     },
 
     // TOZO-2
     'Tozo2 Toekennen': {
       step: toekennenLabels,
-      documentTitle: 'Brief besluit',
+      documentTitle: 'Besluit toekenning uitkering',
       product: 'Tozo 2',
+      productSpecific: 'uitkering',
     },
     'Tozo2 Toekennen bedrijfskapitaal': {
       step: toekennenLabels,
-      documentTitle: 'Brief besluit lening',
+      documentTitle: 'Besluit toekenning lening',
       product: 'Tozo 2',
+      productSpecific: 'lening',
+    },
+    'Tozo2 Toekennen via batch': {
+      step: toekennenLabels,
+      documentTitle: 'Besluit toekenning uitkering',
+      product: 'Tozo 2',
+      productSpecific: 'uitkering',
     },
   },
   buitenBehandeling: {
     'Tozo Buiten behandeling laten': {
       step: buitenBehandelingLabels,
-      documentTitle: 'Brief besluit',
+      documentTitle: 'Besluit buiten behandeling',
       product: 'Tozo 1',
+      productSpecific: '',
     },
 
     // TOZO-2
     'Tozo2 Buiten behandeling laten': {
       step: buitenBehandelingLabels,
-      documentTitle: 'Brief besluit',
+      documentTitle: 'Besluit buiten behandeling',
       product: 'Tozo 2',
+      productSpecific: '',
     },
   },
   intrekken: {
     'Tozo Intrekken': {
       step: intrekkenLabels,
-      documentTitle: 'Brief intrekking',
+      documentTitle: 'Brief intrekken Tozo 1 aanvraag',
       product: 'Tozo 1',
+      productSpecific: 'aanvraag',
     },
     'Tozo Intrekken met terugvordering voorschot': {
       step: intrekkenLabels,
-      documentTitle: 'Brief intrekking',
+      documentTitle: 'Besluit intrekking met terugbetaling',
       product: 'Tozo 1',
+      productSpecific: 'aanvraag',
     },
 
     // TOZO-2
     'Tozo2 Intrekken met terugvordering voorschot': {
       step: intrekkenLabels,
-      documentTitle: 'Brief besluit uitkering',
+      documentTitle: 'Besluit intrekking met terugbetaling',
       product: 'Tozo 2',
+      productSpecific: 'aanvraag',
     },
     'Tozo2 Intrekken': {
       step: intrekkenLabels,
-      documentTitle: '',
+      documentTitle: 'Besluit intrekking met terugbetaling',
       product: 'Tozo 2',
+      productSpecific: 'aanvraag',
     },
   },
   herstelTermijn: {
@@ -264,16 +324,19 @@ export const documentStatusTranslation: {
       step: herstelTermijnLabels,
       documentTitle: 'Brief meer informatie',
       product: 'Tozo 1',
+      productSpecific: 'uitkering',
     },
     'Tozo Hersteltermijn': {
       step: herstelTermijnLabels,
       documentTitle: 'Brief meer informatie',
       product: 'Tozo 1',
+      productSpecific: '',
     },
     'Hersteltermijn lening Tozo': {
       step: herstelTermijnLabels,
       documentTitle: 'Brief meer informatie',
       product: 'Tozo 1',
+      productSpecific: 'lening',
     },
 
     // TOZO-2
@@ -281,6 +344,7 @@ export const documentStatusTranslation: {
       step: herstelTermijnLabels,
       documentTitle: 'Brief meer informatie',
       product: 'Tozo 2',
+      productSpecific: '',
     },
   },
   aanvraag: {
@@ -288,11 +352,13 @@ export const documentStatusTranslation: {
       step: aanvraagLabels,
       documentTitle: 'Ontvangst- bevestiging Aanvraag',
       product: 'Tozo 1',
+      productSpecific: 'aanvraag',
     },
     'E-AANVR-KBBZ': {
       step: aanvraagLabels,
       documentTitle: 'Ontvangst- bevestiging Aanvraag',
       product: 'Tozo 1',
+      productSpecific: 'aanvraag',
     },
 
     // TOZO-2
@@ -300,6 +366,23 @@ export const documentStatusTranslation: {
       step: aanvraagLabels,
       documentTitle: 'Ontvangst- bevestiging Aanvraag',
       product: 'Tozo 2',
+      productSpecific: 'aanvraag',
+    },
+  },
+  vrijeBeschikking: {
+    'Tozo Vrije beschikking': {
+      step: vrijeBeschikkingLabels,
+      documentTitle: 'Besluit Tozo 1 aanvraag',
+      product: 'Tozo 1',
+      productSpecific: '',
+    },
+
+    // TOZO-2
+    'Tozo2 Vrije beschikking': {
+      step: vrijeBeschikkingLabels,
+      documentTitle: 'Besluit Tozo 2 aanvraag',
+      product: 'Tozo 2',
+      productSpecific: '',
     },
   },
 };
