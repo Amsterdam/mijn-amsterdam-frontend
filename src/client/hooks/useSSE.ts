@@ -29,7 +29,7 @@ export function useSSE({
     connectionCounter += 1;
     console.info('[SSE] Connect ', connectionCounter);
     setEventSource(es);
-  }, [path]);
+  }, [path, requestParams]);
 
   // Connecting to the EventSource.
   useEffect(() => {
