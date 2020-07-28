@@ -12,6 +12,8 @@ import {
   loadServicesMap,
   loadServicesRelated,
 } from './index';
+import { loadServicesTips } from './tips';
+import { sessionID } from '../helpers/app';
 
 export async function loadServicesSSE(
   req: Request,
@@ -58,6 +60,10 @@ export async function loadServicesSSE(
 
   addServiceResultHandler(res, servicesGenerated, 'generated');
 
+  const servicesTips = loadServicesTips(sessionID, req);
+
+  addServiceResultHandler(res, servicesTips, 'tips');
+
   // Wait for all services to have responded and then end the stream.
   Promise.allSettled([
     servicesDirect,
@@ -66,6 +72,7 @@ export async function loadServicesSSE(
     servicesMap,
     servicesCMSContent,
     servicesGenerated,
+    servicesTips,
   ]).then(() => {
     sendMessage(res, 'close', 'close', null);
     next();

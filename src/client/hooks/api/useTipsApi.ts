@@ -18,15 +18,15 @@ const requestConfig = {
 export function useTipsApi() {
   const { isOptIn } = useOptIn();
   const profileType = useProfileTypeValue();
-
   const [api, fetchTips] = useDataApi<{ TIPS: ApiResponse<TIPSData> }>(
     requestConfig,
     pristineData
   );
   const setAppState = useAppStateSetter();
-
   const fetchTrigger = `${profileType}-${isOptIn}`;
-  const [loadingTrigger, setLoadingTrigger] = useState<null | string>(null);
+  const [loadingTrigger, setLoadingTrigger] = useState<null | string>(
+    fetchTrigger
+  );
 
   useEffect(() => {
     if (fetchTrigger !== loadingTrigger) {

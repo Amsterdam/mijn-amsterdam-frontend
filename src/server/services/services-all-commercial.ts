@@ -7,6 +7,7 @@ import {
   loadServicesGeneratedCommercial,
   loadServicesMapCommercial,
   loadServicesRelatedCommercial,
+  loadServicesTips,
 } from './index';
 
 export async function loadServicesAllCommercial(
@@ -40,6 +41,9 @@ export async function loadServicesAllCommercial(
     passthroughRequestHeaders
   );
 
+  req.query.profileType = 'commercial';
+  const servicesTipsPromise = loadServicesTips(sessionID, req);
+
   const serviceResults = await Promise.all([
     servicesDirectPromise,
     servicesRelatePromise,
@@ -47,6 +51,7 @@ export async function loadServicesAllCommercial(
     servicesCMSContPromise,
     servicesAfvalPromise,
     servicesGeneratedPromise,
+    servicesTipsPromise,
   ]);
 
   // Merge all service results into 1 response object

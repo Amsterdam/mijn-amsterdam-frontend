@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react';
-import { useCookie } from './useCookie';
+import { useCookie, cookieAtom } from './useCookie';
+import { useRecoilValue } from 'recoil';
 
 export interface OptIn {
   isOptIn: boolean;
@@ -25,4 +26,8 @@ export function useOptIn(): OptIn {
   return useMemo(() => {
     return { isOptIn: isOptInCookie === 'yes', optIn, optOut };
   }, [isOptInCookie, optIn, optOut]);
+}
+
+export function useOptInValue() {
+  return useRecoilValue(cookieAtom).optInPersonalizedTips === 'yes';
 }

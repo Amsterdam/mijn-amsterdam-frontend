@@ -11,6 +11,7 @@ import {
   loadServicesGeneratedCommercial,
   loadServicesMapCommercial,
   loadServicesRelatedCommercial,
+  loadServicesTips,
 } from './index';
 
 export async function loadServicesSSECommercial(
@@ -67,7 +68,20 @@ export async function loadServicesSSECommercial(
 
   addServiceResultHandler(res, servicesGenerated, 'generated');
 
-  Promise.allSettled([servicesRelated, servicesDirect]).then(() => {
+  req.query.profileType = 'commercial';
+  const servicesTips = loadServicesTips(sessionID, req);
+
+  addServiceResultHandler(res, servicesTips, 'tips');
+
+  Promise.allSettled([
+    servicesRelated,
+    servicesDirect,
+    servicesAfval,
+    servicesMap,
+    servicesCMSContent,
+    servicesGenerated,
+    servicesTips,
+  ]).then(() => {
     sendMessage(res, 'close', 'close', null);
     next();
   });

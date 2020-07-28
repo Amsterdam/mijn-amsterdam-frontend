@@ -5,6 +5,7 @@ import {
   loadServicesGenerated,
   loadServicesMap,
   loadServicesRelated,
+  loadServicesTips,
 } from './index';
 import { Request } from 'express';
 import { getPassthroughRequestHeaders } from '../helpers/app';
@@ -37,6 +38,8 @@ export async function loadServicesAll(sessionID: SessionID, req: Request) {
     passthroughRequestHeaders
   );
 
+  const servicesTipsPromise = loadServicesTips(sessionID, req);
+
   const serviceResults = await Promise.all([
     servicesDirectPromise,
     servicesRelatePromise,
@@ -44,6 +47,7 @@ export async function loadServicesAll(sessionID: SessionID, req: Request) {
     servicesCMSContPromise,
     servicesAfvalPromise,
     servicesGeneratedPromise,
+    servicesTipsPromise,
   ]);
 
   // Merge all service results into 1 response object

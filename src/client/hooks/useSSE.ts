@@ -5,16 +5,27 @@ const WAIT_MS_BEFORE_RETRY = 2000;
 export const MAX_RETRY_COUNT = 4;
 export const SSE_ERROR_MESSAGE = 'sse-error';
 
-export function useSSE(
-  path: string,
-  eventName: string,
-  callback: (message: any) => void,
-  postpone: boolean
-) {
+interface useSSEProps {
+  path: string;
+  eventName: string;
+  callback: (message: any) => void;
+  postpone: boolean;
+  requestParams?: Record<string, string>;
+}
+
+export function useSSE({
+  path,
+  eventName,
+  callback,
+  postpone,
+  requestParams,
+}: useSSEProps) {
   const [es, setEventSource] = useState<EventSource | null>(null);
 
   const connect = useCallback(() => {
-    const es = new EventSource(path);
+    const es = new EventSource(
+      path + (requestParams ? '?' + new URLSearchParams(requestParams) : '')
+    );
     connectionCounter += 1;
     console.info('[SSE] Connect ', connectionCounter);
     setEventSource(es);

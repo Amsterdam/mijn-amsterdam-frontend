@@ -2,7 +2,7 @@ import { atom, useRecoilState } from 'recoil';
 import { useEffect, useCallback } from 'react';
 import * as Cookies from 'js-cookie';
 
-const cookieAtom = atom<Record<string, string>>({
+export const cookieAtom = atom<Record<string, string>>({
   key: 'appCookies',
   default: {},
 });

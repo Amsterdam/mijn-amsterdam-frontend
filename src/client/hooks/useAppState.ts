@@ -1,6 +1,12 @@
 import * as Sentry from '@sentry/browser';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { atom, useRecoilState, useRecoilValue, selectorFamily } from 'recoil';
+import {
+  atom,
+  useRecoilState,
+  useRecoilValue,
+  selectorFamily,
+  SetterOrUpdater,
+} from 'recoil';
 import { AppState, createAllErrorState, PRISTINE_APPSTATE } from '../AppState';
 import { BFFApiUrls } from '../config/api';
 import { transformAppState } from '../data-transform/appState';
@@ -8,6 +14,7 @@ import { pollBffHealth, requestApiData, useDataApi } from './api/useDataApi';
 import { useProfileTypeValue } from './useProfileType';
 import { SSE_ERROR_MESSAGE, useSSE } from './useSSE';
 import { Chapters } from '../../universal/config/chapter';
+import { useOptInValue } from './useOptIn';
 
 const fallbackServiceRequestOptions = {
   postpone: true,
@@ -22,19 +29,20 @@ export const appStateAtom = atom<AppState>({
   default: PRISTINE_APPSTATE,
 });
 
-/**
- * The primary communication is the EventSource. In the case the EventSource can't connect to the server, a number of retries will take place.
- * If the EventSource fails the Fallback service endpoint /all will be used in a last attempt to fetch the data needed to display a fruity application.
- * If that fails we just can't connect to the server for whatever reason. Sentry error handling might have information about this scenario.
- */
-export function useAppState() {
-  const hasEventSourceSupport = 'EventSource' in window; // IE11 and early edge versions don't have EventSource support. These browsers will use the the Fallback service endpoint.
-  const [isFallbackServiceEnabled, setFallbackServiceEnabled] = useState(
-    !hasEventSourceSupport
-  );
+interface useAppStateFallbackServiceProps {
+  profileType: ProfileType;
+  requestParams: { optin: string; profileType: ProfileType };
+  isEnabled: boolean;
+  setAppState: SetterOrUpdater<AppState>;
+}
+
+export function useAppStateFallbackService({
+  profileType,
+  requestParams,
+  isEnabled,
+  setAppState,
+}: useAppStateFallbackServiceProps) {
   const [isDataRequested, setIsDataRequested] = useState(false);
-  const profileType = useProfileTypeValue();
-  const [appState, setAppState] = useRecoilState(appStateAtom);
   const [api, fetchFallbackService] = useDataApi<AppState | null>(
     fallbackServiceRequestOptions,
     null
@@ -52,45 +60,40 @@ export function useAppState() {
     [setAppState]
   );
 
+  const fetchSauron = useCallback(() => {
+    return fetchFallbackService({
+      ...fallbackServiceRequestOptions,
+      url: BFFApiUrls[profileType].SERVICES_SAURON,
+      postpone: false,
+      params: requestParams,
+    });
+  }, [requestParams, profileType, fetchFallbackService]);
+
   // If no EvenSource support or EventSource fails, the Fallback service endpoint is used for fetching all the data.
   useEffect(() => {
-    if (!isDataRequested && isFallbackServiceEnabled && api.isPristine) {
+    if (!isEnabled) {
+      return;
+    }
+    if (!isDataRequested && api.isPristine) {
       // If we have EventSource support but in the case it failed
-      if (hasEventSourceSupport) {
-        console.info('SSE Failed, using Fallback service');
-
-        // We don't know why it failed, ashortcoming of EventSource error handling, so we poll for server health which is a likely source of failure.
-        pollBffHealth()
-          .then(() => {
-            fetchFallbackService({
-              ...fallbackServiceRequestOptions,
-              url: BFFApiUrls[profileType].SERVICES_SAURON,
-              postpone: false,
-            });
-          })
-          .catch(appStateError);
-      } else {
-        // If we don't have EventSource support start with the Fallback service immediately
-        fetchFallbackService({
-          ...fallbackServiceRequestOptions,
-          url: BFFApiUrls[profileType].SERVICES_SAURON,
-          postpone: false,
-        });
-      }
+      pollBffHealth()
+        .then(() => {
+          fetchSauron();
+        })
+        .catch(appStateError);
     }
   }, [
     fetchFallbackService,
-    isFallbackServiceEnabled,
     api.isPristine,
     isDataRequested,
     appStateError,
-    profileType,
-    hasEventSourceSupport,
+    fetchSauron,
+    isEnabled,
   ]);
 
   // Update the appState with data fetched by the Fallback service endpoint
   useEffect(() => {
-    if (isDataRequested) {
+    if (isDataRequested || !isEnabled) {
       return;
     }
     if (api.data !== null && !api.isLoading && !api.isError) {
@@ -99,19 +102,34 @@ export function useAppState() {
     } else if (api.isError) {
       // If everything fails, this is the final state update.
       const errorMessage =
-        'Services.all endpoint could not be reached or returns an error. ' +
-        (isFallbackServiceEnabled ? 'Fallback service fallback enabled.' : '');
+        'Services.all endpoint could not be reached or returns an error. ';
       setIsDataRequested(true);
       appStateError(errorMessage);
     }
-  }, [
-    appState,
-    api,
-    isFallbackServiceEnabled,
-    isDataRequested,
-    appStateError,
-    setAppState,
-  ]);
+  }, [api, isDataRequested, appStateError, setAppState, isEnabled]);
+}
+
+/**
+ * The primary communication is the EventSource. In the case the EventSource can't connect to the server, a number of retries will take place.
+ * If the EventSource fails the Fallback service endpoint /all will be used in a last attempt to fetch the data needed to display a fruity application.
+ * If that fails we just can't connect to the server for whatever reason. Sentry error handling might have information about this scenario.
+ */
+export function useAppState() {
+  const hasEventSourceSupport = 'EventSource' in window; // IE11 and early edge versions don't have EventSource support. These browsers will use the the Fallback service endpoint.
+  const [isFallbackServiceEnabled, setFallbackServiceEnabled] = useState(
+    !hasEventSourceSupport
+  );
+
+  const profileType = useProfileTypeValue();
+  const isOptIn = useOptInValue();
+  const [appState, setAppState] = useRecoilState(appStateAtom);
+
+  const serviceRequestParams = useMemo(() => {
+    return {
+      optin: isOptIn ? 'true' : 'false',
+      profileType,
+    };
+  }, [isOptIn, profileType]);
 
   // The EventSource will only be used if we have EventSource support
   const onEvent = useCallback(
@@ -137,7 +155,20 @@ export function useAppState() {
     return BFFApiUrls[profileType].SERVICES_SSE;
   }, [profileType]);
 
-  useSSE(path, 'message', onEvent, isFallbackServiceEnabled);
+  useSSE({
+    path,
+    eventName: 'message',
+    callback: onEvent,
+    postpone: isFallbackServiceEnabled,
+    requestParams: serviceRequestParams,
+  });
+
+  useAppStateFallbackService({
+    profileType,
+    isEnabled: isFallbackServiceEnabled,
+    requestParams: serviceRequestParams,
+    setAppState,
+  });
 
   return appState;
 }
