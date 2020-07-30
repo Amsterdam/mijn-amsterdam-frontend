@@ -8,7 +8,9 @@ describe('Profile page', () => {
   itShouldLogin();
 
   it('Clicking the profile link in the header shows the profile page', () => {
-    selectComponent('MainNavBar_ProfileLink').click();
+    selectComponent('MyChaptersPanel_Links')
+      .find('a[href*="/persoonlijke-gegevens"]:eq(0)')
+      .click();
     assertAtPage('Mijn gegevens', '/persoonlijke-gegevens');
   });
 
