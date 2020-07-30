@@ -83,18 +83,20 @@ export async function loadServicesTips(sessionID: string, req: Request) {
     tipsRequestData.profileType = params.profileType;
   }
 
+  let data = {};
+
   if (params.optin) {
     const tipsRequestDataServiceResults = await Promise.all([
       loadServicesDirect(sessionID, passthroughRequestHeaders),
       loadServicesRelated(sessionID, passthroughRequestHeaders),
     ]);
 
-    const data = createTipsRequestDataFromServiceResults(
+    data = createTipsRequestDataFromServiceResults(
       tipsRequestDataServiceResults
     );
-
-    tipsRequestData.data = data;
   }
+
+  tipsRequestData.data = data;
 
   const TIPS = await fetchTIPS(
     sessionID,

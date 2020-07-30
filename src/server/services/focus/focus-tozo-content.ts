@@ -323,7 +323,7 @@ export const documentStatusTranslation: {
     },
     'Tozo2 Intrekken': {
       step: intrekkenLabels,
-      documentTitle: 'Besluit intrekking met terugbetaling',
+      documentTitle: 'Besluit intrekking',
       product: 'Tozo 2',
       productSpecific: 'aanvraag',
     },
