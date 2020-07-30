@@ -4,12 +4,13 @@ import { FocusTozoDocument } from './focus-combined';
 import { FocusStepContent } from './focus-types';
 
 function productName(
-  document: Pick<FocusTozoDocument, 'productTitle' | 'productSpecific'>
+  document: Pick<FocusTozoDocument, 'productTitle' | 'productSpecific'>,
+  includeArticle: boolean = true
 ) {
   const hasProductSpecific = !!document.productSpecific;
-  return `${hasProductSpecific ? 'de ' : ''}${document.productTitle}${
-    hasProductSpecific ? ` ${document.productSpecific}` : ''
-  }`;
+  return `${hasProductSpecific && includeArticle ? 'de ' : ''}${
+    document.productTitle
+  }${hasProductSpecific ? ` ${document.productSpecific}` : ''}`;
 }
 
 const aanvraagLabels: FocusStepContent = {
@@ -63,7 +64,8 @@ const herstelTermijnLabels: FocusStepContent = {
 
 const toekennenLabels: FocusStepContent = {
   notification: {
-    title: document => `${productName(document)}: Uw aanvraag is toegekend`,
+    title: document =>
+      `${productName(document, false)}: Uw aanvraag is toegekend`,
     description: document =>
       `U hebt recht op ${productName(document)} (besluit: ${defaultDateFormat(
         document.datePublished
@@ -79,7 +81,8 @@ const toekennenLabels: FocusStepContent = {
 
 const afwijzenLabels: FocusStepContent = {
   notification: {
-    title: document => `${productName(document)}: Uw aanvraag is afgewezen`,
+    title: document =>
+      `${productName(document, false)}: Uw aanvraag is afgewezen`,
     description: document =>
       `U hebt geen recht op ${productName(
         document
@@ -152,7 +155,7 @@ export const documentStatusTranslation: {
   afwijzen: {
     'Afwijzen uitkering Tozo': {
       step: afwijzenLabels,
-      documentTitle: 'Brief besluit',
+      documentTitle: 'Besluit afwijzing uitkering',
       product: 'Tozo 1',
       productSpecific: 'uitkering',
     },
@@ -164,7 +167,7 @@ export const documentStatusTranslation: {
     },
     'Afwijzen lening Tozo': {
       step: afwijzenLabels,
-      documentTitle: 'Brief besluit',
+      documentTitle: 'Besluit afwijzing lening',
       product: 'Tozo 1',
       productSpecific: 'lening',
     },
@@ -211,6 +214,12 @@ export const documentStatusTranslation: {
 
     // TOZO-2
     'Tozo2 Toekennen voorschot via batch': {
+      step: voorschotToekennenLabels,
+      documentTitle: 'Brief betaling voorschot',
+      product: 'Tozo 2',
+      productSpecific: 'voorschot',
+    },
+    'Tozo2 Toekennen voorschot': {
       step: voorschotToekennenLabels,
       documentTitle: 'Brief betaling voorschot',
       product: 'Tozo 2',
