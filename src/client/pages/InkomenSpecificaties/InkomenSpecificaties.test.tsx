@@ -1,14 +1,12 @@
-import { AppState } from '../../AppState';
-import { MemoryRouter, Route, Switch } from 'react-router-dom';
-
-import InkomenSpecificaties from './InkomenSpecificaties';
+import { shallow, mount } from 'enzyme';
 import React from 'react';
-import { mount } from 'enzyme';
-import { MockAppStateProvider } from '../../AppStateProvider';
-import {
-  transformFOCUSIncomeSpecificationsData,
-  FOCUSIncomeSpecificationSourceDataContent,
-} from '../../../server/services';
+import { generatePath } from 'react-router-dom';
+import { MutableSnapshot } from 'recoil';
+import { AppRoutes } from '../../../universal/config/routing';
+import { appStateAtom } from '../../hooks/useAppState';
+import MockApp from '../MockApp';
+import InkomenSpecificaties from './InkomenSpecificaties';
+import { transformFOCUSIncomeSpecificationsData } from '../../../server/services';
 
 const sourceData: FOCUSIncomeSpecificationSourceDataContent = {
   jaaropgaven: [
@@ -96,35 +94,41 @@ const sourceData: FOCUSIncomeSpecificationSourceDataContent = {
 
 const content = transformFOCUSIncomeSpecificationsData(sourceData);
 
-const APP_STATE: Partial<AppState> = {
-  FOCUS_SPECIFICATIES: { content, status: 'OK' },
-};
-
-function mountComponentWithRoute(route: string) {
-  return mount(
-    <MemoryRouter initialEntries={[route]}>
-      <MockAppStateProvider value={APP_STATE}>
-        <Switch>
-          <Route path="/:type?" component={InkomenSpecificaties} />
-        </Switch>
-      </MockAppStateProvider>
-    </MemoryRouter>
-  );
+function initializeState(snapshot: MutableSnapshot) {
+  snapshot.set(appStateAtom, {
+    FOCUS_SPECIFICATIES: {
+      content,
+      status: 'OK',
+    },
+  });
 }
 
-describe('<InkomenSpecificaties />', () => {
-  it('Renders a list with Uitkeringspecificaties items', () => {
-    const component = mountComponentWithRoute('/');
-    expect(component.html()).toMatchSnapshot();
+describe('<InkomenSpecificaties /> Uitkeringsspecificaties', () => {
+  const routeEntry = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
+    type: 'uitkeringsspecificaties',
+  });
+  const routePath = AppRoutes['INKOMEN/SPECIFICATIES'];
+
+  const Component = () => (
+    <MockApp
+      routeEntry={routeEntry}
+      routePath={routePath}
+      component={InkomenSpecificaties}
+      initializeState={initializeState}
+    />
+  );
+
+  it('Renders without crashing', () => {
+    shallow(<Component />);
   });
 
-  it('Renders a list with Jaaropgaven items', () => {
-    const component = mountComponentWithRoute('/jaaropgaven');
-    expect(component.html()).toMatchSnapshot();
+  it('Matches the Full Page snapshot', () => {
+    const html = mount(<Component />).html();
+    expect(html).toMatchSnapshot();
   });
 
   it('Allows filtering (search) the results', () => {
-    const component = mountComponentWithRoute('/');
+    const component = mount(<Component />);
     component.find('button.SearchButton').simulate('click');
     expect(component.find('.SearchPanel')).toHaveLength(1);
     component.find('.Select').simulate('change', { target: { value: 'WWB' } });
@@ -136,5 +140,30 @@ describe('<InkomenSpecificaties />', () => {
     component.update();
     expect(component.find('table')).toHaveLength(0);
     expect(component.contains('Resetten')).toBe(true);
+  });
+});
+
+describe('<InkomenSpecificaties /> Jaaropgaven', () => {
+  const routeEntry = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
+    type: 'jaaropgaven',
+  });
+  const routePath = AppRoutes['INKOMEN/SPECIFICATIES'];
+
+  const Component = () => (
+    <MockApp
+      routeEntry={routeEntry}
+      routePath={routePath}
+      component={InkomenSpecificaties}
+      initializeState={initializeState}
+    />
+  );
+
+  it('Renders without crashing', () => {
+    shallow(<Component />);
+  });
+
+  it('Matches the Full Page snapshot', () => {
+    const html = mount(<Component />).html();
+    expect(html).toMatchSnapshot();
   });
 });

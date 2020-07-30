@@ -1,27 +1,20 @@
 import classnames from 'classnames';
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { animated, useSpring } from 'react-spring';
-import useRouter from 'use-react-router';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
+import { animated } from 'react-spring';
 import { AppRoutes } from '../../../universal/config';
-import { getFullName, isLoading } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
-import { AppContext } from '../../AppState';
 import { IconInfo } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
-import { getMyChapters } from '../../helpers/chapters';
 import { trackItemPresentation } from '../../hooks/analytics.hook';
+import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
-import { SessionContext } from '../../SessionState';
+import { useAppStateGetter } from '../../hooks/useAppState';
+import { useChapterMenuItems } from '../../hooks/useChapters';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 import Linkd, { Button } from '../Button/Button';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
-import LoadingContent from '../LoadingContent/LoadingContent';
+import LogoutLink from '../LogoutLink/LogoutLink';
 import MainNavSubmenu, {
   MainNavSubmenuLink,
 } from '../MainNavSubmenu/MainNavSubmenu';
@@ -29,13 +22,11 @@ import Tutorial from '../Tutorial/Tutorial';
 import {
   mainMenuItemId,
   mainMenuItems,
-  submenuItems,
   MenuItem,
 } from './MainNavBar.constants';
 import styles from './MainNavBar.module.scss';
-import { BRPData } from '../../../universal/types/brp';
-import { SessionData } from '../../hooks/api/api.session';
-import LogoutLink from '../LogoutLink/LogoutLink';
+import { ProfileName } from './ProfileName';
+import { useBurgerMenuAnimation } from './useBurgerMenuAnimation';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -46,30 +37,12 @@ export interface MainNavLinkProps {
   title: string;
 }
 
-interface ProfileNameProps {
-  persoon?: BRPData['persoon'];
-  userType?: SessionData['userType'];
-}
-
-function ProfileName({ persoon, userType }: ProfileNameProps) {
-  return (
-    <span
-      className={classnames(
-        styles.ProfileName,
-        styles[`ProfileName--${userType}`]
-      )}
-    >
-      {persoon?.opgemaakteNaam ? getFullName(persoon) : 'Mijn gegevens'}
-    </span>
-  );
-}
-
 function SecondaryLinks() {
-  const { BRP } = useContext(AppContext);
+  const { BRP, KVK } = useAppStateGetter();
   const persoon = BRP.content?.persoon || null;
   const hasFirstName = !!(persoon && persoon.voornamen);
   const isDesktopScreen = useDesktopScreen();
-  const session = useContext(SessionContext);
+  const profileType = useProfileTypeValue();
 
   useEffect(() => {
     if (hasFirstName) {
@@ -80,22 +53,11 @@ function SecondaryLinks() {
   return (
     <div className={styles.secondaryLinks}>
       {isDesktopScreen && <FontEnlarger />}
-
-      <Link
-        to={AppRoutes.BRP}
-        className={styles.ProfileLink}
-        data-tutorial-item="Hier ziet u uw persoonsgegevens, zoals uw adres en geboortedatum;left-bottom"
-      >
-        {isLoading(BRP) ? (
-          <LoadingContent barConfig={[['15rem', '1rem', '0']]} />
-        ) : (
-          <ProfileName
-            persoon={BRP.content?.persoon}
-            userType={session.userType}
-          />
-        )}
-      </Link>
-
+      <ProfileName
+        person={BRP.content?.persoon}
+        company={KVK.content}
+        profileType={profileType}
+      />
       <LogoutLink>Uitloggen</LogoutLink>
     </div>
   );
@@ -137,56 +99,6 @@ function getMenuItem(item: MenuItem) {
   );
 }
 
-function useBurgerMenuAnimation(isBurgerMenuVisible: boolean | undefined) {
-  const config = {
-    mass: 0.3,
-    tension: 400,
-  };
-
-  const linkContainerAnim = {
-    immediate: isBurgerMenuVisible === undefined,
-    reverse: isBurgerMenuVisible,
-    left: -400,
-    config,
-    from: {
-      left: 0,
-    },
-  };
-
-  const backdropAnim = {
-    immediate: isBurgerMenuVisible === undefined,
-    reverse: isBurgerMenuVisible,
-    opacity: 0,
-    from: {
-      opacity: 1,
-    },
-  };
-
-  const left: any = {
-    immediate: isBurgerMenuVisible !== false,
-    reverse: !isBurgerMenuVisible,
-    left: 0,
-    config,
-    from: {
-      left: -1000,
-    },
-  };
-
-  if (!isBurgerMenuVisible) {
-    left.delay = 300;
-  }
-
-  const linkContainerAnimationProps = useSpring(linkContainerAnim);
-  const backdropAnimationProps = useSpring(backdropAnim);
-  const leftProps = useSpring(left);
-
-  return {
-    linkContainerAnimationProps,
-    backdropAnimationProps,
-    leftProps,
-  };
-}
-
 interface BurgerButtonProps {
   isActive: boolean;
   toggleBurgerMenu: (isActive: boolean) => void;
@@ -208,16 +120,13 @@ function BurgerButton({ isActive, toggleBurgerMenu }: BurgerButtonProps) {
 }
 
 export default function MainNavBar() {
-  const appState = useContext(AppContext);
-  const session = useContext(SessionContext);
-  const { isAuthenticated } = session;
+  const session = useSessionValue();
   const hasBurgerMenu = useTabletScreen();
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
     undefined
   );
-  const { items: myChapterItems } = getMyChapters(appState);
-
-  const { history, location } = useRouter();
+  const myChapterItems = useChapterMenuItems();
+  const location = useLocation();
   const [isTutorialVisible, setIsTutorialVisible] = useState(false);
 
   const onClickOutsideBurgermenu = useCallback(
@@ -252,7 +161,7 @@ export default function MainNavBar() {
   // Hides small screen menu on route change
   useEffect(() => {
     toggleBurgerMenu(false);
-  }, [history.location]);
+  }, [location.pathname]);
 
   const {
     linkContainerAnimationProps,
@@ -263,17 +172,12 @@ export default function MainNavBar() {
   const menuItemsComposed = useMemo(() => {
     return mainMenuItems.map(item => {
       let menuItem = item;
-      if (item.id in submenuItems) {
-        // Add dynamic chapter submenu items to the menu
-        if (item.id === mainMenuItemId.CHAPTERS) {
-          menuItem = { ...item, submenuItems: myChapterItems };
-        } else {
-          menuItem = {
-            ...item,
-            submenuItems: submenuItems[item.id],
-          };
-        }
+
+      // Add dynamic chapter submenu items to the menu
+      if (item.id === mainMenuItemId.CHAPTERS) {
+        menuItem = { ...item, submenuItems: myChapterItems };
       }
+
       return getMenuItem(menuItem);
     });
   }, [myChapterItems]);
@@ -293,7 +197,7 @@ export default function MainNavBar() {
         />
       )}
 
-      {isAuthenticated && (
+      {session.isAuthenticated && (
         <>
           {hasBurgerMenu && (
             <animated.div

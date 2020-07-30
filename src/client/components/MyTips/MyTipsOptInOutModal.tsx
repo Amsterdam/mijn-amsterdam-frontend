@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
-import { AppContext } from '../../AppState';
+import React from 'react';
+import { useOptIn } from '../../hooks/useOptIn';
 import { Button } from '../Button/Button';
 import Modal from '../Modal/Modal';
-import { OptInContext } from '../OptInContext/OptInContext';
 import styles from './MyTips.module.scss';
 
 interface OptInOutModalProps {
@@ -14,10 +13,7 @@ export default function MyTipsOptInOutModal({
   isOpen,
   onClose,
 }: OptInOutModalProps) {
-  const optInState = useContext(OptInContext);
-  const { controller } = useContext(AppContext);
-
-  const { isOptIn, optIn, optOut } = optInState;
+  const { isOptIn, optIn, optOut } = useOptIn();
 
   return (
     <Modal
@@ -49,10 +45,8 @@ export default function MyTipsOptInOutModal({
             onClick={() => {
               if (isOptIn) {
                 optOut();
-                controller.TIPS?.fetch(false);
               } else {
                 optIn();
-                controller.TIPS?.fetch(true);
               }
               onClose();
             }}

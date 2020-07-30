@@ -2,126 +2,129 @@
 
 exports[`Vergunningen service FetchVergunningenGenerated: should respond with a success response 1`] = `
 Object {
-  "cases": Array [
-    Object {
-      "chapter": "VERGUNNINGEN",
-      "datePublished": "2020-06-17T00:00:00",
-      "id": "vergunning-2952768564-case",
-      "link": Object {
-        "title": "Z/20/1595179",
-        "to": "/vergunningen/detail/2952768564",
+  "content": Object {
+    "cases": Array [
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-06-17T00:00:00",
+        "id": "vergunning-2952768564-case",
+        "link": Object {
+          "title": "Z/20/1595179",
+          "to": "/vergunningen/detail/2952768564",
+        },
+        "title": "Vergunningsaanvraag Z/20/1595179",
       },
-      "title": "Vergunningsaanvraag Z/20/1595179",
-    },
-    Object {
-      "chapter": "VERGUNNINGEN",
-      "datePublished": "2020-06-16T00:00:00",
-      "id": "vergunning-154877179-case",
-      "link": Object {
-        "title": "Z/20/1593633",
-        "to": "/vergunningen/detail/154877179",
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-06-16T00:00:00",
+        "id": "vergunning-154877179-case",
+        "link": Object {
+          "title": "Z/20/1593633",
+          "to": "/vergunningen/detail/154877179",
+        },
+        "title": "Vergunningsaanvraag Z/20/1593633",
       },
-      "title": "Vergunningsaanvraag Z/20/1593633",
-    },
-    Object {
-      "chapter": "VERGUNNINGEN",
-      "datePublished": "2020-06-08T00:00:00",
-      "id": "vergunning-4043653692-case",
-      "link": Object {
-        "title": "Z/20/1592761",
-        "to": "/vergunningen/detail/4043653692",
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-06-08T00:00:00",
+        "id": "vergunning-4043653692-case",
+        "link": Object {
+          "title": "Z/20/1592761",
+          "to": "/vergunningen/detail/4043653692",
+        },
+        "title": "Vergunningsaanvraag Z/20/1592761",
       },
-      "title": "Vergunningsaanvraag Z/20/1592761",
-    },
-    Object {
-      "chapter": "VERGUNNINGEN",
-      "datePublished": "2020-05-06T00:00:00",
-      "id": "vergunning-211045982-case",
-      "link": Object {
-        "title": "Z/20/1592552",
-        "to": "/vergunningen/detail/211045982",
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-05-06T00:00:00",
+        "id": "vergunning-211045982-case",
+        "link": Object {
+          "title": "Z/20/1592552",
+          "to": "/vergunningen/detail/211045982",
+        },
+        "title": "Vergunningsaanvraag Z/20/1592552",
       },
-      "title": "Vergunningsaanvraag Z/20/1592552",
-    },
-    Object {
-      "chapter": "VERGUNNINGEN",
-      "datePublished": "2020-05-03T00:00:00",
-      "id": "vergunning-2226696250-case",
-      "link": Object {
-        "title": "Z/20/1592521",
-        "to": "/vergunningen/detail/2226696250",
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-05-03T00:00:00",
+        "id": "vergunning-2226696250-case",
+        "link": Object {
+          "title": "Z/20/1592521",
+          "to": "/vergunningen/detail/2226696250",
+        },
+        "title": "Vergunningsaanvraag Z/20/1592521",
       },
-      "title": "Vergunningsaanvraag Z/20/1592521",
-    },
-  ],
-  "notifications": Array [
-    Object {
-      "chapter": "VERGUNNINGEN",
-      "datePublished": "2020-06-17T00:00:00",
-      "description": "Uw vergunningsaanvraag TVM - RVV - Object is afgehandeld",
-      "id": "vergunning-2952768564-notification",
-      "link": Object {
-        "title": "Bekijk details",
-        "to": "/vergunningen/detail/2952768564",
+    ],
+    "notifications": Array [
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-06-17T00:00:00",
+        "description": "Uw vergunningsaanvraag TVM - RVV - Object is afgehandeld",
+        "id": "vergunning-2952768564-notification",
+        "link": Object {
+          "title": "Bekijk details",
+          "to": "/vergunningen/detail/2952768564",
+        },
+        "title": "Vergunningsaanvraag",
       },
-      "title": "Vergunningsaanvraag",
-    },
-    Object {
-      "chapter": "VERGUNNINGEN",
-      "datePublished": "2020-06-16T00:00:00",
-      "description": "Uw vergunningsaanvraag TVM - RVV - Object is geregistreerd",
-      "id": "vergunning-154877179-notification",
-      "link": Object {
-        "title": "Bekijk details",
-        "to": "/vergunningen/detail/154877179",
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-06-16T00:00:00",
+        "description": "Uw vergunningsaanvraag TVM - RVV - Object is geregistreerd",
+        "id": "vergunning-154877179-notification",
+        "link": Object {
+          "title": "Bekijk details",
+          "to": "/vergunningen/detail/154877179",
+        },
+        "title": "Vergunningsaanvraag",
       },
-      "title": "Vergunningsaanvraag",
-    },
-    Object {
-      "chapter": "VERGUNNINGEN",
-      "datePublished": "2020-06-08T00:00:00",
-      "description": "Uw vergunningsaanvraag TVM - RVV - Object is geregistreerd",
-      "id": "vergunning-4043653692-notification",
-      "link": Object {
-        "title": "Bekijk details",
-        "to": "/vergunningen/detail/4043653692",
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-06-08T00:00:00",
+        "description": "Uw vergunningsaanvraag TVM - RVV - Object is geregistreerd",
+        "id": "vergunning-4043653692-notification",
+        "link": Object {
+          "title": "Bekijk details",
+          "to": "/vergunningen/detail/4043653692",
+        },
+        "title": "Vergunningsaanvraag",
       },
-      "title": "Vergunningsaanvraag",
-    },
-    Object {
-      "chapter": "VERGUNNINGEN",
-      "datePublished": "2020-05-23T00:00:00",
-      "description": "Uw vergunningsaanvraag TVM - RVV - Object is verleend",
-      "id": "vergunning-3367397848-notification",
-      "link": Object {
-        "title": "Bekijk details",
-        "to": "/vergunningen/detail/3367397848",
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-05-23T00:00:00",
+        "description": "Uw vergunningsaanvraag TVM - RVV - Object is verleend",
+        "id": "vergunning-3367397848-notification",
+        "link": Object {
+          "title": "Bekijk details",
+          "to": "/vergunningen/detail/3367397848",
+        },
+        "title": "Vergunningsaanvraag",
       },
-      "title": "Vergunningsaanvraag",
-    },
-    Object {
-      "chapter": "VERGUNNINGEN",
-      "datePublished": "2020-05-06T00:00:00",
-      "description": "Uw vergunningsaanvraag TVM - RVV - Object is geregistreerd",
-      "id": "vergunning-211045982-notification",
-      "link": Object {
-        "title": "Bekijk details",
-        "to": "/vergunningen/detail/211045982",
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-05-06T00:00:00",
+        "description": "Uw vergunningsaanvraag TVM - RVV - Object is geregistreerd",
+        "id": "vergunning-211045982-notification",
+        "link": Object {
+          "title": "Bekijk details",
+          "to": "/vergunningen/detail/211045982",
+        },
+        "title": "Vergunningsaanvraag",
       },
-      "title": "Vergunningsaanvraag",
-    },
-    Object {
-      "chapter": "VERGUNNINGEN",
-      "datePublished": "2020-05-03T00:00:00",
-      "description": "Uw vergunningsaanvraag TVM - RVV - Object is geregistreerd",
-      "id": "vergunning-2226696250-notification",
-      "link": Object {
-        "title": "Bekijk details",
-        "to": "/vergunningen/detail/2226696250",
+      Object {
+        "chapter": "VERGUNNINGEN",
+        "datePublished": "2020-05-03T00:00:00",
+        "description": "Uw vergunningsaanvraag TVM - RVV - Object is geregistreerd",
+        "id": "vergunning-2226696250-notification",
+        "link": Object {
+          "title": "Bekijk details",
+          "to": "/vergunningen/detail/2226696250",
+        },
+        "title": "Vergunningsaanvraag",
       },
-      "title": "Vergunningsaanvraag",
-    },
-  ],
+    ],
+  },
+  "status": "OK",
 }
 `;
 

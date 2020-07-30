@@ -1,5 +1,8 @@
-import { getBagSearchAddress, toLatLng } from '../../universal/helpers';
-import { Adres } from '../../universal/types';
+import {
+  getBagSearchAddress,
+  toLatLng,
+  apiErrorResult,
+} from '../../universal/helpers';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 
@@ -23,8 +26,12 @@ export function formatBAGData(responseData: BAGSourceData): BAGData {
 export function fetchBAG(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
-  address: Adres
+  address: { straatnaam: string | null; huisnummer: string | null }
 ) {
+  if (!address) {
+    return apiErrorResult('Could not query BAG, no address supplied.', null);
+  }
+
   const params = { q: getBagSearchAddress(address) };
 
   return requestData<BAGData>(

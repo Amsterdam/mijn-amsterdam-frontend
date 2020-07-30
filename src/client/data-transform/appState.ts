@@ -17,7 +17,7 @@ export function transformAppState(data: Partial<AppState>) {
   if (data && typeof data === 'object') {
     const appStateKeys = Object.keys(data) as Array<keyof typeof data>;
     for (const key of appStateKeys) {
-      if (data[key] && key !== 'controller' && data[key]?.status === 'ERROR') {
+      if (data[key] && data[key]?.status === 'ERROR') {
         if (data[key]?.content === null) {
           data[key]!.content =
             PRISTINE_APPSTATE[key].content || data[key]!.content;

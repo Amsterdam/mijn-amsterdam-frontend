@@ -3,18 +3,38 @@ import { MyTip } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { ApiStateKey } from './state';
+import { Request } from 'express';
+import { getPassthroughRequestHeaders } from '../helpers/app';
+import { loadServicesDirect } from './services-direct';
+import { loadServicesRelated } from './services-related';
 
 export type TIPSData = MyTip[];
 
+export interface TIPSParams {
+  optin: boolean;
+  profileType?: ProfileType;
+}
+
 export interface TIPSRequestData {
   optin: boolean;
-  data: any;
+  profileType?: ProfileType;
+  data?: any;
+}
+
+export function getTipsRequestParams(req: Request) {
+  const params: TIPSParams = {
+    optin: req.query.optin === 'true',
+  };
+  if (req.query.profileType) {
+    params.profileType = req.query.profileType as ProfileType;
+  }
+  return params;
 }
 
 export async function fetchTIPS(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
-  requestBody: TIPSRequestData
+  requestBody: TIPSRequestData | null
 ) {
   return requestData<TIPSData>(
     getApiConfig('TIPS', {
@@ -51,17 +71,30 @@ function createTipsRequestDataFromServiceResults(
   }, {});
 }
 
-export async function loadServicesTips(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
-  servicesResults: ServiceResults,
-  optin: boolean = false
-) {
-  const data = createTipsRequestDataFromServiceResults(servicesResults);
+export async function loadServicesTips(sessionID: string, req: Request) {
+  const passthroughRequestHeaders = getPassthroughRequestHeaders(req);
+  const params = getTipsRequestParams(req);
+
   const tipsRequestData: TIPSRequestData = {
-    data,
-    optin,
+    optin: !!params.optin,
   };
+
+  if (params.profileType) {
+    tipsRequestData.profileType = params.profileType;
+  }
+
+  if (params.optin) {
+    const tipsRequestDataServiceResults = await Promise.all([
+      loadServicesDirect(sessionID, passthroughRequestHeaders),
+      loadServicesRelated(sessionID, passthroughRequestHeaders),
+    ]);
+
+    const data = createTipsRequestDataFromServiceResults(
+      tipsRequestDataServiceResults
+    );
+
+    tipsRequestData.data = data;
+  }
 
   const TIPS = await fetchTIPS(
     sessionID,

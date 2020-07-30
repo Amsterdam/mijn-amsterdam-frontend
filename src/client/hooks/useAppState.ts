@@ -1,20 +1,113 @@
 import * as Sentry from '@sentry/browser';
-import { useState, useCallback, useEffect, useMemo } from 'react';
-import { useDataApi, requestApiData, pollBffHealth } from './api/api.hook';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  atom,
+  useRecoilState,
+  useRecoilValue,
+  selectorFamily,
+  SetterOrUpdater,
+} from 'recoil';
+import { AppState, createAllErrorState, PRISTINE_APPSTATE } from '../AppState';
 import { BFFApiUrls } from '../config/api';
-import { useSSE, SSE_ERROR_MESSAGE } from './useSSE';
 import { transformAppState } from '../data-transform/appState';
-import { useTipsApi } from './api/api.tips';
-import { PRISTINE_APPSTATE, AppState, createAllErrorState } from '../AppState';
+import { pollBffHealth, requestApiData, useDataApi } from './api/useDataApi';
+import { useProfileTypeValue } from './useProfileType';
+import { SSE_ERROR_MESSAGE, useSSE } from './useSSE';
+import { Chapters } from '../../universal/config/chapter';
+import { useOptInValue } from './useOptIn';
 
 const fallbackServiceRequestOptions = {
-  url: BFFApiUrls.SERVICES_SAURON,
   postpone: true,
   transformResponse: [
     ...requestApiData.defaults.transformResponse,
     transformAppState,
   ],
 };
+
+export const appStateAtom = atom<AppState>({
+  key: 'appState',
+  default: PRISTINE_APPSTATE,
+});
+
+interface useAppStateFallbackServiceProps {
+  profileType: ProfileType;
+  requestParams: { optin: string; profileType: ProfileType };
+  isEnabled: boolean;
+  setAppState: SetterOrUpdater<AppState>;
+}
+
+export function useAppStateFallbackService({
+  profileType,
+  requestParams,
+  isEnabled,
+  setAppState,
+}: useAppStateFallbackServiceProps) {
+  const [isDataRequested, setIsDataRequested] = useState(false);
+  const [api, fetchFallbackService] = useDataApi<AppState | null>(
+    fallbackServiceRequestOptions,
+    null
+  );
+
+  const appStateError = useCallback(
+    (message: string) => {
+      Sentry.captureMessage('Could not load any data sources.', {
+        extra: {
+          message,
+        },
+      });
+      setAppState(appState => createAllErrorState(appState, message));
+    },
+    [setAppState]
+  );
+
+  const fetchSauron = useCallback(() => {
+    return fetchFallbackService({
+      ...fallbackServiceRequestOptions,
+      url: BFFApiUrls[profileType].SERVICES_SAURON,
+      postpone: false,
+      params: requestParams,
+    });
+  }, [requestParams, profileType, fetchFallbackService]);
+
+  // If no EvenSource support or EventSource fails, the Fallback service endpoint is used for fetching all the data.
+  useEffect(() => {
+    if (!isEnabled) {
+      return;
+    }
+    if (!isDataRequested && api.isPristine) {
+      // If we have EventSource support but in the case it failed
+      pollBffHealth()
+        .then(() => {
+          fetchSauron();
+        })
+        .catch(appStateError);
+    }
+  }, [
+    fetchFallbackService,
+    api.isPristine,
+    isDataRequested,
+    appStateError,
+    fetchSauron,
+    isEnabled,
+  ]);
+
+  // Update the appState with data fetched by the Fallback service endpoint
+  useEffect(() => {
+    if (isDataRequested || !isEnabled) {
+      return;
+    }
+    if (api.data !== null && !api.isLoading && !api.isError) {
+      setIsDataRequested(true);
+      setAppState(appState => Object.assign({}, appState, api.data));
+    } else if (api.isError) {
+      // If everything fails, this is the final state update.
+      const errorMessage =
+        'Services.all endpoint could not be reached or returns an error.';
+      setIsDataRequested(true);
+      appStateError(errorMessage);
+    }
+  }, [api, isDataRequested, appStateError, setAppState, isEnabled]);
+}
 
 /**
  * The primary communication is the EventSource. In the case the EventSource can't connect to the server, a number of retries will take place.
@@ -23,122 +116,90 @@ const fallbackServiceRequestOptions = {
  */
 export function useAppState() {
   const hasEventSourceSupport = 'EventSource' in window; // IE11 and early edge versions don't have EventSource support. These browsers will use the the Fallback service endpoint.
-  const { TIPS, fetch: fetchTips, isLoading: isLoadingTips } = useTipsApi();
   const [isFallbackServiceEnabled, setFallbackServiceEnabled] = useState(
     !hasEventSourceSupport
   );
-  const [isDataRequested, setIsDateRequested] = useState(false);
 
-  // The controller is used for close coupling of state refetch methods. You can put fetch methods here that can be called from components.
-  const controller = useMemo(() => {
+  const profileType = useProfileTypeValue();
+  const isOptIn = useOptInValue();
+  const [appState, setAppState] = useRecoilState(appStateAtom);
+
+  const serviceRequestParams = useMemo(() => {
     return {
-      TIPS: {
-        fetch: fetchTips,
-      },
+      optin: isOptIn ? 'true' : 'false',
+      profileType,
     };
-  }, [fetchTips]);
-
-  const [appState, setAppState] = useState<AppState>(
-    Object.assign({}, PRISTINE_APPSTATE, { controller })
-  );
-
-  const [api, fetchFallbackService] = useDataApi<AppState | null>(
-    fallbackServiceRequestOptions,
-    null
-  );
-
-  function appStateError(message: string) {
-    Sentry.captureMessage('Could not load any data sources.', {
-      extra: {
-        message,
-      },
-    });
-    setAppState(appState => createAllErrorState(appState, message));
-  }
-
-  // If no EvenSource support or EventSource fails, the Fallback service endpoint is used for fetching all the data.
-  useEffect(() => {
-    if (!isDataRequested && isFallbackServiceEnabled && api.isPristine) {
-      // If we have EventSource support but in the case it failed
-      if (hasEventSourceSupport) {
-        console.info('SSE Failed, using Fallback service');
-
-        // We don't know why it failed, ashortcoming of EventSource error handling, so we poll for server health which is a likely source of failure.
-        pollBffHealth()
-          .then(() => {
-            fetchFallbackService({
-              ...fallbackServiceRequestOptions,
-              postpone: false,
-            });
-          })
-          .catch(appStateError);
-      } else {
-        // If we don't have EventSource support start with the Fallback service immediately
-        fetchFallbackService({
-          ...fallbackServiceRequestOptions,
-          postpone: false,
-        });
-      }
-    }
-  }, [
-    fetchFallbackService,
-    isFallbackServiceEnabled,
-    api.isPristine,
-    isDataRequested,
-    hasEventSourceSupport,
-  ]);
-
-  // Update the appState with data fetched by the Fallback service endpoint
-  useEffect(() => {
-    if (isDataRequested) {
-      return;
-    }
-    if (api.data !== null && !api.isLoading && !api.isError) {
-      setAppState(appState => Object.assign({}, appState, api.data));
-      setIsDateRequested(true);
-    } else if (api.isError) {
-      // If everything fails, this is the final state update.
-      const errorMessage =
-        'Services.all endpoint could not be reached or returns an error. ' +
-        (isFallbackServiceEnabled ? 'Fallback service fallback enabled.' : '');
-
-      appStateError(errorMessage);
-      setIsDateRequested(true);
-    }
-  }, [appState, api, isFallbackServiceEnabled, isDataRequested]);
+  }, [isOptIn, profileType]);
 
   // The EventSource will only be used if we have EventSource support
-  const onEvent = useCallback((messageData: any) => {
-    if (messageData && messageData !== SSE_ERROR_MESSAGE) {
-      const transformedMessageData = transformAppState(messageData);
-      setAppState(appState => {
-        const appStateUpdated = {
-          ...appState,
-          // Should there be an
-          ...transformedMessageData,
-        };
-        return appStateUpdated;
-      });
-    } else if (messageData === SSE_ERROR_MESSAGE) {
-      setFallbackServiceEnabled(true);
-    }
-  }, []);
+  const onEvent = useCallback(
+    (messageData: any) => {
+      if (messageData && messageData !== SSE_ERROR_MESSAGE) {
+        const transformedMessageData = transformAppState(messageData);
+        setAppState(appState => {
+          const appStateUpdated = {
+            ...appState,
+            // Should there be an
+            ...transformedMessageData,
+          };
+          return appStateUpdated;
+        });
+      } else if (messageData === SSE_ERROR_MESSAGE) {
+        setFallbackServiceEnabled(true);
+      }
+    },
+    [setAppState]
+  );
 
-  useSSE(BFFApiUrls.SERVICES_SSE, 'message', onEvent, isFallbackServiceEnabled);
+  const path = useMemo(() => {
+    return BFFApiUrls[profileType].SERVICES_SSE;
+  }, [profileType]);
 
-  // Add TIPS to AppState if they are refetched
-  useEffect(() => {
-    if (
-      !isLoadingTips &&
-      TIPS.status !== 'PRISTINE' &&
-      TIPS.content !== appState.TIPS.content
-    ) {
-      const tipsState = transformAppState({ TIPS });
-      setAppState(Object.assign({}, appState, tipsState));
-    } else if (isLoadingTips && TIPS.content !== appState.TIPS.content) {
-      setAppState(Object.assign({}, appState, { TIPS }));
-    }
-  }, [TIPS, appState, isLoadingTips]);
+  useSSE({
+    path,
+    eventName: 'message',
+    callback: onEvent,
+    postpone: isFallbackServiceEnabled,
+    requestParams: serviceRequestParams,
+  });
+
+  useAppStateFallbackService({
+    profileType,
+    isEnabled: hasEventSourceSupport ? isFallbackServiceEnabled : true,
+    requestParams: serviceRequestParams,
+    setAppState,
+  });
 
   return appState;
+}
+
+export function useAppStateGetter() {
+  return useRecoilValue(appStateAtom);
+}
+
+export function useAppStateSetter() {
+  return useRecoilState(appStateAtom)[1];
+}
+
+const appStateNotificationsSelector = selectorFamily({
+  key: 'appStateNotifications',
+  get: (profileType: ProfileType) => ({ get }) => {
+    const appState = get(appStateAtom);
+
+    if (
+      profileType === 'private-commercial' &&
+      appState.NOTIFICATIONS.content
+    ) {
+      return appState.NOTIFICATIONS.content.filter(
+        notification => notification.chapter !== Chapters.BRP
+      );
+    }
+
+    return appState.NOTIFICATIONS.content || [];
+  },
+});
+
+export function useAppStateNotifications() {
+  const profileType = useProfileTypeValue();
+  return useRecoilValue(appStateNotificationsSelector(profileType));
 }

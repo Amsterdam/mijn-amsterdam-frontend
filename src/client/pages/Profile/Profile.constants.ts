@@ -5,21 +5,27 @@ import {
 
 import { isMokum } from '../../../universal/helpers';
 import { BRPData } from '../../../universal/types';
-import { AppState } from '../../AppState';
 import { ExternalUrls } from '../../config/app';
+import { KVKData } from '../../../server/services/kvk';
 
-type PanelKey = keyof Omit<BRPData, 'identiteitsbewijzen' | 'notifications'>;
+type BRPPanelKey = keyof Omit<
+  BRPData,
+  'identiteitsbewijzen' | 'notifications' | 'kvkNummer'
+>;
+
+type KVKPanelKey = keyof Omit<KVKData, 'mokum'>;
+
 type PanelProps = Pick<InfoPanelProps, 'title' | 'actionLinks'>;
 
 export type PanelConfigFormatter =
   | PanelProps
-  | ((brpData: AppState['BRP']) => PanelProps);
+  | ((panelData: any) => PanelProps);
 
-type PanelConfig = {
-  [key in PanelKey]: PanelConfigFormatter;
+type PanelConfig<T extends string> = {
+  [key in T]: PanelConfigFormatter;
 };
 
-export const panelConfig: PanelConfig = {
+export const panelConfig: PanelConfig<BRPPanelKey> = {
   persoon: BRP => ({
     title: 'Persoonlijke gegevens',
     actionLinks: isMokum(BRP.content)
@@ -92,4 +98,49 @@ export const panelConfig: PanelConfig = {
     title: 'Vorige woonadressen',
     actionLinks: [],
   },
+};
+
+export const panelConfigCommercial: PanelConfig<KVKPanelKey> = {
+  onderneming: KVK => ({
+    title: 'Onderneming',
+    actionLinks: isMokum(KVK.content)
+      ? [
+          {
+            title: 'Inzien of correctie doorgeven',
+            url: ExternalUrls.CHANGE_PERSONAL_DATA,
+            external: true,
+          },
+        ]
+      : [],
+  }),
+  rechtspersonen: KVK => ({
+    title:
+      KVK.content?.rechtspersonen.length &&
+      KVK.content.rechtspersonen.length > 1
+        ? 'Rechtspersonen'
+        : 'Rechtspersoon',
+    actionLinks: [],
+  }),
+  vestigingen: KVK => ({
+    title:
+      KVK.content?.vestigingen.length && KVK.content.vestigingen.length > 1
+        ? 'Vestigingen'
+        : 'Vestiging',
+    actionLinks: [],
+  }),
+  aandeelhouders: KVK => ({
+    title:
+      KVK.content?.aandeelhouders.length &&
+      KVK.content.aandeelhouders.length > 1
+        ? 'Aandeelhouders'
+        : 'Aandeelhouder',
+    actionLinks: [],
+  }),
+  bestuurders: KVK => ({
+    title:
+      KVK.content?.bestuurders.length && KVK.content.bestuurders.length > 1
+        ? 'Bestuurders'
+        : 'Bestuurder',
+    actionLinks: [],
+  }),
 };

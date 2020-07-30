@@ -1,13 +1,14 @@
 import classnames from 'classnames';
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
+import { FocusItem } from '../../../server/services/focus/focus-types';
 import {
   AppRoutes,
   ChapterTitles,
   FeatureToggle,
 } from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
-import { AppContext } from '../../AppState';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
   addTitleLinkComponent,
   Alert,
@@ -20,14 +21,13 @@ import {
   Table,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import {
   annualStatementsTableDisplayProps,
   specificationsTableDisplayProps,
 } from '../../pages/InkomenSpecificaties/InkomenSpecificaties';
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import styles from './Inkomen.module.scss';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { FocusItem } from '../../../server/services/focus/focus-types';
 
 export const incomSpecificationsRouteMonthly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES']
@@ -50,9 +50,11 @@ const decisionsDisplayProps = {
 };
 
 export default () => {
-  const { FOCUS_AANVRAGEN, FOCUS_SPECIFICATIES, FOCUS_TOZO } = useContext(
-    AppContext
-  );
+  const {
+    FOCUS_AANVRAGEN,
+    FOCUS_SPECIFICATIES,
+    FOCUS_TOZO,
+  } = useAppStateGetter();
   const aanvragen = (FOCUS_AANVRAGEN.content || []) as FocusItem[];
   const tozoItems = FOCUS_TOZO.content || [];
   const uitkeringsspecificaties =
@@ -72,12 +74,12 @@ export default () => {
 
     return addTitleLinkComponent(
       itemsRequested
-        .map(item =>
-          Object.assign(item, {
+        .map(item => {
+          return Object.assign({}, item, {
             displayDatePublished: defaultDateFormat(item.datePublished),
             displayDateStart: defaultDateFormat(item.dateStart),
-          })
-        )
+          });
+        })
         .sort(dateSort('datePublished', 'desc'))
     );
   }, [aanvragen, tozoItems]);
@@ -95,12 +97,12 @@ export default () => {
 
     return addTitleLinkComponent(
       itemsDecided
-        .map(item =>
-          Object.assign(item, {
+        .map(item => {
+          return Object.assign({}, item, {
             displayDatePublished: defaultDateFormat(item.datePublished),
             displayDateStart: defaultDateFormat(item.dateStart),
-          })
-        )
+          });
+        })
         .sort(dateSort('datePublished', 'desc'))
     );
   }, [aanvragen, tozoItems]);
@@ -108,8 +110,14 @@ export default () => {
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
 
-  const itemsSpecificationsMonthly = uitkeringsspecificaties.slice(0, 3) || [];
-  const itemsSpecificationsYearly = jaaropgaven.slice(0, 3) || [];
+  const itemsSpecificationsMonthly = useMemo(
+    () => uitkeringsspecificaties.slice(0, 3) || [],
+    [uitkeringsspecificaties]
+  );
+  const itemsSpecificationsYearly = useMemo(
+    () => jaaropgaven.slice(0, 3) || [],
+    [jaaropgaven]
+  );
 
   const isLoadingFocus = isLoading(FOCUS_AANVRAGEN) || isLoading(FOCUS_TOZO);
   const isLoadingFocusSpecificaties = isLoading(FOCUS_SPECIFICATIES);

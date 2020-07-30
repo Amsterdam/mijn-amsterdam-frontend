@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { matchPath } from 'react-router-dom';
-import useRouter from 'use-react-router';
+import { useLocation } from 'react-router-dom';
 import { CustomTrackingUrls } from '../../universal/config';
 import { TMA_LOGIN_URL_DIGID, TMA_LOGIN_URL_EHERKENNING } from '../config/api';
 import { PageTitleMain, PageTitles } from '../config/pages';
@@ -19,11 +19,11 @@ const sortedPageTitleRoutes = Object.keys(PageTitles).sort((a, b) => {
 });
 
 export function usePageChange() {
-  const { location } = useRouter();
+  const location = useLocation();
 
   useEffect(() => {
     // Scroll to top on route change
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
 
     // Change Page title on route change
     const index = sortedPageTitleRoutes.findIndex(route => {

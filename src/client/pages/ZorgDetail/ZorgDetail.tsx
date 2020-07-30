@@ -1,29 +1,25 @@
-import React, { useContext, useMemo } from 'react';
-import useRouter from 'use-react-router';
+import React, { useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
-import { AppContext } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
   DetailPage,
+  InfoDetail,
+  LinkdInline,
   LoadingContent,
   PageContent,
   PageHeading,
   StatusLine,
-  InfoDetail,
-  LinkdInline,
 } from '../../components';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './ZorgDetail.module.scss';
 
 export default () => {
-  const { WMO } = useContext(AppContext);
+  const { WMO } = useAppStateGetter();
 
-  const {
-    match: {
-      params: { id },
-    },
-  } = useRouter();
+  const { id } = useParams();
 
   const WmoItem = WMO.content?.find(item => item.id === id);
   const noContent = !isLoading(WMO) && !WmoItem;
@@ -34,7 +30,7 @@ export default () => {
     }
     return WmoItem.steps.map((step, index) => {
       if (index === 0 && !step.documents.length) {
-        return Object.assign(step, {
+        return Object.assign({}, step, {
           altDocumentContent: (
             <p>
               <strong>

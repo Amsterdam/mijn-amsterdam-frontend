@@ -1,6 +1,6 @@
 import Heading from '../Heading/Heading';
 import Linkd from '../Button/Button';
-import React from 'react';
+import React, { useMemo } from 'react';
 import SectionCollapsible from '../SectionCollapsible/SectionCollapsible';
 import { Unshaped } from '../../../universal/types';
 import classnames from 'classnames';
@@ -78,17 +78,20 @@ function InfoPanelTable({
   panelData = {},
   omitPairWithFalseyValues = true,
 }: InfoPanelTableProps) {
-  const tables = Array.isArray(panelData)
-    ? panelData.map(panelData =>
-        entries(panelData).filter(
-          filterValue.bind(null, omitPairWithFalseyValues)
+  const tables = useMemo(() => {
+    return Array.isArray(panelData)
+      ? panelData.map(panelData =>
+          entries(panelData).filter(
+            filterValue.bind(null, omitPairWithFalseyValues)
+          )
         )
-      )
-    : [
-        entries(panelData).filter(
-          filterValue.bind(null, omitPairWithFalseyValues)
-        ),
-      ];
+      : [
+          entries(panelData).filter(
+            filterValue.bind(null, omitPairWithFalseyValues)
+          ),
+        ];
+  }, [panelData, omitPairWithFalseyValues]);
+
   return (
     <div className={styles.TableWrap}>
       {tables.map((rows, index) => (
@@ -102,7 +105,9 @@ function InfoPanelTable({
                     lower: true,
                   })}`}
                 >
-                  <th>{title}</th>
+                  <th>
+                    <span>{title}</span>
+                  </th>
                   <td>{getValue(value)}</td>
                 </tr>
               );
@@ -137,9 +142,7 @@ export default function InfoPanel({
           omitPairWithFalseyValues={omitPairWithFalseyValues}
           panelData={panelData}
         />
-        {!!actionLinks.length && (
-          <InfoPanelActionLinks actionLinks={actionLinks} />
-        )}
+        <InfoPanelActionLinks actionLinks={actionLinks || []} />
       </div>
     </div>
   );

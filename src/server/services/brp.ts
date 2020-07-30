@@ -9,6 +9,10 @@ import {
 } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import {
+  apiSuccesResult,
+  apiDependencyError,
+} from '../../universal/helpers/api';
 
 const DAYS_BEFORE_EXPIRATION = 120;
 
@@ -180,13 +184,11 @@ export async function fetchBRPGenerated(
   passthroughRequestHeaders: Record<string, string>
 ) {
   const BRP = await fetchBRP(sessionID, passthroughRequestHeaders);
-  let notifications: MyNotification[] = [];
 
   if (BRP.status === 'OK') {
-    notifications = transformBRPNotifications(BRP.content, new Date());
+    return apiSuccesResult({
+      notifications: transformBRPNotifications(BRP.content, new Date()),
+    });
   }
-
-  return {
-    notifications,
-  };
+  return apiDependencyError({ BRP });
 }

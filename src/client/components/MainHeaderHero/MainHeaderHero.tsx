@@ -3,7 +3,9 @@ import React, { useMemo } from 'react';
 import { AppRoutes } from '../../../universal/config';
 import { matchPath } from 'react-router';
 import styles from './MainHeaderHero.module.scss';
-import useRouter from 'use-react-router';
+import { useLocation } from 'react-router-dom';
+import classnames from 'classnames';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 
 const LANDSCAPE_SCREEN_RATIO = 0.25;
 const PORTRAIT_SCREEN_RATIO = 0.4;
@@ -24,7 +26,9 @@ function imgUrl(
 }
 
 function useHeroSrc() {
-  const { location } = useRouter();
+  const location = useLocation();
+  const profileType = useProfileTypeValue();
+  const isCommercialHeader = profileType !== 'private';
   const isChapterPath = (path: string) =>
     !!matchPath(location.pathname, {
       path,
@@ -35,6 +39,9 @@ function useHeroSrc() {
   let imageName: string;
 
   switch (true) {
+    case isCommercialHeader:
+      imageName = 'zakelijk';
+      break;
     case isChapterPath(AppRoutes.BRP):
       imageName = 'burgerzaken';
       break;
@@ -77,9 +84,15 @@ function useHeroSrc() {
 
 export default function MainHeaderHero() {
   const srcSet = useHeroSrc();
+  const profileType = useProfileTypeValue();
 
   return (
-    <div className={styles.MainHeaderHero}>
+    <div
+      className={classnames(
+        styles.MainHeaderHero,
+        profileType !== 'private' && styles['MainHeaderHero--commercial']
+      )}
+    >
       <picture>
         <source
           media="(orientation: portrait) and (max-width: 360px)"

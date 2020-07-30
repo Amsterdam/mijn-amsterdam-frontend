@@ -11,7 +11,7 @@ import {
   TextPage,
 } from '../../components';
 import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
-import { trackPageView, clearSessionStorage } from '../../hooks';
+import { trackPageView } from '../../hooks';
 import styles from './Landing.module.scss';
 import { ExternalUrls } from '../../config/app';
 
@@ -20,8 +20,6 @@ export default () => {
 
   useEffect(() => {
     trackPageView('Landingspagina', document.location.href + 'landingspagina');
-    // Whenever we load the landing/login page, start a new session.
-    clearSessionStorage();
   }, []);
 
   const [isRedirecting, setRedirecting] = useState(false);

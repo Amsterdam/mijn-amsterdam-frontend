@@ -1,11 +1,17 @@
 import { generatePath } from 'react-router-dom';
 import { AppRoutes } from '../../universal/config/routing';
-import { LinkProps, MyCase } from '../../universal/types/App.types';
+import {
+  LinkProps,
+  MyCase,
+  MyNotification,
+} from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import { hash, isRecentCase } from '../../universal/helpers/utils';
 import { dateSort } from '../../universal/helpers/date';
 import { Chapters } from '../../universal/config/index';
+import { apiDependencyError } from '../../universal/helpers';
+import { apiSuccesResult } from '../../universal/helpers/api';
 
 export interface VergunningSource {
   status: 'Toewijzen' | 'Afgehandeld' | 'Ontvangen' | string;
@@ -132,29 +138,34 @@ export async function fetchVergunningenGenerated(
   passthroughRequestHeaders: Record<string, string>,
   compareDate?: Date
 ) {
-  const vergunningen = await fetchVergunningen(
+  const VERGUNNINGEN = await fetchVergunningen(
     sessionID,
     passthroughRequestHeaders
   );
-  const compareToDate = compareDate || new Date();
 
-  const cases = Array.isArray(vergunningen.content)
-    ? vergunningen.content
-        .filter(
-          vergunning =>
-            vergunning.status !== 'Afgehandeld' ||
-            (vergunning.dateDecision &&
-              isRecentCase(vergunning.dateDecision, compareToDate))
-        )
-        .map(createVergunningRecentCase)
-    : [];
+  if (VERGUNNINGEN.status === 'OK') {
+    const compareToDate = compareDate || new Date();
 
-  const notifications = Array.isArray(vergunningen.content)
-    ? vergunningen.content.map(createVergunningNotification)
-    : [];
+    const cases: MyCase[] = Array.isArray(VERGUNNINGEN.content)
+      ? VERGUNNINGEN.content
+          .filter(
+            vergunning =>
+              vergunning.status !== 'Afgehandeld' ||
+              (vergunning.dateDecision &&
+                isRecentCase(vergunning.dateDecision, compareToDate))
+          )
+          .map(createVergunningRecentCase)
+      : [];
 
-  return {
-    cases,
-    notifications,
-  };
+    const notifications: MyNotification[] = Array.isArray(VERGUNNINGEN.content)
+      ? VERGUNNINGEN.content.map(createVergunningNotification)
+      : [];
+
+    return apiSuccesResult({
+      cases,
+      notifications,
+    });
+  }
+
+  return apiDependencyError({ VERGUNNINGEN });
 }

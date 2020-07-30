@@ -1,3 +1,5 @@
+import React, { useState, useMemo } from 'react';
+import { isError, isLoading } from '../../../universal/helpers';
 import {
   Alert,
   ChapterIcon,
@@ -7,23 +9,25 @@ import {
   PageHeading,
   Pagination,
 } from '../../components';
-import React, { useContext, useState } from 'react';
-import { isError, isLoading } from '../../../universal/helpers';
-
-import { AppContext } from '../../AppState';
+import {
+  useAppStateGetter,
+  useAppStateNotifications,
+} from '../../hooks/useAppState';
 import styles from './MyNotifications.module.scss';
 
 const PAGE_SIZE = 10;
 const INITIAL_INDEX = [0, PAGE_SIZE - 1];
 
 export default () => {
-  const { NOTIFICATIONS } = useContext(AppContext);
+  const { NOTIFICATIONS } = useAppStateGetter();
+  const notifications = useAppStateNotifications();
 
   const [[startIndex, endIndex], setPageIndex] = useState(INITIAL_INDEX);
-  const itemsPaginated =
-    NOTIFICATIONS.content?.slice(startIndex, endIndex + 1) || [];
+  const itemsPaginated = useMemo(() => {
+    return notifications.slice(startIndex, endIndex + 1);
+  }, [startIndex, endIndex, notifications]);
 
-  const total = NOTIFICATIONS.content?.length || itemsPaginated.length;
+  const total = notifications.length || itemsPaginated.length;
 
   return (
     <DetailPage className={styles.MyNotifications}>

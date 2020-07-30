@@ -80,6 +80,7 @@ Object {
       "voorvoegselGeslachtsnaam": null,
     },
   ],
+  "kvkNummer": "123123123",
   "ouders": Array [
     Object {
       "bsn": "123456780",

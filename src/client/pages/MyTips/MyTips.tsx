@@ -1,3 +1,7 @@
+import React, { useState } from 'react';
+import { ChapterTitles, FeatureToggle } from '../../../universal/config';
+import { isError, isLoading } from '../../../universal/helpers';
+import { ComponentChildren } from '../../../universal/types/App.types';
 import {
   Alert,
   Button,
@@ -8,17 +12,9 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
-import { ChapterTitles, FeatureToggle } from '../../../universal/config';
-import React, { useContext, useState } from 'react';
-import { isError, isLoading } from '../../../universal/helpers';
-
-import { AppContext } from '../../AppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
+import { useOptIn } from '../../hooks/useOptIn';
 import styles from './MyTips.module.scss';
-import {
-  OptInContext,
-  OptInContextProvider,
-} from '../../components/OptInContext/OptInContext';
-import { ComponentChildren } from '../../../universal/types/App.types';
 
 interface OptInPageContentProps {
   children: ComponentChildren;
@@ -26,7 +22,7 @@ interface OptInPageContentProps {
 
 function OptInPageContent({ children }: OptInPageContentProps) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const { isOptIn } = useContext(OptInContext);
+  const { isOptIn } = useOptIn();
   return (
     <PageContent>
       <p>
@@ -63,23 +59,21 @@ function OptInPageContent({ children }: OptInPageContentProps) {
 }
 
 export default () => {
-  const { TIPS } = useContext(AppContext);
+  const { TIPS } = useAppStateGetter();
 
   return (
     <OverviewPage className={styles.MyTips}>
-      <PageHeading isLoading={isLoading(TIPS)} icon={<ChapterIcon />}>
+      <PageHeading isLoading={false} icon={<ChapterIcon />}>
         {ChapterTitles.TIPS}
       </PageHeading>
       {FeatureToggle.myTipsoptInOutPersonalization && (
-        <OptInContextProvider>
-          <OptInPageContent>
-            {isError(TIPS) && (
-              <Alert type="warning">
-                <p>We kunnen op dit moment geen gegevens tonen.</p>
-              </Alert>
-            )}
-          </OptInPageContent>
-        </OptInContextProvider>
+        <OptInPageContent>
+          {isError(TIPS) && (
+            <Alert type="warning">
+              <p>We kunnen op dit moment geen gegevens tonen.</p>
+            </Alert>
+          )}
+        </OptInPageContent>
       )}
       <MyTips
         showHeader={false}

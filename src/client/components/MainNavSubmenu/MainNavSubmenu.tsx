@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import React, { HTMLAttributes, MouseEvent, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
-import useRouter from 'use-react-router';
+import { useLocation } from 'react-router-dom';
 import {
   ComponentChildren,
   LinkProps,
@@ -95,12 +95,12 @@ export default function MainNavSubmenu({
     debouncedLeave();
   };
 
-  const { history } = useRouter();
+  const location = useLocation();
   // Hides small screen menu on route change
   useEffect(() => {
     cancelEnter();
     setMenuIsOpen(false);
-  }, [history.location, cancelEnter]);
+  }, [location.pathname, cancelEnter]);
 
   return (
     <span

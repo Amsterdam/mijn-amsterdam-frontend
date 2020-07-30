@@ -1,28 +1,16 @@
-import { fetchAFVAL, fetchBRP } from './index';
-import {
-  ApiDependencyErrorResponse,
-  apiDependencyError,
-} from '../../universal/helpers';
-import { fetchHOME } from './home';
+import { apiDependencyError } from '../../universal/helpers';
 import { scrapeGarbageCenterData } from './afval/afvalpunten';
-
-type AFVALResponseData =
-  | ResolvedType<ReturnType<typeof fetchAFVAL>>
-  | ApiDependencyErrorResponse;
-
-type AFVALPUNTENResponseData =
-  | ResolvedType<ReturnType<typeof scrapeGarbageCenterData>>
-  | ApiDependencyErrorResponse;
+import { fetchHOME } from './home';
+import { fetchAFVAL } from './index';
 
 export async function loadServicesAfval(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  const BRP = await fetchBRP(sessionID, passthroughRequestHeaders);
   const HOME = await fetchHOME(sessionID, passthroughRequestHeaders);
 
-  let AFVAL: AFVALResponseData;
-  let AFVALPUNTEN: AFVALPUNTENResponseData;
+  let AFVAL;
+  let AFVALPUNTEN;
 
   if (HOME.status === 'OK') {
     AFVAL = await fetchAFVAL(
@@ -32,8 +20,8 @@ export async function loadServicesAfval(
     );
     AFVALPUNTEN = await scrapeGarbageCenterData(HOME.content?.latlng);
   } else {
-    AFVAL = apiDependencyError({ BRP, HOME });
-    AFVALPUNTEN = apiDependencyError({ BRP, HOME });
+    AFVAL = apiDependencyError({ HOME });
+    AFVALPUNTEN = apiDependencyError({ HOME });
   }
 
   return {

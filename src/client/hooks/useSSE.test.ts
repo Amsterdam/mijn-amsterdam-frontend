@@ -58,7 +58,12 @@ describe('useAppState', () => {
 
   it('Should connect and respond with multiple messages.', () => {
     const hook = renderHook(() =>
-      sseHook.useSSE('http://mock-sse', 'message', onEventCallback, false)
+      sseHook.useSSE({
+        path: 'http://mock-sse',
+        eventName: 'message',
+        callback: onEventCallback,
+        postpone: false,
+      })
     );
     expect(EventSourceMock.prototype.init).toHaveBeenCalled();
     expect(EventSourceMock.prototype.addEventListener).toHaveBeenCalledTimes(4);
@@ -78,14 +83,18 @@ describe('useAppState', () => {
 
   it('Should connect fail, retry and respond with an error.', async () => {
     renderHook(() =>
-      sseHook.useSSE('http://mock-sse', 'message', onEventCallback, false)
+      sseHook.useSSE({
+        path: 'http://mock-sse',
+        eventName: 'message',
+        callback: onEventCallback,
+        postpone: false,
+      })
     );
 
-    // First try
     expect(EventSourceMock.prototype.init).toHaveBeenCalledTimes(1);
     expect(EventSourceMock.prototype.addEventListener).toHaveBeenCalledTimes(4);
 
-    // Second try
+    // First try
     act(() => {
       evHandlers.error(new Error('Server not reachable.'));
     });
@@ -93,7 +102,7 @@ describe('useAppState', () => {
     jest.runAllTimers();
     expect(EventSourceMock.prototype.init).toHaveBeenCalledTimes(2);
 
-    // Third try
+    // Second try
     act(() => {
       evHandlers.error(new Error('Server not reachable.'));
     });
@@ -101,11 +110,19 @@ describe('useAppState', () => {
     jest.runAllTimers();
     expect(EventSourceMock.prototype.init).toHaveBeenCalledTimes(3);
 
-    // Fourth, last try
+    // Third try
     act(() => {
       evHandlers.error(new Error('Server not reachable.'));
     });
     expect(EventSourceMock.prototype.close).toHaveBeenCalledTimes(3);
+    jest.runAllTimers();
+    expect(EventSourceMock.prototype.init).toHaveBeenCalledTimes(3);
+
+    // Fourth, last try
+    act(() => {
+      evHandlers.error(new Error('Server not reachable.'));
+    });
+    expect(EventSourceMock.prototype.close).toHaveBeenCalledTimes(4);
     jest.runAllTimers();
 
     // Init is not called again
@@ -116,7 +133,12 @@ describe('useAppState', () => {
 
   it('Should not connect if postponed.', () => {
     renderHook(() =>
-      sseHook.useSSE('http://mock-sse', 'message', onEventCallback, true)
+      sseHook.useSSE({
+        path: 'http://mock-sse',
+        eventName: 'message',
+        callback: onEventCallback,
+        postpone: true,
+      })
     );
 
     // First try

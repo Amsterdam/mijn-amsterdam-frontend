@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AlphaPage /> Matches the Full Page snapshot 1`] = `"<main class=\\"Page AlphaPage\\"><header class=\\"PageHeading\\"><div class=\\"HeadingInner\\"><h2 class=\\"Heading Heading__large\\">AlphaPage</h2></div></header><div class=\\"PageContent\\"><p>AlphaPage body</p></div></main>"`;

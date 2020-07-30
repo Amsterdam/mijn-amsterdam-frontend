@@ -1,32 +1,27 @@
-import React, { useContext } from 'react';
-import useRouter from 'use-react-router';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
   capitalizeFirstLetter,
+  defaultDateFormat,
   isError,
   isLoading,
-  defaultDateFormat,
 } from '../../../universal/helpers';
-import { AppContext } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
   DetailPage,
+  InfoDetail,
   LoadingContent,
   PageContent,
   PageHeading,
-  InfoDetail,
 } from '../../components';
 import styles from './BurgerzakenDetail.module.scss';
+import { useAppStateGetter } from '../../hooks/useAppState';
 
 export default () => {
-  const { BRP } = useContext(AppContext);
-
-  const {
-    match: {
-      params: { id },
-    },
-  } = useRouter();
+  const { BRP } = useAppStateGetter();
+  const { id } = useParams();
 
   const DocumentItem = BRP.content?.identiteitsbewijzen?.find(
     item => item.id === id

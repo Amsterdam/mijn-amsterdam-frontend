@@ -137,15 +137,15 @@ export const brpInfoLabels = {
   verbintenisHistorisch,
 };
 
-function format(labelConfig: ProfileLabels<any>, data: any, brpData: BRPData) {
+export function format<T, X>(labelConfig: X, data: any, profileData: T) {
   const formattedData = entries(labelConfig).reduce((acc, [key, formatter]) => {
     const labelFormatter = Array.isArray(formatter) ? formatter[0] : formatter;
     const label =
       typeof labelFormatter === 'function'
-        ? labelFormatter(key, data, brpData)
+        ? labelFormatter(key, data, profileData)
         : labelFormatter;
     const value = Array.isArray(formatter)
-      ? formatter[1](data[key], data, brpData)
+      ? formatter[1](data[key], data, profileData)
       : data[key];
 
     // Don't display falsey values
@@ -162,7 +162,7 @@ function format(labelConfig: ProfileLabels<any>, data: any, brpData: BRPData) {
   return formattedData;
 }
 
-interface ProfileSection {
+export interface ProfileSection {
   [key: string]: Value;
 }
 

@@ -1,5 +1,9 @@
-import * as Sentry from '@sentry/node';
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
+import {
+  addServiceResultHandler,
+  getPassthroughRequestHeaders,
+  sendMessage,
+} from '../helpers/app';
 import {
   loadServicesAfval,
   loadServicesCMSContent,
@@ -7,39 +11,9 @@ import {
   loadServicesGenerated,
   loadServicesMap,
   loadServicesRelated,
-  loadServicesTips,
 } from './index';
-import { getPassthroughRequestHeaders } from '../helpers/app';
-
-function sendMessage(
-  res: Response,
-  id: string,
-  event: string = 'message',
-  data: any
-) {
-  const doStringify = typeof data !== 'string';
-  const payload = doStringify ? JSON.stringify(data) : data;
-  const message = `event: ${event}\nid: ${id}\ndata: ${payload}\n\n`;
-  res.write(message);
-  res.flush();
-}
-
-function addServiceResultHandler(
-  res: Response,
-  servicePromise: Promise<any>,
-  serviceName: string
-) {
-  return servicePromise
-    .then(data => {
-      sendMessage(res, serviceName, 'message', data);
-      return data;
-    })
-    .catch(error =>
-      Sentry.captureException(error, {
-        extra: { module: 'services-sse', serviceName },
-      })
-    );
-}
+import { loadServicesTips } from './tips';
+import { sessionID } from '../helpers/app';
 
 export async function loadServicesSSE(
   req: Request,
@@ -54,62 +28,39 @@ export async function loadServicesSSE(
   });
 
   const sessionID = res.locals.sessionID;
+  const passThroughHeaders = getPassthroughRequestHeaders(req);
 
-  const servicesDirect = loadServicesDirect(
-    sessionID,
-    getPassthroughRequestHeaders(req)
-  );
+  const servicesDirect = loadServicesDirect(sessionID, passThroughHeaders);
 
   addServiceResultHandler(res, servicesDirect, 'direct');
 
-  const servicesRelated = loadServicesRelated(
-    sessionID,
-    getPassthroughRequestHeaders(req)
-  );
+  const servicesRelated = loadServicesRelated(sessionID, passThroughHeaders);
 
   addServiceResultHandler(res, servicesRelated, 'related');
 
-  const servicesAfval = loadServicesAfval(
-    sessionID,
-    getPassthroughRequestHeaders(req)
-  );
+  const servicesAfval = loadServicesAfval(sessionID, passThroughHeaders);
 
   addServiceResultHandler(res, servicesAfval, 'afval');
 
-  const servicesMap = loadServicesMap(
-    sessionID,
-    getPassthroughRequestHeaders(req)
-  );
+  const servicesMap = loadServicesMap(sessionID, passThroughHeaders);
 
   addServiceResultHandler(res, servicesMap, 'map');
 
   const servicesCMSContent = loadServicesCMSContent(
     sessionID,
-    getPassthroughRequestHeaders(req)
+    passThroughHeaders
   );
 
   addServiceResultHandler(res, servicesCMSContent, 'cmscontent');
 
   const servicesGenerated = loadServicesGenerated(
     sessionID,
-    getPassthroughRequestHeaders(req)
+    passThroughHeaders
   );
 
   addServiceResultHandler(res, servicesGenerated, 'generated');
 
-  const tipsRequestDataServiceResults = await Promise.all([
-    servicesDirect,
-    servicesRelated,
-  ]);
-
-  const optin = req.cookies.optInPersonalizedTips === 'yes';
-
-  const servicesTips = loadServicesTips(
-    sessionID,
-    getPassthroughRequestHeaders(req),
-    tipsRequestDataServiceResults,
-    optin
-  );
+  const servicesTips = loadServicesTips(sessionID, req);
 
   addServiceResultHandler(res, servicesTips, 'tips');
 

@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { isLoading } from '../../../universal/helpers';
-import { AppContext } from '../../AppState';
 import {
   DirectLinks,
   MyAreaDashboard,
@@ -13,27 +12,37 @@ import {
   Page,
   PageHeading,
 } from '../../components';
-import { getMyChapters } from '../../helpers/chapters';
 import { usePhoneScreen } from '../../hooks/media.hook';
+import {
+  useAppStateGetter,
+  useAppStateNotifications,
+} from '../../hooks/useAppState';
+import { useChapters } from '../../hooks/useChapters';
 import styles from './Dashboard.module.scss';
 
 const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
 
 export default () => {
-  const appState = useContext(AppContext);
+  const appState = useAppStateGetter();
   const { TIPS, NOTIFICATIONS, CASES, BUURT, HOME } = appState;
+  const notifications = useAppStateNotifications();
 
-  const tipItems = TIPS.content?.slice(0, MAX_TIPS_VISIBLE) || [];
-  const notificationItems =
-    NOTIFICATIONS.content?.slice(0, MAX_NOTIFICATIONS_VISIBLE) || [];
+  const tipItems = useMemo(() => {
+    return TIPS.content?.slice(0, MAX_TIPS_VISIBLE) || [];
+  }, [TIPS.content]);
+
+  const notificationItems = useMemo(() => {
+    return notifications.slice(0, MAX_NOTIFICATIONS_VISIBLE);
+  }, [notifications]);
+
   const isPhoneScreen = usePhoneScreen();
-  const NOTIFICATIONSTotal = NOTIFICATIONS.content?.length || 0;
+  const NOTIFICATIONSTotal = notifications.length;
 
   const {
     items: myChapterItems,
     isLoading: isMyChaptersLoading,
-  } = getMyChapters(appState);
+  } = useChapters();
 
   return (
     <>

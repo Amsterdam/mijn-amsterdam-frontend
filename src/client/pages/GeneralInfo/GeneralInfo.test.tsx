@@ -1,18 +1,48 @@
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import React from 'react';
-import { AppState } from '../../AppState';
-import { MockAppStateProvider } from '../../AppStateProvider';
+import { generatePath } from 'react-router-dom';
+import { MutableSnapshot } from 'recoil';
+import { AppRoutes } from '../../../universal/config/routing';
+import { appStateAtom } from '../../hooks/useAppState';
+import MockApp from '../MockApp';
 import GeneralInfo from './GeneralInfo';
 
-const STATE_KEY = 'BRP'; // Use correct state
-const APP_STATE: Partial<AppState> = {
-  [STATE_KEY]: { content: null, status: 'OK' },
-}; // Add slice of the AppState here
+const testState = {
+  CMS_CONTENT: {
+    status: 'OK',
+    content: {
+      generalInfo: {
+        content: '<p>Dingen! <a href="http://example.org">Linkje</a></p>',
+        title: 'Algemene info',
+      },
+    },
+  },
+};
 
-it('Renders without crashing', () => {
-  shallow(
-    <MockAppStateProvider value={APP_STATE}>
-      <GeneralInfo />
-    </MockAppStateProvider>
+function initializeState(snapshot: MutableSnapshot) {
+  snapshot.set(appStateAtom, testState);
+}
+
+describe('<GeneralInfo />', () => {
+  const routeEntry = generatePath(AppRoutes.GENERAL_INFO);
+  const routePath = AppRoutes.GENERAL_INFO;
+
+  const Component = () => (
+    <MockApp
+      routeEntry={routeEntry}
+      routePath={routePath}
+      component={GeneralInfo}
+      initializeState={initializeState}
+    />
   );
+
+  it('Renders without crashing', () => {
+    shallow(<Component />);
+  });
+
+  it('Matches the Full Page snapshot', () => {
+    const html = mount(<Component />).html();
+
+    expect(html).toMatchSnapshot();
+  });
 });

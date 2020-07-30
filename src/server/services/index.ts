@@ -11,8 +11,13 @@ export * from './wmo';
 export * from './tips';
 
 export * from './services-direct';
+export * from './services-direct-commercial';
 export * from './services-related';
+export * from './services-related-commercial';
 export * from './services-generated';
+export * from './services-generated-commercial';
 export * from './services-map';
+export * from './services-map-commercial';
 export * from './services-cmscontent';
 export * from './services-afval';
+export * from './services-afval-commercial';

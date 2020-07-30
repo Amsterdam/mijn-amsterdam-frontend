@@ -1,16 +1,41 @@
-import { BrowserRouter } from 'react-router-dom';
-import MainHeaderHero from './MainHeaderHero';
-import React from 'react';
-import { SessionContext } from '../../SessionState';
 import { shallow } from 'enzyme';
+import React from 'react';
+import { AppRoutes } from '../../../universal/config/routing';
+import MockApp from '../../pages/MockApp';
+import MainHeaderHero from './MainHeaderHero';
 
-it('Renders without crashing', () => {
-  const testState = { isAuthenticated: false } as any;
-  shallow(
-    <BrowserRouter>
-      <SessionContext.Provider value={testState}>
-        <MainHeaderHero />
-      </SessionContext.Provider>
-    </BrowserRouter>
-  );
+describe('<MainHeaderHero />', () => {
+  it('Renders the Inkomen header', () => {
+    expect(
+      shallow(
+        <MockApp
+          component={MainHeaderHero}
+          routeEntry={AppRoutes.INKOMEN}
+          routePath={AppRoutes.INKOMEN}
+        />
+      ).html()
+    ).toMatchSnapshot();
+  });
+  it('Renders the Dashboard header', () => {
+    expect(
+      shallow(
+        <MockApp
+          component={MainHeaderHero}
+          routeEntry={AppRoutes.ROOT}
+          routePath={AppRoutes.ROOT}
+        />
+      ).html()
+    ).toMatchSnapshot();
+  });
+  it('Renders the Afval header', () => {
+    expect(
+      shallow(
+        <MockApp
+          component={MainHeaderHero}
+          routeEntry={AppRoutes.AFVAL}
+          routePath={AppRoutes.AFVAL}
+        />
+      ).html()
+    ).toMatchSnapshot();
+  });
 });

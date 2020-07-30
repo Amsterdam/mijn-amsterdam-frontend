@@ -1,0 +1,67 @@
+@import '../../styles/_global.scss';
+
+.ProfileName {
+  margin-left: 3.3rem;
+  margin-right: 2.8rem;
+  text-decoration: none;
+
+  @include select(Button_Button) {
+    position: relative;
+    display: inline-block;
+  }
+
+  a:hover {
+    color: $color-primary-red;
+    text-decoration: underline;
+  }
+
+  @include mq-phone() {
+    display: block;
+    margin: 0;
+    padding: 1rem 2rem;
+    border-top: .1rem solid $color-neutral-grey2;
+
+    @include select(Button_Button) {
+      display: block;
+    }
+  }
+}
+
+.ProfileLink {
+  margin-left: 1.3rem;
+  font-weight: normal;
+
+  svg {
+    position: absolute;;
+    width: 1.2em;
+    height: 1.3em;
+    margin-left: -2.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  @include mq-phone() {
+    margin-left: 5rem;
+  }
+}
+
+.ProfileLink--active {
+  color: $color-support-blue;
+  // text-decoration: underline;
+
+  svg {
+    fill: $color-support-blue;
+  }
+}
+
+.ProfileLink--private {
+  margin-left: 2rem;
+  + .ProfileLink--commercial {
+    margin-left: 5.3rem;
+
+    @include mq-phone() {
+      margin-left: 2rem;
+      margin-top: 1rem;
+    }
+  }
+}

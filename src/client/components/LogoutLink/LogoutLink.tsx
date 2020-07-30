@@ -1,18 +1,17 @@
-import React, { useContext } from 'react';
-
-import Linkd from '../Button/Button';
-import { IconLogout } from '../../assets/icons';
-import styles from './LogoutLink.module.scss';
-import { SessionContext } from '../../SessionState';
+import React from 'react';
 import { ComponentChildren } from '../../../universal/types/App.types';
+import { IconLogout } from '../../assets/icons';
 import { LOGOUT_URL } from '../../config/api';
+import { useSessionValue } from '../../hooks/api/useSessionApi';
+import Linkd from '../Button/Button';
+import styles from './LogoutLink.module.scss';
 
 interface LogoutLinkProps {
   children: ComponentChildren;
 }
 
 export default function LogoutLink({ children }: LogoutLinkProps) {
-  const session = useContext(SessionContext);
+  const session = useSessionValue();
   return (
     <Linkd
       onClick={event => {

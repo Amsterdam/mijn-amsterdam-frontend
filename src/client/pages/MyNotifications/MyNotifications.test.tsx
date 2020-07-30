@@ -1,20 +1,89 @@
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import React from 'react';
-import { MockAppStateProvider } from '../../AppStateProvider';
+import { generatePath } from 'react-router-dom';
+import { MutableSnapshot } from 'recoil';
+import { AppRoutes } from '../../../universal/config/routing';
+import { appStateAtom } from '../../hooks/useAppState';
+import MockApp from '../MockApp';
 import MyNotifications from './MyNotifications';
-import { AppState } from '../../AppState';
+import { Chapters } from '../../../universal/config/chapter';
 
-const appState: Partial<AppState> = {
+const testState = {
   NOTIFICATIONS: {
-    content: [],
     status: 'OK',
+    content: [
+      {
+        id: 'Not1',
+        title: 'Notification',
+        description: 'Notificatie1',
+        datePublished: '2020-07-24',
+        chapter: Chapters.ROOT,
+        link: {
+          to: '/item-1',
+          title: 'Linkje!',
+        },
+      },
+      {
+        id: 'Not2',
+        title: 'Notification',
+        description: 'Notificatie2',
+        datePublished: '2020-07-24',
+        chapter: Chapters.BRP,
+        link: {
+          to: '/item-2',
+          title: 'Linkje!',
+        },
+      },
+      {
+        id: 'Not3',
+        title: 'Notification',
+        description: 'Notificatie3',
+        datePublished: '2020-07-24',
+        chapter: Chapters.INKOMEN,
+        isAlert: true,
+        link: {
+          to: '/item-3',
+          title: 'Linkje!',
+        },
+      },
+    ],
   },
 };
 
-it('Renders without crashing', () => {
-  shallow(
-    <MockAppStateProvider value={appState}>
-      <MyNotifications />
-    </MockAppStateProvider>
+function initializeState(snapshot: MutableSnapshot) {
+  snapshot.set(appStateAtom, testState);
+}
+
+describe('<MyNotifications />', () => {
+  beforeAll(() => {
+    (window.scrollTo as any) = jest.fn();
+    (window.matchMedia as any) = jest.fn(() => {
+      return {
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+      };
+    });
+  });
+
+  const routeEntry = generatePath(AppRoutes.NOTIFICATIONS);
+  const routePath = AppRoutes.NOTIFICATIONS;
+
+  const Component = () => (
+    <MockApp
+      routeEntry={routeEntry}
+      routePath={routePath}
+      component={MyNotifications}
+      initializeState={initializeState}
+    />
   );
+
+  it('Renders without crashing', () => {
+    shallow(<Component />);
+  });
+
+  it('Matches the Full Page snapshot', () => {
+    const html = mount(<Component />).html();
+
+    expect(html).toMatchSnapshot();
+  });
 });

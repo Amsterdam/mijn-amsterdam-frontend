@@ -9,11 +9,11 @@ import { Link } from 'react-router-dom';
 import Linkd from '../Button/Button';
 import MainHeaderHero from '../MainHeaderHero/MainHeaderHero';
 import MainNavBar from '../MainNavBar/MainNavBar';
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import styles from './MainHeader.module.scss';
-import useRouter from 'use-react-router';
-import { AppContext } from '../../AppState';
+import { useLocation } from 'react-router-dom';
 import { getApiErrors } from '../../config/api';
+import { useAppStateGetter } from '../../hooks/useAppState';
 
 export interface MainHeaderProps {
   isAuthenticated?: boolean;
@@ -23,11 +23,11 @@ export default function MainHeader({
   isAuthenticated = false,
 }: MainHeaderProps) {
   const isHeroVisible = true;
-  const appState = useContext(AppContext);
+  const appState = useAppStateGetter();
   const errors = useMemo(() => getApiErrors(appState), [appState]);
   const Logo = useDesktopScreen() ? AmsterdamLogoLarge : AmsterdamLogo;
   const hasErrors = !!errors.length;
-  const { location } = useRouter();
+  const location = useLocation();
 
   return (
     <header className={styles.header}>

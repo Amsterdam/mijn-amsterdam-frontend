@@ -13,6 +13,8 @@ import TIPS from './json/tips.json';
 import AMSTERDAM_CONTENT_GENERAL_INFO from './json/amsterdam-nl-content-uitleg.json';
 import AMSTERDAM_CONTENT_FOOTER from './json/amsterdam-nl-content-footer.json';
 import VERGUNNINGEN from './json/vergunningen.json';
+import KVK2 from './json/kvk-handelsregister2.json';
+import KVK1 from './json/kvk-handelsregister.json';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
   return new Promise(resolve => {
@@ -45,11 +47,11 @@ type MockDataConfig = Record<
 
 export const mockDataConfig: MockDataConfig = {
   [ApiUrls.BELASTINGEN]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
+      // if (isCommercialUser(config)) {
+      //   return 'no-content';
+      // }
       return await loadMockApiResponseJson(BELASTINGEN);
     },
   },
@@ -92,90 +94,111 @@ export const mockDataConfig: MockDataConfig = {
     },
   },
   [ApiUrls.ERFPACHT]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
+      // if (isCommercialUser(config)) {
+      //   return 'no-content';
+      // }
       return await JSON.stringify({ status: true });
     },
   },
   [ApiUrls.BAG]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
+      // if (isCommercialUser(config)) {
+      //   return 'no-content';
+      // }
       return await loadMockApiResponseJson(BAG);
     },
   },
   [ApiUrls.AFVAL]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
+      // if (isCommercialUser(config)) {
+      //   return 'no-content';
+      // }
       return await loadMockApiResponseJson(AFVAL);
     },
   },
   [ApiUrls.MILIEUZONE]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
+      // if (isCommercialUser(config)) {
+      //   return await loadMockApiResponseJson(MILIEUZONE);
+      // }
       return await loadMockApiResponseJson(MILIEUZONE);
     },
   },
   [ApiUrls.CMS_CONTENT_GENERAL_INFO]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
+      // if (isCommercialUser(config)) {
+      //   return 'no-content';
+      // }
       return await loadMockApiResponseJson(AMSTERDAM_CONTENT_GENERAL_INFO);
     },
   },
   [ApiUrls.CMS_CONTENT_FOOTER]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
-      if (isCommercialUser(config)) {
-        return 'no-content';
-      }
+      // if (isCommercialUser(config)) {
+      //   return 'no-content';
+      // }
       return await loadMockApiResponseJson(AMSTERDAM_CONTENT_FOOTER);
     },
   },
   [ApiUrls.VERGUNNINGEN]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
       if (isCommercialUser(config)) {
-        return 'no-content';
+        return await loadMockApiResponseJson(VERGUNNINGEN);
       }
       return await loadMockApiResponseJson(VERGUNNINGEN);
     },
   },
+  [ApiUrls.KVK]: {
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    responseData: async (config: any) => {
+      if (isCommercialUser(config)) {
+        return await loadMockApiResponseJson(KVK2);
+      }
+      return await loadMockApiResponseJson(KVK1);
+    },
+  },
   [ApiUrls.TIPS]: {
-    status: (config: any) => (isCommercialUser(config) ? 500 : 200),
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     method: 'post',
     responseData: async (config: any) => {
       const requestData = JSON.parse(config.data);
       const content = await loadMockApiResponseJson(TIPS);
       const tips = JSON.parse(content);
-      const sourceTips = Object.values(requestData.data)
-        .filter(
-          responseContent =>
-            typeof responseContent === 'object' &&
-            responseContent !== null &&
-            'tips' in responseContent
-        )
-        .flatMap((responseContent: any) => responseContent.tips);
+
+      const sourceTips = requestData?.data
+        ? Object.values(requestData.data)
+            .filter(
+              responseContent =>
+                typeof responseContent === 'object' &&
+                responseContent !== null &&
+                'tips' in responseContent
+            )
+            .flatMap((responseContent: any) => responseContent.tips)
+        : [];
 
       const items = [
         ...(tips as MyTip[]),
         ...sourceTips.map(tip => Object.assign(tip, { isPersonalized: true })),
-      ].filter((tip: MyTip) =>
-        requestData?.optin ? tip.isPersonalized : !tip.isPersonalized
-      );
+      ]
+        .filter((tip: MyTip) =>
+          requestData?.optin ? tip.isPersonalized : !tip.isPersonalized
+        )
+        .map(tip => {
+          if (requestData.profileType !== 'private') {
+            return Object.assign(tip, {
+              title: `[${requestData.profileType}] ${tip.title}`,
+            });
+          }
+          return tip;
+        });
       return JSON.stringify(items);
     },
   },

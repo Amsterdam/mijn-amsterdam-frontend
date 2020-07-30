@@ -1,14 +1,13 @@
-import * as mediaHook from '../../hooks/media.hook';
-import * as session from '../../hooks/api/api.session';
-
 import { mount, shallow } from 'enzyme';
-
-import { BrowserRouter } from 'react-router-dom';
-import MainNavBar from './MainNavBar';
 import React from 'react';
-import { SessionState } from '../../SessionState';
-import { MockAppStateProvider } from '../../AppStateProvider';
-import { PRISTINE_APPSTATE } from '../../AppState';
+import { generatePath } from 'react-router-dom';
+import { MutableSnapshot } from 'recoil';
+import { AppRoutes } from '../../../universal/config';
+import * as session from '../../hooks/api/useSessionApi';
+import * as mediaHook from '../../hooks/media.hook';
+import { appStateAtom } from '../../hooks/useAppState';
+import MockApp from '../../pages/MockApp';
+import MainNavBar from './MainNavBar';
 
 const sessionState: any = {
   isAuthenticated: true,
@@ -22,7 +21,7 @@ const sessionState: any = {
   userType: 'BURGER',
 };
 
-const appState: any = Object.assign({}, PRISTINE_APPSTATE, {
+const testState = {
   SESSION: sessionState,
   CHAPTERS: {
     isLoading: false,
@@ -36,24 +35,43 @@ const appState: any = Object.assign({}, PRISTINE_APPSTATE, {
       },
     },
   },
-});
+};
 
-describe('MainNavBar', () => {
-  it('Renders correctly', () => {
-    expect(
-      shallow(
-        <BrowserRouter>
-          <SessionState value={sessionState}>
-            <MockAppStateProvider value={appState}>
-              <MainNavBar />
-            </MockAppStateProvider>
-          </SessionState>
-        </BrowserRouter>
-      ).html()
-    ).toMatchSnapshot();
+function initializeState(snapshot: MutableSnapshot) {
+  snapshot.set(appStateAtom, testState);
+}
+
+describe('<MainNavBar />', () => {
+  const routeEntry = generatePath(AppRoutes.ROOT);
+  const routePath = AppRoutes.ROOT;
+
+  beforeAll(() => {
+    (window.matchMedia as any) = jest.fn(() => {
+      return {
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+      };
+    });
   });
 
-  describe('Small screen version of MainNavBar', () => {
+  const Component = () => (
+    <MockApp
+      routeEntry={routeEntry}
+      routePath={routePath}
+      component={MainNavBar}
+      initializeState={initializeState}
+    />
+  );
+
+  it('Renders without crashing', () => {
+    shallow(<Component />);
+  });
+
+  it('Matches the Desktop snapshot', () => {
+    expect(mount(<Component />).html()).toMatchSnapshot();
+  });
+
+  describe('Small screen version of <MainNavBar />', () => {
     let hookSpies: any = {};
 
     beforeEach(() => {
@@ -76,37 +94,23 @@ describe('MainNavBar', () => {
             userType: 'BURGER',
             isDirty: true,
             refetch: () => void 0,
+            logout: () => void 0,
           };
         });
     });
+
     afterEach(() => {
       hookSpies.useTabletScreen.mockRestore();
       hookSpies.useDesktopScreen.mockRestore();
       hookSpies.useSessionApi.mockRestore();
     });
+
     it('Renders burger menu on small screens', () => {
-      expect(
-        shallow(
-          <BrowserRouter>
-            <SessionState value={sessionState}>
-              <MockAppStateProvider value={appState}>
-                <MainNavBar />
-              </MockAppStateProvider>
-            </SessionState>
-          </BrowserRouter>
-        ).html()
-      ).toMatchSnapshot();
+      expect(mount(<Component />).html()).toMatchSnapshot();
     });
+
     it('Opens and closes the burger menu', () => {
-      const component = mount(
-        <BrowserRouter>
-          <SessionState value={sessionState}>
-            <MockAppStateProvider value={appState}>
-              <MainNavBar />
-            </MockAppStateProvider>
-          </SessionState>
-        </BrowserRouter>
-      );
+      const component = mount(<Component />);
 
       expect(component.find('BurgerButton')).toHaveLength(1);
       component.find('BurgerButton').simulate('click');

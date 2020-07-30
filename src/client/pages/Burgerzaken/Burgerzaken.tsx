@@ -1,8 +1,9 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
-import { AppContext } from '../../AppState';
+import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
+  addTitleLinkComponent,
   Alert,
   ChapterIcon,
   Linkd,
@@ -11,10 +12,9 @@ import {
   PageHeading,
   SectionCollapsible,
   Table,
-  addTitleLinkComponent,
 } from '../../components';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Burgerzaken.module.scss';
-import { defaultDateFormat } from '../../../universal/helpers/date';
 
 const DISPLAY_PROPS = {
   title: '',
@@ -22,7 +22,7 @@ const DISPLAY_PROPS = {
 };
 
 export default () => {
-  const { BRP } = useContext(AppContext);
+  const { BRP } = useAppStateGetter();
 
   const documentItems = useMemo(() => {
     if (!BRP.content?.identiteitsbewijzen) {

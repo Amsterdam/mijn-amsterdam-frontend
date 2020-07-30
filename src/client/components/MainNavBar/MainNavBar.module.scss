@@ -69,23 +69,12 @@
 
 .secondaryLinks {
   position: absolute;
-  margin-top: -8.1rem;
+  margin-top: -8.9rem;
   right: calc((100vw - #{$main-boxed-width}) / 2);
   display: inline-block;
 
   @include select(LoadingContent_LoadingContent) {
     display: inline-block;
-  }
-
-  > a {
-    margin-left: 3.3rem;
-    font-weight: normal;
-    text-decoration: none;
-
-    &:hover {
-      color: $color-primary-red;
-      text-decoration: underline;
-    }
   }
 
   @include mq-tablet() {
@@ -99,7 +88,6 @@
       &, &:hover {
         border-top: 0.1rem solid $color-neutral-grey2;
       }
-      font-weight: bold;
       font-size: 1.5rem;
       margin: 0;
       padding-left: 1.6rem;
@@ -187,7 +175,7 @@
 }
 
 .GeneralInfoLink {
-  svg {
+  @include select(Button_Icon) {
     width: 2.2rem;
     height: 2.2rem;
   }
@@ -212,11 +200,5 @@
   margin-bottom: 1rem;
   @include mq-tablet() {
     margin-bottom: 0;
-  }
-}
-
-.ProfileName {
-  &--BEDRIJF {
-    color: $color-support-purple;
   }
 }

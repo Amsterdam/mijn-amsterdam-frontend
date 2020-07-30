@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { isError, isLoading } from '../../../universal/helpers';
-import { AppContext } from '../../AppState';
 import {
   Alert,
   InnerHtml,
@@ -9,9 +8,10 @@ import {
   PageHeading,
   TextPage,
 } from '../../components';
+import { useAppStateGetter } from '../../hooks/useAppState';
 
 export default () => {
-  const { CMS_CONTENT } = useContext(AppContext);
+  const { CMS_CONTENT } = useAppStateGetter();
   const generalInfo = CMS_CONTENT.content?.generalInfo;
 
   return (

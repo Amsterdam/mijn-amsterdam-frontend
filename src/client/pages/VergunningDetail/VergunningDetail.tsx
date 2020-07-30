@@ -1,13 +1,12 @@
-import React, { useContext, useMemo } from 'react';
-import useRouter from 'use-react-router';
+import React, { useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
+  defaultDateFormat,
   isError,
   isLoading,
-  defaultDateFormat,
 } from '../../../universal/helpers';
 import { GenericDocument } from '../../../universal/types/App.types';
-import { AppContext } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
@@ -20,19 +19,16 @@ import {
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
-import styles from './VergunningDetail.module.scss';
 import StatusLine, {
   StatusLineItem,
 } from '../../components/StatusLine/StatusLine';
+import { useAppStateGetter } from '../../hooks/useAppState';
+import styles from './VergunningDetail.module.scss';
 
 export default () => {
-  const { VERGUNNINGEN } = useContext(AppContext);
+  const { VERGUNNINGEN } = useAppStateGetter();
 
-  const {
-    match: {
-      params: { id },
-    },
-  } = useRouter();
+  const { id } = useParams();
 
   const VergunningItem = VERGUNNINGEN.content?.find(item => item.id === id);
   const noContent = !isLoading(VERGUNNINGEN) && !VergunningItem;

@@ -256,7 +256,7 @@ interface StatusLineProps {
   items: StatusLineItem[];
   trackCategory: string;
   altDocumentContent?: AltDocumentContent;
-  id: string;
+  id?: string;
   showToggleMore?: boolean;
   statusLabel?: string;
   className?: string;

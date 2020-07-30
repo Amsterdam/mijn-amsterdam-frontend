@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Chapters, FeatureToggle } from '../../universal/config';
 import {
   ApiResponse,
@@ -6,7 +7,9 @@ import {
   isMokum,
 } from '../../universal/helpers';
 import { AppState } from '../AppState';
-import { ChapterMenuItem, myChaptersMenuItems } from '../config/menuItems';
+import { ChapterMenuItem, chaptersByProfileType } from '../config/menuItems';
+import { useAppStateGetter } from './useAppState';
+import { useProfileTypeValue } from './useProfileType';
 
 function isChapterActive(
   item: ChapterMenuItem,
@@ -22,6 +25,7 @@ function isChapterActive(
     MILIEUZONE,
     VERGUNNINGEN,
     HOME,
+    KVK,
   }: AppState
 ) {
   switch (item.id) {
@@ -30,7 +34,6 @@ function isChapterActive(
         !(
           isLoading(FOCUS_AANVRAGEN) &&
           isLoading(FOCUS_SPECIFICATIES) &&
-          isLoading(FOCUS_TOZO) &&
           isLoading(FOCUS_TOZO)
         ) &&
         (!!FOCUS_AANVRAGEN.content?.length ||
@@ -82,6 +85,9 @@ function isChapterActive(
 
     case Chapters.VERGUNNINGEN:
       return !isLoading(VERGUNNINGEN) && !!VERGUNNINGEN.content?.length;
+
+    case Chapters.KVK:
+      return !isLoading(KVK) && !!KVK.content?.onderneming?.handelsnaam;
   }
 
   return false;
@@ -92,22 +98,34 @@ export interface ChaptersState {
   isLoading: boolean;
 }
 
-export function getMyChapters(appState: AppState): ChaptersState {
-  const items = myChaptersMenuItems.filter(item => {
+export function useChapterMenuItems() {
+  const profileType = useProfileTypeValue();
+  return chaptersByProfileType[profileType] || [];
+}
+
+export function useChapters(): ChaptersState {
+  const appState = useAppStateGetter();
+  const chapterItems = useChapterMenuItems();
+
+  const items = chapterItems.filter(item => {
     // Check to see if Chapter has been loaded or if it is directly available
     return isChapterActive(item, appState);
   });
-  return {
-    items,
-    isLoading:
-      !!appState &&
-      Object.entries(appState)
-        .filter(([key]) => key !== 'controller')
-        .some(([key, apiState]) => {
-          const loading =
-            isLoading(apiState as ApiResponse<any>) &&
-            !isError(apiState as ApiResponse<any>);
-          return loading;
-        }),
-  };
+
+  return useMemo(
+    () => ({
+      items,
+      isLoading:
+        !!appState &&
+        chapterItems
+          .map(({ id }) => ({ id, apiState: appState[id as keyof AppState] }))
+          .filter(({ id, apiState }) => !!apiState)
+          .some(({ id, apiState }) => {
+            const apiStateTyped = apiState as ApiResponse<any>;
+            const loading = isLoading(apiStateTyped) && !isError(apiStateTyped);
+            return loading;
+          }),
+    }),
+    [items, chapterItems, appState]
+  );
 }

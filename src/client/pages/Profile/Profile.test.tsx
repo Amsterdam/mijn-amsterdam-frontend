@@ -1,8 +1,10 @@
 import { mount, shallow } from 'enzyme';
-import React, { ReactNode } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { AppState } from '../../AppState';
-import { MockAppStateProvider } from '../../AppStateProvider';
+import React from 'react';
+import { generatePath } from 'react-router-dom';
+import { MutableSnapshot } from 'recoil';
+import { AppRoutes } from '../../../universal/config/routing';
+import { appStateAtom } from '../../hooks/useAppState';
+import MockApp from '../MockApp';
 import Profile from './Profile';
 
 const responseData = {
@@ -173,25 +175,27 @@ const responseData = {
   ],
 };
 
-function getAppState(status: any = 'OK'): Partial<AppState> {
-  return {
-    BRP: {
-      content:
-        status === 'OK' ? JSON.parse(JSON.stringify(responseData)) : null,
-      status,
-    },
-  };
+const testState = {
+  BRP: { status: 'OK', content: responseData },
+};
+
+function initializeState(snapshot: MutableSnapshot) {
+  snapshot.set(appStateAtom, testState);
 }
 
-function mountWithAppstate(appState: Partial<AppState>, component: ReactNode) {
-  return mount(
-    <BrowserRouter>
-      <MockAppStateProvider value={appState}>{component}</MockAppStateProvider>
-    </BrowserRouter>
+describe('<Profile />', () => {
+  const routeEntry = generatePath(AppRoutes.BRP);
+  const routePath = AppRoutes.BRP;
+
+  const Component = () => (
+    <MockApp
+      routeEntry={routeEntry}
+      routePath={routePath}
+      component={Profile}
+      initializeState={initializeState}
+    />
   );
-}
 
-describe('BRP Profile page', () => {
   beforeAll(() => {
     (window.matchMedia as any) = jest.fn(() => {
       return {
@@ -202,101 +206,10 @@ describe('BRP Profile page', () => {
   });
 
   it('Renders without crashing', () => {
-    shallow(
-      <MockAppStateProvider value={getAppState()}>
-        <Profile />
-      </MockAppStateProvider>
-    );
+    shallow(<Component />);
   });
 
-  it('Renders all the information provided', () => {
-    const appState = getAppState();
-    const page = mountWithAppstate(appState, <Profile />);
-
-    expect(page.html()).toMatchSnapshot();
-  });
-
-  it('Does display verbintenis information if present', () => {
-    const appState = getAppState();
-    const page = mountWithAppstate(appState, <Profile />);
-
-    expect(page.find(`.InfoPanel.Verbintenis`)).toHaveLength(2);
-  });
-
-  it('Does not display verbintenis information if not present', () => {
-    const appState = getAppState();
-    if (appState.BRP?.status === 'OK') {
-      delete appState.BRP.content!.verbintenis;
-      delete appState.BRP.content!.verbintenisHistorisch;
-    }
-
-    const page = mountWithAppstate(appState, <Profile />);
-
-    expect(page.find(`.InfoPanel.Verbintenis`)).toHaveLength(0);
-  });
-
-  it('Does not display country and place of birth when NOT a resident of Amsterdam', () => {
-    const appState = getAppState();
-    if (appState.BRP?.status === 'OK') {
-      appState.BRP.content!.persoon.mokum = false;
-      appState.BRP.content!.persoon.geboorteplaatsnaam = '';
-      appState.BRP.content!.persoon.geboortelandnaam = '';
-    }
-
-    const page = mountWithAppstate(appState, <Profile />);
-
-    expect(
-      page
-        .find('.InfoPanel')
-        .at(0)
-        .find(`.InfoPanelTableRow__geboorteplaats td`)
-    ).toHaveLength(0);
-    expect(
-      page
-        .find('.InfoPanel')
-        .at(0)
-        .find(`.InfoPanelTableRow__geboorteland td`)
-    ).toHaveLength(0);
-  });
-
-  it('Displays onbekend as value for country and place of birth when IS resident of Amsterdam', () => {
-    const appState = getAppState();
-    if (appState.BRP?.status === 'OK') {
-      appState.BRP.content!.persoon.geboorteplaatsnaam = '';
-      appState.BRP.content!.persoon.geboortelandnaam = '';
-    }
-
-    const page = mountWithAppstate(appState, <Profile />);
-
-    expect(
-      page
-        .find('.InfoPanel')
-        .at(0)
-        .find(`.InfoPanelTableRow__geboorteplaats td`)
-        .text()
-    ).toBe('Onbekend');
-    expect(
-      page
-        .find('.InfoPanel')
-        .at(0)
-        .find(`.InfoPanelTableRow__geboorteland td`)
-        .text()
-    ).toBe('Onbekend');
-  });
-
-  it('Displays an alert when adres.inOnderzoek and/or persoon.vertrokkenOnbekendWaarheen is true', () => {
-    const appState = getAppState();
-    const page = mountWithAppstate(appState, <Profile />);
-
-    expect(page.find('.vertrokkenOnbekendWaarheen')).not.toBeNull();
-    expect(page.find('.inOnderzoek')).not.toBeNull();
-  });
-
-  it('Displays an alert if the api responds with an error', () => {
-    const appState = getAppState('ERROR');
-    const page = mountWithAppstate(appState, <Profile />);
-
-    expect(page.find(`.InfoPanel.Verbintenis`)).toHaveLength(0);
-    expect(page.find('[class*="Alert_Alert"]')).not.toBeNull();
+  it('Matches the Full Page snapshot', () => {
+    expect(mount(<Component />).html()).toMatchSnapshot();
   });
 });

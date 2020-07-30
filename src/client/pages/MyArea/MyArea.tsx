@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { getOtapEnvItem } from '../../../universal/config/env';
-import { AppContext } from '../../AppState';
 import { MyAreaHeader, MyAreaMapIFrame } from '../../components';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './MyArea.module.scss';
 
 export default () => {
-  const { BUURT } = useContext(AppContext);
+  const { BUURT } = useAppStateGetter();
 
   return (
     <div className={styles.Container}>

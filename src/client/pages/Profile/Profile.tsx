@@ -1,10 +1,10 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import {
   defaultDateFormat,
   isError,
   isLoading,
 } from '../../../universal/helpers';
-import { AppContext, AppState } from '../../AppState';
+import { AppState } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
@@ -16,9 +16,11 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import { formatBrpProfileData } from './formatData';
 import { panelConfig, PanelConfigFormatter } from './Profile.constants';
 import styles from './Profile.module.scss';
+import classnames from 'classnames';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,
@@ -31,7 +33,7 @@ function formatInfoPanelConfig(
 }
 
 export default function Profile() {
-  const { BRP } = useContext(AppContext);
+  const { BRP } = useAppStateGetter();
 
   const brpProfileData = useMemo(() => {
     return BRP.content ? formatBrpProfileData(BRP.content) : BRP.content;
@@ -135,7 +137,7 @@ export default function Profile() {
       {!!brpProfileData?.verbintenis && (
         <InfoPanelCollapsible
           id="profile-verbintenis"
-          className={styles.Verbintenis}
+          className={classnames(styles.Verbintenis, styles.CollapsiblePanel)}
           {...formatInfoPanelConfig(panelConfig.verbintenis, BRP)}
           panelData={brpProfileData.verbintenis}
         />
@@ -145,7 +147,7 @@ export default function Profile() {
         brpProfileData?.verbintenisHistorisch.length && (
           <InfoPanelCollapsible
             id="profile-verbintenisHistorisch"
-            className={styles.Verbintenis}
+            className={classnames(styles.Verbintenis, styles.CollapsiblePanel)}
             {...formatInfoPanelConfig(panelConfig.verbintenisHistorisch, BRP)}
             panelData={brpProfileData.verbintenisHistorisch}
           />
@@ -154,6 +156,7 @@ export default function Profile() {
       {!!brpProfileData?.kinderen && brpProfileData.kinderen.length && (
         <InfoPanelCollapsible
           id="profile-kinderen"
+          className={classnames(styles.Verbintenis, styles.CollapsiblePanel)}
           {...formatInfoPanelConfig(panelConfig.kinderen, BRP)}
           panelData={brpProfileData.kinderen}
         />
@@ -162,6 +165,7 @@ export default function Profile() {
       {!!brpProfileData?.ouders && brpProfileData.ouders.length && (
         <InfoPanelCollapsible
           id="profile-ouders"
+          className={styles.CollapsiblePanel}
           {...formatInfoPanelConfig(panelConfig.ouders, BRP)}
           panelData={brpProfileData.ouders}
         />
@@ -171,6 +175,7 @@ export default function Profile() {
         brpProfileData?.adresHistorisch.length && (
           <InfoPanelCollapsible
             id="profile-adresHistorisch"
+            className={styles.CollapsiblePanel}
             {...formatInfoPanelConfig(panelConfig.adresHistorisch, BRP)}
             panelData={brpProfileData.adresHistorisch}
           />

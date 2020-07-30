@@ -1,8 +1,8 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
-import { AppContext } from '../../AppState';
 import {
+  addTitleLinkComponent,
   Alert,
   ChapterIcon,
   Linkd,
@@ -12,9 +12,9 @@ import {
   PageHeading,
   SectionCollapsible,
   Table,
-  addTitleLinkComponent,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Zorg.module.scss';
 
 const DISPLAY_PROPS = {
@@ -22,7 +22,7 @@ const DISPLAY_PROPS = {
 };
 
 export default () => {
-  const { WMO } = useContext(AppContext);
+  const { WMO } = useAppStateGetter();
 
   const itemsActual = useMemo(() => {
     if (!WMO.content?.length) {

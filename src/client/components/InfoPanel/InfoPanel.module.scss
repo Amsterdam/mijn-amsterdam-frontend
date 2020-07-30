@@ -38,6 +38,19 @@
 
 .TableWrap {
   width: 59%;
+  th span {
+    white-space: nowrap;
+  }
+  @include mq-desktop() {
+    th {
+      position: relative;
+      span {
+        position: absolute;
+        right: 2rem;
+        top: .1rem;
+      }
+    }
+  }
 }
 
 .InfoPanelTable {

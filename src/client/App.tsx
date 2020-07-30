@@ -1,14 +1,18 @@
 import * as Sentry from '@sentry/browser';
 import classnames from 'classnames';
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import ErrorBoundary from 'react-error-boundary';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import useRouter from 'use-react-router';
+import {
+  BrowserRouter,
+  Redirect,
+  Route,
+  Switch,
+  useLocation,
+} from 'react-router-dom';
 import { AppRoutes, FeatureToggle } from '../universal/config';
 import { getOtapEnvItem, IS_PRODUCTION } from '../universal/config/env';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
-import AppStateProvider from './AppStateProvider';
 import {
   ApplicationError,
   AutoLogoutDialog,
@@ -48,10 +52,16 @@ import {
   VergunningDetail,
   Accessibility,
 } from './pages';
-import { SessionContext, SessionState } from './SessionState';
+
+import { RecoilRoot } from 'recoil';
+import ProfileCommercial from './pages/Profile/ProfileCommercial';
+import { useAppState } from './hooks/useAppState';
+import { useTipsApi } from './hooks/api/useTipsApi';
+import { useSessionValue, useSessionApi } from './hooks/api/useSessionApi';
+import { useProfileTypeValue } from './hooks/useProfileType';
 
 function AppNotAuthenticated() {
-  const { location } = useRouter();
+  const location = useLocation();
 
   const [routeEntry, setRouteEntry] = useLocalStorage('RouteEntry', '');
 
@@ -88,8 +98,11 @@ function AppNotAuthenticated() {
 }
 
 function AppAuthenticated() {
-  const { location } = useRouter();
-  const session = useContext(SessionContext);
+  useAppState();
+  useTipsApi();
+  const location = useLocation();
+  const session = useSessionValue();
+  const profileType = useProfileTypeValue();
   const [routeEntry, setRouteEntry] = useLocalStorage('RouteEntry', '');
 
   const redirectAfterLogin = routeEntry || AppRoutes.ROOT;
@@ -120,7 +133,13 @@ function AppAuthenticated() {
           />
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
+          {profileType !== 'private' ? (
+            <Redirect from={AppRoutes.BRP} to={AppRoutes.KVK} />
+          ) : (
+            <Redirect from={AppRoutes.KVK} to={AppRoutes.BRP} />
+          )}
           <Route path={AppRoutes.BRP} component={Profile} />
+          <Route path={AppRoutes.KVK} component={ProfileCommercial} />
           <Route path={AppRoutes.TIPS} component={MyTips} />
           <Route
             path={AppRoutes['INKOMEN/STADSPAS']}
@@ -170,8 +189,7 @@ function AppAuthenticated() {
 }
 
 function AppLanding() {
-  const session = useContext(SessionContext);
-
+  const session = useSessionApi();
   const { isPristine, isAuthenticated, validityInSeconds } = session;
 
   // If session was previously authenticated we don't want to show the loader again
@@ -188,9 +206,7 @@ function AppLanding() {
   // Render the main app only if we are authenticated
   return isAuthenticated ? (
     <>
-      <AppStateProvider>
-        <AppAuthenticated />
-      </AppStateProvider>
+      <AppAuthenticated />
       <AutoLogoutDialog settings={dialogTimeoutSettings} />
     </>
   ) : (
@@ -211,15 +227,15 @@ export default function App() {
   };
 
   return (
-    <BrowserRouter>
-      <ErrorBoundary
-        onError={sendToSentry}
-        FallbackComponent={ApplicationError}
-      >
-        <SessionState>
+    <RecoilRoot>
+      <BrowserRouter>
+        <ErrorBoundary
+          onError={sendToSentry}
+          FallbackComponent={ApplicationError}
+        >
           <AppLanding />
-        </SessionState>
-      </ErrorBoundary>
-    </BrowserRouter>
+        </ErrorBoundary>
+      </BrowserRouter>
+    </RecoilRoot>
   );
 }

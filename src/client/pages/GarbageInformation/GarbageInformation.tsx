@@ -1,12 +1,11 @@
 import classnames from 'classnames';
-import React, { ReactNode, useContext } from 'react';
+import React, { ReactNode } from 'react';
 import { ChapterTitles } from '../../../universal/config';
 import { getFullAddress, isError, isLoading } from '../../../universal/helpers';
 import {
   GarbageCenter,
   GarbageRetrievalMoment,
 } from '../../../universal/types';
-import { AppContext } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
@@ -21,6 +20,7 @@ import {
   SectionCollapsible,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './GarbageInformation.module.scss';
 
 interface PanelProps {
@@ -64,7 +64,7 @@ function GarbageCenterItem({ item }: { item: GarbageCenter }) {
 }
 
 export default () => {
-  const { BRP, AFVAL, AFVALPUNTEN, HOME } = useContext(AppContext);
+  const { BRP, AFVAL, AFVALPUNTEN, HOME } = useAppStateGetter();
   let garbageContainersMapUrl = '';
 
   if (HOME && HOME?.content?.latlng?.lng && HOME?.content?.latlng?.lat) {

@@ -7,5 +7,5 @@ export interface ComponentProps {
 }
 
 export default function AlphaComponent({ children }: ComponentProps) {
-  return <div className={styles.AlphaComponent}>AlphaComponent {children}</div>;
+  return <div className={styles.AlphaComponent}>AlphaComponent{children}</div>;
 }

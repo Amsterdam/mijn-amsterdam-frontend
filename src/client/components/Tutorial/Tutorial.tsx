@@ -18,9 +18,11 @@ function TutorialItem({ el }: { el: any }) {
   const fontSize = styledElement.getPropertyValue('font-size');
   const lineHeight = styledElement.getPropertyValue('line-height');
   const padding = styledElement.getPropertyValue('padding');
-  const [text, fromDirection = 'right-top'] = el.dataset.tutorialItem.split(
-    ';'
-  );
+  const [
+    text,
+    fromDirection = 'right-top',
+    label,
+  ] = el.dataset.tutorialItem.split(';');
 
   const ref = useRef<HTMLDivElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
@@ -60,7 +62,7 @@ function TutorialItem({ el }: { el: any }) {
         className={styles.TutorialItemHeading}
         style={{ fontSize, lineHeight, padding }}
       >
-        {heading.textContent}
+        {label || heading.textContent}
       </h3>
       <div className={styles.TutorialItemInner}>
         <p className={styles.TutorialText} style={textStyle}>
@@ -92,9 +94,13 @@ export default function Tutorial({ onClose }: TutorialProps) {
         )}
         style={{ height: document.body.clientHeight }}
       >
-        {tutorialItems.map((el, i) => (
-          <TutorialItem key={i} el={el} />
-        ))}
+        {tutorialItems
+          .filter(el => {
+            return !!el.getAttribute('data-tutorial-item');
+          })
+          .map((el, i) => (
+            <TutorialItem key={i} el={el} />
+          ))}
         <CloseButton
           title="Uitleg verbergen"
           onClick={onClose}

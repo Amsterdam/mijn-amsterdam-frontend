@@ -1,7 +1,8 @@
 import { mount } from 'enzyme';
 import React from 'react';
-import { SessionContext } from '../../SessionState';
 import AutoLogoutDialog, { AutoLogoutDialogSettings } from './AutoLogoutDialog';
+import { RecoilRoot } from 'recoil';
+import { sessionAtom } from '../../hooks/api/useSessionApi';
 
 const ONE_SECOND_IN_MS = 1000;
 const DOC_TITLE = 'AutoLogoutDialog';
@@ -49,9 +50,11 @@ describe('AutoLogoutDialog', () => {
     document.title = DOC_TITLE;
     jest.useFakeTimers();
     component = mount(
-      <SessionContext.Provider value={session}>
+      <RecoilRoot
+        initializeState={snapshot => snapshot.set(sessionAtom, session)}
+      >
         <AutoLogoutDialog settings={settings} />
-      </SessionContext.Provider>
+      </RecoilRoot>
     );
   });
 
@@ -87,7 +90,13 @@ describe('AutoLogoutDialog', () => {
       ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow!
     );
     component.update();
-    expect(component.childAt(0).prop('isOpen')).toBe(true);
+
+    expect(
+      component
+        .childAt(1)
+        .childAt(0)
+        .prop('isOpen')
+    ).toBe(true);
     map.mousemove();
     jest.advanceTimersByTime(
       ONE_SECOND_IN_MS * settings.secondsSessionRenewRequestInterval!

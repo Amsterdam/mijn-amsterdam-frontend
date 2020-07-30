@@ -1,22 +1,36 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import { PRISTINE_APPSTATE } from '../AppState';
-import * as dataApiHook from './api/api.hook';
-import * as tipsHook from './api/api.tips';
+import * as dataApiHook from './api/useDataApi';
+import * as tipsHook from './api/useTipsApi';
+import * as optinHook from './useOptIn';
 import { useAppState } from './useAppState';
 import * as sseHook from './useSSE';
 import { SSE_ERROR_MESSAGE } from './useSSE';
+import * as recoil from 'recoil';
+import * as profileTypeHook from './useProfileType';
 
 describe('useAppState', () => {
   let onEventCallback: any;
   const stateSliceMock = { FOO: { content: { hello: 'world' } } };
+  const initialAppState = PRISTINE_APPSTATE;
 
   const useSSEMock = jest.fn(
-    (endpoint, messageName, callback: (messageData: any) => void, postpone) => {
+    ({ callback }: { callback: (messageData: any) => void }) => {
       onEventCallback = jest.fn(callback);
     }
   );
   const fetchTips = jest.fn();
   const fetchFallbackService = jest.fn();
+
+  let appData: any = initialAppState;
+  const setAppState = jest.fn(data => {
+    appData = data(appData);
+  });
+  const useRecoilStateMock = jest.fn(() => [appData, setAppState]);
+  const useRecoilValueMock = jest.fn(() => null);
+  const useProfileTypeMock = jest.fn(() => ['private']);
+  const useProfileTypeValueMock = jest.fn(() => 'private');
+  const useOptInValueMock = jest.fn(() => true);
 
   // @ts-ignore
   const useTipsApi = (tipsHook.useTipsApi = jest.fn(() => {
@@ -24,13 +38,19 @@ describe('useAppState', () => {
   }));
 
   // @ts-ignore
+  const useProfileType = (profileTypeHook.useProfileType = useProfileTypeMock);
+  // @ts-ignore
+  const useProfileTypeValue = (profileTypeHook.useProfileTypeValue = useProfileTypeValueMock);
+  // @ts-ignore
+  const useRecoilValue = (recoil.useRecoilValue = useRecoilValueMock);
+  // @ts-ignore
+  const useRecoilState = (recoil.useRecoilState = useRecoilStateMock);
+  // @ts-ignore
+  const useOptInValue = (optinHook.useOptInValue = useOptInValueMock);
+  // @ts-ignore
   const useSSE = (sseHook.useSSE = useSSEMock);
   // @ts-ignore
-  const useDataApi = (dataApiHook.useDataApi = jest.fn());
-  // @ts-ignore
-  const pollBffHealth = (dataApiHook.pollBffHealth = jest.fn());
-
-  useDataApi.mockReturnValue([
+  const useDataApi = (dataApiHook.useDataApi = jest.fn(() => [
     {
       isLoading: false,
       isError: false,
@@ -39,11 +59,23 @@ describe('useAppState', () => {
       isDirty: false,
     },
     fetchFallbackService,
-  ]);
-
-  const initialAppState = Object.assign({}, PRISTINE_APPSTATE, {
-    controller: { TIPS: { fetch: fetchTips } },
-  });
+  ]));
+  // @ts-ignore
+  const pollBffHealth = (dataApiHook.pollBffHealth = jest.fn(() => {
+    return {
+      then(callback: any) {
+        callback();
+        return {
+          catch(callback: any) {
+            return callback();
+          },
+        };
+      },
+      catch(callback: any) {
+        return callback();
+      },
+    };
+  }));
 
   beforeAll(() => {
     (window as any).console.info = jest.fn();
@@ -56,12 +88,18 @@ describe('useAppState', () => {
   });
 
   beforeEach(() => {
+    appData = initialAppState;
     fetchTips.mockClear();
     fetchFallbackService.mockClear();
     useDataApi.mockClear();
     useTipsApi.mockClear();
     useSSE.mockClear();
     pollBffHealth.mockClear();
+    useRecoilState.mockClear();
+    useProfileType.mockClear();
+    useOptInValue.mockClear();
+    useRecoilValue.mockClear();
+    useProfileTypeValue.mockClear();
   });
 
   it('Should start with the SSE endpoint', async () => {
@@ -78,14 +116,11 @@ describe('useAppState', () => {
       onEventCallback(stateSliceMock);
     });
 
-    expect(useDataApi).toBeCalledTimes(2);
-    expect(useSSE).toBeCalledTimes(2);
+    expect(setAppState).toBeCalledTimes(1);
 
     expect(fetchFallbackService).toBeCalledTimes(0);
 
-    expect(result.current).toEqual(
-      Object.assign({}, initialAppState, stateSliceMock)
-    );
+    expect(appData).toEqual(Object.assign({}, initialAppState, stateSliceMock));
   });
 
   it('Should start with the Fallback service endpoint for browsers that do not have window.EventSource', () => {
@@ -175,7 +210,7 @@ describe('useAppState', () => {
         ALL: {
           status: 'ERROR',
           message:
-            'Services.all endpoint could not be reached or returns an error. Fallback service fallback enabled.',
+            'Services.all endpoint could not be reached or returns an error.',
         },
       })
     );
