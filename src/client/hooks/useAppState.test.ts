@@ -2,6 +2,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { PRISTINE_APPSTATE } from '../AppState';
 import * as dataApiHook from './api/useDataApi';
 import * as tipsHook from './api/useTipsApi';
+import * as optinHook from './useOptIn';
 import { useAppState } from './useAppState';
 import * as sseHook from './useSSE';
 import { SSE_ERROR_MESSAGE } from './useSSE';
@@ -14,7 +15,7 @@ describe('useAppState', () => {
   const initialAppState = PRISTINE_APPSTATE;
 
   const useSSEMock = jest.fn(
-    (endpoint, messageName, callback: (messageData: any) => void, postpone) => {
+    ({ callback }: { callback: (messageData: any) => void }) => {
       onEventCallback = jest.fn(callback);
     }
   );
@@ -26,7 +27,10 @@ describe('useAppState', () => {
     appData = data(appData);
   });
   const useRecoilStateMock = jest.fn(() => [appData, setAppState]);
+  const useRecoilValueMock = jest.fn(() => null);
   const useProfileTypeMock = jest.fn(() => ['private']);
+  const useProfileTypeValueMock = jest.fn(() => 'private');
+  const useOptInValueMock = jest.fn(() => true);
 
   // @ts-ignore
   const useTipsApi = (tipsHook.useTipsApi = jest.fn(() => {
@@ -36,15 +40,17 @@ describe('useAppState', () => {
   // @ts-ignore
   const useProfileType = (profileTypeHook.useProfileType = useProfileTypeMock);
   // @ts-ignore
+  const useProfileTypeValue = (profileTypeHook.useProfileTypeValue = useProfileTypeValueMock);
+  // @ts-ignore
+  const useRecoilValue = (recoil.useRecoilValue = useRecoilValueMock);
+  // @ts-ignore
   const useRecoilState = (recoil.useRecoilState = useRecoilStateMock);
+  // @ts-ignore
+  const useOptInValue = (optinHook.useOptInValue = useOptInValueMock);
   // @ts-ignore
   const useSSE = (sseHook.useSSE = useSSEMock);
   // @ts-ignore
-  const useDataApi = (dataApiHook.useDataApi = jest.fn());
-  // @ts-ignore
-  const pollBffHealth = (dataApiHook.pollBffHealth = jest.fn());
-
-  useDataApi.mockReturnValue([
+  const useDataApi = (dataApiHook.useDataApi = jest.fn(() => [
     {
       isLoading: false,
       isError: false,
@@ -53,7 +59,23 @@ describe('useAppState', () => {
       isDirty: false,
     },
     fetchFallbackService,
-  ]);
+  ]));
+  // @ts-ignore
+  const pollBffHealth = (dataApiHook.pollBffHealth = jest.fn(() => {
+    return {
+      then(callback: any) {
+        callback();
+        return {
+          catch(callback: any) {
+            return callback();
+          },
+        };
+      },
+      catch(callback: any) {
+        return callback();
+      },
+    };
+  }));
 
   beforeAll(() => {
     (window as any).console.info = jest.fn();
@@ -75,6 +97,9 @@ describe('useAppState', () => {
     pollBffHealth.mockClear();
     useRecoilState.mockClear();
     useProfileType.mockClear();
+    useOptInValue.mockClear();
+    useRecoilValue.mockClear();
+    useProfileTypeValue.mockClear();
   });
 
   it('Should start with the SSE endpoint', async () => {
@@ -185,7 +210,7 @@ describe('useAppState', () => {
         ALL: {
           status: 'ERROR',
           message:
-            'Services.all endpoint could not be reached or returns an error. Fallback service fallback enabled.',
+            'Services.all endpoint could not be reached or returns an error.',
         },
       })
     );

@@ -102,7 +102,7 @@ export function useAppStateFallbackService({
     } else if (api.isError) {
       // If everything fails, this is the final state update.
       const errorMessage =
-        'Services.all endpoint could not be reached or returns an error. ';
+        'Services.all endpoint could not be reached or returns an error.';
       setIsDataRequested(true);
       appStateError(errorMessage);
     }
@@ -165,7 +165,7 @@ export function useAppState() {
 
   useAppStateFallbackService({
     profileType,
-    isEnabled: isFallbackServiceEnabled,
+    isEnabled: hasEventSourceSupport ? isFallbackServiceEnabled : true,
     requestParams: serviceRequestParams,
     setAppState,
   });
