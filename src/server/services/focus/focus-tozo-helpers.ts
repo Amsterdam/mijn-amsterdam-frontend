@@ -202,7 +202,6 @@ export function createTozoResult(
 ) {
   const documents: FocusTozoDocument[] = Array.isArray(tozodocumenten)
     ? tozodocumenten
-        // .filter(doc => TOZO_AANVRAAG_DOCUMENT_TYPES.includes(doc.type))
         .map(document => {
           return {
             ...document,
@@ -212,26 +211,42 @@ export function createTozoResult(
         .sort(dateSort('datePublished'))
     : [];
 
-  const tozoSteps: Array<FocusItemStep | null> = documents.map(document =>
-    createTozoDocumentStep(document)
-  );
+  const tozoSteps: FocusItemStep[] = documents
+    .map(document => createTozoDocumentStep(document))
+    .filter(
+      (step: FocusItemStep | null): step is FocusItemStep => step !== null
+    );
 
   if (!tozoSteps.length) {
     return apiSuccesResult([]);
   }
 
+  // Aggregate all aanvraag steps and combine into 1
+  let aanvraagSteps: Record<string, FocusItemStep> = {};
+
+  for (const step of tozoSteps) {
+    if (step && step.title === 'aanvraag') {
+      if (step?.product && !aanvraagSteps[step?.product]) {
+        aanvraagSteps[step?.product] = step;
+      } else if (step?.product) {
+        aanvraagSteps[step?.product].documents.push(...step.documents);
+      }
+    }
+  }
+
   const tozo1Steps = tozoSteps.filter(
-    (step: FocusItemStep | null): step is FocusItemStep =>
-      step !== null && step.product === 'Tozo 1'
+    step => step.product === 'Tozo 1' && step.title !== 'aanvraag'
   );
-
   const tozo2Steps = tozoSteps.filter(
-    (step: FocusItemStep | null): step is FocusItemStep =>
-      step !== null && step.product === 'Tozo 2'
+    step => step.product === 'Tozo 2' && step.title !== 'aanvraag'
   );
 
-  const tozo1Item = tozo1Steps.length && createTozoItem('Tozo 1', tozo1Steps);
-  const tozo2Item = tozo2Steps.length && createTozoItem('Tozo 2', tozo2Steps);
+  const tozo1Item =
+    tozo1Steps.length &&
+    createTozoItem('Tozo 1', [aanvraagSteps['Tozo 1'], ...tozo1Steps]);
+  const tozo2Item =
+    tozo2Steps.length &&
+    createTozoItem('Tozo 2', [aanvraagSteps['Tozo 2'], ...tozo2Steps]);
   const tozoItems: FocusItem[] = [];
 
   if (tozo1Item) {
