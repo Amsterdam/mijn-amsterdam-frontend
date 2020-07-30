@@ -241,12 +241,16 @@ export function createTozoResult(
     step => step.product === 'Tozo 2' && step.title !== 'aanvraag'
   );
 
-  const tozo1Item =
-    tozo1Steps.length &&
-    createTozoItem('Tozo 1', [aanvraagSteps['Tozo 1'], ...tozo1Steps]);
-  const tozo2Item =
-    tozo2Steps.length &&
-    createTozoItem('Tozo 2', [aanvraagSteps['Tozo 2'], ...tozo2Steps]);
+  if (aanvraagSteps['Tozo 1']) {
+    tozo1Steps.unshift(aanvraagSteps['Tozo 1']);
+  }
+
+  if (aanvraagSteps['Tozo 2']) {
+    tozo2Steps.unshift(aanvraagSteps['Tozo 2']);
+  }
+
+  const tozo1Item = tozo1Steps.length && createTozoItem('Tozo 1', tozo1Steps);
+  const tozo2Item = tozo2Steps.length && createTozoItem('Tozo 2', tozo2Steps);
   const tozoItems: FocusItem[] = [];
 
   if (tozo1Item) {
