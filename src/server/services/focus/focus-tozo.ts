@@ -1,4 +1,8 @@
-import { apiSuccesResult, dateSort } from '../../../universal/helpers';
+import {
+  apiSuccesResult,
+  dateSort,
+  apiDependencyError,
+} from '../../../universal/helpers';
 import { isRecentCase } from '../../../universal/helpers/utils';
 import { MyCase, MyNotification } from '../../../universal/types/App.types';
 import { stepStatusLabels } from './focus-aanvragen-content';
