@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { useCookie, cookieAtom } from './useCookie';
+import { useCookie, cookieAtom, COOKIE_OPTIN } from './useCookie';
 import { useRecoilValue } from 'recoil';
 
 export interface OptIn {
@@ -9,11 +9,9 @@ export interface OptIn {
 }
 
 export function useOptIn(): OptIn {
-  const [isOptInCookie, setOptInCookie] = useCookie(
-    'optInPersonalizedTips',
-    'no',
-    { path: '/' }
-  );
+  const [isOptInCookie, setOptInCookie] = useCookie(COOKIE_OPTIN, {
+    path: '/',
+  });
 
   const optIn = useCallback(() => {
     setOptInCookie('yes');
@@ -29,5 +27,5 @@ export function useOptIn(): OptIn {
 }
 
 export function useOptInValue() {
-  return useRecoilValue(cookieAtom).optInPersonalizedTips === 'yes';
+  return useRecoilValue(cookieAtom)[COOKIE_OPTIN] === 'yes';
 }

@@ -27,6 +27,7 @@ import {
 import styles from './MainNavBar.module.scss';
 import { ProfileName } from './ProfileName';
 import { useBurgerMenuAnimation } from './useBurgerMenuAnimation';
+import { isError } from '../../../universal/helpers/api';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -53,11 +54,13 @@ function SecondaryLinks() {
   return (
     <div className={styles.secondaryLinks}>
       {isDesktopScreen && <FontEnlarger />}
-      <ProfileName
-        person={BRP.content?.persoon}
-        company={KVK.content}
-        profileType={profileType}
-      />
+      {!isError(BRP) && !isError(KVK) && (
+        <ProfileName
+          person={BRP.content?.persoon}
+          company={KVK.content}
+          profileType={profileType}
+        />
+      )}
       <LogoutLink>Uitloggen</LogoutLink>
     </div>
   );

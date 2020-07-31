@@ -186,6 +186,12 @@
   color: inherit;
 }
 
+.secondaryLinks {
+  *[class*="FontEnlarger_FontEnlarger__"] + [class*="LogoutLink"] {
+    margin-left: 3rem;
+  }
+}
+
 // Animation of the mainnavbar
 .Backdrop {
   position: fixed;

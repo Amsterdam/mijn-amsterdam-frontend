@@ -157,6 +157,7 @@ export const mockDataConfig: MockDataConfig = {
     },
   },
   [ApiUrls.KVK]: {
+    // delay: 12000,
     status: (config: any) => (isCommercialUser(config) ? 200 : 200),
     responseData: async (config: any) => {
       if (isCommercialUser(config)) {

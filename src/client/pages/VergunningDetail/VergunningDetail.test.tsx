@@ -18,8 +18,19 @@ const testState = {
   },
 };
 
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
+const testState2 = {
+  VERGUNNINGEN: {
+    status: 'OK',
+    content: [],
+  },
+};
+
+function state(state: any) {
+  function initializeState(snapshot: MutableSnapshot) {
+    snapshot.set(appStateAtom, state);
+  }
+
+  return initializeState;
 }
 
 describe('<Vergunningen />', () => {
@@ -28,12 +39,12 @@ describe('<Vergunningen />', () => {
   });
   const routePath = AppRoutes['VERGUNNINGEN/DETAIL'];
 
-  const Component = () => (
+  let Component = () => (
     <MockApp
       routeEntry={routeEntry}
       routePath={routePath}
       component={VergunningDetail}
-      initializeState={initializeState}
+      initializeState={state(testState)}
     />
   );
 
@@ -42,6 +53,20 @@ describe('<Vergunningen />', () => {
   });
 
   it('Matches the Full Page snapshot', () => {
+    const html = mount(<Component />).html();
+
+    expect(html).toMatchSnapshot();
+  });
+
+  it('Matches the Full Page snapshot', () => {
+    Component = () => (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={VergunningDetail}
+        initializeState={state(testState2)}
+      />
+    );
     const html = mount(<Component />).html();
 
     expect(html).toMatchSnapshot();
