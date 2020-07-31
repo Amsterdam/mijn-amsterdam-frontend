@@ -10,7 +10,7 @@ import { trackItemPresentation } from '../../hooks/analytics.hook';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { useChapterMenuItems } from '../../hooks/useChapters';
+import { useChapters } from '../../hooks/useChapters';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import Linkd, { Button } from '../Button/Button';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
@@ -128,7 +128,7 @@ export default function MainNavBar() {
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
     undefined
   );
-  const myChapterItems = useChapterMenuItems();
+  const { items: myChapterItems } = useChapters();
   const location = useLocation();
   const [isTutorialVisible, setIsTutorialVisible] = useState(false);
 
