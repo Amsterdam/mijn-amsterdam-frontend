@@ -1,0 +1,42 @@
+@import '../../styles/_global.scss';
+
+.MyAreaMapContainer.MyArea {
+  height: 100vh;
+}
+
+.MyAreaMapContainer {
+  min-height: 20rem;
+  height: 100%;
+  width: 100%;
+}
+
+.ZoomControl {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 401;
+  display: flex;
+  flex-direction: column;
+}
+
+.ZoomButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  width: 45px;
+  height: 45px;
+  border: 0;
+  text-align: center;
+  padding: 0;
+  margin-bottom: 5px;;
+
+  &:hover {
+    background-color: $color-neutral-grey2;
+  }
+}
+
+.ZoomInOutButton {
+  font-weight: bold;
+  font-size: 1.6em;
+}

@@ -20,6 +20,7 @@ export const FeatureToggle = {
   cmsFooterActive: true,
   KrefiaDirectLinkActive: true,
   tipsFlipActive: true,
+  myArea2Active: !IS_PRODUCTION,
   profileToggleActive: !IS_PRODUCTION,
   profilePageResidentCount: !IS_PRODUCTION,
   kvkActive: !IS_PRODUCTION,

@@ -13,12 +13,14 @@ export function getFullName(persoon: Persoon) {
     : '';
 }
 
-export function getFullAddress(adres: {
-  straatnaam: string | null;
-  huisnummer: string | null;
-  huisnummertoevoeging: string | null;
-  huisletter: string | null;
-}) {
+export function getFullAddress(
+  adres: {
+    straatnaam: string | null;
+    huisnummer: string | null;
+    huisnummertoevoeging: string | null;
+    huisletter: string | null;
+  } | null
+) {
   return adres
     ? `${adres.straatnaam} ${adres.huisnummer || ''} ${adres.huisletter ||
         ''} ${adres.huisnummertoevoeging || ''}`.trim()

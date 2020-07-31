@@ -101,7 +101,11 @@ function AppAuthenticated() {
   const redirectAfterLogin = useDeeplinkRedirect();
 
   return location.pathname === AppRoutes.BUURT ? (
-    <MyArea />
+    FeatureToggle.myArea2Active ? (
+      <MyArea2Loader />
+    ) : (
+      <MyArea />
+    )
   ) : (
     <>
       <MainHeader isAuthenticated={session.isAuthenticated} />
