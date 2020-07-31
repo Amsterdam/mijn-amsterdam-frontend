@@ -15,7 +15,9 @@ export function MyArea2Loader() {
   const homeAddress = getFullAddress(address);
   return (
     <Suspense fallback={<div>Loading buurt bundle...</div>}>
-      <MyArea2Lazy center={HOME.content?.latlng} homeAddress={homeAddress} />
+      <div style={{ height: '100vh' }}>
+        <MyArea2Lazy center={HOME.content?.latlng} homeAddress={homeAddress} />
+      </div>
     </Suspense>
   );
 }
