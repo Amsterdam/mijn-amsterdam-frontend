@@ -18,7 +18,8 @@ export interface TIPSParams {
 export interface TIPSRequestData {
   optin: boolean;
   profileType?: ProfileType;
-  data?: any;
+  userData?: any;
+  tips?: MyTip[];
 }
 
 export function getTipsRequestParams(req: Request) {
@@ -65,10 +66,23 @@ function extractSuccessResponseContent(
 function createTipsRequestDataFromServiceResults(
   servicesResults: ServiceResults
 ) {
-  return servicesResults.reduce((acc, result) => {
+  const tips = [];
+  const userData = {};
+
+  for (const result of servicesResults) {
     const data = extractSuccessResponseContent(result);
-    return Object.assign(acc, deepOmitKeys(data, ['description']));
-  }, {});
+    Object.assign(userData, deepOmitKeys(data, ['description']));
+    const tipsFromSource = Object.values(data).flatMap(data =>
+      'tips' in data ? data['tips'] : []
+    );
+    if (tipsFromSource.length) {
+      tips.push(...tipsFromSource);
+    }
+  }
+  return {
+    userData,
+    tips,
+  };
 }
 
 export async function loadServicesTips(sessionID: string, req: Request) {
@@ -83,20 +97,18 @@ export async function loadServicesTips(sessionID: string, req: Request) {
     tipsRequestData.profileType = params.profileType;
   }
 
-  let data = {};
-
   if (params.optin) {
     const tipsRequestDataServiceResults = await Promise.all([
       loadServicesDirect(sessionID, passthroughRequestHeaders),
       loadServicesRelated(sessionID, passthroughRequestHeaders),
     ]);
 
-    data = createTipsRequestDataFromServiceResults(
+    const requestData = createTipsRequestDataFromServiceResults(
       tipsRequestDataServiceResults
     );
-  }
 
-  tipsRequestData.data = data;
+    Object.assign(tipsRequestData, requestData);
+  }
 
   const TIPS = await fetchTIPS(
     sessionID,

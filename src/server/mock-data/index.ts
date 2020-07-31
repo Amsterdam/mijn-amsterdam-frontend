@@ -171,6 +171,9 @@ export const mockDataConfig: MockDataConfig = {
     method: 'post',
     responseData: async (config: any) => {
       const requestData = JSON.parse(config.data);
+
+      console.log('requestData', requestData);
+
       const content = await loadMockApiResponseJson(TIPS);
       const tips = JSON.parse(content);
 
