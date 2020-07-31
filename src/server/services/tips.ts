@@ -73,7 +73,7 @@ function createTipsRequestDataFromServiceResults(
     const data = extractSuccessResponseContent(result);
     Object.assign(userData, deepOmitKeys(data, ['description']));
     const tipsFromSource = Object.values(data).flatMap(data =>
-      'tips' in data ? data['tips'] : []
+      data && 'tips' in data ? data['tips'] : []
     );
     if (tipsFromSource.length) {
       tips.push(...tipsFromSource);
