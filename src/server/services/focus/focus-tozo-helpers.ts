@@ -1,10 +1,11 @@
+import * as Sentry from '@sentry/node';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, Chapters } from '../../../universal/config';
 import {
   apiSuccesResult,
   dateFormat,
-  hash,
   dateSort,
+  hash,
 } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types/App.types';
 import {
@@ -53,25 +54,6 @@ export function getStepLabels(
   return [stepType as FocusTozoStepType, stepLabels];
 }
 
-export function getStepLabelsByS(
-  document: FocusTozoDocument
-): [FocusTozoStepType, FocusTozoLabelTranslations] | null {
-  const labelSetEntries = Object.entries(documentStatusTranslation);
-
-  const labelSetEntry = labelSetEntries.find(([stepType, labelSet]) => {
-    return document.description in labelSet || document.type in labelSet;
-  });
-
-  if (!labelSetEntry) {
-    return null;
-  }
-
-  const [stepType, labelSet] = labelSetEntry;
-  const stepLabels = labelSet[document.description] || labelSet[document.type];
-
-  return [stepType as FocusTozoStepType, stepLabels];
-}
-
 function getDocumentTitleTranslation(
   stepType: FocusTozoStepType,
   labelSet: FocusTozoLabelTranslations,
@@ -111,6 +93,11 @@ export function createTozoDocumentStep(document: FocusTozoDocument) {
   const documentStepLabelSet = getStepLabels(document);
 
   if (!documentStepLabelSet) {
+    Sentry.captureMessage('Unknown Tozo document encountered', {
+      extra: {
+        document,
+      },
+    });
     return null;
   }
 
