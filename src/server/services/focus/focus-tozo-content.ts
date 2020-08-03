@@ -167,7 +167,7 @@ export const documentStatusTranslation: {
     },
 
     // TOZO-2
-    'TOZO 2 (vervolgregeling tegemoetkoming Ondern en Zelfst)': {
+    'TOZO 2 (vervolgregeling tegemoetkoming Ondernemers en Zelfstandigen)': {
       step: aanvraagLabels,
       documentTitle: 'Ontvangst- bevestiging Aanvraag',
       product: 'Tozo 2',
