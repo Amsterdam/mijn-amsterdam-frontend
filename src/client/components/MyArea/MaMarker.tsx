@@ -1,90 +1,62 @@
-import { Marker, useMapInstance } from '@datapunt/react-maps';
-import L from 'leaflet';
-import React, { PropsWithChildren, useEffect, useRef, useState } from 'react';
+import { Marker } from '@datapunt/arm-core';
+import { useMapInstance } from '@datapunt/react-maps';
+import L, { LeafletEventHandlerFn } from 'leaflet';
+import React, { useCallback, useMemo } from 'react';
 import { LOCATION_ZOOM } from '../../../universal/config/map';
 import iconUrl from '../../assets/icons/home.svg';
-import { MaPopup } from './MaPopup';
-import { MaTooltip } from './MaTooltip';
-import { firstChildOfType } from './utils';
 
-function useBindComponentToMarker(component: any, markerInstance: any) {
-  const componentRef = useRef();
-  let name = '';
-  if (component) {
-    component = React.cloneElement(component, {
-      ref: componentRef,
-    });
-    name = component.type.displayName;
-  }
-  useEffect(() => {
-    if (componentRef.current && markerInstance) {
-      // Use the name of the child component to complete the bind method call.
-      // For example passing a Popup component will result in bindPopup(ref.current)
-      markerInstance['bind' + name](componentRef.current);
-    }
-  }, [componentRef, markerInstance, name]);
-
-  return component;
+interface MaMarkerProps {
+  latlng: LatLngObject;
+  iconUrl: string;
+  onClick?: LeafletEventHandlerFn;
 }
 
-type MaMarkerProps = PropsWithChildren<{
-  center: LatLngObject;
-  iconUrl: string;
-}>;
+function MaMarker({ latlng, iconUrl, onClick }: MaMarkerProps) {
+  const markerConfig = useMemo(() => {
+    const icon = L.icon({
+      iconUrl,
+      iconSize: [32, 32],
+      iconAnchor: [16, 16],
+    });
 
-function MaMarker({ children, center, iconUrl }: MaMarkerProps) {
-  const [markerInstance, setMarkerInstance] = useState<L.Marker<any>>();
-  const popup = useBindComponentToMarker(
-    firstChildOfType(children, MaPopup),
-    markerInstance
-  );
-  const tooltip = useBindComponentToMarker(
-    firstChildOfType(children, MaTooltip),
-    markerInstance
-  );
-  const icon = L.icon({
-    iconUrl,
-    iconSize: [32, 32],
-    iconAnchor: [16, 16],
-    // popupAnchor: [1, -34],
-    tooltipAnchor: [16, 0],
-  });
+    const events: { [key: string]: LeafletEventHandlerFn } = {};
+
+    if (onClick) {
+      events.click = (event: any) => console.log(event);
+    }
+    return { options: { icon }, events };
+  }, [iconUrl, onClick]);
 
   return (
-    <>
-      <Marker
-        setInstance={setMarkerInstance}
-        options={{ icon }}
-        args={[center]}
-      />
-      {popup}
-      {tooltip}
-    </>
+    <Marker
+      latLng={latlng}
+      options={markerConfig.options}
+      events={markerConfig.events}
+    />
   );
 }
 
 interface HomeIconMarkerProps {
   center: LatLngObject;
-  address?: string;
   zoom?: number;
 }
 
 export function HomeIconMarker({
   center,
   zoom = LOCATION_ZOOM,
-  address,
 }: HomeIconMarkerProps) {
   const mapInstance = useMapInstance();
 
-  useEffect(() => {
-    if (center && mapInstance) {
-      mapInstance.setView(center, zoom);
+  const onClick = useCallback(() => {
+    console.log('hiah');
+    if (!mapInstance) {
+      return null;
     }
-  }, [center, zoom, mapInstance]);
+    console.log('setview');
+    mapInstance.setView(center, zoom);
+  }, [zoom, center, mapInstance]);
 
-  return (
-    <MaMarker iconUrl={iconUrl} center={center}>
-      {!!address && <MaTooltip>{address}</MaTooltip>}
-    </MaMarker>
-  );
+  console.log('iconUrl', iconUrl);
+
+  return <MaMarker iconUrl={iconUrl} latlng={center} onClick={onClick} />;
 }

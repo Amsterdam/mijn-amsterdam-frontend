@@ -27,7 +27,15 @@ const options: Sentry.NodeOptions = {
   dsn: getOtapEnvItem('bffSentryDsn'),
   environment: ENV,
   debug: isDebug,
+  beforeSend(event, hint) {
+    if (isDebug) {
+      console.log(event, hint);
+      return null;
+    }
+    return event;
+  },
 };
+
 Sentry.init(options);
 
 const app = express();

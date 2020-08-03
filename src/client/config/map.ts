@@ -29,12 +29,3 @@ export const DEFAULT_MAP_DISPLAY_CONFIG: MapDisplayOptions = {
   zoomTools: true,
   zoom: HOOD_ZOOM,
 };
-
-export const DEFAULT_TILE_LAYER_CONFIG = {
-  url: 'https://t{s}.data.amsterdam.nl/topo_rd/{z}/{x}/{y}.png',
-  options: {
-    subdomains: '1234',
-    tms: true,
-    detectRetina: true,
-  },
-};
