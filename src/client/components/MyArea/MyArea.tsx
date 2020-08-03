@@ -1,8 +1,9 @@
 import classnames from 'classnames';
 import React, { HTMLProps, PropsWithChildren } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { AppRoutes, getOtapEnvItem } from '../../../universal/config';
-import { IconClose, IconHome, IconHomeCommercial } from '../../assets/icons';
+import { AppRoutes } from '../../../universal/config';
+import { getOtapEnvItem } from '../../../universal/config/env';
+import { IconClose, IconHome } from '../../assets/icons';
 import { ReactComponent as Logo } from '../../assets/images/logo-amsterdam.svg';
 import Linkd from '../Button/Button';
 import Heading from '../Heading/Heading';
@@ -11,28 +12,6 @@ import { Adres } from '../../../universal/types';
 import { getFullAddress } from '../../../universal/helpers';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { Colors } from '../../config/app';
-
-export function MyAreaHeader() {
-  return (
-    <div className={styles.Header}>
-      <Link
-        className={styles.LogoLink}
-        to={AppRoutes.ROOT}
-        title="Terug naar home"
-      >
-        <Logo
-          role="img"
-          aria-label="Gemeente Amsterdam logo"
-          className={styles.Logo}
-        />
-        <h1 className={styles.Title}>Mijn buurt</h1>
-      </Link>
-      <Linkd iconPosition="right" icon={IconClose} href={AppRoutes.ROOT}>
-        Sluit kaart
-      </Linkd>
-    </div>
-  );
-}
 
 function MyAreaLoader() {
   const profileType = useProfileTypeValue();

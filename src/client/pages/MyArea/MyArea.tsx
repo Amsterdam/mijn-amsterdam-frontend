@@ -1,6 +1,6 @@
 import React from 'react';
 import { getOtapEnvItem } from '../../../universal/config/env';
-import { MyAreaHeader, MyAreaMapIFrame } from '../../components';
+import { MyAreaMapIFrame, MyAreaHeader } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './MyArea.module.scss';
 

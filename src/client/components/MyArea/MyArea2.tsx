@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import React from 'react';
 import { IconHome } from '../../assets/icons';
 import {
@@ -9,7 +10,6 @@ import { HomeIconMarker } from './MaMarker';
 import { MaZoomControl } from './MaZoomControl';
 import styles from './MyArea2.module.scss';
 import { MyAreaMapContainer } from './MyAreaMapContainer';
-import classnames from 'classnames';
 
 interface MyAreaMapComponentProps {
   id?: string;

@@ -12,12 +12,12 @@ export function MyArea2Loader() {
     (profileType === 'private'
       ? BRP.content?.adres
       : KVK.content?.vestigingen[0].bezoekadres) || null;
+
   const homeAddress = getFullAddress(address);
+
   return (
     <Suspense fallback={<div>Loading buurt bundle...</div>}>
-      <div style={{ height: '100vh' }}>
-        <MyArea2Lazy center={HOME.content?.latlng} homeAddress={homeAddress} />
-      </div>
+      <MyArea2Lazy center={HOME.content?.latlng} homeAddress={homeAddress} />
     </Suspense>
   );
 }
