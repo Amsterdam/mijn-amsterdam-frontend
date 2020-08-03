@@ -36,7 +36,7 @@ export function getStepLabels(
   const labelSetEntries = Object.entries(documentStatusTranslation);
 
   const labelSetEntry = labelSetEntries.find(([stepType, labelSet]) => {
-    return document.description in labelSet || document.type in labelSet;
+    return document.description in labelSet;
   });
 
   if (!labelSetEntry) {
@@ -44,7 +44,11 @@ export function getStepLabels(
   }
 
   const [stepType, labelSet] = labelSetEntry;
-  const stepLabels = labelSet[document.description] || labelSet[document.type];
+  const stepLabels = labelSet[document.description];
+
+  if (!labelSetEntry) {
+    return null;
+  }
 
   return [stepType as FocusTozoStepType, stepLabels];
 }
@@ -241,16 +245,12 @@ export function createTozoResult(
     step => step.product === 'Tozo 2' && step.title !== 'aanvraag'
   );
 
-  if (aanvraagSteps['Tozo 1']) {
-    tozo1Steps.unshift(aanvraagSteps['Tozo 1']);
-  }
-
-  if (aanvraagSteps['Tozo 2']) {
-    tozo2Steps.unshift(aanvraagSteps['Tozo 2']);
-  }
-
-  const tozo1Item = tozo1Steps.length && createTozoItem('Tozo 1', tozo1Steps);
-  const tozo2Item = tozo2Steps.length && createTozoItem('Tozo 2', tozo2Steps);
+  const tozo1Item =
+    tozo1Steps.length &&
+    createTozoItem('Tozo 1', [aanvraagSteps['Tozo 1'], ...tozo1Steps]);
+  const tozo2Item =
+    tozo2Steps.length &&
+    createTozoItem('Tozo 2', [aanvraagSteps['Tozo 2'], ...tozo2Steps]);
   const tozoItems: FocusItem[] = [];
 
   if (tozo1Item) {

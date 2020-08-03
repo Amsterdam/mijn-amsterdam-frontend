@@ -30,6 +30,14 @@ Object {
               "url": "/api/focus/document?id=4400000024&isBulk=true&isDms=false",
             },
             Object {
+              "datePublished": "2020-03-30T07:40:23.283Z",
+              "id": "715216441",
+              "title": "Ontvangst- bevestiging Aanvraag
+30 maart om 09:40 uur",
+              "type": "PDF",
+              "url": "/api/focus/document?id=715216441",
+            },
+            Object {
               "datePublished": "2020-03-31T00:04:34+02:00",
               "id": "4400000029",
               "title": "Ontvangst- bevestiging Aanvraag
@@ -54,14 +62,6 @@ Object {
               "url": "/api/focus/document?id=4400000031&isBulk=true&isDms=false",
             },
             Object {
-              "datePublished": "2020-04-17T04:34:38.060Z",
-              "id": "1462198587",
-              "title": "Ontvangst- bevestiging Aanvraag
-17 april om 06:34 uur",
-              "type": "PDF",
-              "url": "/api/focus/document?id=1462198587",
-            },
-            Object {
               "datePublished": "2020-05-26T16:07:20.241Z",
               "id": "2197118628",
               "title": "Ontvangst- bevestiging Aanvraag
@@ -78,77 +78,6 @@ Object {
           "product": "Tozo 1",
           "status": "Aanvraag",
           "title": "aanvraag",
-        },
-        Object {
-          "datePublished": "2020-03-29T15:43:50.511Z",
-          "description": "<p>
-        Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken.
-        Bekijk de brief voor meer details.
-      </p>",
-          "documents": Array [
-            Object {
-              "datePublished": "2020-03-29T15:43:50.511Z",
-              "id": "2270450253",
-              "title": "Brief meer informatie",
-              "type": "PDF",
-              "url": "/api/focus/document?id=2270450253",
-            },
-          ],
-          "id": "465766076",
-          "isActive": true,
-          "isChecked": true,
-          "notificationDescription": "Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.",
-          "notificationTitle": "Tozo 1: Meer informatie nodig",
-          "product": "Tozo 1",
-          "status": "Informatie nodig",
-          "title": "herstelTermijn",
-        },
-        Object {
-          "datePublished": "2020-04-01T04:32:38.528Z",
-          "description": "<p>
-        Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken.
-        Bekijk de brief voor meer details.
-      </p>",
-          "documents": Array [
-            Object {
-              "datePublished": "2020-04-01T04:32:38.528Z",
-              "id": "2655077854",
-              "title": "Brief meer informatie",
-              "type": "PDF",
-              "url": "/api/focus/document?id=2655077854",
-            },
-          ],
-          "id": "1197106748",
-          "isActive": true,
-          "isChecked": true,
-          "notificationDescription": "Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.",
-          "notificationTitle": "Tozo 1: Meer informatie nodig",
-          "product": "Tozo 1",
-          "status": "Informatie nodig",
-          "title": "herstelTermijn",
-        },
-        Object {
-          "datePublished": "2020-04-08T08:40:50.368Z",
-          "description": "<p>
-        U hebt geen recht op Tozo 1. Bekijk de brief voor meer details.
-      </p>",
-          "documents": Array [
-            Object {
-              "datePublished": "2020-04-08T08:40:50.368Z",
-              "id": "2256126955",
-              "title": "Besluit afwijzing",
-              "type": "PDF",
-              "url": "/api/focus/document?id=2256126955",
-            },
-          ],
-          "id": "2690856194",
-          "isActive": true,
-          "isChecked": true,
-          "notificationDescription": "U hebt geen recht op Tozo 1 (besluit: 08 april 2020).",
-          "notificationTitle": "Tozo 1: Uw aanvraag is afgewezen",
-          "product": "Tozo 1",
-          "status": "Besluit",
-          "title": "afwijzen",
         },
         Object {
           "datePublished": "2020-04-10T07:40:46.652Z",
@@ -174,30 +103,6 @@ Object {
           "title": "afwijzen",
         },
         Object {
-          "datePublished": "2020-04-13T19:41:36.937Z",
-          "description": "<p>
-          U hebt recht op de Tozo 1 lening. Bekijk de brief
-          voor meer details.
-        </p>",
-          "documents": Array [
-            Object {
-              "datePublished": "2020-04-13T19:41:36.937Z",
-              "id": "1577042327",
-              "title": "Brief besluit lening",
-              "type": "PDF",
-              "url": "/api/focus/document?id=1577042327",
-            },
-          ],
-          "id": "4022270203",
-          "isActive": true,
-          "isChecked": true,
-          "notificationDescription": "U hebt recht op de Tozo 1 lening (besluit: 13 april 2020).",
-          "notificationTitle": "Tozo 1 lening: Uw aanvraag is toegekend",
-          "product": "Tozo 1",
-          "status": "Besluit",
-          "title": "toekennen",
-        },
-        Object {
           "datePublished": "2020-04-14T21:11:11.735Z",
           "description": "<p>Wij behandelen uw aanvraag voor Tozo 1 niet meer. Bekijk de brief voor meer details.</p>",
           "documents": Array [
@@ -217,30 +122,6 @@ Object {
           "product": "Tozo 1",
           "status": "Besluit",
           "title": "buitenBehandeling",
-        },
-        Object {
-          "datePublished": "2020-04-23T06:31:15.357Z",
-          "description": "<p>
-          U hebt recht op de Tozo 1 uitkering. Bekijk de brief
-          voor meer details.
-        </p>",
-          "documents": Array [
-            Object {
-              "datePublished": "2020-04-23T06:31:15.357Z",
-              "id": "4242655908",
-              "title": "Brief besluit uitkering",
-              "type": "PDF",
-              "url": "/api/focus/document?id=4242655908",
-            },
-          ],
-          "id": "3330307199",
-          "isActive": true,
-          "isChecked": true,
-          "notificationDescription": "U hebt recht op de Tozo 1 uitkering (besluit: 23 april 2020).",
-          "notificationTitle": "Tozo 1 uitkering: Uw aanvraag is toegekend",
-          "product": "Tozo 1",
-          "status": "Besluit",
-          "title": "toekennen",
         },
         Object {
           "datePublished": "2020-04-26T09:51:07.848Z",
@@ -267,48 +148,24 @@ Object {
           "title": "toekennen",
         },
         Object {
-          "datePublished": "2020-05-01T08:12:42.508Z",
+          "datePublished": "2020-04-26T09:51:07.848Z",
           "description": "<p>
-          Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
-          voorwaarden in de brief.
-        </p>",
-          "documents": Array [
-            Object {
-              "datePublished": "2020-05-01T08:12:42.508Z",
-              "id": "4079322899",
-              "title": "Brief betaling voorschot",
-              "type": "PDF",
-              "url": "/api/focus/document?id=4079322899",
-            },
-          ],
-          "id": "1681241285",
-          "isActive": true,
-          "isChecked": true,
-          "notificationDescription": "Wij hebben een voorschot naar uw rekening overgemaakt.",
-          "notificationTitle": "Tozo 1: Wij hebben een voorschot betaald",
-          "product": "Tozo 1",
-          "status": "Voorschot",
-          "title": "voorschot",
-        },
-        Object {
-          "datePublished": "2020-05-03T00:11:20.137Z",
-          "description": "<p>
-        U hebt geen recht op de Tozo 1 lening. Bekijk de brief voor meer details.
+        U hebt geen recht op Tozo 1. Bekijk de brief voor meer details.
       </p>",
           "documents": Array [
             Object {
-              "datePublished": "2020-05-03T00:11:20.137Z",
-              "id": "1086455086",
-              "title": "Besluit afwijzing lening",
+              "datePublished": "2020-04-26T09:51:07.848Z",
+              "id": "761801503",
+              "title": "Besluit afwijzing",
               "type": "PDF",
-              "url": "/api/focus/document?id=1086455086",
+              "url": "/api/focus/document?id=761801503",
             },
           ],
-          "id": "3201486145",
+          "id": "2858909140",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "U hebt geen recht op de Tozo 1 lening (besluit: 03 mei 2020).",
-          "notificationTitle": "Tozo 1 lening: Uw aanvraag is afgewezen",
+          "notificationDescription": "U hebt geen recht op Tozo 1 (besluit: 26 april 2020).",
+          "notificationTitle": "Tozo 1: Uw aanvraag is afgewezen",
           "product": "Tozo 1",
           "status": "Besluit",
           "title": "afwijzen",
@@ -333,29 +190,6 @@ Object {
           "product": "Tozo 1",
           "status": "Besluit",
           "title": "intrekken",
-        },
-        Object {
-          "datePublished": "2020-05-12T04:46:18.408Z",
-          "description": "<p>
-        U hebt geen recht op de Tozo 1 uitkering. Bekijk de brief voor meer details.
-      </p>",
-          "documents": Array [
-            Object {
-              "datePublished": "2020-05-12T04:46:18.408Z",
-              "id": "3038546045",
-              "title": "Besluit afwijzing uitkering",
-              "type": "PDF",
-              "url": "/api/focus/document?id=3038546045",
-            },
-          ],
-          "id": "510232014",
-          "isActive": true,
-          "isChecked": true,
-          "notificationDescription": "U hebt geen recht op de Tozo 1 uitkering (besluit: 12 mei 2020).",
-          "notificationTitle": "Tozo 1 uitkering: Uw aanvraag is afgewezen",
-          "product": "Tozo 1",
-          "status": "Besluit",
-          "title": "afwijzen",
         },
         Object {
           "datePublished": "2020-05-12T10:09:08.865Z",
@@ -553,29 +387,21 @@ Object {
     Object {
       "chapter": "INKOMEN",
       "datePublished": "2020-05-26T17:29:22.037Z",
-      "dateStart": "2020-03-30T07:40:23.283Z",
-      "id": "847081187",
+      "dateStart": "2020-06-23T21:14:15+02:00",
+      "id": "567827386",
       "link": Object {
         "title": "Bekijk hoe het met uw aanvraag staat",
-        "to": "/inkomen-en-stadspas/tozo/847081187",
+        "to": "/inkomen-en-stadspas/tozo/567827386",
       },
       "productTitle": "Tozo 2",
       "status": "Besluit",
       "steps": Array [
         Object {
-          "datePublished": "2020-03-30T07:40:23.283Z",
+          "datePublished": "2020-06-23T21:14:15+02:00",
           "description": "<p>
         Wij hebben uw aanvraag Tozo 2 ontvangen.
       </p>",
           "documents": Array [
-            Object {
-              "datePublished": "2020-03-30T07:40:23.283Z",
-              "id": "715216441",
-              "title": "Ontvangst- bevestiging Aanvraag
-30 maart om 09:40 uur",
-              "type": "PDF",
-              "url": "/api/focus/document?id=715216441",
-            },
             Object {
               "datePublished": "2020-06-23T21:14:15+02:00",
               "id": "4400000048",
@@ -585,37 +411,14 @@ Object {
               "url": "/api/focus/document?id=4400000048&isBulk=true&isDms=false",
             },
           ],
-          "id": "4070433909",
+          "id": "2504755767",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "Wij hebben uw aanvraag Tozo 2 ontvangen op 30 maart om 09:40 uur",
+          "notificationDescription": "Wij hebben uw aanvraag Tozo 2 ontvangen op 23 juni om 21:14 uur",
           "notificationTitle": "Wij hebben uw aanvraag Tozo 2 ontvangen",
           "product": "Tozo 2",
           "status": "Aanvraag",
           "title": "aanvraag",
-        },
-        Object {
-          "datePublished": "2020-04-01T07:21:55.883Z",
-          "description": "<p>
-        U hebt geen recht op Tozo 2. Bekijk de brief voor meer details.
-      </p>",
-          "documents": Array [
-            Object {
-              "datePublished": "2020-04-01T07:21:55.883Z",
-              "id": "1531067513",
-              "title": "Besluit afwijzing",
-              "type": "PDF",
-              "url": "/api/focus/document?id=1531067513",
-            },
-          ],
-          "id": "98708388",
-          "isActive": true,
-          "isChecked": true,
-          "notificationDescription": "U hebt geen recht op Tozo 2 (besluit: 01 april 2020).",
-          "notificationTitle": "Tozo 2: Uw aanvraag is afgewezen",
-          "product": "Tozo 2",
-          "status": "Besluit",
-          "title": "afwijzen",
         },
         Object {
           "datePublished": "2020-04-01T10:29:00.100Z",
@@ -846,6 +649,29 @@ Object {
           "product": "Tozo 2",
           "status": "Besluit",
           "title": "toekennen",
+        },
+        Object {
+          "datePublished": "2020-05-26T09:51:07.848Z",
+          "description": "<p>
+        U hebt geen recht op Tozo 2. Bekijk de brief voor meer details.
+      </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2020-05-26T09:51:07.848Z",
+              "id": "761801503",
+              "title": "Besluit terugvordering",
+              "type": "PDF",
+              "url": "/api/focus/document?id=761801503",
+            },
+          ],
+          "id": "3771612598",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt geen recht op Tozo 2 (besluit: 26 mei 2020).",
+          "notificationTitle": "Tozo 2: Uw aanvraag is afgewezen",
+          "product": "Tozo 2",
+          "status": "Besluit",
+          "title": "afwijzen",
         },
         Object {
           "datePublished": "2020-05-26T17:29:22.037Z",
