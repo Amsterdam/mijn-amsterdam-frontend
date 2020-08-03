@@ -387,34 +387,34 @@ Object {
     Object {
       "chapter": "INKOMEN",
       "datePublished": "2020-05-26T17:29:22.037Z",
-      "dateStart": "2020-04-17T04:34:38.060Z",
-      "id": "2091150628",
+      "dateStart": "2020-06-23T21:14:15+02:00",
+      "id": "567827386",
       "link": Object {
         "title": "Bekijk hoe het met uw aanvraag staat",
-        "to": "/inkomen-en-stadspas/tozo/2091150628",
+        "to": "/inkomen-en-stadspas/tozo/567827386",
       },
       "productTitle": "Tozo 2",
       "status": "Besluit",
       "steps": Array [
         Object {
-          "datePublished": "2020-04-17T04:34:38.060Z",
+          "datePublished": "2020-06-23T21:14:15+02:00",
           "description": "<p>
         Wij hebben uw aanvraag Tozo 2 ontvangen.
       </p>",
           "documents": Array [
             Object {
-              "datePublished": "2020-04-17T04:34:38.060Z",
-              "id": "1462198587",
+              "datePublished": "2020-06-23T21:14:15+02:00",
+              "id": "4400000048",
               "title": "Ontvangst- bevestiging Aanvraag
-17 april om 06:34 uur",
+23 juni om 21:14 uur",
               "type": "PDF",
-              "url": "/api/focus/document?id=1462198587",
+              "url": "/api/focus/document?id=4400000048&isBulk=true&isDms=false",
             },
           ],
-          "id": "1131695438",
+          "id": "2504755767",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "Wij hebben uw aanvraag Tozo 2 ontvangen op 17 april om 06:34 uur",
+          "notificationDescription": "Wij hebben uw aanvraag Tozo 2 ontvangen op 23 juni om 21:14 uur",
           "notificationTitle": "Wij hebben uw aanvraag Tozo 2 ontvangen",
           "product": "Tozo 2",
           "status": "Aanvraag",
