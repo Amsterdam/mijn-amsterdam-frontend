@@ -33,7 +33,7 @@ export const LINKS: Record<string, DirectLink> = {
     isActive: true,
   },
   KREFIA: {
-    title: 'Kredieten en budgetbeheer (Krefia)',
+    title: 'Kredietbank en FIBU Amsterdam',
     url: ExternalUrls.KREFIA,
     isExternalLink: true,
     isActive: FeatureToggle.KrefiaDirectLinkActive,
