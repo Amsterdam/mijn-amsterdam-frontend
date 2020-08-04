@@ -1,5 +1,5 @@
+import L, { DivIcon, Icon } from 'leaflet';
 import { capitalizeFirstLetter } from '../../../universal/helpers';
-import L, { Icon, DivIcon } from 'leaflet';
 
 export interface DatasetItem {
   id: string;

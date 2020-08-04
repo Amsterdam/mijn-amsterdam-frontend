@@ -1,5 +1,4 @@
 import { ChevronRight } from '@datapunt/asc-assets';
-// import styles from './MyAreaCollapisblePanel.module.scss';
 import { Icon, themeColor, themeSpacing } from '@datapunt/asc-ui';
 import React, { PropsWithChildren, useState } from 'react';
 import styled from 'styled-components';
