@@ -1,9 +1,9 @@
 import { Marker } from '@datapunt/arm-core';
-import { useMapInstance } from '@datapunt/react-maps';
 import L, { LeafletEventHandlerFn } from 'leaflet';
 import React, { useCallback, useMemo } from 'react';
 import { LOCATION_ZOOM } from '../../../universal/config/map';
 import iconUrl from '../../assets/icons/home.svg';
+import { useMapRef } from './useMap';
 
 interface MaMarkerProps {
   latlng: LatLngObject;
@@ -22,8 +22,9 @@ function MaMarker({ latlng, iconUrl, onClick }: MaMarkerProps) {
     const events: { [key: string]: LeafletEventHandlerFn } = {};
 
     if (onClick) {
-      events.click = (event: any) => console.log(event);
+      events.click = onClick;
     }
+
     return { options: { icon }, events };
   }, [iconUrl, onClick]);
 
@@ -41,22 +42,18 @@ interface HomeIconMarkerProps {
   zoom?: number;
 }
 
-export function HomeIconMarker({
+export const HomeIconMarker = function HomeIconMarker({
   center,
   zoom = LOCATION_ZOOM,
 }: HomeIconMarkerProps) {
-  const mapInstance = useMapInstance();
+  const mapRef = useMapRef();
 
   const onClick = useCallback(() => {
-    console.log('hiah');
-    if (!mapInstance) {
+    if (!mapRef.current) {
       return null;
     }
-    console.log('setview');
-    mapInstance.setView(center, zoom);
-  }, [zoom, center, mapInstance]);
+    mapRef.current.setView(center, zoom);
+  }, [zoom, center, mapRef]);
 
-  console.log('iconUrl', iconUrl);
-
-  return <MaMarker iconUrl={iconUrl} latlng={center} onClick={onClick} />;
-}
+  return <MaMarker iconUrl={iconUrl} onClick={onClick} latlng={center} />;
+};

@@ -14,7 +14,9 @@ export default function MyArea2({ homeAddress, center }: MyArea2Props) {
     <ThemeProvider>
       <div className={styles.MyArea2}>
         <MyAreaHeader />
-        <MyArea center={center} homeAddress={homeAddress} />
+        <div className={styles.MapArea}>
+          <MyArea center={center} homeAddress={homeAddress} />
+        </div>
       </div>
     </ThemeProvider>
   );
