@@ -17,6 +17,7 @@ import { HomeIconMarker } from './MaMarker';
 import MyAreaLoader from './MyAreaLoader';
 import MyAreaPanels from './MyAreaPanels';
 import { LOCATION_ZOOM } from '../../../universal/config/map';
+import { themeSpacing } from '@datapunt/asc-ui/lib/utils/themeUtils';
 
 interface MyAreaMapComponentProps {
   title?: string;
@@ -27,6 +28,7 @@ interface MyAreaMapComponentProps {
 
 const StyledViewerContainer = styled(ViewerContainer)`
   height: 100%;
+  left: ${themeSpacing(8)};
 `;
 
 export default function MyArea2({
