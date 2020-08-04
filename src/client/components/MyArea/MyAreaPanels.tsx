@@ -1,36 +1,25 @@
-import {
-  MapPanel,
-  MapPanelContent,
-  MapPanelContext,
-  MapPanelDrawer,
-} from '@datapunt/arm-core';
-import { SnapPoint } from '@datapunt/arm-core/es/components/MapPanel/constants';
-import React, { useContext, useState, useEffect, useCallback } from 'react';
+import { MapPanel, MapPanelContent, MapPanelDrawer } from '@datapunt/arm-core';
+import React from 'react';
+import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
 import { useDesktopScreen } from '../../hooks';
-import { atom, useRecoilState, selector, useRecoilValue } from 'recoil';
+import MyAreaCollapisblePanel, {
+  CollapsedState,
+} from './MyAreaCollapsiblePanel';
+import MyAreaDatasetControl, {
+  datasetControlItemsAtom,
+} from './MyAreaDatasetControl';
 
-const panelConfig = {
-  afvalcontainers: {
-    title: 'Afvalcontainers',
-    id: 'afvalcontainers',
-    open: true,
-    active: true,
-  },
-  evenementen: {
-    title: 'Evenementen',
-    id: 'evenementen',
-    open: true,
-    active: true,
-  },
-  bekendmakingen: {
-    title: 'Bekendmakingen',
-    id: 'bekendmakingen',
-    open: true,
-    active: true,
-  },
-  parkeerzones: {
-    title: 'Parkeerzones',
-    id: 'parkeerzones',
+interface MyAreaPanel {
+  title: string;
+  id: string;
+  open: boolean;
+  active: boolean;
+}
+
+const panelConfig: Record<string, MyAreaPanel> = {
+  datasets: {
+    title: 'Datasets',
+    id: 'datasets',
     open: true,
     active: true,
   },
@@ -46,10 +35,20 @@ export const openPanelsSelector = selector({
   get: ({ get }) => {
     const appState = get(panelStateAtom);
     return Object.values(appState)
-      .filter(state => state.open === true)
-      .map(state => state.id);
+      .filter((state) => state.open === true)
+      .map((state) => state.id);
   },
 });
+
+function isOpen(panel: MyAreaPanel) {
+  return panel.active && panel.open;
+}
+
+function collapsedState(datasets: Array<{ isActive: boolean }>) {
+  return datasets.some((dataset) => dataset.isActive)
+    ? CollapsedState.Expanded
+    : CollapsedState.Collapsed;
+}
 
 export default function MyAreaPanels() {
   const isDesktop = useDesktopScreen();
@@ -57,6 +56,7 @@ export default function MyAreaPanels() {
   // const mapPanel = useContext(MapPanelContext);
   // const openPanels = useRecoilValue(openPanelsSelector);
   const [panelState /*setPanelState*/] = useRecoilState(panelStateAtom);
+  const datasetControlItems = useRecoilValue(datasetControlItemsAtom);
 
   // useEffect(() => {
   //   if (
@@ -84,9 +84,17 @@ export default function MyAreaPanels() {
 
   return (
     <PanelComponent>
-      {panelState.afvalcontainers.open && (
-        <MapPanelContent title={panelState.afvalcontainers.title} animate>
-          hoi
+      {isOpen(panelState.datasets) && (
+        <MapPanelContent title={panelState.datasets.title} animate>
+          {datasetControlItems.map((controlItem) => (
+            <MyAreaCollapisblePanel
+              key={controlItem.id}
+              state={collapsedState(controlItem.datasets)}
+              title={`${controlItem.title}`}
+            >
+              <MyAreaDatasetControl items={controlItem.datasets} />
+            </MyAreaCollapisblePanel>
+          ))}
         </MapPanelContent>
       )}
     </PanelComponent>

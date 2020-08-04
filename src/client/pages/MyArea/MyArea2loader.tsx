@@ -2,8 +2,9 @@ import React, { Suspense } from 'react';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { getFullAddress } from '../../../universal/helpers/brp';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import MyArea2 from './MyArea2';
 
-export const MyArea2Lazy = React.lazy(() => import('./MyArea2'));
+// export const MyArea2Lazy = React.lazy(() => import('./MyArea2'));
 
 export function MyArea2Loader() {
   const { HOME, KVK, BRP } = useAppStateGetter();
@@ -17,7 +18,7 @@ export function MyArea2Loader() {
 
   return (
     <Suspense fallback={<div>Loading buurt bundle...</div>}>
-      <MyArea2Lazy center={HOME.content?.latlng} homeAddress={homeAddress} />
+      <MyArea2 center={HOME.content?.latlng} homeAddress={homeAddress} />
     </Suspense>
   );
 }

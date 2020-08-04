@@ -48,7 +48,7 @@ export default function MyArea2({
       />
       <MapPanelProvider
         variant={isDesktop ? 'panel' : 'drawer'}
-        initialPosition={SnapPoint.Closed}
+        initialPosition={SnapPoint.Full}
       >
         <MyAreaPanels />
       </MapPanelProvider>
