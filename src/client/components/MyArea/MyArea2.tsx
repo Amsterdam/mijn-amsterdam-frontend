@@ -16,6 +16,7 @@ import { MaMap } from './MaMap';
 import { HomeIconMarker } from './MaMarker';
 import MyAreaLoader from './MyAreaLoader';
 import MyAreaPanels from './MyAreaPanels';
+import { LOCATION_ZOOM } from '../../../universal/config/map';
 
 interface MyAreaMapComponentProps {
   title?: string;
@@ -38,7 +39,7 @@ export default function MyArea2({
 
   return !!center ? (
     <MaMap title={title} zoom={options.zoom} center={center}>
-      <HomeIconMarker center={center} zoom={options.zoom} />
+      <HomeIconMarker center={center} zoom={LOCATION_ZOOM} />
       <StyledViewerContainer
         bottomRight={<Zoom />}
         bottomLeft={<BaseLayerToggle />}
