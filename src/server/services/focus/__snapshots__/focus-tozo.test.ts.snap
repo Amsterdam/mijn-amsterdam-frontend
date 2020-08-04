@@ -125,10 +125,7 @@ Object {
         },
         Object {
           "datePublished": "2020-04-26T09:51:07.848Z",
-          "description": "<p>
-          U hebt recht op Tozo 1. Bekijk de brief
-          voor meer details.
-        </p>",
+          "description": "<p>Wij hebben een besluit genomen over uw Tozo 1 aanvraag. Bekijk de brief voor meer details.</p>",
           "documents": Array [
             Object {
               "datePublished": "2020-04-26T09:51:07.848Z",
@@ -138,14 +135,14 @@ Object {
               "url": "/api/focus/document?id=761801503",
             },
           ],
-          "id": "1249048973",
+          "id": "4015447106",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "U hebt recht op Tozo 1 (besluit: 26 april 2020).",
-          "notificationTitle": "Tozo 1: Uw aanvraag is toegekend",
+          "notificationDescription": "Wij hebben een besluit genomen over uw Tozo 1 aanvraag.",
+          "notificationTitle": "Tozo 1: Besluit aanvraag",
           "product": "Tozo 1",
           "status": "Besluit",
-          "title": "toekennen",
+          "title": "vrijeBeschikking",
         },
         Object {
           "datePublished": "2020-04-26T09:51:07.848Z",
@@ -262,10 +259,7 @@ Object {
         },
         Object {
           "datePublished": "2020-05-18T07:16:42.924Z",
-          "description": "<p>
-          U hebt recht op Tozo 1. Bekijk de brief
-          voor meer details.
-        </p>",
+          "description": "<p>Wij hebben een besluit genomen over uw Tozo 1 aanvraag. Bekijk de brief voor meer details.</p>",
           "documents": Array [
             Object {
               "datePublished": "2020-05-18T07:16:42.924Z",
@@ -275,14 +269,14 @@ Object {
               "url": "/api/focus/document?id=761801503",
             },
           ],
-          "id": "4151722886",
+          "id": "805686505",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "U hebt recht op Tozo 1 (besluit: 18 mei 2020).",
-          "notificationTitle": "Tozo 1: Uw aanvraag is toegekend",
+          "notificationDescription": "Wij hebben een besluit genomen over uw Tozo 1 aanvraag.",
+          "notificationTitle": "Tozo 1: Besluit aanvraag",
           "product": "Tozo 1",
           "status": "Besluit",
-          "title": "toekennen",
+          "title": "vrijeBeschikking",
         },
         Object {
           "datePublished": "2020-05-19T20:16:34.894Z",
@@ -448,7 +442,7 @@ Object {
             Object {
               "datePublished": "2020-04-07T07:52:32.224Z",
               "id": "218062038",
-              "title": "Besluit intrekking",
+              "title": "Brief intrekken Tozo 2 aanvraag",
               "type": "PDF",
               "url": "/api/focus/document?id=218062038",
             },
