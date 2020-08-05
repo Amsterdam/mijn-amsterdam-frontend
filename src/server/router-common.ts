@@ -14,7 +14,6 @@ routerCommon.get(BffEndpoints.SERVICES_TIPS, async function handleRouteTips(
     res.json(tipsResult);
     next();
   } catch (error) {
-    console.log('erroir', error);
     next(error);
   }
 });
