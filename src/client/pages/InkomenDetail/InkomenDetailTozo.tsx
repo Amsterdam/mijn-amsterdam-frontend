@@ -7,7 +7,6 @@ import {
   Alert,
   ChapterIcon,
   DetailPage,
-  Heading,
   Linkd,
   LoadingContent,
   PageContent,
@@ -54,18 +53,6 @@ export default () => {
         {TozoItem?.productTitle || title}
       </PageHeading>
       <PageContent className={styles.DetailPageContent}>
-        {TozoItem?.productTitle === 'Tozo 1' && (
-          <div className={styles.Tozo2Alert}>
-            <Heading size="tiny">
-              Hebt u na 1 juni 2020 ook Tozo 2 aangevraagd?
-            </Heading>
-            <p>
-              Wij werken er hard aan om ook die aanvraag in Mijn Amsterdam te
-              tonen. Als het zover is, ziet u uw aanvraag vanzelf hier
-              verschijnen.
-            </p>
-          </div>
-        )}
         <p>
           Onderstaand ziet u de status van uw aanvraag voor een{' '}
           {TozoItem?.productTitle || 'Tozo'}-uitkering en/of een{' '}

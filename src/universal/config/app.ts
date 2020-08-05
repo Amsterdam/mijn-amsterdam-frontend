@@ -14,12 +14,13 @@ export const FeatureToggle = {
   focusCombinedActive: true,
   identiteitsbewijzenActive: true,
   tozoActive: true,
-  tozo2active: !IS_PRODUCTION,
+  tozo2active: true,
   eherkenningActive: !IS_PRODUCTION,
   vergunningenActive: !IS_PRODUCTION,
   cmsFooterActive: true,
   KrefiaDirectLinkActive: !IS_PRODUCTION,
   tipsFlipActive: true,
+  profileToggleActive: !IS_PRODUCTION,
 };
 
 export const DAYS_KEEP_RECENT = 28;
