@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import React, { ReactNode, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { KVKSourceDataContent } from '../../../server/services/kvk';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { getFullName } from '../../../universal/helpers';
 import { BRPData } from '../../../universal/types';
 import { IconProfile, IconSuitcase } from '../../assets/icons';
@@ -132,7 +132,7 @@ export function ProfileName({
     let nameContent: undefined | string | ReactNode;
 
     switch (true) {
-      case !!person && !company:
+      case !FeatureToggle.profileToggleActive || (!!person && !company):
         nameContent = (
           <PrivateProfileName
             person={person!}
