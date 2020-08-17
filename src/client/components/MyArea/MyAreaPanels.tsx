@@ -18,8 +18,8 @@ interface MyAreaPanel {
 
 const panelConfig: Record<string, MyAreaPanel> = {
   datasets: {
-    title: 'Datasets',
-    id: 'datasets',
+    title: 'Kaartlagen',
+    id: 'kaartlagen',
     open: true,
     active: true,
   },
