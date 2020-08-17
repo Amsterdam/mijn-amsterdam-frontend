@@ -359,6 +359,30 @@ Object {
           "title": "herstelTermijn",
         },
         Object {
+          "datePublished": "2020-05-26T16:07:20.241Z",
+          "description": "<p>
+          Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
+          voorwaarden in de brief.
+        </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2020-05-26T16:07:20.241Z",
+              "id": "21971186328",
+              "title": "Brief betaling voorschot",
+              "type": "PDF",
+              "url": "/api/focus/document?id=2197118628",
+            },
+          ],
+          "id": "1148185236",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben een voorschot naar uw rekening overgemaakt.",
+          "notificationTitle": "Tozo 1: Wij hebben een voorschot betaald",
+          "product": "Tozo 1",
+          "status": "Voorschot",
+          "title": "voorschot",
+        },
+        Object {
           "datePublished": "2020-03-26T15:18:44+01:00",
           "description": "<p>
         Wij hebben uw aanvraag Tozo 1 ontvangen.
@@ -692,30 +716,6 @@ Object {
           "product": "Tozo 2",
           "status": "Besluit",
           "title": "besluit",
-        },
-        Object {
-          "datePublished": "2020-05-26T16:07:20.241Z",
-          "description": "<p>
-          Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
-          voorwaarden in de brief.
-        </p>",
-          "documents": Array [
-            Object {
-              "datePublished": "2020-05-26T16:07:20.241Z",
-              "id": "21971186328",
-              "title": "Brief betaling voorschot",
-              "type": "PDF",
-              "url": "/api/focus/document?id=2197118628",
-            },
-          ],
-          "id": "1033149047",
-          "isActive": true,
-          "isChecked": true,
-          "notificationDescription": "Wij hebben een voorschot naar uw rekening overgemaakt.",
-          "notificationTitle": "Tozo 2: Wij hebben een voorschot betaald",
-          "product": "Tozo 2",
-          "status": "Voorschot",
-          "title": "voorschot",
         },
         Object {
           "datePublished": "2020-05-26T17:29:22.037Z",
