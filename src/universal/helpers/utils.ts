@@ -1,7 +1,7 @@
 import { differenceInCalendarDays } from 'date-fns';
 import { KeyboardEvent, MouseEvent } from 'react';
 import { matchPath } from 'react-router-dom';
-import { PrivateRoutes, DAYS_KEEP_RECENT } from '../config';
+import { PrivateRoutes, DAYS_KEEP_RECENT, IS_AP } from '../config';
 
 // https://github.com/Microsoft/TypeScript/issues/21826#issuecomment-479851685
 export const entries = Object.entries as <T>(
@@ -31,7 +31,7 @@ export function isInteralUrl(url: string) {
 
 export function isPrivateRoute(pathname: string) {
   return PrivateRoutes.some(
-    (path) =>
+    path =>
       !!matchPath(pathname, {
         path,
         exact: true,
@@ -45,12 +45,12 @@ export function isExternalUrl(url: string) {
 }
 
 export function directApiUrl(url: string) {
-  return url.replace(/\/api\//, '/test-api/');
+  return !IS_AP ? url.replace(/\/api\//, '/test-api/') : url;
 }
 
 export function range(a: number, b: number) {
   return Array.from(
-    (function* (x, y) {
+    (function*(x, y) {
       while (x <= y) yield x++;
     })(a, b)
   );
@@ -102,7 +102,7 @@ export function hash(str: string) {
 // Recursively omit keys from objects. Important: Objects with all keys omitted will remain in the data empty.
 export function deepOmitKeys(data: any, omitKeys: string[] = []): any {
   if (Array.isArray(data)) {
-    return data.map((item) => deepOmitKeys(data, omitKeys));
+    return data.map(item => deepOmitKeys(data, omitKeys));
   } else if (data !== null && typeof data === 'object') {
     const rdata: Record<string, any> = omit(data, omitKeys);
     for (const [key, value] of Object.entries(rdata)) {
