@@ -1,9 +1,6 @@
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
-import {
-  FocusTozoStepType,
-  FocusTozoLabelTranslations,
-} from './focus-tozo-content';
+import { FocusTozoStepType, FocusTozoLabelSet } from './focus-tozo-content';
 
 export type FocusTozoDocumentType =
   | 'E-AANVR-KBBZ'
@@ -19,7 +16,7 @@ export interface FocusTozoDocument {
   type: FocusTozoDocumentType;
   productTitle: string;
   stepType: FocusTozoStepType;
-  productSpecific?: FocusTozoLabelTranslations['productSpecific'];
+  productSpecific?: FocusTozoLabelSet['productSpecific'];
 }
 
 export type FocusInkomenSpecificatieType =
