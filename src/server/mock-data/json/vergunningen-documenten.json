@@ -1,0 +1,17 @@
+{
+  "content": [
+    {
+      "id": "D/1942291",
+      "sequence": 1,
+      "title": "Training voorbeelddocument.docx",
+      "url": "/api/decosjoin/document/gAAAAABfOmCnL-lDdeNUKMiRX94o8tROnBdjF2ocNDriT2dxwuNHbFHZaWqYL8HJ1pMpp8vfsT1lkj6fKJBT-jmZuSvCdC5cx-jQL29CaJUJpGej6_m7fW3qnJvNoyZ2UPkopluLPBSU"
+    },
+    {
+      "id": "D/1942292",
+      "sequence": 2,
+      "title": "Samenvatting-77e4e870-df7c-4770-ba47-8a6a9cbf85cc.pdf",
+      "url": "/api/decosjoin/document/gAAAAABfOmCnv4n_mQsXNN3w7Y8QiNQefvxwx17YtY6XS6SdfhiygBldVYwElqDy9G3sFSVCtMhxGeIEWBlUNvpnV33ZVzysifrkj44sXh1oF3BQ6sg9MkpJshXoOpjZ6NbGK2WAUsul"
+    }
+  ],
+  "status": "OK"
+}

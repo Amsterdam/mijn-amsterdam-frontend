@@ -12,6 +12,7 @@ import { dateSort } from '../../universal/helpers/date';
 import { Chapters } from '../../universal/config/index';
 import { apiDependencyError } from '../../universal/helpers';
 import { apiSuccesResult } from '../../universal/helpers/api';
+import { GenericDocument } from '../../universal/types/App.types';
 
 export interface VergunningSource {
   status: 'Toewijzen' | 'Afgehandeld' | 'Ontvangen' | string;
@@ -24,10 +25,11 @@ export interface VergunningSource {
   timeStart: string | null;
   timeEnd: string | null;
   isActual: boolean;
-  kenteken?: string | null;
-  location?: string | null;
-  decision?: string | null;
+  kenteken: string | null;
+  location: string | null;
+  decision: string | null;
   dateDecision?: string | null;
+  documentsUrl: string | null;
 }
 
 export type VergunningenSourceData = {
@@ -41,6 +43,10 @@ export interface Vergunning extends Omit<VergunningSource, 'dateEndInclusive'> {
   link: LinkProps;
 }
 
+export interface VergunningDocument extends GenericDocument {
+  sequence: number;
+}
+
 export type VergunningenData = Vergunning[];
 
 export function transformVergunningenData(
@@ -50,7 +56,7 @@ export function transformVergunningenData(
     return [];
   }
 
-  const vergunningen: Vergunning[] = responseData?.content?.map(item => {
+  const vergunningen: Vergunning[] = responseData?.content?.map((item) => {
     const id = hash(
       `vergunning-${item.identifier || item.caseType + item.dateRequest}`
     );
@@ -149,7 +155,7 @@ export async function fetchVergunningenGenerated(
     const cases: MyCase[] = Array.isArray(VERGUNNINGEN.content)
       ? VERGUNNINGEN.content
           .filter(
-            vergunning =>
+            (vergunning) =>
               vergunning.status !== 'Afgehandeld' ||
               (vergunning.dateDecision &&
                 isRecentCase(vergunning.dateDecision, compareToDate))
