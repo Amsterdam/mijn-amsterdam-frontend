@@ -49,7 +49,7 @@ export function getLabelSet(
   return labelSetEntry[1];
 }
 
-function getDocumentTitleTranslation(
+function getDocumentTitle(
   labelSet: FocusTozoLabelSet,
   document: FocusTozoDocument
 ) {
@@ -96,7 +96,7 @@ export function createTozoItemStep(document: FocusTozoDocument) {
     return null;
   }
 
-  const documentTitle = getDocumentTitleTranslation(labelSet, document);
+  const documentTitle = getDocumentTitle(labelSet, document);
 
   const attachedDocument = {
     id: document.id,
