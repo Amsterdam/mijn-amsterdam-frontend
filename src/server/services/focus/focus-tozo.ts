@@ -9,7 +9,7 @@ import { stepStatusLabels } from './focus-aanvragen-content';
 import { createFocusRecentCase } from './focus-aanvragen-helpers';
 import { fetchFOCUSCombined } from './focus-combined';
 import {
-  createTozoDocumentStepNotifications,
+  createTozoItemStepNotifications,
   createTozoResult,
 } from './focus-tozo-helpers';
 
@@ -39,7 +39,7 @@ export async function fetchFOCUSTozoGenerated(
     const compareDate = new Date();
 
     const notifications: MyNotification[] = TOZO.content.flatMap(item =>
-      createTozoDocumentStepNotifications(item)
+      createTozoItemStepNotifications(item)
     );
 
     const cases: MyCase[] = TOZO.content

@@ -12,54 +12,49 @@ import {
   FocusCombinedSourceResponse,
   FocusTozoDocument,
 } from './focus-combined';
-import {
-  documentStatusTranslation,
-  FocusTozoLabelTranslations,
-  FocusTozoStepType,
-} from './focus-tozo-content';
+import { tozoDocumentLabelSet, FocusTozoLabelSet } from './focus-tozo-content';
 import { FocusItem, FocusItemStep, FocusStepContent } from './focus-types';
 
 export function getProductTitleForDocument(document: FocusTozoDocument) {
-  const documentStepLabelSet = getStepLabels(document);
+  const labelSet = getLabelSet(document);
 
-  if (!documentStepLabelSet) {
+  if (!labelSet) {
     return document.description;
   }
-
-  const [, labelSet] = documentStepLabelSet;
 
   return labelSet.product;
 }
 
-export function getStepLabels(
+function transformDescriptionKey(description: string) {
+  return description.replace(/\s/g, '').toLowerCase();
+}
+
+export function getLabelSet(
   document: FocusTozoDocument
-): [FocusTozoStepType, FocusTozoLabelTranslations] | null {
-  const labelSetEntries = Object.entries(documentStatusTranslation);
-
-  const labelSetEntry = labelSetEntries.find(([stepType, labelSet]) => {
-    return document.description in labelSet;
-  });
-
-  if (!labelSetEntry) {
-    return null;
-  }
-
-  const [stepType, labelSet] = labelSetEntry;
-  const stepLabels = labelSet[document.description];
+): FocusTozoLabelSet | null {
+  const labelSetEntry = Object.entries(tozoDocumentLabelSet).find(
+    ([description]) => {
+      return (
+        transformDescriptionKey(description) ===
+        transformDescriptionKey(document.description)
+      );
+    }
+  );
 
   if (!labelSetEntry) {
     return null;
   }
 
-  return [stepType as FocusTozoStepType, stepLabels];
+  // We don't need labelSetEntry[0]
+  return labelSetEntry[1];
 }
 
 function getDocumentTitleTranslation(
-  stepType: FocusTozoStepType,
-  labelSet: FocusTozoLabelTranslations,
+  labelSet: FocusTozoLabelSet,
   document: FocusTozoDocument
 ) {
-  if (stepType === 'aanvraag') {
+  // Documents of the aanvraag step are formatted differently
+  if (labelSet.productSpecific === 'aanvraag') {
     return `${labelSet.documentTitle}\n${dateFormat(
       document.datePublished,
       `dd MMMM 'om' HH:mm`
@@ -89,10 +84,10 @@ function getDocumentStepNotificationTitle(
   return stepLabels.notification?.title(document);
 }
 
-export function createTozoDocumentStep(document: FocusTozoDocument) {
-  const documentStepLabelSet = getStepLabels(document);
+export function createTozoItemStep(document: FocusTozoDocument) {
+  const labelSet = getLabelSet(document);
 
-  if (!documentStepLabelSet) {
+  if (!labelSet) {
     Sentry.captureMessage('Unknown Tozo document encountered', {
       extra: {
         document,
@@ -101,13 +96,7 @@ export function createTozoDocumentStep(document: FocusTozoDocument) {
     return null;
   }
 
-  const [stepType, labelSet] = documentStepLabelSet;
-
-  const documentTitle = getDocumentTitleTranslation(
-    stepType,
-    labelSet,
-    document
-  );
+  const documentTitle = getDocumentTitleTranslation(labelSet, document);
 
   const attachedDocument = {
     id: document.id,
@@ -118,7 +107,7 @@ export function createTozoDocumentStep(document: FocusTozoDocument) {
   };
 
   const id = hash(
-    `${document.productTitle}-${stepType}-${document.id}-${document.datePublished}`
+    `${document.productTitle}-${document.id}-${document.datePublished}`
   );
 
   document.productSpecific = labelSet.productSpecific;
@@ -127,20 +116,20 @@ export function createTozoDocumentStep(document: FocusTozoDocument) {
     id,
     documents: [attachedDocument],
     product: document.productTitle,
-    title: stepType,
-    description: getDocumentStepDescription(document, labelSet.step),
+    title: labelSet.stepType,
+    description: getDocumentStepDescription(document, labelSet.labels),
     datePublished: document.datePublished,
-    status: labelSet.step.status,
+    status: labelSet.labels.status,
     isChecked: true,
     isActive: true,
 
     notificationTitle: getDocumentStepNotificationTitle(
       document,
-      labelSet.step
+      labelSet.labels
     ),
     notificationDescription: getDocumentStepNotificationDescription(
       document,
-      labelSet.step
+      labelSet.labels
     ),
   };
 
@@ -154,6 +143,7 @@ export function createTozoItem(productTitle: string, steps: FocusItemStep[]) {
       : 'Tozo 1 (aangevraagd voor 1 juni 2020)';
 
   const id = hash(`${title}-${steps[0].datePublished}`);
+
   return {
     id,
     dateStart: steps[0].datePublished,
@@ -171,7 +161,7 @@ export function createTozoItem(productTitle: string, steps: FocusItemStep[]) {
   };
 }
 
-export function createTozoDocumentStepNotifications(
+export function createTozoItemStepNotifications(
   item: FocusItem
 ): MyNotification[] {
   return item.steps.map(step => ({
@@ -203,7 +193,7 @@ export function createTozoResult(
     : [];
 
   const tozoSteps: FocusItemStep[] = documents
-    .map(document => createTozoDocumentStep(document))
+    .map(document => createTozoItemStep(document))
     .filter(
       (step: FocusItemStep | null): step is FocusItemStep => step !== null
     );
@@ -212,32 +202,37 @@ export function createTozoResult(
     return apiSuccesResult([]);
   }
 
-  // Aggregate all aanvraag steps and combine into 1
+  // Aggregate all aanvraag step documents and combine into 1
   let aanvraagSteps: Record<string, FocusItemStep> = {};
+  const otherSteps: FocusItemStep[] = [];
 
   for (const step of tozoSteps) {
     if (step && step.title === 'aanvraag') {
-      if (step?.product && !aanvraagSteps[step?.product]) {
-        aanvraagSteps[step?.product] = step;
+      if (step?.product && !aanvraagSteps[step.product]) {
+        // step is not present, cache the step
+        aanvraagSteps[step.product] = step;
       } else if (step?.product) {
-        aanvraagSteps[step?.product].documents.push(...step.documents);
+        // step is present, add documents
+        aanvraagSteps[step.product].documents.push(...step.documents);
       }
+    } else if (step) {
+      otherSteps.push(step);
     }
   }
 
-  const tozo1Steps = tozoSteps.filter(
-    step => step.product === 'Tozo 1' && step.title !== 'aanvraag'
-  );
-  const tozo2Steps = tozoSteps.filter(
-    step => step.product === 'Tozo 2' && step.title !== 'aanvraag'
-  );
+  const tozo1Steps = otherSteps.filter(step => step.product === 'Tozo 1');
+  const tozo2Steps = otherSteps.filter(step => step.product === 'Tozo 2');
 
-  const tozo1Item =
-    tozo1Steps.length &&
-    createTozoItem('Tozo 1', [aanvraagSteps['Tozo 1'], ...tozo1Steps]);
-  const tozo2Item =
-    tozo2Steps.length &&
-    createTozoItem('Tozo 2', [aanvraagSteps['Tozo 2'], ...tozo2Steps]);
+  if (aanvraagSteps['Tozo 1']) {
+    tozo1Steps.push(aanvraagSteps['Tozo 1']);
+  }
+  const tozo1Item = tozo1Steps.length && createTozoItem('Tozo 1', tozo1Steps);
+
+  if (aanvraagSteps['Tozo 2']) {
+    tozo2Steps.push(aanvraagSteps['Tozo 2']);
+  }
+  const tozo2Item = tozo2Steps.length && createTozoItem('Tozo 2', tozo2Steps);
+
   const tozoItems: FocusItem[] = [];
 
   if (tozo1Item) {
