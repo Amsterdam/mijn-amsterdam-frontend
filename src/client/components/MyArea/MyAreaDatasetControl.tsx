@@ -6,7 +6,7 @@ import {
 } from './datasets';
 import styled from 'styled-components';
 import { Checkbox, Label } from '@datapunt/asc-ui';
-import { atom, selector, useSetRecoilState } from 'recoil';
+import { atom, selector, useSetRecoilState, useRecoilValue } from 'recoil';
 
 export const datasetControlItemsAtom = atom({
   key: 'datasetControlItems',
@@ -59,6 +59,10 @@ export const datasetControlItemsSelector = selector({
     );
   },
 });
+
+export function useDatasetControlItems(): DatasetControlItem[] {
+  return useRecoilValue(datasetControlItemsSelector);
+}
 
 export type datasetItemChangeEventHandler = (
   event: React.FormEvent<HTMLInputElement>,
