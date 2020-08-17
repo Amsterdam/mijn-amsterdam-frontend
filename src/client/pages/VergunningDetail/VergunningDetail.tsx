@@ -1,13 +1,17 @@
-import React, { useMemo, useEffect } from 'react';
-import { useParams, generatePath } from 'react-router-dom';
+import React, { useEffect, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
+import {
+  Vergunning,
+  VergunningDocument,
+} from '../../../server/services/vergunningen';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
   defaultDateFormat,
+  directApiUrl,
   isError,
   isLoading,
-  directApiUrl,
 } from '../../../universal/helpers';
-import { GenericDocument } from '../../../universal/types/App.types';
+import { apiPristineResult, ApiResponse } from '../../../universal/helpers/api';
 import {
   Alert,
   ChapterIcon,
@@ -23,20 +27,9 @@ import InfoDetail, {
 import StatusLine, {
   StatusLineItem,
 } from '../../components/StatusLine/StatusLine';
+import { useDataApi } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './VergunningDetail.module.scss';
-import { useDataApi } from '../../hooks/api/useDataApi';
-import { ApiConfig, ApiUrls } from '../../../server/config';
-import {
-  Vergunning,
-  VergunningDocument,
-} from '../../../server/services/vergunningen';
-import { BFFApiUrls } from '../../config/api';
-import { apiPristineResult } from '../../../universal/helpers/api';
-import {
-  ApiSuccessResponse,
-  ApiResponse,
-} from '../../../universal/helpers/api';
 
 function useVergunningStatusLineItems(VergunningItem?: Vergunning) {
   const statusLineItems: StatusLineItem[] = useMemo(() => {
@@ -92,7 +85,7 @@ export default () => {
   ] = useDataApi<ApiResponse<VergunningDocument[]>>({}, apiPristineResult([]));
   const { id } = useParams();
 
-  const VergunningItem = VERGUNNINGEN.content?.find(item => item.id === id);
+  const VergunningItem = VERGUNNINGEN.content?.find((item) => item.id === id);
   const noContent = !isLoading(VERGUNNINGEN) && !VergunningItem;
 
   const statusLineItems = useVergunningStatusLineItems(VergunningItem);
