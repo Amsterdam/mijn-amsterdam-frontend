@@ -31,3 +31,4 @@ yarn-error.log*
 /cypress/screenshots
 /.vscode/settings.json
 screenshots
+/scrape-personas.js
