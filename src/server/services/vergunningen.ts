@@ -21,7 +21,7 @@ export interface VergunningSource {
   caseType: string;
   dateRequest: string;
   dateFrom: string | null;
-  dateEndInclusive: string | null; // datum t/m
+  dateEnd: string | null; // datum t/m
   timeStart: string | null;
   timeEnd: string | null;
   isActual: boolean;
@@ -37,9 +37,8 @@ export type VergunningenSourceData = {
   status: 'OK' | 'ERROR';
 };
 
-export interface Vergunning extends Omit<VergunningSource, 'dateEndInclusive'> {
+export interface Vergunning extends VergunningSource {
   id: string;
-  dateEnd: string | null;
   link: LinkProps;
 }
 
@@ -60,11 +59,8 @@ export function transformVergunningenData(
     const id = hash(
       `vergunning-${item.identifier || item.caseType + item.dateRequest}`
     );
-    const dateEnd = item.dateEndInclusive;
-    delete item.dateEndInclusive;
     const vergunning = Object.assign({}, item, {
       id,
-      dateEnd,
       link: {
         to: generatePath(AppRoutes['VERGUNNINGEN/DETAIL'], {
           id,
