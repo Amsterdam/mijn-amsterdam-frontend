@@ -1,12 +1,17 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
+import {
+  Vergunning,
+  VergunningDocument,
+} from '../../../server/services/vergunningen';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
   defaultDateFormat,
+  directApiUrl,
   isError,
   isLoading,
 } from '../../../universal/helpers';
-import { GenericDocument } from '../../../universal/types/App.types';
+import { apiPristineResult, ApiResponse } from '../../../universal/helpers/api';
 import {
   Alert,
   ChapterIcon,
@@ -22,18 +27,11 @@ import InfoDetail, {
 import StatusLine, {
   StatusLineItem,
 } from '../../components/StatusLine/StatusLine';
+import { useDataApi } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './VergunningDetail.module.scss';
 
-export default () => {
-  const { VERGUNNINGEN } = useAppStateGetter();
-
-  const { id } = useParams();
-
-  const VergunningItem = VERGUNNINGEN.content?.find(item => item.id === id);
-  const noContent = !isLoading(VERGUNNINGEN) && !VergunningItem;
-  const documents: GenericDocument[] = [];
-
+function useVergunningStatusLineItems(VergunningItem?: Vergunning) {
   const statusLineItems: StatusLineItem[] = useMemo(() => {
     if (!VergunningItem) {
       return [];
@@ -73,6 +71,33 @@ export default () => {
       },
     ];
   }, [VergunningItem]);
+
+  return statusLineItems;
+}
+
+export default () => {
+  const { VERGUNNINGEN } = useAppStateGetter();
+  const [
+    {
+      data: { content: documents },
+    },
+    fetchDocuments,
+  ] = useDataApi<ApiResponse<VergunningDocument[]>>({}, apiPristineResult([]));
+  const { id } = useParams();
+
+  const VergunningItem = VERGUNNINGEN.content?.find((item) => item.id === id);
+  const noContent = !isLoading(VERGUNNINGEN) && !VergunningItem;
+
+  const statusLineItems = useVergunningStatusLineItems(VergunningItem);
+  const documentsUrl = VergunningItem?.documentsUrl;
+
+  useEffect(() => {
+    if (documentsUrl) {
+      fetchDocuments({
+        url: directApiUrl(documentsUrl),
+      });
+    }
+  }, [documentsUrl, fetchDocuments]);
 
   return (
     <DetailPage>
@@ -128,8 +153,9 @@ export default () => {
         {!!VergunningItem?.decision && (
           <InfoDetail label="Resultaat" value={VergunningItem.decision} />
         )}
-        {!!documents.length && (
+        {!!documents?.length && (
           <InfoDetail
+            el="div"
             label="Documenten"
             value={<DocumentList documents={documents} isExpandedView={true} />}
           />

@@ -9,17 +9,23 @@ export interface InfoDetailGroupProps {
 export interface InfoDetailProps {
   label: string;
   value: string | number | ReactNode;
+  el?: keyof JSX.IntrinsicElements;
 }
 
 export function InfoDetailGroup({ children }: InfoDetailGroupProps) {
   return <div className={styles.InfoDetailGroup}>{children}</div>;
 }
 
-export default function InfoDetail({ label, value }: InfoDetailProps) {
+export default function InfoDetail({
+  label,
+  value,
+  el = 'p',
+}: InfoDetailProps) {
+  const El = el;
   return (
-    <p className={styles.InfoDetail}>
+    <El className={styles.InfoDetail}>
       <span className={styles.Label}>{label}</span>
       <span className={styles.Value}>{value}</span>
-    </p>
+    </El>
   );
 }
