@@ -148,7 +148,7 @@ export type FocusTozoLabelSet = {
 };
 
 export const tozoDocumentLabelSet: Record<
-  FocusDocumentFromSource['documentCodeId'],
+  FocusTozoDocument['documentCodeId'],
   FocusTozoLabelSet
 > = {
   '756': {
