@@ -3,15 +3,9 @@ import React, { HTMLProps, PropsWithChildren } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { getOtapEnvItem } from '../../../universal/config/env';
-import { IconClose, IconHome } from '../../assets/icons';
-import { ReactComponent as Logo } from '../../assets/images/logo-amsterdam.svg';
-import Linkd from '../Button/Button';
+import { IconHome } from '../../assets/icons';
 import Heading from '../Heading/Heading';
 import styles from './MyArea.module.scss';
-import { Adres } from '../../../universal/types';
-import { getFullAddress } from '../../../universal/helpers';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { Colors } from '../../config/app';
 
 function MyAreaLoader() {
   const profileType = useProfileTypeValue();
@@ -78,6 +72,9 @@ export function MyAreaDashboard({
   return (
     <div {...otherProps} className={styles.MapDashboard}>
       {getOtapEnvItem('isMyAreaMapEnabled') && <MyAreaMapIFrame url={url} />}
+      {getOtapEnvItem('isMyArea2MapEnabled') && (
+        <MyArea2Loader isDashboard={true} />
+      )}
       <NavLink to={AppRoutes.BUURT} className={styles.MapDashboardOverlay}>
         <div>
           <Heading size="large">Mijn buurt</Heading>

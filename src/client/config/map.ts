@@ -19,13 +19,3 @@ export const DEFAULT_MAP_OPTIONS = {
     [52.50536, 5.10737],
   ],
 } as Partial<MapOptions>;
-
-export interface MapDisplayOptions {
-  zoomTools: boolean;
-  zoom: number;
-}
-
-export const DEFAULT_MAP_DISPLAY_CONFIG: MapDisplayOptions = {
-  zoomTools: true,
-  zoom: HOOD_ZOOM,
-};

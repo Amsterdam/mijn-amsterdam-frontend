@@ -3,6 +3,8 @@ import L, { LeafletEventHandlerFn } from 'leaflet';
 import React, { useCallback, useMemo } from 'react';
 import { LOCATION_ZOOM } from '../../../universal/config/map';
 import iconUrl from '../../assets/icons/home.svg';
+import iconUrlCommercial from '../../assets/icons/Suitcase__primary-red.svg';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useMapRef } from './useMap';
 
 interface MaMarkerProps {
@@ -47,6 +49,11 @@ export const HomeIconMarker = function HomeIconMarker({
   zoom = LOCATION_ZOOM,
 }: HomeIconMarkerProps) {
   const mapRef = useMapRef();
+  const profileType = useProfileTypeValue();
+
+  const homeIconUrl = useMemo(() => {
+    return profileType === 'private' ? iconUrl : iconUrlCommercial;
+  }, [profileType]);
 
   const onClick = useCallback(() => {
     if (!mapRef.current) {
@@ -55,5 +62,12 @@ export const HomeIconMarker = function HomeIconMarker({
     mapRef.current.setView(center, zoom);
   }, [zoom, center, mapRef]);
 
-  return <MaMarker iconUrl={iconUrl} onClick={onClick} latlng={center} />;
+  return (
+    <MaMarker
+      key={profileType}
+      iconUrl={homeIconUrl}
+      onClick={onClick}
+      latlng={center}
+    />
+  );
 };

@@ -65,7 +65,7 @@ import { useAppState } from './hooks/useAppState';
 import { useTipsApi } from './hooks/api/useTipsApi';
 import { useSessionValue, useSessionApi } from './hooks/api/useSessionApi';
 import { useProfileTypeValue } from './hooks/useProfileType';
-import { MyArea2Loader } from './components/MyArea/MyArea2Loader';
+import { MyArea2Loader } from './components/MyArea/MyArea2loader';
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
@@ -107,7 +107,7 @@ function AppAuthenticated() {
 
   return location.pathname === AppRoutes.BUURT ? (
     FeatureToggle.myArea2Active ? (
-      <MyArea2Loader />
+      <MyArea2Loader isDashboard={false} />
     ) : (
       <MyArea />
     )

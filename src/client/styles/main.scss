@@ -16,6 +16,7 @@ html {
 }
 
 body {
+  height: 100%;
   min-height: 100vh;
   font-family: 'AvenirNext', Arial, Helvetica, sans-serif;
   color: $color-black;
@@ -39,7 +40,7 @@ body {
 }
 
 #root {
-  min-height: 100%;
+  min-height: 100vh;
   position: relative;
 }
 
