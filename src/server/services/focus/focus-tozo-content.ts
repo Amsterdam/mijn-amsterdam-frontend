@@ -140,6 +140,7 @@ export type FocusTozoStepType =
 
 export type FocusTozoLabelSet = {
   labels: FocusStepContent;
+  omschrijving: string;
   documentTitle: string;
   product: 'Tozo 1' | 'Tozo 2';
   productSpecific: 'uitkering' | 'lening' | 'voorschot' | 'aanvraag' | '';
@@ -147,263 +148,224 @@ export type FocusTozoLabelSet = {
 };
 
 export const tozoDocumentLabelSet: Record<
-  FocusDocumentFromSource['omschrijving'],
+  FocusTozoDocument['documentCodeId'],
   FocusTozoLabelSet
 > = {
-  //-------------------------------------------------------
-  // aanvraag
-  //-------------------------------------------------------
-  'Verkorte Aanvraag BBZ': {
+  '756': {
+    omschrijving: 'Verkorte Aanvraag BBZ',
     labels: aanvraagLabels,
     documentTitle: 'Ontvangst- bevestiging Aanvraag',
     product: 'Tozo 1',
     productSpecific: 'aanvraag',
     stepType: 'aanvraag',
   },
-  'Tegemoetkoming Ondernemers en Zelfstandigen': {
+  '770': {
+    omschrijving: 'Tegemoetkoming Ondernemers en Zelfstandigen',
     labels: aanvraagLabels,
     documentTitle: 'Ontvangst- bevestiging Aanvraag',
     product: 'Tozo 1',
     productSpecific: 'aanvraag',
     stepType: 'aanvraag',
   },
-
-  // TOZO-2
-  'TOZO 2 (vervolgregeling tegemoetkoming Ondernemers en Zelfstandigen)': {
+  '777': {
+    omschrijving:
+      'TOZO 2 (vervolgregeling tegemoetkoming Ondernemers en Zelfstandigen)',
     labels: aanvraagLabels,
     documentTitle: 'Ontvangst- bevestiging Aanvraag',
     product: 'Tozo 2',
     productSpecific: 'aanvraag',
     stepType: 'aanvraag',
   },
-  //-------------------------------------------------------
-  // voorschot
-  //-------------------------------------------------------
-  'Bbz Toekennen voorschot Tozo': {
+  '175296': {
+    omschrijving: 'Toekennen voorschot Tozo',
     labels: voorschotToekennenLabels,
     documentTitle: 'Brief betaling voorschot',
     product: 'Tozo 1',
     productSpecific: 'voorschot',
     stepType: 'voorschot',
   },
-  'Bbz Toekennen voorschot Tozo via batch': {
+  '175299': {
+    omschrijving: 'Bbz Toekennen voorschot Tozo via batch',
     labels: voorschotToekennenLabels,
     documentTitle: 'Brief betaling voorschot',
     product: 'Tozo 1',
     productSpecific: 'voorschot',
     stepType: 'voorschot',
   },
-  'Tozo Toekennen voorschot': {
-    labels: voorschotToekennenLabels,
-    documentTitle: 'Brief betaling voorschot',
-    product: 'Tozo 1',
-    productSpecific: 'voorschot',
-    stepType: 'voorschot',
-  },
-
-  // TOZO-2
-  'Tozo2 Toekennen voorschot via batch': {
-    labels: voorschotToekennenLabels,
-    documentTitle: 'Brief betaling voorschot',
-    product: 'Tozo 2',
-    productSpecific: 'voorschot',
-    stepType: 'voorschot',
-  },
-  'Tozo2 Toekennen voorschot': {
-    labels: voorschotToekennenLabels,
-    documentTitle: 'Brief betaling voorschot',
-    product: 'Tozo 2',
-    productSpecific: 'voorschot',
-    stepType: 'voorschot',
-  },
-
-  //-------------------------------------------------------
-  // herstelTermijn
-  //-------------------------------------------------------
-  'Tozo Hersteltermijn': {
-    labels: herstelTermijnLabels,
-    documentTitle: 'Brief meer informatie',
-    product: 'Tozo 1',
-    productSpecific: '',
-    stepType: 'herstelTermijn',
-  },
-
-  // TOZO-2
-  'Tozo2 Hersteltermijn': {
-    labels: herstelTermijnLabels,
-    documentTitle: 'Brief meer informatie',
-    product: 'Tozo 2',
-    productSpecific: '',
-    stepType: 'herstelTermijn',
-  },
-
-  //-------------------------------------------------------
-  // afwijzen
-  //-------------------------------------------------------
-  'Tozo Afwijzen': {
-    labels: afwijzenLabels,
-    documentTitle: 'Besluit afwijzing',
-    product: 'Tozo 1',
-    productSpecific: '',
-    stepType: 'besluit',
-  },
-  'Tozo Afwijzen via batch': {
-    labels: afwijzenLabels,
-    documentTitle: 'Besluit afwijzing',
-    product: 'Tozo 1',
-    productSpecific: '',
-    stepType: 'besluit',
-  },
-  'Tozo Terugvordering voorschot': {
-    labels: afwijzenLabels,
-    documentTitle: 'Besluit afwijzing',
-    product: 'Tozo 1',
-    productSpecific: '',
-    stepType: 'besluit',
-  },
-
-  // TOZO-2
-  'Tozo2 Afwijzen': {
-    labels: afwijzenLabels,
-    documentTitle: 'Besluit afwijzing',
-    product: 'Tozo 2',
-    productSpecific: '',
-    stepType: 'besluit',
-  },
-  'Tozo2 Afwijzen via batch': {
-    labels: afwijzenLabels,
-    documentTitle: 'Besluit terugvordering',
-    product: 'Tozo 2',
-    productSpecific: '',
-    stepType: 'besluit',
-  },
-  'Tozo2 Terugvordering voorschot': {
-    labels: afwijzenLabels,
-    documentTitle: 'Besluit terugvordering',
-    product: 'Tozo 2',
-    productSpecific: '',
-    stepType: 'besluit',
-  },
-
-  //-------------------------------------------------------
-  // toekennen
-  //-------------------------------------------------------
-  'Tozo Toekennen': {
+  '175303': {
+    omschrijving: 'Tozo Toekennen',
     labels: toekennenLabels,
     documentTitle: 'Besluit toekenning uitkering',
     product: 'Tozo 1',
     productSpecific: 'uitkering',
     stepType: 'besluit',
   },
-  'Tozo Toekennen bedrijfskapitaal': {
-    labels: toekennenLabels,
-    documentTitle: 'Besluit toekenning lening',
+  '175304': {
+    omschrijving: 'Tozo Afwijzen',
+    labels: afwijzenLabels,
+    documentTitle: 'Besluit afwijzing',
     product: 'Tozo 1',
-    productSpecific: 'lening',
+    productSpecific: '',
     stepType: 'besluit',
   },
-  'Tozo Toekennen via batch': {
-    labels: toekennenLabels,
-    documentTitle: 'Besluit toekenning uitkering',
-    product: 'Tozo 1',
-    productSpecific: 'uitkering',
-    stepType: 'besluit',
-  },
-
-  // TOZO-2
-  'Tozo2 Toekennen': {
-    labels: toekennenLabels,
-    documentTitle: 'Besluit toekenning uitkering',
-    product: 'Tozo 2',
-    productSpecific: 'uitkering',
-    stepType: 'besluit',
-  },
-  'Tozo2 Toekennen bedrijfskapitaal': {
-    labels: toekennenLabels,
-    documentTitle: 'Besluit toekenning lening',
-    product: 'Tozo 2',
-    productSpecific: 'lening',
-    stepType: 'besluit',
-  },
-  'Tozo2 Toekennen via batch': {
-    labels: toekennenLabels,
-    documentTitle: 'Besluit toekenning uitkering',
-    product: 'Tozo 2',
-    productSpecific: 'uitkering',
-    stepType: 'besluit',
-  },
-
-  //-------------------------------------------------------
-  // buitenBehandeling
-  //-------------------------------------------------------
-  'Tozo Buiten behandeling laten': {
+  '175305': {
+    omschrijving: 'Tozo Buiten behandeling laten',
     labels: buitenBehandelingLabels,
     documentTitle: 'Besluit buiten behandeling',
     product: 'Tozo 1',
     productSpecific: '',
     stepType: 'besluit',
   },
-
-  // TOZO-2
-  'Tozo2 Buiten behandeling laten': {
-    labels: buitenBehandelingLabels,
-    documentTitle: 'Besluit buiten behandeling',
-    product: 'Tozo 2',
+  '175306': {
+    omschrijving: 'Tozo Hersteltermijn',
+    labels: herstelTermijnLabels,
+    documentTitle: 'Brief meer informatie',
+    product: 'Tozo 1',
+    productSpecific: '',
+    stepType: 'herstelTermijn',
+  },
+  '175308': {
+    omschrijving: 'Tozo Terugvordering voorschot',
+    labels: afwijzenLabels,
+    documentTitle: 'Besluit afwijzing',
+    product: 'Tozo 1',
     productSpecific: '',
     stepType: 'besluit',
   },
-
-  //-------------------------------------------------------
-  // intrekken
-  //-------------------------------------------------------
-  'Tozo Intrekken': {
+  '175311': {
+    omschrijving: 'Tozo Toekennen bedrijfskapitaal',
+    labels: toekennenLabels,
+    documentTitle: 'Besluit toekenning lening',
+    product: 'Tozo 1',
+    productSpecific: 'lening',
+    stepType: 'besluit',
+  },
+  '175314': {
+    omschrijving: 'Tozo Toekennen via batch',
+    labels: toekennenLabels,
+    documentTitle: 'Besluit toekenning uitkering',
+    product: 'Tozo 1',
+    productSpecific: 'uitkering',
+    stepType: 'besluit',
+  },
+  '175317': {
+    omschrijving: 'Tozo Intrekken met terugvordering voorschot',
+    labels: intrekkenLabels,
+    documentTitle: 'Besluit intrekking met terugbetaling',
+    product: 'Tozo 1',
+    productSpecific: 'aanvraag',
+    stepType: 'intrekken',
+  },
+  '175331': {
+    omschrijving: 'Tozo Intrekken',
     labels: intrekkenLabels,
     documentTitle: 'Brief intrekken Tozo 1 aanvraag',
     product: 'Tozo 1',
     productSpecific: 'aanvraag',
     stepType: 'intrekken',
   },
-  'Tozo Intrekken met terugvordering voorschot': {
-    labels: intrekkenLabels,
-    documentTitle: 'Besluit intrekking met terugbetaling',
-    product: 'Tozo 1',
-    productSpecific: 'aanvraag',
-    stepType: 'intrekken',
-  },
-
-  // TOZO-2
-  'Tozo2 Intrekken met terugvordering voorschot': {
-    labels: intrekkenLabels,
-    documentTitle: 'Besluit intrekking met terugbetaling',
-    product: 'Tozo 2',
-    productSpecific: 'aanvraag',
-    stepType: 'intrekken',
-  },
-  'Tozo2 Intrekken': {
-    labels: intrekkenLabels,
-    documentTitle: 'Brief intrekken Tozo 2 aanvraag',
-    product: 'Tozo 2',
-    productSpecific: 'aanvraag',
-    stepType: 'intrekken',
-  },
-
-  //-------------------------------------------------------
-  // vrijeBeschikking
-  //-------------------------------------------------------
-  'Tozo Vrije beschikking': {
+  '175334': {
+    omschrijving: 'Tozo Vrije beschikking',
     labels: vrijeBeschikkingLabels,
     documentTitle: 'Besluit Tozo 1 aanvraag',
     product: 'Tozo 1',
     productSpecific: '',
     stepType: 'vrijeBeschikking',
   },
-
-  // TOZO-2
-  'Tozo2 Vrije beschikking': {
-    labels: vrijeBeschikkingLabels,
-    documentTitle: 'Besluit Tozo 2 aanvraag',
+  '175335': {
+    omschrijving: 'Tozo Afwijzen via batch',
+    labels: afwijzenLabels,
+    documentTitle: 'Besluit afwijzing',
+    product: 'Tozo 1',
+    productSpecific: '',
+    stepType: 'besluit',
+  },
+  '175336': {
+    omschrijving: 'Tozo2 Toekennen',
+    labels: toekennenLabels,
+    documentTitle: 'Besluit toekenning uitkering',
+    product: 'Tozo 2',
+    productSpecific: 'uitkering',
+    stepType: 'besluit',
+  },
+  '175337': {
+    omschrijving: 'Tozo2 Afwijzen',
+    labels: afwijzenLabels,
+    documentTitle: 'Besluit afwijzing',
     product: 'Tozo 2',
     productSpecific: '',
-    stepType: 'vrijeBeschikking',
+    stepType: 'besluit',
+  },
+  '175338': {
+    omschrijving: 'Tozo2 Toekennen bedrijfskapitaal',
+    labels: toekennenLabels,
+    documentTitle: 'Besluit toekenning lening',
+    product: 'Tozo 2',
+    productSpecific: 'lening',
+    stepType: 'besluit',
+  },
+  '175340': {
+    omschrijving: 'Tozo2 Hersteltermijn',
+    labels: herstelTermijnLabels,
+    documentTitle: 'Brief meer informatie',
+    product: 'Tozo 2',
+    productSpecific: '',
+    stepType: 'herstelTermijn',
+  },
+  '175341': {
+    omschrijving: 'Tozo2 Intrekken',
+    labels: intrekkenLabels,
+    documentTitle: 'Brief intrekken Tozo 2 aanvraag',
+    product: 'Tozo 2',
+    productSpecific: 'aanvraag',
+    stepType: 'intrekken',
+  },
+  '175342': {
+    omschrijving: 'Tozo2 Buiten behandeling laten',
+    labels: buitenBehandelingLabels,
+    documentTitle: 'Besluit buiten behandeling',
+    product: 'Tozo 2',
+    productSpecific: '',
+    stepType: 'besluit',
+  },
+  '175343': {
+    omschrijving: 'Tozo2 Terugvordering voorschot',
+    labels: afwijzenLabels,
+    documentTitle: 'Besluit terugvordering',
+    product: 'Tozo 2',
+    productSpecific: '',
+    stepType: 'besluit',
+  },
+  '175344': {
+    omschrijving: 'Tozo2 Intrekken met terugvordering voorschot',
+    labels: intrekkenLabels,
+    documentTitle: 'Besluit intrekking met terugbetaling',
+    product: 'Tozo 2',
+    productSpecific: 'aanvraag',
+    stepType: 'intrekken',
+  },
+  '175345': {
+    omschrijving: 'Tozo2 Toekennen voorschot via batch',
+    labels: voorschotToekennenLabels,
+    documentTitle: 'Brief betaling voorschot',
+    product: 'Tozo 2',
+    productSpecific: 'voorschot',
+    stepType: 'voorschot',
+  },
+  '175346': {
+    omschrijving: 'Tozo2 Toekennen voorschot',
+    labels: voorschotToekennenLabels,
+    documentTitle: 'Brief betaling voorschot',
+    product: 'Tozo 2',
+    productSpecific: 'voorschot',
+    stepType: 'voorschot',
+  },
+  '175347': {
+    omschrijving: 'Tozo2 Toekennen via batch',
+    labels: toekennenLabels,
+    documentTitle: 'Besluit toekenning uitkering',
+    product: 'Tozo 2',
+    productSpecific: 'uitkering',
+    stepType: 'besluit',
   },
 };

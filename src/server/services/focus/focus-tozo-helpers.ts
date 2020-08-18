@@ -25,18 +25,17 @@ export function getProductTitleForDocument(document: FocusTozoDocument) {
   return labelSet.product;
 }
 
-function transformDescriptionKey(description: string) {
-  return description.replace(/\s/g, '').toLowerCase();
+function transformKey(documentCodeId: string) {
+  return documentCodeId.replace(/\s/g, '').toLowerCase();
 }
 
 export function getLabelSet(
   document: FocusTozoDocument
 ): FocusTozoLabelSet | null {
   const labelSetEntry = Object.entries(tozoDocumentLabelSet).find(
-    ([description]) => {
+    ([documentCodeId]) => {
       return (
-        transformDescriptionKey(description) ===
-        transformDescriptionKey(document.description)
+        transformKey(documentCodeId) === transformKey(document.documentCodeId)
       );
     }
   );

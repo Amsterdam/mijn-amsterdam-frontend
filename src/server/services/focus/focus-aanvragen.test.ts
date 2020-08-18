@@ -20,38 +20,6 @@ import {
 const testData: FocusProductFromSource[] = [
   {
     _id: '123123123',
-    dienstverleningstermijn: 28,
-    inspanningsperiode: 28,
-    naam: 'Voorschot Tozo (voor ondernemers) (Eenm.)',
-    processtappen: {
-      aanvraag: {
-        datum: '2020-04-03T00:00:00',
-        document: [],
-      },
-      beslissing: {
-        datum: '2020-04-03T00:00:00',
-        document: [
-          {
-            $ref: 'focus/document?id=660000000000027&isBulk=false&isDms=false',
-            id: 660000000000027,
-            isBulk: false,
-            isDms: false,
-            omschrijving: 'Voorschot Tozo (voor ondernemers) (Eenm.)',
-          },
-        ],
-      },
-      bezwaar: null,
-      herstelTermijn: null,
-      inBehandeling: {
-        datum: '2020-04-03T00:00:00',
-        document: [],
-      },
-    },
-    soortProduct: 'Bijzondere Bijstand',
-    typeBesluit: 'Toekenning',
-  },
-  {
-    _id: '123123123',
     dienstverleningstermijn: 42,
     inspanningsperiode: 28,
     naam: 'Stadspas',
