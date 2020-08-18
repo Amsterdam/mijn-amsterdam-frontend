@@ -32,6 +32,7 @@ export interface FocusDocumentFromSource {
   isBulk: boolean;
   isDms: boolean;
   omschrijving: string;
+  documentCodeId: string;
 }
 
 export interface FocusProductStepFromSource {
