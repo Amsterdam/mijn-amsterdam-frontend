@@ -312,7 +312,7 @@ Array [
   Object {
     "caseType": "TVM - RVV - Object",
     "dateDecision": "2020-07-02",
-    "dateEnd": undefined,
+    "dateEnd": "2020-07-02",
     "dateFrom": "2020-07-02",
     "dateRequest": "2020-06-24T00:00:00",
     "decision": "Verleend",
@@ -334,7 +334,7 @@ Array [
   Object {
     "caseType": "TVM - RVV - Object",
     "dateDecision": "2020-06-24",
-    "dateEnd": undefined,
+    "dateEnd": "2020-07-02",
     "dateFrom": "2020-07-02",
     "dateRequest": "2020-06-24T00:00:00",
     "decision": "Ingetrokken",
@@ -356,7 +356,7 @@ Array [
   Object {
     "caseType": "TVM - RVV - Object",
     "dateDecision": "2020-07-01",
-    "dateEnd": undefined,
+    "dateEnd": "2020-07-02",
     "dateFrom": "2020-07-02",
     "dateRequest": "2020-06-24T00:00:00",
     "decision": "Niet verleend",
@@ -378,7 +378,7 @@ Array [
   Object {
     "caseType": "TVM - RVV - Object",
     "dateDecision": "2020-07-02",
-    "dateEnd": undefined,
+    "dateEnd": "2020-07-02",
     "dateFrom": "2020-07-02",
     "dateRequest": "2020-06-24T00:00:00",
     "decision": "Verleend",
@@ -400,7 +400,7 @@ Array [
   Object {
     "caseType": "TVM - RVV - Object",
     "dateDecision": null,
-    "dateEnd": undefined,
+    "dateEnd": "2020-07-02",
     "dateFrom": "2020-07-02",
     "dateRequest": "2020-06-24T00:00:00",
     "decision": null,
@@ -422,7 +422,7 @@ Array [
   Object {
     "caseType": "TVM - RVV - Object",
     "dateDecision": null,
-    "dateEnd": undefined,
+    "dateEnd": "2020-07-02",
     "dateFrom": "2020-07-02",
     "dateRequest": "2020-06-24T00:00:00",
     "decision": null,
@@ -444,7 +444,7 @@ Array [
   Object {
     "caseType": "TVM - RVV - Object",
     "dateDecision": null,
-    "dateEnd": undefined,
+    "dateEnd": null,
     "dateFrom": null,
     "dateRequest": "2020-06-24T00:00:00",
     "decision": null,
@@ -466,7 +466,7 @@ Array [
   Object {
     "caseType": "TVM - RVV - Object",
     "dateDecision": null,
-    "dateEnd": undefined,
+    "dateEnd": "2020-07-02",
     "dateFrom": "2020-07-02",
     "dateRequest": "2020-06-24T00:00:00",
     "decision": null,
@@ -488,7 +488,7 @@ Array [
   Object {
     "caseType": "TVM - RVV - Object",
     "dateDecision": null,
-    "dateEnd": undefined,
+    "dateEnd": "2020-07-02",
     "dateFrom": "2020-07-02",
     "dateRequest": "2020-06-24T00:00:00",
     "decision": null,
@@ -510,7 +510,7 @@ Array [
   Object {
     "caseType": "TVM - RVV - Object",
     "dateDecision": "2020-06-25",
-    "dateEnd": undefined,
+    "dateEnd": "2020-06-25",
     "dateFrom": "2020-06-25",
     "dateRequest": "2020-06-17T00:00:00",
     "decision": "Verleend",
@@ -532,7 +532,7 @@ Array [
   Object {
     "caseType": "TVM - RVV - Object",
     "dateDecision": null,
-    "dateEnd": undefined,
+    "dateEnd": "2020-06-16",
     "dateFrom": "2020-06-16",
     "dateRequest": "2020-06-08T00:00:00",
     "decision": null,
@@ -554,7 +554,7 @@ Array [
   Object {
     "caseType": "TVM - RVV - Object",
     "dateDecision": null,
-    "dateEnd": undefined,
+    "dateEnd": null,
     "dateFrom": null,
     "dateRequest": "2020-05-06T00:00:00",
     "decision": null,
@@ -576,7 +576,7 @@ Array [
   Object {
     "caseType": "TVM - RVV - Object",
     "dateDecision": null,
-    "dateEnd": undefined,
+    "dateEnd": null,
     "dateFrom": null,
     "dateRequest": "2020-05-03T00:00:00",
     "decision": null,
@@ -598,7 +598,7 @@ Array [
   Object {
     "caseType": "TVM - RVV - Object",
     "dateDecision": "2019-12-05",
-    "dateEnd": undefined,
+    "dateEnd": "2020-12-31",
     "dateFrom": "2019-12-19",
     "dateRequest": "2019-12-31T00:00:00",
     "decision": "Verleend",
@@ -620,7 +620,7 @@ Array [
   Object {
     "caseType": "TVM - RVV - Object",
     "dateDecision": "2019-06-21",
-    "dateEnd": undefined,
+    "dateEnd": "2020-07-02",
     "dateFrom": "2020-07-02",
     "dateRequest": "2019-06-13T00:00:00",
     "decision": "Verleend",
