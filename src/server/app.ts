@@ -11,7 +11,7 @@ import express, {
 } from 'express';
 import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { apiErrorResult } from '../universal/helpers';
-import { BFF_BASE_PATH, BFF_PORT } from './config';
+import { BFF_BASE_PATH, BFF_PORT, BffEndpoints } from './config';
 import {
   clearSession,
   exitEarly,
@@ -39,6 +39,8 @@ const options: Sentry.NodeOptions = {
 Sentry.init(options);
 
 const app = express();
+
+initWebsocketRouter();
 
 app.set('trust proxy', true);
 app.use(Sentry.Handlers.requestHandler() as RequestHandler);

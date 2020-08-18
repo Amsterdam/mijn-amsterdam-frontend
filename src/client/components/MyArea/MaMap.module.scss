@@ -1,0 +1,11 @@
+@import '../../styles/_global.scss';
+
+:global(.leaflet-tile-pane) {
+  z-index: z-index(map-tile-layer);
+}
+
+
+.MapContainer {
+  border: 1px solid red;
+  height: 100%;
+}

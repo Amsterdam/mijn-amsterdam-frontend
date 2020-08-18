@@ -1,5 +1,7 @@
 import L, { DivIcon, Icon } from 'leaflet';
 import { capitalizeFirstLetter } from '../../../universal/helpers';
+import styles from './MyAreaSuperCluster.module.scss';
+import classnames from 'classnames';
 
 export interface DatasetItem {
   id: string;
@@ -34,12 +36,24 @@ export interface DatasetControlItem {
   datasets: MapDataset[];
 }
 
-export function createMarkerIcon(label: string, className?: string) {
+interface createMarkerOptions {
+  label: string;
+  className?: string;
+  iconSize?: [number, number];
+  iconAnchor?: [number, number];
+}
+
+export function createMarkerIcon({
+  label,
+  className,
+  iconSize = [40, 40],
+  iconAnchor = [20, 20],
+}: createMarkerOptions) {
   return L.divIcon({
-    className: 'icoontje-icon',
-    iconSize: [30, 30],
-    html: `<span class="icoontje-html">${label}</span>`,
-    iconAnchor: [15, 15],
+    className: classnames(styles.MarkerIcon, className),
+    iconSize,
+    html: `<span class="${styles.MarkerIconLabel}">${label}</span>`,
+    iconAnchor,
   });
 }
 
@@ -78,7 +92,8 @@ const defaultDataset = (
     id,
     isLoading: true,
     items: [],
-    icon: (item: any) => createMarkerIcon('1', 'icoontje'),
+    icon: (item: any) =>
+      createMarkerIcon({ label: '1', className: 'icoontje' }),
     title: capitalizeFirstLetter(id),
     datasetType,
     isActive,

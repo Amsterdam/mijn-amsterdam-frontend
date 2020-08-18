@@ -35,6 +35,7 @@
     }
   },
   "dependencies": {
+    "@datapunt/arm-cluster": "^0.3.5",
     "@datapunt/arm-core": "^0.3.5",
     "@datapunt/asc-assets": "^0.23.0-alpha.1",
     "@datapunt/asc-ui": "^0.23.0-alpha.1",
@@ -62,8 +63,10 @@
     "@types/react-transition-group": "^4.4.0",
     "@types/sanitize-html": "^1.23.3",
     "@types/styled-components": "^5.1.2",
+    "@types/supercluster": "^5.0.2",
     "@types/throttle-debounce": "^2.1.0",
     "@types/uid-safe": "^2.1.2",
+    "@types/ws": "^7.2.6",
     "axios": "^0.19.2",
     "axios-mock-adapter": "^1.18.2",
     "body-parser": "^1.19.0",
@@ -78,6 +81,7 @@
     "js-cookie": "^2.2.1",
     "jw-paginate": "^1.0.4",
     "leaflet": "^1.6.0",
+    "leaflet.markercluster": "^1.4.1",
     "memory-cache": "^0.2.0",
     "proj4": "^2.6.2",
     "react": "^16.13.1",
@@ -93,11 +97,13 @@
     "scrape-it": "^5.2.3",
     "slugme": "^1.1.1",
     "styled-components": "^5.1.1",
+    "supercluster": "^7.1.0",
     "throttle-debounce": "^2.2.1",
     "typescript": "^3.9.7",
     "uid-safe": "^2.1.5",
     "use-debounce": "^3.4.3",
-    "use-media": "^1.4.0"
+    "use-media": "^1.4.0",
+    "ws": "^7.3.1"
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^3.4.1",

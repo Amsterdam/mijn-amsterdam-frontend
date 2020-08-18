@@ -14,6 +14,7 @@ import {
 import { clearSessionCache } from './source-api-request';
 
 export function isValidRequestPath(requestPath: string, path: string) {
+  console.log('mathc', requestPath, `${BFF_BASE_PATH}${path}`);
   return (
     requestPath === npath.join(BFF_BASE_PATH, path) ||
     requestPath ===
@@ -28,13 +29,14 @@ export function isValidRequestPath(requestPath: string, path: string) {
 }
 
 export function isBffEndpoint(requestPath: string) {
-  return Object.values(BffEndpoints).some(path =>
+  console.log('sbb', requestPath);
+  return Object.values(BffEndpoints).some((path) =>
     isValidRequestPath(requestPath, path)
   );
 }
 
 export function isBffPublicEndpoint(requestPath: string) {
-  return PUBLIC_BFF_ENDPOINTS.some(path =>
+  return PUBLIC_BFF_ENDPOINTS.some((path) =>
     isValidRequestPath(requestPath, path)
   );
 }
@@ -124,11 +126,11 @@ export function addServiceResultHandler(
   serviceName: string
 ) {
   return servicePromise
-    .then(data => {
+    .then((data) => {
       sendMessage(res, serviceName, 'message', data);
       return data;
     })
-    .catch(error =>
+    .catch((error) =>
       Sentry.captureException(error, {
         extra: { module: 'services-sse', serviceName },
       })
