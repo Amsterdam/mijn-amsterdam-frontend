@@ -4,13 +4,15 @@
   [class*='InfoPanel_InfoPanelTable'] + [class*='InfoPanel_InfoPanelTable'] {
     margin-top: 10rem;
   }
-  [class*='InfoPanelTableRow__voornamen'] {
+  @include mq-desktop() {
+    [class*='InfoPanelTableRow__voornamen'] {
       th,
       th span,
       td {
         padding-top: 3rem;
       }
     }
+  }
 }
 
 .Intro {
