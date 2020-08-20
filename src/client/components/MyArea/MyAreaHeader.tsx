@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
-import { IconClose } from '../../assets/icons';
 import { ReactComponent as Logo } from '../../assets/images/logo-amsterdam.svg';
-import Linkd from '../Button/Button';
+import { Button } from '../Button/Button';
 import styles from './MyArea.module.scss';
 
 export default function MyAreaHeader() {
+  const history = useHistory();
   return (
     <div className={styles.Header}>
       <Link
@@ -21,9 +21,9 @@ export default function MyAreaHeader() {
         />
         <h1 className={styles.Title}>Mijn buurt</h1>
       </Link>
-      <Linkd iconPosition="right" icon={IconClose} href={AppRoutes.ROOT}>
-        Sluit kaart
-      </Linkd>
+      <Button onClick={() => history.push(AppRoutes.ROOT)}>
+        Kaart sluiten
+      </Button>
     </div>
   );
 }
