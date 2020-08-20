@@ -106,6 +106,7 @@ export default () => {
           }
           return apiSuccesResult(
             content.map((document: VergunningDocument) =>
+              // Some documents don't have titles, assign a default title.
               Object.assign(document, { title: document.title || 'Document' })
             )
           );
