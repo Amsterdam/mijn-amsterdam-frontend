@@ -156,7 +156,7 @@ export default function Profile() {
       {!!brpProfileData?.kinderen && brpProfileData.kinderen.length && (
         <InfoPanelCollapsible
           id="profile-kinderen"
-          className={classnames(styles.Verbintenis, styles.CollapsiblePanel)}
+          className={styles.CollapsiblePanel}
           {...formatInfoPanelConfig(panelConfig.kinderen, BRP)}
           panelData={brpProfileData.kinderen}
         />
