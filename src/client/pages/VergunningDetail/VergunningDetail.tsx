@@ -81,6 +81,7 @@ function useVergunningStatusLineItems(VergunningItem?: Vergunning) {
 
 export default () => {
   const { VERGUNNINGEN } = useAppStateGetter();
+  // Set-up the documents api source
   const [
     {
       data: { content: documents },
@@ -101,6 +102,7 @@ export default () => {
   const statusLineItems = useVergunningStatusLineItems(VergunningItem);
   const documentsUrl = VergunningItem?.documentsUrl;
 
+  // Fetch the documents for this Item
   useEffect(() => {
     if (documentsUrl) {
       fetchDocuments({
