@@ -11,7 +11,11 @@ import {
   isError,
   isLoading,
 } from '../../../universal/helpers';
-import { apiPristineResult, ApiResponse } from '../../../universal/helpers/api';
+import {
+  apiPristineResult,
+  ApiResponse,
+  apiSuccesResult,
+} from '../../../universal/helpers/api';
 import {
   Alert,
   ChapterIcon,
@@ -80,12 +84,13 @@ export default () => {
   const [
     {
       data: { content: documents },
+      isLoading: isLoadingDocuments,
     },
     fetchDocuments,
   ] = useDataApi<ApiResponse<VergunningDocument[]>>({}, apiPristineResult([]));
   const { id } = useParams();
 
-  const VergunningItem = VERGUNNINGEN.content?.find((item) => item.id === id);
+  const VergunningItem = VERGUNNINGEN.content?.find(item => item.id === id);
   const noContent = !isLoading(VERGUNNINGEN) && !VergunningItem;
 
   const statusLineItems = useVergunningStatusLineItems(VergunningItem);
@@ -95,6 +100,16 @@ export default () => {
     if (documentsUrl) {
       fetchDocuments({
         url: directApiUrl(documentsUrl),
+        transformResponse: ({ content }) => {
+          if (!content) {
+            return [];
+          }
+          return apiSuccesResult(
+            content.map((document: VergunningDocument) =>
+              Object.assign(document, { title: document.title || 'Document' })
+            )
+          );
+        },
       });
     }
   }, [documentsUrl, fetchDocuments]);
@@ -153,13 +168,25 @@ export default () => {
         {!!VergunningItem?.decision && (
           <InfoDetail label="Resultaat" value={VergunningItem.decision} />
         )}
-        {!!documents?.length && (
-          <InfoDetail
-            el="div"
-            label="Documenten"
-            value={<DocumentList documents={documents} isExpandedView={true} />}
-          />
-        )}
+
+        <InfoDetail
+          el="div"
+          label="Documenten"
+          value={
+            isLoadingDocuments ? (
+              <LoadingContent
+                barConfig={[
+                  ['100%', '2rem', '1rem'],
+                  ['100%', '2rem', '1rem'],
+                ]}
+              />
+            ) : !!documents?.length ? (
+              <DocumentList documents={documents} isExpandedView={true} />
+            ) : (
+              <span>Geen documenten beschikbaar</span>
+            )
+          }
+        />
       </PageContent>
       {!!statusLineItems.length && (
         <StatusLine

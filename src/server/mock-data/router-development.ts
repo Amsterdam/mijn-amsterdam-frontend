@@ -7,7 +7,9 @@ export const routerDevelopment = express.Router();
 routerDevelopment.get(
   '/decosjoin/listdocuments/:key',
   (req: Request, res: Response, next: NextFunction) => {
-    res.json(VergunningenDocuments);
-    next();
+    setTimeout(() => {
+      res.json(VergunningenDocuments);
+      next();
+    }, 2000);
   }
 );
