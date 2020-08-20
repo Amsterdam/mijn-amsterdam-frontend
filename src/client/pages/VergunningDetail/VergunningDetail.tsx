@@ -87,7 +87,12 @@ export default () => {
       isLoading: isLoadingDocuments,
     },
     fetchDocuments,
-  ] = useDataApi<ApiResponse<VergunningDocument[]>>({}, apiPristineResult([]));
+  ] = useDataApi<ApiResponse<VergunningDocument[]>>(
+    {
+      postpone: true,
+    },
+    apiPristineResult([])
+  );
   const { id } = useParams();
 
   const VergunningItem = VERGUNNINGEN.content?.find(item => item.id === id);
