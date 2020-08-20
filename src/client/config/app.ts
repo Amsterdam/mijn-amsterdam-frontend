@@ -20,6 +20,8 @@ export const ExternalUrls = {
     'https://www.amsterdam.nl/bestuur-organisatie/werkenbij/',
   ZORG_LEES_MEER: 'https://www.amsterdam.nl/zorg-ondersteuning/',
   SSO_BELASTINGEN: 'https://belastingbalie.amsterdam.nl/digid.saml.php?start',
+  EH_SSO_BELASTINGEN:
+    'https://belastingbalie.amsterdam.nl/eherkenning.saml.php?start',
   SSO_MILIEUZONE: getOtapEnvItem('ssoMilieuzoneUrl'),
   MIJN_SUBSIDIES: 'https://mijnsubsidies.amsterdam.nl/loket/',
   MIJN_AMSTERDAM_VEELGEVRAAGD:
