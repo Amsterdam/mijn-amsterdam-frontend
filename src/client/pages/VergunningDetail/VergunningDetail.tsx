@@ -11,7 +11,11 @@ import {
   isError,
   isLoading,
 } from '../../../universal/helpers';
-import { apiPristineResult, ApiResponse } from '../../../universal/helpers/api';
+import {
+  apiPristineResult,
+  ApiResponse,
+  apiSuccesResult,
+} from '../../../universal/helpers/api';
 import {
   Alert,
   ChapterIcon,
@@ -77,24 +81,43 @@ function useVergunningStatusLineItems(VergunningItem?: Vergunning) {
 
 export default () => {
   const { VERGUNNINGEN } = useAppStateGetter();
+  // Set-up the documents api source
   const [
     {
       data: { content: documents },
+      isLoading: isLoadingDocuments,
     },
     fetchDocuments,
-  ] = useDataApi<ApiResponse<VergunningDocument[]>>({}, apiPristineResult([]));
+  ] = useDataApi<ApiResponse<VergunningDocument[]>>(
+    {
+      postpone: true,
+    },
+    apiPristineResult([])
+  );
   const { id } = useParams();
 
-  const VergunningItem = VERGUNNINGEN.content?.find((item) => item.id === id);
+  const VergunningItem = VERGUNNINGEN.content?.find(item => item.id === id);
   const noContent = !isLoading(VERGUNNINGEN) && !VergunningItem;
 
   const statusLineItems = useVergunningStatusLineItems(VergunningItem);
   const documentsUrl = VergunningItem?.documentsUrl;
 
+  // Fetch the documents for this Item
   useEffect(() => {
     if (documentsUrl) {
       fetchDocuments({
         url: directApiUrl(documentsUrl),
+        transformResponse: ({ content }) => {
+          if (!content) {
+            return [];
+          }
+          return apiSuccesResult(
+            content.map((document: VergunningDocument) =>
+              // Some documents don't have titles, assign a default title.
+              Object.assign(document, { title: document.title || 'Document' })
+            )
+          );
+        },
       });
     }
   }, [documentsUrl, fetchDocuments]);
@@ -153,13 +176,25 @@ export default () => {
         {!!VergunningItem?.decision && (
           <InfoDetail label="Resultaat" value={VergunningItem.decision} />
         )}
-        {!!documents?.length && (
-          <InfoDetail
-            el="div"
-            label="Documenten"
-            value={<DocumentList documents={documents} isExpandedView={true} />}
-          />
-        )}
+
+        <InfoDetail
+          el="div"
+          label="Documenten"
+          value={
+            isLoadingDocuments ? (
+              <LoadingContent
+                barConfig={[
+                  ['100%', '2rem', '1rem'],
+                  ['100%', '2rem', '1rem'],
+                ]}
+              />
+            ) : !!documents?.length ? (
+              <DocumentList documents={documents} isExpandedView={true} />
+            ) : (
+              <span>Geen documenten beschikbaar</span>
+            )
+          }
+        />
       </PageContent>
       {!!statusLineItems.length && (
         <StatusLine

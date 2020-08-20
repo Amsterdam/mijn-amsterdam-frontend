@@ -13,8 +13,40 @@ Object {
         "to": "/inkomen-en-stadspas/tozo/3046246265",
       },
       "productTitle": "Tozo 1",
-      "status": "Aanvraag",
+      "status": "Besluit",
       "steps": Array [
+        Object {
+          "datePublished": "2018-11-17T00:00:00+01:00",
+          "description": "<p>
+        Wij hebben uw aanvraag Tozo 1 ontvangen.
+      </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2018-11-17T00:00:00+01:00",
+              "id": "2180620381",
+              "title": "Ontvangst- bevestiging Aanvraag
+17 november om 00:00 uur",
+              "type": "PDF",
+              "url": "/api/focus/document?id=218062038",
+            },
+            Object {
+              "datePublished": "2018-11-17T00:00:00+01:00",
+              "id": "2180620382",
+              "title": "Ontvangst- bevestiging Aanvraag
+17 november om 00:00 uur",
+              "type": "PDF",
+              "url": "/api/focus/document?id=218062038",
+            },
+          ],
+          "id": "4173753142",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben uw aanvraag Tozo 1 ontvangen op 17 november om 00:00 uur",
+          "notificationTitle": "Wij hebben uw aanvraag Tozo 1 ontvangen",
+          "product": "Tozo 1",
+          "status": "Aanvraag",
+          "title": "aanvraag",
+        },
         Object {
           "datePublished": "2018-11-17T00:00:00+01:00",
           "description": "<p>
@@ -314,38 +346,6 @@ Object {
           "status": "Besluit",
           "title": "besluit",
         },
-        Object {
-          "datePublished": "2018-11-17T00:00:00+01:00",
-          "description": "<p>
-        Wij hebben uw aanvraag Tozo 1 ontvangen.
-      </p>",
-          "documents": Array [
-            Object {
-              "datePublished": "2018-11-17T00:00:00+01:00",
-              "id": "2180620381",
-              "title": "Ontvangst- bevestiging Aanvraag
-17 november om 00:00 uur",
-              "type": "PDF",
-              "url": "/api/focus/document?id=218062038",
-            },
-            Object {
-              "datePublished": "2018-11-17T00:00:00+01:00",
-              "id": "2180620382",
-              "title": "Ontvangst- bevestiging Aanvraag
-17 november om 00:00 uur",
-              "type": "PDF",
-              "url": "/api/focus/document?id=218062038",
-            },
-          ],
-          "id": "4173753142",
-          "isActive": true,
-          "isChecked": true,
-          "notificationDescription": "Wij hebben uw aanvraag Tozo 1 ontvangen op 17 november om 00:00 uur",
-          "notificationTitle": "Wij hebben uw aanvraag Tozo 1 ontvangen",
-          "product": "Tozo 1",
-          "status": "Aanvraag",
-          "title": "aanvraag",
-        },
       ],
       "title": "Tozo 1 (aangevraagd voor 1 juni 2020)",
       "type": "Tozo",
@@ -360,8 +360,32 @@ Object {
         "to": "/inkomen-en-stadspas/tozo/1546677329",
       },
       "productTitle": "Tozo 2",
-      "status": "Aanvraag",
+      "status": "Besluit",
       "steps": Array [
+        Object {
+          "datePublished": "2018-11-17T00:00:00+01:00",
+          "description": "<p>
+        Wij hebben uw aanvraag Tozo 2 ontvangen.
+      </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2018-11-17T00:00:00+01:00",
+              "id": "2180620383",
+              "title": "Ontvangst- bevestiging Aanvraag
+17 november om 00:00 uur",
+              "type": "PDF",
+              "url": "/api/focus/document?id=218062038",
+            },
+          ],
+          "id": "3187354391",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben uw aanvraag Tozo 2 ontvangen op 17 november om 00:00 uur",
+          "notificationTitle": "Wij hebben uw aanvraag Tozo 2 ontvangen",
+          "product": "Tozo 2",
+          "status": "Aanvraag",
+          "title": "aanvraag",
+        },
         Object {
           "datePublished": "2018-11-17T00:00:00+01:00",
           "description": "<p>
@@ -616,30 +640,6 @@ Object {
           "product": "Tozo 2",
           "status": "Besluit",
           "title": "besluit",
-        },
-        Object {
-          "datePublished": "2018-11-17T00:00:00+01:00",
-          "description": "<p>
-        Wij hebben uw aanvraag Tozo 2 ontvangen.
-      </p>",
-          "documents": Array [
-            Object {
-              "datePublished": "2018-11-17T00:00:00+01:00",
-              "id": "2180620383",
-              "title": "Ontvangst- bevestiging Aanvraag
-17 november om 00:00 uur",
-              "type": "PDF",
-              "url": "/api/focus/document?id=218062038",
-            },
-          ],
-          "id": "3187354391",
-          "isActive": true,
-          "isChecked": true,
-          "notificationDescription": "Wij hebben uw aanvraag Tozo 2 ontvangen op 17 november om 00:00 uur",
-          "notificationTitle": "Wij hebben uw aanvraag Tozo 2 ontvangen",
-          "product": "Tozo 2",
-          "status": "Aanvraag",
-          "title": "aanvraag",
         },
       ],
       "title": "Tozo 2 (aangevraagd na 1 juni 2020)",
