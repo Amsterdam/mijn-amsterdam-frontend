@@ -6,6 +6,8 @@ import { getOtapEnvItem } from '../../../universal/config/env';
 import { IconHome } from '../../assets/icons';
 import Heading from '../Heading/Heading';
 import styles from './MyArea.module.scss';
+import MyArea2MapDashboard from './MyArea2Dashboard';
+import { MyArea2Loader } from './MyArea2loader';
 
 function MyAreaLoader() {
   const profileType = useProfileTypeValue();
