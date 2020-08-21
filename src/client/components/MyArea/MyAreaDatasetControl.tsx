@@ -1,12 +1,12 @@
+import { Checkbox, Label } from '@datapunt/asc-ui';
 import React from 'react';
-import {
-  MapDataset,
-  DATASET_CONTROL_ITEMS,
-  DatasetControlItem,
-} from './datasets';
+import { atom, selector, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { Checkbox, Label, Icon, themeSpacing } from '@datapunt/asc-ui';
-import { atom, selector, useSetRecoilState, useRecoilValue } from 'recoil';
+import {
+  DatasetControlItem,
+  DATASET_CONTROL_ITEMS,
+  MapDataset,
+} from './datasets';
 
 export const datasetControlItemsAtom = atom({
   key: 'datasetControlItems',
