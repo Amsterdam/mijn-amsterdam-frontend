@@ -2,9 +2,9 @@ import {
   BaseLayer,
   BaseLayerToggle,
   Map,
-  MapPanelProvider,
   ViewerContainer,
   Zoom,
+  MapPanelProvider,
 } from '@datapunt/arm-core';
 import { SnapPoint } from '@datapunt/arm-core/es/components/MapPanel/constants';
 import {

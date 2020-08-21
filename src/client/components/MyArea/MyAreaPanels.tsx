@@ -92,7 +92,7 @@ export default function MyAreaPanels() {
   return (
     <PanelComponent>
       {isOpen(panelState.datasets) && (
-        <MaMapPanelContent title={panelState.datasets.title} animate>
+        <MaMapPanelContent animate>
           {datasetControlItems.map((controlItem) => (
             <MyAreaCollapisblePanel
               key={controlItem.id}
