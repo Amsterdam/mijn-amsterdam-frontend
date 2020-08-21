@@ -7,10 +7,14 @@ import {
   Zoom,
 } from '@datapunt/arm-core';
 import { SnapPoint } from '@datapunt/arm-core/es/components/MapPanel/constants';
+import {
+  AERIAL_AMSTERDAM_LAYERS,
+  DEFAULT_AMSTERDAM_LAYERS,
+} from '@datapunt/arm-core/lib/constants';
 import { ThemeProvider } from '@datapunt/asc-ui';
 import { themeSpacing } from '@datapunt/asc-ui/lib/utils/themeUtils';
 import 'leaflet/dist/leaflet.css';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { HOOD_ZOOM } from '../../../universal/config/map';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
@@ -20,10 +24,6 @@ import { HomeIconMarker } from './MaMarker';
 import MyAreaHeader from './MyAreaHeader';
 import MyAreaLoader from './MyAreaLoader';
 import MyAreaPanels from './MyAreaPanels';
-import {
-  AERIAL_AMSTERDAM_LAYERS,
-  DEFAULT_AMSTERDAM_LAYERS,
-} from '@datapunt/arm-core/lib/constants';
 
 const StyledViewerContainer = styled(ViewerContainer)`
   height: 100%;
@@ -51,8 +51,8 @@ const MyAreaMap = styled(Map)`
 
 export default function MyArea2() {
   const isDesktop = useDesktopScreen();
-  const [useLeafletCluster, setUseLeafletCluster] = useState(true);
-  const { HOME, KVK, BRP } = useAppStateGetter();
+  // const [useLeafletCluster, setUseLeafletCluster] = useState(true);
+  const { HOME /*KVK, BRP*/ } = useAppStateGetter();
   // const profileType = useProfileTypeValue();
   // const address =
   //   (profileType === 'private'
