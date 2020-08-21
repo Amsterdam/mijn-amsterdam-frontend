@@ -32,3 +32,10 @@ export { ReactComponent as IconTips } from './Tip.svg';
 export { ReactComponent as IconWonen } from './wonen.svg';
 export { ReactComponent as IconZorg } from './zorg.svg';
 export { ReactComponent as IconVergunningen } from './vergunningen.svg';
+
+export { ReactComponent as MapIconAfvalGlas } from './map/glas.svg';
+export { ReactComponent as MapIconAfvalGft } from './map/gft.svg';
+export { ReactComponent as MapIconAfvalPlastic } from './map/plastic.svg';
+export { ReactComponent as MapIconAfvalTextiel } from './map/textile.svg';
+export { ReactComponent as MapIconAfvalRest } from './map/trashcontainer.svg';
+export { ReactComponent as MapIconAuto } from './map/car.svg';

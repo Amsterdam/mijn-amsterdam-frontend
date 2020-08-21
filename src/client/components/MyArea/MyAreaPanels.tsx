@@ -8,6 +8,7 @@ import MyAreaCollapisblePanel, {
 import MyAreaDatasetControl, {
   datasetControlItemsAtom,
 } from './MyAreaDatasetControl';
+import styled from 'styled-components';
 
 interface MyAreaPanel {
   title: string;
@@ -50,6 +51,12 @@ function collapsedState(datasets: Array<{ isActive: boolean }>) {
     : CollapsedState.Collapsed;
 }
 
+const MaMapPanelContent = styled(MapPanelContent)`
+  & header {
+    display: none !important;
+  }
+`;
+
 export default function MyAreaPanels() {
   const isDesktop = useDesktopScreen();
   const PanelComponent = isDesktop ? MapPanel : MapPanelDrawer;
@@ -85,7 +92,7 @@ export default function MyAreaPanels() {
   return (
     <PanelComponent>
       {isOpen(panelState.datasets) && (
-        <MapPanelContent title={panelState.datasets.title} animate>
+        <MaMapPanelContent title={panelState.datasets.title} animate>
           {datasetControlItems.map((controlItem) => (
             <MyAreaCollapisblePanel
               key={controlItem.id}
@@ -95,7 +102,7 @@ export default function MyAreaPanels() {
               <MyAreaDatasetControl items={controlItem.datasets} />
             </MyAreaCollapisblePanel>
           ))}
-        </MapPanelContent>
+        </MaMapPanelContent>
       )}
     </PanelComponent>
   );

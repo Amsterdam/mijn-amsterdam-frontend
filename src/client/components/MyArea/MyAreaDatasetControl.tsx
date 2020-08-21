@@ -5,7 +5,7 @@ import {
   DatasetControlItem,
 } from './datasets';
 import styled from 'styled-components';
-import { Checkbox, Label } from '@datapunt/asc-ui';
+import { Checkbox, Label, Icon, themeSpacing } from '@datapunt/asc-ui';
 import { atom, selector, useSetRecoilState, useRecoilValue } from 'recoil';
 
 export const datasetControlItemsAtom = atom({
@@ -73,13 +73,24 @@ export interface MyAreaDatasetControlItemProps {
   item: MapDataset;
 }
 
+const LabelInner = styled.span`
+  display: flex;
+  align-items: center;
+`;
+
 function MyAreaDatasetControlItem({ item }: MyAreaDatasetControlItemProps) {
   const updateDatasetControlItems = useSetRecoilState(
     datasetControlItemsSelector
   );
+  const label = (
+    <LabelInner>
+      {item.icon}
+      {item.title}
+    </LabelInner>
+  ) as any;
   return (
     <li>
-      <Label htmlFor={item.id} label={item.title}>
+      <Label htmlFor={item.id} label={label}>
         <Checkbox
           id={item.id}
           checked={item.isActive}

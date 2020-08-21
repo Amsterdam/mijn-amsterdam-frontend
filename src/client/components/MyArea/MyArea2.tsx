@@ -107,7 +107,7 @@ export default function MyArea2() {
               />
               <MapPanelProvider
                 variant={isDesktop ? 'panel' : 'drawer'}
-                initialPosition={SnapPoint.Full}
+                initialPosition={isDesktop ? SnapPoint.Full : SnapPoint.Closed}
               >
                 <MyAreaPanels />
                 {/* {useLeafletCluster ? <MyAreaDatasets /> : <MaSuperClusterLayer />} */}
