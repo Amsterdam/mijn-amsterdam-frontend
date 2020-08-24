@@ -23,6 +23,7 @@ interface EnvVars {
   sentryDsn?: string;
   bffSentryDsn?: string;
   ssoErfpachtUrl?: string;
+  ssoErfpachtUrlEH?: string;
   ssoMilieuzoneUrl?: string;
   isMyAreaMapEnabled?: boolean;
   krefiaDirectLink?: string;
@@ -36,6 +37,10 @@ const otapServerEnv: OtapEnv = {
   development: {
     isMyAreaMapEnabled: false,
     krefiaDirectLink: 'https://krefia.amsterdam.nl',
+    ssoErfpachtUrl:
+      'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
+    ssoErfpachtUrlEH:
+      'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtZakelijk',
   },
   test: {
     isMyAreaMapEnabled: false,
@@ -49,6 +54,8 @@ const otapServerEnv: OtapEnv = {
     bffSentryDsn: process.env.BFF_SENTRY_DSN || '',
     ssoErfpachtUrl:
       'https://mijnerfpacht.acc.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
+    ssoErfpachtUrlEH:
+      'https://mijnerfpacht.acc.amsterdam.nl/saml/login/alias/mijnErfpachtZakelijk',
     ssoMilieuzoneUrl: 'https://ontheffingen-acc.amsterdam.nl/publiek/aanvragen',
     isMyAreaMapEnabled: true,
     krefiaDirectLink: 'https://krefia-acceptatie.amsterdam.nl',
@@ -61,6 +68,8 @@ const otapServerEnv: OtapEnv = {
     bffSentryDsn: process.env.BFF_SENTRY_DSN || '',
     ssoErfpachtUrl:
       'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
+    ssoErfpachtUrlEH:
+      'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtZakelijk',
     ssoMilieuzoneUrl: 'https://ontheffingen.amsterdam.nl/publiek/aanvragen',
     isMyAreaMapEnabled: true,
     krefiaDirectLink: 'https://krefia.amsterdam.nl',

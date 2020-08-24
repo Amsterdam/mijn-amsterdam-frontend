@@ -8,6 +8,7 @@ export const ExternalUrls = {
   CONTACT_FORM:
     'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx',
   SSO_ERFPACHT: getOtapEnvItem('ssoErfpachtUrl'),
+  EH_SSO_ERFPACHT: getOtapEnvItem('ssoErfpachtUrlEH'),
   BERICHTENBOX: 'https://mijn.overheid.nl/berichtenbox/inbox/',
   CONTACT_GENERAL: 'https://www.amsterdam.nl/contact/',
   AMSTERDAM_NEWSLETTER:

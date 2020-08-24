@@ -51,7 +51,14 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     id: Chapters.ERFPACHT,
     to: ExternalUrls.SSO_ERFPACHT || '',
     rel: 'external',
-    profileTypes: ['private', 'private-commercial', 'commercial'],
+    profileTypes: ['private', 'private-commercial'],
+  },
+  {
+    title: ChapterTitles.ERFPACHT,
+    id: Chapters.ERFPACHT,
+    to: ExternalUrls.EH_SSO_ERFPACHT || '',
+    rel: 'external',
+    profileTypes: ['commercial'],
   },
   {
     title: ChapterTitles.ZORG,
