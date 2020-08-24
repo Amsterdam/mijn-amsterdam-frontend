@@ -28,7 +28,6 @@ export default function useWebsocketRouter() {
   wss.on('connection', function connection(ws) {
     ws.on('message', async function onIncomingMessage(message: string) {
       const payload = JSON.parse(message);
-      console.log('payload:', payload);
       const data = await getClusterData(payload);
       ws.send(JSON.stringify(data));
     });

@@ -14,7 +14,7 @@ import {
 import { ThemeProvider } from '@datapunt/asc-ui';
 import { themeSpacing } from '@datapunt/asc-ui/lib/utils/themeUtils';
 import 'leaflet/dist/leaflet.css';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { HOOD_ZOOM } from '../../../universal/config/map';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
@@ -24,6 +24,8 @@ import { HomeIconMarker } from './MaMarker';
 import MyAreaHeader from './MyAreaHeader';
 import MyAreaLoader from './MyAreaLoader';
 import MyAreaPanels from './MyAreaPanels';
+import MyAreaDatasets from './MyAreaDatasets';
+import { MaSuperClusterLayer } from './MyAreaSuperCluster';
 
 const StyledViewerContainer = styled(ViewerContainer)`
   height: 100%;
@@ -51,7 +53,7 @@ const MyAreaMap = styled(Map)`
 
 export default function MyArea2() {
   const isDesktop = useDesktopScreen();
-  // const [useLeafletCluster, setUseLeafletCluster] = useState(true);
+  const [useLeafletCluster, setUseLeafletCluster] = useState(true);
   const { HOME /*KVK, BRP*/ } = useAppStateGetter();
   // const profileType = useProfileTypeValue();
   // const address =
@@ -90,11 +92,11 @@ export default function MyArea2() {
               <StyledViewerContainer
                 bottomRight={
                   <>
-                    {/* <button
+                    <button
                       onClick={() => setUseLeafletCluster(!useLeafletCluster)}
                     >
                       {useLeafletCluster ? 'LC' : 'SC'}
-                    </button> */}
+                    </button>
                     <Zoom />
                   </>
                 }
@@ -110,7 +112,11 @@ export default function MyArea2() {
                 initialPosition={isDesktop ? SnapPoint.Full : SnapPoint.Closed}
               >
                 <MyAreaPanels />
-                {/* {useLeafletCluster ? <MyAreaDatasets /> : <MaSuperClusterLayer />} */}
+                {useLeafletCluster ? (
+                  <MyAreaDatasets />
+                ) : (
+                  <MaSuperClusterLayer />
+                )}
               </MapPanelProvider>
             </MyAreaMap>
           ) : (

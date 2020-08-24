@@ -1,52 +1,46 @@
-import { Icon, themeSpacing } from '@datapunt/asc-ui';
+import { themeSpacing } from '@datapunt/asc-ui';
 import themeColors from '@datapunt/asc-ui/es/theme/default/colors';
 import classnames from 'classnames';
-import L, { DivIcon } from 'leaflet';
-import React, { ReactNode } from 'react';
+import L, { Marker, LatLngTuple } from 'leaflet';
+import React, { ReactElement, ReactNode } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import styled from 'styled-components';
 import { capitalizeFirstLetter } from '../../../universal/helpers';
-import styles from './MyAreaSuperCluster.module.scss';
 import {
-  MapIconAfvalRest,
-  MapIconAfvalTextiel,
-  MapIconAfvalPlastic,
-  MapIconAuto,
   MapIconAfvalGft,
   MapIconAfvalGlas,
+  MapIconAfvalPlastic,
+  MapIconAfvalRest,
+  MapIconAfvalTextiel,
+  MapIconAuto,
 } from '../../assets/icons';
+import styles from './MyAreaSuperCluster.module.scss';
 
-export interface DatasetItem {
+export type DatasetSource = Record<string, LatLngTuple[]>;
+
+export interface DatasetsSource {
   id: string;
-  title: string;
-  latLng: LatLngObject;
-  type: string;
-  [key: string]: any;
+  collection: DatasetSource;
 }
 
-export interface Dataset {
+export type Dataset = Record<string, Marker[]>;
+
+export interface Datasets {
   id: string;
-  items: DatasetItem[];
+  collection: Dataset;
 }
 
-type MapDatasetIcon = L.Icon | DivIcon | ((item: any) => L.Icon | DivIcon);
-
-export interface MapDataset extends Dataset {
+export interface DatasetControl {
+  id: string;
+  isActive: boolean;
   title: string;
   icon: ReactNode;
-  createMarkerIcon: MapDatasetIcon;
-  isLoading: boolean;
-  isActive: boolean;
-  datasetType: 'superCluster' | 'shapes';
-}
-
-export interface MapDatasetItem extends DatasetItem {
-  icon: MapDatasetIcon;
 }
 
 export interface DatasetControlItem {
   id: string;
   title: string;
-  datasets: MapDataset[];
+  collection: DatasetControl[];
 }
 
 interface createMarkerOptions {
@@ -124,7 +118,7 @@ const DatasetIconTriangle = styled(DatasetIconSquare)`
   border-color: transparent transparent ${(props) => props.color};
 `;
 
-const datasetIcons: Record<string, ReactNode> = {
+const datasetIcons: Record<string, ReactElement<any>> = {
   rest: (
     <DatasetIcon style={{ backgroundColor: themeColors.tint.level6 }}>
       <MapIconAfvalRest fill={themeColors.tint.level1} />
@@ -257,25 +251,25 @@ const datasetIcons: Record<string, ReactNode> = {
   ),
 };
 
-function getIcon(id: string) {
+export const datasetIconHtml = Object.fromEntries(
+  Object.entries(datasetIcons).map(([datasetId, icon]) => {
+    return [datasetId, renderToStaticMarkup(icon)];
+  })
+);
+
+export function getIcon(id: string) {
   return datasetIcons[id] || <></>;
 }
 
-const defaultDataset = (
-  groupId: string,
-  datasetType: MapDataset['datasetType'],
-  isActive: boolean = true,
-  id: string
-) => {
+export function getIconHtml(id: string) {
+  return datasetIconHtml[id] || '';
+}
+
+const createDatasetControl = (id: string, isActive: boolean = true) => {
   return {
     id,
-    isLoading: true,
-    items: [],
     icon: getIcon(id),
-    createMarkerIcon: (item: any) =>
-      createMarkerIcon({ label: '1', className: 'icoontje' }),
     title: capitalizeFirstLetter(id),
-    datasetType,
     isActive,
   };
 };
@@ -284,31 +278,29 @@ export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
   {
     id: 'parkeren',
     title: 'Parkeren',
-    datasets: DATASETS.parkeren.map(
-      defaultDataset.bind(null, 'parkeren', 'shapes', false)
-    ),
+    collection: DATASETS.parkeren.map((id) => createDatasetControl(id, false)),
   },
   {
     id: 'afvalcontainers',
     title: 'Afvalcontainers',
-    datasets: DATASETS.afvalcontainers.map(
-      defaultDataset.bind(null, 'afvalcontainers', 'superCluster', true)
+    collection: DATASETS.afvalcontainers.map((id) =>
+      createDatasetControl(id, true)
     ),
   },
 
   {
     id: 'bekendmakingen',
     title: 'Bekendmakingen',
-    datasets: DATASETS.bekendmakingen.map(
-      defaultDataset.bind(null, 'bekendmakingen', 'superCluster', true)
+    collection: DATASETS.bekendmakingen.map((id) =>
+      createDatasetControl(id, true)
     ),
   },
 
   {
     id: 'evenementen',
     title: 'Evenementen',
-    datasets: DATASETS.evenementen.map(
-      defaultDataset.bind(null, 'evenementen', 'superCluster', true)
+    collection: DATASETS.evenementen.map((id) =>
+      createDatasetControl(id, true)
     ),
   },
 ];

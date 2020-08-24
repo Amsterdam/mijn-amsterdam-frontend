@@ -61,7 +61,7 @@ export async function loadServicesMapDatasets() {
     Promise.resolve(
       require('../mock-data/json/map-datasets/afvalcontainers.json')
     ).then((response) => {
-      const datasets: Record<string, Array<[number, number]>> = {};
+      const collection: Record<string, Array<[number, number]>> = {};
       for (const feature of response.features) {
         const wasteName = feature.properties.waste_name.toLowerCase();
         // const properties = {
@@ -80,15 +80,15 @@ export async function loadServicesMapDatasets() {
         //   properties,
         //   geometry: item.geometry,
         // };
-        if (!datasets[wasteName]) {
-          datasets[wasteName] = [];
+        if (!collection[wasteName]) {
+          collection[wasteName] = [];
         }
         // const [lng, lat] = feature.geometry.coordinates;
-        datasets[wasteName].push(feature.geometry.coordinates);
+        collection[wasteName].push(feature.geometry.coordinates);
       }
       return {
         id: 'afvalcontainers',
-        datasets,
+        collection,
       };
     }),
     Promise.resolve(
@@ -115,7 +115,7 @@ export async function loadServicesMapDatasets() {
       });
       return {
         id: 'evenementen',
-        datasets: {
+        collection: {
           evenementen,
         },
       };
@@ -123,7 +123,7 @@ export async function loadServicesMapDatasets() {
     Promise.resolve(
       require('../mock-data/json/map-datasets/bekendmakingen.json')
     ).then((response) => {
-      const datasets: Record<string, Array<[number, number]>> = {};
+      const collection: Record<string, Array<[number, number]>> = {};
       for (const feature of response.features) {
         const coordinates = proj4RD.inverse(feature.geometry.coordinates);
         // const properties = {
@@ -137,11 +137,11 @@ export async function loadServicesMapDatasets() {
         //   type: 'Point',
         //   coordinates,
         // };
-        if (!datasets[feature.properties.onderwerp]) {
-          datasets[feature.properties.onderwerp] = [];
+        if (!collection[feature.properties.onderwerp]) {
+          collection[feature.properties.onderwerp] = [];
         }
         // const [lng, lat] = coordinates;
-        datasets[feature.properties.onderwerp].push(coordinates);
+        collection[feature.properties.onderwerp].push(coordinates);
         // return {
         //   type: 'Feature',
         //   properties,
@@ -153,7 +153,7 @@ export async function loadServicesMapDatasets() {
       // );
       return {
         id: 'bekendmakingen',
-        datasets,
+        collection,
       };
     }),
   ]);

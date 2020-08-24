@@ -96,10 +96,10 @@ export default function MyAreaPanels() {
           {datasetControlItems.map((controlItem) => (
             <MyAreaCollapisblePanel
               key={controlItem.id}
-              state={collapsedState(controlItem.datasets)}
+              state={collapsedState(controlItem.collection)}
               title={`${controlItem.title}`}
             >
-              <MyAreaDatasetControl items={controlItem.datasets} />
+              <MyAreaDatasetControl collection={controlItem.collection} />
             </MyAreaCollapisblePanel>
           ))}
         </MaMapPanelContent>

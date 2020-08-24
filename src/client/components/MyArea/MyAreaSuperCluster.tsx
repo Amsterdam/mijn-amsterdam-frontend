@@ -93,7 +93,7 @@ export function MaSuperClusterLayer({
   const datasetControlItems = useDatasetControlItems();
   const activeDatasetIds = useMemo(() => {
     return datasetControlItems.flatMap((item) =>
-      item.datasets
+      item.collection
         .filter((dataset) => dataset.isActive)
         .map((dataset) => dataset.id)
     );

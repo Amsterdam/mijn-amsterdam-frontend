@@ -1,11 +1,11 @@
 import { Checkbox, Label } from '@datapunt/asc-ui';
 import React from 'react';
-import { atom, selector, useRecoilValue, useSetRecoilState } from 'recoil';
+import { atom, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import {
   DatasetControlItem,
   DATASET_CONTROL_ITEMS,
-  MapDataset,
+  DatasetControl,
 } from './datasets';
 
 export const datasetControlItemsAtom = atom({
@@ -25,10 +25,10 @@ function updateDatasetControlItem({
   isActive,
 }: updateDatasetControlItemProps) {
   return items.map((item) => {
-    if (item.datasets.some((dataset) => ids.includes(dataset.id))) {
+    if (item.collection.some((dataset) => ids.includes(dataset.id))) {
       return {
         ...item,
-        datasets: item.datasets.map((item) => {
+        collection: item.collection.map((item) => {
           if (ids.includes(item.id)) {
             return {
               ...item,
@@ -43,25 +43,8 @@ function updateDatasetControlItem({
   });
 }
 
-export const datasetControlItemsSelector = selector({
-  key: 'datasetControlItemsSelector',
-  get: ({ get }) => get(datasetControlItemsAtom),
-  set: ({ set, get }, newValue: any) => {
-    const { ids, isActive } = newValue;
-    const items = get(datasetControlItemsAtom);
-    set(
-      datasetControlItemsAtom,
-      updateDatasetControlItem({
-        items,
-        ids,
-        isActive,
-      })
-    );
-  },
-});
-
 export function useDatasetControlItems(): DatasetControlItem[] {
-  return useRecoilValue(datasetControlItemsSelector);
+  return useRecoilValue(datasetControlItemsAtom);
 }
 
 export type datasetItemChangeEventHandler = (
@@ -70,7 +53,7 @@ export type datasetItemChangeEventHandler = (
 ) => void;
 
 export interface MyAreaDatasetControlItemProps {
-  item: MapDataset;
+  datasetControl: DatasetControl;
 }
 
 const LabelInner = styled.span`
@@ -78,27 +61,32 @@ const LabelInner = styled.span`
   align-items: center;
 `;
 
-function MyAreaDatasetControlItem({ item }: MyAreaDatasetControlItemProps) {
-  const updateDatasetControlItems = useSetRecoilState(
-    datasetControlItemsSelector
-  );
+function MyAreaDatasetControlItem({
+  datasetControl,
+}: MyAreaDatasetControlItemProps) {
+  const updateDatasetControlItems = useSetRecoilState(datasetControlItemsAtom);
+  const items = useDatasetControlItems();
+
   const label = (
     <LabelInner>
-      {item.icon}
-      {item.title}
+      {datasetControl.icon}
+      {datasetControl.title}
     </LabelInner>
   ) as any;
   return (
     <li>
-      <Label htmlFor={item.id} label={label}>
+      <Label htmlFor={datasetControl.id} label={label}>
         <Checkbox
-          id={item.id}
-          checked={item.isActive}
+          id={datasetControl.id}
+          checked={datasetControl.isActive}
           onChange={(event) =>
-            updateDatasetControlItems({
-              ids: [item.id],
-              isActive: !item.isActive,
-            })
+            updateDatasetControlItems(
+              updateDatasetControlItem({
+                items,
+                ids: [datasetControl.id],
+                isActive: !datasetControl.isActive,
+              })
+            )
           }
         />
       </Label>
@@ -113,16 +101,19 @@ const UnstyledOrderedList = styled('ol')`
 `;
 
 interface MyAreaDatasetControlProps {
-  items: MapDataset[];
+  collection: DatasetControl[];
 }
 
 export default function MyAreaDatasetControl({
-  items,
+  collection,
 }: MyAreaDatasetControlProps) {
   return (
     <UnstyledOrderedList>
-      {items.map((item) => (
-        <MyAreaDatasetControlItem key={item.id} item={item} />
+      {collection.map((datasetControl) => (
+        <MyAreaDatasetControlItem
+          key={datasetControl.id}
+          datasetControl={datasetControl}
+        />
       ))}
     </UnstyledOrderedList>
   );
