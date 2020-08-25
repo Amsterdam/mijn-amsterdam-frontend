@@ -74,7 +74,48 @@ function transformAfvalcontainers(WFSData: any) {
 }
 
 function transformAfvalcontainersDetail(responseData: any) {
-  return responseData;
+  // {
+  //   "id": "74769",
+  //   "typeId": "3574",
+  //   "type": "https://api.data.amsterdam.nl/v1/huishoudelijkafval/containertype/3574/",
+  //   "status": 1,
+  //   "clusterId": "117262.696|487637.492",
+  //   "cluster": "https://api.data.amsterdam.nl/v1/huishoudelijkafval/cluster/117262.696%7C487637.492/",
+  //   "fractie": "1",
+  //   "locatieId": "25876",
+  //   "locatie": "https://api.data.amsterdam.nl/v1/huishoudelijkafval/containerlocatie/25876/",
+  //   "gbdBuurtId": "03630000000706",
+  //   "gbdBuurt": "https://api.data.amsterdam.nl/v1/gebieden/buurten/03630000000706/",
+  //   "idNummer": "REF31325",
+  //   "geometrie": {
+  //       "type": "Point",
+  //       "coordinates": [
+  //           117262.69587068968,
+  //           487637.4922001306
+  //       ]
+  //   },
+  //   "eigenaarId": "16",
+  //   "serienummer": "HBD2.017.1242",
+  //   "datumCreatie": "2017-10-04",
+  //   "eigenaarNaam": "F Nieuw-West",
+  //   "gbdBuurtCode": "F77a",
+  //   "verwijderdDp": true,
+  //   "datumPlaatsing": "2017-09-25",
+  //   "geadopteerdInd": true,
+  //   "datumOplevering": "2017-05-01",
+  //   "bagOpenbareruimteId": "0363300000003060",
+  //   "bagOpenbareruimte": "https://api.data.amsterdam.nl/v1/bag/openbareruimte/0363300000003060/",
+  //   "datumOperationeel": "2017-09-25",
+  //   "wijzigingsdatumDp": "2020-07-07T06:46:12.608540",
+  //   "fractieOmschrijving": "Rest",
+  //   "datumAflopenGarantie": "2024-05-01",
+  //   "bagHoofdadresVerblijfsobjectId": "0363010000600262",
+  //   "bagHoofdadresVerblijfsobject": "https://api.data.amsterdam.nl/v1/bag/verblijfsobject/0363010000600262/"
+  // }
+  return {
+    title: responseData.idNummer,
+    datePublished: responseData.datumPlaatsing,
+  };
 }
 
 function transformEvenementen(WFSData: any) {
@@ -93,7 +134,24 @@ function transformEvenementen(WFSData: any) {
 }
 
 function transformEvenementenDetail(responseData: any) {
-  return responseData;
+  // {
+  //   "titel": "Buurtexpositie \"Moooi .... zelf gemaakt!\"",
+  //   "url": "https://evenementen.amsterdam.nl/evenementen/2020/08/buurtexpositie-moooi-2/",
+  //   "omschrijving": "Buurtexpositie\r\ndé Zomerhit van MLB Galerie!\r\n\r\nMooooi… Zelf gemaakt!\r\nKom en laat je verrassen.\r\n15 creatieve buurtgenoten nemen voor 4 dagen de galerie over om het resultaat van hun passie aan de wereld te laten zien. Maak een praatje, drink een drankje of… koop iets heel leuks.\r\nVeel moois voor vriendelijke prijsjes!\r\n\r\nDigitale opening:19 augustus om 17.00 uur via zoomverbinding. \r\nHeel simpel: klik die dag vanaf 16.45 uur op de link op onze website www.mlbgalerie.nl.\r\n\r\nOpen: \r\ndonderdag 20 t/m zondag 23 augustus\r\ndo, vr en za: 13.00 - 18.00 uur; \r\nzo: 13.00 - 16.00 uur\r\n\r\nMLB Galerie, Witte de Withstraat 32A\r\n\r\nLet op: de toegang corona-proof + gratis\r\n\r\nWie: Dennis van Beek, Daphne van Dijk, Sjoerd Dijkstra, ellen tekent, Joke Engel, Storm Everts, Soxna Fall, Margreth Hoek, Vera Ore, Mieke de Rijk, Emmy Schrempft, Frea Spanjaard, Joop Souverein, René Wagenaar, Linda Zeelig\r\n\r\nWat: kaarten, finger boards, tekeningen, presse papiers, (zand)schilderijen, cartoons, borduursels, oorbellen, armbanden, kettingen, hangers, aquarel, zeefdrukken, hout/staal/glas\r\n\r\n Mede mogelijk gemaakt door Inspiratieteam de Baarsjes",
+  //   "startdatum": "2020-08-23",
+  //   "starttijd": "13:00:00",
+  //   "einddatum": null,
+  //   "eindtijd": "16:00:00"
+  // }
+  return {
+    title: responseData.titel,
+    description: responseData.omschrijving,
+    url: responseData.url,
+    dateStart: responseData.startdatum,
+    dateEnd: responseData.einddatum || responseData.startdatum,
+    timeStart: responseData.starttijd,
+    timeEnd: responseData.eindtijd,
+  };
 }
 
 function transformBekendmakingen(WFSData: any) {
@@ -116,7 +174,25 @@ function transformBekendmakingen(WFSData: any) {
 }
 
 function transformBekendmakingenDetail(responseData: any) {
-  return responseData;
+  // {
+  //   "categorie": "wonen",
+  //   "onderwerp": "omgevingsvergunning",
+  //   "titel": "Aanvraag omgevingsvergunning kap Burg Hogguerstraat 2",
+  //   "beschrijving": "Burg Hogguerstraat 2, 1064EB, aanvraag voor het kappen van één houtopstand, ontvangen op 15 ...",
+  //   "url": "https://bekendmakingen.amsterdam.nl/bekendmakingen/stadsdeel-nieuw-west/2020/week-29/aanvragen/aanvraag-18/",
+  //   "postcodehuisnummer": "",
+  //   "plaats": "",
+  //   "straat": "",
+  //   "datum": "2020-07-21T22:00:00Z",
+  //   "overheid": "Amsterdam"
+  // }
+  return {
+    title: responseData.titel,
+    subject: responseData.onderwerp,
+    description: responseData.beschrijving,
+    url: responseData.url,
+    datePublished: responseData.datum,
+  };
 }
 
 function transformParkeerzones(WFSData: any) {}

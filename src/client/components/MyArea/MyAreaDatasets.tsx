@@ -9,6 +9,7 @@ import { getIconHtml, Datasets, DatasetsSource } from './datasets';
 import { useDatasetControlItems } from './MyAreaDatasetControl';
 import axios from 'axios';
 import { DatasetItemTuple } from '../../../server/services';
+import { atom, useRecoilState } from 'recoil';
 
 const iconCreateFunction = (
   marker: L.Marker & { getChildCount: () => number }
@@ -105,6 +106,17 @@ function createMarker(
   } as any);
 }
 
+interface SelectedMarkerData {
+  datasetGroupId: string;
+  datasetId: string;
+  markerData: any;
+}
+
+export const selectedMarkerDataAtom = atom<SelectedMarkerData | null>({
+  key: 'selectedMarkerData',
+  default: null,
+});
+
 export default function MyAreaDatasets() {
   const datasetControlItems = useDatasetControlItems();
   const [
@@ -125,6 +137,9 @@ export default function MyAreaDatasets() {
   }, []);
 
   const [clusterLayer, setClusterLayer] = useState<L.Layer | null>(null);
+  const [selectedMarkerData, setSelectedMarkerData] = useRecoilState(
+    selectedMarkerDataAtom
+  );
 
   const activeDatasetIds: string[] = useMemo(() => {
     return datasetControlItems.flatMap((datasetControlItem) =>
@@ -155,8 +170,12 @@ export default function MyAreaDatasets() {
         axios({
           url: `/test-api/bff/map/datasets/${event.layer.options.datasetGroupId}/${event.layer.options.datasetItemId}`,
         })
-          .then((response) => {
-            console.log('response:', response);
+          .then(({ data: { content: markerData } }) => {
+            setSelectedMarkerData({
+              datasetGroupId: event.layer.options.datasetGroupId,
+              datasetId: event.layer.options.datasetId,
+              markerData,
+            });
           })
           .catch((error) => {
             console.error('request error', error);
@@ -168,7 +187,7 @@ export default function MyAreaDatasets() {
         clusterLayer?.off('click');
       }
     };
-  }, [clusterLayer]);
+  }, [clusterLayer, setSelectedMarkerData]);
 
   return (
     <>

@@ -9,6 +9,8 @@ import MyAreaDatasetControl, {
   datasetControlItemsAtom,
 } from './MyAreaDatasetControl';
 import styled from 'styled-components';
+import { selectedMarkerDataAtom } from './MyAreaDatasets';
+import { getIcon } from './datasets';
 
 interface MyAreaPanel {
   title: string;
@@ -51,11 +53,26 @@ function collapsedState(datasets: Array<{ isActive: boolean }>) {
     : CollapsedState.Collapsed;
 }
 
-const MaMapPanelContent = styled(MapPanelContent)`
-  & header {
-    display: none !important;
-  }
-`;
+const MapPanelContentDetail = styled(MapPanelContent)``;
+
+interface PanelSubTitleProps {
+  datasetId: string;
+  datasetGroupId: string;
+}
+
+function PanelSubTitle({ datasetId, datasetGroupId }: PanelSubTitleProps) {
+  return (
+    <span
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+      }}
+    >
+      {getIcon(datasetId)}
+      {datasetGroupId}
+    </span>
+  );
+}
 
 export default function MyAreaPanels() {
   const isDesktop = useDesktopScreen();
@@ -64,7 +81,9 @@ export default function MyAreaPanels() {
   // const openPanels = useRecoilValue(openPanelsSelector);
   const [panelState /*setPanelState*/] = useRecoilState(panelStateAtom);
   const datasetControlItems = useRecoilValue(datasetControlItemsAtom);
-
+  const [selectedMarkerData, setSelectedMarkerData] = useRecoilState(
+    selectedMarkerDataAtom
+  );
   // useEffect(() => {
   //   if (
   //     openPanels.length &&
@@ -92,7 +111,7 @@ export default function MyAreaPanels() {
   return (
     <PanelComponent>
       {isOpen(panelState.datasets) && (
-        <MaMapPanelContent animate>
+        <MapPanelContent animate stackOrder={0}>
           {datasetControlItems.map((controlItem) => (
             <MyAreaCollapisblePanel
               key={controlItem.id}
@@ -102,7 +121,25 @@ export default function MyAreaPanels() {
               <MyAreaDatasetControl collection={controlItem.collection} />
             </MyAreaCollapisblePanel>
           ))}
-        </MaMapPanelContent>
+          {selectedMarkerData && (
+            <MapPanelContentDetail
+              title={selectedMarkerData.markerData.title}
+              subTitle={
+                <PanelSubTitle
+                  datasetId={selectedMarkerData.datasetId}
+                  datasetGroupId={selectedMarkerData.datasetGroupId}
+                />
+              }
+              stackOrder={3}
+              animate
+              onClose={() => setSelectedMarkerData(null)}
+            >
+              {!!selectedMarkerData.markerData.description && (
+                <p>{selectedMarkerData.markerData.description}</p>
+              )}
+            </MapPanelContentDetail>
+          )}
+        </MapPanelContent>
       )}
     </PanelComponent>
   );
