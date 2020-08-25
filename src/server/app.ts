@@ -11,7 +11,7 @@ import express, {
 } from 'express';
 import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { apiErrorResult } from '../universal/helpers';
-import { BFF_BASE_PATH, BFF_PORT, BffEndpoints } from './config';
+import { BFF_BASE_PATH, BFF_PORT } from './config';
 import {
   clearSession,
   exitEarly,
@@ -20,6 +20,7 @@ import {
 } from './helpers/app';
 import { routerDevelopment } from './mock-data/router-development';
 import { router } from './router';
+import initWebsocketRouter from './router-ws';
 
 const isDebug = ENV === 'development';
 

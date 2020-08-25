@@ -14,7 +14,6 @@ import {
 import { clearSessionCache } from './source-api-request';
 
 export function isValidRequestPath(requestPath: string, path: string) {
-  console.log('mathc', requestPath, `${BFF_BASE_PATH}${path}`);
   return (
     requestPath === npath.join(BFF_BASE_PATH, path) ||
     requestPath ===
@@ -29,7 +28,6 @@ export function isValidRequestPath(requestPath: string, path: string) {
 }
 
 export function isBffEndpoint(requestPath: string) {
-  console.log('sbb', requestPath);
   return Object.values(BffEndpoints).some((path) =>
     isValidRequestPath(requestPath, path)
   );

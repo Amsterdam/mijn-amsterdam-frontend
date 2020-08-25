@@ -1,12 +1,14 @@
 import { MarkerClusterGroup } from '@datapunt/arm-cluster';
 import { themeColor } from '@datapunt/asc-ui';
 import L, { LatLngTuple, Marker } from 'leaflet';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { apiPristineResult, ApiResponse } from '../../../universal/helpers/api';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { getIconHtml, Datasets, DatasetsSource } from './datasets';
 import { useDatasetControlItems } from './MyAreaDatasetControl';
+import axios from 'axios';
+import { DatasetItemTuple } from '../../../server/services';
 
 const iconCreateFunction = (
   marker: L.Marker & { getChildCount: () => number }
@@ -58,10 +60,12 @@ function createDatasetMarkers(datasetsSource: DatasetsSource[]): Datasets[] {
       ...datasetSource,
       collection: Object.fromEntries(
         Object.entries(datasetSource.collection).map(
-          ([datasetId, coordinates]) => {
+          ([datasetId, datasetItems]) => {
             return [
               datasetId,
-              coordinates.map((latLng) => createMarker(datasetId, latLng)),
+              datasetItems.map((datasetItemTuple) =>
+                createMarker(datasetSource.id, datasetId, datasetItemTuple)
+              ),
             ];
           }
         )
@@ -80,8 +84,12 @@ function getFilteredMarkers(datasets: Datasets[], activeDatasetIds: string[]) {
   );
 }
 
-function createMarker(datasetId: string, coordinates: LatLngTuple) {
-  const [lat, lng] = coordinates;
+function createMarker(
+  datasetGroupId: string,
+  datasetId: string,
+  datasetItem: DatasetItemTuple
+) {
+  const [lat, lng, datasetItemId] = datasetItem;
   const html = getIconHtml(datasetId);
   const icon = L.divIcon({
     html,
@@ -89,7 +97,12 @@ function createMarker(datasetId: string, coordinates: LatLngTuple) {
     iconSize: [14, 14],
     iconAnchor: [7, 7],
   });
-  return L.marker(new L.LatLng(lat, lng), { icon });
+  return L.marker(new L.LatLng(lat, lng), {
+    icon,
+    datasetItemId,
+    datasetId,
+    datasetGroupId,
+  } as any);
 }
 
 export default function MyAreaDatasets() {
@@ -110,6 +123,8 @@ export default function MyAreaDatasets() {
   useEffect(() => {
     fetchDatasets({ url: '/test-api/bff/map/datasets', postpone: false });
   }, []);
+
+  const [clusterLayer, setClusterLayer] = useState<L.Layer | null>(null);
 
   const activeDatasetIds: string[] = useMemo(() => {
     return datasetControlItems.flatMap((datasetControlItem) =>
@@ -133,10 +148,36 @@ export default function MyAreaDatasets() {
     return getFilteredMarkers(datasets, activeDatasetIds);
   }, [datasets, activeDatasetIds]);
 
+  useEffect(() => {
+    if (clusterLayer) {
+      clusterLayer?.on('click', (event: any) => {
+        console.log('event click', event.layer.options.datasetItemId);
+        axios({
+          url: `/test-api/bff/map/datasets/${event.layer.options.datasetGroupId}/${event.layer.options.datasetItemId}`,
+        })
+          .then((response) => {
+            console.log('response:', response);
+          })
+          .catch((error) => {
+            console.error('request error', error);
+          });
+      });
+    }
+    return () => {
+      if (clusterLayer) {
+        clusterLayer?.off('click');
+      }
+    };
+  }, [clusterLayer]);
+
   return (
     <>
       <Styles />
-      <MarkerClusterGroup optionsOverrides={options} markers={markers} />
+      <MarkerClusterGroup
+        optionsOverrides={options}
+        markers={markers}
+        setInstance={setClusterLayer}
+      />
     </>
   );
 }

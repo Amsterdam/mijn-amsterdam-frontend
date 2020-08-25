@@ -141,7 +141,12 @@ export const BffEndpoints = {
   SERVICES_STREAM: `/services/stream`,
   HEALTH: `/status/health`,
   MAP_DATASETS: `/map/datasets`,
+  MAP_DATASETS_ITEM: `/map/datasets/:dataset/:id`,
   MAP_DATASETS_WS: `/map/datasets/ws`,
 };
 
-export const PUBLIC_BFF_ENDPOINTS: string[] = [BffEndpoints.HEALTH];
+export const PUBLIC_BFF_ENDPOINTS: string[] = [
+  BffEndpoints.HEALTH,
+  BffEndpoints.MAP_DATASETS,
+  BffEndpoints.MAP_DATASETS_ITEM,
+];

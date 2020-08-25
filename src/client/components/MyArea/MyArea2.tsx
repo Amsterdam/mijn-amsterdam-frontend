@@ -87,7 +87,6 @@ export default function MyArea2() {
               }}
             >
               <BaseLayer />
-
               <HomeIconMarker center={center} />
               <StyledViewerContainer
                 bottomRight={

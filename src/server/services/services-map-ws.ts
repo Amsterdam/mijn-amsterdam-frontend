@@ -49,7 +49,7 @@ async function generateSuperCluster(activeDatasetIds: string[] = []) {
   currentlyActiveDatasetIds = activeDatasetIds;
 
   if (!dataStore) {
-    dataStore = (await loadServicesMapDatasets()).content;
+    dataStore = (await loadServicesMapDatasets('x-ws')).content;
   }
 
   console.log('hasChangedDatasetIds:', hasChangedDatasetIds, activeDatasetIds);

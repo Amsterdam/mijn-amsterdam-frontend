@@ -16,10 +16,12 @@ import KVK2 from './json/kvk-handelsregister2.json';
 import MILIEUZONE from './json/milieuzone.json';
 import TIPS from './json/tips.json';
 import VERGUNNINGEN from './json/vergunningen.json';
-import WMO from './json/wmo.json';
+import KVK2 from './json/kvk-handelsregister2.json';
+import KVK1 from './json/kvk-handelsregister.json';
+import { datasetEndpoints } from '../services/services-map';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve(data);
     }, delayMS);
@@ -182,7 +184,7 @@ export const mockDataConfig: MockDataConfig = {
       const sourceTips = requestData?.data
         ? Object.values(requestData.data)
             .filter(
-              responseContent =>
+              (responseContent) =>
                 typeof responseContent === 'object' &&
                 responseContent !== null &&
                 'tips' in responseContent
@@ -192,13 +194,15 @@ export const mockDataConfig: MockDataConfig = {
 
       const items = [
         ...(tips as MyTip[]),
-        ...sourceTips.map(tip => Object.assign(tip, { isPersonalized: true })),
+        ...sourceTips.map((tip) =>
+          Object.assign(tip, { isPersonalized: true })
+        ),
       ]
         .filter((tip: MyTip) =>
           requestData?.optin ? tip.isPersonalized : !tip.isPersonalized
         )
         .map(tip => {
-          if (config.params.audience !== 'persoonlijk') {
+          if (requestData.profileType !== 'private') {
             return Object.assign(tip, {
               title: `[${config.params.audience}] ${tip.title}`,
             });
@@ -206,6 +210,36 @@ export const mockDataConfig: MockDataConfig = {
           return tip;
         });
       return JSON.stringify(items);
+    },
+  },
+  [datasetEndpoints.afvalcontainers.listUrl]: {
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    responseData: async (config: any) => {
+      // if (isCommercialUser(config)) {
+      // }
+      return await loadMockApiResponseJson(
+        require('../mock-data/json/map-datasets/afvalcontainers.json')
+      );
+    },
+  },
+  [datasetEndpoints.bekendmakingen.listUrl]: {
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    responseData: async (config: any) => {
+      // if (isCommercialUser(config)) {
+      // }
+      return await loadMockApiResponseJson(
+        require('../mock-data/json/map-datasets/bekendmakingen.json')
+      );
+    },
+  },
+  [datasetEndpoints.evenementen.listUrl]: {
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    responseData: async (config: any) => {
+      // if (isCommercialUser(config)) {
+      // }
+      return await loadMockApiResponseJson(
+        require('../mock-data/json/map-datasets/evenementen.json')
+      );
     },
   },
 };

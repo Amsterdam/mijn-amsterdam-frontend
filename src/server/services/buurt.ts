@@ -9,7 +9,9 @@ import {
 } from '../../universal/config';
 import { apiSuccesResult } from '../../universal/helpers';
 import { fetchHOME } from './home';
-import proj4 from 'proj4';
+import { requestData } from '../helpers/source-api-request';
+import { DataRequestConfig } from '../config';
+import { apiErrorResult } from '../../universal/helpers/api';
 
 const MAP_URL =
   'https://data.amsterdam.nl/data/?modus=kaart&achtergrond=topo_rd_zw&embed=true';
@@ -51,112 +53,151 @@ export async function fetchBUURT(
   });
 }
 
-const projDefinition = `+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.4171,50.3319,465.5524,-0.398957,0.343988,-1.87740,4.0725 +units=m +no_defs'`;
-const proj4RD = proj4('WGS84', projDefinition);
+export type DatasetItemTuple = [number, number, string];
 
-export async function loadServicesMapDatasets() {
-  // sessionID: SessionID,
-  // passthroughRequestHeaders: Record<string, string>
-  const datasets = await Promise.all([
-    Promise.resolve(
-      require('../mock-data/json/map-datasets/afvalcontainers.json')
-    ).then((response) => {
-      const collection: Record<string, Array<[number, number]>> = {};
-      for (const feature of response.features) {
-        const wasteName = feature.properties.waste_name.toLowerCase();
-        // const properties = {
-        //   title: `${item.properties.waste_name} container`,
-        //   description: `${item.properties.text || 'geen besc.'}
-        //   id: ${item.properties.id_number}
-        //   `,
-        //   dataset: [
-        //     'afvalcontainers',
-        //     item.properties.waste_name.toLowerCase(),
-        //   ],
-        // };
+function transformAfvalcontainers(WFSData: any) {
+  const collection: Record<string, DatasetItemTuple[]> = {};
+  for (const feature of WFSData.features) {
+    const fractieOmschrijving = feature.properties?.fractie_omschrijving.toLowerCase();
+    if (!collection[fractieOmschrijving]) {
+      collection[fractieOmschrijving] = [];
+    }
+    if (feature?.geometry?.coordinates) {
+      const [lng, lat] = feature.geometry.coordinates;
+      collection[fractieOmschrijving].push([lat, lng, feature.properties.id]);
+    }
+  }
+  return {
+    id: 'afvalcontainers',
+    collection,
+  };
+}
 
-        // return {
-        //   type: 'Feature',
-        //   properties,
-        //   geometry: item.geometry,
-        // };
-        if (!collection[wasteName]) {
-          collection[wasteName] = [];
-        }
-        // const [lng, lat] = feature.geometry.coordinates;
-        collection[wasteName].push(feature.geometry.coordinates);
+function transformAfvalcontainersDetail(responseData: any) {
+  return responseData;
+}
+
+function transformEvenementen(WFSData: any) {
+  const collection: Record<string, DatasetItemTuple[]> = { evenementen: [] };
+  for (const feature of WFSData.features) {
+    if (feature?.geometry?.coordinates) {
+      const [lng, lat] = feature.geometry.coordinates;
+      collection.evenementen.push([lat, lng, feature.properties.id]);
+    }
+  }
+
+  return {
+    id: 'evenementen',
+    collection,
+  };
+}
+
+function transformEvenementenDetail(responseData: any) {
+  return responseData;
+}
+
+function transformBekendmakingen(WFSData: any) {
+  const collection: Record<string, DatasetItemTuple[]> = {};
+  for (const feature of WFSData.features) {
+    const onderwerp = feature.properties?.onderwerp.toLowerCase();
+    if (!collection[onderwerp]) {
+      collection[onderwerp] = [];
+    }
+    if (feature?.geometry?.coordinates) {
+      const [lng, lat] = feature.geometry.coordinates;
+      collection[onderwerp].push([lat, lng, feature.properties.ogc_fid]);
+    }
+  }
+
+  return {
+    id: 'bekendmakingen',
+    collection,
+  };
+}
+
+function transformBekendmakingenDetail(responseData: any) {
+  return responseData;
+}
+
+function transformParkeerzones(WFSData: any) {}
+
+function transformParkeerzonesUitzonderingen(WFSData: any) {}
+
+interface DatasetConfig {
+  listUrl: string;
+  detailUrl: string;
+  transformList?: (data: any) => any;
+  transformDetail?: (data: any) => any;
+}
+
+export const datasetEndpoints: Record<string, DatasetConfig> = {
+  afvalcontainers: {
+    listUrl:
+      'https://api.data.amsterdam.nl/v1/wfs/huishoudelijkafval/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=container&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326',
+    detailUrl: 'https://api.data.amsterdam.nl/v1/huishoudelijkafval/container/',
+    transformList: transformAfvalcontainers,
+    transformDetail: transformAfvalcontainersDetail,
+  },
+  evenementen: {
+    listUrl:
+      'https://map.data.amsterdam.nl/maps/evenementen?REQUEST=GetFeature&SERVICE=wfs&VERSION=2.0.0&TYPENAMES=evenementen&outputFormat=application/json;%20subtype=geojson;%20charset=utf-8&SRSNAME=urn:ogc:def:crs:EPSG::4326',
+    detailUrl: 'https://api.data.amsterdam.nl/vsd/evenementen/',
+    transformList: transformEvenementen,
+    transformDetail: transformEvenementenDetail,
+  },
+  bekendmakingen: {
+    listUrl:
+      'https://map.data.amsterdam.nl/maps/bekendmakingen?REQUEST=GetFeature&SERVICE=wfs&VERSION=2.0.0&TYPENAMES=ms:bekendmakingen&outputFormat=application/json;%20subtype=geojson;%20charset=utf-8&SRSNAME=urn:ogc:def:crs:EPSG::4326',
+    detailUrl: 'https://api.data.amsterdam.nl/vsd/bekendmakingen/',
+    transformList: transformBekendmakingen,
+    transformDetail: transformBekendmakingenDetail,
+  },
+  parkeerzones: {
+    listUrl: '',
+    detailUrl: '',
+    transformList: transformParkeerzones,
+  },
+  parkeerzonesUitzonderingen: {
+    listUrl: '',
+    detailUrl: '',
+    transformList: transformParkeerzonesUitzonderingen,
+  },
+};
+
+export async function loadServicesMapDatasets(sessionID: SessionID) {
+  const requests = Object.entries(datasetEndpoints)
+    .filter(([, config]) => !!config.listUrl)
+    .map(([dataset, config]) => {
+      const requestConfig: DataRequestConfig = {
+        url: config.listUrl,
+      };
+      if (config.transformList) {
+        requestConfig.transformResponse = config.transformList;
       }
-      return {
-        id: 'afvalcontainers',
-        collection,
-      };
-    }),
-    Promise.resolve(
-      require('../mock-data/json/map-datasets/evenementen.json')
-    ).then((response) => {
-      const evenementen = response.features.map((item: any) => {
-        const coordinates = proj4RD.inverse(item.geometry.coordinates);
-        // const properties = {
-        //   title: item.properties.titel,
-        //   description: item.properties.omschrijving,
-        //   dataset: ['evenementen', 'evenementen'],
-        // };
-        // const geometry = {
-        //   type: 'Point',
-        //   coordinates,
-        // };
-        // return {
-        //   type: 'Feature',
-        //   properties,
-        //   geometry,
-        // };
-        // const [lng, lat] = coordinates;
-        return coordinates;
-      });
-      return {
-        id: 'evenementen',
-        collection: {
-          evenementen,
-        },
-      };
-    }),
-    Promise.resolve(
-      require('../mock-data/json/map-datasets/bekendmakingen.json')
-    ).then((response) => {
-      const collection: Record<string, Array<[number, number]>> = {};
-      for (const feature of response.features) {
-        const coordinates = proj4RD.inverse(feature.geometry.coordinates);
-        // const properties = {
-        //   dataset: ['bekendmakingen', item.properties.onderwerp],
-        //   title: item.properties.onderwerp,
-        //   date: item.properties.datum,
-        //   description: item.properties.titel,
-        //   url: item.url,
-        // };
-        // const geometry = {
-        //   type: 'Point',
-        //   coordinates,
-        // };
-        if (!collection[feature.properties.onderwerp]) {
-          collection[feature.properties.onderwerp] = [];
-        }
-        // const [lng, lat] = coordinates;
-        collection[feature.properties.onderwerp].push(coordinates);
-        // return {
-        //   type: 'Feature',
-        //   properties,
-        //   geometry,
-        // };
-      }
-      // console.log(
-      //   Array.from(new Set(features.map(item => item.properties.dataset[1])))
-      // );
-      return {
-        id: 'bekendmakingen',
-        collection,
-      };
-    }),
-  ]);
+      return requestData(requestConfig, sessionID, {});
+    });
 
-  return apiSuccesResult(datasets);
+  const datasets = await Promise.all(requests);
+  return apiSuccesResult(datasets.map(({ content }) => content));
+}
+
+export async function loadServicesMapDatasetItem(
+  sessionID: SessionID,
+  dataset: string,
+  id: string
+) {
+  const config = datasetEndpoints[dataset];
+  if (!config) {
+    return apiErrorResult(`Unknown dataset ${dataset}`, null);
+  }
+  const requestConfig: DataRequestConfig = {
+    url: `${config.detailUrl}${id}`,
+  };
+  if (config.transformDetail) {
+    requestConfig.transformResponse = config.transformDetail;
+  }
+  console.log('Requesting dataset detail', requestConfig);
+  const result = await requestData(requestConfig, sessionID, {});
+  console.log('Dataset detail result', result);
+  return result;
 }

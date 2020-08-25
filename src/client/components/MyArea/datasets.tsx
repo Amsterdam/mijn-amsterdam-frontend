@@ -15,8 +15,9 @@ import {
   MapIconAuto,
 } from '../../assets/icons';
 import styles from './MyAreaSuperCluster.module.scss';
+import { DatasetItemTuple } from '../../../server/services';
 
-export type DatasetSource = Record<string, LatLngTuple[]>;
+export type DatasetSource = Record<string, DatasetItemTuple[]>;
 
 export interface DatasetsSource {
   id: string;
