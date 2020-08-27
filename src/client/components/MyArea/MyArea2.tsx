@@ -150,7 +150,7 @@ export default function MyArea2() {
               >
                 <MyAreaPanels />
                 {useLeafletCluster ? (
-                  <MyAreaDatasets />
+                  <MyAreaDatasets onMarkerClick={onMarkerClick} />
                 ) : (
                   <MaSuperClusterLayer onMarkerClick={onMarkerClick} />
                 )}
