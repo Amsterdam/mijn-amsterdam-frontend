@@ -1,3 +1,4 @@
+import { apiSuccesResult } from '../../universal/helpers';
 import {
   CITY_LAYERS_CONFIG,
   CITY_ZOOM,
@@ -12,6 +13,8 @@ import { fetchHOME } from './home';
 import { requestData } from '../helpers/source-api-request';
 import { DataRequestConfig } from '../config';
 import { apiErrorResult } from '../../universal/helpers/api';
+import { getFullAddress } from '../../universal/helpers/brp';
+import { response } from 'express';
 
 const MAP_URL =
   'https://data.amsterdam.nl/data/?modus=kaart&achtergrond=topo_rd_zw&embed=true';
@@ -74,6 +77,18 @@ function transformAfvalcontainers(WFSData: any) {
 }
 
 function transformAfvalcontainersDetail(responseData: any) {
+  const afvalUrls: Record<string, string> = {
+    rest:
+      'https://www.amsterdam.nl/veelgevraagd/?productid=%7BC5AC6694-CB65-4ED8-B5B3-6794BEA279FD%7D',
+    glas:
+      'https://www.amsterdam.nl/veelgevraagd/?productid=%7B881CBA8B-AB9F-43DF-910F-6B5DF7A91080%7D',
+    plastic:
+      'https://www.amsterdam.nl/veelgevraagd/?productid=%7B3B03E107-63EC-40D0-B2E8-92BCCCE0B91A%7D',
+    papier:
+      'https://www.amsterdam.nl/veelgevraagd/?productid=%7B95B69586-623A-4333-9322-A48FF8424B77%7D',
+    textiel:
+      'https://www.amsterdam.nl/veelgevraagd/?caseid=%7BD68460AA-EB08-4132-A69F-7763CD8431A2%7D',
+  };
   // {
   //   "id": "74769",
   //   "typeId": "3574",
@@ -112,9 +127,11 @@ function transformAfvalcontainersDetail(responseData: any) {
   //   "bagHoofdadresVerblijfsobjectId": "0363010000600262",
   //   "bagHoofdadresVerblijfsobject": "https://api.data.amsterdam.nl/v1/bag/verblijfsobject/0363010000600262/"
   // }
+  const type = responseData.fractieOmschrijving.toLowerCase();
   return {
-    title: responseData.idNummer,
-    datePublished: responseData.datumPlaatsing,
+    title: `${capitalizeFirstLetter(type)} ${responseData.idNummer}`,
+    type,
+    url: afvalUrls[type],
   };
 }
 
@@ -186,9 +203,11 @@ function transformBekendmakingenDetail(responseData: any) {
   //   "datum": "2020-07-21T22:00:00Z",
   //   "overheid": "Amsterdam"
   // }
+
   return {
     title: responseData.titel,
     subject: responseData.onderwerp,
+    category: responseData.categorie,
     description: responseData.beschrijving,
     url: responseData.url,
     datePublished: responseData.datum,
