@@ -50,6 +50,7 @@ ENV PORT=80
 ENV REDIRECT_AFTER_LOGIN=https://mijn.ot.amsterdam.nl
 ENV BFF_ENV=development
 
+COPY src/server/mock-data/json /app/build-bff/server/mock-data/json
 COPY scripts/serveBuild.js /app/scripts/serveBuild.js
 
 # Serving both front-end and back-end on th test environment
