@@ -1,5 +1,5 @@
-import { Checkbox, Label } from '@datapunt/asc-ui';
-import React from 'react';
+import { Checkbox, Label, themeSpacing } from '@datapunt/asc-ui';
+import React, { useCallback } from 'react';
 import { atom, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import {
@@ -19,32 +19,37 @@ interface updateDatasetControlItemProps {
   isActive: boolean;
 }
 
-function updateDatasetControlItem({
-  items,
-  ids,
-  isActive,
-}: updateDatasetControlItemProps) {
-  return items.map((item) => {
-    if (item.collection.some((dataset) => ids.includes(dataset.id))) {
-      return {
-        ...item,
-        collection: item.collection.map((item) => {
-          if (ids.includes(item.id)) {
-            return {
-              ...item,
-              isActive,
-            };
-          }
-          return item;
-        }),
-      };
-    }
-    return item;
-  });
-}
-
 export function useDatasetControlItems(): DatasetControlItem[] {
   return useRecoilValue(datasetControlItemsAtom);
+}
+
+export function useUpdateDatasetControlItems() {
+  const updateDatasetControlItems = useSetRecoilState(datasetControlItemsAtom);
+  const items = useDatasetControlItems();
+
+  return useCallback(
+    (ids: string[], isActive: boolean) => {
+      const updatedItems = items.map((item) => {
+        if (item.collection.some((dataset) => ids.includes(dataset.id))) {
+          return {
+            ...item,
+            collection: item.collection.map((item) => {
+              if (ids.includes(item.id)) {
+                return {
+                  ...item,
+                  isActive,
+                };
+              }
+              return item;
+            }),
+          };
+        }
+        return item;
+      });
+      updateDatasetControlItems(updatedItems);
+    },
+    [items, updateDatasetControlItems]
+  );
 }
 
 export type datasetItemChangeEventHandler = (
@@ -64,9 +69,7 @@ const LabelInner = styled.span`
 function MyAreaDatasetControlItem({
   datasetControl,
 }: MyAreaDatasetControlItemProps) {
-  const updateDatasetControlItems = useSetRecoilState(datasetControlItemsAtom);
-  const items = useDatasetControlItems();
-
+  const updateDatasetControlItems = useUpdateDatasetControlItems();
   const label = (
     <LabelInner>
       {datasetControl.icon}
@@ -81,11 +84,8 @@ function MyAreaDatasetControlItem({
           checked={datasetControl.isActive}
           onChange={(event) =>
             updateDatasetControlItems(
-              updateDatasetControlItem({
-                items,
-                ids: [datasetControl.id],
-                isActive: !datasetControl.isActive,
-              })
+              [datasetControl.id],
+              !datasetControl.isActive
             )
           }
         />
@@ -94,9 +94,9 @@ function MyAreaDatasetControlItem({
   );
 }
 
-const UnstyledOrderedList = styled('ol')`
+const DatasetControlItemList = styled('ol')`
   margin: 0;
-  padding: 0;
+  padding: 0 0 0 ${themeSpacing(1)};
   list-style-type: none;
 `;
 
@@ -108,13 +108,13 @@ export default function MyAreaDatasetControl({
   collection,
 }: MyAreaDatasetControlProps) {
   return (
-    <UnstyledOrderedList>
+    <DatasetControlItemList>
       {collection.map((datasetControl) => (
         <MyAreaDatasetControlItem
           key={datasetControl.id}
           datasetControl={datasetControl}
         />
       ))}
-    </UnstyledOrderedList>
+    </DatasetControlItemList>
   );
 }

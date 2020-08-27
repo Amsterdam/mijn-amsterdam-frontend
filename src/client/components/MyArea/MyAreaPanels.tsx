@@ -1,56 +1,42 @@
-import { MapPanel, MapPanelContent, MapPanelDrawer } from '@datapunt/arm-core';
-import React from 'react';
-import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
+import {
+  MapPanel,
+  MapPanelContent,
+  MapPanelDrawer,
+  MapPanelContext,
+} from '@datapunt/arm-core';
+import React, { useContext, useEffect, useCallback } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import styled from 'styled-components';
 import { useDesktopScreen } from '../../hooks';
+import { getIcon, DatasetControl, DatasetControlItem } from './datasets';
 import MyAreaCollapisblePanel, {
   CollapsedState,
+  isCollapsed,
 } from './MyAreaCollapsiblePanel';
 import MyAreaDatasetControl, {
   datasetControlItemsAtom,
+  useUpdateDatasetControlItems,
 } from './MyAreaDatasetControl';
-import styled from 'styled-components';
 import { selectedMarkerDataAtom } from './MyAreaDatasets';
-import { getIcon } from './datasets';
+import MyAreaPanelContent from './MyAreaPanelContent';
+import { SnapPoint } from '@datapunt/arm-core/lib/components/MapPanel/constants';
+import { Label, Checkbox } from '@datapunt/asc-ui';
 
-interface MyAreaPanel {
-  title: string;
-  id: string;
-  open: boolean;
-  active: boolean;
-}
-
-const panelConfig: Record<string, MyAreaPanel> = {
-  datasets: {
-    title: 'Kaartlagen',
-    id: 'kaartlagen',
-    open: true,
-    active: true,
-  },
-};
-
-const panelStateAtom = atom({
-  key: 'MyAreaPanelState',
-  default: panelConfig,
-});
-
-export const openPanelsSelector = selector({
-  key: 'openPanels',
-  get: ({ get }) => {
-    const appState = get(panelStateAtom);
-    return Object.values(appState)
-      .filter((state) => state.open === true)
-      .map((state) => state.id);
-  },
-});
-
-function isOpen(panel: MyAreaPanel) {
-  return panel.active && panel.open;
-}
-
-function collapsedState(datasets: Array<{ isActive: boolean }>) {
+function initialCollapsedState(datasets: Array<{ isActive: boolean }>) {
   return datasets.some((dataset) => dataset.isActive)
     ? CollapsedState.Expanded
     : CollapsedState.Collapsed;
+}
+
+function isIndeterminateControl(datasets: Array<{ isActive: boolean }>) {
+  return (
+    !datasets.every((dataset) => dataset.isActive) &&
+    datasets.some((dataset) => dataset.isActive)
+  );
+}
+
+function isCheckedControl(datasets: Array<{ isActive: boolean }>) {
+  return datasets.every((dataset) => dataset.isActive);
 }
 
 const MapPanelContentDetail = styled(MapPanelContent)``;
@@ -74,24 +60,64 @@ function PanelSubTitle({ datasetId, datasetGroupId }: PanelSubTitleProps) {
   );
 }
 
+const TitleWithCheckbox = React.memo(
+  ({
+    controlItem,
+    onChange,
+  }: {
+    controlItem: DatasetControlItem;
+    onChange: (datasetControlItem: DatasetControlItem) => void;
+  }) => (
+    <Label htmlFor={controlItem.id} label={controlItem.title}>
+      <Checkbox
+        id={controlItem.id}
+        checked={isCheckedControl(controlItem.collection)}
+        indeterminate={isIndeterminateControl(controlItem.collection)}
+        onChange={() => onChange(controlItem)}
+      />
+    </Label>
+  )
+);
+
 export default function MyAreaPanels() {
   const isDesktop = useDesktopScreen();
   const PanelComponent = isDesktop ? MapPanel : MapPanelDrawer;
-  // const mapPanel = useContext(MapPanelContext);
+  const { setPositionFromSnapPoint } = useContext(MapPanelContext);
   // const openPanels = useRecoilValue(openPanelsSelector);
-  const [panelState /*setPanelState*/] = useRecoilState(panelStateAtom);
   const datasetControlItems = useRecoilValue(datasetControlItemsAtom);
   const [selectedMarkerData, setSelectedMarkerData] = useRecoilState(
     selectedMarkerDataAtom
   );
-  // useEffect(() => {
-  //   if (
-  //     openPanels.length &&
-  //     !mapPanel.matchPositionWithSnapPoint(SnapPoint.Halfway)
-  //   ) {
-  //     mapPanel.setPositionFromSnapPoint(SnapPoint.Full);
-  //   }
-  // }, [openPanels, mapPanel]);
+
+  const updateDatasetControlItems = useUpdateDatasetControlItems();
+
+  useEffect(() => {
+    if (selectedMarkerData !== null) {
+      setPositionFromSnapPoint(SnapPoint.Full);
+    }
+  }, [selectedMarkerData]);
+
+  const checkUncheckAll = useCallback(
+    (controlItem: DatasetControlItem) => {
+      const total = controlItem.collection.length;
+      const threshold = Math.round(total / 2);
+      const activeItemsTotal = controlItem.collection.filter(
+        (item) => item.isActive
+      ).length;
+
+      const isActive =
+        (activeItemsTotal !== 0 &&
+          activeItemsTotal !== total &&
+          activeItemsTotal >= threshold) ||
+        activeItemsTotal === 0;
+      // console.log(controlItem.title, isActive, activeItemsTotal, total);
+      updateDatasetControlItems(
+        controlItem.collection.map((item) => item.id),
+        isActive
+      );
+    },
+    [updateDatasetControlItems]
+  );
 
   // const closePanelContent = useCallback(
   //   (panelId: string) => {
@@ -108,39 +134,45 @@ export default function MyAreaPanels() {
   //   [openPanels, mapPanel, setPanelState]
   // );
 
+  const onChange = useCallback(
+    (controlItem: DatasetControlItem) => checkUncheckAll(controlItem),
+    [checkUncheckAll]
+  );
+
   return (
     <PanelComponent>
-      {isOpen(panelState.datasets) && (
-        <MapPanelContent animate stackOrder={0}>
-          {datasetControlItems.map((controlItem) => (
-            <MyAreaCollapisblePanel
-              key={controlItem.id}
-              state={collapsedState(controlItem.collection)}
-              title={`${controlItem.title}`}
-            >
-              <MyAreaDatasetControl collection={controlItem.collection} />
-            </MyAreaCollapisblePanel>
-          ))}
-          {selectedMarkerData && (
-            <MapPanelContentDetail
-              title={selectedMarkerData.markerData.title}
-              subTitle={
-                <PanelSubTitle
-                  datasetId={selectedMarkerData.datasetId}
-                  datasetGroupId={selectedMarkerData.datasetGroupId}
-                />
-              }
-              stackOrder={3}
-              animate
-              onClose={() => setSelectedMarkerData(null)}
-            >
-              {!!selectedMarkerData.markerData.description && (
-                <p>{selectedMarkerData.markerData.description}</p>
-              )}
-            </MapPanelContentDetail>
-          )}
-        </MapPanelContent>
-      )}
+      <MapPanelContent animate stackOrder={0}>
+        {datasetControlItems.map((controlItem) => (
+          <MyAreaCollapisblePanel
+            key={controlItem.id}
+            initalState={initialCollapsedState(controlItem.collection)}
+            title={
+              <TitleWithCheckbox
+                controlItem={controlItem}
+                onChange={onChange}
+              />
+            }
+          >
+            <MyAreaDatasetControl collection={controlItem.collection} />
+          </MyAreaCollapisblePanel>
+        ))}
+        {selectedMarkerData && (
+          <MapPanelContentDetail
+            title={selectedMarkerData.markerData.title}
+            subTitle={
+              <PanelSubTitle
+                datasetId={selectedMarkerData.datasetId}
+                datasetGroupId={selectedMarkerData.datasetGroupId}
+              />
+            }
+            stackOrder={3}
+            animate
+            onClose={() => setSelectedMarkerData(null)}
+          >
+            <MyAreaPanelContent panelItem={selectedMarkerData.markerData} />
+          </MapPanelContentDetail>
+        )}
+      </MapPanelContent>
     </PanelComponent>
   );
 }

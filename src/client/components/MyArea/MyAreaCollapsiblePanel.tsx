@@ -1,6 +1,6 @@
 import { ChevronRight } from '@datapunt/asc-assets';
 import { Icon, themeColor, themeSpacing } from '@datapunt/asc-ui';
-import React, { PropsWithChildren, useState } from 'react';
+import React, { PropsWithChildren, useState, ReactNode } from 'react';
 import styled from 'styled-components';
 
 const CollapsiblePanel = styled('div')`
@@ -32,7 +32,7 @@ const PanelHeadingElement = styled('h3')`
 `;
 
 const PanelIcon = styled(Icon)`
-  width: 26px;
+  width: ${themeSpacing(6)};
   transition: transform 100ms linear;
   transform-origin: center;
 `;
@@ -42,13 +42,17 @@ export enum CollapsedState {
   Collapsed,
 }
 
-function isExpanded(state: CollapsedState) {
+export function isExpanded(state: CollapsedState) {
   return state === CollapsedState.Expanded;
+}
+
+export function isCollapsed(state: CollapsedState) {
+  return !isExpanded(state);
 }
 
 interface MyAreaCollapsiblePanelHeadingProps {
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  title: string;
+  title: ReactNode;
   state?: CollapsedState;
 }
 
@@ -60,7 +64,10 @@ function MyAreaCollapsiblePanelHeading({
   return (
     <PanelHeadingElement>
       <UnstyledButton onClick={onClick} aria-expanded={isExpanded(state)}>
-        <PanelIcon rotate={state === CollapsedState.Collapsed ? 0 : 90}>
+        <PanelIcon
+          // size={12}
+          rotate={state === CollapsedState.Collapsed ? 0 : 90}
+        >
           <ChevronRight />
         </PanelIcon>
         {title}
@@ -70,16 +77,16 @@ function MyAreaCollapsiblePanelHeading({
 }
 
 type MyAreaCollapsiblePanelProps = PropsWithChildren<{
-  title: string;
-  state?: CollapsedState;
+  title: ReactNode;
+  initalState?: CollapsedState;
 }>;
 
 export default function MyAreaCollapsiblePanel({
   children,
   title,
-  state = CollapsedState.Collapsed,
+  initalState = CollapsedState.Collapsed,
 }: MyAreaCollapsiblePanelProps) {
-  const [collapsedState, setCollapsedState] = useState(state);
+  const [collapsedState, setCollapsedState] = useState(initalState);
   return (
     <CollapsiblePanel>
       <MyAreaCollapsiblePanelHeading

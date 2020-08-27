@@ -1,15 +1,15 @@
 import { MarkerClusterGroup } from '@datapunt/arm-cluster';
 import { themeColor } from '@datapunt/asc-ui';
-import L, { LatLngTuple, Marker } from 'leaflet';
-import React, { useEffect, useMemo, useState } from 'react';
+import axios from 'axios';
+import L from 'leaflet';
+import React, { useEffect, useMemo, useState, useCallback } from 'react';
+import { atom, useRecoilState } from 'recoil';
 import { createGlobalStyle } from 'styled-components';
+import { DatasetItemTuple } from '../../../server/services';
 import { apiPristineResult, ApiResponse } from '../../../universal/helpers/api';
 import { useDataApi } from '../../hooks/api/useDataApi';
-import { getIconHtml, Datasets, DatasetsSource } from './datasets';
+import { Datasets, DatasetsSource, getIconHtml } from './datasets';
 import { useDatasetControlItems } from './MyAreaDatasetControl';
-import axios from 'axios';
-import { DatasetItemTuple } from '../../../server/services';
-import { atom, useRecoilState } from 'recoil';
 
 const iconCreateFunction = (
   marker: L.Marker & { getChildCount: () => number }
@@ -109,6 +109,7 @@ function createMarker(
 interface SelectedMarkerData {
   datasetGroupId: string;
   datasetId: string;
+  datasetItemId: string;
   markerData: any;
 }
 
@@ -119,6 +120,7 @@ export const selectedMarkerDataAtom = atom<SelectedMarkerData | null>({
 
 export default function MyAreaDatasets() {
   const datasetControlItems = useDatasetControlItems();
+
   const [
     {
       data: { content: datasetsSource },
@@ -160,18 +162,21 @@ export default function MyAreaDatasets() {
     if (!datasets) {
       return [];
     }
+    console.log('change!!');
     return getFilteredMarkers(datasets, activeDatasetIds);
   }, [datasets, activeDatasetIds]);
 
-  useEffect(() => {
-    if (clusterLayer) {
-      clusterLayer?.on('click', (event: any) => {
-        console.log('event click', event.layer.options.datasetItemId);
+  const onMarkerClick = useCallback(
+    (event: any) => {
+      if (
+        selectedMarkerData?.datasetItemId !== event.layer.options.datasetItemId
+      ) {
         axios({
           url: `/test-api/bff/map/datasets/${event.layer.options.datasetGroupId}/${event.layer.options.datasetItemId}`,
         })
           .then(({ data: { content: markerData } }) => {
             setSelectedMarkerData({
+              datasetItemId: event.layer.options.datasetItemId,
               datasetGroupId: event.layer.options.datasetGroupId,
               datasetId: event.layer.options.datasetId,
               markerData,
@@ -180,14 +185,22 @@ export default function MyAreaDatasets() {
           .catch((error) => {
             console.error('request error', error);
           });
-      });
-    }
-    return () => {
-      if (clusterLayer) {
-        clusterLayer?.off('click');
       }
+    },
+    [setSelectedMarkerData, selectedMarkerData]
+  );
+
+  useEffect(() => {
+    if (!clusterLayer) {
+      return;
+    }
+
+    clusterLayer.on('click', onMarkerClick);
+
+    return () => {
+      clusterLayer?.off('click', onMarkerClick);
     };
-  }, [clusterLayer, setSelectedMarkerData]);
+  }, [clusterLayer, onMarkerClick]);
 
   return (
     <>
