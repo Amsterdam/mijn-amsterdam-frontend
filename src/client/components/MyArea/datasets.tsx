@@ -1,4 +1,4 @@
-import { themeSpacing } from '@datapunt/asc-ui';
+import { themeSpacing, themeColor } from '@datapunt/asc-ui';
 import themeColors from '@datapunt/asc-ui/es/theme/default/colors';
 import classnames from 'classnames';
 import L, { Marker, LatLngTuple } from 'leaflet';
@@ -100,6 +100,7 @@ const DatasetIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid #ffffff;
 `;
 
 const DatasetIconCircle = styled(DatasetIcon)`
@@ -115,8 +116,21 @@ const DatasetIconTriangle = styled(DatasetIconSquare)`
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 0 7px 14px 7px;
-  border-color: transparent transparent ${(props) => props.color};
+  border-width: 0 10px 20px 10px;
+  border-color: transparent transparent #ffffff;
+  position: relative;
+
+  &:before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: -18px;
+    left: -7px;
+    border-style: solid;
+    border-width: 0 7px 14px 7px;
+    border-color: transparent transparent ${(props) => props.color};
+  }
 `;
 
 const datasetIcons: Record<string, ReactElement<any>> = {
