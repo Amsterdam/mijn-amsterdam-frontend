@@ -55,7 +55,7 @@ const MyAreaMap = styled(Map)`
 
 export default function MyArea2() {
   const isDesktop = useDesktopScreen();
-  const [useLeafletCluster, setUseLeafletCluster] = useState(false);
+  const [useLeafletCluster, setUseLeafletCluster] = useState(true);
   const { HOME /*KVK, BRP*/ } = useAppStateGetter();
   const [selectedMarkerData, setSelectedMarkerData] = useRecoilState(
     selectedMarkerDataAtom
