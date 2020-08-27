@@ -1,10 +1,11 @@
-import { themeSpacing, themeColor } from '@datapunt/asc-ui';
+import { themeSpacing } from '@datapunt/asc-ui';
 import themeColors from '@datapunt/asc-ui/es/theme/default/colors';
 import classnames from 'classnames';
-import L, { Marker, LatLngTuple } from 'leaflet';
+import L, { Marker } from 'leaflet';
 import React, { ReactElement, ReactNode } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import styled from 'styled-components';
+import { DatasetItemTuple } from '../../../server/services';
 import { capitalizeFirstLetter } from '../../../universal/helpers';
 import {
   MapIconAfvalGft,
@@ -15,7 +16,6 @@ import {
   MapIconAuto,
 } from '../../assets/icons';
 import styles from './MyAreaSuperCluster.module.scss';
-import { DatasetItemTuple } from '../../../server/services';
 
 export type DatasetSource = Record<string, DatasetItemTuple[]>;
 

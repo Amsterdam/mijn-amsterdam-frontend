@@ -136,7 +136,7 @@ export default function MyAreaDatasets() {
 
   useEffect(() => {
     fetchDatasets({ url: '/test-api/bff/map/datasets', postpone: false });
-  }, []);
+  }, [fetchDatasets]);
 
   const [clusterLayer, setClusterLayer] = useState<L.Layer | null>(null);
   const [selectedMarkerData, setSelectedMarkerData] = useRecoilState(
@@ -162,7 +162,6 @@ export default function MyAreaDatasets() {
     if (!datasets) {
       return [];
     }
-    console.log('change!!');
     return getFilteredMarkers(datasets, activeDatasetIds);
   }, [datasets, activeDatasetIds]);
 
