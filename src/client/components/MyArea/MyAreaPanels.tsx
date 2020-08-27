@@ -94,6 +94,7 @@ export default function MyAreaPanels() {
     if (selectedMarkerData !== null) {
       setPositionFromSnapPoint(SnapPoint.Full);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedMarkerData]);
 
   const checkUncheckAll = useCallback(
