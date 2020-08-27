@@ -8,7 +8,7 @@ let superClusterIndex: Supercluster;
 
 function filterDatastore(dataStore: any, activeDatasetIds: any) {
   return dataStore.flatMap((dataset: any) => {
-    const { collection, id } = dataset;
+    const { collection, id: datasetGroupId } = dataset;
     return Object.entries(collection)
       .filter(([datasetId, coordinates]) =>
         activeDatasetIds.includes(datasetId)
@@ -18,10 +18,10 @@ function filterDatastore(dataStore: any, activeDatasetIds: any) {
           return {
             geometry: {
               type: 'Point',
-              coordinates,
+              coordinates: [coordinates[1], coordinates[0]],
             },
             properties: {
-              dataset: [id, datasetId],
+              dataset: [coordinates[2], datasetId, datasetGroupId],
             },
             type: 'Feature',
           };
@@ -52,8 +52,6 @@ async function generateSuperCluster(activeDatasetIds: string[] = []) {
     dataStore = (await loadServicesMapDatasets('x-ws')).content;
   }
 
-  console.log('hasChangedDatasetIds:', hasChangedDatasetIds, activeDatasetIds);
-
   if (!superClusterIndex || hasChangedDatasetIds) {
     const features = filterDatastore(dataStore, activeDatasetIds);
     superClusterIndex = new Supercluster({
@@ -61,7 +59,7 @@ async function generateSuperCluster(activeDatasetIds: string[] = []) {
       radius: 40,
       extent: 2500,
       nodeSize: 512,
-      maxZoom: 16,
+      maxZoom: 15,
     }).load(features);
   }
 }
@@ -75,6 +73,7 @@ export async function getClusterData({
   parentId,
 }: any) {
   await generateSuperCluster(datasetIds || currentlyActiveDatasetIds);
+
   if (parentId) {
     return {
       children: superClusterIndex.getChildren(parseInt(parentId, 10)),

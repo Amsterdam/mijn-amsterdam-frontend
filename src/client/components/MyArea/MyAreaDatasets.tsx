@@ -1,7 +1,7 @@
 import { MarkerClusterGroup } from '@datapunt/arm-cluster';
 import { themeColor } from '@datapunt/asc-ui';
 import axios from 'axios';
-import L from 'leaflet';
+import L, { LeafletMouseEventHandlerFn } from 'leaflet';
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { atom, useRecoilState } from 'recoil';
 import { createGlobalStyle } from 'styled-components';
@@ -118,7 +118,11 @@ export const selectedMarkerDataAtom = atom<SelectedMarkerData | null>({
   default: null,
 });
 
-export default function MyAreaDatasets() {
+interface MyAreaDatasetsProps {
+  onMarkerClick?: LeafletMouseEventHandlerFn;
+}
+
+export default function MyAreaDatasets({ onMarkerClick }: MyAreaDatasetsProps) {
   const datasetControlItems = useDatasetControlItems();
 
   const [
@@ -135,13 +139,13 @@ export default function MyAreaDatasets() {
   );
 
   useEffect(() => {
-    fetchDatasets({ url: '/test-api/bff/map/datasets', postpone: false });
+    fetchDatasets({
+      url: '/test-api/bff/map/datasets',
+      postpone: false,
+    });
   }, [fetchDatasets]);
 
   const [clusterLayer, setClusterLayer] = useState<L.Layer | null>(null);
-  const [selectedMarkerData, setSelectedMarkerData] = useRecoilState(
-    selectedMarkerDataAtom
-  );
 
   const activeDatasetIds: string[] = useMemo(() => {
     return datasetControlItems.flatMap((datasetControlItem) =>
@@ -165,32 +169,8 @@ export default function MyAreaDatasets() {
     return getFilteredMarkers(datasets, activeDatasetIds);
   }, [datasets, activeDatasetIds]);
 
-  const onMarkerClick = useCallback(
-    (event: any) => {
-      if (
-        selectedMarkerData?.datasetItemId !== event.layer.options.datasetItemId
-      ) {
-        axios({
-          url: `/test-api/bff/map/datasets/${event.layer.options.datasetGroupId}/${event.layer.options.datasetItemId}`,
-        })
-          .then(({ data: { content: markerData } }) => {
-            setSelectedMarkerData({
-              datasetItemId: event.layer.options.datasetItemId,
-              datasetGroupId: event.layer.options.datasetGroupId,
-              datasetId: event.layer.options.datasetId,
-              markerData,
-            });
-          })
-          .catch((error) => {
-            console.error('request error', error);
-          });
-      }
-    },
-    [setSelectedMarkerData, selectedMarkerData]
-  );
-
   useEffect(() => {
-    if (!clusterLayer) {
+    if (!clusterLayer || !onMarkerClick) {
       return;
     }
 

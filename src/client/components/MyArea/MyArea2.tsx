@@ -14,7 +14,7 @@ import {
 import { ThemeProvider } from '@datapunt/asc-ui';
 import { themeSpacing } from '@datapunt/asc-ui/lib/utils/themeUtils';
 import 'leaflet/dist/leaflet.css';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { HOOD_ZOOM } from '../../../universal/config/map';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
@@ -24,8 +24,10 @@ import { HomeIconMarker } from './MaMarker';
 import MyAreaHeader from './MyAreaHeader';
 import MyAreaLoader from './MyAreaLoader';
 import MyAreaPanels from './MyAreaPanels';
-import MyAreaDatasets from './MyAreaDatasets';
+import MyAreaDatasets, { selectedMarkerDataAtom } from './MyAreaDatasets';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
+import { useRecoilState } from 'recoil';
+import axios from 'axios';
 
 const StyledViewerContainer = styled(ViewerContainer)`
   height: 100%;
@@ -53,8 +55,11 @@ const MyAreaMap = styled(Map)`
 
 export default function MyArea2() {
   const isDesktop = useDesktopScreen();
-  const [useLeafletCluster, setUseLeafletCluster] = useState(true);
+  const [useLeafletCluster, setUseLeafletCluster] = useState(false);
   const { HOME /*KVK, BRP*/ } = useAppStateGetter();
+  const [selectedMarkerData, setSelectedMarkerData] = useRecoilState(
+    selectedMarkerDataAtom
+  );
   // const profileType = useProfileTypeValue();
   // const address =
   //   (profileType === 'private'
@@ -64,6 +69,39 @@ export default function MyArea2() {
   // const homeAddress = getFullAddress(address);
 
   const center = HOME.content?.latlng;
+  // TODO: Move into final component solution (SuperCluster or MarkerCluster)
+  const onMarkerClick = useCallback(
+    (event: any) => {
+      const datasetItemId = event?.layer?.feature?.properties?.dataset
+        ? event?.layer?.feature?.properties?.dataset[0]
+        : event.layer.options.datasetItemId;
+
+      if (selectedMarkerData?.datasetItemId !== datasetItemId) {
+        const datasetGroupId = event?.layer?.feature?.properties?.dataset
+          ? event?.layer?.feature?.properties?.dataset[2]
+          : event.layer.options.datasetGroupId;
+        const datasetId = event?.layer?.feature?.properties?.dataset
+          ? event?.layer?.feature?.properties?.dataset[1]
+          : event.layer.options.datasetId;
+
+        axios({
+          url: `/test-api/bff/map/datasets/${datasetGroupId}/${datasetItemId}`,
+        })
+          .then(({ data: { content: markerData } }) => {
+            setSelectedMarkerData({
+              datasetItemId,
+              datasetGroupId,
+              datasetId,
+              markerData,
+            });
+          })
+          .catch((error) => {
+            console.error('request error', error);
+          });
+      }
+    },
+    [setSelectedMarkerData, selectedMarkerData]
+  );
 
   return (
     <ThemeProvider>
@@ -114,7 +152,7 @@ export default function MyArea2() {
                 {useLeafletCluster ? (
                   <MyAreaDatasets />
                 ) : (
-                  <MaSuperClusterLayer />
+                  <MaSuperClusterLayer onMarkerClick={onMarkerClick} />
                 )}
               </MapPanelProvider>
             </MyAreaMap>

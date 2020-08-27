@@ -1,7 +1,7 @@
 import classnames from 'classnames';
-import L from 'leaflet';
+import L, { LeafletMouseEventHandlerFn } from 'leaflet';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { createMarkerIcon } from './datasets';
+import { createMarkerIcon, getIconHtml } from './datasets';
 import { useDatasetControlItems } from './MyAreaDatasetControl';
 import datasetStyles from './MyAreaSuperCluster.module.scss';
 import { useMapRef } from './useMap';
@@ -11,11 +11,12 @@ export const WS_SUPERCLUSTER_SERVER = 'ws://localhost:5013';
 function createMarker(feature: any, latlng: any) {
   let icon;
   if (!feature?.properties.cluster) {
-    icon = createMarkerIcon({
-      label: '1',
-      className: classnames(
-        datasetStyles[`MarkerIcon-${feature.properties.dataset.join('--')}`]
-      ),
+    const html = getIconHtml(feature.properties.dataset[1]);
+    icon = L.divIcon({
+      html,
+      className: '',
+      iconSize: [14, 14],
+      iconAnchor: [7, 7],
     });
   } else {
     const count = feature.properties.point_count;
@@ -81,13 +82,15 @@ function useSuperClusterWebSocket(onMessageCallback: (data: any) => void) {
 }
 
 interface MaSuperClusterLayerProps {
-  onClickMarker?: (event: any, properties: any) => void;
+  onMarkerClick?: LeafletMouseEventHandlerFn;
 }
 
 export function MaSuperClusterLayer({
-  onClickMarker,
+  onMarkerClick,
 }: MaSuperClusterLayerProps) {
   const map = useMapRef().current;
+
+  console.info('Using MaSuperClusterLayer');
 
   const markers = useClusterMarkers(map);
   const datasetControlItems = useDatasetControlItems();
@@ -175,18 +178,18 @@ export function MaSuperClusterLayer({
       if (event.layer.feature.properties.cluster_id) {
         const center = [point.lat, point.lng];
         console.log(map.getZoom(), event.layer.feature);
-        if (map.getZoom() === 16) {
-          console.log(event.layer.feature);
-          requestData({ parentId: event.layer.feature.id });
-        } else {
-          requestData({
-            getClusterExpansionZoom: event.layer.feature.properties.cluster_id,
-            center,
-            datasetIds: activeDatasetIds,
-          });
-        }
+        // if (map.getZoom() === 16) {
+        //   console.log(event.layer.feature);
+        //   requestData({ parentId: event.layer.feature.id });
+        // } else {
+        requestData({
+          getClusterExpansionZoom: event.layer.feature.properties.cluster_id,
+          center,
+          datasetIds: activeDatasetIds,
+        });
+        // }
       }
-      onClickMarker && onClickMarker(event, event.layer.feature.properties);
+      onMarkerClick && onMarkerClick(event);
     };
 
     markers.on('click', onClick);
@@ -194,7 +197,7 @@ export function MaSuperClusterLayer({
     return () => {
       markers.off('click', onClick);
     };
-  }, [markers, requestData, map, activeDatasetIds, onClickMarker]);
+  }, [markers, requestData, map, activeDatasetIds, onMarkerClick]);
 
   useEffect(() => {
     if (wsReady && updateClusterData) {
