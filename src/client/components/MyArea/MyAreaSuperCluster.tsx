@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import L, { marker } from 'leaflet';
+import L from 'leaflet';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { createMarkerIcon } from './datasets';
 import { useDatasetControlItems } from './MyAreaDatasetControl';

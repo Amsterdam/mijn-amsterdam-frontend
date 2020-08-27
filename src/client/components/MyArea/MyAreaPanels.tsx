@@ -1,17 +1,18 @@
 import {
   MapPanel,
   MapPanelContent,
-  MapPanelDrawer,
   MapPanelContext,
+  MapPanelDrawer,
 } from '@datapunt/arm-core';
-import React, { useContext, useEffect, useCallback } from 'react';
+import { SnapPoint } from '@datapunt/arm-core/lib/components/MapPanel/constants';
+import { Checkbox, Label } from '@datapunt/asc-ui';
+import React, { useCallback, useContext, useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { useDesktopScreen } from '../../hooks';
-import { getIcon, DatasetControl, DatasetControlItem } from './datasets';
+import { DatasetControlItem, getIcon } from './datasets';
 import MyAreaCollapisblePanel, {
   CollapsedState,
-  isCollapsed,
 } from './MyAreaCollapsiblePanel';
 import MyAreaDatasetControl, {
   datasetControlItemsAtom,
@@ -19,8 +20,6 @@ import MyAreaDatasetControl, {
 } from './MyAreaDatasetControl';
 import { selectedMarkerDataAtom } from './MyAreaDatasets';
 import MyAreaPanelContent from './MyAreaPanelContent';
-import { SnapPoint } from '@datapunt/arm-core/lib/components/MapPanel/constants';
-import { Label, Checkbox } from '@datapunt/asc-ui';
 
 function initialCollapsedState(datasets: Array<{ isActive: boolean }>) {
   return datasets.some((dataset) => dataset.isActive)
