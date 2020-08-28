@@ -15,6 +15,7 @@ import { DataRequestConfig } from '../config';
 import { apiErrorResult } from '../../universal/helpers/api';
 import { getFullAddress } from '../../universal/helpers/brp';
 import { response } from 'express';
+import { defaultDateFormat } from '../../universal/helpers/date';
 
 const MAP_URL =
   'https://data.amsterdam.nl/data/?modus=kaart&achtergrond=topo_rd_zw&embed=true';
@@ -160,14 +161,26 @@ function transformEvenementenDetail(responseData: any) {
   //   "einddatum": null,
   //   "eindtijd": "16:00:00"
   // }
+  let starttijd;
+  if (responseData.starttijd) {
+    const parts = responseData.starttijd.split(':');
+    parts.pop();
+    starttijd = parts.join(':');
+  }
+  let eindtijd;
+  if (responseData.eindtijd) {
+    const parts = responseData.eindtijd.split(':');
+    parts.pop();
+    eindtijd = parts.join(':');
+  }
   return {
     title: responseData.titel,
     description: responseData.omschrijving,
     url: responseData.url,
     dateStart: responseData.startdatum,
     dateEnd: responseData.einddatum || responseData.startdatum,
-    timeStart: responseData.starttijd,
-    timeEnd: responseData.eindtijd,
+    timeStart: starttijd,
+    timeEnd: eindtijd,
   };
 }
 

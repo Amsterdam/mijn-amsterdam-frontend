@@ -1,7 +1,8 @@
 import React from 'react';
-import InfoDetail from '../InfoDetail/InfoDetail';
+import InfoDetail, { InfoDetailGroup } from '../InfoDetail/InfoDetail';
 import { defaultDateFormat } from '../../../universal/helpers';
 import Linkd from '../Button/Button';
+import styles from './MyArea.module.scss';
 
 interface MyAreaPanelContentProps {
   panelItem: any;
@@ -24,8 +25,41 @@ export default function MyAreaPanelContent({
       {!!panelItem.subject && (
         <InfoDetail label="Onderwerp" value={panelItem.subject} />
       )}
+
+      {panelItem.dateStart && panelItem.dateEnd && (
+        <>
+          <InfoDetailGroup>
+            <InfoDetail
+              label={`Datum ${
+                panelItem.dateStart !== panelItem.dateEnd ? 'van' : ''
+              }`}
+              value={defaultDateFormat(panelItem.dateStart)}
+            />
+            {panelItem.dateStart !== panelItem.dateEnd && (
+              <InfoDetail
+                label="Datum tot en met"
+                value={defaultDateFormat(panelItem.dateStart)}
+              />
+            )}
+          </InfoDetailGroup>
+          {(panelItem.timeStart || panelItem.timeEnd) && (
+            <InfoDetailGroup>
+              {panelItem.timeStart && (
+                <InfoDetail label="Tijd van" value={panelItem.timeStart} />
+              )}
+              {panelItem.timeEnd && (
+                <InfoDetail label="Tijd tot" value={panelItem.timeEnd} />
+              )}
+            </InfoDetailGroup>
+          )}
+        </>
+      )}
       {!!panelItem.description && (
-        <InfoDetail label="Beschrijving" value={panelItem.description} />
+        <InfoDetail
+          className={styles.InfoDetailDescription}
+          label="Beschrijving"
+          value={panelItem.description}
+        />
       )}
       {!!panelItem.url && (
         <InfoDetail
