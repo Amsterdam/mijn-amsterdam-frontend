@@ -1,9 +1,8 @@
 import { MarkerClusterGroup } from '@datapunt/arm-cluster';
 import { themeColor } from '@datapunt/asc-ui';
-import axios from 'axios';
 import L, { LeafletMouseEventHandlerFn } from 'leaflet';
-import React, { useEffect, useMemo, useState, useCallback } from 'react';
-import { atom, useRecoilState } from 'recoil';
+import React, { useEffect, useMemo, useState } from 'react';
+import { atom } from 'recoil';
 import { createGlobalStyle } from 'styled-components';
 import { DatasetItemTuple } from '../../../server/services';
 import { apiPristineResult, ApiResponse } from '../../../universal/helpers/api';

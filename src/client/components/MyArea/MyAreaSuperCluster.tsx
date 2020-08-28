@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import L, { LeafletMouseEventHandlerFn } from 'leaflet';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { createMarkerIcon, getIconHtml } from './datasets';
