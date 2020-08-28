@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import themeColors from '@datapunt/asc-ui/es/theme/default/colors';
 import { useMapInstance } from '@datapunt/react-maps';
 import L, { LeafletMouseEventHandlerFn } from 'leaflet';
+import React, { useEffect, useState } from 'react';
+import { createGlobalStyle } from 'styled-components';
 import { proj4RD } from '../../config/map';
 import { getIconHtml } from './datasets';
-import themeColors from '@datapunt/asc-ui/es/theme/default/colors';
-import { Theme } from '@datapunt/asc-ui';
-import { createGlobalStyle } from 'styled-components';
 
 interface MaWMSLayerProps {
   onMarkerClick?: LeafletMouseEventHandlerFn;
@@ -41,7 +40,6 @@ export function randomColor() {
         allColors.length - 1
       )
     ];
-  console.log('c', color);
   return color;
 }
 
@@ -114,6 +112,7 @@ export function MaWMSLayer({
         });
         setJson(jsonData);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
