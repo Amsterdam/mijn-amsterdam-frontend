@@ -7,7 +7,7 @@ import { createGlobalStyle } from 'styled-components';
 import { DatasetItemTuple } from '../../../server/services';
 import { apiPristineResult, ApiResponse } from '../../../universal/helpers/api';
 import { useDataApi } from '../../hooks/api/useDataApi';
-import { Datasets, DatasetsSource, getIconHtml } from './datasets';
+import { Datasets, DatasetsSource, getIconHtml, LayerType } from './datasets';
 import { useDatasetControlItems } from './MyAreaDatasetControl';
 
 const iconCreateFunction = (
@@ -51,6 +51,10 @@ const Styles = createGlobalStyle`
     .arm__icon-text {
       text-align:center;
     }
+  }
+
+  .ma-marker-selected {
+    outline: 4px solid blue;
   }
 `;
 
@@ -121,9 +125,38 @@ interface MyAreaDatasetsProps {
   onMarkerClick?: LeafletMouseEventHandlerFn;
 }
 
-export default function MyAreaDatasets({ onMarkerClick }: MyAreaDatasetsProps) {
+export function useActiveDatasetIds() {
   const datasetControlItems = useDatasetControlItems();
+  const activeDatasetIds: string[] = useMemo(() => {
+    return datasetControlItems.flatMap((datasetControlItem) =>
+      datasetControlItem.collection
+        .filter((dataset) => dataset.isActive)
+        .map((dataset) => dataset.id)
+    );
+  }, [datasetControlItems]);
 
+  return activeDatasetIds;
+}
+
+export function useActiveClusterDatasetIds() {
+  const datasetControlItems = useDatasetControlItems();
+  const activeDatasetIds: string[] = useMemo(() => {
+    return datasetControlItems.flatMap((datasetControlItem) =>
+      datasetControlItem.collection
+        .filter(
+          (dataset) =>
+            dataset.isActive && dataset.layerType === LayerType.Cluster
+        )
+        .map((dataset) => dataset.id)
+    );
+  }, [datasetControlItems]);
+
+  return activeDatasetIds;
+}
+
+export default function MyAreaDatasets({ onMarkerClick }: MyAreaDatasetsProps) {
+  const activeDatasetIds = useActiveClusterDatasetIds();
+  const activeDatasetIdsString = activeDatasetIds.join(',');
   const [
     {
       data: { content: datasetsSource },
@@ -146,14 +179,6 @@ export default function MyAreaDatasets({ onMarkerClick }: MyAreaDatasetsProps) {
 
   const [clusterLayer, setClusterLayer] = useState<L.Layer | null>(null);
 
-  const activeDatasetIds: string[] = useMemo(() => {
-    return datasetControlItems.flatMap((datasetControlItem) =>
-      datasetControlItem.collection
-        .filter((dataset) => dataset.isActive)
-        .map((dataset) => dataset.id)
-    );
-  }, [datasetControlItems]);
-
   const datasets = useMemo(() => {
     if (!datasetsSource) {
       return [];
@@ -165,8 +190,8 @@ export default function MyAreaDatasets({ onMarkerClick }: MyAreaDatasetsProps) {
     if (!datasets) {
       return [];
     }
-    return getFilteredMarkers(datasets, activeDatasetIds);
-  }, [datasets, activeDatasetIds]);
+    return getFilteredMarkers(datasets, activeDatasetIdsString.split(','));
+  }, [datasets, activeDatasetIdsString]);
 
   useEffect(() => {
     if (!clusterLayer || !onMarkerClick) {

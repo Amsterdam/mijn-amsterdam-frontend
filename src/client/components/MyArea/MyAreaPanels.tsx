@@ -54,7 +54,7 @@ function PanelSubTitle({ datasetId, datasetGroupId }: PanelSubTitleProps) {
       }}
     >
       {getIcon(datasetId)}
-      {datasetGroupId}
+      {datasetGroupId || datasetId}
     </span>
   );
 }

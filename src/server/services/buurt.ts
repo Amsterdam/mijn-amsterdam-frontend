@@ -227,10 +227,44 @@ function transformBekendmakingenDetail(responseData: any) {
   };
 }
 
-function transformParkeerzones(WFSData: any) {}
+// {
+//   "begin_datum_gebied": "2010-06-03",
+//   "gebied_code": "WP61B",
+//   "gebied_omschrijving": "WP61B West 8.2 Zeeheldenbuurt",
+//   "eind_datum_gebied": null,
+//   "domein_code": "363",
+//   "gebruiks_doel": "VERGUNP",
+//   "gebied_naam": "West 8.2 Zeeheldenbuurt",
+//   "show": "TRUE",
+//   "parent": "West 8",
+//   "color": "#A00078"
+// }
+function transformParkeerzones(WFSData: any) {
+  return {
+    title: WFSData.gebied_naam,
+    description: WFSData.gebied_omschrijving,
+    subject: WFSData.gebied_code,
+  };
+}
 
-function transformParkeerzonesUitzonderingen(WFSData: any) {}
+function transformparkeerzones_uitz(WFSData: any) {
+  return {
+    title: WFSData.gebied_naam,
+    description: WFSData.omschrijving,
+    subject: WFSData.gebied_code,
+  };
+}
 
+// {
+//      "gebied_code": "WM55_U02",
+//     "begin_datum_gebied": "2018-01-01",
+//     "eind_datum_gebied": null,
+//     "domein_code": "363",
+//     "gebruiks_doel": "VERGUNP",
+//     "gebied_naam": "Sportpark Middenmeer",
+//     "omschrijving": "Uw parkeervergunning geldt niet van ma t/m za 9.00 tot 21.00 uur.",
+//     "show": "TRUE"
+// }
 interface DatasetConfig {
   listUrl: string;
   detailUrl: string;
@@ -262,13 +296,13 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
   },
   parkeerzones: {
     listUrl: '',
-    detailUrl: '',
-    transformList: transformParkeerzones,
+    detailUrl: 'https://api.data.amsterdam.nl/vsd/parkeerzones/',
+    transformDetail: transformParkeerzones,
   },
-  parkeerzonesUitzonderingen: {
+  parkeerzones_uitz: {
     listUrl: '',
-    detailUrl: '',
-    transformList: transformParkeerzonesUitzonderingen,
+    detailUrl: 'https://api.data.amsterdam.nl/vsd/parkeerzones_uitz/',
+    transformDetail: transformparkeerzones_uitz,
   },
 };
 

@@ -16,6 +16,7 @@ import {
   MapIconAuto,
 } from '../../assets/icons';
 import styles from './MyAreaSuperCluster.module.scss';
+import { DEFAULT_WMS_OPTIONS, DEFAULT_POLYLINE_OPTIONS } from './MaWmsLayer';
 
 export type DatasetSource = Record<string, DatasetItemTuple[]>;
 
@@ -36,6 +37,7 @@ export interface DatasetControl {
   isActive: boolean;
   title: string;
   icon: ReactNode;
+  layerType: LayerType;
 }
 
 export interface DatasetControlItem {
@@ -67,7 +69,7 @@ export function createMarkerIcon({
 
 export const DATASETS = {
   afvalcontainers: ['rest', 'papier', 'glas', 'plastic', 'textiel', 'gft'],
-  parkeren: ['parkeerzones', 'parkeerzonesuitzonderingen'],
+  parkeren: ['parkeerzones', 'parkeerzones_uitz'],
   bekendmakingen: [
     'apv vergunning',
     'evenementenvergunning',
@@ -171,7 +173,7 @@ const datasetIcons: Record<string, ReactElement<any>> = {
       <MapIconAuto />
     </DatasetIcon>
   ),
-  parkeerzonesuitzonderingen: (
+  parkeerzones_uitz: (
     <DatasetIcon style={{ backgroundColor: themeColors.supplement.pink }}>
       <MapIconAuto fill={themeColors.tint.level1} />
     </DatasetIcon>
@@ -280,12 +282,22 @@ export function getIconHtml(id: string) {
   return datasetIconHtml[id] || '';
 }
 
-const createDatasetControl = (id: string, isActive: boolean = true) => {
+export enum LayerType {
+  Wms,
+  Cluster,
+}
+
+const createDatasetControl = (
+  id: string,
+  isActive: boolean = true,
+  layerType: LayerType = LayerType.Cluster
+) => {
   return {
     id,
     icon: getIcon(id),
     title: capitalizeFirstLetter(id),
     isActive,
+    layerType,
   };
 };
 
@@ -293,7 +305,9 @@ export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
   {
     id: 'parkeren',
     title: 'Parkeren',
-    collection: DATASETS.parkeren.map((id) => createDatasetControl(id, false)),
+    collection: DATASETS.parkeren.map((id) =>
+      createDatasetControl(id, false, LayerType.Wms)
+    ),
   },
   {
     id: 'afvalcontainers',
@@ -319,3 +333,25 @@ export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
     ),
   },
 ];
+
+export const PARKEERZONES_WMS_OPTIONS = {
+  parkeerzones: {
+    ...DEFAULT_WMS_OPTIONS,
+    layers: 'parkeerzones',
+  },
+  parkeerzones_uitz: {
+    ...DEFAULT_WMS_OPTIONS,
+    layers: 'parkeerzones_uitz',
+  },
+};
+
+export const PARKEERZONES_POLYLINE_OPTIONS = {
+  parkeerzones: {
+    ...DEFAULT_POLYLINE_OPTIONS,
+    color: themeColors.supplement.yellow,
+  },
+  parkeerzones_uitz: {
+    ...DEFAULT_POLYLINE_OPTIONS,
+    color: themeColors.supplement.pink,
+  },
+};
