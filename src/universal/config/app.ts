@@ -16,7 +16,7 @@ export const FeatureToggle = {
   tozoActive: true,
   tozo2active: true,
   eherkenningActive: !IS_PRODUCTION,
-  vergunningenActive: !IS_PRODUCTION,
+  vergunningenActive: true,
   cmsFooterActive: true,
   KrefiaDirectLinkActive: !IS_PRODUCTION,
   tipsFlipActive: true,
