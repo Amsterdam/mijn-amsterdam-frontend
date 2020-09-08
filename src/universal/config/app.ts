@@ -18,7 +18,7 @@ export const FeatureToggle = {
   eherkenningActive: !IS_PRODUCTION,
   vergunningenActive: true,
   cmsFooterActive: true,
-  KrefiaDirectLinkActive: !IS_PRODUCTION,
+  KrefiaDirectLinkActive: true,
   tipsFlipActive: true,
   profileToggleActive: !IS_PRODUCTION,
 };
