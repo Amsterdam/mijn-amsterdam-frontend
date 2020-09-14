@@ -368,4 +368,12 @@ export const tozoDocumentLabelSet: Record<
     productSpecific: 'uitkering',
     stepType: 'besluit',
   },
+  '175355': {
+    omschrijving: 'Tozo Herziening met terugvordering',
+    labels: toekennenLabels,
+    documentTitle: 'Tozo Herziening met terugvordering',
+    product: 'Tozo 2',
+    productSpecific: 'uitkering',
+    stepType: 'besluit',
+  },
 };
