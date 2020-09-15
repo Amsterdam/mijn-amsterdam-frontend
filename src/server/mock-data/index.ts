@@ -16,6 +16,7 @@ import KVK2 from './json/kvk-handelsregister2.json';
 import MILIEUZONE from './json/milieuzone.json';
 import TIPS from './json/tips.json';
 import VERGUNNINGEN from './json/vergunningen.json';
+import WMO from './json/wmo.json';
 import KVK2 from './json/kvk-handelsregister2.json';
 import KVK1 from './json/kvk-handelsregister.json';
 import { datasetEndpoints } from '../services/services-map';

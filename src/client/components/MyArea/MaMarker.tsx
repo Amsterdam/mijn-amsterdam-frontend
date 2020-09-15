@@ -3,7 +3,7 @@ import L, { LeafletEventHandlerFn } from 'leaflet';
 import React, { useCallback, useMemo } from 'react';
 import { LOCATION_ZOOM } from '../../../universal/config/map';
 import iconUrl from '../../assets/icons/home.svg';
-import iconUrlCommercial from '../../assets/icons/Suitcase__primary-red.svg';
+import iconUrlCommercial from '../../assets/icons/map/homeCommercial__primary-red.svg';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useMapRef } from './useMap';
 
