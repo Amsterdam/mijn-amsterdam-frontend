@@ -2,6 +2,7 @@
 
 exports[`BRP data api + transformation should transform the source data 1`] = `
 Object {
+  "_adresSleutel": "xxxcasdasfada",
   "adres": Object {
     "begindatumVerblijf": "1967-01-01T00:00:00Z",
     "huisletter": null,
