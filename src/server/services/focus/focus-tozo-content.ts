@@ -119,6 +119,17 @@ const intrekkenLabels: FocusStepContent = {
     `<p>U hebt uw ${document.productTitle} aanvraag ingetrokken. Bekijk de brief voor meer details.</p>`,
 };
 
+const herzieningLabels: FocusStepContent = {
+  notification: {
+    title: document => `${document.productTitle}: Besluit herzien`,
+    description: document =>
+      `Ons besluit is herzien, uw uitkering wordt teruggevorderd.`,
+  },
+  status: stepLabels.beslissing,
+  description: document =>
+    `<p>Ons besluit is herzien, uw uitkering wordt teruggevorderd.</p>`,
+};
+
 const vrijeBeschikkingLabels: FocusStepContent = {
   notification: {
     title: document => `${document.productTitle}: Besluit aanvraag`,
@@ -253,7 +264,7 @@ export const tozoDocumentLabelSet: Record<
     labels: intrekkenLabels,
     documentTitle: 'Besluit intrekking met terugbetaling',
     product: 'Tozo 1',
-    productSpecific: 'aanvraag',
+    productSpecific: '',
     stepType: 'intrekken',
   },
   '175331': {
@@ -261,7 +272,7 @@ export const tozoDocumentLabelSet: Record<
     labels: intrekkenLabels,
     documentTitle: 'Brief intrekken Tozo 1 aanvraag',
     product: 'Tozo 1',
-    productSpecific: 'aanvraag',
+    productSpecific: '',
     stepType: 'intrekken',
   },
   '175334': {
@@ -317,7 +328,7 @@ export const tozoDocumentLabelSet: Record<
     labels: intrekkenLabels,
     documentTitle: 'Brief intrekken Tozo 2 aanvraag',
     product: 'Tozo 2',
-    productSpecific: 'aanvraag',
+    productSpecific: '',
     stepType: 'intrekken',
   },
   '175342': {
@@ -341,7 +352,7 @@ export const tozoDocumentLabelSet: Record<
     labels: intrekkenLabels,
     documentTitle: 'Besluit intrekking met terugbetaling',
     product: 'Tozo 2',
-    productSpecific: 'aanvraag',
+    productSpecific: '',
     stepType: 'intrekken',
   },
   '175345': {
@@ -370,7 +381,7 @@ export const tozoDocumentLabelSet: Record<
   },
   '175355': {
     omschrijving: 'Tozo Herziening met terugvordering',
-    labels: toekennenLabels,
+    labels: herzieningLabels,
     documentTitle: 'Tozo Herziening met terugvordering',
     product: 'Tozo 2',
     productSpecific: 'uitkering',
