@@ -1,0 +1,29 @@
+{
+  "content": [
+    {
+      "id": "D/1942287",
+      "sequence": 1,
+      "title": "Training voorbeelddocument.docx",
+      "url": "/api/decosjoin/document/gAAAAABfPiOeVi35oGwW5RXKK2lfiKyt7GEu86bUs1Uf6EcS3DokfF1U8SJ8cpCDeKSMYzaqntvbprYrtkf8JDdkx331TOa5vmJKqheBoqQLVmrGVg73AlsDzQXPZ5rusV4jzBRdWgYg"
+    },
+    {
+      "id": "D/1942288",
+      "sequence": 2,
+      "title": "Samenvatting-46c6ee83-ad44-4bc3-95b3-71e6ff933b26.pdf",
+      "url": "/api/decosjoin/document/gAAAAABfPiOezhFAtHwyE0H9DzsPJw3sGI1Lx2na36Qxwx1O-H-L5Wlhvh0YBtAtUAsFmrPWQ5ZgDUBjPS69U_YkHri0jsX9n51mE-TmEfzbjXnMBRjh7gnR8TDorjEjdbXTLVnC2m7L"
+    },
+    {
+      "id": "D/2001866",
+      "sequence": 3,
+      "title": null,
+      "url": "/api/decosjoin/document/gAAAAABfPiOea9eWivKly3KFHyqcEvDK_Sl0mSQ_e4leHtGWjYttw2fKZoijwVkGEMFYErkmftl_8sItb3K56AAYiB5EAInekj7YaX7xMe_h6V8n0ooOFvfJgQz57FUQIINSWEvjc5Ep"
+    },
+    {
+      "id": "D/2001867",
+      "sequence": 4,
+      "title": null,
+      "url": "/api/decosjoin/document/gAAAAABfPiOeIaGmkoi52jDM3B0JWzQ7ChygsJYf_hc1EPgczEPO9nG4aEgIvlL2yFBwWKjsQ_hZdnn6aPSIGoAhYyvLMXHl9tikJNfLFtEY1v3VuI89gDc2b6kpiDEh524-dD_8HiaY"
+    }
+  ],
+  "status": "OK"
+}

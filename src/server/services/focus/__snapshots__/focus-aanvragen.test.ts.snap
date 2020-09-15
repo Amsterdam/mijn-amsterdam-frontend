@@ -3,44 +3,6 @@
 exports[`FOCUS_AANVRAGEN service Normalizes the focus aanvragen items correctly  1`] = `
 Array [
   Object {
-    "datePublished": "2020-04-03T00:00:00",
-    "dateStart": "2020-04-03T00:00:00",
-    "decision": "toekenning",
-    "dienstverleningstermijn": 28,
-    "id": "399318441",
-    "inspanningsperiode": 28,
-    "steps": Array [
-      Object {
-        "datePublished": "2020-04-03T00:00:00",
-        "documents": Array [],
-        "id": "aanvraag",
-        "title": "aanvraag",
-      },
-      Object {
-        "datePublished": "2020-04-03T00:00:00",
-        "documents": Array [
-          Object {
-            "datePublished": "2020-04-03T00:00:00",
-            "id": "660000000000027",
-            "title": "Voorschot Tozo (voor ondernemers) (Eenm.)",
-            "type": "PDF",
-            "url": "/test-api/focus/document?id=660000000000027&isBulk=false&isDms=false",
-          },
-        ],
-        "id": "beslissing",
-        "title": "beslissing",
-      },
-      Object {
-        "datePublished": "2020-04-03T00:00:00",
-        "documents": Array [],
-        "id": "inBehandeling",
-        "title": "inBehandeling",
-      },
-    ],
-    "title": "Voorschot Tozo (voor ondernemers) (Eenm.)",
-    "type": "Bijzondere Bijstand",
-  },
-  Object {
     "datePublished": "2019-07-08T15:05:52+02:00",
     "dateStart": "2019-07-08T15:05:52+02:00",
     "decision": undefined,

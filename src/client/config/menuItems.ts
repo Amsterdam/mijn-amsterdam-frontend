@@ -31,7 +31,14 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     id: Chapters.BELASTINGEN,
     to: ExternalUrls.SSO_BELASTINGEN,
     rel: 'external',
-    profileTypes: ['private', 'private-commercial', 'commercial'],
+    profileTypes: ['private', 'private-commercial'],
+  },
+  {
+    title: ChapterTitles.BELASTINGEN,
+    id: Chapters.BELASTINGEN,
+    to: ExternalUrls.EH_SSO_BELASTINGEN,
+    rel: 'external',
+    profileTypes: ['commercial'],
   },
   {
     title: ChapterTitles.BURGERZAKEN,
@@ -44,7 +51,14 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     id: Chapters.ERFPACHT,
     to: ExternalUrls.SSO_ERFPACHT || '',
     rel: 'external',
-    profileTypes: ['private', 'private-commercial', 'commercial'],
+    profileTypes: ['private', 'private-commercial'],
+  },
+  {
+    title: ChapterTitles.ERFPACHT,
+    id: Chapters.ERFPACHT,
+    to: ExternalUrls.EH_SSO_ERFPACHT || '',
+    rel: 'external',
+    profileTypes: ['commercial'],
   },
   {
     title: ChapterTitles.ZORG,
@@ -80,13 +94,13 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
 ];
 
 export const chaptersByProfileType: Record<ProfileType, ChapterMenuItem[]> = {
-  private: myChaptersMenuItems.filter(item =>
+  private: myChaptersMenuItems.filter((item) =>
     item.profileTypes.includes('private')
   ),
-  'private-commercial': myChaptersMenuItems.filter(item =>
+  'private-commercial': myChaptersMenuItems.filter((item) =>
     item.profileTypes.includes('private-commercial')
   ),
-  commercial: myChaptersMenuItems.filter(item =>
+  commercial: myChaptersMenuItems.filter((item) =>
     item.profileTypes.includes('commercial')
   ),
 };

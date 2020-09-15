@@ -114,7 +114,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${BFF_DATAPUNT_API_BASE_URL}/afvalophaalgebieden/search/`,
   },
   KVK: {
-    url: `${BFF_MS_API_BASE_URL}/kvk/handelsregister`,
+    url: `${BFF_MS_API_BASE_URL}/brp/hr`,
   },
 };
 

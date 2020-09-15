@@ -21,6 +21,10 @@ import { formatBrpProfileData } from './formatData';
 import { panelConfig, PanelConfigFormatter } from './Profile.constants';
 import styles from './Profile.module.scss';
 import classnames from 'classnames';
+import {
+  isMokum,
+  hasMultipleNationalities,
+} from '../../../universal/helpers/brp';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,
@@ -50,6 +54,25 @@ export default function Profile() {
           u vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of
           uw burgerlijke staat. De gemeente gebruikt deze gegevens. Belangrijk
           dus dat deze gegevens kloppen.
+        </p>
+        {!isMokum(BRP.content) && (
+          <p>
+            U staat niet ingeschreven in Amsterdam. Daarom ziet u alleen
+            gegevens die de gemeente Amsterdam van u heeft. Bijvoorbeeld een oud
+            adres in Amsterdam of een parkeerbon.
+          </p>
+        )}
+        {hasMultipleNationalities(BRP.content) && (
+          <p>
+            Als u een andere nationaliteit hebt of hebt gehad naast de
+            Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet
+            alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit
+            moment geen Nederlandse nationaliteit hebt.
+          </p>
+        )}
+        <p>
+          Gegevens van een levenloos geboren kindje ziet u niet in Mijn
+          Amsterdam. U kunt die gegevens alleen inzien via MijnOverheid.
         </p>
 
         {isLoading(BRP) && (
@@ -156,7 +179,7 @@ export default function Profile() {
       {!!brpProfileData?.kinderen && brpProfileData.kinderen.length && (
         <InfoPanelCollapsible
           id="profile-kinderen"
-          className={classnames(styles.Verbintenis, styles.CollapsiblePanel)}
+          className={styles.CollapsiblePanel}
           {...formatInfoPanelConfig(panelConfig.kinderen, BRP)}
           panelData={brpProfileData.kinderen}
         />

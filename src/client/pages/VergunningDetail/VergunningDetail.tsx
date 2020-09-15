@@ -1,12 +1,21 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
+import {
+  Vergunning,
+  VergunningDocument,
+} from '../../../server/services/vergunningen';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
   defaultDateFormat,
+  directApiUrl,
   isError,
   isLoading,
 } from '../../../universal/helpers';
-import { GenericDocument } from '../../../universal/types/App.types';
+import {
+  apiPristineResult,
+  ApiResponse,
+  apiSuccesResult,
+} from '../../../universal/helpers/api';
 import {
   Alert,
   ChapterIcon,
@@ -22,18 +31,11 @@ import InfoDetail, {
 import StatusLine, {
   StatusLineItem,
 } from '../../components/StatusLine/StatusLine';
+import { useDataApi } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './VergunningDetail.module.scss';
 
-export default () => {
-  const { VERGUNNINGEN } = useAppStateGetter();
-
-  const { id } = useParams();
-
-  const VergunningItem = VERGUNNINGEN.content?.find(item => item.id === id);
-  const noContent = !isLoading(VERGUNNINGEN) && !VergunningItem;
-  const documents: GenericDocument[] = [];
-
+function useVergunningStatusLineItems(VergunningItem?: Vergunning) {
   const statusLineItems: StatusLineItem[] = useMemo(() => {
     if (!VergunningItem) {
       return [];
@@ -73,6 +75,52 @@ export default () => {
       },
     ];
   }, [VergunningItem]);
+
+  return statusLineItems;
+}
+
+export default () => {
+  const { VERGUNNINGEN } = useAppStateGetter();
+  // Set-up the documents api source
+  const [
+    {
+      data: { content: documents },
+      isLoading: isLoadingDocuments,
+    },
+    fetchDocuments,
+  ] = useDataApi<ApiResponse<VergunningDocument[]>>(
+    {
+      postpone: true,
+    },
+    apiPristineResult([])
+  );
+  const { id } = useParams();
+
+  const VergunningItem = VERGUNNINGEN.content?.find(item => item.id === id);
+  const noContent = !isLoading(VERGUNNINGEN) && !VergunningItem;
+
+  const statusLineItems = useVergunningStatusLineItems(VergunningItem);
+  const documentsUrl = VergunningItem?.documentsUrl;
+
+  // Fetch the documents for this Item
+  useEffect(() => {
+    if (documentsUrl) {
+      fetchDocuments({
+        url: directApiUrl(documentsUrl),
+        transformResponse: ({ content }) => {
+          if (!content) {
+            return [];
+          }
+          return apiSuccesResult(
+            content.map((document: VergunningDocument) =>
+              // Some documents don't have titles, assign a default title.
+              Object.assign(document, { title: document.title || 'Document' })
+            )
+          );
+        },
+      });
+    }
+  }, [documentsUrl, fetchDocuments]);
 
   return (
     <DetailPage>
@@ -128,12 +176,25 @@ export default () => {
         {!!VergunningItem?.decision && (
           <InfoDetail label="Resultaat" value={VergunningItem.decision} />
         )}
-        {!!documents.length && (
-          <InfoDetail
-            label="Documenten"
-            value={<DocumentList documents={documents} isExpandedView={true} />}
-          />
-        )}
+
+        <InfoDetail
+          el="div"
+          label="Documenten"
+          value={
+            isLoadingDocuments ? (
+              <LoadingContent
+                barConfig={[
+                  ['100%', '2rem', '1rem'],
+                  ['100%', '2rem', '1rem'],
+                ]}
+              />
+            ) : !!documents?.length ? (
+              <DocumentList documents={documents} isExpandedView={true} />
+            ) : (
+              <span>Geen documenten beschikbaar</span>
+            )
+          }
+        />
       </PageContent>
       {!!statusLineItems.length && (
         <StatusLine

@@ -8,6 +8,7 @@ export const ExternalUrls = {
   CONTACT_FORM:
     'https://formulieren.amsterdam.nl/TripleForms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx',
   SSO_ERFPACHT: getOtapEnvItem('ssoErfpachtUrl'),
+  EH_SSO_ERFPACHT: getOtapEnvItem('ssoErfpachtUrlEH'),
   BERICHTENBOX: 'https://mijn.overheid.nl/berichtenbox/inbox/',
   CONTACT_GENERAL: 'https://www.amsterdam.nl/contact/',
   AMSTERDAM_NEWSLETTER:
@@ -20,6 +21,8 @@ export const ExternalUrls = {
     'https://www.amsterdam.nl/bestuur-organisatie/werkenbij/',
   ZORG_LEES_MEER: 'https://www.amsterdam.nl/zorg-ondersteuning/',
   SSO_BELASTINGEN: 'https://belastingbalie.amsterdam.nl/digid.saml.php?start',
+  EH_SSO_BELASTINGEN:
+    'https://belastingbalie.amsterdam.nl/eherkenning.saml.php?start',
   SSO_MILIEUZONE: getOtapEnvItem('ssoMilieuzoneUrl'),
   MIJN_SUBSIDIES: 'https://mijnsubsidies.amsterdam.nl/loket/',
   MIJN_AMSTERDAM_VEELGEVRAAGD:

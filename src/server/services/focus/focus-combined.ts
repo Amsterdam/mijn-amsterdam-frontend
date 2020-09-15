@@ -14,6 +14,7 @@ export interface FocusTozoDocument {
   description: string;
   url: string;
   type: FocusTozoDocumentType;
+  documentCodeId: string;
   productTitle: string;
   stepType: FocusTozoStepType;
   productSpecific?: FocusTozoLabelSet['productSpecific'];

@@ -9,7 +9,7 @@ import express, {
   RequestHandler,
   Response,
 } from 'express';
-import { ENV, getOtapEnvItem } from '../universal/config/env';
+import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { apiErrorResult } from '../universal/helpers';
 import { BFF_BASE_PATH, BFF_PORT } from './config';
 import {
@@ -21,6 +21,7 @@ import {
 import { routerCommercial } from './router-commercial';
 import { routerCommon } from './router-common';
 import { routerPrivate } from './router-private';
+import { routerDevelopment } from './mock-data/router-development';
 
 const isDebug = ENV === 'development';
 
@@ -39,6 +40,11 @@ app.use(Sentry.Handlers.requestHandler() as RequestHandler);
 app.use(cors());
 app.use(bodyParser.json({ limit: '1mb' }));
 app.use(compression());
+
+// Development routing for mock data
+if (!IS_AP) {
+  app.use('/test-api', routerDevelopment);
+}
 
 // Basic security measure
 app.use(exitEarly);

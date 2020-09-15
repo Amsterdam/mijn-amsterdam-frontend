@@ -25,18 +25,17 @@ export function getProductTitleForDocument(document: FocusTozoDocument) {
   return labelSet.product;
 }
 
-function transformDescriptionKey(description: string) {
-  return description.replace(/\s/g, '').toLowerCase();
+function transformKey(documentCodeId: string) {
+  return documentCodeId.replace(/\s/g, '').toLowerCase();
 }
 
 export function getLabelSet(
   document: FocusTozoDocument
 ): FocusTozoLabelSet | null {
   const labelSetEntry = Object.entries(tozoDocumentLabelSet).find(
-    ([description]) => {
+    ([documentCodeId]) => {
       return (
-        transformDescriptionKey(description) ===
-        transformDescriptionKey(document.description)
+        transformKey(documentCodeId) === transformKey(document.documentCodeId)
       );
     }
   );
@@ -224,12 +223,12 @@ export function createTozoResult(
   const tozo2Steps = otherSteps.filter(step => step.product === 'Tozo 2');
 
   if (aanvraagSteps['Tozo 1']) {
-    tozo1Steps.push(aanvraagSteps['Tozo 1']);
+    tozo1Steps.unshift(aanvraagSteps['Tozo 1']);
   }
   const tozo1Item = tozo1Steps.length && createTozoItem('Tozo 1', tozo1Steps);
 
   if (aanvraagSteps['Tozo 2']) {
-    tozo2Steps.push(aanvraagSteps['Tozo 2']);
+    tozo2Steps.unshift(aanvraagSteps['Tozo 2']);
   }
   const tozo2Item = tozo2Steps.length && createTozoItem('Tozo 2', tozo2Steps);
 
