@@ -46,7 +46,7 @@ function OptInPageContent({ children }: OptInPageContentProps) {
           onClick={() => setModalIsOpen(true)}
           aria-expanded={modalIsOpen}
         >
-          {isOptIn ? 'Toon alle tips' : 'Toon persoonlijke tips'}
+          {isOptIn ? 'Toon alle tips' : 'Maak tips persoonlijk'}
         </Button>
       </p>
       <MyTipsOptInOutModal
