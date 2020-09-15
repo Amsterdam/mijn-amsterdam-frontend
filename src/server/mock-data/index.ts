@@ -1,20 +1,21 @@
 import { MyTip } from '../../universal/types';
 import { ApiUrls, DEV_USER_TYPE_HEADER } from '../config';
 
+import AFVAL from './json/afvalophaalgebieden.json';
+import AMSTERDAM_CONTENT_FOOTER from './json/amsterdam-nl-content-footer.json';
+import AMSTERDAM_CONTENT_GENERAL_INFO from './json/amsterdam-nl-content-uitleg.json';
+import BAG from './json/bag.json';
 import BELASTINGEN from './json/belasting.json';
 import BRP from './json/brp.json';
-import WMO from './json/wmo.json';
+import ERFPACHT from './json/erfpacht.json';
 import FOCUS_AANVRAGEN from './json/focus-aanvragen.json';
 import FOCUS_COMBINED from './json/focus-combined.json';
-import BAG from './json/bag.json';
-import AFVAL from './json/afvalophaalgebieden.json';
+import KVK1 from './json/kvk-handelsregister.json';
+import KVK2 from './json/kvk-handelsregister2.json';
 import MILIEUZONE from './json/milieuzone.json';
 import TIPS from './json/tips.json';
-import AMSTERDAM_CONTENT_GENERAL_INFO from './json/amsterdam-nl-content-uitleg.json';
-import AMSTERDAM_CONTENT_FOOTER from './json/amsterdam-nl-content-footer.json';
 import VERGUNNINGEN from './json/vergunningen.json';
-import KVK2 from './json/kvk-handelsregister2.json';
-import KVK1 from './json/kvk-handelsregister.json';
+import WMO from './json/wmo.json';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
   return new Promise(resolve => {
@@ -99,7 +100,7 @@ export const mockDataConfig: MockDataConfig = {
       // if (isCommercialUser(config)) {
       //   return 'no-content';
       // }
-      return await JSON.stringify({ status: true });
+      return await loadMockApiResponseJson(ERFPACHT);
     },
   },
   [ApiUrls.BAG]: {

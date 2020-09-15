@@ -1,0 +1,19 @@
+{
+  "content": {
+    "status": true,
+    "meldingen": [
+      {
+        "datePublished": "2020-08-14",
+        "description": "Vanaf 11-2020 wordt de Erfpacht.",
+        "id": 4,
+        "priority": 1,
+        "title": "Erfpacht melding",
+        "url": {
+          "title": "Doe iets met erfpacht",
+          "url": "https://mijn-erfpacht.amsterdam.nl"
+        }
+      }
+    ]
+  },
+  "status": "OK"
+}
