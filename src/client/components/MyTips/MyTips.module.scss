@@ -47,11 +47,12 @@
   align-items: flex-end;
 
   @include select(Button_Button) {
-    margin-left: 2rem;
+
+    margin-left: auto;
   }
 
   .OptIn {
-    margin-left: auto;
+    margin-left: 2rem;
   }
 }
 

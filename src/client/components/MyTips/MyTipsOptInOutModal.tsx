@@ -53,7 +53,7 @@ export default function MyTipsOptInOutModal({
           >
             {isOptIn
               ? 'Nee, toon geen persoonlijke tips'
-              : 'Ja, toon persoonlijke tips'}
+              : 'Ja, maak tips persoonlijk'}
           </Button>
         </p>
       </>
