@@ -1,44 +1,73 @@
 {
   "content": {
+    "aandeelhouders": [],
+    "bestuurders": [],
     "mokum": true,
     "onderneming": {
-      "handelsnaam": "Take out Thai food B.V.",
-      "overigeHandelsnamen": [],
-      "rechtsvorm": "BV",
-      "hoofdactiviteit": "Maaltijden verkoop en levering aan huis",
-      "overigeActiviteiten": [],
-      "datumAanvang": "2004-06-14",
+      "datumAanvang": null,
       "datumEinde": null,
-      "aantalWerkzamePersonen": 4
+      "kvkNummer": "90006178"
     },
-     "rechtspersonen": [
+    "rechtspersonen": [
       {
-        "bsn": "123123123",
-        "kvkNummer": "098098"
+        "adres": {
+          "huisletter": null,
+          "huisnummer": "16",
+          "huisnummertoevoeging": "I",
+          "openbareRuimteNaam": "Schakelstraat",
+          "postcode": "1014 AW",
+          "woonplaatsNaam": "Amsterdam"
+        },
+        "geboortedatum": "1971-08-25",
+        "geslachtsnaam": "Grupstal",
+        "voornamen": "Hendrika Johanna Theodora"
       }
     ],
     "vestigingen": [
       {
-        "vestigingsnummer": "1505",
-        "handelsnaam": "Take out Thai food B.V.",
-        "isHoofdvestiging": true,
-        "aantalWerkzamePersonen": 4,
-        "bezoekadres": {
-          "straatnaam": "Kloveniersburgwal",
-          "postcode": "1012 DH",
-          "woonplaatsnaam": "Amsterdam",
-          "huisnummer": "16",
-          "huisnummertoevoeging": "II",
-          "huisletter": null
-        },
-        "postadres": null,
-        "telefoonnummer": "0612345600",
-        "websites": ["https://www.takeoutthaifood.nl"],
-        "email": "info@takeoutthaifood.nl",
-        "fax": "08890876543",
-        "activiteiten": "Maaltijdbereiding",
-        "datumAanvang": "2011-08-09",
-        "datumEinde": null
+        "activiteiten": [
+          {
+            "code": "000000000003012",
+            "indicatieHoofdactiviteit": true,
+            "omschrijving": "Bouw van sport- en recreatievaartuigen"
+          },
+          {
+            "code": "000000000093291",
+            "indicatieHoofdactiviteit": false,
+            "omschrijving": "Jachthavens"
+          }
+        ],
+        "datumAanvang": "1966-10-15",
+        "datumEinde": "2020-06-01",
+        "emailadres": "info@jachthavens.nl",
+        "faxnummer": null,
+        "handelsnamen": [
+          "Local Streetplanet Eenmanszaak"
+        ],
+        "rekeningnummerBankGiro": null,
+        "telefoonnummer": "+310209845632",
+        "typeringVestiging": "Hoofdvestiging",
+        "vestigingsNummer": "990000965656"
+      },
+      {
+        "activiteiten": [
+          {
+            "code": "000000000005630",
+            "indicatieHoofdactiviteit": true,
+            "omschrijving": "Caf\u00e9s"
+          }
+        ],
+        "datumAanvang": "2020-05-01",
+        "datumEinde": null,
+        "emailadres": "Info@kruijffSport.nl",
+        "faxnummer": null,
+        "handelsnamen": [
+          "Kruijff Sport"
+        ],
+        "rekeningnummerBankGiro": null,
+        "telefoonnummer": "+310209845632",
+        "typeringVestiging": "Hoofdvestiging",
+        "vestigingsNummer": "990000996056"
       }
     ]
   },
