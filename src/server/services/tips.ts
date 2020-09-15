@@ -12,12 +12,10 @@ export type TIPSData = MyTip[];
 
 export interface TIPSParams {
   optin: boolean;
-  profileType?: ProfileType;
+  audience: 'persoonlijk' | 'persoonlijk,zakelijk' | 'zakelijk';
 }
 
-export interface TIPSRequestData {
-  optin: boolean;
-  profileType?: ProfileType;
+export interface TIPSRequestData extends TIPSParams {
   userData?: any;
   tips?: MyTip[];
 }
@@ -25,9 +23,17 @@ export interface TIPSRequestData {
 export function getTipsRequestParams(req: Request) {
   const params: TIPSParams = {
     optin: req.query.optin === 'true',
+    audience: 'persoonlijk',
   };
   if (req.query.profileType) {
-    params.profileType = req.query.profileType as ProfileType;
+    switch (req.query.profileType) {
+      case 'private-commercial':
+        params.audience = 'persoonlijk,zakelijk';
+        break;
+      case 'commercial':
+        params.audience = 'zakelijk';
+        break;
+    }
   }
   return params;
 }
@@ -90,12 +96,8 @@ export async function loadServicesTips(sessionID: string, req: Request) {
   const params = getTipsRequestParams(req);
 
   const tipsRequestData: TIPSRequestData = {
-    optin: !!params.optin,
+    ...params,
   };
-
-  if (params.profileType) {
-    tipsRequestData.profileType = params.profileType;
-  }
 
   if (params.optin) {
     const tipsRequestDataServiceResults = await Promise.all([

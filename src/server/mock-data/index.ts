@@ -194,9 +194,9 @@ export const mockDataConfig: MockDataConfig = {
           requestData?.optin ? tip.isPersonalized : !tip.isPersonalized
         )
         .map(tip => {
-          if (requestData.profileType !== 'private') {
+          if (requestData.audience !== 'persoonlijk') {
             return Object.assign(tip, {
-              title: `[${requestData.profileType}] ${tip.title}`,
+              title: `[${requestData.audience}] ${tip.title}`,
             });
           }
           return tip;
