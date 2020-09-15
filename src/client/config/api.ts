@@ -32,6 +32,7 @@ export const BFF_API_BASE_URL = `${API_BASE_PATH_MODDED}/bff`;
 export const AUTH_API_URL = `${API_BASE_PATH_MODDED}/auth/check`;
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
 export const LOGOUT_URL = '/logout';
+export const BRP_RESIDENTS_API_URL = `${API_BASE_PATH_MODDED}/brp/aantal_inwoners`;
 
 export const BFFApiUrls: Record<ProfileType, Record<string, string>> = {
   private: {
