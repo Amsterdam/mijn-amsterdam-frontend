@@ -14,20 +14,20 @@ type Rechtsvorm = string;
 
 export interface Onderneming {
   handelsnaam: string;
-  overigeHandelsnamen: string[];
+  overigeHandelsnamen: string[] | null;
   rechtsvorm: Rechtsvorm;
   hoofdactiviteit: string;
-  overigeActiviteiten: string[];
+  overigeActiviteiten: string[] | null;
   datumAanvang: string;
   datumEinde: string | null;
-  aantalWerkzamePersonen: number;
 }
 
 export interface Rechtspersoon {
-  rsin: string;
+  rsin?: string;
+  bsn?: string;
   kvkNummer: string;
   statutaireNaam: string;
-  statutaireVestigingsplaats: string;
+  statutaireZetel: string;
 }
 
 export interface Aandeelhouder {
@@ -44,17 +44,17 @@ export interface Bestuurder {
 }
 
 export interface Vestiging {
-  vestigingsnummer: string;
-  handelsnaam: string;
+  vestigingsNummer: string;
+  handelsnamen: string[];
+  typeringVestiging: string;
   isHoofdvestiging: boolean;
-  aantalWerkzamePersonen: string | null;
   bezoekadres: Adres | null;
   postadres: Adres | null;
   telefoonnummer: string | null;
-  websites: string[] | null;
+  website: string | null;
   fax: string | null;
   email: string | null;
-  activiteiten: string;
+  activiteiten: Array<{ omschrijving: string } | string>;
   datumAanvang: string | null;
   datumEinde: string | null;
 }
@@ -75,6 +75,23 @@ export interface KVKSourceData {
 export interface KVKData extends KVKSourceDataContent {}
 
 export function transformKVKData(responseData: KVKSourceData): KVKData {
+  if (responseData.content.vestigingen) {
+    responseData.content.vestigingen = responseData.content.vestigingen.map(
+      vestiging => {
+        const activiteiten = Array.isArray(vestiging.activiteiten)
+          ? vestiging.activiteiten.map(activiteit =>
+              typeof activiteit === 'string'
+                ? activiteit
+                : activiteit.omschrijving
+            )
+          : null;
+        return Object.assign(vestiging, {
+          activiteiten,
+          isHoofdvestiging: vestiging.typeringVestiging === 'Hoofdvestiging',
+        });
+      }
+    );
+  }
   return responseData.content;
 }
 

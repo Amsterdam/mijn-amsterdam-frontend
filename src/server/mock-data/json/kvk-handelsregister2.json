@@ -1,61 +1,48 @@
 {
   "content": {
+    "aandeelhouders": [],
+    "bestuurders": [],
     "mokum": true,
     "onderneming": {
-      "handelsnaam": "Take out Thai food B.V.",
-      "overigeHandelsnamen": [],
-      "rechtsvorm": "BV",
-      "hoofdactiviteit": "Maaltijden verkoop en levering aan huis",
-      "overigeActiviteiten": [],
-      "datumAanvang": "2004-06-14",
+      "datumAanvang": null,
       "datumEinde": null,
-      "aantalWerkzamePersonen": 4
+      "kvkNummer": "90006143"
     },
     "rechtspersonen": [
       {
-        "rsin": "123123123",
-        "kvkNummer": "098098",
-        "statutaireNaam": "Rechtspersoontje",
-        "statutaireVestigingsplaats": "Amsterdam"
+        "datumAanvang": "2020-01-01",
+        "datumEinde": null,
+        "datumVoortzetting": null,
+        "emailadres": null,
+        "faxnummer": null,
+        "rechtsvorm": "BeslotenVennootschap",
+        "statutaireNaam": "Ballonenverkoop B.V.",
+        "statutaireZetel": "Amsterdam",
+        "telefoonnummer": null,
+        "type": "nnp",
+        "url": null
       }
     ],
     "vestigingen": [
       {
-        "vestigingsnummer": "1505",
-        "handelsnaam": "Take out Thai food B.V.",
-        "isHoofdvestiging": true,
-        "aantalWerkzamePersonen": 4,
-        "bezoekadres": {
-          "straatnaam": "Kloveniersburgwal",
-          "postcode": "1012 DH",
-          "woonplaatsnaam": "Amsterdam",
-          "huisnummer": "16",
-          "huisnummertoevoeging": "II",
-          "huisletter": null
-        },
-        "postadres": null,
-        "telefoonnummer": "0612345600",
-        "websites": ["https://www.takeoutthaifood.nl"],
-        "email": "info@takeoutthaifood.nl",
-        "fax": "08890876543",
-        "activiteiten": "Maaltijdbereiding",
-        "datumAanvang": "2011-08-09",
-        "datumEinde": null
-      }
-    ],
-    "aandeelhouders": [
-      {
-        "opgemaakteNaam": "Jack van den Groenen",
-        "geboortedatum": "1969-06-23",
-        "bevoegdheid": "Enig aandeelhouder"
-      }
-    ],
-    "bestuurders": [
-      {
-        "opgemaakteNaam": "Vera de Vries",
-        "geboortedatum": "1974-04-16",
-        "functietitel": "CFO",
-        "bevoegdheid": "Geen idee"
+        "activiteiten": [
+          {
+            "code": "000000000002051",
+            "indicatieHoofdactiviteit": true,
+            "omschrijving": "Vervaardiging van kruit en springstoffen en van lucifers"
+          }
+        ],
+        "datumAanvang": "2019-05-01",
+        "datumEinde": null,
+        "emailadres": null,
+        "faxnummer": null,
+        "handelsnamen": [
+          "Prijsknaller B.V."
+        ],
+        "rekeningnummerBankGiro": null,
+        "telefoonnummer": "+310203154691",
+        "typeringVestiging": "Hoofdvestiging",
+        "vestigingsNummer": "990000996048"
       }
     ]
   },

@@ -29,55 +29,118 @@ type ProfileLabels<T> = { [key in keyof T]: ProfileLabelValueFormatter };
 
 const onderneming: ProfileLabels<Partial<Onderneming>> = {
   handelsnaam: 'Handelsnaam',
-  // overigeHandelsnamen: value =>
-  //     Array.isArray(value)
-  //       ? value.map(({ omschrijving }) => omschrijving).join(' ')
-  //       : null,
+  overigeHandelsnamen: [
+    'Overige handelsnamen',
+    (handelsnamen: string[]) =>
+      handelsnamen ? (
+        <>
+          {handelsnamen.map(handelsnaam => (
+            <>
+              {handelsnaam}
+              <br />
+            </>
+          ))}
+        </>
+      ) : null,
+  ],
   rechtsvorm: 'Rechtsvorm',
   hoofdactiviteit: 'Activiteiten',
-  // overigeActiviteiten: string[];
-  datumAanvang: ['Startdatum onderneming', value => defaultDateFormat(value)],
-  datumEinde: ['Startdatum onderneming', value => defaultDateFormat(value)],
-  aantalWerkzamePersonen: 'Aantal werkzame personen',
+  overigeActiviteiten: [
+    'Overige activiteiten',
+    (activiteiten: string[]) =>
+      activiteiten ? (
+        <>
+          {activiteiten.map(activiteit => (
+            <>
+              {activiteit}
+              <br />
+            </>
+          ))}
+        </>
+      ) : null,
+  ],
+  datumAanvang: [
+    'Startdatum onderneming',
+    value => (value ? defaultDateFormat(value) : null),
+  ],
+  datumEinde: [
+    'Startdatum onderneming',
+    value => (value ? defaultDateFormat(value) : null),
+  ],
 };
 
 const vestiging: ProfileLabels<Partial<Vestiging>> = {
-  vestigingsnummer: 'Vestigingsnummer',
-  handelsnaam: 'Handelsnaam',
-  // isHoofdvestiging: ['Is hoofdvestiging', value => value ? 'Ja' : 'Nee'],
+  vestigingsNummer: 'Vestigingsnummer',
+  handelsnamen: [
+    'Handelsnaam',
+    (handelsnamen: string[]) =>
+      handelsnamen ? (
+        <>
+          {handelsnamen.map(handelsnaam => (
+            <>
+              {handelsnaam}
+              <br />
+            </>
+          ))}
+        </>
+      ) : null,
+  ],
+  isHoofdvestiging: ['Hoofdvestiging', value => (value ? 'Ja' : null)],
 
-  bezoekadres: ['Bezoekadres', (value: Adres) => getFullAddress(value)],
-  postadres: ['Postadres', (value: Adres) => getFullAddress(value)],
+  bezoekadres: [
+    'Bezoekadres',
+    (value: Adres) => (value ? getFullAddress(value) : null),
+  ],
+  postadres: [
+    'Postadres',
+    (value: Adres) => (value ? getFullAddress(value) : null),
+  ],
   telefoonnummer: [
     'Telefoonnummer',
     (value: string) => <LinkdInline href={`tel:${value}`}>{value}</LinkdInline>,
   ],
 
-  websites: [
+  website: [
     'Internetadres',
-    (value: string[]) => (
-      <>
-        {value.map(url => (
-          <LinkdInline key={url} href={url} external={true}>
-            {url}
-          </LinkdInline>
-        ))}
-      </>
-    ),
+    (url: string) =>
+      url ? (
+        <LinkdInline key={url} href={url} external={true}>
+          {url}
+        </LinkdInline>
+      ) : null,
   ],
   email: [
     'E-mail',
-    (value: string) => (
-      <LinkdInline external={true} href={`mailto:${value}`}>
-        {value}
-      </LinkdInline>
-    ),
+    (value: string) =>
+      value ? (
+        <LinkdInline external={true} href={`mailto:${value}`}>
+          {value}
+        </LinkdInline>
+      ) : null,
   ],
   fax: 'Fax',
-  activiteiten: 'Activiteiten',
-  datumAanvang: ['Datum vestiging', value => defaultDateFormat(value)],
-  // datumEinde: string | nullstring,
-  aantalWerkzamePersonen: 'Werkzame personen',
+  activiteiten: [
+    'Activiteiten',
+    (activiteiten: string[]) =>
+      activiteiten ? (
+        <>
+          {activiteiten.map(activiteit => (
+            <>
+              {activiteit}
+              <br />
+            </>
+          ))}
+        </>
+      ) : null,
+  ],
+  datumAanvang: [
+    'Datum vestiging',
+    value => (value ? defaultDateFormat(value) : null),
+  ],
+  datumEinde: [
+    'Datum sluiting',
+    value => (value ? defaultDateFormat(value) : null),
+  ],
 };
 
 const rechtspersoon: ProfileLabels<Partial<Rechtspersoon> & {
@@ -87,7 +150,7 @@ const rechtspersoon: ProfileLabels<Partial<Rechtspersoon> & {
   kvkNummer: 'KVKnummer',
   bsn: 'BSN',
   statutaireNaam: 'Statutaire naam',
-  statutaireVestigingsplaats: 'Vestiging',
+  statutaireZetel: 'Statutaire zetel',
 };
 
 const aandeelhouder: ProfileLabels<Partial<Aandeelhouder>> = {
