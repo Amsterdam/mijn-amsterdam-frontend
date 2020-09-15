@@ -1,9 +1,16 @@
-import React, { useMemo } from 'react';
+import classnames from 'classnames';
+import React, { useEffect, useMemo } from 'react';
 import {
+  apiPristineResult,
+  ApiResponse,
   defaultDateFormat,
   isError,
   isLoading,
 } from '../../../universal/helpers';
+import {
+  hasMultipleNationalities,
+  isMokum,
+} from '../../../universal/helpers/brp';
 import { AppState } from '../../AppState';
 import {
   Alert,
@@ -16,15 +23,13 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
+import { BRP_RESIDENTS_API_URL } from '../../config/api';
+import { useDataApi } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { formatBrpProfileData } from './formatData';
 import { panelConfig, PanelConfigFormatter } from './Profile.constants';
 import styles from './Profile.module.scss';
-import classnames from 'classnames';
-import {
-  isMokum,
-  hasMultipleNationalities,
-} from '../../../universal/helpers/brp';
+import { apiSuccesResult } from '../../../universal/helpers/api';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,
@@ -39,9 +44,42 @@ function formatInfoPanelConfig(
 export default function Profile() {
   const { BRP } = useAppStateGetter();
 
+  const [{ data: residentData }, fetchResidentCount] = useDataApi<
+    ApiResponse<{ residentCount: number }>
+  >(
+    {
+      postpone: true,
+    },
+    apiPristineResult({ residentCount: -1 })
+  );
+
+  const residentCount = residentData?.content?.residentCount;
+
   const brpProfileData = useMemo(() => {
+    if (typeof residentCount === 'number' && BRP.content?.adres) {
+      const brpContent = {
+        ...BRP.content,
+        adres: {
+          ...BRP.content.adres,
+          aantalBewoners: residentCount,
+        },
+      };
+      return formatBrpProfileData(brpContent);
+    }
     return BRP.content ? formatBrpProfileData(BRP.content) : BRP.content;
-  }, [BRP]);
+  }, [BRP.content, residentCount]);
+
+  // Fetch the resident count data
+  useEffect(() => {
+    if (BRP.content?._adresSleutel) {
+      fetchResidentCount({
+        url: BRP_RESIDENTS_API_URL,
+        method: 'post',
+        data: BRP.content?._adresSleutel,
+        transformResponse: responseContent => apiSuccesResult(responseContent),
+      });
+    }
+  }, [BRP.content, fetchResidentCount]);
 
   return (
     <DetailPage className={styles.Profile}>
