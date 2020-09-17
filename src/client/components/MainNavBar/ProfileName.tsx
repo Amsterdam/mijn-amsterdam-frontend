@@ -39,7 +39,7 @@ function CommercialProfileName({
       <span
         data-tutorial-item={
           hasTutorial
-            ? 'Hier kunt u uw schakelen naar uw zakelijke profiel;left-bottom'
+            ? 'Hier kunt u schakelen naar uw zakelijke profiel;left-bottom'
             : ''
         }
       >
