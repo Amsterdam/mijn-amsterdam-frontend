@@ -21,6 +21,7 @@ export const FeatureToggle = {
   KrefiaDirectLinkActive: true,
   tipsFlipActive: true,
   profileToggleActive: !IS_PRODUCTION,
+  profilePageResidentCount: !IS_PRODUCTION,
 };
 
 export const DAYS_KEEP_RECENT = 28;

@@ -99,8 +99,7 @@ const SERVICE_NAME = 'KVK'; // Change to your service name
 
 export function fetchKVK(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
-  kvkNummer?: string
+  passthroughRequestHeaders: Record<string, string>
 ) {
   return requestData<KVKData>(
     getApiConfig(SERVICE_NAME, {

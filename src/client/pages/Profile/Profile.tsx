@@ -30,6 +30,7 @@ import { formatBrpProfileData } from './formatData';
 import { panelConfig, PanelConfigFormatter } from './Profile.constants';
 import styles from './Profile.module.scss';
 import { apiSuccesResult } from '../../../universal/helpers/api';
+import { FeatureToggle } from '../../../universal/config/app';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,
@@ -56,7 +57,11 @@ export default function Profile() {
   const residentCount = residentData?.content?.residentCount;
 
   const brpProfileData = useMemo(() => {
-    if (typeof residentCount === 'number' && BRP.content?.adres) {
+    if (
+      FeatureToggle.profilePageResidentCount &&
+      typeof residentCount === 'number' &&
+      BRP.content?.adres
+    ) {
       const brpContent = {
         ...BRP.content,
         adres: {
@@ -71,11 +76,11 @@ export default function Profile() {
 
   // Fetch the resident count data
   useEffect(() => {
-    if (BRP.content?._adresSleutel) {
+    if (BRP.content?.adres?._adresSleutel) {
       fetchResidentCount({
         url: BRP_RESIDENTS_API_URL,
         method: 'post',
-        data: BRP.content?._adresSleutel,
+        data: BRP.content?.adres?._adresSleutel,
         transformResponse: responseContent => apiSuccesResult(responseContent),
       });
     }

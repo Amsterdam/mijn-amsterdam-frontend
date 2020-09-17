@@ -1,7 +1,7 @@
 {
-  "_adresSleutel": "xxxcasdasfada",
   "kvkNummer": "123123123",
   "adres": {
+    "_adresSleutel": "xxxcasdasfada",
     "inOnderzoek": true,
     "huisletter": null,
     "huisnummer": "1",

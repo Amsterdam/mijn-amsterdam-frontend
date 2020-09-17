@@ -10,7 +10,7 @@ import { KVKData } from '../../../server/services/kvk';
 
 type BRPPanelKey = keyof Omit<
   BRPData,
-  'identiteitsbewijzen' | 'notifications' | 'kvkNummer' | '_adresSleutel'
+  'identiteitsbewijzen' | 'notifications' | 'kvkNummer'
 >;
 
 type KVKPanelKey = keyof Omit<KVKData, 'mokum'>;
