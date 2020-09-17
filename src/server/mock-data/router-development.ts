@@ -13,3 +13,13 @@ routerDevelopment.get(
     }, 2000);
   }
 );
+
+routerDevelopment.post(
+  '/brp/aantal_inwoners',
+  (req: Request, res: Response, next: NextFunction) => {
+    setTimeout(() => {
+      res.json({ residentCount: 3 });
+      next();
+    }, 2000);
+  }
+);

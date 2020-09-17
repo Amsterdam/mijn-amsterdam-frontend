@@ -1,9 +1,16 @@
-import React, { useMemo } from 'react';
+import classnames from 'classnames';
+import React, { useEffect, useMemo } from 'react';
 import {
+  apiPristineResult,
+  ApiResponse,
   defaultDateFormat,
   isError,
   isLoading,
 } from '../../../universal/helpers';
+import {
+  hasMultipleNationalities,
+  isMokum,
+} from '../../../universal/helpers/brp';
 import { AppState } from '../../AppState';
 import {
   Alert,
@@ -16,11 +23,13 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
+import { BRP_RESIDENTS_API_URL } from '../../config/api';
+import { useDataApi } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { formatBrpProfileData } from './formatData';
 import { panelConfig, PanelConfigFormatter } from './Profile.constants';
 import styles from './Profile.module.scss';
-import classnames from 'classnames';
+import { apiSuccesResult } from '../../../universal/helpers/api';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,
@@ -35,9 +44,42 @@ function formatInfoPanelConfig(
 export default function Profile() {
   const { BRP } = useAppStateGetter();
 
+  const [{ data: residentData }, fetchResidentCount] = useDataApi<
+    ApiResponse<{ residentCount: number }>
+  >(
+    {
+      postpone: true,
+    },
+    apiPristineResult({ residentCount: -1 })
+  );
+
+  const residentCount = residentData?.content?.residentCount;
+
   const brpProfileData = useMemo(() => {
+    if (typeof residentCount === 'number' && BRP.content?.adres) {
+      const brpContent = {
+        ...BRP.content,
+        adres: {
+          ...BRP.content.adres,
+          aantalBewoners: residentCount,
+        },
+      };
+      return formatBrpProfileData(brpContent);
+    }
     return BRP.content ? formatBrpProfileData(BRP.content) : BRP.content;
-  }, [BRP]);
+  }, [BRP.content, residentCount]);
+
+  // Fetch the resident count data
+  useEffect(() => {
+    if (BRP.content?._adresSleutel) {
+      fetchResidentCount({
+        url: BRP_RESIDENTS_API_URL,
+        method: 'post',
+        data: BRP.content?._adresSleutel,
+        transformResponse: responseContent => apiSuccesResult(responseContent),
+      });
+    }
+  }, [BRP.content, fetchResidentCount]);
 
   return (
     <DetailPage className={styles.Profile}>
@@ -50,6 +92,25 @@ export default function Profile() {
           u vast. Het gaat hier bijvoorbeeld om uw naam, adres, geboortedatum of
           uw burgerlijke staat. De gemeente gebruikt deze gegevens. Belangrijk
           dus dat deze gegevens kloppen.
+        </p>
+        {!isMokum(BRP.content) && (
+          <p>
+            U staat niet ingeschreven in Amsterdam. Daarom ziet u alleen
+            gegevens die de gemeente Amsterdam van u heeft. Bijvoorbeeld een oud
+            adres in Amsterdam of een parkeerbon.
+          </p>
+        )}
+        {hasMultipleNationalities(BRP.content) && (
+          <p>
+            Als u een andere nationaliteit hebt of hebt gehad naast de
+            Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet
+            alleen uw buitenlandse nationaliteit of nationaliteiten als u op dit
+            moment geen Nederlandse nationaliteit hebt.
+          </p>
+        )}
+        <p>
+          Gegevens van een levenloos geboren kindje ziet u niet in Mijn
+          Amsterdam. U kunt die gegevens alleen inzien via MijnOverheid.
         </p>
 
         {isLoading(BRP) && (

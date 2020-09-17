@@ -5,7 +5,7 @@ describe('Navigate to Chapters', () => {
 
   it('should open the Tips opt-in modal', () => {
     selectComponent('MyTips_OptIn').should('exist');
-    selectComponent('MyTips_OptIn').should('contain', 'Toon persoonlijke tips');
+    selectComponent('MyTips_OptIn').should('contain', 'Maak tips persoonlijk');
     selectComponent('MyTips_OptIn').click();
     selectComponent('Modal_Modal').should('exist');
   });
@@ -14,7 +14,7 @@ describe('Navigate to Chapters', () => {
     selectComponent('MyTips_OptInOutConfirmButton').should('exist');
     selectComponent('MyTips_OptInOutConfirmButton').should(
       'contain',
-      'Ja, toon persoonlijke tips'
+      'Ja, maak tips persoonlijk'
     );
     cy.get(
       '[class*="MyTips_TipItem__"]:first [class*="Heading_Heading"]'

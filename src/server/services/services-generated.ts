@@ -10,6 +10,7 @@ import { fetchFOCUSTozoGenerated } from './focus/focus-tozo';
 import { fetchMILIEUZONEGenerated } from './milieuzone';
 import { fetchVergunningenGenerated } from './vergunningen';
 import { ApiResult } from './state';
+import { fetchERFPACHTGenerated } from './erfpacht';
 
 export function getGeneratedItemsFromApiResults(
   responses: Array<ApiResult<any>>
@@ -56,6 +57,7 @@ export async function loadServicesGenerated(
     belastingGeneratedResult,
     milieuzoneGeneratedResult,
     vergunningenGeneratedResult,
+    erfpachtGeneratedResult,
   ] = await Promise.allSettled([
     fetchBRPGenerated(sessionID, passthroughRequestHeaders),
     fetchFOCUSAanvragenGenerated(sessionID, passthroughRequestHeaders),
@@ -64,6 +66,7 @@ export async function loadServicesGenerated(
     fetchBELASTINGGenerated(sessionID, passthroughRequestHeaders),
     fetchMILIEUZONEGenerated(sessionID, passthroughRequestHeaders),
     fetchVergunningenGenerated(sessionID, passthroughRequestHeaders),
+    fetchERFPACHTGenerated(sessionID, passthroughRequestHeaders),
   ]);
 
   const brpGenerated = getSettledResult(brpGeneratedResult);
@@ -77,6 +80,7 @@ export async function loadServicesGenerated(
   const belastingGenerated = getSettledResult(belastingGeneratedResult);
   const milieuzoneGenerated = getSettledResult(milieuzoneGeneratedResult);
   const vergunningenGenerated = getSettledResult(vergunningenGeneratedResult);
+  const erfpachtGenerated = getSettledResult(erfpachtGeneratedResult);
 
   return getGeneratedItemsFromApiResults([
     brpGenerated,
@@ -86,5 +90,6 @@ export async function loadServicesGenerated(
     belastingGenerated,
     milieuzoneGenerated,
     vergunningenGenerated,
+    erfpachtGenerated,
   ]);
 }

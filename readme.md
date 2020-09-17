@@ -42,6 +42,12 @@ be used to duplicate any component and assign it a specific name.
 The BFF api is the goto part of the application where we do data fetching, data transformations, short-lived request/response caching, error handling and response formatting.
 The codebase is also written in typescript so a compilation step is required for it to work. For development purposes we use `ts-node` which takes care of compiling and running the BFF app.
 
+### BFF Development api
+
+The BFF also has a router that's intended for development purposes only. Not all api requests are targeted at the BFF api in production, some requests are made to the microservice api's directly.
+For this pupose we have a development router with mock endpoints see `router-development.ts`. For example, vergunning documents and resident count are retrieved directly without going through the BFF.
+It's basically an additional development server integrated in the BFF api.
+
 
 ## Tooling
 

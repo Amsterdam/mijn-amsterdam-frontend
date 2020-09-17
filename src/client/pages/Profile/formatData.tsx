@@ -11,7 +11,7 @@ import {
   Verbintenis,
   VerbintenisHistorisch,
 } from '../../../universal/types';
-import { LinkdInline } from '../../components/index';
+import { LinkdInline, LoadingContent } from '../../components/index';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
@@ -47,13 +47,7 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
     (value, _item, BRPData) =>
       BRPData?.persoon.mokum ? value || 'Onbekend' : value,
   ],
-  nationaliteiten: [
-    'Nationaliteit',
-    value =>
-      Array.isArray(value)
-        ? value.map(({ omschrijving }) => omschrijving).join(' ')
-        : null,
-  ],
+  nationaliteiten: ['Nationaliteit', value => 'Nederlandse'],
   indicatieGeheim: [
     'Geheimhouding',
     (value, _item, BRPData) =>
@@ -98,6 +92,16 @@ const adres: ProfileLabels<Partial<Adres>> = {
   begindatumVerblijf: [
     'Vanaf',
     value => (value ? defaultDateFormat(value) : 'Onbekend'),
+  ],
+  aantalBewoners: [
+    'Aantal bewoners',
+    value => {
+      return value === -1 ? (
+        <LoadingContent barConfig={[['2rem', '2rem', '0']]} />
+      ) : (
+        value
+      );
+    },
   ],
 };
 
