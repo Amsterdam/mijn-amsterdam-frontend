@@ -67,9 +67,10 @@ function InfoPanelContent({
 
 export default function ProfileCommercial() {
   const { KVK } = useAppStateGetter();
-
   const kvkProfileData = useMemo(() => {
-    return KVK.content ? formatKvkProfileData(KVK.content) : KVK.content;
+    return KVK.content !== null
+      ? formatKvkProfileData(KVK.content)
+      : KVK.content;
   }, [KVK]);
 
   return (
