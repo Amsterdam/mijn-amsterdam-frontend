@@ -39,7 +39,7 @@ function CommercialProfileName({
       <span
         data-tutorial-item={
           hasTutorial
-            ? 'Hier kunt u uw algemene bedrijfsgegevens uit het KVK handelsregister raadplegen;left-bottom'
+            ? 'Hier kunt u uw schakelen naar uw zakelijke profiel;left-bottom'
             : ''
         }
       >
@@ -77,7 +77,7 @@ function PrivateProfileName({
       <span
         data-tutorial-item={
           hasTutorial
-            ? 'Hier ziet u uw persoonsgegevens, zoals uw adres en geboortedatum;right-bottom'
+            ? 'Hier kunt u schakelen naar uw privé profiel;right-bottom'
             : ''
         }
       >
@@ -103,13 +103,13 @@ function PrivateCommercialProfileToggle({
       <PrivateProfileName
         person={person}
         isActive={profileType === 'private'}
-        hasTutorial={profileType === 'private'}
+        hasTutorial={profileType === 'private-commercial'}
         onClick={() => setProfileType('private')}
       />
       <CommercialProfileName
         company={company}
         isActive={profileType === 'private-commercial'}
-        hasTutorial={profileType === 'private-commercial'}
+        hasTutorial={profileType === 'private'}
         onClick={() => setProfileType('private-commercial')}
       />
     </>
