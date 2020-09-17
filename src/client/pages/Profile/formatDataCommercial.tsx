@@ -32,28 +32,32 @@ const onderneming: ProfileLabels<Partial<Onderneming>> = {
   overigeHandelsnamen: [
     'Overige handelsnamen',
     (handelsnamen: string[]) =>
-      handelsnamen
-        ? handelsnamen.map(handelsnaam => (
+      handelsnamen ? (
+        <>
+          {handelsnamen.map(handelsnaam => (
             <span key={handelsnaam}>
               {handelsnaam}
               <br />
             </span>
-          ))
-        : null,
+          ))}
+        </>
+      ) : null,
   ],
   rechtsvorm: 'Rechtsvorm',
   hoofdactiviteit: 'Activiteiten',
   overigeActiviteiten: [
     'Overige activiteiten',
     (activiteiten: string[]) =>
-      activiteiten
-        ? activiteiten.map(activiteit => (
+      activiteiten ? (
+        <>
+          {activiteiten.map(activiteit => (
             <span key={activiteit}>
               {activiteit}
               <br />
             </span>
-          ))
-        : null,
+          ))}
+        </>
+      ) : null,
   ],
   datumAanvang: [
     'Startdatum onderneming',
@@ -70,14 +74,16 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
   handelsnamen: [
     'Handelsnaam',
     (handelsnamen: string[]) =>
-      handelsnamen
-        ? handelsnamen.map(handelsnaam => (
+      handelsnamen ? (
+        <>
+          {handelsnamen.map(handelsnaam => (
             <span key={handelsnaam}>
               {handelsnaam}
               <br />
             </span>
-          ))
-        : null,
+          ))}
+        </>
+      ) : null,
   ],
   isHoofdvestiging: ['Hoofdvestiging', value => (value ? 'Ja' : null)],
 
@@ -116,14 +122,16 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
   activiteiten: [
     'Activiteiten',
     (activiteiten: string[]) =>
-      activiteiten
-        ? activiteiten.map(activiteit => (
+      activiteiten ? (
+        <>
+          {activiteiten.map(activiteit => (
             <span key={activiteit}>
               {activiteit}
               <br />
             </span>
-          ))
-        : null,
+          ))}
+        </>
+      ) : null,
   ],
   datumAanvang: [
     'Datum vestiging',
