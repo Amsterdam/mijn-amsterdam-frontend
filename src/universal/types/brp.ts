@@ -23,7 +23,7 @@ export interface Adres {
   begindatumVerblijf: string | null;
   inOnderzoek: boolean;
   aantalBewoners?: number;
-  _adresSleutel: string;
+  _adresSleutel?: string;
 }
 
 export interface Persoon {
