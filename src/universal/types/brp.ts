@@ -23,6 +23,7 @@ export interface Adres {
   begindatumVerblijf: string | null;
   inOnderzoek: boolean;
   aantalBewoners?: number;
+  _adresSleutel: string;
 }
 
 export interface Persoon {
@@ -72,7 +73,6 @@ export interface Kind {
 }
 
 export interface BRPDataFromSource {
-  _adresSleutel: string;
   kvkNummer: string;
   persoon: Persoon;
   verbintenis?: Verbintenis;
