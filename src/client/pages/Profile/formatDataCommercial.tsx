@@ -34,10 +34,10 @@ const onderneming: ProfileLabels<Partial<Onderneming>> = {
     (handelsnamen: string[]) =>
       handelsnamen
         ? handelsnamen.map(handelsnaam => (
-            <>
+            <span key={handelsnaam}>
               {handelsnaam}
               <br />
-            </>
+            </span>
           ))
         : null,
   ],
@@ -48,10 +48,10 @@ const onderneming: ProfileLabels<Partial<Onderneming>> = {
     (activiteiten: string[]) =>
       activiteiten
         ? activiteiten.map(activiteit => (
-            <>
+            <span key={activiteit}>
               {activiteit}
               <br />
-            </>
+            </span>
           ))
         : null,
   ],
@@ -72,10 +72,10 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
     (handelsnamen: string[]) =>
       handelsnamen
         ? handelsnamen.map(handelsnaam => (
-            <>
+            <span key={handelsnaam}>
               {handelsnaam}
               <br />
-            </>
+            </span>
           ))
         : null,
   ],
@@ -118,10 +118,10 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
     (activiteiten: string[]) =>
       activiteiten
         ? activiteiten.map(activiteit => (
-            <>
+            <span key={activiteit}>
               {activiteit}
               <br />
-            </>
+            </span>
           ))
         : null,
   ],
