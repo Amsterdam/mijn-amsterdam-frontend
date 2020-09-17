@@ -74,7 +74,10 @@ export interface KVKSourceData {
 
 export interface KVKData extends KVKSourceDataContent {}
 
-export function transformKVKData(responseData: KVKSourceData): KVKData {
+export function transformKVKData(responseData: KVKSourceData): KVKData | null {
+  if (typeof responseData !== 'object') {
+    return null;
+  }
   if (responseData.content.vestigingen) {
     responseData.content.vestigingen = responseData.content.vestigingen.map(
       vestiging => {
