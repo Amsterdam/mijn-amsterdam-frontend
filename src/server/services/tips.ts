@@ -11,18 +11,17 @@ import { loadServicesRelated } from './services-related';
 export type TIPSData = MyTip[];
 
 export interface TIPSParams {
-  optin: boolean;
   audience: 'persoonlijk' | 'persoonlijk,zakelijk' | 'zakelijk';
 }
 
-export interface TIPSRequestData extends TIPSParams {
+export interface TIPSRequestData {
+  optin: boolean;
   userData?: any;
   tips?: MyTip[];
 }
 
 export function getTipsRequestParams(req: Request) {
   const params: TIPSParams = {
-    optin: req.query.optin === 'true',
     audience: 'persoonlijk',
   };
   if (req.query.profileType) {
@@ -41,12 +40,14 @@ export function getTipsRequestParams(req: Request) {
 export async function fetchTIPS(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
-  requestBody: TIPSRequestData | null
+  requestBody: TIPSRequestData | null,
+  requestParams: TIPSParams | null
 ) {
   return requestData<TIPSData>(
     getApiConfig('TIPS', {
       method: 'POST',
       data: requestBody,
+      params: requestParams,
     }),
     sessionID,
     passthroughRequestHeaders
@@ -78,7 +79,7 @@ function createTipsRequestDataFromServiceResults(
   for (const result of servicesResults) {
     const data = extractSuccessResponseContent(result);
     Object.assign(userData, deepOmitKeys(data, ['description']));
-    const tipsFromSource = Object.values(data).flatMap(data =>
+    const tipsFromSource = Object.values(data).flatMap((data) =>
       data && 'tips' in data ? data['tips'] : []
     );
     if (tipsFromSource.length) {
@@ -95,11 +96,13 @@ export async function loadServicesTips(sessionID: string, req: Request) {
   const passthroughRequestHeaders = getPassthroughRequestHeaders(req);
   const params = getTipsRequestParams(req);
 
+  const optin = req.query.optin === 'true';
+
   const tipsRequestData: TIPSRequestData = {
-    ...params,
+    optin,
   };
 
-  if (params.optin) {
+  if (optin) {
     const tipsRequestDataServiceResults = await Promise.all([
       loadServicesDirect(sessionID, passthroughRequestHeaders),
       loadServicesRelated(sessionID, passthroughRequestHeaders),
@@ -115,7 +118,8 @@ export async function loadServicesTips(sessionID: string, req: Request) {
   const TIPS = await fetchTIPS(
     sessionID,
     passthroughRequestHeaders,
-    tipsRequestData
+    tipsRequestData,
+    params
   );
 
   return {
