@@ -1,7 +1,6 @@
 import { fetchBRP } from './index';
 import { fetchHOME } from './home';
 import { fetchKVK } from './kvk';
-import { apiSuccesResult } from '../../universal/helpers/api';
 
 export async function loadServicesRelated(
   sessionID: SessionID,
