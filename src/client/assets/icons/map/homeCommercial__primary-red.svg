@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="EC0000">
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="EC0000">
     <title>Bedrijfsgebouw</title>
-
-    <path d="M15,30 C23.2842712,30 30,23.2842712 30,15 C30,6.71572875 23.2842712,0 15,0 C6.71572875,0 0,6.71572875 0,15 C0,23.2842712 6.71572875,30 15,30 Z" fill="#EC0000"/>
-    <g transform="translate(6.000000, 6.000000)">
-    <path fill="#ffffff" d="M17,4 L18,9 L18,11 L17,11 L16.8964233,17 L15,17 L15,11 L11,11 L11,17 L1,17 L1,11 L0,11 L0,9 L1,4 L17,4 Z M9,11 L3,11 L3,15 L9,15 L9,11 Z M17,1 L17,3 L1,3 L1,1 L17,1 Z" id="Combined-Shape"></path>
+    <g
+     transform="scale(0.88888889)"
+     id="g909">
+    <circle
+       fill="#ff0000"
+       id="path877"
+       cx="18"
+       cy="18"
+       r="18" />
+    <g
+       transform="matrix(0.62068966,0,0,0.62068966,8.6896552,7.4482759)">
+      <path
+         d="M 22,7 V 0 H 0 V 32 H 32 V 7 Z M 4,28 V 4 h 14 v 24 z m 26,2 H 22 V 9 h 8 z M 6,7 h 4 v 4 H 6 Z m 0,7 h 4 v 4 H 6 Z M 16,11 H 12 V 7 h 4 z m 0,7 h -4 v -4 h 4 z m 10,0 h -2 v -2 h 4 v 2 z m 0,4 h -2 v -2 h 4 v 2 z m 0,4 h -2 v -2 h 4 v 2 z m 0,-12 h -2 v -2 h 4 v 2 z M 6,21 h 4 v 4 H 6 Z m 10,4 h -4 v -4 h 4 z"
+         fill="#ffffff" />
     </g>
+  </g>
 </svg>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="18px" height="16px" viewBox="0 0 18 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <title>Bedrijfsgebouw</title>
-    <path d="M17,4 L18,9 L18,11 L17,11 L16.8964233,17 L15,17 L15,11 L11,11 L11,17 L1,17 L1,11 L0,11 L0,9 L1,4 L17,4 Z M9,11 L3,11 L3,15 L9,15 L9,11 Z M17,1 L17,3 L1,3 L1,1 L17,1 Z" id="Combined-Shape"></path>
+    <path d="M22,7 L22,0 L0,0 L0,32 L32,32 L32,7 L22,7 Z M4,28 L4,4 L18,4 L18,28 L4,28 Z M30,30 L22,30 L22,9 L30,9 L30,30 Z M6,7 L10,7 L10,11 L6,11 L6,7 Z M6,14 L10,14 L10,18 L6,18 L6,14 Z M16,11 L12,11 L12,7 L16,7 L16,11 Z M16,18 L12,18 L12,14 L16,14 L16,18 Z M26,18 L24,18 L24,16 L28,16 L28,18 L26,18 Z M26,22 L24,22 L24,20 L28,20 L28,22 L26,22 Z M26,26 L24,26 L24,24 L28,24 L28,26 L26,26 Z M26,14 L24,14 L24,12 L28,12 L28,14 L26,14 Z M6,21 L10,21 L10,25 L6,25 L6,21 Z M16,25 L12,25 L12,21 L16,21 L16,25 Z"></path>
 </svg>
