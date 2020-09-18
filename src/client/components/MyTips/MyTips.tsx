@@ -64,7 +64,7 @@ const Tip = ({ tip }: TipProps) => {
             <>
               {isFlipped && (
                 <div className={styles.TipFlip}>
-                  {tip.reason.map(reason => (
+                  {tip.reason.map((reason) => (
                     <span key={reason}>{reason}</span>
                   ))}
                 </div>

@@ -50,6 +50,13 @@ export function useTipsApi() {
       setAppState((appState: AppState) => {
         return Object.assign({}, appState, api.data);
       });
+    } else {
+      setAppState((appState: AppState) => {
+        if (appState.TIPS !== pristineData.TIPS) {
+          return Object.assign({}, appState, pristineData);
+        }
+        return appState;
+      });
     }
   }, [api, setAppState]);
 }
