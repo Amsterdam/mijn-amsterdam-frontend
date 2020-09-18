@@ -27,8 +27,6 @@ export function getTipsRequestParams(req: Request) {
   if (req.query.profileType) {
     switch (req.query.profileType) {
       case 'private-commercial':
-        params.audience = 'persoonlijk,zakelijk';
-        break;
       case 'commercial':
         params.audience = 'zakelijk';
         break;
