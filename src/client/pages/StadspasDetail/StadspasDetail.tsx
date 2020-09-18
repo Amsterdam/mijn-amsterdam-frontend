@@ -127,7 +127,7 @@ export default () => {
               </li>
               <li className={styles.AmountLeft}>
                 <span className={styles.Label}>
-                  Nog te besteden vóór{' '}
+                  Nog te besteden vóór&nbsp;
                   <time dateTime={stadspasItem.datumAfloop}>
                     {defaultDateFormat(stadspasItem.datumAfloop)}
                   </time>
