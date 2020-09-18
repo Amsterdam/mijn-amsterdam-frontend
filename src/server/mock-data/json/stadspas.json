@@ -1,9 +1,20 @@
 {
   "content": [
     {
-      "pasNummer": "123123123123",
+      "id": "xxx123123123123",
+      "pasnummer": "123123123123",
       "datumAfloop": "2020-12-12",
-      "naam": "Ramses rawjingakoli"
+      "naam": "Ramses rawjingakoli",
+      "totaal": 220,
+      "saldo": 130
+    },
+    {
+      "id": "xxx89899898",
+      "pasnummer": "89899898",
+      "datumAfloop": "2021-04-23",
+      "naam": "Jawh rawjingakoli",
+      "totaal": 220,
+      "saldo": 80
     }
   ],
   "status": "OK"

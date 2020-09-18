@@ -32,6 +32,20 @@ export interface TableProps {
   displayProps?: { [key: string]: string | number | ReactNode };
 }
 
+interface TdValueProps {
+  value: string | number | ReactNode;
+}
+
+function TdValue({ value }: TdValueProps) {
+  if (value !== '' && value !== 0 && !value) {
+    return <span>&mdash;</span>;
+  }
+  if (React.isValidElement(value)) {
+    return value;
+  }
+  return <InnerHtml>{value as string}</InnerHtml>;
+}
+
 export default function Table({
   items,
   displayProps,
@@ -78,11 +92,7 @@ export default function Table({
                 {!!label && (
                   <span className={styles.DisplayPropLabel}>{label}:</span>
                 )}
-                {item[key] ? (
-                  <InnerHtml>{item[key]}</InnerHtml>
-                ) : (
-                  <span>&mdash;</span>
-                )}
+                <TdValue value={item[key]} />
               </td>
             ))}
           </tr>

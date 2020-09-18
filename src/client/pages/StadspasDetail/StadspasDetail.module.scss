@@ -1,0 +1,184 @@
+@import '../../styles/_global.scss';
+
+.StadspasNummer {
+  color: $color-neutral-grey4;
+  margin-bottom: 3.2rem;
+}
+
+.DetailPageContent {
+  margin-bottom: 6rem;
+}
+
+.PageContentBalance {
+  border-top: .1rem solid $color-neutral-grey2;
+  padding-top: 2.4rem;
+  max-width: 96rem;
+  padding-left: 16rem;
+  margin: 0 auto;
+
+  @include mq-tablet {
+    max-width: none;
+    padding-left: 11.5rem;
+    margin-right: 2rem;
+  }
+
+  @include mq-phone {
+    padding-left: 0;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+}
+
+.Balance {
+  @include reset-list-style;
+  display: flex;
+  width: 100%;
+  height: 4.5rem;
+  position: relative;
+
+  // On smaller screens the legend items are positioned vertically
+  // and aligned left. More vertical space is needed therefor.
+  @include mq-tablet {
+    height: 6.5rem;
+  }
+
+  > li {
+    flex: 1 1 auto;
+    padding-top: 3.5rem;
+
+    @include mq-tablet {
+      padding-top: 5.5rem;
+    }
+
+    // The colored bar
+    &:after {
+      content: '';
+      height: 1rem;
+      display: block;
+    }
+  }
+
+  .Label {
+    position: absolute;
+    white-space: nowrap;
+    left: 0;
+    right: auto;
+    top: 0;
+    display: flex;
+    align-items: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+
+    // Legend color
+    &:before {
+      content: '';
+      width: 1rem;
+      height: 1rem;
+      display: block;
+      margin-right: 1.4rem;
+    }
+  }
+
+  .AmountSpent {
+    .Label {
+      &:before {
+        background-color: $color-support-warning;
+      }
+    }
+    &:after {
+      background-color: $color-support-warning;
+    }
+  }
+
+  .AmountLeft {
+    margin-left: .2rem;
+    .Label {
+      text-align: right;
+      right: 0;
+      left: auto;
+      &:before {
+        background-color: $color-neutral-grey4;
+      }
+
+      // Position the second legend color underneath
+      @include mq-tablet {
+        margin-top: 2rem;
+        left: 0;
+      }
+    }
+    &:after {
+      background-color: $color-neutral-grey4;
+    }
+  }
+
+}
+
+.ToggleTransactionsOveview {
+  position: relative;
+  left: 50%;
+  display: block;
+  transform: translatex(-50%);
+  margin-top: 2rem;
+
+  svg {
+    transform: rotate(90deg);
+  }
+
+  &.isTransactionOverviewActive {
+    svg {
+      transform: rotate(-90deg);
+    }
+  }
+}
+
+.PageContentTransactions {
+  @extend .PageContentBalance;
+  padding-top: 0;
+  border-width: 0;
+
+  &.withActiveTransactionsOverview {
+    margin-top: 7rem;
+    border-width: .1rem;
+  }
+}
+
+.TransactionsOverview {
+  margin-top: -2.7rem;
+}
+
+.Transactions {
+  @include reset-list-style;
+  padding-top: 2rem;
+}
+
+.TransactionLabels {
+  border-bottom: .1rem solid $color-neutral-grey2;
+  font-weight: bold;
+  color: $color-neutral-grey4;
+  padding-bottom: .5rem;
+
+  span:last-child {
+    float: right;
+  }
+}
+.Transaction {
+  padding: 0;
+  margin: 0;
+  border-bottom: .1rem solid $color-neutral-grey2;
+  padding-bottom: 2rem;
+  margin-bottom: 1rem;
+}
+
+.TransactionDate {
+  color: $color-neutral-grey4;
+  display: block;
+}
+.TransactionTitle {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+.TransactionValue {
+  font-size: 1.8rem;
+  font-weight: bold;
+  float: right;
+}

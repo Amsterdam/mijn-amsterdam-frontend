@@ -9,6 +9,7 @@ import {
 } from './index';
 import { fetchVergunningen } from './vergunningen';
 import { getSettledResult } from '../../universal/helpers/api';
+import { fetchStadspas } from './focus/gpass-stadspas';
 
 export async function loadServicesDirect(
   sessionID: SessionID,
@@ -43,6 +44,10 @@ export async function loadServicesDirect(
     sessionID,
     passthroughRequestHeaders
   );
+  const fetchStadspasRequest = fetchStadspas(
+    sessionID,
+    passthroughRequestHeaders
+  );
 
   const [
     FOCUS_AANVRAGEN,
@@ -53,6 +58,7 @@ export async function loadServicesDirect(
     BELASTINGEN,
     MILIEUZONE,
     VERGUNNINGEN,
+    GPASS_STADSPAS,
   ] = await Promise.allSettled([
     fetchFOCUSAanvragenRequest,
     fetchFOCUSSpecificatiesRequest,
@@ -62,6 +68,7 @@ export async function loadServicesDirect(
     fetchBELASTINGRequest,
     fetchMILIEUZONERequest,
     fetchVergunningenRequest,
+    fetchStadspasRequest,
   ]);
 
   return {
@@ -73,5 +80,6 @@ export async function loadServicesDirect(
     BELASTINGEN: getSettledResult(BELASTINGEN),
     MILIEUZONE: getSettledResult(MILIEUZONE),
     VERGUNNINGEN: getSettledResult(VERGUNNINGEN),
+    GPASS_STADSPAS: getSettledResult(GPASS_STADSPAS),
   };
 }

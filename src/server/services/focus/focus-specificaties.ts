@@ -89,6 +89,7 @@ function transformIncomSpecificationItem(
     ...item,
     displayDatePublished,
     documentUrl: `<a
+        class="DisplayPropDocumentDownloadLink"
         href=${`${API_BASE_PATH}/${item.url}`}
         rel="external noopener noreferrer"
         download=${documentDownloadName(item)}
