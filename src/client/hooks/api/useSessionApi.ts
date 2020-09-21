@@ -1,19 +1,20 @@
 import Cookies from 'js-cookie';
-import { useEffect, useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { atom, useRecoilState } from 'recoil';
 import { COOKIE_KEY_COMMERCIAL_LOGIN } from '../../../universal/config';
+import { ApiSuccessResponse } from '../../../universal/helpers';
+import {
+  ApiErrorResponse,
+  apiSuccesResult,
+} from '../../../universal/helpers/api';
 import {
   AUTH_API_URL,
   IS_COMMERCIAL_PATH_MATCH,
   LOGOUT_URL,
 } from '../../config/api';
-import { ApiRequestOptions, useDataApi, requestApiData } from './useDataApi';
-import { ApiSuccessResponse } from '../../../universal/helpers';
 import { clearSessionStorage } from '../storage.hook';
-import {
-  apiSuccesResult,
-  ApiErrorResponse,
-} from '../../../universal/helpers/api';
+import { clearDeeplinkEntry } from '../useDeeplink.hook';
+import { ApiRequestOptions, requestApiData, useDataApi } from './useDataApi';
 
 export type SessionData = {
   isAuthenticated: boolean;
@@ -115,6 +116,7 @@ export function useSessionApi() {
   const logoutSession = useCallback(() => {
     setExplicitLogout();
     clearSessionStorage();
+    clearDeeplinkEntry();
     window.location.href = LOGOUT_URL;
   }, []);
 
