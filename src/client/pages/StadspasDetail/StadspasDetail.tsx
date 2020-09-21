@@ -1,24 +1,28 @@
+import classnames from 'classnames';
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import {
+  GPassStadspasBudget,
+  GPassStadspasTransaction,
+} from '../../../server/services/focus/gpass-stadspas';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { isError, isLoading } from '../../../universal/helpers';
+import { defaultDateFormat } from '../../../universal/helpers/date';
+import { IconChevronRight } from '../../assets/icons';
 import {
   Alert,
+  Button,
   ChapterIcon,
   DetailPage,
+  Heading,
+  Linkd,
   LinkdInline,
   LoadingContent,
   PageContent,
   PageHeading,
-  Linkd,
-  Heading,
-  Button,
 } from '../../components';
-import styles from './StadspasDetail.module.scss';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { isLoading, isError } from '../../../universal/helpers';
-import { useParams } from 'react-router-dom';
-import { defaultDateFormat } from '../../../universal/helpers/date';
-import { IconChevronRight } from '../../assets/icons';
-import classnames from 'classnames';
+import styles from './StadspasDetail.module.scss';
 
 const transactions = [
   {
@@ -59,6 +63,105 @@ function Transaction({ value, title, date }: TransactionProps) {
   );
 }
 
+interface TransactionOverviewProps {
+  transactions: GPassStadspasTransaction[];
+}
+
+function TransactionOverview({ transactions }: TransactionOverviewProps) {
+  return (
+    <div className={styles.TransactionsOverview}>
+      <div className={styles.TransactionLabels}>
+        <span>Uitgaven</span>
+        <span>Bedrag</span>
+      </div>
+      <ul className={styles.Transactions}>
+        {transactions.map(transaction => (
+          <Transaction
+            key={transaction.id}
+            value={transaction.amount}
+            title={transaction.title}
+            date={transaction.date}
+          />
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+interface BudgetBalanceProps {
+  budget: GPassStadspasBudget;
+  dateEnd: string;
+}
+
+function BudgetBalance({ budget, dateEnd }: BudgetBalanceProps) {
+  return (
+    <ul className={styles.Balance}>
+      <li
+        className={styles.AmountSpent}
+        style={{
+          width: `${(100 / budget.assigned) * budget.balance}%`,
+        }}
+      >
+        <span className={styles.Label}>
+          Uitgegeven &euro;
+          {budget.assigned - budget.balance}
+        </span>
+      </li>
+      <li className={styles.AmountLeft}>
+        <span className={styles.Label}>
+          Nog te besteden vóór&nbsp;
+          <time dateTime={dateEnd}>{defaultDateFormat(dateEnd)}</time>
+          &nbsp; &euro;{budget.balance}
+        </span>
+      </li>
+    </ul>
+  );
+}
+
+interface StadspasBudgetProps {
+  budget: GPassStadspasBudget;
+  dateEnd: string;
+}
+
+function StadspasBudget({ budget, dateEnd }: StadspasBudgetProps) {
+  const [isTransactionOverviewActive, toggleTransactionOverview] = useState(
+    false
+  );
+
+  return (
+    <>
+      <PageContent className={styles.PageContentBalance}>
+        <BudgetBalance budget={budget} dateEnd={dateEnd} />
+      </PageContent>
+      <PageContent
+        className={classnames(
+          styles.PageContentTransactions,
+          isTransactionOverviewActive && styles.withActiveTransactionsOverview
+        )}
+      >
+        {!!isTransactionOverviewActive && (
+          <TransactionOverview transactions={transactions} />
+        )}
+        <Button
+          className={classnames(
+            styles.ToggleTransactionsOveview,
+            isTransactionOverviewActive && styles.isTransactionOverviewActive
+          )}
+          icon={IconChevronRight}
+          variant="plain"
+          lean={true}
+          onClick={() =>
+            toggleTransactionOverview(!isTransactionOverviewActive)
+          }
+        >
+          {isTransactionOverviewActive ? 'Verberg' : 'Laat zien'} wat ik heb
+          uitgegeven
+        </Button>
+      </PageContent>
+    </>
+  );
+}
+
 export default () => {
   const { GPASS_STADSPAS } = useAppStateGetter();
   const { id } = useParams();
@@ -67,10 +170,6 @@ export default () => {
   const title = 'Saldo Stadspas';
   const isLoadingStadspas = isLoading(GPASS_STADSPAS);
   const noContent = !stadspasItem;
-
-  const [isTransactionOverviewActive, toggleTransactionOverview] = useState(
-    false
-  );
 
   return (
     <DetailPage>
@@ -107,79 +206,20 @@ export default () => {
         {isLoadingStadspas && <LoadingContent />}
       </PageContent>
       {!!stadspasItem && (
-        <>
-          <PageContent className={styles.PageContentBalance}>
-            <Heading size="large">{stadspasItem?.naam}</Heading>
-            <p className={styles.StadspasNummer}>
-              Stadspasnummer: {stadspasItem.pasnummer}
-            </p>
-            <ul className={styles.Balance}>
-              <li
-                className={styles.AmountSpent}
-                style={{
-                  width: `${(100 / stadspasItem.totaal) * stadspasItem.saldo}%`,
-                }}
-              >
-                <span className={styles.Label}>
-                  Uitgegeven &euro;
-                  {stadspasItem.totaal - stadspasItem.saldo}
-                </span>
-              </li>
-              <li className={styles.AmountLeft}>
-                <span className={styles.Label}>
-                  Nog te besteden vóór&nbsp;
-                  <time dateTime={stadspasItem.datumAfloop}>
-                    {defaultDateFormat(stadspasItem.datumAfloop)}
-                  </time>
-                  &nbsp; &euro;{stadspasItem.saldo}
-                </span>
-              </li>
-            </ul>
-          </PageContent>
-          <PageContent
-            className={classnames(
-              styles.PageContentTransactions,
-              isTransactionOverviewActive &&
-                styles.withActiveTransactionsOverview
-            )}
-          >
-            {!!isTransactionOverviewActive && (
-              <div className={styles.TransactionsOverview}>
-                <div className={styles.TransactionLabels}>
-                  <span>Uitgaven</span>
-                  <span>Bedrag</span>
-                </div>
-                <ul className={styles.Transactions}>
-                  {transactions.map(transaction => (
-                    <Transaction
-                      key={transaction.id}
-                      value={transaction.amount}
-                      title={transaction.title}
-                      date={transaction.date}
-                    />
-                  ))}
-                </ul>
-              </div>
-            )}
-            <Button
-              className={classnames(
-                styles.ToggleTransactionsOveview,
-                isTransactionOverviewActive &&
-                  styles.isTransactionOverviewActive
-              )}
-              icon={IconChevronRight}
-              variant="plain"
-              lean={true}
-              onClick={() =>
-                toggleTransactionOverview(!isTransactionOverviewActive)
-              }
-            >
-              {isTransactionOverviewActive ? 'Verberg' : 'Laat zien'} wat ik heb
-              uitgegeven
-            </Button>
-          </PageContent>
-        </>
+        <PageContent className={styles.PageContentBalance}>
+          <Heading size="large">{stadspasItem?.naam}</Heading>
+          <p className={styles.StadspasNummer}>
+            Stadspasnummer: {stadspasItem.pasnummer}
+          </p>
+        </PageContent>
       )}
+      {stadspasItem?.budgets.map(budget => (
+        <StadspasBudget
+          key={budget.title}
+          budget={budget}
+          dateEnd={stadspasItem.datumAfloop}
+        />
+      ))}
     </DetailPage>
   );
 };
