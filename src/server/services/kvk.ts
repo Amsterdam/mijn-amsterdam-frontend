@@ -54,7 +54,7 @@ export interface Vestiging {
   website: string | null;
   fax: string | null;
   email: string | null;
-  activiteiten: Array<{ omschrijving: string } | string>;
+  activiteiten: string[];
   datumAanvang: string | null;
   datumEinde: string | null;
 }
@@ -85,15 +85,7 @@ export function transformKVKData(responseData: KVKSourceData): KVKData | null {
   if (responseData.content.vestigingen) {
     responseData.content.vestigingen = responseData.content.vestigingen.map(
       vestiging => {
-        const activiteiten = Array.isArray(vestiging.activiteiten)
-          ? vestiging.activiteiten.map(activiteit =>
-              typeof activiteit === 'string'
-                ? activiteit
-                : activiteit.omschrijving
-            )
-          : null;
         return Object.assign(vestiging, {
-          activiteiten,
           isHoofdvestiging: vestiging.typeringVestiging === 'Hoofdvestiging',
         });
       }
