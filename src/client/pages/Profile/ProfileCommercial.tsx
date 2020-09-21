@@ -19,7 +19,7 @@ import {
   panelConfigCommercial,
 } from './Profile.constants';
 import { formatKvkProfileData } from './formatDataCommercial';
-import { ProfileSection } from './formatData';
+import { ProfileSection } from './formatDataPrivate';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,
