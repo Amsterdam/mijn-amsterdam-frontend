@@ -15,6 +15,7 @@ import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
 import { trackPageView } from '../../hooks';
 import styles from './Landing.module.scss';
 import { ExternalUrls } from '../../config/app';
+import { MaintenanceNotification01 } from '../../config/staticData';
 
 export default () => {
   const loginButton = useRef(null);
@@ -38,11 +39,7 @@ export default () => {
         </p>
         {new Date() < new Date('2020-09-22T12:00:00') && (
           <Alert type="warning">
-            <p>
-              Vanwege technisch onderhoud kunt u op dinsdag 22 september van
-              10.00 tot 12.00 uur niet inloggen op Mijn Amsterdam. Onze excuses
-              voor het ongemak.
-            </p>
+            <p>{MaintenanceNotification01.description}</p>
           </Alert>
         )}
         <div className={styles.LoginOption}>
