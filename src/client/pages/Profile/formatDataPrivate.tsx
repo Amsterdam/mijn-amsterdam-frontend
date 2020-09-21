@@ -47,7 +47,15 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
     (value, _item, BRPData) =>
       BRPData?.persoon.mokum ? value || 'Onbekend' : value,
   ],
-  nationaliteiten: ['Nationaliteit', value => 'Nederlandse'],
+  nationaliteiten: [
+    'Nationaliteit',
+    (nationaliteiten: BRPData['persoon']['nationaliteiten']) =>
+      nationaliteiten?.some(
+        ({ omschrijving }) => omschrijving === 'Nederlandse'
+      )
+        ? 'Nederlandse'
+        : null,
+  ],
   indicatieGeheim: [
     'Geheimhouding',
     (value, _item, BRPData) =>

@@ -10,7 +10,7 @@ import {
 } from '../../../server/services/kvk';
 import { defaultDateFormat, getFullAddress } from '../../../universal/helpers';
 import { LinkdInline } from '../../components/index';
-import { format, ProfileSection } from './formatData';
+import { format, ProfileSection } from './formatDataPrivate';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
