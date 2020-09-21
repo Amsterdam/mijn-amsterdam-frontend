@@ -1,11 +1,17 @@
 import { dateSort } from '../../universal/helpers/date';
 import { AppState, PRISTINE_APPSTATE, createAllErrorState } from '../AppState';
-import { WelcomeNotification } from '../config/staticData';
+import {
+  WelcomeNotification,
+  MaintenanceNotification01,
+} from '../config/staticData';
 import * as Sentry from '@sentry/browser';
 
 function transformNotifications(NOTIFICATIONS: AppState['NOTIFICATIONS']) {
   if (NOTIFICATIONS.status === 'OK') {
     NOTIFICATIONS.content.push(WelcomeNotification);
+    if (new Date() <= new Date('2020-09-22T12:00:00')) {
+      NOTIFICATIONS.content.push(MaintenanceNotification01);
+    }
     NOTIFICATIONS.content.sort(dateSort('datePublished', 'desc'));
   }
   return NOTIFICATIONS;
