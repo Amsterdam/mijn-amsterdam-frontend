@@ -22,6 +22,7 @@ export const FeatureToggle = {
   tipsFlipActive: true,
   profileToggleActive: !IS_PRODUCTION,
   profilePageResidentCount: !IS_PRODUCTION,
+  kvkActive: !IS_PRODUCTION,
 };
 
 export const DAYS_KEEP_RECENT = 28;

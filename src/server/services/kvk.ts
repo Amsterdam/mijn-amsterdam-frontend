@@ -1,5 +1,7 @@
 import { requestData } from '../helpers';
 import { getApiConfig } from '../config';
+import { FeatureToggle } from '../../universal/config/app';
+import { apiSuccesResult } from '../../universal/helpers/api';
 
 export interface Adres {
   straatnaam: string;
@@ -100,11 +102,14 @@ export function fetchKVK(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  return requestData<KVKData>(
-    getApiConfig(SERVICE_NAME, {
-      transformResponse: transformKVKData,
-    }),
-    sessionID,
-    passthroughRequestHeaders
-  );
+  if (FeatureToggle.kvkActive) {
+    return requestData<KVKData>(
+      getApiConfig(SERVICE_NAME, {
+        transformResponse: transformKVKData,
+      }),
+      sessionID,
+      passthroughRequestHeaders
+    );
+  }
+  return apiSuccesResult(null);
 }
