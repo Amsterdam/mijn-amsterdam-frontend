@@ -26,16 +26,8 @@
     "vestigingen": [
       {
         "activiteiten": [
-          {
-            "code": "000000000003012",
-            "indicatieHoofdactiviteit": true,
-            "omschrijving": "Bouw van sport- en recreatievaartuigen"
-          },
-          {
-            "code": "000000000093291",
-            "indicatieHoofdactiviteit": false,
-            "omschrijving": "Jachthavens"
-          }
+          "Bouw van sport- en recreatievaartuigen",
+          "Jachthavens"
         ],
         "datumAanvang": "1966-10-15",
         "datumEinde": "2020-06-01",
@@ -51,11 +43,7 @@
       },
       {
         "activiteiten": [
-          {
-            "code": "000000000005630",
-            "indicatieHoofdactiviteit": true,
-            "omschrijving": "Caf\u00e9s"
-          }
+          "Caf\u00e9s"
         ],
         "datumAanvang": "2020-05-01",
         "datumEinde": null,

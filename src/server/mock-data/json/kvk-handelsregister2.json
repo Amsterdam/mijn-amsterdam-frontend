@@ -26,11 +26,7 @@
     "vestigingen": [
       {
         "activiteiten": [
-          {
-            "code": "000000000002051",
-            "indicatieHoofdactiviteit": true,
-            "omschrijving": "Vervaardiging van kruit en springstoffen en van lucifers"
-          }
+          "Vervaardiging van kruit en springstoffen en van lucifers"
         ],
         "datumAanvang": "2019-05-01",
         "datumEinde": null,
