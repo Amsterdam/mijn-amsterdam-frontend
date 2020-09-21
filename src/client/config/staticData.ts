@@ -25,7 +25,8 @@ export const WelcomeNotification: MyNotification = {
 
 export const MaintenanceNotification01: MyNotification = {
   id: 'maintenance01',
-  chapter: Chapters.UPDATES,
+  chapter: Chapters.NOTIFICATIONS,
+  isAlert: true,
   datePublished: new Date().toISOString(),
   title: 'Onderhoud Mijn Amsterdam',
   description: `Vanwege technisch onderhoud kunt u op dinsdag 22 september van 10.00 tot 12.00 uur niet inloggen op Mijn Amsterdam. Onze excuses voor het ongemak.`,
@@ -33,7 +34,8 @@ export const MaintenanceNotification01: MyNotification = {
 
 export const MaintenanceNotification02: MyNotification = {
   id: 'maintenance02',
-  chapter: Chapters.UPDATES,
+  chapter: Chapters.NOTIFICATIONS,
+  isAlert: true,
   datePublished: new Date().toISOString(),
   title: 'Onderhoud Mijn Amsterdam',
   description: `Vanwege onderhoud is een deel van Mijn Amsterdam op 8 juni 2020 niet zichtbaar.
