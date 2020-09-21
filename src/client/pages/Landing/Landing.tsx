@@ -9,6 +9,7 @@ import {
   PageContent,
   PageHeading,
   TextPage,
+  Alert,
 } from '../../components';
 import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
 import { trackPageView } from '../../hooks';
@@ -35,6 +36,15 @@ export default () => {
           Mijn Amsterdam is uw persoonlijke online pagina bij de gemeente
           Amsterdam.
         </p>
+        {new Date() < new Date('2020-09-22T12:00:00') && (
+          <Alert type="warning">
+            <p>
+              Vanwege technisch onderhoud kunt u op dinsdag 22 september van
+              10.00 tot 12.00 uur niet inloggen op Mijn Amsterdam. Onze excuses
+              voor het ongemak.
+            </p>
+          </Alert>
+        )}
         <div className={styles.LoginOption}>
           {FeatureToggle.eherkenningActive && (
             <Heading className={styles.LoginOptionHeading} size="tiny" el="h3">

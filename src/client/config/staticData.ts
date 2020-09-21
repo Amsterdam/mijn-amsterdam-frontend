@@ -28,9 +28,7 @@ export const MaintenanceNotification01: MyNotification = {
   chapter: Chapters.UPDATES,
   datePublished: new Date().toISOString(),
   title: 'Onderhoud Mijn Amsterdam',
-  description: `Vanwege onderhoud is een deel van Mijn Amsterdam op 6 juni 2020 niet zichtbaar.
-    Het gaat om uw persoonsgegevens, de gegevens van uw paspoort of ID-kaart en uw adres op de kaart.
-    Onze excuses voor het ongemak.`,
+  description: `Vanwege technisch onderhoud kunt u op dinsdag 22 september van 10.00 tot 12.00 uur niet inloggen op Mijn Amsterdam. Onze excuses voor het ongemak.`,
 };
 
 export const MaintenanceNotification02: MyNotification = {
