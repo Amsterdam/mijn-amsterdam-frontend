@@ -8,7 +8,7 @@ import {
   isLoading,
 } from '../../../universal/helpers';
 import {
-  hasMultipleNationalities,
+  hasDutchAndOtherNationalities,
   isMokum,
 } from '../../../universal/helpers/brp';
 import { AppState } from '../../AppState';
@@ -26,7 +26,7 @@ import {
 import { BRP_RESIDENTS_API_URL } from '../../config/api';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { formatBrpProfileData } from './formatData';
+import { formatBrpProfileData } from './formatDataPrivate';
 import { panelConfig, PanelConfigFormatter } from './Profile.constants';
 import styles from './Profile.module.scss';
 import { apiSuccesResult } from '../../../universal/helpers/api';
@@ -98,14 +98,14 @@ export default function Profile() {
           uw burgerlijke staat. De gemeente gebruikt deze gegevens. Belangrijk
           dus dat deze gegevens kloppen.
         </p>
-        {!isMokum(BRP.content) && (
+        {!isLoading(BRP) && !isMokum(BRP.content) && (
           <p>
             U staat niet ingeschreven in Amsterdam. Daarom ziet u alleen
             gegevens die de gemeente Amsterdam van u heeft. Bijvoorbeeld een oud
             adres in Amsterdam of een parkeerbon.
           </p>
         )}
-        {hasMultipleNationalities(BRP.content) && (
+        {hasDutchAndOtherNationalities(BRP.content) && (
           <p>
             Als u een andere nationaliteit hebt of hebt gehad naast de
             Nederlandse, dan ziet u alleen uw Nederlandse nationaliteit. U ziet

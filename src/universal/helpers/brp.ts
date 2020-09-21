@@ -40,12 +40,14 @@ export function isMokum(
   return !!brpContent?.persoon?.mokum || !!brpContent?.mokum;
 }
 
-export function hasMultipleNationalities(
+export function hasDutchAndOtherNationalities(
   brpContent: {
     persoon: { nationaliteiten: Array<{ omschrijving: string }> | null };
   } | null
 ) {
-  return !!brpContent?.persoon?.nationaliteiten?.some(
-    ({ omschrijving }) => omschrijving !== 'Nederlandse'
+  const nationaliteiten = brpContent?.persoon?.nationaliteiten || [];
+  return (
+    nationaliteiten.length > 1 &&
+    nationaliteiten.some(({ omschrijving }) => omschrijving === 'Nederlandse')
   );
 }
