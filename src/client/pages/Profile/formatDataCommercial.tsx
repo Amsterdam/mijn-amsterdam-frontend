@@ -29,7 +29,7 @@ type ProfileLabels<T> = { [key in keyof T]: ProfileLabelValueFormatter };
 
 const onderneming: ProfileLabels<Partial<Onderneming>> = {
   handelsnaam: 'Handelsnaam',
-  overigeHandelsnamen: [
+  handelsnamen: [
     'Overige handelsnamen',
     (handelsnamen: string[]) =>
       handelsnamen ? (
@@ -89,27 +89,42 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
 
   bezoekadres: [
     'Bezoekadres',
-    (value: Adres) => (value ? getFullAddress(value) : null),
+    (adres: Adres) =>
+      adres
+        ? `${getFullAddress(adres)}\n${adres.postcode}, ${adres.woonplaatsNaam}`
+        : null,
   ],
   postadres: [
     'Postadres',
-    (value: Adres) => (value ? getFullAddress(value) : null),
+    (adres: Adres) =>
+      adres
+        ? `${getFullAddress(adres)}\n${adres.postcode || ('' && ', ')}${
+            adres.woonplaatsNaam
+          }`
+        : null,
   ],
   telefoonnummer: [
     'Telefoonnummer',
     (value: string) => <LinkdInline href={`tel:${value}`}>{value}</LinkdInline>,
   ],
 
-  website: [
-    'Internetadres',
-    (url: string) =>
-      url ? (
-        <LinkdInline key={url} href={url} external={true}>
-          {url}
-        </LinkdInline>
+  websites: [
+    'Website',
+    (urls: string[]) =>
+      urls ? (
+        <>
+          {urls.map(url => (
+            <span>
+              <LinkdInline key={url} href={url} external={true}>
+                {url}
+              </LinkdInline>
+              <br />
+            </span>
+          ))}
+        </>
       ) : null,
   ],
-  email: [
+  emailadres: [
     'E-mail',
     (value: string) =>
       value ? (

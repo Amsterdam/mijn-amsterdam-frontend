@@ -6,21 +6,23 @@
     "onderneming": {
       "datumAanvang": null,
       "datumEinde": null,
-      "kvkNummer": "90006178"
+      "handelsnamen": [
+        "Kruijff Sport",
+        "Local Streetplanet Eenmanszaak"
+      ],
+      "hoofdactiviteit": "Caf\u00e9s",
+      "overigeActiviteiten": [
+        "Jachthavens"
+      ],
+      "rechtsvorm": null
     },
     "rechtspersonen": [
       {
-        "adres": {
-          "huisletter": null,
-          "huisnummer": "16",
-          "huisnummertoevoeging": "I",
-          "openbareRuimteNaam": "Schakelstraat",
-          "postcode": "1014 AW",
-          "woonplaatsNaam": "Amsterdam"
-        },
-        "geboortedatum": "1971-08-25",
-        "geslachtsnaam": "Grupstal",
-        "voornamen": "Hendrika Johanna Theodora"
+        "bsn": "123460013",
+        "kvkNummer": "90006178",
+        "rsin": null,
+        "statutaireNaam": null,
+        "statutaireZetel": null
       }
     ],
     "vestigingen": [
@@ -29,6 +31,14 @@
           "Bouw van sport- en recreatievaartuigen",
           "Jachthavens"
         ],
+        "bezoekadres": {
+          "huisletter": null,
+          "huisnummer": "17",
+          "huisnummertoevoeging": null,
+          "postcode": "7623 DM",
+          "straatnaam": "Kamgras",
+          "woonplaatsNaam": "Borne"
+        },
         "datumAanvang": "1966-10-15",
         "datumEinde": "2020-06-01",
         "emailadres": "info@jachthavens.nl",
@@ -36,15 +46,31 @@
         "handelsnamen": [
           "Local Streetplanet Eenmanszaak"
         ],
-        "rekeningnummerBankGiro": null,
+        "postadres": {
+          "huisletter": null,
+          "huisnummer": "16",
+          "huisnummertoevoeging": "I",
+          "postcode": null,
+          "straatnaam": "Schakelstraat",
+          "woonplaatsNaam": "Amsterdam"
+        },
         "telefoonnummer": "+310209845632",
         "typeringVestiging": "Hoofdvestiging",
-        "vestigingsNummer": "990000965656"
+        "vestigingsNummer": "990000965656",
+        "websites": ["www.jachthavens.amsterdam.nl"]
       },
       {
         "activiteiten": [
           "Caf\u00e9s"
         ],
+        "bezoekadres": {
+          "huisletter": null,
+          "huisnummer": "29",
+          "huisnummertoevoeging": null,
+          "postcode": "1097 XK",
+          "straatnaam": "Akkerstraat",
+          "woonplaatsNaam": "Amsterdam"
+        },
         "datumAanvang": "2020-05-01",
         "datumEinde": null,
         "emailadres": "Info@kruijffSport.nl",
@@ -52,10 +78,18 @@
         "handelsnamen": [
           "Kruijff Sport"
         ],
-        "rekeningnummerBankGiro": null,
+        "postadres": {
+          "huisletter": null,
+          "huisnummer": "29",
+          "huisnummertoevoeging": null,
+          "postcode": null,
+          "straatnaam": "Akkerstraat",
+          "woonplaatsNaam": "Amsterdam"
+        },
         "telefoonnummer": "+310209845632",
         "typeringVestiging": "Hoofdvestiging",
-        "vestigingsNummer": "990000996056"
+        "vestigingsNummer": "990000996056",
+        "websites": ["www.kruijff_sport.nl", "wwww.bladiebla.nl"]
       }
     ]
   },
