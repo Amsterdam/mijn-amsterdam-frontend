@@ -14,7 +14,7 @@ routerDevelopment.get(
 );
 
 routerDevelopment.post(
-  '/brp/aantal_inwoners',
+  '/brp/aantal_bewoners',
   (req: Request, res: Response, next: NextFunction) => {
     setTimeout(() => {
       res.json({ residentCount: 3 }).end();
