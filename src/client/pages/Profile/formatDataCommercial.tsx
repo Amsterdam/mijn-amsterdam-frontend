@@ -116,7 +116,7 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
       urls?.length ? (
         <>
           {urls.map(url => (
-            <span>
+            <span key={url}>
               <LinkdInline key={url} href={url} external={true}>
                 {url}
               </LinkdInline>
