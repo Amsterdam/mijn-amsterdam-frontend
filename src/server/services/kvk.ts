@@ -6,7 +6,7 @@ import { apiSuccesResult } from '../../universal/helpers/api';
 export interface Adres {
   straatnaam: string;
   postcode: string;
-  woonplaatsnaam: string;
+  woonplaatsNaam: string;
   huisnummer: string;
   huisnummertoevoeging: string | null;
   huisletter: string | null;
@@ -15,8 +15,8 @@ export interface Adres {
 type Rechtsvorm = string;
 
 export interface Onderneming {
-  handelsnaam: string;
-  overigeHandelsnamen: string[] | null;
+  handelsnaam: string | null;
+  handelsnamen: string[] | null;
   rechtsvorm: Rechtsvorm;
   hoofdactiviteit: string;
   overigeActiviteiten: string[] | null;
@@ -53,9 +53,9 @@ export interface Vestiging {
   bezoekadres: Adres | null;
   postadres: Adres | null;
   telefoonnummer: string | null;
-  website: string | null;
+  websites: string[] | null;
   fax: string | null;
-  email: string | null;
+  emailadres: string | null;
   activiteiten: string[];
   datumAanvang: string | null;
   datumEinde: string | null;
@@ -83,6 +83,10 @@ export function transformKVKData(responseData: KVKSourceData): KVKData | null {
     responseData.content === null
   ) {
     return null;
+  }
+  if (responseData.content.onderneming?.handelsnamen) {
+    responseData.content.onderneming.handelsnaam =
+      responseData.content.onderneming?.handelsnamen.pop() || null;
   }
   if (responseData.content.vestigingen) {
     responseData.content.vestigingen = responseData.content.vestigingen.map(
