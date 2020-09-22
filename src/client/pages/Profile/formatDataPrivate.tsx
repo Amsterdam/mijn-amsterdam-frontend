@@ -52,9 +52,11 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
     (nationaliteiten: BRPData['persoon']['nationaliteiten']) =>
       nationaliteiten?.some(
         ({ omschrijving }) => omschrijving === 'Nederlandse'
-      )
-        ? 'Nederlandse'
-        : null,
+      ) ? (
+        'Nederlandse'
+      ) : (
+        <>&mdash;</>
+      ),
   ],
   indicatieGeheim: [
     'Geheimhouding',

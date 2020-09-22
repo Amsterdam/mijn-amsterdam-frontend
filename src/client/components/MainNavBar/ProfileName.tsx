@@ -43,9 +43,7 @@ function CommercialProfileName({
             : ''
         }
       >
-        {company?.onderneming?.handelsnamen
-          ? company.onderneming.handelsnamen[0]
-          : 'Zakelijk'}
+        {company?.onderneming?.handelsnaam || 'Zakelijk'}
       </span>
     </Button>
   );

@@ -6,21 +6,20 @@
     "onderneming": {
       "datumAanvang": null,
       "datumEinde": null,
-      "kvkNummer": "90006143"
+      "handelsnamen": [
+        "Prijsknaller B.V."
+      ],
+      "hoofdactiviteit": "Vervaardiging van kruit en springstoffen en van lucifers",
+      "overigeActiviteiten": [],
+      "rechtsvorm": "BeslotenVennootschap"
     },
     "rechtspersonen": [
       {
-        "datumAanvang": "2020-01-01",
-        "datumEinde": null,
-        "datumVoortzetting": null,
-        "emailadres": null,
-        "faxnummer": null,
-        "rechtsvorm": "BeslotenVennootschap",
+        "bsn": null,
+        "kvkNummer": "90006143",
+        "rsin": "999999999",
         "statutaireNaam": "Ballonenverkoop B.V.",
-        "statutaireZetel": "Amsterdam",
-        "telefoonnummer": null,
-        "type": "nnp",
-        "url": null
+        "statutaireZetel": "Amsterdam"
       }
     ],
     "vestigingen": [
@@ -28,6 +27,14 @@
         "activiteiten": [
           "Vervaardiging van kruit en springstoffen en van lucifers"
         ],
+        "bezoekadres": {
+          "huisletter": null,
+          "huisnummer": "504",
+          "huisnummertoevoeging": null,
+          "postcode": "1017 CB",
+          "straatnaam": "Herengracht",
+          "woonplaatsNaam": "Amsterdam"
+        },
         "datumAanvang": "2019-05-01",
         "datumEinde": null,
         "emailadres": null,
@@ -35,10 +42,18 @@
         "handelsnamen": [
           "Prijsknaller B.V."
         ],
-        "rekeningnummerBankGiro": null,
+        "postadres": {
+          "huisletter": null,
+          "huisnummer": "504",
+          "huisnummertoevoeging": null,
+          "postcode": null,
+          "straatnaam": "Herengracht",
+          "woonplaatsNaam": "Amsterdam"
+        },
         "telefoonnummer": "+310203154691",
         "typeringVestiging": "Hoofdvestiging",
-        "vestigingsNummer": "990000996048"
+        "vestigingsNummer": "990000996048",
+        "websites": []
       }
     ]
   },

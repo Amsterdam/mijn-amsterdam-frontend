@@ -32,7 +32,7 @@ const onderneming: ProfileLabels<Partial<Onderneming>> = {
   handelsnamen: [
     'Overige handelsnamen',
     (handelsnamen: string[]) =>
-      handelsnamen ? (
+      handelsnamen?.length ? (
         <>
           {handelsnamen.map(handelsnaam => (
             <span key={handelsnaam}>
@@ -48,7 +48,7 @@ const onderneming: ProfileLabels<Partial<Onderneming>> = {
   overigeActiviteiten: [
     'Overige activiteiten',
     (activiteiten: string[]) =>
-      activiteiten ? (
+      activiteiten?.length ? (
         <>
           {activiteiten.map(activiteit => (
             <span key={activiteit}>
@@ -74,7 +74,7 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
   handelsnamen: [
     'Handelsnaam',
     (handelsnamen: string[]) =>
-      handelsnamen ? (
+      handelsnamen?.length ? (
         <>
           {handelsnamen.map(handelsnaam => (
             <span key={handelsnaam}>
@@ -113,7 +113,7 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
   websites: [
     'Website',
     (urls: string[]) =>
-      urls ? (
+      urls?.length ? (
         <>
           {urls.map(url => (
             <span>
@@ -139,7 +139,7 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
   activiteiten: [
     'Activiteiten',
     (activiteiten: string[]) =>
-      activiteiten ? (
+      activiteiten?.length ? (
         <>
           {activiteiten.map(activiteit => (
             <span key={activiteit}>
