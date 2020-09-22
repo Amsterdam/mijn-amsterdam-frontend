@@ -1,4 +1,4 @@
-import { IS_PRODUCTION } from './env';
+import { IS_PRODUCTION, IS_AP } from './env';
 
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
 export const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
@@ -23,7 +23,7 @@ export const FeatureToggle = {
   profileToggleActive: !IS_PRODUCTION,
   profilePageResidentCount: !IS_PRODUCTION,
   kvkActive: !IS_PRODUCTION,
-  erfpachtMeldingenActive: !IS_PRODUCTION,
+  erfpachtMeldingenActive: !IS_AP,
 };
 
 export const DAYS_KEEP_RECENT = 28;
