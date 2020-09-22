@@ -91,7 +91,7 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
     'Bezoekadres',
     (adres: Adres) =>
       adres
-        ? `${getFullAddress(adres)}\n${adres.postcode || ('' && ', ')}${
+        ? `${getFullAddress(adres)}\n${(adres.postcode || '') && ', '}${
             adres.woonplaatsNaam
           }`
         : null,
@@ -100,7 +100,7 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
     'Postadres',
     (adres: Adres) =>
       adres
-        ? `${getFullAddress(adres)}\n${adres.postcode || ('' && ', ')}${
+        ? `${getFullAddress(adres)}\n${(adres.postcode || '') && ', '}${
             adres.woonplaatsNaam
           }`
         : null,
