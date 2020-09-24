@@ -81,6 +81,9 @@ const persoonSecundair: ProfileLabels<Partial<Persoon>> = {
 persoonSecundair.geboorteplaatsnaam = 'Geboorteplaats';
 persoonSecundair.geboortelandnaam = 'Geboorteland';
 
+delete persoonSecundair.nationaliteiten;
+delete persoonSecundair.indicatieGeheim;
+
 const adres: ProfileLabels<Partial<Adres>> = {
   straatnaam: [
     'Straat',
