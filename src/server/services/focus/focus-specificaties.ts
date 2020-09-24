@@ -52,10 +52,10 @@ function transformIncomeSpecificationNotification(
       datePublished: item.datePublished,
       chapter: Chapters.INKOMEN,
       title: 'Nieuwe jaaropgave',
-      description: `Uw jaaropgave ${dateFormat(
-        item.datePublished,
-        'yyyy'
-      )} staat voor u klaar.`,
+      description: `Uw jaaropgave ${parseInt(
+        dateFormat(item.datePublished, 'yyyy'),
+        10
+      ) - 1} staat voor u klaar.`,
       link: {
         to: `${API_BASE_PATH}/${item.url}`,
         title: 'Bekijk jaaropgave',

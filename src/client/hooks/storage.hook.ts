@@ -216,3 +216,9 @@ export function clearLocalStorage() {
     localStorage.clear();
   } catch (error) {}
 }
+
+export function removeLocalStorageKey(key: string) {
+  try {
+    localStorage.removeItem(key);
+  } catch (error) {}
+}

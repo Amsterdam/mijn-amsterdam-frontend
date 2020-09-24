@@ -6,43 +6,127 @@
     "onderneming": {
       "datumAanvang": null,
       "datumEinde": null,
-      "kvkNummer": "90006143"
+      "handelsnamen": [
+        "Ballonenverkoop B.V.",
+        "Feestwinkel"
+      ],
+      "hoofdactiviteit": "Detailhandel via internet in kleding en mode-artikelen",
+      "overigeActiviteiten": [
+        "Elektrotechnische bouwinstallatie"
+      ],
+      "rechtsvorm": "BeslotenVennootschap"
     },
     "rechtspersonen": [
       {
-        "datumAanvang": "2020-01-01",
-        "datumEinde": null,
-        "datumVoortzetting": null,
-        "emailadres": null,
-        "faxnummer": null,
-        "rechtsvorm": "BeslotenVennootschap",
+        "bsn": null,
+        "kvkNummer": "90006151",
+        "rsin": "999999999",
         "statutaireNaam": "Ballonenverkoop B.V.",
-        "statutaireZetel": "Amsterdam",
-        "telefoonnummer": null,
-        "type": "nnp",
-        "url": null
+        "statutaireZetel": "Amsterdam"
       }
     ],
     "vestigingen": [
       {
         "activiteiten": [
-          {
-            "code": "000000000002051",
-            "indicatieHoofdactiviteit": true,
-            "omschrijving": "Vervaardiging van kruit en springstoffen en van lucifers"
-          }
+          "Geestelijke gezondheids- en verslavingszorg met overnachting",
+          "Elektrotechnische bouwinstallatie"
         ],
-        "datumAanvang": "2019-05-01",
+        "bezoekadres": {
+          "huisletter": null,
+          "huisnummer": "66",
+          "huisnummertoevoeging": null,
+          "postcode": "1076 DE",
+          "straatnaam": "Laan der Hesperiden",
+          "woonplaatsNaam": "Amsterdam"
+        },
+        "datumAanvang": "2020-01-01",
+        "datumEinde": null,
+        "emailadres": "info@electrotechniek.amsterdam.nl",
+        "faxnummer": "+310204107999",
+        "handelsnamen": [
+          "Ballonenverkoop B.V."
+        ],
+        "postadres": {
+          "huisletter": null,
+          "huisnummer": "66",
+          "huisnummertoevoeging": null,
+          "postcode": null,
+          "straatnaam": "Laan der Hesperiden",
+          "woonplaatsNaam": "Amsterdam"
+        },
+        "telefoonnummer": "+310209991362",
+        "typeringVestiging": "Hoofdvestiging",
+        "vestigingsNummer": "990000996064",
+        "websites": [
+          "www.electrotechniek.amsterdam.nl"
+        ]
+      },
+      {
+        "activiteiten": [
+          "Winkels in boeken"
+        ],
+        "bezoekadres": {
+          "huisletter": null,
+          "huisnummer": "18",
+          "huisnummertoevoeging": null,
+          "postcode": "1114 BD",
+          "straatnaam": "Borchlandweg",
+          "woonplaatsNaam": "Amsterdam-Duivendrecht"
+        },
+        "datumAanvang": "2020-05-01",
+        "datumEinde": null,
+        "emailadres": "info@feestwinkel.nl",
+        "faxnummer": "+310204107765",
+        "handelsnamen": [
+          "Ballonenverkoop B.V.",
+          "Feestwinkel"
+        ],
+        "postadres": {
+          "huisletter": null,
+          "huisnummer": "18",
+          "huisnummertoevoeging": null,
+          "postcode": null,
+          "straatnaam": "Borchlandweg",
+          "woonplaatsNaam": "Amsterdam-Duivendrecht"
+        },
+        "telefoonnummer": "+310208451362",
+        "typeringVestiging": "Nevenvestiging",
+        "vestigingsNummer": "990000996080",
+        "websites": [
+          "www.feestwinkel.nl"
+        ]
+      },
+      {
+        "activiteiten": [
+          "Detailhandel via internet in kleding en mode-artikelen"
+        ],
+        "bezoekadres": {
+          "huisletter": null,
+          "huisnummer": "590",
+          "huisnummertoevoeging": null,
+          "postcode": "1101 DS",
+          "straatnaam": "Arena boulevard",
+          "woonplaatsNaam": "Amsterdam"
+        },
+        "datumAanvang": "2020-05-01",
         "datumEinde": null,
         "emailadres": null,
         "faxnummer": null,
         "handelsnamen": [
-          "Prijsknaller B.V."
+          "Ballonenverkoop B.V."
         ],
-        "rekeningnummerBankGiro": null,
-        "telefoonnummer": "+310203154691",
-        "typeringVestiging": "Hoofdvestiging",
-        "vestigingsNummer": "990000996048"
+        "postadres": {
+          "huisletter": null,
+          "huisnummer": "590",
+          "huisnummertoevoeging": null,
+          "postcode": null,
+          "straatnaam": "Arena boulevard",
+          "woonplaatsNaam": "Amsterdam"
+        },
+        "telefoonnummer": "+310205641954",
+        "typeringVestiging": "Nevenvestiging",
+        "vestigingsNummer": "990000996072",
+        "websites": []
       }
     ]
   },

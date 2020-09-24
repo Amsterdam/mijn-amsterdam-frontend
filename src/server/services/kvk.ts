@@ -1,10 +1,12 @@
 import { requestData } from '../helpers';
 import { getApiConfig } from '../config';
+import { FeatureToggle } from '../../universal/config/app';
+import { apiSuccesResult } from '../../universal/helpers/api';
 
 export interface Adres {
   straatnaam: string;
   postcode: string;
-  woonplaatsnaam: string;
+  woonplaatsNaam: string;
   huisnummer: string;
   huisnummertoevoeging: string | null;
   huisletter: string | null;
@@ -13,8 +15,8 @@ export interface Adres {
 type Rechtsvorm = string;
 
 export interface Onderneming {
-  handelsnaam: string;
-  overigeHandelsnamen: string[] | null;
+  handelsnaam: string | null;
+  handelsnamen: string[] | null;
   rechtsvorm: Rechtsvorm;
   hoofdactiviteit: string;
   overigeActiviteiten: string[] | null;
@@ -51,10 +53,10 @@ export interface Vestiging {
   bezoekadres: Adres | null;
   postadres: Adres | null;
   telefoonnummer: string | null;
-  website: string | null;
+  websites: string[] | null;
   fax: string | null;
-  email: string | null;
-  activiteiten: Array<{ omschrijving: string } | string>;
+  emailadres: string | null;
+  activiteiten: string[];
   datumAanvang: string | null;
   datumEinde: string | null;
 }
@@ -82,18 +84,14 @@ export function transformKVKData(responseData: KVKSourceData): KVKData | null {
   ) {
     return null;
   }
+  if (responseData.content.onderneming?.handelsnamen) {
+    responseData.content.onderneming.handelsnaam =
+      responseData.content.onderneming?.handelsnamen.pop() || null;
+  }
   if (responseData.content.vestigingen) {
     responseData.content.vestigingen = responseData.content.vestigingen.map(
       vestiging => {
-        const activiteiten = Array.isArray(vestiging.activiteiten)
-          ? vestiging.activiteiten.map(activiteit =>
-              typeof activiteit === 'string'
-                ? activiteit
-                : activiteit.omschrijving
-            )
-          : null;
         return Object.assign(vestiging, {
-          activiteiten,
           isHoofdvestiging: vestiging.typeringVestiging === 'Hoofdvestiging',
         });
       }
@@ -108,11 +106,14 @@ export function fetchKVK(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  return requestData<KVKData>(
-    getApiConfig(SERVICE_NAME, {
-      transformResponse: transformKVKData,
-    }),
-    sessionID,
-    passthroughRequestHeaders
-  );
+  if (FeatureToggle.kvkActive) {
+    return requestData<KVKData>(
+      getApiConfig(SERVICE_NAME, {
+        transformResponse: transformKVKData,
+      }),
+      sessionID,
+      passthroughRequestHeaders
+    );
+  }
+  return apiSuccesResult(null);
 }

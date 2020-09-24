@@ -8,18 +8,16 @@ routerDevelopment.get(
   '/decosjoin/listdocuments/:key',
   (req: Request, res: Response, next: NextFunction) => {
     setTimeout(() => {
-      res.json(VergunningenDocuments);
-      next();
+      res.json(VergunningenDocuments).end();
     }, 2000);
   }
 );
 
 routerDevelopment.post(
-  '/brp/aantal_inwoners',
+  '/brp/aantal_bewoners',
   (req: Request, res: Response, next: NextFunction) => {
     setTimeout(() => {
-      res.json({ residentCount: 3 });
-      next();
+      res.json({ residentCount: 3 }).end();
     }, 2000);
   }
 );

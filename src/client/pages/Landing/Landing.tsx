@@ -9,11 +9,13 @@ import {
   PageContent,
   PageHeading,
   TextPage,
+  Alert,
 } from '../../components';
 import { LOGIN_URL_DIGID, LOGIN_URL_EHERKENNING } from '../../config/api';
 import { trackPageView } from '../../hooks';
 import styles from './Landing.module.scss';
 import { ExternalUrls } from '../../config/app';
+import { MaintenanceNotification01 } from '../../config/staticData';
 
 export default () => {
   const loginButton = useRef(null);
@@ -35,6 +37,11 @@ export default () => {
           Mijn Amsterdam is uw persoonlijke online pagina bij de gemeente
           Amsterdam.
         </p>
+        {new Date() < new Date('2020-09-22T12:00:00') && (
+          <Alert type="warning">
+            <p>{MaintenanceNotification01.description}</p>
+          </Alert>
+        )}
         <div className={styles.LoginOption}>
           {FeatureToggle.eherkenningActive && (
             <Heading className={styles.LoginOptionHeading} size="tiny" el="h3">

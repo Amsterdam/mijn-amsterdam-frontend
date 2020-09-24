@@ -1,4 +1,4 @@
-import { Chapters } from '../../universal/config';
+import { Chapters, FeatureToggle } from '../../universal/config';
 import { omit } from '../../universal/helpers';
 import { MyNotification, MyTip } from '../../universal/types';
 import { getApiConfig } from '../config';
@@ -27,7 +27,7 @@ interface ERFPACHTSourceData {
 
 function transformERFPACHTNotifications(notifications?: MyNotification[]) {
   const notificationsTransformed = Array.isArray(notifications)
-    ? notifications.map(notification => ({
+    ? notifications.map((notification) => ({
         ...notification,
         chapter: Chapters.ERFPACHT,
       }))
@@ -36,8 +36,24 @@ function transformERFPACHTNotifications(notifications?: MyNotification[]) {
   return notificationsTransformed;
 }
 
-function transformERFPACHTData(responseData: ERFPACHTSourceData): ERFPACHTData {
-  const { status: isKnown, meldingen } = responseData?.content || {
+function transformERFPACHTData(
+  responseData: ERFPACHTSourceDataContent
+): ERFPACHTData {
+  const { status: isKnown, meldingen = [] } = responseData || {
+    status: false,
+    meldingen: [],
+  };
+
+  return {
+    isKnown,
+    notifications: transformERFPACHTNotifications(meldingen),
+  };
+}
+
+function transformERFPACHTDataWithNotifications(
+  responseData: ERFPACHTSourceData
+): ERFPACHTData {
+  const { status: isKnown, meldingen = [] } = responseData?.content || {
     status: false,
     meldingen: [],
   };
@@ -55,7 +71,9 @@ export async function fetchERFPACHT(
 ) {
   const response = await requestData<ERFPACHTData>(
     getApiConfig('ERFPACHT', {
-      transformResponse: transformERFPACHTData,
+      transformResponse: FeatureToggle.erfpachtMeldingenActive
+        ? transformERFPACHTDataWithNotifications
+        : transformERFPACHTData,
     }),
     sessionID,
     passthroughRequestHeaders
