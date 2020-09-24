@@ -57,10 +57,7 @@ import {
   ZorgDetail,
 } from './pages';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
-import { useAppState } from './hooks/useAppState';
-import { useTipsApi } from './hooks/api/useTipsApi';
-import { useSessionValue, useSessionApi } from './hooks/api/useSessionApi';
-import { useProfileTypeValue } from './hooks/useProfileType';
+import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
