@@ -14,7 +14,7 @@ export { default as MyArea } from './MyArea/MyArea';
 export { default as MyNotifications } from './MyNotifications/MyNotifications';
 export { default as MyTips } from './MyTips/MyTips';
 export { default as NotFound } from './NotFound/NotFound';
-export { default as Profile } from './Profile/Profile';
+export { default as Profile } from './Profile/ProfilePrivate';
 export { default as VergunningDetail } from './VergunningDetail/VergunningDetail';
 export { default as Vergunningen } from './Vergunningen/Vergunningen';
 export { default as Zorg } from './Zorg/Zorg';
