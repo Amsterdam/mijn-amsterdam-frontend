@@ -2,6 +2,7 @@
   "name": "mijn-amsterdam-frontend",
   "version": "2.7.5",
   "scripts": {
+    "analyze": "npx source-map-explorer 'build/static/js/*.js'",
     "build": "react-scripts build && npm run bff-api:build",
     "serve-build": "concurrently \"npm:bff-api:serve-build\" \"node scripts/serveBuild\"",
     "serve-dev": "concurrently \"npm:bff-api:watch\" \"npm:start\"",
