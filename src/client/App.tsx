@@ -195,8 +195,17 @@ function AppLanding() {
 }
 
 export default function App() {
+  /**
+   * Visitor analytics and support
+   */
   useAnalytics(!!getOtapEnvItem('analyticsId'));
   useScript('/js/usabilla.js', false, true, IS_PRODUCTION);
+  useScript(
+    '/siteimproveanalytics.com/js/siteanalyze_6004851.js',
+    false,
+    true,
+    IS_PRODUCTION
+  );
 
   const sendToSentry = (error: Error, componentStack: string) => {
     Sentry.captureException(error, {
