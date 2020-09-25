@@ -77,30 +77,30 @@ export default function MainNavSubmenu({
 }: MainNavSubmenuProps) {
   const [isOpen, setMenuIsOpen] = useState(false);
 
-  const [debouncedLeave, cancelLeave] = useDebouncedCallback(() => {
+  const debouncedLeave = useDebouncedCallback(() => {
     setMenuIsOpen(false);
   }, 100);
 
-  const [debouncedEnter, cancelEnter] = useDebouncedCallback(() => {
+  const debouncedEnter = useDebouncedCallback(() => {
     setMenuIsOpen(true);
   }, 100);
 
   const onEnter = () => {
-    cancelLeave();
-    debouncedEnter();
+    debouncedLeave.cancel();
+    debouncedEnter.callback();
   };
 
   const onLeave = () => {
-    cancelEnter();
-    debouncedLeave();
+    debouncedEnter.cancel();
+    debouncedLeave.callback();
   };
 
   const location = useLocation();
   // Hides small screen menu on route change
   useEffect(() => {
-    cancelEnter();
+    debouncedEnter.cancel();
     setMenuIsOpen(false);
-  }, [location.pathname, cancelEnter]);
+  }, [location.pathname, debouncedEnter]);
 
   return (
     <span

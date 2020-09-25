@@ -57,12 +57,12 @@ export function altDocumentContent(
 export default () => {
   const { FOCUS_AANVRAGEN } = useAppStateGetter();
 
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const aanvragen = (FOCUS_AANVRAGEN.content || []) as FocusItem[];
-  const focusItem = aanvragen.find(item => item.id === id);
+  const focusItem = aanvragen.find((item) => item.id === id);
   const noContent = !isLoading(FOCUS_AANVRAGEN) && !focusItem;
   const hasDecision =
-    focusItem && focusItem.steps.some(step => step.status === 'Besluit');
+    focusItem && focusItem.steps.some((step) => step.status === 'Besluit');
   let title = 'Onbekend item';
 
   if (focusItem) {

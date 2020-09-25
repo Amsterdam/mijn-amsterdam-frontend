@@ -1,5 +1,5 @@
-import themeColors from '@datapunt/asc-ui/es/theme/default/colors';
-import { useMapInstance } from '@datapunt/react-maps';
+import themeColors from '@amsterdam/asc-ui/es/theme/default/colors';
+import { useMapInstance } from '@amsterdam/react-maps';
 import L, { LeafletMouseEventHandlerFn } from 'leaflet';
 import React, { useEffect, useState } from 'react';
 import { createGlobalStyle } from 'styled-components';

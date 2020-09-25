@@ -3,9 +3,9 @@ import {
   MapPanelContent,
   MapPanelContext,
   MapPanelDrawer,
-} from '@datapunt/arm-core';
-import { SnapPoint } from '@datapunt/arm-core/lib/components/MapPanel/constants';
-import { Checkbox, Label } from '@datapunt/asc-ui';
+} from '@amsterdam/arm-core';
+import { SnapPoint } from '@amsterdam/arm-core/lib/components/MapPanel/constants';
+import { Checkbox, Label } from '@amsterdam/asc-ui';
 import React, { useCallback, useContext, useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';

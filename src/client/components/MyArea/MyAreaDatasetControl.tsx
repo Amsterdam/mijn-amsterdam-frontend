@@ -1,4 +1,4 @@
-import { Checkbox, Label, themeSpacing } from '@datapunt/asc-ui';
+import { Checkbox, Label, themeSpacing } from '@amsterdam/asc-ui';
 import React, { useCallback } from 'react';
 import { atom, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';

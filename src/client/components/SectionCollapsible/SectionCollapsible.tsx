@@ -44,8 +44,8 @@ export function SectionCollapsibleHeading({
         <button
           aria-expanded={isAriaExpanded}
           className={styles.TitleToggle}
-          onKeyPress={event => hasItems && toggleCollapsed(event)}
-          onClick={event => hasItems && toggleCollapsed(event)}
+          onKeyPress={(event) => hasItems && toggleCollapsed(event)}
+          onClick={(event) => hasItems && toggleCollapsed(event)}
         >
           <IconChevronRight aria-hidden="true" className={styles.CaretIcon} />{' '}
           {children}
@@ -90,13 +90,13 @@ export default function SectionCollapsible({
   const hasTitle = !!title;
   const hasNoItemsMessage = !!noItemsMessage;
 
-  const [setReadyForAnimatonDebounced] = useDebouncedCallback(() => {
+  const setReadyForAnimatonDebounced = useDebouncedCallback(() => {
     if (!isLoading && isReadyForAnimation === false) {
       setReadyForAnimaton(true);
     }
   }, 50);
 
-  setReadyForAnimatonDebounced();
+  setReadyForAnimatonDebounced.callback();
 
   const [{ height: contentHeight }, setDimensions] = useState({
     width: 0,

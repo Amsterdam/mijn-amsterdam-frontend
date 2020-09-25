@@ -94,9 +94,9 @@ export default () => {
     },
     apiPristineResult([])
   );
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
 
-  const VergunningItem = VERGUNNINGEN.content?.find(item => item.id === id);
+  const VergunningItem = VERGUNNINGEN.content?.find((item) => item.id === id);
   const noContent = !isLoading(VERGUNNINGEN) && !VergunningItem;
 
   const statusLineItems = useVergunningStatusLineItems(VergunningItem);

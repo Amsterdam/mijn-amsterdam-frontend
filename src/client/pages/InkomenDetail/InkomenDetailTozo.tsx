@@ -21,7 +21,7 @@ export default () => {
   const { FOCUS_TOZO } = useAppStateGetter();
 
   const tozoItems = FOCUS_TOZO.content || [];
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
 
   let TozoItem = tozoItems.find(item => item.id === id);
 

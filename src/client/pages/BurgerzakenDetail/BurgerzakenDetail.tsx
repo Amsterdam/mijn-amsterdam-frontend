@@ -21,10 +21,10 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 
 export default () => {
   const { BRP } = useAppStateGetter();
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
 
   const DocumentItem = BRP.content?.identiteitsbewijzen?.find(
-    item => item.id === id
+    (item) => item.id === id
   );
   const noContent = !isLoading && !DocumentItem;
 

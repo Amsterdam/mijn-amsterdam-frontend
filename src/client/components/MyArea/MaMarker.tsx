@@ -1,4 +1,4 @@
-import { Marker } from '@datapunt/arm-core';
+import { Marker } from '@amsterdam/arm-core';
 import L, { LeafletEventHandlerFn } from 'leaflet';
 import React, { useCallback, useMemo } from 'react';
 import { LOCATION_ZOOM } from '../../../universal/config/map';

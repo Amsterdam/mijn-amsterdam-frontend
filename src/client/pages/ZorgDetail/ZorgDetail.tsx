@@ -18,10 +18,9 @@ import styles from './ZorgDetail.module.scss';
 
 export default () => {
   const { WMO } = useAppStateGetter();
+  const { id } = useParams<{ id: string }>();
 
-  const { id } = useParams();
-
-  const WmoItem = WMO.content?.find(item => item.id === id);
+  const WmoItem = WMO.content?.find((item) => item.id === id);
   const noContent = !isLoading(WMO) && !WmoItem;
 
   const steps = useMemo(() => {

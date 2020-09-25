@@ -103,8 +103,8 @@ export function MaSuperClusterLayer({
 
   useEffect(() => {
     return () => {
-      if (markers) {
-        markers?.remove();
+      if (markers?.remove) {
+        markers.remove();
       }
     };
   }, [markers]);

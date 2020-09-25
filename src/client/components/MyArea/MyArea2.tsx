@@ -5,14 +5,14 @@ import {
   ViewerContainer,
   Zoom,
   MapPanelProvider,
-} from '@datapunt/arm-core';
-import { SnapPoint } from '@datapunt/arm-core/es/components/MapPanel/constants';
+} from '@amsterdam/arm-core';
+import { SnapPoint } from '@amsterdam/arm-core/es/components/MapPanel/constants';
 import {
   AERIAL_AMSTERDAM_LAYERS,
   DEFAULT_AMSTERDAM_LAYERS,
-} from '@datapunt/arm-core/lib/constants';
-import { ThemeProvider } from '@datapunt/asc-ui';
-import { themeSpacing } from '@datapunt/asc-ui/lib/utils/themeUtils';
+} from '@amsterdam/arm-core/lib/constants';
+import { ThemeProvider } from '@amsterdam/asc-ui';
+import { themeSpacing } from '@amsterdam/asc-ui/lib/utils/themeUtils';
 import 'leaflet/dist/leaflet.css';
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';

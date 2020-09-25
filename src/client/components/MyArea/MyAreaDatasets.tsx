@@ -1,5 +1,5 @@
-import { MarkerClusterGroup } from '@datapunt/arm-cluster';
-import { themeColor } from '@datapunt/asc-ui';
+import { MarkerClusterGroup } from '@amsterdam/arm-cluster';
+import { themeColor } from '@amsterdam/asc-ui';
 import L, { LeafletMouseEventHandlerFn } from 'leaflet';
 import React, { useEffect, useMemo, useState } from 'react';
 import { atom } from 'recoil';
@@ -201,7 +201,7 @@ export default function MyAreaDatasets({ onMarkerClick }: MyAreaDatasetsProps) {
     clusterLayer.on('click', onMarkerClick);
 
     return () => {
-      clusterLayer?.off('click', onMarkerClick);
+      clusterLayer.off('click', onMarkerClick);
     };
   }, [clusterLayer, onMarkerClick]);
 

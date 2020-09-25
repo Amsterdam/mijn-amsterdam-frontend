@@ -1,11 +1,11 @@
 import React from 'react';
-import { BaseLayer, Map } from '@datapunt/arm-core';
+import { BaseLayer, Map } from '@amsterdam/arm-core';
 import { LOCATION_ZOOM, HOOD_ZOOM } from '../../../universal/config/map';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { HomeIconMarker } from './MaMarker';
 import MyAreaLoader from './MyAreaLoader';
 import styled from 'styled-components';
-import { ThemeProvider } from '@datapunt/asc-ui';
+import { ThemeProvider } from '@amsterdam/asc-ui';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import 'leaflet/dist/leaflet.css';
 

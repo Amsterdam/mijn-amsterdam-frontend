@@ -1,4 +1,4 @@
-import { useMapInstance } from '@datapunt/react-maps';
+import { useMapInstance } from '@amsterdam/react-maps';
 import { useRef, useEffect } from 'react';
 
 export function useMapRef() {

@@ -1,5 +1,5 @@
-import { ChevronRight } from '@datapunt/asc-assets';
-import { Icon, themeColor, themeSpacing } from '@datapunt/asc-ui';
+import { ChevronRight } from '@amsterdam/asc-assets';
+import { Icon, themeColor, themeSpacing } from '@amsterdam/asc-ui';
 import React, { PropsWithChildren, useState, ReactNode } from 'react';
 import styled from 'styled-components';
 

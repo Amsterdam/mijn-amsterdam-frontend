@@ -43,7 +43,7 @@ function Caret() {
 export default () => {
   const { FOCUS_SPECIFICATIES } = useAppStateGetter();
 
-  const { type } = useParams();
+  const { type } = useParams<{ type: string }>();
 
   const isAnnualStatementOverviewPage = type === 'jaaropgaven';
 
@@ -92,8 +92,8 @@ export default () => {
   const [[startIndex, endIndex], setPageIndex] = useState(INITIAL_INDEX);
 
   const itemsFiltered = items
-    .filter(item => (selectedType ? item.type === selectedType : true))
-    .filter(item => {
+    .filter((item) => (selectedType ? item.type === selectedType : true))
+    .filter((item) => {
       const datePublished = parseISO(item.datePublished);
       return (
         datePublished >= selectedDates[0] && datePublished <= selectedDates[1]
@@ -107,7 +107,7 @@ export default () => {
   const maxDateFilterActive =
     selectedDates[1].toString() !== maxDate.toString();
 
-  const selectTypeFilter = useCallback(type => {
+  const selectTypeFilter = useCallback((type) => {
     setSelectedType(type);
     setPageIndex(INITIAL_INDEX);
   }, []);
@@ -177,7 +177,7 @@ export default () => {
 
         {isSearchPanelActive && (
           <div className={styles.SearchPanel}>
-            {items.some(item => !!item.type) && (
+            {items.some((item) => !!item.type) && (
               <div className={styles.FilterInput}>
                 <span>
                   Regeling{' '}
@@ -196,7 +196,7 @@ export default () => {
                     typeFilterActive && styles.FilterActive
                   )}
                   value={selectedType}
-                  onChange={event => selectTypeFilter(event.target.value)}
+                  onChange={(event) => selectTypeFilter(event.target.value)}
                 >
                   <option value="">Alle regelingen ({items.length})</option>
                   {options.map(([option, count]) => (
@@ -227,7 +227,7 @@ export default () => {
                 )}
                 value={selectedDates[0]}
                 hasNativeSupport={isNativeDatePickerInputSupported()}
-                onChange={dateStart => {
+                onChange={(dateStart) => {
                   setSelectedDates(([, dateEnd]) => [
                     dateStart || minDate,
                     dateEnd || maxDate,
@@ -255,7 +255,7 @@ export default () => {
                 )}
                 value={selectedDates[1]}
                 hasNativeSupport={isNativeDatePickerInputSupported()}
-                onChange={dateEnd =>
+                onChange={(dateEnd) =>
                   setSelectedDates(([dateStart]) => [
                     dateStart || minDate,
                     dateEnd || maxDate,

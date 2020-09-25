@@ -1,5 +1,5 @@
-import { themeSpacing } from '@datapunt/asc-ui';
-import themeColors from '@datapunt/asc-ui/es/theme/default/colors';
+import { themeSpacing } from '@amsterdam/asc-ui';
+import themeColors from '@amsterdam/asc-ui/es/theme/default/colors';
 import classnames from 'classnames';
 import L, { Marker } from 'leaflet';
 import React, { ReactElement, ReactNode } from 'react';

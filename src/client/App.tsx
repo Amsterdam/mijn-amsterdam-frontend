@@ -220,10 +220,10 @@ export default function App() {
     IS_ACCEPTANCE
   );
 
-  const sendToSentry = (error: Error, componentStack: string) => {
+  const sendToSentry = (error: Error, info: { componentStack: string }) => {
     Sentry.captureException(error, {
       extra: {
-        componentStack,
+        componentStack: info.componentStack,
       },
     });
   };
