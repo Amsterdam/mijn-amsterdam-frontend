@@ -80,7 +80,7 @@ export default function Profile() {
       fetchResidentCount({
         url: BRP_RESIDENTS_API_URL,
         method: 'post',
-        data: BRP.content?.adres?._adresSleutel,
+        data: { addressKey: BRP.content?.adres?._adresSleutel },
         transformResponse: responseContent => apiSuccesResult(responseContent),
       });
     }
