@@ -1,19 +1,17 @@
-import { useDesktopScreen, usePhoneScreen } from '../../hooks/media.hook';
-
-import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
-import { ReactComponent as AmsterdamLogoLarge } from '../../assets/images/logo-amsterdam-large.svg';
+import React, { useMemo } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
+import { ReactComponent as AmsterdamLogoLarge } from '../../assets/images/logo-amsterdam-large.svg';
+import { ReactComponent as AmsterdamLogo } from '../../assets/images/logo-amsterdam.svg';
+import { getApiErrors } from '../../config/api';
+import { useDesktopScreen, usePhoneScreen } from '../../hooks/media.hook';
+import { useAppStateGetter } from '../../hooks/useAppState';
+import Linkd from '../Button/Button';
 import ErrorMessages from '../ErrorMessages/ErrorMessages';
 import Heading from '../Heading/Heading';
-import { Link } from 'react-router-dom';
-import Linkd from '../Button/Button';
 import MainHeaderHero from '../MainHeaderHero/MainHeaderHero';
 import MainNavBar from '../MainNavBar/MainNavBar';
-import React, { useMemo } from 'react';
 import styles from './MainHeader.module.scss';
-import { useLocation } from 'react-router-dom';
-import { getApiErrors } from '../../config/api';
-import { useAppStateGetter } from '../../hooks/useAppState';
 
 export interface MainHeaderProps {
   isAuthenticated?: boolean;

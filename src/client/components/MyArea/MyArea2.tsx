@@ -2,9 +2,9 @@ import {
   BaseLayer,
   BaseLayerToggle,
   Map,
+  MapPanelProvider,
   ViewerContainer,
   Zoom,
-  MapPanelProvider,
 } from '@amsterdam/arm-core';
 import { SnapPoint } from '@amsterdam/arm-core/es/components/MapPanel/constants';
 import {
@@ -13,29 +13,29 @@ import {
 } from '@amsterdam/arm-core/lib/constants';
 import { ThemeProvider } from '@amsterdam/asc-ui';
 import { themeSpacing } from '@amsterdam/asc-ui/lib/utils/themeUtils';
+import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { HOOD_ZOOM } from '../../../universal/config/map';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useDesktopScreen } from '../../hooks';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import {
+  PARKEERZONES_POLYLINE_OPTIONS,
+  PARKEERZONES_WMS_OPTIONS,
+} from './datasets';
 import { HomeIconMarker } from './MaMarker';
-import MyAreaHeader from './MyAreaHeader';
-import MyAreaLoader from './MyAreaLoader';
-import MyAreaPanels from './MyAreaPanels';
+import { MaWMSLayer } from './MaWmsLayer';
 import MyAreaDatasets, {
   selectedMarkerDataAtom,
   useActiveDatasetIds,
 } from './MyAreaDatasets';
+import MyAreaHeader from './MyAreaHeader';
+import MyAreaLoader from './MyAreaLoader';
+import MyAreaPanels from './MyAreaPanels';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
-import { useRecoilState } from 'recoil';
-import axios from 'axios';
-import { MaWMSLayer } from './MaWmsLayer';
-import {
-  PARKEERZONES_WMS_OPTIONS,
-  PARKEERZONES_POLYLINE_OPTIONS,
-} from './datasets';
 
 const StyledViewerContainer = styled(ViewerContainer)`
   height: 100%;

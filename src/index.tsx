@@ -1,16 +1,13 @@
 /// <reference path="./universal/types/global.d.ts" />
 /// <reference types="react-scripts" />
 
-import './client/polyfill';
-import './client/styles/main.scss';
-
 import * as Sentry from '@sentry/browser';
-
-import { ENV, getOtapEnvItem } from './universal/config/env';
-
-import App from './client/App';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App from './client/App';
+import './client/polyfill';
+import './client/styles/main.scss';
+import { ENV, getOtapEnvItem } from './universal/config/env';
 
 Sentry.init({
   dsn: getOtapEnvItem('sentryDsn'),

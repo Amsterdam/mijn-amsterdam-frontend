@@ -1,3 +1,19 @@
+interface EnvVars {
+  analyticsId?: number;
+  analyticsUrlBase?: string;
+  sentryDsn?: string;
+  bffSentryDsn?: string;
+  ssoErfpachtUrl?: string;
+  ssoErfpachtUrlEH?: string;
+  ssoMilieuzoneUrl?: string;
+  isMyAreaMapEnabled?: boolean;
+  isMyArea2MapEnabled?: boolean;
+  krefiaDirectLink?: string;
+}
+
+type OtapEnvName = 'development' | 'test' | 'acceptance' | 'production';
+type OtapEnv = { [name in OtapEnvName]: EnvVars };
+
 function getBrowserEnv() {
   return process.env.REACT_APP_ENV || 'production';
 }
@@ -16,23 +32,6 @@ process.env.NODE_ENV !== 'test' && console.info(`App running in ${ENV} mode.`);
 export const IS_ACCEPTANCE = ENV === 'acceptance';
 export const IS_PRODUCTION = ENV === 'production';
 export const IS_AP = IS_ACCEPTANCE || IS_PRODUCTION;
-
-interface EnvVars {
-  analyticsId?: number;
-  analyticsUrlBase?: string;
-  sentryDsn?: string;
-  bffSentryDsn?: string;
-  ssoErfpachtUrl?: string;
-  ssoErfpachtUrlEH?: string;
-  ssoMilieuzoneUrl?: string;
-  isMyAreaMapEnabled?: boolean;
-  isMyArea2MapEnabled?: boolean;
-  krefiaDirectLink?: string;
-}
-
-type OtapEnvName = 'development' | 'test' | 'acceptance' | 'production';
-
-type OtapEnv = { [name in OtapEnvName]: EnvVars };
 
 const otapServerEnv: OtapEnv = {
   development: {

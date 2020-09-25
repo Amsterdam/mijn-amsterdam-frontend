@@ -1,7 +1,6 @@
-import React, { HTMLProps } from 'react';
-
-import { ComponentChildren } from '../../../universal/types';
 import classnames from 'classnames';
+import React, { HTMLProps } from 'react';
+import { ComponentChildren } from '../../../universal/types';
 import styles from './Heading.module.scss';
 
 type HeadingStyleSize = 'tiny' | 'small' | 'medium' | 'mediumLarge' | 'large';
