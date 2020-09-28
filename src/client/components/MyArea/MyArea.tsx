@@ -3,7 +3,7 @@ import React, { HTMLProps, PropsWithChildren } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { getOtapEnvItem } from '../../../universal/config/env';
-import { IconClose, IconHome, IconSuitcase } from '../../assets/icons';
+import { IconClose, IconHome, IconHomeCommercial } from '../../assets/icons';
 import { ReactComponent as Logo } from '../../assets/images/logo-amsterdam.svg';
 import Linkd from '../Button/Button';
 import Heading from '../Heading/Heading';
@@ -40,7 +40,7 @@ function MyAreaLoader() {
         {profileType === 'private' ? (
           <IconHome aria-hidden="true" />
         ) : (
-          <IconSuitcase aria-hidden="true" />
+          <IconHomeCommercial aria-hidden="true" />
         )}
         Uw adres wordt opgezocht...
       </span>
