@@ -7,6 +7,7 @@ import { Request } from 'express';
 import { getPassthroughRequestHeaders } from '../helpers/app';
 import { loadServicesDirect } from './services-direct';
 import { loadServicesRelated } from './services-related';
+import { getSettledResult } from '../../universal/helpers/api';
 
 export type TIPSData = MyTip[];
 
@@ -77,7 +78,7 @@ function createTipsRequestDataFromServiceResults(
   for (const result of servicesResults) {
     const data = extractSuccessResponseContent(result);
     Object.assign(userData, deepOmitKeys(data, ['description']));
-    const tipsFromSource = Object.values(data).flatMap((data) =>
+    const tipsFromSource = Object.values(data).flatMap(data =>
       data && 'tips' in data ? data['tips'] : []
     );
     if (tipsFromSource.length) {

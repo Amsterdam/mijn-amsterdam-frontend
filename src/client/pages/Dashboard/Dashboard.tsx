@@ -19,14 +19,16 @@ import {
 } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
 import styles from './Dashboard.module.scss';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 
 const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
 
 export default () => {
   const appState = useAppStateGetter();
-  const { TIPS, NOTIFICATIONS, CASES, BUURT, HOME } = appState;
+  const { TIPS, NOTIFICATIONS, CASES, BUURT, HOME, BRP, KVK } = appState;
   const notifications = useAppStateNotifications();
+  const profileType = useProfileTypeValue();
 
   const tipItems = useMemo(() => {
     return TIPS.content?.slice(0, MAX_TIPS_VISIBLE) || [];
@@ -85,6 +87,11 @@ export default () => {
           <MyAreaDashboard
             url={BUURT.content?.embed.simple}
             center={HOME.content?.latlng}
+            address={
+              profileType === 'private'
+                ? BRP.content?.adres
+                : KVK.content?.hoofdAdres
+            }
             data-tutorial-item="Op deze kaart ziet u informatie van de gemeente, bijvoorbeeld over afval, parkeren en vergunningen;left-top"
           />
         )}

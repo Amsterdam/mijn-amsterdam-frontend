@@ -9,6 +9,8 @@ import Linkd from '../Button/Button';
 import Heading from '../Heading/Heading';
 import styles from './MyArea.module.scss';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { Adres } from '../../../universal/types';
+import { getFullAddress } from '../../../universal/helpers/brp';
 
 export function MyAreaHeader() {
   return (
@@ -84,22 +86,26 @@ export function MyAreaMapIFrame({ url, className }: MyAreaMapIframeProps) {
 interface MyAreaDashboardComponentProps extends HTMLProps<HTMLDivElement> {
   center?: LatLngObject | null;
   url?: string;
+  address?: Adres | null;
 }
 
 export function MyAreaDashboard({
   center,
   url,
+  address,
   ...otherProps
 }: MyAreaDashboardComponentProps) {
+  const profileType = useProfileTypeValue();
   return (
     <div {...otherProps} className={styles.MapDashboard}>
       {getOtapEnvItem('isMyAreaMapEnabled') && <MyAreaMapIFrame url={url} />}
       <NavLink to={AppRoutes.BUURT} className={styles.MapDashboardOverlay}>
         <div>
           <Heading size="large">Mijn buurt</Heading>
+          {address && <p>{getFullAddress(address)}</p>}
           <p>
-            Klik voor een overzicht van gemeentelijke informatie rond uw eigen
-            woning.
+            Klik voor een overzicht van gemeentelijke informatie rond uw{' '}
+            {profileType === 'private' ? 'eigen woning' : 'bedrijf'}.
           </p>
         </div>
       </NavLink>

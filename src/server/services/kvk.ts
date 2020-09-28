@@ -2,15 +2,7 @@ import { requestData } from '../helpers';
 import { getApiConfig } from '../config';
 import { FeatureToggle } from '../../universal/config/app';
 import { apiSuccesResult } from '../../universal/helpers/api';
-
-export interface Adres {
-  straatnaam: string;
-  postcode: string;
-  woonplaatsNaam: string;
-  huisnummer: string;
-  huisnummertoevoeging: string | null;
-  huisletter: string | null;
-}
+import { Adres } from '../../universal/types';
 
 type Rechtsvorm = string;
 
@@ -68,6 +60,7 @@ export interface KVKSourceDataContent {
   vestigingen: Vestiging[];
   aandeelhouders: Aandeelhouder[];
   bestuurders: Bestuurder[];
+  hoofdAdres: Adres | null; // eerste bezoekadres of postadres in lijst met vestigingen
 }
 
 export interface KVKSourceData {
@@ -96,13 +89,24 @@ export function transformKVKData(responseData: KVKSourceData): KVKData | null {
         });
       }
     );
+    responseData.content.hoofdAdres = null;
+    if (responseData.content.vestigingen.length) {
+      const eersteVestigingMetAdres = responseData.content.vestigingen.find(
+        vestiging => !!(vestiging.bezoekadres || vestiging.postadres)
+      );
+      if (typeof eersteVestigingMetAdres !== 'undefined') {
+        responseData.content.hoofdAdres =
+          eersteVestigingMetAdres.bezoekadres ||
+          eersteVestigingMetAdres.postadres;
+      }
+    }
   }
   return responseData.content;
 }
 
 const SERVICE_NAME = 'KVK'; // Change to your service name
 
-export function fetchKVK(
+export async function fetchKVK(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {

@@ -1,18 +1,27 @@
-import { fetchBRP } from './index';
+import { getSettledResult } from '../../universal/helpers/api';
 import { fetchHOME } from './home';
+import { fetchBRP } from './index';
 import { fetchKVK } from './kvk';
+import { getProfileType } from '../helpers/profile-type';
 
 export async function loadServicesRelated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  const BRP = await fetchBRP(sessionID, passthroughRequestHeaders);
-  const HOME = await fetchHOME(sessionID, passthroughRequestHeaders);
-  const KVK = await fetchKVK(sessionID, passthroughRequestHeaders);
+  const BRPResult = fetchBRP(sessionID, passthroughRequestHeaders);
+  const KVKResult = fetchKVK(sessionID, passthroughRequestHeaders);
+
+  const HOMEResult = fetchHOME(sessionID, passthroughRequestHeaders);
+
+  const [BRP, KVK, HOME] = await Promise.allSettled([
+    BRPResult,
+    KVKResult,
+    HOMEResult,
+  ]);
 
   return {
-    BRP,
-    HOME,
-    KVK,
+    BRP: getSettledResult(BRP),
+    HOME: getSettledResult(HOME),
+    KVK: getSettledResult(KVK),
   };
 }

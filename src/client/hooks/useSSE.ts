@@ -38,7 +38,7 @@ export function useSSE({
     }
   }, [es, connect, postpone]);
 
-  // TODO: Uncomment this effect if we need explicit data stream for dynamic profile switch
+  // TODO: Uncomment this effect if we need path switching for returning data from different stream sources
   // useEffect(() => {
   //   if (es) {
   //     setEventSource(null);

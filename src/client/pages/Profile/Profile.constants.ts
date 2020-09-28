@@ -13,7 +13,7 @@ type BRPPanelKey = keyof Omit<
   'identiteitsbewijzen' | 'notifications' | 'kvkNummer'
 >;
 
-type KVKPanelKey = keyof Omit<KVKData, 'mokum'>;
+type KVKPanelKey = keyof Omit<KVKData, 'mokum' | 'hoofdAdres'>;
 
 type PanelProps = Pick<InfoPanelProps, 'title' | 'actionLinks'>;
 
