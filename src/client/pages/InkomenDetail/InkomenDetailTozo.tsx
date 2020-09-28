@@ -67,7 +67,7 @@ export default () => {
                 Meer informatie over de {TozoItem?.title}
               </Linkd>
             ) : (
-              <Linkd external={true} href={ExternalUrls.WPI_TOZO2}>
+              <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
                 Meer informatie over de {TozoItem?.title}
               </Linkd>
             )}
