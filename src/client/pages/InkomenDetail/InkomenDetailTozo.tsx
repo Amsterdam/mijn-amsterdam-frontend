@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/browser';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Redirect } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
@@ -25,14 +25,20 @@ export default () => {
 
   let TozoItem = tozoItems.find(item => item.id === id);
 
-  if (!TozoItem && tozoItems.length >= 1) {
-    Sentry.captureMessage('Tozo Item not found', {
-      extra: {
-        requestedId: id,
-        availableIds: tozoItems.map(item => item.id),
-      },
-    });
-    TozoItem = tozoItems[tozoItems.length - 1];
+  if (!isLoading(FOCUS_TOZO)) {
+    if (!TozoItem && tozoItems.length >= 1) {
+      Sentry.captureMessage('Tozo Item not found', {
+        extra: {
+          requestedId: id,
+          availableIds: tozoItems.map(item => item.id),
+        },
+      });
+      TozoItem = tozoItems[tozoItems.length - 1];
+    }
+
+    if (!TozoItem) {
+      return <Redirect to={AppRoutes.INKOMEN} />;
+    }
   }
 
   const noContent = !isLoading(FOCUS_TOZO) && !TozoItem;
