@@ -15,14 +15,14 @@ interface CommercialProfileNameProps {
   company?: KVKSourceDataContent;
   onClick?: (event: any) => void;
   isActive: boolean;
-  hasTutorial: boolean;
+  tutorial: string;
 }
 
 function CommercialProfileName({
   company,
   onClick,
   isActive,
-  hasTutorial,
+  tutorial,
 }: CommercialProfileNameProps) {
   return (
     <Button
@@ -36,13 +36,7 @@ function CommercialProfileName({
         isActive && styles['ProfileLink--active']
       )}
     >
-      <span
-        data-tutorial-item={
-          hasTutorial
-            ? 'Hier kunt u schakelen naar uw zakelijke profiel;left-bottom'
-            : ''
-        }
-      >
+      <span data-tutorial-item={tutorial}>
         {company?.onderneming?.handelsnaam || 'Zakelijk'}
       </span>
     </Button>
@@ -53,14 +47,14 @@ interface PrivateProfileNameProps {
   person?: BRPData['persoon'];
   onClick?: (event: any) => void;
   isActive: boolean;
-  hasTutorial: boolean;
+  tutorial: string;
 }
 
 function PrivateProfileName({
   person,
   onClick,
   isActive,
-  hasTutorial,
+  tutorial,
 }: PrivateProfileNameProps) {
   return (
     <Button
@@ -74,13 +68,7 @@ function PrivateProfileName({
         isActive && styles['ProfileLink--active']
       )}
     >
-      <span
-        data-tutorial-item={
-          hasTutorial
-            ? 'Hier kunt u schakelen naar uw privé profiel;right-bottom'
-            : ''
-        }
-      >
+      <span data-tutorial-item={tutorial}>
         {person?.opgemaakteNaam ? getFullName(person) : 'Mijn gegevens'}
       </span>
     </Button>
@@ -103,13 +91,21 @@ function PrivateCommercialProfileToggle({
       <PrivateProfileName
         person={person}
         isActive={profileType === 'private'}
-        hasTutorial={profileType === 'private-commercial'}
+        tutorial={
+          profileType === 'private-commercial'
+            ? 'Hier kunt u schakelen naar uw privé profiel;left-bottom'
+            : ''
+        }
         onClick={() => setProfileType('private')}
       />
       <CommercialProfileName
         company={company}
         isActive={profileType === 'private-commercial'}
-        hasTutorial={profileType === 'private'}
+        tutorial={
+          profileType === 'private'
+            ? 'Hier kunt u schakelen naar uw zakelijke profiel;right-bottom'
+            : ''
+        }
         onClick={() => setProfileType('private-commercial')}
       />
     </>
@@ -137,7 +133,9 @@ export function ProfileName({
           <PrivateProfileName
             person={person!}
             isActive={false}
-            hasTutorial={true}
+            tutorial={
+              'Hier ziet u uw persoonsgegevens, zoals uw adres en geboortedatum;left-bottom'
+            }
             onClick={() => history.push(AppRoutes.BRP)}
           />
         );
@@ -150,7 +148,9 @@ export function ProfileName({
           <CommercialProfileName
             company={company!}
             isActive={false}
-            hasTutorial={true}
+            tutorial={
+              'Hier ziet u uw bedrijfsgegevens uit het handelsregister van de KvK;left-bottom'
+            }
             onClick={() => history.push(AppRoutes.KVK)}
           />
         );
