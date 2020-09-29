@@ -19,6 +19,7 @@ export async function fetchHOME(
   } else if (BRP.status === 'OK' && !isMokum(BRP.content)) {
     HOME = apiSuccesResult({
       latlng: null,
+      address: null,
     });
   } else {
     HOME = apiDependencyError({ BRP });

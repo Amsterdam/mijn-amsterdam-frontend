@@ -65,7 +65,7 @@ function GarbageCenterItem({ item }: { item: GarbageCenter }) {
 }
 
 export default () => {
-  const { BRP, AFVAL, AFVALPUNTEN, HOME } = useAppStateGetter();
+  const { AFVAL, AFVALPUNTEN, HOME } = useAppStateGetter();
   let garbageContainersMapUrl = '';
 
   if (HOME && HOME?.content?.latlng?.lng && HOME?.content?.latlng?.lat) {
@@ -154,10 +154,10 @@ export default () => {
         )}
       </PageContent>
 
-      {!!BRP.content?.adres && (
+      {!!HOME.content?.address && (
         <GarbagePanel className={styles.AddressPanel}>
           <Heading size="tiny">Uw adres</Heading>
-          <p>{getFullAddress(BRP.content?.adres)}</p>
+          <p>{getFullAddress(HOME.content?.address)}</p>
         </GarbagePanel>
       )}
       {!!grofvuil && garbagePointCollapsible('grofvuil', grofvuil)}

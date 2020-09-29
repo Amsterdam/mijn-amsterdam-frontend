@@ -85,7 +85,7 @@ export default () => {
           <MyAreaDashboard
             url={BUURT.content?.embed.simple}
             center={HOME.content?.latlng}
-            address={null}
+            address={HOME.content?.address}
             data-tutorial-item="Op deze kaart ziet u informatie van de gemeente, bijvoorbeeld over afval, parkeren en vergunningen;left-top"
           />
         )}

@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { BffEndpoints } from './config';
 import { loadServicesAll } from './services/services-all';
-import { loadServicesSSE } from './services/services-sse';
+import { loadServicesSSE } from './services/services-sse-private-commercial';
 
 export const routerPrivateCommercial = express.Router();
 
@@ -12,7 +12,6 @@ routerPrivateCommercial.get(
     res: Response,
     next: NextFunction
   ) {
-    console.log('bliapapapa');
     try {
       const servicesResult = await loadServicesAll(res.locals.sessionID, req);
       res.json(servicesResult);

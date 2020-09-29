@@ -2,15 +2,7 @@ import { requestData } from '../helpers';
 import { getApiConfig } from '../config';
 import { FeatureToggle } from '../../universal/config/app';
 import { apiSuccesResult } from '../../universal/helpers/api';
-
-export interface Adres {
-  straatnaam: string;
-  postcode: string;
-  woonplaatsNaam: string;
-  huisnummer: string;
-  huisnummertoevoeging: string | null;
-  huisletter: string | null;
-}
+import { Adres } from '../../universal/types';
 
 type Rechtsvorm = string;
 
@@ -75,6 +67,31 @@ export interface KVKSourceData {
 }
 
 export interface KVKData extends KVKSourceDataContent {}
+
+export function getKvkAddress(kvkData: KVKData) {
+  let address: Adres | null = null;
+  const vestigingen = kvkData?.vestigingen;
+
+  if (!vestigingen?.length) {
+    return null;
+  }
+
+  if (vestigingen.length <= 2) {
+    const vestiging = kvkData?.vestigingen.find(
+      vestiging => !!vestiging.bezoekadres
+    );
+    address = vestiging?.bezoekadres || null;
+  }
+
+  if (!address) {
+    const vestiging = kvkData?.vestigingen.find(
+      vestiging => !!vestiging.postadres
+    );
+    address = vestiging?.postadres || null;
+  }
+
+  return address;
+}
 
 export function transformKVKData(responseData: KVKSourceData): KVKData | null {
   if (

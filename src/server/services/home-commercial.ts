@@ -1,7 +1,7 @@
 import { fetchBAG } from './index';
 import { apiSuccesResult, apiErrorResult } from '../../universal/helpers/api';
 import { apiDependencyError, isMokum } from '../../universal/helpers';
-import { fetchKVK, Adres } from './kvk';
+import { fetchKVK, getKvkAddress } from './kvk';
 
 export async function fetchHOMECommercial(
   sessionID: SessionID,
@@ -12,13 +12,7 @@ export async function fetchHOMECommercial(
   let HOME;
 
   if (KVK.status === 'OK' && isMokum(KVK.content)) {
-    let address: Adres | null = null;
-
-    if (KVK.content?.vestigingen[0]?.bezoekadres) {
-      address = KVK.content.vestigingen[0].bezoekadres;
-    } else if (KVK.content?.vestigingen[0]?.postadres) {
-      address = KVK.content.vestigingen[0].postadres;
-    }
+    const address = KVK.content ? getKvkAddress(KVK.content) : null;
     if (address) {
       HOME = await fetchBAG(sessionID, passthroughRequestHeaders, address);
     } else {
@@ -27,6 +21,7 @@ export async function fetchHOMECommercial(
   } else if (KVK.status === 'OK' && !isMokum(KVK.content)) {
     HOME = apiSuccesResult({
       latlng: null,
+      address: null,
     });
   } else {
     HOME = apiDependencyError({ KVK });
