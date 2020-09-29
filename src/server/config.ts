@@ -129,6 +129,12 @@ export function getApiConfig(name: SourceApiKey, config?: DataRequestConfig) {
   return Object.assign(ApiConfig[name] || {}, config || {});
 }
 
+export const BffProfileTypePathSegment = {
+  private: '/',
+  privateCommercial: '/private-commercial',
+  commercial: '/commercial',
+};
+
 export const BffEndpoints = {
   SERVICES_TIPS: `/services/tips`,
   SERVICES_ALL: `/services/all`,

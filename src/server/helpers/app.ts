@@ -7,14 +7,23 @@ import {
   DEV_USER_TYPE_HEADER,
   PUBLIC_BFF_ENDPOINTS,
   TMA_SAML_HEADER,
+  BffProfileTypePathSegment,
 } from '../config';
 import { clearSessionCache } from './source-api-request';
 import uid from 'uid-safe';
+import npath from 'path';
 
 export function isValidRequestPath(requestPath: string, path: string) {
   return (
-    requestPath === `${BFF_BASE_PATH}${path}` ||
-    requestPath === `${BFF_BASE_PATH}/commercial${path}`
+    requestPath === npath.join(BFF_BASE_PATH, path) ||
+    requestPath ===
+      npath.join(
+        BFF_BASE_PATH,
+        BffProfileTypePathSegment.privateCommercial,
+        path
+      ) ||
+    requestPath ===
+      npath.join(BFF_BASE_PATH, BffProfileTypePathSegment.commercial, path)
   );
 }
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { TIPSData } from '../../../server/services/tips';
 import { ApiResponse } from '../../../universal/helpers/api';
 import { AppState, PRISTINE_APPSTATE } from '../../AppState';
@@ -16,6 +16,7 @@ const requestConfig = {
 };
 
 export function useTipsApi() {
+  const isInitialMount = useRef(true);
   const { isOptIn } = useOptIn();
   const profileType = useProfileTypeValue();
   const [api, fetchTips] = useDataApi<{ TIPS: ApiResponse<TIPSData> }>(
@@ -23,14 +24,9 @@ export function useTipsApi() {
     pristineData
   );
   const setAppState = useAppStateSetter();
-  const fetchTrigger = `${profileType}-${isOptIn}`;
-  const [loadingTrigger, setLoadingTrigger] = useState<null | string>(
-    fetchTrigger
-  );
 
   useEffect(() => {
-    if (fetchTrigger !== loadingTrigger) {
-      setLoadingTrigger(fetchTrigger);
+    if (!isInitialMount.current) {
       fetchTips({
         ...requestConfig,
         params: {
@@ -39,7 +35,9 @@ export function useTipsApi() {
         },
       });
     }
-  }, [isOptIn, fetchTrigger, loadingTrigger, fetchTips, profileType]);
+    isInitialMount.current = false;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOptIn, fetchTips]);
 
   useEffect(() => {
     if (
@@ -50,7 +48,7 @@ export function useTipsApi() {
       setAppState((appState: AppState) => {
         return Object.assign({}, appState, api.data);
       });
-    } else {
+    } else if (api.isDirty) {
       setAppState((appState: AppState) => {
         if (appState.TIPS !== pristineData.TIPS) {
           return Object.assign({}, appState, pristineData);

@@ -39,15 +39,15 @@ export function useSSE({
   }, [es, connect, postpone]);
 
   // TODO: Uncomment this effect if we need explicit data stream for dynamic profile switch
-  // useEffect(() => {
-  //   if (es) {
-  //     setEventSource(null);
-  //   }
-  //   // WE don't have to know which ES is present, just if one is. On Path change we need a new EventSource whatsoever.
-  //   // Resetting the eventSource will trigger the Connecting to the EventSource effect. This is why we can leave it out of
-  //   // the dependency array.
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [path]);
+  useEffect(() => {
+    if (es) {
+      setEventSource(null);
+    }
+    // WE don't have to know which ES is present, just if one is. On Path change we need a new EventSource whatsoever.
+    // Resetting the eventSource will trigger the Connecting to the EventSource effect. This is why we can leave it out of
+    // the dependency array.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [path]);
 
   useEffect(() => {
     if (!es || postpone) {
