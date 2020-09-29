@@ -1,8 +1,7 @@
 import classnames from 'classnames';
 import React, { HTMLProps, PropsWithChildren } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { AppRoutes } from '../../../universal/config';
-import { getOtapEnvItem } from '../../../universal/config/env';
+import { AppRoutes, getOtapEnvItem } from '../../../universal/config';
 import { IconClose, IconHome, IconHomeCommercial } from '../../assets/icons';
 import { ReactComponent as Logo } from '../../assets/images/logo-amsterdam.svg';
 import Linkd from '../Button/Button';
