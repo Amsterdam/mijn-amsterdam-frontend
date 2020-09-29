@@ -1,53 +1,41 @@
 import {
-  loadServicesAfval,
-  loadServicesCMSContent,
-  loadServicesDirect,
-  loadServicesGenerated,
-  loadServicesMap,
-  loadServicesRelated,
   loadServicesTips,
+  loadServicesAfvalCommercial,
+  loadServicesMapCommercial,
 } from './index';
 import { Request } from 'express';
 import { getPassthroughRequestHeaders } from '../helpers/app';
+import { fetchHOMECommercial } from './home-commercial';
 
-export async function loadServicesAll(sessionID: SessionID, req: Request) {
-  const passthroughRequestHeaders = getPassthroughRequestHeaders(req);
+export async function loadServicesAllPrivateCommercial(
+  sessionID: SessionID,
+  req: Request
+) {
+  const passThroughHeaders = getPassthroughRequestHeaders(req);
 
-  const servicesDirectPromise = loadServicesDirect(
-    sessionID,
-    passthroughRequestHeaders
-  );
-  const servicesRelatePromise = loadServicesRelated(
-    sessionID,
-    passthroughRequestHeaders
-  );
-  const servicesMapPromise = loadServicesMap(
-    sessionID,
-    passthroughRequestHeaders
-  );
-  const servicesCMSContPromise = loadServicesCMSContent(
-    sessionID,
-    passthroughRequestHeaders
-  );
-  const servicesAfvalPromise = loadServicesAfval(
-    sessionID,
-    passthroughRequestHeaders
-  );
-  const servicesGeneratedPromise = loadServicesGenerated(
-    sessionID,
-    passthroughRequestHeaders
+  const serviceHome = fetchHOMECommercial(sessionID, passThroughHeaders).then(
+    HOME => {
+      return {
+        HOME,
+      };
+    }
   );
 
-  const servicesTipsPromise = loadServicesTips(sessionID, req);
+  const servicesAfval = loadServicesAfvalCommercial(
+    sessionID,
+    passThroughHeaders
+  );
+
+  const servicesMap = loadServicesMapCommercial(sessionID, passThroughHeaders);
+
+  req.query.profileType = 'private-commerical';
+  const servicesTips = loadServicesTips(sessionID, req);
 
   const serviceResults = await Promise.all([
-    servicesDirectPromise,
-    servicesRelatePromise,
-    servicesMapPromise,
-    servicesCMSContPromise,
-    servicesAfvalPromise,
-    servicesGeneratedPromise,
-    servicesTipsPromise,
+    serviceHome,
+    servicesAfval,
+    servicesMap,
+    servicesTips,
   ]);
 
   // Merge all service results into 1 response object

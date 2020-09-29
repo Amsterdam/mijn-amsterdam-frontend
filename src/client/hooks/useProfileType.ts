@@ -5,20 +5,6 @@ import { useSessionStorage } from './storage.hook';
 
 let initialProfileType = IS_COMMERCIAL_PATH_MATCH ? 'commercial' : 'private';
 
-// try {
-//   const sessionProfileType = JSON.parse(
-//     sessionStorage.getItem('profileType') || ''
-//   );
-//   if (sessionProfileType) {
-//     initialProfileType = sessionProfileType;
-//   }
-// } catch (error) {
-//   console.info(
-//     'Local storage not accessible, using initial profile type',
-//     initialProfileType
-//   );
-// }
-
 export const profileTypeState = atom<ProfileType>({
   key: 'profileType',
   default: initialProfileType as ProfileType,
