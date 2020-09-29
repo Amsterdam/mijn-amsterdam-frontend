@@ -24,6 +24,7 @@ export const FeatureToggle = {
   profilePageResidentCount: !IS_PRODUCTION,
   kvkActive: !IS_PRODUCTION,
   erfpachtMeldingenActive: !IS_AP,
+  residentCountActive: !IS_PRODUCTION,
 };
 
 export const DAYS_KEEP_RECENT = 28;
