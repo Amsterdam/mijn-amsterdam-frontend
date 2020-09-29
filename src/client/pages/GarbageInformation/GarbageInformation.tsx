@@ -22,6 +22,7 @@ import {
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './GarbageInformation.module.scss';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 
 interface PanelProps {
   children: ReactNode;
@@ -111,6 +112,7 @@ export default () => {
   );
 
   const [restafval, grofvuil] = AFVAL.content || [];
+  const profileType = useProfileTypeValue();
 
   return (
     <DetailPage className={styles.GarbageInformation}>
@@ -118,14 +120,33 @@ export default () => {
         {ChapterTitles.AFVAL}
       </PageHeading>
       <PageContent>
-        <p>
-          Bekijk waar u uw afval kwijt kunt en hoe u uw afval kunt scheiden.
-        </p>
-        <p>
-          <Linkd href={ExternalUrls.AFVAL} external={true}>
-            De regels voor afval en hergebruik
-          </Linkd>
-        </p>
+        {profileType === 'private' && (
+          <>
+            <p>
+              Bekijk waar u uw afval kwijt kunt en hoe u uw afval kunt scheiden.
+            </p>
+            <p>
+              <Linkd href={ExternalUrls.AFVAL} external={true}>
+                De regels voor afval en hergebruik
+              </Linkd>
+            </p>
+          </>
+        )}
+        {profileType !== 'private' && (
+          <>
+            <p>
+              Deze afvalregels gelden als u per week maxi­maal 9
+              vuil­nis­zak­ken met res­taf­val hebt. Hebt u meer afval? Dan moet
+              u een contract afsluiten met een erkende afvalinzamelaar of de
+              gemeente.
+            </p>
+            <p>
+              <Linkd href={ExternalUrls.AFVAL_COMMERCIAL} external={true}>
+                Regels bedrijfsafval in Amsterdam
+              </Linkd>
+            </p>
+          </>
+        )}
         {isError(AFVAL) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
@@ -139,11 +160,8 @@ export default () => {
           <p>{getFullAddress(BRP.content?.adres)}</p>
         </GarbagePanel>
       )}
-
       {!!grofvuil && garbagePointCollapsible('grofvuil', grofvuil)}
-
       {!!restafval && garbagePointCollapsible('restafval', restafval)}
-
       <SectionCollapsible
         id="garbageContainersOnMap"
         className={classnames(styles.InfoSection, styles.InfoSectionMap)}

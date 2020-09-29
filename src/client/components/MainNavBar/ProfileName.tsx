@@ -5,7 +5,7 @@ import { KVKSourceDataContent } from '../../../server/services/kvk';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { getFullName } from '../../../universal/helpers';
 import { BRPData } from '../../../universal/types';
-import { IconProfile, IconSuitcase } from '../../assets/icons';
+import { IconProfile, IconHomeCommercial } from '../../assets/icons';
 import { useProfileType } from '../../hooks/useProfileType';
 import { Button } from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
@@ -27,7 +27,7 @@ function CommercialProfileName({
   return (
     <Button
       onClick={onClick}
-      icon={IconSuitcase}
+      icon={IconHomeCommercial}
       variant="plain"
       lean={true}
       className={classnames(
