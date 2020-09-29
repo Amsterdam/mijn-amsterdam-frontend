@@ -76,18 +76,18 @@ export function getKvkAddress(kvkData: KVKData) {
     return null;
   }
 
-  if (vestigingen.length <= 2) {
+  if (vestigingen.length) {
     const vestiging = kvkData?.vestigingen.find(
       vestiging => !!vestiging.bezoekadres
     );
     address = vestiging?.bezoekadres || null;
-  }
 
-  if (!address) {
-    const vestiging = kvkData?.vestigingen.find(
-      vestiging => !!vestiging.postadres
-    );
-    address = vestiging?.postadres || null;
+    if (!address) {
+      const vestiging = kvkData?.vestigingen.find(
+        vestiging => !!vestiging.postadres
+      );
+      address = vestiging?.postadres || null;
+    }
   }
 
   return address;
