@@ -76,7 +76,10 @@ export default function Profile() {
 
   // Fetch the resident count data
   useEffect(() => {
-    if (BRP.content?.adres?._adresSleutel) {
+    if (
+      FeatureToggle.residentCountActive &&
+      BRP.content?.adres?._adresSleutel
+    ) {
       fetchResidentCount({
         url: BRP_RESIDENTS_API_URL,
         method: 'post',
