@@ -4,14 +4,9 @@ import {
   getPassthroughRequestHeaders,
   sendMessage,
 } from '../helpers/app';
-import {
-  loadServicesAfval,
-  loadServicesCMSContent,
-  loadServicesDirect,
-  loadServicesGenerated,
-  loadServicesMap,
-  loadServicesRelated,
-} from './index';
+import { fetchHOMECommercial } from './home-commercial';
+import { loadServicesAfvalCommercial } from './services-afval-commercial';
+import { loadServicesMapCommercial } from './services-map-commercial';
 import { loadServicesTips } from './tips';
 
 export async function loadServicesSSE(
@@ -29,50 +24,33 @@ export async function loadServicesSSE(
   const sessionID = res.locals.sessionID;
   const passThroughHeaders = getPassthroughRequestHeaders(req);
 
-  const servicesDirect = loadServicesDirect(sessionID, passThroughHeaders);
+  const serviceHome = fetchHOMECommercial(sessionID, passThroughHeaders).then(
+    HOME => {
+      return {
+        HOME,
+      };
+    }
+  );
 
-  addServiceResultHandler(res, servicesDirect, 'direct');
+  addServiceResultHandler(res, serviceHome, 'home');
 
-  const servicesRelated = loadServicesRelated(sessionID, passThroughHeaders);
-
-  addServiceResultHandler(res, servicesRelated, 'related');
-
-  const servicesAfval = loadServicesAfval(sessionID, passThroughHeaders);
+  const servicesAfval = loadServicesAfvalCommercial(
+    sessionID,
+    passThroughHeaders
+  );
 
   addServiceResultHandler(res, servicesAfval, 'afval');
 
-  const servicesMap = loadServicesMap(sessionID, passThroughHeaders);
+  const servicesMap = loadServicesMapCommercial(sessionID, passThroughHeaders);
 
   addServiceResultHandler(res, servicesMap, 'map');
-
-  const servicesCMSContent = loadServicesCMSContent(
-    sessionID,
-    passThroughHeaders
-  );
-
-  addServiceResultHandler(res, servicesCMSContent, 'cmscontent');
-
-  const servicesGenerated = loadServicesGenerated(
-    sessionID,
-    passThroughHeaders
-  );
-
-  addServiceResultHandler(res, servicesGenerated, 'generated');
 
   const servicesTips = loadServicesTips(sessionID, req);
 
   addServiceResultHandler(res, servicesTips, 'tips');
 
   // Wait for all services to have responded and then end the stream.
-  Promise.allSettled([
-    servicesDirect,
-    servicesRelated,
-    servicesAfval,
-    servicesMap,
-    servicesCMSContent,
-    servicesGenerated,
-    servicesTips,
-  ]).then(() => {
+  Promise.allSettled([servicesAfval, servicesMap, servicesTips]).then(() => {
     sendMessage(res, 'close', 'close', null);
     next();
   });
