@@ -116,10 +116,6 @@ export default function Profile() {
             moment geen Nederlandse nationaliteit hebt.
           </p>
         )}
-        <p>
-          Gegevens van een levenloos geboren kindje ziet u niet in Mijn
-          Amsterdam. U kunt die gegevens alleen inzien via MijnOverheid.
-        </p>
 
         {isLoading(BRP) && (
           <div className={styles.LoadingContent}>
@@ -249,6 +245,16 @@ export default function Profile() {
             panelData={brpProfileData.adresHistorisch}
           />
         )}
+      <PageContent>
+        <p className={styles.SuppressedParagraph}>
+          Gegevens van een levenloos geboren kindje ziet u niet in Mijn
+          Amsterdam. U kunt die gegevens alleen inzien via{' '}
+          <LinkdInline href="https://mijn.overheid.nl" external={true}>
+            Mijn Overheid
+          </LinkdInline>
+          .
+        </p>
+      </PageContent>
     </DetailPage>
   );
 }
