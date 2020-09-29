@@ -1,17 +1,17 @@
 import * as Sentry from '@sentry/node';
 import { NextFunction, Request, Response } from 'express';
+import npath from 'path';
+import uid from 'uid-safe';
 import { IS_AP } from '../../universal/config';
 import {
   BffEndpoints,
+  BffProfileTypePathSegment,
   BFF_BASE_PATH,
   DEV_USER_TYPE_HEADER,
   PUBLIC_BFF_ENDPOINTS,
   TMA_SAML_HEADER,
-  BffProfileTypePathSegment,
 } from '../config';
 import { clearSessionCache } from './source-api-request';
-import uid from 'uid-safe';
-import npath from 'path';
 
 export function isValidRequestPath(requestPath: string, path: string) {
   return (
