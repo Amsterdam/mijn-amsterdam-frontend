@@ -1,8 +1,8 @@
-import { requestData } from '../helpers';
-import { getApiConfig } from '../config';
 import { FeatureToggle } from '../../universal/config/app';
 import { apiSuccesResult } from '../../universal/helpers/api';
 import { Adres } from '../../universal/types';
+import { getApiConfig } from '../config';
+import { requestData } from '../helpers';
 
 type Rechtsvorm = string;
 
