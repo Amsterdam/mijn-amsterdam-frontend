@@ -204,7 +204,7 @@ export default function App() {
     '/siteimproveanalytics.com/js/siteanalyze_6004851.js',
     false,
     true,
-    IS_PRODUCTION
+    !IS_PRODUCTION
   );
 
   const sendToSentry = (error: Error, componentStack: string) => {
