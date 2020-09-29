@@ -11,7 +11,11 @@ import {
 } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
-import { getOtapEnvItem, IS_PRODUCTION } from '../universal/config/env';
+import {
+  getOtapEnvItem,
+  IS_PRODUCTION,
+  IS_ACCEPTANCE,
+} from '../universal/config/env';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
 import {
@@ -195,8 +199,17 @@ function AppLanding() {
 }
 
 export default function App() {
+  /**
+   * Visitor analytics and support
+   */
   useAnalytics(!!getOtapEnvItem('analyticsId'));
   useScript('/js/usabilla.js', false, true, IS_PRODUCTION);
+  useScript(
+    '//siteimproveanalytics.com/js/siteanalyze_6004851.js',
+    false,
+    true,
+    IS_ACCEPTANCE
+  );
 
   const sendToSentry = (error: Error, componentStack: string) => {
     Sentry.captureException(error, {
