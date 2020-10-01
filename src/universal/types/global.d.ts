@@ -17,6 +17,14 @@ type SessionID = string;
 
 type ResolvedType<T> = T extends PromiseLike<infer U> ? U : T;
 
+type ReturnTypeAsync<T extends (...args: any) => any> = T extends (
+  ...args: any
+) => Promise<infer R>
+  ? R
+  : T extends (...args: any) => infer R
+  ? R
+  : any;
+
 type NullableValues<T> = {
   [P in keyof T]: null;
 };

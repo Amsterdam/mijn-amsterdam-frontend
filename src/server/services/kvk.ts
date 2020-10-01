@@ -119,7 +119,7 @@ export function transformKVKData(responseData: KVKSourceData): KVKData | null {
 
 const SERVICE_NAME = 'KVK'; // Change to your service name
 
-export function fetchKVK(
+export async function fetchKVK(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {

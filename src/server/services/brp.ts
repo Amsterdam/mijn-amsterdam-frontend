@@ -172,7 +172,7 @@ export function transformBRPData(responseData: BRPDataFromSource) {
   return responseData as BRPData;
 }
 
-export function fetchBRP(
+export async function fetchBRP(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {

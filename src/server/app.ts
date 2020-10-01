@@ -11,19 +11,15 @@ import express, {
 } from 'express';
 import { ENV, getOtapEnvItem, IS_AP } from '../universal/config/env';
 import { apiErrorResult } from '../universal/helpers';
-import { BFF_BASE_PATH, BFF_PORT, BffProfileTypePathSegment } from './config';
+import { BFF_BASE_PATH, BFF_PORT } from './config';
 import {
   clearSession,
   exitEarly,
   secureValidation,
   sessionID,
 } from './helpers/app';
-import { routerCommercial } from './router-commercial';
-import { routerCommon } from './router-common';
-import { routerPrivate } from './router-private';
 import { routerDevelopment } from './mock-data/router-development';
-import { routerPrivateCommercial } from './router-private-commercial';
-import npath from 'path';
+import { router } from './router';
 
 const isDebug = ENV === 'development';
 
@@ -56,19 +52,7 @@ app.use(secureValidation);
 app.use(sessionID);
 
 // Mount the routers at the base path
-app.use(BFF_BASE_PATH, routerCommon);
-// Private profiles
-app.use(BFF_BASE_PATH, routerPrivate);
-// Private-Commerical profiles (ZZP / Freelance)
-app.use(
-  npath.join(BFF_BASE_PATH, BffProfileTypePathSegment.privateCommercial),
-  routerPrivateCommercial
-);
-// Commercial profiles
-app.use(
-  npath.join(BFF_BASE_PATH, BffProfileTypePathSegment.commercial),
-  routerCommercial
-);
+app.use(BFF_BASE_PATH, router);
 
 // Destroy the session as soon as the api requests are all processed
 app.use(clearSession);

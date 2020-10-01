@@ -1,19 +1,18 @@
 import { apiSuccesResult } from '../../universal/helpers';
-import { getSettledResult } from '../../universal/helpers/api';
+import { getSettledResult, ApiResponse } from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
 import { MyCase, MyNotification } from '../../universal/types';
 import { fetchBELASTINGGenerated } from './belasting';
 import { fetchBRPGenerated } from './brp';
+import { fetchERFPACHTGenerated } from './erfpacht';
 import { fetchFOCUSAanvragenGenerated } from './focus/focus-aanvragen';
 import { fetchFOCUSSpecificationsGenerated } from './focus/focus-specificaties';
 import { fetchFOCUSTozoGenerated } from './focus/focus-tozo';
 import { fetchMILIEUZONEGenerated } from './milieuzone';
 import { fetchVergunningenGenerated } from './vergunningen';
-import { ApiResult } from './state';
-import { fetchERFPACHTGenerated } from './erfpacht';
 
 export function getGeneratedItemsFromApiResults(
-  responses: Array<ApiResult<any>>
+  responses: Array<ApiResponse<any>>
 ) {
   const notifications: MyNotification[] = [];
   const cases: MyCase[] = [];
@@ -45,7 +44,7 @@ export function getGeneratedItemsFromApiResults(
   };
 }
 
-export async function loadServicesGenerated(
+export async function fetchGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
