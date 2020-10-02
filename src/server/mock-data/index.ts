@@ -1,5 +1,6 @@
 import { MyTip } from '../../universal/types';
 import { ApiUrls, DEV_USER_TYPE_HEADER } from '../config';
+import { datasetEndpoints } from '../services';
 
 import AFVAL from './json/afvalophaalgebieden.json';
 import AMSTERDAM_CONTENT_FOOTER from './json/amsterdam-nl-content-footer.json';
@@ -17,9 +18,6 @@ import MILIEUZONE from './json/milieuzone.json';
 import TIPS from './json/tips.json';
 import VERGUNNINGEN from './json/vergunningen.json';
 import WMO from './json/wmo.json';
-import KVK2 from './json/kvk-handelsregister2.json';
-import KVK1 from './json/kvk-handelsregister.json';
-import { datasetEndpoints } from '../services/services-map';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
   return new Promise((resolve) => {
@@ -202,7 +200,7 @@ export const mockDataConfig: MockDataConfig = {
         .filter((tip: MyTip) =>
           requestData?.optin ? tip.isPersonalized : !tip.isPersonalized
         )
-        .map(tip => {
+        .map((tip) => {
           if (requestData.profileType !== 'private') {
             return Object.assign(tip, {
               title: `[${config.params.audience}] ${tip.title}`,

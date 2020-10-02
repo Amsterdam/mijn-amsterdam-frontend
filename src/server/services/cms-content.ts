@@ -1,4 +1,4 @@
-import sanitizeHtml from 'sanitize-html';
+import sanitizeHtml, { IOptions } from 'sanitize-html';
 import {
   ApiResponse,
   apiSuccesResult,
@@ -27,10 +27,12 @@ const TAGS_ALLOWED = [
   'h4',
   'h5',
 ];
+
 const ATTR_ALLOWED = {
   a: ['href', 'name', 'target', 'rel'],
 };
-const DEFAULT_CONFIG = {
+
+const DEFAULT_CONFIG: IOptions = {
   allowedSchemes: ['https', 'tel', 'mailto', 'http'],
   disallowedTagsMode: 'discard',
 };
@@ -42,7 +44,7 @@ export function sanitizeCmsContent(
     allowedAttributes: ATTR_ALLOWED,
 
     // Filter out empty tags
-    exclusiveFilter: function(frame: any) {
+    exclusiveFilter: function (frame: any) {
       return !frame.text.trim();
     },
   }
@@ -114,8 +116,8 @@ function transformFooterResponse(responseData: any) {
           ? [verwijzing.extern]
           : [];
         const links = [...extern, ...intern]
-          .filter(item => !!item.link)
-          .map(item => {
+          .filter((item) => !!item.link)
+          .map((item) => {
             const { link } = item;
             return {
               to: link.url,

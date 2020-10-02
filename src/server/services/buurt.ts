@@ -1,4 +1,3 @@
-import { apiSuccesResult } from '../../universal/helpers';
 import {
   CITY_LAYERS_CONFIG,
   CITY_ZOOM,
@@ -8,14 +7,14 @@ import {
   HOOD_ZOOM,
   LOCATION_ZOOM,
 } from '../../universal/config';
-import { apiSuccesResult } from '../../universal/helpers';
-import { fetchHOME } from './home';
-import { requestData } from '../helpers/source-api-request';
-import { DataRequestConfig } from '../config';
+import {
+  apiSuccesResult,
+  capitalizeFirstLetter,
+} from '../../universal/helpers';
 import { apiErrorResult } from '../../universal/helpers/api';
-import { getFullAddress } from '../../universal/helpers/brp';
-import { response } from 'express';
-import { defaultDateFormat } from '../../universal/helpers/date';
+import { DataRequestConfig } from '../config';
+import { requestData } from '../helpers/source-api-request';
+import { fetchHOME } from './home';
 
 const MAP_URL =
   'https://data.amsterdam.nl/data/?modus=kaart&achtergrond=topo_rd_zw&embed=true';

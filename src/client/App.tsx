@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/browser';
 import classnames from 'classnames';
-import React, { useEffect } from 'react';
+import React from 'react';
 import ErrorBoundary from 'react-error-boundary';
 import {
   BrowserRouter,
@@ -13,8 +13,8 @@ import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
 import {
   getOtapEnvItem,
-  IS_PRODUCTION,
   IS_ACCEPTANCE,
+  IS_PRODUCTION,
 } from '../universal/config/env';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
@@ -25,6 +25,7 @@ import {
   MainHeader,
 } from './components';
 import { DefaultAutologoutDialogSettings } from './components/AutoLogoutDialog/AutoLogoutDialog';
+import { MyArea2Loader } from './components/MyArea/MyArea2loader';
 import {
   TMA_LOGIN_URL_DIGID_AFTER_REDIRECT,
   TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT,
@@ -61,11 +62,6 @@ import {
   ZorgDetail,
 } from './pages';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
-import { useAppState } from './hooks/useAppState';
-import { useTipsApi } from './hooks/api/useTipsApi';
-import { useSessionValue, useSessionApi } from './hooks/api/useSessionApi';
-import { useProfileTypeValue } from './hooks/useProfileType';
-import { MyArea2Loader } from './components/MyArea/MyArea2loader';
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();

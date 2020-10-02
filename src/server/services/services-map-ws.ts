@@ -1,6 +1,6 @@
 // or require in Node / Browserify
 import Supercluster from 'supercluster';
-import { loadServicesMapDatasets } from './services-map';
+import { loadServicesMapDatasets } from './buurt';
 
 let currentlyActiveDatasetIds: string[] = [];
 let dataStore: any;
