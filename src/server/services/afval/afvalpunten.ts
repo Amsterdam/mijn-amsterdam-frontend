@@ -11,6 +11,7 @@ import { sortAlpha } from '../../../universal/helpers/utils';
 import fs from 'fs';
 import path from 'path';
 import { sub } from 'date-fns';
+import cachedAfvalPunten from '../../mock-data/json/afvalpunten.json';
 
 export const cache = new memoryCache.Cache<string, any>();
 const AFVALPUNT_CACHE_HOURS_TTL = 24; // 1 day
