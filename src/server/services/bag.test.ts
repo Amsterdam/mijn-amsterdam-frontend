@@ -1,10 +1,9 @@
 import MockAdapter from 'axios-mock-adapter';
 import { jsonCopy } from '../../universal/helpers';
 import { ApiUrls } from '../config';
+import { axiosRequest } from '../helpers/source-api-request';
 import bagData from '../mock-data/json/bag.json';
 import { fetchBAG, formatBAGData } from './bag';
-import { axiosRequest } from '../helpers/source-api-request';
-import * as Sentry from '@sentry/node';
 
 describe('BAG service', () => {
   const axMock = new MockAdapter(axiosRequest);
@@ -23,6 +22,7 @@ describe('BAG service', () => {
 
   it('should extraxt a lat/lon object', () => {
     expect(formatBAGData(bagData as any)).toStrictEqual({
+      address: undefined,
       latlng: {
         lat: 52.372950494299445,
         lng: 4.834586581980725,
@@ -33,6 +33,7 @@ describe('BAG service', () => {
   it('should have a null lat/lon', () => {
     bagData.results = [];
     expect(formatBAGData(bagData as any)).toStrictEqual({
+      address: undefined,
       latlng: null,
     });
   });
@@ -48,6 +49,7 @@ describe('BAG service', () => {
     expect(rs).toStrictEqual({
       status: 'OK',
       content: {
+        address,
         latlng: {
           lat: 52.372950494299445,
           lng: 4.834586581980725,
