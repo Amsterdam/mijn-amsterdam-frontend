@@ -140,7 +140,6 @@ export function useAppState() {
         setAppState(appState => {
           const appStateUpdated = {
             ...appState,
-            // Should there be an
             ...transformedMessageData,
           };
           return appStateUpdated;
@@ -152,10 +151,8 @@ export function useAppState() {
     [setAppState]
   );
 
-  const path = BFFApiUrls.SERVICES_SSE;
-
   useSSE({
-    path,
+    path: BFFApiUrls.SERVICES_SSE,
     eventName: 'message',
     callback: onEvent,
     postpone: isFallbackServiceEnabled,
@@ -178,27 +175,4 @@ export function useAppStateGetter() {
 
 export function useAppStateSetter() {
   return useRecoilState(appStateAtom)[1];
-}
-
-const appStateNotificationsSelector = selectorFamily({
-  key: 'appStateNotifications',
-  get: (profileType: ProfileType) => ({ get }) => {
-    const appState = get(appStateAtom);
-
-    if (
-      profileType === 'private-commercial' &&
-      appState.NOTIFICATIONS.content
-    ) {
-      return appState.NOTIFICATIONS.content.filter(
-        notification => notification.chapter !== Chapters.BRP
-      );
-    }
-
-    return appState.NOTIFICATIONS.content || [];
-  },
-});
-
-export function useAppStateNotifications() {
-  const profileType = useProfileTypeValue();
-  return useRecoilValue(appStateNotificationsSelector(profileType));
 }

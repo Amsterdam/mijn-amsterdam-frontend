@@ -13,12 +13,10 @@ import {
   PageHeading,
 } from '../../components';
 import { usePhoneScreen } from '../../hooks/media.hook';
-import {
-  useAppStateGetter,
-  useAppStateNotifications,
-} from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
 import styles from './Dashboard.module.scss';
+import { useAppStateNotifications } from '../../hooks/useNotifications';
 
 const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
