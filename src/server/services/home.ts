@@ -62,10 +62,12 @@ export async function fetchHOME(
   profileType: ProfileType
 ) {
   switch (profileType) {
-    default:
-    case 'private':
-      return fetchPrivate(sessionID, passthroughRequestHeaders);
+    case 'private-commercial':
     case 'commercial':
       return fetchCommercial(sessionID, passthroughRequestHeaders);
+
+    case 'private':
+    default:
+      return fetchPrivate(sessionID, passthroughRequestHeaders);
   }
 }

@@ -33,11 +33,11 @@
         ],
         "bezoekadres": {
           "huisletter": null,
-          "huisnummer": "17",
+          "huisnummer": "16",
           "huisnummertoevoeging": null,
-          "postcode": "7623 DM",
-          "straatnaam": "Kamgras",
-          "woonplaatsNaam": "Borne"
+          "postcode": null,
+          "straatnaam": "Schakelstraat",
+          "woonplaatsNaam": "Amsterdam"
         },
         "datumAanvang": "1966-10-15",
         "datumEinde": "2020-06-01",
@@ -48,11 +48,11 @@
         ],
         "postadres": {
           "huisletter": null,
-          "huisnummer": "16",
+          "huisnummer": "17",
           "huisnummertoevoeging": "I",
-          "postcode": null,
-          "straatnaam": "Schakelstraat",
-          "woonplaatsNaam": "Amsterdam"
+          "postcode": "7623 DM",
+          "straatnaam": "Kamgras",
+          "woonplaatsNaam": "Borne"
         },
         "telefoonnummer": "+310209845632",
         "typeringVestiging": "Hoofdvestiging",

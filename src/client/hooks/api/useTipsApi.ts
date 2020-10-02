@@ -48,7 +48,7 @@ export function useTipsApi() {
       setAppState((appState: AppState) => {
         return Object.assign({}, appState, api.data);
       });
-    } else if (api.isDirty) {
+    } else if (api.isLoading) {
       setAppState((appState: AppState) => {
         if (appState.TIPS !== pristineData.TIPS) {
           return Object.assign({}, appState, pristineData);

@@ -110,6 +110,7 @@ export type ServiceID = keyof ServicesType;
 export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
 
 type PrivateServices = ServicesType;
+type PrivateCommercialServices = ServicesType;
 
 type CommercialServices = Pick<
   ServiceMap,
@@ -125,11 +126,6 @@ type CommercialServices = Pick<
   | 'KVK'
   | 'MILIEUZONE'
   | 'VERGUNNINGEN'
->;
-
-type PrivateCommercialServices = Pick<
-  ServiceMap,
-  'AFVAL' | 'AFVALPUNTEN' | 'BUURT' | 'HOME'
 >;
 
 type TipsServices = Pick<
@@ -173,7 +169,25 @@ export const servicesByProfileType: ServicesByProfileType = {
     VERGUNNINGEN,
     WMO,
   },
-  'private-commercial': { AFVAL, AFVALPUNTEN, BUURT, HOME },
+  'private-commercial': {
+    AFVAL,
+    AFVALPUNTEN,
+    BRP,
+    BELASTINGEN,
+    BUURT,
+    CMS_CONTENT,
+    ERFPACHT,
+    FOCUS_AANVRAGEN,
+    FOCUS_SPECIFICATIES,
+    FOCUS_TOZO,
+    NOTIFICATIONS,
+    CASES,
+    HOME,
+    KVK,
+    MILIEUZONE,
+    VERGUNNINGEN,
+    WMO,
+  },
   commercial: {
     AFVAL,
     AFVALPUNTEN,
@@ -211,14 +225,17 @@ function loadServices(
     | PrivateServices
     | CommercialServices
     | TipsServices
-    | PrivateCommercialServices
+    | PrivateCommercialServices,
+  filterIds: SessionID[] = []
 ) {
-  return Object.entries(serviceMap).map(([serviceID, fetchService]) => {
-    // Return service result as Object like { SERVICE_ID: result }
-    return (fetchService(sessionID, req) as Promise<any>).then(result => ({
-      [serviceID]: result,
-    }));
-  });
+  return Object.entries(serviceMap)
+    .filter(([serviceID]) => !filterIds.length || filterIds.includes(serviceID))
+    .map(([serviceID, fetchService]) => {
+      // Return service result as Object like { SERVICE_ID: result }
+      return (fetchService(sessionID, req) as Promise<any>).then(result => ({
+        [serviceID]: result,
+      }));
+    });
 }
 
 export async function loadServicesSSE(
@@ -228,11 +245,18 @@ export async function loadServicesSSE(
 ) {
   const sessionID = res.locals.sessionID;
   const profileType = getProfileType(req);
+  const requestedServiceIds = (queryParams(req).serviceIds ||
+    []) as ServiceID[];
 
   // Determine the services to be loaded for certain profile types
   const serviceMap = getServiceMap(profileType);
   const serviceIds = Object.keys(serviceMap);
-  const servicePromises = loadServices(sessionID, req, serviceMap);
+  const servicePromises = loadServices(
+    sessionID,
+    req,
+    serviceMap,
+    requestedServiceIds
+  );
 
   // Tell the client we respond with an event stream
   res.writeHead(200, {
