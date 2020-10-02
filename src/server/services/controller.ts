@@ -37,6 +37,10 @@ function callService<T>(fetchService: (...args: any) => Promise<T>) {
     fetchService(sessionID, getPassthroughRequestHeaders(req));
 }
 
+function getServiceMap(profileType: ProfileType) {
+  return servicesByProfileType[profileType];
+}
+
 /**
  * The service methods
  */
@@ -80,6 +84,7 @@ const NOTIFICATIONS = async (sessionID: SessionID, req: Request) =>
 const CASES = async (sessionID: SessionID, req: Request) =>
   (await fetchGenerated(sessionID, getPassthroughRequestHeaders(req))).CASES;
 
+// Store all services for type derivation
 const services = {
   BRP,
   CMS_CONTENT,
@@ -199,11 +204,7 @@ export const servicesTips: TipsServices = {
   WMO,
 };
 
-function getServiceMap(profileType: ProfileType) {
-  return servicesByProfileType[profileType];
-}
-
-export function loadServices(
+function loadServices(
   sessionID: SessionID,
   req: Request,
   serviceMap:
@@ -275,10 +276,7 @@ export async function loadServicesAll(req: Request, res: Response) {
   return Object.assign(serviceResults, tipsResult);
 }
 
-export async function loadServicesTipsRequestData(
-  sessionID: SessionID,
-  req: Request
-) {
+async function loadServicesTipsRequestData(sessionID: SessionID, req: Request) {
   const servicePromises = loadServices(sessionID, req, servicesTips);
   const requestData = (await Promise.allSettled(servicePromises)).reduce(
     (acc, result, index) => Object.assign(acc, getSettledResult(result)),
