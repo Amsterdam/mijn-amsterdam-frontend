@@ -36,7 +36,7 @@ describe('Garbage page', () => {
           .click();
       });
       it('Should expand the content', () => {
-        cy.get('[class*=SectionCollapsible_Title]')
+        cy.get('[class*=SectionCollapsible_TitleToggle]')
           .contains(h)
           .parent()
           .next()
