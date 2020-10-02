@@ -19,7 +19,7 @@ export function useTipsApi() {
   const isInitialMount = useRef(true);
   const { isOptIn } = useOptIn();
   const profileType = useProfileTypeValue();
-  const [api, fetchTips] = useDataApi<{ TIPS: ApiResponse<TIPSData> }>(
+  const [api, fetchTips] = useDataApi<{ TIPS: ApiResponse<TIPSData | null> }>(
     requestConfig,
     pristineData
   );
