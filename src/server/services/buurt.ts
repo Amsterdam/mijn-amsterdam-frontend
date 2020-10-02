@@ -1,13 +1,13 @@
-import { apiSuccesResult } from '../../universal/helpers';
 import {
+  CITY_LAYERS_CONFIG,
+  CITY_ZOOM,
   DEFAULT_LAT,
   DEFAULT_LNG,
-  LOCATION_ZOOM,
-  CITY_LAYERS_CONFIG,
   HOOD_LAYERS_CONFIG,
   HOOD_ZOOM,
-  CITY_ZOOM,
+  LOCATION_ZOOM,
 } from '../../universal/config';
+import { apiSuccesResult } from '../../universal/helpers';
 import { fetchHOME } from './home';
 
 const MAP_URL =
@@ -35,14 +35,17 @@ export function getEmbedUrl(latlng: LatLngObject | null) {
   return embed;
 }
 
-export async function loadServicesMap(
+export async function fetchBUURT(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  passthroughRequestHeaders: Record<string, string>,
+  profileType: ProfileType
 ) {
-  const HOME = await fetchHOME(sessionID, passthroughRequestHeaders);
-  return {
-    BUURT: apiSuccesResult({
-      embed: getEmbedUrl(HOME.content?.latlng || null),
-    }),
-  };
+  const HOME = await fetchHOME(
+    sessionID,
+    passthroughRequestHeaders,
+    profileType
+  );
+  return apiSuccesResult({
+    embed: getEmbedUrl(HOME.content?.latlng || null),
+  });
 }

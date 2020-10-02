@@ -11,7 +11,6 @@ import { sortAlpha } from '../../../universal/helpers/utils';
 import fs from 'fs';
 import path from 'path';
 import { sub } from 'date-fns';
-import cachedAfvalPunten from '../../mock-data/json/afvalpunten.json';
 
 export const cache = new memoryCache.Cache<string, any>();
 const AFVALPUNT_CACHE_HOURS_TTL = 24; // 1 day
@@ -183,15 +182,15 @@ async function scrapeAfvalpuntGeoLocations() {
   return scrapeResult.data.items;
 }
 
-export async function scrapeGarbageCenterData(center: LatLngObject | null) {
+export async function fetchAfvalpunten(center: LatLngObject | null) {
   const fileName = path.join(
     __dirname,
     '../../',
     'mock-data/json/afvalpunten.json'
   );
-  const cachedFileContents: AfvalpuntenResponseData | null = await import(
+  const cachedFileContents: AfvalpuntenResponseData | null = ((await import(
     fileName
-  );
+  )) as any).default;
 
   // Development and e2e testing will always serve cached file
   const isMockAdapterEnabled = !process.env.BFF_DISABLE_MOCK_ADAPTER;

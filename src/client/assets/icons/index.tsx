@@ -27,7 +27,7 @@ export { ReactComponent as IconMilieuzone } from './milieuzone.svg';
 export { ReactComponent as IconProfile } from './Profile.svg';
 export { ReactComponent as IconPassport } from './Passport.svg';
 export { ReactComponent as IconSearch } from './Search.svg';
-export { ReactComponent as IconSuitcase } from './Suitcase.svg';
+export { ReactComponent as IconHomeCommercial } from './home-commercial.svg';
 export { ReactComponent as IconTips } from './Tip.svg';
 export { ReactComponent as IconWonen } from './wonen.svg';
 export { ReactComponent as IconZorg } from './zorg.svg';

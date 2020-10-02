@@ -5,6 +5,7 @@ import {
 } from '../../universal/helpers';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import { Adres } from '../../universal/types';
 
 export interface BAGSourceData {
   results: Array<{ [key: string]: any; centroid: Centroid }>;
@@ -12,21 +13,26 @@ export interface BAGSourceData {
 
 export interface BAGData {
   latlng: LatLngObject | null;
+  address?: Adres | null;
 }
 
-export function formatBAGData(responseData: BAGSourceData): BAGData {
+export function formatBAGData(
+  responseData: BAGSourceData,
+  address?: Adres
+): BAGData {
   const centroid = !!responseData?.results?.length
     ? responseData.results[0].centroid
     : null;
   return {
     latlng: centroid ? toLatLng(centroid) : null,
+    address,
   };
 }
 
-export function fetchBAG(
+export async function fetchBAG(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
-  address: { straatnaam: string | null; huisnummer: string | null }
+  address: Adres
 ) {
   if (!address) {
     return apiErrorResult('Could not query BAG, no address supplied.', null);
@@ -37,7 +43,7 @@ export function fetchBAG(
   return requestData<BAGData>(
     getApiConfig('BAG', {
       params,
-      transformResponse: formatBAGData,
+      transformResponse: responseData => formatBAGData(responseData, address),
     }),
     sessionID,
     passthroughRequestHeaders

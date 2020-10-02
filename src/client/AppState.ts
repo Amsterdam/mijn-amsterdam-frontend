@@ -1,41 +1,20 @@
 import { createContext } from 'react';
-
 import {
-  loadServicesGenerated,
-  loadServicesDirect,
-  loadServicesRelated,
-  loadServicesMap,
-  loadServicesCMSContent,
-  loadServicesTips,
-} from '../server/services';
-import {
-  FEApiResponseData,
-  ApiResponse,
-  apiPristineResult,
-} from '../universal/helpers/api';
-import { loadServicesAfval } from '../server/services/services-afval';
-
-type GeneratedResponse = FEApiResponseData<typeof loadServicesGenerated>;
-type DirectResponse = FEApiResponseData<typeof loadServicesDirect>;
-type MapsResponse = FEApiResponseData<typeof loadServicesMap>;
-type RelatedResponse = FEApiResponseData<typeof loadServicesRelated>;
-type CMSContentResponse = FEApiResponseData<typeof loadServicesCMSContent>;
-type AfvalResponse = FEApiResponseData<typeof loadServicesAfval>;
-type TipsResponse = FEApiResponseData<typeof loadServicesTips>;
-
-type ApiState = GeneratedResponse &
-  DirectResponse &
-  MapsResponse &
-  RelatedResponse &
-  AfvalResponse &
-  CMSContentResponse &
-  TipsResponse;
+  ServiceID,
+  ServicesTips,
+  ServicesType,
+} from '../server/services/controller';
+import { apiPristineResult, ApiResponse } from '../universal/helpers/api';
 
 export type AppState = {
-  [key in keyof ApiState]: ApiResponse<ApiState[key]['content']>;
+  [key in ServiceID]: ApiResponse<
+    ReturnTypeAsync<ServicesType[key]>['content']
+  >; // TODO FIXXX!!!
+} & {
+  TIPS: ServicesTips['TIPS'] | ApiResponse<any>;
 };
 
-export const PRISTINE_APPSTATE = {
+export const PRISTINE_APPSTATE: AppState = {
   // Generated
   TIPS: apiPristineResult([]),
   NOTIFICATIONS: apiPristineResult([]),

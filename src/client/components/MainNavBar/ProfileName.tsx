@@ -5,7 +5,7 @@ import { KVKSourceDataContent } from '../../../server/services/kvk';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { getFullName } from '../../../universal/helpers';
 import { BRPData } from '../../../universal/types';
-import { IconProfile, IconSuitcase } from '../../assets/icons';
+import { IconHomeCommercial, IconProfile } from '../../assets/icons';
 import { useProfileType } from '../../hooks/useProfileType';
 import { Button } from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
@@ -27,7 +27,7 @@ function CommercialProfileName({
   return (
     <Button
       onClick={onClick}
-      icon={IconSuitcase}
+      icon={IconHomeCommercial}
       variant="plain"
       lean={true}
       className={classnames(
@@ -36,9 +36,7 @@ function CommercialProfileName({
         isActive && styles['ProfileLink--active']
       )}
     >
-      <span data-tutorial-item={tutorial}>
-        {company?.onderneming?.handelsnaam || 'Zakelijk'}
-      </span>
+      <span data-tutorial-item={tutorial}>Mijn onderneming</span>
     </Button>
   );
 }
