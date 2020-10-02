@@ -27,7 +27,6 @@ export default () => {
   const appState = useAppStateGetter();
   const { TIPS, NOTIFICATIONS, CASES, BUURT, HOME } = appState;
   const notifications = useAppStateNotifications();
-
   const tipItems = useMemo(() => {
     return TIPS.content?.slice(0, MAX_TIPS_VISIBLE) || [];
   }, [TIPS.content]);

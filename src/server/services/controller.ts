@@ -248,10 +248,10 @@ export async function loadServicesSSE(
   // Send service results to tips api for personalized tips
   const tipsPromise = loadServicesTipsRequestData(sessionID, req);
 
-  addServiceResultHandler(res, tipsPromise, 'tips');
+  addServiceResultHandler(res, tipsPromise, 'TIPS');
 
   // Close the connection when all services responded
-  Promise.allSettled(servicePromises).then(() => {
+  Promise.allSettled([...servicePromises, tipsPromise]).then(() => {
     sendMessage(res, 'close', 'close', null);
     next();
   });

@@ -60,7 +60,6 @@ function OptInPageContent({ children }: OptInPageContentProps) {
 
 export default () => {
   const { TIPS } = useAppStateGetter();
-
   return (
     <OverviewPage className={styles.MyTips}>
       <PageHeading isLoading={false} icon={<ChapterIcon />}>

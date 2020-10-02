@@ -1,4 +1,5 @@
 export * from './afval/afval';
+export * from './afval/afvalpunten';
 export * from './bag';
 export * from './belasting';
 export * from './brp';

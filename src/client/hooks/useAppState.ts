@@ -26,7 +26,7 @@ const fallbackServiceRequestOptions = {
 
 export const appStateAtom = atom<AppState>({
   key: 'appState',
-  default: PRISTINE_APPSTATE,
+  default: PRISTINE_APPSTATE as AppState,
 });
 
 interface useAppStateFallbackServiceProps {
@@ -63,11 +63,11 @@ export function useAppStateFallbackService({
   const fetchSauron = useCallback(() => {
     return fetchFallbackService({
       ...fallbackServiceRequestOptions,
-      url: BFFApiUrls[profileType].SERVICES_SAURON,
+      url: BFFApiUrls.SERVICES_SAURON,
       postpone: false,
       params: requestParams,
     });
-  }, [requestParams, profileType, fetchFallbackService]);
+  }, [requestParams, fetchFallbackService]);
 
   // If no EvenSource support or EventSource fails, the Fallback service endpoint is used for fetching all the data.
   useEffect(() => {
@@ -134,6 +134,7 @@ export function useAppState() {
   // The EventSource will only be used if we have EventSource support
   const onEvent = useCallback(
     (messageData: any) => {
+      console.log('on event', messageData);
       if (messageData && messageData !== SSE_ERROR_MESSAGE) {
         const transformedMessageData = transformAppState(messageData);
         setAppState(appState => {
@@ -151,9 +152,7 @@ export function useAppState() {
     [setAppState]
   );
 
-  const path = useMemo(() => {
-    return BFFApiUrls[profileType].SERVICES_SSE;
-  }, [profileType]);
+  const path = BFFApiUrls.SERVICES_SSE;
 
   useSSE({
     path,

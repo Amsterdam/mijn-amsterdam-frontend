@@ -4,12 +4,14 @@ import {
   ServicesTips,
   ServicesType,
 } from '../server/services/controller';
-import { apiPristineResult } from '../universal/helpers/api';
+import { apiPristineResult, ApiResponse } from '../universal/helpers/api';
 
 export type AppState = {
-  [key in ServiceID]: ReturnTypeAsync<ServicesType[key]>; // TODO FIXXX!!!
+  [key in ServiceID]: ApiResponse<
+    ReturnTypeAsync<ServicesType[key]>['content']
+  >; // TODO FIXXX!!!
 } & {
-  TIPS: ServicesTips['TIPS'];
+  TIPS: ServicesTips['TIPS'] | ApiResponse<any>;
 };
 
 export const PRISTINE_APPSTATE: AppState = {
