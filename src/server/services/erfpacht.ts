@@ -14,7 +14,7 @@ export interface ERFPACHTData {
 }
 
 interface ERFPACHTSourceDataContent {
-  status: boolean;
+  isKnown: boolean;
   meldingen: MyNotification[];
   tips: MyTip[];
 }
@@ -27,7 +27,7 @@ interface ERFPACHTSourceData {
 
 function transformERFPACHTNotifications(notifications?: MyNotification[]) {
   const notificationsTransformed = Array.isArray(notifications)
-    ? notifications.map((notification) => ({
+    ? notifications.map(notification => ({
         ...notification,
         chapter: Chapters.ERFPACHT,
       }))
@@ -36,25 +36,9 @@ function transformERFPACHTNotifications(notifications?: MyNotification[]) {
   return notificationsTransformed;
 }
 
-function transformERFPACHTData(
-  responseData: ERFPACHTSourceDataContent
-): ERFPACHTData {
-  const { status: isKnown, meldingen = [] } = responseData || {
-    status: false,
-    meldingen: [],
-  };
-
-  return {
-    isKnown,
-    notifications: transformERFPACHTNotifications(meldingen),
-  };
-}
-
-function transformERFPACHTDataWithNotifications(
-  responseData: ERFPACHTSourceData
-): ERFPACHTData {
-  const { status: isKnown, meldingen = [] } = responseData?.content || {
-    status: false,
+function transformERFPACHTData(responseData: ERFPACHTSourceData): ERFPACHTData {
+  const { isKnown, meldingen = [] } = responseData?.content || {
+    isKnown: false,
     meldingen: [],
   };
 
@@ -71,9 +55,7 @@ export async function fetchERFPACHT(
 ) {
   const response = await requestData<ERFPACHTData>(
     getApiConfig('ERFPACHT', {
-      transformResponse: FeatureToggle.erfpachtMeldingenActive
-        ? transformERFPACHTDataWithNotifications
-        : transformERFPACHTData,
+      transformResponse: transformERFPACHTData,
     }),
     sessionID,
     passthroughRequestHeaders
