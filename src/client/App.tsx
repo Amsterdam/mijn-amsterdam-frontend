@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/browser';
 import classnames from 'classnames';
 import React from 'react';
-import ErrorBoundary from 'react-error-boundary';
+import { ErrorBoundary } from 'react-error-boundary';
 import {
   BrowserRouter,
   Redirect,

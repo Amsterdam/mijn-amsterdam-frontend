@@ -1,12 +1,15 @@
 import classnames from 'classnames';
 import React, { HTMLProps, PropsWithChildren } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { getOtapEnvItem } from '../../../universal/config/env';
-import { IconHome } from '../../assets/icons';
+import { getFullAddress } from '../../../universal/helpers';
+import { Adres } from '../../../universal/types';
+import { IconHome, IconHomeCommercial } from '../../assets/icons';
+import { Colors } from '../../config/app';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 import Heading from '../Heading/Heading';
 import styles from './MyArea.module.scss';
-import MyArea2MapDashboard from './MyArea2Dashboard';
 import { MyArea2Loader } from './MyArea2loader';
 
 function MyAreaLoader() {

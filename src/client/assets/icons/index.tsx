@@ -17,6 +17,7 @@ export { ReactComponent as IconDownload } from './Download.svg';
 export { ReactComponent as IconExternalLink } from './External-Link.svg';
 export { ReactComponent as IconHomeSimple } from './home-simple.svg';
 export { ReactComponent as IconHome } from './home.svg';
+export { ReactComponent as IconHomeCommercial } from './home-commercial.svg';
 export { ReactComponent as IconGarbage } from './Huisvuilkalender.svg';
 export { ReactComponent as IconInfo } from './Info.svg';
 export { ReactComponent as IconInkomen } from './inkomen.svg';
