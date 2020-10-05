@@ -21,7 +21,10 @@ export default () => {
   const loginButton = useRef(null);
 
   useEffect(() => {
-    trackPageView('Landingspagina', document.location.href + 'landingspagina');
+    trackPageView(
+      'Landingspagina',
+      document.location.host + document.location.pathname + '/landingspagina'
+    );
   }, []);
 
   const [isRedirecting, setRedirecting] = useState(false);
