@@ -46,7 +46,7 @@ function OptInPageContent({ children }: OptInPageContentProps) {
           onClick={() => setModalIsOpen(true)}
           aria-expanded={modalIsOpen}
         >
-          {isOptIn ? 'Toon alle tips' : 'Toon persoonlijke tips'}
+          {isOptIn ? 'Toon alle tips' : 'Maak tips persoonlijk'}
         </Button>
       </p>
       <MyTipsOptInOutModal
@@ -60,7 +60,6 @@ function OptInPageContent({ children }: OptInPageContentProps) {
 
 export default () => {
   const { TIPS } = useAppStateGetter();
-
   return (
     <OverviewPage className={styles.MyTips}>
       <PageHeading isLoading={false} icon={<ChapterIcon />}>

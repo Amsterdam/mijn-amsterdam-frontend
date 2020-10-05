@@ -32,12 +32,16 @@ const BrpDocumentCallToAction: Record<
       'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/paspoort-aanvragen/',
     'europese identiteitskaart':
       'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/id-kaart-aanvragen/',
+    'nederlandse identiteitskaart':
+      'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/id-kaart-aanvragen/',
     rijbewijs: '',
   },
   willExpire: {
     paspoort:
       'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/paspoort-aanvragen/',
     'europese identiteitskaart':
+      'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/id-kaart-aanvragen/',
+    'nederlandse identiteitskaart':
       'https://www.amsterdam.nl/burgerzaken/paspoort-en-idkaart/id-kaart-aanvragen/',
     rijbewijs: '',
   },
@@ -168,7 +172,7 @@ export function transformBRPData(responseData: BRPDataFromSource) {
   return responseData as BRPData;
 }
 
-export function fetchBRP(
+export async function fetchBRP(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {

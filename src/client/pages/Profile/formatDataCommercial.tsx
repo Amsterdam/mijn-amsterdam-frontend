@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Aandeelhouder,
-  Adres,
   Bestuurder,
   KVKData,
   Onderneming,
@@ -10,7 +9,8 @@ import {
 } from '../../../server/services/kvk';
 import { defaultDateFormat, getFullAddress } from '../../../universal/helpers';
 import { LinkdInline } from '../../components/index';
-import { format, ProfileSection } from './formatData';
+import { format, ProfileSection } from './formatDataPrivate';
+import { Adres } from '../../../universal/types';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
@@ -29,55 +29,135 @@ type ProfileLabels<T> = { [key in keyof T]: ProfileLabelValueFormatter };
 
 const onderneming: ProfileLabels<Partial<Onderneming>> = {
   handelsnaam: 'Handelsnaam',
-  // overigeHandelsnamen: value =>
-  //     Array.isArray(value)
-  //       ? value.map(({ omschrijving }) => omschrijving).join(' ')
-  //       : null,
+  handelsnamen: [
+    'Overige handelsnamen',
+    (handelsnamen: string[]) =>
+      handelsnamen?.length ? (
+        <>
+          {handelsnamen.map(handelsnaam => (
+            <span key={handelsnaam}>
+              {handelsnaam}
+              <br />
+            </span>
+          ))}
+        </>
+      ) : null,
+  ],
   rechtsvorm: 'Rechtsvorm',
   hoofdactiviteit: 'Activiteiten',
-  // overigeActiviteiten: string[];
-  datumAanvang: ['Startdatum onderneming', value => defaultDateFormat(value)],
-  datumEinde: ['Startdatum onderneming', value => defaultDateFormat(value)],
-  aantalWerkzamePersonen: 'Aantal werkzame personen',
+  overigeActiviteiten: [
+    'Overige activiteiten',
+    (activiteiten: string[]) =>
+      activiteiten?.length ? (
+        <>
+          {activiteiten.map(activiteit => (
+            <span key={activiteit}>
+              {activiteit}
+              <br />
+            </span>
+          ))}
+        </>
+      ) : null,
+  ],
+  datumAanvang: [
+    'Startdatum onderneming',
+    value => (value ? defaultDateFormat(value) : null),
+  ],
+  datumEinde: [
+    'Startdatum onderneming',
+    value => (value ? defaultDateFormat(value) : null),
+  ],
 };
 
 const vestiging: ProfileLabels<Partial<Vestiging>> = {
-  vestigingsnummer: 'Vestigingsnummer',
-  handelsnaam: 'Handelsnaam',
-  // isHoofdvestiging: ['Is hoofdvestiging', value => value ? 'Ja' : 'Nee'],
+  vestigingsNummer: 'Vestigingsnummer',
+  handelsnamen: [
+    'Handelsnaam',
+    (handelsnamen: string[]) =>
+      handelsnamen?.length ? (
+        <>
+          {handelsnamen.map(handelsnaam => (
+            <span key={handelsnaam}>
+              {handelsnaam}
+              <br />
+            </span>
+          ))}
+        </>
+      ) : null,
+  ],
+  isHoofdvestiging: ['Hoofdvestiging', value => (value ? 'Ja' : null)],
 
-  bezoekadres: ['Bezoekadres', (value: Adres) => getFullAddress(value)],
-  postadres: ['Postadres', (value: Adres) => getFullAddress(value)],
+  bezoekadres: [
+    'Bezoekadres',
+    (adres: Adres) =>
+      adres
+        ? `${getFullAddress(adres)}\n${
+            adres.postcode ? adres.postcode + ', ' : ''
+          }${adres.woonplaatsNaam}`
+        : null,
+  ],
+  postadres: [
+    'Postadres',
+    (adres: Adres) =>
+      adres
+        ? `${getFullAddress(adres)}\n${
+            adres.postcode ? adres.postcode + ', ' : ''
+          }${adres.woonplaatsNaam}`
+        : null,
+  ],
   telefoonnummer: [
     'Telefoonnummer',
     (value: string) => <LinkdInline href={`tel:${value}`}>{value}</LinkdInline>,
   ],
 
   websites: [
-    'Internetadres',
-    (value: string[]) => (
-      <>
-        {value.map(url => (
-          <LinkdInline key={url} href={url} external={true}>
-            {url}
-          </LinkdInline>
-        ))}
-      </>
-    ),
+    'Website',
+    (urls: string[]) =>
+      urls?.length ? (
+        <>
+          {urls.map(url => (
+            <span key={url}>
+              <LinkdInline key={url} href={url} external={true}>
+                {url}
+              </LinkdInline>
+              <br />
+            </span>
+          ))}
+        </>
+      ) : null,
   ],
-  email: [
+  emailadres: [
     'E-mail',
-    (value: string) => (
-      <LinkdInline external={true} href={`mailto:${value}`}>
-        {value}
-      </LinkdInline>
-    ),
+    (value: string) =>
+      value ? (
+        <LinkdInline external={true} href={`mailto:${value}`}>
+          {value}
+        </LinkdInline>
+      ) : null,
   ],
   fax: 'Fax',
-  activiteiten: 'Activiteiten',
-  datumAanvang: ['Datum vestiging', value => defaultDateFormat(value)],
-  // datumEinde: string | nullstring,
-  aantalWerkzamePersonen: 'Werkzame personen',
+  activiteiten: [
+    'Activiteiten',
+    (activiteiten: string[]) =>
+      activiteiten?.length ? (
+        <>
+          {activiteiten.map(activiteit => (
+            <span key={activiteit}>
+              {activiteit}
+              <br />
+            </span>
+          ))}
+        </>
+      ) : null,
+  ],
+  datumAanvang: [
+    'Datum vestiging',
+    value => (value ? defaultDateFormat(value) : null),
+  ],
+  datumEinde: [
+    'Datum sluiting',
+    value => (value ? defaultDateFormat(value) : null),
+  ],
 };
 
 const rechtspersoon: ProfileLabels<Partial<Rechtspersoon> & {
@@ -87,7 +167,7 @@ const rechtspersoon: ProfileLabels<Partial<Rechtspersoon> & {
   kvkNummer: 'KVKnummer',
   bsn: 'BSN',
   statutaireNaam: 'Statutaire naam',
-  statutaireVestigingsplaats: 'Vestiging',
+  statutaireZetel: 'Statutaire zetel',
 };
 
 const aandeelhouder: ProfileLabels<Partial<Aandeelhouder>> = {

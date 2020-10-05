@@ -5,7 +5,7 @@ import { KVKSourceDataContent } from '../../../server/services/kvk';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { getFullName } from '../../../universal/helpers';
 import { BRPData } from '../../../universal/types';
-import { IconProfile, IconSuitcase } from '../../assets/icons';
+import { IconHomeCommercial, IconProfile } from '../../assets/icons';
 import { useProfileType } from '../../hooks/useProfileType';
 import { Button } from '../Button/Button';
 import LoadingContent from '../LoadingContent/LoadingContent';
@@ -15,19 +15,19 @@ interface CommercialProfileNameProps {
   company?: KVKSourceDataContent;
   onClick?: (event: any) => void;
   isActive: boolean;
-  hasTutorial: boolean;
+  tutorial: string;
 }
 
 function CommercialProfileName({
   company,
   onClick,
   isActive,
-  hasTutorial,
+  tutorial,
 }: CommercialProfileNameProps) {
   return (
     <Button
       onClick={onClick}
-      icon={IconSuitcase}
+      icon={IconHomeCommercial}
       variant="plain"
       lean={true}
       className={classnames(
@@ -36,15 +36,7 @@ function CommercialProfileName({
         isActive && styles['ProfileLink--active']
       )}
     >
-      <span
-        data-tutorial-item={
-          hasTutorial
-            ? 'Hier kunt u uw algemene bedrijfsgegevens uit het KVK handelsregister raadplegen;left-bottom'
-            : ''
-        }
-      >
-        {company?.onderneming?.handelsnaam || 'Zakelijk'}
-      </span>
+      <span data-tutorial-item={tutorial}>Mijn onderneming</span>
     </Button>
   );
 }
@@ -53,14 +45,14 @@ interface PrivateProfileNameProps {
   person?: BRPData['persoon'];
   onClick?: (event: any) => void;
   isActive: boolean;
-  hasTutorial: boolean;
+  tutorial: string;
 }
 
 function PrivateProfileName({
   person,
   onClick,
   isActive,
-  hasTutorial,
+  tutorial,
 }: PrivateProfileNameProps) {
   return (
     <Button
@@ -74,13 +66,7 @@ function PrivateProfileName({
         isActive && styles['ProfileLink--active']
       )}
     >
-      <span
-        data-tutorial-item={
-          hasTutorial
-            ? 'Hier ziet u uw persoonsgegevens, zoals uw adres en geboortedatum;right-bottom'
-            : ''
-        }
-      >
+      <span data-tutorial-item={tutorial}>
         {person?.opgemaakteNaam ? getFullName(person) : 'Mijn gegevens'}
       </span>
     </Button>
@@ -103,13 +89,21 @@ function PrivateCommercialProfileToggle({
       <PrivateProfileName
         person={person}
         isActive={profileType === 'private'}
-        hasTutorial={profileType === 'private'}
+        tutorial={
+          profileType === 'private-commercial'
+            ? 'Hier kunt u schakelen naar uw privé profiel;left-bottom'
+            : ''
+        }
         onClick={() => setProfileType('private')}
       />
       <CommercialProfileName
         company={company}
         isActive={profileType === 'private-commercial'}
-        hasTutorial={profileType === 'private-commercial'}
+        tutorial={
+          profileType === 'private'
+            ? 'Hier kunt u schakelen naar uw zakelijke profiel;right-bottom'
+            : ''
+        }
         onClick={() => setProfileType('private-commercial')}
       />
     </>
@@ -137,7 +131,9 @@ export function ProfileName({
           <PrivateProfileName
             person={person!}
             isActive={false}
-            hasTutorial={true}
+            tutorial={
+              'Hier ziet u uw persoonsgegevens, zoals uw adres en geboortedatum;left-bottom'
+            }
             onClick={() => history.push(AppRoutes.BRP)}
           />
         );
@@ -150,7 +146,9 @@ export function ProfileName({
           <CommercialProfileName
             company={company!}
             isActive={false}
-            hasTutorial={true}
+            tutorial={
+              'Hier ziet u uw bedrijfsgegevens uit het handelsregister van de KvK;left-bottom'
+            }
             onClick={() => history.push(AppRoutes.KVK)}
           />
         );

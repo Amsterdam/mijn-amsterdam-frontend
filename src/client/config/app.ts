@@ -34,6 +34,8 @@ export const ExternalUrls = {
     "https://www.amsterdam.nl/ondernemen/veelgestelde-vragen-corona-ondernemers/ondersteuning-zelfstandigen-zzp'ers/",
   WPI_TOZO2: '',
   AFVAL: 'https://www.amsterdam.nl/afval/',
+  AFVAL_COMMERCIAL:
+    'https://www.amsterdam.nl/veelgevraagd/?productid={3D70B70E-8A19-4A95-BE31-8743995BC545}',
   AFVAL_AFSPRAAK_MAKEN:
     'https://formulieren.amsterdam.nl/TriplEforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Grofvuil.aspx',
   AMSTERDAM_COMPLAINTS_FROM:

@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/browser';
 import classnames from 'classnames';
-import React, { useEffect } from 'react';
+import React from 'react';
 import ErrorBoundary from 'react-error-boundary';
 import {
   BrowserRouter,
@@ -9,8 +9,13 @@ import {
   Switch,
   useLocation,
 } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
-import { getOtapEnvItem, IS_PRODUCTION } from '../universal/config/env';
+import {
+  getOtapEnvItem,
+  IS_PRODUCTION,
+  IS_ACCEPTANCE,
+} from '../universal/config/env';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
 import {
@@ -24,17 +29,22 @@ import {
   TMA_LOGIN_URL_DIGID_AFTER_REDIRECT,
   TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT,
 } from './config/api';
+import { useAnalytics, usePageChange, useScript } from './hooks';
+import { useSessionApi, useSessionValue } from './hooks/api/useSessionApi';
+import { useTipsApi } from './hooks/api/useTipsApi';
+import { useAppState } from './hooks/useAppState';
 import {
-  useAnalytics,
-  useLocalStorage,
-  usePageChange,
-  useScript,
-} from './hooks';
+  useDeeplinkEntry,
+  useDeeplinkRedirect,
+} from './hooks/useDeeplink.hook';
+import { useProfileTypeValue } from './hooks/useProfileType';
 import {
+  Accessibility,
   Burgerzaken,
   BurgerzakenDetail,
   Dashboard,
   GarbageInformation,
+  GeneralInfo,
   Inkomen,
   InkomenDetail,
   InkomenDetailTozo,
@@ -45,33 +55,15 @@ import {
   MyTips,
   NotFound,
   Profile,
+  VergunningDetail,
+  Vergunningen,
   Zorg,
   ZorgDetail,
-  GeneralInfo,
-  Vergunningen,
-  VergunningDetail,
-  Accessibility,
 } from './pages';
-
-import { RecoilRoot } from 'recoil';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
-import { useAppState } from './hooks/useAppState';
-import { useTipsApi } from './hooks/api/useTipsApi';
-import { useSessionValue, useSessionApi } from './hooks/api/useSessionApi';
-import { useProfileTypeValue } from './hooks/useProfileType';
 
 function AppNotAuthenticated() {
-  const location = useLocation();
-
-  const [routeEntry, setRouteEntry] = useLocalStorage('RouteEntry', '');
-
-  if (
-    (!routeEntry || routeEntry === '/') &&
-    location.pathname !== '/' &&
-    isPrivateRoute(location.pathname)
-  ) {
-    setRouteEntry(location.pathname);
-  }
+  useDeeplinkEntry();
 
   return (
     <>
@@ -103,18 +95,10 @@ function AppAuthenticated() {
   const location = useLocation();
   const session = useSessionValue();
   const profileType = useProfileTypeValue();
-  const [routeEntry, setRouteEntry] = useLocalStorage('RouteEntry', '');
-
-  const redirectAfterLogin = routeEntry || AppRoutes.ROOT;
 
   usePageChange();
 
-  useEffect(() => {
-    if (routeEntry) {
-      setRouteEntry('');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const redirectAfterLogin = useDeeplinkRedirect();
 
   return location.pathname === AppRoutes.BUURT ? (
     <MyArea />
@@ -215,8 +199,17 @@ function AppLanding() {
 }
 
 export default function App() {
+  /**
+   * Visitor analytics and support
+   */
   useAnalytics(!!getOtapEnvItem('analyticsId'));
   useScript('/js/usabilla.js', false, true, IS_PRODUCTION);
+  useScript(
+    '//siteimproveanalytics.com/js/siteanalyze_6004851.js',
+    false,
+    true,
+    IS_ACCEPTANCE
+  );
 
   const sendToSentry = (error: Error, componentStack: string) => {
     Sentry.captureException(error, {

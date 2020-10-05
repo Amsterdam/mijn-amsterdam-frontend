@@ -3,6 +3,7 @@ import {
   ChapterTitles,
   Chapters,
   Chapter,
+  profileTypeChapterTitleAdjustment,
 } from '../../universal/config';
 
 import { ExternalUrls } from './app';
@@ -94,13 +95,28 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
 ];
 
 export const chaptersByProfileType: Record<ProfileType, ChapterMenuItem[]> = {
-  private: myChaptersMenuItems.filter((item) =>
-    item.profileTypes.includes('private')
-  ),
-  'private-commercial': myChaptersMenuItems.filter((item) =>
-    item.profileTypes.includes('private-commercial')
-  ),
-  commercial: myChaptersMenuItems.filter((item) =>
-    item.profileTypes.includes('commercial')
-  ),
+  private: myChaptersMenuItems
+    .filter(item => item.profileTypes.includes('private'))
+    .map(item => {
+      return {
+        ...item,
+        title: profileTypeChapterTitleAdjustment('private', item.id),
+      };
+    }),
+  'private-commercial': myChaptersMenuItems
+    .filter(item => item.profileTypes.includes('private-commercial'))
+    .map(item => {
+      return {
+        ...item,
+        title: profileTypeChapterTitleAdjustment('private-commercial', item.id),
+      };
+    }),
+  commercial: myChaptersMenuItems
+    .filter(item => item.profileTypes.includes('commercial'))
+    .map(item => {
+      return {
+        ...item,
+        title: profileTypeChapterTitleAdjustment('commercial', item.id),
+      };
+    }),
 };

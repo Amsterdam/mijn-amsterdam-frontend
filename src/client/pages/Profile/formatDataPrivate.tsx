@@ -11,7 +11,8 @@ import {
   Verbintenis,
   VerbintenisHistorisch,
 } from '../../../universal/types';
-import { LinkdInline } from '../../components/index';
+import { LinkdInline, LoadingContent } from '../../components/index';
+import { FeatureToggle } from '../../../universal/config';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
@@ -49,10 +50,14 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
   ],
   nationaliteiten: [
     'Nationaliteit',
-    value =>
-      Array.isArray(value)
-        ? value.map(({ omschrijving }) => omschrijving).join(' ')
-        : null,
+    (nationaliteiten: BRPData['persoon']['nationaliteiten']) =>
+      nationaliteiten?.some(
+        ({ omschrijving }) => omschrijving === 'Nederlandse'
+      ) ? (
+        'Nederlandse'
+      ) : (
+        <>&mdash;</>
+      ),
   ],
   indicatieGeheim: [
     'Geheimhouding',
@@ -77,6 +82,9 @@ const persoonSecundair: ProfileLabels<Partial<Persoon>> = {
 persoonSecundair.geboorteplaatsnaam = 'Geboorteplaats';
 persoonSecundair.geboortelandnaam = 'Geboorteland';
 
+delete persoonSecundair.nationaliteiten;
+delete persoonSecundair.indicatieGeheim;
+
 const adres: ProfileLabels<Partial<Adres>> = {
   straatnaam: [
     'Straat',
@@ -98,6 +106,18 @@ const adres: ProfileLabels<Partial<Adres>> = {
   begindatumVerblijf: [
     'Vanaf',
     value => (value ? defaultDateFormat(value) : 'Onbekend'),
+  ],
+  aantalBewoners: [
+    'Aantal bewoners',
+    value => {
+      return FeatureToggle.residentCountActive ? (
+        value === -1 ? (
+          <LoadingContent barConfig={[['2rem', '2rem', '0']]} />
+        ) : (
+          value
+        )
+      ) : null;
+    },
   ],
 };
 

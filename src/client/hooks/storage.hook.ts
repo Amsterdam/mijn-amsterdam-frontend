@@ -4,7 +4,7 @@ import { Unshaped } from '../../universal/types';
 
 interface LocalStorageHandler {
   value: string | null;
-  set: (newValue: string) => void;
+  set: (newValue: string | null) => void;
   remove: () => void;
 }
 
@@ -64,7 +64,10 @@ function useWindowStorage(
 
   const saveValueToLocalStorage = useCallback(
     (key: string, value: string | null) => {
-      return adapter.setItem(key, String(value));
+      if (value === null) {
+        return adapter.removeItem(key);
+      }
+      return adapter.setItem(key, value);
     },
     [adapter]
   );
@@ -91,16 +94,6 @@ function useWindowStorage(
     [key, saveValueToLocalStorage]
   );
 
-  const init = useCallback(() => {
-    const valueLoadedFromLocalStorage = getValueFromLocalStorage();
-    if (
-      valueLoadedFromLocalStorage === null ||
-      valueLoadedFromLocalStorage === 'null'
-    ) {
-      set(defaultValue);
-    }
-  }, [defaultValue, getValueFromLocalStorage, set]);
-
   function onStorageEvent(e: StorageEvent) {
     let storageAllowed = true;
     // Check if we can handle the storage event
@@ -126,10 +119,6 @@ function useWindowStorage(
     adapter.removeItem(key);
   }
 
-  useEffect(() => {
-    init();
-  }, [init]);
-
   let hasLocalStorage = false;
 
   try {
@@ -146,7 +135,7 @@ function useWindowStorage(
   });
 
   const handler: LocalStorageHandler = {
-    value,
+    value: value === null ? defaultValue : value,
     set,
     remove,
   };
@@ -161,14 +150,14 @@ export function useStorage(
 ) {
   let val = null;
   try {
-    val = JSON.stringify(initialValue);
+    val = initialValue !== null ? JSON.stringify(initialValue) : initialValue;
   } catch (e) {}
 
   const { value: item, set: setValue } = useWindowStorage(key, val, adapter);
   const setItem = useCallback(
-    (newValue: string) => {
+    (newValue: string | null) => {
       try {
-        setValue(JSON.stringify(newValue));
+        setValue(newValue !== null ? JSON.stringify(newValue) : null);
       } catch (e) {}
     },
     [setValue]
@@ -214,5 +203,11 @@ export function clearSessionStorage() {
 export function clearLocalStorage() {
   try {
     localStorage.clear();
+  } catch (error) {}
+}
+
+export function removeLocalStorageKey(key: string) {
+  try {
+    localStorage.removeItem(key);
   } catch (error) {}
 }

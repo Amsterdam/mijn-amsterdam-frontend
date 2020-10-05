@@ -1,0 +1,26 @@
+{
+  "content": {
+    "isKnown": true,
+    "meldingen": [
+      {
+        "title": "Kwesi is contactpersoon geworden voor E17uu/12",
+        "description": "Kwesi is contactpersoon geworden voor E17uu/12",
+        "datePublished": "2020-08-04",
+        "link": {
+          "title": "Kwesi is contactpersoon geworden voor E17uu/12",
+          "to": "/page/groundleases/detail?id=E1xx/1xx"
+        }
+      },
+      {
+        "title": "Nieuwe factuur met nummer 20102410",
+        "description": "Nieuwe factuur met nummer 20102410",
+        "datePublished": "2020-06-17",
+        "link": {
+          "title": "Nieuwe factuur met nummer 20102410",
+          "to": "/page/groundleases/detail?id=E1xx/1xx"
+        }
+      }
+    ]
+  },
+  "status": "OK"
+}

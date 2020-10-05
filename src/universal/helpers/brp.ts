@@ -39,3 +39,15 @@ export function isMokum(
 ) {
   return !!brpContent?.persoon?.mokum || !!brpContent?.mokum;
 }
+
+export function hasDutchAndOtherNationalities(
+  brpContent: {
+    persoon: { nationaliteiten: Array<{ omschrijving: string }> | null };
+  } | null
+) {
+  const nationaliteiten = brpContent?.persoon?.nationaliteiten || [];
+  return (
+    nationaliteiten.length > 1 &&
+    nationaliteiten.some(({ omschrijving }) => omschrijving === 'Nederlandse')
+  );
+}

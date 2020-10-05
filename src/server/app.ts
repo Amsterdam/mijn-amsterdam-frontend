@@ -18,10 +18,8 @@ import {
   secureValidation,
   sessionID,
 } from './helpers/app';
-import { routerCommercial } from './router-commercial';
-import { routerCommon } from './router-common';
-import { routerPrivate } from './router-private';
 import { routerDevelopment } from './mock-data/router-development';
+import { router } from './router';
 
 const isDebug = ENV === 'development';
 
@@ -54,11 +52,7 @@ app.use(secureValidation);
 app.use(sessionID);
 
 // Mount the routers at the base path
-app.use(BFF_BASE_PATH, routerCommon);
-// Private profiles
-app.use(BFF_BASE_PATH, routerPrivate);
-// Commercial profiles
-app.use(BFF_BASE_PATH + '/commercial', routerCommercial);
+app.use(BFF_BASE_PATH, router);
 
 // Destroy the session as soon as the api requests are all processed
 app.use(clearSession);

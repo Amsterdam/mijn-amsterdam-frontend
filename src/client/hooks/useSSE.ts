@@ -10,7 +10,7 @@ interface useSSEProps {
   eventName: string;
   callback: (message: any) => void;
   postpone: boolean;
-  requestParams?: Record<string, string>;
+  requestParams?: Record<string, string | string[]>;
 }
 
 export function useSSE({
@@ -22,35 +22,24 @@ export function useSSE({
 }: useSSEProps) {
   const [es, setEventSource] = useState<EventSource | null>(null);
 
-  const connect = useCallback(() => {
+  const connect = useCallback((path, requestParams) => {
     const es = new EventSource(
       path + (requestParams ? '?' + new URLSearchParams(requestParams) : '')
     );
     connectionCounter += 1;
     console.info('[SSE] Connect ', connectionCounter);
     setEventSource(es);
-  }, [path, requestParams]);
+  }, []);
 
   // Connecting to the EventSource.
   useEffect(() => {
-    if (!es && !postpone && connectionCounter !== MAX_RETRY_COUNT) {
-      connect();
+    if (!postpone && connectionCounter !== MAX_RETRY_COUNT) {
+      connect(path, requestParams);
     }
-  }, [es, connect, postpone]);
-
-  // TODO: Uncomment this effect if we need explicit data stream for dynamic profile switch
-  // useEffect(() => {
-  //   if (es) {
-  //     setEventSource(null);
-  //   }
-  //   // WE don't have to know which ES is present, just if one is. On Path change we need a new EventSource whatsoever.
-  //   // Resetting the eventSource will trigger the Connecting to the EventSource effect. This is why we can leave it out of
-  //   // the dependency array.
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [path]);
+  }, [path, connect, postpone, requestParams]);
 
   useEffect(() => {
-    if (!es || postpone) {
+    if (!es) {
       return;
     }
 
@@ -61,7 +50,7 @@ export function useSSE({
 
       setTimeout(() => {
         if (connectionCounter !== MAX_RETRY_COUNT) {
-          connect();
+          connect(path, requestParams);
         }
       }, WAIT_MS_BEFORE_RETRY);
 
@@ -111,5 +100,6 @@ export function useSSE({
       es.removeEventListener('close', closeEventSource);
       es.removeEventListener(eventName, onMessageEvent);
     };
-  }, [eventName, es, callback, connect, postpone]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [es]);
 }

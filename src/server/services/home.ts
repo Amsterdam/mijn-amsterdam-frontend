@@ -1,8 +1,9 @@
 import { apiDependencyError, isMokum } from '../../universal/helpers';
-import { apiSuccesResult } from '../../universal/helpers/api';
+import { apiErrorResult, apiSuccesResult } from '../../universal/helpers/api';
 import { fetchBAG, fetchBRP } from './index';
+import { fetchKVK, getKvkAddress } from './kvk';
 
-export async function fetchHOME(
+async function fetchPrivate(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
@@ -19,10 +20,54 @@ export async function fetchHOME(
   } else if (BRP.status === 'OK' && !isMokum(BRP.content)) {
     HOME = apiSuccesResult({
       latlng: null,
+      address: null,
     });
   } else {
     HOME = apiDependencyError({ BRP });
   }
 
   return HOME;
+}
+
+async function fetchCommercial(
+  sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>
+) {
+  const KVK = await fetchKVK(sessionID, passthroughRequestHeaders);
+
+  let HOME;
+
+  if (KVK.status === 'OK' && isMokum(KVK.content)) {
+    const address = KVK.content ? getKvkAddress(KVK.content) : null;
+    if (address) {
+      HOME = await fetchBAG(sessionID, passthroughRequestHeaders, address);
+    } else {
+      HOME = apiErrorResult('Could not query BAG: address missing.', null);
+    }
+  } else if (KVK.status === 'OK' && !isMokum(KVK.content)) {
+    HOME = apiSuccesResult({
+      latlng: null,
+      address: null,
+    });
+  } else {
+    HOME = apiDependencyError({ KVK });
+  }
+
+  return HOME;
+}
+
+export async function fetchHOME(
+  sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>,
+  profileType: ProfileType
+) {
+  switch (profileType) {
+    case 'private-commercial':
+    case 'commercial':
+      return fetchCommercial(sessionID, passthroughRequestHeaders);
+
+    case 'private':
+    default:
+      return fetchPrivate(sessionID, passthroughRequestHeaders);
+  }
 }

@@ -64,7 +64,7 @@ const Tip = ({ tip }: TipProps) => {
             <>
               {isFlipped && (
                 <div className={styles.TipFlip}>
-                  {tip.reason.map(reason => (
+                  {tip.reason.map((reason) => (
                     <span key={reason}>{reason}</span>
                   ))}
                 </div>
@@ -141,7 +141,6 @@ function TipsOptInHeader({ showTipsPageLink }: TipsOptInHeaderProps) {
     <>
       <div className={styles.HeaderBar}>
         <Heading size="large">Mijn tips</Heading>
-        {showTipsPageLink && <Linkd href={AppRoutes.TIPS}>Mijn tips</Linkd>}
         <Button
           lean={true}
           variant="plain"
@@ -150,8 +149,9 @@ function TipsOptInHeader({ showTipsPageLink }: TipsOptInHeaderProps) {
           icon={IconChevronRight}
           aria-expanded={modalIsOpen}
         >
-          {isOptIn ? 'Toon alle tips' : 'Toon persoonlijke tips'}
+          {isOptIn ? 'Toon alle tips' : 'Maak tips persoonlijk'}
         </Button>
+        {showTipsPageLink && <Linkd href={AppRoutes.TIPS}>Al mijn tips</Linkd>}
       </div>
       <MyTipsOptInOutModal
         isOpen={modalIsOpen}

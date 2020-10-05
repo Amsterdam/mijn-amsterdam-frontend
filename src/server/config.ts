@@ -114,7 +114,7 @@ export const ApiConfig: ApiDataRequestConfig = {
     url: `${BFF_DATAPUNT_API_BASE_URL}/afvalophaalgebieden/search/`,
   },
   KVK: {
-    url: `${BFF_MS_API_BASE_URL}/kvk/handelsregister`,
+    url: `${BFF_MS_API_BASE_URL}/brp/hr`,
   },
 };
 
@@ -128,6 +128,12 @@ export const ApiUrls = Object.entries(ApiConfig).reduce(
 export function getApiConfig(name: SourceApiKey, config?: DataRequestConfig) {
   return Object.assign(ApiConfig[name] || {}, config || {});
 }
+
+export const BffProfileTypePathSegment = {
+  private: '/',
+  privateCommercial: '/private-commercial',
+  commercial: '/commercial',
+};
 
 export const BffEndpoints = {
   SERVICES_TIPS: `/services/tips`,

@@ -1,33 +1,27 @@
-import { requestData } from '../helpers';
+import { FeatureToggle } from '../../universal/config/app';
+import { apiSuccesResult } from '../../universal/helpers/api';
+import { Adres } from '../../universal/types';
 import { getApiConfig } from '../config';
-
-export interface Adres {
-  straatnaam: string;
-  postcode: string;
-  woonplaatsnaam: string;
-  huisnummer: string;
-  huisnummertoevoeging: string | null;
-  huisletter: string | null;
-}
+import { requestData } from '../helpers';
 
 type Rechtsvorm = string;
 
 export interface Onderneming {
-  handelsnaam: string;
-  overigeHandelsnamen: string[];
+  handelsnaam: string | null;
+  handelsnamen: string[] | null;
   rechtsvorm: Rechtsvorm;
   hoofdactiviteit: string;
-  overigeActiviteiten: string[];
+  overigeActiviteiten: string[] | null;
   datumAanvang: string;
   datumEinde: string | null;
-  aantalWerkzamePersonen: number;
 }
 
 export interface Rechtspersoon {
-  rsin: string;
+  rsin?: string;
+  bsn?: string;
   kvkNummer: string;
   statutaireNaam: string;
-  statutaireVestigingsplaats: string;
+  statutaireZetel: string;
 }
 
 export interface Aandeelhouder {
@@ -44,17 +38,17 @@ export interface Bestuurder {
 }
 
 export interface Vestiging {
-  vestigingsnummer: string;
-  handelsnaam: string;
+  vestigingsNummer: string;
+  handelsnamen: string[];
+  typeringVestiging: string;
   isHoofdvestiging: boolean;
-  aantalWerkzamePersonen: string | null;
   bezoekadres: Adres | null;
   postadres: Adres | null;
   telefoonnummer: string | null;
   websites: string[] | null;
   fax: string | null;
-  email: string | null;
-  activiteiten: string;
+  emailadres: string | null;
+  activiteiten: string[];
   datumAanvang: string | null;
   datumEinde: string | null;
 }
@@ -74,22 +68,69 @@ export interface KVKSourceData {
 
 export interface KVKData extends KVKSourceDataContent {}
 
-export function transformKVKData(responseData: KVKSourceData): KVKData {
+export function getKvkAddress(kvkData: KVKData) {
+  let address: Adres | null = null;
+  const vestigingen = kvkData?.vestigingen;
+
+  if (!vestigingen?.length) {
+    return null;
+  }
+
+  if (vestigingen.length) {
+    const vestiging = kvkData?.vestigingen.find(
+      vestiging => !!vestiging.bezoekadres
+    );
+    address = vestiging?.bezoekadres || null;
+
+    if (!address) {
+      const vestiging = kvkData?.vestigingen.find(
+        vestiging => !!vestiging.postadres
+      );
+      address = vestiging?.postadres || null;
+    }
+  }
+
+  return address;
+}
+
+export function transformKVKData(responseData: KVKSourceData): KVKData | null {
+  if (
+    typeof responseData.content !== 'object' ||
+    Array.isArray(responseData.content) ||
+    responseData.content === null
+  ) {
+    return null;
+  }
+  if (responseData.content.onderneming?.handelsnamen) {
+    responseData.content.onderneming.handelsnaam =
+      responseData.content.onderneming?.handelsnamen.pop() || null;
+  }
+  if (responseData.content.vestigingen) {
+    responseData.content.vestigingen = responseData.content.vestigingen.map(
+      vestiging => {
+        return Object.assign(vestiging, {
+          isHoofdvestiging: vestiging.typeringVestiging === 'Hoofdvestiging',
+        });
+      }
+    );
+  }
   return responseData.content;
 }
 
 const SERVICE_NAME = 'KVK'; // Change to your service name
 
-export function fetchKVK(
+export async function fetchKVK(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
-  kvkNummer?: string
+  passthroughRequestHeaders: Record<string, string>
 ) {
-  return requestData<KVKData>(
-    getApiConfig(SERVICE_NAME, {
-      transformResponse: transformKVKData,
-    }),
-    sessionID,
-    passthroughRequestHeaders
-  );
+  if (FeatureToggle.kvkActive) {
+    return requestData<KVKData>(
+      getApiConfig(SERVICE_NAME, {
+        transformResponse: transformKVKData,
+      }),
+      sessionID,
+      passthroughRequestHeaders
+    );
+  }
+  return apiSuccesResult(null);
 }

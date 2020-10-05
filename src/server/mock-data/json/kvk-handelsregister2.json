@@ -1,61 +1,132 @@
 {
   "content": {
+    "aandeelhouders": [],
+    "bestuurders": [],
     "mokum": true,
     "onderneming": {
-      "handelsnaam": "Take out Thai food B.V.",
-      "overigeHandelsnamen": [],
-      "rechtsvorm": "BV",
-      "hoofdactiviteit": "Maaltijden verkoop en levering aan huis",
-      "overigeActiviteiten": [],
-      "datumAanvang": "2004-06-14",
+      "datumAanvang": null,
       "datumEinde": null,
-      "aantalWerkzamePersonen": 4
+      "handelsnamen": [
+        "Ballonenverkoop B.V.",
+        "Feestwinkel"
+      ],
+      "hoofdactiviteit": "Detailhandel via internet in kleding en mode-artikelen",
+      "overigeActiviteiten": [
+        "Elektrotechnische bouwinstallatie"
+      ],
+      "rechtsvorm": "BeslotenVennootschap"
     },
     "rechtspersonen": [
       {
-        "rsin": "123123123",
-        "kvkNummer": "098098",
-        "statutaireNaam": "Rechtspersoontje",
-        "statutaireVestigingsplaats": "Amsterdam"
+        "bsn": null,
+        "kvkNummer": "90006151",
+        "rsin": "999999999",
+        "statutaireNaam": "Ballonenverkoop B.V.",
+        "statutaireZetel": "Amsterdam"
       }
     ],
     "vestigingen": [
       {
-        "vestigingsnummer": "1505",
-        "handelsnaam": "Take out Thai food B.V.",
-        "isHoofdvestiging": true,
-        "aantalWerkzamePersonen": 4,
+        "activiteiten": [
+          "Geestelijke gezondheids- en verslavingszorg met overnachting",
+          "Elektrotechnische bouwinstallatie"
+        ],
         "bezoekadres": {
-          "straatnaam": "Kloveniersburgwal",
-          "postcode": "1012 DH",
-          "woonplaatsnaam": "Amsterdam",
-          "huisnummer": "16",
-          "huisnummertoevoeging": "II",
-          "huisletter": null
+          "huisletter": null,
+          "huisnummer": "66",
+          "huisnummertoevoeging": null,
+          "postcode": "1076 DE",
+          "straatnaam": "Laan der Hesperiden",
+          "woonplaatsNaam": "Amsterdam"
         },
-        "postadres": null,
-        "telefoonnummer": "0612345600",
-        "websites": ["https://www.takeoutthaifood.nl"],
-        "email": "info@takeoutthaifood.nl",
-        "fax": "08890876543",
-        "activiteiten": "Maaltijdbereiding",
-        "datumAanvang": "2011-08-09",
-        "datumEinde": null
-      }
-    ],
-    "aandeelhouders": [
+        "datumAanvang": "2020-01-01",
+        "datumEinde": null,
+        "emailadres": "info@electrotechniek.amsterdam.nl",
+        "faxnummer": "+310204107999",
+        "handelsnamen": [
+          "Ballonenverkoop B.V."
+        ],
+        "postadres": {
+          "huisletter": null,
+          "huisnummer": "66",
+          "huisnummertoevoeging": null,
+          "postcode": null,
+          "straatnaam": "Laan der Hesperiden",
+          "woonplaatsNaam": "Amsterdam"
+        },
+        "telefoonnummer": "+310209991362",
+        "typeringVestiging": "Hoofdvestiging",
+        "vestigingsNummer": "990000996064",
+        "websites": [
+          "www.electrotechniek.amsterdam.nl"
+        ]
+      },
       {
-        "opgemaakteNaam": "Jack van den Groenen",
-        "geboortedatum": "1969-06-23",
-        "bevoegdheid": "Enig aandeelhouder"
-      }
-    ],
-    "bestuurders": [
+        "activiteiten": [
+          "Winkels in boeken"
+        ],
+        "bezoekadres": {
+          "huisletter": null,
+          "huisnummer": "18",
+          "huisnummertoevoeging": null,
+          "postcode": "1114 BD",
+          "straatnaam": "Borchlandweg",
+          "woonplaatsNaam": "Amsterdam-Duivendrecht"
+        },
+        "datumAanvang": "2020-05-01",
+        "datumEinde": null,
+        "emailadres": "info@feestwinkel.nl",
+        "faxnummer": "+310204107765",
+        "handelsnamen": [
+          "Ballonenverkoop B.V.",
+          "Feestwinkel"
+        ],
+        "postadres": {
+          "huisletter": null,
+          "huisnummer": "18",
+          "huisnummertoevoeging": null,
+          "postcode": null,
+          "straatnaam": "Borchlandweg",
+          "woonplaatsNaam": "Amsterdam-Duivendrecht"
+        },
+        "telefoonnummer": "+310208451362",
+        "typeringVestiging": "Nevenvestiging",
+        "vestigingsNummer": "990000996080",
+        "websites": [
+          "www.feestwinkel.nl"
+        ]
+      },
       {
-        "opgemaakteNaam": "Vera de Vries",
-        "geboortedatum": "1974-04-16",
-        "functietitel": "CFO",
-        "bevoegdheid": "Geen idee"
+        "activiteiten": [
+          "Detailhandel via internet in kleding en mode-artikelen"
+        ],
+        "bezoekadres": {
+          "huisletter": null,
+          "huisnummer": "590",
+          "huisnummertoevoeging": null,
+          "postcode": "1101 DS",
+          "straatnaam": "Arena boulevard",
+          "woonplaatsNaam": "Amsterdam"
+        },
+        "datumAanvang": "2020-05-01",
+        "datumEinde": null,
+        "emailadres": null,
+        "faxnummer": null,
+        "handelsnamen": [
+          "Ballonenverkoop B.V."
+        ],
+        "postadres": {
+          "huisletter": null,
+          "huisnummer": "590",
+          "huisnummertoevoeging": null,
+          "postcode": null,
+          "straatnaam": "Arena boulevard",
+          "woonplaatsNaam": "Amsterdam"
+        },
+        "telefoonnummer": "+310205641954",
+        "typeringVestiging": "Nevenvestiging",
+        "vestigingsNummer": "990000996072",
+        "websites": []
       }
     ]
   },

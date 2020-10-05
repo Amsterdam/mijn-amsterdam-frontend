@@ -9,11 +9,9 @@ import {
   PageHeading,
   Pagination,
 } from '../../components';
-import {
-  useAppStateGetter,
-  useAppStateNotifications,
-} from '../../hooks/useAppState';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './MyNotifications.module.scss';
+import { useAppStateNotifications } from '../../hooks/useNotifications';
 
 const PAGE_SIZE = 10;
 const INITIAL_INDEX = [0, PAGE_SIZE - 1];

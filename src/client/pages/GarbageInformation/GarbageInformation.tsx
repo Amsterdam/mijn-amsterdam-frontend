@@ -1,6 +1,9 @@
 import classnames from 'classnames';
 import React, { ReactNode } from 'react';
-import { ChapterTitles } from '../../../universal/config';
+import {
+  Chapters,
+  profileTypeChapterTitleAdjustment,
+} from '../../../universal/config';
 import { getFullAddress, isError, isLoading } from '../../../universal/helpers';
 import {
   GarbageCenter,
@@ -21,6 +24,7 @@ import {
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 import styles from './GarbageInformation.module.scss';
 
 interface PanelProps {
@@ -64,7 +68,7 @@ function GarbageCenterItem({ item }: { item: GarbageCenter }) {
 }
 
 export default () => {
-  const { BRP, AFVAL, AFVALPUNTEN, HOME } = useAppStateGetter();
+  const { AFVAL, AFVALPUNTEN, HOME } = useAppStateGetter();
   let garbageContainersMapUrl = '';
 
   if (HOME && HOME?.content?.latlng?.lng && HOME?.content?.latlng?.lat) {
@@ -111,21 +115,41 @@ export default () => {
   );
 
   const [restafval, grofvuil] = AFVAL.content || [];
+  const profileType = useProfileTypeValue();
 
   return (
     <DetailPage className={styles.GarbageInformation}>
       <PageHeading isLoading={isLoading(AFVAL)} icon={<ChapterIcon />}>
-        {ChapterTitles.AFVAL}
+        {profileTypeChapterTitleAdjustment(profileType, Chapters.AFVAL)}
       </PageHeading>
       <PageContent>
-        <p>
-          Bekijk waar u uw afval kwijt kunt en hoe u uw afval kunt scheiden.
-        </p>
-        <p>
-          <Linkd href={ExternalUrls.AFVAL} external={true}>
-            De regels voor afval en hergebruik
-          </Linkd>
-        </p>
+        {profileType === 'private' && (
+          <>
+            <p>
+              Bekijk waar u uw afval kwijt kunt en hoe u uw afval kunt scheiden.
+            </p>
+            <p>
+              <Linkd href={ExternalUrls.AFVAL} external={true}>
+                De regels voor afval en hergebruik
+              </Linkd>
+            </p>
+          </>
+        )}
+        {profileType !== 'private' && (
+          <>
+            <p>
+              Deze afvalregels gelden als u per week maxi­maal 9
+              vuil­nis­zak­ken met res­taf­val hebt. Hebt u meer afval? Dan moet
+              u een contract afsluiten met een erkende afvalinzamelaar of de
+              gemeente.
+            </p>
+            <p>
+              <Linkd href={ExternalUrls.AFVAL_COMMERCIAL} external={true}>
+                Regels bedrijfsafval in Amsterdam
+              </Linkd>
+            </p>
+          </>
+        )}
         {isError(AFVAL) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
@@ -133,17 +157,14 @@ export default () => {
         )}
       </PageContent>
 
-      {!!BRP.content?.adres && (
+      {!!HOME.content?.address && (
         <GarbagePanel className={styles.AddressPanel}>
           <Heading size="tiny">Uw adres</Heading>
-          <p>{getFullAddress(BRP.content?.adres)}</p>
+          <p>{getFullAddress(HOME.content?.address)}</p>
         </GarbagePanel>
       )}
-
       {!!grofvuil && garbagePointCollapsible('grofvuil', grofvuil)}
-
       {!!restafval && garbagePointCollapsible('restafval', restafval)}
-
       <SectionCollapsible
         id="garbageContainersOnMap"
         className={classnames(styles.InfoSection, styles.InfoSectionMap)}
