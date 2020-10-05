@@ -36,6 +36,13 @@ export function trackPageView(title?: string, url?: string) {
     documentTitle: title || document.title,
     href: url || document.location.href,
   };
+
+  const payloadSZ = {
+    url: payload.href,
+    title: payload.documentTitle,
+  };
+  (window as any)._sz?.push(['trackdynamic', payloadSZ]);
+
   return MatomoInstance && MatomoInstance.trackPageView(payload);
 }
 

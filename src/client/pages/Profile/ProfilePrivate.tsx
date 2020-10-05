@@ -250,7 +250,7 @@ export default function Profile() {
           Gegevens van een levenloos geboren kindje ziet u niet in Mijn
           Amsterdam. U kunt die gegevens alleen inzien via{' '}
           <LinkdInline href="https://mijn.overheid.nl" external={true}>
-            Mijn Overheid
+            MijnOverheid
           </LinkdInline>
           .
         </p>

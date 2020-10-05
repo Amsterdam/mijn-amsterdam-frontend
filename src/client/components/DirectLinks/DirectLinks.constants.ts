@@ -45,7 +45,7 @@ export const LINKS: Record<string, DirectLink> = {
     isActive: true,
   },
   MIJN_OVERHEID_BERICHTEBOX: {
-    title: 'Mijn Overheid Berichtenbox',
+    title: 'MijnOverheid Berichtenbox',
     url: ExternalUrls.BERICHTENBOX,
     isExternalLink: true,
     isActive: true,

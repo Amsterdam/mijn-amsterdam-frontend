@@ -65,7 +65,7 @@ export default function MainHeader({
         </span>
       </div>
       {isAuthenticated && <MainNavBar />}
-      {hasErrors && (
+      {isAuthenticated && hasErrors && (
         <ErrorMessages errors={errors} className={styles.ErrorMessages} />
       )}
       {isHeroVisible && <MainHeaderHero />}

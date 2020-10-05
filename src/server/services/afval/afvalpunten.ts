@@ -203,7 +203,19 @@ export async function fetchAfvalpunten(center: LatLngObject | null) {
         hours: AFVALPUNT_CACHE_HOURS_TTL,
       }) < new Date(cachedFileContents.datePublished))
   ) {
-    return apiSuccesResult(cachedFileContents);
+    const responseData: AfvalpuntenResponseData = {
+      ...cachedFileContents,
+      centers: cachedFileContents.centers
+        .map(garbageCenter => {
+          return Object.assign(garbageCenter, {
+            distance: center
+              ? getApproximateDistance(center, garbageCenter.latlng)
+              : 0,
+          });
+        })
+        .sort(sortAlpha('distance')),
+    };
+    return apiSuccesResult(responseData);
   }
 
   const afvalpuntGeoLocations = await scrapeAfvalpuntGeoLocations();
