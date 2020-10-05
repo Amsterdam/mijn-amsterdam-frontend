@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Aandeelhouder,
-  Adres,
   Bestuurder,
   KVKData,
   Onderneming,
@@ -11,6 +10,7 @@ import {
 import { defaultDateFormat, getFullAddress } from '../../../universal/helpers';
 import { LinkdInline } from '../../components/index';
 import { format, ProfileSection } from './formatDataPrivate';
+import { Adres } from '../../../universal/types';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading

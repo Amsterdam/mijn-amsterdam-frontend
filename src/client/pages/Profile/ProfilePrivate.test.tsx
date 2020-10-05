@@ -5,7 +5,7 @@ import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config/routing';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import Profile from './Profile';
+import Profile from './ProfilePrivate';
 
 const responseData = {
   adres: {

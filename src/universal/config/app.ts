@@ -25,6 +25,7 @@ export const FeatureToggle = {
   kvkActive: !IS_PRODUCTION,
   erfpachtMeldingenActive: !IS_AP,
   stadpasActive: !IS_PRODUCTION,
+  residentCountActive: !IS_PRODUCTION,
 };
 
 export const DAYS_KEEP_RECENT = 28;

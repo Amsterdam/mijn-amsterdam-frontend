@@ -1,20 +1,21 @@
 import * as Sentry from '@sentry/browser';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import {
-  atom,
-  useRecoilState,
-  useRecoilValue,
-  selectorFamily,
-  SetterOrUpdater,
-} from 'recoil';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { atom, SetterOrUpdater, useRecoilState, useRecoilValue } from 'recoil';
 import { AppState, createAllErrorState, PRISTINE_APPSTATE } from '../AppState';
 import { BFFApiUrls } from '../config/api';
 import { transformAppState } from '../data-transform/appState';
 import { pollBffHealth, requestApiData, useDataApi } from './api/useDataApi';
+import { useOptInValue } from './useOptIn';
 import { useProfileTypeValue } from './useProfileType';
 import { SSE_ERROR_MESSAGE, useSSE } from './useSSE';
-import { Chapters } from '../../universal/config/chapter';
-import { useOptInValue } from './useOptIn';
+
+// Whenever a client toggles between private and private-commercial profiles, only these servies are requested from the BFF.
+const INCREMENTAL_SERVICE_IDS_FOR_PROFILE_TOGGLE = [
+  'HOME',
+  'AFVAL',
+  'AFVALPUNTEN',
+  'BUURT',
+];
 
 const fallbackServiceRequestOptions = {
   postpone: true,
@@ -26,7 +27,7 @@ const fallbackServiceRequestOptions = {
 
 export const appStateAtom = atom<AppState>({
   key: 'appState',
-  default: PRISTINE_APPSTATE,
+  default: PRISTINE_APPSTATE as AppState,
 });
 
 interface useAppStateFallbackServiceProps {
@@ -63,11 +64,11 @@ export function useAppStateFallbackService({
   const fetchSauron = useCallback(() => {
     return fetchFallbackService({
       ...fallbackServiceRequestOptions,
-      url: BFFApiUrls[profileType].SERVICES_SAURON,
+      url: BFFApiUrls.SERVICES_SAURON,
       postpone: false,
       params: requestParams,
     });
-  }, [requestParams, profileType, fetchFallbackService]);
+  }, [requestParams, fetchFallbackService]);
 
   // If no EvenSource support or EventSource fails, the Fallback service endpoint is used for fetching all the data.
   useEffect(() => {
@@ -124,49 +125,53 @@ export function useAppState() {
   const isOptIn = useOptInValue();
   const [appState, setAppState] = useRecoilState(appStateAtom);
 
-  const serviceRequestParams = useMemo(() => {
+  // First retrieve all the services specified in the BFF, after that Only retrieve incremental updates
+  const useIncremental = useRef(false);
+  useEffect(() => {
+    useIncremental.current = true;
+  }, []);
+
+  // Request params for the BFF
+  const requestParams = useMemo(() => {
     return {
       optin: isOptIn ? 'true' : 'false',
       profileType,
+      serviceIds:
+        useIncremental.current === false
+          ? []
+          : INCREMENTAL_SERVICE_IDS_FOR_PROFILE_TOGGLE,
     };
   }, [isOptIn, profileType]);
 
-  // The EventSource will only be used if we have EventSource support
-  const onEvent = useCallback(
-    (messageData: any) => {
-      if (messageData && messageData !== SSE_ERROR_MESSAGE) {
-        const transformedMessageData = transformAppState(messageData);
-        setAppState(appState => {
-          const appStateUpdated = {
-            ...appState,
-            // Should there be an
-            ...transformedMessageData,
-          };
-          return appStateUpdated;
-        });
-      } else if (messageData === SSE_ERROR_MESSAGE) {
-        setFallbackServiceEnabled(true);
-      }
-    },
-    [setAppState]
-  );
-
-  const path = useMemo(() => {
-    return BFFApiUrls[profileType].SERVICES_SSE;
-  }, [profileType]);
+  // The callback is fired on every incoming message from the EventSource.
+  const onEvent = useCallback((messageData: any) => {
+    if (messageData && messageData !== SSE_ERROR_MESSAGE) {
+      const transformedMessageData = transformAppState(messageData);
+      setAppState(appState => {
+        const appStateUpdated = {
+          ...appState,
+          ...transformedMessageData,
+        };
+        return appStateUpdated;
+      });
+    } else if (messageData === SSE_ERROR_MESSAGE) {
+      setFallbackServiceEnabled(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useSSE({
-    path,
+    path: BFFApiUrls.SERVICES_SSE,
     eventName: 'message',
     callback: onEvent,
     postpone: isFallbackServiceEnabled,
-    requestParams: serviceRequestParams,
+    requestParams,
   });
 
   useAppStateFallbackService({
     profileType,
     isEnabled: hasEventSourceSupport ? isFallbackServiceEnabled : true,
-    requestParams: serviceRequestParams,
+    requestParams,
     setAppState,
   });
 
@@ -179,27 +184,4 @@ export function useAppStateGetter() {
 
 export function useAppStateSetter() {
   return useRecoilState(appStateAtom)[1];
-}
-
-const appStateNotificationsSelector = selectorFamily({
-  key: 'appStateNotifications',
-  get: (profileType: ProfileType) => ({ get }) => {
-    const appState = get(appStateAtom);
-
-    if (
-      profileType === 'private-commercial' &&
-      appState.NOTIFICATIONS.content
-    ) {
-      return appState.NOTIFICATIONS.content.filter(
-        notification => notification.chapter !== Chapters.BRP
-      );
-    }
-
-    return appState.NOTIFICATIONS.content || [];
-  },
-});
-
-export function useAppStateNotifications() {
-  const profileType = useProfileTypeValue();
-  return useRecoilValue(appStateNotificationsSelector(profileType));
 }

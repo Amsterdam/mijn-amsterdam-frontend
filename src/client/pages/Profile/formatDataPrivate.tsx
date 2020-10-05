@@ -12,6 +12,7 @@ import {
   VerbintenisHistorisch,
 } from '../../../universal/types';
 import { LinkdInline, LoadingContent } from '../../components/index';
+import { FeatureToggle } from '../../../universal/config';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
@@ -109,11 +110,13 @@ const adres: ProfileLabels<Partial<Adres>> = {
   aantalBewoners: [
     'Aantal bewoners',
     value => {
-      return value === -1 ? (
-        <LoadingContent barConfig={[['2rem', '2rem', '0']]} />
-      ) : (
-        value
-      );
+      return FeatureToggle.residentCountActive ? (
+        value === -1 ? (
+          <LoadingContent barConfig={[['2rem', '2rem', '0']]} />
+        ) : (
+          value
+        )
+      ) : null;
     },
   ],
 };

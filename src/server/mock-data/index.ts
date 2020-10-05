@@ -5,6 +5,7 @@ import AFVAL from './json/afvalophaalgebieden.json';
 import AMSTERDAM_CONTENT_FOOTER from './json/amsterdam-nl-content-footer.json';
 import AMSTERDAM_CONTENT_GENERAL_INFO from './json/amsterdam-nl-content-uitleg.json';
 import BAG from './json/bag.json';
+import BAG2 from './json/bag2.json';
 import BELASTINGEN from './json/belasting.json';
 import BRP from './json/brp.json';
 import ERFPACHT from './json/erfpacht.json';
@@ -110,6 +111,9 @@ export const mockDataConfig: MockDataConfig = {
       // if (isCommercialUser(config)) {
       //   return 'no-content';
       // }
+      if (config.params.q === 'Schakelstraat 16') {
+        return await loadMockApiResponseJson(BAG2);
+      }
       return await loadMockApiResponseJson(BAG);
     },
   },

@@ -101,7 +101,7 @@ function getRequestConfigCacheKey(
 export async function requestData<T>(
   config: DataRequestConfig,
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  passthroughRequestHeaders?: Record<string, string>
 ) {
   const source = axios.CancelToken.source();
 

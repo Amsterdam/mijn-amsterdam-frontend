@@ -50,3 +50,14 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   VERGUNNINGEN: 'Vergunningen',
   KVK: 'Mijn onderneming',
 };
+
+export function profileTypeChapterTitleAdjustment(
+  profileType: ProfileType,
+  chapter: Chapter
+) {
+  switch (true) {
+    case profileType !== 'private' && chapter === Chapters.AFVAL:
+      return 'Bedrijfsafval';
+  }
+  return ChapterTitles[chapter];
+}

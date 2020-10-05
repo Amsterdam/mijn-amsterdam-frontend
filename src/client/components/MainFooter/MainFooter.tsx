@@ -1,6 +1,5 @@
 import classnames from 'classnames';
 import React, { useState } from 'react';
-import { CMSFooterContent } from '../../../server/services';
 import { isExternalUrl } from '../../../universal/helpers/utils';
 import { LinkProps } from '../../../universal/types/index';
 import { useDesktopScreen } from '../../hooks/media.hook';
@@ -9,6 +8,7 @@ import Linkd from '../Button/Button';
 import { InnerHtml } from '../index';
 import footerData from './amsterdam-nl-footer-data.json';
 import styles from './MainFooter.module.scss';
+import { CMSFooterContent } from '../../../server/services/cms-content';
 
 interface FooterBlockProps {
   startOpen?: boolean;

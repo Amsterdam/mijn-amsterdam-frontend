@@ -34,19 +34,9 @@ export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
 export const LOGOUT_URL = '/logout';
 export const BRP_RESIDENTS_API_URL = `${API_BASE_PATH_MODDED}/brp/aantal_bewoners`;
 
-export const BFFApiUrls: Record<ProfileType, Record<string, string>> = {
-  private: {
-    SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
-    SERVICES_SSE: `${BFF_API_BASE_URL}/services/stream`,
-  },
-  'private-commercial': {
-    SERVICES_SAURON: `${BFF_API_BASE_URL}/private-commercial/services/all`,
-    SERVICES_SSE: `${BFF_API_BASE_URL}/private-commercial/services/stream`,
-  },
-  commercial: {
-    SERVICES_SAURON: `${BFF_API_BASE_URL}/commercial/services/all`,
-    SERVICES_SSE: `${BFF_API_BASE_URL}/commercial/services/stream`,
-  },
+export const BFFApiUrls = {
+  SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
+  SERVICES_SSE: `${BFF_API_BASE_URL}/services/stream`,
 };
 
 export const SERVICES_TIPS_URL = `${BFF_API_BASE_URL}/services/tips`;
