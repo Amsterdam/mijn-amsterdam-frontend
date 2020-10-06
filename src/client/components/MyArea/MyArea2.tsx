@@ -5,6 +5,7 @@ import {
   MapPanelProvider,
   ViewerContainer,
   Zoom,
+  ControlButton,
 } from '@amsterdam/arm-core';
 import { SnapPoint } from '@amsterdam/arm-core/es/components/MapPanel/constants';
 import {
@@ -149,6 +150,7 @@ export default function MyArea2() {
                     >
                       {useLeafletCluster ? 'LC' : 'SC'}
                     </button>
+                    <ControlButton>bliep</ControlButton>
                     <Zoom />
                   </>
                 }
