@@ -61,7 +61,7 @@ export default () => {
         <ul>
           <li>Mijn Erfpacht</li>
           <li>Erfpacht Overstapportaal</li>
-          <li>Krefia</li>
+          <li>Kredietbank</li>
           <li>Milieuzone</li>
         </ul>
         <p>
