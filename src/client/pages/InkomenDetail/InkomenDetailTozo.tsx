@@ -68,15 +68,9 @@ export default () => {
         </p>
         {!isLoading(FOCUS_TOZO) && (
           <p>
-            {TozoItem?.productTitle === 'Tozo 1' ? (
-              <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
-                Meer informatie over de {TozoItem?.title}
-              </Linkd>
-            ) : (
-              <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
-                Meer informatie over de {TozoItem?.title}
-              </Linkd>
-            )}
+            <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
+              Meer informatie over de {TozoItem?.title}
+            </Linkd>
           </p>
         )}
         {(isError(FOCUS_TOZO) || noContent) && (

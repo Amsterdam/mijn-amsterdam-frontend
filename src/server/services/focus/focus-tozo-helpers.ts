@@ -136,10 +136,19 @@ export function createTozoItemStep(document: FocusTozoDocument) {
 }
 
 export function createTozoItem(productTitle: string, steps: FocusItemStep[]) {
-  const title =
-    productTitle === 'Tozo 2'
-      ? 'Tozo 2 (aangevraagd na 1 juni 2020)'
-      : 'Tozo 1 (aangevraagd voor 1 juni 2020)';
+  let title = '';
+
+  switch (productTitle) {
+    case 'Tozo 1':
+      title = 'Tozo 1 (aangevraagd voor 1 juni 2020)';
+      break;
+    case 'Tozo 2':
+      title = 'Tozo 2 (aangevraagd na 1 juni 2020)';
+      break;
+    case 'Tozo 3':
+      title = 'Tozo 3 (aangevraagd na 1 oktober 2020)';
+      break;
+  }
 
   const id = hash(`${title}-${steps[0].datePublished}`);
 
@@ -221,6 +230,7 @@ export function createTozoResult(
 
   const tozo1Steps = otherSteps.filter(step => step.product === 'Tozo 1');
   const tozo2Steps = otherSteps.filter(step => step.product === 'Tozo 2');
+  const tozo3Steps = otherSteps.filter(step => step.product === 'Tozo 3');
 
   if (aanvraagSteps['Tozo 1']) {
     tozo1Steps.unshift(aanvraagSteps['Tozo 1']);
@@ -232,6 +242,11 @@ export function createTozoResult(
   }
   const tozo2Item = tozo2Steps.length && createTozoItem('Tozo 2', tozo2Steps);
 
+  if (aanvraagSteps['Tozo 3']) {
+    tozo3Steps.unshift(aanvraagSteps['Tozo 3']);
+  }
+  const tozo3Item = tozo3Steps.length && createTozoItem('Tozo 3', tozo3Steps);
+
   const tozoItems: FocusItem[] = [];
 
   if (tozo1Item) {
@@ -240,6 +255,10 @@ export function createTozoResult(
 
   if (tozo2Item) {
     tozoItems.push(tozo2Item);
+  }
+
+  if (tozo3Item) {
+    tozoItems.push(tozo3Item);
   }
 
   return apiSuccesResult(tozoItems);
