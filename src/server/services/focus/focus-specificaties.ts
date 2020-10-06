@@ -2,14 +2,15 @@ import { format } from 'date-fns';
 import { ReactNode } from 'react';
 import { Chapters } from '../../../universal/config';
 import { API_BASE_PATH } from '../../../universal/config/api';
+import { FeatureToggle } from '../../../universal/config/app';
 import {
   dateFormat,
   dateSort,
   defaultDateFormat,
 } from '../../../universal/helpers';
 import {
-  apiSuccesResult,
   apiDependencyError,
+  apiSuccesResult,
 } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
 import {
@@ -150,6 +151,10 @@ export async function fetchFOCUSSpecificationsGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
+  if (!FeatureToggle.focusUitkeringsspecificatieNotificationsActive) {
+    return apiSuccesResult({ notifications: [] });
+  }
+
   const FOCUS_SPECIFICATIES = await fetchFOCUSSpecificaties(
     sessionID,
     passthroughRequestHeaders
