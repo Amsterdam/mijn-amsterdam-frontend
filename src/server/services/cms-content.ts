@@ -8,6 +8,8 @@ import { hash } from '../../universal/helpers/utils';
 import { LinkProps } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import FileCache from '../helpers/file-cache';
+import { sessionID } from '../helpers/app';
 
 const TAGS_ALLOWED = [
   'a',
@@ -163,11 +165,23 @@ function transformFooterResponse(responseData: any) {
   return footer;
 }
 
-export async function fetchCMSCONTENT(
+// Development and e2e testing will always serve cached file
+const isMockAdapterEnabled = !process.env.BFF_DISABLE_MOCK_ADAPTER;
+
+const fileCache = new FileCache({
+  name: 'cms-content.flat-cache.json',
+  cacheTime: isMockAdapterEnabled ? 0 : 24 * 60, // 24 hours
+});
+
+async function getGeneralPage(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  const generalInfoPageRequest = requestData<CMSPageContent>(
+  const apiData = fileCache.getKey('CMS_CONTENT_GENERAL_INFO');
+  if (apiData) {
+    return Promise.resolve(apiData);
+  }
+  return requestData<CMSPageContent>(
     getApiConfig('CMS_CONTENT_GENERAL_INFO', {
       transformResponse: (responseData: any) => {
         return {
@@ -181,14 +195,35 @@ export async function fetchCMSCONTENT(
     sessionID,
     passthroughRequestHeaders
   );
+}
 
-  const footerInfoPageRequest = requestData<CMSFooterContent>(
+async function getFooter(
+  sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>
+) {
+  const apiData = fileCache.getKey('CMS_CONTENT_FOOTER');
+  if (apiData) {
+    return Promise.resolve(apiData);
+  }
+  return requestData<CMSFooterContent>(
     getApiConfig('CMS_CONTENT_FOOTER', {
       transformResponse: transformFooterResponse,
     }),
     sessionID,
     passthroughRequestHeaders
   );
+}
+
+export async function fetchCMSCONTENT(
+  sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>
+) {
+  const generalInfoPageRequest = getGeneralPage(
+    sessionID,
+    passthroughRequestHeaders
+  );
+
+  const footerInfoPageRequest = getFooter(sessionID, passthroughRequestHeaders);
 
   const requests: Promise<
     ApiResponse<CMSPageContent | CMSFooterContent | null>
