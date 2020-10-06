@@ -153,7 +153,7 @@ export type FocusTozoLabelSet = {
   labels: FocusStepContent;
   omschrijving: string;
   documentTitle: string;
-  product: 'Tozo 1' | 'Tozo 2';
+  product: 'Tozo 1' | 'Tozo 2' | 'Tozo 3';
   productSpecific: 'uitkering' | 'lening' | 'voorschot' | 'aanvraag' | '';
   stepType: FocusTozoStepType;
 };
@@ -184,6 +184,15 @@ export const tozoDocumentLabelSet: Record<
     labels: aanvraagLabels,
     documentTitle: 'Ontvangst- bevestiging Aanvraag',
     product: 'Tozo 2',
+    productSpecific: 'aanvraag',
+    stepType: 'aanvraag',
+  },
+  '785': {
+    omschrijving:
+      'TOZO 3 (vervolgregeling tegemoetkoming Ondernemers en Zelfstandigen)',
+    labels: aanvraagLabels,
+    documentTitle: 'Ontvangst- bevestiging Aanvraag',
+    product: 'Tozo 3',
     productSpecific: 'aanvraag',
     stepType: 'aanvraag',
   },
