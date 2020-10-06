@@ -149,7 +149,10 @@ export default function MyArea2() {
                       {useLeafletCluster ? 'LC' : 'SC'}
                     </button>
                     {HOME.content?.latlng && (
-                      <HomeControlButton latlng={HOME.content.latlng} />
+                      <HomeControlButton
+                        zoom={HOOD_ZOOM}
+                        latlng={HOME.content.latlng}
+                      />
                     )}
                     <Zoom />
                   </>

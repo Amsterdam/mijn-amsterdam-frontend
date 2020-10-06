@@ -3,12 +3,17 @@ import { useMapInstance } from '@amsterdam/react-maps';
 import React from 'react';
 import { IconHomeSimple, IconHomeCommercial } from '../../assets/icons';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { HOOD_ZOOM } from '../../../universal/config/map';
 
 interface HomeControlButtonProps {
   latlng: LatLngObject;
+  zoom?: number;
 }
 
-export default function HomeControlButton({ latlng }: HomeControlButtonProps) {
+export default function HomeControlButton({
+  latlng,
+  zoom = HOOD_ZOOM,
+}: HomeControlButtonProps) {
   const profileType = useProfileTypeValue();
   const mapInstance = useMapInstance();
   return (
@@ -21,8 +26,7 @@ export default function HomeControlButton({ latlng }: HomeControlButtonProps) {
       size={44}
       iconSize={profileType === 'private' ? 40 : 20}
       onClick={() => {
-        console.log('zoom', mapInstance.getZoom());
-        mapInstance.setView(latlng, mapInstance.getZoom());
+        mapInstance.setView(latlng, zoom);
       }}
     />
   );
