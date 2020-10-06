@@ -1,29 +1,29 @@
 import { ControlButton } from '@amsterdam/arm-core';
-import React from 'react';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { HOOD_ZOOM } from '../../../universal/config/map';
-import { IconHome, IconHomeCommercial } from '../../assets/icons';
 import { useMapInstance } from '@amsterdam/react-maps';
+import React from 'react';
+import { IconHomeSimple, IconHomeCommercial } from '../../assets/icons';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 
 interface HomeControlButtonProps {
   latlng: LatLngObject;
-  zoom?: number;
 }
 
-export default function HomeControlButton({
-  latlng,
-  zoom = HOOD_ZOOM,
-}: HomeControlButtonProps) {
+export default function HomeControlButton({ latlng }: HomeControlButtonProps) {
   const profileType = useProfileTypeValue();
   const mapInstance = useMapInstance();
   return (
     <ControlButton
       variant="blank"
       type="button"
-      icon={profileType === 'private' ? <IconHome /> : <IconHomeCommercial />}
+      icon={
+        profileType === 'private' ? <IconHomeSimple /> : <IconHomeCommercial />
+      }
       size={44}
-      iconSize={20}
-      onClick={() => mapInstance?.setView(latlng, zoom)}
+      iconSize={profileType === 'private' ? 40 : 20}
+      onClick={() => {
+        console.log('zoom', mapInstance.getZoom());
+        mapInstance.setView(latlng, mapInstance.getZoom());
+      }}
     />
   );
 }
