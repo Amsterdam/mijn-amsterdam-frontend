@@ -1,19 +1,17 @@
+import memoryCache from 'memory-cache';
 import scrapeIt from 'scrape-it';
 import {
   apiSuccesResult,
-  getApproximateDistance,
   ApiSuccessResponse,
+  getApproximateDistance,
 } from '../../../universal/helpers';
-import memoryCache from 'memory-cache';
-import { sanitizeCmsContent } from '../index';
-import { GarbageCenter } from '../../../universal/types/afval';
 import { sortAlpha } from '../../../universal/helpers/utils';
-import fs from 'fs';
-import path from 'path';
-import { sub } from 'date-fns';
+import { AFVALPUNTENData, GarbageCenter } from '../../../universal/types/afval';
+import FileCache from '../../helpers/file-cache';
+import { sanitizeCmsContent } from '../index';
 
 export const cache = new memoryCache.Cache<string, any>();
-const AFVALPUNT_CACHE_HOURS_TTL = 24; // 1 day
+
 const AFVALPUNT_SCRAPE_CACHE_TTL = 60 * 1000; // 1 minute
 
 interface ScrapedOpeningsTijden {
@@ -83,7 +81,7 @@ async function scrapeDetailInfo(item: ScrapedGeoLocation) {
    * Filter out unwanted data, transform data into nicely shaped object
    */
   const tableData = scrapeResult.data.items
-    .filter(item => item.label !== 'Website')
+    .filter((item) => item.label !== 'Website')
     .reduce((acc, { label, value, url }) => {
       const labelTransformed = label.toLowerCase().replace(/[^a-z]/gi, '');
       const labelFinal =
@@ -162,7 +160,7 @@ async function scrapeAfvalpuntGeoLocations() {
           latlng: {
             selector: '',
             attr: 'data-latlon',
-            convert: data => {
+            convert: (data) => {
               const [lng, lat] = data
                 .split(' ')
                 .map((l: string) => parseFloat(l));
@@ -182,38 +180,38 @@ async function scrapeAfvalpuntGeoLocations() {
   return scrapeResult.data.items;
 }
 
-export async function fetchAfvalpunten(center: LatLngObject | null) {
-  const fileName = path.join(
-    __dirname,
-    '../../',
-    'mock-data/json/afvalpunten.json'
-  );
-  const cachedFileContents: AfvalpuntenResponseData | null = ((await import(
-    fileName
-  )) as any).default;
+// Development and e2e testing will always serve cached file
+const isMockAdapterEnabled = !process.env.BFF_DISABLE_MOCK_ADAPTER;
 
-  // Development and e2e testing will always serve cached file
-  const isMockAdapterEnabled = !process.env.BFF_DISABLE_MOCK_ADAPTER;
+const fileCache = new FileCache({
+  name: 'afvalpunten.flat-cache.json',
+  cacheTime: isMockAdapterEnabled ? 0 : 24 * 60, // 24 hours
+});
 
-  if (
-    cachedFileContents &&
-    (isMockAdapterEnabled ||
-      // Last cached file was written not longer than AFVALPUNT_CACHE_HOURS_TTL ago
-      sub(new Date(), {
-        hours: AFVALPUNT_CACHE_HOURS_TTL,
-      }) < new Date(cachedFileContents.datePublished))
-  ) {
+function addApproximateDistance(
+  latlng: LatLngObject | null,
+  centers: AFVALPUNTENData
+) {
+  return centers
+    .map((garbageCenter) => {
+      return Object.assign(garbageCenter, {
+        distance: latlng
+          ? getApproximateDistance(latlng, garbageCenter.latlng)
+          : 0,
+      });
+    })
+    .sort(sortAlpha('distance'));
+}
+
+export async function fetchAfvalpunten(latlng: LatLngObject | null) {
+  const cachedFileContents:
+    | AfvalpuntenResponseData
+    | undefined = fileCache.getKey('responseData');
+
+  if (cachedFileContents) {
     const responseData: AfvalpuntenResponseData = {
       ...cachedFileContents,
-      centers: cachedFileContents.centers
-        .map(garbageCenter => {
-          return Object.assign(garbageCenter, {
-            distance: center
-              ? getApproximateDistance(center, garbageCenter.latlng)
-              : 0,
-          });
-        })
-        .sort(sortAlpha('distance')),
+      centers: addApproximateDistance(latlng, cachedFileContents.centers),
     };
     return apiSuccesResult(responseData);
   }
@@ -221,7 +219,7 @@ export async function fetchAfvalpunten(center: LatLngObject | null) {
   const afvalpuntGeoLocations = await scrapeAfvalpuntGeoLocations();
 
   const detailedItems = await Promise.all(
-    afvalpuntGeoLocations.map(item => {
+    afvalpuntGeoLocations.map((item) => {
       return scrapeDetailInfo(item);
     })
   );
@@ -230,31 +228,25 @@ export async function fetchAfvalpunten(center: LatLngObject | null) {
     detailedItems[0].openingHours
   );
 
-  const detailedItemsWithOpeningHours = detailedItems.map(detailedItem => {
+  const centers = detailedItems.map((detailedItem) => {
     return Object.assign(detailedItem, {
       openingHours,
+      distance: 0,
     });
   });
-
-  const garbageCenterData: GarbageCenter[] = detailedItemsWithOpeningHours.map(
-    item => {
-      return {
-        ...item,
-        distance: center ? getApproximateDistance(center, item.latlng) : 0,
-      };
-    }
-  );
 
   const afvalResult: ApiSuccessResponse<AfvalpuntenResponseData> = await new Promise(
     (resolve, reject) => {
       const responseData: AfvalpuntenResponseData = {
-        centers: garbageCenterData.sort(sortAlpha('distance')),
+        centers: addApproximateDistance(latlng, centers),
         openingHours,
         datePublished: new Date().toISOString(),
       };
-      fs.writeFile(fileName, JSON.stringify(responseData), error => {
-        resolve(apiSuccesResult(responseData));
-      });
+
+      fileCache.setKey('responseData', responseData);
+      fileCache.save();
+
+      resolve(apiSuccesResult(responseData));
     }
   );
 

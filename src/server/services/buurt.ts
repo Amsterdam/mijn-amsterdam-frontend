@@ -1,3 +1,4 @@
+import path from 'path';
 import {
   CITY_LAYERS_CONFIG,
   CITY_ZOOM,
@@ -14,7 +15,9 @@ import {
 } from '../../universal/helpers';
 import { DataRequestConfig } from '../config';
 import { requestData } from '../helpers';
+import FileCache from '../helpers/file-cache';
 import { fetchHOME } from './home';
+import { DEFAULT_CACHE_DIR } from '../helpers/file-cache';
 
 const MAP_URL =
   'https://data.amsterdam.nl/data/?modus=kaart&achtergrond=topo_rd_zw&embed=true';
@@ -305,17 +308,34 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
   },
 };
 
+// Development and e2e testing will always serve cached file
+const isMockAdapterEnabled = !process.env.BFF_DISABLE_MOCK_ADAPTER;
+
+const fileCache = new FileCache({
+  name: 'buurt-datasets.flat-cache.json',
+  cacheTime: isMockAdapterEnabled ? 0 : 24 * 60, // 24 hours
+});
+
 export async function loadServicesMapDatasets(sessionID: SessionID) {
   const requests = Object.entries(datasetEndpoints)
     .filter(([, config]) => !!config.listUrl)
-    .map(([dataset, config]) => {
+    .map(([apiName, config]) => {
+      const apiData = fileCache.getKey(apiName);
+      if (apiData) {
+        return Promise.resolve(apiData);
+      }
       const requestConfig: DataRequestConfig = {
         url: config.listUrl,
+        cacheTimeout: 0,
       };
       if (config.transformList) {
         requestConfig.transformResponse = config.transformList;
       }
-      return requestData(requestConfig, sessionID, {});
+      return requestData(requestConfig, sessionID, {}).then((apiData) => {
+        fileCache.setKey(apiName, apiData);
+        fileCache.save();
+        return apiData;
+      });
     });
 
   const datasets = await Promise.all(requests);

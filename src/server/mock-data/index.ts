@@ -1,7 +1,5 @@
 import { MyTip } from '../../universal/types';
 import { ApiUrls, DEV_USER_TYPE_HEADER } from '../config';
-import { datasetEndpoints } from '../services';
-
 import AFVAL from './json/afvalophaalgebieden.json';
 import AMSTERDAM_CONTENT_FOOTER from './json/amsterdam-nl-content-footer.json';
 import AMSTERDAM_CONTENT_GENERAL_INFO from './json/amsterdam-nl-content-uitleg.json';
@@ -209,36 +207,6 @@ export const mockDataConfig: MockDataConfig = {
           return tip;
         });
       return JSON.stringify(items);
-    },
-  },
-  [datasetEndpoints.afvalcontainers.listUrl]: {
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    responseData: async (config: any) => {
-      // if (isCommercialUser(config)) {
-      // }
-      return await loadMockApiResponseJson(
-        require('../mock-data/json/map-datasets/afvalcontainers.json')
-      );
-    },
-  },
-  [datasetEndpoints.bekendmakingen.listUrl]: {
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    responseData: async (config: any) => {
-      // if (isCommercialUser(config)) {
-      // }
-      return await loadMockApiResponseJson(
-        require('../mock-data/json/map-datasets/bekendmakingen.json')
-      );
-    },
-  },
-  [datasetEndpoints.evenementen.listUrl]: {
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    responseData: async (config: any) => {
-      // if (isCommercialUser(config)) {
-      // }
-      return await loadMockApiResponseJson(
-        require('../mock-data/json/map-datasets/evenementen.json')
-      );
     },
   },
 };
