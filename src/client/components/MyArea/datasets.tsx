@@ -316,7 +316,6 @@ export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
       createDatasetControl(id, true)
     ),
   },
-
   {
     id: 'bekendmakingen',
     title: 'Bekendmakingen',
@@ -324,7 +323,6 @@ export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
       createDatasetControl(id, true)
     ),
   },
-
   {
     id: 'evenementen',
     title: 'Evenementen',
