@@ -156,7 +156,7 @@ export default function MyAreaPanels() {
             <MyAreaDatasetControl collection={controlItem.collection} />
           </MyAreaCollapisblePanel>
         ))}
-        {selectedMarkerData && (
+        {selectedMarkerData && selectedMarkerData.markerData !== null && (
           <MapPanelContentDetail
             title={selectedMarkerData.markerData.title}
             subTitle={
