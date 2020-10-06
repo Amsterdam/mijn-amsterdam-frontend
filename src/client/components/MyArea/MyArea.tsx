@@ -3,7 +3,6 @@ import React, { HTMLProps, PropsWithChildren } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { getOtapEnvItem } from '../../../universal/config/env';
-import { getFullAddress } from '../../../universal/helpers';
 import { Adres } from '../../../universal/types';
 import { IconHome, IconHomeCommercial } from '../../assets/icons';
 import { Colors } from '../../config/app';

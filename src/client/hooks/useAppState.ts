@@ -56,7 +56,7 @@ export function useAppStateFallbackService({
           message,
         },
       });
-      setAppState(appState => createAllErrorState(appState, message));
+      setAppState((appState) => createAllErrorState(appState, message));
     },
     [setAppState]
   );
@@ -99,7 +99,7 @@ export function useAppStateFallbackService({
     }
     if (api.data !== null && !api.isLoading && !api.isError) {
       setIsDataRequested(true);
-      setAppState(appState => Object.assign({}, appState, api.data));
+      setAppState((appState) => Object.assign({}, appState, api.data));
     } else if (api.isError) {
       // If everything fails, this is the final state update.
       const errorMessage =
@@ -147,7 +147,7 @@ export function useAppState() {
   const onEvent = useCallback((messageData: any) => {
     if (messageData && messageData !== SSE_ERROR_MESSAGE) {
       const transformedMessageData = transformAppState(messageData);
-      setAppState(appState => {
+      setAppState((appState) => {
         const appStateUpdated = {
           ...appState,
           ...transformedMessageData,

@@ -1,14 +1,14 @@
-import React from 'react';
 import { BaseLayer, Map } from '@amsterdam/arm-core';
-import { LOCATION_ZOOM, HOOD_ZOOM } from '../../../universal/config/map';
+import { ThemeProvider } from '@amsterdam/asc-ui';
+import 'leaflet/dist/leaflet.css';
+import React from 'react';
+import styled from 'styled-components';
+import { HOOD_ZOOM } from '../../../universal/config/map';
+import { getFullAddress } from '../../../universal/helpers/brp';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
+import { useAppStateGetter } from '../../hooks/useAppState';
 import { HomeIconMarker } from './MaMarker';
 import MyAreaLoader from './MyAreaLoader';
-import styled from 'styled-components';
-import { ThemeProvider } from '@amsterdam/asc-ui';
-import { useAppStateGetter } from '../../hooks/useAppState';
-import 'leaflet/dist/leaflet.css';
-import { getFullAddress } from '../../../universal/helpers/brp';
 
 const DasboardMap = styled(Map)`
   position: absolute;
@@ -32,10 +32,12 @@ export default function MyArea2Dashboard() {
           <BaseLayer />
           <HomeIconMarker
             address={
-              HOME.content?.address ? getFullAddress(HOME.content.address) : ''
+              HOME.content?.address
+                ? getFullAddress(HOME.content.address, true)
+                : ''
             }
             center={center}
-            zoom={LOCATION_ZOOM}
+            zoom={HOOD_ZOOM}
           />
         </DasboardMap>
       ) : (

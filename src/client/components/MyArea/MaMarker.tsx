@@ -5,8 +5,8 @@ import { LOCATION_ZOOM } from '../../../universal/config/map';
 import iconUrl from '../../assets/icons/home.svg';
 import iconUrlCommercial from '../../assets/icons/map/homeCommercial__primary-red.svg';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { useMapRef } from './useMap';
 import styles from './MyArea.module.scss';
+import { useMapRef } from './useMap';
 
 interface MaMarkerProps {
   latlng: LatLngObject;
@@ -38,12 +38,20 @@ function MaMarker({ latlng, iconUrl, onClick, label }: MaMarkerProps) {
 
   useEffect(() => {
     if (markerInstance && label) {
-      markerInstance.unbindTooltip().bindTooltip(label, {
-        className: styles.MarkerText,
-        permanent: true,
-        offset: [0, 40],
-        direction: 'center',
-      });
+      markerInstance
+        .unbindTooltip()
+        .bindTooltip(
+          `<div class="${styles.MarkerLabelText}">${label.replace(
+            /\n/,
+            '<br/>'
+          )}</div>`,
+          {
+            className: styles.MarkerLabel,
+            permanent: true,
+            offset: [0, 14],
+            direction: 'bottom',
+          }
+        );
     }
   }, [markerInstance, label]);
 

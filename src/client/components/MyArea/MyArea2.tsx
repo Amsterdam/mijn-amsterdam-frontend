@@ -146,6 +146,7 @@ export default function MyArea2() {
                     : ''
                 }
                 center={center}
+                zoom={HOOD_ZOOM}
               />
               <StyledViewerContainer
                 bottomRight={

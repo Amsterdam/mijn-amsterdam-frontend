@@ -142,16 +142,21 @@
   white-space: pre-line;
 }
 
-:global(.leaflet-tooltip).MarkerText {
+:global(.leaflet-tooltip).MarkerLabel {
   background-color: rgba(255, 255, 255, .5);
-  color: $color-black;
   border-radius: 0;
-  text-align: center;
   border: 0;
   box-shadow: none;
-  font-size: 1.8rem;
-  font-weight: 500;
+
   &:before {
     display: none;
   }
+}
+
+.MarkerLabelText {
+  // width: 200px;
+  color: $color-black;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 500;
 }

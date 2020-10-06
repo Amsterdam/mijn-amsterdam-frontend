@@ -19,12 +19,20 @@ export function getFullAddress(
     huisnummer: string | null;
     huisnummertoevoeging: string | null;
     huisletter: string | null;
-  } | null
+    postcode: string | null;
+    woonplaatsNaam: string | null;
+  } | null,
+  extended = false
 ) {
   return adres
     ? `${adres.straatnaam} ${adres.huisnummer || ''} ${
         adres.huisletter || ''
-      } ${adres.huisnummertoevoeging || ''}`.trim()
+      } ${adres.huisnummertoevoeging || ''}`.trim() +
+        (extended
+          ? `\n${adres.postcode || ''}${
+              adres.woonplaatsNaam ? ' ' + adres.woonplaatsNaam : ''
+            }`
+          : '')
     : 'unknown address';
 }
 
