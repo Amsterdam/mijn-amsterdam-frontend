@@ -12,7 +12,7 @@ import {
   AERIAL_AMSTERDAM_LAYERS,
   DEFAULT_AMSTERDAM_LAYERS,
 } from '@amsterdam/arm-core/lib/constants';
-import { ThemeProvider } from '@amsterdam/asc-ui';
+import { ThemeProvider, Icon } from '@amsterdam/asc-ui';
 import { themeSpacing } from '@amsterdam/asc-ui/lib/utils/themeUtils';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
@@ -21,11 +21,11 @@ import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { HOOD_ZOOM } from '../../../universal/config/map';
 import { getFullAddress } from '../../../universal/helpers';
-import { IconHome } from '../../assets/icons';
+import { IconHome, IconHomeCommercial } from '../../assets/icons';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useDesktopScreen } from '../../hooks';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { IconButton } from '../Button/Button';
+
 import {
   PARKEERZONES_POLYLINE_OPTIONS,
   PARKEERZONES_WMS_OPTIONS,
@@ -40,6 +40,9 @@ import MyAreaHeader from './MyAreaHeader';
 import MyAreaLoader from './MyAreaLoader';
 import MyAreaPanels from './MyAreaPanels';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { useMapInstance } from '@amsterdam/react-maps';
+import HomeControlButton from './MaHomeControlButton';
 
 const StyledViewerContainer = styled(ViewerContainer)`
   height: 100%;
@@ -68,12 +71,14 @@ const MyAreaMap = styled(Map)`
 export default function MyArea2() {
   const isDesktop = useDesktopScreen();
   const [useLeafletCluster, setUseLeafletCluster] = useState(true);
+  const profileType = useProfileTypeValue();
   const { HOME } = useAppStateGetter();
   const [selectedMarkerData, setSelectedMarkerData] = useRecoilState(
     selectedMarkerDataAtom
   );
   const activeDatasetIds = useActiveDatasetIds();
 
+  const mapInstance = useMapInstance();
   const center = HOME.content?.latlng;
   // TODO: Move into final component solution (SuperCluster or MarkerCluster)
   const onMarkerClick = useCallback(
@@ -150,7 +155,9 @@ export default function MyArea2() {
                     >
                       {useLeafletCluster ? 'LC' : 'SC'}
                     </button>
-                    <ControlButton>bliep</ControlButton>
+                    {HOME.content?.latlng && (
+                      <HomeControlButton latlng={HOME.content.latlng} />
+                    )}
                     <Zoom />
                   </>
                 }
