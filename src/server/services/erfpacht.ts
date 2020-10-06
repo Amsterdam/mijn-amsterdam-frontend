@@ -45,15 +45,22 @@ function transformERFPACHTNotifications(notifications?: MyNotification[]) {
 }
 
 function transformERFPACHTData(responseData: ERFPACHTSourceData): ERFPACHTData {
-  const { isKnown, meldingen = [] } = responseData?.content || {
-    isKnown: false,
-    meldingen: [],
-  };
+  if ('status' in responseData && typeof responseData.status === 'boolean') {
+    return {
+      isKnown: responseData.status,
+      notifications: [],
+    };
+  } else {
+    const { isKnown, meldingen = [] } = responseData?.content || {
+      isKnown: false,
+      meldingen: [],
+    };
 
-  return {
-    isKnown,
-    notifications: transformERFPACHTNotifications(meldingen),
-  };
+    return {
+      isKnown,
+      notifications: transformERFPACHTNotifications(meldingen),
+    };
+  }
 }
 
 export async function fetchERFPACHT(
