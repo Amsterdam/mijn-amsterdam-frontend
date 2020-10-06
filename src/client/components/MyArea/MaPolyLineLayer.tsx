@@ -6,7 +6,7 @@ import { createGlobalStyle } from 'styled-components';
 import { proj4RD } from '../../config/map';
 import { getIconHtml } from './datasets';
 
-interface MaWMSLayerProps {
+interface MaPolyLineLayerProps {
   onMarkerClick?: LeafletMouseEventHandlerFn;
   url: string;
   options?: L.WMSOptions;
@@ -63,14 +63,14 @@ const Styles = createGlobalStyle`
   }
 `;
 
-export function MaWMSLayer({
+export function MaPolyLineLayer({
   onMarkerClick,
   url,
   options = DEFAULT_WMS_OPTIONS,
   polylineOptions = DEFAULT_POLYLINE_OPTIONS,
   datasetId,
   datasetGroupId,
-}: MaWMSLayerProps) {
+}: MaPolyLineLayerProps) {
   const map = useMapInstance();
 
   // useEffect(() => {

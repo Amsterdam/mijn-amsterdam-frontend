@@ -15,8 +15,11 @@ import {
   MapIconAfvalTextiel,
   MapIconAuto,
 } from '../../assets/icons';
+import {
+  DEFAULT_POLYLINE_OPTIONS,
+  DEFAULT_WMS_OPTIONS,
+} from './MaPolyLineLayer';
 import styles from './MyAreaSuperCluster.module.scss';
-import { DEFAULT_WMS_OPTIONS, DEFAULT_POLYLINE_OPTIONS } from './MaWmsLayer';
 
 export type DatasetSource = Record<string, DatasetItemTuple[]>;
 

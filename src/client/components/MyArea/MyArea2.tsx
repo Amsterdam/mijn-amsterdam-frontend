@@ -20,15 +20,17 @@ import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { HOOD_ZOOM } from '../../../universal/config/map';
 import { getFullAddress } from '../../../universal/helpers';
+import { IconHome } from '../../assets/icons';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useDesktopScreen } from '../../hooks';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { IconButton } from '../Button/Button';
 import {
   PARKEERZONES_POLYLINE_OPTIONS,
   PARKEERZONES_WMS_OPTIONS,
 } from './datasets';
 import { HomeIconMarker } from './MaMarker';
-import { MaWMSLayer } from './MaWmsLayer';
+import { MaPolyLineLayer } from './MaPolyLineLayer';
 import MyAreaDatasets, {
   selectedMarkerDataAtom,
   useActiveDatasetIds,
@@ -65,25 +67,16 @@ const MyAreaMap = styled(Map)`
 export default function MyArea2() {
   const isDesktop = useDesktopScreen();
   const [useLeafletCluster, setUseLeafletCluster] = useState(true);
-  const { HOME /*KVK, BRP*/ } = useAppStateGetter();
+  const { HOME } = useAppStateGetter();
   const [selectedMarkerData, setSelectedMarkerData] = useRecoilState(
     selectedMarkerDataAtom
   );
   const activeDatasetIds = useActiveDatasetIds();
-  // const profileType = useProfileTypeValue();
-  // const address =
-  //   (profileType === 'private'
-  //     ? BRP.content?.adres
-  //     : KVK.content?.vestigingen[0].bezoekadres) || null;
-
-  // const homeAddress = getFullAddress(address);
 
   const center = HOME.content?.latlng;
   // TODO: Move into final component solution (SuperCluster or MarkerCluster)
   const onMarkerClick = useCallback(
     (event: any) => {
-      console.log('ev:', event);
-
       const datasetItemId = event?.layer?.feature?.properties?.dataset
         ? event?.layer?.feature?.properties?.dataset[0]
         : event.layer.options.datasetItemId
@@ -142,7 +135,7 @@ export default function MyArea2() {
               <HomeIconMarker
                 address={
                   HOME.content?.address
-                    ? getFullAddress(HOME.content.address)
+                    ? getFullAddress(HOME.content.address, true)
                     : ''
                 }
                 center={center}
@@ -172,7 +165,7 @@ export default function MyArea2() {
               >
                 <MyAreaPanels />
                 {activeDatasetIds.includes('parkeerzones') && (
-                  <MaWMSLayer
+                  <MaPolyLineLayer
                     url="https://map.data.amsterdam.nl/maps/parkeerzones?"
                     options={PARKEERZONES_WMS_OPTIONS.parkeerzones}
                     polylineOptions={PARKEERZONES_POLYLINE_OPTIONS.parkeerzones}
@@ -182,7 +175,7 @@ export default function MyArea2() {
                   />
                 )}
                 {activeDatasetIds.includes('parkeerzones_uitz') && (
-                  <MaWMSLayer
+                  <MaPolyLineLayer
                     url="https://map.data.amsterdam.nl/maps/parkeerzones_uitz?"
                     options={PARKEERZONES_WMS_OPTIONS.parkeerzones_uitz}
                     polylineOptions={
