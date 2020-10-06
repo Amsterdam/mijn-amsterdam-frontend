@@ -357,8 +357,6 @@ export async function loadServicesMapDatasetItem(
   if (config.transformDetail) {
     requestConfig.transformResponse = config.transformDetail;
   }
-  console.log('Requesting dataset detail', requestConfig);
-  const result = await requestData(requestConfig, sessionID, {});
-  console.log('Dataset detail result', result);
-  return result;
+
+  return requestData(requestConfig, sessionID, {});
 }
