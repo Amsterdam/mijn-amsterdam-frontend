@@ -19,6 +19,7 @@ import React, { useCallback, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { HOOD_ZOOM } from '../../../universal/config/map';
+import { getFullAddress } from '../../../universal/helpers';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useDesktopScreen } from '../../hooks';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -138,7 +139,14 @@ export default function MyArea2() {
               }}
             >
               <BaseLayer />
-              <HomeIconMarker center={center} />
+              <HomeIconMarker
+                address={
+                  HOME.content?.address
+                    ? getFullAddress(HOME.content.address)
+                    : ''
+                }
+                center={center}
+              />
               <StyledViewerContainer
                 bottomRight={
                   <>

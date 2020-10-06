@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { ThemeProvider } from '@amsterdam/asc-ui';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import 'leaflet/dist/leaflet.css';
+import { getFullAddress } from '../../../universal/helpers/brp';
 
 const DasboardMap = styled(Map)`
   position: absolute;
@@ -29,7 +30,13 @@ export default function MyArea2Dashboard() {
           }}
         >
           <BaseLayer />
-          <HomeIconMarker center={center} zoom={LOCATION_ZOOM} />
+          <HomeIconMarker
+            address={
+              HOME.content?.address ? getFullAddress(HOME.content.address) : ''
+            }
+            center={center}
+            zoom={LOCATION_ZOOM}
+          />
         </DasboardMap>
       ) : (
         <MyAreaLoader />

@@ -83,7 +83,6 @@ export function MyAreaDashboard({
       <NavLink to={AppRoutes.BUURT} className={styles.MapDashboardOverlay}>
         <div>
           <Heading size="large">Mijn buurt</Heading>
-          {address && <p>{getFullAddress(address)}</p>}
           <p>
             Klik voor een overzicht van gemeentelijke informatie rond uw{' '}
             {profileType === 'private' ? 'eigen woning' : 'bedrijf'}.

@@ -22,8 +22,9 @@ export function getFullAddress(
   } | null
 ) {
   return adres
-    ? `${adres.straatnaam} ${adres.huisnummer || ''} ${adres.huisletter ||
-        ''} ${adres.huisnummertoevoeging || ''}`.trim()
+    ? `${adres.straatnaam} ${adres.huisnummer || ''} ${
+        adres.huisletter || ''
+      } ${adres.huisnummertoevoeging || ''}`.trim()
     : 'unknown address';
 }
 
