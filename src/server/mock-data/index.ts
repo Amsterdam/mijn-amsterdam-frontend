@@ -1,8 +1,6 @@
 import { MyTip } from '../../universal/types';
 import { ApiUrls, DEV_USER_TYPE_HEADER } from '../config';
 import AFVAL from './json/afvalophaalgebieden.json';
-import AMSTERDAM_CONTENT_FOOTER from './json/amsterdam-nl-content-footer.json';
-import AMSTERDAM_CONTENT_GENERAL_INFO from './json/amsterdam-nl-content-uitleg.json';
 import BAG from './json/bag.json';
 import BAG2 from './json/bag2.json';
 import BELASTINGEN from './json/belasting.json';
@@ -131,24 +129,6 @@ export const mockDataConfig: MockDataConfig = {
       //   return await loadMockApiResponseJson(MILIEUZONE);
       // }
       return await loadMockApiResponseJson(MILIEUZONE);
-    },
-  },
-  [ApiUrls.CMS_CONTENT_GENERAL_INFO]: {
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    responseData: async (config: any) => {
-      // if (isCommercialUser(config)) {
-      //   return 'no-content';
-      // }
-      return await loadMockApiResponseJson(AMSTERDAM_CONTENT_GENERAL_INFO);
-    },
-  },
-  [ApiUrls.CMS_CONTENT_FOOTER]: {
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
-    responseData: async (config: any) => {
-      // if (isCommercialUser(config)) {
-      //   return 'no-content';
-      // }
-      return await loadMockApiResponseJson(AMSTERDAM_CONTENT_FOOTER);
     },
   },
   [ApiUrls.VERGUNNINGEN]: {

@@ -194,7 +194,11 @@ async function getGeneralPage(
     }),
     sessionID,
     passthroughRequestHeaders
-  );
+  ).then((apiData) => {
+    fileCache.setKey('CMS_CONTENT_GENERAL_INFO', apiData);
+    fileCache.save();
+    return apiData;
+  });
 }
 
 async function getFooter(
@@ -211,7 +215,11 @@ async function getFooter(
     }),
     sessionID,
     passthroughRequestHeaders
-  );
+  ).then((apiData) => {
+    fileCache.setKey('CMS_CONTENT_FOOTER', apiData);
+    fileCache.save();
+    return apiData;
+  });
 }
 
 export async function fetchCMSCONTENT(
