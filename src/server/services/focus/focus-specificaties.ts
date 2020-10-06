@@ -151,7 +151,7 @@ export async function fetchFOCUSSpecificationsGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  if (!FeatureToggle.focusUitkeringsspecificatieNotificationsActive) {
+  if (!FeatureToggle.focusDocumentDownloadsActive) {
     return apiSuccesResult({ notifications: [] });
   }
 
