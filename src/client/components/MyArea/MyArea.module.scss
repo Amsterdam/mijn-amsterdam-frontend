@@ -20,7 +20,7 @@
 
 .MapDashboard {
   background-color: $color-neutral-grey1;
-  min-height: 48rem;
+  min-height: 50rem;
   margin-bottom: 10rem;
   position: relative;
 }
@@ -37,11 +37,11 @@
   text-decoration: none;
   z-index: z-index(myarea-dashboard-overlay);
 
-  div {
+  > div {
     background-color: $color-white;
     padding: 2rem 4rem;
-    width: 42rem;
-    margin-left: 50%;
+    width: 46rem;
+    margin-left: calc(50% + 2rem);
   }
 }
 
@@ -140,4 +140,18 @@
 
 .InfoDetailDescription {
   white-space: pre-line;
+}
+
+:global(.leaflet-tooltip).MarkerText {
+  background-color: rgba(255, 255, 255, .5);
+  color: $color-black;
+  border-radius: 0;
+  text-align: center;
+  border: 0;
+  box-shadow: none;
+  font-size: 1.8rem;
+  font-weight: 500;
+  &:before {
+    display: none;
+  }
 }

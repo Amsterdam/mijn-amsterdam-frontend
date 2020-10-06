@@ -1,19 +1,21 @@
 import { Marker } from '@amsterdam/arm-core';
-import L, { LeafletEventHandlerFn } from 'leaflet';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import L, { LeafletEventHandlerFn, Marker as MarkerType } from 'leaflet';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { LOCATION_ZOOM } from '../../../universal/config/map';
 import iconUrl from '../../assets/icons/home.svg';
 import iconUrlCommercial from '../../assets/icons/map/homeCommercial__primary-red.svg';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useMapRef } from './useMap';
+import styles from './MyArea.module.scss';
 
 interface MaMarkerProps {
   latlng: LatLngObject;
   iconUrl: string;
   onClick?: LeafletEventHandlerFn;
+  label?: string;
 }
 
-function MaMarker({ latlng, iconUrl, onClick }: MaMarkerProps) {
+function MaMarker({ latlng, iconUrl, onClick, label }: MaMarkerProps) {
   const markerConfig = useMemo(() => {
     const icon = L.icon({
       iconUrl,
@@ -30,6 +32,21 @@ function MaMarker({ latlng, iconUrl, onClick }: MaMarkerProps) {
     return { options: { icon }, events };
   }, [iconUrl, onClick]);
 
+  const [markerInstance, setInstance] = useState<MarkerType | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    if (markerInstance && label) {
+      markerInstance.unbindTooltip().bindTooltip(label, {
+        className: styles.MarkerText,
+        permanent: true,
+        offset: [0, 40],
+        direction: 'center',
+      });
+    }
+  }, [markerInstance, label]);
+
   const latLngObject = useMemo(() => {
     return new L.LatLng(latlng.lat, latlng.lng);
   }, [latlng]);
@@ -39,6 +56,7 @@ function MaMarker({ latlng, iconUrl, onClick }: MaMarkerProps) {
       latLng={latLngObject}
       options={markerConfig.options}
       events={markerConfig.events}
+      setInstance={(markerInstance) => setInstance(markerInstance)}
     />
   );
 }
@@ -78,6 +96,7 @@ export const HomeIconMarker = function HomeIconMarker({
       iconUrl={homeIconUrl}
       onClick={doCenter}
       latlng={center}
+      label={address}
     />
   );
 };
