@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/node';
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, Chapters } from '../../../universal/config';
+import { AppRoutes, Chapters, FeatureToggle } from '../../../universal/config';
 import {
   apiSuccesResult,
   dateFormat,
@@ -248,7 +248,10 @@ export function createTozoResult(
   if (aanvraagSteps['Tozo 3']) {
     tozo3Steps.unshift(aanvraagSteps['Tozo 3']);
   }
-  const tozo3Item = tozo3Steps.length && createTozoItem('Tozo 3', tozo3Steps);
+  const tozo3Item =
+    FeatureToggle.tozo3active &&
+    tozo3Steps.length &&
+    createTozoItem('Tozo 3', tozo3Steps);
 
   const tozoItems: FocusItem[] = [];
 
