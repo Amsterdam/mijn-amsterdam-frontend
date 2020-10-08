@@ -1,7 +1,7 @@
 import { dateFormat, defaultDateFormat } from '../../../universal/helpers';
 import { stepLabels } from './focus-aanvragen-content';
 import { FocusTozoDocument } from './focus-combined';
-import { FocusStepContent, FocusDocumentFromSource } from './focus-types';
+import { FocusStepContent } from './focus-types';
 
 function productName(
   document: Pick<FocusTozoDocument, 'productTitle' | 'productSpecific'>,
