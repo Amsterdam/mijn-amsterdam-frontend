@@ -350,7 +350,7 @@ Object {
     },
     Object {
       "chapter": "INKOMEN",
-      "datePublished": "2020-03-17T00:00:00+01:00",
+      "datePublished": "2020-09-28T00:00:00+01:00",
       "dateStart": "2020-03-17T00:00:00+01:00",
       "id": "3846397689",
       "link": Object {
@@ -633,6 +633,29 @@ Object {
           "isChecked": true,
           "notificationDescription": "U hebt recht op de Tozo 2 uitkering (besluit: 17 maart 2020).",
           "notificationTitle": "Tozo 2 uitkering: Uw aanvraag is toegekend",
+          "product": "Tozo 2",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2020-09-28T00:00:00+01:00",
+          "description": "<p>
+        U hebt geen recht op Tozo 2. Bekijk de brief voor meer details.
+      </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2020-09-28T00:00:00+01:00",
+              "id": "218062037878787",
+              "title": "Besluit afwijzing",
+              "type": "PDF",
+              "url": "/api/focus/document?id=218062037878787",
+            },
+          ],
+          "id": "3674336394",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt geen recht op Tozo 2 (besluit: 28 september 2020).",
+          "notificationTitle": "Tozo 2: Uw aanvraag is afgewezen",
           "product": "Tozo 2",
           "status": "Besluit",
           "title": "besluit",

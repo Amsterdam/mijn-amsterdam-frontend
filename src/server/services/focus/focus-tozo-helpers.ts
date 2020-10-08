@@ -87,11 +87,14 @@ export function createTozoItemStep(document: FocusTozoDocument) {
   const labelSet = getLabelSet(document);
 
   if (!labelSet) {
-    Sentry.captureMessage('Unknown Tozo document encountered', {
-      extra: {
-        document,
-      },
-    });
+    Sentry.captureMessage(
+      `Unknown Tozo document (${document.documentCodeId}) encountered`,
+      {
+        extra: {
+          document,
+        },
+      }
+    );
     return null;
   }
 
