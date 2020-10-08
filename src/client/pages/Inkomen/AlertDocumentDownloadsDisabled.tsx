@@ -7,8 +7,8 @@ export default function AlertDocumentDownloadsDisabled() {
     (!FeatureToggle.focusDocumentDownloadsActive && (
       <Alert type="warning">
         <p>
-          In verband met technische problemen zijn de documenten van Werk
-          Participatie en Inkomen tijdelijk niet in te zien en te downloaden
+          Door technische problemen kunt u de brieven van Inkomen en Stadspas op
+          dit moment niet openen en downloaden. Onze excuses voor het ongemak.
         </p>
       </Alert>
     )) ||
