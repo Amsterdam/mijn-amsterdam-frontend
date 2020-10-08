@@ -163,23 +163,7 @@ export async function fetchFOCUSSpecificationsGenerated(
       uitkeringsspecificaties,
     } = FOCUS_SPECIFICATIES.content;
 
-    if (
-      !FeatureToggle.focusDocumentDownloadsActive &&
-      (jaaropgaven.length || uitkeringsspecificaties.length)
-    ) {
-      notifications.push({
-        chapter: Chapters.INKOMEN,
-        datePublished: new Date().toISOString(),
-        isAlert: true,
-        hideDatePublished: true,
-        id: `focus-document-download-notification`,
-        title: ``,
-        description:
-          'Door technische problemen kunt u de brieven van Inkomen en Stadspas op dit moment niet openen en downloaden. Onze excuses voor het ongemak.',
-      });
-    }
-
-    if (!FeatureToggle.focusDocumentDownloadsActive) {
+    if (FeatureToggle.focusDocumentDownloadsActive) {
       if (jaaropgaven.length) {
         notifications.push(
           transformIncomeSpecificationNotification('jaaropgave', jaaropgaven[0])
@@ -194,6 +178,17 @@ export async function fetchFOCUSSpecificationsGenerated(
           )
         );
       }
+    } else if (jaaropgaven.length || uitkeringsspecificaties.length) {
+      notifications.push({
+        chapter: Chapters.INKOMEN,
+        datePublished: new Date().toISOString(),
+        isAlert: true,
+        hideDatePublished: true,
+        id: `focus-document-download-notification`,
+        title: ``,
+        description:
+          'Door technische problemen kunt u de brieven van Inkomen en Stadspas op dit moment niet openen en downloaden. Onze excuses voor het ongemak.',
+      });
     }
 
     return apiSuccesResult({
