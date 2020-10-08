@@ -119,6 +119,17 @@ const intrekkenLabels: FocusStepContent = {
     `<p>U hebt uw ${document.productTitle} aanvraag ingetrokken. Bekijk de brief voor meer details.</p>`,
 };
 
+const herzieningLabels: FocusStepContent = {
+  notification: {
+    title: document => `${document.productTitle}: Besluit herzien`,
+    description: document =>
+      `Ons besluit is herzien, uw uitkering wordt teruggevorderd.`,
+  },
+  status: stepLabels.beslissing,
+  description: document =>
+    `<p>Ons besluit is herzien, uw uitkering wordt teruggevorderd.</p>`,
+};
+
 const vrijeBeschikkingLabels: FocusStepContent = {
   notification: {
     title: document => `${document.productTitle}: Besluit aanvraag`,
@@ -142,7 +153,7 @@ export type FocusTozoLabelSet = {
   labels: FocusStepContent;
   omschrijving: string;
   documentTitle: string;
-  product: 'Tozo 1' | 'Tozo 2';
+  product: 'Tozo 1' | 'Tozo 2' | 'Tozo 3';
   productSpecific: 'uitkering' | 'lening' | 'voorschot' | 'aanvraag' | '';
   stepType: FocusTozoStepType;
 };
@@ -173,6 +184,15 @@ export const tozoDocumentLabelSet: Record<
     labels: aanvraagLabels,
     documentTitle: 'Ontvangst- bevestiging Aanvraag',
     product: 'Tozo 2',
+    productSpecific: 'aanvraag',
+    stepType: 'aanvraag',
+  },
+  '785': {
+    omschrijving:
+      'TOZO 3 (vervolgregeling tegemoetkoming Ondernemers en Zelfstandigen)',
+    labels: aanvraagLabels,
+    documentTitle: 'Ontvangst- bevestiging Aanvraag',
+    product: 'Tozo 3',
     productSpecific: 'aanvraag',
     stepType: 'aanvraag',
   },
@@ -253,7 +273,7 @@ export const tozoDocumentLabelSet: Record<
     labels: intrekkenLabels,
     documentTitle: 'Besluit intrekking met terugbetaling',
     product: 'Tozo 1',
-    productSpecific: 'aanvraag',
+    productSpecific: '',
     stepType: 'intrekken',
   },
   '175331': {
@@ -261,7 +281,7 @@ export const tozoDocumentLabelSet: Record<
     labels: intrekkenLabels,
     documentTitle: 'Brief intrekken Tozo 1 aanvraag',
     product: 'Tozo 1',
-    productSpecific: 'aanvraag',
+    productSpecific: '',
     stepType: 'intrekken',
   },
   '175334': {
@@ -317,7 +337,7 @@ export const tozoDocumentLabelSet: Record<
     labels: intrekkenLabels,
     documentTitle: 'Brief intrekken Tozo 2 aanvraag',
     product: 'Tozo 2',
-    productSpecific: 'aanvraag',
+    productSpecific: '',
     stepType: 'intrekken',
   },
   '175342': {
@@ -341,7 +361,7 @@ export const tozoDocumentLabelSet: Record<
     labels: intrekkenLabels,
     documentTitle: 'Besluit intrekking met terugbetaling',
     product: 'Tozo 2',
-    productSpecific: 'aanvraag',
+    productSpecific: '',
     stepType: 'intrekken',
   },
   '175345': {
@@ -364,6 +384,14 @@ export const tozoDocumentLabelSet: Record<
     omschrijving: 'Tozo2 Toekennen via batch',
     labels: toekennenLabels,
     documentTitle: 'Besluit toekenning uitkering',
+    product: 'Tozo 2',
+    productSpecific: 'uitkering',
+    stepType: 'besluit',
+  },
+  '175355': {
+    omschrijving: 'Tozo Herziening met terugvordering',
+    labels: herzieningLabels,
+    documentTitle: 'Tozo Herziening met terugvordering',
     product: 'Tozo 2',
     productSpecific: 'uitkering',
     stepType: 'besluit',

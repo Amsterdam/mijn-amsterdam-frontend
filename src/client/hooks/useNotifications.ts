@@ -13,7 +13,9 @@ const appStateNotificationsSelector = selectorFamily({
       appState.NOTIFICATIONS.content
     ) {
       return appState.NOTIFICATIONS.content.filter(
-        notification => notification.chapter !== Chapters.BRP
+        notification =>
+          notification.chapter !== Chapters.BRP &&
+          notification.chapter !== Chapters.BURGERZAKEN
       );
     }
 
