@@ -119,17 +119,6 @@ const intrekkenLabels: FocusStepContent = {
     `<p>U hebt uw ${document.productTitle} aanvraag ingetrokken. Bekijk de brief voor meer details.</p>`,
 };
 
-const herzieningLabels: FocusStepContent = {
-  notification: {
-    title: document => `${document.productTitle}: Besluit herzien`,
-    description: document =>
-      `Ons besluit is herzien, uw uitkering wordt teruggevorderd.`,
-  },
-  status: stepLabels.beslissing,
-  description: document =>
-    `<p>Ons besluit is herzien, uw uitkering wordt teruggevorderd.</p>`,
-};
-
 const vrijeBeschikkingLabels: FocusStepContent = {
   notification: {
     title: document => `${document.productTitle}: Besluit aanvraag`,
@@ -384,14 +373,6 @@ export const tozoDocumentLabelSet: Record<
     omschrijving: 'Tozo2 Toekennen via batch',
     labels: toekennenLabels,
     documentTitle: 'Besluit toekenning uitkering',
-    product: 'Tozo 2',
-    productSpecific: 'uitkering',
-    stepType: 'besluit',
-  },
-  '175355': {
-    omschrijving: 'Tozo Herziening met terugvordering',
-    labels: herzieningLabels,
-    documentTitle: 'Tozo Herziening met terugvordering',
     product: 'Tozo 2',
     productSpecific: 'uitkering',
     stepType: 'besluit',
