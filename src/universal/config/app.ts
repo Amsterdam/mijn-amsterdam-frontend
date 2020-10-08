@@ -16,6 +16,7 @@ export const FeatureToggle = {
   identiteitsbewijzenActive: true,
   tozoActive: true,
   tozo2active: true,
+  tozo3active: false,
   eherkenningActive: !IS_PRODUCTION,
   vergunningenActive: true,
   cmsFooterActive: true,

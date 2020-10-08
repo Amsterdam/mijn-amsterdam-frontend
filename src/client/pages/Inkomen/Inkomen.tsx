@@ -153,6 +153,17 @@ export default () => {
           </Alert>
         )}
         <AlertDocumentDownloadsDisabled />
+        {!FeatureToggle.tozo3active &&
+          tozoItems.some(item => item.productTitle === 'Tozo 2') && (
+            <Alert type="warning">
+              <p>
+                Hebt u Tozo 3 aangevraagd (aanvragen na 1 oktober 2020)? Wij
+                werken er hard aan om ook die aanvraag in Mijn Amsterdam te
+                tonen. Als het zover is, ziet u uw aanvraag vanzelf hier
+                verschijnen.
+              </p>
+            </Alert>
+          )}
       </PageContent>
       <SectionCollapsible
         id="SectionCollapsible-income-request-process"
