@@ -377,4 +377,12 @@ export const tozoDocumentLabelSet: Record<
     productSpecific: 'uitkering',
     stepType: 'besluit',
   },
+  '175359': {
+    omschrijving: 'Tozo2 Afwijzen via batch',
+    labels: afwijzenLabels,
+    documentTitle: 'Besluit afwijzing',
+    product: 'Tozo 2',
+    productSpecific: '',
+    stepType: 'besluit',
+  },
 };
