@@ -664,46 +664,6 @@ Object {
       "title": "Tozo 2 (aangevraagd na 1 juni 2020)",
       "type": "Tozo",
     },
-    Object {
-      "chapter": "INKOMEN",
-      "datePublished": "2020-02-05T00:00:00+01:00",
-      "dateStart": "2020-02-05T00:00:00+01:00",
-      "id": "3190640328",
-      "link": Object {
-        "title": "Bekijk hoe het met uw aanvraag staat",
-        "to": "/inkomen-en-stadspas/tozo/3190640328",
-      },
-      "productTitle": "Tozo 3",
-      "status": "Aanvraag",
-      "steps": Array [
-        Object {
-          "datePublished": "2020-02-05T00:00:00+01:00",
-          "description": "<p>
-        Wij hebben uw aanvraag Tozo 3 ontvangen.
-      </p>",
-          "documents": Array [
-            Object {
-              "datePublished": "2020-02-05T00:00:00+01:00",
-              "id": "2180622340381",
-              "title": "Ontvangst- bevestiging Aanvraag
-05 februari om 00:00 uur",
-              "type": "PDF",
-              "url": "/api/focus/document?id=2180622340381",
-            },
-          ],
-          "id": "3387306635",
-          "isActive": true,
-          "isChecked": true,
-          "notificationDescription": "Wij hebben uw aanvraag Tozo 3 ontvangen op 05 februari om 00:00 uur",
-          "notificationTitle": "Wij hebben uw aanvraag Tozo 3 ontvangen",
-          "product": "Tozo 3",
-          "status": "Aanvraag",
-          "title": "aanvraag",
-        },
-      ],
-      "title": "Tozo 3 (aangevraagd na 1 oktober 2020)",
-      "type": "Tozo",
-    },
   ],
   "status": "OK",
 }
