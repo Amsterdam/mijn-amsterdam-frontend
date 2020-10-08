@@ -51,7 +51,7 @@ export async function fetchFOCUSTozoGenerated(
       notifications.push({
         chapter: Chapters.INKOMEN,
         datePublished: '2020-10-01',
-        isAlert: true,
+        isAlert: false,
         hideDatePublished: false,
         id: `focus-tozo3-notification`,
         title: `Tozo 3`,
