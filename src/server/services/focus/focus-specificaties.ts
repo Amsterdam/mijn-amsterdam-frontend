@@ -151,23 +151,6 @@ export async function fetchFOCUSSpecificationsGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  if (!FeatureToggle.focusDocumentDownloadsActive) {
-    return apiSuccesResult({
-      notifications: [
-        {
-          chapter: Chapters.INKOMEN,
-          datePublished: new Date().toISOString(),
-          isAlert: true,
-          hideDatePublished: true,
-          id: `focus-document-download-notification`,
-          title: ``,
-          description:
-            'Door technische problemen kunt u de brieven van Inkomen en Stadspas op dit moment niet openen en downloaden. Onze excuses voor het ongemak.',
-        },
-      ],
-    });
-  }
-
   const FOCUS_SPECIFICATIES = await fetchFOCUSSpecificaties(
     sessionID,
     passthroughRequestHeaders
@@ -180,19 +163,32 @@ export async function fetchFOCUSSpecificationsGenerated(
       uitkeringsspecificaties,
     } = FOCUS_SPECIFICATIES.content;
 
-    if (jaaropgaven.length) {
-      notifications.push(
-        transformIncomeSpecificationNotification('jaaropgave', jaaropgaven[0])
-      );
-    }
+    if (FeatureToggle.focusDocumentDownloadsActive) {
+      if (jaaropgaven.length) {
+        notifications.push(
+          transformIncomeSpecificationNotification('jaaropgave', jaaropgaven[0])
+        );
+      }
 
-    if (uitkeringsspecificaties.length) {
-      notifications.push(
-        transformIncomeSpecificationNotification(
-          'uitkeringsspecificatie',
-          uitkeringsspecificaties[0]
-        )
-      );
+      if (uitkeringsspecificaties.length) {
+        notifications.push(
+          transformIncomeSpecificationNotification(
+            'uitkeringsspecificatie',
+            uitkeringsspecificaties[0]
+          )
+        );
+      }
+    } else if (jaaropgaven.length || uitkeringsspecificaties.length) {
+      notifications.push({
+        chapter: Chapters.INKOMEN,
+        datePublished: new Date().toISOString(),
+        isAlert: true,
+        hideDatePublished: true,
+        id: `focus-document-download-notification`,
+        title: ``,
+        description:
+          'Door technische problemen kunt u de brieven van Inkomen en Stadspas op dit moment niet openen en downloaden. Onze excuses voor het ongemak.',
+      });
     }
 
     return apiSuccesResult({
