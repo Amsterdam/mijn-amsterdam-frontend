@@ -28,6 +28,7 @@ import {
 } from '../../pages/InkomenSpecificaties/InkomenSpecificaties';
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import styles from './Inkomen.module.scss';
+import AlertDocumentDownloadsDisabled from './AlertDocumentDownloadsDisabled';
 
 export const incomSpecificationsRouteMonthly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES']
@@ -151,6 +152,7 @@ export default () => {
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>
         )}
+        <AlertDocumentDownloadsDisabled />
       </PageContent>
       <SectionCollapsible
         id="SectionCollapsible-income-request-process"

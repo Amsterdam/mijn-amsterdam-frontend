@@ -2,14 +2,15 @@ import { format } from 'date-fns';
 import { ReactNode } from 'react';
 import { Chapters } from '../../../universal/config';
 import { API_BASE_PATH } from '../../../universal/config/api';
+import { FeatureToggle } from '../../../universal/config/app';
 import {
   dateFormat,
   dateSort,
   defaultDateFormat,
 } from '../../../universal/helpers';
 import {
-  apiSuccesResult,
   apiDependencyError,
+  apiSuccesResult,
 } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
 import {
@@ -150,6 +151,23 @@ export async function fetchFOCUSSpecificationsGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
+  if (!FeatureToggle.focusDocumentDownloadsActive) {
+    return apiSuccesResult({
+      notifications: [
+        {
+          chapter: Chapters.INKOMEN,
+          datePublished: new Date().toISOString(),
+          isAlert: true,
+          hideDatePublished: true,
+          id: `focus-document-download-notification`,
+          title: ``,
+          description:
+            'Door technische problemen kunt u de brieven van Inkomen en Stadspas op dit moment niet openen en downloaden. Onze excuses voor het ongemak.',
+        },
+      ],
+    });
+  }
+
   const FOCUS_SPECIFICATIES = await fetchFOCUSSpecificaties(
     sessionID,
     passthroughRequestHeaders

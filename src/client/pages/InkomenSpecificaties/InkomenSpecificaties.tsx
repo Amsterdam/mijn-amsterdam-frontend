@@ -19,6 +19,7 @@ import {
 import { isNativeDatePickerInputSupported } from '../../components/DateInput/DateInput';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './InkomenSpecificaties.module.scss';
+import AlertDocumentDownloadsDisabled from '../Inkomen/AlertDocumentDownloadsDisabled';
 
 export const specificationsTableDisplayProps = {
   title: 'Omschrijving',
@@ -146,6 +147,7 @@ export default () => {
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>
         )}
+        <AlertDocumentDownloadsDisabled />
       </PageContent>
       <Section
         className={styles.TableSection}
