@@ -109,8 +109,9 @@ const adres: ProfileLabels<Partial<Adres>> = {
   ],
   aantalBewoners: [
     'Aantal bewoners',
-    value => {
-      return FeatureToggle.residentCountActive ? (
+    (value, _item, brpData) => {
+      return FeatureToggle.residentCountActive &&
+        !!brpData?.adres?._adresSleutel ? (
         value === -1 ? (
           <LoadingContent barConfig={[['2rem', '2rem', '0']]} />
         ) : (
@@ -158,6 +159,9 @@ export const brpInfoLabels = {
 };
 
 export function format<T, X>(labelConfig: X, data: any, profileData: T) {
+  if (!data) {
+    return data;
+  }
   const formattedData = entries(labelConfig).reduce((acc, [key, formatter]) => {
     const labelFormatter = Array.isArray(formatter) ? formatter[0] : formatter;
     const label =
@@ -187,8 +191,8 @@ export interface ProfileSection {
 }
 
 interface BrpProfileData {
-  persoon: ProfileSection;
-  adres: ProfileSection;
+  persoon: ProfileSection | null;
+  adres: ProfileSection | null;
   adresHistorisch?: ProfileSection[];
   verbintenis?: ProfileSection;
   verbintenisHistorisch?: ProfileSection[];
