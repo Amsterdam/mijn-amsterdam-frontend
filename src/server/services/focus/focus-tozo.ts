@@ -55,7 +55,7 @@ export async function fetchFOCUSTozoGenerated(
         hideDatePublished: false,
         id: `focus-tozo3-notification`,
         title: `Tozo 3`,
-        description: `Hebt u Tozo 3 aangevraagd (aanvragen na 1 oktober 2020)? Wij
+        description: `Hebt u Tozo 3 aangevraagd (aanvragen vanaf 1 oktober 2020)? Wij
                 werken er hard aan om ook die aanvraag in Mijn Amsterdam te
                 tonen. Als het zover is, ziet u uw aanvraag vanzelf hier
                 verschijnen.`,
