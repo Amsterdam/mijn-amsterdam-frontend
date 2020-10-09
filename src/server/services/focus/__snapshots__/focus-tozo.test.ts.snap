@@ -352,10 +352,10 @@ Object {
       "chapter": "INKOMEN",
       "datePublished": "2020-09-28T00:00:00+01:00",
       "dateStart": "2020-03-17T00:00:00+01:00",
-      "id": "3846397689",
+      "id": "3578630920",
       "link": Object {
         "title": "Bekijk hoe het met uw aanvraag staat",
-        "to": "/inkomen-en-stadspas/tozo/3846397689",
+        "to": "/inkomen-en-stadspas/tozo/3578630920",
       },
       "productTitle": "Tozo 2",
       "status": "Besluit",
@@ -662,6 +662,322 @@ Object {
         },
       ],
       "title": "Tozo 2 (aangevraagd vanaf 1 juni 2020)",
+      "type": "Tozo",
+    },
+    Object {
+      "chapter": "INKOMEN",
+      "datePublished": "2020-10-01",
+      "dateStart": "2020-02-05T00:00:00+01:00",
+      "id": "685054265",
+      "link": Object {
+        "title": "Bekijk hoe het met uw aanvraag staat",
+        "to": "/inkomen-en-stadspas/tozo/685054265",
+      },
+      "productTitle": "Tozo 3",
+      "status": "Besluit",
+      "steps": Array [
+        Object {
+          "datePublished": "2020-02-05T00:00:00+01:00",
+          "description": "<p>
+        Wij hebben uw aanvraag Tozo 3 ontvangen.
+      </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2020-02-05T00:00:00+01:00",
+              "id": "2180622340381",
+              "title": "Ontvangst- bevestiging Aanvraag
+05 februari om 00:00 uur",
+              "type": "PDF",
+              "url": "/api/focus/document?id=2180622340381",
+            },
+          ],
+          "id": "3387306635",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben uw aanvraag Tozo 3 ontvangen op 05 februari om 00:00 uur",
+          "notificationTitle": "Wij hebben uw aanvraag Tozo 3 ontvangen",
+          "product": "Tozo 3",
+          "status": "Aanvraag",
+          "title": "aanvraag",
+        },
+        Object {
+          "datePublished": "2020-10-01",
+          "description": "<p>
+          U hebt recht op de Tozo 3 uitkering. Bekijk de brief
+          voor meer details.
+        </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2020-10-01",
+              "id": "",
+              "title": "Besluit toekenning uitkering",
+              "type": "PDF",
+              "url": "/api/focus/document?id=",
+            },
+          ],
+          "id": "973123992",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt recht op de Tozo 3 uitkering (besluit: 01 oktober 2020).",
+          "notificationTitle": "Tozo 3 uitkering: Uw aanvraag is toegekend",
+          "product": "Tozo 3",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2020-10-01",
+          "description": "<p>
+          U hebt recht op de Tozo 3 voorschot. Bekijk de brief
+          voor meer details.
+        </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2020-10-01",
+              "id": "",
+              "title": "Brief betaling voorschot",
+              "type": "PDF",
+              "url": "/api/focus/document?id=",
+            },
+          ],
+          "id": "973123992",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt recht op de Tozo 3 voorschot (besluit: 01 oktober 2020).",
+          "notificationTitle": "Tozo 3 voorschot: Uw aanvraag is toegekend",
+          "product": "Tozo 3",
+          "status": "Besluit",
+          "title": "voorschot",
+        },
+        Object {
+          "datePublished": "2020-10-01",
+          "description": "<p>
+        Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken.
+        Bekijk de brief voor meer details.
+      </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2020-10-01",
+              "id": "",
+              "title": "Brief meer informatie",
+              "type": "PDF",
+              "url": "/api/focus/document?id=",
+            },
+          ],
+          "id": "973123992",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.",
+          "notificationTitle": "Tozo 3: Meer informatie nodig",
+          "product": "Tozo 3",
+          "status": "Informatie nodig",
+          "title": "herstelTermijn",
+        },
+        Object {
+          "datePublished": "2020-10-01",
+          "description": "<p>
+          U hebt recht op de Tozo 3 uitkering. Bekijk de brief
+          voor meer details.
+        </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2020-10-01",
+              "id": "",
+              "title": "Besluit toekenning uitkering",
+              "type": "PDF",
+              "url": "/api/focus/document?id=",
+            },
+          ],
+          "id": "973123992",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt recht op de Tozo 3 uitkering (besluit: 01 oktober 2020).",
+          "notificationTitle": "Tozo 3 uitkering: Uw aanvraag is toegekend",
+          "product": "Tozo 3",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2020-10-01",
+          "description": "<p>Wij behandelen uw aanvraag voor Tozo 3 niet meer. Bekijk de brief voor meer details.</p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2020-10-01",
+              "id": "",
+              "title": "Besluit buiten behandeling",
+              "type": "PDF",
+              "url": "/api/focus/document?id=",
+            },
+          ],
+          "id": "973123992",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Bekijk de brief voor meer details.",
+          "notificationTitle": "Tozo 3: Wij behandelen uw aanvraag niet meer",
+          "product": "Tozo 3",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2020-10-01",
+          "description": "<p>
+        U hebt geen recht op Tozo 3. Bekijk de brief voor meer details.
+      </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2020-10-01",
+              "id": "",
+              "title": "Besluit afwijzing",
+              "type": "PDF",
+              "url": "/api/focus/document?id=",
+            },
+          ],
+          "id": "973123992",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt geen recht op Tozo 3 (besluit: 01 oktober 2020).",
+          "notificationTitle": "Tozo 3: Uw aanvraag is afgewezen",
+          "product": "Tozo 3",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2020-10-01",
+          "description": "<p>U hebt uw Tozo 3 aanvraag ingetrokken. Bekijk de brief voor meer details.</p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2020-10-01",
+              "id": "",
+              "title": "Besluit intrekking met terugbetaling",
+              "type": "PDF",
+              "url": "/api/focus/document?id=",
+            },
+          ],
+          "id": "973123992",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt uw Tozo 3 aanvraag ingetrokken.",
+          "notificationTitle": "Tozo 3: Aanvraag ingetrokken",
+          "product": "Tozo 3",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2020-10-01",
+          "description": "<p>
+        U hebt geen recht op Tozo 3. Bekijk de brief voor meer details.
+      </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2020-10-01",
+              "id": "",
+              "title": "Besluit terugvordering",
+              "type": "PDF",
+              "url": "/api/focus/document?id=",
+            },
+          ],
+          "id": "973123992",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt geen recht op Tozo 3 (besluit: 01 oktober 2020).",
+          "notificationTitle": "Tozo 3: Uw aanvraag is afgewezen",
+          "product": "Tozo 3",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2020-10-01",
+          "description": "<p>
+          U hebt recht op de Tozo 3 lening. Bekijk de brief
+          voor meer details.
+        </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2020-10-01",
+              "id": "",
+              "title": "Besluit toekenning lening",
+              "type": "PDF",
+              "url": "/api/focus/document?id=",
+            },
+          ],
+          "id": "973123992",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt recht op de Tozo 3 lening (besluit: 01 oktober 2020).",
+          "notificationTitle": "Tozo 3 lening: Uw aanvraag is toegekend",
+          "product": "Tozo 3",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2020-10-01",
+          "description": "<p>U hebt uw Tozo 3 aanvraag ingetrokken. Bekijk de brief voor meer details.</p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2020-10-01",
+              "id": "",
+              "title": "Brief intrekken Tozo 3 aanvraag",
+              "type": "PDF",
+              "url": "/api/focus/document?id=",
+            },
+          ],
+          "id": "973123992",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt uw Tozo 3 aanvraag ingetrokken.",
+          "notificationTitle": "Tozo 3: Aanvraag ingetrokken",
+          "product": "Tozo 3",
+          "status": "Besluit",
+          "title": "intrekken",
+        },
+        Object {
+          "datePublished": "2020-10-01",
+          "description": "<p>
+        U hebt geen recht op Tozo 3. Bekijk de brief voor meer details.
+      </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2020-10-01",
+              "id": "",
+              "title": "Besluit afwijzing",
+              "type": "PDF",
+              "url": "/api/focus/document?id=",
+            },
+          ],
+          "id": "973123992",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt geen recht op Tozo 3 (besluit: 01 oktober 2020).",
+          "notificationTitle": "Tozo 3: Uw aanvraag is afgewezen",
+          "product": "Tozo 3",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2020-10-01",
+          "description": "<p>
+          U hebt recht op Tozo 3. Bekijk de brief
+          voor meer details.
+        </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2020-10-01",
+              "id": "",
+              "title": "Brief betaling voorschot",
+              "type": "PDF",
+              "url": "/api/focus/document?id=",
+            },
+          ],
+          "id": "973123992",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt recht op Tozo 3 (besluit: 01 oktober 2020).",
+          "notificationTitle": "Tozo 3: Uw aanvraag is toegekend",
+          "product": "Tozo 3",
+          "status": "Besluit",
+          "title": "voorschot",
+        },
+      ],
+      "title": "Tozo 3 (aangevraagd vanaf 1 oktober 2020)",
       "type": "Tozo",
     },
   ],
