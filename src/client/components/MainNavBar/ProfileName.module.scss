@@ -15,7 +15,7 @@
     text-decoration: underline;
   }
 
-  @include mq-phone() {
+  @include mq-tablet() {
     display: block;
     margin: 0;
     padding: 1rem 2rem;
@@ -40,8 +40,8 @@
     transform: translateY(-50%);
   }
 
-  @include mq-phone() {
-    margin-left: 5rem;
+  @include mq-tablet() {
+    margin-left: 2rem;
   }
 }
 
@@ -56,10 +56,11 @@
 
 .ProfileLink--private {
   margin-left: 2rem;
+
   + .ProfileLink--commercial {
     margin-left: 5.3rem;
 
-    @include mq-phone() {
+    @include mq-tablet() {
       margin-left: 2rem;
       margin-top: 1rem;
     }
