@@ -28,6 +28,7 @@ import {
 } from '../../pages/InkomenSpecificaties/InkomenSpecificaties';
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
 import styles from './Inkomen.module.scss';
+import AlertDocumentDownloadsDisabled from './AlertDocumentDownloadsDisabled';
 
 export const incomSpecificationsRouteMonthly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES']
@@ -151,6 +152,18 @@ export default () => {
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>
         )}
+        <AlertDocumentDownloadsDisabled />
+        {!FeatureToggle.tozo3active &&
+          tozoItems.some(item => item.productTitle === 'Tozo 2') && (
+            <Alert type="warning">
+              <p>
+                Hebt u Tozo 3 aangevraagd (aanvragen na 1 oktober 2020)? Wij
+                werken er hard aan om ook die aanvraag in Mijn Amsterdam te
+                tonen. Als het zover is, ziet u uw aanvraag vanzelf hier
+                verschijnen.
+              </p>
+            </Alert>
+          )}
       </PageContent>
       <SectionCollapsible
         id="SectionCollapsible-income-request-process"

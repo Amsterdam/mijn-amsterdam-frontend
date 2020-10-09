@@ -8,10 +8,12 @@ import { MyCase, MyNotification } from '../../../universal/types/App.types';
 import { stepStatusLabels } from './focus-aanvragen-content';
 import { createFocusRecentCase } from './focus-aanvragen-helpers';
 import { fetchFOCUSCombined } from './focus-combined';
+import { FeatureToggle } from '../../../universal/config/app';
 import {
   createTozoItemStepNotifications,
   createTozoResult,
 } from './focus-tozo-helpers';
+import { Chapters } from '../../../universal/config';
 
 export async function fetchFOCUSTozo(
   sessionID: SessionID,
@@ -41,6 +43,24 @@ export async function fetchFOCUSTozoGenerated(
     const notifications: MyNotification[] = TOZO.content.flatMap(item =>
       createTozoItemStepNotifications(item)
     );
+
+    if (
+      !FeatureToggle.tozo3active &&
+      TOZO.content.some(item => item.productTitle === 'Tozo 2')
+    ) {
+      notifications.push({
+        chapter: Chapters.INKOMEN,
+        datePublished: '2020-10-01',
+        isAlert: false,
+        hideDatePublished: false,
+        id: `focus-tozo3-notification`,
+        title: `Tozo 3`,
+        description: `Hebt u Tozo 3 aangevraagd (aanvragen na 1 oktober 2020)? Wij
+                werken er hard aan om ook die aanvraag in Mijn Amsterdam te
+                tonen. Als het zover is, ziet u uw aanvraag vanzelf hier
+                verschijnen.`,
+      });
+    }
 
     const cases: MyCase[] = TOZO.content
       .filter(

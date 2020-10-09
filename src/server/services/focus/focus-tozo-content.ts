@@ -1,7 +1,7 @@
 import { dateFormat, defaultDateFormat } from '../../../universal/helpers';
 import { stepLabels } from './focus-aanvragen-content';
 import { FocusTozoDocument } from './focus-combined';
-import { FocusStepContent, FocusDocumentFromSource } from './focus-types';
+import { FocusStepContent } from './focus-types';
 
 function productName(
   document: Pick<FocusTozoDocument, 'productTitle' | 'productSpecific'>,
@@ -142,7 +142,7 @@ export type FocusTozoLabelSet = {
   labels: FocusStepContent;
   omschrijving: string;
   documentTitle: string;
-  product: 'Tozo 1' | 'Tozo 2';
+  product: 'Tozo 1' | 'Tozo 2' | 'Tozo 3';
   productSpecific: 'uitkering' | 'lening' | 'voorschot' | 'aanvraag' | '';
   stepType: FocusTozoStepType;
 };
@@ -173,6 +173,15 @@ export const tozoDocumentLabelSet: Record<
     labels: aanvraagLabels,
     documentTitle: 'Ontvangst- bevestiging Aanvraag',
     product: 'Tozo 2',
+    productSpecific: 'aanvraag',
+    stepType: 'aanvraag',
+  },
+  '785': {
+    omschrijving:
+      'TOZO 3 (vervolgregeling tegemoetkoming Ondernemers en Zelfstandigen)',
+    labels: aanvraagLabels,
+    documentTitle: 'Ontvangst- bevestiging Aanvraag',
+    product: 'Tozo 3',
     productSpecific: 'aanvraag',
     stepType: 'aanvraag',
   },
@@ -253,7 +262,7 @@ export const tozoDocumentLabelSet: Record<
     labels: intrekkenLabels,
     documentTitle: 'Besluit intrekking met terugbetaling',
     product: 'Tozo 1',
-    productSpecific: 'aanvraag',
+    productSpecific: '',
     stepType: 'intrekken',
   },
   '175331': {
@@ -261,7 +270,7 @@ export const tozoDocumentLabelSet: Record<
     labels: intrekkenLabels,
     documentTitle: 'Brief intrekken Tozo 1 aanvraag',
     product: 'Tozo 1',
-    productSpecific: 'aanvraag',
+    productSpecific: '',
     stepType: 'intrekken',
   },
   '175334': {
@@ -317,7 +326,7 @@ export const tozoDocumentLabelSet: Record<
     labels: intrekkenLabels,
     documentTitle: 'Brief intrekken Tozo 2 aanvraag',
     product: 'Tozo 2',
-    productSpecific: 'aanvraag',
+    productSpecific: '',
     stepType: 'intrekken',
   },
   '175342': {
@@ -341,7 +350,7 @@ export const tozoDocumentLabelSet: Record<
     labels: intrekkenLabels,
     documentTitle: 'Besluit intrekking met terugbetaling',
     product: 'Tozo 2',
-    productSpecific: 'aanvraag',
+    productSpecific: '',
     stepType: 'intrekken',
   },
   '175345': {
@@ -366,6 +375,14 @@ export const tozoDocumentLabelSet: Record<
     documentTitle: 'Besluit toekenning uitkering',
     product: 'Tozo 2',
     productSpecific: 'uitkering',
+    stepType: 'besluit',
+  },
+  '175359': {
+    omschrijving: 'Tozo2 Afwijzen via batch',
+    labels: afwijzenLabels,
+    documentTitle: 'Besluit afwijzing',
+    product: 'Tozo 2',
+    productSpecific: '',
     stepType: 'besluit',
   },
 };

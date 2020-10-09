@@ -16,6 +16,7 @@ import {
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './InkomenDetail.module.scss';
+import AlertDocumentDownloadsDisabled from '../Inkomen/AlertDocumentDownloadsDisabled';
 
 export default () => {
   const { FOCUS_TOZO } = useAppStateGetter();
@@ -68,15 +69,9 @@ export default () => {
         </p>
         {!isLoading(FOCUS_TOZO) && (
           <p>
-            {TozoItem?.productTitle === 'Tozo 1' ? (
-              <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
-                Meer informatie over de {TozoItem?.title}
-              </Linkd>
-            ) : (
-              <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
-                Meer informatie over de {TozoItem?.title}
-              </Linkd>
-            )}
+            <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
+              Meer informatie over de {TozoItem?.title}
+            </Linkd>
           </p>
         )}
         {(isError(FOCUS_TOZO) || noContent) && (
@@ -84,6 +79,7 @@ export default () => {
             <p>We kunnen op dit moment geen gegevens tonen.</p>
           </Alert>
         )}
+        <AlertDocumentDownloadsDisabled />
         {isLoading(FOCUS_TOZO) && <LoadingContent />}
       </PageContent>
       {!!(TozoItem?.steps && TozoItem.steps.length) && (

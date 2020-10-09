@@ -16,6 +16,7 @@ import {
 import { StatusLineItem } from '../../components/StatusLine/StatusLine';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './InkomenDetail.module.scss';
+import AlertDocumentDownloadsDisabled from '../Inkomen/AlertDocumentDownloadsDisabled';
 
 export const MAX_STEP_COUNT_FOCUS_REUEST = 4;
 
@@ -89,6 +90,7 @@ export default () => {
             </p>
           </Alert>
         )}
+        <AlertDocumentDownloadsDisabled />
         {isLoading(FOCUS_AANVRAGEN) && <LoadingContent />}
       </PageContent>
       {!!focusItem && !!focusItem.steps && (

@@ -50,7 +50,9 @@ export function usePageChange() {
 
     if (!ExcludePageViewTrackingUrls.includes(location.pathname)) {
       trackPageView(
-        title,
+        PageTitles[route]
+          ? PageTitles[route]
+          : `[undefined] ${location.pathname}`,
         CustomTrackingUrls[location.pathname] || location.pathname
       );
     }
