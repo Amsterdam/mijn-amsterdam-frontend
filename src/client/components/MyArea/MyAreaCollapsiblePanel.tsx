@@ -70,8 +70,8 @@ function MyAreaCollapsiblePanelHeading({
         >
           <ChevronRight />
         </PanelIcon>
-        {title}
       </UnstyledButton>
+      {title}
     </PanelHeadingElement>
   );
 }
@@ -91,10 +91,7 @@ export default function MyAreaCollapsiblePanel({
     <CollapsiblePanel>
       <MyAreaCollapsiblePanelHeading
         title={title}
-        onClick={(event: any) => {
-          if (event.target.localName === 'input') {
-            return;
-          }
+        onClick={event => {
           setCollapsedState(
             isExpanded(collapsedState)
               ? CollapsedState.Collapsed
