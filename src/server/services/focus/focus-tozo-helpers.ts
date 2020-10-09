@@ -146,10 +146,10 @@ export function createTozoItem(productTitle: string, steps: FocusItemStep[]) {
       title = 'Tozo 1 (aangevraagd voor 1 juni 2020)';
       break;
     case 'Tozo 2':
-      title = 'Tozo 2 (aangevraagd na 1 juni 2020)';
+      title = 'Tozo 2 (aangevraagd vanaf 1 juni 2020)';
       break;
     case 'Tozo 3':
-      title = 'Tozo 3 (aangevraagd na 1 oktober 2020)';
+      title = 'Tozo 3 (aangevraagd vanaf 1 oktober 2020)';
       break;
   }
 
