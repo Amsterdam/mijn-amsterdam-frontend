@@ -91,13 +91,16 @@ export default function MyAreaCollapsiblePanel({
     <CollapsiblePanel>
       <MyAreaCollapsiblePanelHeading
         title={title}
-        onClick={(event) =>
+        onClick={(event: any) => {
+          if (event.target.localName === 'input') {
+            return;
+          }
           setCollapsedState(
             isExpanded(collapsedState)
               ? CollapsedState.Collapsed
               : CollapsedState.Expanded
-          )
-        }
+          );
+        }}
         state={collapsedState}
       />
       {isExpanded(collapsedState) && (
