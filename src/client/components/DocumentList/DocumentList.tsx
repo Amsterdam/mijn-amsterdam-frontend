@@ -5,6 +5,7 @@ import { IconDownload } from '../../assets/icons';
 import { trackDownload, trackPageView } from '../../hooks/analytics.hook';
 import { Button } from '../Button/Button';
 import styles from './DocumentList.module.scss';
+import * as Sentry from '@sentry/browser';
 
 interface DocumentLinkProps {
   document: GenericDocument;
@@ -51,9 +52,18 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
           `/downloads/${document.title}`,
           document.type
         );
-        // Tracking pageview here because trackDownload doesn't work properly in Matomo
-        trackPageView(document.title, window.location.pathname + downloadUrl);
-        downloadFile(document);
+        fetch(document.url)
+          .then(() => {
+            // Tracking pageview here because trackDownload doesn't work properly in Matomo
+            trackPageView(
+              document.title,
+              window.location.pathname + downloadUrl
+            );
+            downloadFile(document);
+          })
+          .catch((error) => {
+            Sentry.captureException(error);
+          });
       }}
     >
       {label || document.title}
