@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import StatusLine from './StatusLine';
 import { StatusLineItem } from './StatusLine';
+import { BrowserRouter } from 'react-router-dom';
 
 // TODO: Test more/less, html content, multiple items
 describe('<StatusLine />', () => {
@@ -27,7 +28,9 @@ describe('<StatusLine />', () => {
   it('Renders the correct html', () => {
     expect(
       shallow(
-        <StatusLine id="unittest" trackCategory="unittest" items={items} />
+        <BrowserRouter>
+          <StatusLine id="unittest" trackCategory="unittest" items={items} />
+        </BrowserRouter>
       ).html()
     ).toMatchSnapshot();
   });
