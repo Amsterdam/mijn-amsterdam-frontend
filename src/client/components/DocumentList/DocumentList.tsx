@@ -24,7 +24,11 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
       external={true}
       download={document.download || document.title}
       icon={IconDownload}
-      onClick={() => trackDownload(document.url)}
+      onClick={(event) => {
+        event.preventDefault();
+        trackDownload(document.url);
+        window.open(document.url);
+      }}
     >
       {label || document.title}
     </Linkd>
