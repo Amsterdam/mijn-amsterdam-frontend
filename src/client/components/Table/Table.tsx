@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { ReactNode } from 'react';
+import React, { isValidElement, ReactNode } from 'react';
 import { capitalizeFirstLetter, entries } from '../../../universal/helpers';
 import { Unshaped } from '../../../universal/types';
 import Linkd from '../Button/Button';
@@ -78,7 +78,9 @@ export default function Table({
                 {!!label && (
                   <span className={styles.DisplayPropLabel}>{label}:</span>
                 )}
-                {item[key] ? (
+                {item[key] && isValidElement(item[key]) ? (
+                  item[key]
+                ) : item[key] ? (
                   <InnerHtml>{item[key]}</InnerHtml>
                 ) : (
                   <span>&mdash;</span>

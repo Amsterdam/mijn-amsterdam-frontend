@@ -13,6 +13,7 @@ import {
   apiSuccesResult,
 } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
+import { LinkProps } from '../../../universal/types/App.types';
 import {
   fetchFOCUSCombined,
   FocusInkomenSpecificatie as FocusInkomenSpecificatieFromSource,
@@ -35,7 +36,7 @@ export const focusInkomenSpecificatieTypes: {
 export interface FocusInkomenSpecificatie
   extends FocusInkomenSpecificatieFromSource {
   displayDatePublished: string;
-  documentUrl: ReactNode;
+  link: LinkProps;
   notification?: MyNotification;
 }
 
@@ -88,14 +89,11 @@ function transformIncomSpecificationItem(
   return {
     ...item,
     displayDatePublished,
-    documentUrl: `<a
-        href=${`${API_BASE_PATH}/${item.url}`}
-        rel="external noopener noreferrer"
-        class="download"
-        download=${documentDownloadName(item)}
-      >
-        PDF
-      </a>`,
+    link: {
+      title: 'PDF',
+      to: item.url,
+      download: documentDownloadName(item),
+    },
   };
 }
 

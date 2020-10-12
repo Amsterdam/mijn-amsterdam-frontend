@@ -4,6 +4,7 @@ import { Linkd } from '../index';
 import styles from './DocumentList.module.scss';
 import { GenericDocument } from '../../../universal/types/App.types';
 import classnames from 'classnames';
+import { trackDownload } from '../../hooks/analytics.hook';
 
 interface DocumentLinkProps {
   document: GenericDocument;
@@ -18,11 +19,12 @@ interface DocumentListProps {
 export function DocumentLink({ document, label }: DocumentLinkProps) {
   return (
     <Linkd
-      className={classnames(styles.DocumentLink, 'download')}
+      className={styles.DocumentLink}
       href={document.url}
       external={true}
       download={document.title}
       icon={IconDownload}
+      onClick={() => trackDownload(document.url)}
     >
       {label || document.title}
     </Linkd>

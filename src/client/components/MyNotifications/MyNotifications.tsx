@@ -10,6 +10,8 @@ import {
 } from '../../../universal/types';
 import { Colors } from '../../config/app';
 import {
+  trackDownload,
+  trackItemClick,
   trackItemPresentation,
   useSessionCallbackOnceDebounced,
 } from '../../hooks/analytics.hook';
@@ -18,7 +20,6 @@ import ChapterIcon from '../ChapterIcon/ChapterIcon';
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './MyNotifications.module.scss';
-import { trackItemClick, trackDownload } from '../../hooks/analytics.hook';
 
 export interface MyNotificationsProps {
   items: MyNotification[];
@@ -114,7 +115,7 @@ export default function MyNotifications({
                       external={isLinkExternal}
                       download={item.link?.download}
                       className="download"
-                      onClick={(event) => {
+                      onClick={() => {
                         if (item.link?.download) {
                           trackDownload(item.link?.to);
                         } else {
