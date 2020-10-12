@@ -32,6 +32,7 @@ function getProfileType(req: Request) {
   return (queryParams(req).profileType as ProfileType) || DEFAULT_PROFILE_TYPE;
 }
 
+// Default service call just passing sessionID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
   return (sessionID: SessionID, req: Request) =>
     fetchService(sessionID, getPassthroughRequestHeaders(req));
@@ -53,7 +54,7 @@ const FOCUS_TOZO = callService(fetchFOCUSTozo);
 const WMO = callService(fetchWMO);
 const VERGUNNINGEN = callService(fetchVergunningen);
 
-// Location based services
+// Location, address, based services
 const BUURT = (sessionID: SessionID, req: Request) =>
   fetchBUURT(sessionID, getPassthroughRequestHeaders(req), getProfileType(req));
 
@@ -85,7 +86,7 @@ const CASES = async (sessionID: SessionID, req: Request) =>
   (await fetchGenerated(sessionID, getPassthroughRequestHeaders(req))).CASES;
 
 // Store all services for type derivation
-const services = {
+const SERVICES_INDEX = {
   BRP,
   CMS_CONTENT,
   KVK,
@@ -105,27 +106,18 @@ const services = {
   CASES,
 };
 
-export type ServicesType = typeof services;
-export type ServiceID = keyof ServicesType;
-export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
+export type AllServices = typeof SERVICES_INDEX;
+export type ServiceID = keyof AllServices;
+export type ServiceMap = { [key in ServiceID]: AllServices[ServiceID] };
 
-type PrivateServices = ServicesType;
-type PrivateCommercialServices = ServicesType;
-
-type CommercialServices = Pick<
-  ServiceMap,
-  | 'AFVAL'
-  | 'AFVALPUNTEN'
-  | 'BELASTINGEN'
-  | 'BUURT'
-  | 'CMS_CONTENT'
-  | 'ERFPACHT'
-  | 'NOTIFICATIONS'
-  | 'CASES'
-  | 'HOME'
-  | 'KVK'
-  | 'MILIEUZONE'
-  | 'VERGUNNINGEN'
+type CommercialServices = Omit<
+  AllServices,
+  | 'BRP'
+  | 'FOCUS_TOZO'
+  | 'FOCUS_SPECIFICATIES'
+  | 'FOCUS_AANVRAGEN'
+  | 'FOCUS_TOZO'
+  | 'WMO'
 >;
 
 type TipsServices = Pick<
@@ -144,8 +136,8 @@ type TipsServices = Pick<
 >;
 
 type ServicesByProfileType = {
-  private: PrivateServices;
-  'private-commercial': PrivateCommercialServices;
+  private: AllServices;
+  'private-commercial': AllServices;
   commercial: CommercialServices;
 };
 
@@ -221,11 +213,7 @@ export const servicesTips: TipsServices = {
 function loadServices(
   sessionID: SessionID,
   req: Request,
-  serviceMap:
-    | PrivateServices
-    | CommercialServices
-    | TipsServices
-    | PrivateCommercialServices,
+  serviceMap: CommercialServices | TipsServices | AllServices,
   filterIds: SessionID[] = []
 ) {
   return Object.entries(serviceMap)
@@ -290,6 +278,7 @@ export async function loadServicesAll(req: Request, res: Response) {
 
   const tipsPromise = loadServicesTipsRequestData(sessionID, req);
 
+  // Combine all results into 1 object
   const serviceResults = (await Promise.all(servicePromises)).reduce(
     (acc, result, index) => Object.assign(acc, result),
     {}
@@ -297,9 +286,11 @@ export async function loadServicesAll(req: Request, res: Response) {
 
   const tipsResult = await tipsPromise;
 
+  // Add tips result to final result
   return Object.assign(serviceResults, tipsResult);
 }
 
+// Fetches service data to send as post data for the tips api
 async function loadServicesTipsRequestData(sessionID: SessionID, req: Request) {
   const servicePromises = loadServices(sessionID, req, servicesTips);
   const requestData = (await Promise.allSettled(servicePromises)).reduce(
