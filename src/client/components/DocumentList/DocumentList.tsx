@@ -19,10 +19,11 @@ interface DocumentListProps {
 function downloadFile(docDownload: GenericDocument) {
   var link = document.createElement('a');
   link.href = docDownload.url;
-  link.download = addFileType(
+  const downloadName = addFileType(
     docDownload.download || docDownload.title,
     docDownload.type
   );
+  link.download = downloadName;
   link.click();
 }
 
@@ -46,7 +47,10 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
       lean={true}
       onClick={(event) => {
         event.preventDefault();
-        const downloadUrl = addFileType(document.url, document.type);
+        const downloadUrl = addFileType(
+          `/downloads/${document.title}`,
+          document.type
+        );
         trackDownload(downloadUrl);
         downloadFile(document);
       }}
