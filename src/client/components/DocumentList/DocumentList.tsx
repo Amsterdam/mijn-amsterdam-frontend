@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import React from 'react';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { IconDownload } from '../../assets/icons';
-import { trackDownload } from '../../hooks/analytics.hook';
+import { trackDownload, trackPageView } from '../../hooks/analytics.hook';
 import { Button } from '../Button/Button';
 import styles from './DocumentList.module.scss';
 
@@ -51,7 +51,8 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
           `/downloads/${document.title}`,
           document.type
         );
-        trackDownload(downloadUrl);
+        // Tracking pageview here because trackDownload doesn't work properly in Matomo
+        trackPageView(document.title, window.location.pathname + downloadUrl);
         downloadFile(document);
       }}
     >
