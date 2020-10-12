@@ -16,7 +16,7 @@ export const AppRoutes = {
   API_LOGIN: '/api/login',
   API1_LOGIN: '/api1/login',
   TIPS: '/overzicht-tips',
-  NOTIFICATIONS: '/overzicht-updates',
+  NOTIFICATIONS: '/overzicht-updates/:page?',
   AFVAL: '/afval',
   ACCESSIBILITY: '/toegankelijkheidsverklaring',
   GENERAL_INFO: '/uitleg',
@@ -27,7 +27,7 @@ export const AppRoutes = {
 export const PublicRoutes = [AppRoutes.API_LOGIN, AppRoutes.ACCESSIBILITY];
 
 export const PrivateRoutes = Object.values(AppRoutes).filter(
-  path => !PublicRoutes.includes(path)
+  (path) => !PublicRoutes.includes(path)
 );
 
 export const CustomTrackingUrls = {

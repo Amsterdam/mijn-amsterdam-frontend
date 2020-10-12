@@ -12,15 +12,26 @@ import {
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './MyNotifications.module.scss';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
+import { generatePath, useHistory, useParams } from 'react-router-dom';
+import { AppRoutes } from '../../../universal/config/routing';
 
 const PAGE_SIZE = 10;
-const INITIAL_INDEX = [0, PAGE_SIZE - 1];
 
 export default () => {
   const { NOTIFICATIONS } = useAppStateGetter();
   const notifications = useAppStateNotifications();
+  const { page = '1' } = useParams<{ page?: string }>();
+  const history = useHistory();
 
-  const [[startIndex, endIndex], setPageIndex] = useState(INITIAL_INDEX);
+  const initialPage = useMemo(() => {
+    return parseInt(page, 10);
+  }, [page]);
+
+  const [[startIndex, endIndex], setPageIndex] = useState([
+    initialPage - 1,
+    PAGE_SIZE - 1,
+  ]);
+
   const itemsPaginated = useMemo(() => {
     return notifications.slice(startIndex, endIndex + 1);
   }, [startIndex, endIndex, notifications]);
@@ -51,7 +62,11 @@ export default () => {
             className={styles.Pagination}
             totalCount={total}
             pageSize={PAGE_SIZE}
-            onPageClick={(page, ...index) => setPageIndex(index)}
+            initialPage={initialPage}
+            onPageClick={(page, ...index) => {
+              history.replace(generatePath(AppRoutes.NOTIFICATIONS, { page }));
+              setPageIndex(index);
+            }}
           />
         </PageContent>
       )}

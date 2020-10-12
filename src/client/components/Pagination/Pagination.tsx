@@ -11,6 +11,7 @@ export interface ComponentProps {
   className?: string;
   pageSize: number;
   maxPages?: number;
+  initialPage?: number;
 }
 
 export default function Pagination({
@@ -19,9 +20,10 @@ export default function Pagination({
   maxPages = 5,
   onPageClick,
   className,
+  initialPage = 1,
 }: ComponentProps) {
   const [{ currentPage, pages, totalPages }, setPager] = useState(
-    paginate(totalCount, 1, pageSize, maxPages)
+    paginate(totalCount, initialPage, pageSize, maxPages)
   );
 
   const selectPage = useCallback(
@@ -36,7 +38,7 @@ export default function Pagination({
 
   // Effect for resetting the current page when any of the settings change.
   useEffect(() => {
-    selectPage(1);
+    selectPage(initialPage);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [totalCount, pageSize, maxPages]);
 
