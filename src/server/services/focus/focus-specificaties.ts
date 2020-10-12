@@ -57,7 +57,7 @@ function transformIncomeSpecificationNotification(
         parseInt(dateFormat(item.datePublished, 'yyyy'), 10) - 1
       } staat voor u klaar.`,
       link: {
-        to: `${API_BASE_PATH}/${item.url}`,
+        to: item.url,
         title: 'Bekijk jaaropgave',
         download: documentDownloadName(item),
       },
@@ -73,7 +73,7 @@ function transformIncomeSpecificationNotification(
       'MMMM yyyy'
     )} staat voor u klaar.`,
     link: {
-      to: `${API_BASE_PATH}/${item.url}`,
+      to: item.url,
       title: 'Bekijk uitkeringsspecificatie',
       download: documentDownloadName(item),
     },
@@ -86,6 +86,7 @@ function transformIncomSpecificationItem(
 ): FocusInkomenSpecificatie {
   const displayDatePublished = defaultDateFormat(item.datePublished);
   const url = `${API_BASE_PATH}/${item.url}`;
+  console.log(url);
   return {
     ...item,
     url,
