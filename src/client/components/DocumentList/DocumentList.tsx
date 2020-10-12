@@ -4,7 +4,7 @@ import React from 'react';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { IconDownload } from '../../assets/icons';
 import { trackPageView } from '../../hooks/analytics.hook';
-import { Button } from '../Button/Button';
+import Linkd from '../Button/Button';
 import styles from './DocumentList.module.scss';
 
 interface DocumentLinkProps {
@@ -41,33 +41,38 @@ function addFileType(url: string, type: string = '') {
 
 export function DocumentLink({ document, label }: DocumentLinkProps) {
   return (
-    <Button
+    <Linkd
       className={styles.DocumentLink}
       icon={IconDownload}
-      variant="plain"
-      lean={true}
-      onClick={(event) => {
+      href={document.url}
+      onClick={event => {
         event.preventDefault();
         const downloadUrl = addFileType(
           `/downloads/${document.title}`,
           document.type
         );
-        fetch(document.url)
-          .then(() => {
+        fetch(document.url).then(response => {
+          if (response.status !== 200) {
+            Sentry.captureException('Could not download document', {
+              extra: {
+                title: document.title,
+                url: document.url,
+              },
+            });
+          } else {
             // Tracking pageview here because trackDownload doesn't work properly in Matomo
             trackPageView(
               document.title,
               window.location.pathname + downloadUrl
             );
             downloadFile(document);
-          })
-          .catch((error) => {
-            Sentry.captureException(error);
-          });
+          }
+        });
+        return false;
       }}
     >
       {label || document.title}
-    </Button>
+    </Linkd>
   );
 }
 
@@ -82,7 +87,7 @@ export default function DocumentList({
         isExpandedView && styles[`DocumentList--expandedView`]
       )}
     >
-      {documents.map((document) => (
+      {documents.map(document => (
         <li className={styles.DocumentListItem} key={document.id}>
           {isExpandedView ? (
             <>
