@@ -1,11 +1,11 @@
+import * as Sentry from '@sentry/browser';
 import classnames from 'classnames';
 import React from 'react';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { IconDownload } from '../../assets/icons';
-import { trackDownload, trackPageView } from '../../hooks/analytics.hook';
+import { trackPageView } from '../../hooks/analytics.hook';
 import { Button } from '../Button/Button';
 import styles from './DocumentList.module.scss';
-import * as Sentry from '@sentry/browser';
 
 interface DocumentLinkProps {
   document: GenericDocument;
