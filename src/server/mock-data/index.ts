@@ -19,7 +19,7 @@ import VERGUNNINGEN from './json/vergunningen.json';
 import WMO from './json/wmo.json';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve(data);
     }, delayMS);
@@ -182,7 +182,7 @@ export const mockDataConfig: MockDataConfig = {
       const sourceTips = requestData?.data
         ? Object.values(requestData.data)
             .filter(
-              responseContent =>
+              (responseContent) =>
                 typeof responseContent === 'object' &&
                 responseContent !== null &&
                 'tips' in responseContent
@@ -192,12 +192,14 @@ export const mockDataConfig: MockDataConfig = {
 
       const items = [
         ...(tips as MyTip[]),
-        ...sourceTips.map(tip => Object.assign(tip, { isPersonalized: true })),
+        ...sourceTips.map((tip) =>
+          Object.assign(tip, { isPersonalized: true })
+        ),
       ]
         .filter((tip: MyTip) =>
           requestData?.optin ? tip.isPersonalized : !tip.isPersonalized
         )
-        .map(tip => {
+        .map((tip) => {
           if (config.params.audience !== 'persoonlijk') {
             return Object.assign(tip, {
               title: `[${config.params.audience}] ${tip.title}`,
