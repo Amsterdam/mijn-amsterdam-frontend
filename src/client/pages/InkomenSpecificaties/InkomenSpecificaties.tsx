@@ -18,8 +18,8 @@ import {
 } from '../../components';
 import { isNativeDatePickerInputSupported } from '../../components/DateInput/DateInput';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './InkomenSpecificaties.module.scss';
 import AlertDocumentDownloadsDisabled from '../Inkomen/AlertDocumentDownloadsDisabled';
+import styles from './InkomenSpecificaties.module.scss';
 
 export const specificationsTableDisplayProps = {
   title: 'Omschrijving',
