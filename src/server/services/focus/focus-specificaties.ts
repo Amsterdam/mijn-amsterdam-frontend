@@ -86,7 +86,6 @@ function transformIncomSpecificationItem(
 ): FocusInkomenSpecificatie {
   const displayDatePublished = defaultDateFormat(item.datePublished);
   const url = `${API_BASE_PATH}/${item.url}`;
-  console.log(url);
   return {
     ...item,
     url,
