@@ -130,7 +130,7 @@ export default function MyNotifications({
                       }}
                     >
                       {(item.link || item.customLink)?.title ||
-                        'Meer informatie'}
+                        'Meer informatie over ' + item.title}
                     </Linkd>
                   </p>
                 )}
