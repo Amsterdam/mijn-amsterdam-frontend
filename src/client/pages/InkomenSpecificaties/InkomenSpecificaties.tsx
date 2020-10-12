@@ -54,11 +54,7 @@ export default () => {
         ? FOCUS_SPECIFICATIES.content?.jaaropgaven
         : FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties) || []
     );
-  }, [
-    isAnnualStatementOverviewPage,
-    FOCUS_SPECIFICATIES.content?.jaaropgaven,
-    FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties,
-  ]);
+  }, [isAnnualStatementOverviewPage, FOCUS_SPECIFICATIES.content]);
 
   const maxDate = useMemo(() => {
     if (items.length) {
