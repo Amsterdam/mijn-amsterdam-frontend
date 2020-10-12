@@ -47,11 +47,13 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
       href={document.url}
       onClick={event => {
         event.preventDefault();
-        const downloadUrl = addFileType(
-          `/downloads/${document.title}`,
-          document.type
-        );
+
         fetch(document.url).then(response => {
+          const trackingUrl =
+            window.location.host +
+            window.location.pathname +
+            addFileType(`/downloads/${document.title}`, document.type);
+
           if (response.status !== 200) {
             Sentry.captureException('Could not download document', {
               extra: {
@@ -63,7 +65,7 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
             // Tracking pageview here because trackDownload doesn't work properly in Matomo
             trackPageView(
               document.title,
-              window.location.pathname + downloadUrl
+              window.location.host + window.location.pathname + trackingUrl
             );
             downloadFile(document);
           }
