@@ -8,7 +8,7 @@ export const AppRoutes = {
   'INKOMEN/STADSPAS': '/inkomen-en-stadspas/stadspas/:id',
   'INKOMEN/BIJSTANDSUITKERING': '/inkomen-en-stadspas/bijstandsuitkering/:id',
   'INKOMEN/SPECIFICATIES':
-    '/inkomen-en-stadspas/uitkeringsspecificaties/:type?',
+    '/inkomen-en-stadspas/uitkeringsspecificaties/:category?',
   'INKOMEN/TOZO': '/inkomen-en-stadspas/tozo/:id?',
   BRP: '/persoonlijke-gegevens',
   KVK: '/gegevens-handelsregister',

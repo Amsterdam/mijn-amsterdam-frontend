@@ -6,9 +6,12 @@ import { AppRoutes } from '../../../universal/config/routing';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import InkomenSpecificaties from './InkomenSpecificaties';
-import { transformFOCUSIncomeSpecificationsData } from '../../../server/services';
+import {
+  FOCUSIncomeSpecificationSourceDataContent,
+  transformFOCUSIncomeSpecificationsData,
+} from '../../../server/services';
 
-const sourceData: FOCUSIncomeSpecificationSourceDataContent = {
+const sourceData = {
   jaaropgaven: [
     {
       datePublished: '2011-01-28T00:00:00+01:00',
@@ -92,7 +95,9 @@ const sourceData: FOCUSIncomeSpecificationSourceDataContent = {
   ],
 };
 
-const content = transformFOCUSIncomeSpecificationsData(sourceData);
+const content = transformFOCUSIncomeSpecificationsData(
+  sourceData as FOCUSIncomeSpecificationSourceDataContent
+);
 
 function initializeState(snapshot: MutableSnapshot) {
   snapshot.set(appStateAtom, {
@@ -105,7 +110,7 @@ function initializeState(snapshot: MutableSnapshot) {
 
 describe('<InkomenSpecificaties /> Uitkeringsspecificaties', () => {
   const routeEntry = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-    type: 'uitkeringsspecificaties',
+    category: 'uitkeringsspecificaties',
   });
   const routePath = AppRoutes['INKOMEN/SPECIFICATIES'];
 
@@ -145,7 +150,7 @@ describe('<InkomenSpecificaties /> Uitkeringsspecificaties', () => {
 
 describe('<InkomenSpecificaties /> Jaaropgaven', () => {
   const routeEntry = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-    type: 'jaaropgaven',
+    category: 'jaaropgaven',
   });
   const routePath = AppRoutes['INKOMEN/SPECIFICATIES'];
 

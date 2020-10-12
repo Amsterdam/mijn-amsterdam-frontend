@@ -21,7 +21,7 @@ export interface FocusTozoDocument {
   productSpecific?: FocusTozoLabelSet['productSpecific'];
 }
 
-export type FocusInkomenSpecificatieType =
+export type FocusInkomenSpecificatieCategory =
   | 'IOAZ'
   | 'BBS'
   | 'WKO'
@@ -37,7 +37,7 @@ export interface FocusInkomenSpecificatie extends GenericDocument {
   datePublished: string;
   id: string;
   url: string;
-  type: FocusInkomenSpecificatieType;
+  category: FocusInkomenSpecificatieCategory;
 }
 
 export interface FocusCombinedSourceResponse {

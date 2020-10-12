@@ -1,5 +1,4 @@
 import { format } from 'date-fns';
-import { ReactNode } from 'react';
 import { Chapters } from '../../../universal/config';
 import { API_BASE_PATH } from '../../../universal/config/api';
 import { FeatureToggle } from '../../../universal/config/app';
@@ -13,25 +12,10 @@ import {
   apiSuccesResult,
 } from '../../../universal/helpers/api';
 import { MyNotification } from '../../../universal/types';
-import { LinkProps } from '../../../universal/types/App.types';
 import {
   fetchFOCUSCombined,
   FocusInkomenSpecificatie as FocusInkomenSpecificatieFromSource,
-  FocusInkomenSpecificatieType,
 } from './focus-combined';
-
-export const focusInkomenSpecificatieTypes: {
-  [type in FocusInkomenSpecificatieType]: string;
-} = {
-  IOAZ: 'IOAZ',
-  BBS: 'Bijzonder bijstand en stimuleringsregelingen',
-  WKO: 'Wet kinderopvang',
-  IOAW: 'IOAW',
-  STIMREG: 'Stimuleringsregelingen',
-  BIBI: 'Bijzonder bijstand',
-  PART: 'Participatiewet',
-  BBZ: 'BBZ',
-};
 
 export interface FocusInkomenSpecificatie
   extends FocusInkomenSpecificatieFromSource {
@@ -86,8 +70,10 @@ function transformIncomSpecificationItem(
 ): FocusInkomenSpecificatie {
   const displayDatePublished = defaultDateFormat(item.datePublished);
   const url = `${API_BASE_PATH}/${item.url}`;
+  const categoryFromSource = item.type;
   return {
     ...item,
+    category: categoryFromSource,
     type: 'pdf',
     url,
     download: documentDownloadName(item),
