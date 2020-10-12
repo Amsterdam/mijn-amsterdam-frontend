@@ -52,7 +52,10 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
           const trackingUrl =
             window.location.host +
             window.location.pathname +
-            addFileType(`/downloads/${document.title}`, document.type);
+            addFileType(
+              `/downloads/${document.download || document.title}`,
+              document.type
+            );
 
           if (response.status !== 200) {
             Sentry.captureException('Could not download document', {
