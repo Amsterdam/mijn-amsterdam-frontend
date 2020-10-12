@@ -1,6 +1,7 @@
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { FocusTozoStepType, FocusTozoLabelSet } from './focus-tozo-content';
+import { GenericDocument } from '../../../universal/types/App.types';
 
 export type FocusTozoDocumentType =
   | 'E-AANVR-KBBZ'
@@ -31,7 +32,7 @@ export type FocusInkomenSpecificatieType =
   | 'BBZ'
   | string;
 
-export interface FocusInkomenSpecificatie {
+export interface FocusInkomenSpecificatie extends GenericDocument {
   title: string;
   datePublished: string;
   id: string;

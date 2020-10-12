@@ -22,7 +22,7 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
       className={styles.DocumentLink}
       href={document.url}
       external={true}
-      download={document.title}
+      download={document.download || document.title}
       icon={IconDownload}
       onClick={() => trackDownload(document.url)}
     >

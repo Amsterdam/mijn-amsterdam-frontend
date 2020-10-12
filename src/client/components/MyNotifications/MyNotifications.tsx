@@ -10,13 +10,13 @@ import {
 } from '../../../universal/types';
 import { Colors } from '../../config/app';
 import {
-  trackDownload,
   trackItemClick,
   trackItemPresentation,
   useSessionCallbackOnceDebounced,
 } from '../../hooks/analytics.hook';
 import Linkd from '../Button/Button';
 import ChapterIcon from '../ChapterIcon/ChapterIcon';
+import { DocumentLink } from '../DocumentList/DocumentList';
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './MyNotifications.module.scss';
@@ -109,31 +109,39 @@ export default function MyNotifications({
                 )}
                 {(!!item.link || !!item.customLink) && (
                   <p className={styles.Action}>
-                    <Linkd
-                      title={`Meer informatie over de melding: ${item.title}`}
-                      href={item.customLink ? '#' : item.link?.to}
-                      external={isLinkExternal}
-                      download={item.link?.download}
-                      className="download"
-                      onClick={() => {
-                        if (item.link?.download) {
-                          trackDownload(item.link?.to);
-                        } else {
+                    {item.link?.download ? (
+                      <DocumentLink
+                        document={{
+                          id: item.id,
+                          title: item.title,
+                          datePublished: item.datePublished,
+                          url: item.link.to,
+                          download: item.link.download,
+                          type: 'PDF',
+                        }}
+                        label={item.link.title}
+                      />
+                    ) : (
+                      <Linkd
+                        title={`Meer informatie over de melding: ${item.title}`}
+                        href={item.customLink ? '#' : item.link?.to}
+                        external={isLinkExternal}
+                        onClick={() => {
                           trackItemClick(trackCategory, item.title);
-                        }
-                        if (item.customLink) {
-                          item.customLink.callback();
-                          return false;
-                        }
-                        if (item.link && !isLinkExternal) {
-                          showNotification(item.id, item.link.to);
-                          return false;
-                        }
-                      }}
-                    >
-                      {(item.link || item.customLink)?.title ||
-                        'Meer informatie over ' + item.title}
-                    </Linkd>
+                          if (item.customLink) {
+                            item.customLink.callback();
+                            return false;
+                          }
+                          if (item.link && !isLinkExternal) {
+                            showNotification(item.id, item.link.to);
+                            return false;
+                          }
+                        }}
+                      >
+                        {(item.link || item.customLink)?.title ||
+                          'Meer informatie over ' + item.title}
+                      </Linkd>
+                    )}
                   </p>
                 )}
               </li>
