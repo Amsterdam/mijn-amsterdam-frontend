@@ -24,6 +24,10 @@ export function useAnalytics(isEnabled: boolean = true) {
     // const win = window as any;
     // (win._paq || (win._paq = [])).push(['disableCookies']);
     MatomoInstance = new MatomoTracker(MatomoTrackerConfig);
+    (window._paq || (window._paq = [])).push([
+      'setDownloadClasses',
+      'download',
+    ]);
   }
 }
 

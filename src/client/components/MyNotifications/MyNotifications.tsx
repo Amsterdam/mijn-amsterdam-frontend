@@ -67,7 +67,7 @@ export default function MyNotifications({
           </li>
         )}
         {!isLoading &&
-          items.map(item => {
+          items.map((item) => {
             const isLinkExternal =
               (!!item.link?.to && !isInteralUrl(item.link.to)) ||
               !!item.link?.download;
@@ -113,7 +113,8 @@ export default function MyNotifications({
                       href={item.customLink ? '#' : item.link?.to}
                       external={isLinkExternal}
                       download={item.link?.download}
-                      onClick={event => {
+                      className="download"
+                      onClick={(event) => {
                         if (item.link?.download) {
                           trackDownload(item.link?.to);
                         } else {

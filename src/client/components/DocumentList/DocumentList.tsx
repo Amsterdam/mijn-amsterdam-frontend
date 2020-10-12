@@ -18,7 +18,7 @@ interface DocumentListProps {
 export function DocumentLink({ document, label }: DocumentLinkProps) {
   return (
     <Linkd
-      className={styles.DocumentLink}
+      className={classnames(styles.DocumentLink, 'download')}
       href={document.url}
       external={true}
       download={document.title}
@@ -40,7 +40,7 @@ export default function DocumentList({
         isExpandedView && styles[`DocumentList--expandedView`]
       )}
     >
-      {documents.map(document => (
+      {documents.map((document) => (
         <li className={styles.DocumentListItem} key={document.id}>
           {isExpandedView ? (
             <>

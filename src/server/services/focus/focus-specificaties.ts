@@ -53,10 +53,9 @@ function transformIncomeSpecificationNotification(
       datePublished: item.datePublished,
       chapter: Chapters.INKOMEN,
       title: 'Nieuwe jaaropgave',
-      description: `Uw jaaropgave ${parseInt(
-        dateFormat(item.datePublished, 'yyyy'),
-        10
-      ) - 1} staat voor u klaar.`,
+      description: `Uw jaaropgave ${
+        parseInt(dateFormat(item.datePublished, 'yyyy'), 10) - 1
+      } staat voor u klaar.`,
       link: {
         to: `${API_BASE_PATH}/${item.url}`,
         title: 'Bekijk jaaropgave',
@@ -92,6 +91,7 @@ function transformIncomSpecificationItem(
     documentUrl: `<a
         href=${`${API_BASE_PATH}/${item.url}`}
         rel="external noopener noreferrer"
+        class="download"
         download=${documentDownloadName(item)}
       >
         PDF
@@ -114,13 +114,13 @@ export function transformFOCUSIncomeSpecificationsData(
 ) {
   const jaaropgaven = (responseContent.jaaropgaven || [])
     .sort(dateSort('datePublished', 'desc'))
-    .map(item => transformIncomSpecificationItem(item, 'jaaropgave'));
+    .map((item) => transformIncomSpecificationItem(item, 'jaaropgave'));
 
   const uitkeringsspecificaties = (
     responseContent.uitkeringsspecificaties || []
   )
     .sort(dateSort('datePublished', 'desc'))
-    .map(item =>
+    .map((item) =>
       transformIncomSpecificationItem(item, 'uitkeringsspecificatie')
     );
 

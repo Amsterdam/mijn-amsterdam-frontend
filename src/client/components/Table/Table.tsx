@@ -10,7 +10,7 @@ export function addTitleLinkComponent(
   items: any[],
   titleKey: string = 'title'
 ) {
-  return items.map(item => {
+  return items.map((item) => {
     if (!item.link?.to) {
       return item;
     }
@@ -44,7 +44,7 @@ export default function Table({
   );
   const hasDisplayPropTableHeadingLabels = !!Object.keys(
     displayPropsFinal
-  ).filter(titleKey => !!displayPropsFinal[titleKey]).length;
+  ).filter((titleKey) => !!displayPropsFinal[titleKey]).length;
 
   return (
     <table className={classnames(styles.Table, className)}>
