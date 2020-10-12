@@ -1,11 +1,10 @@
-import React from 'react';
-import { IconDownload } from '../../assets/icons';
-import { Linkd } from '../index';
-import styles from './DocumentList.module.scss';
-import { GenericDocument } from '../../../universal/types/App.types';
 import classnames from 'classnames';
+import React from 'react';
+import { GenericDocument } from '../../../universal/types/App.types';
+import { IconDownload } from '../../assets/icons';
 import { trackDownload } from '../../hooks/analytics.hook';
 import { Button } from '../Button/Button';
+import styles from './DocumentList.module.scss';
 
 interface DocumentLinkProps {
   document: GenericDocument;
