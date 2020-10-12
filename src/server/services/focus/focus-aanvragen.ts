@@ -56,11 +56,11 @@ export async function fetchFOCUSAanvragen(
   if (response.status === 'OK') {
     // Filter out the products that we use for the lopende/eerdere aanvragen
     const focusProductsNormalized = response.content
-      .filter(product => focusAanvragenProducten.includes(product.title))
-      .map(product => translateFocusProduct(product, titleTranslations));
+      .filter((product) => focusAanvragenProducten.includes(product.title))
+      .map((product) => translateFocusProduct(product, titleTranslations));
 
     // Transform the normalized products to aanvragen content items.
-    const focusAanvragen = focusProductsNormalized.map(product =>
+    const focusAanvragen = focusProductsNormalized.map((product) =>
       transformFocusProduct(product, contentLabels)
     );
 
@@ -87,14 +87,14 @@ export async function fetchFOCUSAanvragenGenerated(
     const items = FOCUS_AANVRAGEN.content as FocusItem[];
 
     notifications =
-      items.map(focusItem =>
+      items.map((focusItem) =>
         createFocusNotification(focusItem, contentLabels)
       ) || [];
 
     cases =
       items
-        .filter(focusItem => isRecentItem(focusItem.steps, compareDate))
-        .map(focusItem => createFocusRecentCase(focusItem)) || [];
+        .filter((focusItem) => isRecentItem(focusItem.steps, compareDate))
+        .map((focusItem) => createFocusRecentCase(focusItem)) || [];
 
     return apiSuccesResult({
       cases,

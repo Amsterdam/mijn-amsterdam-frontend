@@ -1,9 +1,11 @@
-import React from 'react';
-import { IconDownload } from '../../assets/icons';
-import { Linkd } from '../index';
-import styles from './DocumentList.module.scss';
-import { GenericDocument } from '../../../universal/types/App.types';
+import * as Sentry from '@sentry/browser';
 import classnames from 'classnames';
+import React from 'react';
+import { GenericDocument } from '../../../universal/types/App.types';
+import { IconDownload } from '../../assets/icons';
+import { trackPageView } from '../../hooks/analytics.hook';
+import { Button } from '../Button/Button';
+import styles from './DocumentList.module.scss';
 
 interface DocumentLinkProps {
   document: GenericDocument;
@@ -15,17 +17,57 @@ interface DocumentListProps {
   isExpandedView?: boolean;
 }
 
+function downloadFile(docDownload: GenericDocument) {
+  var link = document.createElement('a');
+  link.href = docDownload.url;
+  const downloadName = addFileType(
+    docDownload.download || docDownload.title,
+    docDownload.type
+  );
+  link.download = downloadName;
+  link.click();
+}
+
+function addFileType(url: string, type: string = '') {
+  if (
+    type &&
+    !url.endsWith('.' + type) &&
+    !url.endsWith('.' + type.toUpperCase())
+  ) {
+    return `${url}.${type}`;
+  }
+  return url;
+}
+
 export function DocumentLink({ document, label }: DocumentLinkProps) {
   return (
-    <Linkd
+    <Button
       className={styles.DocumentLink}
-      href={document.url}
-      external={true}
-      download={document.title}
       icon={IconDownload}
+      variant="plain"
+      lean={true}
+      onClick={(event) => {
+        event.preventDefault();
+        const downloadUrl = addFileType(
+          `/downloads/${document.title}`,
+          document.type
+        );
+        fetch(document.url)
+          .then(() => {
+            // Tracking pageview here because trackDownload doesn't work properly in Matomo
+            trackPageView(
+              document.title,
+              window.location.pathname + downloadUrl
+            );
+            downloadFile(document);
+          })
+          .catch((error) => {
+            Sentry.captureException(error);
+          });
+      }}
     >
       {label || document.title}
-    </Linkd>
+    </Button>
   );
 }
 
@@ -40,7 +82,7 @@ export default function DocumentList({
         isExpandedView && styles[`DocumentList--expandedView`]
       )}
     >
-      {documents.map(document => (
+      {documents.map((document) => (
         <li className={styles.DocumentListItem} key={document.id}>
           {isExpandedView ? (
             <>

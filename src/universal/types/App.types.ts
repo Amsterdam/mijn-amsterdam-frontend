@@ -66,6 +66,7 @@ export interface GenericDocument {
   id: string;
   title: string;
   url: string;
+  download?: string;
   type: string;
   datePublished: string;
 }
