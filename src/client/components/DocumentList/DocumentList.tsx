@@ -5,6 +5,7 @@ import styles from './DocumentList.module.scss';
 import { GenericDocument } from '../../../universal/types/App.types';
 import classnames from 'classnames';
 import { trackDownload } from '../../hooks/analytics.hook';
+import { Button } from '../Button/Button';
 
 interface DocumentLinkProps {
   document: GenericDocument;
@@ -16,22 +17,28 @@ interface DocumentListProps {
   isExpandedView?: boolean;
 }
 
+function downloadFile(docDownload: GenericDocument) {
+  var link = document.createElement('a');
+  link.href = docDownload.url;
+  link.download = docDownload.download || docDownload.title;
+  link.click();
+}
+
 export function DocumentLink({ document, label }: DocumentLinkProps) {
   return (
-    <Linkd
+    <Button
       className={styles.DocumentLink}
-      href={document.url}
-      external={true}
-      download={document.download || document.title}
       icon={IconDownload}
+      variant="plain"
+      lean={true}
       onClick={(event) => {
         event.preventDefault();
         trackDownload(document.url);
-        window.open(document.url);
+        downloadFile(document);
       }}
     >
       {label || document.title}
-    </Linkd>
+    </Button>
   );
 }
 
