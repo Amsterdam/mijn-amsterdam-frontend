@@ -19,8 +19,22 @@ interface DocumentListProps {
 function downloadFile(docDownload: GenericDocument) {
   var link = document.createElement('a');
   link.href = docDownload.url;
-  link.download = docDownload.download || docDownload.title;
+  link.download = addFileType(
+    docDownload.download || docDownload.title,
+    docDownload.type
+  );
   link.click();
+}
+
+function addFileType(url: string, type: string = '') {
+  if (
+    type &&
+    !url.endsWith('.' + type) &&
+    !url.endsWith('.' + type.toUpperCase())
+  ) {
+    return `${url}.${type}`;
+  }
+  return url;
 }
 
 export function DocumentLink({ document, label }: DocumentLinkProps) {
@@ -32,9 +46,8 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
       lean={true}
       onClick={(event) => {
         event.preventDefault();
-        trackDownload(
-          `${document.url}${document.type ? `.${document.type}` : ''}`
-        );
+        const downloadUrl = addFileType(document.url, document.type);
+        trackDownload(downloadUrl);
         downloadFile(document);
       }}
     >
