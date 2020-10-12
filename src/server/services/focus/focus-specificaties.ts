@@ -88,6 +88,7 @@ function transformIncomSpecificationItem(
   const url = `${API_BASE_PATH}/${item.url}`;
   return {
     ...item,
+    type: 'pdf',
     url,
     download: documentDownloadName(item),
     displayDatePublished,

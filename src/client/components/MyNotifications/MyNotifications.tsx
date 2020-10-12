@@ -117,7 +117,7 @@ export default function MyNotifications({
                           datePublished: item.datePublished,
                           url: item.link.to,
                           download: item.link.download,
-                          type: 'PDF',
+                          type: 'pdf',
                         }}
                         label={item.link.title}
                       />

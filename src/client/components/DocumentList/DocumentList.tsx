@@ -32,7 +32,9 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
       lean={true}
       onClick={(event) => {
         event.preventDefault();
-        trackDownload(document.url);
+        trackDownload(
+          `${document.url}${document.type ? `.${document.type}` : ''}`
+        );
         downloadFile(document);
       }}
     >
