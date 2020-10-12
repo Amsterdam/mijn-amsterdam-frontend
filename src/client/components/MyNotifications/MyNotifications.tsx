@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { generatePath, useHistory } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import { defaultDateFormat, isInteralUrl } from '../../../universal/helpers';
@@ -153,7 +153,9 @@ export default function MyNotifications({
       )}
       {!isLoading && showMoreLink && (
         <p className={styles.FooterLink}>
-          <Linkd href={AppRoutes.NOTIFICATIONS}>Alle updates</Linkd>
+          <Linkd href={generatePath(AppRoutes.NOTIFICATIONS)}>
+            Alle updates
+          </Linkd>
         </p>
       )}
     </div>
