@@ -1,17 +1,16 @@
-import React, { useCallback, useEffect, useState } from 'react';
-
-import { IconChevronRight, IconChevronLeft } from '../../assets/icons';
 import classnames from 'classnames';
 import paginate from 'jw-paginate';
+import React, { useMemo } from 'react';
+import { IconChevronLeft, IconChevronRight } from '../../assets/icons';
 import styles from './Pagination.module.scss';
 
 export interface ComponentProps {
   totalCount: number;
-  onPageClick: (page: number, startIndex: number, endIndex: number) => void;
+  onPageClick: (page: number) => void;
   className?: string;
   pageSize: number;
   maxPages?: number;
-  initialPage?: number;
+  currentPage?: number;
 }
 
 export default function Pagination({
@@ -20,41 +19,33 @@ export default function Pagination({
   maxPages = 5,
   onPageClick,
   className,
-  initialPage = 1,
+  currentPage = 1,
 }: ComponentProps) {
-  const [{ currentPage, pages, totalPages }, setPager] = useState(
-    paginate(totalCount, initialPage, pageSize, maxPages)
+  const { pages, totalPages } = useMemo(
+    () => paginate(totalCount, currentPage, pageSize, maxPages),
+    [currentPage, pageSize, totalCount, maxPages]
   );
-
-  const selectPage = useCallback(
-    (page: number) => {
-      const pagerState = paginate(totalCount, page, pageSize, maxPages);
-      const { startIndex, endIndex } = pagerState;
-      setPager(pagerState);
-      onPageClick(page, startIndex, endIndex);
-    },
-    [onPageClick, totalCount, pageSize, maxPages]
-  );
-
-  // Effect for resetting the current page when any of the settings change.
-  useEffect(() => {
-    selectPage(initialPage);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [totalCount, pageSize, maxPages]);
 
   return (
-    <nav className={classnames(styles.Pagination, className)}>
+    <nav
+      className={classnames(styles.Pagination, className)}
+      role="navigation"
+      aria-label="Pagina navigatie"
+    >
       <ul className={styles.PageList}>
         {currentPage !== 1 && (
-          <li
-            onClick={() => selectPage(currentPage - 1)}
-            className={classnames(
-              styles.PageSelectButton,
-              styles.PagePrevButton
-            )}
-          >
-            <IconChevronLeft />
-            vorige
+          <li>
+            <button
+              className={classnames(
+                styles.PageSelectButton,
+                styles.PagePrevButton
+              )}
+              onClick={() => onPageClick(currentPage - 1)}
+              aria-label="Ga naar de vorige pagina"
+            >
+              <IconChevronLeft aria-hidden={true} />
+              vorige
+            </button>
           </li>
         )}
         {pages.map((page, index) => (
@@ -64,21 +55,30 @@ export default function Pagination({
                 styles.PageSelectButton,
                 page === currentPage && styles.SelectedPage
               )}
-              onClick={() => selectPage(page)}
+              onClick={() => onPageClick(page)}
+              aria-current={page === currentPage}
+              aria-label={
+                page === currentPage
+                  ? `Huidige pagina, pagina ${page}`
+                  : `Ga naar pagina ${page}`
+              }
             >
               {page}
             </button>
           </li>
         ))}
         {currentPage !== totalPages && (
-          <li
-            onClick={() => selectPage(currentPage + 1)}
-            className={classnames(
-              styles.PageSelectButton,
-              styles.PageNextButton
-            )}
-          >
-            volgende <IconChevronRight />
+          <li>
+            <button
+              className={classnames(
+                styles.PageSelectButton,
+                styles.PageNextButton
+              )}
+              onClick={() => onPageClick(currentPage + 1)}
+              aria-label="Ga naar de volgende pagina"
+            >
+              volgende <IconChevronRight aria-hidden={true} />
+            </button>
           </li>
         )}
       </ul>

@@ -68,13 +68,13 @@ export default function MyNotifications({
           </li>
         )}
         {!isLoading &&
-          items.map((item) => {
+          items.map((item, index) => {
             const isLinkExternal =
               (!!item.link?.to && !isInteralUrl(item.link.to)) ||
               !!item.link?.download;
             return (
               <li
-                key={`${item.chapter}-${item.id}`}
+                key={`${item.chapter}-${item.id}-${index}`}
                 className={styles.MyNotificationItem}
               >
                 <Heading className={styles.Title} el="h4" size="small">

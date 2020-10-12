@@ -1,4 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
+import { generatePath, useHistory, useParams } from 'react-router-dom';
+import { AppRoutes } from '../../../universal/config/routing';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
   Alert,
@@ -10,10 +12,8 @@ import {
   Pagination,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './MyNotifications.module.scss';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
-import { generatePath, useHistory, useParams } from 'react-router-dom';
-import { AppRoutes } from '../../../universal/config/routing';
+import styles from './MyNotifications.module.scss';
 
 const PAGE_SIZE = 10;
 
@@ -23,20 +23,18 @@ export default () => {
   const { page = '1' } = useParams<{ page?: string }>();
   const history = useHistory();
 
-  const initialPage = useMemo(() => {
+  const currentPage = useMemo(() => {
     return parseInt(page, 10);
   }, [page]);
 
-  const [[startIndex, endIndex], setPageIndex] = useState([
-    initialPage - 1,
-    PAGE_SIZE - 1,
-  ]);
-
   const itemsPaginated = useMemo(() => {
-    return notifications.slice(startIndex, endIndex + 1);
-  }, [startIndex, endIndex, notifications]);
+    const startIndex = currentPage - 1;
+    const start = startIndex * PAGE_SIZE;
+    const end = start + PAGE_SIZE;
+    return notifications.slice(start, end);
+  }, [currentPage, notifications]);
 
-  const total = notifications.length || itemsPaginated.length;
+  const total = notifications.length;
 
   return (
     <DetailPage className={styles.MyNotifications}>
@@ -62,10 +60,9 @@ export default () => {
             className={styles.Pagination}
             totalCount={total}
             pageSize={PAGE_SIZE}
-            initialPage={initialPage}
-            onPageClick={(page, ...index) => {
+            currentPage={currentPage}
+            onPageClick={(page) => {
               history.replace(generatePath(AppRoutes.NOTIFICATIONS, { page }));
-              setPageIndex(index);
             }}
           />
         </PageContent>
