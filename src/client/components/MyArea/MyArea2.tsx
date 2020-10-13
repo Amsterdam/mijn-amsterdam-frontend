@@ -136,15 +136,13 @@ export default function MyArea2() {
               }}
             >
               <BaseLayer />
-              <HomeIconMarker
-                address={
-                  HOME.content?.address
-                    ? getFullAddress(HOME.content.address, true)
-                    : ''
-                }
-                center={center}
-                zoom={HOOD_ZOOM}
-              />
+              {HOME.content?.address && (
+                <HomeIconMarker
+                  address={getFullAddress(HOME.content.address, true)}
+                  center={center}
+                  zoom={HOOD_ZOOM}
+                />
+              )}
               <StyledViewerContainer
                 bottomRight={
                   <>
@@ -153,7 +151,7 @@ export default function MyArea2() {
                     >
                       {useLeafletCluster ? 'LC' : 'SC'}
                     </button>
-                    {HOME.content?.latlng && (
+                    {HOME.content?.address && HOME.content?.latlng && (
                       <HomeControlButton
                         zoom={HOOD_ZOOM}
                         latlng={HOME.content.latlng}
