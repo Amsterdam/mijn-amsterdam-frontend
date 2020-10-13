@@ -1,4 +1,3 @@
-import path from 'path';
 import {
   CITY_LAYERS_CONFIG,
   CITY_ZOOM,
@@ -17,7 +16,6 @@ import { DataRequestConfig } from '../config';
 import { requestData } from '../helpers';
 import FileCache from '../helpers/file-cache';
 import { fetchHOME } from './home';
-import { DEFAULT_CACHE_DIR } from '../helpers/file-cache';
 
 const MAP_URL =
   'https://data.amsterdam.nl/data/?modus=kaart&achtergrond=topo_rd_zw&embed=true';
