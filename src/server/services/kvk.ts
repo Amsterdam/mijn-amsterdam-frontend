@@ -78,13 +78,19 @@ export function getKvkAddress(kvkData: KVKData) {
 
   if (vestigingen.length) {
     const vestiging = kvkData?.vestigingen.find(
-      (vestiging) => !!vestiging.bezoekadres
+      (vestiging) =>
+        !!vestiging.bezoekadres &&
+        (vestiging.bezoekadres.mokum === true ||
+          vestiging.bezoekadres.woonplaatsNaam === 'Amsterdam')
     );
     address = vestiging?.bezoekadres || null;
 
     if (!address) {
       const vestiging = kvkData?.vestigingen.find(
-        (vestiging) => !!vestiging.postadres
+        (vestiging) =>
+          !!vestiging.postadres &&
+          (vestiging.postadres.mokum === true ||
+            vestiging.postadres.woonplaatsNaam === 'Amsterdam')
       );
       address = vestiging?.postadres || null;
     }
