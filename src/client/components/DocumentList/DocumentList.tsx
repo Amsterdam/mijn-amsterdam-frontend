@@ -50,7 +50,6 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
 
         fetch(document.url).then(response => {
           const trackingUrl =
-            window.location.host +
             window.location.pathname +
             addFileType(
               `/downloads/${document.download || document.title}`,
@@ -66,10 +65,7 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
             });
           } else {
             // Tracking pageview here because trackDownload doesn't work properly in Matomo
-            trackPageView(
-              document.title,
-              window.location.host + window.location.pathname + trackingUrl
-            );
+            trackPageView(document.title, trackingUrl);
             downloadFile(document);
           }
         });
