@@ -37,9 +37,9 @@ export const BRP_RESIDENTS_API_URL = `${API_BASE_PATH_MODDED}/brp/aantal_bewoner
 export const BFFApiUrls = {
   SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
   SERVICES_SSE: `${BFF_API_BASE_URL}/services/stream`,
+  MAP_DATASETS: `${BFF_API_BASE_URL}/map/datasets`,
+  SERVICES_TIPS_URL: `${BFF_API_BASE_URL}/services/tips`,
 };
-
-export const SERVICES_TIPS_URL = `${BFF_API_BASE_URL}/services/tips`;
 
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BRP: 'Persoonlijke gegevens, paspoort, ID-kaart + actuele updates',

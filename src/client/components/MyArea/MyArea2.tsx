@@ -40,6 +40,7 @@ import MyAreaPanels from './MyAreaPanels';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import { ChapterTitles } from '../../../universal/config';
+import { BFFApiUrls } from '../../config/api';
 
 const StyledViewerContainer = styled(ViewerContainer)`
   height: 100%;
@@ -97,7 +98,7 @@ export default function MyArea2() {
           : event?.layer?.feature?.properties?.datasetId;
 
         axios({
-          url: `/test-api/bff/map/datasets/${
+          url: `${BFFApiUrls.MAP_DATASETS}${
             datasetGroupId || datasetId
           }/${datasetItemId}`,
         })

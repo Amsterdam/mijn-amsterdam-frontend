@@ -9,6 +9,7 @@ import { apiPristineResult, ApiResponse } from '../../../universal/helpers/api';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { Datasets, DatasetsSource, getIconHtml, LayerType } from './datasets';
 import { useDatasetControlItems } from './MyAreaDatasetControl';
+import { BFFApiUrls } from '../../config/api';
 
 const iconCreateFunction = (
   marker: L.Marker & { getChildCount: () => number }
@@ -164,7 +165,7 @@ export default function MyAreaDatasets({ onMarkerClick }: MyAreaDatasetsProps) {
     fetchDatasets,
   ] = useDataApi<ApiResponse<DatasetsSource[]>>(
     {
-      url: '/test-api/bff/map/datasets',
+      url: BFFApiUrls.MAP_DATASETS,
       postpone: true,
     },
     apiPristineResult(null)
@@ -172,7 +173,7 @@ export default function MyAreaDatasets({ onMarkerClick }: MyAreaDatasetsProps) {
 
   useEffect(() => {
     fetchDatasets({
-      url: '/test-api/bff/map/datasets',
+      url: BFFApiUrls.MAP_DATASETS,
       postpone: false,
     });
   }, [fetchDatasets]);

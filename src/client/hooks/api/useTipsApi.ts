@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { TIPSData } from '../../../server/services/tips';
 import { ApiResponse } from '../../../universal/helpers/api';
 import { AppState, PRISTINE_APPSTATE } from '../../AppState';
-import { SERVICES_TIPS_URL } from '../../config/api';
+import { BFFApiUrls } from '../../config/api';
 import { useAppStateSetter } from '../useAppState';
 import { useOptIn } from '../useOptIn';
 import { useProfileTypeValue } from '../useProfileType';
@@ -11,7 +11,7 @@ import { useDataApi } from './useDataApi';
 const pristineData = { TIPS: PRISTINE_APPSTATE.TIPS };
 
 const requestConfig = {
-  url: SERVICES_TIPS_URL,
+  url: BFFApiUrls.SERVICES_TIPS_URL,
   postpone: true,
 };
 
