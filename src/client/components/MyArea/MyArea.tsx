@@ -1,12 +1,13 @@
 import classnames from 'classnames';
 import React, { HTMLProps, PropsWithChildren } from 'react';
 import { NavLink } from 'react-router-dom';
-import { AppRoutes } from '../../../universal/config';
+import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { getOtapEnvItem } from '../../../universal/config/env';
 import { Adres } from '../../../universal/types';
 import { IconHome, IconHomeCommercial } from '../../assets/icons';
 import { Colors } from '../../config/app';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { useTermReplacement } from '../../hooks/useTermReplacement';
 import Heading from '../Heading/Heading';
 import styles from './MyArea.module.scss';
 import { MyArea2Loader } from './MyArea2loader';
@@ -72,7 +73,7 @@ export function MyAreaDashboard({
   address,
   ...otherProps
 }: MyAreaDashboardComponentProps) {
-  const profileType = useProfileTypeValue();
+  const termReplace = useTermReplacement();
   return (
     <div {...otherProps} className={styles.MapDashboard}>
       {getOtapEnvItem('isMyAreaMapEnabled') && <MyAreaMapIFrame url={url} />}
@@ -81,10 +82,10 @@ export function MyAreaDashboard({
       )}
       <NavLink to={AppRoutes.BUURT} className={styles.MapDashboardOverlay}>
         <div>
-          <Heading size="large">Mijn buurt</Heading>
+          <Heading size="large">{termReplace(ChapterTitles.BUURT)}</Heading>
           <p>
             Klik voor een overzicht van gemeentelijke informatie rond uw{' '}
-            {profileType === 'private' ? 'eigen woning' : 'bedrijf'}.
+            {termReplace('eigen woning')}.
           </p>
         </div>
       </NavLink>

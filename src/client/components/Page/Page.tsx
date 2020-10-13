@@ -9,10 +9,18 @@ export interface PageProps extends HTMLProps<HTMLDivElement> {
   children: ComponentChildren;
 }
 
-export default function Page({ className, children }: PageProps) {
+export default function Page({
+  className,
+  children,
+  ...otherProps
+}: PageProps) {
   const classNames = composeClassNames(styles.Page, className);
 
-  return <main className={classNames}>{children}</main>;
+  return (
+    <main {...otherProps} className={classNames}>
+      {children}
+    </main>
+  );
 }
 
 export function TextPage({ children, className }: PageProps) {

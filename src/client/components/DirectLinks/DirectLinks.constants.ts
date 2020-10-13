@@ -1,6 +1,7 @@
 import { AppRoutes } from '../../../universal/config';
 import { ExternalUrls } from '../../config/app';
 import { FeatureToggle } from '../../../universal/config/app';
+import { ChapterTitles } from '../../../universal/config/chapter';
 
 export interface DirectLink {
   title: string;
@@ -13,14 +14,14 @@ export interface DirectLink {
 
 export const LINKS: Record<string, DirectLink> = {
   BUURT: {
-    title: 'Mijn buurt',
+    title: ChapterTitles.BUURT,
     url: AppRoutes.BUURT,
     isPhoneScreenLink: true,
     id: 'MyAreaHeader',
     isActive: true,
   },
   TIPS: {
-    title: 'Mijn tips',
+    title: ChapterTitles.TIPS,
     url: AppRoutes.TIPS,
     isPhoneScreenLink: true,
     id: 'MyTipsHeader',

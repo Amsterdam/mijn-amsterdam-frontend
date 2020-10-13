@@ -38,6 +38,8 @@ import MyAreaHeader from './MyAreaHeader';
 import MyAreaLoader from './MyAreaLoader';
 import MyAreaPanels from './MyAreaPanels';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
+import { useTermReplacement } from '../../hooks/useTermReplacement';
+import { ChapterTitles } from '../../../universal/config';
 
 const StyledViewerContainer = styled(ViewerContainer)`
   height: 100%;
@@ -71,7 +73,7 @@ export default function MyArea2() {
     selectedMarkerDataAtom
   );
   const activeDatasetIds = useActiveDatasetIds();
-
+  const termReplace = useTermReplacement();
   const center = HOME.content?.latlng;
   // TODO: Move into final component solution (SuperCluster or MarkerCluster)
   const onMarkerClick = useCallback(
@@ -123,7 +125,9 @@ export default function MyArea2() {
           {!!center ? (
             <MyAreaMap
               fullScreen={true}
-              aria-label="Uitebreide kaart van mijn buurt"
+              aria-label={`Uitebreide kaart van ${termReplace(
+                ChapterTitles.BUURT
+              ).toLowerCase()}`}
               options={{
                 ...DEFAULT_MAP_OPTIONS,
                 zoom: HOOD_ZOOM,

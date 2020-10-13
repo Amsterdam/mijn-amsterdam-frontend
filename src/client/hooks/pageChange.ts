@@ -1,17 +1,20 @@
 import { useEffect } from 'react';
-import { matchPath } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
-import { CustomTrackingUrls } from '../../universal/config';
+import { matchPath, useLocation } from 'react-router-dom';
+import {
+  CustomTrackingUrls,
+  DocumentTitleMain,
+  DocumentTitles,
+} from '../../universal/config';
 import { TMA_LOGIN_URL_DIGID, TMA_LOGIN_URL_EHERKENNING } from '../config/api';
-import { PageTitleMain, PageTitles } from '../config/pages';
 import { trackPageView } from './analytics.hook';
+import { useTermReplacement } from './useTermReplacement';
 
 const ExcludePageViewTrackingUrls = [
   TMA_LOGIN_URL_DIGID,
   TMA_LOGIN_URL_EHERKENNING,
 ];
 
-const sortedPageTitleRoutes = Object.keys(PageTitles).sort((a, b) => {
+const sortedPageTitleRoutes = Object.keys(DocumentTitles).sort((a, b) => {
   if (a.length === b.length) {
     return 0;
   }
@@ -20,13 +23,13 @@ const sortedPageTitleRoutes = Object.keys(PageTitles).sort((a, b) => {
 
 export function usePageChange() {
   const location = useLocation();
-
+  const termReplace = useTermReplacement();
   useEffect(() => {
     // Scroll to top on route change
     // window.scrollTo(0, 0);
 
     // Change Page title on route change
-    const index = sortedPageTitleRoutes.findIndex(route => {
+    const index = sortedPageTitleRoutes.findIndex((route) => {
       return (
         location.pathname === route ||
         !!matchPath(location.pathname, {
@@ -41,20 +44,21 @@ export function usePageChange() {
 
     const title =
       index !== -1
-        ? PageTitles[route]
-          ? PageTitles[route]
-          : PageTitleMain
-        : PageTitleMain;
+        ? DocumentTitles[route]
+          ? DocumentTitles[route]
+          : DocumentTitleMain
+        : DocumentTitleMain;
 
-    document.title = title;
+    document.title = termReplace(title);
 
     if (!ExcludePageViewTrackingUrls.includes(location.pathname)) {
+      const title = DocumentTitles[route]
+        ? DocumentTitles[route]
+        : `[undefined] ${location.pathname}`;
       trackPageView(
-        PageTitles[route]
-          ? PageTitles[route]
-          : `[undefined] ${location.pathname}`,
+        termReplace(title),
         CustomTrackingUrls[location.pathname] || location.pathname
       );
     }
-  }, [location.pathname]);
+  }, [location.pathname, termReplace]);
 }

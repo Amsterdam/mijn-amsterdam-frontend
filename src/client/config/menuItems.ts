@@ -3,11 +3,11 @@ import {
   ChapterTitles,
   Chapters,
   Chapter,
-  profileTypeChapterTitleAdjustment,
 } from '../../universal/config';
 
 import { ExternalUrls } from './app';
 import { LinkProps } from '../../universal/types/App.types';
+import { termReplace } from '../hooks/useTermReplacement';
 
 export interface ChapterMenuItem extends LinkProps {
   id: Chapter;
@@ -96,27 +96,27 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
 
 export const chaptersByProfileType: Record<ProfileType, ChapterMenuItem[]> = {
   private: myChaptersMenuItems
-    .filter(item => item.profileTypes.includes('private'))
-    .map(item => {
+    .filter((item) => item.profileTypes.includes('private'))
+    .map((item) => {
       return {
         ...item,
-        title: profileTypeChapterTitleAdjustment('private', item.id),
+        title: termReplace('private', ChapterTitles[item.id]),
       };
     }),
   'private-commercial': myChaptersMenuItems
-    .filter(item => item.profileTypes.includes('private-commercial'))
-    .map(item => {
+    .filter((item) => item.profileTypes.includes('private-commercial'))
+    .map((item) => {
       return {
         ...item,
-        title: profileTypeChapterTitleAdjustment('private-commercial', item.id),
+        title: termReplace('private-commercial', ChapterTitles[item.id]),
       };
     }),
   commercial: myChaptersMenuItems
-    .filter(item => item.profileTypes.includes('commercial'))
-    .map(item => {
+    .filter((item) => item.profileTypes.includes('commercial'))
+    .map((item) => {
       return {
         ...item,
-        title: profileTypeChapterTitleAdjustment('commercial', item.id),
+        title: termReplace('commercial', ChapterTitles[item.id]),
       };
     }),
 };

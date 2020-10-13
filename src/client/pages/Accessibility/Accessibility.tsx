@@ -1,4 +1,6 @@
 import React from 'react';
+import { useTermReplacement } from '../../hooks/useTermReplacement';
+import { ChapterTitles } from '../../../universal/config/chapter';
 import {
   TextPage,
   PageHeading,
@@ -8,6 +10,7 @@ import {
 } from '../../components';
 
 export default () => {
+  const termReplace = useTermReplacement();
   return (
     <TextPage>
       <PageHeading>Volledige toegankelijkheidsverklaring</PageHeading>
@@ -49,9 +52,9 @@ export default () => {
         <ul>
           <li>Pdf-bestanden zijn nog niet altijd toegankelijk.</li>
           <li>
-            De persoonlijke plattegrond ‘Mijn Buurt’ is nog niet helemaal
-            toegankelijk. We werken eraan om de plattegrond zo volledig
-            toegankelijk te maken.
+            De persoonlijke plattegrond ‘{termReplace(ChapterTitles.BUURT)}’ is
+            nog niet helemaal toegankelijk. We werken eraan om de plattegrond zo
+            volledig toegankelijk te maken.
           </li>
         </ul>
 

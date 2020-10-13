@@ -1,9 +1,6 @@
 import classnames from 'classnames';
 import React, { ReactNode } from 'react';
-import {
-  Chapters,
-  profileTypeChapterTitleAdjustment,
-} from '../../../universal/config';
+import { ChapterTitles } from '../../../universal/config/chapter';
 import { getFullAddress, isError, isLoading } from '../../../universal/helpers';
 import {
   GarbageCenter,
@@ -25,6 +22,7 @@ import {
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { useTermReplacement } from '../../hooks/useTermReplacement';
 import styles from './GarbageInformation.module.scss';
 
 interface PanelProps {
@@ -116,11 +114,12 @@ export default () => {
 
   const [restafval, grofvuil] = AFVAL.content || [];
   const profileType = useProfileTypeValue();
+  const termReplace = useTermReplacement();
 
   return (
     <DetailPage className={styles.GarbageInformation}>
       <PageHeading isLoading={isLoading(AFVAL)} icon={<ChapterIcon />}>
-        {profileTypeChapterTitleAdjustment(profileType, Chapters.AFVAL)}
+        {termReplace(ChapterTitles.AFVAL)}
       </PageHeading>
       <PageContent>
         {profileType === 'private' && (

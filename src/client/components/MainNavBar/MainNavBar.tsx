@@ -28,6 +28,7 @@ import styles from './MainNavBar.module.scss';
 import { ProfileName } from './ProfileName';
 import { useBurgerMenuAnimation } from './useBurgerMenuAnimation';
 import { isError } from '../../../universal/helpers/api';
+import { useTermReplacement } from '../../hooks/useTermReplacement';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -166,6 +167,8 @@ export default function MainNavBar() {
     toggleBurgerMenu(false);
   }, [location.pathname]);
 
+  const termReplace = useTermReplacement();
+
   const {
     linkContainerAnimationProps,
     backdropAnimationProps,
@@ -174,16 +177,20 @@ export default function MainNavBar() {
 
   const menuItemsComposed = useMemo(() => {
     return mainMenuItems.map((item) => {
-      let menuItem = item;
+      let menuItem = { ...item };
+
+      menuItem.title = termReplace(menuItem.title);
 
       // Add dynamic chapter submenu items to the menu
       if (item.id === mainMenuItemId.CHAPTERS) {
-        menuItem = { ...item, submenuItems: myChapterItems };
+        menuItem = Object.assign(menuItem, {
+          submenuItems: myChapterItems,
+        });
       }
 
       return getMenuItem(menuItem);
     });
-  }, [myChapterItems]);
+  }, [myChapterItems, termReplace]);
 
   return (
     <nav
