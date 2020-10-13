@@ -60,8 +60,8 @@ const otapServerEnv: OtapEnv = {
     ssoErfpachtUrlEH:
       'https://mijnerfpacht.acc.amsterdam.nl/saml/login/alias/mijnErfpachtZakelijk',
     ssoMilieuzoneUrl: 'https://ontheffingen-acc.amsterdam.nl/publiek/aanvragen',
-    isMyAreaMapEnabled: true,
-    isMyArea2MapEnabled: false,
+    isMyAreaMapEnabled: false,
+    isMyArea2MapEnabled: true,
     krefiaDirectLink: 'https://krefia-acceptatie.amsterdam.nl',
   },
   production: {
