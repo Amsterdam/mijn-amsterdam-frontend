@@ -23,7 +23,7 @@ export const FeatureToggle = {
   KrefiaDirectLinkActive: true,
   tipsFlipActive: true,
   profileToggleActive: !IS_PRODUCTION,
-  profilePageResidentCount: !IS_PRODUCTION,
+  profilePageResidentCount: true,
   kvkActive: !IS_PRODUCTION,
   erfpachtMeldingenActive: !IS_AP,
   residentCountActive: !IS_PRODUCTION,
