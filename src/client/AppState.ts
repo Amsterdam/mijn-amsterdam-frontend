@@ -2,14 +2,12 @@ import { createContext } from 'react';
 import {
   ServiceID,
   ServicesTips,
-  ServicesType,
+  AllServices,
 } from '../server/services/controller';
 import { apiPristineResult, ApiResponse } from '../universal/helpers/api';
 
 export type AppState = {
-  [key in ServiceID]: ApiResponse<
-    ReturnTypeAsync<ServicesType[key]>['content']
-  >;
+  [key in ServiceID]: ApiResponse<ReturnTypeAsync<AllServices[key]>['content']>;
 } & {
   TIPS: ServicesTips['TIPS'] | ApiResponse<any>;
 };
