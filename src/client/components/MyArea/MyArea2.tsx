@@ -98,7 +98,7 @@ export default function MyArea2() {
           : event?.layer?.feature?.properties?.datasetId;
 
         axios({
-          url: `${BFFApiUrls.MAP_DATASETS}${
+          url: `${BFFApiUrls.MAP_DATASETS}/${
             datasetGroupId || datasetId
           }/${datasetItemId}`,
         })
