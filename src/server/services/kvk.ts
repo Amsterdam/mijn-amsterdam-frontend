@@ -78,13 +78,13 @@ export function getKvkAddress(kvkData: KVKData) {
 
   if (vestigingen.length) {
     const vestiging = kvkData?.vestigingen.find(
-      vestiging => !!vestiging.bezoekadres
+      (vestiging) => !!vestiging.bezoekadres
     );
     address = vestiging?.bezoekadres || null;
 
     if (!address) {
       const vestiging = kvkData?.vestigingen.find(
-        vestiging => !!vestiging.postadres
+        (vestiging) => !!vestiging.postadres
       );
       address = vestiging?.postadres || null;
     }
@@ -107,7 +107,7 @@ export function transformKVKData(responseData: KVKSourceData): KVKData | null {
   }
   if (responseData.content.vestigingen) {
     responseData.content.vestigingen = responseData.content.vestigingen.map(
-      vestiging => {
+      (vestiging) => {
         return Object.assign(vestiging, {
           isHoofdvestiging: vestiging.typeringVestiging === 'Hoofdvestiging',
         });
