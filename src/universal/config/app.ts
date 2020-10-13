@@ -23,10 +23,9 @@ export const FeatureToggle = {
   KrefiaDirectLinkActive: true,
   tipsFlipActive: true,
   profileToggleActive: !IS_PRODUCTION,
-  profilePageResidentCount: true,
   kvkActive: !IS_PRODUCTION,
   erfpachtMeldingenActive: !IS_AP,
-  residentCountActive: !IS_PRODUCTION,
+  residentCountActive: true,
 };
 
 export const DAYS_KEEP_RECENT = 28;
