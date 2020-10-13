@@ -23,7 +23,7 @@ export default () => {
   useEffect(() => {
     trackPageView(
       'Landingspagina',
-      document.location.host + document.location.pathname + '/landingspagina'
+      document.location.pathname + '/landingspagina'
     );
   }, []);
 
