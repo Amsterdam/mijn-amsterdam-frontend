@@ -1,3 +1,4 @@
+import React from 'react';
 import { dateSort } from '../../universal/helpers/date';
 import { AppState, PRISTINE_APPSTATE, createAllErrorState } from '../AppState';
 import {
@@ -5,6 +6,7 @@ import {
   MaintenanceNotification01,
 } from '../config/staticData';
 import * as Sentry from '@sentry/browser';
+import { DocumentLink } from '../components/DocumentList/DocumentList';
 
 function transformNotifications(NOTIFICATIONS: AppState['NOTIFICATIONS']) {
   if (NOTIFICATIONS.status === 'OK') {
@@ -30,8 +32,32 @@ export function transformAppState(data: Partial<AppState>) {
         }
       }
     }
+
     if ('NOTIFICATIONS' in data) {
       data['NOTIFICATIONS'] = transformNotifications(data.NOTIFICATIONS!);
+    }
+
+    if (data.FOCUS_SPECIFICATIES?.content) {
+      if (data.FOCUS_SPECIFICATIES?.content.jaaropgaven) {
+        data.FOCUS_SPECIFICATIES.content.jaaropgaven = data.FOCUS_SPECIFICATIES?.content.jaaropgaven.map(
+          (document) => {
+            const documentUrl = (
+              <DocumentLink document={document} label="PDF" />
+            );
+            return Object.assign(document, { documentUrl });
+          }
+        );
+      }
+      if (data.FOCUS_SPECIFICATIES?.content.uitkeringsspecificaties) {
+        data.FOCUS_SPECIFICATIES.content.uitkeringsspecificaties = data.FOCUS_SPECIFICATIES?.content.uitkeringsspecificaties.map(
+          (document) => {
+            const documentUrl = (
+              <DocumentLink document={document} label="PDF" />
+            );
+            return Object.assign(document, { documentUrl });
+          }
+        );
+      }
     }
 
     return data;

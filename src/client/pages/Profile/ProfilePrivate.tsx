@@ -24,7 +24,7 @@ import {
   PageHeading,
 } from '../../components';
 import { BRP_RESIDENTS_API_URL } from '../../config/api';
-import { useDataApi } from '../../hooks/api/useDataApi';
+import { requestApiData, useDataApi } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { formatBrpProfileData } from './formatDataPrivate';
 import { panelConfig, PanelConfigFormatter } from './Profile.constants';
@@ -84,7 +84,10 @@ export default function Profile() {
         url: BRP_RESIDENTS_API_URL,
         method: 'post',
         data: { addressKey: BRP.content?.adres?._adresSleutel },
-        transformResponse: responseContent => apiSuccesResult(responseContent),
+        transformResponse: [
+          ...requestApiData.defaults.transformResponse,
+          (responseContent) => apiSuccesResult(responseContent),
+        ],
       });
     }
   }, [BRP.content, fetchResidentCount]);

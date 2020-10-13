@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { generatePath, useHistory } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import { defaultDateFormat, isInteralUrl } from '../../../universal/helpers';
@@ -10,15 +10,16 @@ import {
 } from '../../../universal/types';
 import { Colors } from '../../config/app';
 import {
+  trackItemClick,
   trackItemPresentation,
   useSessionCallbackOnceDebounced,
 } from '../../hooks/analytics.hook';
 import Linkd from '../Button/Button';
 import ChapterIcon from '../ChapterIcon/ChapterIcon';
+import { DocumentLink } from '../DocumentList/DocumentList';
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './MyNotifications.module.scss';
-import { trackItemClick } from '../../hooks/analytics.hook';
 
 export interface MyNotificationsProps {
   items: MyNotification[];
@@ -67,13 +68,13 @@ export default function MyNotifications({
           </li>
         )}
         {!isLoading &&
-          items.map(item => {
+          items.map((item, index) => {
             const isLinkExternal =
               (!!item.link?.to && !isInteralUrl(item.link.to)) ||
               !!item.link?.download;
             return (
               <li
-                key={`${item.chapter}-${item.id}`}
+                key={`${item.chapter}-${item.id}-${index}`}
                 className={styles.MyNotificationItem}
               >
                 <Heading className={styles.Title} el="h4" size="small">
@@ -108,26 +109,39 @@ export default function MyNotifications({
                 )}
                 {(!!item.link || !!item.customLink) && (
                   <p className={styles.Action}>
-                    <Linkd
-                      title={`Meer informatie over de melding: ${item.title}`}
-                      href={item.customLink ? '#' : item.link?.to}
-                      external={isLinkExternal}
-                      download={item.link?.download}
-                      onClick={event => {
-                        trackItemClick(trackCategory, item.title);
-                        if (item.customLink) {
-                          item.customLink.callback();
-                          return false;
-                        }
-                        if (item.link && !isLinkExternal) {
-                          showNotification(item.id, item.link.to);
-                          return false;
-                        }
-                      }}
-                    >
-                      {(item.link || item.customLink)?.title ||
-                        'Meer informatie'}
-                    </Linkd>
+                    {item.link?.download ? (
+                      <DocumentLink
+                        document={{
+                          id: item.id,
+                          title: item.title,
+                          datePublished: item.datePublished,
+                          url: item.link.to,
+                          download: item.link.download,
+                          type: 'pdf',
+                        }}
+                        label={item.link.title}
+                      />
+                    ) : (
+                      <Linkd
+                        title={`Meer informatie over de melding: ${item.title}`}
+                        href={item.customLink ? '#' : item.link?.to}
+                        external={isLinkExternal}
+                        onClick={() => {
+                          trackItemClick(trackCategory, item.title);
+                          if (item.customLink) {
+                            item.customLink.callback();
+                            return false;
+                          }
+                          if (item.link && !isLinkExternal) {
+                            showNotification(item.id, item.link.to);
+                            return false;
+                          }
+                        }}
+                      >
+                        {(item.link || item.customLink)?.title ||
+                          'Meer informatie over ' + item.title}
+                      </Linkd>
+                    )}
                   </p>
                 )}
               </li>
@@ -139,7 +153,9 @@ export default function MyNotifications({
       )}
       {!isLoading && showMoreLink && (
         <p className={styles.FooterLink}>
-          <Linkd href={AppRoutes.NOTIFICATIONS}>Alle updates</Linkd>
+          <Linkd href={generatePath(AppRoutes.NOTIFICATIONS)}>
+            Alle updates
+          </Linkd>
         </p>
       )}
     </div>

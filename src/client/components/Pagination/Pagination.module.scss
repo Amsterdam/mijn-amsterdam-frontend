@@ -43,7 +43,9 @@
       text-decoration: none;
     }
   }
-
+  &.PagePrevButton {
+    margin-left: -1rem;
+  }
   &.PagePrevButton,
   &.PageNextButton {
     width: auto;

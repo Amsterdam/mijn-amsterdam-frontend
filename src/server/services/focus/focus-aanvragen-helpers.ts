@@ -36,10 +36,10 @@ export function isRecentItem(
 ) {
   return (
     steps.some(
-      step =>
+      (step) =>
         step.title === 'beslissing' &&
         isRecentCase(step.datePublished, compareDate)
-    ) || steps.every(step => step.title !== 'beslissing')
+    ) || steps.every((step) => step.title !== 'beslissing')
   );
 }
 
@@ -87,8 +87,8 @@ export function getDecision(decision: Decision): DecisionFormatted {
 
 export function getLatestStep(steps: Array<{ title: string }>) {
   return (
-    [...processSteps].reverse().find(stepTitle => {
-      return !!steps.find(stepData => stepTitle === stepData.title);
+    [...processSteps].reverse().find((stepTitle) => {
+      return !!steps.find((stepData) => stepTitle === stepData.title);
     }) || 'aanvraag'
   );
 }
@@ -138,7 +138,7 @@ export function findStepsContent(
 
   processSteps.forEach((stepTitle: string) => {
     const steps: Array<{ title: StepTitle }> = product.steps;
-    const stepData = steps.find(step => step.title === stepTitle);
+    const stepData = steps.find((step) => step.title === stepTitle);
     if (labelContent && stepTitle in labelContent) {
       const stepContent = labelContent[stepTitle];
 
@@ -169,8 +169,8 @@ function normalizeFocusSourceProductStep(
     id: stepTitle,
     title: stepTitle,
     documents:
-      stepData.document.map(sourceDocument =>
-        formatFocusDocument(stepData.datum, sourceDocument, 'PDF')
+      stepData.document.map((sourceDocument) =>
+        formatFocusDocument(stepData.datum, sourceDocument, 'pdf')
       ) || [],
     datePublished: stepData.datum,
   };
@@ -194,7 +194,7 @@ export function normalizeFocusSourceProduct(product: FocusProductFromSource) {
       (stepEntry): stepEntry is [StepTitle, FocusProductStepFromSource] =>
         stepEntry[1] !== null
     )
-    .map(step => normalizeFocusSourceProductStep(product, step));
+    .map((step) => normalizeFocusSourceProductStep(product, step));
 
   const latestStep = getLatestStep(steps);
   const id = hash(`${product._id}-${latestStep}`);
@@ -220,7 +220,7 @@ export function fillStepContent(
   stepContent: FocusStepContent
 ): FocusItemStep {
   const additionalInformationStep = product.steps.find(
-    step => step.title === 'herstelTermijn'
+    (step) => step.title === 'herstelTermijn'
   );
 
   let aantalDagenHerstelTermijn = 0;
@@ -276,9 +276,9 @@ export function transformFocusProductSteps(
   stepsContent: ReturnType<typeof findStepsContent>
 ) {
   return processSteps
-    .map(stepTitle => {
+    .map((stepTitle) => {
       const stepContent = stepsContent[stepTitle];
-      const stepData = product.steps.find(step => step.title === stepTitle);
+      const stepData = product.steps.find((step) => step.title === stepTitle);
       if (stepContent && stepData) {
         return fillStepContent(product, stepData, stepContent);
       }
@@ -364,9 +364,9 @@ export function translateFocusProduct(
   prod.title = titleTranslations[prod.title] || prod.title;
   prod.productTitle = prod.title;
 
-  prod.steps = prod.steps.map(step => {
+  prod.steps = prod.steps.map((step) => {
     return Object.assign({}, step, {
-      documents: step.documents.map(doc => {
+      documents: step.documents.map((doc) => {
         return Object.assign({}, doc, {
           title: titleTranslations[doc.title] || doc.title,
         });

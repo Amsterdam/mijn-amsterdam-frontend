@@ -1,9 +1,11 @@
-import React from 'react';
-import { IconDownload } from '../../assets/icons';
-import { Linkd } from '../index';
-import styles from './DocumentList.module.scss';
-import { GenericDocument } from '../../../universal/types/App.types';
+import * as Sentry from '@sentry/browser';
 import classnames from 'classnames';
+import React from 'react';
+import { GenericDocument } from '../../../universal/types/App.types';
+import { IconDownload } from '../../assets/icons';
+import { trackPageView } from '../../hooks/analytics.hook';
+import Linkd from '../Button/Button';
+import styles from './DocumentList.module.scss';
 
 interface DocumentLinkProps {
   document: GenericDocument;
@@ -15,14 +17,60 @@ interface DocumentListProps {
   isExpandedView?: boolean;
 }
 
+function downloadFile(docDownload: GenericDocument) {
+  var link = document.createElement('a');
+  link.href = docDownload.url;
+  const downloadName = addFileType(
+    docDownload.download || docDownload.title,
+    docDownload.type
+  );
+  link.download = downloadName;
+  link.click();
+}
+
+function addFileType(url: string, type: string = '') {
+  if (
+    type &&
+    !url.endsWith('.' + type) &&
+    !url.endsWith('.' + type.toUpperCase())
+  ) {
+    return `${url}.${type}`;
+  }
+  return url;
+}
+
 export function DocumentLink({ document, label }: DocumentLinkProps) {
   return (
     <Linkd
       className={styles.DocumentLink}
-      href={document.url}
-      external={true}
-      download={document.title}
       icon={IconDownload}
+      href={document.url}
+      onClick={event => {
+        event.preventDefault();
+
+        fetch(document.url).then(response => {
+          const trackingUrl =
+            window.location.pathname +
+            addFileType(
+              `/downloads/${document.download || document.title}`,
+              document.type
+            );
+
+          if (response.status !== 200) {
+            Sentry.captureException('Could not download document', {
+              extra: {
+                title: document.title,
+                url: document.url,
+              },
+            });
+          } else {
+            // Tracking pageview here because trackDownload doesn't work properly in Matomo
+            trackPageView(document.title, trackingUrl);
+            downloadFile(document);
+          }
+        });
+        return false;
+      }}
     >
       {label || document.title}
     </Linkd>

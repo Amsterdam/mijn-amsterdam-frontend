@@ -1,4 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
+import { generatePath, useHistory, useParams } from 'react-router-dom';
+import { AppRoutes } from '../../../universal/config/routing';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
   Alert,
@@ -10,22 +12,29 @@ import {
   Pagination,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './MyNotifications.module.scss';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
+import styles from './MyNotifications.module.scss';
 
 const PAGE_SIZE = 10;
-const INITIAL_INDEX = [0, PAGE_SIZE - 1];
 
 export default () => {
   const { NOTIFICATIONS } = useAppStateGetter();
   const notifications = useAppStateNotifications();
+  const { page = '1' } = useParams<{ page?: string }>();
+  const history = useHistory();
 
-  const [[startIndex, endIndex], setPageIndex] = useState(INITIAL_INDEX);
+  const currentPage = useMemo(() => {
+    return parseInt(page, 10);
+  }, [page]);
+
   const itemsPaginated = useMemo(() => {
-    return notifications.slice(startIndex, endIndex + 1);
-  }, [startIndex, endIndex, notifications]);
+    const startIndex = currentPage - 1;
+    const start = startIndex * PAGE_SIZE;
+    const end = start + PAGE_SIZE;
+    return notifications.slice(start, end);
+  }, [currentPage, notifications]);
 
-  const total = notifications.length || itemsPaginated.length;
+  const total = notifications.length;
 
   return (
     <DetailPage className={styles.MyNotifications}>
@@ -51,7 +60,10 @@ export default () => {
             className={styles.Pagination}
             totalCount={total}
             pageSize={PAGE_SIZE}
-            onPageClick={(page, ...index) => setPageIndex(index)}
+            currentPage={currentPage}
+            onPageClick={(page) => {
+              history.replace(generatePath(AppRoutes.NOTIFICATIONS, { page }));
+            }}
           />
         </PageContent>
       )}

@@ -1,3 +1,4 @@
+import { generatePath } from 'react-router-dom';
 import { AppRoutes, Chapter, ChapterTitles } from '../../../universal/config';
 import { LinkProps } from '../../../universal/types';
 import { ChapterMenuItem } from '../../config/menuItems';
@@ -47,6 +48,6 @@ export const mainMenuItems: MenuItem[] = [
   {
     title: MenuItemTitles.NOTIFICATIONS,
     id: mainMenuItemId.NOTIFICATIONS,
-    to: AppRoutes.NOTIFICATIONS,
+    to: generatePath(AppRoutes.NOTIFICATIONS),
   },
 ];

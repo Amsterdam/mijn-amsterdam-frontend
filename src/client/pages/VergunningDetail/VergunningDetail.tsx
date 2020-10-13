@@ -31,7 +31,7 @@ import InfoDetail, {
 import StatusLine, {
   StatusLineItem,
 } from '../../components/StatusLine/StatusLine';
-import { useDataApi } from '../../hooks/api/useDataApi';
+import { requestApiData, useDataApi } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './VergunningDetail.module.scss';
 
@@ -107,17 +107,20 @@ export default () => {
     if (documentsUrl) {
       fetchDocuments({
         url: directApiUrl(documentsUrl),
-        transformResponse: ({ content }) => {
-          if (!content) {
-            return [];
-          }
-          return apiSuccesResult(
-            content.map((document: VergunningDocument) =>
-              // Some documents don't have titles, assign a default title.
-              Object.assign(document, { title: document.title || 'Document' })
-            )
-          );
-        },
+        transformResponse: [
+          ...requestApiData.defaults.transformResponse,
+          ({ content }) => {
+            if (!content) {
+              return [];
+            }
+            return apiSuccesResult(
+              content.map((document: VergunningDocument) =>
+                // Some documents don't have titles, assign a default title.
+                Object.assign(document, { title: document.title || 'Document' })
+              )
+            );
+          },
+        ],
       });
     }
   }, [documentsUrl, fetchDocuments]);

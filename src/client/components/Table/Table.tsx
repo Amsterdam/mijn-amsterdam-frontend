@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { ReactNode } from 'react';
+import React, { isValidElement, ReactNode } from 'react';
 import { capitalizeFirstLetter, entries } from '../../../universal/helpers';
 import { Unshaped } from '../../../universal/types';
 import Linkd from '../Button/Button';
@@ -10,7 +10,7 @@ export function addTitleLinkComponent(
   items: any[],
   titleKey: string = 'title'
 ) {
-  return items.map(item => {
+  return items.map((item) => {
     if (!item.link?.to) {
       return item;
     }
@@ -44,7 +44,7 @@ export default function Table({
   );
   const hasDisplayPropTableHeadingLabels = !!Object.keys(
     displayPropsFinal
-  ).filter(titleKey => !!displayPropsFinal[titleKey]).length;
+  ).filter((titleKey) => !!displayPropsFinal[titleKey]).length;
 
   return (
     <table className={classnames(styles.Table, className)}>
@@ -78,7 +78,9 @@ export default function Table({
                 {!!label && (
                   <span className={styles.DisplayPropLabel}>{label}:</span>
                 )}
-                {item[key] ? (
+                {item[key] && isValidElement(item[key]) ? (
+                  item[key]
+                ) : item[key] ? (
                   <InnerHtml>{item[key]}</InnerHtml>
                 ) : (
                   <span>&mdash;</span>

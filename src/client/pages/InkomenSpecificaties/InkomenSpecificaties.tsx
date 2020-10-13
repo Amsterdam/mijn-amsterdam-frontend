@@ -18,12 +18,12 @@ import {
 } from '../../components';
 import { isNativeDatePickerInputSupported } from '../../components/DateInput/DateInput';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './InkomenSpecificaties.module.scss';
 import AlertDocumentDownloadsDisabled from '../Inkomen/AlertDocumentDownloadsDisabled';
+import styles from './InkomenSpecificaties.module.scss';
 
 export const specificationsTableDisplayProps = {
   title: 'Omschrijving',
-  type: 'Regeling',
+  category: 'Regeling',
   displayDatePublished: 'Datum',
   documentUrl: 'Documenten',
 };
@@ -44,14 +44,17 @@ function Caret() {
 export default () => {
   const { FOCUS_SPECIFICATIES } = useAppStateGetter();
 
-  const { type } = useParams<{ type: string }>();
+  const { category } = useParams<{ category?: 'jaaropgaven' }>();
 
-  const isAnnualStatementOverviewPage = type === 'jaaropgaven';
+  const isAnnualStatementOverviewPage = category === 'jaaropgaven';
 
-  const items =
-    (isAnnualStatementOverviewPage
-      ? FOCUS_SPECIFICATIES.content?.jaaropgaven
-      : FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties) || [];
+  const items = useMemo(() => {
+    return (
+      (isAnnualStatementOverviewPage
+        ? FOCUS_SPECIFICATIES.content?.jaaropgaven
+        : FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties) || []
+    );
+  }, [isAnnualStatementOverviewPage, FOCUS_SPECIFICATIES.content]);
 
   const maxDate = useMemo(() => {
     if (items.length) {
@@ -68,7 +71,7 @@ export default () => {
   }, [items]);
 
   const [isSearchPanelActive, setSearchPanelActive] = useState(false);
-  const [selectedType, setSelectedType] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedDates, setSelectedDates] = useState<[Date, Date]>([
     minDate,
     maxDate,
@@ -84,7 +87,7 @@ export default () => {
   const options: Array<[string, number]> = useMemo(() => {
     return Array.from(
       items.reduce((acc: Map<string, number>, item) => {
-        acc.set(item.type, (acc.get(item.type) || 0) + 1);
+        acc.set(item.category, (acc.get(item.category) || 0) + 1);
         return acc;
       }, new Map<string, number>())
     );
@@ -93,7 +96,9 @@ export default () => {
   const [[startIndex, endIndex], setPageIndex] = useState(INITIAL_INDEX);
 
   const itemsFiltered = items
-    .filter((item) => (selectedType ? item.type === selectedType : true))
+    .filter((item) =>
+      selectedCategory ? item.category === selectedCategory : true
+    )
     .filter((item) => {
       const datePublished = parseISO(item.datePublished);
       return (
@@ -102,19 +107,19 @@ export default () => {
     });
 
   const itemsFilteredPaginated = itemsFiltered.slice(startIndex, endIndex + 1);
-  const typeFilterActive = !!selectedType;
+  const categoryFilterActive = !!selectedCategory;
   const minDateFilterActive =
     selectedDates[0].toString() !== minDate.toString();
   const maxDateFilterActive =
     selectedDates[1].toString() !== maxDate.toString();
 
-  const selectTypeFilter = useCallback((type) => {
-    setSelectedType(type);
+  const selectCategoryFilter = useCallback((category) => {
+    setSelectedCategory(category);
     setPageIndex(INITIAL_INDEX);
   }, []);
 
   function resetSearch() {
-    setSelectedType('');
+    setSelectedCategory('');
     setSelectedDates([minDate, maxDate]);
   }
 
@@ -179,14 +184,14 @@ export default () => {
 
         {isSearchPanelActive && (
           <div className={styles.SearchPanel}>
-            {items.some((item) => !!item.type) && (
+            {items.some((item) => !!item.category) && (
               <div className={styles.FilterInput}>
                 <span>
                   Regeling{' '}
-                  {typeFilterActive && (
+                  {categoryFilterActive && (
                     <button
                       className={styles.ResetFilterButton}
-                      onClick={() => setSelectedType('')}
+                      onClick={() => setSelectedCategory('')}
                     >
                       resetten
                     </button>
@@ -195,10 +200,10 @@ export default () => {
                 <select
                   className={classnames(
                     styles.Select,
-                    typeFilterActive && styles.FilterActive
+                    categoryFilterActive && styles.FilterActive
                   )}
-                  value={selectedType}
-                  onChange={(event) => selectTypeFilter(event.target.value)}
+                  value={selectedCategory}
+                  onChange={(event) => selectCategoryFilter(event.target.value)}
                 >
                   <option value="">Alle regelingen ({items.length})</option>
                   {options.map(([option, count]) => (
