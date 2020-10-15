@@ -119,21 +119,6 @@ export default function MyAreaPanels() {
     [updateDatasetControlItems]
   );
 
-  // const closePanelContent = useCallback(
-  //   (panelId: string) => {
-  //     const updatedPanels = openPanels.filter(id => id !== panelId);
-
-  //     if (!updatedPanels.length) {
-  //       mapPanel.setPositionFromSnapPoint(SnapPoint.Closed);
-  //     }
-
-  //     setPanelState(panelState => {
-  //       return { ...panelState, x: { ...panelState.x, open: false } };
-  //     });
-  //   },
-  //   [openPanels, mapPanel, setPanelState]
-  // );
-
   const onChange = useCallback(
     (controlItem: DatasetControlItem) => checkUncheckAll(controlItem),
     [checkUncheckAll]

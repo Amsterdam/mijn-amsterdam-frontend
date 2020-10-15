@@ -59,13 +59,24 @@ export async function fetchBUURT(
 
 export type DatasetItemTuple = [number, number, string];
 
-const STATUS_CONTAINER_ACTIVE = 1;
+const CONTAINER_STATUS_ACTIVE = 1;
+const CONTAINER_FRACTIE_IN = [
+  'rest',
+  'glas',
+  'papier',
+  'gft',
+  'plastic',
+  'textiel',
+];
 
 function transformAfvalcontainers(WFSData: any) {
   const collection: Record<string, DatasetItemTuple[]> = {};
   for (const feature of WFSData.features) {
-    if (feature.properties?.status === STATUS_CONTAINER_ACTIVE) {
-      const fractieOmschrijving = feature.properties?.fractie_omschrijving.toLowerCase();
+    const fractieOmschrijving = feature.properties?.fractie_omschrijving.toLowerCase();
+    if (
+      feature.properties?.status === CONTAINER_STATUS_ACTIVE &&
+      CONTAINER_FRACTIE_IN.includes(fractieOmschrijving)
+    ) {
       if (!collection[fractieOmschrijving]) {
         collection[fractieOmschrijving] = [];
       }
