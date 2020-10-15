@@ -92,7 +92,7 @@ export default () => {
           <Alert type="warning">
             <p>
               We kunnen op dit moment geen gegevens tonen. Deze pagina is
-              mogelijk verplaatst. Kier hieronder een van de beschikbare Tozo
+              mogelijk verplaatst. Kies hieronder een van de beschikbare Tozo
               aanvragen.
             </p>
             <ul className={styles.TozoAlternatives}>
