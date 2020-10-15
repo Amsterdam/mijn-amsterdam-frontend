@@ -59,16 +59,20 @@ export async function fetchBUURT(
 
 export type DatasetItemTuple = [number, number, string];
 
+const STATUS_CONTAINER_ACTIVE = 1;
+
 function transformAfvalcontainers(WFSData: any) {
   const collection: Record<string, DatasetItemTuple[]> = {};
   for (const feature of WFSData.features) {
-    const fractieOmschrijving = feature.properties?.fractie_omschrijving.toLowerCase();
-    if (!collection[fractieOmschrijving]) {
-      collection[fractieOmschrijving] = [];
-    }
-    if (feature?.geometry?.coordinates) {
-      const [lng, lat] = feature.geometry.coordinates;
-      collection[fractieOmschrijving].push([lat, lng, feature.properties.id]);
+    if (feature.properties?.status === STATUS_CONTAINER_ACTIVE) {
+      const fractieOmschrijving = feature.properties?.fractie_omschrijving.toLowerCase();
+      if (!collection[fractieOmschrijving]) {
+        collection[fractieOmschrijving] = [];
+      }
+      if (feature?.geometry?.coordinates) {
+        const [lng, lat] = feature.geometry.coordinates;
+        collection[fractieOmschrijving].push([lat, lng, feature.properties.id]);
+      }
     }
   }
   return {
