@@ -24,10 +24,9 @@ export const FeatureToggle = {
   tipsFlipActive: true,
   myArea2Active: !IS_PRODUCTION,
   profileToggleActive: !IS_PRODUCTION,
-  profilePageResidentCount: !IS_PRODUCTION,
   kvkActive: !IS_PRODUCTION,
   erfpachtMeldingenActive: !IS_AP,
-  residentCountActive: !IS_PRODUCTION,
+  residentCountActive: true,
 };
 
 export const DAYS_KEEP_RECENT = 28;

@@ -58,7 +58,7 @@ export default function Profile() {
 
   const brpProfileData = useMemo(() => {
     if (
-      FeatureToggle.profilePageResidentCount &&
+      FeatureToggle.residentCountActive &&
       typeof residentCount === 'number' &&
       BRP.content?.adres
     ) {
