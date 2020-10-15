@@ -29,6 +29,8 @@ const CollapsiblePanelContent = styled('div')`
 
 const PanelHeadingElement = styled('h3')`
   margin: 0;
+  display: flex;
+  align-items: center;
 `;
 
 const PanelIcon = styled(Icon)`
@@ -91,7 +93,7 @@ export default function MyAreaCollapsiblePanel({
     <CollapsiblePanel>
       <MyAreaCollapsiblePanelHeading
         title={title}
-        onClick={event => {
+        onClick={(event) => {
           setCollapsedState(
             isExpanded(collapsedState)
               ? CollapsedState.Collapsed
