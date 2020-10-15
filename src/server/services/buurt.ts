@@ -73,6 +73,7 @@ function transformAfvalcontainers(WFSData: any) {
   const collection: Record<string, DatasetItemTuple[]> = {};
   for (const feature of WFSData.features) {
     const fractieOmschrijving = feature.properties?.fractie_omschrijving.toLowerCase();
+    // Redundant filtering, the API should return with the proper dataset already
     if (
       feature.properties?.status === CONTAINER_STATUS_ACTIVE &&
       CONTAINER_FRACTIE_IN.includes(fractieOmschrijving)
@@ -290,7 +291,7 @@ interface DatasetConfig {
 export const datasetEndpoints: Record<string, DatasetConfig> = {
   afvalcontainers: {
     listUrl:
-      'https://api.data.amsterdam.nl/v1/wfs/huishoudelijkafval/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=container&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326',
+      'https://api.data.amsterdam.nl/v1/wfs/huishoudelijkafval/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=container&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326&filter=%3CFilter%3E%3CAnd%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Estatus%3C/PropertyName%3E%3CLiteral%3E1%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3COr%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3ERest%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3ETextiel%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EGlas%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EPapier%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EGFT%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EPlastic%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3C/Or%3E%3C/And%3E%3C/Filter%3E',
     detailUrl: 'https://api.data.amsterdam.nl/v1/huishoudelijkafval/container/',
     transformList: transformAfvalcontainers,
     transformDetail: transformAfvalcontainersDetail,
