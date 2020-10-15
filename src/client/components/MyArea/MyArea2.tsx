@@ -111,7 +111,7 @@ export default function MyArea2() {
             });
           })
           .catch((error) => {
-            console.error('request error', error);
+            console.error('map request error', error);
           });
       }
     },

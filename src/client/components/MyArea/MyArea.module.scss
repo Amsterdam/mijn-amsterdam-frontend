@@ -160,3 +160,10 @@
   font-size: 1.8rem;
   font-weight: 500;
 }
+
+// NOTE: Enable and add styling if we decide to have outstanding focusstyle
+// :global(.leaflet-marker-icon) {
+//   &:focus > div {
+//     outline: 10px solid red;
+//   }
+// }
