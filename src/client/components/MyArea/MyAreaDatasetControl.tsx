@@ -13,12 +13,6 @@ export const datasetControlItemsAtom = atom({
   default: DATASET_CONTROL_ITEMS,
 });
 
-interface updateDatasetControlItemProps {
-  items: DatasetControlItem[];
-  ids: string[];
-  isActive: boolean;
-}
-
 export function useDatasetControlItems(): DatasetControlItem[] {
   return useRecoilValue(datasetControlItemsAtom);
 }
