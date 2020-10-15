@@ -58,6 +58,7 @@ function initializeState(snapshot: MutableSnapshot) {
 describe('<InkomenDetailTozo />', () => {
   const routeEntry = generatePath(AppRoutes['INKOMEN/TOZO'], {
     id: testState.FOCUS_TOZO.content[0].id,
+    version: '2',
   });
   const routePath = AppRoutes['INKOMEN/TOZO'];
 
