@@ -35,7 +35,6 @@ export default () => {
           availableIds: tozoItems.map(item => item.id),
         },
       });
-      // TozoItem = tozoItems[tozoItems.length - 1];
     }
   }
 
