@@ -20,6 +20,7 @@ import { isNativeDatePickerInputSupported } from '../../components/DateInput/Dat
 import { useAppStateGetter } from '../../hooks/useAppState';
 import AlertDocumentDownloadsDisabled from '../Inkomen/AlertDocumentDownloadsDisabled';
 import styles from './InkomenSpecificaties.module.scss';
+import { useAddDocumentLinkComponents } from './useAddDocumentLinks';
 
 export const specificationsTableDisplayProps = {
   title: 'Omschrijving',
@@ -43,7 +44,9 @@ function Caret() {
 
 export default () => {
   const { FOCUS_SPECIFICATIES } = useAppStateGetter();
-
+  const focusSpecificatiesWithDocumentLinks = useAddDocumentLinkComponents(
+    FOCUS_SPECIFICATIES
+  );
   const { category } = useParams<{ category?: 'jaaropgaven' }>();
 
   const isAnnualStatementOverviewPage = category === 'jaaropgaven';
@@ -51,10 +54,11 @@ export default () => {
   const items = useMemo(() => {
     return (
       (isAnnualStatementOverviewPage
-        ? FOCUS_SPECIFICATIES.content?.jaaropgaven
-        : FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties) || []
+        ? focusSpecificatiesWithDocumentLinks.content?.jaaropgaven
+        : focusSpecificatiesWithDocumentLinks.content
+            ?.uitkeringsspecificaties) || []
     );
-  }, [isAnnualStatementOverviewPage, FOCUS_SPECIFICATIES.content]);
+  }, [isAnnualStatementOverviewPage, focusSpecificatiesWithDocumentLinks]);
 
   const maxDate = useMemo(() => {
     if (items.length) {
@@ -96,10 +100,10 @@ export default () => {
   const [[startIndex, endIndex], setPageIndex] = useState(INITIAL_INDEX);
 
   const itemsFiltered = items
-    .filter((item) =>
+    .filter(item =>
       selectedCategory ? item.category === selectedCategory : true
     )
-    .filter((item) => {
+    .filter(item => {
       const datePublished = parseISO(item.datePublished);
       return (
         datePublished >= selectedDates[0] && datePublished <= selectedDates[1]
@@ -113,7 +117,7 @@ export default () => {
   const maxDateFilterActive =
     selectedDates[1].toString() !== maxDate.toString();
 
-  const selectCategoryFilter = useCallback((category) => {
+  const selectCategoryFilter = useCallback(category => {
     setSelectedCategory(category);
     setPageIndex(INITIAL_INDEX);
   }, []);
@@ -184,7 +188,7 @@ export default () => {
 
         {isSearchPanelActive && (
           <div className={styles.SearchPanel}>
-            {items.some((item) => !!item.category) && (
+            {items.some(item => !!item.category) && (
               <div className={styles.FilterInput}>
                 <span>
                   Regeling{' '}
@@ -203,7 +207,7 @@ export default () => {
                     categoryFilterActive && styles.FilterActive
                   )}
                   value={selectedCategory}
-                  onChange={(event) => selectCategoryFilter(event.target.value)}
+                  onChange={event => selectCategoryFilter(event.target.value)}
                 >
                   <option value="">Alle regelingen ({items.length})</option>
                   {options.map(([option, count]) => (
@@ -234,7 +238,7 @@ export default () => {
                 )}
                 value={selectedDates[0]}
                 hasNativeSupport={isNativeDatePickerInputSupported()}
-                onChange={(dateStart) => {
+                onChange={dateStart => {
                   setSelectedDates(([, dateEnd]) => [
                     dateStart || minDate,
                     dateEnd || maxDate,
@@ -262,7 +266,7 @@ export default () => {
                 )}
                 value={selectedDates[1]}
                 hasNativeSupport={isNativeDatePickerInputSupported()}
-                onChange={(dateEnd) =>
+                onChange={dateEnd =>
                   setSelectedDates(([dateStart]) => [
                     dateStart || minDate,
                     dateEnd || maxDate,

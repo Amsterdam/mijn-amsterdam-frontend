@@ -1,6 +1,11 @@
 import * as Sentry from '@sentry/node';
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, Chapters, FeatureToggle } from '../../../universal/config';
+import {
+  AppRoutes,
+  Chapters,
+  FeatureToggle,
+  API_BASE_PATH,
+} from '../../../universal/config';
 import {
   apiSuccesResult,
   dateFormat,
@@ -103,7 +108,7 @@ export function createTozoItemStep(document: FocusTozoDocument) {
   const attachedDocument = {
     id: document.id,
     title: documentTitle,
-    url: `/api/${document.url}`,
+    url: `${API_BASE_PATH}/${document.url}`,
     datePublished: document.datePublished,
     type: 'pdf',
   };

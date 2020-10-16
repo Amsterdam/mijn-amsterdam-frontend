@@ -74,12 +74,13 @@ export function useSSE({
     };
 
     const onMessageEvent = (message: any) => {
+      let messageData = SSE_ERROR_MESSAGE;
       try {
-        callback(JSON.parse(message.data));
+        messageData = JSON.parse(message.data);
       } catch (error) {
-        console.error('[SSE] Parsing sse message data failed.', message);
-        callback(SSE_ERROR_MESSAGE);
+        console.error('[SSE] Parsing sse message data failed.');
       }
+      callback(messageData);
     };
 
     es.addEventListener('error', handleError);

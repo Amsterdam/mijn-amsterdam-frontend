@@ -72,7 +72,7 @@ export async function fetchTIPS(
   sessionID: string,
   passthroughRequestHeaders: Record<string, string>,
   requestParams: Record<string, string>,
-  serviceResults: ServiceResults
+  serviceResults: ServiceResults | null
 ) {
   const params = getTipsRequestParams(requestParams);
   const optin = requestParams.optin === 'true';
@@ -80,7 +80,7 @@ export async function fetchTIPS(
     optin,
   };
 
-  if (optin) {
+  if (optin && serviceResults) {
     Object.assign(
       tipsRequestData,
       createTipsRequestDataFromServiceResults(serviceResults)

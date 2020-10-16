@@ -6,10 +6,26 @@ import { MyNotification } from '../../../universal/types';
 
 const NOTIFICATIONS: MyNotification[] = [];
 
-it('Renders without crashing', () => {
-  shallow(
-    <BrowserRouter>
-      <MyNotifications trackCategory="myNotifications" items={NOTIFICATIONS} />
-    </BrowserRouter>
-  );
+describe('<MyNotifications />', () => {
+  it('Renders without crashing', () => {
+    shallow(
+      <BrowserRouter>
+        <MyNotifications
+          trackCategory="myNotifications"
+          items={NOTIFICATIONS}
+        />
+      </BrowserRouter>
+    );
+  });
+  it('Matches the snapshot', () => {
+    const comp = shallow(
+      <BrowserRouter>
+        <MyNotifications
+          trackCategory="myNotifications"
+          items={NOTIFICATIONS}
+        />
+      </BrowserRouter>
+    );
+    expect(comp.html()).toMatchSnapshot();
+  });
 });
