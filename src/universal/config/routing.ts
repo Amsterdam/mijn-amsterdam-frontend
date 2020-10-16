@@ -9,7 +9,7 @@ export const AppRoutes = {
   'INKOMEN/BIJSTANDSUITKERING': '/inkomen-en-stadspas/bijstandsuitkering/:id',
   'INKOMEN/SPECIFICATIES':
     '/inkomen-en-stadspas/uitkeringsspecificaties/:category?',
-  'INKOMEN/TOZO': '/inkomen-en-stadspas/tozo/:id?',
+  'INKOMEN/TOZO': '/inkomen-en-stadspas/tozo/:version/:id?',
   BRP: '/persoonlijke-gegevens',
   KVK: '/gegevens-handelsregister',
   BUURT: '/buurt',
@@ -27,7 +27,7 @@ export const AppRoutes = {
 export const PublicRoutes = [AppRoutes.API_LOGIN, AppRoutes.ACCESSIBILITY];
 
 export const PrivateRoutes = Object.values(AppRoutes).filter(
-  (path) => !PublicRoutes.includes(path)
+  path => !PublicRoutes.includes(path)
 );
 
 export const CustomTrackingUrls = {

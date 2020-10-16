@@ -140,6 +140,7 @@ export function createTozoItemStep(document: FocusTozoDocument) {
 
 export function createTozoItem(productTitle: string, steps: FocusItemStep[]) {
   let title = '';
+  let version = 1;
 
   switch (productTitle) {
     case 'Tozo 1':
@@ -147,9 +148,11 @@ export function createTozoItem(productTitle: string, steps: FocusItemStep[]) {
       break;
     case 'Tozo 2':
       title = 'Tozo 2 (aangevraagd vanaf 1 juni 2020)';
+      version = 2;
       break;
     case 'Tozo 3':
       title = 'Tozo 3 (aangevraagd vanaf 1 oktober 2020)';
+      version = 3;
       break;
   }
 
@@ -165,7 +168,7 @@ export function createTozoItem(productTitle: string, steps: FocusItemStep[]) {
     type: 'Tozo',
     chapter: Chapters.INKOMEN,
     link: {
-      to: generatePath(AppRoutes['INKOMEN/TOZO'], { id }),
+      to: generatePath(AppRoutes['INKOMEN/TOZO'], { id, version }),
       title: `Bekijk hoe het met uw aanvraag staat`,
     },
     steps,
@@ -175,7 +178,7 @@ export function createTozoItem(productTitle: string, steps: FocusItemStep[]) {
 export function createTozoItemStepNotifications(
   item: FocusItem
 ): MyNotification[] {
-  return item.steps.map((step) => ({
+  return item.steps.map(step => ({
     id: hash(`notification-${step.id}`),
     datePublished: step.datePublished,
     chapter: Chapters.INKOMEN,
@@ -183,7 +186,7 @@ export function createTozoItemStepNotifications(
       step.notificationTitle || 'Update aanvraag ' + item.productTitle + '',
     description: step.notificationDescription || '',
     link: {
-      to: generatePath(AppRoutes['INKOMEN/TOZO'], { id: item.id }),
+      to: item.link.to,
       title: 'Bekijk hoe het met uw aanvraag staat',
     },
   }));
@@ -194,7 +197,7 @@ export function createTozoResult(
 ) {
   const documents: FocusTozoDocument[] = Array.isArray(tozodocumenten)
     ? tozodocumenten
-        .map((document) => {
+        .map(document => {
           return {
             ...document,
             productTitle: getProductTitleForDocument(document),
@@ -204,7 +207,7 @@ export function createTozoResult(
     : [];
 
   const tozoSteps: FocusItemStep[] = documents
-    .map((document) => createTozoItemStep(document))
+    .map(document => createTozoItemStep(document))
     .filter(
       (step: FocusItemStep | null): step is FocusItemStep => step !== null
     );
@@ -231,9 +234,9 @@ export function createTozoResult(
     }
   }
 
-  const tozo1Steps = otherSteps.filter((step) => step.product === 'Tozo 1');
-  const tozo2Steps = otherSteps.filter((step) => step.product === 'Tozo 2');
-  const tozo3Steps = otherSteps.filter((step) => step.product === 'Tozo 3');
+  const tozo1Steps = otherSteps.filter(step => step.product === 'Tozo 1');
+  const tozo2Steps = otherSteps.filter(step => step.product === 'Tozo 2');
+  const tozo3Steps = otherSteps.filter(step => step.product === 'Tozo 3');
 
   if (aanvraagSteps['Tozo 1']) {
     tozo1Steps.unshift(aanvraagSteps['Tozo 1']);

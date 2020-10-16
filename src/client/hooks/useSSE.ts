@@ -77,7 +77,7 @@ export function useSSE({
       try {
         callback(JSON.parse(message.data));
       } catch (error) {
-        console.error('[SSE] Parsing sse message data failed.');
+        console.error('[SSE] Parsing sse message data failed.', message);
         callback(SSE_ERROR_MESSAGE);
       }
     };

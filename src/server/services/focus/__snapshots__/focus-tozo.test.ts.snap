@@ -10,7 +10,7 @@ Object {
       "id": "1569898129",
       "link": Object {
         "title": "Bekijk hoe het met uw aanvraag staat",
-        "to": "/inkomen-en-stadspas/tozo/1569898129",
+        "to": "/inkomen-en-stadspas/tozo/1/1569898129",
       },
       "productTitle": "Tozo 1",
       "status": "Besluit",
@@ -355,7 +355,7 @@ Object {
       "id": "3578630920",
       "link": Object {
         "title": "Bekijk hoe het met uw aanvraag staat",
-        "to": "/inkomen-en-stadspas/tozo/3578630920",
+        "to": "/inkomen-en-stadspas/tozo/2/3578630920",
       },
       "productTitle": "Tozo 2",
       "status": "Besluit",
@@ -671,7 +671,7 @@ Object {
       "id": "685054265",
       "link": Object {
         "title": "Bekijk hoe het met uw aanvraag staat",
-        "to": "/inkomen-en-stadspas/tozo/685054265",
+        "to": "/inkomen-en-stadspas/tozo/3/685054265",
       },
       "productTitle": "Tozo 3",
       "status": "Besluit",
