@@ -307,11 +307,14 @@ export async function loadServicesAll(req: Request, res: Response) {
 }
 
 async function loadServicesTipsRequestData(sessionID: SessionID, req: Request) {
-  const servicePromises = loadServices(sessionID, req, servicesTips);
-  const requestData = (await Promise.allSettled(servicePromises)).reduce(
-    (acc, result, index) => Object.assign(acc, getSettledResult(result)),
-    {}
-  );
+  let requestData = null;
+  if (queryParams(req).optin === 'true') {
+    const servicePromises = loadServices(sessionID, req, servicesTips);
+    requestData = (await Promise.allSettled(servicePromises)).reduce(
+      (acc, result, index) => Object.assign(acc, getSettledResult(result)),
+      {}
+    );
+  }
 
   return fetchTIPS(
     sessionID,
