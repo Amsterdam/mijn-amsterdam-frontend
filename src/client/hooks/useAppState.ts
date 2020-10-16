@@ -99,7 +99,9 @@ export function useAppStateFallbackService({
     }
     if (api.data !== null && !api.isLoading && !api.isError) {
       setIsDataRequested(true);
-      setAppState(appState => Object.assign({}, appState, api.data));
+      setAppState(appState =>
+        Object.assign({}, appState, transformAppState(api.data))
+      );
     } else if (api.isError) {
       // If everything fails, this is the final state update.
       const errorMessage =

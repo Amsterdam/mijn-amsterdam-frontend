@@ -19,7 +19,7 @@ function transformNotifications(NOTIFICATIONS: AppState['NOTIFICATIONS']) {
   return NOTIFICATIONS;
 }
 
-export function transformAppState(data: Partial<AppState>) {
+export function transformAppState(data: Partial<AppState> | null) {
   // Copy the pristine content to the error content so we keep our
   // pristine data state but with error status.
   if (data && typeof data === 'object') {
@@ -40,7 +40,7 @@ export function transformAppState(data: Partial<AppState>) {
     if (data.FOCUS_SPECIFICATIES?.content) {
       if (data.FOCUS_SPECIFICATIES?.content.jaaropgaven) {
         data.FOCUS_SPECIFICATIES.content.jaaropgaven = data.FOCUS_SPECIFICATIES?.content.jaaropgaven.map(
-          (document) => {
+          document => {
             const documentUrl = (
               <DocumentLink document={document} label="PDF" />
             );
@@ -50,7 +50,7 @@ export function transformAppState(data: Partial<AppState>) {
       }
       if (data.FOCUS_SPECIFICATIES?.content.uitkeringsspecificaties) {
         data.FOCUS_SPECIFICATIES.content.uitkeringsspecificaties = data.FOCUS_SPECIFICATIES?.content.uitkeringsspecificaties.map(
-          (document) => {
+          document => {
             const documentUrl = (
               <DocumentLink document={document} label="PDF" />
             );
