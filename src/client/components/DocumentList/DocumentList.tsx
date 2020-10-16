@@ -47,7 +47,6 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
       href={document.url}
       onClick={event => {
         event.preventDefault();
-
         fetch(document.url).then(response => {
           const trackingUrl =
             window.location.pathname +

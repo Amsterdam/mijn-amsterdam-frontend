@@ -1,19 +1,18 @@
+import { Chapters } from '../../../universal/config';
+import { FeatureToggle } from '../../../universal/config/app';
 import {
-  apiSuccesResult,
-  dateSort,
   apiDependencyError,
+  apiSuccesResult,
 } from '../../../universal/helpers';
 import { isRecentCase } from '../../../universal/helpers/utils';
 import { MyCase, MyNotification } from '../../../universal/types/App.types';
 import { stepStatusLabels } from './focus-aanvragen-content';
 import { createFocusRecentCase } from './focus-aanvragen-helpers';
 import { fetchFOCUSCombined } from './focus-combined';
-import { FeatureToggle } from '../../../universal/config/app';
 import {
   createTozoItemStepNotifications,
   createTozoResult,
 } from './focus-tozo-helpers';
-import { Chapters } from '../../../universal/config';
 
 export async function fetchFOCUSTozo(
   sessionID: SessionID,
