@@ -26,6 +26,7 @@ import {
   specificationsTableDisplayProps,
 } from '../../pages/InkomenSpecificaties/InkomenSpecificaties';
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
+import { useAddDocumentLinkComponents } from '../InkomenSpecificaties/useAddDocumentLinks';
 import AlertDocumentDownloadsDisabled from './AlertDocumentDownloadsDisabled';
 import styles from './Inkomen.module.scss';
 
@@ -56,11 +57,14 @@ export default () => {
     FOCUS_SPECIFICATIES,
     FOCUS_TOZO,
   } = useAppStateGetter();
+  const focusSpecificatiesWithDocumentLinks = useAddDocumentLinkComponents(
+    FOCUS_SPECIFICATIES
+  );
   const aanvragen = FOCUS_AANVRAGEN.content;
   const tozoItems = FOCUS_TOZO.content;
   const uitkeringsspecificaties =
-    FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties;
-  const jaaropgaven = FOCUS_SPECIFICATIES.content?.jaaropgaven;
+    focusSpecificatiesWithDocumentLinks.content?.uitkeringsspecificaties;
+  const jaaropgaven = focusSpecificatiesWithDocumentLinks.content?.jaaropgaven;
 
   const itemsRequested = useMemo(() => {
     const itemsRequested =
