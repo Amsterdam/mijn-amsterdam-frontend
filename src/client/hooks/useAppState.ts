@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { atom, SetterOrUpdater, useRecoilState, useRecoilValue } from 'recoil';
 import { AppState, createAllErrorState, PRISTINE_APPSTATE } from '../AppState';
 import { BFFApiUrls } from '../config/api';
-import { transformAppState } from '../data-transform/appState';
+import { transformSourceData } from '../data-transform/appState';
 import { pollBffHealth, useDataApi } from './api/useDataApi';
 import { useOptInValue } from './useOptIn';
 import { useProfileTypeValue } from './useProfileType';
@@ -91,7 +91,7 @@ export function useAppStateFallbackService({
     }
     if (api.data !== null && !api.isLoading && !api.isError) {
       setAppState(appState =>
-        Object.assign({}, appState, transformAppState(api.data))
+        Object.assign({}, appState, transformSourceData(api.data))
       );
     } else if (api.isError) {
       // If everything fails, this is the final state update.
@@ -140,7 +140,7 @@ export function useAppState() {
   // The callback is fired on every incoming message from the EventSource.
   const onEvent = useCallback((messageData: any) => {
     if (messageData && messageData !== SSE_ERROR_MESSAGE) {
-      const transformedMessageData = transformAppState(messageData);
+      const transformedMessageData = transformSourceData(messageData);
       setAppState(appState => {
         const appStateUpdated = {
           ...appState,

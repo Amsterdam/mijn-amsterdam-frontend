@@ -19,7 +19,7 @@ function transformNotifications(NOTIFICATIONS: AppState['NOTIFICATIONS']) {
   return NOTIFICATIONS;
 }
 
-export function transformAppState(data: Partial<AppState> | null) {
+export function transformSourceData(data: Partial<AppState> | null) {
   // Copy the pristine content to the error content so we keep our
   // pristine data state but with error status.
   if (data && typeof data === 'object') {
@@ -38,8 +38,8 @@ export function transformAppState(data: Partial<AppState> | null) {
     }
 
     if (data.FOCUS_SPECIFICATIES?.content) {
-      if (data.FOCUS_SPECIFICATIES?.content.jaaropgaven) {
-        data.FOCUS_SPECIFICATIES.content.jaaropgaven = data.FOCUS_SPECIFICATIES?.content.jaaropgaven.map(
+      if (data.FOCUS_SPECIFICATIES.content.jaaropgaven) {
+        data.FOCUS_SPECIFICATIES.content.jaaropgaven = data.FOCUS_SPECIFICATIES.content.jaaropgaven.map(
           document => {
             const documentUrl = (
               <DocumentLink document={document} label="PDF" />
@@ -49,7 +49,7 @@ export function transformAppState(data: Partial<AppState> | null) {
         );
       }
       if (data.FOCUS_SPECIFICATIES?.content.uitkeringsspecificaties) {
-        data.FOCUS_SPECIFICATIES.content.uitkeringsspecificaties = data.FOCUS_SPECIFICATIES?.content.uitkeringsspecificaties.map(
+        data.FOCUS_SPECIFICATIES.content.uitkeringsspecificaties = data.FOCUS_SPECIFICATIES.content.uitkeringsspecificaties.map(
           document => {
             const documentUrl = (
               <DocumentLink document={document} label="PDF" />
@@ -64,7 +64,7 @@ export function transformAppState(data: Partial<AppState> | null) {
   }
 
   Sentry.captureMessage(
-    '[transformAppState] Data returned from server is not an object',
+    '[transformSourceData] Data returned from server is not an object',
     {
       extra: {
         data,

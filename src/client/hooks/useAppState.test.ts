@@ -40,7 +40,7 @@ describe('useAppState', () => {
   }));
 
   // @ts-ignore
-  const dataTransform = (dataTransformHelpers.transformAppState = transformAppStateMock);
+  const dataTransform = (dataTransformHelpers.transformSourceData = transformAppStateMock);
   // @ts-ignore
   const useProfileType = (profileTypeHook.useProfileType = useProfileTypeMock);
   // @ts-ignore
