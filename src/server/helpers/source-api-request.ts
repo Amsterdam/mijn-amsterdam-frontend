@@ -54,7 +54,7 @@ function enableMockAdapter() {
       } else {
         req.reply(async (...args: any[]) => {
           const data = await resolveWithDelay(
-            Math.random() * 6000,
+            delay,
             await responseData(...args)
           );
           return [
