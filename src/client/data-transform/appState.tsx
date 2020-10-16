@@ -52,7 +52,7 @@ export function transformAppState(data: Partial<AppState> | null) {
         data.FOCUS_SPECIFICATIES.content.uitkeringsspecificaties = data.FOCUS_SPECIFICATIES?.content.uitkeringsspecificaties.map(
           document => {
             const documentUrl = (
-              <DocumentLink document={document} label="PDF" />
+              <DocumentLink document={document} label="PDF..enzo" />
             );
             return Object.assign(document, { documentUrl });
           }
