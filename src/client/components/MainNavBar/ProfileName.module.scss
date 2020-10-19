@@ -3,16 +3,10 @@
 .ProfileName {
   margin-left: 3.3rem;
   margin-right: 2.8rem;
-  text-decoration: none;
 
   @include select(Button_Button) {
     position: relative;
     display: inline-block;
-  }
-
-  a:hover {
-    color: $color-primary-red;
-    text-decoration: underline;
   }
 
   @include mq-tablet() {
@@ -28,16 +22,26 @@
 }
 
 .ProfileLink {
-  margin-left: 1.3rem;
+  // margin-left: 1.3rem;
   font-weight: normal;
+  padding-bottom: 0.3rem;
+  padding-left: 2.6rem;
+  border-bottom: .2rem solid transparent;
+  font-weight: 500;
+
+  &:hover {
+    color: $color-primary-red;
+    border-bottom-color: $color-primary-red;
+    text-decoration: none;
+  }
 
   svg {
     position: absolute;;
     width: 1.2em;
-    height: 1.3em;
-    margin-left: -2.6rem;
-    top: 50%;
-    transform: translateY(-50%);
+    height: 1.2em;
+    left: 0;
+    // margin-left: -2.6rem;
+    transform: translateY(-.1rem);
   }
 
   @include mq-tablet() {
@@ -47,7 +51,7 @@
 
 .ProfileLink--active {
   color: $color-support-blue;
-  // text-decoration: underline;
+  border-bottom-color: $color-support-blue;
 
   svg {
     fill: $color-support-blue;
@@ -58,7 +62,7 @@
   margin-left: 2rem;
 
   + .ProfileLink--commercial {
-    margin-left: 5.3rem;
+    margin-left: 3.3rem;
 
     @include mq-tablet() {
       margin-left: 2rem;

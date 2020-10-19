@@ -24,6 +24,7 @@ function CommercialProfileName({
   isActive,
   tutorial,
 }: CommercialProfileNameProps) {
+  const label = 'Mijn onderneming';
   return (
     <Button
       onClick={onClick}
@@ -36,7 +37,9 @@ function CommercialProfileName({
         isActive && styles['ProfileLink--active']
       )}
     >
-      <span data-tutorial-item={tutorial}>Mijn onderneming</span>
+      <span data-tutorial-item={tutorial ? tutorial + ';' + label : ''}>
+        {label}
+      </span>
     </Button>
   );
 }
@@ -54,6 +57,7 @@ function PrivateProfileName({
   isActive,
   tutorial,
 }: PrivateProfileNameProps) {
+  const label = person?.opgemaakteNaam ? getFullName(person) : 'Mijn gegevens';
   return (
     <Button
       onClick={onClick}
@@ -66,8 +70,8 @@ function PrivateProfileName({
         isActive && styles['ProfileLink--active']
       )}
     >
-      <span data-tutorial-item={tutorial}>
-        {person?.opgemaakteNaam ? getFullName(person) : 'Mijn gegevens'}
+      <span data-tutorial-item={tutorial ? tutorial + ';' + label : ''}>
+        {label}
       </span>
     </Button>
   );
@@ -91,7 +95,7 @@ function PrivateCommercialProfileToggle({
         isActive={profileType === 'private'}
         tutorial={
           profileType === 'private-commercial'
-            ? 'Hier kunt u schakelen naar uw privé profiel;left-bottom'
+            ? 'Hier schakelt u naar uw persoonlijke profiel;left-bottom'
             : ''
         }
         onClick={() => setProfileType('private')}
@@ -101,7 +105,7 @@ function PrivateCommercialProfileToggle({
         isActive={profileType === 'private-commercial'}
         tutorial={
           profileType === 'private'
-            ? 'Hier kunt u schakelen naar uw zakelijke profiel;right-bottom'
+            ? 'Hier schakelt u naar uw zakelijke profiel;left-bottom'
             : ''
         }
         onClick={() => setProfileType('private-commercial')}

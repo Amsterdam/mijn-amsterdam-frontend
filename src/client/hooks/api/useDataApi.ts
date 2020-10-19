@@ -182,13 +182,11 @@ export function useDataApi<T>(
 
 export function pollBffHealth() {
   let pollCount = 0;
+  console.info('Start polling for BFF health.');
 
   return new Promise((resolve, reject) => {
-    function fail(reject: any) {
-      Sentry.captureMessage(`Polling for health failed.`);
-      reject('Could not connect to server, BFF not healthy.');
-    }
     function poll() {
+      pollCount += 1;
       if (pollCount <= MAX_POLL_COUNT) {
         axios({ url: BFF_API_HEALTH_URL, responseType: 'json' })
           .then((response: { data: { status: 'OK' } | string }) => {
@@ -201,19 +199,29 @@ export function pollBffHealth() {
               );
               resolve();
             } else {
-              fail(reject);
+              Sentry.captureMessage(
+                'Could not connect to server, BFF did not reply with response we expect.',
+                {
+                  extra: {
+                    responseData: response.data,
+                    pollCount,
+                  },
+                }
+              );
+              reject();
             }
           })
-          .catch(() => {
+          .catch(error => {
+            console.info('Request failed', pollCount, error.message);
             setTimeout(() => {
               poll();
             }, POLL_INTERVAL_MS);
           });
       } else {
-        fail(reject);
+        reject(
+          'Could not connect to server, BFF not healthy max poll count reached.'
+        );
       }
-
-      pollCount += 1;
     }
     poll();
   });
