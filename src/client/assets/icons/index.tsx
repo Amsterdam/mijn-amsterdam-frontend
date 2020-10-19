@@ -39,4 +39,4 @@ export { ReactComponent as MapIconAfvalPlastic } from './map/plastic.svg';
 export { ReactComponent as MapIconAfvalTextiel } from './map/textile.svg';
 export { ReactComponent as MapIconAfvalRest } from './map/trashcontainer.svg';
 export { ReactComponent as MapIconAuto } from './map/car.svg';
-export { ReactComponent as MapIconHomeCommercial } from './map/homeCommercial.svg';
+export { ReactComponent as MapIconHomeCommercial } from './map/homeCommercial__primary-red.svg';

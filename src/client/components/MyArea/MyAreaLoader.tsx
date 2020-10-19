@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconHome, IconHomeCommercial } from '../../assets/icons';
+import { IconHome, MapIconHomeCommercial } from '../../assets/icons';
 import styles from './MyAreaLoader.module.scss';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 
@@ -11,7 +11,7 @@ export default function MyAreaLoader() {
         {profileType === 'private' ? (
           <IconHome aria-hidden="true" />
         ) : (
-          <IconHomeCommercial aria-hidden="true" />
+          <MapIconHomeCommercial aria-hidden="true" />
         )}
         Uw adres wordt opgezocht...
       </span>

@@ -98,9 +98,8 @@ export default function MyArea2() {
           : event?.layer?.feature?.properties?.datasetId;
 
         axios({
-          url: `${BFFApiUrls.MAP_DATASETS}/${
-            datasetGroupId || datasetId
-          }/${datasetItemId}`,
+          url: `${BFFApiUrls.MAP_DATASETS}/${datasetGroupId ||
+            datasetId}/${datasetItemId}`,
         })
           .then(({ data: { content: markerData } }) => {
             setSelectedMarkerData({
@@ -110,7 +109,7 @@ export default function MyArea2() {
               markerData,
             });
           })
-          .catch((error) => {
+          .catch(error => {
             console.error('map request error', error);
           });
       }

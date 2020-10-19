@@ -18,6 +18,7 @@ import {
   PageHeading,
   Panel,
   SectionCollapsible,
+  LoadingContent,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -118,7 +119,7 @@ export default () => {
 
   return (
     <DetailPage className={styles.GarbageInformation}>
-      <PageHeading isLoading={isLoading(AFVAL)} icon={<ChapterIcon />}>
+      <PageHeading isLoading={false} icon={<ChapterIcon />}>
         {termReplace(ChapterTitles.AFVAL)}
       </PageHeading>
       <PageContent>
@@ -156,12 +157,18 @@ export default () => {
         )}
       </PageContent>
 
-      {!!HOME.content?.address && (
-        <GarbagePanel className={styles.AddressPanel}>
-          <Heading size="tiny">Uw adres</Heading>
-          <p>{getFullAddress(HOME.content?.address)}</p>
-        </GarbagePanel>
-      )}
+      <GarbagePanel className={styles.AddressPanel}>
+        <Heading size="tiny">Uw adres</Heading>
+        <p>
+          {HOME.content?.address ? (
+            getFullAddress(HOME.content.address)
+          ) : isLoading(HOME) ? (
+            <LoadingContent barConfig={[['20rem', '3rem', '0']]} />
+          ) : (
+            'Onbekend adres'
+          )}
+        </p>
+      </GarbagePanel>
       {!!grofvuil && garbagePointCollapsible('grofvuil', grofvuil)}
       {!!restafval && garbagePointCollapsible('restafval', restafval)}
       <SectionCollapsible

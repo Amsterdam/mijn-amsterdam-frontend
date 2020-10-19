@@ -109,9 +109,7 @@ export function useAppStateFallbackService({
  */
 export function useAppState() {
   const hasEventSourceSupport = 'EventSource' in window; // IE11 and early edge versions don't have EventSource support. These browsers will use the the Fallback service endpoint.
-  const [isFallbackServiceEnabled, setFallbackServiceEnabled] = useState(
-    !hasEventSourceSupport
-  );
+  const [isFallbackServiceEnabled, setFallbackServiceEnabled] = useState(true);
 
   const profileType = useProfileTypeValue();
   const isOptIn = useOptInValue();
@@ -119,6 +117,7 @@ export function useAppState() {
 
   // First retrieve all the services specified in the BFF, after that Only retrieve incremental updates
   const useIncremental = useRef(false);
+
   useEffect(() => {
     useIncremental.current = true;
   }, []);
@@ -153,6 +152,25 @@ export function useAppState() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (requestParams.serviceIds.length) {
+      setAppState(appState => {
+        const pristineStateSlices: any = {};
+
+        for (const id of requestParams.serviceIds as Array<keyof AppState>) {
+          pristineStateSlices[id] = PRISTINE_APPSTATE[id];
+        }
+
+        const appStateUpdated = {
+          ...appState,
+          ...pristineStateSlices,
+        };
+
+        return appStateUpdated;
+      });
+    }
+  }, [requestParams, setAppState]);
 
   useSSE({
     path: BFFApiUrls.SERVICES_SSE,
