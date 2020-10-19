@@ -9,7 +9,7 @@
     display: inline-block;
   }
 
-  @include mq-phone() {
+  @include mq-tablet() {
     display: block;
     margin: 0;
     padding: 1rem 2rem;
@@ -22,7 +22,7 @@
 }
 
 .ProfileLink {
-  margin-left: 1.3rem;
+  // margin-left: 1.3rem;
   font-weight: normal;
   padding-bottom: 0.3rem;
   padding-left: 2.6rem;
@@ -30,6 +30,7 @@
   font-weight: 500;
 
   &:hover {
+    color: $color-primary-red;
     border-bottom-color: $color-primary-red;
     text-decoration: none;
   }
@@ -43,8 +44,8 @@
     transform: translateY(-.1rem);
   }
 
-  @include mq-phone() {
-    margin-left: 5rem;
+  @include mq-tablet() {
+    margin-left: 2rem;
   }
 }
 
@@ -59,10 +60,11 @@
 
 .ProfileLink--private {
   margin-left: 2rem;
+
   + .ProfileLink--commercial {
     margin-left: 3.3rem;
 
-    @include mq-phone() {
+    @include mq-tablet() {
       margin-left: 2rem;
       margin-top: 1rem;
     }
