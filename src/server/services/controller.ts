@@ -9,7 +9,7 @@ import {
 import { fetchAFVAL, fetchAFVALPUNTEN } from './afval/afval';
 import { fetchBELASTING } from './belasting';
 import { fetchBRP } from './brp';
-import { fetchBUURT } from './buurt';
+import { fetchBUURT } from './buurt/buurt';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchERFPACHT } from './erfpacht';
 import { fetchFOCUSAanvragen } from './focus/focus-aanvragen';

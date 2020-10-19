@@ -5,7 +5,7 @@ import L, { Marker } from 'leaflet';
 import React, { ReactElement, ReactNode } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import styled from 'styled-components';
-import { DatasetItemTuple } from '../../../server/services';
+import { DatasetItemTuple } from '../../../server/services/buurt/datasets';
 import { capitalizeFirstLetter } from '../../../universal/helpers';
 import {
   MapIconAfvalGft,
@@ -95,6 +95,7 @@ export const DATASETS = {
     'drank- en horecavergunning',
   ],
   evenementen: ['evenementen'],
+  sportfaciliteiten: ['zwembaden'],
 };
 
 const DatasetIcon = styled.div`
@@ -269,6 +270,11 @@ const datasetIcons: Record<string, ReactElement<any>> = {
       style={{ backgroundColor: themeColors.supplement.lightgreen }}
     />
   ),
+  zwembaden: (
+    <DatasetIconCircle
+      style={{ backgroundColor: themeColors.supplement.lightgreen }}
+    />
+  ),
 };
 
 export const datasetIconHtml = Object.fromEntries(
@@ -333,6 +339,13 @@ export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
       createDatasetControl(id, true)
     ),
   },
+  // {
+  //   id: 'zwembaden',
+  //   title: 'Sportfacaliteiten',
+  //   collection: DATASETS.sportfaciliteiten.map((id) =>
+  //     createDatasetControl(id, true)
+  //   ),
+  // },
 ];
 
 export const PARKEERZONES_WMS_OPTIONS = {

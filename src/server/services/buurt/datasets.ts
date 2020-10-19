@@ -1,61 +1,4 @@
-import {
-  CITY_LAYERS_CONFIG,
-  CITY_ZOOM,
-  DEFAULT_LAT,
-  DEFAULT_LNG,
-  HOOD_LAYERS_CONFIG,
-  HOOD_ZOOM,
-  LOCATION_ZOOM,
-} from '../../universal/config';
-import {
-  apiErrorResult,
-  apiSuccesResult,
-  capitalizeFirstLetter,
-} from '../../universal/helpers';
-import { DataRequestConfig } from '../config';
-import { requestData } from '../helpers';
-import FileCache from '../helpers/file-cache';
-import { fetchHOME } from './home';
-
-const MAP_URL =
-  'https://data.amsterdam.nl/data/?modus=kaart&achtergrond=topo_rd_zw&embed=true';
-
-export function getEmbedUrl(latlng: LatLngObject | null) {
-  let lat = DEFAULT_LAT;
-  let lng = DEFAULT_LNG;
-
-  let embed = {
-    advanced: `${MAP_URL}&center=${lat}%2C${lng}&zoom=${CITY_ZOOM}&${CITY_LAYERS_CONFIG}&legenda=true`,
-    simple: `${MAP_URL}&center=${lat}%2C${lng}&zoom=${CITY_ZOOM}`,
-  };
-
-  if (latlng && latlng.lat && latlng.lng) {
-    lat = latlng.lat;
-    lng = latlng.lng;
-
-    embed = {
-      advanced: `${MAP_URL}&center=${lat}%2C${lng}&zoom=${HOOD_ZOOM}&marker=${lat}%2C${lng}&${HOOD_LAYERS_CONFIG}&legenda=true&marker-icon=home`,
-      simple: `${MAP_URL}&center=${lat}%2C${lng}&zoom=${LOCATION_ZOOM}&marker=${lat}%2C${lng}&marker-icon=home`,
-    };
-  }
-
-  return embed;
-}
-
-export async function fetchBUURT(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
-  profileType: ProfileType
-) {
-  const HOME = await fetchHOME(
-    sessionID,
-    passthroughRequestHeaders,
-    profileType
-  );
-  return apiSuccesResult({
-    embed: getEmbedUrl(HOME.content?.latlng || null),
-  });
-}
+import { capitalizeFirstLetter } from '../../../universal/helpers';
 
 export type DatasetItemTuple = [number, number, string];
 
@@ -68,6 +11,90 @@ const CONTAINER_FRACTIE_IN = [
   'plastic',
   'textiel',
 ];
+
+interface DatasetConfig {
+  listUrl: string;
+  detailUrl: string;
+  transformList?: (data: any) => any;
+  transformDetail?: (data: any) => any;
+}
+
+export const datasetEndpoints: Record<string, DatasetConfig> = {
+  afvalcontainers: {
+    listUrl:
+      'https://api.data.amsterdam.nl/v1/wfs/huishoudelijkafval/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=container&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326&filter=%3CFilter%3E%3CAnd%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Estatus%3C/PropertyName%3E%3CLiteral%3E1%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3COr%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3ERest%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3ETextiel%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EGlas%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EPapier%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EGFT%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EPlastic%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3C/Or%3E%3C/And%3E%3C/Filter%3E',
+    detailUrl: 'https://api.data.amsterdam.nl/v1/huishoudelijkafval/container/',
+    transformList: transformAfvalcontainers,
+    transformDetail: transformAfvalcontainersDetail,
+  },
+  evenementen: {
+    listUrl:
+      'https://map.data.amsterdam.nl/maps/evenementen?REQUEST=GetFeature&SERVICE=wfs&VERSION=2.0.0&TYPENAMES=evenementen&outputFormat=application/json;%20subtype=geojson;%20charset=utf-8&SRSNAME=urn:ogc:def:crs:EPSG::4326',
+    detailUrl: 'https://api.data.amsterdam.nl/vsd/evenementen/',
+    transformList: transformEvenementen,
+    transformDetail: transformEvenementenDetail,
+  },
+  bekendmakingen: {
+    listUrl:
+      'https://map.data.amsterdam.nl/maps/bekendmakingen?REQUEST=GetFeature&SERVICE=wfs&VERSION=2.0.0&TYPENAMES=ms:bekendmakingen&outputFormat=application/json;%20subtype=geojson;%20charset=utf-8&SRSNAME=urn:ogc:def:crs:EPSG::4326',
+    detailUrl: 'https://api.data.amsterdam.nl/vsd/bekendmakingen/',
+    transformList: transformBekendmakingen,
+    transformDetail: transformBekendmakingenDetail,
+  },
+  parkeerzones: {
+    listUrl: '',
+    detailUrl: 'https://api.data.amsterdam.nl/vsd/parkeerzones/',
+    transformDetail: transformParkeerzones,
+  },
+  parkeerzones_uitz: {
+    listUrl: '',
+    detailUrl: 'https://api.data.amsterdam.nl/vsd/parkeerzones_uitz/',
+    transformDetail: transformparkeerzones_uitz,
+  },
+  zwembaden: {
+    listUrl:
+      'https://api.data.amsterdam.nl/v1/sport/zwembad/?_fields=id,geometry&page_size=50',
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/zwembad/?id=',
+    transformList: (responseData: any) => {
+      const results = responseData?._embedded?.zwembad;
+      return transformListSportApiResponse('zwembaden', results);
+    },
+    transformDetail: (responseData: any) => {
+      const result = responseData?._embedded?.zwembad;
+      return transformDetailSportApiResponse(result);
+    },
+  },
+};
+
+function transformDetailSportApiResponse(result: any) {
+  if (result.length) {
+    return result[0];
+  }
+
+  return null;
+}
+
+function transformListSportApiResponse(id: string, results: any) {
+  if (results.length) {
+    const collection: Record<string, DatasetItemTuple[]> = {
+      [id]: [],
+    };
+
+    for (const feature of results) {
+      if (feature.geometry?.coordinates) {
+        const [lng, lat] = feature.geometry.coordinates;
+        collection.zwembaden.push([lat, lng, feature.id]);
+      }
+    }
+
+    return {
+      id,
+      collection,
+    };
+  }
+
+  return null;
+}
 
 function transformAfvalcontainers(WFSData: any) {
   const collection: Record<string, DatasetItemTuple[]> = {};
@@ -281,96 +308,3 @@ function transformparkeerzones_uitz(WFSData: any) {
 //     "omschrijving": "Uw parkeervergunning geldt niet van ma t/m za 9.00 tot 21.00 uur.",
 //     "show": "TRUE"
 // }
-interface DatasetConfig {
-  listUrl: string;
-  detailUrl: string;
-  transformList?: (data: any) => any;
-  transformDetail?: (data: any) => any;
-}
-
-export const datasetEndpoints: Record<string, DatasetConfig> = {
-  afvalcontainers: {
-    listUrl:
-      'https://api.data.amsterdam.nl/v1/wfs/huishoudelijkafval/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=container&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326&filter=%3CFilter%3E%3CAnd%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Estatus%3C/PropertyName%3E%3CLiteral%3E1%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3COr%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3ERest%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3ETextiel%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EGlas%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EPapier%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EGFT%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EPlastic%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3C/Or%3E%3C/And%3E%3C/Filter%3E',
-    detailUrl: 'https://api.data.amsterdam.nl/v1/huishoudelijkafval/container/',
-    transformList: transformAfvalcontainers,
-    transformDetail: transformAfvalcontainersDetail,
-  },
-  evenementen: {
-    listUrl:
-      'https://map.data.amsterdam.nl/maps/evenementen?REQUEST=GetFeature&SERVICE=wfs&VERSION=2.0.0&TYPENAMES=evenementen&outputFormat=application/json;%20subtype=geojson;%20charset=utf-8&SRSNAME=urn:ogc:def:crs:EPSG::4326',
-    detailUrl: 'https://api.data.amsterdam.nl/vsd/evenementen/',
-    transformList: transformEvenementen,
-    transformDetail: transformEvenementenDetail,
-  },
-  bekendmakingen: {
-    listUrl:
-      'https://map.data.amsterdam.nl/maps/bekendmakingen?REQUEST=GetFeature&SERVICE=wfs&VERSION=2.0.0&TYPENAMES=ms:bekendmakingen&outputFormat=application/json;%20subtype=geojson;%20charset=utf-8&SRSNAME=urn:ogc:def:crs:EPSG::4326',
-    detailUrl: 'https://api.data.amsterdam.nl/vsd/bekendmakingen/',
-    transformList: transformBekendmakingen,
-    transformDetail: transformBekendmakingenDetail,
-  },
-  parkeerzones: {
-    listUrl: '',
-    detailUrl: 'https://api.data.amsterdam.nl/vsd/parkeerzones/',
-    transformDetail: transformParkeerzones,
-  },
-  parkeerzones_uitz: {
-    listUrl: '',
-    detailUrl: 'https://api.data.amsterdam.nl/vsd/parkeerzones_uitz/',
-    transformDetail: transformparkeerzones_uitz,
-  },
-};
-
-// Development and e2e testing will always serve cached file
-const isMockAdapterEnabled = !process.env.BFF_DISABLE_MOCK_ADAPTER;
-
-const fileCache = new FileCache({
-  name: 'buurt-datasets.flat-cache.json',
-  cacheTime: isMockAdapterEnabled ? 0 : 24 * 60, // 24 hours
-});
-
-export async function loadServicesMapDatasets(sessionID: SessionID) {
-  const requests = Object.entries(datasetEndpoints)
-    .filter(([, config]) => !!config.listUrl)
-    .map(([apiName, config]) => {
-      const apiData = fileCache.getKey(apiName);
-      if (apiData) {
-        return Promise.resolve(apiData);
-      }
-      const requestConfig: DataRequestConfig = {
-        url: config.listUrl,
-        cacheTimeout: 0,
-      };
-      if (config.transformList) {
-        requestConfig.transformResponse = config.transformList;
-      }
-      return requestData(requestConfig, sessionID, {}).then((apiData) => {
-        fileCache.setKey(apiName, apiData);
-        fileCache.save();
-        return apiData;
-      });
-    });
-
-  const datasets = await Promise.all(requests);
-  return apiSuccesResult(datasets.map(({ content }) => content));
-}
-
-export async function loadServicesMapDatasetItem(
-  sessionID: SessionID,
-  dataset: string,
-  id: string
-) {
-  const config = datasetEndpoints[dataset];
-  if (!config) {
-    return apiErrorResult(`Unknown dataset ${dataset}`, null);
-  }
-  const requestConfig: DataRequestConfig = {
-    url: `${config.detailUrl}${id}`,
-  };
-  if (config.transformDetail) {
-    requestConfig.transformResponse = config.transformDetail;
-  }
-
-  return requestData(requestConfig, sessionID, {});
-}

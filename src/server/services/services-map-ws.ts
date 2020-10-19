@@ -1,6 +1,6 @@
 // or require in Node / Browserify
 import Supercluster from 'supercluster';
-import { loadServicesMapDatasets } from './buurt';
+import { loadServicesMapDatasets } from './buurt/buurt';
 
 let currentlyActiveDatasetIds: string[] = [];
 let dataStore: any;
@@ -41,7 +41,7 @@ async function generateSuperCluster(activeDatasetIds: string[] = []) {
         currentlyActiveDatasetIds.some(
           (id: string) => !activeDatasetIds.includes(id)
         ) ||
-        activeDatasetIds.some((id) => !currentlyActiveDatasetIds.includes(id))
+        activeDatasetIds.some(id => !currentlyActiveDatasetIds.includes(id))
       );
     }
   }

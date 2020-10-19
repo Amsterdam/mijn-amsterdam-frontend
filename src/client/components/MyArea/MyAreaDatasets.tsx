@@ -4,12 +4,12 @@ import L, { LeafletMouseEventHandlerFn } from 'leaflet';
 import React, { useEffect, useMemo, useState } from 'react';
 import { atom } from 'recoil';
 import { createGlobalStyle } from 'styled-components';
-import { DatasetItemTuple } from '../../../server/services';
+import { DatasetItemTuple } from '../../../server/services/buurt/datasets';
 import { apiPristineResult, ApiResponse } from '../../../universal/helpers/api';
+import { BFFApiUrls } from '../../config/api';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { Datasets, DatasetsSource, getIconHtml, LayerType } from './datasets';
 import { useDatasetControlItems } from './MyAreaDatasetControl';
-import { BFFApiUrls } from '../../config/api';
 
 const iconCreateFunction = (
   marker: L.Marker & { getChildCount: () => number }
