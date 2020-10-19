@@ -1,4 +1,6 @@
-// AmsterDAM center
+import proj4 from 'proj4';
+
+// Amsterdam center
 export const DEFAULT_LAT: Lat = 52.3717228;
 export const DEFAULT_LNG: Lng = 4.8927377;
 
@@ -11,3 +13,6 @@ export const CITY_LAYERS_CONFIG =
 export const CITY_ZOOM = 8;
 export const HOOD_ZOOM = 13;
 export const LOCATION_ZOOM = 15;
+
+export const projDefinition = `+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.4171,50.3319,465.5524,-0.398957,0.343988,-1.87740,4.0725 +units=m +no_defs'`;
+export const proj4RD = proj4('WGS84', projDefinition);

@@ -3,7 +3,7 @@ import { useMapInstance } from '@amsterdam/react-maps';
 import L, { LeafletMouseEventHandlerFn } from 'leaflet';
 import React, { useEffect, useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
-import { proj4RD } from '../../config/map';
+import { proj4RD } from '../../../universal/config';
 import { getIconHtml } from './datasets';
 
 interface MaPolyLineLayerProps {

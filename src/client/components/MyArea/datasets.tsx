@@ -95,7 +95,16 @@ export const DATASETS = {
     'drank- en horecavergunning',
   ],
   evenementen: ['evenementen'],
-  sportfaciliteiten: ['zwembaden'],
+  sportfaciliteiten: [
+    'zwembad',
+    'sportpark',
+    'sportveld',
+    'gymsportzaal',
+    'sporthal',
+    'sportaanbieder',
+    'openbaresportplek',
+    'hardlooproute',
+  ],
 };
 
 const DatasetIcon = styled.div`
@@ -339,13 +348,13 @@ export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
       createDatasetControl(id, true)
     ),
   },
-  // {
-  //   id: 'zwembaden',
-  //   title: 'Sportfacaliteiten',
-  //   collection: DATASETS.sportfaciliteiten.map((id) =>
-  //     createDatasetControl(id, true)
-  //   ),
-  // },
+  {
+    id: 'sportfacaliteiten',
+    title: 'Sportfacaliteiten',
+    collection: DATASETS.sportfaciliteiten.map((id) =>
+      createDatasetControl(id, true)
+    ),
+  },
 ];
 
 export const PARKEERZONES_WMS_OPTIONS = {
