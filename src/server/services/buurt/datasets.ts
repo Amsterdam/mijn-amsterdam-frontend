@@ -1,8 +1,9 @@
 import { capitalizeFirstLetter } from '../../../universal/helpers';
+import { getApiEmbeddedResponse, recursiveCoordinateSwap } from './helpers';
 
 export type DatasetItemTuple = [number, number, string];
-const ACCEPT_CRS_4326 = {
-  'Accept-Crs': 'EPSG:4326',
+export const ACCEPT_CRS_4326 = {
+  'Accept-Crs': 'EPSG:4326', // Will return coordinates in [lng/lat] format
 };
 const CONTAINER_STATUS_ACTIVE = 1;
 const CONTAINER_FRACTIE_IN = [
@@ -20,147 +21,139 @@ export interface DatasetConfig {
   detailUrl?: string;
   transformList?: (data: any) => any;
   transformDetail?: (data: any) => any;
-  headers?: Record<string, string>;
+  isWms?: boolean;
 }
 
 export const datasetEndpoints: Record<string, DatasetConfig> = {
   afvalcontainers: {
     listUrl:
-      'https://api.data.amsterdam.nl/v1/wfs/huishoudelijkafval/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=container&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326&filter=%3CFilter%3E%3CAnd%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Estatus%3C/PropertyName%3E%3CLiteral%3E1%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3COr%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3ERest%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3ETextiel%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EGlas%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EPapier%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EGFT%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EPlastic%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3C/Or%3E%3C/And%3E%3C/Filter%3E',
+      'https://api.data.amsterdam.nl/v1/wfs/huishoudelijkafval/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=container&OUTPUTFORMAT=geojson&SRSNAME=EPSG:4326&filter=%3CFilter%3E%3CAnd%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Estatus%3C/PropertyName%3E%3CLiteral%3E1%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3COr%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3ERest%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3ETextiel%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EGlas%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EPapier%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EGFT%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EPlastic%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3C/Or%3E%3C/And%3E%3C/Filter%3E',
     detailUrl: 'https://api.data.amsterdam.nl/v1/huishoudelijkafval/container/',
     transformList: transformAfvalcontainers,
     transformDetail: transformAfvalcontainersDetail,
   },
   evenementen: {
     listUrl:
-      'https://map.data.amsterdam.nl/maps/evenementen?REQUEST=GetFeature&SERVICE=wfs&VERSION=2.0.0&TYPENAMES=evenementen&outputFormat=application/json;%20subtype=geojson;%20charset=utf-8&SRSNAME=urn:ogc:def:crs:EPSG::4326',
-    detailUrl: 'https://api.data.amsterdam.nl/vsd/evenementen/',
+      'https://api.data.amsterdam.nl/v1/evenementen/evenementen/?_fields=id,geometry&page_size=1000',
+    detailUrl: 'https://api.data.amsterdam.nl/v1/evenementen/evenementen/',
     transformList: transformEvenementen,
     transformDetail: transformEvenementenDetail,
   },
   bekendmakingen: {
     listUrl:
-      'https://map.data.amsterdam.nl/maps/bekendmakingen?REQUEST=GetFeature&SERVICE=wfs&VERSION=2.0.0&TYPENAMES=ms:bekendmakingen&outputFormat=application/json;%20subtype=geojson;%20charset=utf-8&SRSNAME=urn:ogc:def:crs:EPSG::4326',
-    detailUrl: 'https://api.data.amsterdam.nl/vsd/bekendmakingen/',
+      'https://api.data.amsterdam.nl/v1/bekendmakingen/bekendmakingen/?_fields=id,geometry,onderwerp&page_size=10000',
+    detailUrl:
+      'https://api.data.amsterdam.nl/v1/bekendmakingen/bekendmakingen/',
     transformList: transformBekendmakingen,
     transformDetail: transformBekendmakingenDetail,
   },
   parkeerzones: {
-    listUrl: '',
-    detailUrl: 'https://api.data.amsterdam.nl/vsd/parkeerzones/',
+    listUrl:
+      'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones/?_fields=id,geometry,gebiedskleurcode,gebiedsnaam&indicatieZichtbaar=TRUE&page_size=500',
+    isWms: true,
+    detailUrl: 'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones/',
     transformDetail: transformParkeerzones,
+    transformList: transformParkeerzoneCoords,
   },
-  parkeerzones_uitz: {
-    listUrl: '',
-    detailUrl: 'https://api.data.amsterdam.nl/vsd/parkeerzones_uitz/',
+  parkeerzones_uitzondering: {
+    listUrl:
+      'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones_uitzondering/?_fields=id,geometry,gebiedsnaam&indicatieZichtbaar=TRUE&page_size=100',
+    isWms: true,
+    detailUrl:
+      'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones_uitzondering/',
     transformDetail: transformparkeerzones_uitz,
+    transformList: transformParkeerzoneCoords,
   },
   sport: {
     multi: {
       zwembad: {
         listUrl:
           'https://api.data.amsterdam.nl/v1/sport/zwembad/?_fields=id,geometry&page_size=30',
-        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/zwembad/?id=',
+        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/zwembad/',
         transformList: (responseData: any) =>
           transformListSportApiResponse('zwembad', responseData),
         transformDetail: (responseData: any) =>
-          transformDetailSportApiResponse('zwembad', responseData),
-        headers: ACCEPT_CRS_4326,
+          transformDetailSportApiResponse(responseData),
       },
       sportpark: {
         listUrl:
           'https://api.data.amsterdam.nl/v1/sport/sportpark/?_fields=id,geometry&page_size=60',
-        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportpark/?id=',
+        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportpark/',
         transformList: (responseData: any) =>
           transformListSportApiResponse('sportpark', responseData),
         transformDetail: (responseData: any) =>
-          transformDetailSportApiResponse('sportpark', responseData),
-        headers: ACCEPT_CRS_4326,
+          transformDetailSportApiResponse(responseData),
       },
       sportveld: {
         listUrl:
           'https://api.data.amsterdam.nl/v1/sport/sportveld/?_fields=id,geometry&page_size=1000',
-        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportveld/?id=',
+        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportveld/',
         transformList: (responseData: any) =>
           transformListSportApiResponse('sportveld', responseData),
         transformDetail: (responseData: any) =>
-          transformDetailSportApiResponse('sportveld', responseData),
-        headers: ACCEPT_CRS_4326,
+          transformDetailSportApiResponse(responseData),
       },
       gymsportzaal: {
-        // listUrl:
-        //   'https://api.data.amsterdam.nl/v1/sport/gymsportzaal/?_fields=id,geometry&page_size=50',
-        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/gymsportzaal/?id=',
+        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/gymsportzaal/',
         transformList: (responseData: any) =>
           transformListSportApiResponse('gymsportzaal', responseData),
         transformDetail: (responseData: any) =>
-          transformDetailSportApiResponse('gymsportzaal', responseData),
-        headers: ACCEPT_CRS_4326,
+          transformDetailSportApiResponse(responseData),
       },
       sporthal: {
         listUrl:
           'https://api.data.amsterdam.nl/v1/sport/sporthal/?_fields=id,geometry&page_size=50',
-        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sporthal/?id=',
+        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sporthal/',
         transformList: (responseData: any) =>
           transformListSportApiResponse('sporthal', responseData),
         transformDetail: (responseData: any) =>
-          transformDetailSportApiResponse('sporthal', responseData),
-        headers: ACCEPT_CRS_4326,
+          transformDetailSportApiResponse(responseData),
       },
       sportaanbieder: {
         listUrl:
           'https://api.data.amsterdam.nl/v1/sport/sportaanbieder/?_fields=id,geometry&page_size=2000',
-        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportaanbieder/?id=',
+        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportaanbieder/',
         transformList: (responseData: any) =>
           transformListSportApiResponse('sportaanbieder', responseData),
         transformDetail: (responseData: any) =>
-          transformDetailSportApiResponse('sportaanbieder', responseData),
-        headers: ACCEPT_CRS_4326,
+          transformDetailSportApiResponse(responseData),
       },
       openbaresportplek: {
         listUrl:
           'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/?_fields=id,geometry&page_size=1000',
-        detailUrl:
-          'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/?id=',
+        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/',
         transformList: (responseData: any) =>
           transformListSportApiResponse('openbaresportplek', responseData),
         transformDetail: (responseData: any) =>
-          transformDetailSportApiResponse('openbaresportplek', responseData),
-        headers: ACCEPT_CRS_4326,
+          transformDetailSportApiResponse(responseData),
       },
       hardlooproute: {
         listUrl:
           'https://api.data.amsterdam.nl/v1/sport/hardlooproute/?_fields=id,geometry&page_size=50',
-        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/hardlooproute/?id=',
+        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/hardlooproute/',
         transformList: (responseData: any) =>
           transformListSportApiResponse('hardlooproute', responseData),
         transformDetail: (responseData: any) =>
-          transformDetailSportApiResponse('hardlooproute', responseData),
-        headers: ACCEPT_CRS_4326,
+          transformDetailSportApiResponse(responseData),
       },
     },
   },
 };
 
-function transformDetailSportApiResponse(id: string, responseData: any) {
-  const results = responseData?._embedded[id] || [];
-
-  if (results.length) {
-    return results[0];
-  }
-
-  return null;
+function transformDetailSportApiResponse(responseData: any) {
+  return responseData;
 }
 
 function transformListSportApiResponse(id: string, responseData: any) {
-  const results = responseData?._embedded && responseData?._embedded[id];
+  const results = getApiEmbeddedResponse(id, responseData);
 
-  if (Array.isArray(results) && results.length) {
+  if (results && results.length) {
     const collection: DatasetItemTuple[] = [];
 
     for (const feature of results) {
       if (feature.geometry?.coordinates) {
         if (feature.geometry.type === 'Multipolygon') {
+          recursiveCoordinateSwap(feature.geometry.coordinates);
           collection.push(feature.geometry.coordinates);
         } else if (feature.geometry.type === 'Point') {
           const [lng, lat] = feature.geometry.coordinates;
@@ -179,6 +172,7 @@ function transformListSportApiResponse(id: string, responseData: any) {
 }
 
 function transformAfvalcontainers(WFSData: any) {
+  console.log('WFSData', WFSData);
   const collection: Record<string, DatasetItemTuple[]> = {};
   for (const feature of WFSData.features) {
     const fractieOmschrijving = feature.properties?.fractie_omschrijving.toLowerCase();
@@ -261,19 +255,24 @@ function transformAfvalcontainersDetail(responseData: any) {
   };
 }
 
-function transformEvenementen(WFSData: any) {
+function transformEvenementen(responseData: any) {
+  const results = getApiEmbeddedResponse('evenementen', responseData);
+  console.log('results', results);
   const collection: Record<string, DatasetItemTuple[]> = { evenementen: [] };
-  for (const feature of WFSData.features) {
-    if (feature?.geometry?.coordinates) {
-      const [lng, lat] = feature.geometry.coordinates;
-      collection.evenementen.push([lat, lng, feature.properties.id]);
+  if (results && results.length) {
+    for (const feature of results) {
+      if (feature?.geometry?.coordinates) {
+        const [lng, lat] = feature.geometry.coordinates;
+        collection.evenementen.push([lat, lng, feature.id]);
+      }
     }
-  }
 
-  return {
-    id: 'evenementen',
-    collection,
-  };
+    return {
+      id: 'evenementen',
+      collection,
+    };
+  }
+  return null;
 }
 
 function transformEvenementenDetail(responseData: any) {
@@ -309,23 +308,27 @@ function transformEvenementenDetail(responseData: any) {
   };
 }
 
-function transformBekendmakingen(WFSData: any) {
+function transformBekendmakingen(responseData: any) {
+  const results = getApiEmbeddedResponse('bekendmakingen', responseData);
   const collection: Record<string, DatasetItemTuple[]> = {};
-  for (const feature of WFSData.features) {
-    const onderwerp = feature.properties?.onderwerp.toLowerCase();
-    if (!collection[onderwerp]) {
-      collection[onderwerp] = [];
+  if (results && results.length) {
+    for (const feature of results) {
+      const onderwerp = feature?.onderwerp.toLowerCase();
+      if (!collection[onderwerp]) {
+        collection[onderwerp] = [];
+      }
+      if (feature?.geometry?.coordinates) {
+        const [lng, lat] = feature.geometry.coordinates;
+        collection[onderwerp].push([lat, lng, feature.id]);
+      }
     }
-    if (feature?.geometry?.coordinates) {
-      const [lng, lat] = feature.geometry.coordinates;
-      collection[onderwerp].push([lat, lng, feature.properties.ogc_fid]);
-    }
-  }
 
-  return {
-    id: 'bekendmakingen',
-    collection,
-  };
+    return {
+      id: 'bekendmakingen',
+      collection,
+    };
+  }
+  return null;
 }
 
 function transformBekendmakingenDetail(responseData: any) {
@@ -370,6 +373,26 @@ function transformParkeerzones(WFSData: any) {
     description: WFSData.gebied_omschrijving,
     subject: WFSData.gebied_code,
   };
+}
+
+function transformParkeerzoneCoords(responseData: any) {
+  const results1 = getApiEmbeddedResponse('parkeerzones', responseData);
+  const results2 = getApiEmbeddedResponse(
+    'parkeerzones_uitzondering',
+    responseData
+  );
+  const results = results1 ? results1 : results2 ? results2 : null;
+  if (results && results.length) {
+    for (const feature of results) {
+      recursiveCoordinateSwap(feature.geometry.coordinates);
+      feature.title = feature.gebiedsnaam;
+      feature.color = feature.gebiedskleurcode;
+      delete feature.gebiedskleurcode;
+      delete feature.gebiedsnaam;
+    }
+    return results;
+  }
+  return null;
 }
 
 function transformparkeerzones_uitz(WFSData: any) {

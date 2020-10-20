@@ -1,8 +1,10 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { BffEndpoints } from './config';
 import {
+  loadDataset,
   loadServicesMapDatasetItem,
   loadServicesMapDatasets,
+  loadServicesMapWms,
 } from './services';
 import {
   loadServicesAll,
@@ -47,9 +49,29 @@ router.get(BffEndpoints.SERVICES_TIPS, loadServicesTips);
 router.get(
   BffEndpoints.MAP_DATASETS,
   async (req: Request, res: Response, next: NextFunction) => {
+    const datasetId = req.params.dataset;
     try {
-      const datasets = await loadServicesMapDatasets(res.locals.sessionID);
-      res.json(datasets);
+      if (!datasetId) {
+        res.json(await loadServicesMapDatasets(res.locals.sessionID));
+      } else {
+        res.json(await loadDataset(res.locals.sessionID, datasetId));
+      }
+      next();
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  BffEndpoints.MAP_DATASETS_WMS,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const datasetItem = await loadServicesMapWms(
+        res.locals.sessionID,
+        req.params.dataset
+      );
+      res.json(datasetItem);
       next();
     } catch (error) {
       next(error);
@@ -60,7 +82,6 @@ router.get(
 router.get(
   BffEndpoints.MAP_DATASETS_ITEM,
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log('params', req.params);
     try {
       const datasetItem = await loadServicesMapDatasetItem(
         res.locals.sessionID,

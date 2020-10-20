@@ -23,10 +23,7 @@ import { getFullAddress } from '../../../universal/helpers';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useDesktopScreen } from '../../hooks';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import {
-  PARKEERZONES_POLYLINE_OPTIONS,
-  PARKEERZONES_WMS_OPTIONS,
-} from './datasets';
+import { PARKEERZONES_POLYLINE_OPTIONS } from './datasets';
 import HomeControlButton from './MaHomeControlButton';
 import { HomeIconMarker } from './MaMarker';
 import { MaPolyLineLayer } from './MaPolyLineLayer';
@@ -98,8 +95,9 @@ export default function MyArea2() {
           : event?.layer?.feature?.properties?.datasetId;
 
         axios({
-          url: `${BFFApiUrls.MAP_DATASETS}/${datasetGroupId ||
-            datasetId}/${datasetItemId}`,
+          url: `${BFFApiUrls.MAP_DATASETS_DETAIL}/${
+            datasetGroupId || datasetId
+          }/${datasetItemId}`,
         })
           .then(({ data: { content: markerData } }) => {
             setSelectedMarkerData({
@@ -109,7 +107,7 @@ export default function MyArea2() {
               markerData,
             });
           })
-          .catch(error => {
+          .catch((error) => {
             console.error('map request error', error);
           });
       }
@@ -174,21 +172,19 @@ export default function MyArea2() {
                 {activeDatasetIds.includes('parkeerzones') && (
                   <MaPolyLineLayer
                     url="https://map.data.amsterdam.nl/maps/parkeerzones?"
-                    options={PARKEERZONES_WMS_OPTIONS.parkeerzones}
                     polylineOptions={PARKEERZONES_POLYLINE_OPTIONS.parkeerzones}
                     datasetId="parkeerzones"
                     datasetGroupId="parkeren"
                     onMarkerClick={onMarkerClick}
                   />
                 )}
-                {activeDatasetIds.includes('parkeerzones_uitz') && (
+                {activeDatasetIds.includes('parkeerzones_uitzondering') && (
                   <MaPolyLineLayer
-                    url="https://map.data.amsterdam.nl/maps/parkeerzones_uitz?"
-                    options={PARKEERZONES_WMS_OPTIONS.parkeerzones_uitz}
+                    url="https://map.data.amsterdam.nl/maps/parkeerzones_uitzondering?"
                     polylineOptions={
-                      PARKEERZONES_POLYLINE_OPTIONS.parkeerzones_uitz
+                      PARKEERZONES_POLYLINE_OPTIONS.parkeerzones_uitzondering
                     }
-                    datasetId="parkeerzones_uitz"
+                    datasetId="parkeerzones_uitzondering"
                     datasetGroupId="parkeren"
                     onMarkerClick={onMarkerClick}
                   />

@@ -13,7 +13,7 @@ import { DataRequestConfig } from '../../config';
 import { requestData } from '../../helpers';
 import FileCache from '../../helpers/file-cache';
 import { fetchHOME } from '../home';
-import { DatasetConfig, datasetEndpoints } from './datasets';
+import { ACCEPT_CRS_4326, DatasetConfig, datasetEndpoints } from './datasets';
 
 const MAP_URL =
   'https://data.amsterdam.nl/data/?modus=kaart&achtergrond=topo_rd_zw&embed=true';
@@ -63,18 +63,29 @@ const fileCaches: Record<string, FileCache> = {};
 const fileCache = (id: string) => {
   if (!fileCaches[id]) {
     fileCaches[id] = new FileCache({
-      name: `buurt-dataset-${id}.flat-cache.json`,
+      name: `./buurt/${id}.flat-cache.json`,
       cacheTime: isMockAdapterEnabled ? 0 : 24 * 60, // 24 hours
     });
   }
   return fileCaches[id];
 };
 
-function loadDataset(
+export function loadDataset(
   sessionID: SessionID,
   id: string,
-  config: DatasetConfig
+  config?: DatasetConfig
 ): Promise<ApiResponse<any>> {
+  const datasetConfig = config || datasetEndpoints[id];
+
+  if (!datasetConfig) {
+    return Promise.resolve(apiErrorResult('Unknown dataset specified', null));
+  }
+  if (!datasetConfig.listUrl) {
+    return Promise.resolve(
+      apiErrorResult('Proper endpoint not specified', null)
+    );
+  }
+
   const dataCache = fileCache(id);
   const apiData = dataCache.getKey('response');
 
@@ -83,23 +94,23 @@ function loadDataset(
   }
 
   const requestConfig: DataRequestConfig = {
-    url: config.listUrl,
+    url: datasetConfig.listUrl,
     cacheTimeout: 0, // Don't cache the requests in memory
   };
 
-  if (config.headers) {
-    requestConfig.headers = config.headers;
+  requestConfig.headers = ACCEPT_CRS_4326;
+
+  if (datasetConfig.transformList) {
+    requestConfig.transformResponse = datasetConfig.transformList;
   }
 
-  if (config.transformList) {
-    requestConfig.transformResponse = config.transformList;
-  }
-
-  return requestData(requestConfig, sessionID, {}).then((apiData) => {
-    dataCache.setKey('url', config.listUrl);
-    dataCache.setKey('response', apiData);
-    dataCache.save();
-    return apiData;
+  return requestData(requestConfig, sessionID, {}).then((response) => {
+    if (response.status === 'OK') {
+      dataCache.setKey('url', datasetConfig.listUrl);
+      dataCache.setKey('response', response);
+      dataCache.save();
+    }
+    return response;
   });
 }
 
@@ -147,29 +158,37 @@ function loadDatasets(
 }
 
 export async function loadServicesMapDatasets(sessionID: SessionID) {
-  const configs = Object.entries(datasetEndpoints);
+  const configs = Object.entries(datasetEndpoints).filter(
+    ([, config]) => !config.isWms
+  );
   const datasetResults = await Promise.all(loadDatasets(sessionID, configs));
   return apiSuccesResult(datasetResults.map(({ content }) => content));
 }
 
+export async function loadServicesMapWms(
+  sessionID: SessionID,
+  datasetId: string
+) {
+  const config = datasetEndpoints[datasetId];
+  return loadDataset(sessionID, datasetId, config);
+}
+
 export async function loadServicesMapDatasetItem(
   sessionID: SessionID,
-  dataset: string,
+  datasetId: string,
   id: string
 ) {
-  const config = datasetEndpoints[dataset];
+  const config = datasetEndpoints[datasetId];
 
   if (!config) {
-    return apiErrorResult(`Unknown dataset ${dataset}`, null);
+    return apiErrorResult(`Unknown dataset ${datasetId}`, null);
   }
 
   const requestConfig: DataRequestConfig = {
     url: `${config.detailUrl}${id}`,
   };
 
-  if (config.headers) {
-    requestConfig.headers = config.headers;
-  }
+  requestConfig.headers = ACCEPT_CRS_4326;
 
   if (config.transformDetail) {
     requestConfig.transformResponse = config.transformDetail;

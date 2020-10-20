@@ -95,10 +95,6 @@
 }
 
 .MarkerIcon {
-  // .MarkerIconLabel {
-    //   display: none;
-    // }
-
     @include closeUpZoom() {
       &:before {
         transform: scale(.5);

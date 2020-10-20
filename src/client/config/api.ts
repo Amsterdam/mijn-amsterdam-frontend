@@ -37,6 +37,8 @@ export const BRP_RESIDENTS_API_URL = `${API_BASE_PATH_MODDED}/brp/aantal_bewoner
 export const BFFApiUrls = {
   SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
   SERVICES_SSE: `${BFF_API_BASE_URL}/services/stream`,
+  MAP_DATASETS_WMS: `${BFF_API_BASE_URL}/map/datasets/wms`,
+  MAP_DATASETS_DETAIL: `${BFF_API_BASE_URL}/map/datasets/detail`,
   MAP_DATASETS: `${BFF_API_BASE_URL}/map/datasets`,
   SERVICES_TIPS_URL: `${BFF_API_BASE_URL}/services/tips`,
 };

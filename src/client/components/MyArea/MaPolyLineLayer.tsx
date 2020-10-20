@@ -4,6 +4,7 @@ import L, { LeafletMouseEventHandlerFn } from 'leaflet';
 import React, { useEffect, useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { proj4RD } from '../../../universal/config';
+import { BFFApiUrls } from '../../config/api';
 import { getIconHtml } from './datasets';
 
 interface MaPolyLineLayerProps {
@@ -15,17 +16,22 @@ interface MaPolyLineLayerProps {
   datasetGroupId: string;
 }
 
-export const DEFAULT_WMS_OPTIONS = {
-  format: 'image/png',
-  transparent: true,
-};
+interface MaPolyLineFeature {
+  color?: string;
+  title: string;
+  geometry: any;
+  datasetId: string;
+  datasetItemId: string;
+}
+
+const DEFAULT_POLYLINE_COLOR = '#EC0000';
 
 export const DEFAULT_POLYLINE_OPTIONS = {
   weight: 1,
   fill: true,
   fillOpacity: 0.4,
   stroke: true,
-  color: '#000000',
+  color: DEFAULT_POLYLINE_COLOR,
 };
 const allColors: any = Object.entries(themeColors)
   .filter(([key]) => !['tint', 'bright'].includes(key))
@@ -66,51 +72,23 @@ const Styles = createGlobalStyle`
 export function MaPolyLineLayer({
   onMarkerClick,
   url,
-  options = DEFAULT_WMS_OPTIONS,
   polylineOptions = DEFAULT_POLYLINE_OPTIONS,
   datasetId,
   datasetGroupId,
 }: MaPolyLineLayerProps) {
   const map = useMapInstance();
 
-  // useEffect(() => {
-  //   if (!map) {
-  //     return;
-  //   }
-
-  //   const layer = L.tileLayer.wms(url, options).addTo(map);
-
-  //   if (onMarkerClick) {
-  //     layer.on('click', onMarkerClick);
-  //   }
-
-  //   return () => {
-  //     if (onMarkerClick) {
-  //       layer.off('click', onMarkerClick);
-  //     }
-  //     map.removeLayer(layer);
-  //   };
-  // }, [map, options, url, onMarkerClick]);
-
-  const [json, setJson] = useState<any>(null);
+  const [json, setJson] = useState<MaPolyLineFeature[] | null>(null);
 
   useEffect(() => {
-    fetch(
-      `${url}service=WFS&request=GetFeature&typeNames=ms:${options.layers}&VERSION=2.0.0&outputFormat=geojson`
-    )
+    fetch(`${BFFApiUrls.MAP_DATASETS_WMS}/${datasetId}`)
       .then((data) => data.json())
-      .then((jsonData) => {
-        jsonData.features.forEach((feature: any) => {
-          feature.geometry.coordinates[0] = feature.geometry.coordinates[0].map(
-            (coord: any) => {
-              const c = proj4RD.inverse(coord);
-              return [c[1], c[0]];
-            }
-          );
-          feature.properties.datasetItemId = feature.properties.ogc_fid;
-          feature.properties.datasetId = datasetId;
+      .then(({ content }) => {
+        content.forEach((feature: any) => {
+          feature.datasetItemId = feature.id;
+          feature.datasetId = datasetId;
         });
-        setJson(jsonData);
+        setJson(content);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -120,10 +98,10 @@ export function MaPolyLineLayer({
       return;
     }
 
-    const layers = json.features.map((feature: any) => {
+    const layers = json.map((feature: any) => {
       const options = {
         ...polylineOptions,
-        color: feature.properties.color,
+        color: feature.color,
       };
       const group = L.featureGroup().addTo(map);
       const layer = L.polygon(feature.geometry.coordinates, options).addTo(
@@ -142,7 +120,7 @@ export function MaPolyLineLayer({
       L.marker(layer.getCenter(), {
         icon,
       })
-        .bindTooltip(feature.properties.gebied_naam, {
+        .bindTooltip(feature.title, {
           className: 'ma-marker-tooltip',
         })
         .addTo(group);

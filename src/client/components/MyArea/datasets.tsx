@@ -15,10 +15,7 @@ import {
   MapIconAfvalTextiel,
   MapIconAuto,
 } from '../../assets/icons';
-import {
-  DEFAULT_POLYLINE_OPTIONS,
-  DEFAULT_WMS_OPTIONS,
-} from './MaPolyLineLayer';
+import { DEFAULT_POLYLINE_OPTIONS } from './MaPolyLineLayer';
 import styles from './MyAreaSuperCluster.module.scss';
 
 export type DatasetSource = Record<string, DatasetItemTuple[]>;
@@ -72,7 +69,7 @@ export function createMarkerIcon({
 
 export const DATASETS = {
   afvalcontainers: ['rest', 'papier', 'glas', 'plastic', 'textiel', 'gft'],
-  parkeren: ['parkeerzones', 'parkeerzones_uitz'],
+  parkeren: ['parkeerzones', 'parkeerzones_uitzondering'],
   bekendmakingen: [
     'apv vergunning',
     'evenementenvergunning',
@@ -186,7 +183,7 @@ const datasetIcons: Record<string, ReactElement<any>> = {
       <MapIconAuto />
     </DatasetIcon>
   ),
-  parkeerzones_uitz: (
+  parkeerzones_uitzondering: (
     <DatasetIcon style={{ backgroundColor: themeColors.supplement.pink }}>
       <MapIconAuto fill={themeColors.tint.level1} />
     </DatasetIcon>
@@ -279,10 +276,8 @@ const datasetIcons: Record<string, ReactElement<any>> = {
       style={{ backgroundColor: themeColors.supplement.lightgreen }}
     />
   ),
-  zwembaden: (
-    <DatasetIconCircle
-      style={{ backgroundColor: themeColors.supplement.lightgreen }}
-    />
+  default: (
+    <DatasetIconCircle style={{ backgroundColor: themeColors.tint.level7 }} />
   ),
 };
 
@@ -293,11 +288,11 @@ export const datasetIconHtml = Object.fromEntries(
 );
 
 export function getIcon(id: string) {
-  return datasetIcons[id] || <></>;
+  return datasetIcons[id] || datasetIcons.default;
 }
 
 export function getIconHtml(id: string) {
-  return datasetIconHtml[id] || '';
+  return datasetIconHtml[id] || datasetIconHtml.default;
 }
 
 export enum LayerType {
@@ -321,6 +316,13 @@ const createDatasetControl = (
 
 export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
   {
+    id: 'sportfacaliteiten',
+    title: 'Sportfacaliteiten',
+    collection: DATASETS.sportfaciliteiten.map((id) =>
+      createDatasetControl(id, true)
+    ),
+  },
+  {
     id: 'parkeren',
     title: 'Parkeren',
     collection: DATASETS.parkeren.map((id) =>
@@ -331,40 +333,31 @@ export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
     id: 'afvalcontainers',
     title: 'Afvalcontainers',
     collection: DATASETS.afvalcontainers.map((id) =>
-      createDatasetControl(id, true)
+      createDatasetControl(id, false)
     ),
   },
   {
     id: 'bekendmakingen',
     title: 'Bekendmakingen',
     collection: DATASETS.bekendmakingen.map((id) =>
-      createDatasetControl(id, true)
+      createDatasetControl(id, false)
     ),
   },
   {
     id: 'evenementen',
     title: 'Evenementen',
     collection: DATASETS.evenementen.map((id) =>
-      createDatasetControl(id, true)
-    ),
-  },
-  {
-    id: 'sportfacaliteiten',
-    title: 'Sportfacaliteiten',
-    collection: DATASETS.sportfaciliteiten.map((id) =>
-      createDatasetControl(id, true)
+      createDatasetControl(id, false)
     ),
   },
 ];
 
 export const PARKEERZONES_WMS_OPTIONS = {
   parkeerzones: {
-    ...DEFAULT_WMS_OPTIONS,
     layers: 'parkeerzones',
   },
-  parkeerzones_uitz: {
-    ...DEFAULT_WMS_OPTIONS,
-    layers: 'parkeerzones_uitz',
+  parkeerzones_uitzondering: {
+    layers: 'parkeerzones_uitzondering',
   },
 };
 
@@ -373,7 +366,7 @@ export const PARKEERZONES_POLYLINE_OPTIONS = {
     ...DEFAULT_POLYLINE_OPTIONS,
     color: themeColors.supplement.yellow,
   },
-  parkeerzones_uitz: {
+  parkeerzones_uitzondering: {
     ...DEFAULT_POLYLINE_OPTIONS,
     color: themeColors.supplement.pink,
   },
