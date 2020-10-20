@@ -153,12 +153,31 @@ export async function loadServicesMapDatasets(
   datasetGroupId?: string,
   datasetId?: string
 ) {
-  const configs = getDatasetEndpointConfig(datasetGroupId, datasetId);
+  const configs = getDatasetEndpointConfig(datasetGroupId, datasetId).filter(
+    ([id, config]) => {
+      // Exclude the noCluster datasets if no dataset specs are given. Initially we return only clusterable datasets.
+      return !datasetGroupId ? config.noCluster !== true : true;
+    }
+  );
 
   if (!configs.length) {
     return apiErrorResult('Could not find dataset', null);
   }
   const datasetResults = await loadDatasets(sessionID, configs);
+
+  // Dive into the dataset and retrieve the appropriate collection item
+  // TODO: skip this operation for multi datasets
+  if (datasetGroupId && datasetId) {
+    const [datasetResult] = datasetResults;
+    if (datasetResult?.collection && datasetResult.collection[datasetId]) {
+      datasetResult.collection = {
+        [datasetId]: datasetResult.collection[datasetId],
+      };
+      return apiSuccesResult(datasetResults);
+    }
+    return apiErrorResult('Could not find dataset', null);
+  }
+
   return apiSuccesResult(datasetResults);
   // return apiSuccesResult(configs);
 }
@@ -169,23 +188,24 @@ export async function loadServicesMapDatasetItem(
   datasetId: string,
   datasetItemId: string
 ) {
-  const [[, datasetConfig]] = getDatasetEndpointConfig(
-    datasetGroupId,
-    datasetId
-  );
+  const [datasetConfig] = getDatasetEndpointConfig(datasetGroupId, datasetId);
+
+  console.log(datasetConfig, datasetGroupId, datasetId, datasetItemId);
 
   if (!datasetConfig) {
     return apiErrorResult(`Unknown dataset ${datasetId}`, null);
   }
 
+  const [, config] = datasetConfig;
+
   const requestConfig: DataRequestConfig = {
-    url: `${datasetConfig.detailUrl}${datasetItemId}`,
+    url: `${config.detailUrl}${datasetItemId}`,
   };
 
   requestConfig.headers = ACCEPT_CRS_4326;
 
-  if (datasetConfig.transformDetail) {
-    requestConfig.transformResponse = datasetConfig.transformDetail;
+  if (config.transformDetail) {
+    requestConfig.transformResponse = config.transformDetail;
   }
 
   return requestData(requestConfig, sessionID, {});

@@ -21,6 +21,7 @@ export interface DatasetConfig {
   detailUrl?: string;
   transformList?: (data: any) => any;
   transformDetail?: (data: any) => any;
+  noCluster?: boolean;
 }
 
 export const datasetEndpoints: Record<string, DatasetConfig> = {
@@ -47,6 +48,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     transformDetail: transformBekendmakingenDetail,
   },
   parkeren: {
+    noCluster: true,
     multi: {
       parkeerzones: {
         listUrl:
@@ -379,9 +381,6 @@ function transformParkeerzones(WFSData: any) {
 
 function transformParkeerzoneCoords(datasetId: string, responseData: any) {
   const collection = getApiEmbeddedResponse(datasetId, responseData);
-
-  console.log(datasetId, collection);
-
   if (collection && collection.length) {
     for (const feature of collection) {
       recursiveCoordinateSwap(feature.geometry.coordinates);

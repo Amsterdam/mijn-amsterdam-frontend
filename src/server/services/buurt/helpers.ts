@@ -24,11 +24,8 @@ export function getDatasetEndpointConfig(
     datasetEndpoints
   )
     .filter(([id, config]) => !datasetGroupId || id === datasetGroupId)
-    .filter(
-      ([id, config]) =>
-        !datasetId || (datasetId && config?.multi && config.multi[datasetId])
-    )
     .map(([id, config]) => {
+      // Returns a DatasetConfig from a multi group
       if (datasetId && config?.multi && config.multi[datasetId]) {
         return [
           id,
@@ -40,6 +37,7 @@ export function getDatasetEndpointConfig(
           },
         ];
       }
+      // always return the group dataset if a more specific dataset is not found
       return [id, config];
     });
 

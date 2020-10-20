@@ -1,7 +1,7 @@
 import { themeSpacing } from '@amsterdam/asc-ui';
 import themeColors from '@amsterdam/asc-ui/es/theme/default/colors';
 import classnames from 'classnames';
-import L, { Marker } from 'leaflet';
+import L, { Marker, PolylineOptions } from 'leaflet';
 import React, { ReactElement, ReactNode } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import styled from 'styled-components';
@@ -296,7 +296,7 @@ export function getIconHtml(id: string) {
 }
 
 export enum LayerType {
-  Wms,
+  PolyLine,
   Cluster,
 }
 
@@ -324,7 +324,7 @@ export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
     id: 'parkeren',
     title: 'Parkeren',
     collection: DATASETS.parkeren.map((id) =>
-      createDatasetControl(id, false, LayerType.Wms)
+      createDatasetControl(id, false, LayerType.PolyLine)
     ),
   },
   {
@@ -350,16 +350,13 @@ export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
   },
 ];
 
-export const PARKEERZONES_WMS_OPTIONS = {
-  parkeerzones: {
-    layers: 'parkeerzones',
-  },
-  parkeerzones_uitzondering: {
-    layers: 'parkeerzones_uitzondering',
-  },
-};
+export const POLYLINE_DATASETS = DATASET_CONTROL_ITEMS.flatMap((config) =>
+  config.collection
+    .filter((control) => control.layerType === LayerType.PolyLine)
+    .map((control) => [config.id, control.id])
+);
 
-export const PARKEERZONES_POLYLINE_OPTIONS = {
+export const PARKEERZONES_POLYLINE_OPTIONS: Record<string, PolylineOptions> = {
   parkeerzones: {
     ...DEFAULT_POLYLINE_OPTIONS,
     color: themeColors.supplement.yellow,

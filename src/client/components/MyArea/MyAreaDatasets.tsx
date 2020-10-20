@@ -59,8 +59,8 @@ const Styles = createGlobalStyle`
   }
 `;
 
-function createDatasetMarkers(datasetsSource: DatasetsSource[]): Datasets[] {
-  return datasetsSource.map((datasetSource) => {
+function createDatasetMarkers(datasetsSources: DatasetsSource[]): Datasets[] {
+  return datasetsSources.map((datasetSource) => {
     return {
       ...datasetSource,
       collection: Object.fromEntries(

@@ -15,18 +15,22 @@ import { ThemeProvider } from '@amsterdam/asc-ui';
 import { themeSpacing } from '@amsterdam/asc-ui/lib/utils/themeUtils';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { HOOD_ZOOM } from '../../../universal/config/map';
 import { getFullAddress } from '../../../universal/helpers';
+import { BFFApiUrls } from '../../config/api';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useDesktopScreen } from '../../hooks';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { PARKEERZONES_POLYLINE_OPTIONS } from './datasets';
+import { useTermReplacement } from '../../hooks/useTermReplacement';
+import { PARKEERZONES_POLYLINE_OPTIONS, POLYLINE_DATASETS } from './datasets';
 import HomeControlButton from './MaHomeControlButton';
 import { HomeIconMarker } from './MaMarker';
-import { MaPolyLineLayer } from './MaPolyLineLayer';
+import { MaPolyLineLayer, MaPolyLineFeature } from './MaPolyLineLayer';
 import MyAreaDatasets, {
   selectedMarkerDataAtom,
   useActiveDatasetIds,
@@ -35,10 +39,6 @@ import MyAreaHeader from './MyAreaHeader';
 import MyAreaLoader from './MyAreaLoader';
 import MyAreaPanels from './MyAreaPanels';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
-import { useTermReplacement } from '../../hooks/useTermReplacement';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
-import { BFFApiUrls } from '../../config/api';
-import { generatePath, useHistory, useParams } from 'react-router-dom';
 
 const StyledViewerContainer = styled(ViewerContainer)`
   height: 100%;
@@ -118,6 +118,27 @@ export default function MyArea2() {
         });
       });
   }, [history, datasetGroupId, datasetId, datasetItemId]);
+
+  const polyLineLayerData = useMemo<Record<string, MaPolyLineFeature[]>>(() => {
+    return {};
+  }, [activeDatasetIds]);
+
+  const polyLineLayers = useMemo(() => {
+    return POLYLINE_DATASETS.filter(
+      ([, datasetId]) =>
+        activeDatasetIds.includes(datasetId) &&
+        Array.isArray(polyLineLayerData[datasetId])
+    ).map(([datasetGroupId, datasetId]) => (
+      <MaPolyLineLayer
+        key={datasetId}
+        features={polyLineLayerData[datasetId]}
+        polylineOptions={PARKEERZONES_POLYLINE_OPTIONS[datasetId]}
+        datasetId={datasetId}
+        datasetGroupId={datasetGroupId}
+        onMarkerClick={onMarkerClick}
+      />
+    ));
+  }, [activeDatasetIds, polyLineLayerData]);
 
   // TODO: Move into final component solution (SuperCluster or MarkerCluster)
   const onMarkerClick = useCallback(
@@ -206,26 +227,7 @@ export default function MyArea2() {
                 initialPosition={isDesktop ? SnapPoint.Full : SnapPoint.Closed}
               >
                 <MyAreaPanels />
-                {activeDatasetIds.includes('parkeerzones') && (
-                  <MaPolyLineLayer
-                    url="https://map.data.amsterdam.nl/maps/parkeerzones?"
-                    polylineOptions={PARKEERZONES_POLYLINE_OPTIONS.parkeerzones}
-                    datasetId="parkeerzones"
-                    datasetGroupId="parkeren"
-                    onMarkerClick={onMarkerClick}
-                  />
-                )}
-                {activeDatasetIds.includes('parkeerzones_uitzondering') && (
-                  <MaPolyLineLayer
-                    url="https://map.data.amsterdam.nl/maps/parkeerzones_uitzondering?"
-                    polylineOptions={
-                      PARKEERZONES_POLYLINE_OPTIONS.parkeerzones_uitzondering
-                    }
-                    datasetId="parkeerzones_uitzondering"
-                    datasetGroupId="parkeren"
-                    onMarkerClick={onMarkerClick}
-                  />
-                )}
+                {polyLineLayers}
                 {useLeafletCluster ? (
                   <MyAreaDatasets onMarkerClick={onMarkerClick} />
                 ) : (

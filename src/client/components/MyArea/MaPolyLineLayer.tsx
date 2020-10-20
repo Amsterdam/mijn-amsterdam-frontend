@@ -1,22 +1,19 @@
 import themeColors from '@amsterdam/asc-ui/es/theme/default/colors';
 import { useMapInstance } from '@amsterdam/react-maps';
 import L, { LeafletMouseEventHandlerFn } from 'leaflet';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
-import { proj4RD } from '../../../universal/config';
-import { BFFApiUrls } from '../../config/api';
 import { getIconHtml } from './datasets';
 
 interface MaPolyLineLayerProps {
   onMarkerClick?: LeafletMouseEventHandlerFn;
-  url: string;
-  options?: L.WMSOptions;
   polylineOptions?: L.PolylineOptions;
   datasetId: string;
   datasetGroupId: string;
+  features: MaPolyLineFeature[];
 }
 
-interface MaPolyLineFeature {
+export interface MaPolyLineFeature {
   color?: string;
   title: string;
   geometry: any;
@@ -71,34 +68,19 @@ const Styles = createGlobalStyle`
 
 export function MaPolyLineLayer({
   onMarkerClick,
-  url,
   polylineOptions = DEFAULT_POLYLINE_OPTIONS,
   datasetId,
   datasetGroupId,
+  features,
 }: MaPolyLineLayerProps) {
   const map = useMapInstance();
 
-  const [json, setJson] = useState<MaPolyLineFeature[] | null>(null);
-
   useEffect(() => {
-    fetch(`${BFFApiUrls.MAP_DATASETS_WMS}/${datasetId}`)
-      .then((data) => data.json())
-      .then(({ content }) => {
-        content.forEach((feature: any) => {
-          feature.datasetItemId = feature.id;
-          feature.datasetId = datasetId;
-        });
-        setJson(content);
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (!map || !json) {
+    if (!map) {
       return;
     }
 
-    const layers = json.map((feature: any) => {
+    const layers = features.map((feature: any) => {
       const options = {
         ...polylineOptions,
         color: feature.color,
@@ -136,7 +118,7 @@ export function MaPolyLineLayer({
         map.removeLayer(layer);
       });
     };
-  }, [map, json, onMarkerClick, polylineOptions, datasetId]);
+  }, [map, features, onMarkerClick, polylineOptions, datasetId]);
 
   return <Styles></Styles>;
 }
