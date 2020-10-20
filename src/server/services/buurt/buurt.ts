@@ -14,6 +14,7 @@ import { requestData } from '../../helpers';
 import FileCache from '../../helpers/file-cache';
 import { fetchHOME } from '../home';
 import { ACCEPT_CRS_4326, DatasetConfig, datasetEndpoints } from './datasets';
+import { getDatasetEndpointConfig } from './helpers';
 
 const MAP_URL =
   'https://data.amsterdam.nl/data/?modus=kaart&achtergrond=topo_rd_zw&embed=true';
@@ -70,23 +71,12 @@ const fileCache = (id: string) => {
   return fileCaches[id];
 };
 
-export function loadDataset(
+function loadDataset(
   sessionID: SessionID,
-  id: string,
-  config?: DatasetConfig
+  datasetId: string,
+  datasetConfig: DatasetConfig
 ): Promise<ApiResponse<any>> {
-  const datasetConfig = config || datasetEndpoints[id];
-
-  if (!datasetConfig) {
-    return Promise.resolve(apiErrorResult('Unknown dataset specified', null));
-  }
-  if (!datasetConfig.listUrl) {
-    return Promise.resolve(
-      apiErrorResult('Proper endpoint not specified', null)
-    );
-  }
-
-  const dataCache = fileCache(id);
+  const dataCache = fileCache(datasetId);
   const apiData = dataCache.getKey('response');
 
   if (apiData) {
@@ -105,7 +95,7 @@ export function loadDataset(
   }
 
   return requestData(requestConfig, sessionID, {}).then((response) => {
-    if (response.status === 'OK') {
+    if (response.status === 'OK' && response.content !== null) {
       dataCache.setKey('url', datasetConfig.listUrl);
       dataCache.setKey('response', response);
       dataCache.save();
@@ -129,17 +119,14 @@ function loadDatasets(
     const [id, config] = datasetConfig;
     let request = null;
     if (config.multi) {
-      request = Promise.all(
-        loadDatasets(sessionID, Object.entries(config.multi))
-      ).then((results) => {
-        const collection = results
-          .filter((result) => result.content !== null)
-          .reduce((acc, result: any) => {
-            // Aggregate all api results into 1
-            return Object.assign(acc, {
-              [result.content.id]: result.content.collection,
-            });
-          }, {});
+      const configsMulti = Object.entries(config.multi);
+      request = loadDatasets(sessionID, configsMulti).then((results) => {
+        const collection = results.reduce((acc, result: any) => {
+          // Aggregate all api results into 1
+          return Object.assign(acc, {
+            [result.id]: result.collection,
+          });
+        }, {});
         return apiSuccesResult({
           id,
           collection,
@@ -154,44 +141,51 @@ function loadDatasets(
     }
   }
 
-  return requests;
-}
-
-export async function loadServicesMapDatasets(sessionID: SessionID) {
-  const configs = Object.entries(datasetEndpoints).filter(
-    ([, config]) => !config.isWms
+  return Promise.all(requests).then((datasetResults) =>
+    datasetResults
+      .filter(({ content }) => content !== null)
+      .map(({ content }) => content)
   );
-  const datasetResults = await Promise.all(loadDatasets(sessionID, configs));
-  return apiSuccesResult(datasetResults.map(({ content }) => content));
 }
 
-export async function loadServicesMapWms(
+export async function loadServicesMapDatasets(
   sessionID: SessionID,
-  datasetId: string
+  datasetGroupId?: string,
+  datasetId?: string
 ) {
-  const config = datasetEndpoints[datasetId];
-  return loadDataset(sessionID, datasetId, config);
+  const configs = getDatasetEndpointConfig(datasetGroupId, datasetId);
+
+  if (!configs.length) {
+    return apiErrorResult('Could not find dataset', null);
+  }
+  const datasetResults = await loadDatasets(sessionID, configs);
+  return apiSuccesResult(datasetResults);
+  // return apiSuccesResult(configs);
 }
 
 export async function loadServicesMapDatasetItem(
   sessionID: SessionID,
+  datasetGroupId: string,
   datasetId: string,
-  id: string
+  datasetItemId: string
 ) {
-  const config = datasetEndpoints[datasetId];
+  const [[, datasetConfig]] = getDatasetEndpointConfig(
+    datasetGroupId,
+    datasetId
+  );
 
-  if (!config) {
+  if (!datasetConfig) {
     return apiErrorResult(`Unknown dataset ${datasetId}`, null);
   }
 
   const requestConfig: DataRequestConfig = {
-    url: `${config.detailUrl}${id}`,
+    url: `${datasetConfig.detailUrl}${datasetItemId}`,
   };
 
   requestConfig.headers = ACCEPT_CRS_4326;
 
-  if (config.transformDetail) {
-    requestConfig.transformResponse = config.transformDetail;
+  if (datasetConfig.transformDetail) {
+    requestConfig.transformResponse = datasetConfig.transformDetail;
   }
 
   return requestData(requestConfig, sessionID, {});

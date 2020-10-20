@@ -132,14 +132,11 @@ export const BffEndpoints = {
   SERVICES_ALL: `/services/all`,
   SERVICES_STREAM: `/services/stream`,
   HEALTH: `/status/health`,
-  MAP_DATASETS: `/map/datasets/:dataset?`,
-  MAP_DATASETS_ITEM: `/map/datasets/detail/:dataset/:id`,
-  MAP_DATASETS_WMS: `/map/datasets/wms/:dataset`,
+  MAP_DATASETS: `/map/datasets/:datasetGroupId?/:datasetId?/:datasetItemId?`,
   MAP_DATASETS_WS: `/map/datasets/ws`,
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
   BffEndpoints.HEALTH,
   BffEndpoints.MAP_DATASETS,
-  BffEndpoints.MAP_DATASETS_ITEM,
 ];

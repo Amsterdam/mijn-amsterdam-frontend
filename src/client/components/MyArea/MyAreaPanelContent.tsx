@@ -3,6 +3,7 @@ import InfoDetail, { InfoDetailGroup } from '../InfoDetail/InfoDetail';
 import { defaultDateFormat } from '../../../universal/helpers';
 import Linkd from '../Button/Button';
 import styles from './MyArea.module.scss';
+import LoadingContent from '../LoadingContent/LoadingContent';
 
 interface MyAreaPanelContentProps {
   panelItem: any;
@@ -11,6 +12,10 @@ interface MyAreaPanelContentProps {
 export default function MyAreaPanelContent({
   panelItem,
 }: MyAreaPanelContentProps) {
+  if (!panelItem) {
+    return <LoadingContent />;
+  }
+
   return (
     <div>
       {!!panelItem.datePublished && (

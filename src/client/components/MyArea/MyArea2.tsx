@@ -15,7 +15,7 @@ import { ThemeProvider } from '@amsterdam/asc-ui';
 import { themeSpacing } from '@amsterdam/asc-ui/lib/utils/themeUtils';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { HOOD_ZOOM } from '../../../universal/config/map';
@@ -36,8 +36,9 @@ import MyAreaLoader from './MyAreaLoader';
 import MyAreaPanels from './MyAreaPanels';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
-import { ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { BFFApiUrls } from '../../config/api';
+import { generatePath, useHistory, useParams } from 'react-router-dom';
 
 const StyledViewerContainer = styled(ViewerContainer)`
   height: 100%;
@@ -63,8 +64,18 @@ const MyAreaMap = styled(Map)`
   }
 `;
 
+interface BuurtRouteParams {
+  datasetGroupId?: string;
+  datasetId?: string;
+  datasetItemId?: string;
+}
+
 export default function MyArea2() {
   const isDesktop = useDesktopScreen();
+  const { datasetGroupId, datasetId, datasetItemId } = useParams<
+    BuurtRouteParams
+  >();
+  const history = useHistory();
   const [useLeafletCluster, setUseLeafletCluster] = useState(true);
   const { HOME } = useAppStateGetter();
   const [selectedMarkerData, setSelectedMarkerData] = useRecoilState(
@@ -73,6 +84,41 @@ export default function MyArea2() {
   const activeDatasetIds = useActiveDatasetIds();
   const termReplace = useTermReplacement();
   const center = HOME.content?.latlng;
+
+  useEffect(() => {
+    console.log('load data');
+    if (!datasetItemId || !datasetGroupId || !datasetId) {
+      return;
+    }
+    setSelectedMarkerData({
+      datasetItemId,
+      datasetGroupId,
+      datasetId,
+      markerData: null,
+    });
+
+    axios({
+      url: `${BFFApiUrls.MAP_DATASETS}/${datasetGroupId}/${datasetId}/${datasetItemId}`,
+    })
+      .then(({ data: { content: markerData } }) => {
+        setSelectedMarkerData({
+          datasetItemId,
+          datasetGroupId,
+          datasetId,
+          markerData,
+        });
+      })
+      .catch((error) => {
+        console.error('map request error', error);
+        setSelectedMarkerData({
+          datasetItemId,
+          datasetGroupId,
+          datasetId,
+          markerData: 'error',
+        });
+      });
+  }, [history, datasetGroupId, datasetId, datasetItemId]);
+
   // TODO: Move into final component solution (SuperCluster or MarkerCluster)
   const onMarkerClick = useCallback(
     (event: any) => {
@@ -94,25 +140,16 @@ export default function MyArea2() {
           ? event.layer.options.datasetId
           : event?.layer?.feature?.properties?.datasetId;
 
-        axios({
-          url: `${BFFApiUrls.MAP_DATASETS_DETAIL}/${
-            datasetGroupId || datasetId
-          }/${datasetItemId}`,
-        })
-          .then(({ data: { content: markerData } }) => {
-            setSelectedMarkerData({
-              datasetItemId,
-              datasetGroupId,
-              datasetId,
-              markerData,
-            });
+        history.replace(
+          generatePath(AppRoutes.BUURT, {
+            datasetGroupId,
+            datasetId,
+            datasetItemId,
           })
-          .catch((error) => {
-            console.error('map request error', error);
-          });
+        );
       }
     },
-    [setSelectedMarkerData, selectedMarkerData]
+    [history, selectedMarkerData]
   );
 
   return (

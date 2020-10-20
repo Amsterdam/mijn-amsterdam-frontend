@@ -10,6 +10,7 @@ import React, { useCallback, useContext, useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { useDesktopScreen } from '../../hooks';
+import LoadingContent from '../LoadingContent/LoadingContent';
 import { DatasetControlItem, getIcon } from './datasets';
 import MyAreaCollapisblePanel, {
   CollapsedState,
@@ -20,6 +21,7 @@ import MyAreaDatasetControl, {
 } from './MyAreaDatasetControl';
 import { selectedMarkerDataAtom } from './MyAreaDatasets';
 import MyAreaPanelContent from './MyAreaPanelContent';
+import Alert from '../Alert/Alert';
 
 function initialCollapsedState(datasets: Array<{ isActive: boolean }>) {
   return datasets.some((dataset) => dataset.isActive)
@@ -110,7 +112,7 @@ export default function MyAreaPanels() {
           activeItemsTotal !== total &&
           activeItemsTotal >= threshold) ||
         activeItemsTotal === 0;
-      // console.log(controlItem.title, isActive, activeItemsTotal, total);
+
       updateDatasetControlItems(
         controlItem.collection.map((item) => item.id),
         isActive
@@ -141,20 +143,29 @@ export default function MyAreaPanels() {
             <MyAreaDatasetControl collection={controlItem.collection} />
           </MyAreaCollapisblePanel>
         ))}
-        {selectedMarkerData && selectedMarkerData.markerData !== null && (
+        {selectedMarkerData && (
           <MapPanelContentDetail
-            title={selectedMarkerData.markerData.title}
+            title={selectedMarkerData.markerData?.title}
             subTitle={
               <PanelSubTitle
-                datasetId={selectedMarkerData.datasetId}
-                datasetGroupId={selectedMarkerData.datasetGroupId}
+                datasetId={selectedMarkerData?.datasetId}
+                datasetGroupId={selectedMarkerData?.datasetGroupId}
               />
             }
             stackOrder={3}
             animate
             onClose={() => setSelectedMarkerData(null)}
           >
-            <MyAreaPanelContent panelItem={selectedMarkerData.markerData} />
+            {selectedMarkerData.markerData !== 'error' ? (
+              <MyAreaPanelContent panelItem={selectedMarkerData.markerData} />
+            ) : (
+              <Alert type="warning">
+                <p>
+                  Er kan op dit moment niet meer informatie getoond worden over
+                  dit item.
+                </p>
+              </Alert>
+            )}
           </MapPanelContentDetail>
         )}
       </MapPanelContent>

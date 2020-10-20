@@ -21,7 +21,6 @@ export interface DatasetConfig {
   detailUrl?: string;
   transformList?: (data: any) => any;
   transformDetail?: (data: any) => any;
-  isWms?: boolean;
 }
 
 export const datasetEndpoints: Record<string, DatasetConfig> = {
@@ -47,22 +46,27 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     transformList: transformBekendmakingen,
     transformDetail: transformBekendmakingenDetail,
   },
-  parkeerzones: {
-    listUrl:
-      'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones/?_fields=id,geometry,gebiedskleurcode,gebiedsnaam&indicatieZichtbaar=TRUE&page_size=500',
-    isWms: true,
-    detailUrl: 'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones/',
-    transformDetail: transformParkeerzones,
-    transformList: transformParkeerzoneCoords,
-  },
-  parkeerzones_uitzondering: {
-    listUrl:
-      'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones_uitzondering/?_fields=id,geometry,gebiedsnaam&indicatieZichtbaar=TRUE&page_size=100',
-    isWms: true,
-    detailUrl:
-      'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones_uitzondering/',
-    transformDetail: transformparkeerzones_uitz,
-    transformList: transformParkeerzoneCoords,
+  parkeren: {
+    multi: {
+      parkeerzones: {
+        listUrl:
+          'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones/?_fields=id,geometry,gebiedskleurcode,gebiedsnaam&indicatieZichtbaar=TRUE&page_size=500',
+        detailUrl:
+          'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones/',
+        transformDetail: transformParkeerzones,
+        transformList: (responseData) =>
+          transformParkeerzoneCoords('parkeerzones', responseData),
+      },
+      parkeerzones_uitzondering: {
+        listUrl:
+          'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones_uitzondering/?_fields=id,geometry,gebiedsnaam&indicatieZichtbaar=TRUE&page_size=100',
+        detailUrl:
+          'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones_uitzondering/',
+        transformDetail: transformparkeerzonesUitzondering,
+        transformList: (responseData) =>
+          transformParkeerzoneCoords('parkeerzones_uitzondering', responseData),
+      },
+    },
   },
   sport: {
     multi: {
@@ -172,7 +176,6 @@ function transformListSportApiResponse(id: string, responseData: any) {
 }
 
 function transformAfvalcontainers(WFSData: any) {
-  console.log('WFSData', WFSData);
   const collection: Record<string, DatasetItemTuple[]> = {};
   for (const feature of WFSData.features) {
     const fractieOmschrijving = feature.properties?.fractie_omschrijving.toLowerCase();
@@ -257,7 +260,6 @@ function transformAfvalcontainersDetail(responseData: any) {
 
 function transformEvenementen(responseData: any) {
   const results = getApiEmbeddedResponse('evenementen', responseData);
-  console.log('results', results);
   const collection: Record<string, DatasetItemTuple[]> = { evenementen: [] };
   if (results && results.length) {
     for (const feature of results) {
@@ -375,27 +377,28 @@ function transformParkeerzones(WFSData: any) {
   };
 }
 
-function transformParkeerzoneCoords(responseData: any) {
-  const results1 = getApiEmbeddedResponse('parkeerzones', responseData);
-  const results2 = getApiEmbeddedResponse(
-    'parkeerzones_uitzondering',
-    responseData
-  );
-  const results = results1 ? results1 : results2 ? results2 : null;
-  if (results && results.length) {
-    for (const feature of results) {
+function transformParkeerzoneCoords(datasetId: string, responseData: any) {
+  const collection = getApiEmbeddedResponse(datasetId, responseData);
+
+  console.log(datasetId, collection);
+
+  if (collection && collection.length) {
+    for (const feature of collection) {
       recursiveCoordinateSwap(feature.geometry.coordinates);
       feature.title = feature.gebiedsnaam;
       feature.color = feature.gebiedskleurcode;
       delete feature.gebiedskleurcode;
       delete feature.gebiedsnaam;
     }
-    return results;
+    return {
+      id: datasetId,
+      collection,
+    };
   }
   return null;
 }
 
-function transformparkeerzones_uitz(WFSData: any) {
+function transformparkeerzonesUitzondering(WFSData: any) {
   return {
     title: WFSData.gebied_naam,
     description: WFSData.omschrijving,

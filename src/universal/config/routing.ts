@@ -12,7 +12,7 @@ export const AppRoutes = {
   'INKOMEN/TOZO': '/inkomen-en-stadspas/tozo/:version/:id?',
   BRP: '/persoonlijke-gegevens',
   KVK: '/gegevens-handelsregister',
-  BUURT: '/buurt',
+  BUURT: '/buurt/:datasetGroupId?/:datasetId?/:datasetItemId?',
   API_LOGIN: '/api/login',
   API1_LOGIN: '/api1/login',
   TIPS: '/overzicht-tips',
@@ -27,7 +27,7 @@ export const AppRoutes = {
 export const PublicRoutes = [AppRoutes.API_LOGIN, AppRoutes.ACCESSIBILITY];
 
 export const PrivateRoutes = Object.values(AppRoutes).filter(
-  path => !PublicRoutes.includes(path)
+  (path) => !PublicRoutes.includes(path)
 );
 
 export const CustomTrackingUrls = {

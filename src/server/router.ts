@@ -1,17 +1,15 @@
+import * as Sentry from '@sentry/node';
 import express, { NextFunction, Request, Response } from 'express';
 import { BffEndpoints } from './config';
 import {
-  loadDataset,
   loadServicesMapDatasetItem,
   loadServicesMapDatasets,
-  loadServicesMapWms,
 } from './services';
 import {
   loadServicesAll,
   loadServicesSSE,
   loadServicesTips,
 } from './services/controller';
-import * as Sentry from '@sentry/node';
 
 export const router = express.Router();
 
@@ -49,46 +47,29 @@ router.get(BffEndpoints.SERVICES_TIPS, loadServicesTips);
 router.get(
   BffEndpoints.MAP_DATASETS,
   async (req: Request, res: Response, next: NextFunction) => {
-    const datasetId = req.params.dataset;
+    const datasetGroupId = req.params.datasetGroupId;
+    const datasetId = req.params.datasetId;
+    const datasetItemId = req.params.datasetItemId;
+    let data = null;
     try {
-      if (!datasetId) {
-        res.json(await loadServicesMapDatasets(res.locals.sessionID));
+      if (datasetGroupId && datasetId && datasetItemId) {
+        data = await loadServicesMapDatasetItem(
+          res.locals.sessionID,
+          datasetGroupId,
+          datasetId,
+          datasetItemId
+        );
       } else {
-        res.json(await loadDataset(res.locals.sessionID, datasetId));
+        data = await loadServicesMapDatasets(
+          res.locals.sessionID,
+          datasetGroupId,
+          datasetId
+        );
       }
-      next();
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-router.get(
-  BffEndpoints.MAP_DATASETS_WMS,
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const datasetItem = await loadServicesMapWms(
-        res.locals.sessionID,
-        req.params.dataset
-      );
-      res.json(datasetItem);
-      next();
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-router.get(
-  BffEndpoints.MAP_DATASETS_ITEM,
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const datasetItem = await loadServicesMapDatasetItem(
-        res.locals.sessionID,
-        req.params.dataset,
-        req.params.id
-      );
-      res.json(datasetItem);
+      if (data.status !== 'OK') {
+        res.status(500);
+      }
+      res.json(data);
       next();
     } catch (error) {
       next(error);

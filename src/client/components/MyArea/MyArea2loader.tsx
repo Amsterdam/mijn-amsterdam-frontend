@@ -1,15 +1,15 @@
 import React, { Suspense } from 'react';
 import styles from './MyAreaLoader.module.scss';
 export const MyArea2Lazy = React.lazy(() => import('./MyArea2'));
-export const MyArea2DashboardLazy = React.lazy(() =>
-  import('./MyArea2Dashboard')
+export const MyArea2DashboardLazy = React.lazy(
+  () => import('./MyArea2Dashboard')
 );
 
 interface MyArea2LoaderProps {
   isDashboard: boolean;
 }
 
-export function MyArea2Loader({ isDashboard }: MyArea2LoaderProps) {
+export function MyArea2Loader({ isDashboard = false }: MyArea2LoaderProps) {
   return (
     <Suspense
       fallback={

@@ -92,7 +92,7 @@ export const DATASETS = {
     'drank- en horecavergunning',
   ],
   evenementen: ['evenementen'],
-  sportfaciliteiten: [
+  sport: [
     'zwembad',
     'sportpark',
     'sportveld',
@@ -316,11 +316,9 @@ const createDatasetControl = (
 
 export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
   {
-    id: 'sportfacaliteiten',
-    title: 'Sportfacaliteiten',
-    collection: DATASETS.sportfaciliteiten.map((id) =>
-      createDatasetControl(id, true)
-    ),
+    id: 'sport',
+    title: 'Sport & Bos',
+    collection: DATASETS.sport.map((id) => createDatasetControl(id, true)),
   },
   {
     id: 'parkeren',

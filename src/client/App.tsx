@@ -4,6 +4,7 @@ import React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import {
   BrowserRouter,
+  matchPath,
   Redirect,
   Route,
   Switch,
@@ -101,9 +102,9 @@ function AppAuthenticated() {
 
   const redirectAfterLogin = useDeeplinkRedirect();
 
-  return location.pathname === AppRoutes.BUURT ? (
+  return matchPath(location.pathname, { path: AppRoutes.BUURT }) ? (
     FeatureToggle.myArea2Active ? (
-      <MyArea2Loader isDashboard={false} />
+      <Route path={AppRoutes.BUURT} component={MyArea2Loader} />
     ) : (
       <MyArea />
     )
