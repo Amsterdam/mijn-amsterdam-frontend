@@ -4,7 +4,6 @@ import React, { useCallback, useState } from 'react';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { IconAlert, IconDownload } from '../../assets/icons';
 import { trackPageView } from '../../hooks/analytics.hook';
-import Alert from '../Alert/Alert';
 import Linkd from '../Button/Button';
 import styles from './DocumentList.module.scss';
 
