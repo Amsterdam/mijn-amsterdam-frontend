@@ -44,10 +44,10 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
   const [isErrorVisible, setErrorVisible] = useState(false);
 
   const onClickDocumentLink = useCallback(
-    (event) => {
+    event => {
       event.preventDefault();
       // First check to see if the request will succeed or not.
-      fetch(document.url).then((response) => {
+      fetch(document.url).then(response => {
         const trackingUrl =
           window.location.pathname +
           addFileType(
@@ -77,7 +77,7 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
   );
 
   return (
-    <>
+    <span className={styles.DocumentLinkWrap}>
       <Linkd
         className={classnames(
           styles.DocumentLink,
@@ -92,7 +92,7 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
       {isErrorVisible && (
         <span className={styles.DownloadError}>Download niet beschikbaar</span>
       )}
-    </>
+    </span>
   );
 }
 
@@ -107,7 +107,7 @@ export default function DocumentList({
         isExpandedView && styles[`DocumentList--expandedView`]
       )}
     >
-      {documents.map((document) => (
+      {documents.map(document => (
         <li className={styles.DocumentListItem} key={document.id}>
           {isExpandedView ? (
             <>

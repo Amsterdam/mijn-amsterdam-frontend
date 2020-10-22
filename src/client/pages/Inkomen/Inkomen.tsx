@@ -131,10 +131,7 @@ export default () => {
 
   return (
     <OverviewPage className={styles.Inkomen}>
-      <PageHeading
-        isLoading={isLoadingFocus && isLoadingFocusSpecificaties}
-        icon={<ChapterIcon />}
-      >
+      <PageHeading isLoading={false} icon={<ChapterIcon />}>
         {ChapterTitles.INKOMEN}
       </PageHeading>
       <PageContent>
