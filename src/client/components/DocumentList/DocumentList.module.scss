@@ -20,6 +20,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: .6rem;
+  position: relative;
 }
 
 .DocumentList {
@@ -31,4 +32,25 @@
       font-size: 1.6rem;
     }
   }
+}
+
+.DocumentLinkError {
+  padding-bottom: 1rem;
+  position: relative;
+
+  @include select('Button_Icon') {
+    width: 2rem;
+    height: 2rem;
+    fill: $color-support-warning;
+    transform: translateY(4px);
+  }
+}
+
+.DownloadError {
+  font-size: .8em;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  white-space: nowrap;
 }
