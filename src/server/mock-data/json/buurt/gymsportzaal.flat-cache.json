@@ -1,0 +1,1 @@
+[{"url":"1","response":"2"},{"expire":false,"data":"3"},{"expire":false,"data":"4"},"https://api.data.amsterdam.nl/v1/sport/gymsportzaal/?_fields=id,adres,plaats&page_size=150",{"content":"5","status":"6"},{"id":"7","collection":"8"},"OK","gymsportzaal",[]]

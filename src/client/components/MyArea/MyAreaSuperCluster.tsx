@@ -1,11 +1,11 @@
+import axios from 'axios';
 import L, { LeafletMouseEventHandlerFn } from 'leaflet';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
+import { BFFApiUrls } from '../../config/api';
 import { createMarkerIcon, getIconHtml } from './datasets';
-import { useDatasetControlItems } from './MyAreaDatasetControl';
+import { useActiveClusterDatasetIds } from './MyArea.hooks';
 import datasetStyles from './MyAreaSuperCluster.module.scss';
 import { useMapRef } from './useMap';
-//
-export const WS_SUPERCLUSTER_SERVER = 'ws://localhost:5013';
 
 function createMarker(feature: any, latlng: any) {
   let icon;
@@ -30,7 +30,6 @@ function createMarker(feature: any, latlng: any) {
   return L.marker(latlng, { icon });
 }
 
-// TODO: Use GeoJSON layer
 function useClusterMarkers(map: L.Map | null) {
   const layer = useMemo(() => {
     if (!map) {
@@ -46,40 +45,6 @@ function useClusterMarkers(map: L.Map | null) {
   return layer;
 }
 
-function useSuperClusterWebSocket(onMessageCallback: (data: any) => void) {
-  const ws = useMemo(() => new WebSocket(WS_SUPERCLUSTER_SERVER), []);
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    if (!ws) {
-      return;
-    }
-
-    const open = () => {
-      // console.log('ws:open');
-      setReady(true);
-    };
-
-    const message = (event: any) => {
-      // console.log('ws:message', event);
-      onMessageCallback(JSON.parse(event.data));
-    };
-
-    ws.addEventListener('open', open);
-    ws.addEventListener('message', message);
-
-    return () => {
-      ws.removeEventListener('open', open);
-      ws.removeEventListener('message', message);
-    };
-  }, [ws, onMessageCallback]);
-
-  return {
-    ws,
-    ready,
-  };
-}
-
 interface MaSuperClusterLayerProps {
   onMarkerClick?: LeafletMouseEventHandlerFn;
 }
@@ -88,18 +53,8 @@ export function MaSuperClusterLayer({
   onMarkerClick,
 }: MaSuperClusterLayerProps) {
   const map = useMapRef().current;
-
-  console.info('Using MaSuperClusterLayer');
-
   const markers = useClusterMarkers(map);
-  const datasetControlItems = useDatasetControlItems();
-  const activeDatasetIds = useMemo(() => {
-    return datasetControlItems.flatMap((item) =>
-      item.collection
-        .filter((dataset) => dataset.isActive)
-        .map((dataset) => dataset.id)
-    );
-  }, [datasetControlItems]);
+  const activeDatasetIds = useActiveClusterDatasetIds();
 
   useEffect(() => {
     return () => {
@@ -111,7 +66,6 @@ export function MaSuperClusterLayer({
 
   const updateMap = useCallback(
     (response) => {
-      // console.log('updaa', response);
       if (!map || !markers) {
         return;
       }
@@ -127,16 +81,16 @@ export function MaSuperClusterLayer({
     [map, markers]
   );
 
-  const { ws, ready: wsReady } = useSuperClusterWebSocket(updateMap);
-
   const requestData = useCallback(
-    (query = {}) => {
-      // console.log(ws, query);
-      if (ws) {
-        ws.send(JSON.stringify(query));
-      }
+    async (payload = {}) => {
+      // TODO: put in serviceworker?
+      const response = await axios({
+        url: BFFApiUrls.MAP_DATASETS,
+        params: { payload },
+      });
+      updateMap(response.data);
     },
-    [ws]
+    [updateMap]
   );
 
   const updateClusterData = useCallback(() => {
@@ -145,7 +99,7 @@ export function MaSuperClusterLayer({
     }
     const bounds = map.getBounds();
     requestData({
-      datasetIds: activeDatasetIds,
+      datasetIds: activeDatasetIds.map(([, datasetId]) => datasetId),
       bbox: [
         bounds.getWest(),
         bounds.getSouth(),
@@ -176,17 +130,11 @@ export function MaSuperClusterLayer({
       // Request new cluster data
       if (event.layer.feature.properties.cluster_id) {
         const center = [point.lat, point.lng];
-        console.log(map.getZoom(), event.layer.feature);
-        // if (map.getZoom() === 16) {
-        //   console.log(event.layer.feature);
-        //   requestData({ parentId: event.layer.feature.id });
-        // } else {
         requestData({
           getClusterExpansionZoom: event.layer.feature.properties.cluster_id,
           center,
           datasetIds: activeDatasetIds,
         });
-        // }
       }
       onMarkerClick && onMarkerClick(event);
     };
@@ -199,10 +147,10 @@ export function MaSuperClusterLayer({
   }, [markers, requestData, map, activeDatasetIds, onMarkerClick]);
 
   useEffect(() => {
-    if (wsReady && updateClusterData) {
+    if (updateClusterData) {
       updateClusterData();
     }
-  }, [wsReady, updateClusterData]);
+  }, [updateClusterData]);
 
   return null;
 }

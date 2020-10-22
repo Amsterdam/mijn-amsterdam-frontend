@@ -15,9 +15,8 @@ import { ThemeProvider } from '@amsterdam/asc-ui';
 import { themeSpacing } from '@amsterdam/asc-ui/lib/utils/themeUtils';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { HOOD_ZOOM } from '../../../universal/config/map';
@@ -27,18 +26,15 @@ import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useDesktopScreen } from '../../hooks';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
-import { PARKEERZONES_POLYLINE_OPTIONS, POLYLINE_DATASETS } from './datasets';
 import HomeControlButton from './MaHomeControlButton';
 import { HomeIconMarker } from './MaMarker';
-import { MaPolyLineLayer, MaPolyLineFeature } from './MaPolyLineLayer';
-import MyAreaDatasets, {
-  selectedMarkerDataAtom,
-  useActiveDatasetIds,
-} from './MyAreaDatasets';
+import { useActiveDatasetIds, useSelectedMarkerData } from './MyArea.hooks';
+import MyAreaDatasets from './MyAreaClusterDatasets';
 import MyAreaHeader from './MyAreaHeader';
 import MyAreaLoader from './MyAreaLoader';
 import MyAreaPanels from './MyAreaPanels';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
+import { MyAreaPolyLineDatasets } from './MyAreaPolyLineDatasets';
 
 const StyledViewerContainer = styled(ViewerContainer)`
   height: 100%;
@@ -76,14 +72,10 @@ export default function MyArea2() {
     BuurtRouteParams
   >();
   const history = useHistory();
-  const [useLeafletCluster, setUseLeafletCluster] = useState(true);
   const { HOME } = useAppStateGetter();
-  const [selectedMarkerData, setSelectedMarkerData] = useRecoilState(
-    selectedMarkerDataAtom
-  );
-  const activeDatasetIds = useActiveDatasetIds();
   const termReplace = useTermReplacement();
   const center = HOME.content?.latlng;
+  const [selectedMarkerData, setSelectedMarkerData] = useSelectedMarkerData();
 
   useEffect(() => {
     console.log('load data');
@@ -117,28 +109,13 @@ export default function MyArea2() {
           markerData: 'error',
         });
       });
-  }, [history, datasetGroupId, datasetId, datasetItemId]);
-
-  const polyLineLayerData = useMemo<Record<string, MaPolyLineFeature[]>>(() => {
-    return {};
-  }, [activeDatasetIds]);
-
-  const polyLineLayers = useMemo(() => {
-    return POLYLINE_DATASETS.filter(
-      ([, datasetId]) =>
-        activeDatasetIds.includes(datasetId) &&
-        Array.isArray(polyLineLayerData[datasetId])
-    ).map(([datasetGroupId, datasetId]) => (
-      <MaPolyLineLayer
-        key={datasetId}
-        features={polyLineLayerData[datasetId]}
-        polylineOptions={PARKEERZONES_POLYLINE_OPTIONS[datasetId]}
-        datasetId={datasetId}
-        datasetGroupId={datasetGroupId}
-        onMarkerClick={onMarkerClick}
-      />
-    ));
-  }, [activeDatasetIds, polyLineLayerData]);
+  }, [
+    history,
+    datasetGroupId,
+    datasetId,
+    datasetItemId,
+    setSelectedMarkerData,
+  ]);
 
   // TODO: Move into final component solution (SuperCluster or MarkerCluster)
   const onMarkerClick = useCallback(
@@ -161,6 +138,7 @@ export default function MyArea2() {
           ? event.layer.options.datasetId
           : event?.layer?.feature?.properties?.datasetId;
 
+        // TODO: push state? React must react to location state changes with panels for example
         history.replace(
           generatePath(AppRoutes.BUURT, {
             datasetGroupId,
@@ -201,11 +179,6 @@ export default function MyArea2() {
               <StyledViewerContainer
                 bottomRight={
                   <>
-                    <button
-                      onClick={() => setUseLeafletCluster(!useLeafletCluster)}
-                    >
-                      {useLeafletCluster ? 'LC' : 'SC'}
-                    </button>
                     {HOME.content?.address && HOME.content?.latlng && (
                       <HomeControlButton
                         zoom={HOOD_ZOOM}
@@ -227,12 +200,8 @@ export default function MyArea2() {
                 initialPosition={isDesktop ? SnapPoint.Full : SnapPoint.Closed}
               >
                 <MyAreaPanels />
-                {polyLineLayers}
-                {useLeafletCluster ? (
-                  <MyAreaDatasets onMarkerClick={onMarkerClick} />
-                ) : (
-                  <MaSuperClusterLayer onMarkerClick={onMarkerClick} />
-                )}
+                <MyAreaPolyLineDatasets onMarkerClick={onMarkerClick} />
+                <MaSuperClusterLayer onMarkerClick={onMarkerClick} />
               </MapPanelProvider>
             </MyAreaMap>
           ) : (

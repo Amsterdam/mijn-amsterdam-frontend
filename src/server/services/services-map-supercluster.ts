@@ -7,6 +7,7 @@ let dataStore: any;
 let superClusterIndex: Supercluster;
 
 function filterDatastore(dataStore: any, activeDatasetIds: any) {
+  console.log(dataStore);
   return dataStore.flatMap((dataset: any) => {
     const { collection, id: datasetGroupId } = dataset;
     return Object.entries(collection)
@@ -30,7 +31,10 @@ function filterDatastore(dataStore: any, activeDatasetIds: any) {
   });
 }
 
-async function generateSuperCluster(activeDatasetIds: string[] = []) {
+async function generateSuperCluster(
+  sessionID: SessionID,
+  activeDatasetIds: string[] = []
+) {
   let hasChangedDatasetIds = false;
 
   if (currentlyActiveDatasetIds.length) {
@@ -41,7 +45,7 @@ async function generateSuperCluster(activeDatasetIds: string[] = []) {
         currentlyActiveDatasetIds.some(
           (id: string) => !activeDatasetIds.includes(id)
         ) ||
-        activeDatasetIds.some(id => !currentlyActiveDatasetIds.includes(id))
+        activeDatasetIds.some((id) => !currentlyActiveDatasetIds.includes(id))
       );
     }
   }
@@ -49,7 +53,7 @@ async function generateSuperCluster(activeDatasetIds: string[] = []) {
   currentlyActiveDatasetIds = activeDatasetIds;
 
   if (!dataStore) {
-    dataStore = (await loadServicesMapDatasets('x-ws')).content;
+    dataStore = (await loadServicesMapDatasets(sessionID)).content;
   }
 
   if (!superClusterIndex || hasChangedDatasetIds) {
@@ -64,15 +68,14 @@ async function generateSuperCluster(activeDatasetIds: string[] = []) {
   }
 }
 
-export async function getClusterData({
-  getClusterExpansionZoom,
-  center,
-  bbox,
-  zoom,
-  datasetIds,
-  parentId,
-}: any) {
-  await generateSuperCluster(datasetIds || currentlyActiveDatasetIds);
+export async function getClusterData(
+  sessionID: SessionID,
+  { getClusterExpansionZoom, center, bbox, zoom, datasetIds, parentId }: any
+) {
+  await generateSuperCluster(
+    sessionID,
+    datasetIds || currentlyActiveDatasetIds
+  );
 
   if (parentId) {
     return {
@@ -88,6 +91,4 @@ export async function getClusterData({
   } else if (bbox && zoom) {
     return { data: superClusterIndex.getClusters(bbox, zoom) };
   }
-
-  return { ready: true };
 }

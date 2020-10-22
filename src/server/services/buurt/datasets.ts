@@ -100,6 +100,8 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
           transformDetailSportApiResponse(responseData),
       },
       gymsportzaal: {
+        listUrl:
+          'https://api.data.amsterdam.nl/v1/sport/gymsportzaal/?_fields=id,adres,plaats&page_size=150',
         detailUrl: 'https://api.data.amsterdam.nl/v1/sport/gymsportzaal/',
         transformList: (responseData: any) =>
           transformListSportApiResponse('gymsportzaal', responseData),

@@ -20,7 +20,6 @@ import {
 } from './helpers/app';
 import { routerDevelopment } from './mock-data/router-development';
 import { router } from './router';
-import initWebsocketRouter from './router-ws';
 
 const isDebug = ENV === 'development';
 
@@ -40,8 +39,6 @@ const options: Sentry.NodeOptions = {
 Sentry.init(options);
 
 const app = express();
-
-initWebsocketRouter();
 
 app.set('trust proxy', true);
 app.use(Sentry.Handlers.requestHandler() as RequestHandler);

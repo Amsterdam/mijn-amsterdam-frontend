@@ -19,9 +19,9 @@ import MyAreaDatasetControl, {
   datasetControlItemsAtom,
   useUpdateDatasetControlItems,
 } from './MyAreaDatasetControl';
-import { selectedMarkerDataAtom } from './MyAreaDatasets';
 import MyAreaPanelContent from './MyAreaPanelContent';
 import Alert from '../Alert/Alert';
+import { useSelectedMarkerData } from './MyArea.hooks';
 
 function initialCollapsedState(datasets: Array<{ isActive: boolean }>) {
   return datasets.some((dataset) => dataset.isActive)
@@ -86,9 +86,7 @@ export default function MyAreaPanels() {
   const { setPositionFromSnapPoint } = useContext(MapPanelContext);
   // const openPanels = useRecoilValue(openPanelsSelector);
   const datasetControlItems = useRecoilValue(datasetControlItemsAtom);
-  const [selectedMarkerData, setSelectedMarkerData] = useRecoilState(
-    selectedMarkerDataAtom
-  );
+  const [selectedMarkerData, setSelectedMarkerData] = useSelectedMarkerData();
 
   const updateDatasetControlItems = useUpdateDatasetControlItems();
 

@@ -10,6 +10,8 @@ import {
   loadServicesSSE,
   loadServicesTips,
 } from './services/controller';
+import { getClusterData } from './services/services-map-supercluster';
+import { sessionID } from './helpers/app';
 
 export const router = express.Router();
 
@@ -52,22 +54,27 @@ router.get(
     const datasetItemId = req.params.datasetItemId;
     let data = null;
     try {
-      if (datasetGroupId && datasetId && datasetItemId) {
-        data = await loadServicesMapDatasetItem(
-          res.locals.sessionID,
-          datasetGroupId,
-          datasetId,
-          datasetItemId
-        );
+      if (req.query.payload) {
+        const payload = JSON.parse(req.query.payload as string);
+        data = await getClusterData(res.locals.sessionID, payload);
       } else {
-        data = await loadServicesMapDatasets(
-          res.locals.sessionID,
-          datasetGroupId,
-          datasetId
-        );
-      }
-      if (data.status !== 'OK') {
-        res.status(500);
+        if (datasetGroupId && datasetId && datasetItemId) {
+          data = await loadServicesMapDatasetItem(
+            res.locals.sessionID,
+            datasetGroupId,
+            datasetId,
+            datasetItemId
+          );
+        } else {
+          data = await loadServicesMapDatasets(
+            res.locals.sessionID,
+            datasetGroupId,
+            datasetId
+          );
+        }
+        if (data.status !== 'OK') {
+          res.status(500);
+        }
       }
       res.json(data);
       next();
@@ -76,6 +83,40 @@ router.get(
     }
   }
 );
+
+// router.get(
+//   BffEndpoints.MAP_DATASETS,
+//   async (req: Request, res: Response, next: NextFunction) => {
+//     const datasetGroupId = req.params.datasetGroupId;
+//     const datasetId = req.params.datasetId;
+//     const datasetItemId = req.params.datasetItemId;
+
+//     let data = null;
+//     try {
+//       if (datasetGroupId && datasetId && datasetItemId) {
+//         data = await loadServicesMapDatasetItem(
+//           res.locals.sessionID,
+//           datasetGroupId,
+//           datasetId,
+//           datasetItemId
+//         );
+//       } else {
+//         data = await loadServicesMapDatasets(
+//           res.locals.sessionID,
+//           datasetGroupId,
+//           datasetId
+//         );
+//       }
+//       if (data.status !== 'OK') {
+//         res.status(500);
+//       }
+//       res.json(data);
+//       next();
+//     } catch (error) {
+//       next(error);
+//     }
+//   }
+// );
 
 router.get(
   BffEndpoints.HEALTH,

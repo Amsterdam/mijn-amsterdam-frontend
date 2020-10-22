@@ -46,26 +46,6 @@ export function randomColor() {
   return color;
 }
 
-const Styles = createGlobalStyle`
-  .ma-marker-tooltip {
-    background: none;
-    border: 0;
-    color: white;
-    text-shadow:
-    -1px -1px 0 #000,
-     0   -1px 0 #000,
-     1px -1px 0 #000,
-     1px  0   0 #000,
-     1px  1px 0 #000,
-     0    1px 0 #000,
-    -1px  1px 0 #000,
-    -1px  0   0 #000;
-    font-size: 16px;
-    font-weight: 500;
-    box-shadow: none;
-  }
-`;
-
 export function MaPolyLineLayer({
   onMarkerClick,
   polylineOptions = DEFAULT_POLYLINE_OPTIONS,
@@ -120,5 +100,5 @@ export function MaPolyLineLayer({
     };
   }, [map, features, onMarkerClick, polylineOptions, datasetId]);
 
-  return <Styles></Styles>;
+  return null;
 }
