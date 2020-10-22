@@ -32,3 +32,22 @@
     }
   }
 }
+.DocumentLinkWrap {
+  position: relative;
+  display: block;
+}
+.DocumentLinkError {
+  padding-left: 3px;
+  @include select('Button_Icon') {
+    width: 2rem;
+    height: 2rem;
+    fill: $color-support-warning;
+    margin-bottom: -4px;
+  }
+}
+
+.DownloadError {
+  padding-left: 3px;
+  font-size: .8em;
+  white-space: nowrap;
+}
