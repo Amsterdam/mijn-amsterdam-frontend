@@ -144,18 +144,20 @@ pipeline {
         }
       }
       options {
-        timeout(time: 5, unit: 'MINUTES')
+        timeout(time: 10, unit: 'MINUTES')
       }
       steps {
         script { currentBuild.displayName = "ACC Deploy #${BUILD_NUMBER}" }
         build job: 'Subtask_Openstack_Playbook', parameters: [
           [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
-          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml']
+          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy.yml'],
+          [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: "-e cmdb_id=app_mijnamsterdam"]
         ]
         // Build the BFF
         build job: 'Subtask_Openstack_Playbook', parameters: [
           [$class: 'StringParameterValue', name: 'INVENTORY', value: 'acceptance'],
-          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-bff.yml']
+          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy.yml'],
+          [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: "-e cmdb_id=app_mijnamsterdam-bff"]
         ]
       }
     }
@@ -208,19 +210,21 @@ pipeline {
         branch 'production-release-v*'
       }
       options {
-        timeout(time: 5, unit: 'MINUTES')
+        timeout(time: 10, unit: 'MINUTES')
       }
       steps {
         script { currentBuild.displayName = "PROD:Deploy:#${BUILD_NUMBER}" }
         build job: 'Subtask_Openstack_Playbook', parameters: [
           [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
-          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-frontend.yml']
+          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy.yml'],
+          [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: "-e cmdb_id=app_mijnamsterdam"]
         ]
 
         // Build the BFF
         build job: 'Subtask_Openstack_Playbook', parameters: [
           [$class: 'StringParameterValue', name: 'INVENTORY', value: 'production'],
-          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy-mijnamsterdam-bff.yml']
+          [$class: 'StringParameterValue', name: 'PLAYBOOK', value: 'deploy.yml'],
+          [$class: 'StringParameterValue', name: 'PLAYBOOKPARAMS', value: "-e cmdb_id=app_mijnamsterdam-bff"]
         ]
       }
     }
