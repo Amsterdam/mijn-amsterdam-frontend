@@ -5,7 +5,7 @@ import { GenericDocument } from '../../../universal/types/App.types';
 import * as analytics from '../../hooks/analytics.hook';
 import * as Sentry from '@sentry/browser';
 import DocumentList from './DocumentList';
-import { act } from 'react-test-renderer';
+import { act } from 'react-dom/test-utils';
 
 const ITEMS: GenericDocument[] = [
   {
@@ -56,6 +56,7 @@ describe('DocumentList', () => {
       .find('li')
       .at(0)
       .find('Linkd');
+
     expect(Linkd).toHaveLength(1);
     expect(Linkd.prop('href')).toEqual(ITEMS[0].url);
 
