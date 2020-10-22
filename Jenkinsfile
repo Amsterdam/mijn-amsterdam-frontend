@@ -144,7 +144,7 @@ pipeline {
         }
       }
       options {
-        timeout(time: 5, unit: 'MINUTES')
+        timeout(time: 10, unit: 'MINUTES')
       }
       steps {
         script { currentBuild.displayName = "ACC Deploy #${BUILD_NUMBER}" }
@@ -210,7 +210,7 @@ pipeline {
         branch 'production-release-v*'
       }
       options {
-        timeout(time: 5, unit: 'MINUTES')
+        timeout(time: 10, unit: 'MINUTES')
       }
       steps {
         script { currentBuild.displayName = "PROD:Deploy:#${BUILD_NUMBER}" }
