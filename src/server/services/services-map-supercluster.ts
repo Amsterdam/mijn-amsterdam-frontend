@@ -56,7 +56,7 @@ async function generateSuperCluster(
     extent: 2500,
     nodeSize: 512,
     minPoints: 2,
-    maxZoom: 14,
+    maxZoom: 15,
   } as any).load(features);
 
   return superClusterIndex;

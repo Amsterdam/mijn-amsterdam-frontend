@@ -28,11 +28,9 @@ import { useTermReplacement } from '../../hooks/useTermReplacement';
 import HomeControlButton from './MaHomeControlButton';
 import { HomeIconMarker } from './MaMarker';
 import { useSelectedMarkerData } from './MyArea.hooks';
-import MyAreaClusterDatasets from './MyAreaClusterDatasets';
 import MyAreaHeader from './MyAreaHeader';
 import MyAreaLoader from './MyAreaLoader';
 import MyAreaPanels from './MyAreaPanels';
-import { MyAreaPolyLineDatasets } from './MyAreaPolyLineDatasets';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
 
 const StyledViewerContainer = styled(ViewerContainer)`
@@ -113,7 +111,6 @@ export default function MyArea2() {
       });
   }, [datasetGroupId, datasetId, datasetItemId, setSelectedMarkerData]);
 
-  // TODO: Move into final component solution (SuperCluster or MarkerCluster)
   const onMarkerClick = useCallback(
     (event: any) => {
       const datasetItemId = event?.layer?.feature?.properties?.dataset
@@ -133,6 +130,8 @@ export default function MyArea2() {
           : event.layer.options.datasetId
           ? event.layer.options.datasetId
           : event?.layer?.feature?.properties?.datasetId;
+
+        console.log(event.layer);
 
         setSelectedMarkerData({
           datasetGroupId,
@@ -197,7 +196,7 @@ export default function MyArea2() {
                 initialPosition={isDesktop ? SnapPoint.Full : SnapPoint.Closed}
               >
                 <MyAreaPanels onCloseDetailPanel={onCloseDetailPanel} />
-                <MyAreaPolyLineDatasets onMarkerClick={onMarkerClick} />
+                {/* <MyAreaPolyLineDatasets onMarkerClick={onMarkerClick} /> */}
                 <MaSuperClusterLayer onMarkerClick={onMarkerClick} />
                 {/* <MyAreaClusterDatasets onMarkerClick={onMarkerClick} /> */}
               </MapPanelProvider>
