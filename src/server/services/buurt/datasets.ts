@@ -26,8 +26,44 @@ export interface DatasetConfig {
 
 export const datasetEndpoints: Record<string, DatasetConfig> = {
   afvalcontainers: {
-    listUrl:
-      'https://api.data.amsterdam.nl/v1/wfs/huishoudelijkafval/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=container&OUTPUTFORMAT=geojson&SRSNAME=EPSG:4326&filter=%3CFilter%3E%3CAnd%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Estatus%3C/PropertyName%3E%3CLiteral%3E1%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3COr%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3ERest%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3ETextiel%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EGlas%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EPapier%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EGFT%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Efractie_omschrijving%3C/PropertyName%3E%3CLiteral%3EPlastic%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3C/Or%3E%3C/And%3E%3C/Filter%3E',
+    listUrl: `https://api.data.amsterdam.nl/v1/wfs/huishoudelijkafval/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=container&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326&FILTER=<Filter>
+    <And>
+        <PropertyIsEqualTo>
+            <PropertyName>status</PropertyName>
+            <Literal>1</Literal>
+        </PropertyIsEqualTo>
+        <Or>
+       <PropertyIsEqualTo>
+            <PropertyName>eigenaar_id</PropertyName>
+            <Literal>110</Literal>
+        </PropertyIsEqualTo>
+        <PropertyIsEqualTo>
+            <PropertyName>eigenaar_id</PropertyName>
+            <Literal>16</Literal>
+        </PropertyIsEqualTo>
+        <PropertyIsEqualTo>
+            <PropertyName>eigenaar_id</PropertyName>
+            <Literal>111</Literal>
+        </PropertyIsEqualTo>
+        <PropertyIsEqualTo>
+            <PropertyName>eigenaar_id</PropertyName>
+            <Literal>112</Literal>
+        </PropertyIsEqualTo>
+        <PropertyIsEqualTo>
+            <PropertyName>eigenaar_id</PropertyName>
+            <Literal>67</Literal>
+        </PropertyIsEqualTo>
+        <PropertyIsEqualTo>
+            <PropertyName>eigenaar_id</PropertyName>
+            <Literal>181</Literal>
+        </PropertyIsEqualTo>
+        <PropertyIsEqualTo>
+            <PropertyName>eigenaar_id</PropertyName>
+            <Literal>113</Literal>
+        </PropertyIsEqualTo>
+        </Or>
+    </And>
+</Filter>`,
     detailUrl: 'https://api.data.amsterdam.nl/v1/huishoudelijkafval/container/',
     transformList: transformAfvalcontainers,
     transformDetail: transformAfvalcontainersDetail,
