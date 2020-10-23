@@ -59,7 +59,7 @@ export function MyAreaPolyLineDatasets({
 
   const polyLineLayerData = useMemo<Record<string, MaPolyLineFeature[]>>(() => {
     return {};
-  }, [activePolyLineDatasetIds]);
+  }, []);
 
   const activePolyLineDatasets = useMemo(() => {
     return POLYLINE_DATASETS.filter(([, datasetId]) => {
@@ -69,7 +69,7 @@ export function MyAreaPolyLineDatasets({
         ) && Array.isArray(polyLineLayerData[datasetId])
       );
     });
-  }, [activePolyLineDatasetIds]);
+  }, [activePolyLineDatasetIds, polyLineLayerData]);
 
   return (
     <>
