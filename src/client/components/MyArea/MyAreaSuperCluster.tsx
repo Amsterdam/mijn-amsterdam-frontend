@@ -77,6 +77,7 @@ export function MaSuperClusterLayer({
         markers.clearLayers();
         markers.addData(response.data);
       }
+      console.timeEnd('update cluster data');
     },
     [map, markers]
   );
@@ -97,6 +98,7 @@ export function MaSuperClusterLayer({
     if (!map) {
       return;
     }
+    console.time('update cluster data');
     const bounds = map.getBounds();
     requestData({
       datasetIds: activeDatasetIds.map(([, datasetId]) => datasetId),
