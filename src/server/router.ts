@@ -46,6 +46,20 @@ router.get(
 );
 router.get(BffEndpoints.SERVICES_TIPS, loadServicesTips);
 
+router.post(
+  BffEndpoints.MAP_DATASETS,
+  async (req: Request, res: Response, next: NextFunction) => {
+    let data = null;
+    try {
+      data = await getClusterData(res.locals.sessionID, req.body);
+      res.json(data);
+      next();
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 router.get(
   BffEndpoints.MAP_DATASETS,
   async (req: Request, res: Response, next: NextFunction) => {
@@ -54,27 +68,22 @@ router.get(
     const datasetItemId = req.params.datasetItemId;
     let data = null;
     try {
-      if (req.query.payload) {
-        const payload = JSON.parse(req.query.payload as string);
-        data = await getClusterData(res.locals.sessionID, payload);
+      if (datasetGroupId && datasetId && datasetItemId) {
+        data = await loadServicesMapDatasetItem(
+          res.locals.sessionID,
+          datasetGroupId,
+          datasetId,
+          datasetItemId
+        );
       } else {
-        if (datasetGroupId && datasetId && datasetItemId) {
-          data = await loadServicesMapDatasetItem(
-            res.locals.sessionID,
-            datasetGroupId,
-            datasetId,
-            datasetItemId
-          );
-        } else {
-          data = await loadServicesMapDatasets(
-            res.locals.sessionID,
-            datasetGroupId,
-            datasetId
-          );
-        }
-        if (data.status !== 'OK') {
-          res.status(500);
-        }
+        data = await loadServicesMapDatasets(
+          res.locals.sessionID,
+          datasetGroupId,
+          datasetId
+        );
+      }
+      if (data.status !== 'OK') {
+        res.status(500);
       }
       res.json(data);
       next();

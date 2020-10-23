@@ -87,7 +87,8 @@ export function MaSuperClusterLayer({
       // TODO: put in serviceworker?
       const response = await axios({
         url: BFFApiUrls.MAP_DATASETS,
-        params: { payload },
+        data: payload,
+        method: 'POST',
       });
       updateMap(response.data);
     },

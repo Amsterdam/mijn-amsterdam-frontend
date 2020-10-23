@@ -28,6 +28,7 @@ import { useTermReplacement } from '../../hooks/useTermReplacement';
 import HomeControlButton from './MaHomeControlButton';
 import { HomeIconMarker } from './MaMarker';
 import { useSelectedMarkerData } from './MyArea.hooks';
+import MyAreaClusterDatasets from './MyAreaClusterDatasets';
 import MyAreaHeader from './MyAreaHeader';
 import MyAreaLoader from './MyAreaLoader';
 import MyAreaPanels from './MyAreaPanels';
@@ -198,6 +199,7 @@ export default function MyArea2() {
                 <MyAreaPanels onCloseDetailPanel={onCloseDetailPanel} />
                 <MyAreaPolyLineDatasets onMarkerClick={onMarkerClick} />
                 <MaSuperClusterLayer onMarkerClick={onMarkerClick} />
+                {/* <MyAreaClusterDatasets onMarkerClick={onMarkerClick} /> */}
               </MapPanelProvider>
             </MyAreaMap>
           ) : (
