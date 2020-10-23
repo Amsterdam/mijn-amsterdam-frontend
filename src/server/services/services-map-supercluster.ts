@@ -7,7 +7,6 @@ let dataStore: any;
 let superClusterIndex: Supercluster;
 
 function filterDatastore(dataStore: any, activeDatasetIds: any) {
-  console.log(dataStore);
   return dataStore.flatMap((dataset: any) => {
     const { collection, id: datasetGroupId } = dataset;
     return Object.entries(collection)
@@ -35,19 +34,13 @@ async function generateSuperCluster(
   sessionID: SessionID,
   activeDatasetIds: string[] = []
 ) {
-  let hasChangedDatasetIds = false;
-
-  if (currentlyActiveDatasetIds.length) {
-    if (activeDatasetIds.length !== currentlyActiveDatasetIds.length) {
-      hasChangedDatasetIds = true;
-    } else {
-      return (
-        currentlyActiveDatasetIds.some(
-          (id: string) => !activeDatasetIds.includes(id)
-        ) ||
-        activeDatasetIds.some((id) => !currentlyActiveDatasetIds.includes(id))
-      );
-    }
+  if (
+    activeDatasetIds.length === currentlyActiveDatasetIds.length &&
+    !activeDatasetIds.filter((id) => !currentlyActiveDatasetIds.includes(id))
+      .length
+  ) {
+    console.log('no changes');
+    return superClusterIndex;
   }
 
   currentlyActiveDatasetIds = activeDatasetIds;
@@ -56,27 +49,25 @@ async function generateSuperCluster(
     dataStore = (await loadServicesMapDatasets(sessionID)).content;
   }
 
-  if (!superClusterIndex || hasChangedDatasetIds) {
-    const features = filterDatastore(dataStore, activeDatasetIds);
-    superClusterIndex = new Supercluster({
-      log: true,
-      radius: 40,
-      extent: 2500,
-      nodeSize: 512,
-      maxZoom: 15,
-    }).load(features);
-  }
+  // if (!superClusterIndex || hasChangedDatasetIds) {
+  const features = filterDatastore(dataStore, activeDatasetIds);
+  console.log('new clister');
+  superClusterIndex = new Supercluster({
+    log: true,
+    radius: 40,
+    extent: 2500,
+    nodeSize: 512,
+    minPoints: 2,
+    maxZoom: 14,
+  } as any).load(features);
+
+  return superClusterIndex;
 }
 
 export async function getClusterData(
   sessionID: SessionID,
   { getClusterExpansionZoom, center, bbox, zoom, datasetIds, parentId }: any
 ) {
-  await generateSuperCluster(
-    sessionID,
-    datasetIds || currentlyActiveDatasetIds
-  );
-
   if (parentId) {
     return {
       children: superClusterIndex.getChildren(parseInt(parentId, 10)),
@@ -89,6 +80,10 @@ export async function getClusterData(
       center,
     };
   } else if (bbox && zoom) {
+    await generateSuperCluster(
+      sessionID,
+      datasetIds || currentlyActiveDatasetIds
+    );
     return { data: superClusterIndex.getClusters(bbox, zoom) };
   }
 }

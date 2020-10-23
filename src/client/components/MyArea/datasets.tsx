@@ -316,11 +316,6 @@ const createDatasetControl = (
 
 export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
   {
-    id: 'sport',
-    title: 'Sport & Bos',
-    collection: DATASETS.sport.map((id) => createDatasetControl(id, true)),
-  },
-  {
     id: 'parkeren',
     title: 'Parkeren',
     collection: DATASETS.parkeren.map((id) =>
@@ -331,22 +326,27 @@ export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
     id: 'afvalcontainers',
     title: 'Afvalcontainers',
     collection: DATASETS.afvalcontainers.map((id) =>
-      createDatasetControl(id, false)
+      createDatasetControl(id, true)
     ),
   },
   {
     id: 'bekendmakingen',
     title: 'Bekendmakingen',
     collection: DATASETS.bekendmakingen.map((id) =>
-      createDatasetControl(id, false)
+      createDatasetControl(id, true)
     ),
   },
   {
     id: 'evenementen',
     title: 'Evenementen',
     collection: DATASETS.evenementen.map((id) =>
-      createDatasetControl(id, false)
+      createDatasetControl(id, true)
     ),
+  },
+  {
+    id: 'sport',
+    title: 'Sport & Bos',
+    collection: DATASETS.sport.map((id) => createDatasetControl(id, true)),
   },
 ];
 

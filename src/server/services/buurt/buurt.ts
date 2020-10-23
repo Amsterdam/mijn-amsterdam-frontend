@@ -86,6 +86,7 @@ function loadDataset(
   const requestConfig: DataRequestConfig = {
     url: datasetConfig.listUrl,
     cacheTimeout: 0, // Don't cache the requests in memory
+    cancelTimeout: 1000 * 60 * 3, // 3 mins
   };
 
   requestConfig.headers = ACCEPT_CRS_4326;

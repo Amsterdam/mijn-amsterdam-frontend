@@ -26,44 +26,8 @@ export interface DatasetConfig {
 
 export const datasetEndpoints: Record<string, DatasetConfig> = {
   afvalcontainers: {
-    listUrl: `https://api.data.amsterdam.nl/v1/wfs/huishoudelijkafval/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=container&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326&FILTER=<Filter>
-    <And>
-        <PropertyIsEqualTo>
-            <PropertyName>status</PropertyName>
-            <Literal>1</Literal>
-        </PropertyIsEqualTo>
-        <Or>
-       <PropertyIsEqualTo>
-            <PropertyName>eigenaar_id</PropertyName>
-            <Literal>110</Literal>
-        </PropertyIsEqualTo>
-        <PropertyIsEqualTo>
-            <PropertyName>eigenaar_id</PropertyName>
-            <Literal>16</Literal>
-        </PropertyIsEqualTo>
-        <PropertyIsEqualTo>
-            <PropertyName>eigenaar_id</PropertyName>
-            <Literal>111</Literal>
-        </PropertyIsEqualTo>
-        <PropertyIsEqualTo>
-            <PropertyName>eigenaar_id</PropertyName>
-            <Literal>112</Literal>
-        </PropertyIsEqualTo>
-        <PropertyIsEqualTo>
-            <PropertyName>eigenaar_id</PropertyName>
-            <Literal>67</Literal>
-        </PropertyIsEqualTo>
-        <PropertyIsEqualTo>
-            <PropertyName>eigenaar_id</PropertyName>
-            <Literal>181</Literal>
-        </PropertyIsEqualTo>
-        <PropertyIsEqualTo>
-            <PropertyName>eigenaar_id</PropertyName>
-            <Literal>113</Literal>
-        </PropertyIsEqualTo>
-        </Or>
-    </And>
-</Filter>`,
+    listUrl:
+      'https://api.data.amsterdam.nl/v1/wfs/huishoudelijkafval/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=container&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326&FILTER=%3CFilter%3E%3CAnd%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Estatus%3C/PropertyName%3E%3CLiteral%3E1%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3COr%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E110%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E16%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E111%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E112%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E67%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E181%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E113%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3C/Or%3E%3C/And%3E%3C/Filter%3E',
     detailUrl: 'https://api.data.amsterdam.nl/v1/huishoudelijkafval/container/',
     transformList: transformAfvalcontainers,
     transformDetail: transformAfvalcontainersDetail,
@@ -216,6 +180,7 @@ function transformListSportApiResponse(id: string, responseData: any) {
 }
 
 function transformAfvalcontainers(WFSData: any) {
+  console.log('trans', WFSData);
   const collection: Record<string, DatasetItemTuple[]> = {};
   for (const feature of WFSData.features) {
     const fractieOmschrijving = feature.properties?.fractie_omschrijving.toLowerCase();
