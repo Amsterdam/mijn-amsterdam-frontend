@@ -21,6 +21,7 @@ export interface Adres {
   huisnummertoevoeging: string | null;
   huisletter: string | null;
   begindatumVerblijf: string | null;
+  einddatumVerblijf: string | null;
   inOnderzoek: boolean;
   aantalBewoners?: number;
   _adresSleutel?: string;

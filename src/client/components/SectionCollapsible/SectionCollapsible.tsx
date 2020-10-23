@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { useEffect, useRef, useState, ReactNode } from 'react';
+import React, { useEffect, useRef, useState, ReactNode, useMemo } from 'react';
 import { animated, useSpring } from 'react-spring';
 import { useDebouncedCallback } from 'use-debounce';
 import { withKeyPress } from '../../../universal/helpers';
@@ -9,6 +9,7 @@ import { trackEvent, useSessionStorage } from '../../hooks';
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './SectionCollapsible.module.scss';
+import { useComponentSize } from '../../hooks/useComponentSize';
 
 export interface SectionCollapsibleProps {
   id: string;
@@ -103,11 +104,20 @@ export default function SectionCollapsible({
     height: 0,
   });
 
+  const size = useComponentSize(contentRef.current);
+
+  const contentDimensions = useMemo(() => {
+    return {
+      width: size.width,
+      height: size.height,
+    };
+  }, [size.height, size.width]);
+
   useEffect(() => {
     if (!isLoading && hasItems && contentRef && contentRef.current) {
-      setDimensions(contentRef.current.getBoundingClientRect());
+      setDimensions(contentDimensions);
     }
-  }, [isLoading, hasItems]);
+  }, [isLoading, hasItems, contentDimensions]);
 
   const toggleCollapsed = withKeyPress<HTMLSpanElement>(() => {
     if (isCollapsed && track) {

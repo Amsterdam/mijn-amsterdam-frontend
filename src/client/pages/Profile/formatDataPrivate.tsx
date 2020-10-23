@@ -88,25 +88,25 @@ delete persoonSecundair.indicatieGeheim;
 const adres: ProfileLabels<Partial<Adres>> = {
   straatnaam: [
     'Straat',
-    (_value, _item, brpData) => {
-      return !!brpData?.adres?.straatnaam
-        ? getFullAddress(brpData.adres)
-        : 'Onbekend';
+    (_value, adres, brpData) => {
+      return !!adres?.straatnaam ? getFullAddress(adres) : 'Onbekend';
     },
   ],
   woonplaatsNaam: [
     'Plaats',
-    (_value, _item, brpData) => {
-      return !!brpData?.adres
-        ? `${brpData.adres.postcode || ''} ${
-            brpData.adres.woonplaatsNaam || 'Onbekend'
-          }`
+    (_value, adres, brpData) => {
+      return !!adres
+        ? `${adres.postcode || ''} ${adres.woonplaatsNaam || 'Onbekend'}`
         : 'Onbekend';
     },
   ],
   begindatumVerblijf: [
     'Vanaf',
     (value) => (value ? defaultDateFormat(value) : 'Onbekend'),
+  ],
+  einddatumVerblijf: [
+    'Tot',
+    (value) => (value ? defaultDateFormat(value) : null),
   ],
   aantalBewoners: [
     'Aantal bewoners',
