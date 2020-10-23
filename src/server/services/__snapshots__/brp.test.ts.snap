@@ -5,6 +5,7 @@ Object {
   "adres": Object {
     "_adresSleutel": "xxxcasdasfada",
     "begindatumVerblijf": "1967-01-01T00:00:00Z",
+    "einddatumVerblijf": "1967-01-01T00:00:00Z",
     "huisletter": null,
     "huisnummer": "1",
     "huisnummertoevoeging": null,

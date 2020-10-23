@@ -9,7 +9,8 @@
     "postcode": "1064 BH",
     "straatnaam": "Burgemeester Röellstr",
     "woonplaatsNaam": "Amsterdam",
-    "begindatumVerblijf": "1967-01-01T00:00:00Z"
+    "begindatumVerblijf": "1967-01-01T00:00:00Z",
+    "einddatumVerblijf": "1967-01-01T00:00:00Z"
   },
   "adresHistorisch": [
     {
