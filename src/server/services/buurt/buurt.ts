@@ -180,7 +180,6 @@ export async function loadServicesMapDatasets(
   }
 
   return apiSuccesResult(datasetResults);
-  // return apiSuccesResult(configs);
 }
 
 export async function loadServicesMapDatasetItem(
@@ -190,8 +189,6 @@ export async function loadServicesMapDatasetItem(
   datasetItemId: string
 ) {
   const [datasetConfig] = getDatasetEndpointConfig(datasetGroupId, datasetId);
-
-  console.log(datasetConfig, datasetGroupId, datasetId, datasetItemId);
 
   if (!datasetConfig) {
     return apiErrorResult(`Unknown dataset ${datasetId}`, null);

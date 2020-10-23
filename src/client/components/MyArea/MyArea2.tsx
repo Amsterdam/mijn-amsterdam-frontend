@@ -15,10 +15,10 @@ import { ThemeProvider } from '@amsterdam/asc-ui';
 import { themeSpacing } from '@amsterdam/asc-ui/lib/utils/themeUtils';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
-import React, { useCallback, useEffect, useState } from 'react';
-import { generatePath, useHistory, useParams } from 'react-router-dom';
+import React, { useCallback, useEffect, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { ChapterTitles } from '../../../universal/config';
 import { HOOD_ZOOM } from '../../../universal/config/map';
 import { getFullAddress } from '../../../universal/helpers';
 import { BFFApiUrls } from '../../config/api';
@@ -28,13 +28,12 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import HomeControlButton from './MaHomeControlButton';
 import { HomeIconMarker } from './MaMarker';
-import { useActiveDatasetIds, useSelectedMarkerData } from './MyArea.hooks';
-import MyAreaDatasets from './MyAreaClusterDatasets';
+import { useSelectedMarkerData } from './MyArea.hooks';
 import MyAreaHeader from './MyAreaHeader';
 import MyAreaLoader from './MyAreaLoader';
 import MyAreaPanels from './MyAreaPanels';
-import { MaSuperClusterLayer } from './MyAreaSuperCluster';
 import { MyAreaPolyLineDatasets } from './MyAreaPolyLineDatasets';
+import { MaSuperClusterLayer } from './MyAreaSuperCluster';
 
 const StyledViewerContainer = styled(ViewerContainer)`
   height: 100%;
@@ -68,26 +67,30 @@ interface BuurtRouteParams {
 
 export default function MyArea2() {
   const isDesktop = useDesktopScreen();
-  const { datasetGroupId, datasetId, datasetItemId } = useParams<
-    BuurtRouteParams
-  >();
-  const history = useHistory();
+  const params = useParams<BuurtRouteParams>();
   const { HOME } = useAppStateGetter();
   const termReplace = useTermReplacement();
   const center = HOME.content?.latlng;
-  const [selectedMarkerData, setSelectedMarkerData] = useSelectedMarkerData();
+  const [
+    selectedMarkerDataState,
+    setSelectedMarkerData,
+  ] = useSelectedMarkerData();
+
+  const selectedMarkerData = useMemo(() => {
+    if (!selectedMarkerDataState) {
+      return {
+        ...params,
+      };
+    }
+    return selectedMarkerDataState;
+  }, [selectedMarkerDataState, params]);
+
+  const { datasetGroupId, datasetId, datasetItemId } = selectedMarkerData;
 
   useEffect(() => {
-    console.log('load data');
     if (!datasetItemId || !datasetGroupId || !datasetId) {
       return;
     }
-    setSelectedMarkerData({
-      datasetItemId,
-      datasetGroupId,
-      datasetId,
-      markerData: null,
-    });
 
     axios({
       url: `${BFFApiUrls.MAP_DATASETS}/${datasetGroupId}/${datasetId}/${datasetItemId}`,
@@ -101,7 +104,6 @@ export default function MyArea2() {
         });
       })
       .catch((error) => {
-        console.error('map request error', error);
         setSelectedMarkerData({
           datasetItemId,
           datasetGroupId,
@@ -109,13 +111,7 @@ export default function MyArea2() {
           markerData: 'error',
         });
       });
-  }, [
-    history,
-    datasetGroupId,
-    datasetId,
-    datasetItemId,
-    setSelectedMarkerData,
-  ]);
+  }, [datasetGroupId, datasetId, datasetItemId, setSelectedMarkerData]);
 
   // TODO: Move into final component solution (SuperCluster or MarkerCluster)
   const onMarkerClick = useCallback(
@@ -138,18 +134,19 @@ export default function MyArea2() {
           ? event.layer.options.datasetId
           : event?.layer?.feature?.properties?.datasetId;
 
-        // TODO: push state? React must react to location state changes with panels for example
-        history.replace(
-          generatePath(AppRoutes.BUURT, {
-            datasetGroupId,
-            datasetId,
-            datasetItemId,
-          })
-        );
+        setSelectedMarkerData({
+          datasetGroupId,
+          datasetId,
+          datasetItemId,
+        });
       }
     },
-    [history, selectedMarkerData]
+    [selectedMarkerData, setSelectedMarkerData]
   );
+
+  const onCloseDetailPanel = useCallback(() => {
+    setSelectedMarkerData(null);
+  }, [setSelectedMarkerData]);
 
   return (
     <ThemeProvider>
@@ -199,7 +196,7 @@ export default function MyArea2() {
                 variant={isDesktop ? 'panel' : 'drawer'}
                 initialPosition={isDesktop ? SnapPoint.Full : SnapPoint.Closed}
               >
-                <MyAreaPanels />
+                <MyAreaPanels onCloseDetailPanel={onCloseDetailPanel} />
                 <MyAreaPolyLineDatasets onMarkerClick={onMarkerClick} />
                 <MaSuperClusterLayer onMarkerClick={onMarkerClick} />
               </MapPanelProvider>

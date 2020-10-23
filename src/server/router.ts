@@ -84,40 +84,6 @@ router.get(
   }
 );
 
-// router.get(
-//   BffEndpoints.MAP_DATASETS,
-//   async (req: Request, res: Response, next: NextFunction) => {
-//     const datasetGroupId = req.params.datasetGroupId;
-//     const datasetId = req.params.datasetId;
-//     const datasetItemId = req.params.datasetItemId;
-
-//     let data = null;
-//     try {
-//       if (datasetGroupId && datasetId && datasetItemId) {
-//         data = await loadServicesMapDatasetItem(
-//           res.locals.sessionID,
-//           datasetGroupId,
-//           datasetId,
-//           datasetItemId
-//         );
-//       } else {
-//         data = await loadServicesMapDatasets(
-//           res.locals.sessionID,
-//           datasetGroupId,
-//           datasetId
-//         );
-//       }
-//       if (data.status !== 'OK') {
-//         res.status(500);
-//       }
-//       res.json(data);
-//       next();
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// );
-
 router.get(
   BffEndpoints.HEALTH,
   (req: Request, res: Response, next: NextFunction) => {

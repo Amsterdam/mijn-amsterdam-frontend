@@ -1,14 +1,10 @@
 import { LeafletMouseEventHandlerFn } from 'leaflet';
-import React, { useMemo, useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { BFFApiUrls } from '../../config/api';
 import { PARKEERZONES_POLYLINE_OPTIONS, POLYLINE_DATASETS } from './datasets';
 import { MaPolyLineFeature, MaPolyLineLayer } from './MaPolyLineLayer';
-import {
-  useDatasetGroups,
-  useActiveClusterDatasetIds,
-  useActivePolyLineDatasetIds,
-} from './MyArea.hooks';
+import { useActivePolyLineDatasetIds, useDatasetGroups } from './MyArea.hooks';
 
 const Styles = createGlobalStyle`
   .ma-marker-tooltip {

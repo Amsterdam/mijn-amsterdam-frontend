@@ -1,8 +1,7 @@
 import themeColors from '@amsterdam/asc-ui/es/theme/default/colors';
 import { useMapInstance } from '@amsterdam/react-maps';
 import L, { LeafletMouseEventHandlerFn } from 'leaflet';
-import React, { useEffect } from 'react';
-import { createGlobalStyle } from 'styled-components';
+import { useEffect } from 'react';
 import { getIconHtml } from './datasets';
 
 interface MaPolyLineLayerProps {

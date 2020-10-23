@@ -39,7 +39,6 @@ async function generateSuperCluster(
     !activeDatasetIds.filter((id) => !currentlyActiveDatasetIds.includes(id))
       .length
   ) {
-    console.log('no changes');
     return superClusterIndex;
   }
 
@@ -49,9 +48,8 @@ async function generateSuperCluster(
     dataStore = (await loadServicesMapDatasets(sessionID)).content;
   }
 
-  // if (!superClusterIndex || hasChangedDatasetIds) {
   const features = filterDatastore(dataStore, activeDatasetIds);
-  console.log('new clister');
+
   superClusterIndex = new Supercluster({
     log: true,
     radius: 40,

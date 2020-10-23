@@ -180,7 +180,6 @@ function transformListSportApiResponse(id: string, responseData: any) {
 }
 
 function transformAfvalcontainers(WFSData: any) {
-  console.log('trans', WFSData);
   const collection: Record<string, DatasetItemTuple[]> = {};
   for (const feature of WFSData.features) {
     const fractieOmschrijving = feature.properties?.fractie_omschrijving.toLowerCase();

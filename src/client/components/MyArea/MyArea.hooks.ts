@@ -1,7 +1,7 @@
+import axios from 'axios';
 import { useCallback, useMemo } from 'react';
 import {
   atom,
-  selector,
   useRecoilState,
   useRecoilValue,
   useSetRecoilState,
@@ -10,7 +10,6 @@ import { RefetchFunction } from '../../hooks/api/useDataApi';
 import { DatasetsSource, LayerType } from './datasets';
 import { createClusterDatasetMarkers } from './MyArea.helpers';
 import { useDatasetControlItems } from './MyAreaDatasetControl';
-import axios from 'axios';
 
 export const datasetGroupsAtom = atom<DatasetsSource[]>({
   key: 'datasetGroupsAtom',
@@ -70,10 +69,10 @@ export function useActivePolyLineDatasetIds() {
 }
 
 interface SelectedMarkerData {
-  datasetGroupId: string;
-  datasetId: string;
-  datasetItemId: string;
-  markerData: any;
+  datasetGroupId?: string;
+  datasetId?: string;
+  datasetItemId?: string;
+  markerData?: any | null;
 }
 
 export const selectedMarkerDataAtom = atom<SelectedMarkerData | null>({

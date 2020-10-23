@@ -7,11 +7,12 @@ import {
 import { SnapPoint } from '@amsterdam/arm-core/lib/components/MapPanel/constants';
 import { Checkbox, Label } from '@amsterdam/asc-ui';
 import React, { useCallback, useContext, useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { useDesktopScreen } from '../../hooks';
-import LoadingContent from '../LoadingContent/LoadingContent';
+import Alert from '../Alert/Alert';
 import { DatasetControlItem, getIcon } from './datasets';
+import { useSelectedMarkerDataValue } from './MyArea.hooks';
 import MyAreaCollapisblePanel, {
   CollapsedState,
 } from './MyAreaCollapsiblePanel';
@@ -20,8 +21,6 @@ import MyAreaDatasetControl, {
   useUpdateDatasetControlItems,
 } from './MyAreaDatasetControl';
 import MyAreaPanelContent from './MyAreaPanelContent';
-import Alert from '../Alert/Alert';
-import { useSelectedMarkerData } from './MyArea.hooks';
 
 function initialCollapsedState(datasets: Array<{ isActive: boolean }>) {
   return datasets.some((dataset) => dataset.isActive)
@@ -80,13 +79,19 @@ const TitleWithCheckbox = React.memo(
   )
 );
 
-export default function MyAreaPanels() {
+interface MyAreaPanelsProps {
+  onCloseDetailPanel: () => void;
+}
+
+export default function MyAreaPanels({
+  onCloseDetailPanel,
+}: MyAreaPanelsProps) {
   const isDesktop = useDesktopScreen();
   const PanelComponent = isDesktop ? MapPanel : MapPanelDrawer;
   const { setPositionFromSnapPoint } = useContext(MapPanelContext);
   // const openPanels = useRecoilValue(openPanelsSelector);
   const datasetControlItems = useRecoilValue(datasetControlItemsAtom);
-  const [selectedMarkerData, setSelectedMarkerData] = useSelectedMarkerData();
+  const selectedMarkerData = useSelectedMarkerDataValue();
 
   const updateDatasetControlItems = useUpdateDatasetControlItems();
 
@@ -141,18 +146,21 @@ export default function MyAreaPanels() {
             <MyAreaDatasetControl collection={controlItem.collection} />
           </MyAreaCollapisblePanel>
         ))}
-        {selectedMarkerData && (
+        {selectedMarkerData?.datasetItemId && (
           <MapPanelContentDetail
             title={selectedMarkerData.markerData?.title}
             subTitle={
-              <PanelSubTitle
-                datasetId={selectedMarkerData?.datasetId}
-                datasetGroupId={selectedMarkerData?.datasetGroupId}
-              />
+              selectedMarkerData?.datasetId &&
+              selectedMarkerData?.datasetGroupId ? (
+                <PanelSubTitle
+                  datasetId={selectedMarkerData.datasetId}
+                  datasetGroupId={selectedMarkerData.datasetGroupId}
+                />
+              ) : null
             }
             stackOrder={3}
             animate
-            onClose={() => setSelectedMarkerData(null)}
+            onClose={onCloseDetailPanel}
           >
             {selectedMarkerData.markerData !== 'error' ? (
               <MyAreaPanelContent panelItem={selectedMarkerData.markerData} />
