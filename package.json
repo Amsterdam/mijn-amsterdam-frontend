@@ -62,6 +62,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/react-test-renderer": "^16.9.3",
     "@types/react-transition-group": "^4.4.0",
+    "@types/resize-observer-browser": "^0.1.4",
     "@types/sanitize-html": "^1.23.3",
     "@types/styled-components": "^5.1.2",
     "@types/supercluster": "^5.0.2",
