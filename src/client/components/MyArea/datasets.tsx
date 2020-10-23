@@ -17,6 +17,7 @@ import {
 } from '../../assets/icons';
 import { DEFAULT_POLYLINE_OPTIONS } from './MaPolyLineLayer';
 import styles from './MyAreaSuperCluster.module.scss';
+import { FeatureToggle } from '../../../universal/config/app';
 
 export type DatasetSource = Record<string, DatasetItemTuple[]>;
 
@@ -44,6 +45,7 @@ export interface DatasetControlItem {
   id: string;
   title: string;
   collection: DatasetControl[];
+  isActive: boolean;
 }
 
 interface createMarkerOptions {
@@ -318,6 +320,7 @@ export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
   {
     id: 'parkeren',
     title: 'Parkeren',
+    isActive: true,
     collection: DATASETS.parkeren.map((id) =>
       createDatasetControl(id, false, LayerType.PolyLine)
     ),
@@ -325,6 +328,7 @@ export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
   {
     id: 'afvalcontainers',
     title: 'Afvalcontainers',
+    isActive: true,
     collection: DATASETS.afvalcontainers.map((id) =>
       createDatasetControl(id, true)
     ),
@@ -332,6 +336,7 @@ export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
   {
     id: 'bekendmakingen',
     title: 'Bekendmakingen',
+    isActive: true,
     collection: DATASETS.bekendmakingen.map((id) =>
       createDatasetControl(id, true)
     ),
@@ -339,6 +344,7 @@ export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
   {
     id: 'evenementen',
     title: 'Evenementen',
+    isActive: true,
     collection: DATASETS.evenementen.map((id) =>
       createDatasetControl(id, true)
     ),
@@ -346,11 +352,14 @@ export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
   {
     id: 'sport',
     title: 'Sport & Bos',
+    isActive: FeatureToggle.myAreaDataSportEnBosActive,
     collection: DATASETS.sport.map((id) => createDatasetControl(id, true)),
   },
 ];
 
-export const POLYLINE_DATASETS = DATASET_CONTROL_ITEMS.flatMap((config) =>
+export const POLYLINE_DATASETS = DATASET_CONTROL_ITEMS.filter(
+  (datasetControl) => datasetControl.isActive
+).flatMap((config) =>
   config.collection
     .filter((control) => control.layerType === LayerType.PolyLine)
     .map((control) => [config.id, control.id])

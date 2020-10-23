@@ -6,7 +6,7 @@ export const MyArea2DashboardLazy = React.lazy(
 );
 
 interface MyArea2LoaderProps {
-  isDashboard: boolean;
+  isDashboard?: boolean;
 }
 
 export function MyArea2Loader({ isDashboard = false }: MyArea2LoaderProps) {

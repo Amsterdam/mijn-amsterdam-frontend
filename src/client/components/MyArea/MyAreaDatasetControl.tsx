@@ -10,7 +10,9 @@ import {
 
 export const datasetControlItemsAtom = atom({
   key: 'datasetControlItems',
-  default: DATASET_CONTROL_ITEMS,
+  default: DATASET_CONTROL_ITEMS.filter(
+    (datasetControl) => datasetControl.isActive
+  ),
 });
 
 export function useDatasetControlItems(): DatasetControlItem[] {

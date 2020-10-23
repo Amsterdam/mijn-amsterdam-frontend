@@ -25,8 +25,8 @@ export const FeatureToggle = {
   myArea2Active: !IS_PRODUCTION,
   profileToggleActive: !IS_PRODUCTION,
   kvkActive: !IS_PRODUCTION,
-  erfpachtMeldingenActive: !IS_AP,
   residentCountActive: true,
+  myAreaDataSportEnBosActive: !IS_AP,
 };
 
 export const DAYS_KEEP_RECENT = 28;
