@@ -1,7 +1,18 @@
 import { capitalizeFirstLetter } from '../../../universal/helpers';
 import { getApiEmbeddedResponse, recursiveCoordinateSwap } from './helpers';
 
-export type DatasetItemTuple = [number, number, string];
+type DatasetItemId = string;
+type DatasetId = string;
+
+export type DatasetItemTuple = [Lat, Lng, DatasetItemId | DatasetItemId[]];
+
+export type DatasetCollection = Record<DatasetId, DatasetItemTuple[]>;
+
+export interface DatasetGroup {
+  id: string;
+  collection: DatasetCollection;
+}
+
 export const ACCEPT_CRS_4326 = {
   'Accept-Crs': 'EPSG:4326', // Will return coordinates in [lng/lat] format
 };

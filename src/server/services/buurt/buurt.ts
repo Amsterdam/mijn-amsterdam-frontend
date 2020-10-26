@@ -13,8 +13,13 @@ import { DataRequestConfig } from '../../config';
 import { requestData } from '../../helpers';
 import FileCache from '../../helpers/file-cache';
 import { fetchHOME } from '../home';
-import { ACCEPT_CRS_4326, DatasetConfig, datasetEndpoints } from './datasets';
-import { getDatasetEndpointConfig } from './helpers';
+import {
+  ACCEPT_CRS_4326,
+  DatasetCollection,
+  DatasetConfig,
+  DatasetGroup,
+} from './datasets';
+import { getDatasetEndpointConfig, groupCollectionPoints } from './helpers';
 
 const MAP_URL =
   'https://data.amsterdam.nl/data/?modus=kaart&achtergrond=topo_rd_zw&embed=true';
@@ -71,7 +76,7 @@ const fileCache = (id: string) => {
   return fileCaches[id];
 };
 
-function loadDataset(
+async function loadDataset(
   sessionID: SessionID,
   datasetId: string,
   datasetConfig: DatasetConfig
@@ -95,14 +100,19 @@ function loadDataset(
     requestConfig.transformResponse = datasetConfig.transformList;
   }
 
-  return requestData(requestConfig, sessionID, {}).then((response) => {
-    if (response.status === 'OK' && response.content !== null) {
-      dataCache.setKey('url', datasetConfig.listUrl);
-      dataCache.setKey('response', response);
-      dataCache.save();
-    }
-    return response;
-  });
+  const response = await requestData<DatasetGroup>(
+    requestConfig,
+    sessionID,
+    {}
+  );
+
+  if (response.status === 'OK' && response.content !== null) {
+    dataCache.setKey('url', datasetConfig.listUrl);
+    dataCache.setKey('response', response);
+    dataCache.save();
+  }
+
+  return response;
 }
 
 function loadDatasets(
