@@ -62,8 +62,8 @@ const Styles = createGlobalStyle`
 function getFilteredMarkers(datasets: Datasets[], activeDatasetIds: string[]) {
   return datasets.flatMap((dataset) =>
     Object.entries(dataset.collection)
-      .filter(([id]) => {
-        return activeDatasetIds.includes(id);
+      .filter(([datasetId]) => {
+        return activeDatasetIds.includes(datasetId);
       })
       .flatMap(([datasetId, markers]) => markers)
   );

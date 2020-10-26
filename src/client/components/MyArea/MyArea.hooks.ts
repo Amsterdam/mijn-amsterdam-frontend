@@ -47,14 +47,14 @@ export function useDatasetMarkers() {
 
 export function useActiveDatasetIds(layerType?: LayerType) {
   const datasetControlItems = useDatasetControlItems();
-  const activeDatasetIds: Array<string[]> = useMemo(() => {
+  const activeDatasetIds: string[] = useMemo(() => {
     return datasetControlItems.flatMap((datasetControlItem) =>
       datasetControlItem.collection
         .filter(
           (dataset) =>
             dataset.isActive && (!layerType || dataset.layerType === layerType)
         )
-        .map((dataset) => [datasetControlItem.id, dataset.id])
+        .map((dataset) => dataset.id)
     );
   }, [datasetControlItems, layerType]);
 

@@ -182,7 +182,7 @@ export function MaSuperClusterLayer({
     console.time('update cluster data');
     const bounds = map.getBounds();
     requestData({
-      datasetIds: activeDatasetIds.map(([, datasetId]) => datasetId),
+      datasetIds: activeDatasetIds,
       bbox: [
         bounds.getWest(),
         bounds.getSouth(),
@@ -230,8 +230,10 @@ export function MaSuperClusterLayer({
     };
   }, [markers, onClick]);
 
+  // Fetch initial
   useEffect(() => {
     if (updateClusterData) {
+      console.log('effectness!');
       updateClusterData();
     }
   }, [updateClusterData]);
