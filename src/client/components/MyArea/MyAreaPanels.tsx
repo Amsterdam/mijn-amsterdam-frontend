@@ -11,7 +11,7 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { useDesktopScreen } from '../../hooks';
 import Alert from '../Alert/Alert';
-import { DatasetControlItem, getIcon } from './datasets';
+import { DatasetControlItem } from './datasets';
 import { useSelectedMarkerDataValue } from './MyArea.hooks';
 import MyAreaCollapsiblePanel, {
   CollapsedState,
@@ -21,12 +21,6 @@ import MyAreaDatasetControl, {
   useUpdateDatasetControlItems,
 } from './MyAreaDatasetControl';
 import MyAreaPanelContent from './MyAreaPanelContent';
-
-function initialCollapsedState(datasets: Array<{ isActive: boolean }>) {
-  return datasets.some((dataset) => dataset.isActive)
-    ? CollapsedState.Expanded
-    : CollapsedState.Collapsed;
-}
 
 function isIndeterminateControl(datasets: Array<{ isActive: boolean }>) {
   return (

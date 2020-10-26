@@ -5,6 +5,7 @@ import L, { Marker, PolylineOptions } from 'leaflet';
 import React, { ReactElement, ReactNode } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import styled from 'styled-components';
+import { FeatureToggle } from '../../../universal/config/app';
 import { capitalizeFirstLetter } from '../../../universal/helpers';
 import {
   MapIconAfvalGft,
@@ -12,11 +13,9 @@ import {
   MapIconAfvalPlastic,
   MapIconAfvalRest,
   MapIconAfvalTextiel,
-  MapIconAuto,
 } from '../../assets/icons';
 import { DEFAULT_POLYLINE_OPTIONS } from './MaPolyLineLayer';
 import styles from './MyAreaSuperCluster.module.scss';
-import { FeatureToggle } from '../../../universal/config/app';
 
 export type Dataset = Record<string, Marker[]>;
 
@@ -114,30 +113,30 @@ const DatasetIconCircle = styled(DatasetIcon)`
   height: 16px;
 `;
 
-const DatasetIconSquare = styled(DatasetIconCircle)`
-  border-radius: 0;
-`;
+// const DatasetIconSquare = styled(DatasetIconCircle)`
+//   border-radius: 0;
+// `;
 
-const DatasetIconTriangle = styled(DatasetIconSquare)`
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 10px 20px 10px;
-  border-color: transparent transparent #ffffff;
-  position: relative;
+// const DatasetIconTriangle = styled(DatasetIconSquare)`
+//   width: 0;
+//   height: 0;
+//   border-style: solid;
+//   border-width: 0 10px 20px 10px;
+//   border-color: transparent transparent #ffffff;
+//   position: relative;
 
-  &:before {
-    content: '';
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    bottom: -18px;
-    left: -7px;
-    border-style: solid;
-    border-width: 0 7px 14px 7px;
-    border-color: transparent transparent ${(props) => props.color};
-  }
-`;
+//   &:before {
+//     content: '';
+//     width: 100%;
+//     height: 100%;
+//     position: absolute;
+//     bottom: -18px;
+//     left: -7px;
+//     border-style: solid;
+//     border-width: 0 7px 14px 7px;
+//     border-color: transparent transparent ${(props) => props.color};
+//   }
+// `;
 
 const datasetIcons: Record<string, ReactElement<any>> = {
   rest: (

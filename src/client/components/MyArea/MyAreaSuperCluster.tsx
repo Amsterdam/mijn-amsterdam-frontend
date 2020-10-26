@@ -1,6 +1,6 @@
 import axios from 'axios';
 import L, { LeafletMouseEventHandlerFn } from 'leaflet';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { BFFApiUrls } from '../../config/api';
 import { createMarkerIcon, getIconHtml } from './datasets';
 import { useActiveClusterDatasetIds } from './MyArea.hooks';
@@ -94,7 +94,7 @@ function processMarkers(features: any) {
     }
   }
 
-  for (const [coord, features] of Object.entries<any>(items)) {
+  for (const [, features] of Object.entries<any>(items)) {
     if (features.length === 1) {
       markersFinal.push(features[0]);
     } else {
