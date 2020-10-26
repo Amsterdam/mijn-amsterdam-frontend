@@ -53,7 +53,7 @@ async function generateSuperCluster(
     radius: 40,
     extent: 2500,
     nodeSize: 512,
-    maxZoom: 14,
+    maxZoom: 15,
   }).load(features);
 
   superClusterCache.put(
@@ -83,6 +83,12 @@ export async function getClusterData(
       center,
     };
   } else if (bbox && zoom) {
-    return { data: superClusterIndex.getClusters(bbox, zoom) };
+    const data = superClusterIndex.getClusters(bbox, zoom);
+    data.forEach((feature: any) => {
+      feature.properties.expansion_zoom = superClusterIndex.getClusterExpansionZoom(
+        feature.properties.cluster_id
+      );
+    });
+    return { data };
   }
 }

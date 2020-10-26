@@ -1,6 +1,6 @@
 import axios from 'axios';
 import L, { LeafletMouseEventHandlerFn } from 'leaflet';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { BFFApiUrls } from '../../config/api';
 import { createMarkerIcon, getIconHtml } from './datasets';
 import { useActiveClusterDatasetIds } from './MyArea.hooks';
@@ -76,7 +76,7 @@ function round(num: number, decimalPlaces: number = 10) {
   return Number(num2 + 'e' + -decimalPlaces);
 }
 
-function processMarkers(map: L.Map, features: any) {
+function processMarkers(features: any) {
   const items: any = {};
   const markersFinal: any = [];
   for (const feature of features) {
@@ -148,16 +148,12 @@ export function MaSuperClusterLayer({
         return;
       }
 
-      if (response.expansionZoom) {
-        map.setZoomAround(response.center, response.expansionZoom);
-      } else if (response.children) {
+      if (response.children) {
         console.log('children', response.children);
       } else if (response.data) {
         markers.clearLayers();
-
-        markers.addData(processMarkers(map, response.data));
+        markers.addData(processMarkers(response.data));
       }
-      console.timeEnd('update cluster data');
     },
     [map, markers]
   );
@@ -179,7 +175,6 @@ export function MaSuperClusterLayer({
     if (!map) {
       return;
     }
-    console.time('update cluster data');
     const bounds = map.getBounds();
     requestData({
       datasetIds: activeDatasetIds,
@@ -205,19 +200,15 @@ export function MaSuperClusterLayer({
 
   const onClick = useCallback(
     (event: any) => {
-      const point = event.latlng;
-      // Request new cluster data
       if (event.layer.feature.properties.cluster_id) {
-        const center = [point.lat, point.lng];
-        requestData({
-          getClusterExpansionZoom: event.layer.feature.properties.cluster_id,
-          center,
-          datasetIds: activeDatasetIds,
-        });
+        map.setZoomAround(
+          event.latlng,
+          event.layer.feature.properties.expansion_zoom
+        );
       }
       onMarkerClick && onMarkerClick(event);
     },
-    [onMarkerClick, requestData, activeDatasetIds]
+    [onMarkerClick, map]
   );
 
   useEffect(() => {
@@ -233,7 +224,6 @@ export function MaSuperClusterLayer({
   // Fetch initial
   useEffect(() => {
     if (updateClusterData) {
-      console.log('effectness!');
       updateClusterData();
     }
   }, [updateClusterData]);
