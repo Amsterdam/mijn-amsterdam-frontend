@@ -33,7 +33,7 @@ export function createMarker(
   datasetItem: DatasetItemTuple
 ) {
   const [lat, lng, datasetItemId] = datasetItem;
-  const html = getIconHtml(datasetId);
+  const html = getIconHtml(datasetId, datasetGroupId);
   const icon = L.divIcon({
     html,
     className: '',

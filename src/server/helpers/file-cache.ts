@@ -4,7 +4,7 @@ import path from 'path';
 interface FileCacheProps {
   name: string;
   path?: string;
-  cacheTime?: number;
+  cacheTimeMinutes?: number;
 }
 
 const ONE_MINUTE_MS = 1000 * 60;
@@ -19,12 +19,13 @@ export default class FileCache {
   constructor({
     name,
     path = DEFAULT_CACHE_DIR,
-    cacheTime = 0,
+    cacheTimeMinutes = 0,
   }: FileCacheProps) {
     this.name = name;
     this.path = path;
     this.cache = flatCache.load(name, path);
-    this.expire = cacheTime === 0 ? false : cacheTime * ONE_MINUTE_MS;
+    this.expire =
+      cacheTimeMinutes === 0 ? false : cacheTimeMinutes * ONE_MINUTE_MS;
   }
   getKey(key: string) {
     var now = new Date().getTime();

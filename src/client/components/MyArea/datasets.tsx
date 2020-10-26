@@ -171,107 +171,110 @@ const datasetIcons: Record<string, ReactElement<any>> = {
     </DatasetIcon>
   ),
 
-  // Parkeren
-  parkeerzones: (
-    <DatasetIcon style={{ backgroundColor: themeColors.supplement.yellow }}>
-      <MapIconAuto />
-    </DatasetIcon>
-  ),
-  parkeerzones_uitzondering: (
-    <DatasetIcon style={{ backgroundColor: themeColors.supplement.pink }}>
-      <MapIconAuto fill={themeColors.tint.level1} />
-    </DatasetIcon>
-  ),
+  // // Parkeren
+  // parkeerzones: (
+  //   <DatasetIcon style={{ backgroundColor: themeColors.supplement.yellow }}>
+  //     <MapIconAuto />
+  //   </DatasetIcon>
+  // ),
+  // parkeerzones_uitzondering: (
+  //   <DatasetIcon style={{ backgroundColor: themeColors.supplement.pink }}>
+  //     <MapIconAuto fill={themeColors.tint.level1} />
+  //   </DatasetIcon>
+  // ),
 
-  // Evenementen
-  evenementen: (
-    <DatasetIconCircle
-      style={{ backgroundColor: themeColors.supplement.lightgreen }}
-    />
-  ),
+  // // Evenementen
+  // evenementen: (
+  //   <DatasetIconCircle
+  //     style={{ backgroundColor: themeColors.supplement.lightgreen }}
+  //   />
+  // ),
 
-  // Bekendmakingen
-  evenementenvergunning: (
-    <DatasetIconTriangle color={themeColors.support.valid} />
-  ),
-  exploitatievergunning: (
-    <DatasetIconCircle
-      style={{ backgroundColor: themeColors.supplement.pink }}
-    />
-  ),
-  inspraak: (
-    <DatasetIconCircle style={{ backgroundColor: themeColors.primary.main }} />
-  ),
-  kapvergunning: (
-    <DatasetIconCircle style={{ backgroundColor: themeColors.support.focus }} />
-  ),
-  ligplaatsvergunning: (
-    <DatasetIconSquare style={{ backgroundColor: themeColors.support.valid }} />
-  ),
-  meldingen: (
-    <DatasetIconCircle
-      style={{ backgroundColor: themeColors.supplement.orange }}
-    />
-  ),
-  omgevingsvergunning: (
-    <DatasetIconCircle style={{ backgroundColor: themeColors.support.valid }} />
-  ),
-  onttrekkingsvergunning: (
-    <DatasetIconCircle
-      style={{ backgroundColor: themeColors.supplement.lightgreen }}
-    />
-  ),
-  // ????
-  openingstijden: (
-    <DatasetIconSquare
-      style={{ backgroundColor: themeColors.supplement.pink }}
-    />
-  ),
-  rectificatie: (
-    <DatasetIconSquare
-      style={{ backgroundColor: themeColors.supplement.orange }}
-    />
-  ),
-  // ????
-  speelautomaten: (
-    <DatasetIconSquare
-      style={{ backgroundColor: themeColors.supplement.purple }}
-    />
-  ),
-  splitsingsvergunning: (
-    <DatasetIconCircle
-      style={{ backgroundColor: themeColors.supplement.lightgreen }}
-    />
-  ),
-  terrasvergunning: (
-    <DatasetIconCircle style={{ backgroundColor: themeColors.tint.level4 }} />
-  ),
-  verkeersbesluit: (
-    <DatasetIconTriangle color={themeColors.supplement.orange} />
-  ),
-  'apv vergunning': <DatasetIconTriangle color={themeColors.error.main} />,
-  overig: (
-    <DatasetIconSquare style={{ backgroundColor: themeColors.primary.main }} />
-  ),
-  // ????
-  geluidvergunning: (
-    <DatasetIconCircle
-      style={{ backgroundColor: themeColors.supplement.lightgreen }}
-    />
-  ),
-  // ????
-  bestemmingsplan: (
-    <DatasetIconCircle
-      style={{ backgroundColor: themeColors.supplement.lightgreen }}
-    />
-  ),
-  'drank- en horecavergunning': (
-    <DatasetIconCircle
-      style={{ backgroundColor: themeColors.supplement.lightgreen }}
-    />
-  ),
+  // // Bekendmakingen
+  // evenementenvergunning: (
+  //   <DatasetIconTriangle color={themeColors.support.valid} />
+  // ),
+  // exploitatievergunning: (
+  //   <DatasetIconCircle
+  //     style={{ backgroundColor: themeColors.supplement.pink }}
+  //   />
+  // ),
+  // inspraak: (
+  //   <DatasetIconCircle style={{ backgroundColor: themeColors.primary.main }} />
+  // ),
+  // kapvergunning: (
+  //   <DatasetIconCircle style={{ backgroundColor: themeColors.support.focus }} />
+  // ),
+  // ligplaatsvergunning: (
+  //   <DatasetIconSquare style={{ backgroundColor: themeColors.support.valid }} />
+  // ),
+  // meldingen: (
+  //   <DatasetIconCircle
+  //     style={{ backgroundColor: themeColors.supplement.orange }}
+  //   />
+  // ),
+  // omgevingsvergunning: (
+  //   <DatasetIconCircle style={{ backgroundColor: themeColors.support.valid }} />
+  // ),
+  // onttrekkingsvergunning: (
+  //   <DatasetIconCircle
+  //     style={{ backgroundColor: themeColors.supplement.lightgreen }}
+  //   />
+  // ),
+  // // ????
+  // openingstijden: (
+  //   <DatasetIconSquare
+  //     style={{ backgroundColor: themeColors.supplement.pink }}
+  //   />
+  // ),
+  // rectificatie: (
+  //   <DatasetIconSquare
+  //     style={{ backgroundColor: themeColors.supplement.orange }}
+  //   />
+  // ),
+  // // ????
+  // speelautomaten: (
+  //   <DatasetIconSquare
+  //     style={{ backgroundColor: themeColors.supplement.purple }}
+  //   />
+  // ),
+  // splitsingsvergunning: (
+  //   <DatasetIconCircle
+  //     style={{ backgroundColor: themeColors.supplement.lightgreen }}
+  //   />
+  // ),
+  // terrasvergunning: (
+  //   <DatasetIconCircle style={{ backgroundColor: themeColors.tint.level4 }} />
+  // ),
+  // verkeersbesluit: (
+  //   <DatasetIconTriangle color={themeColors.supplement.orange} />
+  // ),
+  // 'apv vergunning': <DatasetIconTriangle color={themeColors.error.main} />,
+  // overig: (
+  //   <DatasetIconSquare style={{ backgroundColor: themeColors.primary.main }} />
+  // ),
+  // // ????
+  // geluidvergunning: (
+  //   <DatasetIconCircle
+  //     style={{ backgroundColor: themeColors.supplement.lightgreen }}
+  //   />
+  // ),
+  // // ????
+  // bestemmingsplan: (
+  //   <DatasetIconCircle
+  //     style={{ backgroundColor: themeColors.supplement.lightgreen }}
+  //   />
+  // ),
+  // 'drank- en horecavergunning': (
+  //   <DatasetIconCircle
+  //     style={{ backgroundColor: themeColors.supplement.lightgreen }}
+  //   />
+  // ),
   default: (
     <DatasetIconCircle style={{ backgroundColor: themeColors.tint.level7 }} />
+  ),
+  afvalcontainers: (
+    <DatasetIconCircle style={{ backgroundColor: themeColors.tint.level2 }} />
   ),
 };
 
@@ -285,8 +288,12 @@ export function getIcon(id: string) {
   return datasetIcons[id] || datasetIcons.default;
 }
 
-export function getIconHtml(id: string) {
-  return datasetIconHtml[id] || datasetIconHtml.default;
+export function getIconHtml(datasetId: string, datasetGroupId: string) {
+  return (
+    datasetIconHtml[datasetId] ||
+    datasetIconHtml[datasetGroupId] ||
+    datasetIconHtml.default
+  );
 }
 
 export enum LayerType {
@@ -297,11 +304,12 @@ export enum LayerType {
 const createDatasetControl = (
   id: string,
   isActive: boolean = true,
-  layerType: LayerType = LayerType.Cluster
+  layerType: LayerType = LayerType.Cluster,
+  icon?: ReactNode
 ) => {
   return {
     id,
-    icon: getIcon(id),
+    icon,
     title: capitalizeFirstLetter(id),
     isActive,
     layerType,

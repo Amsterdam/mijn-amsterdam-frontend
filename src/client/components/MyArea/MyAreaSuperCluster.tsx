@@ -10,7 +10,10 @@ import { useMapRef } from './useMap';
 function createMarker(feature: any, latlng: any) {
   let icon;
   if (!feature?.properties.cluster) {
-    const html = getIconHtml(feature.properties.dataset[1]);
+    const html = getIconHtml(
+      feature.properties.dataset[1],
+      feature.properties.dataset[2]
+    );
     icon = L.divIcon({
       html,
       className: '',

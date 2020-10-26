@@ -12,7 +12,7 @@ export interface DatasetGroup {
   id: string;
   collection: DatasetCollection;
 }
-
+export const BUURT_CACHE_TTL_HOURS = 24;
 export const ACCEPT_CRS_4326 = {
   'Accept-Crs': 'EPSG:4326', // Will return coordinates in [lng/lat] format
 };

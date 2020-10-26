@@ -13,7 +13,7 @@ import { useDesktopScreen } from '../../hooks';
 import Alert from '../Alert/Alert';
 import { DatasetControlItem, getIcon } from './datasets';
 import { useSelectedMarkerDataValue } from './MyArea.hooks';
-import MyAreaCollapisblePanel, {
+import MyAreaCollapsiblePanel, {
   CollapsedState,
 } from './MyAreaCollapsiblePanel';
 import MyAreaDatasetControl, {
@@ -40,6 +40,12 @@ function isCheckedControl(datasets: Array<{ isActive: boolean }>) {
 }
 
 const MapPanelContentDetail = styled(MapPanelContent)``;
+const StyledCheckbox = styled(Checkbox)`
+  padding-left: 0;
+  > input {
+    left: 0;
+  }
+`;
 
 interface PanelSubTitleProps {
   datasetId: string;
@@ -69,7 +75,7 @@ const TitleWithCheckbox = React.memo(
     onChange: (datasetControlItem: DatasetControlItem) => void;
   }) => (
     <Label htmlFor={controlItem.id} label={controlItem.title}>
-      <Checkbox
+      <StyledCheckbox
         id={controlItem.id}
         checked={isCheckedControl(controlItem.collection)}
         indeterminate={isIndeterminateControl(controlItem.collection)}
@@ -133,9 +139,9 @@ export default function MyAreaPanels({
     <PanelComponent>
       <MapPanelContent animate stackOrder={0}>
         {datasetControlItems.map((controlItem) => (
-          <MyAreaCollapisblePanel
+          <MyAreaCollapsiblePanel
             key={controlItem.id}
-            initalState={initialCollapsedState(controlItem.collection)}
+            initalState={CollapsedState.Collapsed}
             title={
               <TitleWithCheckbox
                 controlItem={controlItem}
@@ -143,8 +149,10 @@ export default function MyAreaPanels({
               />
             }
           >
-            <MyAreaDatasetControl collection={controlItem.collection} />
-          </MyAreaCollapisblePanel>
+            {controlItem.collection.length > 1 ? (
+              <MyAreaDatasetControl collection={controlItem.collection} />
+            ) : null}
+          </MyAreaCollapsiblePanel>
         ))}
         {selectedMarkerData?.datasetItemId && (
           <MapPanelContentDetail

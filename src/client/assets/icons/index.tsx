@@ -4,7 +4,7 @@ export { ReactComponent as IconBelastingen } from './belastingen.svg';
 export { ReactComponent as IconMyNotifications } from './Bell.svg';
 export { ReactComponent as IconBurgerZaken } from './burgerzaken.svg';
 export { ReactComponent as IconCheckmark } from './Checkmark.svg';
-// export { ReactComponent as IconCheckmark__white } from './Checkmark__white.svg';
+export { ReactComponent as IconFilter } from './Filter.svg';
 // export { ReactComponent as IconChevronDown } from './Chevron-Down.svg';
 export { ReactComponent as IconChevronLeft } from './Chevron-Left.svg';
 export { ReactComponent as IconChevronRight } from './Chevron-Right.svg';

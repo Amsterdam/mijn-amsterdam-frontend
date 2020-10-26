@@ -71,7 +71,7 @@ export function MaPolyLineLayer({
 
       layer.feature = feature;
 
-      const html = getIconHtml(datasetId);
+      const html = getIconHtml(datasetId, datasetGroupId);
       const icon = L.divIcon({
         html,
         className: '',
@@ -97,7 +97,14 @@ export function MaPolyLineLayer({
         map.removeLayer(layer);
       });
     };
-  }, [map, features, onMarkerClick, polylineOptions, datasetId]);
+  }, [
+    map,
+    features,
+    onMarkerClick,
+    polylineOptions,
+    datasetId,
+    datasetGroupId,
+  ]);
 
   return null;
 }

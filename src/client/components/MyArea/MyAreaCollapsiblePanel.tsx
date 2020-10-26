@@ -1,7 +1,7 @@
-import { ChevronRight } from '@amsterdam/asc-assets';
 import { Icon, themeColor, themeSpacing } from '@amsterdam/asc-ui';
 import React, { PropsWithChildren, useState, ReactNode } from 'react';
 import styled from 'styled-components';
+import { IconFilter } from '../../assets/icons';
 
 const CollapsiblePanel = styled('div')`
   padding: ${themeSpacing(3, 0)};
@@ -21,6 +21,7 @@ const UnstyledButton = styled('button')`
   display: inline-flex;
   align-items: center;
   font-weight: bold;
+  visibility: hidden;
 `;
 
 const CollapsiblePanelContent = styled('div')`
@@ -31,12 +32,15 @@ const PanelHeadingElement = styled('h3')`
   margin: 0;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+
+  &:hover > button {
+    visibility: visible;
+  }
 `;
 
 const PanelIcon = styled(Icon)`
   width: ${themeSpacing(6)};
-  transition: transform 100ms linear;
-  transform-origin: center;
 `;
 
 export enum CollapsedState {
@@ -53,7 +57,7 @@ export function isCollapsed(state: CollapsedState) {
 }
 
 interface MyAreaCollapsiblePanelHeadingProps {
-  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   title: ReactNode;
   state?: CollapsedState;
 }
@@ -65,15 +69,14 @@ function MyAreaCollapsiblePanelHeading({
 }: MyAreaCollapsiblePanelHeadingProps) {
   return (
     <PanelHeadingElement>
-      <UnstyledButton onClick={onClick} aria-expanded={isExpanded(state)}>
-        <PanelIcon
-          // size={12}
-          rotate={state === CollapsedState.Collapsed ? 0 : 90}
-        >
-          <ChevronRight />
-        </PanelIcon>
-      </UnstyledButton>
       {title}
+      {onClick && (
+        <UnstyledButton onClick={onClick} aria-expanded={isExpanded(state)}>
+          <PanelIcon size={16}>
+            <IconFilter />
+          </PanelIcon>
+        </UnstyledButton>
+      )}
     </PanelHeadingElement>
   );
 }
@@ -93,16 +96,20 @@ export default function MyAreaCollapsiblePanel({
     <CollapsiblePanel>
       <MyAreaCollapsiblePanelHeading
         title={title}
-        onClick={(event) => {
-          setCollapsedState(
-            isExpanded(collapsedState)
-              ? CollapsedState.Collapsed
-              : CollapsedState.Expanded
-          );
-        }}
+        onClick={
+          !!children
+            ? (event) => {
+                setCollapsedState(
+                  isExpanded(collapsedState)
+                    ? CollapsedState.Collapsed
+                    : CollapsedState.Expanded
+                );
+              }
+            : undefined
+        }
         state={collapsedState}
       />
-      {isExpanded(collapsedState) && (
+      {children && isExpanded(collapsedState) && (
         <CollapsiblePanelContent>{children}</CollapsiblePanelContent>
       )}
     </CollapsiblePanel>

@@ -13,7 +13,12 @@ import { DataRequestConfig } from '../../config';
 import { requestData } from '../../helpers';
 import FileCache from '../../helpers/file-cache';
 import { fetchHOME } from '../home';
-import { ACCEPT_CRS_4326, DatasetConfig, DatasetGroup } from './datasets';
+import {
+  ACCEPT_CRS_4326,
+  BUURT_CACHE_TTL_HOURS,
+  DatasetConfig,
+  DatasetGroup,
+} from './datasets';
 import { getDatasetEndpointConfig } from './helpers';
 
 const MAP_URL =
@@ -65,7 +70,7 @@ const fileCache = (id: string) => {
   if (!fileCaches[id]) {
     fileCaches[id] = new FileCache({
       name: `./buurt/${id}.flat-cache.json`,
-      cacheTime: isMockAdapterEnabled ? 0 : 24 * 60, // 24 hours
+      cacheTimeMinutes: isMockAdapterEnabled ? 0 : BUURT_CACHE_TTL_HOURS * 60, // 24 hours
     });
   }
   return fileCaches[id];

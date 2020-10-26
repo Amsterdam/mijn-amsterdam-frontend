@@ -1,9 +1,11 @@
 import Supercluster from 'supercluster';
 import { loadServicesMapDatasets } from './buurt/buurt';
+import memoryCache from 'memory-cache';
+import { BUURT_CACHE_TTL_HOURS } from './buurt/datasets';
 
-let currentlyActiveDatasetIds: string[] = [];
 let dataStore: any;
-let superClusterIndex: Supercluster;
+
+const superClusterCache = new memoryCache.Cache<string, any>();
 
 function filterDatastore(dataStore: any, activeDatasetIds: any) {
   return dataStore.flatMap((dataset: any) => {
@@ -29,34 +31,36 @@ function filterDatastore(dataStore: any, activeDatasetIds: any) {
   });
 }
 
+const cacheKey = (ids: string[]) => ids.sort().join('-');
+
 async function generateSuperCluster(
   sessionID: SessionID,
   activeDatasetIds: string[] = []
 ) {
-  if (
-    activeDatasetIds.length === currentlyActiveDatasetIds.length &&
-    !activeDatasetIds.filter((id) => !currentlyActiveDatasetIds.includes(id))
-      .length
-  ) {
-    return superClusterIndex;
-  }
+  const activeCacheKey = cacheKey(activeDatasetIds);
 
-  currentlyActiveDatasetIds = activeDatasetIds;
+  if (superClusterCache.get(activeCacheKey)) {
+    return superClusterCache.get(activeCacheKey);
+  }
 
   if (!dataStore) {
     dataStore = (await loadServicesMapDatasets(sessionID)).content;
   }
 
   const features = filterDatastore(dataStore, activeDatasetIds);
-
-  superClusterIndex = new Supercluster({
+  const superClusterIndex = new Supercluster({
     log: true,
     radius: 40,
     extent: 2500,
     nodeSize: 512,
-    minPoints: 2,
     maxZoom: 14,
-  } as any).load(features);
+  }).load(features);
+
+  superClusterCache.put(
+    activeCacheKey,
+    superClusterIndex,
+    BUURT_CACHE_TTL_HOURS * 1000 * 60 // HOURS * 60 seconds
+  );
 
   return superClusterIndex;
 }
@@ -65,6 +69,8 @@ export async function getClusterData(
   sessionID: SessionID,
   { getClusterExpansionZoom, center, bbox, zoom, datasetIds, parentId }: any
 ) {
+  const superClusterIndex = await generateSuperCluster(sessionID, datasetIds);
+
   if (parentId) {
     return {
       children: superClusterIndex.getChildren(parseInt(parentId, 10)),
@@ -77,10 +83,6 @@ export async function getClusterData(
       center,
     };
   } else if (bbox && zoom) {
-    await generateSuperCluster(
-      sessionID,
-      datasetIds || currentlyActiveDatasetIds
-    );
     return { data: superClusterIndex.getClusters(bbox, zoom) };
   }
 }

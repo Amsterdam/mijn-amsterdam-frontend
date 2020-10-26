@@ -185,7 +185,7 @@ const isMockAdapterEnabled = !process.env.BFF_DISABLE_MOCK_ADAPTER;
 
 const fileCache = new FileCache({
   name: 'afvalpunten.flat-cache.json',
-  cacheTime: isMockAdapterEnabled ? 0 : 24 * 60, // 24 hours
+  cacheTimeMinutes: isMockAdapterEnabled ? 0 : 24 * 60, // 24 hours
 });
 
 function addApproximateDistance(
