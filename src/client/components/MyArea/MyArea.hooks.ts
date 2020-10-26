@@ -6,19 +6,20 @@ import {
   useRecoilValue,
   useSetRecoilState,
 } from 'recoil';
+import { DatasetGroup } from '../../../server/services/buurt/datasets';
 import { RefetchFunction } from '../../hooks/api/useDataApi';
-import { DatasetsSource, LayerType } from './datasets';
+import { LayerType } from './datasets';
 import { createClusterDatasetMarkers } from './MyArea.helpers';
 import { useDatasetControlItems } from './MyAreaDatasetControl';
 
-export const datasetGroupsAtom = atom<DatasetsSource[]>({
+export const datasetGroupsAtom = atom<DatasetGroup[]>({
   key: 'datasetGroupsAtom',
   default: [],
 });
 
 export function useDatasetGroups(
   layerType?: LayerType
-): [DatasetsSource[], RefetchFunction] {
+): [DatasetGroup[], RefetchFunction] {
   const [datasetGroups, setDatasetGroups] = useRecoilState(datasetGroupsAtom);
   const fetchDatasets = useCallback(
     async (requestOptions) => {
@@ -35,13 +36,13 @@ export function useDatasetGroups(
 }
 
 export function useDatasetMarkers() {
-  const [datasetsSource] = useDatasetGroups();
+  const [datasetGroups] = useDatasetGroups();
   return useMemo(() => {
-    if (!datasetsSource) {
+    if (!datasetGroups) {
       return [];
     }
-    return createClusterDatasetMarkers(datasetsSource);
-  }, [datasetsSource]);
+    return createClusterDatasetMarkers(datasetGroups);
+  }, [datasetGroups]);
 }
 
 export function useActiveDatasetIds(layerType?: LayerType) {

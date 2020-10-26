@@ -1,20 +1,23 @@
 import L from 'leaflet';
-import { DatasetItemTuple } from '../../../server/services/buurt/datasets';
-import { Datasets, DatasetsSource, getIconHtml } from './datasets';
+import {
+  DatasetGroup,
+  DatasetItemTuple,
+} from '../../../server/services/buurt/datasets';
+import { Datasets, getIconHtml } from './datasets';
 
 export function createClusterDatasetMarkers(
-  datasetsSources: DatasetsSource[]
+  datasetGroups: DatasetGroup[]
 ): Datasets[] {
-  return datasetsSources.map((datasetSource) => {
+  return datasetGroups.map((datasetGroup) => {
     return {
-      ...datasetSource,
+      ...datasetGroup,
       collection: Object.fromEntries(
-        Object.entries(datasetSource.collection).map(
+        Object.entries(datasetGroup.collection).map(
           ([datasetId, datasetItems]) => {
             return [
               datasetId,
               datasetItems.map((datasetItemTuple) =>
-                createMarker(datasetSource.id, datasetId, datasetItemTuple)
+                createMarker(datasetGroup.id, datasetId, datasetItemTuple)
               ),
             ];
           }

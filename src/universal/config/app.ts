@@ -10,13 +10,13 @@ export const FeatureToggle = {
   belastingApiActive: true,
   milieuzoneApiActive: true,
   focusUitkeringsspecificatiesActive: true,
-  focusDocumentDownloadsActive: !IS_PRODUCTION,
+  focusDocumentDownloadsActive: false,
   focusAanvragenActive: true,
   focusCombinedActive: true,
   identiteitsbewijzenActive: true,
   tozoActive: true,
   tozo2active: true,
-  tozo3active: !IS_PRODUCTION,
+  tozo3active: true, // Demo Toggle
   eherkenningActive: !IS_PRODUCTION,
   vergunningenActive: true,
   cmsFooterActive: true,
@@ -26,7 +26,7 @@ export const FeatureToggle = {
   profileToggleActive: !IS_PRODUCTION,
   kvkActive: !IS_PRODUCTION,
   residentCountActive: true,
-  myAreaDataSportEnBosActive: !IS_AP,
+  myAreaDataSportEnBosActive: false,
 };
 
 export const DAYS_KEEP_RECENT = 28;

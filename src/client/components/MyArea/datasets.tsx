@@ -5,7 +5,6 @@ import L, { Marker, PolylineOptions } from 'leaflet';
 import React, { ReactElement, ReactNode } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import styled from 'styled-components';
-import { DatasetItemTuple } from '../../../server/services/buurt/datasets';
 import { capitalizeFirstLetter } from '../../../universal/helpers';
 import {
   MapIconAfvalGft,
@@ -18,13 +17,6 @@ import {
 import { DEFAULT_POLYLINE_OPTIONS } from './MaPolyLineLayer';
 import styles from './MyAreaSuperCluster.module.scss';
 import { FeatureToggle } from '../../../universal/config/app';
-
-export type DatasetSource = Record<string, DatasetItemTuple[]>;
-
-export interface DatasetsSource {
-  id: string;
-  collection: DatasetSource;
-}
 
 export type Dataset = Record<string, Marker[]>;
 

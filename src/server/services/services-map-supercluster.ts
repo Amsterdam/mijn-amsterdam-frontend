@@ -1,4 +1,3 @@
-// or require in Node / Browserify
 import Supercluster from 'supercluster';
 import { loadServicesMapDatasets } from './buurt/buurt';
 

@@ -13,13 +13,8 @@ import { DataRequestConfig } from '../../config';
 import { requestData } from '../../helpers';
 import FileCache from '../../helpers/file-cache';
 import { fetchHOME } from '../home';
-import {
-  ACCEPT_CRS_4326,
-  DatasetCollection,
-  DatasetConfig,
-  DatasetGroup,
-} from './datasets';
-import { getDatasetEndpointConfig, groupCollectionPoints } from './helpers';
+import { ACCEPT_CRS_4326, DatasetConfig, DatasetGroup } from './datasets';
+import { getDatasetEndpointConfig } from './helpers';
 
 const MAP_URL =
   'https://data.amsterdam.nl/data/?modus=kaart&achtergrond=topo_rd_zw&embed=true';

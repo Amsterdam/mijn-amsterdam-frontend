@@ -20,7 +20,7 @@ function createMarker(feature: any, latlng: any) {
   } else {
     const count = feature.properties.point_count;
     const size = count < 100 ? 'small' : count < 1000 ? 'medium' : 'large';
-    const label = feature.properties.point_count_abbreviated;
+    const label = count;
     icon = createMarkerIcon({
       label,
       className: datasetStyles[`MarkerIcon--${size}`],
@@ -37,10 +37,6 @@ function useClusterMarkers(map: L.Map | null) {
     }
     const layer = L.geoJSON(undefined, {
       pointToLayer: createMarker,
-      // onEachFeature: (feature, layer) => {
-      //   console.log(feature, layer);
-      //   return feature;
-      // },
     }).addTo(map);
 
     return layer;
@@ -49,39 +45,42 @@ function useClusterMarkers(map: L.Map | null) {
   return layer;
 }
 
-function generatePointsCircle(count: number, centerPt: L.Point) {
-  const PI2 = Math.PI * 2;
-  const _circleStartAngle = 0;
-  //var circumference = this._group.options.spiderfyDistanceMultiplier * this._circleFootSeparation * (2 + count),
-  var circumference = 1 * 25 * (2 + count),
-    legLength = circumference / PI2, //radius from circumference
-    angleStep = PI2 / count,
-    res = [],
-    i,
-    angle;
+function coordinateCircle(
+  center: LatLngObject,
+  count: number = 21,
+  radius: number = 10
+) {
+  const points = [];
+  radius = Math.max(1.3, count / 4);
+  const EARTH_RADIUS = 6378100.0;
+  const lat = (center.lat * Math.PI) / 180.0;
+  const lon = (center.lng * Math.PI) / 180.0;
+  const legAngle = (360 * (Math.PI / 180)) / count;
 
-  legLength = Math.max(legLength, 35); // Minimum distance to get outside the cluster icon.
-
-  res.length = count;
-
-  for (i = 0; i < count; i++) {
-    // Clockwise, like spiral.
-    angle = _circleStartAngle + i * angleStep;
-    res[i] = new L.Point(
-      centerPt.x + legLength * Math.cos(angle),
-      centerPt.y + legLength * Math.sin(angle)
-    ).round();
+  for (let t = 0; t <= Math.PI * 2; t += legAngle) {
+    const latPoint = lat + (radius / EARTH_RADIUS) * Math.sin(t);
+    const lonPoint =
+      lon + ((radius / EARTH_RADIUS) * Math.cos(t)) / Math.cos(lat);
+    const point = [(lonPoint * 180.0) / Math.PI, (latPoint * 180.0) / Math.PI];
+    points.push(point);
   }
 
-  return res;
+  return points;
 }
 
-function processMarkers(map: L.Map, markers: any) {
+function round(num: number, decimalPlaces: number = 10) {
+  const num2 = Math.round((num + 'e' + decimalPlaces) as any);
+  return Number(num2 + 'e' + -decimalPlaces);
+}
+
+function processMarkers(map: L.Map, features: any) {
   const items: any = {};
   const markersFinal: any = [];
-  markers.forEach((feature: any) => {
+  for (const feature of features) {
     if (!feature.properties.cluster) {
-      const c = feature.geometry.coordinates.join('-');
+      const c = `${round(feature.geometry.coordinates[0])}-${round(
+        feature.geometry.coordinates[1]
+      )}`;
       if (!items[c]) {
         items[c] = [feature];
       } else {
@@ -90,28 +89,31 @@ function processMarkers(map: L.Map, markers: any) {
     } else {
       markersFinal.push(feature);
     }
-  });
+  }
 
   for (const [coord, features] of Object.entries<any>(items)) {
     if (features.length === 1) {
       markersFinal.push(features[0]);
     } else {
-      const pts = generatePointsCircle(
-        features.length,
-        map.latLngToLayerPoint((coord as string).split('-') as any)
+      const pts = coordinateCircle(
+        {
+          lat: features[0].geometry.coordinates[1],
+          lng: features[0].geometry.coordinates[0],
+        },
+        features.length
       );
-      const modifiedMarkers = pts.map((pt, index) => {
-        const coordinates = map.layerPointToLatLng(pt);
-        return {
-          ...features[index],
-          geometry: {
-            coordinates: [coordinates.lat, coordinates.lng],
-            type: 'Point',
-          },
-        };
-      });
+      const modifiedMarkers = pts
+        .filter((pt, index) => !!features[index])
+        .map((pt, index) => {
+          return {
+            ...features[index],
+            geometry: {
+              coordinates: pt,
+              type: 'Point',
+            },
+          };
+        });
       markersFinal.push(...modifiedMarkers);
-      console.log('modified markers', modifiedMarkers);
     }
   }
 
