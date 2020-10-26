@@ -101,8 +101,8 @@ export const DATASETS = {
 const DatasetIcon = styled.div`
   margin-right: ${themeSpacing(2)};
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -146,7 +146,7 @@ const datasetIcons: Record<string, ReactElement<any>> = {
     </DatasetIcon>
   ),
   papier: (
-    <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+    <DatasetIcon style={{ backgroundColor: themeColors.supplement.lightblue }}>
       <MapIconAfvalRest fill={themeColors.tint.level1} />
     </DatasetIcon>
   ),

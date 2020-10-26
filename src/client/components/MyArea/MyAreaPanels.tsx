@@ -47,25 +47,6 @@ const StyledCheckbox = styled(Checkbox)`
   }
 `;
 
-interface PanelSubTitleProps {
-  datasetId: string;
-  datasetGroupId: string;
-}
-
-function PanelSubTitle({ datasetId, datasetGroupId }: PanelSubTitleProps) {
-  return (
-    <span
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-      }}
-    >
-      {getIcon(datasetId)}
-      {datasetGroupId || datasetId}
-    </span>
-  );
-}
-
 const TitleWithCheckbox = React.memo(
   ({
     controlItem,
@@ -157,15 +138,6 @@ export default function MyAreaPanels({
         {selectedMarkerData?.datasetItemId && (
           <MapPanelContentDetail
             title={selectedMarkerData.markerData?.title}
-            subTitle={
-              selectedMarkerData?.datasetId &&
-              selectedMarkerData?.datasetGroupId ? (
-                <PanelSubTitle
-                  datasetId={selectedMarkerData.datasetId}
-                  datasetGroupId={selectedMarkerData.datasetGroupId}
-                />
-              ) : null
-            }
             stackOrder={3}
             animate
             onClose={onCloseDetailPanel}
