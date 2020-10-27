@@ -1,6 +1,6 @@
 import { DATASETS } from '../../../universal/config/buurt';
 import { capitalizeFirstLetter } from '../../../universal/helpers';
-import { getApiEmbeddedResponse, recursiveCoordinateSwap } from './helpers';
+import { getApiEmbeddedResponse } from './helpers';
 
 export type DatasetFeatureProperties = {
   id: string;
@@ -164,7 +164,6 @@ function transformListSportApiResponse(datasetId: string, responseData: any) {
           feature.geometry.type === 'MultiPolygon' ||
           feature.geometry.type === 'MultiLineString'
         ) {
-          recursiveCoordinateSwap(feature.geometry.coordinates);
           properties.color = 'purple';
         }
         collection.push({
@@ -387,7 +386,6 @@ function transformParkeerzoneCoords(datasetId: string, responseData: any) {
   const collection: DatasetCollection = [];
   if (results && results.length) {
     for (const feature of results) {
-      recursiveCoordinateSwap(feature.geometry.coordinates);
       collection.push({
         type: 'Feature',
         geometry: feature.geometry,
