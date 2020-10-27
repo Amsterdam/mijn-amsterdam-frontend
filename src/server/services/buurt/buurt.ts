@@ -209,9 +209,13 @@ export async function loadServicesMapDatasetItem(
   }
 
   const [, config] = datasetConfig;
+  const url = config.multi
+    ? `${config.multi[datasetId].detailUrl}${datasetItemId}`
+    : `${config.detailUrl}${datasetItemId}`;
 
   const requestConfig: DataRequestConfig = {
-    url: `${config.detailUrl}${datasetItemId}`,
+    url,
+    cacheTimeout: 0,
   };
 
   requestConfig.headers = ACCEPT_CRS_4326;
