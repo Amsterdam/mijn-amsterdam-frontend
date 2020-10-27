@@ -14,6 +14,7 @@ import {
 import { ThemeProvider } from '@amsterdam/asc-ui';
 import { themeSpacing } from '@amsterdam/asc-ui/lib/utils/themeUtils';
 import axios from 'axios';
+import { LeafletEvent } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
@@ -60,7 +61,7 @@ const MyAreaMap = styled(Map)`
 
 interface BuurtRouteParams {
   datasetId?: string;
-  datasetItemId?: string;
+  id?: string;
 }
 
 export default function MyArea2() {
@@ -83,52 +84,43 @@ export default function MyArea2() {
     return selectedMarkerDataState;
   }, [selectedMarkerDataState, params]);
 
-  const { datasetId, datasetItemId } = selectedMarkerData;
+  const { datasetId, id } = selectedMarkerData;
 
   useEffect(() => {
-    if (!datasetItemId || !datasetId) {
+    if (!id || !datasetId) {
       return;
     }
 
     axios({
-      url: `${BFFApiUrls.MAP_DATASETS}/${datasetId}/${datasetItemId}`,
+      url: `${BFFApiUrls.MAP_DATASETS}/${datasetId}/${id}`,
     })
       .then(({ data: { content: markerData } }) => {
         setSelectedMarkerData({
-          datasetItemId,
+          id,
           datasetId,
           markerData,
         });
       })
       .catch((error) => {
         setSelectedMarkerData({
-          datasetItemId,
+          id,
           datasetId,
           markerData: 'error',
         });
       });
-  }, [datasetId, datasetItemId, setSelectedMarkerData]);
+  }, [datasetId, id, setSelectedMarkerData]);
 
   const onMarkerClick = useCallback(
-    (event: any) => {
-      const datasetItemId = event?.layer?.feature?.properties?.dataset
-        ? event?.layer?.feature?.properties?.dataset[0]
-        : event.layer.options.datasetItemId
-        ? event.layer.options.datasetItemId
-        : event?.layer?.feature?.properties?.datasetItemId;
+    (event: LeafletEvent) => {
+      console.log(event);
+      const id = event?.propagatedFrom?.feature?.properties?.id;
 
-      if (selectedMarkerData?.datasetItemId !== datasetItemId) {
-        const datasetId = event?.layer?.feature?.properties?.dataset
-          ? event?.layer?.feature?.properties?.dataset[1]
-          : event.layer.options.datasetId
-          ? event.layer.options.datasetId
-          : event?.layer?.feature?.properties?.datasetId;
-
-        console.log(event.layer);
+      if (selectedMarkerData?.id !== id) {
+        const datasetId = event?.propagatedFrom?.feature?.properties?.datasetId;
 
         setSelectedMarkerData({
           datasetId,
-          datasetItemId,
+          id,
         });
       }
     },

@@ -12,7 +12,7 @@ export const AppRoutes = {
   'INKOMEN/TOZO': '/inkomen-en-stadspas/tozo/:version/:id?',
   BRP: '/persoonlijke-gegevens',
   KVK: '/gegevens-handelsregister',
-  BUURT: '/buurt/:datasetGroupId?/:datasetId?/:datasetItemId?',
+  BUURT: '/buurt/:datasetGroupId?/:datasetId?/:id?',
   API_LOGIN: '/api/login',
   API1_LOGIN: '/api1/login',
   TIPS: '/overzicht-tips',

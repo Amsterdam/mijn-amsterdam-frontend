@@ -129,7 +129,7 @@ export default function MyAreaPanels({
             ) : null}
           </MyAreaCollapsiblePanel>
         ))}
-        {selectedMarkerData?.datasetItemId && (
+        {selectedMarkerData?.id && (
           <MapPanelContentDetail
             title={selectedMarkerData.markerData?.title}
             stackOrder={3}

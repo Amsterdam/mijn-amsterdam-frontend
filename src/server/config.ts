@@ -132,7 +132,7 @@ export const BffEndpoints = {
   SERVICES_ALL: `/services/all`,
   SERVICES_STREAM: `/services/stream`,
   HEALTH: `/status/health`,
-  MAP_DATASETS: `/map/datasets/:datasetId?/:datasetItemId?`,
+  MAP_DATASETS: `/map/datasets/:datasetId?/:id?`,
   MAP_DATASETS_WS: `/map/datasets/ws`,
 };
 

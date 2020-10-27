@@ -74,14 +74,14 @@ router.get(
   BffEndpoints.MAP_DATASETS,
   async (req: Request, res: Response, next: NextFunction) => {
     const datasetId = req.params.datasetId;
-    const datasetItemId = req.params.datasetItemId;
+    const id = req.params.id;
     let response: ApiResponse<any> | null = null;
     try {
-      if (datasetId && datasetItemId) {
+      if (datasetId && id) {
         response = await loadServicesMapDatasetItem(
           res.locals.sessionID,
           datasetId,
-          datasetItemId
+          id
         );
       } else {
         response = await loadServicesMapDatasets(

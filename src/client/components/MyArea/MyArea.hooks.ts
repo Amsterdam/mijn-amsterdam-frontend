@@ -23,11 +23,11 @@ export function useDatasetGroups(
 ): [DatasetCollection, RefetchFunction] {
   const [datasetGroups, setDatasetGroups] = useRecoilState(datasetGroupsAtom);
   const fetchDatasets = useCallback(
-    async (requestOptions) => {
+    async requestOptions => {
       const response: {
         data: ApiSuccessResponse<DatasetCollection>;
       } = await axios(requestOptions);
-      setDatasetGroups((datasetGroups) => [
+      setDatasetGroups(datasetGroups => [
         ...datasetGroups,
         ...response.data.content,
       ]);
@@ -51,13 +51,13 @@ export function useDatasetMarkers() {
 export function useActiveDatasetIds(layerType?: LayerType) {
   const datasetControlItems = useDatasetControlItems();
   const activeDatasetIds: string[] = useMemo(() => {
-    return datasetControlItems.flatMap((datasetControlItem) =>
+    return datasetControlItems.flatMap(datasetControlItem =>
       datasetControlItem.collection
         .filter(
-          (dataset) =>
+          dataset =>
             dataset.isActive && (!layerType || dataset.layerType === layerType)
         )
-        .map((dataset) => dataset.id)
+        .map(dataset => dataset.id)
     );
   }, [datasetControlItems, layerType]);
 
@@ -74,7 +74,7 @@ export function useActivePolyLineDatasetIds() {
 
 interface SelectedMarkerData {
   datasetId?: string;
-  datasetItemId?: string;
+  id?: string;
   markerData?: any | null;
 }
 

@@ -98,13 +98,15 @@ function processFeatures(features: SuperClusterFeatures) {
   }
 
   for (const [, features] of Object.entries(items)) {
+    // No point modification needed
     if (features.length === 1) {
       markersFinal.push(features[0]);
     } else {
+      const [lng, lat] = features[0].geometry.coordinates;
       const pts = coordinateCircle(
         {
-          lat: features[0].geometry.coordinates[0],
-          lng: features[0].geometry.coordinates[1],
+          lat,
+          lng,
         },
         features.length
       );

@@ -10,7 +10,7 @@ export function createClusterDatasetMarkers(datasetGroups: DatasetCollection) {
     .filter(
       (feature): feature is MaPointFeature => feature.geometry.type === 'Point'
     )
-    .map((feature) => {
+    .map(feature => {
       return createMarker(feature);
     });
 }
@@ -25,11 +25,9 @@ export function createMarker(feature: MaPointFeature) {
   });
 
   const [lat, lng] = feature.geometry.coordinates;
-  return L.marker(new L.LatLng(lat, lng), {
+  const marker = L.marker(new L.LatLng(lat, lng), {
     icon,
-    properties: {
-      datasetItemId: feature.properties.id,
-      datasetId: feature.properties.datasetId,
-    },
-  } as any);
+  });
+  marker.feature = feature;
+  return marker;
 }

@@ -16,7 +16,7 @@ export interface MaPolyLineFeature {
   title: string;
   geometry: any;
   datasetId: string;
-  datasetItemId: string;
+  id: string;
 }
 
 const DEFAULT_POLYLINE_COLOR = '#EC0000';
@@ -31,7 +31,7 @@ export const DEFAULT_POLYLINE_OPTIONS = {
 const allColors: any = Object.entries(themeColors)
   .filter(([key]) => !['tint', 'bright'].includes(key))
   .map(([, colors]) => Object.values(colors))
-  .flatMap((colors) => colors);
+  .flatMap(colors => colors);
 
 export function randomColor() {
   const color =

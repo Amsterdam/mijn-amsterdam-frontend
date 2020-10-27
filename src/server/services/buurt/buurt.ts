@@ -158,7 +158,7 @@ export async function loadServicesMapDatasets(
 export async function loadServicesMapDatasetItem(
   sessionID: SessionID,
   datasetId: string,
-  datasetItemId: string
+  id: string
 ) {
   const [datasetConfig] = getDatasetEndpointConfig(datasetId);
 
@@ -167,7 +167,7 @@ export async function loadServicesMapDatasetItem(
   }
 
   const [, config] = datasetConfig;
-  const url = `${config.detailUrl}${datasetItemId}`;
+  const url = `${config.detailUrl}${id}`;
 
   const requestConfig: DataRequestConfig = {
     url,

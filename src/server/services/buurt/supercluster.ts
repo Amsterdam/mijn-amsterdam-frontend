@@ -90,10 +90,10 @@ export async function loadClusterDatasets(
     const data = superClusterIndex.getClusters(bbox, zoom);
     for (const feature of data) {
       addExpansionZoom(superClusterIndex, feature);
-      feature.geometry.coordinates = [
-        feature.geometry.coordinates[1],
-        feature.geometry.coordinates[0],
-      ];
+      // feature.geometry.coordinates = [
+      //   feature.geometry.coordinates[1],
+      //   feature.geometry.coordinates[0],
+      // ];
     }
     return data;
   }
