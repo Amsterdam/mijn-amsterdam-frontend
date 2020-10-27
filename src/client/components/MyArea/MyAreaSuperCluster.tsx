@@ -69,7 +69,7 @@ function coordinateCircle(
   return points;
 }
 
-function round(num: number, decimalPlaces: number = 10) {
+function round(num: number, decimalPlaces: number = 6) {
   const num2 = Math.round((num + 'e' + decimalPlaces) as any);
   return Number(num2 + 'e' + -decimalPlaces);
 }
