@@ -674,7 +674,7 @@ Object {
         "to": "/inkomen-en-stadspas/tozo/3/685054265",
       },
       "productTitle": "Tozo 3",
-      "status": "Besluit",
+      "status": "Voorschot",
       "steps": Array [
         Object {
           "datePublished": "2020-02-05T00:00:00+01:00",
@@ -727,8 +727,8 @@ Object {
         Object {
           "datePublished": "2020-10-01",
           "description": "<p>
-          U hebt recht op de Tozo 3 voorschot. Bekijk de brief
-          voor meer details.
+          Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
+          voorwaarden in de brief.
         </p>",
           "documents": Array [
             Object {
@@ -742,10 +742,10 @@ Object {
           "id": "973123992",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "U hebt recht op de Tozo 3 voorschot (besluit: 01 oktober 2020).",
-          "notificationTitle": "Tozo 3 voorschot: Uw aanvraag is toegekend",
+          "notificationDescription": "Wij hebben een voorschot naar uw rekening overgemaakt.",
+          "notificationTitle": "Tozo 3: Wij hebben een voorschot betaald",
           "product": "Tozo 3",
-          "status": "Besluit",
+          "status": "Voorschot",
           "title": "voorschot",
         },
         Object {
@@ -955,8 +955,8 @@ Object {
         Object {
           "datePublished": "2020-10-01",
           "description": "<p>
-          U hebt recht op Tozo 3. Bekijk de brief
-          voor meer details.
+          Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
+          voorwaarden in de brief.
         </p>",
           "documents": Array [
             Object {
@@ -970,10 +970,10 @@ Object {
           "id": "973123992",
           "isActive": true,
           "isChecked": true,
-          "notificationDescription": "U hebt recht op Tozo 3 (besluit: 01 oktober 2020).",
-          "notificationTitle": "Tozo 3: Uw aanvraag is toegekend",
+          "notificationDescription": "Wij hebben een voorschot naar uw rekening overgemaakt.",
+          "notificationTitle": "Tozo 3: Wij hebben een voorschot betaald",
           "product": "Tozo 3",
-          "status": "Besluit",
+          "status": "Voorschot",
           "title": "voorschot",
         },
       ],
