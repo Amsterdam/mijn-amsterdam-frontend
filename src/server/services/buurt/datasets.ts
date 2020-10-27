@@ -5,9 +5,14 @@ import { LatLngTuple } from 'leaflet';
 
 type DatasetItemId = string;
 type DatasetId = string;
+type DatasetPolyLineOptions = Record<string, string>;
 
 export type DatasetItemTuple = [Lat, Lng, DatasetItemId | DatasetItemId[]];
-export type DatasetPolyLineItemTuple = [Array<LatLngTuple[]>, DatasetItemId];
+export type DatasetPolyLineItemTuple = [
+  Array<LatLngTuple[]>,
+  DatasetItemId,
+  DatasetPolyLineOptions
+];
 
 export type DatasetCollection = Record<DatasetId, DatasetItemTuple[]>;
 
@@ -177,7 +182,11 @@ function transformListSportApiResponse(id: string, responseData: any) {
       if (feature.geometry?.coordinates) {
         if (feature.geometry.type === 'MultiPolygon') {
           recursiveCoordinateSwap(feature.geometry.coordinates);
-          polylineCollection.push([feature.geometry.coordinates, feature.id]);
+          polylineCollection.push([
+            feature.geometry.coordinates,
+            feature.id,
+            { color: 'purple' }, // TODO: color config
+          ]);
         } else if (feature.geometry.type === 'Point') {
           const [lng, lat] = feature.geometry.coordinates;
           pointCollection.push([lat, lng, feature.id]);
@@ -400,14 +409,16 @@ function transformParkeerzones(WFSData: any) {
 }
 
 function transformParkeerzoneCoords(datasetId: string, responseData: any) {
-  const collection = getApiEmbeddedResponse(datasetId, responseData);
-  if (collection && collection.length) {
-    for (const feature of collection) {
+  const results = getApiEmbeddedResponse(datasetId, responseData);
+  const collection: DatasetPolyLineItemTuple[] = [];
+  if (results && results.length) {
+    for (const feature of results) {
       recursiveCoordinateSwap(feature.geometry.coordinates);
-      feature.title = feature.gebiedsnaam;
-      feature.color = feature.gebiedskleurcode;
-      delete feature.gebiedskleurcode;
-      delete feature.gebiedsnaam;
+      collection.push([
+        feature.geometry.coordinates,
+        feature.id,
+        { color: feature.gebiedskleurcode },
+      ]);
     }
     return {
       id: datasetId,
