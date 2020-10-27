@@ -1,4 +1,5 @@
 import { DatasetConfig, datasetEndpoints } from './datasets';
+import { DATASETS } from '../../../universal/config/buurt';
 export function recursiveCoordinateSwap(coords: any) {
   for (const coord of coords) {
     const c1 = coord[0];
@@ -16,30 +17,15 @@ export function getApiEmbeddedResponse(id: string, responseData: any) {
   return Array.isArray(results) ? results : null;
 }
 
-export function getDatasetEndpointConfig(
-  datasetGroupId?: string,
-  datasetId?: string
-) {
+export function getDatasetEndpointConfig(datasetId?: string) {
   const configs: Array<[string, DatasetConfig]> = Object.entries(
     datasetEndpoints
-  )
-    .filter(([id, config]) => !datasetGroupId || id === datasetGroupId)
-    .map(([datasetGroupId, config]) => {
-      // Returns a DatasetConfig from a multi group
-      if (datasetId && config?.multi && config.multi[datasetId]) {
-        return [
-          datasetGroupId,
-          {
-            ...config,
-            multi: {
-              [datasetId]: config.multi[datasetId],
-            },
-          },
-        ];
-      }
-      // always return the group dataset if a more specific dataset is not found
-      return [datasetGroupId, config];
-    });
+  ).filter(
+    ([id, config]) =>
+      !datasetId ||
+      id === datasetId ||
+      (DATASETS[id] && DATASETS[id].includes(datasetId))
+  );
 
   return configs;
 }

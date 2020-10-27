@@ -31,6 +31,7 @@ import { useSelectedMarkerData } from './MyArea.hooks';
 import MyAreaHeader from './MyAreaHeader';
 import MyAreaLoader from './MyAreaLoader';
 import MyAreaPanels from './MyAreaPanels';
+import { MyAreaPolyLineDatasets } from './MyAreaPolyLineDatasets';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
 
 const StyledViewerContainer = styled(ViewerContainer)`
@@ -58,7 +59,6 @@ const MyAreaMap = styled(Map)`
 `;
 
 interface BuurtRouteParams {
-  datasetGroupId?: string;
   datasetId?: string;
   datasetItemId?: string;
 }
@@ -83,20 +83,19 @@ export default function MyArea2() {
     return selectedMarkerDataState;
   }, [selectedMarkerDataState, params]);
 
-  const { datasetGroupId, datasetId, datasetItemId } = selectedMarkerData;
+  const { datasetId, datasetItemId } = selectedMarkerData;
 
   useEffect(() => {
-    if (!datasetItemId || !datasetGroupId || !datasetId) {
+    if (!datasetItemId || !datasetId) {
       return;
     }
 
     axios({
-      url: `${BFFApiUrls.MAP_DATASETS}/${datasetGroupId}/${datasetId}/${datasetItemId}`,
+      url: `${BFFApiUrls.MAP_DATASETS}/${datasetId}/${datasetItemId}`,
     })
       .then(({ data: { content: markerData } }) => {
         setSelectedMarkerData({
           datasetItemId,
-          datasetGroupId,
           datasetId,
           markerData,
         });
@@ -104,12 +103,11 @@ export default function MyArea2() {
       .catch((error) => {
         setSelectedMarkerData({
           datasetItemId,
-          datasetGroupId,
           datasetId,
           markerData: 'error',
         });
       });
-  }, [datasetGroupId, datasetId, datasetItemId, setSelectedMarkerData]);
+  }, [datasetId, datasetItemId, setSelectedMarkerData]);
 
   const onMarkerClick = useCallback(
     (event: any) => {
@@ -120,11 +118,6 @@ export default function MyArea2() {
         : event?.layer?.feature?.properties?.datasetItemId;
 
       if (selectedMarkerData?.datasetItemId !== datasetItemId) {
-        const datasetGroupId = event?.layer?.feature?.properties?.dataset
-          ? event?.layer?.feature?.properties?.dataset[2]
-          : event.layer.options.datasetGroupId
-          ? event.layer.options.datasetGroupId
-          : event?.layer?.feature?.properties?.datasetGroupId;
         const datasetId = event?.layer?.feature?.properties?.dataset
           ? event?.layer?.feature?.properties?.dataset[1]
           : event.layer.options.datasetId
@@ -134,7 +127,6 @@ export default function MyArea2() {
         console.log(event.layer);
 
         setSelectedMarkerData({
-          datasetGroupId,
           datasetId,
           datasetItemId,
         });
@@ -196,7 +188,7 @@ export default function MyArea2() {
                 initialPosition={isDesktop ? SnapPoint.Full : SnapPoint.Closed}
               >
                 <MyAreaPanels onCloseDetailPanel={onCloseDetailPanel} />
-                {/* <MyAreaPolyLineDatasets onMarkerClick={onMarkerClick} /> */}
+                <MyAreaPolyLineDatasets onMarkerClick={onMarkerClick} />
                 <MaSuperClusterLayer onMarkerClick={onMarkerClick} />
                 {/* <MyAreaClusterDatasets onMarkerClick={onMarkerClick} /> */}
               </MapPanelProvider>

@@ -2,7 +2,7 @@ import { apiDependencyError, isMokum } from '../../universal/helpers';
 import { apiErrorResult, apiSuccesResult } from '../../universal/helpers/api';
 import { fetchBAG, fetchBRP } from './index';
 import { fetchKVK, getKvkAddress } from './kvk';
-import { DEFAULT_LAT, DEFAULT_LNG } from '../../universal/config/map';
+import { DEFAULT_LAT, DEFAULT_LNG } from '../../universal/config/buurt';
 
 async function fetchPrivate(
   sessionID: SessionID,

@@ -6,24 +6,27 @@ import {
   useRecoilValue,
   useSetRecoilState,
 } from 'recoil';
-import { DatasetGroup } from '../../../server/services/buurt/datasets';
+import { DatasetCollection } from '../../../server/services/buurt/datasets';
+import { ApiSuccessResponse } from '../../../universal/helpers';
 import { RefetchFunction } from '../../hooks/api/useDataApi';
 import { LayerType } from './datasets';
 import { createClusterDatasetMarkers } from './MyArea.helpers';
 import { useDatasetControlItems } from './MyAreaDatasetControl';
 
-export const datasetGroupsAtom = atom<DatasetGroup[]>({
+export const datasetGroupsAtom = atom<DatasetCollection>({
   key: 'datasetGroupsAtom',
   default: [],
 });
 
 export function useDatasetGroups(
   layerType?: LayerType
-): [DatasetGroup[], RefetchFunction] {
+): [DatasetCollection, RefetchFunction] {
   const [datasetGroups, setDatasetGroups] = useRecoilState(datasetGroupsAtom);
   const fetchDatasets = useCallback(
     async (requestOptions) => {
-      const response = await axios(requestOptions);
+      const response: {
+        data: ApiSuccessResponse<DatasetCollection>;
+      } = await axios(requestOptions);
       setDatasetGroups((datasetGroups) => [
         ...datasetGroups,
         ...response.data.content,
@@ -70,7 +73,6 @@ export function useActivePolyLineDatasetIds() {
 }
 
 interface SelectedMarkerData {
-  datasetGroupId?: string;
   datasetId?: string;
   datasetItemId?: string;
   markerData?: any | null;

@@ -5,6 +5,7 @@ import L, { Marker, PolylineOptions } from 'leaflet';
 import React, { ReactElement, ReactNode } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import styled from 'styled-components';
+import { DATASETS } from '../../../universal/config';
 import { FeatureToggle } from '../../../universal/config/app';
 import { capitalizeFirstLetter } from '../../../universal/helpers';
 import {
@@ -59,43 +60,6 @@ export function createMarkerIcon({
     iconAnchor,
   });
 }
-
-export const DATASETS = {
-  afvalcontainers: ['rest', 'papier', 'glas', 'plastic', 'textiel', 'gft'],
-  parkeren: ['parkeerzones', 'parkeerzones_uitzondering'],
-  bekendmakingen: [
-    'apv vergunning',
-    'evenementenvergunning',
-    'exploitatievergunning',
-    'inspraak',
-    'kapvergunning',
-    'ligplaatsvergunning',
-    'meldingen',
-    'omgevingsvergunning',
-    'onttrekkingsvergunning',
-    'openingstijden',
-    'rectificatie',
-    'speelautomaten',
-    'splitsingsvergunning',
-    'terrasvergunning',
-    'verkeersbesluit',
-    'overig',
-    'geluidvergunning',
-    'bestemmingsplan',
-    'drank- en horecavergunning',
-  ],
-  evenementen: ['evenementen'],
-  sport: [
-    'zwembad',
-    'sportpark',
-    'sportveld',
-    'gymsportzaal',
-    'sporthal',
-    'sportaanbieder',
-    'openbaresportplek',
-    'hardlooproute',
-  ],
-};
 
 const DatasetIcon = styled.div`
   margin-right: ${themeSpacing(2)};
@@ -287,12 +251,8 @@ export function getIcon(id: string) {
   return datasetIcons[id] || datasetIcons.default;
 }
 
-export function getIconHtml(datasetId: string, datasetGroupId: string) {
-  return (
-    datasetIconHtml[datasetId] ||
-    datasetIconHtml[datasetGroupId] ||
-    datasetIconHtml.default
-  );
+export function getIconHtml(datasetId: string) {
+  return datasetIconHtml[datasetId] || datasetIconHtml.default;
 }
 
 export enum LayerType {
@@ -361,7 +321,7 @@ export const POLYLINE_DATASETS = DATASET_CONTROL_ITEMS.filter(
 ).flatMap((config) =>
   config.collection
     .filter((control) => control.layerType === LayerType.PolyLine)
-    .map((control) => [config.id, control.id])
+    .map((control) => control.id)
 );
 
 export const PARKEERZONES_POLYLINE_OPTIONS: Record<string, PolylineOptions> = {

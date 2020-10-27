@@ -8,7 +8,6 @@ interface MaPolyLineLayerProps {
   onMarkerClick?: LeafletMouseEventHandlerFn;
   polylineOptions?: L.PolylineOptions;
   datasetId: string;
-  datasetGroupId: string;
   features: MaPolyLineFeature[];
 }
 
@@ -49,7 +48,6 @@ export function MaPolyLineLayer({
   onMarkerClick,
   polylineOptions = DEFAULT_POLYLINE_OPTIONS,
   datasetId,
-  datasetGroupId,
   features,
 }: MaPolyLineLayerProps) {
   const map = useMapInstance();
@@ -71,7 +69,7 @@ export function MaPolyLineLayer({
 
       layer.feature = feature;
 
-      const html = getIconHtml(datasetId, datasetGroupId);
+      const html = getIconHtml(datasetId);
       const icon = L.divIcon({
         html,
         className: '',
@@ -97,14 +95,7 @@ export function MaPolyLineLayer({
         map.removeLayer(layer);
       });
     };
-  }, [
-    map,
-    features,
-    onMarkerClick,
-    polylineOptions,
-    datasetId,
-    datasetGroupId,
-  ]);
+  }, [map, features, onMarkerClick, polylineOptions, datasetId]);
 
   return null;
 }

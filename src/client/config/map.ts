@@ -4,7 +4,7 @@ import {
   HOOD_ZOOM,
   proj4RD,
   projDefinition,
-} from '../../universal/config/map';
+} from '../../universal/config/buurt';
 import L, { LatLng, MapOptions } from 'leaflet';
 import { InterfaceCoordinates } from 'proj4';
 

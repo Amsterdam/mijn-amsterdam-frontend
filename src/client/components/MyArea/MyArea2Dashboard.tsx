@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import React from 'react';
 import styled from 'styled-components';
 import { ChapterTitles } from '../../../universal/config';
-import { HOOD_ZOOM } from '../../../universal/config/map';
+import { HOOD_ZOOM } from '../../../universal/config/buurt';
 import { getFullAddress } from '../../../universal/helpers/brp';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useAppStateGetter } from '../../hooks/useAppState';

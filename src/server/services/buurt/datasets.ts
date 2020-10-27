@@ -1,46 +1,34 @@
+import { DATASETS } from '../../../universal/config/buurt';
 import { capitalizeFirstLetter } from '../../../universal/helpers';
 import { getApiEmbeddedResponse, recursiveCoordinateSwap } from './helpers';
-import { DEFAULT_LAT, DEFAULT_LNG } from '../../../universal/config/map';
-import { LatLngTuple } from 'leaflet';
 
-type DatasetItemId = string;
-type DatasetId = string;
-type DatasetPolyLineOptions = Record<string, string>;
-
-export type DatasetItemTuple = [Lat, Lng, DatasetItemId | DatasetItemId[]];
-export type DatasetPolyLineItemTuple = [
-  Array<LatLngTuple[]>,
-  DatasetItemId,
-  DatasetPolyLineOptions
-];
-
-export type DatasetCollection = Record<DatasetId, DatasetItemTuple[]>;
-
-export interface DatasetGroup {
+export type DatasetFeatureProperties = {
   id: string;
-  collection: DatasetCollection;
-}
+  datasetId: string;
+  color?: string;
+};
+export type MaFeature<
+  G extends GeoJSON.Geometry = Exclude<
+    GeoJSON.Geometry,
+    GeoJSON.GeometryCollection
+  >
+> = GeoJSON.Feature<G, DatasetFeatureProperties>;
+export type MaPointFeature = MaFeature<GeoJSON.Point>;
+export type DatasetCollection = MaFeature[];
+
 export const BUURT_CACHE_TTL_HOURS = 24;
 export const ACCEPT_CRS_4326 = {
   'Accept-Crs': 'EPSG:4326', // Will return coordinates in [lng/lat] format
 };
+
 const CONTAINER_STATUS_ACTIVE = 1;
-const CONTAINER_FRACTIE_IN = [
-  'rest',
-  'glas',
-  'papier',
-  'gft',
-  'plastic',
-  'textiel',
-];
 
 export interface DatasetConfig {
-  multi?: Record<string, DatasetConfig>;
+  datasetIds?: string[];
   listUrl?: string;
   detailUrl?: string;
   transformList?: (data: any) => any;
   transformDetail?: (data: any) => any;
-  noCluster?: boolean;
 }
 
 export const datasetEndpoints: Record<string, DatasetConfig> = {
@@ -66,104 +54,94 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     transformList: transformBekendmakingen,
     transformDetail: transformBekendmakingenDetail,
   },
-  parkeren: {
-    noCluster: true,
-    multi: {
-      parkeerzones: {
-        listUrl:
-          'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones/?_fields=id,geometry,gebiedskleurcode,gebiedsnaam&indicatieZichtbaar=TRUE&page_size=500',
-        detailUrl:
-          'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones/',
-        transformDetail: transformParkeerzones,
-        transformList: (responseData) =>
-          transformParkeerzoneCoords('parkeerzones', responseData),
-      },
-      parkeerzones_uitzondering: {
-        listUrl:
-          'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones_uitzondering/?_fields=id,geometry,gebiedsnaam&indicatieZichtbaar=TRUE&page_size=100',
-        detailUrl:
-          'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones_uitzondering/',
-        transformDetail: transformparkeerzonesUitzondering,
-        transformList: (responseData) =>
-          transformParkeerzoneCoords('parkeerzones_uitzondering', responseData),
-      },
-    },
+  parkeerzones: {
+    listUrl:
+      'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones/?_fields=id,geometry,gebiedskleurcode,gebiedsnaam&indicatieZichtbaar=TRUE&page_size=500',
+    detailUrl: 'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones/',
+    transformDetail: transformParkeerzones,
+    transformList: (responseData) =>
+      transformParkeerzoneCoords('parkeerzones', responseData),
   },
-  sport: {
-    multi: {
-      zwembad: {
-        listUrl:
-          'https://api.data.amsterdam.nl/v1/sport/zwembad/?_fields=id,geometry&page_size=30',
-        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/zwembad/',
-        transformList: (responseData: any) =>
-          transformListSportApiResponse('zwembad', responseData),
-        transformDetail: (responseData: any) =>
-          transformDetailSportApiResponse(responseData),
-      },
-      sportpark: {
-        listUrl:
-          'https://api.data.amsterdam.nl/v1/sport/sportpark/?_fields=id,geometry&page_size=60',
-        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportpark/',
-        transformList: (responseData: any) =>
-          transformListSportApiResponse('sportpark', responseData),
-        transformDetail: (responseData: any) =>
-          transformDetailSportApiResponse(responseData),
-      },
-      sportveld: {
-        listUrl:
-          'https://api.data.amsterdam.nl/v1/sport/sportveld/?_fields=id,geometry&page_size=1000',
-        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportveld/',
-        transformList: (responseData: any) =>
-          transformListSportApiResponse('sportveld', responseData),
-        transformDetail: (responseData: any) =>
-          transformDetailSportApiResponse(responseData),
-      },
-      gymsportzaal: {
-        listUrl:
-          'https://api.data.amsterdam.nl/v1/sport/gymsportzaal/?_fields=id,adres,plaats&page_size=150',
-        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/gymsportzaal/',
-        transformList: (responseData: any) =>
-          transformListSportApiResponse('gymsportzaal', responseData),
-        transformDetail: (responseData: any) =>
-          transformDetailSportApiResponse(responseData),
-      },
-      sporthal: {
-        listUrl:
-          'https://api.data.amsterdam.nl/v1/sport/sporthal/?_fields=id,geometry&page_size=50',
-        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sporthal/',
-        transformList: (responseData: any) =>
-          transformListSportApiResponse('sporthal', responseData),
-        transformDetail: (responseData: any) =>
-          transformDetailSportApiResponse(responseData),
-      },
-      sportaanbieder: {
-        listUrl:
-          'https://api.data.amsterdam.nl/v1/sport/sportaanbieder/?_fields=id,geometry&page_size=2000',
-        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportaanbieder/',
-        transformList: (responseData: any) =>
-          transformListSportApiResponse('sportaanbieder', responseData),
-        transformDetail: (responseData: any) =>
-          transformDetailSportApiResponse(responseData),
-      },
-      openbaresportplek: {
-        listUrl:
-          'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/?_fields=id,geometry&page_size=1000',
-        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/',
-        transformList: (responseData: any) =>
-          transformListSportApiResponse('openbaresportplek', responseData),
-        transformDetail: (responseData: any) =>
-          transformDetailSportApiResponse(responseData),
-      },
-      hardlooproute: {
-        listUrl:
-          'https://api.data.amsterdam.nl/v1/sport/hardlooproute/?_fields=id,geometry&page_size=50',
-        detailUrl: 'https://api.data.amsterdam.nl/v1/sport/hardlooproute/',
-        transformList: (responseData: any) =>
-          transformListSportApiResponse('hardlooproute', responseData),
-        transformDetail: (responseData: any) =>
-          transformDetailSportApiResponse(responseData),
-      },
-    },
+  parkeerzones_uitzondering: {
+    listUrl:
+      'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones_uitzondering/?_fields=id,geometry,gebiedsnaam&indicatieZichtbaar=TRUE&page_size=100',
+    detailUrl:
+      'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones_uitzondering/',
+    transformDetail: transformparkeerzonesUitzondering,
+    transformList: (responseData) =>
+      transformParkeerzoneCoords('parkeerzones_uitzondering', responseData),
+  },
+  zwembad: {
+    listUrl:
+      'https://api.data.amsterdam.nl/v1/sport/zwembad/?_fields=id,geometry&page_size=30',
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/zwembad/',
+    transformList: (responseData: any) =>
+      transformListSportApiResponse('zwembad', responseData),
+    transformDetail: (responseData: any) =>
+      transformDetailSportApiResponse(responseData),
+  },
+  sportpark: {
+    listUrl:
+      'https://api.data.amsterdam.nl/v1/sport/sportpark/?_fields=id,geometry&page_size=60',
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportpark/',
+    transformList: (responseData: any) =>
+      transformListSportApiResponse('sportpark', responseData),
+    transformDetail: (responseData: any) =>
+      transformDetailSportApiResponse(responseData),
+  },
+  sportveld: {
+    listUrl:
+      'https://api.data.amsterdam.nl/v1/sport/sportveld/?_fields=id,geometry&page_size=1000',
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportveld/',
+    transformList: (responseData: any) =>
+      transformListSportApiResponse('sportveld', responseData),
+    transformDetail: (responseData: any) =>
+      transformDetailSportApiResponse(responseData),
+  },
+  gymsportzaal: {
+    listUrl:
+      'https://api.data.amsterdam.nl/v1/sport/gymsportzaal/?_fields=id,adres,plaats&page_size=150',
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/gymsportzaal/',
+    transformList: (responseData: any) =>
+      transformListSportApiResponse('gymsportzaal', responseData),
+    transformDetail: (responseData: any) =>
+      transformDetailSportApiResponse(responseData),
+  },
+  sporthal: {
+    listUrl:
+      'https://api.data.amsterdam.nl/v1/sport/sporthal/?_fields=id,geometry&page_size=50',
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sporthal/',
+    transformList: (responseData: any) =>
+      transformListSportApiResponse('sporthal', responseData),
+    transformDetail: (responseData: any) =>
+      transformDetailSportApiResponse(responseData),
+  },
+  sportaanbieder: {
+    listUrl:
+      'https://api.data.amsterdam.nl/v1/sport/sportaanbieder/?_fields=id,geometry&page_size=2000',
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportaanbieder/',
+    transformList: (responseData: any) =>
+      transformListSportApiResponse('sportaanbieder', responseData),
+    transformDetail: (responseData: any) =>
+      transformDetailSportApiResponse(responseData),
+  },
+  openbaresportplek: {
+    listUrl:
+      'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/?_fields=id,geometry&page_size=1000',
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/',
+    transformList: (responseData: any) =>
+      transformListSportApiResponse('openbaresportplek', responseData),
+    transformDetail: (responseData: any) =>
+      transformDetailSportApiResponse(responseData),
+  },
+  hardlooproute: {
+    listUrl:
+      'https://api.data.amsterdam.nl/v1/sport/hardlooproute/?_fields=id,geometry&page_size=50',
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/hardlooproute/',
+    transformList: (responseData: any) =>
+      transformListSportApiResponse('hardlooproute', responseData),
+    transformDetail: (responseData: any) =>
+      transformDetailSportApiResponse(responseData),
   },
 };
 
@@ -171,63 +149,58 @@ function transformDetailSportApiResponse(responseData: any) {
   return responseData;
 }
 
-function transformListSportApiResponse(id: string, responseData: any) {
-  const results = getApiEmbeddedResponse(id, responseData);
+function transformListSportApiResponse(datasetId: string, responseData: any) {
+  const results = getApiEmbeddedResponse(datasetId, responseData);
+  const collection: DatasetCollection = [];
 
   if (results && results.length) {
-    const pointCollection: DatasetItemTuple[] = [];
-    const polylineCollection: DatasetPolyLineItemTuple[] = [];
-
     for (const feature of results) {
       if (feature.geometry?.coordinates) {
-        if (feature.geometry.type === 'MultiPolygon') {
+        const properties: DatasetFeatureProperties = {
+          id: feature.id,
+          datasetId,
+        };
+        if (
+          feature.geometry.type === 'MultiPolygon' ||
+          feature.geometry.type === 'MultiLineString'
+        ) {
           recursiveCoordinateSwap(feature.geometry.coordinates);
-          polylineCollection.push([
-            feature.geometry.coordinates,
-            feature.id,
-            { color: 'purple' }, // TODO: color config
-          ]);
-        } else if (feature.geometry.type === 'Point') {
-          const [lng, lat] = feature.geometry.coordinates;
-          pointCollection.push([lat, lng, feature.id]);
-        } else {
-          // TODO: Fetch geometry from some service here...
-          pointCollection.push([DEFAULT_LAT, DEFAULT_LNG, feature.id]);
+          properties.color = 'purple';
         }
+        collection.push({
+          type: 'Feature',
+          geometry: feature.geometry,
+          properties,
+        });
       }
     }
-
-    return {
-      id,
-      collection: pointCollection.length ? pointCollection : polylineCollection,
-    };
   }
 
-  return null;
+  return collection;
 }
 
 function transformAfvalcontainers(WFSData: any) {
-  const collection: Record<string, DatasetItemTuple[]> = {};
+  const collection: DatasetCollection = [];
   for (const feature of WFSData.features) {
     const fractieOmschrijving = feature.properties?.fractie_omschrijving.toLowerCase();
     // Redundant filtering, the API should return with the proper dataset already
     if (
       feature.properties?.status === CONTAINER_STATUS_ACTIVE &&
-      CONTAINER_FRACTIE_IN.includes(fractieOmschrijving)
+      DATASETS.afvalcontainers.includes(fractieOmschrijving)
     ) {
-      if (!collection[fractieOmschrijving]) {
-        collection[fractieOmschrijving] = [];
-      }
       if (feature?.geometry?.coordinates) {
-        const [lng, lat] = feature.geometry.coordinates;
-        collection[fractieOmschrijving].push([lat, lng, feature.properties.id]);
+        collection.push({
+          type: 'Feature',
+          geometry: feature.geometry,
+          properties: {
+            id: feature.properties.id,
+            datasetId: fractieOmschrijving,
+          },
+        });
       }
     }
   }
-  return {
-    id: 'afvalcontainers',
-    collection,
-  };
+  return collection;
 }
 
 function transformAfvalcontainersDetail(responseData: any) {
@@ -291,21 +264,22 @@ function transformAfvalcontainersDetail(responseData: any) {
 
 function transformEvenementen(responseData: any) {
   const results = getApiEmbeddedResponse('evenementen', responseData);
-  const collection: Record<string, DatasetItemTuple[]> = { evenementen: [] };
+  const collection: DatasetCollection = [];
   if (results && results.length) {
     for (const feature of results) {
       if (feature?.geometry?.coordinates) {
-        const [lng, lat] = feature.geometry.coordinates;
-        collection.evenementen.push([lat, lng, feature.id]);
+        collection.push({
+          type: 'Feature',
+          geometry: feature.geometry,
+          properties: {
+            id: feature.id,
+            datasetId: 'evenementen',
+          },
+        });
       }
     }
-
-    return {
-      id: 'evenementen',
-      collection,
-    };
   }
-  return null;
+  return collection;
 }
 
 function transformEvenementenDetail(responseData: any) {
@@ -343,25 +317,25 @@ function transformEvenementenDetail(responseData: any) {
 
 function transformBekendmakingen(responseData: any) {
   const results = getApiEmbeddedResponse('bekendmakingen', responseData);
-  const collection: Record<string, DatasetItemTuple[]> = {};
+  const collection: DatasetCollection = [];
+
   if (results && results.length) {
     for (const feature of results) {
-      const onderwerp = feature?.onderwerp.toLowerCase();
-      if (!collection[onderwerp]) {
-        collection[onderwerp] = [];
-      }
+      const datasetId = feature?.onderwerp.toLowerCase();
+
       if (feature?.geometry?.coordinates) {
-        const [lng, lat] = feature.geometry.coordinates;
-        collection[onderwerp].push([lat, lng, feature.id]);
+        collection.push({
+          type: 'Feature',
+          geometry: feature.geometry,
+          properties: {
+            id: feature.id,
+            datasetId,
+          },
+        });
       }
     }
-
-    return {
-      id: 'bekendmakingen',
-      collection,
-    };
   }
-  return null;
+  return collection;
 }
 
 function transformBekendmakingenDetail(responseData: any) {
@@ -410,22 +384,22 @@ function transformParkeerzones(WFSData: any) {
 
 function transformParkeerzoneCoords(datasetId: string, responseData: any) {
   const results = getApiEmbeddedResponse(datasetId, responseData);
-  const collection: DatasetPolyLineItemTuple[] = [];
+  const collection: DatasetCollection = [];
   if (results && results.length) {
     for (const feature of results) {
       recursiveCoordinateSwap(feature.geometry.coordinates);
-      collection.push([
-        feature.geometry.coordinates,
-        feature.id,
-        { color: feature.gebiedskleurcode },
-      ]);
+      collection.push({
+        type: 'Feature',
+        geometry: feature.geometry,
+        properties: {
+          id: feature.id,
+          datasetId,
+          color: feature.gebiedskleurcode,
+        },
+      });
     }
-    return {
-      id: datasetId,
-      collection,
-    };
   }
-  return null;
+  return collection;
 }
 
 function transformparkeerzonesUitzondering(WFSData: any) {

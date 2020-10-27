@@ -1,33 +1,26 @@
-import Supercluster from 'supercluster';
-import { loadServicesMapDatasets } from './buurt/buurt';
+import { featureGroup } from 'leaflet';
 import memoryCache from 'memory-cache';
-import { BUURT_CACHE_TTL_HOURS } from './buurt/datasets';
+import Supercluster from 'supercluster';
+import { loadServicesMapDatasets } from './buurt';
+import {
+  BUURT_CACHE_TTL_HOURS,
+  DatasetCollection,
+  MaPointFeature,
+} from './datasets';
 
 let dataStore: any;
 
 const superClusterCache = new memoryCache.Cache<string, any>();
 
-function filterDatastore(dataStore: any, activeDatasetIds: any) {
-  return dataStore.flatMap((dataset: any) => {
-    const { collection, id: datasetGroupId } = dataset;
-    return Object.entries(collection)
-      .filter(([datasetId, coordinates]) =>
-        activeDatasetIds.includes(datasetId)
-      )
-      .flatMap(([datasetId, coordinates]: any) => {
-        return coordinates.map((coordinates: any) => {
-          return {
-            geometry: {
-              type: 'Point',
-              coordinates: [coordinates[1], coordinates[0]],
-            },
-            properties: {
-              dataset: [coordinates[2], datasetId, datasetGroupId],
-            },
-            type: 'Feature',
-          };
-        });
-      });
+function filterDatastore(
+  dataStore: DatasetCollection,
+  activeDatasetIds: string[]
+) {
+  return dataStore.filter((feature, index): feature is MaPointFeature => {
+    return (
+      feature.geometry.type === 'Point' &&
+      activeDatasetIds.includes(feature.properties.datasetId)
+    );
   });
 }
 
@@ -40,6 +33,7 @@ async function generateSuperCluster(
   const activeCacheKey = cacheKey(activeDatasetIds);
 
   if (superClusterCache.get(activeCacheKey)) {
+    console.info('Cache hit!', activeDatasetIds);
     return superClusterCache.get(activeCacheKey);
   }
 
@@ -80,28 +74,29 @@ function addExpansionZoom(superClusterIndex: any, feature: any) {
   }
 }
 
-export async function getClusterData(
+interface SuperClusterQuery {
+  bbox: any;
+  zoom: number;
+  datasetIds: string[];
+}
+
+export async function loadClusterDatasets(
   sessionID: SessionID,
-  { getClusterExpansionZoom, center, bbox, zoom, datasetIds, parentId }: any
+  { bbox, zoom, datasetIds }: SuperClusterQuery
 ) {
   const superClusterIndex = await generateSuperCluster(sessionID, datasetIds);
 
-  if (parentId) {
-    return {
-      children: superClusterIndex.getChildren(parseInt(parentId, 10)),
-    };
-  } else if (getClusterExpansionZoom && center) {
-    return {
-      expansionZoom: superClusterIndex.getClusterExpansionZoom(
-        getClusterExpansionZoom
-      ),
-      center,
-    };
-  } else if (bbox && zoom) {
+  if (bbox && zoom) {
     const data = superClusterIndex.getClusters(bbox, zoom);
-    data.forEach((feature: any) =>
-      addExpansionZoom(superClusterIndex, feature)
-    );
-    return { data };
+    for (const feature of data) {
+      addExpansionZoom(superClusterIndex, feature);
+      feature.geometry.coordinates = [
+        feature.geometry.coordinates[1],
+        feature.geometry.coordinates[0],
+      ];
+    }
+    return data;
   }
+
+  return null;
 }

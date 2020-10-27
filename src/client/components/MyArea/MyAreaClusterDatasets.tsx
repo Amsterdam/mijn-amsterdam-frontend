@@ -4,11 +4,10 @@ import L, { LeafletMouseEventHandlerFn } from 'leaflet';
 import React, { useEffect, useMemo, useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { BFFApiUrls } from '../../config/api';
-import { Datasets } from './datasets';
 import {
   useActiveClusterDatasetIds,
-  useDatasetMarkers,
   useDatasetGroups,
+  useDatasetMarkers,
 } from './MyArea.hooks';
 
 const iconCreateFunction = (
@@ -59,14 +58,13 @@ const Styles = createGlobalStyle`
   }
 `;
 
-function getFilteredMarkers(datasets: Datasets[], activeDatasetIds: string[]) {
-  return datasets.flatMap((dataset) =>
-    Object.entries(dataset.collection)
-      .filter(([datasetId]) => {
-        return activeDatasetIds.includes(datasetId);
-      })
-      .flatMap(([datasetId, markers]) => markers)
-  );
+function getFilteredMarkers(
+  markers: L.Marker<any>[],
+  activeDatasetIds: string[]
+) {
+  return markers.filter((marker) => {
+    return activeDatasetIds.includes((marker as any).properties.datasetId);
+  });
 }
 
 interface MyAreaClusterDatasetsProps {

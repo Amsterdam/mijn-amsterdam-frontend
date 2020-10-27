@@ -2,16 +2,17 @@ import * as Sentry from '@sentry/node';
 import express, { NextFunction, Request, Response } from 'express';
 import { BffEndpoints } from './config';
 import {
+  loadClusterDatasets,
   loadServicesMapDatasetItem,
   loadServicesMapDatasets,
 } from './services';
+import { loadPolyLineDatasets } from './services/buurt/buurt';
+import { ApiResponse } from '../universal/helpers/api';
 import {
   loadServicesAll,
   loadServicesSSE,
   loadServicesTips,
 } from './services/controller';
-import { getClusterData } from './services/services-map-supercluster';
-import { sessionID } from './helpers/app';
 
 export const router = express.Router();
 
@@ -49,10 +50,19 @@ router.get(BffEndpoints.SERVICES_TIPS, loadServicesTips);
 router.post(
   BffEndpoints.MAP_DATASETS,
   async (req: Request, res: Response, next: NextFunction) => {
-    let data = null;
     try {
-      data = await getClusterData(res.locals.sessionID, req.body);
-      res.json(data);
+      const clusters = await loadClusterDatasets(
+        res.locals.sessionID,
+        req.body
+      );
+      const polylines = await loadPolyLineDatasets(
+        res.locals.sessionID,
+        req.body.datasetIds
+      );
+      res.json({
+        clusters,
+        polylines,
+      });
       next();
     } catch (error) {
       next(error);
@@ -63,29 +73,26 @@ router.post(
 router.get(
   BffEndpoints.MAP_DATASETS,
   async (req: Request, res: Response, next: NextFunction) => {
-    const datasetGroupId = req.params.datasetGroupId;
     const datasetId = req.params.datasetId;
     const datasetItemId = req.params.datasetItemId;
-    let data = null;
+    let response: ApiResponse<any> | null = null;
     try {
-      if (datasetGroupId && datasetId && datasetItemId) {
-        data = await loadServicesMapDatasetItem(
+      if (datasetId && datasetItemId) {
+        response = await loadServicesMapDatasetItem(
           res.locals.sessionID,
-          datasetGroupId,
           datasetId,
           datasetItemId
         );
       } else {
-        data = await loadServicesMapDatasets(
+        response = await loadServicesMapDatasets(
           res.locals.sessionID,
-          datasetGroupId,
           datasetId
         );
       }
-      if (data.status !== 'OK') {
+      if (response.status !== 'OK') {
         res.status(500);
       }
-      res.json(data);
+      res.json(response);
       next();
     } catch (error) {
       next(error);

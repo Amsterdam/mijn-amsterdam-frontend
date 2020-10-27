@@ -1,6 +1,7 @@
 import axios from 'axios';
 import L, { LeafletMouseEventHandlerFn } from 'leaflet';
 import { useCallback, useEffect, useMemo } from 'react';
+import Supercluster from 'supercluster';
 import { BFFApiUrls } from '../../config/api';
 import { createMarkerIcon, getIconHtml } from './datasets';
 import { useActiveClusterDatasetIds } from './MyArea.hooks';
@@ -10,10 +11,7 @@ import { useMapRef } from './useMap';
 function createMarker(feature: any, latlng: any) {
   let icon;
   if (!feature?.properties.cluster) {
-    const html = getIconHtml(
-      feature.properties.dataset[1],
-      feature.properties.dataset[2]
-    );
+    const html = getIconHtml(feature.properties.datasetId);
     icon = L.divIcon({
       html,
       className: '',
@@ -38,7 +36,7 @@ function useClusterMarkers(map: L.Map | null) {
     if (!map) {
       return;
     }
-    const layer = L.geoJSON(undefined, {
+    const layer = L.geoJSON<SuperClusterFeatures>(undefined, {
       pointToLayer: createMarker,
     }).addTo(map);
 
@@ -76,9 +74,14 @@ function round(num: number, decimalPlaces: number = 10) {
   return Number(num2 + 'e' + -decimalPlaces);
 }
 
-function processMarkers(features: any) {
-  const items: any = {};
-  const markersFinal: any = [];
+type SuperClusterFeatures = Array<
+  Supercluster.PointFeature<any> | Supercluster.ClusterFeature<any>
+>;
+
+function processFeatures(features: SuperClusterFeatures) {
+  const items: Record<string, Supercluster.PointFeature<any>[]> = {};
+  const markersFinal: SuperClusterFeatures = [];
+
   for (const feature of features) {
     if (!feature.properties.cluster) {
       const c = `${round(feature.geometry.coordinates[0])}-${round(
@@ -94,14 +97,14 @@ function processMarkers(features: any) {
     }
   }
 
-  for (const [, features] of Object.entries<any>(items)) {
+  for (const [, features] of Object.entries(items)) {
     if (features.length === 1) {
       markersFinal.push(features[0]);
     } else {
       const pts = coordinateCircle(
         {
-          lat: features[0].geometry.coordinates[1],
-          lng: features[0].geometry.coordinates[0],
+          lat: features[0].geometry.coordinates[0],
+          lng: features[0].geometry.coordinates[1],
         },
         features.length
       );
@@ -114,13 +117,13 @@ function processMarkers(features: any) {
               coordinates: pt,
               type: 'Point',
             },
-          };
+          } as Supercluster.PointFeature<any>;
         });
       markersFinal.push(...modifiedMarkers);
     }
   }
 
-  return markersFinal as any;
+  return markersFinal;
 }
 
 interface MaSuperClusterLayerProps {
@@ -143,16 +146,15 @@ export function MaSuperClusterLayer({
   }, [markers]);
 
   const updateMap = useCallback(
-    (response) => {
+    (response: SuperClusterFeatures | { children: string[] }) => {
       if (!map || !markers) {
         return;
       }
-
-      if (response.children) {
-        console.log('children', response.children);
-      } else if (response.data) {
+      if (Array.isArray(response)) {
         markers.clearLayers();
-        markers.addData(processMarkers(response.data));
+        markers.addData(processFeatures(response) as any); // TODO: Figure out proper type
+      } else if (response.children) {
+        console.log('children', response.children);
       }
     },
     [map, markers]
@@ -166,7 +168,8 @@ export function MaSuperClusterLayer({
         data: payload,
         method: 'POST',
       });
-      updateMap(response.data);
+      // TODO: Add typing and error handling
+      updateMap(response.data.clusters);
     },
     [updateMap]
   );

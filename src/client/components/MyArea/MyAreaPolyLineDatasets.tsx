@@ -40,15 +40,11 @@ export function MyAreaPolyLineDatasets({
     if (!datasetGroups.length) {
       return;
     }
-    const loadedIds = datasetGroups.flatMap((datasetGroup) =>
-      Object.keys(datasetGroup.collection).map((datasetId) => [
-        datasetGroup.id,
-        datasetId,
-      ])
+    const loadedIds = Array.from(
+      new Set(datasetGroups.map((feature) => feature.properties.datasetId))
     );
     const datasetIdsToLoad = activePolyLineDatasetIds.filter(
-      ([, datasetId]) =>
-        !loadedIds.some(([, datasetIdLoaded]) => datasetIdLoaded === datasetId)
+      (datasetId) => !loadedIds.includes(datasetId)
     );
     if (datasetIdsToLoad.length) {
       fetchDatasets({
@@ -65,7 +61,7 @@ export function MyAreaPolyLineDatasets({
     return POLYLINE_DATASETS.filter(([, datasetId]) => {
       return (
         activePolyLineDatasetIds.some(
-          ([, datasetIdPolyLIne]) => datasetIdPolyLIne === datasetId
+          (datasetIdPolyLine) => datasetIdPolyLine === datasetId
         ) && Array.isArray(polyLineLayerData[datasetId])
       );
     });
@@ -73,14 +69,13 @@ export function MyAreaPolyLineDatasets({
 
   return (
     <>
-      {activePolyLineDatasets.map(([datasetGroupId, datasetId]) => {
+      {activePolyLineDatasets.map((datasetId) => {
         return (
           <MaPolyLineLayer
             key={datasetId}
             features={polyLineLayerData[datasetId]}
             polylineOptions={PARKEERZONES_POLYLINE_OPTIONS[datasetId]}
             datasetId={datasetId}
-            datasetGroupId={datasetGroupId}
             onMarkerClick={onMarkerClick}
           />
         );

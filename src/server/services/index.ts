@@ -4,6 +4,7 @@ export * from './bag';
 export * from './belasting';
 export * from './brp';
 export * from './buurt/buurt';
+export * from './buurt/supercluster';
 export * from './cms-content';
 export * from './erfpacht';
 export * from './focus/focus-aanvragen';

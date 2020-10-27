@@ -16,11 +16,10 @@ import { fetchHOME } from '../home';
 import {
   ACCEPT_CRS_4326,
   BUURT_CACHE_TTL_HOURS,
+  DatasetCollection,
   DatasetConfig,
-  DatasetGroup,
 } from './datasets';
 import { getDatasetEndpointConfig } from './helpers';
-import { DatasetItemTuple } from './datasets';
 
 const MAP_URL =
   'https://data.amsterdam.nl/data/?modus=kaart&achtergrond=topo_rd_zw&embed=true';
@@ -81,7 +80,7 @@ async function loadDataset(
   sessionID: SessionID,
   datasetId: string,
   datasetConfig: DatasetConfig
-): Promise<ApiResponse<any>> {
+) {
   const dataCache = fileCache(datasetId);
   const apiData = dataCache.getKey('response');
 
@@ -101,7 +100,7 @@ async function loadDataset(
     requestConfig.transformResponse = datasetConfig.transformList;
   }
 
-  const response = await requestData<DatasetGroup>(
+  const response = await requestData<DatasetCollection>(
     requestConfig,
     sessionID,
     {}
@@ -120,98 +119,55 @@ function loadDatasets(
   sessionID: SessionID,
   configs: Array<[string, DatasetConfig]>
 ) {
-  const requests: Array<Promise<
-    ApiResponse<{
-      id: string;
-      collection: Record<string, any>;
-    }>
-  >> = [];
+  const requests: Array<Promise<ApiResponse<DatasetCollection>>> = [];
 
   for (const datasetConfig of configs) {
     const [id, config] = datasetConfig;
-    let request = null;
-    if (config.multi) {
-      const configsMulti = Object.entries(config.multi);
-      request = loadDatasets(sessionID, configsMulti).then((results) => {
-        const collection = results.reduce((acc, result: any) => {
-          // Aggregate all api results into 1
-          return Object.assign(acc, {
-            // Filter out the MultiPolygon features
-            [result.id]: result.collection.filter(
-              (item: DatasetItemTuple) => item.length === 3
-            ),
-          });
-        }, {});
-        return apiSuccesResult({
-          id,
-          collection,
-        });
-      });
-    } else if (config.listUrl) {
-      request = loadDataset(sessionID, id, config);
-    }
-
-    if (request) {
-      requests.push(request);
-    }
+    requests.push(loadDataset(sessionID, id, config));
   }
 
   return Promise.all(requests).then((datasetResults) =>
     datasetResults
       .filter(({ content }) => content !== null)
-      .map(({ content }) => content)
+      .flatMap(({ content }) => content)
   );
 }
 
 export async function loadServicesMapDatasets(
   sessionID: SessionID,
-  datasetGroupId?: string,
   datasetId?: string
 ) {
-  const configs = getDatasetEndpointConfig(datasetGroupId, datasetId).filter(
-    ([id, config]) => {
-      // Exclude the noCluster datasets if no dataset specs are given. Initially we return only clusterable datasets.
-      return !datasetGroupId ? config.noCluster !== true : true;
-    }
-  );
+  const configs = getDatasetEndpointConfig(datasetId);
 
   if (!configs.length) {
     return apiErrorResult('Could not find dataset', null);
   }
-  const datasetResults = await loadDatasets(sessionID, configs);
 
-  // Dive into the dataset and retrieve the appropriate collection item
-  // TODO: skip this operation for multi datasets
-  if (datasetGroupId && datasetId) {
-    const [datasetResult] = datasetResults;
-    if (datasetResult?.collection && datasetResult.collection[datasetId]) {
-      datasetResult.collection = {
-        [datasetId]: datasetResult.collection[datasetId],
-      };
-      return apiSuccesResult(datasetResults);
-    }
-    return apiErrorResult('Could not find dataset', null);
+  const dataStore = await loadDatasets(sessionID, configs);
+  let response = dataStore;
+
+  if (datasetId) {
+    response = dataStore.filter(
+      (feature) => feature?.properties.datasetId === datasetId
+    );
   }
 
-  return apiSuccesResult(datasetResults);
+  return apiSuccesResult(response);
 }
 
 export async function loadServicesMapDatasetItem(
   sessionID: SessionID,
-  datasetGroupId: string,
   datasetId: string,
   datasetItemId: string
 ) {
-  const [datasetConfig] = getDatasetEndpointConfig(datasetGroupId, datasetId);
+  const [datasetConfig] = getDatasetEndpointConfig(datasetId);
 
   if (!datasetConfig) {
     return apiErrorResult(`Unknown dataset ${datasetId}`, null);
   }
 
   const [, config] = datasetConfig;
-  const url = config.multi
-    ? `${config.multi[datasetId].detailUrl}${datasetItemId}`
-    : `${config.detailUrl}${datasetItemId}`;
+  const url = `${config.detailUrl}${datasetItemId}`;
 
   const requestConfig: DataRequestConfig = {
     url,
@@ -225,4 +181,11 @@ export async function loadServicesMapDatasetItem(
   }
 
   return requestData(requestConfig, sessionID, {});
+}
+
+export function loadPolyLineDatasets(
+  sessionID: SessionID,
+  datasetIds?: string[]
+) {
+  return [];
 }

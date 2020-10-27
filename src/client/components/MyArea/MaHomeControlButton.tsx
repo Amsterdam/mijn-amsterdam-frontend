@@ -3,7 +3,7 @@ import { useMapInstance } from '@amsterdam/react-maps';
 import React from 'react';
 import { IconHomeSimple, IconHomeCommercial } from '../../assets/icons';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { HOOD_ZOOM } from '../../../universal/config/map';
+import { HOOD_ZOOM } from '../../../universal/config/buurt';
 
 interface HomeControlButtonProps {
   latlng: LatLngObject;

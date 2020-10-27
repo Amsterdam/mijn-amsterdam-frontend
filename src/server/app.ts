@@ -29,7 +29,7 @@ const options: Sentry.NodeOptions = {
   debug: isDebug,
   beforeSend(event, hint) {
     if (isDebug) {
-      console.log(event, hint);
+      console.log(hint);
       return null;
     }
     return event;

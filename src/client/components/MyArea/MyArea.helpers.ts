@@ -1,49 +1,35 @@
 import L from 'leaflet';
 import {
-  DatasetGroup,
-  DatasetItemTuple,
+  DatasetCollection,
+  MaPointFeature,
 } from '../../../server/services/buurt/datasets';
-import { Datasets, getIconHtml } from './datasets';
+import { getIconHtml } from './datasets';
 
-export function createClusterDatasetMarkers(
-  datasetGroups: DatasetGroup[]
-): Datasets[] {
-  return datasetGroups.map((datasetGroup) => {
-    return {
-      ...datasetGroup,
-      collection: Object.fromEntries(
-        Object.entries(datasetGroup.collection).map(
-          ([datasetId, datasetItems]) => {
-            return [
-              datasetId,
-              datasetItems.map((datasetItemTuple) =>
-                createMarker(datasetGroup.id, datasetId, datasetItemTuple)
-              ),
-            ];
-          }
-        )
-      ),
-    };
-  });
+export function createClusterDatasetMarkers(datasetGroups: DatasetCollection) {
+  return datasetGroups
+    .filter(
+      (feature): feature is MaPointFeature => feature.geometry.type === 'Point'
+    )
+    .map((feature) => {
+      return createMarker(feature);
+    });
 }
 
-export function createMarker(
-  datasetGroupId: string,
-  datasetId: string,
-  datasetItem: DatasetItemTuple
-) {
-  const [lat, lng, datasetItemId] = datasetItem;
-  const html = getIconHtml(datasetId, datasetGroupId);
+export function createMarker(feature: MaPointFeature) {
+  const html = getIconHtml(feature.properties.datasetId);
   const icon = L.divIcon({
     html,
     className: '',
     iconSize: [14, 14],
     iconAnchor: [7, 7],
   });
+
+  const [lat, lng] = feature.geometry.coordinates;
   return L.marker(new L.LatLng(lat, lng), {
     icon,
-    datasetItemId,
-    datasetId,
-    datasetGroupId,
+    properties: {
+      datasetItemId: feature.properties.id,
+      datasetId: feature.properties.datasetId,
+    },
   } as any);
 }
