@@ -15,9 +15,9 @@ function productName(
 
 const aanvraagLabels: FocusStepContent = {
   notification: {
-    title: document =>
+    title: (document) =>
       `Wij hebben uw aanvraag ${document.productTitle} ontvangen`,
-    description: document =>
+    description: (document) =>
       `Wij hebben uw aanvraag ${
         document.productTitle
       } ontvangen op ${dateFormat(
@@ -26,7 +26,7 @@ const aanvraagLabels: FocusStepContent = {
       )} uur`,
   },
   status: stepLabels.aanvraag,
-  description: document =>
+  description: (document) =>
     `<p>
         Wij hebben uw aanvraag ${document.productTitle} ontvangen.
       </p>`,
@@ -34,14 +34,14 @@ const aanvraagLabels: FocusStepContent = {
 
 const voorschotToekennenLabels: FocusStepContent = {
   notification: {
-    title: document => {
+    title: (document) => {
       return `${document.productTitle}: Wij hebben een voorschot betaald`;
     },
-    description: document =>
+    description: (document) =>
       `Wij hebben een voorschot naar uw rekening overgemaakt.`,
   },
   status: 'Voorschot',
-  description: document =>
+  description: (document) =>
     `<p>
           Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
           voorwaarden in de brief.
@@ -50,12 +50,12 @@ const voorschotToekennenLabels: FocusStepContent = {
 
 const herstelTermijnLabels: FocusStepContent = {
   notification: {
-    title: document => `${document.productTitle}: Meer informatie nodig`,
-    description: document =>
+    title: (document) => `${document.productTitle}: Meer informatie nodig`,
+    description: (document) =>
       `Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.`,
   },
   status: stepLabels.herstelTermijn,
-  description: document =>
+  description: (document) =>
     `<p>
         Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken.
         Bekijk de brief voor meer details.
@@ -64,15 +64,15 @@ const herstelTermijnLabels: FocusStepContent = {
 
 const toekennenLabels: FocusStepContent = {
   notification: {
-    title: document =>
+    title: (document) =>
       `${productName(document, false)}: Uw aanvraag is toegekend`,
-    description: document =>
+    description: (document) =>
       `U hebt recht op ${productName(document)} (besluit: ${defaultDateFormat(
         document.datePublished
       )}).`,
   },
   status: stepLabels.beslissing,
-  description: document =>
+  description: (document) =>
     `<p>
           U hebt recht op ${productName(document)}. Bekijk de brief
           voor meer details.
@@ -81,15 +81,15 @@ const toekennenLabels: FocusStepContent = {
 
 const afwijzenLabels: FocusStepContent = {
   notification: {
-    title: document =>
+    title: (document) =>
       `${productName(document, false)}: Uw aanvraag is afgewezen`,
-    description: document =>
+    description: (document) =>
       `U hebt geen recht op ${productName(
         document
       )} (besluit: ${defaultDateFormat(document.datePublished)}).`,
   },
   status: stepLabels.beslissing,
-  description: document =>
+  description: (document) =>
     `<p>
         U hebt geen recht op ${productName(
           document
@@ -99,34 +99,34 @@ const afwijzenLabels: FocusStepContent = {
 
 const buitenBehandelingLabels: FocusStepContent = {
   notification: {
-    title: document =>
+    title: (document) =>
       `${document.productTitle}: Wij behandelen uw aanvraag niet meer`,
-    description: document => `Bekijk de brief voor meer details.`,
+    description: (document) => `Bekijk de brief voor meer details.`,
   },
   status: stepLabels.beslissing,
-  description: document =>
+  description: (document) =>
     `<p>Wij behandelen uw aanvraag voor ${document.productTitle} niet meer. Bekijk de brief voor meer details.</p>`,
 };
 
 const intrekkenLabels: FocusStepContent = {
   notification: {
-    title: document => `${document.productTitle}: Aanvraag ingetrokken`,
-    description: document =>
+    title: (document) => `${document.productTitle}: Aanvraag ingetrokken`,
+    description: (document) =>
       `U hebt uw ${document.productTitle} aanvraag ingetrokken.`,
   },
   status: stepLabels.beslissing,
-  description: document =>
+  description: (document) =>
     `<p>U hebt uw ${document.productTitle} aanvraag ingetrokken. Bekijk de brief voor meer details.</p>`,
 };
 
 const vrijeBeschikkingLabels: FocusStepContent = {
   notification: {
-    title: document => `${document.productTitle}: Besluit aanvraag`,
-    description: document =>
+    title: (document) => `${document.productTitle}: Besluit aanvraag`,
+    description: (document) =>
       `Wij hebben een besluit genomen over uw ${document.productTitle} aanvraag.`,
   },
   status: stepLabels.beslissing,
-  description: document =>
+  description: (document) =>
     `<p>Wij hebben een besluit genomen over uw ${document.productTitle} aanvraag. Bekijk de brief voor meer details.</p>`,
 };
 
@@ -402,7 +402,7 @@ export const tozoDocumentLabelSet: Record<
   '175307': {
     omschrijving: 'Tozo3 Toekennen voorschot',
     stepType: 'voorschot',
-    labels: toekennenLabels,
+    labels: voorschotToekennenLabels,
     product: 'Tozo 3',
     productSpecific: 'voorschot',
     documentTitle: 'Brief betaling voorschot',
@@ -482,7 +482,7 @@ export const tozoDocumentLabelSet: Record<
   '175372': {
     omschrijving: 'Tozo3 Toekennen voorschot via batch',
     stepType: 'voorschot',
-    labels: toekennenLabels,
+    labels: voorschotToekennenLabels,
     product: 'Tozo 3',
     productSpecific: '',
     documentTitle: 'Brief betaling voorschot',
