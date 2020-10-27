@@ -48,6 +48,7 @@ async function generateSuperCluster(
   }
 
   const features = filterDatastore(dataStore, activeDatasetIds);
+
   const superClusterIndex = new Supercluster({
     log: true,
     radius: 40,
@@ -63,6 +64,20 @@ async function generateSuperCluster(
   );
 
   return superClusterIndex;
+}
+
+function addExpansionZoom(superClusterIndex: any, feature: any) {
+  try {
+    feature.properties.expansion_zoom = superClusterIndex.getClusterExpansionZoom(
+      feature.properties.cluster_id
+    );
+  } catch (error) {
+    console.error(
+      "Can't add expansion zoom to cluster",
+      feature.properties.cluster_id,
+      feature
+    );
+  }
 }
 
 export async function getClusterData(
@@ -84,11 +99,9 @@ export async function getClusterData(
     };
   } else if (bbox && zoom) {
     const data = superClusterIndex.getClusters(bbox, zoom);
-    data.forEach((feature: any) => {
-      feature.properties.expansion_zoom = superClusterIndex.getClusterExpansionZoom(
-        feature.properties.cluster_id
-      );
-    });
+    data.forEach((feature: any) =>
+      addExpansionZoom(superClusterIndex, feature)
+    );
     return { data };
   }
 }

@@ -20,6 +20,7 @@ import {
   DatasetGroup,
 } from './datasets';
 import { getDatasetEndpointConfig } from './helpers';
+import { DatasetItemTuple } from './datasets';
 
 const MAP_URL =
   'https://data.amsterdam.nl/data/?modus=kaart&achtergrond=topo_rd_zw&embed=true';
@@ -135,7 +136,10 @@ function loadDatasets(
         const collection = results.reduce((acc, result: any) => {
           // Aggregate all api results into 1
           return Object.assign(acc, {
-            [result.id]: result.collection,
+            // Filter out the MultiPolygon features
+            [result.id]: result.collection.filter(
+              (item: DatasetItemTuple) => item.length === 3
+            ),
           });
         }, {});
         return apiSuccesResult({

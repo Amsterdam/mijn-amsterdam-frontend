@@ -1,10 +1,13 @@
 import { capitalizeFirstLetter } from '../../../universal/helpers';
 import { getApiEmbeddedResponse, recursiveCoordinateSwap } from './helpers';
+import { DEFAULT_LAT, DEFAULT_LNG } from '../../../universal/config/map';
+import { LatLngTuple } from 'leaflet';
 
 type DatasetItemId = string;
 type DatasetId = string;
 
 export type DatasetItemTuple = [Lat, Lng, DatasetItemId | DatasetItemId[]];
+export type DatasetPolyLineItemTuple = [Array<LatLngTuple[]>, DatasetItemId];
 
 export type DatasetCollection = Record<DatasetId, DatasetItemTuple[]>;
 
@@ -167,23 +170,27 @@ function transformListSportApiResponse(id: string, responseData: any) {
   const results = getApiEmbeddedResponse(id, responseData);
 
   if (results && results.length) {
-    const collection: DatasetItemTuple[] = [];
+    const pointCollection: DatasetItemTuple[] = [];
+    const polylineCollection: DatasetPolyLineItemTuple[] = [];
 
     for (const feature of results) {
       if (feature.geometry?.coordinates) {
-        if (feature.geometry.type === 'Multipolygon') {
+        if (feature.geometry.type === 'MultiPolygon') {
           recursiveCoordinateSwap(feature.geometry.coordinates);
-          collection.push(feature.geometry.coordinates);
+          polylineCollection.push([feature.geometry.coordinates, feature.id]);
         } else if (feature.geometry.type === 'Point') {
           const [lng, lat] = feature.geometry.coordinates;
-          collection.push([lat, lng, feature.id]);
+          pointCollection.push([lat, lng, feature.id]);
+        } else {
+          // TODO: Fetch geometry from some service here...
+          pointCollection.push([DEFAULT_LAT, DEFAULT_LNG, feature.id]);
         }
       }
     }
 
     return {
       id,
-      collection,
+      collection: pointCollection.length ? pointCollection : polylineCollection,
     };
   }
 

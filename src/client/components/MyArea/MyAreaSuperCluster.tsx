@@ -17,8 +17,8 @@ function createMarker(feature: any, latlng: any) {
     icon = L.divIcon({
       html,
       className: '',
-      iconSize: [14, 14],
-      iconAnchor: [7, 7],
+      iconSize: [32, 32],
+      iconAnchor: [16, 16],
     });
   } else {
     const count = feature.properties.point_count;
