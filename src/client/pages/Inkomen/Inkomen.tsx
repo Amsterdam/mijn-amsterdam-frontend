@@ -64,7 +64,7 @@ export default () => {
     FOCUS_AANVRAGEN,
     FOCUS_SPECIFICATIES,
     FOCUS_TOZO,
-    GPASS_STADSPAS,
+    FOCUS_STADSPAS,
   } = useAppStateGetter();
   const focusSpecificatiesWithDocumentLinks = useAddDocumentLinkComponents(
     FOCUS_SPECIFICATIES
@@ -125,7 +125,7 @@ export default () => {
 
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
-  const hasStadspas = !!GPASS_STADSPAS?.content?.length;
+  const hasStadspas = !!FOCUS_STADSPAS?.content?.length;
 
   const itemsSpecificationsMonthly = useMemo(
     () => uitkeringsspecificaties?.slice(0, 3) || [],
@@ -137,16 +137,16 @@ export default () => {
   );
 
   const stadspasItems = useMemo(() => {
-    if (!GPASS_STADSPAS.content?.length) {
+    if (!FOCUS_STADSPAS.content?.length) {
       return [];
     }
-    return GPASS_STADSPAS.content.map(pass => {
+    return FOCUS_STADSPAS.content.map(pass => {
       return {
         ...pass,
         displayDatumAfloop: defaultDateFormat(pass.datumAfloop),
         detailPageUrl: (
           <LinkdInline
-            href={generatePath(AppRoutes['INKOMEN/STADSPAS/DETAIL'], {
+            href={generatePath(AppRoutes['INKOMEN/STADSPAS/SALDO'], {
               id: pass.id,
             })}
           >
@@ -155,11 +155,11 @@ export default () => {
         ),
       };
     });
-  }, [GPASS_STADSPAS.content]);
+  }, [FOCUS_STADSPAS.content]);
 
   const isLoadingFocus = isLoading(FOCUS_AANVRAGEN) || isLoading(FOCUS_TOZO);
   const isLoadingFocusSpecificaties = isLoading(FOCUS_SPECIFICATIES);
-  const isLoadingStadspas = isLoading(GPASS_STADSPAS);
+  const isLoadingStadspas = isLoading(FOCUS_STADSPAS);
 
   return (
     <OverviewPage className={styles.Inkomen}>
@@ -182,7 +182,7 @@ export default () => {
         </p>
         {(isError(FOCUS_AANVRAGEN) ||
           isError(FOCUS_SPECIFICATIES) ||
-          isError(GPASS_STADSPAS) ||
+          isError(FOCUS_STADSPAS) ||
           isError(FOCUS_TOZO)) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>

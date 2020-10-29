@@ -8,7 +8,7 @@ import MockApp from '../MockApp';
 import StadspasDetail from './StadspasDetail';
 
 const testState = {
-  GPASS_STADSPAS: {
+  FOCUS_STADSPAS: {
     content: [
       {
         id: 'xxx123123123123',
@@ -52,7 +52,7 @@ function initializeState(snapshot: MutableSnapshot) {
 
 describe('<StadspasDetail />', () => {
   const routeEntry = generatePath(AppRoutes['INKOMEN/STADSPAS/DETAIL'], {
-    id: testState.GPASS_STADSPAS.content[0].id,
+    id: testState.FOCUS_STADSPAS.content[0].id,
   });
   const routePath = AppRoutes['INKOMEN/STADSPAS/DETAIL'];
 

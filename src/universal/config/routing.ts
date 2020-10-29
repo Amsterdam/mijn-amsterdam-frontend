@@ -6,7 +6,7 @@ export const AppRoutes = {
   'ZORG/VOORZIENINGEN': '/zorg-en-ondersteuning/voorzieningen/:id',
   INKOMEN: '/inkomen-en-stadspas',
   'INKOMEN/STADSPAS/AANVRAAG': '/inkomen-en-stadspas/stadspas/aanvraag/:id',
-  'INKOMEN/STADSPAS/DETAIL': '/inkomen-en-stadspas/stadspas/detail/:id',
+  'INKOMEN/STADSPAS/SALDO': '/inkomen-en-stadspas/stadspas/saldo/:id',
   'INKOMEN/BIJSTANDSUITKERING': '/inkomen-en-stadspas/bijstandsuitkering/:id',
   'INKOMEN/SPECIFICATIES':
     '/inkomen-en-stadspas/uitkeringsspecificaties/:category?',

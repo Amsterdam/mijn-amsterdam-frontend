@@ -63,8 +63,7 @@ type SourceApiKey =
   | 'ERFPACHT'
   | 'BAG'
   | 'AFVAL'
-  | 'KVK'
-  | 'STADSPAS';
+  | 'KVK';
 
 type ApiDataRequestConfig = Record<SourceApiKey, DataRequestConfig>;
 
@@ -116,9 +115,6 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   KVK: {
     url: `${BFF_MS_API_BASE_URL}/brp/hr`,
-  },
-  STADSPAS: {
-    url: `${BFF_MS_API_BASE_URL}/stadspas`,
   },
 };
 

@@ -14,7 +14,6 @@ import FOCUS_COMBINED from './json/focus-combined.json';
 import KVK1 from './json/kvk-handelsregister.json';
 import KVK2 from './json/kvk-handelsregister2.json';
 import MILIEUZONE from './json/milieuzone.json';
-import STADSPAS from './json/stadspas.json';
 import TIPS from './json/tips.json';
 import VERGUNNINGEN from './json/vergunningen.json';
 import WMO from './json/wmo.json';
@@ -170,13 +169,6 @@ export const mockDataConfig: MockDataConfig = {
         return await loadMockApiResponseJson(KVK2);
       }
       return await loadMockApiResponseJson(KVK1);
-    },
-  },
-  [ApiUrls.STADSPAS]: {
-    // delay: 12000,
-    status: (config: any) => 200,
-    responseData: async (config: any) => {
-      return await loadMockApiResponseJson(STADSPAS);
     },
   },
   [ApiUrls.TIPS]: {

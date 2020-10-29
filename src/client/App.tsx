@@ -132,7 +132,7 @@ function AppAuthenticated() {
           />
           {FeatureToggle.stadpasActive && (
             <Route
-              path={AppRoutes['INKOMEN/STADSPAS/DETAIL']}
+              path={AppRoutes['INKOMEN/STADSPAS/SALDO']}
               component={StadspasDetail}
             />
           )}

@@ -16,6 +16,16 @@
         "url": "focus/document?id=27898591&isBulk=false&isDms=false"
       }
     ],
+    "stadspassaldo": [
+      {
+        "budgets": [],
+        "datumAfloop": "2021-08-31T21:59:59.000Z",
+        "id": 200769,
+        "naam": "G Braber",
+        "pasnummer": 6011012604273,
+        "url_transactions": "/focus/stadspastransacties/gAAAAABfmojHaIr3lIb5ATsZ98is4S8x3HqxdbVACw8562VCtv3ygKtkD5h7rGCUZhoebm0jFAvLjzibxcgKqpbWELopLBT5Ywf1FzDjzvNVQOij_3hYLks="
+      }
+    ],
     "tozodocumenten": [
       {
         "documentCodeId": "785",

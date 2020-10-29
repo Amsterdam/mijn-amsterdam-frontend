@@ -1,10 +1,7 @@
 import classnames from 'classnames';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import {
-  GPassStadspasBudget,
-  GPassStadspasTransaction,
-} from '../../../server/services/focus/gpass-stadspas';
+import { FocusStadspasTransaction } from '../../../server/services/focus/focus-stadspas';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
@@ -23,6 +20,7 @@ import {
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './StadspasDetail.module.scss';
+import { FocusStadspasBudget } from '../../../server/services/focus/focus-combined';
 
 const transactions = [
   {
@@ -64,7 +62,7 @@ function Transaction({ value, title, date }: TransactionProps) {
 }
 
 interface TransactionOverviewProps {
-  transactions: GPassStadspasTransaction[];
+  transactions: FocusStadspasTransaction[];
 }
 
 function TransactionOverview({ transactions }: TransactionOverviewProps) {
@@ -89,7 +87,7 @@ function TransactionOverview({ transactions }: TransactionOverviewProps) {
 }
 
 interface BudgetBalanceProps {
-  budget: GPassStadspasBudget;
+  budget: FocusStadspasBudget;
   dateEnd: string;
 }
 
@@ -119,7 +117,7 @@ function BudgetBalance({ budget, dateEnd }: BudgetBalanceProps) {
 }
 
 interface StadspasBudgetProps {
-  budget: GPassStadspasBudget;
+  budget: FocusStadspasBudget;
   dateEnd: string;
 }
 
@@ -163,12 +161,14 @@ function StadspasBudget({ budget, dateEnd }: StadspasBudgetProps) {
 }
 
 export default () => {
-  const { GPASS_STADSPAS } = useAppStateGetter();
+  const { FOCUS_STADSPAS } = useAppStateGetter();
   const { id } = useParams();
-  const stadspasItem = GPASS_STADSPAS?.content?.find(pass => pass.id === id);
-  const isErrorStadspas = isError(GPASS_STADSPAS);
+  const stadspasItem = id
+    ? FOCUS_STADSPAS?.content?.find(pass => pass.id === parseInt(id, 10))
+    : null;
+  const isErrorStadspas = isError(FOCUS_STADSPAS);
   const title = 'Saldo Stadspas';
-  const isLoadingStadspas = isLoading(GPASS_STADSPAS);
+  const isLoadingStadspas = isLoading(FOCUS_STADSPAS);
   const noContent = !stadspasItem;
 
   return (

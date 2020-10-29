@@ -8,7 +8,7 @@ import MockApp from '../MockApp';
 import Inkomen from './Inkomen';
 
 const testState = {
-  GPASS_STADSPAS: {
+  FOCUS_STADSPAS: {
     content: [
       {
         id: 'xxx123123123123',
