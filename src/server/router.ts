@@ -7,7 +7,7 @@ import {
   loadServicesMapDatasets,
 } from './services';
 import { loadPolyLineDatasets } from './services/buurt/buurt';
-import { ApiResponse } from '../universal/helpers/api';
+import { ApiResponse, apiSuccesResult } from '../universal/helpers/api';
 import {
   loadServicesAll,
   loadServicesSSE,
@@ -59,10 +59,7 @@ router.post(
         res.locals.sessionID,
         req.body.datasetIds
       );
-      res.json({
-        clusters,
-        polylines,
-      });
+      res.json(apiSuccesResult([...clusters, ...polylines]));
       next();
     } catch (error) {
       next(error);

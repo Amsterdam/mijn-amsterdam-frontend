@@ -26,7 +26,6 @@ export interface DatasetControl {
   isActive: boolean;
   title: string;
   icon: ReactNode;
-  layerType: LayerType;
 }
 
 export interface DatasetControlItem {
@@ -251,22 +250,12 @@ export function getIconHtml(datasetId: string) {
   return datasetIconHtml[datasetId] || datasetIconHtml.default;
 }
 
-export enum LayerType {
-  PolyLine = 'PolyLine',
-  Cluster = 'Cluster',
-}
-
-const createDatasetControl = (
-  id: string,
-  layerType: LayerType = LayerType.Cluster,
-  icon?: ReactNode
-) => {
+const createDatasetControl = (id: string, icon?: ReactNode) => {
   return {
     id,
     icon,
     title: capitalizeFirstLetter(id),
     isActive: ACTIVE_DATASET_IDS_INITIAL.includes(id),
-    layerType,
   };
 };
 
@@ -275,9 +264,7 @@ export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
     id: 'parkeren',
     title: 'Parkeren',
     isActive: true,
-    collection: DATASETS.parkeren.map((id) =>
-      createDatasetControl(id, LayerType.PolyLine)
-    ),
+    collection: DATASETS.parkeren.map((id) => createDatasetControl(id)),
   },
   {
     id: 'afvalcontainers',
@@ -304,14 +291,6 @@ export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
     collection: DATASETS.sport.map((id) => createDatasetControl(id)),
   },
 ];
-
-export const POLYLINE_DATASETS = DATASET_CONTROL_ITEMS.filter(
-  (datasetControl) => datasetControl.isActive
-).flatMap((config) =>
-  config.collection
-    .filter((control) => control.layerType === LayerType.PolyLine)
-    .map((control) => control.id)
-);
 
 export const PARKEERZONES_POLYLINE_OPTIONS: Record<string, PolylineOptions> = {
   parkeerzones: {

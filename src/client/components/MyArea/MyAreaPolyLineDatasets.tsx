@@ -1,14 +1,12 @@
 import { LeafletMouseEventHandlerFn } from 'leaflet';
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { createGlobalStyle } from 'styled-components';
-import { MaPolyLineFeature } from '../../../server/services/buurt/datasets';
-import { BFFApiUrls } from '../../config/api';
+import {
+  DatasetCollection,
+  MaPolyLineFeature,
+} from '../../../server/services/buurt/datasets';
 import { PARKEERZONES_POLYLINE_OPTIONS } from './datasets';
 import { MaPolyLineLayer } from './MaPolyLineLayer';
-import {
-  useActivePolyLineDatasetIds,
-  useActivePolyLineFeatures,
-} from './MyArea.hooks';
 
 const Styles = createGlobalStyle`
   .ma-marker-tooltip {
@@ -32,28 +30,13 @@ const Styles = createGlobalStyle`
 
 interface MyAreaPolyLineDatasetsProps {
   onMarkerClick?: LeafletMouseEventHandlerFn;
+  features: MaPolyLineFeature[];
 }
 
 export function MyAreaPolyLineDatasets({
   onMarkerClick,
+  features,
 }: MyAreaPolyLineDatasetsProps) {
-  const [features, fetchDatasets] = useActivePolyLineFeatures();
-  const activePolyLineDatasetIds = useActivePolyLineDatasetIds();
-
-  useEffect(() => {
-    const loadedIds = Array.from(
-      new Set(features.map((feature) => feature.properties.datasetId))
-    );
-    const datasetIdsToLoad = activePolyLineDatasetIds.filter(
-      (datasetId) => !loadedIds.includes(datasetId)
-    );
-    if (datasetIdsToLoad.length) {
-      fetchDatasets({
-        url: `${BFFApiUrls.MAP_DATASETS}/${datasetIdsToLoad[0]}`,
-      });
-    }
-  }, [features, activePolyLineDatasetIds, fetchDatasets]);
-
   const polyLineLayerData = useMemo(() => {
     const polyLineLayerData: Record<string, MaPolyLineFeature[]> = {};
     for (const feature of features) {
@@ -62,7 +45,6 @@ export function MyAreaPolyLineDatasets({
       }
       polyLineLayerData[feature.properties.datasetId].push(feature);
     }
-    console.log('constructing new', Object.entries(polyLineLayerData));
     return Object.entries(polyLineLayerData);
   }, [features]);
 

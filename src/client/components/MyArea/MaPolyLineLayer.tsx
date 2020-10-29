@@ -32,7 +32,7 @@ export function MaPolyLineLayer({
     for (const feature of features) {
       const options = {
         ...polylineOptions,
-        color: feature.properties.color || DEFAULT_POLYLINE_COLOR,
+        color: feature.properties.color || polylineOptions.color,
       };
       const layer = L.polygon(
         feature.geometry.coordinates as

@@ -3,12 +3,6 @@ import { themeColor } from '@amsterdam/asc-ui';
 import L, { LeafletMouseEventHandlerFn } from 'leaflet';
 import React, { useEffect, useMemo, useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
-import { BFFApiUrls } from '../../config/api';
-import {
-  useActiveClusterDatasetIds,
-  useFeatures,
-  useDatasetMarkers,
-} from './MyArea.hooks';
 
 const iconCreateFunction = (
   marker: L.Marker & { getChildCount: () => number }
@@ -74,29 +68,26 @@ interface MyAreaClusterDatasetsProps {
 export default function MyAreaClusterDatasets({
   onMarkerClick,
 }: MyAreaClusterDatasetsProps) {
-  const activeClusterDatasetIds = useActiveClusterDatasetIds();
-  const activeClusterDatasetIdsString = activeClusterDatasetIds.join(',');
+  // const activeClusterDatasetIds = useActiveClusterDatasetIds();
   const [clusterLayer, setClusterLayer] = useState<L.Layer | null>(null);
-  const datasetMarkers = useDatasetMarkers([]); // TODO <<<!!
-  const [, fetchDatasets] = useFeatures();
 
-  // Fetch initial clusterable datasets
-  useEffect(() => {
-    if (activeClusterDatasetIds.length) {
-      fetchDatasets({ url: BFFApiUrls.MAP_DATASETS });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchDatasets]);
+  // // Fetch initial clusterable datasets
+  // useEffect(() => {
+  //   if (activeClusterDatasetIds.length) {
+  //     fetchDatasets({ url: BFFApiUrls.MAP_DATASETS });
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [fetchDatasets]);
 
-  const markers = useMemo(() => {
-    if (!datasetMarkers || !activeClusterDatasetIdsString) {
-      return [];
-    }
-    return getFilteredMarkers(
-      datasetMarkers,
-      activeClusterDatasetIdsString.split(',')
-    );
-  }, [datasetMarkers, activeClusterDatasetIdsString]);
+  const markers = useMemo(() => [], []);
+  //   if (!datasetMarkers || !activeClusterDatasetIdsString) {
+  //     return [];
+  //   }
+  //   return getFilteredMarkers(
+  //     datasetMarkers,
+  //     activeClusterDatasetIdsString.split(',')
+  //   );
+  // }, [datasetMarkers, activeClusterDatasetIdsString]);
 
   useEffect(() => {
     if (!clusterLayer || !onMarkerClick) {

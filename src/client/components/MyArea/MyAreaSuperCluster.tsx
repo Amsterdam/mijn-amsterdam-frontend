@@ -1,12 +1,10 @@
-import axios from 'axios';
-import L, { LeafletMouseEventHandlerFn } from 'leaflet';
+import { useMapInstance } from '@amsterdam/react-maps';
+import L, { LeafletEventHandlerFn, LeafletMouseEventHandlerFn } from 'leaflet';
 import { useCallback, useEffect, useMemo } from 'react';
 import Supercluster from 'supercluster';
-import { BFFApiUrls } from '../../config/api';
 import { createMarkerIcon, getIconHtml } from './datasets';
-import { useActiveClusterDatasetIds } from './MyArea.hooks';
 import datasetStyles from './MyAreaSuperCluster.module.scss';
-import { useMapRef } from './useMap';
+import { MaPointFeature } from '../../../server/services/buurt/datasets';
 
 function createMarker(feature: any, latlng: any) {
   let icon;
@@ -29,21 +27,6 @@ function createMarker(feature: any, latlng: any) {
   }
 
   return L.marker(latlng, { icon });
-}
-
-function useClusterMarkers(map: L.Map | null) {
-  const layer = useMemo(() => {
-    if (!map) {
-      return;
-    }
-    const layer = L.geoJSON<SuperClusterFeatures>(undefined, {
-      pointToLayer: createMarker,
-    }).addTo(map);
-
-    return layer;
-  }, [map]);
-
-  return layer;
 }
 
 function coordinateCircle(
@@ -70,7 +53,7 @@ function coordinateCircle(
 }
 
 function round(num: number, decimalPlaces: number = 6) {
-  const num2 = Math.round((num + 'e' + decimalPlaces) as any);
+  const num2 = Math.round(((num + 'e' + decimalPlaces) as unknown) as number);
   return Number(num2 + 'e' + -decimalPlaces);
 }
 
@@ -80,7 +63,7 @@ type SuperClusterFeatures = Array<
 
 function processFeatures(features: SuperClusterFeatures) {
   const items: Record<string, Supercluster.PointFeature<any>[]> = {};
-  const markersFinal: SuperClusterFeatures = [];
+  const markersFinal: MaPointFeature[] = [];
 
   for (const feature of features) {
     if (!feature.properties.cluster) {
@@ -113,13 +96,14 @@ function processFeatures(features: SuperClusterFeatures) {
       const modifiedMarkers = pts
         .filter((pt, index) => !!features[index])
         .map((pt, index) => {
-          return {
+          const feature: MaPointFeature = {
             ...features[index],
             geometry: {
               coordinates: pt,
               type: 'Point',
             },
-          } as Supercluster.PointFeature<any>;
+          };
+          return feature;
         });
       markersFinal.push(...modifiedMarkers);
     }
@@ -130,80 +114,23 @@ function processFeatures(features: SuperClusterFeatures) {
 
 interface MaSuperClusterLayerProps {
   onMarkerClick?: LeafletMouseEventHandlerFn;
+  onUpdate: LeafletEventHandlerFn;
+  features: SuperClusterFeatures;
 }
 
 export function MaSuperClusterLayer({
   onMarkerClick,
+  onUpdate,
+  features,
 }: MaSuperClusterLayerProps) {
-  const map = useMapRef().current;
-  const markers = useClusterMarkers(map);
-  const activeDatasetIds = useActiveClusterDatasetIds();
-  const activeIdsKey = activeDatasetIds.join(',');
-
-  useEffect(() => {
-    return () => {
-      if (markers?.remove) {
-        markers.remove();
-      }
-    };
-  }, [markers]);
-
-  const updateMap = useCallback(
-    (response: SuperClusterFeatures | { children: string[] }) => {
-      if (!map || !markers) {
-        return;
-      }
-      if (Array.isArray(response)) {
-        markers.clearLayers();
-        markers.addData(processFeatures(response) as any); // TODO: Figure out proper type
-      } else if (response.children) {
-        console.log('children', response.children);
-      }
-    },
-    [map, markers]
-  );
-
-  const requestData = useCallback(
-    async (payload = {}) => {
-      console.log('do request!');
-      // TODO: put in serviceworker?
-      const response = await axios({
-        url: BFFApiUrls.MAP_DATASETS,
-        data: payload,
-        method: 'POST',
-      });
-      // TODO: Add typing and error handling
-      updateMap(response.data.clusters);
-    },
-    [updateMap]
-  );
-
-  const updateClusterData = useCallback(() => {
-    if (!map || !activeIdsKey) {
-      return;
-    }
-    const bounds = map.getBounds();
-    requestData({
-      datasetIds: activeIdsKey.split(','),
-      bbox: [
-        bounds.getWest(),
-        bounds.getSouth(),
-        bounds.getEast(),
-        bounds.getNorth(),
-      ],
-      zoom: map.getZoom(),
+  const map = useMapInstance();
+  const markerLayer = useMemo(() => {
+    const layer = L.geoJSON<SuperClusterFeatures>(undefined, {
+      pointToLayer: createMarker,
     });
-  }, [map, activeIdsKey, requestData]);
 
-  useEffect(() => {
-    if (!map) {
-      return;
-    }
-    map.on('moveend', updateClusterData);
-    return () => {
-      map.off('moveend', updateClusterData);
-    };
-  }, [map, updateClusterData]);
+    return layer;
+  }, []);
 
   const onClick = useCallback(
     (event: any) => {
@@ -218,22 +145,37 @@ export function MaSuperClusterLayer({
     [onMarkerClick, map]
   );
 
-  useEffect(() => {
-    if (!markers) {
-      return;
-    }
-    markers.on('click', onClick);
-    return () => {
-      markers.off('click', onClick);
-    };
-  }, [markers, onClick]);
+  const clusterFeatures = useMemo(() => {
+    return processFeatures(features);
+  }, [features]);
 
-  // Fetch initial
   useEffect(() => {
-    if (updateClusterData) {
-      updateClusterData();
+    if (markerLayer) {
+      markerLayer.addTo(map);
+      markerLayer.clearLayers();
+      markerLayer.addData(clusterFeatures as any); // Type mismatch here.
+      markerLayer.on('click', onClick);
     }
-  }, [updateClusterData]);
+
+    if (map) {
+      map.on('moveend', onUpdate);
+      // map.on('zoomstart', () => {
+      //   markerLayer.eachLayer((layer: any) => {
+      //     layer.getElement().style.visibility = 'hidden';
+      //   });
+      // });
+    }
+
+    return () => {
+      if (markerLayer) {
+        markerLayer.remove();
+        markerLayer.off('click', onClick);
+      }
+      if (map) {
+        map.off('moveend', onUpdate);
+      }
+    };
+  }, [markerLayer, clusterFeatures, onClick, map, onUpdate]);
 
   return null;
 }

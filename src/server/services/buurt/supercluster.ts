@@ -33,7 +33,6 @@ async function generateSuperCluster(
   const activeCacheKey = cacheKey(activeDatasetIds);
 
   if (superClusterCache.get(activeCacheKey)) {
-    console.info('Cache hit!', activeDatasetIds);
     return superClusterCache.get(activeCacheKey);
   }
 

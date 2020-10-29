@@ -18,8 +18,10 @@ import {
   BUURT_CACHE_TTL_HOURS,
   DatasetCollection,
   DatasetConfig,
+  MaPointFeature,
+  MaPolyLineFeature,
 } from './datasets';
-import { getDatasetEndpointConfig } from './helpers';
+import { getDatasetEndpointConfig, recursiveCoordinateSwap } from './helpers';
 
 const MAP_URL =
   'https://data.amsterdam.nl/data/?modus=kaart&achtergrond=topo_rd_zw&embed=true';
@@ -106,6 +108,17 @@ async function loadDataset(
     {}
   );
 
+  if (Array.isArray(response.content)) {
+    response.content = response.content.map((feature) => {
+      if (feature.geometry.type === 'MultiPolygon') {
+        feature.geometry.coordinates = recursiveCoordinateSwap(
+          feature.geometry.coordinates
+        );
+      }
+      return feature;
+    });
+  }
+
   if (response.status === 'OK' && response.content !== null) {
     dataCache.setKey('url', datasetConfig.listUrl);
     dataCache.setKey('response', response);
@@ -115,7 +128,7 @@ async function loadDataset(
   return response;
 }
 
-function loadDatasets(
+async function loadDatasets(
   sessionID: SessionID,
   configs: Array<[string, DatasetConfig]>
 ) {
@@ -126,11 +139,12 @@ function loadDatasets(
     requests.push(loadDataset(sessionID, id, config));
   }
 
-  return Promise.all(requests).then((datasetResults) =>
-    datasetResults
-      .filter(({ content }) => content !== null)
-      .flatMap(({ content }) => content)
+  const results = await Promise.all(requests);
+  const datasetResults = results.flatMap(({ content }) => content);
+  const features = datasetResults.filter(
+    (result): result is MaPointFeature | MaPolyLineFeature => result !== null
   );
+  return features;
 }
 
 export async function loadServicesMapDatasets(
@@ -183,9 +197,20 @@ export async function loadServicesMapDatasetItem(
   return requestData(requestConfig, sessionID, {});
 }
 
-export function loadPolyLineDatasets(
+export async function loadPolyLineDatasets(
   sessionID: SessionID,
   datasetIds?: string[]
 ) {
-  return [];
+  const dataStore = (await loadServicesMapDatasets(sessionID)).content;
+
+  if (!dataStore) {
+    return [];
+  }
+
+  return dataStore.filter((feature, index): feature is MaPolyLineFeature => {
+    return (
+      feature.geometry.type === 'MultiPolygon' &&
+      (!datasetIds || datasetIds.includes(feature.properties.datasetId))
+    );
+  });
 }
