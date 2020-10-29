@@ -1,9 +1,15 @@
 import classnames from 'classnames';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { FocusStadspasTransaction } from '../../../server/services/focus/focus-stadspas';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
-import { isError, isLoading } from '../../../universal/helpers';
+import {
+  isError,
+  isLoading,
+  apiPristineResult,
+  ApiResponse,
+  directApiUrl,
+} from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { IconChevronRight } from '../../assets/icons';
 import {
@@ -21,27 +27,7 @@ import {
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './StadspasDetail.module.scss';
 import { FocusStadspasBudget } from '../../../server/services/focus/focus-combined';
-
-const transactions = [
-  {
-    id: 'xx1',
-    title: 'Hema',
-    amount: '31,30',
-    date: '2020-01-04',
-  },
-  {
-    id: 'xx2',
-    title: 'Aktiesport',
-    amount: '21,30',
-    date: '2019-12-16',
-  },
-  {
-    id: 'xx3',
-    title: 'Hema',
-    amount: '24,40',
-    date: '2019-10-21',
-  },
-];
+import { useDataApi } from '../../hooks/api/useDataApi';
 
 interface TransactionProps {
   value: string;
@@ -117,14 +103,40 @@ function BudgetBalance({ budget, dateEnd }: BudgetBalanceProps) {
 }
 
 interface StadspasBudgetProps {
+  urlTransactions: string;
   budget: FocusStadspasBudget;
   dateEnd: string;
 }
 
-function StadspasBudget({ budget, dateEnd }: StadspasBudgetProps) {
+function StadspasBudget({
+  urlTransactions,
+  budget,
+  dateEnd,
+}: StadspasBudgetProps) {
   const [isTransactionOverviewActive, toggleTransactionOverview] = useState(
     false
   );
+
+  const [
+    {
+      data: { content: transactions },
+      isLoading: isLoadingTransactions,
+      isDirty,
+    },
+    fetchTransactions,
+  ] = useDataApi<ApiResponse<FocusStadspasTransaction[]>>(
+    {
+      url: directApiUrl(urlTransactions),
+      postpone: true,
+    },
+    apiPristineResult([])
+  );
+
+  useEffect(() => {
+    if (isTransactionOverviewActive && !isDirty) {
+      fetchTransactions();
+    }
+  }, [isTransactionOverviewActive, fetchTransactions, isDirty]);
 
   return (
     <>
@@ -137,8 +149,19 @@ function StadspasBudget({ budget, dateEnd }: StadspasBudgetProps) {
           isTransactionOverviewActive && styles.withActiveTransactionsOverview
         )}
       >
-        {!!isTransactionOverviewActive && (
-          <TransactionOverview transactions={transactions} />
+        {!!isTransactionOverviewActive &&
+          !isLoadingTransactions &&
+          transactions !== null && (
+            <TransactionOverview transactions={transactions} />
+          )}
+        {isLoadingTransactions && (
+          <LoadingContent
+            barConfig={[
+              ['100%', '2rem', '1rem'],
+              ['80%', '2rem', '1rem'],
+              ['60%', '2rem', '1rem'],
+            ]}
+          />
         )}
         <Button
           className={classnames(
@@ -167,7 +190,6 @@ export default () => {
     ? FOCUS_STADSPAS?.content?.find(pass => pass.id === parseInt(id, 10))
     : null;
   const isErrorStadspas = isError(FOCUS_STADSPAS);
-  const title = 'Saldo Stadspas';
   const isLoadingStadspas = isLoading(FOCUS_STADSPAS);
   const noContent = !stadspasItem;
 
@@ -176,9 +198,9 @@ export default () => {
       <PageHeading
         icon={<ChapterIcon />}
         backLink={{ to: AppRoutes.INKOMEN, title: ChapterTitles.INKOMEN }}
-        isLoading={isLoadingStadspas}
+        isLoading={false}
       >
-        {title}
+        Saldo Stadspas
       </PageHeading>
       <PageContent className={styles.DetailPageContent}>
         <p>
@@ -193,7 +215,7 @@ export default () => {
             Meer informatie over de stadspas
           </Linkd>
         </p>
-        {(isErrorStadspas || noContent) && (
+        {(isErrorStadspas || (!isLoading(FOCUS_STADSPAS) && noContent)) && (
           <Alert type="warning">
             <p>
               We kunnen op dit moment geen gegevens tonen.{' '}
@@ -215,6 +237,7 @@ export default () => {
       )}
       {stadspasItem?.budgets.map(budget => (
         <StadspasBudget
+          urlTransactions={stadspasItem.urlTransactions}
           key={budget.title}
           budget={budget}
           dateEnd={stadspasItem.datumAfloop}

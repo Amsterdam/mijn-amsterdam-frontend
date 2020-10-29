@@ -137,6 +137,10 @@
   border-width: 0;
   margin-bottom: 4rem;
 
+  @include select('LoadingContent') {
+    margin-top: 2rem;
+  }
+
   &.withActiveTransactionsOverview {
     margin-top: 7rem;
     border-width: .1rem;

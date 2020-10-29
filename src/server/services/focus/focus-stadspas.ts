@@ -14,7 +14,14 @@ export interface FocusStadspasTransaction {
 export function transformFocusStadspasData(
   stadspassaldo: FocusCombinedSourceResponse['stadspassaldo']
 ) {
-  return apiSuccesResult(stadspassaldo);
+  return apiSuccesResult(
+    stadspassaldo.map(saldo => {
+      return {
+        ...saldo,
+        urlTransactions: `/api${saldo.urlTransactions}`,
+      };
+    })
+  );
 }
 
 export async function fetchStadspas(
