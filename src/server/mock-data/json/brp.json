@@ -9,28 +9,31 @@
     "postcode": "1064 BH",
     "straatnaam": "Burgemeester Röellstr",
     "woonplaatsNaam": "Amsterdam",
-    "begindatumVerblijf": "1967-01-01T00:00:00Z"
+    "begindatumVerblijf": "1967-01-01T00:00:00Z",
+    "einddatumVerblijf": "1967-01-01T00:00:00Z"
   },
   "adresHistorisch": [
     {
-      "inOnderzoek": true,
+      "begindatumVerblijf": "2005-09-01T00:00:00Z",
+      "einddatumVerblijf": "2012-08-01T00:00:00Z",
       "huisletter": null,
-      "huisnummer": "1",
-      "huisnummertoevoeging": null,
-      "postcode": "1064 BH",
-      "straatnaam": "Burgemeester Röellstr",
-      "woonplaatsNaam": "Amsterdam",
-      "begindatumVerblijf": "1967-01-01T00:00:00Z"
+      "huisnummer": "9",
+      "huisnummertoevoeging": "H",
+      "inOnderzoek": false,
+      "postcode": "1098 NK",
+      "straatnaam": "Ampèrestraat",
+      "woonplaatsNaam": "Amsterdam"
     },
     {
-      "inOnderzoek": true,
+      "begindatumVerblijf": "1990-01-01T00:00:00Z",
+      "einddatumVerblijf": "2005-09-01T00:00:00Z",
       "huisletter": null,
-      "huisnummer": "1",
-      "huisnummertoevoeging": null,
-      "postcode": "1064 BH",
-      "straatnaam": "Burgemeester Röellstr",
-      "woonplaatsNaam": "Amsterdam",
-      "begindatumVerblijf": "1967-01-01T00:00:00Z"
+      "huisnummer": "9",
+      "huisnummertoevoeging": "3",
+      "inOnderzoek": false,
+      "postcode": "1098 AA",
+      "straatnaam": "Middenweg",
+      "woonplaatsNaam": "Amsterdam"
     }
   ],
   "persoon": {

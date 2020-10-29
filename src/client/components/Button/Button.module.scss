@@ -168,9 +168,7 @@ $buttons: (
   }
   .Icon {
     position: relative;
-    transform: translateY(1px);
-    height: .9em;
-    width: .9em;
+    transform: translateY(1px); // Compensates for rendering just above center.
   }
 }
 

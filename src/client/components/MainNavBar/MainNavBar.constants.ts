@@ -1,13 +1,9 @@
+import { generatePath } from 'react-router-dom';
 import { AppRoutes, Chapter, ChapterTitles } from '../../../universal/config';
 import { LinkProps } from '../../../universal/types';
 import { ChapterMenuItem } from '../../config/menuItems';
 
-type MainMenuId =
-  | Chapter
-  | 'DASHBOARD'
-  | 'MIJN_THEMAS'
-  | 'BUURT'
-  | 'NOTIFICATIONS';
+type MainMenuId = Chapter | 'MIJN_THEMAS';
 
 export interface MenuItem extends LinkProps {
   id: MainMenuId;
@@ -19,6 +15,7 @@ export const mainMenuItemId: { [key: string]: MainMenuId } = {
   CHAPTERS: 'MIJN_THEMAS',
   BUURT: 'BUURT',
   NOTIFICATIONS: 'NOTIFICATIONS',
+  TIPS: 'TIPS',
 };
 
 export const MenuItemTitles = {
@@ -26,6 +23,7 @@ export const MenuItemTitles = {
   CHAPTERS: "Mijn thema's",
   BUURT: ChapterTitles.BUURT,
   NOTIFICATIONS: ChapterTitles.NOTIFICATIONS,
+  TIPS: ChapterTitles.TIPS,
 };
 
 export const mainMenuItems: MenuItem[] = [
@@ -47,6 +45,11 @@ export const mainMenuItems: MenuItem[] = [
   {
     title: MenuItemTitles.NOTIFICATIONS,
     id: mainMenuItemId.NOTIFICATIONS,
-    to: AppRoutes.NOTIFICATIONS,
+    to: generatePath(AppRoutes.NOTIFICATIONS),
+  },
+  {
+    title: MenuItemTitles.TIPS,
+    id: mainMenuItemId.TIPS,
+    to: generatePath(AppRoutes.TIPS),
   },
 ];

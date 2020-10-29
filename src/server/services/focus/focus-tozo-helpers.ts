@@ -1,6 +1,11 @@
 import * as Sentry from '@sentry/node';
 import { generatePath } from 'react-router-dom';
-import { AppRoutes, Chapters } from '../../../universal/config';
+import {
+  AppRoutes,
+  Chapters,
+  FeatureToggle,
+  API_BASE_PATH,
+} from '../../../universal/config';
 import {
   apiSuccesResult,
   dateFormat,
@@ -87,11 +92,14 @@ export function createTozoItemStep(document: FocusTozoDocument) {
   const labelSet = getLabelSet(document);
 
   if (!labelSet) {
-    Sentry.captureMessage('Unknown Tozo document encountered', {
-      extra: {
-        document,
-      },
-    });
+    Sentry.captureMessage(
+      `Unknown Tozo document (${document.documentCodeId}) encountered`,
+      {
+        extra: {
+          document,
+        },
+      }
+    );
     return null;
   }
 
@@ -100,9 +108,9 @@ export function createTozoItemStep(document: FocusTozoDocument) {
   const attachedDocument = {
     id: document.id,
     title: documentTitle,
-    url: `/api/${document.url}`,
+    url: `${API_BASE_PATH}/${document.url}`,
     datePublished: document.datePublished,
-    type: 'PDF',
+    type: 'pdf',
   };
 
   const id = hash(
@@ -136,10 +144,22 @@ export function createTozoItemStep(document: FocusTozoDocument) {
 }
 
 export function createTozoItem(productTitle: string, steps: FocusItemStep[]) {
-  const title =
-    productTitle === 'Tozo 2'
-      ? 'Tozo 2 (aangevraagd na 1 juni 2020)'
-      : 'Tozo 1 (aangevraagd voor 1 juni 2020)';
+  let title = '';
+  let version = 1;
+
+  switch (productTitle) {
+    case 'Tozo 1':
+      title = 'Tozo 1 (aangevraagd voor 1 juni 2020)';
+      break;
+    case 'Tozo 2':
+      title = 'Tozo 2 (aangevraagd vanaf 1 juni 2020)';
+      version = 2;
+      break;
+    case 'Tozo 3':
+      title = 'Tozo 3 (aangevraagd vanaf 1 oktober 2020)';
+      version = 3;
+      break;
+  }
 
   const id = hash(`${title}-${steps[0].datePublished}`);
 
@@ -153,7 +173,7 @@ export function createTozoItem(productTitle: string, steps: FocusItemStep[]) {
     type: 'Tozo',
     chapter: Chapters.INKOMEN,
     link: {
-      to: generatePath(AppRoutes['INKOMEN/TOZO'], { id }),
+      to: generatePath(AppRoutes['INKOMEN/TOZO'], { id, version }),
       title: `Bekijk hoe het met uw aanvraag staat`,
     },
     steps,
@@ -171,7 +191,7 @@ export function createTozoItemStepNotifications(
       step.notificationTitle || 'Update aanvraag ' + item.productTitle + '',
     description: step.notificationDescription || '',
     link: {
-      to: generatePath(AppRoutes['INKOMEN/TOZO'], { id: item.id }),
+      to: item.link.to,
       title: 'Bekijk hoe het met uw aanvraag staat',
     },
   }));
@@ -221,6 +241,7 @@ export function createTozoResult(
 
   const tozo1Steps = otherSteps.filter(step => step.product === 'Tozo 1');
   const tozo2Steps = otherSteps.filter(step => step.product === 'Tozo 2');
+  const tozo3Steps = otherSteps.filter(step => step.product === 'Tozo 3');
 
   if (aanvraagSteps['Tozo 1']) {
     tozo1Steps.unshift(aanvraagSteps['Tozo 1']);
@@ -232,6 +253,14 @@ export function createTozoResult(
   }
   const tozo2Item = tozo2Steps.length && createTozoItem('Tozo 2', tozo2Steps);
 
+  if (aanvraagSteps['Tozo 3']) {
+    tozo3Steps.unshift(aanvraagSteps['Tozo 3']);
+  }
+  const tozo3Item =
+    FeatureToggle.tozo3active &&
+    tozo3Steps.length &&
+    createTozoItem('Tozo 3', tozo3Steps);
+
   const tozoItems: FocusItem[] = [];
 
   if (tozo1Item) {
@@ -240,6 +269,10 @@ export function createTozoResult(
 
   if (tozo2Item) {
     tozoItems.push(tozo2Item);
+  }
+
+  if (tozo3Item) {
+    tozoItems.push(tozo3Item);
   }
 
   return apiSuccesResult(tozoItems);

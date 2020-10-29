@@ -3,8 +3,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { atom, SetterOrUpdater, useRecoilState, useRecoilValue } from 'recoil';
 import { AppState, createAllErrorState, PRISTINE_APPSTATE } from '../AppState';
 import { BFFApiUrls } from '../config/api';
-import { transformAppState } from '../data-transform/appState';
-import { pollBffHealth, requestApiData, useDataApi } from './api/useDataApi';
+import { transformSourceData } from '../data-transform/appState';
+import { pollBffHealth, useDataApi } from './api/useDataApi';
 import { useOptInValue } from './useOptIn';
 import { useProfileTypeValue } from './useProfileType';
 import { SSE_ERROR_MESSAGE, useSSE } from './useSSE';
@@ -19,10 +19,6 @@ const INCREMENTAL_SERVICE_IDS_FOR_PROFILE_TOGGLE = [
 
 const fallbackServiceRequestOptions = {
   postpone: true,
-  transformResponse: [
-    ...requestApiData.defaults.transformResponse,
-    transformAppState,
-  ],
 };
 
 export const appStateAtom = atom<AppState>({
@@ -43,7 +39,6 @@ export function useAppStateFallbackService({
   isEnabled,
   setAppState,
 }: useAppStateFallbackServiceProps) {
-  const [isDataRequested, setIsDataRequested] = useState(false);
   const [api, fetchFallbackService] = useDataApi<AppState | null>(
     fallbackServiceRequestOptions,
     null
@@ -75,39 +70,36 @@ export function useAppStateFallbackService({
     if (!isEnabled) {
       return;
     }
-    if (!isDataRequested && api.isPristine) {
-      // If we have EventSource support but in the case it failed
-      pollBffHealth()
-        .then(() => {
-          fetchSauron();
-        })
-        .catch(appStateError);
-    }
+    // If we have EventSource support but in the case it failed we poll the bff for a health check.
+    pollBffHealth()
+      .then(() => {
+        fetchSauron();
+      })
+      .catch(appStateError);
   }, [
     fetchFallbackService,
-    api.isPristine,
-    isDataRequested,
     appStateError,
     fetchSauron,
     isEnabled,
+    profileType,
   ]);
 
   // Update the appState with data fetched by the Fallback service endpoint
   useEffect(() => {
-    if (isDataRequested || !isEnabled) {
+    if (!isEnabled) {
       return;
     }
     if (api.data !== null && !api.isLoading && !api.isError) {
-      setIsDataRequested(true);
-      setAppState(appState => Object.assign({}, appState, api.data));
+      setAppState(appState =>
+        Object.assign({}, appState, transformSourceData(api.data))
+      );
     } else if (api.isError) {
       // If everything fails, this is the final state update.
       const errorMessage =
         'Services.all endpoint could not be reached or returns an error.';
-      setIsDataRequested(true);
       appStateError(errorMessage);
     }
-  }, [api, isDataRequested, appStateError, setAppState, isEnabled]);
+  }, [api, appStateError, setAppState, isEnabled]);
 }
 
 /**
@@ -141,12 +133,14 @@ export function useAppState() {
           ? []
           : INCREMENTAL_SERVICE_IDS_FOR_PROFILE_TOGGLE,
     };
-  }, [isOptIn, profileType]);
+    // Omitting optIn here because TIPS api handles OptIn toggles
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profileType]);
 
   // The callback is fired on every incoming message from the EventSource.
   const onEvent = useCallback((messageData: any) => {
     if (messageData && messageData !== SSE_ERROR_MESSAGE) {
-      const transformedMessageData = transformAppState(messageData);
+      const transformedMessageData = transformSourceData(messageData);
       setAppState(appState => {
         const appStateUpdated = {
           ...appState,

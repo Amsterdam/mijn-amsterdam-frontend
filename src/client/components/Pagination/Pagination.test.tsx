@@ -6,7 +6,12 @@ describe('<Pagination />', () => {
   const onPageClick = jest.fn();
   it('Renders without crashing', () => {
     shallow(
-      <Pagination totalCount={10} onPageClick={onPageClick} pageSize={2} />
+      <Pagination
+        totalCount={10}
+        onPageClick={onPageClick}
+        pageSize={2}
+        currentPage={1}
+      />
     );
   });
 });

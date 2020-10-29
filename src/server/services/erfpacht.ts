@@ -3,6 +3,7 @@ import { omit } from '../../universal/helpers';
 import { MyNotification, MyTip } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import { IS_PRODUCTION, IS_ACCEPTANCE } from '../../universal/config/env';
 import {
   apiDependencyError,
   apiSuccesResult,
@@ -30,6 +31,13 @@ function transformERFPACHTNotifications(notifications?: MyNotification[]) {
     ? notifications.map(notification => ({
         ...notification,
         chapter: Chapters.ERFPACHT,
+        link: {
+          title:
+            notification.link?.title || 'Meer informatie over deze melding',
+          to: `https://mijnerfpacht${
+            IS_ACCEPTANCE ? '.acc' : ''
+          }.amsterdam.nl${notification.link?.to || ''}`,
+        },
       }))
     : [];
 
@@ -37,15 +45,22 @@ function transformERFPACHTNotifications(notifications?: MyNotification[]) {
 }
 
 function transformERFPACHTData(responseData: ERFPACHTSourceData): ERFPACHTData {
-  const { isKnown, meldingen = [] } = responseData?.content || {
-    isKnown: false,
-    meldingen: [],
-  };
+  if ('status' in responseData && typeof responseData.status === 'boolean') {
+    return {
+      isKnown: responseData.status,
+      notifications: [],
+    };
+  } else {
+    const { isKnown, meldingen = [] } = responseData?.content || {
+      isKnown: false,
+      meldingen: [],
+    };
 
-  return {
-    isKnown,
-    notifications: transformERFPACHTNotifications(meldingen),
-  };
+    return {
+      isKnown,
+      notifications: transformERFPACHTNotifications(meldingen),
+    };
+  }
 }
 
 export async function fetchERFPACHT(

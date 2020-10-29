@@ -9,10 +9,15 @@
   @include reset-list-style;
   padding: 1rem 0;
 
-  @include select(DocumentList_DocumentLink) {
+  @include select(DocumentList_DocumentListItem) {
     margin-bottom: 1rem;
-    svg {
+    @include select(Button_Icon) {
       margin-left: -17px;
+    }
+  }
+  @include select(DocumentList_DocumentLinkError) {
+    @include select(Button_Icon) {
+      margin-left: -21px;
     }
   }
 }

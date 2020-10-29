@@ -1,7 +1,6 @@
 import classnames from 'classnames';
 import React, { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
-import { FocusItem } from '../../../server/services/focus/focus-types';
 import {
   AppRoutes,
   ChapterTitles,
@@ -27,12 +26,15 @@ import {
   specificationsTableDisplayProps,
 } from '../../pages/InkomenSpecificaties/InkomenSpecificaties';
 import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.module.scss';
+import { useAddDocumentLinkComponents } from '../InkomenSpecificaties/useAddDocumentLinks';
+import AlertDocumentDownloadsDisabled from './AlertDocumentDownloadsDisabled';
 import styles from './Inkomen.module.scss';
 import { LinkdInline } from '../../components/Button/Button';
 
 export const incomSpecificationsRouteMonthly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES']
 );
+
 export const incomSpecificationsRouteYearly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES'],
   {
@@ -64,18 +66,22 @@ export default () => {
     FOCUS_TOZO,
     GPASS_STADSPAS,
   } = useAppStateGetter();
-  const aanvragen = (FOCUS_AANVRAGEN.content || []) as FocusItem[];
-  const tozoItems = FOCUS_TOZO.content || [];
+  const focusSpecificatiesWithDocumentLinks = useAddDocumentLinkComponents(
+    FOCUS_SPECIFICATIES
+  );
+  const aanvragen = FOCUS_AANVRAGEN.content;
+  const tozoItems = FOCUS_TOZO.content;
   const uitkeringsspecificaties =
-    FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties || [];
-  const jaaropgaven = FOCUS_SPECIFICATIES.content?.jaaropgaven || [];
+    focusSpecificatiesWithDocumentLinks.content?.uitkeringsspecificaties;
+  const jaaropgaven = focusSpecificatiesWithDocumentLinks.content?.jaaropgaven;
 
   const itemsRequested = useMemo(() => {
-    const itemsRequested = aanvragen.filter(item =>
-      item.steps.every(step => step.title !== 'beslissing')
-    );
+    const itemsRequested =
+      aanvragen?.filter(item =>
+        item.steps.every(step => step.title !== 'beslissing')
+      ) || [];
 
-    if (tozoItems.length && FeatureToggle.tozoActive) {
+    if (tozoItems?.length && FeatureToggle.tozoActive) {
       itemsRequested.push(
         ...tozoItems.filter(tozoItem => tozoItem.status !== 'Besluit')
       );
@@ -94,11 +100,12 @@ export default () => {
   }, [aanvragen, tozoItems]);
 
   const itemsDecided = useMemo(() => {
-    const itemsDecided = aanvragen.filter(item =>
-      item.steps.some(step => step.title === 'beslissing')
-    );
+    const itemsDecided =
+      aanvragen?.filter(item =>
+        item.steps.some(step => step.title === 'beslissing')
+      ) || [];
 
-    if (tozoItems.length && FeatureToggle.tozoActive) {
+    if (tozoItems?.length && FeatureToggle.tozoActive) {
       itemsDecided.push(
         ...tozoItems.filter(tozoItem => tozoItem.status === 'Besluit')
       );
@@ -121,11 +128,11 @@ export default () => {
   const hasStadspas = !!GPASS_STADSPAS?.content?.length;
 
   const itemsSpecificationsMonthly = useMemo(
-    () => uitkeringsspecificaties.slice(0, 3) || [],
+    () => uitkeringsspecificaties?.slice(0, 3) || [],
     [uitkeringsspecificaties]
   );
   const itemsSpecificationsYearly = useMemo(
-    () => jaaropgaven.slice(0, 3) || [],
+    () => jaaropgaven?.slice(0, 3) || [],
     [jaaropgaven]
   );
 
@@ -156,10 +163,7 @@ export default () => {
 
   return (
     <OverviewPage className={styles.Inkomen}>
-      <PageHeading
-        isLoading={isLoadingFocus && isLoadingFocusSpecificaties}
-        icon={<ChapterIcon />}
-      >
+      <PageHeading isLoading={false} icon={<ChapterIcon />}>
         {ChapterTitles.INKOMEN}
       </PageHeading>
       <PageContent>
@@ -184,6 +188,17 @@ export default () => {
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>
         )}
+        <AlertDocumentDownloadsDisabled />
+        {!FeatureToggle.tozo3active &&
+          tozoItems?.some(item => item.productTitle === 'Tozo 2') && (
+            <Alert type="warning">
+              <p>
+                Hebt u Tozo 3 aangevraagd (vanaf 1 oktober 2020)? Wij werken er
+                hard aan om ook die aanvraag in Mijn Amsterdam te tonen. Als het
+                zover is, ziet u uw aanvraag vanzelf hier verschijnen.
+              </p>
+            </Alert>
+          )}
       </PageContent>
 
       <SectionCollapsible
@@ -256,7 +271,7 @@ export default () => {
           startCollapsed={hasActiveRequests || hasActiveDescisions}
           isLoading={isLoadingFocusSpecificaties}
           title="Uitkeringsspecificaties"
-          hasItems={!!uitkeringsspecificaties.length}
+          hasItems={!!uitkeringsspecificaties?.length}
           track={{
             category: 'Inkomen en Stadspas overzicht / Uitkeringsspecificaties',
             name: 'Datatabel',
@@ -268,11 +283,12 @@ export default () => {
             items={itemsSpecificationsMonthly}
             displayProps={specificationsTableDisplayProps}
           />
-          {uitkeringsspecificaties.length > 3 && (
-            <p className={styles.ShowAllButtonContainer}>
-              <Linkd href={incomSpecificationsRouteMonthly}>Toon alles</Linkd>
-            </p>
-          )}
+          {uitkeringsspecificaties?.length &&
+            uitkeringsspecificaties.length > 3 && (
+              <p className={styles.ShowAllButtonContainer}>
+                <Linkd href={incomSpecificationsRouteMonthly}>Toon alles</Linkd>
+              </p>
+            )}
         </SectionCollapsible>
       )}
 
@@ -282,7 +298,7 @@ export default () => {
           startCollapsed={hasActiveRequests || hasActiveDescisions}
           isLoading={isLoadingFocus}
           title="Jaaropgaven"
-          hasItems={!!jaaropgaven.length}
+          hasItems={!!jaaropgaven?.length}
           track={{
             category: 'Inkomen en Stadspas overzicht / Jaaropgaven',
             name: 'Datatabel',
@@ -297,7 +313,7 @@ export default () => {
             items={itemsSpecificationsYearly}
             displayProps={annualStatementsTableDisplayProps}
           />
-          {jaaropgaven.length > 3 && (
+          {jaaropgaven?.length && jaaropgaven.length > 3 && (
             <p className={styles.ShowAllButtonContainer}>
               <Linkd href={incomSpecificationsRouteYearly}>Toon alles</Linkd>
             </p>

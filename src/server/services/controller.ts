@@ -1,5 +1,6 @@
+import * as Sentry from '@sentry/node';
 import { NextFunction, Request, Response } from 'express';
-import { getSettledResult } from '../../universal/helpers/api';
+import { apiErrorResult, getSettledResult } from '../../universal/helpers/api';
 import {
   addServiceResultHandler,
   getPassthroughRequestHeaders,
@@ -239,17 +240,23 @@ function loadServices(
     .filter(([serviceID]) => !filterIds.length || filterIds.includes(serviceID))
     .map(([serviceID, fetchService]) => {
       // Return service result as Object like { SERVICE_ID: result }
-      return (fetchService(sessionID, req) as Promise<any>).then(result => ({
-        [serviceID]: result,
-      }));
+      return (fetchService(sessionID, req) as Promise<any>)
+        .then(result => ({
+          [serviceID]: result,
+        }))
+        .catch((error: Error) => {
+          Sentry.captureException(error);
+          return {
+            [serviceID]: apiErrorResult(
+              `Could not load ${serviceID}, error: ${error.message}`,
+              null
+            ),
+          };
+        });
     });
 }
 
-export async function loadServicesSSE(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+export async function loadServicesSSE(req: Request, res: Response) {
   const sessionID = res.locals.sessionID;
   const profileType = getProfileType(req);
   const requestedServiceIds = (queryParams(req).serviceIds ||
@@ -265,13 +272,6 @@ export async function loadServicesSSE(
     requestedServiceIds
   );
 
-  // Tell the client we respond with an event stream
-  res.writeHead(200, {
-    'content-type': 'text/event-stream',
-    'cache-control': 'no-cache',
-    connection: 'keep-alive',
-  });
-
   // Add result handler that sends the service result via the EventSource stream
   servicePromises.forEach((servicePromise, index) =>
     addServiceResultHandler(res, servicePromise, serviceIds[index])
@@ -283,17 +283,23 @@ export async function loadServicesSSE(
   addServiceResultHandler(res, tipsPromise, 'TIPS');
 
   // Close the connection when all services responded
-  Promise.allSettled([...servicePromises, tipsPromise]).then(() => {
+  return Promise.allSettled([...servicePromises, tipsPromise]).then(() => {
     sendMessage(res, 'close', 'close', null);
-    next();
   });
 }
 
 export async function loadServicesAll(req: Request, res: Response) {
   const sessionID = res.locals.sessionID;
   const profileType = getProfileType(req);
+  const requestedServiceIds = (queryParams(req).serviceIds ||
+    []) as ServiceID[];
   const serviceMap = getServiceMap(profileType);
-  const servicePromises = loadServices(sessionID, req, serviceMap);
+  const servicePromises = loadServices(
+    sessionID,
+    req,
+    serviceMap,
+    requestedServiceIds
+  );
 
   const tipsPromise = loadServicesTipsRequestData(sessionID, req);
 
@@ -308,18 +314,31 @@ export async function loadServicesAll(req: Request, res: Response) {
 }
 
 async function loadServicesTipsRequestData(sessionID: SessionID, req: Request) {
-  const servicePromises = loadServices(sessionID, req, servicesTips);
-  const requestData = (await Promise.allSettled(servicePromises)).reduce(
-    (acc, result, index) => Object.assign(acc, getSettledResult(result)),
-    {}
-  );
+  let requestData = null;
+  if (queryParams(req).optin === 'true') {
+    const servicePromises = loadServices(sessionID, req, servicesTips);
+    requestData = (await Promise.allSettled(servicePromises)).reduce(
+      (acc, result, index) => Object.assign(acc, getSettledResult(result)),
+      {}
+    );
+  }
 
   return fetchTIPS(
     sessionID,
     getPassthroughRequestHeaders(req),
     req.query as Record<string, string>,
     requestData
-  ).then(result => ({ TIPS: result }));
+  )
+    .then(result => ({ TIPS: result }))
+    .catch((error: Error) => {
+      Sentry.captureException(error);
+      return {
+        TIPS: apiErrorResult(
+          `Could not load TIPS, error: ${error.message}`,
+          null
+        ),
+      };
+    });
 }
 
 export type ServicesTips = ReturnTypeAsync<typeof loadServicesTipsRequestData>;

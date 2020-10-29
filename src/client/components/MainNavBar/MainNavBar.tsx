@@ -173,7 +173,7 @@ export default function MainNavBar() {
   } = useBurgerMenuAnimation(isBurgerMenuVisible);
 
   const menuItemsComposed = useMemo(() => {
-    return mainMenuItems.map(item => {
+    return mainMenuItems.map((item) => {
       let menuItem = item;
 
       // Add dynamic chapter submenu items to the menu

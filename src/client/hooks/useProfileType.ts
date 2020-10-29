@@ -30,8 +30,6 @@ export function useProfileType() {
     stateValue
   );
 
-  console.log(stateValue, profileType);
-
   // If we encounter a profileType stored in the SessionStorage, transfer it to the recoil state on first load.
   useEffect(() => {
     if (profileType !== stateValue) {
@@ -41,7 +39,6 @@ export function useProfileType() {
   }, []);
 
   useEffect(() => {
-    console.log('stateValue', stateValue);
     setSessionState(stateValue);
   }, [stateValue, setSessionState]);
 

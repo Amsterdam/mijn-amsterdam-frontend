@@ -24,7 +24,7 @@ import {
   PageHeading,
 } from '../../components';
 import { BRP_RESIDENTS_API_URL } from '../../config/api';
-import { useDataApi } from '../../hooks/api/useDataApi';
+import { requestApiData, useDataApi } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { formatBrpProfileData } from './formatDataPrivate';
 import { panelConfig, PanelConfigFormatter } from './Profile.constants';
@@ -58,7 +58,7 @@ export default function Profile() {
 
   const brpProfileData = useMemo(() => {
     if (
-      FeatureToggle.profilePageResidentCount &&
+      FeatureToggle.residentCountActive &&
       typeof residentCount === 'number' &&
       BRP.content?.adres
     ) {
@@ -84,7 +84,10 @@ export default function Profile() {
         url: BRP_RESIDENTS_API_URL,
         method: 'post',
         data: { addressKey: BRP.content?.adres?._adresSleutel },
-        transformResponse: responseContent => apiSuccesResult(responseContent),
+        transformResponse: [
+          ...requestApiData.defaults.transformResponse,
+          (responseContent) => apiSuccesResult(responseContent),
+        ],
       });
     }
   }, [BRP.content, fetchResidentCount]);
@@ -250,7 +253,7 @@ export default function Profile() {
           Gegevens van een levenloos geboren kindje ziet u niet in Mijn
           Amsterdam. U kunt die gegevens alleen inzien via{' '}
           <LinkdInline href="https://mijn.overheid.nl" external={true}>
-            Mijn Overheid
+            MijnOverheid
           </LinkdInline>
           .
         </p>

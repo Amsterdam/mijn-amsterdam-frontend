@@ -8,6 +8,7 @@ import * as sseHook from './useSSE';
 import { SSE_ERROR_MESSAGE } from './useSSE';
 import * as recoil from 'recoil';
 import * as profileTypeHook from './useProfileType';
+import * as dataTransformHelpers from '../data-transform/appState';
 
 describe('useAppState', () => {
   let onEventCallback: any;
@@ -31,12 +32,15 @@ describe('useAppState', () => {
   const useProfileTypeMock = jest.fn(() => ['private']);
   const useProfileTypeValueMock = jest.fn(() => 'private');
   const useOptInValueMock = jest.fn(() => true);
+  const transformAppStateMock = jest.fn(data => data);
 
   // @ts-ignore
   const useTipsApi = (tipsHook.useTipsApi = jest.fn(() => {
     return { TIPS: { status: 'PRISTINE', content: null }, fetch: fetchTips };
   }));
 
+  // @ts-ignore
+  const dataTransform = (dataTransformHelpers.transformSourceData = transformAppStateMock);
   // @ts-ignore
   const useProfileType = (profileTypeHook.useProfileType = useProfileTypeMock);
   // @ts-ignore
@@ -100,11 +104,12 @@ describe('useAppState', () => {
     useOptInValue.mockClear();
     useRecoilValue.mockClear();
     useProfileTypeValue.mockClear();
+    dataTransform.mockClear();
   });
 
   it('Should start with the SSE endpoint', async () => {
     (window as any).EventSource = true;
-    const { result } = renderHook(() => useAppState());
+    const { result, rerender } = renderHook(() => useAppState());
 
     expect(result.current).toEqual(initialAppState);
 
@@ -117,10 +122,15 @@ describe('useAppState', () => {
     });
 
     expect(setAppState).toBeCalledTimes(1);
+    expect(dataTransform).toBeCalledTimes(1);
 
     expect(fetchFallbackService).toBeCalledTimes(0);
 
-    expect(appData).toEqual(Object.assign({}, initialAppState, stateSliceMock));
+    rerender();
+
+    expect(result.current).toEqual(
+      Object.assign({}, initialAppState, stateSliceMock)
+    );
   });
 
   it('Should start with the Fallback service endpoint for browsers that do not have window.EventSource', () => {
@@ -147,8 +157,8 @@ describe('useAppState', () => {
         isLoading: false,
         isError: false,
         data: stateSliceMock,
-        isPristine: true,
-        isDirty: false,
+        isPristine: false,
+        isDirty: true,
       },
       fetchFallbackService,
     ]);
@@ -159,12 +169,15 @@ describe('useAppState', () => {
       onEventCallback(SSE_ERROR_MESSAGE);
     });
 
-    await expect(pollBffHealth).toHaveBeenCalled();
-
+    await expect(pollBffHealth).toHaveBeenCalledTimes(1);
     expect(fetchFallbackService).toBeCalledTimes(1);
 
-    expect(useDataApi).toBeCalledTimes(3);
-    expect(useSSE).toBeCalledTimes(3);
+    expect(useDataApi).toBeCalledTimes(2);
+    expect(useSSE).toBeCalledTimes(2);
+
+    expect(dataTransform).toBeCalledTimes(1);
+
+    appState.rerender();
 
     expect(appState.result.current).toEqual(
       Object.assign({}, initialAppState, stateSliceMock)
@@ -200,10 +213,11 @@ describe('useAppState', () => {
     await expect(pollBffHealth).toHaveBeenCalled();
 
     expect(fetchFallbackService).toBeCalledTimes(0);
+    expect(dataTransform).toBeCalledTimes(0);
+    expect(useDataApi).toBeCalledTimes(2);
+    expect(useSSE).toBeCalledTimes(2);
 
-    // Rendered again because setState to use Fallback service triggers update and then again when fetchFallbackService triggers a setState call
-    expect(useDataApi).toBeCalledTimes(3);
-    expect(useSSE).toBeCalledTimes(3);
+    appState.rerender();
 
     expect(appState.result.current).toEqual(
       Object.assign({}, initialAppState, {

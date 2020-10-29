@@ -192,7 +192,7 @@ export const kvkInfoLabels = {
 };
 
 interface KvkProfileData {
-  onderneming: ProfileSection;
+  onderneming: ProfileSection | null;
   rechtspersonen?: ProfileSection[];
   vestigingen?: ProfileSection[];
   aandeelhouders?: ProfileSection[];

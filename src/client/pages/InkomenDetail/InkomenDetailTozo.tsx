@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/browser';
 import React from 'react';
-import { useParams, Redirect } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
@@ -13,8 +13,10 @@ import {
   PageHeading,
   StatusLine,
 } from '../../components';
+import { LinkdInline } from '../../components/Button/Button';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import AlertDocumentDownloadsDisabled from '../Inkomen/AlertDocumentDownloadsDisabled';
 import styles from './InkomenDetail.module.scss';
 
 export default () => {
@@ -26,18 +28,13 @@ export default () => {
   let TozoItem = tozoItems.find(item => item.id === id);
 
   if (!isLoading(FOCUS_TOZO)) {
-    if (!TozoItem && tozoItems.length >= 1) {
+    if (!TozoItem) {
       Sentry.captureMessage('Tozo Item not found', {
         extra: {
           requestedId: id,
           availableIds: tozoItems.map(item => item.id),
         },
       });
-      TozoItem = tozoItems[tozoItems.length - 1];
-    }
-
-    if (!TozoItem) {
-      return <Redirect to={AppRoutes.INKOMEN} />;
     }
   }
 
@@ -59,31 +56,52 @@ export default () => {
         {TozoItem?.productTitle || title}
       </PageHeading>
       <PageContent className={styles.DetailPageContent}>
-        <p>
-          Onderstaand ziet u de status van uw aanvraag voor een{' '}
-          {TozoItem?.productTitle || 'Tozo'}-uitkering en/of een{' '}
-          {TozoItem?.productTitle || 'Tozo'}
-          -lening. Indien u beide heeft aangevraagd, ontvangt u voor beide een
-          apart besluit. Informatie die u hier ziet is een werkdag vertraagd.
-        </p>
-        {!isLoading(FOCUS_TOZO) && (
-          <p>
-            {TozoItem?.productTitle === 'Tozo 1' ? (
-              <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
-                Meer informatie over de {TozoItem?.title}
-              </Linkd>
-            ) : (
-              <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
-                Meer informatie over de {TozoItem?.title}
-              </Linkd>
+        {!!TozoItem && (
+          <>
+            <p>
+              Onderstaand ziet u de status van uw aanvraag voor een{' '}
+              {TozoItem?.productTitle || 'Tozo'}-uitkering en/of een{' '}
+              {TozoItem?.productTitle || 'Tozo'}
+              -lening. Indien u beide heeft aangevraagd, ontvangt u voor beide
+              een apart besluit. Informatie die u hier ziet is een werkdag
+              vertraagd.
+            </p>
+            {!isLoading(FOCUS_TOZO) && (
+              <p>
+                <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
+                  Meer informatie over de {TozoItem?.title}
+                </Linkd>
+              </p>
             )}
-          </p>
+          </>
         )}
-        {(isError(FOCUS_TOZO) || noContent) && (
+        {isError(FOCUS_TOZO) ||
+          (noContent && !tozoItems.length && (
+            <Alert type="warning">
+              <p>
+                We kunnen op dit moment geen gegevens tonen.{' '}
+                <LinkdInline href={AppRoutes.INKOMEN}>
+                  Ga naar het overzicht
+                </LinkdInline>
+                .
+              </p>
+            </Alert>
+          ))}
+        {!isLoading(FOCUS_TOZO) && !TozoItem && !!tozoItems.length && (
           <Alert type="warning">
-            <p>We kunnen op dit moment geen gegevens tonen.</p>
+            <p>
+              We kunnen op dit moment geen gegevens tonen. Deze pagina is
+              mogelijk verplaatst. Kies hieronder een van de beschikbare Tozo
+              aanvragen.
+            </p>
+            <ul className={styles.TozoAlternatives}>
+              {tozoItems.map(tozoItem => {
+                return <Linkd href={tozoItem.link.to}>{tozoItem.title}</Linkd>;
+              })}
+            </ul>
           </Alert>
         )}
+        <AlertDocumentDownloadsDisabled />
         {isLoading(FOCUS_TOZO) && <LoadingContent />}
       </PageContent>
       {!!(TozoItem?.steps && TozoItem.steps.length) && (

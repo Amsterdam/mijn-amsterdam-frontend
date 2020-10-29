@@ -1,6 +1,7 @@
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
 import { FocusTozoStepType, FocusTozoLabelSet } from './focus-tozo-content';
+import { GenericDocument } from '../../../universal/types/App.types';
 
 export type FocusTozoDocumentType =
   | 'E-AANVR-KBBZ'
@@ -20,7 +21,7 @@ export interface FocusTozoDocument {
   productSpecific?: FocusTozoLabelSet['productSpecific'];
 }
 
-export type FocusInkomenSpecificatieType =
+export type FocusInkomenSpecificatieCategory =
   | 'IOAZ'
   | 'BBS'
   | 'WKO'
@@ -31,12 +32,12 @@ export type FocusInkomenSpecificatieType =
   | 'BBZ'
   | string;
 
-export interface FocusInkomenSpecificatie {
+export interface FocusInkomenSpecificatie extends GenericDocument {
   title: string;
   datePublished: string;
   id: string;
   url: string;
-  type: FocusInkomenSpecificatieType;
+  category: FocusInkomenSpecificatieCategory;
 }
 
 export interface FocusCombinedSourceResponse {
