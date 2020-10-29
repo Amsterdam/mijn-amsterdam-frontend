@@ -14,7 +14,7 @@ export const PageTitles = {
   [AppRoutes[
     'INKOMEN/BIJSTANDSUITKERING'
   ]]: `Bijstandsuitkering | ${ChapterTitles.INKOMEN}`,
-  [AppRoutes['INKOMEN/STADSPAS']]: `Stadspas | ${ChapterTitles.INKOMEN}`,
+  [AppRoutes['INKOMEN/STADSPAS/AANVRAAG']]: `Stadspas | ${ChapterTitles.INKOMEN}`,
   [AppRoutes['INKOMEN/TOZO']]: `Tozo | ${ChapterTitles.INKOMEN}`,
   [AppRoutes[
     'INKOMEN/SPECIFICATIES'

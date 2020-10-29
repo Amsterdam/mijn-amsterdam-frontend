@@ -91,12 +91,26 @@ export default () => {
   ] = useDataApi<ApiResponse<VergunningDocument[]>>(
     {
       postpone: true,
+      transformResponse: [
+        ...requestApiData.defaults.transformResponse,
+        ({ content }) => {
+          if (!content) {
+            return [];
+          }
+          return apiSuccesResult(
+            content.map((document: VergunningDocument) =>
+              // Some documents don't have titles, assign a default title.
+              Object.assign(document, { title: document.title || 'Document' })
+            )
+          );
+        },
+      ],
     },
     apiPristineResult([])
   );
   const { id } = useParams<{ id: string }>();
 
-  const VergunningItem = VERGUNNINGEN.content?.find((item) => item.id === id);
+  const VergunningItem = VERGUNNINGEN.content?.find(item => item.id === id);
   const noContent = !isLoading(VERGUNNINGEN) && !VergunningItem;
 
   const statusLineItems = useVergunningStatusLineItems(VergunningItem);
@@ -105,23 +119,7 @@ export default () => {
   // Fetch the documents for this Item
   useEffect(() => {
     if (documentsUrl) {
-      fetchDocuments({
-        url: directApiUrl(documentsUrl),
-        transformResponse: [
-          ...requestApiData.defaults.transformResponse,
-          ({ content }) => {
-            if (!content) {
-              return [];
-            }
-            return apiSuccesResult(
-              content.map((document: VergunningDocument) =>
-                // Some documents don't have titles, assign a default title.
-                Object.assign(document, { title: document.title || 'Document' })
-              )
-            );
-          },
-        ],
-      });
+      fetchDocuments({ url: directApiUrl(documentsUrl) });
     }
   }, [documentsUrl, fetchDocuments]);
 
@@ -147,57 +145,72 @@ export default () => {
         {isLoading(VERGUNNINGEN) && (
           <LoadingContent className={styles.LoadingContentInfo} />
         )}
-        <InfoDetail label="Kenmerk" value={VergunningItem?.identifier || '-'} />
-        <InfoDetail
-          label="Soort vergunning"
-          value={VergunningItem?.caseType || '-'}
-        />
-        <InfoDetail label="Omschrijving" value={VergunningItem?.title || '-'} />
-        <InfoDetail label="Locatie" value={VergunningItem?.location || '-'} />
-        <InfoDetailGroup>
-          <InfoDetail
-            label="Vanaf"
-            value={
-              (VergunningItem?.dateFrom
-                ? defaultDateFormat(VergunningItem.dateFrom)
-                : '-') +
-              (VergunningItem?.timeStart
-                ? ' - ' + VergunningItem.timeStart
-                : '')
-            }
-          />
-          <InfoDetail
-            label="Tot en met"
-            value={
-              (VergunningItem?.dateEnd
-                ? defaultDateFormat(VergunningItem.dateEnd)
-                : '-') +
-              (VergunningItem?.timeEnd ? ' - ' + VergunningItem.timeEnd : '')
-            }
-          />
-        </InfoDetailGroup>
-        {!!VergunningItem?.decision && (
-          <InfoDetail label="Resultaat" value={VergunningItem.decision} />
-        )}
-
-        <InfoDetail
-          el="div"
-          label="Documenten"
-          value={
-            isLoadingDocuments ? (
-              <LoadingContent
-                barConfig={[
-                  ['100%', '2rem', '1rem'],
-                  ['100%', '2rem', '1rem'],
-                ]}
+        {!isLoading(VERGUNNINGEN) && (
+          <>
+            <InfoDetail
+              label="Kenmerk"
+              value={VergunningItem?.identifier || '-'}
+            />
+            <InfoDetail
+              label="Soort vergunning"
+              value={VergunningItem?.caseType || '-'}
+            />
+            <InfoDetail
+              label="Omschrijving"
+              value={VergunningItem?.title || '-'}
+            />
+            <InfoDetail
+              label="Locatie"
+              value={VergunningItem?.location || '-'}
+            />
+            <InfoDetailGroup>
+              <InfoDetail
+                label="Vanaf"
+                value={
+                  (VergunningItem?.dateFrom
+                    ? defaultDateFormat(VergunningItem.dateFrom)
+                    : '-') +
+                  (VergunningItem?.timeStart
+                    ? ' - ' + VergunningItem.timeStart
+                    : '')
+                }
               />
-            ) : !!documents?.length ? (
-              <DocumentList documents={documents} isExpandedView={true} />
-            ) : (
-              <span>Geen documenten beschikbaar</span>
-            )
-          }
-        />
+              <InfoDetail
+                label="Tot en met"
+                value={
+                  (VergunningItem?.dateEnd
+                    ? defaultDateFormat(VergunningItem.dateEnd)
+                    : '-') +
+                  (VergunningItem?.timeEnd
+                    ? ' - ' + VergunningItem.timeEnd
+                    : '')
+                }
+              />
+            </InfoDetailGroup>
+            {!!VergunningItem?.decision && (
+              <InfoDetail label="Resultaat" value={VergunningItem.decision} />
+            )}
+
+            <InfoDetail
+              el="div"
+              label="Documenten"
+              value={
+                isLoadingDocuments ? (
+                  <LoadingContent
+                    barConfig={[
+                      ['100%', '2rem', '1rem'],
+                      ['100%', '2rem', '1rem'],
+                    ]}
+                  />
+                ) : !!documents?.length ? (
+                  <DocumentList documents={documents} isExpandedView={true} />
+                ) : (
+                  <span>Geen documenten beschikbaar</span>
+                )
+              }
+            />
+          </>
+        )}
       </PageContent>
       {!!statusLineItems.length && (
         <StatusLine

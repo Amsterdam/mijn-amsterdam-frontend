@@ -25,6 +25,7 @@ export const FeatureToggle = {
   profileToggleActive: !IS_PRODUCTION,
   kvkActive: !IS_PRODUCTION,
   erfpachtMeldingenActive: !IS_AP,
+  stadpasActive: !IS_PRODUCTION,
   residentCountActive: true,
 };
 

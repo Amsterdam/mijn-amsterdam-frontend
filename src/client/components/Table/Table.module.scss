@@ -28,7 +28,7 @@
     }
   }
   thead th {
-    border-bottom: 0.1rem solid $color-neutral-grey2;
+    border-bottom: 0.2rem solid $color-neutral-grey2;
     padding-bottom: .5rem;
   }
 }
@@ -75,4 +75,25 @@
   color: $color-neutral-grey4;
   font-weight: normal;
   white-space: nowrap;
+}
+
+:global(.DisplayPropDocumentDownloadLink) {
+  @extend .LinkdSolo;
+
+  &:before {
+    content: '';
+    position: relative;
+    transform: translateY(3px);
+    display: inline-block;
+    width: 1.8rem;
+    height: 1.8rem;
+    background-image: url('../../assets/icons/Document.svg');
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-size: auto 1.8rem;
+  }
+
+  &:hover:before {
+    background-image: url('../../assets/icons/Document.svg');
+  }
 }

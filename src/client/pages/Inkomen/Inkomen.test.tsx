@@ -8,6 +8,42 @@ import MockApp from '../MockApp';
 import Inkomen from './Inkomen';
 
 const testState = {
+  FOCUS_STADSPAS: {
+    content: [
+      {
+        id: 'xxx123123123123',
+        pasnummer: '123123123123',
+        datumAfloop: '2020-12-12',
+        naam: 'Ramses rawjingakoli',
+        budgets: [
+          {
+            title: 'KLEDING-EN-EDUCATIE',
+            assigned: 220,
+            balance: 130,
+          },
+          {
+            title: 'SPORT-EN-SPEL',
+            assigned: 220,
+            balance: 80,
+          },
+        ],
+      },
+      {
+        id: 'xxx89899898',
+        pasnummer: '89899898',
+        datumAfloop: '2021-04-23',
+        naam: 'Jawh rawjingakoli',
+        budgets: [
+          {
+            title: 'SPORT-EN-SPEL',
+            assigned: 220,
+            balance: 80,
+          },
+        ],
+      },
+    ],
+    status: 'OK',
+  },
   FOCUS_AANVRAGEN: {
     status: 'OK',
     content: [
