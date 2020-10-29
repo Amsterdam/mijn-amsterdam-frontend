@@ -6,7 +6,7 @@ import { createGlobalStyle } from 'styled-components';
 import { BFFApiUrls } from '../../config/api';
 import {
   useActiveClusterDatasetIds,
-  useDatasetGroups,
+  useFeatures,
   useDatasetMarkers,
 } from './MyArea.hooks';
 
@@ -77,16 +77,19 @@ export default function MyAreaClusterDatasets({
   const activeClusterDatasetIds = useActiveClusterDatasetIds();
   const activeClusterDatasetIdsString = activeClusterDatasetIds.join(',');
   const [clusterLayer, setClusterLayer] = useState<L.Layer | null>(null);
-  const datasetMarkers = useDatasetMarkers();
-  const [, fetchDatasets] = useDatasetGroups();
+  const datasetMarkers = useDatasetMarkers([]); // TODO <<<!!
+  const [, fetchDatasets] = useFeatures();
 
   // Fetch initial clusterable datasets
   useEffect(() => {
-    fetchDatasets({ url: BFFApiUrls.MAP_DATASETS });
+    if (activeClusterDatasetIds.length) {
+      fetchDatasets({ url: BFFApiUrls.MAP_DATASETS });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchDatasets]);
 
   const markers = useMemo(() => {
-    if (!datasetMarkers) {
+    if (!datasetMarkers || !activeClusterDatasetIdsString) {
       return [];
     }
     return getFilteredMarkers(

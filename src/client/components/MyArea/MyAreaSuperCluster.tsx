@@ -138,6 +138,7 @@ export function MaSuperClusterLayer({
   const map = useMapRef().current;
   const markers = useClusterMarkers(map);
   const activeDatasetIds = useActiveClusterDatasetIds();
+  const activeIdsKey = activeDatasetIds.join(',');
 
   useEffect(() => {
     return () => {
@@ -164,6 +165,7 @@ export function MaSuperClusterLayer({
 
   const requestData = useCallback(
     async (payload = {}) => {
+      console.log('do request!');
       // TODO: put in serviceworker?
       const response = await axios({
         url: BFFApiUrls.MAP_DATASETS,
@@ -177,12 +179,12 @@ export function MaSuperClusterLayer({
   );
 
   const updateClusterData = useCallback(() => {
-    if (!map) {
+    if (!map || !activeIdsKey) {
       return;
     }
     const bounds = map.getBounds();
     requestData({
-      datasetIds: activeDatasetIds,
+      datasetIds: activeIdsKey.split(','),
       bbox: [
         bounds.getWest(),
         bounds.getSouth(),
@@ -191,7 +193,7 @@ export function MaSuperClusterLayer({
       ],
       zoom: map.getZoom(),
     });
-  }, [map, activeDatasetIds, requestData]);
+  }, [map, activeIdsKey, requestData]);
 
   useEffect(() => {
     if (!map) {

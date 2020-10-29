@@ -5,12 +5,12 @@ import {
 } from '../../../server/services/buurt/datasets';
 import { getIconHtml } from './datasets';
 
-export function createClusterDatasetMarkers(datasetGroups: DatasetCollection) {
-  return datasetGroups
+export function createClusterDatasetMarkers(features: DatasetCollection) {
+  return features
     .filter(
       (feature): feature is MaPointFeature => feature.geometry.type === 'Point'
     )
-    .map(feature => {
+    .map((feature) => {
       return createMarker(feature);
     });
 }
@@ -30,4 +30,18 @@ export function createMarker(feature: MaPointFeature) {
   });
   marker.feature = feature;
   return marker;
+}
+
+export function recursiveCoordinateSwap(coords: any) {
+  const nCoords = [...coords];
+  for (const coord of nCoords) {
+    const c1 = coord[0];
+    if (typeof c1 !== 'number') {
+      recursiveCoordinateSwap(coord);
+    } else if (typeof c1 === 'number') {
+      coord[0] = coord[1];
+      coord[1] = c1;
+    }
+  }
+  return nCoords;
 }

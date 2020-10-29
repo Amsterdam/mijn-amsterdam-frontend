@@ -1,7 +1,7 @@
 import { themeSpacing } from '@amsterdam/asc-ui';
 import themeColors from '@amsterdam/asc-ui/es/theme/default/colors';
 import classnames from 'classnames';
-import L, { Marker, PolylineOptions } from 'leaflet';
+import L, { PolylineOptions } from 'leaflet';
 import React, { ReactElement, ReactNode } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import styled from 'styled-components';
@@ -17,13 +17,6 @@ import {
 } from '../../assets/icons';
 import { DEFAULT_POLYLINE_OPTIONS } from './MaPolyLineLayer';
 import styles from './MyAreaSuperCluster.module.scss';
-
-export type Dataset = Record<string, Marker[]>;
-
-export interface Datasets {
-  id: string;
-  collection: Dataset;
-}
 
 export interface DatasetControl {
   id: string;
@@ -256,13 +249,17 @@ export function getIconHtml(datasetId: string) {
 }
 
 export enum LayerType {
-  PolyLine,
-  Cluster,
+  PolyLine = 'PolyLine',
+  Cluster = 'Cluster',
 }
+
+const ACTIVE_DATASET_IDS_INITIAL = [
+  'parkeerzones',
+  'parkeerzones_uitzondering',
+];
 
 const createDatasetControl = (
   id: string,
-  isActive: boolean = true,
   layerType: LayerType = LayerType.Cluster,
   icon?: ReactNode
 ) => {
@@ -270,7 +267,7 @@ const createDatasetControl = (
     id,
     icon,
     title: capitalizeFirstLetter(id),
-    isActive,
+    isActive: ACTIVE_DATASET_IDS_INITIAL.includes(id),
     layerType,
   };
 };
@@ -281,38 +278,32 @@ export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
     title: 'Parkeren',
     isActive: true,
     collection: DATASETS.parkeren.map((id) =>
-      createDatasetControl(id, false, LayerType.PolyLine)
+      createDatasetControl(id, LayerType.PolyLine)
     ),
   },
   {
     id: 'afvalcontainers',
     title: 'Afvalcontainers',
     isActive: true,
-    collection: DATASETS.afvalcontainers.map((id) =>
-      createDatasetControl(id, true)
-    ),
+    collection: DATASETS.afvalcontainers.map((id) => createDatasetControl(id)),
   },
   {
     id: 'bekendmakingen',
     title: 'Bekendmakingen',
     isActive: true,
-    collection: DATASETS.bekendmakingen.map((id) =>
-      createDatasetControl(id, true)
-    ),
+    collection: DATASETS.bekendmakingen.map((id) => createDatasetControl(id)),
   },
   {
     id: 'evenementen',
     title: 'Evenementen',
     isActive: true,
-    collection: DATASETS.evenementen.map((id) =>
-      createDatasetControl(id, true)
-    ),
+    collection: DATASETS.evenementen.map((id) => createDatasetControl(id)),
   },
   {
     id: 'sport',
     title: 'Sport & Bos',
     isActive: FeatureToggle.myAreaDataSportEnBosActive,
-    collection: DATASETS.sport.map((id) => createDatasetControl(id, true)),
+    collection: DATASETS.sport.map((id) => createDatasetControl(id)),
   },
 ];
 

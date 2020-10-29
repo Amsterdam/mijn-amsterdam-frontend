@@ -1,63 +1,64 @@
 import axios from 'axios';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import {
   atom,
   useRecoilState,
   useRecoilValue,
   useSetRecoilState,
 } from 'recoil';
-import { DatasetCollection } from '../../../server/services/buurt/datasets';
+import {
+  DatasetCollection,
+  MaPolyLineFeature,
+} from '../../../server/services/buurt/datasets';
 import { ApiSuccessResponse } from '../../../universal/helpers';
 import { RefetchFunction } from '../../hooks/api/useDataApi';
 import { LayerType } from './datasets';
-import { createClusterDatasetMarkers } from './MyArea.helpers';
+import {
+  createClusterDatasetMarkers,
+  recursiveCoordinateSwap,
+} from './MyArea.helpers';
 import { useDatasetControlItems } from './MyAreaDatasetControl';
 
-export const datasetGroupsAtom = atom<DatasetCollection>({
-  key: 'datasetGroupsAtom',
+export const featuresAtom = atom<DatasetCollection>({
+  key: 'featuresAtom',
   default: [],
 });
 
-export function useDatasetGroups(
-  layerType?: LayerType
-): [DatasetCollection, RefetchFunction] {
-  const [datasetGroups, setDatasetGroups] = useRecoilState(datasetGroupsAtom);
+export function useFeatures(): [DatasetCollection, RefetchFunction] {
+  const [features, setFeatures] = useState<DatasetCollection>([]);
   const fetchDatasets = useCallback(
-    async requestOptions => {
+    async (requestOptions) => {
       const response: {
         data: ApiSuccessResponse<DatasetCollection>;
       } = await axios(requestOptions);
-      setDatasetGroups(datasetGroups => [
-        ...datasetGroups,
-        ...response.data.content,
-      ]);
+      setFeatures((features) => [...features, ...response.data.content]);
     },
-    [setDatasetGroups]
+    [setFeatures]
   );
 
-  return [datasetGroups, fetchDatasets];
+  return [features, fetchDatasets];
 }
 
-export function useDatasetMarkers() {
-  const [datasetGroups] = useDatasetGroups();
+export function useDatasetMarkers(features: DatasetCollection) {
   return useMemo(() => {
-    if (!datasetGroups) {
+    if (!features) {
       return [];
     }
-    return createClusterDatasetMarkers(datasetGroups);
-  }, [datasetGroups]);
+    return createClusterDatasetMarkers(features);
+  }, [features]);
 }
 
 export function useActiveDatasetIds(layerType?: LayerType) {
   const datasetControlItems = useDatasetControlItems();
   const activeDatasetIds: string[] = useMemo(() => {
-    return datasetControlItems.flatMap(datasetControlItem =>
+    return datasetControlItems.flatMap((datasetControlItem) =>
       datasetControlItem.collection
-        .filter(
-          dataset =>
+        .filter((dataset) => {
+          return (
             dataset.isActive && (!layerType || dataset.layerType === layerType)
-        )
-        .map(dataset => dataset.id)
+          );
+        })
+        .map((dataset) => dataset.id)
     );
   }, [datasetControlItems, layerType]);
 
@@ -70,6 +71,33 @@ export function useActiveClusterDatasetIds() {
 
 export function useActivePolyLineDatasetIds() {
   return useActiveDatasetIds(LayerType.PolyLine);
+}
+
+export function useActivePolyLineFeatures(): [
+  MaPolyLineFeature[],
+  RefetchFunction
+] {
+  const [features, fetchFeatures] = useFeatures();
+  const activePolyLineDatasetIds = useActivePolyLineDatasetIds();
+
+  const polyLineFeatures = useMemo(() => {
+    console.log('feature swapping');
+    return features
+      .filter((feature): feature is MaPolyLineFeature =>
+        activePolyLineDatasetIds.includes(feature.properties.datasetId)
+      )
+      .map((feature) => {
+        return {
+          ...feature,
+          geometry: {
+            ...feature.geometry,
+            coordinates: recursiveCoordinateSwap(feature.geometry.coordinates),
+          },
+        };
+      });
+  }, [features, activePolyLineDatasetIds]);
+
+  return [polyLineFeatures, fetchFeatures];
 }
 
 interface SelectedMarkerData {

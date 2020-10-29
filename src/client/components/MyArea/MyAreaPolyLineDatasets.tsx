@@ -1,10 +1,14 @@
 import { LeafletMouseEventHandlerFn } from 'leaflet';
 import React, { useEffect, useMemo } from 'react';
 import { createGlobalStyle } from 'styled-components';
+import { MaPolyLineFeature } from '../../../server/services/buurt/datasets';
 import { BFFApiUrls } from '../../config/api';
 import { PARKEERZONES_POLYLINE_OPTIONS, POLYLINE_DATASETS } from './datasets';
-import { MaPolyLineFeature, MaPolyLineLayer } from './MaPolyLineLayer';
-import { useActivePolyLineDatasetIds, useDatasetGroups } from './MyArea.hooks';
+import { MaPolyLineLayer } from './MaPolyLineLayer';
+import {
+  useActivePolyLineDatasetIds,
+  useActivePolyLineFeatures,
+} from './MyArea.hooks';
 
 const Styles = createGlobalStyle`
   .ma-marker-tooltip {
@@ -33,47 +37,42 @@ interface MyAreaPolyLineDatasetsProps {
 export function MyAreaPolyLineDatasets({
   onMarkerClick,
 }: MyAreaPolyLineDatasetsProps) {
-  const [datasetGroups, fetchDatasets] = useDatasetGroups();
+  const [features, fetchDatasets] = useActivePolyLineFeatures();
   const activePolyLineDatasetIds = useActivePolyLineDatasetIds();
 
   useEffect(() => {
-    if (!datasetGroups.length) {
-      return;
-    }
     const loadedIds = Array.from(
-      new Set(datasetGroups.map((feature) => feature.properties.datasetId))
+      new Set(features.map((feature) => feature.properties.datasetId))
     );
     const datasetIdsToLoad = activePolyLineDatasetIds.filter(
       (datasetId) => !loadedIds.includes(datasetId)
     );
     if (datasetIdsToLoad.length) {
       fetchDatasets({
-        url: `${BFFApiUrls.MAP_DATASETS}/${datasetIdsToLoad[0][0]}/${datasetIdsToLoad[0][1]}`,
+        url: `${BFFApiUrls.MAP_DATASETS}/${datasetIdsToLoad[0]}`,
       });
     }
-  }, [datasetGroups, activePolyLineDatasetIds, fetchDatasets]);
+  }, [features, activePolyLineDatasetIds, fetchDatasets]);
 
-  const polyLineLayerData = useMemo<Record<string, MaPolyLineFeature[]>>(() => {
-    return {};
-  }, []);
-
-  const activePolyLineDatasets = useMemo(() => {
-    return POLYLINE_DATASETS.filter(([, datasetId]) => {
-      return (
-        activePolyLineDatasetIds.some(
-          (datasetIdPolyLine) => datasetIdPolyLine === datasetId
-        ) && Array.isArray(polyLineLayerData[datasetId])
-      );
-    });
-  }, [activePolyLineDatasetIds, polyLineLayerData]);
+  const polyLineLayerData = useMemo(() => {
+    console.log('constructing new');
+    const polyLineLayerData: Record<string, MaPolyLineFeature[]> = {};
+    for (const feature of features) {
+      if (!polyLineLayerData[feature.properties.datasetId]) {
+        polyLineLayerData[feature.properties.datasetId] = [];
+      }
+      polyLineLayerData[feature.properties.datasetId].push(feature);
+    }
+    return polyLineLayerData;
+  }, [features]);
 
   return (
     <>
-      {activePolyLineDatasets.map((datasetId) => {
+      {Object.entries(polyLineLayerData).map(([datasetId, features]) => {
         return (
           <MaPolyLineLayer
             key={datasetId}
-            features={polyLineLayerData[datasetId]}
+            features={features}
             polylineOptions={PARKEERZONES_POLYLINE_OPTIONS[datasetId]}
             datasetId={datasetId}
             onMarkerClick={onMarkerClick}

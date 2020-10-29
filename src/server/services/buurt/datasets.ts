@@ -14,6 +14,7 @@ export type MaFeature<
   >
 > = GeoJSON.Feature<G, DatasetFeatureProperties>;
 export type MaPointFeature = MaFeature<GeoJSON.Point>;
+export type MaPolyLineFeature = MaFeature<GeoJSON.MultiPolygon>;
 export type DatasetCollection = MaFeature[];
 
 export const BUURT_CACHE_TTL_HOURS = 24;
