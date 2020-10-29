@@ -81,7 +81,6 @@ export function useActivePolyLineFeatures(): [
   const activePolyLineDatasetIds = useActivePolyLineDatasetIds();
 
   const polyLineFeatures = useMemo(() => {
-    console.log('feature swapping');
     return features
       .filter((feature): feature is MaPolyLineFeature =>
         activePolyLineDatasetIds.includes(feature.properties.datasetId)

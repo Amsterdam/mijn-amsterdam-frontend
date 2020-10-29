@@ -5,7 +5,10 @@ import L, { PolylineOptions } from 'leaflet';
 import React, { ReactElement, ReactNode } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import styled from 'styled-components';
-import { DATASETS } from '../../../universal/config';
+import {
+  ACTIVE_DATASET_IDS_INITIAL,
+  DATASETS,
+} from '../../../universal/config';
 import { FeatureToggle } from '../../../universal/config/app';
 import { capitalizeFirstLetter } from '../../../universal/helpers';
 import {
@@ -252,11 +255,6 @@ export enum LayerType {
   PolyLine = 'PolyLine',
   Cluster = 'Cluster',
 }
-
-const ACTIVE_DATASET_IDS_INITIAL = [
-  'parkeerzones',
-  'parkeerzones_uitzondering',
-];
 
 const createDatasetControl = (
   id: string,

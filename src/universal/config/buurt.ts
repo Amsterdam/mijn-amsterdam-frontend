@@ -53,3 +53,10 @@ export const DATASETS: Record<string, string[]> = {
     'hardlooproute',
   ],
 };
+
+export const ACTIVE_DATASET_IDS_INITIAL = [
+  ...DATASETS.afvalcontainers,
+  ...DATASETS.bekendmakingen,
+  ...DATASETS.evenementen,
+  ...DATASETS.sport,
+];

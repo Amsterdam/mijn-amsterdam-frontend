@@ -3,7 +3,7 @@ import React, { useEffect, useMemo } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { MaPolyLineFeature } from '../../../server/services/buurt/datasets';
 import { BFFApiUrls } from '../../config/api';
-import { PARKEERZONES_POLYLINE_OPTIONS, POLYLINE_DATASETS } from './datasets';
+import { PARKEERZONES_POLYLINE_OPTIONS } from './datasets';
 import { MaPolyLineLayer } from './MaPolyLineLayer';
 import {
   useActivePolyLineDatasetIds,
@@ -55,7 +55,6 @@ export function MyAreaPolyLineDatasets({
   }, [features, activePolyLineDatasetIds, fetchDatasets]);
 
   const polyLineLayerData = useMemo(() => {
-    console.log('constructing new');
     const polyLineLayerData: Record<string, MaPolyLineFeature[]> = {};
     for (const feature of features) {
       if (!polyLineLayerData[feature.properties.datasetId]) {
@@ -63,18 +62,18 @@ export function MyAreaPolyLineDatasets({
       }
       polyLineLayerData[feature.properties.datasetId].push(feature);
     }
-    return polyLineLayerData;
+    console.log('constructing new', Object.entries(polyLineLayerData));
+    return Object.entries(polyLineLayerData);
   }, [features]);
 
   return (
     <>
-      {Object.entries(polyLineLayerData).map(([datasetId, features]) => {
+      {polyLineLayerData.map(([datasetId, features]) => {
         return (
           <MaPolyLineLayer
             key={datasetId}
             features={features}
             polylineOptions={PARKEERZONES_POLYLINE_OPTIONS[datasetId]}
-            datasetId={datasetId}
             onMarkerClick={onMarkerClick}
           />
         );

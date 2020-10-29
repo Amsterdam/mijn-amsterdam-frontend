@@ -32,15 +32,16 @@ export function createMarker(feature: MaPointFeature) {
   return marker;
 }
 
-export function recursiveCoordinateSwap(coords: any) {
-  const nCoords = [...coords];
-  for (const coord of nCoords) {
+export function recursiveCoordinateSwap(coords: any[]) {
+  const nCoords: any[] = [];
+  let i = 0;
+  for (i; i < coords.length; i++) {
+    const coord = coords[i];
     const c1 = coord[0];
     if (typeof c1 !== 'number') {
-      recursiveCoordinateSwap(coord);
+      nCoords.push(recursiveCoordinateSwap(coord));
     } else if (typeof c1 === 'number') {
-      coord[0] = coord[1];
-      coord[1] = c1;
+      nCoords.push([coord[1], c1]);
     }
   }
   return nCoords;

@@ -59,7 +59,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     listUrl:
       'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones/?_fields=id,geometry,gebiedskleurcode,gebiedsnaam&indicatieZichtbaar=TRUE&page_size=500',
     detailUrl: 'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones/',
-    transformDetail: transformParkeerzones,
+    transformDetail: transformParkeerzonesDetail,
     transformList: (responseData) =>
       transformParkeerzoneCoords('parkeerzones', responseData),
   },
@@ -68,7 +68,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
       'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones_uitzondering/?_fields=id,geometry,gebiedsnaam&indicatieZichtbaar=TRUE&page_size=100',
     detailUrl:
       'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones_uitzondering/',
-    transformDetail: transformparkeerzonesUitzondering,
+    transformDetail: transformparkeerzonesUitzonderingDetail,
     transformList: (responseData) =>
       transformParkeerzoneCoords('parkeerzones_uitzondering', responseData),
   },
@@ -362,26 +362,6 @@ function transformBekendmakingenDetail(responseData: any) {
   };
 }
 
-// {
-//   "begin_datum_gebied": "2010-06-03",
-//   "gebied_code": "WP61B",
-//   "gebied_omschrijving": "WP61B West 8.2 Zeeheldenbuurt",
-//   "eind_datum_gebied": null,
-//   "domein_code": "363",
-//   "gebruiks_doel": "VERGUNP",
-//   "gebied_naam": "West 8.2 Zeeheldenbuurt",
-//   "show": "TRUE",
-//   "parent": "West 8",
-//   "color": "#A00078"
-// }
-function transformParkeerzones(WFSData: any) {
-  return {
-    title: WFSData.gebied_naam,
-    description: WFSData.gebied_omschrijving,
-    subject: WFSData.gebied_code,
-  };
-}
-
 function transformParkeerzoneCoords(datasetId: string, responseData: any) {
   const results = getApiEmbeddedResponse(datasetId, responseData);
   const collection: DatasetCollection = [];
@@ -401,21 +381,40 @@ function transformParkeerzoneCoords(datasetId: string, responseData: any) {
   return collection;
 }
 
-function transformparkeerzonesUitzondering(WFSData: any) {
+// {
+//  "domeincode": "363",
+// "gebiedscode": "WP60C",
+// "gebiedsnaam": "West 7.3 Witteneiland",
+// "gebiedsouder": "West 7",
+// "gebruiksdoel": "VERGUNP",
+// "eindGeldigheid": null,
+// "beginGeldigheid": "2010-06-03",
+// "gebiedskleurcode": "#EC0000",
+// "indicatieZichtbaar": "TRUE",
+// "gebiedsomschrijving": "WP60C West 7.3 Witteneiland"
+// }
+function transformParkeerzonesDetail(responseData: any) {
   return {
-    title: WFSData.gebied_naam,
-    description: WFSData.omschrijving,
-    subject: WFSData.gebied_code,
+    title: responseData.gebiedsnaam,
+    description: responseData.gebiedsomschrijving,
+    subject: responseData.gebiedscode,
   };
 }
 
 // {
-//      "gebied_code": "WM55_U02",
-//     "begin_datum_gebied": "2018-01-01",
-//     "eind_datum_gebied": null,
-//     "domein_code": "363",
-//     "gebruiks_doel": "VERGUNP",
-//     "gebied_naam": "Sportpark Middenmeer",
-//     "omschrijving": "Uw parkeervergunning geldt niet van ma t/m za 9.00 tot 21.00 uur.",
-//     "show": "TRUE"
+// "domeincode": "363",
+// "gebiedscode": "BL01A_U01",
+// "gebiedsnaam": "Hoofdweg, Bos en Lommerweg en Bos en Lommerplein",
+// "gebruiksdoel": "VERGUNP",
+// "eindGeldigheid": null,
+// "beginGeldigheid": "2010-01-01",
+// "indicatieZichtbaar": "TRUE",
+// "gebiedsomschrijving": "Uw parkeervergunning geldt niet van ma t/m za 10.00 tot 18.00 uur."
 // }
+function transformparkeerzonesUitzonderingDetail(responseData: any) {
+  return {
+    title: responseData.gebiedsnaam,
+    description: responseData.gebiedsomschrijving,
+    subject: responseData.gebiedscode,
+  };
+}
