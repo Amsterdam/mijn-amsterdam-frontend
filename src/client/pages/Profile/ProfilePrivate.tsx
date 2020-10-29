@@ -49,7 +49,13 @@ export default function Profile() {
     ApiResponse<{ residentCount: number }>
   >(
     {
+      url: BRP_RESIDENTS_API_URL,
       postpone: true,
+      method: 'post',
+      transformResponse: [
+        ...requestApiData.defaults.transformResponse,
+        responseContent => apiSuccesResult(responseContent),
+      ],
     },
     apiPristineResult({ residentCount: -1 })
   );
@@ -81,13 +87,7 @@ export default function Profile() {
       BRP.content?.adres?._adresSleutel
     ) {
       fetchResidentCount({
-        url: BRP_RESIDENTS_API_URL,
-        method: 'post',
         data: { addressKey: BRP.content?.adres?._adresSleutel },
-        transformResponse: [
-          ...requestApiData.defaults.transformResponse,
-          (responseContent) => apiSuccesResult(responseContent),
-        ],
       });
     }
   }, [BRP.content, fetchResidentCount]);
