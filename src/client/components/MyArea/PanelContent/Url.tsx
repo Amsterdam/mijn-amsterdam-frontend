@@ -13,11 +13,12 @@ export default function Url({
   urlTitle,
   label = 'Meer informatie',
 }: UrlProps) {
+  const theUrl = url.startsWith('www.') ? `https://${url}` : url;
   return (
     <InfoDetail
       label={label}
       value={
-        <Linkd external={true} href={url}>
+        <Linkd icon={null} external={true} href={theUrl}>
           {urlTitle || url}
         </Linkd>
       }

@@ -30,20 +30,17 @@ export function MaPolyLineLayer({
     const layers: L.Layer[] = [];
 
     for (const feature of features) {
-      const options = {
+      let options: L.PolylineOptions = {
         ...polylineOptions,
         color: feature.properties.color || polylineOptions.color,
       };
-      const layer = L.polygon(
-        feature.geometry.coordinates as
-          | L.LatLngExpression[]
-          | L.LatLngExpression[][]
-          | L.LatLngExpression[][][],
-        options
-      );
 
-      layer.feature = feature;
-
+      if (feature.geometry.type === 'MultiLineString') {
+        options.fillOpacity = 0;
+        options.weight = 2;
+      }
+      const layer = L.polyline(feature.geometry.coordinates as any, options);
+      (layer as any).feature = feature;
       layers.push(layer);
     }
     return layers;

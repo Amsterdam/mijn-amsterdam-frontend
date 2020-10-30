@@ -110,7 +110,10 @@ async function loadDataset(
 
   if (Array.isArray(response.content)) {
     response.content = response.content.map((feature) => {
-      if (feature.geometry.type === 'MultiPolygon') {
+      if (
+        feature.geometry.type === 'MultiPolygon' ||
+        feature.geometry.type === 'MultiLineString'
+      ) {
         feature.geometry.coordinates = recursiveCoordinateSwap(
           feature.geometry.coordinates
         );
@@ -209,7 +212,8 @@ export async function loadPolyLineDatasets(
 
   return dataStore.filter((feature, index): feature is MaPolyLineFeature => {
     return (
-      feature.geometry.type === 'MultiPolygon' &&
+      (feature.geometry.type === 'MultiPolygon' ||
+        feature.geometry.type === 'MultiLineString') &&
       (!datasetIds || datasetIds.includes(feature.properties.datasetId))
     );
   });

@@ -13,7 +13,9 @@ export type MaFeature<
   >
 > = GeoJSON.Feature<G, DatasetFeatureProperties>;
 export type MaPointFeature = MaFeature<GeoJSON.Point>;
-export type MaPolyLineFeature = MaFeature<GeoJSON.MultiPolygon>;
+export type MaPolyLineFeature = MaFeature<
+  GeoJSON.MultiPolygon | GeoJSON.MultiLineString
+>;
 export type DatasetCollection = MaFeature[];
 
 export const BUURT_CACHE_TTL_HOURS = 24;
@@ -82,7 +84,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
   },
   sportveld: {
     listUrl:
-      'https://api.data.amsterdam.nl/v1/sport/sportveld/?_fields=id,geometry&page_size=1000',
+      'https://api.data.amsterdam.nl/v1/sport/sportveld/?_fields=id,geometry,sportfunctie&page_size=1000',
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportveld/',
     transformList: (responseData: any) =>
       transformListSportApiResponse('sportveld', responseData),
@@ -124,6 +126,70 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
   },
 };
 
+function getPolyLineColor(datasetId: string, feature: any) {
+  switch (datasetId) {
+    case 'sportveld':
+      switch (feature.sportfunctie) {
+        case 'Honkbal/softbal':
+          return 'green';
+        case 'Voetbal':
+          return 'green';
+        case 'Atletiek':
+          return 'brown';
+        case 'Australian football':
+          return 'green';
+        case 'Rugby':
+          return 'green';
+        case 'Handboogschieten':
+          return 'green';
+        case 'Golf driving range':
+          return 'green';
+        case 'Short golf':
+          return 'green';
+        case 'Cricket':
+          return 'green';
+        case 'Hockey':
+          return 'green';
+        case 'Tennis':
+          return 'brown';
+        case 'Golf':
+          return 'green';
+        case 'Balspel':
+          return 'green';
+        case 'Honkbal':
+          return 'green';
+        case 'Handbal':
+          return 'green';
+        case 'Korfbal':
+          return 'green';
+        case 'Beachvolleybal':
+          return 'green';
+        case 'Jeu de Boules':
+          return '#ccc';
+        case 'Beachhandbal':
+          return 'sand';
+        case 'Basketbal':
+          return '#555';
+        case 'Skaten':
+          return '#555';
+        case 'Wielrennen':
+          return '#ccc';
+        case 'Padel':
+          return 'green';
+        case 'American football':
+          return 'green';
+        default:
+          return 'purple';
+      }
+    case 'sportpark':
+      return 'green';
+    case 'hardlooproute':
+      return 'purple';
+    default:
+      return 'purple';
+  }
+}
+
 function transformListSportApiResponse(datasetId: string, responseData: any) {
   const results = getApiEmbeddedResponse(datasetId, responseData);
   const collection: DatasetCollection = [];
@@ -139,7 +205,7 @@ function transformListSportApiResponse(datasetId: string, responseData: any) {
           feature.geometry.type === 'MultiPolygon' ||
           feature.geometry.type === 'MultiLineString'
         ) {
-          properties.color = 'purple';
+          properties.color = getPolyLineColor(datasetId, feature);
         }
         collection.push({
           type: 'Feature',

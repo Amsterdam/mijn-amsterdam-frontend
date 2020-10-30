@@ -38,7 +38,8 @@ export function MyAreaDatasets({ onMarkerClick }: MyAreaDatasetsProps) {
     );
     const polyLineFeatures = response.data.content?.filter(
       (feature): feature is MaPolyLineFeature =>
-        feature.geometry.type === 'MultiPolygon'
+        feature.geometry.type === 'MultiPolygon' ||
+        feature.geometry.type === 'MultiLineString'
     );
 
     if (clusterFeatures) {

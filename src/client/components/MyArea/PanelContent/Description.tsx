@@ -16,6 +16,7 @@ export default function Description({
     <InfoDetail
       className={styles.InfoDetailDescription}
       label={label}
+      el="div"
       value={<InnerHtml>{description}</InnerHtml>}
     />
   );

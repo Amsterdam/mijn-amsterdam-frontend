@@ -1,10 +1,7 @@
 import { LeafletMouseEventHandlerFn } from 'leaflet';
 import React, { useMemo } from 'react';
 import { createGlobalStyle } from 'styled-components';
-import {
-  DatasetCollection,
-  MaPolyLineFeature,
-} from '../../../server/services/buurt/datasets';
+import { MaPolyLineFeature } from '../../../server/services/buurt/datasets';
 import { PARKEERZONES_POLYLINE_OPTIONS } from './datasets';
 import { MaPolyLineLayer } from './MaPolyLineLayer';
 

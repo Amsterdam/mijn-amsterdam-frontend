@@ -33,8 +33,6 @@ import { MyAreaDatasets } from './MyAreaDatasets';
 import MyAreaHeader from './MyAreaHeader';
 import MyAreaLoader from './MyAreaLoader';
 import MyAreaPanels from './MyAreaPanels';
-import { MyAreaPolyLineDatasets } from './MyAreaPolyLineDatasets';
-import { MaSuperClusterLayer } from './MyAreaSuperCluster';
 
 const StyledViewerContainer = styled(ViewerContainer)`
   height: 100%;
@@ -113,7 +111,6 @@ export default function MyArea2() {
 
   const onMarkerClick = useCallback(
     (event: LeafletEvent) => {
-      console.log(event);
       const id = event?.propagatedFrom?.feature?.properties?.id;
 
       if (selectedMarkerData?.id !== id) {

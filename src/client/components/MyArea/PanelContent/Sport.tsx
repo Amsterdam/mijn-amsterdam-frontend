@@ -6,6 +6,7 @@ import Description from './Description';
 import GenericBase from './GenericBase';
 import JsonString from './JsonString';
 import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
+import Url from './Url';
 
 interface MyArePanelContentSportProps {
   panelItem: any;
@@ -20,14 +21,20 @@ export default function MyArePanelContentSport({
     case 'zwembad':
       return (
         <GenericBase title={panelItem.naam} supTitle="Zwembaden">
-          <JsonString data={panelItem} />
+          <InfoDetail label="Adres" value={panelItem.adres} />
+          {!!panelItem.emailadres && (
+            <Url
+              label="E-mail"
+              url={`mailto:${panelItem.emailadres}`}
+              urlTitle={panelItem.emailadres}
+            />
+          )}
+          {!!panelItem.website && <Url url={panelItem.website} />}
         </GenericBase>
       );
     case 'sportpark':
       return (
-        <GenericBase title={panelItem.omschrijving} supTitle="Sportparken">
-          {/* <JsonString data={panelItem} /> */}
-        </GenericBase>
+        <GenericBase title={panelItem.omschrijving} supTitle="Sportparken" />
       );
     case 'sportveld':
       return (
@@ -37,26 +44,41 @@ export default function MyArePanelContentSport({
             value={panelItem.soortOndergrond}
           />
           <InfoDetail label="Sportpark" value={panelItem.sportpark} />
-          {/* <JsonString data={panelItem} /> */}
         </GenericBase>
       );
     case 'gymsportzaal':
       return (
         <GenericBase title={panelItem.naam} supTitle="Gymsportzalen">
-          <JsonString data={panelItem} />
+          <InfoDetail label="Adres" value={panelItem.adres} />
+          {!!panelItem.emailadres && (
+            <Url
+              label="E-mail"
+              url={`mailto:${panelItem.emailadres}`}
+              urlTitle={panelItem.emailadres}
+            />
+          )}
+          {!!panelItem.website && <Url url={panelItem.website} />}
         </GenericBase>
       );
     case 'sporthal':
       return (
         <GenericBase title={panelItem.naam} supTitle="Sporthallen">
-          <JsonString data={panelItem} />
+          <InfoDetail label="Adres" value={panelItem.adres} />
+          {!!panelItem.emailadres && (
+            <Url
+              label="E-mail"
+              url={`mailto:${panelItem.emailadres}`}
+              urlTitle={panelItem.emailadres}
+            />
+          )}
+          {!!panelItem.website && <Url url={panelItem.website} />}
         </GenericBase>
       );
     case 'sportaanbieder':
       return (
         <GenericBase title={panelItem.naamAanbieder} supTitle="Sportaanbieders">
           <InfoDetail label="Adres" value={panelItem.adres} />
-          <JsonString data={panelItem} />
+          {!!panelItem.website && <Url url={panelItem.website} />}
         </GenericBase>
       );
     case 'openbaresportplek':
@@ -77,13 +99,12 @@ export default function MyArePanelContentSport({
           {!!panelItem.soortLocatie && (
             <InfoDetail label="Soort locatie" value={panelItem.soortLocatie} />
           )}
-          <JsonString data={panelItem} />
         </GenericBase>
       );
     case 'hardlooproute':
       return (
         <GenericBase title={panelItem.naam} supTitle="Hardlooproutes">
-          <JsonString data={panelItem} />
+          {/* <JsonString data={panelItem} /> */}
         </GenericBase>
       );
   }

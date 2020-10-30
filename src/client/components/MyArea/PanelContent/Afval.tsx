@@ -1,5 +1,8 @@
 import React from 'react';
-import JsonString from './JsonString';
+import InfoDetail from '../../InfoDetail/InfoDetail';
+import GenericBase from './GenericBase';
+import { LinkdInline } from '../../Button/Button';
+import Url from './Url';
 
 const afvalUrls: Record<string, string> = {
   rest:
@@ -23,5 +26,27 @@ export default function MyArePanelContentAfval({
   datasetId,
   panelItem,
 }: MyArePanelContentAfvalProps) {
-  return <JsonString data={panelItem} />;
+  const adoptedText = panelItem.geadopteerdInd ? (
+    'Ja'
+  ) : (
+    <>
+      Nee.{' '}
+      <LinkdInline
+        external={true}
+        href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BA6316561-BBC0-42A0-810F-74A7CCFA188D%7D"
+      >
+        Adopteer deze container
+      </LinkdInline>
+      .
+    </>
+  );
+  return (
+    <GenericBase
+      title={panelItem.fractieOmschrijving}
+      supTitle="Afvalcontainers"
+    >
+      <InfoDetail label="Afvalcontainer geadopteerd?" value={adoptedText} />
+      <Url url={afvalUrls[panelItem.fractieOmschrijving.toLowerCase()]} />
+    </GenericBase>
+  );
 }

@@ -28,12 +28,7 @@ export default function MyAreaPanelContentGeneric({
       );
     case 'afvalcontainers':
       return (
-        <GenericBase
-          title={titleTransform(datasetId)}
-          supTitle={titleTransform(getDatasetGroupId(datasetId))}
-        >
-          <MyArePanelContentAfval datasetId={datasetId} panelItem={panelItem} />
-        </GenericBase>
+        <MyArePanelContentAfval datasetId={datasetId} panelItem={panelItem} />
       );
     case 'bekendmakingen':
       return (
