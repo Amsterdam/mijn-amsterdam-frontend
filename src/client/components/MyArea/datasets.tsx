@@ -250,11 +250,23 @@ export function getIconHtml(datasetId: string) {
   return datasetIconHtml[datasetId] || datasetIconHtml.default;
 }
 
-const createDatasetControl = (id: string, icon?: ReactNode) => {
+function titleTransform(id: string) {
+  return capitalizeFirstLetter(id).replace(/_/g, ' ');
+}
+
+const createDatasetControl = ({
+  id,
+  icon,
+  title,
+}: {
+  id: string;
+  icon?: ReactNode;
+  title?: string;
+}) => {
   return {
     id,
     icon,
-    title: capitalizeFirstLetter(id),
+    title: titleTransform(id),
     isActive: ACTIVE_DATASET_IDS_INITIAL.includes(id),
   };
 };
@@ -264,31 +276,35 @@ export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
     id: 'parkeren',
     title: 'Parkeren',
     isActive: true,
-    collection: DATASETS.parkeren.map((id) => createDatasetControl(id)),
+    collection: DATASETS.parkeren.map((id) => createDatasetControl({ id })),
   },
   {
     id: 'afvalcontainers',
     title: 'Afvalcontainers',
     isActive: true,
-    collection: DATASETS.afvalcontainers.map((id) => createDatasetControl(id)),
+    collection: DATASETS.afvalcontainers.map((id) =>
+      createDatasetControl({ id })
+    ),
   },
   {
     id: 'bekendmakingen',
     title: 'Bekendmakingen',
     isActive: true,
-    collection: DATASETS.bekendmakingen.map((id) => createDatasetControl(id)),
+    collection: DATASETS.bekendmakingen.map((id) =>
+      createDatasetControl({ id })
+    ),
   },
   {
     id: 'evenementen',
     title: 'Evenementen',
     isActive: true,
-    collection: DATASETS.evenementen.map((id) => createDatasetControl(id)),
+    collection: DATASETS.evenementen.map((id) => createDatasetControl({ id })),
   },
   {
     id: 'sport',
     title: 'Sport & Bos',
     isActive: FeatureToggle.myAreaDataSportEnBosActive,
-    collection: DATASETS.sport.map((id) => createDatasetControl(id)),
+    collection: DATASETS.sport.map((id) => createDatasetControl({ id })),
   },
 ];
 

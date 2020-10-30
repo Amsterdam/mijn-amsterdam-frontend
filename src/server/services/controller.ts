@@ -121,6 +121,7 @@ type CommercialServices = Omit<
   | 'FOCUS_SPECIFICATIES'
   | 'FOCUS_AANVRAGEN'
   | 'FOCUS_TOZO'
+  | 'FOCUS_STADSPAS'
   | 'WMO'
 >;
 
