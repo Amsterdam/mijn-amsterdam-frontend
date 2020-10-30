@@ -122,7 +122,7 @@ export const panelConfigCommercial: PanelConfig<KVKPanelKey> = {
     actionLinks: [],
   }),
   hoofdVestiging: KVK => ({
-    title: 'Vestiging',
+    title: 'Hoofdvestiging',
     actionLinks: [],
   }),
   vestigingen: KVK => ({
