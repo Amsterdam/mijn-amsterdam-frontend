@@ -54,6 +54,16 @@ export const DATASETS: Record<string, string[]> = {
   ],
 };
 
+export function getDatasetGroupId(datasetId: string) {
+  const group = Object.entries(DATASETS).find(([groupId, datasetIds]) =>
+    datasetIds.includes(datasetId)
+  );
+  if (group) {
+    return group[0];
+  }
+  return 'Dataset';
+}
+
 export const ACTIVE_DATASET_IDS_INITIAL = [
   ...DATASETS.afvalcontainers,
   ...DATASETS.bekendmakingen,

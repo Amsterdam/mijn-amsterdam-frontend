@@ -250,7 +250,7 @@ export function getIconHtml(datasetId: string) {
   return datasetIconHtml[datasetId] || datasetIconHtml.default;
 }
 
-function titleTransform(id: string) {
+export function titleTransform(id: string) {
   return capitalizeFirstLetter(id).replace(/_/g, ' ');
 }
 

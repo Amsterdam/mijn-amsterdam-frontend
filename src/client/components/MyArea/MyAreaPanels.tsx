@@ -20,7 +20,7 @@ import MyAreaDatasetControl, {
   datasetControlItemsAtom,
   useUpdateDatasetControlItems,
 } from './MyAreaDatasetControl';
-import MyAreaPanelContent from './MyAreaPanelContent';
+import MyAreaPanelContent from './PanelContent/Generic';
 
 function isIndeterminateControl(datasets: Array<{ isActive: boolean }>) {
   return (
@@ -129,15 +129,17 @@ export default function MyAreaPanels({
             ) : null}
           </MyAreaCollapsiblePanel>
         ))}
-        {selectedMarkerData?.id && (
+        {selectedMarkerData?.id && selectedMarkerData?.datasetId && (
           <MapPanelContentDetail
-            title={selectedMarkerData.markerData?.title}
             stackOrder={3}
             animate
             onClose={onCloseDetailPanel}
           >
             {selectedMarkerData.markerData !== 'error' ? (
-              <MyAreaPanelContent panelItem={selectedMarkerData.markerData} />
+              <MyAreaPanelContent
+                datasetId={selectedMarkerData.datasetId}
+                panelItem={selectedMarkerData.markerData}
+              />
             ) : (
               <Alert type="warning">
                 <p>

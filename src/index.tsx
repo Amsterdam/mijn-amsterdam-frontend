@@ -1,4 +1,3 @@
-/// <reference path="./universal/types/global.d.ts" />
 /// <reference types="react-scripts" />
 
 import './client/polyfill';
