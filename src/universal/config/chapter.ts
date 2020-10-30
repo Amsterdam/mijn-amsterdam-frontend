@@ -54,6 +54,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
 };
 
 export const DocumentTitleMain = 'Mijn Amsterdam';
+export const PageTitleMain = 'Mijn Amsterdam';
 
 // Used in <html><head><title>{PageTitle}</title></head>
 export const DocumentTitles = {
@@ -66,7 +67,9 @@ export const DocumentTitles = {
   [AppRoutes[
     'INKOMEN/BIJSTANDSUITKERING'
   ]]: `Bijstandsuitkering | ${ChapterTitles.INKOMEN}`,
-  [AppRoutes['INKOMEN/STADSPAS']]: `Stadspas | ${ChapterTitles.INKOMEN}`,
+  [AppRoutes[
+    'INKOMEN/STADSPAS/AANVRAAG'
+  ]]: `Stadspas | ${ChapterTitles.INKOMEN}`,
   [AppRoutes['INKOMEN/TOZO']]: `Tozo | ${ChapterTitles.INKOMEN}`,
   [AppRoutes[
     'INKOMEN/SPECIFICATIES'
