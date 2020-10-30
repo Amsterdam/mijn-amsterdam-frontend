@@ -1,6 +1,11 @@
 @import '../../styles/_global.scss';
 
-.InfoPanel .Title {
+.InfoPanel {
+  border-top: 0.1rem solid $color-neutral-grey2;
+  padding-top: 3rem;
+}
+
+.Title {
   margin-left: 16rem;
   margin-bottom: 1.8rem;
 
@@ -12,8 +17,6 @@
 .InfoPanelContent {
   display: flex;
   flex-wrap: wrap;
-  border-top: 0.1rem solid $color-neutral-grey2;
-  padding-top: 2rem;
 }
 
 .InfoPanelCollapsible {
@@ -55,6 +58,10 @@
 
 .InfoPanelTable {
   border-collapse: collapse;
+
+  + .InfoPanelTable {
+    border-top: .1rem solid $color-neutral-grey2;
+  }
 
   + .InfoPanelTable {
       margin-top: 2rem;

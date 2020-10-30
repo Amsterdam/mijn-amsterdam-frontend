@@ -107,7 +107,11 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
   ],
   telefoonnummer: [
     'Telefoonnummer',
-    (value: string) => <LinkdInline href={`tel:${value}`}>{value}</LinkdInline>,
+    (value: string) => (
+      <LinkdInline href={`tel:${value}`} external={true}>
+        {value}
+      </LinkdInline>
+    ),
   ],
 
   websites: [
@@ -118,7 +122,7 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
           {urls.map(url => (
             <span key={url}>
               <LinkdInline key={url} href={url} external={true}>
-                {url}
+                {url.replace(/(https?:\/\/)/, '')}
               </LinkdInline>
               <br />
             </span>
@@ -135,7 +139,7 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
         </LinkdInline>
       ) : null,
   ],
-  fax: 'Fax',
+  faxnummer: 'Fax',
   activiteiten: [
     'Activiteiten',
     (activiteiten: string[]) =>
@@ -194,6 +198,7 @@ export const kvkInfoLabels = {
 interface KvkProfileData {
   onderneming: ProfileSection | null;
   rechtspersonen?: ProfileSection[];
+  hoofdVestiging?: ProfileSection;
   vestigingen?: ProfileSection[];
   aandeelhouders?: ProfileSection[];
   bestuurders?: ProfileSection[];
@@ -215,9 +220,17 @@ export function formatKvkProfileData(kvkData: KVKData): KvkProfileData {
   }
 
   if (kvkData.vestigingen?.length) {
-    profileData.vestigingen = kvkData.vestigingen.map(vestiging =>
-      format(kvkInfoLabels.vestiging, vestiging, kvkData)
+    const hoofdVestiging = kvkData.vestigingen.find(
+      vestiging => vestiging.isHoofdvestiging
     );
+
+    profileData.hoofdVestiging = hoofdVestiging
+      ? format(kvkInfoLabels.vestiging, hoofdVestiging, kvkData)
+      : null;
+
+    profileData.vestigingen = kvkData.vestigingen
+      .filter(vestiging => !vestiging.isHoofdvestiging)
+      .map(vestiging => format(kvkInfoLabels.vestiging, vestiging, kvkData));
   }
 
   if (kvkData.aandeelhouders?.length) {
