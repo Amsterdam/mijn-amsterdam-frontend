@@ -21,6 +21,22 @@ export interface FocusTozoDocument {
   productSpecific?: FocusTozoLabelSet['productSpecific'];
 }
 
+export interface FocusStadspasBudget {
+  balance: number;
+  assigned: number;
+  title: string;
+}
+
+// The items you get from the api source
+export interface FocusStadspasSaldo {
+  id: number;
+  pasnummer: number;
+  naam: string;
+  datumAfloop: string;
+  budgets: FocusStadspasBudget[];
+  urlTransactions: string;
+}
+
 export type FocusInkomenSpecificatieCategory =
   | 'IOAZ'
   | 'BBS'
@@ -44,6 +60,7 @@ export interface FocusCombinedSourceResponse {
   uitkeringsspecificaties: FocusInkomenSpecificatie[];
   jaaropgaven: FocusInkomenSpecificatie[];
   tozodocumenten: FocusTozoDocument[];
+  stadspassaldo: FocusStadspasSaldo[];
 }
 
 export async function fetchFOCUSCombined(

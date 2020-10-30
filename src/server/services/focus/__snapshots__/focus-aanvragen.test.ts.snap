@@ -378,7 +378,7 @@ Array [
     "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen-en-stadspas/stadspas/226183637",
+      "to": "/inkomen-en-stadspas/stadspas/aanvraag/226183637",
     },
     "productTitle": "Stadspas",
     "status": "Aanvraag",
@@ -429,7 +429,7 @@ Array [
     "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen-en-stadspas/stadspas/4147155538",
+      "to": "/inkomen-en-stadspas/stadspas/aanvraag/4147155538",
     },
     "productTitle": "Stadspas",
     "status": "In behandeling",
@@ -505,7 +505,7 @@ Array [
     "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen-en-stadspas/stadspas/2371148170",
+      "to": "/inkomen-en-stadspas/stadspas/aanvraag/2371148170",
     },
     "productTitle": "Stadspas",
     "status": "Informatie nodig",

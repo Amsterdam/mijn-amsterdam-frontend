@@ -25,7 +25,7 @@ export interface ApiState<T> {
   data: T;
 }
 
-export type RefetchFunction = (options: Partial<ApiRequestOptions>) => void;
+export type RefetchFunction = (options?: Partial<ApiRequestOptions>) => void;
 
 /**
  * Concepts in this hook are described in the following article:
@@ -92,7 +92,7 @@ export function useDataApi<T>(
   const apiDataReducer = createApiDataReducer<T>();
 
   const refetch = useCallback(
-    (refetchOptions: Partial<ApiRequestOptions>) => {
+    (refetchOptions?: Partial<ApiRequestOptions>) => {
       setRequestOptions(options => ({
         ...options,
         ...refetchOptions,
