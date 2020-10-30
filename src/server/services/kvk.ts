@@ -41,16 +41,16 @@ export interface Vestiging {
   vestigingsNummer: string;
   handelsnamen: string[];
   typeringVestiging: string;
-  isHoofdvestiging: boolean;
   bezoekadres: Adres | null;
   postadres: Adres | null;
   telefoonnummer: string | null;
   websites: string[] | null;
-  fax: string | null;
+  faxnummer: string | null;
   emailadres: string | null;
   activiteiten: string[];
   datumAanvang: string | null;
   datumEinde: string | null;
+  isHoofdvestiging?: boolean;
 }
 
 export interface KVKSourceDataContent {
@@ -78,13 +78,19 @@ export function getKvkAddress(kvkData: KVKData) {
 
   if (vestigingen.length) {
     const vestiging = kvkData?.vestigingen.find(
-      vestiging => !!vestiging.bezoekadres
+      vestiging =>
+        !!vestiging.bezoekadres &&
+        (vestiging.bezoekadres.mokum === true ||
+          vestiging.bezoekadres.woonplaatsNaam === 'Amsterdam')
     );
     address = vestiging?.bezoekadres || null;
 
     if (!address) {
       const vestiging = kvkData?.vestigingen.find(
-        vestiging => !!vestiging.postadres
+        vestiging =>
+          !!vestiging.postadres &&
+          (vestiging.postadres.mokum === true ||
+            vestiging.postadres.woonplaatsNaam === 'Amsterdam')
       );
       address = vestiging?.postadres || null;
     }
@@ -103,13 +109,20 @@ export function transformKVKData(responseData: KVKSourceData): KVKData | null {
   }
   if (responseData.content.onderneming?.handelsnamen) {
     responseData.content.onderneming.handelsnaam =
-      responseData.content.onderneming?.handelsnamen.pop() || null;
+      responseData.content.onderneming?.handelsnamen.shift() || null;
   }
   if (responseData.content.vestigingen) {
     responseData.content.vestigingen = responseData.content.vestigingen.map(
       vestiging => {
         return Object.assign(vestiging, {
           isHoofdvestiging: vestiging.typeringVestiging === 'Hoofdvestiging',
+          websites:
+            vestiging.websites?.map(website => {
+              return !website.startsWith('http://') &&
+                !website.startsWith('https://')
+                ? `https://${website}`
+                : website;
+            }) || null,
         });
       }
     );

@@ -13,7 +13,7 @@ type BRPPanelKey = keyof Omit<
   'identiteitsbewijzen' | 'notifications' | 'kvkNummer'
 >;
 
-type KVKPanelKey = keyof Omit<KVKData, 'mokum'>;
+type KVKPanelKey = keyof Omit<KVKData, 'mokum'> | 'hoofdVestiging';
 
 type PanelProps = Pick<InfoPanelProps, 'title' | 'actionLinks'>;
 
@@ -121,11 +121,12 @@ export const panelConfigCommercial: PanelConfig<KVKPanelKey> = {
         : 'Rechtspersoon',
     actionLinks: [],
   }),
+  hoofdVestiging: KVK => ({
+    title: 'Vestiging',
+    actionLinks: [],
+  }),
   vestigingen: KVK => ({
-    title:
-      KVK.content?.vestigingen.length && KVK.content.vestigingen.length > 1
-        ? 'Vestigingen'
-        : 'Vestiging',
+    title: 'Vestigingen',
     actionLinks: [],
   }),
   aandeelhouders: KVK => ({

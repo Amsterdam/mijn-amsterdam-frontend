@@ -27,7 +27,7 @@ import { BRP_RESIDENTS_API_URL } from '../../config/api';
 import { requestApiData, useDataApi } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { formatBrpProfileData } from './formatDataPrivate';
-import { panelConfig, PanelConfigFormatter } from './Profile.constants';
+import { panelConfig, PanelConfigFormatter } from './profilePanelConfig';
 import styles from './Profile.module.scss';
 import { apiSuccesResult } from '../../../universal/helpers/api';
 import { FeatureToggle } from '../../../universal/config/app';
@@ -86,7 +86,7 @@ export default function Profile() {
         data: { addressKey: BRP.content?.adres?._adresSleutel },
         transformResponse: [
           ...requestApiData.defaults.transformResponse,
-          (responseContent) => apiSuccesResult(responseContent),
+          responseContent => apiSuccesResult(responseContent),
         ],
       });
     }

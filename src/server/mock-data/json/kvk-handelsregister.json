@@ -42,7 +42,7 @@
         "datumAanvang": "1966-10-15",
         "datumEinde": "2020-06-01",
         "emailadres": "info@jachthavens.nl",
-        "faxnummer": null,
+        "faxnummer": "231234234",
         "handelsnamen": [
           "Local Streetplanet Eenmanszaak"
         ],
@@ -87,7 +87,7 @@
           "woonplaatsNaam": "Amsterdam"
         },
         "telefoonnummer": "+310209845632",
-        "typeringVestiging": "Hoofdvestiging",
+        "typeringVestiging": "Nevenvestiginge",
         "vestigingsNummer": "990000996056",
         "websites": ["www.kruijff_sport.nl", "wwww.bladiebla.nl"]
       }
