@@ -28,7 +28,11 @@ const pageConfig = {
   },
   'INKOMEN/STADSPAS': {
     isDetailPage: true,
-    pathname: '/inkomen-en-stadspas/stadspas/:id',
+    pathname: '/inkomen-en-stadspas/stadspas/aanvraag/:id',
+  },
+  'INKOMEN/STADSPAS/SALDO': {
+    isDetailPage: true,
+    pathname: '/inkomen-en-stadspas/stadspas/saldo/:id',
   },
   'INKOMEN/BIJSTANDSUITKERING': {
     isDetailPage: true,

@@ -63,6 +63,7 @@ import {
   ZorgDetail,
 } from './pages';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
+import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
@@ -132,9 +133,15 @@ function AppAuthenticated() {
           <Route path={AppRoutes.KVK} component={ProfileCommercial} />
           <Route path={AppRoutes.TIPS} component={MyTips} />
           <Route
-            path={AppRoutes['INKOMEN/STADSPAS']}
+            path={AppRoutes['INKOMEN/STADSPAS/AANVRAAG']}
             component={InkomenDetail}
           />
+          {FeatureToggle.stadpasActive && (
+            <Route
+              path={AppRoutes['INKOMEN/STADSPAS/SALDO']}
+              component={StadspasDetail}
+            />
+          )}
           <Route
             path={AppRoutes['INKOMEN/BIJSTANDSUITKERING']}
             component={InkomenDetail}

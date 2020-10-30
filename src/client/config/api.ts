@@ -52,6 +52,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   FOCUS_TOZO: 'Aanvraag Tozo',
   FOCUS_SPECIFICATIES:
     'Uitkeringsspecificaties en jaaropgaven + actuele updates',
+  FOCUS_STADSPAS: 'Stadspas saldo',
   ERFPACHT: 'Erfpacht',
   AFVAL: 'Afvalgegevens rond uw adres',
   BUURT: 'Mijn buurt / Mijn bedrijfsomgeving',

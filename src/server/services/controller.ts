@@ -22,6 +22,7 @@ import { fetchMILIEUZONE } from './milieuzone';
 import { fetchTIPS } from './tips';
 import { fetchVergunningen } from './vergunningen';
 import { fetchWMO } from './wmo';
+import { fetchStadspas } from './focus/focus-stadspas';
 
 const DEFAULT_PROFILE_TYPE = 'private';
 
@@ -52,6 +53,7 @@ const KVK = callService(fetchKVK);
 const FOCUS_AANVRAGEN = callService(fetchFOCUSAanvragen);
 const FOCUS_SPECIFICATIES = callService(fetchFOCUSSpecificaties);
 const FOCUS_TOZO = callService(fetchFOCUSTozo);
+const FOCUS_STADSPAS = callService(fetchStadspas);
 const WMO = callService(fetchWMO);
 const VERGUNNINGEN = callService(fetchVergunningen);
 
@@ -94,6 +96,7 @@ const SERVICES_INDEX = {
   FOCUS_AANVRAGEN,
   FOCUS_SPECIFICATIES,
   FOCUS_TOZO,
+  FOCUS_STADSPAS,
   WMO,
   VERGUNNINGEN,
   BUURT,
@@ -129,6 +132,7 @@ type TipsServices = Pick<
   | 'FOCUS_AANVRAGEN'
   | 'FOCUS_SPECIFICATIES'
   | 'FOCUS_TOZO'
+  | 'FOCUS_STADSPAS'
   | 'HOME'
   | 'KVK'
   | 'MILIEUZONE'
@@ -154,6 +158,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     FOCUS_AANVRAGEN,
     FOCUS_SPECIFICATIES,
     FOCUS_TOZO,
+    FOCUS_STADSPAS,
     NOTIFICATIONS,
     CASES,
     HOME,
@@ -173,6 +178,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     FOCUS_AANVRAGEN,
     FOCUS_SPECIFICATIES,
     FOCUS_TOZO,
+    FOCUS_STADSPAS,
     NOTIFICATIONS,
     CASES,
     HOME,
@@ -204,6 +210,7 @@ export const servicesTips: TipsServices = {
   FOCUS_AANVRAGEN,
   FOCUS_SPECIFICATIES,
   FOCUS_TOZO,
+  FOCUS_STADSPAS,
   HOME,
   KVK,
   MILIEUZONE,

@@ -17,6 +17,7 @@ function isChapterActive(
     WMO,
     FOCUS_SPECIFICATIES,
     FOCUS_AANVRAGEN,
+    FOCUS_STADSPAS,
     FOCUS_TOZO,
     ERFPACHT,
     AFVAL,
@@ -34,10 +35,12 @@ function isChapterActive(
         !(
           isLoading(FOCUS_AANVRAGEN) &&
           isLoading(FOCUS_SPECIFICATIES) &&
+          isLoading(FOCUS_STADSPAS) &&
           isLoading(FOCUS_TOZO)
         ) &&
         (!!FOCUS_AANVRAGEN.content?.length ||
           !!FOCUS_TOZO.content?.length ||
+          !!FOCUS_STADSPAS.content?.length ||
           !!FOCUS_SPECIFICATIES.content?.jaaropgaven?.length ||
           !!FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties?.length)
       );

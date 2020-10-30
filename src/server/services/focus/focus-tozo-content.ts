@@ -402,7 +402,7 @@ export const tozoDocumentLabelSet: Record<
   '175307': {
     omschrijving: 'Tozo3 Toekennen voorschot',
     stepType: 'voorschot',
-    labels: toekennenLabels,
+    labels: voorschotToekennenLabels,
     product: 'Tozo 3',
     productSpecific: 'voorschot',
     documentTitle: 'Brief betaling voorschot',
@@ -482,7 +482,7 @@ export const tozoDocumentLabelSet: Record<
   '175372': {
     omschrijving: 'Tozo3 Toekennen voorschot via batch',
     stepType: 'voorschot',
-    labels: toekennenLabels,
+    labels: voorschotToekennenLabels,
     product: 'Tozo 3',
     productSpecific: '',
     documentTitle: 'Brief betaling voorschot',

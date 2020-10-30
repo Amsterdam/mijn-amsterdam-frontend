@@ -187,7 +187,7 @@ export const contentLabels: LabelData = {
   Minimafonds: {
     Stadspas: {
       link: product => ({
-        to: generatePath(AppRoutes['INKOMEN/STADSPAS'], {
+        to: generatePath(AppRoutes['INKOMEN/STADSPAS/AANVRAAG'], {
           id: product.id,
         }),
         title: 'Meer informatie',
@@ -281,7 +281,7 @@ export const contentLabels: LabelData = {
               U heeft recht op een Stadspas. Bekijk de brief voor meer details.
             </p>
             <p>
-              <a href=${FocusExternalUrls.StadsPas} external={true}>
+              <a href="${FocusExternalUrls.StadsPas}" rel="external noopener noreferrer">
                 Meer informatie over de stadspas
               </a>
             </p>
