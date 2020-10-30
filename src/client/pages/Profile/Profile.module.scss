@@ -27,17 +27,22 @@
 
 .DefaultPanel {
   @include centered-block;
-  margin-bottom: 5rem;
-}
-
-.CollapsiblePanel {
-  margin-bottom: 5rem;
+  margin-bottom: 1.6rem;
 }
 
 .ProfileCommercial {
-  th {
-    // white-space: nowrap;
+  @include select(SectionCollapsible_SectionCollapsible) {
+    margin-top: 3rem;
+
+    + [class*="InfoPanel_InfoPanel"] {
+        border-top: 0;
+        padding-top: 1rem;
+    }
   }
+}
+
+.CollapsiblePanel {
+  margin-bottom: 1.6rem;
 }
 
 .SuppressedParagraph {

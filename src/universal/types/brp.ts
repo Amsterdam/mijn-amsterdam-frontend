@@ -25,6 +25,7 @@ export interface Adres {
   inOnderzoek: boolean;
   aantalBewoners?: number;
   _adresSleutel?: string;
+  mokum?: boolean;
 }
 
 export interface Persoon {
