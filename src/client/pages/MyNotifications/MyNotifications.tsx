@@ -24,6 +24,9 @@ export default () => {
   const history = useHistory();
 
   const currentPage = useMemo(() => {
+    if (!page) {
+      return 1;
+    }
     return parseInt(page, 10);
   }, [page]);
 
