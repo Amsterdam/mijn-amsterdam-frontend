@@ -18,11 +18,6 @@
     font-weight: 500;
     font-size: 1.8rem;
   }
-
-  @include mq-tablet() {
-    margin-left: 7rem;
-  }
-
 }
 
 .InfoDetailGroup {
