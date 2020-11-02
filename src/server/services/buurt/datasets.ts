@@ -1,4 +1,5 @@
 import { DATASETS } from '../../../universal/config/buurt';
+import { DataRequestConfig } from '../../config';
 import { getApiEmbeddedResponse } from './helpers';
 
 export type DatasetFeatureProperties = {
@@ -31,6 +32,9 @@ export interface DatasetConfig {
   detailUrl?: string;
   transformList?: (data: any) => any;
   transformDetail?: (data: any) => any;
+  requestConfig?: DataRequestConfig;
+  cache?: boolean;
+  cacheTimeMinutes?: number;
 }
 
 export const datasetEndpoints: Record<string, DatasetConfig> = {
@@ -81,6 +85,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportpark/',
     transformList: (responseData: any) =>
       transformListSportApiResponse('sportpark', responseData),
+    cache: false,
   },
   sportveld: {
     listUrl:

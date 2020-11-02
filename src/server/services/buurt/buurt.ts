@@ -68,11 +68,11 @@ const isMockAdapterEnabled = !process.env.BFF_DISABLE_MOCK_ADAPTER;
 
 const fileCaches: Record<string, FileCache> = {};
 
-const fileCache = (id: string) => {
+const fileCache = (id: string, cacheTimeMinutes: number) => {
   if (!fileCaches[id]) {
     fileCaches[id] = new FileCache({
       name: `./buurt/${id}.flat-cache.json`,
-      cacheTimeMinutes: isMockAdapterEnabled ? 0 : BUURT_CACHE_TTL_HOURS * 60, // 24 hours
+      cacheTimeMinutes,
     });
   }
   return fileCaches[id];
@@ -81,19 +81,34 @@ const fileCache = (id: string) => {
 async function loadDataset(
   sessionID: SessionID,
   datasetId: string,
-  datasetConfig: DatasetConfig
+  datasetConfig: DatasetConfig,
+  params?: { [key: string]: any }
 ) {
-  const dataCache = fileCache(datasetId);
+  const cacheTimeMinutes =
+    datasetConfig.cacheTimeMinutes || BUURT_CACHE_TTL_HOURS * 60;
+  const dataCache = fileCache(
+    datasetId,
+    isMockAdapterEnabled ? -1 : cacheTimeMinutes
+  );
   const apiData = dataCache.getKey('response');
 
-  if (apiData) {
+  if (datasetConfig.cache !== false && apiData) {
     return Promise.resolve(apiData);
+  }
+  const config = { ...(datasetConfig.requestConfig || {}) };
+
+  if (params) {
+    config.params = {
+      ...(config.params || {}),
+      ...params,
+    };
   }
 
   const requestConfig: DataRequestConfig = {
     url: datasetConfig.listUrl,
     cacheTimeout: 0, // Don't cache the requests in memory
     cancelTimeout: 1000 * 60 * 3, // 3 mins
+    ...config,
   };
 
   requestConfig.headers = ACCEPT_CRS_4326;
@@ -122,7 +137,11 @@ async function loadDataset(
     });
   }
 
-  if (response.status === 'OK' && response.content !== null) {
+  if (
+    datasetConfig.cache !== false &&
+    response.status === 'OK' &&
+    response.content !== null
+  ) {
     dataCache.setKey('url', datasetConfig.listUrl);
     dataCache.setKey('response', response);
     dataCache.save();

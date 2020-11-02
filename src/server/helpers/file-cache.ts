@@ -25,7 +25,7 @@ export default class FileCache {
     this.path = path;
     this.cache = flatCache.load(name, path);
     this.expire =
-      cacheTimeMinutes === 0 ? false : cacheTimeMinutes * ONE_MINUTE_MS;
+      cacheTimeMinutes === -1 ? false : cacheTimeMinutes * ONE_MINUTE_MS;
   }
   getKey(key: string) {
     var now = new Date().getTime();
