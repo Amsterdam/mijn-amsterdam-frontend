@@ -1,66 +1,6 @@
 @import '../../styles/_global.scss';
 
-@mixin closeUpZoom() {
-  :global(.map-zoom--15) &,
-  :global(.map-zoom--16) &,
-  :global(.map-zoom--17) &,
-  :global(.map-zoom--18) {
-    @content;
-  }
-}
-
-.DatasetPanelContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  background-color: $color-white;
-  padding: 2rem;
-  z-index: z-index(map-dataset-panel-container);
-}
-
-.MapDatasetList {
-  @include reset-list-style;
-}
-
-.MapDatasetListItem {
-  margin: .2rem 0;
-  padding: .2rem 0;
-  label:before {
-    content: '';
-    width: 14px;
-    height: 14px;
-    display: block;
-    border-radius: 50%;
-    background-color: #000;
-    margin-right: .4rem;
-  }
-}
-
-.MapDatasetListItemToggle {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-
-  > img,
-  > input {
-    margin-right: .4rem;
-  }
-}
-
-.MapDatasetToggleAll {
-  display: block;
-  border-bottom: 1px solid $color-neutral-grey2;
-  padding-bottom: .6rem;
-  margin-bottom: .4rem;
-}
-
-.isDatasetActive {
-  font-weight: 500;
-}
-
-
-.MarkerIcon {
+.MarkerClusterIcon {
   &:before {
     content: '';
     background-color: $color-support-blue;
@@ -75,7 +15,8 @@
   }
 }
 
-.MarkerIconLabel {
+
+.MarkerClusterIconLabel {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -86,153 +27,54 @@
   bottom: 0;
   font-size: 1.4rem;
   color: $color-white;
+}
 
-  @include closeUpZoom() {
-    color: $color-black;
-    text-shadow: -1px -1px 0 $color-white, 1px -1px 0 $color-white, -1px 1px 0 $color-white, 1px 1px 0 $color-white;
+.MarkerIcon--selected {
+  > div {
+    transition: transform 100ms cubic-bezier( 0.175, 0.885, 0.32, 1.275 );
+    transform: translateY(-20px);
   }
 
 }
+.pin {
+  opacity: 0;
+  position: relative;
+  display: block;
 
-.MarkerIcon {
-    @include closeUpZoom() {
-      &:before {
-        transform: scale(.5);
-        box-shadow: none;
-        border: 2px solid #fff;
-      }
-      .MarkerIconLabel {
-        display: none;
-      }
-    }
+  &:before {
+    position: absolute;
+    content: '';
+    z-index: -1;
+    width: 32px;
+    height: 32px;
+    background-color: $color-white;
+    display: block;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    box-shadow: 0px 0px 2px 4px rgba(0, 0, 0, .1);
+  }
+}
+.MarkerIcon--selected .pin {
+  opacity: 1;
+  transform: translateX(-1px) translateY(-21px);
+  transition: transform 100ms cubic-bezier( 0.175, 0.885, 0.32, 1.275 );
+}
 
-    &-afvalcontainers--glas {
-      @include closeUpZoom() {
-        &:before {
-          background-color: yellow;
-        }
-      }
-    }
-    &-afvalcontainers--plastic {
-      @include closeUpZoom() {
-        &:before {
-          background-color: orange;
-        }
-      }
-    }
-    &-afvalcontainers--rest {
-      @include closeUpZoom() {
-        &:before {
-          background-color: $color-neutral-grey4;
-        }
-      }
-    }
-    &-afvalcontainers--textiel {
-      @include closeUpZoom() {
-        &:before {
-          background-color: $color-black;
-        }
-      }
-    }
-    &-afvalcontainers--papier {
-      @include closeUpZoom() {
-        &:before {
-          background-color: blue;
-        }
-      }
-    }
-    &-afvalcontainers--gft {
-      @include closeUpZoom() {
-        &:before {
-          background-color: green;
-        }
-      }
-    }
-
-    &-bekendmakingen--omgevingsvergunning {
-      @include closeUpZoom() {
-        &:before {
-          background-color: purple;
-        }
-      }
-    }
-
-    &-parkeren--parkeerzones {
-      span {
-        right: auto;
-        bottom: auto;
-        background-color: red;
-        padding: 1rem;
-        white-space: nowrap;
-        display: block;
-        color: $color-white;
-        font-weight: bold;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        // width: 10rem;
-        transform: transslateX(-50%) translateY(-50%);
-      }
-      &:before {
-        display: none;
-      }
-    }
+@keyframes bounce {
+  0% {
+    opacity: 0;
+    filter: alpha(opacity=0);
+    transform: translateY(-2000px) rotate(-45deg);
   }
-
-  // Legend styles
-  .MapDatasetListItem--glas label:before {
-    background-color: yellow;
+  60% {
+    opacity: 1;
+    filter: none;
+    transform: translateY(30px) rotate(-45deg);
   }
-  .MapDatasetListItem--papier label:before {
-    background-color: blue;
+  80% {
+    transform: translateY(-10px) rotate(-45deg);
   }
-  .MapDatasetListItem--plastic label:before {
-    background-color: orange;
+  100% {
+    transform: translateY(0) rotate(-45deg);
   }
-  .MapDatasetListItem--gft label:before {
-    background-color: green;
-  }
-  .MapDatasetListItem--rest label:before {
-    background-color: $color-neutral-grey4;
-  }
-  .MapDatasetListItem--textiel label:before {
-    background-color: $color-black;
-  }
-  // .MapZoom--7 {
-    //   :global(.single-marker-icon span) {
-      //     text-indent: -10000px;
-      //   }
-      // }
-      // .MapZoom--8 {
-        //   :global(.single-marker-icon span) {
-          //     text-indent: -10000px;
-          //   }
-          // }
-          // .MapZoom--9 {
-            //   :global(.single-marker-icon span) {
-              //     text-indent: -10000px;
-              //   }
-              // }
-              // .MapZoom--10 {
-                //   :global(.single-marker-icon span) {
-                  //     text-indent: -10000px;
-                  //   }
-                  // }
-                  // .MapZoom--11 {
-                    //   :global(.single-marker-icon span) {
-                      //     text-indent: -10000px;
-                      //   }
-                      // }
-
-                      // .MapZoom--12,
-                      // .MapZoom--13,
-                      // .MapZoom--14,
-                      // .MapZoom--15,
-                      // .MapZoom--16 {
-                        //   :global(.single-marker-icon span) {
-                          //     position: relative;
-                          //     box-shadow: none;
-                          //     text-indent: -10000px;
-                          //     transform: scale(.5);
-                          //   }
-                          // }
+}

@@ -13,22 +13,17 @@ import {
 } from '@amsterdam/arm-core/lib/constants';
 import { ThemeProvider } from '@amsterdam/asc-ui';
 import { themeSpacing } from '@amsterdam/asc-ui/lib/utils/themeUtils';
-import axios from 'axios';
-import { LeafletEvent } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import React, { useCallback, useEffect, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
 import { getFullAddress } from '../../../universal/helpers';
-import { BFFApiUrls } from '../../config/api';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useDesktopScreen } from '../../hooks';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import HomeControlButton from './MaHomeControlButton';
 import { HomeIconMarker } from './MaMarker';
-import { useSelectedMarkerData } from './MyArea.hooks';
 import { MyAreaDatasets } from './MyAreaDatasets';
 import MyAreaHeader from './MyAreaHeader';
 import MyAreaLoader from './MyAreaLoader';
@@ -58,76 +53,11 @@ const MyAreaMap = styled(Map)`
   }
 `;
 
-interface BuurtRouteParams {
-  datasetId?: string;
-  id?: string;
-}
-
 export default function MyArea2() {
   const isDesktop = useDesktopScreen();
-  const params = useParams<BuurtRouteParams>();
   const { HOME } = useAppStateGetter();
   const termReplace = useTermReplacement();
   const center = HOME.content?.latlng;
-  const [
-    selectedMarkerDataState,
-    setSelectedMarkerData,
-  ] = useSelectedMarkerData();
-
-  const selectedMarkerData = useMemo(() => {
-    if (!selectedMarkerDataState) {
-      return {
-        ...params,
-      };
-    }
-    return selectedMarkerDataState;
-  }, [selectedMarkerDataState, params]);
-
-  const { datasetId, id } = selectedMarkerData;
-
-  useEffect(() => {
-    if (!id || !datasetId) {
-      return;
-    }
-
-    axios({
-      url: `${BFFApiUrls.MAP_DATASETS}/${datasetId}/${id}`,
-    })
-      .then(({ data: { content: markerData } }) => {
-        setSelectedMarkerData({
-          id,
-          datasetId,
-          markerData,
-        });
-      })
-      .catch((error) => {
-        setSelectedMarkerData({
-          id,
-          datasetId,
-          markerData: 'error',
-        });
-      });
-  }, [datasetId, id, setSelectedMarkerData]);
-
-  const onMarkerClick = useCallback(
-    (event: LeafletEvent) => {
-      const id = event?.propagatedFrom?.feature?.properties?.id;
-
-      if (selectedMarkerData?.id !== id) {
-        const datasetId = event?.propagatedFrom?.feature?.properties?.datasetId;
-
-        setSelectedMarkerData({
-          datasetId,
-          id,
-        });
-      }
-    },
-    [selectedMarkerData, setSelectedMarkerData]
-  );
-
-  const onCloseDetailPanel = useCallback(() => {
-    setSelectedMarkerData(null);
-  }, [setSelectedMarkerData]);
 
   return (
     <ThemeProvider>
@@ -177,8 +107,8 @@ export default function MyArea2() {
                 variant={isDesktop ? 'panel' : 'drawer'}
                 initialPosition={isDesktop ? SnapPoint.Full : SnapPoint.Closed}
               >
-                <MyAreaPanels onCloseDetailPanel={onCloseDetailPanel} />
-                <MyAreaDatasets onMarkerClick={onMarkerClick} />
+                <MyAreaPanels />
+                <MyAreaDatasets />
               </MapPanelProvider>
             </MyAreaMap>
           ) : (

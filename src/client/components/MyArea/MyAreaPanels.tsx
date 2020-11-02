@@ -12,13 +12,13 @@ import styled from 'styled-components';
 import { useDesktopScreen } from '../../hooks';
 import Alert from '../Alert/Alert';
 import { DatasetControlItem } from './datasets';
-import { useSelectedMarkerDataValue } from './MyArea.hooks';
+import { useFetchPanelFeature, useSelectedFeature } from './MyArea.hooks';
 import MyAreaCollapsiblePanel, {
   CollapsedState,
 } from './MyAreaCollapsiblePanel';
 import MyAreaDatasetControl, {
   datasetControlItemsAtom,
-  useUpdateDatasetControlItems,
+  useSetDatasetControlItems,
 } from './MyAreaDatasetControl';
 import MyAreaPanelContent from './PanelContent/Generic';
 
@@ -60,28 +60,21 @@ const TitleWithCheckbox = React.memo(
   )
 );
 
-interface MyAreaPanelsProps {
-  onCloseDetailPanel: () => void;
-}
-
-export default function MyAreaPanels({
-  onCloseDetailPanel,
-}: MyAreaPanelsProps) {
+export default function MyAreaPanels() {
   const isDesktop = useDesktopScreen();
   const PanelComponent = isDesktop ? MapPanel : MapPanelDrawer;
   const { setPositionFromSnapPoint } = useContext(MapPanelContext);
   // const openPanels = useRecoilValue(openPanelsSelector);
   const datasetControlItems = useRecoilValue(datasetControlItemsAtom);
-  const selectedMarkerData = useSelectedMarkerDataValue();
-
-  const updateDatasetControlItems = useUpdateDatasetControlItems();
+  const setDatasetControlItems = useSetDatasetControlItems();
+  const [selectedFeature, setSelectedFeature] = useSelectedFeature();
 
   useEffect(() => {
-    if (selectedMarkerData !== null) {
+    if (selectedFeature !== null) {
       setPositionFromSnapPoint(SnapPoint.Full);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedMarkerData]);
+  }, [selectedFeature]);
 
   const checkUncheckAll = useCallback(
     (controlItem: DatasetControlItem) => {
@@ -97,18 +90,24 @@ export default function MyAreaPanels({
           activeItemsTotal >= threshold) ||
         activeItemsTotal === 0;
 
-      updateDatasetControlItems(
+      setDatasetControlItems(
         controlItem.collection.map((item) => item.id),
         isActive
       );
     },
-    [updateDatasetControlItems]
+    [setDatasetControlItems]
   );
 
   const onChange = useCallback(
     (controlItem: DatasetControlItem) => checkUncheckAll(controlItem),
     [checkUncheckAll]
   );
+
+  const onCloseDetailPanel = useCallback(() => {
+    setSelectedFeature(null);
+  }, [setSelectedFeature]);
+
+  useFetchPanelFeature();
 
   return (
     <PanelComponent>
@@ -129,16 +128,16 @@ export default function MyAreaPanels({
             ) : null}
           </MyAreaCollapsiblePanel>
         ))}
-        {selectedMarkerData?.id && selectedMarkerData?.datasetId && (
+        {selectedFeature?.id && selectedFeature?.datasetId && (
           <MapPanelContentDetail
             stackOrder={3}
             animate
             onClose={onCloseDetailPanel}
           >
-            {selectedMarkerData.markerData !== 'error' ? (
+            {selectedFeature.markerData !== 'error' ? (
               <MyAreaPanelContent
-                datasetId={selectedMarkerData.datasetId}
-                panelItem={selectedMarkerData.markerData}
+                datasetId={selectedFeature.datasetId}
+                panelItem={selectedFeature.markerData}
               />
             ) : (
               <Alert type="warning">

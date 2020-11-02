@@ -19,8 +19,8 @@ export function useDatasetControlItems(): DatasetControlItem[] {
   return useRecoilValue(datasetControlItemsAtom);
 }
 
-export function useUpdateDatasetControlItems() {
-  const updateDatasetControlItems = useSetRecoilState(datasetControlItemsAtom);
+export function useSetDatasetControlItems() {
+  const setDatasetControlItems = useSetRecoilState(datasetControlItemsAtom);
   const items = useDatasetControlItems();
 
   return useCallback(
@@ -42,9 +42,9 @@ export function useUpdateDatasetControlItems() {
         }
         return item;
       });
-      updateDatasetControlItems(updatedItems);
+      setDatasetControlItems(updatedItems);
     },
-    [items, updateDatasetControlItems]
+    [items, setDatasetControlItems]
   );
 }
 
@@ -65,7 +65,7 @@ const LabelInner = styled.span`
 function MyAreaDatasetControlItem({
   datasetControl,
 }: MyAreaDatasetControlItemProps) {
-  const updateDatasetControlItems = useUpdateDatasetControlItems();
+  const setDatasetControlItems = useSetDatasetControlItems();
   const label = (
     <LabelInner>
       {datasetControl.icon}
@@ -79,7 +79,7 @@ function MyAreaDatasetControlItem({
           id={datasetControl.id}
           checked={datasetControl.isActive}
           onChange={(event) =>
-            updateDatasetControlItems(
+            setDatasetControlItems(
               [datasetControl.id],
               !datasetControl.isActive
             )

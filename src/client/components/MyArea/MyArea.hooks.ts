@@ -1,12 +1,23 @@
-import { useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import {
   atom,
   useRecoilState,
   useRecoilValue,
   useSetRecoilState,
 } from 'recoil';
-import { DatasetCollection } from '../../../server/services/buurt/datasets';
+import {
+  DatasetCollection,
+  MaPointFeature,
+  MaPolyLineFeature,
+} from '../../../server/services/buurt/datasets';
 import { useDatasetControlItems } from './MyAreaDatasetControl';
+import axios, { AxiosResponse } from 'axios';
+import { BFFApiUrls } from '../../config/api';
+import { LeafletEvent } from 'leaflet';
+import { useMapInstance } from '@amsterdam/react-maps';
+import { ApiResponse } from '../../../universal/helpers';
+import styles from './MyAreaSuperCluster.module.scss';
 
 export function useActiveDatasetIds() {
   const datasetControlItems = useDatasetControlItems();
@@ -37,25 +48,159 @@ export function useActiveDatasetIdsToFetch(
   }, [activeDatasetIds, featuresToCompare]);
 }
 
-interface SelectedMarkerData {
+interface SelectedFeature {
   datasetId?: string;
   id?: string;
   markerData?: any | null;
 }
 
-export const selectedMarkerDataAtom = atom<SelectedMarkerData | null>({
-  key: 'selectedMarkerData',
+export const selectedFeatureAtom = atom<SelectedFeature | null>({
+  key: 'selectedFeature',
   default: null,
 });
 
-export function useSelectedMarkerData() {
-  return useRecoilState(selectedMarkerDataAtom);
+export function useSelectedFeature() {
+  return useRecoilState(selectedFeatureAtom);
 }
 
-export function useSelectedMarkerDataValue() {
-  return useRecoilValue(selectedMarkerDataAtom);
+export function useSelectedFeatureValue() {
+  return useRecoilValue(selectedFeatureAtom);
 }
 
-export function useSetSelectedMarkerData() {
-  return useSetRecoilState(selectedMarkerDataAtom);
+export function useSetSelectedFeature() {
+  return useSetRecoilState(selectedFeatureAtom);
+}
+
+export function useFetchPanelFeature() {
+  const params = useParams<{
+    datasetId?: string;
+    id?: string;
+  }>();
+  const [selectedFeatureState, setSelectedFeature] = useSelectedFeature();
+
+  const selectedFeature = useMemo(() => {
+    if (!selectedFeatureState) {
+      return {
+        ...params,
+      };
+    }
+    return selectedFeatureState;
+  }, [selectedFeatureState, params]);
+
+  const { datasetId, id } = selectedFeature;
+
+  useEffect(() => {
+    if (!id || !datasetId) {
+      return;
+    }
+
+    axios({
+      url: `${BFFApiUrls.MAP_DATASETS}/${datasetId}/${id}`,
+    })
+      .then(({ data: { content: markerData } }) => {
+        setSelectedFeature({
+          id,
+          datasetId,
+          markerData,
+        });
+      })
+      .catch((error) => {
+        setSelectedFeature({
+          id,
+          datasetId,
+          markerData: 'error',
+        });
+      });
+  }, [datasetId, id, setSelectedFeature]);
+}
+
+export function useOnMarkerClick() {
+  const setSelectedFeature = useSetSelectedFeature();
+  return useCallback(
+    (event: LeafletEvent) => {
+      const id = event?.propagatedFrom?.feature?.properties?.id;
+      const datasetId = event?.propagatedFrom?.feature?.properties?.datasetId;
+      console.log(
+        'icon',
+        event?.propagatedFrom?.getIcon && event.propagatedFrom.getIcon(),
+        event.propagatedFrom.getElement()
+      );
+      document
+        ?.querySelector(`.${styles['MarkerIcon--selected']}`)
+        ?.classList.remove(styles['MarkerIcon--selected']);
+      event.propagatedFrom
+        .getElement()
+        .classList.add(styles['MarkerIcon--selected']);
+      setSelectedFeature({
+        datasetId,
+        id,
+      });
+    },
+    [setSelectedFeature]
+  );
+}
+
+export function useFetchFeatures({
+  setClusterFeatures,
+  setPolyLineFeatures,
+}: {
+  setClusterFeatures: (features: MaPointFeature[]) => void;
+  setPolyLineFeatures: (features: MaPolyLineFeature[]) => void;
+}) {
+  const map = useMapInstance();
+
+  const fetch = useCallback(
+    async (payload = {}) => {
+      const response: AxiosResponse<ApiResponse<
+        DatasetCollection
+      >> = await axios({
+        url: BFFApiUrls.MAP_DATASETS,
+        data: payload,
+        method: 'POST',
+      });
+      const features = response.data?.content;
+      if (features) {
+        const clusterFeatures = features?.filter(
+          (feature): feature is MaPointFeature =>
+            feature.geometry.type === 'Point'
+        );
+        const polyLineFeatures = features?.filter(
+          (feature): feature is MaPolyLineFeature =>
+            feature.geometry.type === 'MultiPolygon' ||
+            feature.geometry.type === 'MultiLineString'
+        );
+
+        if (clusterFeatures) {
+          setClusterFeatures(clusterFeatures);
+        }
+        if (polyLineFeatures) {
+          setPolyLineFeatures(polyLineFeatures);
+        }
+      }
+    },
+    [setPolyLineFeatures, setClusterFeatures]
+  );
+
+  const fetchFeatures = useCallback(
+    (datasetIds: string[]) => {
+      if (!map) {
+        return;
+      }
+      const bounds = map.getBounds();
+
+      return fetch({
+        datasetIds,
+        bbox: [
+          bounds.getWest(),
+          bounds.getSouth(),
+          bounds.getEast(),
+          bounds.getNorth(),
+        ],
+        zoom: map.getZoom(),
+      });
+    },
+    [map, fetch]
+  );
+
+  return fetchFeatures;
 }

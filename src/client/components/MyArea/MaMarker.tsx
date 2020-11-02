@@ -91,7 +91,9 @@ export const HomeIconMarker = function HomeIconMarker({
     if (!mapRef.current) {
       return null;
     }
-    mapRef.current.setView(center, zoom);
+    if (mapRef.current.getCenter().lat !== center.lat) {
+      mapRef.current.setView(center, zoom);
+    }
   }, [zoom, center, mapRef]);
 
   useEffect(() => {

@@ -1,20 +1,24 @@
 import { useMapInstance } from '@amsterdam/react-maps';
-import L, { LeafletEventHandlerFn, LeafletMouseEventHandlerFn } from 'leaflet';
+import L, {
+  LeafletEventHandlerFn,
+  LeafletMouseEvent,
+  LeafletMouseEventHandlerFn,
+} from 'leaflet';
 import { useCallback, useEffect, useMemo } from 'react';
 import Supercluster from 'supercluster';
-import { createMarkerIcon, getIconHtml } from './datasets';
-import datasetStyles from './MyAreaSuperCluster.module.scss';
 import { MaPointFeature } from '../../../server/services/buurt/datasets';
+import { createMarkerIcon, getIconHtml } from './datasets';
+import styles from './MyAreaSuperCluster.module.scss';
 
 function createMarker(feature: any, latlng: any) {
   let icon;
   if (!feature?.properties.cluster) {
     const html = getIconHtml(feature.properties.datasetId);
     icon = L.divIcon({
-      html,
-      className: '',
+      html: `<span class="${styles.pin}"></span>${html}`,
+      className: styles.MarkerIcon,
       iconSize: [32, 32],
-      iconAnchor: [16, 16],
+      iconAnchor: [14, 14],
     });
   } else {
     const count = feature.properties.point_count;
@@ -22,7 +26,7 @@ function createMarker(feature: any, latlng: any) {
     const label = count;
     icon = createMarkerIcon({
       label,
-      className: datasetStyles[`MarkerIcon--${size}`],
+      className: styles[`MarkerClusterIcon--${size}`],
     });
   }
 
@@ -133,11 +137,11 @@ export function MaSuperClusterLayer({
   }, []);
 
   const onClick = useCallback(
-    (event: any) => {
-      if (event.layer.feature.properties.cluster_id) {
+    (event: LeafletMouseEvent) => {
+      if (event.propagatedFrom.feature.properties.cluster_id) {
         map.setZoomAround(
           event.latlng,
-          event.layer.feature.properties.expansion_zoom
+          event.propagatedFrom.feature.properties.expansion_zoom
         );
       }
       onMarkerClick && onMarkerClick(event);
@@ -150,7 +154,7 @@ export function MaSuperClusterLayer({
   }, [features]);
 
   useEffect(() => {
-    if (markerLayer) {
+    if (markerLayer && clusterFeatures.length) {
       markerLayer.addTo(map);
       markerLayer.clearLayers();
       markerLayer.addData(clusterFeatures as any); // Type mismatch here.
@@ -168,8 +172,8 @@ export function MaSuperClusterLayer({
 
     return () => {
       if (markerLayer) {
-        markerLayer.remove();
         markerLayer.off('click', onClick);
+        markerLayer.remove();
       }
       if (map) {
         map.off('moveend', onUpdate);

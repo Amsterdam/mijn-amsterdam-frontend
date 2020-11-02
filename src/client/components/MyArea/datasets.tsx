@@ -54,9 +54,9 @@ export function createMarkerIcon({
   iconAnchor = [20, 20],
 }: createMarkerOptions) {
   return L.divIcon({
-    className: classnames(styles.MarkerIcon, className),
+    className: classnames(styles.MarkerClusterIcon, className),
     iconSize,
-    html: `<span class="${styles.MarkerIconLabel}">${label}</span>`,
+    html: `<span class="${styles.MarkerClusterIconLabel}">${label}</span>`,
     iconAnchor,
   });
 }
@@ -77,9 +77,9 @@ const DatasetIconCircle = styled(DatasetIcon)`
   height: 16px;
 `;
 
-// const DatasetIconSquare = styled(DatasetIconCircle)`
-//   border-radius: 0;
-// `;
+const DatasetIconSquare = styled(DatasetIconCircle)`
+  border-radius: 0;
+`;
 
 // const DatasetIconTriangle = styled(DatasetIconSquare)`
 //   width: 0;
