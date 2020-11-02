@@ -1,8 +1,6 @@
 import React from 'react';
-import InfoDetail from '../../InfoDetail/InfoDetail';
-import GenericBase from './GenericBase';
 import { LinkdInline } from '../../Button/Button';
-import Url from './Url';
+import GenericBase from './GenericBase';
 
 const afvalUrls: Record<string, string> = {
   rest:
@@ -15,6 +13,8 @@ const afvalUrls: Record<string, string> = {
     'https://www.amsterdam.nl/veelgevraagd/?productid=%7B95B69586-623A-4333-9322-A48FF8424B77%7D',
   textiel:
     'https://www.amsterdam.nl/veelgevraagd/?caseid=%7BD68460AA-EB08-4132-A69F-7763CD8431A2%7D',
+  gft:
+    'https://www.amsterdam.nl/veelgevraagd/?caseid=%7B4FDB05A6-EA6F-4475-A359-C19AD3578CF5%7D',
 };
 
 interface MyArePanelContentAfvalProps {
@@ -26,27 +26,33 @@ export default function MyArePanelContentAfval({
   datasetId,
   panelItem,
 }: MyArePanelContentAfvalProps) {
-  const adoptedText = panelItem.geadopteerdInd ? (
-    'Ja'
-  ) : (
-    <>
-      Nee.{' '}
-      <LinkdInline
-        external={true}
-        href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BA6316561-BBC0-42A0-810F-74A7CCFA188D%7D"
-      >
-        Adopteer deze container
-      </LinkdInline>
-      .
-    </>
-  );
+  const infoUrl = afvalUrls[panelItem.fractieOmschrijving.toLowerCase()];
   return (
     <GenericBase
       title={panelItem.fractieOmschrijving}
       supTitle="Afvalcontainers"
     >
-      <InfoDetail label="Afvalcontainer geadopteerd?" value={adoptedText} />
-      <Url url={afvalUrls[panelItem.fractieOmschrijving.toLowerCase()]} />
+      {!panelItem.geadopteerdInd && (
+        <p>
+          Deze container kunt u adopteren!
+          <br />{' '}
+          <LinkdInline
+            external={true}
+            href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BA6316561-BBC0-42A0-810F-74A7CCFA188D%7D"
+          >
+            Lees hier hoe
+          </LinkdInline>
+        </p>
+      )}
+      {!!infoUrl && (
+        <p>
+          Wat mag er{' '}
+          <LinkdInline external={true} href={infoUrl}>
+            niet
+          </LinkdInline>{' '}
+          in de container?
+        </p>
+      )}
     </GenericBase>
   );
 }

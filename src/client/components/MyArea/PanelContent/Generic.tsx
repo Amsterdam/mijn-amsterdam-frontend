@@ -4,6 +4,7 @@ import LoadingContent from '../../LoadingContent/LoadingContent';
 import { titleTransform } from '../datasets';
 import MyArePanelContentAfval from './Afval';
 import MyArePanelContentBekendmaking from './Bekendmaking';
+import MyArePanelContentEvenementen from './Evenementen';
 import GenericBase from './GenericBase';
 import JsonString from './JsonString';
 import MyArePanelContentSport from './Sport';
@@ -30,17 +31,19 @@ export default function MyAreaPanelContentGeneric({
       return (
         <MyArePanelContentAfval datasetId={datasetId} panelItem={panelItem} />
       );
+    case 'evenementen':
+      return (
+        <MyArePanelContentEvenementen
+          datasetId={datasetId}
+          panelItem={panelItem}
+        />
+      );
     case 'bekendmakingen':
       return (
-        <GenericBase
-          title={titleTransform(datasetId)}
-          supTitle={titleTransform(getDatasetGroupId(datasetId))}
-        >
-          <MyArePanelContentBekendmaking
-            datasetId={datasetId}
-            panelItem={panelItem}
-          />
-        </GenericBase>
+        <MyArePanelContentBekendmaking
+          datasetId={datasetId}
+          panelItem={panelItem}
+        />
       );
     case 'parkeren':
       return (

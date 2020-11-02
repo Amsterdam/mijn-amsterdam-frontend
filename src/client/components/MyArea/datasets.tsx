@@ -17,9 +17,14 @@ import {
   MapIconAfvalPlastic,
   MapIconAfvalRest,
   MapIconAfvalTextiel,
+  MapIconAfvalPapier,
+  MapIconBekendmaking,
+  MapIconSport,
+  MapIconEvenement,
 } from '../../assets/icons';
 import { DEFAULT_POLYLINE_OPTIONS } from './MaPolyLineLayer';
 import styles from './MyAreaSuperCluster.module.scss';
+import { getDatasetGroupId } from '../../../universal/config/buurt';
 
 export interface DatasetControl {
   id: string;
@@ -105,7 +110,7 @@ const datasetIcons: Record<string, ReactElement<any>> = {
   ),
   papier: (
     <DatasetIcon style={{ backgroundColor: themeColors.supplement.lightblue }}>
-      <MapIconAfvalRest fill={themeColors.tint.level1} />
+      <MapIconAfvalPapier fill={themeColors.tint.level1} />
     </DatasetIcon>
   ),
   glas: (
@@ -128,126 +133,38 @@ const datasetIcons: Record<string, ReactElement<any>> = {
       <MapIconAfvalPlastic />
     </DatasetIcon>
   ),
-
-  // // Parkeren
-  // parkeerzones: (
-  //   <DatasetIcon style={{ backgroundColor: themeColors.supplement.yellow }}>
-  //     <MapIconAuto />
-  //   </DatasetIcon>
-  // ),
-  // parkeerzones_uitzondering: (
-  //   <DatasetIcon style={{ backgroundColor: themeColors.supplement.pink }}>
-  //     <MapIconAuto fill={themeColors.tint.level1} />
-  //   </DatasetIcon>
-  // ),
-
-  // // Evenementen
-  // evenementen: (
-  //   <DatasetIconCircle
-  //     style={{ backgroundColor: themeColors.supplement.lightgreen }}
-  //   />
-  // ),
-
-  // // Bekendmakingen
-  // evenementenvergunning: (
-  //   <DatasetIconTriangle color={themeColors.support.valid} />
-  // ),
-  // exploitatievergunning: (
-  //   <DatasetIconCircle
-  //     style={{ backgroundColor: themeColors.supplement.pink }}
-  //   />
-  // ),
-  // inspraak: (
-  //   <DatasetIconCircle style={{ backgroundColor: themeColors.primary.main }} />
-  // ),
-  // kapvergunning: (
-  //   <DatasetIconCircle style={{ backgroundColor: themeColors.support.focus }} />
-  // ),
-  // ligplaatsvergunning: (
-  //   <DatasetIconSquare style={{ backgroundColor: themeColors.support.valid }} />
-  // ),
-  // meldingen: (
-  //   <DatasetIconCircle
-  //     style={{ backgroundColor: themeColors.supplement.orange }}
-  //   />
-  // ),
-  // omgevingsvergunning: (
-  //   <DatasetIconCircle style={{ backgroundColor: themeColors.support.valid }} />
-  // ),
-  // onttrekkingsvergunning: (
-  //   <DatasetIconCircle
-  //     style={{ backgroundColor: themeColors.supplement.lightgreen }}
-  //   />
-  // ),
-  // // ????
-  // openingstijden: (
-  //   <DatasetIconSquare
-  //     style={{ backgroundColor: themeColors.supplement.pink }}
-  //   />
-  // ),
-  // rectificatie: (
-  //   <DatasetIconSquare
-  //     style={{ backgroundColor: themeColors.supplement.orange }}
-  //   />
-  // ),
-  // // ????
-  // speelautomaten: (
-  //   <DatasetIconSquare
-  //     style={{ backgroundColor: themeColors.supplement.purple }}
-  //   />
-  // ),
-  // splitsingsvergunning: (
-  //   <DatasetIconCircle
-  //     style={{ backgroundColor: themeColors.supplement.lightgreen }}
-  //   />
-  // ),
-  // terrasvergunning: (
-  //   <DatasetIconCircle style={{ backgroundColor: themeColors.tint.level4 }} />
-  // ),
-  // verkeersbesluit: (
-  //   <DatasetIconTriangle color={themeColors.supplement.orange} />
-  // ),
-  // 'apv vergunning': <DatasetIconTriangle color={themeColors.error.main} />,
-  // overig: (
-  //   <DatasetIconSquare style={{ backgroundColor: themeColors.primary.main }} />
-  // ),
-  // // ????
-  // geluidvergunning: (
-  //   <DatasetIconCircle
-  //     style={{ backgroundColor: themeColors.supplement.lightgreen }}
-  //   />
-  // ),
-  // // ????
-  // bestemmingsplan: (
-  //   <DatasetIconCircle
-  //     style={{ backgroundColor: themeColors.supplement.lightgreen }}
-  //   />
-  // ),
-  // 'drank- en horecavergunning': (
-  //   <DatasetIconCircle
-  //     style={{ backgroundColor: themeColors.supplement.lightgreen }}
-  //   />
-  // ),
-  default: (
-    <DatasetIconCircle style={{ backgroundColor: themeColors.tint.level7 }} />
+  evenementen: (
+    <DatasetIcon style={{ backgroundColor: themeColors.supplement.purple }}>
+      <MapIconEvenement fill={themeColors.tint.level1} />
+    </DatasetIcon>
   ),
-  afvalcontainers: (
-    <DatasetIconCircle style={{ backgroundColor: themeColors.tint.level2 }} />
+  bekendmakingen: (
+    <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+      <MapIconBekendmaking fill={themeColors.tint.level1} />
+    </DatasetIcon>
+  ),
+  sport: (
+    <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+      <MapIconSport fill={themeColors.tint.level1} />
+    </DatasetIcon>
+  ),
+  default: (
+    <DatasetIconCircle style={{ backgroundColor: themeColors.support.valid }} />
   ),
 };
 
-export const datasetIconHtml = Object.fromEntries(
+const datasetIconHtml = Object.fromEntries(
   Object.entries(datasetIcons).map(([datasetId, icon]) => {
     return [datasetId, renderToStaticMarkup(icon)];
   })
 );
 
-export function getIcon(id: string) {
-  return datasetIcons[id] || datasetIcons.default;
-}
-
 export function getIconHtml(datasetId: string) {
-  return datasetIconHtml[datasetId] || datasetIconHtml.default;
+  return (
+    datasetIconHtml[datasetId] ||
+    datasetIconHtml[getDatasetGroupId(datasetId)] ||
+    datasetIconHtml.default
+  );
 }
 
 export function titleTransform(id: string) {

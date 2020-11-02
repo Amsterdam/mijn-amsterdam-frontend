@@ -1,8 +1,8 @@
 import React from 'react';
 import InfoDetail from '../../InfoDetail/InfoDetail';
 import Date from './Date';
-import DateStartEnd from './DateStartEnd';
 import Description from './Description';
+import GenericBase from './GenericBase';
 import Url from './Url';
 
 interface MyArePanelContentBekendmakingProps {
@@ -14,47 +14,21 @@ export default function MyArePanelContentBekendmaking({
   datasetId,
   panelItem,
 }: MyArePanelContentBekendmakingProps) {
-  // 'apv vergunning',
-  // 'evenementenvergunning',
-  // 'exploitatievergunning',
-  // 'inspraak',
-  // 'kapvergunning',
-  // 'ligplaatsvergunning',
-  // 'meldingen',
-  // 'omgevingsvergunning',
-  // 'onttrekkingsvergunning',
-  // 'openingstijden',
-  // 'rectificatie',
-  // 'speelautomaten',
-  // 'splitsingsvergunning',
-  // 'terrasvergunning',
-  // 'verkeersbesluit',
-  // 'overig',
-  // 'geluidvergunning',
-  // 'bestemmingsplan',
-  // 'drank- en horecavergunning',
   return (
-    <>
+    <GenericBase title={panelItem.titel} supTitle="Bekendmakingen">
       {!!panelItem.datePublished && <Date date={panelItem.datePublished} />}
-      {!!panelItem.category && (
-        <InfoDetail label="Categorie" value={panelItem.category} />
+      {!!panelItem.categorie && (
+        <InfoDetail label="Categorie" value={panelItem.categorie} />
       )}
-      {!!panelItem.subject && (
-        <InfoDetail label="Onderwerp" value={panelItem.subject} />
+      {!!panelItem.onderwerp && (
+        <InfoDetail label="Onderwerp" value={panelItem.onderwerp} />
       )}
+      {!!panelItem.datumTijdstip && <Date date={panelItem.datumTijdstip} />}
 
-      {panelItem.dateStart && panelItem.dateEnd && (
-        <DateStartEnd
-          dateStart={panelItem.dateStart}
-          dateEnd={panelItem.dateEnd}
-          timeStart={panelItem.timeStart}
-          timeEnd={panelItem.timeEnd}
-        />
-      )}
-      {!!panelItem.description && (
-        <Description description={panelItem.description} />
+      {!!panelItem.beschrijving && (
+        <Description description={panelItem.beschrijving} />
       )}
       {!!panelItem.url && <Url url={panelItem.url} />}
-    </>
+    </GenericBase>
   );
 }

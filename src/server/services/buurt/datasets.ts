@@ -85,7 +85,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportpark/',
     transformList: (responseData: any) =>
       transformListSportApiResponse('sportpark', responseData),
-    cache: false,
+    // cache: false,
   },
   sportveld: {
     listUrl:
