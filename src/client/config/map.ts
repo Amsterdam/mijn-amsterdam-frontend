@@ -62,4 +62,5 @@ export const DEFAULT_MAP_OPTIONS = {
     [52.25168, 4.64034],
     [52.50536, 5.10737],
   ],
+  renderer: L.svg({ padding: 1 }),
 } as Partial<MapOptions>;
