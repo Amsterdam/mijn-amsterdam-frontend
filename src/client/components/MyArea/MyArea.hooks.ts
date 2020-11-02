@@ -120,17 +120,9 @@ export function useOnMarkerClick() {
     (event: LeafletEvent) => {
       const id = event?.propagatedFrom?.feature?.properties?.id;
       const datasetId = event?.propagatedFrom?.feature?.properties?.datasetId;
-      console.log(
-        'icon',
-        event?.propagatedFrom?.getIcon && event.propagatedFrom.getIcon(),
-        event.propagatedFrom.getElement()
-      );
-      document
-        ?.querySelector(`.${styles['MarkerIcon--selected']}`)
-        ?.classList.remove(styles['MarkerIcon--selected']);
-      event.propagatedFrom
-        .getElement()
-        .classList.add(styles['MarkerIcon--selected']);
+      const selector = styles['MarkerIcon--selected'];
+      document?.querySelector(`.${selector}`)?.classList.remove(selector);
+      event.propagatedFrom.getElement().classList.add(selector);
       setSelectedFeature({
         datasetId,
         id,
