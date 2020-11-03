@@ -28,37 +28,38 @@
     "vestigingen": [
       {
         "activiteiten": [
-          "Caf\u00e9s",
+          "Bouw van sport- en recreatievaartuigen",
           "Jachthavens"
         ],
         "bezoekadres": {
           "huisletter": null,
-          "huisnummer": "16",
-          "huisnummertoevoeging": null,
-          "postcode": null,
-          "straatnaam": "Schakelstraat",
-          "woonplaatsNaam": "Amsterdam"
-        },
-        "datumAanvang": "1966-10-15",
-        "datumEinde": "2020-06-01",
-        "emailadres": "info@jachthavens.nl",
-        "faxnummer": "231234234",
-        "handelsnamen": [
-          "Kruijff Sport",
-          "Local Streetplanet Eenmanszaak"
-        ],
-        "postadres": {
-          "huisletter": null,
           "huisnummer": "17",
-          "huisnummertoevoeging": "I",
+          "huisnummertoevoeging": null,
           "postcode": "7623 DM",
           "straatnaam": "Kamgras",
           "woonplaatsNaam": "Borne"
         },
+        "datumAanvang": "1966-10-15",
+        "datumEinde": "2020-06-01",
+        "emailadres": "info@jachthavens.nl",
+        "faxnummer": null,
+        "handelsnamen": [
+          "Local Streetplanet Eenmanszaak"
+        ],
+        "postadres": {
+          "huisletter": null,
+          "huisnummer": "16",
+          "huisnummertoevoeging": "I",
+          "postcode": null,
+          "straatnaam": "Schakelstraat",
+          "woonplaatsNaam": "Amsterdam"
+        },
         "telefoonnummer": "+310209845632",
         "typeringVestiging": "Hoofdvestiging",
         "vestigingsNummer": "990000965656",
-        "websites": ["www.jachthavens.amsterdam.nl"]
+        "websites": [
+          "www.jachthavens.amsterdam.nl"
+        ]
       },
       {
         "activiteiten": [
@@ -77,8 +78,7 @@
         "emailadres": "Info@kruijffSport.nl",
         "faxnummer": null,
         "handelsnamen": [
-          "Kruijff Sport",
-          "Nog een handelsnaam"
+          "Kruijff Sport"
         ],
         "postadres": {
           "huisletter": null,
@@ -89,9 +89,11 @@
           "woonplaatsNaam": "Amsterdam"
         },
         "telefoonnummer": "+310209845632",
-        "typeringVestiging": "Nevenvestiginge",
+        "typeringVestiging": "Hoofdvestiging",
         "vestigingsNummer": "990000996056",
-        "websites": ["www.kruijff_sport.nl", "wwww.bladiebla.nl"]
+        "websites": [
+          "www.kruijff_sport.nl"
+        ]
       }
     ]
   },
