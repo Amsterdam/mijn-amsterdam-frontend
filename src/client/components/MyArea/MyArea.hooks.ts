@@ -18,14 +18,15 @@ import { LeafletEvent } from 'leaflet';
 import { useMapInstance } from '@amsterdam/react-maps';
 import { ApiResponse } from '../../../universal/helpers';
 import styles from './MyAreaSuperCluster.module.scss';
+import { MaSuperClusterFeature } from '../../../server/services/buurt/datasets';
 
 export function useActiveDatasetIds() {
   const datasetControlItems = useDatasetControlItems();
   const activeDatasetIds: string[] = useMemo(() => {
-    return datasetControlItems.flatMap(datasetControlItem =>
+    return datasetControlItems.flatMap((datasetControlItem) =>
       datasetControlItem.collection
-        .filter(dataset => dataset.isActive)
-        .map(dataset => dataset.id)
+        .filter((dataset) => dataset.isActive)
+        .map((dataset) => dataset.id)
     );
   }, [datasetControlItems]);
 
@@ -37,10 +38,10 @@ export function useActiveDatasetIdsToFetch(featuresToCompare: DatasetFeatures) {
 
   return useMemo(() => {
     const loadedIds = Array.from(
-      new Set(featuresToCompare.map(feature => feature.properties.datasetId))
+      new Set(featuresToCompare.map((feature) => feature.properties.datasetId))
     );
     const datasetIdsToLoad = activeDatasetIds.filter(
-      datasetId => !loadedIds.includes(datasetId)
+      (datasetId) => !loadedIds.includes(datasetId)
     );
     return datasetIdsToLoad;
   }, [activeDatasetIds, featuresToCompare]);
@@ -102,7 +103,7 @@ export function useFetchPanelFeature() {
           markerData,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         setSelectedFeature({
           id,
           datasetId,
@@ -112,16 +113,44 @@ export function useFetchPanelFeature() {
   }, [datasetId, id, setSelectedFeature]);
 }
 
+const selectedFeatureSelector = styles['MarkerIcon--selected'];
+
+export function useSelectedFeatureCSS(features: MaSuperClusterFeature[]) {
+  const selectedFeature = useSelectedFeatureValue();
+  const map = useMapInstance();
+
+  useEffect(() => {
+    if (map) {
+      console.log('selected!', selectedFeature?.id);
+      map.eachLayer((layer: any) => {
+        const id = layer?.feature?.properties?.id;
+        if (id === selectedFeature?.id && layer.getElement) {
+          const element = layer.getElement();
+          // Add selected class to marker
+          document
+            ?.querySelector(`.${selectedFeatureSelector}`)
+            ?.classList.remove(selectedFeatureSelector);
+          element.classList.add(selectedFeatureSelector);
+        }
+      });
+    }
+  }, [map, selectedFeature?.id, features]);
+}
+
 export function useOnMarkerClick() {
   const setSelectedFeature = useSetSelectedFeature();
+
   return useCallback(
     (event: LeafletEvent) => {
       const id = event?.propagatedFrom?.feature?.properties?.id;
       const datasetId = event?.propagatedFrom?.feature?.properties?.datasetId;
-      const selector = styles['MarkerIcon--selected'];
-      if (!event.propagatedFrom.getElement().classList.contains(selector)) {
-        document?.querySelector(`.${selector}`)?.classList.remove(selector);
-        event.propagatedFrom.getElement().classList.add(selector);
+
+      // Using DOM access here because comparing against selectedFeature will invalidate the memoized calback constantly which re-renders the layer component
+      if (
+        !event.propagatedFrom
+          .getElement()
+          .classList.contains(selectedFeatureSelector)
+      ) {
         setSelectedFeature({
           datasetId,
           id,

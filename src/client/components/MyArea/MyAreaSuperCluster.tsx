@@ -11,6 +11,7 @@ import {
 } from '../../../server/services/buurt/datasets';
 import { createMarkerIcon, getIconHtml } from './datasets';
 import { processFeatures } from './MyArea.helpers';
+import { useSelectedFeatureCSS } from './MyArea.hooks';
 import styles from './MyAreaSuperCluster.module.scss';
 
 function createClusterMarker(
@@ -73,6 +74,8 @@ export function MaSuperClusterLayer({
   );
 
   const clusterFeatures = useMemo(() => {
+    // Pre process the features before they get added to the map.
+    // Some features have the exact same coordinates therefor markers become indistinguishable if we don't modify the coordinates a bit.
     return processFeatures(map, features);
   }, [map, features]);
 
@@ -98,6 +101,9 @@ export function MaSuperClusterLayer({
       }
     };
   }, [markerLayer, clusterFeatures, onClick, map, onUpdate]);
+
+  // This effect will run after the features have been added to the map
+  useSelectedFeatureCSS(features);
 
   return null;
 }
