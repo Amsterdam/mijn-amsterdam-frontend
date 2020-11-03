@@ -107,7 +107,7 @@ export const panelConfigCommercial: PanelConfig<KVKPanelKey> = {
       ? [
           {
             title: 'Inzien of correctie doorgeven',
-            url: ExternalUrls.CHANGE_PERSONAL_DATA,
+            url: ExternalUrls.CHANGE_KVK_DATA,
             external: true,
           },
         ]

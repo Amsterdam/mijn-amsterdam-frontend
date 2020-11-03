@@ -28,7 +28,7 @@
     "vestigingen": [
       {
         "activiteiten": [
-          "Bouw van sport- en recreatievaartuigen",
+          "Caf\u00e9s",
           "Jachthavens"
         ],
         "bezoekadres": {
@@ -44,6 +44,7 @@
         "emailadres": "info@jachthavens.nl",
         "faxnummer": "231234234",
         "handelsnamen": [
+          "Kruijff Sport",
           "Local Streetplanet Eenmanszaak"
         ],
         "postadres": {
@@ -76,7 +77,8 @@
         "emailadres": "Info@kruijffSport.nl",
         "faxnummer": null,
         "handelsnamen": [
-          "Kruijff Sport"
+          "Kruijff Sport",
+          "Nog een handelsnaam"
         ],
         "postadres": {
           "huisletter": null,

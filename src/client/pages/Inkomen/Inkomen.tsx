@@ -125,7 +125,8 @@ export default () => {
 
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
-  const hasStadspas = !!FOCUS_STADSPAS?.content?.length;
+  const hasStadspas = !!FOCUS_STADSPAS?.content?.stadspassaldo?.stadspassen
+    ?.length;
 
   const itemsSpecificationsMonthly = useMemo(
     () => uitkeringsspecificaties?.slice(0, 3) || [],
@@ -137,17 +138,17 @@ export default () => {
   );
 
   const stadspasItems = useMemo(() => {
-    if (!FOCUS_STADSPAS.content?.length) {
+    if (!FOCUS_STADSPAS.content?.stadspassaldo?.stadspassen) {
       return [];
     }
-    return FOCUS_STADSPAS.content.map(pass => {
+    return FOCUS_STADSPAS.content.stadspassaldo.stadspassen.map(stadspas => {
       return {
-        ...pass,
-        displayDatumAfloop: defaultDateFormat(pass.datumAfloop),
+        ...stadspas,
+        displayDatumAfloop: defaultDateFormat(stadspas.datumAfloop),
         detailPageUrl: (
           <LinkdInline
             href={generatePath(AppRoutes['INKOMEN/STADSPAS/SALDO'], {
-              id: pass.id,
+              id: stadspas.id,
             })}
           >
             Bekijk saldo
@@ -234,7 +235,7 @@ export default () => {
         }}
         noItemsMessage="U hebt op dit moment geen lopende aanvragen."
         className={
-          hasStadspas
+          FeatureToggle.stadpasActive
             ? styles.SectionCollapsible
             : styles.SectionCollapsibleFirst
         }
