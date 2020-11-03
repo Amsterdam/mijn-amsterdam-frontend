@@ -114,8 +114,11 @@ export function transformKVKData(responseData: KVKSourceData): KVKData | null {
   if (responseData.content.vestigingen) {
     responseData.content.vestigingen = responseData.content.vestigingen.map(
       vestiging => {
+        const isHoofdvestiging =
+          vestiging.typeringVestiging === 'Hoofdvestiging' &&
+          !vestiging.datumEinde;
         return Object.assign(vestiging, {
-          isHoofdvestiging: vestiging.typeringVestiging === 'Hoofdvestiging',
+          isHoofdvestiging,
           websites:
             vestiging.websites?.map(website => {
               return !website.startsWith('http://') &&

@@ -33,31 +33,33 @@
         ],
         "bezoekadres": {
           "huisletter": null,
-          "huisnummer": "16",
+          "huisnummer": "17",
           "huisnummertoevoeging": null,
-          "postcode": null,
-          "straatnaam": "Schakelstraat",
-          "woonplaatsNaam": "Amsterdam"
+          "postcode": "7623 DM",
+          "straatnaam": "Kamgras",
+          "woonplaatsNaam": "Borne"
         },
         "datumAanvang": "1966-10-15",
         "datumEinde": "2020-06-01",
         "emailadres": "info@jachthavens.nl",
-        "faxnummer": "231234234",
+        "faxnummer": null,
         "handelsnamen": [
           "Local Streetplanet Eenmanszaak"
         ],
         "postadres": {
           "huisletter": null,
-          "huisnummer": "17",
+          "huisnummer": "16",
           "huisnummertoevoeging": "I",
-          "postcode": "7623 DM",
-          "straatnaam": "Kamgras",
-          "woonplaatsNaam": "Borne"
+          "postcode": null,
+          "straatnaam": "Schakelstraat",
+          "woonplaatsNaam": "Amsterdam"
         },
         "telefoonnummer": "+310209845632",
         "typeringVestiging": "Hoofdvestiging",
         "vestigingsNummer": "990000965656",
-        "websites": ["www.jachthavens.amsterdam.nl"]
+        "websites": [
+          "www.jachthavens.amsterdam.nl"
+        ]
       },
       {
         "activiteiten": [
@@ -87,9 +89,11 @@
           "woonplaatsNaam": "Amsterdam"
         },
         "telefoonnummer": "+310209845632",
-        "typeringVestiging": "Nevenvestiginge",
+        "typeringVestiging": "Hoofdvestiging",
         "vestigingsNummer": "990000996056",
-        "websites": ["www.kruijff_sport.nl", "wwww.bladiebla.nl"]
+        "websites": [
+          "www.kruijff_sport.nl"
+        ]
       }
     ]
   },

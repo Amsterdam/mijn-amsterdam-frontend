@@ -25,16 +25,20 @@ export interface FocusStadspasBudget {
   balance: number;
   assigned: number;
   title: string;
+  urlTransactions: string;
 }
 
-// The items you get from the api source
-export interface FocusStadspasSaldo {
+export interface FocusStadspas {
   id: number;
   pasnummer: number;
   naam: string;
   datumAfloop: string;
   budgets: FocusStadspasBudget[];
-  urlTransactions: string;
+}
+
+export interface FocusStadspasSaldo {
+  hoofdpashouder: boolean;
+  stadspassen: FocusStadspas[];
 }
 
 export type FocusInkomenSpecificatieCategory =
@@ -60,7 +64,7 @@ export interface FocusCombinedSourceResponse {
   uitkeringsspecificaties: FocusInkomenSpecificatie[];
   jaaropgaven: FocusInkomenSpecificatie[];
   tozodocumenten: FocusTozoDocument[];
-  stadspassaldo: FocusStadspasSaldo[];
+  stadspassaldo: FocusStadspasSaldo;
 }
 
 export async function fetchFOCUSCombined(
