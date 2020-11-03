@@ -72,7 +72,7 @@ router.get(
   BffEndpoints.MAP_DATASETS,
   async (req: Request, res: Response, next: NextFunction) => {
     const datasetId = req.params.datasetId;
-    const datasetIds = (req.params.datasetIds as unknown) as string[];
+    const datasetIds = (req.query.datasetIds as string)?.split(',') || [];
     const id = req.params.id;
     let response: ApiResponse<any> | null = null;
     try {

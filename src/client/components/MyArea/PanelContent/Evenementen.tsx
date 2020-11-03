@@ -2,6 +2,7 @@ import React from 'react';
 import DateStartEnd from './DateStartEnd';
 import Description from './Description';
 import GenericBase from './GenericBase';
+import Url from './Url';
 
 interface MyArePanelContentEvenementenProps {
   panelItem: any;
@@ -25,6 +26,7 @@ export default function MyArePanelContentEvenementen({
       {!!panelItem.omschrijving && (
         <Description description={panelItem.omschrijving} />
       )}
+      {!!panelItem.url && <Url url={panelItem.url} />}
     </GenericBase>
   );
 }

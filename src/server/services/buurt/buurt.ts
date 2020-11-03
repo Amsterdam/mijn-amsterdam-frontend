@@ -114,7 +114,11 @@ async function loadDatasetFeature(
   requestConfig.headers = ACCEPT_CRS_4326;
 
   if (datasetConfig.transformList) {
-    requestConfig.transformResponse = datasetConfig.transformList;
+    requestConfig.transformResponse = datasetConfig.transformList.bind(
+      null,
+      datasetId,
+      datasetConfig
+    );
   }
 
   const response = await requestData<DatasetFeatures>(
@@ -124,7 +128,7 @@ async function loadDatasetFeature(
   );
 
   if (Array.isArray(response.content)) {
-    response.content = response.content.map((feature) => {
+    response.content = response.content.map(feature => {
       if (
         feature.geometry.type === 'MultiPolygon' ||
         feature.geometry.type === 'MultiLineString'
@@ -164,7 +168,7 @@ export async function loadDatasetFeatures(
   const results = await Promise.allSettled(requests);
 
   const datasetResults = results.flatMap(
-    (result) => getSettledResult(result).content || []
+    result => getSettledResult(result).content || []
   );
 
   const features = datasetResults.filter(
@@ -196,7 +200,11 @@ export async function loadFeatureDetail(
   requestConfig.headers = ACCEPT_CRS_4326;
 
   if (config.transformDetail) {
-    requestConfig.transformResponse = config.transformDetail;
+    requestConfig.transformResponse = config.transformDetail.bind(
+      null,
+      datasetId,
+      config
+    );
   }
 
   return requestData(requestConfig, sessionID, {});

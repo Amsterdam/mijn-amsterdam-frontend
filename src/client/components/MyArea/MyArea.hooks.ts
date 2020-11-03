@@ -22,10 +22,10 @@ import styles from './MyAreaSuperCluster.module.scss';
 export function useActiveDatasetIds() {
   const datasetControlItems = useDatasetControlItems();
   const activeDatasetIds: string[] = useMemo(() => {
-    return datasetControlItems.flatMap((datasetControlItem) =>
+    return datasetControlItems.flatMap(datasetControlItem =>
       datasetControlItem.collection
-        .filter((dataset) => dataset.isActive)
-        .map((dataset) => dataset.id)
+        .filter(dataset => dataset.isActive)
+        .map(dataset => dataset.id)
     );
   }, [datasetControlItems]);
 
@@ -37,10 +37,10 @@ export function useActiveDatasetIdsToFetch(featuresToCompare: DatasetFeatures) {
 
   return useMemo(() => {
     const loadedIds = Array.from(
-      new Set(featuresToCompare.map((feature) => feature.properties.datasetId))
+      new Set(featuresToCompare.map(feature => feature.properties.datasetId))
     );
     const datasetIdsToLoad = activeDatasetIds.filter(
-      (datasetId) => !loadedIds.includes(datasetId)
+      datasetId => !loadedIds.includes(datasetId)
     );
     return datasetIdsToLoad;
   }, [activeDatasetIds, featuresToCompare]);
@@ -102,7 +102,7 @@ export function useFetchPanelFeature() {
           markerData,
         });
       })
-      .catch((error) => {
+      .catch(error => {
         setSelectedFeature({
           id,
           datasetId,
@@ -119,12 +119,14 @@ export function useOnMarkerClick() {
       const id = event?.propagatedFrom?.feature?.properties?.id;
       const datasetId = event?.propagatedFrom?.feature?.properties?.datasetId;
       const selector = styles['MarkerIcon--selected'];
-      document?.querySelector(`.${selector}`)?.classList.remove(selector);
-      event.propagatedFrom.getElement().classList.add(selector);
-      setSelectedFeature({
-        datasetId,
-        id,
-      });
+      if (!event.propagatedFrom.getElement().classList.contains(selector)) {
+        document?.querySelector(`.${selector}`)?.classList.remove(selector);
+        event.propagatedFrom.getElement().classList.add(selector);
+        setSelectedFeature({
+          datasetId,
+          id,
+        });
+      }
     },
     [setSelectedFeature]
   );

@@ -25,34 +25,38 @@ export function MaPolyLineLayer({
   features,
 }: MaPolyLineLayerProps) {
   const map = useMapInstance();
-  const [firstFeature] = features;
-  const paneId = firstFeature?.properties.datasetId;
-  const zIndex = firstFeature?.properties.zIndex;
 
+  // Create custom panes so we can control the zIndex of various polyline shapes
   useEffect(() => {
-    if (paneId && !map.getPane(paneId)) {
-      map.createPane(paneId);
-      const pane = map.getPane(paneId);
-      if (pane) {
-        pane.style.zIndex = zIndex;
+    for (const feature of features) {
+      const paneId = feature.properties.datasetId;
+      const zIndex = feature.properties.zIndex;
+      if (!map.getPane(paneId)) {
+        map.createPane(paneId);
+        const pane = map.getPane(paneId);
+        if (pane && zIndex) {
+          pane.style.zIndex = zIndex;
+        }
       }
     }
-  }, [map, paneId, zIndex]);
+  }, [features, map]);
 
   const layers = useMemo(() => {
     const layers: L.Layer[] = [];
 
     for (const feature of features) {
-      let options: L.PolylineOptions = {
+      const options: L.PolylineOptions = {
         ...polylineOptions,
         color: feature.properties.color || polylineOptions.color,
-        pane: paneId,
+        pane: feature.properties.datasetId,
       };
 
+      // Add fillOpacity for these shapes so they are easily clickable
       if (feature.geometry.type === 'MultiLineString') {
         options.fillOpacity = 0;
         options.weight = 2;
       }
+
       const layer = L.polyline(feature.geometry.coordinates as any, options);
       (layer as any).feature = feature;
       layers.push(layer);

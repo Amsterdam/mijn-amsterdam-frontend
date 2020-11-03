@@ -1,3 +1,4 @@
+import { useMapInstance } from '@amsterdam/react-maps';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   MaPointFeature,
@@ -12,6 +13,7 @@ import { MyAreaPolyLineDatasets } from './MyAreaPolyLineDatasets';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
 
 export function MyAreaDatasets() {
+  const map = useMapInstance();
   const [polyLineFeatures, setPolyLineFeatures] = useState<MaPolyLineFeature[]>(
     []
   );
@@ -29,6 +31,15 @@ export function MyAreaDatasets() {
   useEffect(() => {
     fetchFeatures(activeDatasetIds);
   }, [activeDatasetIds, fetchFeatures]);
+
+  // Set the zIndex of the markerpane. These markers will
+  useEffect(() => {
+    const pane = map?.getPane('markerPane');
+    if (pane) {
+      console.log(pane.style.zIndex);
+      pane.style.zIndex = '800';
+    }
+  }, [map]);
 
   const onMarkerClick = useOnMarkerClick();
 

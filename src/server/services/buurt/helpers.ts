@@ -18,6 +18,7 @@ export function getDatasetEndpointConfig(
         DATASETS[id] &&
         DATASETS[id].some((datasetId) => endpointIDs?.includes(datasetId));
       const isEndpoint = endpointIDs?.includes(id);
+
       return !endpointIDs || isEndpoint || hasDatasetId;
     })
     .filter(

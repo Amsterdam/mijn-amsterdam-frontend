@@ -2,6 +2,7 @@ import Supercluster from 'supercluster';
 import { DATASETS } from '../../../universal/config/buurt';
 import { DataRequestConfig } from '../../config';
 import { getApiEmbeddedResponse } from './helpers';
+import { response } from 'express';
 
 enum zIndexPane {
   PARKEERZONES = '650',
@@ -15,8 +16,9 @@ export type DatasetFeatureProperties = {
   id: string;
   datasetId: string;
   color?: string;
-  zIndex: zIndexPane;
+  zIndex?: zIndexPane;
 };
+
 export type DatasetClusterFeatureProperties = DatasetFeatureProperties & {
   cluster?: boolean;
   point_count?: number;
@@ -33,7 +35,7 @@ export type MaPolyLineFeature = MaFeature<
 >;
 export type DatasetFeatures = MaFeature[];
 export type MaSuperClusterFeature =
-  | Supercluster.PointFeature<DatasetFeatureProperties>
+  | Supercluster.PointFeature<DatasetClusterFeatureProperties>
   | Supercluster.ClusterFeature<DatasetClusterFeatureProperties>;
 
 export const BUURT_CACHE_TTL_HOURS = 24;
@@ -47,13 +49,17 @@ export interface DatasetConfig {
   datasetIds?: string[];
   listUrl?: string;
   detailUrl?: string;
-  transformList?: (data: any) => any;
-  transformDetail?: (data: any) => any;
+  transformList?: (datasetId: string, config: DatasetConfig, data: any) => any;
+  transformDetail?: (
+    datasetId: string,
+    config: DatasetConfig,
+    data: any
+  ) => any;
   requestConfig?: DataRequestConfig;
   cache?: boolean;
   cacheTimeMinutes?: number;
   featureType: 'Point' | 'MultiPolygon' | 'MultiLineString';
-  zIndex?: number;
+  zIndex?: zIndexPane;
 }
 
 export const datasetEndpoints: Record<string, DatasetConfig> = {
@@ -83,8 +89,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     listUrl:
       'https://api.data.amsterdam.nl/v1/wfs/parkeerzones?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=parkeerzones&SRSNAME=urn:ogc:def:crs:EPSG::4326',
     detailUrl: 'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones/',
-    transformList: responseData =>
-      transformParkeerzoneCoords('parkeerzones', responseData),
+    transformList: transformParkeerzoneCoords,
     featureType: 'MultiPolygon',
     cache: false,
     zIndex: zIndexPane.PARKEERZONES,
@@ -94,8 +99,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
       'https://api.data.amsterdam.nl/v1/wfs/parkeerzones?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=parkeerzones_uitzondering&SRSNAME=urn:ogc:def:crs:EPSG::4326',
     detailUrl:
       'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones_uitzondering/',
-    transformList: responseData =>
-      transformParkeerzoneCoords('parkeerzones_uitzondering', responseData),
+    transformList: transformParkeerzoneCoords,
     featureType: 'MultiPolygon',
     cache: false,
     zIndex: zIndexPane.PARKEERZONES_UITZONDERING,
@@ -104,16 +108,14 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     listUrl:
       'https://api.data.amsterdam.nl/v1/sport/zwembad/?_fields=id,geometry&page_size=30',
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/zwembad/',
-    transformList: (responseData: any) =>
-      transformListSportApiResponse('zwembad', responseData),
+    transformList: transformListSportApiResponse,
     featureType: 'Point',
   },
   sportpark: {
     listUrl:
       'https://api.data.amsterdam.nl/v1/wfs/sport?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=sportpark&SRSNAME=urn:ogc:def:crs:EPSG::4326',
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportpark/',
-    transformList: (responseData: any) =>
-      transformListSportApiResponse('sportpark', responseData),
+    transformList: transformListSportApiResponse,
     cache: false,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.SPORTPARK,
@@ -122,8 +124,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     listUrl:
       'https://api.data.amsterdam.nl/v1/wfs/sport?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=sportveld&SRSNAME=urn:ogc:def:crs:EPSG::4326',
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportveld/',
-    transformList: (responseData: any) =>
-      transformListSportApiResponse('sportveld', responseData),
+    transformList: transformListSportApiResponse,
     cache: false,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.SPORTVELD,
@@ -132,40 +133,35 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     listUrl:
       'https://api.data.amsterdam.nl/v1/sport/gymsportzaal/?_fields=id,adres,plaats&page_size=150',
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/gymsportzaal/',
-    transformList: (responseData: any) =>
-      transformListSportApiResponse('gymsportzaal', responseData),
+    transformList: transformListSportApiResponse,
     featureType: 'Point',
   },
   sporthal: {
     listUrl:
       'https://api.data.amsterdam.nl/v1/sport/sporthal/?_fields=id,geometry&page_size=50',
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sporthal/',
-    transformList: (responseData: any) =>
-      transformListSportApiResponse('sporthal', responseData),
+    transformList: transformListSportApiResponse,
     featureType: 'Point',
   },
   sportaanbieder: {
     listUrl:
       'https://api.data.amsterdam.nl/v1/sport/sportaanbieder/?_fields=id,geometry&page_size=2000',
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportaanbieder/',
-    transformList: (responseData: any) =>
-      transformListSportApiResponse('sportaanbieder', responseData),
+    transformList: transformListSportApiResponse,
     featureType: 'Point',
   },
   openbaresportplek: {
     listUrl:
       'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/?_fields=id,geometry&page_size=1000',
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/',
-    transformList: (responseData: any) =>
-      transformListSportApiResponse('openbaresportplek', responseData),
+    transformList: transformListSportApiResponse,
     featureType: 'Point',
   },
   hardlooproute: {
     listUrl:
       'https://api.data.amsterdam.nl/v1/wfs/sport?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=hardlooproute&SRSNAME=urn:ogc:def:crs:EPSG::4326',
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/hardlooproute/',
-    transformList: (responseData: any) =>
-      transformListSportApiResponse('hardlooproute', responseData),
+    transformList: transformListSportApiResponse,
     cache: false,
     featureType: 'MultiLineString',
     zIndex: zIndexPane.HARDLOOPROUTE,
@@ -236,7 +232,11 @@ function getPolyLineColor(datasetId: string, feature: any) {
   }
 }
 
-function transformListSportApiResponse(datasetId: string, responseData: any) {
+function transformListSportApiResponse(
+  datasetId: string,
+  config: DatasetConfig,
+  responseData: any
+) {
   const results = responseData?.features
     ? responseData?.features
     : getApiEmbeddedResponse(datasetId, responseData);
@@ -254,6 +254,9 @@ function transformListSportApiResponse(datasetId: string, responseData: any) {
           feature.geometry.type === 'MultiLineString'
         ) {
           properties.color = getPolyLineColor(datasetId, feature);
+          if (config?.zIndex) {
+            properties.zIndex = config.zIndex;
+          }
         }
         collection.push({
           type: 'Feature',
@@ -267,31 +270,41 @@ function transformListSportApiResponse(datasetId: string, responseData: any) {
   return collection;
 }
 
-function transformAfvalcontainers(WFSData: any) {
+function transformAfvalcontainers(
+  datasetId: string,
+  config: DatasetConfig,
+  WFSData: any
+) {
   const collection: DatasetFeatures = [];
-  for (const feature of WFSData.features) {
-    const fractieOmschrijving = feature.properties?.fractie_omschrijving.toLowerCase();
-    // Redundant filtering, the API should return with the proper dataset already
-    if (
-      feature.properties?.status === CONTAINER_STATUS_ACTIVE &&
-      DATASETS.afvalcontainers.includes(fractieOmschrijving)
-    ) {
-      if (feature?.geometry?.coordinates) {
-        collection.push({
-          type: 'Feature',
-          geometry: feature.geometry,
-          properties: {
-            id: feature.properties.id,
-            datasetId: fractieOmschrijving,
-          },
-        });
+  if (Array.isArray(WFSData.features)) {
+    for (const feature of WFSData.features) {
+      const fractieOmschrijving = feature.properties?.fractie_omschrijving.toLowerCase();
+      // Redundant filtering, the API should return with the proper dataset already
+      if (
+        feature.properties?.status === CONTAINER_STATUS_ACTIVE &&
+        DATASETS.afvalcontainers.includes(fractieOmschrijving)
+      ) {
+        if (feature?.geometry?.coordinates) {
+          collection.push({
+            type: 'Feature',
+            geometry: feature.geometry,
+            properties: {
+              id: feature.properties.id,
+              datasetId: fractieOmschrijving,
+            },
+          });
+        }
       }
     }
   }
   return collection;
 }
 
-function transformEvenementen(responseData: any) {
+function transformEvenementen(
+  datasetId: string,
+  config: DatasetConfig,
+  responseData: any
+) {
   const results = getApiEmbeddedResponse('evenementen', responseData);
   const collection: DatasetFeatures = [];
   if (results && results.length) {
@@ -311,7 +324,11 @@ function transformEvenementen(responseData: any) {
   return collection;
 }
 
-function transformBekendmakingen(responseData: any) {
+function transformBekendmakingen(
+  datasetId: string,
+  config: DatasetConfig,
+  responseData: any
+) {
   const results = getApiEmbeddedResponse('bekendmakingen', responseData);
   const collection: DatasetFeatures = [];
 
@@ -334,7 +351,11 @@ function transformBekendmakingen(responseData: any) {
   return collection;
 }
 
-function transformParkeerzoneCoords(datasetId: string, responseData: any) {
+function transformParkeerzoneCoords(
+  datasetId: string,
+  config: DatasetConfig,
+  responseData: any
+) {
   const results = responseData?.features;
   const collection: DatasetFeatures = [];
 
