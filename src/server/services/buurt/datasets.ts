@@ -3,10 +3,19 @@ import { DATASETS } from '../../../universal/config/buurt';
 import { DataRequestConfig } from '../../config';
 import { getApiEmbeddedResponse } from './helpers';
 
+enum zIndexPane {
+  PARKEERZONES = '650',
+  PARKEERZONES_UITZONDERING = '660',
+  HARDLOOPROUTE = '670',
+  SPORTPARK = '680',
+  SPORTVELD = '690',
+}
+
 export type DatasetFeatureProperties = {
   id: string;
   datasetId: string;
   color?: string;
+  zIndex: zIndexPane;
 };
 export type DatasetClusterFeatureProperties = DatasetFeatureProperties & {
   cluster?: boolean;
@@ -44,6 +53,7 @@ export interface DatasetConfig {
   cache?: boolean;
   cacheTimeMinutes?: number;
   featureType: 'Point' | 'MultiPolygon' | 'MultiLineString';
+  zIndex?: number;
 }
 
 export const datasetEndpoints: Record<string, DatasetConfig> = {
@@ -73,20 +83,22 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     listUrl:
       'https://api.data.amsterdam.nl/v1/wfs/parkeerzones?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=parkeerzones&SRSNAME=urn:ogc:def:crs:EPSG::4326',
     detailUrl: 'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones/',
-    transformList: (responseData) =>
+    transformList: responseData =>
       transformParkeerzoneCoords('parkeerzones', responseData),
     featureType: 'MultiPolygon',
     cache: false,
+    zIndex: zIndexPane.PARKEERZONES,
   },
   parkeerzones_uitzondering: {
     listUrl:
       'https://api.data.amsterdam.nl/v1/wfs/parkeerzones?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=parkeerzones_uitzondering&SRSNAME=urn:ogc:def:crs:EPSG::4326',
     detailUrl:
       'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones_uitzondering/',
-    transformList: (responseData) =>
+    transformList: responseData =>
       transformParkeerzoneCoords('parkeerzones_uitzondering', responseData),
     featureType: 'MultiPolygon',
     cache: false,
+    zIndex: zIndexPane.PARKEERZONES_UITZONDERING,
   },
   zwembad: {
     listUrl:
@@ -104,6 +116,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
       transformListSportApiResponse('sportpark', responseData),
     cache: false,
     featureType: 'MultiPolygon',
+    zIndex: zIndexPane.SPORTPARK,
   },
   sportveld: {
     listUrl:
@@ -113,6 +126,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
       transformListSportApiResponse('sportveld', responseData),
     cache: false,
     featureType: 'MultiPolygon',
+    zIndex: zIndexPane.SPORTVELD,
   },
   gymsportzaal: {
     listUrl:
@@ -154,6 +168,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
       transformListSportApiResponse('hardlooproute', responseData),
     cache: false,
     featureType: 'MultiLineString',
+    zIndex: zIndexPane.HARDLOOPROUTE,
   },
 };
 

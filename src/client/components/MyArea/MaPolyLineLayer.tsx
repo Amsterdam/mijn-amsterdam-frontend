@@ -25,6 +25,19 @@ export function MaPolyLineLayer({
   features,
 }: MaPolyLineLayerProps) {
   const map = useMapInstance();
+  const [firstFeature] = features;
+  const paneId = firstFeature?.properties.datasetId;
+  const zIndex = firstFeature?.properties.zIndex;
+
+  useEffect(() => {
+    if (paneId && !map.getPane(paneId)) {
+      map.createPane(paneId);
+      const pane = map.getPane(paneId);
+      if (pane) {
+        pane.style.zIndex = zIndex;
+      }
+    }
+  }, [map, paneId, zIndex]);
 
   const layers = useMemo(() => {
     const layers: L.Layer[] = [];
@@ -33,6 +46,7 @@ export function MaPolyLineLayer({
       let options: L.PolylineOptions = {
         ...polylineOptions,
         color: feature.properties.color || polylineOptions.color,
+        pane: paneId,
       };
 
       if (feature.geometry.type === 'MultiLineString') {
