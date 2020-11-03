@@ -239,7 +239,7 @@ export default () => {
       )}
       {stadspasItem?.budgets.map(budget => (
         <StadspasBudget
-          urlTransactions={`/api${budget.urlTransactions}`}
+          urlTransactions={budget.urlTransactions}
           key={budget.title}
           budget={budget}
           dateEnd={stadspasItem.datumAfloop}
