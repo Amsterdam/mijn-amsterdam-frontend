@@ -10,21 +10,21 @@ import {
   DATASETS,
 } from '../../../universal/config';
 import { FeatureToggle } from '../../../universal/config/app';
+import { getDatasetGroupId } from '../../../universal/config/buurt';
 import { capitalizeFirstLetter } from '../../../universal/helpers';
 import {
   MapIconAfvalGft,
   MapIconAfvalGlas,
+  MapIconAfvalPapier,
   MapIconAfvalPlastic,
   MapIconAfvalRest,
   MapIconAfvalTextiel,
-  MapIconAfvalPapier,
   MapIconBekendmaking,
-  MapIconSport,
   MapIconEvenement,
+  MapIconSport,
 } from '../../assets/icons';
 import { DEFAULT_POLYLINE_OPTIONS } from './MaPolyLineLayer';
 import styles from './MyAreaSuperCluster.module.scss';
-import { getDatasetGroupId } from '../../../universal/config/buurt';
 
 export interface DatasetControl {
   id: string;
@@ -77,9 +77,9 @@ const DatasetIconCircle = styled(DatasetIcon)`
   height: 16px;
 `;
 
-const DatasetIconSquare = styled(DatasetIconCircle)`
-  border-radius: 0;
-`;
+// const DatasetIconSquare = styled(DatasetIconCircle)`
+//   border-radius: 0;
+// `;
 
 // const DatasetIconTriangle = styled(DatasetIconSquare)`
 //   width: 0;

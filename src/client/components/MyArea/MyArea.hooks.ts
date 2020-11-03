@@ -1,3 +1,6 @@
+import { useMapInstance } from '@amsterdam/react-maps';
+import axios, { AxiosResponse } from 'axios';
+import { LeafletEvent } from 'leaflet';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import {
@@ -10,15 +13,12 @@ import {
   DatasetFeatures,
   MaPointFeature,
   MaPolyLineFeature,
+  MaSuperClusterFeature,
 } from '../../../server/services/buurt/datasets';
-import { useDatasetControlItems } from './MyAreaDatasetControl';
-import axios, { AxiosResponse } from 'axios';
-import { BFFApiUrls } from '../../config/api';
-import { LeafletEvent } from 'leaflet';
-import { useMapInstance } from '@amsterdam/react-maps';
 import { ApiResponse } from '../../../universal/helpers';
+import { BFFApiUrls } from '../../config/api';
+import { useDatasetControlItems } from './MyAreaDatasetControl';
 import styles from './MyAreaSuperCluster.module.scss';
-import { MaSuperClusterFeature } from '../../../server/services/buurt/datasets';
 
 export function useActiveDatasetIds() {
   const datasetControlItems = useDatasetControlItems();
@@ -118,13 +118,12 @@ const selectedFeatureSelector = styles['MarkerIcon--selected'];
 export function useSelectedFeatureCSS(features: MaSuperClusterFeature[]) {
   const selectedFeature = useSelectedFeatureValue();
   const map = useMapInstance();
-
+  const selectedFeatureId = selectedFeature?.id;
   useEffect(() => {
     if (map) {
-      console.log('selected!', selectedFeature?.id);
       map.eachLayer((layer: any) => {
         const id = layer?.feature?.properties?.id;
-        if (id === selectedFeature?.id && layer.getElement) {
+        if (id === selectedFeatureId && layer.getElement) {
           const element = layer.getElement();
           // Add selected class to marker
           document
@@ -134,7 +133,7 @@ export function useSelectedFeatureCSS(features: MaSuperClusterFeature[]) {
         }
       });
     }
-  }, [map, selectedFeature?.id, features]);
+  }, [map, selectedFeatureId, features]);
 }
 
 export function useOnMarkerClick() {
