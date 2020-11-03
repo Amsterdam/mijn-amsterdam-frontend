@@ -1,11 +1,11 @@
 import L from 'leaflet';
 import {
-  DatasetCollection,
+  DatasetFeatures,
   MaPointFeature,
 } from '../../../server/services/buurt/datasets';
 import { getIconHtml } from './datasets';
 
-export function createClusterDatasetMarkers(features: DatasetCollection) {
+export function createClusterDatasetMarkers(features: DatasetFeatures) {
   return features
     .filter(
       (feature): feature is MaPointFeature => feature.geometry.type === 'Point'

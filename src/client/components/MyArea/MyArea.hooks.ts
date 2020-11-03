@@ -7,7 +7,7 @@ import {
   useSetRecoilState,
 } from 'recoil';
 import {
-  DatasetCollection,
+  DatasetFeatures,
   MaPointFeature,
   MaPolyLineFeature,
 } from '../../../server/services/buurt/datasets';
@@ -32,9 +32,7 @@ export function useActiveDatasetIds() {
   return activeDatasetIds;
 }
 
-export function useActiveDatasetIdsToFetch(
-  featuresToCompare: DatasetCollection
-) {
+export function useActiveDatasetIdsToFetch(featuresToCompare: DatasetFeatures) {
   const activeDatasetIds = useActiveDatasetIds();
 
   return useMemo(() => {
@@ -143,13 +141,13 @@ export function useFetchFeatures({
 
   const fetch = useCallback(
     async (payload = {}) => {
-      const response: AxiosResponse<ApiResponse<
-        DatasetCollection
-      >> = await axios({
-        url: BFFApiUrls.MAP_DATASETS,
-        data: payload,
-        method: 'POST',
-      });
+      const response: AxiosResponse<ApiResponse<DatasetFeatures>> = await axios(
+        {
+          url: BFFApiUrls.MAP_DATASETS,
+          data: payload,
+          method: 'POST',
+        }
+      );
       const features = response.data?.content;
       if (features) {
         const clusterFeatures = features?.filter(

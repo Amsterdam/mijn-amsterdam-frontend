@@ -17,7 +17,7 @@ export type MaPointFeature = MaFeature<GeoJSON.Point>;
 export type MaPolyLineFeature = MaFeature<
   GeoJSON.MultiPolygon | GeoJSON.MultiLineString
 >;
-export type DatasetCollection = MaFeature[];
+export type DatasetFeatures = MaFeature[];
 
 export const BUURT_CACHE_TTL_HOURS = 24;
 export const ACCEPT_CRS_4326 = {
@@ -35,6 +35,7 @@ export interface DatasetConfig {
   requestConfig?: DataRequestConfig;
   cache?: boolean;
   cacheTimeMinutes?: number;
+  featureType: 'Point' | 'MultiPolygon' | 'MultiLineString';
 }
 
 export const datasetEndpoints: Record<string, DatasetConfig> = {
@@ -43,12 +44,14 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
       'https://api.data.amsterdam.nl/v1/wfs/huishoudelijkafval/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=container&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326&FILTER=%3CFilter%3E%3CAnd%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Estatus%3C/PropertyName%3E%3CLiteral%3E1%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3COr%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E110%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E16%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E111%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E112%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E67%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E181%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E113%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3C/Or%3E%3C/And%3E%3C/Filter%3E',
     detailUrl: 'https://api.data.amsterdam.nl/v1/huishoudelijkafval/container/',
     transformList: transformAfvalcontainers,
+    featureType: 'Point',
   },
   evenementen: {
     listUrl:
       'https://api.data.amsterdam.nl/v1/evenementen/evenementen/?_fields=id,geometry&page_size=1000',
     detailUrl: 'https://api.data.amsterdam.nl/v1/evenementen/evenementen/',
     transformList: transformEvenementen,
+    featureType: 'Point',
   },
   bekendmakingen: {
     listUrl:
@@ -56,21 +59,26 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     detailUrl:
       'https://api.data.amsterdam.nl/v1/bekendmakingen/bekendmakingen/',
     transformList: transformBekendmakingen,
+    featureType: 'Point',
   },
   parkeerzones: {
     listUrl:
-      'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones/?_fields=id,geometry,gebiedskleurcode,gebiedsnaam&indicatieZichtbaar=TRUE&page_size=500',
+      'https://api.data.amsterdam.nl/v1/wfs/parkeerzones?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=parkeerzones&SRSNAME=urn:ogc:def:crs:EPSG::4326',
     detailUrl: 'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones/',
     transformList: (responseData) =>
       transformParkeerzoneCoords('parkeerzones', responseData),
+    featureType: 'MultiPolygon',
+    cache: false,
   },
   parkeerzones_uitzondering: {
     listUrl:
-      'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones_uitzondering/?_fields=id,geometry,gebiedsnaam&indicatieZichtbaar=TRUE&page_size=100',
+      'https://api.data.amsterdam.nl/v1/wfs/parkeerzones?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=parkeerzones_uitzondering&SRSNAME=urn:ogc:def:crs:EPSG::4326',
     detailUrl:
       'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones_uitzondering/',
     transformList: (responseData) =>
       transformParkeerzoneCoords('parkeerzones_uitzondering', responseData),
+    featureType: 'MultiPolygon',
+    cache: false,
   },
   zwembad: {
     listUrl:
@@ -78,21 +86,25 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/zwembad/',
     transformList: (responseData: any) =>
       transformListSportApiResponse('zwembad', responseData),
+    featureType: 'Point',
   },
   sportpark: {
     listUrl:
-      'https://api.data.amsterdam.nl/v1/sport/sportpark/?_fields=id,geometry&page_size=60',
+      'https://api.data.amsterdam.nl/v1/wfs/sport?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=sportpark&SRSNAME=urn:ogc:def:crs:EPSG::4326',
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportpark/',
     transformList: (responseData: any) =>
       transformListSportApiResponse('sportpark', responseData),
-    // cache: false,
+    cache: false,
+    featureType: 'MultiPolygon',
   },
   sportveld: {
     listUrl:
-      'https://api.data.amsterdam.nl/v1/sport/sportveld/?_fields=id,geometry,sportfunctie&page_size=1000',
+      'https://api.data.amsterdam.nl/v1/wfs/sport?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=sportveld&SRSNAME=urn:ogc:def:crs:EPSG::4326',
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportveld/',
     transformList: (responseData: any) =>
       transformListSportApiResponse('sportveld', responseData),
+    cache: false,
+    featureType: 'MultiPolygon',
   },
   gymsportzaal: {
     listUrl:
@@ -100,6 +112,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/gymsportzaal/',
     transformList: (responseData: any) =>
       transformListSportApiResponse('gymsportzaal', responseData),
+    featureType: 'Point',
   },
   sporthal: {
     listUrl:
@@ -107,6 +120,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sporthal/',
     transformList: (responseData: any) =>
       transformListSportApiResponse('sporthal', responseData),
+    featureType: 'Point',
   },
   sportaanbieder: {
     listUrl:
@@ -114,6 +128,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportaanbieder/',
     transformList: (responseData: any) =>
       transformListSportApiResponse('sportaanbieder', responseData),
+    featureType: 'Point',
   },
   openbaresportplek: {
     listUrl:
@@ -121,13 +136,16 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/',
     transformList: (responseData: any) =>
       transformListSportApiResponse('openbaresportplek', responseData),
+    featureType: 'Point',
   },
   hardlooproute: {
     listUrl:
-      'https://api.data.amsterdam.nl/v1/sport/hardlooproute/?_fields=id,geometry&page_size=50',
+      'https://api.data.amsterdam.nl/v1/wfs/sport?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=hardlooproute&SRSNAME=urn:ogc:def:crs:EPSG::4326',
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/hardlooproute/',
     transformList: (responseData: any) =>
       transformListSportApiResponse('hardlooproute', responseData),
+    cache: false,
+    featureType: 'MultiLineString',
   },
 };
 
@@ -196,14 +214,16 @@ function getPolyLineColor(datasetId: string, feature: any) {
 }
 
 function transformListSportApiResponse(datasetId: string, responseData: any) {
-  const results = getApiEmbeddedResponse(datasetId, responseData);
-  const collection: DatasetCollection = [];
+  const results = responseData?.features
+    ? responseData?.features
+    : getApiEmbeddedResponse(datasetId, responseData);
+  const collection: DatasetFeatures = [];
 
   if (results && results.length) {
     for (const feature of results) {
       if (feature.geometry?.coordinates) {
         const properties: DatasetFeatureProperties = {
-          id: feature.id,
+          id: feature?.properties?.id || feature.id,
           datasetId,
         };
         if (
@@ -225,7 +245,7 @@ function transformListSportApiResponse(datasetId: string, responseData: any) {
 }
 
 function transformAfvalcontainers(WFSData: any) {
-  const collection: DatasetCollection = [];
+  const collection: DatasetFeatures = [];
   for (const feature of WFSData.features) {
     const fractieOmschrijving = feature.properties?.fractie_omschrijving.toLowerCase();
     // Redundant filtering, the API should return with the proper dataset already
@@ -250,7 +270,7 @@ function transformAfvalcontainers(WFSData: any) {
 
 function transformEvenementen(responseData: any) {
   const results = getApiEmbeddedResponse('evenementen', responseData);
-  const collection: DatasetCollection = [];
+  const collection: DatasetFeatures = [];
   if (results && results.length) {
     for (const feature of results) {
       if (feature?.geometry?.coordinates) {
@@ -270,7 +290,7 @@ function transformEvenementen(responseData: any) {
 
 function transformBekendmakingen(responseData: any) {
   const results = getApiEmbeddedResponse('bekendmakingen', responseData);
-  const collection: DatasetCollection = [];
+  const collection: DatasetFeatures = [];
 
   if (results && results.length) {
     for (const feature of results) {
@@ -292,17 +312,18 @@ function transformBekendmakingen(responseData: any) {
 }
 
 function transformParkeerzoneCoords(datasetId: string, responseData: any) {
-  const results = getApiEmbeddedResponse(datasetId, responseData);
-  const collection: DatasetCollection = [];
+  const results = responseData?.features;
+  const collection: DatasetFeatures = [];
+
   if (results && results.length) {
     for (const feature of results) {
       collection.push({
         type: 'Feature',
         geometry: feature.geometry,
         properties: {
-          id: feature.id,
+          id: feature?.properties?.id || feature.id,
           datasetId,
-          color: feature.gebiedskleurcode,
+          color: feature.properties.gebiedskleurcode,
         },
       });
     }

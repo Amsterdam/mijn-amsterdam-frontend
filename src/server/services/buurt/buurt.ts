@@ -8,7 +8,7 @@ import {
   LOCATION_ZOOM,
 } from '../../../universal/config';
 import { apiErrorResult, apiSuccesResult } from '../../../universal/helpers';
-import { ApiResponse } from '../../../universal/helpers/api';
+import { ApiResponse, getSettledResult } from '../../../universal/helpers/api';
 import { DataRequestConfig } from '../../config';
 import { requestData } from '../../helpers';
 import FileCache from '../../helpers/file-cache';
@@ -16,8 +16,8 @@ import { fetchHOME } from '../home';
 import {
   ACCEPT_CRS_4326,
   BUURT_CACHE_TTL_HOURS,
-  DatasetCollection,
   DatasetConfig,
+  DatasetFeatures,
   MaPointFeature,
   MaPolyLineFeature,
 } from './datasets';
@@ -78,7 +78,7 @@ const fileCache = (id: string, cacheTimeMinutes: number) => {
   return fileCaches[id];
 };
 
-async function loadDataset(
+async function loadDatasetFeature(
   sessionID: SessionID,
   datasetId: string,
   datasetConfig: DatasetConfig,
@@ -117,7 +117,7 @@ async function loadDataset(
     requestConfig.transformResponse = datasetConfig.transformList;
   }
 
-  const response = await requestData<DatasetCollection>(
+  const response = await requestData<DatasetFeatures>(
     requestConfig,
     sessionID,
     {}
@@ -150,53 +150,36 @@ async function loadDataset(
   return response;
 }
 
-async function loadDatasets(
+export async function loadDatasetFeatures(
   sessionID: SessionID,
   configs: Array<[string, DatasetConfig]>
 ) {
-  const requests: Array<Promise<ApiResponse<DatasetCollection>>> = [];
+  const requests: Array<Promise<ApiResponse<DatasetFeatures>>> = [];
 
   for (const datasetConfig of configs) {
     const [id, config] = datasetConfig;
-    requests.push(loadDataset(sessionID, id, config));
+    requests.push(loadDatasetFeature(sessionID, id, config));
   }
 
-  const results = await Promise.all(requests);
-  const datasetResults = results.flatMap(({ content }) => content);
+  const results = await Promise.allSettled(requests);
+
+  const datasetResults = results.flatMap(
+    (result) => getSettledResult(result).content || []
+  );
+
   const features = datasetResults.filter(
     (result): result is MaPointFeature | MaPolyLineFeature => result !== null
   );
-  return features;
+
+  return apiSuccesResult(features);
 }
 
-export async function loadServicesMapDatasets(
-  sessionID: SessionID,
-  datasetId?: string
-) {
-  const configs = getDatasetEndpointConfig(datasetId);
-
-  if (!configs.length) {
-    return apiErrorResult('Could not find dataset', null);
-  }
-
-  const dataStore = await loadDatasets(sessionID, configs);
-  let response = dataStore;
-
-  if (datasetId) {
-    response = dataStore.filter(
-      (feature) => feature?.properties.datasetId === datasetId
-    );
-  }
-
-  return apiSuccesResult(response);
-}
-
-export async function loadServicesMapDatasetItem(
+export async function loadFeatureDetail(
   sessionID: SessionID,
   datasetId: string,
   id: string
 ) {
-  const [datasetConfig] = getDatasetEndpointConfig(datasetId);
+  const [datasetConfig] = getDatasetEndpointConfig([datasetId]);
 
   if (!datasetConfig) {
     return apiErrorResult(`Unknown dataset ${datasetId}`, null);
@@ -219,21 +202,36 @@ export async function loadServicesMapDatasetItem(
   return requestData(requestConfig, sessionID, {});
 }
 
-export async function loadPolyLineDatasets(
+export async function loadPolyLineFeatures(
   sessionID: SessionID,
-  datasetIds?: string[]
+  { datasetIds, bbox }: { datasetIds: string[]; bbox: any }
 ) {
-  const dataStore = (await loadServicesMapDatasets(sessionID)).content;
+  const configs = getDatasetEndpointConfig(datasetIds, [
+    'MultiPolygon',
+    'MultiLineString',
+  ]);
+  const requests: Array<Promise<ApiResponse<DatasetFeatures>>> = [];
+  const filterParams = {
+    FILTER: `<Filter><BBOX><gml:Envelope srsName="EPSG:4326"><gml:lowerCorner>${bbox[0]} ${bbox[1]}</gml:lowerCorner><gml:upperCorner>${bbox[2]} ${bbox[3]}</gml:upperCorner></gml:Envelope></BBOX></Filter>`,
+  };
 
-  if (!dataStore) {
-    return [];
+  for (const datasetConfig of configs) {
+    const [id, config] = datasetConfig;
+    requests.push(loadDatasetFeature(sessionID, id, config, filterParams));
   }
 
-  return dataStore.filter((feature, index): feature is MaPolyLineFeature => {
-    return (
-      (feature.geometry.type === 'MultiPolygon' ||
-        feature.geometry.type === 'MultiLineString') &&
-      (!datasetIds || datasetIds.includes(feature.properties.datasetId))
-    );
-  });
+  const results = await Promise.all(requests);
+  const datasetResults = results.flatMap(({ content }) => content);
+  const features = datasetResults.filter(
+    (result): result is MaPolyLineFeature => result !== null
+  );
+  return features;
+
+  // return dataStore.filter((feature, index): feature is MaPolyLineFeature => {
+  //   return (
+  //     (feature.geometry.type === 'MultiPolygon' ||
+  //       feature.geometry.type === 'MultiLineString') &&
+  //     (!datasetIds || datasetIds.includes(feature.properties.datasetId))
+  //   );
+  // });
 }

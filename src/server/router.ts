@@ -1,13 +1,14 @@
 import * as Sentry from '@sentry/node';
 import express, { NextFunction, Request, Response } from 'express';
-import { BffEndpoints } from './config';
-import {
-  loadClusterDatasets,
-  loadServicesMapDatasetItem,
-  loadServicesMapDatasets,
-} from './services';
-import { loadPolyLineDatasets } from './services/buurt/buurt';
 import { ApiResponse, apiSuccesResult } from '../universal/helpers/api';
+import { BffEndpoints } from './config';
+import { loadClusterDatasets } from './services';
+import {
+  loadPolyLineFeatures,
+  loadFeatureDetail,
+  loadDatasetFeatures,
+} from './services/buurt/buurt';
+import { getDatasetEndpointConfig } from './services/buurt/helpers';
 import {
   loadServicesAll,
   loadServicesSSE,
@@ -55,11 +56,11 @@ router.post(
         res.locals.sessionID,
         req.body
       );
-      const polylines = await loadPolyLineDatasets(
+      const polylines = await loadPolyLineFeatures(
         res.locals.sessionID,
-        req.body.datasetIds
+        req.body
       );
-      res.json(apiSuccesResult([...clusters, ...polylines]));
+      res.json(apiSuccesResult([...(clusters || []), ...(polylines || [])]));
       next();
     } catch (error) {
       next(error);
@@ -71,20 +72,15 @@ router.get(
   BffEndpoints.MAP_DATASETS,
   async (req: Request, res: Response, next: NextFunction) => {
     const datasetId = req.params.datasetId;
+    const datasetIds = (req.params.datasetIds as unknown) as string[];
     const id = req.params.id;
     let response: ApiResponse<any> | null = null;
     try {
       if (datasetId && id) {
-        response = await loadServicesMapDatasetItem(
-          res.locals.sessionID,
-          datasetId,
-          id
-        );
+        response = await loadFeatureDetail(res.locals.sessionID, datasetId, id);
       } else {
-        response = await loadServicesMapDatasets(
-          res.locals.sessionID,
-          datasetId
-        );
+        const configs = getDatasetEndpointConfig(datasetIds);
+        response = await loadDatasetFeatures(res.locals.sessionID, configs);
       }
       if (response.status !== 'OK') {
         res.status(500);

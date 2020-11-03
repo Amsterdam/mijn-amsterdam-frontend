@@ -6,15 +6,24 @@ export function getApiEmbeddedResponse(id: string, responseData: any) {
   return Array.isArray(results) ? results : null;
 }
 
-export function getDatasetEndpointConfig(datasetId?: string) {
+export function getDatasetEndpointConfig(
+  endpointIDs?: string[],
+  featureTypes?: DatasetConfig['featureType'][]
+) {
   const configs: Array<[string, DatasetConfig]> = Object.entries(
     datasetEndpoints
-  ).filter(
-    ([id, config]) =>
-      !datasetId ||
-      id === datasetId ||
-      (DATASETS[id] && DATASETS[id].includes(datasetId))
-  );
+  )
+    .filter(([id, config]) => {
+      const hasDatasetId =
+        DATASETS[id] &&
+        DATASETS[id].some((datasetId) => endpointIDs?.includes(datasetId));
+      const isEndpoint = endpointIDs?.includes(id);
+      return !endpointIDs || isEndpoint || hasDatasetId;
+    })
+    .filter(
+      ([id, config]) =>
+        !featureTypes || featureTypes.includes(config.featureType)
+    );
 
   return configs;
 }

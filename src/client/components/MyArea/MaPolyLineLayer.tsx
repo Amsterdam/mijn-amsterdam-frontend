@@ -45,7 +45,7 @@ export function MaPolyLineLayer({
     }
     return layers;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [features]);
 
   useEffect(() => {
     if (!layers.length) {
