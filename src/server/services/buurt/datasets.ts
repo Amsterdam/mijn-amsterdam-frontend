@@ -1,3 +1,4 @@
+import Supercluster from 'supercluster';
 import { DATASETS } from '../../../universal/config/buurt';
 import { DataRequestConfig } from '../../config';
 import { getApiEmbeddedResponse } from './helpers';
@@ -6,6 +7,10 @@ export type DatasetFeatureProperties = {
   id: string;
   datasetId: string;
   color?: string;
+};
+export type DatasetClusterFeatureProperties = DatasetFeatureProperties & {
+  cluster?: boolean;
+  point_count?: number;
 };
 export type MaFeature<
   G extends GeoJSON.Geometry = Exclude<
@@ -18,6 +23,9 @@ export type MaPolyLineFeature = MaFeature<
   GeoJSON.MultiPolygon | GeoJSON.MultiLineString
 >;
 export type DatasetFeatures = MaFeature[];
+export type MaSuperClusterFeature =
+  | Supercluster.PointFeature<DatasetFeatureProperties>
+  | Supercluster.ClusterFeature<DatasetClusterFeatureProperties>;
 
 export const BUURT_CACHE_TTL_HOURS = 24;
 export const ACCEPT_CRS_4326 = {

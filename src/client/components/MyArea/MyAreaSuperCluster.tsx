@@ -5,12 +5,14 @@ import L, {
   LeafletMouseEventHandlerFn,
 } from 'leaflet';
 import { useCallback, useEffect, useMemo } from 'react';
-import Supercluster from 'supercluster';
-import { MaPointFeature } from '../../../server/services/buurt/datasets';
+import {
+  MaSuperClusterFeature,
+  DatasetFeatureProperties,
+} from '../../../server/services/buurt/datasets';
 import { createMarkerIcon, getIconHtml } from './datasets';
 import styles from './MyAreaSuperCluster.module.scss';
 
-function createMarker(feature: any, latlng: any) {
+function createMarker(feature: MaSuperClusterFeature, latlng: LatLngObject) {
   let icon;
   if (!feature?.properties.cluster) {
     const html = getIconHtml(feature.properties.datasetId);
@@ -21,9 +23,9 @@ function createMarker(feature: any, latlng: any) {
       iconAnchor: [14, 14],
     });
   } else {
-    const count = feature.properties.point_count;
+    const count = feature.properties.point_count || 0;
     const size = count < 100 ? 'small' : count < 1000 ? 'medium' : 'large';
-    const label = count;
+    const label = count.toString();
     icon = createMarkerIcon({
       label,
       className: styles[`MarkerClusterIcon--${size}`],
@@ -61,13 +63,11 @@ function round(num: number, decimalPlaces: number = 6) {
   return Number(num2 + 'e' + -decimalPlaces);
 }
 
-type SuperClusterFeatures = Array<
-  Supercluster.PointFeature<any> | Supercluster.ClusterFeature<any>
->;
+type SuperClusterFeatures = MaSuperClusterFeature[];
 
 function processFeatures(features: SuperClusterFeatures) {
-  const items: Record<string, Supercluster.PointFeature<any>[]> = {};
-  const markersFinal: MaPointFeature[] = [];
+  const items: Record<string, SuperClusterFeatures> = {};
+  const markersFinal: SuperClusterFeatures = [];
 
   for (const feature of features) {
     if (!feature.properties.cluster) {
@@ -100,7 +100,7 @@ function processFeatures(features: SuperClusterFeatures) {
       const modifiedMarkers = pts
         .filter((pt, index) => !!features[index])
         .map((pt, index) => {
-          const feature: MaPointFeature = {
+          const feature: MaSuperClusterFeature = {
             ...features[index],
             geometry: {
               coordinates: pt,
@@ -129,7 +129,7 @@ export function MaSuperClusterLayer({
 }: MaSuperClusterLayerProps) {
   const map = useMapInstance();
   const markerLayer = useMemo(() => {
-    const layer = L.geoJSON<SuperClusterFeatures>(undefined, {
+    const layer = L.geoJSON<DatasetFeatureProperties>(undefined, {
       pointToLayer: createMarker,
     });
 
