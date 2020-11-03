@@ -40,7 +40,7 @@ function isChapterActive(
         ) &&
         (!!FOCUS_AANVRAGEN.content?.length ||
           !!FOCUS_TOZO.content?.length ||
-          !!FOCUS_STADSPAS.content?.length ||
+          !!FOCUS_STADSPAS.content?.stadspassaldo?.stadspassen?.length ||
           !!FOCUS_SPECIFICATIES.content?.jaaropgaven?.length ||
           !!FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties?.length)
       );

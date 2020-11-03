@@ -73,15 +73,19 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
   vestigingsNummer: 'Vestigingsnummer',
   handelsnamen: [
     'Handelsnaam',
-    (handelsnamen: string[]) =>
+    (handelsnamen: string[], { isHoofdvestiging }) =>
       handelsnamen?.length ? (
         <>
-          {handelsnamen.map(handelsnaam => (
-            <span key={handelsnaam}>
-              {handelsnaam}
-              <br />
-            </span>
-          ))}
+          {handelsnamen
+            .filter((handelsnaam, index) =>
+              isHoofdvestiging ? index === 0 : true
+            )
+            .map(handelsnaam => (
+              <span key={handelsnaam}>
+                {handelsnaam}
+                <br />
+              </span>
+            ))}
         </>
       ) : null,
   ],

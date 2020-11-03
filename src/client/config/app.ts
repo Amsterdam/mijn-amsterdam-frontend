@@ -3,6 +3,8 @@ import { getOtapEnvItem } from '../../universal/config';
 export const ExternalUrls = {
   CHANGE_PERSONAL_DATA:
     'https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D',
+  CHANGE_KVK_DATA:
+    'https://www.kvk.nl/inschrijven-en-wijzigen/wijziging-doorgeven/',
   REPORT_RELOCATION:
     'https://www.amsterdam.nl/burgerzaken/verhuizing-doorgeven/',
   CONTACT_FORM:
@@ -30,9 +32,7 @@ export const ExternalUrls = {
   AMSTERDAM: 'https://www.amsterdam.nl',
   WPI_CONTACT: 'https://www.amsterdam.nl/werk-inkomen/contact/',
   WPI_ALGEMEEN: 'https://www.amsterdam.nl/werk-inkomen',
-  WPI_TOZO:
-    "https://www.amsterdam.nl/ondernemen/veelgestelde-vragen-corona-ondernemers/ondersteuning-zelfstandigen-zzp'ers/",
-  WPI_TOZO2: '',
+  WPI_TOZO: 'https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/',
   AFVAL: 'https://www.amsterdam.nl/afval/',
   AFVAL_COMMERCIAL:
     'https://www.amsterdam.nl/veelgevraagd/?productid={3D70B70E-8A19-4A95-BE31-8743995BC545}',

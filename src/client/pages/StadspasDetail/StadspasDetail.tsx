@@ -187,7 +187,9 @@ export default () => {
   const { FOCUS_STADSPAS } = useAppStateGetter();
   const { id } = useParams();
   const stadspasItem = id
-    ? FOCUS_STADSPAS?.content?.find(pass => pass.id === parseInt(id, 10))
+    ? FOCUS_STADSPAS?.content?.stadspassaldo?.stadspassen.find(
+        pass => pass.id === parseInt(id, 10)
+      )
     : null;
   const isErrorStadspas = isError(FOCUS_STADSPAS);
   const isLoadingStadspas = isLoading(FOCUS_STADSPAS);
@@ -237,7 +239,7 @@ export default () => {
       )}
       {stadspasItem?.budgets.map(budget => (
         <StadspasBudget
-          urlTransactions={stadspasItem.urlTransactions}
+          urlTransactions={`/api${budget.urlTransactions}`}
           key={budget.title}
           budget={budget}
           dateEnd={stadspasItem.datumAfloop}

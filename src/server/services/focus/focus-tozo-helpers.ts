@@ -61,8 +61,8 @@ function getDocumentTitle(
   if (labelSet.productSpecific === 'aanvraag') {
     return `${labelSet.documentTitle}\n${dateFormat(
       document.datePublished,
-      `dd MMMM 'om' HH:mm`
-    )} uur`;
+      `dd MMMM 'om' HH.mm 'uur'`
+    )}`;
   }
   return labelSet.documentTitle;
 }
