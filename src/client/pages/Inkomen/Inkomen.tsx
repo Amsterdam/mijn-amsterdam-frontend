@@ -172,6 +172,15 @@ export default () => {
           Op deze pagina vindt u informatie over uw uitkering en de
           ondersteuning die u krijgt omdat u weinig geld hebt.
         </p>
+        {!isLoadingStadspas &&
+          FOCUS_STADSPAS.content?.stadspassaldo.isPartnerpas && (
+            <p>
+              Hebt u kinderen of een partner met een Stadspas? 1 volwassene
+              krijgt alle Stadspassen van uw gezin te zien. De andere
+              gezinsleden zien alleen hun eigen Stadspas als ze zelf inloggen op
+              Mijn Amsterdam.
+            </p>
+          )}
         <p>
           <Linkd external={true} href={ExternalUrls.WPI_ALGEMEEN}>
             Algemene informatie over werk en inkomen
