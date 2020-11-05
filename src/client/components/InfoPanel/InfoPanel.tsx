@@ -95,25 +95,27 @@ function InfoPanelTable({
   return (
     <div className={styles.TableWrap}>
       {tables.map((rows, index) => (
-        <table key={index} className={styles.InfoPanelTable}>
-          <tbody>
-            {rows.map(([title, value], index) => {
-              return (
-                <tr
-                  key={title + index}
-                  className={`InfoPanelTableRow__${slug(title, {
-                    lower: true,
-                  })}`}
-                >
-                  <th>
-                    <span>{title}</span>
-                  </th>
-                  <td>{getValue(value)}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div className={styles.InfoPanelTableItem}>
+          <table key={index} className={styles.InfoPanelTable}>
+            <tbody>
+              {rows.map(([title, value], index) => {
+                return (
+                  <tr
+                    key={title + index}
+                    className={`InfoPanelTableRow__${slug(title, {
+                      lower: true,
+                    })}`}
+                  >
+                    <th>
+                      <span>{title}</span>
+                    </th>
+                    <td>{getValue(value)}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       ))}
     </div>
   );

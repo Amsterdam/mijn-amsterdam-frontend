@@ -56,16 +56,16 @@
   }
 }
 
+.InfoPanelTableItem {
+  + .InfoPanelTableItem {
+    border-top: .1rem solid $color-neutral-grey2;
+    margin-top: 2rem;
+    padding-top: 2rem;
+  }
+}
+
 .InfoPanelTable {
   border-collapse: collapse;
-
-  + .InfoPanelTable {
-    border-top: .1rem solid $color-neutral-grey2;
-  }
-
-  + .InfoPanelTable {
-      margin-top: 2rem;
-    }
 
   tbody > tr {
     > td {
