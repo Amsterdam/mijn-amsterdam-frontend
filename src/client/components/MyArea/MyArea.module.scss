@@ -139,7 +139,7 @@
 }
 
 :global(.leaflet-tooltip).MarkerLabel {
-  background-color: rgba(255, 255, 255, .5);
+  background-color: rgba(255, 255, 255, .7);
   border-radius: 0;
   border: 0;
   box-shadow: none;
@@ -154,7 +154,7 @@
   color: $color-black;
   text-align: center;
   font-size: 1.8rem;
-  font-weight: 500;
+  font-weight: bold;
 }
 
 // NOTE: Enable and add styling if we decide to have outstanding focusstyle
