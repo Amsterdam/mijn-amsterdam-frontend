@@ -1,20 +1,25 @@
-import React from 'react';
-import { IconHome, MapIconHomeCommercial } from '../../assets/icons';
+import React, { Suspense } from 'react';
 import styles from './MyAreaLoader.module.scss';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
 
-export default function MyAreaLoader() {
-  const profileType = useProfileTypeValue();
+export const MyArea2Lazy = React.lazy(() => import('./MyArea'));
+export const MyArea2DashboardLazy = React.lazy(
+  () => import('./MyAreaDashboard')
+);
+
+interface MyArea2LoaderProps {
+  isDashboard?: boolean;
+}
+
+export function MyArea2Loader({ isDashboard = false }: MyArea2LoaderProps) {
   return (
-    <div className={styles.MyAreaLoader}>
-      <span>
-        {profileType === 'private' ? (
-          <IconHome aria-hidden="true" />
-        ) : (
-          <MapIconHomeCommercial aria-hidden="true" />
-        )}
-        Uw adres wordt opgezocht...
-      </span>
-    </div>
+    <Suspense
+      fallback={
+        <div className={styles.MyAreaLoader} style={{ height: '100vh' }}>
+          Loading buurt bundle...
+        </div>
+      }
+    >
+      {isDashboard ? <MyArea2DashboardLazy /> : <MyArea2Lazy />}
+    </Suspense>
   );
 }

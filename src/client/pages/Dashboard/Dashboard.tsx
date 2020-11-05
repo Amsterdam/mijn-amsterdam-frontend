@@ -16,7 +16,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
 import styles from './Dashboard.module.scss';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
-import { MyArea2Loader } from '../../components/MyArea/MyArea2loader';
+import { MyArea2Loader } from '../../components/MyArea/MyArealoader';
 
 const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;

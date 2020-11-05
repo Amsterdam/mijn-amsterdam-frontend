@@ -53,7 +53,7 @@ const MyAreaMap = styled(Map)`
   }
 `;
 
-export default function MyArea2() {
+export default function MyArea() {
   const isDesktop = useDesktopScreen();
   const { HOME } = useAppStateGetter();
   const termReplace = useTermReplacement();

@@ -26,7 +26,7 @@ import {
   MainHeader,
 } from './components';
 import { DefaultAutologoutDialogSettings } from './components/AutoLogoutDialog/AutoLogoutDialog';
-import { MyArea2Loader } from './components/MyArea/MyArea2loader';
+import { MyArea2Loader } from './components/MyArea/MyArealoader';
 import {
   TMA_LOGIN_URL_DIGID_AFTER_REDIRECT,
   TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT,
