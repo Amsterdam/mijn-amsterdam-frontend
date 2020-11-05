@@ -1,24 +1,15 @@
 import classnames from 'classnames';
 import React, { useState } from 'react';
+import { CMSFooterContent } from '../../../server/services/cms-content';
 import { isExternalUrl } from '../../../universal/helpers/utils';
 import { LinkProps } from '../../../universal/types/index';
+import { useCMSApi } from '../../hooks/api/useCmsApi';
+import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { useDesktopScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import Linkd from '../Button/Button';
 import { InnerHtml } from '../index';
 import styles from './MainFooter.module.scss';
-import { useDataApi } from '../../hooks/api/useDataApi';
-import { CMSFooterContent } from '../../../server/services/cms-content';
-import {
-  apiPristineResult,
-  ApiResponse,
-  isLoading,
-} from '../../../universal/helpers';
-import { BFFApiUrls } from '../../config/api';
-import { useCMSApi } from '../../hooks/api/useCmsApi';
-import { AppState } from '../../AppState';
-import LoadingContent from '../LoadingContent/LoadingContent';
-import { useSessionValue } from '../../hooks/api/useSessionApi';
 
 interface FooterBlockProps {
   startOpen?: boolean;

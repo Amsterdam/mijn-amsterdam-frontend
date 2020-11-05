@@ -13,8 +13,8 @@ import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
 import {
   getOtapEnvItem,
-  IS_PRODUCTION,
   IS_ACCEPTANCE,
+  IS_PRODUCTION,
 } from '../universal/config/env';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
@@ -30,7 +30,7 @@ import {
   TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT,
 } from './config/api';
 import { useAnalytics, usePageChange, useScript } from './hooks';
-import { useSessionApi, useSessionValue } from './hooks/api/useSessionApi';
+import { useSessionApi } from './hooks/api/useSessionApi';
 import { useTipsApi } from './hooks/api/useTipsApi';
 import { useAppState } from './hooks/useAppState';
 import {
