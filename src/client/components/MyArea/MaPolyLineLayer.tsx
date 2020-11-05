@@ -11,6 +11,7 @@ export const DEFAULT_POLYLINE_OPTIONS = {
   fillOpacity: 0.4,
   stroke: true,
   color: DEFAULT_POLYLINE_COLOR,
+  noClip: true,
 };
 
 interface MaPolyLineLayerProps {

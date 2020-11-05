@@ -7,6 +7,7 @@ import MyArePanelContentBekendmaking from './Bekendmaking';
 import MyArePanelContentEvenementen from './Evenementen';
 import GenericBase from './GenericBase';
 import JsonString from './JsonString';
+import MyArePanelContentParkeren from './Parkeren';
 import MyArePanelContentSport from './Sport';
 
 interface MyAreaPanelContentGenericProps {
@@ -47,12 +48,10 @@ export default function MyAreaPanelContentGeneric({
       );
     case 'parkeren':
       return (
-        <GenericBase title={panelItem.gebiedsnaam} supTitle="Vergunningsgebied">
-          <MyArePanelContentBekendmaking
-            datasetId={datasetId}
-            panelItem={panelItem}
-          />
-        </GenericBase>
+        <MyArePanelContentParkeren
+          datasetId={datasetId}
+          panelItem={panelItem}
+        />
       );
   }
 
