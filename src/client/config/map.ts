@@ -57,7 +57,7 @@ export const DEFAULT_MAP_OPTIONS = {
   minZoom: 7,
   crs: getCrsRd(),
   zoomControl: false,
-  attributionControl: false,
+  attributionControl: true,
   maxBounds: [
     [52.25168, 4.64034],
     [52.50536, 5.10737],

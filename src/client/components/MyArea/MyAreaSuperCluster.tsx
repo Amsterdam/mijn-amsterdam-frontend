@@ -55,6 +55,8 @@ export function MaSuperClusterLayer({
   const markerLayer = useMemo(() => {
     const layer = L.geoJSON<DatasetFeatureProperties>(undefined, {
       pointToLayer: createClusterMarker,
+      attribution:
+        '<a href="https://api.data.amsterdam.nl/v1/docs">Amsterdam DSO api</a>',
     });
 
     return layer;

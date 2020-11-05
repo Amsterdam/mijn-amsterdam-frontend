@@ -76,7 +76,12 @@ export default function MyArea2() {
                 center,
               }}
             >
-              <BaseLayer />
+              <BaseLayer
+                options={{
+                  attribution:
+                    '<a href="https://github.com/amsterdam/amsterdam-react-maps">Amsterdam React Maps</a>',
+                }}
+              />
               {HOME.content?.address && (
                 <HomeIconMarker
                   address={getFullAddress(HOME.content.address, true)}
