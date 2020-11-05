@@ -43,7 +43,7 @@ function TdValue({ value }: TdValueProps) {
   if (React.isValidElement(value)) {
     return value;
   }
-  return <InnerHtml>{value as string}</InnerHtml>;
+  return <InnerHtml el="span">{value as string}</InnerHtml>;
 }
 
 export default function Table({

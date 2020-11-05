@@ -57,7 +57,7 @@ const herstelTermijnLabels: FocusStepContent = {
   status: stepLabels.herstelTermijn,
   description: document =>
     `<p>
-        Wij hebben meer informatie en tijd nodig om uw aanvraag te verwerken.
+        Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.
         Bekijk de brief voor meer details.
       </p>`,
 };
