@@ -41,7 +41,7 @@ export default function MyArePanelContentSport({
         <GenericBase title={panelItem.sportfunctie} supTitle="Sportvelden">
           <InfoDetail
             label="Soort ondergrond"
-            value={panelItem.soortOndergrond.replace('ï¿½', '&')}
+            value={panelItem.soortOndergrond}
           />
           <InfoDetail label="Sportpark" value={panelItem.sportpark} />
         </GenericBase>
