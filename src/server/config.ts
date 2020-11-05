@@ -12,6 +12,7 @@ export const BFF_REQUEST_CACHE_ENABLED = true;
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
 export const BFF_BASE_PATH = IS_AP ? '/bff' : '/test-api/bff';
+export const BFF_PUBLIC_BASE_PATH = IS_AP ? '/public' : '/test-api/public';
 
 const BFF_MS_API_HOST = IS_PRODUCTION
   ? process.env.BFF_MS_API_HOST || 'mijn.data.amsterdam.nl'
@@ -140,6 +141,10 @@ export const BffEndpoints = {
   SERVICES_ALL: `/services/all`,
   SERVICES_STREAM: `/services/stream`,
   HEALTH: `/status/health`,
+  CMS_CONTENT: `/public/services/cms`,
 };
 
-export const PUBLIC_BFF_ENDPOINTS: string[] = [BffEndpoints.HEALTH];
+export const PUBLIC_BFF_ENDPOINTS: string[] = [
+  BffEndpoints.HEALTH,
+  BffEndpoints.CMS_CONTENT,
+];

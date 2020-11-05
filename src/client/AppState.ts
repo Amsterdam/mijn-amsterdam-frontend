@@ -5,6 +5,7 @@ import {
   ServicesType,
 } from '../server/services/controller';
 import { apiPristineResult, ApiResponse } from '../universal/helpers/api';
+// import { fetchCMSCONTENT } from '../server/services';
 
 export type AppState = {
   [key in ServiceID]: ApiResponse<
@@ -12,6 +13,9 @@ export type AppState = {
   >;
 } & {
   TIPS: ServicesTips['TIPS'] | ApiResponse<any>;
+  // CMS_CONTENT: ApiResponse<
+  //   ResolvedType<ReturnType<typeof fetchCMSCONTENT>>['content']
+  // >;
 };
 
 export const PRISTINE_APPSTATE: AppState = {
