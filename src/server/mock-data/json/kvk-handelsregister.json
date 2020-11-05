@@ -94,6 +94,40 @@
         "websites": [
           "www.kruijff_sport.nl"
         ]
+      },
+      {
+        "activiteiten": [
+          "Caf\u00e9s"
+        ],
+        "bezoekadres": {
+          "huisletter": null,
+          "huisnummer": "29",
+          "huisnummertoevoeging": null,
+          "postcode": "1097 XK",
+          "straatnaam": "Akkerstraat",
+          "woonplaatsNaam": "Amsterdam"
+        },
+        "datumAanvang": "2020-05-01",
+        "datumEinde": "2020-05-02",
+        "emailadres": "Info@kruijffSport.nl",
+        "faxnummer": null,
+        "handelsnamen": [
+          "Kruijff Sport"
+        ],
+        "postadres": {
+          "huisletter": null,
+          "huisnummer": "29",
+          "huisnummertoevoeging": null,
+          "postcode": null,
+          "straatnaam": "Akkerstraat",
+          "woonplaatsNaam": "Amsterdam"
+        },
+        "telefoonnummer": "+310209845632",
+        "typeringVestiging": "Hoofdvestiging",
+        "vestigingsNummer": "990000996056",
+        "websites": [
+          "www.kruijff_sport.nl"
+        ]
       }
     ]
   },

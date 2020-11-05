@@ -60,22 +60,21 @@
 
   .Label {
     position: absolute;
-    white-space: nowrap;
     left: 0;
     right: auto;
     top: 0;
-    display: flex;
-    align-items: center;
-    font-size: 1.8rem;
+    padding-left: 2.4rem;
     font-weight: bold;
-
+    white-space: nowrap;
     // Legend color
     &:before {
       content: '';
+      top: .6rem;
+      position: absolute;
+      left: 0;
       width: 1rem;
       height: 1rem;
       display: block;
-      margin-right: 1.4rem;
     }
   }
 
@@ -96,6 +95,7 @@
       text-align: right;
       right: 0;
       left: auto;
+
       &:before {
         background-color: $color-neutral-grey4;
       }
@@ -104,6 +104,7 @@
       @include mq-tablet {
         margin-top: 2rem;
         left: 0;
+        text-align: left;
       }
     }
     &:after {

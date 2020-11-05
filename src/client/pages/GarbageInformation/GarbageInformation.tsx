@@ -48,7 +48,7 @@ function GarbageCenterItem({ item }: { item: GarbageCenter }) {
         )}
       </Heading>
       <Heading size="tiny">Adres</Heading>
-      <InnerHtml wrapWithTagName="p">{item.address}</InnerHtml>
+      <InnerHtml el="p">{item.address}</InnerHtml>
       <Heading size="tiny">Telefoon</Heading>
       <p>
         <a href={`tel:${item.phone}`}>{item.phone}</a>
@@ -108,7 +108,7 @@ export default () => {
       {!!item.opmerking && (
         <GarbagePanel>
           <Heading size="tiny">Opmerking</Heading>
-          <InnerHtml wrapWithTagName="p">{item.opmerking}</InnerHtml>
+          <InnerHtml el="p">{item.opmerking}</InnerHtml>
         </GarbagePanel>
       )}
     </SectionCollapsible>

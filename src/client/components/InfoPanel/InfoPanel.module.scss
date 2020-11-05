@@ -41,6 +41,16 @@
 
 .TableWrap {
   width: 59%;
+  @include mq-phone() {
+    width: 100%;
+  }
+
+  + .TableWrap {
+    border-top: .1rem solid $color-neutral-grey2;
+    margin-top: 2rem;
+    padding-top: 2rem;
+  }
+
   th span {
     white-space: nowrap;
   }
@@ -56,16 +66,12 @@
   }
 }
 
+.InfoPanelTableItem {
+
+}
+
 .InfoPanelTable {
   border-collapse: collapse;
-
-  + .InfoPanelTable {
-    border-top: .1rem solid $color-neutral-grey2;
-  }
-
-  + .InfoPanelTable {
-      margin-top: 2rem;
-    }
 
   tbody > tr {
     > td {
