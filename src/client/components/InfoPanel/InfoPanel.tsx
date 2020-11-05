@@ -95,8 +95,8 @@ function InfoPanelTable({
   return (
     <>
       {tables.map((rows, index) => (
-        <div className={styles.TableWrap}>
-          <table key={index} className={styles.InfoPanelTable}>
+        <div className={styles.TableWrap} key={index}>
+          <table className={styles.InfoPanelTable}>
             <tbody>
               {rows.map(([title, value], index) => {
                 return (
