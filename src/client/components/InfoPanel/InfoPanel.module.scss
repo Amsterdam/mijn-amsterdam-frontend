@@ -41,6 +41,9 @@
 
 .TableWrap {
   width: 59%;
+  @include mq-phone() {
+    width: 100%;
+  }
   th span {
     white-space: nowrap;
   }

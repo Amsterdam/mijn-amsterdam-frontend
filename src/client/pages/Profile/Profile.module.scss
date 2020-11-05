@@ -4,6 +4,7 @@
   [class*='InfoPanel_InfoPanelTable'] + [class*='InfoPanel_InfoPanelTable'] {
     margin-top: 10rem;
   }
+
   @include mq-desktop() {
     [class*='InfoPanelTableRow__voornamen'] {
       th,
@@ -17,6 +18,10 @@
 
 .Intro {
   margin-bottom: 10rem;
+
+   @include mq-phone() {
+    margin-bottom: 2rem;
+  }
 }
 
 .LoadingContent {
