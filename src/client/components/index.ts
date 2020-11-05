@@ -23,7 +23,6 @@ export { default as MainNavBar } from './MainNavBar/MainNavBar';
 export { default as MainNavSubmenu } from './MainNavSubmenu/MainNavSubmenu';
 export { default as Modal } from './Modal/Modal';
 export { default as MyAreaHeader } from './MyArea/MyAreaHeader';
-export { MyAreaDashboard, MyAreaMapIFrame } from './MyArea/MyArea';
 export { default as MyCases } from './MyCases/MyCases';
 export { default as MyChaptersPanel } from './MyChaptersPanel/MyChaptersPanel';
 export { default as MyNotifications } from './MyNotifications/MyNotifications';

@@ -52,7 +52,6 @@ import {
   InkomenDetailTozo,
   InkomenSpecificaties,
   LandingPage,
-  MyArea,
   MyNotifications,
   MyTips,
   NotFound,
@@ -104,11 +103,7 @@ function AppAuthenticated() {
   const redirectAfterLogin = useDeeplinkRedirect();
 
   return matchPath(location.pathname, { path: AppRoutes.BUURT }) ? (
-    FeatureToggle.myArea2Active ? (
-      <Route path={AppRoutes.BUURT} component={MyArea2Loader} />
-    ) : (
-      <MyArea />
-    )
+    <Route path={AppRoutes.BUURT} component={MyArea2Loader} />
   ) : (
     <>
       <MainHeader isAuthenticated={session.isAuthenticated} />

@@ -6,8 +6,6 @@ interface EnvVars {
   ssoErfpachtUrl?: string;
   ssoErfpachtUrlEH?: string;
   ssoMilieuzoneUrl?: string;
-  isMyAreaMapEnabled?: boolean;
-  isMyArea2MapEnabled?: boolean;
   krefiaDirectLink?: string;
 }
 
@@ -35,8 +33,6 @@ export const IS_AP = IS_ACCEPTANCE || IS_PRODUCTION;
 
 const otapServerEnv: OtapEnv = {
   development: {
-    isMyAreaMapEnabled: false,
-    isMyArea2MapEnabled: true,
     krefiaDirectLink: 'https://krefia.amsterdam.nl',
     ssoErfpachtUrl:
       'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
@@ -46,7 +42,6 @@ const otapServerEnv: OtapEnv = {
       'https://d9bff634090c4624bce9ba7d8f0875dd@sentry.data.amsterdam.nl/13',
   },
   test: {
-    isMyAreaMapEnabled: false,
     krefiaDirectLink: 'https://krefia.amsterdam.nl',
   },
   acceptance: {
@@ -60,8 +55,6 @@ const otapServerEnv: OtapEnv = {
     ssoErfpachtUrlEH:
       'https://mijnerfpacht.acc.amsterdam.nl/saml/login/alias/mijnErfpachtZakelijk',
     ssoMilieuzoneUrl: 'https://ontheffingen-acc.amsterdam.nl/publiek/aanvragen',
-    isMyAreaMapEnabled: false,
-    isMyArea2MapEnabled: true,
     krefiaDirectLink: 'https://krefia-acceptatie.amsterdam.nl',
   },
   production: {
@@ -75,8 +68,6 @@ const otapServerEnv: OtapEnv = {
     ssoErfpachtUrlEH:
       'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtZakelijk',
     ssoMilieuzoneUrl: 'https://ontheffingen.amsterdam.nl/publiek/aanvragen',
-    isMyAreaMapEnabled: true,
-    isMyArea2MapEnabled: false,
     krefiaDirectLink: 'https://krefia.amsterdam.nl',
   },
 };

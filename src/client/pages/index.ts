@@ -10,7 +10,6 @@ export { default as InkomenDetail } from './InkomenDetail/InkomenDetail';
 export { default as InkomenDetailTozo } from './InkomenDetail/InkomenDetailTozo';
 export { default as InkomenSpecificaties } from './InkomenSpecificaties/InkomenSpecificaties';
 export { default as LandingPage } from './Landing/Landing';
-export { default as MyArea } from './MyArea/MyArea';
 export { default as MyNotifications } from './MyNotifications/MyNotifications';
 export { default as MyTips } from './MyTips/MyTips';
 export { default as NotFound } from './NotFound/NotFound';

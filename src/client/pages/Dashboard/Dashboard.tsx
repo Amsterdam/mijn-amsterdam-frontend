@@ -4,7 +4,6 @@ import { AppRoutes } from '../../../universal/config';
 import { isLoading } from '../../../universal/helpers';
 import {
   DirectLinks,
-  MyAreaDashboard,
   MyCases,
   MyChaptersPanel,
   MyNotifications,
@@ -17,6 +16,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
 import styles from './Dashboard.module.scss';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
+import { MyArea2Loader } from '../../components/MyArea/MyArea2loader';
 
 const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
@@ -78,14 +78,7 @@ export default () => {
           items={CASES.content!}
         />
 
-        {!isPhoneScreen && (
-          <MyAreaDashboard
-            url={BUURT.content?.embed.simple}
-            center={HOME.content?.latlng}
-            address={HOME.content?.address}
-            data-tutorial-item="Op deze kaart ziet u informatie van de gemeente, bijvoorbeeld over afval, parkeren en vergunningen;left-top"
-          />
-        )}
+        {!isPhoneScreen && <MyArea2Loader isDashboard={true} />}
 
         {!isPhoneScreen && (
           <MyTips

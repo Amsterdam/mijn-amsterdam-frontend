@@ -13,12 +13,11 @@ import {
   Heading,
   InnerHtml,
   Linkd,
-  MyAreaMapIFrame,
+  LoadingContent,
   PageContent,
   PageHeading,
   Panel,
   SectionCollapsible,
-  LoadingContent,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -68,11 +67,6 @@ function GarbageCenterItem({ item }: { item: GarbageCenter }) {
 
 export default () => {
   const { AFVAL, AFVALPUNTEN, HOME } = useAppStateGetter();
-  let garbageContainersMapUrl = '';
-
-  if (HOME && HOME?.content?.latlng?.lng && HOME?.content?.latlng?.lat) {
-    garbageContainersMapUrl = `https://kaart.amsterdam.nl/afvalcontainers#19/${HOME.content.latlng.lat}/${HOME.content.latlng.lng}/topo/9749,9750,9751,9752,9753,9754/9748/`;
-  }
 
   const garbagePointCollapsible = (
     id: string,
@@ -176,10 +170,7 @@ export default () => {
         className={classnames(styles.InfoSection, styles.InfoSectionMap)}
         title="Afvalcontainers in de buurt"
       >
-        <MyAreaMapIFrame
-          className={styles.GarbageContainerMap}
-          url={garbageContainersMapUrl}
-        />
+        LAAD KAART!
       </SectionCollapsible>
       <SectionCollapsible
         id="wegbrengen"
