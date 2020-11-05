@@ -4,8 +4,8 @@
     "bestuurders": [],
     "mokum": true,
     "onderneming": {
-      "datumAanvang": null,
-      "datumEinde": null,
+      "datumAanvang": "1977-09-01",
+      "datumEinde": "2020-07-01",
       "handelsnamen": [
         "Ballonenverkoop B.V.",
         "Feestwinkel"

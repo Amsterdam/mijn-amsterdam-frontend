@@ -64,8 +64,10 @@ const onderneming: ProfileLabels<Partial<Onderneming>> = {
     value => (value ? defaultDateFormat(value) : null),
   ],
   datumEinde: [
-    'Startdatum onderneming',
-    value => (value ? defaultDateFormat(value) : null),
+    'Einddatum onderneming',
+    (value, item, all) => {
+      return value ? defaultDateFormat(value) : null;
+    },
   ],
 };
 
