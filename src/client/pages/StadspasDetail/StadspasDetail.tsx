@@ -210,6 +210,11 @@ export default () => {
           Hieronder ziet u hoeveel u nog te besteden hebt.
         </p>
         <p>
+          Hebt u kinderen of een partner met een Stadspas? 1 volwassene krijgt
+          alle Stadspassen van uw gezin te zien. De andere gezinsleden zien
+          alleen hun eigen Stadspas als ze zelf inloggen op Mijn Amsterdam.
+        </p>
+        <p>
           <Linkd
             external={true}
             href="https://www.amsterdam.nl/toerisme-vrije-tijd/stadspas/"
