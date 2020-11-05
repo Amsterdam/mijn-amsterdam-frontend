@@ -1,16 +1,20 @@
 import React, { Suspense } from 'react';
-import styles from './MyAreaLoader.module.scss';
+import styles from './MyAreaLoadingIndicator.module.scss';
 
-export const MyArea2Lazy = React.lazy(() => import('./MyArea'));
-export const MyArea2DashboardLazy = React.lazy(
-  () => import('./MyAreaDashboard')
+export const MyAreaLazy = React.lazy(() => import('./MyArea'));
+export const MyAreaDashboardLazy = React.lazy(
+  () => import('./MyAreaDashboardMap')
 );
 
-interface MyArea2LoaderProps {
+interface MyAreaLoaderProps {
   isDashboard?: boolean;
+  tutorial?: string;
 }
 
-export function MyArea2Loader({ isDashboard = false }: MyArea2LoaderProps) {
+export default function MyAreaLoader({
+  isDashboard = false,
+  tutorial = '',
+}: MyAreaLoaderProps) {
   return (
     <Suspense
       fallback={
@@ -19,7 +23,11 @@ export function MyArea2Loader({ isDashboard = false }: MyArea2LoaderProps) {
         </div>
       }
     >
-      {isDashboard ? <MyArea2DashboardLazy /> : <MyArea2Lazy />}
+      {isDashboard ? (
+        <MyAreaDashboardLazy tutorial={tutorial} />
+      ) : (
+        <MyAreaLazy />
+      )}
     </Suspense>
   );
 }

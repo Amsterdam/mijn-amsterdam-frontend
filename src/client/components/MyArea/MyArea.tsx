@@ -26,8 +26,8 @@ import HomeControlButton from './MaHomeControlButton';
 import { HomeIconMarker } from './MaMarker';
 import { MyAreaDatasets } from './MyAreaDatasets';
 import MyAreaHeader from './MyAreaHeader';
-import MyAreaLoader from './MyAreaLoader';
 import MyAreaPanels from './MyAreaPanels';
+import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 
 const StyledViewerContainer = styled(ViewerContainer)`
   height: 100%;
@@ -39,7 +39,7 @@ const MyAreaMapContainer = styled.div`
   height: 100%;
 `;
 
-const MyArea2Container = styled.div`
+const MyAreaContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -61,7 +61,7 @@ export default function MyArea() {
 
   return (
     <ThemeProvider>
-      <MyArea2Container>
+      <MyAreaContainer>
         <MyAreaHeader />
         <MyAreaMapContainer>
           {!!center ? (
@@ -117,10 +117,10 @@ export default function MyArea() {
               </MapPanelProvider>
             </MyAreaMap>
           ) : (
-            <MyAreaLoader />
+            <MyAreaLoadingIndicator />
           )}
         </MyAreaMapContainer>
-      </MyArea2Container>
+      </MyAreaContainer>
     </ThemeProvider>
   );
 }

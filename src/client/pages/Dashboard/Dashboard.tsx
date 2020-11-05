@@ -11,19 +11,19 @@ import {
   Page,
   PageHeading,
 } from '../../components';
+import MyAreaDashboard from '../../components/MyArea/MyAreaDashboard';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
-import styles from './Dashboard.module.scss';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
-import { MyArea2Loader } from '../../components/MyArea/MyArealoader';
+import styles from './Dashboard.module.scss';
 
 const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
 
 export default () => {
   const appState = useAppStateGetter();
-  const { TIPS, NOTIFICATIONS, CASES, BUURT, HOME } = appState;
+  const { TIPS, NOTIFICATIONS, CASES } = appState;
   const notifications = useAppStateNotifications();
   const tipItems = useMemo(() => {
     return TIPS.content?.slice(0, MAX_TIPS_VISIBLE) || [];
@@ -70,16 +70,18 @@ export default () => {
             trackCategory="Dashboard / Mijn Thema's"
           />
         </div>
-
         <MyCases
           isLoading={isLoading(CASES)}
           title="Mijn lopende aanvragen"
           data-tutorial-item="Hier staan de aanvragen waar de gemeente nog een besluit over moet nemen;right-top"
           items={CASES.content!}
         />
-
-        {!isPhoneScreen && <MyArea2Loader isDashboard={true} />}
-
+        {!isPhoneScreen && (
+          <MyAreaDashboard
+            tutorial="Op deze kaart ziet u informatie van de gemeente,
+        bijvoorbeeld over afval, parkeren en vergunningen;left-top"
+          />
+        )}
         {!isPhoneScreen && (
           <MyTips
             data-tutorial-item="Hier geven wij u handige tips, bijvoorbeeld over regelingen van de gemeente;right-bottom"

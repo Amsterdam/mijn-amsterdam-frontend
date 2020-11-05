@@ -26,7 +26,7 @@ import {
   MainHeader,
 } from './components';
 import { DefaultAutologoutDialogSettings } from './components/AutoLogoutDialog/AutoLogoutDialog';
-import { MyArea2Loader } from './components/MyArea/MyArealoader';
+import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import {
   TMA_LOGIN_URL_DIGID_AFTER_REDIRECT,
   TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT,
@@ -103,7 +103,9 @@ function AppAuthenticated() {
   const redirectAfterLogin = useDeeplinkRedirect();
 
   return matchPath(location.pathname, { path: AppRoutes.BUURT }) ? (
-    <Route path={AppRoutes.BUURT} component={MyArea2Loader} />
+    <Switch>
+      <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
+    </Switch>
   ) : (
     <>
       <MainHeader isAuthenticated={session.isAuthenticated} />
