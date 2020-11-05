@@ -7,19 +7,20 @@
 }
 
 .Table {
-  tr td:nth-child(2) {
-    width: 30%;
-  }
-  @include select(Table_DisplayPropTitle) {
-    width: 50%;
-  }
-
-  @include mq-tablet() {
-    tr td:nth-child(2) {
-      width: 100%;
+  tr {
+    td:nth-child(1) {
+      width: 20%;
+    }
+    td:nth-child(2) {
+      width: 30%;
+    }
+    td:nth-child(3) {
+      width: 30%;
     }
     @include select(Table_DisplayPropTitle) {
-      width: 100%;
+      &:nth-child(1) {
+        width: 50%;
+      }
     }
   }
 }

@@ -145,7 +145,7 @@ export default () => {
       return {
         ...stadspas,
         displayDatumAfloop: defaultDateFormat(stadspas.datumAfloop),
-        detailPageUrl: (
+        detailPageUrl: !!stadspas.budgets.length && (
           <LinkdInline
             href={generatePath(AppRoutes['INKOMEN/STADSPAS/SALDO'], {
               id: stadspas.id,
@@ -172,6 +172,15 @@ export default () => {
           Op deze pagina vindt u informatie over uw uitkering en de
           ondersteuning die u krijgt omdat u weinig geld hebt.
         </p>
+        {!isLoadingStadspas &&
+          FOCUS_STADSPAS.content?.stadspassaldo?.isPartnerpas && (
+            <p>
+              Hebt u kinderen of een partner met een Stadspas? 1 volwassene
+              krijgt alle Stadspassen van uw gezin te zien. De andere
+              gezinsleden zien alleen hun eigen Stadspas als ze zelf inloggen op
+              Mijn Amsterdam.
+            </p>
+          )}
         <p>
           <Linkd external={true} href={ExternalUrls.WPI_ALGEMEEN}>
             Algemene informatie over werk en inkomen
@@ -202,26 +211,28 @@ export default () => {
           )}
       </PageContent>
 
-      <SectionCollapsible
-        id="SectionCollapsible-stadpas"
-        title="Stadspas"
-        startCollapsed={false}
-        isLoading={isLoadingStadspas}
-        hasItems={hasStadspas}
-        track={{
-          category: 'Inkomen en Stadspas overzicht / Stadpas',
-          name: 'Datatabel',
-        }}
-        noItemsMessage="U hebt op dit moment geen lopende aanvragen."
-        className={styles.SectionCollapsibleFirst}
-      >
-        <Table
-          titleKey="moreDetail"
-          items={stadspasItems}
-          displayProps={stadspasDisplayProps}
-          className={styles.Table}
-        />
-      </SectionCollapsible>
+      {hasStadspas && (
+        <SectionCollapsible
+          id="SectionCollapsible-stadpas"
+          title="Stadspas"
+          startCollapsed={false}
+          isLoading={isLoadingStadspas}
+          hasItems={hasStadspas}
+          track={{
+            category: 'Inkomen en Stadspas overzicht / Stadpas',
+            name: 'Datatabel',
+          }}
+          noItemsMessage="U hebt op dit moment geen lopende aanvragen."
+          className={styles.SectionCollapsibleFirst}
+        >
+          <Table
+            titleKey="moreDetail"
+            items={stadspasItems}
+            displayProps={stadspasDisplayProps}
+            className={styles.Table}
+          />
+        </SectionCollapsible>
+      )}
 
       <SectionCollapsible
         id="SectionCollapsible-income-request-process"
