@@ -4,6 +4,7 @@ import {
   COOKIE_KEY_COMMERCIAL_LOGIN,
   IS_AP,
 } from '../../universal/config';
+import { IS_ACCEPTANCE } from '../../universal/config/env';
 import { isError } from '../../universal/helpers';
 import { AppState } from '../AppState';
 
@@ -32,7 +33,11 @@ export const BFF_API_BASE_URL = `${API_BASE_PATH_MODDED}/bff`;
 export const AUTH_API_URL = `${API_BASE_PATH_MODDED}/auth/check`;
 export const BFF_API_HEALTH_URL = `${BFF_API_BASE_URL}/status/health`;
 export const LOGOUT_URL = '/logout';
+
 export const BRP_RESIDENTS_API_URL = `${API_BASE_PATH_MODDED}/brp/aantal_bewoners`;
+export const BFF_API_PUBLIC_BASE_URL = !IS_AP
+  ? `http://localhost:5000/test-api/bff/public`
+  : `https://${IS_ACCEPTANCE ? 'acc.' : ''}mijn-bff.amsterdam.nl/bff/public`;
 
 export const BFFApiUrls = {
   SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
@@ -40,6 +45,7 @@ export const BFFApiUrls = {
 };
 
 export const SERVICES_TIPS_URL = `${BFF_API_BASE_URL}/services/tips`;
+export const SERVICES_CMS_URL = `${BFF_API_PUBLIC_BASE_URL}/services/cms`;
 
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BRP: 'Persoonlijke gegevens, paspoort, ID-kaart + actuele updates',

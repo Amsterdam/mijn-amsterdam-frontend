@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<MainFooter /> Matches the Full Footer snapshot 1`] = `
-"<footer class=\\"MainFooter\\" id=\\"MainFooter\\"><div class=\\"TopBar InnerContainer\\"><div class=\\"Panel\\"><h3 role=\\"button\\">Contact</h3><div><p>Hebt u een vraag en kunt u het antwoord niet vinden op deze website? Neem dan contact met ons op.</p>
+"<footer class=\\"MainFooter\\" id=\\"MainFooter\\"><div class=\\"TopBar InnerContainer\\"><div class=\\"FooterLoader\\">...</div><div class=\\"Panel\\"><h3 role=\\"button\\">Contact</h3><div><p>Hebt u een vraag en kunt u het antwoord niet vinden op deze website? Neem dan contact met ons op.</p>
                   <ul>
                     <li>
                       <a href=\\"https://formulieren.amsterdam.nl/tripleforms/DirectRegelen/formulier/nl-NL/evAmsterdam/Klachtenformulier.aspx\\">Contactformulier</a>

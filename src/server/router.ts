@@ -6,6 +6,8 @@ import {
   loadServicesTips,
 } from './services/controller';
 import * as Sentry from '@sentry/node';
+import { fetchCMSCONTENT } from './services';
+import { getPassthroughRequestHeaders } from './helpers/app';
 
 export const router = express.Router();
 
@@ -21,6 +23,7 @@ router.get(
     next();
   }
 );
+
 router.get(
   BffEndpoints.SERVICES_STREAM,
   async (req: Request, res: Response, next: NextFunction) => {
@@ -38,6 +41,7 @@ router.get(
     next();
   }
 );
+
 router.get(BffEndpoints.SERVICES_TIPS, loadServicesTips);
 
 router.get(
@@ -47,3 +51,17 @@ router.get(
     next();
   }
 );
+
+router.get(BffEndpoints.CMS_CONTENT, async (req, res, next) => {
+  const sessionID = res.locals.sessionID;
+  try {
+    const response = await fetchCMSCONTENT(
+      sessionID,
+      getPassthroughRequestHeaders(req)
+    );
+    res.json(response);
+  } catch (error) {
+    Sentry.captureException(error);
+  }
+  next();
+});

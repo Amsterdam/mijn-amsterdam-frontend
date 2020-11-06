@@ -1,14 +1,15 @@
 import classnames from 'classnames';
 import React, { useState } from 'react';
+import { CMSFooterContent } from '../../../server/services/cms-content';
 import { isExternalUrl } from '../../../universal/helpers/utils';
 import { LinkProps } from '../../../universal/types/index';
+import { useCMSApi } from '../../hooks/api/useCmsApi';
+import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { useDesktopScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import Linkd from '../Button/Button';
 import { InnerHtml } from '../index';
-import footerData from './amsterdam-nl-footer-data.json';
 import styles from './MainFooter.module.scss';
-import { CMSFooterContent } from '../../../server/services/cms-content';
 
 interface FooterBlockProps {
   startOpen?: boolean;
@@ -51,19 +52,20 @@ function FooterBlock({
 export default function MainFooter() {
   const atom = useAppStateGetter();
   const { CMS_CONTENT } = atom;
-  const footer = CMS_CONTENT.content?.footer ||
-    (footerData as CMSFooterContent) || { blocks: [], sub: [] };
-
+  const footer: CMSFooterContent | null = CMS_CONTENT.content?.footer || null;
+  const { isAuthenticated } = useSessionValue();
+  const { isLoading } = useCMSApi(isAuthenticated);
   return (
     <footer className={styles.MainFooter} id="MainFooter">
       <div className={classnames(styles.TopBar, styles.InnerContainer)}>
-        {footer.blocks.map(footerItem => {
+        {isLoading && <div className={styles.FooterLoader}>...</div>}
+        {footer?.blocks.map(footerItem => {
           return <FooterBlock key={footerItem.id} {...footerItem} />;
         })}
       </div>
       <div className={styles.BottomBar}>
         <div className={styles.InnerContainer}>
-          {footer.sub.map(link => {
+          {footer?.sub.map(link => {
             return (
               <Linkd
                 key={link.title}
