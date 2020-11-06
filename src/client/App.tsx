@@ -68,22 +68,26 @@ function AppNotAuthenticated() {
   useDeeplinkEntry();
 
   return (
-    <div className={classnames(styles.App, styles.NotYetAuthenticated)}>
-      <Switch>
-        <Route exact path={AppRoutes.ROOT} component={LandingPage} />
-        <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
-        <Route
-          render={({ location: { pathname } }) => {
-            if (isPrivateRoute(pathname)) {
-              // Private routes are redirected to Home
-              return <Redirect to={AppRoutes.ROOT} />;
-            }
-            // All other routes are presented with a 404 page
-            return <Route component={NotFound} />;
-          }}
-        />
-      </Switch>
-    </div>
+    <>
+      <MainHeader isAuthenticated={true} />
+      <div className={classnames(styles.App, styles.NotYetAuthenticated)}>
+        <Switch>
+          <Route exact path={AppRoutes.ROOT} component={LandingPage} />
+          <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
+          <Route
+            render={({ location: { pathname } }) => {
+              if (isPrivateRoute(pathname)) {
+                // Private routes are redirected to Home
+                return <Redirect to={AppRoutes.ROOT} />;
+              }
+              // All other routes are presented with a 404 page
+              return <Route component={NotFound} />;
+            }}
+          />
+        </Switch>
+      </div>
+      <MainFooter />
+    </>
   );
 }
 
@@ -101,71 +105,78 @@ function AppAuthenticated() {
       <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
     </Switch>
   ) : (
-    <div className={styles.App} id="AppContent">
-      <Switch>
-        <Redirect
-          from={TMA_LOGIN_URL_DIGID_AFTER_REDIRECT}
-          to={redirectAfterLogin}
-        />
-        <Redirect
-          from={TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT}
-          to={redirectAfterLogin}
-        />
-        <Route exact path={AppRoutes.ROOT} component={Dashboard} />
-        <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
-        {profileType !== 'private' ? (
-          <Redirect from={AppRoutes.BRP} to={AppRoutes.KVK} />
-        ) : (
-          <Redirect from={AppRoutes.KVK} to={AppRoutes.BRP} />
-        )}
-        <Route path={AppRoutes.BRP} component={Profile} />
-        <Route path={AppRoutes.KVK} component={ProfileCommercial} />
-        <Route path={AppRoutes.TIPS} component={MyTips} />
-        <Route
-          path={AppRoutes['INKOMEN/STADSPAS/AANVRAAG']}
-          component={InkomenDetail}
-        />
-        {FeatureToggle.stadpasActive && (
-          <Route
-            path={AppRoutes['INKOMEN/STADSPAS/SALDO']}
-            component={StadspasDetail}
+    <>
+      <MainHeader isAuthenticated={true} />
+      <div className={styles.App} id="AppContent">
+        <Switch>
+          <Redirect
+            from={TMA_LOGIN_URL_DIGID_AFTER_REDIRECT}
+            to={redirectAfterLogin}
           />
-        )}
-        <Route
-          path={AppRoutes['INKOMEN/BIJSTANDSUITKERING']}
-          component={InkomenDetail}
-        />
-        <Route
-          path={AppRoutes['INKOMEN/SPECIFICATIES']}
-          component={InkomenSpecificaties}
-        />
-        {FeatureToggle.tozoActive && (
-          <Route
-            path={AppRoutes['INKOMEN/TOZO']}
-            component={InkomenDetailTozo}
+          <Redirect
+            from={TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT}
+            to={redirectAfterLogin}
           />
-        )}
-        <Route path={AppRoutes.INKOMEN} component={Inkomen} />
-        <Route path={AppRoutes['ZORG/VOORZIENINGEN']} component={ZorgDetail} />
-        <Route path={AppRoutes.ZORG} component={Zorg} />
-        <Route
-          path={AppRoutes.BURGERZAKEN_DOCUMENT}
-          component={BurgerzakenDetail}
-        />
-        <Route path={AppRoutes.BURGERZAKEN} component={Burgerzaken} />
-        {FeatureToggle.garbageInformationPage && (
-          <Route path={AppRoutes.AFVAL} component={GarbageInformation} />
-        )}
-        <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
-        <Route path={AppRoutes.GENERAL_INFO} component={GeneralInfo} />
-        <Route
-          path={AppRoutes['VERGUNNINGEN/DETAIL']}
-          component={VergunningDetail}
-        />
-        <Route path={AppRoutes.VERGUNNINGEN} component={Vergunningen} />
-        <Route component={NotFound} />
-      </Switch>
-    </div>
+          <Route exact path={AppRoutes.ROOT} component={Dashboard} />
+          <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
+          {profileType !== 'private' ? (
+            <Redirect from={AppRoutes.BRP} to={AppRoutes.KVK} />
+          ) : (
+            <Redirect from={AppRoutes.KVK} to={AppRoutes.BRP} />
+          )}
+          <Route path={AppRoutes.BRP} component={Profile} />
+          <Route path={AppRoutes.KVK} component={ProfileCommercial} />
+          <Route path={AppRoutes.TIPS} component={MyTips} />
+          <Route
+            path={AppRoutes['INKOMEN/STADSPAS/AANVRAAG']}
+            component={InkomenDetail}
+          />
+          {FeatureToggle.stadpasActive && (
+            <Route
+              path={AppRoutes['INKOMEN/STADSPAS/SALDO']}
+              component={StadspasDetail}
+            />
+          )}
+          <Route
+            path={AppRoutes['INKOMEN/BIJSTANDSUITKERING']}
+            component={InkomenDetail}
+          />
+          <Route
+            path={AppRoutes['INKOMEN/SPECIFICATIES']}
+            component={InkomenSpecificaties}
+          />
+          {FeatureToggle.tozoActive && (
+            <Route
+              path={AppRoutes['INKOMEN/TOZO']}
+              component={InkomenDetailTozo}
+            />
+          )}
+          <Route path={AppRoutes.INKOMEN} component={Inkomen} />
+          <Route
+            path={AppRoutes['ZORG/VOORZIENINGEN']}
+            component={ZorgDetail}
+          />
+          <Route path={AppRoutes.ZORG} component={Zorg} />
+          <Route
+            path={AppRoutes.BURGERZAKEN_DOCUMENT}
+            component={BurgerzakenDetail}
+          />
+          <Route path={AppRoutes.BURGERZAKEN} component={Burgerzaken} />
+          {FeatureToggle.garbageInformationPage && (
+            <Route path={AppRoutes.AFVAL} component={GarbageInformation} />
+          )}
+          <Route path={AppRoutes.ACCESSIBILITY} component={Accessibility} />
+          <Route path={AppRoutes.GENERAL_INFO} component={GeneralInfo} />
+          <Route
+            path={AppRoutes['VERGUNNINGEN/DETAIL']}
+            component={VergunningDetail}
+          />
+          <Route path={AppRoutes.VERGUNNINGEN} component={Vergunningen} />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
+      <MainFooter />
+    </>
   );
 }
 
@@ -184,19 +195,13 @@ function AppLanding() {
       DefaultAutologoutDialogSettings.secondsBeforeDialogShow,
   };
 
-  return (
+  return isAuthenticated ? (
     <>
-      <MainHeader isAuthenticated={session.isAuthenticated} />
-      {isAuthenticated ? (
-        <>
-          <AppAuthenticated />
-          <AutoLogoutDialog settings={dialogTimeoutSettings} />
-        </>
-      ) : (
-        <AppNotAuthenticated />
-      )}
-      <MainFooter />
+      <AppAuthenticated />
+      <AutoLogoutDialog settings={dialogTimeoutSettings} />
     </>
+  ) : (
+    <AppNotAuthenticated />
   );
 }
 
