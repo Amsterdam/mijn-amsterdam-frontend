@@ -1,10 +1,7 @@
 import * as Sentry from '@sentry/browser';
 import axios, { AxiosRequestConfig } from 'axios';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
-import {
-  apiErrorResponseData,
-  apiErrorResult,
-} from '../../../universal/helpers/api';
+import { apiErrorResult } from '../../../universal/helpers/api';
 import { Action } from '../../../universal/types';
 import { BFF_API_HEALTH_URL } from '../../config/api';
 
@@ -96,7 +93,7 @@ export function useDataApi<T>(
 
   const refetch = useCallback(
     (refetchOptions?: Partial<ApiRequestOptions>) => {
-      setRequestOptions(options => ({
+      setRequestOptions((options) => ({
         ...options,
         ...refetchOptions,
         postpone: false,
@@ -217,7 +214,7 @@ export function pollBffHealth() {
               reject();
             }
           })
-          .catch(error => {
+          .catch((error) => {
             console.info('Request failed', pollCount, error.message);
             setTimeout(() => {
               poll();
