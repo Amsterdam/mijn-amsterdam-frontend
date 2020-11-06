@@ -142,7 +142,7 @@ export function useDataApi<T>(
           const errorMessage = error.response?.data?.message || error.message;
           const payload = apiErrorResult(
             errorMessage,
-            (initialDataNoContent as any).content || null
+            (initialDataNoContent as any)?.content || null
           );
 
           dispatch({
