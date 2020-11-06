@@ -29,7 +29,7 @@
   color: $color-white;
 }
 
-.MarkerIcon--selected {
+.MarkerIcon.Feature--selected {
   > div {
     transition: transform 100ms cubic-bezier( 0.175, 0.885, 0.32, 1.275 );
     transform: translateY(-20px);
@@ -54,27 +54,16 @@
     box-shadow: 0px 0px 2px 4px rgba(0, 0, 0, .1);
   }
 }
-.MarkerIcon--selected .pin {
+
+.MarkerIcon.Feature--selected .pin {
   opacity: 1;
   transform: translateX(-1px) translateY(-21px);
   transition: transform 100ms cubic-bezier( 0.175, 0.885, 0.32, 1.275 );
 }
 
-@keyframes bounce {
-  0% {
-    opacity: 0;
-    filter: alpha(opacity=0);
-    transform: translateY(-2000px) rotate(-45deg);
-  }
-  60% {
-    opacity: 1;
-    filter: none;
-    transform: translateY(30px) rotate(-45deg);
-  }
-  80% {
-    transform: translateY(-10px) rotate(-45deg);
-  }
-  100% {
-    transform: translateY(0) rotate(-45deg);
+.Feature--selected {
+  &[stroke] {
+    fill: red!important;
+    stroke: red!important;
   }
 }

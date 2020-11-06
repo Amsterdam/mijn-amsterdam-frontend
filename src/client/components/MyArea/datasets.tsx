@@ -24,7 +24,7 @@ import {
   MapIconSport,
 } from '../../assets/icons';
 import { DEFAULT_POLYLINE_OPTIONS } from './MaPolyLineLayer';
-import styles from './MyAreaSuperCluster.module.scss';
+import styles from './MyAreaDatasets.module.scss';
 
 export interface DatasetControl {
   id: string;

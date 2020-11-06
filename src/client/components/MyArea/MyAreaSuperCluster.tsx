@@ -6,13 +6,12 @@ import L, {
 } from 'leaflet';
 import { useCallback, useEffect, useMemo } from 'react';
 import {
-  MaSuperClusterFeature,
   DatasetFeatureProperties,
+  MaSuperClusterFeature,
 } from '../../../server/services/buurt/datasets';
 import { createMarkerIcon, getIconHtml } from './datasets';
 import { processFeatures } from './MyArea.helpers';
-import { useSelectedFeatureCSS } from './MyArea.hooks';
-import styles from './MyAreaSuperCluster.module.scss';
+import styles from './MyAreaDatasets.module.scss';
 
 function createClusterMarker(
   feature: MaSuperClusterFeature,
@@ -103,9 +102,6 @@ export function MaSuperClusterLayer({
       }
     };
   }, [markerLayer, clusterFeatures, onClick, map, onUpdate]);
-
-  // This effect will run after the features have been added to the map
-  useSelectedFeatureCSS(features);
 
   return null;
 }

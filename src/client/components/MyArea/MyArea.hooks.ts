@@ -18,7 +18,7 @@ import {
 import { ApiResponse } from '../../../universal/helpers';
 import { BFFApiUrls } from '../../config/api';
 import { useDatasetControlItems } from './MyAreaDatasetControl';
-import styles from './MyAreaSuperCluster.module.scss';
+import styles from './MyAreaDatasets.module.scss';
 
 export function useActiveDatasetIds() {
   const datasetControlItems = useDatasetControlItems();
@@ -113,12 +113,15 @@ export function useFetchPanelFeature() {
   }, [datasetId, id, setSelectedFeature]);
 }
 
-const selectedFeatureSelector = styles['MarkerIcon--selected'];
+const selectedFeatureSelector = styles['Feature--selected'];
 
-export function useSelectedFeatureCSS(features: MaSuperClusterFeature[]) {
+export function useSelectedFeatureCSS(
+  features: Array<MaSuperClusterFeature | MaPolyLineFeature>
+) {
   const selectedFeature = useSelectedFeatureValue();
   const map = useMapInstance();
   const selectedFeatureId = selectedFeature?.id;
+
   useEffect(() => {
     if (map) {
       map.eachLayer((layer: any) => {
@@ -178,12 +181,15 @@ export function useFetchFeatures({
           method: 'POST',
         }
       );
+
       const features = response.data?.content;
+
       if (features) {
         const clusterFeatures = features?.filter(
           (feature): feature is MaPointFeature =>
             feature.geometry.type === 'Point'
         );
+
         const polyLineFeatures = features?.filter(
           (feature): feature is MaPolyLineFeature =>
             feature.geometry.type === 'MultiPolygon' ||

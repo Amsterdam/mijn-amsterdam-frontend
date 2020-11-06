@@ -8,6 +8,7 @@ import {
   useActiveDatasetIds,
   useFetchFeatures,
   useOnMarkerClick,
+  useSelectedFeatureCSS,
 } from './MyArea.hooks';
 import { MyAreaPolyLineDatasets } from './MyAreaPolyLineDatasets';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
@@ -36,12 +37,15 @@ export function MyAreaDatasets() {
   useEffect(() => {
     const pane = map?.getPane('markerPane');
     if (pane) {
-      console.log(pane.style.zIndex);
       pane.style.zIndex = '800';
     }
   }, [map]);
 
   const onMarkerClick = useOnMarkerClick();
+
+  // This effect will run after the features have been added to the map
+  useSelectedFeatureCSS(polyLineFeatures);
+  useSelectedFeatureCSS(clusterFeatures);
 
   return (
     <>
