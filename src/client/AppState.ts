@@ -7,9 +7,11 @@ import {
 import { apiPristineResult, ApiResponse } from '../universal/helpers/api';
 
 export type AppState = {
-  [key in ServiceID]: ApiResponse<ReturnTypeAsync<AllServices[key]>['content']>;
+  [key in ServiceID]: ApiResponse<
+    ReturnTypeAsync<ServicesType[key]>['content']
+  >;
 } & {
-  TIPS: ServicesTips['TIPS'] | ApiResponse<any>;
+  TIPS: ServicesTips | ApiResponse<any>;
 };
 
 export const PRISTINE_APPSTATE: AppState = {

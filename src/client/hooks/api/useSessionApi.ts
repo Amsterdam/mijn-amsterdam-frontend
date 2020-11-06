@@ -52,18 +52,13 @@ const requestOptions: ApiRequestOptions = {
   responseType: 'text',
   transformResponse: [
     ...requestApiData.defaults.transformResponse,
-    (data: SessionData) => {
-      return {
-        SESSION: apiSuccesResult<SessionData>(data),
-      };
-    },
+    (data: SessionData) => apiSuccesResult<SessionData>(data),
   ],
 };
 
-type SessionResponseData = Record<
-  'SESSION',
-  ApiSuccessResponse<SessionData> | ApiErrorResponse<SessionData>
->;
+type SessionResponseData =
+  | ApiSuccessResponse<SessionData>
+  | ApiErrorResponse<SessionData>;
 
 function setExplicitLogout() {
   Cookies.remove(COOKIE_KEY_COMMERCIAL_LOGIN);
@@ -96,17 +91,10 @@ export const sessionAtom = atom<SessionState>({
 export function useSessionApi() {
   const [sessionResponse, refetch] = useDataApi<SessionResponseData>(
     requestOptions,
-    { SESSION: apiSuccesResult(INITIAL_SESSION_CONTENT) }
+    apiSuccesResult(INITIAL_SESSION_CONTENT)
   );
-  const {
-    data: {
-      SESSION: { content: sessionData },
-    },
-    isLoading,
-    isDirty,
-    isPristine,
-  } = sessionResponse;
-
+  const { data, isLoading, isDirty, isPristine } = sessionResponse;
+  const sessionData = data?.content;
   const [session, setSession] = useSessionAtom();
 
   const sessionValidMaxAge = getValidityInSeconds(
