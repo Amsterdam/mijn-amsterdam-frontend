@@ -12,6 +12,7 @@ export const BFF_REQUEST_CACHE_ENABLED = true;
 export const BFF_HOST = process.env.BFF_HOST || 'localhost';
 export const BFF_PORT = process.env.BFF_PORT || 5000;
 export const BFF_BASE_PATH = IS_AP ? '/bff' : '/test-api/bff';
+export const BFF_PUBLIC_BASE_PATH = IS_AP ? '/public' : '/test-api/public';
 
 const BFF_MS_API_HOST = IS_PRODUCTION
   ? process.env.BFF_MS_API_HOST || 'mijn.data.amsterdam.nl'
@@ -35,6 +36,8 @@ export interface DataRequestConfig extends AxiosRequestConfig {
 }
 
 const ONE_SECOND_MS = 1000;
+const ONE_MINUTE_MS = 60 * ONE_SECOND_MS;
+const ONE_HOUR_MS = 60 * ONE_MINUTE_MS;
 
 export const DEFAULT_API_CACHE_TTL_MS = 30 * ONE_SECOND_MS;
 export const DEFAULT_CANCEL_TIMEOUT_MS = 10 * ONE_SECOND_MS;
@@ -95,11 +98,11 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   CMS_CONTENT_GENERAL_INFO: {
     url: `https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data`,
-    cacheTimeout: 0,
+    cacheTimeout: 4 * ONE_HOUR_MS,
   },
   CMS_CONTENT_FOOTER: {
     url: `https://www.amsterdam.nl/algemene_onderdelen/overige/footer/?AppIdt=app-data`,
-    cacheTimeout: 0,
+    cacheTimeout: 4 * ONE_HOUR_MS,
     postponeFetch: !FeatureToggle.cmsFooterActive,
   },
   TIPS: {
@@ -132,11 +135,10 @@ export const BffEndpoints = {
   SERVICES_ALL: `/services/all`,
   SERVICES_STREAM: `/services/stream`,
   HEALTH: `/status/health`,
-  MAP_DATASETS: `/map/datasets/:datasetId?/:id?`,
-  MAP_DATASETS_WS: `/map/datasets/ws`,
+  CMS_CONTENT: `/public/services/cms`,
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
   BffEndpoints.HEALTH,
-  BffEndpoints.MAP_DATASETS,
+  BffEndpoints.CMS_CONTENT,
 ];
