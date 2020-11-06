@@ -94,7 +94,6 @@ export function useSessionApi() {
     apiSuccesResult(INITIAL_SESSION_CONTENT)
   );
   const { data, isLoading, isDirty, isPristine } = sessionResponse;
-  console.log(data);
   const sessionData = data?.content;
   const [session, setSession] = useSessionAtom();
 
