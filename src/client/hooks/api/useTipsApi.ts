@@ -42,12 +42,12 @@ export function useTipsApi() {
   useEffect(() => {
     if (!api.isLoading && api.isDirty && api.data !== PRISTINE_APPSTATE.TIPS) {
       setAppState((appState: AppState) => {
-        return Object.assign({}, appState, api.data);
+        return Object.assign({}, appState, { TIPS: api.data });
       });
     } else if (api.isLoading) {
       setAppState((appState: AppState) => {
         if (appState.TIPS !== pristineData) {
-          return Object.assign({}, appState, pristineData);
+          return Object.assign({}, appState, { TIPS: pristineData });
         }
         return appState;
       });
