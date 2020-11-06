@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 import { AppState, PRISTINE_APPSTATE } from '../../AppState';
-import { SERVICES_CMS_URL } from '../../config/api';
 import { useAppStateSetter } from '../useAppState';
 import { useDataApi } from './useDataApi';
+import { BFFApiUrls } from '../../config/api';
 
 const pristineData = PRISTINE_APPSTATE.CMS_CONTENT;
 
 export function useCMSApi(postpone: boolean = true) {
   const [api] = useDataApi<AppState['CMS_CONTENT']>(
     {
-      url: SERVICES_CMS_URL,
+      url: BFFApiUrls.SERVICES_CMS_URL,
       postpone,
     },
     pristineData

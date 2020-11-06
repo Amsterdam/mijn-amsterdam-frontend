@@ -136,6 +136,7 @@ export const BffEndpoints = {
   SERVICES_STREAM: `/services/stream`,
   HEALTH: `/status/health`,
   CMS_CONTENT: `/public/services/cms`,
+  MAP_DATASETS: `/map/datasets/:datasetId?/:id?`,
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
