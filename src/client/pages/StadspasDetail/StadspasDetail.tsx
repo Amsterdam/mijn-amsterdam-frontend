@@ -117,14 +117,9 @@ function StadspasBudget({
     false
   );
 
-  const [
-    {
-      data: { content: transactions },
-      isLoading: isLoadingTransactions,
-      isDirty,
-    },
-    fetchTransactions,
-  ] = useDataApi<ApiResponse<FocusStadspasTransaction[]>>(
+  const [api, fetchTransactions] = useDataApi<
+    ApiResponse<FocusStadspasTransaction[]>
+  >(
     {
       url: directApiUrl(urlTransactions),
       postpone: true,
@@ -132,11 +127,20 @@ function StadspasBudget({
     apiPristineResult([])
   );
 
+  const {
+    data: { content: transactions },
+    isLoading: isLoadingTransactions,
+    isDirty,
+    isError,
+  } = api;
+
   useEffect(() => {
     if (isTransactionOverviewActive && !isDirty) {
       fetchTransactions();
     }
   }, [isTransactionOverviewActive, fetchTransactions, isDirty]);
+
+  const hasTransactions = budget.balance !== budget.assigned;
 
   return (
     <>
@@ -163,21 +167,28 @@ function StadspasBudget({
             ]}
           />
         )}
-        <Button
-          className={classnames(
-            styles.ToggleTransactionsOveview,
-            isTransactionOverviewActive && styles.isTransactionOverviewActive
-          )}
-          icon={IconChevronRight}
-          variant="plain"
-          lean={true}
-          onClick={() =>
-            toggleTransactionOverview(!isTransactionOverviewActive)
-          }
-        >
-          {isTransactionOverviewActive ? 'Verberg' : 'Laat zien'} wat ik heb
-          uitgegeven
-        </Button>
+        {isError && (
+          <Alert type="warning">
+            <p>We kunnen op dit moment geen transacties tonen</p>
+          </Alert>
+        )}
+        {hasTransactions && (
+          <Button
+            className={classnames(
+              styles.ToggleTransactionsOveview,
+              isTransactionOverviewActive && styles.isTransactionOverviewActive
+            )}
+            icon={IconChevronRight}
+            variant="plain"
+            lean={true}
+            onClick={() =>
+              toggleTransactionOverview(!isTransactionOverviewActive)
+            }
+          >
+            {isTransactionOverviewActive ? 'Verberg' : 'Laat zien'} wat ik heb
+            uitgegeven
+          </Button>
+        )}
       </PageContent>
     </>
   );

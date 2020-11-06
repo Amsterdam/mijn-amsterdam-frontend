@@ -12,7 +12,7 @@ export type AppState = {
     ReturnTypeAsync<ServicesType[key]>['content']
   >;
 } & {
-  TIPS: ServicesTips['TIPS'] | ApiResponse<any>;
+  TIPS: ServicesTips | ApiResponse<any>;
   // CMS_CONTENT: ApiResponse<
   //   ResolvedType<ReturnType<typeof fetchCMSCONTENT>>['content']
   // >;

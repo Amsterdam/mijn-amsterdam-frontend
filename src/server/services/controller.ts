@@ -241,7 +241,7 @@ function loadServices(
     .map(([serviceID, fetchService]) => {
       // Return service result as Object like { SERVICE_ID: result }
       return (fetchService(sessionID, req) as Promise<any>)
-        .then(result => ({
+        .then((result) => ({
           [serviceID]: result,
         }))
         .catch((error: Error) => {
@@ -278,7 +278,11 @@ export async function loadServicesSSE(req: Request, res: Response) {
   );
 
   // Send service results to tips api for personalized tips
-  const tipsPromise = loadServicesTipsRequestData(sessionID, req);
+  const tipsPromise = loadServicesTipsRequestData(sessionID, req).then(
+    (responseData) => {
+      return { TIPS: responseData };
+    }
+  );
 
   addServiceResultHandler(res, tipsPromise, 'TIPS');
 
@@ -315,6 +319,7 @@ export async function loadServicesAll(req: Request, res: Response) {
 
 async function loadServicesTipsRequestData(sessionID: SessionID, req: Request) {
   let requestData = null;
+
   if (queryParams(req).optin === 'true') {
     const servicePromises = loadServices(sessionID, req, servicesTips);
     requestData = (await Promise.allSettled(servicePromises)).reduce(
@@ -328,17 +333,10 @@ async function loadServicesTipsRequestData(sessionID: SessionID, req: Request) {
     getPassthroughRequestHeaders(req),
     req.query as Record<string, string>,
     requestData
-  )
-    .then(result => ({ TIPS: result }))
-    .catch((error: Error) => {
-      Sentry.captureException(error);
-      return {
-        TIPS: apiErrorResult(
-          `Could not load TIPS, error: ${error.message}`,
-          null
-        ),
-      };
-    });
+  ).catch((error: Error) => {
+    Sentry.captureException(error);
+    return apiErrorResult(`Could not load TIPS, error: ${error.message}`, null);
+  });
 }
 
 export type ServicesTips = ReturnTypeAsync<typeof loadServicesTipsRequestData>;
