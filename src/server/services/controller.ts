@@ -110,12 +110,12 @@ const SERVICES_INDEX = {
   CASES,
 };
 
-export type AllServices = typeof SERVICES_INDEX;
-export type ServiceID = keyof AllServices;
-export type ServiceMap = { [key in ServiceID]: AllServices[ServiceID] };
+export type ServicesType = typeof SERVICES_INDEX;
+export type ServiceID = keyof ServicesType;
+export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
 
 type CommercialServices = Omit<
-  AllServices,
+  ServicesType,
   | 'BRP'
   | 'FOCUS_TOZO'
   | 'FOCUS_SPECIFICATIES'
@@ -142,8 +142,8 @@ type TipsServices = Pick<
 >;
 
 type ServicesByProfileType = {
-  private: AllServices;
-  'private-commercial': AllServices;
+  private: ServicesType;
+  'private-commercial': ServicesType;
   commercial: CommercialServices;
 };
 
@@ -222,7 +222,7 @@ export const servicesTips: TipsServices = {
 function loadServices(
   sessionID: SessionID,
   req: Request,
-  serviceMap: CommercialServices | TipsServices | AllServices,
+  serviceMap: CommercialServices | TipsServices | ServicesType,
   filterIds: SessionID[] = []
 ) {
   return Object.entries(serviceMap)
@@ -294,7 +294,13 @@ export async function loadServicesAll(req: Request, res: Response) {
     requestedServiceIds
   );
 
-  const tipsPromise = loadServicesTipsRequestData(sessionID, req);
+  const tipsPromise = loadServicesTipsRequestData(sessionID, req).then(
+    (responseData) => {
+      return {
+        TIPS: responseData,
+      };
+    }
+  );
 
   // Combine all results into 1 object
   const serviceResults = (await Promise.all(servicePromises)).reduce(

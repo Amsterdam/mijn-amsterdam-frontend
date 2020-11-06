@@ -2,7 +2,7 @@ import { createContext } from 'react';
 import {
   ServiceID,
   ServicesTips,
-  AllServices,
+  ServicesType,
 } from '../server/services/controller';
 import { apiPristineResult, ApiResponse } from '../universal/helpers/api';
 
