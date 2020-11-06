@@ -1,7 +1,10 @@
 import * as Sentry from '@sentry/browser';
 import axios, { AxiosRequestConfig } from 'axios';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
-import { apiErrorResponseData } from '../../../universal/helpers/api';
+import {
+  apiErrorResponseData,
+  apiErrorResult,
+} from '../../../universal/helpers/api';
 import { Action } from '../../../universal/types';
 import { BFF_API_HEALTH_URL } from '../../config/api';
 
@@ -140,10 +143,13 @@ export function useDataApi<T>(
       } catch (error) {
         if (!didCancel) {
           const errorMessage = error.response?.data?.message || error.message;
+          const payload = apiErrorResult(errorMessage, null);
+
           dispatch({
             type: ActionTypes.FETCH_FAILURE,
-            payload: apiErrorResponseData(initialDataNoContent, errorMessage),
+            payload,
           });
+
           if (!(error instanceof Error)) {
             Sentry.captureMessage(errorMessage, {
               extra: {

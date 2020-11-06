@@ -122,37 +122,6 @@ export function apiDependencyError(
   };
 }
 
-export function apiErrorResponseData<T>(
-  pristineResponseData: T,
-  error: string
-) {
-  if (!pristineResponseData) {
-    return pristineResponseData;
-  }
-  return Object.entries(pristineResponseData).reduce(
-    (acc, [key, pristineResponseData]) => {
-      return Object.assign(acc, {
-        [key]: apiErrorResult(error, pristineResponseData.content),
-      });
-    },
-    {} as Record<keyof T, ApiErrorResponse<any>>
-  );
-}
-
-export function unwrapApiResponseContent(responseData: {
-  [key: string]: { status: string; content?: any };
-}) {
-  return Object.entries(responseData).reduce(
-    (acc, [apiStateKey, { content, status }]) => {
-      if (status === 'OK') {
-        return Object.assign(acc, { [apiStateKey]: content });
-      }
-      return acc;
-    },
-    {}
-  );
-}
-
 export function getSettledResult<T extends any>(
   result: PromiseSettledResult<T>
 ) {
