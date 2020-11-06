@@ -8,7 +8,7 @@ import { useOptIn } from '../useOptIn';
 import { useProfileTypeValue } from '../useProfileType';
 import { useDataApi } from './useDataApi';
 
-const pristineData = { TIPS: PRISTINE_APPSTATE.TIPS };
+const pristineData = PRISTINE_APPSTATE.TIPS;
 
 const requestConfig = {
   url: SERVICES_TIPS_URL,
@@ -19,7 +19,7 @@ export function useTipsApi() {
   const isInitialMount = useRef(true);
   const { isOptIn } = useOptIn();
   const profileType = useProfileTypeValue();
-  const [api, fetchTips] = useDataApi<{ TIPS: ApiResponse<TIPSData | null> }>(
+  const [api, fetchTips] = useDataApi<ApiResponse<TIPSData | null>>(
     requestConfig,
     pristineData
   );
@@ -40,17 +40,13 @@ export function useTipsApi() {
   }, [isOptIn, fetchTips]);
 
   useEffect(() => {
-    if (
-      !api.isLoading &&
-      api.isDirty &&
-      api.data.TIPS !== PRISTINE_APPSTATE.TIPS
-    ) {
+    if (!api.isLoading && api.isDirty && api.data !== PRISTINE_APPSTATE.TIPS) {
       setAppState((appState: AppState) => {
         return Object.assign({}, appState, api.data);
       });
     } else if (api.isLoading) {
       setAppState((appState: AppState) => {
-        if (appState.TIPS !== pristineData.TIPS) {
+        if (appState.TIPS !== pristineData) {
           return Object.assign({}, appState, pristineData);
         }
         return appState;

@@ -93,7 +93,7 @@ export function useDataApi<T>(
 
   const refetch = useCallback(
     (refetchOptions?: Partial<ApiRequestOptions>) => {
-      setRequestOptions((options) => ({
+      setRequestOptions(options => ({
         ...options,
         ...refetchOptions,
         postpone: false,
@@ -140,7 +140,10 @@ export function useDataApi<T>(
       } catch (error) {
         if (!didCancel) {
           const errorMessage = error.response?.data?.message || error.message;
-          const payload = apiErrorResult(errorMessage, null);
+          const payload = apiErrorResult(
+            errorMessage,
+            (initialDataNoContent as any).content || null
+          );
 
           dispatch({
             type: ActionTypes.FETCH_FAILURE,
@@ -214,7 +217,7 @@ export function pollBffHealth() {
               reject();
             }
           })
-          .catch((error) => {
+          .catch(error => {
             console.info('Request failed', pollCount, error.message);
             setTimeout(() => {
               poll();
