@@ -15,6 +15,7 @@ import { ThemeProvider } from '@amsterdam/asc-ui';
 import { themeSpacing } from '@amsterdam/asc-ui/lib/utils/themeUtils';
 import 'leaflet/dist/leaflet.css';
 import React, { useMemo } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
 import { getFullAddress } from '../../../universal/helpers';
@@ -28,6 +29,7 @@ import { MyAreaDatasets } from './MyAreaDatasets';
 import MyAreaHeader from './MyAreaHeader';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import MyAreaPanels from './MyAreaPanels';
+import { getDatasetGroupId, DATASETS } from '../../../universal/config/buurt';
 
 const StyledViewerContainer = styled(ViewerContainer)`
   height: 100%;
@@ -74,6 +76,7 @@ export default function MyArea({
   const isDesktop = useDesktopScreen();
   const { HOME } = useAppStateGetter();
   const termReplace = useTermReplacement();
+  const location = useLocation();
   const center = HOME.content?.latlng;
   const mapOptions: Partial<L.MapOptions> = useMemo(() => {
     const options = {
@@ -85,6 +88,18 @@ export default function MyArea({
     }
     return options;
   }, [center]);
+
+  const datasetIdsRequested = useMemo(() => {
+    // Url datasets take precedence
+    if (location.search) {
+      const params = new URLSearchParams(location.search);
+      const ids = params?.get('datasetIds')?.split(',');
+      if (ids) {
+        return ids.flatMap((id) => (id in DATASETS ? DATASETS[id] : id));
+      }
+    }
+    return datasetIds;
+  }, [datasetIds, location.search]);
 
   return (
     <ThemeProvider>
@@ -136,7 +151,7 @@ export default function MyArea({
                   <MyAreaPanels />
                 </MapPanelProvider>
               )}
-              <MyAreaDatasets datasetIds={datasetIds} />
+              <MyAreaDatasets datasetIds={datasetIdsRequested} />
             </MyAreaMap>
           ) : (
             <MyAreaLoadingIndicator />
