@@ -4,7 +4,6 @@ import { CMSFooterContent } from '../../../server/services/cms-content';
 import { isExternalUrl } from '../../../universal/helpers/utils';
 import { LinkProps } from '../../../universal/types/index';
 import { useCMSApi } from '../../hooks/api/useCmsApi';
-import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { useDesktopScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import Linkd from '../Button/Button';
@@ -49,12 +48,18 @@ function FooterBlock({
   );
 }
 
-export default function MainFooter() {
+interface MainFooterProps {
+  isAuthenticated: boolean;
+}
+
+export default function MainFooter({
+  isAuthenticated = false,
+}: MainFooterProps) {
   const atom = useAppStateGetter();
   const { CMS_CONTENT } = atom;
   const footer: CMSFooterContent | null = CMS_CONTENT.content?.footer || null;
-  const { isAuthenticated } = useSessionValue();
   const { isLoading } = useCMSApi(isAuthenticated);
+
   return (
     <footer className={styles.MainFooter} id="MainFooter">
       <div className={classnames(styles.TopBar, styles.InnerContainer)}>
