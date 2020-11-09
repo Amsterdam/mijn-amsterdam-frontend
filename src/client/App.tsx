@@ -68,7 +68,7 @@ function AppNotAuthenticated() {
 
   return (
     <>
-      <MainHeader isAuthenticated={true} />
+      <MainHeader isAuthenticated={false} />
       <div className={classnames(styles.App, styles.NotYetAuthenticated)}>
         <Switch>
           <Route exact path={AppRoutes.ROOT} component={LandingPage} />

@@ -31,16 +31,21 @@ function isChapterActive(
 ) {
   switch (item.id) {
     case Chapters.INKOMEN:
+      const hasStadspasSaldo =
+        !FeatureToggle.stadpasActive ||
+        !!FOCUS_STADSPAS.content?.stadspassaldo?.stadspassen?.length;
+      const isLoadingStadspasSaldo =
+        !FeatureToggle.stadpasActive || isLoading(FOCUS_STADSPAS);
       return (
         !(
           isLoading(FOCUS_AANVRAGEN) &&
           isLoading(FOCUS_SPECIFICATIES) &&
-          isLoading(FOCUS_STADSPAS) &&
+          isLoadingStadspasSaldo &&
           isLoading(FOCUS_TOZO)
         ) &&
         (!!FOCUS_AANVRAGEN.content?.length ||
           !!FOCUS_TOZO.content?.length ||
-          !!FOCUS_STADSPAS.content?.stadspassaldo?.stadspassen?.length ||
+          hasStadspasSaldo ||
           !!FOCUS_SPECIFICATIES.content?.jaaropgaven?.length ||
           !!FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties?.length)
       );

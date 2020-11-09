@@ -160,7 +160,8 @@ export default () => {
 
   const isLoadingFocus = isLoading(FOCUS_AANVRAGEN) || isLoading(FOCUS_TOZO);
   const isLoadingFocusSpecificaties = isLoading(FOCUS_SPECIFICATIES);
-  const isLoadingStadspas = isLoading(FOCUS_STADSPAS);
+  const isLoadingStadspas =
+    FeatureToggle.stadpasActive && isLoading(FOCUS_STADSPAS);
 
   return (
     <OverviewPage className={styles.Inkomen}>
@@ -172,7 +173,8 @@ export default () => {
           Op deze pagina vindt u informatie over uw uitkering en de
           ondersteuning die u krijgt omdat u weinig geld hebt.
         </p>
-        {!isLoadingStadspas &&
+        {FeatureToggle.stadpasActive &&
+          !isLoadingStadspas &&
           FOCUS_STADSPAS.content?.stadspassaldo?.isPartnerpas && (
             <p>
               Hebt u kinderen of een partner met een Stadspas? 1 volwassene
@@ -211,7 +213,7 @@ export default () => {
           )}
       </PageContent>
 
-      {hasStadspas && (
+      {FeatureToggle.stadpasActive && hasStadspas && (
         <SectionCollapsible
           id="SectionCollapsible-stadpas"
           title="Stadspas"
