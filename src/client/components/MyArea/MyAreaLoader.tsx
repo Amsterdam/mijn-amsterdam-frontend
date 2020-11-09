@@ -13,6 +13,7 @@ interface MyAreaLoaderProps {
   showPanels?: boolean;
   showHeader?: boolean;
   height?: string;
+  zoom?: number;
 }
 
 export default function MyAreaLoader({
@@ -22,6 +23,7 @@ export default function MyAreaLoader({
   showPanels = true,
   showHeader = true,
   height,
+  zoom,
 }: MyAreaLoaderProps) {
   return (
     <Suspense
@@ -39,6 +41,7 @@ export default function MyAreaLoader({
           showPanels={showPanels}
           showHeader={showHeader}
           height={height}
+          zoom={zoom}
         />
       )}
     </Suspense>

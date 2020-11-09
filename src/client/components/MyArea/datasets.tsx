@@ -5,10 +5,7 @@ import L, { PolylineOptions } from 'leaflet';
 import React, { ReactElement, ReactNode } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import styled from 'styled-components';
-import {
-  ACTIVE_DATASET_IDS_INITIAL,
-  DATASETS,
-} from '../../../universal/config';
+import { DATASETS } from '../../../universal/config';
 import { FeatureToggle } from '../../../universal/config/app';
 import { getDatasetGroupId } from '../../../universal/config/buurt';
 import { capitalizeFirstLetter } from '../../../universal/helpers';

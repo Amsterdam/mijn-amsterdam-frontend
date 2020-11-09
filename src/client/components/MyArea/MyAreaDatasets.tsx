@@ -1,5 +1,6 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   MaPointFeature,
   MaPolyLineFeature,
@@ -19,6 +20,8 @@ interface MyAreaDatasetsProps {
 }
 
 export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
+  const history = useHistory();
+  const location = useLocation();
   const map = useMapInstance();
   const [polyLineFeatures, setPolyLineFeatures] = useState<MaPolyLineFeature[]>(
     []
@@ -38,6 +41,13 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     if (activeDatasetIds.length) {
       fetchFeatures(activeDatasetIds);
     }
+    if (!datasetIds) {
+      history.replace({
+        pathname: location.pathname,
+        search: '?datasetIds=' + activeDatasetIds.join(','),
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeDatasetIds, fetchFeatures]);
 
   // Set the zIndex of the markerpane. These markers will
@@ -50,7 +60,8 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
 
   useEffect(() => {
     setActiveDatasetIds(datasetIds ? datasetIds : ACTIVE_DATASET_IDS_INITIAL);
-  }, [datasetIds, setActiveDatasetIds]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onMarkerClick = useOnMarkerClick();
 

@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { ReactNode, useRef } from 'react';
+import React, { ReactNode } from 'react';
 import { DATASETS } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import { getFullAddress, isError, isLoading } from '../../../universal/helpers';
@@ -23,10 +23,10 @@ import {
 import MyAreaLoader from '../../components/MyArea/MyAreaLoader';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import { useOnScreen } from '../../hooks/useOnScreen';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import styles from './GarbageInformation.module.scss';
+import { LOCATION_ZOOM } from '../../../universal/config/buurt';
 
 interface PanelProps {
   children: ReactNode;
@@ -68,12 +68,8 @@ function GarbageCenterItem({ item }: { item: GarbageCenter }) {
   );
 }
 
-const GARBAGE_CONTAINER_DATASET_IDS = ['afvalcontainers'];
-
 export default () => {
   const { AFVAL, AFVALPUNTEN, HOME } = useAppStateGetter();
-  const ref = useRef<HTMLDivElement | null>(null);
-  const isOnScreen = useOnScreen(ref, '-200px');
   const [restafval, grofvuil] = AFVAL.content || [];
   const profileType = useProfileTypeValue();
   const termReplace = useTermReplacement();
@@ -181,6 +177,7 @@ export default () => {
           showPanels={false}
           showHeader={false}
           height="50rem"
+          zoom={LOCATION_ZOOM}
         />
       </SectionCollapsible>
       <SectionCollapsible

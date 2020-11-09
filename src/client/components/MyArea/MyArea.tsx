@@ -14,10 +14,11 @@ import {
 import { ThemeProvider } from '@amsterdam/asc-ui';
 import { themeSpacing } from '@amsterdam/asc-ui/lib/utils/themeUtils';
 import 'leaflet/dist/leaflet.css';
-import React, { useMemo } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import styled from 'styled-components';
+import React, { useCallback, useMemo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import styled, { CSSProperties } from 'styled-components';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
+import { DATASETS } from '../../../universal/config/buurt';
 import { getFullAddress } from '../../../universal/helpers';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useDesktopScreen } from '../../hooks';
@@ -29,16 +30,21 @@ import { MyAreaDatasets } from './MyAreaDatasets';
 import MyAreaHeader from './MyAreaHeader';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import MyAreaPanels from './MyAreaPanels';
-import { getDatasetGroupId, DATASETS } from '../../../universal/config/buurt';
+import L from 'leaflet';
 
-const StyledViewerContainer = styled(ViewerContainer)`
+const StyledViewerContainer = styled(ViewerContainer)<{ leftOffset: string }>`
   height: 100%;
-  left: ${themeSpacing(8)};
+  left: ${(props) => props.leftOffset};
 `;
 
 const MyAreaMapContainer = styled.div`
   position: relative;
   height: 100%;
+`;
+
+const MyAreaMapOffset = styled.div`
+  height: 100%;
+  position: relative;
 `;
 
 const MyAreaContainer = styled.div<{ height: string }>`
@@ -65,6 +71,7 @@ interface MyAreaProps {
   showPanels?: boolean;
   showHeader?: boolean;
   height?: string;
+  zoom?: number;
 }
 
 export default function MyArea({
@@ -72,34 +79,44 @@ export default function MyArea({
   showPanels = true,
   showHeader = true,
   height = '100vh',
+  zoom = HOOD_ZOOM,
 }: MyAreaProps) {
   const isDesktop = useDesktopScreen();
   const { HOME } = useAppStateGetter();
   const termReplace = useTermReplacement();
   const location = useLocation();
   const center = HOME.content?.latlng;
+
   const mapOptions: Partial<L.MapOptions> = useMemo(() => {
     const options = {
       ...DEFAULT_MAP_OPTIONS,
-      zoom: HOOD_ZOOM,
+      zoom,
     };
     if (center) {
       options.center = center;
     }
     return options;
-  }, [center]);
+  }, [center, zoom]);
 
   const datasetIdsRequested = useMemo(() => {
-    // Url datasets take precedence
+    if (datasetIds) {
+      return datasetIds;
+    }
     if (location.search) {
-      const params = new URLSearchParams(location.search);
-      const ids = params?.get('datasetIds')?.split(',');
+      const queryParams = new URLSearchParams(location.search);
+      const ids = queryParams?.get('datasetIds')?.split(',');
       if (ids) {
         return ids.flatMap((id) => (id in DATASETS ? DATASETS[id] : id));
       }
     }
-    return datasetIds;
-  }, [datasetIds, location.search]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const [mapOffsetLeft, setMapOffsetLeft] = useState('0');
+
+  const onSetDrawerPosition = useCallback((drawerPosition: string) => {
+    setMapOffsetLeft(drawerPosition);
+  }, []);
 
   return (
     <ThemeProvider>
@@ -107,54 +124,57 @@ export default function MyArea({
         {!!showHeader && <MyAreaHeader />}
         <MyAreaMapContainer>
           {!!center ? (
-            <MyAreaMap
-              fullScreen={true}
-              aria-label={`Uitebreide kaart van ${termReplace(
-                ChapterTitles.BUURT
-              ).toLowerCase()}`}
-              options={mapOptions}
-            >
-              <BaseLayer options={baseLayerOptions} />
-              {HOME.content?.address && (
-                <HomeIconMarker
-                  address={getFullAddress(HOME.content.address, true)}
-                  center={center}
-                  zoom={HOOD_ZOOM}
-                />
-              )}
-              <StyledViewerContainer
-                bottomRight={
-                  <>
-                    {HOME.content?.address && HOME.content?.latlng && (
-                      <HomeControlButton
-                        zoom={HOOD_ZOOM}
-                        latlng={HOME.content.latlng}
-                      />
-                    )}
-                    <Zoom />
-                  </>
-                }
-                bottomLeft={
-                  <BaseLayerToggle
-                    aerialLayers={[AERIAL_AMSTERDAM_LAYERS[0]]}
-                    topoLayers={[DEFAULT_AMSTERDAM_LAYERS[0]]}
+            <MyAreaMapOffset>
+              <MyAreaMap
+                fullScreen={true}
+                aria-label={`Uitebreide kaart van ${termReplace(
+                  ChapterTitles.BUURT
+                ).toLowerCase()}`}
+                options={mapOptions}
+              >
+                <BaseLayer options={baseLayerOptions} />
+                {HOME.content?.address && (
+                  <HomeIconMarker
+                    address={getFullAddress(HOME.content.address, true)}
+                    center={center}
+                    zoom={zoom}
                   />
-                }
-              />
-              {!!showPanels && (
-                <MapPanelProvider
-                  variant={isDesktop ? 'panel' : 'drawer'}
-                  initialPosition={
-                    isDesktop ? SnapPoint.Full : SnapPoint.Closed
+                )}
+
+                <StyledViewerContainer
+                  leftOffset={mapOffsetLeft}
+                  bottomRight={
+                    <>
+                      {HOME.content?.address && HOME.content?.latlng && (
+                        <HomeControlButton
+                          zoom={zoom}
+                          latlng={HOME.content.latlng}
+                        />
+                      )}
+                      <Zoom />
+                    </>
                   }
-                >
-                  <MyAreaPanels />
-                </MapPanelProvider>
-              )}
-              <MyAreaDatasets datasetIds={datasetIdsRequested} />
-            </MyAreaMap>
+                  bottomLeft={
+                    <BaseLayerToggle
+                      aerialLayers={[AERIAL_AMSTERDAM_LAYERS[0]]}
+                      topoLayers={[DEFAULT_AMSTERDAM_LAYERS[0]]}
+                    />
+                  }
+                />
+
+                <MyAreaDatasets datasetIds={datasetIdsRequested} />
+              </MyAreaMap>
+            </MyAreaMapOffset>
           ) : (
             <MyAreaLoadingIndicator />
+          )}
+          {!!showPanels && (
+            <MapPanelProvider
+              variant={isDesktop ? 'panel' : 'drawer'}
+              initialPosition={isDesktop ? SnapPoint.Full : SnapPoint.Closed}
+            >
+              <MyAreaPanels onSetDrawerPosition={onSetDrawerPosition} />
+            </MapPanelProvider>
           )}
         </MyAreaMapContainer>
       </MyAreaContainer>

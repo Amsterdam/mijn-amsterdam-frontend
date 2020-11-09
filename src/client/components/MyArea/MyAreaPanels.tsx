@@ -74,10 +74,16 @@ const TitleWithCheckbox = React.memo(
   }
 );
 
-export default function MyAreaPanels() {
+interface MyAreaPanels {
+  onSetDrawerPosition: (drawerPosition: string) => void;
+}
+
+export default function MyAreaPanels({ onSetDrawerPosition }: MyAreaPanels) {
   const isDesktop = useDesktopScreen();
   const PanelComponent = isDesktop ? MapPanel : MapPanelDrawer;
-  const { setPositionFromSnapPoint } = useContext(MapPanelContext);
+  const { setPositionFromSnapPoint, drawerPosition } = useContext(
+    MapPanelContext
+  );
   const [selectedFeature, setSelectedFeature] = useSelectedFeature();
   const [activeDatasetIds, setActiveDatasetIds] = useActiveDatasetIds();
 
@@ -87,6 +93,10 @@ export default function MyAreaPanels() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedFeature]);
+
+  useEffect(() => {
+    onSetDrawerPosition(drawerPosition);
+  }, [drawerPosition, onSetDrawerPosition]);
 
   const checkUncheckAll = useCallback(
     (controlItem: DatasetControlItem) => {
