@@ -33,7 +33,7 @@ function isChapterActive(
     case Chapters.INKOMEN:
       const hasStadspasSaldo =
         !FeatureToggle.stadpasActive ||
-        !!FOCUS_STADSPAS.content?.stadspassaldo?.stadspassen?.length;
+        !!FOCUS_STADSPAS?.content?.stadspassaldo?.stadspassen?.length;
       const isLoadingStadspasSaldo =
         !FeatureToggle.stadpasActive || isLoading(FOCUS_STADSPAS);
       return (
