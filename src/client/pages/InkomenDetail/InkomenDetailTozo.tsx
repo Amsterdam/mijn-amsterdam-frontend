@@ -25,14 +25,14 @@ export default () => {
   const tozoItems = FOCUS_TOZO.content || [];
   const { id } = useParams();
 
-  let TozoItem = tozoItems.find(item => item.id === id);
+  let TozoItem = tozoItems.find((item) => item.id === id);
 
   if (!isLoading(FOCUS_TOZO)) {
     if (!TozoItem) {
       Sentry.captureMessage('Tozo Item not found', {
         extra: {
           requestedId: id,
-          availableIds: tozoItems.map(item => item.id),
+          availableIds: tozoItems.map((item) => item.id),
         },
       });
     }
@@ -69,7 +69,7 @@ export default () => {
             {!isLoading(FOCUS_TOZO) && (
               <p>
                 <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
-                  Meer informatie over de {TozoItem?.title}
+                  Meer informatie over Tozo
                 </Linkd>
               </p>
             )}
@@ -95,7 +95,7 @@ export default () => {
               aanvragen.
             </p>
             <ul className={styles.TozoAlternatives}>
-              {tozoItems.map(tozoItem => {
+              {tozoItems.map((tozoItem) => {
                 return <Linkd href={tozoItem.link.to}>{tozoItem.title}</Linkd>;
               })}
             </ul>
