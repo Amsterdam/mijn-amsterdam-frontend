@@ -43,7 +43,7 @@ export async function fetchBAG(
   return requestData<BAGData>(
     getApiConfig('BAG', {
       params,
-      transformResponse: responseData => formatBAGData(responseData, address),
+      transformResponse: (responseData) => formatBAGData(responseData, address),
     }),
     sessionID,
     passthroughRequestHeaders

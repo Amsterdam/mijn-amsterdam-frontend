@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   atom,
+  RecoilState,
   useRecoilState,
   useRecoilValue,
   useSetRecoilState,
@@ -17,24 +18,19 @@ import {
 } from '../../../server/services/buurt/datasets';
 import { ApiResponse } from '../../../universal/helpers';
 import { BFFApiUrls } from '../../config/api';
-import { useDatasetControlItems } from './MyAreaDatasetControl';
 import styles from './MyAreaDatasets.module.scss';
 
-export function useActiveDatasetIds() {
-  const datasetControlItems = useDatasetControlItems();
-  const activeDatasetIds: string[] = useMemo(() => {
-    return datasetControlItems.flatMap((datasetControlItem) =>
-      datasetControlItem.collection
-        .filter((dataset) => dataset.isActive)
-        .map((dataset) => dataset.id)
-    );
-  }, [datasetControlItems]);
+const activeDatasetIdsAtom: RecoilState<string[]> = atom<string[]>({
+  key: 'activeDatasetIds',
+  default: [],
+});
 
-  return activeDatasetIds;
+export function useActiveDatasetIds() {
+  return useRecoilState(activeDatasetIdsAtom);
 }
 
 export function useActiveDatasetIdsToFetch(featuresToCompare: DatasetFeatures) {
-  const activeDatasetIds = useActiveDatasetIds();
+  const [activeDatasetIds] = useActiveDatasetIds();
 
   return useMemo(() => {
     const loadedIds = Array.from(

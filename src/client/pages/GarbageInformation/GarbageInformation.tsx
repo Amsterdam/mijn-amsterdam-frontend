@@ -1,5 +1,6 @@
 import classnames from 'classnames';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useRef } from 'react';
+import { DATASETS } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import { getFullAddress, isError, isLoading } from '../../../universal/helpers';
 import {
@@ -19,8 +20,10 @@ import {
   Panel,
   SectionCollapsible,
 } from '../../components';
+import MyAreaLoader from '../../components/MyArea/MyAreaLoader';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { useOnScreen } from '../../hooks/useOnScreen';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import styles from './GarbageInformation.module.scss';
@@ -65,8 +68,15 @@ function GarbageCenterItem({ item }: { item: GarbageCenter }) {
   );
 }
 
+const GARBAGE_CONTAINER_DATASET_IDS = ['afvalcontainers'];
+
 export default () => {
   const { AFVAL, AFVALPUNTEN, HOME } = useAppStateGetter();
+  const ref = useRef<HTMLDivElement | null>(null);
+  const isOnScreen = useOnScreen(ref, '-200px');
+  const [restafval, grofvuil] = AFVAL.content || [];
+  const profileType = useProfileTypeValue();
+  const termReplace = useTermReplacement();
 
   const garbagePointCollapsible = (
     id: string,
@@ -106,10 +116,6 @@ export default () => {
       )}
     </SectionCollapsible>
   );
-
-  const [restafval, grofvuil] = AFVAL.content || [];
-  const profileType = useProfileTypeValue();
-  const termReplace = useTermReplacement();
 
   return (
     <DetailPage className={styles.GarbageInformation}>
@@ -170,7 +176,12 @@ export default () => {
         className={classnames(styles.InfoSection, styles.InfoSectionMap)}
         title="Afvalcontainers in de buurt"
       >
-        LAAD KAART!
+        <MyAreaLoader
+          datasetIds={DATASETS.afvalcontainers}
+          showPanels={false}
+          showHeader={false}
+          height="50rem"
+        />
       </SectionCollapsible>
       <SectionCollapsible
         id="wegbrengen"

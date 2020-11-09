@@ -14,7 +14,7 @@ import {
 import { ThemeProvider } from '@amsterdam/asc-ui';
 import { themeSpacing } from '@amsterdam/asc-ui/lib/utils/themeUtils';
 import 'leaflet/dist/leaflet.css';
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
 import { getFullAddress } from '../../../universal/helpers';
@@ -26,8 +26,8 @@ import HomeControlButton from './MaHomeControlButton';
 import { HomeIconMarker } from './MaMarker';
 import { MyAreaDatasets } from './MyAreaDatasets';
 import MyAreaHeader from './MyAreaHeader';
-import MyAreaPanels from './MyAreaPanels';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
+import MyAreaPanels from './MyAreaPanels';
 
 const StyledViewerContainer = styled(ViewerContainer)`
   height: 100%;
@@ -39,10 +39,10 @@ const MyAreaMapContainer = styled.div`
   height: 100%;
 `;
 
-const MyAreaContainer = styled.div`
+const MyAreaContainer = styled.div<{ height: string }>`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: ${(props) => props.height};
 `;
 
 const MyAreaMap = styled(Map)`
@@ -53,16 +53,43 @@ const MyAreaMap = styled(Map)`
   }
 `;
 
-export default function MyArea() {
+const baseLayerOptions = {
+  attribution:
+    '<a href="https://github.com/amsterdam/amsterdam-react-maps">Amsterdam React Maps</a>',
+};
+
+interface MyAreaProps {
+  datasetIds?: string[];
+  showPanels?: boolean;
+  showHeader?: boolean;
+  height?: string;
+}
+
+export default function MyArea({
+  datasetIds,
+  showPanels = true,
+  showHeader = true,
+  height = '100vh',
+}: MyAreaProps) {
   const isDesktop = useDesktopScreen();
   const { HOME } = useAppStateGetter();
   const termReplace = useTermReplacement();
   const center = HOME.content?.latlng;
+  const mapOptions: Partial<L.MapOptions> = useMemo(() => {
+    const options = {
+      ...DEFAULT_MAP_OPTIONS,
+      zoom: HOOD_ZOOM,
+    };
+    if (center) {
+      options.center = center;
+    }
+    return options;
+  }, [center]);
 
   return (
     <ThemeProvider>
-      <MyAreaContainer>
-        <MyAreaHeader />
+      <MyAreaContainer height={height}>
+        {!!showHeader && <MyAreaHeader />}
         <MyAreaMapContainer>
           {!!center ? (
             <MyAreaMap
@@ -70,18 +97,9 @@ export default function MyArea() {
               aria-label={`Uitebreide kaart van ${termReplace(
                 ChapterTitles.BUURT
               ).toLowerCase()}`}
-              options={{
-                ...DEFAULT_MAP_OPTIONS,
-                zoom: HOOD_ZOOM,
-                center,
-              }}
+              options={mapOptions}
             >
-              <BaseLayer
-                options={{
-                  attribution:
-                    '<a href="https://github.com/amsterdam/amsterdam-react-maps">Amsterdam React Maps</a>',
-                }}
-              />
+              <BaseLayer options={baseLayerOptions} />
               {HOME.content?.address && (
                 <HomeIconMarker
                   address={getFullAddress(HOME.content.address, true)}
@@ -108,13 +126,17 @@ export default function MyArea() {
                   />
                 }
               />
-              <MapPanelProvider
-                variant={isDesktop ? 'panel' : 'drawer'}
-                initialPosition={isDesktop ? SnapPoint.Full : SnapPoint.Closed}
-              >
-                <MyAreaPanels />
-                <MyAreaDatasets />
-              </MapPanelProvider>
+              {!!showPanels && (
+                <MapPanelProvider
+                  variant={isDesktop ? 'panel' : 'drawer'}
+                  initialPosition={
+                    isDesktop ? SnapPoint.Full : SnapPoint.Closed
+                  }
+                >
+                  <MyAreaPanels />
+                </MapPanelProvider>
+              )}
+              <MyAreaDatasets datasetIds={datasetIds} />
             </MyAreaMap>
           ) : (
             <MyAreaLoadingIndicator />

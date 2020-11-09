@@ -9,11 +9,19 @@ export const MyAreaDashboardLazy = React.lazy(
 interface MyAreaLoaderProps {
   isDashboard?: boolean;
   tutorial?: string;
+  datasetIds?: string[];
+  showPanels?: boolean;
+  showHeader?: boolean;
+  height?: string;
 }
 
 export default function MyAreaLoader({
   isDashboard = false,
   tutorial = '',
+  datasetIds,
+  showPanels = true,
+  showHeader = true,
+  height,
 }: MyAreaLoaderProps) {
   return (
     <Suspense
@@ -26,7 +34,12 @@ export default function MyAreaLoader({
       {isDashboard ? (
         <MyAreaDashboardLazy tutorial={tutorial} />
       ) : (
-        <MyAreaLazy />
+        <MyAreaLazy
+          datasetIds={datasetIds}
+          showPanels={showPanels}
+          showHeader={showHeader}
+          height={height}
+        />
       )}
     </Suspense>
   );

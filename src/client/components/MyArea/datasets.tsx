@@ -28,7 +28,6 @@ import styles from './MyAreaDatasets.module.scss';
 
 export interface DatasetControl {
   id: string;
-  isActive: boolean;
   title: string;
   icon: ReactNode;
 }
@@ -184,7 +183,6 @@ const createDatasetControl = ({
     id,
     icon,
     title: titleTransform(id),
-    isActive: ACTIVE_DATASET_IDS_INITIAL.includes(id),
   };
 };
 

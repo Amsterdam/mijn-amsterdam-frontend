@@ -4,6 +4,7 @@ import {
   MaPointFeature,
   MaPolyLineFeature,
 } from '../../../server/services/buurt/datasets';
+import { ACTIVE_DATASET_IDS_INITIAL } from '../../../universal/config';
 import {
   useActiveDatasetIds,
   useFetchFeatures,
@@ -13,7 +14,11 @@ import {
 import { MyAreaPolyLineDatasets } from './MyAreaPolyLineDatasets';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
 
-export function MyAreaDatasets() {
+interface MyAreaDatasetsProps {
+  datasetIds?: string[];
+}
+
+export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   const map = useMapInstance();
   const [polyLineFeatures, setPolyLineFeatures] = useState<MaPolyLineFeature[]>(
     []
@@ -23,14 +28,16 @@ export function MyAreaDatasets() {
     setPolyLineFeatures,
     setClusterFeatures,
   });
-  const activeDatasetIds = useActiveDatasetIds();
+  const [activeDatasetIds, setActiveDatasetIds] = useActiveDatasetIds();
 
   const onUpdate = useCallback(() => {
     fetchFeatures(activeDatasetIds);
   }, [fetchFeatures, activeDatasetIds]);
 
   useEffect(() => {
-    fetchFeatures(activeDatasetIds);
+    if (activeDatasetIds.length) {
+      fetchFeatures(activeDatasetIds);
+    }
   }, [activeDatasetIds, fetchFeatures]);
 
   // Set the zIndex of the markerpane. These markers will
@@ -40,6 +47,10 @@ export function MyAreaDatasets() {
       pane.style.zIndex = '800';
     }
   }, [map]);
+
+  useEffect(() => {
+    setActiveDatasetIds(datasetIds ? datasetIds : ACTIVE_DATASET_IDS_INITIAL);
+  }, [datasetIds, setActiveDatasetIds]);
 
   const onMarkerClick = useOnMarkerClick();
 

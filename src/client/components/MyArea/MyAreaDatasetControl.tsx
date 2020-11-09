@@ -1,52 +1,8 @@
 import { Checkbox, Label, themeSpacing } from '@amsterdam/asc-ui';
-import React, { useCallback } from 'react';
-import { atom, useRecoilValue, useSetRecoilState } from 'recoil';
+import React from 'react';
 import styled from 'styled-components';
-import {
-  DatasetControlItem,
-  DATASET_CONTROL_ITEMS,
-  DatasetControl,
-} from './datasets';
-
-export const datasetControlItemsAtom = atom({
-  key: 'datasetControlItems',
-  default: DATASET_CONTROL_ITEMS.filter(
-    (datasetControl) => datasetControl.isActive
-  ),
-});
-
-export function useDatasetControlItems(): DatasetControlItem[] {
-  return useRecoilValue(datasetControlItemsAtom);
-}
-
-export function useSetDatasetControlItems() {
-  const setDatasetControlItems = useSetRecoilState(datasetControlItemsAtom);
-  const items = useDatasetControlItems();
-
-  return useCallback(
-    (ids: string[], isActive: boolean) => {
-      const updatedItems = items.map((item) => {
-        if (item.collection.some((dataset) => ids.includes(dataset.id))) {
-          return {
-            ...item,
-            collection: item.collection.map((item) => {
-              if (ids.includes(item.id)) {
-                return {
-                  ...item,
-                  isActive,
-                };
-              }
-              return item;
-            }),
-          };
-        }
-        return item;
-      });
-      setDatasetControlItems(updatedItems);
-    },
-    [items, setDatasetControlItems]
-  );
-}
+import { DatasetControl } from './datasets';
+import { useActiveDatasetIds } from './MyArea.hooks';
 
 export type datasetItemChangeEventHandler = (
   event: React.FormEvent<HTMLInputElement>,
@@ -65,24 +21,27 @@ const LabelInner = styled.span`
 function MyAreaDatasetControlItem({
   datasetControl,
 }: MyAreaDatasetControlItemProps) {
-  const setDatasetControlItems = useSetDatasetControlItems();
+  const [activeDatasetIds, setActiveDatasetIds] = useActiveDatasetIds();
   const label = (
     <LabelInner>
       {datasetControl.icon}
       {datasetControl.title}
     </LabelInner>
   ) as any;
+  const isActive = activeDatasetIds.includes(datasetControl.id);
   return (
     <li>
       <Label htmlFor={datasetControl.id} label={label}>
         <Checkbox
           id={datasetControl.id}
-          checked={datasetControl.isActive}
-          onChange={(event) =>
-            setDatasetControlItems(
-              [datasetControl.id],
-              !datasetControl.isActive
-            )
+          checked={isActive}
+          onChange={() =>
+            setActiveDatasetIds((datasetIds) => {
+              if (isActive) {
+                return datasetIds.filter((id) => id !== datasetControl.id);
+              }
+              return [...datasetIds, datasetControl.id];
+            })
           }
         />
       </Label>

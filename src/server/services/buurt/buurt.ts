@@ -128,7 +128,7 @@ async function loadDatasetFeature(
   );
 
   if (Array.isArray(response.content)) {
-    response.content = response.content.map(feature => {
+    response.content = response.content.map((feature) => {
       if (
         feature.geometry.type === 'MultiPolygon' ||
         feature.geometry.type === 'MultiLineString'
@@ -168,7 +168,7 @@ export async function loadDatasetFeatures(
   const results = await Promise.allSettled(requests);
 
   const datasetResults = results.flatMap(
-    result => getSettledResult(result).content || []
+    (result) => getSettledResult(result).content || []
   );
 
   const features = datasetResults.filter(

@@ -23,13 +23,13 @@ const weekdays = [
 ];
 
 function parseText(text: string, data: Record<string, any> = {}) {
-  return text.replace(/\[\w+\]/g, function(match) {
+  return text.replace(/\[\w+\]/g, function (match) {
     return data[match.slice(1, -1)] || match;
   });
 }
 
 function parsePickupDays(subject: string) {
-  return weekdays.reduce(function(t, a: string) {
+  return weekdays.reduce(function (t, a: string) {
     return (
       new RegExp(a).test(subject.toLowerCase()) &&
         ((subject = subject.replace(a, '')), t.push(a)),
@@ -57,7 +57,7 @@ function formatPickupDays(days: string, timeFrom: string, timeTo: string) {
     ? parseInt(fromTime.replace('.', ''), 10) <
       parseInt(untilTime.replace('.', ''), 10)
       ? pickupdDays
-          .map(function(day) {
+          .map(function (day) {
             return parseText('[fromDay] vanaf [fromTime] tot [untilTime] uur', {
               fromDay: day,
               fromTime,
@@ -66,7 +66,7 @@ function formatPickupDays(days: string, timeFrom: string, timeTo: string) {
           })
           .join(' en ')
       : pickupdDays
-          .map(function(day) {
+          .map(function (day) {
             return parseText(
               'vanaf [fromDay] [fromTime] uur tot [untilDay] [untilTime] uur',
               {
@@ -80,7 +80,7 @@ function formatPickupDays(days: string, timeFrom: string, timeTo: string) {
           .join(' en ')
     : fromTime && !untilTime
     ? pickupdDays
-        .map(function(day) {
+        .map(function (day) {
           return parseText('[day] vanaf [fromTime] uur', {
             day,
             fromTime,
@@ -135,7 +135,7 @@ export function transformGarbageRetrievalData(
   afvalSourceData: AFVALSourceData
 ) {
   const ophalen: GarbageRetrievalMoment[] = afvalSourceData?.result?.features
-    ? afvalSourceData.result.features.map(feature => {
+    ? afvalSourceData.result.features.map((feature) => {
         const {
           properties: {
             type,

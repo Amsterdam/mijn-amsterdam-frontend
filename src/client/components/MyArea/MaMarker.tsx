@@ -55,13 +55,13 @@ function MaMarker({ latlng, iconUrl, onClick, label }: MaMarkerProps) {
     }
   }, [markerInstance, label]);
 
-  const latLngObject = useMemo(() => {
+  const latLng = useMemo(() => {
     return new L.LatLng(latlng.lat, latlng.lng);
   }, [latlng]);
 
   return (
     <Marker
-      latLng={latLngObject}
+      latLng={latLng}
       options={markerConfig.options}
       events={markerConfig.events}
       setInstance={(markerInstance) => setInstance(markerInstance)}
