@@ -12,11 +12,11 @@ import {
   DEFAULT_AMSTERDAM_LAYERS,
 } from '@amsterdam/arm-core/lib/constants';
 import { ThemeProvider } from '@amsterdam/asc-ui';
-import { themeSpacing } from '@amsterdam/asc-ui/lib/utils/themeUtils';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import React, { useCallback, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import styled, { CSSProperties } from 'styled-components';
+import styled from 'styled-components';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
 import { DATASETS } from '../../../universal/config/buurt';
 import { getFullAddress } from '../../../universal/helpers';
@@ -30,7 +30,6 @@ import { MyAreaDatasets } from './MyAreaDatasets';
 import MyAreaHeader from './MyAreaHeader';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import MyAreaPanels from './MyAreaPanels';
-import L from 'leaflet';
 
 const StyledViewerContainer = styled(ViewerContainer)<{ leftOffset: string }>`
   height: 100%;

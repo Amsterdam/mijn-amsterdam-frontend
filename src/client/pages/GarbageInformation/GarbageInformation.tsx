@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import React, { ReactNode } from 'react';
-import { DATASETS } from '../../../universal/config';
+import { AppRoutes } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import { getFullAddress, isError, isLoading } from '../../../universal/helpers';
 import {
@@ -20,13 +20,11 @@ import {
   Panel,
   SectionCollapsible,
 } from '../../components';
-import MyAreaLoader from '../../components/MyArea/MyAreaLoader';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import styles from './GarbageInformation.module.scss';
-import { LOCATION_ZOOM } from '../../../universal/config/buurt';
 
 interface PanelProps {
   children: ReactNode;
@@ -172,13 +170,13 @@ export default () => {
         className={classnames(styles.InfoSection, styles.InfoSectionMap)}
         title="Afvalcontainers in de buurt"
       >
-        <MyAreaLoader
-          datasetIds={DATASETS.afvalcontainers}
-          showPanels={false}
-          showHeader={false}
-          height="50rem"
-          zoom={LOCATION_ZOOM}
-        />
+        <GarbagePanel>
+          <p>
+            <Linkd href={`${AppRoutes.BUURT}?datasetIds=afvalcontainers`}>
+              Klik hier voor een overzicht van alle afvalcontainers in de buurt.
+            </Linkd>
+          </p>
+        </GarbagePanel>
       </SectionCollapsible>
       <SectionCollapsible
         id="wegbrengen"

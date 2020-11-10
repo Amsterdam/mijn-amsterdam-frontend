@@ -53,7 +53,9 @@ export function SectionCollapsibleHeading({
         </button>
       ) : (
         <>
-          <IconChevronRight aria-hidden="true" className={styles.CaretIcon} />{' '}
+          {hasItems && (
+            <IconChevronRight aria-hidden="true" className={styles.CaretIcon} />
+          )}{' '}
           {children}
         </>
       )}
