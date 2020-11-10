@@ -43,10 +43,6 @@
     // margin-left: -2.6rem;
     transform: translateY(-.1rem);
   }
-
-  @include mq-tablet() {
-    margin-left: 2rem;
-  }
 }
 
 .ProfileLink--active {
@@ -59,13 +55,16 @@
 }
 
 .ProfileLink--private {
-  margin-left: 2rem;
+  max-width: 20rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 
   + .ProfileLink--commercial {
     margin-left: 3.3rem;
 
     @include mq-tablet() {
-      margin-left: 2rem;
+      margin-left: 0;
       margin-top: 1rem;
     }
   }
