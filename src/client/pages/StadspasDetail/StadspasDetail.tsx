@@ -172,23 +172,22 @@ function StadspasBudget({
             <p>We kunnen op dit moment geen transacties tonen</p>
           </Alert>
         )}
-        {hasTransactions && (
-          <Button
-            className={classnames(
-              styles.ToggleTransactionsOveview,
-              isTransactionOverviewActive && styles.isTransactionOverviewActive
-            )}
-            icon={IconChevronRight}
-            variant="plain"
-            lean={true}
-            onClick={() =>
-              toggleTransactionOverview(!isTransactionOverviewActive)
-            }
-          >
-            {isTransactionOverviewActive ? 'Verberg' : 'Laat zien'} wat ik heb
-            uitgegeven
-          </Button>
-        )}
+        {!hasTransactions && <p>U heeft nog geen transacties</p>}
+        <Button
+          className={classnames(
+            styles.ToggleTransactionsOveview,
+            isTransactionOverviewActive && styles.isTransactionOverviewActive
+          )}
+          icon={IconChevronRight}
+          variant="plain"
+          lean={true}
+          onClick={() =>
+            toggleTransactionOverview(!isTransactionOverviewActive)
+          }
+        >
+          {isTransactionOverviewActive ? 'Verberg' : 'Laat zien'} wat ik heb
+          uitgegeven
+        </Button>
       </PageContent>
     </>
   );
@@ -196,7 +195,7 @@ function StadspasBudget({
 
 export default () => {
   const { FOCUS_STADSPAS } = useAppStateGetter();
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const stadspasItem = id
     ? FOCUS_STADSPAS?.content?.stadspassaldo?.stadspassen.find(
         pass => pass.id === parseInt(id, 10)
