@@ -24,9 +24,7 @@ export default function MyAreaHeader() {
         />
         <h1 className={styles.Title}>{termReplace(ChapterTitles.BUURT)}</h1>
       </Link>
-      <Button onClick={() => history.push(AppRoutes.ROOT)}>
-        Kaart sluiten
-      </Button>
+      <Button onClick={() => history.goBack()}>Kaart sluiten</Button>
     </div>
   );
 }
