@@ -54,6 +54,11 @@ interface TransactionOverviewProps {
 function TransactionOverview({ transactions }: TransactionOverviewProps) {
   return (
     <div className={styles.TransactionsOverview}>
+      <p>
+        Hieronder staat een lijst bij welke winkels u geld heeft uitgegeven. Dit
+        kan een dag achterlopen. Het bedrag aan kindtegoed dat u nog over hebt
+        klopt altijd.
+      </p>
       <div className={styles.TransactionLabels}>
         <span>Uitgaven</span>
         <span>Bedrag</span>
@@ -215,10 +220,7 @@ export default () => {
         Saldo Stadspas
       </PageHeading>
       <PageContent className={styles.DetailPageContent}>
-        <p>
-          U mag voor uw kind een bepaald bedrag uitgeven aan kleding en sport.
-          Hieronder ziet u hoeveel u nog te besteden hebt.
-        </p>
+        <p>Hieronder staat hoeveel tegoed nog op de Stadspas staat.</p>
         <p>
           <Linkd
             external={true}
