@@ -1,6 +1,6 @@
 {
   "name": "mijn-amsterdam-frontend",
-  "version": "2.13.0",
+  "version": "2.14.1",
   "scripts": {
     "analyze": "npx source-map-explorer 'build/static/js/*.js'",
     "build": "react-scripts build && npm run bff-api:build",
