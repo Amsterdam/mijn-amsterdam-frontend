@@ -191,7 +191,9 @@ export default function MyTips({
         {isLoading && <LoadingContentListItems />}
         {!isLoading &&
           items.map((item, i) => <Tip key={item.title} tip={item} />)}
-        {items.length % 2 !== 0 && <li className={styles.TipItem} />}
+        {!isLoading && items.length % 2 !== 0 && (
+          <li className={styles.TipItem} />
+        )}
       </ul>
       {!isLoading && !items.length && <MyTipsNoContentMessage />}
     </div>

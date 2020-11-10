@@ -162,7 +162,6 @@ export function ProfileName({
         );
         break;
     }
-    console.log(nameContent);
     return nameContent;
   }, [person, company, history]);
 
