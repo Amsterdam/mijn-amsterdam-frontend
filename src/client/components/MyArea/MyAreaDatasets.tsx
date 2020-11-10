@@ -1,16 +1,15 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
 import {
   MaPointFeature,
-  MaPolyLineFeature,
+  MaPolyLineFeature
 } from '../../../server/services/buurt/datasets';
 import { ACTIVE_DATASET_IDS_INITIAL } from '../../../universal/config';
 import {
   useActiveDatasetIds,
   useFetchFeatures,
   useOnMarkerClick,
-  useSelectedFeatureCSS,
+  useSelectedFeatureCSS
 } from './MyArea.hooks';
 import { MyAreaPolyLineDatasets } from './MyAreaPolyLineDatasets';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
@@ -20,8 +19,6 @@ interface MyAreaDatasetsProps {
 }
 
 export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
-  const history = useHistory();
-  const location = useLocation();
   const map = useMapInstance();
   const [polyLineFeatures, setPolyLineFeatures] = useState<MaPolyLineFeature[]>(
     []
@@ -41,13 +38,6 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     if (activeDatasetIds.length) {
       fetchFeatures(activeDatasetIds);
     }
-    if (!datasetIds) {
-      history.replace({
-        pathname: location.pathname,
-        search: '?datasetIds=' + activeDatasetIds.join(','),
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeDatasetIds, fetchFeatures]);
 
   // Set the zIndex of the markerpane. These markers will
