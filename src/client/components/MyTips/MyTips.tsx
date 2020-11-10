@@ -64,7 +64,7 @@ const Tip = ({ tip }: TipProps) => {
             <>
               {isFlipped && (
                 <div className={styles.TipFlip}>
-                  {tip.reason.map((reason) => (
+                  {tip.reason.map(reason => (
                     <span key={reason}>{reason}</span>
                   ))}
                 </div>
@@ -191,6 +191,7 @@ export default function MyTips({
         {isLoading && <LoadingContentListItems />}
         {!isLoading &&
           items.map((item, i) => <Tip key={item.title} tip={item} />)}
+        {items.length % 2 !== 0 && <li className={styles.TipItem} />}
       </ul>
       {!isLoading && !items.length && <MyTipsNoContentMessage />}
     </div>
