@@ -21,7 +21,10 @@ const UnstyledButton = styled('button')`
   display: inline-flex;
   align-items: center;
   font-weight: bold;
-  visibility: hidden;
+  opacity: 0;
+  &:focus {
+    opacity: 1;
+  }
 `;
 
 const CollapsiblePanelContent = styled('div')`
@@ -35,7 +38,7 @@ const PanelHeadingElement = styled('h3')`
   justify-content: space-between;
 
   &:hover > button {
-    visibility: visible;
+    opacity: 1;
   }
 `;
 
