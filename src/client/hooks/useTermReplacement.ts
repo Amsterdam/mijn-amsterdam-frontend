@@ -3,7 +3,7 @@ import { useProfileTypeValue } from './useProfileType';
 // Super simple term replace
 
 const GENERAL_COMMERCIAL_TERMS = {
-  'Mijn buurt': 'Mijn bedrijfsomgeving',
+  'Mijn buurt': 'Mijn omgeving',
   Afval: 'Bedrijfsafval',
   'eigen woning': 'bedrijf',
   'Afval rond uw adres': 'Bedrijfsafval rond uw adres',
