@@ -10,7 +10,6 @@
 }
 
 .PageContentBalance {
-  border-top: .1rem solid $color-neutral-grey2;
   padding-top: 2.4rem;
   max-width: 96rem;
   padding-left: 16rem;
@@ -143,7 +142,6 @@
   }
 
   &.withActiveTransactionsOverview {
-    margin-top: 3rem;
     border-width: .1rem;
   }
 }
@@ -167,6 +165,7 @@
     float: right;
   }
 }
+
 .Transaction {
   padding: 0;
   margin: 0;
@@ -179,12 +178,18 @@
   color: $color-neutral-grey4;
   display: block;
 }
+
 .TransactionTitle {
   font-size: 1.8rem;
   font-weight: bold;
 }
+
 .TransactionValue {
   font-size: 1.8rem;
   font-weight: bold;
   float: right;
+}
+
+.NoTransactions {
+  text-align: center;
 }
