@@ -8,7 +8,6 @@ import classnames from 'classnames';
 import { entries } from '../../../universal/helpers';
 import styles from './DirectLinks.module.scss';
 import { usePhoneScreen } from '../../hooks/media.hook';
-import { useTermReplacement } from '../../hooks/useTermReplacement';
 
 export default function DirectLinks({
   id = 'DirectLinks',
@@ -17,7 +16,7 @@ export default function DirectLinks({
   ...otherProps
 }: HTMLAttributes<HTMLDivElement> & { profileType: ProfileType }) {
   const isPhoneScreen = usePhoneScreen();
-  const termReplace = useTermReplacement();
+
   return (
     <div
       {...otherProps}
@@ -43,7 +42,7 @@ export default function DirectLinks({
                   href={url}
                   external={isExternalLink}
                 >
-                  {termReplace(title)}
+                  {title}
                 </Linkd>
               </li>
             );

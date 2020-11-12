@@ -34,7 +34,6 @@ async function generateSuperCluster(
   const configs = getDatasetEndpointConfig(datasetIds, ['Point']);
   const datasetFeatures = (await loadDatasetFeatures(sessionID, configs))
     .content;
-  console.log('d:', datasetFeatures.length);
   if (!!datasetFeatures?.length) {
     const features = filterDatasetFeatures(datasetFeatures, datasetIds);
 
