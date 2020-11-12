@@ -86,7 +86,10 @@ export default function ProfileCommercial() {
           gebruikt deze gegevens. Het is dus belangrijk dat uw gegevens kloppen.
         </p>
         <p>
-          <Linkd href="https://kvk.nl" external={true}>
+          <Linkd
+            href="https://www.kvk.nl/inschrijven-en-wijzigen/wijziging-doorgeven/"
+            external={true}
+          >
             Geef wijzigingen door aan de Kamer van Koophandel
           </Linkd>
           .
