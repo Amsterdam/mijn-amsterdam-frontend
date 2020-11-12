@@ -28,6 +28,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './StadspasDetail.module.scss';
 import { FocusStadspasBudget } from '../../../server/services/focus/focus-combined';
 import { useDataApi } from '../../hooks/api/useDataApi';
+import { usePhoneScreen } from '../../hooks/media.hook';
 
 interface TransactionProps {
   value: string;
@@ -48,26 +49,32 @@ function Transaction({ value, title, date }: TransactionProps) {
 }
 
 interface TransactionOverviewProps {
-  transactions: FocusStadspasTransaction[];
+  transactions?: FocusStadspasTransaction[] | null;
 }
 
 function TransactionOverview({ transactions }: TransactionOverviewProps) {
+  const hasTransactions = !!transactions?.length;
   return (
     <div className={styles.TransactionsOverview}>
       <div className={styles.TransactionLabels}>
         <span>Uitgaven</span>
         <span>Bedrag</span>
       </div>
-      <ul className={styles.Transactions}>
-        {transactions.map((transaction) => (
-          <Transaction
-            key={transaction.id}
-            value={transaction.amount}
-            title={transaction.title}
-            date={transaction.date}
-          />
-        ))}
-      </ul>
+      {!hasTransactions && (
+        <p className={styles.NoTransactions}>U heeft nog geen transacties</p>
+      )}
+      {hasTransactions && (
+        <ul className={styles.Transactions}>
+          {transactions!.map(transaction => (
+            <Transaction
+              key={transaction.id}
+              value={transaction.amount}
+              title={transaction.title}
+              date={transaction.date}
+            />
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
@@ -78,6 +85,7 @@ interface BudgetBalanceProps {
 }
 
 function BudgetBalance({ budget, dateEnd }: BudgetBalanceProps) {
+  const isPhoneScreen = usePhoneScreen();
   return (
     <ul className={styles.Balance}>
       <li
@@ -93,7 +101,7 @@ function BudgetBalance({ budget, dateEnd }: BudgetBalanceProps) {
       </li>
       <li className={styles.AmountLeft}>
         <span className={styles.Label}>
-          Nog te besteden vóór&nbsp;
+          {isPhoneScreen ? 'Te' : 'Nog te'} besteden vóór&nbsp;
           <time dateTime={dateEnd}>{defaultDateFormat(dateEnd)}</time>
           &nbsp; &euro;{budget.balance}
         </span>
@@ -140,8 +148,6 @@ function StadspasBudget({
     }
   }, [isTransactionOverviewActive, fetchTransactions, isDirty]);
 
-  const hasTransactions = budget.balance !== budget.assigned;
-
   return (
     <>
       <PageContent className={styles.PageContentBalance}>
@@ -153,11 +159,14 @@ function StadspasBudget({
           isTransactionOverviewActive && styles.withActiveTransactionsOverview
         )}
       >
-        {!!isTransactionOverviewActive &&
-          !isLoadingTransactions &&
-          transactions !== null && (
-            <TransactionOverview transactions={transactions} />
-          )}
+        <p>
+          Hieronder staat een lijst bij welke winkels u geld heeft uitgegeven.
+          Dit kan een dag achterlopen. Het bedrag aan kindtegoed dat u nog over
+          hebt klopt altijd.
+        </p>
+        {!!isTransactionOverviewActive && !isLoadingTransactions && (
+          <TransactionOverview transactions={transactions} />
+        )}
         {isLoadingTransactions && (
           <LoadingContent
             barConfig={[
@@ -172,7 +181,6 @@ function StadspasBudget({
             <p>We kunnen op dit moment geen transacties tonen</p>
           </Alert>
         )}
-        {!hasTransactions && <p>U heeft nog geen transacties</p>}
         <Button
           className={classnames(
             styles.ToggleTransactionsOveview,
@@ -198,7 +206,7 @@ export default () => {
   const { id } = useParams<{ id: string }>();
   const stadspasItem = id
     ? FOCUS_STADSPAS?.content?.stadspassaldo?.stadspassen.find(
-        (pass) => pass.id === parseInt(id, 10)
+        pass => pass.id === parseInt(id, 10)
       )
     : null;
   const isErrorStadspas = isError(FOCUS_STADSPAS);
@@ -215,10 +223,7 @@ export default () => {
         Saldo Stadspas
       </PageHeading>
       <PageContent className={styles.DetailPageContent}>
-        <p>
-          U mag voor uw kind een bepaald bedrag uitgeven aan kleding en sport.
-          Hieronder ziet u hoeveel u nog te besteden hebt.
-        </p>
+        <p>Hieronder staat hoeveel tegoed nog op de Stadspas staat.</p>
         <p>
           <Linkd
             external={true}
@@ -247,7 +252,7 @@ export default () => {
           </p>
         </PageContent>
       )}
-      {stadspasItem?.budgets.map((budget) => (
+      {stadspasItem?.budgets.map(budget => (
         <StadspasBudget
           urlTransactions={budget.urlTransactions}
           key={budget.title}

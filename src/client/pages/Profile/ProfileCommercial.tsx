@@ -1,25 +1,25 @@
 import React, { useMemo } from 'react';
 import { isError, isLoading } from '../../../universal/helpers';
+import { AppState } from '../../AppState';
 import {
   Alert,
   ChapterIcon,
   DetailPage,
   InfoPanel,
+  InfoPanelCollapsible,
+  Linkd,
   LoadingContent,
   PageContent,
   PageHeading,
-  InfoPanelCollapsible,
-  LinkdInline,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './Profile.module.scss';
-import { AppState } from '../../AppState';
-import {
-  PanelConfigFormatter,
-  panelConfigCommercial,
-} from './profilePanelConfig';
 import { formatKvkProfileData } from './formatDataCommercial';
 import { ProfileSection } from './formatDataPrivate';
+import styles from './Profile.module.scss';
+import {
+  panelConfigCommercial,
+  PanelConfigFormatter,
+} from './profilePanelConfig';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,
@@ -80,17 +80,15 @@ export default function ProfileCommercial() {
       </PageHeading>
       <PageContent className={styles.Intro}>
         <p>
-          In het Handelsregister worden uw bedrijfs gegevens vastgelegd. Het
-          gaat hier bijvoorbeeld om uw bedrijfsnaam, vestigingsadres en Kamer
-          van Koophandel nummer. De gemeente gebruikt deze gegevens. Belangrijk
-          dus dat deze gegevens kloppen.
+          Hier ziet u hoe uw onderneming ingeschreven staat in het
+          Handelsregister van de Kamer van Koophandel. In dat register staan
+          onder meer uw bedrijfsnaam, vestigingsadres en KvK-nummer. De gemeente
+          gebruikt deze gegevens. Het is dus belangrijk dat uw gegevens kloppen.
         </p>
         <p>
-          Kloppen uw gegevens niet of wilt u iets wijzigen geeft dit dan door
-          aan de{' '}
-          <LinkdInline href="https://kvk.nl" external={true}>
-            kamer van koophandel
-          </LinkdInline>
+          <Linkd href="https://kvk.nl" external={true}>
+            Geef wijzigingen door aan de Kamer van Koophandel
+          </Linkd>
           .
         </p>
 

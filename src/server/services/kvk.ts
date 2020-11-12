@@ -101,9 +101,10 @@ export function getKvkAddress(kvkData: KVKData) {
 
 export function transformKVKData(responseData: KVKSourceData): KVKData | null {
   if (
+    responseData === null ||
+    responseData.content === null ||
     typeof responseData.content !== 'object' ||
-    Array.isArray(responseData.content) ||
-    responseData.content === null
+    Array.isArray(responseData.content)
   ) {
     return null;
   }

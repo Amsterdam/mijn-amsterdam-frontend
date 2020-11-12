@@ -6,6 +6,7 @@ import {
 import { useDebouncedCallback } from 'use-debounce';
 import { useSessionStorage } from './storage.hook';
 import { getOtapEnvItem } from '../../universal/config';
+import { IS_AP, IS_ACCEPTANCE } from '../../universal/config/env';
 
 let MatomoInstance: MatomoTracker;
 
@@ -29,15 +30,20 @@ export function trackEvent(payload: TrackEventParams) {
 }
 
 export function trackPageView(title?: string, url?: string) {
+  let href = url || document.location.href;
+  if (IS_AP && !href.startsWith('http')) {
+    href = `https://mijn${IS_ACCEPTANCE ? '.acc' : ''}.amsterdam.nl${href}`;
+  }
   const payload = {
     documentTitle: title || document.title,
-    href: url || document.location.href,
+    href,
   };
 
   const payloadSZ = {
     url: payload.href,
     title: payload.documentTitle,
   };
+
   (window as any)._sz?.push(['trackdynamic', payloadSZ]);
 
   return MatomoInstance && MatomoInstance.trackPageView(payload);

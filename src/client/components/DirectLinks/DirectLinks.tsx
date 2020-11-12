@@ -13,8 +13,9 @@ import { useTermReplacement } from '../../hooks/useTermReplacement';
 export default function DirectLinks({
   id = 'DirectLinks',
   className,
+  profileType,
   ...otherProps
-}: HTMLAttributes<HTMLDivElement>) {
+}: HTMLAttributes<HTMLDivElement> & { profileType: ProfileType }) {
   const isPhoneScreen = usePhoneScreen();
   const termReplace = useTermReplacement();
   return (
@@ -27,12 +28,12 @@ export default function DirectLinks({
         Bezoek ook
       </Heading>
       <ul className={styles.LinkList}>
-        {entries(LINKS)
+        {entries(LINKS[profileType])
           .filter(([, { url, isActive }]) => !!url && isActive)
           .filter(([, { isPhoneScreenLink }]) =>
             !isPhoneScreen ? isPhoneScreenLink !== true : true
           )
-          .map((link) => {
+          .map(link => {
             const [linkName, { url, title, isExternalLink, id }] = link;
             return (
               <li key={linkName}>

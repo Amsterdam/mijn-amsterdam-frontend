@@ -130,7 +130,8 @@ export function ProfileName({
     let nameContent: undefined | string | ReactNode;
 
     switch (true) {
-      case !FeatureToggle.profileToggleActive || (!!person && !company):
+      case (!!person && !company) ||
+        (!FeatureToggle.profileToggleActive && !!person):
         nameContent = (
           <PrivateProfileName
             person={person!}
@@ -142,10 +143,13 @@ export function ProfileName({
           />
         );
         break;
-      case !!person && !!company:
+      case FeatureToggle.kvkActive &&
+        FeatureToggle.profileToggleActive &&
+        !!person &&
+        !!company:
         nameContent = <PrivateCommercialProfileToggle person={person!} />;
         break;
-      case !!company && !person:
+      case FeatureToggle.kvkActive && !!company && !person:
         nameContent = (
           <CommercialProfileName
             company={company!}

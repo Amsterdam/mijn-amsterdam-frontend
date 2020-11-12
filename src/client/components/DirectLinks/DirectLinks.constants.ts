@@ -1,7 +1,6 @@
 import { AppRoutes } from '../../../universal/config';
 import { ExternalUrls } from '../../config/app';
 import { FeatureToggle } from '../../../universal/config/app';
-import { ChapterTitles } from '../../../universal/config/chapter';
 
 export interface DirectLink {
   title: string;
@@ -12,16 +11,9 @@ export interface DirectLink {
   isActive: boolean;
 }
 
-export const LINKS: Record<string, DirectLink> = {
-  BUURT: {
-    title: ChapterTitles.BUURT,
-    url: AppRoutes.BUURT,
-    isPhoneScreenLink: true,
-    id: 'MyAreaHeader',
-    isActive: true,
-  },
+const GenericLinks: Record<string, DirectLink> = {
   TIPS: {
-    title: ChapterTitles.TIPS,
+    title: 'Mijn tips',
     url: AppRoutes.TIPS,
     isPhoneScreenLink: true,
     id: 'MyTipsHeader',
@@ -33,15 +25,29 @@ export const LINKS: Record<string, DirectLink> = {
     isExternalLink: true,
     isActive: true,
   },
-  KREFIA: {
-    title: 'Kredietbank',
-    url: ExternalUrls.KREFIA,
-    isExternalLink: true,
-    isActive: FeatureToggle.KrefiaDirectLinkActive,
-  },
   FAQ: {
     title: 'Veelgestelde vragen',
     url: ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD,
+    isExternalLink: true,
+    isActive: true,
+  },
+  AMSTERDAM: {
+    title: 'Amsterdam.nl',
+    url: ExternalUrls.AMSTERDAM,
+    isExternalLink: true,
+    isActive: true,
+  },
+  MIJN_OMGEVING: {
+    title: 'Mijn omgeving',
+    url: AppRoutes.BUURT,
+    isPhoneScreenLink: true,
+    id: 'MyAreaHeader',
+    isActive: true,
+  },
+  MIJN_OVERHEID_ONDERNEMERS: {
+    title: 'MijnOverheid voor ondernemers',
+    url:
+      'https://www.digitaleoverheid.nl/dossiers/movo-mijn-overheid-voor-ondernemers/',
     isExternalLink: true,
     isActive: true,
   },
@@ -51,10 +57,45 @@ export const LINKS: Record<string, DirectLink> = {
     isExternalLink: true,
     isActive: true,
   },
-  AMSTERDAM: {
-    title: 'Amsterdam.nl',
-    url: ExternalUrls.AMSTERDAM,
-    isExternalLink: true,
-    isActive: true,
+};
+
+export const LINKS: Record<ProfileType, Record<string, DirectLink>> = {
+  private: {
+    BUURT: {
+      title: 'Mijn buurt',
+      url: AppRoutes.BUURT,
+      isPhoneScreenLink: true,
+      id: 'MyAreaHeader',
+      isActive: true,
+    },
+    TIPS: GenericLinks.TIPS,
+    MIJN_SUBSIDIE: GenericLinks.MIJN_SUBSIDIE,
+    KREFIA: {
+      title: 'Kredietbank',
+      url: ExternalUrls.KREFIA,
+      isExternalLink: true,
+      isActive: FeatureToggle.KrefiaDirectLinkActive,
+    },
+    FAQ: GenericLinks.FAQ,
+    MIJN_OVERHEID_BERICHTEBOX: GenericLinks.MIJN_OVERHEID_BERICHTEBOX,
+    AMSTERDAM: GenericLinks.AMSTERDAM,
+  },
+  'private-commercial': {
+    BUURT: GenericLinks.MIJN_OMGEVING,
+    TIPS: GenericLinks.TIPS,
+    MIJN_SUBSIDIE: GenericLinks.MIJN_SUBSIDIE,
+    FAQ: GenericLinks.FAQ,
+    MIJN_OVERHEID_BERICHTEBOX: GenericLinks.MIJN_OVERHEID_BERICHTEBOX,
+    MIJN_OVERHEID_ONDERNEMERS: GenericLinks.MIJN_OVERHEID_ONDERNEMERS,
+    AMSTERDAM: GenericLinks.AMSTERDAM,
+  },
+  commercial: {
+    BUURT: GenericLinks.MIJN_OMGEVING,
+    TIPS: GenericLinks.TIPS,
+    MIJN_SUBSIDIE: GenericLinks.MIJN_SUBSIDIE,
+    FAQ: GenericLinks.FAQ,
+    MIJN_OVERHEID_BERICHTEBOX: GenericLinks.MIJN_OVERHEID_BERICHTEBOX,
+    MIJN_OVERHEID_ONDERNEMERS: GenericLinks.MIJN_OVERHEID_ONDERNEMERS,
+    AMSTERDAM: GenericLinks.AMSTERDAM,
   },
 };

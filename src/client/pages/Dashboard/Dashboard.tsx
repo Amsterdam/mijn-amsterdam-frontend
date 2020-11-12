@@ -15,8 +15,9 @@ import MyAreaDashboard from '../../components/MyArea/MyAreaDashboard';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
-import { useAppStateNotifications } from '../../hooks/useNotifications';
 import styles from './Dashboard.module.scss';
+import { useAppStateNotifications } from '../../hooks/useNotifications';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 
 const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
@@ -40,6 +41,8 @@ export default () => {
     items: myChapterItems,
     isLoading: isMyChaptersLoading,
   } = useChapters();
+
+  const profileType = useProfileTypeValue();
 
   return (
     <>
@@ -89,7 +92,10 @@ export default () => {
             items={tipItems}
           />
         )}
-        <DirectLinks data-tutorial-item="Hier staan links naar andere websites;right-bottom" />
+        <DirectLinks
+          data-tutorial-item="Hier staan links naar andere websites;right-bottom"
+          profileType={profileType}
+        />
       </Page>
     </>
   );
