@@ -16,7 +16,6 @@ export default function DirectLinks({
   ...otherProps
 }: HTMLAttributes<HTMLDivElement> & { profileType: ProfileType }) {
   const isPhoneScreen = usePhoneScreen();
-  console.log('isPhoneScreen', isPhoneScreen);
   return (
     <div
       {...otherProps}
@@ -32,7 +31,7 @@ export default function DirectLinks({
           .filter(([, { isPhoneScreenLink }]) =>
             !isPhoneScreen ? isPhoneScreenLink !== true : true
           )
-          .map(link => {
+          .map((link) => {
             const [linkName, { url, title, isExternalLink, id }] = link;
             return (
               <li key={linkName}>
