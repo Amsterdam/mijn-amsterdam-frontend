@@ -60,6 +60,10 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 
+  @include mq-tablet {
+    max-width: 28rem;
+  }
+
   + .ProfileLink--commercial {
     margin-left: 3.3rem;
 
