@@ -28,6 +28,11 @@ import styles from './MainNavBar.module.scss';
 import { ProfileName } from './ProfileName';
 import { useBurgerMenuAnimation } from './useBurgerMenuAnimation';
 import { isError } from '../../../universal/helpers/api';
+import {
+  profileTypeChapterTitleAdjustment,
+  ChapterTitles,
+  Chapters,
+} from '../../../universal/config/chapter';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -131,6 +136,7 @@ export default function MainNavBar() {
   const { items: myChapterItems } = useChapters();
   const location = useLocation();
   const [isTutorialVisible, setIsTutorialVisible] = useState(false);
+  const profileType = useProfileTypeValue();
 
   const onClickOutsideBurgermenu = useCallback(
     (event?: any) => {
@@ -173,17 +179,25 @@ export default function MainNavBar() {
   } = useBurgerMenuAnimation(isBurgerMenuVisible);
 
   const menuItemsComposed = useMemo(() => {
-    return mainMenuItems.map((item) => {
+    return mainMenuItems.map(item => {
       let menuItem = item;
 
       // Add dynamic chapter submenu items to the menu
       if (item.id === mainMenuItemId.CHAPTERS) {
         menuItem = { ...item, submenuItems: myChapterItems };
+      } else if (
+        menuItem.title === ChapterTitles.BUURT &&
+        profileType !== 'private'
+      ) {
+        menuItem = {
+          ...menuItem,
+          title: profileTypeChapterTitleAdjustment(profileType, Chapters.BUURT),
+        };
       }
 
       return getMenuItem(menuItem);
     });
-  }, [myChapterItems]);
+  }, [myChapterItems, profileType]);
 
   return (
     <nav

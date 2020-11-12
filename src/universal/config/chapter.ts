@@ -58,6 +58,8 @@ export function profileTypeChapterTitleAdjustment(
   switch (true) {
     case profileType !== 'private' && chapter === Chapters.AFVAL:
       return 'Bedrijfsafval';
+    case profileType !== 'private' && chapter === Chapters.BUURT:
+      return 'Mijn omgeving';
   }
   return ChapterTitles[chapter];
 }
