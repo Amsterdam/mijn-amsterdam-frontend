@@ -12,9 +12,11 @@ import { usePhoneScreen } from '../../hooks/media.hook';
 export default function DirectLinks({
   id = 'DirectLinks',
   className,
+  profileType,
   ...otherProps
-}: HTMLAttributes<HTMLDivElement>) {
+}: HTMLAttributes<HTMLDivElement> & { profileType: ProfileType }) {
   const isPhoneScreen = usePhoneScreen();
+  console.log('isPhoneScreen', isPhoneScreen);
   return (
     <div
       {...otherProps}
@@ -25,7 +27,7 @@ export default function DirectLinks({
         Bezoek ook
       </Heading>
       <ul className={styles.LinkList}>
-        {entries(LINKS)
+        {entries(LINKS[profileType])
           .filter(([, { url, isActive }]) => !!url && isActive)
           .filter(([, { isPhoneScreenLink }]) =>
             !isPhoneScreen ? isPhoneScreenLink !== true : true
