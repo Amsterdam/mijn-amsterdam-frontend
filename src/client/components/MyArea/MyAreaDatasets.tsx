@@ -11,10 +11,9 @@ import {
   useOnMarkerClick,
   useSelectedFeatureCSS,
 } from './MyArea.hooks';
+import styles from './MyAreaDatasets.module.scss';
 import { MyAreaPolyLineDatasets } from './MyAreaPolyLineDatasets';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
-import LoadingContent from '../LoadingContent/LoadingContent';
-import styles from './MyAreaDatasets.module.scss';
 
 interface MyAreaDatasetsProps {
   datasetIds?: string[];
