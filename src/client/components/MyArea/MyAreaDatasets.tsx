@@ -60,7 +60,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   // This effect will run after the features have been added to the map
   useSelectedFeatureCSS(polyLineFeatures);
   useSelectedFeatureCSS(clusterFeatures);
-  console.log(clusterFeatures.length, polyLineFeatures.length);
+
   return (
     <>
       {!clusterFeatures.length && !polyLineFeatures.length && (
