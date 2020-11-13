@@ -20,7 +20,7 @@ import {
   MapIconEvenement,
   MapIconSport,
 } from '../../assets/icons';
-import { DEFAULT_POLYLINE_OPTIONS } from './MaPolyLineLayer';
+import { DEFAULT_POLYLINE_OPTIONS } from './MyAreaPolyLineLayer';
 import styles from './MyAreaDatasets.module.scss';
 
 export interface DatasetControl {

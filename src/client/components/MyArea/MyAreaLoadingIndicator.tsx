@@ -3,7 +3,13 @@ import { IconHome, MapIconHomeCommercial } from '../../assets/icons';
 import styles from './MyAreaLoadingIndicator.module.scss';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 
-export default function MyAreaLoadingIndicator() {
+interface MyAreaLoadingIndicatorProps {
+  label: string;
+}
+
+export default function MyAreaLoadingIndicator({
+  label,
+}: MyAreaLoadingIndicatorProps) {
   const profileType = useProfileTypeValue();
   return (
     <div className={styles.MyAreaLoader}>
@@ -13,7 +19,7 @@ export default function MyAreaLoadingIndicator() {
         ) : (
           <MapIconHomeCommercial aria-hidden="true" />
         )}
-        Uw adres wordt opgezocht...
+        {label}
       </span>
     </div>
   );

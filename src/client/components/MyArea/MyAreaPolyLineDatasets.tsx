@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { MaPolyLineFeature } from '../../../server/services/buurt/datasets';
 import { PARKEERZONES_POLYLINE_OPTIONS } from './datasets';
-import { MaPolyLineLayer } from './MaPolyLineLayer';
+import { MaPolyLineLayer } from './MyAreaPolyLineLayer';
 
 const Styles = createGlobalStyle`
   .ma-marker-tooltip {

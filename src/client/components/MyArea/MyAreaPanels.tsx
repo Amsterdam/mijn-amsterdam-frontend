@@ -46,33 +46,31 @@ function useDatasetControlActiveIds(controlItem: DatasetControlItem) {
   }, [activeDatasetIds, controlItem]);
 }
 
-const TitleWithCheckbox = React.memo(
-  ({
-    controlItem,
-    onChange,
-  }: {
-    controlItem: DatasetControlItem;
-    onChange: (datasetControlItem: DatasetControlItem) => void;
-  }) => {
-    const activeControlIds = useDatasetControlActiveIds(controlItem);
-    const activeLength = activeControlIds.length;
-    const isActive =
-      !!activeLength && activeLength === controlItem.collection.length;
-    const isInDeterminate =
-      !!activeLength && activeLength !== controlItem.collection.length;
+function TitleWithCheckbox({
+  controlItem,
+  onChange,
+}: {
+  controlItem: DatasetControlItem;
+  onChange: (datasetControlItem: DatasetControlItem) => void;
+}) {
+  const activeControlIds = useDatasetControlActiveIds(controlItem);
+  const activeLength = activeControlIds.length;
+  const isActive =
+    !!activeLength && activeLength === controlItem.collection.length;
+  const isInDeterminate =
+    !!activeLength && activeLength !== controlItem.collection.length;
 
-    return (
-      <Label htmlFor={controlItem.id} label={controlItem.title}>
-        <StyledCheckbox
-          id={controlItem.id}
-          checked={isActive}
-          indeterminate={isInDeterminate}
-          onChange={() => onChange(controlItem)}
-        />
-      </Label>
-    );
-  }
-);
+  return (
+    <Label htmlFor={controlItem.id} label={controlItem.title}>
+      <StyledCheckbox
+        id={controlItem.id}
+        checked={isActive}
+        indeterminate={isInDeterminate}
+        onChange={() => onChange(controlItem)}
+      />
+    </Label>
+  );
+}
 
 interface MyAreaPanels {
   onSetDrawerPosition: (drawerPosition: string) => void;

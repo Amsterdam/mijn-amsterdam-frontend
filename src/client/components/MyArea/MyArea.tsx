@@ -25,7 +25,7 @@ import { useDesktopScreen } from '../../hooks';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import HomeControlButton from './MaHomeControlButton';
-import { HomeIconMarker } from './MaMarker';
+import { HomeIconMarker } from './MyAreaMarker';
 import { MyAreaDatasets } from './MyAreaDatasets';
 import MyAreaHeader from './MyAreaHeader';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
@@ -54,10 +54,6 @@ const MyAreaContainer = styled.div<{ height: string }>`
 
 const MyAreaMap = styled(Map)`
   position: absolute;
-
-  .leaflet-tile-pane {
-    z-index: 400;
-  }
 `;
 
 const baseLayerOptions = {
@@ -134,7 +130,7 @@ export default function MyArea({
                 <BaseLayer options={baseLayerOptions} />
                 {HOME.content?.address && (
                   <HomeIconMarker
-                    address={getFullAddress(HOME.content.address, true)}
+                    label={getFullAddress(HOME.content.address, true)}
                     center={center}
                     zoom={zoom}
                   />
@@ -165,7 +161,7 @@ export default function MyArea({
               </MyAreaMap>
             </MyAreaMapOffset>
           ) : (
-            <MyAreaLoadingIndicator />
+            <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />
           )}
           {!!showPanels && (
             <MapPanelProvider

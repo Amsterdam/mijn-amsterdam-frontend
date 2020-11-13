@@ -8,14 +8,14 @@ import { useProfileTypeValue } from '../../hooks/useProfileType';
 import styles from './MyArea.module.scss';
 import { useMapRef } from './useMap';
 
-interface MaMarkerProps {
+interface MyAreaMarkerProps {
   latlng: LatLngObject;
   iconUrl: string;
   onClick?: LeafletEventHandlerFn;
   label?: string;
 }
 
-function MaMarker({ latlng, iconUrl, onClick, label }: MaMarkerProps) {
+function MyAreaMarker({ latlng, iconUrl, onClick, label }: MyAreaMarkerProps) {
   const markerConfig = useMemo(() => {
     const icon = L.icon({
       iconUrl,
@@ -71,14 +71,14 @@ function MaMarker({ latlng, iconUrl, onClick, label }: MaMarkerProps) {
 
 interface HomeIconMarkerProps {
   center: LatLngObject;
-  address: string;
+  label: string;
   zoom?: number;
 }
 
 export const HomeIconMarker = function HomeIconMarker({
   center,
   zoom = LOCATION_ZOOM,
-  address = '',
+  label = '',
 }: HomeIconMarkerProps) {
   const mapRef = useMapRef();
   const profileType = useProfileTypeValue();
@@ -101,12 +101,12 @@ export const HomeIconMarker = function HomeIconMarker({
   }, [doCenter]);
 
   return (
-    <MaMarker
+    <MyAreaMarker
       key={profileType}
       iconUrl={homeIconUrl}
       onClick={doCenter}
       latlng={center}
-      label={address}
+      label={label}
     />
   );
 };

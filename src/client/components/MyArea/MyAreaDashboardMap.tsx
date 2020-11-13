@@ -9,7 +9,7 @@ import { getFullAddress } from '../../../universal/helpers/brp';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
-import { HomeIconMarker } from './MaMarker';
+import { HomeIconMarker } from './MyAreaMarker';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 
 const DasboardMap = styled(Map)`
@@ -40,7 +40,7 @@ export default function MyAreaDashboard({ tutorial }: MyAreaDashboardProps) {
         >
           <BaseLayer />
           <HomeIconMarker
-            address={
+            label={
               HOME.content?.address
                 ? getFullAddress(HOME.content.address, true)
                 : ''
@@ -50,7 +50,7 @@ export default function MyAreaDashboard({ tutorial }: MyAreaDashboardProps) {
           />
         </DasboardMap>
       ) : (
-        <MyAreaLoadingIndicator />
+        <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />
       )}
     </ThemeProvider>
   );
