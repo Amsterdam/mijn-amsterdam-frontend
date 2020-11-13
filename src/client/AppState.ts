@@ -42,7 +42,6 @@ export const PRISTINE_APPSTATE: AppState = {
     datePublished: '',
   }),
   HOME: apiPristineResult(null),
-  BUURT: apiPristineResult(null),
 
   // CMS content
   CMS_CONTENT: apiPristineResult({

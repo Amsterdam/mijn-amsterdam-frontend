@@ -9,7 +9,6 @@ import {
 import { fetchAFVAL, fetchAFVALPUNTEN } from './afval/afval';
 import { fetchBELASTING } from './belasting';
 import { fetchBRP } from './brp';
-import { fetchBUURT } from './buurt/buurt';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchERFPACHT } from './erfpacht';
 import { fetchFOCUSAanvragen } from './focus/focus-aanvragen';
@@ -58,9 +57,6 @@ const WMO = callService(fetchWMO);
 const VERGUNNINGEN = callService(fetchVergunningen);
 
 // Location, address, based services
-const BUURT = (sessionID: SessionID, req: Request) =>
-  fetchBUURT(sessionID, getPassthroughRequestHeaders(req), getProfileType(req));
-
 const HOME = (sessionID: SessionID, req: Request) =>
   fetchHOME(sessionID, getPassthroughRequestHeaders(req), getProfileType(req));
 
@@ -99,7 +95,6 @@ const SERVICES_INDEX = {
   FOCUS_STADSPAS,
   WMO,
   VERGUNNINGEN,
-  BUURT,
   HOME,
   AFVAL,
   AFVALPUNTEN,
@@ -153,7 +148,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     AFVALPUNTEN,
     BRP,
     BELASTINGEN,
-    BUURT,
     CMS_CONTENT,
     ERFPACHT,
     FOCUS_AANVRAGEN,
@@ -173,7 +167,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     AFVALPUNTEN,
     BRP,
     BELASTINGEN,
-    BUURT,
     CMS_CONTENT,
     ERFPACHT,
     FOCUS_AANVRAGEN,
@@ -192,7 +185,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     AFVAL,
     AFVALPUNTEN,
     BELASTINGEN,
-    BUURT,
     CMS_CONTENT,
     ERFPACHT,
     NOTIFICATIONS,

@@ -2,7 +2,7 @@
   "kvkNummer": "123123123",
   "adres": {
     "_adresSleutel": "xxxcasdasfada",
-    "inOnderzoek": false,
+    "inOnderzoek": true,
     "huisletter": null,
     "huisnummer": "1",
     "huisnummertoevoeging": null,
@@ -37,7 +37,7 @@
     }
   ],
   "persoon": {
-    "vertrokkenOnbekendWaarheen": false,
+    "vertrokkenOnbekendWaarheen": true,
     "datumVertrekUitNederland": "1967-01-01T00:00:00Z",
     "aanduidingNaamgebruikOmschrijving": "Eigen geslachtsnaam",
     "omschrijvingAdellijkeTitel": "Hertogin",

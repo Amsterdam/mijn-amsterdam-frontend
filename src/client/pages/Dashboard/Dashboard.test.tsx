@@ -43,7 +43,6 @@ const testState = {
       },
     ],
   },
-  BUURT: { status: 'OK', content: { embed: 'http://example.org/map/url/x/y' } },
   HOME: { status: 'OK', content: { latlng: { lat: 5, lng: 40 } } },
   NOTIFICATIONS: {
     status: 'OK',
