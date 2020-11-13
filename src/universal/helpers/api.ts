@@ -3,6 +3,7 @@ export interface ApiErrorResponse<T> {
   content: T;
   status: 'ERROR';
   sentry?: string;
+  id?: string;
 }
 
 export type ApiSuccessResponse<T> = {

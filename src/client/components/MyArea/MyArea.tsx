@@ -122,7 +122,7 @@ export default function MyArea({
             <MyAreaMapOffset>
               <MyAreaMap
                 fullScreen={true}
-                aria-label={`Uitebreide kaart van ${termReplace(
+                aria-label={`Uitgebreide kaart van ${termReplace(
                   ChapterTitles.BUURT
                 ).toLowerCase()}`}
                 options={mapOptions}

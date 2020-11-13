@@ -7,6 +7,7 @@ import {
   loadPolyLineFeatures,
   loadFeatureDetail,
   loadDatasetFeatures,
+  filterDatasetFeatures,
 } from './services/buurt/buurt';
 import { getDatasetEndpointConfig } from './services/buurt/helpers';
 import {
@@ -16,6 +17,7 @@ import {
 } from './services/controller';
 import { fetchCMSCONTENT } from './services';
 import { getPassthroughRequestHeaders } from './helpers/app';
+import { DATASETS } from '../universal/config/buurt';
 
 export const router = express.Router();
 
@@ -56,15 +58,20 @@ router.post(
   BffEndpoints.MAP_DATASETS,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const clusters = await loadClusterDatasets(
-        res.locals.sessionID,
-        req.body
+      const {
+        clusters,
+        errorResults: clusterErrorResults,
+      } = await loadClusterDatasets(res.locals.sessionID, req.body);
+      const {
+        features: polylines,
+        errorResults: polylineErrorResults,
+      } = await loadPolyLineFeatures(res.locals.sessionID, req.body);
+      res.json(
+        apiSuccesResult({
+          features: [...(clusters || []), ...(polylines || [])],
+          errorResults: [...clusterErrorResults, ...polylineErrorResults],
+        })
       );
-      const polylines = await loadPolyLineFeatures(
-        res.locals.sessionID,
-        req.body
-      );
-      res.json(apiSuccesResult([...(clusters || []), ...(polylines || [])]));
       next();
     } catch (error) {
       next(error);
@@ -83,8 +90,18 @@ router.get(
       if (datasetId && id) {
         response = await loadFeatureDetail(res.locals.sessionID, datasetId, id);
       } else {
-        const configs = getDatasetEndpointConfig(datasetIds);
+        const ids = (datasetId ? [datasetId] : datasetIds).flatMap((id) =>
+          DATASETS[id] ? DATASETS[id] : id
+        );
+        const configs = getDatasetEndpointConfig(ids);
         response = await loadDatasetFeatures(res.locals.sessionID, configs);
+
+        if (ids.length) {
+          response.content.features = filterDatasetFeatures(
+            response.content.features,
+            ids
+          );
+        }
       }
       if (response.status !== 'OK') {
         res.status(500);

@@ -276,7 +276,7 @@ function transformAfvalcontainers(
   WFSData: any
 ) {
   const collection: DatasetFeatures = [];
-  if (Array.isArray(WFSData.features)) {
+  if (Array.isArray(WFSData?.features)) {
     for (const feature of WFSData.features) {
       const fractieOmschrijving = feature.properties?.fractie_omschrijving.toLowerCase();
       // Redundant filtering, the API should return with the proper dataset already

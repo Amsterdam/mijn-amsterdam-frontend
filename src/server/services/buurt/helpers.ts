@@ -26,7 +26,7 @@ export function getDatasetEndpointConfig(
         !featureTypes || featureTypes.includes(config.featureType)
     );
 
-  return configs;
+  return Array.from(new Set(configs));
 }
 
 export function recursiveCoordinateSwap(coords: any[]) {

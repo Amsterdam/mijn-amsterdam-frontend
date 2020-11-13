@@ -1,42 +1,14 @@
 import memoryCache from 'memory-cache';
 import Supercluster from 'supercluster';
-import { loadDatasetFeatures } from './buurt';
-import {
-  BUURT_CACHE_TTL_HOURS,
-  DatasetFeatures,
-  MaPointFeature,
-} from './datasets';
+import { filterDatasetFeatures, loadDatasetFeatures } from './buurt';
+import { MaPointFeature } from './datasets';
 import { getDatasetEndpointConfig } from './helpers';
 
 const superClusterCache = new memoryCache.Cache<string, any>();
-
-function filterDatasetFeatures(
-  features: DatasetFeatures,
-  activeDatasetIds: string[]
-) {
-  return features.filter((feature, index): feature is MaPointFeature => {
-    return activeDatasetIds.includes(feature.properties.datasetId);
-  });
-}
-
 const cacheKey = (ids: string[]) => ids.sort().join('-');
 
-async function generateSuperCluster(
-  sessionID: SessionID,
-  datasetIds: string[] = []
-) {
-  const activeCacheKey = cacheKey(datasetIds);
-
-  if (superClusterCache.get(activeCacheKey)) {
-    return superClusterCache.get(activeCacheKey);
-  }
-
-  const configs = getDatasetEndpointConfig(datasetIds, ['Point']);
-  const datasetFeatures = (await loadDatasetFeatures(sessionID, configs))
-    .content;
-  if (!!datasetFeatures?.length) {
-    const features = filterDatasetFeatures(datasetFeatures, datasetIds);
-
+async function generateSuperCluster(features: MaPointFeature[]) {
+  if (!!features?.length) {
     const superClusterIndex = new Supercluster({
       log: true,
       radius: 40,
@@ -44,13 +16,6 @@ async function generateSuperCluster(
       nodeSize: 512,
       maxZoom: 15,
     }).load(features);
-
-    superClusterCache.put(
-      activeCacheKey,
-      superClusterIndex,
-      BUURT_CACHE_TTL_HOURS * 1000 * 60 // HOURS * 60 seconds
-    );
-
     return superClusterIndex;
   }
 }
@@ -79,18 +44,34 @@ export async function loadClusterDatasets(
   sessionID: SessionID,
   { bbox, zoom, datasetIds }: SuperClusterQuery
 ) {
-  const superClusterIndex = await generateSuperCluster(sessionID, datasetIds);
+  const activeCacheKey = cacheKey(datasetIds);
+
+  if (superClusterCache.get(activeCacheKey)) {
+    return superClusterCache.get(activeCacheKey);
+  }
+
+  const configs = getDatasetEndpointConfig(datasetIds, ['Point']);
+  const { features, errorResults } = (
+    await loadDatasetFeatures(sessionID, configs)
+  ).content;
+
+  const filterFeatures = filterDatasetFeatures(features, datasetIds);
+
+  const superClusterIndex = await generateSuperCluster(filterFeatures);
 
   if (superClusterIndex && bbox && zoom) {
-    const data = superClusterIndex.getClusters(bbox, zoom);
-    for (const feature of data) {
+    const clusters = superClusterIndex.getClusters(bbox, zoom);
+    for (const feature of clusters) {
       addExpansionZoom(superClusterIndex, feature);
       // feature.geometry.coordinates = [
       //   feature.geometry.coordinates[1],
       //   feature.geometry.coordinates[0],
       // ];
     }
-    return data;
+    return {
+      clusters,
+      errorResults,
+    };
   }
 
   return null;

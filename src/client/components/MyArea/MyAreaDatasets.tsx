@@ -14,6 +14,8 @@ import {
 import styles from './MyAreaDatasets.module.scss';
 import { MyAreaPolyLineDatasets } from './MyAreaPolyLineDatasets';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
+import { ApiErrorResponse } from '../../../universal/helpers/api';
+import ErrorMessages from '../ErrorMessages/ErrorMessages';
 
 interface MyAreaDatasetsProps {
   datasetIds?: string[];
@@ -25,9 +27,13 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     []
   );
   const [clusterFeatures, setClusterFeatures] = useState<MaPointFeature[]>([]);
+  const [errorResults, setErrorResults] = useState<
+    Array<ApiErrorResponse<null>>
+  >([]);
   const fetchFeatures = useFetchFeatures({
     setPolyLineFeatures,
     setClusterFeatures,
+    setErrorResults,
   });
   const [activeDatasetIds, setActiveDatasetIds] = useActiveDatasetIds();
 
@@ -66,6 +72,20 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
         <div className={styles.FeatureLoader}>
           <span></span>
         </div>
+      )}
+      {!!errorResults.length && (
+        <ErrorMessages
+          key="DatasetErrorMessages"
+          title="U ziet niet alle gegevens die wij willen tonen in Mijn buurt."
+          errors={errorResults.map((result) => {
+            return {
+              stateKey: result?.id || 'BUURT',
+              name: result?.id || 'dataset',
+              error: result?.message,
+            };
+          })}
+          className={styles.ErrorMessages}
+        />
       )}
       <MyAreaPolyLineDatasets
         features={polyLineFeatures}

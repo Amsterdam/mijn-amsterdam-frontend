@@ -1,5 +1,5 @@
 import { apiErrorResult, apiSuccesResult } from '../../../universal/helpers';
-import { ApiResponse, getSettledResult } from '../../../universal/helpers/api';
+import { ApiResponse } from '../../../universal/helpers/api';
 import { DataRequestConfig } from '../../config';
 import { requestData } from '../../helpers';
 import FileCache from '../../helpers/file-cache';
@@ -27,6 +27,15 @@ const fileCache = (id: string, cacheTimeMinutes: number) => {
   }
   return fileCaches[id];
 };
+
+export function filterDatasetFeatures(
+  features: DatasetFeatures,
+  activeDatasetIds: string[]
+) {
+  return features.filter((feature, index): feature is MaPointFeature => {
+    return activeDatasetIds.includes(feature.properties.datasetId);
+  });
+}
 
 async function loadDatasetFeature(
   sessionID: SessionID,
@@ -77,7 +86,7 @@ async function loadDatasetFeature(
     {}
   );
 
-  if (Array.isArray(response.content)) {
+  if (response.status === 'OK' && Array.isArray(response.content)) {
     response.content = response.content.map((feature) => {
       if (
         feature.geometry.type === 'MultiPolygon' ||
@@ -89,16 +98,12 @@ async function loadDatasetFeature(
       }
       return feature;
     });
-  }
 
-  if (
-    datasetConfig.cache !== false &&
-    response.status === 'OK' &&
-    response.content !== null
-  ) {
-    dataCache.setKey('url', datasetConfig.listUrl);
-    dataCache.setKey('response', response);
-    dataCache.save();
+    if (datasetConfig.cache !== false) {
+      dataCache.setKey('url', datasetConfig.listUrl);
+      dataCache.setKey('response', response);
+      dataCache.save();
+    }
   }
 
   return response;
@@ -108,24 +113,33 @@ export async function loadDatasetFeatures(
   sessionID: SessionID,
   configs: Array<[string, DatasetConfig]>
 ) {
-  const requests: Array<Promise<ApiResponse<DatasetFeatures>>> = [];
+  type ApiDatasetResponse = ApiResponse<DatasetFeatures>;
+  const requests: Array<Promise<ApiDatasetResponse>> = [];
 
   for (const datasetConfig of configs) {
     const [id, config] = datasetConfig;
-    requests.push(loadDatasetFeature(sessionID, id, config));
+    requests.push(
+      loadDatasetFeature(sessionID, id, config).then(
+        (result: ApiDatasetResponse) => {
+          return {
+            ...result,
+            id,
+          };
+        }
+      )
+    );
   }
 
-  const results = await Promise.allSettled(requests);
+  const results = await Promise.all(requests);
+  const errorResults = results.filter((result) => result.status === 'ERROR');
+  const features = results
+    .filter((result) => result.status === 'OK')
+    .flatMap((result) => result.content)
+    .filter(
+      (result): result is MaPointFeature | MaPolyLineFeature => result !== null
+    );
 
-  const datasetResults = results.flatMap(
-    (result) => getSettledResult(result).content || []
-  );
-
-  const features = datasetResults.filter(
-    (result): result is MaPointFeature | MaPolyLineFeature => result !== null
-  );
-
-  return apiSuccesResult(features);
+  return apiSuccesResult({ features, errorResults });
 }
 
 export async function loadFeatureDetail(
@@ -168,28 +182,32 @@ export async function loadPolyLineFeatures(
     'MultiPolygon',
     'MultiLineString',
   ]);
-  const requests: Array<Promise<ApiResponse<DatasetFeatures>>> = [];
+  type ApiDatasetResponse = ApiResponse<DatasetFeatures>;
+  const requests: Array<Promise<ApiDatasetResponse>> = [];
+
   const filterParams = {
     FILTER: `<Filter><BBOX><gml:Envelope srsName="EPSG:4326"><gml:lowerCorner>${bbox[0]} ${bbox[1]}</gml:lowerCorner><gml:upperCorner>${bbox[2]} ${bbox[3]}</gml:upperCorner></gml:Envelope></BBOX></Filter>`,
   };
 
   for (const datasetConfig of configs) {
     const [id, config] = datasetConfig;
-    requests.push(loadDatasetFeature(sessionID, id, config, filterParams));
+    requests.push(
+      loadDatasetFeature(sessionID, id, config, filterParams).then(
+        (result: ApiDatasetResponse) => {
+          return {
+            ...result,
+            id,
+          };
+        }
+      )
+    );
   }
 
   const results = await Promise.all(requests);
+  const errorResults = results.filter((result) => result.status === 'ERROR');
   const datasetResults = results.flatMap(({ content }) => content);
   const features = datasetResults.filter(
     (result): result is MaPolyLineFeature => result !== null
   );
-  return features;
-
-  // return dataStore.filter((feature, index): feature is MaPolyLineFeature => {
-  //   return (
-  //     (feature.geometry.type === 'MultiPolygon' ||
-  //       feature.geometry.type === 'MultiLineString') &&
-  //     (!datasetIds || datasetIds.includes(feature.properties.datasetId))
-  //   );
-  // });
+  return { errorResults, features };
 }

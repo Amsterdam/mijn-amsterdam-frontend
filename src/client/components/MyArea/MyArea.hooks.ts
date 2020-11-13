@@ -19,6 +19,7 @@ import {
 import { ApiResponse } from '../../../universal/helpers';
 import { BFFApiUrls } from '../../config/api';
 import styles from './MyAreaDatasets.module.scss';
+import { ApiErrorResponse } from '../../../universal/helpers/api';
 
 const activeDatasetIdsAtom: RecoilState<string[]> = atom<string[]>({
   key: 'activeDatasetIds',
@@ -162,23 +163,27 @@ export function useOnMarkerClick() {
 export function useFetchFeatures({
   setClusterFeatures,
   setPolyLineFeatures,
+  setErrorResults,
 }: {
   setClusterFeatures: (features: MaPointFeature[]) => void;
   setPolyLineFeatures: (features: MaPolyLineFeature[]) => void;
+  setErrorResults: (errorResults: Array<ApiErrorResponse<null>>) => void;
 }) {
   const map = useMapInstance();
 
   const fetch = useCallback(
     async (payload = {}) => {
-      const response: AxiosResponse<ApiResponse<DatasetFeatures>> = await axios(
-        {
-          url: BFFApiUrls.MAP_DATASETS,
-          data: payload,
-          method: 'POST',
-        }
-      );
+      const response: AxiosResponse<ApiResponse<{
+        features: DatasetFeatures;
+        errorResults: Array<ApiErrorResponse<null>>;
+      }>> = await axios({
+        url: BFFApiUrls.MAP_DATASETS,
+        data: payload,
+        method: 'POST',
+      });
 
-      const features = response.data?.content;
+      const features = response.data?.content?.features;
+      const errorResults = response.data?.content?.errorResults;
 
       if (features) {
         const clusterFeatures = features?.filter(
@@ -198,9 +203,12 @@ export function useFetchFeatures({
         if (polyLineFeatures) {
           setPolyLineFeatures(polyLineFeatures);
         }
+        if (errorResults) {
+          setErrorResults(errorResults);
+        }
       }
     },
-    [setPolyLineFeatures, setClusterFeatures]
+    [setPolyLineFeatures, setClusterFeatures, setErrorResults]
   );
 
   const fetchFeatures = useCallback(

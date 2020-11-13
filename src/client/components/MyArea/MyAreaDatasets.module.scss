@@ -97,3 +97,17 @@
     transform: rotate(360deg);
   }
 }
+
+.ErrorMessages {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 499;
+  width: $main-boxed-width;
+  min-height: 4rem;
+  box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, .1);
+  > p {
+    background-color: $color-white;
+  }
+}

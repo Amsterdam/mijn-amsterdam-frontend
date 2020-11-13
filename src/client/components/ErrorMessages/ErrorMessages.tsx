@@ -17,23 +17,32 @@ export interface Error {
 interface ComponentProps {
   className?: string;
   errors: Error[];
+  title?: string;
+  dismisedKey?: string;
 }
 
-export function useErrorMessagesDismissed() {
-  return useSessionStorage('ErrorMessagesDismissed', false);
+export function useErrorMessagesDismissed(
+  dismisedKey: string = 'ErrorMessagesDismissed'
+) {
+  return useSessionStorage(dismisedKey, false);
 }
 
-export default function ErrorMessages({ className, errors }: ComponentProps) {
+export default function ErrorMessages({
+  className,
+  errors,
+  title = 'U ziet misschien niet al uw gegevens.',
+  dismisedKey,
+}: ComponentProps) {
   const el = useRef(null);
   const session = useSessionValue();
   const isAllErrorMessage = errors.some(
-    error => error.stateKey === ALL_ERROR_STATE_KEY
+    (error) => error.stateKey === ALL_ERROR_STATE_KEY
   );
   const [isModalOpen, setModalOpen] = useState(false);
   const top = el.current
     ? (el.current! as HTMLElement).getBoundingClientRect().top
     : 0;
-  const [isDismissed, setDismissed] = useErrorMessagesDismissed();
+  const [isDismissed, setDismissed] = useErrorMessagesDismissed(dismisedKey);
 
   useEffect(() => {
     if (isAllErrorMessage) {
@@ -52,13 +61,12 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
     >
       <p className={styles.MessageBar}>
         <span className={styles.MessageBarInner}>
-          <IconAlert aria-hidden="true" className={styles.AlertIcon} /> U ziet
-          misschien niet al uw gegevens.{' '}
+          <IconAlert aria-hidden="true" className={styles.AlertIcon} /> {title}{' '}
           <Button
             lean={true}
             variant="inline"
             onClick={() => setModalOpen(true)}
-            aria-label="Meer informatie over waarom u mischien niet alle gegevens ziet."
+            aria-label="Meer informatie over waarom u misschien niet alle gegevens ziet."
           >
             Meer informatie
           </Button>
@@ -78,7 +86,7 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
       <Modal
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
-        title="U ziet misschien niet al uw gegevens"
+        title={title}
         contentVerticalPosition={el.current ? Math.max(top, 0) : 'center'}
       >
         <div className={styles.ErrorInfo}>
