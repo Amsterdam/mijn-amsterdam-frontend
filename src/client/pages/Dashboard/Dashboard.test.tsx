@@ -1,12 +1,13 @@
 import { shallow, mount } from 'enzyme';
 import React from 'react';
 import { generatePath } from 'react-router-dom';
-import { MutableSnapshot } from 'recoil';
+import { MutableSnapshot, RecoilState } from 'recoil';
 import { AppRoutes } from '../../../universal/config/routing';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import Dashboard from './Dashboard';
 import { Chapters } from '../../../universal/config/chapter';
+import { AppState } from '../../AppState';
 
 // TIPS, NOTIFICATIONS, CASES, BUURT, HOME
 
@@ -83,10 +84,10 @@ const testState = {
       },
     ],
   },
-};
+} as Partial<AppState>;
 
 function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
+  snapshot.set(appStateAtom as RecoilState<Partial<AppState>>, testState);
 }
 
 describe('<Dashboard />', () => {
