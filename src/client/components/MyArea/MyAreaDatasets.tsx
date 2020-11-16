@@ -16,6 +16,7 @@ import { MyAreaPolyLineDatasets } from './MyAreaPolyLineDatasets';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
 import { ApiErrorResponse } from '../../../universal/helpers/api';
 import ErrorMessages from '../ErrorMessages/ErrorMessages';
+import { useDebouncedCallback } from 'use-debounce/lib';
 
 interface MyAreaDatasetsProps {
   datasetIds?: string[];
@@ -33,11 +34,15 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   const [isFeaturesLoading, setFeaturesLoading] = useState(
     !clusterFeatures.length && !polyLineFeatures.length
   );
+  const setFeaturesLoadingDebounced = useDebouncedCallback((isLoading) => {
+    setFeaturesLoading(isLoading);
+  }, 800);
+
   const fetchFeatures = useFetchFeatures({
     setPolyLineFeatures,
     setClusterFeatures,
     setErrorResults,
-    setFeaturesLoading,
+    setFeaturesLoading: setFeaturesLoadingDebounced.callback,
   });
 
   const [activeDatasetIds, setActiveDatasetIds] = useActiveDatasetIds();

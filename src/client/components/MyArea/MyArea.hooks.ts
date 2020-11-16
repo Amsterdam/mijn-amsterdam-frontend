@@ -169,7 +169,7 @@ export function useFetchFeatures({
   setClusterFeatures: (features: MaPointFeature[]) => void;
   setPolyLineFeatures: (features: MaPolyLineFeature[]) => void;
   setErrorResults: (errorResults: Array<ApiErrorResponse<null>>) => void;
-  setFeaturesLoading: (isLoading: boolean) => void;
+  setFeaturesLoading: any;
 }) {
   const map = useMapInstance();
 
