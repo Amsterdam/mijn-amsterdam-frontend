@@ -77,19 +77,19 @@ export default () => {
 
   const itemsRequested = useMemo(() => {
     const itemsRequested =
-      aanvragen?.filter(item =>
-        item.steps.every(step => step.title !== 'beslissing')
+      aanvragen?.filter((item) =>
+        item.steps.every((step) => step.title !== 'beslissing')
       ) || [];
 
     if (tozoItems?.length && FeatureToggle.tozoActive) {
       itemsRequested.push(
-        ...tozoItems.filter(tozoItem => tozoItem.status !== 'Besluit')
+        ...tozoItems.filter((tozoItem) => tozoItem.status !== 'Besluit')
       );
     }
 
     return addTitleLinkComponent(
       itemsRequested
-        .map(item => {
+        .map((item) => {
           return Object.assign({}, item, {
             displayDatePublished: defaultDateFormat(item.datePublished),
             displayDateStart: defaultDateFormat(item.dateStart),
@@ -101,19 +101,19 @@ export default () => {
 
   const itemsDecided = useMemo(() => {
     const itemsDecided =
-      aanvragen?.filter(item =>
-        item.steps.some(step => step.title === 'beslissing')
+      aanvragen?.filter((item) =>
+        item.steps.some((step) => step.title === 'beslissing')
       ) || [];
 
     if (tozoItems?.length && FeatureToggle.tozoActive) {
       itemsDecided.push(
-        ...tozoItems.filter(tozoItem => tozoItem.status === 'Besluit')
+        ...tozoItems.filter((tozoItem) => tozoItem.status === 'Besluit')
       );
     }
 
     return addTitleLinkComponent(
       itemsDecided
-        .map(item => {
+        .map((item) => {
           return Object.assign({}, item, {
             displayDatePublished: defaultDateFormat(item.datePublished),
             displayDateStart: defaultDateFormat(item.dateStart),
@@ -125,8 +125,7 @@ export default () => {
 
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
-  const hasStadspas = !!FOCUS_STADSPAS?.content?.stadspassaldo?.stadspassen
-    ?.length;
+  const hasStadspas = !!FOCUS_STADSPAS?.content?.stadspassen?.length;
 
   const itemsSpecificationsMonthly = useMemo(
     () => uitkeringsspecificaties?.slice(0, 3) || [],
@@ -138,10 +137,10 @@ export default () => {
   );
 
   const stadspasItems = useMemo(() => {
-    if (!FOCUS_STADSPAS.content?.stadspassaldo?.stadspassen) {
+    if (!FOCUS_STADSPAS.content?.stadspassen) {
       return [];
     }
-    return FOCUS_STADSPAS.content.stadspassaldo.stadspassen.map(stadspas => {
+    return FOCUS_STADSPAS.content.stadspassen.map((stadspas) => {
       return {
         ...stadspas,
         displayDatumAfloop: defaultDateFormat(stadspas.datumAfloop),
@@ -175,7 +174,7 @@ export default () => {
         </p>
         {FeatureToggle.stadpasActive &&
           !isLoadingStadspas &&
-          FOCUS_STADSPAS.content?.stadspassaldo?.isPartnerpas && (
+          FOCUS_STADSPAS.content?.isPartnerpas && (
             <p>
               Hebt u kinderen of een partner met een Stadspas? 1 volwassene
               krijgt alle Stadspassen van uw gezin te zien. De andere
@@ -202,7 +201,7 @@ export default () => {
         )}
         <AlertDocumentDownloadsDisabled />
         {!FeatureToggle.tozo3active &&
-          tozoItems?.some(item => item.productTitle === 'Tozo 2') && (
+          tozoItems?.some((item) => item.productTitle === 'Tozo 2') && (
             <Alert type="warning">
               <p>
                 Hebt u Tozo 3 aangevraagd (vanaf 1 oktober 2020)? Wij werken er

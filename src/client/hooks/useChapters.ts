@@ -33,7 +33,7 @@ function isChapterActive(
     case Chapters.INKOMEN:
       const hasStadspasSaldo =
         FeatureToggle.stadpasActive &&
-        !!FOCUS_STADSPAS?.content?.stadspassaldo?.stadspassen?.length;
+        !!FOCUS_STADSPAS?.content?.stadspassen?.length;
       const isLoadingStadspasSaldo =
         FeatureToggle.stadpasActive && isLoading(FOCUS_STADSPAS);
       return (
@@ -115,7 +115,7 @@ export function useChapters(): ChaptersState {
   const appState = useAppStateGetter();
   const chapterItems = useChapterMenuItems();
 
-  const items = chapterItems.filter(item => {
+  const items = chapterItems.filter((item) => {
     // Check to see if Chapter has been loaded or if it is directly available
     return isChapterActive(item, appState);
   });
