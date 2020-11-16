@@ -109,7 +109,9 @@ export function useAppStateFallbackService({
  */
 export function useAppState() {
   const hasEventSourceSupport = 'EventSource' in window; // IE11 and early edge versions don't have EventSource support. These browsers will use the the Fallback service endpoint.
-  const [isFallbackServiceEnabled, setFallbackServiceEnabled] = useState(false);
+  const [isFallbackServiceEnabled, setFallbackServiceEnabled] = useState(
+    !hasEventSourceSupport
+  );
 
   const profileType = useProfileTypeValue();
   const isOptIn = useOptInValue();
