@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { generatePath, Link } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { isLoading } from '../../../universal/helpers';
 import {
@@ -15,9 +15,9 @@ import MyAreaDashboard from '../../components/MyArea/MyAreaDashboard';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
-import styles from './Dashboard.module.scss';
 import { useAppStateNotifications } from '../../hooks/useNotifications';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import styles from './Dashboard.module.scss';
 
 const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
@@ -53,7 +53,7 @@ export default () => {
         <PageHeading>
           <Link
             className={styles.MyNotificationsHeadingLink}
-            to={AppRoutes.NOTIFICATIONS}
+            to={generatePath(AppRoutes.NOTIFICATIONS)}
           >
             Actueel
           </Link>

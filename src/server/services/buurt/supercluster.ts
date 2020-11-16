@@ -1,7 +1,7 @@
 import memoryCache from 'memory-cache';
-import Supercluster from 'supercluster';
+import Supercluster, { AnyProps, PointFeature } from 'supercluster';
 import { filterDatasetFeatures, loadDatasetFeatures } from './buurt';
-import { MaPointFeature } from './datasets';
+import { MaPointFeature, MaSuperClusterFeature } from './datasets';
 import { getDatasetEndpointConfig } from './helpers';
 
 const superClusterCache = new memoryCache.Cache<string, any>();
@@ -54,25 +54,19 @@ export async function loadClusterDatasets(
   const { features, errorResults } = (
     await loadDatasetFeatures(sessionID, configs)
   ).content;
-
+  let clusters: PointFeature<AnyProps>[] = [];
   const filterFeatures = filterDatasetFeatures(features, datasetIds);
-
   const superClusterIndex = await generateSuperCluster(filterFeatures);
 
   if (superClusterIndex && bbox && zoom) {
-    const clusters = superClusterIndex.getClusters(bbox, zoom);
+    clusters = superClusterIndex.getClusters(bbox, zoom);
     for (const feature of clusters) {
       addExpansionZoom(superClusterIndex, feature);
-      // feature.geometry.coordinates = [
-      //   feature.geometry.coordinates[1],
-      //   feature.geometry.coordinates[0],
-      // ];
     }
-    return {
-      clusters,
-      errorResults,
-    };
   }
 
-  return null;
+  return {
+    clusters,
+    errorResults,
+  };
 }

@@ -52,9 +52,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   }, [fetchFeatures, activeDatasetIds]);
 
   useEffect(() => {
-    if (activeDatasetIds.length) {
-      fetchFeatures(activeDatasetIds);
-    }
+    fetchFeatures(activeDatasetIds);
   }, [activeDatasetIds, fetchFeatures]);
 
   // Set the zIndex of the markerpane. These markers will
