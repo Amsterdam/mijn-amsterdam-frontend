@@ -70,6 +70,9 @@ export const DocumentTitles = {
   [AppRoutes[
     'INKOMEN/STADSPAS/AANVRAAG'
   ]]: `Stadspas | ${ChapterTitles.INKOMEN}`,
+  [AppRoutes[
+    'INKOMEN/STADSPAS/SALDO'
+  ]]: `Stadspas saldo | ${ChapterTitles.INKOMEN}`,
   [AppRoutes['INKOMEN/TOZO']]: `Tozo | ${ChapterTitles.INKOMEN}`,
   [AppRoutes[
     'INKOMEN/SPECIFICATIES'
