@@ -54,7 +54,7 @@ export const DEFAULT_MAP_OPTIONS = {
   center: { lat: DEFAULT_LAT, lng: DEFAULT_LNG },
   zoom: HOOD_ZOOM,
   maxZoom: 16,
-  minZoom: 8,
+  minZoom: 9,
   crs: getCrsRd(),
   zoomControl: false,
   attributionControl: true,
