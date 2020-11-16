@@ -164,15 +164,19 @@ export function useFetchFeatures({
   setClusterFeatures,
   setPolyLineFeatures,
   setErrorResults,
+  setFeaturesLoading,
 }: {
   setClusterFeatures: (features: MaPointFeature[]) => void;
   setPolyLineFeatures: (features: MaPolyLineFeature[]) => void;
   setErrorResults: (errorResults: Array<ApiErrorResponse<null>>) => void;
+  setFeaturesLoading: (isLoading: boolean) => void;
 }) {
   const map = useMapInstance();
 
   const fetch = useCallback(
     async (payload = {}) => {
+      setFeaturesLoading(true);
+
       const response: AxiosResponse<ApiResponse<{
         features: DatasetFeatures;
         errorResults: Array<ApiErrorResponse<null>>;
@@ -206,9 +210,16 @@ export function useFetchFeatures({
         if (errorResults) {
           setErrorResults(errorResults);
         }
+
+        setFeaturesLoading(false);
       }
     },
-    [setPolyLineFeatures, setClusterFeatures, setErrorResults]
+    [
+      setPolyLineFeatures,
+      setClusterFeatures,
+      setErrorResults,
+      setFeaturesLoading,
+    ]
   );
 
   const fetchFeatures = useCallback(

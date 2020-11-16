@@ -66,6 +66,7 @@ router.post(
         features: polylines,
         errorResults: polylineErrorResults,
       } = await loadPolyLineFeatures(res.locals.sessionID, req.body);
+
       res.json(
         apiSuccesResult({
           features: [...(clusters || []), ...(polylines || [])],

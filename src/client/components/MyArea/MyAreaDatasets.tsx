@@ -30,11 +30,16 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   const [errorResults, setErrorResults] = useState<
     Array<ApiErrorResponse<null>>
   >([]);
+  const [isFeaturesLoading, setFeaturesLoading] = useState(
+    !clusterFeatures.length && !polyLineFeatures.length
+  );
   const fetchFeatures = useFetchFeatures({
     setPolyLineFeatures,
     setClusterFeatures,
     setErrorResults,
+    setFeaturesLoading,
   });
+
   const [activeDatasetIds, setActiveDatasetIds] = useActiveDatasetIds();
 
   const onUpdate = useCallback(() => {
@@ -68,9 +73,9 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
 
   return (
     <>
-      {!clusterFeatures.length && !polyLineFeatures.length && (
+      {isFeaturesLoading && (
         <div className={styles.FeatureLoader}>
-          <span></span>
+          <span>Kaartgegevens laden...</span>
         </div>
       )}
       {!!errorResults.length && (
