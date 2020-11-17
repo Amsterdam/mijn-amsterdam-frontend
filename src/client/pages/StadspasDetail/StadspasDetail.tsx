@@ -56,7 +56,7 @@ function TransactionOverview({ transactions }: TransactionOverviewProps) {
   return (
     <div className={styles.TransactionsOverview}>
       <div className={styles.TransactionLabels}>
-        <span>Uitgaven</span>
+        <span>Winkels</span>
         <span>Bedrag</span>
       </div>
       <ul className={styles.Transactions}>
