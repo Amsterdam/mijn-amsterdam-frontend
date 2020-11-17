@@ -675,7 +675,7 @@ Array [
         "decision": "toekenning",
         "description": "
             <p>
-              U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer
+              U hebt recht op een bijstandsuitkering. Bekijk de brief voor meer
               details.
             </p>
             <p>
@@ -784,7 +784,7 @@ Array [
       Object {
         "datePublished": "2019-05-07T15:05:51+02:00",
         "decision": "afwijzing",
-        "description": "U heeft geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.",
+        "description": "U hebt geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.",
         "documents": Array [
           Object {
             "datePublished": "2019-05-07T15:05:51+02:00",
@@ -908,7 +908,7 @@ Array [
         "decision": "toekenning",
         "description": "
             <p>
-              U heeft recht op een bijstandsuitkering. Bekijk de brief voor meer
+              U hebt recht op een bijstandsuitkering. Bekijk de brief voor meer
               details.
             </p>
             <p>
