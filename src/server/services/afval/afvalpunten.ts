@@ -205,12 +205,6 @@ export async function fetchAfvalpunten(latlng: LatLngObject | null) {
     | AfvalpuntenResponseData
     | undefined = fileCache.getKey('responseData');
 
-  console.log(
-    'afvalpinten',
-    fileCache.cache._persisted.responseData,
-    cachedFileContents
-  );
-
   if (cachedFileContents) {
     const responseData: AfvalpuntenResponseData = {
       ...cachedFileContents,
