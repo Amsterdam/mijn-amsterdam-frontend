@@ -282,7 +282,7 @@ export const contentLabels: LabelData = {
             </p>
             <p>
               <a href="${FocusExternalUrls.StadsPas}" rel="external noopener noreferrer">
-                Meer informatie over de stadspas
+                Meer informatie over de Stadspas
               </a>
             </p>
           `,
