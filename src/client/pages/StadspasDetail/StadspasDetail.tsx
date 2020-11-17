@@ -1,14 +1,15 @@
 import classnames from 'classnames';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { FocusStadspasBudget } from '../../../server/services/focus/focus-combined';
 import { FocusStadspasTransaction } from '../../../server/services/focus/focus-stadspas';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
-  isError,
-  isLoading,
   apiPristineResult,
   ApiResponse,
   directApiUrl,
+  isError,
+  isLoading,
 } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { IconChevronRight } from '../../assets/icons';
@@ -24,11 +25,10 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
-import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './StadspasDetail.module.scss';
-import { FocusStadspasBudget } from '../../../server/services/focus/focus-combined';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
+import { useAppStateGetter } from '../../hooks/useAppState';
+import styles from './StadspasDetail.module.scss';
 
 interface TransactionProps {
   value: string;
