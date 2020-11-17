@@ -229,7 +229,7 @@ export default () => {
       <SectionCollapsible
         id="SectionCollapsible-income-request-process"
         title="Lopende aanvragen"
-        startCollapsed={false}
+        startCollapsed={FeatureToggle.stadpasActive && hasStadspas}
         isLoading={isLoadingFocus}
         hasItems={hasActiveRequests}
         track={{
@@ -252,7 +252,7 @@ export default () => {
 
       <SectionCollapsible
         id="SectionCollapsible-income-request-process-decisions"
-        startCollapsed={hasActiveRequests}
+        startCollapsed={true}
         isLoading={isLoadingFocus}
         hasItems={hasActiveDescisions}
         title="Eerdere aanvragen"
@@ -272,7 +272,7 @@ export default () => {
       {FeatureToggle.focusCombinedActive && (
         <SectionCollapsible
           id="SectionCollapsible-income-specifications-monthly"
-          startCollapsed={hasActiveRequests || hasActiveDescisions}
+          startCollapsed={true}
           isLoading={isLoadingFocusSpecificaties}
           title="Uitkeringsspecificaties"
           hasItems={!!uitkeringsspecificaties?.length}
@@ -299,7 +299,7 @@ export default () => {
       {FeatureToggle.focusCombinedActive && (
         <SectionCollapsible
           id="SectionCollapsible-income-specifications-yearly"
-          startCollapsed={hasActiveRequests || hasActiveDescisions}
+          startCollapsed={true}
           isLoading={isLoadingFocus}
           title="Jaaropgaven"
           hasItems={!!jaaropgaven?.length}

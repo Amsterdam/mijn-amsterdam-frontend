@@ -28,14 +28,14 @@ export default () => {
     if (!WMO.content?.length) {
       return [];
     }
-    return addTitleLinkComponent(WMO.content?.filter(item => item.isActual));
+    return addTitleLinkComponent(WMO.content?.filter((item) => item.isActual));
   }, [WMO]);
 
   const itemsPrevious = useMemo(() => {
     if (!WMO.content?.length) {
       return [];
     }
-    return addTitleLinkComponent(WMO.content?.filter(item => !item.isActual));
+    return addTitleLinkComponent(WMO.content?.filter((item) => !item.isActual));
   }, [WMO]);
 
   const hasActualItems = !!itemsActual.length;
@@ -88,7 +88,7 @@ export default () => {
         title="Eerdere regelingen en hulpmiddelen"
         noItemsMessage="U hebt geen eerdere regelingen en hulpmiddelen."
         hasItems={!!itemsPrevious.length}
-        startCollapsed={hasActualItems}
+        startCollapsed={true}
         isLoading={isLoading(WMO)}
         track={{
           category:
