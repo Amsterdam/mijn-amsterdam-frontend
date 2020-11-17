@@ -59,17 +59,16 @@ export default () => {
         {!!TozoItem && (
           <>
             <p>
-              Onderstaand ziet u de status van uw aanvraag voor een{' '}
-              {TozoItem?.productTitle || 'Tozo'}-uitkering en/of een{' '}
-              {TozoItem?.productTitle || 'Tozo'}
-              -lening. Indien u beide heeft aangevraagd, ontvangt u voor beide
-              een apart besluit. Informatie die u hier ziet is een werkdag
-              vertraagd.
+              Hieronder ziet u hoe het staat met uw aanvraag voor een uitkering
+              of lening van de {TozoItem?.productTitle || 'Tozo'}. Als u een
+              uitkering én een lening hebt aangevraagd, dan krijgt u voor
+              allebei apart een besluit. Het duurt maximaal 3 dagen voordat uw
+              documenten in Mijn Amsterdam staan.
             </p>
             {!isLoading(FOCUS_TOZO) && (
               <p>
                 <Linkd external={true} href={ExternalUrls.WPI_TOZO}>
-                  Meer informatie over Tozo
+                  Meer informatie over de Tozo
                 </Linkd>
               </p>
             )}
