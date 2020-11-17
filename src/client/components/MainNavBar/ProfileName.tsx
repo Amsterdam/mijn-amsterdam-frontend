@@ -24,7 +24,7 @@ function CommercialProfileName({
   isActive,
   tutorial,
 }: CommercialProfileNameProps) {
-  const label = 'Mijn onderneming';
+  const label = company?.onderneming.handelsnaam || 'Mijn onderneming';
   return (
     <Button
       onClick={onClick}

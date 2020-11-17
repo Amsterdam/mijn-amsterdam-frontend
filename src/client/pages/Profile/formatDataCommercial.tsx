@@ -34,7 +34,7 @@ const onderneming: ProfileLabels<Partial<Onderneming>> = {
     (handelsnamen: string[]) =>
       handelsnamen?.length ? (
         <>
-          {handelsnamen.map(handelsnaam => (
+          {handelsnamen.map((handelsnaam) => (
             <span key={handelsnaam}>
               {handelsnaam}
               <br />
@@ -50,7 +50,7 @@ const onderneming: ProfileLabels<Partial<Onderneming>> = {
     (activiteiten: string[]) =>
       activiteiten?.length ? (
         <>
-          {activiteiten.map(activiteit => (
+          {activiteiten.map((activiteit) => (
             <span key={activiteit}>
               {activiteit}
               <br />
@@ -61,7 +61,7 @@ const onderneming: ProfileLabels<Partial<Onderneming>> = {
   ],
   datumAanvang: [
     'Startdatum onderneming',
-    value => (value ? defaultDateFormat(value) : null),
+    (value) => (value ? defaultDateFormat(value) : null),
   ],
   datumEinde: [
     'Einddatum onderneming',
@@ -82,7 +82,7 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
             .filter((handelsnaam, index) =>
               isHoofdvestiging ? index === 0 : true
             )
-            .map(handelsnaam => (
+            .map((handelsnaam) => (
               <span key={handelsnaam}>
                 {handelsnaam}
                 <br />
@@ -91,8 +91,6 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
         </>
       ) : null,
   ],
-  isHoofdvestiging: ['Hoofdvestiging', value => (value ? 'Ja' : null)],
-
   bezoekadres: [
     'Bezoekadres',
     (adres: Adres) =>
@@ -119,13 +117,12 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
       </LinkdInline>
     ),
   ],
-
   websites: [
     'Website',
     (urls: string[]) =>
       urls?.length ? (
         <>
-          {urls.map(url => (
+          {urls.map((url) => (
             <span key={url}>
               <LinkdInline key={url} href={url} external={true}>
                 {url.replace(/(https?:\/\/)/, '')}
@@ -151,7 +148,7 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
     (activiteiten: string[]) =>
       activiteiten?.length ? (
         <>
-          {activiteiten.map(activiteit => (
+          {activiteiten.map((activiteit) => (
             <span key={activiteit}>
               {activiteit}
               <br />
@@ -162,17 +159,19 @@ const vestiging: ProfileLabels<Partial<Vestiging>> = {
   ],
   datumAanvang: [
     'Datum vestiging',
-    value => (value ? defaultDateFormat(value) : null),
+    (value) => (value ? defaultDateFormat(value) : null),
   ],
   datumEinde: [
     'Datum sluiting',
-    value => (value ? defaultDateFormat(value) : null),
+    (value) => (value ? defaultDateFormat(value) : null),
   ],
 };
 
-const rechtspersoon: ProfileLabels<Partial<Rechtspersoon> & {
-  bsn?: string;
-}> = {
+const rechtspersoon: ProfileLabels<
+  Partial<Rechtspersoon> & {
+    bsn?: string;
+  }
+> = {
   rsin: 'RSIN',
   kvkNummer: 'KVKnummer',
   bsn: 'BSN',
@@ -220,14 +219,14 @@ export function formatKvkProfileData(kvkData: KVKData): KvkProfileData {
   };
 
   if (kvkData.rechtspersonen?.length) {
-    profileData.rechtspersonen = kvkData.rechtspersonen.map(persoon =>
+    profileData.rechtspersonen = kvkData.rechtspersonen.map((persoon) =>
       format(kvkInfoLabels.rechtspersoon, persoon, kvkData)
     );
   }
 
   if (kvkData.vestigingen?.length) {
     const hoofdVestiging = kvkData.vestigingen.find(
-      vestiging => vestiging.isHoofdvestiging
+      (vestiging) => vestiging.isHoofdvestiging
     );
 
     profileData.hoofdVestiging = hoofdVestiging
@@ -235,18 +234,18 @@ export function formatKvkProfileData(kvkData: KVKData): KvkProfileData {
       : null;
 
     profileData.vestigingen = kvkData.vestigingen
-      .filter(vestiging => !vestiging.isHoofdvestiging)
-      .map(vestiging => format(kvkInfoLabels.vestiging, vestiging, kvkData));
+      .filter((vestiging) => !vestiging.isHoofdvestiging)
+      .map((vestiging) => format(kvkInfoLabels.vestiging, vestiging, kvkData));
   }
 
   if (kvkData.aandeelhouders?.length) {
-    profileData.aandeelhouders = kvkData.aandeelhouders.map(aandeelhouder =>
+    profileData.aandeelhouders = kvkData.aandeelhouders.map((aandeelhouder) =>
       format(kvkInfoLabels.aandeelhouder, aandeelhouder, kvkData)
     );
   }
 
   if (kvkData.bestuurders?.length) {
-    profileData.bestuurders = kvkData.bestuurders.map(bestuurder =>
+    profileData.bestuurders = kvkData.bestuurders.map((bestuurder) =>
       format(kvkInfoLabels.bestuurder, bestuurder, kvkData)
     );
   }

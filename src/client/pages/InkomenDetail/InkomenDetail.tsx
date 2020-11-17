@@ -33,7 +33,7 @@ export function altDocumentContent(
     statusLineItem.isRecent &&
     !statusLineItem.isActive
   ) {
-    return <b>U heeft deze brief per post ontvangen.</b>;
+    return <b>U hebt deze brief per post ontvangen.</b>;
   }
 
   return ['Informatie nodig', 'Besluit'].includes(statusLineItem.status) ? (
@@ -45,7 +45,7 @@ export function altDocumentContent(
       </b>
     ) : (
       <b>
-        U heeft
+        U hebt
         {statusLineItem.status === 'Besluit' ? 'dit besluit' : 'deze brief'} per
         post ontvangen.
       </b>

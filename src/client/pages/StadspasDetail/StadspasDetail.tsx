@@ -1,14 +1,15 @@
 import classnames from 'classnames';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { FocusStadspasBudget } from '../../../server/services/focus/focus-combined';
 import { FocusStadspasTransaction } from '../../../server/services/focus/focus-stadspas';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
-  isError,
-  isLoading,
   apiPristineResult,
   ApiResponse,
   directApiUrl,
+  isError,
+  isLoading,
 } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import { IconChevronRight } from '../../assets/icons';
@@ -24,11 +25,10 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
-import { useAppStateGetter } from '../../hooks/useAppState';
-import styles from './StadspasDetail.module.scss';
-import { FocusStadspasBudget } from '../../../server/services/focus/focus-combined';
 import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
+import { useAppStateGetter } from '../../hooks/useAppState';
+import styles from './StadspasDetail.module.scss';
 
 interface TransactionProps {
   value: string;
@@ -53,28 +53,22 @@ interface TransactionOverviewProps {
 }
 
 function TransactionOverview({ transactions }: TransactionOverviewProps) {
-  const hasTransactions = !!transactions?.length;
   return (
     <div className={styles.TransactionsOverview}>
       <div className={styles.TransactionLabels}>
         <span>Uitgaven</span>
         <span>Bedrag</span>
       </div>
-      {!hasTransactions && (
-        <p className={styles.NoTransactions}>U heeft nog geen transacties</p>
-      )}
-      {hasTransactions && (
-        <ul className={styles.Transactions}>
-          {transactions!.map((transaction) => (
-            <Transaction
-              key={transaction.id}
-              value={transaction.amount}
-              title={transaction.title}
-              date={transaction.date}
-            />
-          ))}
-        </ul>
-      )}
+      <ul className={styles.Transactions}>
+        {transactions!.map((transaction) => (
+          <Transaction
+            key={transaction.id}
+            value={transaction.amount}
+            title={transaction.title}
+            date={transaction.date}
+          />
+        ))}
+      </ul>
     </div>
   );
 }
@@ -91,7 +85,7 @@ function BudgetBalance({ budget, dateEnd }: BudgetBalanceProps) {
       <li
         className={styles.AmountSpent}
         style={{
-          width: `${(100 / budget.assigned) * budget.balance}%`,
+          width: `${100 - (100 / budget.assigned) * budget.balance}%`,
         }}
       >
         <span className={styles.Label}>
@@ -99,7 +93,12 @@ function BudgetBalance({ budget, dateEnd }: BudgetBalanceProps) {
           {budget.assigned - budget.balance}
         </span>
       </li>
-      <li className={styles.AmountLeft}>
+      <li
+        className={styles.AmountLeft}
+        style={{
+          width: budget.assigned === budget.balance ? '100%' : 'auto',
+        }}
+      >
         <span className={styles.Label}>
           {isPhoneScreen ? 'Te' : 'Nog te'} besteden vóór&nbsp;
           <time dateTime={dateEnd}>{defaultDateFormat(dateEnd)}</time>
@@ -125,12 +124,9 @@ function StadspasBudget({
     false
   );
 
-  const [api, fetchTransactions] = useDataApi<
-    ApiResponse<FocusStadspasTransaction[]>
-  >(
+  const [api] = useDataApi<ApiResponse<FocusStadspasTransaction[]>>(
     {
       url: directApiUrl(urlTransactions),
-      postpone: true,
     },
     apiPristineResult([])
   );
@@ -138,19 +134,15 @@ function StadspasBudget({
   const {
     data: { content: transactions },
     isLoading: isLoadingTransactions,
-    isDirty,
     isError,
   } = api;
-
-  useEffect(() => {
-    if (isTransactionOverviewActive && !isDirty) {
-      fetchTransactions();
-    }
-  }, [isTransactionOverviewActive, fetchTransactions, isDirty]);
 
   return (
     <>
       <PageContent className={styles.PageContentBalance}>
+        <Heading className={styles.PageContentBalanceHeading}>
+          {budget.description}
+        </Heading>
         <BudgetBalance budget={budget} dateEnd={dateEnd} />
       </PageContent>
       <PageContent
@@ -167,35 +159,32 @@ function StadspasBudget({
         {!!isTransactionOverviewActive && !isLoadingTransactions && (
           <TransactionOverview transactions={transactions} />
         )}
-        {isLoadingTransactions && (
-          <LoadingContent
-            barConfig={[
-              ['100%', '2rem', '1rem'],
-              ['80%', '2rem', '1rem'],
-              ['60%', '2rem', '1rem'],
-            ]}
-          />
-        )}
         {isError && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen transacties tonen</p>
           </Alert>
         )}
-        <Button
-          className={classnames(
-            styles.ToggleTransactionsOveview,
-            isTransactionOverviewActive && styles.isTransactionOverviewActive
-          )}
-          icon={IconChevronRight}
-          variant="plain"
-          lean={true}
-          onClick={() =>
-            toggleTransactionOverview(!isTransactionOverviewActive)
-          }
-        >
-          {isTransactionOverviewActive ? 'Verberg' : 'Laat zien'} wat ik heb
-          uitgegeven
-        </Button>
+        {!!transactions?.length ? (
+          <Button
+            className={classnames(
+              styles.ToggleTransactionsOveview,
+              isTransactionOverviewActive && styles.isTransactionOverviewActive
+            )}
+            icon={IconChevronRight}
+            variant="plain"
+            lean={true}
+            onClick={() =>
+              toggleTransactionOverview(!isTransactionOverviewActive)
+            }
+          >
+            {isTransactionOverviewActive ? 'Verberg' : 'Laat zien'} wat ik heb
+            uitgegeven
+          </Button>
+        ) : (
+          !isLoadingTransactions && (
+            <p className={styles.NoTransactions}>U hebt nog geen transacties</p>
+          )
+        )}
       </PageContent>
     </>
   );
@@ -205,7 +194,7 @@ export default () => {
   const { FOCUS_STADSPAS } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
   const stadspasItem = id
-    ? FOCUS_STADSPAS?.content?.stadspassen.find(
+    ? FOCUS_STADSPAS?.content?.stadspassaldo?.stadspassen.find(
         (pass) => pass.id === parseInt(id, 10)
       )
     : null;
@@ -245,7 +234,7 @@ export default () => {
         {isLoadingStadspas && <LoadingContent />}
       </PageContent>
       {!!stadspasItem && (
-        <PageContent className={styles.PageContentBalance}>
+        <PageContent className={styles.PageContentStadspasInfo}>
           <Heading size="large">{stadspasItem?.naam}</Heading>
           <p className={styles.StadspasNummer}>
             Stadspasnummer: {stadspasItem.pasnummer}
@@ -255,7 +244,7 @@ export default () => {
       {stadspasItem?.budgets.map((budget) => (
         <StadspasBudget
           urlTransactions={budget.urlTransactions}
-          key={budget.title}
+          key={budget.code}
           budget={budget}
           dateEnd={stadspasItem.datumAfloop}
         />

@@ -8,6 +8,7 @@ import {
   InfoPanel,
   InfoPanelCollapsible,
   Linkd,
+  LinkdInline,
   LoadingContent,
   PageContent,
   PageHeading,
@@ -164,6 +165,20 @@ export default function ProfileCommercial() {
           profileData={kvkProfileData.bestuurders}
         />
       )}
+      <PageContent>
+        <p className={styles.SuppressedParagraph}>
+          Hebt u de afgelopen 14 dagen uw KvK-gegevens gewijzigd? Dan kan het
+          zijn dat u die wijziging nog niet ziet in Mijn Amsterdam.
+        </p>
+        <p className={styles.SuppressedParagraph}>
+          U kunt deze gegevens niet gebruiken als uittreksel. Een gewaarmerkt
+          uittreksel vraagt u aan bij de de{' '}
+          <LinkdInline href="https://kvk.nl" external={true}>
+            Kamer van Koophandel
+          </LinkdInline>
+          .
+        </p>
+      </PageContent>
     </DetailPage>
   );
 }
