@@ -25,6 +25,8 @@ export interface FocusStadspasBudget {
   balance: number;
   assigned: number;
   title: string;
+  description: string;
+  code: string;
   urlTransactions: string;
 }
 

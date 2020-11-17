@@ -6,11 +6,14 @@
 }
 
 .DetailPageContent {
-  margin-bottom: 6rem;
+  margin-bottom: 5rem;
+
+  + .PageContentStadspasInfo {
+    border-top: .1rem solid $color-neutral-grey2;
+  }
 }
 
 .PageContentBalance {
-  padding-top: 2.4rem;
   max-width: 96rem;
   padding-left: 16rem;
   margin: 0 auto;
@@ -26,6 +29,16 @@
     margin-left: 1rem;
     margin-right: 1rem;
   }
+
+}
+
+.PageContentStadspasInfo {
+  @extend .PageContentBalance;
+  padding-top: 2.4rem;
+}
+
+.PageContentBalanceHeading {
+  margin-bottom: 1rem;
 }
 
 .Balance {
@@ -192,4 +205,5 @@
 
 .NoTransactions {
   text-align: center;
+  font-weight: 500;
 }
