@@ -280,7 +280,7 @@ export default () => {
             category: 'Inkomen en Stadspas overzicht / Uitkeringsspecificaties',
             name: 'Datatabel',
           }}
-          noItemsMessage="Er zijn op dit moment geen uitkeringgspecificaties."
+          noItemsMessage="Er zijn op dit moment geen uitkeringsspecificaties."
         >
           <Table
             className={specicationsStyles.SpecificationsTable}
