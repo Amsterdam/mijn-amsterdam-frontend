@@ -38,8 +38,6 @@ export default () => {
     return addTitleLinkComponent(WMO.content?.filter((item) => !item.isActual));
   }, [WMO]);
 
-  const hasActualItems = !!itemsActual.length;
-
   return (
     <OverviewPage className={styles.ZorgOverviewPage}>
       <PageHeading isLoading={isLoading(WMO)} icon={<ChapterIcon />}>
