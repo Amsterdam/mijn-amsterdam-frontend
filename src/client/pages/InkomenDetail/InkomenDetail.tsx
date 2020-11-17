@@ -33,7 +33,7 @@ export function altDocumentContent(
     statusLineItem.isRecent &&
     !statusLineItem.isActive
   ) {
-    return <b>U heeft deze brief per post ontvangen.</b>;
+    return <b>U hebt deze brief per post ontvangen.</b>;
   }
 
   return ['Informatie nodig', 'Besluit'].includes(statusLineItem.status) ? (
@@ -45,7 +45,7 @@ export function altDocumentContent(
       </b>
     ) : (
       <b>
-        U heeft
+        U hebt
         {statusLineItem.status === 'Besluit' ? 'dit besluit' : 'deze brief'} per
         post ontvangen.
       </b>
@@ -60,10 +60,10 @@ export default () => {
 
   const { id } = useParams();
   const aanvragen = (FOCUS_AANVRAGEN.content || []) as FocusItem[];
-  const focusItem = aanvragen.find(item => item.id === id);
+  const focusItem = aanvragen.find((item) => item.id === id);
   const noContent = !isLoading(FOCUS_AANVRAGEN) && !focusItem;
   const hasDecision =
-    focusItem && focusItem.steps.some(step => step.status === 'Besluit');
+    focusItem && focusItem.steps.some((step) => step.status === 'Besluit');
   let title = 'Onbekend item';
 
   if (focusItem) {

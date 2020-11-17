@@ -10,7 +10,7 @@ export function addTitleLinkComponent(
   items: any[],
   titleKey: string = 'title'
 ) {
-  return items.map(item => {
+  return items.map((item) => {
     if (!item.link?.to) {
       return item;
     }
@@ -38,7 +38,7 @@ interface TdValueProps {
 
 function TdValue({ value }: TdValueProps) {
   if (value !== '' && value !== 0 && !value) {
-    return <span>&mdash;</span>;
+    return <span>&nbsp;</span>;
   }
   if (React.isValidElement(value)) {
     return value;
@@ -58,7 +58,7 @@ export default function Table({
   );
   const hasDisplayPropTableHeadingLabels = !!Object.keys(
     displayPropsFinal
-  ).filter(titleKey => !!displayPropsFinal[titleKey]).length;
+  ).filter((titleKey) => !!displayPropsFinal[titleKey]).length;
 
   return (
     <table className={classnames(styles.Table, className)}>
