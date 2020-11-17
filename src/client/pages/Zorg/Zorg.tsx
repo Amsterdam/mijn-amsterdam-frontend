@@ -28,17 +28,15 @@ export default () => {
     if (!WMO.content?.length) {
       return [];
     }
-    return addTitleLinkComponent(WMO.content?.filter((item) => item.isActual));
+    return addTitleLinkComponent(WMO.content?.filter(item => item.isActual));
   }, [WMO]);
 
   const itemsPrevious = useMemo(() => {
     if (!WMO.content?.length) {
       return [];
     }
-    return addTitleLinkComponent(WMO.content?.filter((item) => !item.isActual));
+    return addTitleLinkComponent(WMO.content?.filter(item => !item.isActual));
   }, [WMO]);
-
-  const hasActualItems = !!itemsActual.length;
 
   return (
     <OverviewPage className={styles.ZorgOverviewPage}>
