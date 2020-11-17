@@ -13,9 +13,6 @@ import {
 } from './datasets';
 import { getDatasetEndpointConfig, recursiveCoordinateSwap } from './helpers';
 
-// Development and e2e testing will always serve cached file
-const isMockAdapterEnabled = !process.env.BFF_DISABLE_MOCK_ADAPTER;
-
 const fileCaches: Record<string, FileCache> = {};
 
 const fileCache = (id: string, cacheTimeMinutes: number) => {
@@ -45,10 +42,7 @@ async function loadDatasetFeature(
 ) {
   const cacheTimeMinutes =
     datasetConfig.cacheTimeMinutes || BUURT_CACHE_TTL_HOURS * 60;
-  const dataCache = fileCache(
-    datasetId,
-    isMockAdapterEnabled ? -1 : cacheTimeMinutes
-  );
+  const dataCache = fileCache(datasetId, cacheTimeMinutes);
   const apiData = dataCache.getKey('response');
 
   if (datasetConfig.cache !== false && apiData) {

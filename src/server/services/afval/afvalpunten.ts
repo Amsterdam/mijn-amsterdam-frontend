@@ -180,12 +180,9 @@ async function scrapeAfvalpuntGeoLocations() {
   return scrapeResult.data.items;
 }
 
-// Development and e2e testing will always serve cached file
-const isMockAdapterEnabled = !process.env.BFF_DISABLE_MOCK_ADAPTER;
-
 const fileCache = new FileCache({
   name: 'afvalpunten.flat-cache.json',
-  cacheTimeMinutes: isMockAdapterEnabled ? 0 : 24 * 60, // 24 hours
+  cacheTimeMinutes: 24 * 60, // 24 hours
 });
 
 function addApproximateDistance(
@@ -207,6 +204,12 @@ export async function fetchAfvalpunten(latlng: LatLngObject | null) {
   const cachedFileContents:
     | AfvalpuntenResponseData
     | undefined = fileCache.getKey('responseData');
+
+  console.log(
+    'afvalpinten',
+    fileCache.cache._persisted.responseData,
+    cachedFileContents
+  );
 
   if (cachedFileContents) {
     const responseData: AfvalpuntenResponseData = {

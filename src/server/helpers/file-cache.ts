@@ -30,6 +30,7 @@ export default class FileCache {
   getKey(key: string) {
     var now = new Date().getTime();
     var value = this.cache.getKey(key);
+
     if (value === undefined || (value.expire !== false && value.expire < now)) {
       return undefined;
     } else {

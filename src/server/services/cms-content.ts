@@ -165,12 +165,9 @@ function transformFooterResponse(responseData: any) {
   return footer;
 }
 
-// Development and e2e testing will always serve cached file
-const isMockAdapterEnabled = !process.env.BFF_DISABLE_MOCK_ADAPTER;
-
 const fileCache = new FileCache({
   name: 'cms-content.flat-cache.json',
-  cacheTimeMinutes: isMockAdapterEnabled ? 0 : 24 * 60, // 24 hours
+  cacheTimeMinutes: 24 * 60, // 24 hours
 });
 
 async function getGeneralPage(
