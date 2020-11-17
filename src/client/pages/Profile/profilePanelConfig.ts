@@ -103,15 +103,7 @@ export const panelConfig: PanelConfig<BRPPanelKey> = {
 export const panelConfigCommercial: PanelConfig<KVKPanelKey> = {
   onderneming: (KVK) => ({
     title: 'Onderneming',
-    actionLinks: isMokum(KVK.content)
-      ? [
-          {
-            title: 'Inzien of correctie doorgeven',
-            url: ExternalUrls.CHANGE_KVK_DATA,
-            external: true,
-          },
-        ]
-      : [],
+    actionLinks: [],
   }),
   rechtspersonen: (KVK) => ({
     title:
