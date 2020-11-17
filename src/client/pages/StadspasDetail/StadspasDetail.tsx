@@ -159,15 +159,6 @@ function StadspasBudget({
         {!!isTransactionOverviewActive && !isLoadingTransactions && (
           <TransactionOverview transactions={transactions} />
         )}
-        {isLoadingTransactions && (
-          <LoadingContent
-            barConfig={[
-              ['100%', '2rem', '1rem'],
-              ['80%', '2rem', '1rem'],
-              ['60%', '2rem', '1rem'],
-            ]}
-          />
-        )}
         {isError && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen transacties tonen</p>
@@ -190,7 +181,9 @@ function StadspasBudget({
             uitgegeven
           </Button>
         ) : (
-          <p className={styles.NoTransactions}>U hebt nog geen transacties</p>
+          !isLoadingTransactions && (
+            <p className={styles.NoTransactions}>U hebt nog geen transacties</p>
+          )
         )}
       </PageContent>
     </>
