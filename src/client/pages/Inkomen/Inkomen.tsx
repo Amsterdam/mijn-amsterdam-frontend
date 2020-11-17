@@ -19,6 +19,7 @@ import {
   SectionCollapsible,
   Table,
 } from '../../components';
+import { LinkdInline } from '../../components/Button/Button';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import {
@@ -29,7 +30,6 @@ import specicationsStyles from '../InkomenSpecificaties/InkomenSpecificaties.mod
 import { useAddDocumentLinkComponents } from '../InkomenSpecificaties/useAddDocumentLinks';
 import AlertDocumentDownloadsDisabled from './AlertDocumentDownloadsDisabled';
 import styles from './Inkomen.module.scss';
-import { LinkdInline } from '../../components/Button/Button';
 
 export const incomSpecificationsRouteMonthly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES']
@@ -184,11 +184,11 @@ export default () => {
           )}
         <p>
           <Linkd external={true} href={ExternalUrls.WPI_ALGEMEEN}>
-            Algemene informatie over werk en inkomen
+            Algemene informatie over Werk en Inkomen
           </Linkd>
           <br />
           <Linkd external={true} href={ExternalUrls.WPI_CONTACT}>
-            Contact Inkomen en Stadspas
+            Contact Werk en Inkomen
           </Linkd>
         </p>
         {(isError(FOCUS_AANVRAGEN) ||
@@ -200,16 +200,6 @@ export default () => {
           </Alert>
         )}
         <AlertDocumentDownloadsDisabled />
-        {!FeatureToggle.tozo3active &&
-          tozoItems?.some((item) => item.productTitle === 'Tozo 2') && (
-            <Alert type="warning">
-              <p>
-                Hebt u Tozo 3 aangevraagd (vanaf 1 oktober 2020)? Wij werken er
-                hard aan om ook die aanvraag in Mijn Amsterdam te tonen. Als het
-                zover is, ziet u uw aanvraag vanzelf hier verschijnen.
-              </p>
-            </Alert>
-          )}
       </PageContent>
 
       {FeatureToggle.stadpasActive && hasStadspas && (
@@ -238,7 +228,7 @@ export default () => {
       <SectionCollapsible
         id="SectionCollapsible-income-request-process"
         title="Lopende aanvragen"
-        startCollapsed={false}
+        startCollapsed={FeatureToggle.stadpasActive && hasStadspas}
         isLoading={isLoadingFocus}
         hasItems={hasActiveRequests}
         track={{
@@ -261,7 +251,7 @@ export default () => {
 
       <SectionCollapsible
         id="SectionCollapsible-income-request-process-decisions"
-        startCollapsed={hasActiveRequests}
+        startCollapsed={true}
         isLoading={isLoadingFocus}
         hasItems={hasActiveDescisions}
         title="Eerdere aanvragen"
@@ -281,7 +271,7 @@ export default () => {
       {FeatureToggle.focusCombinedActive && (
         <SectionCollapsible
           id="SectionCollapsible-income-specifications-monthly"
-          startCollapsed={hasActiveRequests || hasActiveDescisions}
+          startCollapsed={true}
           isLoading={isLoadingFocusSpecificaties}
           title="Uitkeringsspecificaties"
           hasItems={!!uitkeringsspecificaties?.length}
@@ -289,7 +279,7 @@ export default () => {
             category: 'Inkomen en Stadspas overzicht / Uitkeringsspecificaties',
             name: 'Datatabel',
           }}
-          noItemsMessage="Er zijn op dit moment geen uitkeringgspecificaties."
+          noItemsMessage="Er zijn op dit moment geen uitkeringsspecificaties."
         >
           <Table
             className={specicationsStyles.SpecificationsTable}
@@ -308,7 +298,7 @@ export default () => {
       {FeatureToggle.focusCombinedActive && (
         <SectionCollapsible
           id="SectionCollapsible-income-specifications-yearly"
-          startCollapsed={hasActiveRequests || hasActiveDescisions}
+          startCollapsed={true}
           isLoading={isLoadingFocus}
           title="Jaaropgaven"
           hasItems={!!jaaropgaven?.length}

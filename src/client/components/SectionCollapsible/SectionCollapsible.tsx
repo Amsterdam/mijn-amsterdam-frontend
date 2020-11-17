@@ -24,7 +24,6 @@ export interface SectionCollapsibleProps {
 }
 
 export interface SectionCollapsibleHeadingProps {
-  hasItems: boolean;
   children: ComponentChildren;
   toggleCollapsed: (event: any) => void;
   isAriaExpanded: boolean;
@@ -32,33 +31,23 @@ export interface SectionCollapsibleHeadingProps {
 
 export function SectionCollapsibleHeading({
   children,
-  hasItems,
   toggleCollapsed,
   isAriaExpanded,
 }: SectionCollapsibleHeadingProps) {
   return (
     <Heading
       size="mediumLarge"
-      className={classnames(styles.Title, hasItems && styles.TitleWithItems)}
+      className={classnames(styles.Title, styles.TitleWithItems)}
     >
-      {hasItems ? (
-        <button
-          aria-expanded={isAriaExpanded}
-          className={styles.TitleToggle}
-          onKeyPress={(event) => hasItems && toggleCollapsed(event)}
-          onClick={(event) => hasItems && toggleCollapsed(event)}
-        >
-          <IconChevronRight aria-hidden="true" className={styles.CaretIcon} />{' '}
-          {children}
-        </button>
-      ) : (
-        <>
-          {hasItems && (
-            <IconChevronRight aria-hidden="true" className={styles.CaretIcon} />
-          )}{' '}
-          {children}
-        </>
-      )}
+      <button
+        aria-expanded={isAriaExpanded}
+        className={styles.TitleToggle}
+        onKeyPress={(event) => toggleCollapsed(event)}
+        onClick={(event) => toggleCollapsed(event)}
+      >
+        <IconChevronRight aria-hidden="true" className={styles.CaretIcon} />{' '}
+        {children}
+      </button>
     </Heading>
   );
 }
@@ -93,7 +82,7 @@ export default function SectionCollapsible({
   const hasTitle = !!title;
   const hasNoItemsMessage = !!noItemsMessage;
 
-  const setReadyForAnimatonDebounced = useDebouncedCallback(() => {
+ const setReadyForAnimatonDebounced = useDebouncedCallback(() => {
     if (!isLoading && isReadyForAnimation === false) {
       setReadyForAnimaton(true);
     }
@@ -116,10 +105,10 @@ export default function SectionCollapsible({
   }, [size.height, size.width]);
 
   useEffect(() => {
-    if (!isLoading && hasItems && contentRef && contentRef.current) {
+    if (!isLoading && contentRef && contentRef.current) {
       setDimensions(contentDimensions);
     }
-  }, [isLoading, hasItems, contentDimensions]);
+  }, [isLoading, contentDimensions]);
 
   const toggleCollapsed = withKeyPress<HTMLSpanElement>(() => {
     if (isCollapsed && track) {
@@ -148,7 +137,6 @@ export default function SectionCollapsible({
         <SectionCollapsibleHeading
           isAriaExpanded={!isCollapsed}
           toggleCollapsed={toggleCollapsed}
-          hasItems={hasItems}
         >
           {title}
         </SectionCollapsibleHeading>
@@ -161,21 +149,19 @@ export default function SectionCollapsible({
           ]}
         />
       )}
-      {hasNoItemsMessage && !isLoading && !hasItems && (
-        <p className={styles.NoItemsMessage}>{noItemsMessage}</p>
-      )}
 
-      {!isLoading && hasItems && (
-        <animated.div
-          aria-hidden={isCollapsed}
-          className={styles.Panel}
-          style={heightAnimSpring}
-        >
-          <div className={styles.PanelInner} ref={contentRef}>
-            {children}
-          </div>
-        </animated.div>
-      )}
+      <animated.div
+        aria-hidden={isCollapsed}
+        className={styles.Panel}
+        style={heightAnimSpring}
+      >
+        <div className={styles.PanelInner} ref={contentRef}>
+          {hasNoItemsMessage && !isLoading && !hasItems && (
+            <p className={styles.NoItemsMessage}>{noItemsMessage}</p>
+          )}
+          {hasItems && children}
+        </div>
+      </animated.div>
     </SectionCollapsibleBody>
   );
 }

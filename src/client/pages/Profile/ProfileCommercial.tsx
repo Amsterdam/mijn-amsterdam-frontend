@@ -21,6 +21,8 @@ import {
   panelConfigCommercial,
   PanelConfigFormatter,
 } from './profilePanelConfig';
+import classnames from 'classnames';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,
@@ -38,6 +40,7 @@ interface InfoPanelMultiProps {
   KVKData: AppState['KVK'];
   panelConfig: PanelConfigFormatter;
   profileData: ProfileSection;
+  className?: string;
 }
 
 function InfoPanelMulti({
@@ -46,6 +49,7 @@ function InfoPanelMulti({
   KVKData,
   panelConfig,
   profileData,
+  className,
 }: InfoPanelMultiProps) {
   if (!items?.length) {
     return null;
@@ -53,13 +57,13 @@ function InfoPanelMulti({
   return items.length > 1 ? (
     <InfoPanelCollapsible
       id={id}
-      className={styles.CollapsiblePanel}
+      className={classnames(styles.CollapsiblePanel, className)}
       {...formatInfoPanelConfig(panelConfig, KVKData)}
       panelData={profileData}
     />
   ) : (
     <InfoPanel
-      className={styles.DefaultPanel}
+      className={classnames(styles.DefaultPanel, className)}
       {...formatInfoPanelConfig(panelConfig, KVKData)}
       panelData={profileData}
     />
@@ -73,6 +77,7 @@ export default function ProfileCommercial() {
       ? formatKvkProfileData(KVK.content)
       : KVK.content;
   }, [KVK]);
+  const profileType = useProfileTypeValue();
 
   return (
     <DetailPage className={styles.ProfileCommercial}>
@@ -122,6 +127,10 @@ export default function ProfileCommercial() {
       {!!KVK.content?.rechtspersonen && kvkProfileData?.rechtspersonen && (
         <InfoPanelMulti
           id="kvk-rechtspersonen"
+          className={classnames(
+            styles.InfoPanelRechtspersonen,
+            styles[`is-${profileType}`]
+          )}
           KVKData={KVK}
           items={KVK.content.rechtspersonen}
           panelConfig={panelConfigCommercial.rechtspersonen}

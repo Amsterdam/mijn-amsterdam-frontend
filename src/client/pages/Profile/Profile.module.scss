@@ -53,3 +53,12 @@
 .SuppressedParagraph {
   color: $color-neutral-grey4;
 }
+
+.InfoPanelRechtspersonen.is-private-commercial {
+  border: 0;
+  padding-top: 0;
+  margin-top: -1.4rem;
+  @include select(Heading) {
+    display: none;
+  }
+}

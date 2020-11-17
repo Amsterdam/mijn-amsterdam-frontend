@@ -56,7 +56,7 @@ function TransactionOverview({ transactions }: TransactionOverviewProps) {
   return (
     <div className={styles.TransactionsOverview}>
       <div className={styles.TransactionLabels}>
-        <span>Uitgaven</span>
+        <span>Winkels</span>
         <span>Bedrag</span>
       </div>
       <ul className={styles.Transactions}>
@@ -152,8 +152,8 @@ function StadspasBudget({
         )}
       >
         <p>
-          Hieronder staat een lijst bij welke winkels u geld heeft uitgegeven.
-          Dit kan een dag achterlopen. Het bedrag aan kindtegoed dat u nog over
+          Hieronder ziet u bij welke winkels u geld hebt uitgegeven. Deze
+          informatie kan een dag achterlopen. Maar het bedrag dat u nog over
           hebt klopt altijd.
         </p>
         {!!isTransactionOverviewActive && !isLoadingTransactions && (
@@ -212,13 +212,13 @@ export default () => {
         Saldo Stadspas
       </PageHeading>
       <PageContent className={styles.DetailPageContent}>
-        <p>Hieronder staat hoeveel tegoed nog op de Stadspas staat.</p>
+        <p>Hieronder ziet u hoeveel geld er nog op de Stadspas staat.</p>
         <p>
           <Linkd
             external={true}
             href="https://www.amsterdam.nl/toerisme-vrije-tijd/stadspas/"
           >
-            Meer informatie over de stadspas
+            Meer informatie over de Stadspas
           </Linkd>
         </p>
         {(isErrorStadspas || (!isLoading(FOCUS_STADSPAS) && noContent)) && (
