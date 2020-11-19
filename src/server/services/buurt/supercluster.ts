@@ -1,7 +1,7 @@
 import memoryCache from 'memory-cache';
 import Supercluster, { AnyProps, PointFeature } from 'supercluster';
 import { filterDatasetFeatures, loadDatasetFeatures } from './buurt';
-import { MaPointFeature, MaSuperClusterFeature } from './datasets';
+import { MaPointFeature } from './datasets';
 import { getDatasetEndpointConfig } from './helpers';
 
 const superClusterCache = new memoryCache.Cache<string, any>();
@@ -14,7 +14,7 @@ async function generateSuperCluster(features: MaPointFeature[]) {
       radius: 40,
       extent: 2500,
       nodeSize: 512,
-      maxZoom: 15,
+      maxZoom: 14,
     }).load(features);
     return superClusterIndex;
   }

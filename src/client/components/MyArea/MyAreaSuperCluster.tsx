@@ -10,9 +10,10 @@ import {
   DatasetFeatureProperties,
   MaSuperClusterFeature,
 } from '../../../server/services/buurt/datasets';
-import { createMarkerIcon, getIconHtml } from './datasets';
+import { getIconHtml } from './datasets';
 import { processFeatures } from './MyArea.helpers';
 import styles from './MyAreaDatasets.module.scss';
+import classnames from 'classnames';
 
 function createClusterMarker(
   feature: MaSuperClusterFeature,
@@ -31,9 +32,15 @@ function createClusterMarker(
     const count = feature.properties.point_count || 0;
     const size = count < 100 ? 'small' : count < 1000 ? 'medium' : 'large';
     const label = count.toString();
-    icon = createMarkerIcon({
-      label,
-      className: styles[`MarkerClusterIcon--${size}`],
+
+    icon = L.divIcon({
+      className: classnames(
+        styles.MarkerClusterIcon,
+        styles[`MarkerClusterIcon--${size}`]
+      ),
+      iconSize: [40, 40],
+      html: `<span class="${styles.MarkerClusterIconLabel}">${label}</span>`,
+      iconAnchor: [20, 20],
     });
   }
 

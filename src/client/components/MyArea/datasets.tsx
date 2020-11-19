@@ -1,7 +1,6 @@
 import { themeSpacing } from '@amsterdam/asc-ui';
 import themeColors from '@amsterdam/asc-ui/es/theme/default/colors';
-import classnames from 'classnames';
-import L, { PolylineOptions } from 'leaflet';
+import { PolylineOptions } from 'leaflet';
 import React, { ReactElement, ReactNode } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import styled from 'styled-components';
@@ -21,7 +20,6 @@ import {
   MapIconSport,
 } from '../../assets/icons';
 import { DEFAULT_POLYLINE_OPTIONS } from './MyAreaPolyLineLayer';
-import styles from './MyAreaDatasets.module.scss';
 
 export interface DatasetControl {
   id: string;
@@ -36,36 +34,15 @@ export interface DatasetControlItem {
   isActive: boolean;
 }
 
-interface createMarkerOptions {
-  label: string;
-  className?: string;
-  iconSize?: [number, number];
-  iconAnchor?: [number, number];
-}
-
-export function createMarkerIcon({
-  label,
-  className,
-  iconSize = [40, 40],
-  iconAnchor = [20, 20],
-}: createMarkerOptions) {
-  return L.divIcon({
-    className: classnames(styles.MarkerClusterIcon, className),
-    iconSize,
-    html: `<span class="${styles.MarkerClusterIconLabel}">${label}</span>`,
-    iconAnchor,
-  });
-}
-
 const DatasetIcon = styled.div`
   margin-right: ${themeSpacing(2)};
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 2px solid #ffffff;
+  width: 32px;
+  height: 32px;
 `;
 
 const DatasetIconCircle = styled(DatasetIcon)`
@@ -188,13 +165,13 @@ export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
     id: 'parkeren',
     title: 'Parkeren',
     isActive: true,
-    collection: DATASETS.parkeren.map((id) => createDatasetControl({ id })),
+    collection: DATASETS.parkeren.map(id => createDatasetControl({ id })),
   },
   {
     id: 'afvalcontainers',
     title: 'Afvalcontainers',
     isActive: true,
-    collection: DATASETS.afvalcontainers.map((id) =>
+    collection: DATASETS.afvalcontainers.map(id =>
       createDatasetControl({ id })
     ),
   },
@@ -202,21 +179,19 @@ export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
     id: 'bekendmakingen',
     title: 'Bekendmakingen',
     isActive: true,
-    collection: DATASETS.bekendmakingen.map((id) =>
-      createDatasetControl({ id })
-    ),
+    collection: DATASETS.bekendmakingen.map(id => createDatasetControl({ id })),
   },
   {
     id: 'evenementen',
     title: 'Evenementen',
     isActive: true,
-    collection: DATASETS.evenementen.map((id) => createDatasetControl({ id })),
+    collection: DATASETS.evenementen.map(id => createDatasetControl({ id })),
   },
   {
     id: 'sport',
     title: 'Sport & Bos',
     isActive: FeatureToggle.myAreaDataSportEnBosActive,
-    collection: DATASETS.sport.map((id) => createDatasetControl({ id })),
+    collection: DATASETS.sport.map(id => createDatasetControl({ id })),
   },
 ];
 
