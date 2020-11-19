@@ -120,7 +120,6 @@ type CommercialServices = Pick<
   ServiceMap,
   | 'AFVAL'
   | 'AFVALPUNTEN'
-  | 'BELASTINGEN'
   | 'BUURT'
   | 'CMS_CONTENT'
   | 'ERFPACHT'
@@ -198,7 +197,6 @@ export const servicesByProfileType: ServicesByProfileType = {
   commercial: {
     AFVAL,
     AFVALPUNTEN,
-    BELASTINGEN,
     BUURT,
     CMS_CONTENT,
     ERFPACHT,

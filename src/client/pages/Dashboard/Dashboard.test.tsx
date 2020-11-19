@@ -84,6 +84,21 @@ const testState = {
       },
     ],
   },
+
+  // Some chapters
+  BELASTINGEN: {
+    content: {
+      isKnown: true,
+    },
+  },
+  MILIEUZONE: {
+    content: {
+      isKnown: true,
+    },
+  },
+  FOCUS_TOZO: {
+    content: [{}],
+  },
 };
 
 function initializeState(snapshot: MutableSnapshot) {
