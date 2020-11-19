@@ -46,7 +46,7 @@ function useDatasetControlActiveIds(controlItem: DatasetControlItem) {
   }, [activeDatasetIds, controlItem]);
 }
 
-function TitleWithCheckbox({
+const ControlItemTitle = React.memo(function TitleWithCheckbox({
   controlItem,
   onChange,
 }: {
@@ -70,7 +70,7 @@ function TitleWithCheckbox({
       />
     </Label>
   );
-}
+});
 
 interface MyAreaPanels {
   onSetDrawerPosition: (drawerPosition: string) => void;
@@ -145,10 +145,7 @@ export default function MyAreaPanels({ onSetDrawerPosition }: MyAreaPanels) {
             key={controlItem.id}
             initalState={CollapsedState.Collapsed}
             title={
-              <TitleWithCheckbox
-                controlItem={controlItem}
-                onChange={onChange}
-              />
+              <ControlItemTitle controlItem={controlItem} onChange={onChange} />
             }
           >
             {controlItem.collection.length > 1 ? (
