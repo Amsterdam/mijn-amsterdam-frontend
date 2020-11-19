@@ -22,7 +22,7 @@
   top: 100%;
   transform: translateX(-50%);
   width: 30rem;
-  z-index: 100;
+  z-index: z-index(font-enlarger-popup);
   display: none;
 
   > p {

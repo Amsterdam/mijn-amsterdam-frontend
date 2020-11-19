@@ -11,6 +11,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import { HomeIconMarker } from './MyAreaMarker';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
+import { LatLngLiteral } from 'leaflet';
 
 const DasboardMap = styled(Map)`
   position: absolute;
@@ -23,22 +24,23 @@ interface MyAreaDashboardProps {
 export default function MyAreaDashboard({ tutorial }: MyAreaDashboardProps) {
   const { HOME } = useAppStateGetter();
   const termReplace = useTermReplacement();
-  const center = HOME.content?.latlng;
+  const center =
+    HOME.content?.latlng || (DEFAULT_MAP_OPTIONS.center as LatLngLiteral);
   return (
     <ThemeProvider>
-      {!!center ? (
-        <DasboardMap
-          fullScreen={true}
-          aria-label={`Kaart van ${termReplace(
-            ChapterTitles.BUURT
-          ).toLowerCase()}`}
-          options={{
-            ...DEFAULT_MAP_OPTIONS,
-            zoom: HOOD_ZOOM,
-            center,
-          }}
-        >
-          <BaseLayer />
+      <DasboardMap
+        fullScreen={true}
+        aria-label={`Kaart van ${termReplace(
+          ChapterTitles.BUURT
+        ).toLowerCase()}`}
+        options={{
+          ...DEFAULT_MAP_OPTIONS,
+          zoom: HOOD_ZOOM,
+          center,
+        }}
+      >
+        <BaseLayer />
+        {!!HOME.content?.address && center && (
           <HomeIconMarker
             label={
               HOME.content?.address
@@ -48,10 +50,11 @@ export default function MyAreaDashboard({ tutorial }: MyAreaDashboardProps) {
             center={center}
             zoom={HOOD_ZOOM}
           />
-        </DasboardMap>
-      ) : (
-        <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />
-      )}
+        )}
+        {!HOME.content?.latlng && (
+          <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />
+        )}
+      </DasboardMap>
     </ThemeProvider>
   );
 }

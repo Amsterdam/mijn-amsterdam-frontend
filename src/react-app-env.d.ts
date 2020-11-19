@@ -6,11 +6,6 @@ declare module 'slugme';
 type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
 type Nullable<T> = T | null;
 
-type Lat = number;
-type Lng = number;
-type Centroid = [Lng, Lat];
-type LatLngObject = { lat: Lat; lng: Lng };
-
 type SessionID = string;
 
 type ResolvedType<T> = T extends PromiseLike<infer U> ? U : T;

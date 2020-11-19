@@ -19,7 +19,10 @@ import {
 import { ApiResponse } from '../../../universal/helpers';
 import { BFFApiUrls } from '../../config/api';
 import styles from './MyAreaDatasets.module.scss';
-import { ApiErrorResponse } from '../../../universal/helpers/api';
+import {
+  ApiErrorResponse,
+  apiErrorResult,
+} from '../../../universal/helpers/api';
 
 const activeDatasetIdsAtom: RecoilState<string[]> = atom<string[]>({
   key: 'activeDatasetIds',
@@ -176,18 +179,29 @@ export function useFetchFeatures({
   const fetch = useCallback(
     async (payload = {}) => {
       setFeaturesLoading(true);
+      let response: AxiosResponse<
+        ApiResponse<{
+          features: DatasetFeatures;
+          errorResults: Array<ApiErrorResponse<null>>;
+        }>
+      > | null = null;
+      try {
+        response = await axios({
+          url: BFFApiUrls.MAP_DATASETS,
+          data: payload,
+          method: 'POST',
+        });
+      } catch (error) {
+        setErrorResults([
+          {
+            ...apiErrorResult('Kaartgegevens konden niet worden geladen', null),
+            id: 'Alle datasets',
+          },
+        ]);
+      }
 
-      const response: AxiosResponse<ApiResponse<{
-        features: DatasetFeatures;
-        errorResults: Array<ApiErrorResponse<null>>;
-      }>> = await axios({
-        url: BFFApiUrls.MAP_DATASETS,
-        data: payload,
-        method: 'POST',
-      });
-
-      const features = response.data?.content?.features;
-      const errorResults = response.data?.content?.errorResults;
+      const features = response?.data.content?.features;
+      const errorResults = response?.data.content?.errorResults;
 
       if (features) {
         const clusterFeatures = features?.filter(
@@ -210,9 +224,9 @@ export function useFetchFeatures({
         if (errorResults) {
           setErrorResults(errorResults);
         }
-
-        setFeaturesLoading(false);
       }
+
+      setFeaturesLoading(false);
     },
     [
       setPolyLineFeatures,

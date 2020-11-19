@@ -1,5 +1,9 @@
 import { Marker } from '@amsterdam/arm-core';
-import L, { LeafletEventHandlerFn, Marker as MarkerType } from 'leaflet';
+import L, {
+  LatLngLiteral,
+  LeafletEventHandlerFn,
+  Marker as MarkerType,
+} from 'leaflet';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { LOCATION_ZOOM } from '../../../universal/config/buurt';
 import iconUrl from '../../assets/icons/home.svg';
@@ -9,7 +13,7 @@ import styles from './MyArea.module.scss';
 import { useMapRef } from './useMap';
 
 interface MyAreaMarkerProps {
-  latlng: LatLngObject;
+  latlng: LatLngLiteral;
   iconUrl: string;
   onClick?: LeafletEventHandlerFn;
   label?: string;
@@ -70,7 +74,7 @@ function MyAreaMarker({ latlng, iconUrl, onClick, label }: MyAreaMarkerProps) {
 }
 
 interface HomeIconMarkerProps {
-  center: LatLngObject;
+  center: LatLngLiteral;
   label: string;
   zoom?: number;
 }

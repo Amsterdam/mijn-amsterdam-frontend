@@ -1,5 +1,4 @@
 import {
-  BaseLayer,
   BaseLayerToggle,
   Map,
   MapPanelProvider,
@@ -24,7 +23,7 @@ import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useDesktopScreen } from '../../hooks';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
-import HomeControlButton from './MaHomeControlButton';
+import HomeControlButton from './MyAreaHomeControlButton';
 import { HomeIconMarker } from './MyAreaMarker';
 import { MyAreaDatasets } from './MyAreaDatasets';
 import MyAreaHeader from './MyAreaHeader';
@@ -57,6 +56,8 @@ const MyAreaMap = styled(Map)`
 `;
 
 const baseLayerOptions = {
+  subdomains: ['t1', 't2', 't3', 't4'],
+  tms: true,
   attribution:
     '<a href="https://github.com/amsterdam/amsterdam-react-maps">Amsterdam React Maps</a>',
 };
@@ -118,51 +119,51 @@ export default function MyArea({
       <MyAreaContainer height={height}>
         {!!showHeader && <MyAreaHeader />}
         <MyAreaMapContainer>
-          {!!center ? (
-            <MyAreaMapOffset>
-              <MyAreaMap
-                fullScreen={true}
-                aria-label={`Uitgebreide kaart van ${termReplace(
-                  ChapterTitles.BUURT
-                ).toLowerCase()}`}
-                options={mapOptions}
-              >
-                <BaseLayer options={baseLayerOptions} />
-                {HOME.content?.address && (
-                  <HomeIconMarker
-                    label={getFullAddress(HOME.content.address, true)}
-                    center={center}
-                    zoom={zoom}
-                  />
-                )}
-
-                <StyledViewerContainer
-                  leftOffset={mapOffsetLeft}
-                  bottomRight={
-                    <>
-                      {HOME.content?.address && HOME.content?.latlng && (
-                        <HomeControlButton
-                          zoom={zoom}
-                          latlng={HOME.content.latlng}
-                        />
-                      )}
-                      <Zoom />
-                    </>
-                  }
-                  bottomLeft={
-                    <BaseLayerToggle
-                      aerialLayers={[AERIAL_AMSTERDAM_LAYERS[0]]}
-                      topoLayers={[DEFAULT_AMSTERDAM_LAYERS[0]]}
-                    />
-                  }
+          <MyAreaMapOffset>
+            <MyAreaMap
+              fullScreen={true}
+              aria-label={`Uitgebreide kaart van ${termReplace(
+                ChapterTitles.BUURT
+              ).toLowerCase()}`}
+              options={mapOptions}
+            >
+              {HOME.content?.address && !!center && (
+                <HomeIconMarker
+                  label={getFullAddress(HOME.content.address, true)}
+                  center={center}
+                  zoom={zoom}
                 />
+              )}
 
-                <MyAreaDatasets datasetIds={datasetIdsRequested} />
-              </MyAreaMap>
-            </MyAreaMapOffset>
-          ) : (
-            <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />
-          )}
+              <StyledViewerContainer
+                leftOffset={mapOffsetLeft}
+                bottomRight={
+                  <>
+                    {HOME.content?.address && HOME.content?.latlng && (
+                      <HomeControlButton
+                        zoom={zoom}
+                        latlng={HOME.content.latlng}
+                      />
+                    )}
+                    <Zoom />
+                  </>
+                }
+                bottomLeft={
+                  <BaseLayerToggle
+                    aerialLayers={[AERIAL_AMSTERDAM_LAYERS[0]]}
+                    topoLayers={[DEFAULT_AMSTERDAM_LAYERS[0]]}
+                    options={baseLayerOptions}
+                  />
+                }
+              />
+
+              <MyAreaDatasets datasetIds={datasetIdsRequested} />
+            </MyAreaMap>
+            {!HOME.content?.address && (
+              <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />
+            )}
+          </MyAreaMapOffset>
+
           {!!showPanels && (
             <MapPanelProvider
               variant={isDesktop ? 'panel' : 'drawer'}

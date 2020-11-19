@@ -1,18 +1,19 @@
+import { LatLngLiteral, LatLngTuple } from 'leaflet';
 import {
+  apiErrorResult,
   getBagSearchAddress,
   toLatLng,
-  apiErrorResult,
 } from '../../universal/helpers';
+import { Adres } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
-import { Adres } from '../../universal/types';
 
 export interface BAGSourceData {
-  results: Array<{ [key: string]: any; centroid: Centroid }>;
+  results: Array<{ [key: string]: any; centroid: LatLngTuple }>;
 }
 
 export interface BAGData {
-  latlng: LatLngObject | null;
+  latlng: LatLngLiteral | null;
   address?: Adres | null;
 }
 

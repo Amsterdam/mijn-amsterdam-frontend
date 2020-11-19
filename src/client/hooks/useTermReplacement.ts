@@ -9,10 +9,14 @@ const GENERAL_COMMERCIAL_TERMS = {
   'Afval rond uw adres': 'Bedrijfsafval rond uw adres',
 };
 
+const GENERAL_PRIVATE_TERMS = {
+  Openbaresportplek: 'Openbare sportplek',
+};
+
 const terms: {
   [profileType in ProfileType]: Record<string, string>;
 } = {
-  private: {},
+  private: GENERAL_PRIVATE_TERMS,
   'private-commercial': GENERAL_COMMERCIAL_TERMS,
   commercial: GENERAL_COMMERCIAL_TERMS,
 };

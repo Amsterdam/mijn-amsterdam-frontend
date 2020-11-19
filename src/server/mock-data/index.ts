@@ -1,5 +1,6 @@
 import { MyTip } from '../../universal/types';
 import { ApiUrls, DEV_USER_TYPE_HEADER } from '../config';
+import { datasetEndpoints } from '../services/buurt/datasets';
 import AFVAL from './json/afvalophaalgebieden.json';
 import BAG from './json/bag.json';
 import BAG2 from './json/bag2.json';
@@ -56,7 +57,7 @@ export const mockDataConfig: MockDataConfig = {
   },
   [ApiUrls.BRP]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
-    // delay: 2500,
+    delay: 7500,
     responseData: async (config: any) => {
       if (isCommercialUser(config)) {
         return 'no-content';

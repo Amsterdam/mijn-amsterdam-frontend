@@ -4,16 +4,17 @@ import React from 'react';
 import { IconHomeSimple, IconHomeCommercial } from '../../assets/icons';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { HOOD_ZOOM } from '../../../universal/config/buurt';
+import { LatLngLiteral } from 'leaflet';
 
-interface HomeControlButtonProps {
-  latlng: LatLngObject;
+interface MyAreaHomeControlButtonProps {
+  latlng: LatLngLiteral;
   zoom?: number;
 }
 
-export default function HomeControlButton({
+export default function MyAreaHomeControlButton({
   latlng,
   zoom = HOOD_ZOOM,
-}: HomeControlButtonProps) {
+}: MyAreaHomeControlButtonProps) {
   const profileType = useProfileTypeValue();
   const mapInstance = useMapInstance();
   return (

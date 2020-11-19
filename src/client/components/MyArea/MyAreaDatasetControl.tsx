@@ -1,6 +1,7 @@
 import { Checkbox, Label, themeSpacing } from '@amsterdam/asc-ui';
 import React from 'react';
 import styled from 'styled-components';
+import { useTermReplacement } from '../../hooks/useTermReplacement';
 import { DatasetControl } from './datasets';
 import { useActiveDatasetIds } from './MyArea.hooks';
 
@@ -21,11 +22,12 @@ const LabelInner = styled.span`
 function MyAreaDatasetControlItem({
   datasetControl,
 }: MyAreaDatasetControlItemProps) {
+  const termReplace = useTermReplacement();
   const [activeDatasetIds, setActiveDatasetIds] = useActiveDatasetIds();
   const label = (
     <LabelInner>
       {datasetControl.icon}
-      {datasetControl.title}
+      {termReplace(datasetControl.title)}
     </LabelInner>
   ) as any;
   const isActive = activeDatasetIds.includes(datasetControl.id);

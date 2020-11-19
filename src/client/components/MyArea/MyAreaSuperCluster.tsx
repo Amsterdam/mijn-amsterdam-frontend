@@ -1,5 +1,6 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import L, {
+  LatLngLiteral,
   LeafletEventHandlerFn,
   LeafletMouseEvent,
   LeafletMouseEventHandlerFn,
@@ -15,7 +16,7 @@ import styles from './MyAreaDatasets.module.scss';
 
 function createClusterMarker(
   feature: MaSuperClusterFeature,
-  latlng: LatLngObject
+  latlng: LatLngLiteral
 ) {
   let icon;
   if (!feature?.properties.cluster) {

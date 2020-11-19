@@ -70,7 +70,7 @@
 
 .FeatureLoader {
   position: absolute;
-  z-index: 999;
+  z-index: z-index(my-area-feature-loader);
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
@@ -88,8 +88,12 @@
   top: 1rem;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 499;
-  width: $main-boxed-width;
+  z-index: z-index(my-area-error-messages);
+  max-width: $main-boxed-width;
+  @include mq-phone {
+    max-width: calc(100% - 2rem);
+  }
+  width: 100%;
   min-height: 4rem;
   box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, .1);
   > p {

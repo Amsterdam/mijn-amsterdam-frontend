@@ -1,3 +1,5 @@
+import { LatLngLiteral, LatLngTuple } from 'leaflet';
+
 /**
  * Calculates the haversine distance between point A, and B.
  * @param { lat: number, lng: number } latlngA point A
@@ -5,8 +7,8 @@
  * @param {boolean} isMiles If we are using miles, else km.
  */
 export function getApproximateDistance(
-  latlngA: LatLngObject,
-  latlngB: LatLngObject
+  latlngA: LatLngLiteral,
+  latlngB: LatLngLiteral
 ) {
   const squared = (x: number) => x * x;
   const toRad = (x: number) => (x * Math.PI) / 180;
@@ -26,6 +28,6 @@ export function getApproximateDistance(
   return Math.round(R * c);
 }
 
-export function toLatLng([lon, lat]: Centroid): LatLngObject {
-  return { lat, lng: lon };
+export function toLatLng([lng, lat]: LatLngTuple): LatLngLiteral {
+  return { lat, lng };
 }

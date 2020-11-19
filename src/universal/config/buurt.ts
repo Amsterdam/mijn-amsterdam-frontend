@@ -1,8 +1,8 @@
 import proj4 from 'proj4';
 
 // Amsterdam center
-export const DEFAULT_LAT: Lat = 52.3717228;
-export const DEFAULT_LNG: Lng = 4.8927377;
+export const DEFAULT_LAT: number = 52.3717228;
+export const DEFAULT_LNG: number = 4.8927377;
 
 export const MAP_URL = process.env.REACT_APP_EMBED_MAP_URL;
 export const HOOD_LAYERS_CONFIG =

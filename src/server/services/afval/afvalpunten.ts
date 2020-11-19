@@ -1,3 +1,4 @@
+import { LatLngLiteral } from 'leaflet';
 import memoryCache from 'memory-cache';
 import scrapeIt from 'scrape-it';
 import {
@@ -186,7 +187,7 @@ const fileCache = new FileCache({
 });
 
 function addApproximateDistance(
-  latlng: LatLngObject | null,
+  latlng: LatLngLiteral | null,
   centers: AFVALPUNTENData
 ) {
   return centers
@@ -200,7 +201,7 @@ function addApproximateDistance(
     .sort(sortAlpha('distance'));
 }
 
-export async function fetchAfvalpunten(latlng: LatLngObject | null) {
+export async function fetchAfvalpunten(latlng: LatLngLiteral | null) {
   const cachedFileContents:
     | AfvalpuntenResponseData
     | undefined = fileCache.getKey('responseData');

@@ -1,10 +1,13 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useDebouncedCallback } from 'use-debounce/lib';
 import {
   MaPointFeature,
   MaPolyLineFeature,
 } from '../../../server/services/buurt/datasets';
 import { ACTIVE_DATASET_IDS_INITIAL } from '../../../universal/config';
+import { ApiErrorResponse } from '../../../universal/helpers/api';
+import ErrorMessages from '../ErrorMessages/ErrorMessages';
 import {
   useActiveDatasetIds,
   useFetchFeatures,
@@ -14,9 +17,6 @@ import {
 import styles from './MyAreaDatasets.module.scss';
 import { MyAreaPolyLineDatasets } from './MyAreaPolyLineDatasets';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
-import { ApiErrorResponse } from '../../../universal/helpers/api';
-import ErrorMessages from '../ErrorMessages/ErrorMessages';
-import { useDebouncedCallback } from 'use-debounce/lib';
 
 interface MyAreaDatasetsProps {
   datasetIds?: string[];
@@ -34,6 +34,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   const [isFeaturesLoading, setFeaturesLoading] = useState(
     !clusterFeatures.length && !polyLineFeatures.length
   );
+
   const setFeaturesLoadingDebounced = useDebouncedCallback((isLoading) => {
     setFeaturesLoading(isLoading);
   }, 800);
