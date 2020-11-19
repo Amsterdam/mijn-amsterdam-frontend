@@ -6,15 +6,15 @@ import {
 } from '@amsterdam/arm-core';
 import { SnapPoint } from '@amsterdam/arm-core/lib/components/MapPanel/constants';
 import { Checkbox, Label } from '@amsterdam/asc-ui';
-import React, { useCallback, useContext, useEffect, useMemo } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDesktopScreen } from '../../hooks';
 import Alert from '../Alert/Alert';
 import { DatasetControlItem, DATASET_CONTROL_ITEMS } from './datasets';
 import {
+  useActiveDatasetIds,
   useFetchPanelFeature,
   useSelectedFeature,
-  useActiveDatasetIds,
 } from './MyArea.hooks';
 import MyAreaCollapsiblePanel, {
   CollapsedState,
@@ -39,38 +39,28 @@ function filterActiveDatasets(
   );
 }
 
-function useDatasetControlActiveIds(controlItem: DatasetControlItem) {
-  const [activeDatasetIds] = useActiveDatasetIds();
-  return useMemo(() => {
-    return filterActiveDatasets(controlItem, activeDatasetIds);
-  }, [activeDatasetIds, controlItem]);
-}
-
-const ControlItemTitle = React.memo(function TitleWithCheckbox({
+function TitleWithCheckbox({
   controlItem,
+  isActive,
+  isIndeterminate,
   onChange,
 }: {
   controlItem: DatasetControlItem;
   onChange: (datasetControlItem: DatasetControlItem) => void;
+  isActive: boolean;
+  isIndeterminate: boolean;
 }) {
-  const activeControlIds = useDatasetControlActiveIds(controlItem);
-  const activeLength = activeControlIds.length;
-  const isActive =
-    !!activeLength && activeLength === controlItem.collection.length;
-  const isInDeterminate =
-    !!activeLength && activeLength !== controlItem.collection.length;
-
   return (
     <Label htmlFor={controlItem.id} label={controlItem.title}>
       <StyledCheckbox
         id={controlItem.id}
         checked={isActive}
-        indeterminate={isInDeterminate}
+        indeterminate={isIndeterminate}
         onChange={() => onChange(controlItem)}
       />
     </Label>
   );
-});
+}
 
 interface MyAreaPanels {
   onSetDrawerPosition: (drawerPosition: string) => void;
@@ -140,19 +130,35 @@ export default function MyAreaPanels({ onSetDrawerPosition }: MyAreaPanels) {
   return (
     <PanelComponent>
       <MapPanelContent animate stackOrder={0}>
-        {DATASET_CONTROL_ITEMS.map((controlItem) => (
-          <MyAreaCollapsiblePanel
-            key={controlItem.id}
-            initalState={CollapsedState.Collapsed}
-            title={
-              <ControlItemTitle controlItem={controlItem} onChange={onChange} />
-            }
-          >
-            {controlItem.collection.length > 1 ? (
-              <MyAreaDatasetControl collection={controlItem.collection} />
-            ) : null}
-          </MyAreaCollapsiblePanel>
-        ))}
+        {DATASET_CONTROL_ITEMS.map((controlItem) => {
+          const activeControlIds = filterActiveDatasets(
+            controlItem,
+            activeDatasetIds
+          );
+          const activeLength = activeControlIds.length;
+          const isActive =
+            !!activeLength && activeLength === controlItem.collection.length;
+          const isIndeterminate =
+            !!activeLength && activeLength !== controlItem.collection.length;
+          return (
+            <MyAreaCollapsiblePanel
+              key={controlItem.id}
+              initalState={CollapsedState.Collapsed}
+              title={
+                <TitleWithCheckbox
+                  isActive={isActive}
+                  isIndeterminate={isIndeterminate}
+                  controlItem={controlItem}
+                  onChange={onChange}
+                />
+              }
+            >
+              {controlItem.collection.length > 1 ? (
+                <MyAreaDatasetControl collection={controlItem.collection} />
+              ) : null}
+            </MyAreaCollapsiblePanel>
+          );
+        })}
         {selectedFeature?.id && selectedFeature?.datasetId && (
           <MapPanelContentDetail
             stackOrder={3}

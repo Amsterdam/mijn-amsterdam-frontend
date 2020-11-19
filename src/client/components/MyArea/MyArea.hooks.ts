@@ -17,12 +17,12 @@ import {
   MaSuperClusterFeature,
 } from '../../../server/services/buurt/datasets';
 import { ApiResponse } from '../../../universal/helpers';
-import { BFFApiUrls } from '../../config/api';
-import styles from './MyAreaDatasets.module.scss';
 import {
   ApiErrorResponse,
   apiErrorResult,
 } from '../../../universal/helpers/api';
+import { BFFApiUrls } from '../../config/api';
+import styles from './MyAreaDatasets.module.scss';
 
 const activeDatasetIdsAtom: RecoilState<string[]> = atom<string[]>({
   key: 'activeDatasetIds',
@@ -141,25 +141,22 @@ export function useSelectedFeatureCSS(
 
 export function useOnMarkerClick() {
   const setSelectedFeature = useSetSelectedFeature();
-
+  const selectedFeature = useSelectedFeatureValue();
+  const selectedFeatureId = selectedFeature?.id;
   return useCallback(
     (event: LeafletEvent) => {
       const id = event?.propagatedFrom?.feature?.properties?.id;
       const datasetId = event?.propagatedFrom?.feature?.properties?.datasetId;
 
       // Using DOM access here because comparing against selectedFeature will invalidate the memoized calback constantly which re-renders the layer component
-      if (
-        !event.propagatedFrom
-          .getElement()
-          .classList.contains(selectedFeatureSelector)
-      ) {
+      if (selectedFeatureId !== id) {
         setSelectedFeature({
           datasetId,
           id,
         });
       }
     },
-    [setSelectedFeature]
+    [setSelectedFeature, selectedFeatureId]
   );
 }
 
