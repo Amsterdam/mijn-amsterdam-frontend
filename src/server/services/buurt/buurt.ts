@@ -5,7 +5,7 @@ import { requestData } from '../../helpers';
 import FileCache from '../../helpers/file-cache';
 import {
   ACCEPT_CRS_4326,
-  BUURT_CACHE_TTL_HOURS,
+  BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
   DatasetConfig,
   DatasetFeatures,
   MaPointFeature,

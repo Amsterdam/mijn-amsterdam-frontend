@@ -2,7 +2,6 @@ import Supercluster from 'supercluster';
 import { DATASETS } from '../../../universal/config/buurt';
 import { DataRequestConfig } from '../../config';
 import { getApiEmbeddedResponse } from './helpers';
-import { response } from 'express';
 
 enum zIndexPane {
   PARKEERZONES = '650',
