@@ -43,11 +43,11 @@ function isChapterActive(
           isLoadingStadspasSaldo &&
           isLoading(FOCUS_TOZO)
         ) &&
-        (!!FOCUS_AANVRAGEN.content?.length ||
-          !!FOCUS_TOZO.content?.length ||
+        (!!FOCUS_AANVRAGEN?.content?.length ||
+          !!FOCUS_TOZO?.content?.length ||
           hasStadspasSaldo ||
-          !!FOCUS_SPECIFICATIES.content?.jaaropgaven?.length ||
-          !!FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties?.length)
+          !!FOCUS_SPECIFICATIES?.content?.jaaropgaven?.length ||
+          !!FOCUS_SPECIFICATIES?.content?.uitkeringsspecificaties?.length)
       );
 
     case Chapters.ZORG:
@@ -117,7 +117,7 @@ export function useChapters(): ChaptersState {
 
   const items = chapterItems.filter((item) => {
     // Check to see if Chapter has been loaded or if it is directly available
-    return isChapterActive(item, appState);
+    return item.isAlwaysVisible || isChapterActive(item, appState);
   });
 
   return useMemo(
@@ -126,12 +126,12 @@ export function useChapters(): ChaptersState {
       isLoading:
         !!appState &&
         chapterItems
-          .map(({ id }) => ({ id, apiState: appState[id as keyof AppState] }))
-          .filter(({ id, apiState }) => !!apiState)
-          .some(({ id, apiState }) => {
+          .filter(({ isAlwaysVisible }) => !isAlwaysVisible)
+          .map(({ id }) => appState[id as keyof AppState])
+          .filter(apiState => !!apiState)
+          .some(apiState => {
             const apiStateTyped = apiState as ApiResponse<any>;
-            const loading = isLoading(apiStateTyped) && !isError(apiStateTyped);
-            return loading;
+            return isLoading(apiStateTyped) && !isError(apiStateTyped);
           }),
     }),
     [items, chapterItems, appState]

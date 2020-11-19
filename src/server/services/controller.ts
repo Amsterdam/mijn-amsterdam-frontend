@@ -114,6 +114,7 @@ type CommercialServices = Omit<
   | 'BRP'
   | 'FOCUS_TOZO'
   | 'FOCUS_SPECIFICATIES'
+  | 'BELASTINGEN'
   | 'FOCUS_AANVRAGEN'
   | 'FOCUS_TOZO'
   | 'FOCUS_STADSPAS'
@@ -184,7 +185,6 @@ export const servicesByProfileType: ServicesByProfileType = {
   commercial: {
     AFVAL,
     AFVALPUNTEN,
-    BELASTINGEN,
     CMS_CONTENT,
     ERFPACHT,
     NOTIFICATIONS,

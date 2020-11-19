@@ -12,6 +12,7 @@ import { termReplace } from '../hooks/useTermReplacement';
 export interface ChapterMenuItem extends LinkProps {
   id: Chapter;
   profileTypes: ProfileType[];
+  isAlwaysVisible?: boolean;
 }
 
 const myChaptersMenuItems: ChapterMenuItem[] = [
@@ -40,6 +41,7 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     to: ExternalUrls.EH_SSO_BELASTINGEN,
     rel: 'external',
     profileTypes: ['commercial'],
+    isAlwaysVisible: true,
   },
   {
     title: ChapterTitles.BURGERZAKEN,
