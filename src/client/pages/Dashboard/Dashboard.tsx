@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { generatePath, Link } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { isLoading } from '../../../universal/helpers';
 import {
@@ -53,7 +53,7 @@ export default () => {
         <PageHeading>
           <Link
             className={styles.MyNotificationsHeadingLink}
-            to={AppRoutes.NOTIFICATIONS}
+            to={generatePath(AppRoutes.NOTIFICATIONS)}
           >
             Actueel
           </Link>
