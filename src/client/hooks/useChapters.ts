@@ -43,11 +43,11 @@ function isChapterActive(
           isLoadingStadspasSaldo &&
           isLoading(FOCUS_TOZO)
         ) &&
-        (!!FOCUS_AANVRAGEN.content?.length ||
-          !!FOCUS_TOZO.content?.length ||
+        (!!FOCUS_AANVRAGEN?.content?.length ||
+          !!FOCUS_TOZO?.content?.length ||
           hasStadspasSaldo ||
-          !!FOCUS_SPECIFICATIES.content?.jaaropgaven?.length ||
-          !!FOCUS_SPECIFICATIES.content?.uitkeringsspecificaties?.length)
+          !!FOCUS_SPECIFICATIES?.content?.jaaropgaven?.length ||
+          !!FOCUS_SPECIFICATIES?.content?.uitkeringsspecificaties?.length)
       );
 
     case Chapters.ZORG:
