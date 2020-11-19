@@ -39,6 +39,9 @@ export type MaSuperClusterFeature =
   | Supercluster.ClusterFeature<DatasetClusterFeatureProperties>;
 
 export const BUURT_CACHE_TTL_HOURS = 24;
+export const BUURT_CACHE_TTL_1_DAY_IN_MINUTES = 24 * 60;
+export const BUURT_CACHE_TTL_1_WEEK_IN_MINUTES =
+  7 * BUURT_CACHE_TTL_1_DAY_IN_MINUTES;
 export const ACCEPT_CRS_4326 = {
   'Accept-Crs': 'EPSG:4326', // Will return coordinates in [lng/lat] format
 };
@@ -69,6 +72,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     detailUrl: 'https://api.data.amsterdam.nl/v1/huishoudelijkafval/container/',
     transformList: transformAfvalcontainers,
     featureType: 'Point',
+    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
   evenementen: {
     listUrl:
@@ -76,6 +80,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     detailUrl: 'https://api.data.amsterdam.nl/v1/evenementen/evenementen/',
     transformList: transformEvenementen,
     featureType: 'Point',
+    cacheTimeMinutes: BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
   },
   bekendmakingen: {
     listUrl:
@@ -84,6 +89,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
       'https://api.data.amsterdam.nl/v1/bekendmakingen/bekendmakingen/',
     transformList: transformBekendmakingen,
     featureType: 'Point',
+    cacheTimeMinutes: BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
   },
   parkeerzones: {
     listUrl:
@@ -110,6 +116,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/zwembad/',
     transformList: transformListSportApiResponse,
     featureType: 'Point',
+    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
   sportpark: {
     listUrl:
@@ -142,6 +149,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sporthal/',
     transformList: transformListSportApiResponse,
     featureType: 'Point',
+    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
   sportaanbieder: {
     listUrl:
@@ -149,6 +157,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportaanbieder/',
     transformList: transformListSportApiResponse,
     featureType: 'Point',
+    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
   openbaresportplek: {
     listUrl:
@@ -156,6 +165,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/',
     transformList: transformListSportApiResponse,
     featureType: 'Point',
+    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
   hardlooproute: {
     listUrl:

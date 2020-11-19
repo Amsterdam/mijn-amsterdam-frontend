@@ -41,7 +41,7 @@ async function loadDatasetFeature(
   params?: { [key: string]: any }
 ) {
   const cacheTimeMinutes =
-    datasetConfig.cacheTimeMinutes || BUURT_CACHE_TTL_HOURS * 60;
+    datasetConfig.cacheTimeMinutes || BUURT_CACHE_TTL_1_DAY_IN_MINUTES;
   const dataCache = fileCache(datasetId, cacheTimeMinutes);
   const apiData = dataCache.getKey('response');
 
