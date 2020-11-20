@@ -22,6 +22,7 @@ import {
   apiErrorResult,
 } from '../../../universal/helpers/api';
 import { BFFApiUrls } from '../../config/api';
+import { DatasetControlItem } from './datasets';
 import styles from './MyAreaDatasets.module.scss';
 
 const activeDatasetIdsAtom: RecoilState<string[]> = atom<string[]>({
@@ -255,4 +256,49 @@ export function useFetchFeatures({
   );
 
   return fetchFeatures;
+}
+
+export function filterActiveDatasets(
+  controlItem: DatasetControlItem,
+  activeDatasetIds: string[]
+) {
+  return controlItem.collection.filter((dataset) =>
+    activeDatasetIds.includes(dataset.id)
+  );
+}
+
+function toggleCategory(
+  activeDatasetIds: string[],
+  controlItem: DatasetControlItem
+) {
+  const total = controlItem.collection.length;
+  const threshold = Math.round(total / 2);
+  const activeItemsTotal = filterActiveDatasets(controlItem, activeDatasetIds)
+    .length;
+
+  const isActive =
+    (activeItemsTotal !== 0 &&
+      activeItemsTotal !== total &&
+      activeItemsTotal >= threshold) ||
+    activeItemsTotal === 0;
+
+  if (!isActive) {
+    return activeDatasetIds.filter((id) => {
+      const isDatasetIdInControlItem = controlItem.collection.some(
+        (dataset) => dataset.id === id
+      );
+      return !isDatasetIdInControlItem;
+    });
+  }
+  return [...activeDatasetIds, ...controlItem.collection.map(({ id }) => id)];
+}
+
+export function useControlItemChange() {
+  const [activeDatasetIds, setActiveDatasetIds] = useActiveDatasetIds();
+  return useCallback(
+    (controlItem: DatasetControlItem) => {
+      setActiveDatasetIds(toggleCategory(activeDatasetIds, controlItem));
+    },
+    [activeDatasetIds, setActiveDatasetIds]
+  );
 }

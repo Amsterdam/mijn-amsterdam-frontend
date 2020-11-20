@@ -1,17 +1,9 @@
-import { Icon, themeColor, themeSpacing } from '@amsterdam/asc-ui';
-import React, { PropsWithChildren, useState, ReactNode } from 'react';
+import { Icon, themeSpacing } from '@amsterdam/asc-ui';
+import React, { PropsWithChildren, ReactNode, useState } from 'react';
 import styled from 'styled-components';
 import { IconFilter } from '../../assets/icons';
 
-const CollapsiblePanel = styled('div')`
-  padding: ${themeSpacing(3, 0)};
-  border-top: 1px solid ${themeColor('tint', 'level3')};
-  &:last-child {
-    border-bottom: 1px solid ${themeColor('tint', 'level3')};
-  }
-`;
-
-const UnstyledButton = styled('button')`
+export const ToggleButton = styled('button')`
   appearance: none;
   border: 0;
   padding: 0;
@@ -20,30 +12,20 @@ const UnstyledButton = styled('button')`
   background: none;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   font-weight: bold;
-  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 10;
+  border: 1px solid #eee;
+  width: 36px;
+  height: 36px;
+  /* visibility: hidden; */
+  &:hover,
   &:focus {
-    opacity: 1;
+    visibility: visible;
   }
-`;
-
-const CollapsiblePanelContent = styled('div')`
-  padding-left: ${themeSpacing(5)};
-`;
-
-const PanelHeadingElement = styled('h3')`
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  &:hover > button {
-    opacity: 1;
-  }
-`;
-
-const PanelIcon = styled(Icon)`
-  width: ${themeSpacing(6)};
 `;
 
 export enum CollapsedState {
@@ -71,50 +53,55 @@ function MyAreaCollapsiblePanelHeading({
   state = CollapsedState.Collapsed,
 }: MyAreaCollapsiblePanelHeadingProps) {
   return (
-    <PanelHeadingElement>
+    <>
       {title}
       {onClick && (
-        <UnstyledButton onClick={onClick} aria-expanded={isExpanded(state)}>
-          <PanelIcon size={16}>
+        <ToggleButton onClick={onClick} aria-expanded={isExpanded(state)}>
+          <Icon size={16}>
             <IconFilter />
-          </PanelIcon>
-        </UnstyledButton>
+          </Icon>
+        </ToggleButton>
       )}
-    </PanelHeadingElement>
+    </>
   );
 }
 
 type MyAreaCollapsiblePanelProps = PropsWithChildren<{
   title: ReactNode;
   initalState?: CollapsedState;
+  isTopLevelItem: boolean;
 }>;
 
 export default function MyAreaCollapsiblePanel({
   children,
   title,
   initalState = CollapsedState.Collapsed,
+  isTopLevelItem,
 }: MyAreaCollapsiblePanelProps) {
-  const [collapsedState, setCollapsedState] = useState(initalState);
+  const [collapsedState, setCollapsedState] = useState(
+    isTopLevelItem ? CollapsedState.Expanded : initalState
+  );
+  const hasChildren = React.Children.count(children) >= 1;
   return (
-    <CollapsiblePanel>
-      <MyAreaCollapsiblePanelHeading
-        title={title}
-        onClick={
-          !!children
-            ? (event) => {
-                setCollapsedState(
-                  isExpanded(collapsedState)
-                    ? CollapsedState.Collapsed
-                    : CollapsedState.Expanded
-                );
-              }
-            : undefined
-        }
-        state={collapsedState}
-      />
-      {children && isExpanded(collapsedState) && (
-        <CollapsiblePanelContent>{children}</CollapsiblePanelContent>
+    <>
+      {!isTopLevelItem && (
+        <MyAreaCollapsiblePanelHeading
+          title={title}
+          onClick={
+            hasChildren
+              ? (event) => {
+                  setCollapsedState(
+                    isExpanded(collapsedState)
+                      ? CollapsedState.Collapsed
+                      : CollapsedState.Expanded
+                  );
+                }
+              : undefined
+          }
+          state={collapsedState}
+        />
       )}
-    </CollapsiblePanel>
+      {hasChildren && isExpanded(collapsedState) && children}
+    </>
   );
 }

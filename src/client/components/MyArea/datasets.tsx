@@ -21,17 +21,12 @@ import {
 } from '../../assets/icons';
 import { DEFAULT_POLYLINE_OPTIONS } from './MyAreaPolyLineLayer';
 
-export interface DatasetControl {
-  id: string;
-  title: string;
-  icon: ReactNode;
-}
-
 export interface DatasetControlItem {
   id: string;
   title: string;
-  collection: DatasetControl[];
-  isActive: boolean;
+  collection: DatasetControlItem[];
+  isActive?: boolean;
+  type?: 'filters' | 'category' | 'dataset' | 'filter';
 }
 
 const DatasetIcon = styled.div`
@@ -146,54 +141,110 @@ export function titleTransform(id: string) {
 
 const createDatasetControl = ({
   id,
-  icon,
   title,
-}: {
-  id: string;
-  icon?: ReactNode;
-  title?: string;
-}) => {
+  collection,
+  isActive,
+  type = 'category',
+}: DatasetControlItem) => {
   return {
     id,
-    icon,
-    title: titleTransform(id),
+    title,
+    collection,
+    isActive,
+    type,
   };
 };
 
-export const DATASET_CONTROL_ITEMS: DatasetControlItem[] = [
-  {
-    id: 'parkeren',
-    title: 'Parkeren',
-    isActive: true,
-    collection: DATASETS.parkeren.map(id => createDatasetControl({ id })),
+type PropertyName = string;
+
+interface DatasetFilterConfig {
+  [datasetId: string]: boolean | PropertyName[];
+}
+
+export const DATASETS_FILTERED: Record<string, DatasetFilterConfig> = {
+  openbaresportplek: {
+    sportfunctie: [
+      'Honkbal/softbal',
+      'Voetbal',
+      'Atletiek',
+      'Australian football',
+      'Rugby',
+      'Handboogschieten',
+      'Golf driving range',
+      'Short golf',
+      'Cricket',
+      'Hockey',
+      'Tennis',
+      'Golf',
+      'Balspel',
+      'Honkbal',
+      'Handbal',
+      'Korfbal',
+      'Beachvolleybal',
+      'Jeu de Boules',
+      'Beachhandbal',
+      'Basketbal',
+      'Skaten',
+      'Wielrennen',
+      'Padel',
+      'American football',
+    ],
   },
-  {
-    id: 'afvalcontainers',
-    title: 'Afvalcontainers',
-    isActive: true,
-    collection: DATASETS.afvalcontainers.map(id =>
-      createDatasetControl({ id })
-    ),
-  },
-  {
-    id: 'bekendmakingen',
-    title: 'Bekendmakingen',
-    isActive: true,
-    collection: DATASETS.bekendmakingen.map(id => createDatasetControl({ id })),
-  },
-  {
-    id: 'evenementen',
-    title: 'Evenementen',
-    isActive: true,
-    collection: DATASETS.evenementen.map(id => createDatasetControl({ id })),
-  },
-  {
-    id: 'sport',
-    title: 'Sport & Bos',
-    isActive: FeatureToggle.myAreaDataSportEnBosActive,
-    collection: DATASETS.sport.map(id => createDatasetControl({ id })),
-  },
-];
+};
+
+const DATASET_CONTROL_ITEM_ACTIVE: Record<string, boolean> = {
+  sport: FeatureToggle.myAreaDataSportEnBosActive,
+};
+
+const DATASET_CONTROL_ITEMS: DatasetControlItem[] = Object.entries(
+  DATASETS
+).map(([id, datasetIds]) => {
+  return createDatasetControl({
+    id,
+    type: 'category',
+    title: id,
+    isActive: DATASET_CONTROL_ITEM_ACTIVE[id] || true,
+    collection: datasetIds.map((id) => {
+      const datasetFilters = DATASETS_FILTERED[id];
+      return createDatasetControl({
+        id,
+        title: id,
+        type: 'dataset',
+        isActive: DATASET_CONTROL_ITEM_ACTIVE[id] || true,
+        collection: datasetFilters
+          ? Object.entries(datasetFilters)
+              .filter(([id, propertyNames]) => Array.isArray(propertyNames))
+              .map(([id, propertyNames]) => {
+                const filterCollection = (propertyNames as PropertyName[]).map(
+                  (id) =>
+                    createDatasetControl({
+                      id,
+                      type: 'filter',
+                      title: id,
+                      isActive: DATASET_CONTROL_ITEM_ACTIVE[id] || true,
+                      collection: [],
+                    })
+                );
+                return createDatasetControl({
+                  type: 'filters',
+                  id,
+                  title: id,
+                  isActive: DATASET_CONTROL_ITEM_ACTIVE[id] || true,
+                  collection: filterCollection,
+                });
+              })
+          : [],
+      });
+    }),
+  });
+});
+
+export const TOP_LEVEL_CONTROL_ITEM: DatasetControlItem = {
+  title: 'Kaartgegevens',
+  id: 'mijn-buurt-datasets',
+  isActive: true,
+  collection: DATASET_CONTROL_ITEMS,
+};
 
 export const PARKEERZONES_POLYLINE_OPTIONS: Record<string, PolylineOptions> = {
   parkeerzones: {
