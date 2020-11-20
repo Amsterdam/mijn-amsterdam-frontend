@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
-
+import path from 'path';
 import VergunningenDocuments from './json/vergunningen-documenten.json';
 import { apiSuccesResult } from '../../universal/helpers/api';
 
@@ -9,6 +9,15 @@ routerDevelopment.get(
   '/decosjoin/listdocuments/:key',
   (req: Request, res: Response, next: NextFunction) => {
     res.json(VergunningenDocuments).end();
+  }
+);
+
+routerDevelopment.get(
+  '/focus/document',
+  (req: Request, res: Response, next: NextFunction) => {
+    res.type('application/pdf');
+    res.sendFile(path.join(__dirname, 'document.pdf'));
+    // res.end();
   }
 );
 

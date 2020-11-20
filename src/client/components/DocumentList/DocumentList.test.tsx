@@ -29,8 +29,13 @@ describe('DocumentList', () => {
   const captureException = ((Sentry as any).captureException = jest.fn());
   const fetch = ((global as any).fetch = jest
     .fn()
-    .mockResolvedValueOnce({ status: 200 })
-    .mockResolvedValueOnce({ status: 404 }));
+    .mockResolvedValueOnce({ status: 200, blob: () => null })
+    .mockResolvedValueOnce({ status: 404, statusText: 'not found' }));
+
+  (window as any).URL = {
+    createObjectURL: jest.fn((blob: any) => void 0),
+  };
+  (window as any).location.assign = jest.fn((file: any) => void 0);
 
   beforeEach(() => {
     fetch.mockClear();
@@ -52,10 +57,7 @@ describe('DocumentList', () => {
         <DocumentList documents={ITEMS} />
       </BrowserRouter>
     );
-    const Linkd = component
-      .find('li')
-      .at(0)
-      .find('Linkd');
+    const Linkd = component.find('li').at(0).find('Linkd');
 
     expect(Linkd).toHaveLength(1);
     expect(Linkd.prop('href')).toEqual(ITEMS[0].url);
@@ -76,10 +78,7 @@ describe('DocumentList', () => {
         <DocumentList documents={ITEMS} />
       </BrowserRouter>
     );
-    const Linkd = component
-      .find('li')
-      .at(0)
-      .find('Linkd');
+    const Linkd = component.find('li').at(0).find('Linkd');
 
     await act(async () => {
       Linkd.simulate('click');
@@ -87,7 +86,7 @@ describe('DocumentList', () => {
 
     expect(track).not.toHaveBeenCalled();
     expect(captureException).toHaveBeenCalledWith(
-      'Could not download document',
+      new Error(`Failed to download document. Error: not found, Code: 404`),
       {
         extra: {
           title: ITEMS[0].title,

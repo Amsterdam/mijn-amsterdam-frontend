@@ -43,33 +43,44 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
   const [isErrorVisible, setErrorVisible] = useState(false);
 
   const onClickDocumentLink = useCallback(
-    event => {
+    (event) => {
       event.preventDefault();
+      if (!('fetch' in window)) {
+        downloadFile(document);
+        return;
+      }
       // First check to see if the request will succeed or not.
-      fetch(document.url).then(response => {
-        const trackingUrl =
-          window.location.pathname +
-          addFileType(
-            `/downloads/${document.download || document.title}`,
-            document.type
-          );
+      fetch(document.url)
+        .then((res) => {
+          if (res.status !== 200) {
+            throw new Error(
+              `Failed to download document. Error: ${res.statusText}, Code: ${res.status}`
+            );
+          }
+          return res.blob();
+        })
+        .then((blob) => {
+          const trackingUrl =
+            window.location.pathname +
+            addFileType(
+              `/downloads/${document.download || document.title}`,
+              document.type
+            );
+          // Tracking pageview here because trackDownload doesn't work properly in Matomo.
+          trackPageView(document.title, trackingUrl);
 
-        // Show error if request fails
-        if (response.status !== 200) {
-          Sentry.captureException('Could not download document', {
+          const file = window.URL.createObjectURL(blob);
+          window.location.assign(file);
+        })
+        .catch((error) => {
+          Sentry.captureException(error, {
             extra: {
               title: document.title,
               url: document.url,
             },
           });
           setErrorVisible(true);
-        } else {
-          // Tracking pageview here because trackDownload doesn't work properly in Matomo.
-          trackPageView(document.title, trackingUrl);
-          // Make the file download available to the browser.
-          downloadFile(document);
-        }
-      });
+        });
       return false;
     },
     [document]
@@ -106,7 +117,7 @@ export default function DocumentList({
         isExpandedView && styles[`DocumentList--expandedView`]
       )}
     >
-      {documents.map(document => (
+      {documents.map((document) => (
         <li className={styles.DocumentListItem} key={document.id}>
           {isExpandedView ? (
             <>
