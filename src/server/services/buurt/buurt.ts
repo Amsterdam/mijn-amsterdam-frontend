@@ -12,6 +12,7 @@ import {
   MaPolyLineFeature,
 } from './datasets';
 import { getDatasetEndpointConfig, recursiveCoordinateSwap } from './helpers';
+import { IS_AP } from '../../../universal/config/env';
 
 const fileCaches: Record<string, FileCache> = {};
 
@@ -40,8 +41,9 @@ async function loadDatasetFeature(
   datasetConfig: DatasetConfig,
   params?: { [key: string]: any }
 ) {
-  const cacheTimeMinutes =
-    datasetConfig.cacheTimeMinutes || BUURT_CACHE_TTL_1_DAY_IN_MINUTES;
+  const cacheTimeMinutes = IS_AP
+    ? datasetConfig.cacheTimeMinutes || BUURT_CACHE_TTL_1_DAY_IN_MINUTES
+    : -1;
   const dataCache = fileCache(datasetId, cacheTimeMinutes);
   const apiData = dataCache.getKey('response');
 
@@ -81,7 +83,7 @@ async function loadDatasetFeature(
   );
 
   if (response.status === 'OK' && Array.isArray(response.content)) {
-    response.content = response.content.map((feature) => {
+    response.content = response.content.map(feature => {
       if (
         feature.geometry.type === 'MultiPolygon' ||
         feature.geometry.type === 'MultiLineString'
@@ -125,10 +127,10 @@ export async function loadDatasetFeatures(
   }
 
   const results = await Promise.all(requests);
-  const errorResults = results.filter((result) => result.status === 'ERROR');
+  const errorResults = results.filter(result => result.status === 'ERROR');
   const features = results
-    .filter((result) => result.status === 'OK')
-    .flatMap((result) => result.content)
+    .filter(result => result.status === 'OK')
+    .flatMap(result => result.content)
     .filter(
       (result): result is MaPointFeature | MaPolyLineFeature => result !== null
     );
@@ -198,7 +200,7 @@ export async function loadPolyLineFeatures(
   }
 
   const results = await Promise.all(requests);
-  const errorResults = results.filter((result) => result.status === 'ERROR');
+  const errorResults = results.filter(result => result.status === 'ERROR');
   const datasetResults = results.flatMap(({ content }) => content);
   const features = datasetResults.filter(
     (result): result is MaPolyLineFeature => result !== null

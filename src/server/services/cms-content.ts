@@ -10,6 +10,7 @@ import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import FileCache from '../helpers/file-cache';
 import { sessionID } from '../helpers/app';
+import { IS_AP } from '../../universal/config';
 
 const TAGS_ALLOWED = [
   'a',
@@ -46,7 +47,7 @@ export function sanitizeCmsContent(
     allowedAttributes: ATTR_ALLOWED,
 
     // Filter out empty tags
-    exclusiveFilter: function (frame: any) {
+    exclusiveFilter: function(frame: any) {
       return !frame.text.trim();
     },
   }
@@ -118,8 +119,8 @@ function transformFooterResponse(responseData: any) {
           ? [verwijzing.extern]
           : [];
         const links = [...extern, ...intern]
-          .filter((item) => !!item.link)
-          .map((item) => {
+          .filter(item => !!item.link)
+          .map(item => {
             const { link } = item;
             return {
               to: link.url,
@@ -167,7 +168,7 @@ function transformFooterResponse(responseData: any) {
 
 const fileCache = new FileCache({
   name: 'cms-content.flat-cache.json',
-  cacheTimeMinutes: 24 * 60, // 24 hours
+  cacheTimeMinutes: IS_AP ? 24 * 60 : -1, // 24 hours
 });
 
 async function getGeneralPage(
@@ -191,7 +192,7 @@ async function getGeneralPage(
     }),
     sessionID,
     passthroughRequestHeaders
-  ).then((apiData) => {
+  ).then(apiData => {
     fileCache.setKey('CMS_CONTENT_GENERAL_INFO', apiData);
     fileCache.save();
     return apiData;
@@ -212,7 +213,7 @@ async function getFooter(
     }),
     sessionID,
     passthroughRequestHeaders
-  ).then((apiData) => {
+  ).then(apiData => {
     fileCache.setKey('CMS_CONTENT_FOOTER', apiData);
     fileCache.save();
     return apiData;
