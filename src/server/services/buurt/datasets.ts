@@ -162,7 +162,7 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     listUrl:
       'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/?_fields=id,geometry&page_size=1000',
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/',
-    transformList: transformListSportApiResponse,
+    transformList: transformListSportFilteredApiResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
@@ -240,6 +240,12 @@ function getPolyLineColor(datasetId: string, feature: any) {
       return 'purple';
   }
 }
+
+function transformListSportFilteredApiResponse(
+  datasetId: string,
+  config: DatasetConfig,
+  responseData: any
+) {}
 
 function transformListSportApiResponse(
   datasetId: string,
