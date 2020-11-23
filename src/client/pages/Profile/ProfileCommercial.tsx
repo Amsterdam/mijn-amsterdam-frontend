@@ -146,12 +146,14 @@ export default function ProfileCommercial() {
         />
       )}
 
-      {!!kvkProfileData?.vestigingen?.length && (
-        <InfoPanelCollapsible
+      {!!kvkProfileData?.vestigingen?.length && KVK.content?.vestigingen && (
+        <InfoPanelMulti
           id="overige-vestigingen"
+          KVKData={KVK}
+          items={KVK.content.vestigingen}
           className={styles.CollapsiblePanel}
-          {...formatInfoPanelConfig(panelConfigCommercial.vestigingen, KVK)}
-          panelData={kvkProfileData.vestigingen}
+          panelConfig={panelConfigCommercial.vestigingen}
+          profileData={kvkProfileData.vestigingen}
         />
       )}
 

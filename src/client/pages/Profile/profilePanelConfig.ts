@@ -118,7 +118,7 @@ export const panelConfigCommercial: PanelConfig<KVKPanelKey> = {
     actionLinks: [],
   }),
   vestigingen: (KVK) => ({
-    title: 'Vestigingen',
+    title: KVK.content.vestigingen.length > 1 ? 'Vestigingen' : 'Vestiging',
     actionLinks: [],
   }),
   aandeelhouders: (KVK) => ({
