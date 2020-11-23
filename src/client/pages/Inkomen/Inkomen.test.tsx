@@ -10,7 +10,7 @@ import Inkomen from './Inkomen';
 const testState = {
   FOCUS_STADSPAS: {
     content: {
-      isPartnerpas: true,
+      type: 'hoofdpashouder',
       stadspassen: [
         {
           budgets: [

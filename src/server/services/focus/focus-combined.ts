@@ -39,7 +39,7 @@ export interface FocusStadspas {
 }
 
 export interface FocusStadspasSaldo {
-  isPartnerpas: boolean;
+  type: 'hoofpashouder' | 'partner' | 'kind';
   stadspassen: FocusStadspas[];
 }
 

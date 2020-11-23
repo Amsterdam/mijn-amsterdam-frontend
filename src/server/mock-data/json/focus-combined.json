@@ -17,7 +17,7 @@
       }
     ],
     "stadspassaldo": {
-      "isPartnerpas": false,
+      "type": "hoofdpashouder",
       "stadspassen": [
         {
           "budgets": [],

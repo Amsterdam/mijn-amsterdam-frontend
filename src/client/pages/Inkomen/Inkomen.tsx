@@ -174,7 +174,7 @@ export default () => {
         </p>
         {FeatureToggle.stadpasActive &&
           !isLoadingStadspas &&
-          FOCUS_STADSPAS.content?.isPartnerpas && (
+          FOCUS_STADSPAS.content?.type !== 'kind' && (
             <p>
               Hebt u kinderen of een partner met een Stadspas? 1 volwassene
               krijgt alle Stadspassen van uw gezin te zien. De andere
