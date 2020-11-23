@@ -52,16 +52,42 @@ const StyledLabel = styled(Label)`
   }
 `;
 
+function checkboxState(
+  controlItem: DatasetControlItem,
+  activeDatasetIds: string[]
+) {
+  if (controlItem.type === 'category') {
+    const activeControlIds = filterActiveDatasets(
+      controlItem,
+      activeDatasetIds
+    );
+    const activeLength = activeControlIds.length;
+    const isChecked =
+      !!activeLength && activeLength === controlItem.collection.length;
+    const isIndeterminate =
+      !!activeLength && activeLength !== controlItem.collection.length;
+
+    return {
+      isChecked,
+      isIndeterminate,
+    };
+  }
+  return {
+    isChecked: activeDatasetIds.includes(controlItem.id),
+    isIndeterminate: false, // TODO: Fix for child filters
+  };
+}
+
 interface DatasetControlCheckboxProps {
   controlItem: DatasetControlItem;
   onChange: (datasetControlItem: DatasetControlItem) => void;
-  isActive: boolean;
+  isChecked: boolean;
   isIndeterminate: boolean;
 }
 
 export function DatasetControlCheckbox({
   controlItem,
-  isActive,
+  isChecked,
   isIndeterminate,
   onChange,
 }: DatasetControlCheckboxProps) {
@@ -69,7 +95,7 @@ export function DatasetControlCheckbox({
     <StyledLabel htmlFor={controlItem.id} label={controlItem.title}>
       <StyledCheckbox
         id={controlItem.id}
-        checked={isActive}
+        checked={isChecked}
         indeterminate={isIndeterminate}
         onChange={() => onChange(controlItem)}
       />
@@ -88,21 +114,18 @@ function DatasetControlPanel({
   onChange,
   activeDatasetIds,
 }: DatasetControlPanelProps) {
-  const activeControlIds = filterActiveDatasets(controlItem, activeDatasetIds);
-  const activeLength = activeControlIds.length;
-  const isActive =
-    !!activeLength && activeLength === controlItem.collection.length;
-  const isIndeterminate =
-    !!activeLength && activeLength !== controlItem.collection.length;
   const isTopLevelItem = controlItem.id === TOP_LEVEL_CONTROL_ITEM.id;
-
+  const { isChecked, isIndeterminate } = checkboxState(
+    controlItem,
+    activeDatasetIds
+  );
   if (
     controlItem.collection.length <= 1 &&
     !controlItem.collection[0].collection.length
   ) {
     return (
       <DatasetControlCheckbox
-        isActive={isActive}
+        isChecked={isChecked}
         isIndeterminate={isIndeterminate}
         controlItem={controlItem}
         onChange={onChange}
@@ -116,7 +139,7 @@ function DatasetControlPanel({
         (!isTopLevelItem && controlItem.type === 'category') ||
         controlItem.type === 'dataset' ? (
           <DatasetControlCheckbox
-            isActive={isActive}
+            isChecked={isChecked}
             isIndeterminate={isIndeterminate}
             controlItem={controlItem}
             onChange={onChange}
@@ -128,6 +151,10 @@ function DatasetControlPanel({
     >
       <DatasetControlList>
         {controlItem.collection.map((controlItem) => {
+          const { isChecked, isIndeterminate } = checkboxState(
+            controlItem,
+            activeDatasetIds
+          );
           return (
             <DatasetControlListItem key={controlItem.id}>
               {controlItem.collection.length ? (
@@ -138,9 +165,9 @@ function DatasetControlPanel({
                 />
               ) : (
                 <DatasetControlCheckbox
-                  isActive={isActive}
-                  isIndeterminate={isIndeterminate}
+                  isChecked={isChecked}
                   controlItem={controlItem}
+                  isIndeterminate={isIndeterminate}
                   onChange={onChange}
                 />
               )}

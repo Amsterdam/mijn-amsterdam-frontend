@@ -25,7 +25,6 @@ export interface DatasetControlItem {
   id: string;
   title: string;
   collection: DatasetControlItem[];
-  isActive?: boolean;
   type?: 'filters' | 'category' | 'dataset' | 'filter';
 }
 
@@ -143,14 +142,12 @@ const createDatasetControl = ({
   id,
   title,
   collection,
-  isActive,
   type = 'category',
 }: DatasetControlItem) => {
   return {
     id,
     title,
     collection,
-    isActive,
     type,
   };
 };
@@ -192,10 +189,6 @@ export const DATASETS_FILTERED: Record<string, DatasetFilterConfig> = {
   },
 };
 
-const DATASET_CONTROL_ITEM_ACTIVE: Record<string, boolean> = {
-  sport: FeatureToggle.myAreaDataSportEnBosActive,
-};
-
 const DATASET_CONTROL_ITEMS: DatasetControlItem[] = Object.entries(
   DATASETS
 ).map(([id, datasetIds]) => {
@@ -203,14 +196,12 @@ const DATASET_CONTROL_ITEMS: DatasetControlItem[] = Object.entries(
     id,
     type: 'category',
     title: id,
-    isActive: DATASET_CONTROL_ITEM_ACTIVE[id] || true,
     collection: datasetIds.map((id) => {
       const datasetFilters = DATASETS_FILTERED[id];
       return createDatasetControl({
         id,
         title: id,
         type: 'dataset',
-        isActive: DATASET_CONTROL_ITEM_ACTIVE[id] || true,
         collection: datasetFilters
           ? Object.entries(datasetFilters)
               .filter(([id, propertyNames]) => Array.isArray(propertyNames))
@@ -221,7 +212,6 @@ const DATASET_CONTROL_ITEMS: DatasetControlItem[] = Object.entries(
                       id,
                       type: 'filter',
                       title: id,
-                      isActive: DATASET_CONTROL_ITEM_ACTIVE[id] || true,
                       collection: [],
                     })
                 );
@@ -229,7 +219,6 @@ const DATASET_CONTROL_ITEMS: DatasetControlItem[] = Object.entries(
                   type: 'filters',
                   id,
                   title: id,
-                  isActive: DATASET_CONTROL_ITEM_ACTIVE[id] || true,
                   collection: filterCollection,
                 });
               })
@@ -242,7 +231,6 @@ const DATASET_CONTROL_ITEMS: DatasetControlItem[] = Object.entries(
 export const TOP_LEVEL_CONTROL_ITEM: DatasetControlItem = {
   title: 'Kaartgegevens',
   id: 'mijn-buurt-datasets',
-  isActive: true,
   collection: DATASET_CONTROL_ITEMS,
 };
 

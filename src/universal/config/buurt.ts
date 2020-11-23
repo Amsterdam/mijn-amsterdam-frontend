@@ -17,7 +17,9 @@ export const LOCATION_ZOOM = 16;
 export const projDefinition = `+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.4171,50.3319,465.5524,-0.398957,0.343988,-1.87740,4.0725 +units=m +no_defs`;
 export const proj4RD = proj4('WGS84', projDefinition);
 
-export const DATASETS: Record<string, string[]> = {
+type DatasetsConfig = Record<string, string[]>;
+
+export const DATASETS: DatasetsConfig = {
   afvalcontainers: ['rest', 'papier', 'glas', 'plastic', 'textiel', 'gft'],
   parkeren: ['parkeerzones', 'parkeerzones_uitzondering'],
   bekendmakingen: [
@@ -65,8 +67,9 @@ export function getDatasetGroupId(datasetId: string) {
 }
 
 export const ACTIVE_DATASET_IDS_INITIAL = [
-  ...DATASETS.afvalcontainers,
-  ...DATASETS.bekendmakingen,
-  ...DATASETS.evenementen,
-  ...DATASETS.sport,
+  // ...DATASETS.afvalcontainers,
+  // ...DATASETS.bekendmakingen,
+  // ...DATASETS.evenementen,
+  // ...DATASETS.sport,
+  'openbaresportplek',
 ];

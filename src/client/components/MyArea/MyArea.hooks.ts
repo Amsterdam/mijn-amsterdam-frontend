@@ -1,6 +1,6 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import axios, { AxiosResponse } from 'axios';
-import { LeafletEvent } from 'leaflet';
+import { control, LeafletEvent } from 'leaflet';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import {
@@ -297,7 +297,18 @@ export function useControlItemChange() {
   const [activeDatasetIds, setActiveDatasetIds] = useActiveDatasetIds();
   return useCallback(
     (controlItem: DatasetControlItem) => {
-      setActiveDatasetIds(toggleCategory(activeDatasetIds, controlItem));
+      let datasetIds = activeDatasetIds;
+      switch (controlItem.type) {
+        case 'category':
+          datasetIds = toggleCategory(activeDatasetIds, controlItem);
+          break;
+        case 'dataset':
+          datasetIds = activeDatasetIds.includes(controlItem.id)
+            ? activeDatasetIds.filter((id) => id !== controlItem.id)
+            : [...activeDatasetIds, controlItem.id];
+          break;
+      }
+      setActiveDatasetIds(datasetIds);
     },
     [activeDatasetIds, setActiveDatasetIds]
   );
