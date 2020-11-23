@@ -43,7 +43,7 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
   const [isErrorVisible, setErrorVisible] = useState(false);
 
   const onClickDocumentLink = useCallback(
-    (event) => {
+    event => {
       event.preventDefault();
       if (!('fetch' in window)) {
         downloadFile(document);
@@ -51,7 +51,7 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
       }
       // First check to see if the request will succeed or not.
       fetch(document.url)
-        .then((res) => {
+        .then(res => {
           if (res.status !== 200) {
             throw new Error(
               `Failed to download document. Error: ${res.statusText}, Code: ${res.status}`
@@ -59,7 +59,7 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
           }
           return res.blob();
         })
-        .then((blob) => {
+        .then(blob => {
           const trackingUrl =
             window.location.pathname +
             addFileType(
@@ -69,10 +69,17 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
           // Tracking pageview here because trackDownload doesn't work properly in Matomo.
           trackPageView(document.title, trackingUrl);
 
-          const file = window.URL.createObjectURL(blob);
-          window.location.assign(file);
+          if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+            window.navigator.msSaveOrOpenBlob(blob, document.title);
+          } else {
+            const fileUrl = window.URL.createObjectURL(blob);
+            downloadFile({
+              ...document,
+              url: fileUrl,
+            });
+          }
         })
-        .catch((error) => {
+        .catch(error => {
           Sentry.captureException(error, {
             extra: {
               title: document.title,
@@ -117,7 +124,7 @@ export default function DocumentList({
         isExpandedView && styles[`DocumentList--expandedView`]
       )}
     >
-      {documents.map((document) => (
+      {documents.map(document => (
         <li className={styles.DocumentListItem} key={document.id}>
           {isExpandedView ? (
             <>
