@@ -1,5 +1,5 @@
 import { useMapInstance } from '@amsterdam/react-maps';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
 import {
   MaPointFeature,
@@ -22,6 +22,8 @@ interface MyAreaDatasetsProps {
   datasetIds?: string[];
 }
 
+let i = 0;
+
 export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   const map = useMapInstance();
   const [polyLineFeatures, setPolyLineFeatures] = useState<MaPolyLineFeature[]>(
@@ -31,7 +33,10 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   const [errorResults, setErrorResults] = useState<
     Array<ApiErrorResponse<null>>
   >([]);
-  const [isFeaturesLoading, setFeaturesLoading] = useState(true);
+  const [isFeaturesLoading, setFeaturesLoading] = useState(
+    !clusterFeatures.length && !polyLineFeatures.length
+  );
+  const prevActiveDatasetIds = useRef<string[]>([]);
 
   const setFeaturesLoadingDebounced = useDebouncedCallback((isLoading) => {
     setFeaturesLoading(isLoading);
@@ -44,20 +49,18 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     setFeaturesLoading: setFeaturesLoadingDebounced.callback,
   });
 
-  useEffect(() => {
-    const activeDatasetIds = datasetIds
-      ? datasetIds
-      : ACTIVE_DATASET_IDS_INITIAL;
-    setActiveDatasetIds(activeDatasetIds);
-    fetchFeatures(activeDatasetIds);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const [activeDatasetIds, setActiveDatasetIds] = useActiveDatasetIds();
 
   const onUpdate = useCallback(() => {
     fetchFeatures(activeDatasetIds);
   }, [fetchFeatures, activeDatasetIds]);
+
+  useEffect(() => {
+    if (activeDatasetIds.length || prevActiveDatasetIds.current.length !== 0) {
+      fetchFeatures(activeDatasetIds);
+      prevActiveDatasetIds.current = activeDatasetIds;
+    }
+  }, [activeDatasetIds, fetchFeatures]);
 
   // Set the zIndex of the markerpane. These markers will
   useEffect(() => {
@@ -66,6 +69,11 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       pane.style.zIndex = '800';
     }
   }, [map]);
+
+  useEffect(() => {
+    setActiveDatasetIds(datasetIds ? datasetIds : ACTIVE_DATASET_IDS_INITIAL);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onMarkerClick = useOnMarkerClick();
 

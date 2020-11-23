@@ -1,7 +1,7 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import axios, { AxiosResponse, CancelTokenSource } from 'axios';
 import { control, LeafletEvent } from 'leaflet';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   atom,
@@ -182,13 +182,17 @@ export function useFetchFeatures({
   setFeaturesLoading: any;
 }) {
   const map = useMapInstance();
-  const [abortSignal, setAbortSignal] = useState<CancelTokenSource>();
+  const abortSignal = useRef<CancelTokenSource>();
+
   const fetch = useCallback(
     async (payload = {}) => {
       setFeaturesLoading(true);
-      abortSignal && abortSignal.cancel();
+
+      abortSignal.current?.cancel();
+
       const tokenSource = axios.CancelToken.source();
-      setAbortSignal(() => tokenSource);
+      abortSignal.current = tokenSource;
+
       let response: AxiosResponse<
         ApiResponse<{
           features: DatasetFeatures;
@@ -250,7 +254,6 @@ export function useFetchFeatures({
       setClusterFeatures,
       setErrorResults,
       setFeaturesLoading,
-      abortSignal,
     ]
   );
 
