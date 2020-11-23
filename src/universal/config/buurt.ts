@@ -17,48 +17,55 @@ export const LOCATION_ZOOM = 16;
 export const projDefinition = `+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.4171,50.3319,465.5524,-0.398957,0.343988,-1.87740,4.0725 +units=m +no_defs`;
 export const proj4RD = proj4('WGS84', projDefinition);
 
-type DatasetsConfig = Record<string, string[]>;
+type DatasetsConfig = Record<string, any>;
 
 export const DATASETS: DatasetsConfig = {
-  afvalcontainers: ['rest', 'papier', 'glas', 'plastic', 'textiel', 'gft'],
-  parkeren: ['parkeerzones', 'parkeerzones_uitzondering'],
-  bekendmakingen: [
-    'apv vergunning',
-    'evenementenvergunning',
-    'exploitatievergunning',
-    'inspraak',
-    'kapvergunning',
-    'ligplaatsvergunning',
-    'meldingen',
-    'omgevingsvergunning',
-    'onttrekkingsvergunning',
-    'openingstijden',
-    'rectificatie',
-    'speelautomaten',
-    'splitsingsvergunning',
-    'terrasvergunning',
-    'verkeersbesluit',
-    'overig',
-    'geluidvergunning',
-    'bestemmingsplan',
-    'drank- en horecavergunning',
-  ],
-  evenementen: ['evenementen'],
-  sport: [
-    'zwembad',
-    'sportpark',
-    'sportveld',
-    'gymsportzaal',
-    'sporthal',
-    'sportaanbieder',
-    'openbaresportplek',
-    'hardlooproute',
-  ],
+  afvalcontainers: {
+    rest: true,
+    papier: true,
+    glas: true,
+    plastic: true,
+    textiel: true,
+    gft: true,
+  },
+  parkeren: { parkeerzones: true, parkeerzones_uitzondering: true },
+  bekendmakingen: {
+    'apv vergunning': true,
+    evenementenvergunning: true,
+    exploitatievergunning: true,
+    inspraak: true,
+    kapvergunning: true,
+    ligplaatsvergunning: true,
+    meldingen: true,
+    omgevingsvergunning: true,
+    onttrekkingsvergunning: true,
+    openingstijden: true,
+    rectificatie: true,
+    speelautomaten: true,
+    splitsingsvergunning: true,
+    terrasvergunning: true,
+    verkeersbesluit: true,
+    overig: true,
+    geluidvergunning: true,
+    bestemmingsplan: true,
+    'drank- en horecavergunning': true,
+  },
+  evenementen: { evenementen: true },
+  sport: {
+    zwembad: true,
+    sportpark: true,
+    sportveld: true,
+    gymsportzaal: true,
+    sporthal: true,
+    sportaanbieder: true,
+    openbaresportplek: true,
+    hardlooproute: true,
+  },
 };
 
 export function getDatasetGroupId(datasetId: string) {
-  const group = Object.entries(DATASETS).find(([groupId, datasetIds]) =>
-    datasetIds.includes(datasetId)
+  const group = Object.entries(DATASETS).find(([groupId, datasetConfig]) =>
+    Object.keys(datasetConfig).includes(datasetId)
   );
   if (group) {
     return group[0];

@@ -191,12 +191,12 @@ export const DATASETS_FILTERED: Record<string, DatasetFilterConfig> = {
 
 const DATASET_CONTROL_ITEMS: DatasetControlItem[] = Object.entries(
   DATASETS
-).map(([id, datasetIds]) => {
+).map(([id, datasetConfig]) => {
   return createDatasetControl({
     id,
     type: 'category',
     title: id,
-    collection: datasetIds.map((id) => {
+    collection: Object.entries(datasetConfig).map(([id, config]) => {
       const datasetFilters = DATASETS_FILTERED[id];
       return createDatasetControl({
         id,

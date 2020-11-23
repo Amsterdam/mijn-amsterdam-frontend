@@ -293,11 +293,11 @@ function transformAfvalcontainers(
   const collection: DatasetFeatures = [];
   if (Array.isArray(WFSData?.features)) {
     for (const feature of WFSData.features) {
-      const fractieOmschrijving = feature.properties?.fractie_omschrijving.toLowerCase();
-      // Redundant filtering, the API should return with the proper dataset already
+      const fractieOmschrijvingDatasetId = feature.properties?.fractie_omschrijving.toLowerCase();
+      // Redundant check on active state, the API should only return the active containers already.
       if (
         feature.properties?.status === CONTAINER_STATUS_ACTIVE &&
-        DATASETS.afvalcontainers.includes(fractieOmschrijving)
+        !!DATASETS.afvalcontainers[fractieOmschrijvingDatasetId]
       ) {
         if (feature?.geometry?.coordinates) {
           collection.push({
@@ -305,7 +305,7 @@ function transformAfvalcontainers(
             geometry: feature.geometry,
             properties: {
               id: feature.properties.id,
-              datasetId: fractieOmschrijving,
+              datasetId: fractieOmschrijvingDatasetId,
             },
           });
         }
