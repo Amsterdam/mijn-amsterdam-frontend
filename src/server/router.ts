@@ -67,15 +67,13 @@ router.post(
         errorResults: polylineErrorResults,
       } = await loadPolyLineFeatures(res.locals.sessionID, req.body);
 
-      setTimeout(() => {
-        res.json(
-          apiSuccesResult({
-            features: [...(clusters || []), ...(polylines || [])],
-            errorResults: [...clusterErrorResults, ...polylineErrorResults],
-          })
-        );
-        next();
-      }, 2000);
+      res.json(
+        apiSuccesResult({
+          features: [...(clusters || []), ...(polylines || [])],
+          errorResults: [...clusterErrorResults, ...polylineErrorResults],
+        })
+      );
+      next();
     } catch (error) {
       next(error);
     }
@@ -109,10 +107,8 @@ router.get(
       if (response.status !== 'OK') {
         res.status(500);
       }
-      setTimeout(() => {
-        res.json(response);
-        next();
-      }, 3000);
+      res.json(response);
+      next();
     } catch (error) {
       next(error);
     }
