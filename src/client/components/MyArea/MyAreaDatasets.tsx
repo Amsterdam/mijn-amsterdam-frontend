@@ -1,5 +1,5 @@
 import { useMapInstance } from '@amsterdam/react-maps';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
 import {
   MaPointFeature,
@@ -36,7 +36,6 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   const [isFeaturesLoading, setFeaturesLoading] = useState(
     !clusterFeatures.length && !polyLineFeatures.length
   );
-  const prevActiveDatasetIds = useRef<string[]>([]);
 
   const setFeaturesLoadingDebounced = useDebouncedCallback((isLoading) => {
     setFeaturesLoading(isLoading);
@@ -56,9 +55,11 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   }, [fetchFeatures, activeDatasetIds]);
 
   useEffect(() => {
-    if (activeDatasetIds.length || prevActiveDatasetIds.current.length !== 0) {
+    if (activeDatasetIds.length) {
       fetchFeatures(activeDatasetIds);
-      prevActiveDatasetIds.current = activeDatasetIds;
+    } else {
+      setClusterFeatures([]);
+      setPolyLineFeatures([]);
     }
   }, [activeDatasetIds, fetchFeatures]);
 
