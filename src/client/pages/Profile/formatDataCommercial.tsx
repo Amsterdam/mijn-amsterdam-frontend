@@ -225,17 +225,25 @@ export function formatKvkProfileData(kvkData: KVKData): KvkProfileData {
   }
 
   if (kvkData.vestigingen?.length) {
-    const hoofdVestiging = kvkData.vestigingen.find(
-      (vestiging) => vestiging.isHoofdvestiging
-    );
+    if (kvkData.vestigingen?.length === 1) {
+      profileData.vestigingen = kvkData.vestigingen.map((vestiging) =>
+        format(kvkInfoLabels.vestiging, vestiging, kvkData)
+      );
+    } else {
+      const hoofdVestiging = kvkData.vestigingen.find(
+        (vestiging) => vestiging.isHoofdvestiging
+      );
 
-    profileData.hoofdVestiging = hoofdVestiging
-      ? format(kvkInfoLabels.vestiging, hoofdVestiging, kvkData)
-      : null;
+      profileData.hoofdVestiging = hoofdVestiging
+        ? format(kvkInfoLabels.vestiging, hoofdVestiging, kvkData)
+        : null;
 
-    profileData.vestigingen = kvkData.vestigingen
-      .filter((vestiging) => !vestiging.isHoofdvestiging)
-      .map((vestiging) => format(kvkInfoLabels.vestiging, vestiging, kvkData));
+      profileData.vestigingen = kvkData.vestigingen
+        .filter((vestiging) => !vestiging.isHoofdvestiging)
+        .map((vestiging) =>
+          format(kvkInfoLabels.vestiging, vestiging, kvkData)
+        );
+    }
   }
 
   if (kvkData.aandeelhouders?.length) {
