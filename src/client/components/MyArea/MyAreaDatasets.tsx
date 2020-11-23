@@ -31,9 +31,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   const [errorResults, setErrorResults] = useState<
     Array<ApiErrorResponse<null>>
   >([]);
-  const [isFeaturesLoading, setFeaturesLoading] = useState(
-    !clusterFeatures.length && !polyLineFeatures.length
-  );
+  const [isFeaturesLoading, setFeaturesLoading] = useState(true);
 
   const setFeaturesLoadingDebounced = useDebouncedCallback((isLoading) => {
     setFeaturesLoading(isLoading);
@@ -46,15 +44,20 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     setFeaturesLoading: setFeaturesLoadingDebounced.callback,
   });
 
+  useEffect(() => {
+    const activeDatasetIds = datasetIds
+      ? datasetIds
+      : ACTIVE_DATASET_IDS_INITIAL;
+    setActiveDatasetIds(activeDatasetIds);
+    fetchFeatures(activeDatasetIds);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const [activeDatasetIds, setActiveDatasetIds] = useActiveDatasetIds();
 
   const onUpdate = useCallback(() => {
     fetchFeatures(activeDatasetIds);
   }, [fetchFeatures, activeDatasetIds]);
-
-  useEffect(() => {
-    fetchFeatures(activeDatasetIds);
-  }, [activeDatasetIds, fetchFeatures]);
 
   // Set the zIndex of the markerpane. These markers will
   useEffect(() => {
@@ -63,11 +66,6 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
       pane.style.zIndex = '800';
     }
   }, [map]);
-
-  useEffect(() => {
-    setActiveDatasetIds(datasetIds ? datasetIds : ACTIVE_DATASET_IDS_INITIAL);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const onMarkerClick = useOnMarkerClick();
 

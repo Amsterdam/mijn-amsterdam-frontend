@@ -1,7 +1,7 @@
 import { useMapInstance } from '@amsterdam/react-maps';
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, CancelTokenSource } from 'axios';
 import { control, LeafletEvent } from 'leaflet';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   atom,
@@ -94,8 +94,11 @@ export function useFetchPanelFeature() {
       return;
     }
 
+    let source = axios.CancelToken.source();
+
     axios({
       url: `${BFFApiUrls.MAP_DATASETS}/${datasetId}/${id}`,
+      cancelToken: source.token,
     })
       .then(({ data: { content: markerData } }) => {
         setSelectedFeature({
@@ -105,12 +108,18 @@ export function useFetchPanelFeature() {
         });
       })
       .catch((error) => {
-        setSelectedFeature({
-          id,
-          datasetId,
-          markerData: 'error',
-        });
+        if (!axios.isCancel(error)) {
+          setSelectedFeature({
+            id,
+            datasetId,
+            markerData: 'error',
+          });
+        }
       });
+
+    return () => {
+      source.cancel();
+    };
   }, [datasetId, id, setSelectedFeature]);
 }
 
@@ -173,29 +182,39 @@ export function useFetchFeatures({
   setFeaturesLoading: any;
 }) {
   const map = useMapInstance();
-
+  const [abortSignal, setAbortSignal] = useState<CancelTokenSource>();
   const fetch = useCallback(
     async (payload = {}) => {
       setFeaturesLoading(true);
+      abortSignal && abortSignal.cancel();
+      const tokenSource = axios.CancelToken.source();
+      setAbortSignal(() => tokenSource);
       let response: AxiosResponse<
         ApiResponse<{
           features: DatasetFeatures;
           errorResults: Array<ApiErrorResponse<null>>;
         }>
       > | null = null;
+
       try {
         response = await axios({
           url: BFFApiUrls.MAP_DATASETS,
           data: payload,
           method: 'POST',
+          cancelToken: tokenSource.token,
         });
       } catch (error) {
-        setErrorResults([
-          {
-            ...apiErrorResult('Kaartgegevens konden niet worden geladen', null),
-            id: 'Alle datasets',
-          },
-        ]);
+        if (!axios.isCancel(error)) {
+          setErrorResults([
+            {
+              ...apiErrorResult(
+                'Kaartgegevens konden niet worden geladen',
+                null
+              ),
+              id: 'Alle datasets',
+            },
+          ]);
+        }
       }
 
       const features = response?.data.content?.features;
@@ -231,6 +250,7 @@ export function useFetchFeatures({
       setClusterFeatures,
       setErrorResults,
       setFeaturesLoading,
+      abortSignal,
     ]
   );
 

@@ -17,7 +17,14 @@ export const LOCATION_ZOOM = 16;
 export const projDefinition = `+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.4171,50.3319,465.5524,-0.398957,0.343988,-1.87740,4.0725 +units=m +no_defs`;
 export const proj4RD = proj4('WGS84', projDefinition);
 
-type DatasetsConfig = Record<string, any>;
+export type DatasetCategoryId = string;
+export type DatasetId = string;
+export type DatasetPropertyName = string;
+export type DatasetPropertyValue = string;
+
+type DatasetFilterConfig = Record<DatasetPropertyName, DatasetPropertyValue[]>;
+type DatasetConfig = Record<DatasetId, boolean | DatasetFilterConfig>;
+type DatasetsConfig = Record<DatasetCategoryId, DatasetConfig>;
 
 export const DATASETS: DatasetsConfig = {
   afvalcontainers: {
@@ -58,7 +65,34 @@ export const DATASETS: DatasetsConfig = {
     gymsportzaal: true,
     sporthal: true,
     sportaanbieder: true,
-    openbaresportplek: true,
+    openbaresportplek: {
+      sportfunctie: [
+        'Honkbal/softbal',
+        'Voetbal',
+        'Atletiek',
+        'Australian football',
+        'Rugby',
+        'Handboogschieten',
+        'Golf driving range',
+        'Short golf',
+        'Cricket',
+        'Hockey',
+        'Tennis',
+        'Golf',
+        'Balspel',
+        'Honkbal',
+        'Handbal',
+        'Korfbal',
+        'Beachvolleybal',
+        'Jeu de Boules',
+        'Beachhandbal',
+        'Basketbal',
+        'Skaten',
+        'Wielrennen',
+        'Padel',
+        'American football',
+      ],
+    },
     hardlooproute: true,
   },
 };

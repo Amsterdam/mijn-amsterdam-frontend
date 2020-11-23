@@ -17,7 +17,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
-import { DATASETS } from '../../../universal/config/buurt';
+import { DATASETS, DatasetCategoryId } from '../../../universal/config/buurt';
 import { getFullAddress } from '../../../universal/helpers';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useDesktopScreen } from '../../hooks';
@@ -102,7 +102,9 @@ export default function MyArea({
       const queryParams = new URLSearchParams(location.search);
       const ids = queryParams?.get('datasetIds')?.split(',');
       if (ids) {
-        return ids.flatMap((id) => (id in DATASETS ? DATASETS[id] : id));
+        return ids.flatMap((id) =>
+          id in DATASETS ? Object.keys(DATASETS[id]) : id
+        );
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

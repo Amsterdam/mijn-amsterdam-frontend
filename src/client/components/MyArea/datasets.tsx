@@ -1,11 +1,10 @@
 import { themeSpacing } from '@amsterdam/asc-ui';
 import themeColors from '@amsterdam/asc-ui/es/theme/default/colors';
 import { PolylineOptions } from 'leaflet';
-import React, { ReactElement, ReactNode } from 'react';
+import React, { ReactElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import styled from 'styled-components';
 import { DATASETS } from '../../../universal/config';
-import { FeatureToggle } from '../../../universal/config/app';
 import { getDatasetGroupId } from '../../../universal/config/buurt';
 import { capitalizeFirstLetter } from '../../../universal/helpers';
 import {
@@ -152,77 +151,41 @@ const createDatasetControl = ({
   };
 };
 
-type PropertyName = string;
-
-interface DatasetFilterConfig {
-  [datasetId: string]: boolean | PropertyName[];
-}
-
-export const DATASETS_FILTERED: Record<string, DatasetFilterConfig> = {
-  openbaresportplek: {
-    sportfunctie: [
-      'Honkbal/softbal',
-      'Voetbal',
-      'Atletiek',
-      'Australian football',
-      'Rugby',
-      'Handboogschieten',
-      'Golf driving range',
-      'Short golf',
-      'Cricket',
-      'Hockey',
-      'Tennis',
-      'Golf',
-      'Balspel',
-      'Honkbal',
-      'Handbal',
-      'Korfbal',
-      'Beachvolleybal',
-      'Jeu de Boules',
-      'Beachhandbal',
-      'Basketbal',
-      'Skaten',
-      'Wielrennen',
-      'Padel',
-      'American football',
-    ],
-  },
-};
-
 const DATASET_CONTROL_ITEMS: DatasetControlItem[] = Object.entries(
   DATASETS
-).map(([id, datasetConfig]) => {
+).map(([datasetCategoryId, datasetConfig]) => {
   return createDatasetControl({
-    id,
+    id: datasetCategoryId,
     type: 'category',
-    title: id,
-    collection: Object.entries(datasetConfig).map(([id, config]) => {
-      const datasetFilters = DATASETS_FILTERED[id];
+    title: datasetCategoryId,
+    collection: Object.entries(datasetConfig).map(([datasetId, config]) => {
       return createDatasetControl({
-        id,
-        title: id,
+        id: datasetId,
+        title: datasetId,
         type: 'dataset',
-        collection: datasetFilters
-          ? Object.entries(datasetFilters)
-              .filter(([id, propertyNames]) => Array.isArray(propertyNames))
-              .map(([id, propertyNames]) => {
-                const filterCollection = (propertyNames as PropertyName[]).map(
-                  (id) =>
+        collection:
+          typeof config === 'object'
+            ? Object.entries(config)
+                .filter(([propertyName, propertyValues]) =>
+                  Array.isArray(propertyValues)
+                )
+                .map(([propertyName, propertyValues]) => {
+                  const filterCollection = propertyValues.map((propertyValue) =>
                     createDatasetControl({
-                      id,
+                      id: propertyValue,
                       type: 'filter',
-                      title: id,
+                      title: propertyValue,
                       collection: [],
                     })
-                );
-                return createDatasetControl({
-                  type: 'filters',
-                  id,
-                  title: id,
-                  collection: filterCollection,
-                });
-              })
-          : [],
+                  );
+                  return createDatasetControl({
+                    type: 'filters',
+                    id: propertyName,
+                    title: propertyName,
+                    collection: filterCollection,
+                  });
+                })
+            : [],
       });
     }),
   });

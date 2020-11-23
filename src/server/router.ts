@@ -67,13 +67,15 @@ router.post(
         errorResults: polylineErrorResults,
       } = await loadPolyLineFeatures(res.locals.sessionID, req.body);
 
-      res.json(
-        apiSuccesResult({
-          features: [...(clusters || []), ...(polylines || [])],
-          errorResults: [...clusterErrorResults, ...polylineErrorResults],
-        })
-      );
-      next();
+      setTimeout(() => {
+        res.json(
+          apiSuccesResult({
+            features: [...(clusters || []), ...(polylines || [])],
+            errorResults: [...clusterErrorResults, ...polylineErrorResults],
+          })
+        );
+        next();
+      }, 2000);
     } catch (error) {
       next(error);
     }
@@ -92,7 +94,7 @@ router.get(
         response = await loadFeatureDetail(res.locals.sessionID, datasetId, id);
       } else {
         const ids = (datasetId ? [datasetId] : datasetIds).flatMap((id) =>
-          DATASETS[id] ? DATASETS[id] : id
+          DATASETS[id] ? Object.keys(DATASETS[id]) : id
         );
         const configs = getDatasetEndpointConfig(ids);
         response = await loadDatasetFeatures(res.locals.sessionID, configs);
@@ -107,8 +109,10 @@ router.get(
       if (response.status !== 'OK') {
         res.status(500);
       }
-      res.json(response);
-      next();
+      setTimeout(() => {
+        res.json(response);
+        next();
+      }, 3000);
     } catch (error) {
       next(error);
     }
