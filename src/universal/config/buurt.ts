@@ -69,21 +69,16 @@ export const DATASETS: DatasetsConfig = {
     sportveld: true,
     gymsportzaal: true,
     sporthal: true,
-    sportaanbieder: true,
-    openbaresportplek: {
-      sportvoorziening: [
-        'Basketbal',
-        'Tennis',
-        'Voetbal',
-        'Overig',
-        'Fitness / Bootcamp',
-        'Skate',
-        'Jeu de boules',
-        'Tafeltennis',
-        'Beachvolley',
-      ],
+    sportaanbieder: {
+      indicatieStadspas: [],
     },
-    hardlooproute: true,
+    openbaresportplek: {
+      sportvoorziening: [],
+      soortOndergrond: [],
+    },
+    hardlooproute: {
+      lengte: [],
+    },
   },
 };
 

@@ -1,12 +1,12 @@
 import memoryCache from 'memory-cache';
 import Supercluster, { AnyProps, PointFeature } from 'supercluster';
+import {
+  DatasetFilterSelection,
+  DatasetId,
+} from '../../../universal/config/buurt';
 import { filterDatasetFeatures, loadDatasetFeatures } from './buurt';
 import { MaPointFeature } from './datasets';
 import { getDatasetEndpointConfig } from './helpers';
-import {
-  DatasetId,
-  DatasetFilterSelection,
-} from '../../../universal/config/buurt';
 
 const superClusterCache = new memoryCache.Cache<string, any>();
 const cacheKey = (ids: DatasetId[], filters: DatasetFilterSelection) => {
@@ -59,13 +59,16 @@ export async function loadClusterDatasets(
   }
 
   const configs = getDatasetEndpointConfig(datasetIds, ['Point']);
-  const { features, errorResults } = (
-    await loadDatasetFeatures(sessionID, configs)
-  ).content;
+  const {
+    features,
+    filters: filterSelection,
+    errors,
+  } = await loadDatasetFeatures(sessionID, configs);
 
   let clusters: PointFeature<AnyProps>[] = [];
 
   const filteredFeatures = filterDatasetFeatures(features, datasetIds, filters);
+
   const superClusterIndex = await generateSuperCluster(filteredFeatures);
 
   if (superClusterIndex && bbox && zoom) {
@@ -78,6 +81,7 @@ export async function loadClusterDatasets(
 
   return {
     clusters,
-    errorResults,
+    filters: filterSelection,
+    errors,
   };
 }

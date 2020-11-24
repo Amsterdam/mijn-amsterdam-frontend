@@ -1,9 +1,9 @@
 import { LeafletMouseEventHandlerFn } from 'leaflet';
 import React, { useMemo } from 'react';
 import { createGlobalStyle } from 'styled-components';
-import { MaPolyLineFeature } from '../../../server/services/buurt/datasets';
+import { MaPolylineFeature } from '../../../server/services/buurt/datasets';
 import { PARKEERZONES_POLYLINE_OPTIONS } from './datasets';
-import { MaPolyLineLayer } from './MyAreaPolyLineLayer';
+import { MaPolylineLayer } from './MyAreaPolylineLayer';
 
 const Styles = createGlobalStyle`
   .ma-marker-tooltip {
@@ -25,31 +25,31 @@ const Styles = createGlobalStyle`
   }
 `;
 
-interface MyAreaPolyLineDatasetsProps {
+interface MyAreaPolylineDatasetsProps {
   onMarkerClick?: LeafletMouseEventHandlerFn;
-  features: MaPolyLineFeature[];
+  features: MaPolylineFeature[];
 }
 
-export function MyAreaPolyLineDatasets({
+export function MyAreaPolylineDatasets({
   onMarkerClick,
   features,
-}: MyAreaPolyLineDatasetsProps) {
-  const polyLineLayerData = useMemo(() => {
-    const polyLineLayerData: Record<string, MaPolyLineFeature[]> = {};
+}: MyAreaPolylineDatasetsProps) {
+  const polylineLayerData = useMemo(() => {
+    const polylineLayerData: Record<string, MaPolylineFeature[]> = {};
     for (const feature of features) {
-      if (!polyLineLayerData[feature.properties.datasetId]) {
-        polyLineLayerData[feature.properties.datasetId] = [];
+      if (!polylineLayerData[feature.properties.datasetId]) {
+        polylineLayerData[feature.properties.datasetId] = [];
       }
-      polyLineLayerData[feature.properties.datasetId].push(feature);
+      polylineLayerData[feature.properties.datasetId].push(feature);
     }
-    return Object.entries(polyLineLayerData);
+    return Object.entries(polylineLayerData);
   }, [features]);
 
   return (
     <>
-      {polyLineLayerData.map(([datasetId, features]) => {
+      {polylineLayerData.map(([datasetId, features]) => {
         return (
-          <MaPolyLineLayer
+          <MaPolylineLayer
             key={datasetId}
             features={features}
             polylineOptions={PARKEERZONES_POLYLINE_OPTIONS[datasetId]}

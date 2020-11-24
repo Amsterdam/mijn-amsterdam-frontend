@@ -1,5 +1,15 @@
+import {
+  DatasetFilterConfig,
+  DatasetFilterSelection,
+  DatasetId,
+} from '../../../universal/config/buurt';
+import { IS_AP } from '../../../universal/config/env';
 import { apiErrorResult, apiSuccesResult } from '../../../universal/helpers';
-import { ApiResponse } from '../../../universal/helpers/api';
+import {
+  ApiErrorResponse,
+  ApiResponse,
+  ApiSuccessResponse,
+} from '../../../universal/helpers/api';
 import { DataRequestConfig } from '../../config';
 import { requestData } from '../../helpers';
 import FileCache from '../../helpers/file-cache';
@@ -8,17 +18,11 @@ import {
   BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
   DatasetConfig,
   DatasetFeatures,
+  DatasetResponse,
   MaFeature,
   MaPointFeature,
-  MaPolyLineFeature,
 } from './datasets';
 import { getDatasetEndpointConfig, recursiveCoordinateSwap } from './helpers';
-import { IS_AP } from '../../../universal/config/env';
-import {
-  DatasetFilterConfig,
-  DatasetFilterSelection,
-  DatasetId,
-} from '../../../universal/config/buurt';
 
 const fileCaches: Record<string, FileCache> = {};
 
@@ -32,11 +36,33 @@ const fileCache = (id: string, cacheTimeMinutes: number) => {
   return fileCaches[id];
 };
 
+export function createFilterConfig(
+  features: MaFeature[],
+  filterConfig: DatasetFilterConfig
+) {
+  const filters: DatasetFilterConfig = {};
+  const propertyNames = Object.keys(filterConfig);
+  for (const propertyName of propertyNames) {
+    // Collect distinct property values from the dataset
+    filters[propertyName] = Array.from(
+      new Set(
+        features.map(
+          (feature) => (feature?.properties || feature)[propertyName]
+        )
+      )
+    );
+  }
+
+  return filters;
+}
+
+// Matches feature properties to requested filters
 function isFilterMatch(feature: MaFeature, filters: DatasetFilterConfig) {
   return Object.entries(filters).every(([propertyName, propertyValues]) => {
     return (
-      feature.properties[propertyName] &&
-      propertyValues.includes(feature.properties[propertyName])
+      !propertyValues.length ||
+      (propertyName in feature.properties &&
+        propertyValues.includes(feature.properties[propertyName]))
     );
   });
 }
@@ -47,13 +73,14 @@ export function filterDatasetFeatures(
   filters: DatasetFilterSelection
 ) {
   return features
-    .filter((feature, index): feature is MaPointFeature => {
+    .filter((feature): feature is MaPointFeature => {
       return activeDatasetIds.includes(feature.properties.datasetId);
     })
     .filter((feature) => {
       if (filters[feature.properties.datasetId]) {
         return isFilterMatch(feature, filters[feature.properties.datasetId]);
       }
+      // Always return true if no filter is found for a certain dataset
       return true;
     });
 }
@@ -68,10 +95,17 @@ async function loadDatasetFeature(
     ? datasetConfig.cacheTimeMinutes || BUURT_CACHE_TTL_1_DAY_IN_MINUTES
     : -1;
   const dataCache = fileCache(datasetId, cacheTimeMinutes);
-  const apiData = dataCache.getKey('response');
+  const features = dataCache.getKey('features');
+  const filters = dataCache.getKey('filters');
 
-  if (datasetConfig.cache !== false && apiData) {
-    return Promise.resolve(apiData);
+  if (datasetConfig.cache !== false && features) {
+    const apiData: DatasetResponse = {
+      features,
+    };
+    if (filters) {
+      apiData.filters = filters;
+    }
+    return Promise.resolve(apiSuccesResult(apiData));
   }
   const config = { ...(datasetConfig.requestConfig || {}) };
 
@@ -82,8 +116,13 @@ async function loadDatasetFeature(
     };
   }
 
+  const url =
+    typeof datasetConfig.listUrl === 'function'
+      ? datasetConfig.listUrl(datasetConfig)
+      : datasetConfig.listUrl;
+
   const requestConfig: DataRequestConfig = {
-    url: datasetConfig.listUrl,
+    url,
     cacheTimeout: 0, // Don't cache the requests in memory
     cancelTimeout: 1000 * 60 * 3, // 3 mins
     ...config,
@@ -105,61 +144,119 @@ async function loadDatasetFeature(
     {}
   );
 
-  if (response.status === 'OK' && Array.isArray(response.content)) {
-    response.content = response.content.map((feature) => {
-      if (
-        feature.geometry.type === 'MultiPolygon' ||
-        feature.geometry.type === 'MultiLineString'
-      ) {
-        feature.geometry.coordinates = recursiveCoordinateSwap(
-          feature.geometry.coordinates
-        );
-      }
-      return feature;
-    });
+  if (response.status === 'OK') {
+    response.content = Array.isArray(response.content)
+      ? response.content.map((feature) => {
+          if (
+            feature.geometry.type === 'MultiPolygon' ||
+            feature.geometry.type === 'MultiLineString'
+          ) {
+            feature.geometry.coordinates = recursiveCoordinateSwap(
+              feature.geometry.coordinates
+            );
+          }
+          return feature;
+        })
+      : [];
+
+    const filters =
+      datasetConfig.filters &&
+      createFilterConfig(response.content, datasetConfig.filters);
 
     if (datasetConfig.cache !== false) {
-      dataCache.setKey('url', datasetConfig.listUrl);
-      dataCache.setKey('response', response);
+      dataCache.setKey('url', url);
+      dataCache.setKey('features', response.content);
+      if (filters) {
+        dataCache.setKey('filters', filters);
+      }
       dataCache.save();
     }
+
+    const apiResponse: DatasetResponse = { features: response.content };
+
+    if (filters) {
+      apiResponse.filters = filters;
+    }
+
+    return apiSuccesResult(apiResponse);
   }
 
   return response;
+}
+
+function datasetApiResult(results: ApiResponse<DatasetResponse | null>[]) {
+  const errors = results
+    .filter(
+      (result): result is ApiErrorResponse<null> => result.status === 'ERROR'
+    )
+    .map((result) => ({ id: result.id, error: result.message }));
+
+  const responses = results.filter(
+    (result): result is ApiSuccessResponse<DatasetResponse> =>
+      result.status === 'OK' && result.content !== null
+  );
+
+  return {
+    features: responses.flatMap((response) => response.content.features),
+    filters: Object.fromEntries(
+      responses.map((response) => [response.id, response.content.filters])
+    ) as DatasetFilterSelection,
+    errors,
+  };
 }
 
 export async function loadDatasetFeatures(
   sessionID: SessionID,
   configs: Array<[string, DatasetConfig]>
 ) {
-  type ApiDatasetResponse = ApiResponse<DatasetFeatures>;
+  type ApiDatasetResponse = ApiResponse<DatasetResponse | null>;
   const requests: Array<Promise<ApiDatasetResponse>> = [];
 
   for (const datasetConfig of configs) {
     const [id, config] = datasetConfig;
     requests.push(
-      loadDatasetFeature(sessionID, id, config).then(
-        (result: ApiDatasetResponse) => {
-          return {
-            ...result,
-            id,
-          };
-        }
-      )
+      loadDatasetFeature(sessionID, id, config).then((result) => {
+        return {
+          ...result,
+          id,
+        };
+      })
     );
   }
 
   const results = await Promise.all(requests);
-  const errorResults = results.filter((result) => result.status === 'ERROR');
+  return datasetApiResult(results);
+}
 
-  const features = results
-    .filter((result) => result.status === 'OK')
-    .flatMap((result) => result.content)
-    .filter(
-      (result): result is MaPointFeature | MaPolyLineFeature => result !== null
+export async function loadPolylineFeatures(
+  sessionID: SessionID,
+  { datasetIds, bbox }: { datasetIds: string[]; bbox: any }
+) {
+  const configs = getDatasetEndpointConfig(datasetIds, [
+    'MultiPolygon',
+    'MultiLineString',
+  ]);
+  type ApiDatasetResponse = ApiResponse<DatasetResponse | null>;
+  const requests: Array<Promise<ApiDatasetResponse>> = [];
+
+  const filterParams = {
+    FILTER: `<Filter><BBOX><gml:Envelope srsName="EPSG:4326"><gml:lowerCorner>${bbox[0]} ${bbox[1]}</gml:lowerCorner><gml:upperCorner>${bbox[2]} ${bbox[3]}</gml:upperCorner></gml:Envelope></BBOX></Filter>`,
+  };
+
+  for (const datasetConfig of configs) {
+    const [id, config] = datasetConfig;
+    requests.push(
+      loadDatasetFeature(sessionID, id, config, filterParams).then((result) => {
+        return {
+          ...result,
+          id,
+        };
+      })
     );
+  }
 
-  return apiSuccesResult({ features, errorResults });
+  const results = await Promise.all(requests);
+  return datasetApiResult(results);
 }
 
 export async function loadFeatureDetail(
@@ -192,42 +289,4 @@ export async function loadFeatureDetail(
   }
 
   return requestData(requestConfig, sessionID, {});
-}
-
-export async function loadPolyLineFeatures(
-  sessionID: SessionID,
-  { datasetIds, bbox }: { datasetIds: string[]; bbox: any }
-) {
-  const configs = getDatasetEndpointConfig(datasetIds, [
-    'MultiPolygon',
-    'MultiLineString',
-  ]);
-  type ApiDatasetResponse = ApiResponse<DatasetFeatures>;
-  const requests: Array<Promise<ApiDatasetResponse>> = [];
-
-  const filterParams = {
-    FILTER: `<Filter><BBOX><gml:Envelope srsName="EPSG:4326"><gml:lowerCorner>${bbox[0]} ${bbox[1]}</gml:lowerCorner><gml:upperCorner>${bbox[2]} ${bbox[3]}</gml:upperCorner></gml:Envelope></BBOX></Filter>`,
-  };
-
-  for (const datasetConfig of configs) {
-    const [id, config] = datasetConfig;
-    requests.push(
-      loadDatasetFeature(sessionID, id, config, filterParams).then(
-        (result: ApiDatasetResponse) => {
-          return {
-            ...result,
-            id,
-          };
-        }
-      )
-    );
-  }
-
-  const results = await Promise.all(requests);
-  const errorResults = results.filter((result) => result.status === 'ERROR');
-  const datasetResults = results.flatMap(({ content }) => content);
-  const features = datasetResults.filter(
-    (result): result is MaPolyLineFeature => result !== null
-  );
-  return { errorResults, features };
 }

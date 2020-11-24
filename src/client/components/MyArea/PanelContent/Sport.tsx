@@ -78,6 +78,10 @@ export default function MyArePanelContentSport({
       return (
         <GenericBase title={panelItem.naamAanbieder} supTitle="Sportaanbieders">
           <InfoDetail label="Adres" value={panelItem.adres} />
+          <InfoDetail
+            label="Stadspas indicatie"
+            value={panelItem.indicatieStadspas || 'Nee'}
+          />
           {!!panelItem.website && <Url url={panelItem.website} />}
         </GenericBase>
       );
@@ -95,6 +99,12 @@ export default function MyArePanelContentSport({
           )}
           {!!panelItem.omschrijving && (
             <Description description={panelItem.omschrijving} />
+          )}
+          {!!panelItem.soortOndergrond && (
+            <InfoDetail
+              label="Soort ondergrond"
+              value={panelItem.soortOndergrond}
+            />
           )}
           {!!panelItem.soortLocatie && (
             <InfoDetail label="Soort locatie" value={panelItem.soortLocatie} />

@@ -7,6 +7,7 @@ import {
 } from '../../../universal/config/buurt';
 import { DataRequestConfig } from '../../config';
 import { getApiEmbeddedResponse } from './helpers';
+import { DatasetCategoryId } from '../../../universal/config/buurt';
 
 enum zIndexPane {
   PARKEERZONES = '650',
@@ -35,13 +36,18 @@ export type MaFeature<
   >
 > = GeoJSON.Feature<G, DatasetFeatureProperties>;
 export type MaPointFeature = MaFeature<GeoJSON.Point>;
-export type MaPolyLineFeature = MaFeature<
+export type MaPolylineFeature = MaFeature<
   GeoJSON.MultiPolygon | GeoJSON.MultiLineString
 >;
 export type DatasetFeatures = MaFeature[];
 export type MaSuperClusterFeature =
   | Supercluster.PointFeature<DatasetClusterFeatureProperties>
   | Supercluster.ClusterFeature<DatasetClusterFeatureProperties>;
+
+export type DatasetResponse = {
+  features: DatasetFeatures;
+  filters?: DatasetFilterConfig;
+};
 
 export const BUURT_CACHE_TTL_HOURS = 24;
 export const BUURT_CACHE_TTL_1_DAY_IN_MINUTES = 24 * 60;
@@ -55,7 +61,7 @@ const CONTAINER_STATUS_ACTIVE = 1;
 
 export interface DatasetConfig {
   datasetIds?: string[];
-  listUrl?: string;
+  listUrl?: string | ((config: DatasetConfig) => string);
   detailUrl?: string;
   transformList?: (datasetId: string, config: DatasetConfig, data: any) => any;
   transformDetail?: (
@@ -69,6 +75,24 @@ export interface DatasetConfig {
   featureType: 'Point' | 'MultiPolygon' | 'MultiLineString';
   zIndex?: zIndexPane;
   filters?: DatasetFilterConfig;
+}
+
+function getDatasetFilters(
+  datasetCategoryId: DatasetCategoryId,
+  datasetId: DatasetId
+) {
+  return DATASETS[datasetCategoryId] &&
+    DATASETS[datasetCategoryId][datasetId] !== true
+    ? (DATASETS[datasetCategoryId][datasetId] as DatasetFilterConfig)
+    : undefined;
+}
+
+function datasetSportListUrl(datasetId: DatasetId, pageSize: number = 1000) {
+  const apiUrl = `https://api.data.amsterdam.nl/v1/sport/${datasetId}/?_fields=id,geometry`;
+  const pageSizeParam = `&page_size=${pageSize}`;
+
+  return ({ filters }: DatasetConfig) =>
+    apiUrl + (filters && ',' + Object.keys(filters).join(',')) + pageSizeParam;
 }
 
 export const datasetEndpoints: Record<string, DatasetConfig> = {
@@ -158,23 +182,20 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
   sportaanbieder: {
-    listUrl:
-      'https://api.data.amsterdam.nl/v1/sport/sportaanbieder/?_fields=id,geometry&page_size=2000',
+    listUrl: datasetSportListUrl('sportaanbieder', 2000),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportaanbieder/',
     transformList: transformListSportApiResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
+    filters: getDatasetFilters('sport', 'sportaanbieder'),
   },
   openbaresportplek: {
-    listUrl:
-      'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/?_fields=id,geometry,sportvoorziening&page_size=1000',
+    listUrl: datasetSportListUrl('openbaresportplek', 1000),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/',
     transformList: transformListSportApiResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
-    filters: {
-      sportvoorziening: [],
-    },
+    filters: getDatasetFilters('sport', 'openbaresportplek'),
   },
   hardlooproute: {
     listUrl:
@@ -184,10 +205,11 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     cache: false,
     featureType: 'MultiLineString',
     zIndex: zIndexPane.HARDLOOPROUTE,
+    filters: getDatasetFilters('sport', 'hardlooproute'),
   },
 };
 
-function getPolyLineColor(datasetId: string, feature: any) {
+function getPolylineColor(datasetId: string, feature: any) {
   switch (datasetId) {
     case 'sportveld':
       switch (feature.sportfunctie) {
@@ -287,7 +309,7 @@ function transformListSportApiResponse(
           feature.geometry.type === 'MultiLineString';
 
         if (hasShapeGeometry) {
-          properties.color = getPolyLineColor(datasetId, feature);
+          properties.color = getPolylineColor(datasetId, feature);
           if (config?.zIndex) {
             properties.zIndex = config.zIndex;
           }

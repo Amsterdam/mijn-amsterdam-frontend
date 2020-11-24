@@ -1,5 +1,5 @@
 import { useMapInstance } from '@amsterdam/react-maps';
-import axios, { AxiosResponse, CancelTokenSource } from 'axios';
+import axios, { CancelTokenSource } from 'axios';
 import { LeafletEvent } from 'leaflet';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useParams } from 'react-router-dom';
@@ -13,7 +13,7 @@ import { useDebouncedCallback } from 'use-debounce/lib';
 import {
   DatasetFeatures,
   MaPointFeature,
-  MaPolyLineFeature,
+  MaPolylineFeature,
   MaSuperClusterFeature,
 } from '../../../server/services/buurt/datasets';
 import {
@@ -23,11 +23,6 @@ import {
   DatasetPropertyValue,
   DATASETS,
 } from '../../../universal/config/buurt';
-import { ApiResponse } from '../../../universal/helpers';
-import {
-  ApiErrorResponse,
-  apiErrorResult,
-} from '../../../universal/helpers/api';
 import { BFFApiUrls } from '../../config/api';
 import { DatasetCategoryItem, DatasetControlItem } from './datasets';
 import styles from './MyAreaDatasets.module.scss';
@@ -42,23 +37,24 @@ export function useActiveDatasetIds() {
   return useRecoilState(activeDatasetIdsAtom);
 }
 
+// The currently active (selected) filter set
 const activeDatasetFiltersAtom = atom<DatasetFilterSelection>({
   key: 'activeDatasetFilters',
-  default: Object.fromEntries(
-    Object.entries(DATASETS).flatMap(([categoryId, categoryConfig]) => {
-      return Object.entries(categoryConfig)
-        .filter(
-          ([categoryId, categoryConfig]) => typeof categoryConfig === 'object'
-        )
-        .map(([datasetId, datasetConfig]: any) => {
-          return [datasetId, datasetConfig];
-        });
-    })
-  ),
+  default: {},
 });
 
 export function useActiveDatasetFilters() {
   return useRecoilState(activeDatasetFiltersAtom);
+}
+
+// The complete available filter set
+const datasetFilterSelectionAtom = atom<DatasetFilterSelection>({
+  key: 'datasetFilterSelection',
+  default: {},
+});
+
+export function useDatasetFilterSelection() {
+  return useRecoilState(datasetFilterSelectionAtom);
 }
 
 export function useActiveDatasetIdsToFetch(featuresToCompare: DatasetFeatures) {
@@ -153,7 +149,7 @@ export function useFetchPanelFeature() {
 const selectedFeatureSelector = styles['Feature--selected'];
 
 export function useSelectedFeatureCSS(
-  features: Array<MaSuperClusterFeature | MaPolyLineFeature>
+  features: Array<MaSuperClusterFeature | MaPolylineFeature>
 ) {
   const selectedFeature = useSelectedFeatureValue();
   const map = useMapInstance();
@@ -197,118 +193,61 @@ export function useOnMarkerClick() {
   );
 }
 
-export function useFetchFeatures({
-  setClusterFeatures,
-  setPolyLineFeatures,
-  setErrorResults,
-  setFeaturesLoading,
-}: {
-  setClusterFeatures: (features: MaPointFeature[]) => void;
-  setPolyLineFeatures: (features: MaPolyLineFeature[]) => void;
-  setErrorResults: (errorResults: Array<ApiErrorResponse<null>>) => void;
-  setFeaturesLoading: any;
-}) {
+type DatasetResponseContent = {
+  clusters?: MaPointFeature[];
+  polylines?: MaPolylineFeature[];
+  filters?: DatasetFilterSelection;
+  errors: Array<{ id: string; message: string }>;
+};
+
+export function useFetchFeatures() {
   const map = useMapInstance();
   const abortSignal = useRef<CancelTokenSource>();
 
-  const fetchCallback = useCallback(
-    async (payload = {}) => {
-      setFeaturesLoading(true);
-
+  return useCallback(
+    async (
+      datasetIds: DatasetId[],
+      filters: DatasetFilterSelection | null
+    ): Promise<DatasetResponseContent | null> => {
       abortSignal.current?.cancel();
 
       const tokenSource = axios.CancelToken.source();
       abortSignal.current = tokenSource;
-
-      let response: AxiosResponse<
-        ApiResponse<{
-          features: DatasetFeatures;
-          errorResults: Array<ApiErrorResponse<null>>;
-        }>
-      > | null = null;
-
+      const bounds = map.getBounds();
       try {
-        response = await axios({
+        const response = await axios({
           url: BFFApiUrls.MAP_DATASETS,
-          data: payload,
+          data: {
+            datasetIds,
+            filters,
+            bbox: [
+              bounds.getWest(),
+              bounds.getSouth(),
+              bounds.getEast(),
+              bounds.getNorth(),
+            ],
+            zoom: map.getZoom(),
+          },
           method: 'POST',
           cancelToken: tokenSource.token,
         });
+        return response.data.content;
       } catch (error) {
         if (!axios.isCancel(error)) {
-          setErrorResults([
-            {
-              ...apiErrorResult(
-                'Kaartgegevens konden niet worden geladen',
-                null
-              ),
-              id: 'Alle datasets',
-            },
-          ]);
+          return {
+            errors: [
+              {
+                message: 'Kaartgegevens konden niet worden geladen',
+                id: 'Alle kaartgegevens',
+              },
+            ],
+          };
         }
       }
-
-      const features = response?.data.content?.features;
-      const errorResults = response?.data.content?.errorResults;
-
-      if (features) {
-        const clusterFeatures = features?.filter(
-          (feature): feature is MaPointFeature =>
-            feature.geometry.type === 'Point'
-        );
-
-        const polyLineFeatures = features?.filter(
-          (feature): feature is MaPolyLineFeature =>
-            feature.geometry.type === 'MultiPolygon' ||
-            feature.geometry.type === 'MultiLineString'
-        );
-
-        if (clusterFeatures) {
-          setClusterFeatures(clusterFeatures);
-        }
-        if (polyLineFeatures) {
-          setPolyLineFeatures(polyLineFeatures);
-        }
-        if (errorResults) {
-          setErrorResults(errorResults);
-        }
-      }
-
-      setFeaturesLoading(false);
+      return null;
     },
-    [
-      setPolyLineFeatures,
-      setClusterFeatures,
-      setErrorResults,
-      setFeaturesLoading,
-    ]
+    [map]
   );
-
-  const fetch = useDebouncedCallback(fetchCallback, 20).callback;
-
-  const fetchFeatures = useCallback(
-    (datasetIds: DatasetId[], filters: DatasetFilterSelection) => {
-      if (!map) {
-        return;
-      }
-      const bounds = map.getBounds();
-
-      return fetch({
-        datasetIds,
-        filters,
-        bbox: [
-          bounds.getWest(),
-          bounds.getSouth(),
-          bounds.getEast(),
-          bounds.getNorth(),
-        ],
-        zoom: map.getZoom(),
-      });
-    },
-    [map, fetch]
-  );
-
-  return fetchFeatures;
 }
 
 export function filterActiveDatasets(
@@ -387,13 +326,15 @@ export function useFilterControlItemChange() {
 
       let activeFiltersUpdate = { ...activeFilters };
 
+      console.log('!!', activeFiltersUpdate);
+
       if (!isChecked && !activeFiltersUpdate[datasetId]) {
         activeFiltersUpdate[datasetId] = {
           [propertyName]: [propertyValue],
         };
       }
 
-      let filterValues = activeFiltersUpdate[datasetId][propertyName];
+      let filterValues = activeFiltersUpdate[datasetId][propertyName] || [];
 
       if (isChecked) {
         filterValues = activeFiltersUpdate[datasetId][propertyName].filter(

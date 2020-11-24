@@ -6,7 +6,7 @@ import {
 } from '@amsterdam/arm-core';
 import { SnapPoint } from '@amsterdam/arm-core/lib/components/MapPanel/constants';
 import { Checkbox, Label, themeSpacing } from '@amsterdam/asc-ui';
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import {
   DatasetFilterSelection,
@@ -17,15 +17,16 @@ import {
 import { useDesktopScreen } from '../../hooks';
 import Alert from '../Alert/Alert';
 import {
+  createDatasetControlItems,
   DatasetCategoryItem,
   DatasetControlItem,
-  DATASET_CONTROL_ITEMS,
 } from './datasets';
 import {
   filterActiveDatasets,
   useActiveDatasetFilters,
   useActiveDatasetIds,
   useControlItemChange,
+  useDatasetFilterSelection,
   useFetchPanelFeature,
   useFilterControlItemChange,
   useSelectedFeature,
@@ -72,10 +73,11 @@ export function filterItemCheckboxState(
 ) {
   // console.log(activeFilters[datasetId][propertyName]);
   return {
-    isChecked:
+    isChecked: !!(
       activeFilters[datasetId] &&
       activeFilters[datasetId][propertyName] &&
-      activeFilters[datasetId][propertyName].includes(propertyValue),
+      activeFilters[datasetId][propertyName].includes(propertyValue)
+    ),
   };
 }
 
@@ -253,6 +255,11 @@ export default function MyAreaPanels({ onSetDrawerPosition }: MyAreaPanels) {
   const [selectedFeature, setSelectedFeature] = useSelectedFeature();
   const [activeDatasetIds] = useActiveDatasetIds();
   const [activeFilters] = useActiveDatasetFilters();
+  const [filterSelection] = useDatasetFilterSelection();
+
+  const datasetControlItems = useMemo(() => {
+    return createDatasetControlItems(filterSelection);
+  }, [filterSelection]);
 
   useEffect(() => {
     if (selectedFeature !== null) {
@@ -278,7 +285,7 @@ export default function MyAreaPanels({ onSetDrawerPosition }: MyAreaPanels) {
     <PanelComponent>
       <MapPanelContent animate stackOrder={0}>
         <DatasetControlList>
-          {DATASET_CONTROL_ITEMS.map((controlItemCategory) => (
+          {datasetControlItems.map((controlItemCategory) => (
             <DatasetControlListItem key={controlItemCategory.id}>
               <DatasetControlPanel
                 key={controlItemCategory.id}

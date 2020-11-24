@@ -1,7 +1,7 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import L, { LeafletMouseEventHandlerFn } from 'leaflet';
 import { useEffect, useMemo } from 'react';
-import { MaPolyLineFeature } from '../../../server/services/buurt/datasets';
+import { MaPolylineFeature } from '../../../server/services/buurt/datasets';
 
 const DEFAULT_POLYLINE_COLOR = '#EC0000';
 
@@ -14,17 +14,17 @@ export const DEFAULT_POLYLINE_OPTIONS = {
   noClip: true,
 };
 
-interface MaPolyLineLayerProps {
+interface MaPolylineLayerProps {
   onMarkerClick?: LeafletMouseEventHandlerFn;
   polylineOptions?: L.PolylineOptions;
-  features: MaPolyLineFeature[];
+  features: MaPolylineFeature[];
 }
 
-export function MaPolyLineLayer({
+export function MaPolylineLayer({
   onMarkerClick,
   polylineOptions = DEFAULT_POLYLINE_OPTIONS,
   features,
-}: MaPolyLineLayerProps) {
+}: MaPolylineLayerProps) {
   const map = useMapInstance();
 
   // Create custom panes so we can control the zIndex of various polyline shapes

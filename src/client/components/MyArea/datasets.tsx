@@ -22,7 +22,8 @@ import {
   MapIconEvenement,
   MapIconSport,
 } from '../../assets/icons';
-import { DEFAULT_POLYLINE_OPTIONS } from './MyAreaPolyLineLayer';
+import { DEFAULT_POLYLINE_OPTIONS } from './MyAreaPolylineLayer';
+import { DatasetFilterSelection } from '../../../universal/config/buurt';
 
 interface DatasetItem {
   id: string;
@@ -160,34 +161,46 @@ export function titleTransform(id: string) {
   return capitalizeFirstLetter(id).replace(/_/g, ' ');
 }
 
-export const DATASET_CONTROL_ITEMS = Object.entries(DATASETS).map(
-  ([datasetCategoryId, datasetConfig]) => {
+export const createDatasetControlItems = (
+  filterSelection: DatasetFilterSelection | null
+) => {
+  console.log('filterSelection', filterSelection);
+  return Object.entries(DATASETS).map(([datasetCategoryId, datasetConfig]) => {
     const collection = Object.entries(datasetConfig).map(
       ([datasetId, config]) => {
+        const filterConfig =
+          filterSelection && filterSelection[datasetId]
+            ? filterSelection[datasetId]
+            : config;
+
         const collection =
-          typeof config === 'object'
-            ? Object.entries(config).map(([propertyName, propertyValues]) => {
-                if (!Array.isArray(propertyValues)) {
-                  propertyValues = [];
-                }
-                const filterCollection = propertyValues.map((propertyValue) => {
-                  const datasetFilterControlItem: DatasetFilterControlItem = {
-                    type: 'filter',
-                    id: propertyValue,
-                    title: propertyValue,
-                    propertyName,
-                    datasetId,
+          typeof filterConfig === 'object'
+            ? Object.entries(filterConfig).map(
+                ([propertyName, propertyValues]) => {
+                  if (!Array.isArray(propertyValues)) {
+                    propertyValues = [];
+                  }
+                  const filterCollection = propertyValues.map(
+                    (propertyValue) => {
+                      const datasetFilterControlItem: DatasetFilterControlItem = {
+                        type: 'filter',
+                        id: propertyValue,
+                        title: propertyValue,
+                        propertyName,
+                        datasetId,
+                      };
+                      return datasetFilterControlItem;
+                    }
+                  );
+                  const datasetFilterCategoryItem: DatasetFilterCategoryItem = {
+                    type: 'filters',
+                    id: propertyName,
+                    title: propertyName,
+                    collection: filterCollection,
                   };
-                  return datasetFilterControlItem;
-                });
-                const datasetFilterCategoryItem: DatasetFilterCategoryItem = {
-                  type: 'filters',
-                  id: propertyName,
-                  title: propertyName,
-                  collection: filterCollection,
-                };
-                return datasetFilterCategoryItem;
-              })
+                  return datasetFilterCategoryItem;
+                }
+              )
             : [];
 
         const datasetControlItem: DatasetControlItem = {
@@ -209,8 +222,8 @@ export const DATASET_CONTROL_ITEMS = Object.entries(DATASETS).map(
     };
 
     return datasetCategoryItem;
-  }
-);
+  });
+};
 
 export const PARKEERZONES_POLYLINE_OPTIONS: Record<string, PolylineOptions> = {
   parkeerzones: {

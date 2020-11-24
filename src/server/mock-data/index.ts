@@ -189,16 +189,4 @@ export const mockDataConfig: MockDataConfig = {
       return JSON.stringify(items);
     },
   },
-  // [datasetEndpoints.afvalcontainers.listUrl!]: {
-  //   status: (config: any) => (isCommercialUser(config) ? 500 : 500),
-  //   responseData: async () => {
-  //     return null;
-  //   },
-  // },
-  // [datasetEndpoints.sportpark.listUrl!]: {
-  //   status: (config: any) => (isCommercialUser(config) ? 500 : 500),
-  //   responseData: async () => {
-  //     return null;
-  //   },
-  // },
 };

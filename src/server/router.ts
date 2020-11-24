@@ -4,7 +4,7 @@ import { ApiResponse, apiSuccesResult } from '../universal/helpers/api';
 import { BffEndpoints } from './config';
 import { loadClusterDatasets } from './services';
 import {
-  loadPolyLineFeatures,
+  loadPolylineFeatures,
   loadFeatureDetail,
   loadDatasetFeatures,
   filterDatasetFeatures,
@@ -60,19 +60,27 @@ router.post(
     try {
       const {
         clusters,
-        errorResults: clusterErrorResults,
+        errors: clusterErrors,
+        filters: clusterFilters,
       } = await loadClusterDatasets(res.locals.sessionID, req.body);
+
       const {
         features: polylines,
-        errorResults: polylineErrorResults,
-      } = await loadPolyLineFeatures(res.locals.sessionID, req.body);
+        errors: polylineErrors,
+        filters: polylineFilters,
+      } = await loadPolylineFeatures(res.locals.sessionID, req.body);
 
-      res.json(
-        apiSuccesResult({
-          features: [...(clusters || []), ...(polylines || [])],
-          errorResults: [...clusterErrorResults, ...polylineErrorResults],
-        })
-      );
+      const responseContent = {
+        clusters: clusters || [],
+        polylines: polylines || [],
+        errors: [...clusterErrors, ...polylineErrors],
+        filters: {
+          ...clusterFilters,
+          ...polylineFilters,
+        },
+      };
+
+      res.json(apiSuccesResult(responseContent));
       next();
     } catch (error) {
       next(error);
@@ -96,19 +104,25 @@ router.get(
           DATASETS[id] ? Object.keys(DATASETS[id]) : id
         );
         const configs = getDatasetEndpointConfig(ids);
-        response = await loadDatasetFeatures(res.locals.sessionID, configs);
+        const datasetData = await loadDatasetFeatures(
+          res.locals.sessionID,
+          configs
+        );
+        response = apiSuccesResult(datasetData);
 
         if (ids.length) {
           response.content.features = filterDatasetFeatures(
-            response.content.features,
+            datasetData.features,
             ids,
             datasetFilters
           );
         }
       }
+
       if (response.status !== 'OK') {
         res.status(500);
       }
+
       res.json(response);
       next();
     } catch (error) {
