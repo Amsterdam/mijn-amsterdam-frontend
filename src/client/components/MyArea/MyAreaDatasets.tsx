@@ -17,12 +17,11 @@ import {
 import styles from './MyAreaDatasets.module.scss';
 import { MyAreaPolyLineDatasets } from './MyAreaPolyLineDatasets';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
+import { useActiveDatasetFilters } from './MyArea.hooks';
 
 interface MyAreaDatasetsProps {
   datasetIds?: string[];
 }
-
-let i = 0;
 
 export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   const map = useMapInstance();
@@ -49,19 +48,20 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   });
 
   const [activeDatasetIds, setActiveDatasetIds] = useActiveDatasetIds();
+  const [activeFilters, setActiveFilters] = useActiveDatasetFilters();
 
   const onUpdate = useCallback(() => {
-    fetchFeatures(activeDatasetIds);
-  }, [fetchFeatures, activeDatasetIds]);
+    fetchFeatures(activeDatasetIds, activeFilters);
+  }, [fetchFeatures, activeDatasetIds, activeFilters]);
 
   useEffect(() => {
     if (activeDatasetIds.length) {
-      fetchFeatures(activeDatasetIds);
+      fetchFeatures(activeDatasetIds, activeFilters);
     } else {
       setClusterFeatures([]);
       setPolyLineFeatures([]);
     }
-  }, [activeDatasetIds, fetchFeatures]);
+  }, [activeDatasetIds, fetchFeatures, activeFilters]);
 
   // Set the zIndex of the markerpane. These markers will
   useEffect(() => {

@@ -17,7 +17,7 @@ import {
 } from './services/controller';
 import { fetchCMSCONTENT } from './services';
 import { getPassthroughRequestHeaders } from './helpers/app';
-import { DATASETS } from '../universal/config/buurt';
+import { DATASETS, DatasetFilterSelection } from '../universal/config/buurt';
 
 export const router = express.Router();
 
@@ -84,6 +84,7 @@ router.get(
   BffEndpoints.MAP_DATASETS,
   async (req: Request, res: Response, next: NextFunction) => {
     const datasetId = req.params.datasetId;
+    const datasetFilters = req.query.filters as DatasetFilterSelection;
     const datasetIds = (req.query.datasetIds as string)?.split(',') || [];
     const id = req.params.id;
     let response: ApiResponse<any> | null = null;
@@ -100,7 +101,8 @@ router.get(
         if (ids.length) {
           response.content.features = filterDatasetFeatures(
             response.content.features,
-            ids
+            ids,
+            datasetFilters
           );
         }
       }

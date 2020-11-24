@@ -22,9 +22,14 @@ export type DatasetId = string;
 export type DatasetPropertyName = string;
 export type DatasetPropertyValue = string;
 
-type DatasetFilterConfig = Record<DatasetPropertyName, DatasetPropertyValue[]>;
-type DatasetConfig = Record<DatasetId, boolean | DatasetFilterConfig>;
-type DatasetsConfig = Record<DatasetCategoryId, DatasetConfig>;
+export type DatasetFilterConfig = Record<
+  DatasetPropertyName,
+  DatasetPropertyValue[]
+>;
+export type DatasetConfig = Record<DatasetId, true | DatasetFilterConfig>;
+export type DatasetsConfig = Record<DatasetCategoryId, DatasetConfig>;
+
+export type DatasetFilterSelection = Record<DatasetId, DatasetFilterConfig>;
 
 export const DATASETS: DatasetsConfig = {
   afvalcontainers: {
@@ -66,38 +71,23 @@ export const DATASETS: DatasetsConfig = {
     sporthal: true,
     sportaanbieder: true,
     openbaresportplek: {
-      sportfunctie: [
-        'Honkbal/softbal',
-        'Voetbal',
-        'Atletiek',
-        'Australian football',
-        'Rugby',
-        'Handboogschieten',
-        'Golf driving range',
-        'Short golf',
-        'Cricket',
-        'Hockey',
-        'Tennis',
-        'Golf',
-        'Balspel',
-        'Honkbal',
-        'Handbal',
-        'Korfbal',
-        'Beachvolleybal',
-        'Jeu de Boules',
-        'Beachhandbal',
+      sportvoorziening: [
         'Basketbal',
-        'Skaten',
-        'Wielrennen',
-        'Padel',
-        'American football',
+        'Tennis',
+        'Voetbal',
+        'Overig',
+        'Fitness / Bootcamp',
+        'Skate',
+        'Jeu de boules',
+        'Tafeltennis',
+        'Beachvolley',
       ],
     },
     hardlooproute: true,
   },
 };
 
-export function getDatasetGroupId(datasetId: string) {
+export function getDatasetCategoryId(datasetId: string) {
   const group = Object.entries(DATASETS).find(([groupId, datasetConfig]) =>
     Object.keys(datasetConfig).includes(datasetId)
   );

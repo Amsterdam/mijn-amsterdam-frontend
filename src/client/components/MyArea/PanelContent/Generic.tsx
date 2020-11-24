@@ -1,5 +1,5 @@
 import React from 'react';
-import { getDatasetGroupId } from '../../../../universal/config/buurt';
+import { getDatasetCategoryId } from '../../../../universal/config/buurt';
 import LoadingContent from '../../LoadingContent/LoadingContent';
 import { titleTransform } from '../datasets';
 import MyArePanelContentAfval from './Afval';
@@ -23,7 +23,7 @@ export default function MyAreaPanelContentGeneric({
     return <LoadingContent />;
   }
 
-  switch (getDatasetGroupId(datasetId)) {
+  switch (getDatasetCategoryId(datasetId)) {
     case 'sport':
       return (
         <MyArePanelContentSport datasetId={datasetId} panelItem={panelItem} />
@@ -58,7 +58,7 @@ export default function MyAreaPanelContentGeneric({
   return (
     <GenericBase
       title={titleTransform(datasetId)}
-      supTitle={titleTransform(getDatasetGroupId(datasetId))}
+      supTitle={titleTransform(getDatasetCategoryId(datasetId))}
     >
       <JsonString data={panelItem} />
     </GenericBase>

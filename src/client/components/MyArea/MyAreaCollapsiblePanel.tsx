@@ -1,4 +1,4 @@
-import { Icon, themeSpacing } from '@amsterdam/asc-ui';
+import { Icon } from '@amsterdam/asc-ui';
 import React, { PropsWithChildren, ReactNode, useState } from 'react';
 import styled from 'styled-components';
 import { IconFilter } from '../../assets/icons';
@@ -69,38 +69,32 @@ function MyAreaCollapsiblePanelHeading({
 type MyAreaCollapsiblePanelProps = PropsWithChildren<{
   title: ReactNode;
   initalState?: CollapsedState;
-  isTopLevelItem: boolean;
 }>;
 
 export default function MyAreaCollapsiblePanel({
   children,
   title,
   initalState = CollapsedState.Collapsed,
-  isTopLevelItem,
 }: MyAreaCollapsiblePanelProps) {
-  const [collapsedState, setCollapsedState] = useState(
-    isTopLevelItem ? CollapsedState.Expanded : initalState
-  );
+  const [collapsedState, setCollapsedState] = useState(initalState);
   const hasChildren = React.Children.count(children) >= 1;
   return (
     <>
-      {!isTopLevelItem && (
-        <MyAreaCollapsiblePanelHeading
-          title={title}
-          onClick={
-            hasChildren
-              ? (event) => {
-                  setCollapsedState(
-                    isExpanded(collapsedState)
-                      ? CollapsedState.Collapsed
-                      : CollapsedState.Expanded
-                  );
-                }
-              : undefined
-          }
-          state={collapsedState}
-        />
-      )}
+      <MyAreaCollapsiblePanelHeading
+        title={title}
+        onClick={
+          hasChildren
+            ? (event) => {
+                setCollapsedState(
+                  isExpanded(collapsedState)
+                    ? CollapsedState.Collapsed
+                    : CollapsedState.Expanded
+                );
+              }
+            : undefined
+        }
+        state={collapsedState}
+      />
       {hasChildren && isExpanded(collapsedState) && children}
     </>
   );

@@ -5,7 +5,11 @@ import React, { ReactElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import styled from 'styled-components';
 import { DATASETS } from '../../../universal/config';
-import { getDatasetGroupId } from '../../../universal/config/buurt';
+import {
+  DatasetId,
+  DatasetPropertyName,
+  getDatasetCategoryId,
+} from '../../../universal/config/buurt';
 import { capitalizeFirstLetter } from '../../../universal/helpers';
 import {
   MapIconAfvalGft,
@@ -20,11 +24,30 @@ import {
 } from '../../assets/icons';
 import { DEFAULT_POLYLINE_OPTIONS } from './MyAreaPolyLineLayer';
 
-export interface DatasetControlItem {
+interface DatasetItem {
   id: string;
   title: string;
+}
+
+export interface DatasetCategoryItem extends DatasetItem {
+  type: 'category';
   collection: DatasetControlItem[];
-  type?: 'filters' | 'category' | 'dataset' | 'filter';
+}
+
+export interface DatasetControlItem extends DatasetItem {
+  type: 'dataset';
+  collection: DatasetFilterCategoryItem[];
+}
+
+export interface DatasetFilterCategoryItem extends DatasetItem {
+  collection: DatasetFilterControlItem[];
+  type: 'filters';
+}
+
+export interface DatasetFilterControlItem extends DatasetItem {
+  datasetId: DatasetId;
+  propertyName: DatasetPropertyName;
+  type: 'filter';
 }
 
 const DatasetIcon = styled.div`
@@ -128,7 +151,7 @@ const datasetIconHtml = Object.fromEntries(
 export function getIconHtml(datasetId: string) {
   return (
     datasetIconHtml[datasetId] ||
-    datasetIconHtml[getDatasetGroupId(datasetId)] ||
+    datasetIconHtml[getDatasetCategoryId(datasetId)] ||
     datasetIconHtml.default
   );
 }
@@ -137,65 +160,57 @@ export function titleTransform(id: string) {
   return capitalizeFirstLetter(id).replace(/_/g, ' ');
 }
 
-const createDatasetControl = ({
-  id,
-  title,
-  collection,
-  type = 'category',
-}: DatasetControlItem) => {
-  return {
-    id,
-    title,
-    collection,
-    type,
-  };
-};
-
-const DATASET_CONTROL_ITEMS: DatasetControlItem[] = Object.entries(
-  DATASETS
-).map(([datasetCategoryId, datasetConfig]) => {
-  return createDatasetControl({
-    id: datasetCategoryId,
-    type: 'category',
-    title: datasetCategoryId,
-    collection: Object.entries(datasetConfig).map(([datasetId, config]) => {
-      return createDatasetControl({
-        id: datasetId,
-        title: datasetId,
-        type: 'dataset',
-        collection:
+export const DATASET_CONTROL_ITEMS = Object.entries(DATASETS).map(
+  ([datasetCategoryId, datasetConfig]) => {
+    const collection = Object.entries(datasetConfig).map(
+      ([datasetId, config]) => {
+        const collection =
           typeof config === 'object'
-            ? Object.entries(config)
-                .filter(([propertyName, propertyValues]) =>
-                  Array.isArray(propertyValues)
-                )
-                .map(([propertyName, propertyValues]) => {
-                  const filterCollection = propertyValues.map((propertyValue) =>
-                    createDatasetControl({
-                      id: propertyValue,
-                      type: 'filter',
-                      title: propertyValue,
-                      collection: [],
-                    })
-                  );
-                  return createDatasetControl({
-                    type: 'filters',
-                    id: propertyName,
-                    title: propertyName,
-                    collection: filterCollection,
-                  });
-                })
-            : [],
-      });
-    }),
-  });
-});
+            ? Object.entries(config).map(([propertyName, propertyValues]) => {
+                if (!Array.isArray(propertyValues)) {
+                  propertyValues = [];
+                }
+                const filterCollection = propertyValues.map((propertyValue) => {
+                  const datasetFilterControlItem: DatasetFilterControlItem = {
+                    type: 'filter',
+                    id: propertyValue,
+                    title: propertyValue,
+                    propertyName,
+                    datasetId,
+                  };
+                  return datasetFilterControlItem;
+                });
+                const datasetFilterCategoryItem: DatasetFilterCategoryItem = {
+                  type: 'filters',
+                  id: propertyName,
+                  title: propertyName,
+                  collection: filterCollection,
+                };
+                return datasetFilterCategoryItem;
+              })
+            : [];
 
-export const TOP_LEVEL_CONTROL_ITEM: DatasetControlItem = {
-  title: 'Kaartgegevens',
-  id: 'mijn-buurt-datasets',
-  collection: DATASET_CONTROL_ITEMS,
-};
+        const datasetControlItem: DatasetControlItem = {
+          id: datasetId,
+          title: datasetId,
+          type: 'dataset',
+          collection,
+        };
+
+        return datasetControlItem;
+      }
+    );
+
+    const datasetCategoryItem: DatasetCategoryItem = {
+      id: datasetCategoryId,
+      type: 'category',
+      title: datasetCategoryId,
+      collection,
+    };
+
+    return datasetCategoryItem;
+  }
+);
 
 export const PARKEERZONES_POLYLINE_OPTIONS: Record<string, PolylineOptions> = {
   parkeerzones: {

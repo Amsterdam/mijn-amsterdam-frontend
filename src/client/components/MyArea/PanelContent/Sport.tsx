@@ -1,5 +1,5 @@
 import React from 'react';
-import { getDatasetGroupId } from '../../../../universal/config';
+import { getDatasetCategoryId } from '../../../../universal/config';
 import InfoDetail from '../../InfoDetail/InfoDetail';
 import { titleTransform } from '../datasets';
 import Description from './Description';
@@ -111,7 +111,7 @@ export default function MyArePanelContentSport({
   return (
     <GenericBase
       title={titleTransform(datasetId)}
-      supTitle={titleTransform(getDatasetGroupId(datasetId))}
+      supTitle={titleTransform(getDatasetCategoryId(datasetId))}
     >
       <JsonString data={panelItem} />;
     </GenericBase>

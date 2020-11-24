@@ -1,37 +1,64 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import axios, { AxiosResponse, CancelTokenSource } from 'axios';
-import { control, LeafletEvent } from 'leaflet';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { LeafletEvent } from 'leaflet';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   atom,
-  RecoilState,
   useRecoilState,
   useRecoilValue,
   useSetRecoilState,
 } from 'recoil';
+import { useDebouncedCallback } from 'use-debounce/lib';
 import {
   DatasetFeatures,
   MaPointFeature,
   MaPolyLineFeature,
   MaSuperClusterFeature,
 } from '../../../server/services/buurt/datasets';
+import {
+  DatasetFilterSelection,
+  DatasetId,
+  DatasetPropertyName,
+  DatasetPropertyValue,
+  DATASETS,
+} from '../../../universal/config/buurt';
 import { ApiResponse } from '../../../universal/helpers';
 import {
   ApiErrorResponse,
   apiErrorResult,
 } from '../../../universal/helpers/api';
 import { BFFApiUrls } from '../../config/api';
-import { DatasetControlItem } from './datasets';
+import { DatasetCategoryItem, DatasetControlItem } from './datasets';
 import styles from './MyAreaDatasets.module.scss';
+import { filterItemCheckboxState } from './MyAreaPanels';
 
-const activeDatasetIdsAtom: RecoilState<string[]> = atom<string[]>({
+const activeDatasetIdsAtom = atom<string[]>({
   key: 'activeDatasetIds',
   default: [],
 });
 
 export function useActiveDatasetIds() {
   return useRecoilState(activeDatasetIdsAtom);
+}
+
+const activeDatasetFiltersAtom = atom<DatasetFilterSelection>({
+  key: 'activeDatasetFilters',
+  default: Object.fromEntries(
+    Object.entries(DATASETS).flatMap(([categoryId, categoryConfig]) => {
+      return Object.entries(categoryConfig)
+        .filter(
+          ([categoryId, categoryConfig]) => typeof categoryConfig === 'object'
+        )
+        .map(([datasetId, datasetConfig]: any) => {
+          return [datasetId, datasetConfig];
+        });
+    })
+  ),
+});
+
+export function useActiveDatasetFilters() {
+  return useRecoilState(activeDatasetFiltersAtom);
 }
 
 export function useActiveDatasetIdsToFetch(featuresToCompare: DatasetFeatures) {
@@ -184,7 +211,7 @@ export function useFetchFeatures({
   const map = useMapInstance();
   const abortSignal = useRef<CancelTokenSource>();
 
-  const fetch = useCallback(
+  const fetchCallback = useCallback(
     async (payload = {}) => {
       setFeaturesLoading(true);
 
@@ -257,8 +284,10 @@ export function useFetchFeatures({
     ]
   );
 
+  const fetch = useDebouncedCallback(fetchCallback, 20).callback;
+
   const fetchFeatures = useCallback(
-    (datasetIds: string[]) => {
+    (datasetIds: DatasetId[], filters: DatasetFilterSelection) => {
       if (!map) {
         return;
       }
@@ -266,6 +295,7 @@ export function useFetchFeatures({
 
       return fetch({
         datasetIds,
+        filters,
         bbox: [
           bounds.getWest(),
           bounds.getSouth(),
@@ -282,17 +312,17 @@ export function useFetchFeatures({
 }
 
 export function filterActiveDatasets(
-  controlItem: DatasetControlItem,
-  activeDatasetIds: string[]
-) {
-  return controlItem.collection.filter((dataset) =>
-    activeDatasetIds.includes(dataset.id)
-  );
+  controlItem: DatasetCategoryItem,
+  activeDatasetIds: DatasetId[]
+): DatasetId[] {
+  return controlItem.collection
+    .filter((controlItem) => activeDatasetIds.includes(controlItem.id))
+    .map((controlItem) => controlItem.id);
 }
 
 function toggleCategory(
   activeDatasetIds: string[],
-  controlItem: DatasetControlItem
+  controlItem: DatasetCategoryItem
 ) {
   const total = controlItem.collection.length;
   const threshold = Math.round(total / 2);
@@ -308,7 +338,7 @@ function toggleCategory(
   if (!isActive) {
     return activeDatasetIds.filter((id) => {
       const isDatasetIdInControlItem = controlItem.collection.some(
-        (dataset) => dataset.id === id
+        (controlItem) => controlItem.id === id
       );
       return !isDatasetIdInControlItem;
     });
@@ -318,21 +348,68 @@ function toggleCategory(
 
 export function useControlItemChange() {
   const [activeDatasetIds, setActiveDatasetIds] = useActiveDatasetIds();
+
   return useCallback(
-    (controlItem: DatasetControlItem) => {
+    (controlItem: DatasetControlItem | DatasetCategoryItem) => {
       let datasetIds = activeDatasetIds;
       switch (controlItem.type) {
         case 'category':
           datasetIds = toggleCategory(activeDatasetIds, controlItem);
+          setActiveDatasetIds(datasetIds);
           break;
         case 'dataset':
           datasetIds = activeDatasetIds.includes(controlItem.id)
             ? activeDatasetIds.filter((id) => id !== controlItem.id)
             : [...activeDatasetIds, controlItem.id];
+          setActiveDatasetIds(datasetIds);
           break;
       }
-      setActiveDatasetIds(datasetIds);
     },
     [activeDatasetIds, setActiveDatasetIds]
+  );
+}
+
+export function useFilterControlItemChange() {
+  const [activeFilters, setActiveFilters] = useActiveDatasetFilters();
+
+  return useCallback(
+    (
+      datasetId: DatasetId,
+      propertyName: DatasetPropertyName,
+      propertyValue: DatasetPropertyValue
+    ) => {
+      const { isChecked } = filterItemCheckboxState(
+        activeFilters,
+        datasetId,
+        propertyName,
+        propertyValue
+      );
+
+      let activeFiltersUpdate = { ...activeFilters };
+
+      if (!isChecked && !activeFiltersUpdate[datasetId]) {
+        activeFiltersUpdate[datasetId] = {
+          [propertyName]: [propertyValue],
+        };
+      }
+
+      let filterValues = activeFiltersUpdate[datasetId][propertyName];
+
+      if (isChecked) {
+        filterValues = activeFiltersUpdate[datasetId][propertyName].filter(
+          (value) => value !== propertyValue
+        );
+      } else {
+        filterValues = [...filterValues, propertyValue];
+      }
+
+      activeFiltersUpdate[datasetId] = {
+        ...activeFiltersUpdate[datasetId],
+        [propertyName]: filterValues,
+      };
+
+      setActiveFilters(activeFiltersUpdate);
+    },
+    [activeFilters, setActiveFilters]
   );
 }

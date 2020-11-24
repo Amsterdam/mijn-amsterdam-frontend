@@ -8,11 +8,17 @@ import {
   BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
   DatasetConfig,
   DatasetFeatures,
+  MaFeature,
   MaPointFeature,
   MaPolyLineFeature,
 } from './datasets';
 import { getDatasetEndpointConfig, recursiveCoordinateSwap } from './helpers';
 import { IS_AP } from '../../../universal/config/env';
+import {
+  DatasetFilterConfig,
+  DatasetFilterSelection,
+  DatasetId,
+} from '../../../universal/config/buurt';
 
 const fileCaches: Record<string, FileCache> = {};
 
@@ -26,13 +32,30 @@ const fileCache = (id: string, cacheTimeMinutes: number) => {
   return fileCaches[id];
 };
 
+function isFilterMatch(feature: MaFeature, filters: DatasetFilterConfig) {
+  return Object.entries(filters).every(([propertyName, propertyValues]) => {
+    return (
+      feature.properties[propertyName] &&
+      propertyValues.includes(feature.properties[propertyName])
+    );
+  });
+}
+
 export function filterDatasetFeatures(
   features: DatasetFeatures,
-  activeDatasetIds: string[]
+  activeDatasetIds: DatasetId[],
+  filters: DatasetFilterSelection
 ) {
-  return features.filter((feature, index): feature is MaPointFeature => {
-    return activeDatasetIds.includes(feature.properties.datasetId);
-  });
+  return features
+    .filter((feature, index): feature is MaPointFeature => {
+      return activeDatasetIds.includes(feature.properties.datasetId);
+    })
+    .filter((feature) => {
+      if (filters[feature.properties.datasetId]) {
+        return isFilterMatch(feature, filters[feature.properties.datasetId]);
+      }
+      return true;
+    });
 }
 
 async function loadDatasetFeature(
@@ -83,7 +106,7 @@ async function loadDatasetFeature(
   );
 
   if (response.status === 'OK' && Array.isArray(response.content)) {
-    response.content = response.content.map(feature => {
+    response.content = response.content.map((feature) => {
       if (
         feature.geometry.type === 'MultiPolygon' ||
         feature.geometry.type === 'MultiLineString'
@@ -127,10 +150,11 @@ export async function loadDatasetFeatures(
   }
 
   const results = await Promise.all(requests);
-  const errorResults = results.filter(result => result.status === 'ERROR');
+  const errorResults = results.filter((result) => result.status === 'ERROR');
+
   const features = results
-    .filter(result => result.status === 'OK')
-    .flatMap(result => result.content)
+    .filter((result) => result.status === 'OK')
+    .flatMap((result) => result.content)
     .filter(
       (result): result is MaPointFeature | MaPolyLineFeature => result !== null
     );
@@ -200,7 +224,7 @@ export async function loadPolyLineFeatures(
   }
 
   const results = await Promise.all(requests);
-  const errorResults = results.filter(result => result.status === 'ERROR');
+  const errorResults = results.filter((result) => result.status === 'ERROR');
   const datasetResults = results.flatMap(({ content }) => content);
   const features = datasetResults.filter(
     (result): result is MaPolyLineFeature => result !== null

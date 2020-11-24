@@ -1,5 +1,10 @@
 import Supercluster from 'supercluster';
-import { DATASETS } from '../../../universal/config/buurt';
+import {
+  DatasetFilterConfig,
+  DatasetId,
+  DatasetPropertyValue,
+  DATASETS,
+} from '../../../universal/config/buurt';
 import { DataRequestConfig } from '../../config';
 import { getApiEmbeddedResponse } from './helpers';
 
@@ -13,9 +18,10 @@ enum zIndexPane {
 
 export type DatasetFeatureProperties = {
   id: string;
-  datasetId: string;
+  datasetId: DatasetId;
   color?: string;
   zIndex?: zIndexPane;
+  [propertyName: string /*DatasetPropertyName*/]: DatasetPropertyValue | any;
 };
 
 export type DatasetClusterFeatureProperties = DatasetFeatureProperties & {
@@ -62,6 +68,7 @@ export interface DatasetConfig {
   cacheTimeMinutes?: number;
   featureType: 'Point' | 'MultiPolygon' | 'MultiLineString';
   zIndex?: zIndexPane;
+  filters?: DatasetFilterConfig;
 }
 
 export const datasetEndpoints: Record<string, DatasetConfig> = {
@@ -160,11 +167,14 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
   },
   openbaresportplek: {
     listUrl:
-      'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/?_fields=id,geometry&page_size=1000',
+      'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/?_fields=id,geometry,sportvoorziening&page_size=1000',
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/',
-    transformList: transformListSportFilteredApiResponse,
+    transformList: transformListSportApiResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
+    filters: {
+      sportvoorziening: [],
+    },
   },
   hardlooproute: {
     listUrl:
@@ -241,11 +251,18 @@ function getPolyLineColor(datasetId: string, feature: any) {
   }
 }
 
-function transformListSportFilteredApiResponse(
-  datasetId: string,
+function addFilterProps(
+  featureProperties: MaFeature['properties'],
   config: DatasetConfig,
-  responseData: any
-) {}
+  featureSourceProperties: any
+) {
+  if (config.filters && featureSourceProperties) {
+    for (const propertyName of Object.keys(config.filters)) {
+      featureProperties[propertyName] = featureSourceProperties[propertyName];
+    }
+  }
+  return featureProperties;
+}
 
 function transformListSportApiResponse(
   datasetId: string,
@@ -264,19 +281,26 @@ function transformListSportApiResponse(
           id: feature?.properties?.id || feature.id,
           datasetId,
         };
-        if (
+
+        const hasShapeGeometry =
           feature.geometry.type === 'MultiPolygon' ||
-          feature.geometry.type === 'MultiLineString'
-        ) {
+          feature.geometry.type === 'MultiLineString';
+
+        if (hasShapeGeometry) {
           properties.color = getPolyLineColor(datasetId, feature);
           if (config?.zIndex) {
             properties.zIndex = config.zIndex;
           }
         }
+
         collection.push({
           type: 'Feature',
           geometry: feature.geometry,
-          properties,
+          properties: addFilterProps(
+            properties,
+            config,
+            feature?.properties || feature
+          ),
         });
       }
     }

@@ -17,17 +17,17 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
-import { DATASETS, DatasetCategoryId } from '../../../universal/config/buurt';
+import { DATASETS } from '../../../universal/config/buurt';
 import { getFullAddress } from '../../../universal/helpers';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useDesktopScreen } from '../../hooks';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
-import HomeControlButton from './MyAreaHomeControlButton';
-import { HomeIconMarker } from './MyAreaMarker';
 import { MyAreaDatasets } from './MyAreaDatasets';
 import MyAreaHeader from './MyAreaHeader';
+import HomeControlButton from './MyAreaHomeControlButton';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
+import { HomeIconMarker } from './MyAreaMarker';
 import MyAreaPanels from './MyAreaPanels';
 
 const StyledViewerContainer = styled(ViewerContainer)<{ leftOffset: string }>`

@@ -89,6 +89,7 @@ export function MaSuperClusterLayer({
   }, [map, features]);
 
   useEffect(() => {
+    markerLayer.clearLayers();
     if (markerLayer && clusterFeatures.length) {
       markerLayer.addTo(map);
       markerLayer.addData(clusterFeatures as any); // Type mismatch here.

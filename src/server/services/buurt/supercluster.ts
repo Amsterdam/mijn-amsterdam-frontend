@@ -3,9 +3,16 @@ import Supercluster, { AnyProps, PointFeature } from 'supercluster';
 import { filterDatasetFeatures, loadDatasetFeatures } from './buurt';
 import { MaPointFeature } from './datasets';
 import { getDatasetEndpointConfig } from './helpers';
+import {
+  DatasetId,
+  DatasetFilterSelection,
+} from '../../../universal/config/buurt';
 
 const superClusterCache = new memoryCache.Cache<string, any>();
-const cacheKey = (ids: string[]) => ids.sort().join('-');
+const cacheKey = (ids: DatasetId[], filters: DatasetFilterSelection) => {
+  // TODO: Add filters to cache key
+  return ids.sort().join('-');
+};
 
 async function generateSuperCluster(features: MaPointFeature[]) {
   if (!!features?.length) {
@@ -37,14 +44,15 @@ function addExpansionZoom(superClusterIndex: any, feature: any) {
 interface SuperClusterQuery {
   bbox: any;
   zoom: number;
-  datasetIds: string[];
+  datasetIds: DatasetId[];
+  filters: DatasetFilterSelection;
 }
 
 export async function loadClusterDatasets(
   sessionID: SessionID,
-  { bbox, zoom, datasetIds }: SuperClusterQuery
+  { bbox, zoom, datasetIds, filters }: SuperClusterQuery
 ) {
-  const activeCacheKey = cacheKey(datasetIds);
+  const activeCacheKey = cacheKey(datasetIds, filters);
 
   if (superClusterCache.get(activeCacheKey)) {
     return superClusterCache.get(activeCacheKey);
@@ -54,12 +62,15 @@ export async function loadClusterDatasets(
   const { features, errorResults } = (
     await loadDatasetFeatures(sessionID, configs)
   ).content;
+
   let clusters: PointFeature<AnyProps>[] = [];
-  const filterFeatures = filterDatasetFeatures(features, datasetIds);
-  const superClusterIndex = await generateSuperCluster(filterFeatures);
+
+  const filteredFeatures = filterDatasetFeatures(features, datasetIds, filters);
+  const superClusterIndex = await generateSuperCluster(filteredFeatures);
 
   if (superClusterIndex && bbox && zoom) {
     clusters = superClusterIndex.getClusters(bbox, zoom);
+
     for (const feature of clusters) {
       addExpansionZoom(superClusterIndex, feature);
     }
