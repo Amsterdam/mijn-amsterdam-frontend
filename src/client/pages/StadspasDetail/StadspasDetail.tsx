@@ -44,7 +44,10 @@ function Transaction({ value, title, date }: TransactionProps) {
         {defaultDateFormat(date)}
       </time>
       <span className={styles.TransactionTitle}>{title}</span>
-      <span className={styles.TransactionValue}>{displayAmount(value)}</span>
+      <span className={styles.TransactionValue}>
+        {value > 0 && '+'}
+        {displayAmount(value)}
+      </span>
     </li>
   );
 }
@@ -90,7 +93,7 @@ function BudgetBalance({ budget, dateEnd }: BudgetBalanceProps) {
         }}
       >
         <span className={styles.Label}>
-          Uitgegeven &euro;{displayAmount(budget.assigned - budget.balance)}
+          Uitgegeven &euro; {displayAmount(budget.assigned - budget.balance)}
         </span>
       </li>
       <li
@@ -102,7 +105,7 @@ function BudgetBalance({ budget, dateEnd }: BudgetBalanceProps) {
         <span className={styles.Label}>
           {isPhoneScreen ? 'Te' : 'Nog te'} besteden vóór&nbsp;
           <time dateTime={dateEnd}>{defaultDateFormat(dateEnd)}</time>
-          &nbsp;&euro;{displayAmount(budget.balance)}
+          &nbsp;&euro; {displayAmount(budget.balance)}
         </span>
       </li>
     </ul>

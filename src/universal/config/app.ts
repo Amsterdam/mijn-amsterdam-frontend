@@ -26,6 +26,7 @@ export const FeatureToggle = {
   profileToggleActive: !IS_PRODUCTION,
   kvkActive: !IS_PRODUCTION,
   stadpasActive: !IS_PRODUCTION,
+  stadpasActive: true,
   residentCountActive: true,
   myAreaDataSportEnBosActive: !IS_PRODUCTION,
 };
