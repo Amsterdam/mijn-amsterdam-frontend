@@ -121,7 +121,7 @@ interface AfvalOphaalGebied {
 
 const titles: { [type: string]: string } = {
   huisvuil: 'Restafval',
-  grofvuil: 'Grofvuil',
+  grofvuil: 'Grof afval',
 };
 
 interface AFVALSourceData {
