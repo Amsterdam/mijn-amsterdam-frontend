@@ -24,7 +24,7 @@ export type DatasetPropertyValue = string;
 
 export type DatasetFilterConfig = Record<
   DatasetPropertyName,
-  DatasetPropertyValue[]
+  { values: DatasetPropertyValue[]; emptyValue?: string }
 >;
 export type DatasetConfig = Record<DatasetId, true | DatasetFilterConfig>;
 export type DatasetsConfig = Record<DatasetCategoryId, DatasetConfig>;
@@ -70,14 +70,14 @@ export const DATASETS: DatasetsConfig = {
     gymsportzaal: true,
     sporthal: true,
     sportaanbieder: {
-      indicatieStadspas: [],
+      indicatieStadspas: { values: [], emptyValue: 'Nee' },
     },
     openbaresportplek: {
-      sportvoorziening: [],
-      soortOndergrond: [],
+      sportvoorziening: { values: [], emptyValue: 'Onbekend' },
+      soortOndergrond: { values: [], emptyValue: 'Onbekend' },
     },
     hardlooproute: {
-      lengte: [],
+      lengte: { values: [], emptyValue: 'Onbekend' },
     },
   },
 };

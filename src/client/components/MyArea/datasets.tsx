@@ -176,7 +176,8 @@ export const createDatasetControlItems = (
         const collection =
           typeof filterConfig === 'object'
             ? Object.entries(filterConfig).map(
-                ([propertyName, propertyValues]) => {
+                ([propertyName, valueConfig]) => {
+                  let propertyValues = valueConfig.values;
                   if (!Array.isArray(propertyValues)) {
                     propertyValues = [];
                   }

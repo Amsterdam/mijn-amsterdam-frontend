@@ -96,7 +96,7 @@ export function filterItemCheckboxState(
     isChecked: !!(
       activeFilters[datasetId] &&
       activeFilters[datasetId][propertyName] &&
-      activeFilters[datasetId][propertyName].includes(propertyValue)
+      activeFilters[datasetId][propertyName].values.includes(propertyValue)
     ),
   };
 }

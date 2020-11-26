@@ -44,13 +44,19 @@ export function createFilterConfig(
   const propertyNames = Object.keys(filterConfig);
   for (const propertyName of propertyNames) {
     // Collect distinct property values from the dataset
-    filters[propertyName] = Array.from(
-      new Set(
-        features.map(
-          (feature) => (feature?.properties || feature)[propertyName]
+    filters[propertyName] = {
+      values: Array.from(
+        new Set(
+          features.map(
+            (feature) =>
+              // Get property value from object.properties or from object itself
+              (feature?.properties || feature)[propertyName] ||
+              filterConfig[propertyName].emptyValue ||
+              'Lege waarde'
+          )
         )
-      )
-    );
+      ),
+    };
   }
 
   return filters;
@@ -58,7 +64,8 @@ export function createFilterConfig(
 
 // Matches feature properties to requested filters
 function isFilterMatch(feature: MaFeature, filters: DatasetFilterConfig) {
-  return Object.entries(filters).every(([propertyName, propertyValues]) => {
+  return Object.entries(filters).every(([propertyName, valueConfig]) => {
+    const propertyValues = valueConfig.values;
     return (
       !propertyValues.length ||
       (propertyName in feature.properties &&
@@ -80,7 +87,7 @@ export function filterDatasetFeatures(
       if (filters[feature.properties.datasetId]) {
         return isFilterMatch(feature, filters[feature.properties.datasetId]);
       }
-      // Always return true if no filter is found for a certain dataset
+      // Always return true if dataset is unfiltered. Meaning, show everything.
       return true;
     });
 }
