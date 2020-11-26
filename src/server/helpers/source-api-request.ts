@@ -218,6 +218,8 @@ export async function requestData<T>(
     if (cache.get(cacheKey)) {
       // Resolve with error
       cache.get(cacheKey).resolve(responseData);
+      // Remove entry from cache
+      cache.del(cacheKey);
     }
 
     return responseData;

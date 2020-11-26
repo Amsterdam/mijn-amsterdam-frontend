@@ -30,19 +30,19 @@ routerDevelopment.get(
           {
             id: 'xx1',
             title: 'Hema',
-            amount: '31,30',
+            amount: -31.3,
             date: '2020-01-04',
           },
           {
             id: 'xx2',
             title: 'Aktiesport',
-            amount: '21,30',
+            amount: -21.3,
             date: '2019-12-16',
           },
           {
             id: 'xx3',
             title: 'Hema',
-            amount: '24,40',
+            amount: -0.99,
             date: '2019-10-21',
           },
         ])

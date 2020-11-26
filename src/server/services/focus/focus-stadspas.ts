@@ -4,7 +4,7 @@ import { apiSuccesResult } from '../../../universal/helpers/api';
 export interface FocusStadspasTransaction {
   id: string;
   title: string;
-  amount: string;
+  amount: number;
   date: string;
 }
 
