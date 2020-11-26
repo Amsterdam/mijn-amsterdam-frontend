@@ -16,11 +16,12 @@ function imgUrl(
   imageName: string,
   width: number,
   orientation: 'landscape' | 'portrait' = 'landscape',
-  pixelDensity: number = 1
+  pixelDensity: number = 1,
+  dir = ''
 ) {
   const ratio =
     orientation === 'portrait' ? PORTRAIT_SCREEN_RATIO : LANDSCAPE_SCREEN_RATIO;
-  return `/header/${Math.round(pixelDensity * width)}x${Math.round(
+  return `/header${dir}/${Math.round(pixelDensity * width)}x${Math.round(
     pixelDensity * (width * ratio)
   )}-${imageName}.jpg`;
 }
@@ -37,10 +38,21 @@ function useHeroSrc() {
     });
 
   let imageName: string;
+  let dir = '';
 
+  // TODO: Make more dynamic. Maybe with image names based on profileType and Chapter
   switch (true) {
     case isCommercialHeader:
-      imageName = 'zakelijk';
+      dir = '/zakelijk';
+      imageName = 'algemeen';
+      switch (true) {
+        case isChapterPath(AppRoutes.INKOMEN):
+          imageName = 'inkomen';
+          break;
+        case isChapterPath(AppRoutes.VERGUNNINGEN):
+          imageName = 'vergunningen';
+          break;
+      }
       break;
     case isChapterPath(AppRoutes.BRP):
       imageName = 'burgerzaken';
@@ -62,23 +74,23 @@ function useHeroSrc() {
   // ------------------------------------------------------------
   // Produces the following image urls
   // ------------------------------------------------------------
-  // PORTRAIT_SMALL: '/header/Header-Desktop-1-1600x400.jpg';
-  // PORTRAIT_SMALL_2X: '/header/Header-Desktop-1-1366x342.jpg';
-  // PORTRAIT_SMALL_3X: '/header/Header-Desktop-1-1024x256.jpg';
-  // LANDSCAPE_SMALL: '/header/Header-Desktop-1-360x144.jpg';
-  // LANDSCAPE_MEDIUM: '/header/Header-Desktop-1-720x288.jpg';
-  // LANDSCAPE_LARGE: '/header/Header-Desktop-1-1080x432.jpg';
+  // PORTRAIT_SMALL: '/header/1600x400-$imageName.jpg';
+  // PORTRAIT_SMALL_2X: '/header/1366x342-$imageName.jpg';
+  // PORTRAIT_SMALL_3X: '/header/1024x256-$imageName.jpg';
+  // LANDSCAPE_SMALL: '/header/360x144-$imageName.jpg';
+  // LANDSCAPE_MEDIUM: '/header/720x288-$imageName.jpg';
+  // LANDSCAPE_LARGE: '/header/1080x432-$imageName.jpg';
 
   return useMemo(
     () => ({
-      PORTRAIT_SMALL: imgUrl(imageName, 360, 'portrait'),
-      PORTRAIT_SMALL_2X: imgUrl(imageName, 360, 'portrait', 2),
-      PORTRAIT_SMALL_3X: imgUrl(imageName, 360, 'portrait', 3),
-      LANDSCAPE_SMALL: imgUrl(imageName, 1024),
-      LANDSCAPE_MEDIUM: imgUrl(imageName, 1366),
-      LANDSCAPE_LARGE: imgUrl(imageName, 1600),
+      PORTRAIT_SMALL: imgUrl(imageName, 360, 'portrait', 1, dir),
+      PORTRAIT_SMALL_2X: imgUrl(imageName, 360, 'portrait', 2, dir),
+      PORTRAIT_SMALL_3X: imgUrl(imageName, 360, 'portrait', 3, dir),
+      LANDSCAPE_SMALL: imgUrl(imageName, 1024, 'landscape', 1, dir),
+      LANDSCAPE_MEDIUM: imgUrl(imageName, 1366, 'landscape', 1, dir),
+      LANDSCAPE_LARGE: imgUrl(imageName, 1600, 'landscape', 1, dir),
     }),
-    [imageName]
+    [imageName, dir]
   );
 }
 
