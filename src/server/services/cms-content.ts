@@ -134,20 +134,15 @@ function transformFooterResponse(responseData: any) {
             ...(verwijzing.intern || []),
             ...(verwijzing.extern || []),
           ];
-          const subLinks = [];
-          subLinks.push(
-            ...links
-              .filter(({ link }) => !!link && !link.url.match(/(cookies)/g))
-              .map(({ link }) => {
-                const title = link.label;
-                return {
-                  to: link.url,
-                  title,
-                };
-              })
-          );
-
-          return subLinks;
+          return links
+            .filter(({ link }) => !!link && !link.url.match(/(cookies)/g))
+            .map(({ link }) => {
+              const title = link.label;
+              return {
+                to: link.url,
+                title,
+              };
+            });
         }
       );
       footer.sub.push(...otherLinks);
