@@ -36,7 +36,7 @@ routerDevelopment.get(
           {
             id: 'xx2',
             title: 'Aktiesport',
-            amount: -21.3,
+            amount: 21.3,
             date: '2019-12-16',
           },
           {
