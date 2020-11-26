@@ -29,9 +29,10 @@ import { useDataApi } from '../../hooks/api/useDataApi';
 import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './StadspasDetail.module.scss';
+import displayAmount from '../../../universal/helpers/text';
 
 interface TransactionProps {
-  value: string;
+  value: number;
   title: string;
   date: string;
 }
@@ -43,7 +44,7 @@ function Transaction({ value, title, date }: TransactionProps) {
         {defaultDateFormat(date)}
       </time>
       <span className={styles.TransactionTitle}>{title}</span>
-      <span className={styles.TransactionValue}>&euro; {value}</span>
+      <span className={styles.TransactionValue}>{displayAmount(value)}</span>
     </li>
   );
 }
@@ -60,7 +61,7 @@ function TransactionOverview({ transactions }: TransactionOverviewProps) {
         <span>Bedrag</span>
       </div>
       <ul className={styles.Transactions}>
-        {transactions!.map((transaction) => (
+        {transactions!.map(transaction => (
           <Transaction
             key={transaction.id}
             value={transaction.amount}
@@ -89,8 +90,7 @@ function BudgetBalance({ budget, dateEnd }: BudgetBalanceProps) {
         }}
       >
         <span className={styles.Label}>
-          Uitgegeven &euro;
-          {budget.assigned - budget.balance}
+          Uitgegeven &euro;{displayAmount(budget.assigned - budget.balance)}
         </span>
       </li>
       <li
@@ -102,7 +102,7 @@ function BudgetBalance({ budget, dateEnd }: BudgetBalanceProps) {
         <span className={styles.Label}>
           {isPhoneScreen ? 'Te' : 'Nog te'} besteden vóór&nbsp;
           <time dateTime={dateEnd}>{defaultDateFormat(dateEnd)}</time>
-          &nbsp; &euro;{budget.balance}
+          &nbsp;&euro;{displayAmount(budget.balance)}
         </span>
       </li>
     </ul>
@@ -195,7 +195,7 @@ export default () => {
   const { id } = useParams<{ id: string }>();
   const stadspasItem = id
     ? FOCUS_STADSPAS?.content?.stadspassaldo?.stadspassen.find(
-        (pass) => pass.id === parseInt(id, 10)
+        pass => pass.id === parseInt(id, 10)
       )
     : null;
   const isErrorStadspas = isError(FOCUS_STADSPAS);
@@ -214,11 +214,8 @@ export default () => {
       <PageContent className={styles.DetailPageContent}>
         <p>Hieronder ziet u hoeveel geld er nog op de Stadspas staat.</p>
         <p>
-          <Linkd
-            external={true}
-            href="https://www.amsterdam.nl/toerisme-vrije-tijd/stadspas/"
-          >
-            Meer informatie over de Stadspas
+          <Linkd external={true} href="https://www.amsterdam.nl/kindtegoed">
+            Meer informatie over het Kindtegoed
           </Linkd>
         </p>
         {(isErrorStadspas || (!isLoading(FOCUS_STADSPAS) && noContent)) && (
@@ -241,7 +238,7 @@ export default () => {
           </p>
         </PageContent>
       )}
-      {stadspasItem?.budgets.map((budget) => (
+      {stadspasItem?.budgets.map(budget => (
         <StadspasBudget
           urlTransactions={budget.urlTransactions}
           key={budget.code}

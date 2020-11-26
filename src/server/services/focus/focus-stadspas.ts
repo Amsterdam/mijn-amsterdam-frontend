@@ -3,7 +3,7 @@ import { fetchFOCUSCombined } from './focus-combined';
 export interface FocusStadspasTransaction {
   id: string;
   title: string;
-  amount: string;
+  amount: number;
   date: string;
 }
 
