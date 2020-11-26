@@ -194,7 +194,7 @@ export default () => {
   const { FOCUS_STADSPAS } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
   const stadspasItem = id
-    ? FOCUS_STADSPAS?.content?.stadspassaldo?.stadspassen.find(
+    ? FOCUS_STADSPAS?.content?.stadspassen.find(
         pass => pass.id === parseInt(id, 10)
       )
     : null;
