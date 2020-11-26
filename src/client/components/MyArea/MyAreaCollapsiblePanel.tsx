@@ -1,7 +1,8 @@
 import { Icon } from '@amsterdam/asc-ui';
 import React, { PropsWithChildren, ReactNode, useState } from 'react';
 import styled from 'styled-components';
-import { IconFilter } from '../../assets/icons';
+import { SVGComponent } from '../../../universal/types';
+import { IconChevronRight } from '../../assets/icons';
 
 export const ToggleButton = styled('button')`
   appearance: none;
@@ -18,9 +19,9 @@ export const ToggleButton = styled('button')`
   right: 0;
   top: 0;
   z-index: 10;
-  border: 1px solid #eee;
   width: 36px;
   height: 36px;
+  transform: ${(props) => (props['aria-expanded'] ? 'rotate(90deg)' : 'none')};
   /* visibility: hidden; */
   &:hover,
   &:focus {
@@ -45,20 +46,23 @@ interface MyAreaCollapsiblePanelHeadingProps {
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   title: ReactNode;
   state?: CollapsedState;
+  toggleIcon?: SVGComponent;
 }
 
 function MyAreaCollapsiblePanelHeading({
   onClick,
   title,
   state = CollapsedState.Collapsed,
+  toggleIcon = IconChevronRight,
 }: MyAreaCollapsiblePanelHeadingProps) {
+  const ToggleIcon = toggleIcon;
   return (
     <>
       {title}
       {onClick && (
         <ToggleButton onClick={onClick} aria-expanded={isExpanded(state)}>
           <Icon size={16}>
-            <IconFilter />
+            <ToggleIcon />
           </Icon>
         </ToggleButton>
       )}
@@ -68,20 +72,23 @@ function MyAreaCollapsiblePanelHeading({
 
 type MyAreaCollapsiblePanelProps = PropsWithChildren<{
   title: ReactNode;
-  initalState?: CollapsedState;
+  initialState?: CollapsedState;
+  toggleIcon?: SVGComponent;
 }>;
 
 export default function MyAreaCollapsiblePanel({
   children,
   title,
-  initalState = CollapsedState.Collapsed,
+  initialState = CollapsedState.Collapsed,
+  toggleIcon,
 }: MyAreaCollapsiblePanelProps) {
-  const [collapsedState, setCollapsedState] = useState(initalState);
+  const [collapsedState, setCollapsedState] = useState(initialState);
   const hasChildren = React.Children.count(children) >= 1;
   return (
     <>
       <MyAreaCollapsiblePanelHeading
         title={title}
+        toggleIcon={toggleIcon}
         onClick={
           hasChildren
             ? (event) => {
