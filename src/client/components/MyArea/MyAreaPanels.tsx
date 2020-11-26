@@ -191,9 +191,8 @@ function DatasetControlPanel({
           );
           return (
             <DatasetControlListItem key={controlItem.id}>
-              {!controlItem.collection.length ? (
-                datasetControl
-              ) : (
+              {(!controlItem.collection.length || !isChecked) && datasetControl}
+              {isChecked && !!controlItem.collection.length && (
                 <MyAreaCollapsiblePanel title={datasetControl}>
                   <DatasetControlList>
                     {controlItem.collection.map((filterCategory) => {
