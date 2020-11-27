@@ -51,7 +51,7 @@ export const DATASETS: DatasetCategories = {
       gft: { title: 'GFT' },
     },
   },
-  parkeren: {
+  parkeerzones: {
     title: 'Parkeren',
     datasets: {
       parkeerzones: { title: 'Parkeerzones' },
@@ -97,7 +97,12 @@ export const DATASETS: DatasetCategories = {
         title: 'Sportveld',
         filters: {
           sportfunctie: {
-            // title: 'Sportfunctie',
+            title: 'Sportfunctie',
+            values: [],
+            emptyValue: 'Onbekend',
+          },
+          soortOndergrond: {
+            title: 'Soort ondergrond',
             values: [],
             emptyValue: 'Onbekend',
           },
@@ -155,5 +160,5 @@ export const ACTIVE_DATASET_IDS_INITIAL = [
   // ...DATASETS.bekendmakingen,
   // ...DATASETS.evenementen,
   // ...DATASETS.sport,
-  'openbaresportplek',
+  'sportveld',
 ];

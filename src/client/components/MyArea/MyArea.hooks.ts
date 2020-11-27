@@ -16,8 +16,6 @@ import {
   MaSuperClusterFeature,
 } from '../../../server/services/buurt/datasets';
 import {
-  DatasetCategory,
-  DatasetControl,
   DatasetFilterSelection,
   DatasetId,
   DatasetPropertyName,

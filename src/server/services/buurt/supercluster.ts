@@ -9,10 +9,23 @@ import { MaPointFeature } from './datasets';
 import { getDatasetEndpointConfig } from './helpers';
 
 const superClusterCache = new memoryCache.Cache<string, any>();
-const cacheKey = (ids: DatasetId[], filters: DatasetFilterSelection) => {
-  // TODO: Add filters to cache key
-  return ids.sort().join('-');
-};
+function cacheKey(ids: DatasetId[], filters: DatasetFilterSelection) {
+  const key =
+    ids.sort().join('-') +
+    '-' +
+    Object.entries(filters)
+      .flatMap(([datasetId, filters]) => [
+        datasetId,
+        Object.entries(filters).flatMap(([propertyName, property]) => [
+          propertyName,
+          property.values,
+        ]),
+      ])
+      .sort()
+      .join('-');
+
+  return key.toLowerCase();
+}
 
 async function generateSuperCluster(features: MaPointFeature[]) {
   if (!!features?.length) {
@@ -59,6 +72,7 @@ export async function loadClusterDatasets(
   }
 
   const configs = getDatasetEndpointConfig(datasetIds, ['Point']);
+
   const {
     features,
     filters: filterSelection,
@@ -68,7 +82,6 @@ export async function loadClusterDatasets(
   let clusters: PointFeature<AnyProps>[] = [];
 
   const filteredFeatures = filterDatasetFeatures(features, datasetIds, filters);
-
   const superClusterIndex = await generateSuperCluster(filteredFeatures);
 
   if (superClusterIndex && bbox && zoom) {

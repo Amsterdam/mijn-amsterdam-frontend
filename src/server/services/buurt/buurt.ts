@@ -1,3 +1,4 @@
+import { LatLngTuple } from 'leaflet';
 import {
   DatasetFilterSelection,
   DatasetId,
@@ -38,6 +39,42 @@ const fileCache = (id: string, cacheTimeMinutes: number) => {
   return fileCaches[id];
 };
 
+export function isCoordWithingBoundingBox(
+  bbox: [number, number, number, number],
+  coords: LatLngTuple[]
+) {
+  const [x1, y1, x2, y2] = bbox;
+  let i = 0;
+  let len = coords.length;
+  for (i; i < len; i += 1) {
+    const y = coords[i][0];
+    const x = coords[i][1];
+    if (x1 <= x && x <= x2 && y1 <= y && y <= y2) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export function filterPolylineFeaturesWithinBoundingBox(
+  features: MaFeature[],
+  bbox: [number, number, number, number]
+) {
+  const featuresFiltered = [];
+  const hasCoord = (coords: any) => isCoordWithingBoundingBox(bbox, coords);
+
+  let i = 0;
+  let len = features.length;
+
+  for (i; i < len; i += 1) {
+    if (features[i].geometry.coordinates.flat().some(hasCoord)) {
+      featuresFiltered.push(features[i]);
+    }
+  }
+
+  return featuresFiltered;
+}
+
 function getDynamicDatasetFilters(datasetId: DatasetId) {
   const datasetCategoryId = getDatasetCategoryId(datasetId);
 
@@ -72,7 +109,6 @@ export function createDynamicFilterConfig(
       values: Array.from(
         new Set(
           features.map((feature) => {
-            console.log(feature, filterConfig);
             // Get property value from object.properties or from object itself
             return (
               (feature?.properties || feature)[propertyName] ||
@@ -118,7 +154,7 @@ export function filterDatasetFeatures(
     });
 }
 
-async function loadDatasetFeature(
+async function fetchDataset(
   sessionID: SessionID,
   datasetId: DatasetId,
   datasetConfig: DatasetConfig,
@@ -127,18 +163,23 @@ async function loadDatasetFeature(
   const cacheTimeMinutes = IS_AP
     ? datasetConfig.cacheTimeMinutes || BUURT_CACHE_TTL_1_DAY_IN_MINUTES
     : -1;
-  const dataCache = fileCache(datasetId, cacheTimeMinutes);
-  const features = dataCache.getKey('features');
-  const filters = dataCache.getKey('filters');
 
-  if (datasetConfig.cache !== false && features) {
-    const apiData: DatasetResponse = {
-      features,
-    };
-    if (filters) {
-      apiData.filters = filters;
+  let dataCache: FileCache | null = null;
+
+  if (datasetConfig.cache !== false) {
+    dataCache = fileCache(datasetId, cacheTimeMinutes);
+    const features = dataCache.getKey('features');
+    const filters = dataCache.getKey('filters');
+
+    if (features) {
+      const apiData: DatasetResponse = {
+        features,
+      };
+      if (filters) {
+        apiData.filters = filters;
+      }
+      return Promise.resolve(apiSuccesResult(apiData));
     }
-    return Promise.resolve(apiSuccesResult(apiData));
   }
   const config = { ...(datasetConfig.requestConfig || {}) };
 
@@ -196,7 +237,7 @@ async function loadDatasetFeature(
     const filters =
       filterConfig && createDynamicFilterConfig(response.content, filterConfig);
 
-    if (datasetConfig.cache !== false) {
+    if (dataCache && datasetConfig.cache !== false) {
       dataCache.setKey('url', url);
       dataCache.setKey('features', response.content);
       if (filters) {
@@ -248,7 +289,7 @@ export async function loadDatasetFeatures(
   for (const datasetConfig of configs) {
     const [id, config] = datasetConfig;
     requests.push(
-      loadDatasetFeature(sessionID, id, config).then((result) => {
+      fetchDataset(sessionID, id, config).then((result) => {
         return {
           ...result,
           id,
@@ -263,7 +304,11 @@ export async function loadDatasetFeatures(
 
 export async function loadPolylineFeatures(
   sessionID: SessionID,
-  { datasetIds, bbox }: { datasetIds: string[]; bbox: any }
+  {
+    datasetIds,
+    bbox,
+    filters,
+  }: { datasetIds: string[]; bbox: any; filters: DatasetFilterSelection }
 ) {
   const configs = getDatasetEndpointConfig(datasetIds, [
     'MultiPolygon',
@@ -272,24 +317,83 @@ export async function loadPolylineFeatures(
   type ApiDatasetResponse = ApiResponse<DatasetResponse | null>;
   const requests: Array<Promise<ApiDatasetResponse>> = [];
 
-  const filterParams = {
-    FILTER: `<Filter><BBOX><gml:Envelope srsName="EPSG:4326"><gml:lowerCorner>${bbox[0]} ${bbox[1]}</gml:lowerCorner><gml:upperCorner>${bbox[2]} ${bbox[3]}</gml:upperCorner></gml:Envelope></BBOX></Filter>`,
-  };
+  // TODO: Determine if we should use the WFS server for live querying
+  // const filterQuery = (query: string = '') => {
+  //   return `
+  //     <Filter>
+  //       <And>
+  //         <BBOX>
+  //           <gml:Envelope srsName="EPSG:4326">
+  //             <gml:lowerCorner>${bbox[0]} ${bbox[1]}</gml:lowerCorner>
+  //             <gml:upperCorner>${bbox[2]} ${bbox[3]}</gml:upperCorner>
+  //           </gml:Envelope>
+  //         </BBOX>
+  //         ${query}
+  //       </And>
+  //     </Filter>`;
+  // };
 
   for (const datasetConfig of configs) {
-    const [id, config] = datasetConfig;
+    const [datasetId, config] = datasetConfig;
+    //   const filterParams = { FILTER: filterQuery() };
+
+    //   if (filters && filters[datasetId]) {
+    //     const filterBlocks = [];
+
+    //     for (const [propertyName, { values }] of Object.entries(
+    //       filters[datasetId]
+    //     )) {
+    //       if (!values.length) {
+    //         continue;
+    //       }
+
+    //       const block = values
+    //         .map((value) => {
+    //           return `
+    //           <PropertyIsEqualTo>
+    //             <PropertyName>${propertyName}</PropertyName>
+    //             <Literal>${value}</Literal>
+    //           </PropertyIsEqualTo>
+    //         `;
+    //         })
+    //         .join('\n');
+
+    //       filterBlocks.push(block);
+    //     }
+
+    //     filterParams.FILTER = filterBlocks.length
+    //       ? filterQuery(`<Or>${filterBlocks.join('</Or><Or>')}</Or>`)
+    //       : filterParams.FILTER;
+    //   }
+
     requests.push(
-      loadDatasetFeature(sessionID, id, config, filterParams).then((result) => {
+      fetchDataset(sessionID, datasetId, config, {}).then((result) => {
         return {
           ...result,
-          id,
+          id: datasetId,
         };
       })
     );
   }
 
   const results = await Promise.all(requests);
-  return datasetApiResult(results);
+  const result = datasetApiResult(results);
+
+  const featuresWithinBoundingbox = filterPolylineFeaturesWithinBoundingBox(
+    result.features,
+    bbox
+  );
+
+  const featuresFiltered = filterDatasetFeatures(
+    featuresWithinBoundingbox,
+    datasetIds,
+    filters
+  );
+
+  return {
+    ...result,
+    features: featuresFiltered,
+  };
 }
 
 export async function loadFeatureDetail(

@@ -8,6 +8,7 @@ import {
   loadFeatureDetail,
   loadDatasetFeatures,
   filterDatasetFeatures,
+  isCoordWithingBoundingBox,
 } from './services/buurt/buurt';
 import { getDatasetEndpointConfig } from './services/buurt/helpers';
 import {
@@ -18,6 +19,8 @@ import {
 import { fetchCMSCONTENT } from './services';
 import { getPassthroughRequestHeaders } from './helpers/app';
 import { DATASETS, DatasetFilterSelection } from '../universal/config/buurt';
+import { LatLngTuple } from 'leaflet';
+import { filterPolylineFeaturesWithinBoundingBox } from './services/buurt/buurt';
 
 export const router = express.Router();
 

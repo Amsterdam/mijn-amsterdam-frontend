@@ -4,11 +4,8 @@ import { PolylineOptions } from 'leaflet';
 import React, { ReactElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import styled from 'styled-components';
-import { DATASETS } from '../../../universal/config';
 import {
-  DatasetPropertyFilter,
   DatasetId,
-  DatasetPropertyName,
   getDatasetCategoryId,
 } from '../../../universal/config/buurt';
 import { capitalizeFirstLetter } from '../../../universal/helpers';

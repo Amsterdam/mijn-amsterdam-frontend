@@ -16,7 +16,7 @@ export function getDatasetEndpointConfig(
     .filter(([id, config]) => {
       const hasDatasetId =
         DATASETS[id] &&
-        Object.keys(DATASETS[id]).some((datasetId) =>
+        Object.keys(DATASETS[id].datasets).some((datasetId) =>
           endpointIDs?.includes(datasetId)
         );
       const isEndpoint = endpointIDs?.includes(id);

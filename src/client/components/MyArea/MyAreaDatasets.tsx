@@ -14,6 +14,7 @@ import ErrorMessages from '../ErrorMessages/ErrorMessages';
 import {
   useActiveDatasetFilters,
   useActiveDatasetIds,
+  useDatasetFilterSelection,
   useFetchFeatures,
   useOnMarkerClick,
   useSelectedFeatureCSS,
@@ -21,7 +22,6 @@ import {
 import styles from './MyAreaDatasets.module.scss';
 import { MyAreaPolylineDatasets } from './MyAreaPolylineDatasets';
 import { MaSuperClusterLayer } from './MyAreaSuperCluster';
-import { useDatasetFilterSelection } from './MyArea.hooks';
 
 interface MyAreaDatasetsProps {
   datasetIds?: string[];
@@ -98,7 +98,6 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
 
   // Effect fetches everytime datasets are de/activated or filter selection is changed.
   useEffect(() => {
-    console.log('fetchback!');
     if (activeDatasetIds.length) {
       setFeaturesLoadingDebounced(true);
       fetchDebounced.callback(activeDatasetIds, activeFilters);

@@ -26,6 +26,13 @@ export default function MyArePanelContentSport({
               urlTitle={panelItem.emailadres}
             />
           )}
+          {!!panelItem.telefoonnummer && (
+            <Url
+              label="Telefoonnummer"
+              url={`tel:${panelItem.telefoonnummer}`}
+              urlTitle={panelItem.telefoonnummer}
+            />
+          )}
           {!!panelItem.website && <Url url={panelItem.website} />}
         </GenericBase>
       );
@@ -54,6 +61,13 @@ export default function MyArePanelContentSport({
               urlTitle={panelItem.emailadres}
             />
           )}
+          {!!panelItem.telefoonnummer && (
+            <Url
+              label="Telefoonnummer"
+              url={`tel:${panelItem.telefoonnummer}`}
+              urlTitle={panelItem.telefoonnummer}
+            />
+          )}
           {!!panelItem.website && <Url url={panelItem.website} />}
         </GenericBase>
       );
@@ -68,12 +82,26 @@ export default function MyArePanelContentSport({
               urlTitle={panelItem.emailadres}
             />
           )}
+          {!!panelItem.telefoonnummer && (
+            <Url
+              label="Telefoonnummer"
+              url={`tel:${panelItem.telefoonnummer}`}
+              urlTitle={panelItem.telefoonnummer}
+            />
+          )}
           {!!panelItem.website && <Url url={panelItem.website} />}
         </GenericBase>
       );
     case 'sportaanbieder':
       return (
         <GenericBase title={panelItem.naamAanbieder} supTitle="Sportaanbieders">
+          {panelItem.naamSportfaciliteit &&
+            panelItem.naamAanbieder !== panelItem.naamSportfaciliteit && (
+              <InfoDetail
+                label="Sportfaciliteit"
+                value={panelItem.naamSportfaciliteit}
+              />
+            )}
           <InfoDetail label="Adres" value={panelItem.adres} />
           <InfoDetail
             label="Stadspas indicatie"

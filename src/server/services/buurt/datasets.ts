@@ -8,7 +8,10 @@ import {
 } from '../../../universal/config/buurt';
 import { DataRequestConfig } from '../../config';
 import { getApiEmbeddedResponse } from './helpers';
-import { DatasetCategoryId } from '../../../universal/config/buurt';
+import {
+  DatasetCategoryId,
+  DatasetPropertyName,
+} from '../../../universal/config/buurt';
 
 enum zIndexPane {
   PARKEERZONES = '650',
@@ -79,7 +82,7 @@ export interface DatasetConfig {
   cacheTimeMinutes?: number;
   featureType: 'Point' | 'MultiPolygon' | 'MultiLineString';
   zIndex?: zIndexPane;
-  filters?: DatasetPropertyFilter;
+  additionalStaticPropertyNames?: DatasetPropertyName[];
 }
 
 function getFilterPropertyNames(datasetId: DatasetId) {
@@ -101,10 +104,15 @@ function dsoApiListUrl(datasetId: DatasetId, pageSize: number = 1000) {
   const pageSizeParam = `&page_size=${pageSize}`;
 
   return (datasetConfig: DatasetConfig) => {
-    const filterPropertyNames = getFilterPropertyNames(datasetId);
+    const propertyNames = getFilterPropertyNames(datasetId) || [];
+
+    if (datasetConfig.additionalStaticPropertyNames) {
+      propertyNames.push(...datasetConfig.additionalStaticPropertyNames);
+    }
+
     return (
       apiUrl +
-      (filterPropertyNames && ',' + filterPropertyNames.join(',')) +
+      (propertyNames.length ? ',' + propertyNames.join(',') : '') +
       pageSizeParam
     );
   };
@@ -140,60 +148,54 @@ export const datasetEndpoints: Record<
     cacheTimeMinutes: BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
   },
   parkeerzones: {
-    listUrl:
-      'https://api.data.amsterdam.nl/v1/wfs/parkeerzones?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=parkeerzones&SRSNAME=urn:ogc:def:crs:EPSG::4326',
+    listUrl: dsoApiListUrl('parkeerzones'),
+    // 'https://api.data.amsterdam.nl/v1/wfs/parkeerzones?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=parkeerzones&SRSNAME=urn:ogc:def:crs:EPSG::4326',
     detailUrl: 'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones/',
     transformList: transformParkeerzoneCoords,
     featureType: 'MultiPolygon',
-    cache: false,
     zIndex: zIndexPane.PARKEERZONES,
+    additionalStaticPropertyNames: ['gebiedskleurcode'],
   },
   parkeerzones_uitzondering: {
-    listUrl:
-      'https://api.data.amsterdam.nl/v1/wfs/parkeerzones?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=parkeerzones_uitzondering&SRSNAME=urn:ogc:def:crs:EPSG::4326',
+    listUrl: dsoApiListUrl('parkeerzones_uitzondering'),
+    // 'https://api.data.amsterdam.nl/v1/wfs/parkeerzones?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=parkeerzones_uitzondering&SRSNAME=urn:ogc:def:crs:EPSG::4326',
     detailUrl:
       'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones_uitzondering/',
     transformList: transformParkeerzoneCoords,
     featureType: 'MultiPolygon',
-    cache: false,
     zIndex: zIndexPane.PARKEERZONES_UITZONDERING,
   },
   zwembad: {
-    listUrl:
-      'https://api.data.amsterdam.nl/v1/sport/zwembad/?_fields=id,geometry&page_size=30',
+    listUrl: dsoApiListUrl('zwembad'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/zwembad/',
     transformList: transformListSportApiResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
   sportpark: {
-    listUrl:
-      'https://api.data.amsterdam.nl/v1/wfs/sport?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=sportpark&SRSNAME=urn:ogc:def:crs:EPSG::4326',
+    listUrl: dsoApiListUrl('sportpark'),
+    // 'https://api.data.amsterdam.nl/v1/wfs/sport?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=sportpark&SRSNAME=urn:ogc:def:crs:EPSG::4326',
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportpark/',
     transformList: transformListSportApiResponse,
-    cache: false,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.SPORTPARK,
   },
   sportveld: {
-    listUrl:
-      'https://api.data.amsterdam.nl/v1/wfs/sport?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=sportveld&SRSNAME=urn:ogc:def:crs:EPSG::4326',
+    listUrl: dsoApiListUrl('sportveld'),
+    // 'https://api.data.amsterdam.nl/v1/wfs/sport?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=sportveld&SRSNAME=urn:ogc:def:crs:EPSG::4326',
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportveld/',
     transformList: transformListSportApiResponse,
-    cache: false,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.SPORTVELD,
   },
   gymsportzaal: {
-    listUrl:
-      'https://api.data.amsterdam.nl/v1/sport/gymsportzaal/?_fields=id,adres,plaats&page_size=150',
+    listUrl: dsoApiListUrl('gymsportzaal'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/gymsportzaal/',
     transformList: transformListSportApiResponse,
     featureType: 'Point',
   },
   sporthal: {
-    listUrl:
-      'https://api.data.amsterdam.nl/v1/sport/sporthal/?_fields=id,geometry&page_size=50',
+    listUrl: dsoApiListUrl('sporthal'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sporthal/',
     transformList: transformListSportApiResponse,
     featureType: 'Point',
@@ -207,7 +209,7 @@ export const datasetEndpoints: Record<
     cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
   openbaresportplek: {
-    listUrl: dsoApiListUrl('openbaresportplek', 1000),
+    listUrl: dsoApiListUrl('openbaresportplek'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/',
     transformList: transformListSportApiResponse,
     featureType: 'Point',
@@ -297,7 +299,8 @@ function addFilterProps(
   if (filterPropertyNames && featureSourceProperties) {
     for (const propertyName of filterPropertyNames) {
       featureProperties[propertyName] =
-        featureSourceProperties?.properties[propertyName] ||
+        (featureSourceProperties?.properties &&
+          featureSourceProperties.properties[propertyName]) ||
         featureSourceProperties[propertyName];
     }
   }
@@ -384,7 +387,7 @@ function transformEvenementen(
   config: DatasetConfig,
   responseData: any
 ) {
-  const results = getApiEmbeddedResponse('evenementen', responseData);
+  const results = getApiEmbeddedResponse(datasetId, responseData);
   const collection: DatasetFeatures = [];
   if (results && results.length) {
     for (const feature of results) {
@@ -396,7 +399,7 @@ function transformEvenementen(
             datasetId,
             {
               id: feature.id,
-              datasetId: 'evenementen',
+              datasetId,
             },
             feature
           ),
@@ -412,7 +415,7 @@ function transformBekendmakingen(
   config: DatasetConfig,
   responseData: any
 ) {
-  const results = getApiEmbeddedResponse('bekendmakingen', responseData);
+  const results = getApiEmbeddedResponse(datasetId, responseData);
   const collection: DatasetFeatures = [];
 
   if (results && results.length) {
@@ -443,8 +446,11 @@ function transformParkeerzoneCoords(
   config: DatasetConfig,
   responseData: any
 ) {
-  const results = responseData?.features;
+  const results =
+    responseData?.features || getApiEmbeddedResponse(datasetId, responseData);
   const collection: DatasetFeatures = [];
+
+  console.log(results);
 
   if (results && results.length) {
     for (const feature of results) {
@@ -456,7 +462,8 @@ function transformParkeerzoneCoords(
           {
             id: feature?.properties?.id || feature.id,
             datasetId,
-            color: feature.properties.gebiedskleurcode,
+            color:
+              feature?.properties?.gebiedskleurcode || feature.gebiedskleurcode,
           },
           feature
         ),

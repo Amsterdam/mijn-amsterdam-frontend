@@ -13,7 +13,8 @@ export default function Url({
   urlTitle,
   label = 'Meer informatie',
 }: UrlProps) {
-  const theUrl = url.startsWith('www.') ? `https://${url}` : url;
+  const theUrl =
+    url.startsWith('www.') || !url.startsWith('http') ? `https://${url}` : url;
   return (
     <InfoDetail
       label={label}
