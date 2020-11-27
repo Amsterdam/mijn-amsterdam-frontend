@@ -22,74 +22,132 @@ export type DatasetId = string;
 export type DatasetPropertyName = string;
 export type DatasetPropertyValue = string;
 
-export type DatasetFilterConfig = Record<
+export type DatasetPropertyFilter = Record<
   DatasetPropertyName,
-  { values: DatasetPropertyValue[]; emptyValue?: string }
+  { values: DatasetPropertyValue[]; emptyValue?: string; title?: string }
 >;
-export type DatasetConfig = Record<DatasetId, true | DatasetFilterConfig>;
-export type DatasetsConfig = Record<DatasetCategoryId, DatasetConfig>;
 
-export type DatasetFilterSelection = Record<DatasetId, DatasetFilterConfig>;
+export interface DatasetControl {
+  title: string;
+  filters?: DatasetPropertyFilter;
+}
 
-export const DATASETS: DatasetsConfig = {
+export type DatasetCategory = {
+  title: string;
+  datasets: Record<DatasetId, DatasetControl>;
+};
+export type DatasetCategories = Record<DatasetCategoryId, DatasetCategory>;
+export type DatasetFilterSelection = Record<DatasetId, DatasetPropertyFilter>;
+
+export const DATASETS: DatasetCategories = {
   afvalcontainers: {
-    rest: true,
-    papier: true,
-    glas: true,
-    plastic: true,
-    textiel: true,
-    gft: true,
+    title: 'Afvalcontainers',
+    datasets: {
+      rest: { title: 'Rest' },
+      papier: { title: 'Papier' },
+      glas: { title: 'Glas' },
+      plastic: { title: 'Plastic' },
+      textiel: { title: 'Textiel' },
+      gft: { title: 'GFT' },
+    },
   },
-  parkeren: { parkeerzones: true, parkeerzones_uitzondering: true },
+  parkeren: {
+    title: 'Parkeren',
+    datasets: {
+      parkeerzones: { title: 'Parkeerzones' },
+      parkeerzones_uitzondering: {
+        title: 'Parkeerzones uitzondering',
+      },
+    },
+  },
   bekendmakingen: {
-    'apv vergunning': true,
-    evenementenvergunning: true,
-    exploitatievergunning: true,
-    inspraak: true,
-    kapvergunning: true,
-    ligplaatsvergunning: true,
-    meldingen: true,
-    omgevingsvergunning: true,
-    onttrekkingsvergunning: true,
-    openingstijden: true,
-    rectificatie: true,
-    speelautomaten: true,
-    splitsingsvergunning: true,
-    terrasvergunning: true,
-    verkeersbesluit: true,
-    overig: true,
-    geluidvergunning: true,
-    bestemmingsplan: true,
-    'drank- en horecavergunning': true,
+    title: 'Bekendmakingen',
+    datasets: {
+      'apv vergunning': { title: 'APV Vergunning' },
+      evenementenvergunning: { title: 'Evenementenvergunning' },
+      exploitatievergunning: { title: 'Exploitatievergunning' },
+      inspraak: { title: 'Inspraak' },
+      kapvergunning: { title: 'Kapvergunning' },
+      ligplaatsvergunning: { title: 'Ligplaatsvergunning' },
+      meldingen: { title: 'Meldingen' },
+      omgevingsvergunning: { title: 'Omgevingsvergunning' },
+      onttrekkingsvergunning: { title: 'Onttrekkingsvergunning' },
+      openingstijden: { title: 'Openingstijden' },
+      rectificatie: { title: 'Rectificatie' },
+      speelautomaten: { title: 'Speelautomaten' },
+      splitsingsvergunning: { title: 'Splitsingsvergunning' },
+      terrasvergunning: { title: 'Terrasvergunning' },
+      verkeersbesluit: { title: 'Verkeersbesluit' },
+      overig: { title: 'Overig' },
+      geluidvergunning: { title: 'Geluidvergunning' },
+      bestemmingsplan: { title: 'Bestemmingsplan' },
+      'drank- en horecavergunning': { title: 'Drank- en horecavergunning' },
+    },
   },
-  evenementen: { evenementen: true },
+  evenementen: {
+    title: 'Evenementen',
+    datasets: { evenementen: { title: 'Evenementen' } },
+  },
   sport: {
-    zwembad: true,
-    sportpark: true,
-    sportveld: true,
-    gymsportzaal: true,
-    sporthal: true,
-    sportaanbieder: {
-      indicatieStadspas: { values: [], emptyValue: 'Nee' },
-    },
-    openbaresportplek: {
-      sportvoorziening: { values: [], emptyValue: 'Onbekend' },
-      soortOndergrond: { values: [], emptyValue: 'Onbekend' },
-    },
-    hardlooproute: {
-      lengte: { values: [], emptyValue: 'Onbekend' },
+    title: 'Sport',
+    datasets: {
+      zwembad: { title: 'Zwembad' },
+      sportpark: { title: 'Sportpark' },
+      sportveld: {
+        title: 'Sportveld',
+        filters: {
+          sportfunctie: {
+            // title: 'Sportfunctie',
+            values: [],
+            emptyValue: 'Onbekend',
+          },
+        },
+      },
+      gymsportzaal: { title: 'Gymsportzaal' },
+      sporthal: { title: 'Sporthal' },
+      sportaanbieder: {
+        title: 'Sportaanbieders',
+        filters: {
+          indicatieStadspas: {
+            values: [],
+            emptyValue: 'Nee',
+            title: 'Indicatie stadspas',
+          },
+        },
+      },
+      openbaresportplek: {
+        title: 'Openbare sportplek',
+        filters: {
+          sportvoorziening: {
+            title: 'Sportvoorziening',
+            values: [],
+            emptyValue: 'Onbekend',
+          },
+          soortOndergrond: {
+            title: 'Soort ondergrond',
+            values: [],
+            emptyValue: 'Onbekend',
+          },
+        },
+      },
+      hardlooproute: {
+        title: 'Harlooproute',
+        filters: {
+          lengte: { values: [], emptyValue: 'Onbekend' },
+        },
+      },
     },
   },
 };
 
-export function getDatasetCategoryId(datasetId: string) {
-  const group = Object.entries(DATASETS).find(([groupId, datasetConfig]) =>
-    Object.keys(datasetConfig).includes(datasetId)
+export function getDatasetCategoryId(datasetId: DatasetId) {
+  const group = Object.entries(DATASETS).find(([categoryId, category]) =>
+    Object.keys(category.datasets).includes(datasetId)
   );
   if (group) {
     return group[0];
   }
-  return 'Dataset';
+  return;
 }
 
 export const ACTIVE_DATASET_IDS_INITIAL = [

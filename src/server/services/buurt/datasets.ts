@@ -1,9 +1,10 @@
 import Supercluster from 'supercluster';
 import {
-  DatasetFilterConfig,
+  DatasetPropertyFilter,
   DatasetId,
   DatasetPropertyValue,
   DATASETS,
+  getDatasetCategoryId,
 } from '../../../universal/config/buurt';
 import { DataRequestConfig } from '../../config';
 import { getApiEmbeddedResponse } from './helpers';
@@ -46,7 +47,7 @@ export type MaSuperClusterFeature =
 
 export type DatasetResponse = {
   features: DatasetFeatures;
-  filters?: DatasetFilterConfig;
+  filters?: DatasetPropertyFilter;
 };
 
 export const BUURT_CACHE_TTL_HOURS = 24;
@@ -60,12 +61,16 @@ export const ACCEPT_CRS_4326 = {
 const CONTAINER_STATUS_ACTIVE = 1;
 
 export interface DatasetConfig {
-  datasetIds?: string[];
+  datasetIds?: DatasetId[];
   listUrl?: string | ((config: DatasetConfig) => string);
   detailUrl?: string;
-  transformList?: (datasetId: string, config: DatasetConfig, data: any) => any;
+  transformList?: (
+    datasetId: DatasetId,
+    config: DatasetConfig,
+    data: any
+  ) => any;
   transformDetail?: (
-    datasetId: string,
+    datasetId: DatasetId,
     config: DatasetConfig,
     data: any
   ) => any;
@@ -74,28 +79,41 @@ export interface DatasetConfig {
   cacheTimeMinutes?: number;
   featureType: 'Point' | 'MultiPolygon' | 'MultiLineString';
   zIndex?: zIndexPane;
-  filters?: DatasetFilterConfig;
+  filters?: DatasetPropertyFilter;
 }
 
-function getDatasetFilters(
-  datasetCategoryId: DatasetCategoryId,
-  datasetId: DatasetId
-) {
-  return DATASETS[datasetCategoryId] &&
-    DATASETS[datasetCategoryId][datasetId] !== true
-    ? (DATASETS[datasetCategoryId][datasetId] as DatasetFilterConfig)
-    : undefined;
+function getFilterPropertyNames(datasetId: DatasetId) {
+  const datasetCategoryId = getDatasetCategoryId(datasetId);
+
+  if (!datasetCategoryId) {
+    return;
+  }
+  const propertyFilters =
+    DATASETS[datasetCategoryId].datasets[datasetId]?.filters;
+
+  return propertyFilters && Object.keys(propertyFilters);
 }
 
-function datasetSportListUrl(datasetId: DatasetId, pageSize: number = 1000) {
-  const apiUrl = `https://api.data.amsterdam.nl/v1/sport/${datasetId}/?_fields=id,geometry`;
+function dsoApiListUrl(datasetId: DatasetId, pageSize: number = 1000) {
+  const apiUrl = `https://api.data.amsterdam.nl/v1/${getDatasetCategoryId(
+    datasetId
+  )}/${datasetId}/?_fields=id,geometry`;
   const pageSizeParam = `&page_size=${pageSize}`;
 
-  return ({ filters }: DatasetConfig) =>
-    apiUrl + (filters && ',' + Object.keys(filters).join(',')) + pageSizeParam;
+  return (datasetConfig: DatasetConfig) => {
+    const filterPropertyNames = getFilterPropertyNames(datasetId);
+    return (
+      apiUrl +
+      (filterPropertyNames && ',' + filterPropertyNames.join(',')) +
+      pageSizeParam
+    );
+  };
 }
 
-export const datasetEndpoints: Record<string, DatasetConfig> = {
+export const datasetEndpoints: Record<
+  DatasetId | DatasetCategoryId,
+  DatasetConfig
+> = {
   afvalcontainers: {
     listUrl:
       'https://api.data.amsterdam.nl/v1/wfs/huishoudelijkafval/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=container&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326&FILTER=%3CFilter%3E%3CAnd%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Estatus%3C/PropertyName%3E%3CLiteral%3E1%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3COr%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E110%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E16%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E111%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E112%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E67%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E181%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E113%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3C/Or%3E%3C/And%3E%3C/Filter%3E',
@@ -182,20 +200,18 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
   sportaanbieder: {
-    listUrl: datasetSportListUrl('sportaanbieder', 2000),
+    listUrl: dsoApiListUrl('sportaanbieder', 2000),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportaanbieder/',
     transformList: transformListSportApiResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
-    filters: getDatasetFilters('sport', 'sportaanbieder'),
   },
   openbaresportplek: {
-    listUrl: datasetSportListUrl('openbaresportplek', 1000),
+    listUrl: dsoApiListUrl('openbaresportplek', 1000),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/',
     transformList: transformListSportApiResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
-    filters: getDatasetFilters('sport', 'openbaresportplek'),
   },
   hardlooproute: {
     listUrl:
@@ -205,11 +221,10 @@ export const datasetEndpoints: Record<string, DatasetConfig> = {
     cache: false,
     featureType: 'MultiLineString',
     zIndex: zIndexPane.HARDLOOPROUTE,
-    filters: getDatasetFilters('sport', 'hardlooproute'),
   },
 };
 
-function getPolylineColor(datasetId: string, feature: any) {
+function getPolylineColor(datasetId: DatasetId, feature: any) {
   switch (datasetId) {
     case 'sportveld':
       switch (feature.sportfunctie) {
@@ -274,20 +289,23 @@ function getPolylineColor(datasetId: string, feature: any) {
 }
 
 function addFilterProps(
+  datasetId: DatasetId,
   featureProperties: MaFeature['properties'],
-  config: DatasetConfig,
   featureSourceProperties: any
 ) {
-  if (config.filters && featureSourceProperties) {
-    for (const propertyName of Object.keys(config.filters)) {
-      featureProperties[propertyName] = featureSourceProperties[propertyName];
+  const filterPropertyNames = getFilterPropertyNames(datasetId);
+  if (filterPropertyNames && featureSourceProperties) {
+    for (const propertyName of filterPropertyNames) {
+      featureProperties[propertyName] =
+        featureSourceProperties?.properties[propertyName] ||
+        featureSourceProperties[propertyName];
     }
   }
   return featureProperties;
 }
 
 function transformListSportApiResponse(
-  datasetId: string,
+  datasetId: DatasetId,
   config: DatasetConfig,
   responseData: any
 ) {
@@ -318,11 +336,7 @@ function transformListSportApiResponse(
         collection.push({
           type: 'Feature',
           geometry: feature.geometry,
-          properties: addFilterProps(
-            properties,
-            config,
-            feature?.properties || feature
-          ),
+          properties: addFilterProps(datasetId, properties, feature),
         });
       }
     }
@@ -332,7 +346,7 @@ function transformListSportApiResponse(
 }
 
 function transformAfvalcontainers(
-  datasetId: string,
+  datasetId: DatasetId,
   config: DatasetConfig,
   WFSData: any
 ) {
@@ -343,16 +357,20 @@ function transformAfvalcontainers(
       // Redundant check on active state, the API should only return the active containers already.
       if (
         feature.properties?.status === CONTAINER_STATUS_ACTIVE &&
-        !!DATASETS.afvalcontainers[fractieOmschrijvingDatasetId]
+        !!DATASETS.afvalcontainers.datasets[fractieOmschrijvingDatasetId]
       ) {
         if (feature?.geometry?.coordinates) {
           collection.push({
             type: 'Feature',
             geometry: feature.geometry,
-            properties: {
-              id: feature.properties.id,
-              datasetId: fractieOmschrijvingDatasetId,
-            },
+            properties: addFilterProps(
+              datasetId,
+              {
+                id: feature.properties.id,
+                datasetId: fractieOmschrijvingDatasetId,
+              },
+              feature
+            ),
           });
         }
       }
@@ -362,7 +380,7 @@ function transformAfvalcontainers(
 }
 
 function transformEvenementen(
-  datasetId: string,
+  datasetId: DatasetId,
   config: DatasetConfig,
   responseData: any
 ) {
@@ -374,10 +392,14 @@ function transformEvenementen(
         collection.push({
           type: 'Feature',
           geometry: feature.geometry,
-          properties: {
-            id: feature.id,
-            datasetId: 'evenementen',
-          },
+          properties: addFilterProps(
+            datasetId,
+            {
+              id: feature.id,
+              datasetId: 'evenementen',
+            },
+            feature
+          ),
         });
       }
     }
@@ -386,7 +408,7 @@ function transformEvenementen(
 }
 
 function transformBekendmakingen(
-  datasetId: string,
+  datasetId: DatasetId,
   config: DatasetConfig,
   responseData: any
 ) {
@@ -401,10 +423,14 @@ function transformBekendmakingen(
         collection.push({
           type: 'Feature',
           geometry: feature.geometry,
-          properties: {
-            id: feature.id,
+          properties: addFilterProps(
             datasetId,
-          },
+            {
+              id: feature.id,
+              datasetId,
+            },
+            feature
+          ),
         });
       }
     }
@@ -413,7 +439,7 @@ function transformBekendmakingen(
 }
 
 function transformParkeerzoneCoords(
-  datasetId: string,
+  datasetId: DatasetId,
   config: DatasetConfig,
   responseData: any
 ) {
@@ -425,11 +451,15 @@ function transformParkeerzoneCoords(
       collection.push({
         type: 'Feature',
         geometry: feature.geometry,
-        properties: {
-          id: feature?.properties?.id || feature.id,
+        properties: addFilterProps(
           datasetId,
-          color: feature.properties.gebiedskleurcode,
-        },
+          {
+            id: feature?.properties?.id || feature.id,
+            datasetId,
+            color: feature.properties.gebiedskleurcode,
+          },
+          feature
+        ),
       });
     }
   }

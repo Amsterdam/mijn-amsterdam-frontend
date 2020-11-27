@@ -1,12 +1,10 @@
 import React from 'react';
 import { getDatasetCategoryId } from '../../../../universal/config/buurt';
 import LoadingContent from '../../LoadingContent/LoadingContent';
-import { titleTransform } from '../datasets';
 import MyArePanelContentAfval from './Afval';
 import MyArePanelContentBekendmaking from './Bekendmaking';
 import MyArePanelContentEvenementen from './Evenementen';
-import GenericBase from './GenericBase';
-import JsonString from './JsonString';
+import { GenericContent } from './GenericBase';
 import MyArePanelContentParkeren from './Parkeren';
 import MyArePanelContentSport from './Sport';
 
@@ -23,7 +21,9 @@ export default function MyAreaPanelContentGeneric({
     return <LoadingContent />;
   }
 
-  switch (getDatasetCategoryId(datasetId)) {
+  const datasetCategoryId = getDatasetCategoryId(datasetId);
+
+  switch (datasetCategoryId) {
     case 'sport':
       return (
         <MyArePanelContentSport datasetId={datasetId} panelItem={panelItem} />
@@ -55,12 +55,5 @@ export default function MyAreaPanelContentGeneric({
       );
   }
 
-  return (
-    <GenericBase
-      title={titleTransform(datasetId)}
-      supTitle={titleTransform(getDatasetCategoryId(datasetId))}
-    >
-      <JsonString data={panelItem} />
-    </GenericBase>
-  );
+  return <GenericContent datasetId={datasetId} panelItem={panelItem} />;
 }

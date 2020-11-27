@@ -5,22 +5,20 @@ import {
   MapPanelDrawer,
 } from '@amsterdam/arm-core';
 import { SnapPoint } from '@amsterdam/arm-core/lib/components/MapPanel/constants';
-import { Checkbox, Label, themeSpacing } from '@amsterdam/asc-ui';
-import React, { useCallback, useContext, useEffect, useMemo } from 'react';
+import { Checkbox, Label } from '@amsterdam/asc-ui';
+import React, { useCallback, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import {
+  DatasetCategory,
   DatasetFilterSelection,
   DatasetId,
   DatasetPropertyName,
   DatasetPropertyValue,
+  DATASETS,
 } from '../../../universal/config';
+import { DatasetCategoryId } from '../../../universal/config/buurt';
 import { useDesktopScreen } from '../../hooks';
 import Alert from '../Alert/Alert';
-import {
-  createDatasetControlItems,
-  DatasetCategoryItem,
-  DatasetControlItem,
-} from './datasets';
 import {
   filterActiveDatasets,
   useActiveDatasetFilters,
@@ -31,11 +29,8 @@ import {
   useFilterControlItemChange,
   useSelectedFeature,
 } from './MyArea.hooks';
-import MyAreaCollapsiblePanel, {
-  CollapsedState,
-} from './MyAreaCollapsiblePanel';
+import MyAreaCollapsiblePanel from './MyAreaCollapsiblePanel';
 import MyAreaPanelContent from './PanelContent/Generic';
-import { IconFilter } from '../../assets/icons';
 
 const MapPanelContentDetail = styled(MapPanelContent)``;
 
@@ -101,156 +96,177 @@ export function filterItemCheckboxState(
   };
 }
 
-function controlItemCheckboxState(
-  controlItem: DatasetControlItem | DatasetCategoryItem,
+function categoryCheckboxState(
+  category: DatasetCategory,
+  activeDatasetIds: DatasetId[]
+) {
+  const datasetIds = Object.keys(category.datasets);
+  const activeControlIds = filterActiveDatasets(datasetIds, activeDatasetIds);
+  const activeLength = activeControlIds.length;
+  const datasetCount = datasetIds.length;
+  const isChecked = !!activeLength && activeLength === datasetCount;
+  const isIndeterminate = !!activeLength && activeLength !== datasetCount;
+
+  return {
+    isChecked,
+    isIndeterminate,
+  };
+}
+
+function datasetCheckboxState(
+  datasetId: DatasetId,
   activeDatasetIds: string[]
 ) {
-  if (controlItem.type === 'category') {
-    const activeControlIds = filterActiveDatasets(
-      controlItem,
-      activeDatasetIds
-    );
-    const activeLength = activeControlIds.length;
-    const isChecked =
-      !!activeLength && activeLength === controlItem.collection.length;
-    const isIndeterminate =
-      !!activeLength && activeLength !== controlItem.collection.length;
-
-    return {
-      isChecked,
-      isIndeterminate,
-    };
-  }
   return {
-    isChecked: activeDatasetIds.includes(controlItem.id),
-    isIndeterminate: false, // TODO: Fix for non-category items
+    isChecked: activeDatasetIds.includes(datasetId),
+    isIndeterminate: false, // Dataset checkboxes don't need indeterminate state
   };
 }
 
 interface DatasetControlCheckboxProps {
-  controlItem: any;
-  onChange: (controlItem: any) => void;
+  id: string;
+  label: string;
+  onChange: (event: React.FormEvent<HTMLInputElement>) => void;
   isChecked: boolean;
   isIndeterminate: boolean;
 }
 
 export function DatasetControlCheckbox({
-  controlItem,
+  id,
+  label,
   isChecked,
   isIndeterminate,
   onChange,
 }: DatasetControlCheckboxProps) {
   return (
-    <StyledLabel htmlFor={controlItem.id} label={controlItem.title}>
+    <StyledLabel htmlFor={id} label={label}>
       <StyledCheckbox
-        id={controlItem.id}
+        id={id}
         checked={isChecked}
         indeterminate={isIndeterminate}
-        onChange={() => onChange(controlItem)}
+        onChange={onChange}
       />
     </StyledLabel>
   );
 }
 
 interface DatasetControlPanelProps {
-  onControlItemChange: (
-    datasetControlItem: DatasetCategoryItem | DatasetControlItem
-  ) => void;
+  onControlItemChange: (type: 'category' | 'dataset', ids: string[]) => void;
   onFilterControlItemChange: (
     datasetId: DatasetId,
     propertyName: DatasetPropertyName,
     propertyValue: DatasetPropertyValue
   ) => void;
-  controlItemCategory: DatasetCategoryItem;
+  categoryId: DatasetCategoryId;
+  category: DatasetCategory;
   activeDatasetIds: string[];
   activeFilters: DatasetFilterSelection;
 }
 
 function DatasetControlPanel({
-  controlItemCategory,
+  categoryId,
+  category,
   onControlItemChange,
   onFilterControlItemChange,
   activeDatasetIds,
   activeFilters,
 }: DatasetControlPanelProps) {
-  const { isChecked, isIndeterminate } = controlItemCheckboxState(
-    controlItemCategory,
+  const [filterSelection] = useDatasetFilterSelection();
+  const { isChecked, isIndeterminate } = categoryCheckboxState(
+    category,
     activeDatasetIds
   );
-
-  const hasCollection = controlItemCategory.collection.length > 1;
+  const datasetIds = Object.keys(category.datasets);
+  const hasDatasets =
+    !!category.datasets && Object.keys(category.datasets).length > 1;
 
   const categoryTitle = (
     <DatasetControlCheckbox
       isChecked={isChecked}
       isIndeterminate={isIndeterminate}
-      controlItem={controlItemCategory}
-      onChange={onControlItemChange}
+      id={categoryId}
+      label={category.title}
+      onChange={() => onControlItemChange('category', datasetIds)}
     />
   );
 
-  if (!hasCollection) {
+  if (!hasDatasets) {
     return categoryTitle;
   }
 
   return (
     <MyAreaCollapsiblePanel title={categoryTitle}>
       <DatasetControlList>
-        {controlItemCategory.collection.map((controlItem) => {
-          const { isChecked, isIndeterminate } = controlItemCheckboxState(
-            controlItem,
+        {Object.entries(category.datasets).map(([datasetId, dataset]) => {
+          const { isChecked, isIndeterminate } = datasetCheckboxState(
+            datasetId,
             activeDatasetIds
           );
           const datasetControl = (
             <DatasetControlCheckbox
               isChecked={isChecked}
-              controlItem={controlItem}
+              id={datasetId}
+              label={dataset.title}
               isIndeterminate={isIndeterminate}
-              onChange={onControlItemChange}
+              onChange={() => onControlItemChange('dataset', [datasetId])}
             />
           );
+          const hasFilters = !!(
+            dataset.filters && Object.keys(dataset.filters).length
+          );
           return (
-            <DatasetControlListItem key={controlItem.id}>
-              {(!controlItem.collection.length || !isChecked) && datasetControl}
-              {isChecked && !!controlItem.collection.length && (
+            <DatasetControlListItem key={datasetId}>
+              {(!hasFilters || !isChecked) && datasetControl}
+              {isChecked && hasFilters && (
                 <MyAreaCollapsiblePanel title={datasetControl}>
                   <DatasetFilterControlCagegoryList>
-                    {controlItem.collection.map((filterCategory) => {
-                      return (
-                        <DatasetControlListItem key={filterCategory.id}>
-                          <FilterPropertyName>
-                            {filterCategory.title}
-                          </FilterPropertyName>
-                          <DatasetFilterControlList>
-                            {filterCategory.collection.map(
-                              (controlItemFilter) => {
+                    {Object.entries(dataset.filters!).map(
+                      ([propertyId, property]) => {
+                        const hasStaticValues = !!(
+                          property.values && property.values.length
+                        );
+                        const propertyValues = hasStaticValues
+                          ? property.values
+                          : filterSelection[datasetId]
+                          ? filterSelection[datasetId][propertyId].values
+                          : [];
+                        return (
+                          <DatasetControlListItem key={propertyId}>
+                            {property.title && (
+                              <FilterPropertyName>
+                                {property.title}
+                              </FilterPropertyName>
+                            )}
+                            <DatasetFilterControlList>
+                              {propertyValues.map((value) => {
                                 const { isChecked } = filterItemCheckboxState(
                                   activeFilters,
-                                  controlItem.id,
-                                  filterCategory.id,
-                                  controlItemFilter.id
+                                  datasetId,
+                                  propertyId,
+                                  value
                                 );
                                 return (
                                   <DatasetControlCheckbox
-                                    key={controlItemFilter.id}
+                                    key={value}
                                     isChecked={isChecked}
-                                    controlItem={controlItemFilter}
+                                    id={value}
+                                    label={value}
                                     isIndeterminate={false}
                                     onChange={() =>
                                       onFilterControlItemChange(
-                                        controlItem.id,
-                                        filterCategory.id,
-                                        controlItemFilter.id
+                                        datasetId,
+                                        propertyId,
+                                        value
                                       )
                                     }
                                   />
                                 );
-                              }
-                            )}
-                          </DatasetFilterControlList>
-                        </DatasetControlListItem>
-                      );
-                    })}
+                              })}
+                            </DatasetFilterControlList>
+                          </DatasetControlListItem>
+                        );
+                      }
+                    )}
                   </DatasetFilterControlCagegoryList>
                 </MyAreaCollapsiblePanel>
               )}
@@ -275,11 +291,6 @@ export default function MyAreaPanels({ onSetDrawerPosition }: MyAreaPanels) {
   const [selectedFeature, setSelectedFeature] = useSelectedFeature();
   const [activeDatasetIds] = useActiveDatasetIds();
   const [activeFilters] = useActiveDatasetFilters();
-  const [filterSelection] = useDatasetFilterSelection();
-
-  const datasetControlItems = useMemo(() => {
-    return createDatasetControlItems(filterSelection);
-  }, [filterSelection]);
 
   useEffect(() => {
     if (selectedFeature !== null) {
@@ -305,11 +316,11 @@ export default function MyAreaPanels({ onSetDrawerPosition }: MyAreaPanels) {
     <PanelComponent>
       <MapPanelContent animate stackOrder={0}>
         <DatasetCategoryList>
-          {datasetControlItems.map((controlItemCategory) => (
-            <DatasetControlListItem key={controlItemCategory.id}>
+          {Object.entries(DATASETS).map(([categoryId, category]) => (
+            <DatasetControlListItem key={categoryId}>
               <DatasetControlPanel
-                key={controlItemCategory.id}
-                controlItemCategory={controlItemCategory}
+                categoryId={categoryId}
+                category={category}
                 onControlItemChange={onControlItemChange}
                 onFilterControlItemChange={onFilterControlItemChange}
                 activeDatasetIds={activeDatasetIds}

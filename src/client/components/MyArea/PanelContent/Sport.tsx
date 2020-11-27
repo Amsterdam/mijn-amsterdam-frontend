@@ -1,11 +1,8 @@
 import React from 'react';
-import { getDatasetCategoryId } from '../../../../universal/config';
-import InfoDetail from '../../InfoDetail/InfoDetail';
-import { titleTransform } from '../datasets';
-import Description from './Description';
-import GenericBase from './GenericBase';
-import JsonString from './JsonString';
 import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
+import InfoDetail from '../../InfoDetail/InfoDetail';
+import Description from './Description';
+import GenericBase, { GenericContent } from './GenericBase';
 import Url from './Url';
 
 interface MyArePanelContentSportProps {
@@ -118,12 +115,5 @@ export default function MyArePanelContentSport({
         </GenericBase>
       );
   }
-  return (
-    <GenericBase
-      title={titleTransform(datasetId)}
-      supTitle={titleTransform(getDatasetCategoryId(datasetId))}
-    >
-      <JsonString data={panelItem} />;
-    </GenericBase>
-  );
+  return <GenericContent datasetId={datasetId} panelItem={panelItem} />;
 }

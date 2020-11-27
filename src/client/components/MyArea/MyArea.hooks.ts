@@ -9,7 +9,6 @@ import {
   useRecoilValue,
   useSetRecoilState,
 } from 'recoil';
-import { useDebouncedCallback } from 'use-debounce/lib';
 import {
   DatasetFeatures,
   MaPointFeature,
@@ -17,14 +16,14 @@ import {
   MaSuperClusterFeature,
 } from '../../../server/services/buurt/datasets';
 import {
+  DatasetCategory,
+  DatasetControl,
   DatasetFilterSelection,
   DatasetId,
   DatasetPropertyName,
   DatasetPropertyValue,
-  DATASETS,
 } from '../../../universal/config/buurt';
 import { BFFApiUrls } from '../../config/api';
-import { DatasetCategoryItem, DatasetControlItem } from './datasets';
 import styles from './MyAreaDatasets.module.scss';
 import { filterItemCheckboxState } from './MyAreaPanels';
 
@@ -251,21 +250,21 @@ export function useFetchFeatures() {
 }
 
 export function filterActiveDatasets(
-  controlItem: DatasetCategoryItem,
+  datasetIds: DatasetId[],
   activeDatasetIds: DatasetId[]
 ): DatasetId[] {
-  return controlItem.collection
-    .filter((controlItem) => activeDatasetIds.includes(controlItem.id))
-    .map((controlItem) => controlItem.id);
+  return datasetIds
+    .filter((datasetId) => activeDatasetIds.includes(datasetId))
+    .map((datasetId) => datasetId);
 }
 
 function toggleCategory(
-  activeDatasetIds: string[],
-  controlItem: DatasetCategoryItem
-) {
-  const total = controlItem.collection.length;
+  datasetIds: DatasetId[],
+  activeDatasetIds: DatasetId[]
+): DatasetId[] {
+  const total = datasetIds.length;
   const threshold = Math.round(total / 2);
-  const activeItemsTotal = filterActiveDatasets(controlItem, activeDatasetIds)
+  const activeItemsTotal = filterActiveDatasets(datasetIds, activeDatasetIds)
     .length;
 
   const isActive =
@@ -275,34 +274,34 @@ function toggleCategory(
     activeItemsTotal === 0;
 
   if (!isActive) {
-    return activeDatasetIds.filter((id) => {
-      const isDatasetIdInControlItem = controlItem.collection.some(
-        (controlItem) => controlItem.id === id
+    return activeDatasetIds.filter((activeId) => {
+      const isDatasetIdInCategory = datasetIds.some(
+        (datasetId) => datasetId === activeId
       );
-      return !isDatasetIdInControlItem;
+      return !isDatasetIdInCategory;
     });
   }
-  return [...activeDatasetIds, ...controlItem.collection.map(({ id }) => id)];
+  return [...activeDatasetIds, ...datasetIds];
 }
 
 export function useControlItemChange() {
   const [activeDatasetIds, setActiveDatasetIds] = useActiveDatasetIds();
 
   return useCallback(
-    (controlItem: DatasetControlItem | DatasetCategoryItem) => {
+    (type: 'category' | 'dataset', ids: string[]) => {
       let datasetIds = activeDatasetIds;
-      switch (controlItem.type) {
+      switch (type) {
         case 'category':
-          datasetIds = toggleCategory(activeDatasetIds, controlItem);
-          setActiveDatasetIds(datasetIds);
+          datasetIds = toggleCategory(ids, activeDatasetIds);
           break;
         case 'dataset':
-          datasetIds = activeDatasetIds.includes(controlItem.id)
-            ? activeDatasetIds.filter((id) => id !== controlItem.id)
-            : [...activeDatasetIds, controlItem.id];
-          setActiveDatasetIds(datasetIds);
+          datasetIds = activeDatasetIds.some((id) => ids.includes(id))
+            ? activeDatasetIds.filter((id) => !ids.includes(id))
+            : [...activeDatasetIds, ...ids];
+
           break;
       }
+      setActiveDatasetIds(datasetIds);
     },
     [activeDatasetIds, setActiveDatasetIds]
   );
@@ -335,7 +334,10 @@ export function useFilterControlItemChange() {
       }
 
       let filterValues =
-        activeFiltersUpdate[datasetId][propertyName].values || [];
+        (activeFiltersUpdate[datasetId] &&
+          activeFiltersUpdate[datasetId][propertyName] &&
+          activeFiltersUpdate[datasetId][propertyName].values) ||
+        [];
 
       if (isChecked) {
         filterValues = activeFiltersUpdate[datasetId][

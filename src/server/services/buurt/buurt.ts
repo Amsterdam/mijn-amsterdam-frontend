@@ -1,7 +1,9 @@
 import {
-  DatasetFilterConfig,
   DatasetFilterSelection,
   DatasetId,
+  DatasetPropertyFilter,
+  DATASETS,
+  getDatasetCategoryId,
 } from '../../../universal/config/buurt';
 import { IS_AP } from '../../../universal/config/env';
 import { apiErrorResult, apiSuccesResult } from '../../../universal/helpers';
@@ -36,24 +38,48 @@ const fileCache = (id: string, cacheTimeMinutes: number) => {
   return fileCaches[id];
 };
 
-export function createFilterConfig(
+function getDynamicDatasetFilters(datasetId: DatasetId) {
+  const datasetCategoryId = getDatasetCategoryId(datasetId);
+
+  if (!datasetCategoryId) {
+    return;
+  }
+
+  const propertyFilters =
+    DATASETS[datasetCategoryId].datasets[datasetId]?.filters;
+
+  if (!propertyFilters) {
+    return;
+  }
+
+  // Only select property filters that don't have static values defined.
+  return Object.fromEntries(
+    Object.entries(propertyFilters).filter(([propertyId, property]) => {
+      return !property.values.length;
+    })
+  );
+}
+
+export function createDynamicFilterConfig(
   features: MaFeature[],
-  filterConfig: DatasetFilterConfig
+  filterConfig: DatasetPropertyFilter
 ) {
-  const filters: DatasetFilterConfig = {};
+  const filters: DatasetPropertyFilter = {};
   const propertyNames = Object.keys(filterConfig);
   for (const propertyName of propertyNames) {
     // Collect distinct property values from the dataset
     filters[propertyName] = {
       values: Array.from(
         new Set(
-          features.map(
-            (feature) =>
-              // Get property value from object.properties or from object itself
+          features.map((feature) => {
+            console.log(feature, filterConfig);
+            // Get property value from object.properties or from object itself
+            return (
               (feature?.properties || feature)[propertyName] ||
               filterConfig[propertyName].emptyValue ||
-              'Lege waarde'
-          )
+              'EMPTY_VALUE'
+            );
+          })
         )
       ),
     };
@@ -63,7 +89,7 @@ export function createFilterConfig(
 }
 
 // Matches feature properties to requested filters
-function isFilterMatch(feature: MaFeature, filters: DatasetFilterConfig) {
+function isFilterMatch(feature: MaFeature, filters: DatasetPropertyFilter) {
   return Object.entries(filters).every(([propertyName, valueConfig]) => {
     const propertyValues = valueConfig.values;
     return (
@@ -94,7 +120,7 @@ export function filterDatasetFeatures(
 
 async function loadDatasetFeature(
   sessionID: SessionID,
-  datasetId: string,
+  datasetId: DatasetId,
   datasetConfig: DatasetConfig,
   params?: { [key: string]: any }
 ) {
@@ -166,9 +192,9 @@ async function loadDatasetFeature(
         })
       : [];
 
+    const filterConfig = getDynamicDatasetFilters(datasetId);
     const filters =
-      datasetConfig.filters &&
-      createFilterConfig(response.content, datasetConfig.filters);
+      filterConfig && createDynamicFilterConfig(response.content, filterConfig);
 
     if (datasetConfig.cache !== false) {
       dataCache.setKey('url', url);

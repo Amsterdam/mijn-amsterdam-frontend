@@ -6,6 +6,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import styled from 'styled-components';
 import { DATASETS } from '../../../universal/config';
 import {
+  DatasetPropertyFilter,
   DatasetId,
   DatasetPropertyName,
   getDatasetCategoryId,
@@ -23,33 +24,6 @@ import {
   MapIconSport,
 } from '../../assets/icons';
 import { DEFAULT_POLYLINE_OPTIONS } from './MyAreaPolylineLayer';
-import { DatasetFilterSelection } from '../../../universal/config/buurt';
-
-interface DatasetItem {
-  id: string;
-  title: string;
-}
-
-export interface DatasetCategoryItem extends DatasetItem {
-  type: 'category';
-  collection: DatasetControlItem[];
-}
-
-export interface DatasetControlItem extends DatasetItem {
-  type: 'dataset';
-  collection: DatasetFilterCategoryItem[];
-}
-
-export interface DatasetFilterCategoryItem extends DatasetItem {
-  collection: DatasetFilterControlItem[];
-  type: 'filters';
-}
-
-export interface DatasetFilterControlItem extends DatasetItem {
-  datasetId: DatasetId;
-  propertyName: DatasetPropertyName;
-  type: 'filter';
-}
 
 const DatasetIcon = styled.div`
   margin-right: ${themeSpacing(2)};
@@ -92,7 +66,7 @@ const DatasetIconCircle = styled(DatasetIcon)`
 //   }
 // `;
 
-const datasetIcons: Record<string, ReactElement<any>> = {
+const datasetIcons: Record<DatasetId, ReactElement<any>> = {
   rest: (
     <DatasetIcon style={{ backgroundColor: themeColors.tint.level6 }}>
       <MapIconAfvalRest fill={themeColors.tint.level1} />
@@ -149,10 +123,11 @@ const datasetIconHtml = Object.fromEntries(
   })
 );
 
-export function getIconHtml(datasetId: string) {
+export function getIconHtml(datasetId: DatasetId) {
+  const datasetCategoryId = getDatasetCategoryId(datasetId);
   return (
     datasetIconHtml[datasetId] ||
-    datasetIconHtml[getDatasetCategoryId(datasetId)] ||
+    (datasetCategoryId && datasetIconHtml[datasetCategoryId]) ||
     datasetIconHtml.default
   );
 }
@@ -160,71 +135,6 @@ export function getIconHtml(datasetId: string) {
 export function titleTransform(id: string) {
   return capitalizeFirstLetter(id).replace(/_/g, ' ');
 }
-
-export const createDatasetControlItems = (
-  filterSelection: DatasetFilterSelection | null
-) => {
-  console.log('filterSelection', filterSelection);
-  return Object.entries(DATASETS).map(([datasetCategoryId, datasetConfig]) => {
-    const collection = Object.entries(datasetConfig).map(
-      ([datasetId, config]) => {
-        const filterConfig =
-          filterSelection && filterSelection[datasetId]
-            ? filterSelection[datasetId]
-            : config;
-
-        const collection =
-          typeof filterConfig === 'object'
-            ? Object.entries(filterConfig).map(
-                ([propertyName, valueConfig]) => {
-                  let propertyValues = valueConfig.values;
-                  if (!Array.isArray(propertyValues)) {
-                    propertyValues = [];
-                  }
-                  const filterCollection = propertyValues.map(
-                    (propertyValue) => {
-                      const datasetFilterControlItem: DatasetFilterControlItem = {
-                        type: 'filter',
-                        id: propertyValue,
-                        title: propertyValue,
-                        propertyName,
-                        datasetId,
-                      };
-                      return datasetFilterControlItem;
-                    }
-                  );
-                  const datasetFilterCategoryItem: DatasetFilterCategoryItem = {
-                    type: 'filters',
-                    id: propertyName,
-                    title: propertyName,
-                    collection: filterCollection,
-                  };
-                  return datasetFilterCategoryItem;
-                }
-              )
-            : [];
-
-        const datasetControlItem: DatasetControlItem = {
-          id: datasetId,
-          title: datasetId,
-          type: 'dataset',
-          collection,
-        };
-
-        return datasetControlItem;
-      }
-    );
-
-    const datasetCategoryItem: DatasetCategoryItem = {
-      id: datasetCategoryId,
-      type: 'category',
-      title: datasetCategoryId,
-      collection,
-    };
-
-    return datasetCategoryItem;
-  });
-};
 
 export const PARKEERZONES_POLYLINE_OPTIONS: Record<string, PolylineOptions> = {
   parkeerzones: {

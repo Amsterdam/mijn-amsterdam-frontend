@@ -1,6 +1,8 @@
 import { Heading, themeColor } from '@amsterdam/asc-ui';
 import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
+import { DATASETS, getDatasetCategoryId } from '../../../../universal/config';
+import JsonString from './JsonString';
 
 const SuperTitle = styled(Heading)`
   font-size: 1.6rem;
@@ -20,6 +22,25 @@ type GenericBaseProps = PropsWithChildren<{
   title?: string;
   supTitle?: string;
 }>;
+
+interface GenericContentProps {
+  panelItem: any;
+  datasetId: string;
+}
+
+export function GenericContent({ datasetId, panelItem }: GenericContentProps) {
+  const datasetCategoryId = getDatasetCategoryId(datasetId);
+  const category = datasetCategoryId ? DATASETS[datasetCategoryId] : undefined;
+  const dataset = category ? category.datasets[datasetId] : undefined;
+  return (
+    <GenericBase
+      title={dataset?.title || datasetId}
+      supTitle={category?.title || datasetCategoryId || 'Unknown category'}
+    >
+      <JsonString data={panelItem} />
+    </GenericBase>
+  );
+}
 
 export default function GenericBase({
   title,
