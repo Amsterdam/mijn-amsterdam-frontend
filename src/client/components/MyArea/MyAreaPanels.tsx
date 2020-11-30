@@ -6,7 +6,7 @@ import {
 } from '@amsterdam/arm-core';
 import { SnapPoint } from '@amsterdam/arm-core/lib/components/MapPanel/constants';
 import { Checkbox, Label } from '@amsterdam/asc-ui';
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { ReactNode, useCallback, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import {
   DatasetCategory,
@@ -81,18 +81,22 @@ const StyledLabel = styled(Label)`
   }
 `;
 
+const FeatureCount = styled.small`
+  padding-left: 1rem;
+`;
+
 export function filterItemCheckboxState(
   activeFilters: DatasetFilterSelection,
   datasetId: DatasetId,
   propertyName: DatasetPropertyName,
   propertyValue: DatasetPropertyValue
 ) {
+  const propertyValues =
+    activeFilters[datasetId] &&
+    activeFilters[datasetId][propertyName] &&
+    activeFilters[datasetId][propertyName].values;
   return {
-    isChecked: !!(
-      activeFilters[datasetId] &&
-      activeFilters[datasetId][propertyName] &&
-      activeFilters[datasetId][propertyName].values.includes(propertyValue)
-    ),
+    isChecked: !!propertyValues && propertyValue in propertyValues,
   };
 }
 
@@ -125,7 +129,7 @@ function datasetCheckboxState(
 
 interface DatasetControlCheckboxProps {
   id: string;
-  label: string;
+  label: ReactNode;
   onChange: (event: React.FormEvent<HTMLInputElement>) => void;
   isChecked: boolean;
   isIndeterminate: boolean;
@@ -223,13 +227,16 @@ function DatasetControlPanel({
                     {Object.entries(dataset.filters!).map(
                       ([propertyId, property]) => {
                         const hasStaticValues = !!(
-                          property.values && property.values.length
+                          property.values && Object.keys(property.values).length
                         );
-                        const propertyValues = hasStaticValues
-                          ? property.values
-                          : filterSelection[datasetId]
-                          ? filterSelection[datasetId][propertyId].values
-                          : [];
+                        const propertyValues = Object.entries(
+                          hasStaticValues
+                            ? property.values
+                            : filterSelection[datasetId] &&
+                              filterSelection[datasetId][propertyId]
+                            ? filterSelection[datasetId][propertyId].values
+                            : {}
+                        );
                         return (
                           <DatasetControlListItem key={propertyId}>
                             {property.title && (
@@ -238,7 +245,7 @@ function DatasetControlPanel({
                               </FilterPropertyName>
                             )}
                             <DatasetFilterControlList>
-                              {propertyValues.map((value) => {
+                              {propertyValues.map(([value, featureCount]) => {
                                 const { isChecked } = filterItemCheckboxState(
                                   activeFilters,
                                   datasetId,
@@ -250,7 +257,18 @@ function DatasetControlPanel({
                                     key={value}
                                     isChecked={isChecked}
                                     id={value}
-                                    label={value}
+                                    label={
+                                      <>
+                                        {value}{' '}
+                                        {featureCount > 1 ? (
+                                          <FeatureCount>
+                                            {featureCount}
+                                          </FeatureCount>
+                                        ) : (
+                                          ''
+                                        )}
+                                      </>
+                                    }
                                     isIndeterminate={false}
                                     onChange={() =>
                                       onFilterControlItemChange(

@@ -101,25 +101,30 @@ export function createDynamicFilterConfig(
   features: MaFeature[],
   filterConfig: DatasetPropertyFilter
 ) {
-  const filters: DatasetPropertyFilter = {};
+  // const filters: DatasetPropertyFilter = {};
   const propertyNames = Object.keys(filterConfig);
-  for (const propertyName of propertyNames) {
-    // Collect distinct property values from the dataset
-    filters[propertyName] = {
-      values: Array.from(
-        new Set(
-          features.map((feature) => {
-            // Get property value from object.properties or from object itself
-            return (
-              (feature?.properties || feature)[propertyName] ||
-              filterConfig[propertyName].emptyValue ||
-              'EMPTY_VALUE'
-            );
-          })
-        )
-      ),
-    };
+
+  const filters: DatasetPropertyFilter = {};
+
+  for (const feature of features) {
+    for (const propertyName of propertyNames) {
+      // Get property value from object.filters or from object itself
+      const value =
+        (feature?.properties || feature)[propertyName] ||
+        filterConfig[propertyName].emptyValue ||
+        'EMPTY_VALUE';
+      if (!filters[propertyName]) {
+        filters[propertyName] = {
+          values: {},
+        };
+      }
+      const values = filters[propertyName].values;
+      values[value] = (values[value] || 0) + 1;
+      filters[propertyName].values = values;
+    }
   }
+
+  console.log('filters!!!', filters);
 
   return filters;
 }
@@ -129,9 +134,9 @@ function isFilterMatch(feature: MaFeature, filters: DatasetPropertyFilter) {
   return Object.entries(filters).every(([propertyName, valueConfig]) => {
     const propertyValues = valueConfig.values;
     return (
-      !propertyValues.length ||
+      !Object.keys(propertyValues).length ||
       (propertyName in feature.properties &&
-        propertyValues.includes(feature.properties[propertyName]))
+        feature.properties[propertyName] in propertyValues)
     );
   });
 }
@@ -308,7 +313,11 @@ export async function loadPolylineFeatures(
     datasetIds,
     bbox,
     filters,
-  }: { datasetIds: string[]; bbox: any; filters: DatasetFilterSelection }
+  }: {
+    datasetIds: string[];
+    bbox: [number, number, number, number];
+    filters: DatasetFilterSelection;
+  }
 ) {
   const configs = getDatasetEndpointConfig(datasetIds, [
     'MultiPolygon',

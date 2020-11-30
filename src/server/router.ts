@@ -1,14 +1,15 @@
 import * as Sentry from '@sentry/node';
 import express, { NextFunction, Request, Response } from 'express';
+import { DatasetFilterSelection, DATASETS } from '../universal/config/buurt';
 import { ApiResponse, apiSuccesResult } from '../universal/helpers/api';
 import { BffEndpoints } from './config';
-import { loadClusterDatasets } from './services';
+import { getPassthroughRequestHeaders } from './helpers/app';
+import { fetchCMSCONTENT, loadClusterDatasets } from './services';
 import {
-  loadPolylineFeatures,
-  loadFeatureDetail,
-  loadDatasetFeatures,
   filterDatasetFeatures,
-  isCoordWithingBoundingBox,
+  loadDatasetFeatures,
+  loadFeatureDetail,
+  loadPolylineFeatures,
 } from './services/buurt/buurt';
 import { getDatasetEndpointConfig } from './services/buurt/helpers';
 import {
@@ -16,11 +17,6 @@ import {
   loadServicesSSE,
   loadServicesTips,
 } from './services/controller';
-import { fetchCMSCONTENT } from './services';
-import { getPassthroughRequestHeaders } from './helpers/app';
-import { DATASETS, DatasetFilterSelection } from '../universal/config/buurt';
-import { LatLngTuple } from 'leaflet';
-import { filterPolylineFeaturesWithinBoundingBox } from './services/buurt/buurt';
 
 export const router = express.Router();
 
@@ -95,7 +91,8 @@ router.get(
   BffEndpoints.MAP_DATASETS,
   async (req: Request, res: Response, next: NextFunction) => {
     const datasetId = req.params.datasetId;
-    const datasetFilters = req.query.filters as DatasetFilterSelection;
+    const datasetFilters = (req.query
+      .filters as unknown) as DatasetFilterSelection;
     const datasetIds = (req.query.datasetIds as string)?.split(',') || [];
     const id = req.params.id;
     let response: ApiResponse<any> | null = null;

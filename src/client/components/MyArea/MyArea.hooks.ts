@@ -327,22 +327,21 @@ export function useFilterControlItemChange() {
 
       if (!isChecked && !activeFiltersUpdate[datasetId]) {
         activeFiltersUpdate[datasetId] = {
-          [propertyName]: { values: [propertyValue] },
+          [propertyName]: { values: { [propertyValue]: 1 } },
         };
       }
 
-      let filterValues =
-        (activeFiltersUpdate[datasetId] &&
+      const filterValues = {
+        ...((activeFiltersUpdate[datasetId] &&
           activeFiltersUpdate[datasetId][propertyName] &&
           activeFiltersUpdate[datasetId][propertyName].values) ||
-        [];
+          {}),
+      };
 
       if (isChecked) {
-        filterValues = activeFiltersUpdate[datasetId][
-          propertyName
-        ].values.filter((value) => value !== propertyValue);
+        delete filterValues[propertyValue];
       } else {
-        filterValues = [...filterValues, propertyValue];
+        filterValues[propertyValue] = 1;
       }
 
       activeFiltersUpdate[datasetId] = {
