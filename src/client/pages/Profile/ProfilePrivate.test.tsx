@@ -240,7 +240,7 @@ describe('<Profile />', () => {
           testState({
             ...responseData,
             verbintenis: null,
-          })
+          } as any)
         )}
       />
     );
