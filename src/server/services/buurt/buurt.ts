@@ -124,8 +124,6 @@ export function createDynamicFilterConfig(
     }
   }
 
-  console.log('filters!!!', filters);
-
   return filters;
 }
 

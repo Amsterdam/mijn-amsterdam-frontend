@@ -16,7 +16,10 @@ import {
   DatasetPropertyValue,
   DATASETS,
 } from '../../../universal/config';
-import { DatasetCategoryId } from '../../../universal/config/buurt';
+import {
+  DatasetCategoryId,
+  DatasetPropertyFilter,
+} from '../../../universal/config/buurt';
 import { useDesktopScreen } from '../../hooks';
 import Alert from '../Alert/Alert';
 import {
@@ -154,6 +157,77 @@ export function DatasetControlCheckbox({
   );
 }
 
+interface DatasetPropertyFilterPanelProps {
+  datasetId: DatasetId;
+  filters: DatasetPropertyFilter;
+  activeFilters: DatasetFilterSelection;
+  onFilterControlItemChange: DatasetControlPanelProps['onFilterControlItemChange'];
+}
+
+function DatasetPropertyFilterPanel({
+  datasetId,
+  filters,
+  activeFilters,
+  onFilterControlItemChange,
+}: DatasetPropertyFilterPanelProps) {
+  const [filterSelection] = useDatasetFilterSelection();
+  return (
+    <DatasetFilterControlCagegoryList>
+      {Object.entries(filters).map(([propertyId, property]) => {
+        const hasStaticValues = !!(
+          property.values && Object.keys(property.values).length
+        );
+        const propertyValues = Object.entries(
+          hasStaticValues
+            ? property.values
+            : filterSelection[datasetId] &&
+              filterSelection[datasetId][propertyId]
+            ? filterSelection[datasetId][propertyId].values
+            : {}
+        );
+        return (
+          <DatasetControlListItem key={propertyId}>
+            {property.title && (
+              <FilterPropertyName>{property.title}</FilterPropertyName>
+            )}
+            <DatasetFilterControlList>
+              {propertyValues.map(([value, featureCount]) => {
+                const { isChecked } = filterItemCheckboxState(
+                  activeFilters,
+                  datasetId,
+                  propertyId,
+                  value
+                );
+                return (
+                  <DatasetControlCheckbox
+                    key={value}
+                    isChecked={isChecked}
+                    id={value}
+                    label={
+                      <>
+                        {value}{' '}
+                        {featureCount > 1 ? (
+                          <FeatureCount>{featureCount}</FeatureCount>
+                        ) : (
+                          ''
+                        )}
+                      </>
+                    }
+                    isIndeterminate={false}
+                    onChange={() =>
+                      onFilterControlItemChange(datasetId, propertyId, value)
+                    }
+                  />
+                );
+              })}
+            </DatasetFilterControlList>
+          </DatasetControlListItem>
+        );
+      })}
+    </DatasetFilterControlCagegoryList>
+  );
+}
+
 interface DatasetControlPanelProps {
   onControlItemChange: (type: 'category' | 'dataset', ids: string[]) => void;
   onFilterControlItemChange: (
@@ -175,7 +249,6 @@ function DatasetControlPanel({
   activeDatasetIds,
   activeFilters,
 }: DatasetControlPanelProps) {
-  const [filterSelection] = useDatasetFilterSelection();
   const { isChecked, isIndeterminate } = categoryCheckboxState(
     category,
     activeDatasetIds
@@ -223,69 +296,12 @@ function DatasetControlPanel({
               {(!hasFilters || !isChecked) && datasetControl}
               {isChecked && hasFilters && (
                 <MyAreaCollapsiblePanel title={datasetControl}>
-                  <DatasetFilterControlCagegoryList>
-                    {Object.entries(dataset.filters!).map(
-                      ([propertyId, property]) => {
-                        const hasStaticValues = !!(
-                          property.values && Object.keys(property.values).length
-                        );
-                        const propertyValues = Object.entries(
-                          hasStaticValues
-                            ? property.values
-                            : filterSelection[datasetId] &&
-                              filterSelection[datasetId][propertyId]
-                            ? filterSelection[datasetId][propertyId].values
-                            : {}
-                        );
-                        return (
-                          <DatasetControlListItem key={propertyId}>
-                            {property.title && (
-                              <FilterPropertyName>
-                                {property.title}
-                              </FilterPropertyName>
-                            )}
-                            <DatasetFilterControlList>
-                              {propertyValues.map(([value, featureCount]) => {
-                                const { isChecked } = filterItemCheckboxState(
-                                  activeFilters,
-                                  datasetId,
-                                  propertyId,
-                                  value
-                                );
-                                return (
-                                  <DatasetControlCheckbox
-                                    key={value}
-                                    isChecked={isChecked}
-                                    id={value}
-                                    label={
-                                      <>
-                                        {value}{' '}
-                                        {featureCount > 1 ? (
-                                          <FeatureCount>
-                                            {featureCount}
-                                          </FeatureCount>
-                                        ) : (
-                                          ''
-                                        )}
-                                      </>
-                                    }
-                                    isIndeterminate={false}
-                                    onChange={() =>
-                                      onFilterControlItemChange(
-                                        datasetId,
-                                        propertyId,
-                                        value
-                                      )
-                                    }
-                                  />
-                                );
-                              })}
-                            </DatasetFilterControlList>
-                          </DatasetControlListItem>
-                        );
-                      }
-                    )}
-                  </DatasetFilterControlCagegoryList>
+                  <DatasetPropertyFilterPanel
+                    datasetId={datasetId}
+                    filters={dataset.filters!}
+                    activeFilters={activeFilters}
+                    onFilterControlItemChange={onFilterControlItemChange}
+                  />
                 </MyAreaCollapsiblePanel>
               )}
             </DatasetControlListItem>
