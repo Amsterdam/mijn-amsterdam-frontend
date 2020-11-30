@@ -248,16 +248,18 @@ export default function Profile() {
             panelData={brpProfileData.adresHistorisch}
           />
         )}
-      <PageContent>
-        <p className={styles.SuppressedParagraph}>
-          Gegevens van een levenloos geboren kindje ziet u niet in Mijn
-          Amsterdam. U kunt die gegevens alleen inzien via{' '}
-          <LinkdInline href="https://mijn.overheid.nl" external={true}>
-            MijnOverheid
-          </LinkdInline>
-          .
-        </p>
-      </PageContent>
+      {isMokum(BRP.content) && (
+        <PageContent>
+          <p className={styles.SuppressedParagraph}>
+            Gegevens van een levenloos geboren kindje ziet u niet in Mijn
+            Amsterdam. U kunt die gegevens alleen inzien via{' '}
+            <LinkdInline href="https://mijn.overheid.nl" external={true}>
+              MijnOverheid
+            </LinkdInline>
+            .
+          </p>
+        </PageContent>
+      )}
     </DetailPage>
   );
 }

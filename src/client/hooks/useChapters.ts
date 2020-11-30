@@ -75,7 +75,7 @@ function isChapterActive(
         FeatureToggle.garbageInformationPage &&
         !isLoading(AFVAL) &&
         !isLoading(HOME) &&
-        isMokum(BRP.content)
+        (isMokum(BRP.content) || isMokum(KVK.content))
       );
 
     case Chapters.ERFPACHT:
@@ -128,8 +128,8 @@ export function useChapters(): ChaptersState {
         chapterItems
           .filter(({ isAlwaysVisible }) => !isAlwaysVisible)
           .map(({ id }) => appState[id as keyof AppState])
-          .filter(apiState => !!apiState)
-          .some(apiState => {
+          .filter((apiState) => !!apiState)
+          .some((apiState) => {
             const apiStateTyped = apiState as ApiResponse<any>;
             return isLoading(apiStateTyped) && !isError(apiStateTyped);
           }),

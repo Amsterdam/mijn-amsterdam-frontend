@@ -175,26 +175,17 @@ const responseData = {
   ],
 };
 
-const testState = {
-  BRP: { status: 'OK', content: responseData },
-};
+const testState = (content = responseData) => ({
+  BRP: { status: 'OK', content },
+});
 
-function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
+function initializeState(testState: any) {
+  return (snapshot: MutableSnapshot) => snapshot.set(appStateAtom, testState);
 }
 
 describe('<Profile />', () => {
   const routeEntry = generatePath(AppRoutes.BRP);
   const routePath = AppRoutes.BRP;
-
-  const Component = () => (
-    <MockApp
-      routeEntry={routeEntry}
-      routePath={routePath}
-      component={Profile}
-      initializeState={initializeState}
-    />
-  );
 
   beforeAll(() => {
     (window.matchMedia as any) = jest.fn(() => {
@@ -205,11 +196,52 @@ describe('<Profile />', () => {
     });
   });
 
-  it('Renders without crashing', () => {
-    shallow(<Component />);
+  it('Matches the Full Page snapshot', () => {
+    const Component = () => (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={Profile}
+        initializeState={initializeState(testState())}
+      />
+    );
+    expect(mount(<Component />).html()).toMatchSnapshot();
   });
 
-  it('Matches the Full Page snapshot', () => {
+  it('Matches the Full Page snapshot Non-Mokum', () => {
+    const Component = () => (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={Profile}
+        initializeState={initializeState(
+          testState({
+            ...responseData,
+            persoon: {
+              ...responseData.persoon,
+              mokum: false,
+            },
+          })
+        )}
+      />
+    );
+    expect(mount(<Component />).html()).toMatchSnapshot();
+  });
+
+  it('Matches the Full Page snapshot No verbintenis', () => {
+    const Component = () => (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={Profile}
+        initializeState={initializeState(
+          testState({
+            ...responseData,
+            verbintenis: null,
+          } as any)
+        )}
+      />
+    );
     expect(mount(<Component />).html()).toMatchSnapshot();
   });
 });
