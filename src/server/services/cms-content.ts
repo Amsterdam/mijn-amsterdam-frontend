@@ -47,7 +47,7 @@ export function sanitizeCmsContent(
     allowedAttributes: ATTR_ALLOWED,
 
     // Filter out empty tags
-    exclusiveFilter: function(frame: any) {
+    exclusiveFilter: function (frame: any) {
       return !frame.text.trim();
     },
   }
@@ -119,8 +119,8 @@ function transformFooterResponse(responseData: any) {
           ? [verwijzing.extern]
           : [];
         const links = [...extern, ...intern]
-          .filter(item => !!item.link)
-          .map(item => {
+          .filter((item) => !!item.link)
+          .map((item) => {
             const { link } = item;
             return {
               to: link.url,
@@ -168,14 +168,13 @@ const fileCache = new FileCache({
 
 async function getGeneralPage(
   sessionID: SessionID,
-  _passthroughHeaders: Record<string, string>,
-  query: Record<string, string>
+  profileType: ProfileType = 'private'
 ) {
-  const apiData = fileCache.getKey('CMS_CONTENT_GENERAL_INFO');
+  const apiData = fileCache.getKey('CMS_CONTENT_GENERAL_INFO_' + profileType);
   if (apiData) {
     return Promise.resolve(apiData);
   }
-   const requestConfig = getApiConfig('CMS_CONTENT_GENERAL_INFO', {
+  const requestConfig = getApiConfig('CMS_CONTENT_GENERAL_INFO', {
     transformResponse: (responseData: any) => {
       return {
         title: responseData.applicatie.title,
@@ -191,9 +190,12 @@ async function getGeneralPage(
     url: requestConfig.urls![profileType],
   };
 
-  return requestData<CMSPageContent>(
-    requestConfigFinal,
-    sessionID
+  return requestData<CMSPageContent>(requestConfigFinal, sessionID).then(
+    (apiData) => {
+      fileCache.setKey('CMS_CONTENT_GENERAL_INFO_' + profileType, apiData);
+      fileCache.save();
+      return apiData;
+    }
   );
 }
 
@@ -211,7 +213,7 @@ async function getFooter(
     }),
     sessionID,
     passthroughRequestHeaders
-  ).then(apiData => {
+  ).then((apiData) => {
     fileCache.setKey('CMS_CONTENT_FOOTER', apiData);
     fileCache.save();
     return apiData;
@@ -220,11 +222,12 @@ async function getFooter(
 
 export async function fetchCMSCONTENT(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  passthroughRequestHeaders: Record<string, string>,
+  query?: Record<string, string>
 ) {
   const generalInfoPageRequest = getGeneralPage(
     sessionID,
-    passthroughRequestHeaders
+    query?.profileType as ProfileType
   );
 
   const footerInfoPageRequest = getFooter(sessionID, passthroughRequestHeaders);
