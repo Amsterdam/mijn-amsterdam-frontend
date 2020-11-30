@@ -80,12 +80,23 @@ const ERFPACHT = callService(fetchERFPACHT);
 
 // Special services that aggeragates CASES and NOTIFICATIONS from various services
 const NOTIFICATIONS = async (sessionID: SessionID, req: Request) =>
-  (await fetchGenerated(sessionID, getPassthroughRequestHeaders(req)))
-    .NOTIFICATIONS;
+  (
+    await fetchGenerated(
+      sessionID,
+      getPassthroughRequestHeaders(req),
+      getProfileType(req)
+    )
+  ).NOTIFICATIONS;
 
 // Recent cases
 const CASES = async (sessionID: SessionID, req: Request) =>
-  (await fetchGenerated(sessionID, getPassthroughRequestHeaders(req))).CASES;
+  (
+    await fetchGenerated(
+      sessionID,
+      getPassthroughRequestHeaders(req),
+      getProfileType(req)
+    )
+  ).CASES;
 
 // Store all services for type derivation
 const services = {
@@ -234,6 +245,13 @@ function loadServices(
     | PrivateCommercialServices,
   filterIds: SessionID[] = []
 ) {
+  console.info(
+    req.query,
+    'Fetching services in map ',
+    Object.keys(serviceMap),
+    'filtering ids',
+    filterIds
+  );
   return Object.entries(serviceMap)
     .filter(([serviceID]) => !filterIds.length || filterIds.includes(serviceID))
     .map(([serviceID, fetchService]) => {
