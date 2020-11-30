@@ -168,30 +168,33 @@ const fileCache = new FileCache({
 
 async function getGeneralPage(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  _passthroughHeaders: Record<string, string>,
+  query: Record<string, string>
 ) {
   const apiData = fileCache.getKey('CMS_CONTENT_GENERAL_INFO');
   if (apiData) {
     return Promise.resolve(apiData);
   }
-  return requestData<CMSPageContent>(
-    getApiConfig('CMS_CONTENT_GENERAL_INFO', {
-      transformResponse: (responseData: any) => {
-        return {
-          title: responseData.applicatie.title,
-          content:
-            sanitizeCmsContent(responseData.applicatie.inhoud.inleiding) +
-            sanitizeCmsContent(responseData.applicatie.inhoud.tekst),
-        };
-      },
-    }),
-    sessionID,
-    passthroughRequestHeaders
-  ).then(apiData => {
-    fileCache.setKey('CMS_CONTENT_GENERAL_INFO', apiData);
-    fileCache.save();
-    return apiData;
+   const requestConfig = getApiConfig('CMS_CONTENT_GENERAL_INFO', {
+    transformResponse: (responseData: any) => {
+      return {
+        title: responseData.applicatie.title,
+        content:
+          sanitizeCmsContent(responseData.applicatie.inhoud.inleiding) +
+          sanitizeCmsContent(responseData.applicatie.inhoud.tekst),
+      };
+    },
   });
+
+  const requestConfigFinal = {
+    ...requestConfig,
+    url: requestConfig.urls![profileType],
+  };
+
+  return requestData<CMSPageContent>(
+    requestConfigFinal,
+    sessionID
+  );
 }
 
 async function getFooter(

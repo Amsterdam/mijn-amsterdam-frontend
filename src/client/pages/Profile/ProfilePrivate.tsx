@@ -54,7 +54,7 @@ export default function Profile() {
       method: 'post',
       transformResponse: [
         ...requestApiData.defaults.transformResponse,
-        responseContent => apiSuccesResult(responseContent),
+        (responseContent) => apiSuccesResult(responseContent),
       ],
     },
     apiPristineResult({ residentCount: -1 })

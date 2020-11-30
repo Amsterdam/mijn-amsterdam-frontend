@@ -38,8 +38,8 @@ export default () => {
       return [];
     }
     const items: Vergunning[] = VERGUNNINGEN.content
-      .filter(x => x)
-      .map(item => {
+      .filter((x) => x)
+      .map((item) => {
         return {
           ...item,
           title:
@@ -54,13 +54,13 @@ export default () => {
 
   const vergunningenPrevious = useMemo(() => {
     return vergunningen.filter(
-      vergunning => vergunning.status === 'Afgehandeld'
+      (vergunning) => vergunning.status === 'Afgehandeld'
     );
   }, [vergunningen]);
 
   const vergunningenActual = useMemo(() => {
     return vergunningen.filter(
-      vergunning => vergunning.status !== 'Afgehandeld'
+      (vergunning) => vergunning.status !== 'Afgehandeld'
     );
   }, [vergunningen]);
 
@@ -116,7 +116,7 @@ export default () => {
         noItemsMessage="U hebt geen eerdere aanvragen."
         hasItems={!!vergunningenPrevious.length}
         startCollapsed={true}
-        className={styles.SectionCollapsibleCurrent}
+        className={styles.SectionCollapsiblePrevious}
         isLoading={isLoading(VERGUNNINGEN)}
         track={{
           category: 'Vergunningen overzicht / Eerdere aanvragen',

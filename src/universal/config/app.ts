@@ -22,12 +22,10 @@ export const FeatureToggle = {
   cmsFooterActive: true,
   KrefiaDirectLinkActive: true,
   tipsFlipActive: true,
-  myArea2Active: !IS_PRODUCTION,
   profileToggleActive: !IS_PRODUCTION,
-  kvkActive: !IS_PRODUCTION,
+  kvkActive: true,
   stadpasActive: true,
   residentCountActive: true,
-  myAreaDataSportEnBosActive: !IS_PRODUCTION,
 };
 
 export const DAYS_KEEP_RECENT = 28;

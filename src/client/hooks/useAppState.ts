@@ -15,6 +15,7 @@ const INCREMENTAL_SERVICE_IDS_FOR_PROFILE_TOGGLE = [
   'AFVAL',
   'AFVALPUNTEN',
   'BUURT',
+  'CMS_CONTENT',
 ];
 
 const fallbackServiceRequestOptions = {

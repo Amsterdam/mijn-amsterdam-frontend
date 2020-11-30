@@ -16,7 +16,7 @@
 
 .GarbageInformation {
   @include select(PageContent) {
-    padding-bottom: 5rem;
+    padding-bottom: $page-content-bottom-space;
   }
 }
 

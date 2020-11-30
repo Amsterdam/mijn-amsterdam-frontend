@@ -17,10 +17,10 @@
 }
 
 .Intro {
-  margin-bottom: 10rem;
+  padding-bottom: $page-content-bottom-space;
 
    @include mq-phone() {
-    margin-bottom: 2rem;
+    padding-bottom: 2rem;
   }
 }
 

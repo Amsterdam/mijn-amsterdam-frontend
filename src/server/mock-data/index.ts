@@ -1,6 +1,9 @@
 import { MyTip } from '../../universal/types';
-import { ApiUrls, DEV_USER_TYPE_HEADER } from '../config';
+import { ApiUrls, DEV_USER_TYPE_HEADER, getApiConfig } from '../config';
+
 import AFVAL from './json/afvalophaalgebieden.json';
+import AMSTERDAM_CONTENT_FOOTER from './json/amsterdam-nl-content-footer.json';
+import AMSTERDAM_CONTENT_GENERAL_INFO from './json/amsterdam-nl-content-uitleg.json';
 import BAG from './json/bag.json';
 import BAG2 from './json/bag2.json';
 import BELASTINGEN from './json/belasting.json';
@@ -56,7 +59,7 @@ export const mockDataConfig: MockDataConfig = {
   },
   [ApiUrls.BRP]: {
     status: (config: any) => (isCommercialUser(config) ? 500 : 200),
-    // delay: 7500,
+    // delay: 2500,
     responseData: async (config: any) => {
       if (isCommercialUser(config)) {
         return 'no-content';
@@ -129,6 +132,51 @@ export const mockDataConfig: MockDataConfig = {
       //   return await loadMockApiResponseJson(MILIEUZONE);
       // }
       return await loadMockApiResponseJson(MILIEUZONE);
+    },
+  },
+  [getApiConfig('CMS_CONTENT_GENERAL_INFO').urls?.private!]: {
+    status: (config: any) => 200,
+    responseData: async (config: any) => {
+      return await loadMockApiResponseJson({
+        ...AMSTERDAM_CONTENT_GENERAL_INFO,
+        applicatie: {
+          ...AMSTERDAM_CONTENT_GENERAL_INFO.applicatie,
+          title: 'Dit ziet u in Mijn Amsterdam',
+        },
+      });
+    },
+  },
+  [getApiConfig('CMS_CONTENT_GENERAL_INFO').urls!['private-commercial']!]: {
+    status: (config: any) => 200,
+    responseData: async (config: any) => {
+      return await loadMockApiResponseJson({
+        ...AMSTERDAM_CONTENT_GENERAL_INFO,
+        applicatie: {
+          ...AMSTERDAM_CONTENT_GENERAL_INFO.applicatie,
+          title: '[EENMANSZAAK] Dit ziet u in Mijn Amsterdam',
+        },
+      });
+    },
+  },
+  [getApiConfig('CMS_CONTENT_GENERAL_INFO').urls?.commercial!]: {
+    status: (config: any) => 200,
+    responseData: async (config: any) => {
+      return await loadMockApiResponseJson({
+        ...AMSTERDAM_CONTENT_GENERAL_INFO,
+        applicatie: {
+          ...AMSTERDAM_CONTENT_GENERAL_INFO.applicatie,
+          title: '[ZAKELIJK] Dit ziet u in Mijn Amsterdam',
+        },
+      });
+    },
+  },
+  [ApiUrls.CMS_CONTENT_FOOTER]: {
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    responseData: async (config: any) => {
+      // if (isCommercialUser(config)) {
+      //   return 'no-content';
+      // }
+      return await loadMockApiResponseJson(AMSTERDAM_CONTENT_FOOTER);
     },
   },
   [ApiUrls.VERGUNNINGEN]: {

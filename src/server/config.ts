@@ -33,6 +33,7 @@ export interface DataRequestConfig extends AxiosRequestConfig {
   cacheTimeout?: number;
   cancelTimeout?: number;
   postponeFetch?: boolean;
+  urls?: Record<string, string>;
 }
 
 const ONE_SECOND_MS = 1000;
@@ -97,8 +98,15 @@ export const ApiConfig: ApiDataRequestConfig = {
     postponeFetch: !FeatureToggle.vergunningenActive,
   },
   CMS_CONTENT_GENERAL_INFO: {
-    url: `https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data`,
     cacheTimeout: 4 * ONE_HOUR_MS,
+    urls: {
+      private:
+        'https://www.amsterdam.nl/mijn-content/artikelen/ziet-amsterdam/?AppIdt=app-data',
+      'private-commercial':
+        'https://www.amsterdam.nl/mijn-content/artikelen/overzicht-producten-eenmanszaak/?AppIdt=app-data',
+      commercial:
+        'https://www.amsterdam.nl/mijn-content/artikelen/overzicht-producten-ondernemers/?AppIdt=app-data',
+    },
   },
   CMS_CONTENT_FOOTER: {
     url: `https://www.amsterdam.nl/algemene_onderdelen/overige/footer/?AppIdt=app-data`,
