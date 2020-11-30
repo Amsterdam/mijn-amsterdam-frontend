@@ -36,8 +36,8 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
   geslachtsnaam: 'Achternaam',
   omschrijvingGeslachtsaanduiding: 'Geslacht',
   bsn: 'BSN',
-  geboortedatum: ['Geboortedatum', value => defaultDateFormat(value)],
-  overlijdensdatum: ['Datum overlijden', value => defaultDateFormat(value)],
+  geboortedatum: ['Geboortedatum', (value) => defaultDateFormat(value)],
+  overlijdensdatum: ['Datum overlijden', (value) => defaultDateFormat(value)],
   geboorteplaatsnaam: [
     'Geboorteplaats',
     (value, _item, BRPData) =>
@@ -102,11 +102,11 @@ const adres: ProfileLabels<Partial<Adres>> = {
   ],
   begindatumVerblijf: [
     'Vanaf',
-    value => (value ? defaultDateFormat(value) : 'Onbekend'),
+    (value) => (value ? defaultDateFormat(value) : 'Onbekend'),
   ],
   einddatumVerblijf: [
     'Tot',
-    value => (value ? defaultDateFormat(value) : null),
+    (value) => (value ? defaultDateFormat(value) : null),
   ],
   aantalBewoners: [
     'Aantal bewoners',
@@ -136,17 +136,18 @@ const verbintenis: ProfileLabels<Partial<Verbintenis> & Partial<Persoon>> = {
     (value, item) =>
       !item.datumOntbinding ? transformVerbintenisStatus(value) : value,
   ],
-  datumSluiting: ['Vanaf', value => !!value && defaultDateFormat(value)],
+  datumSluiting: ['Vanaf', (value) => !!value && defaultDateFormat(value)],
   datumOntbinding: [
     'Datum ontbinding',
-    value => !!value && defaultDateFormat(value),
+    (value) => !!value && defaultDateFormat(value),
   ],
   plaatsnaamSluitingOmschrijving: 'Plaats',
   landnaamSluiting: 'Land',
 };
 
-const verbintenisHistorisch: ProfileLabels<Partial<VerbintenisHistorisch> &
-  Partial<Persoon>> = {
+const verbintenisHistorisch: ProfileLabels<
+  Partial<VerbintenisHistorisch> & Partial<Persoon>
+> = {
   ...verbintenis,
   redenOntbindingOmschrijving: 'Reden ontbinding',
 };
@@ -224,7 +225,7 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
       brpData.verbintenisHistorisch.length
     ) {
       const verbintenisHistorisch = brpData.verbintenisHistorisch.map(
-        verbintenis => {
+        (verbintenis) => {
           return {
             ...format(
               brpInfoLabels.verbintenisHistorisch,
@@ -243,13 +244,13 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
     }
 
     if (Array.isArray(brpData.kinderen) && brpData.kinderen.length) {
-      profileData.kinderen = brpData.kinderen.map(kind =>
+      profileData.kinderen = brpData.kinderen.map((kind) =>
         format(brpInfoLabels.persoonSecundair, kind, brpData)
       );
     }
 
     if (Array.isArray(brpData.ouders) && brpData.ouders.length) {
-      profileData.ouders = brpData.ouders.map(ouder =>
+      profileData.ouders = brpData.ouders.map((ouder) =>
         format(brpInfoLabels.persoonSecundair, ouder, brpData)
       );
     }
@@ -258,7 +259,7 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
       Array.isArray(brpData.adresHistorisch) &&
       brpData.adresHistorisch.length
     ) {
-      profileData.adresHistorisch = brpData.adresHistorisch.map(adres =>
+      profileData.adresHistorisch = brpData.adresHistorisch.map((adres) =>
         format(brpInfoLabels.adres, adres, brpData)
       );
     }

@@ -78,7 +78,7 @@ export function getKvkAddress(kvkData: KVKData) {
 
   if (vestigingen.length) {
     const vestiging = kvkData?.vestigingen.find(
-      vestiging =>
+      (vestiging) =>
         !!vestiging.bezoekadres &&
         (vestiging.bezoekadres.mokum === true ||
           vestiging.bezoekadres.woonplaatsNaam === 'Amsterdam')
@@ -87,7 +87,7 @@ export function getKvkAddress(kvkData: KVKData) {
 
     if (!address) {
       const vestiging = kvkData?.vestigingen.find(
-        vestiging =>
+        (vestiging) =>
           !!vestiging.postadres &&
           (vestiging.postadres.mokum === true ||
             vestiging.postadres.woonplaatsNaam === 'Amsterdam')
@@ -114,14 +114,14 @@ export function transformKVKData(responseData: KVKSourceData): KVKData | null {
   }
   if (responseData.content.vestigingen) {
     responseData.content.vestigingen = responseData.content.vestigingen.map(
-      vestiging => {
+      (vestiging) => {
         const isHoofdvestiging =
           vestiging.typeringVestiging === 'Hoofdvestiging' &&
           !vestiging.datumEinde;
         return Object.assign(vestiging, {
           isHoofdvestiging,
           websites:
-            vestiging.websites?.map(website => {
+            vestiging.websites?.map((website) => {
               return !website.startsWith('http://') &&
                 !website.startsWith('https://')
                 ? `https://${website}`
