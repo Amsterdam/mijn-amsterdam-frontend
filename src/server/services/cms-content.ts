@@ -178,8 +178,6 @@ export async function fetchCMSCONTENT(
     url: requestConfig.urls![profileType],
   };
 
-  console.log('requestConfigFinal', profileType, requestConfigFinal);
-
   const generalInfoPageRequest = requestData<CMSPageContent>(
     requestConfigFinal,
     sessionID
