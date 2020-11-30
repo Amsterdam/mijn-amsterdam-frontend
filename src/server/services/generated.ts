@@ -46,8 +46,31 @@ export function getGeneratedItemsFromApiResults(
 
 export async function fetchGenerated(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  passthroughRequestHeaders: Record<string, string>,
+  profileType: ProfileType
 ) {
+  if (profileType === 'commercial') {
+    const [
+      milieuzoneGeneratedResult,
+      vergunningenGeneratedResult,
+      erfpachtGeneratedResult,
+    ] = await Promise.allSettled([
+      fetchMILIEUZONEGenerated(sessionID, passthroughRequestHeaders),
+      fetchVergunningenGenerated(sessionID, passthroughRequestHeaders),
+      fetchERFPACHTGenerated(sessionID, passthroughRequestHeaders),
+    ]);
+
+    const milieuzoneGenerated = getSettledResult(milieuzoneGeneratedResult);
+    const vergunningenGenerated = getSettledResult(vergunningenGeneratedResult);
+    const erfpachtGenerated = getSettledResult(erfpachtGeneratedResult);
+
+    return getGeneratedItemsFromApiResults([
+      milieuzoneGenerated,
+      vergunningenGenerated,
+      erfpachtGenerated,
+    ]);
+  }
+
   const [
     brpGeneratedResult,
     focusAanvragenGeneratedResult,
