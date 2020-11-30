@@ -1,5 +1,5 @@
 import { MyTip } from '../../universal/types';
-import { ApiUrls, DEV_USER_TYPE_HEADER } from '../config';
+import { ApiUrls, DEV_USER_TYPE_HEADER, getApiConfig } from '../config';
 
 import AFVAL from './json/afvalophaalgebieden.json';
 import AMSTERDAM_CONTENT_FOOTER from './json/amsterdam-nl-content-footer.json';
@@ -19,7 +19,7 @@ import VERGUNNINGEN from './json/vergunningen.json';
 import WMO from './json/wmo.json';
 
 export function resolveWithDelay(delayMS: number = 0, data: any) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve(data);
     }, delayMS);
@@ -134,13 +134,40 @@ export const mockDataConfig: MockDataConfig = {
       return await loadMockApiResponseJson(MILIEUZONE);
     },
   },
-  [ApiUrls.CMS_CONTENT_GENERAL_INFO]: {
-    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+  [getApiConfig('CMS_CONTENT_GENERAL_INFO').urls?.private!]: {
+    status: (config: any) => 200,
     responseData: async (config: any) => {
-      // if (isCommercialUser(config)) {
-      //   return 'no-content';
-      // }
-      return await loadMockApiResponseJson(AMSTERDAM_CONTENT_GENERAL_INFO);
+      return await loadMockApiResponseJson({
+        ...AMSTERDAM_CONTENT_GENERAL_INFO,
+        applicatie: {
+          ...AMSTERDAM_CONTENT_GENERAL_INFO.applicatie,
+          title: 'Dit ziet u in Mijn Amsterdam',
+        },
+      });
+    },
+  },
+  [getApiConfig('CMS_CONTENT_GENERAL_INFO').urls!['private-commercial']!]: {
+    status: (config: any) => 200,
+    responseData: async (config: any) => {
+      return await loadMockApiResponseJson({
+        ...AMSTERDAM_CONTENT_GENERAL_INFO,
+        applicatie: {
+          ...AMSTERDAM_CONTENT_GENERAL_INFO.applicatie,
+          title: '[EENMANSZAAK] Dit ziet u in Mijn Amsterdam',
+        },
+      });
+    },
+  },
+  [getApiConfig('CMS_CONTENT_GENERAL_INFO').urls?.commercial!]: {
+    status: (config: any) => 200,
+    responseData: async (config: any) => {
+      return await loadMockApiResponseJson({
+        ...AMSTERDAM_CONTENT_GENERAL_INFO,
+        applicatie: {
+          ...AMSTERDAM_CONTENT_GENERAL_INFO.applicatie,
+          title: '[ZAKELIJK] Dit ziet u in Mijn Amsterdam',
+        },
+      });
     },
   },
   [ApiUrls.CMS_CONTENT_FOOTER]: {
@@ -182,7 +209,7 @@ export const mockDataConfig: MockDataConfig = {
       const sourceTips = requestData?.data
         ? Object.values(requestData.data)
             .filter(
-              responseContent =>
+              (responseContent) =>
                 typeof responseContent === 'object' &&
                 responseContent !== null &&
                 'tips' in responseContent
@@ -192,12 +219,14 @@ export const mockDataConfig: MockDataConfig = {
 
       const items = [
         ...(tips as MyTip[]),
-        ...sourceTips.map(tip => Object.assign(tip, { isPersonalized: true })),
+        ...sourceTips.map((tip) =>
+          Object.assign(tip, { isPersonalized: true })
+        ),
       ]
         .filter((tip: MyTip) =>
           requestData?.optin ? tip.isPersonalized : !tip.isPersonalized
         )
-        .map(tip => {
+        .map((tip) => {
           if (config.params.audience !== 'persoonlijk') {
             return Object.assign(tip, {
               title: `[${config.params.audience}] ${tip.title}`,

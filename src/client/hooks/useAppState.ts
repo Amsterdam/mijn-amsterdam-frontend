@@ -15,6 +15,7 @@ const INCREMENTAL_SERVICE_IDS_FOR_PROFILE_TOGGLE = [
   'AFVAL',
   'AFVALPUNTEN',
   'BUURT',
+  'CMS_CONTENT',
 ];
 
 const fallbackServiceRequestOptions = {
@@ -51,7 +52,7 @@ export function useAppStateFallbackService({
           message,
         },
       });
-      setAppState(appState => createAllErrorState(appState, message));
+      setAppState((appState) => createAllErrorState(appState, message));
     },
     [setAppState]
   );
@@ -90,7 +91,7 @@ export function useAppStateFallbackService({
       return;
     }
     if (api.data !== null && !api.isLoading && !api.isError) {
-      setAppState(appState =>
+      setAppState((appState) =>
         Object.assign({}, appState, transformSourceData(api.data))
       );
     } else if (api.isError) {
@@ -141,7 +142,7 @@ export function useAppState() {
   const onEvent = useCallback((messageData: any) => {
     if (messageData && messageData !== SSE_ERROR_MESSAGE) {
       const transformedMessageData = transformSourceData(messageData);
-      setAppState(appState => {
+      setAppState((appState) => {
         const appStateUpdated = {
           ...appState,
           ...transformedMessageData,

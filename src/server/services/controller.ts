@@ -36,7 +36,7 @@ function getProfileType(req: Request) {
 
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
   return (sessionID: SessionID, req: Request) =>
-    fetchService(sessionID, getPassthroughRequestHeaders(req));
+    fetchService(sessionID, getPassthroughRequestHeaders(req), req.query);
 }
 
 function getServiceMap(profileType: ProfileType) {

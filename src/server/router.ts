@@ -57,7 +57,8 @@ router.get(BffEndpoints.CMS_CONTENT, async (req, res, next) => {
   try {
     const response = await fetchCMSCONTENT(
       sessionID,
-      getPassthroughRequestHeaders(req)
+      getPassthroughRequestHeaders(req),
+      req.query as Record<string, string>
     );
     res.json(response);
   } catch (error) {

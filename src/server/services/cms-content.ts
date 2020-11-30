@@ -42,7 +42,7 @@ export function sanitizeCmsContent(
     allowedAttributes: ATTR_ALLOWED,
 
     // Filter out empty tags
-    exclusiveFilter: function(frame: any) {
+    exclusiveFilter: function (frame: any) {
       return !frame.text.trim();
     },
   }
@@ -114,8 +114,8 @@ function transformFooterResponse(responseData: any) {
           ? [verwijzing.extern]
           : [];
         const links = [...extern, ...intern]
-          .filter(item => !!item.link)
-          .map(item => {
+          .filter((item) => !!item.link)
+          .map((item) => {
             const { link } = item;
             return {
               to: link.url,
@@ -158,29 +158,38 @@ function transformFooterResponse(responseData: any) {
 
 export async function fetchCMSCONTENT(
   sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>
+  _passthroughHeaders: Record<string, string>,
+  query: Record<string, string>
 ) {
+  const profileType = (query.profileType || 'private') as ProfileType;
+  const requestConfig = getApiConfig('CMS_CONTENT_GENERAL_INFO', {
+    transformResponse: (responseData: any) => {
+      return {
+        title: responseData.applicatie.title,
+        content:
+          sanitizeCmsContent(responseData.applicatie.inhoud.inleiding) +
+          sanitizeCmsContent(responseData.applicatie.inhoud.tekst),
+      };
+    },
+  });
+
+  const requestConfigFinal = {
+    ...requestConfig,
+    url: requestConfig.urls![profileType],
+  };
+
+  console.log('requestConfigFinal', profileType, requestConfigFinal);
+
   const generalInfoPageRequest = requestData<CMSPageContent>(
-    getApiConfig('CMS_CONTENT_GENERAL_INFO', {
-      transformResponse: (responseData: any) => {
-        return {
-          title: responseData.applicatie.title,
-          content:
-            sanitizeCmsContent(responseData.applicatie.inhoud.inleiding) +
-            sanitizeCmsContent(responseData.applicatie.inhoud.tekst),
-        };
-      },
-    }),
-    sessionID,
-    passthroughRequestHeaders
+    requestConfigFinal,
+    sessionID
   );
 
   const footerInfoPageRequest = requestData<CMSFooterContent>(
     getApiConfig('CMS_CONTENT_FOOTER', {
       transformResponse: transformFooterResponse,
     }),
-    sessionID,
-    passthroughRequestHeaders
+    sessionID
   );
 
   const requests: Promise<
