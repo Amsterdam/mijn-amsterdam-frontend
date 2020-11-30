@@ -266,7 +266,7 @@ function datasetApiResult(results: ApiResponse<DatasetResponse | null>[]) {
     .filter(
       (result): result is ApiErrorResponse<null> => result.status === 'ERROR'
     )
-    .map((result) => ({ id: result.id, error: result.message }));
+    .map((result) => ({ id: result.id, message: result.message }));
 
   const responses = results.filter(
     (result): result is ApiSuccessResponse<DatasetResponse> =>
