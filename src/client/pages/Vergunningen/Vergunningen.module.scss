@@ -2,8 +2,13 @@
 
 .Vergunningen {
   @include select(PageContent) {
-    padding-bottom: 5rem;
+    padding-bottom: $page-content-bottom-space;
   }
+}
+
+.SectionCollapsibleCurrent {
+  border-top: 0.1rem solid $color-neutral-grey2;
+  padding-top: 1.7rem;
 }
 
 .Table {
