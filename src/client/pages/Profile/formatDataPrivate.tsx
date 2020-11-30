@@ -1,4 +1,5 @@
 import React from 'react';
+import { FeatureToggle } from '../../../universal/config';
 import {
   defaultDateFormat,
   entries,
@@ -12,7 +13,6 @@ import {
   VerbintenisHistorisch,
 } from '../../../universal/types';
 import { LinkdInline, LoadingContent } from '../../components/index';
-import { FeatureToggle } from '../../../universal/config';
 
 /**
  * The functionality in this file transforms the data from the api into a structure which is fit for loading
@@ -58,6 +58,12 @@ const persoon: ProfileLabels<Partial<Persoon>> = {
       ) : (
         <>&mdash;</>
       ),
+  ],
+  omschrijvingBurgerlijkeStaat: [
+    'Burgerlijke staat',
+    (_value, _item, BRPData) => {
+      return !BRPData?.verbintenis ? 'Ongehuwd' : undefined;
+    },
   ],
   indicatieGeheim: [
     'Geheimhouding',
@@ -208,6 +214,7 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
     adres: format(brpInfoLabels.adres, brpData.adres, brpData),
   };
 
+  // Exclude below profile data for non-mokum residents.
   if (!!brpData?.persoon.mokum) {
     if (brpData.verbintenis && !!brpData.verbintenis.soortVerbintenis) {
       profileData.verbintenis = {
