@@ -21,7 +21,7 @@ function createClusterMarker(
 ) {
   let icon;
   if (!feature?.properties.cluster) {
-    const html = getIconHtml(feature.properties.datasetId);
+    const html = getIconHtml(feature);
     icon = L.divIcon({
       html: `<span class="${styles.pin}"></span>${html}`,
       className: styles.MarkerIcon,

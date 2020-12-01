@@ -21,6 +21,7 @@ import {
   MapIconSport,
 } from '../../assets/icons';
 import { DEFAULT_POLYLINE_OPTIONS } from './MyAreaPolylineLayer';
+import { MaPointFeature } from '../../../server/services/buurt/datasets';
 
 const DatasetIcon = styled.div`
   margin-right: ${themeSpacing(2)};
@@ -115,18 +116,29 @@ const datasetIcons: Record<DatasetId, ReactElement<any>> = {
 };
 
 const datasetIconHtml = Object.fromEntries(
-  Object.entries(datasetIcons).map(([datasetId, icon]) => {
-    return [datasetId, renderToStaticMarkup(icon)];
+  Object.entries(datasetIcons).map(([id, icon]) => {
+    return [id, renderToStaticMarkup(icon)];
   })
 );
 
-export function getIconHtml(datasetId: DatasetId) {
+export function getIconHtml(feature: MaPointFeature) {
+  const datasetId = feature.properties.datasetId;
   const datasetCategoryId = getDatasetCategoryId(datasetId);
-  return (
+  const icon =
     datasetIconHtml[datasetId] ||
     (datasetCategoryId && datasetIconHtml[datasetCategoryId]) ||
-    datasetIconHtml.default
-  );
+    datasetIconHtml.default;
+
+  switch (datasetId) {
+    case 'afvalcontainers':
+      return (
+        datasetIconHtml[
+          feature.properties.fractie_omschrijving.toLowerCase()
+        ] || icon
+      );
+  }
+
+  return icon;
 }
 
 export function titleTransform(id: string) {
