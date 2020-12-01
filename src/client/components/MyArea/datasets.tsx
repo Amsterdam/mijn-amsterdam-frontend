@@ -4,11 +4,8 @@ import { PolylineOptions } from 'leaflet';
 import React, { ReactElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import styled from 'styled-components';
-import {
-  DatasetId,
-  getDatasetCategoryId,
-} from '../../../universal/config/buurt';
-import { capitalizeFirstLetter } from '../../../universal/helpers';
+import { MaPointFeature } from '../../../server/services/buurt/datasets';
+import { getDatasetCategoryId } from '../../../universal/config/buurt';
 import {
   MapIconAfvalGft,
   MapIconAfvalGlas,
@@ -21,7 +18,6 @@ import {
   MapIconSport,
 } from '../../assets/icons';
 import { DEFAULT_POLYLINE_OPTIONS } from './MyAreaPolylineLayer';
-import { MaPointFeature } from '../../../server/services/buurt/datasets';
 
 const DatasetIcon = styled.div`
   margin-right: ${themeSpacing(2)};
