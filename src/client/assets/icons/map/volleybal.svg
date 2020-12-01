@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Volleybal icoon</title>
+    <g fill-rule="nonzero">
+        <path d="M3.2,1.608 C1.264,3.072 0,5.384 0,8 C0,9.168 0.256,10.28 0.712,11.288 L3.2,9.848 L3.2,1.608 Z" id="Path"></path>
+        <path d="M7.2,7.536 L7.2,0.04 C6.352,0.128 5.544,0.344 4.8,0.672 L4.8,8.928 L7.2,7.536 Z" id="Path"></path>
+        <path d="M8,8.92 L1.512,12.664 C2,13.336 2.584,13.936 3.256,14.424 L10.4,10.312 L8,8.92 Z" id="Path"></path>
+        <path d="M8.8,4.768 L8.8,7.536 L15.288,11.28 C15.624,10.536 15.848,9.736 15.944,8.896 L8.8,4.768 Z" id="Path"></path>
+        <path d="M4.856,15.36 C5.824,15.768 6.88,16 8,16 C10.672,16 13.032,14.68 14.488,12.672 L12,11.232 L4.856,15.36 Z" id="Path"></path>
+        <path d="M15.936,7.048 C15.496,3.344 12.528,0.408 8.8,0.04 L8.8,2.92 L15.936,7.048 Z" id="Path"></path>
+    </g>
+</svg>

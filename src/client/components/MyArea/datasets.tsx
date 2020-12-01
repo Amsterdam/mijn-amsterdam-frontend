@@ -13,9 +13,14 @@ import {
   MapIconAfvalPlastic,
   MapIconAfvalRest,
   MapIconAfvalTextiel,
+  MapIconBasketbal,
   MapIconBekendmaking,
   MapIconEvenement,
+  MapIconFitness,
   MapIconSport,
+  MapIconTennis,
+  MapIconVoetbal,
+  MapIconVolleybal,
 } from '../../assets/icons';
 import { DEFAULT_POLYLINE_OPTIONS } from './MyAreaPolylineLayer';
 
@@ -81,6 +86,31 @@ const datasetIcons: Record<string, ReactElement<any>> = {
       <MapIconSport fill={themeColors.tint.level1} />
     </DatasetIcon>
   ),
+  voetbal: (
+    <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+      <MapIconVoetbal fill={themeColors.tint.level1} />
+    </DatasetIcon>
+  ),
+  volleybal: (
+    <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+      <MapIconVolleybal fill={themeColors.tint.level1} />
+    </DatasetIcon>
+  ),
+  basketbal: (
+    <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+      <MapIconBasketbal fill={themeColors.tint.level1} />
+    </DatasetIcon>
+  ),
+  fitness: (
+    <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+      <MapIconFitness fill={themeColors.tint.level1} />
+    </DatasetIcon>
+  ),
+  tennis: (
+    <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+      <MapIconTennis fill={themeColors.tint.level1} />
+    </DatasetIcon>
+  ),
   default: (
     <DatasetIconCircle style={{ backgroundColor: themeColors.support.valid }} />
   ),
@@ -106,6 +136,11 @@ export function getIconHtml(feature: MaPointFeature) {
         datasetIconHtml[
           feature.properties.fractie_omschrijving.toLowerCase()
         ] || icon
+      );
+    case 'openbaresportplek':
+      return (
+        datasetIconHtml[feature.properties.sportvoorziening.toLowerCase()] ||
+        icon
       );
   }
 

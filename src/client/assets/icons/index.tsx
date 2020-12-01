@@ -45,3 +45,9 @@ export { ReactComponent as MapIconBekendmaking } from './map/bekendmaking.svg';
 export { ReactComponent as MapIconEvenement } from './map/evenement.svg';
 export { ReactComponent as MapIconSport } from './map/sport.svg';
 export { ReactComponent as MapIconHomeCommercial } from './map/homeCommercial__primary-red.svg';
+
+export { ReactComponent as MapIconTennis } from './map/tennis.svg';
+export { ReactComponent as MapIconVoetbal } from './map/voetbal.svg';
+export { ReactComponent as MapIconFitness } from './map/fitness.svg';
+export { ReactComponent as MapIconVolleybal } from './map/volleybal.svg';
+export { ReactComponent as MapIconBasketbal } from './map/basketbal.svg';
