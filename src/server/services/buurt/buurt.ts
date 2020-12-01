@@ -41,19 +41,30 @@ const fileCache = (id: string, cacheTimeMinutes: number) => {
 
 export function isCoordWithingBoundingBox(
   bbox: [number, number, number, number],
-  coords: LatLngTuple[]
+  coord: LatLngTuple
 ) {
   const [x1, y1, x2, y2] = bbox;
-  let i = 0;
-  let len = coords.length;
-  for (i; i < len; i += 1) {
-    const y = coords[i][0];
-    const x = coords[i][1];
-    if (x1 <= x && x <= x2 && y1 <= y && y <= y2) {
-      return true;
+  const y = coord[0];
+  const x = coord[1];
+
+  if (x1 <= x && x <= x2 && y1 <= y && y <= y2) {
+    return true;
+  }
+
+  return false;
+}
+
+// Flatten GeoJSON for easy processing
+function flatten(input: any[]) {
+  const flattened: LatLngTuple[] = [];
+  for (const value of input) {
+    if (Array.isArray(value) && typeof value[0] === 'number') {
+      flattened.push(value as LatLngTuple);
+    } else if (Array.isArray(value)) {
+      flattened.push(...flatten(value));
     }
   }
-  return false;
+  return flattened;
 }
 
 export function filterPolylineFeaturesWithinBoundingBox(
@@ -61,13 +72,15 @@ export function filterPolylineFeaturesWithinBoundingBox(
   bbox: [number, number, number, number]
 ) {
   const featuresFiltered = [];
-  const hasCoord = (coords: any) => isCoordWithingBoundingBox(bbox, coords);
+  const hasCoord = (coord: LatLngTuple) =>
+    isCoordWithingBoundingBox(bbox, coord);
 
   let i = 0;
   let len = features.length;
 
   for (i; i < len; i += 1) {
-    if (features[i].geometry.coordinates.flat().some(hasCoord)) {
+    const coords = flatten(features[i].geometry.coordinates);
+    if (coords.some(hasCoord)) {
       featuresFiltered.push(features[i]);
     }
   }
@@ -324,54 +337,8 @@ export async function loadPolylineFeatures(
   type ApiDatasetResponse = ApiResponse<DatasetResponse | null>;
   const requests: Array<Promise<ApiDatasetResponse>> = [];
 
-  // TODO: Determine if we should use the WFS server for live querying
-  // const filterQuery = (query: string = '') => {
-  //   return `
-  //     <Filter>
-  //       <And>
-  //         <BBOX>
-  //           <gml:Envelope srsName="EPSG:4326">
-  //             <gml:lowerCorner>${bbox[0]} ${bbox[1]}</gml:lowerCorner>
-  //             <gml:upperCorner>${bbox[2]} ${bbox[3]}</gml:upperCorner>
-  //           </gml:Envelope>
-  //         </BBOX>
-  //         ${query}
-  //       </And>
-  //     </Filter>`;
-  // };
-
   for (const datasetConfig of configs) {
     const [datasetId, config] = datasetConfig;
-    //   const filterParams = { FILTER: filterQuery() };
-
-    //   if (filters && filters[datasetId]) {
-    //     const filterBlocks = [];
-
-    //     for (const [propertyName, { values }] of Object.entries(
-    //       filters[datasetId]
-    //     )) {
-    //       if (!values.length) {
-    //         continue;
-    //       }
-
-    //       const block = values
-    //         .map((value) => {
-    //           return `
-    //           <PropertyIsEqualTo>
-    //             <PropertyName>${propertyName}</PropertyName>
-    //             <Literal>${value}</Literal>
-    //           </PropertyIsEqualTo>
-    //         `;
-    //         })
-    //         .join('\n');
-
-    //       filterBlocks.push(block);
-    //     }
-
-    //     filterParams.FILTER = filterBlocks.length
-    //       ? filterQuery(`<Or>${filterBlocks.join('</Or><Or>')}</Or>`)
-    //       : filterParams.FILTER;
-    //   }
 
     requests.push(
       fetchDataset(sessionID, datasetId, config, {}).then((result) => {

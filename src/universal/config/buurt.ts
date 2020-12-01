@@ -48,30 +48,42 @@ export type DatasetCategory = {
 export type DatasetCategories = Record<DatasetCategoryId, DatasetCategory>;
 export type DatasetFilterSelection = Record<DatasetId, DatasetPropertyFilter>;
 
-const afvalContainerAdoptieFilter = {
-  geadopteerdInd: {
-    title: 'Geadopteerd',
-    emptyValue: 'Nee',
-    values: {},
-  },
-};
-
 export const DATASETS: DatasetCategories = {
   afvalcontainers: {
     title: 'Afvalcontainers',
     datasets: {
-      rest: {
-        title: 'Rest',
-        filters: afvalContainerAdoptieFilter,
+      afvalcontainers: {
+        title: 'Afvalcontainers',
+        filters: {
+          fractie_omschrijving: {
+            title: 'Type',
+            emptyValue: 'Onbekend',
+            values: {},
+          },
+          geadopteerd_ind: {
+            title: 'Geadopteerd',
+            emptyValue: 'Nee',
+            values: {},
+          },
+        },
       },
-      papier: { title: 'Papier', filters: afvalContainerAdoptieFilter },
-      glas: { title: 'Glas', filters: afvalContainerAdoptieFilter },
-      plastic: { title: 'Plastic', filters: afvalContainerAdoptieFilter },
-      textiel: { title: 'Textiel', filters: afvalContainerAdoptieFilter },
-      gft: { title: 'GFT', filters: afvalContainerAdoptieFilter },
     },
   },
-  parkeerzones: {
+  // afvalcontainers: {
+  //   title: 'Afvalcontainers',
+  //   datasets: {
+  //     rest: {
+  //       title: 'Rest',
+  //       filters: afvalContainerAdoptieFilter,
+  //     },
+  //     papier: { title: 'Papier', filters: afvalContainerAdoptieFilter },
+  //     glas: { title: 'Glas', filters: afvalContainerAdoptieFilter },
+  //     plastic: { title: 'Plastic', filters: afvalContainerAdoptieFilter },
+  //     textiel: { title: 'Textiel', filters: afvalContainerAdoptieFilter },
+  //     gft: { title: 'GFT', filters: afvalContainerAdoptieFilter },
+  //   },
+  // },
+  parkeren: {
     title: 'Parkeren',
     datasets: {
       parkeerzones: { title: 'Parkeerzones' },
@@ -83,25 +95,21 @@ export const DATASETS: DatasetCategories = {
   bekendmakingen: {
     title: 'Bekendmakingen',
     datasets: {
-      'apv vergunning': { title: 'APV Vergunning' },
-      evenementenvergunning: { title: 'Evenementenvergunning' },
-      exploitatievergunning: { title: 'Exploitatievergunning' },
-      inspraak: { title: 'Inspraak' },
-      kapvergunning: { title: 'Kapvergunning' },
-      ligplaatsvergunning: { title: 'Ligplaatsvergunning' },
-      meldingen: { title: 'Meldingen' },
-      omgevingsvergunning: { title: 'Omgevingsvergunning' },
-      onttrekkingsvergunning: { title: 'Onttrekkingsvergunning' },
-      openingstijden: { title: 'Openingstijden' },
-      rectificatie: { title: 'Rectificatie' },
-      speelautomaten: { title: 'Speelautomaten' },
-      splitsingsvergunning: { title: 'Splitsingsvergunning' },
-      terrasvergunning: { title: 'Terrasvergunning' },
-      verkeersbesluit: { title: 'Verkeersbesluit' },
-      overig: { title: 'Overig' },
-      geluidvergunning: { title: 'Geluidvergunning' },
-      bestemmingsplan: { title: 'Bestemmingsplan' },
-      'drank- en horecavergunning': { title: 'Drank- en horecavergunning' },
+      bekendmakingen: {
+        title: 'Bekendmakingen',
+        filters: {
+          onderwerp: {
+            title: 'Onderwerp',
+            emptyValue: 'Overig',
+            values: {},
+          },
+          categorie: {
+            title: 'Categorie',
+            emptyValue: 'Overig',
+            values: {},
+          },
+        },
+      },
     },
   },
   evenementen: {

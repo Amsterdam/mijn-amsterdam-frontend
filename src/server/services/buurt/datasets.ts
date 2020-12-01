@@ -97,10 +97,9 @@ function getFilterPropertyNames(datasetId: DatasetId) {
   return propertyFilters && Object.keys(propertyFilters);
 }
 
-function dsoApiListUrl(datasetId: DatasetId, pageSize: number = 1000) {
-  const apiUrl = `https://api.data.amsterdam.nl/v1/${getDatasetCategoryId(
-    datasetId
-  )}/${datasetId}/?_fields=id,geometry`;
+function dsoApiListUrl(dataset: string, pageSize: number = 1000) {
+  const [datasetCategoryId, datasetId] = dataset.split('/');
+  const apiUrl = `https://api.data.amsterdam.nl/v1/${datasetCategoryId}/${datasetId}/?_fields=id,geometry`;
   const pageSizeParam = `&page_size=${pageSize}`;
 
   return (datasetConfig: DatasetConfig) => {
@@ -126,7 +125,7 @@ export const datasetEndpoints: Record<
     listUrl:
       'https://api.data.amsterdam.nl/v1/wfs/huishoudelijkafval/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=container&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326&FILTER=%3CFilter%3E%3CAnd%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Estatus%3C/PropertyName%3E%3CLiteral%3E1%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3COr%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E110%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E16%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E111%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E112%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E67%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E181%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E113%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3C/Or%3E%3C/And%3E%3C/Filter%3E',
     detailUrl: 'https://api.data.amsterdam.nl/v1/huishoudelijkafval/container/',
-    transformList: transformAfvalcontainers,
+    transformList: transformDsoApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
@@ -139,90 +138,89 @@ export const datasetEndpoints: Record<
     cacheTimeMinutes: BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
   },
   bekendmakingen: {
-    listUrl:
-      'https://api.data.amsterdam.nl/v1/bekendmakingen/bekendmakingen/?_fields=id,geometry,onderwerp&page_size=10000',
+    listUrl: dsoApiListUrl('bekendmakingen/bekendmakingen'),
     detailUrl:
       'https://api.data.amsterdam.nl/v1/bekendmakingen/bekendmakingen/',
-    transformList: transformBekendmakingen,
+    transformList: transformDsoApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
   },
   parkeerzones: {
-    listUrl: dsoApiListUrl('parkeerzones'),
-    // 'https://api.data.amsterdam.nl/v1/wfs/parkeerzones?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=parkeerzones&SRSNAME=urn:ogc:def:crs:EPSG::4326',
+    listUrl: dsoApiListUrl('parkeerzones/parkeerzones'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones/',
     transformList: transformParkeerzoneCoords,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.PARKEERZONES,
     additionalStaticPropertyNames: ['gebiedskleurcode'],
+    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
   parkeerzones_uitzondering: {
-    listUrl: dsoApiListUrl('parkeerzones_uitzondering'),
-    // 'https://api.data.amsterdam.nl/v1/wfs/parkeerzones?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=parkeerzones_uitzondering&SRSNAME=urn:ogc:def:crs:EPSG::4326',
+    listUrl: dsoApiListUrl('parkeerzones/parkeerzones_uitzondering'),
     detailUrl:
       'https://api.data.amsterdam.nl/v1/parkeerzones/parkeerzones_uitzondering/',
     transformList: transformParkeerzoneCoords,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.PARKEERZONES_UITZONDERING,
+    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
   zwembad: {
-    listUrl: dsoApiListUrl('zwembad'),
+    listUrl: dsoApiListUrl('sport/zwembad'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/zwembad/',
-    transformList: transformListSportApiResponse,
+    transformList: transformDsoApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
   sportpark: {
-    listUrl: dsoApiListUrl('sportpark'),
-    // 'https://api.data.amsterdam.nl/v1/wfs/sport?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=sportpark&SRSNAME=urn:ogc:def:crs:EPSG::4326',
+    listUrl: dsoApiListUrl('sport/sportpark'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportpark/',
-    transformList: transformListSportApiResponse,
+    transformList: transformDsoApiListResponse,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.SPORTPARK,
+    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
   sportveld: {
-    listUrl: dsoApiListUrl('sportveld'),
-    // 'https://api.data.amsterdam.nl/v1/wfs/sport?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=sportveld&SRSNAME=urn:ogc:def:crs:EPSG::4326',
+    listUrl: dsoApiListUrl('sport/sportveld'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportveld/',
-    transformList: transformListSportApiResponse,
+    transformList: transformDsoApiListResponse,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.SPORTVELD,
+    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
   gymsportzaal: {
-    listUrl: dsoApiListUrl('gymsportzaal'),
+    listUrl: dsoApiListUrl('sport/gymsportzaal'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/gymsportzaal/',
-    transformList: transformListSportApiResponse,
+    transformList: transformDsoApiListResponse,
     featureType: 'Point',
+    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
   sporthal: {
-    listUrl: dsoApiListUrl('sporthal'),
+    listUrl: dsoApiListUrl('sport/sporthal'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sporthal/',
-    transformList: transformListSportApiResponse,
+    transformList: transformDsoApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
   sportaanbieder: {
-    listUrl: dsoApiListUrl('sportaanbieder', 2000),
+    listUrl: dsoApiListUrl('sport/sportaanbieder', 2000),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportaanbieder/',
-    transformList: transformListSportApiResponse,
+    transformList: transformDsoApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
   openbaresportplek: {
-    listUrl: dsoApiListUrl('openbaresportplek'),
+    listUrl: dsoApiListUrl('sport/openbaresportplek'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/',
-    transformList: transformListSportApiResponse,
+    transformList: transformDsoApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
   hardlooproute: {
-    listUrl:
-      'https://api.data.amsterdam.nl/v1/wfs/sport?service=WFS&version=2.0.0&request=GetFeature&OUTPUTFORMAT=geojson&typeName=hardlooproute&SRSNAME=urn:ogc:def:crs:EPSG::4326',
+    listUrl: dsoApiListUrl('sport/hardlooproute'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/hardlooproute/',
-    transformList: transformListSportApiResponse,
-    cache: false,
+    transformList: transformDsoApiListResponse,
     featureType: 'MultiLineString',
     zIndex: zIndexPane.HARDLOOPROUTE,
+    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
 };
 
@@ -307,7 +305,7 @@ function addFilterProps(
   return featureProperties;
 }
 
-function transformListSportApiResponse(
+function transformDsoApiListResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
   responseData: any
@@ -348,40 +346,6 @@ function transformListSportApiResponse(
   return collection;
 }
 
-function transformAfvalcontainers(
-  datasetId: DatasetId,
-  config: DatasetConfig,
-  WFSData: any
-) {
-  const collection: DatasetFeatures = [];
-  if (Array.isArray(WFSData?.features)) {
-    for (const feature of WFSData.features) {
-      const fractieOmschrijvingDatasetId = feature.properties?.fractie_omschrijving.toLowerCase();
-      // Redundant check on active state, the API should only return the active containers already.
-      if (
-        feature.properties?.status === CONTAINER_STATUS_ACTIVE &&
-        !!DATASETS.afvalcontainers.datasets[fractieOmschrijvingDatasetId]
-      ) {
-        if (feature?.geometry?.coordinates) {
-          collection.push({
-            type: 'Feature',
-            geometry: feature.geometry,
-            properties: addFilterProps(
-              datasetId,
-              {
-                id: feature.properties.id,
-                datasetId: fractieOmschrijvingDatasetId,
-              },
-              feature
-            ),
-          });
-        }
-      }
-    }
-  }
-  return collection;
-}
-
 function transformEvenementen(
   datasetId: DatasetId,
   config: DatasetConfig,
@@ -391,37 +355,6 @@ function transformEvenementen(
   const collection: DatasetFeatures = [];
   if (results && results.length) {
     for (const feature of results) {
-      if (feature?.geometry?.coordinates) {
-        collection.push({
-          type: 'Feature',
-          geometry: feature.geometry,
-          properties: addFilterProps(
-            datasetId,
-            {
-              id: feature.id,
-              datasetId,
-            },
-            feature
-          ),
-        });
-      }
-    }
-  }
-  return collection;
-}
-
-function transformBekendmakingen(
-  datasetId: DatasetId,
-  config: DatasetConfig,
-  responseData: any
-) {
-  const results = getApiEmbeddedResponse(datasetId, responseData);
-  const collection: DatasetFeatures = [];
-
-  if (results && results.length) {
-    for (const feature of results) {
-      const datasetId = feature?.onderwerp.toLowerCase();
-
       if (feature?.geometry?.coordinates) {
         collection.push({
           type: 'Feature',

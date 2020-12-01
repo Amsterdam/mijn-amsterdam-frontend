@@ -50,8 +50,8 @@ const DatasetCategoryList = styled.ol`
   list-style-type: none;
 `;
 
-const DatasetControlList = styled(DatasetCategoryList)`
-  padding-left: 4rem;
+const DatasetControlList = styled(DatasetCategoryList)<{ noIndent?: boolean }>`
+  padding-left: ${(props) => (props.noIndent ? '0' : '4rem')};
 `;
 
 const DatasetFilterControlCagegoryList = styled(DatasetControlList)``;
@@ -231,6 +231,7 @@ function DatasetPropertyFilterPanel({
 }
 
 interface DatasePanelProps {
+  noIndent?: boolean;
   datasets: Record<DatasetCategoryId, DatasetControl>;
   onFilterControlItemChange: DatasetControlPanelProps['onFilterControlItemChange'];
   onControlItemChange: DatasetControlPanelProps['onControlItemChange'];
@@ -238,6 +239,7 @@ interface DatasePanelProps {
 }
 
 function DatasetPanel({
+  noIndent,
   datasets,
   onFilterControlItemChange,
   onControlItemChange,
@@ -245,7 +247,7 @@ function DatasetPanel({
 }: DatasePanelProps) {
   const [activeFilters] = useActiveDatasetFilters();
   return (
-    <DatasetControlList>
+    <DatasetControlList noIndent={noIndent}>
       {Object.entries(datasets).map(([datasetId, dataset]) => {
         const { isChecked, isIndeterminate } = datasetCheckboxState(
           datasetId,
@@ -307,8 +309,7 @@ function DatasetControlPanel({
     activeDatasetIds
   );
   const datasetIds = Object.keys(category.datasets);
-  const hasDatasets =
-    !!category.datasets && Object.keys(category.datasets).length > 1;
+  const hasDatasets = !!datasetIds.length;
 
   const categoryTitle = (
     <DatasetControlCheckbox
@@ -322,6 +323,22 @@ function DatasetControlPanel({
 
   if (!hasDatasets) {
     return categoryTitle;
+  }
+
+  const isSingleDatasetWithFilters = !!(
+    datasetIds.length === 1 && category.datasets[datasetIds[0]].filters
+  );
+
+  if (isSingleDatasetWithFilters) {
+    return (
+      <DatasetPanel
+        noIndent={true}
+        datasets={category.datasets}
+        onFilterControlItemChange={onFilterControlItemChange}
+        onControlItemChange={onControlItemChange}
+        activeDatasetIds={activeDatasetIds}
+      />
+    );
   }
 
   return (
