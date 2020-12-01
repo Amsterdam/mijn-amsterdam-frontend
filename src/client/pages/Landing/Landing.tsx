@@ -48,7 +48,7 @@ export default () => {
         <div className={styles.LoginOption}>
           {FeatureToggle.eherkenningActive && (
             <Heading className={styles.LoginOptionHeading} size="tiny" el="h3">
-              Voor particulieren en eenmanszakan
+              Voor particulieren en eenmanszaken
             </Heading>
           )}
           <p>
