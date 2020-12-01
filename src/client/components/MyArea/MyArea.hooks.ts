@@ -235,7 +235,8 @@ export function useFetchFeatures() {
             errors: [
               {
                 message: 'Kaartgegevens konden niet worden geladen',
-                id: 'Alle kaartgegevens',
+                id:
+                  'De extra informatie die wij normaal op de kaart tonen, bijvoorbeeld over afval en vergunningen',
               },
             ],
           };
