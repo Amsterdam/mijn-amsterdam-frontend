@@ -323,8 +323,6 @@ export function useFilterControlItemChange() {
 
       let activeFiltersUpdate = { ...activeFilters };
 
-      console.log('!!', activeFiltersUpdate);
-
       if (!isChecked && !activeFiltersUpdate[datasetId]) {
         activeFiltersUpdate[datasetId] = {
           [propertyName]: { values: { [propertyValue]: 1 } },

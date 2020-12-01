@@ -25,13 +25,17 @@ export type DatasetPropertyValueWithCount = Record<
   DatasetPropertyValue,
   number
 >;
+export interface DatasetPropertyValueConfig {
+  title?: string;
+  isExcluded?: true;
+}
 
 export type DatasetPropertyFilter = Record<
   DatasetPropertyName,
   {
-    values: DatasetPropertyValueWithCount;
+    values?: DatasetPropertyValueWithCount;
     isVisible?: boolean;
-    emptyValue?: string;
+    valueConfig?: Record<DatasetPropertyValue, DatasetPropertyValueConfig>;
     title?: string;
   }
 >;
@@ -57,32 +61,18 @@ export const DATASETS: DatasetCategories = {
         filters: {
           fractie_omschrijving: {
             title: 'Type',
-            emptyValue: 'Onbekend',
-            values: {},
           },
           geadopteerd_ind: {
             title: 'Geadopteerd',
-            emptyValue: 'Nee',
-            values: {},
+            valueConfig: {
+              true: { title: 'Ja' },
+              undefined: { title: 'Nee' },
+            },
           },
         },
       },
     },
   },
-  // afvalcontainers: {
-  //   title: 'Afvalcontainers',
-  //   datasets: {
-  //     rest: {
-  //       title: 'Rest',
-  //       filters: afvalContainerAdoptieFilter,
-  //     },
-  //     papier: { title: 'Papier', filters: afvalContainerAdoptieFilter },
-  //     glas: { title: 'Glas', filters: afvalContainerAdoptieFilter },
-  //     plastic: { title: 'Plastic', filters: afvalContainerAdoptieFilter },
-  //     textiel: { title: 'Textiel', filters: afvalContainerAdoptieFilter },
-  //     gft: { title: 'GFT', filters: afvalContainerAdoptieFilter },
-  //   },
-  // },
   parkeren: {
     title: 'Parkeren',
     datasets: {
@@ -100,13 +90,9 @@ export const DATASETS: DatasetCategories = {
         filters: {
           onderwerp: {
             title: 'Onderwerp',
-            emptyValue: 'Overig',
-            values: {},
           },
           categorie: {
             title: 'Categorie',
-            emptyValue: 'Overig',
-            values: {},
           },
         },
       },
@@ -126,13 +112,9 @@ export const DATASETS: DatasetCategories = {
         filters: {
           sportfunctie: {
             title: 'Sportfunctie',
-            values: {},
-            emptyValue: 'Onbekend',
           },
           soortOndergrond: {
             title: 'Soort ondergrond',
-            values: {},
-            emptyValue: 'Onbekend',
           },
         },
       },
@@ -142,8 +124,6 @@ export const DATASETS: DatasetCategories = {
         title: 'Sportaanbieders',
         filters: {
           indicatieStadspas: {
-            values: {},
-            emptyValue: 'Nee',
             title: 'Indicatie stadspas',
           },
         },
@@ -153,20 +133,16 @@ export const DATASETS: DatasetCategories = {
         filters: {
           sportvoorziening: {
             title: 'Sportvoorziening',
-            values: {},
-            emptyValue: 'Onbekend',
           },
           soortOndergrond: {
             title: 'Soort ondergrond',
-            values: {},
-            emptyValue: 'Onbekend',
           },
         },
       },
       hardlooproute: {
         title: 'Harlooproute',
         filters: {
-          lengte: { values: {}, emptyValue: 'Onbekend' },
+          lengte: {},
         },
       },
     },

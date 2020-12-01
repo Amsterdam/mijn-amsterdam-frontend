@@ -174,17 +174,18 @@ function DatasetPropertyFilterPanel({
   return (
     <DatasetFilterControlCagegoryList>
       {filterEntries.map(([propertyId, property]) => {
-        const hasStaticValues = !!(
-          property.values && Object.keys(property.values).length
-        );
-        const propertyValues = Object.entries(
-          hasStaticValues
-            ? property.values
-            : filterSelection[datasetId] &&
-              filterSelection[datasetId][propertyId]
-            ? filterSelection[datasetId][propertyId].values
-            : {}
-        ).sort((a, b) => {
+        const filterSelectionValues =
+          filterSelection[datasetId] &&
+          filterSelection[datasetId][propertyId] &&
+          filterSelection[datasetId][propertyId].values;
+
+        const values = property.values
+          ? property.values
+          : filterSelectionValues
+          ? filterSelectionValues
+          : {};
+
+        const propertyValues = Object.entries(values).sort((a, b) => {
           return b[1] - a[1];
         });
         return (
@@ -194,6 +195,13 @@ function DatasetPropertyFilterPanel({
             )}
             <DatasetFilterControlList>
               {propertyValues.map(([value, featureCount]) => {
+                let label = value;
+                const valueConfig = property.valueConfig
+                  ? property.valueConfig[value]
+                  : undefined;
+                if (valueConfig?.title) {
+                  label = valueConfig?.title;
+                }
                 const { isChecked } = filterItemCheckboxState(
                   activeFilters,
                   datasetId,
@@ -207,7 +215,7 @@ function DatasetPropertyFilterPanel({
                     id={value}
                     label={
                       <>
-                        {value}{' '}
+                        {label}{' '}
                         {featureCount > 1 ? (
                           <FeatureCount>({featureCount})</FeatureCount>
                         ) : (

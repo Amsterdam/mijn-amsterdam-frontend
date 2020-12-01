@@ -105,7 +105,7 @@ function getDynamicDatasetFilters(datasetId: DatasetId) {
   // Only select property filters that don't have static values defined.
   return Object.fromEntries(
     Object.entries(propertyFilters).filter(([propertyId, property]) => {
-      return !property.values.length;
+      return !property.values?.length;
     })
   );
 }
@@ -122,16 +122,15 @@ export function createDynamicFilterConfig(
   for (const feature of features) {
     for (const propertyName of propertyNames) {
       // Get property value from object.filters or from object itself
-      const value =
-        (feature?.properties || feature)[propertyName] ||
-        filterConfig[propertyName].emptyValue ||
-        'EMPTY_VALUE';
+      const value = (feature?.properties || feature)[propertyName];
+
       if (!filters[propertyName]) {
         filters[propertyName] = {
           values: {},
         };
       }
-      const values = filters[propertyName].values;
+
+      const values = filters[propertyName]?.values || {};
       values[value] = (values[value] || 0) + 1;
       filters[propertyName].values = values;
     }
@@ -145,9 +144,10 @@ function isFilterMatch(feature: MaFeature, filters: DatasetPropertyFilter) {
   return Object.entries(filters).every(([propertyName, valueConfig]) => {
     const propertyValues = valueConfig.values;
     return (
-      !Object.keys(propertyValues).length ||
-      (propertyName in feature.properties &&
-        feature.properties[propertyName] in propertyValues)
+      propertyValues &&
+      (!Object.keys(propertyValues).length ||
+        (propertyName in feature.properties &&
+          feature.properties[propertyName] in propertyValues))
     );
   });
 }
