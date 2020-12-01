@@ -39,32 +39,7 @@ const DatasetIconCircle = styled(DatasetIcon)`
   height: 16px;
 `;
 
-// const DatasetIconSquare = styled(DatasetIconCircle)`
-//   border-radius: 0;
-// `;
-
-// const DatasetIconTriangle = styled(DatasetIconSquare)`
-//   width: 0;
-//   height: 0;
-//   border-style: solid;
-//   border-width: 0 10px 20px 10px;
-//   border-color: transparent transparent #ffffff;
-//   position: relative;
-
-//   &:before {
-//     content: '';
-//     width: 100%;
-//     height: 100%;
-//     position: absolute;
-//     bottom: -18px;
-//     left: -7px;
-//     border-style: solid;
-//     border-width: 0 7px 14px 7px;
-//     border-color: transparent transparent ${(props) => props.color};
-//   }
-// `;
-
-const datasetIcons: Record<DatasetId, ReactElement<any>> = {
+const datasetIcons: Record<string, ReactElement<any>> = {
   rest: (
     <DatasetIcon style={{ backgroundColor: themeColors.tint.level6 }}>
       <MapIconAfvalRest fill={themeColors.tint.level1} />
@@ -139,10 +114,6 @@ export function getIconHtml(feature: MaPointFeature) {
   }
 
   return icon;
-}
-
-export function titleTransform(id: string) {
-  return capitalizeFirstLetter(id).replace(/_/g, ' ');
 }
 
 export const PARKEERZONES_POLYLINE_OPTIONS: Record<string, PolylineOptions> = {
