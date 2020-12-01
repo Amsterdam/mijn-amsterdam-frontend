@@ -318,8 +318,9 @@ function DatasetControlPanel({
     activeDatasetIds
   );
   const datasetIds = Object.keys(category.datasets);
-  const hasDatasets = !!datasetIds.length;
-
+  const isSingleDatasetWithFilters = !!(
+    datasetIds.length === 1 && category.datasets[datasetIds[0]].filters
+  );
   const categoryTitle = (
     <DatasetControlCheckbox
       isChecked={isChecked}
@@ -330,13 +331,12 @@ function DatasetControlPanel({
     />
   );
 
-  if (!hasDatasets) {
+  if (
+    (datasetIds.length === 1 && !isSingleDatasetWithFilters) ||
+    !datasetIds.some((id) => activeDatasetIds.includes(id))
+  ) {
     return categoryTitle;
   }
-
-  const isSingleDatasetWithFilters = !!(
-    datasetIds.length === 1 && category.datasets[datasetIds[0]].filters
-  );
 
   if (isSingleDatasetWithFilters) {
     return (

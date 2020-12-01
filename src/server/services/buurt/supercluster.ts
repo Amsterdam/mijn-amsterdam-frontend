@@ -9,6 +9,7 @@ import { MaPointFeature } from './datasets';
 import { getDatasetEndpointConfig } from './helpers';
 
 const superClusterCache = new memoryCache.Cache<string, any>();
+
 function cacheKey(ids: DatasetId[], filters: DatasetFilterSelection) {
   const key =
     ids.sort().join('-') +
@@ -16,10 +17,12 @@ function cacheKey(ids: DatasetId[], filters: DatasetFilterSelection) {
     Object.entries(filters)
       .flatMap(([datasetId, filters]) => [
         datasetId,
-        Object.entries(filters).flatMap(([propertyName, property]) => [
-          propertyName,
-          property.values,
-        ]),
+        Object.entries(filters)
+          .flatMap(([propertyName, property]) => [
+            propertyName,
+            property.values ? Object.keys(property.values).join('-') : '',
+          ])
+          .join('-'),
       ])
       .sort()
       .join('-');
@@ -67,6 +70,8 @@ export async function loadClusterDatasets(
 ) {
   const activeCacheKey = cacheKey(datasetIds, filters);
 
+  console.log('activeCacheKey', activeCacheKey);
+
   if (superClusterCache.get(activeCacheKey)) {
     return superClusterCache.get(activeCacheKey);
   }
@@ -92,9 +97,13 @@ export async function loadClusterDatasets(
     }
   }
 
-  return {
+  const response = {
     clusters,
     filters: filterSelection,
     errors,
   };
+
+  superClusterCache.put(activeCacheKey, response);
+
+  return response;
 }

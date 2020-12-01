@@ -32,6 +32,8 @@ export { ReactComponent as IconTips } from './Tip.svg';
 export { ReactComponent as IconWonen } from './wonen.svg';
 export { ReactComponent as IconZorg } from './zorg.svg';
 export { ReactComponent as IconVergunningen } from './vergunningen.svg';
+export { ReactComponent as IconPlus } from './plus.svg';
+export { ReactComponent as IconMin } from './min.svg';
 
 // Map icons
 export { ReactComponent as MapIconAfvalGlas } from './map/glas.svg';
