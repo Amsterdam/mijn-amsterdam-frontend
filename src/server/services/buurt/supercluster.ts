@@ -4,7 +4,11 @@ import {
   DatasetFilterSelection,
   DatasetId,
 } from '../../../universal/config/buurt';
-import { filterDatasetFeatures, loadDatasetFeatures } from './buurt';
+import {
+  createDynamicFilterConfig,
+  filterDatasetFeatures,
+  loadDatasetFeatures,
+} from './buurt';
 import { MaPointFeature } from './datasets';
 import { getDatasetEndpointConfig } from './helpers';
 
@@ -68,13 +72,11 @@ export async function loadClusterDatasets(
   sessionID: SessionID,
   { bbox, zoom, datasetIds, filters }: SuperClusterQuery
 ) {
-  const activeCacheKey = cacheKey(datasetIds, filters);
+  // const activeCacheKey = cacheKey(datasetIds, filters);
 
-  console.log('activeCacheKey', activeCacheKey);
-
-  if (superClusterCache.get(activeCacheKey)) {
-    return superClusterCache.get(activeCacheKey);
-  }
+  // if (superClusterCache.get(activeCacheKey)) {
+  //   return superClusterCache.get(activeCacheKey);
+  // }
 
   const configs = getDatasetEndpointConfig(datasetIds, ['Point']);
 
@@ -103,7 +105,7 @@ export async function loadClusterDatasets(
     errors,
   };
 
-  superClusterCache.put(activeCacheKey, response);
+  // superClusterCache.put(activeCacheKey, response);
 
   return response;
 }

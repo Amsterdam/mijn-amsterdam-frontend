@@ -331,10 +331,7 @@ function DatasetControlPanel({
     />
   );
 
-  if (
-    (datasetIds.length === 1 && !isSingleDatasetWithFilters) ||
-    !datasetIds.some((id) => activeDatasetIds.includes(id))
-  ) {
+  if (datasetIds.length === 1 && !isSingleDatasetWithFilters) {
     return categoryTitle;
   }
 
