@@ -1,6 +1,5 @@
 import React from 'react';
 import { InfoDetail } from '../..';
-import Description from './Description';
 import GenericBase from './GenericBase';
 import Url from './Url';
 

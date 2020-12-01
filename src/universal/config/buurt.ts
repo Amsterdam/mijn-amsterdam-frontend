@@ -47,6 +47,7 @@ export interface DatasetControl {
 
 export type DatasetCategory = {
   title: string;
+  profileType?: ProfileType;
   datasets: Record<DatasetId, DatasetControl>;
 };
 export type DatasetCategories = Record<DatasetCategoryId, DatasetCategory>;
