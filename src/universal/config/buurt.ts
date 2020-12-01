@@ -59,9 +59,7 @@ export const DATASETS: DatasetCategories = {
       afvalcontainers: {
         title: 'Afvalcontainers',
         filters: {
-          fractie_omschrijving: {
-            title: 'Type',
-          },
+          fractie_omschrijving: {},
           geadopteerd_ind: {
             title: 'Geadopteerd',
             valueConfig: {
@@ -110,9 +108,7 @@ export const DATASETS: DatasetCategories = {
       sportveld: {
         title: 'Sportveld',
         filters: {
-          sportfunctie: {
-            title: 'Sportfunctie',
-          },
+          sportfunctie: {},
           soortOndergrond: {
             title: 'Soort ondergrond',
           },
@@ -125,6 +121,9 @@ export const DATASETS: DatasetCategories = {
         filters: {
           indicatieStadspas: {
             title: 'Indicatie stadspas',
+            valueConfig: {
+              '': { title: 'Nee' },
+            },
           },
         },
       },

@@ -41,6 +41,7 @@ import {
 } from './MyArea.hooks';
 import MyAreaCollapsiblePanel from './MyAreaCollapsiblePanel';
 import MyAreaPanelContent from './PanelContent/Generic';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 
 const MapPanelContentDetail = styled(MapPanelContent)``;
 
@@ -210,12 +211,12 @@ function DatasetPropertyFilterPanel({
                 );
                 return (
                   <DatasetControlCheckbox
-                    key={value}
+                    key={label}
                     isChecked={isChecked}
-                    id={value}
+                    id={label}
                     label={
                       <>
-                        {label}{' '}
+                        {capitalizeFirstLetter(label)}{' '}
                         {featureCount > 1 ? (
                           <FeatureCount>({featureCount})</FeatureCount>
                         ) : (
