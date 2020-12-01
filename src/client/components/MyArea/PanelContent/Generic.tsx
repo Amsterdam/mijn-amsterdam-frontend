@@ -2,6 +2,7 @@ import React from 'react';
 import { getDatasetCategoryId } from '../../../../universal/config/buurt';
 import LoadingContent from '../../LoadingContent/LoadingContent';
 import MyArePanelContentAfval from './Afval';
+import MyArePanelContentBedrijvenInvesteringsZones from './BedrijvenInvesteringsZones';
 import MyArePanelContentBekendmaking from './Bekendmaking';
 import MyArePanelContentEvenementen from './Evenementen';
 import { GenericContent } from './GenericBase';
@@ -49,6 +50,13 @@ export default function MyAreaPanelContentGeneric({
     case 'parkeren':
       return (
         <MyArePanelContentParkeren
+          datasetId={datasetId}
+          panelItem={panelItem}
+        />
+      );
+    case 'bedrijveninvesteringszones':
+      return (
+        <MyArePanelContentBedrijvenInvesteringsZones
           datasetId={datasetId}
           panelItem={panelItem}
         />

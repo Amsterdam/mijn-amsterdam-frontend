@@ -146,6 +146,14 @@ export const DATASETS: DatasetCategories = {
       },
     },
   },
+  bedrijveninvesteringszones: {
+    title: 'Bedrijveninvesteringszones',
+    datasets: {
+      bedrijveninvesteringszones: {
+        title: 'Bedrijveninvesteringszones',
+      },
+    },
+  },
 };
 
 export function getDatasetCategoryId(datasetId: DatasetId) {

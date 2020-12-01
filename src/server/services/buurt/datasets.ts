@@ -15,6 +15,7 @@ import {
 
 enum zIndexPane {
   PARKEERZONES = '650',
+  BEDRIJVENINVESTERINGSZONES = '651',
   PARKEERZONES_UITZONDERING = '660',
   HARDLOOPROUTE = '670',
   SPORTPARK = '680',
@@ -220,6 +221,17 @@ export const datasetEndpoints: Record<
     transformList: transformDsoApiListResponse,
     featureType: 'MultiLineString',
     zIndex: zIndexPane.HARDLOOPROUTE,
+    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
+  },
+  bedrijveninvesteringszones: {
+    listUrl: dsoApiListUrl(
+      'bedrijveninvesteringszones/bedrijveninvesteringszones'
+    ),
+    detailUrl:
+      'https://api.data.amsterdam.nl/v1/bedrijveninvesteringszones/bedrijveninvesteringszones/',
+    transformList: transformDsoApiListResponse,
+    featureType: 'MultiPolygon',
+    zIndex: zIndexPane.BEDRIJVENINVESTERINGSZONES,
     cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
 };

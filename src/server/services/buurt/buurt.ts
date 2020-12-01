@@ -238,6 +238,7 @@ async function fetchDataset(
     response.content = Array.isArray(response.content)
       ? response.content.map((feature) => {
           if (
+            feature.geometry.type === 'Polygon' ||
             feature.geometry.type === 'MultiPolygon' ||
             feature.geometry.type === 'MultiLineString'
           ) {
