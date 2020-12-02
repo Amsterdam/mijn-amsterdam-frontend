@@ -18,7 +18,6 @@ interface ComponentProps {
   className?: string;
   errors: Error[];
   title?: string;
-  dismisedKey?: string;
 }
 
 export function useErrorMessagesDismissed(
@@ -31,10 +30,9 @@ export default function ErrorMessages({
   className,
   errors,
   title = 'U ziet misschien niet al uw gegevens.',
-  dismisedKey,
 }: ComponentProps) {
-  const el = useRef(null);
   const session = useSessionValue();
+  const el = useRef(null);
   const isAllErrorMessage = errors.some(
     (error) => error.stateKey === ALL_ERROR_STATE_KEY
   );
@@ -42,7 +40,11 @@ export default function ErrorMessages({
   const top = el.current
     ? (el.current! as HTMLElement).getBoundingClientRect().top
     : 0;
-  const [isDismissed, setDismissed] = useErrorMessagesDismissed(dismisedKey);
+  const [isDismissed, setDismissed] = useState(false);
+
+  useEffect(() => {
+    setDismissed(false);
+  }, [errors]);
 
   useEffect(() => {
     if (isAllErrorMessage) {
@@ -74,13 +76,10 @@ export default function ErrorMessages({
         </span>
 
         <IconButton
-          icon={!isDismissed ? IconClose : IconAlert}
-          className={classnames(
-            styles.ToggleButton,
-            isDismissed && styles.isDismissed
-          )}
-          onClick={() => setDismissed(!isDismissed)}
-          aria-label={isDismissed ? 'Toon bericht' : 'Verberg bericht'}
+          icon={IconClose}
+          className={styles.CloseButton}
+          onClick={() => setDismissed(true)}
+          aria-label="Verberg bericht"
         />
       </p>
       <Modal
