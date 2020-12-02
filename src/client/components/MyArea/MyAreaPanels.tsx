@@ -42,6 +42,11 @@ import {
 import MyAreaCollapsiblePanel from './MyAreaCollapsiblePanel';
 import MyAreaPanelContent from './PanelContent/Generic';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
+import {
+  useProfileType,
+  useProfileTypeValue,
+} from '../../hooks/useProfileType';
 
 const MapPanelContentDetail = styled(MapPanelContent)``;
 
@@ -207,18 +212,22 @@ function DatasetPropertyFilterPanel({
             <DatasetFilterControlList>
               {propertyValues.map(([value, featureCount]) => {
                 let label = value;
+
                 const valueConfig = property.valueConfig
                   ? property.valueConfig[value]
                   : undefined;
+
                 if (valueConfig?.title) {
                   label = valueConfig?.title;
                 }
+
                 const { isChecked } = filterItemCheckboxState(
                   activeFilters,
                   datasetId,
                   propertyId,
                   value
                 );
+
                 return (
                   <DatasetControlCheckbox
                     key={label}
@@ -276,13 +285,25 @@ function DatasetPanel({
   activeDatasetIds,
 }: DatasePanelProps) {
   const [activeFilters] = useActiveDatasetFilters();
+  const profileType = useProfileTypeValue();
+
+  const datasetsVisible = useMemo(() => {
+    return Object.entries(datasets).filter(([datasetId, dataset]) => {
+      return (
+        !Array.isArray(dataset.profileType) ||
+        dataset.profileType.includes(profileType)
+      );
+    });
+  }, [profileType, datasets]);
+
   return (
     <DatasetControlList noIndent={noIndent}>
-      {Object.entries(datasets).map(([datasetId, dataset]) => {
+      {datasetsVisible.map(([datasetId, dataset]) => {
         const { isChecked, isIndeterminate } = datasetCheckboxState(
           datasetId,
           activeDatasetIds
         );
+
         const datasetControl = (
           <DatasetControlCheckbox
             isChecked={isChecked}
@@ -292,9 +313,11 @@ function DatasetPanel({
             onChange={() => onControlItemChange('dataset', [datasetId])}
           />
         );
+
         const hasFilters = !!(
           dataset.filters && Object.keys(dataset.filters).length
         );
+
         return (
           <DatasetControlListItem key={datasetId}>
             {(!hasFilters || !isChecked) && datasetControl}
@@ -338,10 +361,13 @@ function DatasetControlPanel({
     category,
     activeDatasetIds
   );
+
   const datasetIds = Object.keys(category.datasets);
+
   const isSingleDatasetWithFilters = !!(
     datasetIds.length === 1 && category.datasets[datasetIds[0]].filters
   );
+
   const categoryTitle = (
     <DatasetControlCheckbox
       isChecked={isChecked}
@@ -386,6 +412,7 @@ interface MyAreaPanels {
 
 export default function MyAreaPanels({ onSetDrawerPosition }: MyAreaPanels) {
   const isDesktop = useDesktopScreen();
+  const profileType = useProfileTypeValue();
   const PanelComponent = isDesktop ? MapPanel : MapPanelDrawer;
   const { setPositionFromSnapPoint, drawerPosition } = useContext(
     MapPanelContext
@@ -413,11 +440,20 @@ export default function MyAreaPanels({ onSetDrawerPosition }: MyAreaPanels) {
 
   useFetchPanelFeature();
 
+  const datasets = useMemo(() => {
+    return Object.entries(DATASETS).filter(([categoryId, category]) => {
+      return (
+        !Array.isArray(category.profileType) ||
+        category.profileType.includes(profileType)
+      );
+    });
+  }, [profileType]);
+
   return (
     <PanelComponent>
       <MapPanelContent animate stackOrder={0}>
         <DatasetCategoryList>
-          {Object.entries(DATASETS).map(([categoryId, category]) => (
+          {datasets.map(([categoryId, category]) => (
             <DatasetControlListItem key={categoryId}>
               <DatasetControlPanel
                 categoryId={categoryId}

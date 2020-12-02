@@ -43,12 +43,13 @@ export type DatasetPropertyFilter = Record<
 
 export interface DatasetControl {
   title: string;
+  profileType?: ProfileType[];
   filters?: DatasetPropertyFilter;
 }
 
 export type DatasetCategory = {
   title: string;
-  profileType?: ProfileType;
+  profileType?: ProfileType[];
   datasets: Record<DatasetId, DatasetControl>;
 };
 export type DatasetCategories = Record<DatasetCategoryId, DatasetCategory>;
@@ -156,6 +157,7 @@ export const DATASETS: DatasetCategories = {
   },
   bedrijveninvesteringszones: {
     title: 'Bedrijveninvesteringszones',
+    profileType: ['commercial', 'private-commercial'],
     datasets: {
       bedrijveninvesteringszones: {
         title: 'Bedrijveninvesteringszones',
