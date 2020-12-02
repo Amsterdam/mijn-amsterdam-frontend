@@ -43,10 +43,6 @@ export default function ErrorMessages({
   const [isDismissed, setDismissed] = useState(false);
 
   useEffect(() => {
-    setDismissed(false);
-  }, [errors]);
-
-  useEffect(() => {
     if (isAllErrorMessage) {
       setModalOpen(true);
     }
