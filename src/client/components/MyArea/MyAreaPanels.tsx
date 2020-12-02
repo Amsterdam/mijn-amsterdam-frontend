@@ -43,10 +43,6 @@ import MyAreaCollapsiblePanel from './MyAreaCollapsiblePanel';
 import MyAreaPanelContent from './PanelContent/Generic';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
-import {
-  useProfileType,
-  useProfileTypeValue,
-} from '../../hooks/useProfileType';
 
 const MapPanelContentDetail = styled(MapPanelContent)``;
 
