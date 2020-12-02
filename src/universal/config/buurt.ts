@@ -34,6 +34,7 @@ export type DatasetPropertyFilter = Record<
   DatasetPropertyName,
   {
     values?: DatasetPropertyValueWithCount;
+    valuesRefined?: DatasetPropertyValueWithCount;
     isVisible?: boolean;
     valueConfig?: Record<DatasetPropertyValue, DatasetPropertyValueConfig>;
     title?: string;
@@ -132,10 +133,16 @@ export const DATASETS: DatasetCategories = {
         title: 'Openbare sportplek',
         filters: {
           sportvoorziening: {
-            title: 'Sportvoorziening',
+            // title: 'Sportvoorziening',
+            valueConfig: {
+              null: { title: 'Onbekend' },
+            },
           },
           soortOndergrond: {
             title: 'Soort ondergrond',
+            valueConfig: {
+              '': { title: 'Onbekend' },
+            },
           },
         },
       },

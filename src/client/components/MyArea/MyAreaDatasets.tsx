@@ -51,7 +51,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
   const fetchFeatures = useFetchFeatures();
 
   const [activeDatasetIds, setActiveDatasetIds] = useActiveDatasetIds();
-  const [activeFilters, setActiveFilters] = useActiveDatasetFilters();
+  const [activeFilters] = useActiveDatasetFilters();
 
   const fetch = useCallback(
     async (

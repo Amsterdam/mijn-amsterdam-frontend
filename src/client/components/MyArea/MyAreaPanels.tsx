@@ -75,9 +75,11 @@ const StyledCheckbox = styled(Checkbox)`
   }
 `;
 
-const StyledLabel = styled(Label)`
+const StyledLabel = styled(Label)<{ isDimmed?: boolean }>`
   display: flex;
   align-items: center;
+  opacity: ${(props) => (props.isDimmed ? '0.5' : 1)};
+  font-weight: ${(props) => (props.isDimmed ? 'normal' : '500')};
   > span {
     margin: 0.5rem;
   }
@@ -136,6 +138,7 @@ interface DatasetControlCheckboxProps {
   onChange: (event: React.FormEvent<HTMLInputElement>) => void;
   isChecked: boolean;
   isIndeterminate: boolean;
+  isDimmed?: boolean;
 }
 
 export function DatasetControlCheckbox({
@@ -143,10 +146,11 @@ export function DatasetControlCheckbox({
   label,
   isChecked,
   isIndeterminate,
+  isDimmed,
   onChange,
 }: DatasetControlCheckboxProps) {
   return (
-    <StyledLabel htmlFor={id} label={label}>
+    <StyledLabel htmlFor={id} label={label} isDimmed={isDimmed}>
       <StyledCheckbox
         id={id}
         checked={isChecked}
@@ -180,6 +184,11 @@ function DatasetPropertyFilterPanel({
           filterSelection[datasetId][propertyId] &&
           filterSelection[datasetId][propertyId].values;
 
+        const filterSelectionValuesRefined =
+          filterSelection[datasetId] &&
+          filterSelection[datasetId][propertyId] &&
+          filterSelection[datasetId][propertyId].valuesRefined;
+
         const values = property.values
           ? property.values
           : filterSelectionValues
@@ -189,6 +198,7 @@ function DatasetPropertyFilterPanel({
         const propertyValues = Object.entries(values).sort((a, b) => {
           return b[1] - a[1];
         });
+
         return (
           <DatasetControlListItem key={propertyId}>
             {property.title && (
@@ -214,11 +224,22 @@ function DatasetPropertyFilterPanel({
                     key={label}
                     isChecked={isChecked}
                     id={label}
+                    isDimmed={
+                      filterSelectionValuesRefined
+                        ? !filterSelectionValuesRefined[value]
+                        : false
+                    }
                     label={
                       <>
                         {capitalizeFirstLetter(label)}{' '}
-                        {featureCount > 1 ? (
-                          <FeatureCount>({featureCount})</FeatureCount>
+                        {featureCount >= 1 ? (
+                          <FeatureCount>
+                            (
+                            {filterSelectionValuesRefined
+                              ? filterSelectionValuesRefined[value] || 0
+                              : featureCount}
+                            )
+                          </FeatureCount>
                         ) : (
                           ''
                         )}

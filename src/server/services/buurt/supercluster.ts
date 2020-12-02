@@ -4,13 +4,14 @@ import {
   DatasetFilterSelection,
   DatasetId,
 } from '../../../universal/config/buurt';
-import {
-  createDynamicFilterConfig,
-  filterDatasetFeatures,
-  loadDatasetFeatures,
-} from './buurt';
+import { loadDatasetFeatures } from './buurt';
 import { MaPointFeature } from './datasets';
-import { getDatasetEndpointConfig } from './helpers';
+import {
+  filterDatasetFeatures,
+  filterPointFeaturesWithinBoundingBox,
+  getDatasetEndpointConfig,
+  refineFilterSelection,
+} from './helpers';
 
 const superClusterCache = new memoryCache.Cache<string, any>();
 
@@ -86,9 +87,19 @@ export async function loadClusterDatasets(
     errors,
   } = await loadDatasetFeatures(sessionID, configs);
 
+  const featuresWithinBoundingbox = filterPointFeaturesWithinBoundingBox(
+    features,
+    bbox
+  );
+
   let clusters: PointFeature<AnyProps>[] = [];
 
-  const filteredFeatures = filterDatasetFeatures(features, datasetIds, filters);
+  const filteredFeatures = filterDatasetFeatures(
+    featuresWithinBoundingbox,
+    datasetIds,
+    filters
+  );
+
   const superClusterIndex = await generateSuperCluster(filteredFeatures);
 
   if (superClusterIndex && bbox && zoom) {
@@ -101,7 +112,7 @@ export async function loadClusterDatasets(
 
   const response = {
     clusters,
-    filters: filterSelection,
+    filters: refineFilterSelection(featuresWithinBoundingbox, filterSelection),
     errors,
   };
 

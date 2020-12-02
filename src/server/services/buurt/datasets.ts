@@ -62,8 +62,6 @@ export const ACCEPT_CRS_4326 = {
   'Accept-Crs': 'EPSG:4326', // Will return coordinates in [lng/lat] format
 };
 
-const CONTAINER_STATUS_ACTIVE = 1;
-
 export interface DatasetConfig {
   datasetIds?: DatasetId[];
   listUrl?: string | ((config: DatasetConfig) => string);
@@ -81,7 +79,7 @@ export interface DatasetConfig {
   requestConfig?: DataRequestConfig;
   cache?: boolean;
   cacheTimeMinutes?: number;
-  featureType: 'Point' | 'MultiPolygon' | 'MultiLineString';
+  featureType: 'Point' | 'Polygon' | 'MultiPolygon' | 'MultiLineString';
   zIndex?: zIndexPane;
   additionalStaticPropertyNames?: DatasetPropertyName[];
 }
@@ -394,8 +392,6 @@ function transformParkeerzoneCoords(
   const results =
     responseData?.features || getApiEmbeddedResponse(datasetId, responseData);
   const collection: DatasetFeatures = [];
-
-  console.log(results);
 
   if (results && results.length) {
     for (const feature of results) {

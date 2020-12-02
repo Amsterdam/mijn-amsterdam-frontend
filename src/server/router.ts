@@ -6,12 +6,14 @@ import { BffEndpoints } from './config';
 import { getPassthroughRequestHeaders } from './helpers/app';
 import { fetchCMSCONTENT, loadClusterDatasets } from './services';
 import {
-  filterDatasetFeatures,
   loadDatasetFeatures,
   loadFeatureDetail,
   loadPolylineFeatures,
 } from './services/buurt/buurt';
-import { getDatasetEndpointConfig } from './services/buurt/helpers';
+import {
+  filterDatasetFeatures,
+  getDatasetEndpointConfig,
+} from './services/buurt/helpers';
 import {
   loadServicesAll,
   loadServicesSSE,

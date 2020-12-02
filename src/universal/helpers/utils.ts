@@ -31,7 +31,7 @@ export function isInteralUrl(url: string) {
 
 export function isPrivateRoute(pathname: string) {
   return PrivateRoutes.some(
-    path =>
+    (path) =>
       !!matchPath(pathname, {
         path,
         exact: true,
@@ -50,7 +50,7 @@ export function directApiUrl(url: string) {
 
 export function range(a: number, b: number) {
   return Array.from(
-    (function*(x, y) {
+    (function* (x, y) {
       while (x <= y) yield x++;
     })(a, b)
   );
@@ -102,7 +102,7 @@ export function hash(str: string) {
 // Recursively omit keys from objects. Important: Objects with all keys omitted will remain in the data empty.
 export function deepOmitKeys(data: any, omitKeys: string[] = []): any {
   if (Array.isArray(data)) {
-    return data.map(item => deepOmitKeys(data, omitKeys));
+    return data.map((item) => deepOmitKeys(data, omitKeys));
   } else if (data !== null && typeof data === 'object') {
     const rdata: Record<string, any> = omit(data, omitKeys);
     for (const [key, value] of Object.entries(rdata)) {
@@ -125,4 +125,15 @@ export function isRecentCase(datePublished: string, compareDate: Date) {
     differenceInCalendarDays(compareDate, new Date(datePublished)) <
     DAYS_KEEP_RECENT
   );
+}
+
+export function recLookup(obj: any, path: string): any {
+  if (!obj) {
+    return;
+  }
+  const parts = path.split('.');
+  if (parts.length === 1) {
+    return obj[parts[0]];
+  }
+  return recLookup(obj[parts[0]], parts.slice(1).join('.'));
 }

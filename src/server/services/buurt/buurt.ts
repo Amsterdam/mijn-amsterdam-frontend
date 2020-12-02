@@ -1,10 +1,6 @@
-import { LatLngTuple } from 'leaflet';
 import {
   DatasetFilterSelection,
   DatasetId,
-  DatasetPropertyFilter,
-  DATASETS,
-  getDatasetCategoryId,
 } from '../../../universal/config/buurt';
 import { IS_AP } from '../../../universal/config/env';
 import { apiErrorResult, apiSuccesResult } from '../../../universal/helpers';
@@ -16,16 +12,22 @@ import {
 import { DataRequestConfig } from '../../config';
 import { requestData } from '../../helpers';
 import FileCache from '../../helpers/file-cache';
+import { refineFilterSelection } from './helpers';
 import {
   ACCEPT_CRS_4326,
   BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
   DatasetConfig,
   DatasetFeatures,
   DatasetResponse,
-  MaFeature,
-  MaPointFeature,
 } from './datasets';
-import { getDatasetEndpointConfig, recursiveCoordinateSwap } from './helpers';
+import {
+  createDynamicFilterConfig,
+  filterDatasetFeatures,
+  filterPolylineFeaturesWithinBoundingBox,
+  getDatasetEndpointConfig,
+  getDynamicDatasetFilters,
+  recursiveCoordinateSwap,
+} from './helpers';
 
 const fileCaches: Record<string, FileCache> = {};
 
@@ -39,135 +41,27 @@ const fileCache = (id: string, cacheTimeMinutes: number) => {
   return fileCaches[id];
 };
 
-export function isCoordWithingBoundingBox(
-  bbox: [number, number, number, number],
-  coord: LatLngTuple
-) {
-  const [x1, y1, x2, y2] = bbox;
-  const y = coord[0];
-  const x = coord[1];
+function datasetApiResult(results: ApiResponse<DatasetResponse | null>[]) {
+  const errors = results
+    .filter(
+      (result): result is ApiErrorResponse<null> => result.status === 'ERROR'
+    )
+    .map((result) => ({ id: result.id, message: result.message }));
 
-  if (x1 <= x && x <= x2 && y1 <= y && y <= y2) {
-    return true;
-  }
-
-  return false;
-}
-
-// Flatten GeoJSON for easy processing
-function flatten(input: any[]) {
-  const flattened: LatLngTuple[] = [];
-  for (const value of input) {
-    if (Array.isArray(value) && typeof value[0] === 'number') {
-      flattened.push(value as LatLngTuple);
-    } else if (Array.isArray(value)) {
-      flattened.push(...flatten(value));
-    }
-  }
-  return flattened;
-}
-
-export function filterPolylineFeaturesWithinBoundingBox(
-  features: MaFeature[],
-  bbox: [number, number, number, number]
-) {
-  const featuresFiltered = [];
-  const hasCoord = (coord: LatLngTuple) =>
-    isCoordWithingBoundingBox(bbox, coord);
-
-  let i = 0;
-  let len = features.length;
-
-  for (i; i < len; i += 1) {
-    const coords = flatten(features[i].geometry.coordinates);
-    if (coords.some(hasCoord)) {
-      featuresFiltered.push(features[i]);
-    }
-  }
-
-  return featuresFiltered;
-}
-
-function getDynamicDatasetFilters(datasetId: DatasetId) {
-  const datasetCategoryId = getDatasetCategoryId(datasetId);
-
-  if (!datasetCategoryId) {
-    return;
-  }
-
-  const propertyFilters =
-    DATASETS[datasetCategoryId].datasets[datasetId]?.filters;
-
-  if (!propertyFilters) {
-    return;
-  }
-
-  // Only select property filters that don't have static values defined.
-  return Object.fromEntries(
-    Object.entries(propertyFilters).filter(([propertyId, property]) => {
-      return !property.values?.length;
-    })
+  const responses = results.filter(
+    (result): result is ApiSuccessResponse<DatasetResponse> =>
+      result.status === 'OK' && result.content !== null
   );
-}
 
-export function createDynamicFilterConfig(
-  features: MaFeature[],
-  filterConfig: DatasetPropertyFilter
-) {
-  // const filters: DatasetPropertyFilter = {};
-  const propertyNames = Object.keys(filterConfig);
-
-  const filters: DatasetPropertyFilter = {};
-
-  for (const feature of features) {
-    for (const propertyName of propertyNames) {
-      // Get property value from object.filters or from object itself
-      const value = (feature?.properties || feature)[propertyName];
-
-      if (!filters[propertyName]) {
-        filters[propertyName] = {
-          values: {},
-        };
-      }
-
-      const values = filters[propertyName]?.values || {};
-      values[value] = (values[value] || 0) + 1;
-      filters[propertyName].values = values;
-    }
-  }
-
-  return filters;
-}
-
-// Matches feature properties to requested filters
-function isFilterMatch(feature: MaFeature, filters: DatasetPropertyFilter) {
-  return Object.entries(filters).every(([propertyName, valueConfig]) => {
-    const propertyValues = valueConfig.values;
-    return (
-      propertyValues &&
-      (!Object.keys(propertyValues).length ||
-        (propertyName in feature.properties &&
-          feature.properties[propertyName] in propertyValues))
-    );
-  });
-}
-
-export function filterDatasetFeatures(
-  features: DatasetFeatures,
-  activeDatasetIds: DatasetId[],
-  filters: DatasetFilterSelection
-) {
-  return features
-    .filter((feature): feature is MaPointFeature => {
-      return activeDatasetIds.includes(feature.properties.datasetId);
-    })
-    .filter((feature) => {
-      if (filters[feature.properties.datasetId]) {
-        return isFilterMatch(feature, filters[feature.properties.datasetId]);
-      }
-      // Always return true if dataset is unfiltered. Meaning, show everything.
-      return true;
-    });
+  return {
+    features: responses.flatMap((response) => response.content.features),
+    filters: Object.fromEntries(
+      responses
+        .filter((response) => !!response.content.filters)
+        .map((response) => [response.id, response.content.filters])
+    ) as DatasetFilterSelection,
+    errors,
+  };
 }
 
 async function fetchDataset(
@@ -275,27 +169,6 @@ async function fetchDataset(
   return response;
 }
 
-function datasetApiResult(results: ApiResponse<DatasetResponse | null>[]) {
-  const errors = results
-    .filter(
-      (result): result is ApiErrorResponse<null> => result.status === 'ERROR'
-    )
-    .map((result) => ({ id: result.id, message: result.message }));
-
-  const responses = results.filter(
-    (result): result is ApiSuccessResponse<DatasetResponse> =>
-      result.status === 'OK' && result.content !== null
-  );
-
-  return {
-    features: responses.flatMap((response) => response.content.features),
-    filters: Object.fromEntries(
-      responses.map((response) => [response.id, response.content.filters])
-    ) as DatasetFilterSelection,
-    errors,
-  };
-}
-
 export async function loadDatasetFeatures(
   sessionID: SessionID,
   configs: Array<[string, DatasetConfig]>
@@ -334,6 +207,7 @@ export async function loadPolylineFeatures(
   const configs = getDatasetEndpointConfig(datasetIds, [
     'MultiPolygon',
     'MultiLineString',
+    'Polygon',
   ]);
   type ApiDatasetResponse = ApiResponse<DatasetResponse | null>;
   const requests: Array<Promise<ApiDatasetResponse>> = [];
@@ -367,6 +241,7 @@ export async function loadPolylineFeatures(
 
   return {
     ...result,
+    filters: refineFilterSelection(featuresWithinBoundingbox, result.filters),
     features: featuresFiltered,
   };
 }
