@@ -211,12 +211,11 @@ export function createDynamicFilterConfig(
 function isFilterMatch(feature: MaFeature, filters: DatasetPropertyFilter) {
   return Object.entries(filters).every(([propertyName, valueConfig]) => {
     const propertyValues = valueConfig.values;
-    return (
-      propertyValues &&
-      (!Object.keys(propertyValues).length ||
-        (propertyName in feature.properties &&
-          feature.properties[propertyName] in propertyValues))
-    );
+    const propVal = feature.properties[propertyName];
+    const isFilteredValue = propertyValues ? propVal in propertyValues : false;
+    return propertyValues
+      ? !Object.keys(propertyValues).length || isFilteredValue
+      : true;
   });
 }
 
