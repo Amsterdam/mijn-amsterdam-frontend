@@ -245,19 +245,12 @@ function loadServices(
     | PrivateCommercialServices,
   filterIds: SessionID[] = []
 ) {
-  console.info(
-    req.query,
-    'Fetching services in map ',
-    Object.keys(serviceMap),
-    'filtering ids',
-    filterIds
-  );
   return Object.entries(serviceMap)
     .filter(([serviceID]) => !filterIds.length || filterIds.includes(serviceID))
     .map(([serviceID, fetchService]) => {
       // Return service result as Object like { SERVICE_ID: result }
       return (fetchService(sessionID, req) as Promise<any>)
-        .then((result) => ({
+        .then(result => ({
           [serviceID]: result,
         }))
         .catch((error: Error) => {
@@ -295,7 +288,7 @@ export async function loadServicesSSE(req: Request, res: Response) {
 
   // Send service results to tips api for personalized tips
   const tipsPromise = loadServicesTipsRequestData(sessionID, req).then(
-    (responseData) => {
+    responseData => {
       return { TIPS: responseData };
     }
   );
