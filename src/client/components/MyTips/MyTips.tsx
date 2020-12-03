@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { isExternalUrl } from '../../../universal/helpers';
+import { directApiUrlByProfileType } from '../../../universal/helpers/utils';
 import { MyTip } from '../../../universal/types';
 import { IconChevronRight, IconClose, IconInfo } from '../../assets/icons';
 import {
@@ -11,6 +12,7 @@ import {
   useSessionCallbackOnceDebounced,
 } from '../../hooks/analytics.hook';
 import { useOptIn } from '../../hooks/useOptIn';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 import Linkd, { Button, IconButton } from '../Button/Button';
 import Heading from '../Heading/Heading';
 import LoadingContent, { BarConfig } from '../LoadingContent/LoadingContent';
@@ -25,21 +27,29 @@ function tipTitle(title: string) {
   return `Tip: ${title}`;
 }
 
+const PLACEHOLDER_URL =
+  'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==';
+
 const Tip = ({ tip }: TipProps) => {
-  const [imgUrl, setImgUrl] = useState(
-    'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='
-  );
+  const [imgUrl, setImgUrl] = useState(PLACEHOLDER_URL);
+  const profileType = useProfileTypeValue();
+
+  const tipImgUrl = tip.imgUrl
+    ? directApiUrlByProfileType(tip.imgUrl, profileType)
+    : false;
 
   useEffect(() => {
-    const image = new Image();
-    const url = tip.imgUrl;
-    if (url) {
-      image.addEventListener('load', () => {
-        setImgUrl(url);
-      });
-      image.src = url;
+    if (!tipImgUrl) {
+      return;
     }
-  }, [tip.imgUrl]);
+    const image = new Image();
+    if (tipImgUrl) {
+      image.addEventListener('load', () => {
+        setImgUrl(tipImgUrl);
+      });
+      image.src = tipImgUrl;
+    }
+  }, [tipImgUrl]);
 
   const isExternal = isExternalUrl(tip.link.to);
   const tipTrackingCategory = tip.isPersonalized
