@@ -7,7 +7,7 @@ import {
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
   defaultDateFormat,
-  directApiUrl,
+  directApiUrlByProfileType,
   isError,
   isLoading,
 } from '../../../universal/helpers';
@@ -33,6 +33,7 @@ import StatusLine, {
 } from '../../components/StatusLine/StatusLine';
 import { requestApiData, useDataApi } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 import styles from './VergunningDetail.module.scss';
 
 function useVergunningStatusLineItems(VergunningItem?: Vergunning) {
@@ -109,17 +110,20 @@ export default () => {
     apiPristineResult([])
   );
   const { id } = useParams<{ id: string }>();
-
+  const profileType = useProfileTypeValue();
   const VergunningItem = VERGUNNINGEN.content?.find(item => item.id === id);
   const noContent = !isLoading(VERGUNNINGEN) && !VergunningItem;
-
   const statusLineItems = useVergunningStatusLineItems(VergunningItem);
-  const documentsUrl = VergunningItem?.documentsUrl;
+  const documentsUrl = VergunningItem?.documentsUrl
+    ? directApiUrlByProfileType(VergunningItem?.documentsUrl, profileType)
+    : false;
 
   // Fetch the documents for this Item
   useEffect(() => {
     if (documentsUrl) {
-      fetchDocuments({ url: directApiUrl(documentsUrl) });
+      fetchDocuments({
+        url: documentsUrl,
+      });
     }
   }, [documentsUrl, fetchDocuments]);
 
