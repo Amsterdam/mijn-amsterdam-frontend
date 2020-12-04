@@ -1,4 +1,5 @@
 import { useMapInstance } from '@amsterdam/react-maps';
+import classnames from 'classnames';
 import L, {
   LatLngLiteral,
   LeafletEventHandlerFn,
@@ -13,7 +14,6 @@ import {
 import { getIconHtml } from './datasets';
 import { processFeatures } from './MyArea.helpers';
 import styles from './MyAreaDatasets.module.scss';
-import classnames from 'classnames';
 
 function createClusterMarker(
   feature: MaSuperClusterFeature,
@@ -90,6 +90,7 @@ export function MaSuperClusterLayer({
 
   useEffect(() => {
     markerLayer.clearLayers();
+
     if (markerLayer && clusterFeatures.length) {
       markerLayer.addTo(map);
       markerLayer.addData(clusterFeatures as any); // Type mismatch here.

@@ -1,6 +1,11 @@
 import React from 'react';
-import { getDatasetCategoryId } from '../../../../universal/config/buurt';
+import {
+  getDatasetCategoryId,
+  DatasetCategoryId,
+} from '../../../../universal/config/buurt';
+import Alert from '../../Alert/Alert';
 import LoadingContent from '../../LoadingContent/LoadingContent';
+import { useLoadingFeature, useSelectedFeature } from '../MyArea.hooks';
 import MyArePanelContentAfval from './Afval';
 import MyArePanelContentBedrijvenInvesteringsZones from './BedrijvenInvesteringsZones';
 import MyArePanelContentBekendmaking from './Bekendmaking';
@@ -8,60 +13,90 @@ import MyArePanelContentEvenementen from './Evenementen';
 import { GenericContent } from './GenericBase';
 import MyArePanelContentParkeren from './Parkeren';
 import MyArePanelContentSport from './Sport';
+import styles from './PanelContent.module.scss';
 
-interface MyAreaPanelContentGenericProps {
-  panelItem: any;
-  datasetId: string;
+interface MyAreaPanelContentSwitchProps {
+  datasetCategoryId: DatasetCategoryId;
+  feature: any;
 }
 
-export default function MyAreaPanelContentGeneric({
-  datasetId,
-  panelItem,
-}: MyAreaPanelContentGenericProps) {
-  if (!panelItem) {
-    return <LoadingContent />;
-  }
-
-  const datasetCategoryId = getDatasetCategoryId(datasetId);
-
+function MyAreaPanelContentSwitch({
+  datasetCategoryId,
+  feature,
+}: MyAreaPanelContentSwitchProps) {
   switch (datasetCategoryId) {
     case 'sport':
       return (
-        <MyArePanelContentSport datasetId={datasetId} panelItem={panelItem} />
+        <MyArePanelContentSport
+          datasetId={feature?.datasetId}
+          panelItem={feature}
+        />
       );
     case 'afvalcontainers':
       return (
-        <MyArePanelContentAfval datasetId={datasetId} panelItem={panelItem} />
+        <MyArePanelContentAfval
+          datasetId={feature?.datasetId}
+          panelItem={feature}
+        />
       );
     case 'evenementen':
       return (
         <MyArePanelContentEvenementen
-          datasetId={datasetId}
-          panelItem={panelItem}
+          datasetId={feature?.datasetId}
+          panelItem={feature}
         />
       );
     case 'bekendmakingen':
       return (
         <MyArePanelContentBekendmaking
-          datasetId={datasetId}
-          panelItem={panelItem}
+          datasetId={feature?.datasetId}
+          panelItem={feature}
         />
       );
     case 'parkeren':
       return (
         <MyArePanelContentParkeren
-          datasetId={datasetId}
-          panelItem={panelItem}
+          datasetId={feature?.datasetId}
+          panelItem={feature}
         />
       );
     case 'bedrijveninvesteringszones':
       return (
         <MyArePanelContentBedrijvenInvesteringsZones
-          datasetId={datasetId}
-          panelItem={panelItem}
+          datasetId={feature?.datasetId}
+          panelItem={feature}
         />
       );
   }
+  return <GenericContent datasetId={feature?.datasetId} panelItem={feature} />;
+}
 
-  return <GenericContent datasetId={datasetId} panelItem={panelItem} />;
+export default function MyAreaPanelContentGeneric() {
+  const [selectedFeature] = useSelectedFeature();
+  const [loadingFeature] = useLoadingFeature();
+
+  if (!selectedFeature || !loadingFeature?.datasetId) {
+    return <LoadingContent />;
+  }
+
+  if (loadingFeature?.isError) {
+    return (
+      <Alert type="warning">
+        <p>
+          Er kan op dit moment niet meer informatie getoond worden over dit
+          item.
+        </p>
+      </Alert>
+    );
+  }
+
+  const datasetCategoryId = getDatasetCategoryId(selectedFeature.datasetId);
+  // const isLoading = selectedFeature.id !== loadingFeature.id;
+
+  return (
+    <MyAreaPanelContentSwitch
+      datasetCategoryId={datasetCategoryId!}
+      feature={selectedFeature}
+    />
+  );
 }

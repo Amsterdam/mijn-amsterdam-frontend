@@ -1,19 +1,18 @@
 import {
   BaseLayerToggle,
   Map,
-  MapPanelProvider,
   ViewerContainer,
   Zoom,
 } from '@amsterdam/arm-core';
-import { SnapPoint } from '@amsterdam/arm-core/es/components/MapPanel/constants';
 import {
   AERIAL_AMSTERDAM_LAYERS,
   DEFAULT_AMSTERDAM_LAYERS,
 } from '@amsterdam/arm-core/lib/constants';
 import { ThemeProvider } from '@amsterdam/asc-ui';
-import L from 'leaflet';
+import { useMapInstance } from '@amsterdam/react-maps';
+import L, { TileLayerOptions } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
@@ -30,9 +29,14 @@ import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import { HomeIconMarker } from './MyAreaMarker';
 import MyAreaPanels from './MyAreaPanels';
 
-const StyledViewerContainer = styled(ViewerContainer)<{ leftOffset: string }>`
-  height: 100%;
-  left: ${(props) => props.leftOffset};
+const StyledViewerContainer = styled(ViewerContainer)<{
+  mapOffset: { left: string; bottom: string };
+}>`
+  transition: left 200ms ease-out, bottom 200ms ease-out;
+  top: 0;
+  right: 0;
+  left: ${(props) => props.mapOffset?.left || '0'};
+  bottom: ${(props) => props.mapOffset?.bottom || '0'};
 `;
 
 const MyAreaMapContainer = styled.div`
@@ -55,12 +59,26 @@ const MyAreaMap = styled(Map)`
   position: absolute;
 `;
 
-const baseLayerOptions = {
+const baseLayerOptions: TileLayerOptions = {
   subdomains: ['t1', 't2', 't3', 't4'],
   tms: true,
   attribution:
     '<a href="https://github.com/amsterdam/amsterdam-react-maps">Amsterdam React Maps</a>',
 };
+
+function AttributionToggle() {
+  const isDesktop = useDesktopScreen();
+  const mapInstance = useMapInstance();
+
+  useEffect(() => {
+    const control = mapInstance.attributionControl.getContainer();
+    if (control) {
+      control.style.display = isDesktop ? 'block' : 'none';
+    }
+  }, [isDesktop, mapInstance]);
+
+  return null;
+}
 
 interface MyAreaProps {
   datasetIds?: string[];
@@ -110,11 +128,23 @@ export default function MyArea({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [mapOffsetLeft, setMapOffsetLeft] = useState('0');
+  const [mapOffset, setMapOffset] = useState({
+    left: '0',
+    bottom: isDesktop ? '0' : '3rem',
+  });
 
-  const onSetDrawerPosition = useCallback((drawerPosition: string) => {
-    setMapOffsetLeft(drawerPosition);
-  }, []);
+  const onTogglePanel = useCallback(
+    (isOpen: boolean) => {
+      if (isDesktop) {
+        setMapOffset(
+          isOpen
+            ? { left: '48rem', bottom: '0' }
+            : { left: '3rem', bottom: '0' }
+        );
+      }
+    },
+    [isDesktop]
+  );
 
   return (
     <ThemeProvider>
@@ -129,6 +159,7 @@ export default function MyArea({
               ).toLowerCase()}`}
               options={mapOptions}
             >
+              <AttributionToggle />
               {HOME.content?.address && !!center && (
                 <HomeIconMarker
                   label={getFullAddress(HOME.content.address, true)}
@@ -138,7 +169,7 @@ export default function MyArea({
               )}
 
               <StyledViewerContainer
-                leftOffset={mapOffsetLeft}
+                mapOffset={mapOffset}
                 bottomRight={
                   <>
                     {HOME.content?.address && HOME.content?.latlng && (
@@ -166,14 +197,7 @@ export default function MyArea({
             )}
           </MyAreaMapOffset>
 
-          {!!showPanels && (
-            <MapPanelProvider
-              variant={isDesktop ? 'panel' : 'drawer'}
-              initialPosition={isDesktop ? SnapPoint.Full : SnapPoint.Closed}
-            >
-              <MyAreaPanels onSetDrawerPosition={onSetDrawerPosition} />
-            </MapPanelProvider>
-          )}
+          {!!showPanels && <MyAreaPanels onTogglePanel={onTogglePanel} />}
         </MyAreaMapContainer>
       </MyAreaContainer>
     </ThemeProvider>

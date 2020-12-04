@@ -167,7 +167,6 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
         onUpdate={onUpdate}
         onMarkerClick={onMarkerClick}
       />
-      {/* <MyAreaClusterDatasets onMarkerClick={onMarkerClick} /> */}
     </>
   );
 }

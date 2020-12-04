@@ -1,8 +1,13 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import axios, { CancelTokenSource } from 'axios';
 import { LeafletEvent } from 'leaflet';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+} from 'react';
 import {
   atom,
   useRecoilState,
@@ -11,6 +16,7 @@ import {
 } from 'recoil';
 import {
   DatasetFeatures,
+  MaFeature,
   MaPointFeature,
   MaPolylineFeature,
   MaSuperClusterFeature,
@@ -68,13 +74,24 @@ export function useActiveDatasetIdsToFetch(featuresToCompare: DatasetFeatures) {
   }, [activeDatasetIds, featuresToCompare]);
 }
 
-interface SelectedFeature {
+interface LoadingFeature {
   datasetId?: string;
   id?: string;
-  markerData?: any | null;
+  isError?: boolean;
 }
 
-export const selectedFeatureAtom = atom<SelectedFeature | null>({
+export const loadingFeatureAtom = atom<LoadingFeature | null>({
+  key: 'loadingFeature',
+  default: null,
+});
+
+export function useLoadingFeature() {
+  return useRecoilState(loadingFeatureAtom);
+}
+
+type SelectedFeature = any;
+
+export const selectedFeatureAtom = atom<SelectedFeature>({
   key: 'selectedFeature',
   default: null,
 });
@@ -92,55 +109,34 @@ export function useSetSelectedFeature() {
 }
 
 export function useFetchPanelFeature() {
-  const params = useParams<{
-    datasetId?: string;
-    id?: string;
-  }>();
-  const [selectedFeatureState, setSelectedFeature] = useSelectedFeature();
-
-  const selectedFeature = useMemo(() => {
-    if (!selectedFeatureState) {
-      return {
-        ...params,
-      };
-    }
-    return selectedFeatureState;
-  }, [selectedFeatureState, params]);
-
-  const { datasetId, id } = selectedFeature;
+  const setSelectedFeature = useSetSelectedFeature();
+  const [loadingFeature, setLoadingFeature] = useLoadingFeature();
 
   useEffect(() => {
-    if (!id || !datasetId) {
+    if (!loadingFeature) {
       return;
     }
 
     let source = axios.CancelToken.source();
+    const { datasetId, id } = loadingFeature;
 
     axios({
       url: `${BFFApiUrls.MAP_DATASETS}/${datasetId}/${id}`,
       cancelToken: source.token,
     })
-      .then(({ data: { content: markerData } }) => {
-        setSelectedFeature({
-          id,
-          datasetId,
-          markerData,
-        });
+      .then(({ data: { content: feature } }) => {
+        setSelectedFeature({ ...feature, datasetId });
       })
       .catch((error) => {
         if (!axios.isCancel(error)) {
-          setSelectedFeature({
-            id,
-            datasetId,
-            markerData: 'error',
-          });
+          setLoadingFeature({ isError: true });
         }
       });
 
     return () => {
       source.cancel();
     };
-  }, [datasetId, id, setSelectedFeature]);
+  }, [loadingFeature, setSelectedFeature, setLoadingFeature]);
 }
 
 const selectedFeatureSelector = styles['Feature--selected'];
@@ -148,15 +144,20 @@ const selectedFeatureSelector = styles['Feature--selected'];
 export function useSelectedFeatureCSS(
   features: Array<MaSuperClusterFeature | MaPolylineFeature>
 ) {
-  const selectedFeature = useSelectedFeatureValue();
+  const [loadingFeature] = useLoadingFeature();
   const map = useMapInstance();
-  const selectedFeatureId = selectedFeature?.id;
+  const loadingFeatureId = loadingFeature?.id;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (map) {
       map.eachLayer((layer: any) => {
         const id = layer?.feature?.properties?.id;
-        if (id === selectedFeatureId && layer.getElement) {
+        if (
+          id &&
+          loadingFeatureId &&
+          id === loadingFeatureId &&
+          layer.getElement
+        ) {
           const element = layer.getElement();
           // Add selected class to marker
           document
@@ -166,27 +167,29 @@ export function useSelectedFeatureCSS(
         }
       });
     }
-  }, [map, selectedFeatureId, features]);
+  }, [map, loadingFeatureId, features]);
 }
 
 export function useOnMarkerClick() {
-  const setSelectedFeature = useSetSelectedFeature();
-  const selectedFeature = useSelectedFeatureValue();
-  const selectedFeatureId = selectedFeature?.id;
+  const [loadingFeature, setLoadingFeature] = useLoadingFeature();
+  const loadingFeatureId = loadingFeature?.id;
+
   return useCallback(
     (event: LeafletEvent) => {
       const id = event?.propagatedFrom?.feature?.properties?.id;
       const datasetId = event?.propagatedFrom?.feature?.properties?.datasetId;
 
-      // Using DOM access here because comparing against selectedFeature will invalidate the memoized calback constantly which re-renders the layer component
-      if (selectedFeatureId !== id) {
-        setSelectedFeature({
+      // Using DOM access here because comparing against loadingFeature will invalidate the memoized calback constantly which re-renders the layer component
+      if (loadingFeatureId !== id) {
+        setLoadingFeature({
+          // ...loadingFeature,
           datasetId,
           id,
         });
       }
     },
-    [setSelectedFeature, selectedFeatureId]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   );
 }
 

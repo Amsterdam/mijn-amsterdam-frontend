@@ -1,16 +1,8 @@
-import {
-  MapPanel,
-  MapPanelContent,
-  MapPanelContext,
-  MapPanelDrawer,
-} from '@amsterdam/arm-core';
-import { SnapPoint } from '@amsterdam/arm-core/lib/components/MapPanel/constants';
 import { Checkbox, Label } from '@amsterdam/asc-ui';
 import React, {
+  PropsWithChildren,
   ReactNode,
   useCallback,
-  useContext,
-  useEffect,
   useMemo,
 } from 'react';
 import styled from 'styled-components';
@@ -27,8 +19,10 @@ import {
   DatasetControl,
   DatasetPropertyFilter,
 } from '../../../universal/config/buurt';
-import { useDesktopScreen } from '../../hooks';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 import Alert from '../Alert/Alert';
+import { CloseButton } from '../Button/Button';
 import {
   filterActiveDatasets,
   useActiveDatasetFilters,
@@ -37,14 +31,12 @@ import {
   useDatasetFilterSelection,
   useFetchPanelFeature,
   useFilterControlItemChange,
+  useLoadingFeature,
   useSelectedFeature,
 } from './MyArea.hooks';
 import MyAreaCollapsiblePanel from './MyAreaCollapsiblePanel';
+import { PanelComponent, PanelContent } from './MyAreaPanelComponent';
 import MyAreaPanelContent from './PanelContent/Generic';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
-
-const MapPanelContentDetail = styled(MapPanelContent)``;
 
 const DatasetCategoryList = styled.ol`
   margin: 0;
@@ -403,38 +395,23 @@ function DatasetControlPanel({
 }
 
 interface MyAreaPanels {
-  onSetDrawerPosition: (drawerPosition: string) => void;
+  onTogglePanel: (isOpen: boolean) => void;
 }
 
-export default function MyAreaPanels({ onSetDrawerPosition }: MyAreaPanels) {
-  const isDesktop = useDesktopScreen();
+export default function MyAreaPanels({ onTogglePanel }: MyAreaPanels) {
   const profileType = useProfileTypeValue();
-  const PanelComponent = isDesktop ? MapPanel : MapPanelDrawer;
-  const { setPositionFromSnapPoint, drawerPosition } = useContext(
-    MapPanelContext
-  );
   const [selectedFeature, setSelectedFeature] = useSelectedFeature();
+  const [loadingFeature, setLoadingFeature] = useLoadingFeature();
   const [activeDatasetIds] = useActiveDatasetIds();
-
-  useEffect(() => {
-    if (selectedFeature !== null) {
-      setPositionFromSnapPoint(SnapPoint.Full);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedFeature]);
-
-  useEffect(() => {
-    onSetDrawerPosition(drawerPosition);
-  }, [drawerPosition, onSetDrawerPosition]);
-
   const onControlItemChange = useControlItemChange();
   const onFilterControlItemChange = useFilterControlItemChange();
 
+  useFetchPanelFeature();
+
   const onCloseDetailPanel = useCallback(() => {
     setSelectedFeature(null);
-  }, [setSelectedFeature]);
-
-  useFetchPanelFeature();
+    setLoadingFeature(null);
+  }, [setSelectedFeature, setLoadingFeature]);
 
   const datasets = useMemo(() => {
     return Object.entries(DATASETS).filter(([categoryId, category]) => {
@@ -445,9 +422,11 @@ export default function MyAreaPanels({ onSetDrawerPosition }: MyAreaPanels) {
     });
   }, [profileType]);
 
+  const isFeatureDetailLoading = !!loadingFeature?.id;
+
   return (
-    <PanelComponent>
-      <MapPanelContent animate stackOrder={0}>
+    <PanelComponent isOpen={true} onTogglePanel={onTogglePanel}>
+      <PanelContent zIndex={402} isActive={!isFeatureDetailLoading}>
         <DatasetCategoryList>
           {datasets.map(([categoryId, category]) => (
             <DatasetControlListItem key={categoryId}>
@@ -461,28 +440,14 @@ export default function MyAreaPanels({ onSetDrawerPosition }: MyAreaPanels) {
             </DatasetControlListItem>
           ))}
         </DatasetCategoryList>
-        {selectedFeature?.id && selectedFeature?.datasetId && (
-          <MapPanelContentDetail
-            stackOrder={3}
-            animate
-            onClose={onCloseDetailPanel}
-          >
-            {selectedFeature.markerData !== 'error' ? (
-              <MyAreaPanelContent
-                datasetId={selectedFeature.datasetId}
-                panelItem={selectedFeature.markerData}
-              />
-            ) : (
-              <Alert type="warning">
-                <p>
-                  Er kan op dit moment niet meer informatie getoond worden over
-                  dit item.
-                </p>
-              </Alert>
-            )}
-          </MapPanelContentDetail>
-        )}
-      </MapPanelContent>
+      </PanelContent>
+      <PanelContent
+        zIndex={403}
+        isActive={isFeatureDetailLoading}
+        onClose={onCloseDetailPanel}
+      >
+        <MyAreaPanelContent />
+      </PanelContent>
     </PanelComponent>
   );
 }

@@ -1,4 +1,5 @@
 import { useState, useCallback, useLayoutEffect } from 'react';
+import { useDebouncedCallback } from 'use-debounce/lib';
 
 function getSize(el: HTMLElement | null) {
   if (!el) {
@@ -16,9 +17,7 @@ export function useComponentSize(el: HTMLElement | null) {
 
   const handleResize = useCallback(
     function handleResize() {
-      if (el) {
-        setComponentSize(getSize(el));
-      }
+      setComponentSize(getSize(el));
     },
     [el, setComponentSize]
   );

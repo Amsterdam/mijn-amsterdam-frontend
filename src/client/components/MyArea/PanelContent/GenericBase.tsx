@@ -3,6 +3,7 @@ import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import { DATASETS, getDatasetCategoryId } from '../../../../universal/config';
 import JsonString from './JsonString';
+import { usePhoneScreen } from '../../../hooks/media.hook';
 
 const SuperTitle = styled(Heading)`
   font-size: 1.6rem;
@@ -12,8 +13,8 @@ const SuperTitle = styled(Heading)`
   margin-bottom: 1rem;
 `;
 
-const Title = styled(Heading)`
-  font-size: 3rem;
+const Title = styled(Heading)<{ isPhone: boolean }>`
+  font-size: ${(props) => (props.isPhone ? '2rem' : '3rem')};
   margin: 0;
   margin-bottom: 2rem;
 `;
@@ -47,10 +48,15 @@ export default function GenericBase({
   supTitle,
   children,
 }: GenericBaseProps) {
+  const isPhone = usePhoneScreen();
   return (
     <>
       {!!supTitle && <SuperTitle as="h4">{supTitle}</SuperTitle>}
-      {!!title && <Title as="h3">{title}</Title>}
+      {!!title && (
+        <Title as="h3" isPhone={isPhone}>
+          {title}
+        </Title>
+      )}
       {children}
     </>
   );

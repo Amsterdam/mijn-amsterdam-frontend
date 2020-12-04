@@ -4,6 +4,7 @@ import Date from './Date';
 import Description from './Description';
 import GenericBase from './GenericBase';
 import Url from './Url';
+import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
 
 interface MyArePanelContentBekendmakingProps {
   panelItem: any;
@@ -15,13 +16,13 @@ export default function MyArePanelContentBekendmaking({
   panelItem,
 }: MyArePanelContentBekendmakingProps) {
   return (
-    <GenericBase title={panelItem.titel} supTitle="Bekendmakingen">
+    <GenericBase
+      title={capitalizeFirstLetter(panelItem.onderwerp)}
+      supTitle="Bekendmakingen"
+    >
       {!!panelItem.datePublished && <Date date={panelItem.datePublished} />}
       {!!panelItem.categorie && (
         <InfoDetail label="Categorie" value={panelItem.categorie} />
-      )}
-      {!!panelItem.onderwerp && (
-        <InfoDetail label="Onderwerp" value={panelItem.onderwerp} />
       )}
       {!!panelItem.datumTijdstip && <Date date={panelItem.datumTijdstip} />}
 
