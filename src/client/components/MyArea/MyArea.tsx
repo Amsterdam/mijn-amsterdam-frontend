@@ -27,8 +27,14 @@ import MyAreaHeader from './MyAreaHeader';
 import HomeControlButton from './MyAreaHomeControlButton';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import { HomeIconMarker } from './MyAreaMarker';
-import { PanelState } from './MyAreaPanelComponent';
+import {
+  PanelState,
+  DESKTOP_PANEL_WIDTH,
+  DESKTOP_PANEL_TOGGLE_BUTTON_WIDTH,
+  PREVIEW_PANEL_HEIGHT,
+} from './MyAreaPanelComponent';
 import MyAreaPanels from './MyAreaPanels';
+import { PhonePanelPadding } from './MyAreaPanelComponent';
 
 const StyledViewerContainer = styled(ViewerContainer)<{
   mapOffset: { left: string; bottom: string };
@@ -131,16 +137,29 @@ export default function MyArea({
 
   const [mapOffset, setMapOffset] = useState({
     left: '0',
-    bottom: isDesktop ? '0' : '3rem',
+    bottom: isDesktop ? '0' : `${PhonePanelPadding.TOP}px`,
   });
 
   const onTogglePanel = useCallback(
-    (state: PanelState) => {
+    (state: PanelState, panelHeight: number = PhonePanelPadding.TOP) => {
       if (isDesktop) {
         setMapOffset(
           state === PanelState.Open
-            ? { left: '48rem', bottom: '0' }
-            : { left: '3rem', bottom: '0' }
+            ? { left: `${DESKTOP_PANEL_WIDTH}px`, bottom: '0' }
+            : { left: `${DESKTOP_PANEL_TOGGLE_BUTTON_WIDTH}px`, bottom: '0' }
+        );
+      } else {
+        // TODO: Sensible value here, determine when we don't want the controls to be connected to the panel anymore
+        const bottomOffset =
+          panelHeight > 10 * PhonePanelPadding.TOP
+            ? PhonePanelPadding.TOP
+            : panelHeight;
+        setMapOffset(
+          state === PanelState.Open
+            ? { left: '0', bottom: `${bottomOffset}px` }
+            : state === PanelState.Preview
+            ? { left: '0', bottom: `${PREVIEW_PANEL_HEIGHT}px` }
+            : { left: '0', bottom: `${PhonePanelPadding.TOP}px` }
         );
       }
     },
@@ -168,7 +187,6 @@ export default function MyArea({
                   zoom={zoom}
                 />
               )}
-
               <StyledViewerContainer
                 mapOffset={mapOffset}
                 bottomRight={

@@ -3,6 +3,7 @@ import React, {
   PropsWithChildren,
   ReactNode,
   useCallback,
+  useEffect,
   useMemo,
 } from 'react';
 import styled from 'styled-components';
@@ -37,11 +38,14 @@ import {
 import MyAreaCollapsiblePanel from './MyAreaCollapsiblePanel';
 import {
   PanelComponent,
+  PanelComponentProps,
   PanelContent,
   PanelState,
+  PREVIEW_PANEL_HEIGHT,
 } from './MyAreaPanelComponent';
 import MyAreaPanelContent from './PanelContent/Generic';
 import { usePhoneScreen } from '../../hooks/media.hook';
+import { usePanelState } from './MyAreaPanelComponent';
 
 const DatasetCategoryList = styled.ol`
   margin: 0;
@@ -400,17 +404,18 @@ function DatasetControlPanel({
 }
 
 interface MyAreaPanels {
-  onTogglePanel: (state: PanelState) => void;
+  onTogglePanel: PanelComponentProps['onTogglePanel'];
 }
 
 export default function MyAreaPanels({ onTogglePanel }: MyAreaPanels) {
   const profileType = useProfileTypeValue();
-  const [, setSelectedFeature] = useSelectedFeature();
+  const [selectedFeature, setSelectedFeature] = useSelectedFeature();
   const [loadingFeature, setLoadingFeature] = useLoadingFeature();
   const [activeDatasetIds] = useActiveDatasetIds();
   const onControlItemChange = useControlItemChange();
   const onFilterControlItemChange = useFilterControlItemChange();
-  const isMobile = usePhoneScreen();
+  const isPhone = usePhoneScreen();
+  const [currentPanelState, setPanelState] = usePanelState();
 
   useFetchPanelFeature();
 
@@ -430,12 +435,29 @@ export default function MyAreaPanels({ onTogglePanel }: MyAreaPanels) {
 
   const isFeatureDetailLoading = !!loadingFeature?.id;
 
+  // Set panel state without explicit panel interaction.
+  useEffect(() => {
+    if (!!selectedFeature) {
+      if (isPhone && currentPanelState === PanelState.Closed) {
+        setPanelState(PanelState.Preview);
+      } else if (currentPanelState === PanelState.Closed) {
+        setPanelState(PanelState.Open);
+      }
+    }
+    // Only react on selectedFeature changes. This wil result in re-render which causes the currentPanel state to be up-to-date.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedFeature, isPhone]);
+
   return (
     <PanelComponent
-      state={isMobile ? PanelState.Closed : PanelState.Open}
+      initialState={isPhone ? PanelState.Closed : PanelState.Open}
       onTogglePanel={onTogglePanel}
     >
-      <PanelContent zIndex={402} isActive={!isFeatureDetailLoading}>
+      <PanelContent
+        minHeight={PREVIEW_PANEL_HEIGHT * 2}
+        zIndex={402}
+        isActive={!isFeatureDetailLoading}
+      >
         <DatasetCategoryList>
           {datasets.map(([categoryId, category]) => (
             <DatasetControlListItem key={categoryId}>
