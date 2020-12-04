@@ -35,8 +35,13 @@ import {
   useSelectedFeature,
 } from './MyArea.hooks';
 import MyAreaCollapsiblePanel from './MyAreaCollapsiblePanel';
-import { PanelComponent, PanelContent } from './MyAreaPanelComponent';
+import {
+  PanelComponent,
+  PanelContent,
+  PanelState,
+} from './MyAreaPanelComponent';
 import MyAreaPanelContent from './PanelContent/Generic';
+import { usePhoneScreen } from '../../hooks/media.hook';
 
 const DatasetCategoryList = styled.ol`
   margin: 0;
@@ -395,16 +400,17 @@ function DatasetControlPanel({
 }
 
 interface MyAreaPanels {
-  onTogglePanel: (isOpen: boolean) => void;
+  onTogglePanel: (state: PanelState) => void;
 }
 
 export default function MyAreaPanels({ onTogglePanel }: MyAreaPanels) {
   const profileType = useProfileTypeValue();
-  const [selectedFeature, setSelectedFeature] = useSelectedFeature();
+  const [, setSelectedFeature] = useSelectedFeature();
   const [loadingFeature, setLoadingFeature] = useLoadingFeature();
   const [activeDatasetIds] = useActiveDatasetIds();
   const onControlItemChange = useControlItemChange();
   const onFilterControlItemChange = useFilterControlItemChange();
+  const isMobile = usePhoneScreen();
 
   useFetchPanelFeature();
 
@@ -425,7 +431,10 @@ export default function MyAreaPanels({ onTogglePanel }: MyAreaPanels) {
   const isFeatureDetailLoading = !!loadingFeature?.id;
 
   return (
-    <PanelComponent isOpen={true} onTogglePanel={onTogglePanel}>
+    <PanelComponent
+      state={isMobile ? PanelState.Closed : PanelState.Open}
+      onTogglePanel={onTogglePanel}
+    >
       <PanelContent zIndex={402} isActive={!isFeatureDetailLoading}>
         <DatasetCategoryList>
           {datasets.map(([categoryId, category]) => (

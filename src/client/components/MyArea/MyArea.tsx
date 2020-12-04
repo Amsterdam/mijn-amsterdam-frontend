@@ -27,6 +27,7 @@ import MyAreaHeader from './MyAreaHeader';
 import HomeControlButton from './MyAreaHomeControlButton';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import { HomeIconMarker } from './MyAreaMarker';
+import { PanelState } from './MyAreaPanelComponent';
 import MyAreaPanels from './MyAreaPanels';
 
 const StyledViewerContainer = styled(ViewerContainer)<{
@@ -134,10 +135,10 @@ export default function MyArea({
   });
 
   const onTogglePanel = useCallback(
-    (isOpen: boolean) => {
+    (state: PanelState) => {
       if (isDesktop) {
         setMapOffset(
-          isOpen
+          state === PanelState.Open
             ? { left: '48rem', bottom: '0' }
             : { left: '3rem', bottom: '0' }
         );
