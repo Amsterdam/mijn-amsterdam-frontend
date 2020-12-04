@@ -178,7 +178,7 @@ export function getDatasetCategoryId(datasetId: DatasetId) {
 
 export const ACTIVE_DATASET_IDS_INITIAL = [
   // ...DATASETS.afvalcontainers,
-  // ...DATASETS.bekendmakingen,
+  'bekendmakingen',
   // ...DATASETS.evenementen,
   // ...DATASETS.sport,
   'sportveld',
