@@ -13,7 +13,7 @@ const SuperTitle = styled(Heading)`
   margin-bottom: 1rem;
 `;
 
-const Title = styled(Heading)<{ isPhone: boolean }>`
+export const Title = styled(Heading)<{ isPhone?: boolean }>`
   font-size: ${(props) => (props.isPhone ? '2rem' : '3rem')};
   margin: 0;
   margin-bottom: 2rem;

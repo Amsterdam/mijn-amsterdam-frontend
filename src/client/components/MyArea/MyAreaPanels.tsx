@@ -1,11 +1,5 @@
 import { Checkbox, Label } from '@amsterdam/asc-ui';
-import React, {
-  PropsWithChildren,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-} from 'react';
+import React, { ReactNode, useCallback, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import {
   DatasetCategory,
@@ -21,9 +15,8 @@ import {
   DatasetPropertyFilter,
 } from '../../../universal/config/buurt';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
+import { usePhoneScreen } from '../../hooks/media.hook';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
-import Alert from '../Alert/Alert';
-import { CloseButton } from '../Button/Button';
 import {
   filterActiveDatasets,
   useActiveDatasetFilters,
@@ -42,10 +35,10 @@ import {
   PanelContent,
   PanelState,
   PREVIEW_PANEL_HEIGHT,
+  usePanelState,
 } from './MyAreaPanelComponent';
 import MyAreaPanelContent from './PanelContent/Generic';
-import { usePhoneScreen } from '../../hooks/media.hook';
-import { usePanelState } from './MyAreaPanelComponent';
+import { Title } from './PanelContent/GenericBase';
 
 const DatasetCategoryList = styled.ol`
   margin: 0;
@@ -453,11 +446,8 @@ export default function MyAreaPanels({ onTogglePanel }: MyAreaPanels) {
       initialState={isPhone ? PanelState.Closed : PanelState.Open}
       onTogglePanel={onTogglePanel}
     >
-      <PanelContent
-        minHeight={PREVIEW_PANEL_HEIGHT * 2}
-        zIndex={402}
-        isActive={!isFeatureDetailLoading}
-      >
+      <PanelContent zIndex={402} isActive={!isFeatureDetailLoading}>
+        <Title isPhone={isPhone}>Selecteer kaartgegevens</Title>
         <DatasetCategoryList>
           {datasets.map(([categoryId, category]) => (
             <DatasetControlListItem key={categoryId}>

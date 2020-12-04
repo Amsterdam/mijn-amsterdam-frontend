@@ -49,6 +49,7 @@ const StyledViewerContainer = styled(ViewerContainer)<{
 const MyAreaMapContainer = styled.div`
   position: relative;
   height: 100%;
+  overflow: hidden;
 `;
 
 const MyAreaMapOffset = styled.div`

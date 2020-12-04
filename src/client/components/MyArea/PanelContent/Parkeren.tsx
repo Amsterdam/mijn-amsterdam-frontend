@@ -20,11 +20,6 @@ export default function MyArePanelContentParkeren({
           ? 'Vergunningsgebied uitzondering'
           : 'Vergunningsgebied'
       }
-    >
-      {!!panelItem.gebiedsomschrijving && (
-        <Description description={panelItem.gebiedsomschrijving} />
-      )}
-      {!!panelItem.url && <Url url={panelItem.url} />}
-    </GenericBase>
+    />
   );
 }
