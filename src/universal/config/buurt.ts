@@ -153,6 +153,12 @@ export const DATASETS: DatasetCategories = {
               '': { title: 'Onbekend' },
             },
           },
+          soortLocatie: {
+            title: 'Soort locatie',
+            valueConfig: {
+              '': { title: 'Onbekend' },
+            },
+          },
         },
       },
       hardlooproute: {

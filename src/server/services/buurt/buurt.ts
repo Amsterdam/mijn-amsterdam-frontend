@@ -12,7 +12,7 @@ import {
 import { DataRequestConfig } from '../../config';
 import { requestData } from '../../helpers';
 import FileCache from '../../helpers/file-cache';
-import { refineFilterSelection } from './helpers';
+import { refineFilterSelection, filterAndRefineFeatures } from './helpers';
 import {
   ACCEPT_CRS_4326,
   BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
@@ -233,16 +233,14 @@ export async function loadPolylineFeatures(
     bbox
   );
 
-  const featuresFiltered = filterDatasetFeatures(
-    featuresWithinBoundingbox,
-    datasetIds,
-    filters
-  );
-
   return {
     ...result,
-    filters: refineFilterSelection(featuresWithinBoundingbox, result.filters),
-    features: featuresFiltered,
+    ...filterAndRefineFeatures(
+      featuresWithinBoundingbox,
+      datasetIds,
+      filters,
+      result.filters
+    ),
   };
 }
 

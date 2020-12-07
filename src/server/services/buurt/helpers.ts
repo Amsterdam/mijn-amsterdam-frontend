@@ -60,26 +60,6 @@ export function recursiveCoordinateSwap(coords: any[]) {
   return nCoords;
 }
 
-export function refineFilterSelection(
-  features: MaFeature[],
-  filtersBase: DatasetFilterSelection
-) {
-  for (const [datasetId, filters] of Object.entries(filtersBase)) {
-    for (const [propertyName, propertyFilterConfig] of Object.entries(
-      filters
-    )) {
-      if (propertyFilterConfig.values) {
-        const refined = createDynamicFilterConfig(features, filters);
-        if (refined[propertyName]) {
-          filtersBase[datasetId][propertyName].valuesRefined =
-            refined[propertyName].values;
-        }
-      }
-    }
-  }
-  return filtersBase;
-}
-
 export function isCoordWithingBoundingBox(
   bbox: [number, number, number, number],
   coord: LatLngTuple,
@@ -235,4 +215,47 @@ export function filterDatasetFeatures(
       // Always return true if dataset is unfiltered. Meaning, show everything.
       return true;
     });
+}
+
+export function refineFilterSelection(
+  features: MaFeature[],
+  filtersBase: DatasetFilterSelection
+) {
+  for (const [datasetId, filters] of Object.entries(filtersBase)) {
+    for (const [propertyName, propertyFilterConfig] of Object.entries(
+      filters
+    )) {
+      if (propertyFilterConfig.values) {
+        const refined = createDynamicFilterConfig(features, filters);
+        if (refined[propertyName]) {
+          filtersBase[datasetId][propertyName].valuesRefined =
+            refined[propertyName].values;
+        }
+      }
+    }
+  }
+  return filtersBase;
+}
+
+export function filterAndRefineFeatures(
+  featuresBase: DatasetFeatures,
+  datasetIds: DatasetId[],
+  filterSelection: DatasetFilterSelection,
+  filtersBase: DatasetFilterSelection
+) {
+  let featuresFiltered = featuresBase;
+  let filtersRefined = filterSelection;
+
+  featuresFiltered = filterDatasetFeatures(
+    featuresBase,
+    datasetIds,
+    filtersRefined
+  );
+
+  filtersRefined = refineFilterSelection(featuresFiltered, filtersBase);
+
+  return {
+    filters: filtersRefined,
+    features: featuresFiltered,
+  };
 }

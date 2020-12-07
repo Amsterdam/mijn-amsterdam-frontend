@@ -229,7 +229,7 @@ function DatasetPropertyFilterPanel({
                     label={
                       <>
                         {capitalizeFirstLetter(label)}{' '}
-                        {/* {featureCount >= 1 ? (
+                        {featureCount >= 1 ? (
                           <FeatureCount>
                             (
                             {filterSelectionValuesRefined
@@ -239,7 +239,7 @@ function DatasetPropertyFilterPanel({
                           </FeatureCount>
                         ) : (
                           ''
-                        )} */}
+                        )}
                       </>
                     }
                     isIndeterminate={false}
@@ -396,9 +396,13 @@ function DatasetControlPanel({
 
 interface MyAreaPanels {
   onTogglePanel: PanelComponentProps['onTogglePanel'];
+  availableHeight: number;
 }
 
-export default function MyAreaPanels({ onTogglePanel }: MyAreaPanels) {
+export default function MyAreaPanels({
+  onTogglePanel,
+  availableHeight,
+}: MyAreaPanels) {
   const profileType = useProfileTypeValue();
   const [selectedFeature, setSelectedFeature] = useSelectedFeature();
   const [loadingFeature, setLoadingFeature] = useLoadingFeature();
@@ -424,7 +428,7 @@ export default function MyAreaPanels({ onTogglePanel }: MyAreaPanels) {
     });
   }, [profileType]);
 
-  // Set panel state without explicit panel interaction.
+  // Set panel state without explicit panel interaction. Effect reacts to loading detailed features.
   useEffect(() => {
     if (!loadingFeature) {
       return;
@@ -464,6 +468,7 @@ export default function MyAreaPanels({ onTogglePanel }: MyAreaPanels) {
         id="filters"
         cycle={filtersPanelCycle}
         onTogglePanel={onTogglePanel}
+        availableHeight={availableHeight}
       >
         <Title isPhone={isPhone}>Selecteer kaartgegevens</Title>
         <DatasetCategoryList>
@@ -486,6 +491,7 @@ export default function MyAreaPanels({ onTogglePanel }: MyAreaPanels) {
         cycle={detailPanelCycle}
         onTogglePanel={onTogglePanel}
         onClose={onCloseDetailPanel}
+        availableHeight={availableHeight}
       >
         <MyAreaPanelContent />
       </PanelComponent>

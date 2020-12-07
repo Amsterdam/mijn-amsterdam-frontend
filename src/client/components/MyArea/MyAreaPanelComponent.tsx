@@ -16,10 +16,10 @@ import { usePhoneScreen } from '../../hooks/media.hook';
 import { CloseButton } from '../Button/Button';
 
 export enum PanelState {
-  Open = 'OPEN',
-  Closed = 'CLOSED',
-  Preview = 'PREVIEW',
-  Tip = 'TIP',
+  Open = 'OPEN', // Panel is fully open at $availableHeight
+  Closed = 'CLOSED', // Panel is invisible
+  Preview = 'PREVIEW', // Part of the panel is available
+  Tip = 'TIP', // Only panel toggle button visible on screen
 }
 
 const Panel = styled(animated.div)`
@@ -180,17 +180,17 @@ type PanelDesktopAnimatedProps = PropsWithChildren<{
 }>;
 
 function PanelDesktopAnimated({ state, children }: PanelDesktopAnimatedProps) {
-  let transform = `translateX(calc(-100% + 0px))`;
+  let transform = `translate3d(calc(-100% + 0px), 0, 0)`;
 
   switch (state) {
     case PanelState.Tip:
-      transform = `translateX(calc(-100% + ${DESKTOP_PANEL_TOGGLE_BUTTON_WIDTH}px))`;
+      transform = `translate3d(calc(-100% + ${DESKTOP_PANEL_TOGGLE_BUTTON_WIDTH}px), 0, 0)`;
       break;
     case PanelState.Preview:
-      transform = `translateX(calc(-100% + ${DESKTOP_PANEL_PREVIEW_WIDTH}px))`;
+      transform = `translate3d(calc(-100% + ${DESKTOP_PANEL_PREVIEW_WIDTH}px), 0, 0)`;
       break;
     case PanelState.Open:
-      transform = 'translateX(calc(0% + 0px))';
+      transform = 'translate3d(calc(0% + 0px), 0, 0)';
       break;
   }
 
@@ -211,17 +211,17 @@ function PanelPhoneAnimated({
   children,
   height,
 }: PanelPhoneAnimatedProps) {
-  let transform = `translateY(calc(100% - 0px))`;
+  let transform = `translate3d(0, calc(100% - 0px), 0)`;
 
   switch (state) {
     case PanelState.Tip:
-      transform = `translateY(calc(100% - ${PHONE_PANEL_TIP_HEIGHT}px))`;
+      transform = `translate3d(0, calc(100% - ${PHONE_PANEL_TIP_HEIGHT}px), 0)`;
       break;
     case PanelState.Preview:
-      transform = `translateY(calc(100% - ${PHONE_PANEL_PREVIEW_HEIGHT}px))`;
+      transform = `translate3d(0, calc(100% - ${PHONE_PANEL_PREVIEW_HEIGHT}px), 0)`;
       break;
     case PanelState.Open:
-      transform = 'translateY(calc(0% - 0px))';
+      transform = 'translate3d(0, calc(0% - 0px), 0)';
       break;
   }
   const anim: CSSProperties & UseSpringBaseProps = useSpring({
@@ -253,9 +253,10 @@ export function usePanelState() {
 
 export type PanelComponentProps = PropsWithChildren<{
   id: string;
-  onTogglePanel?: (state: PanelState, panelheight?: number) => void;
+  onTogglePanel?: (id: string, state: PanelState, panelheight?: number) => void;
   onClose?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   cycle: PanelState[];
+  availableHeight: number;
 }>;
 
 export function PanelComponent({
@@ -264,6 +265,7 @@ export function PanelComponent({
   onTogglePanel,
   onClose,
   cycle = [PanelState.Preview, PanelState.Open],
+  availableHeight,
 }: PanelComponentProps) {
   const [stateStore, setStateStore] = usePanelState();
   const initialState = cycle[0];
@@ -276,16 +278,16 @@ export function PanelComponent({
   );
   const isPhone = usePhoneScreen();
   const ref = useRef<HTMLDivElement | null>(null);
-  // const { height } = useComponentSize(ref.current);
-  const height = 610; // TODO: DETERMINE MAX HEIGHT
 
   const panelHeight = useMemo(() => {
-    return height + PhonePanelPadding.TOP + PhonePanelPadding.BOTTOM;
-  }, [height]);
+    return availableHeight + PhonePanelPadding.TOP + PhonePanelPadding.BOTTOM;
+  }, [availableHeight]);
 
   useEffect(() => {
-    onTogglePanel && onTogglePanel(state, panelHeight);
-  }, [state, onTogglePanel]);
+    onTogglePanel && onTogglePanel(id, state, panelHeight);
+    // Disabled deps here because we only want to respond to actual state change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
 
   useEffect(() => {
     setState(initialState);

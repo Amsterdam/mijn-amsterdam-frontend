@@ -7,10 +7,9 @@ import {
 import { loadDatasetFeatures } from './buurt';
 import { MaPointFeature } from './datasets';
 import {
-  filterDatasetFeatures,
+  filterAndRefineFeatures,
   filterPointFeaturesWithinBoundingBox,
   getDatasetEndpointConfig,
-  refineFilterSelection,
 } from './helpers';
 
 const superClusterCache = new memoryCache.Cache<string, any>();
@@ -81,11 +80,10 @@ export async function loadClusterDatasets(
 
   const configs = getDatasetEndpointConfig(datasetIds, ['Point']);
 
-  const {
-    features,
-    filters: filterSelection,
-    errors,
-  } = await loadDatasetFeatures(sessionID, configs);
+  const { features, filters: filtersBase, errors } = await loadDatasetFeatures(
+    sessionID,
+    configs
+  );
 
   const featuresWithinBoundingbox = filterPointFeaturesWithinBoundingBox(
     features,
@@ -94,13 +92,19 @@ export async function loadClusterDatasets(
 
   let clusters: PointFeature<AnyProps>[] = [];
 
-  const filteredFeatures = filterDatasetFeatures(
+  const {
+    filters: filtersRefined,
+    features: filteredFeatures,
+  } = filterAndRefineFeatures(
     featuresWithinBoundingbox,
     datasetIds,
-    filters
+    filters,
+    filtersBase
   );
 
-  const superClusterIndex = await generateSuperCluster(filteredFeatures);
+  const superClusterIndex = await generateSuperCluster(
+    filteredFeatures as MaPointFeature[]
+  );
 
   if (superClusterIndex && bbox && zoom) {
     clusters = superClusterIndex.getClusters(bbox, zoom);
@@ -112,7 +116,7 @@ export async function loadClusterDatasets(
 
   const response = {
     clusters,
-    filters: refineFilterSelection(featuresWithinBoundingbox, filterSelection),
+    filters: filtersRefined,
     errors,
   };
 

@@ -12,7 +12,13 @@ import { ThemeProvider } from '@amsterdam/asc-ui';
 import { useMapInstance } from '@amsterdam/react-maps';
 import L, { TileLayerOptions } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
@@ -36,6 +42,7 @@ import {
 } from './MyAreaPanelComponent';
 import MyAreaPanels from './MyAreaPanels';
 import { PhonePanelPadding } from './MyAreaPanelComponent';
+import { getElementSize } from '../../hooks/useComponentSize';
 
 const StyledViewerContainer = styled(ViewerContainer)<{
   mapOffset: { left: string; bottom: string };
@@ -138,41 +145,37 @@ export default function MyArea({
   }, []);
 
   const [mapOffset, setMapOffset] = useState({
-    left: '0',
-    bottom: isDesktop ? '0' : `${PhonePanelPadding.TOP}px`,
+    left: isDesktop ? `${DESKTOP_PANEL_WIDTH}px` : '0',
+    bottom: isDesktop ? '0' : `${PHONE_PANEL_PREVIEW_HEIGHT}px`,
   });
 
   const onTogglePanel = useCallback(
-    (state: PanelState, panelHeight: number = PHONE_PANEL_TIP_HEIGHT) => {
+    (
+      id: string,
+      state: PanelState,
+      panelHeight: number = PHONE_PANEL_TIP_HEIGHT
+    ) => {
       if (isDesktop) {
         setMapOffset(
           state === PanelState.Open
             ? { left: `${DESKTOP_PANEL_WIDTH}px`, bottom: '0' }
             : { left: `${DESKTOP_PANEL_TOGGLE_BUTTON_WIDTH}px`, bottom: '0' }
         );
-      } else {
-        // TODO: Sensible value here, determine when we don't want the controls to be connected to the panel anymore
-        const bottomOffset =
-          panelHeight > 10 * PHONE_PANEL_TIP_HEIGHT
-            ? PHONE_PANEL_TIP_HEIGHT
-            : panelHeight;
-        setMapOffset(
-          state === PanelState.Open
-            ? { left: '0', bottom: `${bottomOffset}px` }
-            : state === PanelState.Preview
-            ? { left: '0', bottom: `${PHONE_PANEL_PREVIEW_HEIGHT}px` }
-            : { left: '0', bottom: `${PHONE_PANEL_TIP_HEIGHT}px` }
-        );
       }
     },
     [isDesktop]
   );
 
+  const mapContainerRef = useRef(null);
+
+  const panelComponentAvailableHeight = getElementSize(mapContainerRef.current)
+    .height;
+
   return (
     <ThemeProvider>
       <MyAreaContainer height={height}>
         {!!showHeader && <MyAreaHeader />}
-        <MyAreaMapContainer>
+        <MyAreaMapContainer ref={mapContainerRef}>
           <MyAreaMapOffset>
             <MyAreaMap
               fullScreen={true}
@@ -218,7 +221,12 @@ export default function MyArea({
             )}
           </MyAreaMapOffset>
 
-          {!!showPanels && <MyAreaPanels onTogglePanel={onTogglePanel} />}
+          {!!showPanels && (
+            <MyAreaPanels
+              onTogglePanel={onTogglePanel}
+              availableHeight={panelComponentAvailableHeight}
+            />
+          )}
         </MyAreaMapContainer>
       </MyAreaContainer>
     </ThemeProvider>
