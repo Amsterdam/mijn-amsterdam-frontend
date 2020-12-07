@@ -111,19 +111,27 @@ export const DATASETS: DatasetCategories = {
       sportveld: {
         title: 'Sportveld',
         filters: {
-          sportfunctie: {},
+          sportfunctie: {
+            title: '',
+            valueConfig: {
+              null: { title: 'Overig' },
+            },
+          },
           soortOndergrond: {
             title: 'Soort ondergrond',
+            valueConfig: {
+              null: { title: 'Onbekend' },
+            },
           },
         },
       },
-      gymsportzaal: { title: 'Gymsportzaal' },
+      // gymsportzaal: { title: 'Gymsportzaal' },
       sporthal: { title: 'Sporthal' },
       sportaanbieder: {
         title: 'Sportaanbieders',
         filters: {
           indicatieStadspas: {
-            title: 'Indicatie stadspas',
+            title: 'Stadspas indicatie',
             valueConfig: {
               '': { title: 'Nee' },
             },
@@ -177,9 +185,9 @@ export function getDatasetCategoryId(datasetId: DatasetId) {
 }
 
 export const ACTIVE_DATASET_IDS_INITIAL = [
-  // ...DATASETS.afvalcontainers,
+  'afvalcontainers',
   'bekendmakingen',
-  // ...DATASETS.evenementen,
+  'evenementen',
   // ...DATASETS.sport,
-  'sportveld',
+  // 'sportveld',
 ];

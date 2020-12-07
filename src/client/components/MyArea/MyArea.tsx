@@ -31,7 +31,8 @@ import {
   PanelState,
   DESKTOP_PANEL_WIDTH,
   DESKTOP_PANEL_TOGGLE_BUTTON_WIDTH,
-  PREVIEW_PANEL_HEIGHT,
+  PHONE_PANEL_PREVIEW_HEIGHT,
+  PHONE_PANEL_TIP_HEIGHT,
 } from './MyAreaPanelComponent';
 import MyAreaPanels from './MyAreaPanels';
 import { PhonePanelPadding } from './MyAreaPanelComponent';
@@ -142,7 +143,7 @@ export default function MyArea({
   });
 
   const onTogglePanel = useCallback(
-    (state: PanelState, panelHeight: number = PhonePanelPadding.TOP) => {
+    (state: PanelState, panelHeight: number = PHONE_PANEL_TIP_HEIGHT) => {
       if (isDesktop) {
         setMapOffset(
           state === PanelState.Open
@@ -152,15 +153,15 @@ export default function MyArea({
       } else {
         // TODO: Sensible value here, determine when we don't want the controls to be connected to the panel anymore
         const bottomOffset =
-          panelHeight > 10 * PhonePanelPadding.TOP
-            ? PhonePanelPadding.TOP
+          panelHeight > 10 * PHONE_PANEL_TIP_HEIGHT
+            ? PHONE_PANEL_TIP_HEIGHT
             : panelHeight;
         setMapOffset(
           state === PanelState.Open
             ? { left: '0', bottom: `${bottomOffset}px` }
             : state === PanelState.Preview
-            ? { left: '0', bottom: `${PREVIEW_PANEL_HEIGHT}px` }
-            : { left: '0', bottom: `${PhonePanelPadding.TOP}px` }
+            ? { left: '0', bottom: `${PHONE_PANEL_PREVIEW_HEIGHT}px` }
+            : { left: '0', bottom: `${PHONE_PANEL_TIP_HEIGHT}px` }
         );
       }
     },

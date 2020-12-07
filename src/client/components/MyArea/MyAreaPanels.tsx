@@ -32,9 +32,7 @@ import MyAreaCollapsiblePanel from './MyAreaCollapsiblePanel';
 import {
   PanelComponent,
   PanelComponentProps,
-  PanelContent,
   PanelState,
-  PREVIEW_PANEL_HEIGHT,
   usePanelState,
 } from './MyAreaPanelComponent';
 import MyAreaPanelContent from './PanelContent/Generic';
@@ -231,7 +229,7 @@ function DatasetPropertyFilterPanel({
                     label={
                       <>
                         {capitalizeFirstLetter(label)}{' '}
-                        {featureCount >= 1 ? (
+                        {/* {featureCount >= 1 ? (
                           <FeatureCount>
                             (
                             {filterSelectionValuesRefined
@@ -241,7 +239,7 @@ function DatasetPropertyFilterPanel({
                           </FeatureCount>
                         ) : (
                           ''
-                        )}
+                        )} */}
                       </>
                     }
                     isIndeterminate={false}
@@ -413,8 +411,8 @@ export default function MyAreaPanels({ onTogglePanel }: MyAreaPanels) {
   useFetchPanelFeature();
 
   const onCloseDetailPanel = useCallback(() => {
-    setSelectedFeature(null);
-    setLoadingFeature(null);
+    // setSelectedFeature(null);
+    // setLoadingFeature(null);
   }, [setSelectedFeature, setLoadingFeature]);
 
   const datasets = useMemo(() => {
@@ -426,27 +424,47 @@ export default function MyAreaPanels({ onTogglePanel }: MyAreaPanels) {
     });
   }, [profileType]);
 
-  const isFeatureDetailLoading = !!loadingFeature?.id;
-
   // Set panel state without explicit panel interaction.
   useEffect(() => {
-    if (!!selectedFeature) {
-      if (isPhone && currentPanelState === PanelState.Closed) {
-        setPanelState(PanelState.Preview);
-      } else if (currentPanelState === PanelState.Closed) {
-        setPanelState(PanelState.Open);
-      }
+    if (!loadingFeature) {
+      return;
     }
-    // Only react on selectedFeature changes. This wil result in re-render which causes the currentPanel state to be up-to-date.
+    if (isPhone) {
+      setPanelState((store) => ({
+        ...store,
+        detail: PanelState.Preview,
+      }));
+    } else {
+      setPanelState((store) => ({
+        ...store,
+        detail: PanelState.Open,
+      }));
+    }
+    // Only react on loadingFeature changes. This wil result in re-render which causes the currentPanel state to be up-to-date.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedFeature, isPhone]);
+  }, [loadingFeature, isPhone]);
+
+  const filtersPanelCycle = useMemo(() => {
+    if (isPhone) {
+      return [PanelState.Preview, PanelState.Open];
+    }
+    return [PanelState.Open, PanelState.Tip];
+  }, [isPhone]);
+
+  const detailPanelCycle = useMemo(() => {
+    if (isPhone) {
+      return [PanelState.Closed, PanelState.Preview, PanelState.Open];
+    }
+    return [PanelState.Closed, PanelState.Open];
+  }, [isPhone]);
 
   return (
-    <PanelComponent
-      initialState={isPhone ? PanelState.Closed : PanelState.Open}
-      onTogglePanel={onTogglePanel}
-    >
-      <PanelContent zIndex={402} isActive={!isFeatureDetailLoading}>
+    <>
+      <PanelComponent
+        id="filters"
+        cycle={filtersPanelCycle}
+        onTogglePanel={onTogglePanel}
+      >
         <Title isPhone={isPhone}>Selecteer kaartgegevens</Title>
         <DatasetCategoryList>
           {datasets.map(([categoryId, category]) => (
@@ -461,14 +479,16 @@ export default function MyAreaPanels({ onTogglePanel }: MyAreaPanels) {
             </DatasetControlListItem>
           ))}
         </DatasetCategoryList>
-      </PanelContent>
-      <PanelContent
-        zIndex={403}
-        isActive={isFeatureDetailLoading}
+      </PanelComponent>
+
+      <PanelComponent
+        id="detail"
+        cycle={detailPanelCycle}
+        onTogglePanel={onTogglePanel}
         onClose={onCloseDetailPanel}
       >
         <MyAreaPanelContent />
-      </PanelContent>
-    </PanelComponent>
+      </PanelComponent>
+    </>
   );
 }

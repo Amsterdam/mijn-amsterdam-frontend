@@ -8,19 +8,18 @@ import React, {
   useEffect,
   useMemo,
   useRef,
-  useState,
 } from 'react';
 import { animated, useSpring, UseSpringBaseProps } from 'react-spring';
 import { atom, useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { usePhoneScreen } from '../../hooks/media.hook';
-import { useComponentSize } from '../../hooks/useComponentSize';
 import { CloseButton } from '../Button/Button';
 
 export enum PanelState {
   Open = 'OPEN',
   Closed = 'CLOSED',
   Preview = 'PREVIEW',
+  Tip = 'TIP',
 }
 
 const Panel = styled(animated.div)`
@@ -35,6 +34,7 @@ const Panel = styled(animated.div)`
 
 export const DESKTOP_PANEL_TOGGLE_BUTTON_WIDTH = 8 * spacing;
 export const DESKTOP_PANEL_WIDTH = 120 * spacing;
+export const DESKTOP_PANEL_PREVIEW_WIDTH = 60 * spacing;
 
 const PanelDesktop = styled(Panel)`
   width: ${DESKTOP_PANEL_WIDTH}px;
@@ -43,14 +43,15 @@ const PanelDesktop = styled(Panel)`
   overflow-y: auto;
 `;
 
+export const PHONE_PANEL_PREVIEW_HEIGHT = 32 * spacing;
+export const PHONE_PANEL_TIP_HEIGHT = 10 * spacing;
+
 export const PhonePanelPadding = {
-  TOP: spacing * 10,
+  TOP: PHONE_PANEL_TIP_HEIGHT,
   RIGHT: spacing * 4,
   BOTTOM: spacing * 6,
   LEFT: spacing * 4,
 };
-
-export const PREVIEW_PANEL_HEIGHT = 32 * spacing;
 
 const phonePanelPaddingString = Object.values(PhonePanelPadding)
   .map((spacing) => spacing + 'px')
@@ -118,6 +119,7 @@ const StyledToggleButton = styled.button`
   border: 0;
   padding: 0;
   box-shadow: none;
+  z-index: 2;
   width: ${DESKTOP_PANEL_TOGGLE_BUTTON_WIDTH}px;
   > span {
     transform: ${(props) =>
@@ -157,7 +159,6 @@ const StyledPanelContent = styled.div<{ zIndex: number; isActive: boolean }>`
 `;
 
 type PanelContentProps = PropsWithChildren<{
-  onClose?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   zIndex?: number;
   isActive?: boolean;
 }>;
@@ -166,13 +167,9 @@ export function PanelContent({
   zIndex = 1,
   isActive = true,
   children,
-  onClose,
 }: PanelContentProps) {
   return (
     <StyledPanelContent zIndex={zIndex} isActive={isActive}>
-      {!!onClose && (
-        <CloseButton style={{ float: 'right' }} onClick={onClose} />
-      )}
       {children}
     </StyledPanelContent>
   );
@@ -183,11 +180,22 @@ type PanelDesktopAnimatedProps = PropsWithChildren<{
 }>;
 
 function PanelDesktopAnimated({ state, children }: PanelDesktopAnimatedProps) {
+  let transform = `translateX(calc(-100% + 0px))`;
+
+  switch (state) {
+    case PanelState.Tip:
+      transform = `translateX(calc(-100% + ${DESKTOP_PANEL_TOGGLE_BUTTON_WIDTH}px))`;
+      break;
+    case PanelState.Preview:
+      transform = `translateX(calc(-100% + ${DESKTOP_PANEL_PREVIEW_WIDTH}px))`;
+      break;
+    case PanelState.Open:
+      transform = 'translateX(calc(0% + 0px))';
+      break;
+  }
+
   const anim: CSSProperties & UseSpringBaseProps = useSpring({
-    transform:
-      state === PanelState.Closed
-        ? `translateX(calc(-100% + ${DESKTOP_PANEL_TOGGLE_BUTTON_WIDTH}px))`
-        : 'translateX(calc(0% + 0px))',
+    transform,
     config: { mass: 0.3, tension: 400 },
   });
   return <PanelDesktop style={anim}>{children}</PanelDesktop>;
@@ -203,11 +211,14 @@ function PanelPhoneAnimated({
   children,
   height,
 }: PanelPhoneAnimatedProps) {
-  let transform = `translateY(calc(100% - ${PhonePanelPadding.TOP}px))`;
+  let transform = `translateY(calc(100% - 0px))`;
 
   switch (state) {
+    case PanelState.Tip:
+      transform = `translateY(calc(100% - ${PHONE_PANEL_TIP_HEIGHT}px))`;
+      break;
     case PanelState.Preview:
-      transform = `translateY(calc(100% - ${PREVIEW_PANEL_HEIGHT}px))`;
+      transform = `translateY(calc(100% - ${PHONE_PANEL_PREVIEW_HEIGHT}px))`;
       break;
     case PanelState.Open:
       transform = 'translateY(calc(0% - 0px))';
@@ -224,9 +235,16 @@ function PanelPhoneAnimated({
   return <PanelPhone style={anim}>{children}</PanelPhone>;
 }
 
-const panelStateAtom = atom<PanelState>({
+const StyledCloseButton = styled(CloseButton)`
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 20000;
+`;
+
+const panelStateAtom = atom<Record<string, PanelState>>({
   key: 'myAreaPanelState',
-  default: PanelState.Closed,
+  default: {},
 });
 
 export function usePanelState() {
@@ -234,20 +252,32 @@ export function usePanelState() {
 }
 
 export type PanelComponentProps = PropsWithChildren<{
-  initialState: PanelState;
+  id: string;
   onTogglePanel?: (state: PanelState, panelheight?: number) => void;
+  onClose?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  cycle: PanelState[];
 }>;
 
 export function PanelComponent({
+  id,
   children,
-  initialState = PanelState.Closed,
   onTogglePanel,
+  onClose,
+  cycle = [PanelState.Preview, PanelState.Open],
 }: PanelComponentProps) {
-  const [state, setState] = usePanelState();
+  const [stateStore, setStateStore] = usePanelState();
+  const initialState = cycle[0];
+  const state = stateStore[id] || initialState;
+  const setState = useCallback(
+    (state: PanelState) => {
+      setStateStore((store) => ({ ...store, [id]: state }));
+    },
+    [setStateStore, id]
+  );
   const isPhone = usePhoneScreen();
   const ref = useRef<HTMLDivElement | null>(null);
-  const { height } = useComponentSize(ref.current);
-  // const height = 610;
+  // const { height } = useComponentSize(ref.current);
+  const height = 610; // TODO: DETERMINE MAX HEIGHT
 
   const panelHeight = useMemo(() => {
     return height + PhonePanelPadding.TOP + PhonePanelPadding.BOTTOM;
@@ -261,29 +291,33 @@ export function PanelComponent({
     setState(initialState);
   }, [initialState, setState]);
 
-  function phonePanelState(state: PanelState): PanelState {
-    if (state === PanelState.Preview) {
-      return PanelState.Open;
-    }
-    return state === PanelState.Closed ? PanelState.Preview : PanelState.Closed;
-  }
+  function nextPanelState(currentState: PanelState): PanelState {
+    const currentStateIndex = cycle.indexOf(currentState);
+    const nextState =
+      cycle.length - 1 === currentStateIndex
+        ? cycle[0]
+        : cycle[currentStateIndex + 1];
 
-  function desktopPanelState(state: PanelState): PanelState {
-    return state === PanelState.Closed ? PanelState.Open : PanelState.Closed;
+    return nextState;
   }
 
   useEffect(() => {
-    if (state === PanelState.Closed) {
+    if (state === initialState) {
       ref?.current?.scrollTo(0, 0);
     }
-  }, [state]);
+  }, [state, initialState]);
+
+  const hasCloseCallback = !!onClose;
+  const showToggleButton =
+    !hasCloseCallback || (hasCloseCallback && state !== PanelState.Open);
+  const showCloseButton = !isPhone && hasCloseCallback && !showToggleButton;
 
   return isPhone ? (
     <PanelPhoneAnimated state={state} height={panelHeight}>
       <PanelTogglePhone
-        aria-expanded={state !== PanelState.Closed}
+        aria-expanded={state !== PanelState.Closed && state !== PanelState.Tip}
         onClick={() => {
-          setState(phonePanelState(state));
+          setState(nextPanelState(state));
         }}
       />
       <PhonePanelInner panelState={state} ref={ref}>
@@ -292,10 +326,20 @@ export function PanelComponent({
     </PanelPhoneAnimated>
   ) : (
     <PanelDesktopAnimated state={state}>
-      <PanelToggleDesktop
-        isExpanded={state !== PanelState.Closed}
-        onClick={() => setState(desktopPanelState(state))}
-      />
+      {showToggleButton && (
+        <PanelToggleDesktop
+          isExpanded={state !== PanelState.Closed && state !== PanelState.Tip}
+          onClick={() => setState(nextPanelState(state))}
+        />
+      )}
+      {showCloseButton && (
+        <StyledCloseButton
+          onClick={(event) => {
+            setState(PanelState.Closed);
+            onClose && onClose(event);
+          }}
+        />
+      )}
       <DesktopPanelInner panelState={state} ref={ref}>
         {children}
       </DesktopPanelInner>
