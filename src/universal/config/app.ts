@@ -1,5 +1,3 @@
-import { IS_PRODUCTION } from './env';
-
 // See https://date-fns.org/v1.30.1/docs/format for more formatting options
 export const DEFAULT_DATE_FORMAT = 'dd MMMM yyyy';
 
@@ -17,12 +15,12 @@ export const FeatureToggle = {
   tozoActive: true,
   tozo2active: true,
   tozo3active: true,
-  eherkenningActive: !IS_PRODUCTION,
+  eherkenningActive: true,
   vergunningenActive: true,
   cmsFooterActive: true,
   KrefiaDirectLinkActive: true,
   tipsFlipActive: true,
-  profileToggleActive: !IS_PRODUCTION,
+  profileToggleActive: true,
   kvkActive: true,
   stadpasActive: true,
   residentCountActive: true,
