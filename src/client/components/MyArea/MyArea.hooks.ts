@@ -113,7 +113,7 @@ export function useFetchPanelFeature() {
   const [loadingFeature, setLoadingFeature] = useLoadingFeature();
 
   useEffect(() => {
-    if (!loadingFeature) {
+    if (!loadingFeature?.datasetId || !loadingFeature?.id) {
       return;
     }
 
