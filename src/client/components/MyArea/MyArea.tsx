@@ -27,6 +27,7 @@ import { getFullAddress } from '../../../universal/helpers';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useDesktopScreen } from '../../hooks';
 import { useAppStateGetter } from '../../hooks/useAppState';
+import { getElementSize } from '../../hooks/useComponentSize';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import { MyAreaDatasets } from './MyAreaDatasets';
 import MyAreaHeader from './MyAreaHeader';
@@ -34,15 +35,13 @@ import HomeControlButton from './MyAreaHomeControlButton';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import { HomeIconMarker } from './MyAreaMarker';
 import {
-  PanelState,
-  DESKTOP_PANEL_WIDTH,
   DESKTOP_PANEL_TOGGLE_BUTTON_WIDTH,
+  DESKTOP_PANEL_WIDTH,
+  PanelState,
   PHONE_PANEL_PREVIEW_HEIGHT,
   PHONE_PANEL_TIP_HEIGHT,
 } from './MyAreaPanelComponent';
 import MyAreaPanels from './MyAreaPanels';
-import { PhonePanelPadding } from './MyAreaPanelComponent';
-import { getElementSize } from '../../hooks/useComponentSize';
 
 const StyledViewerContainer = styled(ViewerContainer)<{
   mapOffset: { left: string; bottom: string };

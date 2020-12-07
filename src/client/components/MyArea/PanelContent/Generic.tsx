@@ -1,7 +1,7 @@
 import React from 'react';
 import {
-  getDatasetCategoryId,
   DatasetCategoryId,
+  getDatasetCategoryId,
 } from '../../../../universal/config/buurt';
 import Alert from '../../Alert/Alert';
 import LoadingContent from '../../LoadingContent/LoadingContent';
@@ -13,7 +13,6 @@ import MyArePanelContentEvenementen from './Evenementen';
 import { GenericContent } from './GenericBase';
 import MyArePanelContentParkeren from './Parkeren';
 import MyArePanelContentSport from './Sport';
-import styles from './PanelContent.module.scss';
 
 interface MyAreaPanelContentSwitchProps {
   datasetCategoryId: DatasetCategoryId;

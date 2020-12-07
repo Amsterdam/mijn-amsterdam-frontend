@@ -16,7 +16,6 @@ import {
 } from 'recoil';
 import {
   DatasetFeatures,
-  MaFeature,
   MaPointFeature,
   MaPolylineFeature,
   MaSuperClusterFeature,

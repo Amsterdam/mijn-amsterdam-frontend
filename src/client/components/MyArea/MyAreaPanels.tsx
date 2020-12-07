@@ -404,20 +404,19 @@ export default function MyAreaPanels({
   availableHeight,
 }: MyAreaPanels) {
   const profileType = useProfileTypeValue();
-  const [selectedFeature, setSelectedFeature] = useSelectedFeature();
-  const [loadingFeature, setLoadingFeature] = useLoadingFeature();
+  const [, setSelectedFeature] = useSelectedFeature();
+  const [loadingFeature] = useLoadingFeature();
   const [activeDatasetIds] = useActiveDatasetIds();
   const onControlItemChange = useControlItemChange();
   const onFilterControlItemChange = useFilterControlItemChange();
   const isPhone = usePhoneScreen();
-  const [currentPanelState, setPanelState] = usePanelState();
+  const [, setPanelState] = usePanelState();
 
   useFetchPanelFeature();
 
   const onCloseDetailPanel = useCallback(() => {
-    // setSelectedFeature(null);
-    // setLoadingFeature(null);
-  }, [setSelectedFeature, setLoadingFeature]);
+    setSelectedFeature(null);
+  }, [setSelectedFeature]);
 
   const datasets = useMemo(() => {
     return Object.entries(DATASETS).filter(([categoryId, category]) => {

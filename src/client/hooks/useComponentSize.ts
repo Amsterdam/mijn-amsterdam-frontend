@@ -1,5 +1,4 @@
-import { useState, useCallback, useLayoutEffect } from 'react';
-import { useDebouncedCallback } from 'use-debounce/lib';
+import { useCallback, useLayoutEffect, useState } from 'react';
 
 export function getElementSize(el: HTMLElement | null) {
   if (!el) {

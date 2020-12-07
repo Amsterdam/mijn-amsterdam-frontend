@@ -1,7 +1,5 @@
 import React from 'react';
-import Description from './Description';
 import GenericBase from './GenericBase';
-import Url from './Url';
 
 interface MyArePanelContentParkerenProps {
   panelItem: any;
