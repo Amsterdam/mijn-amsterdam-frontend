@@ -79,7 +79,7 @@ function SecondaryLinks() {
 
 function MainNavLink({ children, to, title, ...rest }: MainNavLinkProps) {
   return (
-    <NavLink to={to} className={styles.MainNavLink} {...rest}>
+    <NavLink exact={true} to={to} className={styles.MainNavLink} {...rest}>
       <span>{children}</span>
     </NavLink>
   );
@@ -126,6 +126,7 @@ function BurgerButton({ isActive, toggleBurgerMenu }: BurgerButtonProps) {
         styles.BurgerMenuToggleBtn,
         isActive && styles.BurgerMenuToggleBtnOpen
       )}
+      aria-expanded={isActive}
       onClick={() => toggleBurgerMenu(!isActive)}
     >
       Navigatie
