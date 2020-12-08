@@ -1,14 +1,14 @@
 import classnames from 'classnames';
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-  useRef,
-} from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { animated } from 'react-spring';
 import { AppRoutes } from '../../../universal/config';
+import {
+  Chapters,
+  ChapterTitles,
+  profileTypeChapterTitleAdjustment,
+} from '../../../universal/config/chapter';
+import { isError } from '../../../universal/helpers/api';
 import { ComponentChildren } from '../../../universal/types';
 import { IconInfo } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
@@ -33,12 +33,6 @@ import {
 import styles from './MainNavBar.module.scss';
 import { ProfileName } from './ProfileName';
 import { useBurgerMenuAnimation } from './useBurgerMenuAnimation';
-import { isError } from '../../../universal/helpers/api';
-import {
-  profileTypeChapterTitleAdjustment,
-  ChapterTitles,
-  Chapters,
-} from '../../../universal/config/chapter';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
