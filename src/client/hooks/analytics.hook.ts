@@ -2,6 +2,7 @@ import MatomoTracker from '@datapunt/matomo-tracker-js';
 import {
   TrackEventParams,
   UserOptions,
+  CustomDimension,
 } from '@datapunt/matomo-tracker-js/lib/types';
 import { useDebouncedCallback } from 'use-debounce';
 import { useSessionStorage } from './storage.hook';
@@ -31,9 +32,11 @@ export function trackEvent(payload: TrackEventParams) {
 
 export function trackPageView(title?: string, url?: string) {
   let href = url || document.location.href;
+
   if (IS_AP && !href.startsWith('http')) {
     href = `https://mijn${IS_ACCEPTANCE ? '.acc' : ''}.amsterdam.nl${href}`;
   }
+
   const payload = {
     documentTitle: title || document.title,
     href,
@@ -44,22 +47,13 @@ export function trackPageView(title?: string, url?: string) {
     title: payload.documentTitle,
   };
 
+  // The siteimprove tracking call
   (window as any)._sz?.push(['trackdynamic', payloadSZ]);
 
   return MatomoInstance && MatomoInstance.trackPageView(payload);
 }
 
-export function trackDownload(url: string) {
-  return (
-    MatomoInstance &&
-    MatomoInstance.trackLink({
-      href: url,
-      linkType: 'download',
-    })
-  );
-}
-
-export function trackLink(url: string) {
+export function trackLink(url: string, customDimensions?: CustomDimension[]) {
   return (
     MatomoInstance &&
     MatomoInstance.trackLink({
