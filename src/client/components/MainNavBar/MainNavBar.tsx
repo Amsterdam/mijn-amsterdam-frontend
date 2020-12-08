@@ -1,5 +1,11 @@
 import classnames from 'classnames';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useRef,
+} from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { animated } from 'react-spring';
 import { AppRoutes } from '../../../universal/config';
@@ -135,8 +141,20 @@ export default function MainNavBar() {
   );
   const { items: myChapterItems } = useChapters();
   const location = useLocation();
-  const [isTutorialVisible, setIsTutorialVisible] = useState(false);
+  const [isTutorialVisible, setIsTutorialVisible] = useState<
+    boolean | undefined
+  >(undefined);
   const profileType = useProfileTypeValue();
+  const tutorialRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (isTutorialVisible === undefined) {
+      return;
+    }
+    if (isTutorialVisible === false) {
+      tutorialRef?.current?.focus();
+    }
+  }, [isTutorialVisible]);
 
   const onClickOutsideBurgermenu = useCallback(
     (event?: any) => {
@@ -244,6 +262,7 @@ export default function MainNavBar() {
         {location.pathname === AppRoutes.ROOT && (
           <>
             <Button
+              ref={tutorialRef}
               className={styles.TutorialBtn}
               onClick={() => {
                 setIsTutorialVisible(!isTutorialVisible);
