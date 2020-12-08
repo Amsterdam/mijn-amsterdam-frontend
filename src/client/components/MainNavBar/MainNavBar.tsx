@@ -133,6 +133,15 @@ function BurgerButton({ isActive, toggleBurgerMenu }: BurgerButtonProps) {
   );
 }
 
+function isTargetWithinMenu(target: any) {
+  const LinkContainer = document.getElementById(LinkContainerId);
+  const BurgerMenuToggleButton = document.getElementById(BurgerMenuToggleBtnId);
+  return (
+    (LinkContainer && LinkContainer.contains(target)) ||
+    (BurgerMenuToggleButton && BurgerMenuToggleButton.contains(target))
+  );
+}
+
 export default function MainNavBar() {
   const session = useSessionValue();
   const hasBurgerMenu = useTabletScreen();
@@ -147,6 +156,7 @@ export default function MainNavBar() {
   const profileType = useProfileTypeValue();
   const tutorialRef = useRef<HTMLButtonElement | null>(null);
 
+  // Re-focus the tutorial button on closing of modal. WCAG requirement.
   useEffect(() => {
     if (isTutorialVisible === undefined) {
       return;
@@ -156,34 +166,35 @@ export default function MainNavBar() {
     }
   }, [isTutorialVisible]);
 
-  const onClickOutsideBurgermenu = useCallback(
-    (event?: any) => {
-      if (isBurgerMenuVisible) {
-        // Testing for clicks on elements that are not part of the responsive menu
-        const BurgerMenuToggleButton = document.getElementById(
-          BurgerMenuToggleBtnId
-        );
-        const LinkContainer = document.getElementById(LinkContainerId);
-        const clickedOutside = !(
-          (LinkContainer && LinkContainer.contains(event.target)) ||
-          (BurgerMenuToggleButton &&
-            BurgerMenuToggleButton.contains(event.target))
-        );
-
-        if (clickedOutside) {
+  // Bind click outside and tab navigation interaction
+  useEffect(() => {
+    if (!hasBurgerMenu) {
+      return;
+    }
+    const onTab = (event?: any) => {
+      const isMenuTarget = isTargetWithinMenu(event.target);
+      if (event.key === 'Tab') {
+        if (isBurgerMenuVisible === true && !isMenuTarget) {
           toggleBurgerMenu(false);
+        } else if (isBurgerMenuVisible === false && isMenuTarget) {
+          toggleBurgerMenu(true);
         }
       }
-    },
-    [isBurgerMenuVisible]
-  );
+    };
 
-  // Bind click outside small screen menu to hide it
-  useEffect(() => {
+    const onClickOutsideBurgermenu = (event?: any) => {
+      if (isBurgerMenuVisible === true && !isTargetWithinMenu(event.target)) {
+        toggleBurgerMenu(false);
+      }
+    };
+
+    document.addEventListener('keyup', onTab);
     document.addEventListener('click', onClickOutsideBurgermenu);
-    return () =>
+    return () => {
+      document.removeEventListener('keyup', onTab);
       document.removeEventListener('click', onClickOutsideBurgermenu);
-  }, [onClickOutsideBurgermenu]);
+    };
+  }, [hasBurgerMenu, isBurgerMenuVisible]);
 
   // Hides small screen menu on route change
   useEffect(() => {

@@ -102,6 +102,7 @@ export default function MainNavSubmenu({
     setMenuIsOpen(false);
   }, [location.pathname, cancelEnter]);
 
+  // Add Escape dismissal. WCAG requirement.
   useEffect(() => {
     const onEscape = (event: any) => {
       if (event.key === 'Escape') {
@@ -112,6 +113,7 @@ export default function MainNavSubmenu({
     return () => {
       document.removeEventListener('keyup', onEscape);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
