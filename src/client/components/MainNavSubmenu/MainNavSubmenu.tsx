@@ -102,6 +102,18 @@ export default function MainNavSubmenu({
     setMenuIsOpen(false);
   }, [location.pathname, cancelEnter]);
 
+  useEffect(() => {
+    const onEscape = (event: any) => {
+      if (event.key === 'Escape') {
+        onLeave();
+      }
+    };
+    document.addEventListener('keyup', onEscape);
+    return () => {
+      document.removeEventListener('keyup', onEscape);
+    };
+  }, []);
+
   return (
     <span
       className={styles.MainNavSubmenu}
