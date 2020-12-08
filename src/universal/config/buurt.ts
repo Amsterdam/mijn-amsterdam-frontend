@@ -136,6 +136,12 @@ export const DATASETS: DatasetCategories = {
               '': { title: 'Nee' },
             },
           },
+          indicatieAangepastSporten: {
+            title: 'Aangepast sporten',
+            valueConfig: {
+              '': { title: 'Nee' },
+            },
+          },
         },
       },
       openbaresportplek: {

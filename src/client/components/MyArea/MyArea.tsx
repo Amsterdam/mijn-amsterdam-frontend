@@ -35,7 +35,7 @@ import HomeControlButton from './MyAreaHomeControlButton';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import { HomeIconMarker } from './MyAreaMarker';
 import {
-  DESKTOP_PANEL_TOGGLE_BUTTON_WIDTH,
+  DESKTOP_PANEL_TIP_WIDTH,
   DESKTOP_PANEL_WIDTH,
   PanelState,
   PHONE_PANEL_PREVIEW_HEIGHT,
@@ -149,16 +149,12 @@ export default function MyArea({
   });
 
   const onTogglePanel = useCallback(
-    (
-      id: string,
-      state: PanelState,
-      panelHeight: number = PHONE_PANEL_TIP_HEIGHT
-    ) => {
+    (id: string, state: PanelState) => {
       if (isDesktop) {
         setMapOffset(
           state === PanelState.Open
             ? { left: `${DESKTOP_PANEL_WIDTH}px`, bottom: '0' }
-            : { left: `${DESKTOP_PANEL_TOGGLE_BUTTON_WIDTH}px`, bottom: '0' }
+            : { left: `${DESKTOP_PANEL_TIP_WIDTH}px`, bottom: '0' }
         );
       }
     },

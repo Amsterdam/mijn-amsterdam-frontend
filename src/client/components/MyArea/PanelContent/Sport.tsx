@@ -107,6 +107,10 @@ export default function MyArePanelContentSport({
             label="Stadspas indicatie"
             value={panelItem.indicatieStadspas || 'Nee'}
           />
+          <InfoDetail
+            label="Aangepast sporten"
+            value={panelItem.indicatieAangepastSporten || 'Nee'}
+          />
           {!!panelItem.website && <Url url={panelItem.website} />}
         </GenericBase>
       );
