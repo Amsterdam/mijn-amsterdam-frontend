@@ -6,7 +6,7 @@ export default () => {
   return (
     <TextPage>
       <PageHeading>404 - Pagina niet gevonden</PageHeading>
-      <PageContent>
+      <PageContent id="AppContent">
         <p>Helaas, de pagina waar u naar op zoek was bestaat niet (meer).</p>
       </PageContent>
     </TextPage>
