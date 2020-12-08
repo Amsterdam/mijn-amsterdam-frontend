@@ -84,6 +84,7 @@
   position: absolute;
   right: .8rem;
   bottom: .8rem;
+  z-index: 2;
   &:hover {
     @include select(Button_Icon) {
       fill: #fff;
@@ -100,6 +101,7 @@
   background-color: rgba(0, 0, 0, .7);
   padding: 1rem;
   color: $color-white;
+  z-index: 1;
 
   span {
     display: block;

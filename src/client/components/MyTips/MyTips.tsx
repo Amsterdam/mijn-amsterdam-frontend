@@ -68,31 +68,31 @@ const Tip = ({ tip }: TipProps) => {
   return (
     <li className={styles.TipItem}>
       <article>
-        <figure className={styles.ImageContainer}>
+        <div className={styles.ImageContainer}>
           <img alt="" src={imgUrl} className={styles.Img} />
           {FeatureToggle.tipsFlipActive && !!tip.reason?.length && (
-            <>
-              {isFlipped && (
-                <div className={styles.TipFlip}>
-                  {tip.reason.map(reason => (
-                    <span key={reason}>{reason}</span>
-                  ))}
-                </div>
-              )}
+            <div>
               <IconButton
+                id={`tip-flip-${tip.id}`}
                 className={styles.TipFlipButton}
                 icon={isFlipped ? IconClose : IconInfo}
-                title={
-                  !isFlipped
-                    ? 'Waarom u deze tip ziet.'
-                    : 'Sluit tip informatie'
-                }
                 onClick={() => setIsFlipped(!isFlipped)}
+                aria-label="Reden waarom u deze tip ziet"
+                aria-expanded={isFlipped}
                 iconFill="#ffffff"
               />
-            </>
+              <p
+                aria-labelledby={`tip-flip-${tip.id}`}
+                className={styles.TipFlip}
+                hidden={!isFlipped}
+              >
+                {tip.reason.map(reason => (
+                  <span key={reason}>{reason}</span>
+                ))}
+              </p>
+            </div>
           )}
-        </figure>
+        </div>
         <Heading el="h4">{tip.title}</Heading>
         <p>{tip.description}</p>
         <Linkd

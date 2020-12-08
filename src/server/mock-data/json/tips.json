@@ -1,94 +1,87 @@
 [
   {
-      "datePublished": "2019-07-24",
-      "isPersonalized": true,
-      "description": "U mag geen telefoon meer vasthouden op de fiets",
-      "id": 1,
-      "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/bellenopfiets.jpg",
-      "link": {
-          "title": "Meer informatie",
-          "to": "https://www.rijksoverheid.nl/onderwerpen/fiets/vraag-en-antwoord/mag-ik-bellen-en-naar-muziek-luisteren-op-de-fiets"
-      },
-      "priority": 50,
-      "reason": ["Op basis van common sense"],
-      "title": "PERSONALIZED: Geen telefoon op de fiets"
+    "audience": [
+      "persoonlijk"
+    ],
+    "datePublished": "2020-06-15",
+    "description": "Maakt u mondkapjes? Of zoekt u manieren om te blijven bewegen? Amsterdammers helpen elkaar tijdens de coronacrisis.",
+    "id": "mijn-12",
+    "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/mondkapjes.jpg",
+    "isPersonalized": false,
+    "link": {
+      "title": "Vind elkaar",
+      "to": "https://wijamsterdam.nl/"
+    },
+    "priority": 70,
+    "reason": ["Omdat dit een toptip is."],
+    "title": "Amsterdammers helpen Amsterdammers"
   },
   {
-      "datePublished": "2019-08-18",
-      "description": "Kijk waar het dichtstbijzijnde Afvalpunt is. En welke vergunningen de gemeente heeft uitgegeven in uw buurt",
-      "id": 9,
-      "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/afvalpunt.jpg",
-      "link": {
-          "title": "Kijk op de kaart",
-          "to": "/buurt"
-      },
-      "priority": 40,
-      "reason": [],
-      "title": "Mijn buurt"
+    "audience": [
+      "persoonlijk"
+    ],
+    "datePublished": "2020-06-15",
+    "description": "Bent u op zoek naar gegevens of onderzoek over uw stad of buurt? U vindt al deze informatie nu op 1 website.",
+    "id": "mijn-14",
+    "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/openresearch.jpg",
+    "isPersonalized": false,
+    "link": {
+      "title": "Kijk op openresearch.amsterdam",
+      "to": "https://openresearch.amsterdam/"
+    },
+    "priority": 70,
+    "reason": ["Omdat dit een toptip is."],
+    "title": "Voor nieuwsgierige Amsterdammers"
   },
   {
-      "datePublished": "2019-07-24",
-      "description": "Op een Afvalpunt kunt u uw grofvuil, klein chemisch afval en tweedehands spullen inleveren",
-      "id": 3,
-      "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/grofvuil.jpg",
-      "link": {
-          "title": "Adressen Afvalpunten",
-          "to": "https://www.amsterdam.nl/afval/grofvuil/grofvuil-wegbrengen/"
-      },
-      "priority": 25,
-      "reason": [],
-      "title": "Grofvuil"
+    "audience": [
+      "persoonlijk"
+    ],
+    "datePublished": "2019-07-24",
+    "description": "Op een Afvalpunt kunt u uw grofvuil, klein chemisch afval en tweedehands spullen inleveren.",
+    "id": "mijn-3",
+    "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/grofvuil.jpg",
+    "isPersonalized": false,
+    "link": {
+      "title": "Adressen Afvalpunten",
+      "to": "https://www.amsterdam.nl/afval/grofvuil/grofvuil-wegbrengen/"
+    },
+    "priority": 25,
+    "reason": ["Omdat dit een toptip is."],
+    "title": "Grofvuil"
   },
   {
-      "datePublished": "2019-07-24",
-      "description": "Er is altijd vrijwilligerswerk dat bij u past\nBekijk de vacature",
-      "id": 2,
-      "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/vrijwilliger.jpg",
-      "link": {
-          "title": "Vrijwilligerscentrale Amsterdam",
-          "to": "https://www.vca.nu/vacaturebank/"
-      },
-      "priority": 20,
-      "reason": [],
-      "title": "Vrijwilliger worden?"
+    "audience": [
+      "persoonlijk"
+    ],
+    "datePublished": "2019-07-24",
+    "description": "Er is altijd vrijwilligerswerk dat bij u past. Bekijk de vacatures.",
+    "id": "mijn-2",
+    "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/vrijwilliger.jpg",
+    "isPersonalized": false,
+    "link": {
+      "title": "Vrijwilligerscentrale Amsterdam",
+      "to": "https://www.vca.nu/vacaturebank/"
+    },
+    "priority": 20,
+    "reason": ["Omdat dit een toptip is."],
+    "title": "Vrijwilliger worden?"
   },
   {
-      "datePublished": "2019-07-24",
-      "description": "Bekijk hoe u gratis een geveltuin kunt aanvragen bij uw stadsdeel. Of hoe u de geveltuin kunt laten verwijderen.",
-      "id": 4,
-      "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/geveltuin.jpg",
-      "link": {
-          "title": "Meer informatie",
-          "to": "https://www.amsterdam.nl/veelgevraagd/?productid=%7B2214F853-B9F5-41F6-934B-B1616D8E0949%7D#%7B7E4E60A9-F809-4FC9-B7EB-9C06B3DB4513%7D"
-      },
-      "priority": 20,
-      "reason": [],
-      "title": "Geveltuin"
-  },
-  {
-      "datePublished": "2019-07-24",
-      "description": "De GGD geeft advies en alle vaccinaties die u nodig hebt voor uw vakantie naar het buitenland",
-      "id": 5,
-      "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/vaccinaties.jpg",
-      "link": {
-          "title": "Meer informatie",
-          "to": "https://www.ggd.amsterdam.nl/ggd/contact/reizigersvaccinatie/vaccinaties.jpg"
-      },
-      "priority": 20,
-      "reason": [],
-      "title": "Vaccinaties"
-  },
-  {
-      "datePublished": "2019-07-24",
-      "description": "U vindt hier steeds weer nieuwe onderwerpen! Bekijk de nieuwe onderwerpen",
-      "id": 7,
-      "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/nieuweaansluiting.jpg",
-      "link": {
-          "title": "Bekijk de nieuwe onderwerpen",
-          "to": "/"
-      },
-      "priority": 20,
-      "reason": [],
-      "title": "Kom snel terug"
+    "audience": [
+      "persoonlijk"
+    ],
+    "datePublished": "2019-07-24",
+    "description": "Bekijk hoe u gratis een geveltuin kunt aanvragen bij uw stadsdeel. Of hoe u de geveltuin kunt laten verwijderen.",
+    "id": "mijn-4",
+    "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/geveltuin.jpg",
+    "isPersonalized": false,
+    "link": {
+      "title": "Meer informatie",
+      "to": "https://www.amsterdam.nl/wonen-leefomgeving/medebeheer/geveltuin-aanvragen/"
+    },
+    "priority": 20,
+    "reason": ["Omdat dit een toptip is."],
+    "title": "Geveltuin"
   }
 ]
