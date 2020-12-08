@@ -297,6 +297,7 @@ export default function MainNavBar() {
           variant="plain"
           icon={IconInfo}
           lean={true}
+          aria-label="Dit ziet u in Mijn Amsterdam"
         />
       </div>
     </nav>
