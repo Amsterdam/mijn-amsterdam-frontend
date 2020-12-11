@@ -1,13 +1,13 @@
+import * as Sentry from '@sentry/node';
 import express, { NextFunction, Request, Response } from 'express';
 import { BffEndpoints } from './config';
+import { getPassthroughRequestHeaders } from './helpers/app';
+import { fetchCMSCONTENT } from './services';
 import {
   loadServicesAll,
   loadServicesSSE,
   loadServicesTips,
 } from './services/controller';
-import * as Sentry from '@sentry/node';
-import { fetchCMSCONTENT } from './services';
-import { getPassthroughRequestHeaders, sendMessage } from './helpers/app';
 
 export const router = express.Router();
 

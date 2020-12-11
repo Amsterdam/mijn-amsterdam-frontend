@@ -66,7 +66,12 @@ const Tip = ({ tip }: TipProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   return (
-    <li className={styles.TipItem}>
+    <li
+      className={classnames(
+        styles.TipItem,
+        tip.isPersonalized ? 'is-personalized' : ''
+      )}
+    >
       <article>
         <div className={styles.ImageContainer}>
           <img alt="" src={imgUrl} className={styles.Img} />

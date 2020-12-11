@@ -41,7 +41,7 @@
     "description": "Op een Afvalpunt kunt u uw grofvuil, klein chemisch afval en tweedehands spullen inleveren.",
     "id": "mijn-3",
     "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/grofvuil.jpg",
-    "isPersonalized": false,
+    "isPersonalized": true,
     "link": {
       "title": "Adressen Afvalpunten",
       "to": "https://www.amsterdam.nl/afval/grofvuil/grofvuil-wegbrengen/"
@@ -58,7 +58,7 @@
     "description": "Er is altijd vrijwilligerswerk dat bij u past. Bekijk de vacatures.",
     "id": "mijn-2",
     "imgUrl": "https://mijn.acc.amsterdam.nl/api/tips/static/tip_images/vrijwilliger.jpg",
-    "isPersonalized": false,
+    "isPersonalized": true,
     "link": {
       "title": "Vrijwilligerscentrale Amsterdam",
       "to": "https://www.vca.nu/vacaturebank/"
