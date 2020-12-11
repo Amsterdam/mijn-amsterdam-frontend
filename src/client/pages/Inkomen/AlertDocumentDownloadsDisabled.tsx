@@ -4,7 +4,7 @@ import { Alert } from '../../components';
 
 export default function AlertDocumentDownloadsDisabled() {
   return (
-    (!FeatureToggle.focusDocumentDownloadsActive && (
+    (FeatureToggle.focusDocumentDownloadsAlert && (
       <Alert type="warning">
         <p>
           Door technische problemen kunt u de brieven van Inkomen en Stadspas op

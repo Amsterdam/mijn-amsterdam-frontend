@@ -8,7 +8,7 @@ export const FeatureToggle = {
   belastingApiActive: true,
   milieuzoneApiActive: true,
   focusUitkeringsspecificatiesActive: true,
-  focusDocumentDownloadsActive: true,
+  focusDocumentDownloadsAlert: false,
   focusAanvragenActive: true,
   focusCombinedActive: true,
   identiteitsbewijzenActive: true,

@@ -12,44 +12,45 @@ export interface PageProps extends HTMLProps<HTMLDivElement> {
 export default function Page({
   className,
   children,
+  id,
   ...otherProps
 }: PageProps) {
   const classNames = composeClassNames(styles.Page, className);
 
   return (
-    <main {...otherProps} className={classNames}>
+    <main {...otherProps} id={id} className={classNames}>
       {children}
     </main>
   );
 }
 
-export function TextPage({ children, className }: PageProps) {
+export function TextPage({ children, className, id }: PageProps) {
   return (
-    <Page className={composeClassNames(styles.TextPage, className)}>
+    <Page id={id} className={composeClassNames(styles.TextPage, className)}>
       {children}
     </Page>
   );
 }
 
-export function OverviewPage({ children, className }: PageProps) {
+export function OverviewPage({ children, className, id }: PageProps) {
   return (
-    <Page className={composeClassNames(styles.OverviewPage, className)}>
+    <Page id={id} className={composeClassNames(styles.OverviewPage, className)}>
       {children}
     </Page>
   );
 }
 
-export function DetailPage({ children, className }: PageProps) {
+export function DetailPage({ children, className, id }: PageProps) {
   return (
-    <Page className={composeClassNames(styles.DetailPage, className)}>
+    <Page id={id} className={composeClassNames(styles.DetailPage, className)}>
       {children}
     </Page>
   );
 }
 
-export function PageContent({ children, className }: PageProps) {
+export function PageContent({ children, className, id }: PageProps) {
   return (
-    <div className={composeClassNames(styles.PageContent, className)}>
+    <div id={id} className={composeClassNames(styles.PageContent, className)}>
       {children}
     </div>
   );

@@ -35,7 +35,7 @@ export default () => {
       <PageHeading className={styles.Heading}>
         Welkom op Mijn Amsterdam
       </PageHeading>
-      <PageContent className={styles.LandingContent} id="AppContent">
+      <PageContent className={styles.LandingContent} id="skip-to-id-AppContent">
         <p>
           Mijn Amsterdam is uw persoonlijke online pagina bij de gemeente
           Amsterdam.

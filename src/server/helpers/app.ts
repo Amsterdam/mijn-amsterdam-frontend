@@ -103,7 +103,7 @@ export function sendMessage(
   res: Response,
   id: string,
   event: string = 'message',
-  data: any
+  data?: any
 ) {
   const doStringify = typeof data !== 'string';
   const payload = doStringify ? JSON.stringify(data) : data;

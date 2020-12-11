@@ -23,7 +23,6 @@ import { routerDevelopment } from './mock-data/router-development';
 import { router } from './router';
 
 const isDebug = ENV === 'development';
-
 const options: Sentry.NodeOptions = {
   dsn: getOtapEnvItem('bffSentryDsn'),
   environment: ENV,
@@ -35,6 +34,7 @@ const options: Sentry.NodeOptions = {
     }
     return event;
   },
+  release: 'mijnamsterdam-bff@' + process.env.npm_package_version,
 };
 
 Sentry.init(options);

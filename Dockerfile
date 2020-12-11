@@ -14,6 +14,7 @@ COPY tsconfig.json /app/
 COPY tsconfig.bff.json /app/
 COPY package.json /app/
 COPY package-lock.json /app/
+COPY .env.production /app/
 
 RUN npm ci
 
@@ -29,8 +30,10 @@ FROM build-deps as build-app
 
 ENV BROWSER=none
 ENV CI=true
+
 ARG REACT_APP_ENV=production
 ENV REACT_APP_ENV=$REACT_APP_ENV
+
 ENV INLINE_RUNTIME_CHUNK=false
 ENV TZ=Europe/Amsterdam
 

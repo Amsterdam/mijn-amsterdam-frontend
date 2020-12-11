@@ -44,12 +44,14 @@ router.get(
       'cache-control': 'no-cache',
       connection: 'keep-alive',
     });
+    res.write('retry: 1000\n');
+    res.flush();
     try {
       await loadServicesSSE(req, res);
     } catch (error) {
       Sentry.captureException(error);
+      res.end();
     }
-    next();
   }
 );
 

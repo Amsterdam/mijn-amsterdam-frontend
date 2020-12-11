@@ -185,6 +185,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
         <p className={ButtonStyles.ButtonGroup}>
           {continueButtonIsVisible && (
             <Button
+              tabIndex={1}
               variant="secondary"
               className="continue-button"
               onClick={continueUsingApp}
@@ -194,12 +195,14 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
           )}
           <Linkd
             variant="secondary-inverted"
+            tabIndex={2}
             lean={false}
             isDisabled={!continueButtonIsVisible}
             className={classnames('logout-button', styles.LogoutButton)}
             external={true}
             icon=""
             onClick={() => session.logout()}
+            onKeyPress={event => event.key === 'Enter' && session.logout()}
             role="button"
           >
             {continueButtonIsVisible

@@ -145,7 +145,7 @@ export async function fetchFOCUSSpecificationsGenerated(
       uitkeringsspecificaties,
     } = FOCUS_SPECIFICATIES.content;
 
-    if (FeatureToggle.focusDocumentDownloadsActive) {
+    if (!FeatureToggle.focusDocumentDownloadsAlert) {
       if (jaaropgaven.length) {
         notifications.push(
           transformIncomeSpecificationNotification('jaaropgave', jaaropgaven[0])

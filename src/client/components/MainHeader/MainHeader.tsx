@@ -31,10 +31,10 @@ export default function MainHeader({
     <header className={styles.header}>
       {!usePhoneScreen() && (
         <nav className={styles.DirectSkipLinks}>
-          <Linkd external={true} tabIndex={0} href="#AppContent">
+          <Linkd external={true} tabIndex={0} href="#skip-to-id-AppContent">
             Direct naar: <b>Pagina inhoud</b>
           </Linkd>
-          <Linkd external={true} tabIndex={0} href="#MainFooter">
+          <Linkd external={true} tabIndex={0} href="#skip-to-id-MainFooter">
             Direct naar: <b>Footer</b>
           </Linkd>
         </nav>

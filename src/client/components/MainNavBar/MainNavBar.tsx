@@ -1,8 +1,14 @@
 import classnames from 'classnames';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { animated } from 'react-spring';
 import { AppRoutes } from '../../../universal/config';
+import {
+  Chapters,
+  ChapterTitles,
+  profileTypeChapterTitleAdjustment,
+} from '../../../universal/config/chapter';
+import { isError } from '../../../universal/helpers/api';
 import { ComponentChildren } from '../../../universal/types';
 import { IconInfo } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
@@ -27,8 +33,6 @@ import {
 import styles from './MainNavBar.module.scss';
 import { ProfileName } from './ProfileName';
 import { useBurgerMenuAnimation } from './useBurgerMenuAnimation';
-import { isError } from '../../../universal/helpers/api';
-import { useTermReplacement } from '../../hooks/useTermReplacement';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -69,7 +73,7 @@ function SecondaryLinks() {
 
 function MainNavLink({ children, to, title, ...rest }: MainNavLinkProps) {
   return (
-    <NavLink to={to} className={styles.MainNavLink} {...rest}>
+    <NavLink exact={true} to={to} className={styles.MainNavLink} {...rest}>
       <span>{children}</span>
     </NavLink>
   );
@@ -116,10 +120,20 @@ function BurgerButton({ isActive, toggleBurgerMenu }: BurgerButtonProps) {
         styles.BurgerMenuToggleBtn,
         isActive && styles.BurgerMenuToggleBtnOpen
       )}
+      aria-expanded={isActive}
       onClick={() => toggleBurgerMenu(!isActive)}
     >
       Navigatie
     </button>
+  );
+}
+
+function isTargetWithinMenu(target: any) {
+  const LinkContainer = document.getElementById(LinkContainerId);
+  const BurgerMenuToggleButton = document.getElementById(BurgerMenuToggleBtnId);
+  return (
+    (LinkContainer && LinkContainer.contains(target)) ||
+    (BurgerMenuToggleButton && BurgerMenuToggleButton.contains(target))
   );
 }
 
@@ -131,43 +145,56 @@ export default function MainNavBar() {
   );
   const { items: myChapterItems } = useChapters();
   const location = useLocation();
-  const [isTutorialVisible, setIsTutorialVisible] = useState(false);
+  const [isTutorialVisible, setIsTutorialVisible] = useState<
+    boolean | undefined
+  >(undefined);
+  const profileType = useProfileTypeValue();
+  const tutorialRef = useRef<HTMLButtonElement | null>(null);
 
-  const onClickOutsideBurgermenu = useCallback(
-    (event?: any) => {
-      if (isBurgerMenuVisible) {
-        // Testing for clicks on elements that are not part of the responsive menu
-        const BurgerMenuToggleButton = document.getElementById(
-          BurgerMenuToggleBtnId
-        );
-        const LinkContainer = document.getElementById(LinkContainerId);
-        const clickedOutside = !(
-          (LinkContainer && LinkContainer.contains(event.target)) ||
-          (BurgerMenuToggleButton &&
-            BurgerMenuToggleButton.contains(event.target))
-        );
+  // Re-focus the tutorial button on closing of modal. WCAG requirement.
+  useEffect(() => {
+    if (isTutorialVisible === undefined) {
+      return;
+    }
+    if (isTutorialVisible === false) {
+      tutorialRef?.current?.focus();
+    }
+  }, [isTutorialVisible]);
 
-        if (clickedOutside) {
+  // Bind click outside and tab navigation interaction
+  useEffect(() => {
+    if (!hasBurgerMenu) {
+      return;
+    }
+    const onTab = (event?: any) => {
+      const isMenuTarget = isTargetWithinMenu(event.target);
+      if (event.key === 'Tab') {
+        if (isBurgerMenuVisible === true && !isMenuTarget) {
           toggleBurgerMenu(false);
+        } else if (isBurgerMenuVisible === false && isMenuTarget) {
+          toggleBurgerMenu(true);
         }
       }
-    },
-    [isBurgerMenuVisible]
-  );
+    };
 
-  // Bind click outside small screen menu to hide it
-  useEffect(() => {
+    const onClickOutsideBurgermenu = (event?: any) => {
+      if (isBurgerMenuVisible === true && !isTargetWithinMenu(event.target)) {
+        toggleBurgerMenu(false);
+      }
+    };
+
+    document.addEventListener('keyup', onTab);
     document.addEventListener('click', onClickOutsideBurgermenu);
-    return () =>
+    return () => {
+      document.removeEventListener('keyup', onTab);
       document.removeEventListener('click', onClickOutsideBurgermenu);
-  }, [onClickOutsideBurgermenu]);
+    };
+  }, [hasBurgerMenu, isBurgerMenuVisible]);
 
   // Hides small screen menu on route change
   useEffect(() => {
     toggleBurgerMenu(false);
   }, [location.pathname]);
-
-  const termReplace = useTermReplacement();
 
   const {
     linkContainerAnimationProps,
@@ -176,21 +203,25 @@ export default function MainNavBar() {
   } = useBurgerMenuAnimation(isBurgerMenuVisible);
 
   const menuItemsComposed = useMemo(() => {
-    return mainMenuItems.map((item) => {
-      let menuItem = { ...item };
-
-      menuItem.title = termReplace(menuItem.title);
+    return mainMenuItems.map(item => {
+      let menuItem = item;
 
       // Add dynamic chapter submenu items to the menu
       if (item.id === mainMenuItemId.CHAPTERS) {
-        menuItem = Object.assign(menuItem, {
-          submenuItems: myChapterItems,
-        });
+        menuItem = { ...item, submenuItems: myChapterItems };
+      } else if (
+        menuItem.title === ChapterTitles.BUURT &&
+        profileType !== 'private'
+      ) {
+        menuItem = {
+          ...menuItem,
+          title: profileTypeChapterTitleAdjustment(profileType, Chapters.BUURT),
+        };
       }
 
       return getMenuItem(menuItem);
     });
-  }, [myChapterItems, termReplace]);
+  }, [myChapterItems, profileType]);
 
   return (
     <nav
@@ -237,6 +268,7 @@ export default function MainNavBar() {
         {location.pathname === AppRoutes.ROOT && (
           <>
             <Button
+              ref={tutorialRef}
               className={styles.TutorialBtn}
               onClick={() => {
                 setIsTutorialVisible(!isTutorialVisible);
@@ -260,6 +292,7 @@ export default function MainNavBar() {
           variant="plain"
           icon={IconInfo}
           lean={true}
+          aria-label="Dit ziet u in Mijn Amsterdam"
         />
       </div>
     </nav>

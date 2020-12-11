@@ -1,7 +1,5 @@
 import React, { useRef, useState } from 'react';
-
 import { ComponentChildren } from '../../../universal/types';
-import classnames from 'classnames';
 import styles from './FontEnlarger.module.scss';
 
 export interface ComponentProps {
@@ -26,29 +24,26 @@ export default function FontEnlarger({ children }: ComponentProps) {
     <div className={styles.FontEnlarger}>
       <button
         ref={buttonRef}
-        aria-label="Uitleg tekst vergroten"
         onFocus={() => show()}
         onBlur={() => hide()}
         onClick={() => focus()}
         onKeyUp={event => {
           event.key.toLowerCase() === 'escape' && hide();
         }}
+        aria-label="Uitleg tekst vergroten"
         aria-expanded={isVisible}
+        id="show-font-enlarger-info"
       >
         A &#43; &minus;
       </button>
-      <div
-        className={classnames(
-          styles.FontEnlargerPopup,
-          isVisible && styles.isVisible
-        )}
+      <p
+        aria-labelledby="show-font-enlarger-info"
+        hidden={!isVisible}
+        className={styles.FontEnlargerPopup}
       >
-        <p>
-          Om de pagina makkelijker te lezen kunt u de pagina vergroten, door in
-          Windows Control met + toets in te drukken (op Mac is het Command met
-          +).
-        </p>
-      </div>
+        Om de pagina makkelijker te lezen kunt u de pagina vergroten, door in
+        Windows Control met + toets in te drukken (op Mac is het Command met +).
+      </p>
     </div>
   );
 }
