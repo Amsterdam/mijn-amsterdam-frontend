@@ -5,6 +5,7 @@ import { CustomTrackingUrls } from '../../universal/config';
 import { TMA_LOGIN_URL_DIGID, TMA_LOGIN_URL_EHERKENNING } from '../config/api';
 import { PageTitleMain, PageTitles } from '../config/pages';
 import { trackPageView } from './analytics.hook';
+import { AppRoutes } from '../../universal/config/routing';
 
 const ExcludePageViewTrackingUrls = [
   TMA_LOGIN_URL_DIGID,
@@ -44,6 +45,15 @@ export function usePageChange() {
         ? PageTitles[route]
           ? PageTitles[route]
           : PageTitleMain
+        : !Object.values(AppRoutes).find(
+            route =>
+              !!matchPath(location.pathname, {
+                path: route,
+                exact: true,
+                strict: false,
+              })
+          )
+        ? 'Pagina niet gevonden'
         : PageTitleMain;
 
     document.title = title;

@@ -52,6 +52,7 @@ export interface MyCase {
 }
 
 export interface MyTip {
+  id: string;
   datePublished: string;
   title: string;
   description: string;

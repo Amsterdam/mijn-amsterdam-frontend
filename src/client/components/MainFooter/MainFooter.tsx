@@ -61,7 +61,7 @@ export default function MainFooter({
   const { isLoading } = useCMSApi(isAuthenticated);
 
   return (
-    <footer className={styles.MainFooter} id="MainFooter">
+    <footer className={styles.MainFooter} id="skip-to-id-MainFooter">
       <div className={classnames(styles.TopBar, styles.InnerContainer)}>
         {isLoading && <div className={styles.FooterLoader}>...</div>}
         {footer?.blocks.map(footerItem => {

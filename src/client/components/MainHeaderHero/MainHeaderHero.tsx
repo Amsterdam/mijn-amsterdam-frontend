@@ -107,15 +107,15 @@ export default function MainHeaderHero() {
     >
       <picture>
         <source
-          media="(orientation: portrait) and (max-width: 360px)"
+          media="(orientation: portrait) and (max-width: 320px)"
           srcSet={srcSet.PORTRAIT_SMALL}
         />
         <source
-          media="(orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) and (min-width: 360px)"
+          media="(orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) and (min-width: 320px)"
           srcSet={srcSet.PORTRAIT_SMALL_2X}
         />
         <source
-          media="(orientation: portrait) and (-webkit-min-device-pixel-ratio: 3) and (min-width: 360px)"
+          media="(orientation: portrait) and (-webkit-min-device-pixel-ratio: 3) and (min-width: 320px)"
           srcSet={srcSet.PORTRAIT_SMALL_3X}
         />
         <source
