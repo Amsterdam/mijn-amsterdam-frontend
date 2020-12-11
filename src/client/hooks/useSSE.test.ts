@@ -1,12 +1,9 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import * as sseHook from './useSSE';
-import { SSE_ERROR_MESSAGE } from './useSSE';
+import { SSE_ERROR_MESSAGE, MAX_CONNECTION_RETRY_COUNT } from './useSSE';
+import { init } from '@sentry/node';
 
-interface SSEMessage {
-  data: string;
-}
-
-const evHandlers: Record<string, (args: any) => void> = {};
+const evHandlers: Record<string, (args?: any) => void> = {};
 const sseMockResponse = JSON.stringify({
   FOO: { content: { hello: 'world' } },
 });
@@ -16,9 +13,36 @@ function EventSourceMock() {
   this.init();
 }
 
-EventSourceMock.prototype.init = jest.fn();
-EventSourceMock.prototype.readyState = 'x';
-EventSourceMock.prototype.close = jest.fn();
+EventSourceMock.CONNECTING = 0;
+EventSourceMock.OPEN = 1;
+EventSourceMock.CLOSED = 2;
+EventSourceMock.prototype.readyState = 0;
+EventSourceMock.prototype.mockRestore = () => {
+  [
+    'init',
+    'open',
+    'close',
+    'error',
+    'addEventListener',
+    'removeEventListener',
+  ].forEach(name => {
+    EventSourceMock.prototype[name].mockClear();
+  });
+  EventSourceMock.prototype.readyState = 0;
+};
+EventSourceMock.prototype.init = jest.fn(function init() {});
+EventSourceMock.prototype.setReadyState = function(readyState: number) {
+  this.readyState = readyState;
+};
+EventSourceMock.prototype.open = jest.fn(() => {
+  evHandlers.open && evHandlers.open();
+});
+EventSourceMock.prototype.close = jest.fn(() => {
+  evHandlers.close && evHandlers.close();
+});
+EventSourceMock.prototype.error = jest.fn((error: any) => {
+  evHandlers.error && evHandlers.error(error);
+});
 EventSourceMock.prototype.addEventListener = jest.fn(
   (eventName: string, handler: (args: any) => void) => {
     evHandlers[eventName] = jest.fn(handler);
@@ -33,11 +57,8 @@ EventSourceMock.prototype.removeEventListener = jest.fn(
 const onEventCallback = jest.fn();
 
 describe('useAppState', () => {
-  (window as any).EventSource = EventSourceMock;
-  // @ts-ignore
-  sseHook.MAX_RETRY_COUNT = 4;
-
   beforeAll(() => {
+    (window as any).EventSource = EventSourceMock;
     (window as any).console.info = jest.fn();
     (window as any).console.error = jest.fn();
   });
@@ -48,12 +69,8 @@ describe('useAppState', () => {
   });
 
   beforeEach(() => {
-    EventSourceMock.prototype.init.mockClear();
-    EventSourceMock.prototype.close.mockClear();
-    EventSourceMock.prototype.addEventListener.mockClear();
-    EventSourceMock.prototype.removeEventListener.mockClear();
+    EventSourceMock.prototype.mockRestore();
     onEventCallback.mockClear();
-    jest.useFakeTimers();
   });
 
   it('Should connect and respond with multiple messages.', () => {
@@ -66,7 +83,7 @@ describe('useAppState', () => {
       })
     );
     expect(EventSourceMock.prototype.init).toHaveBeenCalled();
-    expect(EventSourceMock.prototype.addEventListener).toHaveBeenCalledTimes(4);
+    expect(EventSourceMock.prototype.addEventListener).toHaveBeenCalledTimes(3);
 
     act(() => {
       evHandlers.message({ data: sseMockResponse });
@@ -77,7 +94,7 @@ describe('useAppState', () => {
     hook.unmount();
 
     expect(EventSourceMock.prototype.removeEventListener).toHaveBeenCalledTimes(
-      4
+      3
     );
   });
 
@@ -92,42 +109,18 @@ describe('useAppState', () => {
     );
 
     expect(EventSourceMock.prototype.init).toHaveBeenCalledTimes(1);
-    expect(EventSourceMock.prototype.addEventListener).toHaveBeenCalledTimes(4);
+    expect(EventSourceMock.prototype.addEventListener).toHaveBeenCalledTimes(3);
 
-    // First try
-    act(() => {
-      evHandlers.error(new Error('Server not reachable.'));
-    });
+    // Simulate retries
+    for (let i = 0; i < MAX_CONNECTION_RETRY_COUNT; i += 1) {
+      EventSourceMock.prototype.open();
+      expect(evHandlers.open).toHaveBeenCalledTimes(i + 1);
+
+      EventSourceMock.prototype.error(new Error('Server not reachable.'));
+      expect(evHandlers.error).toHaveBeenCalledTimes(i + 1);
+    }
+
     expect(EventSourceMock.prototype.close).toHaveBeenCalledTimes(1);
-    jest.runAllTimers();
-    expect(EventSourceMock.prototype.init).toHaveBeenCalledTimes(2);
-
-    // Second try
-    act(() => {
-      evHandlers.error(new Error('Server not reachable.'));
-    });
-    expect(EventSourceMock.prototype.close).toHaveBeenCalledTimes(2);
-    jest.runAllTimers();
-    expect(EventSourceMock.prototype.init).toHaveBeenCalledTimes(3);
-
-    // Third try
-    act(() => {
-      evHandlers.error(new Error('Server not reachable.'));
-    });
-    expect(EventSourceMock.prototype.close).toHaveBeenCalledTimes(3);
-    jest.runAllTimers();
-    expect(EventSourceMock.prototype.init).toHaveBeenCalledTimes(3);
-
-    // Fourth, last try
-    act(() => {
-      evHandlers.error(new Error('Server not reachable.'));
-    });
-    expect(EventSourceMock.prototype.close).toHaveBeenCalledTimes(4);
-    jest.runAllTimers();
-
-    // Init is not called again
-    expect(EventSourceMock.prototype.init).toHaveBeenCalledTimes(3);
-
     expect(onEventCallback).toHaveBeenCalledWith(SSE_ERROR_MESSAGE);
   });
 
@@ -144,5 +137,41 @@ describe('useAppState', () => {
     // First try
     expect(EventSourceMock.prototype.init).toHaveBeenCalledTimes(0);
     expect(EventSourceMock.prototype.addEventListener).toHaveBeenCalledTimes(0);
+  });
+
+  it('Should fail immediately if connection is closed but with error.', () => {
+    EventSourceMock.prototype.readyState = 2;
+
+    renderHook(() =>
+      sseHook.useSSE({
+        path: 'http://mock-sse',
+        eventName: 'message',
+        callback: onEventCallback,
+        postpone: false,
+      })
+    );
+
+    EventSourceMock.prototype.error(new Error('Server not reachable.'));
+
+    expect(EventSourceMock.prototype.close).toHaveBeenCalledTimes(1);
+    expect(onEventCallback).toHaveBeenCalledWith(SSE_ERROR_MESSAGE);
+  });
+
+  it('Should fail immediately if connection is open but with error.', () => {
+    EventSourceMock.prototype.readyState = 1;
+
+    renderHook(() =>
+      sseHook.useSSE({
+        path: 'http://mock-sse',
+        eventName: 'message',
+        callback: onEventCallback,
+        postpone: false,
+      })
+    );
+
+    EventSourceMock.prototype.error(new Error('Server not reachable.'));
+
+    expect(EventSourceMock.prototype.close).toHaveBeenCalledTimes(1);
+    expect(onEventCallback).toHaveBeenCalledWith(SSE_ERROR_MESSAGE);
   });
 });
