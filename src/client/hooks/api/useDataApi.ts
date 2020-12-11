@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/browser';
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { apiErrorResult } from '../../../universal/helpers/api';
 import { Action } from '../../../universal/types';
@@ -195,7 +195,12 @@ export function pollBffHealth() {
       pollCount += 1;
       if (pollCount <= MAX_POLL_COUNT) {
         axios({ url: BFF_API_HEALTH_URL, responseType: 'json' })
-          .then((response: { data: { status: 'OK' } | string }) => {
+          .then((response: AxiosResponse<any>) => {
+            console.info(
+              'Health check response',
+              response.data,
+              response.headers
+            );
             if (
               typeof response.data !== 'string' &&
               response.data?.status === 'OK'

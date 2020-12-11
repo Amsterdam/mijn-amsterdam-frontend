@@ -297,7 +297,7 @@ export async function loadServicesSSE(req: Request, res: Response) {
 
   // Close the connection when all services responded
   return Promise.allSettled([...servicePromises, tipsPromise]).then(() => {
-    sendMessage(res, 'close', 'close', null);
+    sendMessage(res, 'close', 'message', 'close');
   });
 }
 

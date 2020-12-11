@@ -7,7 +7,7 @@ import {
 } from './services/controller';
 import * as Sentry from '@sentry/node';
 import { fetchCMSCONTENT } from './services';
-import { getPassthroughRequestHeaders } from './helpers/app';
+import { getPassthroughRequestHeaders, sendMessage } from './helpers/app';
 
 export const router = express.Router();
 
@@ -33,12 +33,14 @@ router.get(
       'cache-control': 'no-cache',
       connection: 'keep-alive',
     });
+    res.write('retry: 1000\n');
+    res.flush();
     try {
       await loadServicesSSE(req, res);
     } catch (error) {
       Sentry.captureException(error);
+      res.end();
     }
-    next();
   }
 );
 
