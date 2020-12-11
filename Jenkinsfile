@@ -83,6 +83,7 @@ pipeline {
         sh "docker build -t ${IMAGE_TEST} " +
            "--shm-size 1G " +
            "--build-arg REACT_APP_ENV=development " +
+           "--build-arg REACT_APP_VERSION=${npm_package_version} " +
            "--target=serve-ot-bff " +
            "."
         sh "docker push ${IMAGE_TEST}"
@@ -122,6 +123,7 @@ pipeline {
         // build the Front-end/nginx image
         sh "docker build -t ${IMAGE_ACCEPTANCE} " +
            "--build-arg REACT_APP_ENV=acceptance " +
+           "--build-arg REACT_APP_VERSION=${npm_package_version} " +
            "--target=deploy-acceptance-frontend " +
            "--shm-size 1G " +
            "."
@@ -175,6 +177,7 @@ pipeline {
         script { currentBuild.displayName = "PROD:Build:#${BUILD_NUMBER}" }
         sh "docker build -t ${IMAGE_PRODUCTION} " +
            "--target=deploy-production-frontend " +
+           "--build-arg REACT_APP_VERSION=${npm_package_version} " +
            "--shm-size 1G " +
            "."
         sh "docker push ${IMAGE_PRODUCTION}"
