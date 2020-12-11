@@ -31,6 +31,7 @@ ENV BROWSER=none
 ENV CI=true
 ARG REACT_APP_ENV=production
 ENV REACT_APP_ENV=$REACT_APP_ENV
+ENV REACT_APP_VERSION=$npm_package_version
 ENV INLINE_RUNTIME_CHUNK=false
 ENV TZ=Europe/Amsterdam
 
