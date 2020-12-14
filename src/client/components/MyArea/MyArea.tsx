@@ -31,11 +31,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import { getElementSize } from '../../hooks/useComponentSize';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import LegendControl from './LegendControl';
-import {
-  useFetchPanelFeature,
-  useLoadingFeature,
-  useSelectedFeature,
-} from './MyArea.hooks';
+import { useFetchPanelFeature, useLoadingFeature } from './MyArea.hooks';
 import { MyAreaDatasets } from './MyAreaDatasets';
 import MyAreaHeader from './MyAreaHeader';
 import HomeControlButton from './MyAreaHomeControlButton';
@@ -221,7 +217,7 @@ export default function MyArea({
     if (isDesktop) {
       cycleFilterPanelState();
     } else {
-      if (filterState === panelCycle.filters[0]) {
+      if (filterState !== PanelState.Closed) {
         setFilterPanelState(PanelState.Closed);
       } else if (filterState === PanelState.Closed) {
         initialFilterPanelState();
