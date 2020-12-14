@@ -1,7 +1,7 @@
 import { Icon } from '@amsterdam/asc-ui';
 import React, { PropsWithChildren, ReactNode, useState } from 'react';
 import styled from 'styled-components';
-import { IconMin, IconPlus } from '../../assets/icons';
+import { IconChevronRight, IconMin, IconPlus } from '../../assets/icons';
 
 export const ToggleButton = styled('button')`
   appearance: none;
@@ -20,9 +20,8 @@ export const ToggleButton = styled('button')`
   z-index: 10;
   width: 36px;
   height: 36px;
-  /* transform: ${(props) =>
-    props['aria-expanded'] ? 'rotate(45deg)' : 'none'}; */
-  /* visibility: hidden; */
+  transform: ${(props) => (props['aria-expanded'] ? 'rotate(90deg)' : 'none')};
+  transition: transform 80ms linear;
   &:hover,
   &:focus {
     visibility: visible;
@@ -59,7 +58,7 @@ function MyAreaCollapsiblePanelHeading({
       {onClick && (
         <ToggleButton onClick={onClick} aria-expanded={isExpanded(state)}>
           <Icon size={16}>
-            {isExpanded(state) ? <IconMin /> : <IconPlus />}
+            <IconChevronRight />
           </Icon>
         </ToggleButton>
       )}

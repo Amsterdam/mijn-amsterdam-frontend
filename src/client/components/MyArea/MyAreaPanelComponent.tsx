@@ -3,6 +3,7 @@ import { spacing } from '@amsterdam/asc-ui/lib/theme/default';
 import React, {
   CSSProperties,
   PropsWithChildren,
+  ReactNode,
   useCallback,
   useEffect,
   useRef,
@@ -49,8 +50,7 @@ function panelSize(
   id: string,
   state: PanelState,
   isPhone: boolean,
-  availableHeight?: number,
-  contentHeight?: number
+  availableHeight?: number
 ) {
   let size = '0px';
   switch (state) {
@@ -104,6 +104,7 @@ const PanelInner = styled.div<{ panelState: PanelState }>`
 const PanelInnerPhone = styled(PanelInner)`
   padding-right: ${themeSpacing(4)};
   padding-left: ${themeSpacing(4)};
+  max-height: calc(100% - 40px);
 `;
 
 const PanelInnerDesktop = styled(PanelInner)`
@@ -233,6 +234,73 @@ export type PanelComponentProps = PropsWithChildren<{
   availableHeight: number;
 }>;
 
+export function usePanelStateCycle(id: string, cycle: PanelState[]) {
+  const [stateStore, setStateStore] = usePanelState();
+  const initialState = cycle[0];
+  const state = stateStore[id] || initialState;
+
+  const setState = useCallback(
+    (state: PanelState) => {
+      setStateStore((store) => ({ ...store, [id]: state }));
+    },
+    [setStateStore, id]
+  );
+
+  const nextPanelState = useCallback(
+    (currentState: PanelState): PanelState => {
+      const currentStateIndex = cycle.indexOf(currentState);
+      const nextState =
+        cycle.length - 1 === currentStateIndex
+          ? cycle[0]
+          : cycle[currentStateIndex + 1];
+      return nextState;
+    },
+    [cycle]
+  );
+
+  const nextState = useCallback(
+    (event?: any) => {
+      if (state !== cycle[cycle.length - 1]) {
+        const nextState = nextPanelState(state);
+        setState(nextState);
+      }
+    },
+    [cycle, state, setState, nextPanelState]
+  );
+
+  const prevState = useCallback(
+    (event?: any) => {
+      const index = cycle.indexOf(state);
+      if (index !== 0) {
+        setState(cycle[index - 1]);
+      }
+    },
+    [cycle, state, setState]
+  );
+
+  const cycleNext = useCallback(
+    (event?: any) => {
+      const nextState = nextPanelState(state);
+      setState(nextState);
+    },
+    [state, setState, nextPanelState]
+  );
+
+  const setInitialState = useCallback(() => setState(initialState), [
+    initialState,
+    setState,
+  ]);
+
+  return {
+    next: nextState,
+    prev: prevState,
+    cycle: cycleNext,
+    set: setState,
+    initial: setInitialState,
+    state,
+  };
+}
+
 export function PanelComponent({
   id,
   children,
@@ -241,37 +309,22 @@ export function PanelComponent({
   cycle = [PanelState.Preview, PanelState.Open],
   availableHeight,
 }: PanelComponentProps) {
-  const [stateStore, setStateStore] = usePanelState();
+  const [stateStore] = usePanelState();
   const initialState = cycle[0];
   const state = stateStore[id] || initialState;
-  const setState = useCallback(
-    (state: PanelState) => {
-      setStateStore((store) => ({ ...store, [id]: state }));
-    },
-    [setStateStore, id]
-  );
   const isPhone = usePhoneScreen();
   const ref = useRef<HTMLDivElement | null>(null);
-  const { height: contentHeight } = useComponentSize(ref.current);
+
+  const { next, prev, cycle: cycleState, initial } = usePanelStateCycle(
+    id,
+    cycle
+  );
 
   useEffect(() => {
     onTogglePanel && onTogglePanel(id, state);
     // Disabled deps here because we only want to respond to actual state change
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
-
-  useEffect(() => {
-    setState(initialState);
-  }, [initialState, setState]);
-
-  function nextPanelState(currentState: PanelState): PanelState {
-    const currentStateIndex = cycle.indexOf(currentState);
-    const nextState =
-      cycle.length - 1 === currentStateIndex
-        ? cycle[0]
-        : cycle[currentStateIndex + 1];
-    return nextState;
-  }
 
   useEffect(() => {
     if (state === initialState) {
@@ -284,34 +337,16 @@ export function PanelComponent({
     !hasCloseCallback || (hasCloseCallback && state !== PanelState.Open);
   const showCloseButton = hasCloseCallback && state === PanelState.Open;
 
-  const onToNextState = (event: any) => {
-    console.log(state, cycle[cycle.length - 1]);
-    if (state !== cycle[cycle.length - 1]) {
-      const nextState = nextPanelState(state);
-      setState(nextState);
-    }
-  };
-  const onToPrevState = (event: any) => {
-    if (state !== cycle[0]) {
-      const nextState = nextPanelState(state);
-      setState(nextState);
-    }
-  };
-  const cycleState = (event: any) => {
-    const nextState = nextPanelState(state);
-    setState(nextState);
-  };
-
   return isPhone ? (
     <PanelPhoneAnimated
-      onSwipedUp={onToNextState}
-      onSwipedDown={onToPrevState}
-      height={panelSize(id, state, true, availableHeight, contentHeight)}
+      onSwipedUp={next}
+      onSwipedDown={prev}
+      height={panelSize(id, state, true, availableHeight)}
     >
       {showCloseButton && (
         <StyledCloseButton
           onClick={(event) => {
-            setState(cycle[0]);
+            initial();
             onClose && onClose(event);
           }}
         />
@@ -333,7 +368,7 @@ export function PanelComponent({
       {showCloseButton && (
         <StyledCloseButton
           onClick={(event) => {
-            setState(cycle[0]);
+            initial();
             onClose && onClose(event);
           }}
         />
@@ -343,7 +378,7 @@ export function PanelComponent({
           aria-expanded={
             state !== PanelState.Closed && state !== PanelState.Tip // Consider the Panel at Tip state as not expanded
           }
-          onClick={() => setState(nextPanelState(state))}
+          onClick={cycleState}
         >
           <Icon>
             <IconChevronRight />

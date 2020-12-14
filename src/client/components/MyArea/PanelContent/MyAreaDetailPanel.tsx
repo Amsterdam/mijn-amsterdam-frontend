@@ -76,7 +76,7 @@ function MyAreaPanelContentSwitch({
   return <GenericContent datasetId={feature?.datasetId} panelItem={feature} />;
 }
 
-export default function MyAreaPanelContentGeneric() {
+export default function MyAreaDetailPanel() {
   const [selectedFeature] = useSelectedFeature();
   const [loadingFeature] = useLoadingFeature();
 
