@@ -1,4 +1,3 @@
-import { ChevronRight } from '@amsterdam/asc-assets';
 import { Icon, themeColor, themeSpacing } from '@amsterdam/asc-ui';
 import { spacing } from '@amsterdam/asc-ui/lib/theme/default';
 import React, {
@@ -6,15 +5,16 @@ import React, {
   PropsWithChildren,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
 } from 'react';
 import { animated, useSpring, UseSpringBaseProps } from 'react-spring';
+import { useSwipeable } from 'react-swipeable';
 import { atom, useRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { IconChevronRight } from '../../assets/icons';
 import { usePhoneScreen } from '../../hooks/media.hook';
-import { CloseButton } from '../Button/Button';
 import { useComponentSize } from '../../hooks/useComponentSize';
+import { CloseButton } from '../Button/Button';
 
 export enum PanelState {
   Closed = 'CLOSED', // Panel is invisible
@@ -31,7 +31,7 @@ export const DESKTOP_PANEL_TIP_WIDTH = px(8 * spacing);
 export const DESKTOP_PANEL_PREVIEW_WIDTH = px(60 * spacing);
 export const DESKTOP_PANEL_WIDTH = px(120 * spacing);
 
-export const PHONE_PANEL_PREVIEW_HEIGHT = px(32 * spacing);
+export const PHONE_PANEL_PREVIEW_HEIGHT = px(38 * spacing);
 export const PHONE_PANEL_TIP_HEIGHT = px(10 * spacing);
 
 const PHONE_FIXED_AVAILABLE_HEIGHT = 1000;
@@ -46,9 +46,11 @@ export function usePanelState() {
 }
 
 function panelSize(
+  id: string,
   state: PanelState,
   isPhone: boolean,
-  availableHeight?: number
+  availableHeight?: number,
+  contentHeight?: number
 ) {
   let size = '0px';
   switch (state) {
@@ -67,13 +69,11 @@ function panelSize(
       size = '0px';
       break;
   }
-  console.log('panelSize', state, isPhone, size);
   return size;
 }
 
 const Panel = styled(animated.div)`
   position: absolute;
-  display: flex;
   left: 0;
   bottom: 0;
   background-color: #fff;
@@ -83,25 +83,32 @@ const Panel = styled(animated.div)`
 `;
 
 const PanelDesktop = styled(Panel)`
-  flex-direction: row;
   width: ${DESKTOP_PANEL_WIDTH};
   top: 0;
   transform: translate3d(calc(-100% + 0px), 0, 0); // first render: hidden
 `;
 
 const PanelPhone = styled(Panel)`
-  flex-direction: column;
   right: 0;
   transform: translate3d(0, calc(100% - 0px), 0); // first render: hidden
 `;
 
 const PanelInner = styled.div<{ panelState: PanelState }>`
   position: relative;
-  flex-grow: 1;
   z-index: 1;
   max-height: 100%; // set max height to enable overflow scrolling.
   overflow-y: ${(props) =>
     props.panelState === PanelState.Open ? 'auto' : 'hidden'};
+`;
+
+const PanelInnerPhone = styled(PanelInner)`
+  padding-right: ${themeSpacing(4)};
+  padding-left: ${themeSpacing(4)};
+`;
+
+const PanelInnerDesktop = styled(PanelInner)`
+  padding-right: ${DESKTOP_PANEL_TIP_WIDTH};
+  padding-left: ${themeSpacing(4)};
 `;
 
 const PanelTogglePhone = styled.button`
@@ -132,6 +139,10 @@ const PanelTogglePhone = styled.button`
 `;
 
 const PanelToggleDesktop = styled.button`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  top: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -176,9 +187,24 @@ function PanelDesktopAnimated({ children, width }: PanelDesktopAnimatedProps) {
 
 type PanelPhoneAnimatedProps = PropsWithChildren<{
   height: string;
+  onSwipedUp: any;
+  onSwipedDown: any;
 }>;
 
-function PanelPhoneAnimated({ children, height }: PanelPhoneAnimatedProps) {
+const swipeConfig = {
+  delta: 10, // min distance(px) before a swipe starts
+  preventDefaultTouchmoveEvent: true, // call e.preventDefault *See Details*
+  trackTouch: true, // track touch input
+  trackMouse: false, // track mouse input
+  rotationAngle: 0, // set a rotation angle
+};
+
+function PanelPhoneAnimated({
+  children,
+  height,
+  onSwipedUp,
+  onSwipedDown,
+}: PanelPhoneAnimatedProps) {
   const anim: CSSProperties & UseSpringBaseProps = useSpring({
     transform: `translate3d(0, calc(100% - ${height}), 0)`,
     height,
@@ -187,8 +213,16 @@ function PanelPhoneAnimated({ children, height }: PanelPhoneAnimatedProps) {
       tension: 400,
     },
   });
-  console.log('phone', height, `translate3d(0, calc(100% - ${height}), 0)`);
-  return <PanelPhone style={anim}>{children}</PanelPhone>;
+  const handlers = useSwipeable({
+    onSwipedUp,
+    onSwipedDown,
+    ...swipeConfig,
+  });
+  return (
+    <PanelPhone {...handlers} style={anim}>
+      {children}
+    </PanelPhone>
+  );
 }
 
 export type PanelComponentProps = PropsWithChildren<{
@@ -218,7 +252,7 @@ export function PanelComponent({
   );
   const isPhone = usePhoneScreen();
   const ref = useRef<HTMLDivElement | null>(null);
-  // const { height: contentHeight } = useComponentSize(ref.current);
+  const { height: contentHeight } = useComponentSize(ref.current);
 
   useEffect(() => {
     onTogglePanel && onTogglePanel(id, state);
@@ -232,9 +266,11 @@ export function PanelComponent({
 
   function nextPanelState(currentState: PanelState): PanelState {
     const currentStateIndex = cycle.indexOf(currentState);
-    return cycle.length - 1 === currentStateIndex
-      ? cycle[0]
-      : cycle[currentStateIndex + 1];
+    const nextState =
+      cycle.length - 1 === currentStateIndex
+        ? cycle[0]
+        : cycle[currentStateIndex + 1];
+    return nextState;
   }
 
   useEffect(() => {
@@ -246,41 +282,77 @@ export function PanelComponent({
   const hasCloseCallback = !!onClose;
   const showToggleButton =
     !hasCloseCallback || (hasCloseCallback && state !== PanelState.Open);
-  const showCloseButton = !isPhone && hasCloseCallback && !showToggleButton;
+  const showCloseButton = hasCloseCallback && state === PanelState.Open;
+
+  const onToNextState = (event: any) => {
+    console.log(state, cycle[cycle.length - 1]);
+    if (state !== cycle[cycle.length - 1]) {
+      const nextState = nextPanelState(state);
+      setState(nextState);
+    }
+  };
+  const onToPrevState = (event: any) => {
+    if (state !== cycle[0]) {
+      const nextState = nextPanelState(state);
+      setState(nextState);
+    }
+  };
+  const cycleState = (event: any) => {
+    const nextState = nextPanelState(state);
+    setState(nextState);
+  };
 
   return isPhone ? (
-    <PanelPhoneAnimated height={panelSize(state, true, availableHeight)}>
-      <PanelTogglePhone
-        aria-expanded={state !== PanelState.Closed && state !== PanelState.Tip}
-        onClick={() => {
-          setState(nextPanelState(state));
-        }}
-      />
-      <PanelInner panelState={state} ref={ref}>
-        {children}
-      </PanelInner>
-    </PanelPhoneAnimated>
-  ) : (
-    <PanelDesktopAnimated width={panelSize(state, false)}>
+    <PanelPhoneAnimated
+      onSwipedUp={onToNextState}
+      onSwipedDown={onToPrevState}
+      height={panelSize(id, state, true, availableHeight, contentHeight)}
+    >
       {showCloseButton && (
         <StyledCloseButton
           onClick={(event) => {
-            setState(PanelState.Closed);
+            setState(cycle[0]);
             onClose && onClose(event);
           }}
         />
       )}
-      <PanelInner panelState={state} ref={ref}>
+      {showToggleButton && (
+        <PanelTogglePhone
+          aria-expanded={
+            state !== PanelState.Closed && state !== PanelState.Tip
+          }
+          onClick={cycleState}
+        />
+      )}
+      <PanelInnerPhone panelState={state} ref={ref}>
         {children}
-      </PanelInner>
+      </PanelInnerPhone>
+    </PanelPhoneAnimated>
+  ) : (
+    <PanelDesktopAnimated width={panelSize(id, state, false)}>
+      {showCloseButton && (
+        <StyledCloseButton
+          onClick={(event) => {
+            setState(cycle[0]);
+            onClose && onClose(event);
+          }}
+        />
+      )}
       {showToggleButton && (
         <PanelToggleDesktop
           aria-expanded={
             state !== PanelState.Closed && state !== PanelState.Tip // Consider the Panel at Tip state as not expanded
           }
           onClick={() => setState(nextPanelState(state))}
-        />
+        >
+          <Icon>
+            <IconChevronRight />
+          </Icon>
+        </PanelToggleDesktop>
       )}
+      <PanelInnerDesktop panelState={state} ref={ref}>
+        {children}
+      </PanelInnerDesktop>
     </PanelDesktopAnimated>
   );
 }

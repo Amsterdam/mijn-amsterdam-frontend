@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
-import { matchPath } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
-import { CustomTrackingUrls } from '../../universal/config';
-import { TMA_LOGIN_URL_DIGID, TMA_LOGIN_URL_EHERKENNING } from '../config/api';
-import { PageTitleMain, PageTitles } from '../config/pages';
-import { trackPageView } from './analytics.hook';
+import { matchPath, useLocation } from 'react-router-dom';
+import {
+  CustomTrackingUrls,
+  DocumentTitles,
+  PageTitleMain,
+} from '../../universal/config';
 import { AppRoutes } from '../../universal/config/routing';
+import { TMA_LOGIN_URL_DIGID, TMA_LOGIN_URL_EHERKENNING } from '../config/api';
+import { trackPageView } from './analytics.hook';
 import { useTermReplacement } from './useTermReplacement';
 
 const ExcludePageViewTrackingUrls = [
@@ -13,7 +15,7 @@ const ExcludePageViewTrackingUrls = [
   TMA_LOGIN_URL_EHERKENNING,
 ];
 
-const sortedPageTitleRoutes = Object.keys(PageTitles).sort((a, b) => {
+const sortedPageTitleRoutes = Object.keys(DocumentTitles).sort((a, b) => {
   if (a.length === b.length) {
     return 0;
   }
@@ -29,7 +31,7 @@ export function usePageChange() {
     // window.scrollTo(0, 0);
 
     // Change Page title on route change
-    const index = sortedPageTitleRoutes.findIndex(route => {
+    const index = sortedPageTitleRoutes.findIndex((route) => {
       return (
         location.pathname === route ||
         !!matchPath(location.pathname, {
@@ -44,11 +46,11 @@ export function usePageChange() {
 
     const title =
       index !== -1
-        ? PageTitles[route]
-          ? PageTitles[route]
+        ? DocumentTitles[route]
+          ? DocumentTitles[route]
           : PageTitleMain
         : !Object.values(AppRoutes).find(
-            route =>
+            (route) =>
               !!matchPath(location.pathname, {
                 path: route,
                 exact: true,

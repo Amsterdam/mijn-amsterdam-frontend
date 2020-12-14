@@ -3,11 +3,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { animated } from 'react-spring';
 import { AppRoutes } from '../../../universal/config';
-import {
-  Chapters,
-  ChapterTitles,
-  profileTypeChapterTitleAdjustment,
-} from '../../../universal/config/chapter';
+import { Chapters, ChapterTitles } from '../../../universal/config/chapter';
 import { isError } from '../../../universal/helpers/api';
 import { ComponentChildren } from '../../../universal/types';
 import { IconInfo } from '../../assets/icons';
@@ -33,6 +29,7 @@ import {
 import styles from './MainNavBar.module.scss';
 import { ProfileName } from './ProfileName';
 import { useBurgerMenuAnimation } from './useBurgerMenuAnimation';
+import { useTermReplacement } from '../../hooks/useTermReplacement';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -140,6 +137,7 @@ function isTargetWithinMenu(target: any) {
 export default function MainNavBar() {
   const session = useSessionValue();
   const hasBurgerMenu = useTabletScreen();
+  const termReplace = useTermReplacement();
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
     undefined
   );
@@ -203,7 +201,7 @@ export default function MainNavBar() {
   } = useBurgerMenuAnimation(isBurgerMenuVisible);
 
   const menuItemsComposed = useMemo(() => {
-    return mainMenuItems.map(item => {
+    return mainMenuItems.map((item) => {
       let menuItem = item;
 
       // Add dynamic chapter submenu items to the menu
@@ -215,13 +213,13 @@ export default function MainNavBar() {
       ) {
         menuItem = {
           ...menuItem,
-          title: profileTypeChapterTitleAdjustment(profileType, Chapters.BUURT),
+          title: termReplace(Chapters.BUURT),
         };
       }
 
       return getMenuItem(menuItem);
     });
-  }, [myChapterItems, profileType]);
+  }, [myChapterItems, profileType, termReplace]);
 
   return (
     <nav

@@ -7,7 +7,13 @@ import styles from './MyArea.module.scss';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import { ChapterTitles } from '../../../universal/config/chapter';
 
-export default function MyAreaHeader() {
+interface MyAreaHeaderProps {
+  showCloseButton?: boolean;
+}
+
+export default function MyAreaHeader({
+  showCloseButton = true,
+}: MyAreaHeaderProps) {
   const history = useHistory();
   const termReplace = useTermReplacement();
   return (
@@ -24,7 +30,9 @@ export default function MyAreaHeader() {
         />
         <h1 className={styles.Title}>{termReplace(ChapterTitles.BUURT)}</h1>
       </Link>
-      <Button onClick={() => history.goBack()}>Kaart sluiten</Button>
+      {showCloseButton && (
+        <Button onClick={() => history.goBack()}>Kaart sluiten</Button>
+      )}
     </div>
   );
 }

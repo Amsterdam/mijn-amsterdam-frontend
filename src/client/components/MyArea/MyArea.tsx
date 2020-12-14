@@ -144,8 +144,8 @@ export default function MyArea({
   }, []);
 
   const [mapOffset, setMapOffset] = useState({
-    left: isDesktop ? `${DESKTOP_PANEL_WIDTH}px` : '0',
-    bottom: isDesktop ? '0' : `${PHONE_PANEL_PREVIEW_HEIGHT}px`,
+    left: isDesktop ? DESKTOP_PANEL_WIDTH : '0',
+    bottom: isDesktop ? '0' : PHONE_PANEL_TIP_HEIGHT,
   });
 
   const onTogglePanel = useCallback(
@@ -153,8 +153,14 @@ export default function MyArea({
       if (isDesktop) {
         setMapOffset(
           state === PanelState.Open
-            ? { left: `${DESKTOP_PANEL_WIDTH}px`, bottom: '0' }
-            : { left: `${DESKTOP_PANEL_TIP_WIDTH}px`, bottom: '0' }
+            ? { left: DESKTOP_PANEL_WIDTH, bottom: '0' }
+            : { left: DESKTOP_PANEL_TIP_WIDTH, bottom: '0' }
+        );
+      } else {
+        setMapOffset(
+          state === PanelState.Preview
+            ? { left: '0', bottom: PHONE_PANEL_PREVIEW_HEIGHT }
+            : { left: '0', bottom: PHONE_PANEL_TIP_HEIGHT }
         );
       }
     },
@@ -169,7 +175,7 @@ export default function MyArea({
   return (
     <ThemeProvider>
       <MyAreaContainer height={height}>
-        {!!showHeader && <MyAreaHeader />}
+        {!!showHeader && <MyAreaHeader showCloseButton={false} />}
         <MyAreaMapContainer ref={mapContainerRef}>
           <MyAreaMapOffset>
             <MyAreaMap

@@ -1,4 +1,4 @@
-import { Checkbox, Label } from '@amsterdam/asc-ui';
+import { Checkbox, Label, themeSpacing } from '@amsterdam/asc-ui';
 import React, { ReactNode, useCallback, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import {
@@ -38,19 +38,22 @@ import {
 import MyAreaPanelContent from './PanelContent/Generic';
 import { Title } from './PanelContent/GenericBase';
 
-const DatasetCategoryList = styled.ol`
-  margin: 0;
+const DatasetList = styled.ol`
   padding: 0;
   list-style-type: none;
 `;
 
-const DatasetControlList = styled(DatasetCategoryList)<{ noIndent?: boolean }>`
+const DatasetCategoryList = styled(DatasetList)`
+  margin: ${themeSpacing(4, 0, 4, 0)};
+`;
+
+const DatasetControlList = styled(DatasetList)<{ noIndent?: boolean }>`
   padding-left: ${(props) => (props.noIndent ? '0' : '4rem')};
 `;
 
 const DatasetFilterControlCagegoryList = styled(DatasetControlList)``;
 
-const DatasetFilterControlList = styled(DatasetCategoryList)``;
+const DatasetFilterControlList = styled(DatasetList)``;
 
 const DatasetControlListItem = styled.li`
   position: relative;
@@ -449,7 +452,7 @@ export default function MyAreaPanels({
 
   const filtersPanelCycle = useMemo(() => {
     if (isPhone) {
-      return [PanelState.Preview, PanelState.Open];
+      return [PanelState.Tip, PanelState.Open];
     }
     return [PanelState.Open, PanelState.Tip];
   }, [isPhone]);
@@ -469,7 +472,6 @@ export default function MyAreaPanels({
         onTogglePanel={onTogglePanel}
         availableHeight={availableHeight}
       >
-        <Title isPhone={isPhone}>Selecteer kaartgegevens</Title>
         <DatasetCategoryList>
           {datasets.map(([categoryId, category]) => (
             <DatasetControlListItem key={categoryId}>

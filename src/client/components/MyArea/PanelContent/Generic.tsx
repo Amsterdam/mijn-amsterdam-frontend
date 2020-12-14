@@ -1,4 +1,6 @@
+import { themeSpacing } from '@amsterdam/asc-ui';
 import React from 'react';
+import styled from 'styled-components';
 import {
   DatasetCategoryId,
   getDatasetCategoryId,
@@ -13,6 +15,10 @@ import MyArePanelContentEvenementen from './Evenementen';
 import { GenericContent } from './GenericBase';
 import MyArePanelContentParkeren from './Parkeren';
 import MyArePanelContentSport from './Sport';
+
+const MyAreaPanelContent = styled.div`
+  padding: ${themeSpacing(4, 0, 4, 0)};
+`;
 
 interface MyAreaPanelContentSwitchProps {
   datasetCategoryId: DatasetCategoryId;
@@ -93,9 +99,11 @@ export default function MyAreaPanelContentGeneric() {
   // const isLoading = selectedFeature.id !== loadingFeature.id;
 
   return (
-    <MyAreaPanelContentSwitch
-      datasetCategoryId={datasetCategoryId!}
-      feature={selectedFeature}
-    />
+    <MyAreaPanelContent>
+      <MyAreaPanelContentSwitch
+        datasetCategoryId={datasetCategoryId!}
+        feature={selectedFeature}
+      />
+    </MyAreaPanelContent>
   );
 }
