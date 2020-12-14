@@ -190,6 +190,7 @@ export default function MyArea({
     state: filterState,
     initial: initialFilterPanelState,
     set: setFilterPanelState,
+    cycle: cycleFilterPanelState,
   } = usePanelStateCycle('filters', panelCycle.filters);
 
   const { state: detailState, set: setDetailPanelState } = usePanelStateCycle(
@@ -217,12 +218,22 @@ export default function MyArea({
   }, [setSelectedFeature]);
 
   const toggleFilterPanel = useCallback(() => {
-    if (filterState !== PanelState.Closed) {
-      setFilterPanelState(PanelState.Closed);
-    } else if (filterState === PanelState.Closed) {
-      initialFilterPanelState();
+    if (isDesktop) {
+      cycleFilterPanelState();
+    } else {
+      if (filterState === panelCycle.filters[0]) {
+        setFilterPanelState(PanelState.Closed);
+      } else if (filterState === PanelState.Closed) {
+        initialFilterPanelState();
+      }
     }
-  }, [filterState, setFilterPanelState, initialFilterPanelState]);
+  }, [
+    isDesktop,
+    filterState,
+    setFilterPanelState,
+    initialFilterPanelState,
+    cycleFilterPanelState,
+  ]);
 
   // Set panel state without explicit panel interaction. Effect reacts to loading detailed features.
   useEffect(() => {

@@ -15,10 +15,7 @@ const StyledButton = styled(Button)<{ isActive: boolean }>`
     props.isActive
       ? themeColor('tint', 'level3')
       : themeColor('tint', 'level1')};
-  color: ${(props) =>
-    props.isActive
-      ? themeColor('tint', 'level1')
-      : themeColor('tint', 'level7')};
+  color: ${themeColor('tint', 'level7')};
 `;
 
 export interface LegendControlProps {
