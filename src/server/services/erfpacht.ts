@@ -34,9 +34,7 @@ function transformERFPACHTNotifications(notifications?: MyNotification[]) {
         link: {
           title:
             notification.link?.title || 'Meer informatie over deze melding',
-          to: `https://mijnerfpacht${
-            IS_ACCEPTANCE ? '.acc' : ''
-          }.amsterdam.nl${notification.link?.to || ''}`,
+          to: notification.link?.to || '',
         },
       }))
     : [];
