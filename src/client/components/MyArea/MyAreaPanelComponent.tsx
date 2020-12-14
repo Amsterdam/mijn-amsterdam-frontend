@@ -3,7 +3,6 @@ import { spacing } from '@amsterdam/asc-ui/lib/theme/default';
 import React, {
   CSSProperties,
   PropsWithChildren,
-  ReactNode,
   useCallback,
   useEffect,
   useRef,
@@ -14,7 +13,6 @@ import { atom, useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { IconChevronRight } from '../../assets/icons';
 import { usePhoneScreen } from '../../hooks/media.hook';
-import { useComponentSize } from '../../hooks/useComponentSize';
 import { CloseButton } from '../Button/Button';
 
 export enum PanelState {
@@ -304,7 +302,6 @@ export function usePanelStateCycle(id: string, cycle: PanelState[]) {
 export function PanelComponent({
   id,
   children,
-  onTogglePanel,
   onClose,
   cycle = [PanelState.Preview, PanelState.Open],
   availableHeight,
@@ -319,12 +316,6 @@ export function PanelComponent({
     id,
     cycle
   );
-
-  useEffect(() => {
-    onTogglePanel && onTogglePanel(id, state);
-    // Disabled deps here because we only want to respond to actual state change
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state]);
 
   useEffect(() => {
     if (state === initialState) {

@@ -1,7 +1,7 @@
 import { Icon } from '@amsterdam/asc-ui';
 import React, { PropsWithChildren, ReactNode, useState } from 'react';
 import styled from 'styled-components';
-import { IconChevronRight, IconMin, IconPlus } from '../../assets/icons';
+import { IconChevronRight } from '../../assets/icons';
 
 export const ToggleButton = styled('button')`
   appearance: none;

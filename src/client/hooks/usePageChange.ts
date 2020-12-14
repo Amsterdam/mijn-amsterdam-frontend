@@ -71,5 +71,5 @@ export function usePageChange() {
         CustomTrackingUrls[location.pathname] || location.pathname
       );
     }
-  }, [location.pathname]);
+  }, [location.pathname, termReplace]);
 }

@@ -13,18 +13,12 @@ const StyledButton = styled(Button)<{ isActive: boolean }>`
   min-width: inherit;
   background-color: ${(props) =>
     props.isActive
-      ? themeColor('primary', 'main')
+      ? themeColor('tint', 'level3')
       : themeColor('tint', 'level1')};
   color: ${(props) =>
     props.isActive
       ? themeColor('tint', 'level1')
       : themeColor('tint', 'level7')};
-  svg {
-    fill: ${(props) =>
-      props.isActive
-        ? themeColor('tint', 'level1')
-        : themeColor('tint', 'level7')}!important;
-  }
 `;
 
 export interface LegendControlProps {
@@ -40,7 +34,7 @@ const LegendControl: React.FC<LegendControlProps> = ({
 }) => {
   const iconProps = showDesktopVariant
     ? { iconLeft: <MapLayers /> }
-    : { icon: <MapLayers />, size: 32 };
+    : { icon: <MapLayers />, size: 40 };
 
   return (
     <Control>

@@ -26,11 +26,6 @@ import {
 } from './MyArea.hooks';
 import MyAreaCollapsiblePanel from './MyAreaCollapsiblePanel';
 
-const LegendControlButton = styled.div`
-  left: 100%;
-  position: relative;
-`;
-
 export const PanelList = styled.ol<{ indent?: number }>`
   padding: 0;
   list-style-type: none;
