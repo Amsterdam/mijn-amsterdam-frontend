@@ -51,6 +51,7 @@ import {
 } from './MyAreaPanelComponent';
 import { MyAreaLegendPanel } from './MyAreaPanels';
 import MyAreaDetailPanel from './PanelContent/MyAreaDetailPanel';
+import { usePhoneScreen } from '../../hooks/media.hook';
 
 const StyledViewerContainer = styled(ViewerContainer)<{
   mapOffset: { left: string; bottom: string };
@@ -109,7 +110,7 @@ function nextMapOffset(isDesktop: boolean, state: PanelState) {
   return isDesktop
     ? state === PanelState.Open
       ? { left: DESKTOP_PANEL_WIDTH, bottom: '0' }
-      : { left: DESKTOP_PANEL_TIP_WIDTH, bottom: '0' }
+      : { left: '0', bottom: '0' }
     : state === PanelState.Preview
     ? { left: '0', bottom: PHONE_PANEL_PREVIEW_HEIGHT }
     : { left: '0', bottom: PHONE_PANEL_TIP_HEIGHT };
@@ -131,7 +132,7 @@ export default function MyArea({
   zoom = HOOD_ZOOM,
 }: MyAreaProps) {
   const isDesktop = useDesktopScreen();
-  const isPhone = !isDesktop;
+  const isPhone = usePhoneScreen();
   const { HOME } = useAppStateGetter();
   const termReplace = useTermReplacement();
   const location = useLocation();
@@ -181,7 +182,7 @@ export default function MyArea({
       };
     }
     return {
-      filters: [PanelState.Open, PanelState.Tip],
+      filters: [PanelState.Open, PanelState.Closed],
       detail: [PanelState.Closed, PanelState.Open],
     };
   }, [isPhone]);
@@ -193,10 +194,11 @@ export default function MyArea({
     cycle: cycleFilterPanelState,
   } = usePanelStateCycle('filters', panelCycle.filters);
 
-  const { state: detailState, set: setDetailPanelState } = usePanelStateCycle(
-    'detail',
-    panelCycle.detail
-  );
+  const {
+    state: detailState,
+    set: setDetailPanelState,
+    initial: setInitialDetailPanelState,
+  } = usePanelStateCycle('detail', panelCycle.detail);
 
   const [mapOffset, setMapOffset] = useState(
     nextMapOffset(isDesktop, filterState)
@@ -214,8 +216,8 @@ export default function MyArea({
   }, [filterState, detailState, isDesktop]);
 
   const onCloseDetailPanel = useCallback(() => {
-    setSelectedFeature(null);
-  }, [setSelectedFeature]);
+    setInitialDetailPanelState();
+  }, [setInitialDetailPanelState]);
 
   const toggleFilterPanel = useCallback(() => {
     if (isDesktop) {
