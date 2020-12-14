@@ -171,7 +171,7 @@ export default function MyArea({
   const panelCycle = useMemo(() => {
     if (isPhone) {
       return {
-        filters: [PanelState.Preview, PanelState.Open],
+        filters: [PanelState.Tip, PanelState.Preview, PanelState.Open],
         detail: [PanelState.Closed, PanelState.Preview, PanelState.Open],
       };
     }
@@ -330,6 +330,7 @@ export default function MyArea({
               <PanelComponent
                 id="filters"
                 cycle={panelCycle.filters}
+                initialPanelState={PanelState.Preview}
                 // onTogglePanel={onTogglePanel}
                 availableHeight={panelComponentAvailableHeight}
               >

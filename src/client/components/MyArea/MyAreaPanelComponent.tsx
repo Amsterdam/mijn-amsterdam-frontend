@@ -226,17 +226,13 @@ function PanelPhoneAnimated({
   );
 }
 
-export type PanelComponentProps = PropsWithChildren<{
-  id: string;
-  onTogglePanel?: (id: string, state: PanelState) => void;
-  onClose?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  cycle: PanelState[];
-  availableHeight: number;
-}>;
-
-export function usePanelStateCycle(id: string, cycle: PanelState[]) {
+export function usePanelStateCycle(
+  id: string,
+  cycle: PanelState[],
+  initialPanelState?: PanelState
+) {
   const [stateStore, setStateStore] = usePanelState();
-  const initialState = cycle[0];
+  const initialState = initialPanelState || cycle[0];
   const state = stateStore[id] || initialState;
 
   const setState = useCallback(
@@ -301,22 +297,33 @@ export function usePanelStateCycle(id: string, cycle: PanelState[]) {
   };
 }
 
+export type PanelComponentProps = PropsWithChildren<{
+  id: string;
+  onTogglePanel?: (id: string, state: PanelState) => void;
+  onClose?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  cycle: PanelState[];
+  availableHeight: number;
+  initialPanelState?: PanelState;
+}>;
+
 export function PanelComponent({
   id,
   children,
   onClose,
   cycle = [PanelState.Preview, PanelState.Open],
+  initialPanelState,
   availableHeight,
 }: PanelComponentProps) {
   const [stateStore] = usePanelState();
-  const initialState = cycle[0];
+  const initialState = initialPanelState || cycle[0];
   const state = stateStore[id] || initialState;
   const isPhone = usePhoneScreen();
   const ref = useRef<HTMLDivElement | null>(null);
 
   const { next, prev, cycle: cycleState, initial } = usePanelStateCycle(
     id,
-    cycle
+    cycle,
+    initialPanelState
   );
 
   useEffect(() => {
