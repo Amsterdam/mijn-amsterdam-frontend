@@ -80,8 +80,16 @@ export default function MyAreaDetailPanel() {
   const [selectedFeature] = useSelectedFeature();
   const [loadingFeature] = useLoadingFeature();
 
-  if (!selectedFeature || !loadingFeature?.datasetId) {
-    return <LoadingContent />;
+  if (
+    !selectedFeature ||
+    !loadingFeature?.datasetId ||
+    selectedFeature.id !== loadingFeature?.id
+  ) {
+    return (
+      <MyAreaPanelContent>
+        <LoadingContent />
+      </MyAreaPanelContent>
+    );
   }
 
   if (loadingFeature?.isError) {

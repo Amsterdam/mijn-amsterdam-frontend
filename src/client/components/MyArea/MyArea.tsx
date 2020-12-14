@@ -26,6 +26,7 @@ import { DATASETS } from '../../../universal/config/buurt';
 import { getFullAddress } from '../../../universal/helpers';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useDesktopScreen } from '../../hooks';
+import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { getElementSize } from '../../hooks/useComponentSize';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
@@ -41,7 +42,6 @@ import HomeControlButton from './MyAreaHomeControlButton';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import { HomeIconMarker } from './MyAreaMarker';
 import {
-  DESKTOP_PANEL_TIP_WIDTH,
   DESKTOP_PANEL_WIDTH,
   PanelComponent,
   PanelState,
@@ -51,7 +51,6 @@ import {
 } from './MyAreaPanelComponent';
 import { MyAreaLegendPanel } from './MyAreaPanels';
 import MyAreaDetailPanel from './PanelContent/MyAreaDetailPanel';
-import { usePhoneScreen } from '../../hooks/media.hook';
 
 const StyledViewerContainer = styled(ViewerContainer)<{
   mapOffset: { left: string; bottom: string };
@@ -137,7 +136,6 @@ export default function MyArea({
   const termReplace = useTermReplacement();
   const location = useLocation();
   const center = HOME.content?.latlng;
-  const [, setSelectedFeature] = useSelectedFeature();
   const [loadingFeature] = useLoadingFeature();
 
   useFetchPanelFeature();
