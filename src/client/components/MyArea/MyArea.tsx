@@ -77,6 +77,7 @@ const MyAreaContainer = styled.div<{ height: string }>`
   display: flex;
   flex-direction: column;
   height: ${(props) => props.height};
+  position: relative;
 `;
 
 const MyAreaMap = styled(Map)`
@@ -261,29 +262,52 @@ export default function MyArea({
               <StyledViewerContainer
                 mapOffset={mapOffset}
                 topLeft={
-                  <LegendControl
-                    isActive={filterState !== PanelState.Closed}
-                    showDesktopVariant={isDesktop}
-                    onClick={toggleFilterPanel}
-                  />
-                }
-                bottomRight={
                   <>
-                    {HOME.content?.address && HOME.content?.latlng && (
-                      <HomeControlButton
-                        zoom={zoom}
-                        latlng={HOME.content.latlng}
+                    <LegendControl
+                      isActive={filterState !== PanelState.Closed}
+                      showDesktopVariant={isDesktop}
+                      onClick={toggleFilterPanel}
+                    />
+                    {isPhone && (
+                      <BaseLayerToggle
+                        aerialLayers={[AERIAL_AMSTERDAM_LAYERS[0]]}
+                        topoLayers={[DEFAULT_AMSTERDAM_LAYERS[0]]}
+                        options={baseLayerOptions}
                       />
                     )}
-                    <Zoom />
                   </>
                 }
+                topRight={
+                  isPhone &&
+                  HOME.content?.address &&
+                  HOME.content?.latlng && (
+                    <HomeControlButton
+                      zoom={zoom}
+                      latlng={HOME.content.latlng}
+                    />
+                  )
+                }
+                bottomRight={
+                  isDesktop && (
+                    <>
+                      {HOME.content?.address && HOME.content?.latlng && (
+                        <HomeControlButton
+                          zoom={zoom}
+                          latlng={HOME.content.latlng}
+                        />
+                      )}
+                      <Zoom />
+                    </>
+                  )
+                }
                 bottomLeft={
-                  <BaseLayerToggle
-                    aerialLayers={[AERIAL_AMSTERDAM_LAYERS[0]]}
-                    topoLayers={[DEFAULT_AMSTERDAM_LAYERS[0]]}
-                    options={baseLayerOptions}
-                  />
+                  isDesktop && (
+                    <BaseLayerToggle
+                      aerialLayers={[AERIAL_AMSTERDAM_LAYERS[0]]}
+                      topoLayers={[DEFAULT_AMSTERDAM_LAYERS[0]]}
+                      options={baseLayerOptions}
+                    />
+                  )
                 }
               />
 

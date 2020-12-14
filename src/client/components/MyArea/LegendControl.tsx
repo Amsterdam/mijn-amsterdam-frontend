@@ -34,7 +34,7 @@ const LegendControl: React.FC<LegendControlProps> = ({
 }) => {
   const iconProps = showDesktopVariant
     ? { iconLeft: <MapLayers /> }
-    : { icon: <MapLayers />, size: 40 };
+    : { icon: <MapLayers />, size: 46 };
 
   return (
     <Control>

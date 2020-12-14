@@ -30,7 +30,7 @@ export const DESKTOP_PANEL_TIP_WIDTH = px(8 * spacing);
 export const DESKTOP_PANEL_PREVIEW_WIDTH = px(60 * spacing);
 export const DESKTOP_PANEL_WIDTH = px(120 * spacing);
 
-export const PHONE_PANEL_PREVIEW_HEIGHT = px(38 * spacing);
+export const PHONE_PANEL_PREVIEW_HEIGHT = px(60 * spacing);
 export const PHONE_PANEL_TIP_HEIGHT = px(10 * spacing);
 
 const PHONE_FIXED_AVAILABLE_HEIGHT = 1000;
@@ -188,10 +188,11 @@ type PanelPhoneAnimatedProps = PropsWithChildren<{
   height: string;
   onSwipedUp: any;
   onSwipedDown: any;
+  id: string;
 }>;
 
 const swipeConfig = {
-  delta: 10, // min distance(px) before a swipe starts
+  delta: 40, // min distance(px) before a swipe starts
   preventDefaultTouchmoveEvent: true, // call e.preventDefault *See Details*
   trackTouch: true, // track touch input
   trackMouse: false, // track mouse input
@@ -203,6 +204,7 @@ function PanelPhoneAnimated({
   height,
   onSwipedUp,
   onSwipedDown,
+  id,
 }: PanelPhoneAnimatedProps) {
   const anim: CSSProperties & UseSpringBaseProps = useSpring({
     transform: `translate3d(0, calc(100% - ${height}), 0)`,
@@ -218,7 +220,7 @@ function PanelPhoneAnimated({
     ...swipeConfig,
   });
   return (
-    <PanelPhone {...handlers} style={anim}>
+    <PanelPhone {...handlers} id={id} style={anim}>
       {children}
     </PanelPhone>
   );
@@ -330,8 +332,13 @@ export function PanelComponent({
 
   return isPhone ? (
     <PanelPhoneAnimated
-      onSwipedUp={next}
-      onSwipedDown={prev}
+      id={id}
+      onSwipedUp={(event: any) => {
+        next();
+      }}
+      onSwipedDown={(event: any) => {
+        prev();
+      }}
       height={panelSize(id, state, true, availableHeight)}
     >
       {showCloseButton && (
