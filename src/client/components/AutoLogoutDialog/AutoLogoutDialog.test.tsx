@@ -3,6 +3,7 @@ import React from 'react';
 import AutoLogoutDialog, { AutoLogoutDialogSettings } from './AutoLogoutDialog';
 import { RecoilRoot } from 'recoil';
 import { sessionAtom } from '../../hooks/api/useSessionApi';
+import { Button } from '../Button/Button';
 
 const ONE_SECOND_IN_MS = 1000;
 const DOC_TITLE = 'AutoLogoutDialog';
@@ -97,15 +98,21 @@ describe('AutoLogoutDialog', () => {
         .childAt(0)
         .prop('isOpen')
     ).toBe(true);
+
     map.mousemove();
+
     jest.advanceTimersByTime(
       ONE_SECOND_IN_MS * settings.secondsSessionRenewRequestInterval!
     );
+
     expect(refetch).not.toHaveBeenCalled();
+
     jest.advanceTimersByTime(
       ONE_SECOND_IN_MS * settings.secondsBeforeAutoLogout!
     );
+
     component.update();
+
     expect(logout).toHaveBeenCalled();
   });
 
@@ -115,13 +122,14 @@ describe('AutoLogoutDialog', () => {
         (settings.secondsBeforeDialogShow! - settings.secondsBeforeAutoLogout!)
     );
     component.update();
-    let continueButton = component.find('Button.continue-button');
+
+    let continueButton = component.find(Button);
     expect(continueButton).toHaveLength(1);
 
     continueButton.simulate('click');
     component.update();
 
-    continueButton = component.find('Button.continue-button');
+    continueButton = component.find(Button);
     expect(refetch).toHaveBeenCalledTimes(1);
     expect(continueButton).toHaveLength(0);
   });
@@ -134,7 +142,7 @@ describe('AutoLogoutDialog', () => {
         settings.secondsBeforeAutoLogout!
     );
     component.update();
-    let continueButton = component.find('Button.continue-button');
+    let continueButton = component.find(Button);
     expect(continueButton).toHaveLength(1);
 
     expect(document.title).toBe(documentTitle);

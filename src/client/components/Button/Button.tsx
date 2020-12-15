@@ -1,11 +1,13 @@
-import React, { AnchorHTMLAttributes, ButtonHTMLAttributes } from 'react';
-
-import { IconChevronRight, IconClose } from '../../assets/icons';
-import { Link } from 'react-router-dom';
-import { ReactNode } from 'react';
 import classnames from 'classnames';
-import styles from './Button.module.scss';
+import React, {
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+  ReactNode,
+} from 'react';
+import { Link } from 'react-router-dom';
+import { IconChevronRight, IconClose } from '../../assets/icons';
 import { trackLink } from '../../hooks/analytics.hook';
+import styles from './Button.module.scss';
 
 interface CustomButtonProps {
   variant?: 'primary' | 'secondary' | 'secondary-inverted' | 'plain' | 'inline';
@@ -111,29 +113,35 @@ function ButtonBody({
   );
 }
 
-export function Button({
-  children,
-  variant = 'secondary',
-  className,
-  lean = false,
-  isDisabled = false,
-  icon,
-  iconSize,
-  iconPosition = 'left',
-  ...otherProps
-}: ButtonProps) {
-  return (
-    <button
-      {...otherProps}
-      className={buttonStyle({ lean, isDisabled, variant, className })}
-      disabled={isDisabled}
-    >
-      <ButtonBody iconSize={iconSize} icon={icon} iconPosition={iconPosition}>
-        {children}
-      </ButtonBody>
-    </button>
-  );
-}
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      children,
+      variant = 'secondary',
+      className,
+      lean = false,
+      isDisabled = false,
+      icon,
+      iconSize,
+      iconPosition = 'left',
+      ...otherProps
+    },
+    ref
+  ) => {
+    return (
+      <button
+        {...otherProps}
+        ref={ref}
+        className={buttonStyle({ lean, isDisabled, variant, className })}
+        disabled={isDisabled}
+      >
+        <ButtonBody iconSize={iconSize} icon={icon} iconPosition={iconPosition}>
+          {children}
+        </ButtonBody>
+      </button>
+    );
+  }
+);
 
 type PolymorphicType = keyof JSX.IntrinsicElements | React.ComponentType<any>;
 

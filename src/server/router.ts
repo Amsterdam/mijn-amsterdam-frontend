@@ -1,13 +1,13 @@
+import * as Sentry from '@sentry/node';
 import express, { NextFunction, Request, Response } from 'express';
 import { BffEndpoints } from './config';
+import { getPassthroughRequestHeaders } from './helpers/app';
+import { fetchCMSCONTENT } from './services';
 import {
   loadServicesAll,
   loadServicesSSE,
   loadServicesTips,
 } from './services/controller';
-import * as Sentry from '@sentry/node';
-import { fetchCMSCONTENT } from './services';
-import { getPassthroughRequestHeaders } from './helpers/app';
 
 export const router = express.Router();
 
@@ -33,12 +33,14 @@ router.get(
       'cache-control': 'no-cache',
       connection: 'keep-alive',
     });
+    res.write('retry: 1000\n');
+    res.flush();
     try {
       await loadServicesSSE(req, res);
     } catch (error) {
       Sentry.captureException(error);
+      res.end();
     }
-    next();
   }
 );
 

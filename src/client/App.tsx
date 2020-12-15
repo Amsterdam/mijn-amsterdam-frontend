@@ -100,7 +100,7 @@ function AppAuthenticated() {
   ) : (
     <>
       <MainHeader isAuthenticated={true} />
-      <div className={styles.App} id="AppContent">
+      <div className={styles.App} id="skip-to-id-AppContent">
         <Switch>
           <Redirect
             from={TMA_LOGIN_URL_DIGID_AFTER_REDIRECT}
