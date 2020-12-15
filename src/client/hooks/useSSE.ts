@@ -85,11 +85,17 @@ export function useSSE({
     es.addEventListener('open', handleOpen);
     es.addEventListener(eventName, onMessageEvent);
 
+    // This listener is here because Sentry reports back errors of interrupted connections whilst the page is being refreshed.
+    // If we close the event source before the unload Sentry stays calm.
+    window.addEventListener('beforeunload', closeEventSource);
+
     return () => {
       console.info('[SSE] Unmounting hook');
       es.removeEventListener('error', handleError);
       es.removeEventListener('open', handleOpen);
       es.removeEventListener(eventName, onMessageEvent);
+
+      window.removeEventListener('beforeunload', closeEventSource);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [es]);
