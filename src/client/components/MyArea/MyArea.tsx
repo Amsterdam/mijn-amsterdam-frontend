@@ -110,7 +110,7 @@ function nextMapOffset(isDesktop: boolean, state: PanelState) {
       : { left: DESKTOP_PANEL_TIP_WIDTH, bottom: '0' }
     : state === PanelState.Preview
     ? { left: '0', bottom: PHONE_PANEL_PREVIEW_HEIGHT }
-    : { left: '0', bottom: PHONE_PANEL_TIP_HEIGHT };
+    : { left: '0', bottom: '0' };
 }
 
 interface MyAreaProps {
@@ -173,7 +173,7 @@ export default function MyArea({
   const panelCycle = useMemo(() => {
     if (!isDesktop) {
       return {
-        filters: [PanelState.Tip, PanelState.Preview, PanelState.Open],
+        filters: [PanelState.Preview, PanelState.Open],
         detail: [PanelState.Closed, PanelState.Preview, PanelState.Open],
       };
     }

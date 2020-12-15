@@ -94,8 +94,7 @@ const PanelInner = styled.div<{ panelState: PanelState }>`
   position: relative;
   z-index: 1;
   max-height: 100%; // set max height to enable overflow scrolling.
-  overflow-y: ${(props) =>
-    props.panelState === PanelState.Open ? 'auto' : 'hidden'};
+  overflow-y: auto;
 `;
 
 const PanelInnerPhone = styled(PanelInner)`
