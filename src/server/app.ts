@@ -21,6 +21,7 @@ import {
 } from './helpers/app';
 import { routerDevelopment } from './mock-data/router-development';
 import { router } from './router';
+import morgan from 'morgan';
 
 const isDebug = ENV === 'development';
 const options: Sentry.NodeOptions = {
@@ -41,6 +42,7 @@ Sentry.init(options);
 
 const app = express();
 
+app.use(morgan('combined'));
 app.set('trust proxy', true);
 app.use(Sentry.Handlers.requestHandler() as RequestHandler);
 

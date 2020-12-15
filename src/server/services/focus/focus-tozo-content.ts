@@ -76,7 +76,10 @@ const toekennenLabels: FocusStepContent = {
     `<p>
           U hebt recht op ${productName(document)}. Bekijk de brief
           voor meer details.
-        </p>`,
+        </p>` +
+    (document.productTitle !== 'Tozo 1'
+      ? '<p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>'
+      : ''),
 };
 
 const afwijzenLabels: FocusStepContent = {
@@ -94,7 +97,10 @@ const afwijzenLabels: FocusStepContent = {
         U hebt geen recht op ${productName(
           document
         )}. Bekijk de brief voor meer details.
-      </p>`,
+      </p>` +
+    (document.productTitle !== 'Tozo 1'
+      ? '<p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>'
+      : ''),
 };
 
 const buitenBehandelingLabels: FocusStepContent = {

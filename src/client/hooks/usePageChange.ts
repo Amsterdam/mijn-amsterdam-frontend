@@ -9,6 +9,7 @@ import { AppRoutes } from '../../universal/config/routing';
 import { TMA_LOGIN_URL_DIGID, TMA_LOGIN_URL_EHERKENNING } from '../config/api';
 import { trackPageView } from './analytics.hook';
 import { useTermReplacement } from './useTermReplacement';
+import { useProfileTypeValue } from './useProfileType';
 
 const ExcludePageViewTrackingUrls = [
   TMA_LOGIN_URL_DIGID,
@@ -25,6 +26,7 @@ const sortedPageTitleRoutes = Object.keys(DocumentTitles).sort((a, b) => {
 export function usePageChange() {
   const location = useLocation();
   const termReplace = useTermReplacement();
+  const profileType = useProfileTypeValue();
 
   useEffect(() => {
     // Scroll to top on route change
@@ -66,9 +68,10 @@ export function usePageChange() {
       const title = DocumentTitles[route]
         ? DocumentTitles[route]
         : `[undefined] ${location.pathname}`;
-      trackPageView(
+      trackPageViewWithProfileType(
         termReplace(title),
-        CustomTrackingUrls[location.pathname] || location.pathname
+        CustomTrackingUrls[location.pathname] || location.pathname,
+        profileType
       );
     }
   }, [location.pathname, termReplace]);

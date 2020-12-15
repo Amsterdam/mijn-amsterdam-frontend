@@ -1,13 +1,13 @@
-import { Chapters } from '../../universal/config';
-import { IS_ACCEPTANCE } from '../../universal/config/env';
+import { Chapters, FeatureToggle } from '../../universal/config';
 import { omit } from '../../universal/helpers';
+import { MyNotification, MyTip } from '../../universal/types';
+import { getApiConfig } from '../config';
+import { requestData } from '../helpers';
+import { IS_PRODUCTION, IS_ACCEPTANCE } from '../../universal/config/env';
 import {
   apiDependencyError,
   apiSuccesResult,
 } from '../../universal/helpers/api';
-import { MyNotification, MyTip } from '../../universal/types';
-import { getApiConfig } from '../config';
-import { requestData } from '../helpers';
 
 export interface ERFPACHTData {
   isKnown: boolean;
@@ -28,15 +28,13 @@ interface ERFPACHTSourceData {
 
 function transformERFPACHTNotifications(notifications?: MyNotification[]) {
   const notificationsTransformed = Array.isArray(notifications)
-    ? notifications.map((notification) => ({
+    ? notifications.map(notification => ({
         ...notification,
         chapter: Chapters.ERFPACHT,
         link: {
           title:
             notification.link?.title || 'Meer informatie over deze melding',
-          to: `https://mijnerfpacht${IS_ACCEPTANCE ? '.acc' : ''}.amsterdam.nl${
-            notification.link?.to || ''
-          }`,
+          to: notification.link?.to || '',
         },
       }))
     : [];

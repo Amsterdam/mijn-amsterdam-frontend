@@ -1,12 +1,13 @@
 import MatomoTracker from '@datapunt/matomo-tracker-js';
 import {
+  CustomDimension,
   TrackEventParams,
   UserOptions,
 } from '@datapunt/matomo-tracker-js/lib/types';
 import { useDebouncedCallback } from 'use-debounce';
-import { useSessionStorage } from './storage.hook';
 import { getOtapEnvItem } from '../../universal/config';
-import { IS_AP, IS_ACCEPTANCE } from '../../universal/config/env';
+import { IS_ACCEPTANCE, IS_AP } from '../../universal/config/env';
+import { useSessionStorage } from './storage.hook';
 
 let MatomoInstance: MatomoTracker;
 
@@ -17,6 +18,15 @@ const MatomoTrackerConfig: UserOptions = {
   urlBase: getOtapEnvItem('analyticsUrlBase') || '',
   siteId,
 };
+
+// See dimension Ids specified on https://analytics.data.amsterdam.nl/
+enum CustomDimensionId {
+  ProfileType = 2,
+}
+
+function profileTypeDimension(profileType: ProfileType) {
+  return { id: CustomDimensionId.ProfileType, value: profileType };
+}
 
 // Initialize connection with analytics
 export function useAnalytics(isEnabled: boolean = true) {
@@ -29,14 +39,37 @@ export function trackEvent(payload: TrackEventParams) {
   return MatomoInstance && MatomoInstance.trackEvent(payload);
 }
 
-export function trackPageView(title?: string, url?: string) {
+export function trackEventWithProfileType(
+  payload: TrackEventParams,
+  profileType: ProfileType
+) {
+  return (
+    MatomoInstance &&
+    MatomoInstance.trackEvent({
+      ...payload,
+      customDimensions: [
+        ...(payload.customDimensions || []),
+        profileTypeDimension(profileType),
+      ],
+    })
+  );
+}
+
+export function trackPageView(
+  title?: string,
+  url?: string,
+  customDimensions?: CustomDimension[]
+) {
   let href = url || document.location.href;
+
   if (IS_AP && !href.startsWith('http')) {
     href = `https://mijn${IS_ACCEPTANCE ? '.acc' : ''}.amsterdam.nl${href}`;
   }
+
   const payload = {
     documentTitle: title || document.title,
     href,
+    customDimensions,
   };
 
   const payloadSZ = {
@@ -44,19 +77,18 @@ export function trackPageView(title?: string, url?: string) {
     title: payload.documentTitle,
   };
 
+  // The siteimprove tracking call
   (window as any)._sz?.push(['trackdynamic', payloadSZ]);
 
   return MatomoInstance && MatomoInstance.trackPageView(payload);
 }
 
-export function trackDownload(url: string) {
-  return (
-    MatomoInstance &&
-    MatomoInstance.trackLink({
-      href: url,
-      linkType: 'download',
-    })
-  );
+export function trackPageViewWithProfileType(
+  title: string,
+  url: string,
+  profileType: ProfileType
+) {
+  return trackPageView(title, url, [profileTypeDimension(profileType)]);
 }
 
 export function trackLink(url: string) {
@@ -72,24 +104,29 @@ export function trackLink(url: string) {
 export function trackItemPresentation(
   category: string,
   name: string,
-  value?: number
+  profileType: ProfileType
 ) {
   const payload = {
     category,
     name,
     action: 'Tonen',
-    value,
   };
-  return trackEvent(payload);
+  return trackEventWithProfileType(payload, profileType);
 }
 
-export function trackItemClick(category: string, name: string, value?: number) {
-  return trackEvent({
-    category,
-    name,
-    action: 'Klikken',
-    value,
-  });
+export function trackItemClick(
+  category: string,
+  name: string,
+  profileType: ProfileType
+) {
+  return trackEventWithProfileType(
+    {
+      category,
+      name,
+      action: 'Klikken',
+    },
+    profileType
+  );
 }
 
 /**
@@ -104,7 +141,7 @@ export function useSessionCallbackOnceDebounced(
   timeoutMS: number = 1000
 ) {
   const [isSessionTracked, setSessionTracked] = useSessionStorage(key, false);
-  const trackEvent = useDebouncedCallback(() => {
+  const [trackEvent] = useDebouncedCallback(() => {
     if (!isSessionTracked) {
       callback();
       setSessionTracked(true);

@@ -8,7 +8,10 @@ import { isError } from '../../../universal/helpers/api';
 import { ComponentChildren } from '../../../universal/types';
 import { IconInfo } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
-import { trackItemPresentation } from '../../hooks/analytics.hook';
+import {
+  trackItemPresentation,
+  trackItemClick,
+} from '../../hooks/analytics.hook';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -49,9 +52,9 @@ function SecondaryLinks() {
 
   useEffect(() => {
     if (hasFirstName) {
-      trackItemPresentation('Mijn gegevens', 'Link naar Profiel');
+      trackItemPresentation('Mijn gegevens', 'Link naar Profiel', profileType);
     }
-  }, [hasFirstName]);
+  }, [hasFirstName, profileType]);
 
   return (
     <div className={styles.secondaryLinks}>
@@ -270,6 +273,9 @@ export default function MainNavBar() {
               className={styles.TutorialBtn}
               onClick={() => {
                 setIsTutorialVisible(!isTutorialVisible);
+                if (!isTutorialVisible) {
+                  trackItemClick('Klikken', 'rondleiding', profileType);
+                }
               }}
               variant="plain"
               aria-expanded={isTutorialVisible}
