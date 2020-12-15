@@ -21,7 +21,7 @@ const MatomoTrackerConfig: UserOptions = {
 
 // See dimension Ids specified on https://analytics.data.amsterdam.nl/
 enum CustomDimensionId {
-  ProfileType = 1,
+  ProfileType = 2,
 }
 
 function profileTypeDimension(profileType: ProfileType) {
