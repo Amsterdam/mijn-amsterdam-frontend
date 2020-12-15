@@ -2,14 +2,23 @@ import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
 import * as analytics from '../../hooks/analytics.hook';
 import SectionCollapsible from './SectionCollapsible';
+import * as profileTypeHook from '../../hooks/useProfileType';
 
 describe('SectionCollapsible', () => {
   let component: ReactWrapper<typeof SectionCollapsible>;
-  const trackingSpy = jest.spyOn(analytics, 'trackEvent');
+  const trackingSpy = jest.spyOn(analytics, 'trackEventWithProfileType');
+
+  const profileTypeHookMock = ((profileTypeHook as any).useProfileTypeValue = jest.fn(
+    () => 'prive'
+  ));
 
   afterEach(() => {
     component.unmount();
     sessionStorage.clear();
+  });
+
+  afterAll(() => {
+    profileTypeHookMock.mockRestore();
   });
 
   it('should start uncollapsed', () => {
@@ -85,11 +94,14 @@ describe('SectionCollapsible', () => {
     );
 
     component.find(`.Title button`).simulate('click');
-    expect(trackingSpy).toHaveBeenCalledWith({
-      category: 'the category',
-      name: 'the content thing',
-      action: 'Open klikken',
-    });
+    expect(trackingSpy).toHaveBeenCalledWith(
+      {
+        category: 'the category',
+        name: 'the content thing',
+        action: 'Open klikken',
+      },
+      'prive'
+    );
   });
 
   it('should show title and "no items message"', () => {
