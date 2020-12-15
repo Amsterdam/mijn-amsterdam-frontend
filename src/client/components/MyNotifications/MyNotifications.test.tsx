@@ -3,10 +3,19 @@ import MyNotifications from './MyNotifications';
 import React from 'react';
 import { shallow } from 'enzyme';
 import { MyNotification } from '../../../universal/types';
+import * as profileTypeHook from '../../hooks/useProfileType';
 
 const NOTIFICATIONS: MyNotification[] = [];
 
 describe('<MyNotifications />', () => {
+  const profileTypeHookMock = ((profileTypeHook as any).useProfileTypeValue = jest.fn(
+    () => 'prive'
+  ));
+
+  afterAll(() => {
+    profileTypeHookMock.mockRestore();
+  });
+
   it('Renders without crashing', () => {
     shallow(
       <BrowserRouter>

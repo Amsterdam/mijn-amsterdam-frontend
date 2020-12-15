@@ -1,15 +1,16 @@
 import classnames from 'classnames';
-import React, { useEffect, useRef, useState, ReactNode, useMemo } from 'react';
+import React, { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 import { useDebouncedCallback } from 'use-debounce';
 import { withKeyPress } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
 import { IconChevronRight } from '../../assets/icons';
-import { trackEvent, useSessionStorage } from '../../hooks';
+import { trackEventWithProfileType, useSessionStorage } from '../../hooks';
+import { useComponentSize } from '../../hooks/useComponentSize';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './SectionCollapsible.module.scss';
-import { useComponentSize } from '../../hooks/useComponentSize';
 
 export interface SectionCollapsibleProps {
   id: string;
@@ -42,8 +43,8 @@ export function SectionCollapsibleHeading({
       <button
         aria-expanded={isAriaExpanded}
         className={styles.TitleToggle}
-        onKeyPress={(event) => toggleCollapsed(event)}
-        onClick={(event) => toggleCollapsed(event)}
+        onKeyPress={event => toggleCollapsed(event)}
+        onClick={event => toggleCollapsed(event)}
       >
         <IconChevronRight aria-hidden="true" className={styles.CaretIcon} />{' '}
         {children}
@@ -81,6 +82,7 @@ export default function SectionCollapsible({
   const [isReadyForAnimation, setReadyForAnimaton] = useState(false);
   const hasTitle = !!title;
   const hasNoItemsMessage = !!noItemsMessage;
+  const profileType = useProfileTypeValue();
 
   const [setReadyForAnimatonDebounced] = useDebouncedCallback(() => {
     if (!isLoading && isReadyForAnimation === false) {
@@ -112,10 +114,13 @@ export default function SectionCollapsible({
 
   const toggleCollapsed = withKeyPress<HTMLSpanElement>(() => {
     if (isCollapsed && track) {
-      trackEvent({
-        ...track,
-        action: 'Open klikken',
-      });
+      trackEventWithProfileType(
+        {
+          ...track,
+          action: 'Open klikken',
+        },
+        profileType
+      );
     }
     setCollapsed(!isCollapsed);
   });

@@ -3,7 +3,8 @@ import classnames from 'classnames';
 import React, { useCallback, useState } from 'react';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { IconAlert, IconDownload } from '../../assets/icons';
-import { trackPageView } from '../../hooks/analytics.hook';
+import { trackPageViewWithProfileType } from '../../hooks/analytics.hook';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 import Linkd from '../Button/Button';
 import styles from './DocumentList.module.scss';
 
@@ -41,6 +42,7 @@ function addFileType(url: string, type: string = '') {
 
 export function DocumentLink({ document, label }: DocumentLinkProps) {
   const [isErrorVisible, setErrorVisible] = useState(false);
+  const profileType = useProfileTypeValue();
 
   const onClickDocumentLink = useCallback(
     event => {
@@ -66,8 +68,13 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
               `/downloads/${document.download || document.title}`,
               document.type
             );
+
           // Tracking pageview here because trackDownload doesn't work properly in Matomo.
-          trackPageView(document.title, trackingUrl);
+          trackPageViewWithProfileType(
+            document.title,
+            trackingUrl,
+            profileType
+          );
 
           if (window.navigator && window.navigator.msSaveOrOpenBlob) {
             window.navigator.msSaveOrOpenBlob(blob, document.title);
@@ -90,7 +97,7 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
         });
       return false;
     },
-    [document]
+    [document, profileType]
   );
 
   return (
