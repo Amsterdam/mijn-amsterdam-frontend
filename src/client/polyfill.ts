@@ -9,7 +9,7 @@ if (!Element.prototype.matches) {
 }
 
 if (!Element.prototype.closest) {
-  Element.prototype.closest = function(s: string) {
+  Element.prototype.closest = function (s: string) {
     let el = this;
 
     do {

@@ -31,7 +31,7 @@ import InfoDetail, {
 import StatusLine, {
   StatusLineItem,
 } from '../../components/StatusLine/StatusLine';
-import { requestApiData, useDataApi } from '../../hooks/api/useDataApi';
+import { useDataApi } from '../../hooks/api/useDataApi';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import styles from './VergunningDetail.module.scss';
@@ -80,7 +80,7 @@ function useVergunningStatusLineItems(VergunningItem?: Vergunning) {
   return statusLineItems;
 }
 
-export default () => {
+export default function VergunningDetail() {
   const { VERGUNNINGEN } = useAppStateGetter();
   // Set-up the documents api source
   const [
@@ -92,26 +92,23 @@ export default () => {
   ] = useDataApi<ApiResponse<VergunningDocument[]>>(
     {
       postpone: true,
-      transformResponse: [
-        ...requestApiData.defaults.transformResponse,
-        ({ content }) => {
-          if (!content) {
-            return [];
-          }
-          return apiSuccesResult(
-            content.map((document: VergunningDocument) =>
-              // Some documents don't have titles, assign a default title.
-              Object.assign(document, { title: document.title || 'Document' })
-            )
-          );
-        },
-      ],
+      transformResponse: ({ content }) => {
+        if (!content) {
+          return [];
+        }
+        return apiSuccesResult(
+          content.map((document: VergunningDocument) =>
+            // Some documents don't have titles, assign a default title.
+            Object.assign(document, { title: document.title || 'Document' })
+          )
+        );
+      },
     },
     apiPristineResult([])
   );
   const { id } = useParams<{ id: string }>();
   const profileType = useProfileTypeValue();
-  const VergunningItem = VERGUNNINGEN.content?.find(item => item.id === id);
+  const VergunningItem = VERGUNNINGEN.content?.find((item) => item.id === id);
   const noContent = !isLoading(VERGUNNINGEN) && !VergunningItem;
   const statusLineItems = useVergunningStatusLineItems(VergunningItem);
   const documentsUrl = VergunningItem?.documentsUrl
@@ -227,4 +224,4 @@ export default () => {
       )}
     </DetailPage>
   );
-};
+}

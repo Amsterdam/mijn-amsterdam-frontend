@@ -58,7 +58,7 @@ function OptInPageContent({ children }: OptInPageContentProps) {
   );
 }
 
-export default () => {
+export default function MyTipsPage() {
   const { TIPS } = useAppStateGetter();
   return (
     <OverviewPage className={styles.MyTips}>
@@ -81,4 +81,4 @@ export default () => {
       />
     </OverviewPage>
   );
-};
+}

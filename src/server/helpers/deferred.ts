@@ -6,7 +6,7 @@
  */
 export class Deferred<T> {
   private readonly _promise: Promise<T>;
-  private _resolve?: (value?: T | PromiseLike<T>) => void;
+  private _resolve?: (value: T | PromiseLike<T>) => void;
   private _reject?: (reason?: any) => void;
 
   constructor() {
@@ -20,7 +20,7 @@ export class Deferred<T> {
     return this._promise;
   }
 
-  resolve = (value?: T | PromiseLike<T>): void => {
+  resolve = (value: T | PromiseLike<T>): void => {
     this._resolve!(value);
   };
 

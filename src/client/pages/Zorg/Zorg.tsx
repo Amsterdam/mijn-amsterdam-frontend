@@ -21,21 +21,21 @@ const DISPLAY_PROPS = {
   title: '',
 };
 
-export default () => {
+export default function Zorg() {
   const { WMO } = useAppStateGetter();
 
   const itemsActual = useMemo(() => {
     if (!WMO.content?.length) {
       return [];
     }
-    return addTitleLinkComponent(WMO.content?.filter(item => item.isActual));
+    return addTitleLinkComponent(WMO.content?.filter((item) => item.isActual));
   }, [WMO]);
 
   const itemsPrevious = useMemo(() => {
     if (!WMO.content?.length) {
       return [];
     }
-    return addTitleLinkComponent(WMO.content?.filter(item => !item.isActual));
+    return addTitleLinkComponent(WMO.content?.filter((item) => !item.isActual));
   }, [WMO]);
 
   return (
@@ -102,4 +102,4 @@ export default () => {
       </p>
     </OverviewPage>
   );
-};
+}

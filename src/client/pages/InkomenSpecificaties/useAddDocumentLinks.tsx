@@ -12,7 +12,7 @@ export function useAddDocumentLinkComponents(
       };
       if (focusSpecificatiesContent.jaaropgaven) {
         focusSpecificatiesContent.jaaropgaven = focusSpecificatiesContent.jaaropgaven.map(
-          document => {
+          (document) => {
             const documentUrl = (
               <DocumentLink document={document} label="PDF" />
             );
@@ -22,7 +22,7 @@ export function useAddDocumentLinkComponents(
       }
       if (focusSpecificatiesContent.uitkeringsspecificaties) {
         focusSpecificatiesContent.uitkeringsspecificaties = focusSpecificatiesContent.uitkeringsspecificaties.map(
-          document => {
+          (document) => {
             const documentUrl = (
               <DocumentLink document={document} label="PDF" />
             );

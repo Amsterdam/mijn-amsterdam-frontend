@@ -16,7 +16,7 @@ import {
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './ZorgDetail.module.scss';
 
-export default () => {
+export default function ZorgDetail() {
   const { WMO } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
 
@@ -83,4 +83,4 @@ export default () => {
       )}
     </DetailPage>
   );
-};
+}

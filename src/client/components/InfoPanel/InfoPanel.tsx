@@ -44,7 +44,7 @@ export interface InfoPanelCollapsibleProps extends InfoPanelProps {
 function InfoPanelActionLinks({ actionLinks }: InfoPanelActionLinksProps) {
   return (
     <ul className={styles.InfoPanelActionLinks}>
-      {actionLinks.map(actionLink => (
+      {actionLinks.map((actionLink) => (
         <li key={actionLink.title}>
           <Linkd href={actionLink.url} external={actionLink.external}>
             {actionLink.title}
@@ -80,7 +80,7 @@ function InfoPanelTable({
 }: InfoPanelTableProps) {
   const tables = useMemo(() => {
     return Array.isArray(panelData)
-      ? panelData.map(panelData =>
+      ? panelData.map((panelData) =>
           entries(panelData).filter(
             filterValue.bind(null, omitPairWithFalseyValues)
           )

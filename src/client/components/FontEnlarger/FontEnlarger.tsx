@@ -27,7 +27,7 @@ export default function FontEnlarger({ children }: ComponentProps) {
         onFocus={() => show()}
         onBlur={() => hide()}
         onClick={() => focus()}
-        onKeyUp={event => {
+        onKeyUp={(event) => {
           event.key.toLowerCase() === 'escape' && hide();
         }}
         aria-label="Uitleg tekst vergroten"

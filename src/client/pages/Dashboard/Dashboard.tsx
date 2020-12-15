@@ -22,7 +22,7 @@ import styles from './Dashboard.module.scss';
 const MAX_NOTIFICATIONS_VISIBLE = 3;
 const MAX_TIPS_VISIBLE = 3;
 
-export default () => {
+export default function Dashboard() {
   const appState = useAppStateGetter();
   const { TIPS, NOTIFICATIONS, CASES } = appState;
   const notifications = useAppStateNotifications();
@@ -99,4 +99,4 @@ export default () => {
       </Page>
     </>
   );
-};
+}

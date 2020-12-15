@@ -202,7 +202,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
             external={true}
             icon=""
             onClick={() => session.logout()}
-            onKeyPress={event => event.key === 'Enter' && session.logout()}
+            onKeyPress={(event) => event.key === 'Enter' && session.logout()}
             role="button"
           >
             {continueButtonIsVisible

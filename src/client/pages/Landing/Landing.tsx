@@ -17,7 +17,7 @@ import styles from './Landing.module.scss';
 import { ExternalUrls } from '../../config/app';
 import { MaintenanceNotification01 } from '../../config/staticData';
 
-export default () => {
+export default function Landing() {
   const loginButton = useRef(null);
 
   useEffect(() => {
@@ -145,4 +145,4 @@ export default () => {
       </PageContent>
     </TextPage>
   );
-};
+}

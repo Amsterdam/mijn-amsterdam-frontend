@@ -7,9 +7,9 @@ import {
 } from '../../universal/config';
 import { AppRoutes } from '../../universal/config/routing';
 import { TMA_LOGIN_URL_DIGID, TMA_LOGIN_URL_EHERKENNING } from '../config/api';
-import { trackPageView } from './analytics.hook';
-import { useTermReplacement } from './useTermReplacement';
+import { trackPageViewWithProfileType } from './analytics.hook';
 import { useProfileTypeValue } from './useProfileType';
+import { useTermReplacement } from './useTermReplacement';
 
 const ExcludePageViewTrackingUrls = [
   TMA_LOGIN_URL_DIGID,
@@ -74,5 +74,5 @@ export function usePageChange() {
         profileType
       );
     }
-  }, [location.pathname, termReplace]);
+  }, [location.pathname, termReplace, profileType]);
 }

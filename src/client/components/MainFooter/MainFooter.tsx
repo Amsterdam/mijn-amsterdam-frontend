@@ -29,13 +29,13 @@ function FooterBlock({
   const [isOpen, toggleOpen] = useState(startOpen);
   return (
     <div className={classnames(styles.Panel, isOpen && styles.PanelOpen)}>
-      <h3 role={titleRole} onClick={() => toggleOpen(isOpen => !isOpen)}>
+      <h3 role={titleRole} onClick={() => toggleOpen((isOpen) => !isOpen)}>
         {title}
       </h3>
       {!!description && <InnerHtml>{description}</InnerHtml>}
       {!!links.length && (
         <ul>
-          {links.map(link => (
+          {links.map((link) => (
             <li key={link.title}>
               <Linkd external={true} href={link.to}>
                 {link.title}
@@ -64,13 +64,13 @@ export default function MainFooter({
     <footer className={styles.MainFooter} id="skip-to-id-MainFooter">
       <div className={classnames(styles.TopBar, styles.InnerContainer)}>
         {isLoading && <div className={styles.FooterLoader}>...</div>}
-        {footer?.blocks.map(footerItem => {
+        {footer?.blocks.map((footerItem) => {
           return <FooterBlock key={footerItem.id} {...footerItem} />;
         })}
       </div>
       <div className={styles.BottomBar}>
         <div className={styles.InnerContainer}>
-          {footer?.sub.map(link => {
+          {footer?.sub.map((link) => {
             return (
               <Linkd
                 key={link.title}

@@ -66,7 +66,7 @@ function GarbageCenterItem({ item }: { item: GarbageCenter }) {
   );
 }
 
-export default () => {
+export default function GarbageInformation() {
   const { AFVAL, AFVALPUNTEN, HOME } = useAppStateGetter();
   const [restafval, grofvuil] = AFVAL.content || [];
   const profileType = useProfileTypeValue();
@@ -204,4 +204,4 @@ export default () => {
       </PageContent>
     </DetailPage>
   );
-};
+}

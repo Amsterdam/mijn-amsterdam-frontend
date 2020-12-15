@@ -30,7 +30,7 @@ const DISPLAY_PROPS_HISTORY = {
   decision: 'Resultaat',
 };
 
-export default () => {
+export default function Vergunningen() {
   const { VERGUNNINGEN } = useAppStateGetter();
 
   const vergunningen: Vergunning[] = useMemo(() => {
@@ -132,4 +132,4 @@ export default () => {
       </SectionCollapsible>
     </OverviewPage>
   );
-};
+}

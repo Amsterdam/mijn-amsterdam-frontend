@@ -95,7 +95,7 @@ export default function Tutorial({ onClose }: TutorialProps) {
         style={{ height: document.body.clientHeight }}
       >
         {tutorialItems
-          .filter(el => {
+          .filter((el) => {
             return !!el.getAttribute('data-tutorial-item');
           })
           .map((el, i) => (

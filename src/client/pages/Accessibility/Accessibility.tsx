@@ -9,7 +9,7 @@ import {
   Heading,
 } from '../../components';
 
-export default () => {
+export default function Accessibility() {
   const termReplace = useTermReplacement();
   return (
     <TextPage>
@@ -97,4 +97,4 @@ export default () => {
       </PageContent>
     </TextPage>
   );
-};
+}

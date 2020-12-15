@@ -10,8 +10,9 @@ import App from './client/App';
 import './client/styles/main.scss';
 import { ENV, getOtapEnvItem } from './universal/config/env';
 
-const release = `mijnamsterdam-frontend@${process.env.REACT_APP_VERSION ||
-  'latest-unknown'}`;
+const release = `mijnamsterdam-frontend@${
+  process.env.REACT_APP_VERSION || 'latest-unknown'
+}`;
 console.info('App version: ' + release);
 
 Sentry.init({

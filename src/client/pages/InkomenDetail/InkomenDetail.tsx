@@ -55,7 +55,7 @@ export function altDocumentContent(
   );
 }
 
-export default () => {
+export default function InkomenDetail() {
   const { FOCUS_AANVRAGEN } = useAppStateGetter();
 
   const { id } = useParams<{ id: string }>();
@@ -104,4 +104,4 @@ export default () => {
       )}
     </DetailPage>
   );
-};
+}

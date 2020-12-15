@@ -19,7 +19,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import AlertDocumentDownloadsDisabled from '../Inkomen/AlertDocumentDownloadsDisabled';
 import styles from './InkomenDetail.module.scss';
 
-export default () => {
+export default function InkomenDetailTozo() {
   const { FOCUS_TOZO } = useAppStateGetter();
 
   const tozoItems = FOCUS_TOZO.content || [];
@@ -117,4 +117,4 @@ export default () => {
       )}
     </DetailPage>
   );
-};
+}

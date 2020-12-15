@@ -42,7 +42,7 @@ function Caret() {
   return <i className={styles.SearchButtonIcon}>&#9698;</i>;
 }
 
-export default () => {
+export default function InkomenSpecificaties() {
   const { FOCUS_SPECIFICATIES } = useAppStateGetter();
   const focusSpecificatiesWithDocumentLinks = useAddDocumentLinkComponents(
     FOCUS_SPECIFICATIES
@@ -100,10 +100,10 @@ export default () => {
   const [[startIndex, endIndex], setPageIndex] = useState(INITIAL_INDEX);
 
   const itemsFiltered = items
-    .filter(item =>
+    .filter((item) =>
       selectedCategory ? item.category === selectedCategory : true
     )
-    .filter(item => {
+    .filter((item) => {
       const datePublished = parseISO(item.datePublished);
       return (
         datePublished >= selectedDates[0] && datePublished <= selectedDates[1]
@@ -117,7 +117,7 @@ export default () => {
   const maxDateFilterActive =
     selectedDates[1].toString() !== maxDate.toString();
 
-  const selectCategoryFilter = useCallback(category => {
+  const selectCategoryFilter = useCallback((category) => {
     setSelectedCategory(category);
     setPageIndex(INITIAL_INDEX);
   }, []);
@@ -188,7 +188,7 @@ export default () => {
 
         {isSearchPanelActive && (
           <div className={styles.SearchPanel}>
-            {items.some(item => !!item.category) && (
+            {items.some((item) => !!item.category) && (
               <div className={styles.FilterInput}>
                 <span>
                   Regeling{' '}
@@ -207,7 +207,7 @@ export default () => {
                     categoryFilterActive && styles.FilterActive
                   )}
                   value={selectedCategory}
-                  onChange={event => selectCategoryFilter(event.target.value)}
+                  onChange={(event) => selectCategoryFilter(event.target.value)}
                 >
                   <option value="">Alle regelingen ({items.length})</option>
                   {options.map(([option, count]) => (
@@ -238,7 +238,7 @@ export default () => {
                 )}
                 value={selectedDates[0]}
                 hasNativeSupport={isNativeDatePickerInputSupported()}
-                onChange={dateStart => {
+                onChange={(dateStart) => {
                   setSelectedDates(([, dateEnd]) => [
                     dateStart || minDate,
                     dateEnd || maxDate,
@@ -266,7 +266,7 @@ export default () => {
                 )}
                 value={selectedDates[1]}
                 hasNativeSupport={isNativeDatePickerInputSupported()}
-                onChange={dateEnd =>
+                onChange={(dateEnd) =>
                   setSelectedDates(([dateStart]) => [
                     dateStart || minDate,
                     dateEnd || maxDate,
@@ -311,4 +311,4 @@ export default () => {
       </Section>
     </OverviewPage>
   );
-};
+}

@@ -14,7 +14,7 @@ export default function LogoutLink({ children }: LogoutLinkProps) {
   const session = useSessionValue();
   return (
     <Linkd
-      onClick={event => {
+      onClick={(event) => {
         event.preventDefault();
         session.logout();
         return false;

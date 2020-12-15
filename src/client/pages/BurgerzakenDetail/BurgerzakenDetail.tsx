@@ -19,7 +19,7 @@ import {
 import styles from './BurgerzakenDetail.module.scss';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
-export default () => {
+export default function BurgerzakenDetail() {
   const { BRP } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
 
@@ -69,4 +69,4 @@ export default () => {
       </PageContent>
     </DetailPage>
   );
-};
+}

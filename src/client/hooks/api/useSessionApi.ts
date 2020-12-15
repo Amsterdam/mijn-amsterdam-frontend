@@ -14,7 +14,7 @@ import {
 } from '../../config/api';
 import { clearSessionStorage } from '../storage.hook';
 import { clearDeeplinkEntry } from '../useDeeplink.hook';
-import { ApiRequestOptions, requestApiData, useDataApi } from './useDataApi';
+import { ApiRequestOptions, useDataApi } from './useDataApi';
 
 export type SessionData = {
   isAuthenticated: boolean;
@@ -50,10 +50,7 @@ export const INITIAL_SESSION_STATE: SessionState = {
 const requestOptions: ApiRequestOptions = {
   url: AUTH_API_URL,
   responseType: 'text',
-  transformResponse: [
-    ...requestApiData.defaults.transformResponse,
-    (data: SessionData) => apiSuccesResult<SessionData>(data),
-  ],
+  transformResponse: (data: SessionData) => apiSuccesResult<SessionData>(data),
 };
 
 type SessionResponseData =

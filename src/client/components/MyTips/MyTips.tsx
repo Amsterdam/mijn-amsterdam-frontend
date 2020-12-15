@@ -99,7 +99,7 @@ const Tip = ({ tip, profileType }: TipProps) => {
                 className={styles.TipFlip}
                 hidden={!isFlipped}
               >
-                {tip.reason.map(reason => (
+                {tip.reason.map((reason) => (
                   <span key={reason}>{reason}</span>
                 ))}
               </p>
@@ -205,7 +205,7 @@ export default function MyTips({
   const profileType = useProfileTypeValue();
   useEffect(() => {
     if (items.length) {
-      items.forEach(tip => {
+      items.forEach((tip) => {
         trackItemPresentation(
           tipTrackingCategory('Tonen', tip.isPersonalized),
           tipTitle(tip.title),

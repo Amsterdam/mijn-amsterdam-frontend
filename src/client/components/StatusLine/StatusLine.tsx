@@ -103,7 +103,7 @@ interface StatusLineItemProps {
   style?: CSSProperties;
 }
 
-export function StatusLineItem({
+export function LineItem({
   children,
   highlight = false,
   style,
@@ -319,7 +319,7 @@ export default function StatusLine({
         {!!items.length && (
           <ul className={styles.List}>
             {items.map((item, index) => (
-              <StatusLineItem
+              <LineItem
                 key={`step-${item.status}-${index}`}
                 highlight={highlightKey ? !!item[highlightKey] : false}
                 style={{
@@ -346,7 +346,7 @@ export default function StatusLine({
                   documents={item.documents}
                   altDocumentContent={item.altDocumentContent}
                 />
-              </StatusLineItem>
+              </LineItem>
             ))}
           </ul>
         )}

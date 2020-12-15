@@ -59,7 +59,7 @@ const decisionsDisplayProps = {
   displayDatePublished: 'Datum besluit',
 };
 
-export default () => {
+export default function Inkomen() {
   const {
     FOCUS_AANVRAGEN,
     FOCUS_SPECIFICATIES,
@@ -325,4 +325,4 @@ export default () => {
       )}
     </OverviewPage>
   );
-};
+}

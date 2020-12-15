@@ -1,5 +1,9 @@
 import * as Sentry from '@sentry/browser';
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, {
+  AxiosRequestConfig,
+  AxiosResponse,
+  AxiosTransformer,
+} from 'axios';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { apiErrorResult } from '../../../universal/helpers/api';
 import { Action } from '../../../universal/types';
@@ -93,7 +97,7 @@ export function useDataApi<T>(
 
   const refetch = useCallback(
     (refetchOptions?: Partial<ApiRequestOptions>) => {
-      setRequestOptions(options => ({
+      setRequestOptions((options) => ({
         ...options,
         ...refetchOptions,
         postpone: false,
@@ -122,11 +126,16 @@ export function useDataApi<T>(
         type: ActionTypes.FETCH_INIT,
       });
 
-      const requestOptionsFinal = {
+      const requestOptionsFinal: AxiosRequestConfig = {
         ...DEFAULT_REQUEST_OPTIONS,
         ...requestOptions,
         cancelToken: source.token,
       };
+      if (requestOptions.transformResponse) {
+        requestOptionsFinal.transformResponse = addAxiosResponseTransform(
+          requestOptions.transformResponse
+        );
+      }
 
       try {
         const result = await requestApiData(requestOptionsFinal);
@@ -208,7 +217,7 @@ export function pollBffHealth() {
               Sentry.captureMessage(
                 `Polling for health succeeded after ${pollCount} tries.`
               );
-              resolve();
+              resolve(response);
             } else {
               Sentry.captureMessage(
                 'Could not connect to server, BFF did not reply with response we expect.',
@@ -236,4 +245,17 @@ export function pollBffHealth() {
     }
     poll();
   });
+}
+
+export function addAxiosResponseTransform(
+  transformer: AxiosTransformer | AxiosTransformer[]
+) {
+  return [
+    ...(Array.isArray(requestApiData.defaults.transformResponse)
+      ? requestApiData.defaults.transformResponse
+      : requestApiData.defaults.transformResponse
+      ? [requestApiData.defaults.transformResponse]
+      : []),
+    ...(Array.isArray(transformer) ? transformer : [transformer]),
+  ];
 }

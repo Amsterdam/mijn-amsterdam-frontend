@@ -48,7 +48,9 @@ export function trackEventWithProfileType(
     MatomoInstance.trackEvent({
       ...payload,
       customDimensions: [
-        ...(payload.customDimensions || []),
+        ...(Array.isArray(payload.customDimensions)
+          ? payload.customDimensions
+          : []),
         profileTypeDimension(profileType),
       ],
     })
@@ -141,7 +143,7 @@ export function useSessionCallbackOnceDebounced(
   timeoutMS: number = 1000
 ) {
   const [isSessionTracked, setSessionTracked] = useSessionStorage(key, false);
-  const [trackEvent] = useDebouncedCallback(() => {
+  const trackEvent = useDebouncedCallback(() => {
     if (!isSessionTracked) {
       callback();
       setSessionTracked(true);

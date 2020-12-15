@@ -17,7 +17,7 @@ import styles from './MyNotifications.module.scss';
 
 const PAGE_SIZE = 10;
 
-export default () => {
+export default function MyNotificationsPage() {
   const { NOTIFICATIONS } = useAppStateGetter();
   const notifications = useAppStateNotifications();
   const { page = '1' } = useParams<{ page?: string }>();
@@ -72,4 +72,4 @@ export default () => {
       )}
     </DetailPage>
   );
-};
+}

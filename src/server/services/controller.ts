@@ -233,7 +233,7 @@ function loadServices(
     .map(([serviceID, fetchService]) => {
       // Return service result as Object like { SERVICE_ID: result }
       return (fetchService(sessionID, req) as Promise<any>)
-        .then(result => ({
+        .then((result) => ({
           [serviceID]: result,
         }))
         .catch((error: Error) => {
@@ -271,7 +271,7 @@ export async function loadServicesSSE(req: Request, res: Response) {
 
   // Send service results to tips api for personalized tips
   const tipsPromise = loadServicesTipsRequestData(sessionID, req).then(
-    responseData => {
+    (responseData) => {
       return { TIPS: responseData };
     }
   );

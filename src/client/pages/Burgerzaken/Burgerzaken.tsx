@@ -21,14 +21,14 @@ const DISPLAY_PROPS = {
   datumAfloop: 'Geldig tot',
 };
 
-export default () => {
+export default function Burgerzeken() {
   const { BRP } = useAppStateGetter();
 
   const documentItems = useMemo(() => {
     if (!BRP.content?.identiteitsbewijzen) {
       return [];
     }
-    const items = BRP.content?.identiteitsbewijzen.map(item => {
+    const items = BRP.content?.identiteitsbewijzen.map((item) => {
       return {
         ...item,
         datumAfloop: defaultDateFormat(item.datumAfloop),
@@ -82,4 +82,4 @@ export default () => {
       </SectionCollapsible>
     </OverviewPage>
   );
-};
+}

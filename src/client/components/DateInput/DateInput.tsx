@@ -69,7 +69,7 @@ export default function DateInput({
           )}
           type="date"
           value={valueFormatted}
-          onChange={event => {
+          onChange={(event) => {
             if (event.target.value) {
               const parsed = parseISO(event.target.value);
               let dateValue = isValid(parsed) ? parsed : null;
@@ -84,25 +84,25 @@ export default function DateInput({
         <div className={classnames(styles.DateInputFallback, className)}>
           <select
             className={styles.DateInputFallbackSelect}
-            onChange={event => {
+            onChange={(event) => {
               const day = Number(event.target.value);
               setDate([yearSelected, monthSelected, day]);
             }}
             value={daySelected}
           >
-            {range(1, daysInMonthSelected).map(day => (
+            {range(1, daysInMonthSelected).map((day) => (
               <option key={day}>{day}</option>
             ))}
           </select>
           <select
             className={styles.DateInputFallbackSelect}
-            onChange={event => {
+            onChange={(event) => {
               const month = Number(event.target.value);
               setDate([yearSelected, month, daySelected]);
             }}
             value={monthSelected}
           >
-            {range(0, 11).map(month => (
+            {range(0, 11).map((month) => (
               <option key={month} value={month}>
                 {getMonth(month)}
               </option>
@@ -110,7 +110,7 @@ export default function DateInput({
           </select>
           <select
             className={styles.DateInputFallbackSelect}
-            onChange={event => {
+            onChange={(event) => {
               const year = Number(event.target.value);
               setDate([year, monthSelected, daySelected]);
             }}
@@ -119,7 +119,7 @@ export default function DateInput({
             {range(
               Math.min(1900, yearSelected - 50),
               Math.min(yearSelected + 100, new Date().getFullYear())
-            ).map(year => (
+            ).map((year) => (
               <option key={year}>{year}</option>
             ))}
           </select>
