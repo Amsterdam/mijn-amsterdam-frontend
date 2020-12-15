@@ -29,7 +29,6 @@ function px(size: number) {
 export const DESKTOP_PANEL_TIP_WIDTH = px(8 * spacing);
 export const DESKTOP_PANEL_PREVIEW_WIDTH = px(60 * spacing);
 export const DESKTOP_PANEL_WIDTH = px(120 * spacing);
-
 export const PHONE_PANEL_PREVIEW_HEIGHT = px(60 * spacing);
 export const PHONE_PANEL_TIP_HEIGHT = px(10 * spacing);
 
@@ -310,32 +309,33 @@ export function PanelComponent({
   id,
   children,
   onClose,
-  cycle = [PanelState.Preview, PanelState.Open],
+  cycle,
   initialPanelState,
   availableHeight,
 }: PanelComponentProps) {
-  const [stateStore] = usePanelState();
-  const initialState = initialPanelState || cycle[0];
-  const state = stateStore[id] || initialState;
   const isPhone = usePhoneScreen();
   const ref = useRef<HTMLDivElement | null>(null);
 
-  const { next, prev, cycle: cycleState, initial } = usePanelStateCycle(
+  const { next, prev, cycle: cycleState, initial, state } = usePanelStateCycle(
     id,
     cycle,
     initialPanelState
   );
 
   useEffect(() => {
-    if (state === initialState) {
+    if (state === initialPanelState) {
       ref?.current?.scrollTo(0, 0);
     }
-  }, [state, initialState]);
+  }, [state, initialPanelState]);
 
   const hasCloseCallback = !!onClose;
   const showToggleButton =
     !hasCloseCallback || (hasCloseCallback && state !== PanelState.Open);
   const showCloseButton = hasCloseCallback && state === PanelState.Open;
+
+  if (id === 'filters') {
+    console.log(id, state, panelSize(id, state, false));
+  }
 
   return isPhone ? (
     <PanelPhoneAnimated

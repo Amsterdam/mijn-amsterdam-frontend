@@ -38,6 +38,7 @@ import HomeControlButton from './MyAreaHomeControlButton';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import { HomeIconMarker } from './MyAreaMarker';
 import {
+  DESKTOP_PANEL_TIP_WIDTH,
   DESKTOP_PANEL_WIDTH,
   PanelComponent,
   PanelState,
@@ -47,6 +48,7 @@ import {
 } from './MyAreaPanelComponent';
 import { MyAreaLegendPanel } from './MyAreaPanels';
 import MyAreaDetailPanel from './PanelContent/MyAreaDetailPanel';
+import { DESKTOP_PANEL_PREVIEW_WIDTH } from './MyAreaPanelComponent';
 
 const StyledViewerContainer = styled(ViewerContainer)<{
   mapOffset: { left: string; bottom: string };
@@ -105,7 +107,7 @@ function nextMapOffset(isDesktop: boolean, state: PanelState) {
   return isDesktop
     ? state === PanelState.Open
       ? { left: DESKTOP_PANEL_WIDTH, bottom: '0' }
-      : { left: '0', bottom: '0' }
+      : { left: DESKTOP_PANEL_TIP_WIDTH, bottom: '0' }
     : state === PanelState.Preview
     ? { left: '0', bottom: PHONE_PANEL_PREVIEW_HEIGHT }
     : { left: '0', bottom: PHONE_PANEL_TIP_HEIGHT };
@@ -169,17 +171,17 @@ export default function MyArea({
     .height;
 
   const panelCycle = useMemo(() => {
-    if (isPhone) {
+    if (!isDesktop) {
       return {
         filters: [PanelState.Tip, PanelState.Preview, PanelState.Open],
         detail: [PanelState.Closed, PanelState.Preview, PanelState.Open],
       };
     }
     return {
-      filters: [PanelState.Open, PanelState.Closed],
+      filters: [PanelState.Open, PanelState.Tip],
       detail: [PanelState.Closed, PanelState.Open],
     };
-  }, [isPhone]);
+  }, [isDesktop]);
 
   const {
     state: filterState,
@@ -244,6 +246,8 @@ export default function MyArea({
     // Only react on loadingFeature changes. This wil result in re-render which causes the currentPanel state to be up-to-date.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadingFeature, isPhone]);
+
+  console.log('panelCycle.filters', panelCycle.filters);
 
   return (
     <ThemeProvider>
@@ -330,8 +334,6 @@ export default function MyArea({
               <PanelComponent
                 id="filters"
                 cycle={panelCycle.filters}
-                initialPanelState={PanelState.Preview}
-                // onTogglePanel={onTogglePanel}
                 availableHeight={panelComponentAvailableHeight}
               >
                 <MyAreaLegendPanel />
@@ -340,7 +342,6 @@ export default function MyArea({
               <PanelComponent
                 id="detail"
                 cycle={panelCycle.detail}
-                // onTogglePanel={onTogglePanel}
                 onClose={onCloseDetailPanel}
                 availableHeight={panelComponentAvailableHeight}
               >
