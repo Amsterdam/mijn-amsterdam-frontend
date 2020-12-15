@@ -1,4 +1,4 @@
-import { Checkbox, Label, themeColor } from '@amsterdam/asc-ui';
+import { Checkbox, Label, themeColor, themeSpacing } from '@amsterdam/asc-ui';
 import React, { ReactNode, useMemo } from 'react';
 import styled from 'styled-components';
 import {
@@ -47,6 +47,13 @@ export const PanelListItem = styled.li`
   > ol > li > ol > li {
     border-top: 0;
   }
+  > ol > li {
+    margin-left: ${themeSpacing(9)};
+  }
+`;
+
+const PropertyFilterPanel = styled.div`
+  margin-left: ${themeSpacing(9)};
 `;
 
 const FilterPropertyName = styled.strong`
@@ -180,7 +187,7 @@ export function DatasetPropertyFilterPanel({
         });
 
         return (
-          <>
+          <PropertyFilterPanel>
             {property.title && (
               <FilterPropertyName>{property.title}</FilterPropertyName>
             )}
@@ -239,7 +246,7 @@ export function DatasetPropertyFilterPanel({
                 );
               })}
             </PanelList>
-          </>
+          </PropertyFilterPanel>
         );
       })}
     </>
