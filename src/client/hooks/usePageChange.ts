@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import { matchPath } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { matchPath, useLocation } from 'react-router-dom';
 import { CustomTrackingUrls } from '../../universal/config';
+import { AppRoutes } from '../../universal/config/routing';
 import { TMA_LOGIN_URL_DIGID, TMA_LOGIN_URL_EHERKENNING } from '../config/api';
 import { PageTitleMain, PageTitles } from '../config/pages';
-import { trackPageView } from './analytics.hook';
-import { AppRoutes } from '../../universal/config/routing';
+import { trackPageViewWithProfileType } from './analytics.hook';
+import { useProfileTypeValue } from './useProfileType';
 
 const ExcludePageViewTrackingUrls = [
   TMA_LOGIN_URL_DIGID,
@@ -21,6 +21,7 @@ const sortedPageTitleRoutes = Object.keys(PageTitles).sort((a, b) => {
 
 export function usePageChange() {
   const location = useLocation();
+  const profileType = useProfileTypeValue();
 
   useEffect(() => {
     // Scroll to top on route change
@@ -59,12 +60,13 @@ export function usePageChange() {
     document.title = title;
 
     if (!ExcludePageViewTrackingUrls.includes(location.pathname)) {
-      trackPageView(
+      trackPageViewWithProfileType(
         PageTitles[route]
           ? PageTitles[route]
           : `[undefined] ${location.pathname}`,
-        CustomTrackingUrls[location.pathname] || location.pathname
+        CustomTrackingUrls[location.pathname] || location.pathname,
+        profileType
       );
     }
-  }, [location.pathname]);
+  }, [location.pathname, profileType]);
 }

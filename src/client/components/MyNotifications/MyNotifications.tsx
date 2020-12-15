@@ -20,6 +20,7 @@ import { DocumentLink } from '../DocumentList/DocumentList';
 import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './MyNotifications.module.scss';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 
 export interface MyNotificationsProps {
   items: MyNotification[];
@@ -42,13 +43,13 @@ export default function MyNotifications({
   ...otherProps
 }: MyNotificationsProps) {
   const history = useHistory();
-
+  const profileType = useProfileTypeValue();
   function showNotification(id: string, to: string) {
     history.push(to);
   }
 
   useSessionCallbackOnceDebounced(trackCategory, () =>
-    trackItemPresentation(trackCategory, 'Aantal updates', items.length)
+    trackItemPresentation(trackCategory, 'Aantal updates', profileType)
   );
 
   return (
@@ -127,7 +128,11 @@ export default function MyNotifications({
                         href={item.customLink ? '#' : item.link?.to}
                         external={isLinkExternal}
                         onClick={() => {
-                          trackItemClick(trackCategory, item.title);
+                          trackItemClick(
+                            trackCategory,
+                            item.title,
+                            profileType
+                          );
                           if (item.customLink) {
                             item.customLink.callback();
                             return false;

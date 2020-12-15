@@ -4,13 +4,14 @@ import { defaultDateFormat } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { IconChevronLeft } from '../../assets/icons';
-import { trackEvent } from '../../hooks/analytics.hook';
+import { trackEventWithProfileType } from '../../hooks/analytics.hook';
 import { useSessionStorage } from '../../hooks/storage.hook';
 import { Button } from '../Button/Button';
 import DocumentList from '../DocumentList/DocumentList';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './StatusLine.module.scss';
 import Heading from '../Heading/Heading';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 
 export type StepType =
   | 'first-step'
@@ -287,14 +288,18 @@ export default function StatusLine({
     'STATUS_LINE_' + id,
     showToggleMore
   );
+  const profileType = useProfileTypeValue();
 
   function toggleCollapsed() {
     if (isCollapsed) {
-      trackEvent({
-        category: trackCategory,
-        name: 'Metrolijn',
-        action: 'Alles tonen',
-      });
+      trackEventWithProfileType(
+        {
+          category: trackCategory,
+          name: 'Metrolijn',
+          action: 'Alles tonen',
+        },
+        profileType
+      );
     }
     setCollapsed(!isCollapsed);
   }

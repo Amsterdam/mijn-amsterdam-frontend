@@ -11,6 +11,7 @@ import LoadingContent from '../LoadingContent/LoadingContent';
 import { MainNavSubmenuLink } from '../MainNavSubmenu/MainNavSubmenu';
 import Panel from '../Panel/Panel';
 import styles from './MyChaptersPanel.module.scss';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 
 export interface MyChaptersPanelProps {
   title: string;
@@ -27,11 +28,15 @@ export default function MyChaptersPanel({
   trackCategory,
   ...otherProps
 }: MyChaptersPanelProps) {
+  const profileType = useProfileTypeValue();
   // Use debounced value here because we want to avoid dependent loading flickr in the scenario: Api A done and Api B started request with data returned from B.
-
   useSessionCallbackOnceDebounced(trackCategory, () => {
     items.forEach(({ id }) => {
-      trackItemPresentation(trackCategory, `Thema ${ChapterTitles[id] || id}`);
+      trackItemPresentation(
+        trackCategory,
+        `Thema ${ChapterTitles[id] || id}`,
+        profileType
+      );
     });
   });
 
