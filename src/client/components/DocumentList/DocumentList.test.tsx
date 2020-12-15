@@ -6,6 +6,7 @@ import * as analytics from '../../hooks/analytics.hook';
 import * as Sentry from '@sentry/browser';
 import DocumentList from './DocumentList';
 import { act } from 'react-dom/test-utils';
+import * as profileTypeHook from '../../hooks/useProfileType';
 
 const ITEMS: GenericDocument[] = [
   {
@@ -25,13 +26,15 @@ const ITEMS: GenericDocument[] = [
 ];
 
 describe('DocumentList', () => {
-  const track = ((analytics as any).trackPageView = jest.fn());
+  const track = ((analytics as any).trackPageViewWithProfileType = jest.fn());
   const captureException = ((Sentry as any).captureException = jest.fn());
   const fetch = ((global as any).fetch = jest
     .fn()
     .mockResolvedValueOnce({ status: 200, blob: () => null })
     .mockResolvedValueOnce({ status: 404, statusText: 'not found' }));
-
+  const profileTypeHookMock = ((profileTypeHook as any).useProfileTypeValue = jest.fn(
+    () => 'prive'
+  ));
   (window as any).URL = {
     createObjectURL: jest.fn((blob: any) => void 0),
   };
@@ -40,6 +43,10 @@ describe('DocumentList', () => {
   beforeEach(() => {
     fetch.mockClear();
     track.mockClear();
+  });
+
+  afterAll(() => {
+    profileTypeHookMock.mockRestore();
   });
 
   it('Renders without crashing', () => {
@@ -57,7 +64,10 @@ describe('DocumentList', () => {
         <DocumentList documents={ITEMS} />
       </BrowserRouter>
     );
-    const Linkd = component.find('li').at(0).find('Linkd');
+    const Linkd = component
+      .find('li')
+      .at(0)
+      .find('Linkd');
 
     expect(Linkd).toHaveLength(1);
     expect(Linkd.prop('href')).toEqual(ITEMS[0].url);
@@ -69,7 +79,8 @@ describe('DocumentList', () => {
     expect(track).toHaveBeenCalledWith(
       ITEMS[0].title,
       // The additional leading / is representing window.location.pathname
-      '//downloads/' + ITEMS[0].title + '.pdf'
+      '//downloads/' + ITEMS[0].title + '.pdf',
+      'prive'
     );
   });
   it('Clicking a link fires tracking call', async () => {
@@ -78,7 +89,10 @@ describe('DocumentList', () => {
         <DocumentList documents={ITEMS} />
       </BrowserRouter>
     );
-    const Linkd = component.find('li').at(0).find('Linkd');
+    const Linkd = component
+      .find('li')
+      .at(0)
+      .find('Linkd');
 
     await act(async () => {
       Linkd.simulate('click');

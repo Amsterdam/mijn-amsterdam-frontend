@@ -9,7 +9,6 @@ import {
   trackItemClick,
   trackItemPresentation,
   trackLink,
-  useSessionCallbackOnceDebounced,
 } from '../../hooks/analytics.hook';
 import { useOptIn } from '../../hooks/useOptIn';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
@@ -21,18 +20,27 @@ import MyTipsOptInOutModal from './MyTipsOptInOutModal';
 
 export interface TipProps {
   tip: MyTip;
+  profileType: ProfileType;
 }
 
 function tipTitle(title: string) {
   return `Tip: ${title}`;
 }
+function tipFlipTitle(title: string) {
+  return `Tip flip: ${title}`;
+}
 
 const PLACEHOLDER_URL =
   'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==';
 
-const Tip = ({ tip }: TipProps) => {
+function tipTrackingCategory(category: string, isPersonalized: boolean) {
+  return isPersonalized
+    ? `${category} gepersonalizeerde tips`
+    : `${category} generieke tips`;
+}
+
+const Tip = ({ tip, profileType }: TipProps) => {
   const [imgUrl, setImgUrl] = useState(PLACEHOLDER_URL);
-  const profileType = useProfileTypeValue();
 
   const tipImgUrl = tip.imgUrl
     ? directApiUrlByProfileType(tip.imgUrl, profileType)
@@ -52,17 +60,8 @@ const Tip = ({ tip }: TipProps) => {
   }, [tipImgUrl]);
 
   const isExternal = isExternalUrl(tip.link.to);
-  const tipTrackingCategory = tip.isPersonalized
-    ? (category: string) => `${category} enkelvoudige content tips`
-    : (category: string) => `${category} generieke tips`;
 
-  const presentationCategory = tipTrackingCategory('Tonen');
-  const clickCategory = tipTrackingCategory('Klikken');
-
-  useSessionCallbackOnceDebounced(presentationCategory, () =>
-    trackItemPresentation(presentationCategory, tipTitle(tip.title))
-  );
-
+  const clickCategory = tipTrackingCategory('Klikken', tip.isPersonalized);
   const [isFlipped, setIsFlipped] = useState(false);
 
   return (
@@ -81,7 +80,16 @@ const Tip = ({ tip }: TipProps) => {
                 id={`tip-flip-${tip.id}`}
                 className={styles.TipFlipButton}
                 icon={isFlipped ? IconClose : IconInfo}
-                onClick={() => setIsFlipped(!isFlipped)}
+                onClick={() => {
+                  setIsFlipped(!isFlipped);
+                  if (!isFlipped) {
+                    trackItemClick(
+                      clickCategory,
+                      tipFlipTitle(tip.title),
+                      profileType
+                    );
+                  }
+                }}
                 aria-label="Reden waarom u deze tip ziet"
                 aria-expanded={isFlipped}
                 iconFill="#ffffff"
@@ -105,7 +113,7 @@ const Tip = ({ tip }: TipProps) => {
           href={tip.link.to}
           external={isExternal}
           onClick={() => {
-            trackItemClick(clickCategory, tipTitle(tip.title));
+            trackItemClick(clickCategory, tipTitle(tip.title), profileType);
             if (isExternal) {
               trackLink(tip.link.to);
             }
@@ -194,6 +202,19 @@ export default function MyTips({
   showHeader = true,
   ...otherProps
 }: MyTipsProps) {
+  const profileType = useProfileTypeValue();
+  useEffect(() => {
+    if (items.length) {
+      items.forEach(tip => {
+        trackItemPresentation(
+          tipTrackingCategory('Tonen', tip.isPersonalized),
+          tipTitle(tip.title),
+          profileType
+        );
+      });
+    }
+  }, [items, profileType]);
+
   return (
     <div {...otherProps} className={classnames(styles.MyTips, className)}>
       {showHeader && <TipsOptInHeader showTipsPageLink={!!items.length} />}
@@ -205,7 +226,9 @@ export default function MyTips({
       >
         {isLoading && <LoadingContentListItems />}
         {!isLoading &&
-          items.map((item, i) => <Tip key={item.title} tip={item} />)}
+          items.map((item, i) => (
+            <Tip key={item.title} profileType={profileType} tip={item} />
+          ))}
         {!isLoading && items.length % 2 !== 0 && (
           <li className={styles.TipItem} />
         )}
