@@ -40,25 +40,43 @@ export function useSSE({
     }
 
     const handleOpen = () => {
-      console.info('[SSE] Open connection', connectionCounter.current);
+      console.info(
+        '[SSE] Open connection, connectionCount: ',
+        connectionCounter.current
+      );
       connectionCounter.current += 1;
     };
 
     const closeEventSource = () => {
-      console.info('[SSE] Close connection', connectionCounter.current);
+      console.info(
+        '[SSE] Close connection, connectionCount: ',
+        connectionCounter.current
+      );
       connectionCounter.current = 0;
       es.close();
     };
 
     const handleError = (error: any) => {
-      console.info('[SSE] Error connecting', es.readyState);
+      console.info('[SSE] Error connecting, ES ReadyState:', es.readyState);
 
-      if (
-        EventSource.CONNECTING === es.readyState &&
-        connectionCounter.current >= MAX_CONNECTION_RETRY_COUNT
-      ) {
-        closeEventSource();
-        callback(SSE_ERROR_MESSAGE);
+      switch (true) {
+        // Trying to connect but responding with an error
+        case EventSource.CONNECTING === es.readyState &&
+          connectionCounter.current >= MAX_CONNECTION_RETRY_COUNT:
+          closeEventSource();
+          callback(SSE_ERROR_MESSAGE);
+          break;
+        // We're open but an error occured during communication
+        case EventSource.OPEN === es.readyState &&
+          connectionCounter.current <= MAX_CONNECTION_RETRY_COUNT:
+          closeEventSource();
+          callback(SSE_ERROR_MESSAGE);
+          break;
+        // Closed before reaching max retry means connection not possible
+        case EventSource.CLOSED === es.readyState &&
+          connectionCounter.current <= MAX_CONNECTION_RETRY_COUNT:
+          callback(SSE_ERROR_MESSAGE);
+          break;
       }
     };
 
