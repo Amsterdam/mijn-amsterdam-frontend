@@ -54,10 +54,8 @@ export function useSSE({
       console.info('[SSE] Error connecting', es.readyState);
 
       if (
-        (EventSource.CONNECTING === es.readyState &&
-          connectionCounter.current >= MAX_CONNECTION_RETRY_COUNT) ||
-        EventSource.CLOSED === es.readyState ||
-        EventSource.OPEN === es.readyState
+        EventSource.CONNECTING === es.readyState &&
+        connectionCounter.current >= MAX_CONNECTION_RETRY_COUNT
       ) {
         closeEventSource();
         callback(SSE_ERROR_MESSAGE);
