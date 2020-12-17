@@ -218,10 +218,12 @@ export function getDatasetCategoryId(datasetId: DatasetId) {
   return;
 }
 
+export function getDatasetIds(categoryId: DatasetCategoryId) {
+  return DATASETS[categoryId] ? Object.keys(DATASETS[categoryId].datasets) : [];
+}
+
 export const ACTIVE_DATASET_IDS_INITIAL = [
-  'afvalcontainers',
-  'bekendmakingen',
-  'evenementen',
-  // ...DATASETS.sport,
-  // 'sportveld',
+  ...getDatasetIds('afvalcontainers'),
+  ...getDatasetIds('bekendmakingen'),
+  ...getDatasetIds('evenementen'),
 ];
