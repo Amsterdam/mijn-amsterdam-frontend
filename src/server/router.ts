@@ -30,7 +30,7 @@ router.get(
     // Tell the client we respond with an event stream
     res.writeHead(200, {
       'content-type': 'text/event-stream',
-      'cache-control': 'no-cache',
+      'Cache-Control': 'no-cache, no-transform',
       connection: 'keep-alive',
     });
     res.write('retry: 1000\n');
