@@ -125,7 +125,23 @@ export const DATASETS: DatasetCategories = {
           },
         },
       },
-      // gymsportzaal: { title: 'Gymsportzaal' },
+      gymsportzaal: {
+        title: 'Gymsportzaal',
+        filters: {
+          indicatieToegankelijkMindervaliden: {
+            title: 'Toegankelijk voor minder validen',
+            valueConfig: {
+              '': { title: 'Nee' },
+            },
+          },
+          indicatieVoorzieningenMindervaliden: {
+            title: 'Voorzieningen voor minder validen',
+            valueConfig: {
+              '': { title: 'Nee' },
+            },
+          },
+        },
+      },
       sporthal: { title: 'Sporthal' },
       sportaanbieder: {
         title: 'Sportaanbieders',
@@ -141,6 +157,9 @@ export const DATASETS: DatasetCategories = {
             valueConfig: {
               '': { title: 'Nee' },
             },
+          },
+          typeSport: {
+            title: 'Sport',
           },
         },
       },

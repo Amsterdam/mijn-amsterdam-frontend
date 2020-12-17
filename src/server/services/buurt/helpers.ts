@@ -162,9 +162,7 @@ export function createDynamicFilterConfig(
   features: MaFeature[],
   filterConfig: DatasetPropertyFilter
 ) {
-  // const filters: DatasetPropertyFilter = {};
   const propertyNames = Object.keys(filterConfig);
-
   const filters: DatasetPropertyFilter = {};
 
   for (const feature of features) {

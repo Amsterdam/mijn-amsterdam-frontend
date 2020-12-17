@@ -53,6 +53,9 @@ export default function MyArePanelContentSport({
     case 'gymsportzaal':
       return (
         <GenericBase title={panelItem.naam} supTitle="Gymsportzalen">
+          {!!panelItem.omschrijving && (
+            <Description description={panelItem.omschrijving} />
+          )}
           <InfoDetail label="Adres" value={panelItem.adres} />
           {!!panelItem.emailadres && (
             <Url
@@ -69,6 +72,12 @@ export default function MyArePanelContentSport({
             />
           )}
           {!!panelItem.website && <Url url={panelItem.website} />}
+          {!!panelItem.bijzonderheden && (
+            <InfoDetail
+              label="Bijzonderheden"
+              value={panelItem.bijzonderheden}
+            />
+          )}
         </GenericBase>
       );
     case 'sporthal':
@@ -102,6 +111,7 @@ export default function MyArePanelContentSport({
                 value={panelItem.naamSportfaciliteit}
               />
             )}
+          <InfoDetail label="Sport" value={panelItem.typeSport} />
           <InfoDetail label="Adres" value={panelItem.adres} />
           <InfoDetail
             label="Stadspas indicatie"
