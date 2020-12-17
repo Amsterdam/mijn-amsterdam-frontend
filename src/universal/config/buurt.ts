@@ -1,4 +1,5 @@
 import proj4 from 'proj4';
+import { FeatureToggle } from './app';
 
 // Amsterdam center
 export const DEFAULT_LAT: number = 52.3717228;
@@ -27,13 +28,11 @@ export type DatasetPropertyValueWithCount = Record<
 >;
 export interface DatasetPropertyValueConfig {
   title?: string;
-  isExcluded?: true;
 }
 
 export interface DatasetProperty {
   values?: DatasetPropertyValueWithCount;
   valuesRefined?: DatasetPropertyValueWithCount;
-  isVisible?: boolean;
   valueConfig?: Record<DatasetPropertyValue, DatasetPropertyValueConfig>;
   title?: string;
 }
@@ -50,6 +49,7 @@ export interface DatasetControl {
 }
 
 export type DatasetCategory = {
+  isDisabled?: boolean;
   title: string;
   profileType?: ProfileType[];
   datasets: Record<DatasetId, DatasetControl>;
@@ -106,6 +106,7 @@ export const DATASETS: DatasetCategories = {
     datasets: { evenementen: { title: 'Evenementen' } },
   },
   sport: {
+    isDisabled: !FeatureToggle.sportDatasetsActive,
     title: 'Sport',
     datasets: {
       zwembad: { title: 'Zwembad' },

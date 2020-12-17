@@ -404,17 +404,19 @@ export function MyAreaLegendPanel() {
 
   return (
     <CategoryPanel>
-      {datasets.map(([categoryId, category]) => (
-        <PanelListItem key={`category-${categoryId}`}>
-          <DatasetControlPanel
-            categoryId={categoryId}
-            category={category}
-            onControlItemChange={onControlItemChange}
-            onFilterControlItemChange={onFilterControlItemChange}
-            activeDatasetIds={activeDatasetIds}
-          />
-        </PanelListItem>
-      ))}
+      {datasets
+        .filter(([categoryId, category]) => !category.isDisabled)
+        .map(([categoryId, category]) => (
+          <PanelListItem key={`category-${categoryId}`}>
+            <DatasetControlPanel
+              categoryId={categoryId}
+              category={category}
+              onControlItemChange={onControlItemChange}
+              onFilterControlItemChange={onFilterControlItemChange}
+              activeDatasetIds={activeDatasetIds}
+            />
+          </PanelListItem>
+        ))}
     </CategoryPanel>
   );
 }

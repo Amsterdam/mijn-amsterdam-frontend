@@ -233,7 +233,7 @@ export default function MyArea({
   return (
     <ThemeProvider>
       <MyAreaContainer>
-        {!!showHeader && <MyAreaHeader showCloseButton={false} />}
+        {!!showHeader && <MyAreaHeader showCloseButton={true} />}
         <MyAreaMapContainer ref={mapContainerRef}>
           <MyAreaMapOffset>
             <MyAreaMap
