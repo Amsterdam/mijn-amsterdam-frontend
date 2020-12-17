@@ -15,6 +15,7 @@ COPY tsconfig.bff.json /app/
 COPY package.json /app/
 COPY package-lock.json /app/
 COPY .env.production /app/
+COPY .prettierrc /app/
 
 RUN npm ci
 
