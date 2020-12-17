@@ -13,7 +13,7 @@ import {
   DatasetCategoryId,
   DatasetControl,
   DatasetProperty,
-  DatasetPropertyFilter,
+  DatasetPropertyValueWithCount,
 } from '../../../universal/config/buurt';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
@@ -26,10 +26,6 @@ import {
   useFilterControlItemChange,
 } from './MyArea.hooks';
 import MyAreaCollapsiblePanel from './MyAreaCollapsiblePanel';
-import {
-  DatasetPropertyValueConfig,
-  DatasetPropertyValueWithCount,
-} from '../../../universal/config/buurt';
 
 export const PanelList = styled.ol<{ indent?: number }>`
   padding: 0;

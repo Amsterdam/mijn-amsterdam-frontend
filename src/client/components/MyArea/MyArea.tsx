@@ -12,13 +12,7 @@ import { ThemeProvider } from '@amsterdam/asc-ui';
 import { useMapInstance } from '@amsterdam/react-maps';
 import L, { TileLayerOptions } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
@@ -41,8 +35,6 @@ import {
   DESKTOP_PANEL_WIDTH,
   PanelComponent,
   PanelState,
-  PHONE_PANEL_PREVIEW_HEIGHT,
-  PHONE_PANEL_TIP_HEIGHT,
   usePanelStateCycle,
 } from './MyAreaPanelComponent';
 import { MyAreaLegendPanel } from './MyAreaPanels';
@@ -176,19 +168,10 @@ export default function MyArea({
     panelCycle.filters,
     isDesktop ? PanelState.Open : PanelState.Preview
   );
-  const {
-    state: filterState,
-    initial: initialFilterPanelState,
-    set: setFilterPanelState,
-    cycle: cycleFilterPanelState,
-  } = filterPanelCycle;
+  const { state: filterState, set: setFilterPanelState } = filterPanelCycle;
 
   const detailPanelCycle = usePanelStateCycle('detail', panelCycle.detail);
-  const {
-    state: detailState,
-    set: setDetailPanelState,
-    initial: setInitialDetailPanelState,
-  } = detailPanelCycle;
+  const { state: detailState, set: setDetailPanelState } = detailPanelCycle;
 
   // Set panel state without explicit panel interaction. Effect reacts to loading detailed features.
   useEffect(() => {
