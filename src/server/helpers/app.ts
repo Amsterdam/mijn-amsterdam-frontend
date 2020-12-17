@@ -115,7 +115,6 @@ export function sendMessage(
   const payload = doStringify ? JSON.stringify(data) : data;
   const message = `event: ${event}\nid: ${id}\ndata: ${payload}\n\n`;
   res.write(message);
-  res.flush();
 }
 
 export function addServiceResultHandler(
