@@ -12,6 +12,7 @@ import {
 import {
   DatasetCategoryId,
   DatasetControl,
+  DatasetProperty,
   DatasetPropertyFilter,
 } from '../../../universal/config/buurt';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
@@ -25,6 +26,10 @@ import {
   useFilterControlItemChange,
 } from './MyArea.hooks';
 import MyAreaCollapsiblePanel from './MyAreaCollapsiblePanel';
+import {
+  DatasetPropertyValueConfig,
+  DatasetPropertyValueWithCount,
+} from '../../../universal/config/buurt';
 
 export const PanelList = styled.ol<{ indent?: number }>`
   padding: 0;
@@ -150,106 +155,85 @@ export function DatasetControlCheckbox({
 
 interface DatasetPropertyFilterPanelProps {
   datasetId: DatasetId;
-  filters: DatasetPropertyFilter;
+  propertyName: DatasetPropertyName;
+  property: DatasetProperty;
+  values: DatasetPropertyValueWithCount;
+  valuesRefined?: DatasetPropertyValueWithCount;
   activeFilters: DatasetFilterSelection;
   onFilterControlItemChange: DatasetControlPanelProps['onFilterControlItemChange'];
 }
 
 export function DatasetPropertyFilterPanel({
   datasetId,
-  filters,
+  propertyName,
+  property,
+  values,
+  valuesRefined,
   activeFilters,
   onFilterControlItemChange,
 }: DatasetPropertyFilterPanelProps) {
-  const [filterSelection] = useDatasetFilterSelection();
-  const filterEntries = useMemo(() => Object.entries(filters), [filters]);
+  const valuesSorted = useMemo(() => {
+    return Object.entries(values).sort((a, b) => {
+      return b[1] - a[1];
+    });
+  }, [values]);
+
   return (
-    <>
-      {filterEntries.map(([propertyId, property]) => {
-        const filterSelectionValues =
-          filterSelection[datasetId] &&
-          filterSelection[datasetId][propertyId] &&
-          filterSelection[datasetId][propertyId].values;
+    <PropertyFilterPanel>
+      {property.title && (
+        <FilterPropertyName>{property.title}</FilterPropertyName>
+      )}
+      <PanelList>
+        {valuesSorted.map(([value, featureCount], index) => {
+          let label = value;
 
-        const filterSelectionValuesRefined =
-          filterSelection[datasetId] &&
-          filterSelection[datasetId][propertyId] &&
-          filterSelection[datasetId][propertyId].valuesRefined;
+          const valueConfig = property.valueConfig
+            ? property.valueConfig[value]
+            : undefined;
 
-        const values = property.values
-          ? property.values
-          : filterSelectionValues
-          ? filterSelectionValues
-          : {};
+          if (valueConfig?.title) {
+            label = valueConfig?.title;
+          }
 
-        const propertyValues = Object.entries(values).sort((a, b) => {
-          return b[1] - a[1];
-        });
+          const { isChecked } = filterItemCheckboxState(
+            activeFilters,
+            datasetId,
+            propertyName,
+            value
+          );
 
-        return (
-          <PropertyFilterPanel>
-            {property.title && (
-              <FilterPropertyName>{property.title}</FilterPropertyName>
-            )}
-            <PanelList>
-              {propertyValues.map(([value, featureCount]) => {
-                let label = value;
-
-                const valueConfig = property.valueConfig
-                  ? property.valueConfig[value]
-                  : undefined;
-
-                if (valueConfig?.title) {
-                  label = valueConfig?.title;
+          return (
+            <PanelListItem key={`property-${datasetId + propertyName + index}`}>
+              <DatasetControlCheckbox
+                isChecked={isChecked}
+                id={label}
+                isDimmed={valuesRefined ? !valuesRefined[value] : false}
+                label={
+                  <>
+                    {capitalizeFirstLetter(label)}{' '}
+                    {featureCount >= 1 ? (
+                      <FeatureCount>
+                        (
+                        {valuesRefined
+                          ? valuesRefined[value] || 0
+                          : featureCount}
+                        )
+                      </FeatureCount>
+                    ) : (
+                      ''
+                    )}
+                  </>
                 }
-
-                const { isChecked } = filterItemCheckboxState(
-                  activeFilters,
-                  datasetId,
-                  propertyId,
-                  value
-                );
-
-                return (
-                  <PanelListItem key={datasetId + propertyId}>
-                    <DatasetControlCheckbox
-                      key={label}
-                      isChecked={isChecked}
-                      id={label}
-                      isDimmed={
-                        filterSelectionValuesRefined
-                          ? !filterSelectionValuesRefined[value]
-                          : false
-                      }
-                      label={
-                        <>
-                          {capitalizeFirstLetter(label)}{' '}
-                          {featureCount >= 1 ? (
-                            <FeatureCount>
-                              (
-                              {filterSelectionValuesRefined
-                                ? filterSelectionValuesRefined[value] || 0
-                                : featureCount}
-                              )
-                            </FeatureCount>
-                          ) : (
-                            ''
-                          )}
-                        </>
-                      }
-                      isIndeterminate={false}
-                      onChange={() =>
-                        onFilterControlItemChange(datasetId, propertyId, value)
-                      }
-                    />
-                  </PanelListItem>
-                );
-              })}
-            </PanelList>
-          </PropertyFilterPanel>
-        );
-      })}
-    </>
+                isIndeterminate={false}
+                onChange={() =>
+                  onFilterControlItemChange(datasetId, propertyName, value)
+                }
+              />
+            </PanelListItem>
+          );
+        })}
+      </PanelList>
+    </PropertyFilterPanel>
   );
 }
 
@@ -269,6 +253,7 @@ export function DatasetPanel({
   activeDatasetIds,
 }: DatasePanelProps) {
   const [activeFilters] = useActiveDatasetFilters();
+  const [filterSelection] = useDatasetFilterSelection();
 
   const { isChecked, isIndeterminate } = datasetCheckboxState(
     datasetId,
@@ -292,12 +277,32 @@ export function DatasetPanel({
       {(!hasFilters || !isChecked) && datasetControl}
       {isChecked && hasFilters && (
         <MyAreaCollapsiblePanel title={datasetControl}>
-          <DatasetPropertyFilterPanel
-            datasetId={datasetId}
-            filters={dataset.filters!}
-            activeFilters={activeFilters}
-            onFilterControlItemChange={onFilterControlItemChange}
-          />
+          {Object.entries(dataset.filters!).map(([propertyName, property]) => {
+            const filterSelectionValues =
+              filterSelection[datasetId] &&
+              filterSelection[datasetId][propertyName] &&
+              filterSelection[datasetId][propertyName].values;
+
+            const filterSelectionValuesRefined =
+              filterSelection[datasetId] &&
+              filterSelection[datasetId][propertyName] &&
+              filterSelection[datasetId][propertyName].valuesRefined;
+
+            const values = property.values || filterSelectionValues || {};
+
+            return (
+              <DatasetPropertyFilterPanel
+                key={datasetId + propertyName}
+                datasetId={datasetId}
+                propertyName={propertyName}
+                property={property}
+                values={values}
+                valuesRefined={filterSelectionValuesRefined}
+                activeFilters={activeFilters}
+                onFilterControlItemChange={onFilterControlItemChange}
+              />
+            );
+          })}
         </MyAreaCollapsiblePanel>
       )}
     </>
@@ -365,7 +370,7 @@ export function DatasetControlPanel({
       <PanelList>
         {Object.entries(category.datasets).map(([datasetId, dataset]) => {
           return (
-            <PanelListItem key={datasetId}>
+            <PanelListItem key={`dataset-${datasetId}`}>
               <DatasetPanel
                 datasetId={datasetId}
                 dataset={dataset}
@@ -400,7 +405,7 @@ export function MyAreaLegendPanel() {
   return (
     <CategoryPanel>
       {datasets.map(([categoryId, category]) => (
-        <PanelListItem key={categoryId}>
+        <PanelListItem key={`category-${categoryId}`}>
           <DatasetControlPanel
             categoryId={categoryId}
             category={category}

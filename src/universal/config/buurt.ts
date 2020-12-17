@@ -30,15 +30,17 @@ export interface DatasetPropertyValueConfig {
   isExcluded?: true;
 }
 
+export interface DatasetProperty {
+  values?: DatasetPropertyValueWithCount;
+  valuesRefined?: DatasetPropertyValueWithCount;
+  isVisible?: boolean;
+  valueConfig?: Record<DatasetPropertyValue, DatasetPropertyValueConfig>;
+  title?: string;
+}
+
 export type DatasetPropertyFilter = Record<
   DatasetPropertyName,
-  {
-    values?: DatasetPropertyValueWithCount;
-    valuesRefined?: DatasetPropertyValueWithCount;
-    isVisible?: boolean;
-    valueConfig?: Record<DatasetPropertyValue, DatasetPropertyValueConfig>;
-    title?: string;
-  }
+  DatasetProperty
 >;
 
 export interface DatasetControl {

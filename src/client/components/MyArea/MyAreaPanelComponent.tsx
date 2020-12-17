@@ -140,34 +140,41 @@ const PanelToggleDesktop = styled.button`
   right: 0;
   bottom: 0;
   top: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: ${themeColor(
-    'tint',
-    'level1'
-  )}; // Hides underlying scrollbar
+  display: block;
+  background-color: ${themeColor('tint', 'level1')};
   border: 0;
   padding: 0;
   box-shadow: none;
-  z-index: 2;
+  z-index: 2; // Place above innerpanels so we hide the scrollbar of that panel
   width: ${DESKTOP_PANEL_TIP_WIDTH};
-  > span {
-    transform: ${(props) =>
-      props['aria-expanded'] ? 'rotate(180deg)' : 'none'};
-    transition: transform 200ms ease-in;
-  }
-  &:hover {
-    background-color: ${themeColor('tint', 'level2')};
+
+  ${Icon} {
+    height: ${themeSpacing(11)};
+    width: ${themeSpacing(6)};
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    left: 100%;
+    position: absolute;
+    top: ${themeSpacing(4)};
+
+    svg {
+      transform: ${(props) =>
+        props['aria-expanded'] ? 'rotate(180deg)' : 'none'};
+      transition: transform 200ms ease-in;
+    }
   }
 `;
 
 const StyledCloseButton = styled(CloseButton)`
   position: absolute;
   right: ${themeSpacing(6)};
-  top: ${themeSpacing(6)};
+  top: ${themeSpacing(4)};
   z-index: 20000;
+  width: ${themeSpacing(6)};
+  height: ${themeSpacing(6)};
 `;
 
 type PanelDesktopAnimatedProps = PropsWithChildren<{
@@ -299,61 +306,47 @@ export type PanelComponentProps = PropsWithChildren<{
   id: string;
   onTogglePanel?: (id: string, state: PanelState) => void;
   onClose?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  cycle: PanelState[];
+  cycle: any;
   availableHeight: number;
-  initialPanelState?: PanelState;
+  showCloseButton?: boolean;
 }>;
 
 export function PanelComponent({
   id,
   children,
-  onClose,
   cycle,
-  initialPanelState,
   availableHeight,
+  showCloseButton,
 }: PanelComponentProps) {
   const isPhone = usePhoneScreen();
   const ref = useRef<HTMLDivElement | null>(null);
-
-  const { next, prev, cycle: cycleState, initial, state } = usePanelStateCycle(
-    id,
-    cycle,
-    initialPanelState
-  );
-
+  const { state, initialState, next, prev, cycle: cycleState } = cycle;
   useEffect(() => {
-    if (state === initialPanelState) {
+    if (state === initialState) {
       ref?.current?.scrollTo(0, 0);
     }
-  }, [state, initialPanelState]);
+  }, [state, initialState]);
 
-  const hasCloseCallback = !!onClose;
   const showToggleButton =
-    !hasCloseCallback || (hasCloseCallback && state !== PanelState.Open);
-  const showCloseButton = hasCloseCallback && state === PanelState.Open;
-
-  if (id === 'filters') {
-    console.log(id, state, panelSize(id, state, false));
-  }
+    !showCloseButton || (isPhone && state !== PanelState.Open);
 
   return isPhone ? (
     <PanelPhoneAnimated
       id={id}
       onSwipedUp={(event: any) => {
-        next();
+        if (ref.current && !ref.current.contains(event.event.target)) {
+          next();
+        }
       }}
       onSwipedDown={(event: any) => {
-        prev();
+        if (ref.current && !ref.current.contains(event.event.target)) {
+          prev();
+        }
       }}
       height={panelSize(id, state, true, availableHeight)}
     >
       {showCloseButton && (
-        <StyledCloseButton
-          onClick={(event) => {
-            initial();
-            onClose && onClose(event);
-          }}
-        />
+        <StyledCloseButton iconSize="24" onClick={cycleState} />
       )}
       {showToggleButton && (
         <PanelTogglePhone
@@ -363,20 +356,13 @@ export function PanelComponent({
           onClick={cycleState}
         />
       )}
-      <PanelInnerPhone panelState={state} ref={ref}>
+      <PanelInnerPhone className="panel-inner" panelState={state} ref={ref}>
         {children}
       </PanelInnerPhone>
     </PanelPhoneAnimated>
   ) : (
     <PanelDesktopAnimated width={panelSize(id, state, false)}>
-      {showCloseButton && (
-        <StyledCloseButton
-          onClick={(event) => {
-            initial();
-            onClose && onClose(event);
-          }}
-        />
-      )}
+      {showCloseButton && <StyledCloseButton onClick={cycleState} />}
       {showToggleButton && (
         <PanelToggleDesktop
           aria-expanded={
@@ -384,7 +370,7 @@ export function PanelComponent({
           }
           onClick={cycleState}
         >
-          <Icon>
+          <Icon size={16}>
             <IconChevronRight />
           </Icon>
         </PanelToggleDesktop>

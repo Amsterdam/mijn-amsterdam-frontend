@@ -30,7 +30,6 @@ import { usePhoneScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { getElementSize } from '../../hooks/useComponentSize';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
-import LegendControl from './LegendControl';
 import { useFetchPanelFeature, useLoadingFeature } from './MyArea.hooks';
 import { MyAreaDatasets } from './MyAreaDatasets';
 import MyAreaHeader from './MyAreaHeader';
@@ -48,16 +47,14 @@ import {
 } from './MyAreaPanelComponent';
 import { MyAreaLegendPanel } from './MyAreaPanels';
 import MyAreaDetailPanel from './PanelContent/MyAreaDetailPanel';
-import { DESKTOP_PANEL_PREVIEW_WIDTH } from './MyAreaPanelComponent';
 
 const StyledViewerContainer = styled(ViewerContainer)<{
-  mapOffset: { left: string; bottom: string };
+  mapOffset?: { left: string };
 }>`
   transition: left 200ms ease-out, bottom 200ms ease-out;
   top: 0;
   right: 0;
   left: ${(props) => props.mapOffset?.left || '0'};
-  bottom: ${(props) => props.mapOffset?.bottom || '0'};
 `;
 
 const MyAreaMapContainer = styled.div`
@@ -71,11 +68,12 @@ const MyAreaMapOffset = styled.div`
   position: relative;
 `;
 
-const MyAreaContainer = styled.div<{ height: string }>`
+const MyAreaContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: ${(props) => props.height};
   position: relative;
+  overflow: hidden;
+  height: 100%;
 `;
 
 const MyAreaMap = styled(Map)`
@@ -103,16 +101,6 @@ function AttributionToggle() {
   return null;
 }
 
-function nextMapOffset(isDesktop: boolean, state: PanelState) {
-  return isDesktop
-    ? state === PanelState.Open
-      ? { left: DESKTOP_PANEL_WIDTH, bottom: '0' }
-      : { left: DESKTOP_PANEL_TIP_WIDTH, bottom: '0' }
-    : state === PanelState.Preview
-    ? { left: '0', bottom: PHONE_PANEL_PREVIEW_HEIGHT }
-    : { left: '0', bottom: '0' };
-}
-
 interface MyAreaProps {
   datasetIds?: string[];
   showPanels?: boolean;
@@ -125,7 +113,7 @@ export default function MyArea({
   datasetIds,
   showPanels = true,
   showHeader = true,
-  height = '100vh',
+  height = '100%',
   zoom = HOOD_ZOOM,
 }: MyAreaProps) {
   const isDesktop = useDesktopScreen();
@@ -171,67 +159,36 @@ export default function MyArea({
     .height;
 
   const panelCycle = useMemo(() => {
-    if (!isDesktop) {
+    if (isDesktop) {
       return {
-        filters: [PanelState.Preview, PanelState.Open],
-        detail: [PanelState.Closed, PanelState.Preview, PanelState.Open],
+        filters: [PanelState.Open, PanelState.Tip],
+        detail: [PanelState.Closed, PanelState.Open],
       };
     }
     return {
-      filters: [PanelState.Open, PanelState.Tip],
-      detail: [PanelState.Closed, PanelState.Open],
+      filters: [PanelState.Tip, PanelState.Preview, PanelState.Open],
+      detail: [PanelState.Closed, PanelState.Preview, PanelState.Open],
     };
   }, [isDesktop]);
 
+  const filterPanelCycle = usePanelStateCycle(
+    'filters',
+    panelCycle.filters,
+    isDesktop ? PanelState.Open : PanelState.Preview
+  );
   const {
     state: filterState,
     initial: initialFilterPanelState,
     set: setFilterPanelState,
     cycle: cycleFilterPanelState,
-  } = usePanelStateCycle('filters', panelCycle.filters);
+  } = filterPanelCycle;
 
+  const detailPanelCycle = usePanelStateCycle('detail', panelCycle.detail);
   const {
     state: detailState,
     set: setDetailPanelState,
     initial: setInitialDetailPanelState,
-  } = usePanelStateCycle('detail', panelCycle.detail);
-
-  const [mapOffset, setMapOffset] = useState(
-    nextMapOffset(isDesktop, filterState)
-  );
-
-  useEffect(() => {
-    if (
-      filterState === PanelState.Closed &&
-      detailState === PanelState.Preview
-    ) {
-      setMapOffset(nextMapOffset(isDesktop, detailState));
-    } else {
-      setMapOffset(nextMapOffset(isDesktop, filterState));
-    }
-  }, [filterState, detailState, isDesktop]);
-
-  const onCloseDetailPanel = useCallback(() => {
-    setInitialDetailPanelState();
-  }, [setInitialDetailPanelState]);
-
-  const toggleFilterPanel = useCallback(() => {
-    if (isDesktop) {
-      cycleFilterPanelState();
-    } else {
-      if (filterState !== PanelState.Closed) {
-        setFilterPanelState(PanelState.Closed);
-      } else if (filterState === PanelState.Closed) {
-        initialFilterPanelState();
-      }
-    }
-  }, [
-    isDesktop,
-    filterState,
-    setFilterPanelState,
-    initialFilterPanelState,
-    cycleFilterPanelState,
-  ]);
+  } = detailPanelCycle;
 
   // Set panel state without explicit panel interaction. Effect reacts to loading detailed features.
   useEffect(() => {
@@ -247,11 +204,35 @@ export default function MyArea({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadingFeature, isPhone]);
 
-  console.log('panelCycle.filters', panelCycle.filters);
+  const prevFilterPanelState = useRef<PanelState | null>(null);
+
+  // If Detail panel is opened set FiltersPanel to a TIP state and store the State it's in, if Detail panel is closed restore the Filters panel state to the state it was in.
+  useEffect(() => {
+    if (detailState !== PanelState.Closed && !prevFilterPanelState.current) {
+      prevFilterPanelState.current = filterState;
+      setFilterPanelState(PanelState.Tip);
+    } else if (
+      detailState === PanelState.Closed &&
+      prevFilterPanelState.current
+    ) {
+      setFilterPanelState(prevFilterPanelState.current);
+      prevFilterPanelState.current = null;
+    }
+  }, [detailState, filterState, setFilterPanelState]);
+
+  const mapOffset = useMemo(() => {
+    if (isDesktop) {
+      if (filterState === PanelState.Open || detailState === PanelState.Open) {
+        return { left: DESKTOP_PANEL_WIDTH };
+      }
+      return { left: DESKTOP_PANEL_TIP_WIDTH };
+    }
+    return;
+  }, [isDesktop, detailState, filterState]);
 
   return (
     <ThemeProvider>
-      <MyAreaContainer height={height}>
+      <MyAreaContainer>
         {!!showHeader && <MyAreaHeader showCloseButton={false} />}
         <MyAreaMapContainer ref={mapContainerRef}>
           <MyAreaMapOffset>
@@ -273,20 +254,13 @@ export default function MyArea({
               <StyledViewerContainer
                 mapOffset={mapOffset}
                 topLeft={
-                  <>
-                    <LegendControl
-                      isActive={filterState !== PanelState.Closed}
-                      showDesktopVariant={isDesktop}
-                      onClick={toggleFilterPanel}
+                  isPhone && (
+                    <BaseLayerToggle
+                      aerialLayers={[AERIAL_AMSTERDAM_LAYERS[0]]}
+                      topoLayers={[DEFAULT_AMSTERDAM_LAYERS[0]]}
+                      options={baseLayerOptions}
                     />
-                    {isPhone && (
-                      <BaseLayerToggle
-                        aerialLayers={[AERIAL_AMSTERDAM_LAYERS[0]]}
-                        topoLayers={[DEFAULT_AMSTERDAM_LAYERS[0]]}
-                        options={baseLayerOptions}
-                      />
-                    )}
-                  </>
+                  )
                 }
                 topRight={
                   isPhone &&
@@ -333,7 +307,7 @@ export default function MyArea({
             <>
               <PanelComponent
                 id="filters"
-                cycle={panelCycle.filters}
+                cycle={filterPanelCycle}
                 availableHeight={panelComponentAvailableHeight}
               >
                 <MyAreaLegendPanel />
@@ -341,9 +315,9 @@ export default function MyArea({
 
               <PanelComponent
                 id="detail"
-                cycle={panelCycle.detail}
-                onClose={onCloseDetailPanel}
+                cycle={detailPanelCycle}
                 availableHeight={panelComponentAvailableHeight}
+                showCloseButton={isDesktop || detailState === PanelState.Open}
               >
                 <MyAreaDetailPanel />
               </PanelComponent>

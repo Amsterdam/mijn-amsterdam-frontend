@@ -13,11 +13,12 @@ html {
   box-sizing: border-box;
   font-size: 62.5%; // translates to 10px which makes 1rem = 10px in all other elemens contained within body
   line-height: 1.375;
+  height: 100%;
 }
 
 body {
   height: 100%;
-  min-height: 100vh;
+  min-height: 100%;
   font-family: 'AvenirNext', Arial, Helvetica, sans-serif;
   color: $color-black;
   font-size: 1.6rem;
@@ -41,7 +42,8 @@ body {
 }
 
 #root {
-  min-height: 100vh;
+  min-height: 100%;
+  height: 100%;
   position: relative;
 }
 
