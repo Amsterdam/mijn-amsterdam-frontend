@@ -25,13 +25,13 @@ EventSourceMock.prototype.mockRestore = () => {
     'error',
     'addEventListener',
     'removeEventListener',
-  ].forEach(name => {
+  ].forEach((name) => {
     EventSourceMock.prototype[name].mockClear();
   });
   EventSourceMock.prototype.readyState = 0;
 };
 EventSourceMock.prototype.init = jest.fn(function init() {});
-EventSourceMock.prototype.setReadyState = function(readyState: number) {
+EventSourceMock.prototype.setReadyState = function (readyState: number) {
   this.readyState = readyState;
 };
 EventSourceMock.prototype.open = jest.fn(() => {
@@ -153,7 +153,6 @@ describe('useAppState', () => {
 
     EventSourceMock.prototype.error(new Error('Server not reachable.'));
 
-    expect(EventSourceMock.prototype.close).toHaveBeenCalledTimes(1);
     expect(onEventCallback).toHaveBeenCalledWith(SSE_ERROR_MESSAGE);
   });
 
@@ -170,8 +169,6 @@ describe('useAppState', () => {
     );
 
     EventSourceMock.prototype.error(new Error('Server not reachable.'));
-
-    expect(EventSourceMock.prototype.close).toHaveBeenCalledTimes(1);
     expect(onEventCallback).toHaveBeenCalledWith(SSE_ERROR_MESSAGE);
   });
 });
