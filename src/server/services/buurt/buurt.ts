@@ -90,6 +90,7 @@ async function fetchDataset(
       return Promise.resolve(apiSuccesResult(apiData));
     }
   }
+
   const config = { ...(datasetConfig.requestConfig || {}) };
 
   if (params) {
@@ -106,7 +107,6 @@ async function fetchDataset(
 
   const requestConfig: DataRequestConfig = {
     url,
-    cacheTimeout: 0, // Don't cache the requests in memory
     cancelTimeout: 1000 * 60 * 3, // 3 mins
     ...config,
   };
