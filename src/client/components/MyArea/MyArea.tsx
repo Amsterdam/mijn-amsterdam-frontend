@@ -294,7 +294,6 @@ export default function MyArea({
               >
                 <MyAreaLegendPanel />
               </PanelComponent>
-
               <PanelComponent
                 id="detail"
                 cycle={detailPanelCycle}

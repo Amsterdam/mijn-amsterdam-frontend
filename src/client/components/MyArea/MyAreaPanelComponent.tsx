@@ -325,14 +325,18 @@ export function PanelComponent({
   const ref = useRef<HTMLDivElement | null>(null);
   const { state, initialState, next, prev, cycle: cycleState, states } = cycle;
 
+  // If we have scrolled a PanelInner, move the scroll position to top if we
+  // are cycling to the first state.
   useEffect(() => {
     if (state === states[0]) {
       ref?.current?.scrollTo(0, 0);
     }
   }, [state, initialState, states]);
 
-  const showToggleButton =
-    !showCloseButton || (isNarrowScreen && state !== PanelState.Open);
+  const showToggleButton = !showCloseButton;
+
+  const isPanelExpanded =
+    state !== PanelState.Closed && state !== PanelState.Tip; // Consider the Panel at Tip state as not expanded
 
   return isNarrowScreen ? (
     <PanelPhoneAnimated
@@ -354,9 +358,7 @@ export function PanelComponent({
       )}
       {showToggleButton && (
         <PanelTogglePhone
-          aria-expanded={
-            state !== PanelState.Closed && state !== PanelState.Tip
-          }
+          aria-expanded={isPanelExpanded}
           onClick={cycleState}
         />
       )}
@@ -369,9 +371,7 @@ export function PanelComponent({
       {showCloseButton && <StyledCloseButton onClick={cycleState} />}
       {showToggleButton && (
         <PanelToggleDesktop
-          aria-expanded={
-            state !== PanelState.Closed && state !== PanelState.Tip // Consider the Panel at Tip state as not expanded
-          }
+          aria-expanded={isPanelExpanded}
           onClick={cycleState}
         >
           <Icon size={16}>
@@ -379,7 +379,7 @@ export function PanelComponent({
           </Icon>
         </PanelToggleDesktop>
       )}
-      <PanelInnerDesktop panelState={state} ref={ref}>
+      <PanelInnerDesktop className="panel-inner" panelState={state} ref={ref}>
         {children}
       </PanelInnerDesktop>
     </PanelDesktopAnimated>
