@@ -28,8 +28,8 @@
   color: $color-white;
 }
 .MarkerIcon {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   display: block;;
   &.Feature--selected {
     > div {
@@ -49,8 +49,8 @@
     position: absolute;
     content: '';
     z-index: -1;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     background-color: $color-white;
     display: block;
     border-radius: 50% 50% 50% 0;
@@ -61,7 +61,7 @@
 
 .MarkerIcon.Feature--selected .pin {
   opacity: 1;
-  transform: translateX(-1px) translateY(-21px);
+  transform: translateX(0) translateY(-21px);
   transition: transform 100ms cubic-bezier( 0.175, 0.885, 0.32, 1.275 );
 }
 

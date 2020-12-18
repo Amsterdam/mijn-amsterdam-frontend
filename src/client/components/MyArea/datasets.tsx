@@ -6,11 +6,6 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import styled from 'styled-components';
 import { MaPointFeature } from '../../../server/services/buurt/datasets';
 import {
-  getDatasetCategoryId,
-  DatasetCategoryId,
-  DatasetId,
-} from '../../../universal/config/buurt';
-import {
   MapIconAfvalGft,
   MapIconAfvalGlas,
   MapIconAfvalPapier,
@@ -21,7 +16,6 @@ import {
   MapIconBekendmaking,
   MapIconEvenement,
   MapIconFitness,
-  MapIconSport,
   MapIconTennis,
   MapIconVoetbal,
   MapIconVolleybal,
@@ -35,8 +29,8 @@ const DatasetIcon = styled.div`
   align-items: center;
   justify-content: center;
   border: 2px solid #ffffff;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
 `;
 
 const DatasetIconCircle = styled(DatasetIcon)`
