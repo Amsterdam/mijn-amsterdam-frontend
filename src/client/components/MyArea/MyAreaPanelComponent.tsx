@@ -128,6 +128,7 @@ export function usePanelStateCycle(
       initial: setInitialState,
       initialState,
       state,
+      reset: () => setState(initialState),
     }),
     [
       states,

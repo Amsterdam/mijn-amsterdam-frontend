@@ -12,6 +12,7 @@ import {
   atom,
   useRecoilState,
   useRecoilValue,
+  useResetRecoilState,
   useSetRecoilState,
 } from 'recoil';
 import {
@@ -86,6 +87,10 @@ export const loadingFeatureAtom = atom<LoadingFeature | null>({
 
 export function useLoadingFeature() {
   return useRecoilState(loadingFeatureAtom);
+}
+
+export function useSetLoadingFeature() {
+  return useSetRecoilState(loadingFeatureAtom);
 }
 
 type SelectedFeature = any;
@@ -354,4 +359,30 @@ export function useFilterControlItemChange() {
     },
     [activeFilters, setActiveFilters]
   );
+}
+
+export function useResetMyAreaState() {
+  const resetActiveDatasetIdsAtom = useResetRecoilState(activeDatasetIdsAtom);
+  const resetActiveDatasetFiltersAtom = useResetRecoilState(
+    activeDatasetFiltersAtom
+  );
+  const resetDatasetFilterSelectionAtom = useResetRecoilState(
+    datasetFilterSelectionAtom
+  );
+  const resetLoadingFeatureAtom = useResetRecoilState(loadingFeatureAtom);
+  const resetSelectedFeatureAtom = useResetRecoilState(selectedFeatureAtom);
+
+  return useCallback(() => {
+    resetActiveDatasetIdsAtom();
+    resetActiveDatasetFiltersAtom();
+    resetDatasetFilterSelectionAtom();
+    resetLoadingFeatureAtom();
+    resetSelectedFeatureAtom();
+  }, [
+    resetActiveDatasetIdsAtom,
+    resetActiveDatasetFiltersAtom,
+    resetDatasetFilterSelectionAtom,
+    resetLoadingFeatureAtom,
+    resetSelectedFeatureAtom,
+  ]);
 }

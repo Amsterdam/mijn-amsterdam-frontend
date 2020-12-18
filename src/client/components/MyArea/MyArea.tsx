@@ -22,7 +22,13 @@ import { useWidescreen } from '../../hooks';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { getElementSize } from '../../hooks/useComponentSize';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
-import { useFetchPanelFeature, useLoadingFeature } from './MyArea.hooks';
+import {
+  useFetchPanelFeature,
+  useLoadingFeature,
+  useResetMyAreaState,
+  useSetLoadingFeature,
+  useSetSelectedFeature,
+} from './MyArea.hooks';
 import { MyAreaDatasets } from './MyAreaDatasets';
 import MyAreaHeader from './MyAreaHeader';
 import HomeControlButton from './MyAreaHomeControlButton';
@@ -115,6 +121,7 @@ export default function MyArea({
   const mapContainerRef = useRef(null);
   const panelComponentAvailableHeight = getElementSize(mapContainerRef.current)
     .height;
+  const resetMyAreaState = useResetMyAreaState();
 
   useFetchPanelFeature();
 
@@ -166,6 +173,16 @@ export default function MyArea({
 
   const detailPanelCycle = usePanelStateCycle('detail', panelCycle.detail);
   const { state: detailState, set: setDetailPanelState } = detailPanelCycle;
+
+  useEffect(() => {
+    return () => {
+      console.log('\n\n\n', 'RESET!!', '\n\n\n');
+      detailPanelCycle.reset();
+      filterPanelCycle.reset();
+      resetMyAreaState();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resetMyAreaState]);
 
   // Set panel state without explicit panel interaction. Effect reacts to loading detailed features.
   useEffect(() => {
