@@ -297,6 +297,7 @@ function toggleCategory(
 
 export function useControlItemChange() {
   const [activeDatasetIds, setActiveDatasetIds] = useActiveDatasetIds();
+  const [, setActiveFilters] = useActiveDatasetFilters();
 
   return useCallback(
     (type: 'category' | 'dataset', ids: string[]) => {
@@ -313,8 +314,26 @@ export function useControlItemChange() {
           break;
       }
       setActiveDatasetIds(datasetIds);
+
+      // Remove the filters of inActive datasets
+      setActiveFilters((filters) => {
+        if (
+          Object.keys(filters).some(
+            (datasetId) => !datasetIds.includes(datasetId)
+          )
+        ) {
+          const filtersUpdated = { ...filters };
+          for (const datasetId of Object.keys(filters)) {
+            if (!datasetIds.includes(datasetId)) {
+              delete filtersUpdated[datasetId];
+            }
+          }
+          return filtersUpdated;
+        }
+        return filters;
+      });
     },
-    [activeDatasetIds, setActiveDatasetIds]
+    [activeDatasetIds, setActiveDatasetIds, setActiveFilters]
   );
 }
 
