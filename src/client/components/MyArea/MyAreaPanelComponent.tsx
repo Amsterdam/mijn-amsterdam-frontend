@@ -357,12 +357,27 @@ export function PanelComponent({
     <PanelNarrowAnimated
       id={id}
       onSwipedUp={(event: any) => {
-        if (ref.current && !ref.current.contains(event.event.target)) {
+        // If panel inner is not scrollable or if the panel is scrollable and scrolled to the maximum
+        if (
+          (ref?.current &&
+            ref.current.scrollHeight <= ref.current.clientHeight) ||
+          (ref?.current &&
+            ref.current.scrollHeight > ref.current.clientHeight &&
+            ref.current.scrollHeight - ref.current.clientHeight ===
+              ref.current?.scrollTop)
+        ) {
           next();
         }
       }}
       onSwipedDown={(event: any) => {
-        if (ref.current && !ref.current.contains(event.event.target)) {
+        // If panel inner is not scrollable or if the panel is scrollable and scrolled to the top
+        if (
+          (ref?.current &&
+            ref.current.scrollHeight <= ref.current.clientHeight) ||
+          (ref?.current &&
+            ref.current.scrollHeight > ref.current.clientHeight &&
+            ref.current?.scrollTop === 0)
+        ) {
           prev();
         }
       }}
