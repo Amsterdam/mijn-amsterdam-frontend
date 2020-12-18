@@ -143,6 +143,7 @@ export function getDynamicDatasetFilters(datasetId: DatasetId) {
     return;
   }
 
+  // Check if this dataset has filtering possibilities
   const propertyFilters =
     DATASETS[datasetCategoryId].datasets[datasetId]?.filters;
 
@@ -170,12 +171,18 @@ export function createDynamicFilterConfig(
       // Get property value from object.filters or from object itself
       const value = (feature?.properties || feature)[propertyName];
 
+      // Check if value is excluded
+      if (filterConfig[propertyName]?.excludeValues?.includes(value)) {
+        continue;
+      }
+
       if (!filters[propertyName]) {
         filters[propertyName] = {
           values: {},
         };
       }
 
+      // Count the values in the dataset
       const values = filters[propertyName].values!;
       values[value] = (values[value] || 0) + 1;
       filters[propertyName].values = values;

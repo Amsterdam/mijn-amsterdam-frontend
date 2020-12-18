@@ -35,6 +35,7 @@ export interface DatasetProperty {
   valuesRefined?: DatasetPropertyValueWithCount;
   valueConfig?: Record<DatasetPropertyValue, DatasetPropertyValueConfig>;
   title?: string;
+  excludeValues?: string[];
 }
 
 export type DatasetPropertyFilter = Record<
@@ -64,7 +65,9 @@ export const DATASETS: DatasetCategories = {
       afvalcontainers: {
         title: 'Afvalcontainers',
         filters: {
-          fractie_omschrijving: {},
+          fractie_omschrijving: {
+            excludeValues: ['Brood', 'brood'],
+          },
           geadopteerd_ind: {
             title: 'Geadopteerd',
             valueConfig: {

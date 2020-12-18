@@ -1,11 +1,15 @@
 import { themeSpacing } from '@amsterdam/asc-ui';
 import themeColors from '@amsterdam/asc-ui/es/theme/default/colors';
 import { PolylineOptions } from 'leaflet';
-import React, { ReactElement } from 'react';
+import React, { isValidElement, ReactElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import styled from 'styled-components';
 import { MaPointFeature } from '../../../server/services/buurt/datasets';
-import { getDatasetCategoryId } from '../../../universal/config/buurt';
+import {
+  getDatasetCategoryId,
+  DatasetCategoryId,
+  DatasetId,
+} from '../../../universal/config/buurt';
 import {
   MapIconAfvalGft,
   MapIconAfvalGlas,
@@ -40,37 +44,44 @@ const DatasetIconCircle = styled(DatasetIcon)`
   height: 16px;
 `;
 
-const datasetIcons: Record<string, ReactElement<any>> = {
-  rest: (
-    <DatasetIcon style={{ backgroundColor: themeColors.tint.level6 }}>
-      <MapIconAfvalRest fill={themeColors.tint.level1} />
-    </DatasetIcon>
-  ),
-  papier: (
-    <DatasetIcon style={{ backgroundColor: themeColors.supplement.lightblue }}>
-      <MapIconAfvalPapier fill={themeColors.tint.level1} />
-    </DatasetIcon>
-  ),
-  glas: (
-    <DatasetIcon style={{ backgroundColor: themeColors.supplement.yellow }}>
-      <MapIconAfvalGlas />
-    </DatasetIcon>
-  ),
-  textiel: (
-    <DatasetIcon style={{ backgroundColor: themeColors.tint.level6 }}>
-      <MapIconAfvalTextiel fill={themeColors.tint.level1} />
-    </DatasetIcon>
-  ),
-  gft: (
-    <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-      <MapIconAfvalGft fill={themeColors.tint.level1} />
-    </DatasetIcon>
-  ),
-  plastic: (
-    <DatasetIcon style={{ backgroundColor: themeColors.supplement.orange }}>
-      <MapIconAfvalPlastic />
-    </DatasetIcon>
-  ),
+export const datasetIcons: Record<
+  string,
+  ReactElement<any> | Record<string, ReactElement<any>>
+> = {
+  afvalcontainers: {
+    rest: (
+      <DatasetIcon style={{ backgroundColor: themeColors.tint.level6 }}>
+        <MapIconAfvalRest fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    papier: (
+      <DatasetIcon
+        style={{ backgroundColor: themeColors.supplement.lightblue }}
+      >
+        <MapIconAfvalPapier fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    glas: (
+      <DatasetIcon style={{ backgroundColor: themeColors.supplement.yellow }}>
+        <MapIconAfvalGlas />
+      </DatasetIcon>
+    ),
+    textiel: (
+      <DatasetIcon style={{ backgroundColor: themeColors.tint.level6 }}>
+        <MapIconAfvalTextiel fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    gft: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <MapIconAfvalGft fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    plastic: (
+      <DatasetIcon style={{ backgroundColor: themeColors.supplement.orange }}>
+        <MapIconAfvalPlastic />
+      </DatasetIcon>
+    ),
+  },
   evenementen: (
     <DatasetIcon style={{ backgroundColor: themeColors.supplement.purple }}>
       <MapIconEvenement fill={themeColors.tint.level1} />
@@ -81,72 +92,84 @@ const datasetIcons: Record<string, ReactElement<any>> = {
       <MapIconBekendmaking fill={themeColors.tint.level1} />
     </DatasetIcon>
   ),
-  sport: (
-    <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-      <MapIconSport fill={themeColors.tint.level1} />
-    </DatasetIcon>
-  ),
-  voetbal: (
-    <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-      <MapIconVoetbal fill={themeColors.tint.level1} />
-    </DatasetIcon>
-  ),
-  volleybal: (
-    <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-      <MapIconVolleybal fill={themeColors.tint.level1} />
-    </DatasetIcon>
-  ),
-  basketbal: (
-    <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-      <MapIconBasketbal fill={themeColors.tint.level1} />
-    </DatasetIcon>
-  ),
-  fitness: (
-    <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-      <MapIconFitness fill={themeColors.tint.level1} />
-    </DatasetIcon>
-  ),
-  tennis: (
-    <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-      <MapIconTennis fill={themeColors.tint.level1} />
-    </DatasetIcon>
-  ),
+  openbaresportplek: {
+    voetbal: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <MapIconVoetbal fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    volleybal: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <MapIconVolleybal fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    basketbal: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <MapIconBasketbal fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    fitness: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <MapIconFitness fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    tennis: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <MapIconTennis fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+  },
   default: (
     <DatasetIconCircle style={{ backgroundColor: themeColors.support.valid }} />
   ),
 };
 
-const datasetIconHtml = Object.fromEntries(
-  Object.entries(datasetIcons).map(([id, icon]) => {
-    return [id, renderToStaticMarkup(icon)];
-  })
-);
+export function getIcon(id: string, childId?: string) {
+  let icon;
+
+  if (id && childId && datasetIcons[id] && (datasetIcons[id] as any)[childId]) {
+    icon = (datasetIcons[id] as any)[childId];
+  } else if (id && datasetIcons[id] && isValidElement(datasetIcons[id])) {
+    icon = datasetIcons[id];
+  }
+
+  return icon && (icon as ReactElement<any>);
+}
+
+export function getIconChildIdFromValue(id: string, value: string) {
+  let childId: undefined | string = undefined;
+
+  switch (id) {
+    case 'openbaresportplek':
+    case 'afvalcontainers':
+      childId = value?.toLowerCase();
+      break;
+  }
+
+  return childId;
+}
 
 export function getIconHtml(feature: MaPointFeature) {
   const datasetId = feature.properties.datasetId;
-  const datasetCategoryId = getDatasetCategoryId(datasetId);
-  const icon =
-    datasetIconHtml[datasetId] ||
-    (datasetCategoryId && datasetIconHtml[datasetCategoryId]) ||
-    datasetIconHtml.default;
-
+  let iconDefault = datasetIcons.default;
+  let childId: undefined | string = undefined;
   switch (datasetId) {
     case 'afvalcontainers':
-      return (
-        datasetIconHtml[
-          feature.properties.fractie_omschrijving?.toLowerCase()
-        ] || icon
+      childId = getIconChildIdFromValue(
+        datasetId,
+        feature.properties.fractie_omschrijving
       );
+      break;
     case 'openbaresportplek':
-      return (
-        datasetIconHtml[feature.properties.sportvoorziening?.toLowerCase()] ||
-        icon
+      childId = getIconChildIdFromValue(
+        datasetId,
+        feature.properties.sportvoorziening
       );
+      break;
   }
-
-  return icon;
+  const icon = getIcon(datasetId, childId);
+  return icon ? renderToStaticMarkup(icon) : iconDefault;
 }
-
 export const PARKEERZONES_POLYLINE_OPTIONS: Record<string, PolylineOptions> = {
   parkeerzones: {
     ...DEFAULT_POLYLINE_OPTIONS,

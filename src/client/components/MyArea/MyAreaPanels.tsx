@@ -17,6 +17,7 @@ import {
 } from '../../../universal/config/buurt';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { getIcon, getIconChildIdFromValue } from './datasets';
 import {
   filterActiveDatasets,
   useActiveDatasetFilters,
@@ -74,6 +75,15 @@ const StyledLabel = styled(Label)<{ isDimmed?: boolean }>`
   align-items: center;
   opacity: ${(props) => (props.isDimmed ? '0.5' : 1)};
   font-weight: ${(props) => (props.isDimmed ? 'normal' : '500')};
+  > span {
+    display: flex;
+    align-items: center;
+    > small {
+      display: inline-block;
+      margin-top: 2px;
+      margin-left: 4px;
+    }
+  }
 `;
 
 const FeatureCount = styled.small``;
@@ -206,6 +216,10 @@ export function DatasetPropertyFilterPanel({
                 isDimmed={valuesRefined ? !valuesRefined[value] : false}
                 label={
                   <>
+                    {getIcon(
+                      datasetId,
+                      getIconChildIdFromValue(datasetId, value)
+                    ) || ''}
                     {capitalizeFirstLetter(label)}{' '}
                     {featureCount >= 1 ? (
                       <FeatureCount>
