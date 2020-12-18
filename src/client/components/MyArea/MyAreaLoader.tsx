@@ -12,7 +12,6 @@ interface MyAreaLoaderProps {
   datasetIds?: string[];
   showPanels?: boolean;
   showHeader?: boolean;
-  height?: string;
   zoom?: number;
 }
 
@@ -22,7 +21,6 @@ export default function MyAreaLoader({
   datasetIds,
   showPanels = true,
   showHeader = true,
-  height,
   zoom,
 }: MyAreaLoaderProps) {
   return (
@@ -40,7 +38,6 @@ export default function MyAreaLoader({
           datasetIds={datasetIds}
           showPanels={showPanels}
           showHeader={showHeader}
-          height={height}
           zoom={zoom}
         />
       )}

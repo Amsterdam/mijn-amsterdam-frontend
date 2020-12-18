@@ -95,7 +95,6 @@ interface MyAreaProps {
   datasetIds?: string[];
   showPanels?: boolean;
   showHeader?: boolean;
-  height?: string;
   zoom?: number;
 }
 
@@ -103,7 +102,6 @@ export default function MyArea({
   datasetIds,
   showPanels = true,
   showHeader = true,
-  height = '100%',
   zoom = HOOD_ZOOM,
 }: MyAreaProps) {
   const isWideScreen = useWidescreen();
@@ -113,6 +111,10 @@ export default function MyArea({
   const location = useLocation();
   const center = HOME.content?.latlng;
   const [loadingFeature] = useLoadingFeature();
+  const prevFilterPanelState = useRef<PanelState | null>(null);
+  const mapContainerRef = useRef(null);
+  const panelComponentAvailableHeight = getElementSize(mapContainerRef.current)
+    .height;
 
   useFetchPanelFeature();
 
@@ -141,11 +143,6 @@ export default function MyArea({
     return;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const mapContainerRef = useRef(null);
-
-  const panelComponentAvailableHeight = getElementSize(mapContainerRef.current)
-    .height;
 
   const panelCycle = useMemo(() => {
     if (isWideScreen) {
@@ -184,8 +181,6 @@ export default function MyArea({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadingFeature, isNarrowScreen]);
 
-  const prevFilterPanelState = useRef<PanelState | null>(null);
-
   // If Detail panel is opened set FiltersPanel to a TIP state and store the State it's in, if Detail panel is closed restore the Filters panel state to the state it was in.
   useEffect(() => {
     if (detailState !== PanelState.Closed && !prevFilterPanelState.current) {
@@ -209,6 +204,13 @@ export default function MyArea({
     }
     return;
   }, [isWideScreen, detailState, filterState]);
+
+  const mapLayers = useMemo(() => {
+    return {
+      aerial: [AERIAL_AMSTERDAM_LAYERS[0]],
+      topo: [DEFAULT_AMSTERDAM_LAYERS[0]],
+    };
+  }, []);
 
   return (
     <ThemeProvider>
@@ -236,8 +238,8 @@ export default function MyArea({
                 topLeft={
                   isNarrowScreen && (
                     <BaseLayerToggle
-                      aerialLayers={[AERIAL_AMSTERDAM_LAYERS[0]]}
-                      topoLayers={[DEFAULT_AMSTERDAM_LAYERS[0]]}
+                      aerialLayers={mapLayers.aerial}
+                      topoLayers={mapLayers.topo}
                       options={baseLayerOptions}
                     />
                   )
