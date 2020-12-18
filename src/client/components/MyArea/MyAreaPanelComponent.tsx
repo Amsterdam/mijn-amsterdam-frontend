@@ -12,7 +12,7 @@ import { useSwipeable } from 'react-swipeable';
 import { atom, useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { IconChevronRight } from '../../assets/icons';
-import { usePhoneScreen } from '../../hooks/media.hook';
+import { useWidescreen } from '../../hooks/media.hook';
 import { CloseButton } from '../Button/Button';
 
 export enum PanelState {
@@ -32,7 +32,7 @@ export const DESKTOP_PANEL_WIDTH = px(120 * spacing);
 export const PHONE_PANEL_PREVIEW_HEIGHT = px(60 * spacing);
 export const PHONE_PANEL_TIP_HEIGHT = px(10 * spacing);
 
-const PHONE_FIXED_AVAILABLE_HEIGHT = 1000;
+const PHONE_FIXED_AVAILABLE_HEIGHT = 1000; // A large height for a narrow screen device
 
 const panelStateAtom = atom<Record<string, PanelState>>({
   key: 'myAreaPanelState',
@@ -43,22 +43,23 @@ export function usePanelState() {
   return useRecoilState(panelStateAtom);
 }
 
-function panelSize(
-  id: string,
+function getPanelSize(
   state: PanelState,
-  isPhone: boolean,
+  isNarrowScreen: boolean,
   availableHeight?: number
 ) {
   let size = '0px';
   switch (state) {
     case PanelState.Tip:
-      size = isPhone ? PHONE_PANEL_TIP_HEIGHT : DESKTOP_PANEL_TIP_WIDTH;
+      size = isNarrowScreen ? PHONE_PANEL_TIP_HEIGHT : DESKTOP_PANEL_TIP_WIDTH;
       break;
     case PanelState.Preview:
-      size = isPhone ? PHONE_PANEL_PREVIEW_HEIGHT : DESKTOP_PANEL_PREVIEW_WIDTH;
+      size = isNarrowScreen
+        ? PHONE_PANEL_PREVIEW_HEIGHT
+        : DESKTOP_PANEL_PREVIEW_WIDTH;
       break;
     case PanelState.Open:
-      size = isPhone
+      size = isNarrowScreen
         ? px(availableHeight || PHONE_FIXED_AVAILABLE_HEIGHT)
         : DESKTOP_PANEL_WIDTH;
       break;
@@ -233,11 +234,11 @@ function PanelPhoneAnimated({
 
 export function usePanelStateCycle(
   id: string,
-  cycle: PanelState[],
+  states: PanelState[],
   initialPanelState?: PanelState
 ) {
   const [stateStore, setStateStore] = usePanelState();
-  const initialState = initialPanelState || cycle[0];
+  const initialState = initialPanelState || states[0];
   const state = stateStore[id] || initialState;
 
   const setState = useCallback(
@@ -249,34 +250,34 @@ export function usePanelStateCycle(
 
   const nextPanelState = useCallback(
     (currentState: PanelState): PanelState => {
-      const currentStateIndex = cycle.indexOf(currentState);
+      const currentStateIndex = states.indexOf(currentState);
       const nextState =
-        cycle.length - 1 === currentStateIndex
-          ? cycle[0]
-          : cycle[currentStateIndex + 1];
+        states.length - 1 === currentStateIndex
+          ? states[0]
+          : states[currentStateIndex + 1];
       return nextState;
     },
-    [cycle]
+    [states]
   );
 
   const nextState = useCallback(
     (event?: any) => {
-      if (state !== cycle[cycle.length - 1]) {
+      if (state !== states[states.length - 1]) {
         const nextState = nextPanelState(state);
         setState(nextState);
       }
     },
-    [cycle, state, setState, nextPanelState]
+    [states, state, setState, nextPanelState]
   );
 
   const prevState = useCallback(
     (event?: any) => {
-      const index = cycle.indexOf(state);
+      const index = states.indexOf(state);
       if (index !== 0) {
-        setState(cycle[index - 1]);
+        setState(states[index - 1]);
       }
     },
-    [cycle, state, setState]
+    [states, state, setState]
   );
 
   const cycleNext = useCallback(
@@ -293,6 +294,7 @@ export function usePanelStateCycle(
   ]);
 
   return {
+    states,
     next: nextState,
     prev: prevState,
     cycle: cycleNext,
@@ -318,19 +320,21 @@ export function PanelComponent({
   availableHeight,
   showCloseButton,
 }: PanelComponentProps) {
-  const isPhone = usePhoneScreen();
+  const isWideScreen = useWidescreen();
+  const isNarrowScreen = !isWideScreen;
   const ref = useRef<HTMLDivElement | null>(null);
-  const { state, initialState, next, prev, cycle: cycleState } = cycle;
+  const { state, initialState, next, prev, cycle: cycleState, states } = cycle;
+
   useEffect(() => {
-    if (state === initialState) {
+    if (state === states[0]) {
       ref?.current?.scrollTo(0, 0);
     }
-  }, [state, initialState]);
+  }, [state, initialState, states]);
 
   const showToggleButton =
-    !showCloseButton || (isPhone && state !== PanelState.Open);
+    !showCloseButton || (isNarrowScreen && state !== PanelState.Open);
 
-  return isPhone ? (
+  return isNarrowScreen ? (
     <PanelPhoneAnimated
       id={id}
       onSwipedUp={(event: any) => {
@@ -343,7 +347,7 @@ export function PanelComponent({
           prev();
         }
       }}
-      height={panelSize(id, state, true, availableHeight)}
+      height={getPanelSize(state, true, availableHeight)}
     >
       {showCloseButton && (
         <StyledCloseButton iconSize="24" onClick={cycleState} />
@@ -361,7 +365,7 @@ export function PanelComponent({
       </PanelInnerPhone>
     </PanelPhoneAnimated>
   ) : (
-    <PanelDesktopAnimated width={panelSize(id, state, false)}>
+    <PanelDesktopAnimated width={getPanelSize(state, false)}>
       {showCloseButton && <StyledCloseButton onClick={cycleState} />}
       {showToggleButton && (
         <PanelToggleDesktop

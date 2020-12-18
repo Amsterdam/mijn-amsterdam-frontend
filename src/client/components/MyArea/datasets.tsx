@@ -134,12 +134,12 @@ export function getIconHtml(feature: MaPointFeature) {
     case 'afvalcontainers':
       return (
         datasetIconHtml[
-          feature.properties.fractie_omschrijving.toLowerCase()
+          feature.properties.fractie_omschrijving?.toLowerCase()
         ] || icon
       );
     case 'openbaresportplek':
       return (
-        datasetIconHtml[feature.properties.sportvoorziening.toLowerCase()] ||
+        datasetIconHtml[feature.properties.sportvoorziening?.toLowerCase()] ||
         icon
       );
   }

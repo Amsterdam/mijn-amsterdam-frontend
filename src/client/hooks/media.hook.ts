@@ -18,3 +18,7 @@ export function useTabletScreen(): boolean {
 export function usePhoneScreen(): boolean {
   return useMediaLayout({ maxWidth: Breakpoints.phone });
 }
+
+export function useWidescreen(): boolean {
+  return useMediaLayout({ minWidth: Breakpoints.wideScreen });
+}

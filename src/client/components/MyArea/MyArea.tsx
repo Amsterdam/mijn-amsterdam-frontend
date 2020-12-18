@@ -16,11 +16,9 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
-import { DATASETS } from '../../../universal/config/buurt';
 import { getFullAddress } from '../../../universal/helpers';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
-import { useDesktopScreen } from '../../hooks';
-import { usePhoneScreen } from '../../hooks/media.hook';
+import { useWidescreen } from '../../hooks';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { getElementSize } from '../../hooks/useComponentSize';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
@@ -80,15 +78,15 @@ const baseLayerOptions: TileLayerOptions = {
 };
 
 function AttributionToggle() {
-  const isDesktop = useDesktopScreen();
+  const isWideScreen = useWidescreen();
   const mapInstance = useMapInstance();
 
   useEffect(() => {
     const control = mapInstance.attributionControl.getContainer();
     if (control) {
-      control.style.display = isDesktop ? 'block' : 'none';
+      control.style.display = isWideScreen ? 'block' : 'none';
     }
-  }, [isDesktop, mapInstance]);
+  }, [isWideScreen, mapInstance]);
 
   return null;
 }
@@ -108,8 +106,8 @@ export default function MyArea({
   height = '100%',
   zoom = HOOD_ZOOM,
 }: MyAreaProps) {
-  const isDesktop = useDesktopScreen();
-  const isPhone = usePhoneScreen();
+  const isWideScreen = useWidescreen();
+  const isNarrowScreen = !isWideScreen;
   const { HOME } = useAppStateGetter();
   const termReplace = useTermReplacement();
   const location = useLocation();
@@ -150,7 +148,7 @@ export default function MyArea({
     .height;
 
   const panelCycle = useMemo(() => {
-    if (isDesktop) {
+    if (isWideScreen) {
       return {
         filters: [PanelState.Open, PanelState.Tip],
         detail: [PanelState.Closed, PanelState.Open],
@@ -160,12 +158,12 @@ export default function MyArea({
       filters: [PanelState.Tip, PanelState.Preview, PanelState.Open],
       detail: [PanelState.Closed, PanelState.Preview, PanelState.Open],
     };
-  }, [isDesktop]);
+  }, [isWideScreen]);
 
   const filterPanelCycle = usePanelStateCycle(
     'filters',
     panelCycle.filters,
-    isDesktop ? PanelState.Open : PanelState.Preview
+    isWideScreen ? PanelState.Open : PanelState.Preview
   );
   const { state: filterState, set: setFilterPanelState } = filterPanelCycle;
 
@@ -177,14 +175,14 @@ export default function MyArea({
     if (!loadingFeature) {
       return;
     }
-    if (isPhone) {
+    if (isNarrowScreen) {
       setDetailPanelState(PanelState.Preview);
     } else {
       setDetailPanelState(PanelState.Open);
     }
     // Only react on loadingFeature changes. This wil result in re-render which causes the currentPanel state to be up-to-date.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loadingFeature, isPhone]);
+  }, [loadingFeature, isNarrowScreen]);
 
   const prevFilterPanelState = useRef<PanelState | null>(null);
 
@@ -203,14 +201,14 @@ export default function MyArea({
   }, [detailState, filterState, setFilterPanelState]);
 
   const mapOffset = useMemo(() => {
-    if (isDesktop) {
+    if (isWideScreen) {
       if (filterState === PanelState.Open || detailState === PanelState.Open) {
         return { left: DESKTOP_PANEL_WIDTH };
       }
       return { left: DESKTOP_PANEL_TIP_WIDTH };
     }
     return;
-  }, [isDesktop, detailState, filterState]);
+  }, [isWideScreen, detailState, filterState]);
 
   return (
     <ThemeProvider>
@@ -236,7 +234,7 @@ export default function MyArea({
               <StyledViewerContainer
                 mapOffset={mapOffset}
                 topLeft={
-                  isPhone && (
+                  isNarrowScreen && (
                     <BaseLayerToggle
                       aerialLayers={[AERIAL_AMSTERDAM_LAYERS[0]]}
                       topoLayers={[DEFAULT_AMSTERDAM_LAYERS[0]]}
@@ -245,7 +243,7 @@ export default function MyArea({
                   )
                 }
                 topRight={
-                  isPhone &&
+                  isNarrowScreen &&
                   HOME.content?.address &&
                   HOME.content?.latlng && (
                     <HomeControlButton
@@ -255,7 +253,7 @@ export default function MyArea({
                   )
                 }
                 bottomRight={
-                  isDesktop && (
+                  isWideScreen && (
                     <>
                       {HOME.content?.address && HOME.content?.latlng && (
                         <HomeControlButton
@@ -268,7 +266,7 @@ export default function MyArea({
                   )
                 }
                 bottomLeft={
-                  isDesktop && (
+                  isWideScreen && (
                     <BaseLayerToggle
                       aerialLayers={[AERIAL_AMSTERDAM_LAYERS[0]]}
                       topoLayers={[DEFAULT_AMSTERDAM_LAYERS[0]]}
@@ -299,7 +297,9 @@ export default function MyArea({
                 id="detail"
                 cycle={detailPanelCycle}
                 availableHeight={panelComponentAvailableHeight}
-                showCloseButton={isDesktop || detailState === PanelState.Open}
+                showCloseButton={
+                  isWideScreen || detailState === PanelState.Open
+                }
               >
                 <MyAreaDetailPanel />
               </PanelComponent>

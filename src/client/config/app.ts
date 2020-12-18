@@ -72,6 +72,7 @@ export const Colors = {
 
 // NOTE: Keep up-to-date with _breakpoints.scss
 export const Breakpoints = {
-  tablet: 1024, // px
-  phone: 640, // px
+  tablet: 1024,
+  phone: 640,
+  wideScreen: 768,
 };
