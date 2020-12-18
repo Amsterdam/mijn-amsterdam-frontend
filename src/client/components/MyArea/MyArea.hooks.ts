@@ -31,6 +31,16 @@ import { BFFApiUrls } from '../../config/api';
 import styles from './MyAreaDatasets.module.scss';
 import { filterItemCheckboxState } from './MyAreaPanels';
 
+const NO_DATA_ERROR_RESPONSE = {
+  errors: [
+    {
+      message: 'Kaartgegevens konden niet worden geladen',
+      id:
+        'De extra informatie die wij normaal op de kaart tonen, bijvoorbeeld over afval en vergunningen',
+    },
+  ],
+};
+
 const activeDatasetIdsAtom = atom<string[]>({
   key: 'activeDatasetIds',
   default: [],
@@ -50,7 +60,7 @@ export function useActiveDatasetFilters() {
   return useRecoilState(activeDatasetFiltersAtom);
 }
 
-// The complete available filter set
+// The complete available filter set from server
 const datasetFilterSelectionAtom = atom<DatasetFilterSelection>({
   key: 'datasetFilterSelection',
   default: {},
@@ -80,6 +90,7 @@ interface LoadingFeature {
   isError?: boolean;
 }
 
+// The state of the feature currently / last indicated to be loaded
 export const loadingFeatureAtom = atom<LoadingFeature | null>({
   key: 'loadingFeature',
   default: null,
@@ -95,6 +106,7 @@ export function useSetLoadingFeature() {
 
 type SelectedFeature = any;
 
+// The data of the selected loading feature.
 export const selectedFeatureAtom = atom<SelectedFeature>({
   key: 'selectedFeature',
   default: null,
@@ -129,6 +141,7 @@ export function useFetchPanelFeature() {
       cancelToken: source.token,
     })
       .then(({ data: { content: feature } }) => {
+        // Add datasetid to the feature data, used for referencing to other states.
         setSelectedFeature({ ...feature, datasetId });
       })
       .catch((error) => {
@@ -238,15 +251,7 @@ export function useFetchFeatures() {
         return response.data.content;
       } catch (error) {
         if (!axios.isCancel(error)) {
-          return {
-            errors: [
-              {
-                message: 'Kaartgegevens konden niet worden geladen',
-                id:
-                  'De extra informatie die wij normaal op de kaart tonen, bijvoorbeeld over afval en vergunningen',
-              },
-            ],
-          };
+          return NO_DATA_ERROR_RESPONSE;
         }
       }
       return null;
@@ -313,6 +318,8 @@ export function useControlItemChange() {
   );
 }
 
+const IS_FILTER_ENABLED = 1;
+
 export function useFilterControlItemChange() {
   const [activeFilters, setActiveFilters] = useActiveDatasetFilters();
 
@@ -333,7 +340,7 @@ export function useFilterControlItemChange() {
 
       if (!isChecked && !activeFiltersUpdate[datasetId]) {
         activeFiltersUpdate[datasetId] = {
-          [propertyName]: { values: { [propertyValue]: 1 } },
+          [propertyName]: { values: { [propertyValue]: IS_FILTER_ENABLED } },
         };
       }
 
@@ -347,7 +354,7 @@ export function useFilterControlItemChange() {
       if (isChecked) {
         delete filterValues[propertyValue];
       } else {
-        filterValues[propertyValue] = 1;
+        filterValues[propertyValue] = IS_FILTER_ENABLED;
       }
 
       activeFiltersUpdate[datasetId] = {
