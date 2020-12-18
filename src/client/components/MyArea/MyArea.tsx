@@ -29,8 +29,8 @@ import HomeControlButton from './MyAreaHomeControlButton';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import { HomeIconMarker } from './MyAreaMarker';
 import {
-  DESKTOP_PANEL_TIP_WIDTH,
-  DESKTOP_PANEL_WIDTH,
+  WIDE_PANEL_TIP_WIDTH,
+  WIDE_PANEL_WIDTH,
   PanelComponent,
   PanelState,
   usePanelStateCycle,
@@ -198,9 +198,9 @@ export default function MyArea({
   const mapOffset = useMemo(() => {
     if (isWideScreen) {
       if (filterState === PanelState.Open || detailState === PanelState.Open) {
-        return { left: DESKTOP_PANEL_WIDTH };
+        return { left: WIDE_PANEL_WIDTH };
       }
-      return { left: DESKTOP_PANEL_TIP_WIDTH };
+      return { left: WIDE_PANEL_TIP_WIDTH };
     }
     return;
   }, [isWideScreen, detailState, filterState]);
