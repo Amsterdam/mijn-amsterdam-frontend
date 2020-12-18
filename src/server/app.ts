@@ -48,7 +48,7 @@ app.use(Sentry.Handlers.requestHandler() as RequestHandler);
 
 app.use(cors());
 app.use(bodyParser.json({ limit: '1mb' }));
-app.use(compression());
+// app.use(compression()); // Temp disble compression to see if sse connection stabalizes.
 
 // Development routing for mock data
 if (!IS_AP) {

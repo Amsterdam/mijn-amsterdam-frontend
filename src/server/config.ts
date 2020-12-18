@@ -145,9 +145,11 @@ export const BffEndpoints = {
   HEALTH: `/status/health`,
   CMS_CONTENT: `/public/services/cms`,
   MAP_DATASETS: `/map/datasets/:datasetId?/:id?`,
+  CACHE_OVERVIEW: `/status/cache`,
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
   BffEndpoints.HEALTH,
   BffEndpoints.CMS_CONTENT,
+  BffEndpoints.CACHE_OVERVIEW,
 ];

@@ -30,14 +30,14 @@ import {
 
 const fileCaches: Record<string, FileCache> = {};
 
-const fileCache = (id: string, cacheTimeMinutes: number) => {
-  if (!fileCaches[id]) {
-    fileCaches[id] = new FileCache({
-      name: `./buurt/${id}.flat-cache.json`,
+const fileCache = (name: string, cacheTimeMinutes: number) => {
+  if (!fileCaches[name]) {
+    fileCaches[name] = new FileCache({
+      name,
       cacheTimeMinutes,
     });
   }
-  return fileCaches[id];
+  return fileCaches[name];
 };
 
 function datasetApiResult(results: ApiResponse<DatasetResponse | null>[]) {

@@ -1,5 +1,8 @@
 import flatCache from 'flat-cache';
-import path from 'path';
+import path, { resolve } from 'path';
+import fs from 'fs';
+import { rejects } from 'assert';
+import { IS_AP } from '../../universal/config';
 
 interface FileCacheProps {
   name: string;
@@ -8,7 +11,48 @@ interface FileCacheProps {
 }
 
 const ONE_MINUTE_MS = 1000 * 60;
-export const DEFAULT_CACHE_DIR = path.join(__dirname, '../', 'mock-data/json');
+const EXT = 'flat-cache.json';
+
+export const DEFAULT_CACHE_DIR = path.join(__dirname, '../', 'cache');
+
+function fileName(name: string) {
+  const cacheName = IS_AP ? `prod.${name}` : `dev.${name}`;
+  return `${cacheName}.${EXT}`;
+}
+
+export function cacheOverview() {
+  return new Promise((resolve, reject) => {
+    fs.readdir(DEFAULT_CACHE_DIR, (error, names) => {
+      if (error) {
+        reject(error);
+      }
+      const overview = names
+        .filter((name) => name.endsWith(`.${EXT}`))
+        .map((file) => {
+          const [env, name] = file.split('.');
+          const fileCache = flatCache.load(fileName(name), DEFAULT_CACHE_DIR);
+          return {
+            name,
+            env,
+            keys: fileCache.keys().map((key) => {
+              const keyData = fileCache.getKey(key);
+              const overview: Record<string, string | boolean> = {
+                key,
+                expire: keyData.expire
+                  ? new Date(keyData.expire).toISOString()
+                  : false,
+              };
+              if (key === 'url') {
+                overview.url = keyData.data;
+              }
+              return overview;
+            }),
+          };
+        });
+      resolve(overview);
+    });
+  });
+}
 
 export default class FileCache {
   name: string;
@@ -21,9 +65,9 @@ export default class FileCache {
     path = DEFAULT_CACHE_DIR,
     cacheTimeMinutes = 0,
   }: FileCacheProps) {
-    this.name = name;
+    this.name = fileName(name);
     this.path = path;
-    this.cache = flatCache.load(name, path);
+    this.cache = flatCache.load(this.name, path);
     this.expire =
       cacheTimeMinutes === -1 ? false : cacheTimeMinutes * ONE_MINUTE_MS;
   }

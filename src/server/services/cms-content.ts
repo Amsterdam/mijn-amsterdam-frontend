@@ -162,7 +162,7 @@ function transformFooterResponse(responseData: any) {
 }
 
 const fileCache = new FileCache({
-  name: 'cms-content.flat-cache.json',
+  name: 'cms-content',
   cacheTimeMinutes: IS_AP ? 24 * 60 : -1, // 24 hours
 });
 

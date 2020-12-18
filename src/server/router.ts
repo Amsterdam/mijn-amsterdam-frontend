@@ -4,6 +4,7 @@ import { DatasetFilterSelection, DATASETS } from '../universal/config/buurt';
 import { ApiResponse, apiSuccesResult } from '../universal/helpers/api';
 import { BffEndpoints } from './config';
 import { getPassthroughRequestHeaders } from './helpers/app';
+import { cacheOverview } from './helpers/file-cache';
 import { fetchCMSCONTENT, loadClusterDatasets } from './services';
 import {
   loadDatasetFeatures,
@@ -133,6 +134,15 @@ router.get(
     } catch (error) {
       next(error);
     }
+  }
+);
+
+router.get(
+  BffEndpoints.CACHE_OVERVIEW,
+  async (req: Request, res: Response, next: NextFunction) => {
+    const overview = await cacheOverview();
+    res.json(overview);
+    next();
   }
 );
 

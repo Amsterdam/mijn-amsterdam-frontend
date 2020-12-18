@@ -83,7 +83,7 @@ async function scrapeDetailInfo(item: ScrapedGeoLocation) {
    * Filter out unwanted data, transform data into nicely shaped object
    */
   const tableData = scrapeResult.data.items
-    .filter(item => item.label !== 'Website')
+    .filter((item) => item.label !== 'Website')
     .reduce((acc, { label, value, url }) => {
       const labelTransformed = label.toLowerCase().replace(/[^a-z]/gi, '');
       const labelFinal =
@@ -162,7 +162,7 @@ async function scrapeAfvalpuntGeoLocations() {
           latlng: {
             selector: '',
             attr: 'data-latlon',
-            convert: data => {
+            convert: (data) => {
               const [lng, lat] = data
                 .split(' ')
                 .map((l: string) => parseFloat(l));
@@ -183,7 +183,7 @@ async function scrapeAfvalpuntGeoLocations() {
 }
 
 const fileCache = new FileCache({
-  name: 'afvalpunten.flat-cache.json',
+  name: 'afvalpunten',
   cacheTimeMinutes: IS_AP ? 24 * 60 : -1, // 24 hours
 });
 
@@ -192,7 +192,7 @@ function addApproximateDistance(
   centers: AFVALPUNTENData
 ) {
   return centers
-    .map(garbageCenter => {
+    .map((garbageCenter) => {
       return Object.assign(garbageCenter, {
         distance: latlng
           ? getApproximateDistance(latlng, garbageCenter.latlng)
@@ -218,7 +218,7 @@ export async function fetchAfvalpunten(latlng: LatLngLiteral | null) {
   const afvalpuntGeoLocations = await scrapeAfvalpuntGeoLocations();
 
   const detailedItems = await Promise.all(
-    afvalpuntGeoLocations.map(item => {
+    afvalpuntGeoLocations.map((item) => {
       return scrapeDetailInfo(item);
     })
   );
@@ -227,7 +227,7 @@ export async function fetchAfvalpunten(latlng: LatLngLiteral | null) {
     detailedItems[0].openingHours
   );
 
-  const centers = detailedItems.map(detailedItem => {
+  const centers = detailedItems.map((detailedItem) => {
     return Object.assign(detailedItem, {
       openingHours,
       distance: 0,
