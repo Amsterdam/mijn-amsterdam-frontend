@@ -26,8 +26,6 @@ import {
   useFetchPanelFeature,
   useLoadingFeature,
   useResetMyAreaState,
-  useSetLoadingFeature,
-  useSetSelectedFeature,
 } from './MyArea.hooks';
 import { MyAreaDatasets } from './MyAreaDatasets';
 import MyAreaHeader from './MyAreaHeader';
@@ -35,11 +33,11 @@ import HomeControlButton from './MyAreaHomeControlButton';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import { HomeIconMarker } from './MyAreaMarker';
 import {
-  WIDE_PANEL_TIP_WIDTH,
-  WIDE_PANEL_WIDTH,
   PanelComponent,
   PanelState,
   usePanelStateCycle,
+  WIDE_PANEL_TIP_WIDTH,
+  WIDE_PANEL_WIDTH,
 } from './MyAreaPanelComponent';
 import { MyAreaLegendPanel } from './MyAreaPanels';
 import MyAreaDetailPanel from './PanelContent/MyAreaDetailPanel';
@@ -174,9 +172,9 @@ export default function MyArea({
   const detailPanelCycle = usePanelStateCycle('detail', panelCycle.detail);
   const { state: detailState, set: setDetailPanelState } = detailPanelCycle;
 
+  // Reset state on unmount
   useEffect(() => {
     return () => {
-      console.log('\n\n\n', 'RESET!!', '\n\n\n');
       detailPanelCycle.reset();
       filterPanelCycle.reset();
       resetMyAreaState();
