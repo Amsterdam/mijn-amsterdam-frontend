@@ -130,18 +130,17 @@ export default function MyArea({
   }, [center, zoom]);
 
   const datasetIdsRequested = useMemo(() => {
-    if (datasetIds) {
-      return datasetIds;
-    }
     if (location.search) {
       const queryParams = new URLSearchParams(location.search);
       const ids = queryParams?.get('datasetIds')?.split(',');
-      if (ids) {
-        return ids.flatMap((id) =>
-          id in DATASETS ? Object.keys(DATASETS[id]) : id
-        );
+      if (ids?.length) {
+        return ids;
       }
     }
+    if (Array.isArray(datasetIds) && datasetIds.length) {
+      return datasetIds;
+    }
+    return;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
