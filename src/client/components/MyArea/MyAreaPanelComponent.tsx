@@ -5,6 +5,7 @@ import React, {
   PropsWithChildren,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
 } from 'react';
 import { animated, useSpring, UseSpringBaseProps } from 'react-spring';
@@ -54,6 +55,91 @@ const panelStateAtom = atom<Record<string, PanelState>>({
 
 export function usePanelState() {
   return useRecoilState(panelStateAtom);
+}
+
+export function usePanelStateCycle(
+  id: string,
+  states: PanelState[],
+  initialPanelState?: PanelState
+) {
+  const [stateStore, setStateStore] = usePanelState();
+  const initialState = initialPanelState || states[0];
+  const state = stateStore[id] || initialState;
+
+  const setState = useCallback(
+    (state: PanelState) => {
+      setStateStore((store) => ({ ...store, [id]: state }));
+    },
+    [setStateStore, id]
+  );
+
+  const nextPanelState = useCallback(
+    (currentState: PanelState): PanelState => {
+      const currentStateIndex = states.indexOf(currentState);
+      const nextState =
+        states.length - 1 === currentStateIndex
+          ? states[0]
+          : states[currentStateIndex + 1];
+      return nextState;
+    },
+    [states]
+  );
+
+  const nextState = useCallback(
+    (event?: any) => {
+      if (state !== states[states.length - 1]) {
+        const nextState = nextPanelState(state);
+        setState(nextState);
+      }
+    },
+    [states, state, setState, nextPanelState]
+  );
+
+  const prevState = useCallback(
+    (event?: any) => {
+      const index = states.indexOf(state);
+      if (index !== 0) {
+        setState(states[index - 1]);
+      }
+    },
+    [states, state, setState]
+  );
+
+  const cycleNext = useCallback(
+    (event?: any) => {
+      const nextState = nextPanelState(state);
+      setState(nextState);
+    },
+    [state, setState, nextPanelState]
+  );
+
+  const setInitialState = useCallback(() => setState(initialState), [
+    initialState,
+    setState,
+  ]);
+
+  return useMemo(
+    () => ({
+      states,
+      next: nextState,
+      prev: prevState,
+      cycle: cycleNext,
+      set: setState,
+      initial: setInitialState,
+      initialState,
+      state,
+    }),
+    [
+      states,
+      nextState,
+      prevState,
+      cycleNext,
+      setState,
+      setInitialState,
+      state,
+      initialState,
+    ]
+  );
 }
 
 function getPanelSize(
@@ -196,7 +282,7 @@ const StyledCloseButton = styled(CloseButton)`
   position: absolute;
   right: ${themeSpacing(6)};
   top: ${themeSpacing(4)};
-  z-index: 20000;
+  z-index: 3;
   width: ${themeSpacing(6)};
   height: ${themeSpacing(6)};
 `;
@@ -244,79 +330,6 @@ function PanelNarrowAnimated({
       {children}
     </PanelNarrow>
   );
-}
-
-export function usePanelStateCycle(
-  id: string,
-  states: PanelState[],
-  initialPanelState?: PanelState
-) {
-  const [stateStore, setStateStore] = usePanelState();
-  const initialState = initialPanelState || states[0];
-  const state = stateStore[id] || initialState;
-
-  const setState = useCallback(
-    (state: PanelState) => {
-      setStateStore((store) => ({ ...store, [id]: state }));
-    },
-    [setStateStore, id]
-  );
-
-  const nextPanelState = useCallback(
-    (currentState: PanelState): PanelState => {
-      const currentStateIndex = states.indexOf(currentState);
-      const nextState =
-        states.length - 1 === currentStateIndex
-          ? states[0]
-          : states[currentStateIndex + 1];
-      return nextState;
-    },
-    [states]
-  );
-
-  const nextState = useCallback(
-    (event?: any) => {
-      if (state !== states[states.length - 1]) {
-        const nextState = nextPanelState(state);
-        setState(nextState);
-      }
-    },
-    [states, state, setState, nextPanelState]
-  );
-
-  const prevState = useCallback(
-    (event?: any) => {
-      const index = states.indexOf(state);
-      if (index !== 0) {
-        setState(states[index - 1]);
-      }
-    },
-    [states, state, setState]
-  );
-
-  const cycleNext = useCallback(
-    (event?: any) => {
-      const nextState = nextPanelState(state);
-      setState(nextState);
-    },
-    [state, setState, nextPanelState]
-  );
-
-  const setInitialState = useCallback(() => setState(initialState), [
-    initialState,
-    setState,
-  ]);
-
-  return {
-    states,
-    next: nextState,
-    prev: prevState,
-    cycle: cycleNext,
-    set: setState,
-    initial: setInitialState,
-    initialState,
-    state,
-  };
 }
 
 export type PanelComponentProps = PropsWithChildren<{

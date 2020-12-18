@@ -15,6 +15,7 @@ interface MyAreaDashboardProps {
 export default function MyAreaDashboard({ tutorial }: MyAreaDashboardProps) {
   const termReplace = useTermReplacement();
   const ref = useRef<HTMLDivElement | null>(null);
+  // Check if the Map is nearly scrolled into view
   const isOnScreen = useOnScreen(ref, '-200px');
 
   return (

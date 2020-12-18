@@ -1,4 +1,4 @@
-import { Icon } from '@amsterdam/asc-ui';
+import { Icon, themeSpacing } from '@amsterdam/asc-ui';
 import React, { PropsWithChildren, ReactNode, useState } from 'react';
 import styled from 'styled-components';
 import { IconChevronRight } from '../../assets/icons';
@@ -17,9 +17,9 @@ export const ToggleButton = styled('button')`
   position: absolute;
   right: 0;
   top: 0;
-  z-index: 10;
-  width: 36px;
-  height: 36px;
+  z-index: 3;
+  width: ${themeSpacing(9)};
+  height: ${themeSpacing(9)};
   transform: ${(props) => (props['aria-expanded'] ? 'rotate(90deg)' : 'none')};
   transition: transform 80ms linear;
   &:hover,
