@@ -85,12 +85,6 @@ export function MaSuperClusterLayer({
   const onKeyup = useCallback(
     (event: any) => {
       if (event.originalEvent.key === 'Enter') {
-        console.log(
-          'onKeyup',
-          event,
-          event.layer.feature,
-          event.layer.getLatLng()
-        );
         event.latlng = event.layer.getLatLng();
         onClick(event);
       }
@@ -128,7 +122,7 @@ export function MaSuperClusterLayer({
         map.off('moveend', onUpdate);
       }
     };
-  }, [markerLayer, clusterFeatures, onClick, map, onUpdate]);
+  }, [markerLayer, clusterFeatures, onClick, map, onUpdate, onKeyup]);
 
   return null;
 }
