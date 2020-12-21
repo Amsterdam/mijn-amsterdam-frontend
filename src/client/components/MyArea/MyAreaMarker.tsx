@@ -1,8 +1,10 @@
 import { Marker } from '@amsterdam/arm-core';
 import L, {
   LatLngLiteral,
+  LayerEvent,
   LeafletEventHandlerFn,
   Marker as MarkerType,
+  MarkerOptions,
 } from 'leaflet';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { LOCATION_ZOOM } from '../../../universal/config/buurt';
@@ -17,9 +19,16 @@ interface MyAreaMarkerProps {
   iconUrl: string;
   onClick?: LeafletEventHandlerFn;
   label?: string;
+  alt?: string;
 }
 
-function MyAreaMarker({ latlng, iconUrl, onClick, label }: MyAreaMarkerProps) {
+function MyAreaMarker({
+  latlng,
+  iconUrl,
+  onClick,
+  label,
+  alt,
+}: MyAreaMarkerProps) {
   const markerConfig = useMemo(() => {
     const icon = L.icon({
       iconUrl,
@@ -33,8 +42,15 @@ function MyAreaMarker({ latlng, iconUrl, onClick, label }: MyAreaMarkerProps) {
       events.click = onClick;
     }
 
-    return { options: { icon }, events };
-  }, [iconUrl, onClick]);
+    const marker: { options: MarkerOptions; events: any } = {
+      options: { icon },
+      events,
+    };
+    if (alt) {
+      marker.options.alt = alt;
+    }
+    return marker;
+  }, [iconUrl, onClick, alt]);
 
   const [markerInstance, setInstance] = useState<MarkerType | undefined>(
     undefined
@@ -45,10 +61,9 @@ function MyAreaMarker({ latlng, iconUrl, onClick, label }: MyAreaMarkerProps) {
       markerInstance
         .unbindTooltip()
         .bindTooltip(
-          `<div class="${styles.MarkerLabelText}">${label.replace(
-            /\n/,
-            '<br/>'
-          )}</div>`,
+          `<div aria-label="Locatiegegevens" class="${
+            styles.MarkerLabelText
+          }">${label.replace(/\n/, '<br/>')}</div>`,
           {
             className: styles.MarkerLabel,
             permanent: true,
@@ -111,6 +126,7 @@ export const HomeIconMarker = function HomeIconMarker({
       onClick={doCenter}
       latlng={center}
       label={label}
+      alt="Thuislocatie icoon"
     />
   );
 };
