@@ -274,7 +274,12 @@ export function DatasetPanel({
     <DatasetControlCheckbox
       isChecked={isChecked}
       id={datasetId}
-      label={dataset.title}
+      label={
+        <>
+          {getIcon(datasetId) || getIcon(datasetId, datasetId) || ''}
+          {dataset.title}
+        </>
+      }
       isIndeterminate={isIndeterminate}
       onChange={() => onControlItemChange('dataset', [datasetId])}
     />
@@ -354,7 +359,12 @@ export function DatasetControlPanel({
       isChecked={isChecked}
       isIndeterminate={isIndeterminate}
       id={categoryId}
-      label={category.title}
+      label={
+        <>
+          {getIcon(categoryId) || ''}
+          {category.title}
+        </>
+      }
       onChange={() => onControlItemChange('category', datasetIds)}
     />
   );

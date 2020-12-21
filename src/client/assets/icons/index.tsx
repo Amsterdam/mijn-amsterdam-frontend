@@ -42,7 +42,7 @@ export { ReactComponent as MapIconAfvalPlastic } from './map/plastic.svg';
 export { ReactComponent as MapIconAfvalTextiel } from './map/textile.svg';
 export { ReactComponent as MapIconAfvalPapier } from './map/paper.svg';
 export { ReactComponent as MapIconAfvalRest } from './map/trashcontainer.svg';
-// export { ReactComponent as MapIconAuto } from './map/car.svg';
+export { ReactComponent as MapIconAuto } from './map/car.svg';
 export { ReactComponent as MapIconBekendmaking } from './map/bekendmaking.svg';
 export { ReactComponent as MapIconEvenement } from './map/evenement.svg';
 export { ReactComponent as MapIconSport } from './map/sport.svg';

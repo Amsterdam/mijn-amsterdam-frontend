@@ -26,13 +26,15 @@ export default function MyArePanelContentAfval({
   datasetId,
   panelItem,
 }: MyArePanelContentAfvalProps) {
-  const infoUrl = afvalUrls[panelItem.fractieOmschrijving.toLowerCase()];
+  const infoUrl =
+    panelItem.fractieOmschrijving &&
+    afvalUrls[panelItem.fractieOmschrijving.toLowerCase()];
   return (
     <GenericBase
-      title={panelItem.fractieOmschrijving}
+      title={panelItem.fractieOmschrijving || panelItem.serienummer}
       supTitle="Afvalcontainers"
     >
-      {!panelItem.geadopteerdInd && (
+      {!panelItem.geadopteerdInd && panelItem.fractieOmschrijving && (
         <p>
           Deze container kunt u adopteren!
           <br />{' '}

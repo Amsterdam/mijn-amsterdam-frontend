@@ -12,6 +12,7 @@ import {
   DatasetCategoryId,
   DatasetPropertyName,
 } from '../../../universal/config/buurt';
+import themeColors from '@amsterdam/asc-ui/lib/theme/default/colors';
 
 enum zIndexPane {
   PARKEERZONES = '650',
@@ -84,16 +85,13 @@ export interface DatasetConfig {
   additionalStaticPropertyNames?: DatasetPropertyName[];
 }
 
-function getFilterPropertyNames(datasetId: DatasetId) {
+function getPropertyFilters(datasetId: DatasetId) {
   const datasetCategoryId = getDatasetCategoryId(datasetId);
 
   if (!datasetCategoryId) {
     return;
   }
-  const propertyFilters =
-    DATASETS[datasetCategoryId].datasets[datasetId]?.filters;
-
-  return propertyFilters && Object.keys(propertyFilters);
+  return DATASETS[datasetCategoryId].datasets[datasetId]?.filters;
 }
 
 function dsoApiListUrl(dataset: string, pageSize: number = 1000) {
@@ -102,7 +100,8 @@ function dsoApiListUrl(dataset: string, pageSize: number = 1000) {
   const pageSizeParam = `&page_size=${pageSize}`;
 
   return (datasetConfig: DatasetConfig) => {
-    const propertyNames = getFilterPropertyNames(datasetId) || [];
+    const propertyFilters = getPropertyFilters(datasetId);
+    const propertyNames = propertyFilters ? Object.keys(propertyFilters) : [];
 
     if (datasetConfig.additionalStaticPropertyNames) {
       propertyNames.push(...datasetConfig.additionalStaticPropertyNames);
@@ -124,20 +123,19 @@ export const datasetEndpoints: Record<
     listUrl:
       'https://api.data.amsterdam.nl/v1/wfs/huishoudelijkafval/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=container&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326&FILTER=%3CFilter%3E%3CAnd%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Estatus%3C/PropertyName%3E%3CLiteral%3E1%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3COr%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E110%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E16%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E111%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E112%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E67%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E181%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3CPropertyIsEqualTo%3E%3CPropertyName%3Eeigenaar_id%3C/PropertyName%3E%3CLiteral%3E113%3C/Literal%3E%3C/PropertyIsEqualTo%3E%3C/Or%3E%3C/And%3E%3C/Filter%3E',
     detailUrl: 'https://api.data.amsterdam.nl/v1/huishoudelijkafval/container/',
-    transformList: transformDsoApiListResponse,
+    transformList: transformAfvalcontainersResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
   evenementen: {
-    listUrl:
-      'https://api.data.amsterdam.nl/v1/evenementen/evenementen/?_fields=id,geometry&page_size=1000',
+    listUrl: dsoApiListUrl('evenementen/evenementen'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/evenementen/evenementen/',
     transformList: transformEvenementen,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
   },
   bekendmakingen: {
-    listUrl: dsoApiListUrl('bekendmakingen/bekendmakingen'),
+    listUrl: dsoApiListUrl('bekendmakingen/bekendmakingen', 10000),
     detailUrl:
       'https://api.data.amsterdam.nl/v1/bekendmakingen/bekendmakingen/',
     transformList: transformDsoApiListResponse,
@@ -303,9 +301,10 @@ function addFilterProps(
   featureProperties: MaFeature['properties'],
   featureSourceProperties: any
 ) {
-  const filterPropertyNames = getFilterPropertyNames(datasetId);
-  if (filterPropertyNames && featureSourceProperties) {
-    for (const propertyName of filterPropertyNames) {
+  const propertyFilters = getPropertyFilters(datasetId);
+  const propertyNames = propertyFilters ? Object.keys(propertyFilters) : [];
+  if (propertyNames && featureSourceProperties) {
+    for (const propertyName of propertyNames) {
       featureProperties[propertyName] =
         (featureSourceProperties?.properties &&
           featureSourceProperties.properties[propertyName]) ||
@@ -356,6 +355,35 @@ function transformDsoApiListResponse(
   return collection;
 }
 
+function createCustomFractieOmschrijving(featureProps: any) {
+  if (featureProps.serienummer?.trim().startsWith('Kerstboom')) {
+    return 'Kerstboom inzamellocatie';
+  }
+  return 'Overig';
+}
+
+function transformAfvalcontainersResponse(
+  datasetId: DatasetId,
+  config: DatasetConfig,
+  responseData: any
+) {
+  const features = responseData?.features
+    ? responseData?.features
+    : getApiEmbeddedResponse(datasetId, responseData);
+  return transformDsoApiListResponse(datasetId, config, {
+    features: features.map((feature: any) => {
+      const fractie_omschrijving =
+        feature.properties.fractie_omschrijving ||
+        createCustomFractieOmschrijving(feature.properties);
+
+      return {
+        ...feature,
+        fractie_omschrijving,
+      };
+    }),
+  });
+}
+
 function transformEvenementen(
   datasetId: DatasetId,
   config: DatasetConfig,
@@ -395,20 +423,40 @@ function transformParkeerzoneCoords(
 
   if (results && results.length) {
     for (const feature of results) {
-      collection.push({
+      const featureTransformed: MaPolylineFeature = {
         type: 'Feature',
         geometry: feature.geometry,
         properties: addFilterProps(
           datasetId,
           {
-            id: feature?.properties?.id || feature.id,
+            id: feature.id,
             datasetId,
-            color:
-              feature?.properties?.gebiedskleurcode || feature.gebiedskleurcode,
           },
           feature
         ),
-      });
+      };
+
+      // Change gebiedsnaam for grouping purposes
+      featureTransformed.properties.gebiedsnaam =
+        featureTransformed.properties.gebiedsnaam?.split(' ')[0] || 'Amsterdam';
+
+      const colors: Record<string, string> = {
+        oost: themeColors.supplement.lightblue,
+        west: themeColors.supplement.purple,
+        noord: themeColors.support.focus,
+        zuid: themeColors.supplement.orange,
+        zuidoost: themeColors.supplement.lightgreen,
+        'nieuw-west': themeColors.supplement.yellow,
+        haven: themeColors.supplement.pink,
+        centrum: themeColors.support.valid,
+      };
+
+      // Add custom color code
+      featureTransformed.properties.color =
+        colors[featureTransformed.properties.gebiedsnaam.toLowerCase()] ||
+        'red';
+
+      collection.push(featureTransformed);
     }
   }
   return collection;

@@ -12,10 +12,12 @@ import {
   MapIconAfvalPlastic,
   MapIconAfvalRest,
   MapIconAfvalTextiel,
+  MapIconAuto,
   MapIconBasketbal,
   MapIconBekendmaking,
   MapIconEvenement,
   MapIconFitness,
+  MapIconSport,
   MapIconTennis,
   MapIconVoetbal,
   MapIconVolleybal,
@@ -43,6 +45,11 @@ export const datasetIcons: Record<
   ReactElement<any> | Record<string, ReactElement<any>>
 > = {
   afvalcontainers: {
+    afvalcontainers: (
+      <DatasetIcon style={{ backgroundColor: themeColors.tint.level6 }}>
+        <MapIconAfvalRest fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
     rest: (
       <DatasetIcon style={{ backgroundColor: themeColors.tint.level6 }}>
         <MapIconAfvalRest fill={themeColors.tint.level1} />
@@ -86,6 +93,11 @@ export const datasetIcons: Record<
       <MapIconBekendmaking fill={themeColors.tint.level1} />
     </DatasetIcon>
   ),
+  sport: (
+    <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+      <MapIconSport fill={themeColors.tint.level1} />
+    </DatasetIcon>
+  ),
   openbaresportplek: {
     voetbal: (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
@@ -113,8 +125,59 @@ export const datasetIcons: Record<
       </DatasetIcon>
     ),
   },
+  parkeren: (
+    <DatasetIcon style={{ backgroundColor: themeColors.supplement.lightblue }}>
+      <MapIconAuto fill={themeColors.tint.level1} />
+    </DatasetIcon>
+  ),
+  parkeerzones: {
+    oost: (
+      <DatasetIcon
+        style={{ backgroundColor: themeColors.supplement.lightblue }}
+      >
+        <MapIconAuto fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    west: (
+      <DatasetIcon style={{ backgroundColor: themeColors.supplement.purple }}>
+        <MapIconAuto fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    noord: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <MapIconAuto fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    zuid: (
+      <DatasetIcon style={{ backgroundColor: themeColors.supplement.orange }}>
+        <MapIconAuto fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    zuidoost: (
+      <DatasetIcon
+        style={{ backgroundColor: themeColors.supplement.lightgreen }}
+      >
+        <MapIconAuto fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    'nieuw-west': (
+      <DatasetIcon style={{ backgroundColor: themeColors.supplement.yellow }}>
+        <MapIconAuto fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    haven: (
+      <DatasetIcon style={{ backgroundColor: themeColors.supplement.pink }}>
+        <MapIconAuto fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    centrum: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <MapIconAuto fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+  },
   default: (
-    <DatasetIconCircle style={{ backgroundColor: themeColors.support.valid }} />
+    <DatasetIconCircle style={{ backgroundColor: themeColors.tint.level7 }} />
   ),
 };
 
@@ -123,7 +186,12 @@ export function getIcon(id: string, childId?: string) {
 
   if (id && childId && datasetIcons[id] && (datasetIcons[id] as any)[childId]) {
     icon = (datasetIcons[id] as any)[childId];
-  } else if (id && datasetIcons[id] && isValidElement(datasetIcons[id])) {
+  } else if (
+    !childId &&
+    id &&
+    datasetIcons[id] &&
+    isValidElement(datasetIcons[id])
+  ) {
     icon = datasetIcons[id];
   }
 
@@ -134,8 +202,7 @@ export function getIconChildIdFromValue(id: string, value: string) {
   let childId: undefined | string = undefined;
 
   switch (id) {
-    case 'openbaresportplek':
-    case 'afvalcontainers':
+    default:
       childId = value?.toLowerCase();
       break;
   }
@@ -160,9 +227,15 @@ export function getIconHtml(feature: MaPointFeature) {
         feature.properties.sportvoorziening
       );
       break;
+    case 'parkeerzones':
+      childId = getIconChildIdFromValue(
+        datasetId,
+        feature.properties.gebiedsnaam
+      );
+      break;
   }
   const icon = getIcon(datasetId, childId);
-  return icon ? renderToStaticMarkup(icon) : iconDefault;
+  return renderToStaticMarkup(icon || iconDefault);
 }
 export const PARKEERZONES_POLYLINE_OPTIONS: Record<string, PolylineOptions> = {
   parkeerzones: {
