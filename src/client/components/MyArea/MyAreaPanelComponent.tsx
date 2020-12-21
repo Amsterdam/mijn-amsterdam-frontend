@@ -269,7 +269,7 @@ const PanelToggleDesktop = styled.button`
     justify-content: center;
     left: 100%;
     position: absolute;
-    top: ${themeSpacing(4)};
+    top: ${themeSpacing(5)};
 
     svg {
       transform: ${(props) =>

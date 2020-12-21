@@ -16,7 +16,7 @@ export const ToggleButton = styled('button')`
   font-weight: bold;
   position: absolute;
   right: 0;
-  top: 0;
+  top: 3px;
   z-index: 3;
   width: ${themeSpacing(9)};
   height: ${themeSpacing(9)};
