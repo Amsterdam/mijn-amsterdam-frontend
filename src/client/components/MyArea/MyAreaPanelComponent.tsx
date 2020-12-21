@@ -398,11 +398,18 @@ export function PanelComponent({
       height={getPanelSize(state, true, availableHeight)}
     >
       {showCloseButton && (
-        <StyledCloseButton iconSize="24" onClick={cycleState} />
+        <StyledCloseButton
+          iconSize="24"
+          onClick={cycleState}
+          aria-label={`${id} paneel sluiten`}
+        />
       )}
       {showToggleButton && (
         <PanelTogglePhone
           aria-expanded={isPanelExpanded}
+          aria-label={
+            !isPanelExpanded ? `Maak ${id} paneel groter` : `Sluit ${id} paneel`
+          }
           onClick={cycleState}
         />
       )}
@@ -416,6 +423,9 @@ export function PanelComponent({
       {showToggleButton && (
         <PanelToggleDesktop
           aria-expanded={isPanelExpanded}
+          aria-label={
+            isPanelExpanded ? `Verberg ${id} paneel` : `Toon ${id} paneel`
+          }
           onClick={cycleState}
         >
           <Icon size={16}>
