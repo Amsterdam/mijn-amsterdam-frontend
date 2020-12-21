@@ -83,13 +83,13 @@ export const DATASETS: DatasetCategories = {
     title: 'Parkeren',
     datasets: {
       parkeerzones: {
-        title: 'Parkeerzones',
+        title: 'Parkeervergunningen',
         filters: {
           gebiedsnaam: {},
         },
       },
       parkeerzones_uitzondering: {
-        title: 'Parkeerzones uitzondering',
+        title: 'Uitzonderingen parkeervergunningen',
       },
     },
   },
