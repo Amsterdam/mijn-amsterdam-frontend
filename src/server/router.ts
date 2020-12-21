@@ -26,7 +26,7 @@ router.get(
 
 router.get(
   BffEndpoints.SERVICES_STREAM,
-  async (req: Request, res: Response, next: NextFunction) => {
+  (req: Request, res: Response, next: NextFunction) => {
     // See https://nodejs.org/api/net.html#net_socket_setnodelay_nodelay
     req.socket.setNoDelay(true);
     // Tell the client we respond with an event stream
@@ -36,12 +36,7 @@ router.get(
       connection: 'keep-alive',
     });
     res.write('retry: 1000\n');
-    try {
-      await loadServicesSSE(req, res);
-    } catch (error) {
-      Sentry.captureException(error);
-      res.end();
-    }
+    loadServicesSSE(req, res);
   }
 );
 

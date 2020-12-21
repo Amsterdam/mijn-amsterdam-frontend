@@ -207,8 +207,8 @@ export async function requestData<T>(
             apiName,
           },
         });
-    const sentryId = !IS_AP ? null : capturedId;
 
+    const sentryId = !IS_AP ? null : capturedId;
     const responseData = apiErrorResult(
       error?.response?.data?.message || error.toString(),
       null,

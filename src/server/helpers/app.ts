@@ -28,13 +28,13 @@ export function isValidRequestPath(requestPath: string, path: string) {
 }
 
 export function isBffEndpoint(requestPath: string) {
-  return Object.values(BffEndpoints).some(path =>
+  return Object.values(BffEndpoints).some((path) =>
     isValidRequestPath(requestPath, path)
   );
 }
 
 export function isBffPublicEndpoint(requestPath: string) {
-  return PUBLIC_BFF_ENDPOINTS.some(path =>
+  return PUBLIC_BFF_ENDPOINTS.some((path) =>
     isValidRequestPath(requestPath, path)
   );
 }
@@ -122,14 +122,8 @@ export function addServiceResultHandler(
   servicePromise: Promise<any>,
   serviceName: string
 ) {
-  return servicePromise
-    .then(data => {
-      sendMessage(res, serviceName, 'message', data);
-      return data;
-    })
-    .catch(error =>
-      Sentry.captureException(error, {
-        extra: { module: 'services-sse', serviceName },
-      })
-    );
+  return servicePromise.then((data) => {
+    sendMessage(res, serviceName, 'message', data);
+    return data;
+  });
 }
