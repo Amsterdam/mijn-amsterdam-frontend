@@ -116,14 +116,8 @@ export function addServiceResultHandler(
   servicePromise: Promise<any>,
   serviceName: string
 ) {
-  return servicePromise
-    .then((data) => {
-      sendMessage(res, serviceName, 'message', data);
-      return data;
-    })
-    .catch((error) =>
-      Sentry.captureException(error, {
-        extra: { module: 'services-sse', serviceName },
-      })
-    );
+  return servicePromise.then((data) => {
+    sendMessage(res, serviceName, 'message', data);
+    return data;
+  });
 }
