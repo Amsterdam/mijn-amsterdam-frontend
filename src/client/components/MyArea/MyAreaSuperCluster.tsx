@@ -23,7 +23,7 @@ function createClusterMarker(
   if (!feature?.properties.cluster) {
     const html = getIconHtml(feature);
     icon = L.divIcon({
-      html: `<span class="${styles.pin}"></span>${html}`,
+      html: `<div role="button" aria-label="Toon meer informatie over ${feature.properties.datasetId} met id ${feature.properties.id}." class="${styles.MarkerClusterIconLabel}">${html}</div>`,
       className: styles.MarkerIcon,
       iconSize: [32, 32],
       iconAnchor: [14, 14],
@@ -39,12 +39,12 @@ function createClusterMarker(
         styles[`MarkerClusterIcon--${size}`]
       ),
       iconSize: [40, 40],
-      html: `<span class="${styles.MarkerClusterIconLabel}">${label}</span>`,
+      html: `<div role="button" aria-label="Zoom in op ${label} locaties op de kaart." class="${styles.MarkerClusterIconLabel}">${label}</div>`,
       iconAnchor: [20, 20],
     });
   }
 
-  return L.marker(latlng, { icon });
+  return L.marker(latlng, { icon, keyboard: true });
 }
 
 interface MaSuperClusterLayerProps {
@@ -73,13 +73,29 @@ export function MaSuperClusterLayer({
     (event: LeafletMouseEvent) => {
       if (event.propagatedFrom.feature.properties.cluster_id) {
         map.setZoomAround(
-          event.latlng,
+          event.latlng || (event as any)._latlng,
           event.propagatedFrom.feature.properties.expansion_zoom
         );
       }
       onMarkerClick && onMarkerClick(event);
     },
     [onMarkerClick, map]
+  );
+
+  const onKeyup = useCallback(
+    (event: any) => {
+      if (event.originalEvent.key === 'Enter') {
+        console.log(
+          'onKeyup',
+          event,
+          event.layer.feature,
+          event.layer.getLatLng()
+        );
+        event.latlng = event.layer.getLatLng();
+        onClick(event);
+      }
+    },
+    [onClick]
   );
 
   const clusterFeatures = useMemo(() => {
@@ -95,6 +111,7 @@ export function MaSuperClusterLayer({
       markerLayer.addTo(map);
       markerLayer.addData(clusterFeatures as any); // Type mismatch here.
       markerLayer.on('click', onClick);
+      markerLayer.on('keyup', onKeyup);
     }
 
     if (map) {
@@ -104,6 +121,7 @@ export function MaSuperClusterLayer({
     return () => {
       if (markerLayer) {
         markerLayer.off('click', onClick);
+        markerLayer.off('keyup', onKeyup);
         markerLayer.remove();
       }
       if (map) {

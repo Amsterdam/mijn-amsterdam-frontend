@@ -43,9 +43,9 @@ router.get(
     req.socket.setNoDelay(true);
     // Tell the client we respond with an event stream
     res.writeHead(200, {
-      'content-type': 'text/event-stream',
+      'Content-type': 'text/event-stream',
       'Cache-Control': 'no-cache, no-transform',
-      connection: 'keep-alive',
+      Connection: 'keep-alive',
     });
     res.write('retry: 1000\n');
     loadServicesSSE(req, res);

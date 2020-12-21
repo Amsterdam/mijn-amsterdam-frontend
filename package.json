@@ -84,7 +84,6 @@
     "js-cookie": "^2.2.1",
     "jw-paginate": "^1.0.4",
     "leaflet": "^1.7.1",
-    "leaflet.markercluster": "^1.4.1",
     "memory-cache": "^0.2.0",
     "morgan": "^1.10.0",
     "node-sass": "^4.14.1",

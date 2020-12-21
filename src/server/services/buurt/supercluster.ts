@@ -12,36 +12,14 @@ import {
   getDatasetEndpointConfig,
 } from './helpers';
 
-const superClusterCache = new memoryCache.Cache<string, any>();
-
-function cacheKey(ids: DatasetId[], filters: DatasetFilterSelection) {
-  const key =
-    ids.sort().join('-') +
-    '-' +
-    Object.entries(filters)
-      .flatMap(([datasetId, filters]) => [
-        datasetId,
-        Object.entries(filters)
-          .flatMap(([propertyName, property]) => [
-            propertyName,
-            property.values ? Object.keys(property.values).join('-') : '',
-          ])
-          .join('-'),
-      ])
-      .sort()
-      .join('-');
-
-  return key.toLowerCase();
-}
-
 async function generateSuperCluster(features: MaPointFeature[]) {
   if (!!features?.length) {
     const superClusterIndex = new Supercluster({
       log: true,
       radius: 40,
-      extent: 2500,
-      nodeSize: 512,
-      maxZoom: 14,
+      extent: 1250,
+      nodeSize: 256,
+      maxZoom: 13,
     }).load(features);
     return superClusterIndex;
   }
@@ -72,12 +50,6 @@ export async function loadClusterDatasets(
   sessionID: SessionID,
   { bbox, zoom, datasetIds, filters }: SuperClusterQuery
 ) {
-  // const activeCacheKey = cacheKey(datasetIds, filters);
-
-  // if (superClusterCache.get(activeCacheKey)) {
-  //   return superClusterCache.get(activeCacheKey);
-  // }
-
   const configs = getDatasetEndpointConfig(datasetIds, ['Point']);
 
   const { features, filters: filtersBase, errors } = await loadDatasetFeatures(
@@ -119,8 +91,6 @@ export async function loadClusterDatasets(
     filters: filtersRefined,
     errors,
   };
-
-  // superClusterCache.put(activeCacheKey, response);
 
   return response;
 }
