@@ -14,6 +14,7 @@ import {
 } from '../../../universal/config/buurt';
 import { recLookup } from '../../../universal/helpers';
 import { LatLngTuple } from 'leaflet';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 
 export function getApiEmbeddedResponse(id: string, responseData: any) {
   const results = responseData?._embedded && responseData?._embedded[id];
@@ -30,7 +31,7 @@ export function getDatasetEndpointConfig(
     .filter(([id, config]) => {
       const hasDatasetId =
         DATASETS[id] &&
-        Object.keys(DATASETS[id].datasets).some((datasetId) =>
+        Object.keys(DATASETS[id].datasets).some(datasetId =>
           endpointIDs?.includes(datasetId)
         );
       const isEndpoint = endpointIDs?.includes(id);
@@ -169,7 +170,9 @@ export function createDynamicFilterConfig(
   for (const feature of features) {
     for (const propertyName of propertyNames) {
       // Get property value from object.filters or from object itself
-      const value = (feature?.properties || feature)[propertyName];
+      const value = capitalizeFirstLetter(
+        String((feature?.properties || feature)[propertyName])
+      );
 
       // Check if value is excluded
       if (filterConfig[propertyName]?.excludeValues?.includes(value)) {
@@ -213,7 +216,7 @@ export function filterDatasetFeatures(
     .filter((feature): feature is MaPointFeature => {
       return activeDatasetIds.includes(feature.properties.datasetId);
     })
-    .filter((feature) => {
+    .filter(feature => {
       if (filters[feature.properties.datasetId]) {
         return isFilterMatch(feature, filters[feature.properties.datasetId]);
       }

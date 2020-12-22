@@ -26,6 +26,7 @@ export type DatasetPropertyValueWithCount = Record<
   DatasetPropertyValue,
   number
 >;
+
 export interface DatasetPropertyValueConfig {
   title?: string;
 }
@@ -33,7 +34,7 @@ export interface DatasetPropertyValueConfig {
 export interface DatasetProperty {
   values?: DatasetPropertyValueWithCount;
   valuesRefined?: DatasetPropertyValueWithCount;
-  valueConfig?: Record<DatasetPropertyValue, DatasetPropertyValueConfig>;
+  valueConfig?: Record<DatasetPropertyValue, DatasetPropertyValueConfig>; // The key of the valueConfig should always start with a cappital letter as the values are Capitalized on the BFF
   title?: string;
   excludeValues?: string[];
 }
@@ -71,8 +72,8 @@ export const DATASETS: DatasetCategories = {
           geadopteerd_ind: {
             title: 'Geadopteerd',
             valueConfig: {
-              true: { title: 'Ja' },
-              undefined: { title: 'Nee' },
+              True: { title: 'Ja' },
+              Undefined: { title: 'Nee' },
             },
           },
         },
@@ -125,13 +126,13 @@ export const DATASETS: DatasetCategories = {
           sportfunctie: {
             title: '',
             valueConfig: {
-              null: { title: 'Overig' },
+              Null: { title: 'Overig' },
             },
           },
           soortOndergrond: {
             title: 'Soort ondergrond',
             valueConfig: {
-              null: { title: 'Onbekend' },
+              Null: { title: 'Onbekend' },
             },
           },
         },
@@ -180,7 +181,7 @@ export const DATASETS: DatasetCategories = {
           sportvoorziening: {
             // title: 'Sportvoorziening',
             valueConfig: {
-              null: { title: 'Onbekend' },
+              Null: { title: 'Onbekend' },
             },
           },
           soortOndergrond: {
@@ -200,7 +201,7 @@ export const DATASETS: DatasetCategories = {
       hardlooproute: {
         title: 'Harlooproute',
         filters: {
-          lengte: {},
+          lengte: { title: 'Lengte in KM' },
         },
       },
     },

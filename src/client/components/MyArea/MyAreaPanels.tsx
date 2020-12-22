@@ -189,6 +189,7 @@ export function DatasetPropertyFilterPanel({
       {property.title && (
         <FilterPropertyName>{property.title}</FilterPropertyName>
       )}
+      {!valuesSorted.length && <span>laden...</span>}
       <PanelList>
         {valuesSorted.map(([value, featureCount], index) => {
           let label = value;
