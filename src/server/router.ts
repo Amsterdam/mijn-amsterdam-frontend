@@ -3,7 +3,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import { DatasetFilterSelection, DATASETS } from '../universal/config/buurt';
 import { ApiResponse, apiSuccesResult } from '../universal/helpers/api';
 import { BffEndpoints } from './config';
-import { getPassthroughRequestHeaders } from './helpers/app';
+import { getPassthroughRequestHeaders, queryParams } from './helpers/app';
 import { cacheOverview } from './helpers/file-cache';
 import { fetchCMSCONTENT, loadClusterDatasets } from './services';
 import {
@@ -19,6 +19,7 @@ import {
   loadServicesAll,
   loadServicesSSE,
   loadServicesTips,
+  loadServicesTipsRequestDataOverview,
 } from './services/controller';
 
 export const router = express.Router();
@@ -53,6 +54,12 @@ router.get(
 );
 
 router.get(BffEndpoints.SERVICES_TIPS, loadServicesTips);
+
+// Function for easily extract the request data for the Tips service
+router.get(
+  BffEndpoints.SERVICES_TIPS_REQUEST_DATA_OVERVIEW,
+  loadServicesTipsRequestDataOverview
+);
 
 router.post(
   BffEndpoints.MAP_DATASETS,
@@ -155,7 +162,7 @@ router.get(BffEndpoints.CMS_CONTENT, async (req, res, next) => {
     const response = await fetchCMSCONTENT(
       sessionID,
       getPassthroughRequestHeaders(req),
-      req.query as Record<string, string>
+      queryParams(req)
     );
     res.json(response);
   } catch (error) {

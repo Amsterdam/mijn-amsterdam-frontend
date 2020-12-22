@@ -12,6 +12,7 @@ import {
   TMA_SAML_HEADER,
 } from '../config';
 import { clearSessionCache } from './source-api-request';
+import { DEFAULT_PROFILE_TYPE } from '../../client/config/app';
 
 export function isValidRequestPath(requestPath: string, path: string) {
   const isRouteMatch = !!matchPath(requestPath, {
@@ -22,13 +23,13 @@ export function isValidRequestPath(requestPath: string, path: string) {
 }
 
 export function isBffEndpoint(requestPath: string) {
-  return Object.values(BffEndpoints).some((path) =>
+  return Object.values(BffEndpoints).some(path =>
     isValidRequestPath(requestPath, path)
   );
 }
 
 export function isBffPublicEndpoint(requestPath: string) {
-  return PUBLIC_BFF_ENDPOINTS.some((path) =>
+  return PUBLIC_BFF_ENDPOINTS.some(path =>
     isValidRequestPath(requestPath, path)
   );
 }
@@ -116,8 +117,16 @@ export function addServiceResultHandler(
   servicePromise: Promise<any>,
   serviceName: string
 ) {
-  return servicePromise.then((data) => {
+  return servicePromise.then(data => {
     sendMessage(res, serviceName, 'message', data);
     return data;
   });
+}
+
+export function queryParams(req: Request) {
+  return req.query as Record<string, string>;
+}
+
+export function getProfileType(req: Request) {
+  return (queryParams(req).profileType as ProfileType) || DEFAULT_PROFILE_TYPE;
 }

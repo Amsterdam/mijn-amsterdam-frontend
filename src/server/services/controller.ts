@@ -5,6 +5,8 @@ import {
   addServiceResultHandler,
   getPassthroughRequestHeaders,
   sendMessage,
+  getProfileType,
+  queryParams,
 } from '../helpers/app';
 import { fetchAFVAL, fetchAFVALPUNTEN } from './afval/afval';
 import { fetchBELASTING } from './belasting';
@@ -18,25 +20,19 @@ import { fetchGenerated } from './generated';
 import { fetchHOME } from './home';
 import { fetchKVK } from './kvk';
 import { fetchMILIEUZONE } from './milieuzone';
-import { fetchTIPS } from './tips';
+import { fetchTIPS, createTipsRequestData } from './tips';
 import { fetchVergunningen } from './vergunningen';
 import { fetchWMO } from './wmo';
 import { fetchStadspasSaldo } from './focus/focus-stadspas';
 
-const DEFAULT_PROFILE_TYPE = 'private';
-
-function queryParams(req: Request) {
-  return req.query as Record<string, string>;
-}
-
-function getProfileType(req: Request) {
-  return (queryParams(req).profileType as ProfileType) || DEFAULT_PROFILE_TYPE;
-}
-
 // Default service call just passing sessionID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
   return (sessionID: SessionID, req: Request) =>
-    fetchService(sessionID, getPassthroughRequestHeaders(req), req.query);
+    fetchService(
+      sessionID,
+      getPassthroughRequestHeaders(req),
+      queryParams(req)
+    );
 }
 
 function getServiceMap(profileType: ProfileType) {
@@ -120,16 +116,22 @@ export type ServicesType = typeof SERVICES_INDEX;
 export type ServiceID = keyof ServicesType;
 export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
 
-type CommercialServices = Omit<
-  ServicesType,
-  | 'BRP'
-  | 'FOCUS_TOZO'
-  | 'FOCUS_SPECIFICATIES'
-  | 'BELASTINGEN'
-  | 'FOCUS_AANVRAGEN'
-  | 'FOCUS_TOZO'
-  | 'FOCUS_STADSPAS'
-  | 'WMO'
+type PrivateServices = ServicesType;
+type PrivateCommercialServices = ServicesType;
+
+type CommercialServices = Pick<
+  ServiceMap,
+  | 'AFVAL'
+  | 'AFVALPUNTEN'
+  | 'BUURT'
+  | 'CMS_CONTENT'
+  | 'ERFPACHT'
+  | 'NOTIFICATIONS'
+  | 'CASES'
+  | 'HOME'
+  | 'KVK'
+  | 'MILIEUZONE'
+  | 'VERGUNNINGEN'
 >;
 
 type TipsServices = Pick<
@@ -149,8 +151,8 @@ type TipsServices = Pick<
 >;
 
 type ServicesByProfileType = {
-  private: ServicesType;
-  'private-commercial': ServicesType;
+  private: PrivateServices;
+  'private-commercial': PrivateCommercialServices;
   commercial: CommercialServices;
 };
 
@@ -225,7 +227,11 @@ export const servicesTips: TipsServices = {
 function loadServices(
   sessionID: SessionID,
   req: Request,
-  serviceMap: CommercialServices | TipsServices | ServicesType,
+  serviceMap:
+    | PrivateServices
+    | CommercialServices
+    | TipsServices
+    | PrivateCommercialServices,
   filterIds: SessionID[] = []
 ) {
   return Object.entries(serviceMap)
@@ -233,7 +239,7 @@ function loadServices(
     .map(([serviceID, fetchService]) => {
       // Return service result as Object like { SERVICE_ID: result }
       return (fetchService(sessionID, req) as Promise<any>)
-        .then((result) => ({
+        .then(result => ({
           [serviceID]: result,
         }))
         .catch((error: Error) => {
@@ -271,7 +277,7 @@ export async function loadServicesSSE(req: Request, res: Response) {
 
   // Send service results to tips api for personalized tips
   const tipsPromise = loadServicesTipsRequestData(sessionID, req).then(
-    (responseData) => {
+    responseData => {
       return { TIPS: responseData };
     }
   );
@@ -317,10 +323,13 @@ export async function loadServicesAll(req: Request, res: Response) {
   return Object.assign(serviceResults, tipsResult);
 }
 
-// Fetches service data to send as post data for the tips api
-async function loadServicesTipsRequestData(sessionID: SessionID, req: Request) {
-  let requestData = null;
+/**
+ * TIPS specific services
+ */
+export type ServicesTips = ReturnTypeAsync<typeof loadServicesTipsRequestData>;
 
+async function createTipsServiceResults(sessionID: SessionID, req: Request) {
+  let requestData = null;
   if (queryParams(req).optin === 'true') {
     const servicePromises = loadServices(sessionID, req, servicesTips);
     requestData = (await Promise.allSettled(servicePromises)).reduce(
@@ -328,19 +337,22 @@ async function loadServicesTipsRequestData(sessionID: SessionID, req: Request) {
       {}
     );
   }
+  return requestData;
+}
+
+async function loadServicesTipsRequestData(sessionID: SessionID, req: Request) {
+  const serviceResults = await createTipsServiceResults(sessionID, req);
 
   return fetchTIPS(
     sessionID,
     getPassthroughRequestHeaders(req),
-    req.query as Record<string, string>,
-    requestData
+    queryParams(req),
+    serviceResults
   ).catch((error: Error) => {
     Sentry.captureException(error);
     return apiErrorResult(`Could not load TIPS, error: ${error.message}`, null);
   });
 }
-
-export type ServicesTips = ReturnTypeAsync<typeof loadServicesTipsRequestData>;
 
 export async function loadServicesTips(
   req: Request,
@@ -350,5 +362,17 @@ export async function loadServicesTips(
   const sessionID = res.locals.sessionID;
   const result = await loadServicesTipsRequestData(sessionID, req);
   res.json(result);
+  next();
+}
+
+export async function loadServicesTipsRequestDataOverview(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const sessionID = res.locals.sessionID;
+  req.query.optin = 'true';
+  const result = await createTipsServiceResults(sessionID, req);
+  res.json(createTipsRequestData(queryParams(req), result));
   next();
 }

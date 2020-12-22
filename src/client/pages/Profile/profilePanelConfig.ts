@@ -7,6 +7,8 @@ import { isMokum } from '../../../universal/helpers';
 import { BRPData } from '../../../universal/types';
 import { ExternalUrls } from '../../config/app';
 import { KVKData } from '../../../server/services/kvk';
+import { FeatureToggle } from '../../../universal/config';
+import styles from './Profile.module.scss';
 
 type BRPPanelKey = keyof Omit<
   BRPData,
@@ -26,22 +28,27 @@ type PanelConfig<T extends string> = {
 };
 
 export const panelConfig: PanelConfig<BRPPanelKey> = {
-  persoon: (BRP) => ({
-    title: 'Persoonlijke gegevens',
-    actionLinks: isMokum(BRP.content)
-      ? [
-          {
-            title: 'Inzien of correctie doorgeven',
-            url: ExternalUrls.CHANGE_PERSONAL_DATA,
-            external: true,
-          },
-        ]
-      : [],
-  }),
-  adres: (BRP) => {
+  persoon: BRP => {
+    const actionLinks = [];
+
+    if (isMokum(BRP.content)) {
+      actionLinks.push({
+        title: 'Inzien of correctie doorgeven',
+        url: ExternalUrls.CHANGE_PERSONAL_DATA,
+        external: true,
+      });
+    }
+
+    return {
+      title: 'Persoonlijke gegevens',
+      actionLinks,
+    };
+  },
+  adres: BRP => {
     const title = isMokum(BRP.content)
       ? 'Verhuizing doorgeven'
       : 'Verhuizing naar Amsterdam doorgeven';
+
     const actionLinks: ActionLink[] = [
       {
         title,
@@ -49,12 +56,25 @@ export const panelConfig: PanelConfig<BRPPanelKey> = {
         external: true,
       },
     ];
+
+    if (
+      FeatureToggle.residentCountActive &&
+      !!BRP.content?.adres?._adresSleutel
+    ) {
+      actionLinks.push({
+        title: 'Onjuiste inschrijving melden',
+        url: ExternalUrls.CHANGE_RESIDENT_COUNT,
+        external: true,
+        className: styles['ActionLink--reportIncorrectResidentCount'],
+      });
+    }
+
     return {
       title: 'Woonadres',
       actionLinks,
     };
   },
-  verbintenis: (BRP) => ({
+  verbintenis: BRP => ({
     title: 'Burgerlijke staat',
     actionLinks: isMokum(BRP.content)
       ? [
@@ -66,7 +86,7 @@ export const panelConfig: PanelConfig<BRPPanelKey> = {
         ]
       : [],
   }),
-  verbintenisHistorisch: (BRP) => ({
+  verbintenisHistorisch: BRP => ({
     title: 'Eerdere huwelijken of partnerschappen',
     actionLinks: isMokum(BRP.content)
       ? [
@@ -82,7 +102,7 @@ export const panelConfig: PanelConfig<BRPPanelKey> = {
     title: 'Ouders',
     actionLinks: [],
   },
-  kinderen: (BRP) => ({
+  kinderen: BRP => ({
     title: 'Kinderen',
     actionLinks: isMokum(BRP.content)
       ? [
@@ -101,11 +121,11 @@ export const panelConfig: PanelConfig<BRPPanelKey> = {
 };
 
 export const panelConfigCommercial: PanelConfig<KVKPanelKey> = {
-  onderneming: (KVK) => ({
+  onderneming: KVK => ({
     title: 'Onderneming',
     actionLinks: [],
   }),
-  rechtspersonen: (KVK) => ({
+  rechtspersonen: KVK => ({
     title:
       KVK.content?.rechtspersonen.length &&
       KVK.content.rechtspersonen.length > 1
@@ -113,15 +133,15 @@ export const panelConfigCommercial: PanelConfig<KVKPanelKey> = {
         : 'Rechtspersoon',
     actionLinks: [],
   }),
-  hoofdVestiging: (KVK) => ({
+  hoofdVestiging: KVK => ({
     title: 'Hoofdvestiging',
     actionLinks: [],
   }),
-  vestigingen: (KVK) => ({
+  vestigingen: KVK => ({
     title: KVK.content.vestigingen.length > 1 ? 'Vestigingen' : 'Vestiging',
     actionLinks: [],
   }),
-  aandeelhouders: (KVK) => ({
+  aandeelhouders: KVK => ({
     title:
       KVK.content?.aandeelhouders.length &&
       KVK.content.aandeelhouders.length > 1
@@ -129,7 +149,7 @@ export const panelConfigCommercial: PanelConfig<KVKPanelKey> = {
         : 'Aandeelhouder',
     actionLinks: [],
   }),
-  bestuurders: (KVK) => ({
+  bestuurders: KVK => ({
     title:
       KVK.content?.bestuurders.length && KVK.content.bestuurders.length > 1
         ? 'Bestuurders'

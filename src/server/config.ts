@@ -140,6 +140,7 @@ export function getApiConfig(name: SourceApiKey, config?: DataRequestConfig) {
 
 export const BffEndpoints = {
   SERVICES_TIPS: `/services/tips`,
+  SERVICES_TIPS_REQUEST_DATA_OVERVIEW: `/services/tips/requestdataoverview`,
   SERVICES_ALL: `/services/all`,
   SERVICES_STREAM: `/services/stream`,
   HEALTH: `/status/health`,

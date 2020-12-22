@@ -12,6 +12,7 @@ export interface ActionLink {
   title: string;
   url: string;
   external?: boolean;
+  className?: string;
 }
 
 export type ActionLinksFormatter =
@@ -46,7 +47,11 @@ function InfoPanelActionLinks({ actionLinks }: InfoPanelActionLinksProps) {
     <ul className={styles.InfoPanelActionLinks}>
       {actionLinks.map((actionLink) => (
         <li key={actionLink.title}>
-          <Linkd href={actionLink.url} external={actionLink.external}>
+          <Linkd
+            className={actionLink.className || ''}
+            href={actionLink.url}
+            external={actionLink.external}
+          >
             {actionLink.title}
           </Linkd>
         </li>
