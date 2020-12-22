@@ -79,6 +79,7 @@ async function fetchDataset(
 
   if (datasetConfig.cache !== false) {
     dataCache = fileCache(datasetId, cacheTimeMinutes);
+
     const features = dataCache.getKey('features');
     const filters = dataCache.getKey('filters');
 
