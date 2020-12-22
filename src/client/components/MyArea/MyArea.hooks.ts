@@ -199,7 +199,6 @@ export function useOnMarkerClick() {
       // Using DOM access here because comparing against loadingFeature will invalidate the memoized calback constantly which re-renders the layer component
       if (loadingFeatureId !== id) {
         setLoadingFeature({
-          // ...loadingFeature,
           datasetId,
           id,
         });
