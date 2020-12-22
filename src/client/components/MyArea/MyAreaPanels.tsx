@@ -249,6 +249,7 @@ export function DatasetPropertyFilterPanel({
 }
 
 interface DatasePanelProps {
+  categoryId: DatasetCategoryId;
   datasetId: DatasetId;
   dataset: DatasetControl;
   onFilterControlItemChange: DatasetControlPanelProps['onFilterControlItemChange'];
@@ -257,6 +258,7 @@ interface DatasePanelProps {
 }
 
 export function DatasetPanel({
+  categoryId,
   datasetId,
   dataset,
   onFilterControlItemChange,
@@ -277,7 +279,7 @@ export function DatasetPanel({
       id={datasetId}
       label={
         <>
-          {getIcon(datasetId) || getIcon(datasetId, datasetId) || ''}
+          {getIcon(categoryId, datasetId) || ''}
           {dataset.title}
         </>
       }
@@ -362,7 +364,7 @@ export function DatasetControlPanel({
       id={categoryId}
       label={
         <>
-          {getIcon(categoryId) || ''}
+          {getIcon(categoryId, categoryId) || ''}
           {category.title}
         </>
       }
@@ -377,6 +379,7 @@ export function DatasetControlPanel({
   if (isSingleDatasetWithFilters) {
     return (
       <DatasetPanel
+        categoryId={categoryId}
         datasetId={datasetIds[0]}
         dataset={category.datasets[datasetIds[0]]}
         onFilterControlItemChange={onFilterControlItemChange}
@@ -393,6 +396,7 @@ export function DatasetControlPanel({
           return (
             <PanelListItem key={`dataset-${datasetId}`}>
               <DatasetPanel
+                categoryId={categoryId}
                 datasetId={datasetId}
                 dataset={dataset}
                 onFilterControlItemChange={onFilterControlItemChange}

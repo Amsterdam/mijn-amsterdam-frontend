@@ -83,21 +83,27 @@ export const datasetIcons: Record<
       </DatasetIcon>
     ),
   },
-  evenementen: (
-    <DatasetIcon style={{ backgroundColor: themeColors.supplement.purple }}>
-      <MapIconEvenement fill={themeColors.tint.level1} />
-    </DatasetIcon>
-  ),
-  bekendmakingen: (
-    <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-      <MapIconBekendmaking fill={themeColors.tint.level1} />
-    </DatasetIcon>
-  ),
-  sport: (
-    <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-      <MapIconSport fill={themeColors.tint.level1} />
-    </DatasetIcon>
-  ),
+  evenementen: {
+    evenementen: (
+      <DatasetIcon style={{ backgroundColor: themeColors.supplement.purple }}>
+        <MapIconEvenement fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+  },
+  bekendmakingen: {
+    bekendmakingen: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <MapIconBekendmaking fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+  },
+  sport: {
+    sport: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <MapIconSport fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+  },
   openbaresportplek: {
     voetbal: (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
@@ -125,11 +131,15 @@ export const datasetIcons: Record<
       </DatasetIcon>
     ),
   },
-  parkeren: (
-    <DatasetIcon style={{ backgroundColor: themeColors.supplement.lightblue }}>
-      <MapIconAuto fill={themeColors.tint.level1} />
-    </DatasetIcon>
-  ),
+  parkeren: {
+    parkeren: (
+      <DatasetIcon
+        style={{ backgroundColor: themeColors.supplement.lightblue }}
+      >
+        <MapIconAuto fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+  },
   parkeerzones: {
     oost: (
       <DatasetIcon
@@ -212,8 +222,10 @@ export function getIconChildIdFromValue(id: string, value: string) {
 
 export function getIconHtml(feature: MaPointFeature) {
   const datasetId = feature.properties.datasetId;
+
   let iconDefault = datasetIcons.default;
   let childId: undefined | string = undefined;
+
   switch (datasetId) {
     case 'afvalcontainers':
       childId = getIconChildIdFromValue(
@@ -234,7 +246,9 @@ export function getIconHtml(feature: MaPointFeature) {
       );
       break;
   }
+
   const icon = getIcon(datasetId, childId);
+  console.log(feature, icon, datasetId, childId);
   return renderToStaticMarkup(icon || iconDefault);
 }
 export const PARKEERZONES_POLYLINE_OPTIONS: Record<string, PolylineOptions> = {
