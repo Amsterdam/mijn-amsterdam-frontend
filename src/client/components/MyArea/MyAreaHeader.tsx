@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, matchPath, useHistory } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { ReactComponent as Logo } from '../../assets/images/logo-amsterdam.svg';
 import Linkd, { Button } from '../Button/Button';
@@ -28,9 +28,6 @@ export default function MyAreaHeader({
             styles.DirectSkipLinks
           )}
         >
-          <Linkd external={true} tabIndex={0} href="#skip-to-id-Map">
-            Direct naar: <b>Kaart</b>
-          </Linkd>
           <Linkd external={true} tabIndex={0} href="#skip-to-id-LegendPanel">
             Direct naar: <b>Legenda paneel</b>
           </Linkd>
@@ -49,7 +46,21 @@ export default function MyAreaHeader({
         <h1 className={styles.Title}>{termReplace(ChapterTitles.BUURT)}</h1>
       </Link>
       {showCloseButton && (
-        <Button onClick={() => history.goBack()}>Kaart sluiten</Button>
+        <Button
+          onClick={() => {
+            history.goBack();
+            // Skip the hashtag history of the DirectSkipLinks
+            if (
+              matchPath(history.location.pathname, {
+                path: AppRoutes.BUURT,
+              })
+            ) {
+              history.goBack();
+            }
+          }}
+        >
+          Kaart sluiten
+        </Button>
       )}
     </div>
   );
