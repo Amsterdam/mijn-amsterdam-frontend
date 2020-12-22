@@ -1,12 +1,13 @@
 import * as Sentry from '@sentry/node';
 import express, { NextFunction, Request, Response } from 'express';
 import { BffEndpoints } from './config';
-import { getPassthroughRequestHeaders } from './helpers/app';
+import { getPassthroughRequestHeaders, queryParams } from './helpers/app';
 import { fetchCMSCONTENT } from './services';
 import {
   loadServicesAll,
   loadServicesSSE,
   loadServicesTips,
+  loadServicesTipsRequestDataOverview,
 } from './services/controller';
 
 export const router = express.Router();
@@ -42,6 +43,12 @@ router.get(
 
 router.get(BffEndpoints.SERVICES_TIPS, loadServicesTips);
 
+// Function for easily extract the request data for the Tips service
+router.get(
+  BffEndpoints.SERVICES_TIPS_REQUEST_DATA_OVERVIEW,
+  loadServicesTipsRequestDataOverview
+);
+
 router.get(
   BffEndpoints.HEALTH,
   (req: Request, res: Response, next: NextFunction) => {
@@ -56,7 +63,7 @@ router.get(BffEndpoints.CMS_CONTENT, async (req, res, next) => {
     const response = await fetchCMSCONTENT(
       sessionID,
       getPassthroughRequestHeaders(req),
-      req.query as Record<string, string>
+      queryParams(req)
     );
     res.json(response);
   } catch (error) {

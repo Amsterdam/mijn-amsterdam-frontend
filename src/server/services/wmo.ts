@@ -67,6 +67,7 @@ export interface WmoItem {
   isActual: boolean; // Indicates if this item is designated Current or Previous
   link: LinkProps;
   steps: WmoProcessStep[];
+  voorzieningsoortcode: WmoApiItem['Voorzieningsoortcode'];
 }
 
 function isDateInFuture(dateStr: string | Date, compareDate: Date) {
@@ -720,6 +721,8 @@ export function transformWMOResponse(
           to: route,
         },
         steps,
+        // This field is added specifically for the Tips api.
+        voorzieningsoortcode: itemTypeCode,
       };
     });
 

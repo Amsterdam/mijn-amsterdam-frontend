@@ -47,6 +47,7 @@ Array [
     "supplier": null,
     "supplierUrl": "",
     "title": "Vervoerskostenvergoeding rolstoeltaxi of vervoer derden",
+    "voorzieningsoortcode": "VVK",
   },
   Object {
     "dateFinish": "08 maart 2020",
@@ -114,6 +115,7 @@ Array [
     "supplier": "Emile Thuiszorg",
     "supplierUrl": "",
     "title": "Hulp bij het huishouden",
+    "voorzieningsoortcode": "WMH",
   },
   Object {
     "dateFinish": "12 maart 2020",
@@ -181,6 +183,7 @@ Array [
     "supplier": "Amstelring",
     "supplierUrl": "",
     "title": "Dagbesteding",
+    "voorzieningsoortcode": "DBS",
   },
   Object {
     "dateFinish": "08 maart 2020",
@@ -248,6 +251,7 @@ Array [
     "supplier": "Amstelring",
     "supplierUrl": "",
     "title": "Ambulante ondersteuning",
+    "voorzieningsoortcode": "AO5",
   },
   Object {
     "dateFinish": "08 maart 2020",
@@ -315,6 +319,7 @@ Array [
     "supplier": "Amstelring",
     "supplierUrl": "",
     "title": "Dagbesteding 2019! 2",
+    "voorzieningsoortcode": "DBS",
   },
   Object {
     "dateFinish": "31 december 2019",
@@ -382,6 +387,7 @@ Array [
     "supplier": "Familysupporters/Forsa",
     "supplierUrl": "",
     "title": "Ambulante ondersteuning",
+    "voorzieningsoortcode": "AO5",
   },
   Object {
     "dateFinish": "31 december 2018",
@@ -448,6 +454,7 @@ Array [
     "supplier": "Familysupporters/Forsa",
     "supplierUrl": "",
     "title": "Ambulante ondersteuning",
+    "voorzieningsoortcode": "AO5",
   },
   Object {
     "dateFinish": "08 maart 2019",
@@ -514,6 +521,7 @@ Array [
     "supplier": "Amstelring",
     "supplierUrl": "",
     "title": "Ambulante ondersteuning",
+    "voorzieningsoortcode": "AO5",
   },
   Object {
     "dateFinish": "20 november 2019",
@@ -581,6 +589,7 @@ Array [
     "supplier": "Leger des Heils",
     "supplierUrl": "",
     "title": "Ambulante ondersteuning",
+    "voorzieningsoortcode": "AO5",
   },
   Object {
     "dateFinish": "",
@@ -648,6 +657,7 @@ Array [
     "supplier": "Welzorg",
     "supplierUrl": "",
     "title": "Woonruimteaanpassing",
+    "voorzieningsoortcode": "WRA",
   },
   Object {
     "dateFinish": "",
@@ -713,6 +723,7 @@ Array [
     "supplier": "Medipoint B.V.",
     "supplierUrl": "",
     "title": "Handbewogen rolstoel voor semi-permanent gebruik",
+    "voorzieningsoortcode": "ROL",
   },
   Object {
     "dateFinish": "",
@@ -780,6 +791,7 @@ Array [
     "supplier": "Welzorg",
     "supplierUrl": "",
     "title": "Woonruimteaanpassing",
+    "voorzieningsoortcode": "WRA",
   },
   Object {
     "dateFinish": "01 januari 2019",
@@ -846,6 +858,7 @@ Array [
     "supplier": "Vivium Zorggroep",
     "supplierUrl": "",
     "title": "Dagbesteding",
+    "voorzieningsoortcode": "DBS",
   },
   Object {
     "dateFinish": "",
@@ -913,6 +926,7 @@ Array [
     "supplier": "Welzorg",
     "supplierUrl": "",
     "title": "Woonruimteaanpassing",
+    "voorzieningsoortcode": "WRA",
   },
   Object {
     "dateFinish": "13 april 2019",
@@ -979,6 +993,7 @@ Array [
     "supplier": "Emile Thuiszorg",
     "supplierUrl": "",
     "title": "Hulp bij het huishouden",
+    "voorzieningsoortcode": "WMH",
   },
   Object {
     "dateFinish": "08 maart 2019",
@@ -1045,6 +1060,7 @@ Array [
     "supplier": "Amstelring",
     "supplierUrl": "",
     "title": "Dagbesteding 2019!",
+    "voorzieningsoortcode": "DBS",
   },
   Object {
     "dateFinish": "",
@@ -1089,6 +1105,7 @@ Array [
     "supplier": "Transvision",
     "supplierUrl": "",
     "title": "Deur tot deur Plus vervoer",
+    "voorzieningsoortcode": "AOV",
   },
   Object {
     "dateFinish": "21 februari 2019",
@@ -1155,6 +1172,7 @@ Array [
     "supplier": "2Learn B.V.",
     "supplierUrl": "",
     "title": "Ambulante ondersteuning",
+    "voorzieningsoortcode": "AO5",
   },
   Object {
     "dateFinish": "30 december 2018",
@@ -1221,6 +1239,7 @@ Array [
     "supplier": "Stichting Forsa Amsterdam",
     "supplierUrl": "",
     "title": "Ambulante ondersteuning",
+    "voorzieningsoortcode": "AO5",
   },
   Object {
     "dateFinish": "16 februari 2018",
@@ -1287,6 +1306,7 @@ Array [
     "supplier": "Cordaan",
     "supplierUrl": "",
     "title": "Ambulante ondersteuning",
+    "voorzieningsoortcode": "AO5",
   },
   Object {
     "dateFinish": "27 november 2018",
@@ -1334,6 +1354,7 @@ Array [
     "supplier": null,
     "supplierUrl": "",
     "title": "Hulp bij het huishouden (Pgb)",
+    "voorzieningsoortcode": "WMH",
   },
   Object {
     "dateFinish": "23 november 2018",
@@ -1400,6 +1421,7 @@ Array [
     "supplier": "Amstelring",
     "supplierUrl": "",
     "title": "Ambulante ondersteuning",
+    "voorzieningsoortcode": "AO5",
   },
   Object {
     "dateFinish": "26 februari 2018",
@@ -1444,6 +1466,7 @@ Array [
     "supplier": "Transvision",
     "supplierUrl": "",
     "title": "Deur tot deur Plus vervoer",
+    "voorzieningsoortcode": "AOV",
   },
   Object {
     "dateFinish": "08 maart 2018",
@@ -1510,6 +1533,7 @@ Array [
     "supplier": "Amstelring",
     "supplierUrl": "",
     "title": "Dagbesteding",
+    "voorzieningsoortcode": "DBS",
   },
   Object {
     "dateFinish": "13 april 2018",
@@ -1576,6 +1600,7 @@ Array [
     "supplier": "Emile Thuiszorg",
     "supplierUrl": "",
     "title": "Hulp bij het huishouden",
+    "voorzieningsoortcode": "WMH",
   },
   Object {
     "dateFinish": "01 mei 2018",
@@ -1642,6 +1667,7 @@ Array [
     "supplier": "Cordaan",
     "supplierUrl": "",
     "title": "Dagbesteding",
+    "voorzieningsoortcode": "DBS",
   },
   Object {
     "dateFinish": "16 februari 2018",
@@ -1708,6 +1734,7 @@ Array [
     "supplier": "Cordaan",
     "supplierUrl": "",
     "title": "Hulp bij het huishouden",
+    "voorzieningsoortcode": "WMH",
   },
   Object {
     "dateFinish": "02 januari 2018",
@@ -1722,6 +1749,7 @@ Array [
     "supplier": undefined,
     "supplierUrl": "",
     "title": "Specialistische jeugdhulp",
+    "voorzieningsoortcode": "JG01",
   },
   Object {
     "dateFinish": "",
@@ -1766,6 +1794,7 @@ Array [
     "supplier": "Transvision",
     "supplierUrl": "",
     "title": "Deur tot deur Plus vervoer",
+    "voorzieningsoortcode": "AOV",
   },
   Object {
     "dateFinish": "",
@@ -1833,6 +1862,7 @@ Array [
     "supplier": "Ergomedi Bouw B.V.",
     "supplierUrl": "",
     "title": "Woonruimteaanpassing",
+    "voorzieningsoortcode": "WRA",
   },
   Object {
     "dateFinish": "",
@@ -1898,6 +1928,7 @@ Array [
     "supplier": "Medipoint B.V.",
     "supplierUrl": "",
     "title": "Scootmobiel voor buitengebruik",
+    "voorzieningsoortcode": "SCO",
   },
   Object {
     "dateFinish": "",
@@ -1963,6 +1994,7 @@ Array [
     "supplier": "Medipoint B.V.",
     "supplierUrl": "",
     "title": "Elektrische hulpaandrijving voor rolstoel",
+    "voorzieningsoortcode": "OVE",
   },
   Object {
     "dateFinish": "",
@@ -2030,6 +2062,7 @@ Array [
     "supplier": "Gebr Koenen B.V.",
     "supplierUrl": "",
     "title": "Woonruimteaanpassing",
+    "voorzieningsoortcode": "WRA",
   },
   Object {
     "dateFinish": "",
@@ -2097,6 +2130,7 @@ Array [
     "supplier": "Gebr Koenen B.V.",
     "supplierUrl": "",
     "title": "Woonruimteaanpassing",
+    "voorzieningsoortcode": "WRA",
   },
   Object {
     "dateFinish": "",
@@ -2141,6 +2175,7 @@ Array [
     "supplier": "RMC Amsterdam",
     "supplierUrl": "",
     "title": "Deur tot deur, samenreizend vervoer",
+    "voorzieningsoortcode": "AOV",
   },
   Object {
     "dateFinish": "",
@@ -2208,6 +2243,7 @@ Array [
     "supplier": "Gebr Koenen B.V.",
     "supplierUrl": "",
     "title": "Woonruimteaanpassing",
+    "voorzieningsoortcode": "WRA",
   },
   Object {
     "dateFinish": "",
@@ -2273,6 +2309,7 @@ Array [
     "supplier": "Welzorg",
     "supplierUrl": "",
     "title": "Kinderspeelvoertuig",
+    "voorzieningsoortcode": "OVE",
   },
   Object {
     "dateFinish": "",
@@ -2338,6 +2375,7 @@ Array [
     "supplier": "Medipoint B.V.",
     "supplierUrl": "",
     "title": "Handbewogen rolstoel",
+    "voorzieningsoortcode": "ROL",
   },
   Object {
     "dateFinish": "",
@@ -2403,6 +2441,7 @@ Array [
     "supplier": "Medipoint B.V.",
     "supplierUrl": "",
     "title": "Douche-/toiletstoel (verrijdbaar/kantelbaar/individueel aangepast)",
+    "voorzieningsoortcode": "RWD",
   },
   Object {
     "dateFinish": "07 september 2012",
@@ -2447,6 +2486,7 @@ Array [
     "supplier": "Transvision",
     "supplierUrl": "",
     "title": "Kamer tot kamer vervoer !!1!!",
+    "voorzieningsoortcode": "AOV",
   },
 ]
 `;
