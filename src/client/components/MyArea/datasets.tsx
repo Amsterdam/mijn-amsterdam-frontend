@@ -245,10 +245,13 @@ export function getIconHtml(feature: MaPointFeature) {
         feature.properties.gebiedsnaam
       );
       break;
+    default:
+      childId = datasetId;
+      break;
   }
 
   const icon = getIcon(datasetId, childId);
-  console.log(feature, icon, datasetId, childId);
+
   return renderToStaticMarkup(icon || iconDefault);
 }
 export const PARKEERZONES_POLYLINE_OPTIONS: Record<string, PolylineOptions> = {
