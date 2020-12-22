@@ -43,7 +43,6 @@ export function SectionCollapsibleHeading({
       <button
         aria-expanded={isAriaExpanded}
         className={styles.TitleToggle}
-        onKeyPress={event => toggleCollapsed(event)}
         onClick={event => toggleCollapsed(event)}
       >
         <IconChevronRight aria-hidden="true" className={styles.CaretIcon} />{' '}
