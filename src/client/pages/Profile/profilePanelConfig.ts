@@ -28,7 +28,7 @@ type PanelConfig<T extends string> = {
 };
 
 export const panelConfig: PanelConfig<BRPPanelKey> = {
-  persoon: BRP => {
+  persoon: (BRP) => {
     const actionLinks = [];
 
     if (isMokum(BRP.content)) {
@@ -44,7 +44,7 @@ export const panelConfig: PanelConfig<BRPPanelKey> = {
       actionLinks,
     };
   },
-  adres: BRP => {
+  adres: (BRP) => {
     const title = isMokum(BRP.content)
       ? 'Verhuizing doorgeven'
       : 'Verhuizing naar Amsterdam doorgeven';
@@ -74,7 +74,7 @@ export const panelConfig: PanelConfig<BRPPanelKey> = {
       actionLinks,
     };
   },
-  verbintenis: BRP => ({
+  verbintenis: (BRP) => ({
     title: 'Burgerlijke staat',
     actionLinks: isMokum(BRP.content)
       ? [
@@ -86,7 +86,7 @@ export const panelConfig: PanelConfig<BRPPanelKey> = {
         ]
       : [],
   }),
-  verbintenisHistorisch: BRP => ({
+  verbintenisHistorisch: (BRP) => ({
     title: 'Eerdere huwelijken of partnerschappen',
     actionLinks: isMokum(BRP.content)
       ? [
@@ -102,7 +102,7 @@ export const panelConfig: PanelConfig<BRPPanelKey> = {
     title: 'Ouders',
     actionLinks: [],
   },
-  kinderen: BRP => ({
+  kinderen: (BRP) => ({
     title: 'Kinderen',
     actionLinks: isMokum(BRP.content)
       ? [
@@ -121,11 +121,11 @@ export const panelConfig: PanelConfig<BRPPanelKey> = {
 };
 
 export const panelConfigCommercial: PanelConfig<KVKPanelKey> = {
-  onderneming: KVK => ({
+  onderneming: (KVK) => ({
     title: 'Onderneming',
     actionLinks: [],
   }),
-  rechtspersonen: KVK => ({
+  rechtspersonen: (KVK) => ({
     title:
       KVK.content?.rechtspersonen.length &&
       KVK.content.rechtspersonen.length > 1
@@ -133,15 +133,15 @@ export const panelConfigCommercial: PanelConfig<KVKPanelKey> = {
         : 'Rechtspersoon',
     actionLinks: [],
   }),
-  hoofdVestiging: KVK => ({
+  hoofdVestiging: (KVK) => ({
     title: 'Hoofdvestiging',
     actionLinks: [],
   }),
-  vestigingen: KVK => ({
+  vestigingen: (KVK) => ({
     title: KVK.content.vestigingen.length > 1 ? 'Vestigingen' : 'Vestiging',
     actionLinks: [],
   }),
-  aandeelhouders: KVK => ({
+  aandeelhouders: (KVK) => ({
     title:
       KVK.content?.aandeelhouders.length &&
       KVK.content.aandeelhouders.length > 1
@@ -149,7 +149,7 @@ export const panelConfigCommercial: PanelConfig<KVKPanelKey> = {
         : 'Aandeelhouder',
     actionLinks: [],
   }),
-  bestuurders: KVK => ({
+  bestuurders: (KVK) => ({
     title:
       KVK.content?.bestuurders.length && KVK.content.bestuurders.length > 1
         ? 'Bestuurders'
