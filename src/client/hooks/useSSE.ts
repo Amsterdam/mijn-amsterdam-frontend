@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, useRef } from 'react';
-export const SSE_ERROR_MESSAGE = 'sse-error';
 
-export const MAX_CONNECTION_RETRY_COUNT = 5;
+export const SSE_ERROR_MESSAGE = 'sse-error';
+export const MAX_CONNECTION_RETRY_COUNT = 3;
 
 interface useSSEProps {
   path: string;
@@ -40,11 +40,11 @@ export function useSSE({
     }
 
     const handleOpen = () => {
+      connectionCounter.current += 1;
       console.info(
         '[SSE] Open connection, connectionCount: ',
         connectionCounter.current
       );
-      connectionCounter.current += 1;
     };
 
     const closeEventSource = () => {
@@ -57,7 +57,12 @@ export function useSSE({
     };
 
     const handleError = (error: any) => {
-      console.info('[SSE] Error connecting, ES ReadyState:', es.readyState);
+      console.info(
+        '[SSE] Error connecting, ES ReadyState:',
+        es.readyState,
+        'count: ',
+        connectionCounter.current
+      );
 
       switch (true) {
         // Trying to connect but responding with an error

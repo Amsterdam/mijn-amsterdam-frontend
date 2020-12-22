@@ -48,6 +48,7 @@ router.get(
       'Cache-Control': 'no-cache, no-transform',
       Connection: 'keep-alive',
     });
+
     res.write('retry: 1000\n');
     loadServicesSSE(req, res);
   }
