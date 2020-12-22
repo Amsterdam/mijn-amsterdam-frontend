@@ -250,7 +250,7 @@ function loadServices(
     .map(([serviceID, fetchService]) => {
       // Return service result as Object like { SERVICE_ID: result }
       return (fetchService(sessionID, req) as Promise<any>)
-        .then((result) => ({
+        .then(result => ({
           [serviceID]: result,
         }))
         .catch((error: Error) => {
@@ -288,7 +288,7 @@ export async function loadServicesSSE(req: Request, res: Response) {
 
   // Send service results to tips api for personalized tips
   const tipsPromise = loadServicesTipsRequestData(sessionID, req).then(
-    (responseData) => {
+    responseData => {
       return { TIPS: responseData };
     }
   );
@@ -326,9 +326,12 @@ export async function loadServicesAll(req: Request, res: Response) {
   return Object.assign(serviceResults, tipsResult);
 }
 
-async function loadServicesTipsRequestData(sessionID: SessionID, req: Request) {
-  let requestData = null;
+/**
+ * TIPS specific services
+ */
 
+async function createTipsServiceResults(sessionID: SessionID, req: Request) {
+  let requestData = null;
   if (queryParams(req).optin === 'true') {
     const servicePromises = loadServices(sessionID, req, servicesTips);
     requestData = (await Promise.allSettled(servicePromises)).reduce(
@@ -336,12 +339,15 @@ async function loadServicesTipsRequestData(sessionID: SessionID, req: Request) {
       {}
     );
   }
+  return requestData;
+}
 
+async function loadServicesTipsRequestData(sessionID: SessionID, req: Request) {
   return fetchTIPS(
     sessionID,
     getPassthroughRequestHeaders(req),
     req.query as Record<string, string>,
-    requestData
+    await createTipsServiceResults(sessionID, req)
   ).catch((error: Error) => {
     Sentry.captureException(error);
     return apiErrorResult(`Could not load TIPS, error: ${error.message}`, null);
@@ -357,6 +363,18 @@ export async function loadServicesTips(
 ) {
   const sessionID = res.locals.sessionID;
   const result = await loadServicesTipsRequestData(sessionID, req);
+  res.json(result);
+  next();
+}
+
+export async function loadServicesTipsRequestDataOverview(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const sessionID = res.locals.sessionID;
+  req.query.optin = 'true';
+  const result = await createTipsServiceResults(sessionID, req);
   res.json(result);
   next();
 }

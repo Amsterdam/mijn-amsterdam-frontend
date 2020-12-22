@@ -68,13 +68,10 @@ function createTipsRequestDataFromServiceResults(
   };
 }
 
-export async function fetchTIPS(
-  sessionID: string,
-  passthroughRequestHeaders: Record<string, string>,
+export function createTipsRequestData(
   requestParams: Record<string, string>,
   serviceResults: ServiceResults | null
 ) {
-  const params = getTipsRequestParams(requestParams);
   const optin = requestParams.optin === 'true';
   const tipsRequestData: TIPSRequestData = {
     optin,
@@ -86,6 +83,16 @@ export async function fetchTIPS(
       createTipsRequestDataFromServiceResults(serviceResults)
     );
   }
+}
+
+export async function fetchTIPS(
+  sessionID: string,
+  passthroughRequestHeaders: Record<string, string>,
+  requestParams: Record<string, string>,
+  serviceResults: ServiceResults | null
+) {
+  const params = getTipsRequestParams(requestParams);
+  const tipsRequestData = createTipsRequestData(requestParams, serviceResults);
 
   return requestData<TIPSData>(
     getApiConfig('TIPS', {

@@ -7,6 +7,7 @@ import {
   loadServicesAll,
   loadServicesSSE,
   loadServicesTips,
+  loadServicesTipsRequestDataOverview,
 } from './services/controller';
 
 export const router = express.Router();
@@ -41,6 +42,12 @@ router.get(
 );
 
 router.get(BffEndpoints.SERVICES_TIPS, loadServicesTips);
+
+// Function for easily extract the request data for the Tips service
+router.get(
+  BffEndpoints.SERVICES_TIPS_REQUEST_DATA_OVERVIEW,
+  loadServicesTipsRequestDataOverview
+);
 
 router.get(
   BffEndpoints.HEALTH,
