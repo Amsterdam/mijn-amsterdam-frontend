@@ -13,9 +13,6 @@
 
 .TipItem {
   width: calc((100% / 3) - 3%);
-  p {
-    margin-top: 1.2rem;
-  }
   margin-bottom: 2rem;
   @include mq-phone() {
     width: 100%;
@@ -102,6 +99,7 @@
   padding: 1rem;
   color: $color-white;
   z-index: 1;
+  margin: 0;
 
   span {
     display: block;
