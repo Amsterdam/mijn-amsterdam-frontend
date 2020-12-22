@@ -232,7 +232,7 @@ export default function MyArea({
       <MyAreaContainer>
         {!!showHeader && <MyAreaHeader showCloseButton={true} />}
         <MyAreaMapContainer ref={mapContainerRef}>
-          <MyAreaMapOffset>
+          <MyAreaMapOffset id="skip-to-id-Map">
             <MyAreaMap
               fullScreen={true}
               aria-label={`Uitgebreide kaart van ${termReplace(

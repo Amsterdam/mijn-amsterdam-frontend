@@ -180,6 +180,7 @@ export function useSelectedFeatureCSS(
           document
             ?.querySelector(`.${selectedFeatureSelector}`)
             ?.classList.remove(selectedFeatureSelector);
+
           element.classList.add(selectedFeatureSelector);
         }
       });

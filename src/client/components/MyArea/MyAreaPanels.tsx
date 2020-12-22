@@ -424,7 +424,7 @@ export function MyAreaLegendPanel() {
   const [activeDatasetIds] = useActiveDatasetIds();
 
   return (
-    <CategoryPanel>
+    <CategoryPanel id="skip-to-id-LegendPanel">
       {datasets
         .filter(([categoryId, category]) => !category.isDisabled)
         .map(([categoryId, category]) => (
