@@ -1,6 +1,11 @@
 {
   "name": "mijn-amsterdam-frontend",
   "version": "2.26.9",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Amsterdam/mijn-amsterdam-frontend.git"
+  },
+  "license": "Mozilla Public License 2.0",
   "scripts": {
     "analyze": "npx source-map-explorer 'build/static/js/*.js'",
     "build": "react-scripts build && npm run bff-api:build",
@@ -36,7 +41,6 @@
     }
   },
   "dependencies": {
-    "@amsterdam/arm-cluster": "^0.4.0",
     "@amsterdam/arm-core": "^0.4.0",
     "@amsterdam/asc-assets": "^0.26.2",
     "@amsterdam/asc-ui": "^0.26.2",
