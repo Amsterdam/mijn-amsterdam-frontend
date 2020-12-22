@@ -34,18 +34,21 @@ export default function MyArePanelContentAfval({
       title={panelItem.fractieOmschrijving || panelItem.serienummer}
       supTitle="Afvalcontainers"
     >
-      {!panelItem.geadopteerdInd && panelItem.fractieOmschrijving && (
-        <p>
-          Deze container kunt u adopteren!
-          <br />{' '}
-          <LinkdInline
-            external={true}
-            href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BA6316561-BBC0-42A0-810F-74A7CCFA188D%7D"
-          >
-            Lees hier hoe
-          </LinkdInline>
-        </p>
-      )}
+      {!panelItem.geadopteerdInd &&
+        panelItem.fractieOmschrijving &&
+        // You can't adopt a Kerstboom inzamellocatie
+        !panelItem.fractieOmschrijving.startsWith('Kerst') && (
+          <p>
+            Deze container kunt u adopteren!
+            <br />{' '}
+            <LinkdInline
+              external={true}
+              href="https://www.amsterdam.nl/veelgevraagd/?productid=%7BA6316561-BBC0-42A0-810F-74A7CCFA188D%7D"
+            >
+              Lees hier hoe
+            </LinkdInline>
+          </p>
+        )}
       {!!infoUrl && (
         <p>
           Wat mag er{' '}
