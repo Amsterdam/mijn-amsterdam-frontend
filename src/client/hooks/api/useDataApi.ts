@@ -1,14 +1,21 @@
 import * as Sentry from '@sentry/browser';
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, {
+  AxiosRequestConfig,
+  AxiosResponse,
+  AxiosTransformer,
+} from 'axios';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { apiErrorResult } from '../../../universal/helpers/api';
 import { Action } from '../../../universal/types';
+import { BFF_API_HEALTH_URL } from '../../config/api';
 
 export interface ApiRequestOptions extends AxiosRequestConfig {
   postpone?: boolean;
 }
 
 const REQUEST_TIMEOUT = 20000; // 20seconds;
+const MAX_POLL_COUNT = 5;
+const POLL_INTERVAL_MS = 1000;
 
 export const requestApiData = axios.create({
   responseType: 'json', // default
@@ -112,18 +119,23 @@ export function useDataApi<T>(
       let source = axios.CancelToken.source();
 
       requestTimeout = setTimeout(() => {
-        source.cancel('useDataApi request timeout.');
+        source.cancel('Request timeout.');
       }, REQUEST_TIMEOUT);
 
       dispatch({
         type: ActionTypes.FETCH_INIT,
       });
 
-      const requestOptionsFinal = {
+      const requestOptionsFinal: AxiosRequestConfig = {
         ...DEFAULT_REQUEST_OPTIONS,
         ...requestOptions,
         cancelToken: source.token,
       };
+      if (requestOptions.transformResponse) {
+        requestOptionsFinal.transformResponse = addAxiosResponseTransform(
+          requestOptions.transformResponse
+        );
+      }
 
       try {
         const result = await requestApiData(requestOptionsFinal);
@@ -181,4 +193,69 @@ export function useDataApi<T>(
   return useMemo(() => {
     return [state, refetch];
   }, [state, refetch]);
+}
+
+export function pollBffHealth() {
+  let pollCount = 0;
+  console.info('Start polling for BFF health.');
+
+  return new Promise((resolve, reject) => {
+    function poll() {
+      pollCount += 1;
+      if (pollCount <= MAX_POLL_COUNT) {
+        axios({ url: BFF_API_HEALTH_URL, responseType: 'json' })
+          .then((response: AxiosResponse<any>) => {
+            console.info(
+              'Health check response',
+              response.data,
+              response.headers
+            );
+            if (
+              typeof response.data !== 'string' &&
+              response.data?.status === 'OK'
+            ) {
+              Sentry.captureMessage(
+                `Polling for health succeeded after ${pollCount} tries.`
+              );
+              resolve(response);
+            } else {
+              Sentry.captureMessage(
+                'Could not connect to server, BFF did not reply with response we expect.',
+                {
+                  extra: {
+                    responseData: response.data,
+                    pollCount,
+                  },
+                }
+              );
+              reject();
+            }
+          })
+          .catch((error) => {
+            console.info('Request failed', pollCount, error.message);
+            setTimeout(() => {
+              poll();
+            }, POLL_INTERVAL_MS);
+          });
+      } else {
+        reject(
+          'Could not connect to server, BFF not healthy max poll count reached.'
+        );
+      }
+    }
+    poll();
+  });
+}
+
+export function addAxiosResponseTransform(
+  transformer: AxiosTransformer | AxiosTransformer[]
+) {
+  return [
+    ...(Array.isArray(requestApiData.defaults.transformResponse)
+      ? requestApiData.defaults.transformResponse
+      : requestApiData.defaults.transformResponse
+      ? [requestApiData.defaults.transformResponse]
+      : []),
+    ...(Array.isArray(transformer) ? transformer : [transformer]),
+  ];
 }
