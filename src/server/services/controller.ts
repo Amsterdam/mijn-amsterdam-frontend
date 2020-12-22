@@ -21,7 +21,7 @@ import { fetchGenerated } from './generated';
 import { fetchHOME } from './home';
 import { fetchKVK } from './kvk';
 import { fetchMILIEUZONE } from './milieuzone';
-import { fetchTIPS } from './tips';
+import { fetchTIPS, createTipsRequestData } from './tips';
 import { fetchVergunningen } from './vergunningen';
 import { fetchWMO } from './wmo';
 import { fetchStadspas } from './focus/focus-stadspas';
@@ -372,6 +372,6 @@ export async function loadServicesTipsRequestDataOverview(
   const sessionID = res.locals.sessionID;
   req.query.optin = 'true';
   const result = await createTipsServiceResults(sessionID, req);
-  res.json(result);
+  res.json(createTipsRequestData(queryParams(req), result));
   next();
 }

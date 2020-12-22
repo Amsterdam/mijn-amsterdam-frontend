@@ -15,17 +15,15 @@ export interface TIPSRequestData {
   tips?: MyTip[];
 }
 
-export function getTipsRequestParams(requestParams: Record<string, string>) {
+export function getTipsRequestParams(queryParams: Record<string, string>) {
   const params: TIPSParams = {
     audience: 'persoonlijk',
   };
-  if (requestParams.profileType) {
-    switch (requestParams.profileType) {
-      case 'private-commercial':
-      case 'commercial':
-        params.audience = 'zakelijk';
-        break;
-    }
+  switch (queryParams.profileType) {
+    case 'private-commercial':
+    case 'commercial':
+      params.audience = 'zakelijk';
+      break;
   }
   return params;
 }
@@ -69,10 +67,10 @@ function createTipsRequestDataFromServiceResults(
 }
 
 export function createTipsRequestData(
-  requestParams: Record<string, string>,
+  queryParams: Record<string, string>,
   serviceResults: ServiceResults | null
 ) {
-  const optin = requestParams.optin === 'true';
+  const optin = queryParams.optin === 'true';
   const tipsRequestData: TIPSRequestData = {
     optin,
   };
@@ -83,16 +81,20 @@ export function createTipsRequestData(
       createTipsRequestDataFromServiceResults(serviceResults)
     );
   }
+
+  return tipsRequestData;
 }
 
 export async function fetchTIPS(
   sessionID: string,
   passthroughRequestHeaders: Record<string, string>,
-  requestParams: Record<string, string>,
+  queryParams: Record<string, string>,
   serviceResults: ServiceResults | null
 ) {
-  const params = getTipsRequestParams(requestParams);
-  const tipsRequestData = createTipsRequestData(requestParams, serviceResults);
+  const params = getTipsRequestParams(queryParams);
+  const tipsRequestData = createTipsRequestData(queryParams, serviceResults);
+
+  console.log('tipsRequestDatatipsRequestDatatipsRequestData', tipsRequestData);
 
   return requestData<TIPSData>(
     getApiConfig('TIPS', {

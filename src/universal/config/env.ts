@@ -41,6 +41,8 @@ const otapServerEnv: OtapEnv = {
       'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
     ssoErfpachtUrlEH:
       'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtZakelijk',
+    bffSentryDsn:
+      'https://d9bff634090c4624bce9ba7d8f0875dd@sentry.data.amsterdam.nl/13',
   },
   test: {
     isMyAreaMapEnabled: false,

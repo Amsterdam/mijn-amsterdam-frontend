@@ -27,6 +27,13 @@ const options: Sentry.NodeOptions = {
   dsn: getOtapEnvItem('bffSentryDsn'),
   environment: ENV,
   debug: isDebug,
+  beforeSend(event, hint) {
+    if (isDebug) {
+      console.log(hint);
+      return null;
+    }
+    return event;
+  },
   release: 'mijnamsterdam-bff@' + process.env.npm_package_version,
 };
 
