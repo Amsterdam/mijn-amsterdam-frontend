@@ -75,3 +75,5 @@ export const Breakpoints = {
   tablet: 1024, // px
   phone: 640, // px
 };
+
+export const DEFAULT_PROFILE_TYPE = 'private';

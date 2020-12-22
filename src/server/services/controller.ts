@@ -5,6 +5,8 @@ import {
   addServiceResultHandler,
   getPassthroughRequestHeaders,
   sendMessage,
+  getProfileType,
+  queryParams,
 } from '../helpers/app';
 import { fetchAFVAL, fetchAFVALPUNTEN } from './afval/afval';
 import { fetchBELASTING } from './belasting';
@@ -24,19 +26,13 @@ import { fetchVergunningen } from './vergunningen';
 import { fetchWMO } from './wmo';
 import { fetchStadspas } from './focus/focus-stadspas';
 
-const DEFAULT_PROFILE_TYPE = 'private';
-
-function queryParams(req: Request) {
-  return req.query as Record<string, string>;
-}
-
-function getProfileType(req: Request) {
-  return (queryParams(req).profileType as ProfileType) || DEFAULT_PROFILE_TYPE;
-}
-
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
   return (sessionID: SessionID, req: Request) =>
-    fetchService(sessionID, getPassthroughRequestHeaders(req), req.query);
+    fetchService(
+      sessionID,
+      getPassthroughRequestHeaders(req),
+      queryParams(req)
+    );
 }
 
 function getServiceMap(profileType: ProfileType) {
@@ -329,6 +325,7 @@ export async function loadServicesAll(req: Request, res: Response) {
 /**
  * TIPS specific services
  */
+export type ServicesTips = ReturnTypeAsync<typeof loadServicesTipsRequestData>;
 
 async function createTipsServiceResults(sessionID: SessionID, req: Request) {
   let requestData = null;
@@ -343,18 +340,18 @@ async function createTipsServiceResults(sessionID: SessionID, req: Request) {
 }
 
 async function loadServicesTipsRequestData(sessionID: SessionID, req: Request) {
+  const serviceResults = await createTipsServiceResults(sessionID, req);
+
   return fetchTIPS(
     sessionID,
     getPassthroughRequestHeaders(req),
-    req.query as Record<string, string>,
-    await createTipsServiceResults(sessionID, req)
+    queryParams(req),
+    serviceResults
   ).catch((error: Error) => {
     Sentry.captureException(error);
     return apiErrorResult(`Could not load TIPS, error: ${error.message}`, null);
   });
 }
-
-export type ServicesTips = ReturnTypeAsync<typeof loadServicesTipsRequestData>;
 
 export async function loadServicesTips(
   req: Request,

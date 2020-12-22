@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/node';
 import express, { NextFunction, Request, Response } from 'express';
 import { BffEndpoints } from './config';
-import { getPassthroughRequestHeaders } from './helpers/app';
+import { getPassthroughRequestHeaders, queryParams } from './helpers/app';
 import { fetchCMSCONTENT } from './services';
 import {
   loadServicesAll,
@@ -63,7 +63,7 @@ router.get(BffEndpoints.CMS_CONTENT, async (req, res, next) => {
     const response = await fetchCMSCONTENT(
       sessionID,
       getPassthroughRequestHeaders(req),
-      req.query as Record<string, string>
+      queryParams(req)
     );
     res.json(response);
   } catch (error) {
