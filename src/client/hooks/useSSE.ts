@@ -40,11 +40,11 @@ export function useSSE({
     }
 
     const handleOpen = () => {
+      connectionCounter.current += 1;
       console.info(
         '[SSE] Open connection, connectionCount: ',
         connectionCounter.current
       );
-      connectionCounter.current += 1;
     };
 
     const closeEventSource = () => {

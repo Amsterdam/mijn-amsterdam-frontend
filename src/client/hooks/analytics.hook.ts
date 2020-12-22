@@ -48,7 +48,7 @@ export function trackEventWithProfileType(
     MatomoInstance.trackEvent({
       ...payload,
       customDimensions: [
-        ...(payload.customDimensions || []),
+        ...((payload.customDimensions as CustomDimension[]) || []),
         profileTypeDimension(profileType),
       ],
     })
