@@ -84,6 +84,7 @@ describe('requestData.ts', () => {
 
     expect(await cache.get(CACHE_KEY_1).promise).toStrictEqual(rs);
 
+    // Should clear the cache timeout
     jest.runAllTimers();
 
     expect(cache.get(CACHE_KEY_1)).toBe(null);

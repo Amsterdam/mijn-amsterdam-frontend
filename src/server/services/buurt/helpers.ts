@@ -12,7 +12,6 @@ import {
   DATASETS,
   getDatasetCategoryId,
 } from '../../../universal/config/buurt';
-import { recLookup } from '../../../universal/helpers';
 import { LatLngTuple } from 'leaflet';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 
@@ -31,7 +30,7 @@ export function getDatasetEndpointConfig(
     .filter(([id, config]) => {
       const hasDatasetId =
         DATASETS[id] &&
-        Object.keys(DATASETS[id].datasets).some(datasetId =>
+        Object.keys(DATASETS[id].datasets).some((datasetId) =>
           endpointIDs?.includes(datasetId)
         );
       const isEndpoint = endpointIDs?.includes(id);
@@ -216,7 +215,7 @@ export function filterDatasetFeatures(
     .filter((feature): feature is MaPointFeature => {
       return activeDatasetIds.includes(feature.properties.datasetId);
     })
-    .filter(feature => {
+    .filter((feature) => {
       if (filters[feature.properties.datasetId]) {
         return isFilterMatch(feature, filters[feature.properties.datasetId]);
       }

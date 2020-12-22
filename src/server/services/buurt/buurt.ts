@@ -42,7 +42,9 @@ const fileCache = (name: string, cacheTimeMinutes: number) => {
   return fileCaches[name];
 };
 
-function datasetApiResult(results: ApiResponse<DatasetResponse | null>[]) {
+export function datasetApiResult(
+  results: ApiResponse<DatasetResponse | null>[]
+) {
   const errors = results
     .filter(
       (result): result is ApiErrorResponse<null> => result.status === 'ERROR'
@@ -65,7 +67,7 @@ function datasetApiResult(results: ApiResponse<DatasetResponse | null>[]) {
   };
 }
 
-async function fetchDataset(
+export async function fetchDataset(
   sessionID: SessionID,
   datasetId: DatasetId,
   datasetConfig: DatasetConfig,
