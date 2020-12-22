@@ -24,7 +24,7 @@ describe('useAppState', () => {
   const fetchFallbackService = jest.fn();
 
   let appData: any = initialAppState;
-  const setAppState = jest.fn(data => {
+  const setAppState = jest.fn((data) => {
     appData = data(appData);
   });
   const useRecoilStateMock = jest.fn(() => [appData, setAppState]);
@@ -32,7 +32,7 @@ describe('useAppState', () => {
   const useProfileTypeMock = jest.fn(() => ['private']);
   const useProfileTypeValueMock = jest.fn(() => 'private');
   const useOptInValueMock = jest.fn(() => true);
-  const transformAppStateMock = jest.fn(data => data);
+  const transformAppStateMock = jest.fn((data) => data);
 
   // @ts-ignore
   const useTipsApi = (tipsHook.useTipsApi = jest.fn(() => {
@@ -64,22 +64,6 @@ describe('useAppState', () => {
     },
     fetchFallbackService,
   ]));
-  // @ts-ignore
-  const pollBffHealth = (dataApiHook.pollBffHealth = jest.fn(() => {
-    return {
-      then(callback: any) {
-        callback();
-        return {
-          catch(callback: any) {
-            return callback();
-          },
-        };
-      },
-      catch(callback: any) {
-        return callback();
-      },
-    };
-  }));
 
   beforeAll(() => {
     (window as any).console.info = jest.fn();
@@ -98,7 +82,6 @@ describe('useAppState', () => {
     useDataApi.mockClear();
     useTipsApi.mockClear();
     useSSE.mockClear();
-    pollBffHealth.mockClear();
     useRecoilState.mockClear();
     useProfileType.mockClear();
     useOptInValue.mockClear();
@@ -156,20 +139,17 @@ describe('useAppState', () => {
       {
         isLoading: false,
         isError: false,
-        data: stateSliceMock,
+        data: stateSliceMock as any,
         isPristine: false,
         isDirty: true,
       },
       fetchFallbackService,
     ]);
 
-    pollBffHealth.mockResolvedValueOnce('ok');
-
     act(() => {
       onEventCallback(SSE_ERROR_MESSAGE);
     });
 
-    await expect(pollBffHealth).toHaveBeenCalledTimes(1);
     expect(fetchFallbackService).toBeCalledTimes(1);
 
     expect(useDataApi).toBeCalledTimes(2);
@@ -204,15 +184,11 @@ describe('useAppState', () => {
       fetchFallbackService,
     ]);
 
-    pollBffHealth.mockRejectedValue('nok');
-
     act(() => {
       onEventCallback(SSE_ERROR_MESSAGE);
     });
 
-    await expect(pollBffHealth).toHaveBeenCalled();
-
-    expect(fetchFallbackService).toBeCalledTimes(0);
+    expect(fetchFallbackService).toBeCalledTimes(1);
     expect(dataTransform).toBeCalledTimes(0);
     expect(useDataApi).toBeCalledTimes(2);
     expect(useSSE).toBeCalledTimes(2);

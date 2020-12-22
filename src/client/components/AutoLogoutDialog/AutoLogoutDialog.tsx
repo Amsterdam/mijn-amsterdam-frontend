@@ -26,7 +26,7 @@ const ONE_MINUTE_SECONDS = 60;
 const AUTOLOGOUT_DIALOG_TIMEOUT_SECONDS = 13 * ONE_MINUTE_SECONDS;
 export const AUTOLOGOUT_DIALOG_LAST_CHANCE_COUNTER_SECONDS =
   2 * ONE_MINUTE_SECONDS;
-const SESSION_RENEW_INTERVAL_SECONDS = 30;
+const SESSION_RENEW_INTERVAL_SECONDS = 300;
 const TITLE = 'Wilt u doorgaan?';
 
 export interface AutoLogoutDialogSettings {
@@ -202,7 +202,7 @@ export default function AutoLogoutDialog({ settings = {} }: ComponentProps) {
             external={true}
             icon=""
             onClick={() => session.logout()}
-            onKeyPress={event => event.key === 'Enter' && session.logout()}
+            onKeyPress={(event) => event.key === 'Enter' && session.logout()}
             role="button"
           >
             {continueButtonIsVisible

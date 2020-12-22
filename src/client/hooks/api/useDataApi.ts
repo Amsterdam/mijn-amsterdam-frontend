@@ -1,17 +1,14 @@
 import * as Sentry from '@sentry/browser';
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { apiErrorResult } from '../../../universal/helpers/api';
 import { Action } from '../../../universal/types';
-import { BFF_API_HEALTH_URL } from '../../config/api';
 
 export interface ApiRequestOptions extends AxiosRequestConfig {
   postpone?: boolean;
 }
 
 const REQUEST_TIMEOUT = 20000; // 20seconds;
-const MAX_POLL_COUNT = 5;
-const POLL_INTERVAL_MS = 1000;
 
 export const requestApiData = axios.create({
   responseType: 'json', // default
@@ -93,7 +90,7 @@ export function useDataApi<T>(
 
   const refetch = useCallback(
     (refetchOptions?: Partial<ApiRequestOptions>) => {
-      setRequestOptions(options => ({
+      setRequestOptions((options) => ({
         ...options,
         ...refetchOptions,
         postpone: false,
@@ -115,7 +112,7 @@ export function useDataApi<T>(
       let source = axios.CancelToken.source();
 
       requestTimeout = setTimeout(() => {
-        source.cancel('Request timeout.');
+        source.cancel('useDataApi request timeout.');
       }, REQUEST_TIMEOUT);
 
       dispatch({
@@ -184,56 +181,4 @@ export function useDataApi<T>(
   return useMemo(() => {
     return [state, refetch];
   }, [state, refetch]);
-}
-
-export function pollBffHealth() {
-  let pollCount = 0;
-  console.info('Start polling for BFF health.');
-
-  return new Promise((resolve, reject) => {
-    function poll() {
-      pollCount += 1;
-      if (pollCount <= MAX_POLL_COUNT) {
-        axios({ url: BFF_API_HEALTH_URL, responseType: 'json' })
-          .then((response: AxiosResponse<any>) => {
-            console.info(
-              'Health check response',
-              response.data,
-              response.headers
-            );
-            if (
-              typeof response.data !== 'string' &&
-              response.data?.status === 'OK'
-            ) {
-              Sentry.captureMessage(
-                `Polling for health succeeded after ${pollCount} tries.`
-              );
-              resolve();
-            } else {
-              Sentry.captureMessage(
-                'Could not connect to server, BFF did not reply with response we expect.',
-                {
-                  extra: {
-                    responseData: response.data,
-                    pollCount,
-                  },
-                }
-              );
-              reject();
-            }
-          })
-          .catch(error => {
-            console.info('Request failed', pollCount, error.message);
-            setTimeout(() => {
-              poll();
-            }, POLL_INTERVAL_MS);
-          });
-      } else {
-        reject(
-          'Could not connect to server, BFF not healthy max poll count reached.'
-        );
-      }
-    }
-    poll();
-  });
 }
