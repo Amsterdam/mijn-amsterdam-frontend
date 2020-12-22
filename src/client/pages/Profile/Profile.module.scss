@@ -62,3 +62,11 @@
     display: none;
   }
 }
+
+.ActionLink--reportIncorrectResidentCount {
+  @include mq-desktop {
+    position: absolute;
+    bottom: .3rem;
+    white-space: nowrap;
+  }
+}

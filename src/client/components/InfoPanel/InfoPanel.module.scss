@@ -124,6 +124,7 @@
 
 .InfoPanelActionLinks {
   @include reset-list-style;
+  position: relative;
 
   > li {
     margin-bottom: 0.6rem;

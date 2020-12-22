@@ -94,8 +94,6 @@ export async function fetchTIPS(
   const params = getTipsRequestParams(queryParams);
   const tipsRequestData = createTipsRequestData(queryParams, serviceResults);
 
-  console.log('tipsRequestDatatipsRequestDatatipsRequestData', tipsRequestData);
-
   return requestData<TIPSData>(
     getApiConfig('TIPS', {
       method: 'POST',
