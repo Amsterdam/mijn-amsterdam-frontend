@@ -226,3 +226,9 @@ export const ACTIVE_DATASET_IDS_INITIAL = [
   'bekendmakingen',
   'evenementen',
 ];
+
+export const POLYLINE_GEOMETRY_TYPES = [
+  'Polygon',
+  'MultiPolygon',
+  'MultiLineString',
+];

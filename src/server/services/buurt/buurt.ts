@@ -1,6 +1,7 @@
 import {
   DatasetFilterSelection,
   DatasetId,
+  POLYLINE_GEOMETRY_TYPES,
 } from '../../../universal/config/buurt';
 import { IS_AP } from '../../../universal/config/env';
 import { apiErrorResult, apiSuccesResult } from '../../../universal/helpers';
@@ -18,6 +19,7 @@ import {
   DatasetConfig,
   DatasetFeatures,
   DatasetResponse,
+  DEFAULT_API_REQUEST_TIMEOUT,
 } from './datasets';
 import {
   createDynamicFilterConfig,
@@ -107,7 +109,7 @@ async function fetchDataset(
 
   const requestConfig: DataRequestConfig = {
     url,
-    cancelTimeout: 1000 * 60 * 3, // 3 mins
+    cancelTimeout: DEFAULT_API_REQUEST_TIMEOUT,
     ...config,
   };
 
@@ -130,11 +132,8 @@ async function fetchDataset(
   if (response.status === 'OK') {
     response.content = Array.isArray(response.content)
       ? response.content.map((feature) => {
-          if (
-            feature.geometry.type === 'Polygon' ||
-            feature.geometry.type === 'MultiPolygon' ||
-            feature.geometry.type === 'MultiLineString'
-          ) {
+          if (POLYLINE_GEOMETRY_TYPES.includes(feature.geometry.type)) {
+            // Swap the coordinates of the polyline datasets so leaflet can render them easily on the front-end.
             feature.geometry.coordinates = recursiveCoordinateSwap(
               feature.geometry.coordinates
             );
@@ -168,11 +167,12 @@ async function fetchDataset(
   return response;
 }
 
+type ApiDatasetResponse = ApiResponse<DatasetResponse | null>;
+
 export async function loadDatasetFeatures(
   sessionID: SessionID,
   configs: Array<[string, DatasetConfig]>
 ) {
-  type ApiDatasetResponse = ApiResponse<DatasetResponse | null>;
   const requests: Array<Promise<ApiDatasetResponse>> = [];
 
   for (const datasetConfig of configs) {
@@ -187,8 +187,7 @@ export async function loadDatasetFeatures(
     );
   }
 
-  const results = await Promise.all(requests);
-  return datasetApiResult(results);
+  return Promise.all(requests).then(datasetApiResult);
 }
 
 export async function loadPolylineFeatures(
@@ -208,7 +207,7 @@ export async function loadPolylineFeatures(
     'MultiLineString',
     'Polygon',
   ]);
-  type ApiDatasetResponse = ApiResponse<DatasetResponse | null>;
+
   const requests: Array<Promise<ApiDatasetResponse>> = [];
 
   for (const datasetConfig of configs) {

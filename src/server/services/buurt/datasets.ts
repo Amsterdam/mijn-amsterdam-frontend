@@ -62,6 +62,7 @@ export const BUURT_CACHE_TTL_1_WEEK_IN_MINUTES =
 export const ACCEPT_CRS_4326 = {
   'Accept-Crs': 'EPSG:4326', // Will return coordinates in [lng/lat] format
 };
+export const DEFAULT_API_REQUEST_TIMEOUT = 1000 * 60 * 3; // 3 mins
 
 export interface DatasetConfig {
   datasetIds?: DatasetId[];
