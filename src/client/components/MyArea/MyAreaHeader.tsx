@@ -49,14 +49,6 @@ export default function MyAreaHeader({
         <Button
           onClick={() => {
             history.goBack();
-            // Skip the hashtag history of the DirectSkipLinks
-            if (
-              matchPath(history.location.pathname, {
-                path: AppRoutes.BUURT,
-              })
-            ) {
-              history.goBack();
-            }
           }}
         >
           Kaart sluiten
