@@ -100,33 +100,12 @@ router.get(
   BffEndpoints.MAP_DATASETS,
   async (req: Request, res: Response, next: NextFunction) => {
     const datasetId = req.params.datasetId;
-    const datasetFilters = (req.query
-      .filters as unknown) as DatasetFilterSelection;
-    const datasetIds = (req.query.datasetIds as string)?.split(',') || [];
     const id = req.params.id;
-    let response: ApiResponse<any> | null = null;
-    try {
-      if (datasetId && id) {
-        response = await loadFeatureDetail(res.locals.sessionID, datasetId, id);
-      } else {
-        const ids = (datasetId ? [datasetId] : datasetIds).flatMap((id) =>
-          DATASETS[id] ? Object.keys(DATASETS[id]) : id
-        );
-        const configs = getDatasetEndpointConfig(ids);
-        const datasetData = await loadDatasetFeatures(
-          res.locals.sessionID,
-          configs
-        );
-        response = apiSuccesResult(datasetData);
 
-        if (ids.length) {
-          response.content.features = filterDatasetFeatures(
-            datasetData.features,
-            ids,
-            datasetFilters
-          );
-        }
-      }
+    let response: ApiResponse<any> | null = null;
+
+    try {
+      response = await loadFeatureDetail(res.locals.sessionID, datasetId, id);
 
       if (response.status !== 'OK') {
         res.status(500);
