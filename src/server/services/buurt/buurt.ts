@@ -5,11 +5,7 @@ import {
 } from '../../../universal/config/buurt';
 import { IS_AP } from '../../../universal/config/env';
 import { apiErrorResult, apiSuccesResult } from '../../../universal/helpers';
-import {
-  ApiErrorResponse,
-  ApiResponse,
-  ApiSuccessResponse,
-} from '../../../universal/helpers/api';
+import { ApiResponse } from '../../../universal/helpers/api';
 import { DataRequestConfig } from '../../config';
 import { requestData } from '../../helpers';
 import FileCache from '../../helpers/file-cache';
@@ -23,6 +19,7 @@ import {
 } from './datasets';
 import {
   createDynamicFilterConfig,
+  datasetApiResult,
   filterAndRefineFeatures,
   filterPolylineFeaturesWithinBoundingBox,
   getDatasetEndpointConfig,
@@ -41,31 +38,6 @@ const fileCache = (name: string, cacheTimeMinutes: number) => {
   }
   return fileCaches[name];
 };
-
-export function datasetApiResult(
-  results: ApiResponse<DatasetResponse | null>[]
-) {
-  const errors = results
-    .filter(
-      (result): result is ApiErrorResponse<null> => result.status === 'ERROR'
-    )
-    .map((result) => ({ id: result.id, message: result.message }));
-
-  const responses = results.filter(
-    (result): result is ApiSuccessResponse<DatasetResponse> =>
-      result.status === 'OK' && result.content !== null
-  );
-
-  return {
-    features: responses.flatMap((response) => response.content.features),
-    filters: Object.fromEntries(
-      responses
-        .filter((response) => !!response.content.filters)
-        .map((response) => [response.id, response.content.filters])
-    ) as DatasetFilterSelection,
-    errors,
-  };
-}
 
 export async function fetchDataset(
   sessionID: SessionID,

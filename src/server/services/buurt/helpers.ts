@@ -1,10 +1,4 @@
-import {
-  DatasetConfig,
-  datasetEndpoints,
-  DatasetFeatures,
-  MaFeature,
-  MaPointFeature,
-} from './datasets';
+import { LatLngTuple } from 'leaflet';
 import {
   DatasetFilterSelection,
   DatasetId,
@@ -12,8 +6,20 @@ import {
   DATASETS,
   getDatasetCategoryId,
 } from '../../../universal/config/buurt';
-import { LatLngTuple } from 'leaflet';
+import {
+  ApiErrorResponse,
+  ApiResponse,
+  ApiSuccessResponse,
+} from '../../../universal/helpers';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
+import {
+  DatasetConfig,
+  datasetEndpoints,
+  DatasetFeatures,
+  DatasetResponse,
+  MaFeature,
+  MaPointFeature,
+} from './datasets';
 
 export function getApiEmbeddedResponse(id: string, responseData: any) {
   const results = responseData?._embedded && responseData?._embedded[id];
@@ -302,4 +308,29 @@ export function createFeaturePropertiesFromPropertyFilterConfig(
     }
   }
   return featureProperties;
+}
+
+export function datasetApiResult(
+  results: ApiResponse<DatasetResponse | null>[]
+) {
+  const errors = results
+    .filter(
+      (result): result is ApiErrorResponse<null> => result.status === 'ERROR'
+    )
+    .map((result) => ({ id: result.id, message: result.message }));
+
+  const responses = results.filter(
+    (result): result is ApiSuccessResponse<DatasetResponse> =>
+      result.status === 'OK' && result.content !== null
+  );
+
+  return {
+    features: responses.flatMap((response) => response.content.features),
+    filters: Object.fromEntries(
+      responses
+        .filter((response) => !!response.content.filters)
+        .map((response) => [response.id, response.content.filters])
+    ) as DatasetFilterSelection,
+    errors,
+  };
 }

@@ -1,8 +1,10 @@
 import * as config from '../../../universal/config/buurt';
-import { datasetEndpoints } from './datasets';
+import { ApiResponse } from '../../../universal/helpers';
+import { datasetEndpoints, DatasetResponse } from './datasets';
 import {
   createDynamicFilterConfig,
   createFeaturePropertiesFromPropertyFilterConfig,
+  datasetApiResult,
   filterAndRefineFeatures,
   filterDatasetFeatures,
   filterPointFeaturesWithinBoundingBox,
@@ -434,5 +436,35 @@ describe('Buurt helpers', () => {
         sourceFeature
       )
     ).toStrictEqual(transformedFeatureProperties);
+  });
+
+  it('Should datasetApiResult', () => {
+    const apiResponses: ApiResponse<DatasetResponse | null>[] = [
+      {
+        status: 'OK',
+        content: { features: features.slice(0, 2) },
+      },
+      {
+        status: 'OK',
+        content: { features: features.slice(2) },
+      },
+      {
+        status: 'ERROR',
+        content: null,
+        message: 'Internal server error 500',
+        id: 'unreachable-dataset',
+      },
+    ];
+    const datasetResults = {
+      errors: [
+        {
+          message: 'Internal server error 500',
+          id: 'unreachable-dataset',
+        },
+      ],
+      features,
+      filters: {},
+    };
+    expect(datasetApiResult(apiResponses)).toStrictEqual(datasetResults);
   });
 });
