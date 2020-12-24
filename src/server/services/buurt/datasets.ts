@@ -1,23 +1,19 @@
+import themeColors from '@amsterdam/asc-ui/lib/theme/default/colors';
 import Supercluster from 'supercluster';
 import {
-  DatasetPropertyFilter,
+  DatasetCategoryId,
   DatasetId,
+  DatasetPropertyFilter,
+  DatasetPropertyName,
   DatasetPropertyValue,
-  DATASETS,
-  getDatasetCategoryId,
 } from '../../../universal/config/buurt';
 import { DataRequestConfig } from '../../config';
 import {
   createFeaturePropertiesFromPropertyFilterConfig,
   getApiEmbeddedResponse,
   getPropertyFilters,
+  transformDsoApiListResponse,
 } from './helpers';
-import {
-  DatasetCategoryId,
-  DatasetPropertyName,
-} from '../../../universal/config/buurt';
-import themeColors from '@amsterdam/asc-ui/lib/theme/default/colors';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 
 enum zIndexPane {
   PARKEERZONES = '650',
@@ -228,115 +224,6 @@ export const datasetEndpoints: Record<
     cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
 };
-
-function getPolylineColor(datasetId: DatasetId, feature: any) {
-  switch (datasetId) {
-    case 'sportveld':
-      switch (feature.sportfunctie) {
-        case 'Honkbal/softbal':
-          return 'green';
-        case 'Voetbal':
-          return 'green';
-        case 'Atletiek':
-          return 'brown';
-        case 'Australian football':
-          return 'green';
-        case 'Rugby':
-          return 'green';
-        case 'Handboogschieten':
-          return 'green';
-        case 'Golf driving range':
-          return 'green';
-        case 'Short golf':
-          return 'green';
-        case 'Cricket':
-          return 'green';
-        case 'Hockey':
-          return 'green';
-        case 'Tennis':
-          return 'brown';
-        case 'Golf':
-          return 'green';
-        case 'Balspel':
-          return 'green';
-        case 'Honkbal':
-          return 'green';
-        case 'Handbal':
-          return 'green';
-        case 'Korfbal':
-          return 'green';
-        case 'Beachvolleybal':
-          return 'green';
-        case 'Jeu de Boules':
-          return '#ccc';
-        case 'Beachhandbal':
-          return 'sand';
-        case 'Basketbal':
-          return '#555';
-        case 'Skaten':
-          return '#555';
-        case 'Wielrennen':
-          return '#ccc';
-        case 'Padel':
-          return 'green';
-        case 'American football':
-          return 'green';
-        default:
-          return 'purple';
-      }
-    case 'sportpark':
-      return 'green';
-    case 'hardlooproute':
-      return 'purple';
-    default:
-      return 'purple';
-  }
-}
-
-function transformDsoApiListResponse(
-  datasetId: DatasetId,
-  config: DatasetConfig,
-  responseData: any
-) {
-  const results = responseData?.features
-    ? responseData?.features
-    : getApiEmbeddedResponse(datasetId, responseData);
-  const collection: DatasetFeatures = [];
-
-  if (results && results.length) {
-    for (const feature of results) {
-      if (feature.geometry?.coordinates) {
-        const properties: DatasetFeatureProperties = {
-          id: feature?.properties?.id || feature.id,
-          datasetId,
-        };
-
-        const hasShapeGeometry =
-          feature.geometry.type === 'MultiPolygon' ||
-          feature.geometry.type === 'MultiLineString';
-
-        if (hasShapeGeometry) {
-          properties.color = getPolylineColor(datasetId, feature);
-          if (config?.zIndex) {
-            properties.zIndex = config.zIndex;
-          }
-        }
-
-        collection.push({
-          type: 'Feature',
-          geometry: feature.geometry,
-          properties: createFeaturePropertiesFromPropertyFilterConfig(
-            datasetId,
-            properties,
-            feature
-          ),
-        });
-      }
-    }
-  }
-
-  return collection;
-}
 
 function createCustomFractieOmschrijving(featureProps: any) {
   if (featureProps.serienummer?.trim().startsWith('Kerstboom')) {

@@ -1,6 +1,11 @@
 import * as config from '../../../universal/config/buurt';
 import { ApiResponse } from '../../../universal/helpers';
-import { datasetEndpoints, DatasetResponse } from './datasets';
+import {
+  datasetEndpoints,
+  DatasetResponse,
+  MaPointFeature,
+  MaPolylineFeature,
+} from './datasets';
 import {
   createDynamicFilterConfig,
   createFeaturePropertiesFromPropertyFilterConfig,
@@ -16,7 +21,106 @@ import {
   isCoordWithingBoundingBox,
   recursiveCoordinateSwap,
   refineFilterSelection,
+  transformDsoApiListResponse,
 } from './helpers';
+
+const DSO_API_RESULT = {
+  _links: {
+    self: {
+      href: 'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/',
+    },
+    next: {
+      href: 'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/?page=2',
+    },
+    previous: {
+      href: null,
+    },
+  },
+  _embedded: {
+    openbaresportplek: [
+      {
+        _links: {
+          self: {
+            href: 'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/1/',
+            title: 'NIEUWENDAM',
+          },
+        },
+        schema:
+          'https://schemas.data.amsterdam.nl/datasets/sport/sport#openbaresportplek',
+        id: 1,
+        foto: 'Nieuwendam_1.jpg',
+        naam: 'NIEUWENDAM',
+        geometry: {
+          type: 'Point',
+          coordinates: [4.8, 52.2],
+        },
+        oppervlakte: 507,
+        omschrijving: 'Basketbalpaal, speeltuin Nieuwendam',
+        soortLocatie: 'Speeltuin',
+        soortOmheining: 'Geen',
+        soortOndergrond: 'Asfalt',
+        soortVerlichting: 'Ja',
+        sportvoorziening: 'Basketbal',
+        indicatieOverdekt: 'Nee',
+      },
+    ],
+  },
+  page: {
+    number: 1,
+    size: 20,
+    totalElements: 824,
+    totalPages: 42,
+  },
+};
+
+const DSO_API_RESULT2 = {
+  _links: {
+    self: { href: 'https://api.data.amsterdam.nl/v1/sport/sportveld/' },
+    next: {
+      href:
+        'https://api.data.amsterdam.nl/v1/sport/sportveld/?page=2&page_size=1',
+    },
+    previous: { href: null },
+  },
+  _embedded: {
+    sportveld: [
+      {
+        _links: {
+          self: {
+            href: 'https://api.data.amsterdam.nl/v1/sport/sportveld/1/',
+            title: 'Sportpark Middenmeer-Voorland 02',
+          },
+        },
+        schema:
+          'https://schemas.data.amsterdam.nl/datasets/sport/sport#sportveld',
+        id: 1,
+        id2: '{E3710BD2-A5E2-48A6-8486-B9B3F8E18FC8}',
+        omtrek: 314.84447,
+        geometry: {
+          type: 'MultiPolygon',
+          coordinates: [
+            [
+              [
+                [4.948418551871725, 52.349302960452505],
+                [4.948398653104854, 52.34932100133867],
+              ],
+            ],
+          ],
+        },
+        sportpark: 'Sportpark Middenmeer-Voorland',
+        objecttype: 'Sportveld (begroeid)',
+        oppervlakte: 5825.39499,
+        sportfunctie: 'Honkbal/softbal',
+        veldindeling: 'SPO-MIDD-15',
+        objectsubtype: 'Gras- en kruidachtigen',
+        soortOndergrond: 'Gras',
+        jaarVanActiviteit: 2012.0,
+        sportparkFunctioneleNaam: 'Sportpark Middenmeer-Voorland 02',
+      },
+    ],
+  },
+  page: { number: 1, size: 1, totalElements: 636, totalPages: 636 },
+};
 
 const OPENBARESPORTPLEK1 = {
   geometry: { coordinates: [15, 15] },
@@ -99,6 +203,23 @@ describe('Buurt helpers', () => {
                 title: 'Soort locatie',
                 valueConfig: {
                   '': { title: 'Onbekend' },
+                },
+              },
+            },
+          },
+          sportveld: {
+            title: 'Sportveld',
+            filters: {
+              sportfunctie: {
+                title: '',
+                valueConfig: {
+                  Null: { title: 'Overig' },
+                },
+              },
+              soortOndergrond: {
+                title: 'Soort ondergrond',
+                valueConfig: {
+                  Null: { title: 'Onbekend' },
                 },
               },
             },
@@ -466,5 +587,64 @@ describe('Buurt helpers', () => {
       filters: {},
     };
     expect(datasetApiResult(apiResponses)).toStrictEqual(datasetResults);
+  });
+
+  it('Should transformDsoApiListResponse, transform Point feature', () => {
+    const datasetResultTransformed: MaPointFeature[] = [
+      {
+        geometry: {
+          coordinates: [4.8, 52.2],
+          type: 'Point',
+        },
+        properties: {
+          datasetId: 'openbaresportplek',
+          id: '1',
+          soortLocatie: 'Speeltuin',
+          soortOndergrond: 'Asfalt',
+          sportvoorziening: 'Basketbal',
+        },
+        type: 'Feature',
+      },
+    ];
+    expect(
+      transformDsoApiListResponse(
+        'openbaresportplek',
+        DATASETS.sport.datasets.openbaresportplek,
+        DSO_API_RESULT
+      )
+    ).toStrictEqual(datasetResultTransformed);
+  });
+
+  it('Should transformDsoApiListResponse, transform Polyline feature', () => {
+    const datasetResultTransformed: MaPolylineFeature[] = [
+      {
+        geometry: {
+          coordinates: [
+            [
+              [
+                [52.349302960452505, 4.948418551871725],
+                [52.34932100133867, 4.948398653104854],
+              ],
+            ],
+          ],
+          type: 'MultiPolygon',
+        },
+        properties: {
+          color: 'green',
+          datasetId: 'sportveld',
+          id: '1',
+          soortOndergrond: 'Gras',
+          sportfunctie: 'Honkbal/softbal',
+        },
+        type: 'Feature',
+      },
+    ];
+    expect(
+      transformDsoApiListResponse(
+        'sportveld',
+        DATASETS.sport.datasets.sportveld,
+        DSO_API_RESULT2
+      )
+    ).toStrictEqual(datasetResultTransformed);
   });
 });

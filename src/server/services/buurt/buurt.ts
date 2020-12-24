@@ -105,18 +105,6 @@ export async function fetchDataset(
   );
 
   if (response.status === 'OK') {
-    response.content = Array.isArray(response.content)
-      ? response.content.map((feature) => {
-          if (POLYLINE_GEOMETRY_TYPES.includes(feature.geometry.type)) {
-            // Swap the coordinates of the polyline datasets so leaflet can render them easily on the front-end.
-            feature.geometry.coordinates = recursiveCoordinateSwap(
-              feature.geometry.coordinates
-            );
-          }
-          return feature;
-        })
-      : [];
-
     const filterConfig = getDynamicDatasetFilters(datasetId);
     const filters =
       filterConfig && createDynamicFilterConfig(response.content, filterConfig);

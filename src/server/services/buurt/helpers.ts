@@ -5,6 +5,7 @@ import {
   DatasetPropertyFilter,
   DATASETS,
   getDatasetCategoryId,
+  POLYLINE_GEOMETRY_TYPES,
 } from '../../../universal/config/buurt';
 import {
   ApiErrorResponse,
@@ -15,6 +16,7 @@ import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 import {
   DatasetConfig,
   datasetEndpoints,
+  DatasetFeatureProperties,
   DatasetFeatures,
   DatasetResponse,
   MaFeature,
@@ -333,4 +335,117 @@ export function datasetApiResult(
     ) as DatasetFilterSelection,
     errors,
   };
+}
+
+export function getPolylineColor(datasetId: DatasetId, feature: any) {
+  switch (datasetId) {
+    case 'sportveld':
+      switch (feature.sportfunctie) {
+        case 'Honkbal/softbal':
+          return 'green';
+        case 'Voetbal':
+          return 'green';
+        case 'Atletiek':
+          return 'brown';
+        case 'Australian football':
+          return 'green';
+        case 'Rugby':
+          return 'green';
+        case 'Handboogschieten':
+          return 'green';
+        case 'Golf driving range':
+          return 'green';
+        case 'Short golf':
+          return 'green';
+        case 'Cricket':
+          return 'green';
+        case 'Hockey':
+          return 'green';
+        case 'Tennis':
+          return 'brown';
+        case 'Golf':
+          return 'green';
+        case 'Balspel':
+          return 'green';
+        case 'Honkbal':
+          return 'green';
+        case 'Handbal':
+          return 'green';
+        case 'Korfbal':
+          return 'green';
+        case 'Beachvolleybal':
+          return 'green';
+        case 'Jeu de Boules':
+          return '#ccc';
+        case 'Beachhandbal':
+          return 'sand';
+        case 'Basketbal':
+          return '#555';
+        case 'Skaten':
+          return '#555';
+        case 'Wielrennen':
+          return '#ccc';
+        case 'Padel':
+          return 'green';
+        case 'American football':
+          return 'green';
+        default:
+          return 'purple';
+      }
+    case 'sportpark':
+      return 'green';
+    case 'hardlooproute':
+      return 'purple';
+    default:
+      return 'purple';
+  }
+}
+
+export function transformDsoApiListResponse(
+  datasetId: DatasetId,
+  config: DatasetConfig,
+  responseData: any
+) {
+  const results = responseData?.features
+    ? responseData?.features
+    : getApiEmbeddedResponse(datasetId, responseData);
+  const collection: DatasetFeatures = [];
+
+  if (results && results.length) {
+    for (const feature of results) {
+      if (feature.geometry?.coordinates) {
+        const properties: DatasetFeatureProperties = {
+          id: String(feature?.properties?.id || feature.id),
+          datasetId,
+        };
+
+        const hasShapeGeometry = POLYLINE_GEOMETRY_TYPES.includes(
+          feature.geometry.type
+        );
+
+        if (hasShapeGeometry) {
+          properties.color = getPolylineColor(datasetId, feature);
+          if (config?.zIndex) {
+            properties.zIndex = config.zIndex;
+          }
+          // Swap the coordinates of the polyline datasets so leaflet can render them easily on the front-end.
+          feature.geometry.coordinates = recursiveCoordinateSwap(
+            feature.geometry.coordinates
+          );
+        }
+
+        collection.push({
+          type: 'Feature',
+          geometry: feature.geometry,
+          properties: createFeaturePropertiesFromPropertyFilterConfig(
+            datasetId,
+            properties,
+            feature
+          ),
+        });
+      }
+    }
+  }
+
+  return collection;
 }
