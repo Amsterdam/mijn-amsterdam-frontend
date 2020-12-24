@@ -167,7 +167,14 @@ export function createDynamicFilterConfig(
   const filters: DatasetPropertyFilter = {};
 
   for (const feature of features) {
+    const featureProps = feature?.properties || feature;
+
     for (const propertyName of propertyNames) {
+      // Exlcude all features if they don't have the desired property.
+      if (!(propertyName in featureProps)) {
+        continue;
+      }
+
       // Get property value from object.filters or from object itself
       const value = capitalizeFirstLetter(
         String((feature?.properties || feature)[propertyName])
@@ -200,6 +207,7 @@ function isFilterMatch(feature: MaFeature, filters: DatasetPropertyFilter) {
     const propertyValues = valueConfig.values;
     const propVal = feature.properties[propertyName];
     const isFilteredValue = propertyValues ? propVal in propertyValues : false;
+
     return propertyValues
       ? !Object.keys(propertyValues).length || isFilteredValue
       : true;
@@ -250,19 +258,48 @@ export function filterAndRefineFeatures(
   filterSelection: DatasetFilterSelection,
   filtersBase: DatasetFilterSelection
 ) {
-  let featuresFiltered = featuresBase;
-  let filtersRefined = filterSelection;
-
-  featuresFiltered = filterDatasetFeatures(
+  const featuresFiltered = filterDatasetFeatures(
     featuresBase,
     datasetIds,
-    filtersRefined
+    filterSelection
   );
 
-  filtersRefined = refineFilterSelection(featuresFiltered, filtersBase);
+  const filtersRefined = refineFilterSelection(featuresFiltered, filtersBase);
 
   return {
     filters: filtersRefined,
     features: featuresFiltered,
   };
+}
+
+export function getPropertyFilters(datasetId: DatasetId) {
+  const datasetCategoryId = getDatasetCategoryId(datasetId);
+
+  if (!datasetCategoryId) {
+    return;
+  }
+  return DATASETS[datasetCategoryId].datasets[datasetId]?.filters;
+}
+
+export function createFeaturePropertiesFromPropertyFilterConfig(
+  datasetId: DatasetId,
+  featureProperties: MaFeature['properties'],
+  featureSourceProperties: any
+) {
+  const propertyFilters = getPropertyFilters(datasetId);
+  const propertyNames = propertyFilters ? Object.keys(propertyFilters) : [];
+
+  if (propertyNames && featureSourceProperties) {
+    for (const propertyName of propertyNames) {
+      // NOTE: Simple normalization of the value here. It only transforms ja to Ja. This could be severely improved but should really be done in the Database.
+      featureProperties[propertyName] = capitalizeFirstLetter(
+        String(
+          featureSourceProperties?.properties
+            ? featureSourceProperties.properties[propertyName]
+            : featureSourceProperties[propertyName]
+        )
+      );
+    }
+  }
+  return featureProperties;
 }

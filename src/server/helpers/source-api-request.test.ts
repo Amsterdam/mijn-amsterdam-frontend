@@ -26,11 +26,8 @@ describe('requestData.ts', () => {
   let axMock: any;
   let axiosRequestSpy: any;
 
-  beforeAll(() => {
-    jest.useFakeTimers();
-  });
-
   beforeEach(() => {
+    jest.useFakeTimers('modern');
     axMock = new MockAdapter(axiosRequest);
     axMock
       .onGet(DUMMY_URL)

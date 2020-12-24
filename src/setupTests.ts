@@ -1,5 +1,5 @@
-import { configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+// import { configure } from 'enzyme';
+// import Adapter from 'enzyme-adapter-react-16';
 
 // Warnings about code wrappend in act( ... ): https://github.com/testing-library/react-testing-library/issues/281
 // this is just a little hack to silence a warning that we'll get until react
@@ -18,4 +18,4 @@ afterAll(() => {
   console.error = originalError;
 });
 
-configure({ adapter: new Adapter() });
+// configure({ adapter: new Adapter() });

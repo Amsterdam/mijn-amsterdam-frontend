@@ -7,12 +7,17 @@ import {
   getDatasetCategoryId,
 } from '../../../universal/config/buurt';
 import { DataRequestConfig } from '../../config';
-import { getApiEmbeddedResponse } from './helpers';
+import {
+  createFeaturePropertiesFromPropertyFilterConfig,
+  getApiEmbeddedResponse,
+  getPropertyFilters,
+} from './helpers';
 import {
   DatasetCategoryId,
   DatasetPropertyName,
 } from '../../../universal/config/buurt';
 import themeColors from '@amsterdam/asc-ui/lib/theme/default/colors';
+import { capitalizeFirstLetter } from '../../../universal/helpers/text';
 
 enum zIndexPane {
   PARKEERZONES = '650',
@@ -84,15 +89,6 @@ export interface DatasetConfig {
   featureType: 'Point' | 'Polygon' | 'MultiPolygon' | 'MultiLineString';
   zIndex?: zIndexPane;
   additionalStaticPropertyNames?: DatasetPropertyName[];
-}
-
-function getPropertyFilters(datasetId: DatasetId) {
-  const datasetCategoryId = getDatasetCategoryId(datasetId);
-
-  if (!datasetCategoryId) {
-    return;
-  }
-  return DATASETS[datasetCategoryId].datasets[datasetId]?.filters;
 }
 
 function dsoApiListUrl(dataset: string, pageSize: number = 1000) {
@@ -297,24 +293,6 @@ function getPolylineColor(datasetId: DatasetId, feature: any) {
   }
 }
 
-function addFilterProps(
-  datasetId: DatasetId,
-  featureProperties: MaFeature['properties'],
-  featureSourceProperties: any
-) {
-  const propertyFilters = getPropertyFilters(datasetId);
-  const propertyNames = propertyFilters ? Object.keys(propertyFilters) : [];
-  if (propertyNames && featureSourceProperties) {
-    for (const propertyName of propertyNames) {
-      featureProperties[propertyName] =
-        (featureSourceProperties?.properties &&
-          featureSourceProperties.properties[propertyName]) ||
-        featureSourceProperties[propertyName];
-    }
-  }
-  return featureProperties;
-}
-
 function transformDsoApiListResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
@@ -347,7 +325,11 @@ function transformDsoApiListResponse(
         collection.push({
           type: 'Feature',
           geometry: feature.geometry,
-          properties: addFilterProps(datasetId, properties, feature),
+          properties: createFeaturePropertiesFromPropertyFilterConfig(
+            datasetId,
+            properties,
+            feature
+          ),
         });
       }
     }
@@ -398,7 +380,7 @@ function transformEvenementen(
         collection.push({
           type: 'Feature',
           geometry: feature.geometry,
-          properties: addFilterProps(
+          properties: createFeaturePropertiesFromPropertyFilterConfig(
             datasetId,
             {
               id: feature.id,
@@ -427,7 +409,7 @@ function transformParkeerzoneCoords(
       const featureTransformed: MaPolylineFeature = {
         type: 'Feature',
         geometry: feature.geometry,
-        properties: addFilterProps(
+        properties: createFeaturePropertiesFromPropertyFilterConfig(
           datasetId,
           {
             id: feature.id,
