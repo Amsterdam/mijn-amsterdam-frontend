@@ -98,7 +98,7 @@ function InfoPanelTable({
   }, [panelData, omitPairWithFalseyValues]);
 
   return (
-    <>
+    <div className={styles.Tables}>
       {tables.map((rows, index) => (
         <div className={styles.TableWrap} key={index}>
           <table className={styles.InfoPanelTable}>
@@ -122,7 +122,7 @@ function InfoPanelTable({
           </table>
         </div>
       ))}
-    </>
+    </div>
   );
 }
 

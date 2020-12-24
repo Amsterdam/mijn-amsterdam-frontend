@@ -38,14 +38,25 @@
   }
 }
 
-.TableWrap {
+.Tables {
   width: 59%;
   @include mq-phone() {
     width: 100%;
   }
+}
+
+.TableWrap {
 
   + .TableWrap {
-    border-top: .1rem solid $color-neutral-grey2;
+    &:before {
+      content: '';
+      display: block;
+      left: 0;
+      right:0;
+      position: absolute;
+      border-top: .1rem solid $color-neutral-grey2;
+      margin-top: -2rem;
+    }
     margin-top: 2rem;
     padding-top: 2rem;
   }
