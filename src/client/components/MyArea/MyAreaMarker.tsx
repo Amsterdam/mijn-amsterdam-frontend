@@ -1,7 +1,6 @@
 import { Marker } from '@amsterdam/arm-core';
 import L, {
   LatLngLiteral,
-  LayerEvent,
   LeafletEventHandlerFn,
   Marker as MarkerType,
   MarkerOptions,
