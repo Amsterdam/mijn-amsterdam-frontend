@@ -1,7 +1,6 @@
 import {
   DatasetFilterSelection,
   DatasetId,
-  POLYLINE_GEOMETRY_TYPES,
 } from '../../../universal/config/buurt';
 import { IS_AP } from '../../../universal/config/env';
 import { apiErrorResult, apiSuccesResult } from '../../../universal/helpers';
@@ -24,12 +23,11 @@ import {
   filterPolylineFeaturesWithinBoundingBox,
   getDatasetEndpointConfig,
   getDynamicDatasetFilters,
-  recursiveCoordinateSwap,
 } from './helpers';
 
 const fileCaches: Record<string, FileCache> = {};
 
-const fileCache = (name: string, cacheTimeMinutes: number) => {
+export function fileCache(name: string, cacheTimeMinutes: number) {
   if (!fileCaches[name]) {
     fileCaches[name] = new FileCache({
       name,
@@ -37,7 +35,7 @@ const fileCache = (name: string, cacheTimeMinutes: number) => {
     });
   }
   return fileCaches[name];
-};
+}
 
 export async function fetchDataset(
   sessionID: SessionID,
@@ -150,7 +148,9 @@ export async function loadDatasetFeatures(
     );
   }
 
-  return Promise.all(requests).then(datasetApiResult);
+  const results = await Promise.all(requests);
+
+  return datasetApiResult(results);
 }
 
 export async function loadPolylineFeatures(
