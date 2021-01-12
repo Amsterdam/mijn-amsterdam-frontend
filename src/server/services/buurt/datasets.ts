@@ -6,6 +6,7 @@ import {
   DatasetPropertyFilter,
   DatasetPropertyName,
   DatasetPropertyValue,
+  FeatureType,
 } from '../../../universal/config/buurt';
 import { DataRequestConfig } from '../../config';
 import {
@@ -82,7 +83,7 @@ export interface DatasetConfig {
   requestConfig?: DataRequestConfig;
   cache?: boolean;
   cacheTimeMinutes?: number;
-  featureType: 'Point' | 'Polygon' | 'MultiPolygon' | 'MultiLineString';
+  featureType: FeatureType;
   zIndex?: zIndexPane;
   additionalStaticPropertyNames?: DatasetPropertyName[];
 }

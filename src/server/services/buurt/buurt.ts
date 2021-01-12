@@ -1,6 +1,7 @@
 import {
   DatasetFilterSelection,
   DatasetId,
+  POLYLINE_GEOMETRY_TYPES,
 } from '../../../universal/config/buurt';
 import { IS_AP } from '../../../universal/config/env';
 import { apiErrorResult, apiSuccesResult } from '../../../universal/helpers';
@@ -165,12 +166,7 @@ export async function loadPolylineFeatures(
     filters: DatasetFilterSelection;
   }
 ) {
-  const configs = getDatasetEndpointConfig(datasetIds, [
-    'MultiPolygon',
-    'MultiLineString',
-    'Polygon',
-  ]);
-
+  const configs = getDatasetEndpointConfig(datasetIds, POLYLINE_GEOMETRY_TYPES);
   const requests: Array<Promise<ApiDatasetResponse>> = [];
 
   for (const datasetConfig of configs) {

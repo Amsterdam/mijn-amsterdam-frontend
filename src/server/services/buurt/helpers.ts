@@ -13,6 +13,7 @@ import {
   ApiSuccessResponse,
 } from '../../../universal/helpers';
 import { capitalizeFirstLetter } from '../../../universal/helpers/text';
+import { jsonCopy } from '../../../universal/helpers/utils';
 import {
   DatasetConfig,
   datasetEndpoints,
@@ -244,20 +245,22 @@ export function refineFilterSelection(
   features: MaFeature[],
   filtersBase: DatasetFilterSelection
 ) {
-  for (const [datasetId, filters] of Object.entries(filtersBase)) {
+  const filtersRefined = jsonCopy(filtersBase) as DatasetFilterSelection;
+
+  for (const [datasetId, filters] of Object.entries(filtersRefined)) {
     for (const [propertyName, propertyFilterConfig] of Object.entries(
       filters
     )) {
       if (propertyFilterConfig.values) {
         const refined = createDynamicFilterConfig(features, filters);
         if (refined[propertyName]) {
-          filtersBase[datasetId][propertyName].valuesRefined =
+          filtersRefined[datasetId][propertyName].valuesRefined =
             refined[propertyName].values;
         }
       }
     }
   }
-  return filtersBase;
+  return filtersRefined;
 }
 
 export function filterAndRefineFeatures(
