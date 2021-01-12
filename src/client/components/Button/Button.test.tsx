@@ -1,10 +1,7 @@
-import { mount, shallow } from 'enzyme';
-
 import { BrowserRouter } from 'react-router-dom';
 import { ReactComponent as IconComponent } from '../../assets/icons/Alert.svg';
 import Linkd from './Button';
 import React from 'react';
-import renderer from 'react-test-renderer';
 
 describe('Linkd', () => {
   it('Renders without crashing', () => {
