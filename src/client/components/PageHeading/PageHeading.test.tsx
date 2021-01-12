@@ -1,7 +1,8 @@
+import { render } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
 import PageHeading from './PageHeading';
 
 it('Renders without crashing', () => {
-  shallow(<PageHeading>Hola!</PageHeading>);
+  const { container } = render(<PageHeading>Hola!</PageHeading>);
+  expect(container.querySelector('h2')).toBeInTheDocument();
 });

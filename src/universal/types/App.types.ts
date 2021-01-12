@@ -61,6 +61,7 @@ export interface MyTip {
   isPersonalized: boolean;
   priority?: number;
   reason: string[];
+  audience?: string[];
 }
 
 export interface GenericDocument {

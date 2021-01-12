@@ -42,6 +42,7 @@ export default function DateInput({
     ([year, month, day]: [number, number, number]) => {
       setDateState([year, month, day]);
       const date = new Date(year, month, day);
+      console.log('daySelected', day, daySelected, date);
       onChange(date);
     },
     [onChange, setDateState]
@@ -80,6 +81,7 @@ export default function DateInput({
           }}
         />
       )}
+
       {!hasNativeSupport && (
         <div className={classnames(styles.DateInputFallback, className)}>
           <select

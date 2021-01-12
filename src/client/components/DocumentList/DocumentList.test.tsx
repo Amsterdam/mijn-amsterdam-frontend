@@ -1,4 +1,4 @@
-import { mount, shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { GenericDocument } from '../../../universal/types/App.types';
@@ -64,10 +64,7 @@ describe('DocumentList', () => {
         <DocumentList documents={ITEMS} />
       </BrowserRouter>
     );
-    const Linkd = component
-      .find('li')
-      .at(0)
-      .find('Linkd');
+    const Linkd = component.find('li').at(0).find('Linkd');
 
     expect(Linkd).toHaveLength(1);
     expect(Linkd.prop('href')).toEqual(ITEMS[0].url);
@@ -89,10 +86,7 @@ describe('DocumentList', () => {
         <DocumentList documents={ITEMS} />
       </BrowserRouter>
     );
-    const Linkd = component
-      .find('li')
-      .at(0)
-      .find('Linkd');
+    const Linkd = component.find('li').at(0).find('Linkd');
 
     await act(async () => {
       Linkd.simulate('click');

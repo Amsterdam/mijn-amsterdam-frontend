@@ -1,7 +1,8 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import Page from './Page';
 
 it('Renders without crashing', () => {
-  shallow(<Page>Hela!</Page>);
+  render(<Page>Hela!</Page>);
+  expect(screen.getByText('Hela!')).toBeInTheDocument();
 });

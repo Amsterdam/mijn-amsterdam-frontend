@@ -1,27 +1,18 @@
+import { render } from '@testing-library/react';
 import React from 'react';
-import { mount } from 'enzyme';
-import DirectLinks from './DirectLinks';
-import * as mediaHook from '../../hooks/media.hook';
 import { BrowserRouter } from 'react-router-dom';
+import { usePhoneScreen } from '../../hooks/media.hook';
+import DirectLinks from './DirectLinks';
+
+jest.mock('../../hooks/media.hook');
 
 describe('<DirectLinks />', () => {
-  let hookSpies: any = {};
-
-  beforeAll(() => {
-    (window.matchMedia as any) = jest.fn(() => {
-      return {
-        addListener: jest.fn(),
-        removeListener: jest.fn(),
-      };
-    });
-  });
-
   function getMountHtml(profileType: ProfileType) {
-    return mount(
+    return render(
       <BrowserRouter>
         <DirectLinks profileType={profileType} />
       </BrowserRouter>
-    ).html();
+    ).asFragment();
   }
 
   it('It renders private links', () => {
@@ -34,10 +25,7 @@ describe('<DirectLinks />', () => {
     expect(getMountHtml('commercial')).toMatchSnapshot();
   });
   it('It renders additional links on phone', () => {
-    hookSpies.usePhoneScreen = jest
-      .spyOn(mediaHook, 'usePhoneScreen')
-      .mockImplementationOnce(() => true);
+    (usePhoneScreen as jest.Mock).mockReturnValueOnce(true);
     expect(getMountHtml('private')).toMatchSnapshot();
-    hookSpies.usePhoneScreen.mockRestore();
   });
 });
