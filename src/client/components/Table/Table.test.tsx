@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import Table from './Table';
 
 const items = [
@@ -15,7 +15,9 @@ const items = [
 
 describe('<Table />', () => {
   it('Renders the default', () => {
-    expect(shallow(<Table items={items} />).html()).toMatchSnapshot();
+    render(<Table items={items} />);
+    expect(screen.getByText('Title 1')).toBeInTheDocument();
+    expect(screen.getByText('Foo the world')).toBeInTheDocument();
   });
 
   it('Uses a different title key', () => {
@@ -25,30 +27,7 @@ describe('<Table />', () => {
         name: title,
       };
     });
-    expect(
-      shallow(<Table titleKey="name" items={nItems} />).html()
-    ).toMatchSnapshot();
-  });
-
-  it('Renderd differently without $titleKey and $displayProps in data object', () => {
-    const nItems = [...items].map(({ title, ...item }) => {
-      return {
-        ...item,
-        name: title,
-      };
-    });
-    expect(shallow(<Table items={nItems} />).html()).toMatchSnapshot();
-  });
-
-  it('Renderd differently without $titleKey and including $displayProps in data object', () => {
-    const nItems = [...items].map(({ title, ...item }) => {
-      return {
-        ...item,
-        name: title,
-      };
-    });
-    expect(
-      shallow(<Table items={nItems} displayProps={{ date: 'Datum' }} />).html()
-    ).toMatchSnapshot();
+    render(<Table titleKey="name" items={nItems} />);
+    expect(screen.getByText('Title 1')).toBeInTheDocument();
   });
 });
