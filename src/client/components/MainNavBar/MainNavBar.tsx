@@ -9,14 +9,14 @@ import { ComponentChildren } from '../../../universal/types';
 import { IconInfo } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
 import {
-  trackItemPresentation,
   trackItemClick,
+  trackItemPresentation,
 } from '../../hooks/analytics.hook';
-import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { useTermReplacement } from '../../hooks/useTermReplacement';
 import Linkd, { Button } from '../Button/Button';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
 import LogoutLink from '../LogoutLink/LogoutLink';
@@ -32,7 +32,6 @@ import {
 import styles from './MainNavBar.module.scss';
 import { ProfileName } from './ProfileName';
 import { useBurgerMenuAnimation } from './useBurgerMenuAnimation';
-import { useTermReplacement } from '../../hooks/useTermReplacement';
 
 const BurgerMenuToggleBtnId = 'BurgerMenuToggleBtn';
 const LinkContainerId = 'MainMenu';
@@ -137,8 +136,11 @@ function isTargetWithinMenu(target: any) {
   );
 }
 
-export default function MainNavBar() {
-  const session = useSessionValue();
+export default function MainNavBar({
+  isAuthenticated = false,
+}: {
+  isAuthenticated: boolean;
+}) {
   const hasBurgerMenu = useTabletScreen();
   const termReplace = useTermReplacement();
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
@@ -239,7 +241,7 @@ export default function MainNavBar() {
         />
       )}
 
-      {session.isAuthenticated && (
+      {isAuthenticated && (
         <>
           {hasBurgerMenu && (
             <animated.div

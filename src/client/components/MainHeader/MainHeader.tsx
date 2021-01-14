@@ -64,7 +64,7 @@ export default function MainHeader({
           )}
         </span>
       </div>
-      {isAuthenticated && <MainNavBar />}
+      {isAuthenticated && <MainNavBar isAuthenticated={isAuthenticated} />}
       {isAuthenticated && hasErrors && (
         <ErrorMessages errors={errors} className={styles.ErrorMessages} />
       )}
