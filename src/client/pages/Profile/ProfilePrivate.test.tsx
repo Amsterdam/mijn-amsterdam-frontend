@@ -1,4 +1,4 @@
-import { mount, shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import React from 'react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
@@ -205,7 +205,7 @@ describe('<Profile />', () => {
         initializeState={initializeState(testState())}
       />
     );
-    expect(mount(<Component />).html()).toMatchSnapshot();
+    expect(render(<Component />).asFragment()).toMatchSnapshot();
   });
 
   it('Matches the Full Page snapshot Non-Mokum', () => {
@@ -225,7 +225,7 @@ describe('<Profile />', () => {
         )}
       />
     );
-    expect(mount(<Component />).html()).toMatchSnapshot();
+    expect(render(<Component />).asFragment()).toMatchSnapshot();
   });
 
   it('Matches the Full Page snapshot No verbintenis', () => {
@@ -242,6 +242,6 @@ describe('<Profile />', () => {
         )}
       />
     );
-    expect(mount(<Component />).html()).toMatchSnapshot();
+    expect(render(<Component />).asFragment()).toMatchSnapshot();
   });
 });

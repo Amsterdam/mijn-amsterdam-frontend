@@ -1,4 +1,4 @@
-import { mount, shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import React from 'react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
@@ -128,7 +128,7 @@ const responseData = {
   status: 'OK',
 };
 
-const testState = {
+const testState: any = {
   KVK: responseData,
 };
 
@@ -158,11 +158,8 @@ describe('<ProfileCommercial />', () => {
     });
   });
 
-  it('Renders without crashing', () => {
-    shallow(<Component />);
-  });
-
   it('Matches the Full Page snapshot', () => {
-    expect(mount(<Component />).html()).toMatchSnapshot();
+    const { asFragment } = render(<Component />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });

@@ -1,4 +1,4 @@
-import { shallow, mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import React from 'react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
@@ -8,7 +8,7 @@ import MockApp from '../MockApp';
 import MyNotifications from './MyNotifications';
 import { Chapters } from '../../../universal/config/chapter';
 
-const testState = {
+const testState: any = {
   NOTIFICATIONS: {
     status: 'OK',
     content: [
@@ -77,13 +77,8 @@ describe('<MyNotifications />', () => {
     />
   );
 
-  it('Renders without crashing', () => {
-    shallow(<Component />);
-  });
-
   it('Matches the Full Page snapshot', () => {
-    const html = mount(<Component />).html();
-
-    expect(html).toMatchSnapshot();
+    const { asFragment } = render(<Component />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });

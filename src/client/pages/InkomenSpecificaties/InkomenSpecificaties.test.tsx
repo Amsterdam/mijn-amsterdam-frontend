@@ -1,4 +1,4 @@
-import { shallow, mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import React from 'react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
@@ -10,6 +10,7 @@ import {
   FOCUSIncomeSpecificationSourceDataContent,
   transformFOCUSIncomeSpecificationsData,
 } from '../../../server/services';
+import userEvent from '@testing-library/user-event';
 
 const sourceData = {
   jaaropgaven: [
@@ -123,28 +124,30 @@ describe('<InkomenSpecificaties /> Uitkeringsspecificaties', () => {
     />
   );
 
-  it('Renders without crashing', () => {
-    shallow(<Component />);
-  });
-
   it('Matches the Full Page snapshot', () => {
-    const html = mount(<Component />).html();
-    expect(html).toMatchSnapshot();
+    const { asFragment } = render(<Component />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('Allows filtering (search) the results', () => {
-    const component = mount(<Component />);
-    component.find('button.SearchButton').simulate('click');
-    expect(component.find('.SearchPanel')).toHaveLength(1);
-    component.find('.Select').simulate('change', { target: { value: 'WWB' } });
-    expect(component.find('tbody tr')).toHaveLength(1);
-    (component.find('DateInput') as any)
-      .at(0)
-      .props()
-      .onChange(new Date('2021-01-01'));
-    component.update();
-    expect(component.find('table')).toHaveLength(0);
-    expect(component.contains('Resetten')).toBe(true);
+    const { getByText, getByDisplayValue, queryByText } = render(<Component />);
+
+    expect(getByText('18 januari 2014')).toBeInTheDocument();
+
+    userEvent.click(getByText('Zoeken'));
+
+    expect(getByText('Datum van')).toBeInTheDocument();
+    expect(getByDisplayValue('2014-01-18')).toBeInTheDocument();
+
+    expect(getByText('Datum t/m')).toBeInTheDocument();
+    expect(getByDisplayValue('2019-05-18')).toBeInTheDocument();
+
+    expect(getByDisplayValue('Alle regelingen (7)')).toBeInTheDocument();
+
+    userEvent.type(getByDisplayValue('2014-01-18'), '2019-03-23');
+
+    expect(getByDisplayValue('2019-03-23')).toBeInTheDocument();
+    expect(queryByText('18 januari 2014')).toBeNull();
   });
 });
 
@@ -163,12 +166,8 @@ describe('<InkomenSpecificaties /> Jaaropgaven', () => {
     />
   );
 
-  it('Renders without crashing', () => {
-    shallow(<Component />);
-  });
-
   it('Matches the Full Page snapshot', () => {
-    const html = mount(<Component />).html();
-    expect(html).toMatchSnapshot();
+    const { asFragment } = render(<Component />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });
