@@ -1,11 +1,12 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import Section from './Section';
 
 it('Renders without crashing', () => {
-  shallow(
+  render(
     <Section>
       <p>Hey!</p>
     </Section>
   );
+  expect(screen.getByText('Hey!')).toBeInTheDocument();
 });
