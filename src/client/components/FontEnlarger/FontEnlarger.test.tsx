@@ -1,9 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import FontEnlarger from './FontEnlarger';
 
 describe('Font enlarger information', () => {
   it('Renders without crashing', () => {
-    shallow(<FontEnlarger />);
+    render(<FontEnlarger />);
+    expect(screen.getByLabelText('Uitleg tekst vergroten')).toBeInTheDocument();
   });
 });
