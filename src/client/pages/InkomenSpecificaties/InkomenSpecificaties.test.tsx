@@ -105,7 +105,7 @@ function initializeState(snapshot: MutableSnapshot) {
       content,
       status: 'OK',
     },
-  });
+  } as any);
 }
 
 describe('<InkomenSpecificaties /> Uitkeringsspecificaties', () => {
