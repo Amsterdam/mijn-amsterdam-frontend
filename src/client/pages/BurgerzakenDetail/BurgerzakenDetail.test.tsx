@@ -1,4 +1,4 @@
-import { mount, shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import React from 'react';
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
@@ -24,7 +24,7 @@ const identiteitsbewijzen = [
   },
 ];
 
-const testState = {
+const testState: any = {
   BRP: { status: 'OK', content: { identiteitsbewijzen } },
 };
 
@@ -47,13 +47,8 @@ describe('<BurgerzakenDetail />', () => {
     />
   );
 
-  it('Renders without crashing', () => {
-    shallow(<Component />);
-  });
-
   it('Matches the Full Page snapshot', () => {
-    const html = mount(<Component />).html();
-
-    expect(html).toMatchSnapshot();
+    const { asFragment } = render(<Component />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });
