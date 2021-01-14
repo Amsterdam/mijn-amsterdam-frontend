@@ -122,7 +122,7 @@ function BurgerButton({ isActive, toggleBurgerMenu }: BurgerButtonProps) {
       aria-expanded={isActive}
       onClick={() => toggleBurgerMenu(!isActive)}
     >
-      Navigatie
+      {isActive ? 'Verberg' : 'Toon'} navigatie
     </button>
   );
 }
