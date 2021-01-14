@@ -1,122 +1,114 @@
-import { mount, ReactWrapper } from 'enzyme';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
+import { RecoilRoot } from 'recoil';
 import * as analytics from '../../hooks/analytics.hook';
 import SectionCollapsible from './SectionCollapsible';
-import * as profileTypeHook from '../../hooks/useProfileType';
 
-describe('SectionCollapsible', () => {
-  let component: ReactWrapper<typeof SectionCollapsible>;
+describe('<SectionCollapsible />', () => {
   const trackingSpy = jest.spyOn(analytics, 'trackEventWithProfileType');
 
-  const profileTypeHookMock = ((profileTypeHook as any).useProfileTypeValue = jest.fn(
-    () => 'prive'
-  ));
-
-  afterEach(() => {
-    component.unmount();
-    sessionStorage.clear();
-  });
-
-  afterAll(() => {
-    profileTypeHookMock.mockRestore();
-  });
-
   it('should start uncollapsed', () => {
-    component = mount(
-      <SectionCollapsible
-        id="test-SectionCollapsible"
-        isLoading={false}
-        hasItems={true}
-        startCollapsed={false}
-        title="test!"
-      >
-        <div style={{ height: 500 }}>Boohoo!</div>
-      </SectionCollapsible>
+    const { container } = render(
+      <RecoilRoot>
+        <SectionCollapsible
+          id="test-SectionCollapsible"
+          isLoading={false}
+          hasItems={true}
+          startCollapsed={false}
+          title="test!"
+        >
+          <div style={{ height: 500 }}>Boohoo!</div>
+        </SectionCollapsible>
+      </RecoilRoot>
     );
-    expect(
-      (component.find('SectionCollapsibleHeading').props() as any)
-        .isAriaExpanded
-    ).toBe(true);
+
+    expect(container.querySelector('[aria-hidden=false]')).toBeInTheDocument();
+    expect(screen.getByText('test!')).toBeInTheDocument();
+    expect(screen.getByText('Boohoo!')).toBeInTheDocument();
   });
 
   it('should start collapsed', () => {
-    component = mount(
-      <SectionCollapsible
-        id="test-SectionCollapsible"
-        isLoading={false}
-        hasItems={true}
-        title="test"
-      >
-        <div style={{ height: 500 }}>Boohoo!</div>
-      </SectionCollapsible>
+    const { container } = render(
+      <RecoilRoot>
+        <SectionCollapsible
+          id="test-SectionCollapsible"
+          isLoading={false}
+          hasItems={true}
+          startCollapsed={false}
+          title="test!"
+        >
+          <div style={{ height: 500 }}>Boohoo!</div>
+        </SectionCollapsible>
+      </RecoilRoot>
     );
 
-    expect(
-      (component.find('SectionCollapsibleHeading').props() as any)
-        .isAriaExpanded
-    ).toBe(false);
+    expect(container.querySelector('[aria-hidden=true]')).toBeInTheDocument();
+    expect(screen.getByText('test!')).toBeInTheDocument();
+    expect(screen.getByText('Boohoo!')).toBeInTheDocument();
   });
 
   it('should collapse/expand when clicking the title', () => {
-    component = mount(
-      <SectionCollapsible
-        id="test-SectionCollapsible"
-        isLoading={false}
-        hasItems={true}
-        title="Click me!"
-      >
-        <div style={{ height: 500 }}>Boohoo!</div>
-      </SectionCollapsible>
+    const { container, getByText } = render(
+      <RecoilRoot>
+        <SectionCollapsible
+          id="test-SectionCollapsible1"
+          isLoading={false}
+          hasItems={true}
+          title="Click me!"
+        >
+          <div style={{ height: 500 }}>Boohoo!</div>
+        </SectionCollapsible>
+      </RecoilRoot>
     );
-
-    expect(
-      (component.find('SectionCollapsibleHeading').props() as any)
-        .isAriaExpanded
-    ).toBe(false);
-    component.find(`.Title button`).simulate('click');
-    expect(
-      (component.find('SectionCollapsibleHeading').props() as any)
-        .isAriaExpanded
-    ).toBe(true);
+    expect(container.querySelector('[aria-hidden=true]')).toBeInTheDocument();
+    userEvent.click(getByText('Click me!'));
+    expect(container.querySelector('[aria-hidden=false]')).toBeInTheDocument();
   });
 
   it('should call trackEvent if tracking info is provided and section is expanded', () => {
-    component = mount(
-      <SectionCollapsible
-        id="test-SectionCollapsible"
-        isLoading={false}
-        hasItems={true}
-        track={{ category: 'the category', name: 'the content thing' }}
-        title="Click me!"
-      >
-        <div style={{ height: 500 }}>Boohoo!</div>
-      </SectionCollapsible>
+    const { container, getByText } = render(
+      <RecoilRoot>
+        <SectionCollapsible
+          id="test-SectionCollapsible2"
+          isLoading={false}
+          hasItems={true}
+          track={{ category: 'the category', name: 'the content thing' }}
+          title="Click me!"
+        >
+          <div style={{ height: 500 }}>Boohoo!</div>
+        </SectionCollapsible>
+      </RecoilRoot>
     );
 
-    component.find(`.Title button`).simulate('click');
+    expect(container.querySelector('[aria-hidden=true]')).toBeInTheDocument();
+    userEvent.click(getByText('Click me!'));
+    expect(container.querySelector('[aria-hidden=false]')).toBeInTheDocument();
     expect(trackingSpy).toHaveBeenCalledWith(
       {
         category: 'the category',
         name: 'the content thing',
         action: 'Open klikken',
       },
-      'prive'
+      'private'
     );
   });
 
   it('should show title and "no items message"', () => {
-    component = mount(
-      <SectionCollapsible
-        id="test-SectionCollapsible"
-        title="My Items"
-        isLoading={false}
-        hasItems={false}
-        noItemsMessage="No items"
-      >
-        <div style={{ height: 500 }}>Boohoo!</div>
-      </SectionCollapsible>
+    render(
+      <RecoilRoot>
+        <SectionCollapsible
+          id="test-SectionCollapsible3"
+          title="My Items"
+          isLoading={false}
+          hasItems={false}
+          noItemsMessage="No items"
+        >
+          <div style={{ height: 500 }}>Boohoo!</div>
+        </SectionCollapsible>
+      </RecoilRoot>
     );
 
-    expect(component.html()).toMatchSnapshot();
+    expect(screen.getByText('No items')).toBeInTheDocument();
   });
 });
