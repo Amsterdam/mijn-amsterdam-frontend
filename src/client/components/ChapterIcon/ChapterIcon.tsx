@@ -47,7 +47,9 @@ export default function ChapterIcon({
 
   return (
     <Icon
-      aria-label={chapter ? ChapterTitles[chapter] : label}
+      aria-label={
+        chapter && ChapterTitles[chapter] ? ChapterTitles[chapter] : label
+      }
       fill={fill}
       className={classnames(styles.ChapterIcon, className)}
     />
