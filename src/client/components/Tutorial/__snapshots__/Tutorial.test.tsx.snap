@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`tutorial Renders without crashing 1`] = `"<div><div data-tutorial-item=\\"Hello world!left-top\\">This is happening</div><div data-tutorial-item=\\"Goody two shoes!left-bottom\\">On a large scale</div></div>"`;

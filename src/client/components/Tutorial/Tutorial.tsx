@@ -7,10 +7,6 @@ import { useDetectResizing, useModalRoot, usePhoneScreen } from '../../hooks';
 import { CloseButton } from '../Button/Button';
 import styles from './Tutorial.module.scss';
 
-interface TutorialProps {
-  onClose: () => void;
-}
-
 function TutorialItem({ el }: { el: any }) {
   const heading = el.querySelector('[class^="Heading_Heading"]') || el;
   const pos = heading.getBoundingClientRect();
@@ -74,6 +70,10 @@ function TutorialItem({ el }: { el: any }) {
       </div>
     </div>
   );
+}
+
+interface TutorialProps {
+  onClose: () => void;
 }
 
 export default function Tutorial({ onClose }: TutorialProps) {

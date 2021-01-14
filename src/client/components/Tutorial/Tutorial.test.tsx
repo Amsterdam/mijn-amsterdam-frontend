@@ -1,18 +1,12 @@
+import { render } from '@testing-library/react';
 import React from 'react';
-import { mount } from 'enzyme';
 import Tutorial from './Tutorial';
 
+jest.mock('../../hooks/media.hook');
+
 describe('tutorial', () => {
-  beforeAll(() => {
-    (window.matchMedia as any) = jest.fn(() => {
-      return {
-        addListener: jest.fn(),
-        removeListener: jest.fn(),
-      };
-    });
-  });
   it('Renders without crashing', () => {
-    const comp = mount(
+    render(
       <div>
         <div data-tutorial-item="Hello world!left-top">This is happening</div>
         <div data-tutorial-item="Goody two shoes!left-bottom">
@@ -21,8 +15,5 @@ describe('tutorial', () => {
         <Tutorial onClose={() => void 0} />
       </div>
     );
-
-    expect(comp.html()).toMatchSnapshot();
-    comp.unmount();
   });
 });
