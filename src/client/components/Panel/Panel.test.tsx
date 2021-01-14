@@ -1,11 +1,12 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import Panel from './Panel';
 
 it('Renders without crashing', () => {
-  shallow(
+  render(
     <Panel>
       <p>hey!</p>
     </Panel>
   );
+  expect(screen.getByText('hey!')).toBeInTheDocument();
 });
