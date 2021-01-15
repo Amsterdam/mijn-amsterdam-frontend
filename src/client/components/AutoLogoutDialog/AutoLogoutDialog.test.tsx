@@ -1,14 +1,14 @@
-import { render, screen } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
-import AutoLogoutDialog, { AutoLogoutDialogSettings } from './AutoLogoutDialog';
 import { RecoilRoot } from 'recoil';
 import { sessionAtom } from '../../hooks/api/useSessionApi';
-import { Button } from '../Button/Button';
+import AutoLogoutDialog, { AutoLogoutDialogSettings } from './AutoLogoutDialog';
 
 const ONE_SECOND_IN_MS = 1000;
 const DOC_TITLE = 'AutoLogoutDialog';
 
-xdescribe('AutoLogoutDialog', () => {
+describe('AutoLogoutDialog', () => {
   window.scrollTo = jest.fn();
 
   const refetch = jest.fn(() => {});
@@ -25,126 +25,154 @@ xdescribe('AutoLogoutDialog', () => {
     secondsSessionRenewRequestInterval: 2,
   };
 
-  let component: any;
   const map: any = {};
-
-  // beforeAll(() => {
-  //   window.addEventListener = jest.fn((event, callback: any) => {
-  //     map[event] = () => {
-  //       callback && callback();
-  //     };
-  //   });
-  //   // inspired by https://github.com/facebook/jest/issues/890#issuecomment-450708771
-  //   delete window.location;
-  //   (window as any) = Object.create(window);
-  //   window.location = {
-  //     ...window.location,
-  //     href: '/test',
-  //   };
-  // });
-
-  afterAll(() => {
-    // (window.addEventListener as any).mockRestore();
-  });
+  let listenerSpy: jest.SpyInstance;
 
   beforeEach(() => {
+    window.addEventListener = jest.fn((event, callback: any) => {
+      map[event] = (...args: any) => {
+        callback && callback(...args);
+      };
+    });
+    listenerSpy = jest.spyOn(window, 'addEventListener');
     document.title = DOC_TITLE;
     jest.useFakeTimers();
-    component = render(
+    // component = ;
+  });
+
+  afterEach(() => {
+    listenerSpy.mockRestore();
+    refetch.mockReset();
+    // component.unmount();
+    // component = null;
+  });
+
+  it('resets the autologout counter every x seconds whenever user activity is detected', async () => {
+    render(
       <RecoilRoot
         initializeState={(snapshot) => snapshot.set(sessionAtom, session)}
       >
         <AutoLogoutDialog settings={settings} />
       </RecoilRoot>
     );
-  });
 
-  afterEach(() => {
-    refetch.mockReset();
-    component.unmount();
-    component = null;
-  });
-
-  it('resets the autologout counter every x seconds whenever user activity is detected', () => {
-    const rf = refetch;
-
-    map.mousemove();
-
-    jest.advanceTimersByTime(
-      ONE_SECOND_IN_MS * settings.secondsSessionRenewRequestInterval!
-    );
-    expect(refetch).toHaveBeenCalled();
-    expect(refetch).toBe(rf);
-
-    map.mousemove();
-    jest.advanceTimersByTime(
-      ONE_SECOND_IN_MS * settings.secondsSessionRenewRequestInterval!
+    await waitFor(() =>
+      expect(listenerSpy.mock.calls.some((c) => c[0] === 'mousemove')).toBe(
+        true
+      )
     );
 
-    expect(refetch).toBe(rf);
+    act(() => {
+      map.mousemove();
+      jest.advanceTimersByTime(
+        ONE_SECOND_IN_MS * settings.secondsSessionRenewRequestInterval!
+      );
+    });
+
+    await waitFor(() => expect(refetch).toHaveBeenCalled());
+
+    act(() => {
+      map.mousemove();
+
+      jest.advanceTimersByTime(
+        ONE_SECOND_IN_MS * settings.secondsSessionRenewRequestInterval!
+      );
+    });
 
     expect(refetch).toHaveBeenCalledTimes(2);
   });
 
   it('shows the auto logout dialog after x seconds and fires callback after another x seconds', () => {
-    jest.advanceTimersByTime(
-      ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow!
+    render(
+      <RecoilRoot
+        initializeState={(snapshot) => snapshot.set(sessionAtom, session)}
+      >
+        <AutoLogoutDialog settings={settings} />
+      </RecoilRoot>
     );
-    component.update();
 
-    expect(component.childAt(1).childAt(0).prop('isOpen')).toBe(true);
+    act(() => {
+      jest.advanceTimersByTime(
+        ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow!
+      );
+    });
 
-    map.mousemove();
+    expect(screen.getByText('Wilt u doorgaan?')).toBeInTheDocument();
 
-    jest.advanceTimersByTime(
-      ONE_SECOND_IN_MS * settings.secondsSessionRenewRequestInterval!
-    );
+    act(() => {
+      map.mousemove();
+
+      jest.advanceTimersByTime(
+        ONE_SECOND_IN_MS * settings.secondsSessionRenewRequestInterval!
+      );
+    });
 
     expect(refetch).not.toHaveBeenCalled();
 
-    jest.advanceTimersByTime(
-      ONE_SECOND_IN_MS * settings.secondsBeforeAutoLogout!
-    );
-
-    component.update();
+    act(() => {
+      jest.advanceTimersByTime(
+        ONE_SECOND_IN_MS * settings.secondsBeforeAutoLogout!
+      );
+    });
 
     expect(logout).toHaveBeenCalled();
   });
 
   it('fires callback when clicking continue button', () => {
-    jest.advanceTimersByTime(
-      ONE_SECOND_IN_MS *
-        (settings.secondsBeforeDialogShow! - settings.secondsBeforeAutoLogout!)
+    render(
+      <RecoilRoot
+        initializeState={(snapshot) => snapshot.set(sessionAtom, session)}
+      >
+        <AutoLogoutDialog settings={settings} />
+      </RecoilRoot>
     );
-    component.update();
 
-    let continueButton = component.find(Button);
-    expect(continueButton).toHaveLength(1);
+    act(() => {
+      jest.advanceTimersByTime(
+        ONE_SECOND_IN_MS *
+          (settings.secondsBeforeDialogShow! -
+            settings.secondsBeforeAutoLogout!)
+      );
+    });
 
-    continueButton.simulate('click');
-    component.update();
+    expect(screen.getByText('Doorgaan')).toBeInTheDocument();
 
-    continueButton = component.find(Button);
+    act(() => {
+      userEvent.click(screen.getByText('Doorgaan'));
+    });
+
     expect(refetch).toHaveBeenCalledTimes(1);
-    expect(continueButton).toHaveLength(0);
+
+    expect(screen.queryByText('Doorgaan')).toBeNull();
   });
 
   it('switches the document title continuously when timer is visible', () => {
+    render(
+      <RecoilRoot
+        initializeState={(snapshot) => snapshot.set(sessionAtom, session)}
+      >
+        <AutoLogoutDialog settings={settings} />
+      </RecoilRoot>
+    );
+
     const documentTitle = document.title;
 
-    jest.advanceTimersByTime(
-      ONE_SECOND_IN_MS * settings.secondsBeforeDialogShow! -
-        settings.secondsBeforeAutoLogout!
-    );
-    component.update();
-    let continueButton = component.find(Button);
-    expect(continueButton).toHaveLength(1);
+    act(() => {
+      jest.advanceTimersByTime(
+        ONE_SECOND_IN_MS *
+          (settings.secondsBeforeDialogShow! -
+            settings.secondsBeforeAutoLogout!)
+      );
+    });
+
+    expect(screen.getByText('Doorgaan')).toBeInTheDocument();
 
     expect(document.title).toBe(documentTitle);
 
-    jest.advanceTimersByTime(ONE_SECOND_IN_MS * 2);
-    component.update();
+    act(() => {
+      jest.advanceTimersByTime(ONE_SECOND_IN_MS * 2);
 
-    expect(document.title).not.toBe(DOC_TITLE);
+      expect(document.title).not.toBe(DOC_TITLE);
+    });
   });
 });
