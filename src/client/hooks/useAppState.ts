@@ -76,9 +76,9 @@ export function useAppStateFallbackService({
       return;
     }
     if (api.data !== null && !api.isLoading && !api.isError) {
-      setAppState((appState) =>
-        Object.assign({}, appState, transformSourceData(api.data))
-      );
+      setAppState((appState) => {
+        return Object.assign({}, appState, transformSourceData(api.data));
+      });
     } else if (api.isError) {
       // If everything fails, this is the final state update.
       const errorMessage =

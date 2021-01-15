@@ -1,6 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import MockAdapter from 'axios-mock-adapter';
-import { getDefaultState, useDataApi, requestApiData } from './useDataApi';
+import { getDefaultState, useDataApi } from './useDataApi';
+import axios from 'axios';
 
 interface Response {
   foo: string;
@@ -12,7 +13,7 @@ const DUMMY_RESPONSE: DummyResponse = { foo: 'bar' };
 const DUMMY_URL = 'http://test';
 
 describe('Api hook', () => {
-  const axMock = new MockAdapter(requestApiData);
+  const axMock = new MockAdapter(axios);
 
   axMock.onGet(DUMMY_URL).reply(200, DUMMY_RESPONSE);
 

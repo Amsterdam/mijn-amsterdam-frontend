@@ -1,47 +1,11 @@
 import { act, renderHook } from '@testing-library/react-hooks';
+import { newEventSourceMock } from './EventSourceMock';
 import * as sseHook from './useSSE';
 import { MAX_CONNECTION_RETRY_COUNT, SSE_ERROR_MESSAGE } from './useSSE';
 
-const evHandlers: Record<string, (args?: any) => void> = {};
 const sseMockResponse = JSON.stringify({
   FOO: { content: { hello: 'world' } },
 });
-
-const newMock = () => {
-  function EventSourceMock() {
-    // @ts-ignore
-    this.init();
-  }
-
-  EventSourceMock.CONNECTING = 0;
-  EventSourceMock.OPEN = 1;
-  EventSourceMock.CLOSED = 2;
-  EventSourceMock.prototype.readyState = 0;
-  EventSourceMock.prototype.init = jest.fn();
-  EventSourceMock.prototype.setReadyState = function (readyState: number) {
-    this.readyState = readyState;
-  };
-  EventSourceMock.prototype.open = jest.fn(() => {
-    evHandlers.open && evHandlers.open();
-  });
-  EventSourceMock.prototype.close = jest.fn(() => {
-    evHandlers.close && evHandlers.close();
-  });
-  EventSourceMock.prototype.error = jest.fn((error: any) => {
-    evHandlers.error && evHandlers.error(error);
-  });
-  EventSourceMock.prototype.addEventListener = jest.fn(
-    (eventName: string, handler: (args: any) => void) => {
-      evHandlers[eventName] = jest.fn(handler);
-    }
-  );
-  EventSourceMock.prototype.removeEventListener = jest.fn(
-    (eventName: string, handler: () => void) => {
-      delete evHandlers[eventName];
-    }
-  );
-  return EventSourceMock;
-};
 
 describe('useAppState', () => {
   jest.spyOn(console, 'log').mockImplementation();
@@ -49,7 +13,7 @@ describe('useAppState', () => {
   jest.spyOn(console, 'error').mockImplementation();
 
   it('Should connect and respond with multiple messages.', async () => {
-    const EventSourceMock = ((window as any).EventSource = newMock());
+    const EventSourceMock = ((window as any).EventSource = newEventSourceMock());
     const onEventCallback = jest.fn();
     const hook = renderHook(() =>
       sseHook.useSSE({
@@ -64,7 +28,7 @@ describe('useAppState', () => {
     expect(EventSourceMock.prototype.addEventListener).toHaveBeenCalledTimes(3);
 
     act(() => {
-      evHandlers.message({ data: sseMockResponse });
+      EventSourceMock.prototype.evHandlers.message({ data: sseMockResponse });
     });
 
     expect(onEventCallback).toHaveBeenCalledWith(JSON.parse(sseMockResponse));
@@ -77,7 +41,7 @@ describe('useAppState', () => {
   });
 
   it('Should connect fail, retry and respond with an error.', async () => {
-    const EventSourceMock = ((window as any).EventSource = newMock());
+    const EventSourceMock = ((window as any).EventSource = newEventSourceMock());
     const onEventCallback = jest.fn();
     renderHook(() =>
       sseHook.useSSE({
@@ -94,10 +58,14 @@ describe('useAppState', () => {
     // Simulate retries
     for (let i = 0; i < MAX_CONNECTION_RETRY_COUNT; i += 1) {
       EventSourceMock.prototype.open();
-      expect(evHandlers.open).toHaveBeenCalledTimes(i + 1);
+      expect(EventSourceMock.prototype.evHandlers.open).toHaveBeenCalledTimes(
+        i + 1
+      );
 
       EventSourceMock.prototype.error(new Error('Server not reachable.'));
-      expect(evHandlers.error).toHaveBeenCalledTimes(i + 1);
+      expect(EventSourceMock.prototype.evHandlers.error).toHaveBeenCalledTimes(
+        i + 1
+      );
     }
 
     expect(EventSourceMock.prototype.close).toHaveBeenCalledTimes(1);
@@ -105,7 +73,7 @@ describe('useAppState', () => {
   });
 
   it('Should not connect if postponed.', () => {
-    const EventSourceMock = ((window as any).EventSource = newMock());
+    const EventSourceMock = ((window as any).EventSource = newEventSourceMock());
     const onEventCallback = jest.fn();
     renderHook(() =>
       sseHook.useSSE({
@@ -122,7 +90,7 @@ describe('useAppState', () => {
   });
 
   it('Should fail immediately if connection is closed but with error.', () => {
-    const EventSourceMock = ((window as any).EventSource = newMock());
+    const EventSourceMock = ((window as any).EventSource = newEventSourceMock());
     const onEventCallback = jest.fn();
     EventSourceMock.prototype.readyState = 2;
 
@@ -141,7 +109,7 @@ describe('useAppState', () => {
   });
 
   it('Should fail immediately if connection is open but with error.', () => {
-    const EventSourceMock = ((window as any).EventSource = newMock());
+    const EventSourceMock = ((window as any).EventSource = newEventSourceMock());
     const onEventCallback = jest.fn();
     EventSourceMock.prototype.readyState = 1;
 

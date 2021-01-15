@@ -128,6 +128,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "http-proxy-middleware": "^1.0.6",
     "prettier": "^2.2.1",
+    "react-recoil-hooks-testing-library": "0.0.8",
     "react-test-renderer": "^17.0.1"
   }
 }

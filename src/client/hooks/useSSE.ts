@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState, useRef } from 'react';
-import { useWhyDidYouUpdate } from './useWhyDidYouUpdate';
 
 export const SSE_ERROR_MESSAGE = 'sse-error';
 export const MAX_CONNECTION_RETRY_COUNT = 3;
