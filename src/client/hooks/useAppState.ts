@@ -76,9 +76,9 @@ export function useAppStateFallbackService({
       return;
     }
     if (api.data !== null && !api.isLoading && !api.isError) {
-      setAppState((appState) =>
-        Object.assign({}, appState, transformSourceData(api.data))
-      );
+      setAppState((appState) => {
+        return Object.assign({}, appState, transformSourceData(api.data));
+      });
     } else if (api.isError) {
       // If everything fails, this is the final state update.
       const errorMessage =
@@ -140,6 +140,25 @@ export function useAppState() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (requestParams.serviceIds.length) {
+      setAppState((appState) => {
+        const pristineStateSlices: any = {};
+
+        for (const id of requestParams.serviceIds as Array<keyof AppState>) {
+          pristineStateSlices[id] = PRISTINE_APPSTATE[id];
+        }
+
+        const appStateUpdated = {
+          ...appState,
+          ...pristineStateSlices,
+        };
+
+        return appStateUpdated;
+      });
+    }
+  }, [requestParams, setAppState]);
 
   useSSE({
     path: BFFApiUrls.SERVICES_SSE,

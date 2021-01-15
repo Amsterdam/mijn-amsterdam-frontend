@@ -1,4 +1,3 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
 import { FocusItem } from '../../../server/services/focus/focus-types';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
@@ -55,10 +54,10 @@ export function altDocumentContent(
   );
 }
 
-export default () => {
+export default function InkomenDetail() {
   const { FOCUS_AANVRAGEN } = useAppStateGetter();
 
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const aanvragen = (FOCUS_AANVRAGEN.content || []) as FocusItem[];
   const focusItem = aanvragen.find((item) => item.id === id);
   const noContent = !isLoading(FOCUS_AANVRAGEN) && !focusItem;
@@ -104,4 +103,4 @@ export default () => {
       )}
     </DetailPage>
   );
-};
+}

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { AppRoutes } from '../../../universal/config';
 import { matchPath } from 'react-router';

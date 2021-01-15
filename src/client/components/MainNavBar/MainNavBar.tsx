@@ -1,26 +1,22 @@
 import classnames from 'classnames';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { animated } from 'react-spring';
 import { AppRoutes } from '../../../universal/config';
-import {
-  Chapters,
-  ChapterTitles,
-  profileTypeChapterTitleAdjustment,
-} from '../../../universal/config/chapter';
+import { ChapterTitles } from '../../../universal/config/chapter';
 import { isError } from '../../../universal/helpers/api';
 import { ComponentChildren } from '../../../universal/types';
 import { IconInfo } from '../../assets/icons';
 import { ChapterIcons } from '../../config/chapterIcons';
 import {
-  trackItemPresentation,
   trackItemClick,
+  trackItemPresentation,
 } from '../../hooks/analytics.hook';
-import { useSessionValue } from '../../hooks/api/useSessionApi';
 import { useDesktopScreen, useTabletScreen } from '../../hooks/media.hook';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useChapters } from '../../hooks/useChapters';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { useTermReplacement } from '../../hooks/useTermReplacement';
 import Linkd, { Button } from '../Button/Button';
 import FontEnlarger from '../FontEnlarger/FontEnlarger';
 import LogoutLink from '../LogoutLink/LogoutLink';
@@ -126,7 +122,7 @@ function BurgerButton({ isActive, toggleBurgerMenu }: BurgerButtonProps) {
       aria-expanded={isActive}
       onClick={() => toggleBurgerMenu(!isActive)}
     >
-      Navigatie
+      {isActive ? 'Verberg' : 'Toon'} navigatie
     </button>
   );
 }
@@ -140,9 +136,13 @@ function isTargetWithinMenu(target: any) {
   );
 }
 
-export default function MainNavBar() {
-  const session = useSessionValue();
+export default function MainNavBar({
+  isAuthenticated = false,
+}: {
+  isAuthenticated: boolean;
+}) {
   const hasBurgerMenu = useTabletScreen();
+  const termReplace = useTermReplacement();
   const [isBurgerMenuVisible, toggleBurgerMenu] = useState<boolean | undefined>(
     undefined
   );
@@ -206,7 +206,7 @@ export default function MainNavBar() {
   } = useBurgerMenuAnimation(isBurgerMenuVisible);
 
   const menuItemsComposed = useMemo(() => {
-    return mainMenuItems.map(item => {
+    return mainMenuItems.map((item) => {
       let menuItem = item;
 
       // Add dynamic chapter submenu items to the menu
@@ -218,13 +218,13 @@ export default function MainNavBar() {
       ) {
         menuItem = {
           ...menuItem,
-          title: profileTypeChapterTitleAdjustment(profileType, Chapters.BUURT),
+          title: termReplace(menuItem.title),
         };
       }
 
       return getMenuItem(menuItem);
     });
-  }, [myChapterItems, profileType]);
+  }, [myChapterItems, profileType, termReplace]);
 
   return (
     <nav
@@ -241,7 +241,7 @@ export default function MainNavBar() {
         />
       )}
 
-      {session.isAuthenticated && (
+      {isAuthenticated && (
         <>
           {hasBurgerMenu && (
             <animated.div

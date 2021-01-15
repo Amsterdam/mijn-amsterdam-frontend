@@ -1,15 +1,11 @@
 import classnames from 'classnames';
 import FocusTrap from 'focus-trap-react';
-import React, { CSSProperties, useEffect, useRef, useState } from 'react';
+import { CSSProperties, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { IconArrowRrimaryWhite } from '../../assets/icons';
 import { useDetectResizing, useModalRoot, usePhoneScreen } from '../../hooks';
 import { CloseButton } from '../Button/Button';
 import styles from './Tutorial.module.scss';
-
-interface TutorialProps {
-  onClose: () => void;
-}
 
 function TutorialItem({ el }: { el: any }) {
   const heading = el.querySelector('[class^="Heading_Heading"]') || el;
@@ -76,6 +72,10 @@ function TutorialItem({ el }: { el: any }) {
   );
 }
 
+interface TutorialProps {
+  onClose: () => void;
+}
+
 export default function Tutorial({ onClose }: TutorialProps) {
   const tutorialItems = Array.from(
     document.querySelectorAll('[data-tutorial-item]')
@@ -95,7 +95,7 @@ export default function Tutorial({ onClose }: TutorialProps) {
         style={{ height: document.body.clientHeight }}
       >
         {tutorialItems
-          .filter(el => {
+          .filter((el) => {
             return !!el.getAttribute('data-tutorial-item');
           })
           .map((el, i) => (

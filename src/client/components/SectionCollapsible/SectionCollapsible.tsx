@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 import { useDebouncedCallback } from 'use-debounce';
 import { withKeyPress } from '../../../universal/helpers';
@@ -43,7 +43,7 @@ export function SectionCollapsibleHeading({
       <button
         aria-expanded={isAriaExpanded}
         className={styles.TitleToggle}
-        onClick={event => toggleCollapsed(event)}
+        onClick={(event) => toggleCollapsed(event)}
       >
         <IconChevronRight aria-hidden="true" className={styles.CaretIcon} />{' '}
         {children}
@@ -83,13 +83,13 @@ export default function SectionCollapsible({
   const hasNoItemsMessage = !!noItemsMessage;
   const profileType = useProfileTypeValue();
 
-  const [setReadyForAnimatonDebounced] = useDebouncedCallback(() => {
+  const setReadyForAnimatonDebounced = useDebouncedCallback(() => {
     if (!isLoading && isReadyForAnimation === false) {
       setReadyForAnimaton(true);
     }
   }, 50);
 
-  setReadyForAnimatonDebounced();
+  setReadyForAnimatonDebounced.callback();
 
   const [{ height: contentHeight }, setDimensions] = useState({
     width: 0,

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
@@ -16,12 +16,11 @@ import {
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './ZorgDetail.module.scss';
 
-export default () => {
+export default function ZorgDetail() {
   const { WMO } = useAppStateGetter();
+  const { id } = useParams<{ id: string }>();
 
-  const { id } = useParams();
-
-  const WmoItem = WMO.content?.find(item => item.id === id);
+  const WmoItem = WMO.content?.find((item) => item.id === id);
   const noContent = !isLoading(WMO) && !WmoItem;
 
   const steps = useMemo(() => {
@@ -84,4 +83,4 @@ export default () => {
       )}
     </DetailPage>
   );
-};
+}

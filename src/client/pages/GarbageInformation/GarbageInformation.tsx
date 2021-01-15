@@ -1,9 +1,7 @@
 import classnames from 'classnames';
-import React, { ReactNode } from 'react';
-import {
-  Chapters,
-  profileTypeChapterTitleAdjustment,
-} from '../../../universal/config';
+import { ReactNode } from 'react';
+import { AppRoutes } from '../../../universal/config';
+import { ChapterTitles } from '../../../universal/config/chapter';
 import { getFullAddress, isError, isLoading } from '../../../universal/helpers';
 import {
   GarbageCenter,
@@ -16,7 +14,7 @@ import {
   Heading,
   InnerHtml,
   Linkd,
-  MyAreaMapIFrame,
+  LoadingContent,
   PageContent,
   PageHeading,
   Panel,
@@ -25,6 +23,7 @@ import {
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { useTermReplacement } from '../../hooks/useTermReplacement';
 import styles from './GarbageInformation.module.scss';
 
 interface PanelProps {
@@ -67,13 +66,11 @@ function GarbageCenterItem({ item }: { item: GarbageCenter }) {
   );
 }
 
-export default () => {
+export default function GarbageInformation() {
   const { AFVAL, AFVALPUNTEN, HOME } = useAppStateGetter();
-  let garbageContainersMapUrl = '';
-
-  if (HOME && HOME?.content?.latlng?.lng && HOME?.content?.latlng?.lat) {
-    garbageContainersMapUrl = `https://kaart.amsterdam.nl/afvalcontainers#19/${HOME.content.latlng.lat}/${HOME.content.latlng.lng}/topo/9749,9750,9751,9752,9753,9754/9748/`;
-  }
+  const [restafval, grofvuil] = AFVAL.content || [];
+  const profileType = useProfileTypeValue();
+  const termReplace = useTermReplacement();
 
   const garbagePointCollapsible = (
     id: string,
@@ -114,13 +111,10 @@ export default () => {
     </SectionCollapsible>
   );
 
-  const [restafval, grofvuil] = AFVAL.content || [];
-  const profileType = useProfileTypeValue();
-
   return (
     <DetailPage className={styles.GarbageInformation}>
-      <PageHeading isLoading={isLoading(AFVAL)} icon={<ChapterIcon />}>
-        {profileTypeChapterTitleAdjustment(profileType, Chapters.AFVAL)}
+      <PageHeading isLoading={false} icon={<ChapterIcon />}>
+        {termReplace(ChapterTitles.AFVAL)}
       </PageHeading>
       <PageContent>
         {profileType === 'private' && (
@@ -157,12 +151,18 @@ export default () => {
         )}
       </PageContent>
 
-      {!!HOME.content?.address && (
-        <GarbagePanel className={styles.AddressPanel}>
-          <Heading size="tiny">Uw adres</Heading>
-          <p>{getFullAddress(HOME.content?.address)}</p>
-        </GarbagePanel>
-      )}
+      <GarbagePanel className={styles.AddressPanel}>
+        <Heading size="tiny">Uw adres</Heading>
+        <p>
+          {HOME.content?.address ? (
+            getFullAddress(HOME.content.address)
+          ) : isLoading(HOME) ? (
+            <LoadingContent barConfig={[['20rem', '3rem', '0']]} />
+          ) : (
+            'Onbekend adres'
+          )}
+        </p>
+      </GarbagePanel>
       {!!grofvuil && garbagePointCollapsible('grofvuil', grofvuil)}
       {!!restafval && garbagePointCollapsible('restafval', restafval)}
       <SectionCollapsible
@@ -170,10 +170,13 @@ export default () => {
         className={classnames(styles.InfoSection, styles.InfoSectionMap)}
         title="Afvalcontainers in de buurt"
       >
-        <MyAreaMapIFrame
-          className={styles.GarbageContainerMap}
-          url={garbageContainersMapUrl}
-        />
+        <GarbagePanel>
+          <p>
+            <Linkd href={`${AppRoutes.BUURT}?datasetIds=afvalcontainers`}>
+              Klik hier voor een overzicht van alle afvalcontainers in de buurt.
+            </Linkd>
+          </p>
+        </GarbagePanel>
       </SectionCollapsible>
       <SectionCollapsible
         id="wegbrengen"
@@ -201,4 +204,4 @@ export default () => {
       </PageContent>
     </DetailPage>
   );
-};
+}

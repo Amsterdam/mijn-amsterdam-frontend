@@ -1,4 +1,5 @@
 import { fetchFOCUSCombined } from './focus-combined';
+import { apiSuccesResult } from '../../../universal/helpers/api';
 
 export interface FocusStadspasTransaction {
   id: string;
@@ -7,7 +8,7 @@ export interface FocusStadspasTransaction {
   date: string;
 }
 
-export async function fetchStadspas(
+export async function fetchStadspasSaldo(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
@@ -15,6 +16,10 @@ export async function fetchStadspas(
     sessionID,
     passthroughRequestHeaders
   );
+
+  if (response.status === 'OK') {
+    return apiSuccesResult(response.content.stadspassaldo || null);
+  }
 
   return response;
 }

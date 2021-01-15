@@ -1,9 +1,7 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import StatusLine from './StatusLine';
-import { StatusLineItem } from './StatusLine';
+import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import * as profileTypeHook from '../../hooks/useProfileType';
+import { RecoilRoot } from 'recoil';
+import StatusLine, { StatusLineItem } from './StatusLine';
 
 const items: StatusLineItem[] = [
   {
@@ -25,23 +23,17 @@ const items: StatusLineItem[] = [
   },
 ];
 
-// TODO: Test more/less, html content, multiple items
 describe('<StatusLine />', () => {
-  const profileTypeHookMock = ((profileTypeHook as any).useProfileTypeValue = jest.fn(
-    () => 'prive'
-  ));
-
-  afterAll(() => {
-    profileTypeHookMock.mockRestore();
-  });
-
-  it('Renders the correct html', () => {
-    expect(
-      shallow(
+  it('Renders correctly', () => {
+    render(
+      <RecoilRoot>
         <BrowserRouter>
           <StatusLine id="unittest" trackCategory="unittest" items={items} />
         </BrowserRouter>
-      ).html()
-    ).toMatchSnapshot();
+      </RecoilRoot>
+    );
+    expect(screen.getByText(items[0].description)).toBeInTheDocument();
+    expect(screen.getByText(items[0].status)).toBeInTheDocument();
+    expect(screen.getByText(items[0].documents[0].title)).toBeInTheDocument();
   });
 });

@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ALL_ERROR_STATE_KEY } from '../../AppState';
 import { IconAlert, IconClose } from '../../assets/icons';
 import { useSessionValue } from '../../hooks/api/useSessionApi';
@@ -17,23 +17,30 @@ export interface Error {
 interface ComponentProps {
   className?: string;
   errors: Error[];
+  title?: string;
 }
 
-export function useErrorMessagesDismissed() {
-  return useSessionStorage('ErrorMessagesDismissed', false);
+export function useErrorMessagesDismissed(
+  dismisedKey: string = 'ErrorMessagesDismissed'
+) {
+  return useSessionStorage(dismisedKey, false);
 }
 
-export default function ErrorMessages({ className, errors }: ComponentProps) {
-  const el = useRef(null);
+export default function ErrorMessages({
+  className,
+  errors,
+  title = 'U ziet misschien niet al uw gegevens.',
+}: ComponentProps) {
   const session = useSessionValue();
+  const el = useRef(null);
   const isAllErrorMessage = errors.some(
-    error => error.stateKey === ALL_ERROR_STATE_KEY
+    (error) => error.stateKey === ALL_ERROR_STATE_KEY
   );
   const [isModalOpen, setModalOpen] = useState(false);
   const top = el.current
     ? (el.current! as HTMLElement).getBoundingClientRect().top
     : 0;
-  const [isDismissed, setDismissed] = useErrorMessagesDismissed();
+  const [isDismissed, setDismissed] = useState(false);
 
   useEffect(() => {
     if (isAllErrorMessage) {
@@ -52,13 +59,12 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
     >
       <p className={styles.MessageBar}>
         <span className={styles.MessageBarInner}>
-          <IconAlert aria-hidden="true" className={styles.AlertIcon} /> U ziet
-          misschien niet al uw gegevens.{' '}
+          <IconAlert aria-hidden="true" className={styles.AlertIcon} /> {title}{' '}
           <Button
             lean={true}
             variant="inline"
             onClick={() => setModalOpen(true)}
-            aria-label="Meer informatie over waarom u mischien niet alle gegevens ziet."
+            aria-label="Meer informatie over waarom u misschien niet alle gegevens ziet."
           >
             Meer informatie
           </Button>
@@ -66,19 +72,16 @@ export default function ErrorMessages({ className, errors }: ComponentProps) {
         </span>
 
         <IconButton
-          icon={!isDismissed ? IconClose : IconAlert}
-          className={classnames(
-            styles.ToggleButton,
-            isDismissed && styles.isDismissed
-          )}
-          onClick={() => setDismissed(!isDismissed)}
-          aria-label={isDismissed ? 'Toon bericht' : 'Verberg bericht'}
+          icon={IconClose}
+          className={styles.CloseButton}
+          onClick={() => setDismissed(true)}
+          aria-label="Verberg bericht"
         />
       </p>
       <Modal
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
-        title="U ziet misschien niet al uw gegevens"
+        title={title}
         contentVerticalPosition={el.current ? Math.max(top, 0) : 'center'}
       >
         <div className={styles.ErrorInfo}>

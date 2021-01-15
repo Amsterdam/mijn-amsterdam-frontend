@@ -1,3 +1,17 @@
+interface EnvVars {
+  analyticsId?: number;
+  analyticsUrlBase?: string;
+  sentryDsn?: string;
+  bffSentryDsn?: string;
+  ssoErfpachtUrl?: string;
+  ssoErfpachtUrlEH?: string;
+  ssoMilieuzoneUrl?: string;
+  krefiaDirectLink?: string;
+}
+
+type OtapEnvName = 'development' | 'test' | 'acceptance' | 'production';
+type OtapEnv = { [name in OtapEnvName]: EnvVars };
+
 function getBrowserEnv() {
   return process.env.REACT_APP_ENV || 'production';
 }
@@ -17,25 +31,8 @@ export const IS_ACCEPTANCE = ENV === 'acceptance';
 export const IS_PRODUCTION = ENV === 'production';
 export const IS_AP = IS_ACCEPTANCE || IS_PRODUCTION;
 
-interface EnvVars {
-  analyticsId?: number;
-  analyticsUrlBase?: string;
-  sentryDsn?: string;
-  bffSentryDsn?: string;
-  ssoErfpachtUrl?: string;
-  ssoErfpachtUrlEH?: string;
-  ssoMilieuzoneUrl?: string;
-  isMyAreaMapEnabled?: boolean;
-  krefiaDirectLink?: string;
-}
-
-type OtapEnvName = 'development' | 'test' | 'acceptance' | 'production';
-
-type OtapEnv = { [name in OtapEnvName]: EnvVars };
-
 const otapServerEnv: OtapEnv = {
   development: {
-    isMyAreaMapEnabled: false,
     krefiaDirectLink: 'https://krefia.amsterdam.nl',
     ssoErfpachtUrl:
       'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtBurger',
@@ -45,7 +42,6 @@ const otapServerEnv: OtapEnv = {
       'https://d9bff634090c4624bce9ba7d8f0875dd@sentry.data.amsterdam.nl/13',
   },
   test: {
-    isMyAreaMapEnabled: false,
     krefiaDirectLink: 'https://krefia.amsterdam.nl',
   },
   acceptance: {
@@ -59,7 +55,6 @@ const otapServerEnv: OtapEnv = {
     ssoErfpachtUrlEH:
       'https://mijnerfpacht.acc.amsterdam.nl/saml/login/alias/mijnErfpachtZakelijk',
     ssoMilieuzoneUrl: 'https://ontheffingen-acc.amsterdam.nl/publiek/aanvragen',
-    isMyAreaMapEnabled: true,
     krefiaDirectLink: 'https://krefia-acceptatie.amsterdam.nl',
   },
   production: {
@@ -73,7 +68,6 @@ const otapServerEnv: OtapEnv = {
     ssoErfpachtUrlEH:
       'https://mijnerfpacht.amsterdam.nl/saml/login/alias/mijnErfpachtZakelijk',
     ssoMilieuzoneUrl: 'https://ontheffingen.amsterdam.nl/publiek/aanvragen',
-    isMyAreaMapEnabled: true,
     krefiaDirectLink: 'https://krefia.amsterdam.nl',
   },
 };

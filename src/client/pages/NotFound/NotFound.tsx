@@ -1,8 +1,6 @@
 import { PageContent, PageHeading, TextPage } from '../../components';
 
-import React from 'react';
-
-export default () => {
+export default function NotFound() {
   return (
     <TextPage>
       <PageHeading>404 - Pagina niet gevonden</PageHeading>
@@ -11,4 +9,4 @@ export default () => {
       </PageContent>
     </TextPage>
   );
-};
+}

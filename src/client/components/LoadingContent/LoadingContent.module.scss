@@ -11,7 +11,9 @@
 }
 
 .LoadingContent {
-  > div {
+  display: block;
+  > span {
+    display: block;
     height: 1rem;
     margin-bottom: 1rem;
     animation-duration: 3s;

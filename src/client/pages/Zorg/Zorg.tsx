@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
@@ -21,7 +21,7 @@ const DISPLAY_PROPS = {
   title: '',
 };
 
-export default () => {
+export default function Zorg() {
   const { WMO } = useAppStateGetter();
 
   const itemsActual = useMemo(() => {
@@ -102,4 +102,4 @@ export default () => {
       </p>
     </OverviewPage>
   );
-};
+}

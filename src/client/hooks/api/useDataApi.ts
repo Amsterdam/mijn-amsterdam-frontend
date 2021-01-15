@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/browser';
-import axios, { AxiosRequestConfig } from 'axios';
-import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
+import axios, { AxiosRequestConfig, AxiosTransformer } from 'axios';
+import { useCallback, useEffect, useReducer, useState } from 'react';
 import { apiErrorResult } from '../../../universal/helpers/api';
 import { Action } from '../../../universal/types';
 
@@ -9,10 +9,6 @@ export interface ApiRequestOptions extends AxiosRequestConfig {
 }
 
 const REQUEST_TIMEOUT = 20000; // 20seconds;
-
-export const requestApiData = axios.create({
-  responseType: 'json', // default
-});
 
 export interface ApiState<T> {
   isLoading: boolean;
@@ -68,6 +64,7 @@ function createApiDataReducer<T>() {
 export const DEFAULT_REQUEST_OPTIONS: ApiRequestOptions = {
   // Postpone fetch when hook is called/set-up for the first time
   postpone: false,
+  responseType: 'json',
 };
 
 export function getDefaultState<T>(initialData: T, postpone = false) {
@@ -112,21 +109,37 @@ export function useDataApi<T>(
       let source = axios.CancelToken.source();
 
       requestTimeout = setTimeout(() => {
-        source.cancel('useDataApi request timeout.');
+        source.cancel('Request timeout.');
       }, REQUEST_TIMEOUT);
 
       dispatch({
         type: ActionTypes.FETCH_INIT,
       });
 
-      const requestOptionsFinal = {
+      const requestOptionsFinal: AxiosRequestConfig = {
         ...DEFAULT_REQUEST_OPTIONS,
         ...requestOptions,
         cancelToken: source.token,
       };
+      if (requestOptions.transformResponse) {
+        requestOptionsFinal.transformResponse = addAxiosResponseTransform(
+          requestOptions.transformResponse
+        );
+      }
+
+      let requestApiData = axios.get;
+
+      switch (requestOptionsFinal.method?.toLowerCase()) {
+        case 'post':
+          requestApiData = axios.post;
+          break;
+      }
 
       try {
-        const result = await requestApiData(requestOptionsFinal);
+        const result = await requestApiData(
+          requestOptionsFinal.url!,
+          requestOptionsFinal
+        );
 
         if (!didCancel) {
           dispatch({
@@ -167,7 +180,7 @@ export function useDataApi<T>(
       clearTimeout(requestTimeout);
     };
 
-    if (requestOptions.postpone !== true && requestOptions.url !== '') {
+    if (requestOptions.postpone !== true && !!requestOptions.url) {
       fetchData();
     }
     // When component is destroyed this callback is executed.
@@ -178,7 +191,18 @@ export function useDataApi<T>(
     // See: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
   }, [requestOptions, initialDataNoContent]);
 
-  return useMemo(() => {
-    return [state, refetch];
-  }, [state, refetch]);
+  return [state, refetch];
+}
+
+export function addAxiosResponseTransform(
+  transformer: AxiosTransformer | AxiosTransformer[]
+) {
+  return [
+    ...(Array.isArray(axios.defaults.transformResponse)
+      ? axios.defaults.transformResponse
+      : axios.defaults.transformResponse
+      ? [axios.defaults.transformResponse]
+      : []),
+    ...(Array.isArray(transformer) ? transformer : [transformer]),
+  ];
 }

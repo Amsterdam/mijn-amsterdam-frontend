@@ -1,4 +1,4 @@
-import React, { HTMLProps } from 'react';
+import { HTMLProps } from 'react';
 
 import { ComponentChildren } from '../../../universal/types';
 import classnames from 'classnames';

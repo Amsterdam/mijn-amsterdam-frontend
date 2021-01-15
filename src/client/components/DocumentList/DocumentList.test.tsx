@@ -1,12 +1,15 @@
-import { mount, shallow } from 'enzyme';
-import React from 'react';
+import * as Sentry from '@sentry/browser';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
 import { BrowserRouter } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
 import { GenericDocument } from '../../../universal/types/App.types';
 import * as analytics from '../../hooks/analytics.hook';
-import * as Sentry from '@sentry/browser';
+import { trackPageViewWithProfileType } from '../../hooks/analytics.hook';
 import DocumentList from './DocumentList';
-import { act } from 'react-dom/test-utils';
-import * as profileTypeHook from '../../hooks/useProfileType';
+
+jest.mock('../../hooks/analytics.hook');
 
 const ITEMS: GenericDocument[] = [
   {
@@ -26,87 +29,71 @@ const ITEMS: GenericDocument[] = [
 ];
 
 describe('DocumentList', () => {
-  const track = ((analytics as any).trackPageViewWithProfileType = jest.fn());
-  const captureException = ((Sentry as any).captureException = jest.fn());
-  const fetch = ((global as any).fetch = jest
-    .fn()
-    .mockResolvedValueOnce({ status: 200, blob: () => null })
-    .mockResolvedValueOnce({ status: 404, statusText: 'not found' }));
-  const profileTypeHookMock = ((profileTypeHook as any).useProfileTypeValue = jest.fn(
-    () => 'prive'
-  ));
-  (window as any).URL = {
-    createObjectURL: jest.fn((blob: any) => void 0),
-  };
-  (window as any).location.assign = jest.fn((file: any) => void 0);
-
-  beforeEach(() => {
-    fetch.mockClear();
-    track.mockClear();
-  });
-
-  afterAll(() => {
-    profileTypeHookMock.mockRestore();
-  });
-
-  it('Renders without crashing', () => {
-    shallow(<DocumentList documents={ITEMS} />);
-  });
-
-  it('Has x download links', () => {
-    const component = shallow(<DocumentList documents={ITEMS} />);
-    expect(component.find('li')).toHaveLength(2);
+  Object.defineProperty(window, 'location', {
+    value: {
+      ...window.location,
+    },
+    writable: true,
   });
 
   it('Clicking a link fires tracking call', async () => {
-    const component = mount(
-      <BrowserRouter>
-        <DocumentList documents={ITEMS} />
-      </BrowserRouter>
+    const fetch = ((global as any).fetch = jest
+      .fn()
+      .mockResolvedValueOnce({ status: 200, blob: () => null }));
+
+    (trackPageViewWithProfileType as jest.Mock).mockReturnValue(null);
+
+    render(
+      <RecoilRoot>
+        <BrowserRouter>
+          <DocumentList documents={ITEMS} />
+        </BrowserRouter>
+      </RecoilRoot>
     );
-    const Linkd = component
-      .find('li')
-      .at(0)
-      .find('Linkd');
 
-    expect(Linkd).toHaveLength(1);
-    expect(Linkd.prop('href')).toEqual(ITEMS[0].url);
-
-    await act(async () => {
-      Linkd.simulate('click');
-    });
+    expect(screen.getAllByText(ITEMS[0].title).length).toBe(2);
+    userEvent.click(screen.getAllByText(ITEMS[0].title)[0]);
     expect(fetch).toHaveBeenCalledWith(ITEMS[0].url);
-    expect(track).toHaveBeenCalledWith(
-      ITEMS[0].title,
-      // The additional leading / is representing window.location.pathname
-      '//downloads/' + ITEMS[0].title + '.pdf',
-      'prive'
+
+    await waitFor(() =>
+      expect(trackPageViewWithProfileType).toHaveBeenCalledWith(
+        ITEMS[0].title,
+        // The additional leading / is representing window.location.pathname
+        '//downloads/' + ITEMS[0].title + '.pdf',
+        'private'
+      )
     );
   });
+
   it('Clicking a link fires tracking call', async () => {
-    const component = mount(
-      <BrowserRouter>
-        <DocumentList documents={ITEMS} />
-      </BrowserRouter>
+    const fetch = ((global as any).fetch = jest
+      .fn()
+      .mockResolvedValueOnce({ status: 404, statusText: 'not found' }));
+    const track = ((analytics as any).trackPageViewWithProfileType = jest.fn());
+    const captureException = ((Sentry as any).captureException = jest.fn());
+
+    render(
+      <RecoilRoot>
+        <BrowserRouter>
+          <DocumentList documents={ITEMS} />
+        </BrowserRouter>
+      </RecoilRoot>
     );
-    const Linkd = component
-      .find('li')
-      .at(0)
-      .find('Linkd');
 
-    await act(async () => {
-      Linkd.simulate('click');
-    });
+    userEvent.click(screen.getAllByText(ITEMS[0].title)[0]);
+    expect(fetch).toHaveBeenCalledWith(ITEMS[0].url);
 
-    expect(track).not.toHaveBeenCalled();
-    expect(captureException).toHaveBeenCalledWith(
-      new Error(`Failed to download document. Error: not found, Code: 404`),
-      {
-        extra: {
-          title: ITEMS[0].title,
-          url: ITEMS[0].url,
-        },
-      }
+    await waitFor(() => expect(track).not.toHaveBeenCalled());
+    await waitFor(() =>
+      expect(captureException).toHaveBeenCalledWith(
+        new Error(`Failed to download document. Error: not found, Code: 404`),
+        {
+          extra: {
+            title: ITEMS[0].title,
+            url: ITEMS[0].url,
+          },
+        }
+      )
     );
   });
 });

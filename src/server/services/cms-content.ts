@@ -1,4 +1,4 @@
-import sanitizeHtml from 'sanitize-html';
+import sanitizeHtml, { IOptions } from 'sanitize-html';
 import {
   ApiResponse,
   apiSuccesResult,
@@ -8,6 +8,9 @@ import { hash } from '../../universal/helpers/utils';
 import { LinkProps } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import FileCache from '../helpers/file-cache';
+import { sessionID } from '../helpers/app';
+import { IS_AP } from '../../universal/config';
 
 const TAGS_ALLOWED = [
   'a',
@@ -27,10 +30,12 @@ const TAGS_ALLOWED = [
   'h4',
   'h5',
 ];
+
 const ATTR_ALLOWED = {
   a: ['href', 'name', 'target', 'rel'],
 };
-const DEFAULT_CONFIG = {
+
+const DEFAULT_CONFIG: IOptions = {
   allowedSchemes: ['https', 'tel', 'mailto', 'http'],
   disallowedTagsMode: 'discard',
 };
@@ -156,12 +161,19 @@ function transformFooterResponse(responseData: any) {
   return footer;
 }
 
-export async function fetchCMSCONTENT(
+const fileCache = new FileCache({
+  name: 'cms-content',
+  cacheTimeMinutes: IS_AP ? 24 * 60 : -1, // 24 hours
+});
+
+async function getGeneralPage(
   sessionID: SessionID,
-  _passthroughHeaders: Record<string, string>,
-  query: Record<string, string>
+  profileType: ProfileType = 'private'
 ) {
-  const profileType = (query.profileType || 'private') as ProfileType;
+  const apiData = fileCache.getKey('CMS_CONTENT_GENERAL_INFO_' + profileType);
+  if (apiData) {
+    return Promise.resolve(apiData);
+  }
   const requestConfig = getApiConfig('CMS_CONTENT_GENERAL_INFO', {
     transformResponse: (responseData: any) => {
       return {
@@ -178,17 +190,47 @@ export async function fetchCMSCONTENT(
     url: requestConfig.urls![profileType],
   };
 
-  const generalInfoPageRequest = requestData<CMSPageContent>(
-    requestConfigFinal,
-    sessionID
+  return requestData<CMSPageContent>(requestConfigFinal, sessionID).then(
+    (apiData) => {
+      fileCache.setKey('CMS_CONTENT_GENERAL_INFO_' + profileType, apiData);
+      fileCache.save();
+      return apiData;
+    }
   );
+}
 
-  const footerInfoPageRequest = requestData<CMSFooterContent>(
+async function getFooter(
+  sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>
+) {
+  const apiData = fileCache.getKey('CMS_CONTENT_FOOTER');
+  if (apiData) {
+    return Promise.resolve(apiData);
+  }
+  return requestData<CMSFooterContent>(
     getApiConfig('CMS_CONTENT_FOOTER', {
       transformResponse: transformFooterResponse,
     }),
-    sessionID
+    sessionID,
+    passthroughRequestHeaders
+  ).then((apiData) => {
+    fileCache.setKey('CMS_CONTENT_FOOTER', apiData);
+    fileCache.save();
+    return apiData;
+  });
+}
+
+export async function fetchCMSCONTENT(
+  sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>,
+  query?: Record<string, string>
+) {
+  const generalInfoPageRequest = getGeneralPage(
+    sessionID,
+    query?.profileType as ProfileType
   );
+
+  const footerInfoPageRequest = getFooter(sessionID, passthroughRequestHeaders);
 
   const requests: Promise<
     ApiResponse<CMSPageContent | CMSFooterContent | null>

@@ -40,7 +40,7 @@ export const mainMenuItems: MenuItem[] = [
   {
     title: MenuItemTitles.BUURT,
     id: mainMenuItemId.BUURT,
-    to: AppRoutes.BUURT,
+    to: generatePath(AppRoutes.BUURT),
   },
   {
     title: MenuItemTitles.NOTIFICATIONS,

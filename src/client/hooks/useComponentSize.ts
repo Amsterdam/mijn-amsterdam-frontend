@@ -1,6 +1,6 @@
-import { useState, useCallback, useLayoutEffect } from 'react';
+import { useCallback, useLayoutEffect, useState } from 'react';
 
-function getSize(el: HTMLElement | null) {
+export function getElementSize(el: HTMLElement | null) {
   if (!el) {
     return {
       width: 0,
@@ -12,13 +12,11 @@ function getSize(el: HTMLElement | null) {
 }
 
 export function useComponentSize(el: HTMLElement | null) {
-  const [ComponentSize, setComponentSize] = useState(getSize(el));
+  const [ComponentSize, setComponentSize] = useState(getElementSize(el));
 
   const handleResize = useCallback(
     function handleResize() {
-      if (el) {
-        setComponentSize(getSize(el));
-      }
+      setComponentSize(getElementSize(el));
     },
     [el, setComponentSize]
   );

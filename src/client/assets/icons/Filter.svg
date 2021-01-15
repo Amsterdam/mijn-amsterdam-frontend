@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Resultaten Filter icoon</title>
+    <g id="Icon/32/Filter" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M0.3,0 L0.3,4.7 L9.9,14.3 L9.9,32 L15.9,32 L22.1,26.5 L22.1,14.3 L31.7,4.7 L31.7,0 L0.3,0 Z M17.8,12.5 L17.8,24.5 L14.2,27.7 L14.2,12.5 L6.1,4.3 L25.9,4.3 L17.8,12.5 Z" id="Shape" fill="#000000"></path>
+    </g>
+</svg>

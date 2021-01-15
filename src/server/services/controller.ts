@@ -11,7 +11,6 @@ import {
 import { fetchAFVAL, fetchAFVALPUNTEN } from './afval/afval';
 import { fetchBELASTING } from './belasting';
 import { fetchBRP } from './brp';
-import { fetchBUURT } from './buurt';
 import { fetchCMSCONTENT } from './cms-content';
 import { fetchERFPACHT } from './erfpacht';
 import { fetchFOCUSAanvragen } from './focus/focus-aanvragen';
@@ -24,8 +23,9 @@ import { fetchMILIEUZONE } from './milieuzone';
 import { fetchTIPS, createTipsRequestData } from './tips';
 import { fetchVergunningen } from './vergunningen';
 import { fetchWMO } from './wmo';
-import { fetchStadspas } from './focus/focus-stadspas';
+import { fetchStadspasSaldo } from './focus/focus-stadspas';
 
+// Default service call just passing sessionID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
   return (sessionID: SessionID, req: Request) =>
     fetchService(
@@ -48,14 +48,11 @@ const KVK = callService(fetchKVK);
 const FOCUS_AANVRAGEN = callService(fetchFOCUSAanvragen);
 const FOCUS_SPECIFICATIES = callService(fetchFOCUSSpecificaties);
 const FOCUS_TOZO = callService(fetchFOCUSTozo);
-const FOCUS_STADSPAS = callService(fetchStadspas);
+const FOCUS_STADSPAS = callService(fetchStadspasSaldo);
 const WMO = callService(fetchWMO);
 const VERGUNNINGEN = callService(fetchVergunningen);
 
-// Location based services
-const BUURT = (sessionID: SessionID, req: Request) =>
-  fetchBUURT(sessionID, getPassthroughRequestHeaders(req), getProfileType(req));
-
+// Location, address, based services
 const HOME = (sessionID: SessionID, req: Request) =>
   fetchHOME(sessionID, getPassthroughRequestHeaders(req), getProfileType(req));
 
@@ -95,7 +92,7 @@ const CASES = async (sessionID: SessionID, req: Request) =>
   ).CASES;
 
 // Store all services for type derivation
-const services = {
+const SERVICES_INDEX = {
   BRP,
   CMS_CONTENT,
   KVK,
@@ -105,7 +102,6 @@ const services = {
   FOCUS_STADSPAS,
   WMO,
   VERGUNNINGEN,
-  BUURT,
   HOME,
   AFVAL,
   AFVALPUNTEN,
@@ -116,7 +112,7 @@ const services = {
   CASES,
 };
 
-export type ServicesType = typeof services;
+export type ServicesType = typeof SERVICES_INDEX;
 export type ServiceID = keyof ServicesType;
 export type ServiceMap = { [key in ServiceID]: ServicesType[ServiceID] };
 
@@ -127,7 +123,6 @@ type CommercialServices = Pick<
   ServiceMap,
   | 'AFVAL'
   | 'AFVALPUNTEN'
-  | 'BUURT'
   | 'CMS_CONTENT'
   | 'ERFPACHT'
   | 'NOTIFICATIONS'
@@ -166,7 +161,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     AFVALPUNTEN,
     BRP,
     BELASTINGEN,
-    BUURT,
     CMS_CONTENT,
     ERFPACHT,
     FOCUS_AANVRAGEN,
@@ -186,7 +180,6 @@ export const servicesByProfileType: ServicesByProfileType = {
     AFVALPUNTEN,
     BRP,
     BELASTINGEN,
-    BUURT,
     CMS_CONTENT,
     ERFPACHT,
     FOCUS_AANVRAGEN,
@@ -204,7 +197,6 @@ export const servicesByProfileType: ServicesByProfileType = {
   commercial: {
     AFVAL,
     AFVALPUNTEN,
-    BUURT,
     CMS_CONTENT,
     ERFPACHT,
     NOTIFICATIONS,
@@ -246,7 +238,7 @@ function loadServices(
     .map(([serviceID, fetchService]) => {
       // Return service result as Object like { SERVICE_ID: result }
       return (fetchService(sessionID, req) as Promise<any>)
-        .then(result => ({
+        .then((result) => ({
           [serviceID]: result,
         }))
         .catch((error: Error) => {
@@ -284,7 +276,7 @@ export async function loadServicesSSE(req: Request, res: Response) {
 
   // Send service results to tips api for personalized tips
   const tipsPromise = loadServicesTipsRequestData(sessionID, req).then(
-    responseData => {
+    (responseData) => {
       return { TIPS: responseData };
     }
   );
@@ -310,8 +302,15 @@ export async function loadServicesAll(req: Request, res: Response) {
     requestedServiceIds
   );
 
-  const tipsPromise = loadServicesTipsRequestData(sessionID, req);
+  const tipsPromise = loadServicesTipsRequestData(sessionID, req).then(
+    (responseData) => {
+      return {
+        TIPS: responseData,
+      };
+    }
+  );
 
+  // Combine all results into 1 object
   const serviceResults = (await Promise.all(servicePromises)).reduce(
     (acc, result, index) => Object.assign(acc, result),
     {}
@@ -319,6 +318,7 @@ export async function loadServicesAll(req: Request, res: Response) {
 
   const tipsResult = await tipsPromise;
 
+  // Add tips result to final result
   return Object.assign(serviceResults, tipsResult);
 }
 

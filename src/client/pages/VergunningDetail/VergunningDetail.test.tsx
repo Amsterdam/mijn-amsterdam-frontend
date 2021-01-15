@@ -1,5 +1,5 @@
-import { mount, shallow } from 'enzyme';
-import React from 'react';
+import { render } from '@testing-library/react';
+
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
@@ -48,27 +48,8 @@ describe('<Vergunningen />', () => {
     />
   );
 
-  it('Renders without crashing', () => {
-    shallow(<Component />);
-  });
-
   it('Matches the Full Page snapshot', () => {
-    const html = mount(<Component />).html();
-
-    expect(html).toMatchSnapshot();
-  });
-
-  it('Matches the Full Page snapshot', () => {
-    Component = () => (
-      <MockApp
-        routeEntry={routeEntry}
-        routePath={routePath}
-        component={VergunningDetail}
-        initializeState={state(testState2)}
-      />
-    );
-    const html = mount(<Component />).html();
-
-    expect(html).toMatchSnapshot();
+    const { asFragment } = render(<Component />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });

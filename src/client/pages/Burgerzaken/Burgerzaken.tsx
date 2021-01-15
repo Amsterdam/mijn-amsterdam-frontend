@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
@@ -21,14 +21,14 @@ const DISPLAY_PROPS = {
   datumAfloop: 'Geldig tot',
 };
 
-export default () => {
+export default function Burgerzeken() {
   const { BRP } = useAppStateGetter();
 
   const documentItems = useMemo(() => {
     if (!BRP.content?.identiteitsbewijzen) {
       return [];
     }
-    const items = BRP.content?.identiteitsbewijzen.map(item => {
+    const items = BRP.content?.identiteitsbewijzen.map((item) => {
       return {
         ...item,
         datumAfloop: defaultDateFormat(item.datumAfloop),
@@ -82,4 +82,4 @@ export default () => {
       </SectionCollapsible>
     </OverviewPage>
   );
-};
+}

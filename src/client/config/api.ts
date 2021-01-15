@@ -42,10 +42,11 @@ export const BFF_API_PUBLIC_BASE_URL = !IS_AP
 export const BFFApiUrls = {
   SERVICES_SAURON: `${BFF_API_BASE_URL}/services/all`,
   SERVICES_SSE: `${BFF_API_BASE_URL}/services/stream`,
+  MAP_DATASETS_WMS: `${BFF_API_BASE_URL}/map/datasets/wms`,
+  MAP_DATASETS: `${BFF_API_BASE_URL}/map/datasets`,
+  SERVICES_TIPS_URL: `${BFF_API_BASE_URL}/services/tips`,
+  SERVICES_CMS_URL: `${BFF_API_PUBLIC_BASE_URL}/services/cms`,
 };
-
-export const SERVICES_TIPS_URL = `${BFF_API_BASE_URL}/services/tips`;
-export const SERVICES_CMS_URL = `${BFF_API_PUBLIC_BASE_URL}/services/cms`;
 
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   BRP: 'Persoonlijke gegevens, paspoort, ID-kaart + actuele updates',
@@ -60,7 +61,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   FOCUS_STADSPAS: 'Stadspas saldo',
   ERFPACHT: 'Erfpacht',
   AFVAL: 'Afvalgegevens rond uw adres',
-  BUURT: 'Mijn buurt',
+  BUURT: 'Mijn buurt / Mijn bedrijfsomgeving',
   BELASTINGEN: 'Belastingen + actuele updates',
   MILIEUZONE: 'Milieuzone + actuele updates',
   HOME: 'Uw locatie op de kaart',

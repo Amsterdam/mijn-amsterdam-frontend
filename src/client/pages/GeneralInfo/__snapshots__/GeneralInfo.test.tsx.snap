@@ -1,3 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<GeneralInfo /> Matches the Full Page snapshot 1`] = `"<main class=\\"Page TextPage\\"><header class=\\"PageHeading\\"><div class=\\"HeadingInner\\"><h2 class=\\"Heading Heading__large\\">Algemene info</h2></div></header><div class=\\"PageContent\\"><div><p>Dingen! <a href=\\"http://example.org\\">Linkje</a></p></div></div></main>"`;
+exports[`<GeneralInfo /> Matches the Full Page snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="Page TextPage"
+  >
+    <header
+      class="PageHeading"
+    >
+      <div
+        class="HeadingInner"
+      >
+        <h2
+          class="Heading Heading__large"
+        >
+          Algemene info
+        </h2>
+      </div>
+    </header>
+    <div
+      class="PageContent"
+    >
+      <div>
+        <p>
+          Dingen! 
+          <a
+            href="http://example.org"
+          >
+            Linkje
+          </a>
+        </p>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;

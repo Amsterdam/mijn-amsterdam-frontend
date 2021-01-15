@@ -1,7 +1,7 @@
 import DigiDLogo from '../../assets/images/digid-logo.svg';
 import EherkenningLogo from '../../assets/images/eherkenning-logo.svg';
 import classnames from 'classnames';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FeatureToggle } from '../../../universal/config';
 import {
   Heading,
@@ -17,7 +17,7 @@ import styles from './Landing.module.scss';
 import { ExternalUrls } from '../../config/app';
 import { MaintenanceNotification01 } from '../../config/staticData';
 
-export default () => {
+export default function Landing() {
   const loginButton = useRef(null);
 
   useEffect(() => {
@@ -145,4 +145,4 @@ export default () => {
       </PageContent>
     </TextPage>
   );
-};
+}

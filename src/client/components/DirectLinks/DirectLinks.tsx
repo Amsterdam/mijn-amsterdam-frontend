@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from 'react';
+import { HTMLAttributes } from 'react';
 
 import { IconExternalLink } from '../../assets/icons';
 import Heading from '../Heading/Heading';

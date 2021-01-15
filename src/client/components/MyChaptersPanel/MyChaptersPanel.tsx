@@ -1,4 +1,3 @@
-import React from 'react';
 import { ChapterTitles } from '../../../universal/config';
 import { ChapterIcons } from '../../config/chapterIcons';
 import { ChapterMenuItem } from '../../config/menuItems';

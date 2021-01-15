@@ -1,3 +1,5 @@
+import { LatLngLiteral } from 'leaflet';
+
 export enum Stadsdeel {
   centrum = 'Centrum',
   nieuwWest = 'Nieuw-West',
@@ -20,7 +22,7 @@ export interface GarbageRetrievalMoment {
 
 export interface GarbageCenter {
   title: string;
-  latlng: LatLngObject;
+  latlng: LatLngLiteral;
   url: string;
   address: string;
   phone: string;

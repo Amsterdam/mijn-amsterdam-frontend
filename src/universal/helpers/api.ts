@@ -3,11 +3,13 @@ export interface ApiErrorResponse<T> {
   content: T;
   status: 'ERROR';
   sentry?: string;
+  id?: string;
 }
 
 export type ApiSuccessResponse<T> = {
   content: T;
   status: 'OK';
+  id?: string;
 };
 
 // This state is used for checking if we are expecting data from the api.

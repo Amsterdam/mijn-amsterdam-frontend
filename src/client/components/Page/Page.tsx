@@ -1,4 +1,4 @@
-import React, { HTMLProps } from 'react';
+import { HTMLProps } from 'react';
 
 import { ComponentChildren } from '../../../universal/types';
 import composeClassNames from 'classnames';
@@ -9,11 +9,16 @@ export interface PageProps extends HTMLProps<HTMLDivElement> {
   children: ComponentChildren;
 }
 
-export default function Page({ className, children, id }: PageProps) {
+export default function Page({
+  className,
+  children,
+  id,
+  ...otherProps
+}: PageProps) {
   const classNames = composeClassNames(styles.Page, className);
 
   return (
-    <main id={id} className={classNames}>
+    <main {...otherProps} id={id} className={classNames}>
       {children}
     </main>
   );

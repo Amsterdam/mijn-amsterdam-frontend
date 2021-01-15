@@ -1,26 +1,65 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Linkd Linkd default renders correctly 1`] = `
-<a
-  className="Button Button__plain Button__lean Linkd"
-  href="/"
-  onClick={[Function]}
->
-  <svg
-    aria-hidden="true"
-    className="Icon Icon__left"
-    fill="#000"
-    height="14px"
-    width="14px"
+<DocumentFragment>
+  <a
+    class="Button Button__plain Button__lean Linkd"
+    href="/"
   >
-    Chevron-Right.svg
-  </svg>
-  <svg>
-    Alert.svg
-  </svg>
-</a>
+    <svg
+      aria-hidden="true"
+      class="Icon Icon__left"
+      fill="#000"
+      height="14px"
+      width="14px"
+    >
+      Chevron-Right.svg
+    </svg>
+    <svg>
+      Alert.svg
+    </svg>
+  </a>
+</DocumentFragment>
 `;
 
-exports[`Linkd Linkd external renders correctly 1`] = `"<a target=\\"_blank\\" rel=\\"external noopener noreferrer\\" href=\\"/\\" class=\\"Button Button__plain Button__lean Linkd\\"><svg aria-hidden=\\"true\\" width=\\"14px\\" height=\\"14px\\" fill=\\"#000\\" class=\\"Icon Icon__left\\">Chevron-Right.svg</svg>Link!</a>"`;
+exports[`Linkd Linkd external renders correctly 1`] = `
+<DocumentFragment>
+  <a
+    class="Button Button__plain Button__lean Linkd"
+    href="/"
+    rel="external noopener noreferrer"
+    target="_blank"
+  >
+    <svg
+      aria-hidden="true"
+      class="Icon Icon__left"
+      fill="#000"
+      height="14px"
+      width="14px"
+    >
+      Chevron-Right.svg
+    </svg>
+    Link!
+  </a>
+</DocumentFragment>
+`;
 
-exports[`Linkd Renders 1`] = `"<a class=\\"Button Button__plain Button__lean Linkd\\" href=\\"/\\"><svg aria-hidden=\\"true\\" width=\\"14px\\" height=\\"14px\\" fill=\\"#000\\" class=\\"Icon Icon__left\\">Chevron-Right.svg</svg>Link!</a>"`;
+exports[`Linkd Renders 1`] = `
+<DocumentFragment>
+  <a
+    class="Button Button__plain Button__lean Linkd"
+    href="/"
+  >
+    <svg
+      aria-hidden="true"
+      class="Icon Icon__left"
+      fill="#000"
+      height="14px"
+      width="14px"
+    >
+      Chevron-Right.svg
+    </svg>
+    Link!
+  </a>
+</DocumentFragment>
+`;

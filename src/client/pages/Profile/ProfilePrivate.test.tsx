@@ -1,5 +1,5 @@
-import { mount, shallow } from 'enzyme';
-import React from 'react';
+import { render } from '@testing-library/react';
+
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config/routing';
@@ -25,7 +25,6 @@ const responseData = {
       huisletter: null,
       huisnummer: '9',
       huisnummertoevoeging: 'H',
-      inOnderzoek: false,
       postcode: '1098 NK',
       straatnaam: 'Ampèrestraat',
       woonplaatsNaam: 'Amsterdam',
@@ -36,7 +35,6 @@ const responseData = {
       huisletter: null,
       huisnummer: '9',
       huisnummertoevoeging: '3',
-      inOnderzoek: false,
       postcode: '1098 AA',
       straatnaam: 'Middenweg',
       woonplaatsNaam: 'Amsterdam',
@@ -207,7 +205,7 @@ describe('<Profile />', () => {
         initializeState={initializeState(testState())}
       />
     );
-    expect(mount(<Component />).html()).toMatchSnapshot();
+    expect(render(<Component />).asFragment()).toMatchSnapshot();
   });
 
   it('Matches the Full Page snapshot Non-Mokum', () => {
@@ -227,7 +225,7 @@ describe('<Profile />', () => {
         )}
       />
     );
-    expect(mount(<Component />).html()).toMatchSnapshot();
+    expect(render(<Component />).asFragment()).toMatchSnapshot();
   });
 
   it('Matches the Full Page snapshot No verbintenis', () => {
@@ -244,6 +242,6 @@ describe('<Profile />', () => {
         )}
       />
     );
-    expect(mount(<Component />).html()).toMatchSnapshot();
+    expect(render(<Component />).asFragment()).toMatchSnapshot();
   });
 });

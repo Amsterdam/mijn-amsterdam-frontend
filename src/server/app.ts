@@ -16,6 +16,7 @@ import {
   clearSession,
   exitEarly,
   secureValidation,
+  send404,
   sessionID,
 } from './helpers/app';
 import { routerDevelopment } from './mock-data/router-development';
@@ -82,7 +83,11 @@ app.use(function onError(
 });
 
 app.use((req: Request, res: Response) => {
-  res.end();
+  if (!res.headersSent) {
+    send404(res);
+  } else {
+    res.end();
+  }
 });
 
 app.listen(BFF_PORT, () => {

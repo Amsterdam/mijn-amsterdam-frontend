@@ -1,201 +1,125 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act } from '@testing-library/react-hooks';
+import axios from 'axios';
+import { renderRecoilHook } from 'react-recoil-hooks-testing-library';
 import { PRISTINE_APPSTATE } from '../AppState';
 import * as dataApiHook from './api/useDataApi';
-import * as tipsHook from './api/useTipsApi';
-import * as optinHook from './useOptIn';
+import { newEventSourceMock } from './EventSourceMock';
 import { useAppState } from './useAppState';
 import * as sseHook from './useSSE';
 import { SSE_ERROR_MESSAGE } from './useSSE';
-import * as recoil from 'recoil';
-import * as profileTypeHook from './useProfileType';
-import * as dataTransformHelpers from '../data-transform/appState';
+
+jest.mock('./api/useTipsApi');
+jest.mock('./useOptIn');
+jest.mock('./useProfileType');
+
+jest.spyOn(console, 'info').mockImplementation();
 
 describe('useAppState', () => {
-  let onEventCallback: any;
   const stateSliceMock = { FOO: { content: { hello: 'world' } } };
   const initialAppState = PRISTINE_APPSTATE;
 
-  const useSSEMock = jest.fn(
-    ({ callback }: { callback: (messageData: any) => void }) => {
-      onEventCallback = jest.fn(callback);
-    }
-  );
-  const fetchTips = jest.fn();
-  const fetchFallbackService = jest.fn();
-
-  let appData: any = initialAppState;
-  const setAppState = jest.fn((data) => {
-    appData = data(appData);
-  });
-  const useRecoilStateMock = jest.fn(() => [appData, setAppState]);
-  const useRecoilValueMock = jest.fn(() => null);
-  const useProfileTypeMock = jest.fn(() => ['private']);
-  const useProfileTypeValueMock = jest.fn(() => 'private');
-  const useOptInValueMock = jest.fn(() => true);
-  const transformAppStateMock = jest.fn((data) => data);
-
-  // @ts-ignore
-  const useTipsApi = (tipsHook.useTipsApi = jest.fn(() => {
-    return { TIPS: { status: 'PRISTINE', content: null }, fetch: fetchTips };
-  }));
-
-  // @ts-ignore
-  const dataTransform = (dataTransformHelpers.transformSourceData = transformAppStateMock);
-  // @ts-ignore
-  const useProfileType = (profileTypeHook.useProfileType = useProfileTypeMock);
-  // @ts-ignore
-  const useProfileTypeValue = (profileTypeHook.useProfileTypeValue = useProfileTypeValueMock);
-  // @ts-ignore
-  const useRecoilValue = (recoil.useRecoilValue = useRecoilValueMock);
-  // @ts-ignore
-  const useRecoilState = (recoil.useRecoilState = useRecoilStateMock);
-  // @ts-ignore
-  const useOptInValue = (optinHook.useOptInValue = useOptInValueMock);
-  // @ts-ignore
-  const useSSE = (sseHook.useSSE = useSSEMock);
-  // @ts-ignore
-  const useDataApi = (dataApiHook.useDataApi = jest.fn(() => [
-    {
-      isLoading: false,
-      isError: false,
-      data: null,
-      isPristine: true,
-      isDirty: false,
-    },
-    fetchFallbackService,
-  ]));
-
-  beforeAll(() => {
-    (window as any).console.info = jest.fn();
-    (window as any).console.error = jest.fn();
-  });
-
-  afterAll(() => {
-    (window as any).console.info.mockRestore();
-    (window as any).console.error.mockRestore();
-  });
+  let dataApiSpy: jest.SpyInstance;
+  let axiosGetSpy: jest.SpyInstance;
+  let sseSpy: jest.SpyInstance;
 
   beforeEach(() => {
-    appData = initialAppState;
-    fetchTips.mockClear();
-    fetchFallbackService.mockClear();
-    useDataApi.mockClear();
-    useTipsApi.mockClear();
-    useSSE.mockClear();
-    useRecoilState.mockClear();
-    useProfileType.mockClear();
-    useOptInValue.mockClear();
-    useRecoilValue.mockClear();
-    useProfileTypeValue.mockClear();
-    dataTransform.mockClear();
+    dataApiSpy = jest.spyOn(dataApiHook, 'useDataApi');
+    axiosGetSpy = jest.spyOn(axios, 'get');
+    sseSpy = jest.spyOn(sseHook, 'useSSE');
+  });
+
+  afterEach(() => {
+    dataApiSpy.mockRestore();
+    axiosGetSpy.mockRestore();
+    sseSpy.mockRestore();
   });
 
   it('Should start with the SSE endpoint', async () => {
-    (window as any).EventSource = true;
-    const { result, rerender } = renderHook(() => useAppState());
+    const EventSourceMock = ((window as any).EventSource = newEventSourceMock());
+    const { result } = renderRecoilHook(() => useAppState());
 
     expect(result.current).toEqual(initialAppState);
 
-    expect(useDataApi).toBeCalledTimes(1);
-    expect(useSSE).toBeCalledTimes(1);
-
-    // trigger the state update
     act(() => {
-      onEventCallback(stateSliceMock);
+      EventSourceMock.prototype.evHandlers.message({
+        data: JSON.stringify(stateSliceMock),
+      });
     });
 
-    expect(setAppState).toBeCalledTimes(1);
-    expect(dataTransform).toBeCalledTimes(1);
-
-    expect(fetchFallbackService).toBeCalledTimes(0);
-
-    rerender();
+    expect(dataApiSpy).toBeCalledTimes(3);
+    expect(axiosGetSpy).toBeCalledTimes(0);
 
     expect(result.current).toEqual(
       Object.assign({}, initialAppState, stateSliceMock)
     );
   });
 
-  it('Should start with the Fallback service endpoint for browsers that do not have window.EventSource', () => {
+  it('Should start with the Fallback service endpoint for browsers that do not have window.EventSource', async () => {
     delete (window as any).EventSource;
-    const appState = renderHook(() => useAppState());
 
-    expect(appState.result.current).toEqual(initialAppState);
-    expect(useDataApi).toBeCalledTimes(1);
-    expect(useSSE).toBeCalledTimes(1);
-    expect(fetchFallbackService).toBeCalledTimes(1);
+    axiosGetSpy.mockResolvedValueOnce({ data: stateSliceMock });
+
+    const { result, waitForNextUpdate } = renderRecoilHook(() => useAppState());
+
+    expect(result.current).toEqual(initialAppState);
+
+    expect(dataApiSpy).toBeCalledTimes(3);
+    expect(sseSpy).toBeCalledTimes(3);
+    expect(axiosGetSpy).toBeCalledTimes(1);
+
+    await waitForNextUpdate();
+
+    expect(result.current).toEqual(
+      Object.assign({}, initialAppState, stateSliceMock)
+    );
   });
 
   it('Should use Fallback service endpoint if EventSource fails to connect', async () => {
-    (window as any).EventSource = true;
-    const appState = renderHook(() => useAppState());
+    const EventSourceMock = ((window as any).EventSource = newEventSourceMock());
+    const { result, waitForNextUpdate } = renderRecoilHook(() => useAppState());
 
-    expect(appState.result.current).toEqual(initialAppState);
-    expect(useDataApi).toBeCalledTimes(1);
-    expect(useSSE).toBeCalledTimes(1);
-    expect(fetchFallbackService).toBeCalledTimes(0);
+    axiosGetSpy.mockResolvedValueOnce({ data: stateSliceMock });
 
-    useDataApi.mockReturnValueOnce([
-      {
-        isLoading: false,
-        isError: false,
-        data: stateSliceMock as any,
-        isPristine: false,
-        isDirty: true,
-      },
-      fetchFallbackService,
-    ]);
+    expect(result.current).toEqual(initialAppState);
 
     act(() => {
-      onEventCallback(SSE_ERROR_MESSAGE);
+      EventSourceMock.prototype.evHandlers.message({
+        data: JSON.stringify(SSE_ERROR_MESSAGE),
+      }); // Hack to trigger the error callback
     });
 
-    expect(fetchFallbackService).toBeCalledTimes(1);
+    expect(sseSpy).toBeCalledTimes(5);
+    expect(dataApiSpy).toBeCalledTimes(5);
+    expect(axiosGetSpy).toBeCalledTimes(1);
 
-    expect(useDataApi).toBeCalledTimes(2);
-    expect(useSSE).toBeCalledTimes(2);
+    await waitForNextUpdate();
 
-    expect(dataTransform).toBeCalledTimes(1);
-
-    appState.rerender();
-
-    expect(appState.result.current).toEqual(
+    expect(result.current).toEqual(
       Object.assign({}, initialAppState, stateSliceMock)
     );
   });
 
   it('Should respond with an appState error entry if Fallback service and SSE both fail.', async () => {
-    (window as any).EventSource = true;
-    const appState = renderHook(() => useAppState());
+    const EventSourceMock = ((window as any).EventSource = newEventSourceMock());
+    const { result, waitForNextUpdate } = renderRecoilHook(() => useAppState());
 
-    expect(appState.result.current).toEqual(initialAppState);
-    expect(useDataApi).toBeCalledTimes(1);
-    expect(useSSE).toBeCalledTimes(1);
-    expect(fetchFallbackService).toBeCalledTimes(0);
+    axiosGetSpy.mockRejectedValueOnce(new Error('bad stuff'));
 
-    useDataApi.mockReturnValue([
-      {
-        isLoading: false,
-        isError: true,
-        data: null,
-        isPristine: true,
-        isDirty: false,
-      },
-      fetchFallbackService,
-    ]);
+    expect(result.current).toEqual(initialAppState);
 
     act(() => {
-      onEventCallback(SSE_ERROR_MESSAGE);
+      EventSourceMock.prototype.evHandlers.message({
+        data: JSON.stringify(SSE_ERROR_MESSAGE),
+      }); // Hack to trigger the error callback
     });
 
-    expect(fetchFallbackService).toBeCalledTimes(1);
-    expect(dataTransform).toBeCalledTimes(0);
-    expect(useDataApi).toBeCalledTimes(2);
-    expect(useSSE).toBeCalledTimes(2);
+    expect(sseSpy).toBeCalledTimes(5);
+    expect(dataApiSpy).toBeCalledTimes(5);
+    expect(axiosGetSpy).toBeCalledTimes(1);
 
-    appState.rerender();
+    await waitForNextUpdate();
 
-    expect(appState.result.current).toEqual(
+    expect(result.current).toEqual(
       Object.assign({}, initialAppState, {
         ALL: {
           status: 'ERROR',

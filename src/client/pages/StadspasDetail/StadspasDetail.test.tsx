@@ -1,5 +1,5 @@
-import { shallow, mount } from 'enzyme';
-import React from 'react';
+import { render } from '@testing-library/react';
+
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config/routing';
@@ -7,41 +7,59 @@ import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import StadspasDetail from './StadspasDetail';
 
-const testState = {
+const testState: any = {
   FOCUS_STADSPAS: {
-    content: [
-      {
-        id: 'xxx123123123123',
-        pasnummer: '123123123123',
-        datumAfloop: '2020-12-12',
-        naam: 'Ramses rawjingakoli',
-        budgets: [
-          {
-            title: 'KLEDING-EN-EDUCATIE',
-            assigned: 220,
-            balance: 130,
-          },
-          {
-            title: 'SPORT-EN-SPEL',
-            assigned: 220,
-            balance: 80,
-          },
-        ],
-      },
-      {
-        id: 'xxx89899898',
-        pasnummer: '89899898',
-        datumAfloop: '2021-04-23',
-        naam: 'Jawh rawjingakoli',
-        budgets: [
-          {
-            title: 'SPORT-EN-SPEL',
-            assigned: 220,
-            balance: 80,
-          },
-        ],
-      },
-    ],
+    content: {
+      type: 'hoofdpashouder',
+      stadspassen: [
+        {
+          budgets: [],
+          datumAfloop: '2021-08-31T21:59:59.000Z',
+          id: 200769,
+          naam: 'G Braber',
+          pasnummer: 6011012604273,
+        },
+        {
+          budgets: [
+            {
+              assigned: 25,
+              balance: 5,
+              code: 'AMSTEST_0-9',
+              description: 'Kindbudget test MijnAmsterdam',
+              urlTransactions:
+                '/api/focus/stadspastransacties/gAAAAABfs6wSk83lMv3MAtPe391EqxgHHao5z7PXh1ZSihPf2BHaAJbpfxuRA-8UeEPg72nUbTMrPfhQ2I2OtTDmeBKOPABi5OB-NdL2Q14eUjV6bO3e5-r_G2OPuqMw2Luw35AenP9E',
+            },
+          ],
+          datumAfloop: '2021-08-31T21:59:59.000Z',
+          id: 200770,
+          naam: 'P Blokzijl',
+          pasnummer: 6011012604737,
+        },
+        {
+          budgets: [],
+          datumAfloop: '2021-08-31T21:59:59.000Z',
+          id: 200772,
+          naam: 'J Haarlem',
+          pasnummer: 6011012606062,
+        },
+        {
+          budgets: [
+            {
+              assigned: 150,
+              balance: 150,
+              code: 'AMSTEST_10-14',
+              description: 'Kindbudget ',
+              urlTransactions:
+                '/api/focus/stadspastransacties/gAAAAABfs6wT4Dljs4eKjKN9JbCP_tTkePB1sD30c1m0SKqYlFUNyZ3WYEovImWgXQuTkKqb0mf2Nb7iHqR21wU8vn-t2Jdnq-F23lr78cFz8WWybnh6DgLrnNhoASxK_9_Ltrj9j35R',
+            },
+          ],
+          datumAfloop: '2021-08-31T21:59:59.000Z',
+          id: 200781,
+          naam: 'R Moes',
+          pasnummer: 6011012610643,
+        },
+      ],
+    },
     status: 'OK',
   },
 };
@@ -51,10 +69,10 @@ function initializeState(snapshot: MutableSnapshot) {
 }
 
 describe('<StadspasDetail />', () => {
-  const routeEntry = generatePath(AppRoutes['INKOMEN/STADSPAS/DETAIL'], {
-    id: testState.FOCUS_STADSPAS.content[0].id,
+  const routeEntry = generatePath(AppRoutes['INKOMEN/STADSPAS/SALDO'], {
+    id: testState.FOCUS_STADSPAS.content.stadspassen[0].id,
   });
-  const routePath = AppRoutes['INKOMEN/STADSPAS/DETAIL'];
+  const routePath = AppRoutes['INKOMEN/STADSPAS/SALDO'];
 
   const Component = () => (
     <MockApp
@@ -65,13 +83,8 @@ describe('<StadspasDetail />', () => {
     />
   );
 
-  it('Renders without crashing', () => {
-    shallow(<Component />);
-  });
-
   it('Matches the Full Page snapshot', () => {
-    const html = mount(<Component />).html();
-
-    expect(html).toMatchSnapshot();
+    const { asFragment } = render(<Component />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });

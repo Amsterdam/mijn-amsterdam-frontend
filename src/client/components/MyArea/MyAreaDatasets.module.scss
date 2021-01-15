@@ -1,0 +1,98 @@
+@import '../../styles/_global.scss';
+
+.MarkerClusterIcon {
+  &:before {
+    content: '';
+    background-color: $color-support-blue;
+    border-radius: 50%;
+    color: $color-white;
+    font-weight: bold;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.MarkerClusterIconLabel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 1.4rem;
+  color: $color-white;
+}
+
+.MarkerIcon {
+  display: block;;
+  &.Feature--selected {
+    color: inherit;
+  }
+}
+
+.Feature--selected {
+  &[stroke] {
+    fill: red!important;
+    stroke: red!important;
+    stroke-width: 2;
+  }
+}
+
+.FeatureLoader {
+  position: absolute;
+  z-index: z-index(my-area-feature-loader);
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  top: 1rem;
+  background-color: rgba(255, 255, 255, .8);
+  color: $color-support-blue;
+  padding: .2rem 1rem;
+  font-weight: 500;
+  box-shadow: 0px 0px 2px 4px rgba(0, 0, 0, .1);
+  border: 1px solid $color-support-blue;
+  white-space: nowrap;
+}
+
+.ErrorMessages {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: z-index(my-area-error-messages);
+  max-width: $main-boxed-width;
+  @include mq-phone {
+    max-width: calc(100% - 2rem);
+  }
+  width: 100%;
+  min-height: 4rem;
+  box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, .1);
+  > p {
+    background-color: $color-white;
+  }
+}
+
+// NOTE: Enable and add styling if we decide to have outstanding focusstyle
+:global(.leaflet-marker-icon) {
+  &:focus > div {
+    &:before {
+      content: '';
+      width: 120%;
+      height: 120%;
+      position: absolute;
+      display: block;
+      background-color: $color-support-focus;
+      // opacity: .8;
+      z-index: -1;
+      border-radius: 50%;
+    }
+    &.MarkerClusterIconLabel:before {
+      width: 150%;
+      height: 150%;
+    }
+  }
+}

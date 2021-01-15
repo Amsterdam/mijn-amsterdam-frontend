@@ -1,4 +1,4 @@
-/// <reference path="./universal/types/global.d.ts" />
+/// <reference path="./react-app-env.d.ts" />
 
 // Compilation entrypoint
 

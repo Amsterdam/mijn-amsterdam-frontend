@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React from 'react';
+
 import { matchPath } from 'react-router';
 import { useLocation } from 'react-router-dom';
 import {
@@ -12,6 +12,7 @@ import { IconBurgerZaken } from '../../assets/icons';
 import { Colors } from '../../config/app';
 import { ChapterIcons } from '../../config/chapterIcons';
 import styles from './ChapterIcon.module.scss';
+import { ChapterTitles } from '../../../universal/config/chapter';
 
 export interface ChapterIconProps {
   chapter?: ChapterType;
@@ -27,7 +28,7 @@ export default function ChapterIcon({
   const location = useLocation();
 
   let matchChapter: ChapterType = chapter || Chapters.ROOT;
-
+  let label = chapter;
   if (!chapter) {
     const route = entries(AppRoutes).find(([chapterId, path]) => {
       const match = matchPath(location.pathname, {
@@ -39,13 +40,16 @@ export default function ChapterIcon({
     });
     if (route) {
       matchChapter = route[0].split('/')[0] as ChapterType;
+      label = ChapterTitles[matchChapter];
     }
   }
   const Icon = ChapterIcons[matchChapter] || IconBurgerZaken;
 
   return (
     <Icon
-      aria-label={matchChapter}
+      aria-label={
+        chapter && ChapterTitles[chapter] ? ChapterTitles[chapter] : label
+      }
       fill={fill}
       className={classnames(styles.ChapterIcon, className)}
     />

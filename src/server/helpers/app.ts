@@ -1,11 +1,11 @@
 import * as Sentry from '@sentry/node';
 import { NextFunction, Request, Response } from 'express';
 import npath from 'path';
+import { matchPath } from 'react-router-dom';
 import uid from 'uid-safe';
 import { IS_AP } from '../../universal/config';
 import {
   BffEndpoints,
-  BffProfileTypePathSegment,
   BFF_BASE_PATH,
   DEV_USER_TYPE_HEADER,
   PUBLIC_BFF_ENDPOINTS,
@@ -15,17 +15,11 @@ import { clearSessionCache } from './source-api-request';
 import { DEFAULT_PROFILE_TYPE } from '../../client/config/app';
 
 export function isValidRequestPath(requestPath: string, path: string) {
-  return (
-    requestPath === npath.join(BFF_BASE_PATH, path) ||
-    requestPath ===
-      npath.join(
-        BFF_BASE_PATH,
-        BffProfileTypePathSegment.privateCommercial,
-        path
-      ) ||
-    requestPath ===
-      npath.join(BFF_BASE_PATH, BffProfileTypePathSegment.commercial, path)
-  );
+  const isRouteMatch = !!matchPath(requestPath, {
+    path: npath.join(BFF_BASE_PATH, path),
+    exact: true,
+  });
+  return isRouteMatch;
 }
 
 export function isBffEndpoint(requestPath: string) {

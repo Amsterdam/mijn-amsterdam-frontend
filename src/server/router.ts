@@ -1,8 +1,20 @@
 import * as Sentry from '@sentry/node';
 import express, { NextFunction, Request, Response } from 'express';
+import { DatasetFilterSelection, DATASETS } from '../universal/config/buurt';
+import { ApiResponse, apiSuccesResult } from '../universal/helpers/api';
 import { BffEndpoints } from './config';
 import { getPassthroughRequestHeaders, queryParams } from './helpers/app';
-import { fetchCMSCONTENT } from './services';
+import { cacheOverview } from './helpers/file-cache';
+import { fetchCMSCONTENT, loadClusterDatasets } from './services';
+import {
+  loadDatasetFeatures,
+  loadFeatureDetail,
+  loadPolylineFeatures,
+} from './services/buurt/buurt';
+import {
+  filterDatasetFeatures,
+  getDatasetEndpointConfig,
+} from './services/buurt/helpers';
 import {
   loadServicesAll,
   loadServicesSSE,
@@ -32,9 +44,9 @@ router.get(
     req.socket.setNoDelay(true);
     // Tell the client we respond with an event stream
     res.writeHead(200, {
-      'content-type': 'text/event-stream',
+      'Content-type': 'text/event-stream',
       'Cache-Control': 'no-cache, no-transform',
-      connection: 'keep-alive',
+      Connection: 'keep-alive',
     });
 
     res.write('retry: 1000\n');
@@ -48,6 +60,72 @@ router.get(BffEndpoints.SERVICES_TIPS, loadServicesTips);
 router.get(
   BffEndpoints.SERVICES_TIPS_REQUEST_DATA_OVERVIEW,
   loadServicesTipsRequestDataOverview
+);
+
+router.post(
+  BffEndpoints.MAP_DATASETS,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const {
+        clusters,
+        errors: clusterErrors,
+        filters: clusterFilters,
+      } = await loadClusterDatasets(res.locals.sessionID, req.body);
+
+      const {
+        features: polylines,
+        errors: polylineErrors,
+        filters: polylineFilters,
+      } = await loadPolylineFeatures(res.locals.sessionID, req.body);
+
+      const responseContent = {
+        clusters: clusters || [],
+        polylines: polylines || [],
+        errors: [...clusterErrors, ...polylineErrors],
+        filters: {
+          ...clusterFilters,
+          ...polylineFilters,
+        },
+      };
+
+      res.json(apiSuccesResult(responseContent));
+      next();
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  BffEndpoints.MAP_DATASETS,
+  async (req: Request, res: Response, next: NextFunction) => {
+    const datasetId = req.params.datasetId;
+    const id = req.params.id;
+
+    let response: ApiResponse<any> | null = null;
+
+    try {
+      response = await loadFeatureDetail(res.locals.sessionID, datasetId, id);
+
+      if (response.status !== 'OK') {
+        res.status(500);
+      }
+
+      res.json(response);
+      next();
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  BffEndpoints.CACHE_OVERVIEW,
+  async (req: Request, res: Response, next: NextFunction) => {
+    const overview = await cacheOverview();
+    res.json(overview);
+    next();
+  }
 );
 
 router.get(

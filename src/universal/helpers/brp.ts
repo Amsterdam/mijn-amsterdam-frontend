@@ -13,15 +13,26 @@ export function getFullName(persoon: Persoon) {
     : '';
 }
 
-export function getFullAddress(adres: {
-  straatnaam: string | null;
-  huisnummer: string | null;
-  huisnummertoevoeging: string | null;
-  huisletter: string | null;
-}) {
+export function getFullAddress(
+  adres: {
+    straatnaam: string | null;
+    huisnummer: string | null;
+    huisnummertoevoeging: string | null;
+    huisletter: string | null;
+    postcode: string | null;
+    woonplaatsNaam: string | null;
+  } | null,
+  extended = false
+) {
   return adres
-    ? `${adres.straatnaam} ${adres.huisnummer || ''} ${adres.huisletter ||
-        ''} ${adres.huisnummertoevoeging || ''}`.trim()
+    ? `${adres.straatnaam} ${adres.huisnummer || ''} ${
+        adres.huisletter || ''
+      } ${adres.huisnummertoevoeging || ''}`.trim() +
+        (extended
+          ? `\n${adres.postcode || ''}${
+              adres.woonplaatsNaam ? ' ' + adres.woonplaatsNaam : ''
+            }`
+          : '')
     : 'unknown address';
 }
 

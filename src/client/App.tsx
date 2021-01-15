@@ -1,9 +1,10 @@
 import * as Sentry from '@sentry/browser';
 import classnames from 'classnames';
-import React from 'react';
-import ErrorBoundary from 'react-error-boundary';
+
+import { ErrorBoundary } from 'react-error-boundary';
 import {
   BrowserRouter,
+  matchPath,
   Redirect,
   Route,
   Switch,
@@ -21,6 +22,7 @@ import {
   MainHeader,
 } from './components';
 import { DefaultAutologoutDialogSettings } from './components/AutoLogoutDialog/AutoLogoutDialog';
+import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import {
   TMA_LOGIN_URL_DIGID_AFTER_REDIRECT,
   TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT,
@@ -46,7 +48,6 @@ import {
   InkomenDetailTozo,
   InkomenSpecificaties,
   LandingPage,
-  MyArea,
   MyNotifications,
   MyTips,
   NotFound,
@@ -95,8 +96,10 @@ function AppAuthenticated() {
   const profileType = useProfileTypeValue();
   const redirectAfterLogin = useDeeplinkRedirect();
 
-  return location.pathname === AppRoutes.BUURT ? (
-    <MyArea />
+  return matchPath(location.pathname, { path: AppRoutes.BUURT }) ? (
+    <Switch>
+      <Route path={AppRoutes.BUURT} component={MyAreaLoader} />
+    </Switch>
   ) : (
     <>
       <MainHeader isAuthenticated={true} />
@@ -211,10 +214,10 @@ export default function App() {
     IS_AP
   );
 
-  const sendToSentry = (error: Error, componentStack: string) => {
+  const sendToSentry = (error: Error, info: { componentStack: string }) => {
     Sentry.captureException(error, {
       extra: {
-        componentStack,
+        componentStack: info.componentStack,
       },
     });
   };

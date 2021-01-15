@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/browser';
-import React from 'react';
+
 import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
@@ -19,11 +19,11 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import AlertDocumentDownloadsDisabled from '../Inkomen/AlertDocumentDownloadsDisabled';
 import styles from './InkomenDetail.module.scss';
 
-export default () => {
+export default function InkomenDetailTozo() {
   const { FOCUS_TOZO } = useAppStateGetter();
 
   const tozoItems = FOCUS_TOZO.content || [];
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
 
   let TozoItem = tozoItems.find((item) => item.id === id);
 
@@ -117,4 +117,4 @@ export default () => {
       )}
     </DetailPage>
   );
-};
+}

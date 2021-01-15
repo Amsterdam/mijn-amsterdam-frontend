@@ -1,4 +1,3 @@
-import React from 'react';
 import { useOptIn } from '../../hooks/useOptIn';
 import { Button } from '../Button/Button';
 import Modal from '../Modal/Modal';

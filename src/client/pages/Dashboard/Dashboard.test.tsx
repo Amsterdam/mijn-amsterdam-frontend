@@ -1,16 +1,19 @@
-import { shallow, mount } from 'enzyme';
-import React from 'react';
+import { render } from '@testing-library/react';
+
 import { generatePath } from 'react-router-dom';
-import { MutableSnapshot } from 'recoil';
+import { MutableSnapshot, RecoilState } from 'recoil';
 import { AppRoutes } from '../../../universal/config/routing';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import Dashboard from './Dashboard';
 import { Chapters } from '../../../universal/config/chapter';
+import { AppState } from '../../AppState';
+
+jest.mock('use-media');
 
 // TIPS, NOTIFICATIONS, CASES, BUURT, HOME
 
-const testState = {
+const testState: any = {
   TIPS: {
     status: 'OK',
     content: [
@@ -43,7 +46,6 @@ const testState = {
       },
     ],
   },
-  BUURT: { status: 'OK', content: { embed: 'http://example.org/map/url/x/y' } },
   HOME: { status: 'OK', content: { latlng: { lat: 5, lng: 40 } } },
   NOTIFICATIONS: {
     status: 'OK',
@@ -102,18 +104,12 @@ const testState = {
 };
 
 function initializeState(snapshot: MutableSnapshot) {
-  snapshot.set(appStateAtom, testState);
+  snapshot.set(appStateAtom as RecoilState<Partial<AppState>>, testState);
 }
 
 describe('<Dashboard />', () => {
   beforeAll(() => {
     (window.scrollTo as any) = jest.fn();
-    (window.matchMedia as any) = jest.fn(() => {
-      return {
-        addListener: jest.fn(),
-        removeListener: jest.fn(),
-      };
-    });
   });
 
   const routeEntry = generatePath(AppRoutes.ROOT);
@@ -128,13 +124,8 @@ describe('<Dashboard />', () => {
     />
   );
 
-  it('Renders without crashing', () => {
-    shallow(<Component />);
-  });
-
   it('Matches the Full Page snapshot', () => {
-    const html = mount(<Component />).html();
-
-    expect(html).toMatchSnapshot();
+    const { asFragment } = render(<Component />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });

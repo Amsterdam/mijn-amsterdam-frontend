@@ -1,11 +1,10 @@
-import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import InfoPanel from './InfoPanel';
 import { BrowserRouter } from 'react-router-dom';
 
 const infoData = {
   foo: 'bar',
-  bar: '',
+  hello: '',
 };
 
 const title = 'The InfoPanel';
@@ -24,24 +23,34 @@ const actionLinks = [
 
 describe('InfoPanel', () => {
   it('Renders everything correctly', () => {
-    expect(
-      shallow(
-        <BrowserRouter>
-          <InfoPanel
-            title={title}
-            actionLinks={actionLinks}
-            panelData={infoData}
-          />
-        </BrowserRouter>
-      ).html()
-    ).toMatchSnapshot();
+    render(
+      <BrowserRouter>
+        <InfoPanel
+          title={title}
+          actionLinks={actionLinks}
+          panelData={infoData}
+        />
+      </BrowserRouter>
+    );
+    expect(screen.getByText(title)).toBeInTheDocument();
+    expect(screen.getByText(actionLinks[0].title)).toBeInTheDocument();
+    expect(screen.getByText(actionLinks[1].title)).toBeInTheDocument();
+    expect(screen.getByText(/foo/)).toBeInTheDocument();
+    expect(screen.getByText(/bar/)).toBeInTheDocument();
+    expect(screen.queryByText(/hello/)).toBe(null);
   });
 
   it('Doesn`t omit falsey values', () => {
-    expect(
-      shallow(
-        <InfoPanel panelData={infoData} omitPairWithFalseyValues={false} />
-      ).html()
-    ).toMatchSnapshot();
+    render(
+      <BrowserRouter>
+        <InfoPanel
+          title={title}
+          actionLinks={actionLinks}
+          panelData={infoData}
+          omitPairWithFalseyValues={false}
+        />
+      </BrowserRouter>
+    );
+    expect(screen.getByText(/hello/)).toBeInTheDocument();
   });
 });

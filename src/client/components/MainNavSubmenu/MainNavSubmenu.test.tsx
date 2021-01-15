@@ -1,46 +1,51 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import MainNavSubmenu from './MainNavSubmenu';
+import { act, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
 import { BrowserRouter } from 'react-router-dom';
+import MainNavSubmenu from './MainNavSubmenu';
 
 const SUBMENU_TITLE = 'submenutje';
 
 describe('<MainNavSubmenu/> rendering', () => {
-  let comp: any;
   beforeEach(() => {
     jest.useFakeTimers();
   });
-  beforeAll(() => {
-    comp = mount(
+
+  it('Opens/closes the submenu panel on user interaction', () => {
+    const { container, getByText } = render(
       <BrowserRouter>
         <MainNavSubmenu title={SUBMENU_TITLE} id="een-submenu">
-          <a href="#">Linkje</a>
+          <a href="/">Linkje</a>
         </MainNavSubmenu>
       </BrowserRouter>
     );
-  });
-  it('Renders a submenu item', () => {
-    expect(comp.html()).toMatchSnapshot();
-  });
+    act(() => {
+      userEvent.hover(screen.getByText(SUBMENU_TITLE));
+      jest.runAllTimers();
+    });
 
-  it('Opens/closes the submenu panel on user interaction', () => {
-    expect(comp.find('.MainNavSubmenu')).toHaveLength(1);
-    comp.find('.MainNavSubmenu').simulate('mouseenter');
-    jest.runAllTimers();
-    comp.update();
-    expect(comp.find('.SubmenuPanel.SubmenuPanelOpen')).toHaveLength(1);
-    expect(comp.html()).toMatchSnapshot();
-    comp.find('.MainNavSubmenu').simulate('mouseleave');
-    jest.runAllTimers();
-    comp.update();
-    expect(comp.find('.SubmenuPanel.SubmenuPanelOpen')).toHaveLength(0);
-    comp.find('.MainNavSubmenu').simulate('focus');
-    jest.runAllTimers();
-    comp.update();
-    expect(comp.find('.SubmenuPanel.SubmenuPanelOpen')).toHaveLength(1);
-    comp.find('.MainNavSubmenu').simulate('blur');
-    jest.runAllTimers();
-    comp.update();
-    expect(comp.find('.SubmenuPanel.SubmenuPanelOpen')).toHaveLength(0);
+    expect(screen.getByText('Linkje')).toBeInTheDocument();
+    expect(container.querySelector('[aria-hidden=false]')).toBeInTheDocument();
+
+    act(() => {
+      userEvent.unhover(screen.getByText(SUBMENU_TITLE));
+      jest.runAllTimers();
+    });
+
+    expect(container.querySelector('[aria-hidden=true]')).toBeInTheDocument();
+
+    act(() => {
+      getByText(SUBMENU_TITLE).parentElement?.focus();
+      jest.runAllTimers();
+    });
+
+    expect(container.querySelector('[aria-hidden=false]')).toBeInTheDocument();
+
+    act(() => {
+      getByText(SUBMENU_TITLE).parentElement?.blur();
+      jest.runAllTimers();
+    });
+
+    expect(container.querySelector('[aria-hidden=true]')).toBeInTheDocument();
   });
 });

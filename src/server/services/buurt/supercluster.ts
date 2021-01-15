@@ -1,0 +1,96 @@
+import memoryCache from 'memory-cache';
+import Supercluster, { AnyProps, PointFeature } from 'supercluster';
+import {
+  DatasetFilterSelection,
+  DatasetId,
+} from '../../../universal/config/buurt';
+import { loadDatasetFeatures } from './buurt';
+import { MaPointFeature } from './datasets';
+import {
+  filterAndRefineFeatures,
+  filterPointFeaturesWithinBoundingBox,
+  getDatasetEndpointConfig,
+} from './helpers';
+
+async function generateSuperCluster(features: MaPointFeature[]) {
+  if (!!features?.length) {
+    const superClusterIndex = new Supercluster({
+      log: true,
+      radius: 40,
+      extent: 1250,
+      nodeSize: 256,
+      maxZoom: 13,
+    }).load(features);
+    return superClusterIndex;
+  }
+}
+
+function addExpansionZoom(superClusterIndex: any, feature: any) {
+  try {
+    feature.properties.expansion_zoom = superClusterIndex.getClusterExpansionZoom(
+      feature.properties.cluster_id
+    );
+  } catch (error) {
+    console.error(
+      "Can't add expansion zoom to cluster",
+      feature.properties.cluster_id,
+      feature
+    );
+  }
+}
+
+interface SuperClusterQuery {
+  bbox: any;
+  zoom: number;
+  datasetIds: DatasetId[];
+  filters: DatasetFilterSelection;
+}
+
+export async function loadClusterDatasets(
+  sessionID: SessionID,
+  { bbox, zoom, datasetIds, filters }: SuperClusterQuery
+) {
+  const configs = getDatasetEndpointConfig(datasetIds, ['Point']);
+
+  const { features, filters: filtersBase, errors } = await loadDatasetFeatures(
+    sessionID,
+    configs
+  );
+
+  const featuresWithinBoundingbox = filterPointFeaturesWithinBoundingBox(
+    features,
+    bbox
+  );
+
+  let clusters: PointFeature<AnyProps>[] = [];
+
+  const {
+    filters: filtersRefined,
+    features: filteredFeatures,
+  } = filterAndRefineFeatures(
+    featuresWithinBoundingbox,
+    datasetIds,
+    filters,
+    filtersBase
+  );
+
+  const superClusterIndex = await generateSuperCluster(
+    filteredFeatures as MaPointFeature[]
+  );
+
+  if (superClusterIndex && bbox && zoom) {
+    clusters = superClusterIndex.getClusters(bbox, zoom);
+
+    for (const feature of clusters) {
+      addExpansionZoom(superClusterIndex, feature);
+    }
+  }
+
+  const response = {
+    clusters,
+    filters: filtersRefined,
+    errors,
+  };
+
+  return response;
+}

@@ -1,5 +1,5 @@
-import { shallow, mount } from 'enzyme';
-import React from 'react';
+import { render } from '@testing-library/react';
+
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config/routing';
@@ -39,7 +39,7 @@ const afvalpunt = {
   openingHours: 'van maandag t/m vrijdag 09:00 16:30',
 };
 
-const testState = {
+const testState: any = {
   BRP: {
     status: 'OK',
     content: {
@@ -73,13 +73,8 @@ describe('<GarbageInformation />', () => {
     />
   );
 
-  it('Renders without crashing', () => {
-    shallow(<Component />);
-  });
-
   it('Matches the Full Page snapshot', () => {
-    const html = mount(<Component />).html();
-
-    expect(html).toMatchSnapshot();
+    const { asFragment } = render(<Component />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });

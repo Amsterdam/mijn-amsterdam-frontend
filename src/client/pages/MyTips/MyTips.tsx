@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChapterTitles, FeatureToggle } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types/App.types';
@@ -58,7 +58,7 @@ function OptInPageContent({ children }: OptInPageContentProps) {
   );
 }
 
-export default () => {
+export default function MyTipsPage() {
   const { TIPS } = useAppStateGetter();
   return (
     <OverviewPage className={styles.MyTips}>
@@ -81,4 +81,4 @@ export default () => {
       />
     </OverviewPage>
   );
-};
+}

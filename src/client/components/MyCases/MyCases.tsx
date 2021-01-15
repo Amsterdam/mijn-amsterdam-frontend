@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React from 'react';
+
 import { NavLink } from 'react-router-dom';
 import { MyCase } from '../../../universal/types';
 import { Colors } from '../../config/app';
@@ -57,7 +57,7 @@ export default function MyCases({
       )}
       {!!items.length && (
         <ul className={styles.List}>
-          {items.map(item => (
+          {items.map((item) => (
             <CaseItem key={item.id} item={item} />
           ))}
         </ul>

@@ -5,7 +5,6 @@ import {
   ServicesType,
 } from '../server/services/controller';
 import { apiPristineResult, ApiResponse } from '../universal/helpers/api';
-// import { fetchCMSCONTENT } from '../server/services';
 
 export type AppState = {
   [key in ServiceID]: ApiResponse<
@@ -13,9 +12,6 @@ export type AppState = {
   >;
 } & {
   TIPS: ServicesTips | ApiResponse<any>;
-  // CMS_CONTENT: ApiResponse<
-  //   ResolvedType<ReturnType<typeof fetchCMSCONTENT>>['content']
-  // >;
 };
 
 export const PRISTINE_APPSTATE: AppState = {
@@ -46,7 +42,6 @@ export const PRISTINE_APPSTATE: AppState = {
     datePublished: '',
   }),
   HOME: apiPristineResult(null),
-  BUURT: apiPristineResult(null),
 
   // CMS content
   CMS_CONTENT: apiPristineResult({

@@ -26,11 +26,8 @@ describe('requestData.ts', () => {
   let axMock: any;
   let axiosRequestSpy: any;
 
-  beforeAll(() => {
-    jest.useFakeTimers();
-  });
-
   beforeEach(() => {
+    jest.useFakeTimers('modern');
     axMock = new MockAdapter(axiosRequest);
     axMock
       .onGet(DUMMY_URL)
@@ -84,6 +81,7 @@ describe('requestData.ts', () => {
 
     expect(await cache.get(CACHE_KEY_1).promise).toStrictEqual(rs);
 
+    // Should clear the cache timeout
     jest.runAllTimers();
 
     expect(cache.get(CACHE_KEY_1)).toBe(null);

@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FocusStadspasBudget } from '../../../server/services/focus/focus-combined';
 import { FocusStadspasTransaction } from '../../../server/services/focus/focus-stadspas';
@@ -64,7 +64,7 @@ function TransactionOverview({ transactions }: TransactionOverviewProps) {
         <span>Bedrag</span>
       </div>
       <ul className={styles.Transactions}>
-        {transactions!.map(transaction => (
+        {transactions!.map((transaction) => (
           <Transaction
             key={transaction.id}
             value={transaction.amount}
@@ -193,12 +193,12 @@ function StadspasBudget({
   );
 }
 
-export default () => {
+export default function StadspasDetail() {
   const { FOCUS_STADSPAS } = useAppStateGetter();
   const { id } = useParams<{ id: string }>();
   const stadspasItem = id
-    ? FOCUS_STADSPAS?.content?.stadspassaldo?.stadspassen.find(
-        pass => pass.id === parseInt(id, 10)
+    ? FOCUS_STADSPAS?.content?.stadspassen.find(
+        (pass) => pass.id === parseInt(id, 10)
       )
     : null;
   const isErrorStadspas = isError(FOCUS_STADSPAS);
@@ -241,7 +241,7 @@ export default () => {
           </p>
         </PageContent>
       )}
-      {stadspasItem?.budgets.map(budget => (
+      {stadspasItem?.budgets.map((budget) => (
         <StadspasBudget
           urlTransactions={budget.urlTransactions}
           key={budget.code}
@@ -251,4 +251,4 @@ export default () => {
       ))}
     </DetailPage>
   );
-};
+}

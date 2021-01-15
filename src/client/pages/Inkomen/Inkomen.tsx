@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
 import {
   AppRoutes,
@@ -59,7 +59,7 @@ const decisionsDisplayProps = {
   displayDatePublished: 'Datum besluit',
 };
 
-export default () => {
+export default function Inkomen() {
   const {
     FOCUS_AANVRAGEN,
     FOCUS_SPECIFICATIES,
@@ -125,8 +125,7 @@ export default () => {
 
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
-  const hasStadspas = !!FOCUS_STADSPAS?.content?.stadspassaldo?.stadspassen
-    ?.length;
+  const hasStadspas = !!FOCUS_STADSPAS?.content?.stadspassen?.length;
 
   const itemsSpecificationsMonthly = useMemo(
     () => uitkeringsspecificaties?.slice(0, 3) || [],
@@ -138,10 +137,10 @@ export default () => {
   );
 
   const stadspasItems = useMemo(() => {
-    if (!FOCUS_STADSPAS.content?.stadspassaldo?.stadspassen) {
+    if (!FOCUS_STADSPAS.content?.stadspassen) {
       return [];
     }
-    return FOCUS_STADSPAS.content.stadspassaldo.stadspassen.map((stadspas) => {
+    return FOCUS_STADSPAS.content.stadspassen.map((stadspas) => {
       return {
         ...stadspas,
         displayDatumAfloop: defaultDateFormat(stadspas.datumAfloop),
@@ -175,7 +174,7 @@ export default () => {
         </p>
         {FeatureToggle.stadpasActive &&
           !isLoadingStadspas &&
-          FOCUS_STADSPAS.content?.stadspassaldo?.type !== 'kind' && (
+          FOCUS_STADSPAS.content?.type !== 'kind' && (
             <p>
               Hebt u kinderen of een partner met een Stadspas? 1 volwassene
               krijgt alle Stadspassen van uw gezin te zien. De andere
@@ -326,4 +325,4 @@ export default () => {
       )}
     </OverviewPage>
   );
-};
+}

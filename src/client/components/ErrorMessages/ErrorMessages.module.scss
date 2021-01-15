@@ -1,5 +1,9 @@
 @import '../../styles/_global.scss';
 
+.ErrorMessages.Dismissed {
+  opacity: 0;
+}
+
 .MessageBar {
   background-color: $color-neutral-grey2;
   margin: 0;
@@ -15,14 +19,6 @@
 .MessageBarInner {
   opacity: 1;
   transition: opacity 100ms ease-in-out;
-}
-
-.ErrorMessages.Dismissed .MessageBar {
-  background: transparent;
-
-  .MessageBarInner {
-    opacity: 0;
-  }
 }
 
 .ErrorFromServer {
@@ -58,9 +54,15 @@
   }
 }
 
-.ToggleButton {
+.CloseButton {
   position: absolute;
   right: .5rem;
+  height: 2.4rem;
+  width: 2.4rem;
+  > svg {
+    height: 2.4rem;
+    width: 2.4rem;
+  }
 
   &, &:hover {
     background: none;
@@ -68,11 +70,6 @@
 
   top: 50%;
   transform: translateY(-50%);
-
-
-  &.isDismissed {
-    display: none;
-  }
 }
 
 .ErrorMessages.Dismissed .ToggleButton svg {

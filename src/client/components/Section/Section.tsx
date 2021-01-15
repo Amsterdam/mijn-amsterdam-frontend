@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 import { ComponentChildren } from '../../../universal/types';
 import Heading from '../Heading/Heading';

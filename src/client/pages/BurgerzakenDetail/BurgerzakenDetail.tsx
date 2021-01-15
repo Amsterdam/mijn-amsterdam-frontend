@@ -1,4 +1,3 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
@@ -19,12 +18,12 @@ import {
 import styles from './BurgerzakenDetail.module.scss';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
-export default () => {
+export default function BurgerzakenDetail() {
   const { BRP } = useAppStateGetter();
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
 
   const DocumentItem = BRP.content?.identiteitsbewijzen?.find(
-    item => item.id === id
+    (item) => item.id === id
   );
   const noContent = !isLoading && !DocumentItem;
 
@@ -69,4 +68,4 @@ export default () => {
       </PageContent>
     </DetailPage>
   );
-};
+}

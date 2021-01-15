@@ -1,5 +1,5 @@
 import { ComponentChildren } from '../../../universal/types';
-import React from 'react';
+
 import classnames from 'classnames';
 import styles from './LoadingContent.module.scss';
 
@@ -27,10 +27,10 @@ export default function LoadingContent({
   className,
 }: ComponentProps) {
   return (
-    <div className={classnames(styles.LoadingContent, className)}>
+    <span className={classnames(styles.LoadingContent, className)}>
       {barConfig.map(([width, height, marginBottom], index) => {
         return (
-          <div
+          <span
             key={index}
             style={{
               width,
@@ -40,6 +40,6 @@ export default function LoadingContent({
           />
         );
       })}
-    </div>
+    </span>
   );
 }

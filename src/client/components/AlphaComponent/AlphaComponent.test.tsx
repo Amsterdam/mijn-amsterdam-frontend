@@ -1,13 +1,14 @@
 import AlphaComponent from './AlphaComponent';
-import React from 'react';
-import { shallow } from 'enzyme';
+
+import { render, screen } from '@testing-library/react';
 
 describe('<AlphaComponent />', () => {
   it('Renders without crashing', () => {
-    shallow(<AlphaComponent />);
+    render(<AlphaComponent />);
   });
 
-  it('Matches the default snapshot', () => {
-    expect(shallow(<AlphaComponent />).html()).toMatchSnapshot();
+  it('Renders AlphaComponent text', () => {
+    render(<AlphaComponent />);
+    expect(screen.getByText('AlphaComponent')).toBeInTheDocument();
   });
 });

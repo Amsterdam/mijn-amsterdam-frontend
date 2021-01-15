@@ -1,4 +1,3 @@
-import React from 'react';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
   Alert,
@@ -10,7 +9,7 @@ import {
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
 
-export default () => {
+export default function GeneralInfo() {
   const { CMS_CONTENT } = useAppStateGetter();
   const generalInfo = CMS_CONTENT.content?.generalInfo;
 
@@ -31,4 +30,4 @@ export default () => {
       </PageContent>
     </TextPage>
   );
-};
+}

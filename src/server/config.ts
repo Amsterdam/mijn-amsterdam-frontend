@@ -138,12 +138,6 @@ export function getApiConfig(name: SourceApiKey, config?: DataRequestConfig) {
   return Object.assign(ApiConfig[name] || {}, config || {});
 }
 
-export const BffProfileTypePathSegment = {
-  private: '/',
-  privateCommercial: '/private-commercial',
-  commercial: '/commercial',
-};
-
 export const BffEndpoints = {
   SERVICES_TIPS: `/services/tips`,
   SERVICES_TIPS_REQUEST_DATA_OVERVIEW: `/services/tips/requestdataoverview`,
@@ -151,9 +145,12 @@ export const BffEndpoints = {
   SERVICES_STREAM: `/services/stream`,
   HEALTH: `/status/health`,
   CMS_CONTENT: `/public/services/cms`,
+  MAP_DATASETS: `/map/datasets/:datasetId?/:id?`,
+  CACHE_OVERVIEW: `/status/cache`,
 };
 
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
   BffEndpoints.HEALTH,
   BffEndpoints.CMS_CONTENT,
+  BffEndpoints.CACHE_OVERVIEW,
 ];

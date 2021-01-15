@@ -1,3 +1,4 @@
+import { LatLngLiteral } from 'leaflet';
 import { capitalizeFirstLetter } from '../../../universal/helpers';
 import { GarbageRetrievalMoment, Stadsdeel } from '../../../universal/types';
 import { getApiConfig } from '../../config';
@@ -182,7 +183,7 @@ export function transformGarbageRetrievalData(
 
 export async function fetchAfvalmomenten(
   sessionID: SessionID,
-  center: LatLngObject | null
+  center: LatLngLiteral | null
 ) {
   const params = { lat: center?.lat, lon: center?.lng };
   const garbageMomentData = await requestData<GarbageRetrievalMoment[]>(

@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import paginate from 'jw-paginate';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { IconChevronLeft, IconChevronRight } from '../../assets/icons';
 import styles from './Pagination.module.scss';
 

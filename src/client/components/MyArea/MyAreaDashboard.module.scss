@@ -1,0 +1,32 @@
+@import '../../styles/_global.scss';
+
+.DashboardMapContainer {
+  background-color: $color-neutral-grey1;
+  min-height: 50rem;
+  margin-bottom: 10rem;
+  position: relative;
+}
+
+.NavLink {
+  display: block;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: flex-end;
+  text-decoration: none;
+  z-index: z-index(my-area-dashboard-content);
+  text-decoration: none;
+}
+
+.NavLinkContentWrap {
+  display: block;
+  background-color: $color-white;
+  padding: 2rem 4rem;
+  width: 46rem;
+  margin-left: calc(50% + 2rem);
+
+}

@@ -1,9 +1,8 @@
-import React from 'react';
-import { shallow, mount } from 'enzyme';
-import MyChaptersPanel from './MyChaptersPanel';
+import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
 import { ChapterMenuItem } from '../../config/menuItems';
-import * as profileTypeHook from '../../hooks/useProfileType';
+import MyChaptersPanel from './MyChaptersPanel';
 
 const PANEL_TITLE = 'whoa!';
 const items: ChapterMenuItem[] = [
@@ -21,33 +20,12 @@ const items: ChapterMenuItem[] = [
     rel: 'external',
     profileTypes: ['private'],
   },
-  {
-    title: 'Zorg en ondersteuning',
-    id: 'ZORG',
-    to: '/zorg-en-ondersteuning',
-    profileTypes: ['private'],
-  },
-  {
-    title: 'Inkomen en Stadspas',
-    id: 'INKOMEN',
-    to: '/inkomen-en-stadspas',
-    profileTypes: ['private'],
-  },
-  { title: 'Afval', id: 'AFVAL', to: '/afval', profileTypes: ['private'] },
 ];
 
 describe('Chapter panel display', () => {
-  const profileTypeHookMock = ((profileTypeHook as any).useProfileTypeValue = jest.fn(
-    () => 'prive'
-  ));
-
-  afterAll(() => {
-    profileTypeHookMock.mockRestore();
-  });
-
   it('Renders chapter items', () => {
-    expect(
-      shallow(
+    render(
+      <RecoilRoot>
         <BrowserRouter>
           <MyChaptersPanel
             title={PANEL_TITLE}
@@ -56,21 +34,29 @@ describe('Chapter panel display', () => {
             trackCategory="track-test"
           />
         </BrowserRouter>
-      ).html()
-    ).toMatchSnapshot();
+      </RecoilRoot>
+    );
+    expect(screen.getByText(PANEL_TITLE)).toBeInTheDocument();
+    expect(screen.getByText('Belastingen')).toBeInTheDocument();
+    expect(screen.getByText('Erfpacht')).toBeInTheDocument();
   });
 
   it('Displays content loading placeholder', () => {
-    const comp = mount(
-      <BrowserRouter>
-        <MyChaptersPanel
-          title={PANEL_TITLE}
-          items={items}
-          isLoading={true}
-          trackCategory="track-test"
-        />
-      </BrowserRouter>
+    const { container } = render(
+      <RecoilRoot>
+        <BrowserRouter>
+          <MyChaptersPanel
+            title={PANEL_TITLE}
+            items={items}
+            isLoading={true}
+            trackCategory="track-test"
+          />
+        </BrowserRouter>
+      </RecoilRoot>
     );
-    expect(comp.find('.LoadingContent')).toHaveLength(1);
+
+    expect(
+      container.querySelector('[class*="LoadingContent"]')
+    ).toBeInTheDocument();
   });
 });

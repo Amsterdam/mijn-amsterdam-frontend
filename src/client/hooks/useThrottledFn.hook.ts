@@ -17,11 +17,11 @@ export function useActivityThrottle(
   const throttledCallback = useThrottledFn(callback, throttleTimeoutMs);
 
   useEffect(() => {
-    defaultEvents.forEach(eventName => {
+    defaultEvents.forEach((eventName) => {
       window.addEventListener(eventName, throttledCallback);
     });
     return () => {
-      defaultEvents.forEach(eventName => {
+      defaultEvents.forEach((eventName) => {
         window.removeEventListener(eventName, throttledCallback);
       });
     };
