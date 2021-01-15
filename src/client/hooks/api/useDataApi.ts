@@ -179,7 +179,7 @@ export function useDataApi<T>(
       clearTimeout(requestTimeout);
     };
 
-    if (requestOptions.postpone !== true && requestOptions.url !== '') {
+    if (requestOptions.postpone !== true && !!requestOptions.url) {
       fetchData();
     }
     // When component is destroyed this callback is executed.
