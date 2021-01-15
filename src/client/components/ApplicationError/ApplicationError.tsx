@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './ApplicationError.module.scss';
 import { FallbackProps } from 'react-error-boundary';
 

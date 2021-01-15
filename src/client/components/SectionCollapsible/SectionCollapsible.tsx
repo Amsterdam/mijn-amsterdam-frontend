@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 import { useDebouncedCallback } from 'use-debounce';
 import { withKeyPress } from '../../../universal/helpers';

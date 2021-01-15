@@ -1,4 +1,3 @@
-import React from 'react';
 import { InfoDetail } from '../..';
 import GenericBase from './GenericBase';
 import Url from './Url';

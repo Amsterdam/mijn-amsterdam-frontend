@@ -1,7 +1,7 @@
 import { MapLayers } from '@amsterdam/asc-assets';
 import { Button, themeColor } from '@amsterdam/asc-ui';
+import { FC } from 'react';
 import styled from 'styled-components';
-import React from 'react';
 
 const Control = styled.div`
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
@@ -24,7 +24,7 @@ export interface LegendControlProps {
   isActive: boolean;
 }
 
-const LegendControl: React.FC<LegendControlProps> = ({
+const LegendControl: FC<LegendControlProps> = ({
   showDesktopVariant,
   onClick,
   isActive,

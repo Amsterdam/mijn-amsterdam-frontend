@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FocusStadspasBudget } from '../../../server/services/focus/focus-combined';
 import { FocusStadspasTransaction } from '../../../server/services/focus/focus-stadspas';

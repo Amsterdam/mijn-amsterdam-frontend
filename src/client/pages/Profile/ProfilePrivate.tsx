@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import {
   apiPristineResult,
   ApiResponse,

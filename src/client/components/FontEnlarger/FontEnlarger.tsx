@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { ComponentChildren } from '../../../universal/types';
 import styles from './FontEnlarger.module.scss';
 

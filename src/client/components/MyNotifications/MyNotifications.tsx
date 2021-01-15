@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React from 'react';
+
 import { generatePath, useHistory } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';

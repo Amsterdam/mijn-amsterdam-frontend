@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import React from 'react';
+
 import { BrowserRouter } from 'react-router-dom';
 import { ReactComponent as IconComponent } from '../../assets/icons/Alert.svg';
 import Linkd from './Button';

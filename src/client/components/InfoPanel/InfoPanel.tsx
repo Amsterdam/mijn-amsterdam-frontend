@@ -1,6 +1,6 @@
 import Heading from '../Heading/Heading';
 import Linkd from '../Button/Button';
-import React, { useMemo } from 'react';
+import { isValidElement, useMemo } from 'react';
 import SectionCollapsible from '../SectionCollapsible/SectionCollapsible';
 import { Unshaped } from '../../../universal/types';
 import classnames from 'classnames';
@@ -61,7 +61,7 @@ function InfoPanelActionLinks({ actionLinks }: InfoPanelActionLinksProps) {
 }
 
 function getValue(value: any) {
-  if (React.isValidElement(value)) {
+  if (isValidElement(value)) {
     return value;
   }
   if (Array.isArray(value) || typeof value === 'object') {

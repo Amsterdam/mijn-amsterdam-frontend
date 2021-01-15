@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React from 'react';
+
 import { NavLink } from 'react-router-dom';
 import { MyCase } from '../../../universal/types';
 import { Colors } from '../../config/app';

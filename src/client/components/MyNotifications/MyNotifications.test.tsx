@@ -1,6 +1,6 @@
 import { BrowserRouter } from 'react-router-dom';
 import MyNotifications from './MyNotifications';
-import React from 'react';
+
 import { render, screen } from '@testing-library/react';
 import { MyNotification } from '../../../universal/types';
 import userEvent from '@testing-library/user-event';

@@ -1,6 +1,6 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
+
 import { RecoilRoot } from 'recoil';
 import { sessionAtom } from '../../hooks/api/useSessionApi';
 import AutoLogoutDialog, { AutoLogoutDialogSettings } from './AutoLogoutDialog';

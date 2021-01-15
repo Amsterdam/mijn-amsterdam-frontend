@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { isError, isLoading } from '../../../universal/helpers';
 import { AppState } from '../../AppState';
 import {

@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { CSSProperties } from 'react';
+import { CSSProperties } from 'react';
 import { defaultDateFormat } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types';
 import { GenericDocument } from '../../../universal/types/App.types';

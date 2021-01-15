@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AppRoutes, FeatureToggle } from '../../../universal/config';
 import { isExternalUrl } from '../../../universal/helpers';
 import { directApiUrlByProfileType } from '../../../universal/helpers/utils';

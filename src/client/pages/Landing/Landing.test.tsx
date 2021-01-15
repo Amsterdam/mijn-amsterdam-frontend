@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import React from 'react';
+
 import Landing from './Landing';
 import { RecoilRoot } from 'recoil';
 import { sessionAtom, SessionState } from '../../hooks/api/useSessionApi';

@@ -1,5 +1,11 @@
 import { Icon, themeSpacing } from '@amsterdam/asc-ui';
-import React, { PropsWithChildren, ReactNode, useState } from 'react';
+import {
+  PropsWithChildren,
+  ReactNode,
+  useState,
+  MouseEvent as ReactMouseEvent,
+  Children,
+} from 'react';
 import styled from 'styled-components';
 import { IconChevronRight } from '../../assets/icons';
 
@@ -42,7 +48,7 @@ export function isCollapsed(state: CollapsedState) {
 }
 
 interface MyAreaCollapsiblePanelHeadingProps {
-  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClick?: (event: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => void;
   title: ReactNode;
   state?: CollapsedState;
 }
@@ -77,7 +83,7 @@ export default function MyAreaCollapsiblePanel({
   initialState = CollapsedState.Collapsed,
 }: MyAreaCollapsiblePanelProps) {
   const [collapsedState, setCollapsedState] = useState(initialState);
-  const hasChildren = React.Children.count(children) >= 1;
+  const hasChildren = Children.count(children) >= 1;
   return (
     <>
       <MyAreaCollapsiblePanelHeading

@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import DateInput from './DateInput';
-import React from 'react';
+
 import { parseISO } from 'date-fns';
 
 describe('<DateInput />', () => {

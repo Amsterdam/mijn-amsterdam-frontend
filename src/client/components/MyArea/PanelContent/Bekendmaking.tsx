@@ -1,4 +1,3 @@
-import React from 'react';
 import InfoDetail from '../../InfoDetail/InfoDetail';
 import Date from './Date';
 import Description from './Description';

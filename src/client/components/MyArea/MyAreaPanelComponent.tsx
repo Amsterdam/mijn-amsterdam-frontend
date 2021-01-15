@@ -1,12 +1,13 @@
 import { Icon, themeColor, themeSpacing } from '@amsterdam/asc-ui';
 import { spacing } from '@amsterdam/asc-ui/lib/theme/default';
-import React, {
+import {
   CSSProperties,
   PropsWithChildren,
   useCallback,
   useEffect,
   useMemo,
   useRef,
+  MouseEvent,
 } from 'react';
 import { animated, useSpring, UseSpringBaseProps } from 'react-spring';
 import { useSwipeable } from 'react-swipeable';
@@ -336,7 +337,7 @@ function PanelNarrowAnimated({
 export type PanelComponentProps = PropsWithChildren<{
   id: string;
   onTogglePanel?: (id: string, state: PanelState) => void;
-  onClose?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClose?: (event: MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   cycle: ReturnType<typeof usePanelStateCycle>;
   availableHeight: number;
   showCloseButton?: boolean;

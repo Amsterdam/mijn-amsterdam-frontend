@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CMSFooterContent } from '../../../server/services/cms-content';
 import { isExternalUrl } from '../../../universal/helpers/utils';
 import { LinkProps } from '../../../universal/types/index';

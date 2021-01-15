@@ -1,4 +1,3 @@
-import React from 'react';
 import { defaultDateFormat } from '../../../../universal/helpers';
 import InfoDetail, { InfoDetailGroup } from '../../InfoDetail/InfoDetail';
 

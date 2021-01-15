@@ -1,4 +1,3 @@
-import React from 'react';
 import GenericBase from './GenericBase';
 
 interface MyArePanelContentParkerenProps {

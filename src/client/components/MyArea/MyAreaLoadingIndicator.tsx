@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconHome, MapIconHomeCommercial } from '../../assets/icons';
 import styles from './MyAreaLoadingIndicator.module.scss';
 import { useProfileTypeValue } from '../../hooks/useProfileType';

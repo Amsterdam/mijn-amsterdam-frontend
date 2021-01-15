@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { animated } from 'react-spring';
 import { AppRoutes } from '../../../universal/config';
@@ -218,7 +218,7 @@ export default function MainNavBar({
       ) {
         menuItem = {
           ...menuItem,
-          title: termReplace(Chapters.BUURT),
+          title: termReplace(menuItem.title),
         };
       }
 

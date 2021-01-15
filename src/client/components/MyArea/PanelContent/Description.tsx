@@ -1,4 +1,3 @@
-import React from 'react';
 import InfoDetail from '../../InfoDetail/InfoDetail';
 import InnerHtml from '../../InnerHtml/InnerHtml';
 import styles from './PanelContent.module.scss';

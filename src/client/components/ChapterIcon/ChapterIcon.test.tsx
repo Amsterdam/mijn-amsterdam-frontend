@@ -1,7 +1,7 @@
 import { BrowserRouter } from 'react-router-dom';
 import ChapterIcon from './ChapterIcon';
 import { Chapters } from '../../../universal/config';
-import React from 'react';
+
 import { render, screen } from '@testing-library/react';
 import { ChapterTitles } from '../../../universal/config/chapter';
 

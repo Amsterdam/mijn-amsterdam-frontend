@@ -1,4 +1,3 @@
-import React from 'react';
 import DateStartEnd from './DateStartEnd';
 import Description from './Description';
 import GenericBase from './GenericBase';

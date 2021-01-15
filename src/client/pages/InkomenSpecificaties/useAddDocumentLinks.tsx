@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { AppState } from '../../AppState';
 import { DocumentLink } from '../../components/DocumentList/DocumentList';
 

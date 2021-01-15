@@ -1,4 +1,3 @@
-import React from 'react';
 import Linkd from '../../Button/Button';
 import InfoDetail from '../../InfoDetail/InfoDetail';
 

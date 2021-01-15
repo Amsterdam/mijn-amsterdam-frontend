@@ -1,4 +1,3 @@
-import React from 'react';
 import { capitalizeFirstLetter } from '../../../../universal/helpers/text';
 import InfoDetail from '../../InfoDetail/InfoDetail';
 import Description from './Description';

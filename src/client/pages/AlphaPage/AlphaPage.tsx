@@ -1,4 +1,3 @@
-import React from 'react';
 import { Page, PageContent, PageHeading } from '../../components';
 import styles from './AlphaPage.module.scss';
 

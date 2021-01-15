@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/browser';
-import React from 'react';
+
 import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';

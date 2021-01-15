@@ -1,4 +1,3 @@
-import React from 'react';
 import { FeatureToggle } from '../../../universal/config';
 import {
   defaultDateFormat,

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { Vergunning } from '../../../server/services/vergunningen';
 import { ChapterTitles } from '../../../universal/config/index';
 import { isError, isLoading } from '../../../universal/helpers';

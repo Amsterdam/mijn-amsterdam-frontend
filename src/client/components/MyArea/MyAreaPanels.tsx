@@ -1,5 +1,5 @@
 import { Checkbox, Label, themeColor, themeSpacing } from '@amsterdam/asc-ui';
-import React, { ReactNode, useMemo } from 'react';
+import { ReactNode, useMemo, FormEvent } from 'react';
 import styled from 'styled-components';
 import {
   DatasetCategory,
@@ -133,7 +133,7 @@ function datasetCheckboxState(
 interface DatasetControlCheckboxProps {
   id: string;
   label: ReactNode;
-  onChange: (event: React.FormEvent<HTMLInputElement>) => void;
+  onChange: (event: FormEvent<HTMLInputElement>) => void;
   isChecked: boolean;
   isIndeterminate: boolean;
   isDimmed?: boolean;

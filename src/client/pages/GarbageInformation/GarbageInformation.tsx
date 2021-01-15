@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { AppRoutes } from '../../../universal/config';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import { getFullAddress, isError, isLoading } from '../../../universal/helpers';

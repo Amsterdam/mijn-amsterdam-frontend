@@ -1,4 +1,3 @@
-import React from 'react';
 import { ComponentChildren } from '../../../universal/types/App.types';
 import { IconLogout } from '../../assets/icons';
 import { LOGOUT_URL } from '../../config/api';

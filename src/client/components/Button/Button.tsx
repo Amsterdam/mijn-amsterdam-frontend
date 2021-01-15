@@ -1,7 +1,9 @@
 import classnames from 'classnames';
-import React, {
+import {
   AnchorHTMLAttributes,
   ButtonHTMLAttributes,
+  ComponentType,
+  forwardRef,
   ReactNode,
 } from 'react';
 import { Link } from 'react-router-dom';
@@ -113,7 +115,7 @@ function ButtonBody({
   );
 }
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       children,
@@ -143,7 +145,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   }
 );
 
-type PolymorphicType = keyof JSX.IntrinsicElements | React.ComponentType<any>;
+type PolymorphicType = keyof JSX.IntrinsicElements | ComponentType<any>;
 
 export default function Linkd({
   children,

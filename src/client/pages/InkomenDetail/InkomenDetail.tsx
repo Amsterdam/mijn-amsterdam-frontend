@@ -1,4 +1,3 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
 import { FocusItem } from '../../../server/services/focus/focus-types';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';

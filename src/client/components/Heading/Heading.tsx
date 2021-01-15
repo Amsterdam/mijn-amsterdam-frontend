@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { HTMLProps } from 'react';
+import { HTMLProps } from 'react';
 import { ComponentChildren } from '../../../universal/types';
 import styles from './Heading.module.scss';
 

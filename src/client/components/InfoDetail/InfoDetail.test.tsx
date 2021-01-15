@@ -1,5 +1,5 @@
 import InfoDetail from './InfoDetail';
-import React from 'react';
+
 import { render, screen } from '@testing-library/react';
 
 it('Renders without crashing', () => {

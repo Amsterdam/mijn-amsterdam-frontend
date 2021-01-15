@@ -1,4 +1,3 @@
-import React from 'react';
 import { LinkdInline } from '../../Button/Button';
 import GenericBase from './GenericBase';
 

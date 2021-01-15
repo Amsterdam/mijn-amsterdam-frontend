@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { ReactComponent as Logo } from '../../assets/images/logo-amsterdam.svg';

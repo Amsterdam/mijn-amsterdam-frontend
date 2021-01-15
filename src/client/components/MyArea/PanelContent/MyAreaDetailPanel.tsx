@@ -1,5 +1,5 @@
 import { themeSpacing } from '@amsterdam/asc-ui';
-import React from 'react';
+
 import styled from 'styled-components';
 import {
   DatasetCategoryId,

@@ -1,5 +1,5 @@
 import AlphaComponent from './AlphaComponent';
-import React from 'react';
+
 import { render, screen } from '@testing-library/react';
 
 describe('<AlphaComponent />', () => {

@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ALL_ERROR_STATE_KEY } from '../../AppState';
 import { IconAlert, IconClose } from '../../assets/icons';
 import { useSessionValue } from '../../hooks/api/useSessionApi';

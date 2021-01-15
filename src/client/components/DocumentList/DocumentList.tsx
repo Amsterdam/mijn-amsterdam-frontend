@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/browser';
 import classnames from 'classnames';
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { GenericDocument } from '../../../universal/types/App.types';
 import { IconAlert, IconDownload } from '../../assets/icons';
 import { trackPageViewWithProfileType } from '../../hooks/analytics.hook';

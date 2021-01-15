@@ -1,5 +1,5 @@
 import { LeafletMouseEventHandlerFn } from 'leaflet';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { MaPolylineFeature } from '../../../server/services/buurt/datasets';
 import { PARKEERZONES_POLYLINE_OPTIONS } from './datasets';

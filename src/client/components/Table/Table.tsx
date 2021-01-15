@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { ReactNode } from 'react';
+import { isValidElement, ReactNode } from 'react';
 import { capitalizeFirstLetter, entries } from '../../../universal/helpers';
 import { Unshaped } from '../../../universal/types';
 import Linkd from '../Button/Button';
@@ -40,7 +40,7 @@ function TdValue({ value }: TdValueProps) {
   if (value !== '' && value !== 0 && !value) {
     return <span>&nbsp;</span>;
   }
-  if (React.isValidElement(value)) {
+  if (isValidElement(value)) {
     return value;
   }
   return <InnerHtml el="span">{value as string}</InnerHtml>;

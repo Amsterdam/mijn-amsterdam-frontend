@@ -1,5 +1,5 @@
 import { Heading, themeColor } from '@amsterdam/asc-ui';
-import React, { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import { DATASETS, getDatasetCategoryId } from '../../../../universal/config';
 import JsonString from './JsonString';

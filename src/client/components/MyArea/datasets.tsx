@@ -1,7 +1,7 @@
 import { themeSpacing } from '@amsterdam/asc-ui';
 import themeColors from '@amsterdam/asc-ui/es/theme/default/colors';
 import { PolylineOptions } from 'leaflet';
-import React, { isValidElement, ReactElement } from 'react';
+import { isValidElement, ReactElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import styled from 'styled-components';
 import { MaPointFeature } from '../../../server/services/buurt/datasets';

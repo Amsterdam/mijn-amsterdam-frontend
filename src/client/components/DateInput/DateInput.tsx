@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState, useEffect } from 'react';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 import { format, getDaysInMonth, parseISO, isValid } from 'date-fns';
 import { getMonth, range } from '../../../universal/helpers';
 

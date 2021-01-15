@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React from 'react';
+
 import { ComponentChildren } from '../../../universal/types';
 import { IconAlert, IconCheckmark } from '../../assets/icons';
 import styles from './Alert.module.scss';

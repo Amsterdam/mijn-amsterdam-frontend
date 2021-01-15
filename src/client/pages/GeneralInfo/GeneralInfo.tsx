@@ -1,4 +1,3 @@
-import React from 'react';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
   Alert,

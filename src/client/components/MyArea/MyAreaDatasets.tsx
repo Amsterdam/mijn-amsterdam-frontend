@@ -1,5 +1,5 @@
 import { useMapInstance } from '@amsterdam/react-maps';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
 import {
   MaPointFeature,

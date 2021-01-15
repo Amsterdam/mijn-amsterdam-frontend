@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import FocusTrap from 'focus-trap-react';
-import React, { CSSProperties, useEffect, useRef, useState } from 'react';
+import { CSSProperties, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { IconArrowRrimaryWhite } from '../../assets/icons';
 import { useDetectResizing, useModalRoot, usePhoneScreen } from '../../hooks';

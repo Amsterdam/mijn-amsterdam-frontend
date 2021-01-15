@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { HTMLAttributes, MouseEvent, useEffect, useState } from 'react';
+import { HTMLAttributes, MouseEvent, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 import { useLocation } from 'react-router-dom';

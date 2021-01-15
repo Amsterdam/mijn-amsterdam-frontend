@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChapterTitles, FeatureToggle } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types/App.types';

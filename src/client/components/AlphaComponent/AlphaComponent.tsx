@@ -1,5 +1,5 @@
 import { ComponentChildren } from '../../../universal/types';
-import React from 'react';
+
 import styles from './AlphaComponent.module.scss';
 
 export interface ComponentProps {

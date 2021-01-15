@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTermReplacement } from '../../hooks/useTermReplacement';
 import { ChapterTitles } from '../../../universal/config/chapter';
 import {

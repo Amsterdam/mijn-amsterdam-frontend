@@ -1,7 +1,7 @@
 import DigiDLogo from '../../assets/images/digid-logo.svg';
 import EherkenningLogo from '../../assets/images/eherkenning-logo.svg';
 import classnames from 'classnames';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FeatureToggle } from '../../../universal/config';
 import {
   Heading,

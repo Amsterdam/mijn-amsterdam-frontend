@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { CSSProperties, useEffect, useRef } from 'react';
 
 import { CloseButton } from '../Button/Button';
 import { ComponentChildren } from '../../../universal/types';
@@ -71,7 +71,7 @@ export function Dialog({
     };
   }, [isOpen]);
 
-  const inlineStyles: React.CSSProperties = {};
+  const inlineStyles: CSSProperties = {};
 
   if (typeof contentWidth === 'number') {
     inlineStyles.width = '100%';

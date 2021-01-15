@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import React from 'react';
+
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot, RecoilState } from 'recoil';
 import { AppRoutes } from '../../../universal/config/routing';

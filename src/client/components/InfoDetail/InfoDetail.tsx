@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import styles from './InfoDetail.module.scss';
 import { ComponentChildren } from '../../../universal/types/App.types';
 import classnames from 'classnames';

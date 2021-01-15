@@ -1,7 +1,5 @@
 import { PageContent, PageHeading, TextPage } from '../../components';
 
-import React from 'react';
-
 export default function NotFound() {
   return (
     <TextPage>

@@ -5,7 +5,7 @@ import L, {
   Marker as MarkerType,
   MarkerOptions,
 } from 'leaflet';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { LOCATION_ZOOM } from '../../../universal/config/buurt';
 import iconUrl from '../../assets/icons/home.svg';
 import iconUrlCommercial from '../../assets/icons/map/homeCommercial__primary-red.svg';

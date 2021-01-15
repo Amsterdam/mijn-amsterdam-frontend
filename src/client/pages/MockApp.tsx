@@ -1,12 +1,13 @@
 import { RecoilRoot, RecoilRootProps } from 'recoil';
-import React from 'react';
+import { Component } from 'react';
+
 import { MemoryRouter, Route } from 'react-router-dom';
 
 interface MockAppProps {
   routePath: string;
   routeEntry: string;
   initializeState?: RecoilRootProps['initializeState'];
-  component: React.Component | any;
+  component: Component | any;
 }
 
 export default function MockApp({

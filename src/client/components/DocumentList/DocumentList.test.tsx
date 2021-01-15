@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/browser';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
+
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { GenericDocument } from '../../../universal/types/App.types';

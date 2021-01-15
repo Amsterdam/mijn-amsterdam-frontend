@@ -1,7 +1,7 @@
 import { BaseLayer, Map } from '@amsterdam/arm-core';
 import { ThemeProvider } from '@amsterdam/asc-ui';
 import 'leaflet/dist/leaflet.css';
-import React from 'react';
+
 import styled from 'styled-components';
 import { ChapterTitles } from '../../../universal/config';
 import { HOOD_ZOOM } from '../../../universal/config/buurt';

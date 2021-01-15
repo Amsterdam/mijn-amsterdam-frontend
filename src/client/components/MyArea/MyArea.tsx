@@ -12,7 +12,7 @@ import { ThemeProvider } from '@amsterdam/asc-ui';
 import { useMapInstance } from '@amsterdam/react-maps';
 import L, { TileLayerOptions } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import React, { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';

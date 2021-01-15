@@ -1,5 +1,5 @@
 import 'leaflet/dist/leaflet.css';
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { generatePath, NavLink } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { useTermReplacement } from '../../hooks/useTermReplacement';

@@ -1,13 +1,10 @@
 // Hook taken from https://usehooks.com/useOnScreen/
-import { useEffect, useState } from 'react';
+import { useEffect, useState, RefObject } from 'react';
 
 const hasInteractionObserverSupport =
   typeof IntersectionObserver !== 'undefined';
 
-export function useOnScreen(
-  ref: React.RefObject<any>,
-  rootMargin: string = '0px'
-) {
+export function useOnScreen(ref: RefObject<any>, rootMargin: string = '0px') {
   const [isIntersecting, setIntersecting] = useState(
     !hasInteractionObserverSupport // true if we don't have support
   );

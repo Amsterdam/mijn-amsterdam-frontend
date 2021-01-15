@@ -1,5 +1,5 @@
 import MyTips from './MyTips';
-import React from 'react';
+
 import { render, screen } from '@testing-library/react';
 import { MyTip } from '../../../universal/types';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
