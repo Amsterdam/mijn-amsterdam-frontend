@@ -34,58 +34,57 @@ export function useSSE({
     }
   }, [path, connect, postpone, requestParams]);
 
-  useEffect(() => {
-    if (!es) {
-      return;
-    }
+  const handleOpen = useCallback(() => {
+    connectionCounter.current += 1;
+    console.info(
+      '[SSE] Open connection, connectionCount: ',
+      connectionCounter.current
+    );
+  }, []);
 
-    const handleOpen = () => {
-      connectionCounter.current += 1;
-      console.info(
-        '[SSE] Open connection, connectionCount: ',
-        connectionCounter.current
-      );
-    };
+  const closeEventSource = useCallback(() => {
+    console.info(
+      '[SSE] Close connection, connectionCount: ',
+      connectionCounter.current
+    );
+    connectionCounter.current = 0;
+    es?.close();
+  }, [es]);
 
-    const closeEventSource = () => {
-      console.info(
-        '[SSE] Close connection, connectionCount: ',
-        connectionCounter.current
-      );
-      connectionCounter.current = 0;
-      es.close();
-    };
-
-    const handleError = (error: any) => {
+  const handleError = useCallback(
+    (error: any) => {
       console.info(
         '[SSE] Error connecting, ES ReadyState:',
-        es.readyState,
+        es?.readyState,
         'count: ',
         connectionCounter.current
       );
 
       switch (true) {
         // Trying to connect but responding with an error
-        case EventSource.CONNECTING === es.readyState &&
+        case EventSource.CONNECTING === es?.readyState &&
           connectionCounter.current >= MAX_CONNECTION_RETRY_COUNT:
           closeEventSource();
           callback(SSE_ERROR_MESSAGE);
           break;
         // We're open but an error occured during communication
-        case EventSource.OPEN === es.readyState &&
+        case EventSource.OPEN === es?.readyState &&
           connectionCounter.current <= MAX_CONNECTION_RETRY_COUNT:
           closeEventSource();
           callback(SSE_ERROR_MESSAGE);
           break;
         // Closed before reaching max retry means connection not possible
-        case EventSource.CLOSED === es.readyState &&
+        case EventSource.CLOSED === es?.readyState &&
           connectionCounter.current <= MAX_CONNECTION_RETRY_COUNT:
           callback(SSE_ERROR_MESSAGE);
           break;
       }
-    };
+    },
+    [es, callback, closeEventSource]
+  );
 
-    const onMessageEvent = (message: any) => {
+  const onMessageEvent = useCallback(
+    (message: any) => {
       if (message.lastEventId === 'close') {
         closeEventSource();
         return;
@@ -100,7 +99,14 @@ export function useSSE({
       }
 
       callback(messageData);
-    };
+    },
+    [callback, closeEventSource]
+  );
+
+  useEffect(() => {
+    if (!es) {
+      return;
+    }
 
     es.addEventListener('error', handleError);
     es.addEventListener('open', handleOpen);
@@ -118,6 +124,12 @@ export function useSSE({
 
       window.removeEventListener('beforeunload', closeEventSource);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [es]);
+  }, [
+    es,
+    handleOpen,
+    closeEventSource,
+    onMessageEvent,
+    handleError,
+    eventName,
+  ]);
 }
