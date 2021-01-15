@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState, useRef } from 'react';
+import { useWhyDidYouUpdate } from './useWhyDidYouUpdate';
 
 export const SSE_ERROR_MESSAGE = 'sse-error';
 export const MAX_CONNECTION_RETRY_COUNT = 3;
@@ -22,7 +23,7 @@ export function useSSE({
   const connectionCounter = useRef(0);
 
   const connect = useCallback((path, requestParams) => {
-    const es = new EventSource(
+    const es = new window.EventSource(
       path + (requestParams ? '?' + new URLSearchParams(requestParams) : '')
     );
     setEs(es);

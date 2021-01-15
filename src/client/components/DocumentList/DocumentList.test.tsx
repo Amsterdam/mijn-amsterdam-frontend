@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/browser';
-import { render, screen, act } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
@@ -29,15 +29,12 @@ const ITEMS: GenericDocument[] = [
 ];
 
 describe('DocumentList', () => {
-  (window as any).URL = {
-    createObjectURL: jest.fn((blob: any) => void 0),
-  };
-  (window as any).location = { assign: jest.fn((file: any) => void 0) };
-
-  // beforeEach(() => {
-  //   fetch.mockClear();
-  //   track.mockClear();
-  // });
+  Object.defineProperty(window, 'location', {
+    value: {
+      ...window.location,
+    },
+    writable: true,
+  });
 
   it('Clicking a link fires tracking call', async () => {
     const fetch = ((global as any).fetch = jest
@@ -45,8 +42,6 @@ describe('DocumentList', () => {
       .mockResolvedValueOnce({ status: 200, blob: () => null }));
 
     (trackPageViewWithProfileType as jest.Mock).mockReturnValue(null);
-
-    const captureException = ((Sentry as any).captureException = jest.fn());
 
     render(
       <RecoilRoot>
@@ -58,18 +53,16 @@ describe('DocumentList', () => {
 
     expect(screen.getAllByText(ITEMS[0].title).length).toBe(2);
     userEvent.click(screen.getAllByText(ITEMS[0].title)[0]);
-    // await act(async () => {
-    //   Linkd.simulate('click');
-    // });
     expect(fetch).toHaveBeenCalledWith(ITEMS[0].url);
-    setTimeout(() => {
+
+    await waitFor(() =>
       expect(trackPageViewWithProfileType).toHaveBeenCalledWith(
         ITEMS[0].title,
         // The additional leading / is representing window.location.pathname
         '//downloads/' + ITEMS[0].title + '.pdf',
-        'prive'
-      );
-    }, 0);
+        'private'
+      )
+    );
   });
 
   it('Clicking a link fires tracking call', async () => {
@@ -79,7 +72,7 @@ describe('DocumentList', () => {
     const track = ((analytics as any).trackPageViewWithProfileType = jest.fn());
     const captureException = ((Sentry as any).captureException = jest.fn());
 
-    const component = render(
+    render(
       <RecoilRoot>
         <BrowserRouter>
           <DocumentList documents={ITEMS} />
@@ -88,9 +81,10 @@ describe('DocumentList', () => {
     );
 
     userEvent.click(screen.getAllByText(ITEMS[0].title)[0]);
+    expect(fetch).toHaveBeenCalledWith(ITEMS[0].url);
 
-    setTimeout(() => {
-      expect(track).not.toHaveBeenCalled();
+    await waitFor(() => expect(track).not.toHaveBeenCalled());
+    await waitFor(() =>
       expect(captureException).toHaveBeenCalledWith(
         new Error(`Failed to download document. Error: not found, Code: 404`),
         {
@@ -99,7 +93,7 @@ describe('DocumentList', () => {
             url: ITEMS[0].url,
           },
         }
-      );
-    }, 0);
+      )
+    );
   });
 });
