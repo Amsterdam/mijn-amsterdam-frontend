@@ -129,7 +129,8 @@ export const datasetEndpoints: Record<
     cacheTimeMinutes: BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
   },
   bekendmakingen: {
-    listUrl: dsoApiListUrl('bekendmakingen/bekendmakingen', 10000),
+    listUrl:
+      'https://api.data.amsterdam.nl/v1/wfs/bekendmakingen/?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&TYPENAMES=bekendmakingen&OUTPUTFORMAT=geojson&SRSNAME=urn:ogc:def:crs:EPSG::4326',
     detailUrl:
       'https://api.data.amsterdam.nl/v1/bekendmakingen/bekendmakingen/',
     transformList: transformDsoApiListResponse,

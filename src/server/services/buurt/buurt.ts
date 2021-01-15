@@ -108,7 +108,7 @@ export async function fetchDataset(
     const filters =
       filterConfig && createDynamicFilterConfig(response.content, filterConfig);
 
-    if (dataCache && datasetConfig.cache !== false) {
+    if (dataCache && response.content.length && datasetConfig.cache !== false) {
       dataCache.setKey('url', url);
       dataCache.setKey('features', response.content);
       if (filters) {
