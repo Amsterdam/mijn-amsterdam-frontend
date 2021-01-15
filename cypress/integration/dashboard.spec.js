@@ -17,10 +17,6 @@ describe('Dashboard', () => {
     selectComponent('MyCases_MyCases').should('exist');
   });
 
-  it('Shows MyArea', () => {
-    selectComponent('MyArea_MapDashboard').should('exist');
-  });
-
   it('Shows MyTips', () => {
     selectComponent('MyTips_MyTips').should('exist');
   });
