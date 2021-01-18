@@ -73,6 +73,8 @@ export const DATASETS: DatasetCategories = {
             valueConfig: {
               True: { title: 'Ja' },
               Undefined: { title: 'Nee' },
+              Null: { title: 'Nee' },
+              False: { title: 'Nee' },
             },
           },
         },

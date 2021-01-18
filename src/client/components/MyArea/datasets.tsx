@@ -110,7 +110,7 @@ export const datasetIcons: Record<
         <MapIconVoetbal fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
-    volleybal: (
+    beachvolley: (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
         <MapIconVolleybal fill={themeColors.tint.level1} />
       </DatasetIcon>
@@ -120,7 +120,7 @@ export const datasetIcons: Record<
         <MapIconBasketbal fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
-    fitness: (
+    'fitness / bootcamp': (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
         <MapIconFitness fill={themeColors.tint.level1} />
       </DatasetIcon>
@@ -128,6 +128,26 @@ export const datasetIcons: Record<
     tennis: (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
         <MapIconTennis fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    'jeu de boules': (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        {/* <MapIconTennis fill={themeColors.tint.level1} /> */}
+      </DatasetIcon>
+    ),
+    overig: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        {/* <MapIconTennis fill={themeColors.tint.level1} /> */}
+      </DatasetIcon>
+    ),
+    skate: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        {/* <MapIconTennis fill={themeColors.tint.level1} /> */}
+      </DatasetIcon>
+    ),
+    tafeltennis: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        {/* <MapIconTennis fill={themeColors.tint.level1} /> */}
       </DatasetIcon>
     ),
   },
