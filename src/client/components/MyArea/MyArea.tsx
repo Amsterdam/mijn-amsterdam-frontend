@@ -15,6 +15,7 @@ import 'leaflet/dist/leaflet.css';
 import { useEffect, useMemo, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import useMedia from 'use-media';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
 import { getFullAddress } from '../../../universal/helpers';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
@@ -109,6 +110,7 @@ export default function MyArea({
   zoom = HOOD_ZOOM,
 }: MyAreaProps) {
   const isWideScreen = useWidescreen();
+  const isLandscape = useMedia('(orientation: landscape)');
   const isNarrowScreen = !isWideScreen;
   const { HOME } = useAppStateGetter();
   const termReplace = useTermReplacement();
@@ -156,11 +158,17 @@ export default function MyArea({
         detail: [PanelState.Closed, PanelState.Open],
       };
     }
+    if (isLandscape) {
+      return {
+        filters: [PanelState.Tip, PanelState.Open],
+        detail: [PanelState.Closed, PanelState.Open],
+      };
+    }
     return {
       filters: [PanelState.Tip, PanelState.Preview, PanelState.Open],
       detail: [PanelState.Closed, PanelState.Preview, PanelState.Open],
     };
-  }, [isWideScreen]);
+  }, [isWideScreen, isLandscape]);
 
   const filterPanelCycle = usePanelStateCycle(
     'filters',
@@ -184,17 +192,20 @@ export default function MyArea({
 
   // Set panel state without explicit panel interaction. Effect reacts to loading detailed features.
   useEffect(() => {
-    if (!loadingFeature) {
+    if (loadingFeature) {
       return;
     }
     if (isNarrowScreen) {
-      setDetailPanelState(PanelState.Preview);
+      if (isLandscape) {
+        setDetailPanelState(PanelState.Open);
+      } else {
+        setDetailPanelState(PanelState.Preview);
+      }
     } else {
       setDetailPanelState(PanelState.Open);
     }
     // Only react on loadingFeature changes. This wil result in re-render which causes the currentPanel state to be up-to-date.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loadingFeature, isNarrowScreen]);
+  }, [loadingFeature, isNarrowScreen, setDetailPanelState, isLandscape]);
 
   // If Detail panel is opened set FiltersPanel to a TIP state and store the State it's in, if Detail panel is closed restore the Filters panel state to the state it was in.
   useEffect(() => {
