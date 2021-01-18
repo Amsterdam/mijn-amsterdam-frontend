@@ -189,21 +189,23 @@ export function useSelectedFeatureCSS(
 }
 
 export function useOnMarkerClick() {
-  const [loadingFeature, setLoadingFeature] = useLoadingFeature();
-  const loadingFeatureId = loadingFeature?.id;
-
+  const [, setLoadingFeature] = useLoadingFeature();
   return useCallback(
     (event: LeafletEvent) => {
       const id = event?.propagatedFrom?.feature?.properties?.id;
       const datasetId = event?.propagatedFrom?.feature?.properties?.datasetId;
 
       // Using DOM access here because comparing against loadingFeature will invalidate the memoized calback constantly which re-renders the layer component
-      if (loadingFeatureId !== id) {
-        setLoadingFeature({
-          datasetId,
-          id,
-        });
-      }
+
+      setLoadingFeature((loadingFeature) => {
+        if (loadingFeature?.id !== id) {
+          return {
+            datasetId,
+            id,
+          };
+        }
+        return loadingFeature;
+      });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
