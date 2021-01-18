@@ -3,6 +3,7 @@ import {
   DatasetFilterSelection,
   DatasetId,
   DatasetPropertyFilter,
+  DatasetPropertyValueWithCount,
   DATASETS,
   getDatasetCategoryId,
   POLYLINE_GEOMETRY_TYPES,
@@ -252,10 +253,25 @@ export function refineFilterSelection(
       filters
     )) {
       if (propertyFilterConfig.values) {
-        const refined = createDynamicFilterConfig(features, filters);
+        const refined = createDynamicFilterConfig(
+          features.filter(
+            (feature) => datasetId === feature.properties.datasetId
+          ),
+          filters
+        );
+
         if (refined[propertyName]) {
           filtersRefined[datasetId][propertyName].valuesRefined =
             refined[propertyName].values;
+        } else if (filtersRefined[datasetId][propertyName].values) {
+          // No features provided so we return a refined selection with 0 count
+          const valuesRefined: DatasetPropertyValueWithCount = {};
+          for (const value of Object.keys(
+            filtersRefined[datasetId][propertyName].values!
+          )) {
+            valuesRefined[value] = 0;
+          }
+          filtersRefined[datasetId][propertyName].valuesRefined = valuesRefined;
         }
       }
     }
@@ -425,7 +441,6 @@ export function transformDsoApiListResponse(
     ? responseData?.features
     : getApiEmbeddedResponse(embeddedDatasetId || datasetId, responseData);
 
-  console.log('results', responseData, datasetId, embeddedDatasetId);
   const collection: DatasetFeatures = [];
 
   if (results && results.length) {
