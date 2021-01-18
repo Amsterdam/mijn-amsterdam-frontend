@@ -116,48 +116,11 @@ export const DATASETS: DatasetCategories = {
     isDisabled: !FeatureToggle.sportDatasetsActive,
     title: 'Sport',
     datasets: {
-      zwembad: { title: 'Zwembad' },
-      sportpark: { title: 'Sportpark' },
-      sportveld: {
-        title: 'Sportveld',
-        filters: {
-          sportfunctie: {
-            title: '',
-            valueConfig: {
-              Null: { title: 'Overig' },
-            },
-          },
-          soortOndergrond: {
-            title: 'Soort ondergrond',
-            valueConfig: {
-              Null: { title: 'Onbekend' },
-            },
-          },
-        },
-      },
-      gymsportzaal: {
-        title: 'Gymsportzaal',
-        filters: {
-          indicatieToegankelijkMindervaliden: {
-            title: 'Toegankelijk voor minder validen',
-            valueConfig: {
-              '': { title: 'Nee' },
-            },
-          },
-          indicatieVoorzieningenMindervaliden: {
-            title: 'Voorzieningen voor minder validen',
-            valueConfig: {
-              '': { title: 'Nee' },
-            },
-          },
-        },
-      },
-      sporthal: { title: 'Sporthal' },
       sportaanbieder: {
-        title: 'Sportaanbieders',
+        title: 'Sporten',
         filters: {
           indicatieStadspas: {
-            title: 'Stadspas indicatie',
+            title: 'Stadspasvergoeding jeugd',
             valueConfig: {
               '': { title: 'Nee' },
             },
@@ -170,6 +133,25 @@ export const DATASETS: DatasetCategories = {
           },
           typeSport: {
             title: 'Sport',
+          },
+        },
+      },
+      zwembad: { title: 'Zwembaden' },
+      sporthal: { title: 'Sporthal' },
+      gymsportzaal: {
+        title: 'Gymzaal',
+        filters: {
+          indicatieToegankelijkMindervaliden: {
+            title: 'Toegankelijk voor minder validen',
+            valueConfig: {
+              '': { title: 'Nee' },
+            },
+          },
+          indicatieVoorzieningenMindervaliden: {
+            title: 'Voorzieningen voor minder validen',
+            valueConfig: {
+              '': { title: 'Nee' },
+            },
           },
         },
       },
@@ -197,9 +179,27 @@ export const DATASETS: DatasetCategories = {
         },
       },
       hardlooproute: {
-        title: 'Harlooproute',
+        title: 'Hardlooproutes',
         filters: {
           lengte: { title: 'Lengte in KM' },
+        },
+      },
+      sportpark: { title: 'Sportpark' },
+      sportveld: {
+        title: 'Sportveld',
+        filters: {
+          sportfunctie: {
+            title: '',
+            valueConfig: {
+              Null: { title: 'Overig' },
+            },
+          },
+          soortOndergrond: {
+            title: 'Soort ondergrond',
+            valueConfig: {
+              Null: { title: 'Onbekend' },
+            },
+          },
         },
       },
     },

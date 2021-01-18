@@ -27,6 +27,7 @@ import {
   useFilterControlItemChange,
 } from './MyArea.hooks';
 import MyAreaCollapsiblePanel from './MyAreaCollapsiblePanel';
+import { sortAlpha } from '../../../universal/helpers/utils';
 
 export const PanelList = styled.ol<{ indent?: number }>`
   padding: 0;
@@ -178,11 +179,24 @@ export function DatasetPropertyFilterPanel({
   activeFilters,
   onFilterControlItemChange,
 }: DatasetPropertyFilterPanelProps) {
-  const valuesSorted = useMemo(() => {
-    return Object.entries(values).sort((a, b) => {
-      return b[1] - a[1];
-    });
-  }, [values]);
+  const valuesSorted = useMemo(
+    () =>
+      Object.entries(values)
+        .map(([propertyValue, count]) => {
+          let label = propertyValue;
+          const valueConfig = property.valueConfig
+            ? property.valueConfig[propertyValue]
+            : undefined;
+
+          if (valueConfig?.title) {
+            label = valueConfig?.title;
+          }
+
+          return [propertyValue, count, label] as const;
+        })
+        .sort(sortAlpha('2')), // Sort on label
+    [values, property]
+  );
 
   return (
     <PropertyFilterPanel>
@@ -191,17 +205,7 @@ export function DatasetPropertyFilterPanel({
       )}
       {!valuesSorted.length && <span>laden...</span>}
       <PanelList>
-        {valuesSorted.map(([value, featureCount], index) => {
-          let label = value;
-
-          const valueConfig = property.valueConfig
-            ? property.valueConfig[value]
-            : undefined;
-
-          if (valueConfig?.title) {
-            label = valueConfig?.title;
-          }
-
+        {valuesSorted.map(([value, featureCount, label], index) => {
           const { isChecked } = filterItemCheckboxState(
             activeFilters,
             datasetId,

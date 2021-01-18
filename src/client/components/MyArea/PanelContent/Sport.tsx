@@ -102,7 +102,7 @@ export default function MyArePanelContentSport({
       );
     case 'sportaanbieder':
       return (
-        <GenericBase title={panelItem.naamAanbieder} supTitle="Sportaanbieders">
+        <GenericBase title={panelItem.naamAanbieder} supTitle="Sporten">
           {panelItem.naamSportfaciliteit &&
             panelItem.naamAanbieder !== panelItem.naamSportfaciliteit && (
               <InfoDetail
@@ -113,7 +113,7 @@ export default function MyArePanelContentSport({
           <InfoDetail label="Sport" value={panelItem.typeSport} />
           <InfoDetail label="Adres" value={panelItem.adres} />
           <InfoDetail
-            label="Stadspas indicatie"
+            label="Stadspasvergoeding jeugd"
             value={panelItem.indicatieStadspas || 'Nee'}
           />
           <InfoDetail
