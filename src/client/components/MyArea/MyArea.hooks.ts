@@ -142,7 +142,7 @@ export function useFetchPanelFeature() {
     })
       .then(({ data: { content: feature } }) => {
         // Add datasetid to the feature data, used for referencing to other states.
-        setSelectedFeature({ ...feature, datasetId });
+        setSelectedFeature({ ...feature, id: String(feature.id), datasetId });
       })
       .catch((error) => {
         if (!axios.isCancel(error)) {
