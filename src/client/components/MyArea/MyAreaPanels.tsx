@@ -183,16 +183,9 @@ export function DatasetPropertyFilterPanel({
       Object.entries(values)
         .map(([propertyValue, count]) => {
           let label = propertyValue;
-          const valueConfig = property.valueConfig
-            ? property.valueConfig[propertyValue]
-            : undefined;
-
-          if (valueConfig?.title) {
-            label = valueConfig?.title;
-          } else if (property.transformValueLabel) {
+          if (property.transformValueLabel) {
             label = property.transformValueLabel(label);
           }
-
           return [propertyValue, count, label] as const;
         })
         .sort(sortAlpha('2')), // Sort on label

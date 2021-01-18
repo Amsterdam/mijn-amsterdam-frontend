@@ -330,16 +330,28 @@ export function createFeaturePropertiesFromPropertyFilterConfig(
 
   if (filterPropertyNames && featureSourceProperties) {
     for (const propertyName of filterPropertyNames) {
-      // NOTE: Simple normalization of the value here. It only transforms 'ja' to 'Ja'.
-      featureProperties[propertyName] = capitalizeFirstLetter(
+      const valueConfig =
+        propertyFilters && propertyFilters[propertyName].valueConfig;
+
+      // Simple normalization of the value here. It only transforms 'ja' to 'Ja'.
+      const value = capitalizeFirstLetter(
         String(
           featureSourceProperties?.properties
             ? featureSourceProperties.properties[propertyName]
             : featureSourceProperties[propertyName]
         )
       );
+
+      featureProperties[propertyName] = value;
+
+      // Apply a data transformation to the value.
+      if (valueConfig && valueConfig[value]?.title) {
+        featureProperties[propertyName] = valueConfig[value].title;
+      }
     }
   }
+
+  // Also add the static property names to the feature properties
   if (staticPropertyNames && featureSourceProperties) {
     for (const propertyName of staticPropertyNames) {
       featureProperties[propertyName] = featureSourceProperties?.properties
