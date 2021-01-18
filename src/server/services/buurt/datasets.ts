@@ -10,7 +10,6 @@ import {
 } from '../../../universal/config/buurt';
 import { DataRequestConfig } from '../../config';
 import {
-  createFeaturePropertiesFromPropertyFilterConfig,
   getApiEmbeddedResponse,
   getPropertyFilters,
   transformDsoApiListResponse,
@@ -124,7 +123,7 @@ export const datasetEndpoints: Record<
   evenementen: {
     listUrl: dsoApiListUrl('evenementen/evenementen'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/evenementen/evenementen/',
-    transformList: transformEvenementen,
+    transformList: transformDsoApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
   },
@@ -256,61 +255,18 @@ function transformAfvalcontainersResponse(
   });
 }
 
-function transformEvenementen(
-  datasetId: DatasetId,
-  config: DatasetConfig,
-  responseData: any
-) {
-  const results = getApiEmbeddedResponse(datasetId, responseData);
-  const collection: DatasetFeatures = [];
-  if (results && results.length) {
-    for (const feature of results) {
-      if (feature?.geometry?.coordinates) {
-        collection.push({
-          type: 'Feature',
-          geometry: feature.geometry,
-          properties: createFeaturePropertiesFromPropertyFilterConfig(
-            datasetId,
-            {
-              id: feature.id,
-              datasetId,
-            },
-            feature
-          ),
-        });
-      }
-    }
-  }
-  return collection;
-}
-
 function transformParkeerzoneCoords(
   datasetId: DatasetId,
   config: DatasetConfig,
   responseData: any
 ) {
-  const results =
-    responseData?.features || getApiEmbeddedResponse(datasetId, responseData);
-  const collection: DatasetFeatures = [];
+  const features = transformDsoApiListResponse(datasetId, config, responseData);
 
-  if (results && results.length) {
-    for (const feature of results) {
-      const featureTransformed: MaPolylineFeature = {
-        type: 'Feature',
-        geometry: feature.geometry,
-        properties: createFeaturePropertiesFromPropertyFilterConfig(
-          datasetId,
-          {
-            id: feature.id,
-            datasetId,
-          },
-          feature
-        ),
-      };
-
+  if (features && features.length) {
+    for (const feature of features) {
       // Change gebiedsnaam for grouping purposes
-      featureTransformed.properties.gebiedsnaam =
-        featureTransformed.properties.gebiedsnaam?.split(' ')[0] || 'Amsterdam';
+      feature.properties.gebiedsnaam =
+        feature.properties.gebiedsnaam?.split(' ')[0] || 'Amsterdam';
 
       const colors: Record<string, string> = {
         oost: themeColors.supplement.lightblue,
@@ -324,12 +280,11 @@ function transformParkeerzoneCoords(
       };
 
       // Add custom color code
-      featureTransformed.properties.color =
-        colors[featureTransformed.properties.gebiedsnaam.toLowerCase()] ||
-        'red';
+      feature.properties.color =
+        colors[feature.properties.gebiedsnaam.toLowerCase()] || 'red';
 
-      collection.push(featureTransformed);
+      // collection.push(featureTransformed);
     }
   }
-  return collection;
+  return features;
 }
