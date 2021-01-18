@@ -197,8 +197,8 @@
   position: absolute;
   top: $main-header-topbar-height;
   width: 100vw;
-  height: calc(100% - #{$main-header-topbar-height});
-  background-color: rgba(0, 0, 0, .5);
+  height: 200%;
+  background-image: linear-gradient(rgba(0, 0, 0, .5) 75%, transparent);
   z-index: z-index(burger-menu-backdrop);
 }
 

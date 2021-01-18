@@ -246,7 +246,10 @@ export default function MainNavBar({
           {hasBurgerMenu && (
             <animated.div
               key="BurgerMenuBackDrop"
-              style={{ ...leftProps, ...backdropAnimationProps }}
+              style={{
+                ...leftProps,
+                ...backdropAnimationProps,
+              }}
               className={styles.Backdrop}
             />
           )}
