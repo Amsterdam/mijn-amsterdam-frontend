@@ -138,9 +138,29 @@ export const DATASETS: DatasetCategories = {
       },
       zwembad: { title: 'Zwembaden' },
       sporthal: { title: 'Sporthal' },
-      gymsportzaal: {
+      gymzaal: {
         title: 'Gymzaal',
         filters: {
+          indicatieToegankelijkMindervaliden: {
+            title: 'Toegankelijk voor minder validen',
+            valueConfig: {
+              '': { title: 'Nee' },
+            },
+          },
+          indicatieVoorzieningenMindervaliden: {
+            title: 'Voorzieningen voor minder validen',
+            valueConfig: {
+              '': { title: 'Nee' },
+            },
+          },
+        },
+      },
+      sportzaal: {
+        title: 'Sportzaal',
+        filters: {
+          type: {
+            title: 'Type',
+          },
           indicatieToegankelijkMindervaliden: {
             title: 'Toegankelijk voor minder validen',
             valueConfig: {

@@ -49,9 +49,13 @@ export default function MyArePanelContentSport({
           <InfoDetail label="Sportpark" value={panelItem.sportpark} />
         </GenericBase>
       );
-    case 'gymsportzaal':
+    case 'gymzaal':
+    case 'sportzaal':
       return (
-        <GenericBase title={panelItem.naam} supTitle="Gymsportzalen">
+        <GenericBase
+          title={panelItem.naam}
+          supTitle={datasetId === 'sportzaal' ? 'Sportzalen' : 'Gymzalen'}
+        >
           {!!panelItem.omschrijving && (
             <Description description={panelItem.omschrijving} />
           )}

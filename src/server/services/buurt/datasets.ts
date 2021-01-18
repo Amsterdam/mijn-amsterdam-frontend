@@ -87,24 +87,29 @@ export interface DatasetConfig {
   additionalStaticPropertyNames?: DatasetPropertyName[];
 }
 
-function dsoApiListUrl(dataset: string, pageSize: number = 1000) {
-  const [datasetCategoryId, datasetId] = dataset.split('/');
-  const apiUrl = `https://api.data.amsterdam.nl/v1/${datasetCategoryId}/${datasetId}/?_fields=id,geometry`;
+function dsoApiListUrl(
+  dataset: string,
+  pageSize: number = 1000,
+  datasetId?: DatasetId
+) {
+  const [datasetCategoryId, embeddedDatasetId] = dataset.split('/');
+  const apiUrl = `https://api.data.amsterdam.nl/v1/${datasetCategoryId}/${embeddedDatasetId}/?_fields=id,geometry`;
   const pageSizeParam = `&page_size=${pageSize}`;
 
   return (datasetConfig: DatasetConfig) => {
-    const propertyFilters = getPropertyFilters(datasetId);
+    const propertyFilters = getPropertyFilters(datasetId || embeddedDatasetId);
     const propertyNames = propertyFilters ? Object.keys(propertyFilters) : [];
 
     if (datasetConfig.additionalStaticPropertyNames) {
       propertyNames.push(...datasetConfig.additionalStaticPropertyNames);
     }
 
-    return (
+    const dsoApiUrl =
       apiUrl +
       (propertyNames.length ? ',' + propertyNames.join(',') : '') +
-      pageSizeParam
-    );
+      pageSizeParam;
+
+    return dsoApiUrl;
   };
 }
 
@@ -177,10 +182,18 @@ export const datasetEndpoints: Record<
     zIndex: zIndexPane.SPORTVELD,
     cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
-  gymsportzaal: {
-    listUrl: dsoApiListUrl('sport/gymsportzaal'),
+  gymzaal: {
+    listUrl: dsoApiListUrl('sport/gymsportzaal', undefined, 'gymzaal'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/gymsportzaal/',
-    transformList: transformDsoApiListResponse,
+    transformList: transformGymzaalResponse,
+    featureType: 'Point',
+    additionalStaticPropertyNames: ['type'],
+    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
+  },
+  sportzaal: {
+    listUrl: dsoApiListUrl('sport/gymsportzaal', undefined, 'sportzaal'),
+    detailUrl: 'https://api.data.amsterdam.nl/v1/sport/gymsportzaal/',
+    transformList: transformSportzaalResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
   },
@@ -287,4 +300,42 @@ function transformParkeerzoneCoords(
     }
   }
   return features;
+}
+
+function transformSportzaalResponse(
+  datasetId: DatasetId,
+  config: DatasetConfig,
+  responseData: any
+) {
+  const features = transformDsoApiListResponse(
+    datasetId,
+    config,
+    responseData,
+    'gymsportzaal'
+  );
+
+  return features.filter(
+    (feature) =>
+      feature.properties.type &&
+      !feature.properties.type.toLowerCase().includes('gymz')
+  );
+}
+
+function transformGymzaalResponse(
+  datasetId: DatasetId,
+  config: DatasetConfig,
+  responseData: any
+) {
+  const features = transformDsoApiListResponse(
+    datasetId,
+    config,
+    responseData,
+    'gymsportzaal'
+  );
+
+  return features.filter(
+    (feature) =>
+      feature.properties.type &&
+      feature.properties.type.toLowerCase().includes('gymz')
+  );
 }

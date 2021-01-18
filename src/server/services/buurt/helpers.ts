@@ -298,11 +298,15 @@ export function createFeaturePropertiesFromPropertyFilterConfig(
   featureSourceProperties: any
 ) {
   const propertyFilters = getPropertyFilters(datasetId);
-  const propertyNames = propertyFilters ? Object.keys(propertyFilters) : [];
+  const filterPropertyNames = propertyFilters
+    ? Object.keys(propertyFilters)
+    : [];
+  const staticPropertyNames =
+    datasetEndpoints[datasetId].additionalStaticPropertyNames;
 
-  if (propertyNames && featureSourceProperties) {
-    for (const propertyName of propertyNames) {
-      // NOTE: Simple normalization of the value here. It only transforms ja to Ja. This could be severely improved but should really be done in the Database.
+  if (filterPropertyNames && featureSourceProperties) {
+    for (const propertyName of filterPropertyNames) {
+      // NOTE: Simple normalization of the value here. It only transforms 'ja' to 'Ja'.
       featureProperties[propertyName] = capitalizeFirstLetter(
         String(
           featureSourceProperties?.properties
@@ -310,6 +314,13 @@ export function createFeaturePropertiesFromPropertyFilterConfig(
             : featureSourceProperties[propertyName]
         )
       );
+    }
+  }
+  if (staticPropertyNames && featureSourceProperties) {
+    for (const propertyName of staticPropertyNames) {
+      featureProperties[propertyName] = featureSourceProperties?.properties
+        ? featureSourceProperties.properties[propertyName]
+        : featureSourceProperties[propertyName];
     }
   }
   return featureProperties;
@@ -407,11 +418,12 @@ export function getPolylineColor(datasetId: DatasetId, feature: any) {
 export function transformDsoApiListResponse(
   datasetId: DatasetId,
   config: DatasetConfig,
-  responseData: any
+  responseData: any,
+  embeddedDatasetId?: string
 ) {
   const results = responseData?.features
     ? responseData?.features
-    : getApiEmbeddedResponse(datasetId, responseData);
+    : getApiEmbeddedResponse(embeddedDatasetId || datasetId, responseData);
   const collection: DatasetFeatures = [];
 
   if (results && results.length) {
