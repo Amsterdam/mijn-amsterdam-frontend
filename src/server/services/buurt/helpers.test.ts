@@ -362,9 +362,9 @@ describe('Buurt helpers', () => {
         },
       },
     };
-    expect(createDynamicFilterConfig(features, filterConfig)).toStrictEqual(
-      dynamicFilterConfig
-    );
+    expect(
+      createDynamicFilterConfig('openbaresportplek', features, filterConfig)
+    ).toStrictEqual(dynamicFilterConfig);
   });
 
   it('Should filterDatasetFeatures, filter the right features with only datasetid', () => {
@@ -449,7 +449,40 @@ describe('Buurt helpers', () => {
             SoortOndergrond2: 2,
             SoortOndergrond3: 1,
           },
-          valuesRefined: { SoortOndergrond1: 1, SoortOndergrond3: 1 },
+          valuesRefined: {
+            SoortOndergrond1: 1,
+            SoortOndergrond3: 1,
+            SoortOndergrond2: 0,
+          },
+        },
+      },
+    });
+
+    expect(
+      refineFilterSelection([], {
+        openbaresportplek: {
+          soortOndergrond: {
+            values: {
+              SoortOndergrond3: 1,
+              SoortOndergrond2: 2,
+              SoortOndergrond1: 1,
+            },
+          },
+        },
+      })
+    ).toStrictEqual({
+      openbaresportplek: {
+        soortOndergrond: {
+          values: {
+            SoortOndergrond1: 1,
+            SoortOndergrond2: 2,
+            SoortOndergrond3: 1,
+          },
+          valuesRefined: {
+            SoortOndergrond1: 0,
+            SoortOndergrond3: 0,
+            SoortOndergrond2: 0,
+          },
         },
       },
     });
@@ -496,6 +529,8 @@ describe('Buurt helpers', () => {
             },
             valuesRefined: {
               SoortOndergrond3: 1,
+              SoortOndergrond1: 0,
+              SoortOndergrond2: 0,
             },
           },
         },

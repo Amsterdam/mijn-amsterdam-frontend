@@ -165,6 +165,7 @@ describe('Buurt services', () => {
     expect(requestData).toHaveBeenCalled();
     expect(getDynamicDatasetFilters).toHaveBeenCalledWith(datasetId);
     expect(createDynamicFilterConfig).toHaveBeenCalledWith(
+      datasetId,
       DUMMY_DATA_RESPONSE.content,
       DATASET_FILTER_CONFIG_MOCK
     );

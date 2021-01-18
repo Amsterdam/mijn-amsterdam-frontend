@@ -170,6 +170,7 @@ export function getDynamicDatasetFilters(datasetId: DatasetId) {
 }
 
 export function createDynamicFilterConfig(
+  datasetId: DatasetId,
   features: MaFeature[],
   filterConfig: DatasetPropertyFilter
 ) {
@@ -178,6 +179,10 @@ export function createDynamicFilterConfig(
 
   for (const feature of features) {
     const featureProps = feature?.properties || feature;
+
+    if (featureProps.datasetId !== datasetId) {
+      continue;
+    }
 
     for (const propertyName of propertyNames) {
       // Exlcude all features if they don't have the desired property.
@@ -196,8 +201,16 @@ export function createDynamicFilterConfig(
       }
 
       if (!filters[propertyName]) {
+        const values: DatasetPropertyValueWithCount = {};
+        // Set incoming values to 0
+        if (filterConfig[propertyName].values) {
+          // Assumes value is already capitalized;
+          for (const value of Object.keys(filterConfig[propertyName].values!)) {
+            values[value] = 0;
+          }
+        }
         filters[propertyName] = {
-          values: {},
+          values,
         };
       }
 
@@ -248,26 +261,21 @@ export function refineFilterSelection(
 ) {
   const filtersRefined = jsonCopy(filtersBase) as DatasetFilterSelection;
 
-  for (const [datasetId, filters] of Object.entries(filtersRefined)) {
+  for (const [datasetId, filters] of Object.entries(filtersBase)) {
     for (const [propertyName, propertyFilterConfig] of Object.entries(
       filters
     )) {
       if (propertyFilterConfig.values) {
-        const refined = createDynamicFilterConfig(
-          features.filter(
-            (feature) => datasetId === feature.properties.datasetId
-          ),
-          filters
-        );
+        const refined = createDynamicFilterConfig(datasetId, features, filters);
 
         if (refined[propertyName]) {
           filtersRefined[datasetId][propertyName].valuesRefined =
             refined[propertyName].values;
-        } else if (filtersRefined[datasetId][propertyName].values) {
+        } else if (filtersBase[datasetId][propertyName].values) {
           // No features provided so we return a refined selection with 0 count
           const valuesRefined: DatasetPropertyValueWithCount = {};
           for (const value of Object.keys(
-            filtersRefined[datasetId][propertyName].values!
+            filtersBase[datasetId][propertyName].values!
           )) {
             valuesRefined[value] = 0;
           }
