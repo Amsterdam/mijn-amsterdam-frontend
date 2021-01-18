@@ -1,5 +1,5 @@
 import { Checkbox, Label, themeColor, themeSpacing } from '@amsterdam/asc-ui';
-import { ReactNode, useMemo, FormEvent } from 'react';
+import { FormEvent, ReactNode, useMemo } from 'react';
 import styled from 'styled-components';
 import {
   DatasetCategory,
@@ -15,7 +15,7 @@ import {
   DatasetProperty,
   DatasetPropertyValueWithCount,
 } from '../../../universal/config/buurt';
-import { capitalizeFirstLetter } from '../../../universal/helpers/text';
+import { sortAlpha } from '../../../universal/helpers/utils';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { getIcon, getIconChildIdFromValue } from './datasets';
 import {
@@ -27,7 +27,6 @@ import {
   useFilterControlItemChange,
 } from './MyArea.hooks';
 import MyAreaCollapsiblePanel from './MyAreaCollapsiblePanel';
-import { sortAlpha } from '../../../universal/helpers/utils';
 
 export const PanelList = styled.ol<{ indent?: number }>`
   padding: 0;
@@ -190,6 +189,8 @@ export function DatasetPropertyFilterPanel({
 
           if (valueConfig?.title) {
             label = valueConfig?.title;
+          } else if (property.transformValueLabel) {
+            label = property.transformValueLabel(label);
           }
 
           return [propertyValue, count, label] as const;
@@ -225,7 +226,7 @@ export function DatasetPropertyFilterPanel({
                       datasetId,
                       getIconChildIdFromValue(datasetId, value)
                     ) || ''}
-                    {capitalizeFirstLetter(label)}{' '}
+                    {label}
                     {featureCount >= 1 ? (
                       <FeatureCount>
                         (

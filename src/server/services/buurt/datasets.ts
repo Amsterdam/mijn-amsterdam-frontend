@@ -109,6 +109,8 @@ function dsoApiListUrl(
       (propertyNames.length ? ',' + propertyNames.join(',') : '') +
       pageSizeParam;
 
+    console.log('dsoApiUrl', dsoApiUrl);
+
     return dsoApiUrl;
   };
 }

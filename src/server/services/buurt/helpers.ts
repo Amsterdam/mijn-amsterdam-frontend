@@ -424,6 +424,8 @@ export function transformDsoApiListResponse(
   const results = responseData?.features
     ? responseData?.features
     : getApiEmbeddedResponse(embeddedDatasetId || datasetId, responseData);
+
+  console.log('results', responseData, datasetId, embeddedDatasetId);
   const collection: DatasetFeatures = [];
 
   if (results && results.length) {

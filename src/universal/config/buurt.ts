@@ -35,6 +35,7 @@ export interface DatasetProperty {
   valueConfig?: Record<DatasetPropertyValue, DatasetPropertyValueConfig>; // The key of the valueConfig should always start with a cappital letter as the values are Capitalized on the BFF
   title?: string;
   excludeValues?: string[];
+  transformValueLabel?: (value: any) => any;
 }
 
 export type DatasetPropertyFilter = Record<
@@ -201,7 +202,10 @@ export const DATASETS: DatasetCategories = {
       hardlooproute: {
         title: 'Hardlooproutes',
         filters: {
-          lengte: { title: 'Lengte in KM' },
+          lengte: {
+            title: 'Lengte',
+            transformValueLabel: (value) => value + ' Km',
+          },
         },
       },
       sportpark: { title: 'Sportpark' },

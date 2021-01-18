@@ -89,12 +89,9 @@ export async function fetchDataset(
 
   requestConfig.headers = ACCEPT_CRS_4326;
 
-  if (datasetConfig.transformList) {
-    requestConfig.transformResponse = datasetConfig.transformList.bind(
-      null,
-      datasetId,
-      datasetConfig
-    );
+  if (typeof datasetConfig.transformList === 'function') {
+    requestConfig.transformResponse = (responseData) =>
+      datasetConfig.transformList!(datasetId, datasetConfig, responseData);
   }
 
   const response = await requestData<DatasetFeatures>(
