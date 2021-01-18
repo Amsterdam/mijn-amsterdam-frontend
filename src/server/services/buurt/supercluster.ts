@@ -67,12 +67,9 @@ export async function loadClusterDatasets(
   const {
     filters: filtersRefined,
     features: filteredFeatures,
-  } = filterAndRefineFeatures(
-    featuresWithinBoundingbox,
-    datasetIds,
-    filters,
-    filtersBase
-  );
+  } = filterAndRefineFeatures(featuresWithinBoundingbox, datasetIds, filters, {
+    ...filtersBase,
+  });
 
   const superClusterIndex = await generateSuperCluster(
     filteredFeatures as MaPointFeature[]
