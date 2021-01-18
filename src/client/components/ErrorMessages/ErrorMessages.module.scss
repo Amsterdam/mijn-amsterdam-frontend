@@ -1,7 +1,7 @@
 @import '../../styles/_global.scss';
 
 .ErrorMessages.Dismissed {
-  opacity: 0;
+  display: none;
 }
 
 .MessageBar {
@@ -70,8 +70,4 @@
 
   top: 50%;
   transform: translateY(-50%);
-}
-
-.ErrorMessages.Dismissed .ToggleButton svg {
-  fill: $color-support-warning;
 }
