@@ -192,7 +192,7 @@ export default function MyArea({
 
   // Set panel state without explicit panel interaction. Effect reacts to loading detailed features.
   useEffect(() => {
-    if (loadingFeature) {
+    if (!loadingFeature) {
       return;
     }
     if (isNarrowScreen) {
