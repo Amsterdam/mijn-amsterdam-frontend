@@ -15,3 +15,14 @@ export { ReactComponent as IconVoetbal } from './voetbal.svg';
 export { ReactComponent as IconFitness } from './fitness.svg';
 export { ReactComponent as IconVolleybal } from './volleybal.svg';
 export { ReactComponent as IconBasketbal } from './basketbal.svg';
+
+export { ReactComponent as IconGeneral } from './general.svg';
+export { ReactComponent as IconGymzaal } from './gymzaal.svg';
+export { ReactComponent as IconOverig } from './overig.svg';
+export { ReactComponent as IconSkate } from './skate.svg';
+export { ReactComponent as IconSportveld } from './sportveld.svg';
+export { ReactComponent as IconSporthal } from './sporthal.svg';
+export { ReactComponent as IconZwembad } from './zwemmen.svg';
+export { ReactComponent as IconTafeltennis } from './tafeltennis.svg';
+export { ReactComponent as IconJeuDeBoules } from './jeuDeBoules.svg';
+export { ReactComponent as IconHardlopen } from './hardlopen.svg';

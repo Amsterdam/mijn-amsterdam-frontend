@@ -21,6 +21,16 @@ import {
   IconTennis,
   IconVoetbal,
   IconVolleybal,
+  IconGymzaal,
+  IconSporthal,
+  IconHardlopen,
+  IconSkate,
+  IconZwembad,
+  IconJeuDeBoules,
+  IconTafeltennis,
+  IconOverig,
+  IconSportveld,
+  IconGeneral,
 } from '../../assets/icons/map';
 import { DEFAULT_POLYLINE_OPTIONS } from './MyAreaPolylineLayer';
 
@@ -103,6 +113,51 @@ export const datasetIcons: Record<
         <IconSport fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
+    gymzaal: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <IconGymzaal fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    sporthal: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <IconSporthal fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    sportpark: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <IconOverig fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    sportzaal: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <IconSporthal fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    zwembad: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <IconZwembad fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    hardlooproute: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <IconHardlopen fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    sportveld: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <IconSportveld fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    sportaanbieder: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <IconGeneral fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
+    openbaresportplek: (
+      <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
+        <IconFitness fill={themeColors.tint.level1} />
+      </DatasetIcon>
+    ),
   },
   openbaresportplek: {
     voetbal: (
@@ -132,22 +187,22 @@ export const datasetIcons: Record<
     ),
     'jeu de boules': (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        {/* <IconTennis fill={themeColors.tint.level1} /> */}
+        <IconJeuDeBoules fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
     overig: (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        {/* <IconTennis fill={themeColors.tint.level1} /> */}
+        <IconOverig fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
     skate: (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        {/* <IconTennis fill={themeColors.tint.level1} /> */}
+        <IconSkate fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
     tafeltennis: (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        {/* <IconTennis fill={themeColors.tint.level1} /> */}
+        <IconTafeltennis fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
   },
