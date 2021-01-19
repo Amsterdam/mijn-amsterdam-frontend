@@ -66,7 +66,7 @@ export const DATASETS: DatasetCategories = {
         title: 'Afvalcontainers',
         filters: {
           fractie_omschrijving: {
-            excludeValues: ['Brood', 'brood'],
+            excludeValues: ['Brood', 'brood', 'Kerstboom'],
           },
           geadopteerd_ind: {
             title: 'Geadopteerd',
