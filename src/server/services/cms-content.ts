@@ -190,13 +190,23 @@ async function getGeneralPage(
     url: requestConfig.urls![profileType],
   };
 
-  return requestData<CMSPageContent>(requestConfigFinal, sessionID).then(
-    (apiData) => {
+  return requestData<CMSPageContent>(requestConfigFinal, sessionID)
+    .then((apiData) => {
       fileCache.setKey('CMS_CONTENT_GENERAL_INFO_' + profileType, apiData);
       fileCache.save();
       return apiData;
-    }
-  );
+    })
+    .catch((error) => {
+      const staleApiData = fileCache.getKeyStale(
+        'CMS_CONTENT_GENERAL_INFO_' + profileType
+      );
+
+      if (staleApiData) {
+        return Promise.resolve(staleApiData);
+      }
+
+      throw error;
+    });
 }
 
 async function getFooter(
@@ -213,11 +223,21 @@ async function getFooter(
     }),
     sessionID,
     passthroughRequestHeaders
-  ).then((apiData) => {
-    fileCache.setKey('CMS_CONTENT_FOOTER', apiData);
-    fileCache.save();
-    return apiData;
-  });
+  )
+    .then((apiData) => {
+      fileCache.setKey('CMS_CONTENT_FOOTER', apiData);
+      fileCache.save();
+      return apiData;
+    })
+    .catch((error) => {
+      const staleApiData = fileCache.getKeyStale('CMS_CONTENT_FOOTER');
+
+      if (staleApiData) {
+        return Promise.resolve(staleApiData);
+      }
+
+      throw error;
+    });
 }
 
 export async function fetchCMSCONTENT(

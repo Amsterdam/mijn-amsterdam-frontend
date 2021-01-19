@@ -14,8 +14,8 @@ const EXT = 'flat-cache.json';
 
 export const DEFAULT_CACHE_DIR = path.join(__dirname, '../', 'cache');
 
-function fileName(name: string) {
-  const cacheName = IS_AP ? `prod.${name}` : `dev.${name}`;
+function fileName(name: string, isProd: boolean = IS_AP) {
+  const cacheName = isProd ? `prod.${name}` : `dev.${name}`;
   return `${cacheName}.${EXT}`;
 }
 
@@ -55,6 +55,7 @@ export function cacheOverview() {
 
 export default class FileCache {
   name: string;
+  name_: string;
   path?: string;
   cache: any;
   expire: number | false;
@@ -66,6 +67,7 @@ export default class FileCache {
   }: FileCacheProps) {
     this.name = fileName(name);
     this.path = path;
+    this.name_ = name;
     this.cache = flatCache.load(this.name, path);
     this.expire =
       cacheTimeMinutes === -1 ? false : cacheTimeMinutes * ONE_MINUTE_MS;
@@ -95,5 +97,9 @@ export default class FileCache {
   }
   remove() {
     flatCache.clearCacheById(this.name, this.path);
+  }
+  getKeyStale(key: string) {
+    return flatCache.load(fileName(this.name_, false), this.path).getKey(key)
+      ?.data;
   }
 }
