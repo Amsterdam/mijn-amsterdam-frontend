@@ -1,7 +1,5 @@
 /// <reference types="react-scripts" />
 
-import './client/polyfill';
-
 import * as Sentry from '@sentry/browser';
 
 import ReactDOM from 'react-dom';
