@@ -4,7 +4,7 @@ export const ExternalUrls = {
   CHANGE_PERSONAL_DATA:
     'https://www.amsterdam.nl/veelgevraagd/?productid=%7B989C04B3-AD81-4ABA-8DFE-465A29E2BF85%7D',
   CHANGE_RESIDENT_COUNT:
-    'https://www.amsterdam.nl/veelgevraagd/?caseid=%7B25D66618-7577-4144-89E6-BB511394DA0C%7D',
+    'https://www.amsterdam.nl/veelgevraagd/?productid=%7BE4C7C5B6-242B-46AF-8EF1-8D65D8EEF918%7D',
   CHANGE_KVK_DATA:
     'https://www.kvk.nl/inschrijven-en-wijzigen/wijziging-doorgeven/',
   REPORT_RELOCATION:
