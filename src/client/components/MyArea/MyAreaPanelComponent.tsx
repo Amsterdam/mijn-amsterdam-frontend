@@ -287,6 +287,10 @@ const StyledCloseButton = styled(CloseButton)`
   z-index: 3;
   width: ${themeSpacing(6)};
   height: ${themeSpacing(6)};
+  svg {
+    width: ${themeSpacing(6)};
+    height: ${themeSpacing(6)};
+  }
 `;
 
 type PanelWideAnimatedProps = PropsWithChildren<{

@@ -78,7 +78,7 @@ const DSO_API_RESULT2 = {
     self: { href: 'https://api.data.amsterdam.nl/v1/sport/sportveld/' },
     next: {
       href:
-        'https://api.data.amsterdam.nl/v1/sport/sportveld/?page=2&page_size=1',
+        'https://api.data.amsterdam.nl/v1/sport/sportveld/?page=2&_pageSize=1',
     },
     previous: { href: null },
   },

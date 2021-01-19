@@ -94,7 +94,7 @@ function dsoApiListUrl(
 ) {
   const [datasetCategoryId, embeddedDatasetId] = dataset.split('/');
   const apiUrl = `https://api.data.amsterdam.nl/v1/${datasetCategoryId}/${embeddedDatasetId}/?_fields=id,geometry`;
-  const pageSizeParam = `&page_size=${pageSize}`;
+  const pageSizeParam = `&_pageSize=${pageSize}`;
 
   return (datasetConfig: DatasetConfig) => {
     const propertyFilters = getPropertyFilters(datasetId || embeddedDatasetId);
