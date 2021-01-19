@@ -1,7 +1,6 @@
 import flatCache from 'flat-cache';
-import path, { resolve } from 'path';
 import fs from 'fs';
-import { rejects } from 'assert';
+import path from 'path';
 import { IS_AP } from '../../universal/config';
 
 interface FileCacheProps {

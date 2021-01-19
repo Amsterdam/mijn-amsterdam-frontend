@@ -296,12 +296,23 @@ export function getIconChildIdFromValue(id: string, value: string) {
 }
 
 export function getIconHtml(feature: MaPointFeature) {
-  const datasetId = feature.properties.datasetId;
-
+  let datasetId = feature.properties.datasetId;
   let iconDefault = datasetIcons.default;
   let childId: undefined | string = undefined;
 
   switch (datasetId) {
+    case 'sport':
+    case 'gymzaal':
+    case 'sporthal':
+    case 'sportpark':
+    case 'sportzaal':
+    case 'zwembad':
+    case 'hardlooproute':
+    case 'sportveld':
+    case 'sportaanbieder':
+      childId = datasetId;
+      datasetId = 'sport';
+      break;
     case 'afvalcontainers':
       childId = getIconChildIdFromValue(
         datasetId,
