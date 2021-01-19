@@ -173,12 +173,18 @@ export default function MyArea({
   const filterPanelCycle = usePanelStateCycle(
     'filters',
     panelCycle.filters,
-    isWideScreen ? PanelState.Open : PanelState.Preview
+    PanelState.Preview
   );
   const { state: filterState, set: setFilterPanelState } = filterPanelCycle;
 
   const detailPanelCycle = usePanelStateCycle('detail', panelCycle.detail);
   const { state: detailState, set: setDetailPanelState } = detailPanelCycle;
+
+  useEffect(() => {
+    if (isWideScreen) {
+      setFilterPanelState(PanelState.Open);
+    }
+  }, [isWideScreen, setFilterPanelState]);
 
   // Reset state on unmount
   useEffect(() => {
