@@ -36,20 +36,4 @@ export { ReactComponent as IconPlus } from './plus.svg';
 export { ReactComponent as IconMin } from './min.svg';
 
 // Map icons
-export { ReactComponent as MapIconAfvalGlas } from './map/glas.svg';
-export { ReactComponent as MapIconAfvalGft } from './map/gft.svg';
-export { ReactComponent as MapIconAfvalPlastic } from './map/plastic.svg';
-export { ReactComponent as MapIconAfvalTextiel } from './map/textile.svg';
-export { ReactComponent as MapIconAfvalPapier } from './map/paper.svg';
-export { ReactComponent as MapIconAfvalRest } from './map/trashcontainer.svg';
-export { ReactComponent as MapIconAuto } from './map/car.svg';
-export { ReactComponent as MapIconBekendmaking } from './map/bekendmaking.svg';
-export { ReactComponent as MapIconEvenement } from './map/evenement.svg';
-export { ReactComponent as MapIconSport } from './map/sport.svg';
 export { ReactComponent as MapIconHomeCommercial } from './map/homeCommercial__primary-red.svg';
-
-export { ReactComponent as MapIconTennis } from './map/tennis.svg';
-export { ReactComponent as MapIconVoetbal } from './map/voetbal.svg';
-export { ReactComponent as MapIconFitness } from './map/fitness.svg';
-export { ReactComponent as MapIconVolleybal } from './map/volleybal.svg';
-export { ReactComponent as MapIconBasketbal } from './map/basketbal.svg';

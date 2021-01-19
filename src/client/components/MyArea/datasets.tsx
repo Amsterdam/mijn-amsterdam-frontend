@@ -6,22 +6,22 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import styled from 'styled-components';
 import { MaPointFeature } from '../../../server/services/buurt/datasets';
 import {
-  MapIconAfvalGft,
-  MapIconAfvalGlas,
-  MapIconAfvalPapier,
-  MapIconAfvalPlastic,
-  MapIconAfvalRest,
-  MapIconAfvalTextiel,
-  MapIconAuto,
-  MapIconBasketbal,
-  MapIconBekendmaking,
-  MapIconEvenement,
-  MapIconFitness,
-  MapIconSport,
-  MapIconTennis,
-  MapIconVoetbal,
-  MapIconVolleybal,
-} from '../../assets/icons';
+  IconAfvalGft,
+  IconAfvalGlas,
+  IconAfvalPapier,
+  IconAfvalPlastic,
+  IconAfvalRest,
+  IconAfvalTextiel,
+  IconAuto,
+  IconBasketbal,
+  IconBekendmaking,
+  IconEvenement,
+  IconFitness,
+  IconSport,
+  IconTennis,
+  IconVoetbal,
+  IconVolleybal,
+} from '../../assets/icons/map';
 import { DEFAULT_POLYLINE_OPTIONS } from './MyAreaPolylineLayer';
 
 const DatasetIcon = styled.div`
@@ -47,107 +47,107 @@ export const datasetIcons: Record<
   afvalcontainers: {
     afvalcontainers: (
       <DatasetIcon style={{ backgroundColor: themeColors.tint.level6 }}>
-        <MapIconAfvalRest fill={themeColors.tint.level1} />
+        <IconAfvalRest fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
     rest: (
       <DatasetIcon style={{ backgroundColor: themeColors.tint.level6 }}>
-        <MapIconAfvalRest fill={themeColors.tint.level1} />
+        <IconAfvalRest fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
     papier: (
       <DatasetIcon
         style={{ backgroundColor: themeColors.supplement.lightblue }}
       >
-        <MapIconAfvalPapier fill={themeColors.tint.level1} />
+        <IconAfvalPapier fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
     glas: (
       <DatasetIcon style={{ backgroundColor: themeColors.supplement.yellow }}>
-        <MapIconAfvalGlas />
+        <IconAfvalGlas />
       </DatasetIcon>
     ),
     textiel: (
       <DatasetIcon style={{ backgroundColor: themeColors.tint.level6 }}>
-        <MapIconAfvalTextiel fill={themeColors.tint.level1} />
+        <IconAfvalTextiel fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
     gft: (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <MapIconAfvalGft fill={themeColors.tint.level1} />
+        <IconAfvalGft fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
     plastic: (
       <DatasetIcon style={{ backgroundColor: themeColors.supplement.orange }}>
-        <MapIconAfvalPlastic />
+        <IconAfvalPlastic />
       </DatasetIcon>
     ),
   },
   evenementen: {
     evenementen: (
       <DatasetIcon style={{ backgroundColor: themeColors.supplement.purple }}>
-        <MapIconEvenement fill={themeColors.tint.level1} />
+        <IconEvenement fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
   },
   bekendmakingen: {
     bekendmakingen: (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <MapIconBekendmaking fill={themeColors.tint.level1} />
+        <IconBekendmaking fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
   },
   sport: {
     sport: (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <MapIconSport fill={themeColors.tint.level1} />
+        <IconSport fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
   },
   openbaresportplek: {
     voetbal: (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <MapIconVoetbal fill={themeColors.tint.level1} />
+        <IconVoetbal fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
     beachvolley: (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <MapIconVolleybal fill={themeColors.tint.level1} />
+        <IconVolleybal fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
     basketbal: (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <MapIconBasketbal fill={themeColors.tint.level1} />
+        <IconBasketbal fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
     'fitness / bootcamp': (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <MapIconFitness fill={themeColors.tint.level1} />
+        <IconFitness fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
     tennis: (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <MapIconTennis fill={themeColors.tint.level1} />
+        <IconTennis fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
     'jeu de boules': (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        {/* <MapIconTennis fill={themeColors.tint.level1} /> */}
+        {/* <IconTennis fill={themeColors.tint.level1} /> */}
       </DatasetIcon>
     ),
     overig: (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        {/* <MapIconTennis fill={themeColors.tint.level1} /> */}
+        {/* <IconTennis fill={themeColors.tint.level1} /> */}
       </DatasetIcon>
     ),
     skate: (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        {/* <MapIconTennis fill={themeColors.tint.level1} /> */}
+        {/* <IconTennis fill={themeColors.tint.level1} /> */}
       </DatasetIcon>
     ),
     tafeltennis: (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        {/* <MapIconTennis fill={themeColors.tint.level1} /> */}
+        {/* <IconTennis fill={themeColors.tint.level1} /> */}
       </DatasetIcon>
     ),
   },
@@ -156,7 +156,7 @@ export const datasetIcons: Record<
       <DatasetIcon
         style={{ backgroundColor: themeColors.supplement.lightblue }}
       >
-        <MapIconAuto fill={themeColors.tint.level1} />
+        <IconAuto fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
   },
@@ -165,44 +165,44 @@ export const datasetIcons: Record<
       <DatasetIcon
         style={{ backgroundColor: themeColors.supplement.lightblue }}
       >
-        <MapIconAuto fill={themeColors.tint.level1} />
+        <IconAuto fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
     west: (
       <DatasetIcon style={{ backgroundColor: themeColors.supplement.purple }}>
-        <MapIconAuto fill={themeColors.tint.level1} />
+        <IconAuto fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
     noord: (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <MapIconAuto fill={themeColors.tint.level1} />
+        <IconAuto fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
     zuid: (
       <DatasetIcon style={{ backgroundColor: themeColors.supplement.orange }}>
-        <MapIconAuto fill={themeColors.tint.level1} />
+        <IconAuto fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
     zuidoost: (
       <DatasetIcon
         style={{ backgroundColor: themeColors.supplement.lightgreen }}
       >
-        <MapIconAuto fill={themeColors.tint.level1} />
+        <IconAuto fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
     'nieuw-west': (
       <DatasetIcon style={{ backgroundColor: themeColors.supplement.yellow }}>
-        <MapIconAuto fill={themeColors.tint.level1} />
+        <IconAuto fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
     haven: (
       <DatasetIcon style={{ backgroundColor: themeColors.supplement.pink }}>
-        <MapIconAuto fill={themeColors.tint.level1} />
+        <IconAuto fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
     centrum: (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <MapIconAuto fill={themeColors.tint.level1} />
+        <IconAuto fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
   },
