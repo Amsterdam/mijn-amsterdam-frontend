@@ -98,10 +98,10 @@ export const DATASETS: DatasetCategories = {
     },
   },
   bekendmakingen: {
-    title: 'Bekendmakingen',
+    title: 'Vergunningen',
     datasets: {
       bekendmakingen: {
-        title: 'Bekendmakingen',
+        title: 'Vergunningen',
         filters: {
           onderwerp: {
             title: 'Onderwerp',
