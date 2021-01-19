@@ -1,4 +1,3 @@
-import memoryCache from 'memory-cache';
 import Supercluster, { AnyProps, PointFeature } from 'supercluster';
 import {
   DatasetFilterSelection,
@@ -17,8 +16,8 @@ async function generateSuperCluster(features: MaPointFeature[]) {
     const superClusterIndex = new Supercluster({
       log: true,
       radius: 40,
-      extent: 1250,
-      nodeSize: 256,
+      extent: 3000,
+      nodeSize: 64,
       maxZoom: 13,
     }).load(features);
     return superClusterIndex;

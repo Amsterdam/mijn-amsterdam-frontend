@@ -368,34 +368,36 @@ export function PanelComponent({
   const isPanelExpanded =
     state !== PanelState.Closed && state !== PanelState.Tip; // Consider the Panel at Tip state as not expanded
 
+  const onSwipedUp = (event: any) => {
+    // If panel inner is not scrollable or if the panel is scrollable and scrolled to the maximum
+    if (
+      (ref?.current && ref.current.scrollHeight <= ref.current.clientHeight) ||
+      (ref?.current &&
+        ref.current.scrollHeight > ref.current.clientHeight &&
+        ref.current.scrollHeight - ref.current.clientHeight >=
+          ref.current?.scrollTop)
+    ) {
+      next();
+    }
+  };
+
+  const onSwipedDown = (event: any) => {
+    // If panel inner is not scrollable or if the panel is scrollable and scrolled to the top
+    if (
+      (ref?.current && ref.current.scrollHeight <= ref.current.clientHeight) ||
+      (ref?.current &&
+        ref.current.scrollHeight > ref.current.clientHeight &&
+        ref.current?.scrollTop === 0)
+    ) {
+      prev();
+    }
+  };
+
   return isNarrowScreen ? (
     <PanelNarrowAnimated
       id={id}
-      onSwipedUp={(event: any) => {
-        // If panel inner is not scrollable or if the panel is scrollable and scrolled to the maximum
-        if (
-          (ref?.current &&
-            ref.current.scrollHeight <= ref.current.clientHeight) ||
-          (ref?.current &&
-            ref.current.scrollHeight > ref.current.clientHeight &&
-            ref.current.scrollHeight - ref.current.clientHeight ===
-              ref.current?.scrollTop)
-        ) {
-          next();
-        }
-      }}
-      onSwipedDown={(event: any) => {
-        // If panel inner is not scrollable or if the panel is scrollable and scrolled to the top
-        if (
-          (ref?.current &&
-            ref.current.scrollHeight <= ref.current.clientHeight) ||
-          (ref?.current &&
-            ref.current.scrollHeight > ref.current.clientHeight &&
-            ref.current?.scrollTop === 0)
-        ) {
-          prev();
-        }
-      }}
+      onSwipedUp={onSwipedUp}
+      onSwipedDown={onSwipedDown}
       height={getPanelSize(state, true, availableHeight)}
     >
       {showCloseButton && (

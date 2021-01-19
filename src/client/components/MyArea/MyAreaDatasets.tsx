@@ -83,7 +83,7 @@ export function MyAreaDatasets({ datasetIds }: MyAreaDatasetsProps) {
     [fetchFeatures, setFilterSelection, setFeaturesLoadingDebounced]
   );
 
-  const fetchDebounced = useDebouncedCallback(fetch, 50);
+  const fetchDebounced = useDebouncedCallback(fetch, 100);
 
   // This callback runs whenever the map zooms / pans
   const onUpdate = useCallback(() => {
