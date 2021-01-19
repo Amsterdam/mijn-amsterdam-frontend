@@ -14,8 +14,10 @@ import {
   DatasetControl,
   DatasetProperty,
   DatasetPropertyValueWithCount,
+  MY_AREA_TRACKING_CATEGORY,
 } from '../../../universal/config/buurt';
 import { sortAlpha } from '../../../universal/helpers/utils';
+import { trackEventWithProfileType } from '../../hooks';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { getIcon, getIconChildIdFromValue } from './datasets';
 import {
@@ -178,6 +180,7 @@ export function DatasetPropertyFilterPanel({
   activeFilters,
   onFilterControlItemChange,
 }: DatasetPropertyFilterPanelProps) {
+  const profileType = useProfileTypeValue();
   const valuesSorted = useMemo(
     () =>
       Object.entries(values)
@@ -234,9 +237,17 @@ export function DatasetPropertyFilterPanel({
                   </>
                 }
                 isIndeterminate={false}
-                onChange={() =>
-                  onFilterControlItemChange(datasetId, propertyName, value)
-                }
+                onChange={() => {
+                  onFilterControlItemChange(datasetId, propertyName, value);
+                  trackEventWithProfileType(
+                    {
+                      category: MY_AREA_TRACKING_CATEGORY,
+                      name: `Filter: ${propertyName} ${label}`,
+                      action: isChecked ? 'Uit' : 'Aan',
+                    },
+                    profileType
+                  );
+                }}
               />
             </PanelListItem>
           );
@@ -265,7 +276,7 @@ export function DatasetPanel({
 }: DatasePanelProps) {
   const [activeFilters] = useActiveDatasetFilters();
   const [filterSelection] = useDatasetFilterSelection();
-
+  const profileType = useProfileTypeValue();
   const { isChecked, isIndeterminate } = datasetCheckboxState(
     datasetId,
     activeDatasetIds
@@ -282,7 +293,17 @@ export function DatasetPanel({
         </>
       }
       isIndeterminate={isIndeterminate}
-      onChange={() => onControlItemChange('dataset', [datasetId])}
+      onChange={() => {
+        onControlItemChange('dataset', [datasetId]);
+        trackEventWithProfileType(
+          {
+            category: MY_AREA_TRACKING_CATEGORY,
+            name: `Dataset: ${dataset.title}`,
+            action: isChecked ? 'Uit' : 'Aan',
+          },
+          profileType
+        );
+      }}
     />
   );
 
@@ -344,6 +365,7 @@ export function DatasetControlPanel({
   onFilterControlItemChange,
   activeDatasetIds,
 }: DatasetControlPanelProps) {
+  const profileType = useProfileTypeValue();
   const { isChecked, isIndeterminate } = categoryCheckboxState(
     category,
     activeDatasetIds
@@ -366,7 +388,17 @@ export function DatasetControlPanel({
           {category.title}
         </>
       }
-      onChange={() => onControlItemChange('category', datasetIds)}
+      onChange={() => {
+        onControlItemChange('category', datasetIds);
+        trackEventWithProfileType(
+          {
+            category: MY_AREA_TRACKING_CATEGORY,
+            name: `Dataset categorie: ${category.title}`,
+            action: isChecked ? 'Uit' : 'Aan',
+          },
+          profileType
+        );
+      }}
     />
   );
 

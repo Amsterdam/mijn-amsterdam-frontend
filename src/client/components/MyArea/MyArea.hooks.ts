@@ -26,10 +26,14 @@ import {
   DatasetId,
   DatasetPropertyName,
   DatasetPropertyValue,
+  MY_AREA_TRACKING_CATEGORY,
 } from '../../../universal/config/buurt';
 import { BFFApiUrls } from '../../config/api';
 import styles from './MyAreaDatasets.module.scss';
 import { filterItemCheckboxState } from './MyAreaPanels';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { trackEventWithProfileType } from '../../hooks';
+import { capitalizeFirstLetter } from '../../../universal/helpers';
 
 const NO_DATA_ERROR_RESPONSE = {
   errors: [
@@ -190,6 +194,7 @@ export function useSelectedFeatureCSS(
 
 export function useOnMarkerClick() {
   const [, setLoadingFeature] = useLoadingFeature();
+  const profileType = useProfileTypeValue();
   return useCallback(
     (event: LeafletEvent) => {
       const isCluster =
@@ -207,6 +212,14 @@ export function useOnMarkerClick() {
           }
           return loadingFeature;
         });
+        trackEventWithProfileType(
+          {
+            category: MY_AREA_TRACKING_CATEGORY,
+            name: `${capitalizeFirstLetter(datasetId)} marker`,
+            action: 'Klikken',
+          },
+          profileType
+        );
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
