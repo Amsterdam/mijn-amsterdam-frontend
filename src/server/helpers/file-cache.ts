@@ -98,8 +98,8 @@ export default class FileCache {
   remove() {
     flatCache.clearCacheById(this.name, this.path);
   }
-  getKeyStale(key: string) {
-    return flatCache.load(fileName(this.name_, false), this.path).getKey(key)
+  getKeyStale(key: string, isProd: boolean = IS_AP) {
+    return flatCache.load(fileName(this.name_, isProd), this.path).getKey(key)
       ?.data;
   }
 }

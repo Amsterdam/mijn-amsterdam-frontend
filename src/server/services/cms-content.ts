@@ -72,7 +72,7 @@ export interface CMSFooterContent {
   blocks: FooterBlock[];
   sub: LinkProps[];
 }
-
+let ono = true;
 function transformFooterResponse(responseData: any) {
   const items = responseData?.applicatie?.blok?.zijbalk[0]?.lijst;
 
@@ -192,9 +192,12 @@ async function getGeneralPage(
 
   return requestData<CMSPageContent>(requestConfigFinal, sessionID)
     .then((apiData) => {
-      fileCache.setKey('CMS_CONTENT_GENERAL_INFO_' + profileType, apiData);
-      fileCache.save();
-      return apiData;
+      if (apiData.content?.content && apiData.content?.title) {
+        fileCache.setKey('CMS_CONTENT_GENERAL_INFO_' + profileType, apiData);
+        fileCache.save();
+        return apiData;
+      }
+      throw new Error('Unexpected page data from iProx CMS');
     })
     .catch((error) => {
       // Try to get stale cache instead.
@@ -226,9 +229,12 @@ async function getFooter(
     passthroughRequestHeaders
   )
     .then((apiData) => {
-      fileCache.setKey('CMS_CONTENT_FOOTER', apiData);
-      fileCache.save();
-      return apiData;
+      if (apiData.content?.blocks.length) {
+        fileCache.setKey('CMS_CONTENT_FOOTER', apiData);
+        fileCache.save();
+        return apiData;
+      }
+      throw new Error('Unexpected footer data from iProx CMS');
     })
     .catch((error) => {
       // Try to get stale cache instead.
