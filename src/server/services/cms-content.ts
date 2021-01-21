@@ -1,4 +1,5 @@
 import sanitizeHtml, { IOptions } from 'sanitize-html';
+import { IS_AP } from '../../universal/config';
 import {
   ApiResponse,
   apiSuccesResult,
@@ -9,8 +10,6 @@ import { LinkProps } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
 import FileCache from '../helpers/file-cache';
-import { sessionID } from '../helpers/app';
-import { IS_AP } from '../../universal/config';
 
 const TAGS_ALLOWED = [
   'a',
@@ -72,7 +71,7 @@ export interface CMSFooterContent {
   blocks: FooterBlock[];
   sub: LinkProps[];
 }
-let ono = true;
+
 function transformFooterResponse(responseData: any) {
   const items = responseData?.applicatie?.blok?.zijbalk[0]?.lijst;
 
