@@ -62,7 +62,7 @@ export type DatasetFilterSelection = Record<DatasetId, DatasetPropertyFilter>;
 
 const excludeFractieOmschrijving = ['Brood', 'brood'];
 const month = new Date().getMonth();
-// Add Kerstboom inzamellocatie in December and January
+// Exlude Kerstboom in all months but December and January
 if (month !== 11 && month !== 0) {
   excludeFractieOmschrijving.push('Kerstboom');
 }
