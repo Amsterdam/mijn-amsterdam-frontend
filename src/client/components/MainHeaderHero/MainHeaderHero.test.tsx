@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import { AppRoutes } from '../../../universal/config/routing';
+import { AppRoutes } from '../../../universal/config';
 import MockApp from '../../pages/MockApp';
 import MainHeaderHero from './MainHeaderHero';
 

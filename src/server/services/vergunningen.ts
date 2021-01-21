@@ -1,5 +1,5 @@
 import { generatePath } from 'react-router-dom';
-import { AppRoutes } from '../../universal/config/routing';
+import { AppRoutes } from '../../universal/config/routes';
 import {
   LinkProps,
   MyCase,

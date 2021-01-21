@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 
 import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
-import { AppRoutes } from '../../../universal/config/routing';
+import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../../pages/MockApp';
 import footer from './amsterdam-nl-footer-data.json';

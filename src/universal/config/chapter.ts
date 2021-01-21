@@ -1,4 +1,4 @@
-import { AppRoutes } from './routing';
+import { AppRoutes } from './routes';
 
 // Within the team we call these Themes
 export type Chapter =

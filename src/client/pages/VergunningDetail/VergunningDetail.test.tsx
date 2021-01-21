@@ -4,7 +4,7 @@ import { generatePath } from 'react-router-dom';
 import { MutableSnapshot } from 'recoil';
 import vergunningenData from '../../../server/mock-data/json/vergunningen.json';
 import { transformVergunningenData } from '../../../server/services/vergunningen';
-import { AppRoutes } from '../../../universal/config/routing';
+import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
 import VergunningDetail from './VergunningDetail';

@@ -5,7 +5,7 @@ import {
   DocumentTitles,
   PageTitleMain,
 } from '../../universal/config';
-import { AppRoutes } from '../../universal/config/routing';
+import { AppRoutes } from '../../universal/config';
 import { TMA_LOGIN_URL_DIGID, TMA_LOGIN_URL_EHERKENNING } from '../config/api';
 import { trackPageViewWithProfileType } from './analytics.hook';
 import { useProfileTypeValue } from './useProfileType';

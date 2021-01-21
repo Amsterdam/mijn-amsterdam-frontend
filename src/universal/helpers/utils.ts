@@ -35,7 +35,7 @@ export function isPrivateRoute(pathname: string) {
       !!matchPath(pathname, {
         path,
         exact: true,
-        strict: false,
+        strict: true,
       })
   );
 }
