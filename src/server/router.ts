@@ -1,20 +1,14 @@
 import * as Sentry from '@sentry/node';
 import express, { NextFunction, Request, Response } from 'express';
-import { DatasetFilterSelection, DATASETS } from '../universal/config/buurt';
 import { ApiResponse, apiSuccesResult } from '../universal/helpers/api';
 import { BffEndpoints } from './config';
 import { getPassthroughRequestHeaders, queryParams } from './helpers/app';
 import { cacheOverview } from './helpers/file-cache';
 import { fetchCMSCONTENT, loadClusterDatasets } from './services';
 import {
-  loadDatasetFeatures,
   loadFeatureDetail,
   loadPolylineFeatures,
 } from './services/buurt/buurt';
-import {
-  filterDatasetFeatures,
-  getDatasetEndpointConfig,
-} from './services/buurt/helpers';
 import {
   loadServicesAll,
   loadServicesSSE,
