@@ -65,6 +65,7 @@ export const DEFAULT_REQUEST_OPTIONS: ApiRequestOptions = {
   // Postpone fetch when hook is called/set-up for the first time
   postpone: false,
   responseType: 'json',
+  method: 'get',
 };
 
 export function getDefaultState<T>(initialData: T, postpone = false) {
@@ -127,19 +128,29 @@ export function useDataApi<T>(
         );
       }
 
-      let requestApiData = axios.get;
-
-      switch (requestOptionsFinal.method?.toLowerCase()) {
-        case 'post':
-          requestApiData = axios.post;
-          break;
-      }
-
       try {
-        const result = await requestApiData(
-          requestOptionsFinal.url!,
-          requestOptionsFinal
-        );
+        let result = null;
+
+        switch (requestOptionsFinal.method?.toLowerCase()) {
+          case 'post':
+            result = await axios.post(
+              requestOptionsFinal.url!,
+              requestOptionsFinal.data,
+              requestOptionsFinal
+            );
+            break;
+          default:
+          case 'get':
+            result = await axios.get(
+              requestOptionsFinal.url!,
+              requestOptionsFinal
+            );
+            break;
+        }
+
+        if (!result) {
+          throw new Error('useDataApi request Method not implemented.');
+        }
 
         if (!didCancel) {
           dispatch({
