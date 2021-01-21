@@ -17,7 +17,7 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import useMedia from 'use-media';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
-import { getFullAddress } from '../../../universal/helpers';
+import { getFullAddress, isLoading } from '../../../universal/helpers';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import { useWidescreen } from '../../hooks';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -312,7 +312,7 @@ export default function MyArea({
 
               <MyAreaDatasets datasetIds={datasetIdsRequested} />
             </MyAreaMap>
-            {!HOME.content?.address && (
+            {!HOME.content?.address && !isLoading(HOME) && (
               <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />
             )}
           </MyAreaMapOffset>

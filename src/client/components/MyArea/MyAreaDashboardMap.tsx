@@ -12,6 +12,7 @@ import { useTermReplacement } from '../../hooks/useTermReplacement';
 import { HomeIconMarker } from './MyAreaMarker';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import { LatLngLiteral } from 'leaflet';
+import { isLoading } from '../../../universal/helpers';
 
 const DasboardMap = styled(Map)`
   position: absolute;
@@ -51,7 +52,7 @@ export default function MyAreaDashboard({ tutorial }: MyAreaDashboardProps) {
             zoom={HOOD_ZOOM}
           />
         )}
-        {!HOME.content?.latlng && (
+        {!HOME.content?.latlng && !isLoading(HOME) && (
           <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />
         )}
       </DasboardMap>
