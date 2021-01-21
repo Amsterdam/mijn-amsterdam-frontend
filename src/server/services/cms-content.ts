@@ -197,6 +197,7 @@ async function getGeneralPage(
       return apiData;
     })
     .catch((error) => {
+      // Try to get stale cache instead.
       const staleApiData = fileCache.getKeyStale(
         'CMS_CONTENT_GENERAL_INFO_' + profileType
       );
@@ -230,6 +231,7 @@ async function getFooter(
       return apiData;
     })
     .catch((error) => {
+      // Try to get stale cache instead.
       const staleApiData = fileCache.getKeyStale('CMS_CONTENT_FOOTER');
 
       if (staleApiData) {
