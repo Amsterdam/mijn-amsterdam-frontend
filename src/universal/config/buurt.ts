@@ -60,6 +60,13 @@ export type DatasetCategory = {
 export type DatasetCategories = Record<DatasetCategoryId, DatasetCategory>;
 export type DatasetFilterSelection = Record<DatasetId, DatasetPropertyFilter>;
 
+const excludeFractieOmschrijving = ['Brood', 'brood'];
+const month = new Date().getMonth();
+// Add Kerstboom inzamellocatie in December and January
+if (month !== 11 && month !== 0) {
+  excludeFractieOmschrijving.push('Kerstboom');
+}
+
 export const DATASETS: DatasetCategories = {
   afvalcontainers: {
     title: 'Afvalcontainers',
@@ -68,7 +75,7 @@ export const DATASETS: DatasetCategories = {
         title: 'Afvalcontainers',
         filters: {
           fractie_omschrijving: {
-            excludeValues: ['Brood', 'brood', 'Kerstboom'],
+            excludeValues: excludeFractieOmschrijving,
           },
           geadopteerd_ind: {
             title: 'Geadopteerd',
