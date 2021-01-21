@@ -52,7 +52,7 @@ export default function MyAreaDashboard({ tutorial }: MyAreaDashboardProps) {
             zoom={HOOD_ZOOM}
           />
         )}
-        {!HOME.content?.latlng && !isLoading(HOME) && (
+        {!HOME.content?.latlng && isLoading(HOME) && (
           <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />
         )}
       </DasboardMap>

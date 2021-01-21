@@ -312,7 +312,7 @@ export default function MyArea({
 
               <MyAreaDatasets datasetIds={datasetIdsRequested} />
             </MyAreaMap>
-            {!HOME.content?.address && !isLoading(HOME) && (
+            {!HOME.content?.address && isLoading(HOME) && (
               <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />
             )}
           </MyAreaMapOffset>
