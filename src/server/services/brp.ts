@@ -57,20 +57,22 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
   const notifications: MyNotification[] = [];
 
   const expiredDocuments = data.identiteitsbewijzen?.filter(
-    document => new Date(document.datumAfloop) < compareDate
+    (document) => new Date(document.datumAfloop) < compareDate
   );
 
-  const willExpireSoonDocuments = data.identiteitsbewijzen?.filter(document => {
-    const days = differenceInCalendarDays(
-      new Date(document.datumAfloop),
-      compareDate
-    );
+  const willExpireSoonDocuments = data.identiteitsbewijzen?.filter(
+    (document) => {
+      const days = differenceInCalendarDays(
+        new Date(document.datumAfloop),
+        compareDate
+      );
 
-    return days <= DAYS_BEFORE_EXPIRATION && days > 0;
-  });
+      return days <= DAYS_BEFORE_EXPIRATION && days > 0;
+    }
+  );
 
   if (expiredDocuments?.length) {
-    expiredDocuments.forEach(document => {
+    expiredDocuments.forEach((document) => {
       const docTitle =
         BrpDocumentTitles[document.documentType] || document.documentType;
       notifications.push({
@@ -92,7 +94,7 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
   }
 
   if (willExpireSoonDocuments?.length) {
-    willExpireSoonDocuments.forEach(document => {
+    willExpireSoonDocuments.forEach((document) => {
       const docTitle =
         BrpDocumentTitles[document.documentType] || document.documentType;
       notifications.push({
@@ -151,7 +153,7 @@ export function transformBRPData(responseData: BRPDataFromSource) {
   if (Array.isArray(responseData.identiteitsbewijzen)) {
     // Transform Identiteitsbewijzen
     Object.assign(responseData, {
-      identiteitsbewijzen: responseData.identiteitsbewijzen.map(document => {
+      identiteitsbewijzen: responseData.identiteitsbewijzen.map((document) => {
         const route = generatePath(AppRoutes.BURGERZAKEN_DOCUMENT, {
           id: document.id,
         });
