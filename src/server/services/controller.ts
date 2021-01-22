@@ -24,6 +24,7 @@ import { fetchTIPS, createTipsRequestData } from './tips';
 import { fetchVergunningen } from './vergunningen';
 import { fetchWMO } from './wmo';
 import { fetchStadspasSaldo } from './focus/focus-stadspas';
+import { omit } from '../../universal/helpers';
 
 // Default service call just passing sessionID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -37,6 +38,10 @@ function callService<T>(fetchService: (...args: any) => Promise<T>) {
 
 function getServiceMap(profileType: ProfileType) {
   return servicesByProfileType[profileType];
+}
+
+function getServiceTipsMap(profileType: ProfileType) {
+  return servicesTipsByProfileType[profileType];
 }
 
 /**
@@ -133,22 +138,6 @@ type CommercialServices = Pick<
   | 'VERGUNNINGEN'
 >;
 
-type TipsServices = Pick<
-  ServiceMap,
-  | 'BELASTINGEN'
-  | 'BRP'
-  | 'ERFPACHT'
-  | 'FOCUS_AANVRAGEN'
-  | 'FOCUS_SPECIFICATIES'
-  | 'FOCUS_TOZO'
-  | 'FOCUS_STADSPAS'
-  | 'HOME'
-  | 'KVK'
-  | 'MILIEUZONE'
-  | 'VERGUNNINGEN'
-  | 'WMO'
->;
-
 type ServicesByProfileType = {
   private: PrivateServices;
   'private-commercial': PrivateCommercialServices;
@@ -208,29 +197,27 @@ export const servicesByProfileType: ServicesByProfileType = {
   },
 };
 
-export const servicesTips: TipsServices = {
-  BELASTINGEN,
-  BRP,
-  ERFPACHT,
-  FOCUS_AANVRAGEN,
-  FOCUS_SPECIFICATIES,
-  FOCUS_TOZO,
-  FOCUS_STADSPAS,
-  HOME,
-  KVK,
-  MILIEUZONE,
-  VERGUNNINGEN,
-  WMO,
+const tipsOmit: Array<keyof ServicesType | any> = [
+  'AFVAL',
+  'AFVALPUNTEN',
+  'CMS_CONTENT',
+  'NOTIFICATIONS',
+  'CASES',
+];
+
+export const servicesTipsByProfileType = {
+  private: omit(servicesByProfileType.private, tipsOmit),
+  'private-commercial': omit(
+    servicesByProfileType['private-commercial'],
+    tipsOmit
+  ),
+  commercial: omit(servicesByProfileType.commercial, tipsOmit),
 };
 
 function loadServices(
   sessionID: SessionID,
   req: Request,
-  serviceMap:
-    | PrivateServices
-    | CommercialServices
-    | TipsServices
-    | PrivateCommercialServices,
+  serviceMap: PrivateServices | CommercialServices | PrivateCommercialServices,
   filterIds: SessionID[] = []
 ) {
   return Object.entries(serviceMap)
@@ -330,7 +317,11 @@ export type ServicesTips = ReturnTypeAsync<typeof loadServicesTipsRequestData>;
 async function createTipsServiceResults(sessionID: SessionID, req: Request) {
   let requestData = null;
   if (queryParams(req).optin === 'true') {
-    const servicePromises = loadServices(sessionID, req, servicesTips);
+    const servicePromises = loadServices(
+      sessionID,
+      req,
+      getServiceTipsMap(queryParams(req).profileType as ProfileType) as any
+    );
     requestData = (await Promise.allSettled(servicePromises)).reduce(
       (acc, result, index) => Object.assign(acc, getSettledResult(result)),
       {}
