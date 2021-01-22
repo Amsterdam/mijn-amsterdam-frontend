@@ -1,12 +1,13 @@
 import * as Sentry from '@sentry/node';
 import { NextFunction, Request, Response } from 'express';
+import { omit } from '../../universal/helpers';
 import { apiErrorResult, getSettledResult } from '../../universal/helpers/api';
 import {
   addServiceResultHandler,
   getPassthroughRequestHeaders,
-  sendMessage,
   getProfileType,
   queryParams,
+  sendMessage,
 } from '../helpers/app';
 import { fetchAFVAL, fetchAFVALPUNTEN } from './afval/afval';
 import { fetchBELASTING } from './belasting';
@@ -15,16 +16,15 @@ import { fetchCMSCONTENT } from './cms-content';
 import { fetchERFPACHT } from './erfpacht';
 import { fetchFOCUSAanvragen } from './focus/focus-aanvragen';
 import { fetchFOCUSSpecificaties } from './focus/focus-specificaties';
+import { fetchStadspasSaldo } from './focus/focus-stadspas';
 import { fetchFOCUSTozo } from './focus/focus-tozo';
 import { fetchGenerated } from './generated';
 import { fetchHOME } from './home';
 import { fetchKVK } from './kvk';
 import { fetchMILIEUZONE } from './milieuzone';
-import { fetchTIPS, createTipsRequestData } from './tips';
+import { createTipsRequestData, fetchTIPS } from './tips';
 import { fetchVergunningen } from './vergunningen';
 import { fetchWMO } from './wmo';
-import { fetchStadspasSaldo } from './focus/focus-stadspas';
-import { omit } from '../../universal/helpers';
 
 // Default service call just passing sessionID and request headers as arguments
 function callService<T>(fetchService: (...args: any) => Promise<T>) {
@@ -197,7 +197,7 @@ export const servicesByProfileType: ServicesByProfileType = {
   },
 };
 
-const tipsOmit: Array<keyof ServicesType | any> = [
+const tipsOmit = [
   'AFVAL',
   'AFVALPUNTEN',
   'CMS_CONTENT',
@@ -206,12 +206,18 @@ const tipsOmit: Array<keyof ServicesType | any> = [
 ];
 
 export const servicesTipsByProfileType = {
-  private: omit(servicesByProfileType.private, tipsOmit),
+  private: omit(
+    servicesByProfileType.private,
+    tipsOmit as Array<keyof PrivateServices>
+  ),
   'private-commercial': omit(
     servicesByProfileType['private-commercial'],
-    tipsOmit
+    tipsOmit as Array<keyof PrivateCommercialServices>
   ),
-  commercial: omit(servicesByProfileType.commercial, tipsOmit),
+  commercial: omit(
+    servicesByProfileType.commercial,
+    tipsOmit as Array<keyof CommercialServices>
+  ),
 };
 
 function loadServices(
