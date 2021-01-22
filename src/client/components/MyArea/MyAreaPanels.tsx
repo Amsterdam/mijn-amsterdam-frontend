@@ -214,7 +214,7 @@ export function DatasetPropertyFilterPanel({
             <PanelListItem key={`property-${datasetId + propertyName + index}`}>
               <DatasetControlCheckbox
                 isChecked={isChecked}
-                id={label}
+                id={datasetId + propertyName + label}
                 isDimmed={valuesRefined ? !valuesRefined[value] : false}
                 label={
                   <>
@@ -285,7 +285,7 @@ export function DatasetPanel({
   const datasetControl = (
     <DatasetControlCheckbox
       isChecked={isChecked}
-      id={datasetId}
+      id={categoryId + datasetId}
       label={
         <>
           {getIcon(categoryId, datasetId) || ''}
