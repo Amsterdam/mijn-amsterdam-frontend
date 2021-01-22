@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/browser';
+import { useEffect } from 'react';
 
 import { useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
@@ -26,17 +27,18 @@ export default function InkomenDetailTozo() {
   const { id } = useParams<{ id: string }>();
 
   let TozoItem = tozoItems.find((item) => item.id === id);
+  const isTozoLoading = isLoading(FOCUS_TOZO);
 
-  if (!isLoading(FOCUS_TOZO)) {
-    if (!TozoItem) {
+  useEffect(() => {
+    if (!isTozoLoading && !TozoItem) {
       Sentry.captureMessage('Tozo Item not found', {
         extra: {
           requestedId: id,
-          availableIds: tozoItems.map((item) => item.id),
+          availableIds: (FOCUS_TOZO.content || []).map((item) => item.id),
         },
       });
     }
-  }
+  }, [isTozoLoading, TozoItem, FOCUS_TOZO.content, id]);
 
   const noContent = !isLoading(FOCUS_TOZO) && !TozoItem;
 
