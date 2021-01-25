@@ -39,6 +39,7 @@ import {
 } from './MyAreaPanelComponent';
 import { MyAreaLegendPanel } from './MyAreaPanels';
 import MyAreaDetailPanel from './PanelContent/MyAreaDetailPanel';
+import { useSetLoadingFeature } from './MyArea.hooks';
 
 const StyledViewerContainer = styled(ViewerContainer)<{
   mapOffset?: { left: string };
@@ -121,6 +122,7 @@ export default function MyArea({
   const resetMyAreaState = useResetMyAreaState();
 
   useFetchPanelFeature();
+  const setLoadingFeature = useSetLoadingFeature();
 
   const mapOptions: Partial<L.MapOptions> = useMemo(() => {
     const options = {
@@ -327,6 +329,7 @@ export default function MyArea({
                 id="detail"
                 cycle={detailPanelCycle}
                 availableHeight={panelComponentAvailableHeight}
+                onClose={() => setLoadingFeature(null)}
                 showCloseButton={
                   isWideScreen || detailState === PanelState.Open
                 }

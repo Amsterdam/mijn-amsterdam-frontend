@@ -339,7 +339,9 @@ function PanelNarrowAnimated({
 export type PanelComponentProps = PropsWithChildren<{
   id: string;
   onTogglePanel?: (id: string, state: PanelState) => void;
-  onClose?: (event: MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClose?: (
+    event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  ) => void;
   cycle: ReturnType<typeof usePanelStateCycle>;
   availableHeight: number;
   showCloseButton?: boolean;
@@ -351,6 +353,7 @@ export function PanelComponent({
   cycle,
   availableHeight,
   showCloseButton,
+  onClose,
 }: PanelComponentProps) {
   const isWideScreen = useWidescreen();
   const isNarrowScreen = !isWideScreen;
@@ -405,7 +408,10 @@ export function PanelComponent({
       {showCloseButton && (
         <StyledCloseButton
           iconSize="24"
-          onClick={cycleState}
+          onClick={(event) => {
+            cycleState();
+            onClose && onClose(event);
+          }}
           aria-label={`${id} paneel sluiten`}
         />
       )}
@@ -424,7 +430,14 @@ export function PanelComponent({
     </PanelNarrowAnimated>
   ) : (
     <PanelWideAnimated width={getPanelSize(state, false)}>
-      {showCloseButton && <StyledCloseButton onClick={cycleState} />}
+      {showCloseButton && (
+        <StyledCloseButton
+          onClick={(event) => {
+            cycleState();
+            onClose && onClose(event);
+          }}
+        />
+      )}
       {showToggleButton && (
         <PanelToggleDesktop
           aria-expanded={isPanelExpanded}

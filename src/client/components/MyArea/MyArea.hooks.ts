@@ -203,14 +203,9 @@ export function useOnMarkerClick() {
         const id = event?.propagatedFrom?.feature?.properties?.id;
         const datasetId = event?.propagatedFrom?.feature?.properties?.datasetId;
 
-        setLoadingFeature((loadingFeature) => {
-          if (loadingFeature?.id !== id) {
-            return {
-              datasetId,
-              id,
-            };
-          }
-          return loadingFeature;
+        setLoadingFeature({
+          datasetId,
+          id,
         });
         trackEventWithProfileType(
           {
