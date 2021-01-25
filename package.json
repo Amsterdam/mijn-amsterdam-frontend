@@ -41,7 +41,7 @@
     }
   },
   "dependencies": {
-    "@amsterdam/arm-core": "^0.4.0",
+    "@amsterdam/arm-core": "^0.4.1",
     "@amsterdam/asc-assets": "^0.26.2",
     "@amsterdam/asc-ui": "^0.26.2",
     "@amsterdam/react-maps": "^0.11.0",
