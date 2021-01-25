@@ -17,20 +17,22 @@ import {
   IconBekendmaking,
   IconEvenement,
   IconFitness,
+  IconGeneral,
+  IconGymzaal,
+  IconHardlopen,
+  IconJeuDeBoules,
+  IconOverig,
+  IconSkate,
   IconSport,
+  IconSporthal,
+  IconSportveld,
+  IconSportzaal,
+  IconTafeltennis,
   IconTennis,
   IconVoetbal,
   IconVolleybal,
-  IconGymzaal,
-  IconSporthal,
-  IconHardlopen,
-  IconSkate,
+  IconSportpark,
   IconZwembad,
-  IconJeuDeBoules,
-  IconTafeltennis,
-  IconOverig,
-  IconSportveld,
-  IconGeneral,
 } from '../../assets/icons/map';
 import { DEFAULT_POLYLINE_OPTIONS } from './MyAreaPolylineLayer';
 
@@ -125,12 +127,12 @@ export const datasetIcons: Record<
     ),
     sportpark: (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <IconOverig fill={themeColors.tint.level1} />
+        <IconSportpark fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
     sportzaal: (
       <DatasetIcon style={{ backgroundColor: themeColors.support.valid }}>
-        <IconSporthal fill={themeColors.tint.level1} />
+        <IconSportzaal fill={themeColors.tint.level1} />
       </DatasetIcon>
     ),
     zwembad: (

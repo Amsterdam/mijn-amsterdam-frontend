@@ -4,10 +4,7 @@ import {
   ViewerContainer,
   Zoom,
 } from '@amsterdam/arm-core';
-import {
-  AERIAL_AMSTERDAM_LAYERS,
-  DEFAULT_AMSTERDAM_LAYERS,
-} from '@amsterdam/arm-core/lib/constants';
+import { constants } from '@amsterdam/arm-core';
 import { ThemeProvider } from '@amsterdam/asc-ui';
 import { useMapInstance } from '@amsterdam/react-maps';
 import L, { TileLayerOptions } from 'leaflet';
@@ -239,8 +236,8 @@ export default function MyArea({
 
   const mapLayers = useMemo(() => {
     return {
-      aerial: [AERIAL_AMSTERDAM_LAYERS[0]],
-      topo: [DEFAULT_AMSTERDAM_LAYERS[0]],
+      aerial: [constants.AERIAL_AMSTERDAM_LAYERS[0]],
+      topo: [constants.DEFAULT_AMSTERDAM_LAYERS[0]],
     };
   }, []);
 
@@ -302,8 +299,8 @@ export default function MyArea({
                 bottomLeft={
                   isWideScreen && (
                     <BaseLayerToggle
-                      aerialLayers={[AERIAL_AMSTERDAM_LAYERS[0]]}
-                      topoLayers={[DEFAULT_AMSTERDAM_LAYERS[0]]}
+                      aerialLayers={mapLayers.aerial}
+                      topoLayers={mapLayers.topo}
                       options={baseLayerOptions}
                     />
                   )

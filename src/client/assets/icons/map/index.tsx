@@ -18,6 +18,8 @@ export { ReactComponent as IconBasketbal } from './basketbal.svg';
 
 export { ReactComponent as IconGeneral } from './general.svg';
 export { ReactComponent as IconGymzaal } from './gymzaal.svg';
+export { ReactComponent as IconSportzaal } from './sportzaal.svg';
+export { ReactComponent as IconSportpark } from './sportpark.svg';
 export { ReactComponent as IconOverig } from './overig.svg';
 export { ReactComponent as IconSkate } from './skate.svg';
 export { ReactComponent as IconSportveld } from './sportveld.svg';
