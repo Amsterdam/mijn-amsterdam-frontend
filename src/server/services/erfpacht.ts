@@ -28,7 +28,7 @@ interface ERFPACHTSourceData {
 
 function transformERFPACHTNotifications(notifications?: MyNotification[]) {
   const notificationsTransformed = Array.isArray(notifications)
-    ? notifications.map(notification => ({
+    ? notifications.map((notification) => ({
         ...notification,
         chapter: Chapters.ERFPACHT,
         link: {
@@ -43,22 +43,15 @@ function transformERFPACHTNotifications(notifications?: MyNotification[]) {
 }
 
 function transformERFPACHTData(responseData: ERFPACHTSourceData): ERFPACHTData {
-  if ('status' in responseData && typeof responseData.status === 'boolean') {
-    return {
-      isKnown: responseData.status,
-      notifications: [],
-    };
-  } else {
-    const { isKnown, meldingen = [] } = responseData?.content || {
-      isKnown: false,
-      meldingen: [],
-    };
+  const { isKnown, meldingen = [] } = responseData?.content || {
+    isKnown: false,
+    meldingen: [],
+  };
 
-    return {
-      isKnown,
-      notifications: transformERFPACHTNotifications(meldingen),
-    };
-  }
+  return {
+    isKnown,
+    notifications: transformERFPACHTNotifications(meldingen),
+  };
 }
 
 export async function fetchERFPACHT(
