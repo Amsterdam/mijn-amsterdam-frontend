@@ -210,9 +210,7 @@ const PanelInner = styled.div<{ panelState: PanelState }>`
 const PanelInnerPhone = styled(PanelInner)`
   padding-right: ${themeSpacing(4)};
   padding-left: ${themeSpacing(4)};
-  max-height: calc(
-    100% - ${themeSpacing(15)}
-  ); // Add a little slack to the bottom
+  max-height: 100%;
 `;
 
 const PanelInnerDesktop = styled(PanelInner)`
