@@ -26,8 +26,10 @@
         <meta name="msapplication-config" content="/favicons/browserconfig.xml">
         <meta name="theme-color" content="#ffffff">
 
-        <script nomodule>
-          window.location.replace('/no-support')
+        <script>
+          if (/MSIE (\d+\.\d+);/.test(navigator.userAgent) || navigator.userAgent.indexOf("Trident/") > -1 ) {
+            window.location.replace('/no-support')
+          }
         </script>
     </head>
     <body>
