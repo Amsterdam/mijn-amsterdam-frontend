@@ -17,6 +17,7 @@ export interface Adres {
   straatnaam: string | null;
   postcode: string | null;
   woonplaatsNaam: string | null;
+  landnaam: string | null;
   huisnummer: string | null;
   huisnummertoevoeging: string | null;
   huisletter: string | null;

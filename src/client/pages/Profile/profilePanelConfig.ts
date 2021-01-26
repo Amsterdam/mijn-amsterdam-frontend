@@ -59,7 +59,8 @@ export const panelConfig: PanelConfig<BRPPanelKey> = {
 
     if (
       FeatureToggle.residentCountActive &&
-      !!BRP.content?.adres?._adresSleutel
+      !!BRP.content?.adres?._adresSleutel &&
+      BRP.content?.adres?.landnaam === 'Nederland'
     ) {
       actionLinks.push({
         title: 'Onjuiste inschrijving melden',

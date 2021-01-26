@@ -15,6 +15,7 @@ const responseData = {
     huisnummertoevoeging: null,
     postcode: '1064 BH',
     straatnaam: 'Burgemeester R\u00f6ellstr',
+    landnaam: 'Nederland',
     woonplaatsNaam: 'Amsterdam',
     begindatumVerblijf: '1967-01-01T00:00:00Z',
   },
@@ -238,6 +239,26 @@ describe('<Profile />', () => {
           testState({
             ...responseData,
             verbintenis: null,
+          } as any)
+        )}
+      />
+    );
+    expect(render(<Component />).asFragment()).toMatchSnapshot();
+  });
+
+  it('Matches the Full Page snapshot Not living in Netherlands', () => {
+    const Component = () => (
+      <MockApp
+        routeEntry={routeEntry}
+        routePath={routePath}
+        component={Profile}
+        initializeState={initializeState(
+          testState({
+            ...responseData,
+            adres: {
+              ...responseData.adres,
+              landnaam: 'Nicaragua',
+            },
           } as any)
         )}
       />

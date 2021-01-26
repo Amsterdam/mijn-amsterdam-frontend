@@ -212,7 +212,10 @@ interface BrpProfileData {
 export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
   const profileData: BrpProfileData = {
     persoon: format(brpInfoLabels.persoon, brpData.persoon, brpData),
-    adres: format(brpInfoLabels.adres, brpData.adres, brpData),
+    adres:
+      brpData.adres?.landnaam === 'Nederland'
+        ? format(brpInfoLabels.adres, brpData.adres, brpData)
+        : { '': 'Niet woonachtig in Nederland' },
   };
 
   // Exclude below profile data for non-mokum residents.

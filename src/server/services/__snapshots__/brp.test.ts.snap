@@ -10,6 +10,7 @@ Object {
     "huisnummer": "1",
     "huisnummertoevoeging": null,
     "inOnderzoek": true,
+    "landnaam": "Nederland",
     "postcode": "1064 BH",
     "straatnaam": "Burgemeester Röellstr",
     "woonplaatsNaam": "Amsterdam",

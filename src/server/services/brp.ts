@@ -178,7 +178,6 @@ export async function fetchBRP(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  console.log('BRPRPRPR');
   const options = getApiConfig('BRP', {
     transformResponse: transformBRPData,
   });
