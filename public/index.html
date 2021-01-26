@@ -27,7 +27,7 @@
         <meta name="theme-color" content="#ffffff">
 
         <script>
-          if (/MSIE (\d+\.\d+);/.test(navigator.userAgent) || navigator.userAgent.indexOf("Trident/") > -1 ) {
+          if (/MSIE (\d+\.\d+);/.test(navigator.userAgent) || navigator.userAgent.indexOf("Trident/") > -1 || !('Map' in window && 'Set' in window)) {
             window.location.replace('/no-support')
           }
         </script>
