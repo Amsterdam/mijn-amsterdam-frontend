@@ -363,8 +363,8 @@ export function PanelComponent({
   // If we have scrolled a PanelInner, move the scroll position to top if we
   // are cycling to the first state.
   useEffect(() => {
-    if (state === states[0]) {
-      ref?.current?.scrollTo(0, 0);
+    if (state === states[0] && ref.current?.scrollTo) {
+      ref.current.scrollTo(0, 0);
     }
   }, [state, states]);
 
