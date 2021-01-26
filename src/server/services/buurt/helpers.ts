@@ -100,6 +100,20 @@ function flatten(input: any[]) {
   return flattened;
 }
 
+function getPolygonBoundingBox(
+  points: LatLngTuple[]
+): [number, number, number, number] {
+  const xCoords = points.map((p) => p[0]);
+  const yCoords = points.map((p) => p[1]);
+
+  const x1 = Math.min(...xCoords);
+  const y1 = Math.min(...yCoords);
+  const x2 = Math.max(...xCoords);
+  const y2 = Math.max(...yCoords);
+
+  return [x1, y1, x2, y2];
+}
+
 export function filterPolylineFeaturesWithinBoundingBox(
   features: MaFeature[],
   bbox: [number, number, number, number]
@@ -113,7 +127,14 @@ export function filterPolylineFeaturesWithinBoundingBox(
 
   for (i; i < len; i += 1) {
     const coords = flatten(features[i].geometry.coordinates);
-    if (coords.some(hasCoord)) {
+    if (
+      coords.some(hasCoord) ||
+      // Checks if the boundingbox is covered by the Polygon
+      isCoordWithingBoundingBox(
+        getPolygonBoundingBox(coords),
+        bbox.slice(0, 2) as LatLngTuple
+      )
+    ) {
       featuresFiltered.push(features[i]);
     }
   }
