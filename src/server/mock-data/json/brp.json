@@ -23,7 +23,8 @@
       "inOnderzoek": false,
       "postcode": "1098 NK",
       "straatnaam": "Ampèrestraat",
-      "woonplaatsNaam": "Amsterdam"
+      "woonplaatsNaam": "Amsterdam",
+      "landnaam": "Nederland",
     },
     {
       "begindatumVerblijf": "1990-01-01T00:00:00Z",
@@ -34,7 +35,8 @@
       "inOnderzoek": false,
       "postcode": "1098 AA",
       "straatnaam": "Middenweg",
-      "woonplaatsNaam": "Amsterdam"
+      "woonplaatsNaam": "Amsterdam",
+      "landnaam": "Nederland",
     }
   ],
   "persoon": {
