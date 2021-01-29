@@ -213,7 +213,8 @@ export function formatBrpProfileData(brpData: BRPData): BrpProfileData {
   const profileData: BrpProfileData = {
     persoon: format(brpInfoLabels.persoon, brpData.persoon, brpData),
     adres:
-      brpData.adres?.landnaam === 'Nederland'
+      brpData.adres?.landnaam === 'Nederland' ||
+      !FeatureToggle.foreignAddressInfoActive
         ? format(brpInfoLabels.adres, brpData.adres, brpData)
         : { '': 'Niet woonachtig in Nederland' },
   };

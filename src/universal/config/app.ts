@@ -26,6 +26,7 @@ export const FeatureToggle = {
   stadpasActive: true,
   residentCountActive: true,
   sportDatasetsActive: !IS_PRODUCTION,
+  foreignAddressInfoActive: !IS_PRODUCTION,
 };
 
 export const DAYS_KEEP_RECENT = 28;
