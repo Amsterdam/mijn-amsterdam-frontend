@@ -222,7 +222,7 @@ export const datasetEndpoints: Record<
   hardlooproute: {
     listUrl: dsoApiListUrl('sport/hardlooproute'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/hardlooproute/',
-    transformList: transformDsoApiListResponse,
+    transformList: transformHardlooproutesResponse,
     featureType: 'MultiLineString',
     zIndex: zIndexPane.HARDLOOPROUTE,
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
@@ -339,4 +339,29 @@ function transformGymzaalResponse(
       feature.properties.type &&
       feature.properties.type.toLowerCase().includes('gymz')
   );
+}
+
+export function transformHardlooproutesResponse(
+  datasetId: DatasetId,
+  config: DatasetConfig,
+  responseData: any
+) {
+  const features = transformDsoApiListResponse(datasetId, config, responseData);
+  //0-5 km, 6-10 km en meer dan10km.
+  const groups = [
+    { label: '0-5 km', range: [0, 6] },
+    { label: '6-10 km', range: [6, 11] },
+    { label: 'Meer dan 10 km', range: [11, Infinity] },
+  ];
+
+  for (const feature of features) {
+    const distance = feature.properties.lengte;
+    if (distance) {
+      const groupDistance = groups.find((group) => {
+        return distance >= group.range[0] && distance < group.range[1];
+      });
+      feature.properties.lengte = groupDistance?.label || 'Overige lengtes';
+    }
+  }
+  return features;
 }
