@@ -54,6 +54,24 @@ exports[`<DirectLinks /> It renders additional links on phone 1`] = `
       <li>
         <a
           class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/sbl/"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            External-Link.svg
+          </svg>
+          Stadsbank van Lening
+        </a>
+      </li>
+      <li>
+        <a
+          class="Button Button__plain Button__lean Linkd"
           href="https://krefia.amsterdam.nl"
           rel="external noopener noreferrer"
         >
@@ -164,6 +182,24 @@ exports[`<DirectLinks /> It renders commercial links 1`] = `
       <li>
         <a
           class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/sbl/"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            External-Link.svg
+          </svg>
+          Stadsbank van Lening
+        </a>
+      </li>
+      <li>
+        <a
+          class="Button Button__plain Button__lean Linkd"
           href="https://www.amsterdam.nl/veelgevraagd/?productid={68422ECA-8C56-43EC-A9AA-B3DF190B5077}"
           rel="external noopener noreferrer"
         >
@@ -251,6 +287,24 @@ exports[`<DirectLinks /> It renders private links 1`] = `
             External-Link.svg
           </svg>
           Mijn Subsidies
+        </a>
+      </li>
+      <li>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/sbl/"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            External-Link.svg
+          </svg>
+          Stadsbank van Lening
         </a>
       </li>
       <li>
@@ -361,6 +415,24 @@ exports[`<DirectLinks /> It renders private-commercial links 1`] = `
             External-Link.svg
           </svg>
           Mijn Subsidies
+        </a>
+      </li>
+      <li>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/sbl/"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            External-Link.svg
+          </svg>
+          Stadsbank van Lening
         </a>
       </li>
       <li>
