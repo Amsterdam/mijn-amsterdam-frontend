@@ -25,6 +25,12 @@ const GenericLinks: Record<string, DirectLink> = {
     isExternalLink: true,
     isActive: true,
   },
+  STADSBANK_VAN_LENING: {
+    title: 'Stadsbank van Lening',
+    url: ExternalUrls.STADSBANK_VAN_LENING,
+    isExternalLink: true,
+    isActive: true,
+  },
   FAQ: {
     title: 'Veelgestelde vragen',
     url: ExternalUrls.MIJN_AMSTERDAM_VEELGEVRAAGD,
@@ -70,6 +76,7 @@ export const LINKS: Record<ProfileType, Record<string, DirectLink>> = {
     },
     TIPS: GenericLinks.TIPS,
     MIJN_SUBSIDIE: GenericLinks.MIJN_SUBSIDIE,
+    STADSBANK_VAN_LENING: GenericLinks.STADSBANK_VAN_LENING,
     KREFIA: {
       title: 'Kredietbank',
       url: ExternalUrls.KREFIA,
@@ -84,6 +91,7 @@ export const LINKS: Record<ProfileType, Record<string, DirectLink>> = {
     BUURT: GenericLinks.MIJN_OMGEVING,
     TIPS: GenericLinks.TIPS,
     MIJN_SUBSIDIE: GenericLinks.MIJN_SUBSIDIE,
+    STADSBANK_VAN_LENING: GenericLinks.STADSBANK_VAN_LENING,
     FAQ: GenericLinks.FAQ,
     MIJN_OVERHEID_ONDERNEMERS: GenericLinks.MIJN_OVERHEID_ONDERNEMERS,
     AMSTERDAM: GenericLinks.AMSTERDAM,
@@ -92,6 +100,7 @@ export const LINKS: Record<ProfileType, Record<string, DirectLink>> = {
     BUURT: GenericLinks.MIJN_OMGEVING,
     TIPS: GenericLinks.TIPS,
     MIJN_SUBSIDIE: GenericLinks.MIJN_SUBSIDIE,
+    STADSBANK_VAN_LENING: GenericLinks.STADSBANK_VAN_LENING,
     FAQ: GenericLinks.FAQ,
     MIJN_OVERHEID_ONDERNEMERS: GenericLinks.MIJN_OVERHEID_ONDERNEMERS,
     AMSTERDAM: GenericLinks.AMSTERDAM,
