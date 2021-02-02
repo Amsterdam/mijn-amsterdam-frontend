@@ -215,7 +215,6 @@ export const DATASETS: DatasetCategories = {
         filters: {
           lengte: {
             title: 'Lengte',
-            transformValueLabel: (value) => value + ' Km',
           },
         },
       },

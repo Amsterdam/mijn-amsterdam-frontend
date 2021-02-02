@@ -156,6 +156,9 @@ export default function MyArePanelContentSport({
     case 'hardlooproute':
       return (
         <GenericBase title={panelItem.naam} supTitle="Hardlooproutes">
+          {!!panelItem.lengte && (
+            <InfoDetail label="Lengte" value={panelItem.lengte + ' km'} />
+          )}
           {/* <JsonString data={panelItem} /> */}
         </GenericBase>
       );
