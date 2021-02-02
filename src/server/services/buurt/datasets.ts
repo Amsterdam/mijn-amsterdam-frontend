@@ -58,6 +58,7 @@ export type DatasetResponse = {
 
 export const BUURT_CACHE_TTL_HOURS = 24;
 export const BUURT_CACHE_TTL_1_DAY_IN_MINUTES = 24 * 60;
+export const BUURT_CACHE_TTL_8_HOURS_IN_MINUTES = 8 * 60;
 export const BUURT_CACHE_TTL_1_WEEK_IN_MINUTES =
   7 * BUURT_CACHE_TTL_1_DAY_IN_MINUTES;
 export const ACCEPT_CRS_4326 = {
@@ -123,14 +124,14 @@ export const datasetEndpoints: Record<
     detailUrl: 'https://api.data.amsterdam.nl/v1/huishoudelijkafval/container/',
     transformList: transformAfvalcontainersResponse,
     featureType: 'Point',
-    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
+    cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
   },
   evenementen: {
     listUrl: dsoApiListUrl('evenementen/evenementen'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/evenementen/evenementen/',
     transformList: transformDsoApiListResponse,
     featureType: 'Point',
-    cacheTimeMinutes: BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
+    cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
   },
   bekendmakingen: {
     listUrl:
@@ -139,7 +140,7 @@ export const datasetEndpoints: Record<
       'https://api.data.amsterdam.nl/v1/bekendmakingen/bekendmakingen/',
     transformList: transformDsoApiListResponse,
     featureType: 'Point',
-    cacheTimeMinutes: BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
+    cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
   },
   parkeerzones: {
     listUrl: dsoApiListUrl('parkeerzones/parkeerzones'),
@@ -148,7 +149,7 @@ export const datasetEndpoints: Record<
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.PARKEERZONES,
     additionalStaticPropertyNames: ['gebiedskleurcode'],
-    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
+    cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
   },
   parkeerzones_uitzondering: {
     listUrl: dsoApiListUrl('parkeerzones/parkeerzones_uitzondering'),
@@ -157,14 +158,14 @@ export const datasetEndpoints: Record<
     transformList: transformParkeerzoneCoords,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.PARKEERZONES_UITZONDERING,
-    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
+    cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
   },
   zwembad: {
     listUrl: dsoApiListUrl('sport/zwembad'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/zwembad/',
     transformList: transformDsoApiListResponse,
     featureType: 'Point',
-    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
+    cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
   },
   sportpark: {
     listUrl: dsoApiListUrl('sport/sportpark'),
@@ -172,7 +173,7 @@ export const datasetEndpoints: Record<
     transformList: transformDsoApiListResponse,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.SPORTPARK,
-    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
+    cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
   },
   sportveld: {
     listUrl: dsoApiListUrl('sport/sportveld'),
@@ -180,7 +181,7 @@ export const datasetEndpoints: Record<
     transformList: transformDsoApiListResponse,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.SPORTVELD,
-    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
+    cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
   },
   gymzaal: {
     listUrl: dsoApiListUrl('sport/gymsportzaal', undefined, 'gymzaal'),
@@ -188,35 +189,35 @@ export const datasetEndpoints: Record<
     transformList: transformGymzaalResponse,
     featureType: 'Point',
     additionalStaticPropertyNames: ['type'],
-    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
+    cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
   },
   sportzaal: {
     listUrl: dsoApiListUrl('sport/gymsportzaal', undefined, 'sportzaal'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/gymsportzaal/',
     transformList: transformSportzaalResponse,
     featureType: 'Point',
-    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
+    cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
   },
   sporthal: {
     listUrl: dsoApiListUrl('sport/sporthal'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sporthal/',
     transformList: transformDsoApiListResponse,
     featureType: 'Point',
-    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
+    cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
   },
   sportaanbieder: {
     listUrl: dsoApiListUrl('sport/sportaanbieder', 2000),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/sportaanbieder/',
     transformList: transformDsoApiListResponse,
     featureType: 'Point',
-    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
+    cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
   },
   openbaresportplek: {
     listUrl: dsoApiListUrl('sport/openbaresportplek'),
     detailUrl: 'https://api.data.amsterdam.nl/v1/sport/openbaresportplek/',
     transformList: transformDsoApiListResponse,
     featureType: 'Point',
-    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
+    cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
   },
   hardlooproute: {
     listUrl: dsoApiListUrl('sport/hardlooproute'),
@@ -224,7 +225,7 @@ export const datasetEndpoints: Record<
     transformList: transformDsoApiListResponse,
     featureType: 'MultiLineString',
     zIndex: zIndexPane.HARDLOOPROUTE,
-    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
+    cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
   },
   bedrijveninvesteringszones: {
     listUrl: dsoApiListUrl(
@@ -235,7 +236,7 @@ export const datasetEndpoints: Record<
     transformList: transformDsoApiListResponse,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.BEDRIJVENINVESTERINGSZONES,
-    cacheTimeMinutes: BUURT_CACHE_TTL_1_WEEK_IN_MINUTES,
+    cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
   },
 };
 
