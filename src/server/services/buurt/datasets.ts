@@ -339,3 +339,17 @@ function transformGymzaalResponse(
       feature.properties.type.toLowerCase().includes('gymz')
   );
 }
+
+function transformHardlooproutesResponse(
+  datasetId: DatasetId,
+  config: DatasetConfig,
+  responseData: any
+) {
+  const features = transformDsoApiListResponse(datasetId, config, responseData);
+
+  return features.filter(
+    (feature) =>
+      feature.properties.type &&
+      feature.properties.type.toLowerCase().includes('gymz')
+  );
+}
