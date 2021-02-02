@@ -346,8 +346,9 @@ export function createFeaturePropertiesFromPropertyFilterConfig(
   const filterPropertyNames = propertyFilters
     ? Object.keys(propertyFilters)
     : [];
-  const staticPropertyNames =
-    datasetEndpoints[datasetId].additionalStaticPropertyNames;
+  const staticPropertyNames = datasetEndpoints[datasetId]
+    ? datasetEndpoints[datasetId].additionalStaticPropertyNames
+    : [];
 
   if (filterPropertyNames && featureSourceProperties) {
     for (const propertyName of filterPropertyNames) {

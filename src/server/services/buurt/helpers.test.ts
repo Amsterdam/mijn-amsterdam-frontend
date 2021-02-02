@@ -207,6 +207,9 @@ describe('Buurt helpers', () => {
               },
             },
           },
+          test: {
+            title: 'Afgeleid van openbare sportplek',
+          },
           sportveld: {
             title: 'Sportveld',
             filters: {
@@ -646,6 +649,30 @@ describe('Buurt helpers', () => {
         'openbaresportplek',
         DATASETS.sport.datasets.openbaresportplek,
         DSO_API_RESULT
+      )
+    ).toStrictEqual(datasetResultTransformed);
+  });
+
+  it('Derives dataset from DSO dataset with different name', () => {
+    const datasetResultTransformed: MaPointFeature[] = [
+      {
+        geometry: {
+          coordinates: [4.8, 52.2],
+          type: 'Point',
+        },
+        properties: {
+          datasetId: 'test',
+          id: '1',
+        },
+        type: 'Feature',
+      },
+    ];
+    expect(
+      transformDsoApiListResponse(
+        'test',
+        DATASETS.sport.datasets.test,
+        DSO_API_RESULT,
+        'openbaresportplek'
       )
     ).toStrictEqual(datasetResultTransformed);
   });
