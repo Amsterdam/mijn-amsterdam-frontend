@@ -183,7 +183,7 @@ export function createTozoItem(productTitle: string, steps: FocusItemStep[]) {
 export function createTozoItemStepNotifications(
   item: FocusItem
 ): MyNotification[] {
-  return item.steps.map(step => ({
+  return item.steps.map((step) => ({
     id: hash(`notification-${step.id}`),
     datePublished: step.datePublished,
     chapter: Chapters.INKOMEN,
@@ -202,7 +202,7 @@ export function createTozoResult(
 ) {
   const documents: FocusTozoDocument[] = Array.isArray(tozodocumenten)
     ? tozodocumenten
-        .map(document => {
+        .map((document) => {
           return {
             ...document,
             productTitle: getProductTitleForDocument(document),
@@ -212,7 +212,7 @@ export function createTozoResult(
     : [];
 
   const tozoSteps: FocusItemStep[] = documents
-    .map(document => createTozoItemStep(document))
+    .map((document) => createTozoItemStep(document))
     .filter(
       (step: FocusItemStep | null): step is FocusItemStep => step !== null
     );
@@ -239,9 +239,9 @@ export function createTozoResult(
     }
   }
 
-  const tozo1Steps = otherSteps.filter(step => step.product === 'Tozo 1');
-  const tozo2Steps = otherSteps.filter(step => step.product === 'Tozo 2');
-  const tozo3Steps = otherSteps.filter(step => step.product === 'Tozo 3');
+  const tozo1Steps = otherSteps.filter((step) => step.product === 'Tozo 1');
+  const tozo2Steps = otherSteps.filter((step) => step.product === 'Tozo 2');
+  const tozo3Steps = otherSteps.filter((step) => step.product === 'Tozo 3');
 
   if (aanvraagSteps['Tozo 1']) {
     tozo1Steps.unshift(aanvraagSteps['Tozo 1']);

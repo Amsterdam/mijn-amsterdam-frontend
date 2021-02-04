@@ -39,13 +39,13 @@ export async function fetchFOCUSTozoGenerated(
   if (TOZO.status === 'OK') {
     const compareDate = new Date();
 
-    const notifications: MyNotification[] = TOZO.content.flatMap(item =>
+    const notifications: MyNotification[] = TOZO.content.flatMap((item) =>
       createTozoItemStepNotifications(item)
     );
 
     if (
       !FeatureToggle.tozo3active &&
-      TOZO.content.some(item => item.productTitle === 'Tozo 2')
+      TOZO.content.some((item) => item.productTitle === 'Tozo 2')
     ) {
       notifications.push({
         chapter: Chapters.INKOMEN,
@@ -63,12 +63,12 @@ export async function fetchFOCUSTozoGenerated(
 
     const cases: MyCase[] = TOZO.content
       .filter(
-        item =>
+        (item) =>
           isRecentCase(item.datePublished, compareDate) ||
           item.status !== stepStatusLabels.beslissing
       )
       .map(createFocusRecentCase)
-      .filter(recentCase => recentCase !== null);
+      .filter((recentCase) => recentCase !== null);
 
     return apiSuccesResult({
       cases,
