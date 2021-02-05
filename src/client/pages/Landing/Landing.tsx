@@ -122,7 +122,7 @@ export default function Landing() {
               </a>
             </p>
             <Heading size="tiny" el="h4">
-              U hebt EHerkenning niveau 2+ nodig om in te loggen.
+              U hebt EHerkenning niveau 3 nodig om in te loggen.
             </Heading>
             <p>
               Ga naar <a href="https://eherkenning.nl">eherkenning.nl</a> voor
