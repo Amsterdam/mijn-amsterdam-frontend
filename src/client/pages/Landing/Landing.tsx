@@ -16,6 +16,7 @@ import { trackPageView } from '../../hooks';
 import styles from './Landing.module.scss';
 import { ExternalUrls } from '../../config/app';
 import { MaintenanceNotification01 } from '../../config/staticData';
+import { IS_PRODUCTION } from '../../../universal/config/env';
 
 export default function Landing() {
   const loginButton = useRef(null);
@@ -122,7 +123,8 @@ export default function Landing() {
               </a>
             </p>
             <Heading size="tiny" el="h4">
-              U hebt EHerkenning niveau 3 nodig om in te loggen.
+              U hebt EHerkenning niveau {IS_PRODUCTION ? '2+' : '3'} nodig om in
+              te loggen.
             </Heading>
             <p>
               Ga naar <a href="https://eherkenning.nl">eherkenning.nl</a> voor
