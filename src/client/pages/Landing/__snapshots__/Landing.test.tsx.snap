@@ -104,7 +104,7 @@ exports[`<Landing /> Renders without crashing 1`] = `
         <h4
           class="Heading Heading__tiny"
         >
-          U hebt EHerkenning niveau 2+ nodig om in te loggen.
+          U hebt EHerkenning niveau 3 nodig om in te loggen.
         </h4>
         <p>
           Ga naar 
