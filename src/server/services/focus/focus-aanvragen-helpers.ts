@@ -328,7 +328,8 @@ export function createFocusNotification(
   return {
     id: `${item.id}-notification`,
     datePublished: item.datePublished,
-    chapter: Chapters.INKOMEN,
+    chapter:
+      item.productTitle === 'Stadspas' ? Chapters.STADSPAS : Chapters.INKOMEN,
     title: titleTransform
       ? titleTransform(item)
       : `Update: ${item.title} aanvraag.`,
