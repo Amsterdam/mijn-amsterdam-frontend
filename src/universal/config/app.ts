@@ -27,6 +27,7 @@ export const FeatureToggle = {
   residentCountActive: true,
   sportDatasetsActive: !IS_PRODUCTION,
   foreignAddressInfoActive: !IS_PRODUCTION,
+  irmaActive: !IS_PRODUCTION,
 };
 
 export const DAYS_KEEP_RECENT = 28;

@@ -59,12 +59,16 @@
 }
 
 .LoginOption {
-  border-top: .1rem solid $color-neutral-grey2;
+  border-top: 0.1rem solid $color-neutral-grey2;
   padding-top: 2.6rem;
   padding-bottom: 1rem;
 
   p:last-of-type {
     margin-top: 0;
+  }
+
+  &--irma .LoginLogoWrap {
+    background-color: transparent;
   }
 
   &--eherkenning {
