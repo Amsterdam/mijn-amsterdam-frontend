@@ -60,6 +60,8 @@ import {
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
 import { AppRoutesRedirect } from '../universal/config/routes';
+import Stadspas from './pages/Stadspas/Stadspas';
+import StadspasAanvraagDetail from './pages/StadspasDetail/StadspasAanvraagDetail';
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
@@ -129,7 +131,7 @@ function AppAuthenticated() {
           <Route path={AppRoutes.TIPS} component={MyTips} />
           <Route
             path={AppRoutes['STADSPAS/AANVRAAG']}
-            component={InkomenDetail}
+            component={StadspasAanvraagDetail}
           />
           <Route
             path={AppRoutes['STADSPAS/SALDO']}
@@ -148,6 +150,7 @@ function AppAuthenticated() {
             component={InkomenDetailTozo}
           />
           <Route path={AppRoutes.INKOMEN} component={Inkomen} />
+          <Route path={AppRoutes.STADSPAS} component={Stadspas} />
           <Route
             path={AppRoutes['ZORG/VOORZIENINGEN']}
             component={ZorgDetail}

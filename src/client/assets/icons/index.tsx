@@ -21,6 +21,7 @@ export { ReactComponent as IconHomeCommercial } from './home-commercial.svg';
 export { ReactComponent as IconGarbage } from './Huisvuilkalender.svg';
 export { ReactComponent as IconInfo } from './Info.svg';
 export { ReactComponent as IconInkomen } from './inkomen.svg';
+export { ReactComponent as IconStadspas } from './stadspas.svg';
 export { ReactComponent as IconLogout } from './Logout.svg';
 // export { ReactComponent as IconMenu } from './Menu.svg';
 export { ReactComponent as IconMijnGegevens } from './MijnGegevens.svg';

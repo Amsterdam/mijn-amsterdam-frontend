@@ -5,12 +5,13 @@ export const AppRoutes = {
   ZORG: '/zorg-en-ondersteuning',
   'ZORG/VOORZIENINGEN': '/zorg-en-ondersteuning/voorzieningen/:id',
 
-  'STADSPAS/AANVRAAG': '/inkomen/stadspas/aanvraag/:id',
-  'STADSPAS/SALDO': '/inkomen/stadspas/saldo/:id',
+  'STADSPAS/AANVRAAG': '/stadspas/aanvraag/:id',
+  'STADSPAS/SALDO': '/stadspas/saldo/:id',
   'INKOMEN/BIJSTANDSUITKERING': '/inkomen/bijstandsuitkering/:id',
   'INKOMEN/SPECIFICATIES': '/inkomen/uitkeringsspecificaties/:category?',
   'INKOMEN/TOZO': '/inkomen/tozo/:version/:id',
   INKOMEN: '/inkomen',
+  STADSPAS: '/stadspas',
 
   BRP: '/persoonlijke-gegevens',
   KVK: '/gegevens-handelsregister',

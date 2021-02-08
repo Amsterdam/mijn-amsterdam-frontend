@@ -31,21 +31,22 @@ function isChapterActive(
 ) {
   switch (item.id) {
     case Chapters.INKOMEN:
-      const hasStadspasSaldo = !!FOCUS_STADSPAS?.content?.stadspassen?.length;
-      const isLoadingStadspasSaldo = isLoading(FOCUS_STADSPAS);
       return (
         !(
           isLoading(FOCUS_AANVRAGEN) &&
           isLoading(FOCUS_SPECIFICATIES) &&
-          isLoadingStadspasSaldo &&
           isLoading(FOCUS_TOZO)
         ) &&
         (!!FOCUS_AANVRAGEN?.content?.length ||
           !!FOCUS_TOZO?.content?.length ||
-          hasStadspasSaldo ||
           !!FOCUS_SPECIFICATIES?.content?.jaaropgaven?.length ||
           !!FOCUS_SPECIFICATIES?.content?.uitkeringsspecificaties?.length)
       );
+
+    case Chapters.STADSPAS:
+      const hasStadspasSaldo = !!FOCUS_STADSPAS?.content?.stadspassen?.length;
+      const isLoadingStadspasSaldo = isLoading(FOCUS_STADSPAS);
+      return !isLoadingStadspasSaldo && hasStadspasSaldo;
 
     case Chapters.ZORG:
       return !isLoading(WMO) && !!WMO.content?.length;

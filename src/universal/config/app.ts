@@ -10,8 +10,6 @@ export const FeatureToggle = {
   milieuzoneApiActive: true,
   focusUitkeringsspecificatiesActive: true,
   focusDocumentDownloadsAlert: false,
-  focusAanvragenActive: true,
-  focusCombinedActive: true,
   identiteitsbewijzenActive: true,
   tozo4active: false,
   eherkenningActive: true,

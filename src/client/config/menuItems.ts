@@ -76,6 +76,12 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     profileTypes: ['private', 'private-commercial'],
   },
   {
+    title: ChapterTitles.STADSPAS,
+    id: Chapters.STADSPAS,
+    to: AppRoutes.STADSPAS,
+    profileTypes: ['private'],
+  },
+  {
     title: ChapterTitles.AFVAL,
     id: Chapters.AFVAL,
     to: AppRoutes.AFVAL,

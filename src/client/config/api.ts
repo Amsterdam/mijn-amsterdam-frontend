@@ -59,11 +59,11 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   TIPS: 'Tips',
   NOTIFICATIONS: 'Actuele updates',
   WMO: 'Zorg en ondersteuning',
-  FOCUS_AANVRAGEN: 'Inkomen en Stadspas + actuele updates',
+  FOCUS_AANVRAGEN: 'Uitkering en Stadspas -aanvragen + actuele updates',
   FOCUS_TOZO: 'Aanvraag Tozo',
   FOCUS_SPECIFICATIES:
     'Uitkeringsspecificaties en jaaropgaven + actuele updates',
-  FOCUS_STADSPAS: 'Stadspas saldo',
+  FOCUS_STADSPAS: 'Informatie over uw stadspassen',
   ERFPACHT: 'Erfpacht',
   AFVAL: 'Afvalgegevens rond uw adres',
   BUURT: 'Mijn buurt / Mijn bedrijfsomgeving',
