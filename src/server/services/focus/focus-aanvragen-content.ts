@@ -187,7 +187,7 @@ export const contentLabels: LabelData = {
   Minimafonds: {
     Stadspas: {
       link: (product) => ({
-        to: generatePath(AppRoutes['INKOMEN/STADSPAS/AANVRAAG'], {
+        to: generatePath(AppRoutes['STADSPAS/AANVRAAG'], {
           id: product.id,
         }),
         title: 'Meer informatie',

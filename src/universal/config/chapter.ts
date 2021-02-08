@@ -7,6 +7,7 @@ export type Chapter =
   | 'BURGERZAKEN'
   | 'BUURT'
   | 'INKOMEN'
+  | 'STADSPAS'
   | 'BRP'
   | 'MILIEUZONE'
   | 'NOTIFICATIONS'
@@ -24,6 +25,7 @@ export const Chapters: Record<Chapter, Chapter> = {
   BURGERZAKEN: 'BURGERZAKEN',
   BUURT: 'BUURT',
   INKOMEN: 'INKOMEN',
+  STADSPAS: 'STADSPAS',
   BRP: 'BRP',
   MILIEUZONE: 'MILIEUZONE',
   NOTIFICATIONS: 'NOTIFICATIONS',
@@ -41,7 +43,8 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   BELASTINGEN: 'Belastingen',
   BURGERZAKEN: 'Burgerzaken',
   BUURT: 'Mijn buurt',
-  INKOMEN: 'Inkomen en Stadspas',
+  INKOMEN: 'Inkomen',
+  STADSPAS: 'Stadspas',
   BRP: 'Mijn gegevens',
   MILIEUZONE: 'Milieuzone',
   NOTIFICATIONS: 'Actueel',
@@ -67,12 +70,8 @@ export const DocumentTitles = {
   [AppRoutes[
     'INKOMEN/BIJSTANDSUITKERING'
   ]]: `Bijstandsuitkering | ${ChapterTitles.INKOMEN}`,
-  [AppRoutes[
-    'INKOMEN/STADSPAS/AANVRAAG'
-  ]]: `Stadspas | ${ChapterTitles.INKOMEN}`,
-  [AppRoutes[
-    'INKOMEN/STADSPAS/SALDO'
-  ]]: `Stadspas saldo | ${ChapterTitles.INKOMEN}`,
+  [AppRoutes['STADSPAS/AANVRAAG']]: `Stadspas | ${ChapterTitles.INKOMEN}`,
+  [AppRoutes['STADSPAS/SALDO']]: `Stadspas saldo | ${ChapterTitles.INKOMEN}`,
   [AppRoutes['INKOMEN/TOZO']]: `Tozo | ${ChapterTitles.INKOMEN}`,
   [AppRoutes[
     'INKOMEN/SPECIFICATIES'

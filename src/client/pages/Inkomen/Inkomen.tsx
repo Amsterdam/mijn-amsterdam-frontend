@@ -81,7 +81,7 @@ export default function Inkomen() {
         item.steps.every((step) => step.title !== 'beslissing')
       ) || [];
 
-    if (tozoItems?.length && FeatureToggle.tozoActive) {
+    if (tozoItems?.length) {
       itemsRequested.push(
         ...tozoItems.filter((tozoItem) => tozoItem.status !== 'Besluit')
       );
@@ -105,7 +105,7 @@ export default function Inkomen() {
         item.steps.some((step) => step.title === 'beslissing')
       ) || [];
 
-    if (tozoItems?.length && FeatureToggle.tozoActive) {
+    if (tozoItems?.length) {
       itemsDecided.push(
         ...tozoItems.filter((tozoItem) => tozoItem.status === 'Besluit')
       );
@@ -146,7 +146,7 @@ export default function Inkomen() {
         displayDatumAfloop: defaultDateFormat(stadspas.datumAfloop),
         detailPageUrl: !!stadspas.budgets.length && (
           <LinkdInline
-            href={generatePath(AppRoutes['INKOMEN/STADSPAS/SALDO'], {
+            href={generatePath(AppRoutes['STADSPAS/SALDO'], {
               id: stadspas.id,
             })}
           >
@@ -159,8 +159,7 @@ export default function Inkomen() {
 
   const isLoadingFocus = isLoading(FOCUS_AANVRAGEN) || isLoading(FOCUS_TOZO);
   const isLoadingFocusSpecificaties = isLoading(FOCUS_SPECIFICATIES);
-  const isLoadingStadspas =
-    FeatureToggle.stadpasActive && isLoading(FOCUS_STADSPAS);
+  const isLoadingStadspas = isLoading(FOCUS_STADSPAS);
 
   return (
     <OverviewPage className={styles.Inkomen}>
@@ -172,16 +171,13 @@ export default function Inkomen() {
           Op deze pagina vindt u informatie over uw uitkering en de
           ondersteuning die u krijgt omdat u weinig geld hebt.
         </p>
-        {FeatureToggle.stadpasActive &&
-          !isLoadingStadspas &&
-          FOCUS_STADSPAS.content?.type !== 'kind' && (
-            <p>
-              Hebt u kinderen of een partner met een Stadspas? 1 volwassene
-              krijgt alle Stadspassen van uw gezin te zien. De andere
-              gezinsleden zien alleen hun eigen Stadspas als ze zelf inloggen op
-              Mijn Amsterdam.
-            </p>
-          )}
+        {!isLoadingStadspas && FOCUS_STADSPAS.content?.type !== 'kind' && (
+          <p>
+            Hebt u kinderen of een partner met een Stadspas? 1 volwassene krijgt
+            alle Stadspassen van uw gezin te zien. De andere gezinsleden zien
+            alleen hun eigen Stadspas als ze zelf inloggen op Mijn Amsterdam.
+          </p>
+        )}
         <p>
           <Linkd external={true} href={ExternalUrls.WPI_ALGEMEEN}>
             Algemene informatie over Werk en Inkomen
@@ -202,7 +198,7 @@ export default function Inkomen() {
         <AlertDocumentDownloadsDisabled />
       </PageContent>
 
-      {FeatureToggle.stadpasActive && hasStadspas && (
+      {hasStadspas && (
         <SectionCollapsible
           id="SectionCollapsible-stadpas"
           title="Stadspas"
@@ -228,7 +224,7 @@ export default function Inkomen() {
       <SectionCollapsible
         id="SectionCollapsible-income-request-process"
         title="Lopende aanvragen"
-        startCollapsed={FeatureToggle.stadpasActive && hasStadspas}
+        startCollapsed={hasStadspas}
         isLoading={isLoadingFocus}
         hasItems={hasActiveRequests}
         track={{
@@ -236,11 +232,7 @@ export default function Inkomen() {
           name: 'Datatabel',
         }}
         noItemsMessage="U hebt op dit moment geen lopende aanvragen."
-        className={
-          FeatureToggle.stadpasActive
-            ? styles.SectionCollapsible
-            : styles.SectionCollapsibleFirst
-        }
+        className={styles.SectionCollapsible}
       >
         <Table
           items={itemsRequested}

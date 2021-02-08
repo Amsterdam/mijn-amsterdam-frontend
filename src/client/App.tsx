@@ -59,6 +59,7 @@ import {
 } from './pages';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
 import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
+import { AppRoutesRedirect } from '../universal/config/routes';
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
@@ -113,6 +114,9 @@ function AppAuthenticated() {
             from={TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT}
             to={redirectAfterLogin}
           />
+          {AppRoutesRedirect.map(({ from, to }) => (
+            <Redirect key={from + to} from={from} to={to} />
+          ))}
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           {profileType !== 'private' ? (
@@ -124,15 +128,13 @@ function AppAuthenticated() {
           <Route path={AppRoutes.KVK} component={ProfileCommercial} />
           <Route path={AppRoutes.TIPS} component={MyTips} />
           <Route
-            path={AppRoutes['INKOMEN/STADSPAS/AANVRAAG']}
+            path={AppRoutes['STADSPAS/AANVRAAG']}
             component={InkomenDetail}
           />
-          {FeatureToggle.stadpasActive && (
-            <Route
-              path={AppRoutes['INKOMEN/STADSPAS/SALDO']}
-              component={StadspasDetail}
-            />
-          )}
+          <Route
+            path={AppRoutes['STADSPAS/SALDO']}
+            component={StadspasDetail}
+          />
           <Route
             path={AppRoutes['INKOMEN/BIJSTANDSUITKERING']}
             component={InkomenDetail}
@@ -141,12 +143,10 @@ function AppAuthenticated() {
             path={AppRoutes['INKOMEN/SPECIFICATIES']}
             component={InkomenSpecificaties}
           />
-          {FeatureToggle.tozoActive && (
-            <Route
-              path={AppRoutes['INKOMEN/TOZO']}
-              component={InkomenDetailTozo}
-            />
-          )}
+          <Route
+            path={AppRoutes['INKOMEN/TOZO']}
+            component={InkomenDetailTozo}
+          />
           <Route path={AppRoutes.INKOMEN} component={Inkomen} />
           <Route
             path={AppRoutes['ZORG/VOORZIENINGEN']}
@@ -168,6 +168,7 @@ function AppAuthenticated() {
             component={VergunningDetail}
           />
           <Route path={AppRoutes.VERGUNNINGEN} component={Vergunningen} />
+
           <Route component={NotFound} />
         </Switch>
       </div>

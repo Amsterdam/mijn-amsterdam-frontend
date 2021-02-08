@@ -31,11 +31,8 @@ function isChapterActive(
 ) {
   switch (item.id) {
     case Chapters.INKOMEN:
-      const hasStadspasSaldo =
-        FeatureToggle.stadpasActive &&
-        !!FOCUS_STADSPAS?.content?.stadspassen?.length;
-      const isLoadingStadspasSaldo =
-        FeatureToggle.stadpasActive && isLoading(FOCUS_STADSPAS);
+      const hasStadspasSaldo = !!FOCUS_STADSPAS?.content?.stadspassen?.length;
+      const isLoadingStadspasSaldo = isLoading(FOCUS_STADSPAS);
       return (
         !(
           isLoading(FOCUS_AANVRAGEN) &&
