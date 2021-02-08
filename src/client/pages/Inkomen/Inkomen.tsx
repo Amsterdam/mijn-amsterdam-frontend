@@ -80,10 +80,7 @@ export default function Inkomen() {
         .sort(dateSort('datePublished', 'desc'))
     );
   }, [aanvragen, tozoItems]);
-  console.log(
-    'items',
-    items.map((item) => item.status)
-  );
+
   const itemsRequested = items.filter((item) => item.status !== 'Besluit');
   const itemsDecided = items.filter((item) => item.status === 'Besluit');
 

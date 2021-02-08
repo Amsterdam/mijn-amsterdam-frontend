@@ -1,0 +1,236 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Stadpas /> Matches the Full Page snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="Page OverviewPage Stadspas"
+  >
+    <header
+      class="PageHeading hasIcon"
+    >
+      <span
+        aria-hidden="true"
+        class="Icon"
+      >
+        <svg
+          aria-label="Stadspas"
+          class="ChapterIcon"
+          fill="black"
+        >
+          stadspas.svg
+        </svg>
+      </span>
+      <div
+        class="HeadingInner"
+      >
+        <h2
+          class="Heading Heading__large"
+        >
+          Stadspas
+        </h2>
+      </div>
+    </header>
+    <div
+      class="PageContent"
+    >
+      <p>
+        Intro tekst over de stadspas.
+      </p>
+      <p>
+        Hebt u kinderen of een partner met een Stadspas? 1 volwassene krijgt alle Stadspassen van uw gezin te zien. De andere gezinsleden zien alleen hun eigen Stadspas als ze zelf inloggen op Mijn Amsterdam.
+      </p>
+      <p>
+        <a
+          class="Button Button__plain Button__lean Linkd"
+          href="https://www.amsterdam.nl/stadspas"
+          rel="external noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Right.svg
+          </svg>
+          Meer informatie over de Stadspas
+        </a>
+      </p>
+    </div>
+    <section
+      class="SectionCollapsible SectionCollapsibleFirst"
+    >
+      <h3
+        class="Heading Heading__mediumLarge Title TitleWithItems"
+      >
+        <button
+          aria-expanded="true"
+          class="TitleToggle"
+        >
+          <svg
+            aria-hidden="true"
+            class="CaretIcon"
+          >
+            Chevron-Right.svg
+          </svg>
+           Stadspas
+        </button>
+      </h3>
+      <div
+        aria-hidden="false"
+        class="Panel"
+        style="height: 0px;"
+      >
+        <div
+          class="PanelInner"
+        >
+          <table
+            class="Table Table"
+          >
+            <thead>
+              <tr
+                class="TableRow"
+              >
+                <th
+                  class="DisplayProp"
+                />
+                <th
+                  class="DisplayProp"
+                >
+                  Stadspasnummer
+                </th>
+                <th
+                  class="DisplayProp"
+                >
+                  Einddatum
+                </th>
+                <th
+                  class="DisplayProp"
+                />
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayProp"
+                >
+                  <span>
+                    G Braber
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Stadspasnummer:
+                  </span>
+                  <span>
+                    6011012604273
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Einddatum:
+                  </span>
+                  <span>
+                    31 augustus 2021
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <a
+                    class="Button Button__inline Button__lean Linkd LinkedInline"
+                    href="/stadspas/saldo/200769"
+                  >
+                    Bekijk saldo
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <section
+      class="SectionCollapsible SectionCollapsible"
+    >
+      <h3
+        class="Heading Heading__mediumLarge Title TitleWithItems"
+      >
+        <button
+          aria-expanded="false"
+          class="TitleToggle"
+        >
+          <svg
+            aria-hidden="true"
+            class="CaretIcon"
+          >
+            Chevron-Right.svg
+          </svg>
+           Lopende aanvragen
+        </button>
+      </h3>
+      <div
+        aria-hidden="true"
+        class="Panel"
+        style="height: 0px;"
+      >
+        <div
+          class="PanelInner"
+        >
+          <p
+            class="NoItemsMessage"
+          >
+            U hebt op dit moment geen lopende aanvragen.
+          </p>
+        </div>
+      </div>
+    </section>
+    <section
+      class="SectionCollapsible"
+    >
+      <h3
+        class="Heading Heading__mediumLarge Title TitleWithItems"
+      >
+        <button
+          aria-expanded="false"
+          class="TitleToggle"
+        >
+          <svg
+            aria-hidden="true"
+            class="CaretIcon"
+          >
+            Chevron-Right.svg
+          </svg>
+           Eerdere aanvragen
+        </button>
+      </h3>
+      <div
+        aria-hidden="true"
+        class="Panel"
+        style="height: 0px;"
+      >
+        <div
+          class="PanelInner"
+        >
+          <p
+            class="NoItemsMessage"
+          >
+            U hebt op dit moment geen eerdere aanvragen.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+</DocumentFragment>
+`;

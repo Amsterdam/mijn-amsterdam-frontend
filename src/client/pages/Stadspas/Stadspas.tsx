@@ -140,7 +140,7 @@ export default function Stadspas() {
       )}
 
       <SectionCollapsible
-        id="SectionCollapsible-income-request-process"
+        id="SectionCollapsible-stadspas-request-process"
         title="Lopende aanvragen"
         startCollapsed={hasStadspas}
         isLoading={isLoadingFocus}
@@ -160,7 +160,7 @@ export default function Stadspas() {
       </SectionCollapsible>
 
       <SectionCollapsible
-        id="SectionCollapsible-income-request-process-decisions"
+        id="SectionCollapsible-stadspas-request-process-decisions"
         startCollapsed={true}
         isLoading={isLoadingFocus}
         hasItems={hasActiveDescisions}

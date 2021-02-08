@@ -13,7 +13,7 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
         class="Icon"
       >
         <svg
-          aria-label="Inkomen en Stadspas"
+          aria-label="Inkomen"
           class="ChapterIcon"
           fill="black"
         >
@@ -26,7 +26,7 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
         <h2
           class="Heading Heading__large"
         >
-          Inkomen en Stadspas
+          Inkomen
         </h2>
       </div>
     </header>
@@ -35,9 +35,6 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
     >
       <p>
         Op deze pagina vindt u informatie over uw uitkering en de ondersteuning die u krijgt omdat u weinig geld hebt.
-      </p>
-      <p>
-        Hebt u kinderen of een partner met een Stadspas? 1 volwassene krijgt alle Stadspassen van uw gezin te zien. De andere gezinsleden zien alleen hun eigen Stadspas als ze zelf inloggen op Mijn Amsterdam.
       </p>
       <p>
         <a
@@ -76,7 +73,7 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
       </p>
     </div>
     <section
-      class="SectionCollapsible SectionCollapsibleFirst"
+      class="SectionCollapsible SectionCollapsible"
     >
       <h3
         class="Heading Heading__mediumLarge Title TitleWithItems"
@@ -91,114 +88,11 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
           >
             Chevron-Right.svg
           </svg>
-           Stadspas
-        </button>
-      </h3>
-      <div
-        aria-hidden="false"
-        class="Panel"
-        style="height: 0px;"
-      >
-        <div
-          class="PanelInner"
-        >
-          <table
-            class="Table Table"
-          >
-            <thead>
-              <tr
-                class="TableRow"
-              >
-                <th
-                  class="DisplayProp"
-                />
-                <th
-                  class="DisplayProp"
-                >
-                  Stadspasnummer
-                </th>
-                <th
-                  class="DisplayProp"
-                >
-                  Einddatum
-                </th>
-                <th
-                  class="DisplayProp"
-                />
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                class="TableRow"
-              >
-                <td
-                  class="DisplayProp"
-                >
-                  <span>
-                    G Braber
-                  </span>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Stadspasnummer:
-                  </span>
-                  <span>
-                    6011012604273
-                  </span>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Einddatum:
-                  </span>
-                  <span>
-                    31 augustus 2021
-                  </span>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <a
-                    class="Button Button__inline Button__lean Linkd LinkedInline"
-                    href="/inkomen-en-stadspas/stadspas/saldo/200769"
-                  >
-                    Bekijk saldo
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-    <section
-      class="SectionCollapsible SectionCollapsible"
-    >
-      <h3
-        class="Heading Heading__mediumLarge Title TitleWithItems"
-      >
-        <button
-          aria-expanded="false"
-          class="TitleToggle"
-        >
-          <svg
-            aria-hidden="true"
-            class="CaretIcon"
-          >
-            Chevron-Right.svg
-          </svg>
            Lopende aanvragen
         </button>
       </h3>
       <div
-        aria-hidden="true"
+        aria-hidden="false"
         class="Panel"
         style="height: 0px;"
       >
@@ -230,39 +124,6 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
               </tr>
             </thead>
             <tbody>
-              <tr
-                class="TableRow"
-              >
-                <td
-                  class="DisplayPropTitle"
-                >
-                  Aanvraag inkomen item
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Datum aanvraag:
-                  </span>
-                  <span>
-                    14 juli 2020
-                  </span>
-                </td>
-                <td
-                  class="DisplayProp"
-                >
-                  <span
-                    class="DisplayPropLabel"
-                  >
-                    Status:
-                  </span>
-                  <span>
-                    Besluit
-                  </span>
-                </td>
-              </tr>
               <tr
                 class="TableRow"
               >
@@ -386,6 +247,39 @@ exports[`<Inkomen /> Matches the Full Page snapshot 1`] = `
               </tr>
             </thead>
             <tbody>
+              <tr
+                class="TableRow"
+              >
+                <td
+                  class="DisplayPropTitle"
+                >
+                  Aanvraag inkomen item
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Datum aanvraag:
+                  </span>
+                  <span>
+                    14 juli 2020
+                  </span>
+                </td>
+                <td
+                  class="DisplayProp"
+                >
+                  <span
+                    class="DisplayPropLabel"
+                  >
+                    Datum besluit:
+                  </span>
+                  <span>
+                    24 juli 2020
+                  </span>
+                </td>
+              </tr>
               <tr
                 class="TableRow"
               >

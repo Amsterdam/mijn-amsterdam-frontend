@@ -8,29 +8,6 @@ import MockApp from '../MockApp';
 import Inkomen from './Inkomen';
 
 const testState: any = {
-  FOCUS_STADSPAS: {
-    content: {
-      type: 'hoofdpashouder',
-      stadspassen: [
-        {
-          budgets: [
-            {
-              title: 'SPORT-EN-SPEL',
-              assigned: 220,
-              balance: 80,
-              urlTransactions:
-                '/focus/stadspastransacties/gAAAAABfmojHaIr3lIb5ATsZ98is4S8x3HqxdbVACw8562VCtv3ygKtkD5h7rGCUZhoebm0jFAvLjzibxcgKqpbWELopLBT5Ywf1FzDjzvNVQOij_3hYLks=',
-            },
-          ],
-          datumAfloop: '2021-08-31T21:59:59.000Z',
-          id: 200769,
-          naam: 'G Braber',
-          pasnummer: 6011012604273,
-        },
-      ],
-    },
-    status: 'OK',
-  },
   FOCUS_AANVRAGEN: {
     status: 'OK',
     content: [

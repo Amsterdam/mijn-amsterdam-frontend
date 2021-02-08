@@ -13,11 +13,11 @@ exports[`<StadspasDetail /> Matches the Full Page snapshot 1`] = `
         class="Icon"
       >
         <svg
-          aria-label="Inkomen en Stadspas"
+          aria-label="Stadspas"
           class="ChapterIcon"
           fill="black"
         >
-          inkomen.svg
+          stadspas.svg
         </svg>
       </span>
       <div
@@ -25,7 +25,7 @@ exports[`<StadspasDetail /> Matches the Full Page snapshot 1`] = `
       >
         <a
           class="Button Button__plain Button__lean Linkd BackLink"
-          href="/inkomen-en-stadspas"
+          href="/stadspas"
         >
           <svg
             aria-hidden="true"
@@ -36,7 +36,7 @@ exports[`<StadspasDetail /> Matches the Full Page snapshot 1`] = `
           >
             Chevron-Left.svg
           </svg>
-          Inkomen en Stadspas
+          Stadspas
         </a>
         <h2
           class="Heading Heading__large"
