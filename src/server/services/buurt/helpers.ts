@@ -30,6 +30,15 @@ export function getApiEmbeddedResponse(id: string, responseData: any) {
   return Array.isArray(results) ? results : null;
 }
 
+export function discoverSingleApiEmbeddedResponse(responseData: any) {
+  // Use first key found in embedded response
+  const embeddedKey = responseData?._embedded
+    ? Object.keys(responseData._embedded)[0]
+    : undefined;
+  // Blindly assume there is an array with 1 result
+  return embeddedKey ? responseData._embedded[embeddedKey][0] : null;
+}
+
 export function getDatasetEndpointConfig(
   endpointIDs?: string[],
   featureTypes?: DatasetConfig['featureType'][]
@@ -488,8 +497,18 @@ export function transformDsoApiListResponse(
   if (results && results.length) {
     for (const feature of results) {
       if (feature.geometry?.coordinates) {
+        const id = config.idKeyList
+          ? encodeURIComponent(
+              String(
+                feature?.properties
+                  ? feature?.properties[config.idKeyList]
+                  : feature[config.idKeyList]
+              )
+            )
+          : String(feature?.properties?.id || feature.id);
+
         const properties: DatasetFeatureProperties = {
-          id: String(feature?.properties?.id || feature.id),
+          id,
           datasetId,
         };
 

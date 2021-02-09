@@ -47,7 +47,7 @@ export default function MyAreaHeader({
       {showCloseButton && (
         <Button
           onClick={() => {
-            history.goBack();
+            history.push(AppRoutes.ROOT);
           }}
         >
           Kaart sluiten
