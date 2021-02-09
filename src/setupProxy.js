@@ -49,7 +49,7 @@ function handleSession(req, res, next) {
   }
 }
 
-module.exports = function(app) {
+module.exports = function (app) {
   app.set('trust proxy', 1);
 
   app.use(
@@ -69,8 +69,11 @@ module.exports = function(app) {
   );
 
   app.get(['/logout'], handleLogout);
-  app.get(['/test-api/login', '/test-api1/login'], handleLogin);
-  app.use(['/test-api', '/test-api1'], handleSession);
+  app.get(
+    ['/test-api/login', '/test-api1/login', '/test-api2/login'],
+    handleLogin
+  );
+  app.use(['/test-api', '/test-api1', '/test-api2'], handleSession);
   app.get(['/test-api/auth/check', '/test-api1/auth/check'], (req, res) => {
     return res.send(req.session);
   });

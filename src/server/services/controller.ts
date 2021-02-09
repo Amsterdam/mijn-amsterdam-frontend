@@ -41,7 +41,9 @@ function getServiceMap(profileType: ProfileType) {
 }
 
 function getServiceTipsMap(profileType: ProfileType) {
-  return servicesTipsByProfileType[profileType];
+  return (
+    servicesTipsByProfileType[profileType] || servicesTipsByProfileType.private
+  );
 }
 
 /**
@@ -323,10 +325,11 @@ export type ServicesTips = ReturnTypeAsync<typeof loadServicesTipsRequestData>;
 async function createTipsServiceResults(sessionID: SessionID, req: Request) {
   let requestData = null;
   if (queryParams(req).optin === 'true') {
+    const profileType = queryParams(req).profileType as ProfileType;
     const servicePromises = loadServices(
       sessionID,
       req,
-      getServiceTipsMap(queryParams(req).profileType as ProfileType) as any
+      getServiceTipsMap(profileType) as any
     );
     requestData = (await Promise.allSettled(servicePromises)).reduce(
       (acc, result, index) => Object.assign(acc, getSettledResult(result)),
