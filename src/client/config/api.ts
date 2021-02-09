@@ -1,16 +1,22 @@
 import * as Cookies from 'js-cookie';
 import {
   API_BASE_PATH,
-  COOKIE_KEY_COMMERCIAL_LOGIN,
+  AuthType,
+  COOKIE_KEY_AUTH_TYPE,
   IS_AP,
 } from '../../universal/config';
 import { IS_ACCEPTANCE } from '../../universal/config/env';
 import { isError } from '../../universal/helpers';
 import { AppState } from '../AppState';
 
+// Will be determined after we've been redirected by TMA
 export const IS_COMMERCIAL_PATH_MATCH =
   /\/(test-)?api1(-|\/)login/g.test(window.location.pathname) ||
-  !!Cookies.get(COOKIE_KEY_COMMERCIAL_LOGIN);
+  Cookies.get(COOKIE_KEY_AUTH_TYPE) === AuthType.EHERKENNING;
+
+export const IS_IRMA_PATH_MATCH =
+  /\/(test-)?api2(-|\/)login/g.test(window.location.pathname) ||
+  Cookies.get(COOKIE_KEY_AUTH_TYPE) === AuthType.IRMA;
 
 // Urls directly used from front-end
 export const TMA_LOGIN_URL_DIGID = `${API_BASE_PATH}/login`;
@@ -32,7 +38,8 @@ export const LOGIN_URL_EHERKENNING = TMA_LOGIN_URL_EHERKENNING;
 export const LOGIN_URL_IRMA = TMA_LOGIN_URL_IRMA;
 
 const API_BASE_PATH_MODDED =
-  API_BASE_PATH + (IS_COMMERCIAL_PATH_MATCH ? '1' : '');
+  API_BASE_PATH +
+  (IS_COMMERCIAL_PATH_MATCH ? '1' : IS_IRMA_PATH_MATCH ? '2' : '');
 
 export const BFF_API_BASE_URL = `${API_BASE_PATH_MODDED}/bff`;
 export const AUTH_API_URL = `${API_BASE_PATH_MODDED}/auth/check`;

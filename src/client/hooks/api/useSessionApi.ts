@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import { useCallback, useEffect } from 'react';
 import { atom, useRecoilState } from 'recoil';
-import { COOKIE_KEY_COMMERCIAL_LOGIN } from '../../../universal/config';
+import { AuthType, COOKIE_KEY_AUTH_TYPE } from '../../../universal/config';
 import { ApiSuccessResponse } from '../../../universal/helpers';
 import {
   ApiErrorResponse,
@@ -15,6 +15,7 @@ import {
 import { clearSessionStorage } from '../storage.hook';
 import { clearDeeplinkEntry } from '../useDeeplink.hook';
 import { ApiRequestOptions, useDataApi } from './useDataApi';
+import { IS_IRMA_PATH_MATCH } from '../../config/api';
 
 export type SessionData = {
   isAuthenticated: boolean;
@@ -58,7 +59,7 @@ type SessionResponseData =
   | ApiErrorResponse<SessionData>;
 
 function setExplicitLogout() {
-  Cookies.remove(COOKIE_KEY_COMMERCIAL_LOGIN);
+  Cookies.remove(COOKIE_KEY_AUTH_TYPE);
   (window as any).isExplicitLogout = true;
 }
 
@@ -67,10 +68,18 @@ function isExplicitLogout() {
 }
 
 function saveUserTypeForReloadingAndNewTabs(maxAge: number) {
-  if (IS_COMMERCIAL_PATH_MATCH && !isExplicitLogout()) {
-    Cookies.set(COOKIE_KEY_COMMERCIAL_LOGIN, 'yes', {
-      'Max-age': '' + maxAge,
-    });
+  if (!isExplicitLogout()) {
+    Cookies.set(
+      COOKIE_KEY_AUTH_TYPE,
+      IS_COMMERCIAL_PATH_MATCH
+        ? AuthType.EHERKENNING
+        : IS_IRMA_PATH_MATCH
+        ? AuthType.IRMA
+        : AuthType.DIGID,
+      {
+        'Max-age': '' + maxAge,
+      }
+    );
   }
 }
 
