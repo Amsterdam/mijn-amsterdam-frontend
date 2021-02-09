@@ -82,7 +82,7 @@ exports[`<Landing /> Renders without crashing 1`] = `
         <p>
           <a
             class="LoginBtn LoginBtn--irma"
-            href="/test-api1/login"
+            href="/test-api2/login"
             rel="noopener noreferrer"
             role="button"
           >
