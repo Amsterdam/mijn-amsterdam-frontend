@@ -15,7 +15,7 @@ export const IS_COMMERCIAL_PATH_MATCH =
 // Urls directly used from front-end
 export const TMA_LOGIN_URL_DIGID = `${API_BASE_PATH}/login`;
 export const TMA_LOGIN_URL_EHERKENNING = `${API_BASE_PATH}1/login`;
-export const TMA_LOGIN_URL_IRMA = `${API_BASE_PATH}1/login`;
+export const TMA_LOGIN_URL_IRMA = `${API_BASE_PATH}2/login`;
 
 export const TMA_LOGIN_URL_DIGID_AFTER_REDIRECT = IS_AP
   ? TMA_LOGIN_URL_DIGID
@@ -25,7 +25,7 @@ export const TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT = IS_AP
   : `/test-api1-login`;
 export const TMA_LOGIN_URL_IRMA_AFTER_REDIRECT = IS_AP
   ? TMA_LOGIN_URL_IRMA
-  : `/test-api1-login`;
+  : `/test-api2-login`;
 
 export const LOGIN_URL_DIGID = TMA_LOGIN_URL_DIGID;
 export const LOGIN_URL_EHERKENNING = TMA_LOGIN_URL_EHERKENNING;
