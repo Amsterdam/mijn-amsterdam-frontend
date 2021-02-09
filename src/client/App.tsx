@@ -26,6 +26,7 @@ import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import {
   TMA_LOGIN_URL_DIGID_AFTER_REDIRECT,
   TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT,
+  TMA_LOGIN_URL_IRMA_AFTER_REDIRECT,
 } from './config/api';
 import { useAnalytics, usePageChange, useScript } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
@@ -111,6 +112,10 @@ function AppAuthenticated() {
           />
           <Redirect
             from={TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT}
+            to={redirectAfterLogin}
+          />
+          <Redirect
+            from={TMA_LOGIN_URL_IRMA_AFTER_REDIRECT}
             to={redirectAfterLogin}
           />
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
