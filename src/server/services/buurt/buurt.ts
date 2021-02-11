@@ -9,6 +9,7 @@ import { ApiResponse } from '../../../universal/helpers/api';
 import { DataRequestConfig } from '../../config';
 import { requestData } from '../../helpers';
 import FileCache from '../../helpers/file-cache';
+
 import {
   ACCEPT_CRS_4326,
   BUURT_CACHE_TTL_1_DAY_IN_MINUTES,
@@ -20,6 +21,7 @@ import {
 import {
   createDynamicFilterConfig,
   datasetApiResult,
+  discoverSingleApiEmbeddedResponse,
   filterAndRefineFeatures,
   filterPolylineFeaturesWithinBoundingBox,
   getDatasetEndpointConfig,
@@ -137,6 +139,7 @@ export async function loadDatasetFeatures(
 
   for (const datasetConfig of configs) {
     const [id, config] = datasetConfig;
+
     requests.push(
       fetchDataset(sessionID, id, config).then((result) => {
         return {
@@ -211,7 +214,9 @@ export async function loadFeatureDetail(
   }
 
   const [, config] = datasetConfig;
-  const url = `${config.detailUrl}${id}`;
+  const url = config.idKeyDetail
+    ? `${config.detailUrl}?${config.idKeyDetail}=${id}`
+    : `${config.detailUrl}${id}`;
 
   const requestConfig: DataRequestConfig = {
     url,
@@ -228,5 +233,18 @@ export async function loadFeatureDetail(
     );
   }
 
-  return requestData(requestConfig, sessionID, {});
+  const response = await requestData(requestConfig, sessionID, {});
+
+  if (response.status === 'OK') {
+    const item = discoverSingleApiEmbeddedResponse(response.content);
+    // Replace the value of the `idKeyDetail` property. E.g. idKeyDetail = someOtherId  item.id = item.someOtherId;
+    if (config.idKeyDetail) {
+      item.id = encodeURIComponent(item[config.idKeyDetail]);
+    }
+    if (item) {
+      return apiSuccesResult(item);
+    }
+  }
+
+  return response;
 }

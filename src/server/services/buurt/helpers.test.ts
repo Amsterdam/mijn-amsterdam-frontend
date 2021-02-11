@@ -1,6 +1,7 @@
 import * as config from '../../../universal/config/buurt';
 import { ApiResponse } from '../../../universal/helpers';
 import {
+  DatasetConfig,
   datasetEndpoints,
   DatasetResponse,
   MaPointFeature,
@@ -708,5 +709,43 @@ describe('Buurt helpers', () => {
         DSO_API_RESULT2
       )
     ).toStrictEqual(datasetResultTransformed);
+  });
+
+  it('should use a custom ID property', () => {
+    const config: DatasetConfig = {
+      featureType: 'Point',
+      idKeyList: 'otherUniqueIdentifier',
+    };
+
+    const sourceResponse: any = {
+      _embedded: {
+        'test-id-key-transform': [
+          {
+            id: 1,
+            otherUniqueIdentifier: 'xx-99-uu-88',
+            geometry: { coordinates: [1, 2], type: 'Point' },
+          },
+        ],
+      },
+    };
+
+    const transformedResponse = [
+      {
+        geometry: { coordinates: [1, 2], type: 'Point' },
+        properties: {
+          id: 'xx-99-uu-88',
+          datasetId: 'test-id-key-transform',
+        },
+        type: 'Feature',
+      },
+    ];
+
+    const result = transformDsoApiListResponse(
+      'test-id-key-transform',
+      config,
+      sourceResponse
+    );
+
+    expect(result).toStrictEqual(transformedResponse);
   });
 });

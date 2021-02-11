@@ -20,7 +20,7 @@ export const FeatureToggle = {
   profileToggleActive: true,
   kvkActive: true,
   residentCountActive: true,
-  sportDatasetsActive: !IS_PRODUCTION,
+  sportDatasetsActive: true,
   foreignAddressInfoActive: !IS_PRODUCTION,
   irmaActive: !IS_PRODUCTION,
 };

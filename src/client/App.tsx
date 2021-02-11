@@ -116,6 +116,10 @@ function AppAuthenticated() {
             from={TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT}
             to={redirectAfterLogin}
           />
+          <Redirect
+            from={TMA_LOGIN_URL_IRMA_AFTER_REDIRECT}
+            to={redirectAfterLogin}
+          />
           {AppRoutesRedirect.map(({ from, to }) => (
             <Redirect key={from + to} from={from} to={to} />
           ))}

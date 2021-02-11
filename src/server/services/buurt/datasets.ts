@@ -86,6 +86,9 @@ export interface DatasetConfig {
   featureType: FeatureType;
   zIndex?: zIndexPane;
   additionalStaticPropertyNames?: DatasetPropertyName[];
+  // NOTE: The ID key also has to be added to the `additionalStaticPropertyNames` array if using the DSO REST API endpoints. The WFS endpoints retrieve all the property names by default so `additionalStaticPropertyNames` can be left empty.
+  idKeyList?: string;
+  idKeyDetail?: string;
 }
 
 function dsoApiListUrl(
@@ -125,6 +128,8 @@ export const datasetEndpoints: Record<
     transformList: transformAfvalcontainersResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
+    idKeyList: 'id_nummer',
+    idKeyDetail: 'idNummer',
   },
   evenementen: {
     listUrl: dsoApiListUrl('evenementen/evenementen'),
@@ -132,6 +137,10 @@ export const datasetEndpoints: Record<
     transformList: transformDsoApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
+    // NOTE: Tried URL as unique ID but various events point to the same URL.
+    // additionalStaticPropertyNames: ['url'],
+    // idKeyList: 'url',
+    // idKeyDetail: 'url',
   },
   bekendmakingen: {
     listUrl:
@@ -141,6 +150,8 @@ export const datasetEndpoints: Record<
     transformList: transformDsoApiListResponse,
     featureType: 'Point',
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
+    idKeyList: 'officielebekendmakingen_id',
+    idKeyDetail: 'officielebekendmakingenId',
   },
   parkeerzones: {
     listUrl: dsoApiListUrl('parkeerzones/parkeerzones'),
@@ -148,8 +159,10 @@ export const datasetEndpoints: Record<
     transformList: transformParkeerzoneCoords,
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.PARKEERZONES,
-    additionalStaticPropertyNames: ['gebiedskleurcode'],
+    additionalStaticPropertyNames: ['gebiedskleurcode', 'gebiedscode'],
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
+    idKeyList: 'gebiedscode',
+    idKeyDetail: 'gebiedscode',
   },
   parkeerzones_uitzondering: {
     listUrl: dsoApiListUrl('parkeerzones/parkeerzones_uitzondering'),
@@ -159,6 +172,9 @@ export const datasetEndpoints: Record<
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.PARKEERZONES_UITZONDERING,
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
+    additionalStaticPropertyNames: ['gebiedscode'],
+    idKeyList: 'gebiedscode',
+    idKeyDetail: 'gebiedscode',
   },
   zwembad: {
     listUrl: dsoApiListUrl('sport/zwembad'),
@@ -237,6 +253,9 @@ export const datasetEndpoints: Record<
     featureType: 'MultiPolygon',
     zIndex: zIndexPane.BEDRIJVENINVESTERINGSZONES,
     cacheTimeMinutes: BUURT_CACHE_TTL_8_HOURS_IN_MINUTES,
+    additionalStaticPropertyNames: ['naam'],
+    idKeyList: 'naam',
+    idKeyDetail: 'naam',
   },
 };
 

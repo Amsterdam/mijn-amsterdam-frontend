@@ -35,6 +35,10 @@ export default function Landing() {
 
   const [isRedirecting, setRedirecting] = useState(false);
   const [isRedirectingEherkenning, setRedirectingEherkenning] = useState(false);
+  const [isRedirectingIrma, setRedirectingIrma] = useState(false);
+
+  const isRedirectingAny =
+    isRedirecting || isRedirectingEherkenning || isRedirectingIrma;
 
   return (
     <TextPage>
@@ -66,8 +70,7 @@ export default function Landing() {
               rel="noopener noreferrer"
               className={classnames(
                 styles.LoginBtn,
-                (isRedirecting || isRedirectingEherkenning) &&
-                  styles.LoginBtnDisabled
+                isRedirectingAny && styles.LoginBtnDisabled
               )}
             >
               <span className={styles.LoginLogoWrap}>
@@ -107,13 +110,12 @@ export default function Landing() {
                 ref={loginButton}
                 role="button"
                 href={LOGIN_URL_IRMA}
-                onClick={() => setRedirectingEherkenning(true)}
+                onClick={() => setRedirectingIrma(true)}
                 rel="noopener noreferrer"
                 className={classnames(
                   styles.LoginBtn,
                   styles['LoginBtn--irma'],
-                  (isRedirecting || isRedirectingEherkenning) &&
-                    styles.LoginBtnDisabled
+                  isRedirectingAny && styles.LoginBtnDisabled
                 )}
               >
                 <span className={styles.LoginLogoWrap}>
@@ -124,7 +126,7 @@ export default function Landing() {
                   />
                 </span>
                 <span className={styles.LoginButtonText}>
-                  {isRedirectingEherkenning
+                  {isRedirectingIrma
                     ? 'Bezig met inloggen...'
                     : 'Inloggen met IRMA'}
                 </span>
@@ -162,8 +164,7 @@ export default function Landing() {
                 className={classnames(
                   styles.LoginBtn,
                   styles['LoginBtn--eherkenning'],
-                  (isRedirecting || isRedirectingEherkenning) &&
-                    styles.LoginBtnDisabled
+                  isRedirectingAny && styles.LoginBtnDisabled
                 )}
               >
                 <span className={styles.LoginLogoWrap}>

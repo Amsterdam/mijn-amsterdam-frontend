@@ -17,8 +17,13 @@ const SESSION_MAX_AGE = 15 * 60 * 1000; // 15 minutes
 
 function handleLogin(req, res, next) {
   const isCommercialUser = req.url.includes('/test-api1/');
+  const isIrmaUser = req.url.includes('/test-api2/');
   const redirectUrlAfterLogin = `${REDIRECT_AFTER_LOGIN}/${
-    isCommercialUser ? 'test-api1-login' : 'test-api-login'
+    isCommercialUser
+      ? 'test-api1-login'
+      : isIrmaUser
+      ? 'test-api2-login'
+      : 'test-api-login'
   }`;
 
   const userType = isCommercialUser ? 'BEDRIJF' : 'BURGER';
@@ -49,7 +54,7 @@ function handleSession(req, res, next) {
   }
 }
 
-module.exports = function(app) {
+module.exports = function (app) {
   app.set('trust proxy', 1);
 
   app.use(
@@ -69,19 +74,26 @@ module.exports = function(app) {
   );
 
   app.get(['/logout'], handleLogout);
-  app.get(['/test-api/login', '/test-api1/login'], handleLogin);
-  app.use(['/test-api', '/test-api1'], handleSession);
-  app.get(['/test-api/auth/check', '/test-api1/auth/check'], (req, res) => {
-    return res.send(req.session);
-  });
+  app.get(
+    ['/test-api/login', '/test-api1/login', '/test-api2/login'],
+    handleLogin
+  );
+  app.use(['/test-api', '/test-api1', '/test-api2'], handleSession);
+  app.get(
+    ['/test-api/auth/check', '/test-api1/auth/check', '/test-api2/auth/check'],
+    (req, res) => {
+      return res.send(req.session);
+    }
+  );
 
   app.use(
-    ['/test-api', '/test-api1'],
+    ['/test-api', '/test-api1', '/test-api2'],
     createProxyMiddleware({
       target: `http://${apiHost}:${apiPort}`,
       changeOrigin: true,
       pathRewrite: {
         '/test-api1': '/test-api',
+        '/test-api2': '/test-api',
       },
       onProxyReq: function onProxyReq(proxyReq, req, res) {
         proxyReq.setHeader('x-saml-attribute-token1', 'foobar');
