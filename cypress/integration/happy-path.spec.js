@@ -24,27 +24,31 @@ const pageConfig = {
   },
   INKOMEN: {
     hasCollapsiblePanels: true,
-    pathname: '/inkomen-en-stadspas',
+    pathname: '/inkomen',
   },
-  'INKOMEN/STADSPAS': {
-    isDetailPage: true,
-    pathname: '/inkomen-en-stadspas/stadspas/aanvraag/:id',
+  STADSPAS: {
+    hasCollapsiblePanels: true,
+    pathname: '/stadspas',
   },
-  'INKOMEN/STADSPAS/SALDO': {
+  'STADSPAS/AANVRAAG': {
     isDetailPage: true,
-    pathname: '/inkomen-en-stadspas/stadspas/saldo/:id',
+    pathname: '/stadspas/aanvraag/:id',
+  },
+  'STADSPAS/SALDO': {
+    isDetailPage: true,
+    pathname: '/stadspas/saldo/:id',
   },
   'INKOMEN/BIJSTANDSUITKERING': {
     isDetailPage: true,
-    pathname: '/inkomen-en-stadspas/bijstandsuitkering/:id',
+    pathname: '/inkomen/bijstandsuitkering/:id',
   },
   'INKOMEN/SPECIFICATIES': {
     isDetailPage: true,
-    pathname: '/inkomen-en-stadspas/uitkeringsspecificaties',
+    pathname: '/inkomen/uitkeringsspecificaties',
   },
   'INKOMEN/TOZO': {
     isDetailPage: true,
-    pathname: '/inkomen-en-stadspas/tozo/:id?',
+    pathname: '/inkomen/tozo/:id?',
   },
   BRP: {
     hasCollapsiblePanels: true,
@@ -129,11 +133,9 @@ describe('The happy path', () => {
         cy.get('a[href*="' + detailUrl + '"]:eq(0)').click({ force: true });
 
         // Expand the statusline component should it be rendered collapsed
-        cy.get('body').then($body => {
+        cy.get('body').then(($body) => {
           if ($body.text().includes('Toon alles')) {
-            cy.get('button')
-              .contains('Toon alles')
-              .click();
+            cy.get('button').contains('Toon alles').click();
             cy.get('[class*="StatusLine_ListItem"]')
               .its('length')
               .should('be.gte', 2);
