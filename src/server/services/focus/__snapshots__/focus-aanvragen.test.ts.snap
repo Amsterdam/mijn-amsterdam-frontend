@@ -378,7 +378,7 @@ Array [
     "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen-en-stadspas/stadspas/aanvraag/226183637",
+      "to": "/stadspas/aanvraag/226183637",
     },
     "productTitle": "Stadspas",
     "status": "Aanvraag",
@@ -429,7 +429,7 @@ Array [
     "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen-en-stadspas/stadspas/aanvraag/4147155538",
+      "to": "/stadspas/aanvraag/4147155538",
     },
     "productTitle": "Stadspas",
     "status": "In behandeling",
@@ -505,7 +505,7 @@ Array [
     "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen-en-stadspas/stadspas/aanvraag/2371148170",
+      "to": "/stadspas/aanvraag/2371148170",
     },
     "productTitle": "Stadspas",
     "status": "Informatie nodig",
@@ -605,7 +605,7 @@ Array [
     "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen-en-stadspas/bijstandsuitkering/399318441",
+      "to": "/inkomen/bijstandsuitkering/399318441",
     },
     "productTitle": "Bijstandsuitkering",
     "status": "Besluit",
@@ -716,7 +716,7 @@ Array [
     "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen-en-stadspas/bijstandsuitkering/399318441",
+      "to": "/inkomen/bijstandsuitkering/399318441",
     },
     "productTitle": "Bijstandsuitkering",
     "status": "Besluit",
@@ -814,7 +814,7 @@ Array [
     "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen-en-stadspas/bijstandsuitkering/399318441",
+      "to": "/inkomen/bijstandsuitkering/399318441",
     },
     "productTitle": "Bijstandsuitkering",
     "status": "Besluit",
@@ -949,7 +949,7 @@ Array [
     "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen-en-stadspas/bijstandsuitkering/399318441",
+      "to": "/inkomen/bijstandsuitkering/399318441",
     },
     "productTitle": "Bijstandsuitkering",
     "status": "Besluit",
