@@ -79,11 +79,9 @@ export const ApiConfig: ApiDataRequestConfig = {
   },
   FOCUS_COMBINED: {
     url: `${BFF_MS_API_BASE_URL}/focus/combined`,
-    postponeFetch: !FeatureToggle.focusCombinedActive,
   },
   FOCUS_AANVRAGEN: {
     url: `${BFF_MS_API_BASE_URL}/focus/aanvragen`,
-    postponeFetch: !FeatureToggle.focusAanvragenActive,
   },
   BELASTINGEN: {
     url: `${BFF_MS_API_BASE_URL}/belastingen/get`,

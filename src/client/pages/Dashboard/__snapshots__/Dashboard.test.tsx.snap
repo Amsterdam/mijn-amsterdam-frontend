@@ -269,7 +269,7 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
           <a
             class="MainNavSubmenuLink"
             data-chapter-id="INKOMEN"
-            href="/inkomen-en-stadspas"
+            href="/inkomen"
           >
             <span
               class="SubmenuItemIcon"
@@ -284,7 +284,7 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
             <span
               class="SubmenuItemTitle"
             >
-              Inkomen en Stadspas
+              Inkomen
             </span>
           </a>
           <a

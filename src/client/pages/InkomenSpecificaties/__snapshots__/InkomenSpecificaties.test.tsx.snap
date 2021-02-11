@@ -13,7 +13,7 @@ exports[`<InkomenSpecificaties /> Jaaropgaven Matches the Full Page snapshot 1`]
         class="Icon"
       >
         <svg
-          aria-label="Inkomen en Stadspas"
+          aria-label="Inkomen"
           class="ChapterIcon"
           fill="black"
         >
@@ -25,7 +25,7 @@ exports[`<InkomenSpecificaties /> Jaaropgaven Matches the Full Page snapshot 1`]
       >
         <a
           class="Button Button__plain Button__lean Linkd BackLink"
-          href="/inkomen-en-stadspas"
+          href="/inkomen"
         >
           <svg
             aria-hidden="true"
@@ -36,7 +36,7 @@ exports[`<InkomenSpecificaties /> Jaaropgaven Matches the Full Page snapshot 1`]
           >
             Chevron-Left.svg
           </svg>
-          Inkomen en Stadspas
+          Inkomen
         </a>
         <h2
           class="Heading Heading__large"
@@ -308,7 +308,7 @@ exports[`<InkomenSpecificaties /> Uitkeringsspecificaties Matches the Full Page 
         class="Icon"
       >
         <svg
-          aria-label="Inkomen en Stadspas"
+          aria-label="Inkomen"
           class="ChapterIcon"
           fill="black"
         >
@@ -320,7 +320,7 @@ exports[`<InkomenSpecificaties /> Uitkeringsspecificaties Matches the Full Page 
       >
         <a
           class="Button Button__plain Button__lean Linkd BackLink"
-          href="/inkomen-en-stadspas"
+          href="/inkomen"
         >
           <svg
             aria-hidden="true"
@@ -331,7 +331,7 @@ exports[`<InkomenSpecificaties /> Uitkeringsspecificaties Matches the Full Page 
           >
             Chevron-Left.svg
           </svg>
-          Inkomen en Stadspas
+          Inkomen
         </a>
         <h2
           class="Heading Heading__large"

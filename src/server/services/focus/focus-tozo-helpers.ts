@@ -256,10 +256,7 @@ export function createTozoResult(
   if (aanvraagSteps['Tozo 3']) {
     tozo3Steps.unshift(aanvraagSteps['Tozo 3']);
   }
-  const tozo3Item =
-    FeatureToggle.tozo3active &&
-    tozo3Steps.length &&
-    createTozoItem('Tozo 3', tozo3Steps);
+  const tozo3Item = tozo3Steps.length && createTozoItem('Tozo 3', tozo3Steps);
 
   const tozoItems: FocusItem[] = [];
 

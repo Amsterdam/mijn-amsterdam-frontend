@@ -181,7 +181,7 @@ exports[`<MyNotifications /> Matches the Full Page snapshot 1`] = `
               <em
                 class="ChapterIndication"
               >
-                Inkomen en Stadspas
+                Inkomen
               </em>
               <time
                 class="Datum"

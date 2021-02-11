@@ -44,17 +44,17 @@ export async function fetchFOCUSTozoGenerated(
     );
 
     if (
-      !FeatureToggle.tozo3active &&
-      TOZO.content.some((item) => item.productTitle === 'Tozo 2')
+      !FeatureToggle.tozo4active &&
+      TOZO.content.some((item) => item.productTitle === 'Tozo 3')
     ) {
       notifications.push({
         chapter: Chapters.INKOMEN,
-        datePublished: '2020-10-01',
+        datePublished: '2021-02-20',
         isAlert: false,
         hideDatePublished: false,
-        id: `focus-tozo3-notification`,
-        title: `Tozo 3`,
-        description: `Hebt u Tozo 3 aangevraagd (aanvragen vanaf 1 oktober 2020)? Wij
+        id: `focus-tozo4-notification`,
+        title: `Tozo 4`,
+        description: `Hebt u Tozo 4 aangevraagd (aanvragen vanaf 1 XXXX 2021)? Wij
                 werken er hard aan om ook die aanvraag in Mijn Amsterdam te
                 tonen. Als het zover is, ziet u uw aanvraag vanzelf hier
                 verschijnen.`,

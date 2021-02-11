@@ -22,7 +22,7 @@ export const processSteps: StepTitle[] = [
 
 export const stepStatusLabels = stepLabels;
 
-// NOTE: Possibly deprecated because it seems document titles actually contain meaningful names in the latest api response.
+// NOTE: We probably need more up-to-date document names.
 export const titleTranslations: DocumentTitles = {
   'LO: Aanvraag': 'Aanvraag bijstandsuitkering',
   'LO: Besluit': 'Besluit aanvraag bijstandsuitkering',
@@ -187,7 +187,7 @@ export const contentLabels: LabelData = {
   Minimafonds: {
     Stadspas: {
       link: (product) => ({
-        to: generatePath(AppRoutes['INKOMEN/STADSPAS/AANVRAAG'], {
+        to: generatePath(AppRoutes['STADSPAS/AANVRAAG'], {
           id: product.id,
         }),
         title: 'Meer informatie',

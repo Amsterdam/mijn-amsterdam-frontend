@@ -47,6 +47,7 @@ export const ExternalUrls = {
     'https://formulier.amsterdam.nl/mail/afval/afvalwijzer/',
   KREFIA: getOtapEnvItem('krefiaDirectLink'),
   STADSBANK_VAN_LENING: 'https://www.amsterdam.nl/sbl/',
+  STADSPAS: 'https://www.amsterdam.nl/stadspas',
 };
 
 // NOTE: Keep up-to-date with _colors.scss

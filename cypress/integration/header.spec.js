@@ -9,9 +9,7 @@ describe('Header', () => {
 
   it('Header shows menu items', () => {
     selectComponent('MainNavBar_MainNavBar').should('exist');
-    selectComponent('MainNavBar_MainNavBar')
-      .get('a')
-      .should('exist');
+    selectComponent('MainNavBar_MainNavBar').get('a').should('exist');
   });
 
   it('(PHONE) Should show the burger menu when on a small screen', () => {

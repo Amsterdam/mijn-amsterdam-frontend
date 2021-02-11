@@ -4,13 +4,15 @@ export const AppRoutes = {
   BURGERZAKEN_DOCUMENT: '/burgerzaken/document/:id',
   ZORG: '/zorg-en-ondersteuning',
   'ZORG/VOORZIENINGEN': '/zorg-en-ondersteuning/voorzieningen/:id',
-  INKOMEN: '/inkomen-en-stadspas',
-  'INKOMEN/STADSPAS/AANVRAAG': '/inkomen-en-stadspas/stadspas/aanvraag/:id',
-  'INKOMEN/STADSPAS/SALDO': '/inkomen-en-stadspas/stadspas/saldo/:id',
-  'INKOMEN/BIJSTANDSUITKERING': '/inkomen-en-stadspas/bijstandsuitkering/:id',
-  'INKOMEN/SPECIFICATIES':
-    '/inkomen-en-stadspas/uitkeringsspecificaties/:category?',
-  'INKOMEN/TOZO': '/inkomen-en-stadspas/tozo/:version/:id',
+
+  'STADSPAS/AANVRAAG': '/stadspas/aanvraag/:id',
+  'STADSPAS/SALDO': '/stadspas/saldo/:id',
+  'INKOMEN/BIJSTANDSUITKERING': '/inkomen/bijstandsuitkering/:id',
+  'INKOMEN/SPECIFICATIES': '/inkomen/uitkeringsspecificaties/:category?',
+  'INKOMEN/TOZO': '/inkomen/tozo/:version/:id',
+  INKOMEN: '/inkomen',
+  STADSPAS: '/stadspas',
+
   BRP: '/persoonlijke-gegevens',
   KVK: '/gegevens-handelsregister',
   BUURT: '/buurt',
@@ -24,6 +26,30 @@ export const AppRoutes = {
   VERGUNNINGEN: '/vergunningen',
   'VERGUNNINGEN/DETAIL': '/vergunningen/detail/:id',
 };
+
+export const AppRoutesRedirect = [
+  {
+    from: '/inkomen-en-stadspas/stadspas/aanvraag/:id',
+    to: AppRoutes['STADSPAS/AANVRAAG'],
+  },
+  {
+    from: '/inkomen-en-stadspas/stadspas/saldo/:id',
+    to: AppRoutes['STADSPAS/SALDO'],
+  },
+  {
+    from: '/inkomen-en-stadspas/bijstandsuitkering/:id',
+    to: AppRoutes['INKOMEN/BIJSTANDSUITKERING'],
+  },
+  {
+    from: '/inkomen-en-stadspas/uitkeringsspecificaties/:category?',
+    to: AppRoutes['INKOMEN/SPECIFICATIES'],
+  },
+  {
+    from: '/inkomen-en-stadspas/tozo/:version/:id',
+    to: AppRoutes['INKOMEN/TOZO'],
+  },
+  { from: '/inkomen-en-stadspas', to: AppRoutes.INKOMEN },
+];
 
 export const PublicRoutes = [AppRoutes.API_LOGIN, AppRoutes.ACCESSIBILITY];
 

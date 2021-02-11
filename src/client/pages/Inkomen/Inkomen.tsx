@@ -1,11 +1,8 @@
 import classnames from 'classnames';
 import { useMemo } from 'react';
 import { generatePath } from 'react-router-dom';
-import {
-  AppRoutes,
-  ChapterTitles,
-  FeatureToggle,
-} from '../../../universal/config';
+import { FocusItem } from '../../../server/services/focus/focus-types';
+import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { dateSort, isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
@@ -19,7 +16,6 @@ import {
   SectionCollapsible,
   Table,
 } from '../../components';
-import { LinkdInline } from '../../components/Button/Button';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import {
@@ -42,13 +38,6 @@ export const incomSpecificationsRouteYearly = generatePath(
   }
 );
 
-const stadspasDisplayProps = {
-  naam: '',
-  pasnummer: 'Stadspasnummer',
-  displayDatumAfloop: 'Einddatum',
-  detailPageUrl: '',
-};
-
 const requestsDisplayProps = {
   displayDateStart: 'Datum aanvraag',
   status: 'Status',
@@ -64,7 +53,6 @@ export default function Inkomen() {
     FOCUS_AANVRAGEN,
     FOCUS_SPECIFICATIES,
     FOCUS_TOZO,
-    FOCUS_STADSPAS,
   } = useAppStateGetter();
   const focusSpecificatiesWithDocumentLinks = useAddDocumentLinkComponents(
     FOCUS_SPECIFICATIES
@@ -75,20 +63,14 @@ export default function Inkomen() {
     focusSpecificatiesWithDocumentLinks.content?.uitkeringsspecificaties;
   const jaaropgaven = focusSpecificatiesWithDocumentLinks.content?.jaaropgaven;
 
-  const itemsRequested = useMemo(() => {
-    const itemsRequested =
-      aanvragen?.filter((item) =>
-        item.steps.every((step) => step.title !== 'beslissing')
-      ) || [];
-
-    if (tozoItems?.length && FeatureToggle.tozoActive) {
-      itemsRequested.push(
-        ...tozoItems.filter((tozoItem) => tozoItem.status !== 'Besluit')
-      );
+  const items: FocusItem[] = useMemo(() => {
+    if (!aanvragen && !tozoItems) {
+      return [];
     }
 
     return addTitleLinkComponent(
-      itemsRequested
+      [...(aanvragen || []), ...(tozoItems || [])]
+        .filter((item) => item.productTitle !== 'Stadspas')
         .map((item) => {
           return Object.assign({}, item, {
             displayDatePublished: defaultDateFormat(item.datePublished),
@@ -99,68 +81,17 @@ export default function Inkomen() {
     );
   }, [aanvragen, tozoItems]);
 
-  const itemsDecided = useMemo(() => {
-    const itemsDecided =
-      aanvragen?.filter((item) =>
-        item.steps.some((step) => step.title === 'beslissing')
-      ) || [];
-
-    if (tozoItems?.length && FeatureToggle.tozoActive) {
-      itemsDecided.push(
-        ...tozoItems.filter((tozoItem) => tozoItem.status === 'Besluit')
-      );
-    }
-
-    return addTitleLinkComponent(
-      itemsDecided
-        .map((item) => {
-          return Object.assign({}, item, {
-            displayDatePublished: defaultDateFormat(item.datePublished),
-            displayDateStart: defaultDateFormat(item.dateStart),
-          });
-        })
-        .sort(dateSort('datePublished', 'desc'))
-    );
-  }, [aanvragen, tozoItems]);
+  const itemsRequested = items.filter((item) => item.status !== 'Besluit');
+  const itemsDecided = items.filter((item) => item.status === 'Besluit');
 
   const hasActiveRequests = !!itemsRequested.length;
   const hasActiveDescisions = !!itemsDecided.length;
-  const hasStadspas = !!FOCUS_STADSPAS?.content?.stadspassen?.length;
 
-  const itemsSpecificationsMonthly = useMemo(
-    () => uitkeringsspecificaties?.slice(0, 3) || [],
-    [uitkeringsspecificaties]
-  );
-  const itemsSpecificationsYearly = useMemo(
-    () => jaaropgaven?.slice(0, 3) || [],
-    [jaaropgaven]
-  );
-
-  const stadspasItems = useMemo(() => {
-    if (!FOCUS_STADSPAS.content?.stadspassen) {
-      return [];
-    }
-    return FOCUS_STADSPAS.content.stadspassen.map((stadspas) => {
-      return {
-        ...stadspas,
-        displayDatumAfloop: defaultDateFormat(stadspas.datumAfloop),
-        detailPageUrl: !!stadspas.budgets.length && (
-          <LinkdInline
-            href={generatePath(AppRoutes['INKOMEN/STADSPAS/SALDO'], {
-              id: stadspas.id,
-            })}
-          >
-            Bekijk saldo
-          </LinkdInline>
-        ),
-      };
-    });
-  }, [FOCUS_STADSPAS.content]);
+  const itemsSpecificationsMonthly = uitkeringsspecificaties?.slice(0, 3);
+  const itemsSpecificationsYearly = jaaropgaven?.slice(0, 3);
 
   const isLoadingFocus = isLoading(FOCUS_AANVRAGEN) || isLoading(FOCUS_TOZO);
   const isLoadingFocusSpecificaties = isLoading(FOCUS_SPECIFICATIES);
-  const isLoadingStadspas =
-    FeatureToggle.stadpasActive && isLoading(FOCUS_STADSPAS);
 
   return (
     <OverviewPage className={styles.Inkomen}>
@@ -172,16 +103,6 @@ export default function Inkomen() {
           Op deze pagina vindt u informatie over uw uitkering en de
           ondersteuning die u krijgt omdat u weinig geld hebt.
         </p>
-        {FeatureToggle.stadpasActive &&
-          !isLoadingStadspas &&
-          FOCUS_STADSPAS.content?.type !== 'kind' && (
-            <p>
-              Hebt u kinderen of een partner met een Stadspas? 1 volwassene
-              krijgt alle Stadspassen van uw gezin te zien. De andere
-              gezinsleden zien alleen hun eigen Stadspas als ze zelf inloggen op
-              Mijn Amsterdam.
-            </p>
-          )}
         <p>
           <Linkd external={true} href={ExternalUrls.WPI_ALGEMEEN}>
             Algemene informatie over Werk en Inkomen
@@ -193,7 +114,6 @@ export default function Inkomen() {
         </p>
         {(isError(FOCUS_AANVRAGEN) ||
           isError(FOCUS_SPECIFICATIES) ||
-          isError(FOCUS_STADSPAS) ||
           isError(FOCUS_TOZO)) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
@@ -202,45 +122,18 @@ export default function Inkomen() {
         <AlertDocumentDownloadsDisabled />
       </PageContent>
 
-      {FeatureToggle.stadpasActive && hasStadspas && (
-        <SectionCollapsible
-          id="SectionCollapsible-stadpas"
-          title="Stadspas"
-          startCollapsed={false}
-          isLoading={isLoadingStadspas}
-          hasItems={hasStadspas}
-          track={{
-            category: 'Inkomen en Stadspas overzicht / Stadpas',
-            name: 'Datatabel',
-          }}
-          noItemsMessage="U hebt op dit moment geen lopende aanvragen."
-          className={styles.SectionCollapsibleFirst}
-        >
-          <Table
-            titleKey="moreDetail"
-            items={stadspasItems}
-            displayProps={stadspasDisplayProps}
-            className={styles.Table}
-          />
-        </SectionCollapsible>
-      )}
-
       <SectionCollapsible
         id="SectionCollapsible-income-request-process"
         title="Lopende aanvragen"
-        startCollapsed={FeatureToggle.stadpasActive && hasStadspas}
+        startCollapsed={false}
         isLoading={isLoadingFocus}
         hasItems={hasActiveRequests}
         track={{
-          category: 'Inkomen en Stadspas overzicht / Lopende aanvragen',
+          category: 'Inkomen overzicht / Lopende aanvragen',
           name: 'Datatabel',
         }}
         noItemsMessage="U hebt op dit moment geen lopende aanvragen."
-        className={
-          FeatureToggle.stadpasActive
-            ? styles.SectionCollapsible
-            : styles.SectionCollapsibleFirst
-        }
+        className={styles.SectionCollapsible}
       >
         <Table
           items={itemsRequested}
@@ -256,7 +149,7 @@ export default function Inkomen() {
         hasItems={hasActiveDescisions}
         title="Eerdere aanvragen"
         track={{
-          category: 'Inkomen en Stadspas overzicht / Eerdere aanvragen',
+          category: 'Inkomen overzicht / Eerdere aanvragen',
           name: 'Datatabel',
         }}
         noItemsMessage="U hebt op dit moment geen eerdere aanvragen."
@@ -268,46 +161,45 @@ export default function Inkomen() {
         />
       </SectionCollapsible>
 
-      {FeatureToggle.focusCombinedActive && (
-        <SectionCollapsible
-          id="SectionCollapsible-income-specifications-monthly"
-          startCollapsed={true}
-          isLoading={isLoadingFocusSpecificaties}
-          title="Uitkeringsspecificaties"
-          hasItems={!!uitkeringsspecificaties?.length}
-          track={{
-            category: 'Inkomen en Stadspas overzicht / Uitkeringsspecificaties',
-            name: 'Datatabel',
-          }}
-          noItemsMessage="Er zijn op dit moment geen uitkeringsspecificaties."
-        >
+      <SectionCollapsible
+        id="SectionCollapsible-income-specifications-monthly"
+        startCollapsed={true}
+        isLoading={isLoadingFocusSpecificaties}
+        title="Uitkeringsspecificaties"
+        hasItems={!!uitkeringsspecificaties?.length}
+        track={{
+          category: 'Inkomen overzicht / Uitkeringsspecificaties',
+          name: 'Datatabel',
+        }}
+        noItemsMessage="Er zijn op dit moment geen uitkeringsspecificaties."
+      >
+        {itemsSpecificationsMonthly && (
           <Table
             className={specicationsStyles.SpecificationsTable}
             items={itemsSpecificationsMonthly}
             displayProps={specificationsTableDisplayProps}
           />
-          {uitkeringsspecificaties?.length &&
-            uitkeringsspecificaties.length > 3 && (
-              <p className={styles.ShowAllButtonContainer}>
-                <Linkd href={incomSpecificationsRouteMonthly}>Toon alles</Linkd>
-              </p>
-            )}
-        </SectionCollapsible>
-      )}
+        )}
+        {uitkeringsspecificaties?.length && uitkeringsspecificaties.length > 3 && (
+          <p className={styles.ShowAllButtonContainer}>
+            <Linkd href={incomSpecificationsRouteMonthly}>Toon alles</Linkd>
+          </p>
+        )}
+      </SectionCollapsible>
 
-      {FeatureToggle.focusCombinedActive && (
-        <SectionCollapsible
-          id="SectionCollapsible-income-specifications-yearly"
-          startCollapsed={true}
-          isLoading={isLoadingFocus}
-          title="Jaaropgaven"
-          hasItems={!!jaaropgaven?.length}
-          track={{
-            category: 'Inkomen en Stadspas overzicht / Jaaropgaven',
-            name: 'Datatabel',
-          }}
-          noItemsMessage="Er zijn op dit moment geen jaaropgaven."
-        >
+      <SectionCollapsible
+        id="SectionCollapsible-income-specifications-yearly"
+        startCollapsed={true}
+        isLoading={isLoadingFocus}
+        title="Jaaropgaven"
+        hasItems={!!jaaropgaven?.length}
+        track={{
+          category: 'Inkomen overzicht / Jaaropgaven',
+          name: 'Datatabel',
+        }}
+        noItemsMessage="Er zijn op dit moment geen jaaropgaven."
+      >
+        {itemsSpecificationsYearly && (
           <Table
             className={classnames(
               specicationsStyles.SpecificationsTable,
@@ -316,13 +208,13 @@ export default function Inkomen() {
             items={itemsSpecificationsYearly}
             displayProps={annualStatementsTableDisplayProps}
           />
-          {jaaropgaven?.length && jaaropgaven.length > 3 && (
-            <p className={styles.ShowAllButtonContainer}>
-              <Linkd href={incomSpecificationsRouteYearly}>Toon alles</Linkd>
-            </p>
-          )}
-        </SectionCollapsible>
-      )}
+        )}
+        {jaaropgaven?.length && jaaropgaven.length > 3 && (
+          <p className={styles.ShowAllButtonContainer}>
+            <Linkd href={incomSpecificationsRouteYearly}>Toon alles</Linkd>
+          </p>
+        )}
+      </SectionCollapsible>
     </OverviewPage>
   );
 }

@@ -69,10 +69,10 @@ function initializeState(snapshot: MutableSnapshot) {
 }
 
 describe('<StadspasDetail />', () => {
-  const routeEntry = generatePath(AppRoutes['INKOMEN/STADSPAS/SALDO'], {
+  const routeEntry = generatePath(AppRoutes['STADSPAS/SALDO'], {
     id: testState.FOCUS_STADSPAS.content.stadspassen[0].id,
   });
-  const routePath = AppRoutes['INKOMEN/STADSPAS/SALDO'];
+  const routePath = AppRoutes['STADSPAS/SALDO'];
 
   const Component = () => (
     <MockApp

@@ -1,6 +1,5 @@
 import * as Sentry from '@sentry/browser';
 import classnames from 'classnames';
-
 import { ErrorBoundary } from 'react-error-boundary';
 import {
   BrowserRouter,
@@ -13,6 +12,7 @@ import {
 import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
 import { getOtapEnvItem, IS_AP, IS_PRODUCTION } from '../universal/config/env';
+import { AppRoutesRedirect } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
 import {
@@ -59,6 +59,8 @@ import {
   ZorgDetail,
 } from './pages';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
+import Stadspas from './pages/Stadspas/Stadspas';
+import StadspasAanvraagDetail from './pages/StadspasDetail/StadspasAanvraagDetail';
 import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
 
 function AppNotAuthenticated() {
@@ -118,6 +120,9 @@ function AppAuthenticated() {
             from={TMA_LOGIN_URL_IRMA_AFTER_REDIRECT}
             to={redirectAfterLogin}
           />
+          {AppRoutesRedirect.map(({ from, to }) => (
+            <Redirect key={from + to} from={from} to={to} />
+          ))}
           <Route exact path={AppRoutes.ROOT} component={Dashboard} />
           <Route path={AppRoutes.NOTIFICATIONS} component={MyNotifications} />
           {profileType !== 'private' ? (
@@ -129,15 +134,13 @@ function AppAuthenticated() {
           <Route path={AppRoutes.KVK} component={ProfileCommercial} />
           <Route path={AppRoutes.TIPS} component={MyTips} />
           <Route
-            path={AppRoutes['INKOMEN/STADSPAS/AANVRAAG']}
-            component={InkomenDetail}
+            path={AppRoutes['STADSPAS/AANVRAAG']}
+            component={StadspasAanvraagDetail}
           />
-          {FeatureToggle.stadpasActive && (
-            <Route
-              path={AppRoutes['INKOMEN/STADSPAS/SALDO']}
-              component={StadspasDetail}
-            />
-          )}
+          <Route
+            path={AppRoutes['STADSPAS/SALDO']}
+            component={StadspasDetail}
+          />
           <Route
             path={AppRoutes['INKOMEN/BIJSTANDSUITKERING']}
             component={InkomenDetail}
@@ -146,13 +149,12 @@ function AppAuthenticated() {
             path={AppRoutes['INKOMEN/SPECIFICATIES']}
             component={InkomenSpecificaties}
           />
-          {FeatureToggle.tozoActive && (
-            <Route
-              path={AppRoutes['INKOMEN/TOZO']}
-              component={InkomenDetailTozo}
-            />
-          )}
+          <Route
+            path={AppRoutes['INKOMEN/TOZO']}
+            component={InkomenDetailTozo}
+          />
           <Route path={AppRoutes.INKOMEN} component={Inkomen} />
+          <Route path={AppRoutes.STADSPAS} component={Stadspas} />
           <Route
             path={AppRoutes['ZORG/VOORZIENINGEN']}
             component={ZorgDetail}
@@ -173,6 +175,7 @@ function AppAuthenticated() {
             component={VergunningDetail}
           />
           <Route path={AppRoutes.VERGUNNINGEN} component={Vergunningen} />
+
           <Route component={NotFound} />
         </Switch>
       </div>

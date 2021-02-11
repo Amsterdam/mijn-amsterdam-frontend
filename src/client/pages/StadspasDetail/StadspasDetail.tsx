@@ -209,7 +209,7 @@ export default function StadspasDetail() {
     <DetailPage>
       <PageHeading
         icon={<ChapterIcon />}
-        backLink={{ to: AppRoutes.INKOMEN, title: ChapterTitles.INKOMEN }}
+        backLink={{ to: AppRoutes.STADSPAS, title: ChapterTitles.STADSPAS }}
         isLoading={false}
       >
         Saldo Stadspas
@@ -225,7 +225,7 @@ export default function StadspasDetail() {
           <Alert type="warning">
             <p>
               We kunnen op dit moment geen gegevens tonen.{' '}
-              <LinkdInline href={AppRoutes.INKOMEN}>
+              <LinkdInline href={AppRoutes.STADSPAS}>
                 Naar het overzicht
               </LinkdInline>
             </p>

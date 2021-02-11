@@ -13,11 +13,10 @@ import {
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import AlertDocumentDownloadsDisabled from '../Inkomen/AlertDocumentDownloadsDisabled';
-import styles from './InkomenDetail.module.scss';
+import { MAX_STEP_COUNT_FOCUS_REUEST } from '../InkomenDetail/InkomenDetail';
+import styles from './StadspasAanvraagDetail.module.scss';
 
-export const MAX_STEP_COUNT_FOCUS_REUEST = 4;
-
-export default function InkomenDetail() {
+export default function StadspasAanvraagDetail() {
   const { FOCUS_AANVRAGEN } = useAppStateGetter();
 
   const { id } = useParams<{ id: string }>();
@@ -35,7 +34,7 @@ export default function InkomenDetail() {
     <DetailPage>
       <PageHeading
         icon={<ChapterIcon />}
-        backLink={{ to: AppRoutes.INKOMEN, title: ChapterTitles.INKOMEN }}
+        backLink={{ to: AppRoutes.STADSPAS, title: ChapterTitles.STADSPAS }}
         isLoading={isLoading(FOCUS_AANVRAGEN)}
       >
         {title}
@@ -45,7 +44,7 @@ export default function InkomenDetail() {
           <Alert type="warning">
             <p>
               We kunnen op dit moment geen gegevens tonen.{' '}
-              <LinkdInline href={AppRoutes.INKOMEN}>
+              <LinkdInline href={AppRoutes.STADSPAS}>
                 Naar het overzicht
               </LinkdInline>
             </p>
@@ -56,7 +55,7 @@ export default function InkomenDetail() {
       </PageContent>
       {!!focusItem && !!focusItem.steps && (
         <StatusLine
-          trackCategory={`Inkomen / ${focusItem.title}`}
+          trackCategory={`Stadspas / ${focusItem.title}`}
           items={focusItem.steps}
           showToggleMore={true}
           maxStepCount={!hasDecision ? MAX_STEP_COUNT_FOCUS_REUEST : undefined}

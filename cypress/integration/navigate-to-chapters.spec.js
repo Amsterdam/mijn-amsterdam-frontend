@@ -10,8 +10,8 @@ const assertNavigationForChapters = {
     title: 'Zorg en ondersteuning',
   },
   INKOMEN: {
-    path: '/inkomen-en-stadspas',
-    title: 'Inkomen en Stadspas',
+    path: '/inkomen',
+    title: 'Inkomen',
   },
   AFVAL: {
     path: '/afval',

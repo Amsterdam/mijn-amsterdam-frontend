@@ -108,7 +108,7 @@ export default function InkomenDetailTozo() {
       {!!(TozoItem?.steps && TozoItem.steps.length) && (
         <StatusLine
           className={styles.AanvraagStatusLine}
-          trackCategory={`Inkomen en Stadspas / ${TozoItem?.productTitle} aanvraag`}
+          trackCategory={`Inkomen / ${TozoItem?.productTitle} aanvraag`}
           statusLabel={`${TozoItem?.productTitle}-aanvraag`}
           items={TozoItem.steps}
           showToggleMore={false}
