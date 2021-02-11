@@ -1,6 +1,5 @@
 import * as Sentry from '@sentry/browser';
 import classnames from 'classnames';
-
 import { ErrorBoundary } from 'react-error-boundary';
 import {
   BrowserRouter,
@@ -13,6 +12,7 @@ import {
 import { RecoilRoot } from 'recoil';
 import { AppRoutes, FeatureToggle } from '../universal/config';
 import { getOtapEnvItem, IS_AP, IS_PRODUCTION } from '../universal/config/env';
+import { AppRoutesRedirect } from '../universal/config/routes';
 import { isPrivateRoute } from '../universal/helpers';
 import styles from './App.module.scss';
 import {
@@ -26,6 +26,7 @@ import MyAreaLoader from './components/MyArea/MyAreaLoader';
 import {
   TMA_LOGIN_URL_DIGID_AFTER_REDIRECT,
   TMA_LOGIN_URL_EHERKENNING_AFTER_REDIRECT,
+  TMA_LOGIN_URL_IRMA_AFTER_REDIRECT,
 } from './config/api';
 import { useAnalytics, usePageChange, useScript } from './hooks';
 import { useSessionApi } from './hooks/api/useSessionApi';
@@ -58,10 +59,9 @@ import {
   ZorgDetail,
 } from './pages';
 import ProfileCommercial from './pages/Profile/ProfileCommercial';
-import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
-import { AppRoutesRedirect } from '../universal/config/routes';
 import Stadspas from './pages/Stadspas/Stadspas';
 import StadspasAanvraagDetail from './pages/StadspasDetail/StadspasAanvraagDetail';
+import StadspasDetail from './pages/StadspasDetail/StadspasDetail';
 
 function AppNotAuthenticated() {
   useDeeplinkEntry();
