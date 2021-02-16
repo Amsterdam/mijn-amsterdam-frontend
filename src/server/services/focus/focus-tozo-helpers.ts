@@ -13,14 +13,11 @@ import {
   hash,
 } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types/App.types';
-import {
-  FocusCombinedSourceResponse,
-  FocusTozoDocument,
-} from './focus-combined';
+import { FocusCombinedSourceResponse, FocusDocument } from './focus-combined';
 import { tozoDocumentLabelSet, FocusTozoLabelSet } from './focus-tozo-content';
 import { FocusItem, FocusItemStep, FocusStepContent } from './focus-types';
 
-export function getProductTitleForDocument(document: FocusTozoDocument) {
+export function getProductTitleForDocument(document: FocusDocument) {
   const labelSet = getLabelSet(document);
 
   if (!labelSet) {
@@ -34,9 +31,7 @@ function transformKey(documentCodeId: string) {
   return documentCodeId.replace(/\s/g, '').toLowerCase();
 }
 
-export function getLabelSet(
-  document: FocusTozoDocument
-): FocusTozoLabelSet | null {
+export function getLabelSet(document: FocusDocument): FocusTozoLabelSet | null {
   const labelSetEntry = Object.entries(tozoDocumentLabelSet).find(
     ([documentCodeId]) => {
       return (
@@ -55,7 +50,7 @@ export function getLabelSet(
 
 function getDocumentTitle(
   labelSet: FocusTozoLabelSet,
-  document: FocusTozoDocument
+  document: FocusDocument
 ) {
   // Documents of the aanvraag step are formatted differently
   if (labelSet.productSpecific === 'aanvraag') {
@@ -68,27 +63,27 @@ function getDocumentTitle(
 }
 
 function getDocumentStepDescription(
-  document: FocusTozoDocument,
+  document: FocusDocument,
   stepLabels: FocusStepContent
 ) {
   return stepLabels.description(document);
 }
 
 function getDocumentStepNotificationDescription(
-  document: FocusTozoDocument,
+  document: FocusDocument,
   stepLabels: FocusStepContent
 ) {
   return stepLabels.notification?.description(document);
 }
 
 function getDocumentStepNotificationTitle(
-  document: FocusTozoDocument,
+  document: FocusDocument,
   stepLabels: FocusStepContent
 ) {
   return stepLabels.notification?.title(document);
 }
 
-export function createTozoItemStep(document: FocusTozoDocument) {
+export function createTozoItemStep(document: FocusDocument) {
   const labelSet = getLabelSet(document);
 
   if (!labelSet) {
@@ -200,7 +195,7 @@ export function createTozoItemStepNotifications(
 export function createTozoResult(
   tozodocumenten: FocusCombinedSourceResponse['tozodocumenten']
 ) {
-  const documents: FocusTozoDocument[] = Array.isArray(tozodocumenten)
+  const documents: FocusDocument[] = Array.isArray(tozodocumenten)
     ? tozodocumenten
         .map((document) => {
           return {

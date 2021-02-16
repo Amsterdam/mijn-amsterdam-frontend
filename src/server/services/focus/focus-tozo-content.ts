@@ -1,10 +1,10 @@
 import { dateFormat, defaultDateFormat } from '../../../universal/helpers';
 import { stepLabels } from './focus-aanvragen-content';
-import { FocusTozoDocument } from './focus-combined';
+import { FocusDocument } from './focus-combined';
 import { FocusStepContent } from './focus-types';
 
 function productName(
-  document: Pick<FocusTozoDocument, 'productTitle' | 'productSpecific'>,
+  document: Pick<FocusDocument, 'productTitle' | 'productSpecific'>,
   includeArticle: boolean = true
 ) {
   const hasProductSpecific = !!document.productSpecific;
@@ -154,7 +154,7 @@ export type FocusTozoLabelSet = {
 };
 
 export const tozoDocumentLabelSet: Record<
-  FocusTozoDocument['documentCodeId'],
+  FocusDocument['documentCodeId'],
   FocusTozoLabelSet
 > = {
   // Tozo 1

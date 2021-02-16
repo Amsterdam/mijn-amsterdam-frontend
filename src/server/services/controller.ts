@@ -55,6 +55,7 @@ const KVK = callService(fetchKVK);
 const FOCUS_AANVRAGEN = callService(fetchFOCUSAanvragen);
 const FOCUS_SPECIFICATIES = callService(fetchFOCUSSpecificaties);
 const FOCUS_TOZO = callService(fetchFOCUSTozo);
+const FOCUS_TONK = callService(fetchFOCUSTozo);
 const FOCUS_STADSPAS = callService(fetchStadspasSaldo);
 const WMO = callService(fetchWMO);
 const VERGUNNINGEN = callService(fetchVergunningen);
@@ -106,6 +107,7 @@ const SERVICES_INDEX = {
   FOCUS_AANVRAGEN,
   FOCUS_SPECIFICATIES,
   FOCUS_TOZO,
+  FOCUS_TONK,
   FOCUS_STADSPAS,
   WMO,
   VERGUNNINGEN,
@@ -157,6 +159,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     FOCUS_AANVRAGEN,
     FOCUS_SPECIFICATIES,
     FOCUS_TOZO,
+    FOCUS_TONK,
     FOCUS_STADSPAS,
     NOTIFICATIONS,
     CASES,
@@ -176,6 +179,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     FOCUS_AANVRAGEN,
     FOCUS_SPECIFICATIES,
     FOCUS_TOZO,
+    FOCUS_TONK,
     FOCUS_STADSPAS,
     NOTIFICATIONS,
     CASES,

@@ -27,6 +27,7 @@ export const PRISTINE_APPSTATE: AppState = {
   }),
   FOCUS_AANVRAGEN: apiPristineResult([]),
   FOCUS_TOZO: apiPristineResult([]),
+  FOCUS_TONK: apiPristineResult([]),
   FOCUS_STADSPAS: apiPristineResult(null),
   WMO: apiPristineResult([]),
   ERFPACHT: apiPristineResult({ isKnown: false }),

@@ -6,32 +6,16 @@ import { GenericDocument } from '../../../universal/types/App.types';
 import { IconChevronLeft } from '../../assets/icons';
 import { trackEventWithProfileType } from '../../hooks/analytics.hook';
 import { useSessionStorage } from '../../hooks/storage.hook';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { Button } from '../Button/Button';
 import DocumentList from '../DocumentList/DocumentList';
+import Heading from '../Heading/Heading';
 import InnerHtml from '../InnerHtml/InnerHtml';
 import styles from './StatusLine.module.scss';
-import Heading from '../Heading/Heading';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { AltDocumentContent, StatusLineItem } from './StatusLine.types';
 
-export type StepType =
-  | 'first-step'
-  | 'last-step'
-  | 'intermediate-step'
-  | 'single-step';
-
-export interface StatusLineItem {
-  id: string;
-  status: string;
-  datePublished: string;
-  description: string;
-  documents: GenericDocument[];
-  isActive?: boolean;
-  isChecked?: boolean;
-  isHighlight?: boolean;
-  [key: string]: any;
-}
-
-type AltDocumentContent = string | JSX.Element;
+// Types used to be in this file
+export * from './StatusLine.types';
 
 interface StatusLinePanelProps {
   children: ComponentChildren;
@@ -89,8 +73,12 @@ export function StatusLinePanelDocuments({
 }: StatusLinePanelDocumentsProps) {
   return (
     <StatusLinePanel name="documents">
-      {!!altDocumentContent && (
-        <span className={styles.altDocumentContent}>{altDocumentContent}</span>
+      {!!altDocumentContent && typeof altDocumentContent === 'string' ? (
+        <InnerHtml el="span" className={styles.altDocumentContent}>
+          {altDocumentContent}
+        </InnerHtml>
+      ) : (
+        altDocumentContent
       )}
       {!!documents.length && <DocumentList documents={documents} />}
     </StatusLinePanel>
@@ -146,7 +134,7 @@ export function ToggleMore({ isCollapsed, toggleCollapsed }: ToggleMoreProps) {
 interface StatusLineConnectionProps {
   index: number;
   total: number;
-  max?: number;
+  max?: number | -1;
   isActive: boolean;
   isChecked: boolean;
 }
@@ -271,7 +259,7 @@ interface StatusLineProps {
   statusLabel?: string;
   className?: string;
   maxStepCount?: number | -1; // Supply -1 if you want to treat each step as a single, not connected step
-  highlightKey?: string | false; // key of data item which corresponding value is cast to a boolean and controls wether this item gets the highlight class
+  highlightKey?: string | false; // key of data item which corresponding value is cast to a boolean and controls wether this item gets the highlight class.
 }
 
 export default function StatusLine({

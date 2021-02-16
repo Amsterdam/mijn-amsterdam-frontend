@@ -53,23 +53,26 @@ export default function Inkomen() {
     FOCUS_AANVRAGEN,
     FOCUS_SPECIFICATIES,
     FOCUS_TOZO,
+    FOCUS_TONK,
   } = useAppStateGetter();
+
   const focusSpecificatiesWithDocumentLinks = useAddDocumentLinkComponents(
     FOCUS_SPECIFICATIES
   );
   const aanvragen = FOCUS_AANVRAGEN.content;
   const tozoItems = FOCUS_TOZO.content;
+  const tonkItems = FOCUS_TONK.content;
   const uitkeringsspecificaties =
     focusSpecificatiesWithDocumentLinks.content?.uitkeringsspecificaties;
   const jaaropgaven = focusSpecificatiesWithDocumentLinks.content?.jaaropgaven;
 
   const items: FocusItem[] = useMemo(() => {
-    if (!aanvragen && !tozoItems) {
+    if ((!aanvragen && !tozoItems) || !tonkItems) {
       return [];
     }
 
     return addTitleLinkComponent(
-      [...(aanvragen || []), ...(tozoItems || [])]
+      [...(aanvragen || []), ...(tozoItems || []), ...(tonkItems || [])]
         .filter((item) => item.productTitle !== 'Stadspas')
         .map((item) => {
           return Object.assign({}, item, {
@@ -79,7 +82,7 @@ export default function Inkomen() {
         })
         .sort(dateSort('datePublished', 'desc'))
     );
-  }, [aanvragen, tozoItems]);
+  }, [aanvragen, tozoItems, tonkItems]);
 
   const itemsRequested = items.filter((item) => item.status !== 'Besluit');
   const itemsDecided = items.filter((item) => item.status === 'Besluit');
@@ -90,7 +93,10 @@ export default function Inkomen() {
   const itemsSpecificationsMonthly = uitkeringsspecificaties?.slice(0, 3);
   const itemsSpecificationsYearly = jaaropgaven?.slice(0, 3);
 
-  const isLoadingFocus = isLoading(FOCUS_AANVRAGEN) || isLoading(FOCUS_TOZO);
+  const isLoadingFocus =
+    isLoading(FOCUS_AANVRAGEN) ||
+    isLoading(FOCUS_TOZO) ||
+    isLoading(FOCUS_TONK);
   const isLoadingFocusSpecificaties = isLoading(FOCUS_SPECIFICATIES);
 
   return (
@@ -114,7 +120,8 @@ export default function Inkomen() {
         </p>
         {(isError(FOCUS_AANVRAGEN) ||
           isError(FOCUS_SPECIFICATIES) ||
-          isError(FOCUS_TOZO)) && (
+          isError(FOCUS_TOZO) ||
+          isError(FOCUS_TONK)) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>

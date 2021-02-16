@@ -5,7 +5,7 @@ import { MutableSnapshot } from 'recoil';
 import { AppRoutes } from '../../../universal/config';
 import { appStateAtom } from '../../hooks/useAppState';
 import MockApp from '../MockApp';
-import InkomenDetailTozo from './InkomenDetailTozo';
+import StatusDetail from './StatusDetail';
 
 const testState: any = {
   FOCUS_TOZO: {
@@ -55,7 +55,7 @@ function initializeState(snapshot: MutableSnapshot) {
   snapshot.set(appStateAtom, testState);
 }
 
-describe('<InkomenDetailTozo />', () => {
+describe('<StatusDetail />', () => {
   const routeEntry = generatePath(AppRoutes['INKOMEN/TOZO'], {
     id: testState.FOCUS_TOZO.content[0].id,
     version: '2',
@@ -66,7 +66,7 @@ describe('<InkomenDetailTozo />', () => {
     <MockApp
       routeEntry={routeEntry}
       routePath={routePath}
-      component={InkomenDetailTozo}
+      component={StatusDetail}
       initializeState={initializeState}
     />
   );
