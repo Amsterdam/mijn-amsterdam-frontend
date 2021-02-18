@@ -67,6 +67,17 @@ const afwijzenLabels: FocusStepContent = {
       </p>`,
 };
 
+const buitenBehandelingLabels: FocusStepContent = {
+  notification: {
+    title: (document) =>
+      `${document.productTitle}: Wij behandelen uw aanvraag niet meer`,
+    description: (document) => `Bekijk de brief voor meer details.`,
+  },
+  status: stepLabels.beslissing,
+  description: (document) =>
+    `<p>Wij behandelen uw aanvraag voor ${document.productTitle} niet meer. Bekijk de brief voor meer details.</p>`,
+};
+
 export const tonkDocumentLabelSet: Record<
   FocusDocument['documentCodeId'],
   FocusTonkLabelSet
@@ -75,28 +86,36 @@ export const tonkDocumentLabelSet: Record<
     omschrijving: 'Tonk regeling aanvraag',
     labels: aanvraagLabels,
     documentTitle: 'Aanvraag Tonk regeling',
-    product: 'Tonk 1',
+    product: 'Tonk',
     stepType: 'aanvraag',
   },
   'TONK-222': {
     omschrijving: 'Tonk regeling hersteltermijn',
     labels: herstelTermijnLabels,
     documentTitle: 'Brief meer informatie',
-    product: 'Tonk 1',
+    product: 'Tonk',
     stepType: 'herstelTermijn',
   },
   'TONK-333': {
     omschrijving: 'Tonk regeling besluit toekennen',
     labels: toekennenLabels,
     documentTitle: 'Besluit toekennimg',
-    product: 'Tonk 1',
+    product: 'Tonk',
     stepType: 'besluit',
   },
   'TONK-444': {
     omschrijving: 'Tonk regeling besluit afwijzen',
     labels: afwijzenLabels,
     documentTitle: 'Besluit afwijzing',
-    product: 'Tonk 1',
+    product: 'Tonk',
+    stepType: 'besluit',
+  },
+  'TONK-555': {
+    omschrijving: 'Tonk Buiten behandeling laten',
+    labels: buitenBehandelingLabels,
+    documentTitle: 'Besluit buiten behandeling',
+    product: 'Tonk',
+    productSpecific: '',
     stepType: 'besluit',
   },
 };
