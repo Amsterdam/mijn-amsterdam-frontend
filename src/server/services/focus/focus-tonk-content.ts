@@ -82,35 +82,35 @@ export const tonkDocumentLabelSet: Record<
   FocusDocument['documentCodeId'],
   FocusTonkLabelSet
 > = {
-  'TONK-111': {
+  'tonk-111': {
     omschrijving: 'Tonk regeling aanvraag',
     labels: aanvraagLabels,
     documentTitle: 'Aanvraag Tonk regeling',
     product: 'Tonk',
     stepType: 'aanvraag',
   },
-  'TONK-222': {
+  'tonk-222': {
     omschrijving: 'Tonk regeling hersteltermijn',
     labels: herstelTermijnLabels,
     documentTitle: 'Brief meer informatie',
     product: 'Tonk',
     stepType: 'herstelTermijn',
   },
-  'TONK-333': {
+  'tonk-333': {
     omschrijving: 'Tonk regeling besluit toekennen',
     labels: toekennenLabels,
     documentTitle: 'Besluit toekennimg',
     product: 'Tonk',
     stepType: 'besluit',
   },
-  'TONK-444': {
+  'tonk-444': {
     omschrijving: 'Tonk regeling besluit afwijzen',
     labels: afwijzenLabels,
     documentTitle: 'Besluit afwijzing',
     product: 'Tonk',
     stepType: 'besluit',
   },
-  'TONK-555': {
+  'tonk-555': {
     omschrijving: 'Tonk Buiten behandeling laten',
     labels: buitenBehandelingLabels,
     documentTitle: 'Besluit buiten behandeling',

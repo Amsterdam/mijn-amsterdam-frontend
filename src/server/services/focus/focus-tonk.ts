@@ -24,10 +24,10 @@ import {
 import { FocusItem, FocusItemStep } from './focus-types';
 
 export function createTonkResult(
-  tozodocumenten: FocusCombinedSourceResponse['tozodocumenten']
+  tonkdocumenten: FocusCombinedSourceResponse['tozodocumenten']
 ) {
-  const documents: FocusDocument[] = Array.isArray(tozodocumenten)
-    ? tozodocumenten
+  const documents: FocusDocument[] = Array.isArray(tonkdocumenten)
+    ? tonkdocumenten
         .map((document) => {
           return {
             ...document,
@@ -39,6 +39,8 @@ export function createTonkResult(
         })
         .sort(dateSort('datePublished'))
     : [];
+
+  console.log('tonktnonk', documents);
 
   const tonkSteps: FocusItemStep[] = documents
     .map((document) => createToxxItemStep(document, tonkDocumentLabelSet))
@@ -76,13 +78,26 @@ export async function fetchFOCUSTonk(
     passthroughRequestHeaders
   );
 
+  console.log(
+    'response.content.tozodocumenten',
+    response.content?.tozodocumenten
+  );
+
   if (response.status === 'OK') {
     return createTonkResult(
-      response.content.tozodocumenten.filter(
-        (document) =>
+      response.content.tozodocumenten.filter((document) => {
+        console.log(
+          'doc.doc',
+          document,
+          sanitizeDocumentCodeId(document.documentCodeId),
+          sanitizeDocumentCodeId(document.documentCodeId) in
+            tonkDocumentLabelSet
+        );
+        return (
           sanitizeDocumentCodeId(document.documentCodeId) in
           tonkDocumentLabelSet
-      )
+        );
+      })
     );
   }
 

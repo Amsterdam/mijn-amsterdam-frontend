@@ -7,6 +7,7 @@ import { fetchBRPGenerated } from './brp';
 import { fetchERFPACHTGenerated } from './erfpacht';
 import { fetchFOCUSAanvragenGenerated } from './focus/focus-aanvragen';
 import { fetchFOCUSSpecificationsGenerated } from './focus/focus-specificaties';
+import { fetchFOCUSTonkGenerated } from './focus/focus-tonk';
 import { fetchFOCUSTozoGenerated } from './focus/focus-tozo';
 import { fetchMILIEUZONEGenerated } from './milieuzone';
 import { fetchVergunningenGenerated } from './vergunningen';
@@ -76,6 +77,7 @@ export async function fetchGenerated(
     focusAanvragenGeneratedResult,
     focusSpecificatiesGeneratedResult,
     focusTozoGeneratedResult,
+    focusTonkGeneratedResult,
     belastingGeneratedResult,
     milieuzoneGeneratedResult,
     vergunningenGeneratedResult,
@@ -85,6 +87,7 @@ export async function fetchGenerated(
     fetchFOCUSAanvragenGenerated(sessionID, passthroughRequestHeaders),
     fetchFOCUSSpecificationsGenerated(sessionID, passthroughRequestHeaders),
     fetchFOCUSTozoGenerated(sessionID, passthroughRequestHeaders),
+    fetchFOCUSTonkGenerated(sessionID, passthroughRequestHeaders),
     fetchBELASTINGGenerated(sessionID, passthroughRequestHeaders),
     fetchMILIEUZONEGenerated(sessionID, passthroughRequestHeaders),
     fetchVergunningenGenerated(sessionID, passthroughRequestHeaders),
@@ -99,6 +102,7 @@ export async function fetchGenerated(
     focusSpecificatiesGeneratedResult
   );
   const focusTozoGenerated = getSettledResult(focusTozoGeneratedResult);
+  const focusTonkGenerated = getSettledResult(focusTonkGeneratedResult);
   const belastingGenerated = getSettledResult(belastingGeneratedResult);
   const milieuzoneGenerated = getSettledResult(milieuzoneGeneratedResult);
   const vergunningenGenerated = getSettledResult(vergunningenGeneratedResult);
@@ -109,6 +113,7 @@ export async function fetchGenerated(
     focusAanvragenGenerated,
     focusSpecificatiesGenerated,
     focusTozoGenerated,
+    focusTonkGenerated,
     belastingGenerated,
     milieuzoneGenerated,
     vergunningenGenerated,
