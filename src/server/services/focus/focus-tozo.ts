@@ -1,5 +1,6 @@
 import { Chapters } from '../../../universal/config';
 import { FeatureToggle } from '../../../universal/config/app';
+import { AppRoutes } from '../../../universal/config/routes';
 import {
   apiDependencyError,
   apiSuccesResult,
@@ -19,10 +20,10 @@ import {
   createToxxItemStep,
   createToxxItemStepNotifications,
   getProductTitleForDocument,
+  sanitizeDocumentCodeId,
 } from './focus-toxx-helpers';
 import { tozoDocumentLabelSet } from './focus-tozo-content';
 import { FocusItem, FocusItemStep } from './focus-types';
-import { AppRoutes } from '../../../universal/config/routes';
 
 export function createTozoResult(
   tozodocumenten: FocusCombinedSourceResponse['tozodocumenten']
@@ -151,7 +152,13 @@ export async function fetchFOCUSTozo(
   );
 
   if (response.status === 'OK') {
-    return createTozoResult(response.content.tozodocumenten);
+    return createTozoResult(
+      response.content.tozodocumenten.filter(
+        (document) =>
+          sanitizeDocumentCodeId(document.documentCodeId) in
+          tozoDocumentLabelSet
+      )
+    );
   }
 
   return response;

@@ -1,6 +1,5 @@
-import * as Sentry from '@sentry/node';
 import { generatePath } from 'react-router-dom';
-import { API_BASE_PATH, AppRoutes, Chapters } from '../../../universal/config';
+import { API_BASE_PATH, Chapters } from '../../../universal/config';
 import { dateFormat, hash } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types/App.types';
 import { FocusDocument } from './focus-combined';
@@ -25,28 +24,24 @@ export function getProductTitleForDocument(
   return labelSetForProduct.product;
 }
 
-function transformKey(documentCodeId: string) {
+export function sanitizeDocumentCodeId(documentCodeId: string) {
   return documentCodeId.replace(/\s/g, '').toLowerCase();
 }
 
 export function getLabelSet(
   document: FocusDocument,
   labelSetCollection: ToxxLabelSetCollection
-): ToxxLabelSet | null {
-  const labelSetEntry = Object.entries(labelSetCollection).find(
+): ToxxLabelSet {
+  const [, labelSet] = Object.entries(labelSetCollection).find(
     ([documentCodeId]) => {
       return (
-        transformKey(documentCodeId) === transformKey(document.documentCodeId)
+        sanitizeDocumentCodeId(documentCodeId) ===
+        sanitizeDocumentCodeId(document.documentCodeId)
       );
     }
-  );
+  )!; // We're filtering up-front so find will result
 
-  if (!labelSetEntry) {
-    return null;
-  }
-
-  // We don't need labelSetEntry[0]
-  return labelSetEntry[1];
+  return labelSet;
 }
 
 function getDocumentTitle(labelSet: ToxxLabelSet, document: FocusDocument) {
@@ -86,19 +81,6 @@ export function createToxxItemStep(
   labelSetCollection: ToxxLabelSetCollection
 ) {
   const labelSet = getLabelSet(document, labelSetCollection);
-
-  if (!labelSet) {
-    Sentry.captureMessage(
-      `Unknown Tozo document (${document.documentCodeId}) encountered`,
-      {
-        extra: {
-          document,
-        },
-      }
-    );
-    return null;
-  }
-
   const documentTitle = getDocumentTitle(labelSet, document);
 
   const attachedDocument = {
@@ -160,7 +142,7 @@ export function createToxxItem({
   return {
     id,
     dateStart: steps[0].datePublished,
-    datePublished: steps[steps.length - 1].datePublished,
+    datePublished: steps[steps.length - 1].datePublished, // Use the date from latest step
     title,
     status: steps[steps.length - 1].status,
     productTitle,

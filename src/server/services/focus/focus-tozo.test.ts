@@ -1,5 +1,5 @@
 import combined from '../../mock-data/json/focus-combined.json';
-import { createTozoResult } from './focus-toxx-helpers';
+import { createTozoResult } from './focus-tozo';
 
 describe('Focus Tozo service', () => {
   it('Transforms data correctly and matches snapshot', () => {
