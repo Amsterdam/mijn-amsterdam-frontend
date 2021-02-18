@@ -31,17 +31,19 @@ export function sanitizeDocumentCodeId(documentCodeId: string) {
 export function getLabelSet(
   document: FocusDocument,
   labelSetCollection: ToxxLabelSetCollection
-): ToxxLabelSet {
-  const [, labelSet] = Object.entries(labelSetCollection).find(
-    ([documentCodeId]) => {
-      return (
-        sanitizeDocumentCodeId(documentCodeId) ===
-        sanitizeDocumentCodeId(document.documentCodeId)
-      );
-    }
-  )!; // We're filtering up-front so find will result
+): ToxxLabelSet | null {
+  const entry = Object.entries(labelSetCollection).find(([documentCodeId]) => {
+    return (
+      sanitizeDocumentCodeId(documentCodeId) ===
+      sanitizeDocumentCodeId(document.documentCodeId)
+    );
+  });
 
-  return labelSet;
+  if (entry) {
+    return entry[1];
+  }
+
+  return null;
 }
 
 function getDocumentTitle(labelSet: ToxxLabelSet, document: FocusDocument) {
@@ -81,6 +83,11 @@ export function createToxxItemStep(
   labelSetCollection: ToxxLabelSetCollection
 ) {
   const labelSet = getLabelSet(document, labelSetCollection);
+
+  if (!labelSet) {
+    return null;
+  }
+
   const documentTitle = getDocumentTitle(labelSet, document);
 
   const attachedDocument = {

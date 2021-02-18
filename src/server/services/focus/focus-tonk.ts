@@ -40,8 +40,6 @@ export function createTonkResult(
         .sort(dateSort('datePublished'))
     : [];
 
-  console.log('tonktnonk', documents);
-
   const tonkSteps: FocusItemStep[] = documents
     .map((document) => createToxxItemStep(document, tonkDocumentLabelSet))
     .filter(

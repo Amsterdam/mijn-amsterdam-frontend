@@ -3,7 +3,7 @@
 exports[`<Zorg /> Matches the Full Page snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="Page DetailPage"
+    class="Page DetailPage StatusDetail"
   >
     <header
       class="PageHeading hasIcon hasBackLink"
@@ -117,17 +117,7 @@ exports[`<Zorg /> Matches the Full Page snapshot 1`] = `
             </div>
             <div
               class="Panel Panel--documents"
-            >
-              <span
-                class="altDocumentContent"
-              >
-                <p>
-                  <strong>
-                    U krijgt dit besluit per post.
-                  </strong>
-                </p>
-              </span>
-            </div>
+            />
           </div>
         </li>
       </ul>
