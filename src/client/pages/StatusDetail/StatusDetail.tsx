@@ -21,7 +21,7 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import AlertDocumentDownloadsDisabled from '../Inkomen/AlertDocumentDownloadsDisabled';
 import styles from './StatusDetail.module.scss';
 
-interface StatusSourceItem {
+export interface StatusSourceItem {
   id: string;
   title: string;
   productTitle?: string;
