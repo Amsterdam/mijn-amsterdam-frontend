@@ -1,7 +1,7 @@
 import { dateFormat, defaultDateFormat } from '../../../universal/helpers';
 import { stepLabels } from './focus-aanvragen-content';
 import { FocusDocument } from './focus-combined';
-import { FocusStepContent } from './focus-types';
+import { FocusStepContent, FocusTonkLabelSet } from './focus-types';
 
 const aanvraagLabels: FocusStepContent = {
   notification: {
@@ -67,17 +67,7 @@ const afwijzenLabels: FocusStepContent = {
       </p>`,
 };
 
-export type FocusTonkStepType = 'aanvraag' | 'herstelTermijn' | 'besluit';
-
-export type FocusTonkLabelSet = {
-  labels: FocusStepContent;
-  omschrijving: string;
-  documentTitle: string;
-  product: 'Tonk 1';
-  stepType: FocusTonkStepType;
-};
-
-export const tozoDocumentLabelSet: Record<
+export const tonkDocumentLabelSet: Record<
   FocusDocument['documentCodeId'],
   FocusTonkLabelSet
 > = {

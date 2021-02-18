@@ -1,7 +1,7 @@
 import { dateFormat, defaultDateFormat } from '../../../universal/helpers';
 import { stepLabels } from './focus-aanvragen-content';
 import { FocusDocument } from './focus-combined';
-import { FocusStepContent } from './focus-types';
+import { FocusStepContent, FocusTozoLabelSet } from './focus-types';
 
 function productName(
   document: Pick<FocusDocument, 'productTitle' | 'productSpecific'>,
@@ -134,23 +134,6 @@ const vrijeBeschikkingLabels: FocusStepContent = {
   status: stepLabels.beslissing,
   description: (document) =>
     `<p>Wij hebben een besluit genomen over uw ${document.productTitle} aanvraag. Bekijk de brief voor meer details.</p>`,
-};
-
-export type FocusTozoStepType =
-  | 'aanvraag'
-  | 'herstelTermijn'
-  | 'besluit'
-  | 'intrekken'
-  | 'vrijeBeschikking'
-  | 'voorschot';
-
-export type FocusTozoLabelSet = {
-  labels: FocusStepContent;
-  omschrijving: string;
-  documentTitle: string;
-  product: 'Tozo 1' | 'Tozo 2' | 'Tozo 3';
-  productSpecific: 'uitkering' | 'lening' | 'voorschot' | 'aanvraag' | '';
-  stepType: FocusTozoStepType;
 };
 
 export const tozoDocumentLabelSet: Record<
