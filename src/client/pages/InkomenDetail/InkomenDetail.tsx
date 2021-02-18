@@ -52,7 +52,7 @@ export function InkomenDetailTonk() {
         {!isLoading && (
           <p>
             <Linkd external={true} href={ExternalUrls.WPI_TONK}>
-              Meer informatie over de Tonk
+              Meer informatie over de TONK
             </Linkd>
           </p>
         )}

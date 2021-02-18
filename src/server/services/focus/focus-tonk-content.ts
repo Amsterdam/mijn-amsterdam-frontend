@@ -38,32 +38,32 @@ const herstelTermijnLabels: FocusStepContent = {
 
 const toekennenLabels: FocusStepContent = {
   notification: {
-    title: (document) => `Tonk: Uw aanvraag is toegekend`,
+    title: (document) => `TONK: Uw aanvraag is toegekend`,
     description: (document) =>
-      `U hebt recht op Tonk (besluit: ${defaultDateFormat(
+      `U hebt recht op TONK (besluit: ${defaultDateFormat(
         document.datePublished
       )}).`,
   },
   status: stepLabels.beslissing,
   description: (document) =>
     `<p>
-          U hebt recht op Tonk. Bekijk de brief
+          U hebt recht op TONK. Bekijk de brief
           voor meer details.
         </p>`,
 };
 
 const afwijzenLabels: FocusStepContent = {
   notification: {
-    title: (document) => `Tonk: Uw aanvraag is afgewezen`,
+    title: (document) => `TONK: Uw aanvraag is afgewezen`,
     description: (document) =>
-      `U hebt geen recht op Tonk (besluit: ${defaultDateFormat(
+      `U hebt geen recht op TONK (besluit: ${defaultDateFormat(
         document.datePublished
       )}).`,
   },
   status: stepLabels.beslissing,
   description: (document) =>
     `<p>
-        U hebt geen recht op Tonk. Bekijk de brief voor meer details.
+        U hebt geen recht op TONK. Bekijk de brief voor meer details.
       </p>`,
 };
 
@@ -83,38 +83,38 @@ export const tonkDocumentLabelSet: Record<
   FocusTonkLabelSet
 > = {
   'tonk-111': {
-    omschrijving: 'Tonk regeling aanvraag',
+    omschrijving: 'TONK regeling aanvraag',
     labels: aanvraagLabels,
-    documentTitle: 'Aanvraag Tonk regeling',
-    product: 'Tonk',
+    documentTitle: 'Aanvraag TONK regeling',
+    product: 'TONK',
     stepType: 'aanvraag',
   },
   'tonk-222': {
-    omschrijving: 'Tonk regeling hersteltermijn',
+    omschrijving: 'TONK regeling hersteltermijn',
     labels: herstelTermijnLabels,
     documentTitle: 'Brief meer informatie',
-    product: 'Tonk',
+    product: 'TONK',
     stepType: 'herstelTermijn',
   },
   'tonk-333': {
-    omschrijving: 'Tonk regeling besluit toekennen',
+    omschrijving: 'TONK regeling besluit toekennen',
     labels: toekennenLabels,
-    documentTitle: 'Besluit toekennimg',
-    product: 'Tonk',
+    documentTitle: 'Besluit toekenning',
+    product: 'TONK',
     stepType: 'besluit',
   },
   'tonk-444': {
-    omschrijving: 'Tonk regeling besluit afwijzen',
+    omschrijving: 'TONK regeling besluit afwijzen',
     labels: afwijzenLabels,
     documentTitle: 'Besluit afwijzing',
-    product: 'Tonk',
+    product: 'TONK',
     stepType: 'besluit',
   },
   'tonk-555': {
-    omschrijving: 'Tonk Buiten behandeling laten',
+    omschrijving: 'TONK Buiten behandeling laten',
     labels: buitenBehandelingLabels,
     documentTitle: 'Besluit buiten behandeling',
-    product: 'Tonk',
+    product: 'TONK',
     productSpecific: '',
     stepType: 'besluit',
   },

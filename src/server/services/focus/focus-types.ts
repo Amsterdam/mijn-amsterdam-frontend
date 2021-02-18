@@ -152,7 +152,7 @@ export type FocusTonkLabelSet = {
   labels: FocusStepContent;
   omschrijving: string;
   documentTitle: string;
-  product: 'Tonk';
+  product: 'TONK';
   stepType: FocusTonkStepType;
   productSpecific?: '';
 };

@@ -73,7 +73,7 @@ export const DocumentTitles = {
   [AppRoutes['STADSPAS/AANVRAAG']]: `Stadspas | ${ChapterTitles.INKOMEN}`,
   [AppRoutes['STADSPAS/SALDO']]: `Stadspas saldo | ${ChapterTitles.INKOMEN}`,
   [AppRoutes['INKOMEN/TOZO']]: `Tozo | ${ChapterTitles.INKOMEN}`,
-  [AppRoutes['INKOMEN/TONK']]: `Tonk | ${ChapterTitles.INKOMEN}`,
+  [AppRoutes['INKOMEN/TONK']]: `TONK | ${ChapterTitles.INKOMEN}`,
   [AppRoutes[
     'INKOMEN/SPECIFICATIES'
   ]]: `Uitkeringsspecificaties | ${ChapterTitles.INKOMEN}`,

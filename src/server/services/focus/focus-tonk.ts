@@ -52,8 +52,8 @@ export function createTonkResult(
 
   const tonkItems: FocusItem[] = [
     createToxxItem({
-      title: 'Tonk',
-      productTitle: 'Tonk',
+      title: 'TONK',
+      productTitle: 'TONK',
       steps: tonkSteps,
       routeProps: {
         path: AppRoutes['INKOMEN/TONK'],
