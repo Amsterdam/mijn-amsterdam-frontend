@@ -73,6 +73,7 @@ export function createTozoResult(
   const tozo1Steps = otherSteps.filter((step) => step.product === 'Tozo 1');
   const tozo2Steps = otherSteps.filter((step) => step.product === 'Tozo 2');
   const tozo3Steps = otherSteps.filter((step) => step.product === 'Tozo 3');
+  const tozo4Steps = otherSteps.filter((step) => step.product === 'Tozo 4');
 
   if (aanvraagSteps['Tozo 1']) {
     tozo1Steps.unshift(aanvraagSteps['Tozo 1']);
@@ -125,6 +126,23 @@ export function createTozoResult(
       },
     });
 
+  if (aanvraagSteps['Tozo 4']) {
+    tozo4Steps.unshift(aanvraagSteps['Tozo 4']);
+  }
+  const tozo4Item =
+    tozo4Steps.length &&
+    createToxxItem({
+      title: 'Tozo 4 (aangevraagd vanaf 1 maart 2021)',
+      productTitle: 'Tozo 4',
+      steps: tozo4Steps,
+      routeProps: {
+        path: AppRoutes['INKOMEN/TOZO'],
+        params: {
+          version: '4',
+        },
+      },
+    });
+
   const tozoItems: FocusItem[] = [];
 
   if (tozo1Item) {
@@ -137,6 +155,10 @@ export function createTozoResult(
 
   if (tozo3Item) {
     tozoItems.push(tozo3Item);
+  }
+
+  if (tozo4Item) {
+    tozoItems.push(tozo4Item);
   }
 
   return apiSuccesResult(tozoItems);
@@ -179,16 +201,16 @@ export async function fetchFOCUSTozoGenerated(
 
     if (
       !FeatureToggle.tozo4active &&
-      TOZO.content.some((item) => item.productTitle === 'Tozo 3')
+      !TOZO.content.some((item) => item.productTitle === 'Tozo 4')
     ) {
       notifications.push({
         chapter: Chapters.INKOMEN,
-        datePublished: '2021-02-20',
+        datePublished: '2021-02-01',
         isAlert: false,
         hideDatePublished: false,
         id: `focus-tozo4-notification`,
         title: `Tozo 4`,
-        description: `Hebt u Tozo 4 aangevraagd (aanvragen vanaf 1 XXXX 2021)? Wij
+        description: `Hebt u Tozo 4 aangevraagd (aanvragen vanaf 1 maart 2021)? Wij
                 werken er hard aan om ook die aanvraag in Mijn Amsterdam te
                 tonen. Als het zover is, ziet u uw aanvraag vanzelf hier
                 verschijnen.`,

@@ -76,21 +76,9 @@ export async function fetchFOCUSTonk(
     passthroughRequestHeaders
   );
 
-  console.log(
-    'response.content.tozodocumenten',
-    response.content?.tozodocumenten
-  );
-
   if (response.status === 'OK') {
     return createTonkResult(
       response.content.tozodocumenten.filter((document) => {
-        console.log(
-          'doc.doc',
-          document,
-          sanitizeDocumentCodeId(document.documentCodeId),
-          sanitizeDocumentCodeId(document.documentCodeId) in
-            tonkDocumentLabelSet
-        );
         return (
           sanitizeDocumentCodeId(document.documentCodeId) in
           tonkDocumentLabelSet
