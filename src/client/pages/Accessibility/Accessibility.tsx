@@ -87,7 +87,7 @@ export default function Accessibility() {
           Mijn Amsterdam moeten zetten. Lees hier onze{' '}
           <LinkdInline
             external={true}
-            href={'/Uitslag WCAG Onderzoek 15-02-2021.pdf'}
+            href={'/toegankelijkheidsverklaring-mijn-amsterdam-20200520.html'}
           >
             volledige toegankelijkheidsverklaring
           </LinkdInline>
