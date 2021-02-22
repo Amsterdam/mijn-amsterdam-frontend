@@ -32,6 +32,25 @@ const aanvraagLabels: FocusStepContent = {
       </p>`,
 };
 
+const inkomstenVerklaringLabels: FocusStepContent = {
+  notification: {
+    title: (document) =>
+      `Wij hebben uw inkomstenverklaring ${document.productTitle} ontvangen`,
+    description: (document) =>
+      `Wij hebben uw inkomstenverklaring ${
+        document.productTitle
+      } ontvangen op ${dateFormat(
+        document.datePublished,
+        `dd MMMM 'om' HH.mm 'uur'`
+      )}`,
+  },
+  status: stepLabels.aanvraag,
+  description: (document) =>
+    `<p>
+        Wij hebben uw inkomstenverklaring ${document.productTitle} ontvangen.
+      </p>`,
+};
+
 const voorschotToekennenLabels: FocusStepContent = {
   notification: {
     title: (document) => {
@@ -272,6 +291,14 @@ export const tozoDocumentLabelSet: Record<
     productSpecific: 'aanvraag',
     stepType: 'aanvraag',
   },
+  '790': {
+    omschrijving: 'Tozo 2 inkomstenwijziging',
+    documentTitle: 'Tozo 2 inkomstenwijziging',
+    stepType: 'verklaring',
+    labels: inkomstenVerklaringLabels,
+    product: 'Tozo 2',
+    productSpecific: '',
+  },
 
   '175336': {
     omschrijving: 'Tozo2 Toekennen',
@@ -379,6 +406,14 @@ export const tozoDocumentLabelSet: Record<
     product: 'Tozo 3',
     productSpecific: 'aanvraag',
     stepType: 'aanvraag',
+  },
+  '792': {
+    omschrijving: 'Tozo3 inkomstenwijziging',
+    documentTitle: 'Tozo3 inkomstenwijziging',
+    stepType: 'verklaring',
+    labels: inkomstenVerklaringLabels,
+    product: 'Tozo 3',
+    productSpecific: '',
   },
   '175309': {
     omschrijving: 'Tozo3 Toekennen',
@@ -583,14 +618,14 @@ export const tozoDocumentLabelSet: Record<
   //   product: 'Tozo 4',
   //   productSpecific: '',
   // },
-  // '????': {
-  //   omschrijving: 'Tozo4 inkomstenwijziging',
-  //   documentTitle: 'Tozo4 inkomstenwijziging',
-  //   stepType: '',
-  //   labels: voorschotToekennenLabels,
-  //   product: 'Tozo 4',
-  //   productSpecific: '',
-  // },
+  '794': {
+    omschrijving: 'Tozo4 inkomstenwijziging',
+    documentTitle: 'Tozo4 inkomstenwijziging',
+    stepType: 'verklaring',
+    labels: inkomstenVerklaringLabels,
+    product: 'Tozo 4',
+    productSpecific: '',
+  },
   // '????': {
   //   omschrijving: 'Tozo4 Terugvorderingsbesluit',
   //   documentTitle: 'Tozo4 Terugvorderingsbesluit',
