@@ -19,17 +19,25 @@ export function isValidRequestPath(requestPath: string, path: string) {
     path: npath.join(BFF_BASE_PATH, path),
     exact: true,
   });
+  if (path.includes('mainte'))
+    console.log(
+      'pub',
+      requestPath,
+      path,
+      npath.join(BFF_BASE_PATH, path),
+      isRouteMatch
+    );
   return isRouteMatch;
 }
 
 export function isBffEndpoint(requestPath: string) {
-  return Object.values(BffEndpoints).some(path =>
+  return Object.values(BffEndpoints).some((path) =>
     isValidRequestPath(requestPath, path)
   );
 }
 
 export function isBffPublicEndpoint(requestPath: string) {
-  return PUBLIC_BFF_ENDPOINTS.some(path =>
+  return PUBLIC_BFF_ENDPOINTS.some((path) =>
     isValidRequestPath(requestPath, path)
   );
 }
@@ -117,7 +125,7 @@ export function addServiceResultHandler(
   servicePromise: Promise<any>,
   serviceName: string
 ) {
-  return servicePromise.then(data => {
+  return servicePromise.then((data) => {
     sendMessage(res, serviceName, 'message', data);
     return data;
   });

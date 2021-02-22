@@ -58,6 +58,7 @@ export const BFFApiUrls = {
   MAP_DATASETS: `${BFF_API_BASE_URL}/map/datasets`,
   SERVICES_TIPS_URL: `${BFF_API_BASE_URL}/services/tips`,
   SERVICES_CMS_URL: `${BFF_API_PUBLIC_BASE_URL}/services/cms`,
+  SERVICES_CMS_MAINTENANCE_NOTIFICATIONS_URL: `${BFF_API_PUBLIC_BASE_URL}/services/cms/maintenance-notifications`,
 };
 
 export const ErrorNames: Record<string /* ApiStateKey */, string> = {

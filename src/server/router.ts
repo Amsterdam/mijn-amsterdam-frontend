@@ -9,6 +9,7 @@ import {
   loadFeatureDetail,
   loadPolylineFeatures,
 } from './services/buurt/buurt';
+import { fetchCMSMaintenanceNotifications } from './services/cms-maintenance-notifications';
 import {
   loadServicesAll,
   loadServicesSSE,
@@ -144,3 +145,26 @@ router.get(BffEndpoints.CMS_CONTENT, async (req, res, next) => {
   }
   next();
 });
+
+router.get(
+  BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
+  async (req, res, next) => {
+    const sessionID = res.locals.sessionID;
+    try {
+      let response = await fetchCMSMaintenanceNotifications(
+        sessionID,
+        getPassthroughRequestHeaders(req),
+        req.params
+      );
+      if (req.params.page && response.content) {
+        response = apiSuccesResult(
+          response.content.filter((item) => item.page === req.params.page)
+        );
+      }
+      res.json(response);
+    } catch (error) {
+      Sentry.captureException(error);
+    }
+    next();
+  }
+);

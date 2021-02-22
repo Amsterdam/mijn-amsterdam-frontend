@@ -11,6 +11,7 @@ import {
   PageHeading,
   TextPage,
   Alert,
+  InnerHtml,
 } from '../../components';
 import {
   LOGIN_URL_DIGID,
@@ -20,8 +21,8 @@ import {
 import { trackPageView } from '../../hooks';
 import styles from './Landing.module.scss';
 import { ExternalUrls } from '../../config/app';
-import { MaintenanceNotification01 } from '../../config/staticData';
 import { IS_PRODUCTION } from '../../../universal/config/env';
+import { useCmsMaintenanceNotifications } from '../../hooks/api/useCmsMaintenanceNotifications';
 
 export default function Landing() {
   const loginButton = useRef(null);
@@ -32,6 +33,10 @@ export default function Landing() {
       document.location.pathname + '/landingspagina'
     );
   }, []);
+
+  const maintenanceNotifications = useCmsMaintenanceNotifications(
+    'landingspagina'
+  );
 
   const [isRedirecting, setRedirecting] = useState(false);
   const [isRedirectingEherkenning, setRedirectingEherkenning] = useState(false);
@@ -50,11 +55,15 @@ export default function Landing() {
           Mijn Amsterdam is uw persoonlijke online pagina bij de gemeente
           Amsterdam.
         </p>
-        {new Date() < new Date('2020-09-22T12:00:00') && (
-          <Alert type="warning">
-            <p>{MaintenanceNotification01.description}</p>
-          </Alert>
-        )}
+        {!!maintenanceNotifications?.length &&
+          maintenanceNotifications.map((notification) => {
+            return (
+              <Alert type="warning">
+                <InnerHtml>{notification.description}</InnerHtml>
+              </Alert>
+            );
+          })}
+
         <div className={styles.LoginOption}>
           {FeatureToggle.eherkenningActive && (
             <Heading className={styles.LoginOptionHeading} size="tiny" el="h3">

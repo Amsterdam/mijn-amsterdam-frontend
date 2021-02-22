@@ -60,6 +60,7 @@ type SourceApiKey =
   | 'VERGUNNINGEN'
   | 'CMS_CONTENT_GENERAL_INFO'
   | 'CMS_CONTENT_FOOTER'
+  | 'CMS_MAINTENANCE_NOTIFICATIONS'
   | 'TIPS'
   | 'BRP'
   | 'ERFPACHT'
@@ -111,6 +112,10 @@ export const ApiConfig: ApiDataRequestConfig = {
     cacheTimeout: 4 * ONE_HOUR_MS,
     postponeFetch: !FeatureToggle.cmsFooterActive,
   },
+  CMS_MAINTENANCE_NOTIFICATIONS: {
+    url: `https://www.amsterdam.nl/storingsmeldingen/alle-meldingen-mijn-amsterdam?new_json=true`,
+    cacheTimeout: ONE_HOUR_MS,
+  },
   TIPS: {
     url: `${BFF_MS_API_BASE_URL}/tips/gettips`,
   },
@@ -143,6 +148,7 @@ export const BffEndpoints = {
   SERVICES_STREAM: `/services/stream`,
   HEALTH: `/status/health`,
   CMS_CONTENT: `/public/services/cms`,
+  CMS_MAINTENANCE_NOTIFICATIONS: `/public/services/cms/maintenance-notifications/:page?`,
   MAP_DATASETS: `/map/datasets/:datasetId?/:id?`,
   CACHE_OVERVIEW: `/status/cache`,
 };
@@ -150,5 +156,6 @@ export const BffEndpoints = {
 export const PUBLIC_BFF_ENDPOINTS: string[] = [
   BffEndpoints.HEALTH,
   BffEndpoints.CMS_CONTENT,
+  BffEndpoints.CMS_MAINTENANCE_NOTIFICATIONS,
   BffEndpoints.CACHE_OVERVIEW,
 ];
