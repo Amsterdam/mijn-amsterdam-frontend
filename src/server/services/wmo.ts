@@ -10,6 +10,7 @@ import {
 import { LinkProps } from '../../universal/types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
+import { StatusLineItem } from '../../client/components/StatusLine/StatusLine.types';
 
 // Example data
 // [
@@ -41,24 +42,6 @@ import { requestData } from '../helpers';
 //   },
 // ];
 
-interface Document {
-  id: string;
-  title: string;
-  url: string;
-  type: string;
-  datePublished: string;
-}
-
-export interface WmoProcessStep {
-  id: string;
-  status: string;
-  datePublished: string;
-  description: string;
-  documents: Document[];
-  isActive: boolean;
-  isChecked: boolean;
-}
-
 export interface WmoItem {
   id: string;
   title: string; // Omschrijving
@@ -66,7 +49,7 @@ export interface WmoItem {
   supplierUrl: string; // Leverancier url
   isActual: boolean; // Indicates if this item is designated Current or Previous
   link: LinkProps;
-  steps: WmoProcessStep[];
+  steps: StatusLineItem[];
   voorzieningsoortcode: WmoApiItem['Voorzieningsoortcode'];
 }
 
@@ -115,10 +98,10 @@ const Labels: {
     statusItems: [
       {
         status: 'Besluit',
-        datePublished: data => data.dateDecision,
+        datePublished: (data) => data.dateDecision,
         isChecked: (stepIndex, data) => data.isActual === true,
         isActive: (stepIndex, data) => data.isActual === true,
-        description: data =>
+        description: (data) =>
           `
             <p>
               U hebt recht op een ${data.title} per ${defaultDateFormat(
@@ -134,10 +117,10 @@ const Labels: {
       },
       {
         status: 'Einde recht',
-        datePublished: data => (data.isActual ? '' : data.dateFinish),
+        datePublished: (data) => (data.isActual ? '' : data.dateFinish),
         isChecked: () => false,
         isActive: (stepIndex, data) => data.isActual === false,
-        description: data =>
+        description: (data) =>
           `<p>
             ${
               data.isActual
@@ -182,10 +165,10 @@ const Labels: {
     statusItems: [
       {
         status: 'Besluit',
-        datePublished: data => data.dateDecision,
+        datePublished: (data) => data.dateDecision,
         isChecked: (stepIndex, data) => data.isActual === true,
         isActive: (stepIndex, data) => data.isActual === true,
-        description: data =>
+        description: (data) =>
           `
             <p>
               U hebt recht op een ${data.title} per ${defaultDateFormat(
@@ -200,10 +183,10 @@ const Labels: {
       },
       {
         status: 'Einde recht',
-        datePublished: data => (data.isActual ? '' : data.dateFinish),
+        datePublished: (data) => (data.isActual ? '' : data.dateFinish),
         isChecked: () => false,
         isActive: (stepIndex, data) => data.isActual === false,
-        description: data =>
+        description: (data) =>
           `
             <p>
               ${
@@ -245,10 +228,10 @@ const Labels: {
     statusItems: [
       {
         status: 'Besluit',
-        datePublished: data => data.dateDecision,
+        datePublished: (data) => data.dateDecision,
         isChecked: (stepIndex, data) => data.isActual === true,
         isActive: (stepIndex, data) => data.isActual === true,
-        description: data =>
+        description: (data) =>
           `
             <p>
               U hebt recht op ${data.title} per ${defaultDateFormat(
@@ -263,10 +246,10 @@ const Labels: {
       },
       {
         status: 'Einde recht',
-        datePublished: data => data.dateFinish || '',
+        datePublished: (data) => data.dateFinish || '',
         isChecked: () => false,
         isActive: (stepIndex, data) => data.isActual === false,
-        description: data =>
+        description: (data) =>
           `
             <p>
               ${
@@ -317,7 +300,7 @@ const Labels: {
     statusItems: [
       {
         status: 'Besluit',
-        datePublished: data => data.dateDecision,
+        datePublished: (data) => data.dateDecision,
         isChecked: (stepIndex, sourceData: WmoSourceData) => true,
         isActive: (stepIndex, sourceData: WmoSourceData) => false,
         description: (data: WmoSourceData) => {
@@ -366,7 +349,7 @@ const Labels: {
         isActive: (stepIndex, sourceData: WmoSourceData, today: Date) =>
           sourceData.isActual === true &&
           isDateInFuture(sourceData.dateFinish, today),
-        description: data =>
+        description: (data) =>
           `<p>
             ${data.supplier} is gestart met het leveren van ${data.title}.
           </p>`,
@@ -378,7 +361,7 @@ const Labels: {
           sourceData.isActual === false ||
           isDateInPast(sourceData.dateFinish, today),
         isActive: (stepIndex, sourceData: WmoSourceData) => false,
-        description: data =>
+        description: (data) =>
           `<p>
             ${
               data.isActual
@@ -419,10 +402,10 @@ const Labels: {
     statusItems: [
       {
         status: 'Besluit',
-        datePublished: data => data.dateDecision,
+        datePublished: (data) => data.dateDecision,
         isChecked: () => true,
         isActive: () => false,
-        description: data =>
+        description: (data) =>
           `
             <p>
               U hebt recht op een ${data.title} per ${defaultDateFormat(
@@ -445,7 +428,7 @@ const Labels: {
           data.isActual
             ? isDateInFuture(data.dateStartServiceDelivery, today)
             : false,
-        description: data =>
+        description: (data) =>
           `<p>
             De gemeente heeft opdracht gegeven aan ${data.serviceDeliverySupplier} om een ${data.title} aan u te leveren.
           </p>`,
@@ -458,17 +441,17 @@ const Labels: {
           data.isActual
             ? isDateInPast(data.dateStartServiceDelivery, today)
             : false,
-        description: data =>
+        description: (data) =>
           `<p>
             ${data.serviceDeliverySupplier} heeft aan ons doorgegeven dat een ${data.title} bij u is afgeleverd.
           </p>`,
       },
       {
         status: 'Einde recht',
-        datePublished: data => (data.isActual ? '' : data.dateFinish),
+        datePublished: (data) => (data.isActual ? '' : data.dateFinish),
         isChecked: () => false,
         isActive: (stepIndex, data) => data.isActual === false,
-        description: data =>
+        description: (data) =>
           `<p>
             ${
               data.isActual
@@ -490,10 +473,10 @@ const Labels: {
     statusItems: [
       {
         status: 'Besluit',
-        datePublished: data => data.dateDecision,
+        datePublished: (data) => data.dateDecision,
         isChecked: () => true,
         isActive: () => false,
-        description: data =>
+        description: (data) =>
           `
             <p>
               U hebt recht op een ${data.title} per ${defaultDateFormat(
@@ -516,7 +499,7 @@ const Labels: {
           data.isActual
             ? isDateInFuture(data.dateStartServiceDelivery, today)
             : false,
-        description: data =>
+        description: (data) =>
           `<p>
             De gemeente heeft opdracht gegeven aan ${data.serviceDeliverySupplier} om de aanpassingen aan uw woning uit
             te voeren.
@@ -530,7 +513,7 @@ const Labels: {
           data.isActual
             ? isDateInPast(data.dateStartServiceDelivery, today)
             : false,
-        description: data =>
+        description: (data) =>
           `<p>
             ${data.serviceDeliverySupplier} heeft aan ons doorgegeven dat de
             aanpassing aan uw woning is uitgevoerd.
@@ -538,10 +521,10 @@ const Labels: {
       },
       {
         status: 'Einde recht',
-        datePublished: data => (data.isActual ? '' : data.dateFinish),
+        datePublished: (data) => (data.isActual ? '' : data.dateFinish),
         isChecked: () => false,
         isActive: (stepIndex, data) => data.isActual === false,
-        description: data =>
+        description: (data) =>
           `<p>
             ${
               data.isActual
@@ -570,40 +553,58 @@ function parseLabelContent(
   return rText;
 }
 
-function formatWmoProcessSteps(
-  data: WmoSourceData,
+function formatWmoStatusLineItems(
+  wmoItem: WmoSourceData,
   today: Date
-): WmoProcessStep[] {
+): StatusLineItem[] {
   const labelData = Object.values(Labels).find((labelData, index) => {
-    const type = data.deliveryType || '';
+    const type = wmoItem.deliveryType || '';
     return (
       labelData.deliveryType[type] &&
-      labelData.deliveryType[type]!.includes(data.itemTypeCode)
+      labelData.deliveryType[type]!.includes(wmoItem.itemTypeCode)
     );
   });
 
   if (labelData) {
-    const items: WmoProcessStep[] = labelData.statusItems.map(
+    const steps: StatusLineItem[] = labelData.statusItems.map(
       (statusItem, index) => {
         const datePublished = parseLabelContent(
           statusItem.datePublished,
-          data,
+          wmoItem,
           today
         ) as string;
 
-        return {
+        const stepData: StatusLineItem = {
           id: `status-step-${index}`,
           status: statusItem.status,
-          description: parseLabelContent(statusItem.description, data, today),
+          description: parseLabelContent(
+            statusItem.description,
+            wmoItem,
+            today
+          ),
           datePublished,
-          isActive: statusItem.isActive(index, data, today),
-          isChecked: statusItem.isChecked(index, data, today),
-          documents: [], // NOTE: To be implemented late 2020
+          isActive: statusItem.isActive(index, wmoItem, today),
+          isChecked: statusItem.isChecked(index, wmoItem, today),
+          documents: [], // NOTE: To be implemented
         };
+
+        if (index === 0) {
+          stepData.altDocumentContent = `<p>
+            <strong>
+              ${
+                wmoItem.isActual
+                  ? 'U krijgt dit besluit per post.'
+                  : 'U hebt dit besluit per post ontvangen.'
+              }
+            </strong>
+          </p>`;
+        }
+
+        return stepData;
       }
     );
 
-    return items;
+    return steps;
   }
 
   return [];
@@ -685,7 +686,7 @@ export function transformWMOResponse(
 
       const id = slug(`${title}-${index}`).toLowerCase();
 
-      const steps: WmoItem['steps'] = formatWmoProcessSteps(
+      const steps: WmoItem['steps'] = formatWmoStatusLineItems(
         {
           title,
           dateStart,

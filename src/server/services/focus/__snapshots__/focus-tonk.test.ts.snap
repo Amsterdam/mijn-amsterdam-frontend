@@ -1,0 +1,140 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Focus TONK service Transforms data correctly and matches snapshot 1`] = `
+Object {
+  "content": Array [
+    Object {
+      "chapter": "INKOMEN",
+      "datePublished": "2021-04-27T00:00:00+01:00",
+      "dateStart": "2021-04-05T00:00:00+01:00",
+      "id": "1913900562",
+      "link": Object {
+        "title": "Bekijk hoe het met uw aanvraag staat",
+        "to": "/inkomen/tonk/1/1913900562",
+      },
+      "productTitle": "TONK",
+      "status": "Besluit",
+      "steps": Array [
+        Object {
+          "datePublished": "2021-04-05T00:00:00+01:00",
+          "description": "<p>
+        Wij hebben uw aanvraag TONK ontvangen.
+      </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-04-05T00:00:00+01:00",
+              "id": "802",
+              "title": "Aanvraag TONK regeling",
+              "type": "pdf",
+              "url": "/test-api/focus/document?id=2180622340381",
+            },
+          ],
+          "id": "3624820805",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben uw aanvraag TONK ontvangen op 05 april om 01.00 uur",
+          "notificationTitle": "Wij hebben uw aanvraag TONK ontvangen",
+          "product": "TONK",
+          "status": "Aanvraag",
+          "title": "aanvraag",
+        },
+        Object {
+          "datePublished": "2021-04-17T00:00:00+01:00",
+          "description": "<p>
+        Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.
+        Bekijk de brief voor meer details.
+      </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-04-17T00:00:00+01:00",
+              "id": "TONK-222",
+              "title": "Brief meer informatie",
+              "type": "pdf",
+              "url": "/test-api/focus/document?id=218062038",
+            },
+          ],
+          "id": "2505121437",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.",
+          "notificationTitle": "TONK: Meer informatie nodig",
+          "product": "TONK",
+          "status": "Informatie nodig",
+          "title": "herstelTermijn",
+        },
+        Object {
+          "datePublished": "2021-04-27T00:00:00+01:00",
+          "description": "<p>
+          U hebt recht op TONK. Bekijk de brief
+          voor meer details.
+        </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-04-27T00:00:00+01:00",
+              "id": "TONK-333",
+              "title": "Besluit toekenning",
+              "type": "pdf",
+              "url": "/test-api/focus/document?id=218062038",
+            },
+          ],
+          "id": "1497039359",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt recht op TONK (besluit: 27 april 2021).",
+          "notificationTitle": "TONK: Uw aanvraag is toegekend",
+          "product": "TONK",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2021-04-27T00:00:00+01:00",
+          "description": "<p>
+        U hebt geen recht op TONK. Bekijk de brief voor meer details.
+      </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-04-27T00:00:00+01:00",
+              "id": "TONK-444",
+              "title": "Besluit afwijzing",
+              "type": "pdf",
+              "url": "/test-api/focus/document?id=218062038",
+            },
+          ],
+          "id": "3836783192",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt geen recht op TONK (besluit: 27 april 2021).",
+          "notificationTitle": "TONK: Uw aanvraag is afgewezen",
+          "product": "TONK",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2021-04-27T00:00:00+01:00",
+          "description": "<p>Wij behandelen uw aanvraag voor TONK niet meer. Bekijk de brief voor meer details.</p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-04-27T00:00:00+01:00",
+              "id": "TONK-555",
+              "title": "Besluit buiten behandeling",
+              "type": "pdf",
+              "url": "/test-api/focus/document?id=218062038",
+            },
+          ],
+          "id": "805593401",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Bekijk de brief voor meer details.",
+          "notificationTitle": "TONK: Wij behandelen uw aanvraag niet meer",
+          "product": "TONK",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+      ],
+      "title": "TONK",
+      "type": "Tozo",
+    },
+  ],
+  "status": "OK",
+}
+`;

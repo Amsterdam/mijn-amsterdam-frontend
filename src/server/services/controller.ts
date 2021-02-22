@@ -17,6 +17,7 @@ import { fetchERFPACHT } from './erfpacht';
 import { fetchFOCUSAanvragen } from './focus/focus-aanvragen';
 import { fetchFOCUSSpecificaties } from './focus/focus-specificaties';
 import { fetchStadspasSaldo } from './focus/focus-stadspas';
+import { fetchFOCUSTonk } from './focus/focus-tonk';
 import { fetchFOCUSTozo } from './focus/focus-tozo';
 import { fetchGenerated } from './generated';
 import { fetchHOME } from './home';
@@ -55,6 +56,7 @@ const KVK = callService(fetchKVK);
 const FOCUS_AANVRAGEN = callService(fetchFOCUSAanvragen);
 const FOCUS_SPECIFICATIES = callService(fetchFOCUSSpecificaties);
 const FOCUS_TOZO = callService(fetchFOCUSTozo);
+const FOCUS_TONK = callService(fetchFOCUSTonk);
 const FOCUS_STADSPAS = callService(fetchStadspasSaldo);
 const WMO = callService(fetchWMO);
 const VERGUNNINGEN = callService(fetchVergunningen);
@@ -106,6 +108,7 @@ const SERVICES_INDEX = {
   FOCUS_AANVRAGEN,
   FOCUS_SPECIFICATIES,
   FOCUS_TOZO,
+  FOCUS_TONK,
   FOCUS_STADSPAS,
   WMO,
   VERGUNNINGEN,
@@ -157,6 +160,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     FOCUS_AANVRAGEN,
     FOCUS_SPECIFICATIES,
     FOCUS_TOZO,
+    FOCUS_TONK,
     FOCUS_STADSPAS,
     NOTIFICATIONS,
     CASES,
@@ -176,6 +180,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     FOCUS_AANVRAGEN,
     FOCUS_SPECIFICATIES,
     FOCUS_TOZO,
+    FOCUS_TONK,
     FOCUS_STADSPAS,
     NOTIFICATIONS,
     CASES,

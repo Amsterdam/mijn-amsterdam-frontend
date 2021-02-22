@@ -1,4 +1,4 @@
-export const AppRoutes = {
+export const AppRoutes: Record<string, string> = {
   ROOT: '/',
   BURGERZAKEN: '/burgerzaken',
   BURGERZAKEN_DOCUMENT: '/burgerzaken/document/:id',
@@ -10,6 +10,7 @@ export const AppRoutes = {
   'INKOMEN/BIJSTANDSUITKERING': '/inkomen/bijstandsuitkering/:id',
   'INKOMEN/SPECIFICATIES': '/inkomen/uitkeringsspecificaties/:category?',
   'INKOMEN/TOZO': '/inkomen/tozo/:version/:id',
+  'INKOMEN/TONK': '/inkomen/tonk/:version/:id',
   INKOMEN: '/inkomen',
   STADSPAS: '/stadspas',
 

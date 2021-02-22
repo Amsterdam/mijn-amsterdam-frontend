@@ -6,8 +6,11 @@ export { default as Dashboard } from './Dashboard/Dashboard';
 export { default as GarbageInformation } from './GarbageInformation/GarbageInformation';
 export { default as GeneralInfo } from './GeneralInfo/GeneralInfo';
 export { default as Inkomen } from './Inkomen/Inkomen';
-export { default as InkomenDetail } from './InkomenDetail/InkomenDetail';
-export { default as InkomenDetailTozo } from './InkomenDetail/InkomenDetailTozo';
+export {
+  InkomenDetailUitkering,
+  InkomenDetailTozo,
+  InkomenDetailTonk,
+} from './InkomenDetail/InkomenDetail';
 export { default as InkomenSpecificaties } from './InkomenSpecificaties/InkomenSpecificaties';
 export { default as LandingPage } from './Landing/Landing';
 export { default as MyNotifications } from './MyNotifications/MyNotifications';

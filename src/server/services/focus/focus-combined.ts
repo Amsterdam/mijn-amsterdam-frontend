@@ -1,24 +1,17 @@
+import { GenericDocument } from '../../../universal/types/App.types';
 import { getApiConfig } from '../../config';
 import { requestData } from '../../helpers';
-import { FocusTozoStepType, FocusTozoLabelSet } from './focus-tozo-content';
-import { GenericDocument } from '../../../universal/types/App.types';
 
-export type FocusTozoDocumentType =
-  | 'E-AANVR-KBBZ'
-  | 'E-AANVR-TOZO'
-  | 'E-AANVR-TOZ2'
-  | string;
-
-export interface FocusTozoDocument {
+export interface FocusDocument {
   datePublished: string;
   id: string;
   description: string;
   url: string;
-  type: FocusTozoDocumentType;
+  type: string;
   documentCodeId: string;
   productTitle: string;
-  stepType: FocusTozoStepType;
-  productSpecific?: FocusTozoLabelSet['productSpecific'];
+  stepType: string;
+  productSpecific?: string;
 }
 
 export interface FocusStadspasBudget {
@@ -65,7 +58,7 @@ export interface FocusInkomenSpecificatie extends GenericDocument {
 export interface FocusCombinedSourceResponse {
   uitkeringsspecificaties: FocusInkomenSpecificatie[];
   jaaropgaven: FocusInkomenSpecificatie[];
-  tozodocumenten: FocusTozoDocument[];
+  tozodocumenten: FocusDocument[];
   stadspassaldo: FocusStadspasSaldo;
 }
 

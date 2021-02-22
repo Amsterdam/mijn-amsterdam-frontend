@@ -980,6 +980,277 @@ Object {
       "title": "Tozo 3 (aangevraagd vanaf 1 oktober 2020)",
       "type": "Tozo",
     },
+    Object {
+      "chapter": "INKOMEN",
+      "datePublished": "2021-03-27T00:00:00+01:00",
+      "dateStart": "2021-03-27T00:00:00+01:00",
+      "id": "1579672147",
+      "link": Object {
+        "title": "Bekijk hoe het met uw aanvraag staat",
+        "to": "/inkomen/tozo/4/1579672147",
+      },
+      "productTitle": "Tozo 4",
+      "status": "Besluit",
+      "steps": Array [
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>
+        Wij hebben uw aanvraag Tozo 4 ontvangen.
+      </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "800",
+              "title": "Ontvangst- bevestiging Aanvraag",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "3736011396",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben uw aanvraag Tozo 4 ontvangen op 27 maart om 00.00 uur",
+          "notificationTitle": "Wij hebben uw aanvraag Tozo 4 ontvangen",
+          "product": "Tozo 4",
+          "status": "Aanvraag",
+          "title": "aanvraag",
+        },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>
+          U hebt recht op Tozo 4. Bekijk de brief
+          voor meer details.
+        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "5654",
+              "title": "Besluit toekenning uitkering",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "3307440798",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt recht op Tozo 4 (besluit: 27 maart 2021).",
+          "notificationTitle": "Tozo 4: Uw aanvraag is toegekend",
+          "product": "Tozo 4",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>
+        U hebt geen recht op Tozo 4. Bekijk de brief voor meer details.
+      </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "5651",
+              "title": "Besluit afwijzing",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "4281796251",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt geen recht op Tozo 4 (besluit: 27 maart 2021).",
+          "notificationTitle": "Tozo 4: Uw aanvraag is afgewezen",
+          "product": "Tozo 4",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>
+        U hebt geen recht op Tozo 4. Bekijk de brief voor meer details.
+      </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "5673",
+              "title": "Besluit afwijzing",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "4242210651",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt geen recht op Tozo 4 (besluit: 27 maart 2021).",
+          "notificationTitle": "Tozo 4: Uw aanvraag is afgewezen",
+          "product": "Tozo 4",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>
+          U hebt recht op Tozo 4. Bekijk de brief
+          voor meer details.
+        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "5656",
+              "title": "Besluit toekenning lening",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "2350097180",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt recht op Tozo 4 (besluit: 27 maart 2021).",
+          "notificationTitle": "Tozo 4: Uw aanvraag is toegekend",
+          "product": "Tozo 4",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>
+        Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.
+        Bekijk de brief voor meer details.
+      </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "5668",
+              "title": "Brief meer informatie",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "1221566897",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.",
+          "notificationTitle": "Tozo 4: Meer informatie nodig",
+          "product": "Tozo 4",
+          "status": "Informatie nodig",
+          "title": "herstelTermijn",
+        },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>U hebt uw Tozo 4 aanvraag ingetrokken. Bekijk de brief voor meer details.</p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "5670",
+              "title": "Brief intrekken Tozo 4 aanvraag",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "47954776",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt uw Tozo 4 aanvraag ingetrokken.",
+          "notificationTitle": "Tozo 4: Aanvraag ingetrokken",
+          "product": "Tozo 4",
+          "status": "Besluit",
+          "title": "intrekken",
+        },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>Wij behandelen uw aanvraag voor Tozo 4 niet meer. Bekijk de brief voor meer details.</p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "5652",
+              "title": "Besluit buiten behandeling",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "4294144792",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Bekijk de brief voor meer details.",
+          "notificationTitle": "Tozo 4: Wij behandelen uw aanvraag niet meer",
+          "product": "Tozo 4",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>
+          Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
+          voorwaarden in de brief.
+        </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "5677",
+              "title": "Brief betaling voorschot",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "2298163039",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben een voorschot naar uw rekening overgemaakt.",
+          "notificationTitle": "Tozo 4: Wij hebben een voorschot betaald",
+          "product": "Tozo 4",
+          "status": "Voorschot",
+          "title": "voorschot",
+        },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>
+          Wij hebben een voorschot naar uw rekening overgemaakt. Kijk voor de
+          voorwaarden in de brief.
+        </p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "5657",
+              "title": "Brief betaling voorschot",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "1389596445",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "Wij hebben een voorschot naar uw rekening overgemaakt.",
+          "notificationTitle": "Tozo 4: Wij hebben een voorschot betaald",
+          "product": "Tozo 4",
+          "status": "Voorschot",
+          "title": "voorschot",
+        },
+        Object {
+          "datePublished": "2021-03-27T00:00:00+01:00",
+          "description": "<p>
+          U hebt recht op Tozo 4. Bekijk de brief
+          voor meer details.
+        </p><p><a rel=\\"external noopener noreferrer\\" href=\\"https://www.amsterdam.nl/werk-inkomen/pak-je-kans/\\">Meer regelingen van de gemeente Amsterdam</a></p>",
+          "documents": Array [
+            Object {
+              "datePublished": "2021-03-27T00:00:00+01:00",
+              "id": "5674",
+              "title": "Besluit toekenning uitkering",
+              "type": "pdf",
+              "url": "/test-api/",
+            },
+          ],
+          "id": "2398874460",
+          "isActive": true,
+          "isChecked": true,
+          "notificationDescription": "U hebt recht op Tozo 4 (besluit: 27 maart 2021).",
+          "notificationTitle": "Tozo 4: Uw aanvraag is toegekend",
+          "product": "Tozo 4",
+          "status": "Besluit",
+          "title": "besluit",
+        },
+      ],
+      "title": "Tozo 4 (aangevraagd vanaf 1 april 2021)",
+      "type": "Tozo",
+    },
   ],
   "status": "OK",
 }

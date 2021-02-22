@@ -35,6 +35,7 @@ export const ExternalUrls = {
   WPI_CONTACT: 'https://www.amsterdam.nl/werk-inkomen/contact/',
   WPI_ALGEMEEN: 'https://www.amsterdam.nl/werk-inkomen',
   WPI_TOZO: 'https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/',
+  WPI_TONK: 'https://www.amsterdam.nl/tonk/',
   AFVAL: 'https://www.amsterdam.nl/afval/',
   AFVAL_COMMERCIAL:
     'https://www.amsterdam.nl/veelgevraagd/?productid={3D70B70E-8A19-4A95-BE31-8743995BC545}',

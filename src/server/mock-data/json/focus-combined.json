@@ -393,6 +393,134 @@
         "id": "",
         "datePublished": "2020-10-01",
         "url": "focus/document?id="
+      },
+      {
+        "documentCodeId": "802",
+        "description": "Tonk regeling aanvraag",
+        "datePublished": "2021-04-05T00:00:00+01:00",
+        "id": "802",
+        "type": "",
+        "url": "focus/document?id=2180622340381"
+      },
+      {
+        "documentCodeId": "TONK-222",
+        "description": "Tonk regeling hersteltermijn",
+        "datePublished": "2021-04-17T00:00:00+01:00",
+        "id": "TONK-222",
+        "type": "",
+        "url": "focus/document?id=218062038"
+      },
+      {
+        "documentCodeId": "TONK-333",
+        "description": "Tonk regeling besluit toekennen",
+        "datePublished": "2021-04-27T00:00:00+01:00",
+        "id": "TONK-333",
+        "type": "",
+        "url": "focus/document?id=218062038"
+      },
+      {
+        "documentCodeId": "TONK-444",
+        "description": "Tonk regeling besluit afwijzen",
+        "datePublished": "2021-04-27T00:00:00+01:00",
+        "id": "TONK-444",
+        "type": "",
+        "url": "focus/document?id=218062038"
+      },
+      {
+        "documentCodeId": "TONK-555",
+        "description": "Tonk regeling besluit buiten behandeling",
+        "datePublished": "2021-04-27T00:00:00+01:00",
+        "id": "TONK-555",
+        "type": "",
+        "url": "focus/document?id=218062038"
+      },
+      {
+        "id": "800",
+        "documentCodeId": "800",
+        "type": "",
+        "url": "",
+        "description": "Tozo4 (vervolgregeling tegemoetkoming Ondernemers en Zelfstandigen)",
+        "datePublished": "2021-03-27T00:00:00+01:00"
+      },
+      {
+        "id": "5654",
+        "documentCodeId": "175654",
+        "type": "",
+        "url": "",
+        "description": "Tozo4 Toekennen",
+        "datePublished": "2021-03-27T00:00:00+01:00"
+      },
+      {
+        "id": "5651",
+        "documentCodeId": "175651",
+        "type": "",
+        "url": "",
+        "description": "Tozo4 Afwijzen",
+        "datePublished": "2021-03-27T00:00:00+01:00"
+      },
+      {
+        "id": "5673",
+        "documentCodeId": "175673",
+        "type": "",
+        "url": "",
+        "description": "Tozo4 Afwijzen via batch",
+        "datePublished": "2021-03-27T00:00:00+01:00"
+      },
+      {
+        "id": "5656",
+        "documentCodeId": "175656",
+        "type": "",
+        "url": "",
+        "description": "Tozo4 Toekennen bedrijfskapitaal",
+        "datePublished": "2021-03-27T00:00:00+01:00"
+      },
+      {
+        "id": "5668",
+        "documentCodeId": "175668",
+        "type": "",
+        "url": "",
+        "description": "Tozo4 Hersteltermijn",
+        "datePublished": "2021-03-27T00:00:00+01:00"
+      },
+      {
+        "id": "5670",
+        "documentCodeId": "175670",
+        "type": "",
+        "url": "",
+        "description": "Tozo4 Intrekken",
+        "datePublished": "2021-03-27T00:00:00+01:00"
+      },
+      {
+        "id": "5652",
+        "documentCodeId": "175652",
+        "type": "",
+        "url": "",
+        "description": "Tozo4 Buiten behandeling laten",
+        "datePublished": "2021-03-27T00:00:00+01:00"
+      },
+      {
+        "id": "5677",
+        "documentCodeId": "175677",
+        "type": "",
+        "url": "",
+        "description": "Tozo4 Toekennen voorschot via batch",
+        "datePublished": "2021-03-27T00:00:00+01:00"
+      },
+      {
+        "id": "5657",
+        "documentCodeId": "175657",
+        "type": "",
+        "url": "",
+        "description": "Tozo4 Toekennen voorschot",
+        "datePublished": "2021-03-27T00:00:00+01:00"
+      },
+      {
+        "id": "5674",
+        "documentCodeId": "175674",
+        "type": "",
+        "url": "",
+        "description": "Tozo4 Toekennen via batch",
+        "datePublished": "2021-03-27T00:00:00+01:00"
       }
     ],
     "uitkeringsspecificaties": [

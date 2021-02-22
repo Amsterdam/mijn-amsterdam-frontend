@@ -45,7 +45,8 @@ import {
   GarbageInformation,
   GeneralInfo,
   Inkomen,
-  InkomenDetail,
+  InkomenDetailUitkering,
+  InkomenDetailTonk,
   InkomenDetailTozo,
   InkomenSpecificaties,
   LandingPage,
@@ -143,7 +144,7 @@ function AppAuthenticated() {
           />
           <Route
             path={AppRoutes['INKOMEN/BIJSTANDSUITKERING']}
-            component={InkomenDetail}
+            component={InkomenDetailUitkering}
           />
           <Route
             path={AppRoutes['INKOMEN/SPECIFICATIES']}
@@ -152,6 +153,10 @@ function AppAuthenticated() {
           <Route
             path={AppRoutes['INKOMEN/TOZO']}
             component={InkomenDetailTozo}
+          />
+          <Route
+            path={AppRoutes['INKOMEN/TONK']}
+            component={InkomenDetailTonk}
           />
           <Route path={AppRoutes.INKOMEN} component={Inkomen} />
           <Route path={AppRoutes.STADSPAS} component={Stadspas} />
