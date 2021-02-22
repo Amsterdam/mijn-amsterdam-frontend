@@ -156,11 +156,11 @@ router.get(
         getPassthroughRequestHeaders(req),
         req.params
       );
-      if (req.params.page && response.content) {
-        response = apiSuccesResult(
-          response.content.filter((item) => item.page === req.params.page)
-        );
-      }
+      // if (req.params.page && response.content) {
+      //   response = apiSuccesResult(
+      //     response.content.filter((item) => item.page === req.params.page)
+      //   );
+      // }
       res.json(response);
     } catch (error) {
       Sentry.captureException(error);

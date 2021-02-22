@@ -34,7 +34,7 @@
     vertical-align: middle;
     width: 2rem;
     height: 2rem;
-    margin-right: .4rem;
+    margin-right: 0.4rem;
   }
 }
 
@@ -47,6 +47,7 @@
 
 .Description {
   margin: 0.2rem 0;
+  white-space: pre-wrap;
 }
 
 .Datum {

@@ -1,28 +1,26 @@
-import DigiDLogo from '../../assets/images/digid-logo.svg';
-import EherkenningLogo from '../../assets/images/eherkenning-logo.svg';
-import IrmaLogo from '../../assets/images/irma_logo.jpg';
 import classnames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
 import { FeatureToggle } from '../../../universal/config';
+import { IS_PRODUCTION } from '../../../universal/config/env';
+import DigiDLogo from '../../assets/images/digid-logo.svg';
+import EherkenningLogo from '../../assets/images/eherkenning-logo.svg';
+import IrmaLogo from '../../assets/images/irma_logo.jpg';
 import {
   Heading,
   LinkdInline,
   PageContent,
   PageHeading,
   TextPage,
-  Alert,
-  InnerHtml,
 } from '../../components';
+import { MaintenanceNotificationsLandingPage } from '../../components/MaintenanceNotifications/MaintenanceNotifications';
 import {
   LOGIN_URL_DIGID,
   LOGIN_URL_EHERKENNING,
   LOGIN_URL_IRMA,
 } from '../../config/api';
+import { ExternalUrls } from '../../config/app';
 import { trackPageView } from '../../hooks';
 import styles from './Landing.module.scss';
-import { ExternalUrls } from '../../config/app';
-import { IS_PRODUCTION } from '../../../universal/config/env';
-import { useCmsMaintenanceNotifications } from '../../hooks/api/useCmsMaintenanceNotifications';
 
 export default function Landing() {
   const loginButton = useRef(null);
@@ -33,10 +31,6 @@ export default function Landing() {
       document.location.pathname + '/landingspagina'
     );
   }, []);
-
-  const maintenanceNotifications = useCmsMaintenanceNotifications(
-    'landingspagina'
-  );
 
   const [isRedirecting, setRedirecting] = useState(false);
   const [isRedirectingEherkenning, setRedirectingEherkenning] = useState(false);
@@ -55,15 +49,7 @@ export default function Landing() {
           Mijn Amsterdam is uw persoonlijke online pagina bij de gemeente
           Amsterdam.
         </p>
-        {!!maintenanceNotifications?.length &&
-          maintenanceNotifications.map((notification) => {
-            return (
-              <Alert type="warning">
-                <InnerHtml>{notification.description}</InnerHtml>
-              </Alert>
-            );
-          })}
-
+        <MaintenanceNotificationsLandingPage />
         <div className={styles.LoginOption}>
           {FeatureToggle.eherkenningActive && (
             <Heading className={styles.LoginOptionHeading} size="tiny" el="h3">

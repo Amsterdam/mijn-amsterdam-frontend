@@ -148,7 +148,7 @@ export const BffEndpoints = {
   SERVICES_STREAM: `/services/stream`,
   HEALTH: `/status/health`,
   CMS_CONTENT: `/public/services/cms`,
-  CMS_MAINTENANCE_NOTIFICATIONS: `/public/services/cms/maintenance-notifications/:page?`,
+  CMS_MAINTENANCE_NOTIFICATIONS: `/public/services/cms/maintenance-notifications`,
   MAP_DATASETS: `/map/datasets/:datasetId?/:id?`,
   CACHE_OVERVIEW: `/status/cache`,
 };
