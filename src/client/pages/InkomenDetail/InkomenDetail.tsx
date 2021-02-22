@@ -43,11 +43,9 @@ export function InkomenDetailTonk() {
     return (
       <>
         <p>
-          Hieronder ziet u hoe het staat met uw aanvraag voor een uitkering of
-          lening van de {inkomenItem?.productTitle || 'Tozo'}. Als u een
-          uitkering én een lening hebt aangevraagd, dan krijgt u voor allebei
-          apart een besluit. Het duurt maximaal 3 dagen voordat uw documenten in
-          Mijn Amsterdam staan.
+          Hieronder ziet u hoe het staat met uw aanvraag voor een uitkering de{' '}
+          {inkomenItem?.productTitle || 'Tonk'}. Het duurt maximaal 3 dagen
+          voordat uw documenten in Mijn Amsterdam staan.
         </p>
         {!isLoading && (
           <p>
