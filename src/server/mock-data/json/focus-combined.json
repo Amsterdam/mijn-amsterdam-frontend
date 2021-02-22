@@ -395,10 +395,10 @@
         "url": "focus/document?id="
       },
       {
-        "documentCodeId": "TONK-111",
+        "documentCodeId": "802",
         "description": "Tonk regeling aanvraag",
         "datePublished": "2021-04-05T00:00:00+01:00",
-        "id": "TONK-111",
+        "id": "802",
         "type": "",
         "url": "focus/document?id=2180622340381"
       },
@@ -435,8 +435,8 @@
         "url": "focus/document?id=218062038"
       },
       {
-        "id": "tozo4aanvraag",
-        "documentCodeId": "tozo4aanvraag",
+        "id": "800",
+        "documentCodeId": "800",
         "type": "",
         "url": "",
         "description": "Tozo4 (vervolgregeling tegemoetkoming Ondernemers en Zelfstandigen)",

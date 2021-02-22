@@ -132,7 +132,7 @@ export function createTozoResult(
   const tozo4Item =
     tozo4Steps.length &&
     createToxxItem({
-      title: 'Tozo 4 (aangevraagd vanaf 1 maart 2021)',
+      title: 'Tozo 4 (aangevraagd vanaf 1 april 2021)',
       productTitle: 'Tozo 4',
       steps: tozo4Steps,
       routeProps: {
@@ -200,7 +200,7 @@ export async function fetchFOCUSTozoGenerated(
     );
 
     if (
-      !FeatureToggle.tozo4active &&
+      FeatureToggle.tozo4PreNotificationactive &&
       !TOZO.content.some((item) => item.productTitle === 'Tozo 4')
     ) {
       notifications.push({

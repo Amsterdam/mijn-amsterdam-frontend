@@ -38,32 +38,32 @@ const herstelTermijnLabels: FocusStepContent = {
 
 const toekennenLabels: FocusStepContent = {
   notification: {
-    title: (document) => `TONK: Uw aanvraag is toegekend`,
+    title: (document) => `${document.productTitle}: Uw aanvraag is toegekend`,
     description: (document) =>
-      `U hebt recht op TONK (besluit: ${defaultDateFormat(
+      `U hebt recht op ${document.productTitle} (besluit: ${defaultDateFormat(
         document.datePublished
       )}).`,
   },
   status: stepLabels.beslissing,
   description: (document) =>
     `<p>
-          U hebt recht op TONK. Bekijk de brief
+          U hebt recht op ${document.productTitle}. Bekijk de brief
           voor meer details.
         </p>`,
 };
 
 const afwijzenLabels: FocusStepContent = {
   notification: {
-    title: (document) => `TONK: Uw aanvraag is afgewezen`,
+    title: (document) => `${document.productTitle}: Uw aanvraag is afgewezen`,
     description: (document) =>
-      `U hebt geen recht op TONK (besluit: ${defaultDateFormat(
-        document.datePublished
-      )}).`,
+      `U hebt geen recht op ${
+        document.productTitle
+      } (besluit: ${defaultDateFormat(document.datePublished)}).`,
   },
   status: stepLabels.beslissing,
   description: (document) =>
     `<p>
-        U hebt geen recht op TONK. Bekijk de brief voor meer details.
+        U hebt geen recht op ${document.productTitle}. Bekijk de brief voor meer details.
       </p>`,
 };
 
@@ -82,7 +82,7 @@ export const tonkDocumentLabelSet: Record<
   FocusDocument['documentCodeId'],
   FocusTonkLabelSet
 > = {
-  'tonk-111': {
+  '802': {
     omschrijving: 'TONK regeling aanvraag',
     labels: aanvraagLabels,
     documentTitle: 'Aanvraag TONK regeling',
