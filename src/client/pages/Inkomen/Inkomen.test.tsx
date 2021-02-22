@@ -46,6 +46,25 @@ const testState: any = {
       },
     ],
   },
+  FOCUS_TONK: {
+    status: 'OK',
+    content: [
+      {
+        title: 'Tonk 1 item',
+        datePublished: '2020-07-24',
+        dateStart: '2020-07-14',
+        status: 'Besluit',
+        steps: [],
+      },
+      {
+        title: 'Tonk 2 item',
+        datePublished: '2020-07-24',
+        dateStart: '2020-07-14',
+        status: 'Meer informatie',
+        steps: [],
+      },
+    ],
+  },
   FOCUS_SPECIFICATIES: {
     status: 'OK',
     content: {
