@@ -9,6 +9,8 @@ const appStateNotificationsSelector = selectorFamily({
   get: (profileType: ProfileType) => ({ get }) => {
     const appState = get(appStateAtom);
     let notifications = appState.NOTIFICATIONS.content || [];
+
+    // Exlclude meldingen
     if (
       profileType === 'private-commercial' &&
       appState.NOTIFICATIONS.content
@@ -26,5 +28,10 @@ const appStateNotificationsSelector = selectorFamily({
 
 export function useAppStateNotifications() {
   const profileType = useProfileTypeValue();
-  return useRecoilValue(appStateNotificationsSelector(profileType));
+
+  const notifications = useRecoilValue(
+    appStateNotificationsSelector(profileType)
+  );
+
+  return notifications;
 }

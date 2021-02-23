@@ -1,27 +1,26 @@
-import DigiDLogo from '../../assets/images/digid-logo.svg';
-import EherkenningLogo from '../../assets/images/eherkenning-logo.svg';
-import IrmaLogo from '../../assets/images/irma_logo.jpg';
 import classnames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
 import { FeatureToggle } from '../../../universal/config';
+import { IS_PRODUCTION } from '../../../universal/config/env';
+import DigiDLogo from '../../assets/images/digid-logo.svg';
+import EherkenningLogo from '../../assets/images/eherkenning-logo.svg';
+import IrmaLogo from '../../assets/images/irma_logo.jpg';
 import {
   Heading,
   LinkdInline,
   PageContent,
   PageHeading,
   TextPage,
-  Alert,
 } from '../../components';
+import { MaintenanceNotificationsLandingPage } from '../../components/MaintenanceNotifications/MaintenanceNotifications';
 import {
   LOGIN_URL_DIGID,
   LOGIN_URL_EHERKENNING,
   LOGIN_URL_IRMA,
 } from '../../config/api';
+import { ExternalUrls } from '../../config/app';
 import { trackPageView } from '../../hooks';
 import styles from './Landing.module.scss';
-import { ExternalUrls } from '../../config/app';
-import { MaintenanceNotification01 } from '../../config/staticData';
-import { IS_PRODUCTION } from '../../../universal/config/env';
 
 export default function Landing() {
   const loginButton = useRef(null);
@@ -50,11 +49,7 @@ export default function Landing() {
           Mijn Amsterdam is uw persoonlijke online pagina bij de gemeente
           Amsterdam.
         </p>
-        {new Date() < new Date('2020-09-22T12:00:00') && (
-          <Alert type="warning">
-            <p>{MaintenanceNotification01.description}</p>
-          </Alert>
-        )}
+        <MaintenanceNotificationsLandingPage />
         <div className={styles.LoginOption}>
           {FeatureToggle.eherkenningActive && (
             <Heading className={styles.LoginOptionHeading} size="tiny" el="h3">

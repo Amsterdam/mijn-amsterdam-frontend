@@ -32,6 +32,7 @@ export interface MyNotification {
   datePublished: string;
   title: string;
   description: string;
+  moreInformation?: string;
   link?: LinkProps;
   hideDatePublished?: boolean;
   isAlert?: boolean;

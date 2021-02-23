@@ -65,11 +65,11 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
                 </time>
               </div>
             </aside>
-            <p
+            <div
               class="Description"
             >
               Notificatie1
-            </p>
+            </div>
             <p
               class="Action"
             >
@@ -125,11 +125,11 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
                 </time>
               </div>
             </aside>
-            <p
+            <div
               class="Description"
             >
               Notificatie2
-            </p>
+            </div>
             <p
               class="Action"
             >
@@ -185,11 +185,11 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
                 </time>
               </div>
             </aside>
-            <p
+            <div
               class="Description"
             >
               Notificatie3
-            </p>
+            </div>
             <p
               class="Action"
             >
