@@ -22,6 +22,7 @@ import {
   sanitizeDocumentCodeId,
 } from './focus-toxx-helpers';
 import { FocusItem, FocusItemStep } from './focus-types';
+import { FeatureToggle } from '../../../universal/config/app';
 
 export function createTonkResult(
   tonkdocumenten: FocusCombinedSourceResponse['tozodocumenten']
@@ -71,6 +72,10 @@ export async function fetchFOCUSTonk(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
+  if (!FeatureToggle.tonkActive) {
+    return apiSuccesResult([]);
+  }
+
   const response = await fetchFOCUSCombined(
     sessionID,
     passthroughRequestHeaders

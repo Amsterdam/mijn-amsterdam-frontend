@@ -157,7 +157,7 @@ export function createTozoResult(
     tozoItems.push(tozo3Item);
   }
 
-  if (tozo4Item) {
+  if (FeatureToggle.tozo4Active && tozo4Item) {
     tozoItems.push(tozo4Item);
   }
 
@@ -205,7 +205,7 @@ export async function fetchFOCUSTozoGenerated(
     ) {
       notifications.push({
         chapter: Chapters.INKOMEN,
-        datePublished: '2021-02-01',
+        datePublished: '2021-03-01',
         isAlert: false,
         hideDatePublished: false,
         id: `focus-tozo4-notification`,
