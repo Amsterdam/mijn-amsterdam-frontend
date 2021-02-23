@@ -1,3 +1,4 @@
+import { isFuture, isPast, parseISO } from 'date-fns';
 import marked from 'marked';
 import { Chapters, IS_AP } from '../../universal/config';
 import { ApiResponse, apiSuccesResult } from '../../universal/helpers';
@@ -8,7 +9,7 @@ import { requestData } from '../helpers/source-api-request';
 
 const fileCache = new FileCache({
   name: 'cms-maintenance-notifications',
-  cacheTimeMinutes: IS_AP ? 24 * 60 : -1, // 24 hours
+  cacheTimeMinutes: IS_AP ? 15 : -1, // 15 minutes
 });
 
 interface Tyd {
@@ -114,11 +115,11 @@ function transformCMSEventResponse(
 async function fetchCMSMaintenanceNotifications(
   sessionID: SessionID
 ): Promise<ApiResponse<CMSMaintenanceNotification[]>> {
-  // const cachedData = fileCache.getKey('CMS_MAINTENANCE_NOTIFICATIONS');
+  const cachedData = fileCache.getKey('CMS_MAINTENANCE_NOTIFICATIONS');
 
-  // if (cachedData) {
-  //   return Promise.resolve(cachedData);
-  // }
+  if (cachedData) {
+    return Promise.resolve(cachedData);
+  }
 
   function fetchCMSEventData(url: string) {
     return requestData<CMSMaintenanceNotification>(
@@ -133,21 +134,35 @@ async function fetchCMSMaintenanceNotifications(
 
   const requestConfig = getApiConfig('CMS_MAINTENANCE_NOTIFICATIONS');
 
-  const eventItems = await requestData<CMSFeedItem[]>(
-    requestConfig,
-    sessionID
-  ).then((apiData) => {
-    if (Array.isArray(apiData.content)) {
-      return Promise.all(
-        apiData.content.map((feedItem) =>
-          fetchCMSEventData(feedItem.feedid).then(
-            (response) => response.content
+  const eventItems = await requestData<CMSFeedItem[]>(requestConfig, sessionID)
+    .then((apiData) => {
+      if (Array.isArray(apiData.content)) {
+        return Promise.all(
+          apiData.content.map((feedItem) =>
+            fetchCMSEventData(feedItem.feedid).then(
+              (response) => response.content
+            )
           )
+        );
+      }
+      return [];
+    })
+    .then((notifications) => {
+      return notifications
+        .filter(
+          (notification): notification is CMSMaintenanceNotification =>
+            notification !== null
         )
-      );
-    }
-    return [];
-  });
+        .filter((notification) => {
+          const startDateTime = parseISO(
+            notification.dateStart + 'T' + notification.timeStart
+          );
+          const endDateTime = parseISO(
+            notification.dateEnd + 'T' + notification.timeEnd
+          );
+          return isPast(startDateTime) && isFuture(endDateTime);
+        });
+    });
 
   const eventItemsResponse = apiSuccesResult(
     eventItems.filter(
@@ -155,10 +170,10 @@ async function fetchCMSMaintenanceNotifications(
     )
   );
 
-  // if (eventItemsResponse.content) {
-  //   fileCache.setKey('CMS_MAINTENANCE_NOTIFICATIONS', eventItemsResponse);
-  //   fileCache.save();
-  // }
+  if (eventItemsResponse.content) {
+    fileCache.setKey('CMS_MAINTENANCE_NOTIFICATIONS', eventItemsResponse);
+    fileCache.save();
+  }
 
   return eventItemsResponse;
 }
