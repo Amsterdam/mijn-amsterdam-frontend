@@ -56,12 +56,12 @@ function GarbageCenterItem({ item }: { item: GarbageCenter }) {
       <p>
         <a href={`mailto:${item.email}`}>{item.email}</a>
       </p>
-      <Heading size="tiny">Openingstijden</Heading>
-      <InnerHtml
-        className={classnames(styles.htmlContent, styles.OpeningHours)}
-      >
-        {item.openingHours}
-      </InnerHtml>
+      <Heading size="tiny">Meer informatie</Heading>
+      <p>
+        <a href={item.website} rel="noopener noreferrer">
+          Spullen wegbrengen naar een Afvalpunt
+        </a>
+      </p>
     </GarbagePanel>
   );
 }
