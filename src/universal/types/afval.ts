@@ -28,7 +28,7 @@ export interface GarbageCenter {
   phone: string;
   email: string;
   distance: number;
-  openingHours: string;
+  website: string;
 }
 
 export type AFVALData = GarbageRetrievalMoment[];

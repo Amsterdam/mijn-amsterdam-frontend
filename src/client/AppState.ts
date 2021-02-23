@@ -39,7 +39,6 @@ export const PRISTINE_APPSTATE: AppState = {
   AFVAL: apiPristineResult([]),
   AFVALPUNTEN: apiPristineResult({
     centers: [],
-    openingHours: '',
     datePublished: '',
   }),
   HOME: apiPristineResult(null),

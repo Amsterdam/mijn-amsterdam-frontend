@@ -16,15 +16,12 @@ export const cache = new memoryCache.Cache<string, any>();
 
 const AFVALPUNT_SCRAPE_CACHE_TTL = 60 * 1000; // 1 minute
 
-interface ScrapedOpeningsTijden {
-  openingstijden: { content: string };
-}
-
 type ScrapedGeoLocation = Pick<GarbageCenter, 'title' | 'url' | 'latlng'>;
 
-type ScrapedDetailInfo = Pick<GarbageCenter, 'address' | 'phone' | 'email'> & {
-  openingHours: string;
-};
+type ScrapedDetailInfo = Pick<
+  GarbageCenter,
+  'address' | 'phone' | 'email' | 'website'
+>;
 
 interface ScrapedDetailInfoTable {
   label: string;
@@ -36,12 +33,11 @@ type ScrapedGeoAndDetail = ScrapedGeoLocation & ScrapedDetailInfo;
 
 interface AfvalpuntenResponseData {
   centers: GarbageCenter[];
-  openingHours: string;
   datePublished: string;
 }
 
 const tableLabelTranslation: Record<string, string> = {
-  openingstijden: 'openingHours',
+  website: 'website',
   adres: 'address',
   telefoon: 'phone',
 };
@@ -82,17 +78,20 @@ async function scrapeDetailInfo(item: ScrapedGeoLocation) {
   /**
    * Filter out unwanted data, transform data into nicely shaped object
    */
-  const tableData = scrapeResult.data.items
-    .filter((item) => item.label !== 'Website')
-    .reduce((acc, { label, value, url }) => {
+
+  const tableData = scrapeResult.data.items.reduce(
+    (acc, { label, value, url }) => {
       const labelTransformed = label.toLowerCase().replace(/[^a-z]/gi, '');
       const labelFinal =
         tableLabelTranslation[labelTransformed] || labelTransformed;
       return {
         ...acc,
-        [labelFinal]: label === 'Openingstijden' ? url : value,
+        [labelFinal]:
+          label === 'Openingstijden' || label === 'Website' ? url : value,
       };
-    }, {} as ScrapedDetailInfo);
+    },
+    {} as ScrapedDetailInfo
+  );
   /**
    * Combine data from previous pages
    */
@@ -108,38 +107,8 @@ async function scrapeDetailInfo(item: ScrapedGeoLocation) {
   return itemCombined;
 }
 
-async function scrapeOpeningstijden(url: string) {
-  const cacheKey = 'afvalpunten-openingstijden';
-  const cachedData = cache.get(cacheKey);
-
-  if (cachedData) {
-    return cachedData as string;
-  }
-
-  const scrapeResult = await scrapeIt<ScrapedOpeningsTijden>(url, {
-    openingstijden: {
-      selector: '#zone_content > .grid-case-blok',
-      eq: 2,
-      data: {
-        content: {
-          selector: '.iprox-rich-content',
-          how: 'html',
-        },
-      },
-    },
-  });
-
-  const openingstijdenSanitized = sanitizeCmsContent(
-    scrapeResult.data.openingstijden.content
-  );
-
-  cache.put(cacheKey, openingstijdenSanitized, AFVALPUNT_SCRAPE_CACHE_TTL);
-
-  return openingstijdenSanitized;
-}
-
 async function scrapeAfvalpuntGeoLocations() {
-  const cacheKey = 'afvalpunten-geolcations';
+  const cacheKey = 'afvalpunten-geolocations';
   const cachedData = cache.get(cacheKey);
 
   if (cachedData) {
@@ -179,7 +148,9 @@ async function scrapeAfvalpuntGeoLocations() {
 
   cache.put(cacheKey, scrapeResult.data.items, AFVALPUNT_SCRAPE_CACHE_TTL);
 
-  return scrapeResult.data.items;
+  return scrapeResult.data.items.filter(
+    (item) => !!(item.latlng.lat && item.latlng.lng)
+  );
 }
 
 const fileCache = new FileCache({
@@ -223,13 +194,8 @@ export async function fetchAfvalpunten(latlng: LatLngLiteral | null) {
     })
   );
 
-  const openingHours = await scrapeOpeningstijden(
-    detailedItems[0].openingHours
-  );
-
   const centers = detailedItems.map((detailedItem) => {
     return Object.assign(detailedItem, {
-      openingHours,
       distance: 0,
     });
   });
@@ -238,7 +204,6 @@ export async function fetchAfvalpunten(latlng: LatLngLiteral | null) {
     (resolve, reject) => {
       const responseData: AfvalpuntenResponseData = {
         centers: addApproximateDistance(latlng, centers),
-        openingHours,
         datePublished: new Date().toISOString(),
       };
 
