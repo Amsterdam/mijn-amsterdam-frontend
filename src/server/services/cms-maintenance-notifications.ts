@@ -1,12 +1,10 @@
-import { IS_AP } from '../../universal/config';
+import marked from 'marked';
+import { Chapters, IS_AP } from '../../universal/config';
 import { ApiResponse, apiSuccesResult } from '../../universal/helpers';
+import { LinkProps, MyNotification } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import FileCache from '../helpers/file-cache';
 import { requestData } from '../helpers/source-api-request';
-import { sanitizeCmsContent } from './cms-content';
-import { cache } from './afval/afvalpunten';
-import { LinkProps } from '../../universal/types/App.types';
-import marked from 'marked';
 
 const fileCache = new FileCache({
   name: 'cms-maintenance-notifications',
@@ -76,10 +74,7 @@ function transformCMSEventResponse(
       'storingsmeldingen/alle-meldingen-mijn-amsterdam',
       ''
     ),
-    datePublished: eventData.item.page.CorDtm.replace(
-      /(\d{4})(\d{2})(\d{2})/,
-      '$1-$2-$3'
-    ),
+    datePublished: new Date().toISOString(),
   } as CMSMaintenanceNotification;
 
   for (const veld of eventData.item.page.cluster.veld) {
@@ -117,9 +112,7 @@ function transformCMSEventResponse(
 }
 
 export async function fetchCMSMaintenanceNotifications(
-  sessionID: SessionID,
-  passthroughRequestHeaders: Record<string, string>,
-  params?: Record<string, string>
+  sessionID: SessionID
 ): Promise<ApiResponse<CMSMaintenanceNotification[]>> {
   // const cachedData = fileCache.getKey('CMS_MAINTENANCE_NOTIFICATIONS');
 
@@ -168,4 +161,39 @@ export async function fetchCMSMaintenanceNotifications(
   // }
 
   return eventItemsResponse;
+}
+
+export async function fetchMaintenanceNotificationsDashboard(
+  sessionID: SessionID
+) {
+  const maintenanceNotifications = await fetchCMSMaintenanceNotifications(
+    sessionID
+  );
+
+  if (!maintenanceNotifications.content?.length) {
+    return maintenanceNotifications;
+  }
+
+  const dashboardNotifications = maintenanceNotifications.content.map(
+    (notification, index) => {
+      const item: MyNotification = {
+        id: `maintenance-${index}-${notification.title}`,
+        chapter: Chapters.NOTIFICATIONS,
+        isAlert: true,
+        datePublished: notification.datePublished,
+        hideDatePublished: true,
+        title: notification.title,
+        description: notification.description,
+      };
+      if (notification.moreInformation) {
+        item.moreInformation = notification.moreInformation;
+      }
+      if (notification.link) {
+        item.link = notification.link;
+      }
+      return item;
+    }
+  );
+
+  return apiSuccesResult({ notifications: dashboardNotifications });
 }

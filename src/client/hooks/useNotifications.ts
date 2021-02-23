@@ -3,7 +3,6 @@ import { Chapters } from '../../universal/config';
 import { appStateAtom } from './useAppState';
 import { useProfileTypeValue } from './useProfileType';
 import { WelcomeNotification } from '../config/staticData';
-import { useMaintenanceNotificationsDashboard } from './api/useCmsMaintenanceNotifications';
 
 const appStateNotificationsSelector = selectorFamily({
   key: 'appStateNotifications',
@@ -29,13 +28,10 @@ const appStateNotificationsSelector = selectorFamily({
 
 export function useAppStateNotifications() {
   const profileType = useProfileTypeValue();
-  const maintenanceNotifications = useMaintenanceNotificationsDashboard();
+
   const notifications = useRecoilValue(
     appStateNotificationsSelector(profileType)
   );
 
-  if (maintenanceNotifications) {
-    return [...maintenanceNotifications, ...notifications];
-  }
   return notifications;
 }

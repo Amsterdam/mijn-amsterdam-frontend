@@ -4,6 +4,7 @@ import { dateSort } from '../../universal/helpers/date';
 import { MyCase, MyNotification } from '../../universal/types';
 import { fetchBELASTINGGenerated } from './belasting';
 import { fetchBRPGenerated } from './brp';
+import { fetchMaintenanceNotificationsDashboard } from './cms-maintenance-notifications';
 import { fetchERFPACHTGenerated } from './erfpacht';
 import { fetchFOCUSAanvragenGenerated } from './focus/focus-aanvragen';
 import { fetchFOCUSSpecificationsGenerated } from './focus/focus-specificaties';
@@ -55,20 +56,26 @@ export async function fetchGenerated(
       milieuzoneGeneratedResult,
       vergunningenGeneratedResult,
       erfpachtGeneratedResult,
+      maintenanceNotifications,
     ] = await Promise.allSettled([
       fetchMILIEUZONEGenerated(sessionID, passthroughRequestHeaders),
       fetchVergunningenGenerated(sessionID, passthroughRequestHeaders),
       fetchERFPACHTGenerated(sessionID, passthroughRequestHeaders),
+      fetchMaintenanceNotificationsDashboard(sessionID),
     ]);
 
     const milieuzoneGenerated = getSettledResult(milieuzoneGeneratedResult);
     const vergunningenGenerated = getSettledResult(vergunningenGeneratedResult);
     const erfpachtGenerated = getSettledResult(erfpachtGeneratedResult);
+    const maintenanceNotificationsResult = getSettledResult(
+      maintenanceNotifications
+    );
 
     return getGeneratedItemsFromApiResults([
       milieuzoneGenerated,
       vergunningenGenerated,
       erfpachtGenerated,
+      maintenanceNotificationsResult,
     ]);
   }
 
@@ -82,6 +89,7 @@ export async function fetchGenerated(
     milieuzoneGeneratedResult,
     vergunningenGeneratedResult,
     erfpachtGeneratedResult,
+    maintenanceNotifications,
   ] = await Promise.allSettled([
     fetchBRPGenerated(sessionID, passthroughRequestHeaders),
     fetchFOCUSAanvragenGenerated(sessionID, passthroughRequestHeaders),
@@ -92,6 +100,7 @@ export async function fetchGenerated(
     fetchMILIEUZONEGenerated(sessionID, passthroughRequestHeaders),
     fetchVergunningenGenerated(sessionID, passthroughRequestHeaders),
     fetchERFPACHTGenerated(sessionID, passthroughRequestHeaders),
+    fetchMaintenanceNotificationsDashboard(sessionID),
   ]);
 
   const brpGenerated = getSettledResult(brpGeneratedResult);
@@ -107,6 +116,9 @@ export async function fetchGenerated(
   const milieuzoneGenerated = getSettledResult(milieuzoneGeneratedResult);
   const vergunningenGenerated = getSettledResult(vergunningenGeneratedResult);
   const erfpachtGenerated = getSettledResult(erfpachtGeneratedResult);
+  const maintenanceNotificationsResult = getSettledResult(
+    maintenanceNotifications
+  );
 
   return getGeneratedItemsFromApiResults([
     brpGenerated,
@@ -118,5 +130,6 @@ export async function fetchGenerated(
     milieuzoneGenerated,
     vergunningenGenerated,
     erfpachtGenerated,
+    maintenanceNotificationsResult,
   ]);
 }

@@ -151,16 +151,7 @@ router.get(
   async (req, res, next) => {
     const sessionID = res.locals.sessionID;
     try {
-      let response = await fetchCMSMaintenanceNotifications(
-        sessionID,
-        getPassthroughRequestHeaders(req),
-        req.params
-      );
-      // if (req.params.page && response.content) {
-      //   response = apiSuccesResult(
-      //     response.content.filter((item) => item.page === req.params.page)
-      //   );
-      // }
+      let response = await fetchCMSMaintenanceNotifications(sessionID);
       res.json(response);
     } catch (error) {
       Sentry.captureException(error);
