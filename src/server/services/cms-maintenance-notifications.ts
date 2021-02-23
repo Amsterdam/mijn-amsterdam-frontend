@@ -100,10 +100,10 @@ function transformCMSEventResponse(
         }
         break;
       case 'Meer informatie':
-        item.moreInformation = marked(veld.Src);
+        item.moreInformation = veld.Src;
         break;
       case 'Omschrijving':
-        item.description = marked(veld.Src);
+        item.description = veld.Src;
         break;
     }
   }

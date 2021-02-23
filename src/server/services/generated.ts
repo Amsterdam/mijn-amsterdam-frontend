@@ -1,3 +1,4 @@
+import marked from 'marked';
 import { apiSuccesResult } from '../../universal/helpers';
 import { getSettledResult, ApiResponse } from '../../universal/helpers/api';
 import { dateSort } from '../../universal/helpers/date';
@@ -12,6 +13,7 @@ import { fetchFOCUSTonkGenerated } from './focus/focus-tonk';
 import { fetchFOCUSTozoGenerated } from './focus/focus-tozo';
 import { fetchMILIEUZONEGenerated } from './milieuzone';
 import { fetchVergunningenGenerated } from './vergunningen';
+import { sanitizeCmsContent } from './cms-content';
 
 export function getGeneratedItemsFromApiResults(
   responses: Array<ApiResponse<any>>
@@ -36,6 +38,19 @@ export function getGeneratedItemsFromApiResults(
   }
 
   const notificationsResult = notifications
+    .map((notification) => {
+      if (notification.description) {
+        notification.description = sanitizeCmsContent(
+          marked(notification.description)
+        );
+      }
+      if (notification.moreInformation) {
+        notification.moreInformation = sanitizeCmsContent(
+          marked(notification.moreInformation)
+        );
+      }
+      return notification;
+    })
     .sort(dateSort('datePublished', 'desc'))
     // Put the alerts on the top regardless of the publication date
     .sort((a, b) => (a.isAlert === b.isAlert ? 0 : a.isAlert ? -1 : 0));

@@ -21,9 +21,9 @@ export function MaintenanceNotifications({
 
   return (
     <>
-      {maintenanceNotifications.map((notification) => {
+      {maintenanceNotifications.map((notification, index) => {
         return (
-          <Alert type="warning">
+          <Alert type="warning" key={notification.title + index}>
             <InnerHtml>{notification.description}</InnerHtml>
             {notification.moreInformation && isMoreInformationVisible && (
               <InnerHtml>{notification.moreInformation}</InnerHtml>

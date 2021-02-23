@@ -71,11 +71,11 @@ exports[`<MyNotifications /> Matches the Full Page snapshot 1`] = `
               </time>
             </div>
           </aside>
-          <p
+          <div
             class="Description"
           >
             Notificatie1
-          </p>
+          </div>
           <p
             class="Action"
           >
@@ -131,11 +131,11 @@ exports[`<MyNotifications /> Matches the Full Page snapshot 1`] = `
               </time>
             </div>
           </aside>
-          <p
+          <div
             class="Description"
           >
             Notificatie2
-          </p>
+          </div>
           <p
             class="Action"
           >
@@ -191,11 +191,11 @@ exports[`<MyNotifications /> Matches the Full Page snapshot 1`] = `
               </time>
             </div>
           </aside>
-          <p
+          <div
             class="Description"
           >
             Notificatie3
-          </p>
+          </div>
           <p
             class="Action"
           >
@@ -245,11 +245,11 @@ exports[`<MyNotifications /> Matches the Full Page snapshot 1`] = `
               </em>
             </div>
           </aside>
-          <p
+          <div
             class="Description"
           >
             Mijn Amsterdam is nog volop in ontwikkeling. Er komt steeds meer informatie bij.
-          </p>
+          </div>
           <p
             class="Action"
           >
