@@ -325,13 +325,16 @@ exports[`<GarbageInformation /> Matches the Full Page snapshot 1`] = `
             <h3
               class="Heading Heading__tiny"
             >
-              Openingstijden
+              Meer informatie
             </h3>
-            <div
-              class="htmlContent OpeningHours"
-            >
-              van maandag t/m vrijdag 09:00 16:30
-            </div>
+            <p>
+              <a
+                href="http://example.org/afvalpunt"
+                rel="noopener noreferrer"
+              >
+                Spullen wegbrengen naar een Afvalpunt
+              </a>
+            </p>
           </div>
         </div>
       </div>

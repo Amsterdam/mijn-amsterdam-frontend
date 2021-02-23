@@ -115,27 +115,14 @@
     position: absolute;
     display: block;
     content: '';
-    border-bottom: .1rem solid $color-neutral-grey2;
+    border-bottom: 0.1rem solid $color-neutral-grey2;
     width: $main-boxed-width;
     max-width: calc(100% - 2rem);
     left: 50%;
     transform: translateX(-50%);
   }
-  &[class*=SectionCollapsible]:not([class*=SectionCollapsible_isCollapsed]) {
+  &[class*='SectionCollapsible']:not([class*='SectionCollapsible_isCollapsed']) {
     max-width: 100%;
-  }
-}
-
-.OpeningHours {
-   > *:not(:first-child) {
-    background-color: $color-neutral-grey1;
-    padding: 1rem;
-    margin: 0;
-    // display: none;
-  }
-
-  > ul {
-    padding-left: 3rem!important; // sorry...
   }
 }
 

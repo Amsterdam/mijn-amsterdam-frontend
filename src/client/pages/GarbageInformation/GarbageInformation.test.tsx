@@ -31,12 +31,11 @@ const grofvuil = {
 const afvalpunt = {
   title: 'De afvalpuntenweg',
   latlng: { latng: { lat: 5, lng: 40 } },
-  url: 'http://example.org/afvalpunt',
   address: 'afvalpuntenweg 23, 1067 BA',
   phone: '123123123',
   email: 'afval@punt.com',
   distance: 34,
-  openingHours: 'van maandag t/m vrijdag 09:00 16:30',
+  website: 'http://example.org/afvalpunt',
 };
 
 const testState: any = {
