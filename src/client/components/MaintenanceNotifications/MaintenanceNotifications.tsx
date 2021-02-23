@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Alert, InnerHtml } from '../../components';
 import { useCmsMaintenanceNotifications } from '../../hooks/api/useCmsMaintenanceNotifications';
 import { Button } from '../Button/Button';
-
+import styles from './MaintenanceNotifications.module.scss';
 import Linkd from '../Button/Button';
 
 interface MaintenanceNotificationsProps {
@@ -24,9 +24,13 @@ export function MaintenanceNotifications({
       {maintenanceNotifications.map((notification, index) => {
         return (
           <Alert type="warning" key={notification.title + index}>
-            <InnerHtml>{notification.description}</InnerHtml>
+            <InnerHtml className={styles.Description}>
+              {notification.description}
+            </InnerHtml>
             {notification.moreInformation && isMoreInformationVisible && (
-              <InnerHtml>{notification.moreInformation}</InnerHtml>
+              <InnerHtml className={styles.MoreInformation}>
+                {notification.moreInformation}
+              </InnerHtml>
             )}
             {notification.moreInformation && !isMoreInformationVisible && (
               <p>

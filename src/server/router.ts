@@ -9,7 +9,7 @@ import {
   loadFeatureDetail,
   loadPolylineFeatures,
 } from './services/buurt/buurt';
-import { fetchCMSMaintenanceNotifications } from './services/cms-maintenance-notifications';
+import { fetchMaintenanceNotificationsPages } from './services/cms-maintenance-notifications';
 import {
   loadServicesAll,
   loadServicesSSE,
@@ -151,7 +151,7 @@ router.get(
   async (req, res, next) => {
     const sessionID = res.locals.sessionID;
     try {
-      let response = await fetchCMSMaintenanceNotifications(sessionID);
+      let response = await fetchMaintenanceNotificationsPages(sessionID);
       res.json(response);
     } catch (error) {
       Sentry.captureException(error);

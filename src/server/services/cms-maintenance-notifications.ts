@@ -111,7 +111,7 @@ function transformCMSEventResponse(
   return item;
 }
 
-export async function fetchCMSMaintenanceNotifications(
+async function fetchCMSMaintenanceNotifications(
   sessionID: SessionID
 ): Promise<ApiResponse<CMSMaintenanceNotification[]>> {
   // const cachedData = fileCache.getKey('CMS_MAINTENANCE_NOTIFICATIONS');
@@ -163,6 +163,30 @@ export async function fetchCMSMaintenanceNotifications(
   return eventItemsResponse;
 }
 
+export async function fetchMaintenanceNotificationsPages(sessionID: SessionID) {
+  const maintenanceNotifications = await fetchCMSMaintenanceNotifications(
+    sessionID
+  );
+
+  if (!maintenanceNotifications.content?.length) {
+    return maintenanceNotifications;
+  }
+
+  return apiSuccesResult(
+    maintenanceNotifications.content
+      .filter((notification) => notification.path !== '/dashboard')
+      .map((notification) => {
+        if (notification.moreInformation) {
+          notification.moreInformation = marked(notification.moreInformation);
+        }
+        if (notification.description) {
+          notification.description = marked(notification.description);
+        }
+        return notification;
+      })
+  );
+}
+
 export async function fetchMaintenanceNotificationsDashboard(
   sessionID: SessionID
 ) {
@@ -174,8 +198,9 @@ export async function fetchMaintenanceNotificationsDashboard(
     return maintenanceNotifications;
   }
 
-  const dashboardNotifications = maintenanceNotifications.content.map(
-    (notification, index) => {
+  const dashboardNotifications = maintenanceNotifications.content
+    .filter((notification) => notification.path === '/dashboard')
+    .map((notification, index) => {
       const item: MyNotification = {
         id: `maintenance-${index}-${notification.title}`,
         chapter: Chapters.NOTIFICATIONS,
@@ -192,8 +217,7 @@ export async function fetchMaintenanceNotificationsDashboard(
         item.link = notification.link;
       }
       return item;
-    }
-  );
+    });
 
   return apiSuccesResult({ notifications: dashboardNotifications });
 }
