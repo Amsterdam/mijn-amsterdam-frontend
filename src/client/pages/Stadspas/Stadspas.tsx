@@ -96,7 +96,7 @@ export default function Stadspas() {
         {ChapterTitles.STADSPAS}
       </PageHeading>
       <PageContent>
-        <p>Intro tekst over de stadspas.</p>
+        <p>Hieronder vindt u meer informatie over uw eigen Stadspas.</p>
         {!isLoadingStadspas && FOCUS_STADSPAS.content?.type !== 'kind' && (
           <p>
             Hebt u kinderen of een partner met een Stadspas? 1 volwassene krijgt
