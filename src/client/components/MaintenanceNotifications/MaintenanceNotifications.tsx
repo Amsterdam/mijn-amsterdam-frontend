@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Alert } from '../../components';
+import { Alert, InnerHtml } from '../../components';
 import { useCmsMaintenanceNotifications } from '../../hooks/api/useCmsMaintenanceNotifications';
 import { Button } from '../Button/Button';
-import styles from './MaintenanceNotifications.module.scss';
+
+import Linkd from '../Button/Button';
 
 interface MaintenanceNotificationsProps {
   path?: string;
@@ -23,9 +24,12 @@ export function MaintenanceNotifications({
       {maintenanceNotifications.map((notification) => {
         return (
           <Alert type="warning">
-            <p className={styles.description}>
-              {notification.description}{' '}
-              {notification.moreInformation && !isMoreInformationVisible && (
+            <InnerHtml>{notification.description}</InnerHtml>
+            {notification.moreInformation && isMoreInformationVisible && (
+              <InnerHtml>{notification.moreInformation}</InnerHtml>
+            )}
+            {notification.moreInformation && !isMoreInformationVisible && (
+              <p>
                 <Button
                   variant="inline"
                   lean={true}
@@ -33,11 +37,13 @@ export function MaintenanceNotifications({
                 >
                   Meer informatie.
                 </Button>
-              )}
-            </p>
-            {notification.moreInformation && isMoreInformationVisible && (
-              <p className={styles.moreInformation}>
-                {notification.moreInformation}
+              </p>
+            )}
+            {isMoreInformationVisible && notification.link && (
+              <p>
+                <Linkd href={notification.link.to}>
+                  {notification.link.title}
+                </Linkd>
               </p>
             )}
           </Alert>
@@ -48,5 +54,5 @@ export function MaintenanceNotifications({
 }
 
 export function MaintenanceNotificationsLandingPage() {
-  return <MaintenanceNotifications path="/" />;
+  return <MaintenanceNotifications path="/landingspagina" />;
 }

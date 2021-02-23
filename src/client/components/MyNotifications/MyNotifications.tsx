@@ -21,6 +21,7 @@ import Heading from '../Heading/Heading';
 import LoadingContent from '../LoadingContent/LoadingContent';
 import styles from './MyNotifications.module.scss';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
+import { InnerHtml } from '..';
 
 export interface MyNotificationsProps {
   items: MyNotification[];
@@ -106,7 +107,14 @@ export default function MyNotifications({
                   </div>
                 </aside>
                 {!!item.description && (
-                  <p className={styles.Description}>{item.description}</p>
+                  <InnerHtml className={styles.Description}>
+                    {item.description}
+                  </InnerHtml>
+                )}
+                {!!item.moreInformation && (
+                  <InnerHtml className={styles.MoreInformation}>
+                    {item.moreInformation}
+                  </InnerHtml>
                 )}
                 {(!!item.link || !!item.customLink) && (
                   <p className={styles.Action}>

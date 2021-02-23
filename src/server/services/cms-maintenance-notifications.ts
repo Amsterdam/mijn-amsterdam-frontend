@@ -5,6 +5,8 @@ import FileCache from '../helpers/file-cache';
 import { requestData } from '../helpers/source-api-request';
 import { sanitizeCmsContent } from './cms-content';
 import { cache } from './afval/afvalpunten';
+import { LinkProps } from '../../universal/types/App.types';
+import marked from 'marked';
 
 const fileCache = new FileCache({
   name: 'cms-maintenance-notifications',
@@ -35,13 +37,13 @@ interface Omschrijving {
 
 interface CMSEventData {
   item: {
+    relUrl: string;
     page: {
       cluster: {
         veld: Array<Tyd | Website | Dtm | MeerInfo | Omschrijving>;
       };
       title: string;
-      content: string;
-      feedid: string;
+      CorDtm: String;
     };
   };
 }
@@ -54,44 +56,59 @@ interface CMSFeedItem {
 
 export interface CMSMaintenanceNotification {
   title: string;
+  datePublished: string;
   dateStart: string;
   dateEnd: string;
   timeEnd: string;
   timeStart: string;
   description: string;
   moreInformation: string;
-  url: string;
+  path: string;
+  link?: LinkProps;
 }
 
 function transformCMSEventResponse(
   eventData: CMSEventData
 ): CMSMaintenanceNotification {
-  // const description = sanitizeCmsContent(eventData);
-  console.log('eventData:', eventData);
-  const item = {} as CMSMaintenanceNotification;
+  const item = {
+    title: eventData.item.page.title,
+    path: eventData.item.relUrl.replace(
+      'storingsmeldingen/alle-meldingen-mijn-amsterdam',
+      ''
+    ),
+    datePublished: eventData.item.page.CorDtm.replace(
+      /(\d{4})(\d{2})(\d{2})/,
+      '$1-$2-$3'
+    ),
+  } as CMSMaintenanceNotification;
+
   for (const veld of eventData.item.page.cluster.veld) {
     switch (veld.Nam) {
       case 'Startdatum':
-        item.dateStart = veld.Dtm;
+        item.dateStart = veld.Dtm.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
         break;
       case 'Einddatum':
-        item.dateEnd = veld.Dtm;
+        item.dateEnd = veld.Dtm.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
         break;
       case 'Starttijd':
-        item.timeStart = veld.Tyd;
+        item.timeStart = veld.Tyd.replace(/(\d{2})(\d{2})/, '$1:$2');
         break;
       case 'Eindtijd':
-        item.timeEnd = veld.Tyd;
+        item.timeEnd = veld.Tyd.replace(/(\d{2})(\d{2})/, '$1:$2');
         break;
       case 'Website':
-        item.title = veld.Wrd;
-        item.url = veld.Src;
+        if (veld.Src && veld.Wrd) {
+          item.link = {
+            title: veld.Wrd,
+            to: veld.Src,
+          };
+        }
         break;
       case 'Meer informatie':
-        item.moreInformation = veld.Src;
+        item.moreInformation = marked(veld.Src);
         break;
       case 'Omschrijving':
-        item.description = veld.Src;
+        item.description = marked(veld.Src);
         break;
     }
   }
@@ -104,11 +121,11 @@ export async function fetchCMSMaintenanceNotifications(
   passthroughRequestHeaders: Record<string, string>,
   params?: Record<string, string>
 ): Promise<ApiResponse<CMSMaintenanceNotification[]>> {
-  const cachedData = fileCache.getKey('CMS_MAINTENANCE_NOTIFICATIONS');
+  // const cachedData = fileCache.getKey('CMS_MAINTENANCE_NOTIFICATIONS');
 
-  if (cachedData) {
-    return Promise.resolve(cachedData);
-  }
+  // if (cachedData) {
+  //   return Promise.resolve(cachedData);
+  // }
 
   function fetchCMSEventData(url: string) {
     return requestData<CMSMaintenanceNotification>(
@@ -145,10 +162,10 @@ export async function fetchCMSMaintenanceNotifications(
     )
   );
 
-  if (eventItemsResponse.content) {
-    fileCache.setKey('CMS_MAINTENANCE_NOTIFICATIONS', eventItemsResponse);
-    fileCache.save();
-  }
+  // if (eventItemsResponse.content) {
+  //   fileCache.setKey('CMS_MAINTENANCE_NOTIFICATIONS', eventItemsResponse);
+  //   fileCache.save();
+  // }
 
   return eventItemsResponse;
 }
