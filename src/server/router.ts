@@ -151,7 +151,10 @@ router.get(
   async (req, res, next) => {
     const sessionID = res.locals.sessionID;
     try {
-      let response = await fetchMaintenanceNotificationsPages(sessionID);
+      let response = await fetchMaintenanceNotificationsPages(
+        sessionID,
+        queryParams(req)
+      );
       res.json(response);
     } catch (error) {
       Sentry.captureException(error);

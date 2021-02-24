@@ -19,14 +19,6 @@ export function isValidRequestPath(requestPath: string, path: string) {
     path: npath.join(BFF_BASE_PATH, path),
     exact: true,
   });
-  if (path.includes('mainte'))
-    console.log(
-      'pub',
-      requestPath,
-      path,
-      npath.join(BFF_BASE_PATH, path),
-      isRouteMatch
-    );
   return isRouteMatch;
 }
 

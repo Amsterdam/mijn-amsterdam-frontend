@@ -6,6 +6,7 @@ import { LinkProps, MyNotification } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import FileCache from '../helpers/file-cache';
 import { requestData } from '../helpers/source-api-request';
+import { queryParams } from '../helpers/app';
 
 const fileCache = new FileCache({
   name: 'cms-maintenance-notifications',
@@ -113,11 +114,12 @@ function transformCMSEventResponse(
 }
 
 async function fetchCMSMaintenanceNotifications(
-  sessionID: SessionID
+  sessionID: SessionID,
+  useCache: boolean = true
 ): Promise<ApiResponse<CMSMaintenanceNotification[]>> {
   const cachedData = fileCache.getKey('CMS_MAINTENANCE_NOTIFICATIONS');
 
-  if (cachedData) {
+  if (useCache && cachedData) {
     return Promise.resolve(cachedData);
   }
 
@@ -178,9 +180,13 @@ async function fetchCMSMaintenanceNotifications(
   return eventItemsResponse;
 }
 
-export async function fetchMaintenanceNotificationsPages(sessionID: SessionID) {
+export async function fetchMaintenanceNotificationsPages(
+  sessionID: SessionID,
+  queryParams?: Record<string, string>
+) {
   const maintenanceNotifications = await fetchCMSMaintenanceNotifications(
-    sessionID
+    sessionID,
+    queryParams?.cache !== 'false'
   );
 
   if (!maintenanceNotifications.content?.length) {
