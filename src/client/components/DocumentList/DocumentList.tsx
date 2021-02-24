@@ -79,11 +79,15 @@ export function DocumentLink({ document, label }: DocumentLinkProps) {
           if (window.navigator && window.navigator.msSaveOrOpenBlob) {
             window.navigator.msSaveOrOpenBlob(blob, document.title);
           } else {
-            const fileUrl = window.URL.createObjectURL(blob);
-            downloadFile({
-              ...document,
-              url: fileUrl,
-            });
+            try {
+              const fileUrl = window.URL.createObjectURL(blob);
+              downloadFile({
+                ...document,
+                url: fileUrl,
+              });
+            } catch (error) {
+              downloadFile(document);
+            }
           }
         })
         .catch((error) => {
