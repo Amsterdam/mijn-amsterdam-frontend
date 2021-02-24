@@ -4,7 +4,8 @@
 @import 'fonts';
 @import 'components/components';
 
-html, body {
+html,
+body {
   min-height: 100%;
 }
 
@@ -17,8 +18,6 @@ html {
 }
 
 body {
-  height: 100%;
-  min-height: 100%;
   font-family: 'AvenirNext', Arial, Helvetica, sans-serif;
   color: $color-black;
   font-size: 1.6rem;
@@ -43,7 +42,6 @@ body {
 
 #root {
   min-height: 100%;
-  height: 100%;
   position: relative;
 }
 
@@ -61,7 +59,7 @@ p a {
   }
 }
 
-[role="button"],
+[role='button'],
 button {
   cursor: pointer;
 }

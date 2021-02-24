@@ -66,7 +66,7 @@ const MyAreaContainer = styled.div`
   flex-direction: column;
   position: relative;
   overflow: hidden;
-  height: 100%;
+  height: 100vh;
 `;
 
 const MyAreaMap = styled(Map)`

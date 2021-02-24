@@ -92,7 +92,7 @@ export default function Tutorial({ onClose }: TutorialProps) {
           styles.Tutorial,
           isResizing && !isPhoneScreen && styles.TutorialResizing
         )}
-        style={{ height: document.body.clientHeight }}
+        style={{ height: document.body.getBoundingClientRect().height }}
       >
         {tutorialItems
           .filter((el) => {

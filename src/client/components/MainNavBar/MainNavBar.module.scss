@@ -61,7 +61,7 @@
 
     // Move home button after the Chapters menu
     &:nth-child(1) {
-      -ms-grid-row:2;
+      -ms-grid-row: 2;
       grid-row: 2;
     }
   }
@@ -85,7 +85,8 @@
     grid-row: 20;
 
     > a {
-      &, &:hover {
+      &,
+      &:hover {
         border-top: 0.1rem solid $color-neutral-grey2;
       }
       font-size: 1.5rem;
@@ -187,7 +188,7 @@
 }
 
 .secondaryLinks {
-  *[class*="FontEnlarger_FontEnlarger__"] + [class*="LogoutLink"] {
+  *[class*='FontEnlarger_FontEnlarger__'] + [class*='LogoutLink'] {
     margin-left: 3rem;
   }
 }
@@ -197,8 +198,8 @@
   position: absolute;
   top: $main-header-topbar-height;
   width: 100vw;
-  height: 200%;
-  background-image: linear-gradient(rgba(0, 0, 0, .5) 75%, transparent);
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
   z-index: z-index(burger-menu-backdrop);
 }
 
