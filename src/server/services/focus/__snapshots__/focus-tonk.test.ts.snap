@@ -24,7 +24,16 @@ Object {
             Object {
               "datePublished": "2021-04-05T00:00:00+01:00",
               "id": "802",
-              "title": "Aanvraag TONK regeling",
+              "title": "Aanvraag TONK regeling
+05 april om 01.00 uur",
+              "type": "pdf",
+              "url": "/test-api/focus/document?id=2180622340381",
+            },
+            Object {
+              "datePublished": "2021-05-05T00:00:00+01:00",
+              "id": "802b",
+              "title": "Aanvraag TONK regeling
+05 mei om 01.00 uur",
               "type": "pdf",
               "url": "/test-api/focus/document?id=2180622340381",
             },

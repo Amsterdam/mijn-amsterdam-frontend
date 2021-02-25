@@ -1001,7 +1001,8 @@ Object {
             Object {
               "datePublished": "2021-03-27T00:00:00+01:00",
               "id": "800",
-              "title": "Ontvangst- bevestiging Aanvraag",
+              "title": "Ontvangst- bevestiging Aanvraag
+27 maart om 00.00 uur",
               "type": "pdf",
               "url": "/test-api/",
             },
