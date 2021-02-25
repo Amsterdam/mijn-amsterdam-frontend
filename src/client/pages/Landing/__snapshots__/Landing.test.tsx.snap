@@ -145,14 +145,14 @@ exports[`<Landing /> Renders without crashing 1`] = `
             <span
               class="LoginButtonText"
             >
-              Inloggen met EHerkenning
+              Inloggen met eHerkenning
             </span>
           </a>
         </p>
         <h4
           class="Heading Heading__tiny"
         >
-          U hebt EHerkenning niveau 3 nodig om in te loggen.
+          U hebt eHerkenning niveau 3 nodig om in te loggen.
         </h4>
         <p>
           Ga naar 

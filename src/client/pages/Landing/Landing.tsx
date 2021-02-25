@@ -172,12 +172,12 @@ export default function Landing() {
                 <span className={styles.LoginButtonText}>
                   {isRedirectingEherkenning
                     ? 'Bezig met inloggen...'
-                    : 'Inloggen met EHerkenning'}
+                    : 'Inloggen met eHerkenning'}
                 </span>
               </a>
             </p>
             <Heading size="tiny" el="h4">
-              U hebt EHerkenning niveau {IS_PRODUCTION ? '2+' : '3'} nodig om in
+              U hebt eHerkenning niveau {IS_PRODUCTION ? '2+' : '3'} nodig om in
               te loggen.
             </Heading>
             <p>

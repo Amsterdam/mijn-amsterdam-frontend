@@ -411,36 +411,60 @@
         "url": "focus/document?id=2180622340381"
       },
       {
-        "documentCodeId": "TONK-222",
-        "description": "Tonk regeling hersteltermijn",
-        "datePublished": "2021-04-17T00:00:00+01:00",
-        "id": "TONK-222",
+        "id": "176137",
+        "documentCodeId": "176137",
+        "description": "TONK hersteltermijn",
         "type": "",
-        "url": "focus/document?id=218062038"
+        "url": "",
+        "datePublished": "2021-04-05T00:00:00+01:00"
       },
       {
-        "documentCodeId": "TONK-333",
-        "description": "Tonk regeling besluit toekennen",
-        "datePublished": "2021-04-27T00:00:00+01:00",
-        "id": "TONK-333",
+        "id": "176138",
+        "documentCodeId": "176138",
+        "description": "TONK intrekken",
         "type": "",
-        "url": "focus/document?id=218062038"
+        "url": "",
+        "datePublished": "2021-04-05T00:00:00+01:00"
       },
       {
-        "documentCodeId": "TONK-444",
-        "description": "Tonk regeling besluit afwijzen",
-        "datePublished": "2021-04-27T00:00:00+01:00",
-        "id": "TONK-444",
+        "id": "176149",
+        "documentCodeId": "176149",
+        "description": "TONK toekennen",
         "type": "",
-        "url": "focus/document?id=218062038"
+        "url": "",
+        "datePublished": "2021-04-05T00:00:00+01:00"
       },
       {
-        "documentCodeId": "TONK-555",
-        "description": "Tonk regeling besluit buiten behandeling",
-        "datePublished": "2021-04-27T00:00:00+01:00",
-        "id": "TONK-555",
+        "id": "176156",
+        "documentCodeId": "176156",
+        "description": "TONK toekennen via batch",
         "type": "",
-        "url": "focus/document?id=218062038"
+        "url": "",
+        "datePublished": "2021-04-05T00:00:00+01:00"
+      },
+      {
+        "id": "176145",
+        "documentCodeId": "176145",
+        "description": "TONK afwijzen",
+        "type": "",
+        "url": "",
+        "datePublished": "2021-04-05T00:00:00+01:00"
+      },
+      {
+        "id": "176155",
+        "documentCodeId": "176155",
+        "description": "TONK afwijzen via batch",
+        "type": "",
+        "url": "",
+        "datePublished": "2021-04-05T00:00:00+01:00"
+      },
+      {
+        "id": "176146",
+        "documentCodeId": "176146",
+        "description": "TONK Buiten behandeling laten",
+        "type": "",
+        "url": "",
+        "datePublished": "2021-04-05T00:00:00+01:00"
       },
       {
         "id": "800",
