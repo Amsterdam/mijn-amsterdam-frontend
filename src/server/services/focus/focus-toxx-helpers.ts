@@ -48,7 +48,7 @@ export function getLabelSet(
 
 function getDocumentTitle(labelSet: ToxxLabelSet, document: FocusDocument) {
   // Documents of the aanvraag step are formatted differently
-  if (labelSet.productSpecific === 'aanvraag') {
+  if (labelSet.stepType === 'aanvraag') {
     return `${labelSet.documentTitle}\n${dateFormat(
       document.datePublished,
       `dd MMMM 'om' HH.mm 'uur'`

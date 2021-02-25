@@ -51,11 +51,31 @@ export function createTonkResult(
     return apiSuccesResult([]);
   }
 
+  // Aggregate all aanvraag step documents and combine into 1
+  let aanvraagSteps: Record<string, FocusItemStep> = {};
+  const otherSteps: FocusItemStep[] = [];
+
+  for (const step of tonkSteps) {
+    if (step && step.title === 'aanvraag') {
+      if (step?.product && !aanvraagSteps[step.product]) {
+        aanvraagSteps[step.product] = step;
+      } else if (step?.product) {
+        aanvraagSteps[step.product].documents.push(...step.documents);
+      }
+    } else if (step) {
+      otherSteps.push(step);
+    }
+  }
+
+  if (aanvraagSteps['TONK']) {
+    otherSteps.unshift(aanvraagSteps['TONK']);
+  }
+
   const tonkItems: FocusItem[] = [
     createToxxItem({
       title: 'TONK',
       productTitle: 'TONK',
-      steps: tonkSteps,
+      steps: otherSteps,
       routeProps: {
         path: AppRoutes['INKOMEN/TONK'],
         params: {
