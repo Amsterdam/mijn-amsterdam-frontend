@@ -67,6 +67,17 @@ const afwijzenLabels: FocusStepContent = {
       </p>`,
 };
 
+const intrekkenLabels: FocusStepContent = {
+  notification: {
+    title: (document) => `${document.productTitle}: Aanvraag ingetrokken`,
+    description: (document) =>
+      `U hebt uw ${document.productTitle} aanvraag ingetrokken.`,
+  },
+  status: stepLabels.beslissing,
+  description: (document) =>
+    `<p>U hebt uw ${document.productTitle} aanvraag ingetrokken. Bekijk de brief voor meer details.</p>`,
+};
+
 const buitenBehandelingLabels: FocusStepContent = {
   notification: {
     title: (document) =>
@@ -83,34 +94,55 @@ export const tonkDocumentLabelSet: Record<
   FocusTonkLabelSet
 > = {
   '802': {
-    omschrijving: 'TONK regeling aanvraag',
+    omschrijving: 'TONK aanvraag',
     labels: aanvraagLabels,
-    documentTitle: 'Aanvraag TONK regeling',
+    documentTitle: 'Aanvraag TONK',
     product: 'TONK',
     stepType: 'aanvraag',
   },
-  'tonk-222': {
-    omschrijving: 'TONK regeling hersteltermijn',
+  '176137': {
+    omschrijving: 'TONK hersteltermijn',
     labels: herstelTermijnLabels,
     documentTitle: 'Brief meer informatie',
     product: 'TONK',
     stepType: 'herstelTermijn',
   },
-  'tonk-333': {
-    omschrijving: 'TONK regeling besluit toekennen',
+  '176138': {
+    omschrijving: 'TONK intrekken',
+    labels: intrekkenLabels,
+    documentTitle: 'Brief intrekken TONK aanvraag',
+    product: 'TONK',
+    stepType: 'intrekken',
+  },
+  '176149': {
+    omschrijving: 'TONK toekennen',
     labels: toekennenLabels,
     documentTitle: 'Besluit toekenning',
     product: 'TONK',
     stepType: 'besluit',
   },
-  'tonk-444': {
-    omschrijving: 'TONK regeling besluit afwijzen',
+  '176156': {
+    omschrijving: 'TONK toekennen via batch',
+    labels: toekennenLabels,
+    documentTitle: 'Besluit toekenning',
+    product: 'TONK',
+    stepType: 'besluit',
+  },
+  '176145': {
+    omschrijving: 'TONK afwijzen',
     labels: afwijzenLabels,
     documentTitle: 'Besluit afwijzing',
     product: 'TONK',
     stepType: 'besluit',
   },
-  'tonk-555': {
+  '176155': {
+    omschrijving: 'TONK afwijzen via batch',
+    labels: afwijzenLabels,
+    documentTitle: 'Besluit afwijzing',
+    product: 'TONK',
+    stepType: 'besluit',
+  },
+  '176146': {
     omschrijving: 'TONK Buiten behandeling laten',
     labels: buitenBehandelingLabels,
     documentTitle: 'Besluit buiten behandeling',
@@ -119,3 +151,6 @@ export const tonkDocumentLabelSet: Record<
     stepType: 'besluit',
   },
 };
+// TODO: Add later?
+// 6147                     TONK Herzien met terugvordering
+// 6148                     TONK Intrekken met terugvordering

@@ -69,6 +69,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   WMO: 'Zorg en ondersteuning',
   FOCUS_AANVRAGEN: 'Uitkering en Stadspas -aanvragen + actuele updates',
   FOCUS_TOZO: 'Aanvraag Tozo',
+  FOCUS_TONK: 'Aanvraag TONK',
   FOCUS_SPECIFICATIES:
     'Uitkeringsspecificaties en jaaropgaven + actuele updates',
   FOCUS_STADSPAS: 'Informatie over uw stadspassen',
