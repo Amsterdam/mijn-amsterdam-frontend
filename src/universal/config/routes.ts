@@ -21,6 +21,7 @@ export const AppRoutes: Record<string, string> = {
   BUURT: '/buurt',
   API_LOGIN: '/api/login',
   API1_LOGIN: '/api1/login',
+  API2_LOGIN: '/api2/login',
   TIPS: '/overzicht-tips',
   NOTIFICATIONS: '/overzicht-updates/:page?',
   AFVAL: '/afval',
@@ -74,7 +75,12 @@ export const AppRoutesRedirect = [
   { from: '/inkomen-en-stadspas', to: AppRoutes.INKOMEN },
 ];
 
-export const PublicRoutes = [AppRoutes.API_LOGIN, AppRoutes.ACCESSIBILITY];
+export const PublicRoutes = [
+  AppRoutes.API_LOGIN,
+  AppRoutes.API1_LOGIN,
+  AppRoutes.API2_LOGIN,
+  AppRoutes.ACCESSIBILITY,
+];
 
 export const PrivateRoutes = Object.values(AppRoutes).filter(
   (path) => !PublicRoutes.includes(path)
