@@ -17,6 +17,7 @@ export type Chapter =
   | 'ZORG'
   | 'VERGUNNINGEN'
   | 'KVK'
+  | 'SIA'
   | string;
 
 export const Chapters: Record<Chapter, Chapter> = {
@@ -35,6 +36,7 @@ export const Chapters: Record<Chapter, Chapter> = {
   ZORG: 'ZORG',
   VERGUNNINGEN: 'VERGUNNINGEN',
   KVK: 'KVK',
+  SIA: 'SIA',
 };
 
 // These are used for PageHeadings and link title props for example.
@@ -54,6 +56,7 @@ export const ChapterTitles: { [chapter in Chapter]: string } = {
   ZORG: 'Zorg en ondersteuning',
   VERGUNNINGEN: 'Vergunningen',
   KVK: 'Mijn onderneming',
+  SIA: 'Meldingen',
 };
 
 export const DocumentTitleMain = 'Mijn Amsterdam';
@@ -91,4 +94,5 @@ export const DocumentTitles = {
   [AppRoutes.TIPS]: `Mijn Tips | overzicht`,
   [AppRoutes.NOTIFICATIONS]: `${ChapterTitles.NOTIFICATIONS} | overzicht`,
   [AppRoutes.AFVAL]: `${ChapterTitles.AFVAL} rond uw adres`,
+  [AppRoutes.SIA]: `${ChapterTitles.SIA} overzicht`,
 };
