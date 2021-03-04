@@ -11,6 +11,7 @@ import FOCUS_COMBINED from './json/focus-combined.json';
 import KVK1 from './json/kvk-handelsregister.json';
 import KVK2 from './json/kvk-handelsregister2.json';
 import MILIEUZONE from './json/milieuzone.json';
+import SIA from './json/sia-meldingen.json';
 import TIPS from './json/tips.json';
 import VERGUNNINGEN from './json/vergunningen.json';
 import WMO from './json/wmo.json';
@@ -129,6 +130,15 @@ export const mockDataConfig: MockDataConfig = {
       //   return await loadMockApiResponseJson(MILIEUZONE);
       // }
       return await loadMockApiResponseJson(MILIEUZONE);
+    },
+  },
+  [ApiUrls.SIA]: {
+    status: (config: any) => (isCommercialUser(config) ? 200 : 200),
+    responseData: async (config: any) => {
+      // if (isCommercialUser(config)) {
+      //   return await loadMockApiResponseJson(MILIEUZONE);
+      // }
+      return await loadMockApiResponseJson(SIA);
     },
   },
   [ApiUrls.VERGUNNINGEN]: {
