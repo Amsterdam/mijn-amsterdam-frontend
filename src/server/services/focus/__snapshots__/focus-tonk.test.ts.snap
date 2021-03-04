@@ -49,30 +49,6 @@ Object {
         },
         Object {
           "datePublished": "2021-04-05T00:00:00+01:00",
-          "description": "<p>
-        Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.
-        Bekijk de brief voor meer details.
-      </p>",
-          "documents": Array [
-            Object {
-              "datePublished": "2021-04-05T00:00:00+01:00",
-              "id": "176137",
-              "title": "Brief meer informatie",
-              "type": "pdf",
-              "url": "/test-api/",
-            },
-          ],
-          "id": "1418559930",
-          "isActive": true,
-          "isChecked": true,
-          "notificationDescription": "Wij hebben meer informatie en tijd nodig om uw aanvraag te behandelen.",
-          "notificationTitle": "TONK: Meer informatie nodig",
-          "product": "TONK",
-          "status": "Informatie nodig",
-          "title": "herstelTermijn",
-        },
-        Object {
-          "datePublished": "2021-04-05T00:00:00+01:00",
           "description": "<p>U hebt uw TONK aanvraag ingetrokken. Bekijk de brief voor meer details.</p>",
           "documents": Array [
             Object {
