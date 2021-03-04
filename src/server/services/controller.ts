@@ -24,6 +24,7 @@ import { fetchGenerated } from './generated';
 import { fetchHOME } from './home';
 import { fetchKVK } from './kvk';
 import { fetchMILIEUZONE } from './milieuzone';
+import { fetchSIA } from './sia';
 import { createTipsRequestData, fetchTIPS } from './tips';
 import { fetchVergunningen } from './vergunningen';
 import { fetchWMO } from './wmo';
@@ -82,6 +83,7 @@ const AFVALPUNTEN = (sessionID: SessionID, req: Request) =>
 // Architectural pattern C. TODO: Make generic services for pattern C.
 const BELASTINGEN = callService(fetchBELASTING);
 const MILIEUZONE = callService(fetchMILIEUZONE);
+const SIA = callService(fetchSIA);
 const ERFPACHT = callService(fetchERFPACHT);
 
 // Special services that aggeragates CASES and NOTIFICATIONS from various services
@@ -122,6 +124,7 @@ const SERVICES_INDEX = {
   AFVALPUNTEN,
   BELASTINGEN,
   MILIEUZONE,
+  SIA,
   ERFPACHT,
   NOTIFICATIONS,
   CASES,
@@ -146,6 +149,7 @@ type CommercialServices = Pick<
   | 'HOME'
   | 'KVK'
   | 'MILIEUZONE'
+  | 'SIA'
   | 'VERGUNNINGEN'
 >;
 
@@ -174,6 +178,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     HOME,
     KVK,
     MILIEUZONE,
+    SIA,
     VERGUNNINGEN,
     WMO,
   },
@@ -195,6 +200,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     HOME,
     KVK,
     MILIEUZONE,
+    SIA,
     VERGUNNINGEN,
     WMO,
   },
@@ -209,6 +215,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     HOME,
     KVK,
     MILIEUZONE,
+    SIA,
     VERGUNNINGEN,
   },
 };
