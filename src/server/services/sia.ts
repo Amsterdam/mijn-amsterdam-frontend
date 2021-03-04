@@ -51,7 +51,7 @@ export async function fetchSIAGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  const SIA = await fetchSIA(sessionID, passthroughRequestHeaders, true);
+  const SIA = await fetchSIA(sessionID, passthroughRequestHeaders);
   if (SIA.status === 'OK') {
     return apiSuccesResult({
       notifications: [],
