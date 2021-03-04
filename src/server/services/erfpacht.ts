@@ -57,7 +57,7 @@ function transformERFPACHTData(responseData: ERFPACHTSourceData): ERFPACHTData {
 async function fetchSource(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
-  includeNotifications: boolean = false
+  includeGenerated: boolean = false
 ) {
   const response = await requestData<ERFPACHTData>(
     getApiConfig('ERFPACHT', {
@@ -67,7 +67,7 @@ async function fetchSource(
     passthroughRequestHeaders
   );
 
-  if (!includeNotifications) {
+  if (!includeGenerated) {
     return Object.assign({}, response, {
       content: response.content
         ? omit(response.content, ['notifications'])

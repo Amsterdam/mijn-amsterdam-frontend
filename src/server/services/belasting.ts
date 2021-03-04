@@ -56,7 +56,7 @@ function transformBELASTINGENData(
 async function fetchSource(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
-  includeNotifications: boolean = false
+  includeGenerated: boolean = false
 ) {
   const response = await requestData<BELASTINGENData>(
     getApiConfig('BELASTINGEN', {
@@ -66,10 +66,10 @@ async function fetchSource(
     passthroughRequestHeaders
   );
 
-  if (!includeNotifications) {
+  if (!includeGenerated) {
     return Object.assign({}, response, {
       content: response.content
-        ? omit(response.content, ['notifications'])
+        ? omit(response.content, ['notifications', 'tips'])
         : null,
     });
   }
