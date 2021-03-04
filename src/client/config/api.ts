@@ -84,6 +84,7 @@ export const ErrorNames: Record<string /* ApiStateKey */, string> = {
   CMS_CONTENT: 'Uitleg Mijn Amsterdam',
   AFVALPUNTEN: 'Afvalpunten',
   KVK: 'Mijn onderneming',
+  SIA: 'Mijn meldingen',
 };
 
 export function getApiErrors(appState: AppState) {
