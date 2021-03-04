@@ -27,7 +27,7 @@ interface MILIEUZONESourceData {
 
 function transformMILIEUZONENotifications(notifications?: MyNotification[]) {
   const notificationsTransformed = Array.isArray(notifications)
-    ? notifications.map(notification => ({
+    ? notifications.map((notification) => ({
         ...notification,
         chapter: Chapters.MILIEUZONE,
       }))
@@ -50,7 +50,7 @@ function transformMILIEUZONEData(
   };
 }
 
-export async function fetchMILIEUZONE(
+async function fetchSource(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
   includeNotifications: boolean = false
@@ -74,21 +74,27 @@ export async function fetchMILIEUZONE(
   return response;
 }
 
+export async function fetchMILIEUZONE(
+  sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>
+) {
+  return fetchSource(sessionID, passthroughRequestHeaders);
+}
+
 export async function fetchMILIEUZONEGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
 ) {
-  const MILIEUZONE = await fetchMILIEUZONE(
+  const MILIEUZONE = await fetchSource(
     sessionID,
     passthroughRequestHeaders,
     true
   );
+
   if (MILIEUZONE.status === 'OK' && MILIEUZONE.content.notifications) {
-    if (MILIEUZONE.content.notifications) {
-      return apiSuccesResult({
-        notifications: MILIEUZONE.content.notifications,
-      });
-    }
+    return apiSuccesResult({
+      notifications: MILIEUZONE.content.notifications,
+    });
   }
   return apiDependencyError({ MILIEUZONE });
 }
