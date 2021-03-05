@@ -36,7 +36,7 @@ function useSiaMeldingStatusLineItems(SiaItem?: SIAItem) {
     return [
       {
         id: 'item-1',
-        status: 'Ontvangen',
+        status: 'Gemeld',
         datePublished: SiaItem.datePublished,
         description: '',
         documents: [],
@@ -46,7 +46,7 @@ function useSiaMeldingStatusLineItems(SiaItem?: SIAItem) {
       },
       {
         id: 'item-2',
-        status: 'In behandeling',
+        status: 'Ingepland',
         datePublished: SiaItem.dateModified,
         description: '',
         documents: [],
@@ -56,7 +56,7 @@ function useSiaMeldingStatusLineItems(SiaItem?: SIAItem) {
       },
       {
         id: 'item-3',
-        status: 'Afgehandeld',
+        status: 'Afgesloten',
         datePublished: SiaItem.dateClosed || '',
         description: '',
         documents: [],
@@ -138,7 +138,7 @@ export default function SiaDetail() {
               <InfoDetail label="Locatie" value={SiaItem?.latlng || '-'} />
             </InfoDetailGroup>
             <InfoDetailGroup>
-              <InfoDetail label="Email" value={SiaItem?.email || '-'} />
+              <InfoDetail label="E-mail melder" value={SiaItem?.email || '-'} />
               <InfoDetail
                 label="Telefoonnummer"
                 value={SiaItem?.phone || '-'}
