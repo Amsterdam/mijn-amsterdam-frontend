@@ -56,6 +56,8 @@ import {
   Profile,
   VergunningDetail,
   Vergunningen,
+  SiaDetail,
+  Sia,
   Zorg,
   ZorgDetail,
 } from './pages';
@@ -180,6 +182,8 @@ function AppAuthenticated() {
             component={VergunningDetail}
           />
           <Route path={AppRoutes.VERGUNNINGEN} component={Vergunningen} />
+          <Route path={AppRoutes['SIA/DETAIL']} component={SiaDetail} />
+          <Route path={AppRoutes.SIA} component={Sia} />
 
           <Route component={NotFound} />
         </Switch>

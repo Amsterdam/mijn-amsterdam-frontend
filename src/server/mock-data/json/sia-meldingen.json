@@ -1,4 +1,16 @@
 {
-    "content": [],
-    "status": "OK"
+  "content": [
+    {
+      "categorie": "Fietswrak",
+      "datum": "2021-03-02",
+      "status": "Gemeld",
+      "omschrijving": "Er staat een fiets al meer dan een jaar op deze plek, met lekke banden etc.",
+      "kenmerk": "SIA-09786",
+      "locatie": [52.3717228,4.8927377],
+      "email": "j.vandergroenen@gmail.com",
+      "telefoonnummer": "0612312345",
+      "fotos": []
+    }
+  ],
+  "status": "OK"
 }
