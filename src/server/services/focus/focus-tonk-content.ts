@@ -100,7 +100,7 @@ export const tonkDocumentLabelSet: Record<
     product: 'TONK',
     stepType: 'aanvraag',
   },
-  '17137': {
+  '176137': {
     omschrijving: 'TONK hersteltermijn',
     labels: herstelTermijnLabels,
     documentTitle: 'Brief meer informatie',
