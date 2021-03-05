@@ -2,6 +2,7 @@ import { generatePath } from 'react-router-dom';
 
 export const AppRoutes: Record<string, string> = {
   ROOT: '/',
+  HOME: '/',
   BURGERZAKEN: '/burgerzaken',
   BURGERZAKEN_DOCUMENT: '/burgerzaken/document/:id',
   ZORG: '/zorg-en-ondersteuning',

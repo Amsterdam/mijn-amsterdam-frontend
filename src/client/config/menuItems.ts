@@ -100,6 +100,12 @@ const myChaptersMenuItems: ChapterMenuItem[] = [
     rel: 'external',
     profileTypes: ['private', 'private-commercial', 'commercial'],
   },
+  {
+    title: ChapterTitles.SIA,
+    id: Chapters.SIA,
+    to: AppRoutes.SIA,
+    profileTypes: ['private', 'private-commercial', 'commercial'],
+  },
 ];
 
 export const chaptersByProfileType: Record<ProfileType, ChapterMenuItem[]> = {
