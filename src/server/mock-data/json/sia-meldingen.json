@@ -10,6 +10,17 @@
       "email": "j.vandergroenen@gmail.com",
       "telefoonnummer": "0612312345",
       "fotos": ["data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==", "data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="]
+    },
+    {
+      "categorie": "Bouwwerkzaamheden",
+      "datum": "2021-03-02",
+      "status": "Afgesloten",
+      "omschrijving": "Ze zijn al 2 jaar aan het boren, ik ben het spuugzat!",
+      "kenmerk": "SIA-123123",
+      "locatie": [52.3717228,4.8927377],
+      "email": "j.vandergroenen@gmail.com",
+      "telefoonnummer": "0612312345",
+      "fotos": []
     }
   ],
   "status": "OK"

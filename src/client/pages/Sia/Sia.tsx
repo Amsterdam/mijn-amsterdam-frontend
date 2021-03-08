@@ -37,7 +37,6 @@ export default function Sia() {
     if (!SIA.content?.length) {
       return [];
     }
-    console.log('SIA.content', SIA.content);
     const items: SIAItem[] = SIA.content
       .filter((x) => x)
       .map((item) => {
@@ -50,11 +49,11 @@ export default function Sia() {
   }, [SIA.content]);
 
   const siaPrevious = useMemo(() => {
-    return sia.filter((vergunning) => vergunning.status === 'Afgehandeld');
+    return sia.filter((vergunning) => vergunning.status === 'Afgesloten');
   }, [sia]);
 
   const siaActual = useMemo(() => {
-    return sia.filter((vergunning) => vergunning.status !== 'Afgehandeld');
+    return sia.filter((vergunning) => vergunning.status !== 'Afgesloten');
   }, [sia]);
 
   return (
