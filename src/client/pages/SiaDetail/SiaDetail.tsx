@@ -160,13 +160,24 @@ export default function SiaDetail() {
                 Maak een nieuwe melding
               </LinkdInline>
             </p>
-            {!!SiaItem?.photos &&
-              SiaItem?.photos.map((photo) => (
-                <InfoDetail
-                  label="Foto's"
-                  value={<img src={photo} alt="Bijgevoegde foto" /> || '-'}
-                />
-              ))}
+            {!!SiaItem?.photos && (
+              <InfoDetail
+                label="Foto's"
+                value={
+                  <div className={styles.Images}>
+                    {SiaItem.photos.map((photo) => (
+                      <div className={styles.ImgContainer}>
+                        <img
+                          className={styles.Img}
+                          src={photo}
+                          alt="Bijgevoegde foto"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                }
+              />
+            )}
           </>
         )}
       </PageContent>
