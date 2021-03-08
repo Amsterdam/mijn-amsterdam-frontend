@@ -11,11 +11,11 @@ import {
   Alert,
   ChapterIcon,
   DetailPage,
-  Linkd,
   LoadingContent,
   PageContent,
   PageHeading,
 } from '../../components';
+import { LinkdInline } from '../../components/Button/Button';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
@@ -24,7 +24,6 @@ import StatusLine, {
 } from '../../components/StatusLine/StatusLine';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './SiaDetail.module.scss';
-import { LinkdInline } from '../../components/Button/Button';
 
 function useSiaMeldingStatusLineItems(SiaItem?: SIAItem) {
   const statusLineItems: StatusLineItem[] = useMemo(() => {
@@ -32,7 +31,9 @@ function useSiaMeldingStatusLineItems(SiaItem?: SIAItem) {
       return [];
     }
 
-    const isDone = SiaItem.status === 'Afgehandeld';
+    const isPending = SiaItem.status === 'Gemeld';
+    const isDone = SiaItem.status === 'Afgesloten';
+    const isInProgress = SiaItem.status === 'Ingepland';
     return [
       {
         id: 'item-1',
@@ -40,9 +41,8 @@ function useSiaMeldingStatusLineItems(SiaItem?: SIAItem) {
         datePublished: SiaItem.datePublished,
         description: '',
         documents: [],
-        isActive: false,
+        isActive: isPending,
         isChecked: true,
-        isHighlight: false,
       },
       {
         id: 'item-2',
@@ -50,9 +50,8 @@ function useSiaMeldingStatusLineItems(SiaItem?: SIAItem) {
         datePublished: SiaItem.dateModified,
         description: '',
         documents: [],
-        isActive: !isDone,
-        isChecked: true,
-        isHighlight: !isDone,
+        isActive: isInProgress,
+        isChecked: isDone || isInProgress,
       },
       {
         id: 'item-3',
@@ -62,7 +61,6 @@ function useSiaMeldingStatusLineItems(SiaItem?: SIAItem) {
         documents: [],
         isActive: isDone,
         isChecked: isDone,
-        isHighlight: isDone,
       },
     ];
   }, [SiaItem]);
@@ -162,11 +160,12 @@ export default function SiaDetail() {
             </p>
             {!!SiaItem?.photos && (
               <InfoDetail
+                el="div"
                 label="Foto's"
                 value={
                   <div className={styles.Images}>
-                    {SiaItem.photos.map((photo) => (
-                      <div className={styles.ImgContainer}>
+                    {SiaItem.photos.map((photo, index) => (
+                      <div key={index} className={styles.ImgContainer}>
                         <img
                           className={styles.Img}
                           src={photo}

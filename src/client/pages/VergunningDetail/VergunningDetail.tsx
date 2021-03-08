@@ -52,7 +52,6 @@ function useVergunningStatusLineItems(VergunningItem?: Vergunning) {
         documents: [],
         isActive: false,
         isChecked: true,
-        isHighlight: false,
       },
       {
         id: 'item-2',
@@ -62,7 +61,6 @@ function useVergunningStatusLineItems(VergunningItem?: Vergunning) {
         documents: [],
         isActive: !isDone,
         isChecked: true,
-        isHighlight: !isDone,
       },
       {
         id: 'item-3',
@@ -72,7 +70,6 @@ function useVergunningStatusLineItems(VergunningItem?: Vergunning) {
         documents: [],
         isActive: isDone,
         isChecked: isDone,
-        isHighlight: isDone,
       },
     ];
   }, [VergunningItem]);
