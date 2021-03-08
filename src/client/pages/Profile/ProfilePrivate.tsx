@@ -32,6 +32,7 @@ import { panelConfig, PanelConfigFormatter } from './profilePanelConfig';
 import styles from './Profile.module.scss';
 import { apiSuccesResult } from '../../../universal/helpers/api';
 import { FeatureToggle } from '../../../universal/config/app';
+import { AppRoutes } from '../../../universal/config';
 
 function formatInfoPanelConfig(
   panelConfig: PanelConfigFormatter,
@@ -93,7 +94,14 @@ export default function Profile() {
 
   return (
     <DetailPage className={styles.Profile}>
-      <PageHeading icon={<ChapterIcon />} isLoading={false}>
+      <PageHeading
+        backLink={{
+          to: AppRoutes.HOME,
+          title: 'Home',
+        }}
+        icon={<ChapterIcon />}
+        isLoading={false}
+      >
         Mijn gegevens
       </PageHeading>
 

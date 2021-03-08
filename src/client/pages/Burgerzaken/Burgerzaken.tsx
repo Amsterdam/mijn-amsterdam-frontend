@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { ChapterTitles } from '../../../universal/config';
+import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
@@ -40,7 +40,14 @@ export default function Burgerzeken() {
 
   return (
     <OverviewPage className={styles.BurgerzakenOverviewPage}>
-      <PageHeading isLoading={isLoading(BRP)} icon={<ChapterIcon />}>
+      <PageHeading
+        backLink={{
+          to: AppRoutes.HOME,
+          title: 'Home',
+        }}
+        isLoading={isLoading(BRP)}
+        icon={<ChapterIcon />}
+      >
         {ChapterTitles.BURGERZAKEN}
       </PageHeading>
       <PageContent>

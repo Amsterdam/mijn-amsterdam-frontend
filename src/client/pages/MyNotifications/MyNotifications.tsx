@@ -49,7 +49,14 @@ export default function MyNotificationsPage() {
 
   return (
     <DetailPage className={styles.MyNotifications}>
-      <PageHeading className={styles.MainHeader} icon={<ChapterIcon />}>
+      <PageHeading
+        backLink={{
+          to: AppRoutes.HOME,
+          title: 'Home',
+        }}
+        className={styles.MainHeader}
+        icon={<ChapterIcon />}
+      >
         Actueel
       </PageHeading>
       <PageContent>

@@ -1,5 +1,9 @@
 import { useState } from 'react';
-import { ChapterTitles, FeatureToggle } from '../../../universal/config';
+import {
+  AppRoutes,
+  ChapterTitles,
+  FeatureToggle,
+} from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import { ComponentChildren } from '../../../universal/types/App.types';
 import {
@@ -63,7 +67,14 @@ export default function MyTipsPage() {
   const { TIPS } = useAppStateGetter();
   return (
     <OverviewPage className={styles.MyTips}>
-      <PageHeading isLoading={false} icon={<ChapterIcon />}>
+      <PageHeading
+        backLink={{
+          to: AppRoutes.HOME,
+          title: 'Home',
+        }}
+        isLoading={false}
+        icon={<ChapterIcon />}
+      >
         {ChapterTitles.TIPS}
       </PageHeading>
       <PageContent>
