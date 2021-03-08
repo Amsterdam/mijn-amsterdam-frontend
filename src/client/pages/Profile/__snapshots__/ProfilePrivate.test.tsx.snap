@@ -6,7 +6,7 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
     class="Page DetailPage Profile"
   >
     <header
-      class="PageHeading hasIcon"
+      class="PageHeading hasIcon hasBackLink"
     >
       <span
         aria-hidden="true"
@@ -23,6 +23,21 @@ exports[`<Profile /> Matches the Full Page snapshot 1`] = `
       <div
         class="HeadingInner"
       >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Home
+        </a>
         <h2
           class="Heading Heading__large"
         >
@@ -1390,7 +1405,7 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
     class="Page DetailPage Profile"
   >
     <header
-      class="PageHeading hasIcon"
+      class="PageHeading hasIcon hasBackLink"
     >
       <span
         aria-hidden="true"
@@ -1407,6 +1422,21 @@ exports[`<Profile /> Matches the Full Page snapshot No verbintenis 1`] = `
       <div
         class="HeadingInner"
       >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Home
+        </a>
         <h2
           class="Heading Heading__large"
         >
@@ -2687,7 +2717,7 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
     class="Page DetailPage Profile"
   >
     <header
-      class="PageHeading hasIcon"
+      class="PageHeading hasIcon hasBackLink"
     >
       <span
         aria-hidden="true"
@@ -2704,6 +2734,21 @@ exports[`<Profile /> Matches the Full Page snapshot Non-Mokum 1`] = `
       <div
         class="HeadingInner"
       >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Home
+        </a>
         <h2
           class="Heading Heading__large"
         >
@@ -3013,7 +3058,7 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
     class="Page DetailPage Profile"
   >
     <header
-      class="PageHeading hasIcon"
+      class="PageHeading hasIcon hasBackLink"
     >
       <span
         aria-hidden="true"
@@ -3030,6 +3075,21 @@ exports[`<Profile /> Matches the Full Page snapshot Not living in Netherlands 1`
       <div
         class="HeadingInner"
       >
+        <a
+          class="Button Button__plain Button__lean Linkd BackLink"
+          href="/"
+        >
+          <svg
+            aria-hidden="true"
+            class="Icon Icon__left"
+            fill="#000"
+            height="14px"
+            width="14px"
+          >
+            Chevron-Left.svg
+          </svg>
+          Home
+        </a>
         <h2
           class="Heading Heading__large"
         >
