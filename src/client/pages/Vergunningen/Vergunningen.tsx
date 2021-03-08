@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Vergunning } from '../../../server/services/vergunningen';
-import { ChapterTitles } from '../../../universal/config/index';
+import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
 import { isError, isLoading } from '../../../universal/helpers';
 import { defaultDateFormat } from '../../../universal/helpers/date';
 import {
@@ -67,7 +67,14 @@ export default function Vergunningen() {
 
   return (
     <OverviewPage className={styles.Vergunningen}>
-      <PageHeading isLoading={isLoading(VERGUNNINGEN)} icon={<ChapterIcon />}>
+      <PageHeading
+        backLink={{
+          to: AppRoutes.HOME,
+          title: 'Home',
+        }}
+        isLoading={isLoading(VERGUNNINGEN)}
+        icon={<ChapterIcon />}
+      >
         {ChapterTitles.VERGUNNINGEN}
       </PageHeading>
       <PageContent>

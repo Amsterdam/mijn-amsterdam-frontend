@@ -114,7 +114,14 @@ export default function GarbageInformation() {
 
   return (
     <DetailPage className={styles.GarbageInformation}>
-      <PageHeading isLoading={false} icon={<ChapterIcon />}>
+      <PageHeading
+        backLink={{
+          to: AppRoutes.HOME,
+          title: 'Home',
+        }}
+        isLoading={false}
+        icon={<ChapterIcon />}
+      >
         {termReplace(ChapterTitles.AFVAL)}
       </PageHeading>
       <PageContent>
