@@ -71,10 +71,10 @@ export default function Sia() {
       </PageHeading>
       <PageContent>
         <p>
-          Ziet u op straat of in een park iets waarvan u wilt dat het gemaakt of
-          opgeruimd wordt, dan kunt u dat bij de gemeente melden. U kunt ook een
-          gevaarlijke verkeerssituatie of overlast van personen en horeca aan
-          ons doorgeven.
+          U hebt uw mailadres en telefoonnummer doorgegeven zodat u op de hoogte
+          wordt gehouden over de voortgang van uw melding. U kunt deze gegevens
+          hier niet meer wijzigen. 12 maanden na ontvangst van uw melding worden
+          deze gegevens automatisch verwijderd uit ons systeem.
         </p>
         <p>
           <Linkd
