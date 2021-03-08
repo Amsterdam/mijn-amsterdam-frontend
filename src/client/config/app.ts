@@ -85,3 +85,6 @@ export const Breakpoints = {
 };
 
 export const DEFAULT_PROFILE_TYPE = 'private';
+
+export const PLACEHOLDER_IMAGE_URL =
+  'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==';
