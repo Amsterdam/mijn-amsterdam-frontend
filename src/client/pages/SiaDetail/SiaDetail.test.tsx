@@ -65,7 +65,7 @@ describe('<SiaDetail />', () => {
     ).toBeInTheDocument();
     expect(screen.getByText(SIA_ITEM.email)).toBeInTheDocument();
     expect(screen.getByText(SIA_ITEM.phone)).toBeInTheDocument();
-    expect(screen.getByText(SIA_ITEM.status)).toBeInTheDocument();
+    expect(screen.getAllByText(SIA_ITEM.status)).toHaveLength(2); // one in body, one in status line
     expect(screen.getByText(SIA_ITEM.description)).toBeInTheDocument();
     expect(screen.getByText(SIA_ITEM.category)).toBeInTheDocument();
   });
