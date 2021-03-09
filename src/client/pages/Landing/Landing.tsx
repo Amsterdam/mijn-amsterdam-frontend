@@ -11,8 +11,8 @@ import {
   PageContent,
   PageHeading,
   TextPage,
+  MaintenanceNotifications,
 } from '../../components';
-import { MaintenanceNotificationsLandingPage } from '../../components/MaintenanceNotifications/MaintenanceNotifications';
 import {
   LOGIN_URL_DIGID,
   LOGIN_URL_EHERKENNING,
@@ -49,7 +49,10 @@ export default function Landing() {
           Mijn Amsterdam is uw persoonlijke online pagina bij de gemeente
           Amsterdam.
         </p>
-        <MaintenanceNotificationsLandingPage />
+        <MaintenanceNotifications
+          fromApiDirectly={true}
+          page="landingspagina"
+        />
         <div className={styles.LoginOption}>
           {FeatureToggle.eherkenningActive && (
             <Heading className={styles.LoginOptionHeading} size="tiny" el="h3">

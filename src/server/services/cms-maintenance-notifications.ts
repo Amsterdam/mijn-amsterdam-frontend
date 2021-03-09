@@ -126,7 +126,7 @@ async function fetchCMSMaintenanceNotifications(
   function fetchCMSEventData(url: string) {
     return requestData<CMSMaintenanceNotification>(
       {
-        url: url + '?Appidt=app-pagetype',
+        url: url + '?Appidt=app-pagetype&reload=true',
         transformResponse: transformCMSEventResponse,
         cacheTimeout: 0,
       },
@@ -155,14 +155,14 @@ async function fetchCMSMaintenanceNotifications(
           (notification): notification is CMSMaintenanceNotification =>
             notification !== null
         )
-        .filter((notification) => {
-          const startDateTime = parseISO(
-            notification.dateStart + 'T' + notification.timeStart
-          );
-          const endDateTime = parseISO(
-            notification.dateEnd + 'T' + notification.timeEnd
-          );
-          return isPast(startDateTime) && isFuture(endDateTime);
+        .map((notification) => {
+          if (notification.moreInformation) {
+            notification.moreInformation = marked(notification.moreInformation);
+          }
+          if (notification.description) {
+            notification.description = marked(notification.description);
+          }
+          return notification;
         });
     });
 
@@ -180,8 +180,9 @@ async function fetchCMSMaintenanceNotifications(
   return eventItemsResponse;
 }
 
-export async function fetchMaintenanceNotificationsPages(
+export async function fetchMaintenanceNotificationsActual(
   sessionID: SessionID,
+  passthroughRequestHeaders: Record<string, string>,
   queryParams?: Record<string, string>
 ) {
   const maintenanceNotifications = await fetchCMSMaintenanceNotifications(
@@ -195,15 +196,17 @@ export async function fetchMaintenanceNotificationsPages(
 
   return apiSuccesResult(
     maintenanceNotifications.content
-      .filter((notification) => notification.path !== '/dashboard')
-      .map((notification) => {
-        if (notification.moreInformation) {
-          notification.moreInformation = marked(notification.moreInformation);
-        }
-        if (notification.description) {
-          notification.description = marked(notification.description);
-        }
-        return notification;
+      .filter((notification) =>
+        queryParams?.page ? notification.path === `/${queryParams.page}` : true
+      )
+      .filter((notification) => {
+        const startDateTime = parseISO(
+          notification.dateStart + 'T' + notification.timeStart
+        );
+        const endDateTime = parseISO(
+          notification.dateEnd + 'T' + notification.timeEnd
+        );
+        return isPast(startDateTime) && isFuture(endDateTime);
       })
   );
 }
@@ -211,34 +214,34 @@ export async function fetchMaintenanceNotificationsPages(
 export async function fetchMaintenanceNotificationsDashboard(
   sessionID: SessionID
 ) {
-  const maintenanceNotifications = await fetchCMSMaintenanceNotifications(
-    sessionID
+  const maintenanceNotifications = await fetchMaintenanceNotificationsActual(
+    sessionID,
+    { page: 'dashboard' }
   );
 
   if (!maintenanceNotifications.content?.length) {
     return maintenanceNotifications;
   }
 
-  const dashboardNotifications = maintenanceNotifications.content
-    .filter((notification) => notification.path === '/dashboard')
-    .map((notification, index) => {
-      const item: MyNotification = {
-        id: `maintenance-${index}-${notification.title}`,
-        chapter: Chapters.NOTIFICATIONS,
-        isAlert: true,
-        datePublished: notification.datePublished,
-        hideDatePublished: true,
-        title: notification.title,
-        description: notification.description,
-      };
-      if (notification.moreInformation) {
-        item.moreInformation = notification.moreInformation;
-      }
-      if (notification.link) {
-        item.link = notification.link;
-      }
-      return item;
-    });
+  const [notification] = maintenanceNotifications.content;
 
-  return apiSuccesResult({ notifications: dashboardNotifications });
+  const item: MyNotification = {
+    id: `maintenance-${notification.title}`,
+    chapter: Chapters.NOTIFICATIONS,
+    isAlert: true,
+    datePublished: notification.datePublished,
+    hideDatePublished: true,
+    title: notification.title,
+    description: notification.description,
+  };
+
+  if (notification.moreInformation) {
+    item.moreInformation = notification.moreInformation;
+  }
+
+  if (notification.link) {
+    item.link = notification.link;
+  }
+
+  return apiSuccesResult({ notifications: [notification] });
 }

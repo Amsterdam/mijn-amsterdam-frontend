@@ -22,6 +22,7 @@ import {
   LoadingContent,
   PageContent,
   PageHeading,
+  MaintenanceNotifications,
 } from '../../components';
 import { BRP_RESIDENTS_API_URL } from '../../config/api';
 import { useDataApi } from '../../hooks/api/useDataApi';
@@ -95,6 +96,7 @@ export default function Profile() {
       <PageHeading icon={<ChapterIcon />} isLoading={false}>
         Mijn gegevens
       </PageHeading>
+
       <PageContent className={styles.Intro}>
         <p>
           In de Basisregistratie Personen legt de gemeente persoonsgegevens over
@@ -102,6 +104,7 @@ export default function Profile() {
           uw burgerlijke staat. De gemeente gebruikt deze gegevens. Belangrijk
           dus dat deze gegevens kloppen.
         </p>
+
         {!isLoading(BRP) && !isMokum(BRP.content) && (
           <p>
             U staat niet ingeschreven in Amsterdam. Daarom ziet u alleen
@@ -125,7 +128,7 @@ export default function Profile() {
             <LoadingContent />
           </div>
         )}
-
+        <MaintenanceNotifications page="persoonlijke-gegevens" />
         {isError(BRP) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>

@@ -19,6 +19,7 @@ import {
   PageHeading,
   Panel,
   SectionCollapsible,
+  MaintenanceNotifications,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -144,6 +145,7 @@ export default function GarbageInformation() {
             </p>
           </>
         )}
+        <MaintenanceNotifications page="afval" />
         {isError(AFVAL) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>

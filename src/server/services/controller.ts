@@ -13,6 +13,7 @@ import { fetchAFVAL, fetchAFVALPUNTEN } from './afval/afval';
 import { fetchBELASTING } from './belasting';
 import { fetchBRP } from './brp';
 import { fetchCMSCONTENT } from './cms-content';
+import { fetchMaintenanceNotificationsActual } from './cms-maintenance-notifications';
 import { fetchERFPACHT } from './erfpacht';
 import { fetchFOCUSAanvragen } from './focus/focus-aanvragen';
 import { fetchFOCUSSpecificaties } from './focus/focus-specificaties';
@@ -52,6 +53,9 @@ function getServiceTipsMap(profileType: ProfileType) {
  */
 const BRP = callService(fetchBRP);
 const CMS_CONTENT = callService(fetchCMSCONTENT);
+const CMS_MAINTENANCE_NOTIFICATIONS = callService(
+  fetchMaintenanceNotificationsActual
+);
 const KVK = callService(fetchKVK);
 const FOCUS_AANVRAGEN = callService(fetchFOCUSAanvragen);
 const FOCUS_SPECIFICATIES = callService(fetchFOCUSSpecificaties);
@@ -104,6 +108,7 @@ const CASES = async (sessionID: SessionID, req: Request) =>
 const SERVICES_INDEX = {
   BRP,
   CMS_CONTENT,
+  CMS_MAINTENANCE_NOTIFICATIONS,
   KVK,
   FOCUS_AANVRAGEN,
   FOCUS_SPECIFICATIES,
@@ -134,6 +139,7 @@ type CommercialServices = Pick<
   | 'AFVAL'
   | 'AFVALPUNTEN'
   | 'CMS_CONTENT'
+  | 'CMS_MAINTENANCE_NOTIFICATIONS'
   | 'ERFPACHT'
   | 'NOTIFICATIONS'
   | 'CASES'
@@ -156,6 +162,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     BRP,
     BELASTINGEN,
     CMS_CONTENT,
+    CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
     FOCUS_AANVRAGEN,
     FOCUS_SPECIFICATIES,
@@ -176,6 +183,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     BRP,
     BELASTINGEN,
     CMS_CONTENT,
+    CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
     FOCUS_AANVRAGEN,
     FOCUS_SPECIFICATIES,
@@ -194,6 +202,7 @@ export const servicesByProfileType: ServicesByProfileType = {
     AFVAL,
     AFVALPUNTEN,
     CMS_CONTENT,
+    CMS_MAINTENANCE_NOTIFICATIONS,
     ERFPACHT,
     NOTIFICATIONS,
     CASES,

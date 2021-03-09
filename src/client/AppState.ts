@@ -48,6 +48,7 @@ export const PRISTINE_APPSTATE: AppState = {
     generalInfo: null,
     footer: null,
   }),
+  CMS_MAINTENANCE_NOTIFICATIONS: apiPristineResult([]),
 
   VERGUNNINGEN: apiPristineResult([]),
 

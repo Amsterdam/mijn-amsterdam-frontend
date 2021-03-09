@@ -9,7 +9,7 @@ import {
   loadFeatureDetail,
   loadPolylineFeatures,
 } from './services/buurt/buurt';
-import { fetchMaintenanceNotificationsPages } from './services/cms-maintenance-notifications';
+import { fetchMaintenanceNotificationsActual } from './services/cms-maintenance-notifications';
 import {
   loadServicesAll,
   loadServicesSSE,
@@ -151,8 +151,9 @@ router.get(
   async (req, res, next) => {
     const sessionID = res.locals.sessionID;
     try {
-      let response = await fetchMaintenanceNotificationsPages(
+      let response = await fetchMaintenanceNotificationsActual(
         sessionID,
+        getPassthroughRequestHeaders(req),
         queryParams(req)
       );
       res.json(response);

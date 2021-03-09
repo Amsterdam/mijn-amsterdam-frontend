@@ -6,13 +6,18 @@ import styles from './MaintenanceNotifications.module.scss';
 import Linkd from '../Button/Button';
 
 interface MaintenanceNotificationsProps {
-  path?: string;
+  page?: string;
+  fromApiDirectly?: boolean;
 }
 
-export function MaintenanceNotifications({
-  path,
+export default function MaintenanceNotifications({
+  page,
+  fromApiDirectly = false,
 }: MaintenanceNotificationsProps) {
-  const maintenanceNotifications = useCmsMaintenanceNotifications(path);
+  const maintenanceNotifications = useCmsMaintenanceNotifications(
+    page,
+    fromApiDirectly
+  );
   const [isMoreInformationVisible, setMoreInformationVisible] = useState(false);
 
   if (!maintenanceNotifications?.length) {
@@ -55,8 +60,4 @@ export function MaintenanceNotifications({
       })}
     </>
   );
-}
-
-export function MaintenanceNotificationsLandingPage() {
-  return <MaintenanceNotifications path="/landingspagina" />;
 }

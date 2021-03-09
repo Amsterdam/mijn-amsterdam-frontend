@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 
 import { ComponentChildren } from '../../../universal/types';
-import { IconAlert, IconCheckmark } from '../../assets/icons';
+import { IconAlert, IconCheckmark, IconInfo } from '../../assets/icons';
 import styles from './Alert.module.scss';
 
 export type AlertType = 'warning' | 'info' | 'success';
@@ -18,6 +18,10 @@ function getIcon(alertType: AlertType) {
     case 'warning':
       Icon = IconAlert;
       break;
+    case 'info':
+      Icon = IconInfo;
+      break;
+    case 'success':
     default:
       Icon = IconCheckmark;
       break;

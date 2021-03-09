@@ -3,22 +3,32 @@ import { ApiResponse } from '../../../universal/helpers';
 import { apiPristineResult } from '../../../universal/helpers/api';
 import { BFFApiUrls } from '../../config/api';
 import { useDataApi } from './useDataApi';
+import { useAppStateGetter } from '../useAppState';
 
-const requestConfig = {
-  url: BFFApiUrls.SERVICES_CMS_MAINTENANCE_NOTIFICATIONS_URL,
-};
-
-export function useCmsMaintenanceNotifications(path?: string) {
+export function useCmsMaintenanceNotifications(
+  page?: string,
+  fromApiDirectly: boolean = false
+) {
+  const { CMS_MAINTENANCE_NOTIFICATIONS } = useAppStateGetter();
   const [api] = useDataApi<ApiResponse<CMSMaintenanceNotification[]>>(
-    requestConfig,
+    {
+      url:
+        BFFApiUrls.SERVICES_CMS_MAINTENANCE_NOTIFICATIONS_URL +
+        (page ? `?page=${page}` : ''),
+      postpone: !fromApiDirectly,
+    },
     apiPristineResult([])
   );
 
-  if (path) {
-    return api.data.content?.filter((notification) => {
-      return notification.path === path;
+  const notifications = fromApiDirectly
+    ? api.data.content
+    : CMS_MAINTENANCE_NOTIFICATIONS.content;
+
+  if (page) {
+    return notifications?.filter((notification) => {
+      return notification.path === `/${page}`;
     });
   }
 
-  return api.data.content;
+  return [];
 }
