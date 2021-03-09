@@ -1,11 +1,25 @@
 /*
-      This CSS resource incorporates links to font software which is the valuable copyrighted
-      property of Monotype Imaging and/or its suppliers. You may not attempt to copy, install,
-      redistribute, convert, modify or reverse engineer this font software. Please contact Monotype
-      Imaging with any questions regarding Web Fonts:  http://www.fonts.com
-      */
+  This CSS resource incorporates links to font software which is the valuable copyrighted
+  property of Monotype Imaging and/or its suppliers. You may not attempt to copy, install,
+  redistribute, convert, modify or reverse engineer this font software. Please contact Monotype
+  Imaging with any questions regarding Web Fonts:  http://www.fonts.com
+  */
 @import url('https://fast.fonts.net/t/1.css?apiType=css&projectid=3680cf49-2b05-4b8a-af28-fa9e27d2bed0');
-@import url('https://static.amsterdam.nl/fonts/fonts.css');
+
+@font-face {
+  font-family: 'Avenir Next';
+  src: url('https://static.amsterdam.nl/fonts/AvenirAll/2cd55546-ec00-4af9-aeca-4a3cd186da53.woff2')
+    format('woff2');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Avenir Next';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('https://static.amsterdam.nl/fonts/AvenirAll/aad99a1f-7917-4dd6-bbb5-b07cedbff64f.woff2')
+    format('woff2');
+}
 
 body,
 button {
