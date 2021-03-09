@@ -66,30 +66,34 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
               </div>
             </aside>
             <div
-              class="Description"
+              class="Body"
             >
-              Notificatie1
-            </div>
-            <p
-              class="Action"
-            >
-              <a
-                class="Button Button__plain Button__lean Linkd"
-                href="/item-1"
-                title="Meer informatie over de melding: Notification"
+              <div
+                class="Description"
               >
-                <svg
-                  aria-hidden="true"
-                  class="Icon Icon__left"
-                  fill="#000"
-                  height="14px"
-                  width="14px"
+                Notificatie1
+              </div>
+              <p
+                class="Action"
+              >
+                <a
+                  class="Button Button__plain Button__lean Linkd"
+                  href="/item-1"
+                  title="Meer informatie over de melding: Notification"
                 >
-                  Chevron-Right.svg
-                </svg>
-                Linkje!
-              </a>
-            </p>
+                  <svg
+                    aria-hidden="true"
+                    class="Icon Icon__left"
+                    fill="#000"
+                    height="14px"
+                    width="14px"
+                  >
+                    Chevron-Right.svg
+                  </svg>
+                  Linkje!
+                </a>
+              </p>
+            </div>
           </li>
           <li
             class="MyNotificationItem"
@@ -126,30 +130,34 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
               </div>
             </aside>
             <div
-              class="Description"
+              class="Body"
             >
-              Notificatie2
-            </div>
-            <p
-              class="Action"
-            >
-              <a
-                class="Button Button__plain Button__lean Linkd"
-                href="/item-2"
-                title="Meer informatie over de melding: Notification"
+              <div
+                class="Description"
               >
-                <svg
-                  aria-hidden="true"
-                  class="Icon Icon__left"
-                  fill="#000"
-                  height="14px"
-                  width="14px"
+                Notificatie2
+              </div>
+              <p
+                class="Action"
+              >
+                <a
+                  class="Button Button__plain Button__lean Linkd"
+                  href="/item-2"
+                  title="Meer informatie over de melding: Notification"
                 >
-                  Chevron-Right.svg
-                </svg>
-                Linkje!
-              </a>
-            </p>
+                  <svg
+                    aria-hidden="true"
+                    class="Icon Icon__left"
+                    fill="#000"
+                    height="14px"
+                    width="14px"
+                  >
+                    Chevron-Right.svg
+                  </svg>
+                  Linkje!
+                </a>
+              </p>
+            </div>
           </li>
           <li
             class="MyNotificationItem"
@@ -186,30 +194,34 @@ exports[`<Dashboard /> Matches the Full Page snapshot 1`] = `
               </div>
             </aside>
             <div
-              class="Description"
+              class="Body"
             >
-              Notificatie3
-            </div>
-            <p
-              class="Action"
-            >
-              <a
-                class="Button Button__plain Button__lean Linkd"
-                href="/item-3"
-                title="Meer informatie over de melding: Notification"
+              <div
+                class="Description"
               >
-                <svg
-                  aria-hidden="true"
-                  class="Icon Icon__left"
-                  fill="#000"
-                  height="14px"
-                  width="14px"
+                Notificatie3
+              </div>
+              <p
+                class="Action"
+              >
+                <a
+                  class="Button Button__plain Button__lean Linkd"
+                  href="/item-3"
+                  title="Meer informatie over de melding: Notification"
                 >
-                  Chevron-Right.svg
-                </svg>
-                Linkje!
-              </a>
-            </p>
+                  <svg
+                    aria-hidden="true"
+                    class="Icon Icon__left"
+                    fill="#000"
+                    height="14px"
+                    width="14px"
+                  >
+                    Chevron-Right.svg
+                  </svg>
+                  Linkje!
+                </a>
+              </p>
+            </div>
           </li>
         </ul>
         <p

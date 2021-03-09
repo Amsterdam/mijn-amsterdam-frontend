@@ -21,8 +21,8 @@ export function useCmsMaintenanceNotifications(
   );
 
   const notifications = fromApiDirectly
-    ? api.data.content
-    : CMS_MAINTENANCE_NOTIFICATIONS.content;
+    ? api.data?.content
+    : CMS_MAINTENANCE_NOTIFICATIONS?.content;
 
   if (page) {
     return notifications?.filter((notification) => {
