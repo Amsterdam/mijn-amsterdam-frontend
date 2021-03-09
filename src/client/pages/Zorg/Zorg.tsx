@@ -12,6 +12,7 @@ import {
   PageHeading,
   SectionCollapsible,
   Table,
+  MaintenanceNotifications,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -58,6 +59,7 @@ export default function Zorg() {
             Lees hier meer over zorg en ondersteuning
           </Linkd>
         </p>
+        <MaintenanceNotifications page="zorg" />
         {isError(WMO) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>

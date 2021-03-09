@@ -16,10 +16,12 @@ import useMedia from 'use-media';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
 import { getFullAddress, isLoading } from '../../../universal/helpers';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
-import { useWidescreen } from '../../hooks';
-import { useAppStateGetter } from '../../hooks/useAppState';
-import { getElementSize } from '../../hooks/useComponentSize';
-import { useTermReplacement } from '../../hooks/useTermReplacement';
+import {
+  useTermReplacement,
+  getElementSize,
+  useWidescreen,
+  useAppStateGetter,
+} from '../../hooks';
 import {
   useFetchPanelFeature,
   useLoadingFeature,
@@ -40,6 +42,7 @@ import {
 import { MyAreaLegendPanel } from './MyAreaPanels';
 import MyAreaDetailPanel from './PanelContent/MyAreaDetailPanel';
 import { useSetLoadingFeature } from './MyArea.hooks';
+import MaintenanceNotifications from '../MaintenanceNotifications/MaintenanceNotifications';
 
 const StyledViewerContainer = styled(ViewerContainer)<{
   mapOffset?: { left: string };
@@ -246,6 +249,7 @@ export default function MyArea({
   return (
     <ThemeProvider>
       <MyAreaContainer>
+        <MaintenanceNotifications page="buurt" />
         {!!showHeader && <MyAreaHeader showCloseButton={true} />}
         <MyAreaMapContainer ref={mapContainerRef}>
           <MyAreaMapOffset id="skip-to-id-Map">

@@ -12,6 +12,7 @@ import {
   LoadingContent,
   PageContent,
   PageHeading,
+  MaintenanceNotifications,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { formatKvkProfileData } from './formatDataCommercial';
@@ -108,7 +109,7 @@ export default function ProfileCommercial() {
             <LoadingContent />
           </div>
         )}
-
+        <MaintenanceNotifications page="gegevens-handelsregister" />
         {isError(KVK) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>

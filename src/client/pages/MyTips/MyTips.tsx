@@ -11,6 +11,7 @@ import {
   OverviewPage,
   PageContent,
   PageHeading,
+  MaintenanceNotifications,
 } from '../../components';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import { useOptIn } from '../../hooks/useOptIn';
@@ -65,6 +66,9 @@ export default function MyTipsPage() {
       <PageHeading isLoading={false} icon={<ChapterIcon />}>
         {ChapterTitles.TIPS}
       </PageHeading>
+      <PageContent>
+        <MaintenanceNotifications page="overzicht-tips" />
+      </PageContent>
       {FeatureToggle.myTipsoptInOutPersonalization && (
         <OptInPageContent>
           {isError(TIPS) && (

@@ -14,6 +14,7 @@ import {
   PageHeading,
   SectionCollapsible,
   Table,
+  MaintenanceNotifications,
 } from '../../components';
 import { LinkdInline } from '../../components/Button/Button';
 import { ExternalUrls } from '../../config/app';
@@ -109,6 +110,7 @@ export default function Stadspas() {
             Meer informatie over de Stadspas
           </Linkd>
         </p>
+        <MaintenanceNotifications page="stadspas" />
         {(isError(FOCUS_AANVRAGEN) || isError(FOCUS_STADSPAS)) && (
           <Alert type="warning">
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>

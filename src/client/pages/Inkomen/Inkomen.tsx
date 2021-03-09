@@ -15,6 +15,7 @@ import {
   PageHeading,
   SectionCollapsible,
   Table,
+  MaintenanceNotifications,
 } from '../../components';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -118,6 +119,7 @@ export default function Inkomen() {
             Contact Werk en Inkomen
           </Linkd>
         </p>
+        <MaintenanceNotifications page="inkomen" />
         {(isError(FOCUS_AANVRAGEN) ||
           isError(FOCUS_SPECIFICATIES) ||
           isError(FOCUS_TOZO) ||

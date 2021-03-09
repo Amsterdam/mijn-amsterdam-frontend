@@ -28,7 +28,7 @@
 }
 
 .MarkerIcon {
-  display: block;;
+  display: block;
   &.Feature--selected {
     color: inherit;
   }
@@ -36,8 +36,8 @@
 
 .Feature--selected {
   &[stroke] {
-    fill: red!important;
-    stroke: red!important;
+    fill: red !important;
+    stroke: red !important;
     stroke-width: 2;
   }
 }
@@ -49,11 +49,11 @@
   transform: translateX(-50%);
   text-align: center;
   top: 1rem;
-  background-color: rgba(255, 255, 255, .8);
+  background-color: rgba(255, 255, 255, 0.8);
   color: $color-support-blue;
-  padding: .2rem 1rem;
+  padding: 0.2rem 1rem;
   font-weight: 500;
-  box-shadow: 0px 0px 2px 4px rgba(0, 0, 0, .1);
+  box-shadow: 0px 0px 2px 4px rgba(0, 0, 0, 0.1);
   border: 1px solid $color-support-blue;
   white-space: nowrap;
 }
@@ -70,7 +70,7 @@
   }
   width: 100%;
   min-height: 4rem;
-  box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, .1);
+  box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.1);
   > p {
     background-color: $color-white;
   }

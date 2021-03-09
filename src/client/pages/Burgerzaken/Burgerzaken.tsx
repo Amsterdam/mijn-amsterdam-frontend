@@ -7,6 +7,7 @@ import {
   Alert,
   ChapterIcon,
   Linkd,
+  MaintenanceNotifications,
   OverviewPage,
   PageContent,
   PageHeading,
@@ -55,6 +56,7 @@ export default function Burgerzeken() {
             Meer informatie over paspoort en ID-kaart
           </Linkd>
         </p>
+        <MaintenanceNotifications page="burgerzaken" />
         {isError(BRP) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>

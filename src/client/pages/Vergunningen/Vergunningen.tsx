@@ -13,6 +13,7 @@ import {
   PageHeading,
   SectionCollapsible,
   Table,
+  MaintenanceNotifications,
 } from '../../components';
 import { OverviewPage } from '../../components/Page/Page';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -84,6 +85,7 @@ export default function Vergunningen() {
             Ontheffing RVV en TVM aanvragen
           </Linkd>
         </p>
+        <MaintenanceNotifications page="vergunningen" />
         {isError(VERGUNNINGEN) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>
