@@ -13,6 +13,7 @@ import {
   PageHeading,
   SectionCollapsible,
   Table,
+  MaintenanceNotifications,
 } from '../../components';
 import { OverviewPage } from '../../components/Page/Page';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -87,6 +88,7 @@ export default function Sia() {
             Doe een melding
           </Linkd>
         </p>
+        <MaintenanceNotifications page="sia-meldingen" />
         {isError(SIA) && (
           <Alert type="warning">
             <p>We kunnen op dit moment geen gegevens tonen.</p>
