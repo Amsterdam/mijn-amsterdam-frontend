@@ -106,57 +106,59 @@ export default function MyNotifications({
                     )}
                   </div>
                 </aside>
-                {!!item.description && (
-                  <InnerHtml className={styles.Description}>
-                    {item.description}
-                  </InnerHtml>
-                )}
-                {!!item.moreInformation && (
-                  <InnerHtml className={styles.MoreInformation}>
-                    {item.moreInformation}
-                  </InnerHtml>
-                )}
-                {(!!item.link || !!item.customLink) && (
-                  <p className={styles.Action}>
-                    {item.link?.download ? (
-                      <DocumentLink
-                        document={{
-                          id: item.id,
-                          title: item.title,
-                          datePublished: item.datePublished,
-                          url: item.link.to,
-                          download: item.link.download,
-                          type: 'pdf',
-                        }}
-                        label={item.link.title}
-                      />
-                    ) : (
-                      <Linkd
-                        title={`Meer informatie over de melding: ${item.title}`}
-                        href={item.customLink ? '#' : item.link?.to}
-                        external={isLinkExternal}
-                        onClick={() => {
-                          trackItemClick(
-                            trackCategory,
-                            item.title,
-                            profileType
-                          );
-                          if (item.customLink) {
-                            item.customLink.callback();
-                            return false;
-                          }
-                          if (item.link && !isLinkExternal) {
-                            showNotification(item.id, item.link.to);
-                            return false;
-                          }
-                        }}
-                      >
-                        {(item.link || item.customLink)?.title ||
-                          'Meer informatie over ' + item.title}
-                      </Linkd>
-                    )}
-                  </p>
-                )}
+                <div className={styles.Body}>
+                  {!!item.description && (
+                    <InnerHtml className={styles.Description}>
+                      {item.description}
+                    </InnerHtml>
+                  )}
+                  {!!item.moreInformation && (
+                    <InnerHtml className={styles.MoreInformation}>
+                      {item.moreInformation}
+                    </InnerHtml>
+                  )}
+                  {(!!item.link || !!item.customLink) && (
+                    <p className={styles.Action}>
+                      {item.link?.download ? (
+                        <DocumentLink
+                          document={{
+                            id: item.id,
+                            title: item.title,
+                            datePublished: item.datePublished,
+                            url: item.link.to,
+                            download: item.link.download,
+                            type: 'pdf',
+                          }}
+                          label={item.link.title}
+                        />
+                      ) : (
+                        <Linkd
+                          title={`Meer informatie over de melding: ${item.title}`}
+                          href={item.customLink ? '#' : item.link?.to}
+                          external={isLinkExternal}
+                          onClick={() => {
+                            trackItemClick(
+                              trackCategory,
+                              item.title,
+                              profileType
+                            );
+                            if (item.customLink) {
+                              item.customLink.callback();
+                              return false;
+                            }
+                            if (item.link && !isLinkExternal) {
+                              showNotification(item.id, item.link.to);
+                              return false;
+                            }
+                          }}
+                        >
+                          {(item.link || item.customLink)?.title ||
+                            'Meer informatie over ' + item.title}
+                        </Linkd>
+                      )}
+                    </p>
+                  )}
+                </div>
               </li>
             );
           })}

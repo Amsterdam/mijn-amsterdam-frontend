@@ -24,14 +24,6 @@
     @include centered-block;
   }
 
-  @include select(MyNotifications_Description) {
-    padding-right: 30rem;
-
-    @include mq-phone() {
-      padding-right: 2rem;
-    }
-  }
-
   @include select(MyNotifications_MetaInfoSecondary) {
     position: absolute;
     right: 0;
