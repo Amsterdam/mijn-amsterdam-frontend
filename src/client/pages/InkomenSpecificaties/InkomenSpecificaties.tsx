@@ -46,7 +46,7 @@ export default function InkomenSpecificaties() {
   const focusSpecificatiesWithDocumentLinks = useAddDocumentLinkComponents(
     FOCUS_SPECIFICATIES
   );
-  const { type, page = '1' } = useParams<{
+  const { type = 'uitkering', page = '1' } = useParams<{
     type: 'jaaropgave' | 'uitkering';
     page?: string;
   }>();

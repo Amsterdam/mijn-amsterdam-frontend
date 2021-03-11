@@ -1,3 +1,5 @@
+import { generatePath } from 'react-router-dom';
+
 export const AppRoutes: Record<string, string> = {
   ROOT: '/',
   BURGERZAKEN: '/burgerzaken',
@@ -42,8 +44,28 @@ export const AppRoutesRedirect = [
     to: AppRoutes['INKOMEN/BIJSTANDSUITKERING'],
   },
   {
-    from: '/inkomen-en-stadspas/uitkeringsspecificaties/:category?',
-    to: AppRoutes['INKOMEN/SPECIFICATIES'],
+    from: '/inkomen-en-stadspas/uitkeringsspecificaties/jaaropgaven',
+    to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
+      type: 'jaaropgave',
+    }),
+  },
+  {
+    from: '/inkomen/uitkeringsspecificaties/jaaropgaven',
+    to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
+      type: 'jaaropgave',
+    }),
+  },
+  {
+    from: '/inkomen-en-stadspas/uitkeringsspecificaties/',
+    to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
+      type: 'uitkering',
+    }),
+  },
+  {
+    from: '/inkomen/uitkeringsspecificaties/',
+    to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
+      type: 'uitkering',
+    }),
   },
   {
     from: '/inkomen-en-stadspas/tozo/:version/:id',
