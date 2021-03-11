@@ -217,7 +217,7 @@ export default function InkomenSpecificaties() {
                   {categoryFilterActive && (
                     <button
                       className={styles.ResetFilterButton}
-                      onClick={() => setSelectedCategory('')}
+                      onClick={() => selectCategoryFilter('')}
                     >
                       resetten
                     </button>
