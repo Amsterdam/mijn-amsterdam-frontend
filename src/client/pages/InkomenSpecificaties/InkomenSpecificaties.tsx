@@ -116,6 +116,14 @@ export default function InkomenSpecificaties() {
     return parseInt(page, 10);
   }, [page]);
 
+  useEffect(() => {
+    window.scrollBy({
+      top: -document.documentElement.scrollTop,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }, [currentPage]);
+
   const itemsFilteredPaginated = useMemo(() => {
     const startIndex = currentPage - 1;
     const start = startIndex * PAGE_SIZE;

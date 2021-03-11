@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { AppRoutes } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
@@ -38,6 +38,14 @@ export default function MyNotificationsPage() {
   }, [currentPage, notifications]);
 
   const total = notifications.length;
+
+  useEffect(() => {
+    window.scrollBy({
+      top: -document.documentElement.scrollTop,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }, [currentPage]);
 
   return (
     <DetailPage className={styles.MyNotifications}>
