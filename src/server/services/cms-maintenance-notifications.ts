@@ -216,6 +216,7 @@ export async function fetchMaintenanceNotificationsDashboard(
 ) {
   const maintenanceNotifications = await fetchMaintenanceNotificationsActual(
     sessionID,
+    {},
     { page: 'dashboard' }
   );
 

@@ -44,7 +44,7 @@ const pageConfig = {
   },
   'INKOMEN/SPECIFICATIES': {
     isDetailPage: true,
-    pathname: '/inkomen/uitkeringsspecificaties',
+    pathname: '/inkomen/specificaties/uitkering',
   },
   'INKOMEN/TOZO': {
     isDetailPage: true,
