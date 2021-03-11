@@ -175,6 +175,10 @@ describe('<InkomenSpecificaties /> Uitkering', () => {
     />
   );
 
+  beforeAll(() => {
+    (window as any).scrollBy = jest.fn();
+  });
+
   it('Matches the Full Page snapshot', () => {
     const { asFragment } = render(<Component />);
     expect(asFragment()).toMatchSnapshot();
