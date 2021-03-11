@@ -111,7 +111,7 @@ function initializeState(snapshot: MutableSnapshot) {
 
 describe('<InkomenSpecificaties /> Uitkeringsspecificaties', () => {
   const routeEntry = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-    category: 'uitkeringsspecificaties',
+    type: 'uitkering',
   });
   const routePath = AppRoutes['INKOMEN/SPECIFICATIES'];
 
@@ -153,7 +153,7 @@ describe('<InkomenSpecificaties /> Uitkeringsspecificaties', () => {
 
 describe('<InkomenSpecificaties /> Jaaropgaven', () => {
   const routeEntry = generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
-    category: 'jaaropgaven',
+    type: 'jaaropgave',
   });
   const routePath = AppRoutes['INKOMEN/SPECIFICATIES'];
 

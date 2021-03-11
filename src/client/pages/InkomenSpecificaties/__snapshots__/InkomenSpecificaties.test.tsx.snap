@@ -41,7 +41,7 @@ exports[`<InkomenSpecificaties /> Jaaropgaven Matches the Full Page snapshot 1`]
         <h2
           class="Heading Heading__large"
         >
-          Bijstandsuitkering Jaaropgaven
+          Bijstandsuitkering
         </h2>
       </div>
     </header>
@@ -336,7 +336,7 @@ exports[`<InkomenSpecificaties /> Uitkeringsspecificaties Matches the Full Page 
         <h2
           class="Heading Heading__large"
         >
-          Bijstandsuitkering 
+          Bijstandsuitkering
         </h2>
       </div>
     </header>

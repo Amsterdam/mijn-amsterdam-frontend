@@ -8,7 +8,7 @@ export const AppRoutes: Record<string, string> = {
   'STADSPAS/AANVRAAG': '/stadspas/aanvraag/:id',
   'STADSPAS/SALDO': '/stadspas/saldo/:id',
   'INKOMEN/BIJSTANDSUITKERING': '/inkomen/bijstandsuitkering/:id',
-  'INKOMEN/SPECIFICATIES': '/inkomen/uitkeringsspecificaties/:category?',
+  'INKOMEN/SPECIFICATIES': '/inkomen/specificaties/:type/:page?',
   'INKOMEN/TOZO': '/inkomen/tozo/:version/:id',
   'INKOMEN/TONK': '/inkomen/tonk/:version/:id',
   INKOMEN: '/inkomen',

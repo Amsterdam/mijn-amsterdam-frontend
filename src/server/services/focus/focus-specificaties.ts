@@ -17,6 +17,8 @@ import {
   FocusInkomenSpecificatie as FocusInkomenSpecificatieFromSource,
 } from './focus-combined';
 
+const DEFAULT_SPECIFICATION_CATEGORY = 'Uitkering';
+
 export interface FocusInkomenSpecificatie
   extends FocusInkomenSpecificatieFromSource {
   displayDatePublished: string;
@@ -65,15 +67,14 @@ function transformIncomeSpecificationNotification(
 }
 
 function transformIncomSpecificationItem(
-  item: FocusInkomenSpecificatieFromSource,
-  type: 'jaaropgave' | 'uitkeringsspecificatie'
+  item: FocusInkomenSpecificatieFromSource
 ): FocusInkomenSpecificatie {
   const displayDatePublished = defaultDateFormat(item.datePublished);
   const url = `${API_BASE_PATH}/${item.url}`;
   const categoryFromSource = item.type;
   return {
     ...item,
-    category: categoryFromSource,
+    category: categoryFromSource || DEFAULT_SPECIFICATION_CATEGORY,
     type: 'pdf',
     url,
     download: documentDownloadName(item),
@@ -96,15 +97,13 @@ export function transformFOCUSIncomeSpecificationsData(
 ) {
   const jaaropgaven = (responseContent.jaaropgaven || [])
     .sort(dateSort('datePublished', 'desc'))
-    .map((item) => transformIncomSpecificationItem(item, 'jaaropgave'));
+    .map((item) => transformIncomSpecificationItem(item));
 
   const uitkeringsspecificaties = (
     responseContent.uitkeringsspecificaties || []
   )
     .sort(dateSort('datePublished', 'desc'))
-    .map((item) =>
-      transformIncomSpecificationItem(item, 'uitkeringsspecificatie')
-    );
+    .map((item) => transformIncomSpecificationItem(item));
 
   return {
     jaaropgaven,
