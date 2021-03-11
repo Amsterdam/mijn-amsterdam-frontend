@@ -16,6 +16,10 @@ const testState: any = {
         dateStart: '2020-07-14',
         status: 'Besluit',
         productTitle: 'Test item',
+        link: {
+          to: 'http://some.page/with/path/segments/aanvraag-1',
+          title: 'Aanvraag Test item',
+        },
         steps: [
           {
             id: 'step1',
@@ -126,5 +130,37 @@ describe('<StatusDetail />', () => {
     userEvent.click(screen.getAllByText('Toon alles')[0]);
 
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('Shows Unknown item page', () => {
+    function DetailComponent() {
+      return (
+        <StatusDetail
+          chapter="INKOMEN"
+          stateKey="FOCUS_TOZO"
+          showToggleMore={true}
+          maxStepCount={() => 3}
+          statusLabel={(statusItem) => `${statusItem?.productTitle}-aanvraag`}
+        />
+      );
+    }
+
+    const Component = () => (
+      <MockApp
+        routeEntry={'http://some.page/with/path/segments/aanvraag-2'}
+        routePath={routePath}
+        component={DetailComponent}
+        initializeState={initializeState}
+      />
+    );
+
+    render(<Component />);
+    expect(screen.getByText('Detailpagina')).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        'Deze pagina is mogelijk verplaatst. Kies hieronder een van de beschikbare aanvragen.'
+      )
+    ).toBeInTheDocument();
+    expect(screen.getByText('Aanvraag Test item')).toBeInTheDocument();
   });
 });
