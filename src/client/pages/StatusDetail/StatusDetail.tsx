@@ -75,7 +75,7 @@ export default function StatusDetail({
     }
   }, [isStateLoading, statusItem, statusItems, stateKey, id]);
 
-  let title = 'Tozo';
+  let title = 'Detailpagina';
 
   if (statusItem) {
     title = statusItem.title;
