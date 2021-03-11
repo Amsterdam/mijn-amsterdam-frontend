@@ -1,3 +1,5 @@
+import { generatePath } from 'react-router-dom';
+
 export const AppRoutes: Record<string, string> = {
   ROOT: '/',
   BURGERZAKEN: '/burgerzaken',
@@ -8,7 +10,7 @@ export const AppRoutes: Record<string, string> = {
   'STADSPAS/AANVRAAG': '/stadspas/aanvraag/:id',
   'STADSPAS/SALDO': '/stadspas/saldo/:id',
   'INKOMEN/BIJSTANDSUITKERING': '/inkomen/bijstandsuitkering/:id',
-  'INKOMEN/SPECIFICATIES': '/inkomen/uitkeringsspecificaties/:category?',
+  'INKOMEN/SPECIFICATIES': '/inkomen/specificaties/:type/:page?',
   'INKOMEN/TOZO': '/inkomen/tozo/:version/:id',
   'INKOMEN/TONK': '/inkomen/tonk/:version/:id',
   INKOMEN: '/inkomen',
@@ -42,8 +44,28 @@ export const AppRoutesRedirect = [
     to: AppRoutes['INKOMEN/BIJSTANDSUITKERING'],
   },
   {
-    from: '/inkomen-en-stadspas/uitkeringsspecificaties/:category?',
-    to: AppRoutes['INKOMEN/SPECIFICATIES'],
+    from: '/inkomen-en-stadspas/uitkeringsspecificaties/jaaropgaven',
+    to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
+      type: 'jaaropgave',
+    }),
+  },
+  {
+    from: '/inkomen/uitkeringsspecificaties/jaaropgaven',
+    to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
+      type: 'jaaropgave',
+    }),
+  },
+  {
+    from: '/inkomen-en-stadspas/uitkeringsspecificaties/',
+    to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
+      type: 'uitkering',
+    }),
+  },
+  {
+    from: '/inkomen/uitkeringsspecificaties/',
+    to: generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
+      type: 'uitkering',
+    }),
   },
   {
     from: '/inkomen-en-stadspas/tozo/:version/:id',

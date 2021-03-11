@@ -29,13 +29,16 @@ import AlertDocumentDownloadsDisabled from './AlertDocumentDownloadsDisabled';
 import styles from './Inkomen.module.scss';
 
 export const incomSpecificationsRouteMonthly = generatePath(
-  AppRoutes['INKOMEN/SPECIFICATIES']
+  AppRoutes['INKOMEN/SPECIFICATIES'],
+  {
+    type: 'uitkering',
+  }
 );
 
 export const incomSpecificationsRouteYearly = generatePath(
   AppRoutes['INKOMEN/SPECIFICATIES'],
   {
-    type: 'jaaropgaven',
+    type: 'jaaropgave',
   }
 );
 

@@ -56,7 +56,7 @@ function initializeState(snapshot: MutableSnapshot) {
 
 describe('<MyNotifications />', () => {
   beforeAll(() => {
-    (window.scrollTo as any) = jest.fn();
+    (window as any).scrollBy = jest.fn();
     (window.matchMedia as any) = jest.fn(() => {
       return {
         addListener: jest.fn(),

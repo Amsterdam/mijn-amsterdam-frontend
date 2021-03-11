@@ -75,7 +75,7 @@ export default function StatusDetail({
     }
   }, [isStateLoading, statusItem, statusItems, stateKey, id]);
 
-  let title = 'Tozo';
+  let title = 'Detailpagina';
 
   if (statusItem) {
     title = statusItem.title;
@@ -111,10 +111,12 @@ export default function StatusDetail({
               beschikbare aanvragen.
             </p>
             <ul className={styles.ItemAlternatives}>
-              {statusItems.map((statusItem) => {
+              {statusItems.map((statusItem, index) => {
                 return (
-                  <li>
-                    <Linkd href={statusItem.link.to}>{statusItem.title}</Linkd>
+                  <li key={statusItem.link?.to || index}>
+                    <Linkd href={statusItem.link?.to || appRoute}>
+                      {statusItem.title}
+                    </Linkd>
                   </li>
                 );
               })}

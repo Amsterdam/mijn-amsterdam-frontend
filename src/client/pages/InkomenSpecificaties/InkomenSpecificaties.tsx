@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { parseISO } from 'date-fns';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import { isError, isLoading } from '../../../universal/helpers';
 import {
@@ -36,7 +36,6 @@ export const annualStatementsTableDisplayProps = {
 };
 
 const PAGE_SIZE = 10;
-const INITIAL_INDEX = [0, PAGE_SIZE - 1];
 
 function Caret() {
   return <i className={styles.SearchButtonIcon}>&#9698;</i>;
@@ -47,10 +46,12 @@ export default function InkomenSpecificaties() {
   const focusSpecificatiesWithDocumentLinks = useAddDocumentLinkComponents(
     FOCUS_SPECIFICATIES
   );
-  const { category } = useParams<{ category?: 'jaaropgaven' }>();
-
-  const isAnnualStatementOverviewPage = category === 'jaaropgaven';
-
+  const { type = 'uitkering', page = '1' } = useParams<{
+    type: 'jaaropgave' | 'uitkering';
+    page?: string;
+  }>();
+  const isAnnualStatementOverviewPage = type === 'jaaropgave';
+  const history = useHistory();
   const items = useMemo(() => {
     return (
       (isAnnualStatementOverviewPage
@@ -88,7 +89,7 @@ export default function InkomenSpecificaties() {
     }
   }, [minDate, maxDate]);
 
-  const options: Array<[string, number]> = useMemo(() => {
+  const categoryFilterOptions: Array<[string, number]> = useMemo(() => {
     return Array.from(
       items.reduce((acc: Map<string, number>, item) => {
         acc.set(item.category, (acc.get(item.category) || 0) + 1);
@@ -96,8 +97,6 @@ export default function InkomenSpecificaties() {
       }, new Map<string, number>())
     );
   }, [items]);
-
-  const [[startIndex, endIndex], setPageIndex] = useState(INITIAL_INDEX);
 
   const itemsFiltered = items
     .filter((item) =>
@@ -110,17 +109,48 @@ export default function InkomenSpecificaties() {
       );
     });
 
-  const itemsFilteredPaginated = itemsFiltered.slice(startIndex, endIndex + 1);
+  const currentPage = useMemo(() => {
+    if (!page) {
+      return 1;
+    }
+    return parseInt(page, 10);
+  }, [page]);
+
+  useEffect(() => {
+    window.scrollBy({
+      top: -document.documentElement.scrollTop,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }, [currentPage]);
+
+  const itemsFilteredPaginated = useMemo(() => {
+    const startIndex = currentPage - 1;
+    const start = startIndex * PAGE_SIZE;
+    const end = start + PAGE_SIZE;
+    return itemsFiltered.slice(start, end);
+  }, [currentPage, itemsFiltered]);
+
+  const total = itemsFiltered.length;
+  const hasCategoryFilters = categoryFilterOptions.length > 1;
   const categoryFilterActive = !!selectedCategory;
   const minDateFilterActive =
     selectedDates[0].toString() !== minDate.toString();
   const maxDateFilterActive =
     selectedDates[1].toString() !== maxDate.toString();
 
-  const selectCategoryFilter = useCallback((category) => {
-    setSelectedCategory(category);
-    setPageIndex(INITIAL_INDEX);
-  }, []);
+  const selectCategoryFilter = useCallback(
+    (category) => {
+      setSelectedCategory(category);
+      history.replace(
+        generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
+          page: '1',
+          type,
+        })
+      );
+    },
+    [type, history]
+  );
 
   function resetSearch() {
     setSelectedCategory('');
@@ -148,7 +178,7 @@ export default function InkomenSpecificaties() {
         backLink={{ to: AppRoutes.INKOMEN, title: ChapterTitles.INKOMEN }}
         isLoading={isLoading(FOCUS_SPECIFICATIES)}
       >
-        Bijstandsuitkering {isAnnualStatementOverviewPage && 'Jaaropgaven'}
+        Bijstandsuitkering
       </PageHeading>
       <PageContent>
         {isError(FOCUS_SPECIFICATIES) && (
@@ -188,14 +218,14 @@ export default function InkomenSpecificaties() {
 
         {isSearchPanelActive && (
           <div className={styles.SearchPanel}>
-            {items.some((item) => !!item.category) && (
+            {hasCategoryFilters && (
               <div className={styles.FilterInput}>
                 <span>
                   Regeling{' '}
                   {categoryFilterActive && (
                     <button
                       className={styles.ResetFilterButton}
-                      onClick={() => setSelectedCategory('')}
+                      onClick={() => selectCategoryFilter('')}
                     >
                       resetten
                     </button>
@@ -210,7 +240,7 @@ export default function InkomenSpecificaties() {
                   onChange={(event) => selectCategoryFilter(event.target.value)}
                 >
                   <option value="">Alle regelingen ({items.length})</option>
-                  {options.map(([option, count]) => (
+                  {categoryFilterOptions.map(([option, count]) => (
                     <option key={option} value={option}>
                       {option} ({count})
                     </option>
@@ -303,9 +333,17 @@ export default function InkomenSpecificaties() {
         {itemsFiltered.length > PAGE_SIZE && (
           <Pagination
             className={styles.Pagination}
-            totalCount={itemsFiltered.length}
+            totalCount={total}
             pageSize={PAGE_SIZE}
-            onPageClick={(page, ...index) => setPageIndex(index)}
+            currentPage={currentPage}
+            onPageClick={(page) => {
+              history.replace(
+                generatePath(AppRoutes['INKOMEN/SPECIFICATIES'], {
+                  page,
+                  type,
+                })
+              );
+            }}
           />
         )}
       </Section>
