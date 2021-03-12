@@ -47,7 +47,10 @@ function useSiaMeldingStatusLineItems(SiaItem?: SIAItem) {
       {
         id: 'item-2',
         status: 'Ingepland',
-        datePublished: SiaItem.dateModified,
+        datePublished:
+          isInProgress && !isDone && SiaItem.dateModified
+            ? SiaItem.dateModified
+            : '',
         description: '',
         documents: [],
         isActive: isInProgress,
@@ -56,7 +59,7 @@ function useSiaMeldingStatusLineItems(SiaItem?: SIAItem) {
       {
         id: 'item-3',
         status: 'Afgesloten',
-        datePublished: SiaItem.dateClosed || '',
+        datePublished: isDone ? SiaItem.dateClosed : '',
         description: '',
         documents: [],
         isActive: isDone,
