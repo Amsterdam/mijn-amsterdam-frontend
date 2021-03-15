@@ -17,6 +17,8 @@ import {
 } from './focus-combined';
 
 const DEFAULT_SPECIFICATION_CATEGORY = 'Uitkering';
+const MONTHS_TO_KEEP_UITKERING_NOTIFICATION = 1;
+const MONTHS_TO_KEEP_JAAROPGAVE_NOTIFICATION = 3;
 
 export interface FocusInkomenSpecificatie
   extends FocusInkomenSpecificatieFromSource {
@@ -27,16 +29,16 @@ function documentDownloadName(item: FocusInkomenSpecificatieFromSource) {
   return `${format(new Date(item.datePublished), 'yyyy-MM-dd')}-${item.title}`;
 }
 
-function isActual(
+function isNotificationActual(
   type: 'uitkering' | 'jaaropgave',
   datePublished: string,
   compareDate: Date
 ) {
   const difference = differenceInMonths(compareDate, new Date(datePublished));
   if (type === 'uitkering') {
-    return difference < 1;
+    return difference < MONTHS_TO_KEEP_UITKERING_NOTIFICATION;
   }
-  return difference < 3;
+  return difference < MONTHS_TO_KEEP_JAAROPGAVE_NOTIFICATION;
 }
 
 function transformIncomeSpecificationNotification(
@@ -154,7 +156,7 @@ export async function fetchFOCUSSpecificationsGenerated(
       uitkeringsspecificaties,
     } = FOCUS_SPECIFICATIES.content;
 
-    const isActualJaaropgave = isActual(
+    const isActualJaaropgave = isNotificationActual(
       'jaaropgave',
       jaaropgaven[0].datePublished,
       new Date()
@@ -167,7 +169,7 @@ export async function fetchFOCUSSpecificationsGenerated(
       );
     }
 
-    const isActualUitkering = isActual(
+    const isActualUitkering = isNotificationActual(
       'uitkering',
       uitkeringsspecificaties[0].datePublished,
       new Date()
