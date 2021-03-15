@@ -279,28 +279,6 @@ Object {
         },
         "title": "Vergunningsaanvraag",
       },
-      Object {
-        "chapter": "VERGUNNINGEN",
-        "datePublished": "2019-12-05",
-        "description": "Uw vergunningsaanvraag TVM - RVV - Object is verleend",
-        "id": "vergunning-2618219588-notification",
-        "link": Object {
-          "title": "Bekijk details",
-          "to": "/vergunningen/detail/2618219588",
-        },
-        "title": "Vergunningsaanvraag",
-      },
-      Object {
-        "chapter": "VERGUNNINGEN",
-        "datePublished": "2019-06-21",
-        "description": "Uw vergunningsaanvraag TVM - RVV - Object is verleend",
-        "id": "vergunning-4195945502-notification",
-        "link": Object {
-          "title": "Bekijk details",
-          "to": "/vergunningen/detail/4195945502",
-        },
-        "title": "Vergunningsaanvraag",
-      },
     ],
   },
   "status": "OK",
