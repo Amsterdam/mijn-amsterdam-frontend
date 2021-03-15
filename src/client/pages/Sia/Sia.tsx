@@ -20,14 +20,16 @@ import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './Sia.module.scss';
 
 const DISPLAY_PROPS = {
-  category: 'Melding',
-  status: 'Status',
+  identifier: 'Meldingsnummer',
+  category: 'Categorie',
+  address: 'Adres',
   datePublished: 'Melding ontvangen',
 };
 
 const DISPLAY_PROPS_HISTORY = {
-  category: 'Melding',
-  status: 'Status',
+  identifier: 'Meldingsnummer',
+  category: 'Categorie',
+  address: 'Adres',
   dateClosed: 'Melding afgehandeld',
 };
 
@@ -44,9 +46,12 @@ export default function Sia() {
         return {
           ...item,
           datePublished: defaultDateFormat(item.datePublished),
+          dateClosed: item.dateClosed
+            ? defaultDateFormat(item.datePublished)
+            : null,
         };
       });
-    return addTitleLinkComponent(items, 'category');
+    return addTitleLinkComponent(items, 'identifier');
   }, [SIA.content]);
 
   const siaPrevious = useMemo(() => {

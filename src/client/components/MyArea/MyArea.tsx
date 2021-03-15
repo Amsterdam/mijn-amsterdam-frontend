@@ -7,10 +7,10 @@ import {
 import { constants } from '@amsterdam/arm-core';
 import { ThemeProvider } from '@amsterdam/asc-ui';
 import { useMapInstance } from '@amsterdam/react-maps';
-import L, { TileLayerOptions } from 'leaflet';
+import L, { LatLngLiteral, TileLayerOptions } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useMemo, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import useMedia from 'use-media';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
@@ -31,7 +31,7 @@ import { MyAreaDatasets } from './MyAreaDatasets';
 import MyAreaHeader from './MyAreaHeader';
 import HomeControlButton from './MyAreaHomeControlButton';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
-import { HomeIconMarker } from './MyAreaMarker';
+import { HomeIconMarker, CustomLatLonMarker } from './MyAreaMarker';
 import {
   PanelComponent,
   PanelState,
@@ -123,24 +123,37 @@ export default function MyArea({
   const panelComponentAvailableHeight = getElementSize(mapContainerRef.current)
     .height;
   const resetMyAreaState = useResetMyAreaState();
+  const queryParams = location.search
+    ? new URLSearchParams(location.search)
+    : null;
+  const coordinateLabel = queryParams?.get('coordinateLabel') || '';
+  const coordinate = queryParams?.get('coordinate') || null;
 
   useFetchPanelFeature();
   const setLoadingFeature = useSetLoadingFeature();
 
-  const mapOptions: Partial<L.MapOptions> = useMemo(() => {
+  const mapOptions: Partial<
+    L.MapOptions & { center: LatLngLiteral }
+  > = useMemo(() => {
     const options = {
       ...DEFAULT_MAP_OPTIONS,
       zoom,
     };
-    if (center) {
+    if (coordinate) {
+      const [lat, lng] = coordinate.split(',').map((n) => parseFloat(n));
+      if (lat && lng) {
+        options.center = { lat, lng };
+      } else if (center) {
+        options.center = center;
+      }
+    } else if (center) {
       options.center = center;
     }
     return options;
-  }, [center, zoom]);
+  }, [center, coordinate, zoom]);
 
   const datasetIdsRequested = useMemo(() => {
-    if (location.search) {
-      const queryParams = new URLSearchParams(location.search);
+    if (queryParams) {
       const ids = queryParams?.get('datasetIds')?.split(',');
       if (ids?.length) {
         return ids;
@@ -261,10 +274,17 @@ export default function MyArea({
               options={mapOptions}
             >
               <AttributionToggle />
-              {HOME.content?.address && !!center && (
+              {HOME.content?.address && center && (
                 <HomeIconMarker
                   label={getFullAddress(HOME.content.address, true)}
                   center={center}
+                  zoom={zoom}
+                />
+              )}
+              {coordinate && mapOptions.center && (
+                <CustomLatLonMarker
+                  label={coordinateLabel || 'Gekozen locatie'}
+                  center={mapOptions.center}
                   zoom={zoom}
                 />
               )}

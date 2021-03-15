@@ -12,14 +12,14 @@
 }
 
 .Table {
-  tr td:nth-child(2) {
-    width: 40%;
-  }
-  tr td:nth-child(3) {
+  tr td:nth-child(1) {
     width: 20%;
   }
-  @include select(Table_DisplayPropTitle) {
-    width: 40%;
+  tr td:nth-child(2) {
+    width: 30%;
+  }
+  tr td:nth-child(3) {
+    width: 25%;
   }
 
   @include mq-tablet() {

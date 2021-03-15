@@ -1,4 +1,4 @@
-import L, { LatLng, MapOptions } from 'leaflet';
+import L, { LatLng, LatLngLiteral, MapOptions } from 'leaflet';
 import proj4, { InterfaceCoordinates } from 'proj4';
 import {
   DEFAULT_LAT,
@@ -64,4 +64,4 @@ export const DEFAULT_MAP_OPTIONS = {
     [52.50536, 5.10737],
   ],
   renderer: L.svg({ padding: 10 }),
-} as Partial<MapOptions>;
+} as Partial<MapOptions & { center: LatLngLiteral }>;

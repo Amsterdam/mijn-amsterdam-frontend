@@ -1,40 +1,49 @@
+import { LatLngTuple } from 'leaflet';
+import { generatePath } from 'react-router-dom';
+import { AppRoutes } from '../../universal/config/routes';
 import {
   apiDependencyError,
   apiSuccesResult,
 } from '../../universal/helpers/api';
+import { LinkProps } from '../../universal/types/App.types';
 import { getApiConfig } from '../config';
 import { requestData } from '../helpers';
-import { LinkProps } from '../../universal/types/App.types';
-import { LatLngTuple } from 'leaflet';
-import { generatePath } from 'react-router-dom';
-import { AppRoutes } from '../../universal/config/routes';
 
 export interface SIAItem {
   identifier: string;
   category: string;
-  datePublished: string;
-  dateModified: string;
-  dateClosed: string;
-  dateSubject: string;
+  datePublished: string; // DateCreated //
+  dateModified: string; // Derive from state update
+  dateClosed: string | null; // Derive from state===closed?
+  dateIncidentStart: string | null;
+  dateIncidentEnd: string | null;
+  status: SiaSourceState;
   description: string;
+  address: string;
+  latlon: LatLngTuple;
   email: string;
-  phone: string;
-  photos: string[];
-  status: string;
+  phone: string | null;
   link: LinkProps;
-  latlng: LatLngTuple;
+  attachments: string[];
 }
 
+type SiaSourceState = 'Afgesloten' | 'Ingepland' | 'Gemeld';
+
 interface SIASourceItem {
-  categorie: string;
-  datum: string;
-  status: string;
-  omschrijving: string;
-  kenmerk: string;
-  locatie: LatLngTuple;
-  email: string;
-  telefoonnummer: string;
-  fotos: string[];
+  category: string; // .category.sub ?
+  datePublished: string; // .created_at
+  dateModified: string; // .status.created_at ???
+  dateClosed: string; // .status.state === done + status.created_at ???
+  dateIncidentStart: string | null; // .incident_date_start
+  dateIncidentEnd: string | null; // .incident_date_end
+  status: SiaSourceState; // /status.state
+  description: string; // .text
+  identifier: string;
+  address: string; // .location.address_text
+  latlon: LatLngTuple;
+  email: string; // .reporter.email
+  phone: string | null; // .reporter.phone
+  attachments: string[]; // .has_attachments + api /attachments/{id} call
 }
 
 interface SIASourceData {
@@ -58,22 +67,25 @@ function transformSIAData(responseData: SIASourceData): SIAItem[] {
   const sia = responseData?.content || [];
   return sia.map((sourceItem) => {
     return {
-      identifier: sourceItem.kenmerk,
-      category: sourceItem.categorie,
-      datePublished: sourceItem.datum,
-      dateSubject: sourceItem.datum,
-      dateModified: sourceItem.datum,
-      dateClosed: sourceItem.datum,
-      description: sourceItem.omschrijving,
+      identifier: sourceItem.identifier,
+      category: sourceItem.category,
+      datePublished: sourceItem.datePublished,
+      dateModified: sourceItem.dateModified,
+      dateClosed: sourceItem.dateClosed,
+      dateIncidentStart: sourceItem.dateIncidentStart,
+      dateIncidentEnd: sourceItem.dateIncidentEnd,
       status: sourceItem.status,
-      latlon: sourceItem.locatie,
+      description: sourceItem.description,
+      address: sourceItem.address,
+      latlon: sourceItem.latlon,
       email: sourceItem.email,
-      phone: sourceItem.telefoonnummer,
-      photos: sourceItem.fotos,
-      latlng: sourceItem.locatie,
+      phone: sourceItem.phone,
+      attachments: sourceItem.attachments,
       link: {
-        to: generatePath(AppRoutes['SIA/DETAIL'], { id: sourceItem.kenmerk }),
-        title: `SIA Melding ${sourceItem.kenmerk}`,
+        to: generatePath(AppRoutes['SIA/DETAIL'], {
+          id: sourceItem.identifier,
+        }),
+        title: `SIA Melding ${sourceItem.identifier}`,
       },
     };
   });

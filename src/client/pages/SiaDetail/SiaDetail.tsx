@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { generatePath, useParams } from 'react-router-dom';
 import { SIAItem } from '../../../server/services/sia';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
@@ -59,7 +59,7 @@ function useSiaMeldingStatusLineItems(SiaItem?: SIAItem) {
       {
         id: 'item-3',
         status: 'Afgesloten',
-        datePublished: isDone ? SiaItem.dateClosed : '',
+        datePublished: isDone ? SiaItem.dateClosed || '' : '',
         description: '',
         documents: [],
         isActive: isDone,
@@ -128,15 +128,36 @@ export default function SiaDetail() {
               <InfoDetail
                 label="Datum overlast"
                 value={
-                  SiaItem?.dateSubject
-                    ? defaultDateFormat(SiaItem.dateSubject)
-                    : '-'
+                  <>
+                    {SiaItem?.dateIncidentStart &&
+                      defaultDateFormat(SiaItem.dateIncidentStart)}
+                    {SiaItem?.dateIncidentEnd && (
+                      <> &mdash; {defaultDateFormat(SiaItem.dateIncidentEnd)}</>
+                    )}
+                  </>
                 }
               />
             </InfoDetailGroup>
             <InfoDetailGroup>
               <InfoDetail label="Categorie" value={SiaItem?.category || '-'} />
-              <InfoDetail label="Locatie" value={SiaItem?.latlng || '-'} />
+              <InfoDetail
+                label="Locatie"
+                value={
+                  <>
+                    {SiaItem?.address || '-'}{' '}
+                    {SiaItem?.latlon && (
+                      <>
+                        <br />
+                        <LinkdInline
+                          href={`${AppRoutes.BUURT}?coordinateLabel=${SiaItem.identifier}&coordinate=${SiaItem.latlon}&datasetIds=`}
+                        >
+                          Bekijk op de kaart
+                        </LinkdInline>
+                      </>
+                    )}
+                  </>
+                }
+              />
             </InfoDetailGroup>
             <InfoDetailGroup>
               <InfoDetail label="E-mail melder" value={SiaItem?.email || '-'} />
@@ -161,13 +182,13 @@ export default function SiaDetail() {
                 Maak een nieuwe melding
               </LinkdInline>
             </p>
-            {!!SiaItem?.photos && (
+            {!!SiaItem?.attachments.length && (
               <InfoDetail
                 el="div"
                 label="Foto's"
                 value={
                   <div className={styles.Images}>
-                    {SiaItem.photos.map((photo, index) => (
+                    {SiaItem.attachments.map((photo, index) => (
                       <div key={index} className={styles.ImgContainer}>
                         <img
                           className={styles.Img}
