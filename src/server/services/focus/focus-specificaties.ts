@@ -1,7 +1,6 @@
-import { format } from 'date-fns';
+import { differenceInMonths, format } from 'date-fns';
 import { Chapters } from '../../../universal/config';
 import { API_BASE_PATH } from '../../../universal/config/api';
-import { FeatureToggle } from '../../../universal/config/app';
 import {
   dateFormat,
   dateSort,
@@ -22,15 +21,26 @@ const DEFAULT_SPECIFICATION_CATEGORY = 'Uitkering';
 export interface FocusInkomenSpecificatie
   extends FocusInkomenSpecificatieFromSource {
   displayDatePublished: string;
-  notification?: MyNotification;
 }
 
 function documentDownloadName(item: FocusInkomenSpecificatieFromSource) {
   return `${format(new Date(item.datePublished), 'yyyy-MM-dd')}-${item.title}`;
 }
 
+function isActual(
+  type: 'uitkering' | 'jaaropgave',
+  datePublished: string,
+  compareDate: Date
+) {
+  const difference = differenceInMonths(compareDate, new Date(datePublished));
+  if (type === 'uitkering') {
+    return difference < 1;
+  }
+  return difference < 3;
+}
+
 function transformIncomeSpecificationNotification(
-  type: 'jaaropgave' | 'uitkeringsspecificatie',
+  type: 'jaaropgave' | 'uitkering',
   item: FocusInkomenSpecificatieFromSource
 ): MyNotification {
   if (type === 'jaaropgave') {
@@ -144,32 +154,33 @@ export async function fetchFOCUSSpecificationsGenerated(
       uitkeringsspecificaties,
     } = FOCUS_SPECIFICATIES.content;
 
-    if (!FeatureToggle.focusDocumentDownloadsAlert) {
-      if (jaaropgaven.length) {
-        notifications.push(
-          transformIncomeSpecificationNotification('jaaropgave', jaaropgaven[0])
-        );
-      }
+    const isActualJaaropgave = isActual(
+      'jaaropgave',
+      jaaropgaven[0].datePublished,
+      new Date()
+    );
 
-      if (uitkeringsspecificaties.length) {
-        notifications.push(
-          transformIncomeSpecificationNotification(
-            'uitkeringsspecificatie',
-            uitkeringsspecificaties[0]
-          )
-        );
-      }
-    } else if (jaaropgaven.length || uitkeringsspecificaties.length) {
-      notifications.push({
-        chapter: Chapters.INKOMEN,
-        datePublished: new Date().toISOString(),
-        isAlert: true,
-        hideDatePublished: true,
-        id: `focus-document-download-notification`,
-        title: ``,
-        description:
-          'Door technische problemen kunt u de brieven van Inkomen en Stadspas op dit moment niet openen en downloaden. Onze excuses voor het ongemak.',
-      });
+    if (jaaropgaven.length && isActualJaaropgave) {
+      // Only the latest Jaaropgave gets a notification
+      notifications.push(
+        transformIncomeSpecificationNotification('jaaropgave', jaaropgaven[0])
+      );
+    }
+
+    const isActualUitkering = isActual(
+      'uitkering',
+      uitkeringsspecificaties[0].datePublished,
+      new Date()
+    );
+
+    if (uitkeringsspecificaties.length && isActualUitkering) {
+      // Only the latest Uitkeringspecificatie gets a notification
+      notifications.push(
+        transformIncomeSpecificationNotification(
+          'uitkering',
+          uitkeringsspecificaties[0]
+        )
+      );
     }
 
     return apiSuccesResult({

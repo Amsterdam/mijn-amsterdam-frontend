@@ -196,7 +196,7 @@ export async function fetchFOCUSTozoGenerated(
     const compareDate = new Date();
 
     const notifications: MyNotification[] = TOZO.content.flatMap((item) =>
-      createToxxItemStepNotifications(item)
+      createToxxItemStepNotifications(item, compareDate)
     );
 
     if (

@@ -13,6 +13,9 @@ import { Chapters } from '../../universal/config/index';
 import { apiDependencyError } from '../../universal/helpers';
 import { apiSuccesResult } from '../../universal/helpers/api';
 import { GenericDocument } from '../../universal/types/App.types';
+import { differenceInMonths } from 'date-fns';
+
+const MONTHS_TO_KEEP_NOTIFICATIONS = 6;
 
 export interface VergunningSource {
   status: 'Toewijzen' | 'Afgehandeld' | 'Ontvangen' | string;
@@ -135,6 +138,13 @@ export function createVergunningNotification(item: Vergunning) {
   };
 }
 
+function isActualNotification(datePublished: string, compareDate: Date) {
+  return (
+    differenceInMonths(compareDate, new Date(datePublished)) <
+    MONTHS_TO_KEEP_NOTIFICATIONS
+  );
+}
+
 export async function fetchVergunningenGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>,
@@ -160,7 +170,14 @@ export async function fetchVergunningenGenerated(
       : [];
 
     const notifications: MyNotification[] = Array.isArray(VERGUNNINGEN.content)
-      ? VERGUNNINGEN.content.map(createVergunningNotification)
+      ? VERGUNNINGEN.content
+          .filter(
+            (vergunning) =>
+              vergunning.status !== 'Afgehandeld' ||
+              (vergunning.dateDecision &&
+                isActualNotification(vergunning.dateDecision, compareToDate))
+          )
+          .map(createVergunningNotification)
       : [];
 
     return apiSuccesResult({

@@ -2,6 +2,7 @@ import { generatePath } from 'react-router-dom';
 import { API_BASE_PATH, Chapters } from '../../../universal/config';
 import { dateFormat, hash } from '../../../universal/helpers';
 import { MyNotification } from '../../../universal/types/App.types';
+import { isNotificationActual } from './focus-aanvragen-helpers';
 import { FocusDocument } from './focus-combined';
 import {
   FocusItem,
@@ -164,18 +165,21 @@ export function createToxxItem({
 }
 
 export function createToxxItemStepNotifications(
-  item: FocusItem
+  item: FocusItem,
+  compareDate: Date
 ): MyNotification[] {
-  return item.steps.map((step) => ({
-    id: hash(`notification-${step.id}`),
-    datePublished: step.datePublished,
-    chapter: Chapters.INKOMEN,
-    title:
-      step.notificationTitle || 'Update aanvraag ' + item.productTitle + '',
-    description: step.notificationDescription || '',
-    link: {
-      to: item.link.to,
-      title: 'Bekijk hoe het met uw aanvraag staat',
-    },
-  }));
+  return item.steps
+    .filter((step) => isNotificationActual(step.datePublished, compareDate))
+    .map((step) => ({
+      id: hash(`notification-${step.id}`),
+      datePublished: step.datePublished,
+      chapter: Chapters.INKOMEN,
+      title:
+        step.notificationTitle || 'Update aanvraag ' + item.productTitle + '',
+      description: step.notificationDescription || '',
+      link: {
+        to: item.link.to,
+        title: 'Bekijk hoe het met uw aanvraag staat',
+      },
+    }));
 }

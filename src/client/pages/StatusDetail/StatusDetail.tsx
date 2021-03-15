@@ -18,7 +18,6 @@ import {
 import { LinkdInline } from '../../components/Button/Button';
 import { StatusLineItem } from '../../components/StatusLine/StatusLine';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import AlertDocumentDownloadsDisabled from '../Inkomen/AlertDocumentDownloadsDisabled';
 import styles from './StatusDetail.module.scss';
 
 export interface StatusSourceItem {
@@ -123,8 +122,6 @@ export default function StatusDetail({
             </ul>
           </Alert>
         )}
-
-        <AlertDocumentDownloadsDisabled />
 
         {isStateLoading && <LoadingContent />}
       </PageContent>
