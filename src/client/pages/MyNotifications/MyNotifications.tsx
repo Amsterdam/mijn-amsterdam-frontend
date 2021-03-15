@@ -53,6 +53,7 @@ export default function MyNotificationsPage() {
         Actueel
       </PageHeading>
       <PageContent>
+        {currentPage !== 1 && <p>Pagina {currentPage}</p>}
         {isError(NOTIFICATIONS) && (
           <Alert type="warning">
             <p>Niet alle updates kunnen op dit moment worden getoond.</p>

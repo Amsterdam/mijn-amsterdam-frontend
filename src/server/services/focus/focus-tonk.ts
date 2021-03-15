@@ -125,7 +125,7 @@ export async function fetchFOCUSTonkGenerated(
     const compareDate = new Date();
 
     const notifications: MyNotification[] = TONK.content.flatMap((item) =>
-      createToxxItemStepNotifications(item)
+      createToxxItemStepNotifications(item, compareDate)
     );
 
     const cases: MyCase[] = TONK.content

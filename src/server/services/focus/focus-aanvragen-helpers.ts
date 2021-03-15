@@ -1,13 +1,14 @@
 import * as Sentry from '@sentry/node';
-import { addDays, parseISO } from 'date-fns';
+import { addDays, differenceInMonths, parseISO } from 'date-fns';
 import { API_BASE_PATH, AppRoutes, Chapters } from '../../../universal/config';
 import {
   defaultDateFormat,
   hash,
-  omit,
   isRecentCase,
+  omit,
 } from '../../../universal/helpers';
 import { GenericDocument, MyCase } from '../../../universal/types';
+import { MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS } from './focus-aanvragen';
 import { processSteps } from './focus-aanvragen-content';
 import {
   Decision,
@@ -376,4 +377,10 @@ export function translateFocusProduct(
   });
 
   return prod;
+}
+
+// Tozo/Tonk items, stadspasaanvraag, bijstandsaanvraag
+export function isNotificationActual(datePublished: string, compareDate: Date) {
+  const difference = differenceInMonths(compareDate, new Date(datePublished));
+  return difference < MONTHS_TO_KEEP_AANVRAAG_NOTIFICATIONS;
 }

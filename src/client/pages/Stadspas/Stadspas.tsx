@@ -19,7 +19,6 @@ import {
 import { LinkdInline } from '../../components/Button/Button';
 import { ExternalUrls } from '../../config/app';
 import { useAppStateGetter } from '../../hooks/useAppState';
-import AlertDocumentDownloadsDisabled from '../Inkomen/AlertDocumentDownloadsDisabled';
 import styles from './Stadspas.module.scss';
 
 const stadspasDisplayProps = {
@@ -116,7 +115,6 @@ export default function Stadspas() {
             <p>We kunnen op dit moment niet alle gegevens tonen.</p>
           </Alert>
         )}
-        <AlertDocumentDownloadsDisabled />
       </PageContent>
 
       {hasStadspas && (

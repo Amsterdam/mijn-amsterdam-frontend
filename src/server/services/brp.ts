@@ -1,4 +1,4 @@
-import { differenceInCalendarDays } from 'date-fns';
+import { differenceInCalendarDays, differenceInMonths } from 'date-fns';
 import { generatePath } from 'react-router-dom';
 import { AppRoutes, Chapters } from '../../universal/config';
 import { defaultDateFormat } from '../../universal/helpers';
@@ -15,6 +15,7 @@ import {
 } from '../../universal/helpers/api';
 
 const DAYS_BEFORE_EXPIRATION = 120;
+const MONTHS_TO_KEEP_NOTIFICATIONS = 12;
 
 const BrpDocumentTitles: Record<string, string> = {
   paspoort: 'paspoort',
@@ -56,9 +57,15 @@ export function transformBRPNotifications(data: BRPData, compareDate: Date) {
 
   const notifications: MyNotification[] = [];
 
-  const expiredDocuments = data.identiteitsbewijzen?.filter(
-    (document) => new Date(document.datumAfloop) < compareDate
-  );
+  // Expired and not expired more than 12 months
+  const expiredDocuments = data.identiteitsbewijzen?.filter((document) => {
+    const dateExpired = new Date(document.datumAfloop);
+    return (
+      dateExpired < compareDate &&
+      differenceInMonths(compareDate, dateExpired) <=
+        MONTHS_TO_KEEP_NOTIFICATIONS
+    );
+  });
 
   const willExpireSoonDocuments = data.identiteitsbewijzen?.filter(
     (document) => {
