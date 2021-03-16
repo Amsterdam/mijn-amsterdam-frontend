@@ -8,10 +8,12 @@ export function InkomenDetailTozo() {
     return (
       <>
         <p>
-          Hieronder ziet u hoe het staat met uw aanvraag voor een uitkering of
-          lening van de {inkomenItem?.productTitle || 'Tozo'}. Als u een
-          uitkering én een lening hebt aangevraagd, dan krijgt u voor allebei
-          apart een besluit. Het duurt maximaal 3 dagen voordat uw documenten in
+          Hieronder ziet u de status van uw aanvraag voor de{' '}
+          {inkomenItem?.productTitle || 'Tozo'}. Als u meerdere aanvragen voor
+          de {inkomenItem?.productTitle || 'Tozo'} hebt gedaan, dan krijgt u 1
+          besluit als antwoord op al uw aanvragen voor de{' '}
+          {inkomenItem?.productTitle || 'Tozo'}. Het duurt maximaal 3 werkdagen
+          voordat uw documenten over de {inkomenItem?.productTitle || 'Tozo'} in
           Mijn Amsterdam staan.
         </p>
         {!isLoading && (
@@ -75,11 +77,31 @@ export function InkomenDetailTonk() {
 export const MAX_STEP_COUNT_FOCUS_REQUEST = 4;
 
 export function InkomenDetailUitkering() {
+  const pageContent = useCallback((isLoading, inkomenItem) => {
+    return (
+      <>
+        <p>
+          Hieronder ziet u de status van uw aanvraag voor een
+          bijstandsuitkering. Het duurt maximaal 3 werkdagen voordat uw
+          documenten over de bijstandsuitkering in Mijn Amsterdam staan.
+        </p>
+        {!isLoading && (
+          <p>
+            <Linkd external={true} href={ExternalUrls.WPI_BIJSTANDSUITKERING}>
+              Meer informatie over de bijstandsuitkering
+            </Linkd>
+          </p>
+        )}
+      </>
+    );
+  }, []);
+
   return (
     <StatusDetail
       chapter="INKOMEN"
       stateKey="FOCUS_AANVRAGEN"
       showToggleMore={true}
+      pageContent={pageContent}
       maxStepCount={(hasDecision) =>
         !hasDecision ? MAX_STEP_COUNT_FOCUS_REQUEST : undefined
       }

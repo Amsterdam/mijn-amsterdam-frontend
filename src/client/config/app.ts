@@ -33,6 +33,8 @@ export const ExternalUrls = {
     'https://www.amsterdam.nl/veelgevraagd/?productid={68422ECA-8C56-43EC-A9AA-B3DF190B5077}',
   AMSTERDAM: 'https://www.amsterdam.nl',
   WPI_CONTACT: 'https://www.amsterdam.nl/werk-inkomen/contact/',
+  WPI_BIJSTANDSUITKERING:
+    'https://www.amsterdam.nl/werk-inkomen/bijstandsuitkering/',
   WPI_ALGEMEEN: 'https://www.amsterdam.nl/werk-inkomen',
   WPI_TOZO: 'https://www.amsterdam.nl/ondernemen/ondersteuning/tozo/',
   WPI_TONK: 'https://www.amsterdam.nl/tonk/',
