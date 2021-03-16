@@ -1,37 +1,40 @@
 import {
   BaseLayerToggle,
+  constants,
   Map,
   ViewerContainer,
   Zoom,
 } from '@amsterdam/arm-core';
-import { constants } from '@amsterdam/arm-core';
 import { ThemeProvider } from '@amsterdam/asc-ui';
 import { useMapInstance } from '@amsterdam/react-maps';
 import L, { LatLngLiteral, TileLayerOptions } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useMemo, useRef } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import useMedia from 'use-media';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
 import { getFullAddress, isLoading } from '../../../universal/helpers';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
 import {
-  useTermReplacement,
   getElementSize,
-  useWidescreen,
   useAppStateGetter,
+  useTermReplacement,
+  useWidescreen,
 } from '../../hooks';
+import MaintenanceNotifications from '../MaintenanceNotifications/MaintenanceNotifications';
 import {
   useFetchPanelFeature,
   useLoadingFeature,
   useResetMyAreaState,
+  useSetLoadingFeature,
 } from './MyArea.hooks';
+import MyAreaCustomLocationControlButton from './MyAreaCustomLocationControlButton';
 import { MyAreaDatasets } from './MyAreaDatasets';
 import MyAreaHeader from './MyAreaHeader';
 import HomeControlButton from './MyAreaHomeControlButton';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
-import { HomeIconMarker, CustomLatLonMarker } from './MyAreaMarker';
+import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker';
 import {
   PanelComponent,
   PanelState,
@@ -41,9 +44,6 @@ import {
 } from './MyAreaPanelComponent';
 import { MyAreaLegendPanel } from './MyAreaPanels';
 import MyAreaDetailPanel from './PanelContent/MyAreaDetailPanel';
-import { useSetLoadingFeature } from './MyArea.hooks';
-import MaintenanceNotifications from '../MaintenanceNotifications/MaintenanceNotifications';
-import MyAreaCustomLocationControlButton from './MyAreaCustomLocationControlButton';
 
 const StyledViewerContainer = styled(ViewerContainer)<{
   mapOffset?: { left: string };
