@@ -49,7 +49,7 @@ const toekennenLabels: FocusStepContent = {
     `<p>
           U hebt recht op ${document.productTitle}. Bekijk de brief
           voor meer details.
-        </p>`,
+        </p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
 const afwijzenLabels: FocusStepContent = {
@@ -64,7 +64,7 @@ const afwijzenLabels: FocusStepContent = {
   description: (document) =>
     `<p>
         U hebt geen recht op ${document.productTitle}. Bekijk de brief voor meer details.
-      </p>`,
+      </p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
 const intrekkenLabels: FocusStepContent = {
@@ -75,7 +75,7 @@ const intrekkenLabels: FocusStepContent = {
   },
   status: stepLabels.beslissing,
   description: (document) =>
-    `<p>U hebt uw ${document.productTitle} aanvraag ingetrokken. Bekijk de brief voor meer details.</p>`,
+    `<p>U hebt uw ${document.productTitle} aanvraag ingetrokken. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
 const buitenBehandelingLabels: FocusStepContent = {
@@ -86,7 +86,7 @@ const buitenBehandelingLabels: FocusStepContent = {
   },
   status: stepLabels.beslissing,
   description: (document) =>
-    `<p>Wij behandelen uw aanvraag voor ${document.productTitle} niet meer. Bekijk de brief voor meer details.</p>`,
+    `<p>Wij behandelen uw aanvraag voor ${document.productTitle} niet meer. Bekijk de brief voor meer details.</p><p><a rel="external noopener noreferrer" href="https://www.amsterdam.nl/werk-inkomen/pak-je-kans/">Meer regelingen van de gemeente Amsterdam</a></p>`,
 };
 
 export const tonkDocumentLabelSet: Record<
