@@ -43,9 +43,10 @@ export function InkomenDetailTonk() {
     return (
       <>
         <p>
-          Hieronder ziet u hoe het staat met uw aanvraag voor een{' '}
-          {inkomenItem?.productTitle || 'Tonk'} uitkering. Het duurt maximaal 3
-          dagen voordat uw documenten in Mijn Amsterdam staan.
+          Hieronder ziet u de status van uw aanvraag TONK. Als u meerdere
+          aanvragen voor de TONK hebt gedaan, dan krijgt u 1 besluit als
+          antwoord op al deze aanvragen. Het duurt maximaal 3 werkdagen voordat
+          uw documenten over de TONK in Mijn Amsterdam staan.
         </p>
         {!isLoading && (
           <p>
