@@ -2,18 +2,18 @@ import { useMemo } from 'react';
 import { SIAItem } from '../../../server/services/sia';
 import { AppRoutes, ChapterTitles } from '../../../universal/config/index';
 import { isError, isLoading } from '../../../universal/helpers';
-import { defaultDateFormat } from '../../../universal/helpers/date';
+import { defaultDateTimeFormat } from '../../../universal/helpers/date';
 import {
   addTitleLinkComponent,
   Alert,
   ChapterIcon,
   Linkd,
+  MaintenanceNotifications,
   // Linkd,
   PageContent,
   PageHeading,
   SectionCollapsible,
   Table,
-  MaintenanceNotifications,
 } from '../../components';
 import { OverviewPage } from '../../components/Page/Page';
 import { useAppStateGetter } from '../../hooks/useAppState';
@@ -45,9 +45,9 @@ export default function Sia() {
       .map((item) => {
         return {
           ...item,
-          datePublished: defaultDateFormat(item.datePublished),
+          datePublished: defaultDateTimeFormat(item.datePublished),
           dateClosed: item.dateClosed
-            ? defaultDateFormat(item.datePublished)
+            ? defaultDateTimeFormat(item.datePublished)
             : null,
         };
       });

@@ -1,6 +1,8 @@
 import { LatLngTuple } from 'leaflet';
 import { generatePath } from 'react-router-dom';
+import { Chapters } from '../../universal/config';
 import { AppRoutes } from '../../universal/config/routes';
+import { defaultDateTimeFormat } from '../../universal/helpers';
 import {
   apiDependencyError,
   apiSuccesResult,
@@ -19,6 +21,8 @@ export interface SIAItem {
   dateIncidentEnd: string | null;
   status: SiaSourceState;
   description: string;
+  priority: string;
+  deadline: string;
   address: string;
   latlon: LatLngTuple;
   email: string;
@@ -38,6 +42,8 @@ interface SIASourceItem {
   dateIncidentEnd: string | null; // .incident_date_end
   status: SiaSourceState; // /status.state
   description: string; // .text
+  priority: string; // .priority.priority
+  deadline: string; // .category.deadline
   identifier: string;
   address: string; // .location.address_text
   latlon: LatLngTuple;
@@ -75,6 +81,8 @@ function transformSIAData(responseData: SIASourceData): SIAItem[] {
       dateIncidentStart: sourceItem.dateIncidentStart,
       dateIncidentEnd: sourceItem.dateIncidentEnd,
       status: sourceItem.status,
+      priority: sourceItem.priority,
+      deadline: sourceItem.deadline,
       description: sourceItem.description,
       address: sourceItem.address,
       latlon: sourceItem.latlon,
@@ -106,6 +114,32 @@ export async function fetchSIA(
   return response;
 }
 
+function createSIANotification(item: SIAItem) {
+  let title = '';
+  let description = '';
+
+  switch (item.status) {
+    default:
+      title = `U hebt een melding gedaan`;
+      description = `Een melding inde categorie ${
+        item.category
+      } op ${defaultDateTimeFormat(item.datePublished)}`;
+      break;
+  }
+
+  return {
+    id: `sia-${item.identifier}-notification`,
+    datePublished: item.dateModified,
+    chapter: Chapters.SIA,
+    title,
+    description,
+    link: {
+      to: item.link.to,
+      title: 'Bekijk details',
+    },
+  };
+}
+
 export async function fetchSIAGenerated(
   sessionID: SessionID,
   passthroughRequestHeaders: Record<string, string>
@@ -113,7 +147,7 @@ export async function fetchSIAGenerated(
   const SIA = await fetchSIA(sessionID, passthroughRequestHeaders);
   if (SIA.status === 'OK') {
     return apiSuccesResult({
-      notifications: [],
+      notifications: SIA.content.map(createSIANotification),
     });
   }
   return apiDependencyError({ SIA });

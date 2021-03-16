@@ -16,10 +16,10 @@
     width: 20%;
   }
   tr td:nth-child(2) {
-    width: 30%;
+    width: 20%;
   }
   tr td:nth-child(3) {
-    width: 25%;
+    width: 40%;
   }
 
   @include mq-tablet() {

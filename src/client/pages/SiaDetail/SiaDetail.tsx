@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { generatePath, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { SIAItem } from '../../../server/services/sia';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
@@ -7,6 +7,8 @@ import {
   isError,
   isLoading,
 } from '../../../universal/helpers';
+import { formatDurationInWords } from '../../../universal/helpers/date';
+import { IconPin } from '../../assets/icons/map';
 import {
   Alert,
   ChapterIcon,
@@ -147,8 +149,9 @@ export default function SiaDetail() {
                     {SiaItem?.address || '-'}{' '}
                     {SiaItem?.latlon && (
                       <>
-                        <br />
                         <LinkdInline
+                          className={styles.MapLink}
+                          icon={IconPin}
                           href={`${AppRoutes.BUURT}?coordinateLabel=${SiaItem.identifier}&coordinate=${SiaItem.latlon}&datasetIds=`}
                         >
                           Bekijk op de kaart
@@ -160,6 +163,15 @@ export default function SiaDetail() {
               />
             </InfoDetailGroup>
             <InfoDetailGroup>
+              <InfoDetail label="Urgentie" value={SiaItem?.priority} />
+              {SiaItem?.deadline && (
+                <InfoDetail
+                  label="Verwerkingstijd"
+                  value={formatDurationInWords(SiaItem?.deadline)}
+                />
+              )}
+            </InfoDetailGroup>
+            <InfoDetailGroup>
               <InfoDetail label="E-mail melder" value={SiaItem?.email || '-'} />
               <InfoDetail
                 label="Telefoonnummer"
@@ -167,10 +179,11 @@ export default function SiaDetail() {
               />
             </InfoDetailGroup>
             <p className={styles.DetailInfo}>
-              U heeft uw mailadres en telefoonnummer aan ons doorgegeven zodat
-              wij u op de hoogte kunnen houden van de voortgang van uw melding.
-              U kunt deze gegevens hier niet meer wijzigen. Over een jaar worden
-              deze automatisch uit ons systeem verwijderd.
+              U hebt uw mailadres en telefoonnummer doorgegeven zodat u op de
+              hoogte wordt gehouden over de voortgang van uw melding. U kunt
+              deze gegevens hier niet meer wijzigen. 12 maanden na ontvangst van
+              uw melding worden deze gegevens automatisch verwijderd uit ons
+              systeem.
             </p>
             <p className={styles.DetailInfo}>
               Wilt u informatie toevoegen? Of is het probleem nog niet opgelost?
