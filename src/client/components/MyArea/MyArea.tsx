@@ -43,6 +43,7 @@ import { MyAreaLegendPanel } from './MyAreaPanels';
 import MyAreaDetailPanel from './PanelContent/MyAreaDetailPanel';
 import { useSetLoadingFeature } from './MyArea.hooks';
 import MaintenanceNotifications from '../MaintenanceNotifications/MaintenanceNotifications';
+import MyAreaCustomLocationControlButton from './MyAreaCustomLocationControlButton';
 
 const StyledViewerContainer = styled(ViewerContainer)<{
   mapOffset?: { left: string };
@@ -312,6 +313,12 @@ export default function MyArea({
                 bottomRight={
                   isWideScreen && (
                     <>
+                      {coordinate && mapOptions.center && (
+                        <MyAreaCustomLocationControlButton
+                          zoom={zoom}
+                          latlng={mapOptions.center}
+                        />
+                      )}
                       {HOME.content?.address && HOME.content?.latlng && (
                         <HomeControlButton
                           zoom={zoom}
