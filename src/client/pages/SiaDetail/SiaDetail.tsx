@@ -10,7 +10,6 @@ import {
   isLoading,
 } from '../../../universal/helpers';
 import { formatDurationInWords } from '../../../universal/helpers/date';
-import { IconPin } from '../../assets/icons/map';
 import {
   Alert,
   ChapterIcon,
@@ -157,7 +156,6 @@ export default function SiaDetail() {
                       <>
                         <Button
                           className={styles.MapLink}
-                          icon={IconPin}
                           variant="inline"
                           lean={true}
                           onClick={() => setLocationModalOpen(true)}
