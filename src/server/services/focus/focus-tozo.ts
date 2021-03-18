@@ -199,24 +199,6 @@ export async function fetchFOCUSTozoGenerated(
       createToxxItemStepNotifications(item, compareDate)
     );
 
-    if (
-      FeatureToggle.tozo4PreNotificationactive &&
-      !TOZO.content.some((item) => item.productTitle === 'Tozo 4')
-    ) {
-      notifications.push({
-        chapter: Chapters.INKOMEN,
-        datePublished: '2021-03-01',
-        isAlert: false,
-        hideDatePublished: false,
-        id: `focus-tozo4-notification`,
-        title: `Tozo 4`,
-        description: `Hebt u Tozo 4 aangevraagd (aanvragen vanaf 1 maart 2021)? Wij
-                werken er hard aan om ook die aanvraag in Mijn Amsterdam te
-                tonen. Als het zover is, ziet u uw aanvraag vanzelf hier
-                verschijnen.`,
-      });
-    }
-
     const cases: MyCase[] = TOZO.content
       .filter(
         (item) =>
