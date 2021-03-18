@@ -20,7 +20,7 @@ const SIA_ITEM = {
   latlon: [52.3717228, 4.8927377],
   email: 'j.vandergroenen@gmail.com',
   phone: '0612312345',
-  photos: [
+  attachments: [
     'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==',
     'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==',
   ],
@@ -42,6 +42,8 @@ function initializeState(snapshot: MutableSnapshot) {
 }
 
 describe('<SiaDetail />', () => {
+  (window as any).scrollTo = jest.fn();
+
   const routeEntry = generatePath(AppRoutes['SIA/DETAIL'], {
     id: SIA_ITEM_ID,
   });
