@@ -74,20 +74,6 @@ export function useDatasetFilterSelection() {
   return useRecoilState(datasetFilterSelectionAtom);
 }
 
-export function useActiveDatasetIdsToFetch(featuresToCompare: DatasetFeatures) {
-  const [activeDatasetIds] = useActiveDatasetIds();
-
-  return useMemo(() => {
-    const loadedIds = Array.from(
-      new Set(featuresToCompare.map((feature) => feature.properties.datasetId))
-    );
-    const datasetIdsToLoad = activeDatasetIds.filter(
-      (datasetId) => !loadedIds.includes(datasetId)
-    );
-    return datasetIdsToLoad;
-  }, [activeDatasetIds, featuresToCompare]);
-}
-
 interface LoadingFeature {
   datasetId?: string;
   id?: string;
@@ -238,6 +224,7 @@ export function useFetchFeatures() {
       datasetIds: DatasetId[],
       filters: DatasetFilterSelection | null
     ): Promise<DatasetResponseContent | null> => {
+      // Cancel all previous requests, the latest request will represent latest state
       abortSignal.current?.cancel();
 
       const tokenSource = axios.CancelToken.source();

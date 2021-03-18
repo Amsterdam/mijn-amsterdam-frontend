@@ -203,10 +203,13 @@ export default function MyArea({
     return;
   }, [isWideScreen, showPanels, detailState, filterState]);
 
+  const hasDatasetIdsToLoad =
+    !!datasetIdsRequested?.length || datasetIdsRequested === undefined;
+
   return (
     <ThemeProvider>
       <MyAreaContainer height={height}>
-        <MaintenanceNotifications page="buurt" />
+        {hasDatasetIdsToLoad && <MaintenanceNotifications page="buurt" />}
         {!!showHeader && <MyAreaHeader showCloseButton={true} />}
         <MyAreaMapContainer ref={mapContainerRef}>
           <MyAreaMapOffset id="skip-to-id-Map">
@@ -287,7 +290,7 @@ export default function MyArea({
                 }
               />
 
-              {!!datasetIdsRequested?.length && (
+              {hasDatasetIdsToLoad && (
                 <MyAreaDatasets datasetIds={datasetIdsRequested} />
               )}
             </MyAreaMap>
