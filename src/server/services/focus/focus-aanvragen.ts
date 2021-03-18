@@ -87,17 +87,13 @@ export async function fetchFOCUSAanvragenGenerated(
   if (FOCUS_AANVRAGEN.status === 'OK') {
     const items = FOCUS_AANVRAGEN.content as FocusItem[];
 
-    notifications =
-      items
-        .filter((item) => isNotificationActual(item.datePublished, compareDate))
-        .map((focusItem) =>
-          createFocusNotification(focusItem, contentLabels)
-        ) || [];
+    notifications = items
+      .filter((item) => isNotificationActual(item.datePublished, compareDate))
+      .map((focusItem) => createFocusNotification(focusItem, contentLabels));
 
-    cases =
-      items
-        .filter((focusItem) => isRecentItem(focusItem.steps, compareDate))
-        .map((focusItem) => createFocusRecentCase(focusItem)) || [];
+    cases = items
+      .filter((focusItem) => isRecentItem(focusItem.steps, compareDate))
+      .map((focusItem) => createFocusRecentCase(focusItem));
 
     return apiSuccesResult({
       cases,
