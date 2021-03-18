@@ -30,10 +30,10 @@ import {
 } from '../../../universal/config/buurt';
 import { BFFApiUrls } from '../../config/api';
 import styles from './MyAreaDatasets.module.scss';
-import { filterItemCheckboxState } from './MyAreaPanels';
 import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { trackEventWithProfileType } from '../../hooks';
 import { capitalizeFirstLetter } from '../../../universal/helpers';
+import { filterItemCheckboxState } from './LegendPanel/DatasetControlCheckbox';
 
 const NO_DATA_ERROR_RESPONSE = {
   errors: [

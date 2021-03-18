@@ -1,4 +1,4 @@
-import { InfoDetail } from '../..';
+import { InfoDetail } from '../../..';
 import GenericBase from './GenericBase';
 import Url from './Url';
 

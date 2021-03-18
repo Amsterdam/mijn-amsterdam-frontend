@@ -1,5 +1,5 @@
-import { defaultDateFormat } from '../../../../universal/helpers';
-import InfoDetail, { InfoDetailGroup } from '../../InfoDetail/InfoDetail';
+import { defaultDateFormat } from '../../../../../universal/helpers';
+import InfoDetail, { InfoDetailGroup } from '../../../InfoDetail/InfoDetail';
 
 interface DateStartEndProps {
   dateStart?: string;

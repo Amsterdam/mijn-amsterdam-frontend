@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import {
   DatasetCategoryId,
   getDatasetCategoryId,
-} from '../../../../universal/config/buurt';
-import Alert from '../../Alert/Alert';
-import LoadingContent from '../../LoadingContent/LoadingContent';
-import { useLoadingFeature, useSelectedFeature } from '../MyArea.hooks';
+} from '../../../../../universal/config/buurt';
+import Alert from '../../../Alert/Alert';
+import LoadingContent from '../../../LoadingContent/LoadingContent';
+import { useLoadingFeature, useSelectedFeature } from '../../MyArea.hooks';
 import MyArePanelContentAfval from './Afval';
 import MyArePanelContentBedrijvenInvesteringsZones from './BedrijvenInvesteringsZones';
 import MyArePanelContentBekendmaking from './Bekendmaking';

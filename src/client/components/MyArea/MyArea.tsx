@@ -12,7 +12,6 @@ import 'leaflet/dist/leaflet.css';
 import { useEffect, useMemo, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import useMedia from 'use-media';
 import { ChapterTitles, HOOD_ZOOM } from '../../../universal/config';
 import { getFullAddress, isLoading } from '../../../universal/helpers';
 import { DEFAULT_MAP_OPTIONS } from '../../config/map';
@@ -23,27 +22,19 @@ import {
   useWidescreen,
 } from '../../hooks';
 import MaintenanceNotifications from '../MaintenanceNotifications/MaintenanceNotifications';
+import { LegendPanel } from './LegendPanel/LegendPanel';
 import {
-  useFetchPanelFeature,
-  useLoadingFeature,
-  useResetMyAreaState,
-  useSetLoadingFeature,
-} from './MyArea.hooks';
+  PanelState,
+  WIDE_PANEL_TIP_WIDTH,
+  WIDE_PANEL_WIDTH,
+} from './LegendPanel/PanelComponent';
+import { useLegendPanelCycle } from './LegendPanel/panelCycle';
 import MyAreaCustomLocationControlButton from './MyAreaCustomLocationControlButton';
 import { MyAreaDatasets } from './MyAreaDatasets';
 import MyAreaHeader from './MyAreaHeader';
 import HomeControlButton from './MyAreaHomeControlButton';
 import MyAreaLoadingIndicator from './MyAreaLoadingIndicator';
 import { CustomLatLonMarker, HomeIconMarker } from './MyAreaMarker';
-import {
-  PanelComponent,
-  PanelState,
-  usePanelStateCycle,
-  WIDE_PANEL_TIP_WIDTH,
-  WIDE_PANEL_WIDTH,
-} from './MyAreaPanelComponent';
-import { MyAreaLegendPanel } from './MyAreaPanels';
-import MyAreaDetailPanel from './PanelContent/MyAreaDetailPanel';
 
 const StyledViewerContainer = styled(ViewerContainer)<{
   mapOffset?: { left: string };
@@ -112,26 +103,21 @@ export default function MyArea({
   zoom = HOOD_ZOOM,
 }: MyAreaProps) {
   const isWideScreen = useWidescreen();
-  const isLandscape = useMedia('(orientation: landscape)');
   const isNarrowScreen = !isWideScreen;
   const { HOME } = useAppStateGetter();
   const termReplace = useTermReplacement();
   const location = useLocation();
   const center = HOME.content?.latlng;
-  const [loadingFeature] = useLoadingFeature();
-  const prevFilterPanelState = useRef<PanelState | null>(null);
+
   const mapContainerRef = useRef(null);
   const panelComponentAvailableHeight = getElementSize(mapContainerRef.current)
     .height;
-  const resetMyAreaState = useResetMyAreaState();
+
   const queryParams = location.search
     ? new URLSearchParams(location.search)
     : null;
   const coordinateLabel = queryParams?.get('coordinateLabel') || '';
   const coordinate = queryParams?.get('coordinate') || null;
-
-  useFetchPanelFeature();
-  const setLoadingFeature = useSetLoadingFeature();
 
   const mapOptions: Partial<
     L.MapOptions & { center: LatLngLiteral }
@@ -167,81 +153,14 @@ export default function MyArea({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const panelCycle = useMemo(() => {
-    if (isWideScreen) {
-      return {
-        filters: [PanelState.Open, PanelState.Tip],
-        detail: [PanelState.Closed, PanelState.Open],
-      };
-    }
-    if (isLandscape) {
-      return {
-        filters: [PanelState.Tip, PanelState.Open],
-        detail: [PanelState.Closed, PanelState.Open],
-      };
-    }
+  const mapLayers = useMemo(() => {
     return {
-      filters: [PanelState.Tip, PanelState.Preview, PanelState.Open],
-      detail: [PanelState.Closed, PanelState.Preview, PanelState.Open],
+      aerial: [constants.AERIAL_AMSTERDAM_LAYERS[0]],
+      topo: [constants.DEFAULT_AMSTERDAM_LAYERS[0]],
     };
-  }, [isWideScreen, isLandscape]);
+  }, []);
 
-  const filterPanelCycle = usePanelStateCycle(
-    'filters',
-    panelCycle.filters,
-    PanelState.Preview
-  );
-  const { state: filterState, set: setFilterPanelState } = filterPanelCycle;
-
-  const detailPanelCycle = usePanelStateCycle('detail', panelCycle.detail);
-  const { state: detailState, set: setDetailPanelState } = detailPanelCycle;
-
-  useEffect(() => {
-    if (isWideScreen) {
-      setFilterPanelState(PanelState.Open);
-    }
-  }, [isWideScreen, setFilterPanelState]);
-
-  // Reset state on unmount
-  useEffect(() => {
-    return () => {
-      detailPanelCycle.reset();
-      filterPanelCycle.reset();
-      resetMyAreaState();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resetMyAreaState]);
-
-  // Set panel state without explicit panel interaction. Effect reacts to loading detailed features.
-  useEffect(() => {
-    if (!loadingFeature) {
-      return;
-    }
-    if (isNarrowScreen) {
-      if (isLandscape) {
-        setDetailPanelState(PanelState.Open);
-      } else {
-        setDetailPanelState(PanelState.Preview);
-      }
-    } else {
-      setDetailPanelState(PanelState.Open);
-    }
-    // Only react on loadingFeature changes. This wil result in re-render which causes the currentPanel state to be up-to-date.
-  }, [loadingFeature, isNarrowScreen, setDetailPanelState, isLandscape]);
-
-  // If Detail panel is opened set FiltersPanel to a TIP state and store the State it's in, if Detail panel is closed restore the Filters panel state to the state it was in.
-  useEffect(() => {
-    if (detailState !== PanelState.Closed && !prevFilterPanelState.current) {
-      prevFilterPanelState.current = filterState;
-      setFilterPanelState(PanelState.Tip);
-    } else if (
-      detailState === PanelState.Closed &&
-      prevFilterPanelState.current
-    ) {
-      setFilterPanelState(prevFilterPanelState.current);
-      prevFilterPanelState.current = null;
-    }
-  }, [detailState, filterState, setFilterPanelState]);
+  const { detailState, filterState } = useLegendPanelCycle();
 
   const mapOffset = useMemo(() => {
     if (isWideScreen) {
@@ -252,13 +171,6 @@ export default function MyArea({
     }
     return;
   }, [isWideScreen, detailState, filterState]);
-
-  const mapLayers = useMemo(() => {
-    return {
-      aerial: [constants.AERIAL_AMSTERDAM_LAYERS[0]],
-      topo: [constants.DEFAULT_AMSTERDAM_LAYERS[0]],
-    };
-  }, []);
 
   return (
     <ThemeProvider>
@@ -348,26 +260,7 @@ export default function MyArea({
           </MyAreaMapOffset>
 
           {!!showPanels && (
-            <>
-              <PanelComponent
-                id="filters"
-                cycle={filterPanelCycle}
-                availableHeight={panelComponentAvailableHeight}
-              >
-                <MyAreaLegendPanel />
-              </PanelComponent>
-              <PanelComponent
-                id="detail"
-                cycle={detailPanelCycle}
-                availableHeight={panelComponentAvailableHeight}
-                onClose={() => setLoadingFeature(null)}
-                showCloseButton={
-                  isWideScreen || detailState === PanelState.Open
-                }
-              >
-                <MyAreaDetailPanel />
-              </PanelComponent>
-            </>
+            <LegendPanel availableHeight={panelComponentAvailableHeight} />
           )}
         </MyAreaMapContainer>
       </MyAreaContainer>

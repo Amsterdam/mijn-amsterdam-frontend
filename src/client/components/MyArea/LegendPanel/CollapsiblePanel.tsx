@@ -1,13 +1,13 @@
 import { Icon, themeSpacing } from '@amsterdam/asc-ui';
 import {
+  Children,
+  MouseEvent as ReactMouseEvent,
   PropsWithChildren,
   ReactNode,
   useState,
-  MouseEvent as ReactMouseEvent,
-  Children,
 } from 'react';
 import styled from 'styled-components';
-import { IconChevronRight } from '../../assets/icons';
+import { IconChevronRight } from '../../../assets/icons';
 
 export const ToggleButton = styled('button')`
   appearance: none;

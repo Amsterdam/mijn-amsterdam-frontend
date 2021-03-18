@@ -1,5 +1,5 @@
-import { defaultDateFormat } from '../../../../universal/helpers';
-import InfoDetail from '../../InfoDetail/InfoDetail';
+import { defaultDateFormat } from '../../../../../universal/helpers';
+import InfoDetail from '../../../InfoDetail/InfoDetail';
 
 interface DateProps {
   date: string;

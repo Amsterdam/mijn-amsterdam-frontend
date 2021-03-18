@@ -1,4 +1,4 @@
-import { LinkdInline } from '../../Button/Button';
+import { LinkdInline } from '../../../Button/Button';
 import GenericBase from './GenericBase';
 
 const afvalUrls: Record<string, string> = {
