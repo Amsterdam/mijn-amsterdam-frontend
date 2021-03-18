@@ -5,6 +5,7 @@ import {
   ViewerContainer,
   Zoom,
 } from '@amsterdam/arm-core';
+import { BaseLayerType } from '@amsterdam/arm-core/lib/components/BaseLayerToggle';
 import { ThemeProvider } from '@amsterdam/asc-ui';
 import { useMapInstance } from '@amsterdam/react-maps';
 import L, { LatLngLiteral, TileLayerOptions } from 'leaflet';
@@ -56,12 +57,12 @@ const MyAreaMapOffset = styled.div`
   position: relative;
 `;
 
-const MyAreaContainer = styled.div`
+const MyAreaContainer = styled.div<{ height?: string }>`
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
-  height: 100vh;
+  height: ${(props) => props.height || '100vh'};
 `;
 
 const MyAreaMap = styled(Map)`
@@ -89,35 +90,69 @@ function AttributionToggle() {
   return null;
 }
 
-interface MyAreaProps {
+interface QueryConfig {
+  datasetIds?: string;
+  centerMarkerLabel?: string;
+  centerMarkerCoordinate?: string;
+}
+
+function getQueryConfig(query: string): QueryConfig {
+  return Object.fromEntries(new URLSearchParams(query).entries());
+}
+
+export interface MyAreaProps {
   datasetIds?: string[];
   showPanels?: boolean;
   showHeader?: boolean;
   zoom?: number;
+  centerMarker?: { latlng: LatLngLiteral; label: string };
+  height?: string;
+  activeBaseLayerType?: BaseLayerType;
 }
 
 export default function MyArea({
   datasetIds,
   showPanels = true,
   showHeader = true,
+  centerMarker,
   zoom = HOOD_ZOOM,
+  height,
+  activeBaseLayerType = BaseLayerType.Topo,
 }: MyAreaProps) {
   const isWideScreen = useWidescreen();
   const isNarrowScreen = !isWideScreen;
   const { HOME } = useAppStateGetter();
   const termReplace = useTermReplacement();
   const location = useLocation();
-  const center = HOME.content?.latlng;
+
+  // Params passed by query will override all other options
+  const customConfig = getQueryConfig(location.search);
 
   const mapContainerRef = useRef(null);
   const panelComponentAvailableHeight = getElementSize(mapContainerRef.current)
     .height;
 
-  const queryParams = location.search
-    ? new URLSearchParams(location.search)
-    : null;
-  const coordinateLabel = queryParams?.get('coordinateLabel') || '';
-  const coordinate = queryParams?.get('coordinate') || null;
+  const centerMarkerLabel =
+    centerMarker?.label || customConfig.centerMarkerLabel || '';
+  const coordinate =
+    centerMarker?.latlng || customConfig.centerMarkerCoordinate || null;
+
+  const center = useMemo(() => {
+    let center = DEFAULT_MAP_OPTIONS.center;
+
+    if (typeof coordinate === 'string') {
+      const [lat, lng] = coordinate.split(',').map((n) => parseFloat(n));
+      if (lat && lng) {
+        center = { lat, lng };
+      }
+    } else if (centerMarker) {
+      center = centerMarker.latlng;
+    } else if (HOME.content?.latlng) {
+      center = HOME.content?.latlng;
+    }
+
+    return center;
+  }, [coordinate, centerMarker, HOME.content]);
 
   const mapOptions: Partial<
     L.MapOptions & { center: LatLngLiteral }
@@ -126,22 +161,15 @@ export default function MyArea({
       ...DEFAULT_MAP_OPTIONS,
       zoom,
     };
-    if (coordinate) {
-      const [lat, lng] = coordinate.split(',').map((n) => parseFloat(n));
-      if (lat && lng) {
-        options.center = { lat, lng };
-      } else if (center) {
-        options.center = center;
-      }
-    } else if (center) {
+    if (center) {
       options.center = center;
     }
     return options;
-  }, [center, coordinate, zoom]);
+  }, [center, zoom]);
 
   const datasetIdsRequested = useMemo(() => {
-    if (queryParams) {
-      const ids = queryParams?.get('datasetIds')?.split(',');
+    if (customConfig.datasetIds) {
+      const ids = customConfig.datasetIds?.split(',');
       if (ids?.length) {
         return ids;
       }
@@ -163,6 +191,9 @@ export default function MyArea({
   const { detailState, filterState } = useLegendPanelCycle();
 
   const mapOffset = useMemo(() => {
+    if (!showPanels) {
+      return { left: '0' };
+    }
     if (isWideScreen) {
       if (filterState === PanelState.Open || detailState === PanelState.Open) {
         return { left: WIDE_PANEL_WIDTH };
@@ -170,33 +201,33 @@ export default function MyArea({
       return { left: WIDE_PANEL_TIP_WIDTH };
     }
     return;
-  }, [isWideScreen, detailState, filterState]);
+  }, [isWideScreen, showPanels, detailState, filterState]);
 
   return (
     <ThemeProvider>
-      <MyAreaContainer>
+      <MyAreaContainer height={height}>
         <MaintenanceNotifications page="buurt" />
         {!!showHeader && <MyAreaHeader showCloseButton={true} />}
         <MyAreaMapContainer ref={mapContainerRef}>
           <MyAreaMapOffset id="skip-to-id-Map">
             <MyAreaMap
               fullScreen={true}
-              aria-label={`Uitgebreide kaart van ${termReplace(
+              aria-label={`Kaart van ${termReplace(
                 ChapterTitles.BUURT
               ).toLowerCase()}`}
               options={mapOptions}
             >
               <AttributionToggle />
-              {HOME.content?.address && center && (
+              {!coordinate && HOME.content?.address && HOME.content?.latlng && (
                 <HomeIconMarker
                   label={getFullAddress(HOME.content.address, true)}
-                  center={center}
+                  center={HOME.content?.latlng}
                   zoom={zoom}
                 />
               )}
               {coordinate && mapOptions.center && (
                 <CustomLatLonMarker
-                  label={coordinateLabel || 'Gekozen locatie'}
+                  label={centerMarkerLabel || 'Gekozen locatie'}
                   center={mapOptions.center}
                   zoom={zoom}
                 />
@@ -206,6 +237,7 @@ export default function MyArea({
                 topLeft={
                   isNarrowScreen && (
                     <BaseLayerToggle
+                      activeLayer={activeBaseLayerType}
                       aerialLayers={mapLayers.aerial}
                       topoLayers={mapLayers.topo}
                       options={baseLayerOptions}
@@ -231,12 +263,14 @@ export default function MyArea({
                           latlng={mapOptions.center}
                         />
                       )}
-                      {HOME.content?.address && HOME.content?.latlng && (
-                        <HomeControlButton
-                          zoom={zoom}
-                          latlng={HOME.content.latlng}
-                        />
-                      )}
+                      {!coordinate &&
+                        HOME.content?.address &&
+                        HOME.content?.latlng && (
+                          <HomeControlButton
+                            zoom={zoom}
+                            latlng={HOME.content.latlng}
+                          />
+                        )}
                       <Zoom />
                     </>
                   )
@@ -244,6 +278,7 @@ export default function MyArea({
                 bottomLeft={
                   isWideScreen && (
                     <BaseLayerToggle
+                      activeLayer={activeBaseLayerType}
                       aerialLayers={mapLayers.aerial}
                       topoLayers={mapLayers.topo}
                       options={baseLayerOptions}
@@ -252,7 +287,9 @@ export default function MyArea({
                 }
               />
 
-              <MyAreaDatasets datasetIds={datasetIdsRequested} />
+              {!!datasetIdsRequested?.length && (
+                <MyAreaDatasets datasetIds={datasetIdsRequested} />
+              )}
             </MyAreaMap>
             {!HOME.content?.address && isLoading(HOME) && (
               <MyAreaLoadingIndicator label="Uw adres wordt opgezocht" />

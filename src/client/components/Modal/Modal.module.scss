@@ -2,11 +2,11 @@
 
 @keyframes fadeIn {
   from {
-    background-color: rgba(0, 0, 0, .2);
+    background-color: rgba(0, 0, 0, 0.2);
   }
 
   to {
-    background-color: rgba(0, 0, 0, .5);
+    background-color: rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -42,7 +42,7 @@
 
   &.HorizontallyCentered {
     left: 50%;
-    transform: translateX(-50%)
+    transform: translateX(-50%);
   }
 
   &.HorizontallyLeft {
@@ -77,11 +77,10 @@
   display: flex;
   border-bottom: 1px solid $color-neutral-grey4;
   padding: 1rem 1.5rem;
-  padding-bottom: .8rem;
+  padding-bottom: 0.8rem;
   align-items: center;
 }
 
 .Content {
   padding: 1.5rem;
 }
-

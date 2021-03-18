@@ -16,7 +16,7 @@ interface ModalProps {
   onClose?: () => void;
   title?: string;
   showCloseButton?: boolean;
-  contentWidth?: number | 'boxed';
+  contentWidth?: number | string | 'boxed';
   contentVerticalPosition?: number | 'center' | 'top' | 'bottom';
   contentHorizontalPosition?: number | 'center' | 'left' | 'right';
   appendTo?: HTMLElement;
@@ -73,7 +73,7 @@ export function Dialog({
 
   const inlineStyles: CSSProperties = {};
 
-  if (typeof contentWidth === 'number') {
+  if (contentWidth !== 'boxed') {
     inlineStyles.width = '100%';
     inlineStyles.maxWidth = contentWidth;
   }

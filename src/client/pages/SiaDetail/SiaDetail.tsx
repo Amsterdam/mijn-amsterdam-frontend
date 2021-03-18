@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import { SIAItem } from '../../../server/services/sia';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
 import {
@@ -14,10 +14,11 @@ import {
   ChapterIcon,
   DetailPage,
   LoadingContent,
+  Modal,
   PageContent,
   PageHeading,
 } from '../../components';
-import { LinkdInline } from '../../components/Button/Button';
+import { LinkdInline, Button } from '../../components/Button/Button';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
@@ -26,6 +27,9 @@ import StatusLine, {
 } from '../../components/StatusLine/StatusLine';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './SiaDetail.module.scss';
+import MyAreaLoader from '../../components/MyArea/MyAreaLoader';
+import { LOCATION_ZOOM } from '../../../universal/config/buurt';
+import { BaseLayerType } from '@amsterdam/arm-core/lib/components/BaseLayerToggle';
 
 function useSiaMeldingStatusLineItems(SiaItem?: SIAItem) {
   const statusLineItems: StatusLineItem[] = useMemo(() => {
@@ -79,6 +83,7 @@ export default function SiaDetail() {
   const SiaItem = SIA.content?.find((item) => item.identifier === id);
   const noContent = !isLoading(SIA) && !SiaItem;
   const statusLineItems = useSiaMeldingStatusLineItems(SiaItem);
+  const [isLocationModalOpen, setLocationModalOpen] = useState(false);
 
   return (
     <DetailPage>
@@ -143,19 +148,22 @@ export default function SiaDetail() {
             <InfoDetailGroup>
               <InfoDetail label="Categorie" value={SiaItem?.category || '-'} />
               <InfoDetail
+                className={styles.LocationInfo}
                 label="Locatie"
                 value={
                   <>
                     {SiaItem?.address || '-'}{' '}
                     {SiaItem?.latlon && (
                       <>
-                        <LinkdInline
+                        <Button
                           className={styles.MapLink}
                           icon={IconPin}
-                          href={`${AppRoutes.BUURT}?coordinateLabel=${SiaItem.identifier}&coordinate=${SiaItem.latlon}&datasetIds=`}
+                          variant="inline"
+                          lean={true}
+                          onClick={() => setLocationModalOpen(true)}
                         >
                           Bekijk op de kaart
-                        </LinkdInline>
+                        </Button>
                       </>
                     )}
                   </>
@@ -225,6 +233,30 @@ export default function SiaDetail() {
           showToggleMore={false}
           id={`sia-detail-${id}`}
         />
+      )}
+      {SiaItem && (
+        <Modal
+          isOpen={isLocationModalOpen}
+          onClose={() => setLocationModalOpen(false)}
+          title={`Locatie van melding ${SiaItem.identifier}`}
+          contentWidth={'62rem'}
+        >
+          <MyAreaLoader
+            showHeader={false}
+            showPanels={false}
+            zoom={LOCATION_ZOOM}
+            datasetIds={[]}
+            activeBaseLayerType={BaseLayerType.Aerial}
+            centerMarker={{
+              latlng: {
+                lat: SiaItem.latlon[0],
+                lng: SiaItem.latlon[1],
+              },
+              label: SiaItem.address,
+            }}
+            height="40rem"
+          />
+        </Modal>
       )}
     </DetailPage>
   );
