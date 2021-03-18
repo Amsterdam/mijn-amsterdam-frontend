@@ -13,7 +13,7 @@
     "serve-dev": "concurrently \"npm:bff-api:watch\" \"npm:start\"",
     "release:bug": "sh scripts/release.sh --bug",
     "release:major": "sh scripts/release.sh --major",
-    "release:minor": "sh scripts/release.sh --minor",
+    "release": "sh scripts/release.sh --minor",
     "start": "react-scripts start",
     "test": "react-scripts test src/client",
     "test-e2e": "REACT_APP_ENV=e2e; react-scripts build && npm run bff-api:build && concurrently \"npm:serve-build\" \"npx cypress run\" --kill-others --success first",
