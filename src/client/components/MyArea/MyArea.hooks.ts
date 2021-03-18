@@ -1,13 +1,7 @@
 import { useMapInstance } from '@amsterdam/react-maps';
 import axios, { CancelTokenSource } from 'axios';
 import { LeafletEvent } from 'leaflet';
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-} from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import {
   atom,
   useRecoilState,
@@ -16,7 +10,6 @@ import {
   useSetRecoilState,
 } from 'recoil';
 import {
-  DatasetFeatures,
   MaPointFeature,
   MaPolylineFeature,
   MaSuperClusterFeature,
@@ -28,12 +21,12 @@ import {
   DatasetPropertyValue,
   MY_AREA_TRACKING_CATEGORY,
 } from '../../../universal/config/buurt';
-import { BFFApiUrls } from '../../config/api';
-import styles from './MyAreaDatasets.module.scss';
-import { useProfileTypeValue } from '../../hooks/useProfileType';
-import { trackEventWithProfileType } from '../../hooks';
 import { capitalizeFirstLetter } from '../../../universal/helpers';
+import { BFFApiUrls } from '../../config/api';
+import { trackEventWithProfileType } from '../../hooks';
+import { useProfileTypeValue } from '../../hooks/useProfileType';
 import { filterItemCheckboxState } from './LegendPanel/DatasetControlCheckbox';
+import styles from './MyAreaDatasets.module.scss';
 
 const NO_DATA_ERROR_RESPONSE = {
   errors: [

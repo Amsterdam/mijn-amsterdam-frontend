@@ -1,7 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { BaseLayerType } from '@amsterdam/arm-core/lib/components/BaseLayerToggle';
+import React, { useMemo, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { SIAItem } from '../../../server/services/sia';
 import { AppRoutes, ChapterTitles } from '../../../universal/config';
+import { LOCATION_ZOOM } from '../../../universal/config/buurt';
 import {
   defaultDateFormat,
   isError,
@@ -18,18 +20,16 @@ import {
   PageContent,
   PageHeading,
 } from '../../components';
-import { LinkdInline, Button } from '../../components/Button/Button';
+import { Button, LinkdInline } from '../../components/Button/Button';
 import InfoDetail, {
   InfoDetailGroup,
 } from '../../components/InfoDetail/InfoDetail';
+import MyAreaLoader from '../../components/MyArea/MyAreaLoader';
 import StatusLine, {
   StatusLineItem,
 } from '../../components/StatusLine/StatusLine';
 import { useAppStateGetter } from '../../hooks/useAppState';
 import styles from './SiaDetail.module.scss';
-import MyAreaLoader from '../../components/MyArea/MyAreaLoader';
-import { LOCATION_ZOOM } from '../../../universal/config/buurt';
-import { BaseLayerType } from '@amsterdam/arm-core/lib/components/BaseLayerToggle';
 
 function useSiaMeldingStatusLineItems(SiaItem?: SIAItem) {
   const statusLineItems: StatusLineItem[] = useMemo(() => {
