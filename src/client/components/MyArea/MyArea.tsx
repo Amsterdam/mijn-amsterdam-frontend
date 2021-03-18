@@ -174,7 +174,7 @@ export default function MyArea({
         return ids;
       }
     }
-    if (Array.isArray(datasetIds) && datasetIds.length) {
+    if (Array.isArray(datasetIds)) {
       return datasetIds;
     }
     return;
@@ -248,13 +248,24 @@ export default function MyArea({
                   )
                 }
                 topRight={
-                  isNarrowScreen &&
-                  HOME.content?.address &&
-                  HOME.content?.latlng && (
-                    <HomeControlButton
-                      zoom={zoom}
-                      latlng={HOME.content.latlng}
-                    />
+                  isNarrowScreen && (
+                    <>
+                      {coordinate && mapOptions.center && (
+                        <MyAreaCustomLocationControlButton
+                          zoom={zoom}
+                          latlng={mapOptions.center}
+                        />
+                      )}
+                      {!coordinate &&
+                        HOME.content?.address &&
+                        HOME.content?.latlng && (
+                          <HomeControlButton
+                            zoom={zoom}
+                            latlng={HOME.content.latlng}
+                          />
+                        )}
+                      <Zoom />
+                    </>
                   )
                 }
                 bottomRight={
