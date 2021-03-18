@@ -531,7 +531,7 @@ export const tozoDocumentLabelSet: Record<
     stepType: 'besluit',
     labels: toekennenLabels,
     product: 'Tozo 4',
-    productSpecific: '',
+    productSpecific: 'uitkering',
   },
   '175651': {
     omschrijving: 'Tozo 4 Afwijzen',
@@ -555,7 +555,7 @@ export const tozoDocumentLabelSet: Record<
     stepType: 'besluit',
     labels: toekennenLabels,
     product: 'Tozo 4',
-    productSpecific: '',
+    productSpecific: 'lening',
   },
   '175668': {
     omschrijving: 'Tozo 4 Hersteltermijn',
@@ -587,7 +587,7 @@ export const tozoDocumentLabelSet: Record<
     stepType: 'voorschot',
     labels: voorschotToekennenLabels,
     product: 'Tozo 4',
-    productSpecific: '',
+    productSpecific: 'voorschot',
   },
   '175657': {
     omschrijving: 'Tozo 4 Toekennen voorschot',
@@ -595,7 +595,7 @@ export const tozoDocumentLabelSet: Record<
     stepType: 'voorschot',
     labels: voorschotToekennenLabels,
     product: 'Tozo 4',
-    productSpecific: '',
+    productSpecific: 'voorschot',
   },
   '175674': {
     omschrijving: 'Tozo 4 Toekennen via batch',
@@ -603,7 +603,7 @@ export const tozoDocumentLabelSet: Record<
     stepType: 'besluit',
     labels: toekennenLabels,
     product: 'Tozo 4',
-    productSpecific: '',
+    productSpecific: 'uitkering',
   },
   // '????': {
   //   omschrijving: 'Tozo 4 Terugvordering voorschot',
