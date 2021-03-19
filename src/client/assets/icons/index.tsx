@@ -30,7 +30,7 @@ export { ReactComponent as IconProfile } from './Profile.svg';
 export { ReactComponent as IconPassport } from './Passport.svg';
 export { ReactComponent as IconSearch } from './Search.svg';
 export { ReactComponent as IconTips } from './Tip.svg';
-export { ReactComponent as IconWonen } from './wonen.svg';
+export { ReactComponent as IconErfpacht } from './erfpacht.svg';
 export { ReactComponent as IconZorg } from './zorg.svg';
 export { ReactComponent as IconVergunningen } from './vergunningen.svg';
 export { ReactComponent as IconPlus } from './plus.svg';
