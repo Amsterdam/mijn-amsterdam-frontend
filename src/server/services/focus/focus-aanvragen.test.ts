@@ -407,6 +407,7 @@ describe('FOCUS_AANVRAGEN service', () => {
     ] as FocusProductStep[];
     expect(getLatestStep(steps)).toBe('besluit');
   });
+
   it('get the correct step', () => {
     const steps = [
       {

@@ -69,7 +69,7 @@ export interface FocusProduct {
   dateStart: string;
   datePublished: string;
   type: ProductType;
-  decision?: DecisionFormatted;
+  decision?: DecisionFormatted | null;
   steps: FocusProductStep[];
   dienstverleningstermijn?: number;
   inspanningsperiode?: number;
@@ -86,7 +86,7 @@ export interface FocusItemStep {
   product?: string;
   isActive?: boolean;
   isChecked?: boolean;
-  decision?: DecisionFormatted;
+  decision?: DecisionFormatted | null;
   notificationTitle?: string;
   notificationDescription?: string;
 }

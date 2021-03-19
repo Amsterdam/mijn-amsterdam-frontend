@@ -2,6 +2,7 @@ import * as Sentry from '@sentry/node';
 import { addDays, differenceInMonths, parseISO } from 'date-fns';
 import { API_BASE_PATH, AppRoutes, Chapters } from '../../../universal/config';
 import {
+  dateSort,
   defaultDateFormat,
   hash,
   isRecentCase,
@@ -192,29 +193,27 @@ function normalizeFocusSourceProductStep(
 }
 
 export function normalizeFocusSourceProduct(product: FocusProductFromSource) {
-  const processSteps = product.processtappen;
-
   const steps = Object.entries(product.processtappen)
     // Filter out steps that don't have any data assiciated
     .filter(
       (stepEntry): stepEntry is [StepTitle, FocusProductStepFromSource] =>
         stepEntry[1] !== null
     )
-    .map((step) => normalizeFocusSourceProductStep(product, step));
+    .map((step) => normalizeFocusSourceProductStep(product, step))
+    .sort(dateSort('datePublished', 'asc'));
 
-  const latestStep = getLatestStep(steps);
-  const id = hash(`${product._id}-${latestStep}`);
+  const lastStep = steps[steps.length - 1];
+  const firstStep = steps[0];
+  const id = hash(`${product._id}-${lastStep.title}`);
 
   return {
     id,
     title: product.naam,
     type: product.soortProduct,
-    decision: product.typeBesluit
-      ? getDecision(product.typeBesluit)
-      : undefined,
+    decision: product.typeBesluit ? getDecision(product.typeBesluit) : null,
     steps,
-    datePublished: processSteps[latestStep]?.datum || '',
-    dateStart: processSteps.aanvraag?.datum || '',
+    datePublished: lastStep.datePublished,
+    dateStart: firstStep.datePublished,
     dienstverleningstermijn: product.dienstverleningstermijn,
     inspanningsperiode: product.inspanningsperiode,
   };

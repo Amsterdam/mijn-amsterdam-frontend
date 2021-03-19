@@ -5,7 +5,7 @@ Array [
   Object {
     "datePublished": "2019-07-08T15:05:52+02:00",
     "dateStart": "2019-07-08T15:05:52+02:00",
-    "decision": undefined,
+    "decision": null,
     "dienstverleningstermijn": 42,
     "id": "226183637",
     "inspanningsperiode": 28,
@@ -45,7 +45,7 @@ Array [
   Object {
     "datePublished": "2019-07-08T15:05:52+02:00",
     "dateStart": "2019-07-07T15:05:52+02:00",
-    "decision": undefined,
+    "decision": null,
     "dienstverleningstermijn": 42,
     "id": "4147155538",
     "inspanningsperiode": 28,
@@ -91,7 +91,7 @@ Array [
   Object {
     "datePublished": "2019-07-06T15:05:52+02:00",
     "dateStart": "2019-07-03T15:05:52+02:00",
-    "decision": undefined,
+    "decision": null,
     "dienstverleningstermijn": 42,
     "id": "2371148170",
     "inspanningsperiode": 28,
@@ -125,28 +125,28 @@ Array [
         "title": "aanvraag",
       },
       Object {
+        "datePublished": "2019-07-04T15:05:52+02:00",
+        "documents": Array [],
+        "id": "inBehandeling",
+        "title": "inBehandeling",
+      },
+      Object {
         "aantalDagenHerstelTermijn": 10,
         "datePublished": "2019-07-06T15:05:52+02:00",
         "documents": Array [],
         "id": "herstelTermijn",
         "title": "herstelTermijn",
       },
-      Object {
-        "datePublished": "2019-07-04T15:05:52+02:00",
-        "documents": Array [],
-        "id": "inBehandeling",
-        "title": "inBehandeling",
-      },
     ],
     "title": "Stadspas",
     "type": "Minimafonds",
   },
   Object {
-    "datePublished": "2019-07-25T15:05:51+02:00",
+    "datePublished": "2019-07-28T15:05:51+02:00",
     "dateStart": "2019-07-24T15:05:51+02:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 21,
-    "id": "4147155538",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -164,6 +164,12 @@ Array [
         "title": "aanvraag",
       },
       Object {
+        "datePublished": "2019-07-25T15:05:51+02:00",
+        "documents": Array [],
+        "id": "inBehandeling",
+        "title": "inBehandeling",
+      },
+      Object {
         "datePublished": "2019-07-28T15:05:51+02:00",
         "documents": Array [
           Object {
@@ -174,25 +180,19 @@ Array [
             "url": "/test-api/focus/document?id=660000000000005&isBulk=false&isDms=false",
           },
         ],
-        "id": "beslissing",
-        "title": "beslissing",
-      },
-      Object {
-        "datePublished": "2019-07-25T15:05:51+02:00",
-        "documents": Array [],
-        "id": "inBehandeling",
-        "title": "inBehandeling",
+        "id": "besluit",
+        "title": "besluit",
       },
     ],
     "title": "Levensonderhoud",
     "type": "Participatiewet",
   },
   Object {
-    "datePublished": "2019-04-11T15:05:51+02:00",
+    "datePublished": "2019-05-07T15:05:51+02:00",
     "dateStart": "2019-04-09T15:05:51+02:00",
     "decision": "afwijzing",
     "dienstverleningstermijn": 21,
-    "id": "4147155538",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -210,6 +210,12 @@ Array [
         "title": "aanvraag",
       },
       Object {
+        "datePublished": "2019-04-11T15:05:51+02:00",
+        "documents": Array [],
+        "id": "inBehandeling",
+        "title": "inBehandeling",
+      },
+      Object {
         "datePublished": "2019-05-07T15:05:51+02:00",
         "documents": Array [
           Object {
@@ -220,25 +226,19 @@ Array [
             "url": "/test-api/focus/document?id=660000000000007&isBulk=false&isDms=false",
           },
         ],
-        "id": "beslissing",
-        "title": "beslissing",
-      },
-      Object {
-        "datePublished": "2019-04-11T15:05:51+02:00",
-        "documents": Array [],
-        "id": "inBehandeling",
-        "title": "inBehandeling",
+        "id": "besluit",
+        "title": "besluit",
       },
     ],
     "title": "Levensonderhoud",
     "type": "Participatiewet",
   },
   Object {
-    "datePublished": "2019-05-19T15:05:51+02:00",
+    "datePublished": "2019-06-08T15:05:51+02:00",
     "dateStart": "2019-05-09T15:05:51+02:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 21,
-    "id": "2371148170",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -256,6 +256,19 @@ Array [
         "title": "aanvraag",
       },
       Object {
+        "datePublished": "2019-05-11T15:05:51+02:00",
+        "documents": Array [],
+        "id": "inBehandeling",
+        "title": "inBehandeling",
+      },
+      Object {
+        "aantalDagenHerstelTermijn": 20,
+        "datePublished": "2019-05-19T15:05:51+02:00",
+        "documents": Array [],
+        "id": "herstelTermijn",
+        "title": "herstelTermijn",
+      },
+      Object {
         "datePublished": "2019-06-08T15:05:51+02:00",
         "documents": Array [
           Object {
@@ -266,32 +279,19 @@ Array [
             "url": "/test-api/focus/document?id=660000000000009&isBulk=false&isDms=false",
           },
         ],
-        "id": "beslissing",
-        "title": "beslissing",
-      },
-      Object {
-        "aantalDagenHerstelTermijn": 20,
-        "datePublished": "2019-05-19T15:05:51+02:00",
-        "documents": Array [],
-        "id": "herstelTermijn",
-        "title": "herstelTermijn",
-      },
-      Object {
-        "datePublished": "2019-05-11T15:05:51+02:00",
-        "documents": Array [],
-        "id": "inBehandeling",
-        "title": "inBehandeling",
+        "id": "besluit",
+        "title": "besluit",
       },
     ],
     "title": "Levensonderhoud",
     "type": "Participatiewet",
   },
   Object {
-    "datePublished": "2019-06-13T15:05:52+02:00",
+    "datePublished": "2019-07-03T15:05:52+02:00",
     "dateStart": "2019-06-08T15:05:52+02:00",
     "decision": "buitenbehandeling",
     "dienstverleningstermijn": 21,
-    "id": "2371148170",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "steps": Array [
       Object {
@@ -316,6 +316,19 @@ Array [
         "title": "aanvraag",
       },
       Object {
+        "datePublished": "2019-06-11T15:05:52+02:00",
+        "documents": Array [],
+        "id": "inBehandeling",
+        "title": "inBehandeling",
+      },
+      Object {
+        "aantalDagenHerstelTermijn": 15,
+        "datePublished": "2019-06-13T15:05:52+02:00",
+        "documents": Array [],
+        "id": "herstelTermijn",
+        "title": "herstelTermijn",
+      },
+      Object {
         "datePublished": "2019-07-03T15:05:52+02:00",
         "documents": Array [
           Object {
@@ -326,21 +339,8 @@ Array [
             "url": "/test-api/focus/document?id=660000000000011&isBulk=false&isDms=false",
           },
         ],
-        "id": "beslissing",
-        "title": "beslissing",
-      },
-      Object {
-        "aantalDagenHerstelTermijn": 15,
-        "datePublished": "2019-06-13T15:05:52+02:00",
-        "documents": Array [],
-        "id": "herstelTermijn",
-        "title": "herstelTermijn",
-      },
-      Object {
-        "datePublished": "2019-06-11T15:05:52+02:00",
-        "documents": Array [],
-        "id": "inBehandeling",
-        "title": "inBehandeling",
+        "id": "besluit",
+        "title": "besluit",
       },
     ],
     "title": "Levensonderhoud",
@@ -349,7 +349,7 @@ Array [
   Object {
     "datePublished": "2020-05-12T00:00:00+02:00",
     "dateStart": "2020-05-12T00:00:00+02:00",
-    "decision": undefined,
+    "decision": null,
     "dienstverleningstermijn": 28,
     "id": "3471293669",
     "inspanningsperiode": 28,
@@ -372,7 +372,7 @@ Array [
   Object {
     "datePublished": "2019-07-08T15:05:52+02:00",
     "dateStart": "2019-07-08T15:05:52+02:00",
-    "decision": undefined,
+    "decision": null,
     "dienstverleningstermijn": 42,
     "id": "226183637",
     "inspanningsperiode": 28,
@@ -423,7 +423,7 @@ Array [
   Object {
     "datePublished": "2019-07-08T15:05:52+02:00",
     "dateStart": "2019-07-07T15:05:52+02:00",
-    "decision": undefined,
+    "decision": null,
     "dienstverleningstermijn": 42,
     "id": "4147155538",
     "inspanningsperiode": 28,
@@ -499,7 +499,7 @@ Array [
   Object {
     "datePublished": "2019-07-06T15:05:52+02:00",
     "dateStart": "2019-07-03T15:05:52+02:00",
-    "decision": undefined,
+    "decision": null,
     "dienstverleningstermijn": 42,
     "id": "2371148170",
     "inspanningsperiode": 28,
@@ -597,18 +597,18 @@ Array [
     "type": "Minimafonds",
   },
   Object {
-    "datePublished": "2019-07-25T15:05:51+02:00",
+    "datePublished": "2019-07-28T15:05:51+02:00",
     "dateStart": "2019-07-24T15:05:51+02:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 21,
-    "id": "4147155538",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen/bijstandsuitkering/4147155538",
+      "to": "/inkomen/bijstandsuitkering/3751690792",
     },
     "productTitle": "Bijstandsuitkering",
-    "status": "In behandeling",
+    "status": "Besluit",
     "steps": Array [
       Object {
         "datePublished": "2019-07-24T15:05:51+02:00",
@@ -664,29 +664,62 @@ Array [
         ",
         "documents": Array [],
         "id": "inBehandeling",
-        "isActive": true,
+        "isActive": false,
         "isChecked": true,
         "product": "Bijstandsuitkering",
         "status": "In behandeling",
         "title": "inBehandeling",
+      },
+      Object {
+        "datePublished": "2019-07-28T15:05:51+02:00",
+        "decision": "toekenning",
+        "description": "
+            <p>
+              U hebt recht op een bijstandsuitkering. Bekijk de brief voor meer
+              details.
+            </p>
+            <p>
+              <a
+                href=https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D
+                rel=\\"external noopener noreferrer\\"
+              >
+                Bekijk hier de betaaldata van de uitkering
+              </a>
+            </p>
+          ",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-07-28T15:05:51+02:00",
+            "id": "660000000000005",
+            "title": "Afwijzen Levensonderhoud (BIJ)",
+            "type": "pdf",
+            "url": "/test-api/focus/document?id=660000000000005&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "besluit",
+        "isActive": true,
+        "isChecked": true,
+        "product": "Bijstandsuitkering",
+        "status": "Besluit",
+        "title": "besluit",
       },
     ],
     "title": "Bijstandsuitkering",
     "type": "Participatiewet",
   },
   Object {
-    "datePublished": "2019-04-11T15:05:51+02:00",
+    "datePublished": "2019-05-07T15:05:51+02:00",
     "dateStart": "2019-04-09T15:05:51+02:00",
     "decision": "afwijzing",
     "dienstverleningstermijn": 21,
-    "id": "4147155538",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen/bijstandsuitkering/4147155538",
+      "to": "/inkomen/bijstandsuitkering/3751690792",
     },
     "productTitle": "Bijstandsuitkering",
-    "status": "In behandeling",
+    "status": "Besluit",
     "steps": Array [
       Object {
         "datePublished": "2019-04-09T15:05:51+02:00",
@@ -742,29 +775,49 @@ Array [
         ",
         "documents": Array [],
         "id": "inBehandeling",
-        "isActive": true,
+        "isActive": false,
         "isChecked": true,
         "product": "Bijstandsuitkering",
         "status": "In behandeling",
         "title": "inBehandeling",
+      },
+      Object {
+        "datePublished": "2019-05-07T15:05:51+02:00",
+        "decision": "afwijzing",
+        "description": "U hebt geen recht op een bijstandsuitkering. Bekijk de brief voor meer details.",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-05-07T15:05:51+02:00",
+            "id": "660000000000007",
+            "title": "Afwijzen Levensonderhoud",
+            "type": "pdf",
+            "url": "/test-api/focus/document?id=660000000000007&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "besluit",
+        "isActive": true,
+        "isChecked": true,
+        "product": "Bijstandsuitkering",
+        "status": "Besluit",
+        "title": "besluit",
       },
     ],
     "title": "Bijstandsuitkering",
     "type": "Participatiewet",
   },
   Object {
-    "datePublished": "2019-05-19T15:05:51+02:00",
+    "datePublished": "2019-06-08T15:05:51+02:00",
     "dateStart": "2019-05-09T15:05:51+02:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 21,
-    "id": "2371148170",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen/bijstandsuitkering/2371148170",
+      "to": "/inkomen/bijstandsuitkering/3751690792",
     },
     "productTitle": "Bijstandsuitkering",
-    "status": "Informatie nodig",
+    "status": "Besluit",
     "steps": Array [
       Object {
         "datePublished": "2019-05-09T15:05:51+02:00",
@@ -844,29 +897,62 @@ Array [
         ",
         "documents": Array [],
         "id": "herstelTermijn",
-        "isActive": true,
+        "isActive": false,
         "isChecked": true,
         "product": "Bijstandsuitkering",
         "status": "Informatie nodig",
         "title": "herstelTermijn",
+      },
+      Object {
+        "datePublished": "2019-06-08T15:05:51+02:00",
+        "decision": "toekenning",
+        "description": "
+            <p>
+              U hebt recht op een bijstandsuitkering. Bekijk de brief voor meer
+              details.
+            </p>
+            <p>
+              <a
+                href=https://www.amsterdam.nl/veelgevraagd/?caseid=%7BEB3CC77D-89D3-40B9-8A28-779FE8E48ACE%7D
+                rel=\\"external noopener noreferrer\\"
+              >
+                Bekijk hier de betaaldata van de uitkering
+              </a>
+            </p>
+          ",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-06-08T15:05:51+02:00",
+            "id": "660000000000009",
+            "title": "Toekennen Levensonderhoud (BIJ)",
+            "type": "pdf",
+            "url": "/test-api/focus/document?id=660000000000009&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "besluit",
+        "isActive": true,
+        "isChecked": true,
+        "product": "Bijstandsuitkering",
+        "status": "Besluit",
+        "title": "besluit",
       },
     ],
     "title": "Bijstandsuitkering",
     "type": "Participatiewet",
   },
   Object {
-    "datePublished": "2019-06-13T15:05:52+02:00",
+    "datePublished": "2019-07-03T15:05:52+02:00",
     "dateStart": "2019-06-08T15:05:52+02:00",
     "decision": "buitenbehandeling",
     "dienstverleningstermijn": 21,
-    "id": "2371148170",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "link": Object {
       "title": "Meer informatie",
-      "to": "/inkomen/bijstandsuitkering/2371148170",
+      "to": "/inkomen/bijstandsuitkering/3751690792",
     },
     "productTitle": "Bijstandsuitkering",
-    "status": "Informatie nodig",
+    "status": "Besluit",
     "steps": Array [
       Object {
         "datePublished": "2019-06-08T15:05:52+02:00",
@@ -953,11 +1039,31 @@ Array [
         ",
         "documents": Array [],
         "id": "herstelTermijn",
-        "isActive": true,
+        "isActive": false,
         "isChecked": true,
         "product": "Bijstandsuitkering",
         "status": "Informatie nodig",
         "title": "herstelTermijn",
+      },
+      Object {
+        "datePublished": "2019-07-03T15:05:52+02:00",
+        "decision": "buitenbehandeling",
+        "description": "Wij behandelen uw aanvraag niet meer. Bekijk de brief voor meer details.",
+        "documents": Array [
+          Object {
+            "datePublished": "2019-07-03T15:05:52+02:00",
+            "id": "660000000000011",
+            "title": "Niet in behandeling nemen",
+            "type": "pdf",
+            "url": "/test-api/focus/document?id=660000000000011&isBulk=false&isDms=false",
+          },
+        ],
+        "id": "besluit",
+        "isActive": true,
+        "isChecked": true,
+        "product": "Bijstandsuitkering",
+        "status": "Besluit",
+        "title": "besluit",
       },
     ],
     "title": "Bijstandsuitkering",
@@ -971,7 +1077,7 @@ Array [
   Object {
     "datePublished": "2019-07-08T15:05:52+02:00",
     "dateStart": "2019-07-08T15:05:52+02:00",
-    "decision": undefined,
+    "decision": null,
     "dienstverleningstermijn": 42,
     "id": "226183637",
     "inspanningsperiode": 28,
@@ -1012,7 +1118,7 @@ Array [
   Object {
     "datePublished": "2019-07-08T15:05:52+02:00",
     "dateStart": "2019-07-07T15:05:52+02:00",
-    "decision": undefined,
+    "decision": null,
     "dienstverleningstermijn": 42,
     "id": "4147155538",
     "inspanningsperiode": 28,
@@ -1059,7 +1165,7 @@ Array [
   Object {
     "datePublished": "2019-07-06T15:05:52+02:00",
     "dateStart": "2019-07-03T15:05:52+02:00",
-    "decision": undefined,
+    "decision": null,
     "dienstverleningstermijn": 42,
     "id": "2371148170",
     "inspanningsperiode": 28,
@@ -1094,28 +1200,28 @@ Array [
         "title": "aanvraag",
       },
       Object {
+        "datePublished": "2019-07-04T15:05:52+02:00",
+        "documents": Array [],
+        "id": "inBehandeling",
+        "title": "inBehandeling",
+      },
+      Object {
         "aantalDagenHerstelTermijn": 10,
         "datePublished": "2019-07-06T15:05:52+02:00",
         "documents": Array [],
         "id": "herstelTermijn",
         "title": "herstelTermijn",
       },
-      Object {
-        "datePublished": "2019-07-04T15:05:52+02:00",
-        "documents": Array [],
-        "id": "inBehandeling",
-        "title": "inBehandeling",
-      },
     ],
     "title": "Stadspas",
     "type": "Minimafonds",
   },
   Object {
-    "datePublished": "2019-07-25T15:05:51+02:00",
+    "datePublished": "2019-07-28T15:05:51+02:00",
     "dateStart": "2019-07-24T15:05:51+02:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 21,
-    "id": "4147155538",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "productTitle": "Bijstandsuitkering",
     "steps": Array [
@@ -1134,6 +1240,12 @@ Array [
         "title": "aanvraag",
       },
       Object {
+        "datePublished": "2019-07-25T15:05:51+02:00",
+        "documents": Array [],
+        "id": "inBehandeling",
+        "title": "inBehandeling",
+      },
+      Object {
         "datePublished": "2019-07-28T15:05:51+02:00",
         "documents": Array [
           Object {
@@ -1144,25 +1256,19 @@ Array [
             "url": "/test-api/focus/document?id=660000000000005&isBulk=false&isDms=false",
           },
         ],
-        "id": "beslissing",
-        "title": "beslissing",
-      },
-      Object {
-        "datePublished": "2019-07-25T15:05:51+02:00",
-        "documents": Array [],
-        "id": "inBehandeling",
-        "title": "inBehandeling",
+        "id": "besluit",
+        "title": "besluit",
       },
     ],
     "title": "Bijstandsuitkering",
     "type": "Participatiewet",
   },
   Object {
-    "datePublished": "2019-04-11T15:05:51+02:00",
+    "datePublished": "2019-05-07T15:05:51+02:00",
     "dateStart": "2019-04-09T15:05:51+02:00",
     "decision": "afwijzing",
     "dienstverleningstermijn": 21,
-    "id": "4147155538",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "productTitle": "Bijstandsuitkering",
     "steps": Array [
@@ -1181,6 +1287,12 @@ Array [
         "title": "aanvraag",
       },
       Object {
+        "datePublished": "2019-04-11T15:05:51+02:00",
+        "documents": Array [],
+        "id": "inBehandeling",
+        "title": "inBehandeling",
+      },
+      Object {
         "datePublished": "2019-05-07T15:05:51+02:00",
         "documents": Array [
           Object {
@@ -1191,25 +1303,19 @@ Array [
             "url": "/test-api/focus/document?id=660000000000007&isBulk=false&isDms=false",
           },
         ],
-        "id": "beslissing",
-        "title": "beslissing",
-      },
-      Object {
-        "datePublished": "2019-04-11T15:05:51+02:00",
-        "documents": Array [],
-        "id": "inBehandeling",
-        "title": "inBehandeling",
+        "id": "besluit",
+        "title": "besluit",
       },
     ],
     "title": "Bijstandsuitkering",
     "type": "Participatiewet",
   },
   Object {
-    "datePublished": "2019-05-19T15:05:51+02:00",
+    "datePublished": "2019-06-08T15:05:51+02:00",
     "dateStart": "2019-05-09T15:05:51+02:00",
     "decision": "toekenning",
     "dienstverleningstermijn": 21,
-    "id": "2371148170",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "productTitle": "Bijstandsuitkering",
     "steps": Array [
@@ -1228,6 +1334,19 @@ Array [
         "title": "aanvraag",
       },
       Object {
+        "datePublished": "2019-05-11T15:05:51+02:00",
+        "documents": Array [],
+        "id": "inBehandeling",
+        "title": "inBehandeling",
+      },
+      Object {
+        "aantalDagenHerstelTermijn": 20,
+        "datePublished": "2019-05-19T15:05:51+02:00",
+        "documents": Array [],
+        "id": "herstelTermijn",
+        "title": "herstelTermijn",
+      },
+      Object {
         "datePublished": "2019-06-08T15:05:51+02:00",
         "documents": Array [
           Object {
@@ -1238,32 +1357,19 @@ Array [
             "url": "/test-api/focus/document?id=660000000000009&isBulk=false&isDms=false",
           },
         ],
-        "id": "beslissing",
-        "title": "beslissing",
-      },
-      Object {
-        "aantalDagenHerstelTermijn": 20,
-        "datePublished": "2019-05-19T15:05:51+02:00",
-        "documents": Array [],
-        "id": "herstelTermijn",
-        "title": "herstelTermijn",
-      },
-      Object {
-        "datePublished": "2019-05-11T15:05:51+02:00",
-        "documents": Array [],
-        "id": "inBehandeling",
-        "title": "inBehandeling",
+        "id": "besluit",
+        "title": "besluit",
       },
     ],
     "title": "Bijstandsuitkering",
     "type": "Participatiewet",
   },
   Object {
-    "datePublished": "2019-06-13T15:05:52+02:00",
+    "datePublished": "2019-07-03T15:05:52+02:00",
     "dateStart": "2019-06-08T15:05:52+02:00",
     "decision": "buitenbehandeling",
     "dienstverleningstermijn": 21,
-    "id": "2371148170",
+    "id": "3751690792",
     "inspanningsperiode": 28,
     "productTitle": "Bijstandsuitkering",
     "steps": Array [
@@ -1289,6 +1395,19 @@ Array [
         "title": "aanvraag",
       },
       Object {
+        "datePublished": "2019-06-11T15:05:52+02:00",
+        "documents": Array [],
+        "id": "inBehandeling",
+        "title": "inBehandeling",
+      },
+      Object {
+        "aantalDagenHerstelTermijn": 15,
+        "datePublished": "2019-06-13T15:05:52+02:00",
+        "documents": Array [],
+        "id": "herstelTermijn",
+        "title": "herstelTermijn",
+      },
+      Object {
         "datePublished": "2019-07-03T15:05:52+02:00",
         "documents": Array [
           Object {
@@ -1299,21 +1418,8 @@ Array [
             "url": "/test-api/focus/document?id=660000000000011&isBulk=false&isDms=false",
           },
         ],
-        "id": "beslissing",
-        "title": "beslissing",
-      },
-      Object {
-        "aantalDagenHerstelTermijn": 15,
-        "datePublished": "2019-06-13T15:05:52+02:00",
-        "documents": Array [],
-        "id": "herstelTermijn",
-        "title": "herstelTermijn",
-      },
-      Object {
-        "datePublished": "2019-06-11T15:05:52+02:00",
-        "documents": Array [],
-        "id": "inBehandeling",
-        "title": "inBehandeling",
+        "id": "besluit",
+        "title": "besluit",
       },
     ],
     "title": "Bijstandsuitkering",
